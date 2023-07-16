@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483348F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:57:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0FE8C433C7;
-	Sun, 16 Jul 2023 20:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289F98F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:57:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0323C433C7;
+	Sun, 16 Jul 2023 20:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689541064;
-	bh=OfCf5GkWf+JZp4yOUdrwytwyUS/PMQanFcRKs1UF1aM=;
+	s=korg; t=1689541067;
+	bh=sh4PXW6Kr5AyDSqId6FLNtnbTfJmyStQpAWxwk6vm+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WelSPIG5CzM8UfaxGbTZDsN2yZQtlG+fusBpOCSBwPVJJeZJ8SrGNINuWC+arv+cf
-	 INecXqGZqE7G7oEJyFZbewiCgz/8H1a9X/Vw1w8w+RaglWAdWkfvgsFfk3SEUs4/QJ
-	 fFb201/ncT+WsQEuV3KCFdVT1Ul9R/WqdPe7tOIU=
+	b=SncEjLA6uVqHqghue0GE7LplsPX439EGFv3q1K6azqcbuO4rhxQBRE1bJAQMZdLhe
+	 meaDAMqSkPg/M18Ahyhs8HnYdiPTBiOXCj88H1tG8DqeV8rgJa5GMBWkEMop0LqL2+
+	 IWkxGIKW/DYypxcgjCx3xbAmWTNLXSeOPClmF7PU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.1 549/591] fs: Establish locking order for unrelated directories
-Date: Sun, 16 Jul 2023 21:51:28 +0200
-Message-ID: <20230716194938.062349641@linuxfoundation.org>
+	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.1 580/591] mtd: parsers: refer to ARCH_BCMBCA instead of ARCH_BCM4908
+Date: Sun, 16 Jul 2023 21:51:59 +0200
+Message-ID: <20230716194938.863751271@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -34,104 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 
-commit f23ce757185319886ca80c4864ce5f81ac6cc9e9 upstream.
+commit 085679b15b5af65f9610f619afde41da0f966194 upstream.
 
-Currently the locking order of inode locks for directories that are not
-in ancestor relationship is not defined because all operations that
-needed to lock two directories like this were serialized by
-sb->s_vfs_rename_mutex. However some filesystems need to lock two
-subdirectories for RENAME_EXCHANGE operations and for this we need the
-locking order established even for two tree-unrelated directories.
-Provide a helper function lock_two_inodes() that establishes lock
-ordering for any two inodes and use it in lock_two_directories().
+Commit dd5c672d7ca9 ("arm64: bcmbca: Merge ARCH_BCM4908 to ARCH_BCMBCA")
+removes config ARCH_BCM4908 as config ARCH_BCMBCA has the same intent.
 
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20230601105830.13168-4-jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Probably due to concurrent development, commit 002181f5b150 ("mtd: parsers:
+add Broadcom's U-Boot parser") introduces 'Broadcom's U-Boot partition
+parser' that depends on ARCH_BCM4908, but this use was not visible during
+the config refactoring from the commit above. Hence, these two changes
+create a reference to a non-existing config symbol.
+
+Adjust the MTD_BRCM_U_BOOT definition to refer to ARCH_BCMBCA instead of
+ARCH_BCM4908 to remove the reference to the non-existing config symbol
+ARCH_BCM4908.
+
+Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20221116124932.4748-1-lukas.bulwahn@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/inode.c    |   42 ++++++++++++++++++++++++++++++++++++++++++
- fs/internal.h |    2 ++
- fs/namei.c    |    4 ++--
- 3 files changed, 46 insertions(+), 2 deletions(-)
+ drivers/mtd/parsers/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -1104,6 +1104,48 @@ void discard_new_inode(struct inode *ino
- EXPORT_SYMBOL(discard_new_inode);
+--- a/drivers/mtd/parsers/Kconfig
++++ b/drivers/mtd/parsers/Kconfig
+@@ -22,7 +22,7 @@ config MTD_BCM63XX_PARTS
  
- /**
-+ * lock_two_inodes - lock two inodes (may be regular files but also dirs)
-+ *
-+ * Lock any non-NULL argument. The caller must make sure that if he is passing
-+ * in two directories, one is not ancestor of the other.  Zero, one or two
-+ * objects may be locked by this function.
-+ *
-+ * @inode1: first inode to lock
-+ * @inode2: second inode to lock
-+ * @subclass1: inode lock subclass for the first lock obtained
-+ * @subclass2: inode lock subclass for the second lock obtained
-+ */
-+void lock_two_inodes(struct inode *inode1, struct inode *inode2,
-+		     unsigned subclass1, unsigned subclass2)
-+{
-+	if (!inode1 || !inode2) {
-+		/*
-+		 * Make sure @subclass1 will be used for the acquired lock.
-+		 * This is not strictly necessary (no current caller cares) but
-+		 * let's keep things consistent.
-+		 */
-+		if (!inode1)
-+			swap(inode1, inode2);
-+		goto lock;
-+	}
-+
-+	/*
-+	 * If one object is directory and the other is not, we must make sure
-+	 * to lock directory first as the other object may be its child.
-+	 */
-+	if (S_ISDIR(inode2->i_mode) == S_ISDIR(inode1->i_mode)) {
-+		if (inode1 > inode2)
-+			swap(inode1, inode2);
-+	} else if (!S_ISDIR(inode1->i_mode))
-+		swap(inode1, inode2);
-+lock:
-+	if (inode1)
-+		inode_lock_nested(inode1, subclass1);
-+	if (inode2 && inode2 != inode1)
-+		inode_lock_nested(inode2, subclass2);
-+}
-+
-+/**
-  * lock_two_nondirectories - take two i_mutexes on non-directory objects
-  *
-  * Lock any non-NULL argument that is not a directory.
---- a/fs/internal.h
-+++ b/fs/internal.h
-@@ -153,6 +153,8 @@ extern long prune_icache_sb(struct super
- int dentry_needs_remove_privs(struct user_namespace *, struct dentry *dentry);
- bool in_group_or_capable(struct user_namespace *mnt_userns,
- 			 const struct inode *inode, vfsgid_t vfsgid);
-+void lock_two_inodes(struct inode *inode1, struct inode *inode2,
-+		     unsigned subclass1, unsigned subclass2);
- 
- /*
-  * fs-writeback.c
---- a/fs/namei.c
-+++ b/fs/namei.c
-@@ -3007,8 +3007,8 @@ struct dentry *lock_rename(struct dentry
- 		return p;
- 	}
- 
--	inode_lock_nested(p1->d_inode, I_MUTEX_PARENT);
--	inode_lock_nested(p2->d_inode, I_MUTEX_PARENT2);
-+	lock_two_inodes(p1->d_inode, p2->d_inode,
-+			I_MUTEX_PARENT, I_MUTEX_PARENT2);
- 	return NULL;
- }
- EXPORT_SYMBOL(lock_rename);
+ config MTD_BRCM_U_BOOT
+ 	tristate "Broadcom's U-Boot partition parser"
+-	depends on ARCH_BCM4908 || COMPILE_TEST
++	depends on ARCH_BCMBCA || COMPILE_TEST
+ 	help
+ 	  Broadcom uses a custom way of storing U-Boot environment variables.
+ 	  They are placed inside U-Boot partition itself at unspecified offset.
 
 
