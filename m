@@ -1,26 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 857DC8833
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:47:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F99C433C8;
-	Sun, 16 Jul 2023 20:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DAED8833
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:47:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5909C433C7;
+	Sun, 16 Jul 2023 20:47:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540428;
-	bh=1bI9VTkb064C9miAHigDSoX5dmCr6mkoMBRm9f4279A=;
+	s=korg; t=1689540431;
+	bh=yR3tLSxtRZAvF1rRQ4nojQYQYF38Es+hEftBMrpqFvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uef7UscPt76LBKzADKaytT9F42ntWO2+E0OVhQGWYacJddEoHID0AaOQlqhVBHLWk
-	 edrky77guGkv9FPF44svG2fDKHAewvyjtrxGJjvPGTBMCaYqdeuTMoS6FRcNZzpnEA
-	 gOfp9W+PBvCI8O6j6+4gOFsgWBNRGXD+qqyLWvr0=
+	b=Yq5RlW/UwiBYdHGAsT36EfijTCitVXPhUX7wbi6jiWjpx/USz75dtEvACe88DPZ+D
+	 mWUsFYZ/T1j0uD9U3YZODqQDxe17iIoiwP5F694U1d2RxZEnr9KAiRgxm97eRD+YWq
+	 /yWO+rIcRjOMf1Os6uNsihka/X9+KQ3DdJDMiJgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Will Deacon <will@kernel.org>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 342/591] ARC: define ASM_NL and __ALIGN(_STR) outside #ifdef __ASSEMBLY__ guard
-Date: Sun, 16 Jul 2023 21:48:01 +0200
-Message-ID: <20230716194932.757549128@linuxfoundation.org>
+Subject: [PATCH 6.1 360/591] arm64: sme: Use STR P to clear FFR context field in streaming SVE mode
+Date: Sun, 16 Jul 2023 21:48:19 +0200
+Message-ID: <20230716194933.227283046@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -34,59 +40,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Will Deacon <will@kernel.org>
 
-[ Upstream commit 92e2921eeafdfca9acd9b83f07d2b7ca099bac24 ]
+[ Upstream commit 893b24181b4c4bf1fa2841b1ed192e5413a97cb1 ]
 
-ASM_NL is useful not only in *.S files but also in .c files for using
-inline assembler in C code.
+The FFR is a predicate register which can vary between 16 and 256 bits
+in size depending upon the configured vector length. When saving the
+SVE state in streaming SVE mode, the FFR register is inaccessible and
+so commit 9f5848665788 ("arm64/sve: Make access to FFR optional") simply
+clears the FFR field of the in-memory context structure. Unfortunately,
+it achieves this using an unconditional 8-byte store and so if the SME
+vector length is anything other than 64 bytes in size we will either
+fail to clear the entire field or, worse, we will corrupt memory
+immediately following the structure. This has led to intermittent kfence
+splats in CI [1] and can trigger kmalloc Redzone corruption messages
+when running the 'fp-stress' kselftest:
 
-On ARC, however, ASM_NL is evaluated inconsistently. It is expanded to
-a backquote (`) in *.S files, but a semicolon (;) in *.c files because
-arch/arc/include/asm/linkage.h defines it inside #ifdef __ASSEMBLY__,
-so the definition for C code falls back to the default value defined in
-include/linux/linkage.h.
+ | =============================================================================
+ | BUG kmalloc-1k (Not tainted): kmalloc Redzone overwritten
+ | -----------------------------------------------------------------------------
+ |
+ | 0xffff000809bf1e22-0xffff000809bf1e27 @offset=7714. First byte 0x0 instead of 0xcc
+ | Allocated in do_sme_acc+0x9c/0x220 age=2613 cpu=1 pid=531
+ |  __kmalloc+0x8c/0xcc
+ |  do_sme_acc+0x9c/0x220
+ |  ...
 
-If ASM_NL is used in inline assembler in .c files, it will result in
-wrong assembly code because a semicolon is not an instruction separator,
-but the start of a comment for ARC.
+Replace the 8-byte store with a store of a predicate register which has
+been zero-initialised with PFALSE, ensuring that the entire field is
+cleared in memory.
 
-Move ASM_NL (also __ALIGN and __ALIGN_STR) out of the #ifdef.
+[1] https://lore.kernel.org/r/CA+G9fYtU7HsV0R0dp4XEH5xXHSJFw8KyDf5VQrLLfMxWfxQkag@mail.gmail.com
 
-Fixes: 9df62f054406 ("arch: use ASM_NL instead of ';' for assembler new line character in the macro")
-Fixes: 8d92e992a785 ("ARC: define __ALIGN_STR and __ALIGN symbols for ARC")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>
+Fixes: 9f5848665788 ("arm64/sve: Make access to FFR optional")
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Tested-by: Anders Roxell <anders.roxell@linaro.org>
+Link: https://lore.kernel.org/r/20230628155605.22296-1-will@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arc/include/asm/linkage.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/include/asm/fpsimdmacros.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arc/include/asm/linkage.h b/arch/arc/include/asm/linkage.h
-index c9434ff3aa4ce..8a3fb71e9cfad 100644
---- a/arch/arc/include/asm/linkage.h
-+++ b/arch/arc/include/asm/linkage.h
-@@ -8,6 +8,10 @@
- 
- #include <asm/dwarf.h>
- 
-+#define ASM_NL		 `	/* use '`' to mark new line in macro */
-+#define __ALIGN		.align 4
-+#define __ALIGN_STR	__stringify(__ALIGN)
-+
- #ifdef __ASSEMBLY__
- 
- .macro ST2 e, o, off
-@@ -28,10 +32,6 @@
- #endif
- .endm
- 
--#define ASM_NL		 `	/* use '`' to mark new line in macro */
--#define __ALIGN		.align 4
--#define __ALIGN_STR	__stringify(__ALIGN)
--
- /* annotation for data we want in DCCM - if enabled in .config */
- .macro ARCFP_DATA nm
- #ifdef CONFIG_ARC_HAS_DCCM
+diff --git a/arch/arm64/include/asm/fpsimdmacros.h b/arch/arm64/include/asm/fpsimdmacros.h
+index 5e0910cf48321..696d247cf8fb0 100644
+--- a/arch/arm64/include/asm/fpsimdmacros.h
++++ b/arch/arm64/include/asm/fpsimdmacros.h
+@@ -294,12 +294,12 @@
+  _for n, 0, 15,	_sve_str_p	\n, \nxbase, \n - 16
+ 		cbz		\save_ffr, 921f
+ 		_sve_rdffr	0
+-		_sve_str_p	0, \nxbase
+-		_sve_ldr_p	0, \nxbase, -16
+ 		b		922f
+ 921:
+-		str		xzr, [x\nxbase]		// Zero out FFR
++		_sve_pfalse	0			// Zero out FFR
+ 922:
++		_sve_str_p	0, \nxbase
++		_sve_ldr_p	0, \nxbase, -16
+ 		mrs		x\nxtmp, fpsr
+ 		str		w\nxtmp, [\xpfpsr]
+ 		mrs		x\nxtmp, fpcr
 -- 
 2.39.2
 
