@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4C88F75
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:02:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BCCC433C7;
-	Sun, 16 Jul 2023 20:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD1E8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:02:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71DEDC433C8;
+	Sun, 16 Jul 2023 20:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537728;
-	bh=vxIU8VqOfSMdAgQ9V1tNK3ME9ufCNbwFpDFNWT/mWh0=;
+	s=korg; t=1689537725;
+	bh=lFxZrl+/cXRmsQ96zGV+uRjvhjSCUjZ7xF2a0Rt3JZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HUCE1/gi8v3YWZuKDMfIzzXo/zgj1ZRxrC4fWeYCIVDIJO2buuUd2wcGYACeAvzZm
-	 3ibBO9B9+7hnm36xe9OBnmzvqZsTmFg4t52K4WBvuxBaJJ3IK5XK+uccdigHZJ42mI
-	 0tI+KG5xZabZosR5t2Qmyg/y/8icKmSaSO7f1/Cg=
+	b=qcqBVZye2u8y0DMr1zeMFTsOJeZT5ATo4Ldz0ZMaFh2IQCcBj1oOogWtxao2e9ave
+	 GfqGcbdx8b8yzk6jIFRfpWDgrRPwefbgXTZsnJUMU9BTpbTxMlGQ3cbUkXbOElps7d
+	 I8Ygm90JsJlLCIMROLddB4dIkBL5fqquZvQveKCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Guedes <andre.guedes@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Kurt Kanzenbach <kurt@linutronix.de>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jimmy Assarsson <extja@kvaser.com>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 199/800] igc: Fix race condition in PTP tx code
-Date: Sun, 16 Jul 2023 21:40:52 +0200
-Message-ID: <20230716194953.723573707@linuxfoundation.org>
+Subject: [PATCH 6.4 198/800] can: kvaser_pciefd: Set hardware timestamp on transmitted packets
+Date: Sun, 16 Jul 2023 21:40:51 +0200
+Message-ID: <20230716194953.701366661@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -38,235 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Jimmy Assarsson <extja@kvaser.com>
 
-[ Upstream commit 9c50e2b150c8ee0eee5f8154e2ad168cdd748877 ]
+[ Upstream commit ec681b91befa982477e24a150dd6452427fe6473 ]
 
-Currently, the igc driver supports timestamping only one tx packet at a
-time. During the transmission flow, the skb that requires hardware
-timestamping is saved in adapter->ptp_tx_skb. Once hardware has the
-timestamp, an interrupt is delivered, and adapter->ptp_tx_work is
-scheduled. In igc_ptp_tx_work(), we read the timestamp register, update
-adapter->ptp_tx_skb, and notify the network stack.
+Set hardware timestamp on transmitted packets.
 
-While the thread executing the transmission flow (the user process
-running in kernel mode) and the thread executing ptp_tx_work don't
-access adapter->ptp_tx_skb concurrently, there are two other places
-where adapter->ptp_tx_skb is accessed: igc_ptp_tx_hang() and
-igc_ptp_suspend().
-
-igc_ptp_tx_hang() is executed by the adapter->watchdog_task worker
-thread which runs periodically so it is possible we have two threads
-accessing ptp_tx_skb at the same time. Consider the following scenario:
-right after __IGC_PTP_TX_IN_PROGRESS is set in igc_xmit_frame_ring(),
-igc_ptp_tx_hang() is executed. Since adapter->ptp_tx_start hasn't been
-written yet, this is considered a timeout and adapter->ptp_tx_skb is
-cleaned up.
-
-This patch fixes the issue described above by adding the ptp_tx_lock to
-protect access to ptp_tx_skb and ptp_tx_start fields from igc_adapter.
-Since igc_xmit_frame_ring() called in atomic context by the networking
-stack, ptp_tx_lock is defined as a spinlock, and the irq safe variants
-of lock/unlock are used.
-
-With the introduction of the ptp_tx_lock, the __IGC_PTP_TX_IN_PROGRESS
-flag doesn't provide much of a use anymore so this patch gets rid of it.
-
-Fixes: 2c344ae24501 ("igc: Add support for TX timestamping")
-Signed-off-by: Andre Guedes <andre.guedes@intel.com>
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Reviewed-by: Kurt Kanzenbach <kurt@linutronix.de>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 26ad340e582d ("can: kvaser_pciefd: Add driver for Kvaser PCIEcan devices")
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://lore.kernel.org/all/20230529134248.752036-5-extja@kvaser.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc.h      |  5 +-
- drivers/net/ethernet/intel/igc/igc_main.c |  9 ++--
- drivers/net/ethernet/intel/igc/igc_ptp.c  | 57 ++++++++++++-----------
- 3 files changed, 41 insertions(+), 30 deletions(-)
+ drivers/net/can/kvaser_pciefd.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc.h b/drivers/net/ethernet/intel/igc/igc.h
-index f7f9e217e7b42..ef4d284634047 100644
---- a/drivers/net/ethernet/intel/igc/igc.h
-+++ b/drivers/net/ethernet/intel/igc/igc.h
-@@ -230,6 +230,10 @@ struct igc_adapter {
- 	struct ptp_clock *ptp_clock;
- 	struct ptp_clock_info ptp_caps;
- 	struct work_struct ptp_tx_work;
-+	/* Access to ptp_tx_skb and ptp_tx_start are protected by the
-+	 * ptp_tx_lock.
-+	 */
-+	spinlock_t ptp_tx_lock;
- 	struct sk_buff *ptp_tx_skb;
- 	struct hwtstamp_config tstamp_config;
- 	unsigned long ptp_tx_start;
-@@ -429,7 +433,6 @@ enum igc_state_t {
- 	__IGC_TESTING,
- 	__IGC_RESETTING,
- 	__IGC_DOWN,
--	__IGC_PTP_TX_IN_PROGRESS,
- };
+diff --git a/drivers/net/can/kvaser_pciefd.c b/drivers/net/can/kvaser_pciefd.c
+index 404eb90db4ca1..37f4befca0345 100644
+--- a/drivers/net/can/kvaser_pciefd.c
++++ b/drivers/net/can/kvaser_pciefd.c
+@@ -1519,6 +1519,7 @@ static void kvaser_pciefd_handle_nack_packet(struct kvaser_pciefd_can *can,
  
- enum igc_tx_flags {
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 60ce0fd5bc8bb..fb4b543665f71 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -1590,9 +1590,10 @@ static netdev_tx_t igc_xmit_frame_ring(struct sk_buff *skb,
- 		 * the other timer registers before skipping the
- 		 * timestamping request.
- 		 */
--		if (adapter->tstamp_config.tx_type == HWTSTAMP_TX_ON &&
--		    !test_and_set_bit_lock(__IGC_PTP_TX_IN_PROGRESS,
--					   &adapter->state)) {
-+		unsigned long flags;
+ 	if (skb) {
+ 		cf->can_id |= CAN_ERR_BUSERROR;
++		kvaser_pciefd_set_skb_timestamp(can->kv_pcie, skb, p->timestamp);
+ 		netif_rx(skb);
+ 	} else {
+ 		stats->rx_dropped++;
+@@ -1550,8 +1551,15 @@ static int kvaser_pciefd_handle_ack_packet(struct kvaser_pciefd *pcie,
+ 		netdev_dbg(can->can.dev, "Packet was flushed\n");
+ 	} else {
+ 		int echo_idx = p->header[0] & KVASER_PCIEFD_PACKET_SEQ_MSK;
+-		int dlc = can_get_echo_skb(can->can.dev, echo_idx, NULL);
+-		u8 count = ioread32(can->reg_base +
++		int dlc;
++		u8 count;
++		struct sk_buff *skb;
 +
-+		spin_lock_irqsave(&adapter->ptp_tx_lock, flags);
-+		if (adapter->tstamp_config.tx_type == HWTSTAMP_TX_ON && !adapter->ptp_tx_skb) {
- 			skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
- 			tx_flags |= IGC_TX_FLAGS_TSTAMP;
++		skb = can->can.echo_skb[echo_idx];
++		if (skb)
++			kvaser_pciefd_set_skb_timestamp(pcie, skb, p->timestamp);
++		dlc = can_get_echo_skb(can->can.dev, echo_idx, NULL);
++		count = ioread32(can->reg_base +
+ 				    KVASER_PCIEFD_KCAN_TX_NPACKETS_REG) & 0xff;
  
-@@ -1601,6 +1602,8 @@ static netdev_tx_t igc_xmit_frame_ring(struct sk_buff *skb,
- 		} else {
- 			adapter->tx_hwtstamp_skipped++;
- 		}
-+
-+		spin_unlock_irqrestore(&adapter->ptp_tx_lock, flags);
- 	}
- 
- 	if (skb_vlan_tag_present(skb)) {
-diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
-index 4e10ced736dbb..56128e55f5c03 100644
---- a/drivers/net/ethernet/intel/igc/igc_ptp.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
-@@ -603,6 +603,7 @@ static int igc_ptp_set_timestamp_mode(struct igc_adapter *adapter,
- 	return 0;
- }
- 
-+/* Requires adapter->ptp_tx_lock held by caller. */
- static void igc_ptp_tx_timeout(struct igc_adapter *adapter)
- {
- 	struct igc_hw *hw = &adapter->hw;
-@@ -610,7 +611,6 @@ static void igc_ptp_tx_timeout(struct igc_adapter *adapter)
- 	dev_kfree_skb_any(adapter->ptp_tx_skb);
- 	adapter->ptp_tx_skb = NULL;
- 	adapter->tx_hwtstamp_timeouts++;
--	clear_bit_unlock(__IGC_PTP_TX_IN_PROGRESS, &adapter->state);
- 	/* Clear the tx valid bit in TSYNCTXCTL register to enable interrupt. */
- 	rd32(IGC_TXSTMPH);
- 	netdev_warn(adapter->netdev, "Tx timestamp timeout\n");
-@@ -618,20 +618,20 @@ static void igc_ptp_tx_timeout(struct igc_adapter *adapter)
- 
- void igc_ptp_tx_hang(struct igc_adapter *adapter)
- {
--	bool timeout = time_is_before_jiffies(adapter->ptp_tx_start +
--					      IGC_PTP_TX_TIMEOUT);
-+	unsigned long flags;
- 
--	if (!test_bit(__IGC_PTP_TX_IN_PROGRESS, &adapter->state))
--		return;
-+	spin_lock_irqsave(&adapter->ptp_tx_lock, flags);
- 
--	/* If we haven't received a timestamp within the timeout, it is
--	 * reasonable to assume that it will never occur, so we can unlock the
--	 * timestamp bit when this occurs.
--	 */
--	if (timeout) {
--		cancel_work_sync(&adapter->ptp_tx_work);
--		igc_ptp_tx_timeout(adapter);
--	}
-+	if (!adapter->ptp_tx_skb)
-+		goto unlock;
-+
-+	if (time_is_after_jiffies(adapter->ptp_tx_start + IGC_PTP_TX_TIMEOUT))
-+		goto unlock;
-+
-+	igc_ptp_tx_timeout(adapter);
-+
-+unlock:
-+	spin_unlock_irqrestore(&adapter->ptp_tx_lock, flags);
- }
- 
- /**
-@@ -641,6 +641,8 @@ void igc_ptp_tx_hang(struct igc_adapter *adapter)
-  * If we were asked to do hardware stamping and such a time stamp is
-  * available, then it must have been for this skb here because we only
-  * allow only one such packet into the queue.
-+ *
-+ * Context: Expects adapter->ptp_tx_lock to be held by caller.
-  */
- static void igc_ptp_tx_hwtstamp(struct igc_adapter *adapter)
- {
-@@ -676,13 +678,7 @@ static void igc_ptp_tx_hwtstamp(struct igc_adapter *adapter)
- 	shhwtstamps.hwtstamp =
- 		ktime_add_ns(shhwtstamps.hwtstamp, adjust);
- 
--	/* Clear the lock early before calling skb_tstamp_tx so that
--	 * applications are not woken up before the lock bit is clear. We use
--	 * a copy of the skb pointer to ensure other threads can't change it
--	 * while we're notifying the stack.
--	 */
- 	adapter->ptp_tx_skb = NULL;
--	clear_bit_unlock(__IGC_PTP_TX_IN_PROGRESS, &adapter->state);
- 
- 	/* Notify the stack and free the skb after we've unlocked */
- 	skb_tstamp_tx(skb, &shhwtstamps);
-@@ -693,24 +689,33 @@ static void igc_ptp_tx_hwtstamp(struct igc_adapter *adapter)
-  * igc_ptp_tx_work
-  * @work: pointer to work struct
-  *
-- * This work function polls the TSYNCTXCTL valid bit to determine when a
-- * timestamp has been taken for the current stored skb.
-+ * This work function checks the TSYNCTXCTL valid bit to determine when
-+ * a timestamp has been taken for the current stored skb.
-  */
- static void igc_ptp_tx_work(struct work_struct *work)
- {
- 	struct igc_adapter *adapter = container_of(work, struct igc_adapter,
- 						   ptp_tx_work);
- 	struct igc_hw *hw = &adapter->hw;
-+	unsigned long flags;
- 	u32 tsynctxctl;
- 
--	if (!test_bit(__IGC_PTP_TX_IN_PROGRESS, &adapter->state))
--		return;
-+	spin_lock_irqsave(&adapter->ptp_tx_lock, flags);
-+
-+	if (!adapter->ptp_tx_skb)
-+		goto unlock;
- 
- 	tsynctxctl = rd32(IGC_TSYNCTXCTL);
--	if (WARN_ON_ONCE(!(tsynctxctl & IGC_TSYNCTXCTL_TXTT_0)))
--		return;
-+	tsynctxctl &= IGC_TSYNCTXCTL_TXTT_0;
-+	if (!tsynctxctl) {
-+		WARN_ONCE(1, "Received a TSTAMP interrupt but no TSTAMP is ready.\n");
-+		goto unlock;
-+	}
- 
- 	igc_ptp_tx_hwtstamp(adapter);
-+
-+unlock:
-+	spin_unlock_irqrestore(&adapter->ptp_tx_lock, flags);
- }
- 
- /**
-@@ -959,6 +964,7 @@ void igc_ptp_init(struct igc_adapter *adapter)
- 		return;
- 	}
- 
-+	spin_lock_init(&adapter->ptp_tx_lock);
- 	spin_lock_init(&adapter->tmreg_lock);
- 	INIT_WORK(&adapter->ptp_tx_work, igc_ptp_tx_work);
- 
-@@ -1023,7 +1029,6 @@ void igc_ptp_suspend(struct igc_adapter *adapter)
- 	cancel_work_sync(&adapter->ptp_tx_work);
- 	dev_kfree_skb_any(adapter->ptp_tx_skb);
- 	adapter->ptp_tx_skb = NULL;
--	clear_bit_unlock(__IGC_PTP_TX_IN_PROGRESS, &adapter->state);
- 
- 	if (pci_device_is_present(adapter->pdev)) {
- 		igc_ptp_time_save(adapter);
+ 		if (count < KVASER_PCIEFD_CAN_TX_MAX_COUNT &&
 -- 
 2.39.2
 
