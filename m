@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09F08F55
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:41:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 412CDC433C8;
-	Sun, 16 Jul 2023 20:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8845B8F55
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:41:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C61BC433C8;
+	Sun, 16 Jul 2023 20:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540062;
-	bh=6Hq2Xq2kx8W//Dmih9HTyiN125VQqeDoPMxTs0S9ozw=;
+	s=korg; t=1689540065;
+	bh=EdD/NB5tGPCH+ZTXDFjbMjDtC2zNh+tkJW6weMZWKdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VQkI6ioS7IZGE2Nfif5XP/pX4OFl/ZJHxWXiYtWGnKqJmOp0zGPvM1nA6WyEwVKdF
-	 WP2njtF6JgOP8ZVAUL7tcb1k7AsL8DoXX4m6XBeD29iry/nQ3ZCkvbUEM/DuPj1xOm
-	 AYHuzx5AXgcYtYvtIbfsZY5Qsl3Kv9GWbVZ8ATBs=
+	b=0k2zleUgGvfVkQtR3houh1Cc0Bk80GZVchXp2FhnaYrDYixN8UBFKoeEeIQlI7qx4
+	 +mzfW0vGDN9CtjQG7c+5Ypl3lxJuYhTOhEyjQWzpobo/5ERxB3lyzV8kxMOpr3s+Zx
+	 UwHVyHZOXBALXizCrHPBbcgcOPWD9BhdLeqzko7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Tim Harvey <tharvey@gateworks.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 222/591] RDMA/hns: Fix hns_roce_table_get return value
-Date: Sun, 16 Jul 2023 21:46:01 +0200
-Message-ID: <20230716194929.614972552@linuxfoundation.org>
+Subject: [PATCH 6.1 231/591] hwmon: (gsc-hwmon) fix fan pwm temperature scaling
+Date: Sun, 16 Jul 2023 21:46:10 +0200
+Message-ID: <20230716194929.850337646@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,43 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Tim Harvey <tharvey@gateworks.com>
 
-[ Upstream commit cf5b608fb0e369c473a8303cad6ddb386505e5b8 ]
+[ Upstream commit a6d80df47ee2c69db99e4f2f8871aa4db154620b ]
 
-The return value of set_hem has been fixed to ENODEV, which will lead a
-diagnostic information missing.
+The GSC fan pwm temperature register is in centidegrees celcius but the
+Linux hwmon convention is to use milidegrees celcius. Fix the scaling.
 
-Fixes: 9a4435375cd1 ("IB/hns: Add driver files for hns RoCE driver")
-Link: https://lore.kernel.org/r/20230523121641.3132102-3-huangjunxian6@hisilicon.com
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 3bce5377ef66 ("hwmon: Add Gateworks System Controller support")
+Signed-off-by: Tim Harvey <tharvey@gateworks.com>
+Link: https://lore.kernel.org/r/20230606153004.1448086-1-tharvey@gateworks.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hem.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/hwmon/gsc-hwmon.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
-index aa8a08d1c0145..f30274986c0da 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hem.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
-@@ -595,11 +595,12 @@ int hns_roce_table_get(struct hns_roce_dev *hr_dev,
- 	}
+diff --git a/drivers/hwmon/gsc-hwmon.c b/drivers/hwmon/gsc-hwmon.c
+index b60ec95b5edbf..74bfc21c2767b 100644
+--- a/drivers/hwmon/gsc-hwmon.c
++++ b/drivers/hwmon/gsc-hwmon.c
+@@ -82,8 +82,8 @@ static ssize_t pwm_auto_point_temp_store(struct device *dev,
+ 	if (kstrtol(buf, 10, &temp))
+ 		return -EINVAL;
  
- 	/* Set HEM base address(128K/page, pa) to Hardware */
--	if (hr_dev->hw->set_hem(hr_dev, table, obj, HEM_HOP_STEP_DIRECT)) {
-+	ret = hr_dev->hw->set_hem(hr_dev, table, obj, HEM_HOP_STEP_DIRECT);
-+	if (ret) {
- 		hns_roce_free_hem(hr_dev, table->hem[i]);
- 		table->hem[i] = NULL;
--		ret = -ENODEV;
--		dev_err(dev, "set HEM base address to HW failed.\n");
-+		dev_err(dev, "set HEM base address to HW failed, ret = %d.\n",
-+			ret);
- 		goto out;
- 	}
+-	temp = clamp_val(temp, 0, 10000);
+-	temp = DIV_ROUND_CLOSEST(temp, 10);
++	temp = clamp_val(temp, 0, 100000);
++	temp = DIV_ROUND_CLOSEST(temp, 100);
  
+ 	regs[0] = temp & 0xff;
+ 	regs[1] = (temp >> 8) & 0xff;
+@@ -100,7 +100,7 @@ static ssize_t pwm_auto_point_pwm_show(struct device *dev,
+ {
+ 	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+ 
+-	return sprintf(buf, "%d\n", 255 * (50 + (attr->index * 10)) / 100);
++	return sprintf(buf, "%d\n", 255 * (50 + (attr->index * 10)));
+ }
+ 
+ static SENSOR_DEVICE_ATTR_RO(pwm1_auto_point1_pwm, pwm_auto_point_pwm, 0);
 -- 
 2.39.2
 
