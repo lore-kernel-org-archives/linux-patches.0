@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC158F5D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:37:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F945C433C7;
-	Sun, 16 Jul 2023 20:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738C88F5D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:37:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC81C433C7;
+	Sun, 16 Jul 2023 20:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539840;
-	bh=zlvEsLOkG4kkRovVqDbJ/93nGlrHZJk91USNVtd+s3o=;
+	s=korg; t=1689539843;
+	bh=n/oljC0FY07lJmRjErLGlwUKeqL2pL1Zof8z/apBXvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b5weafPEtdS/gKENiwZq5UuQ7c2CxOBY4obptueMzg3kHOWTetQvd02rCtY+SbILa
-	 Dyi6UOnhz3nGmrLo7mDxwwC3DEuwiowMc0hzFU10BIkO6efqlEz3ubudUMQhjMu+sp
-	 xP90touTfvjWbmajmFT33tf9X8hz5WVBv7Nwc/Yg=
+	b=Yz5Liy7kdVjsNlP3jP2h/OGFmgT3qyN0vNy4IvTVyZ8Au0JknxazXMhOfvCcOdDgp
+	 GhBT2ZKFxzv6FivO8bgj/TRCapH2+MmMl+YfiPUV1LZbLo9wHbXFjtYfKqospxFidR
+	 sj6WMR3XBh6x0Koq6p78afpy8nT8lokIeR7txKqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Kurt Hackel <kurt.hackel@oracle.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	ocfs2-devel@oss.oracle.com,
-	Jakub Kicinski <kuba@kernel.org>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 133/591] ocfs2: Fix use of slab data with sendpage
-Date: Sun, 16 Jul 2023 21:44:32 +0200
-Message-ID: <20230716194927.316678989@linuxfoundation.org>
+Subject: [PATCH 6.1 151/591] drm/bridge: tc358768: Add atomic_get_input_bus_fmts() implementation
+Date: Sun, 16 Jul 2023 21:44:50 +0200
+Message-ID: <20230716194927.772893806@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -40,87 +35,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit 86d7bd6e66e9925f0f04a7bcf3c92c05fdfefb5a ]
+[ Upstream commit cec5ccef85bd0128cf895612de54a9d21d2015d0 ]
 
-ocfs2 uses kzalloc() to allocate buffers for o2net_hand, o2net_keep_req and
-o2net_keep_resp and then passes these to sendpage.  This isn't really
-allowed as the lifetime of slab objects is not controlled by page ref -
-though in this case it will probably work.  sendmsg() with MSG_SPLICE_PAGES
-will, however, print a warning and give an error.
+Add atomic_get_input_bus_fmts() implementation, tc358768 has a parallel
+RGB input interface with the actual bus format depending on the amount
+of parallel input data lines.
 
-Fix it to use folio_alloc() instead to allocate a buffer for the handshake
-message, keepalive request and reply messages.
+Without this change when the tc358768 is used with less than 24bit the
+color mapping is completely wrong.
 
-Fixes: 98211489d414 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Mark Fasheh <mark@fasheh.com>
-cc: Kurt Hackel <kurt.hackel@oracle.com>
-cc: Joel Becker <jlbec@evilplan.org>
-cc: Joseph Qi <joseph.qi@linux.alibaba.com>
-cc: ocfs2-devel@oss.oracle.com
-Link: https://lore.kernel.org/r/20230623225513.2732256-14-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230330095941.428122-7-francesco@dolcini.it
+Stable-dep-of: ee18698e212b ("drm/bridge: tc358768: fix TCLK_TRAILCNT computation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/tcp.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/bridge/tc358768.c | 44 +++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-diff --git a/fs/ocfs2/cluster/tcp.c b/fs/ocfs2/cluster/tcp.c
-index 785cabd71d670..4e083e25d0e7d 100644
---- a/fs/ocfs2/cluster/tcp.c
-+++ b/fs/ocfs2/cluster/tcp.c
-@@ -2083,18 +2083,24 @@ void o2net_stop_listening(struct o2nm_node *node)
- 
- int o2net_init(void)
- {
-+	struct folio *folio;
-+	void *p;
- 	unsigned long i;
- 
- 	o2quo_init();
--
- 	o2net_debugfs_init();
- 
--	o2net_hand = kzalloc(sizeof(struct o2net_handshake), GFP_KERNEL);
--	o2net_keep_req = kzalloc(sizeof(struct o2net_msg), GFP_KERNEL);
--	o2net_keep_resp = kzalloc(sizeof(struct o2net_msg), GFP_KERNEL);
--	if (!o2net_hand || !o2net_keep_req || !o2net_keep_resp)
-+	folio = folio_alloc(GFP_KERNEL | __GFP_ZERO, 0);
-+	if (!folio)
- 		goto out;
- 
-+	p = folio_address(folio);
-+	o2net_hand = p;
-+	p += sizeof(struct o2net_handshake);
-+	o2net_keep_req = p;
-+	p += sizeof(struct o2net_msg);
-+	o2net_keep_resp = p;
-+
- 	o2net_hand->protocol_version = cpu_to_be64(O2NET_PROTOCOL_VERSION);
- 	o2net_hand->connector_id = cpu_to_be64(1);
- 
-@@ -2120,9 +2126,6 @@ int o2net_init(void)
- 	return 0;
- 
- out:
--	kfree(o2net_hand);
--	kfree(o2net_keep_req);
--	kfree(o2net_keep_resp);
- 	o2net_debugfs_exit();
- 	o2quo_exit();
- 	return -ENOMEM;
-@@ -2131,8 +2134,6 @@ int o2net_init(void)
- void o2net_exit(void)
- {
- 	o2quo_exit();
--	kfree(o2net_hand);
--	kfree(o2net_keep_req);
--	kfree(o2net_keep_resp);
- 	o2net_debugfs_exit();
-+	folio_put(virt_to_folio(o2net_hand));
+diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
+index 765bdebbd06f9..8f7efb14ebdc7 100644
+--- a/drivers/gpu/drm/bridge/tc358768.c
++++ b/drivers/gpu/drm/bridge/tc358768.c
+@@ -9,6 +9,7 @@
+ #include <linux/gpio/consumer.h>
+ #include <linux/i2c.h>
+ #include <linux/kernel.h>
++#include <linux/media-bus-format.h>
+ #include <linux/module.h>
+ #include <linux/regmap.h>
+ #include <linux/regulator/consumer.h>
+@@ -919,6 +920,44 @@ static void tc358768_bridge_enable(struct drm_bridge *bridge)
+ 	}
  }
+ 
++#define MAX_INPUT_SEL_FORMATS	1
++
++static u32 *
++tc358768_atomic_get_input_bus_fmts(struct drm_bridge *bridge,
++				   struct drm_bridge_state *bridge_state,
++				   struct drm_crtc_state *crtc_state,
++				   struct drm_connector_state *conn_state,
++				   u32 output_fmt,
++				   unsigned int *num_input_fmts)
++{
++	struct tc358768_priv *priv = bridge_to_tc358768(bridge);
++	u32 *input_fmts;
++
++	*num_input_fmts = 0;
++
++	input_fmts = kcalloc(MAX_INPUT_SEL_FORMATS, sizeof(*input_fmts),
++			     GFP_KERNEL);
++	if (!input_fmts)
++		return NULL;
++
++	switch (priv->pd_lines) {
++	case 16:
++		input_fmts[0] = MEDIA_BUS_FMT_RGB565_1X16;
++		break;
++	case 18:
++		input_fmts[0] = MEDIA_BUS_FMT_RGB666_1X18;
++		break;
++	default:
++	case 24:
++		input_fmts[0] = MEDIA_BUS_FMT_RGB888_1X24;
++		break;
++	};
++
++	*num_input_fmts = MAX_INPUT_SEL_FORMATS;
++
++	return input_fmts;
++}
++
+ static const struct drm_bridge_funcs tc358768_bridge_funcs = {
+ 	.attach = tc358768_bridge_attach,
+ 	.mode_valid = tc358768_bridge_mode_valid,
+@@ -926,6 +965,11 @@ static const struct drm_bridge_funcs tc358768_bridge_funcs = {
+ 	.enable = tc358768_bridge_enable,
+ 	.disable = tc358768_bridge_disable,
+ 	.post_disable = tc358768_bridge_post_disable,
++
++	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
++	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
++	.atomic_reset = drm_atomic_helper_bridge_reset,
++	.atomic_get_input_bus_fmts = tc358768_atomic_get_input_bus_fmts,
+ };
+ 
+ static const struct drm_bridge_timings default_tc358768_timings = {
 -- 
 2.39.2
 
