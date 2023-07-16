@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708C98F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:11:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75DEC433C7;
-	Sun, 16 Jul 2023 20:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488358F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:11:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BECC0C433C8;
+	Sun, 16 Jul 2023 20:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538285;
-	bh=0PtIYive8b/RYSKz5SvHu5OKERzc2exDMUsiW5EeQJs=;
+	s=korg; t=1689538288;
+	bh=FQoESSiI7TjZW74vinrEmlJIfPEd5LEaYVbCSycoAH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d9mtza2Zl/u4OeWpQO8W0ZCobVHEHHNMck4Xg8OvNl9ZZeoldWe+Eqt1ii0hz5ctK
-	 S0pTyn/RMw28vUyhcX4EgstDYst7ZUEZrziX5yhVquWhsHOrSsxo7nKkjZ2Db96Z2d
-	 7LHFUI5Q+qM1IoaHZK4my9YWBImNS6gaXVXX8Aqk=
+	b=2bX6uqnDaekDCoB59nuSr3XJ3gZNd1czZR/ln1X3EeXDkFm3PXw6Sx30vyunaGnTJ
+	 WT4pMjMq7btOtdbkTlqwLlW3W4dhLftAFEm9d6NPyPiNuuhERfk6PBsrlfXDTeEAFn
+	 4nVBjqMC/s7cTT0qH2wJJfPuVb7hado5o0fFaQFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Keerthy <j-keerthy@ti.com>,
+	Udit Kumar <u-kumar1@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 353/800] arm64: dts: rockchip: Assign ES8316 MCLK rate on rk3588-rock-5b
-Date: Sun, 16 Jul 2023 21:43:26 +0200
-Message-ID: <20230716194957.279055789@linuxfoundation.org>
+Subject: [PATCH 6.4 354/800] arm64: dts: ti: k3-j7200: Fix physical address of pin
+Date: Sun, 16 Jul 2023 21:43:27 +0200
+Message-ID: <20230716194957.301743832@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,52 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Keerthy <j-keerthy@ti.com>
 
-[ Upstream commit 28ee08cef4f838c343013330a3cd12674c4dd113 ]
+[ Upstream commit 3d011933000ed9054c649952d83162d24f020a93 ]
 
-The I2S0_8CH_MCLKOUT clock rate on Rock 5B board defaults to 12 MHz and
-it is used to provide the master clock (MCLK) for the ES8316 audio
-codec.
+wkup_pmx splits into multiple regions. Like
 
-On sound card initialization, this limits the allowed sample rates
-according to the MCLK/LRCK ratios supported by the codec, which results
-in the following non-standard rates: 15625, 30000, 31250, 46875.
+    wkup_pmx0 -> 13 pins (WKUP_PADCONFIG 0 - 12)
+    wkup_pmx1 -> 2 pins (WKUP_PADCONFIG 14 - 15)
+    wkup_pmx2 -> 59 pins (WKUP_PADCONFIG 26 - 84)
+    wkup_pmx3 -> 8 pins (WKUP_PADCONFIG 93 - 100)
 
-Hence, the very first access of the sound card fails:
+With this split, pin offset needs to be adjusted to
+match with new pmx for all pins above wkup_pmx0.
 
-  Broken configuration for playback: no configurations available: Invalid argument
-  Setting of hwparams failed: Invalid argument
+Example a pin under wkup_pmx1 should start from 0 instead of
+old offset(0x38 WKUP_PADCONFIG 14 offset)
 
-However, all subsequent attempts will succeed, as the audio graph card
-will request a correct clock frequency, based on the stream sample rate
-and the multiplication factor.
+J7200 Datasheet (Table 6-106, Section 6.4 Pin Multiplexing) :
+https://www.ti.com/lit/ds/symlink/dra821u.pdf
 
-Assign MCLK to 12.288 MHz, which allows the codec to advertise most of
-the standard sample rates.
+Fixes: 9ae21ac445e9 ("arm64: dts: ti: k3-j7200: Fix wakeup pinmux range")
 
-Fixes: 55529fe3f32d ("arm64: dts: rockchip: Add rk3588-rock-5b analog audio")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://lore.kernel.org/r/20230530181140.483936-4-cristian.ciocaltea@collabora.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Keerthy <j-keerthy@ti.com>
+Signed-off-by: Udit Kumar <u-kumar1@ti.com>
+Link: https://lore.kernel.org/r/20230419040007.3022780-2-u-kumar1@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts | 2 ++
- 1 file changed, 2 insertions(+)
+ .../dts/ti/k3-j7200-common-proc-board.dts     | 28 +++++++++----------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts b/arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts
-index 3e4aee8f70c1b..30cdd366813fb 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts
-@@ -133,6 +133,8 @@ es8316: audio-codec@11 {
- 		reg = <0x11>;
- 		clocks = <&cru I2S0_8CH_MCLKOUT>;
- 		clock-names = "mclk";
-+		assigned-clocks = <&cru I2S0_8CH_MCLKOUT>;
-+		assigned-clock-rates = <12288000>;
- 		#sound-dai-cells = <0>;
+diff --git a/arch/arm64/boot/dts/ti/k3-j7200-common-proc-board.dts b/arch/arm64/boot/dts/ti/k3-j7200-common-proc-board.dts
+index 0d39d6b8cc0ca..63633e4f6c59f 100644
+--- a/arch/arm64/boot/dts/ti/k3-j7200-common-proc-board.dts
++++ b/arch/arm64/boot/dts/ti/k3-j7200-common-proc-board.dts
+@@ -83,25 +83,25 @@ vdd_sd_dv: gpio-regulator-TLV71033 {
+ &wkup_pmx2 {
+ 	mcu_cpsw_pins_default: mcu-cpsw-pins-default {
+ 		pinctrl-single,pins = <
+-			J721E_WKUP_IOPAD(0x0068, PIN_OUTPUT, 0) /* MCU_RGMII1_TX_CTL */
+-			J721E_WKUP_IOPAD(0x006c, PIN_INPUT, 0) /* MCU_RGMII1_RX_CTL */
+-			J721E_WKUP_IOPAD(0x0070, PIN_OUTPUT, 0) /* MCU_RGMII1_TD3 */
+-			J721E_WKUP_IOPAD(0x0074, PIN_OUTPUT, 0) /* MCU_RGMII1_TD2 */
+-			J721E_WKUP_IOPAD(0x0078, PIN_OUTPUT, 0) /* MCU_RGMII1_TD1 */
+-			J721E_WKUP_IOPAD(0x007c, PIN_OUTPUT, 0) /* MCU_RGMII1_TD0 */
+-			J721E_WKUP_IOPAD(0x0088, PIN_INPUT, 0) /* MCU_RGMII1_RD3 */
+-			J721E_WKUP_IOPAD(0x008c, PIN_INPUT, 0) /* MCU_RGMII1_RD2 */
+-			J721E_WKUP_IOPAD(0x0090, PIN_INPUT, 0) /* MCU_RGMII1_RD1 */
+-			J721E_WKUP_IOPAD(0x0094, PIN_INPUT, 0) /* MCU_RGMII1_RD0 */
+-			J721E_WKUP_IOPAD(0x0080, PIN_OUTPUT, 0) /* MCU_RGMII1_TXC */
+-			J721E_WKUP_IOPAD(0x0084, PIN_INPUT, 0) /* MCU_RGMII1_RXC */
++			J721E_WKUP_IOPAD(0x0000, PIN_OUTPUT, 0) /* MCU_RGMII1_TX_CTL */
++			J721E_WKUP_IOPAD(0x0004, PIN_INPUT, 0) /* MCU_RGMII1_RX_CTL */
++			J721E_WKUP_IOPAD(0x0008, PIN_OUTPUT, 0) /* MCU_RGMII1_TD3 */
++			J721E_WKUP_IOPAD(0x000c, PIN_OUTPUT, 0) /* MCU_RGMII1_TD2 */
++			J721E_WKUP_IOPAD(0x0010, PIN_OUTPUT, 0) /* MCU_RGMII1_TD1 */
++			J721E_WKUP_IOPAD(0x0014, PIN_OUTPUT, 0) /* MCU_RGMII1_TD0 */
++			J721E_WKUP_IOPAD(0x0020, PIN_INPUT, 0) /* MCU_RGMII1_RD3 */
++			J721E_WKUP_IOPAD(0x0024, PIN_INPUT, 0) /* MCU_RGMII1_RD2 */
++			J721E_WKUP_IOPAD(0x0028, PIN_INPUT, 0) /* MCU_RGMII1_RD1 */
++			J721E_WKUP_IOPAD(0x002c, PIN_INPUT, 0) /* MCU_RGMII1_RD0 */
++			J721E_WKUP_IOPAD(0x0018, PIN_OUTPUT, 0) /* MCU_RGMII1_TXC */
++			J721E_WKUP_IOPAD(0x001c, PIN_INPUT, 0) /* MCU_RGMII1_RXC */
+ 		>;
+ 	};
  
- 		port {
+ 	mcu_mdio_pins_default: mcu-mdio1-pins-default {
+ 		pinctrl-single,pins = <
+-			J721E_WKUP_IOPAD(0x009c, PIN_OUTPUT, 0) /* (L1) MCU_MDIO0_MDC */
+-			J721E_WKUP_IOPAD(0x0098, PIN_INPUT, 0) /* (L4) MCU_MDIO0_MDIO */
++			J721E_WKUP_IOPAD(0x0034, PIN_OUTPUT, 0) /* (L1) MCU_MDIO0_MDC */
++			J721E_WKUP_IOPAD(0x0030, PIN_INPUT, 0) /* (L4) MCU_MDIO0_MDIO */
+ 		>;
+ 	};
+ };
 -- 
 2.39.2
 
