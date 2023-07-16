@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A4C8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:45:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBC9C433C8;
-	Sun, 16 Jul 2023 20:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A2E8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:45:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC64DC433C8;
+	Sun, 16 Jul 2023 20:45:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540330;
-	bh=N93S4C96SglN10KiffBmIelG5SbtRMT9HHtXfUX8yNs=;
+	s=korg; t=1689540333;
+	bh=6aA1n+PwuxV39DByCKJBPk8LXhWjNlUOrF11QTq1ccc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jeoaKO2hFJzLLnI0PZHROCHP8D3TK4B0DFQEP7KQS8IrbM+YWTQvpcy53O7o4rfI5
-	 aJn91RJGQa6K+cDNs5DmMmT3cUc9SPRXh5TsUN6UTnnqtcXMh0M2YNH5V7ugv1xKBA
-	 1Gmi6aHn5U995m5SEaki1fdvrFZeagvkem/lFlsE=
+	b=bkPrHZqRXU5NRyTPUzYkqxYMJCghau6wDrc37xRHc1Dp0LGVvNaPeVtrY0oReKa7p
+	 fiHNcPaXdC6fqEy74y0R4WQwuXIu27VlGICaeIlDIht1rCYXBPdoYB5SJfSAsaymJ1
+	 0sf3T/Xe9YuPjN7JfqAYkEnPDXTUcauWCvopPItk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Guo Ren <guoren@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 325/591] PCI: qcom: Disable write access to read only registers for IP v2.9.0
-Date: Sun, 16 Jul 2023 21:47:44 +0200
-Message-ID: <20230716194932.300278019@linuxfoundation.org>
+Subject: [PATCH 6.1 326/591] riscv: uprobes: Restore thread.bad_cause
+Date: Sun, 16 Jul 2023 21:47:45 +0200
+Message-ID: <20230716194932.324637680@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,48 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit 200b8f85f2021362adcc8efb575652a2aa44c099 ]
+[ Upstream commit 58b1294dd1d65bb62f08dddbf418f954210c2057 ]
 
-In the post init sequence of v2.9.0, write access to read only registers
-are not disabled after updating the registers. Fix it by disabling the
-access after register update.
+thread.bad_cause is saved in arch_uprobe_pre_xol(), it should be restored
+in arch_uprobe_{post,abort}_xol() accordingly, otherwise the save operation
+is meaningless, this change is similar with x86 and powerpc.
 
-While at it, let's also add a newline after existing dw_pcie_dbi_ro_wr_en()
-guard function to align with rest of the driver.
-
-Link: https://lore.kernel.org/r/20230619150408.8468-4-manivannan.sadhasivam@linaro.org
-Fixes: 0cf7c2efe8ac ("PCI: qcom: Add IPQ60xx support")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Reviewed-by: Guo Ren <guoren@kernel.org>
+Fixes: 74784081aac8 ("riscv: Add uprobes supported")
+Link: https://lore.kernel.org/r/1682214146-3756-1-git-send-email-yangtiezhu@loongson.cn
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/riscv/kernel/probes/uprobes.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 77f4dc244b3f7..49905b2a99607 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1403,6 +1403,7 @@ static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
- 	writel(0, pcie->parf + PARF_Q2A_FLUSH);
+diff --git a/arch/riscv/kernel/probes/uprobes.c b/arch/riscv/kernel/probes/uprobes.c
+index c976a21cd4bd5..194f166b2cc40 100644
+--- a/arch/riscv/kernel/probes/uprobes.c
++++ b/arch/riscv/kernel/probes/uprobes.c
+@@ -67,6 +67,7 @@ int arch_uprobe_post_xol(struct arch_uprobe *auprobe, struct pt_regs *regs)
+ 	struct uprobe_task *utask = current->utask;
  
- 	dw_pcie_dbi_ro_wr_en(pci);
-+
- 	writel(PCIE_CAP_SLOT_VAL, pci->dbi_base + offset + PCI_EXP_SLTCAP);
+ 	WARN_ON_ONCE(current->thread.bad_cause != UPROBE_TRAP_NR);
++	current->thread.bad_cause = utask->autask.saved_cause;
  
- 	val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
-@@ -1412,6 +1413,8 @@ static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
- 	writel(PCI_EXP_DEVCTL2_COMP_TMOUT_DIS, pci->dbi_base + offset +
- 			PCI_EXP_DEVCTL2);
+ 	instruction_pointer_set(regs, utask->vaddr + auprobe->insn_size);
  
-+	dw_pcie_dbi_ro_wr_dis(pci);
-+
- 	for (i = 0; i < 256; i++)
- 		writel(0, pcie->parf + PARF_BDF_TO_SID_TABLE_N + (4 * i));
+@@ -102,6 +103,7 @@ void arch_uprobe_abort_xol(struct arch_uprobe *auprobe, struct pt_regs *regs)
+ {
+ 	struct uprobe_task *utask = current->utask;
  
++	current->thread.bad_cause = utask->autask.saved_cause;
+ 	/*
+ 	 * Task has received a fatal signal, so reset back to probbed
+ 	 * address.
 -- 
 2.39.2
 
