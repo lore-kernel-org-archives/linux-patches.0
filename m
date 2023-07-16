@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099668F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:57:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81919C433C9;
-	Sun, 16 Jul 2023 20:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D244F8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:57:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D60BC433C7;
+	Sun, 16 Jul 2023 20:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689541052;
-	bh=Uw8mv7cXIUrcF4Ag92EEraWI2ECzWKYyA0k7cAYF5og=;
+	s=korg; t=1689541055;
+	bh=GilHDbuUIcS+IJoDumTCwR4N/m03c2KlKKQ81gO8Fgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RtEFa6gtBUiTh9LEkDeF8tysm08z2rG+bVq8JJmLIBULygSGNojT8rXH30gL/rriv
-	 0l0AmG6jY3FOUWI/6SIPOLup842OI9YzOegvUvacDgCRXlnKxQAX8vhPJ9sRJ+8ThJ
-	 U2rH7YAVgkybcbGRYpAcRaYh7OxQ8cdNNj6sYsZE=
+	b=UuuhF8uQ8UwJm0k36EuZI2kBWWnZBmYC8HM3Wp9aN0fiZaR7bfqPhpfV8A1IYTN7W
+	 v4xBbe2kqQtMp0QG13GVbFVLr5Y06MAVkSlAZjawaSmJxt0EGvEnrYDRmFm1u6ViT0
+	 xU0bGFxhb0Yw4cQ2xk/046/ayTbZYwWXSkDFR0zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Corallo <blnxfsl@bluematt.me>,
+	Filipe Manana <fdmanana@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 555/591] btrfs: add handling for RAID1C23/DUP to btrfs_reduce_alloc_profile
-Date: Sun, 16 Jul 2023 21:51:34 +0200
-Message-ID: <20230716194938.214558456@linuxfoundation.org>
+Subject: [PATCH 6.1 556/591] btrfs: delete unused BGs while reclaiming BGs
+Date: Sun, 16 Jul 2023 21:51:35 +0200
+Message-ID: <20230716194938.240484214@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -34,140 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matt Corallo <blnxfsl@bluematt.me>
+From: Naohiro Aota <naota@elisp.net>
 
-commit 160fe8f6fdb13da6111677be6263e5d65e875987 upstream.
+commit 3ed01616bad6c7e3de196676b542ae3df8058592 upstream.
 
-Callers of `btrfs_reduce_alloc_profile` expect it to return exactly
-one allocation profile flag, and failing to do so may ultimately
-result in a WARN_ON and remount-ro when allocating new blocks, like
-the below transaction abort on 6.1.
+The reclaiming process only starts after the filesystem volumes are
+allocated to a certain level (75% by default). Thus, the list of
+reclaiming target block groups can build up so huge at the time the
+reclaim process kicks in. On a test run, there were over 1000 BGs in the
+reclaim list.
 
-`btrfs_reduce_alloc_profile` has two ways of determining the profile,
-first it checks if a conversion balance is currently running and
-uses the profile we're converting to. If no balance is currently
-running, it returns the max-redundancy profile which at least one
-block in the selected block group has.
+As the reclaim involves rewriting the data, it takes really long time to
+reclaim the BGs. While the reclaim is running, btrfs_delete_unused_bgs()
+won't proceed because the reclaim side is holding
+fs_info->reclaim_bgs_lock. As a result, we will have a large number of
+unused BGs kept in the unused list. On my test run, I got 1057 unused BGs.
 
-This works by simply checking each known allocation profile bit in
-redundancy order. However, `btrfs_reduce_alloc_profile` has not been
-updated as new flags have been added - first with the `DUP` profile
-and later with the RAID1C34 profiles.
+Since deleting a block group is relatively easy and fast work, we can call
+btrfs_delete_unused_bgs() while it reclaims BGs, to avoid building up
+unused BGs.
 
-Because of the way it checks, if we have blocks with different
-profiles and at least one is known, that profile will be selected.
-However, if none are known we may return a flag set with multiple
-allocation profiles set.
-
-This is currently only possible when a balance from one of the three
-unhandled profiles to another of the unhandled profiles is canceled
-after allocating at least one block using the new profile.
-
-In that case, a transaction abort like the below will occur and the
-filesystem will need to be mounted with -o skip_balance to get it
-mounted rw again (but the balance cannot be resumed without a
-similar abort).
-
-  [770.648] ------------[ cut here ]------------
-  [770.648] BTRFS: Transaction aborted (error -22)
-  [770.648] WARNING: CPU: 43 PID: 1159593 at fs/btrfs/extent-tree.c:4122 find_free_extent+0x1d94/0x1e00 [btrfs]
-  [770.648] CPU: 43 PID: 1159593 Comm: btrfs Tainted: G        W 6.1.0-0.deb11.7-powerpc64le #1  Debian 6.1.20-2~bpo11+1a~test
-  [770.648] Hardware name: T2P9D01 REV 1.00 POWER9 0x4e1202 opal:skiboot-bc106a0 PowerNV
-  [770.648] NIP:  c00800000f6784fc LR: c00800000f6784f8 CTR: c000000000d746c0
-  [770.648] REGS: c000200089afe9a0 TRAP: 0700   Tainted: G        W (6.1.0-0.deb11.7-powerpc64le Debian 6.1.20-2~bpo11+1a~test)
-  [770.648] MSR:  9000000002029033 <SF,HV,VEC,EE,ME,IR,DR,RI,LE>  CR: 28848282  XER: 20040000
-  [770.648] CFAR: c000000000135110 IRQMASK: 0
-	    GPR00: c00800000f6784f8 c000200089afec40 c00800000f7ea800 0000000000000026
-	    GPR04: 00000001004820c2 c000200089afea00 c000200089afe9f8 0000000000000027
-	    GPR08: c000200ffbfe7f98 c000000002127f90 ffffffffffffffd8 0000000026d6a6e8
-	    GPR12: 0000000028848282 c000200fff7f3800 5deadbeef0000122 c00000002269d000
-	    GPR16: c0002008c7797c40 c000200089afef17 0000000000000000 0000000000000000
-	    GPR20: 0000000000000000 0000000000000001 c000200008bc5a98 0000000000000001
-	    GPR24: 0000000000000000 c0000003c73088d0 c000200089afef17 c000000016d3a800
-	    GPR28: c0000003c7308800 c00000002269d000 ffffffffffffffea 0000000000000001
-  [770.648] NIP [c00800000f6784fc] find_free_extent+0x1d94/0x1e00 [btrfs]
-  [770.648] LR [c00800000f6784f8] find_free_extent+0x1d90/0x1e00 [btrfs]
-  [770.648] Call Trace:
-  [770.648] [c000200089afec40] [c00800000f6784f8] find_free_extent+0x1d90/0x1e00 [btrfs] (unreliable)
-  [770.648] [c000200089afed30] [c00800000f681398] btrfs_reserve_extent+0x1a0/0x2f0 [btrfs]
-  [770.648] [c000200089afeea0] [c00800000f681bf0] btrfs_alloc_tree_block+0x108/0x670 [btrfs]
-  [770.648] [c000200089afeff0] [c00800000f66bd68] __btrfs_cow_block+0x170/0x850 [btrfs]
-  [770.648] [c000200089aff100] [c00800000f66c58c] btrfs_cow_block+0x144/0x288 [btrfs]
-  [770.648] [c000200089aff1b0] [c00800000f67113c] btrfs_search_slot+0x6b4/0xcb0 [btrfs]
-  [770.648] [c000200089aff2a0] [c00800000f679f60] lookup_inline_extent_backref+0x128/0x7c0 [btrfs]
-  [770.648] [c000200089aff3b0] [c00800000f67b338] lookup_extent_backref+0x70/0x190 [btrfs]
-  [770.648] [c000200089aff470] [c00800000f67b54c] __btrfs_free_extent+0xf4/0x1490 [btrfs]
-  [770.648] [c000200089aff5a0] [c00800000f67d770] __btrfs_run_delayed_refs+0x328/0x1530 [btrfs]
-  [770.648] [c000200089aff740] [c00800000f67ea2c] btrfs_run_delayed_refs+0xb4/0x3e0 [btrfs]
-  [770.648] [c000200089aff800] [c00800000f699aa4] btrfs_commit_transaction+0x8c/0x12b0 [btrfs]
-  [770.648] [c000200089aff8f0] [c00800000f6dc628] reset_balance_state+0x1c0/0x290 [btrfs]
-  [770.648] [c000200089aff9a0] [c00800000f6e2f7c] btrfs_balance+0x1164/0x1500 [btrfs]
-  [770.648] [c000200089affb40] [c00800000f6f8e4c] btrfs_ioctl+0x2b54/0x3100 [btrfs]
-  [770.648] [c000200089affc80] [c00000000053be14] sys_ioctl+0x794/0x1310
-  [770.648] [c000200089affd70] [c00000000002af98] system_call_exception+0x138/0x250
-  [770.648] [c000200089affe10] [c00000000000c654] system_call_common+0xf4/0x258
-  [770.648] --- interrupt: c00 at 0x7fff94126800
-  [770.648] NIP:  00007fff94126800 LR: 0000000107e0b594 CTR: 0000000000000000
-  [770.648] REGS: c000200089affe80 TRAP: 0c00   Tainted: G        W (6.1.0-0.deb11.7-powerpc64le Debian 6.1.20-2~bpo11+1a~test)
-  [770.648] MSR:  900000000000d033 <SF,HV,EE,PR,ME,IR,DR,RI,LE>  CR: 24002848  XER: 00000000
-  [770.648] IRQMASK: 0
-	    GPR00: 0000000000000036 00007fffc9439da0 00007fff94217100 0000000000000003
-	    GPR04: 00000000c4009420 00007fffc9439ee8 0000000000000000 0000000000000000
-	    GPR08: 00000000803c7416 0000000000000000 0000000000000000 0000000000000000
-	    GPR12: 0000000000000000 00007fff9467d120 0000000107e64c9c 0000000107e64d0a
-	    GPR16: 0000000107e64d06 0000000107e64cf1 0000000107e64cc4 0000000107e64c73
-	    GPR20: 0000000107e64c31 0000000107e64bf1 0000000107e64be7 0000000000000000
-	    GPR24: 0000000000000000 00007fffc9439ee0 0000000000000003 0000000000000001
-	    GPR28: 00007fffc943f713 0000000000000000 00007fffc9439ee8 0000000000000000
-  [770.648] NIP [00007fff94126800] 0x7fff94126800
-  [770.648] LR [0000000107e0b594] 0x107e0b594
-  [770.648] --- interrupt: c00
-  [770.648] Instruction dump:
-  [770.648] 3b00ffe4 e8898828 481175f5 60000000 4bfff4fc 3be00000 4bfff570 3d220000
-  [770.648] 7fc4f378 e8698830 4811cd95 e8410018 <0fe00000> f9c10060 f9e10068 fa010070
-  [770.648] ---[ end trace 0000000000000000 ]---
-  [770.648] BTRFS: error (device dm-2: state A) in find_free_extent_update_loop:4122: errno=-22 unknown
-  [770.648] BTRFS info (device dm-2: state EA): forced readonly
-  [770.648] BTRFS: error (device dm-2: state EA) in __btrfs_free_extent:3070: errno=-22 unknown
-  [770.648] BTRFS error (device dm-2: state EA): failed to run delayed ref for logical 17838685708288 num_bytes 24576 type 184 action 2 ref_mod 1: -22
-  [770.648] BTRFS: error (device dm-2: state EA) in btrfs_run_delayed_refs:2144: errno=-22 unknown
-  [770.648] BTRFS: error (device dm-2: state EA) in reset_balance_state:3599: errno=-22 unknown
-
-Fixes: 47e6f7423b91 ("btrfs: add support for 3-copy replication (raid1c3)")
-Fixes: 8d6fac0087e5 ("btrfs: add support for 4-copy replication (raid1c4)")
-CC: stable@vger.kernel.org # 5.10+
-Signed-off-by: Matt Corallo <blnxfsl@bluematt.me>
-Reviewed-by: David Sterba <dsterba@suse.com>
+Fixes: 18bb8bbf13c1 ("btrfs: zoned: automatically reclaim zones")
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/block-group.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/btrfs/block-group.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 --- a/fs/btrfs/block-group.c
 +++ b/fs/btrfs/block-group.c
-@@ -79,14 +79,21 @@ static u64 btrfs_reduce_alloc_profile(st
+@@ -1636,10 +1636,24 @@ void btrfs_reclaim_bgs_work(struct work_
+ 
+ next:
+ 		btrfs_put_block_group(bg);
++
++		mutex_unlock(&fs_info->reclaim_bgs_lock);
++		/*
++		 * Reclaiming all the block groups in the list can take really
++		 * long.  Prioritize cleaning up unused block groups.
++		 */
++		btrfs_delete_unused_bgs(fs_info);
++		/*
++		 * If we are interrupted by a balance, we can just bail out. The
++		 * cleaner thread restart again if necessary.
++		 */
++		if (!mutex_trylock(&fs_info->reclaim_bgs_lock))
++			goto end;
+ 		spin_lock(&fs_info->unused_bgs_lock);
  	}
- 	allowed &= flags;
- 
--	if (allowed & BTRFS_BLOCK_GROUP_RAID6)
-+	/* Select the highest-redundancy RAID level. */
-+	if (allowed & BTRFS_BLOCK_GROUP_RAID1C4)
-+		allowed = BTRFS_BLOCK_GROUP_RAID1C4;
-+	else if (allowed & BTRFS_BLOCK_GROUP_RAID6)
- 		allowed = BTRFS_BLOCK_GROUP_RAID6;
-+	else if (allowed & BTRFS_BLOCK_GROUP_RAID1C3)
-+		allowed = BTRFS_BLOCK_GROUP_RAID1C3;
- 	else if (allowed & BTRFS_BLOCK_GROUP_RAID5)
- 		allowed = BTRFS_BLOCK_GROUP_RAID5;
- 	else if (allowed & BTRFS_BLOCK_GROUP_RAID10)
- 		allowed = BTRFS_BLOCK_GROUP_RAID10;
- 	else if (allowed & BTRFS_BLOCK_GROUP_RAID1)
- 		allowed = BTRFS_BLOCK_GROUP_RAID1;
-+	else if (allowed & BTRFS_BLOCK_GROUP_DUP)
-+		allowed = BTRFS_BLOCK_GROUP_DUP;
- 	else if (allowed & BTRFS_BLOCK_GROUP_RAID0)
- 		allowed = BTRFS_BLOCK_GROUP_RAID0;
- 
+ 	spin_unlock(&fs_info->unused_bgs_lock);
+ 	mutex_unlock(&fs_info->reclaim_bgs_lock);
++end:
+ 	btrfs_exclop_finish(fs_info);
+ 	sb_end_write(fs_info->sb);
+ }
 
 
