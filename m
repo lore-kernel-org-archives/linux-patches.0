@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D148F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:43:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA4DC433C7;
-	Sun, 16 Jul 2023 20:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF218F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:43:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF2FC433C8;
+	Sun, 16 Jul 2023 20:43:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540231;
-	bh=b4aDIJsYHPCcG85cEpSQBYX4Ui66WK5ExCnv8e0O/i0=;
+	s=korg; t=1689540234;
+	bh=FyInWm0q1Wkpii3gFFMCFUgbcTHa3j4jUVZVbCaa/6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0npCxNo5xUJroNsj8tffDC674VIxSZaoRAhh1h/gGZ0sQ9IcXbj9p9hdjAWg/hY/k
-	 FkYjywgON+FPg4w/UzqcmJ+uEkbAytajonBMoCm2h5z1It0myZOhVTVucUw3/SVC40
-	 jqgv+xWTCytzpd8+Ze3lDtyu5n+wFOIIYrD06BgY=
+	b=iIZlS6cX0cv5Qsnn4W2HywTuXvP/qzkNqFUs/EWUI1ZhwND1l9EtuuAKXR8DNw0vE
+	 P0qxiD7ZB7gA6A5Nh2zAcECTE8v7UCsxlBvJF+wUVXhycWN80fN0HKZMyFMUvyF96F
+	 HpbQX7IkjwJJpiOI19BReEB+ltwBXlCrlTDdY/OQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <mwalle@kernel.org>,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 282/591] ARM: dts: lan966x: kontron-d10: fix board reset
-Date: Sun, 16 Jul 2023 21:47:01 +0200
-Message-ID: <20230716194931.189834723@linuxfoundation.org>
+Subject: [PATCH 6.1 291/591] platform/x86: lenovo-yogabook: Set default keyboard backligh brightness on probe()
+Date: Sun, 16 Jul 2023 21:47:10 +0200
+Message-ID: <20230716194931.422305644@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,49 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Walle <mwalle@kernel.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit bfcd5714f6424c03e385e0e9296dcd69855cfea7 ]
+[ Upstream commit 9e6380d6573181c555ca1b5019b08d19a9ee581c ]
 
-The pinctrl node was missing which change the pin mux to GPIO mode. Add
-it.
+Set default keyboard backlight brightness on probe(), this fixes
+the backlight being off after a rmmod + modprobe.
 
-Fixes: 79d83b3a458e ("ARM: dts: lan966x: add basic Kontron KSwitch D10 support")
-Signed-off-by: Michael Walle <mwalle@kernel.org>
-[claudiu.beznea: moved pinctrl-* bindings after compatible]
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230616-feature-d10-dt-cleanups-v1-1-50dd0452b8fe@kernel.org
+Fixes: c0549b72d99d ("platform/x86: lenovo-yogabook-wmi: Add driver for Lenovo Yoga Book")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230430165807.472798-5-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/platform/x86/lenovo-yogabook-wmi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi b/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi
-index 0097e72e3fb22..42be207509a46 100644
---- a/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi
-+++ b/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi
-@@ -18,6 +18,8 @@ chosen {
+diff --git a/drivers/platform/x86/lenovo-yogabook-wmi.c b/drivers/platform/x86/lenovo-yogabook-wmi.c
+index 5948ffa74acd5..d57fcc8388519 100644
+--- a/drivers/platform/x86/lenovo-yogabook-wmi.c
++++ b/drivers/platform/x86/lenovo-yogabook-wmi.c
+@@ -295,6 +295,9 @@ static int yogabook_wmi_probe(struct wmi_device *wdev, const void *context)
+ 	}
+ 	data->backside_hall_irq = r;
  
- 	gpio-restart {
- 		compatible = "gpio-restart";
-+		pinctrl-0 = <&reset_pins>;
-+		pinctrl-names = "default";
- 		gpios = <&gpio 56 GPIO_ACTIVE_LOW>;
- 		priority = <200>;
- 	};
-@@ -59,6 +61,12 @@ miim_c_pins: miim-c-pins {
- 		function = "miim_c";
- 	};
- 
-+	reset_pins: reset-pins {
-+		/* SYS_RST# */
-+		pins = "GPIO_56";
-+		function = "gpio";
-+	};
++	/* Set default brightness before enabling the IRQ */
++	yogabook_wmi_set_kbd_backlight(data->wdev, YB_KBD_BL_DEFAULT);
 +
- 	sgpio_a_pins: sgpio-a-pins {
- 		/* SCK, D0, D1 */
- 		pins = "GPIO_32", "GPIO_33", "GPIO_34";
+ 	r = request_irq(data->backside_hall_irq, yogabook_backside_hall_irq,
+ 			IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING,
+ 			"backside_hall_sw", data);
 -- 
 2.39.2
 
