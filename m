@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604F48F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:15:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D786DC433C8;
-	Sun, 16 Jul 2023 20:15:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279598F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:15:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0227C433CC;
+	Sun, 16 Jul 2023 20:15:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538515;
-	bh=To9bNd2JTYZ+mreilwJbdLU3Qjzpy3d9eUON6y2dxQU=;
+	s=korg; t=1689538518;
+	bh=sY4KMhT5t1ANyRtnt4U5bUdQCtoZnGqKkuByCo66e3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FtB99isDV8QBzvmNlr0UkIRperE3mrUISVWfrx6hzVMJ9aFO027o2Dh3PC9yu7oOc
-	 EN26WrFGCJJ4R3r1Z+JMOEKI+VSswlxfIECd240RzndS7ANiby8K7j+LjDLk7bVm2j
-	 U+3B6NYRIOaGgkhPLJZCKZYJcKDJ3wc5Wn3+DfBI=
+	b=RAEE8DXL0Nf5Svia2A/zVC9f1frifRe8lMo0DyomLKe4xzQsAJFcyzyfb27PC8iNh
+	 Mba4NVklbmuzkmJQ/Qc39enfSzYEA1kUe/fXIVPtQTb3LdOf55FkROP/wUTW351TE0
+	 hGSFxp4oHZAu2P5vIVNlY008xeVgnpe/tDwHD2Ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Peng Fan <peng.fan@nxp.com>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 478/800] pinctrl: freescale: Fix a memory out of bounds when num_configs is 1
-Date: Sun, 16 Jul 2023 21:45:31 +0200
-Message-ID: <20230716195000.181227933@linuxfoundation.org>
+Subject: [PATCH 6.4 479/800] pinctrl: microchip-sgpio: check return value of devm_kasprintf()
+Date: Sun, 16 Jul 2023 21:45:32 +0200
+Message-ID: <20230716195000.203884431@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,46 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit 9063777ca1e2e895c5fdd493ee0c3f18fa710ed4 ]
+[ Upstream commit 310cd4c206cd04696ccbfd1927b5ab6973e8cc8e ]
 
-The config passed in by pad wakeup is 1, when num_configs is 1,
-Configuration [1] should not be fetched, which will be detected
-by KASAN as a memory out of bounds condition. Modify to get
-configs[1] when num_configs is 2.
+devm_kasprintf() returns a pointer to dynamically allocated memory.
+Pointer could be NULL in case allocation fails. Check pointer validity.
+Identified with coccinelle (kmerr.cocci script).
 
-Fixes: f60c9eac54af ("gpio: mxc: enable pad wakeup on i.MX8x platforms")
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20230504233736.3766296-1-xiaolei.wang@windriver.com
+Fixes: 7e5ea974e61c ("pinctrl: pinctrl-microchip-sgpio: Add pinctrl driver for Microsemi Serial GPIO")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230615105333.585304-3-claudiu.beznea@microchip.com
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/freescale/pinctrl-scu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-microchip-sgpio.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pinctrl/freescale/pinctrl-scu.c b/drivers/pinctrl/freescale/pinctrl-scu.c
-index ea261b6e74581..3b252d684d723 100644
---- a/drivers/pinctrl/freescale/pinctrl-scu.c
-+++ b/drivers/pinctrl/freescale/pinctrl-scu.c
-@@ -90,7 +90,7 @@ int imx_pinconf_set_scu(struct pinctrl_dev *pctldev, unsigned pin_id,
- 	struct imx_sc_msg_req_pad_set msg;
- 	struct imx_sc_rpc_msg *hdr = &msg.hdr;
- 	unsigned int mux = configs[0];
--	unsigned int conf = configs[1];
-+	unsigned int conf;
- 	unsigned int val;
- 	int ret;
- 
-@@ -115,6 +115,7 @@ int imx_pinconf_set_scu(struct pinctrl_dev *pctldev, unsigned pin_id,
- 	 * Set mux and conf together in one IPC call
- 	 */
- 	WARN_ON(num_configs != 2);
-+	conf = configs[1];
- 
- 	val = conf | BM_PAD_CTL_IFMUX_ENABLE | BM_PAD_CTL_GP_ENABLE;
- 	val |= mux << BP_PAD_CTL_IFMUX;
+diff --git a/drivers/pinctrl/pinctrl-microchip-sgpio.c b/drivers/pinctrl/pinctrl-microchip-sgpio.c
+index 4794602316e7d..666d8b7cdbad3 100644
+--- a/drivers/pinctrl/pinctrl-microchip-sgpio.c
++++ b/drivers/pinctrl/pinctrl-microchip-sgpio.c
+@@ -818,6 +818,9 @@ static int microchip_sgpio_register_bank(struct device *dev,
+ 	pctl_desc->name = devm_kasprintf(dev, GFP_KERNEL, "%s-%sput",
+ 					 dev_name(dev),
+ 					 bank->is_input ? "in" : "out");
++	if (!pctl_desc->name)
++		return -ENOMEM;
++
+ 	pctl_desc->pctlops = &sgpio_pctl_ops;
+ 	pctl_desc->pmxops = &sgpio_pmx_ops;
+ 	pctl_desc->confops = &sgpio_confops;
 -- 
 2.39.2
 
