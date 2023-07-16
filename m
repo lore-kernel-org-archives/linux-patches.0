@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5744F8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:17:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C255CC433C7;
-	Sun, 16 Jul 2023 20:17:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230478F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:17:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D19C433C8;
+	Sun, 16 Jul 2023 20:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538627;
-	bh=lrSTKECLh5UyieDOYBCmMbD/hbAb3/C1glw8GSIIOGE=;
+	s=korg; t=1689538629;
+	bh=ZMlpBJfPXb5crgdB59APBKKc4aikpXVZX7+D6Yz3Blg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RlAh8k1XMZ2gr0GdTIL9fNuQPwv68gtgAFxSqIKbGDyVLyf1BumGnsgPGdV51VHsF
-	 VuhblqzYNpnkk8VaEkh6a+X11eFAh8rjSeydvm9Ft/Xrg/PbIYBd1nEuDkYu5WmOjZ
-	 4U5bDn+khWvWR2l4n4IM0wK77I0Od58aFUI7tqyo=
+	b=bB59v5ikYMthkDv9oj5OSBBxzeERuHTgDy6f2NXRjQfHEcAxr++LnLnK5P8iPonRk
+	 bSmO+w6UWQ84YRLiC0BjmZzTgWAubhznf6fIlGnB557e8u/f6P9NTB8JPLdUNxx1EG
+	 nFLetwKR13urxo/qF/jEfjBWqJZWeUhrOSEQUmA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 518/800] hwrng: st - keep clock enabled while hwrng is registered
-Date: Sun, 16 Jul 2023 21:46:11 +0200
-Message-ID: <20230716195001.127316095@linuxfoundation.org>
+	Andy Chi <andy.chi@canonical.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.4 519/800] ALSA: hda/realtek: Enable mute/micmute LEDs and limit mic boost on EliteBook
+Date: Sun, 16 Jul 2023 21:46:12 +0200
+Message-ID: <20230716195001.150078218@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,96 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Andy Chi <andy.chi@canonical.com>
 
-[ Upstream commit 501e197a02d4aef157f53ba3a0b9049c3e52fedc ]
+commit e94f1f96f108ba96c0ed8bf3fbdd8ee6a6703880 upstream.
 
-The st-rng driver uses devres to register itself with the hwrng core,
-the driver will be unregistered from hwrng when its device goes out of
-scope. This happens after the driver's remove function is called.
+On HP EliteBook 835/845/845W G10, the audio LEDs can be enabled by
+ALC285_FIXUP_HP_MUTE_LED. So use it accordingly.
 
-However, st-rng's clock is disabled in the remove function. There's a
-short timeframe where st-rng is still registered with the hwrng core
-although its clock is disabled. I suppose the clock must be active to
-access the hardware and serve requests from the hwrng core.
-
-Switch to devm_clk_get_enabled and let devres disable the clock and
-unregister the hwrng. This avoids the race condition.
-
-Fixes: 3e75241be808 ("hwrng: drivers - Use device-managed registration API")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Andy Chi <andy.chi@canonical.com>
+Cc: <stable@vger.kernel.org>
+Fixes: 3e10f6ca76c4 ("ALSA: hda/realtek: Add quirk for HP EliteBook G10 laptops")
+Link: https://lore.kernel.org/r/20230626130301.301712-1-andy.chi@canonical.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/hw_random/st-rng.c | 21 +--------------------
- 1 file changed, 1 insertion(+), 20 deletions(-)
+ sound/pci/hda/patch_realtek.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/char/hw_random/st-rng.c b/drivers/char/hw_random/st-rng.c
-index 15ba1e6fae4d2..6e9dfac9fc9f4 100644
---- a/drivers/char/hw_random/st-rng.c
-+++ b/drivers/char/hw_random/st-rng.c
-@@ -42,7 +42,6 @@
- 
- struct st_rng_data {
- 	void __iomem	*base;
--	struct clk	*clk;
- 	struct hwrng	ops;
- };
- 
-@@ -85,26 +84,18 @@ static int st_rng_probe(struct platform_device *pdev)
- 	if (IS_ERR(base))
- 		return PTR_ERR(base);
- 
--	clk = devm_clk_get(&pdev->dev, NULL);
-+	clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(clk))
- 		return PTR_ERR(clk);
- 
--	ret = clk_prepare_enable(clk);
--	if (ret)
--		return ret;
--
- 	ddata->ops.priv	= (unsigned long)ddata;
- 	ddata->ops.read	= st_rng_read;
- 	ddata->ops.name	= pdev->name;
- 	ddata->base	= base;
--	ddata->clk	= clk;
--
--	dev_set_drvdata(&pdev->dev, ddata);
- 
- 	ret = devm_hwrng_register(&pdev->dev, &ddata->ops);
- 	if (ret) {
- 		dev_err(&pdev->dev, "Failed to register HW RNG\n");
--		clk_disable_unprepare(clk);
- 		return ret;
- 	}
- 
-@@ -113,15 +104,6 @@ static int st_rng_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int st_rng_remove(struct platform_device *pdev)
--{
--	struct st_rng_data *ddata = dev_get_drvdata(&pdev->dev);
--
--	clk_disable_unprepare(ddata->clk);
--
--	return 0;
--}
--
- static const struct of_device_id st_rng_match[] __maybe_unused = {
- 	{ .compatible = "st,rng" },
- 	{},
-@@ -134,7 +116,6 @@ static struct platform_driver st_rng_driver = {
- 		.of_match_table = of_match_ptr(st_rng_match),
- 	},
- 	.probe = st_rng_probe,
--	.remove = st_rng_remove
- };
- 
- module_platform_driver(st_rng_driver);
--- 
-2.39.2
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9490,9 +9490,9 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x8b63, "HP Elite Dragonfly 13.5 inch G4", ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b65, "HP ProBook 455 15.6 inch G10 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8b66, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+-	SND_PCI_QUIRK(0x103c, 0x8b70, "HP EliteBook 835 G10", ALC287_FIXUP_CS35L41_I2C_2),
+-	SND_PCI_QUIRK(0x103c, 0x8b72, "HP EliteBook 845 G10", ALC287_FIXUP_CS35L41_I2C_2),
+-	SND_PCI_QUIRK(0x103c, 0x8b74, "HP EliteBook 845W G10", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x103c, 0x8b70, "HP EliteBook 835 G10", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8b72, "HP EliteBook 845 G10", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8b74, "HP EliteBook 845W G10", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b77, "HP ElieBook 865 G10", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8b7a, "HP", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b7d, "HP", ALC236_FIXUP_HP_GPIO_LED),
 
 
