@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053F28F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:26:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78BDFC433C7;
-	Sun, 16 Jul 2023 20:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48648F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:26:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FFFFC433C8;
+	Sun, 16 Jul 2023 20:26:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539206;
-	bh=Y5HPuNF436/Hd3+GuB2D25fM4XvVm4AEF5TWKw2OUg8=;
+	s=korg; t=1689539209;
+	bh=HtlcifJ1IG2kYajyytBeLW9HI7cYPADRnynM3mGNID4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n9FfF0odR8iPVQyirqrM/t1NGjMZ197e6P2ChP1TngVLlxSfSq3gryHNHDSt29/Re
-	 6fP4vFpE/en3LC90NCwJhtuNnmNS9ouWvuS6oBnU267ftf91KH3LdSNRH7d0kd58zq
-	 Evq+Q7eS1I4lDdIgQHXfq9NZN9oMYNaSOxMH7D9w=
+	b=LKGV4hVFo8450orkhwqTMbhRdYP3UOHvwlTDgLtF76HYm9GBt/foQkZYBfIk674gC
+	 LkHQJOzSas4WApPixnEl3k40tPZ/zatAfA2MlchO7q5fsquA5S37Uc2wPLtVUm6DMB
+	 i3qOAAhzlRnqg1is44W8XoC+YpVrEGsCqHso9aSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Egorenkov <Alexander.Egorenkov@ibm.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	SeongJae Park <sj@kernel.org>,
+	Ilya Maximets <i.maximets@ovn.org>,
 	Daniel Borkmann <daniel@iogearbox.net>,
-	Jiri Olsa <jolsa@kernel.org>,
+	Magnus Karlsson <magnus.karlsson@intel.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 696/800] bpf, btf: Warn but return no error for NULL btf from __register_btf_kfunc_id_set()
-Date: Sun, 16 Jul 2023 21:49:09 +0200
-Message-ID: <20230716195005.288287230@linuxfoundation.org>
+Subject: [PATCH 6.4 697/800] xsk: Honor SO_BINDTODEVICE on bind
+Date: Sun, 16 Jul 2023 21:49:10 +0200
+Message-ID: <20230716195005.311248119@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -38,54 +38,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: SeongJae Park <sj@kernel.org>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit 3de4d22cc9ac7c9f38e10edcf54f9a8891a9c2aa ]
+[ Upstream commit f7306acec9aae9893d15e745c8791124d42ab10a ]
 
-__register_btf_kfunc_id_set() assumes .BTF to be part of the module's .ko
-file if CONFIG_DEBUG_INFO_BTF is enabled. If that's not the case, the
-function prints an error message and return an error. As a result, such
-modules cannot be loaded.
+Initial creation of an AF_XDP socket requires CAP_NET_RAW capability. A
+privileged process might create the socket and pass it to a non-privileged
+process for later use. However, that process will be able to bind the socket
+to any network interface. Even though it will not be able to receive any
+traffic without modification of the BPF map, the situation is not ideal.
 
-However, the section could be stripped out during a build process. It would
-be better to let the modules loaded, because their basic functionalities
-have no problem [0], though the BTF functionalities will not be supported.
-Make the function to lower the level of the message from error to warn, and
-return no error.
+Sockets already have a mechanism that can be used to restrict what interface
+they can be attached to. That is SO_BINDTODEVICE.
 
-  [0] https://lore.kernel.org/bpf/20220219082037.ow2kbq5brktf4f2u@apollo.legion
+To change the SO_BINDTODEVICE binding the process will need CAP_NET_RAW.
 
-Fixes: c446fdacb10d ("bpf: fix register_btf_kfunc_id_set for !CONFIG_DEBUG_INFO_BTF")
-Reported-by: Alexander Egorenkov <Alexander.Egorenkov@ibm.com>
-Suggested-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Signed-off-by: SeongJae Park <sj@kernel.org>
+Make xsk_bind() honor the SO_BINDTODEVICE in order to allow safer workflow
+when non-privileged process is using AF_XDP.
+
+The intended workflow is following:
+
+  1. First process creates a bare socket with socket(AF_XDP, ...).
+  2. First process loads the XSK program to the interface.
+  3. First process adds the socket fd to a BPF map.
+  4. First process ties socket fd to a particular interface using
+     SO_BINDTODEVICE.
+  5. First process sends socket fd to a second process.
+  6. Second process allocates UMEM.
+  7. Second process binds socket to the interface with bind(...).
+  8. Second process sends/receives the traffic.
+
+All the steps above are possible today if the first process is privileged
+and the second one has sufficient RLIMIT_MEMLOCK and no capabilities.
+However, the second process will be able to bind the socket to any interface
+it wants on step 7 and send traffic from it. With the proposed change, the
+second process will be able to bind the socket only to a specific interface
+chosen by the first process at step 4.
+
+Fixes: 965a99098443 ("xsk: add support for bind for Rx")
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/87y228q66f.fsf@oc8242746057.ibm.com
-Link: https://lore.kernel.org/bpf/20220219082037.ow2kbq5brktf4f2u@apollo.legion
-Link: https://lore.kernel.org/bpf/20230701171447.56464-1-sj@kernel.org
+Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Link: https://lore.kernel.org/bpf/20230703175329.3259672-1-i.maximets@ovn.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ Documentation/networking/af_xdp.rst | 9 +++++++++
+ net/xdp/xsk.c                       | 5 +++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 72b32b7cd9cd9..25ca17a8e1964 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -7848,10 +7848,8 @@ static int __register_btf_kfunc_id_set(enum btf_kfunc_hook hook,
- 			pr_err("missing vmlinux BTF, cannot register kfuncs\n");
- 			return -ENOENT;
- 		}
--		if (kset->owner && IS_ENABLED(CONFIG_DEBUG_INFO_BTF_MODULES)) {
--			pr_err("missing module BTF, cannot register kfuncs\n");
--			return -ENOENT;
--		}
-+		if (kset->owner && IS_ENABLED(CONFIG_DEBUG_INFO_BTF_MODULES))
-+			pr_warn("missing module BTF, cannot register kfuncs\n");
- 		return 0;
- 	}
- 	if (IS_ERR(btf))
+diff --git a/Documentation/networking/af_xdp.rst b/Documentation/networking/af_xdp.rst
+index 247c6c4127e94..1cc35de336a41 100644
+--- a/Documentation/networking/af_xdp.rst
++++ b/Documentation/networking/af_xdp.rst
+@@ -433,6 +433,15 @@ start N bytes into the buffer leaving the first N bytes for the
+ application to use. The final option is the flags field, but it will
+ be dealt with in separate sections for each UMEM flag.
+ 
++SO_BINDTODEVICE setsockopt
++--------------------------
++
++This is a generic SOL_SOCKET option that can be used to tie AF_XDP
++socket to a particular network interface.  It is useful when a socket
++is created by a privileged process and passed to a non-privileged one.
++Once the option is set, kernel will refuse attempts to bind that socket
++to a different interface.  Updating the value requires CAP_NET_RAW.
++
+ XDP_STATISTICS getsockopt
+ -------------------------
+ 
+diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+index cc1e7f15fa731..32dd55b9ce8a8 100644
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -886,6 +886,7 @@ static int xsk_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
+ 	struct sock *sk = sock->sk;
+ 	struct xdp_sock *xs = xdp_sk(sk);
+ 	struct net_device *dev;
++	int bound_dev_if;
+ 	u32 flags, qid;
+ 	int err = 0;
+ 
+@@ -899,6 +900,10 @@ static int xsk_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
+ 		      XDP_USE_NEED_WAKEUP))
+ 		return -EINVAL;
+ 
++	bound_dev_if = READ_ONCE(sk->sk_bound_dev_if);
++	if (bound_dev_if && bound_dev_if != sxdp->sxdp_ifindex)
++		return -EINVAL;
++
+ 	rtnl_lock();
+ 	mutex_lock(&xs->mutex);
+ 	if (xs->state != XSK_READY) {
 -- 
 2.39.2
 
