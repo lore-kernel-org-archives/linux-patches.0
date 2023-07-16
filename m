@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48648F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:26:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FFFFC433C8;
-	Sun, 16 Jul 2023 20:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB8C8F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:26:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2BAC433C7;
+	Sun, 16 Jul 2023 20:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539209;
-	bh=HtlcifJ1IG2kYajyytBeLW9HI7cYPADRnynM3mGNID4=;
+	s=korg; t=1689539212;
+	bh=N4CVBkMxDrtiSX+ZatOSbQiYI1jf/jVkmPCvSlcFw/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LKGV4hVFo8450orkhwqTMbhRdYP3UOHvwlTDgLtF76HYm9GBt/foQkZYBfIk674gC
-	 LkHQJOzSas4WApPixnEl3k40tPZ/zatAfA2MlchO7q5fsquA5S37Uc2wPLtVUm6DMB
-	 i3qOAAhzlRnqg1is44W8XoC+YpVrEGsCqHso9aSk=
+	b=m0oqAWV1dox7gES4UH9Ejr+huUaIK69HgOlnAHq26rJ+dXBboBtmyN2Gpo6pVhs95
+	 1VwyIRyBBAcpZ77+dRrrIsoZeEDHJGa5vGpyM7jR/fDaL3qIhe4LWcpDFE5CGPQO4E
+	 RslcZSnBxDbL5XUnhlrCAmXsfmb/318vjHdg12NU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Jason Wang <jasowang@redhat.com>,
+	syzbot+9fcea5ef6dc4dc72d334@syzkaller.appspotmail.com,
+	Zeng Heng <zengheng4@huawei.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 697/800] xsk: Honor SO_BINDTODEVICE on bind
-Date: Sun, 16 Jul 2023 21:49:10 +0200
-Message-ID: <20230716195005.311248119@linuxfoundation.org>
+Subject: [PATCH 6.4 688/800] ntfs: Fix panic about slab-out-of-bounds caused by ntfs_listxattr()
+Date: Sun, 16 Jul 2023 21:49:01 +0200
+Message-ID: <20230716195005.105417401@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -38,99 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Zeng Heng <zengheng4@huawei.com>
 
-[ Upstream commit f7306acec9aae9893d15e745c8791124d42ab10a ]
+[ Upstream commit 3c675ddffb17a8b1e32efad5c983254af18b12c2 ]
 
-Initial creation of an AF_XDP socket requires CAP_NET_RAW capability. A
-privileged process might create the socket and pass it to a non-privileged
-process for later use. However, that process will be able to bind the socket
-to any network interface. Even though it will not be able to receive any
-traffic without modification of the BPF map, the situation is not ideal.
+Here is a BUG report from syzbot:
 
-Sockets already have a mechanism that can be used to restrict what interface
-they can be attached to. That is SO_BINDTODEVICE.
+BUG: KASAN: slab-out-of-bounds in ntfs_list_ea fs/ntfs3/xattr.c:191 [inline]
+BUG: KASAN: slab-out-of-bounds in ntfs_listxattr+0x401/0x570 fs/ntfs3/xattr.c:710
+Read of size 1 at addr ffff888021acaf3d by task syz-executor128/3632
 
-To change the SO_BINDTODEVICE binding the process will need CAP_NET_RAW.
+Call Trace:
+ ntfs_list_ea fs/ntfs3/xattr.c:191 [inline]
+ ntfs_listxattr+0x401/0x570 fs/ntfs3/xattr.c:710
+ vfs_listxattr fs/xattr.c:457 [inline]
+ listxattr+0x293/0x2d0 fs/xattr.c:804
 
-Make xsk_bind() honor the SO_BINDTODEVICE in order to allow safer workflow
-when non-privileged process is using AF_XDP.
+Fix the logic of ea_all iteration. When the ea->name_len is 0,
+return immediately, or Add2Ptr() would visit invalid memory
+in the next loop.
 
-The intended workflow is following:
-
-  1. First process creates a bare socket with socket(AF_XDP, ...).
-  2. First process loads the XSK program to the interface.
-  3. First process adds the socket fd to a BPF map.
-  4. First process ties socket fd to a particular interface using
-     SO_BINDTODEVICE.
-  5. First process sends socket fd to a second process.
-  6. Second process allocates UMEM.
-  7. Second process binds socket to the interface with bind(...).
-  8. Second process sends/receives the traffic.
-
-All the steps above are possible today if the first process is privileged
-and the second one has sufficient RLIMIT_MEMLOCK and no capabilities.
-However, the second process will be able to bind the socket to any interface
-it wants on step 7 and send traffic from it. With the proposed change, the
-second process will be able to bind the socket only to a specific interface
-chosen by the first process at step 4.
-
-Fixes: 965a99098443 ("xsk: add support for bind for Rx")
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Link: https://lore.kernel.org/bpf/20230703175329.3259672-1-i.maximets@ovn.org
+Fixes: be71b5cba2e6 ("fs/ntfs3: Add attrib operations")
+Reported-by: syzbot+9fcea5ef6dc4dc72d334@syzkaller.appspotmail.com
+Signed-off-by: Zeng Heng <zengheng4@huawei.com>
+[almaz.alexandrovich@paragon-software.com: lines of the patch have changed]
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/af_xdp.rst | 9 +++++++++
- net/xdp/xsk.c                       | 5 +++++
- 2 files changed, 14 insertions(+)
+ fs/ntfs3/xattr.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/Documentation/networking/af_xdp.rst b/Documentation/networking/af_xdp.rst
-index 247c6c4127e94..1cc35de336a41 100644
---- a/Documentation/networking/af_xdp.rst
-+++ b/Documentation/networking/af_xdp.rst
-@@ -433,6 +433,15 @@ start N bytes into the buffer leaving the first N bytes for the
- application to use. The final option is the flags field, but it will
- be dealt with in separate sections for each UMEM flag.
+diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
+index c3de60a4543fa..fd02fcf4d4091 100644
+--- a/fs/ntfs3/xattr.c
++++ b/fs/ntfs3/xattr.c
+@@ -214,6 +214,9 @@ static ssize_t ntfs_list_ea(struct ntfs_inode *ni, char *buffer,
+ 		ea = Add2Ptr(ea_all, off);
+ 		ea_size = unpacked_ea_size(ea);
  
-+SO_BINDTODEVICE setsockopt
-+--------------------------
++		if (!ea->name_len)
++			break;
 +
-+This is a generic SOL_SOCKET option that can be used to tie AF_XDP
-+socket to a particular network interface.  It is useful when a socket
-+is created by a privileged process and passed to a non-privileged one.
-+Once the option is set, kernel will refuse attempts to bind that socket
-+to a different interface.  Updating the value requires CAP_NET_RAW.
-+
- XDP_STATISTICS getsockopt
- -------------------------
- 
-diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index cc1e7f15fa731..32dd55b9ce8a8 100644
---- a/net/xdp/xsk.c
-+++ b/net/xdp/xsk.c
-@@ -886,6 +886,7 @@ static int xsk_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
- 	struct sock *sk = sock->sk;
- 	struct xdp_sock *xs = xdp_sk(sk);
- 	struct net_device *dev;
-+	int bound_dev_if;
- 	u32 flags, qid;
- 	int err = 0;
- 
-@@ -899,6 +900,10 @@ static int xsk_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
- 		      XDP_USE_NEED_WAKEUP))
- 		return -EINVAL;
- 
-+	bound_dev_if = READ_ONCE(sk->sk_bound_dev_if);
-+	if (bound_dev_if && bound_dev_if != sxdp->sxdp_ifindex)
-+		return -EINVAL;
-+
- 	rtnl_lock();
- 	mutex_lock(&xs->mutex);
- 	if (xs->state != XSK_READY) {
+ 		if (buffer) {
+ 			if (ret + ea->name_len + 1 > bytes_per_buffer) {
+ 				err = -ERANGE;
 -- 
 2.39.2
 
