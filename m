@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5F48F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:52:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B19AC433C8;
-	Sun, 16 Jul 2023 20:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80498F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:52:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8A5C433C7;
+	Sun, 16 Jul 2023 20:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540739;
-	bh=3PgARpoWSwEpNQz1h07/Ra0r2oN1jwiPWQOElYi2O1Q=;
+	s=korg; t=1689540742;
+	bh=kbDGWP2ZXHuYkKQqkVxxI7pRF3pOIz3fYnqNxAVKJAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dNzA0dGHZQYICTqYxs8cjyvH4ChGZlKRPRYKOaafU9y59CrKcLBwsUPC7KkwiBq3b
-	 dUpLd/TdTzoCn6CNofq6QzSKqH47gfPfsaekHWbyf9C4LglOlTVNShOhevu1dXQy/5
-	 Z0UBFb6ytEPSikB3qOu7zRnZsI7ppFmkdeMjTO4s=
+	b=vEOPji0NiJp4jmWGrgQePM8rsLNtf1M5+OUDEjxusQRczgbJTY2EjyLiWj3TfpPP1
+	 0pV+CbxERFPlG61RSjEkTmuszLNVg7ozTqu+pZahElilOPz2eqqT1IqJPbhPoOoPc5
+	 yBd6FuG+jK9qwIArtESKns/mWcW2syMk7d15ovwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 471/591] net/sched: act_ipt: add sanity checks on table name and hook locations
-Date: Sun, 16 Jul 2023 21:50:10 +0200
-Message-ID: <20230716194936.092319534@linuxfoundation.org>
+Subject: [PATCH 6.1 472/591] net: add a couple of helpers for iph tot_len
+Date: Sun, 16 Jul 2023 21:50:11 +0200
+Message-ID: <20230716194936.119371762@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,99 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit b4ee93380b3c891fea996af8d1d3ca0e36ad31f0 ]
+[ Upstream commit 058a8f7f73aae1cc22b53fcefec031b9e391b54d ]
 
-Looks like "tc" hard-codes "mangle" as the only supported table
-name, but on kernel side there are no checks.
+This patch adds three APIs to replace the iph->tot_len setting
+and getting in all places where IPv4 BIG TCP packets may reach,
+they will be used in the following patches.
 
-This is wrong.  Not all xtables targets are safe to call from tc.
-E.g. "nat" targets assume skb has a conntrack object assigned to it.
-Normally those get called from netfilter nat core which consults the
-nat table to obtain the address mapping.
+Note that iph_totlen() will be used when iph is not in linear
+data of the skb.
 
-"tc" userspace either sets PRE or POSTROUTING as hook number, but there
-is no validation of this on kernel side, so update netlink policy to
-reject bogus numbers.  Some targets may assume skb_dst is set for
-input/forward hooks, so prevent those from being used.
-
-act_ipt uses the hook number in two places:
-1. the state hook number, this is fine as-is
-2. to set par.hook_mask
-
-The latter is a bit mask, so update the assignment to make
-xt_check_target() to the right thing.
-
-Followup patch adds required checks for the skb/packet headers before
-calling the targets evaluation function.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: b2dc32dcba08 ("net/sched: act_ipt: add sanity checks on skb before calling target")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_ipt.c | 27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+ include/linux/ip.h  | 21 +++++++++++++++++++++
+ include/net/route.h |  3 ---
+ 2 files changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/act_ipt.c b/net/sched/act_ipt.c
-index 1625e10374161..dc92975a9374f 100644
---- a/net/sched/act_ipt.c
-+++ b/net/sched/act_ipt.c
-@@ -47,7 +47,7 @@ static int ipt_init_target(struct net *net, struct xt_entry_target *t,
- 	par.entryinfo = &e;
- 	par.target    = target;
- 	par.targinfo  = t->data;
--	par.hook_mask = hook;
-+	par.hook_mask = 1 << hook;
- 	par.family    = NFPROTO_IPV4;
- 
- 	ret = xt_check_target(&par, t->u.target_size - sizeof(*t), 0, false);
-@@ -84,7 +84,8 @@ static void tcf_ipt_release(struct tc_action *a)
- 
- static const struct nla_policy ipt_policy[TCA_IPT_MAX + 1] = {
- 	[TCA_IPT_TABLE]	= { .type = NLA_STRING, .len = IFNAMSIZ },
--	[TCA_IPT_HOOK]	= { .type = NLA_U32 },
-+	[TCA_IPT_HOOK]	= NLA_POLICY_RANGE(NLA_U32, NF_INET_PRE_ROUTING,
-+					   NF_INET_NUMHOOKS),
- 	[TCA_IPT_INDEX]	= { .type = NLA_U32 },
- 	[TCA_IPT_TARG]	= { .len = sizeof(struct xt_entry_target) },
- };
-@@ -157,15 +158,27 @@ static int __tcf_ipt_init(struct net *net, unsigned int id, struct nlattr *nla,
- 			return -EEXIST;
- 		}
- 	}
+diff --git a/include/linux/ip.h b/include/linux/ip.h
+index 3d9c6750af627..d11c25f5030a0 100644
+--- a/include/linux/ip.h
++++ b/include/linux/ip.h
+@@ -35,4 +35,25 @@ static inline unsigned int ip_transport_len(const struct sk_buff *skb)
+ {
+ 	return ntohs(ip_hdr(skb)->tot_len) - skb_network_header_len(skb);
+ }
 +
-+	err = -EINVAL;
- 	hook = nla_get_u32(tb[TCA_IPT_HOOK]);
-+	switch (hook) {
-+	case NF_INET_PRE_ROUTING:
-+		break;
-+	case NF_INET_POST_ROUTING:
-+		break;
-+	default:
-+		goto err1;
-+	}
++static inline unsigned int iph_totlen(const struct sk_buff *skb, const struct iphdr *iph)
++{
++	u32 len = ntohs(iph->tot_len);
 +
-+	if (tb[TCA_IPT_TABLE]) {
-+		/* mangle only for now */
-+		if (nla_strcmp(tb[TCA_IPT_TABLE], "mangle"))
-+			goto err1;
-+	}
++	return (len || !skb_is_gso(skb) || !skb_is_gso_tcp(skb)) ?
++	       len : skb->len - skb_network_offset(skb);
++}
++
++static inline unsigned int skb_ip_totlen(const struct sk_buff *skb)
++{
++	return iph_totlen(skb, ip_hdr(skb));
++}
++
++/* IPv4 datagram length is stored into 16bit field (tot_len) */
++#define IP_MAX_MTU	0xFFFFU
++
++static inline void iph_set_totlen(struct iphdr *iph, unsigned int len)
++{
++	iph->tot_len = len <= IP_MAX_MTU ? htons(len) : 0;
++}
+ #endif	/* _LINUX_IP_H */
+diff --git a/include/net/route.h b/include/net/route.h
+index 6e92dd5bcd613..fe00b0a2e4759 100644
+--- a/include/net/route.h
++++ b/include/net/route.h
+@@ -35,9 +35,6 @@
+ #include <linux/cache.h>
+ #include <linux/security.h>
  
--	err = -ENOMEM;
--	tname = kmalloc(IFNAMSIZ, GFP_KERNEL);
-+	tname = kstrdup("mangle", GFP_KERNEL);
- 	if (unlikely(!tname))
- 		goto err1;
--	if (tb[TCA_IPT_TABLE] == NULL ||
--	    nla_strscpy(tname, tb[TCA_IPT_TABLE], IFNAMSIZ) >= IFNAMSIZ)
--		strcpy(tname, "mangle");
+-/* IPv4 datagram length is stored into 16bit field (tot_len) */
+-#define IP_MAX_MTU	0xFFFFU
+-
+ #define RTO_ONLINK	0x01
  
- 	t = kmemdup(td, td->u.target_size, GFP_KERNEL);
- 	if (unlikely(!t))
+ #define RT_CONN_FLAGS(sk)   (RT_TOS(inet_sk(sk)->tos) | sock_flag(sk, SOCK_LOCALROUTE))
 -- 
 2.39.2
 
