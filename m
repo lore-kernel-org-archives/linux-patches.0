@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140448F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:34:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF75C433C8;
-	Sun, 16 Jul 2023 20:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CD28F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:34:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A29C433C7;
+	Sun, 16 Jul 2023 20:34:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539680;
-	bh=j14J+wGwFesU7svfDm8qir2eJtl0XwdPkNltllxnJJg=;
+	s=korg; t=1689539683;
+	bh=DoUKZe7V7nrkZAHSUp1Xsa2lFT2+akblQ3WtZWCpMHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w0kuM0ZJXMPCxZmOpXgbOsFz9b+Z7qwGv+sILEZH3RsMnwuxFVra+PI/Dpk3Ab/v0
-	 mz4rW2uwdtj4TbfNXgvX/Jjn3h9KN0t8GCarOFMawi3rtNBhIbsz6BvlhJotUl25mv
-	 S74RAv1TkLtPvOgyLn8M3jppRkZf4P3b/qaIq7Gw=
+	b=xtpaBrKxU2djUFr6T3PclKfWBcSGsH++B6XwchQZdnXpoujWUiK6yz05rXVjqg1Pu
+	 iRiopj1zNsv+UF9NWsUqNxzwxRMS8WJMUArcahr6Ds6R5Vq/obasGdUuJMkk2QmnPX
+	 Ve/6+5vkxcf2TLU/4Gm4mr/sXrx6u5GMgFsP+zFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youghandhar Chintala <quic_youghand@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 093/591] wifi: ath10k: Trigger STA disconnect after reconfig complete on hardware restart
-Date: Sun, 16 Jul 2023 21:43:52 +0200
-Message-ID: <20230716194926.284010086@linuxfoundation.org>
+Subject: [PATCH 6.1 094/591] wifi: mac80211: recalc min chandef for new STA links
+Date: Sun, 16 Jul 2023 21:43:53 +0200
+Message-ID: <20230716194926.309186226@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,87 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Youghandhar Chintala <quic_youghand@quicinc.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 75bd32f5ce94bc365ba0b9b68bcf9de84a391d37 ]
+[ Upstream commit ba7af2654e3b7b810c750b3c6106f6f20b81cc88 ]
 
-Currently, on WCN3990, the station disconnect after hardware recovery is
-not working as expected. This is because of setting the
-IEEE80211_SDATA_DISCONNECT_HW_RESTART flag very early in the hardware
-recovery process even before the driver invokes ieee80211_hw_restart().
-On the contrary, mac80211 expects this flag to be set after
-ieee80211_hw_restart() is invoked for it to trigger station disconnect.
+When adding a new link to a station, this needs to cause a
+recalculation of the minimum chandef since otherwise we can
+have a higher bandwidth station connected on that link than
+the link is operating at. Do the appropriate recalc.
 
-Set the IEEE80211_SDATA_DISCONNECT_HW_RESTART flag in
-ath10k_reconfig_complete() instead to fix this.
-
-The other targets are not affected by this change, since the hardware
-params flag is not set.
-
-Tested-on: WCN3990 hw1.0 SNOC WLAN.HL.3.2.2.c10-00754-QCAHLSWMTPL-1
-
-Fixes: 2c3fc50591ff ("ath10k: Trigger sta disconnect on hardware restart")
-Signed-off-by: Youghandhar Chintala <quic_youghand@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230518101515.3820-1-quic_youghand@quicinc.com
+Fixes: cb71f1d136a6 ("wifi: mac80211: add sta link addition/removal")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230604120651.377adf3c789a.I91bf28f399e16e6ac1f83bacd1029a698b4e6685@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/core.c | 9 ---------
- drivers/net/wireless/ath/ath10k/mac.c  | 7 +++++++
- 2 files changed, 7 insertions(+), 9 deletions(-)
+ net/mac80211/sta_info.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
-index 5eb131ab916fd..b6052dcc45ebf 100644
---- a/drivers/net/wireless/ath/ath10k/core.c
-+++ b/drivers/net/wireless/ath/ath10k/core.c
-@@ -2504,7 +2504,6 @@ EXPORT_SYMBOL(ath10k_core_napi_sync_disable);
- static void ath10k_core_restart(struct work_struct *work)
- {
- 	struct ath10k *ar = container_of(work, struct ath10k, restart_work);
--	struct ath10k_vif *arvif;
- 	int ret;
+diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
+index 30efa26f977f6..b8c6f6a668fc9 100644
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -2861,6 +2861,8 @@ int ieee80211_sta_activate_link(struct sta_info *sta, unsigned int link_id)
+ 	if (!test_sta_flag(sta, WLAN_STA_INSERTED))
+ 		goto hash;
  
- 	set_bit(ATH10K_FLAG_CRASH_FLUSH, &ar->dev_flags);
-@@ -2543,14 +2542,6 @@ static void ath10k_core_restart(struct work_struct *work)
- 		ar->state = ATH10K_STATE_RESTARTING;
- 		ath10k_halt(ar);
- 		ath10k_scan_finish(ar);
--		if (ar->hw_params.hw_restart_disconnect) {
--			list_for_each_entry(arvif, &ar->arvifs, list) {
--				if (arvif->is_up &&
--				    arvif->vdev_type == WMI_VDEV_TYPE_STA)
--					ieee80211_hw_restart_disconnect(arvif->vif);
--			}
--		}
--
- 		ieee80211_restart_hw(ar->hw);
- 		break;
- 	case ATH10K_STATE_OFF:
-diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
-index ec8d5b29bc72c..f0729acdec50a 100644
---- a/drivers/net/wireless/ath/ath10k/mac.c
-+++ b/drivers/net/wireless/ath/ath10k/mac.c
-@@ -8108,6 +8108,7 @@ static void ath10k_reconfig_complete(struct ieee80211_hw *hw,
- 				     enum ieee80211_reconfig_type reconfig_type)
- {
- 	struct ath10k *ar = hw->priv;
-+	struct ath10k_vif *arvif;
- 
- 	if (reconfig_type != IEEE80211_RECONFIG_TYPE_RESTART)
- 		return;
-@@ -8122,6 +8123,12 @@ static void ath10k_reconfig_complete(struct ieee80211_hw *hw,
- 		ar->state = ATH10K_STATE_ON;
- 		ieee80211_wake_queues(ar->hw);
- 		clear_bit(ATH10K_FLAG_RESTARTING, &ar->dev_flags);
-+		if (ar->hw_params.hw_restart_disconnect) {
-+			list_for_each_entry(arvif, &ar->arvifs, list) {
-+				if (arvif->is_up && arvif->vdev_type == WMI_VDEV_TYPE_STA)
-+					ieee80211_hw_restart_disconnect(arvif->vif);
-+				}
-+		}
- 	}
- 
- 	mutex_unlock(&ar->conf_mutex);
++	ieee80211_recalc_min_chandef(sdata, link_id);
++
+ 	/* Ensure the values are updated for the driver,
+ 	 * redone by sta_remove_link on failure.
+ 	 */
 -- 
 2.39.2
 
