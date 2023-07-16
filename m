@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C20F8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:06:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00AE7C433C8;
-	Sun, 16 Jul 2023 20:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDFF8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:06:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9FEAC433C7;
+	Sun, 16 Jul 2023 20:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538011;
-	bh=SgNvYQsalSrC36NyEjl3SVQqsSpbele75XkT3SZlyKg=;
+	s=korg; t=1689538014;
+	bh=UCLXG6k1BiEOcaIfG2yRP4GRC7+Rak8XIJQuYZCbP4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ho20FiJWWdx+diXjWw05VxtKkdJKS99OQsu9uySdkQE5PzaDTKhYNt13VxeDlpn9v
-	 Ww6+A697x1EsYKPjcCoXb0AQ/PDxKSJY4T9VEySOmhdoRl2LEHbDs+Y25CB0CW6U8K
-	 HzbWPdqoPWz9g0ylaA3YGVEfnPduKmVNR//UHmdg=
+	b=DlH5Yf5Ra4FsW5od6773FMYJ8s/Jg6AZ6gEe3JuRE0Id0jTcAu71A9+l7oEEEtZ2k
+	 BbiCDXB4AK5enaEsH8uNr7ybo21VPZvTDX1Bv1vm5sTcArwhnAMGIb48eX3xI9ckwa
+	 swYFzxDKtpzQPDh/WAFotkYbHrJJyKGAdjd9JTIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 300/800] arm64: dts: qcom: ipq6018: correct qrng unit address
-Date: Sun, 16 Jul 2023 21:42:33 +0200
-Message-ID: <20230716194956.048165146@linuxfoundation.org>
+Subject: [PATCH 6.4 274/800] drm/msm/dsi: dont allow enabling 14nm VCO with unprogrammed rate
+Date: Sun, 16 Jul 2023 21:42:07 +0200
+Message-ID: <20230716194955.456544806@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,37 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 085058786a7890dd44ec623fe5ac74db870f6b93 ]
+[ Upstream commit 1e0a97f84d73ea1182740f62069690c7f3271abb ]
 
-Match unit-address to reg entry to fix dtbs W=1 warnings:
+If the dispcc uses CLK_OPS_PARENT_ENABLE (e.g. on QCM2290), CCF can try
+enabling VCO before the rate has been programmed. This can cause clock
+lockups and/or other boot issues. Program the VCO to the minimal PLL
+rate if the read rate is 0 Hz.
 
-  Warning (simple_bus_reg): /soc/qrng@e1000: simple-bus unit address format error, expected "e3000"
-
-Fixes: 5bf635621245 ("arm64: dts: ipq6018: Add a few device nodes")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reported-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reported-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230419211856.79332-1-krzysztof.kozlowski@linaro.org
+Fixes: f079f6d999cb ("drm/msm/dsi: Add PHY/PLL for 8x96")
+Patchwork: https://patchwork.freedesktop.org/patch/534813/
+Link: https://lore.kernel.org/r/20230501011257.3460103-1-dmitry.baryshkov@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index f531797f26195..c58eeb4376abe 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -302,7 +302,7 @@ mdio: mdio@90000 {
- 			status = "disabled";
- 		};
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+index 9f488adea7f54..3ce45b023e637 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+@@ -539,6 +539,9 @@ static int dsi_pll_14nm_vco_prepare(struct clk_hw *hw)
+ 	if (unlikely(pll_14nm->phy->pll_on))
+ 		return 0;
  
--		prng: qrng@e1000 {
-+		prng: qrng@e3000 {
- 			compatible = "qcom,prng-ee";
- 			reg = <0x0 0x000e3000 0x0 0x1000>;
- 			clocks = <&gcc GCC_PRNG_AHB_CLK>;
++	if (dsi_pll_14nm_vco_recalc_rate(hw, VCO_REF_CLK_RATE) == 0)
++		dsi_pll_14nm_vco_set_rate(hw, pll_14nm->phy->cfg->min_pll_rate, VCO_REF_CLK_RATE);
++
+ 	dsi_phy_write(base + REG_DSI_14nm_PHY_PLL_VREF_CFG1, 0x10);
+ 	dsi_phy_write(cmn_base + REG_DSI_14nm_PHY_CMN_PLL_CNTRL, 1);
+ 
 -- 
 2.39.2
 
