@@ -1,28 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540E68F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:15:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88176C433C7;
-	Sun, 16 Jul 2023 20:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9DF78F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:15:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 333D2C433C7;
+	Sun, 16 Jul 2023 20:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538506;
-	bh=wO2sMeKKYgErAO1sPZjBqE0HyUSDdamvzSjgu/qei2U=;
+	s=korg; t=1689538509;
+	bh=NamyjZLwDGs2YaSjbnqfaM1hm3x8cLrwCYMrFZaDtyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xB4L63+Wo0GnhWqxw3rgjWhoutg2fVRRmS9PCPtxrFiA+2TbHJSxzfVh6a//fFAi3
-	 AvdEoRDn7ZXkrr5Rffi2rOxHPay9TRAjuFYbhHNe9KZM2x6bcojtwETbkzG0eOUH3g
-	 wtTm97SKy+QyFmsNvb8ZR50H4L2S6PBiedPkZ7OA=
+	b=bI3ss0l5tbY6MOw3rSvwYeR+LQkEUT7DYjgIXPCtMW0koZH1Gywfc2squ9USaaI7H
+	 Q+gGx5SayE0SDIxOM0Lq7jm+q8BsI/ca0WV3DfduuuxWTQlGhkSf1wdBvBasIXy42T
+	 RA3/XzdlPzTN6fHAD5MbC9sPirssjItdsAuA3piE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 458/800] platform/x86: think-lmi: mutex protection around multiple WMI calls
-Date: Sun, 16 Jul 2023 21:45:11 +0200
-Message-ID: <20230716194959.720918399@linuxfoundation.org>
+Subject: [PATCH 6.4 476/800] perf tool x86: Fix perf_env memory leak
+Date: Sun, 16 Jul 2023 21:45:29 +0200
+Message-ID: <20230716195000.135889785@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,81 +43,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Pearson <mpearson-lenovo@squebb.ca>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit c41e0121a1221894a1a9c4666156db9e1def4d6c ]
+[ Upstream commit 99d4850062a84564f36923764bb93935ef2ed108 ]
 
-When an attribute is being changed if the Admin account is enabled, or if
-a password is being updated then multiple WMI calls are needed.
-Add mutex protection to ensure no race conditions are introduced.
+Found by leak sanitizer:
+```
+==1632594==ERROR: LeakSanitizer: detected memory leaks
 
-Fixes: b49f72e7f96d ("platform/x86: think-lmi: Certificate authentication support")
-Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230601200552.4396-1-mpearson-lenovo@squebb.ca
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Direct leak of 21 byte(s) in 1 object(s) allocated from:
+    #0 0x7f2953a7077b in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:439
+    #1 0x556701d6fbbf in perf_env__read_cpuid util/env.c:369
+    #2 0x556701d70589 in perf_env__cpuid util/env.c:465
+    #3 0x55670204bba2 in x86__is_amd_cpu arch/x86/util/env.c:14
+    #4 0x5567020487a2 in arch__post_evsel_config arch/x86/util/evsel.c:83
+    #5 0x556701d8f78b in evsel__config util/evsel.c:1366
+    #6 0x556701ef5872 in evlist__config util/record.c:108
+    #7 0x556701cd6bcd in test__PERF_RECORD tests/perf-record.c:112
+    #8 0x556701cacd07 in run_test tests/builtin-test.c:236
+    #9 0x556701cacfac in test_and_print tests/builtin-test.c:265
+    #10 0x556701cadddb in __cmd_test tests/builtin-test.c:402
+    #11 0x556701caf2aa in cmd_test tests/builtin-test.c:559
+    #12 0x556701d3b557 in run_builtin tools/perf/perf.c:323
+    #13 0x556701d3bac8 in handle_internal_command tools/perf/perf.c:377
+    #14 0x556701d3be90 in run_argv tools/perf/perf.c:421
+    #15 0x556701d3c3f8 in main tools/perf/perf.c:537
+    #16 0x7f2952a46189 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+
+SUMMARY: AddressSanitizer: 21 byte(s) leaked in 1 allocation(s).
+```
+
+Fixes: f7b58cbdb3ff36eb ("perf mem/c2c: Add load store event mappings for AMD")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Link: https://lore.kernel.org/r/20230613235416.1650755-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/think-lmi.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ tools/perf/arch/x86/util/env.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
-index 1138f770149d9..6cf77bc26b05b 100644
---- a/drivers/platform/x86/think-lmi.c
-+++ b/drivers/platform/x86/think-lmi.c
-@@ -14,6 +14,7 @@
- #include <linux/acpi.h>
- #include <linux/errno.h>
- #include <linux/fs.h>
-+#include <linux/mutex.h>
- #include <linux/string.h>
- #include <linux/types.h>
- #include <linux/dmi.h>
-@@ -195,6 +196,7 @@ static const char * const level_options[] = {
- };
- static struct think_lmi tlmi_priv;
- static struct class *fw_attr_class;
-+static DEFINE_MUTEX(tlmi_mutex);
+diff --git a/tools/perf/arch/x86/util/env.c b/tools/perf/arch/x86/util/env.c
+index 33b87f8ac1cc1..3e537ffb1353a 100644
+--- a/tools/perf/arch/x86/util/env.c
++++ b/tools/perf/arch/x86/util/env.c
+@@ -13,7 +13,7 @@ bool x86__is_amd_cpu(void)
  
- /* ------ Utility functions ------------*/
- /* Strip out CR if one is present */
-@@ -437,6 +439,9 @@ static ssize_t new_password_store(struct kobject *kobj,
- 	/* Strip out CR if one is present, setting password won't work if it is present */
- 	strip_cr(new_pwd);
- 
-+	/* Use lock in case multiple WMI operations needed */
-+	mutex_lock(&tlmi_mutex);
-+
- 	pwdlen = strlen(new_pwd);
- 	/* pwdlen == 0 is allowed to clear the password */
- 	if (pwdlen && ((pwdlen < setting->minlen) || (pwdlen > setting->maxlen))) {
-@@ -493,6 +498,7 @@ static ssize_t new_password_store(struct kobject *kobj,
- 		kfree(auth_str);
- 	}
- out:
-+	mutex_unlock(&tlmi_mutex);
- 	kfree(new_pwd);
- 	return ret ?: count;
+ 	perf_env__cpuid(&env);
+ 	is_amd = env.cpuid && strstarts(env.cpuid, "AuthenticAMD") ? 1 : -1;
+-
++	perf_env__exit(&env);
+ ret:
+ 	return is_amd >= 1 ? true : false;
  }
-@@ -981,6 +987,9 @@ static ssize_t current_value_store(struct kobject *kobj,
- 	/* Strip out CR if one is present */
- 	strip_cr(new_setting);
- 
-+	/* Use lock in case multiple WMI operations needed */
-+	mutex_lock(&tlmi_mutex);
-+
- 	/* Check if certificate authentication is enabled and active */
- 	if (tlmi_priv.certificate_support && tlmi_priv.pwd_admin->cert_installed) {
- 		if (!tlmi_priv.pwd_admin->signature || !tlmi_priv.pwd_admin->save_signature) {
-@@ -1039,6 +1048,7 @@ static ssize_t current_value_store(struct kobject *kobj,
- 		kobject_uevent(&tlmi_priv.class_dev->kobj, KOBJ_CHANGE);
- 	}
- out:
-+	mutex_unlock(&tlmi_mutex);
- 	kfree(auth_str);
- 	kfree(set_str);
- 	kfree(new_setting);
 -- 
 2.39.2
 
