@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FBB89447
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:29:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E70A7C433C8;
-	Sun, 16 Jul 2023 20:29:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6AD9447
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:30:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6656C433C8;
+	Sun, 16 Jul 2023 20:29:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539397;
-	bh=kFc/nlBAU+uPRG4f3wv1LXhW9qEiEmsPXrboBicvhiE=;
+	s=korg; t=1689539400;
+	bh=oh+bpNpnuRgFrG82qkGA8DJNXxDlfCEzL2HxGpnN5nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gEFtNRtvJhPzalwq32zs/+41wXI5HQJ4Gbz4mIpn6E7tJW2JvZEtXRi2ztGW0lNpj
-	 2JYIYIUpiJVmUiGNBG38Q4BkR/6sdFxhCXju1LDT2bLhBfrYjj3mFI/O4KrhNnu80+
-	 FNAHf9NbCYyBBYkIxVsGnIxg4mI2Y+FrvlbY0cSc=
+	b=OCduq+DlrWznJhoPVpa91sGy3dVK+9+W405PfqoIqupfirj5O8JJV6yQWDF4fxXz6
+	 NwZ+FtJHRe4FOFyKZ3PGmZRnoZbtknvv/+OvghIgpmzGMCIyuT8+rbRCgxHUgu6/1M
+	 zD5KaDJaPl6fubf47Sc3pqhqGe13dOcGGRk9ihqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 754/800] btrfs: fix dirty_metadata_bytes for redirtied buffers
-Date: Sun, 16 Jul 2023 21:50:07 +0200
-Message-ID: <20230716195006.637466790@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=F6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Guchun Chen <guchun.chen@amd.com>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Subject: [PATCH 6.4 787/800] drm/amdgpu: make sure BOs are locked in amdgpu_vm_get_memory
+Date: Sun, 16 Jul 2023 21:50:40 +0200
+Message-ID: <20230716195007.428178299@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,93 +36,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Christian König <christian.koenig@amd.com>
 
-commit f18cc97845aa4ae0e795c088c979fe1642b3b8e5 upstream.
+commit e2ad8e2df432498b1cee2af04df605723f4d75e6 upstream.
 
-dirty_metadata_bytes is decremented in both places that clear the dirty
-bit in a buffer, but only incremented in btrfs_mark_buffer_dirty, which
-means that a buffer that is redirtied using btrfs_redirty_list_add won't
-be added to dirty_metadata_bytes, but it will be subtracted when written
-out, leading an inconsistency in the counter.
+We need to grab the lock of the BO or otherwise can run into a crash
+when we try to inspect the current location.
 
-Move the dirty_metadata_bytes from btrfs_mark_buffer_dirty into
-set_extent_buffer_dirty to also account for the redirty case, and remove
-the now unused set_extent_buffer_dirty return value.
-
-Fixes: d3575156f662 ("btrfs: zoned: redirty released extent buffers")
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Acked-by: Guchun Chen <guchun.chen@amd.com>
+Tested-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.3.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c   |    7 +------
- fs/btrfs/extent_io.c |    7 ++++---
- fs/btrfs/extent_io.h |    2 +-
- 3 files changed, 6 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |   69 ++++++++++++++++++---------------
+ 1 file changed, 39 insertions(+), 30 deletions(-)
 
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -4683,7 +4683,6 @@ void btrfs_mark_buffer_dirty(struct exte
- {
- 	struct btrfs_fs_info *fs_info = buf->fs_info;
- 	u64 transid = btrfs_header_generation(buf);
--	int was_dirty;
- 
- #ifdef CONFIG_BTRFS_FS_RUN_SANITY_TESTS
- 	/*
-@@ -4698,11 +4697,7 @@ void btrfs_mark_buffer_dirty(struct exte
- 	if (transid != fs_info->generation)
- 		WARN(1, KERN_CRIT "btrfs transid mismatch buffer %llu, found %llu running %llu\n",
- 			buf->start, transid, fs_info->generation);
--	was_dirty = set_extent_buffer_dirty(buf);
--	if (!was_dirty)
--		percpu_counter_add_batch(&fs_info->dirty_metadata_bytes,
--					 buf->len,
--					 fs_info->dirty_metadata_batch);
-+	set_extent_buffer_dirty(buf);
- #ifdef CONFIG_BTRFS_FS_CHECK_INTEGRITY
- 	/*
- 	 * Since btrfs_mark_buffer_dirty() can be called with item pointer set
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -4064,7 +4064,7 @@ void btrfs_clear_buffer_dirty(struct btr
- 	WARN_ON(atomic_read(&eb->refs) == 0);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -920,42 +920,51 @@ error_unlock:
+ 	return r;
  }
  
--bool set_extent_buffer_dirty(struct extent_buffer *eb)
-+void set_extent_buffer_dirty(struct extent_buffer *eb)
++static void amdgpu_vm_bo_get_memory(struct amdgpu_bo_va *bo_va,
++				    struct amdgpu_mem_stats *stats)
++{
++	struct amdgpu_vm *vm = bo_va->base.vm;
++	struct amdgpu_bo *bo = bo_va->base.bo;
++
++	if (!bo)
++		return;
++
++	/*
++	 * For now ignore BOs which are currently locked and potentially
++	 * changing their location.
++	 */
++	if (bo->tbo.base.resv != vm->root.bo->tbo.base.resv &&
++	    !dma_resv_trylock(bo->tbo.base.resv))
++		return;
++
++	amdgpu_bo_get_memory(bo, stats);
++	if (bo->tbo.base.resv != vm->root.bo->tbo.base.resv)
++	    dma_resv_unlock(bo->tbo.base.resv);
++}
++
+ void amdgpu_vm_get_memory(struct amdgpu_vm *vm,
+ 			  struct amdgpu_mem_stats *stats)
  {
- 	int i;
- 	int num_pages;
-@@ -4099,13 +4099,14 @@ bool set_extent_buffer_dirty(struct exte
- 					     eb->start, eb->len);
- 		if (subpage)
- 			unlock_page(eb->pages[0]);
-+		percpu_counter_add_batch(&eb->fs_info->dirty_metadata_bytes,
-+					 eb->len,
-+					 eb->fs_info->dirty_metadata_batch);
- 	}
- #ifdef CONFIG_BTRFS_DEBUG
- 	for (i = 0; i < num_pages; i++)
- 		ASSERT(PageDirty(eb->pages[i]));
- #endif
--
--	return was_dirty;
+ 	struct amdgpu_bo_va *bo_va, *tmp;
+ 
+ 	spin_lock(&vm->status_lock);
+-	list_for_each_entry_safe(bo_va, tmp, &vm->idle, base.vm_status) {
+-		if (!bo_va->base.bo)
+-			continue;
+-		amdgpu_bo_get_memory(bo_va->base.bo, stats);
+-	}
+-	list_for_each_entry_safe(bo_va, tmp, &vm->evicted, base.vm_status) {
+-		if (!bo_va->base.bo)
+-			continue;
+-		amdgpu_bo_get_memory(bo_va->base.bo, stats);
+-	}
+-	list_for_each_entry_safe(bo_va, tmp, &vm->relocated, base.vm_status) {
+-		if (!bo_va->base.bo)
+-			continue;
+-		amdgpu_bo_get_memory(bo_va->base.bo, stats);
+-	}
+-	list_for_each_entry_safe(bo_va, tmp, &vm->moved, base.vm_status) {
+-		if (!bo_va->base.bo)
+-			continue;
+-		amdgpu_bo_get_memory(bo_va->base.bo, stats);
+-	}
+-	list_for_each_entry_safe(bo_va, tmp, &vm->invalidated, base.vm_status) {
+-		if (!bo_va->base.bo)
+-			continue;
+-		amdgpu_bo_get_memory(bo_va->base.bo, stats);
+-	}
+-	list_for_each_entry_safe(bo_va, tmp, &vm->done, base.vm_status) {
+-		if (!bo_va->base.bo)
+-			continue;
+-		amdgpu_bo_get_memory(bo_va->base.bo, stats);
+-	}
++	list_for_each_entry_safe(bo_va, tmp, &vm->idle, base.vm_status)
++		amdgpu_vm_bo_get_memory(bo_va, stats);
++
++	list_for_each_entry_safe(bo_va, tmp, &vm->evicted, base.vm_status)
++		amdgpu_vm_bo_get_memory(bo_va, stats);
++
++	list_for_each_entry_safe(bo_va, tmp, &vm->relocated, base.vm_status)
++		amdgpu_vm_bo_get_memory(bo_va, stats);
++
++	list_for_each_entry_safe(bo_va, tmp, &vm->moved, base.vm_status)
++		amdgpu_vm_bo_get_memory(bo_va, stats);
++
++	list_for_each_entry_safe(bo_va, tmp, &vm->invalidated, base.vm_status)
++		amdgpu_vm_bo_get_memory(bo_va, stats);
++
++	list_for_each_entry_safe(bo_va, tmp, &vm->done, base.vm_status)
++		amdgpu_vm_bo_get_memory(bo_va, stats);
+ 	spin_unlock(&vm->status_lock);
  }
  
- void clear_extent_buffer_uptodate(struct extent_buffer *eb)
---- a/fs/btrfs/extent_io.h
-+++ b/fs/btrfs/extent_io.h
-@@ -263,7 +263,7 @@ void extent_buffer_bitmap_set(const stru
- void extent_buffer_bitmap_clear(const struct extent_buffer *eb,
- 				unsigned long start, unsigned long pos,
- 				unsigned long len);
--bool set_extent_buffer_dirty(struct extent_buffer *eb);
-+void set_extent_buffer_dirty(struct extent_buffer *eb);
- void set_extent_buffer_uptodate(struct extent_buffer *eb);
- void clear_extent_buffer_uptodate(struct extent_buffer *eb);
- int extent_buffer_under_io(const struct extent_buffer *eb);
 
 
