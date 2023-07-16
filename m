@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA218F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:05:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871C5C433C8;
-	Sun, 16 Jul 2023 20:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7AB58F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:05:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB71C433C8;
+	Sun, 16 Jul 2023 20:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537924;
-	bh=K4cFRuLE+MyvbssmghWVqUZv1XOr+FVrs8SFrxcOrEw=;
+	s=korg; t=1689537927;
+	bh=e7Sb5KnSAeF19K2EtqipsPPKSL616wuJGxZdQJLAG5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dw4fD+0J0tf2ZXF5kIdqYg7onXT1fy7jtLAzQd8nj3rpp+tXBefJLEjOoqlod+rAA
-	 iMjnuxGWNyTUVlcySOUagfGmuMHL4q9wyxJmKrJfEZzyqdLl0eicpBZGPuvRTWFA0t
-	 uJ2qLK4SEHUsYRNDOiYMGiDhYiUxYCL+P6UFTw5w=
+	b=F3G5dnuSKeO4lbnSIvXoCULbZxDt46NGAMXbg90iMoljM1/qdERiGk1uMsC9cph69
+	 LqY+uEbXzsOncYg2Pl3fTMysqN5QVSSZ/CjFBU0mVl1Py4C2+5zHarhoQtSyTz9dQA
+	 5BBlfNJAPv4NBUGTEw5xkk59DVdCmLt/kGq44plw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 242/800] drm/bridge: tc358768: fix TXTAGOCNT computation
-Date: Sun, 16 Jul 2023 21:41:35 +0200
-Message-ID: <20230716194954.722828787@linuxfoundation.org>
+Subject: [PATCH 6.4 269/800] RDMA/bnxt_re: Fix to remove unnecessary return labels
+Date: Sun, 16 Jul 2023 21:42:02 +0200
+Message-ID: <20230716194955.343572064@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,42 +38,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit 3666aad8185af8d0ce164fd3c4974235417d6d0b ]
+[ Upstream commit 9b3ee47796f529e5bc31a355d6cb756d68a7079a ]
 
-Correct computation of TXTAGOCNT register.
+If there is no cleanup needed then just return directly.  This cleans up
+the code and improve readability.
 
-This register must be set to a value that ensure that the
-TTA-GO period = (4 x TLPX)
-
-with the actual value of TTA-GO being
-
-4 x (TXTAGOCNT + 1) x (HSByteClk cycle)
-
-Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-8-francesco@dolcini.it
+Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
+Link: https://lore.kernel.org/r/1684478897-12247-3-git-send-email-selvin.xavier@broadcom.com
+Reviewed-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Reviewed-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/bnxt_re/qplib_fp.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-index e3f456bfb90c1..d8209433d5f43 100644
---- a/drivers/gpu/drm/bridge/tc358768.c
-+++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -796,7 +796,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+index b922181525035..3c4a3bb1010e0 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+@@ -1618,7 +1618,7 @@ static int bnxt_qplib_put_inline(struct bnxt_qplib_qp *qp,
+ 		il_src = (void *)wqe->sg_list[indx].addr;
+ 		t_len += len;
+ 		if (t_len > qp->max_inline_data)
+-			goto bad;
++			return -ENOMEM;
+ 		while (len) {
+ 			if (pull_dst) {
+ 				pull_dst = false;
+@@ -1642,8 +1642,6 @@ static int bnxt_qplib_put_inline(struct bnxt_qplib_qp *qp,
+ 	}
  
- 	/* TXTAGOCNT[26:16] RXTASURECNT[10:0] */
- 	val = tc358768_to_ns((lptxcnt + 1) * dsibclk_nsk * 4);
--	val = tc358768_ns_to_cnt(val, dsibclk_nsk) - 1;
-+	val = tc358768_ns_to_cnt(val, dsibclk_nsk) / 4 - 1;
- 	val2 = tc358768_ns_to_cnt(tc358768_to_ns((lptxcnt + 1) * dsibclk_nsk),
- 				  dsibclk_nsk) - 2;
- 	val = val << 16 | val2;
+ 	return t_len;
+-bad:
+-	return -ENOMEM;
+ }
+ 
+ static u32 bnxt_qplib_put_sges(struct bnxt_qplib_hwq *hwq,
+@@ -2073,7 +2071,7 @@ int bnxt_qplib_create_cq(struct bnxt_qplib_res *res, struct bnxt_qplib_cq *cq)
+ 	hwq_attr.sginfo = &cq->sg_info;
+ 	rc = bnxt_qplib_alloc_init_hwq(&cq->hwq, &hwq_attr);
+ 	if (rc)
+-		goto exit;
++		return rc;
+ 
+ 	bnxt_qplib_rcfw_cmd_prep((struct cmdq_base *)&req,
+ 				 CMDQ_BASE_OPCODE_CREATE_CQ,
+@@ -2116,7 +2114,6 @@ int bnxt_qplib_create_cq(struct bnxt_qplib_res *res, struct bnxt_qplib_cq *cq)
+ 
+ fail:
+ 	bnxt_qplib_free_hwq(res, &cq->hwq);
+-exit:
+ 	return rc;
+ }
+ 
 -- 
 2.39.2
 
