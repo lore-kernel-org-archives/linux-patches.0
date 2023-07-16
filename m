@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06AD8F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:27:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652D6C433C8;
-	Sun, 16 Jul 2023 20:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1498F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:27:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B08BC433C8;
+	Sun, 16 Jul 2023 20:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539220;
-	bh=3l40eiHJj/NNMHQm6yEZpJZ2YspLPD7oLd4/khaIQdU=;
+	s=korg; t=1689539223;
+	bh=pFjYJL5R6I/nl8gISCr1UMH8nPD+e6rYKspmxpAEkZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aMoee0evfRiEvWHD92nFP6Ltm0qOyBJW+HkcXRNb4+WD56zOLdtPavTo8IQ9eBhS0
-	 r2YbIEY8ubuXiXKwOGb5DKByNwI+NIJke8DIsyNjtJWQ6BRmDfQ+SKeUMfCjTAMXjH
-	 N1E3l0mZ2N9PTkeNDvZJ60sP3HytCRwCrk+vMdHo=
+	b=UoK6+rqRLNJ+RVHD8esMXHVFffmcvj1H39zO3Yo6n6EV2peaHQvSkgGR629m94t5b
+	 L1OdHC5SIKndJzGCsiaY4aUrv7xmh7ibJ8tpXtuSWatPgEXGsol+j88pUOxajEaju6
+	 h+f/s2KXjvhXWT2rl7V8yK92M4PA0YKkIH6Bf6lA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
-	Alexander Wetzel <alexander@wetzel-home.de>,
-	Kalle Valo <quic_kvalo@quicinc.com>
-Subject: [PATCH 6.4 731/800] wifi: ath10k: Serialize wake_tx_queue ops
-Date: Sun, 16 Jul 2023 21:49:44 +0200
-Message-ID: <20230716195006.096830557@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Nicolas Escande <nico.escande@gmail.com>
+Subject: [PATCH 6.4 732/800] wifi: cfg80211: fix receiving mesh packets without RFC1042 header
+Date: Sun, 16 Jul 2023 21:49:45 +0200
+Message-ID: <20230716195006.119938165@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,86 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Wetzel <alexander@wetzel-home.de>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit b719ebc37a1eacd4fd4f1264f731b016e5ec0c6e upstream.
+commit fec3ebb5ed299ac3a998f011c380f2ded47f4866 upstream.
 
-Serialize the ath10k implementation of the wake_tx_queue ops.
-ath10k_mac_op_wake_tx_queue() must not run concurrent since it's using
-ieee80211_txq_schedule_start().
+Fix ethernet header length field after stripping the mesh header
 
-The intend of this patch is to sort out an issue discovered in the discussion
-referred to by the Link tag.
-
-I can't test it with real hardware and thus just implemented the per-ac queue
-lock Felix suggested. One obvious alternative to the per-ac lock would be to
-bring back the txqs_lock commit bb2edb733586 ("ath10k: migrate to mac80211 txq
-scheduling") dropped.
-
-Fixes: bb2edb733586 ("ath10k: migrate to mac80211 txq scheduling")
-Reported-by: Felix Fietkau <nbd@nbd.name>
-Link: https://lore.kernel.org/r/519b5bb9-8899-ae7c-4eff-f3116cdfdb56@nbd.name
-CC: <stable@vger.kernel.org>
-Signed-off-by: Alexander Wetzel <alexander@wetzel-home.de>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230323165527.156414-1-alexander@wetzel-home.de
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/CT5GNZSK28AI.2K6M69OXM9RW5@syracuse/
+Fixes: 986e43b19ae9 ("wifi: mac80211: fix receiving A-MSDU frames on mesh interfaces")
+Reported-and-tested-by: Nicolas Escande <nico.escande@gmail.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://lore.kernel.org/r/20230711115052.68430-1-nbd@nbd.name
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath10k/core.c |    3 +++
- drivers/net/wireless/ath/ath10k/core.h |    3 +++
- drivers/net/wireless/ath/ath10k/mac.c  |    6 ++++--
- 3 files changed, 10 insertions(+), 2 deletions(-)
+ net/wireless/util.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/wireless/ath/ath10k/core.c
-+++ b/drivers/net/wireless/ath/ath10k/core.c
-@@ -3634,6 +3634,9 @@ struct ath10k *ath10k_core_create(size_t
- 	mutex_init(&ar->dump_mutex);
- 	spin_lock_init(&ar->data_lock);
+diff --git a/net/wireless/util.c b/net/wireless/util.c
+index 89c9ad6c886e..1783ab9d57a3 100644
+--- a/net/wireless/util.c
++++ b/net/wireless/util.c
+@@ -580,6 +580,8 @@ int ieee80211_strip_8023_mesh_hdr(struct sk_buff *skb)
+ 		hdrlen += ETH_ALEN + 2;
+ 	else if (!pskb_may_pull(skb, hdrlen))
+ 		return -EINVAL;
++	else
++		payload.eth.h_proto = htons(skb->len - hdrlen);
  
-+	for (int ac = 0; ac < IEEE80211_NUM_ACS; ac++)
-+		spin_lock_init(&ar->queue_lock[ac]);
-+
- 	INIT_LIST_HEAD(&ar->peers);
- 	init_waitqueue_head(&ar->peer_mapping_wq);
- 	init_waitqueue_head(&ar->htt.empty_tx_wq);
---- a/drivers/net/wireless/ath/ath10k/core.h
-+++ b/drivers/net/wireless/ath/ath10k/core.h
-@@ -1170,6 +1170,9 @@ struct ath10k {
- 	/* protects shared structure data */
- 	spinlock_t data_lock;
- 
-+	/* serialize wake_tx_queue calls per ac */
-+	spinlock_t queue_lock[IEEE80211_NUM_ACS];
-+
- 	struct list_head arvifs;
- 	struct list_head peers;
- 	struct ath10k_peer *peer_map[ATH10K_MAX_NUM_PEER_IDS];
---- a/drivers/net/wireless/ath/ath10k/mac.c
-+++ b/drivers/net/wireless/ath/ath10k/mac.c
-@@ -4732,13 +4732,14 @@ static void ath10k_mac_op_wake_tx_queue(
- {
- 	struct ath10k *ar = hw->priv;
- 	int ret;
--	u8 ac;
-+	u8 ac = txq->ac;
- 
- 	ath10k_htt_tx_txq_update(hw, txq);
- 	if (ar->htt.tx_q_state.mode != HTT_TX_MODE_SWITCH_PUSH)
- 		return;
- 
--	ac = txq->ac;
-+	spin_lock_bh(&ar->queue_lock[ac]);
-+
- 	ieee80211_txq_schedule_start(hw, ac);
- 	txq = ieee80211_next_txq(hw, ac);
- 	if (!txq)
-@@ -4753,6 +4754,7 @@ static void ath10k_mac_op_wake_tx_queue(
- 	ath10k_htt_tx_txq_update(hw, txq);
- out:
- 	ieee80211_txq_schedule_end(hw, ac);
-+	spin_unlock_bh(&ar->queue_lock[ac]);
- }
- 
- /* Must not be called with conf_mutex held as workers can use that also. */
+ 	mesh_addr = skb->data + sizeof(payload.eth) + ETH_ALEN;
+ 	switch (payload.flags & MESH_FLAGS_AE) {
+-- 
+2.41.0
+
 
 
