@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F6E8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:11:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A56AC433C7;
-	Sun, 16 Jul 2023 20:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB6B8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:11:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41BCEC433C8;
+	Sun, 16 Jul 2023 20:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538290;
-	bh=YlodnbUFJXb4lIyu3JpaArbvJlF+M+ZzwzlB3xj8AZM=;
+	s=korg; t=1689538293;
+	bh=32bIBJrzYt4IWeuS1C9n0+wAAujBPREGIex+VnxGCfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dBPnB11JJbEREZflH07XheZKkjcHECiAgnDY35oEOzukdO0kRFaDDMDWP5nlZA5Vk
-	 u7HEUj1V3Y1W7Zq5mF7QqcIOJVg7u1VjUw8cHqS8m8cBMaMTesBUQ4Z6lV8JpQYBdk
-	 4DlQlFS4qnFPAlyIM6NUv76MoeXHsQ8DpH9mwlyI=
+	b=aX5Ro6CF1wcHfs86BU416ZbX+p+sIVR5ZbkLOCtPaxRhecyv0qGrKEJQPGuPcBW1A
+	 ChMf295SSh4k9Tyi/cheoqME1HsQatqdTE5aQPejFQlKfnOU5DoNQVbwLjh37CR2mk
+	 iTpmzID7oeTfuO3Hav0Yy2pROWMztXtMXqfbt6bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 355/800] Input: pm8941-powerkey - fix debounce on gen2+ PMICs
-Date: Sun, 16 Jul 2023 21:43:28 +0200
-Message-ID: <20230716194957.324761534@linuxfoundation.org>
+Subject: [PATCH 6.4 346/800] drm/i915: Fix limited range csc matrix
+Date: Sun, 16 Jul 2023 21:43:19 +0200
+Message-ID: <20230716194957.117528114@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,74 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Caleb Connolly <caleb.connolly@linaro.org>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 8c9cce9cb81b5fdc6e66bf3f129727b89e8daab7 ]
+[ Upstream commit 404c3acda4b65924c05bc63242e94f954f84c165 ]
 
-Since PM8998/PM660, the power key debounce register was redefined to
-support shorter debounce times. On PM8941 the shortest debounce time
-(represented by register value 0) was 15625us, on PM8998 the shortest
-debounce time is 62us, with the default being 2ms.
+Our current limited range matrix is a bit off. I think it
+was originally calculated with rounding, as if we wanted
+the normal pixel replication type of behaviour.
+That is, since the 8bpc max value is 0xeb we assumed the
+16bpc max value should be 0xebeb, but what the HDMI spec
+actually says it should be is 0xeb00.
 
-Adjust the bit shift to correctly program debounce on PM8998 and newer.
+So to get what we want we make the formula
+ out = in * (235-16) << (12-8) / in_max + 16 << (12-8),
+with 12 being precision of the csc, 8 being the precision
+of the constants we used.
 
-Fixes: 68c581d5e7d8 ("Input: add Qualcomm PM8941 power key driver")
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-Link: https://lore.kernel.org/r/20230529-pm8941-pwrkey-debounce-v1-2-c043a6d5c814@linaro.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+The hardware takes its coefficients as floating point
+values, but the (235−16)/255 = ~.86, so exponent 0
+is what we want anyway, so it works out perfectly without
+having to hardcode it in hex or start playing with floats.
+
+In terms of raw numbers we are feeding the hardware the
+post offset changes from 0x101 to 0x100, and the coefficient
+changes from 0xdc0 to 0xdb0 (~.860->~.855). So this should
+make everything come out just a tad darker.
+
+I already used better constants in lut_limited_range() earlier
+so the output of the two paths should be closer now.
+
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230329135002.3096-2-ville.syrjala@linux.intel.com
+Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Stable-dep-of: 19db2062094c ("drm/i915: No 10bit gamma on desktop gen3 parts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/pm8941-pwrkey.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/display/intel_color.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/input/misc/pm8941-pwrkey.c b/drivers/input/misc/pm8941-pwrkey.c
-index b6a27ebae977b..74d77d8aaeff2 100644
---- a/drivers/input/misc/pm8941-pwrkey.c
-+++ b/drivers/input/misc/pm8941-pwrkey.c
-@@ -50,7 +50,10 @@
- #define  PON_RESIN_PULL_UP		BIT(0)
+diff --git a/drivers/gpu/drm/i915/display/intel_color.c b/drivers/gpu/drm/i915/display/intel_color.c
+index 36aac88143ac1..3c3e2f5a5cdec 100644
+--- a/drivers/gpu/drm/i915/display/intel_color.c
++++ b/drivers/gpu/drm/i915/display/intel_color.c
+@@ -116,10 +116,9 @@ struct intel_color_funcs {
+ #define ILK_CSC_COEFF_FP(coeff, fbits)	\
+ 	(clamp_val(((coeff) >> (32 - (fbits) - 3)) + 4, 0, 0xfff) & 0xff8)
  
- #define PON_DBC_CTL			0x71
--#define  PON_DBC_DELAY_MASK		0x7
-+#define  PON_DBC_DELAY_MASK_GEN1	0x7
-+#define  PON_DBC_DELAY_MASK_GEN2	0xf
-+#define  PON_DBC_SHIFT_GEN1		6
-+#define  PON_DBC_SHIFT_GEN2		14
+-#define ILK_CSC_COEFF_LIMITED_RANGE 0x0dc0
+ #define ILK_CSC_COEFF_1_0 0x7800
+-
+-#define ILK_CSC_POSTOFF_LIMITED_RANGE (16 * (1 << 12) / 255)
++#define ILK_CSC_COEFF_LIMITED_RANGE ((235 - 16) << (12 - 8)) /* exponent 0 */
++#define ILK_CSC_POSTOFF_LIMITED_RANGE (16 << (12 - 8))
  
- struct pm8941_data {
- 	unsigned int	pull_up_bit;
-@@ -247,7 +250,7 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
- 	struct device *parent;
- 	struct device_node *regmap_node;
- 	const __be32 *addr;
--	u32 req_delay;
-+	u32 req_delay, mask, delay_shift;
- 	int error;
- 
- 	if (of_property_read_u32(pdev->dev.of_node, "debounce", &req_delay))
-@@ -336,12 +339,20 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
- 	pwrkey->input->phys = pwrkey->data->phys;
- 
- 	if (pwrkey->data->supports_debounce_config) {
--		req_delay = (req_delay << 6) / USEC_PER_SEC;
-+		if (pwrkey->subtype >= PON_SUBTYPE_GEN2_PRIMARY) {
-+			mask = PON_DBC_DELAY_MASK_GEN2;
-+			delay_shift = PON_DBC_SHIFT_GEN2;
-+		} else {
-+			mask = PON_DBC_DELAY_MASK_GEN1;
-+			delay_shift = PON_DBC_SHIFT_GEN1;
-+		}
-+
-+		req_delay = (req_delay << delay_shift) / USEC_PER_SEC;
- 		req_delay = ilog2(req_delay);
- 
- 		error = regmap_update_bits(pwrkey->regmap,
- 					   pwrkey->baseaddr + PON_DBC_CTL,
--					   PON_DBC_DELAY_MASK,
-+					   mask,
- 					   req_delay);
- 		if (error) {
- 			dev_err(&pdev->dev, "failed to set debounce: %d\n",
+ /* Nop pre/post offsets */
+ static const u16 ilk_csc_off_zero[3] = {};
 -- 
 2.39.2
 
