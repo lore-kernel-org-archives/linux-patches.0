@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF508F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:10:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BA2C433C7;
-	Sun, 16 Jul 2023 20:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2242C8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:10:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E866C433C8;
+	Sun, 16 Jul 2023 20:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538203;
-	bh=kP8acd/ehKr3faLMmqod5bdajN5MCMDWr7lHafe/nE8=;
+	s=korg; t=1689538208;
+	bh=nehc9UeoDg/AFZKaXKFYGmUBU8oSUPIovkkEZ2zK570=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kThkDxrBhq/n4/Ms6n8EooXzRsf2GtEbrTeArqZtYaHiIZ1EXrFfDqTkHuYzpUAM0
-	 3DcJhPB1EhDeaolS2q/zavTb6Zt4gcVyfIEtf5Fa73vj/qXJO7Hnbp4PSRW/ziZ03O
-	 byriFgpPMOXLgzmD117Mt6EaVlcz2jfRYhpeh7O0=
+	b=DP+o5401ZLnTV8S6l0Vh6Ax3Cokz2GaPxzqGyHXgWh58Plde5Lf52MUVi/n652c0/
+	 WVFZulluvW+jMDvwPjkCmwyDDR+h97kW7MRjMsuk+m/1iV3Xy/rZbBYEDpLLQSyjjE
+	 3I2WDoJGH9flZ20+R73fMPq5kHOLcXW8TO+fNctw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Dulov <d.dulov@aladdin.ru>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 367/800] drm/amdkfd: Fix potential deallocation of previously deallocated memory.
-Date: Sun, 16 Jul 2023 21:43:40 +0200
-Message-ID: <20230716194957.601952933@linuxfoundation.org>
+Subject: [PATCH 6.4 369/800] drm/amd/display: Fix artifacting on eDP panels when engaging freesync video mode
+Date: Sun, 16 Jul 2023 21:43:42 +0200
+Message-ID: <20230716194957.646246341@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,57 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniil Dulov <d.dulov@aladdin.ru>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-[ Upstream commit cabbdea1f1861098991768d7bbf5a49ed1608213 ]
+[ Upstream commit b18f05a0666aecd5cb19c26a8305bcfa4e9d6502 ]
 
-Pointer mqd_mem_obj can be deallocated in kfd_gtt_sa_allocate().
-The function then returns non-zero value, which causes the second deallocation.
+[Why]
+When freesync video mode is enabled, switching resolution from native
+mode to one of the freesync video compatible modes can trigger continous
+artifacts on some eDP panels when running under KDE. The articating can be seen in the
+attached bug report.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+[How]
+Fix this by restricting updates that require full commit by using the same checks
+for stream and scaling changes in the the enable pass of dm_update_crtc_state()
+along with the check for compatible timings for freesync vide mode.
 
-Fixes: d1f8f0d17d40 ("drm/amdkfd: Move non-sdma mqd allocation out of init_mqd")
-Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
-Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2162
+Fixes: da5e14909776 ("drm/amd/display: Fix hang when skipping modeset")
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-index fdbfd725841ff..51b53110341bb 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-@@ -115,18 +115,19 @@ static struct kfd_mem_obj *allocate_mqd(struct kfd_dev *kfd,
- 			&(mqd_mem_obj->gtt_mem),
- 			&(mqd_mem_obj->gpu_addr),
- 			(void *)&(mqd_mem_obj->cpu_ptr), true);
-+
-+		if (retval) {
-+			kfree(mqd_mem_obj);
-+			return NULL;
-+		}
- 	} else {
- 		retval = kfd_gtt_sa_allocate(kfd, sizeof(struct v9_mqd),
- 				&mqd_mem_obj);
--	}
--
--	if (retval) {
--		kfree(mqd_mem_obj);
--		return NULL;
-+		if (retval)
-+			return NULL;
- 	}
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -9259,6 +9259,8 @@ static int dm_update_crtc_state(struct a
  
- 	return mqd_mem_obj;
--
- }
- 
- static void init_mqd(struct mqd_manager *mm, void **mqd,
--- 
-2.39.2
-
+ 		/* Now check if we should set freesync video mode */
+ 		if (amdgpu_freesync_vid_mode && dm_new_crtc_state->stream &&
++		    dc_is_stream_unchanged(new_stream, dm_old_crtc_state->stream) &&
++		    dc_is_stream_scaling_unchanged(new_stream, dm_old_crtc_state->stream) &&
+ 		    is_timing_unchanged_for_freesync(new_crtc_state,
+ 						     old_crtc_state)) {
+ 			new_crtc_state->mode_changed = false;
 
 
