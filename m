@@ -1,33 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678D08F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:14:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE8DEC433C7;
-	Sun, 16 Jul 2023 20:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447F08F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:14:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93CF0C433C8;
+	Sun, 16 Jul 2023 20:14:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538490;
-	bh=DQUa3mqu3z7Z5tKHUw7Bosn1IPdmhPhPz8/aaKUR73Q=;
+	s=korg; t=1689538493;
+	bh=531KIonvJdfc0DRqDAojvyWakR17Ajh0wyuLD6V0wXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kceLYowpnn1hyCJiLofxi4zo7bICelEQaHMRadoNQIR0Dc4oqqK8V2qkc5VFWIQUx
-	 nnC//5+5NzCv+dv/QztO21Tk7OusIJua8SaS1vhAupkXEmpBgYCMMloMuS5gJhkLjl
-	 IL9Nc1fYtdKCYY/fyWJJgZJbnvFfh5MpI67ZzyMU=
+	b=SsXsJkNpHert3LKFFqIbHGeMP3H3MMv0jdOCRlzN5NrMVxL3OCEh+bLcVpbKYceK3
+	 Ow16eqOFkCPlXaVh32oD7I+8273ep2cKACvamkiKvQQVjsq6hW89pI37CIC8VlvM4F
+	 0ReH1KH0eJWeXWnCXG23wSXAtxPp9e6rgmS+83xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ahmad Yasin <ahmad.yasin@intel.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
+	Stephane Eranian <eranian@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 470/800] perf dwarf-aux: Fix off-by-one in die_get_varname()
-Date: Sun, 16 Jul 2023 21:45:23 +0200
-Message-ID: <20230716194959.998576885@linuxfoundation.org>
+Subject: [PATCH 6.4 471/800] perf metric: Fix no group check
+Date: Sun, 16 Jul 2023 21:45:24 +0200
+Message-ID: <20230716195000.021306290@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -41,43 +44,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit 3abfcfd847717d232e36963f31a361747c388fe7 ]
+[ Upstream commit e4c4e8a538a0db071d291bc2dca487e1882a7d4f ]
 
-The die_get_varname() returns "(unknown_type)" string if it failed to
-find a type for the variable.  But it had a space before the opening
-parenthesis and it made the closing parenthesis cut off due to the
-off-by-one in the string length (14).
+The no group check fails if there is more than one meticgroup in the
+metricgroup_no_group.
 
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Fixes: 88fd633cdfa19060 ("perf probe: No need to use formatting strbuf method")
+The first parameter of the match_metric() should be the string, while
+the substring should be the second parameter.
+
+Fixes: ccc66c6092802d68 ("perf metric: JSON flag to not group events if gathering a metric group")
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Acked-by: Ian Rogers <irogers@google.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ahmad Yasin <ahmad.yasin@intel.com>
+Cc: Andi Kleen <ak@linux.intel.com>
 Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Ingo Molnar <mingo@redhat.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20230612234102.3909116-1-namhyung@kernel.org
+Cc: Stephane Eranian <eranian@google.com>
+Link: https://lore.kernel.org/r/20230607162700.3234712-2-kan.liang@linux.intel.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dwarf-aux.c | 2 +-
+ tools/perf/util/metricgroup.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
-index b074144097710..3bff678745635 100644
---- a/tools/perf/util/dwarf-aux.c
-+++ b/tools/perf/util/dwarf-aux.c
-@@ -1103,7 +1103,7 @@ int die_get_varname(Dwarf_Die *vr_die, struct strbuf *buf)
- 	ret = die_get_typename(vr_die, buf);
- 	if (ret < 0) {
- 		pr_debug("Failed to get type, make it unknown.\n");
--		ret = strbuf_add(buf, " (unknown_type)", 14);
-+		ret = strbuf_add(buf, "(unknown_type)", 14);
- 	}
+diff --git a/tools/perf/util/metricgroup.c b/tools/perf/util/metricgroup.c
+index 5e9c657dd3f7a..b659b149e5b41 100644
+--- a/tools/perf/util/metricgroup.c
++++ b/tools/perf/util/metricgroup.c
+@@ -1146,7 +1146,7 @@ static int metricgroup__add_metric_callback(const struct pmu_metric *pm,
  
- 	return ret < 0 ? ret : strbuf_addf(buf, "\t%s", dwarf_diename(vr_die));
+ 	if (pm->metric_expr && match_pm_metric(pm, data->metric_name)) {
+ 		bool metric_no_group = data->metric_no_group ||
+-			match_metric(data->metric_name, pm->metricgroup_no_group);
++			match_metric(pm->metricgroup_no_group, data->metric_name);
+ 
+ 		data->has_match = true;
+ 		ret = add_metric(data->list, pm, data->modifier, metric_no_group,
 -- 
 2.39.2
 
