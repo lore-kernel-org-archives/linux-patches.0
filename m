@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9614F8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:50:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E39C433C7;
-	Sun, 16 Jul 2023 20:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C788F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:50:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54E4C433C7;
+	Sun, 16 Jul 2023 20:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540638;
-	bh=2wbe0hGX14Fm2Tn8K1uRdJrIlrXJFve5ZTWq9eaZbhA=;
+	s=korg; t=1689540641;
+	bh=SBj9yeZaNjFgb0nWw2iiJ6T4HKXt1T/B3qdNRcQm6VI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BcP0ZlZ7rdVkHs7oBgBTqizyhIYQ6yC/UCkvtvbX6aKLv7exbo8uatRAjr6sd0zd1
-	 +BuiUPvjwWk67iGopHCN+fytOtzAGeqRyStcCFGKrS3wqQ3IsvT3671dmcP4olUjtP
-	 3+xc3KOlNiU9uPpeVifZ9Im80DhZ6R/5W+LEeVGc=
+	b=a1o1rdrh0jmh3LXgDjoOOlsUI3kVF2P5z/OYaVwWKBO38F+NhaplkAWC8PwsU22PC
+	 UaHKrp+4C5NxE/3RXk2WdCEFlsL5Pe18PkuV/o8VL9gfJ7cdnm5hYa/BL2ytb/G8JM
+	 LmOGn86M+fIUDy7O+QmDm7h9eNTY0WP/umwZfm0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Luca Weiss <luca@z3ntu.xyz>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Umang Jain <umang.jain@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 407/591] clk: qcom: mmcc-msm8974: use clk_rcg2_shared_ops for mdp_clk_src clock
-Date: Sun, 16 Jul 2023 21:49:06 +0200
-Message-ID: <20230716194934.444142181@linuxfoundation.org>
+Subject: [PATCH 6.1 408/591] staging: vchiq_arm: mark vchiq_platform_init() static
+Date: Sun, 16 Jul 2023 21:49:07 +0200
+Message-ID: <20230716194934.469206169@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,35 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 8fd492e77ff71f68f7311c22f7bc960182465cd7 ]
+[ Upstream commit e152c58d7a48194d6b530d8e004d650fd01568b6 ]
 
-The mdp_clk_src clock should not be turned off. Instead it should be
-'parked' to the XO, as most of other mdp_clk_src clocks. Fix that by
-using the clk_rcg2_shared_ops.
+This function has no callers from other files, and the declaration
+was removed a while ago, causing a W=1 warning:
 
-Fixes: d8b212014e69 ("clk: qcom: Add support for MSM8974's multimedia clock controller (MMCC)")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Luca Weiss <luca@z3ntu.xyz>
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230507175335.2321503-1-dmitry.baryshkov@linaro.org
+drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c:465:5: error: no previous prototype for 'vchiq_platform_init'
+
+Marking it static solves this problem but introduces a new warning
+since gcc determines that 'g_fragments_base' is never initialized
+in some kernel configurations:
+
+In file included from include/linux/string.h:254,
+                 from include/linux/bitmap.h:11,
+                 from include/linux/cpumask.h:12,
+                 from include/linux/mm_types_task.h:14,
+                 from include/linux/mm_types.h:5,
+                 from include/linux/buildid.h:5,
+                 from include/linux/module.h:14,
+                 from drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c:8:
+In function 'memcpy_to_page',
+    inlined from 'free_pagelist' at drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c:433:4:
+include/linux/fortify-string.h:57:33: error: argument 2 null where non-null expected [-Werror=nonnull]
+include/linux/highmem.h:427:9: note: in expansion of macro 'memcpy'
+  427 |         memcpy(to + offset, from, len);
+      |         ^~~~~~
+
+Add a NULL pointer check for this in addition to the static annotation
+to avoid both.
+
+Fixes: 89cc4218f640 ("staging: vchiq_arm: drop unnecessary declarations")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Umang Jain <umang.jain@ideasonboard.com>
+Link: https://lore.kernel.org/r/20230516202603.560554-1-arnd@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/mmcc-msm8974.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/clk/qcom/mmcc-msm8974.c
-+++ b/drivers/clk/qcom/mmcc-msm8974.c
-@@ -473,7 +473,7 @@ static struct clk_rcg2 mdp_clk_src = {
- 		.name = "mdp_clk_src",
- 		.parent_names = mmcc_xo_mmpll0_dsi_hdmi_gpll0,
- 		.num_parents = 6,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
+diff --git a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
+index dc33490ba7fbb..705c5e283c27b 100644
+--- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
++++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
+@@ -415,7 +415,7 @@ free_pagelist(struct vchiq_instance *instance, struct vchiq_pagelist_info *pagel
+ 	pagelistinfo->scatterlist_mapped = 0;
  
+ 	/* Deal with any partial cache lines (fragments) */
+-	if (pagelist->type >= PAGELIST_READ_WITH_FRAGMENTS) {
++	if (pagelist->type >= PAGELIST_READ_WITH_FRAGMENTS && g_fragments_base) {
+ 		char *fragments = g_fragments_base +
+ 			(pagelist->type - PAGELIST_READ_WITH_FRAGMENTS) *
+ 			g_fragments_size;
+@@ -462,7 +462,7 @@ free_pagelist(struct vchiq_instance *instance, struct vchiq_pagelist_info *pagel
+ 	cleanup_pagelistinfo(instance, pagelistinfo);
+ }
+ 
+-int vchiq_platform_init(struct platform_device *pdev, struct vchiq_state *state)
++static int vchiq_platform_init(struct platform_device *pdev, struct vchiq_state *state)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct vchiq_drvdata *drvdata = platform_get_drvdata(pdev);
+-- 
+2.39.2
+
 
 
