@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010B2944C
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:30:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72145C433C9;
-	Sun, 16 Jul 2023 20:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BADE7A924
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:30:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA3AC433C9;
+	Sun, 16 Jul 2023 20:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539402;
-	bh=rE00nsTelNN9dyFmvwGWbyYm/2WqW6CqhFeMwqy9xMI=;
+	s=korg; t=1689539405;
+	bh=EV7DvH5ohIoIrD7esThuyEXLGDjyXa+WMDw0jmVhzT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GR94146bqsBhNeMX/iY/ITKTZeRW5xLSD1YX1gMc9cl+e7UG67kAMVWfuFC3SjPbT
-	 YjQ4quLhzInsNtOtHWRdLNq1AoreYFFeFiJ5ujqgzWC2gSX46qgq427+yMVqZCdGUJ
-	 zvFufWAqrnTP9uiRfCYb5pZhcclJExEJTnea8g+0=
+	b=FQEaY9Sw5i1BUnPS7JHFcrUlpdPb+ZtegxntueT4dTsACZd6jof5BC7+mG3rJx9mX
+	 P+pTzTvMhvk080V1z//AQiQsv9K3o72okmQRdvi2UzwFgVW5YRFsbKXWzbugFwXyKO
+	 EL6ANu3IahEkzXlRQZj4kmbFKv4oc3pc41NMnt1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.4 796/800] netfilter: nf_tables: prevent OOB access in nft_byteorder_eval
-Date: Sun, 16 Jul 2023 21:50:49 +0200
-Message-ID: <20230716195007.638994827@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Manuel Leiner <manuel.leiner@gmx.de>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.4 797/800] wireguard: queueing: use saner cpu selection wrapping
+Date: Sun, 16 Jul 2023 21:50:50 +0200
+Message-ID: <20230716195007.663377060@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,211 +36,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit caf3ef7468f7534771b5c44cd8dbd6f7f87c2cbd upstream.
+commit 7387943fa35516f6f8017a3b0e9ce48a3bef9faa upstream.
 
-When evaluating byteorder expressions with size 2, a union with 32-bit and
-16-bit members is used. Since the 16-bit members are aligned to 32-bit,
-the array accesses will be out-of-bounds.
+Using `% nr_cpumask_bits` is slow and complicated, and not totally
+robust toward dynamic changes to CPU topologies. Rather than storing the
+next CPU in the round-robin, just store the last one, and also return
+that value. This simplifies the loop drastically into a much more common
+pattern.
 
-It may lead to a stack-out-of-bounds access like the one below:
-
-[   23.095215] ==================================================================
-[   23.095625] BUG: KASAN: stack-out-of-bounds in nft_byteorder_eval+0x13c/0x320
-[   23.096020] Read of size 2 at addr ffffc90000007948 by task ping/115
-[   23.096358]
-[   23.096456] CPU: 0 PID: 115 Comm: ping Not tainted 6.4.0+ #413
-[   23.096770] Call Trace:
-[   23.096910]  <IRQ>
-[   23.097030]  dump_stack_lvl+0x60/0xc0
-[   23.097218]  print_report+0xcf/0x630
-[   23.097388]  ? nft_byteorder_eval+0x13c/0x320
-[   23.097577]  ? kasan_addr_to_slab+0xd/0xc0
-[   23.097760]  ? nft_byteorder_eval+0x13c/0x320
-[   23.097949]  kasan_report+0xc9/0x110
-[   23.098106]  ? nft_byteorder_eval+0x13c/0x320
-[   23.098298]  __asan_load2+0x83/0xd0
-[   23.098453]  nft_byteorder_eval+0x13c/0x320
-[   23.098659]  nft_do_chain+0x1c8/0xc50
-[   23.098852]  ? __pfx_nft_do_chain+0x10/0x10
-[   23.099078]  ? __kasan_check_read+0x11/0x20
-[   23.099295]  ? __pfx___lock_acquire+0x10/0x10
-[   23.099535]  ? __pfx___lock_acquire+0x10/0x10
-[   23.099745]  ? __kasan_check_read+0x11/0x20
-[   23.099929]  nft_do_chain_ipv4+0xfe/0x140
-[   23.100105]  ? __pfx_nft_do_chain_ipv4+0x10/0x10
-[   23.100327]  ? lock_release+0x204/0x400
-[   23.100515]  ? nf_hook.constprop.0+0x340/0x550
-[   23.100779]  nf_hook_slow+0x6c/0x100
-[   23.100977]  ? __pfx_nft_do_chain_ipv4+0x10/0x10
-[   23.101223]  nf_hook.constprop.0+0x334/0x550
-[   23.101443]  ? __pfx_ip_local_deliver_finish+0x10/0x10
-[   23.101677]  ? __pfx_nf_hook.constprop.0+0x10/0x10
-[   23.101882]  ? __pfx_ip_rcv_finish+0x10/0x10
-[   23.102071]  ? __pfx_ip_local_deliver_finish+0x10/0x10
-[   23.102291]  ? rcu_read_lock_held+0x4b/0x70
-[   23.102481]  ip_local_deliver+0xbb/0x110
-[   23.102665]  ? __pfx_ip_rcv+0x10/0x10
-[   23.102839]  ip_rcv+0x199/0x2a0
-[   23.102980]  ? __pfx_ip_rcv+0x10/0x10
-[   23.103140]  __netif_receive_skb_one_core+0x13e/0x150
-[   23.103362]  ? __pfx___netif_receive_skb_one_core+0x10/0x10
-[   23.103647]  ? mark_held_locks+0x48/0xa0
-[   23.103819]  ? process_backlog+0x36c/0x380
-[   23.103999]  __netif_receive_skb+0x23/0xc0
-[   23.104179]  process_backlog+0x91/0x380
-[   23.104350]  __napi_poll.constprop.0+0x66/0x360
-[   23.104589]  ? net_rx_action+0x1cb/0x610
-[   23.104811]  net_rx_action+0x33e/0x610
-[   23.105024]  ? _raw_spin_unlock+0x23/0x50
-[   23.105257]  ? __pfx_net_rx_action+0x10/0x10
-[   23.105485]  ? mark_held_locks+0x48/0xa0
-[   23.105741]  __do_softirq+0xfa/0x5ab
-[   23.105956]  ? __dev_queue_xmit+0x765/0x1c00
-[   23.106193]  do_softirq.part.0+0x49/0xc0
-[   23.106423]  </IRQ>
-[   23.106547]  <TASK>
-[   23.106670]  __local_bh_enable_ip+0xf5/0x120
-[   23.106903]  __dev_queue_xmit+0x789/0x1c00
-[   23.107131]  ? __pfx___dev_queue_xmit+0x10/0x10
-[   23.107381]  ? find_held_lock+0x8e/0xb0
-[   23.107585]  ? lock_release+0x204/0x400
-[   23.107798]  ? neigh_resolve_output+0x185/0x350
-[   23.108049]  ? mark_held_locks+0x48/0xa0
-[   23.108265]  ? neigh_resolve_output+0x185/0x350
-[   23.108514]  neigh_resolve_output+0x246/0x350
-[   23.108753]  ? neigh_resolve_output+0x246/0x350
-[   23.109003]  ip_finish_output2+0x3c3/0x10b0
-[   23.109250]  ? __pfx_ip_finish_output2+0x10/0x10
-[   23.109510]  ? __pfx_nf_hook+0x10/0x10
-[   23.109732]  __ip_finish_output+0x217/0x390
-[   23.109978]  ip_finish_output+0x2f/0x130
-[   23.110207]  ip_output+0xc9/0x170
-[   23.110404]  ip_push_pending_frames+0x1a0/0x240
-[   23.110652]  raw_sendmsg+0x102e/0x19e0
-[   23.110871]  ? __pfx_raw_sendmsg+0x10/0x10
-[   23.111093]  ? lock_release+0x204/0x400
-[   23.111304]  ? __mod_lruvec_page_state+0x148/0x330
-[   23.111567]  ? find_held_lock+0x8e/0xb0
-[   23.111777]  ? find_held_lock+0x8e/0xb0
-[   23.111993]  ? __rcu_read_unlock+0x7c/0x2f0
-[   23.112225]  ? aa_sk_perm+0x18a/0x550
-[   23.112431]  ? filemap_map_pages+0x4f1/0x900
-[   23.112665]  ? __pfx_aa_sk_perm+0x10/0x10
-[   23.112880]  ? find_held_lock+0x8e/0xb0
-[   23.113098]  inet_sendmsg+0xa0/0xb0
-[   23.113297]  ? inet_sendmsg+0xa0/0xb0
-[   23.113500]  ? __pfx_inet_sendmsg+0x10/0x10
-[   23.113727]  sock_sendmsg+0xf4/0x100
-[   23.113924]  ? move_addr_to_kernel.part.0+0x4f/0xa0
-[   23.114190]  __sys_sendto+0x1d4/0x290
-[   23.114391]  ? __pfx___sys_sendto+0x10/0x10
-[   23.114621]  ? __pfx_mark_lock.part.0+0x10/0x10
-[   23.114869]  ? lock_release+0x204/0x400
-[   23.115076]  ? find_held_lock+0x8e/0xb0
-[   23.115287]  ? rcu_is_watching+0x23/0x60
-[   23.115503]  ? __rseq_handle_notify_resume+0x6e2/0x860
-[   23.115778]  ? __kasan_check_write+0x14/0x30
-[   23.116008]  ? blkcg_maybe_throttle_current+0x8d/0x770
-[   23.116285]  ? mark_held_locks+0x28/0xa0
-[   23.116503]  ? do_syscall_64+0x37/0x90
-[   23.116713]  __x64_sys_sendto+0x7f/0xb0
-[   23.116924]  do_syscall_64+0x59/0x90
-[   23.117123]  ? irqentry_exit_to_user_mode+0x25/0x30
-[   23.117387]  ? irqentry_exit+0x77/0xb0
-[   23.117593]  ? exc_page_fault+0x92/0x140
-[   23.117806]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-[   23.118081] RIP: 0033:0x7f744aee2bba
-[   23.118282] Code: d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3 0f 1e fa 41 89 ca 64 8b 04 25 18 00 00 00 85 c0 75 15 b8 2c 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 7e c3 0f 1f 44 00 00 41 54 48 83 ec 30 44 89
-[   23.119237] RSP: 002b:00007ffd04a7c9f8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
-[   23.119644] RAX: ffffffffffffffda RBX: 00007ffd04a7e0a0 RCX: 00007f744aee2bba
-[   23.120023] RDX: 0000000000000040 RSI: 000056488e9e6300 RDI: 0000000000000003
-[   23.120413] RBP: 000056488e9e6300 R08: 00007ffd04a80320 R09: 0000000000000010
-[   23.120809] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000040
-[   23.121219] R13: 00007ffd04a7dc38 R14: 00007ffd04a7ca00 R15: 00007ffd04a7e0a0
-[   23.121617]  </TASK>
-[   23.121749]
-[   23.121845] The buggy address belongs to the virtual mapping at
-[   23.121845]  [ffffc90000000000, ffffc90000009000) created by:
-[   23.121845]  irq_init_percpu_irqstack+0x1cf/0x270
-[   23.122707]
-[   23.122803] The buggy address belongs to the physical page:
-[   23.123104] page:0000000072ac19f0 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x24a09
-[   23.123609] flags: 0xfffffc0001000(reserved|node=0|zone=1|lastcpupid=0x1fffff)
-[   23.123998] page_type: 0xffffffff()
-[   23.124194] raw: 000fffffc0001000 ffffea0000928248 ffffea0000928248 0000000000000000
-[   23.124610] raw: 0000000000000000 0000000000000000 00000001ffffffff 0000000000000000
-[   23.125023] page dumped because: kasan: bad access detected
-[   23.125326]
-[   23.125421] Memory state around the buggy address:
-[   23.125682]  ffffc90000007800: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   23.126072]  ffffc90000007880: 00 00 00 00 00 f1 f1 f1 f1 f1 f1 00 00 f2 f2 00
-[   23.126455] >ffffc90000007900: 00 00 00 00 00 00 00 00 00 f2 f2 f2 f2 00 00 00
-[   23.126840]                                               ^
-[   23.127138]  ffffc90000007980: 00 00 00 00 00 00 00 00 00 00 00 00 00 f3 f3 f3
-[   23.127522]  ffffc90000007a00: f3 00 00 00 00 00 00 00 00 00 00 00 f1 f1 f1 f1
-[   23.127906] ==================================================================
-[   23.128324] Disabling lock debugging due to kernel taint
-
-Using simple s16 pointers for the 16-bit accesses fixes the problem. For
-the 32-bit accesses, src and dst can be used directly.
-
-Fixes: 96518518cc41 ("netfilter: add nftables")
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
 Cc: stable@vger.kernel.org
-Reported-by: Tanguy DUBROCA (@SidewayRE) from @Synacktiv working with ZDI
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
+Tested-by: Manuel Leiner <manuel.leiner@gmx.de>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_byteorder.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/wireguard/queueing.c |    1 +
+ drivers/net/wireguard/queueing.h |   25 +++++++++++--------------
+ drivers/net/wireguard/receive.c  |    2 +-
+ drivers/net/wireguard/send.c     |    2 +-
+ 4 files changed, 14 insertions(+), 16 deletions(-)
 
---- a/net/netfilter/nft_byteorder.c
-+++ b/net/netfilter/nft_byteorder.c
-@@ -30,11 +30,11 @@ void nft_byteorder_eval(const struct nft
- 	const struct nft_byteorder *priv = nft_expr_priv(expr);
- 	u32 *src = &regs->data[priv->sreg];
- 	u32 *dst = &regs->data[priv->dreg];
--	union { u32 u32; u16 u16; } *s, *d;
-+	u16 *s16, *d16;
- 	unsigned int i;
+--- a/drivers/net/wireguard/queueing.c
++++ b/drivers/net/wireguard/queueing.c
+@@ -28,6 +28,7 @@ int wg_packet_queue_init(struct crypt_qu
+ 	int ret;
  
--	s = (void *)src;
--	d = (void *)dst;
-+	s16 = (void *)src;
-+	d16 = (void *)dst;
+ 	memset(queue, 0, sizeof(*queue));
++	queue->last_cpu = -1;
+ 	ret = ptr_ring_init(&queue->ring, len, GFP_KERNEL);
+ 	if (ret)
+ 		return ret;
+--- a/drivers/net/wireguard/queueing.h
++++ b/drivers/net/wireguard/queueing.h
+@@ -117,20 +117,17 @@ static inline int wg_cpumask_choose_onli
+ 	return cpu;
+ }
  
- 	switch (priv->size) {
- 	case 8: {
-@@ -62,11 +62,11 @@ void nft_byteorder_eval(const struct nft
- 		switch (priv->op) {
- 		case NFT_BYTEORDER_NTOH:
- 			for (i = 0; i < priv->len / 4; i++)
--				d[i].u32 = ntohl((__force __be32)s[i].u32);
-+				dst[i] = ntohl((__force __be32)src[i]);
- 			break;
- 		case NFT_BYTEORDER_HTON:
- 			for (i = 0; i < priv->len / 4; i++)
--				d[i].u32 = (__force __u32)htonl(s[i].u32);
-+				dst[i] = (__force __u32)htonl(src[i]);
- 			break;
- 		}
- 		break;
-@@ -74,11 +74,11 @@ void nft_byteorder_eval(const struct nft
- 		switch (priv->op) {
- 		case NFT_BYTEORDER_NTOH:
- 			for (i = 0; i < priv->len / 2; i++)
--				d[i].u16 = ntohs((__force __be16)s[i].u16);
-+				d16[i] = ntohs((__force __be16)s16[i]);
- 			break;
- 		case NFT_BYTEORDER_HTON:
- 			for (i = 0; i < priv->len / 2; i++)
--				d[i].u16 = (__force __u16)htons(s[i].u16);
-+				d16[i] = (__force __u16)htons(s16[i]);
- 			break;
- 		}
- 		break;
+-/* This function is racy, in the sense that next is unlocked, so it could return
+- * the same CPU twice. A race-free version of this would be to instead store an
+- * atomic sequence number, do an increment-and-return, and then iterate through
+- * every possible CPU until we get to that index -- choose_cpu. However that's
+- * a bit slower, and it doesn't seem like this potential race actually
+- * introduces any performance loss, so we live with it.
++/* This function is racy, in the sense that it's called while last_cpu is
++ * unlocked, so it could return the same CPU twice. Adding locking or using
++ * atomic sequence numbers is slower though, and the consequences of racing are
++ * harmless, so live with it.
+  */
+-static inline int wg_cpumask_next_online(int *next)
++static inline int wg_cpumask_next_online(int *last_cpu)
+ {
+-	int cpu = *next;
+-
+-	while (unlikely(!cpumask_test_cpu(cpu, cpu_online_mask)))
+-		cpu = cpumask_next(cpu, cpu_online_mask) % nr_cpumask_bits;
+-	*next = cpumask_next(cpu, cpu_online_mask) % nr_cpumask_bits;
++	int cpu = cpumask_next(*last_cpu, cpu_online_mask);
++	if (cpu >= nr_cpu_ids)
++		cpu = cpumask_first(cpu_online_mask);
++	*last_cpu = cpu;
+ 	return cpu;
+ }
+ 
+@@ -159,7 +156,7 @@ static inline void wg_prev_queue_drop_pe
+ 
+ static inline int wg_queue_enqueue_per_device_and_peer(
+ 	struct crypt_queue *device_queue, struct prev_queue *peer_queue,
+-	struct sk_buff *skb, struct workqueue_struct *wq, int *next_cpu)
++	struct sk_buff *skb, struct workqueue_struct *wq)
+ {
+ 	int cpu;
+ 
+@@ -173,7 +170,7 @@ static inline int wg_queue_enqueue_per_d
+ 	/* Then we queue it up in the device queue, which consumes the
+ 	 * packet as soon as it can.
+ 	 */
+-	cpu = wg_cpumask_next_online(next_cpu);
++	cpu = wg_cpumask_next_online(&device_queue->last_cpu);
+ 	if (unlikely(ptr_ring_produce_bh(&device_queue->ring, skb)))
+ 		return -EPIPE;
+ 	queue_work_on(cpu, wq, &per_cpu_ptr(device_queue->worker, cpu)->work);
+--- a/drivers/net/wireguard/receive.c
++++ b/drivers/net/wireguard/receive.c
+@@ -524,7 +524,7 @@ static void wg_packet_consume_data(struc
+ 		goto err;
+ 
+ 	ret = wg_queue_enqueue_per_device_and_peer(&wg->decrypt_queue, &peer->rx_queue, skb,
+-						   wg->packet_crypt_wq, &wg->decrypt_queue.last_cpu);
++						   wg->packet_crypt_wq);
+ 	if (unlikely(ret == -EPIPE))
+ 		wg_queue_enqueue_per_peer_rx(skb, PACKET_STATE_DEAD);
+ 	if (likely(!ret || ret == -EPIPE)) {
+--- a/drivers/net/wireguard/send.c
++++ b/drivers/net/wireguard/send.c
+@@ -318,7 +318,7 @@ static void wg_packet_create_data(struct
+ 		goto err;
+ 
+ 	ret = wg_queue_enqueue_per_device_and_peer(&wg->encrypt_queue, &peer->tx_queue, first,
+-						   wg->packet_crypt_wq, &wg->encrypt_queue.last_cpu);
++						   wg->packet_crypt_wq);
+ 	if (unlikely(ret == -EPIPE))
+ 		wg_queue_enqueue_per_peer_tx(first, PACKET_STATE_DEAD);
+ err:
 
 
