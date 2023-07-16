@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DEFE8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:05:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4396C433C7;
-	Sun, 16 Jul 2023 20:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06C78F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:05:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63063C433C8;
+	Sun, 16 Jul 2023 20:05:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537908;
-	bh=vzfOgnglW74SezP6b//b2b0Edxpf4s5SKCYuaLE3cvE=;
+	s=korg; t=1689537910;
+	bh=S36sNbKGbhjQYrgRgrLWose6/Vt4tZ8xWzRS3ZENiGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cs7umKVdjxH7BwLq+8lTzyapuTPdse3P9WUOXvzlihvxZBbrbf4L5r0hbLkVYvHUi
-	 syfKi3jFZCUHAzJD7CTXyMV2OexjaX0R3POzVZFH1AHkn0QTnAx8UsnuX3f38QiuIS
-	 D6PJmYLGcszdTidWS49lWCToDSeSDWaFF0gCWXlQ=
+	b=eY2+GcYdxv00KEtJ3923b9mU5Q/aH60SH9UGfH7eFXJbnC7hsD50C2uHOcR/35ofl
+	 dTMPD5E4tC434f4z2p54+eR6ShBVbzb2mj961yAXUTJQFSb8V9OyVsBMGheSnxucjR
+	 OvRll7gH/f4nadawAASwcwRdvtu+LDTUMuoQi0F8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Marko <robert.marko@sartura.hr>,
-	Steen Hegelund <Steen.Hegelund@microchip.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 263/800] arm64: dts: microchip: sparx5: do not use PSCI on reference boards
-Date: Sun, 16 Jul 2023 21:41:56 +0200
-Message-ID: <20230716194955.205471735@linuxfoundation.org>
+Subject: [PATCH 6.4 264/800] drm/bridge: tc358767: Switch to devm MIPI-DSI helpers
+Date: Sun, 16 Jul 2023 21:41:57 +0200
+Message-ID: <20230716194955.229165475@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,72 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Marko <robert.marko@sartura.hr>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 70be83708c925b3f72c508e4756e48ad2330c830 ]
+[ Upstream commit f47d6140b7a4c858d82d263e7577ff6fb5279a9c ]
 
-PSCI is not implemented on SparX-5 at all, there is no ATF and U-boot that
-is shipped does not implement it as well.
+DSI device registering and attaching needs to be undone upon
+deregistration. This fixes module unload/load.
 
-I have tried flashing the latest BSP 2022.12 U-boot which did not work.
-After contacting Microchip, they confirmed that there is no ATF for the
-SoC nor PSCI implementation which is unfortunate in 2023.
-
-So, disable PSCI as otherwise kernel crashes as soon as it tries probing
-PSCI with, and the crash is only visible if earlycon is used.
-
-Since PSCI is not implemented, switch core bringup to use spin-tables
-which are implemented in the vendor U-boot and actually work.
-
-Tested on PCB134 with eMMC (VSC5640EV).
-
-Fixes: 6694aee00a4b ("arm64: dts: sparx5: Add basic cpu support")
-Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-Acked-by: Steen Hegelund <Steen.Hegelund@microchip.com>
-Link: https://lore.kernel.org/r/20230221105039.316819-1-robert.marko@sartura.hr
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: bbfd3190b656 ("drm/bridge: tc358767: Add DSI-to-DPI mode support")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230517122107.1766673-1-alexander.stein@ew.tq-group.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/microchip/sparx5.dtsi            |  2 +-
- arch/arm64/boot/dts/microchip/sparx5_pcb_common.dtsi | 12 ++++++++++++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/tc358767.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/microchip/sparx5.dtsi b/arch/arm64/boot/dts/microchip/sparx5.dtsi
-index 0367a00a269b3..5eae6e7fd248e 100644
---- a/arch/arm64/boot/dts/microchip/sparx5.dtsi
-+++ b/arch/arm64/boot/dts/microchip/sparx5.dtsi
-@@ -61,7 +61,7 @@ arm-pmu {
- 		interrupt-affinity = <&cpu0>, <&cpu1>;
- 	};
+diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
+index 91f7cb56a654d..d6349af4f1b62 100644
+--- a/drivers/gpu/drm/bridge/tc358767.c
++++ b/drivers/gpu/drm/bridge/tc358767.c
+@@ -1890,7 +1890,7 @@ static int tc_mipi_dsi_host_attach(struct tc_data *tc)
+ 	if (dsi_lanes < 0)
+ 		return dsi_lanes;
  
--	psci {
-+	psci: psci {
- 		compatible = "arm,psci-0.2";
- 		method = "smc";
- 	};
-diff --git a/arch/arm64/boot/dts/microchip/sparx5_pcb_common.dtsi b/arch/arm64/boot/dts/microchip/sparx5_pcb_common.dtsi
-index 9d1a082de3e29..32bb76b3202a0 100644
---- a/arch/arm64/boot/dts/microchip/sparx5_pcb_common.dtsi
-+++ b/arch/arm64/boot/dts/microchip/sparx5_pcb_common.dtsi
-@@ -6,6 +6,18 @@
- /dts-v1/;
- #include "sparx5.dtsi"
+-	dsi = mipi_dsi_device_register_full(host, &info);
++	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
+ 	if (IS_ERR(dsi))
+ 		return dev_err_probe(dev, PTR_ERR(dsi),
+ 				     "failed to create dsi device\n");
+@@ -1901,7 +1901,7 @@ static int tc_mipi_dsi_host_attach(struct tc_data *tc)
+ 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
+ 			  MIPI_DSI_MODE_LPM | MIPI_DSI_CLOCK_NON_CONTINUOUS;
  
-+&psci {
-+	status = "disabled";
-+};
-+
-+&cpu0 {
-+	enable-method = "spin-table";
-+};
-+
-+&cpu1 {
-+	enable-method = "spin-table";
-+};
-+
- &uart0 {
- 	status = "okay";
- };
+-	ret = mipi_dsi_attach(dsi);
++	ret = devm_mipi_dsi_attach(dev, dsi);
+ 	if (ret < 0) {
+ 		dev_err(dev, "failed to attach dsi to host: %d\n", ret);
+ 		return ret;
 -- 
 2.39.2
 
