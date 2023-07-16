@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842BC8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:11:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071BCC433C8;
-	Sun, 16 Jul 2023 20:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78CCB8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:11:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E03C433C7;
+	Sun, 16 Jul 2023 20:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538296;
-	bh=EyYRh+3otg3D/HkayMLbR/CSzGXR5oVy6A/UB67R580=;
+	s=korg; t=1689538299;
+	bh=XdbxrlkpervG9CYIzdYmHssYbdqUd4yglfkJ9QvFXIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCrbqKEo9Q0/UY6OKHoG87vkROS1tkVsQHFOO9M0zIiiQMsd4fp48esoTwMzzdwyB
-	 RGZ6s89ukkAo8RLxNgyqgaSxmU29GCXg3fTYBZGavdv3amb9JVnPoC5m08cGpdJns5
-	 qbvhpMqPqOtSZFJIQNXkJxTcUUn9xTLNmL4FYlKA=
+	b=Bxp2kc/NE6o68/W4ZeEk9CBx5oZdixFXX6gwYhsUgepe1Zt8TC8aQCtlDCfvaZ4Ru
+	 iMngSZONorv1fndgFl6fL1gYNaEdc/J0s8Vh01YQBn993zn7va5ol/8uvTDtDvL/PW
+	 TjyyvZof2oGPnldby8rf667lUYSdDuYumMw9zygg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Davis <afd@ti.com>,
-	Nishanth Menon <nm@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 393/800] arm64: dts: ti: k3-j721e-beagleboneai64: Fix mailbox node status
-Date: Sun, 16 Jul 2023 21:44:06 +0200
-Message-ID: <20230716194958.199688437@linuxfoundation.org>
+Subject: [PATCH 6.4 402/800] drm/msm/dp: Free resources after unregistering them
+Date: Sun, 16 Jul 2023 21:44:15 +0200
+Message-ID: <20230716194958.408887004@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,68 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Davis <afd@ti.com>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-[ Upstream commit 155e7635ed1f3814d94d12556a3a0fed41d05b76 ]
+[ Upstream commit fa0048a4b1fa7a50c8b0e514f5b428abdf69a6f8 ]
 
-Mailbox nodes are now disabled by default. The BeagleBoard AI64 DT
-addition went in at around the same time and must have missed that
-change so the mailboxes are not re-enabled. Do that here.
+The DP component's unbind operation walks through the submodules to
+unregister and clean things up. But if the unbind happens because the DP
+controller itself is being removed, all the memory for those submodules
+has just been freed.
 
-Fixes: fae14a1cb8dd ("arm64: dts: ti: Add k3-j721e-beagleboneai64")
-Signed-off-by: Andrew Davis <afd@ti.com>
-Reviewed-by: Nishanth Menon <nm@ti.com>
-Link: https://lore.kernel.org/r/20230515172137.474626-1-afd@ti.com
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Change the order of these operations to avoid the many use-after-free
+that otherwise happens in this code path.
+
+Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/542166/
+Link: https://lore.kernel.org/r/20230612220259.1884381-1-quic_bjorande@quicinc.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts b/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
-index 37c24b077b6aa..8a62ac263b89a 100644
---- a/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
-+++ b/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
-@@ -936,6 +936,7 @@ &ufs_wrapper {
- };
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 294ab2bd856de..cffb3f41f6023 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -1330,9 +1330,9 @@ static int dp_display_remove(struct platform_device *pdev)
+ {
+ 	struct dp_display_private *dp = dev_get_dp_display_private(&pdev->dev);
  
- &mailbox0_cluster0 {
-+	status = "okay";
- 	interrupts = <436>;
++	component_del(&pdev->dev, &dp_display_comp_ops);
+ 	dp_display_deinit_sub_modules(dp);
  
- 	mbox_mcu_r5fss0_core0: mbox-mcu-r5fss0-core0 {
-@@ -950,6 +951,7 @@ mbox_mcu_r5fss0_core1: mbox-mcu-r5fss0-core1 {
- };
+-	component_del(&pdev->dev, &dp_display_comp_ops);
+ 	platform_set_drvdata(pdev, NULL);
  
- &mailbox0_cluster1 {
-+	status = "okay";
- 	interrupts = <432>;
- 
- 	mbox_main_r5fss0_core0: mbox-main-r5fss0-core0 {
-@@ -964,6 +966,7 @@ mbox_main_r5fss0_core1: mbox-main-r5fss0-core1 {
- };
- 
- &mailbox0_cluster2 {
-+	status = "okay";
- 	interrupts = <428>;
- 
- 	mbox_main_r5fss1_core0: mbox-main-r5fss1-core0 {
-@@ -978,6 +981,7 @@ mbox_main_r5fss1_core1: mbox-main-r5fss1-core1 {
- };
- 
- &mailbox0_cluster3 {
-+	status = "okay";
- 	interrupts = <424>;
- 
- 	mbox_c66_0: mbox-c66-0 {
-@@ -992,6 +996,7 @@ mbox_c66_1: mbox-c66-1 {
- };
- 
- &mailbox0_cluster4 {
-+	status = "okay";
- 	interrupts = <420>;
- 
- 	mbox_c71_0: mbox-c71-0 {
+ 	return 0;
 -- 
 2.39.2
 
