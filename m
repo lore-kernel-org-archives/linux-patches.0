@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647A78F5D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:42:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC62C433C8;
-	Sun, 16 Jul 2023 20:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F708F5D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:42:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B5DC433C8;
+	Sun, 16 Jul 2023 20:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540121;
-	bh=IwWSh8T8xOo3ga7oxR7k1yIH4LQKmZHC+164MMznWMQ=;
+	s=korg; t=1689540124;
+	bh=XyocUilrO7CofVsKrv3mYHz9JqTTG4tBbiYS3kNwYqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HQBK6vHd2ZV8PLeMAobHY+bZZ3gu5ax21x3QGKRO7naiCTfUYWsa2NWacXZmNbYd+
-	 seqxOlmFrXV5ntF2Cp5rbE+oxeNMj0vb6FaoWjXf+xPz1iMR1I5rWwRDD1XZbipjrZ
-	 g75AMwPwcVE3ug3MVQT3+XoIlz1XHd6VDRgf2HkM=
+	b=gsQqcgVhzHgjoY5DJi/uvJ8RW9ahMqN5jLlwhqkbplMhMlQ3YX3QaaeLdIHEE2IHl
+	 Pz1MnFa3JfsTiWAC3vuLtoye0pGsxIhCP8p3EDJ70MQs7R1sxKSTHaaNf1ivVl4gHS
+	 4bKGrc0YprXerJ4nBa/paVkkfn81zvDgVfbJZHAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Ma <kaima@hust.edu.cn>,
-	Peng Fan <peng.fan@nxp.com>,
-	Jesse Taube <Mr.Bossman075@gmail.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 250/591] clk: imx: clk-imxrt1050: fix memory leak in imxrt1050_clocks_probe
-Date: Sun, 16 Jul 2023 21:46:29 +0200
-Message-ID: <20230716194930.340186490@linuxfoundation.org>
+Subject: [PATCH 6.1 224/591] arm64: dts: renesas: ulcb-kf: Remove flow control for SCIF1
+Date: Sun, 16 Jul 2023 21:46:03 +0200
+Message-ID: <20230716194929.668039555@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,86 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kai Ma <kaima@hust.edu.cn>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 1b280598ab3bd8a2dc8b96a12530d5b1ee7a8f4a ]
+[ Upstream commit 1a2c4e5635177939a088d22fa35c6a7032725663 ]
 
-Use devm_of_iomap() instead of of_iomap() to automatically
-handle the unused ioremap region. If any error occurs, regions allocated by
-kzalloc() will leak, but using devm_kzalloc() instead will automatically
-free the memory using devm_kfree().
+The schematics are misleading, the flow control is for HSCIF1. We need
+SCIF1 for GNSS/GPS which does not use flow control.
 
-Also, fix error handling of hws by adding unregister_hws label, which
-unregisters remaining hws when iomap failed.
-
-Fixes: 7154b046d8f3 ("clk: imx: Add initial support for i.MXRT1050 clock driver")
-Signed-off-by: Kai Ma <kaima@hust.edu.cn>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Acked-by: Jesse Taube <Mr.Bossman075@gmail.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20230418113451.151312-1-kaima@hust.edu.cn
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Fixes: c6c816e22bc8 ("arm64: dts: ulcb-kf: enable SCIF1")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20230525084823.4195-2-wsa+renesas@sang-engineering.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imxrt1050.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/renesas/ulcb-kf.dtsi | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imxrt1050.c b/drivers/clk/imx/clk-imxrt1050.c
-index 26108e9f7e67a..64d8b65a81040 100644
---- a/drivers/clk/imx/clk-imxrt1050.c
-+++ b/drivers/clk/imx/clk-imxrt1050.c
-@@ -42,7 +42,7 @@ static int imxrt1050_clocks_probe(struct platform_device *pdev)
- 	struct device_node *anp;
- 	int ret;
+diff --git a/arch/arm64/boot/dts/renesas/ulcb-kf.dtsi b/arch/arm64/boot/dts/renesas/ulcb-kf.dtsi
+index 408871c2859d1..588b14b66b6fb 100644
+--- a/arch/arm64/boot/dts/renesas/ulcb-kf.dtsi
++++ b/arch/arm64/boot/dts/renesas/ulcb-kf.dtsi
+@@ -393,7 +393,7 @@ hscif0_pins: hscif0 {
+ 	};
  
--	clk_hw_data = kzalloc(struct_size(clk_hw_data, hws,
-+	clk_hw_data = devm_kzalloc(dev, struct_size(clk_hw_data, hws,
- 					  IMXRT1050_CLK_END), GFP_KERNEL);
- 	if (WARN_ON(!clk_hw_data))
- 		return -ENOMEM;
-@@ -53,10 +53,12 @@ static int imxrt1050_clocks_probe(struct platform_device *pdev)
- 	hws[IMXRT1050_CLK_OSC] = imx_obtain_fixed_clk_hw(np, "osc");
+ 	scif1_pins: scif1 {
+-		groups = "scif1_data_b", "scif1_ctrl";
++		groups = "scif1_data_b";
+ 		function = "scif1";
+ 	};
  
- 	anp = of_find_compatible_node(NULL, NULL, "fsl,imxrt-anatop");
--	pll_base = of_iomap(anp, 0);
-+	pll_base = devm_of_iomap(dev, anp, 0, NULL);
- 	of_node_put(anp);
--	if (WARN_ON(!pll_base))
--		return -ENOMEM;
-+	if (WARN_ON(IS_ERR(pll_base))) {
-+		ret = PTR_ERR(pll_base);
-+		goto unregister_hws;
-+	}
+@@ -447,7 +447,6 @@ rsnd_for_pcm3168a_capture: endpoint {
+ &scif1 {
+ 	pinctrl-0 = <&scif1_pins>;
+ 	pinctrl-names = "default";
+-	uart-has-rtscts;
  
- 	/* Anatop clocks */
- 	hws[IMXRT1050_CLK_DUMMY] = imx_clk_hw_fixed("dummy", 0UL);
-@@ -104,8 +106,10 @@ static int imxrt1050_clocks_probe(struct platform_device *pdev)
- 
- 	/* CCM clocks */
- 	ccm_base = devm_platform_ioremap_resource(pdev, 0);
--	if (WARN_ON(IS_ERR(ccm_base)))
--		return PTR_ERR(ccm_base);
-+	if (WARN_ON(IS_ERR(ccm_base))) {
-+		ret = PTR_ERR(ccm_base);
-+		goto unregister_hws;
-+	}
- 
- 	hws[IMXRT1050_CLK_ARM_PODF] = imx_clk_hw_divider("arm_podf", "pll1_arm", ccm_base + 0x10, 0, 3);
- 	hws[IMXRT1050_CLK_PRE_PERIPH_SEL] = imx_clk_hw_mux("pre_periph_sel", ccm_base + 0x18, 18, 2,
-@@ -148,8 +152,12 @@ static int imxrt1050_clocks_probe(struct platform_device *pdev)
- 	ret = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, clk_hw_data);
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to register clks for i.MXRT1050.\n");
--		imx_unregister_hw_clocks(hws, IMXRT1050_CLK_END);
-+		goto unregister_hws;
- 	}
-+	return 0;
-+
-+unregister_hws:
-+	imx_unregister_hw_clocks(hws, IMXRT1050_CLK_END);
- 	return ret;
- }
- static const struct of_device_id imxrt1050_clk_of_match[] = {
+ 	status = "okay";
+ };
 -- 
 2.39.2
 
