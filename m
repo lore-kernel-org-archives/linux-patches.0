@@ -1,53 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C438F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:01:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E21C433C9;
-	Sun, 16 Jul 2023 20:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19DC98F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:01:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B6FC433C7;
+	Sun, 16 Jul 2023 20:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537692;
-	bh=F/TQIVCVl8w6w2WERB43IQbSXfyLUNd846AMwbg1K/w=;
+	s=korg; t=1689537694;
+	bh=aTLESNbkRoZX2Rd0l2zF0DiOZiaJga7dPSpsHpocv0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M6QiOoJHTWl/+cKtOE/3ST2+TTMTokmjr5bW114DTGQvLM14FXN8rFfEPAGcH7jb/
-	 yV5Ygijiq+B7yoEwrR19h/h0UbtSXlzYvOqhTN29IVREfQyQBIpXFyQ1oAOKqtodLM
-	 gk/r8evZLJllno36hqPbGC4LlT/A/RVzFX1v/jiY=
+	b=uLN8qCs5887bz47hLEuLOM0xPCP/oXog96l4Y2O1lgGncU2qdCBgQ2vJ76Ny/h2Ut
+	 OaWjbKih/WJx6i4Nw+609hpwjsORrH/ODK0YfSh0f/4bFf3TaMTlsWbnQh6b/GLbiC
+	 Qa0jW5OlrB1rlRaGby3PQnzSu6NXJ7hXtmRHnvoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Mladek <pmladek@suse.com>,
-	Pingfan Liu <kernelfans@gmail.com>,
-	Lecopzer Chen <lecopzer.chen@mediatek.com>,
 	Douglas Anderson <dianders@chromium.org>,
-	Andi Kleen <ak@linux.intel.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Chen-Yu Tsai <wens@csie.org>,
+	Petr Mladek <pmladek@suse.com>,
 	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Colin Cross <ccross@android.com>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
 	"David S. Miller" <davem@davemloft.net>,
-	Guenter Roeck <groeck@chromium.org>,
-	Ian Rogers <irogers@google.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Masayoshi Mizuma <msys.mizuma@gmail.com>,
-	Matthias Kaehlcke <mka@chromium.org>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Nicholas Piggin <npiggin@gmail.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Ravi V. Shankar" <ravi.v.shankar@intel.com>,
-	Ricardo Neri <ricardo.neri@intel.com>,
-	Stephane Eranian <eranian@google.com>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Sumit Garg <sumit.garg@linaro.org>,
-	Tzung-Bi Shih <tzungbi@chromium.org>,
-	Will Deacon <will@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 187/800] watchdog/perf: adapt the watchdog_perf interface for async model
-Date: Sun, 16 Jul 2023 21:40:40 +0200
-Message-ID: <20230716194953.448689609@linuxfoundation.org>
+Subject: [PATCH 6.4 188/800] watchdog/hardlockup: keep kernel.nmi_watchdog sysctl as 0444 if probe fails
+Date: Sun, 16 Jul 2023 21:40:41 +0200
+Message-ID: <20230716194953.471837938@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -61,180 +40,129 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lecopzer Chen <lecopzer.chen@mediatek.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 930d8f8dbab97cb05dba30e67a2dfa0c6dbf4bc7 ]
+[ Upstream commit 9ec272c586b07d1abf73438524bd12b1df9c5f9b ]
 
-When lockup_detector_init()->watchdog_hardlockup_probe(), PMU may be not
-ready yet.  E.g.  on arm64, PMU is not ready until
-device_initcall(armv8_pmu_driver_init).  And it is deeply integrated with
-the driver model and cpuhp.  Hence it is hard to push this initialization
-before smp_init().
+Patch series "watchdog: Cleanup / fixes after buddy series v5 reviews".
 
-But it is easy to take an opposite approach and try to initialize the
-watchdog once again later.  The delayed probe is called using workqueues.
-It need to allocate memory and must be proceed in a normal context.  The
-delayed probe is able to use if watchdog_hardlockup_probe() returns
-non-zero which means the return code returned when PMU is not ready yet.
+This patch series attempts to finish resolving the feedback received
+from Petr Mladek on the v5 series I posted.
 
-Provide an API - lockup_detector_retry_init() for anyone who needs to
-delayed init lockup detector if they had ever failed at
-lockup_detector_init().
+Probably the only thing that wasn't fully as clean as Petr requested was
+the Kconfig stuff.  I couldn't find a better way to express it without a
+more major overhaul.  In the very least, I renamed "NON_ARCH" to
+"PERF_OR_BUDDY" in the hopes that will make it marginally better.
 
-The original assumption is: nobody should use delayed probe after
-lockup_detector_check() which has __init attribute.  That is, anyone uses
-this API must call between lockup_detector_init() and
-lockup_detector_check(), and the caller must have __init attribute
+Nothing in this series is terribly critical and even the bugfixes are
+small.  However, it does cleanup a few things that were pointed out in
+review.
 
-Link: https://lkml.kernel.org/r/20230519101840.v5.16.If4ad5dd5d09fb1309cebf8bcead4b6a5a7758ca7@changeid
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Co-developed-by: Pingfan Liu <kernelfans@gmail.com>
-Signed-off-by: Pingfan Liu <kernelfans@gmail.com>
-Signed-off-by: Lecopzer Chen <lecopzer.chen@mediatek.com>
+This patch (of 10):
+
+The permissions for the kernel.nmi_watchdog sysctl have always been set at
+compile time despite the fact that a watchdog can fail to probe.  Let's
+fix this and set the permissions based on whether the hardlockup detector
+actually probed.
+
+Link: https://lkml.kernel.org/r/20230527014153.2793931-1-dianders@chromium.org
+Link: https://lkml.kernel.org/r/20230526184139.1.I0d75971cc52a7283f495aac0bd5c3041aadc734e@changeid
+Fixes: a994a3147e4c ("watchdog/hardlockup/perf: Implement init time detection of perf")
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Suggested-by: Petr Mladek <pmladek@suse.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Chen-Yu Tsai <wens@csie.org>
+Reported-by: Petr Mladek <pmladek@suse.com>
+Closes: https://lore.kernel.org/r/ZHCn4hNxFpY5-9Ki@alley
+Reviewed-by: Petr Mladek <pmladek@suse.com>
 Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Colin Cross <ccross@android.com>
-Cc: Daniel Thompson <daniel.thompson@linaro.org>
 Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Guenter Roeck <groeck@chromium.org>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Masayoshi Mizuma <msys.mizuma@gmail.com>
-Cc: Matthias Kaehlcke <mka@chromium.org>
 Cc: Michael Ellerman <mpe@ellerman.id.au>
 Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Cc: "Ravi V. Shankar" <ravi.v.shankar@intel.com>
-Cc: Ricardo Neri <ricardo.neri@intel.com>
-Cc: Stephane Eranian <eranian@google.com>
-Cc: Stephen Boyd <swboyd@chromium.org>
-Cc: Sumit Garg <sumit.garg@linaro.org>
-Cc: Tzung-Bi Shih <tzungbi@chromium.org>
-Cc: Will Deacon <will@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 9ec272c586b0 ("watchdog/hardlockup: keep kernel.nmi_watchdog sysctl as 0444 if probe fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/nmi.h |  2 ++
- kernel/watchdog.c   | 67 ++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 68 insertions(+), 1 deletion(-)
+ include/linux/nmi.h |  6 ------
+ kernel/watchdog.c   | 30 ++++++++++++++++++++----------
+ 2 files changed, 20 insertions(+), 16 deletions(-)
 
 diff --git a/include/linux/nmi.h b/include/linux/nmi.h
-index 600a61c65a9a9..c4f58baf7ccb2 100644
+index c4f58baf7ccb2..d54b9ba9c8247 100644
 --- a/include/linux/nmi.h
 +++ b/include/linux/nmi.h
-@@ -13,6 +13,7 @@
+@@ -91,12 +91,6 @@ static inline void hardlockup_detector_disable(void) {}
+ void watchdog_hardlockup_check(struct pt_regs *regs);
+ #endif
  
- #ifdef CONFIG_LOCKUP_DETECTOR
- void lockup_detector_init(void);
-+void lockup_detector_retry_init(void);
- void lockup_detector_soft_poweroff(void);
- void lockup_detector_cleanup(void);
- 
-@@ -32,6 +33,7 @@ extern int sysctl_hardlockup_all_cpu_backtrace;
- 
- #else /* CONFIG_LOCKUP_DETECTOR */
- static inline void lockup_detector_init(void) { }
-+static inline void lockup_detector_retry_init(void) { }
- static inline void lockup_detector_soft_poweroff(void) { }
- static inline void lockup_detector_cleanup(void) { }
- #endif /* !CONFIG_LOCKUP_DETECTOR */
+-#if defined(CONFIG_HAVE_NMI_WATCHDOG) || defined(CONFIG_HARDLOCKUP_DETECTOR)
+-# define NMI_WATCHDOG_SYSCTL_PERM	0644
+-#else
+-# define NMI_WATCHDOG_SYSCTL_PERM	0444
+-#endif
+-
+ #if defined(CONFIG_HARDLOCKUP_DETECTOR_PERF)
+ extern void arch_touch_nmi_watchdog(void);
+ extern void hardlockup_detector_perf_stop(void);
 diff --git a/kernel/watchdog.c b/kernel/watchdog.c
-index 06ea59c05ee94..f2e991894af62 100644
+index f2e991894af62..6b1754e8b6e96 100644
 --- a/kernel/watchdog.c
 +++ b/kernel/watchdog.c
-@@ -175,7 +175,13 @@ void __weak watchdog_hardlockup_disable(unsigned int cpu)
- 	hardlockup_detector_perf_disable();
- }
+@@ -830,15 +830,6 @@ static struct ctl_table watchdog_sysctls[] = {
+ 		.extra1		= SYSCTL_ZERO,
+ 		.extra2		= (void *)&sixty,
+ 	},
+-	{
+-		.procname       = "nmi_watchdog",
+-		.data		= &watchdog_hardlockup_user_enabled,
+-		.maxlen		= sizeof(int),
+-		.mode		= NMI_WATCHDOG_SYSCTL_PERM,
+-		.proc_handler   = proc_nmi_watchdog,
+-		.extra1		= SYSCTL_ZERO,
+-		.extra2		= SYSCTL_ONE,
+-	},
+ 	{
+ 		.procname	= "watchdog_cpumask",
+ 		.data		= &watchdog_cpumask_bits,
+@@ -902,10 +893,28 @@ static struct ctl_table watchdog_sysctls[] = {
+ 	{}
+ };
  
--/* Return 0, if a hardlockup watchdog is available. Error code otherwise */
-+/*
-+ * Watchdog-detector specific API.
-+ *
-+ * Return 0 when hardlockup watchdog is available, negative value otherwise.
-+ * Note that the negative value means that a delayed probe might
-+ * succeed later.
-+ */
- int __weak __init watchdog_hardlockup_probe(void)
++static struct ctl_table watchdog_hardlockup_sysctl[] = {
++	{
++		.procname       = "nmi_watchdog",
++		.data		= &watchdog_hardlockup_user_enabled,
++		.maxlen		= sizeof(int),
++		.mode		= 0444,
++		.proc_handler   = proc_nmi_watchdog,
++		.extra1		= SYSCTL_ZERO,
++		.extra2		= SYSCTL_ONE,
++	},
++	{}
++};
++
+ static void __init watchdog_sysctl_init(void)
  {
- 	return hardlockup_detector_perf_init();
-@@ -904,6 +910,62 @@ static void __init watchdog_sysctl_init(void)
+ 	register_sysctl_init("kernel", watchdog_sysctls);
++
++	if (watchdog_hardlockup_available)
++		watchdog_hardlockup_sysctl[0].mode = 0644;
++	register_sysctl_init("kernel", watchdog_hardlockup_sysctl);
+ }
++
+ #else
  #define watchdog_sysctl_init() do { } while (0)
  #endif /* CONFIG_SYSCTL */
+@@ -961,6 +970,8 @@ static int __init lockup_detector_check(void)
+ 	/* Make sure no work is pending. */
+ 	flush_work(&detector_work);
  
-+static void __init lockup_detector_delay_init(struct work_struct *work);
-+static bool allow_lockup_detector_init_retry __initdata;
++	watchdog_sysctl_init();
 +
-+static struct work_struct detector_work __initdata =
-+		__WORK_INITIALIZER(detector_work, lockup_detector_delay_init);
-+
-+static void __init lockup_detector_delay_init(struct work_struct *work)
-+{
-+	int ret;
-+
-+	ret = watchdog_hardlockup_probe();
-+	if (ret) {
-+		pr_info("Delayed init of the lockup detector failed: %d\n", ret);
-+		pr_info("Hard watchdog permanently disabled\n");
-+		return;
-+	}
-+
-+	allow_lockup_detector_init_retry = false;
-+
-+	watchdog_hardlockup_available = true;
-+	lockup_detector_setup();
-+}
-+
-+/*
-+ * lockup_detector_retry_init - retry init lockup detector if possible.
-+ *
-+ * Retry hardlockup detector init. It is useful when it requires some
-+ * functionality that has to be initialized later on a particular
-+ * platform.
-+ */
-+void __init lockup_detector_retry_init(void)
-+{
-+	/* Must be called before late init calls */
-+	if (!allow_lockup_detector_init_retry)
-+		return;
-+
-+	schedule_work(&detector_work);
-+}
-+
-+/*
-+ * Ensure that optional delayed hardlockup init is proceed before
-+ * the init code and memory is freed.
-+ */
-+static int __init lockup_detector_check(void)
-+{
-+	/* Prevent any later retry. */
-+	allow_lockup_detector_init_retry = false;
-+
-+	/* Make sure no work is pending. */
-+	flush_work(&detector_work);
-+
-+	return 0;
-+
-+}
-+late_initcall_sync(lockup_detector_check);
-+
- void __init lockup_detector_init(void)
- {
- 	if (tick_nohz_full_enabled())
-@@ -914,6 +976,9 @@ void __init lockup_detector_init(void)
+ 	return 0;
  
- 	if (!watchdog_hardlockup_probe())
- 		watchdog_hardlockup_available = true;
-+	else
-+		allow_lockup_detector_init_retry = true;
-+
+ }
+@@ -980,5 +991,4 @@ void __init lockup_detector_init(void)
+ 		allow_lockup_detector_init_retry = true;
+ 
  	lockup_detector_setup();
- 	watchdog_sysctl_init();
+-	watchdog_sysctl_init();
  }
 -- 
 2.39.2
