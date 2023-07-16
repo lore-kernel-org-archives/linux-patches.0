@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ADA18F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:13:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA06C433C7;
-	Sun, 16 Jul 2023 20:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FEC98F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:13:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87B9C433C8;
+	Sun, 16 Jul 2023 20:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538431;
-	bh=qsJg9YPDUjZzXA3TtHmIlEflCklqK3BxKeCriXpz3g0=;
+	s=korg; t=1689538434;
+	bh=jQwJZ0AjWWaoUEth8BSH8wvlKHw2L6MboJusA8XizdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EpSjMWrBb1KtG3Rk8iQJ6bY9bjyJvqpuUikw+1Sok8BRJ9ihZvszVhzPTFZgsDS8R
-	 LT7sBj7+YF8bqKLWjUalxCaPo9ZD+mHk4q7iO8oXNITowH3xP/VpT0pirdnEYY+oZw
-	 /xxaKimwEjOLfDGEFGvSHY8aeHTIRRtkzvQ5bamM=
+	b=ic8TCO+1LJuQwbZIH1uqHftJVIY0O1C9X3RWOTqnS5WdNec8YYW7jCl+DJP3jGxBR
+	 c+eh/DAk+TqyQZimkgHai5oi+0IOKAVpK0hIgp6G3wOLyxFMXuNqhZ9PXsQ/MOMxwj
+	 yLUke0nKAjJq6484hoRQutYHSDzzcXS8LhEVJK24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wells Lu <wellslutw@gmail.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Keoseong Park <keosung.park@samsung.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 448/800] pinctrl: sunplus: Add check for kmalloc
-Date: Sun, 16 Jul 2023 21:45:01 +0200
-Message-ID: <20230716194959.489810528@linuxfoundation.org>
+Subject: [PATCH 6.4 449/800] scsi: ufs: Declare ufshcd_{hold,release}() once
+Date: Sun, 16 Jul 2023 21:45:02 +0200
+Message-ID: <20230716194959.512733208@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,89 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wells Lu <wellslutw@gmail.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit a5961bed5429cf1134d7f539b4ed60317012f84d ]
+[ Upstream commit 4b68b7f9c46d90c541d39c8b397a86ac0ca4c765 ]
 
-Fix Smatch static checker warning:
-potential null dereference 'configs'. (kmalloc returns null)
+ufshcd_hold() and ufshcd_release are declared twice: once in
+drivers/ufs/core/ufshcd-priv.h and a second time in include/ufs/ufshcd.h.
+Remove the declarations from ufshcd-priv.h.
 
-Fixes: aa74c44be19c ("pinctrl: Add driver for Sunplus SP7021")
-Signed-off-by: Wells Lu <wellslutw@gmail.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Link: https://lore.kernel.org/r/1685277277-12209-1-git-send-email-wellslutw@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: dd11376b9f1b ("scsi: ufs: Split the drivers/scsi/ufs directory")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20230529202640.11883-5-bvanassche@acm.org
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Keoseong Park <keosung.park@samsung.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/sunplus/sppctl.c | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ drivers/ufs/core/ufshcd-priv.h | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/pinctrl/sunplus/sppctl.c b/drivers/pinctrl/sunplus/sppctl.c
-index 6bbbab3a6fdf3..e91ce5b5d5598 100644
---- a/drivers/pinctrl/sunplus/sppctl.c
-+++ b/drivers/pinctrl/sunplus/sppctl.c
-@@ -834,11 +834,6 @@ static int sppctl_dt_node_to_map(struct pinctrl_dev *pctldev, struct device_node
- 	int i, size = 0;
+diff --git a/drivers/ufs/core/ufshcd-priv.h b/drivers/ufs/core/ufshcd-priv.h
+index d53b93c21a0c6..8f58c21693985 100644
+--- a/drivers/ufs/core/ufshcd-priv.h
++++ b/drivers/ufs/core/ufshcd-priv.h
+@@ -84,9 +84,6 @@ unsigned long ufshcd_mcq_poll_cqe_lock(struct ufs_hba *hba,
+ int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index,
+ 			    u8 **buf, bool ascii);
  
- 	list = of_get_property(np_config, "sunplus,pins", &size);
+-int ufshcd_hold(struct ufs_hba *hba, bool async);
+-void ufshcd_release(struct ufs_hba *hba);
 -
--	if (nmG <= 0)
--		nmG = 0;
--
--	parent = of_get_parent(np_config);
- 	*num_maps = size / sizeof(*list);
+ int ufshcd_send_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd);
  
- 	/*
-@@ -866,10 +861,14 @@ static int sppctl_dt_node_to_map(struct pinctrl_dev *pctldev, struct device_node
- 		}
- 	}
- 
-+	if (nmG <= 0)
-+		nmG = 0;
-+
- 	*map = kcalloc(*num_maps + nmG, sizeof(**map), GFP_KERNEL);
--	if (*map == NULL)
-+	if (!(*map))
- 		return -ENOMEM;
- 
-+	parent = of_get_parent(np_config);
- 	for (i = 0; i < (*num_maps); i++) {
- 		dt_pin = be32_to_cpu(list[i]);
- 		pin_num = FIELD_GET(GENMASK(31, 24), dt_pin);
-@@ -883,6 +882,8 @@ static int sppctl_dt_node_to_map(struct pinctrl_dev *pctldev, struct device_node
- 			(*map)[i].data.configs.num_configs = 1;
- 			(*map)[i].data.configs.group_or_pin = pin_get_name(pctldev, pin_num);
- 			configs = kmalloc(sizeof(*configs), GFP_KERNEL);
-+			if (!configs)
-+				goto sppctl_map_err;
- 			*configs = FIELD_GET(GENMASK(7, 0), dt_pin);
- 			(*map)[i].data.configs.configs = configs;
- 
-@@ -896,6 +897,8 @@ static int sppctl_dt_node_to_map(struct pinctrl_dev *pctldev, struct device_node
- 			(*map)[i].data.configs.num_configs = 1;
- 			(*map)[i].data.configs.group_or_pin = pin_get_name(pctldev, pin_num);
- 			configs = kmalloc(sizeof(*configs), GFP_KERNEL);
-+			if (!configs)
-+				goto sppctl_map_err;
- 			*configs = SPPCTL_IOP_CONFIGS;
- 			(*map)[i].data.configs.configs = configs;
- 
-@@ -965,6 +968,15 @@ static int sppctl_dt_node_to_map(struct pinctrl_dev *pctldev, struct device_node
- 	of_node_put(parent);
- 	dev_dbg(pctldev->dev, "%d pins mapped\n", *num_maps);
- 	return 0;
-+
-+sppctl_map_err:
-+	for (i = 0; i < (*num_maps); i++)
-+		if (((*map)[i].type == PIN_MAP_TYPE_CONFIGS_PIN) &&
-+		    (*map)[i].data.configs.configs)
-+			kfree((*map)[i].data.configs.configs);
-+	kfree(*map);
-+	of_node_put(parent);
-+	return -ENOMEM;
- }
- 
- static const struct pinctrl_ops sppctl_pctl_ops = {
+ int ufshcd_exec_raw_upiu_cmd(struct ufs_hba *hba,
 -- 
 2.39.2
 
