@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0778F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:32:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C68C433C7;
-	Sun, 16 Jul 2023 20:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2093E8F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:32:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C03C433C8;
+	Sun, 16 Jul 2023 20:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539546;
-	bh=xjDmeQhu9wh2E3dfIi6488d6FXt3ReDiKcW7QIYxEgc=;
+	s=korg; t=1689539549;
+	bh=VqxWKmb/0zdOtq5FCmTillsvEWryJh9FiRP6aP+TNOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x8BgQ43HFq+d/mbzkQ+u87zhfigP3NOTSYwNs9eYyrrUctT5EaMnLf0dZtT9ebtn0
-	 hU4bzFBycDfaAbe7JFIsBJSnYWrUQ7xowkO52CpKlcVKXY3AYjQjagwjd6RqHp6Fm8
-	 mwUS9GmtWoOBDNPtyH9DB3K+SmWw6u0t0GxhtzzM=
+	b=KZzt/CdE9kYb5Ntvc9Z4HqKtwwCQzaY+CHGPDHUDGC0d6mWeHw2se1u0BPNEb11GJ
+	 4b9rWWxnKkcaublqp9jN6Urpd2t6i/VU9eayAX5K46Dt507cutITQG2S7H+6QGILAN
+	 pejEVj3EK/r/XDsZW8jA/tGbmJ3p9vRFX6IY9F9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
 	Chaitanya Kulkarni <kch@nvidia.com>,
+	Yi Zhang <yi.zhang@redhat.com>,
 	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/591] nvme-auth: no need to reset chap contexts on re-authentication
-Date: Sun, 16 Jul 2023 21:42:37 +0200
-Message-ID: <20230716194924.334475947@linuxfoundation.org>
+Subject: [PATCH 6.1 019/591] nvme-core: fix memory leak in dhchap_secret_store
+Date: Sun, 16 Jul 2023 21:42:38 +0200
+Message-ID: <20230716194924.361682444@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,83 +38,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Chaitanya Kulkarni <kch@nvidia.com>
 
-[ Upstream commit e8a420efb637f52c586596283d6fd96f2a7ecb5c ]
+[ Upstream commit a836ca33c5b07d34dd5347af9f64d25651d12674 ]
 
-Now that the chap context is reset upon completion, this is no longer
-needed. Also remove nvme_auth_reset as no callers are left.
+Free dhchap_secret in nvme_ctrl_dhchap_secret_store() before we return
+fix following kmemleack:-
 
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Stable-dep-of: a836ca33c5b0 ("nvme-core: fix memory leak in dhchap_secret_store")
+unreferenced object 0xffff8886376ea800 (size 64):
+  comm "check", pid 22048, jiffies 4344316705 (age 92.199s)
+  hex dump (first 32 bytes):
+    44 48 48 43 2d 31 3a 30 30 3a 6e 78 72 35 4b 67  DHHC-1:00:nxr5Kg
+    75 58 34 75 6f 41 78 73 4a 61 34 63 2f 68 75 4c  uX4uoAxsJa4c/huL
+  backtrace:
+    [<0000000030ce5d4b>] __kmalloc+0x4b/0x130
+    [<000000009be1cdc1>] nvme_ctrl_dhchap_secret_store+0x8f/0x160 [nvme_core]
+    [<00000000ac06c96a>] kernfs_fop_write_iter+0x12b/0x1c0
+    [<00000000437e7ced>] vfs_write+0x2ba/0x3c0
+    [<00000000f9491baf>] ksys_write+0x5f/0xe0
+    [<000000001c46513d>] do_syscall_64+0x3b/0x90
+    [<00000000ecf348fe>] entry_SYSCALL_64_after_hwframe+0x72/0xdc
+unreferenced object 0xffff8886376eaf00 (size 64):
+  comm "check", pid 22048, jiffies 4344316736 (age 92.168s)
+  hex dump (first 32 bytes):
+    44 48 48 43 2d 31 3a 30 30 3a 6e 78 72 35 4b 67  DHHC-1:00:nxr5Kg
+    75 58 34 75 6f 41 78 73 4a 61 34 63 2f 68 75 4c  uX4uoAxsJa4c/huL
+  backtrace:
+    [<0000000030ce5d4b>] __kmalloc+0x4b/0x130
+    [<000000009be1cdc1>] nvme_ctrl_dhchap_secret_store+0x8f/0x160 [nvme_core]
+    [<00000000ac06c96a>] kernfs_fop_write_iter+0x12b/0x1c0
+    [<00000000437e7ced>] vfs_write+0x2ba/0x3c0
+    [<00000000f9491baf>] ksys_write+0x5f/0xe0
+    [<000000001c46513d>] do_syscall_64+0x3b/0x90
+    [<00000000ecf348fe>] entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+Fixes: f50fff73d620 ("nvme: implement In-Band authentication")
+Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
+Tested-by: Yi Zhang <yi.zhang@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/auth.c | 13 -------------
- drivers/nvme/host/core.c |  4 ----
- drivers/nvme/host/nvme.h |  1 -
- 3 files changed, 18 deletions(-)
+ drivers/nvme/host/core.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/auth.c b/drivers/nvme/host/auth.c
-index 2f823c6b84fd3..1a27d7fb4fa91 100644
---- a/drivers/nvme/host/auth.c
-+++ b/drivers/nvme/host/auth.c
-@@ -920,19 +920,6 @@ int nvme_auth_wait(struct nvme_ctrl *ctrl, int qid)
- }
- EXPORT_SYMBOL_GPL(nvme_auth_wait);
- 
--void nvme_auth_reset(struct nvme_ctrl *ctrl)
--{
--	struct nvme_dhchap_queue_context *chap;
--
--	mutex_lock(&ctrl->dhchap_auth_mutex);
--	list_for_each_entry(chap, &ctrl->dhchap_auth_list, entry) {
--		mutex_unlock(&ctrl->dhchap_auth_mutex);
--		flush_work(&chap->auth_work);
--		nvme_auth_reset_dhchap(chap);
--	}
--	mutex_unlock(&ctrl->dhchap_auth_mutex);
--}
--
- static void nvme_ctrl_auth_work(struct work_struct *work)
- {
- 	struct nvme_ctrl *ctrl =
 diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index a7d9b5b42b388..b63511f481a7f 100644
+index b63511f481a7f..3956164272253 100644
 --- a/drivers/nvme/host/core.c
 +++ b/drivers/nvme/host/core.c
-@@ -3832,8 +3832,6 @@ static ssize_t nvme_ctrl_dhchap_secret_store(struct device *dev,
+@@ -3825,14 +3825,17 @@ static ssize_t nvme_ctrl_dhchap_secret_store(struct device *dev,
+ 		int ret;
+ 
+ 		ret = nvme_auth_generate_key(dhchap_secret, &key);
+-		if (ret)
++		if (ret) {
++			kfree(dhchap_secret);
+ 			return ret;
++		}
+ 		kfree(opts->dhchap_secret);
+ 		opts->dhchap_secret = dhchap_secret;
  		host_key = ctrl->host_key;
  		ctrl->host_key = key;
  		nvme_auth_free_key(host_key);
--		/* Key has changed; re-authentication with new key */
--		nvme_auth_reset(ctrl);
- 	}
+-	}
++	} else
++		kfree(dhchap_secret);
  	/* Start re-authentication */
  	dev_info(ctrl->device, "re-authenticating controller\n");
-@@ -3886,8 +3884,6 @@ static ssize_t nvme_ctrl_dhchap_ctrl_secret_store(struct device *dev,
- 		ctrl_key = ctrl->ctrl_key;
- 		ctrl->ctrl_key = key;
- 		nvme_auth_free_key(ctrl_key);
--		/* Key has changed; re-authentication with new key */
--		nvme_auth_reset(ctrl);
- 	}
- 	/* Start re-authentication */
- 	dev_info(ctrl->device, "re-authenticating controller\n");
-diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
-index 2aa514c3dfa17..5ed771d576c6d 100644
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -1032,7 +1032,6 @@ void nvme_auth_init_ctrl(struct nvme_ctrl *ctrl);
- void nvme_auth_stop(struct nvme_ctrl *ctrl);
- int nvme_auth_negotiate(struct nvme_ctrl *ctrl, int qid);
- int nvme_auth_wait(struct nvme_ctrl *ctrl, int qid);
--void nvme_auth_reset(struct nvme_ctrl *ctrl);
- void nvme_auth_free(struct nvme_ctrl *ctrl);
- #else
- static inline void nvme_auth_init_ctrl(struct nvme_ctrl *ctrl) {};
+ 	queue_work(nvme_wq, &ctrl->dhchap_auth_work);
 -- 
 2.39.2
 
