@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4D58F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:53:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38265C433C7;
-	Sun, 16 Jul 2023 19:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0DE48F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:53:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496D0C433C7;
+	Sun, 16 Jul 2023 19:53:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537223;
-	bh=ZVAjFBOIiZqTllOdsL2izGmL4Zv10JOIcoF7WTvg5tQ=;
+	s=korg; t=1689537226;
+	bh=b81ICQDdUTdS491+GBO2XmnxHMmtmkbWXrH9Fs2HUxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t3eg6Pn+P9oDsjg4ZOJRe2nEvKa2l0HZxSr2d2eRbixY3RfcptIBpbQDqrUgGfl+1
-	 BY5hCgrM+QlNGme2Qk0JmukrA4ulW1AAkpYmSR7HRigKknmwzmUlDMuXWiQPUPuXLn
-	 gzZSKxtMbgZTjKeeigM4Yk4Y4hDnVj188yWD5+wc=
+	b=uz1ENGKT+s2Aob2olwvxfgEOB1S5+A0/ThJDZR5q5v8nBOpstxpzhmhfIa37tiRm9
+	 Oyq1+A1G6Z4aMqH764uBNoay/Ipml5z5SbX5/SPsMtq3yMFkVY4NV9K664KfxzgdF7
+	 JGBVfznF/Ay0kmYtWPw/LDQJmfFEwlaCDjdm6/7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davide Tronchin <davide.tronchin.94@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.4 002/800] USB: serial: option: add LARA-R6 01B PIDs
-Date: Sun, 16 Jul 2023 21:37:35 +0200
-Message-ID: <20230716194949.166810348@linuxfoundation.org>
+	Shawn Wang <shawnwang@linux.alibaba.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 020/800] x86/resctrl: Only show tasks pid in current pid namespace
+Date: Sun, 16 Jul 2023 21:37:53 +0200
+Message-ID: <20230716194949.573252904@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -34,65 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Davide Tronchin <davide.tronchin.94@gmail.com>
+From: Shawn Wang <shawnwang@linux.alibaba.com>
 
-commit ffa5f7a3bf28c1306eef85d4056539c2d4b8eb09 upstream.
+[ Upstream commit 2997d94b5dd0e8b10076f5e0b6f18410c73e28bd ]
 
-The new LARA-R6 product variant identified by the "01B" string can be
-configured (by AT interface) in three different USB modes:
+When writing a task id to the "tasks" file in an rdtgroup,
+rdtgroup_tasks_write() treats the pid as a number in the current pid
+namespace. But when reading the "tasks" file, rdtgroup_tasks_show() shows
+the list of global pids from the init namespace, which is confusing and
+incorrect.
 
-* Default mode (Vendor ID: 0x1546 Product ID: 0x1311) with 4 serial
-interfaces
+To be more robust, let the "tasks" file only show pids in the current pid
+namespace.
 
-* RmNet mode (Vendor ID: 0x1546 Product ID: 0x1312) with 4 serial
-interfaces and 1 RmNet virtual network interface
-
-* CDC-ECM mode (Vendor ID: 0x1546 Product ID: 0x1313) with 4 serial
-interface and 1 CDC-ECM virtual network interface
-The first 4 interfaces of all the 3 USB configurations (default, RmNet,
-CDC-ECM) are the same.
-
-In default mode LARA-R6 01B exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parser/alternative functions
-
-In RmNet mode LARA-R6 01B exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parser/alternative functions
-If 4: RMNET interface
-
-In CDC-ECM mode LARA-R6 01B exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parser/alternative functions
-If 4: CDC-ECM interface
-
-Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
-Link: https://lore.kernel.org/r/20230622092921.12651-1-davide.tronchin.94@gmail.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e02737d5b826 ("x86/intel_rdt: Add tasks files")
+Signed-off-by: Shawn Wang <shawnwang@linux.alibaba.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Reinette Chatre <reinette.chatre@intel.com>
+Acked-by: Fenghua Yu <fenghua.yu@intel.com>
+Tested-by: Reinette Chatre <reinette.chatre@intel.com>
+Link: https://lore.kernel.org/all/20230116071246.97717-1-shawnwang@linux.alibaba.com/
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1151,6 +1151,10 @@ static const struct usb_device_id option
- 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90fa),
- 	  .driver_info = RSVD(3) },
- 	/* u-blox products */
-+	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1311) },	/* u-blox LARA-R6 01B */
-+	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1312),		/* u-blox LARA-R6 01B (RMNET) */
-+	  .driver_info = RSVD(4) },
-+	{ USB_DEVICE_INTERFACE_CLASS(UBLOX_VENDOR_ID, 0x1313, 0xff) },	/* u-blox LARA-R6 01B (ECM) */
- 	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1341) },	/* u-blox LARA-L6 */
- 	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1342),		/* u-blox LARA-L6 (RMNET) */
- 	  .driver_info = RSVD(4) },
+diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+index 6ad33f355861f..61cdd9b1bb6d8 100644
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -726,11 +726,15 @@ static ssize_t rdtgroup_tasks_write(struct kernfs_open_file *of,
+ static void show_rdt_tasks(struct rdtgroup *r, struct seq_file *s)
+ {
+ 	struct task_struct *p, *t;
++	pid_t pid;
+ 
+ 	rcu_read_lock();
+ 	for_each_process_thread(p, t) {
+-		if (is_closid_match(t, r) || is_rmid_match(t, r))
+-			seq_printf(s, "%d\n", t->pid);
++		if (is_closid_match(t, r) || is_rmid_match(t, r)) {
++			pid = task_pid_vnr(t);
++			if (pid)
++				seq_printf(s, "%d\n", pid);
++		}
+ 	}
+ 	rcu_read_unlock();
+ }
+-- 
+2.39.2
+
 
 
