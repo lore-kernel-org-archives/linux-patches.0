@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7809A8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:50:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE58C433C7;
-	Sun, 16 Jul 2023 20:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDAC8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:50:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3030C433C7;
+	Sun, 16 Jul 2023 20:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540627;
-	bh=FaqdUIyMkvgk6FJ8+pmVw35p6XeNUShefM2Z/+8wY4k=;
+	s=korg; t=1689540630;
+	bh=5w/SXJvSSN0lvDF8NdC5CubC4dBvV/ZW1pOyj+a4LPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Em/siksayBDteC8eXUF1UeEuBDoePXiy4hlsd072Fu6+51D3bH/Gtz3LCq0zBLNBm
-	 K/fDa3yLY3wicmgTwUwrvIyOtxV2XLjA9hSXMJzv9fVUDzCQP2MbJSTFl3BJrmAlb9
-	 yCOYLTXh7gku53jG/DK/SqmJQFO1HkBEM1BiKOZw=
+	b=iFA9xMJVpob9prenSD/RJpnDzJ3amLzH+khoWIAps+A/XTnUCYroopdJwfxCRoCgD
+	 zi7Az6Y7xcHemRK4fB6s3a6/T1Fkd4EbPS1x2V9uoFq5qdbziTFVbbSaklgG8hmpti
+	 MGUkoNRCFyh7IqThwQxZm20YXlWotf73IINhW/3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Robert Marko <robimarko@gmail.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 403/591] clk: qcom: reset: support resetting multiple bits
-Date: Sun, 16 Jul 2023 21:49:02 +0200
-Message-ID: <20230716194934.345237089@linuxfoundation.org>
+Subject: [PATCH 6.1 404/591] clk: qcom: ipq6018: fix networking resets
+Date: Sun, 16 Jul 2023 21:49:03 +0200
+Message-ID: <20230716194934.369766237@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,68 +37,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Robert Marko <robimarko@gmail.com>
 
-[ Upstream commit 4a5210893625f89723ea210d7c630b730abb37ad ]
+[ Upstream commit 349b5bed539b491b7894a5186a895751fd8ba6c7 ]
 
-This patch adds the support for giving the complete bitmask
-in reset structure and reset operation will use this bitmask
-for all reset operations.
+Networking resets in IPQ6018 all use bitmask as they require multiple
+bits to be set and cleared instead of a single bit.
 
-Currently, reset structure only takes a single bit for each reset
-and then calculates the bitmask by using the BIT() macro.
+So, current networking resets have the same register and bit 0 set which
+is clearly incorrect.
 
-However, this is not sufficient anymore for newer SoC-s like IPQ8074,
-IPQ6018 and more, since their networking resets require multiple bits
-to be asserted in order to properly reset the HW block completely.
-
-So, in order to allow asserting multiple bits add "bitmask" field to
-qcom_reset_map, and then use that bitmask value if its populated in the
-driver, if its not populated, then we just default to existing behaviour
-and calculate the bitmask on the fly.
-
+Fixes: d9db07f088af ("clk: qcom: Add ipq6018 Global Clock Controller support")
 Signed-off-by: Robert Marko <robimarko@gmail.com>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221107132901.489240-1-robimarko@gmail.com
-Stable-dep-of: 349b5bed539b ("clk: qcom: ipq6018: fix networking resets")
+Link: https://lore.kernel.org/r/20230526190855.2941291-2-robimarko@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/reset.c | 4 ++--
- drivers/clk/qcom/reset.h | 1 +
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/gcc-ipq6018.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/clk/qcom/reset.c b/drivers/clk/qcom/reset.c
-index 2a16adb572d2b..0e914ec7aeae1 100644
---- a/drivers/clk/qcom/reset.c
-+++ b/drivers/clk/qcom/reset.c
-@@ -30,7 +30,7 @@ qcom_reset_assert(struct reset_controller_dev *rcdev, unsigned long id)
- 
- 	rst = to_qcom_reset_controller(rcdev);
- 	map = &rst->reset_map[id];
--	mask = BIT(map->bit);
-+	mask = map->bitmask ? map->bitmask : BIT(map->bit);
- 
- 	return regmap_update_bits(rst->regmap, map->reg, mask, mask);
- }
-@@ -44,7 +44,7 @@ qcom_reset_deassert(struct reset_controller_dev *rcdev, unsigned long id)
- 
- 	rst = to_qcom_reset_controller(rcdev);
- 	map = &rst->reset_map[id];
--	mask = BIT(map->bit);
-+	mask = map->bitmask ? map->bitmask : BIT(map->bit);
- 
- 	return regmap_update_bits(rst->regmap, map->reg, mask, 0);
- }
-diff --git a/drivers/clk/qcom/reset.h b/drivers/clk/qcom/reset.h
-index b8c113582072b..9a47c838d9b1b 100644
---- a/drivers/clk/qcom/reset.h
-+++ b/drivers/clk/qcom/reset.h
-@@ -12,6 +12,7 @@ struct qcom_reset_map {
- 	unsigned int reg;
- 	u8 bit;
- 	u8 udelay;
-+	u32 bitmask;
- };
- 
- struct regmap;
+diff --git a/drivers/clk/qcom/gcc-ipq6018.c b/drivers/clk/qcom/gcc-ipq6018.c
+index 5c5d1b04ea7af..cde62a11f5736 100644
+--- a/drivers/clk/qcom/gcc-ipq6018.c
++++ b/drivers/clk/qcom/gcc-ipq6018.c
+@@ -4517,24 +4517,24 @@ static const struct qcom_reset_map gcc_ipq6018_resets[] = {
+ 	[GCC_PCIE0_AHB_ARES] = { 0x75040, 5 },
+ 	[GCC_PCIE0_AXI_MASTER_STICKY_ARES] = { 0x75040, 6 },
+ 	[GCC_PCIE0_AXI_SLAVE_STICKY_ARES] = { 0x75040, 7 },
+-	[GCC_PPE_FULL_RESET] = { 0x68014, 0 },
+-	[GCC_UNIPHY0_SOFT_RESET] = { 0x56004, 0 },
++	[GCC_PPE_FULL_RESET] = { .reg = 0x68014, .bitmask = 0xf0000 },
++	[GCC_UNIPHY0_SOFT_RESET] = { .reg = 0x56004, .bitmask = 0x3ff2 },
+ 	[GCC_UNIPHY0_XPCS_RESET] = { 0x56004, 2 },
+-	[GCC_UNIPHY1_SOFT_RESET] = { 0x56104, 0 },
++	[GCC_UNIPHY1_SOFT_RESET] = { .reg = 0x56104, .bitmask = 0x32 },
+ 	[GCC_UNIPHY1_XPCS_RESET] = { 0x56104, 2 },
+-	[GCC_EDMA_HW_RESET] = { 0x68014, 0 },
+-	[GCC_NSSPORT1_RESET] = { 0x68014, 0 },
+-	[GCC_NSSPORT2_RESET] = { 0x68014, 0 },
+-	[GCC_NSSPORT3_RESET] = { 0x68014, 0 },
+-	[GCC_NSSPORT4_RESET] = { 0x68014, 0 },
+-	[GCC_NSSPORT5_RESET] = { 0x68014, 0 },
+-	[GCC_UNIPHY0_PORT1_ARES] = { 0x56004, 0 },
+-	[GCC_UNIPHY0_PORT2_ARES] = { 0x56004, 0 },
+-	[GCC_UNIPHY0_PORT3_ARES] = { 0x56004, 0 },
+-	[GCC_UNIPHY0_PORT4_ARES] = { 0x56004, 0 },
+-	[GCC_UNIPHY0_PORT5_ARES] = { 0x56004, 0 },
+-	[GCC_UNIPHY0_PORT_4_5_RESET] = { 0x56004, 0 },
+-	[GCC_UNIPHY0_PORT_4_RESET] = { 0x56004, 0 },
++	[GCC_EDMA_HW_RESET] = { .reg = 0x68014, .bitmask = 0x300000 },
++	[GCC_NSSPORT1_RESET] = { .reg = 0x68014, .bitmask = 0x1000003 },
++	[GCC_NSSPORT2_RESET] = { .reg = 0x68014, .bitmask = 0x200000c },
++	[GCC_NSSPORT3_RESET] = { .reg = 0x68014, .bitmask = 0x4000030 },
++	[GCC_NSSPORT4_RESET] = { .reg = 0x68014, .bitmask = 0x8000300 },
++	[GCC_NSSPORT5_RESET] = { .reg = 0x68014, .bitmask = 0x10000c00 },
++	[GCC_UNIPHY0_PORT1_ARES] = { .reg = 0x56004, .bitmask = 0x30 },
++	[GCC_UNIPHY0_PORT2_ARES] = { .reg = 0x56004, .bitmask = 0xc0 },
++	[GCC_UNIPHY0_PORT3_ARES] = { .reg = 0x56004, .bitmask = 0x300 },
++	[GCC_UNIPHY0_PORT4_ARES] = { .reg = 0x56004, .bitmask = 0xc00 },
++	[GCC_UNIPHY0_PORT5_ARES] = { .reg = 0x56004, .bitmask = 0x3000 },
++	[GCC_UNIPHY0_PORT_4_5_RESET] = { .reg = 0x56004, .bitmask = 0x3c02 },
++	[GCC_UNIPHY0_PORT_4_RESET] = { .reg = 0x56004, .bitmask = 0xc02 },
+ 	[GCC_LPASS_BCR] = {0x1F000, 0},
+ 	[GCC_UBI32_TBU_BCR] = {0x65000, 0},
+ 	[GCC_LPASS_TBU_BCR] = {0x6C000, 0},
 -- 
 2.39.2
 
