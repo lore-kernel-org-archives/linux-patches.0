@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56CB28F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:09:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0855C433C7;
-	Sun, 16 Jul 2023 20:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6DC8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:09:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12ADC433C8;
+	Sun, 16 Jul 2023 20:09:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538189;
-	bh=KRQDK4WT2wKIt2eM5cqo3X7/UXawT6O51ecS9GjjopA=;
+	s=korg; t=1689538192;
+	bh=7CyZ9Se5iyVlpgCPS0OulQndlhx6cRyDUzwrdGVPgI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=12gkXSpiNRcGtBJZl0ylCJO+5kCujHzkOyX+crm9HivXrVje63qSmPy0buJxU3s10
-	 vvgz4UAPjw0376okDZUH8LeRr4Z7CNWKsFhWFxdlSH16AtE08o/21faZZUWwKkFnkm
-	 K6SJ+K9AcnQhYMrjcgRRlUy8QMpCSgNfD4kwm5yA=
+	b=z+XENF8KxIRJrixaNkkRJ4ozfXEF1PKgdpJcRhs5E+rwLDHPWPHyHlBG/IDASwMsh
+	 /54DUewdqSG8ykaKP1wpDl85YH09Kv5xk0+OYdmDF+HnHUil/ogdwQKMrtxEwknmHB
+	 VnzI9r7IYDU0w3YbTY1wB7/3w4wliHI/C2h3h16U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <maxime@cerno.tech>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 363/800] clk: Export clk_hw_forward_rate_request()
-Date: Sun, 16 Jul 2023 21:43:36 +0200
-Message-ID: <20230716194957.509964971@linuxfoundation.org>
+Subject: [PATCH 6.4 364/800] MIPS: DTS: CI20: Fix ACT8600 regulator node names
+Date: Sun, 16 Jul 2023 21:43:37 +0200
+Message-ID: <20230716194957.533609145@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,35 +35,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxime Ripard <maxime@cerno.tech>
+From: Paul Cercueil <paul@crapouillou.net>
 
-[ Upstream commit ed046ac74da0b5602566073023a1519b5ae657b7 ]
+[ Upstream commit 08384e80a70fb1942510ab5f0ce27bad134e634e ]
 
-Commit 262ca38f4b6e ("clk: Stop forwarding clk_rate_requests to the
-parent") introduced the public clk_hw_forward_rate_request() function,
-but didn't export the symbol. Make sure it's the case.
+The Device Tree was using invalid node names for the ACT8600 regulators.
+To be fair, it is not the original committer's fault, as the
+documentation did gives invalid names as well.
 
-Fixes: 262ca38f4b6e ("clk: Stop forwarding clk_rate_requests to the parent")
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Link: https://lore.kernel.org/r/20221018-clk-range-checks-fixes-v4-1-971d5077e7d2@cerno.tech
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+In theory, the fix should have been to modify the driver to accept the
+alternative names. However, even though the act8865 driver spits
+warnings, the kernel seemed to work fine with what is currently
+supported upstream. For that reason, I think it is okay to just update
+the DTS.
+
+I removed the "regulator-name" too, since they really didn't bring any
+information. The node names are enough.
+
+Fixes: 73f2b940474d ("MIPS: CI20: DTS: Add I2C nodes")
+Signed-off-by: Paul Cercueil <paul@crapouillou.net>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/mips/boot/dts/ingenic/ci20.dts | 27 ++++++++-------------------
+ 1 file changed, 8 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index 27c30a533759a..e495dd7a1eae1 100644
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -1549,6 +1549,7 @@ void clk_hw_forward_rate_request(const struct clk_hw *hw,
- 				  parent->core, req,
- 				  parent_rate);
- }
-+EXPORT_SYMBOL_GPL(clk_hw_forward_rate_request);
+diff --git a/arch/mips/boot/dts/ingenic/ci20.dts b/arch/mips/boot/dts/ingenic/ci20.dts
+index 239c4537484d0..2b1284c6c64a6 100644
+--- a/arch/mips/boot/dts/ingenic/ci20.dts
++++ b/arch/mips/boot/dts/ingenic/ci20.dts
+@@ -237,59 +237,49 @@ &i2c0 {
+ 	act8600: act8600@5a {
+ 		compatible = "active-semi,act8600";
+ 		reg = <0x5a>;
+-		status = "okay";
  
- static bool clk_core_can_round(struct clk_core * const core)
- {
+ 		regulators {
+-			vddcore: SUDCDC1 {
+-				regulator-name = "DCDC_REG1";
++			vddcore: DCDC1 {
+ 				regulator-min-microvolt = <1100000>;
+ 				regulator-max-microvolt = <1100000>;
+ 				regulator-always-on;
+ 			};
+-			vddmem: SUDCDC2 {
+-				regulator-name = "DCDC_REG2";
++			vddmem: DCDC2 {
+ 				regulator-min-microvolt = <1500000>;
+ 				regulator-max-microvolt = <1500000>;
+ 				regulator-always-on;
+ 			};
+-			vcc_33: SUDCDC3 {
+-				regulator-name = "DCDC_REG3";
++			vcc_33: DCDC3 {
+ 				regulator-min-microvolt = <3300000>;
+ 				regulator-max-microvolt = <3300000>;
+ 				regulator-always-on;
+ 			};
+-			vcc_50: SUDCDC4 {
+-				regulator-name = "SUDCDC_REG4";
++			vcc_50: SUDCDC_REG4 {
+ 				regulator-min-microvolt = <5000000>;
+ 				regulator-max-microvolt = <5000000>;
+ 				regulator-always-on;
+ 			};
+-			vcc_25: LDO_REG5 {
+-				regulator-name = "LDO_REG5";
++			vcc_25: LDO5 {
+ 				regulator-min-microvolt = <2500000>;
+ 				regulator-max-microvolt = <2500000>;
+ 				regulator-always-on;
+ 			};
+-			wifi_io: LDO_REG6 {
+-				regulator-name = "LDO_REG6";
++			wifi_io: LDO6 {
+ 				regulator-min-microvolt = <2500000>;
+ 				regulator-max-microvolt = <2500000>;
+ 				regulator-always-on;
+ 			};
+-			vcc_28: LDO_REG7 {
+-				regulator-name = "LDO_REG7";
++			cim_io_28: LDO7 {
+ 				regulator-min-microvolt = <2800000>;
+ 				regulator-max-microvolt = <2800000>;
+ 				regulator-always-on;
+ 			};
+-			vcc_15: LDO_REG8 {
+-				regulator-name = "LDO_REG8";
++			cim_io_15: LDO8 {
+ 				regulator-min-microvolt = <1500000>;
+ 				regulator-max-microvolt = <1500000>;
+ 				regulator-always-on;
+ 			};
+ 			vrtc_18: LDO_REG9 {
+-				regulator-name = "LDO_REG9";
+ 				/* Despite the datasheet stating 3.3V
+ 				 * for REG9 and the driver expecting that,
+ 				 * REG9 outputs 1.8V.
+@@ -303,7 +293,6 @@ vrtc_18: LDO_REG9 {
+ 				regulator-always-on;
+ 			};
+ 			vcc_11: LDO_REG10 {
+-				regulator-name = "LDO_REG10";
+ 				regulator-min-microvolt = <1200000>;
+ 				regulator-max-microvolt = <1200000>;
+ 				regulator-always-on;
 -- 
 2.39.2
 
