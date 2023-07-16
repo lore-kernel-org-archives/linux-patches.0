@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2B08F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:24:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D276C433C8;
-	Sun, 16 Jul 2023 20:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF8B8F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:24:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12778C433C8;
+	Sun, 16 Jul 2023 20:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539094;
-	bh=KZYMOEhtKyDQ2hpfcAvFIytXS/O4O04IaSeOaYzUJsM=;
+	s=korg; t=1689539097;
+	bh=WwSY/OzZDkYBCgxMN7MkovpKxAtWMeVsWat8XJtkFZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qLcWP8uUs5qL6FnW7b4gnymR4wYr7XsJl8m6z1kdqjPXGuVo3XAbCJ3azWrkHETH5
-	 4bc86iujLxLo5iBKHcZC9AFVy2H6y35V0zasN3EBVgrM5HRsNvL9tniR894gc5iUYH
-	 jaHBAjfjF5fb7CGZKu3AXOYyJHclfyDbfEPKUZ3Y=
+	b=YHqNYq6j1QThV/nCrsdrqOg74RXw7y7aRfU2O/1wabFPlLo3btN56PijSKAs9Yhy1
+	 AyWf8CDbBEOHR7pMCwn+Bjti6XWukEM39hAWU1NkPU5Reyu03SvJrr9PbH+CN5cVlu
+	 6Wm6V+bIRKXJ+N350S39cauHW/MnLvXYRKPcK1Z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 685/800] octeontx2-af: Fix mapping for NIX block from CGX connection
-Date: Sun, 16 Jul 2023 21:48:58 +0200
-Message-ID: <20230716195005.035837883@linuxfoundation.org>
+Subject: [PATCH 6.4 659/800] media: tc358746: select CONFIG_GENERIC_PHY
+Date: Sun, 16 Jul 2023 21:48:32 +0200
+Message-ID: <20230716195004.419151472@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,71 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 2e7bc57b976bb016c6569a54d95c1b8d88f9450a ]
+[ Upstream commit 582d4ad468cbc6ef2db4689ff3bd5868d95402c9 ]
 
-Firmware configures NIX block mapping for all MAC blocks.
-The current implementation reads the configuration and
-creates the mapping between RVU PF  and NIX blocks. But
-this configuration is only valid for silicons that support
-multiple blocks. For all other silicons, all MAC blocks
-map to NIX0.
+The tc358746 driver selects CONFIG_GENERIC_PHY_MIPI_DPHY and links to
+that, but this fails when CONFIG_GENERIC_PHY is disabled, because Kbuild
+then never enters the drivers/phy directory for building object files:
 
-This patch corrects the mapping by adding a check for the same.
+ERROR: modpost: "phy_mipi_dphy_get_default_config_for_hsclk" [drivers/media/i2c/tc358746.ko] undefined!
 
-Fixes: c5a73b632b90 ("octeontx2-af: Map NIX block from CGX connection")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Add an explicit 'select GENERIC_PHY' here to ensure that the directory
+is entered, and add another dependency on that symbol so make it
+more obvious what is going on if another driver has the same problem,
+as this will produce a Kconfig warning.
+
+Link: https://lore.kernel.org/linux-media/20230623152318.2276816-1-arnd@kernel.org
+Fixes: 80a21da360516 ("media: tc358746: add Toshiba TC358746 Parallel to CSI-2 bridge driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu.h     | 11 +++++++++++
- drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c |  2 +-
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ drivers/media/i2c/Kconfig | 1 +
+ drivers/phy/Kconfig       | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-index d655bf04a483d..68ff3244a84a2 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-@@ -23,6 +23,7 @@
- #define	PCI_DEVID_OCTEONTX2_LBK			0xA061
+diff --git a/drivers/media/i2c/Kconfig b/drivers/media/i2c/Kconfig
+index 256d55bb2b1da..76d1ee3cc1bab 100644
+--- a/drivers/media/i2c/Kconfig
++++ b/drivers/media/i2c/Kconfig
+@@ -1292,6 +1292,7 @@ config VIDEO_TC358746
+ 	select VIDEO_V4L2_SUBDEV_API
+ 	select MEDIA_CONTROLLER
+ 	select V4L2_FWNODE
++	select GENERIC_PHY
+ 	select GENERIC_PHY_MIPI_DPHY
+ 	select REGMAP_I2C
+ 	help
+diff --git a/drivers/phy/Kconfig b/drivers/phy/Kconfig
+index f46e3148d286d..8dba9596408f2 100644
+--- a/drivers/phy/Kconfig
++++ b/drivers/phy/Kconfig
+@@ -18,6 +18,7 @@ config GENERIC_PHY
  
- /* Subsystem Device ID */
-+#define PCI_SUBSYS_DEVID_98XX                  0xB100
- #define PCI_SUBSYS_DEVID_96XX                  0xB200
- #define PCI_SUBSYS_DEVID_CN10K_A	       0xB900
- #define PCI_SUBSYS_DEVID_CNF10K_B              0xBC00
-@@ -669,6 +670,16 @@ static inline u16 rvu_nix_chan_cpt(struct rvu *rvu, u8 chan)
- 	return rvu->hw->cpt_chan_base + chan;
- }
- 
-+static inline bool is_rvu_supports_nix1(struct rvu *rvu)
-+{
-+	struct pci_dev *pdev = rvu->pdev;
-+
-+	if (pdev->subsystem_device == PCI_SUBSYS_DEVID_98XX)
-+		return true;
-+
-+	return false;
-+}
-+
- /* Function Prototypes
-  * RVU
-  */
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-index 83b342fa8d753..48611e6032284 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-@@ -114,7 +114,7 @@ static void rvu_map_cgx_nix_block(struct rvu *rvu, int pf,
- 	p2x = cgx_lmac_get_p2x(cgx_id, lmac_id);
- 	/* Firmware sets P2X_SELECT as either NIX0 or NIX1 */
- 	pfvf->nix_blkaddr = BLKADDR_NIX0;
--	if (p2x == CMR_P2X_SEL_NIX1)
-+	if (is_rvu_supports_nix1(rvu) && p2x == CMR_P2X_SEL_NIX1)
- 		pfvf->nix_blkaddr = BLKADDR_NIX1;
- }
+ config GENERIC_PHY_MIPI_DPHY
+ 	bool
++	depends on GENERIC_PHY
+ 	help
+ 	  Generic MIPI D-PHY support.
  
 -- 
 2.39.2
