@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FB78F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:04:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6614EC433C8;
-	Sun, 16 Jul 2023 20:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B100F8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:04:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36991C433C7;
+	Sun, 16 Jul 2023 20:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537840;
-	bh=JVxLT2CdNFYtjwq2SYOvpsoCzexWg/AVF5Tjmmpx96k=;
+	s=korg; t=1689537843;
+	bh=Qj2eNCogAjV3QetJ2uhBKhQyS8L5SDOsLmpYDwi8zCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jPp9iEfQJxwlm7zkNVVCyWyE/dWLy5sEO1rz9SRTy2tKv4DLhXtodyRbT1VkUubcK
-	 3ds8D17KO1xa3adxmYtCKb7dlO98aiUjOgM4tzrkFjsobu/VKFMnRYGKPfPEEOYJmK
-	 8pUTi+26zyw1cfrJFVxR6XIXGJ8ZcWocgaOzB1Js=
+	b=iRUXl+lK2dTF5KIWzJhBrUD2ov6ze1+xvyRth6ImmlYtz0T2Lq3U32LcqZfKBLiOh
+	 HPeqEb+EpjuSvabz8pErGbIxYtovzc66ar060PlCuDjyXVragSiXJjYEwx1xLUj4Qu
+	 nQfugM6wNsPHHovBGM679L0lg38LbiHEBZjHxKZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Maxim Kochetkov <fido_max@inbox.ru>,
+	Robert Hancock <robert.hancock@calian.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 238/800] drm/bridge: tc358768: fix TCLK_ZEROCNT computation
-Date: Sun, 16 Jul 2023 21:41:31 +0200
-Message-ID: <20230716194954.617387366@linuxfoundation.org>
+Subject: [PATCH 6.4 210/800] net: axienet: Move reset before 64-bit DMA detection
+Date: Sun, 16 Jul 2023 21:41:03 +0200
+Message-ID: <20230716194953.975163876@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,52 +37,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Maxim Kochetkov <fido_max@inbox.ru>
 
-[ Upstream commit f9cf811374f42fca31ac34aaf59ee2ae72b89879 ]
+[ Upstream commit f1bc9fc4a06de0108e0dca2a9a7e99ba1fc632f9 ]
 
-Correct computation of TCLK_ZEROCNT register.
+64-bit DMA detection will fail if axienet was started before (by boot
+loader, boot ROM, etc). In this state axienet will not start properly.
+XAXIDMA_TX_CDESC_OFFSET + 4 register (MM2S_CURDESC_MSB) is used to detect
+64-bit DMA capability here. But datasheet says: When DMACR.RS is 1
+(axienet is in enabled state), CURDESC_PTR becomes Read Only (RO) and
+is used to fetch the first descriptor. So iowrite32()/ioread32() trick
+to this register to detect 64-bit DMA will not work.
+So move axienet reset before 64-bit DMA detection.
 
-This register must be set to a value that ensure that
-(TCLK-PREPARECNT + TCLK-ZERO) > 300ns
-
-with the actual value of (TCLK-PREPARECNT + TCLK-ZERO) being
-
-(1 to 2) + (TCLK_ZEROCNT + 1)) x HSByteClkCycle + (PHY output delay)
-
-with PHY output delay being about
-
-(2 to 3) x MIPIBitClk cycle in the BitClk conversion.
-
-Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-5-francesco@dolcini.it
+Fixes: f735c40ed93c ("net: axienet: Autodetect 64-bit DMA capability")
+Signed-off-by: Maxim Kochetkov <fido_max@inbox.ru>
+Reviewed-by: Robert Hancock <robert.hancock@calian.com>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://lore.kernel.org/r/20230622192245.116864-1-fido_max@inbox.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-index dba1bf3912f1e..aff400c360662 100644
---- a/drivers/gpu/drm/bridge/tc358768.c
-+++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -742,10 +742,10 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+index 3e310b55bce2b..734822321e0ab 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
++++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+@@ -2042,6 +2042,11 @@ static int axienet_probe(struct platform_device *pdev)
+ 		goto cleanup_clk;
+ 	}
  
- 	/* 38ns < TCLK_PREPARE < 95ns */
- 	val = tc358768_ns_to_cnt(65, dsibclk_nsk) - 1;
--	/* TCLK_PREPARE > 300ns */
--	val2 = tc358768_ns_to_cnt(300 + tc358768_to_ns(3 * ui_nsk),
--				  dsibclk_nsk);
--	val |= (val2 - tc358768_to_ns(phy_delay_nsk - dsibclk_nsk)) << 8;
-+	/* TCLK_PREPARE + TCLK_ZERO > 300ns */
-+	val2 = tc358768_ns_to_cnt(300 - tc358768_to_ns(2 * ui_nsk),
-+				  dsibclk_nsk) - 2;
-+	val |= val2 << 8;
- 	dev_dbg(priv->dev, "TCLK_HEADERCNT: 0x%x\n", val);
- 	tc358768_write(priv, TC358768_TCLK_HEADERCNT, val);
++	/* Reset core now that clocks are enabled, prior to accessing MDIO */
++	ret = __axienet_device_reset(lp);
++	if (ret)
++		goto cleanup_clk;
++
+ 	/* Autodetect the need for 64-bit DMA pointers.
+ 	 * When the IP is configured for a bus width bigger than 32 bits,
+ 	 * writing the MSB registers is mandatory, even if they are all 0.
+@@ -2096,11 +2101,6 @@ static int axienet_probe(struct platform_device *pdev)
+ 	lp->coalesce_count_tx = XAXIDMA_DFT_TX_THRESHOLD;
+ 	lp->coalesce_usec_tx = XAXIDMA_DFT_TX_USEC;
  
+-	/* Reset core now that clocks are enabled, prior to accessing MDIO */
+-	ret = __axienet_device_reset(lp);
+-	if (ret)
+-		goto cleanup_clk;
+-
+ 	ret = axienet_mdio_setup(lp);
+ 	if (ret)
+ 		dev_warn(&pdev->dev,
 -- 
 2.39.2
 
