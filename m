@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49948F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:53:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB5EC433C8;
-	Sun, 16 Jul 2023 19:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27288F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:53:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11DAFC433C8;
+	Sun, 16 Jul 2023 19:53:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537200;
-	bh=H3RTGC3DD0ahaWugNBydCwVfi2D0OgnzzpElM7xWMsQ=;
+	s=korg; t=1689537203;
+	bh=jZO2063i91QECqQ7TuP0YDjU9NWEHxl5U0XvjjXaoxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AczxdOvq8QGP1q42inWhAzKReV4btBPQlvMaguLAU2ZsunjwrUgpmrDibZmS1P4J8
-	 Zjb5S8xyWnC0uF5sMl6DwxnTYZOZ0k/gjBh2Fnj+1T09yS0cGQO4DwU5T4Il0w2KXw
-	 Geg+tR6gufpsE08Ex8dfLZxBrUMaJtW8G2puKxRc=
+	b=KXO79+YhRwFSWpAYFI8QT1MH17opEfdtCDUJ0T9gleNKDAhu/Q0Cnmus1moZhAe51
+	 GLx1uWopMHLvEwpLi3V7vyXRl8kbxOfewvlK1TZcrfPEqE3RV5aoJPJbENOOM1pV95
+	 UkWF+JKw6tKO1F1DvvlbEQq6jLwItKj1ZDgKCYzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hersen Wu <hersenxs.wu@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.4 012/800] Revert "drm/amd/display: edp do not add non-edid timings"
-Date: Sun, 16 Jul 2023 21:37:45 +0200
-Message-ID: <20230716194949.391486148@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 013/800] fs: pipe: reveal missing function protoypes
+Date: Sun, 16 Jul 2023 21:37:46 +0200
+Message-ID: <20230716194949.413789004@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,43 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hersen Wu <hersenxs.wu@amd.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit d6149086b45e150c170beaa4546495fd1880724c upstream.
+[ Upstream commit 247c8d2f9837a3e29e3b6b7a4aa9c36c37659dd4 ]
 
-This change causes regression when eDP and external display in mirror
-mode. When external display supports low resolution than eDP, use eDP
-timing to driver external display may cause corruption on external
-display.
+A couple of functions from fs/pipe.c are used both internally
+and for the watch queue code, but the declaration is only
+visible when the latter is enabled:
 
-This reverts commit e749dd10e5f292061ad63d2b030194bf7d7d452c.
+fs/pipe.c:1254:5: error: no previous prototype for 'pipe_resize_ring'
+fs/pipe.c:758:15: error: no previous prototype for 'account_pipe_buffers'
+fs/pipe.c:764:6: error: no previous prototype for 'too_many_pipe_buffers_soft'
+fs/pipe.c:771:6: error: no previous prototype for 'too_many_pipe_buffers_hard'
+fs/pipe.c:777:6: error: no previous prototype for 'pipe_is_unprivileged_user'
 
-Cc: stable@vger.kernel.org
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2655
-Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Make the visible unconditionally to avoid these warnings.
+
+Fixes: c73be61cede5 ("pipe: Add general notification queue support")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Message-Id: <20230516195629.551602-1-arnd@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ include/linux/pipe_fs_i.h | 4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -7196,13 +7196,7 @@ static int amdgpu_dm_connector_get_modes
- 				drm_add_modes_noedid(connector, 1920, 1080);
- 	} else {
- 		amdgpu_dm_connector_ddc_get_modes(connector, edid);
--		/* most eDP supports only timings from its edid,
--		 * usually only detailed timings are available
--		 * from eDP edid. timings which are not from edid
--		 * may damage eDP
--		 */
--		if (connector->connector_type != DRM_MODE_CONNECTOR_eDP)
--			amdgpu_dm_connector_add_common_modes(encoder, connector);
-+		amdgpu_dm_connector_add_common_modes(encoder, connector);
- 		amdgpu_dm_connector_add_freesync_modes(connector, edid);
- 	}
- 	amdgpu_dm_fbc_init(connector);
+diff --git a/include/linux/pipe_fs_i.h b/include/linux/pipe_fs_i.h
+index d2c3f16cf6b18..02e0086b10f6f 100644
+--- a/include/linux/pipe_fs_i.h
++++ b/include/linux/pipe_fs_i.h
+@@ -261,18 +261,14 @@ void generic_pipe_buf_release(struct pipe_inode_info *, struct pipe_buffer *);
+ 
+ extern const struct pipe_buf_operations nosteal_pipe_buf_ops;
+ 
+-#ifdef CONFIG_WATCH_QUEUE
+ unsigned long account_pipe_buffers(struct user_struct *user,
+ 				   unsigned long old, unsigned long new);
+ bool too_many_pipe_buffers_soft(unsigned long user_bufs);
+ bool too_many_pipe_buffers_hard(unsigned long user_bufs);
+ bool pipe_is_unprivileged_user(void);
+-#endif
+ 
+ /* for F_SETPIPE_SZ and F_GETPIPE_SZ */
+-#ifdef CONFIG_WATCH_QUEUE
+ int pipe_resize_ring(struct pipe_inode_info *pipe, unsigned int nr_slots);
+-#endif
+ long pipe_fcntl(struct file *, unsigned int, unsigned long arg);
+ struct pipe_inode_info *get_pipe_info(struct file *file, bool for_splice);
+ 
+-- 
+2.39.2
+
 
 
