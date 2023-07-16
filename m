@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23C78F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:58:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749F2C433C7;
-	Sun, 16 Jul 2023 19:58:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82208F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:58:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499F7C433C8;
+	Sun, 16 Jul 2023 19:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537504;
-	bh=RDxd5pRMeCnw5JaVFr6qETN7PBB5c5j/W4mG5vJOfLw=;
+	s=korg; t=1689537507;
+	bh=ra0ecAm9GDyk6lKFoXIankzZKDENIX6CFYXplPwUS7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zb886fG1HtOQZ2qeMDwnuKarJN4B2XiLaNC6dqm4B/xvVCIsDBpyhjZYUstN21DG/
-	 05zGpVtJeBTC6MYFXymdrcKQbzD1UKJB0gweijGyU6uCSa3AVTGru0rPqZ8ErL3C6O
-	 73ioselI8VbTLhclBrFG4MXoWtviY1B1Cpu5K5bs=
+	b=2tQmvnzRCViMxiT3NdM1Rrq+M0myAE31Fr8N//qQbyRGdwnRs5YTxFuS2rP1kwo/5
+	 DFI5kEOMqKuyPplj1LMujip9jvmwIRowagU1XtTpAAX+cOokqcAek7vSC/9Z2IRK4V
+	 idBFdoI+Ed0L6yeONK39fagTNXEhaT38UA2wRKr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Pengcheng Yang <yangpc@wangsu.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 082/800] rcu: Make rcu_cpu_starting() rely on interrupts being disabled
-Date: Sun, 16 Jul 2023 21:38:55 +0200
-Message-ID: <20230716194951.013491264@linuxfoundation.org>
+Subject: [PATCH 6.4 113/800] samples/bpf: Fix buffer overflow in tcp_basertt
+Date: Sun, 16 Jul 2023 21:39:26 +0200
+Message-ID: <20230716194951.734741432@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -34,83 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Pengcheng Yang <yangpc@wangsu.com>
 
-[ Upstream commit 15d44dfa40305da1648de4bf001e91cc63148725 ]
+[ Upstream commit f4dea9689c5fea3d07170c2cb0703e216f1a0922 ]
 
-Currently, rcu_cpu_starting() is written so that it might be invoked
-with interrupts enabled.  However, it is always called when interrupts
-are disabled, either by rcu_init(), notify_cpu_starting(), or from a
-call point prior to the call to notify_cpu_starting().
+Using sizeof(nv) or strlen(nv)+1 is correct.
 
-But why bother requiring that interrupts be disabled?  The purpose is
-to allow the rcu_data structure's ->beenonline flag to be set after all
-early processing has completed for the incoming CPU, thus allowing this
-flag to be used to determine when workqueues have been set up for the
-incoming CPU, while still allowing this flag to be used as a diagnostic
-within rcu_core().
-
-This commit therefore makes rcu_cpu_starting() rely on interrupts being
-disabled.
-
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Stable-dep-of: 401b0de3ae4f ("rcu-tasks: Stop rcu_tasks_invoke_cbs() from using never-onlined CPUs")
+Fixes: c890063e4404 ("bpf: sample BPF_SOCKET_OPS_BASE_RTT program")
+Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
+Link: https://lore.kernel.org/r/1683276658-2860-1-git-send-email-yangpc@wangsu.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ samples/bpf/tcp_basertt_kern.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
-index f52ff72410416..d5c9afa8adfbd 100644
---- a/kernel/rcu/tree.c
-+++ b/kernel/rcu/tree.c
-@@ -4368,15 +4368,16 @@ int rcutree_offline_cpu(unsigned int cpu)
-  * Note that this function is special in that it is invoked directly
-  * from the incoming CPU rather than from the cpuhp_step mechanism.
-  * This is because this function must be invoked at a precise location.
-+ * This incoming CPU must not have enabled interrupts yet.
-  */
- void rcu_cpu_starting(unsigned int cpu)
- {
--	unsigned long flags;
- 	unsigned long mask;
- 	struct rcu_data *rdp;
- 	struct rcu_node *rnp;
- 	bool newcpu;
- 
-+	lockdep_assert_irqs_disabled();
- 	rdp = per_cpu_ptr(&rcu_data, cpu);
- 	if (rdp->cpu_started)
- 		return;
-@@ -4384,7 +4385,6 @@ void rcu_cpu_starting(unsigned int cpu)
- 
- 	rnp = rdp->mynode;
- 	mask = rdp->grpmask;
--	local_irq_save(flags);
- 	arch_spin_lock(&rcu_state.ofl_lock);
- 	rcu_dynticks_eqs_online();
- 	raw_spin_lock(&rcu_state.barrier_lock);
-@@ -4403,17 +4403,16 @@ void rcu_cpu_starting(unsigned int cpu)
- 	/* An incoming CPU should never be blocking a grace period. */
- 	if (WARN_ON_ONCE(rnp->qsmask & mask)) { /* RCU waiting on incoming CPU? */
- 		/* rcu_report_qs_rnp() *really* wants some flags to restore */
--		unsigned long flags2;
-+		unsigned long flags;
- 
--		local_irq_save(flags2);
-+		local_irq_save(flags);
- 		rcu_disable_urgency_upon_qs(rdp);
- 		/* Report QS -after- changing ->qsmaskinitnext! */
--		rcu_report_qs_rnp(mask, rnp, rnp->gp_seq, flags2);
-+		rcu_report_qs_rnp(mask, rnp, rnp->gp_seq, flags);
- 	} else {
- 		raw_spin_unlock_rcu_node(rnp);
- 	}
- 	arch_spin_unlock(&rcu_state.ofl_lock);
--	local_irq_restore(flags);
- 	smp_mb(); /* Ensure RCU read-side usage follows above initialization. */
- }
- 
+diff --git a/samples/bpf/tcp_basertt_kern.c b/samples/bpf/tcp_basertt_kern.c
+index 8dfe09a92feca..822b0742b8154 100644
+--- a/samples/bpf/tcp_basertt_kern.c
++++ b/samples/bpf/tcp_basertt_kern.c
+@@ -47,7 +47,7 @@ int bpf_basertt(struct bpf_sock_ops *skops)
+ 		case BPF_SOCK_OPS_BASE_RTT:
+ 			n = bpf_getsockopt(skops, SOL_TCP, TCP_CONGESTION,
+ 					   cong, sizeof(cong));
+-			if (!n && !__builtin_memcmp(cong, nv, sizeof(nv)+1)) {
++			if (!n && !__builtin_memcmp(cong, nv, sizeof(nv))) {
+ 				/* Set base_rtt to 80us */
+ 				rv = 80;
+ 			} else if (n) {
 -- 
 2.39.2
 
