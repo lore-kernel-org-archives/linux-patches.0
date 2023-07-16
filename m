@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97FF8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:07:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58578C433C8;
-	Sun, 16 Jul 2023 20:07:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B098F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:07:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24902C433C8;
+	Sun, 16 Jul 2023 20:07:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538060;
-	bh=w54u5yvgqbfpZ7B+eblfgWr3V142jshsCCp4iovDTuE=;
+	s=korg; t=1689538063;
+	bh=+Bifnd3p8dkdvMLG65c53ARxI6OC1br3E+e61h4GWKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xRBdQQxXAui+ffrUZqL6+obZIRoLoZa7zOZOSunzn68MmdkObJRqkvFesdEcOlpfd
-	 JwehhBbU3tXSNMDLCtM3bnaG5lbGNkqoBaKgIsX4jzVdlRb8ubNKbTHlEBn1atqrG6
-	 YEZX14+tlAJBi+3mWAxKiiPhx0nvUTKdGgqcRoEI=
+	b=Ic12W1IcJQkCN5zo0gaDQQWUE8Isu4W8C5YCL5gv82vv1CrG164lRy+Whphz03gmU
+	 HqBOuMYftDgW0hpMfaxZIr+tGjZ+RLPiiRwr15rXqRd7+NMLKQO4IPglCyXBHkoTt2
+	 K29jt+ZPbOG724vijLTyXt0A898qnWZnp78hmqx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
-	Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>,
-	Ajit Khaparde <ajit.khaparde@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 271/800] RDMA/bnxt_re: Remove a redundant check inside bnxt_re_update_gid
-Date: Sun, 16 Jul 2023 21:42:04 +0200
-Message-ID: <20230716194955.388887058@linuxfoundation.org>
+Subject: [PATCH 6.4 310/800] arm64: dts: qcom: sdm845: correct camss unit address
+Date: Sun, 16 Jul 2023 21:42:43 +0200
+Message-ID: <20230716194956.275477259@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -39,52 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit b989f90cef0af48aa5679b6a75476371705ec53c ]
+[ Upstream commit a05b913a27e46926ba60ba2bcacc7ec7a8403e4c ]
 
-The NULL check inside bnxt_re_update_gid() always return false.  If
-sgid_tbl->tbl is not allocated, then dev_init would have failed.
+Match unit-address to reg entry to fix dtbs W=1 warnings:
 
-Fixes: 5fac5b1b297f ("RDMA/bnxt_re: Add vlan tag for untagged RoCE traffic when PFC is configured")
-Link: https://lore.kernel.org/r/1684478897-12247-5-git-send-email-selvin.xavier@broadcom.com
-Reviewed-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
-Reviewed-by: Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>
-Reviewed-by: Ajit Khaparde <ajit.khaparde@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+  Warning (simple_bus_reg): /soc@0/camss@a00000: simple-bus unit address format error, expected "acb3000"
+
+Fixes: d48a6698a6b7 ("arm64: dts: qcom: sdm845: Add CAMSS ISP node")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230419211856.79332-11-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/main.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/main.c b/drivers/infiniband/hw/bnxt_re/main.c
-index cb4465b0792b9..1936f4b4002a7 100644
---- a/drivers/infiniband/hw/bnxt_re/main.c
-+++ b/drivers/infiniband/hw/bnxt_re/main.c
-@@ -969,12 +969,6 @@ static int bnxt_re_update_gid(struct bnxt_re_dev *rdev)
- 	if (!ib_device_try_get(&rdev->ibdev))
- 		return 0;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index cdeb05e95674e..8f99e79ba3fd4 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -4238,7 +4238,7 @@ videocc: clock-controller@ab00000 {
+ 			#reset-cells = <1>;
+ 		};
  
--	if (!sgid_tbl) {
--		ibdev_err(&rdev->ibdev, "QPLIB: SGID table not allocated");
--		rc = -EINVAL;
--		goto out;
--	}
--
- 	for (index = 0; index < sgid_tbl->active; index++) {
- 		gid_idx = sgid_tbl->hw_id[index];
+-		camss: camss@a00000 {
++		camss: camss@acb3000 {
+ 			compatible = "qcom,sdm845-camss";
  
-@@ -992,7 +986,7 @@ static int bnxt_re_update_gid(struct bnxt_re_dev *rdev)
- 		rc = bnxt_qplib_update_sgid(sgid_tbl, &gid, gid_idx,
- 					    rdev->qplib_res.netdev->dev_addr);
- 	}
--out:
-+
- 	ib_device_put(&rdev->ibdev);
- 	return rc;
- }
+ 			reg = <0 0x0acb3000 0 0x1000>,
 -- 
 2.39.2
 
