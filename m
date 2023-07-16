@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87DD58F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:03:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5CDC433C8;
-	Sun, 16 Jul 2023 20:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EEEE8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:03:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F34C433C8;
+	Sun, 16 Jul 2023 20:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537804;
-	bh=CeWq2Sf9QMRyOiVTZyEMY9ZJsIy9IKrB/6j3O0b7qIo=;
+	s=korg; t=1689537807;
+	bh=kv1FyZjkJGIZK9HZ8gVE71VCjyPXiQmt0VSkfm8tCyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L4aHZtijnVRZGfZUEkw9MlzU4U6BzMYoH+FT2H8xfMY1mfCqZQ1Ip0VFXSBXwNM2P
-	 lcT7l9jM9jvZ2IsnSp9sit4CdVONE/IiqINbfAOBKTibRkXSRGkPUhN33CiVMMHJ5P
-	 yPZ70j3QWFopu7aBev84MJKN5QaDfP3n7dvp77IQ=
+	b=RPf6XattsuEygzBmsL7WDmGoM7bytRF8UYU4KRrUd7uI9g83kthgXOp405soLXRmB
+	 UbcJZVSGbrsniRrcFkz8nHvb0HCscznfPLH4UBW5GibSTZFniM8boteofGnxrxVCcm
+	 qfqwfth06OcLgwsqCmaOZkVUcHDS/T/a9I1Z9+YQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Natalia Petrova <n.petrova@fintech.ru>
-Subject: [PATCH 6.4 226/800] radeon: avoid double free in ci_dpm_init()
-Date: Sun, 16 Jul 2023 21:41:19 +0200
-Message-ID: <20230716194954.339810286@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 227/800] drm/amd/display: Explicitly specify update type per plane info change
+Date: Sun, 16 Jul 2023 21:41:20 +0200
+Message-ID: <20230716194954.362148756@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,108 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit 20c3dffdccbd494e0dd631d1660aeecbff6775f2 ]
+[ Upstream commit 710cc1e7cd461446a9325c9bd1e9a54daa462952 ]
 
-Several calls to ci_dpm_fini() will attempt to free resources that
-either have been freed before or haven't been allocated yet. This
-may lead to undefined or dangerous behaviour.
+[Why]
+The bit for flip addr is being set causing the determination for
+FAST vs MEDIUM to always return MEDIUM when plane info is provided
+as a surface update. This causes extreme stuttering for the typical
+atomic update path on Linux.
 
-For instance, if r600_parse_extended_power_table() fails, it might
-call r600_free_extended_power_table() as will ci_dpm_fini() later
-during error handling.
+[How]
+Don't use update_flags->raw for determining FAST vs MEDIUM. It's too
+fragile to changes like this.
 
-Fix this by only freeing pointers to objects previously allocated.
+Explicitly specify the update type per update flag instead. It's not
+as clever as checking the bits itself but at least it's correct.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: cc8dbbb4f62a ("drm/radeon: add dpm support for CI dGPUs (v2)")
-Co-developed-by: Natalia Petrova <n.petrova@fintech.ru>
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Fixes: aa5fdb1ab5b6 ("drm/amd/display: Explicitly specify update type per plane info change")
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/ci_dpm.c | 28 ++++++++++++++++++++--------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/ci_dpm.c b/drivers/gpu/drm/radeon/ci_dpm.c
-index 8ef25ab305ae7..b8f4dac68d850 100644
---- a/drivers/gpu/drm/radeon/ci_dpm.c
-+++ b/drivers/gpu/drm/radeon/ci_dpm.c
-@@ -5517,6 +5517,7 @@ static int ci_parse_power_table(struct radeon_device *rdev)
- 	u8 frev, crev;
- 	u8 *power_state_offset;
- 	struct ci_ps *ps;
-+	int ret;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 7cde67b7f0c33..dcf8631181690 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -2504,9 +2504,6 @@ static enum surface_update_type det_surface_update(const struct dc *dc,
+ 	enum surface_update_type overall_type = UPDATE_TYPE_FAST;
+ 	union surface_update_flags *update_flags = &u->surface->update_flags;
  
- 	if (!atom_parse_data_header(mode_info->atom_context, index, NULL,
- 				   &frev, &crev, &data_offset))
-@@ -5546,11 +5547,15 @@ static int ci_parse_power_table(struct radeon_device *rdev)
- 		non_clock_array_index = power_state->v2.nonClockInfoIndex;
- 		non_clock_info = (struct _ATOM_PPLIB_NONCLOCK_INFO *)
- 			&non_clock_info_array->nonClockInfo[non_clock_array_index];
--		if (!rdev->pm.power_state[i].clock_info)
--			return -EINVAL;
-+		if (!rdev->pm.power_state[i].clock_info) {
-+			ret = -EINVAL;
-+			goto err_free_ps;
-+		}
- 		ps = kzalloc(sizeof(struct ci_ps), GFP_KERNEL);
--		if (ps == NULL)
--			return -ENOMEM;
-+		if (ps == NULL) {
-+			ret = -ENOMEM;
-+			goto err_free_ps;
-+		}
- 		rdev->pm.dpm.ps[i].ps_priv = ps;
- 		ci_parse_pplib_non_clock_info(rdev, &rdev->pm.dpm.ps[i],
- 					      non_clock_info,
-@@ -5590,6 +5595,12 @@ static int ci_parse_power_table(struct radeon_device *rdev)
- 	}
- 
- 	return 0;
-+
-+err_free_ps:
-+	for (i = 0; i < rdev->pm.dpm.num_ps; i++)
-+		kfree(rdev->pm.dpm.ps[i].ps_priv);
-+	kfree(rdev->pm.dpm.ps);
-+	return ret;
- }
- 
- static int ci_get_vbios_boot_values(struct radeon_device *rdev,
-@@ -5678,25 +5689,26 @@ int ci_dpm_init(struct radeon_device *rdev)
- 
- 	ret = ci_get_vbios_boot_values(rdev, &pi->vbios_boot_state);
- 	if (ret) {
--		ci_dpm_fini(rdev);
-+		kfree(rdev->pm.dpm.priv);
- 		return ret;
- 	}
- 
- 	ret = r600_get_platform_caps(rdev);
- 	if (ret) {
--		ci_dpm_fini(rdev);
-+		kfree(rdev->pm.dpm.priv);
- 		return ret;
- 	}
- 
- 	ret = r600_parse_extended_power_table(rdev);
- 	if (ret) {
--		ci_dpm_fini(rdev);
-+		kfree(rdev->pm.dpm.priv);
- 		return ret;
- 	}
- 
- 	ret = ci_parse_power_table(rdev);
- 	if (ret) {
--		ci_dpm_fini(rdev);
-+		kfree(rdev->pm.dpm.priv);
-+		r600_free_extended_power_table(rdev);
- 		return ret;
- 	}
- 
+-	if (u->flip_addr)
+-		update_flags->bits.addr_update = 1;
+-
+ 	if (!is_surface_in_context(context, u->surface) || u->surface->force_full_update) {
+ 		update_flags->raw = 0xFFFFFFFF;
+ 		return UPDATE_TYPE_FULL;
 -- 
 2.39.2
 
