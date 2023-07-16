@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DCF28F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:13:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B417FC433C7;
-	Sun, 16 Jul 2023 20:13:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB0C8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:13:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8395DC433C8;
+	Sun, 16 Jul 2023 20:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538395;
-	bh=/wGeUWe8BL1f1MtKsA3xbZ543ses7K57FuQrpu4d/lo=;
+	s=korg; t=1689538397;
+	bh=OG+o7ENvenI1LO8yawpHtl1zafpz8T71YyI6z7Ho7rI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FyH3sEeNhdGeVJCKR5lbgTgyeJ/MVKjIs1UC7Y8wCM+DVz0ebEnyRjqBVTAO6kNiV
-	 zNUNsldtTNoeXic2GZfjIJDgz0otkMOtBtCP3YFbrkjxOrLL3BBPD+k2tWxcZvrQXE
-	 R/d12qfoPEb4r59I5dfycCv4GZIn/xO7r02fTYtw=
+	b=xU7pQ+CVl+WgE8iXR8+AQQLv5tiLca3Z5ppgrhb0DE2rc/fp2tpdAeTduZv4IBTaf
+	 rDxa3tLL1mJHTECLfrPwvkqTZbOKMLVTz+ZhZ125JLIMHAIS/bvkU4gTI6emXM6YwC
+	 Gqg5akD9GuJCyBtOS9fb2dIAj1AQtMfQ+95COCJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nirmal Patel <nirmal.patel@linux.intel.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Jon Derrick <jonathan.derrick@linux.dev>,
+	Jinhong Zhu <jinhongzhu@hust.edu.cn>,
+	Dan Carpenter <error27@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 436/800] PCI: vmd: Reset VMD config register between soft reboots
-Date: Sun, 16 Jul 2023 21:44:49 +0200
-Message-ID: <20230716194959.211673362@linuxfoundation.org>
+Subject: [PATCH 6.4 437/800] scsi: qedf: Fix NULL dereference in error handling
+Date: Sun, 16 Jul 2023 21:44:50 +0200
+Message-ID: <20230716194959.234261598@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,55 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nirmal Patel <nirmal.patel@linux.intel.com>
+From: Jinhong Zhu <jinhongzhu@hust.edu.cn>
 
-[ Upstream commit b61cf04c49c3dfa70a0d6725d3eb40bf9b35cf71 ]
+[ Upstream commit f025312b089474a54e4859f3453771314d9e3d4f ]
 
-VMD driver can disable or enable MSI remapping by changing
-VMCONFIG_MSI_REMAP register. This register needs to be set to the
-default value during soft reboots. Drives failed to enumerate
-when Windows boots after performing a soft reboot from Linux.
-Windows doesn't support MSI remapping disable feature and stale
-register value hinders Windows VMD driver initialization process.
-Adding vmd_shutdown function to make sure to set the VMCONFIG
-register to the default value.
+Smatch reported:
 
-Link: https://lore.kernel.org/r/20230224202811.644370-1-nirmal.patel@linux.intel.com
-Fixes: ee81ee84f873 ("PCI: vmd: Disable MSI-X remapping when possible")
-Signed-off-by: Nirmal Patel <nirmal.patel@linux.intel.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Jon Derrick <jonathan.derrick@linux.dev>
+drivers/scsi/qedf/qedf_main.c:3056 qedf_alloc_global_queues()
+warn: missing unwind goto?
+
+At this point in the function, nothing has been allocated so we can return
+directly. In particular the "qedf->global_queues" have not been allocated
+so calling qedf_free_global_queues() will lead to a NULL dereference when
+we check if (!gl[i]) and "gl" is NULL.
+
+Fixes: 61d8658b4a43 ("scsi: qedf: Add QLogic FastLinQ offload FCoE driver framework.")
+Signed-off-by: Jinhong Zhu <jinhongzhu@hust.edu.cn>
+Link: https://lore.kernel.org/r/20230502140022.2852-1-jinhongzhu@hust.edu.cn
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/vmd.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/scsi/qedf/qedf_main.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
-index 990630ec57c6a..30ec18283aaf4 100644
---- a/drivers/pci/controller/vmd.c
-+++ b/drivers/pci/controller/vmd.c
-@@ -1036,6 +1036,13 @@ static void vmd_remove(struct pci_dev *dev)
- 	ida_simple_remove(&vmd_instance_ida, vmd->instance);
- }
+diff --git a/drivers/scsi/qedf/qedf_main.c b/drivers/scsi/qedf/qedf_main.c
+index 3b64de81ea0d3..2a31ddc99dde5 100644
+--- a/drivers/scsi/qedf/qedf_main.c
++++ b/drivers/scsi/qedf/qedf_main.c
+@@ -3041,9 +3041,8 @@ static int qedf_alloc_global_queues(struct qedf_ctx *qedf)
+ 	 * addresses of our queues
+ 	 */
+ 	if (!qedf->p_cpuq) {
+-		status = -EINVAL;
+ 		QEDF_ERR(&qedf->dbg_ctx, "p_cpuq is NULL.\n");
+-		goto mem_alloc_failure;
++		return -EINVAL;
+ 	}
  
-+static void vmd_shutdown(struct pci_dev *dev)
-+{
-+        struct vmd_dev *vmd = pci_get_drvdata(dev);
-+
-+        vmd_remove_irq_domain(vmd);
-+}
-+
- #ifdef CONFIG_PM_SLEEP
- static int vmd_suspend(struct device *dev)
- {
-@@ -1101,6 +1108,7 @@ static struct pci_driver vmd_drv = {
- 	.id_table	= vmd_ids,
- 	.probe		= vmd_probe,
- 	.remove		= vmd_remove,
-+	.shutdown	= vmd_shutdown,
- 	.driver		= {
- 		.pm	= &vmd_dev_pm_ops,
- 	},
+ 	qedf->global_queues = kzalloc((sizeof(struct global_queue *)
 -- 
 2.39.2
 
