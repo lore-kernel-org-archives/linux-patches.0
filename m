@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B8F8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:54:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF33C433C7;
-	Sun, 16 Jul 2023 20:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77088F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:54:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A35C433C8;
+	Sun, 16 Jul 2023 20:54:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540879;
-	bh=WQcKjjLYlKbnUYpXszo2uOPFLgRuV0gEoPpcSOmMR4g=;
+	s=korg; t=1689540882;
+	bh=/PhxY4V5E80pAksI2zKQIGvzllHUzYkdvsVt/hMMRD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rNfSLL8aEhphMf6kARQdGqfFTjh7usVpFblPrDPP+qzYZ2YwzN5ky5QMTLhJfmY0A
-	 WREgYydVKCpvnmw84tJX5+L8HEXFSZmI8kH3QH+c2Bpz6xgnrus1pCnrWetwUhG5PB
-	 gFCpYN/kfQ9FdXFyme9fAVD7SUpeXUpVWqUbgul8=
+	b=mYmigH6OJ7obyAbrVPCrxyVk4+/qar2Kp7HykomcgwPPkLrrg3MYQQvln36lBOf/j
+	 glcfFSTwaYn1AvJLMwYp8kUkKF8LbjtOjDIOYy4+kFqH+6s6Z+d0fLBc3b3Y/DeFn3
+	 9R2leB9AwNQtuRqB4naGYCZatIqRHh7/VT8i2bxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Sunil Goutham <sgoutham@marvell.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 493/591] f2fs: fix error path handling in truncate_dnode()
-Date: Sun, 16 Jul 2023 21:50:32 +0200
-Message-ID: <20230716194936.647254875@linuxfoundation.org>
+Subject: [PATCH 6.1 494/591] octeontx2-af: Fix mapping for NIX block from CGX connection
+Date: Sun, 16 Jul 2023 21:50:33 +0200
+Message-ID: <20230716194936.677303877@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,37 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit 0135c482fa97e2fd8245cb462784112a00ed1211 ]
+[ Upstream commit 2e7bc57b976bb016c6569a54d95c1b8d88f9450a ]
 
-If truncate_node() fails in truncate_dnode(), it missed to call
-f2fs_put_page(), fix it.
+Firmware configures NIX block mapping for all MAC blocks.
+The current implementation reads the configuration and
+creates the mapping between RVU PF  and NIX blocks. But
+this configuration is only valid for silicons that support
+multiple blocks. For all other silicons, all MAC blocks
+map to NIX0.
 
-Fixes: 7735730d39d7 ("f2fs: fix to propagate error from __get_meta_page()")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+This patch corrects the mapping by adding a check for the same.
+
+Fixes: c5a73b632b90 ("octeontx2-af: Map NIX block from CGX connection")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/node.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu.h     | 11 +++++++++++
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c |  2 +-
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
-index 07419c3e42a52..a010b4bc36d2c 100644
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -941,8 +941,10 @@ static int truncate_dnode(struct dnode_of_data *dn)
- 	dn->ofs_in_node = 0;
- 	f2fs_truncate_data_blocks(dn);
- 	err = truncate_node(dn);
--	if (err)
-+	if (err) {
-+		f2fs_put_page(page, 1);
- 		return err;
-+	}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+index d493b533cf76e..a3346ea7876c5 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+@@ -23,6 +23,7 @@
+ #define	PCI_DEVID_OCTEONTX2_LBK			0xA061
  
- 	return 1;
+ /* Subsystem Device ID */
++#define PCI_SUBSYS_DEVID_98XX                  0xB100
+ #define PCI_SUBSYS_DEVID_96XX                  0xB200
+ #define PCI_SUBSYS_DEVID_CN10K_A	       0xB900
+ #define PCI_SUBSYS_DEVID_CNF10K_B              0xBC00
+@@ -646,6 +647,16 @@ static inline u16 rvu_nix_chan_cpt(struct rvu *rvu, u8 chan)
+ 	return rvu->hw->cpt_chan_base + chan;
  }
+ 
++static inline bool is_rvu_supports_nix1(struct rvu *rvu)
++{
++	struct pci_dev *pdev = rvu->pdev;
++
++	if (pdev->subsystem_device == PCI_SUBSYS_DEVID_98XX)
++		return true;
++
++	return false;
++}
++
+ /* Function Prototypes
+  * RVU
+  */
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
+index 9eca38547b783..e284a14ca1203 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
+@@ -112,7 +112,7 @@ static void rvu_map_cgx_nix_block(struct rvu *rvu, int pf,
+ 	p2x = cgx_lmac_get_p2x(cgx_id, lmac_id);
+ 	/* Firmware sets P2X_SELECT as either NIX0 or NIX1 */
+ 	pfvf->nix_blkaddr = BLKADDR_NIX0;
+-	if (p2x == CMR_P2X_SEL_NIX1)
++	if (is_rvu_supports_nix1(rvu) && p2x == CMR_P2X_SEL_NIX1)
+ 		pfvf->nix_blkaddr = BLKADDR_NIX1;
+ }
+ 
 -- 
 2.39.2
 
