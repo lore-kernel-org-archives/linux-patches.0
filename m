@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4348F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:57:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61558C433C7;
-	Sun, 16 Jul 2023 20:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A574C8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:57:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2557DC433BA;
+	Sun, 16 Jul 2023 20:57:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689541038;
-	bh=P15VSta9DNdg0oWc+YHAg1KZyuuW0SANQGGtiNra8Yg=;
+	s=korg; t=1689541041;
+	bh=ln/TPeLs+o3HMgCl+03UwH0hnjLaUcm0i6ZBarief/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RLRNAt3MwYGubPyklgD5DVXhv8Wu4f12WUU3wykO1GELL2pofs+BaA/iv/G3OUq27
-	 qX0s7mOS0lOD7NjOjePSlMc6S7l+2hhSKSBGajDD9ulXoJ9qU7jpvSsQQUU0EdxMRH
-	 5uVGIY+K2D5gcCpJDMpqwxmi0IJGpPOaZb2BsiuI=
+	b=2ODTZZ9Q/PmXWFAkwZGuprxnH3jTgSfkpkkRMwUWNjHDIdS+5hxRsdhLW6rCiytNB
+	 7hjPrOlffSDAyh1Vx2YxjWz9M9M2hZ3WefZ7Fhy0aHXm5TBlwiR5iXQKUYr5y3+YUe
+	 biwLJWsFSktzaEilzUABSklslKEwMliZDqpeNNlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Imre Deak <imre.deak@intel.com>,
-	Mika Kahola <mika.kahola@intel.com>
-Subject: [PATCH 6.1 577/591] drm/i915: Fix TypeC mode initialization during system resume
-Date: Sun, 16 Jul 2023 21:51:56 +0200
-Message-ID: <20230716194938.787379484@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Mika Kahola <mika.kahola@intel.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>
+Subject: [PATCH 6.1 578/591] drm/i915/tc: Fix TC port link ref init for DP MST during HW readout
+Date: Sun, 16 Jul 2023 21:51:57 +0200
+Message-ID: <20230716194938.811584417@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,180 +38,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Imre Deak <imre.deak@intel.com>
 
-commit a82796a2e332d108b2d3aff38509caad370f69b5 upstream.
+commit 67165722c27cc46de112a4e10b450170c8980a6f upstream.
 
-During system resume DP MST requires AUX to be working already before
-the HW state readout of the given encoder. Since AUX requires the
-encoder/PHY TypeC mode to be initialized, which atm only happens during
-HW state readout, these AUX transfers can change the TypeC mode
-incorrectly (disconnecting the PHY for an enabled encoder) and trigger
-the state check WARNs in intel_tc_port_sanitize().
+An enabled TC MST port holds one TC port link reference, regardless of
+the number of enabled streams on it, but the TC port HW readout takes
+one reference for each active MST stream.
 
-Fix this by initializing the TypeC mode earlier both during driver
-loading and system resume and making sure that the mode can't change
-until the encoder's state is read out. While at it add the missing
-DocBook comments and rename
-intel_tc_port_sanitize()->intel_tc_port_sanitize_mode() for consistency.
+Fix the HW readout, taking only one reference for MST ports.
+
+This didn't cause an actual problem, since the encoder HW readout doesn't
+yet support reading out the MST HW state.
 
 Signed-off-by: Imre Deak <imre.deak@intel.com>
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
 Reviewed-by: Mika Kahola <mika.kahola@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220922172148.2913088-1-imre.deak@intel.com
+Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230316131724.359612-3-imre.deak@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_ddi.c |    8 +++
- drivers/gpu/drm/i915/display/intel_tc.c  |   66 +++++++++++++++++++++++--------
- drivers/gpu/drm/i915/display/intel_tc.h  |    3 -
- 3 files changed, 60 insertions(+), 17 deletions(-)
+ drivers/gpu/drm/i915/display/intel_tc.c |   20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_ddi.c
-+++ b/drivers/gpu/drm/i915/display/intel_ddi.c
-@@ -3579,7 +3579,7 @@ static void intel_ddi_sync_state(struct
- 	enum phy phy = intel_port_to_phy(i915, encoder->port);
- 
- 	if (intel_phy_is_tc(i915, phy))
--		intel_tc_port_sanitize(enc_to_dig_port(encoder));
-+		intel_tc_port_sanitize_mode(enc_to_dig_port(encoder));
- 
- 	if (crtc_state && intel_crtc_has_dp_encoder(crtc_state))
- 		intel_dp_sync_state(encoder, crtc_state);
-@@ -3789,11 +3789,17 @@ static void intel_ddi_encoder_destroy(st
- 
- static void intel_ddi_encoder_reset(struct drm_encoder *encoder)
- {
-+	struct drm_i915_private *i915 = to_i915(encoder->dev);
- 	struct intel_dp *intel_dp = enc_to_intel_dp(to_intel_encoder(encoder));
-+	struct intel_digital_port *dig_port = enc_to_dig_port(to_intel_encoder(encoder));
-+	enum phy phy = intel_port_to_phy(i915, dig_port->base.port);
- 
- 	intel_dp->reset_link_params = true;
- 
- 	intel_pps_encoder_reset(intel_dp);
-+
-+	if (intel_phy_is_tc(i915, phy))
-+		intel_tc_port_init_mode(dig_port);
- }
- 
- static const struct drm_encoder_funcs intel_ddi_funcs = {
 --- a/drivers/gpu/drm/i915/display/intel_tc.c
 +++ b/drivers/gpu/drm/i915/display/intel_tc.c
-@@ -687,18 +687,58 @@ static void
- intel_tc_port_link_init_refcount(struct intel_digital_port *dig_port,
- 				 int refcount)
- {
-+	dig_port->tc_link_refcount = refcount;
-+}
-+
-+/**
-+ * intel_tc_port_init_mode: Read out HW state and init the given port's TypeC mode
-+ * @dig_port: digital port
-+ *
-+ * Read out the HW state and initialize the TypeC mode of @dig_port. The mode
-+ * will be locked until intel_tc_port_sanitize_mode() is called.
-+ */
-+void intel_tc_port_init_mode(struct intel_digital_port *dig_port)
-+{
- 	struct drm_i915_private *i915 = to_i915(dig_port->base.base.dev);
-+	intel_wakeref_t tc_cold_wref;
-+	enum intel_display_power_domain domain;
- 
-+	mutex_lock(&dig_port->tc_lock);
-+
-+	drm_WARN_ON(&i915->drm, dig_port->tc_mode != TC_PORT_DISCONNECTED);
-+	drm_WARN_ON(&i915->drm, dig_port->tc_lock_wakeref);
- 	drm_WARN_ON(&i915->drm, dig_port->tc_link_refcount);
--	dig_port->tc_link_refcount = refcount;
-+
-+	tc_cold_wref = tc_cold_block(dig_port, &domain);
-+
-+	dig_port->tc_mode = intel_tc_port_get_current_mode(dig_port);
-+	/* Prevent changing dig_port->tc_mode until intel_tc_port_sanitize_mode() is called. */
-+	intel_tc_port_link_init_refcount(dig_port, 1);
-+	dig_port->tc_lock_wakeref = tc_cold_block(dig_port, &dig_port->tc_lock_power_domain);
-+
-+	tc_cold_unblock(dig_port, domain, tc_cold_wref);
-+
-+	drm_dbg_kms(&i915->drm, "Port %s: init mode (%s)\n",
-+		    dig_port->tc_port_name,
-+		    tc_port_mode_name(dig_port->tc_mode));
-+
-+	mutex_unlock(&dig_port->tc_lock);
+@@ -683,11 +683,14 @@ static void intel_tc_port_update_mode(st
+ 	tc_cold_unblock(dig_port, domain, wref);
  }
  
--void intel_tc_port_sanitize(struct intel_digital_port *dig_port)
-+/**
-+ * intel_tc_port_sanitize_mode: Sanitize the given port's TypeC mode
-+ * @dig_port: digital port
-+ *
-+ * Sanitize @dig_port's TypeC mode wrt. the encoder's state right after driver
-+ * loading and system resume:
-+ * If the encoder is enabled keep the TypeC mode/PHY connected state locked until
-+ * the encoder is disabled.
-+ * If the encoder is disabled make sure the PHY is disconnected.
-+ */
-+void intel_tc_port_sanitize_mode(struct intel_digital_port *dig_port)
+-static void
+-intel_tc_port_link_init_refcount(struct intel_digital_port *dig_port,
+-				 int refcount)
++static void __intel_tc_port_get_link(struct intel_digital_port *dig_port)
  {
- 	struct drm_i915_private *i915 = to_i915(dig_port->base.base.dev);
- 	struct intel_encoder *encoder = &dig_port->base;
--	intel_wakeref_t tc_cold_wref;
--	enum intel_display_power_domain domain;
- 	int active_links = 0;
+-	dig_port->tc_link_refcount = refcount;
++	dig_port->tc_link_refcount++;
++}
++
++static void __intel_tc_port_put_link(struct intel_digital_port *dig_port)
++{
++	dig_port->tc_link_refcount--;
+ }
  
- 	mutex_lock(&dig_port->tc_lock);
-@@ -708,21 +748,14 @@ void intel_tc_port_sanitize(struct intel
- 	else if (encoder->base.crtc)
+ /**
+@@ -713,7 +716,7 @@ void intel_tc_port_init_mode(struct inte
+ 
+ 	dig_port->tc_mode = intel_tc_port_get_current_mode(dig_port);
+ 	/* Prevent changing dig_port->tc_mode until intel_tc_port_sanitize_mode() is called. */
+-	intel_tc_port_link_init_refcount(dig_port, 1);
++	__intel_tc_port_get_link(dig_port);
+ 	dig_port->tc_lock_wakeref = tc_cold_block(dig_port, &dig_port->tc_lock_power_domain);
+ 
+ 	tc_cold_unblock(dig_port, domain, tc_cold_wref);
+@@ -749,8 +752,6 @@ void intel_tc_port_sanitize_mode(struct
  		active_links = to_intel_crtc(encoder->base.crtc)->active;
  
--	drm_WARN_ON(&i915->drm, dig_port->tc_mode != TC_PORT_DISCONNECTED);
--	drm_WARN_ON(&i915->drm, dig_port->tc_lock_wakeref);
-+	drm_WARN_ON(&i915->drm, dig_port->tc_link_refcount != 1);
-+	intel_tc_port_link_init_refcount(dig_port, active_links);
- 
--	tc_cold_wref = tc_cold_block(dig_port, &domain);
+ 	drm_WARN_ON(&i915->drm, dig_port->tc_link_refcount != 1);
+-	intel_tc_port_link_init_refcount(dig_port, active_links);
 -
--	dig_port->tc_mode = intel_tc_port_get_current_mode(dig_port);
  	if (active_links) {
  		if (!icl_tc_phy_is_connected(dig_port))
  			drm_dbg_kms(&i915->drm,
- 				    "Port %s: PHY disconnected with %d active link(s)\n",
- 				    dig_port->tc_port_name, active_links);
--		intel_tc_port_link_init_refcount(dig_port, active_links);
--
--		dig_port->tc_lock_wakeref = tc_cold_block(dig_port,
--							  &dig_port->tc_lock_power_domain);
- 	} else {
- 		/*
- 		 * TBT-alt is the default mode in any case the PHY ownership is not
-@@ -736,9 +769,10 @@ void intel_tc_port_sanitize(struct intel
+@@ -769,6 +770,7 @@ void intel_tc_port_sanitize_mode(struct
  				    dig_port->tc_port_name,
  				    tc_port_mode_name(dig_port->tc_mode));
  		icl_tc_phy_disconnect(dig_port);
--	}
++		__intel_tc_port_put_link(dig_port);
  
--	tc_cold_unblock(dig_port, domain, tc_cold_wref);
-+		tc_cold_unblock(dig_port, dig_port->tc_lock_power_domain,
-+				fetch_and_zero(&dig_port->tc_lock_wakeref));
-+	}
- 
- 	drm_dbg_kms(&i915->drm, "Port %s: sanitize mode (%s)\n",
- 		    dig_port->tc_port_name,
-@@ -923,4 +957,6 @@ void intel_tc_port_init(struct intel_dig
- 	dig_port->tc_mode = TC_PORT_DISCONNECTED;
- 	dig_port->tc_link_refcount = 0;
- 	tc_port_load_fia_params(i915, dig_port);
-+
-+	intel_tc_port_init_mode(dig_port);
+ 		tc_cold_unblock(dig_port, dig_port->tc_lock_power_domain,
+ 				fetch_and_zero(&dig_port->tc_lock_wakeref));
+@@ -880,14 +882,14 @@ void intel_tc_port_get_link(struct intel
+ 			    int required_lanes)
+ {
+ 	__intel_tc_port_lock(dig_port, required_lanes);
+-	dig_port->tc_link_refcount++;
++	__intel_tc_port_get_link(dig_port);
+ 	intel_tc_port_unlock(dig_port);
  }
---- a/drivers/gpu/drm/i915/display/intel_tc.h
-+++ b/drivers/gpu/drm/i915/display/intel_tc.h
-@@ -24,7 +24,8 @@ int intel_tc_port_fia_max_lane_count(str
- void intel_tc_port_set_fia_lane_count(struct intel_digital_port *dig_port,
- 				      int required_lanes);
  
--void intel_tc_port_sanitize(struct intel_digital_port *dig_port);
-+void intel_tc_port_init_mode(struct intel_digital_port *dig_port);
-+void intel_tc_port_sanitize_mode(struct intel_digital_port *dig_port);
- void intel_tc_port_lock(struct intel_digital_port *dig_port);
- void intel_tc_port_unlock(struct intel_digital_port *dig_port);
- void intel_tc_port_flush_work(struct intel_digital_port *dig_port);
+ void intel_tc_port_put_link(struct intel_digital_port *dig_port)
+ {
+ 	intel_tc_port_lock(dig_port);
+-	--dig_port->tc_link_refcount;
++	__intel_tc_port_put_link(dig_port);
+ 	intel_tc_port_unlock(dig_port);
+ 
+ 	/*
 
 
