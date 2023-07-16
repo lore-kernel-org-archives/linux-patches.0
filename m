@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45D18F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:20:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC45DC433C7;
-	Sun, 16 Jul 2023 20:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237E08F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:20:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B77FC433C8;
+	Sun, 16 Jul 2023 20:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538842;
-	bh=GDGzWpb4PeW6x27Y8Ho3q8elE1iRWc41EKla1wpVPX8=;
+	s=korg; t=1689538845;
+	bh=aO9NX716XojEKuJq6qIPfQI3jPGRjCYOz086QnLF+PA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y+HooEeelReL7xoTglrpUr+PPdlYaPYb8TeiSB2tNLv8YF886nMNle0uH8aKTZsQ6
-	 gODmCp1SHdByx8LO4oABYDFWS787e67KnQA+mYun22s+PfpFYfxE/FRvXEHrkJdxl1
-	 qgCacgr7i3WjHF4dYC7klFbeIT0UfBhGw87pEfo4=
+	b=GjPxW/r62IiDtZGkKpPmq0gtoHFMlohl4YP9rhWgY96AZMBpqsh6l3gQJTdYy47Ye
+	 fexCOfi+FC0PJO7eq8YaE/dMEQmLSJ0ApOqF89f3dUzK81+RRZ68L3byyiRQo899i2
+	 RwpNQ+YbHDrMoy/LlWsgJjXh/7trUkSJ2mEs3hd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@nxp.com>,
-	"xiahong.bao" <xiahong.bao@nxp.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 567/800] media: amphion: drop repeated codec data for vc1g format
-Date: Sun, 16 Jul 2023 21:47:00 +0200
-Message-ID: <20230716195002.258212082@linuxfoundation.org>
+Subject: [PATCH 6.4 568/800] media: common: saa7146: Avoid a leak in vmalloc_to_sg()
+Date: Sun, 16 Jul 2023 21:47:01 +0200
+Message-ID: <20230716195002.281012321@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,54 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Qian <ming.qian@nxp.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit e1d2ccc2cdd6333584aa3d5386dc667d0837c48f ]
+[ Upstream commit b2aa8ac6f97e26d788948fb60dcc5625c9633f4e ]
 
-For format V4L2_PIX_FMT_VC1_ANNEX_G,
-the separate codec data is required only once.
-The repeated codec data may introduce some decoding error.
-so drop the repeated codec data.
+Commit in Fixes turned a BUG() into a "normal" memory allocation failure.
+While at it, it introduced a memory leak.
+So fix it.
 
-It's amphion vpu's limitation
+Also update the comment on top of the function to reflect what has been
+change by the commit in Fixes.
 
-Fixes: e670f5d672ef ("media: amphion: only insert the first sequence startcode for vc1l format")
-Signed-off-by: Ming Qian <ming.qian@nxp.com>
-Tested-by: xiahong.bao <xiahong.bao@nxp.com>
+Fixes: 40e986c99624 ("media: common: saa7146: replace BUG_ON by WARN_ON")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_malone.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/media/common/saa7146/saa7146_core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/amphion/vpu_malone.c b/drivers/media/platform/amphion/vpu_malone.c
-index e96994437429f..c1d6606ad7e57 100644
---- a/drivers/media/platform/amphion/vpu_malone.c
-+++ b/drivers/media/platform/amphion/vpu_malone.c
-@@ -1313,6 +1313,15 @@ static int vpu_malone_insert_scode_pic(struct malone_scode_t *scode, u32 codec_i
- 	return sizeof(hdr);
- }
+diff --git a/drivers/media/common/saa7146/saa7146_core.c b/drivers/media/common/saa7146/saa7146_core.c
+index bcb957883044c..27c53eed8fe39 100644
+--- a/drivers/media/common/saa7146/saa7146_core.c
++++ b/drivers/media/common/saa7146/saa7146_core.c
+@@ -133,8 +133,8 @@ int saa7146_wait_for_debi_done(struct saa7146_dev *dev, int nobusyloop)
+  ****************************************************************************/
  
-+static int vpu_malone_insert_scode_vc1_g_seq(struct malone_scode_t *scode)
-+{
-+	if (!scode->inst->total_input_count)
-+		return 0;
-+	if (vpu_vb_is_codecconfig(to_vb2_v4l2_buffer(scode->vb)))
-+		scode->need_data = 0;
-+	return 0;
-+}
-+
- static int vpu_malone_insert_scode_vc1_g_pic(struct malone_scode_t *scode)
+ /* this is videobuf_vmalloc_to_sg() from videobuf-dma-sg.c
+-   make sure virt has been allocated with vmalloc_32(), otherwise the BUG()
+-   may be triggered on highmem machines */
++   make sure virt has been allocated with vmalloc_32(), otherwise return NULL
++   on highmem machines */
+ static struct scatterlist* vmalloc_to_sg(unsigned char *virt, int nr_pages)
  {
- 	struct vb2_v4l2_buffer *vbuf;
-@@ -1460,6 +1469,7 @@ static const struct malone_scode_handler scode_handlers[] = {
- 	},
- 	{
- 		.pixelformat = V4L2_PIX_FMT_VC1_ANNEX_G,
-+		.insert_scode_seq = vpu_malone_insert_scode_vc1_g_seq,
- 		.insert_scode_pic = vpu_malone_insert_scode_vc1_g_pic,
- 	},
- 	{
+ 	struct scatterlist *sglist;
+@@ -150,7 +150,7 @@ static struct scatterlist* vmalloc_to_sg(unsigned char *virt, int nr_pages)
+ 		if (NULL == pg)
+ 			goto err;
+ 		if (WARN_ON(PageHighMem(pg)))
+-			return NULL;
++			goto err;
+ 		sg_set_page(&sglist[i], pg, PAGE_SIZE, 0);
+ 	}
+ 	return sglist;
 -- 
 2.39.2
 
