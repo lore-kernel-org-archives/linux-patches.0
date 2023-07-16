@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81C98F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:52:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44374C433C7;
-	Sun, 16 Jul 2023 20:52:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDB38F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:52:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA66C433C7;
+	Sun, 16 Jul 2023 20:52:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540773;
-	bh=mzqmqfhRMZTWcTbwYS/fjxUGQC08RlqhBlXG9X2gSeQ=;
+	s=korg; t=1689540776;
+	bh=iOL6T904AKaSomWeVSUah6/IhD2adloQI9ifXwaLOSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F/A+ZkzLf/Fed5z4xm0gQBih0vO1oecgXeirTBqcJlwtgp3dq5h6Zrg9+aKAeJF0U
-	 auhYioK3o75DFa35aJoYd2mtj/hman763qmYUhYjYYkA16wytkTi6lsm+scB4lw7L0
-	 PRPqBIqUsfS8lDa1f6TnYRC+HB5exfkpQEXeiMTw=
+	b=u1oTXGbqi4z6RV4k9mBfS1ngSxUkKlUAteAY3uD7JyPH0p48QL2Zn8V2s/lReHTjl
+	 U4QQG3gSUhtYkMFcwtCHe+/xNTxz9/e0Et8txNsh4stYdyI/FK9tb9Vy7nf8ie/nwi
+	 mQz8DCX2wD/518WfJCTOp36uySDLefRNaEItJrS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 482/591] Bluetooth: ISO: use hci_sync for setting CIG parameters
-Date: Sun, 16 Jul 2023 21:50:21 +0200
-Message-ID: <20230716194936.369738456@linuxfoundation.org>
+Subject: [PATCH 6.1 483/591] Bluetooth: MGMT: add CIS feature bits to controller information
+Date: Sun, 16 Jul 2023 21:50:22 +0200
+Message-ID: <20230716194936.394818225@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,111 +37,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 6b9545dc9f8ff01d8bc1229103960d9cd265343f ]
+[ Upstream commit 2394186a2cefb9a45a029281a55749804dd8c556 ]
 
-When reconfiguring CIG after disconnection of the last CIS, LE Remove
-CIG shall be sent before LE Set CIG Parameters.  Otherwise, it fails
-because CIG is in the inactive state and not configurable (Core v5.3
-Vol 6 Part B Sec. 4.5.14.3). This ordering is currently wrong under
-suitable timing conditions, because LE Remove CIG is sent via the
-hci_sync queue and may be delayed, but Set CIG Parameters is via
-hci_send_cmd.
+Userspace needs to know whether the adapter has feature support for
+Connected Isochronous Stream - Central/Peripheral, so it can set up
+LE Audio features accordingly.
 
-Make the ordering well-defined by sending also Set CIG Parameters via
-hci_sync.
+Expose these feature bits as settings in MGMT controller info.
 
-Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 73f55453ea52 ("Bluetooth: MGMT: Fix marking SCAN_RSP as not connectable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 47 +++++++++++++++++++++++++++++++++-------
- 1 file changed, 39 insertions(+), 8 deletions(-)
+ include/net/bluetooth/mgmt.h |  2 ++
+ net/bluetooth/mgmt.c         | 12 ++++++++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index ab9f00252dc2a..fef09d2121384 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -770,6 +770,11 @@ static void le_conn_timeout(struct work_struct *work)
- 	hci_abort_conn(conn, HCI_ERROR_REMOTE_USER_TERM);
- }
+diff --git a/include/net/bluetooth/mgmt.h b/include/net/bluetooth/mgmt.h
+index 743f6f59dff81..e18a927669c0a 100644
+--- a/include/net/bluetooth/mgmt.h
++++ b/include/net/bluetooth/mgmt.h
+@@ -109,6 +109,8 @@ struct mgmt_rp_read_index_list {
+ #define MGMT_SETTING_STATIC_ADDRESS	0x00008000
+ #define MGMT_SETTING_PHY_CONFIGURATION	0x00010000
+ #define MGMT_SETTING_WIDEBAND_SPEECH	0x00020000
++#define MGMT_SETTING_CIS_CENTRAL	0x00040000
++#define MGMT_SETTING_CIS_PERIPHERAL	0x00080000
  
-+struct iso_cig_params {
-+	struct hci_cp_le_set_cig_params cp;
-+	struct hci_cis_params cis[0x1f];
-+};
-+
- struct iso_list_data {
- 	union {
- 		u8  cig;
-@@ -781,10 +786,7 @@ struct iso_list_data {
- 		u16 sync_handle;
- 	};
- 	int count;
--	struct {
--		struct hci_cp_le_set_cig_params cp;
--		struct hci_cis_params cis[0x11];
--	} pdu;
-+	struct iso_cig_params pdu;
- };
+ #define MGMT_OP_READ_INFO		0x0004
+ #define MGMT_READ_INFO_SIZE		0
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index fc4ba0884da96..815f2abe918ef 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -859,6 +859,12 @@ static u32 get_supported_settings(struct hci_dev *hdev)
+ 	    hdev->set_bdaddr)
+ 		settings |= MGMT_SETTING_CONFIGURATION;
  
- static void bis_list(struct hci_conn *conn, void *data)
-@@ -1705,10 +1707,33 @@ static int hci_le_create_big(struct hci_conn *conn, struct bt_iso_qos *qos)
- 	return hci_send_cmd(hdev, HCI_OP_LE_CREATE_BIG, sizeof(cp), &cp);
- }
++	if (cis_central_capable(hdev))
++		settings |= MGMT_SETTING_CIS_CENTRAL;
++
++	if (cis_peripheral_capable(hdev))
++		settings |= MGMT_SETTING_CIS_PERIPHERAL;
++
+ 	settings |= MGMT_SETTING_PHY_CONFIGURATION;
  
-+static void set_cig_params_complete(struct hci_dev *hdev, void *data, int err)
-+{
-+	struct iso_cig_params *pdu = data;
-+
-+	bt_dev_dbg(hdev, "");
-+
-+	if (err)
-+		bt_dev_err(hdev, "Unable to set CIG parameters: %d", err);
-+
-+	kfree(pdu);
-+}
-+
-+static int set_cig_params_sync(struct hci_dev *hdev, void *data)
-+{
-+	struct iso_cig_params *pdu = data;
-+	u32 plen;
-+
-+	plen = sizeof(pdu->cp) + pdu->cp.num_cis * sizeof(pdu->cis[0]);
-+	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_CIG_PARAMS, plen, pdu,
-+				     HCI_CMD_TIMEOUT);
-+}
-+
- static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
- {
- 	struct hci_dev *hdev = conn->hdev;
- 	struct iso_list_data data;
-+	struct iso_cig_params *pdu;
+ 	return settings;
+@@ -932,6 +938,12 @@ static u32 get_current_settings(struct hci_dev *hdev)
+ 	if (hci_dev_test_flag(hdev, HCI_WIDEBAND_SPEECH_ENABLED))
+ 		settings |= MGMT_SETTING_WIDEBAND_SPEECH;
  
- 	memset(&data, 0, sizeof(data));
- 
-@@ -1779,12 +1804,18 @@ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
- 	if (qos->cis == BT_ISO_QOS_CIS_UNSET || !data.pdu.cp.num_cis)
- 		return false;
- 
--	if (hci_send_cmd(hdev, HCI_OP_LE_SET_CIG_PARAMS,
--			 sizeof(data.pdu.cp) +
--			 (data.pdu.cp.num_cis * sizeof(*data.pdu.cis)),
--			 &data.pdu) < 0)
-+	pdu = kzalloc(sizeof(*pdu), GFP_KERNEL);
-+	if (!pdu)
- 		return false;
- 
-+	memcpy(pdu, &data.pdu, sizeof(*pdu));
++	if (cis_central_capable(hdev))
++		settings |= MGMT_SETTING_CIS_CENTRAL;
 +
-+	if (hci_cmd_sync_queue(hdev, set_cig_params_sync, pdu,
-+			       set_cig_params_complete) < 0) {
-+		kfree(pdu);
-+		return false;
-+	}
++	if (cis_peripheral_capable(hdev))
++		settings |= MGMT_SETTING_CIS_PERIPHERAL;
 +
- 	return true;
+ 	return settings;
  }
  
 -- 
