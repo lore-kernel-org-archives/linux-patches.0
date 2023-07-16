@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF558F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:00:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A72C433C7;
-	Sun, 16 Jul 2023 20:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5E98F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:00:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71C71C433C8;
+	Sun, 16 Jul 2023 20:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537642;
-	bh=pliFVdMuf51GMDN9egQxiP92mH1yOS+LjzSYlEzTJBQ=;
+	s=korg; t=1689537644;
+	bh=mGSaPe0b0JgF6oBM+lFhaiwEm5jhd/lwQLVL4VJP9Y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XlXUSFFBVBJ/txBb+dkhqk2OOYxLGsbhXy5dfzZTEgRkJF1pDA46BeTjiRZEcibJC
-	 pv0GfTDSL401ZMZBa5fAnOWm6MzZprH1E5EGWTSxYmk8h/tmJDslHRyIamCIbajnWV
-	 9P4MJMbIlgCX9QDrD/bZi7vJ8Y9qmsAsuB1YMoLE=
+	b=OcCwXgy+Wyi2jjuh1Q9Ni0gxZIgRhf6kxAlmDXB3EGEECp8BO1kAbme6DspJsiBWm
+	 EpMige9MGpUNtb6IYl9O6lqUjkwxicegT8n/pRlFf+kM7elv2b+PySU/AEtRGJGcfx
+	 4Wagph3PQxd51O3Pz5uJ5g58de2oIaP4QwgeR7to=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Ziyang Huang <hzyitc@outlook.com>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 168/800] wifi: ath11k: Add missing check for ioremap
-Date: Sun, 16 Jul 2023 21:40:21 +0200
-Message-ID: <20230716194953.011425951@linuxfoundation.org>
+Subject: [PATCH 6.4 169/800] wifi: ath11k: Add missing ops config for IPQ5018 in ath11k_ahb_probe()
+Date: Sun, 16 Jul 2023 21:40:22 +0200
+Message-ID: <20230716194953.034286691@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,46 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Ziyang Huang <hzyitc@outlook.com>
 
-[ Upstream commit 16e0077e14a73866e9b0f4a6bf4ad3d4a5cb0f2a ]
+[ Upstream commit 469ddb20cae61cad9c4f208a4c8682305905a511 ]
 
-Add check for ioremap() and return the error if it fails in order to
-guarantee the success of ioremap(), same as in
-ath11k_qmi_load_file_target_mem().
+Without this patch, the IPQ5018 WiFi will fail and print the following
+logs:
 
-Fixes: 6ac04bdc5edb ("ath11k: Use reserved host DDR addresses from DT for PCI devices")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+	[   11.033179] ath11k c000000.wifi: unsupported device type 7
+	[   11.033223] ath11k: probe of c000000.wifi failed with error -95
+
+Fixes: 25edca7bb18a ("wifi: ath11k: add ipq5018 device support")
+Signed-off-by: Ziyang Huang <hzyitc@outlook.com>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230608022858.27405-1-jiasheng@iscas.ac.cn
+Link: https://lore.kernel.org/r/TYZPR01MB5556D7AA10ABEDDDD2D8F39EC953A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/qmi.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/ath/ath11k/ahb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/qmi.c b/drivers/net/wireless/ath/ath11k/qmi.c
-index ab923e24b0a9c..2328b9447cf1b 100644
---- a/drivers/net/wireless/ath/ath11k/qmi.c
-+++ b/drivers/net/wireless/ath/ath11k/qmi.c
-@@ -2058,6 +2058,9 @@ static int ath11k_qmi_assign_target_mem_chunk(struct ath11k_base *ab)
- 			ab->qmi.target_mem[idx].iaddr =
- 				ioremap(ab->qmi.target_mem[idx].paddr,
- 					ab->qmi.target_mem[i].size);
-+			if (!ab->qmi.target_mem[idx].iaddr)
-+				return -EIO;
-+
- 			ab->qmi.target_mem[idx].size = ab->qmi.target_mem[i].size;
- 			host_ddr_sz = ab->qmi.target_mem[i].size;
- 			ab->qmi.target_mem[idx].type = ab->qmi.target_mem[i].type;
-@@ -2083,6 +2086,8 @@ static int ath11k_qmi_assign_target_mem_chunk(struct ath11k_base *ab)
- 					ab->qmi.target_mem[idx].iaddr =
- 						ioremap(ab->qmi.target_mem[idx].paddr,
- 							ab->qmi.target_mem[i].size);
-+					if (!ab->qmi.target_mem[idx].iaddr)
-+						return -EIO;
- 				} else {
- 					ab->qmi.target_mem[idx].paddr =
- 						ATH11K_QMI_CALDB_ADDRESS;
+diff --git a/drivers/net/wireless/ath/ath11k/ahb.c b/drivers/net/wireless/ath/ath11k/ahb.c
+index 5cbba9a8b6ba9..396548e57022f 100644
+--- a/drivers/net/wireless/ath/ath11k/ahb.c
++++ b/drivers/net/wireless/ath/ath11k/ahb.c
+@@ -1127,6 +1127,7 @@ static int ath11k_ahb_probe(struct platform_device *pdev)
+ 	switch (hw_rev) {
+ 	case ATH11K_HW_IPQ8074:
+ 	case ATH11K_HW_IPQ6018_HW10:
++	case ATH11K_HW_IPQ5018_HW10:
+ 		hif_ops = &ath11k_ahb_hif_ops_ipq8074;
+ 		pci_ops = NULL;
+ 		break;
 -- 
 2.39.2
 
