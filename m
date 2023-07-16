@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E458F5D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:35:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7D8C433C8;
-	Sun, 16 Jul 2023 20:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01ABF8F5D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:35:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776F6C433C9;
+	Sun, 16 Jul 2023 20:35:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539734;
-	bh=2tU+/TzZqgvEHY9qax/NY5QZqwt3saeOaBx/LeYP/FA=;
+	s=korg; t=1689539736;
+	bh=EPWRXqSDPv9b75ybHKIRxjmotL1GG7f8C8IQhOtXUoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YJlyI5hGKLiR48Mlc4biE4cLFT0NKUwHDuEX0g3/Ss0kdW3Vq2z9Cpnxu14lEKlFp
-	 1lP2VASK/oC3xNYoFD0fAXxCz/dW4VBGIqznpAKHW627KGM9llBz6yB0BKho0tKhrG
-	 gvzjfjP+LM6LbL0pYybN78ECpy4pPRiLQFrzrMZw=
+	b=l5nyiKr2/3WMoee7emrtkb7g6QD1kiOWXgEczrT3CPrZbBFQh4cg8z359DcI9fa5P
+	 5bSEfudcEmZKo52tDhjopCjVZ+38aWq5MI0PHN0MfMamo/4Dm8SRs0tT9XChRc5EKn
+	 6vBgnXIin67k/wT7mr0qK7X1vlCzUTxr6GyigGRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 113/591] wifi: cfg80211: drop incorrect nontransmitted BSS update code
-Date: Sun, 16 Jul 2023 21:44:12 +0200
-Message-ID: <20230716194926.802947830@linuxfoundation.org>
+Subject: [PATCH 6.1 114/591] wifi: cfg80211: fix regulatory disconnect with OCB/NAN
+Date: Sun, 16 Jul 2023 21:44:13 +0200
+Message-ID: <20230716194926.828312608@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,215 +34,120 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 39432f8a3752a87a53fd8d5e51824a43aaae5cab ]
+[ Upstream commit e8c2af660ba0790afd14d5cbc2fd05c6dc85e207 ]
 
-The removed code ran for any BSS that was not included in the MBSSID
-element in order to update it. However, instead of using the correct
-inheritance rules, it would simply copy the elements from the
-transmitting AP. The result is that we would report incorrect elements
-in this case.
+Since regulatory disconnect was added, OCB and NAN interface
+types were added, which made it completely unusable for any
+driver that allowed OCB/NAN. Add OCB/NAN (though NAN doesn't
+do anything, we don't have any info) and also remove all the
+logic that opts out, so it won't be broken again if/when new
+interface types are added.
 
-After some discussions, it seems that there are likely not even APs
-actually using this feature. Either way, removing the code decreases
-complexity and makes the cfg80211 behaviour more correct.
-
-Fixes: 0b8fb8235be8 ("cfg80211: Parsing of Multiple BSSID information in scanning")
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230616094949.cfd6d8db1f26.Ia1044902b86cd7d366400a4bfb93691b8f05d68c@changeid
+Fixes: 6e0bd6c35b02 ("cfg80211: 802.11p OCB mode handling")
+Fixes: cb3b7d87652a ("cfg80211: add start / stop NAN commands")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://lore.kernel.org/r/20230616222844.2794d1625a26.I8e78a3789a29e6149447b3139df724a6f1b46fc3@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 154 ++++----------------------------------------
- 1 file changed, 11 insertions(+), 143 deletions(-)
+ include/net/regulatory.h | 13 +------------
+ net/wireless/core.c      | 16 ----------------
+ net/wireless/reg.c       | 14 ++++++++++----
+ 3 files changed, 11 insertions(+), 32 deletions(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 9fcb6f06b8cbe..efe9283e98935 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -2308,118 +2308,6 @@ cfg80211_inform_bss_data(struct wiphy *wiphy,
- }
- EXPORT_SYMBOL(cfg80211_inform_bss_data);
+diff --git a/include/net/regulatory.h b/include/net/regulatory.h
+index 896191f420d50..b2cb4a9eb04dc 100644
+--- a/include/net/regulatory.h
++++ b/include/net/regulatory.h
+@@ -140,17 +140,6 @@ struct regulatory_request {
+  *      otherwise initiating radiation is not allowed. This will enable the
+  *      relaxations enabled under the CFG80211_REG_RELAX_NO_IR configuration
+  *      option
+- * @REGULATORY_IGNORE_STALE_KICKOFF: the regulatory core will _not_ make sure
+- *	all interfaces on this wiphy reside on allowed channels. If this flag
+- *	is not set, upon a regdomain change, the interfaces are given a grace
+- *	period (currently 60 seconds) to disconnect or move to an allowed
+- *	channel. Interfaces on forbidden channels are forcibly disconnected.
+- *	Currently these types of interfaces are supported for enforcement:
+- *	NL80211_IFTYPE_ADHOC, NL80211_IFTYPE_STATION, NL80211_IFTYPE_AP,
+- *	NL80211_IFTYPE_AP_VLAN, NL80211_IFTYPE_MONITOR,
+- *	NL80211_IFTYPE_P2P_CLIENT, NL80211_IFTYPE_P2P_GO,
+- *	NL80211_IFTYPE_P2P_DEVICE. The flag will be set by default if a device
+- *	includes any modes unsupported for enforcement checking.
+  * @REGULATORY_WIPHY_SELF_MANAGED: for devices that employ wiphy-specific
+  *	regdom management. These devices will ignore all regdom changes not
+  *	originating from their own wiphy.
+@@ -177,7 +166,7 @@ enum ieee80211_regulatory_flags {
+ 	REGULATORY_COUNTRY_IE_FOLLOW_POWER	= BIT(3),
+ 	REGULATORY_COUNTRY_IE_IGNORE		= BIT(4),
+ 	REGULATORY_ENABLE_RELAX_NO_IR           = BIT(5),
+-	REGULATORY_IGNORE_STALE_KICKOFF         = BIT(6),
++	/* reuse bit 6 next time */
+ 	REGULATORY_WIPHY_SELF_MANAGED		= BIT(7),
+ };
  
--static void
--cfg80211_parse_mbssid_frame_data(struct wiphy *wiphy,
--				 struct cfg80211_inform_bss *data,
--				 struct ieee80211_mgmt *mgmt, size_t len,
--				 struct cfg80211_non_tx_bss *non_tx_data,
--				 gfp_t gfp)
--{
--	enum cfg80211_bss_frame_type ftype;
--	const u8 *ie = mgmt->u.probe_resp.variable;
--	size_t ielen = len - offsetof(struct ieee80211_mgmt,
--				      u.probe_resp.variable);
--
--	ftype = ieee80211_is_beacon(mgmt->frame_control) ?
--		CFG80211_BSS_FTYPE_BEACON : CFG80211_BSS_FTYPE_PRESP;
--
--	cfg80211_parse_mbssid_data(wiphy, data, ftype, mgmt->bssid,
--				   le64_to_cpu(mgmt->u.probe_resp.timestamp),
--				   le16_to_cpu(mgmt->u.probe_resp.beacon_int),
--				   ie, ielen, non_tx_data, gfp);
--}
--
--static void
--cfg80211_update_notlisted_nontrans(struct wiphy *wiphy,
--				   struct cfg80211_bss *nontrans_bss,
--				   struct ieee80211_mgmt *mgmt, size_t len)
--{
--	u8 *ie, *new_ie, *pos;
--	const struct element *nontrans_ssid;
--	const u8 *trans_ssid, *mbssid;
--	size_t ielen = len - offsetof(struct ieee80211_mgmt,
--				      u.probe_resp.variable);
--	size_t new_ie_len;
--	struct cfg80211_bss_ies *new_ies;
--	const struct cfg80211_bss_ies *old;
--	size_t cpy_len;
--
--	lockdep_assert_held(&wiphy_to_rdev(wiphy)->bss_lock);
--
--	ie = mgmt->u.probe_resp.variable;
--
--	new_ie_len = ielen;
--	trans_ssid = cfg80211_find_ie(WLAN_EID_SSID, ie, ielen);
--	if (!trans_ssid)
--		return;
--	new_ie_len -= trans_ssid[1];
--	mbssid = cfg80211_find_ie(WLAN_EID_MULTIPLE_BSSID, ie, ielen);
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index b3ec9eaec36b3..609b79fe4a748 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -721,22 +721,6 @@ int wiphy_register(struct wiphy *wiphy)
+ 			return -EINVAL;
+ 	}
+ 
 -	/*
--	 * It's not valid to have the MBSSID element before SSID
--	 * ignore if that happens - the code below assumes it is
--	 * after (while copying things inbetween).
+-	 * if a wiphy has unsupported modes for regulatory channel enforcement,
+-	 * opt-out of enforcement checking
 -	 */
--	if (!mbssid || mbssid < trans_ssid)
--		return;
--	new_ie_len -= mbssid[1];
+-	if (wiphy->interface_modes & ~(BIT(NL80211_IFTYPE_STATION) |
+-				       BIT(NL80211_IFTYPE_P2P_CLIENT) |
+-				       BIT(NL80211_IFTYPE_AP) |
+-				       BIT(NL80211_IFTYPE_MESH_POINT) |
+-				       BIT(NL80211_IFTYPE_P2P_GO) |
+-				       BIT(NL80211_IFTYPE_ADHOC) |
+-				       BIT(NL80211_IFTYPE_P2P_DEVICE) |
+-				       BIT(NL80211_IFTYPE_NAN) |
+-				       BIT(NL80211_IFTYPE_AP_VLAN) |
+-				       BIT(NL80211_IFTYPE_MONITOR)))
+-		wiphy->regulatory_flags |= REGULATORY_IGNORE_STALE_KICKOFF;
 -
--	nontrans_ssid = ieee80211_bss_get_elem(nontrans_bss, WLAN_EID_SSID);
--	if (!nontrans_ssid)
--		return;
--
--	new_ie_len += nontrans_ssid->datalen;
--
--	/* generate new ie for nontrans BSS
--	 * 1. replace SSID with nontrans BSS' SSID
--	 * 2. skip MBSSID IE
--	 */
--	new_ie = kzalloc(new_ie_len, GFP_ATOMIC);
--	if (!new_ie)
--		return;
--
--	new_ies = kzalloc(sizeof(*new_ies) + new_ie_len, GFP_ATOMIC);
--	if (!new_ies)
--		goto out_free;
--
--	pos = new_ie;
--
--	/* copy the nontransmitted SSID */
--	cpy_len = nontrans_ssid->datalen + 2;
--	memcpy(pos, nontrans_ssid, cpy_len);
--	pos += cpy_len;
--	/* copy the IEs between SSID and MBSSID */
--	cpy_len = trans_ssid[1] + 2;
--	memcpy(pos, (trans_ssid + cpy_len), (mbssid - (trans_ssid + cpy_len)));
--	pos += (mbssid - (trans_ssid + cpy_len));
--	/* copy the IEs after MBSSID */
--	cpy_len = mbssid[1] + 2;
--	memcpy(pos, mbssid + cpy_len, ((ie + ielen) - (mbssid + cpy_len)));
--
--	/* update ie */
--	new_ies->len = new_ie_len;
--	new_ies->tsf = le64_to_cpu(mgmt->u.probe_resp.timestamp);
--	new_ies->from_beacon = ieee80211_is_beacon(mgmt->frame_control);
--	memcpy(new_ies->data, new_ie, new_ie_len);
--	if (ieee80211_is_probe_resp(mgmt->frame_control)) {
--		old = rcu_access_pointer(nontrans_bss->proberesp_ies);
--		rcu_assign_pointer(nontrans_bss->proberesp_ies, new_ies);
--		rcu_assign_pointer(nontrans_bss->ies, new_ies);
--		if (old)
--			kfree_rcu((struct cfg80211_bss_ies *)old, rcu_head);
--	} else {
--		old = rcu_access_pointer(nontrans_bss->beacon_ies);
--		rcu_assign_pointer(nontrans_bss->beacon_ies, new_ies);
--		cfg80211_update_hidden_bsses(bss_from_pub(nontrans_bss),
--					     new_ies, old);
--		rcu_assign_pointer(nontrans_bss->ies, new_ies);
--		if (old)
--			kfree_rcu((struct cfg80211_bss_ies *)old, rcu_head);
--	}
--
--out_free:
--	kfree(new_ie);
--}
--
- /* cfg80211_inform_bss_width_frame helper */
- static struct cfg80211_bss *
- cfg80211_inform_single_bss_frame_data(struct wiphy *wiphy,
-@@ -2561,51 +2449,31 @@ cfg80211_inform_bss_frame_data(struct wiphy *wiphy,
- 			       struct ieee80211_mgmt *mgmt, size_t len,
- 			       gfp_t gfp)
- {
--	struct cfg80211_bss *res, *tmp_bss;
-+	struct cfg80211_bss *res;
- 	const u8 *ie = mgmt->u.probe_resp.variable;
--	const struct cfg80211_bss_ies *ies1, *ies2;
- 	size_t ielen = len - offsetof(struct ieee80211_mgmt,
- 				      u.probe_resp.variable);
-+	enum cfg80211_bss_frame_type ftype;
- 	struct cfg80211_non_tx_bss non_tx_data = {};
+ 	if (WARN_ON((wiphy->regulatory_flags & REGULATORY_WIPHY_SELF_MANAGED) &&
+ 		    (wiphy->regulatory_flags &
+ 					(REGULATORY_CUSTOM_REG |
+diff --git a/net/wireless/reg.c b/net/wireless/reg.c
+index 522180919a1a3..3b44fa59dbbab 100644
+--- a/net/wireless/reg.c
++++ b/net/wireless/reg.c
+@@ -2429,9 +2429,17 @@ static bool reg_wdev_chan_valid(struct wiphy *wiphy, struct wireless_dev *wdev)
+ 		case NL80211_IFTYPE_P2P_DEVICE:
+ 			/* no enforcement required */
+ 			break;
++		case NL80211_IFTYPE_OCB:
++			if (!wdev->u.ocb.chandef.chan)
++				continue;
++			chandef = wdev->u.ocb.chandef;
++			break;
++		case NL80211_IFTYPE_NAN:
++			/* we have no info, but NAN is also pretty universal */
++			continue;
+ 		default:
+ 			/* others not implemented for now */
+-			WARN_ON(1);
++			WARN_ON_ONCE(1);
+ 			break;
+ 		}
  
- 	res = cfg80211_inform_single_bss_frame_data(wiphy, data, mgmt,
- 						    len, gfp);
-+	if (!res)
-+		return NULL;
+@@ -2490,9 +2498,7 @@ static void reg_check_chans_work(struct work_struct *work)
+ 	rtnl_lock();
  
- 	/* don't do any further MBSSID handling for S1G */
- 	if (ieee80211_is_s1g_beacon(mgmt->frame_control))
- 		return res;
+ 	list_for_each_entry(rdev, &cfg80211_rdev_list, list)
+-		if (!(rdev->wiphy.regulatory_flags &
+-		      REGULATORY_IGNORE_STALE_KICKOFF))
+-			reg_leave_invalid_chans(&rdev->wiphy);
++		reg_leave_invalid_chans(&rdev->wiphy);
  
--	if (!res || !wiphy->support_mbssid ||
--	    !cfg80211_find_elem(WLAN_EID_MULTIPLE_BSSID, ie, ielen))
--		return res;
--	if (wiphy->support_only_he_mbssid &&
--	    !cfg80211_find_ext_elem(WLAN_EID_EXT_HE_CAPABILITY, ie, ielen))
--		return res;
--
-+	ftype = ieee80211_is_beacon(mgmt->frame_control) ?
-+		CFG80211_BSS_FTYPE_BEACON : CFG80211_BSS_FTYPE_PRESP;
- 	non_tx_data.tx_bss = res;
--	/* process each non-transmitting bss */
--	cfg80211_parse_mbssid_frame_data(wiphy, data, mgmt, len,
--					 &non_tx_data, gfp);
--
--	spin_lock_bh(&wiphy_to_rdev(wiphy)->bss_lock);
- 
--	/* check if the res has other nontransmitting bss which is not
--	 * in MBSSID IE
--	 */
--	ies1 = rcu_access_pointer(res->ies);
--
--	/* go through nontrans_list, if the timestamp of the BSS is
--	 * earlier than the timestamp of the transmitting BSS then
--	 * update it
--	 */
--	list_for_each_entry(tmp_bss, &res->nontrans_list,
--			    nontrans_list) {
--		ies2 = rcu_access_pointer(tmp_bss->ies);
--		if (ies2->tsf < ies1->tsf)
--			cfg80211_update_notlisted_nontrans(wiphy, tmp_bss,
--							   mgmt, len);
--	}
--	spin_unlock_bh(&wiphy_to_rdev(wiphy)->bss_lock);
-+	/* process each non-transmitting bss */
-+	cfg80211_parse_mbssid_data(wiphy, data, ftype, mgmt->bssid,
-+				   le64_to_cpu(mgmt->u.probe_resp.timestamp),
-+				   le16_to_cpu(mgmt->u.probe_resp.beacon_int),
-+				   ie, ielen, &non_tx_data, gfp);
- 
- 	return res;
+ 	rtnl_unlock();
  }
 -- 
 2.39.2
