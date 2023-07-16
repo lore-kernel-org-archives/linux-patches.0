@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F868F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:30:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3E6C433C8;
-	Sun, 16 Jul 2023 20:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5F88F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:31:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BDD4C433C9;
+	Sun, 16 Jul 2023 20:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539458;
-	bh=4wdoPoDoU/I0fBOLHS9pBXLVVZzKXJs+p+bUTI6z/y4=;
+	s=korg; t=1689539461;
+	bh=JBc2Jo75qwMc3kdTIC620agapLJ7tOwUc+7EGv49kGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E46iiybdkXq4XPaMvjbcTdwiPyLzrc0EczyQPER9b18XlpjkUtoTPrJTghWRMEmxh
-	 BGJnVJ4Al0j/uaeKm06EuvErGdY7V14j1ay0FYI8hHmmv3AzjL0LebSvU9Mm+Ijm5m
-	 TjAa28tayPWWvpuFUUGHhPvCI92JAz859iDI/8PE=
+	b=WSuF2fBiN6WFbpIBV8x7Fu3lj17SLpohkfsXWwIaPPzWL/sqLwo58b3nn0fJBCHaM
+	 8VOzwgbmlOneVqz2BIo/lSsA7EqzA3SKRiywQUOjwShA9LzA5RJD+27qw6CBOf42j8
+	 07CDWfM/cD3xsBwzg8MvmHpikd9VTVxoLLUZfuc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Yu <chao@kernel.org>,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 005/591] erofs: avoid tagged pointers to mark sync decompression
-Date: Sun, 16 Jul 2023 21:42:24 +0200
-Message-ID: <20230716194924.004567620@linuxfoundation.org>
+Subject: [PATCH 6.1 006/591] erofs: remove tagged pointer helpers
+Date: Sun, 16 Jul 2023 21:42:25 +0200
+Message-ID: <20230716194924.028974031@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,155 +38,222 @@ Content-Transfer-Encoding: 8bit
 
 From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit cdba55067f2f9fdc7870ffcb6aef912d3468cff8 ]
+[ Upstream commit b1ed220c6262bff63cdcb53692e492be0b05206c ]
 
-We could just use a boolean in z_erofs_decompressqueue for sync
-decompression to simplify the code.
+Just open-code the remaining one to simplify the code.
 
 Reviewed-by: Yue Hu <huyue2@coolpad.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20230204093040.97967-2-hsiangkao@linux.alibaba.com
+Link: https://lore.kernel.org/r/20230204093040.97967-3-hsiangkao@linux.alibaba.com
 Stable-dep-of: 967c28b23f6c ("erofs: kill hooked chains to avoid loops on deduplicated compressed images")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 42 ++++++++++++++++--------------------------
- fs/erofs/zdata.h |  2 +-
- 2 files changed, 17 insertions(+), 27 deletions(-)
+ fs/erofs/tagptr.h | 107 ----------------------------------------------
+ fs/erofs/zdata.c  |  26 +++--------
+ fs/erofs/zdata.h  |   1 -
+ 3 files changed, 6 insertions(+), 128 deletions(-)
+ delete mode 100644 fs/erofs/tagptr.h
 
+diff --git a/fs/erofs/tagptr.h b/fs/erofs/tagptr.h
+deleted file mode 100644
+index 64ceb7270b5c1..0000000000000
+--- a/fs/erofs/tagptr.h
++++ /dev/null
+@@ -1,107 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0-only */
+-/*
+- * A tagged pointer implementation
+- */
+-#ifndef __EROFS_FS_TAGPTR_H
+-#define __EROFS_FS_TAGPTR_H
+-
+-#include <linux/types.h>
+-#include <linux/build_bug.h>
+-
+-/*
+- * the name of tagged pointer types are tagptr{1, 2, 3...}_t
+- * avoid directly using the internal structs __tagptr{1, 2, 3...}
+- */
+-#define __MAKE_TAGPTR(n) \
+-typedef struct __tagptr##n {	\
+-	uintptr_t v;	\
+-} tagptr##n##_t;
+-
+-__MAKE_TAGPTR(1)
+-__MAKE_TAGPTR(2)
+-__MAKE_TAGPTR(3)
+-__MAKE_TAGPTR(4)
+-
+-#undef __MAKE_TAGPTR
+-
+-extern void __compiletime_error("bad tagptr tags")
+-	__bad_tagptr_tags(void);
+-
+-extern void __compiletime_error("bad tagptr type")
+-	__bad_tagptr_type(void);
+-
+-/* fix the broken usage of "#define tagptr2_t tagptr3_t" by users */
+-#define __tagptr_mask_1(ptr, n)	\
+-	__builtin_types_compatible_p(typeof(ptr), struct __tagptr##n) ? \
+-		(1UL << (n)) - 1 :
+-
+-#define __tagptr_mask(ptr)	(\
+-	__tagptr_mask_1(ptr, 1) ( \
+-	__tagptr_mask_1(ptr, 2) ( \
+-	__tagptr_mask_1(ptr, 3) ( \
+-	__tagptr_mask_1(ptr, 4) ( \
+-	__bad_tagptr_type(), 0)))))
+-
+-/* generate a tagged pointer from a raw value */
+-#define tagptr_init(type, val) \
+-	((typeof(type)){ .v = (uintptr_t)(val) })
+-
+-/*
+- * directly cast a tagged pointer to the native pointer type, which
+- * could be used for backward compatibility of existing code.
+- */
+-#define tagptr_cast_ptr(tptr) ((void *)(tptr).v)
+-
+-/* encode tagged pointers */
+-#define tagptr_fold(type, ptr, _tags) ({ \
+-	const typeof(_tags) tags = (_tags); \
+-	if (__builtin_constant_p(tags) && (tags & ~__tagptr_mask(type))) \
+-		__bad_tagptr_tags(); \
+-tagptr_init(type, (uintptr_t)(ptr) | tags); })
+-
+-/* decode tagged pointers */
+-#define tagptr_unfold_ptr(tptr) \
+-	((void *)((tptr).v & ~__tagptr_mask(tptr)))
+-
+-#define tagptr_unfold_tags(tptr) \
+-	((tptr).v & __tagptr_mask(tptr))
+-
+-/* operations for the tagger pointer */
+-#define tagptr_eq(_tptr1, _tptr2) ({ \
+-	typeof(_tptr1) tptr1 = (_tptr1); \
+-	typeof(_tptr2) tptr2 = (_tptr2); \
+-	(void)(&tptr1 == &tptr2); \
+-(tptr1).v == (tptr2).v; })
+-
+-/* lock-free CAS operation */
+-#define tagptr_cmpxchg(_ptptr, _o, _n) ({ \
+-	typeof(_ptptr) ptptr = (_ptptr); \
+-	typeof(_o) o = (_o); \
+-	typeof(_n) n = (_n); \
+-	(void)(&o == &n); \
+-	(void)(&o == ptptr); \
+-tagptr_init(o, cmpxchg(&ptptr->v, o.v, n.v)); })
+-
+-/* wrap WRITE_ONCE if atomic update is needed */
+-#define tagptr_replace_tags(_ptptr, tags) ({ \
+-	typeof(_ptptr) ptptr = (_ptptr); \
+-	*ptptr = tagptr_fold(*ptptr, tagptr_unfold_ptr(*ptptr), tags); \
+-*ptptr; })
+-
+-#define tagptr_set_tags(_ptptr, _tags) ({ \
+-	typeof(_ptptr) ptptr = (_ptptr); \
+-	const typeof(_tags) tags = (_tags); \
+-	if (__builtin_constant_p(tags) && (tags & ~__tagptr_mask(*ptptr))) \
+-		__bad_tagptr_tags(); \
+-	ptptr->v |= tags; \
+-*ptptr; })
+-
+-#define tagptr_clear_tags(_ptptr, _tags) ({ \
+-	typeof(_ptptr) ptptr = (_ptptr); \
+-	const typeof(_tags) tags = (_tags); \
+-	if (__builtin_constant_p(tags) && (tags & ~__tagptr_mask(*ptptr))) \
+-		__bad_tagptr_tags(); \
+-	ptptr->v &= ~tags; \
+-*ptptr; })
+-
+-#endif	/* __EROFS_FS_TAGPTR_H */
 diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index ccf7c55d477fe..8e80871a8c1d7 100644
+index 8e80871a8c1d7..3b5f73224c22a 100644
 --- a/fs/erofs/zdata.c
 +++ b/fs/erofs/zdata.c
-@@ -1157,12 +1157,12 @@ static void z_erofs_decompressqueue_work(struct work_struct *work)
+@@ -175,15 +175,6 @@ static void z_erofs_free_pcluster(struct z_erofs_pcluster *pcl)
+ 	DBG_BUGON(1);
  }
  
- static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
--				       bool sync, int bios)
-+				       int bios)
- {
- 	struct erofs_sb_info *const sbi = EROFS_SB(io->sb);
- 
- 	/* wake up the caller thread for sync decompression */
--	if (sync) {
-+	if (io->sync) {
- 		if (!atomic_add_return(bios, &io->pending_bios))
- 			complete(&io->u.done);
- 		return;
-@@ -1294,9 +1294,8 @@ static struct page *pickup_page_for_submission(struct z_erofs_pcluster *pcl,
- 	return page;
- }
- 
--static struct z_erofs_decompressqueue *
--jobqueue_init(struct super_block *sb,
--	      struct z_erofs_decompressqueue *fgq, bool *fg)
-+static struct z_erofs_decompressqueue *jobqueue_init(struct super_block *sb,
-+			      struct z_erofs_decompressqueue *fgq, bool *fg)
- {
- 	struct z_erofs_decompressqueue *q;
- 
-@@ -1313,6 +1312,7 @@ jobqueue_init(struct super_block *sb,
- 		init_completion(&fgq->u.done);
- 		atomic_set(&fgq->pending_bios, 0);
- 		q->eio = false;
-+		q->sync = true;
- 	}
- 	q->sb = sb;
- 	q->head = Z_EROFS_PCLUSTER_TAIL_CLOSED;
-@@ -1326,20 +1326,6 @@ enum {
- 	NR_JOBQUEUES,
- };
- 
--static void *jobqueueset_init(struct super_block *sb,
--			      struct z_erofs_decompressqueue *q[],
--			      struct z_erofs_decompressqueue *fgq, bool *fg)
--{
--	/*
--	 * if managed cache is enabled, bypass jobqueue is needed,
--	 * no need to read from device for all pclusters in this queue.
--	 */
--	q[JQ_BYPASS] = jobqueue_init(sb, fgq + JQ_BYPASS, NULL);
--	q[JQ_SUBMIT] = jobqueue_init(sb, fgq + JQ_SUBMIT, fg);
+-/*
+- * tagged pointer with 1-bit tag for all compressed pages
+- * tag 0 - the page is just found with an extra page reference
+- */
+-typedef tagptr1_t compressed_page_t;
 -
--	return tagptr_cast_ptr(tagptr_fold(tagptr1_t, q[JQ_SUBMIT], *fg));
--}
+-#define tag_compressed_page_justfound(page) \
+-	tagptr_fold(compressed_page_t, page, 1)
 -
- static void move_to_bypass_jobqueue(struct z_erofs_pcluster *pcl,
- 				    z_erofs_next_pcluster_t qtail[],
- 				    z_erofs_next_pcluster_t owned_head)
-@@ -1361,8 +1347,7 @@ static void move_to_bypass_jobqueue(struct z_erofs_pcluster *pcl,
+ static struct workqueue_struct *z_erofs_workqueue __read_mostly;
  
- static void z_erofs_decompressqueue_endio(struct bio *bio)
- {
--	tagptr1_t t = tagptr_init(tagptr1_t, bio->bi_private);
--	struct z_erofs_decompressqueue *q = tagptr_unfold_ptr(t);
-+	struct z_erofs_decompressqueue *q = bio->bi_private;
- 	blk_status_t err = bio->bi_status;
- 	struct bio_vec *bvec;
- 	struct bvec_iter_all iter_all;
-@@ -1381,7 +1366,7 @@ static void z_erofs_decompressqueue_endio(struct bio *bio)
- 	}
- 	if (err)
- 		q->eio = true;
--	z_erofs_decompress_kickoff(q, tagptr_unfold_tags(t), -1);
-+	z_erofs_decompress_kickoff(q, -1);
- 	bio_put(bio);
- }
+ void z_erofs_exit_zip_subsystem(void)
+@@ -319,7 +310,7 @@ static void z_erofs_bind_cache(struct z_erofs_decompress_frontend *fe,
  
-@@ -1394,7 +1379,6 @@ static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
- 	struct address_space *mc = MNGD_MAPPING(EROFS_SB(sb));
- 	z_erofs_next_pcluster_t qtail[NR_JOBQUEUES];
- 	struct z_erofs_decompressqueue *q[NR_JOBQUEUES];
--	void *bi_private;
- 	z_erofs_next_pcluster_t owned_head = f->owned_head;
- 	/* bio is NULL initially, so no need to initialize last_{index,bdev} */
- 	pgoff_t last_index;
-@@ -1404,7 +1388,13 @@ static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
- 	unsigned long pflags;
- 	int memstall = 0;
+ 	for (i = 0; i < pcl->pclusterpages; ++i) {
+ 		struct page *page;
+-		compressed_page_t t;
++		void *t;	/* mark pages just found for debugging */
+ 		struct page *newpage = NULL;
  
--	bi_private = jobqueueset_init(sb, q, fgq, force_fg);
-+	/*
-+	 * if managed cache is enabled, bypass jobqueue is needed,
-+	 * no need to read from device for all pclusters in this queue.
-+	 */
-+	q[JQ_BYPASS] = jobqueue_init(sb, fgq + JQ_BYPASS, NULL);
-+	q[JQ_SUBMIT] = jobqueue_init(sb, fgq + JQ_SUBMIT, force_fg);
-+
- 	qtail[JQ_BYPASS] = &q[JQ_BYPASS]->head;
- 	qtail[JQ_SUBMIT] = &q[JQ_SUBMIT]->head;
+ 		/* the compressed page was loaded before */
+@@ -329,7 +320,7 @@ static void z_erofs_bind_cache(struct z_erofs_decompress_frontend *fe,
+ 		page = find_get_page(mc, pcl->obj.index + i);
  
-@@ -1473,7 +1463,7 @@ static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
- 				last_bdev = mdev.m_bdev;
- 				bio->bi_iter.bi_sector = (sector_t)cur <<
- 					LOG_SECTORS_PER_BLOCK;
--				bio->bi_private = bi_private;
-+				bio->bi_private = q[JQ_SUBMIT];
- 				if (f->readahead)
- 					bio->bi_opf |= REQ_RAHEAD;
- 				++nr_bios;
-@@ -1506,7 +1496,7 @@ static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
- 		kvfree(q[JQ_SUBMIT]);
- 		return;
- 	}
--	z_erofs_decompress_kickoff(q[JQ_SUBMIT], *force_fg, nr_bios);
-+	z_erofs_decompress_kickoff(q[JQ_SUBMIT], nr_bios);
- }
+ 		if (page) {
+-			t = tag_compressed_page_justfound(page);
++			t = (void *)((unsigned long)page | 1);
+ 		} else {
+ 			/* I/O is needed, no possible to decompress directly */
+ 			standalone = false;
+@@ -345,11 +336,10 @@ static void z_erofs_bind_cache(struct z_erofs_decompress_frontend *fe,
+ 			if (!newpage)
+ 				continue;
+ 			set_page_private(newpage, Z_EROFS_PREALLOCATED_PAGE);
+-			t = tag_compressed_page_justfound(newpage);
++			t = (void *)((unsigned long)newpage | 1);
+ 		}
  
- static void z_erofs_runqueue(struct z_erofs_decompress_frontend *f,
+-		if (!cmpxchg_relaxed(&pcl->compressed_bvecs[i].page, NULL,
+-				     tagptr_cast_ptr(t)))
++		if (!cmpxchg_relaxed(&pcl->compressed_bvecs[i].page, NULL, t))
+ 			continue;
+ 
+ 		if (page)
+@@ -1192,8 +1182,6 @@ static struct page *pickup_page_for_submission(struct z_erofs_pcluster *pcl,
+ 
+ 	struct address_space *mapping;
+ 	struct page *oldpage, *page;
+-
+-	compressed_page_t t;
+ 	int justfound;
+ 
+ repeat:
+@@ -1203,10 +1191,8 @@ static struct page *pickup_page_for_submission(struct z_erofs_pcluster *pcl,
+ 	if (!page)
+ 		goto out_allocpage;
+ 
+-	/* process the target tagged pointer */
+-	t = tagptr_init(compressed_page_t, page);
+-	justfound = tagptr_unfold_tags(t);
+-	page = tagptr_unfold_ptr(t);
++	justfound = (unsigned long)page & 1UL;
++	page = (struct page *)((unsigned long)page & ~1UL);
+ 
+ 	/*
+ 	 * preallocated cached pages, which is used to avoid direct reclaim
 diff --git a/fs/erofs/zdata.h b/fs/erofs/zdata.h
-index d98c952129852..b139de5473a97 100644
+index b139de5473a97..f196a729c7e85 100644
 --- a/fs/erofs/zdata.h
 +++ b/fs/erofs/zdata.h
-@@ -110,7 +110,7 @@ struct z_erofs_decompressqueue {
- 		struct work_struct work;
- 	} u;
+@@ -7,7 +7,6 @@
+ #define __EROFS_FS_ZDATA_H
  
--	bool eio;
-+	bool eio, sync;
- };
+ #include "internal.h"
+-#include "tagptr.h"
  
- static inline bool z_erofs_is_inline_pcluster(struct z_erofs_pcluster *pcl)
+ #define Z_EROFS_PCLUSTER_MAX_PAGES	(Z_EROFS_PCLUSTER_MAX_SIZE / PAGE_SIZE)
+ #define Z_EROFS_INLINE_BVECS		2
 -- 
 2.39.2
 
