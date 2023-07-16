@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FBC8F6D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:23:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ACCDC433C8;
-	Sun, 16 Jul 2023 20:23:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9D58F6D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:23:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324B6C433C8;
+	Sun, 16 Jul 2023 20:23:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538982;
-	bh=RMp4xByG4ffeO0OOKmDWbpxiTLqmBseqZwL54lV+3dg=;
+	s=korg; t=1689538985;
+	bh=lN9GC96fFjomqeeakVzw8SDRD0GIjjAzMzuPCM4RI5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lhCHHJwyILsWLKKgrExPH40gXGIxvp5F4OXyWZO/4UOm6cZCof/jfrdvX9FcDeC7g
-	 AHvT7mY6XcY+pbm/Kyaw1GR+IEVU7SvkIoVcMeV5UEe1yLtsFJikUXkidQt0iZujOk
-	 cxdGN3tWYQQmwRlIQFRc96kqnpFQdp8j4AczEnAU=
+	b=EjNFf5qG9VxmCiUrXwnjq7Dxs14f8sdNRAko5hfO0ocCAfg4HM6x+yNVpMQz7Jctu
+	 qMxx4ilGbrDyTCONdklge/cwiimCNEjVoVbC7mNIYMTjCBN0k5Dfaw6nX5HA1IsGV+
+	 HAxr4PZpwH3m9Jb2E2zMNNkN8ordvgzaZveVx0Lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Yury Norov <yury.norov@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Fancy Fang <chen.fang@nxp.com>,
+	Clark Wang <xiaoning.wang@nxp.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 645/800] lib/bitmap: drop optimization of bitmap_{from,to}_arr64
-Date: Sun, 16 Jul 2023 21:48:18 +0200
-Message-ID: <20230716195004.096975819@linuxfoundation.org>
+Subject: [PATCH 6.4 646/800] pwm: imx-tpm: force real_period to be zero in suspend
+Date: Sun, 16 Jul 2023 21:48:19 +0200
+Message-ID: <20230716195004.120025226@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,73 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yury Norov <yury.norov@gmail.com>
+From: Fancy Fang <chen.fang@nxp.com>
 
-[ Upstream commit c1d2ba10f594046831d14b03f194e8d05e78abad ]
+[ Upstream commit 661dfb7f46298e53f6c3deaa772fa527aae86193 ]
 
-bitmap_{from,to}_arr64() optimization is overly optimistic on 32-bit LE
-architectures when it's wired to bitmap_copy_clear_tail().
+During suspend, all the tpm registers will lose values.
+So the 'real_period' value of struct 'imx_tpm_pwm_chip'
+should be forced to be zero to force the period update
+code can be executed after system resume back.
 
-bitmap_copy_clear_tail() takes care of unused bits in the bitmap up to
-the next word boundary. But on 32-bit machines when copying bits from
-bitmap to array of 64-bit words, it's expected that the unused part of
-a recipient array must be cleared up to 64-bit boundary, so the last 4
-bytes may stay untouched when nbits % 64 <= 32.
-
-While the copying part of the optimization works correct, that clear-tail
-trick makes corresponding tests reasonably fail:
-
-test_bitmap: bitmap_to_arr64(nbits == 1): tail is not safely cleared: 0xa5a5a5a500000001 (must be 0x0000000000000001)
-
-Fix it by removing bitmap_{from,to}_arr64() optimization for 32-bit LE
-arches.
-
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/lkml/20230225184702.GA3587246@roeck-us.net/
-Fixes: 0a97953fd221 ("lib: add bitmap_{from,to}_arr64")
-Signed-off-by: Yury Norov <yury.norov@gmail.com>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Signed-off-by: Fancy Fang <chen.fang@nxp.com>
+Signed-off-by: Clark Wang <xiaoning.wang@nxp.com>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Fixes: 738a1cfec2ed ("pwm: Add i.MX TPM PWM driver support")
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bitmap.h | 8 +++-----
- lib/bitmap.c           | 2 +-
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ drivers/pwm/pwm-imx-tpm.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/include/linux/bitmap.h b/include/linux/bitmap.h
-index 7d6d73b781472..03644237e1efb 100644
---- a/include/linux/bitmap.h
-+++ b/include/linux/bitmap.h
-@@ -302,12 +302,10 @@ void bitmap_to_arr32(u32 *buf, const unsigned long *bitmap,
- #endif
+diff --git a/drivers/pwm/pwm-imx-tpm.c b/drivers/pwm/pwm-imx-tpm.c
+index 5e2b452ee5f2e..98ab65c896850 100644
+--- a/drivers/pwm/pwm-imx-tpm.c
++++ b/drivers/pwm/pwm-imx-tpm.c
+@@ -397,6 +397,13 @@ static int __maybe_unused pwm_imx_tpm_suspend(struct device *dev)
+ 	if (tpm->enable_count > 0)
+ 		return -EBUSY;
  
- /*
-- * On 64-bit systems bitmaps are represented as u64 arrays internally. On LE32
-- * machines the order of hi and lo parts of numbers match the bitmap structure.
-- * In both cases conversion is not needed when copying data from/to arrays of
-- * u64.
-+ * On 64-bit systems bitmaps are represented as u64 arrays internally. So,
-+ * the conversion is not needed when copying data from/to arrays of u64.
-  */
--#if (BITS_PER_LONG == 32) && defined(__BIG_ENDIAN)
-+#if BITS_PER_LONG == 32
- void bitmap_from_arr64(unsigned long *bitmap, const u64 *buf, unsigned int nbits);
- void bitmap_to_arr64(u64 *buf, const unsigned long *bitmap, unsigned int nbits);
- #else
-diff --git a/lib/bitmap.c b/lib/bitmap.c
-index 1c81413c51f86..ddb31015e38ae 100644
---- a/lib/bitmap.c
-+++ b/lib/bitmap.c
-@@ -1495,7 +1495,7 @@ void bitmap_to_arr32(u32 *buf, const unsigned long *bitmap, unsigned int nbits)
- EXPORT_SYMBOL(bitmap_to_arr32);
- #endif
++	/*
++	 * Force 'real_period' to be zero to force period update code
++	 * can be executed after system resume back, since suspend causes
++	 * the period related registers to become their reset values.
++	 */
++	tpm->real_period = 0;
++
+ 	clk_disable_unprepare(tpm->clk);
  
--#if (BITS_PER_LONG == 32) && defined(__BIG_ENDIAN)
-+#if BITS_PER_LONG == 32
- /**
-  * bitmap_from_arr64 - copy the contents of u64 array of bits to bitmap
-  *	@bitmap: array of unsigned longs, the destination bitmap
+ 	return 0;
 -- 
 2.39.2
 
