@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884938F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:24:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A312C433C8;
-	Sun, 16 Jul 2023 20:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E20E8F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:24:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A4AC433C8;
+	Sun, 16 Jul 2023 20:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539072;
-	bh=0WuSaP4EjiSH6VHmUmG8yHgktuI1tL9+3zQXoJtMFBw=;
+	s=korg; t=1689539075;
+	bh=Wurn+r556/jIlXNtGm+2w9JWEvWDpDuLTsSnhF38Wlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k++YMGR5ABhzEHfVMNffW0jbscxTrQi59y78UeW+n5bGJAP8aWDUIpnh6L73PLPNa
-	 naIa2v1XCBJfRGHv5s5M9ue4EaBl9eFaCrXf9jkn50erFjLIzacWmY2K4DZRKqg3af
-	 40GEg+1b06Aw20VuS5pY9W74HwFURooL51VgMPkM=
+	b=Y+wwrS9bsIPZ5d/nNIIC+Mgmq6IS0hUc+t8CMhsSToiCCy0umWyXoO0FMcwTxPvCe
+	 vNoKYPUBLRWTSFhj3qIKtzHiK2hzp7wseB9p0S1Pvhge5ejaRaKg85geCQZC9XaDke
+	 GoOjeEGRFp+Zf2WPOxn5qkdk1wniQu4Tazxo/roY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Pawel Dembicki <paweldembicki@gmail.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 677/800] net: dsa: vsc73xx: fix MTU configuration
-Date: Sun, 16 Jul 2023 21:48:50 +0200
-Message-ID: <20230716195004.851064994@linuxfoundation.org>
+Subject: [PATCH 6.4 678/800] mlxsw: minimal: fix potential memory leak in mlxsw_m_linecards_init
+Date: Sun, 16 Jul 2023 21:48:51 +0200
+Message-ID: <20230716195004.874585531@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,52 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pawel Dembicki <paweldembicki@gmail.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 3cf62c8177adb0db9e15c8b898c44f997acf3ebf ]
+[ Upstream commit 08fc75735fda3be97194bfbf3c899c87abb3d0fe ]
 
-Switch in MAXLEN register stores the maximum size of a data frame.
-The MTU size is 18 bytes smaller than the frame size.
+The line cards array is not freed in the error path of
+mlxsw_m_linecards_init(), which can lead to a memory leak. Fix by
+freeing the array in the error path, thereby making the error path
+identical to mlxsw_m_linecards_fini().
 
-The current settings are causing problems with packet forwarding.
-This patch fixes the MTU settings to proper values.
-
-Fixes: fb77ffc6ec86 ("net: dsa: vsc73xx: make the MTU configurable")
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Pawel Dembicki <paweldembicki@gmail.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://lore.kernel.org/r/20230628194327.1765644-1-paweldembicki@gmail.com
+Fixes: 01328e23a476 ("mlxsw: minimal: Extend module to port mapping with slot index")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/r/20230630012647.1078002-1-shaozhengchao@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/vitesse-vsc73xx-core.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlxsw/minimal.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/dsa/vitesse-vsc73xx-core.c b/drivers/net/dsa/vitesse-vsc73xx-core.c
-index ae55167ce0a6f..ef1a4a7c47b23 100644
---- a/drivers/net/dsa/vitesse-vsc73xx-core.c
-+++ b/drivers/net/dsa/vitesse-vsc73xx-core.c
-@@ -1025,17 +1025,17 @@ static int vsc73xx_change_mtu(struct dsa_switch *ds, int port, int new_mtu)
- 	struct vsc73xx *vsc = ds->priv;
- 
- 	return vsc73xx_write(vsc, VSC73XX_BLOCK_MAC, port,
--			     VSC73XX_MAXLEN, new_mtu);
-+			     VSC73XX_MAXLEN, new_mtu + ETH_HLEN + ETH_FCS_LEN);
- }
- 
- /* According to application not "VSC7398 Jumbo Frames" setting
-- * up the MTU to 9.6 KB does not affect the performance on standard
-+ * up the frame size to 9.6 KB does not affect the performance on standard
-  * frames. It is clear from the application note that
-  * "9.6 kilobytes" == 9600 bytes.
-  */
- static int vsc73xx_get_max_mtu(struct dsa_switch *ds, int port)
- {
--	return 9600;
-+	return 9600 - ETH_HLEN - ETH_FCS_LEN;
- }
- 
- static const struct dsa_switch_ops vsc73xx_ds_ops = {
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/minimal.c b/drivers/net/ethernet/mellanox/mlxsw/minimal.c
+index 6b56eadd736e5..6b98c3287b497 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/minimal.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/minimal.c
+@@ -417,6 +417,7 @@ static int mlxsw_m_linecards_init(struct mlxsw_m *mlxsw_m)
+ err_kmalloc_array:
+ 	for (i--; i >= 0; i--)
+ 		kfree(mlxsw_m->line_cards[i]);
++	kfree(mlxsw_m->line_cards);
+ err_kcalloc:
+ 	kfree(mlxsw_m->ports);
+ 	return err;
 -- 
 2.39.2
 
