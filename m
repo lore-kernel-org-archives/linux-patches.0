@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB438F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:18:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72FC8C433C7;
-	Sun, 16 Jul 2023 20:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB71E8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:18:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40537C433C7;
+	Sun, 16 Jul 2023 20:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538707;
-	bh=Ivuf+0SuMYrUq0yJBznwxLtuVdQP/7bUl4P8Ejn9llE=;
+	s=korg; t=1689538710;
+	bh=7zDQq9YlMZNjdo/ueWRSgcT7+mIdw9btaxgvLORz2Fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HV7dbWbIseLHCTPDe63VU1Za/BhBR+7EYWD1bHX1l7OV1sQz3+f2U/V2Ax2AUwJHa
-	 bpGBC++9R6bYj4tn+A//HUJXwEbUY1wj8jqfWDoPWFkSgMe8msZnOrGGaJgoeZM0G9
-	 KTUxfDuQfMzYeZ4RkkTNZZyjgDDULPgz2H3DxgeY=
+	b=NBphDjb8jt1zxIJ5yPAxVIDTVcTi8IXexlLGh6mqq1qCOHp0e9aUV8psF7ehTsM05
+	 0uA+/Kl+618Cr4dwCq9RmmjvdGU5huUIhxuZ3cmlp3zBgT9TVRxt8kDsQWJkgNwpTm
+	 9jsVzgf23MWxY+P9mLQ/jENslUczR2u1B6T6XRT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 530/800] btrfs: do not BUG_ON() on tree mod log failure at balance_level()
-Date: Sun, 16 Jul 2023 21:46:23 +0200
-Message-ID: <20230716195001.404517473@linuxfoundation.org>
+	Stefan Wahren <stefan.wahren@i2se.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 548/800] w1: w1_therm: fix locking behavior in convert_t
+Date: Sun, 16 Jul 2023 21:46:41 +0200
+Message-ID: <20230716195001.820995556@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,67 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Stefan Wahren <stefan.wahren@i2se.com>
 
-commit 39020d8abc7ec62c4de9b260e3d10d4a1c2478ce upstream.
+[ Upstream commit dca5480ab7b77a889088ab7cac81934604510ac7 ]
 
-At balance_level(), instead of doing a BUG_ON() in case we fail to record
-tree mod log operations, do a transaction abort and return the error to
-the callers. There's really no need for the BUG_ON() as we can release
-all resources in this context, and we have to abort because other future
-tree searches that use the tree mod log (btrfs_search_old_slot()) may get
-inconsistent results if other operations modify the tree after that
-failure and before the tree mod log based search.
+The commit 67b392f7b8ed ("w1_therm: optimizing temperature read timings")
+accidentially inverted the logic for lock handling of the bus mutex.
 
-CC: stable@vger.kernel.org # 5.4+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Before:
+  pullup -> release lock before sleep
+  no pullup -> release lock after sleep
+
+After:
+  pullup -> release lock after sleep
+  no pullup -> release lock before sleep
+
+This cause spurious measurements of 85 degree (powerup value) on the
+Tarragon board with connected 1-w temperature sensor
+(w1_therm.w1_strong_pull=0).
+
+In the meantime a new feature for polling the conversion
+completion has been integrated in these branches with
+commit 021da53e65fd ("w1: w1_therm: Add sysfs entries to control
+conversion time and driver features"). But this feature isn't
+available for parasite power mode, so handle this separately.
+
+Link: https://lore.kernel.org/regressions/2023042645-attentive-amends-7b0b@gregkh/T/
+Fixes: 67b392f7b8ed ("w1_therm: optimizing temperature read timings")
+Signed-off-by: Stefan Wahren <stefan.wahren@i2se.com>
+Link: https://lore.kernel.org/r/20230427112152.12313-1-stefan.wahren@i2se.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.c |   17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/w1/slaves/w1_therm.c | 31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
---- a/fs/btrfs/ctree.c
-+++ b/fs/btrfs/ctree.c
-@@ -1042,7 +1042,12 @@ static noinline int balance_level(struct
- 		}
+diff --git a/drivers/w1/slaves/w1_therm.c b/drivers/w1/slaves/w1_therm.c
+index 067692626cf07..99c58bd9d2df0 100644
+--- a/drivers/w1/slaves/w1_therm.c
++++ b/drivers/w1/slaves/w1_therm.c
+@@ -1159,29 +1159,26 @@ static int convert_t(struct w1_slave *sl, struct therm_info *info)
  
- 		ret = btrfs_tree_mod_log_insert_root(root->node, child, true);
--		BUG_ON(ret < 0);
-+		if (ret < 0) {
-+			btrfs_tree_unlock(child);
-+			free_extent_buffer(child);
-+			btrfs_abort_transaction(trans, ret);
-+			goto enospc;
-+		}
- 		rcu_assign_pointer(root->node, child);
+ 			w1_write_8(dev_master, W1_CONVERT_TEMP);
  
- 		add_root_to_dirty_list(root);
-@@ -1130,7 +1135,10 @@ static noinline int balance_level(struct
- 			btrfs_node_key(right, &right_key, 0);
- 			ret = btrfs_tree_mod_log_insert_key(parent, pslot + 1,
- 					BTRFS_MOD_LOG_KEY_REPLACE);
--			BUG_ON(ret < 0);
-+			if (ret < 0) {
-+				btrfs_abort_transaction(trans, ret);
-+				goto enospc;
-+			}
- 			btrfs_set_node_key(parent, &right_key, pslot + 1);
- 			btrfs_mark_buffer_dirty(parent);
- 		}
-@@ -1176,7 +1184,10 @@ static noinline int balance_level(struct
- 		btrfs_node_key(mid, &mid_key, 0);
- 		ret = btrfs_tree_mod_log_insert_key(parent, pslot,
- 						    BTRFS_MOD_LOG_KEY_REPLACE);
--		BUG_ON(ret < 0);
-+		if (ret < 0) {
-+			btrfs_abort_transaction(trans, ret);
-+			goto enospc;
-+		}
- 		btrfs_set_node_key(parent, &mid_key, pslot);
- 		btrfs_mark_buffer_dirty(parent);
- 	}
+-			if (strong_pullup) { /*some device need pullup */
++			if (SLAVE_FEATURES(sl) & W1_THERM_POLL_COMPLETION) {
++				ret = w1_poll_completion(dev_master, W1_POLL_CONVERT_TEMP);
++				if (ret) {
++					dev_dbg(&sl->dev, "%s: Timeout\n", __func__);
++					goto mt_unlock;
++				}
++				mutex_unlock(&dev_master->bus_mutex);
++			} else if (!strong_pullup) { /*no device need pullup */
+ 				sleep_rem = msleep_interruptible(t_conv);
+ 				if (sleep_rem != 0) {
+ 					ret = -EINTR;
+ 					goto mt_unlock;
+ 				}
+ 				mutex_unlock(&dev_master->bus_mutex);
+-			} else { /*no device need pullup */
+-				if (SLAVE_FEATURES(sl) & W1_THERM_POLL_COMPLETION) {
+-					ret = w1_poll_completion(dev_master, W1_POLL_CONVERT_TEMP);
+-					if (ret) {
+-						dev_dbg(&sl->dev, "%s: Timeout\n", __func__);
+-						goto mt_unlock;
+-					}
+-					mutex_unlock(&dev_master->bus_mutex);
+-				} else {
+-					/* Fixed delay */
+-					mutex_unlock(&dev_master->bus_mutex);
+-					sleep_rem = msleep_interruptible(t_conv);
+-					if (sleep_rem != 0) {
+-						ret = -EINTR;
+-						goto dec_refcnt;
+-					}
++			} else { /*some device need pullup */
++				mutex_unlock(&dev_master->bus_mutex);
++				sleep_rem = msleep_interruptible(t_conv);
++				if (sleep_rem != 0) {
++					ret = -EINTR;
++					goto dec_refcnt;
+ 				}
+ 			}
+ 			ret = read_scratchpad(sl, info);
+-- 
+2.39.2
+
 
 
