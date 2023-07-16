@@ -1,28 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31A58F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:04:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9DDC433C8;
-	Sun, 16 Jul 2023 20:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F318F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:04:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA453C433C8;
+	Sun, 16 Jul 2023 20:04:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537857;
-	bh=lp04nvsECuj9Z3KYPrWIO7o5fBWoIIQVz2IrryEAFGo=;
+	s=korg; t=1689537860;
+	bh=ou/S/4/+1QUYBlAR2OQqqhXP1X7F3n/R8j5ylY0esbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1sRZ/ikmw4HtAMBhteiPQm2zCQ0SUWSCx8q10DS22zOLvszOM17Vja4FBufYOq2Ds
-	 ecRqSzKwIkaNHCfszl9ff0AIImcAgbGu2o73XzF6gGKZZTC/Na0J/rQuoM6/eg89BH
-	 +nMPoxbZOGtvHdZT6Iobw3j9vuYXFJOKiDJ6xdSw=
+	b=BwZC4lHcnBC0U35KKm1XSwpIeit6MZWUM7BVZvoHeHsV6ZsIfhI6thSxVXuV213pe
+	 Wx5sWCbUEHtnBUqpmRcqfg2MqlauZ2Y/DtScl+ocZJLm5uFDm8SSOzfg+h45GKwqbu
+	 VLGMojDjmJX4rmmiEVwKUIrT0rbzQ3XXjannmp9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jarod Wilson <jarod@redhat.com>,
+	Moshe Tal <moshet@nvidia.com>,
+	Jussi Maki <joamaki@gmail.com>,
+	Jay Vosburgh <j.vosburgh@gmail.com>,
+	Andy Gospodarek <andy@greyhouse.net>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 215/800] netfilter: conntrack: dccp: copy entire header to stack buffer, not just basic one
-Date: Sun, 16 Jul 2023 21:41:08 +0200
-Message-ID: <20230716194954.089129514@linuxfoundation.org>
+Subject: [PATCH 6.4 206/800] bonding: do not assume skb mac_header is set
+Date: Sun, 16 Jul 2023 21:40:59 +0200
+Message-ID: <20230716194953.882518496@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,145 +42,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ff0a3a7d52ff7282dbd183e7fc29a1fe386b0c30 ]
+[ Upstream commit 6a940abdef3162e5723f1495b8a49859d1708f79 ]
 
-Eric Dumazet says:
-  nf_conntrack_dccp_packet() has an unique:
+Drivers must not assume in their ndo_start_xmit() that
+skbs have their mac_header set. skb->data is all what is needed.
 
-  dh = skb_header_pointer(skb, dataoff, sizeof(_dh), &_dh);
+bonding seems to be one of the last offender as caught by syzbot:
 
-  And nothing more is 'pulled' from the packet, depending on the content.
-  dh->dccph_doff, and/or dh->dccph_x ...)
-  So dccp_ack_seq() is happily reading stuff past the _dh buffer.
+WARNING: CPU: 1 PID: 12155 at include/linux/skbuff.h:2907 skb_mac_offset include/linux/skbuff.h:2913 [inline]
+WARNING: CPU: 1 PID: 12155 at include/linux/skbuff.h:2907 bond_xmit_hash drivers/net/bonding/bond_main.c:4170 [inline]
+WARNING: CPU: 1 PID: 12155 at include/linux/skbuff.h:2907 bond_xmit_3ad_xor_slave_get drivers/net/bonding/bond_main.c:5149 [inline]
+WARNING: CPU: 1 PID: 12155 at include/linux/skbuff.h:2907 bond_3ad_xor_xmit drivers/net/bonding/bond_main.c:5186 [inline]
+WARNING: CPU: 1 PID: 12155 at include/linux/skbuff.h:2907 __bond_start_xmit drivers/net/bonding/bond_main.c:5442 [inline]
+WARNING: CPU: 1 PID: 12155 at include/linux/skbuff.h:2907 bond_start_xmit+0x14ab/0x19d0 drivers/net/bonding/bond_main.c:5470
+Modules linked in:
+CPU: 1 PID: 12155 Comm: syz-executor.3 Not tainted 6.1.30-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/25/2023
+RIP: 0010:skb_mac_header include/linux/skbuff.h:2907 [inline]
+RIP: 0010:skb_mac_offset include/linux/skbuff.h:2913 [inline]
+RIP: 0010:bond_xmit_hash drivers/net/bonding/bond_main.c:4170 [inline]
+RIP: 0010:bond_xmit_3ad_xor_slave_get drivers/net/bonding/bond_main.c:5149 [inline]
+RIP: 0010:bond_3ad_xor_xmit drivers/net/bonding/bond_main.c:5186 [inline]
+RIP: 0010:__bond_start_xmit drivers/net/bonding/bond_main.c:5442 [inline]
+RIP: 0010:bond_start_xmit+0x14ab/0x19d0 drivers/net/bonding/bond_main.c:5470
+Code: 8b 7c 24 30 e8 76 dd 1a 01 48 85 c0 74 0d 48 89 c3 e8 29 67 2e fe e9 15 ef ff ff e8 1f 67 2e fe e9 10 ef ff ff e8 15 67 2e fe <0f> 0b e9 45 f8 ff ff e8 09 67 2e fe e9 dc fa ff ff e8 ff 66 2e fe
+RSP: 0018:ffffc90002fff6e0 EFLAGS: 00010283
+RAX: ffffffff835874db RBX: 000000000000ffff RCX: 0000000000040000
+RDX: ffffc90004dcf000 RSI: 00000000000000b5 RDI: 00000000000000b6
+RBP: ffffc90002fff8b8 R08: ffffffff83586d16 R09: ffffffff83586584
+R10: 0000000000000007 R11: ffff8881599fc780 R12: ffff88811b6a7b7e
+R13: 1ffff110236d4f6f R14: ffff88811b6a7ac0 R15: 1ffff110236d4f76
+FS: 00007f2e9eb47700(0000) GS:ffff8881f6b00000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000001b2e421000 CR3: 000000010e6d4000 CR4: 00000000003526e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+<TASK>
+[<ffffffff8471a49f>] netdev_start_xmit include/linux/netdevice.h:4925 [inline]
+[<ffffffff8471a49f>] __dev_direct_xmit+0x4ef/0x850 net/core/dev.c:4380
+[<ffffffff851d845b>] dev_direct_xmit include/linux/netdevice.h:3043 [inline]
+[<ffffffff851d845b>] packet_direct_xmit+0x18b/0x300 net/packet/af_packet.c:284
+[<ffffffff851c7472>] packet_snd net/packet/af_packet.c:3112 [inline]
+[<ffffffff851c7472>] packet_sendmsg+0x4a22/0x64d0 net/packet/af_packet.c:3143
+[<ffffffff8467a4b2>] sock_sendmsg_nosec net/socket.c:716 [inline]
+[<ffffffff8467a4b2>] sock_sendmsg net/socket.c:736 [inline]
+[<ffffffff8467a4b2>] __sys_sendto+0x472/0x5f0 net/socket.c:2139
+[<ffffffff8467a715>] __do_sys_sendto net/socket.c:2151 [inline]
+[<ffffffff8467a715>] __se_sys_sendto net/socket.c:2147 [inline]
+[<ffffffff8467a715>] __x64_sys_sendto+0xe5/0x100 net/socket.c:2147
+[<ffffffff8553071f>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+[<ffffffff8553071f>] do_syscall_64+0x2f/0x50 arch/x86/entry/common.c:80
+[<ffffffff85600087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-BUG: KASAN: stack-out-of-bounds in nf_conntrack_dccp_packet+0x1134/0x11c0
-Read of size 4 at addr ffff000128f66e0c by task syz-executor.2/29371
-[..]
-
-Fix this by increasing the stack buffer to also include room for
-the extra sequence numbers and all the known dccp packet type headers,
-then pull again after the initial validation of the basic header.
-
-While at it, mark packets invalid that lack 48bit sequence bit but
-where RFC says the type MUST use them.
-
-Compile tested only.
-
-v2: first skb_header_pointer() now needs to adjust the size to
-    only pull the generic header. (Eric)
-
-Heads-up: I intend to remove dccp conntrack support later this year.
-
-Fixes: 2bc780499aa3 ("[NETFILTER]: nf_conntrack: add DCCP protocol support")
-Reported-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 7b8fc0103bb5 ("bonding: add a vlan+srcmac tx hashing option")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Jarod Wilson <jarod@redhat.com>
+Cc: Moshe Tal <moshet@nvidia.com>
+Cc: Jussi Maki <joamaki@gmail.com>
+Cc: Jay Vosburgh <j.vosburgh@gmail.com>
+Cc: Andy Gospodarek <andy@greyhouse.net>
+Cc: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://lore.kernel.org/r/20230622152304.2137482-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_proto_dccp.c | 52 +++++++++++++++++++++++--
- 1 file changed, 49 insertions(+), 3 deletions(-)
+ drivers/net/bonding/bond_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conntrack_proto_dccp.c b/net/netfilter/nf_conntrack_proto_dccp.c
-index c1557d47ccd1e..d4fd626d2b8c3 100644
---- a/net/netfilter/nf_conntrack_proto_dccp.c
-+++ b/net/netfilter/nf_conntrack_proto_dccp.c
-@@ -432,9 +432,19 @@ static bool dccp_error(const struct dccp_hdr *dh,
- 		       struct sk_buff *skb, unsigned int dataoff,
- 		       const struct nf_hook_state *state)
- {
-+	static const unsigned long require_seq48 = 1 << DCCP_PKT_REQUEST |
-+						   1 << DCCP_PKT_RESPONSE |
-+						   1 << DCCP_PKT_CLOSEREQ |
-+						   1 << DCCP_PKT_CLOSE |
-+						   1 << DCCP_PKT_RESET |
-+						   1 << DCCP_PKT_SYNC |
-+						   1 << DCCP_PKT_SYNCACK;
- 	unsigned int dccp_len = skb->len - dataoff;
- 	unsigned int cscov;
- 	const char *msg;
-+	u8 type;
-+
-+	BUILD_BUG_ON(DCCP_PKT_INVALID >= BITS_PER_LONG);
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index edbaa1444f8ec..091e035c76a6f 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -4197,7 +4197,7 @@ u32 bond_xmit_hash(struct bonding *bond, struct sk_buff *skb)
+ 		return skb->hash;
  
- 	if (dh->dccph_doff * 4 < sizeof(struct dccp_hdr) ||
- 	    dh->dccph_doff * 4 > dccp_len) {
-@@ -459,34 +469,70 @@ static bool dccp_error(const struct dccp_hdr *dh,
- 		goto out_invalid;
- 	}
- 
--	if (dh->dccph_type >= DCCP_PKT_INVALID) {
-+	type = dh->dccph_type;
-+	if (type >= DCCP_PKT_INVALID) {
- 		msg = "nf_ct_dccp: reserved packet type ";
- 		goto out_invalid;
- 	}
-+
-+	if (test_bit(type, &require_seq48) && !dh->dccph_x) {
-+		msg = "nf_ct_dccp: type lacks 48bit sequence numbers";
-+		goto out_invalid;
-+	}
-+
- 	return false;
- out_invalid:
- 	nf_l4proto_log_invalid(skb, state, IPPROTO_DCCP, "%s", msg);
- 	return true;
+ 	return __bond_xmit_hash(bond, skb, skb->data, skb->protocol,
+-				skb_mac_offset(skb), skb_network_offset(skb),
++				0, skb_network_offset(skb),
+ 				skb_headlen(skb));
  }
  
-+struct nf_conntrack_dccp_buf {
-+	struct dccp_hdr dh;	 /* generic header part */
-+	struct dccp_hdr_ext ext; /* optional depending dh->dccph_x */
-+	union {			 /* depends on header type */
-+		struct dccp_hdr_ack_bits ack;
-+		struct dccp_hdr_request req;
-+		struct dccp_hdr_response response;
-+		struct dccp_hdr_reset rst;
-+	} u;
-+};
-+
-+static struct dccp_hdr *
-+dccp_header_pointer(const struct sk_buff *skb, int offset, const struct dccp_hdr *dh,
-+		    struct nf_conntrack_dccp_buf *buf)
-+{
-+	unsigned int hdrlen = __dccp_hdr_len(dh);
-+
-+	if (hdrlen > sizeof(*buf))
-+		return NULL;
-+
-+	return skb_header_pointer(skb, offset, hdrlen, buf);
-+}
-+
- int nf_conntrack_dccp_packet(struct nf_conn *ct, struct sk_buff *skb,
- 			     unsigned int dataoff,
- 			     enum ip_conntrack_info ctinfo,
- 			     const struct nf_hook_state *state)
- {
- 	enum ip_conntrack_dir dir = CTINFO2DIR(ctinfo);
--	struct dccp_hdr _dh, *dh;
-+	struct nf_conntrack_dccp_buf _dh;
- 	u_int8_t type, old_state, new_state;
- 	enum ct_dccp_roles role;
- 	unsigned int *timeouts;
-+	struct dccp_hdr *dh;
- 
--	dh = skb_header_pointer(skb, dataoff, sizeof(_dh), &_dh);
-+	dh = skb_header_pointer(skb, dataoff, sizeof(*dh), &_dh.dh);
- 	if (!dh)
- 		return NF_DROP;
- 
- 	if (dccp_error(dh, skb, dataoff, state))
- 		return -NF_ACCEPT;
- 
-+	/* pull again, including possible 48 bit sequences and subtype header */
-+	dh = dccp_header_pointer(skb, dataoff, dh, &_dh);
-+	if (!dh)
-+		return NF_DROP;
-+
- 	type = dh->dccph_type;
- 	if (!nf_ct_is_confirmed(ct) && !dccp_new(ct, skb, dh, state))
- 		return -NF_ACCEPT;
 -- 
 2.39.2
 
