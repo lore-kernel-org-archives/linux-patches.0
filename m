@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AADF8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:08:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48D3C433C8;
-	Sun, 16 Jul 2023 20:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206FD8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:08:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E43C433C8;
+	Sun, 16 Jul 2023 20:08:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538080;
-	bh=DKwoDzISkE9wh3vvu2XI482adqoYiLokyx+1GWjJ6Ik=;
+	s=korg; t=1689538083;
+	bh=JLmTFhhiJx+jeTkmH2n3N7jH6lYJdxLI0yNrC+26B7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ll3jeaKJ1E14YYHJGA5EhZI2d52+GARSur1vkDSOsYrYF2l3hVvBVwfu9ZI/7+ACz
-	 Ma4Ug0AS6+rXCdctt9zcnV3+NSfbPAaxIvzfwicNA0Zgu5OtbuIzfFl2FdtGsO+B0L
-	 Yh4DvdvfhkLIiM/a12oXIexRByQ0Gxxmp/EiTjlM=
+	b=ez2d3zT7NCLsgY1tOMLS/18C7NuJI94LTE75kxRr9bApkBnHWSGFo/K6ap5UOXvNQ
+	 Qow+cnzs0oTg1rp9xTtH884XXFZHzEszVMKUf1pT2evw2gILJYCpxHxYcruu2NkiO3
+	 w7rdRkDZKNpFUCt8KBg79od0kaiIbfn/ur0t7I4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaro Koskinen <aaro.koskinen@iki.fi>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 324/800] ARM: omap2: fix missing tick_broadcast() prototype
-Date: Sun, 16 Jul 2023 21:42:57 +0200
-Message-ID: <20230716194956.596434772@linuxfoundation.org>
+Subject: [PATCH 6.4 325/800] arm64: dts: qcom: pm7250b: add missing spmi-vadc include
+Date: Sun, 16 Jul 2023 21:42:58 +0200
+Message-ID: <20230716194956.619060491@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,39 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit 861bc1d2886d47bd57a2cbf2cda87fdbe3eb9d08 ]
+[ Upstream commit 83022f6484b11a60dbf9a95a88c7ef8e59c4b19c ]
 
-omap2 contains a hack to define tick_broadcast() on non-SMP
-configurations in place of the normal SMP definition. This one
-causes a warning because of a missing prototype:
+This file is using definitions from the spmi-vadc header, so we need to
+include it.
 
-arch/arm/mach-omap2/board-generic.c:44:6: error: no previous prototype for 'tick_broadcast'
-
-Make sure to always include the header with the declaration.
-
-Fixes: d86ad463d670 ("ARM: OMAP2+: Fix regression for using local timer on non-SMP SoCs")
-Acked-by: Aaro Koskinen <aaro.koskinen@iki.fi>
-Link: https://lore.kernel.org/r/20230516153109.514251-9-arnd@kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 11975b9b8135 ("arm64: dts: qcom: Add pm7250b PMIC")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230407-pm7250b-sid-v1-1-fc648478cc25@fairphone.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap2/board-generic.c | 1 +
+ arch/arm64/boot/dts/qcom/pm7250b.dtsi | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/mach-omap2/board-generic.c b/arch/arm/mach-omap2/board-generic.c
-index 1610c567a6a3a..10d2f078e4a8e 100644
---- a/arch/arm/mach-omap2/board-generic.c
-+++ b/arch/arm/mach-omap2/board-generic.c
-@@ -13,6 +13,7 @@
- #include <linux/of_platform.h>
- #include <linux/irqdomain.h>
- #include <linux/clocksource.h>
-+#include <linux/clockchips.h>
+diff --git a/arch/arm64/boot/dts/qcom/pm7250b.dtsi b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+index d709d955a2f5a..daa6f1d30efa0 100644
+--- a/arch/arm64/boot/dts/qcom/pm7250b.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+@@ -3,6 +3,7 @@
+  * Copyright (C) 2022 Luca Weiss <luca.weiss@fairphone.com>
+  */
  
- #include <asm/setup.h>
- #include <asm/mach/arch.h>
++#include <dt-bindings/iio/qcom,spmi-vadc.h>
+ #include <dt-bindings/interrupt-controller/irq.h>
+ #include <dt-bindings/spmi/spmi.h>
+ 
 -- 
 2.39.2
 
