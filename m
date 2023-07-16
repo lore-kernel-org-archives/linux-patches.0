@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FF48F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:09:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A7FC433C8;
-	Sun, 16 Jul 2023 20:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0608F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:09:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50382C433C7;
+	Sun, 16 Jul 2023 20:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538160;
-	bh=Xpx9YY6YGd+aohkVd8fMuCNdNsMg5l+Hiqtde0WDD+8=;
+	s=korg; t=1689538163;
+	bh=gBAMXFNtSDTLu7Nx0mgqqEqsKI3OGpzqdzIOym259SA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UkLee35k7qaC8uuiT1BGMvZE5OaMVCgvM4VyoxcB8AvkqS2mWZKrrqSoh8BlPVRP6
-	 TJgPGq8JZfBlSkH1z6fQPVqofcunVqbhQqUmFvzLWpsxFveBzl1m7rrrksznik0rGQ
-	 ELwztP9br4FekXJdUbEzEOh2/2Xj3VRfvA086wGE=
+	b=t0a/RbMFK8MjLVIn1qnRuH7B4gBGDk5lpv+sKzuD6nZklWxwRrDOX4LJ/Ga4HUH7o
+	 A15lU6UV1wZCfokP9RTyS+1k+rP5F0RwKl+KV4RExjmqj4ZD8Cw9GWNyUmYCbQ2LNA
+	 /Lgkyd29WtnOAg+moFjFwrtJqvPLmkCCavl3t5WY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Stephan Gerhold <stephan@gerhold.net>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 318/800] arm64: dts: qcom: apq8016-sbc: Fix regulator constraints
-Date: Sun, 16 Jul 2023 21:42:51 +0200
-Message-ID: <20230716194956.458741473@linuxfoundation.org>
+Subject: [PATCH 6.4 309/800] arm64: dts: qcom: sdm630: correct camss unit address
+Date: Sun, 16 Jul 2023 21:42:42 +0200
+Message-ID: <20230716194956.252884254@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,184 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephan Gerhold <stephan@gerhold.net>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit e27654df20d77ad7549a3cf6739ebaa3aa59a088 ]
+[ Upstream commit c8b7faa7e9913a94444b3f00b6480e53a174fcfd ]
 
-For some reason DB410c has completely bogus regulator constraints that
-actually just correspond to the programmable voltages which are already
-provided by the regulator driver. Some of them are not just outside the
-recommended operating conditions of the APQ8016E SoC but even exceed
-the absolute maximum ratings, potentially risking permanent device
-damage.
+Match unit-address to reg entry to fix dtbs W=1 warnings:
 
-In practice it's not quite as dangerous thanks to the RPM firmware:
-It turns out that it has its own voltage constraints and silently
-clamps all regulator requests. For example, requesting 3.3V for L5
-(allowed by the current regulator constraints!) still results in 1.8V
-being programmed in the actual regulator hardware.
+  Warning (simple_bus_reg): /soc/camss@ca00000: simple-bus unit address format error, expected "ca00020"
 
-Experimentation with various voltages shows that the internal RPM
-voltage constraints roughly correspond to the safe "specified range"
-in the PM8916 Device Specification (rather than the "programmable
-range" used inside apq8016-sbc.dtsi right now).
-
-Combine those together with some fixed voltages used in the old
-msm-3.10 device tree from Qualcomm to give DB410c some actually valid
-voltage constraints.
-
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Fixes: 4c7d53d16d77 ("arm64: dts: apq8016-sbc: add regulators support")
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Fixes: f3d5d3cc6971 ("arm64: dts: qcom: sdm630: Configure the camera subsystem")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230510-msm8916-regulators-v1-1-54d4960a05fc@gerhold.net
+Link: https://lore.kernel.org/r/20230419211856.79332-10-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/apq8016-sbc.dts | 64 ++++++++++++------------
- 1 file changed, 32 insertions(+), 32 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm630.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-index 59860a2223b83..14cb217a13c1e 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-@@ -447,21 +447,21 @@ &smd_rpm_regulators {
- 	vdd_l7-supply = <&pm8916_s4>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+index eaead2f7beb4e..ab04903fa3ff3 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -1894,7 +1894,7 @@ pil-reloc@94c {
+ 			};
+ 		};
  
- 	s3 {
--		regulator-min-microvolt = <375000>;
--		regulator-max-microvolt = <1562000>;
-+		regulator-min-microvolt = <1250000>;
-+		regulator-max-microvolt = <1350000>;
- 	};
- 
- 	s4 {
--		regulator-min-microvolt = <1800000>;
--		regulator-max-microvolt = <1800000>;
-+		regulator-min-microvolt = <1850000>;
-+		regulator-max-microvolt = <2150000>;
- 
- 		regulator-always-on;
- 		regulator-boot-on;
- 	};
- 
- 	l1 {
--		regulator-min-microvolt = <375000>;
--		regulator-max-microvolt = <1525000>;
-+		regulator-min-microvolt = <1225000>;
-+		regulator-max-microvolt = <1225000>;
- 	};
- 
- 	l2 {
-@@ -470,13 +470,13 @@ l2 {
- 	};
- 
- 	l4 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <2050000>;
-+		regulator-max-microvolt = <2050000>;
- 	};
- 
- 	l5 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
- 	};
- 
- 	l6 {
-@@ -485,45 +485,45 @@ l6 {
- 	};
- 
- 	l7 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
- 	};
- 
- 	l8 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <2900000>;
-+		regulator-max-microvolt = <2900000>;
- 	};
- 
- 	l9 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
- 	};
- 
- 	l10 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <2800000>;
-+		regulator-max-microvolt = <2800000>;
- 	};
- 
- 	l11 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <2950000>;
-+		regulator-max-microvolt = <2950000>;
- 		regulator-allow-set-load;
- 		regulator-system-load = <200000>;
- 	};
- 
- 	l12 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <2950000>;
- 	};
- 
- 	l13 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <3075000>;
-+		regulator-max-microvolt = <3075000>;
- 	};
- 
- 	l14 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
- 	};
- 
- 	/**
-@@ -531,14 +531,14 @@ l14 {
- 	 * for mezzanine boards
- 	 */
- 	l15 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
- 		regulator-always-on;
- 	};
- 
- 	l16 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
- 	};
- 
- 	l17 {
-@@ -547,8 +547,8 @@ l17 {
- 	};
- 
- 	l18 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <2700000>;
-+		regulator-max-microvolt = <2700000>;
- 	};
- };
- 
+-		camss: camss@ca00000 {
++		camss: camss@ca00020 {
+ 			compatible = "qcom,sdm660-camss";
+ 			reg = <0x0ca00020 0x10>,
+ 			      <0x0ca30000 0x100>,
 -- 
 2.39.2
 
