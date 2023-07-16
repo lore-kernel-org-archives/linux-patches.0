@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7588F5D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:41:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39B4C433C8;
-	Sun, 16 Jul 2023 20:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ECBA8F5D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:41:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9A9C433C8;
+	Sun, 16 Jul 2023 20:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540107;
-	bh=2ted/eJLqgxXXbao25Kces2KMcpmj+UtsjKnYVJA2ig=;
+	s=korg; t=1689540110;
+	bh=ciRjg21Q5mjTKqavzrLIz8miY8zntDsOuzxe/7xcat4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TQlqg1vGwj752ZGeyWHZQdDP+CA63myw/O3urQleGM6dhu0zF6AOZ6GS3ZSHr5i0z
-	 ESQsJh6QuuAyuO/yOwSgFDgaNgMXMuiQliA62zwpXsH14PMnKN94wThXMwpEg1X8Z9
-	 eL8rRwQs1g9K0hMK9JTbn9DquTKskn9ULUET6fqI=
+	b=mV2pnKOqwkLXqtmpyZqkYWVYgJCBMnvlYy1KFqw1iyPJ3kS+dc/hszFKNpWKW5EIi
+	 0QgK/QsLYCClpjMtHMGr9NHnfV9k+d4QHu+tvagYlbj8ZUED/LKWb3MMjx3NuW8V7G
+	 S54J9tjKIMHl8pNIjLhJn6HYbMtfNdwMTDli3cZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Pearson <rpearsonhpe@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Chia-I Wu <olvaffe@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 245/591] RDMA/rxe: Fix access checks in rxe_check_bind_mw
-Date: Sun, 16 Jul 2023 21:46:24 +0200
-Message-ID: <20230716194930.208203565@linuxfoundation.org>
+Subject: [PATCH 6.1 246/591] amdgpu: validate offset_in_bo of drm_amdgpu_gem_va
+Date: Sun, 16 Jul 2023 21:46:25 +0200
+Message-ID: <20230716194930.235147443@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,100 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bob Pearson <rpearsonhpe@gmail.com>
+From: Chia-I Wu <olvaffe@gmail.com>
 
-[ Upstream commit 425e1c9018fdf25cb4531606cc92d9d01a55534f ]
+[ Upstream commit 9f0bcf49e9895cb005d78b33a5eebfa11711b425 ]
 
-The subroutine rxe_check_bind_mw() in rxe_mw.c performs checks on the mw
-access flags before they are set so they always succeed.  This patch
-instead checks the access flags passed in the send wqe.
+This is motivated by OOB access in amdgpu_vm_update_range when
+offset_in_bo+map_size overflows.
 
-Fixes: 32a577b4c3a9 ("RDMA/rxe: Add support for bind MW work requests")
-Link: https://lore.kernel.org/r/20230530221334.89432-4-rpearsonhpe@gmail.com
-Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+v2: keep the validations in amdgpu_vm_bo_map
+v3: add the validations to amdgpu_vm_bo_map/amdgpu_vm_bo_replace_map
+    rather than to amdgpu_gem_va_ioctl
+
+Fixes: 9f7eb5367d00 ("drm/amdgpu: actually use the VM map parameters")
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_mw.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mw.c b/drivers/infiniband/sw/rxe/rxe_mw.c
-index 70252991320a0..cebc9f0f428d8 100644
---- a/drivers/infiniband/sw/rxe/rxe_mw.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mw.c
-@@ -48,7 +48,7 @@ int rxe_dealloc_mw(struct ib_mw *ibmw)
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+index 5a8a4cda7e987..58fe7279599f0 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -1427,14 +1427,14 @@ int amdgpu_vm_bo_map(struct amdgpu_device *adev,
+ 	uint64_t eaddr;
  
- static int rxe_check_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
--			 struct rxe_mw *mw, struct rxe_mr *mr)
-+			 struct rxe_mw *mw, struct rxe_mr *mr, int access)
- {
- 	if (mw->ibmw.type == IB_MW_TYPE_1) {
- 		if (unlikely(mw->state != RXE_MW_STATE_VALID)) {
-@@ -58,7 +58,7 @@ static int rxe_check_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
- 		}
+ 	/* validate the parameters */
+-	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK ||
+-	    size == 0 || size & ~PAGE_MASK)
++	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK || size & ~PAGE_MASK)
++		return -EINVAL;
++	if (saddr + size <= saddr || offset + size <= offset)
+ 		return -EINVAL;
  
- 		/* o10-36.2.2 */
--		if (unlikely((mw->access & IB_ZERO_BASED))) {
-+		if (unlikely((access & IB_ZERO_BASED))) {
- 			rxe_dbg_mw(mw, "attempt to bind a zero based type 1 MW\n");
- 			return -EINVAL;
- 		}
-@@ -104,7 +104,7 @@ static int rxe_check_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
- 	}
+ 	/* make sure object fit at this offset */
+ 	eaddr = saddr + size - 1;
+-	if (saddr >= eaddr ||
+-	    (bo && offset + size > amdgpu_bo_size(bo)) ||
++	if ((bo && offset + size > amdgpu_bo_size(bo)) ||
+ 	    (eaddr >= adev->vm_manager.max_pfn << AMDGPU_GPU_PAGE_SHIFT))
+ 		return -EINVAL;
  
- 	/* C10-74 */
--	if (unlikely((mw->access &
-+	if (unlikely((access &
- 		      (IB_ACCESS_REMOTE_WRITE | IB_ACCESS_REMOTE_ATOMIC)) &&
- 		     !(mr->access & IB_ACCESS_LOCAL_WRITE))) {
- 		rxe_dbg_mw(mw,
-@@ -113,7 +113,7 @@ static int rxe_check_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
- 	}
+@@ -1493,14 +1493,14 @@ int amdgpu_vm_bo_replace_map(struct amdgpu_device *adev,
+ 	int r;
  
- 	/* C10-75 */
--	if (mw->access & IB_ZERO_BASED) {
-+	if (access & IB_ZERO_BASED) {
- 		if (unlikely(wqe->wr.wr.mw.length > mr->ibmr.length)) {
- 			rxe_dbg_mw(mw,
- 				"attempt to bind a ZB MW outside of the MR\n");
-@@ -133,12 +133,12 @@ static int rxe_check_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
- }
+ 	/* validate the parameters */
+-	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK ||
+-	    size == 0 || size & ~PAGE_MASK)
++	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK || size & ~PAGE_MASK)
++		return -EINVAL;
++	if (saddr + size <= saddr || offset + size <= offset)
+ 		return -EINVAL;
  
- static void rxe_do_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
--		      struct rxe_mw *mw, struct rxe_mr *mr)
-+		      struct rxe_mw *mw, struct rxe_mr *mr, int access)
- {
- 	u32 key = wqe->wr.wr.mw.rkey & 0xff;
+ 	/* make sure object fit at this offset */
+ 	eaddr = saddr + size - 1;
+-	if (saddr >= eaddr ||
+-	    (bo && offset + size > amdgpu_bo_size(bo)) ||
++	if ((bo && offset + size > amdgpu_bo_size(bo)) ||
+ 	    (eaddr >= adev->vm_manager.max_pfn << AMDGPU_GPU_PAGE_SHIFT))
+ 		return -EINVAL;
  
- 	mw->rkey = (mw->rkey & ~0xff) | key;
--	mw->access = wqe->wr.wr.mw.access;
-+	mw->access = access;
- 	mw->state = RXE_MW_STATE_VALID;
- 	mw->addr = wqe->wr.wr.mw.addr;
- 	mw->length = wqe->wr.wr.mw.length;
-@@ -169,6 +169,7 @@ int rxe_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe)
- 	struct rxe_dev *rxe = to_rdev(qp->ibqp.device);
- 	u32 mw_rkey = wqe->wr.wr.mw.mw_rkey;
- 	u32 mr_lkey = wqe->wr.wr.mw.mr_lkey;
-+	int access = wqe->wr.wr.mw.access;
- 
- 	mw = rxe_pool_get_index(&rxe->mw_pool, mw_rkey >> 8);
- 	if (unlikely(!mw)) {
-@@ -198,11 +199,11 @@ int rxe_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe)
- 
- 	spin_lock_bh(&mw->lock);
- 
--	ret = rxe_check_bind_mw(qp, wqe, mw, mr);
-+	ret = rxe_check_bind_mw(qp, wqe, mw, mr, access);
- 	if (ret)
- 		goto err_unlock;
- 
--	rxe_do_bind_mw(qp, wqe, mw, mr);
-+	rxe_do_bind_mw(qp, wqe, mw, mr, access);
- err_unlock:
- 	spin_unlock_bh(&mw->lock);
- err_drop_mr:
 -- 
 2.39.2
 
