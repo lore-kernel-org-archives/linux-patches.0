@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707D28F5D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:40:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FC2C433C7;
-	Sun, 16 Jul 2023 20:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFE98F55
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:40:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E5BC433C7;
+	Sun, 16 Jul 2023 20:40:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540037;
-	bh=tDEY2Jg+E3JWJHtY7yGVeW6buAETziqXevjbXQJTiX4=;
+	s=korg; t=1689540040;
+	bh=FcRmVPkH293f/MCOsVoDWEFVquK9v/rj2EFJreBQS0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1iwJpii0NBkUTSyIWanrVkyiPaID7B0N4uR7UpG/6fHaK3q/zS6rCwTvaj6PVMzG/
-	 U8qJ6f7vrsG17nl5Q4UJdtn072V+4yR0M8SyuYOZLfX3KcMbwQmRSj2GRXHWfLCC5g
-	 SOymm0UMniFH69ESBQ/bWlim7UrYCDHbNmd4fvoA=
+	b=AVR4FzJrb59VyjXCwjgi28LL0IU5AG+QalwOWCTySRKhBLQlmIThvtIdRWAW4gZg4
+	 c+n0B1+51R7tbQR6EoIefr2IjoDUjG1fkrIiUOh/PN4/TvHzulyWoAd45tGlNoPPv5
+	 Ey+wpJC9ZJXY1TeiUPOf8+vi60Z+g9Epn5qSeVxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 220/591] RDMA/irdma: avoid fortify-string warning in irdma_clr_wqes
-Date: Sun, 16 Jul 2023 21:45:59 +0200
-Message-ID: <20230716194929.562766840@linuxfoundation.org>
+Subject: [PATCH 6.1 194/591] arm64: dts: qcom: msm8916: correct camss unit address
+Date: Sun, 16 Jul 2023 21:45:33 +0200
+Message-ID: <20230716194928.895228479@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,62 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit b002760f877c0d91ecd3c78565b52f4bbac379dd ]
+[ Upstream commit 48798d992ce276cf0d57bf75318daf8eabd02aa4 ]
 
-Commit df8fc4e934c1 ("kbuild: Enable -fstrict-flex-arrays=3") triggers a
-warning for fortified memset():
+Match unit-address to reg entry to fix dtbs W=1 warnings:
 
-In function 'fortify_memset_chk',
-    inlined from 'irdma_clr_wqes' at drivers/infiniband/hw/irdma/uk.c:103:4:
-include/linux/fortify-string.h:493:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
-  493 |                         __write_overflow_field(p_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Warning (simple_bus_reg): /soc@0/camss@1b00000: simple-bus unit address format error, expected "1b0ac00"
 
-The problem here isthat the inner array only has four 8-byte elements, so
-clearing 4096 bytes overflows that. As this structure is part of an outer
-array, change the code to pass a pointer to the irdma_qp_quanta instead,
-and change the size argument for readability, matching the comment above
-it.
-
-Fixes: 551c46edc769 ("RDMA/irdma: Add user/kernel shared libraries")
-Link: https://lore.kernel.org/r/20230523111859.2197825-1-arnd@kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 58f479f90a7c ("arm64: dts: qcom: msm8916: Add CAMSS support")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230419211856.79332-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/uk.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/uk.c b/drivers/infiniband/hw/irdma/uk.c
-index 16183e894da77..dd428d915c175 100644
---- a/drivers/infiniband/hw/irdma/uk.c
-+++ b/drivers/infiniband/hw/irdma/uk.c
-@@ -93,16 +93,18 @@ static int irdma_nop_1(struct irdma_qp_uk *qp)
-  */
- void irdma_clr_wqes(struct irdma_qp_uk *qp, u32 qp_wqe_idx)
- {
--	__le64 *wqe;
-+	struct irdma_qp_quanta *sq;
- 	u32 wqe_idx;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index 9743cb270639d..99aa9b4dce8aa 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -1088,7 +1088,7 @@ dsi_phy0: dsi-phy@1a98300 {
+ 			};
+ 		};
  
- 	if (!(qp_wqe_idx & 0x7F)) {
- 		wqe_idx = (qp_wqe_idx + 128) % qp->sq_ring.size;
--		wqe = qp->sq_base[wqe_idx].elem;
-+		sq = qp->sq_base + wqe_idx;
- 		if (wqe_idx)
--			memset(wqe, qp->swqe_polarity ? 0 : 0xFF, 0x1000);
-+			memset(sq, qp->swqe_polarity ? 0 : 0xFF,
-+			       128 * sizeof(*sq));
- 		else
--			memset(wqe, qp->swqe_polarity ? 0xFF : 0, 0x1000);
-+			memset(sq, qp->swqe_polarity ? 0xFF : 0,
-+			       128 * sizeof(*sq));
- 	}
- }
- 
+-		camss: camss@1b00000 {
++		camss: camss@1b0ac00 {
+ 			compatible = "qcom,msm8916-camss";
+ 			reg = <0x01b0ac00 0x200>,
+ 				<0x01b00030 0x4>,
 -- 
 2.39.2
 
