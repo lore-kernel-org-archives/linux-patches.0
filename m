@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E9738F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:53:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E1FC433C7;
-	Sun, 16 Jul 2023 20:53:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C058F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:53:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C98C433C8;
+	Sun, 16 Jul 2023 20:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540782;
-	bh=I7j5rnv/HC4Qm/5j1txqUuzvZgeySl2Sn3VtHTJcavQ=;
+	s=korg; t=1689540784;
+	bh=jYia2HJK0JNf9erage2YNKyTU5v33WGxUllnwwDr8/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PPQQV3VQ4QDpX7ftAiJn9oHzrjJImX1DTylb8BvfqU/SgzJDV0jh9Z/K9Vbkrn/YB
-	 MqLF2D6CH3+A5xGghv3QUUltuwcMMmrUkMDdY1aMxr97EN378KQJofr9AhTqJicyQs
-	 qsW/NYQztSKlGfWcawvYtRuw029oyP1ONcLHAPpI=
+	b=IIMz3DtDnLUfXST6Qbdoj2+rzXtC2uUoOBSe5vtD9KtxKB0K3LqtYLgaG9Jm3eErh
+	 3Vm6DB/UIUUn/G3iZi7RdP78O9mgs4/ykL3n30q4wSFycWpd1jfOenJpzjgTMwF7cl
+	 1sD17cj9gY2yuwbl+AiI/ekoCrCQKZd4VCdvhh30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Nick Child <nnac123@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 485/591] Bluetooth: MGMT: Fix marking SCAN_RSP as not connectable
-Date: Sun, 16 Jul 2023 21:50:24 +0200
-Message-ID: <20230716194936.444421942@linuxfoundation.org>
+Subject: [PATCH 6.1 486/591] ibmvnic: Do not reset dql stats on NON_FATAL err
+Date: Sun, 16 Jul 2023 21:50:25 +0200
+Message-ID: <20230716194936.469605497@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,71 +35,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Nick Child <nnac123@linux.ibm.com>
 
-[ Upstream commit 73f55453ea5236a586a7f1b3d5e2ee051d655351 ]
+[ Upstream commit 48538ccb825b05544ec308a509e2cc9c013402db ]
 
-When receiving a scan response there is no way to know if the remote
-device is connectable or not, so when it cannot be merged don't
-make any assumption and instead just mark it with a new flag defined as
-MGMT_DEV_FOUND_SCAN_RSP so userspace can tell it is a standalone
-SCAN_RSP.
+All ibmvnic resets, make a call to netdev_tx_reset_queue() when
+re-opening the device. netdev_tx_reset_queue() resets the num_queued
+and num_completed byte counters. These stats are used in Byte Queue
+Limit (BQL) algorithms. The difference between these two stats tracks
+the number of bytes currently sitting on the physical NIC. ibmvnic
+increases the number of queued bytes though calls to
+netdev_tx_sent_queue() in the drivers xmit function. When, VIOS reports
+that it is done transmitting bytes, the ibmvnic device increases the
+number of completed bytes through calls to netdev_tx_completed_queue().
+It is important to note that the driver batches its transmit calls and
+num_queued is increased every time that an skb is added to the next
+batch, not necessarily when the batch is sent to VIOS for transmission.
 
-Link: https://lore.kernel.org/linux-bluetooth/CABBYNZ+CYMsDSPTxBn09Js3BcdC-x7vZFfyLJ3ppZGGwJKmUTw@mail.gmail.com/
-Fixes: c70a7e4cc8d2 ("Bluetooth: Add support for Not Connectable flag for Device Found events")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Unlike other reset types, a NON FATAL reset will not flush the sub crq
+tx buffers. Therefore, it is possible for the batched skb array to be
+partially full. So if there is call to netdev_tx_reset_queue() when
+re-opening the device, the value of num_queued (0) would not account
+for the skb's that are currently batched. Eventually, when the batch
+is sent to VIOS, the call to netdev_tx_completed_queue() would increase
+num_completed to a value greater than the num_queued. This causes a
+BUG_ON crash:
+
+ibmvnic 30000002: Firmware reports error, cause: adapter problem.
+Starting recovery...
+ibmvnic 30000002: tx error 600
+ibmvnic 30000002: tx error 600
+ibmvnic 30000002: tx error 600
+ibmvnic 30000002: tx error 600
+------------[ cut here ]------------
+kernel BUG at lib/dynamic_queue_limits.c:27!
+Oops: Exception in kernel mode, sig: 5
+[....]
+NIP dql_completed+0x28/0x1c0
+LR ibmvnic_complete_tx.isra.0+0x23c/0x420 [ibmvnic]
+Call Trace:
+ibmvnic_complete_tx.isra.0+0x3f8/0x420 [ibmvnic] (unreliable)
+ibmvnic_interrupt_tx+0x40/0x70 [ibmvnic]
+__handle_irq_event_percpu+0x98/0x270
+---[ end trace ]---
+
+Therefore, do not reset the dql stats when performing a NON_FATAL reset.
+
+Fixes: 0d973388185d ("ibmvnic: Introduce xmit_more support using batched subCRQ hcalls")
+Signed-off-by: Nick Child <nnac123@linux.ibm.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/mgmt.h |  1 +
- net/bluetooth/hci_event.c    | 15 +++++----------
- 2 files changed, 6 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/ibm/ibmvnic.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/bluetooth/mgmt.h b/include/net/bluetooth/mgmt.h
-index a5801649f6196..5e68b3dd44222 100644
---- a/include/net/bluetooth/mgmt.h
-+++ b/include/net/bluetooth/mgmt.h
-@@ -979,6 +979,7 @@ struct mgmt_ev_auth_failed {
- #define MGMT_DEV_FOUND_NOT_CONNECTABLE		BIT(2)
- #define MGMT_DEV_FOUND_INITIATED_CONN		BIT(3)
- #define MGMT_DEV_FOUND_NAME_REQUEST_FAILED	BIT(4)
-+#define MGMT_DEV_FOUND_SCAN_RSP			BIT(5)
- 
- #define MGMT_EV_DEVICE_FOUND		0x0012
- struct mgmt_ev_device_found {
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 21416ccc30ab2..b272cc1f36481 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -6307,23 +6307,18 @@ static void process_adv_report(struct hci_dev *hdev, u8 type, bdaddr_t *bdaddr,
- 		return;
+diff --git a/drivers/net/ethernet/ibm/ibmvnic.c b/drivers/net/ethernet/ibm/ibmvnic.c
+index 9282381a438fe..bc97f24b08270 100644
+--- a/drivers/net/ethernet/ibm/ibmvnic.c
++++ b/drivers/net/ethernet/ibm/ibmvnic.c
+@@ -1625,7 +1625,14 @@ static int __ibmvnic_open(struct net_device *netdev)
+ 		if (prev_state == VNIC_CLOSED)
+ 			enable_irq(adapter->tx_scrq[i]->irq);
+ 		enable_scrq_irq(adapter, adapter->tx_scrq[i]);
+-		netdev_tx_reset_queue(netdev_get_tx_queue(netdev, i));
++		/* netdev_tx_reset_queue will reset dql stats. During NON_FATAL
++		 * resets, don't reset the stats because there could be batched
++		 * skb's waiting to be sent. If we reset dql stats, we risk
++		 * num_completed being greater than num_queued. This will cause
++		 * a BUG_ON in dql_completed().
++		 */
++		if (adapter->reset_reason != VNIC_RESET_NON_FATAL)
++			netdev_tx_reset_queue(netdev_get_tx_queue(netdev, i));
  	}
  
--	/* When receiving non-connectable or scannable undirected
--	 * advertising reports, this means that the remote device is
--	 * not connectable and then clearly indicate this in the
--	 * device found event.
--	 *
--	 * When receiving a scan response, then there is no way to
-+	/* When receiving a scan response, then there is no way to
- 	 * know if the remote device is connectable or not. However
- 	 * since scan responses are merged with a previously seen
- 	 * advertising report, the flags field from that report
- 	 * will be used.
- 	 *
--	 * In the really unlikely case that a controller get confused
--	 * and just sends a scan response event, then it is marked as
--	 * not connectable as well.
-+	 * In the unlikely case that a controller just sends a scan
-+	 * response event that doesn't match the pending report, then
-+	 * it is marked as a standalone SCAN_RSP.
- 	 */
- 	if (type == LE_ADV_SCAN_RSP)
--		flags = MGMT_DEV_FOUND_NOT_CONNECTABLE;
-+		flags = MGMT_DEV_FOUND_SCAN_RSP;
- 
- 	/* If there's nothing pending either store the data from this
- 	 * event or send an immediate device found event if the data
+ 	rc = set_link_state(adapter, IBMVNIC_LOGICAL_LNK_UP);
 -- 
 2.39.2
 
