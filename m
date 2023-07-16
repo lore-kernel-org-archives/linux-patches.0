@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F06B8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:58:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1609DC433C8;
-	Sun, 16 Jul 2023 20:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D6F8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:58:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D23F4C433C7;
+	Sun, 16 Jul 2023 20:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689541086;
-	bh=qcvlOthX8qy3LD+hFK8fjAUzkUWSHTw8O7x7v0oWVEM=;
+	s=korg; t=1689541089;
+	bh=0rP2/jCBcjbswwtuDI399GFcDfrMxjV75FNm5xKNqHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tgpVnsxGBwz5aEGYZ4ZerRQrx0ppTsXM/tReghMTtzxgj2codn9T8pROtIQQiDJT9
-	 5krdSujmT9r7agYEka0uNmqzHgpFAkxb+RIUJv6+M2tSXGZRYz5VVJomLLyRuGQYck
-	 k9NKbNR3CkmOsQsX4lp2kkynF1q0fOxX1QNGC8I4=
+	b=z/ltfMneO4my+DEECgpuetsinmWEaRempxLRtZ1xh75u+QibCBpzyoHaCWYCij/8p
+	 SeDlXXNseGpSUGWmFP96V3UQVvZfgi3RcppTf/dNRFwSrflOY6vsA3URSOfbSWDUgp
+	 9XgwyuJSVvGphRk2Q8Bh5rLQd/qynqyZuPNflacE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Cercueil <paul@crapouillou.net>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.1 584/591] MIPS: DTS: CI20: Raise VDDCORE voltage to 1.125 volts
-Date: Sun, 16 Jul 2023 21:52:03 +0200
-Message-ID: <20230716194938.962866072@linuxfoundation.org>
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Jay Shin <jaeshin@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 585/591] block: make sure local irq is disabled when calling __blkcg_rstat_flush
+Date: Sun, 16 Jul 2023 21:52:04 +0200
+Message-ID: <20230716194938.987630904@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -34,46 +38,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Cercueil <paul@crapouillou.net>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit 944520f85d5b1fb2f9ea243be41f9c9af3d4cef3 upstream.
+commit 9c39b7a905d84b7da5f59d80f2e455853fea7217 upstream.
 
-Commit 08384e80a70f ("MIPS: DTS: CI20: Fix ACT8600 regulator node
-names") caused the VDDCORE power supply (regulated by the ACT8600's
-DCDC1 output) to drop from a voltage of 1.2V configured by the
-bootloader, to the 1.1V set in the Device Tree.
+When __blkcg_rstat_flush() is called from cgroup_rstat_flush*() code
+path, interrupt is always disabled.
 
-According to the documentation, the VDDCORE supply should be between
-0.99V and 1.21V; both values are therefore within the supported range.
+When we start to flush blkcg per-cpu stats list in __blkg_release()
+for avoiding to leak blkcg_gq's reference in commit 20cb1c2fb756
+("blk-cgroup: Flush stats before releasing blkcg_gq"), local irq
+isn't disabled yet, then lockdep warning may be triggered because
+the dependent cgroup locks may be acquired from irq(soft irq) handler.
 
-However, VDDCORE being 1.1V results in the CI20 being very unstable,
-with corrupted memory, failures to boot, or reboots at random. The
-reason might be succint drops of the voltage below the minimum required.
+Fix the issue by disabling local irq always.
 
-Raising the minimum voltage to 1.125 volts seems to be enough to address
-this issue, while still keeping a relatively low core voltage which
-helps for power consumption and thermals.
-
-Fixes: 08384e80a70f ("MIPS: DTS: CI20: Fix ACT8600 regulator node names")
-Signed-off-by: Paul Cercueil <paul@crapouillou.net>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 20cb1c2fb756 ("blk-cgroup: Flush stats before releasing blkcg_gq")
+Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Closes: https://lore.kernel.org/linux-block/pz2wzwnmn5tk3pwpskmjhli6g3qly7eoknilb26of376c7kwxy@qydzpvt6zpis/T/#u
+Cc: stable@vger.kernel.org
+Cc: Jay Shin <jaeshin@redhat.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Waiman Long <longman@redhat.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Link: https://lore.kernel.org/r/20230622084249.1208005-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/boot/dts/ingenic/ci20.dts |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ block/blk-cgroup.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/mips/boot/dts/ingenic/ci20.dts
-+++ b/arch/mips/boot/dts/ingenic/ci20.dts
-@@ -240,8 +240,8 @@
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -886,6 +886,7 @@ static void __blkcg_rstat_flush(struct b
+ 	struct llist_head *lhead = per_cpu_ptr(blkcg->lhead, cpu);
+ 	struct llist_node *lnode;
+ 	struct blkg_iostat_set *bisc, *next_bisc;
++	unsigned long flags;
  
- 		regulators {
- 			vddcore: DCDC1 {
--				regulator-min-microvolt = <1100000>;
--				regulator-max-microvolt = <1100000>;
-+				regulator-min-microvolt = <1125000>;
-+				regulator-max-microvolt = <1125000>;
- 				regulator-always-on;
- 			};
- 			vddmem: DCDC2 {
+ 	rcu_read_lock();
+ 
+@@ -899,7 +900,7 @@ static void __blkcg_rstat_flush(struct b
+ 	 * When flushing from cgroup, cgroup_rstat_lock is always held, so
+ 	 * this lock won't cause contention most of time.
+ 	 */
+-	raw_spin_lock(&blkg_stat_lock);
++	raw_spin_lock_irqsave(&blkg_stat_lock, flags);
+ 
+ 	/*
+ 	 * Iterate only the iostat_cpu's queued in the lockless list.
+@@ -925,7 +926,7 @@ static void __blkcg_rstat_flush(struct b
+ 			blkcg_iostat_update(parent, &blkg->iostat.cur,
+ 					    &blkg->iostat.last);
+ 	}
+-	raw_spin_unlock(&blkg_stat_lock);
++	raw_spin_unlock_irqrestore(&blkg_stat_lock, flags);
+ out:
+ 	rcu_read_unlock();
+ }
 
 
