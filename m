@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B85E8F5D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:41:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F99C433C7;
-	Sun, 16 Jul 2023 20:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3448B8F5D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:41:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5EA6C433C7;
+	Sun, 16 Jul 2023 20:41:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540093;
-	bh=sRe831DrJdiIgE09fwtktx67qKztkVDTNsm/VW7LuN0=;
+	s=korg; t=1689540096;
+	bh=eChpkFqjQpgHo+0kp79sDAgmC8+UC7KJ0eA+G6EKAcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=16f3rS6xhUWIibtdltd/tXi3IOOdzIhKQcPvMu3sxAcJWqMcq6d5o4HlkuEkaQYr7
-	 i0Vhh2QfjWJXZzfcHMBlPAXgIIfAHU5NQ0oEIFArKKLX/Dzpr8B5Yg2hq+8fToqQwh
-	 MBZF32XoR/gyoWJbNHgd/5ySP45AGvZF96UAMV/4=
+	b=m2i0GvGwjkqhg+aZ/zDe9tXCyVqO06aA+fC4i9uF5Ou9AAIW3WdtELqWzNuVVxauB
+	 qeyLb2pcyRGS9WCBJLJRyigMT9mo6yXTrvNx1HkVE0YOjf05hDqQUeqFcE8AuV6xVT
+	 DFIeQGI3IS1prtcPN8hCrgav2TCCMNSkicB6r72c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 223/591] ARM: dts: iwg20d-q7-common: Fix backlight pwm specifier
-Date: Sun, 16 Jul 2023 21:46:02 +0200
-Message-ID: <20230716194929.641597920@linuxfoundation.org>
+Subject: [PATCH 6.1 241/591] drm/radeon: fix possible division-by-zero errors
+Date: Sun, 16 Jul 2023 21:46:20 +0200
+Message-ID: <20230716194930.103595086@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -34,47 +35,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 0501fdec106a291c43b3c1b525cf22ab4c24b2d8 ]
+[ Upstream commit 1becc57cd1a905e2aa0e1eca60d2a37744525c4a ]
 
-make dtbs_check:
+Function rv740_get_decoded_reference_divider() may return 0 due to
+unpredictable reference divider value calculated in
+radeon_atom_get_clock_dividers(). This will lead to
+division-by-zero error once that value is used as a divider
+in calculating 'clk_s'.
+While unlikely, this issue should nonetheless be prevented so add a
+sanity check for such cases by testing 'decoded_ref' value against 0.
 
-    arch/arm/boot/dts/renesas/r8a7743-iwg20d-q7.dtb: backlight: pwms: [[58, 0, 5000000], [0]] is too long
-	    From schema: Documentation/devicetree/bindings/leds/backlight/pwm-backlight.yaml
-    arch/arm/boot/dts/renesas/r8a7743-iwg20d-q7-dbcm-ca.dtb: backlight: pwms: [[67, 0, 5000000], [0]] is too long
-	    From schema: Documentation/devicetree/bindings/leds/backlight/pwm-backlight.yaml
-    arch/arm/boot/dts/renesas/r8a7744-iwg20d-q7-dbcm-ca.dtb: backlight: pwms: [[67, 0, 5000000], [0]] is too long
-	    From schema: Documentation/devicetree/bindings/leds/backlight/pwm-backlight.yaml
-    arch/arm/boot/dts/renesas/r8a7744-iwg20d-q7.dtb: backlight: pwms: [[58, 0, 5000000], [0]] is too long
-	    From schema: Documentation/devicetree/bindings/leds/backlight/pwm-backlight.yaml
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-PWM specifiers referring to R-Car PWM Timer Controllers should contain
-only two cells.
+v2: minor coding style fixes (Alex)
+In practice this should actually happen as the vbios should be
+properly populated.
 
-Fix this by dropping the bogus third cell.
-
-Fixes: 6f89dd9e9325d05b ("ARM: dts: iwg20d-q7-common: Add LCD support")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/6e5c3167424a43faf8c1fa68d9667b3d87dc86d8.1684855911.git.geert+renesas@glider.be
+Fixes: 66229b200598 ("drm/radeon/kms: add dpm support for rv7xx (v4)")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/iwg20d-q7-common.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/radeon/cypress_dpm.c | 8 ++++++--
+ drivers/gpu/drm/radeon/ni_dpm.c      | 8 ++++++--
+ drivers/gpu/drm/radeon/rv740_dpm.c   | 8 ++++++--
+ 3 files changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm/boot/dts/iwg20d-q7-common.dtsi b/arch/arm/boot/dts/iwg20d-q7-common.dtsi
-index 03caea6fc6ffa..4351c5a02fa59 100644
---- a/arch/arm/boot/dts/iwg20d-q7-common.dtsi
-+++ b/arch/arm/boot/dts/iwg20d-q7-common.dtsi
-@@ -49,7 +49,7 @@ audio_clock: audio_clock {
- 	lcd_backlight: backlight {
- 		compatible = "pwm-backlight";
+diff --git a/drivers/gpu/drm/radeon/cypress_dpm.c b/drivers/gpu/drm/radeon/cypress_dpm.c
+index fdddbbaecbb74..72a0768df00f7 100644
+--- a/drivers/gpu/drm/radeon/cypress_dpm.c
++++ b/drivers/gpu/drm/radeon/cypress_dpm.c
+@@ -557,8 +557,12 @@ static int cypress_populate_mclk_value(struct radeon_device *rdev,
+ 						     ASIC_INTERNAL_MEMORY_SS, vco_freq)) {
+ 			u32 reference_clock = rdev->clock.mpll.reference_freq;
+ 			u32 decoded_ref = rv740_get_decoded_reference_divider(dividers.ref_div);
+-			u32 clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
+-			u32 clk_v = ss.percentage *
++			u32 clk_s, clk_v;
++
++			if (!decoded_ref)
++				return -EINVAL;
++			clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
++			clk_v = ss.percentage *
+ 				(0x4000 * dividers.whole_fb_div + 0x800 * dividers.frac_fb_div) / (clk_s * 625);
  
--		pwms = <&pwm3 0 5000000 0>;
-+		pwms = <&pwm3 0 5000000>;
- 		brightness-levels = <0 4 8 16 32 64 128 255>;
- 		default-brightness-level = <7>;
- 		enable-gpios = <&gpio5 14 GPIO_ACTIVE_HIGH>;
+ 			mpll_ss1 &= ~CLKV_MASK;
+diff --git a/drivers/gpu/drm/radeon/ni_dpm.c b/drivers/gpu/drm/radeon/ni_dpm.c
+index 672d2239293e0..3e1c1a392fb7b 100644
+--- a/drivers/gpu/drm/radeon/ni_dpm.c
++++ b/drivers/gpu/drm/radeon/ni_dpm.c
+@@ -2241,8 +2241,12 @@ static int ni_populate_mclk_value(struct radeon_device *rdev,
+ 						     ASIC_INTERNAL_MEMORY_SS, vco_freq)) {
+ 			u32 reference_clock = rdev->clock.mpll.reference_freq;
+ 			u32 decoded_ref = rv740_get_decoded_reference_divider(dividers.ref_div);
+-			u32 clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
+-			u32 clk_v = ss.percentage *
++			u32 clk_s, clk_v;
++
++			if (!decoded_ref)
++				return -EINVAL;
++			clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
++			clk_v = ss.percentage *
+ 				(0x4000 * dividers.whole_fb_div + 0x800 * dividers.frac_fb_div) / (clk_s * 625);
+ 
+ 			mpll_ss1 &= ~CLKV_MASK;
+diff --git a/drivers/gpu/drm/radeon/rv740_dpm.c b/drivers/gpu/drm/radeon/rv740_dpm.c
+index d57a3e1df8d63..4464fd21a3029 100644
+--- a/drivers/gpu/drm/radeon/rv740_dpm.c
++++ b/drivers/gpu/drm/radeon/rv740_dpm.c
+@@ -249,8 +249,12 @@ int rv740_populate_mclk_value(struct radeon_device *rdev,
+ 						     ASIC_INTERNAL_MEMORY_SS, vco_freq)) {
+ 			u32 reference_clock = rdev->clock.mpll.reference_freq;
+ 			u32 decoded_ref = rv740_get_decoded_reference_divider(dividers.ref_div);
+-			u32 clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
+-			u32 clk_v = 0x40000 * ss.percentage *
++			u32 clk_s, clk_v;
++
++			if (!decoded_ref)
++				return -EINVAL;
++			clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
++			clk_v = 0x40000 * ss.percentage *
+ 				(dividers.whole_fb_div + (dividers.frac_fb_div / 8)) / (clk_s * 10000);
+ 
+ 			mpll_ss1 &= ~CLKV_MASK;
 -- 
 2.39.2
 
