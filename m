@@ -1,28 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40AFA8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:13:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D49C433C8;
-	Sun, 16 Jul 2023 20:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A3B8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:13:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55342C433C8;
+	Sun, 16 Jul 2023 20:13:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538423;
-	bh=iuWJK9SJxVMKP5LwSNVXIZp5xRy5szBPUxKW9nQngyQ=;
+	s=korg; t=1689538425;
+	bh=SROZB65hKjgbj6OZdqSgiBy8/xEOw2f0vEbnAeHTlfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p8UMw5TJyHZ8KsfNlaX9HwRlkrJDfoAQ0IF4UGn9MvPc6yhWbsf2aVJTepQQacvBD
-	 4eJWWS4w3FDsLqK0me8BAxPmXD5tZkLeO+8geNTjIMrLafUKU+aLEo+/jq/ao4dTvI
-	 4rRz6q40wFVaHHyKDfDb0cDopV/HLzRIIlJkbpt4=
+	b=17w8ozAYk6nVpCZAcS1pPo9/0xxT9FXR3YOepnotdT/vwrYMyZuGCryv0k5Pf6wQ8
+	 zCbes/iLd3tbDOBRBoUICcvkid3Bs/PuIGIdd8mwgh3H44GehxFG/bb/+m2TW1uc+x
+	 sC1f788AWLnSB1ACB3H/Udj0VJJ+T9yTJIX9G8fQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Rongguang Wei <weirongguang@kylinos.cn>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Changbin Du <changbin.du@huawei.com>,
+	Dmitrii Dolgov <9erthalion6@gmail.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@arm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung.kim@lge.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Rob Herring <robh@kernel.org>,
+	Sandipan Das <sandipan.das@amd.com>,
+	Xing Zhengjun <zhengjun.xing@linux.intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 445/800] PCI: pciehp: Cancel bringup sequence if card is not present
-Date: Sun, 16 Jul 2023 21:44:58 +0200
-Message-ID: <20230716194959.420214184@linuxfoundation.org>
+Subject: [PATCH 6.4 446/800] perf evsel: Dont let for_each_group() treat the head of the list as one of its nodes
+Date: Sun, 16 Jul 2023 21:44:59 +0200
+Message-ID: <20230716194959.443688468@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,72 +50,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rongguang Wei <weirongguang@kylinos.cn>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit e8afd0d9fccc27c8ad263db5cf5952cfcf72d6fe ]
+[ Upstream commit 797b9ec8c4bc9ec89f633a9b2c710b7b64753ca4 ]
 
-If a PCIe hotplug slot has an Attention Button, the normal hot-add flow is:
+Address/memory sanitizer was reporting issues in evsel__group_pmu_name
+because the for_each_group_evsel loop didn't terminate when the head
+was reached, the head would then be cast and accessed as an evsel
+leading to invalid memory accesses.
 
-  - Slot is empty and slot power is off
-  - User inserts card in slot and presses Attention Button
-  - OS blinks Power Indicator for 5 seconds
-  - After 5 seconds, OS turns on Power Indicator, turns on slot power, and
-    enumerates the device
+Fix for_each_group_member and for_each_group_evsel to terminate at the
+list head. Note, evsel__group_pmu_name no longer iterates the group, but
+the problem is present regardless.
 
-Previously, if a user pressed the Attention Button on an *empty* slot,
-pciehp logged the following messages and blinked the Power Indicator
-until a second button press:
-
-  [0.000] pciehp: Button press: will power on in 5 sec
-  [0.001] # Power Indicator starts blinking
-  [5.001] # 5 second timeout; slot is empty, so we should cancel the
-            request to power on and turn off Power Indicator
-
-  [7.000] # Power Indicator still blinking
-  [8.000] # possible card insertion
-  [9.000] pciehp: Button press: canceling request to power on
-
-The first button press incorrectly left the slot in BLINKINGON_STATE, so
-the second was interpreted as a "cancel power on" event regardless of
-whether a card was present.
-
-If the slot is empty, turn off the Power Indicator and return from
-BLINKINGON_STATE to OFF_STATE after 5 seconds, effectively canceling the
-request to power on.  Putting the slot in OFF_STATE also means the second
-button press will correctly request a slot power on if the slot is
-occupied.
-
-[bhelgaas: commit log]
-Link: https://lore.kernel.org/r/20230512021518.336460-1-clementwei90@163.com
-Fixes: d331710ea78f ("PCI: pciehp: Become resilient to missed events")
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Rongguang Wei <weirongguang@kylinos.cn>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Fixes: 717e263fc354d53d ("perf report: Show group description when event group is enabled")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Changbin Du <changbin.du@huawei.com>
+Cc: Dmitrii Dolgov <9erthalion6@gmail.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung.kim@lge.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Rob Herring <robh@kernel.org>
+Cc: Sandipan Das <sandipan.das@amd.com>
+Cc: Xing Zhengjun <zhengjun.xing@linux.intel.com>
+Link: https://lore.kernel.org/r/20230526194442.2355872-3-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/hotplug/pciehp_ctrl.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tools/perf/util/evsel.h         | 24 ++++++++++++++++--------
+ tools/perf/util/evsel_fprintf.c |  1 +
+ 2 files changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pci/hotplug/pciehp_ctrl.c b/drivers/pci/hotplug/pciehp_ctrl.c
-index 529c348084401..32baba1b7f131 100644
---- a/drivers/pci/hotplug/pciehp_ctrl.c
-+++ b/drivers/pci/hotplug/pciehp_ctrl.c
-@@ -256,6 +256,14 @@ void pciehp_handle_presence_or_link_change(struct controller *ctrl, u32 events)
- 	present = pciehp_card_present(ctrl);
- 	link_active = pciehp_check_link_active(ctrl);
- 	if (present <= 0 && link_active <= 0) {
-+		if (ctrl->state == BLINKINGON_STATE) {
-+			ctrl->state = OFF_STATE;
-+			cancel_delayed_work(&ctrl->button_work);
-+			pciehp_set_indicators(ctrl, PCI_EXP_SLTCTL_PWR_IND_OFF,
-+					      INDICATOR_NOOP);
-+			ctrl_info(ctrl, "Slot(%s): Card not present\n",
-+				  slot_name(ctrl));
-+		}
- 		mutex_unlock(&ctrl->state_lock);
- 		return;
- 	}
+diff --git a/tools/perf/util/evsel.h b/tools/perf/util/evsel.h
+index 0f54f28a69c25..5a488803d368f 100644
+--- a/tools/perf/util/evsel.h
++++ b/tools/perf/util/evsel.h
+@@ -460,16 +460,24 @@ static inline int evsel__group_idx(struct evsel *evsel)
+ }
+ 
+ /* Iterates group WITHOUT the leader. */
+-#define for_each_group_member(_evsel, _leader) 					\
+-for ((_evsel) = list_entry((_leader)->core.node.next, struct evsel, core.node); \
+-     (_evsel) && (_evsel)->core.leader == (&_leader->core);					\
+-     (_evsel) = list_entry((_evsel)->core.node.next, struct evsel, core.node))
++#define for_each_group_member_head(_evsel, _leader, _head)				\
++for ((_evsel) = list_entry((_leader)->core.node.next, struct evsel, core.node);		\
++	(_evsel) && &(_evsel)->core.node != (_head) &&					\
++	(_evsel)->core.leader == &(_leader)->core;					\
++	(_evsel) = list_entry((_evsel)->core.node.next, struct evsel, core.node))
++
++#define for_each_group_member(_evsel, _leader)				\
++	for_each_group_member_head(_evsel, _leader, &(_leader)->evlist->core.entries)
+ 
+ /* Iterates group WITH the leader. */
+-#define for_each_group_evsel(_evsel, _leader) 					\
+-for ((_evsel) = _leader; 							\
+-     (_evsel) && (_evsel)->core.leader == (&_leader->core);					\
+-     (_evsel) = list_entry((_evsel)->core.node.next, struct evsel, core.node))
++#define for_each_group_evsel_head(_evsel, _leader, _head)				\
++for ((_evsel) = _leader;								\
++	(_evsel) && &(_evsel)->core.node != (_head) &&					\
++	(_evsel)->core.leader == &(_leader)->core;					\
++	(_evsel) = list_entry((_evsel)->core.node.next, struct evsel, core.node))
++
++#define for_each_group_evsel(_evsel, _leader)				\
++	for_each_group_evsel_head(_evsel, _leader, &(_leader)->evlist->core.entries)
+ 
+ static inline bool evsel__has_branch_callstack(const struct evsel *evsel)
+ {
+diff --git a/tools/perf/util/evsel_fprintf.c b/tools/perf/util/evsel_fprintf.c
+index cc80ec554c0a9..036a2171dc1c5 100644
+--- a/tools/perf/util/evsel_fprintf.c
++++ b/tools/perf/util/evsel_fprintf.c
+@@ -2,6 +2,7 @@
+ #include <inttypes.h>
+ #include <stdio.h>
+ #include <stdbool.h>
++#include "util/evlist.h"
+ #include "evsel.h"
+ #include "util/evsel_fprintf.h"
+ #include "util/event.h"
 -- 
 2.39.2
 
