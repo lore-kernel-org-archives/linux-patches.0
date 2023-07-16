@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3C38F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:34:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F172C433C8;
-	Sun, 16 Jul 2023 20:34:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE27B8F55
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:34:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00256C433C8;
+	Sun, 16 Jul 2023 20:34:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539644;
-	bh=CrDk+++5ChoP16jYx7IjFZCwTiGLvv7vVvuOPn2tUj4=;
+	s=korg; t=1689539647;
+	bh=WAR53mxGkIU82Q3+eW9wml1m3JfU1HooDPdEdoMPoQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zjGuEQrivUvEpI/HmqXgFdIDQsteZNAbKg2+sUmYn5APAgEMuCKvM0v4LCIqPPFEO
-	 QISNsG8LSRXQb6CfCtqx8tG8FseF7tzDzmsedWZ5h1WojfelHOMAQuHU7qQKyZRxPD
-	 zJAvypdeJrR8+4z5+HBMNWFgly5/RF98jGz7a0cw=
+	b=kWd6N0P3ee85ATXpieVL2QD1+8BdZlzhf+/2CwEROIOqXP7IEUqCtFcXzFZyzK4y3
+	 MP6YttI2zbW8vOVwsFEKxF3/iEtLE3Gb2pnKWcOiW0XK6h7++dEgtqtgz6BagE6zyw
+	 znSkfyMGJEKXCJUH1M+Mez1Gz5LB1CAuxcZ2Vdsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amisha Patel <amisha.patel@microchip.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Song Liu <song@kernel.org>,
+	Jiri Olsa <olsajiri@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 073/591] wifi: wilc1000: fix for absent RSN capabilities WFA testcase
-Date: Sun, 16 Jul 2023 21:43:32 +0200
-Message-ID: <20230716194925.775991548@linuxfoundation.org>
+Subject: [PATCH 6.1 082/591] bpf: Fix memleak due to fentry attach failure
+Date: Sun, 16 Jul 2023 21:43:41 +0200
+Message-ID: <20230716194926.002769910@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,53 +37,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amisha Patel <amisha.patel@microchip.com>
+From: Yafang Shao <laoar.shao@gmail.com>
 
-[ Upstream commit 9ce4bb09123e9754996e358bd808d39f5d112899 ]
+[ Upstream commit 108598c39eefbedc9882273ac0df96127a629220 ]
 
-Mandatory WFA testcase
-CT_Security_WPA2Personal_STA_RSNEBoundsVerification-AbsentRSNCap,
-performs bounds verfication on Beacon and/or Probe response frames. It
-failed and observed the reason to be absence of cipher suite and AKM
-suite in RSN information. To fix this, enable the RSN flag before extracting RSN
-capabilities.
+If it fails to attach fentry, the allocated bpf trampoline image will be
+left in the system. That can be verified by checking /proc/kallsyms.
 
-Fixes: cd21d99e595e ("wifi: wilc1000: validate pairwise and authentication suite offsets")
-Signed-off-by: Amisha Patel <amisha.patel@microchip.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230421181005.4865-1-amisha.patel@microchip.com
+This meamleak can be verified by a simple bpf program as follows:
+
+  SEC("fentry/trap_init")
+  int fentry_run()
+  {
+      return 0;
+  }
+
+It will fail to attach trap_init because this function is freed after
+kernel init, and then we can find the trampoline image is left in the
+system by checking /proc/kallsyms.
+
+  $ tail /proc/kallsyms
+  ffffffffc0613000 t bpf_trampoline_6442453466_1  [bpf]
+  ffffffffc06c3000 t bpf_trampoline_6442453466_1  [bpf]
+
+  $ bpftool btf dump file /sys/kernel/btf/vmlinux | grep "FUNC 'trap_init'"
+  [2522] FUNC 'trap_init' type_id=119 linkage=static
+
+  $ echo $((6442453466 & 0x7fffffff))
+  2522
+
+Note that there are two left bpf trampoline images, that is because the
+libbpf will fallback to raw tracepoint if -EINVAL is returned.
+
+Fixes: e21aa341785c ("bpf: Fix fexit trampoline.")
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Song Liu <song@kernel.org>
+Cc: Jiri Olsa <olsajiri@gmail.com>
+Link: https://lore.kernel.org/bpf/20230515130849.57502-2-laoar.shao@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/microchip/wilc1000/hif.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/bpf/trampoline.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/microchip/wilc1000/hif.c b/drivers/net/wireless/microchip/wilc1000/hif.c
-index 67df8221b5aeb..a1b75feec6edf 100644
---- a/drivers/net/wireless/microchip/wilc1000/hif.c
-+++ b/drivers/net/wireless/microchip/wilc1000/hif.c
-@@ -485,6 +485,9 @@ void *wilc_parse_join_bss_param(struct cfg80211_bss *bss,
- 		int rsn_ie_len = sizeof(struct element) + rsn_ie[1];
- 		int offset = 8;
+diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
+index 91d8de938a3dd..30af8f66e17b4 100644
+--- a/kernel/bpf/trampoline.c
++++ b/kernel/bpf/trampoline.c
+@@ -279,11 +279,8 @@ bpf_trampoline_get_progs(const struct bpf_trampoline *tr, int *total, bool *ip_a
+ 	return tlinks;
+ }
  
-+		param->mode_802_11i = 2;
-+		param->rsn_found = true;
+-static void __bpf_tramp_image_put_deferred(struct work_struct *work)
++static void bpf_tramp_image_free(struct bpf_tramp_image *im)
+ {
+-	struct bpf_tramp_image *im;
+-
+-	im = container_of(work, struct bpf_tramp_image, work);
+ 	bpf_image_ksym_del(&im->ksym);
+ 	bpf_jit_free_exec(im->image);
+ 	bpf_jit_uncharge_modmem(PAGE_SIZE);
+@@ -291,6 +288,14 @@ static void __bpf_tramp_image_put_deferred(struct work_struct *work)
+ 	kfree_rcu(im, rcu);
+ }
+ 
++static void __bpf_tramp_image_put_deferred(struct work_struct *work)
++{
++	struct bpf_tramp_image *im;
 +
- 		/* extract RSN capabilities */
- 		if (offset < rsn_ie_len) {
- 			/* skip over pairwise suites */
-@@ -494,11 +497,8 @@ void *wilc_parse_join_bss_param(struct cfg80211_bss *bss,
- 				/* skip over authentication suites */
- 				offset += (rsn_ie[offset] * 4) + 2;
++	im = container_of(work, struct bpf_tramp_image, work);
++	bpf_tramp_image_free(im);
++}
++
+ /* callback, fexit step 3 or fentry step 2 */
+ static void __bpf_tramp_image_put_rcu(struct rcu_head *rcu)
+ {
+@@ -465,7 +470,7 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mut
+ 					  &tr->func.model, tr->flags, tlinks,
+ 					  tr->func.addr);
+ 	if (err < 0)
+-		goto out;
++		goto out_free;
  
--				if (offset + 1 < rsn_ie_len) {
--					param->mode_802_11i = 2;
--					param->rsn_found = true;
-+				if (offset + 1 < rsn_ie_len)
- 					memcpy(param->rsn_cap, &rsn_ie[offset], 2);
--				}
- 			}
- 		}
+ 	set_memory_ro((long)im->image, 1);
+ 	set_memory_x((long)im->image, 1);
+@@ -495,7 +500,7 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mut
  	}
+ #endif
+ 	if (err)
+-		goto out;
++		goto out_free;
+ 
+ 	if (tr->cur_image)
+ 		bpf_tramp_image_put(tr->cur_image);
+@@ -506,6 +511,10 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mut
+ 		tr->flags = orig_flags;
+ 	kfree(tlinks);
+ 	return err;
++
++out_free:
++	bpf_tramp_image_free(im);
++	goto out;
+ }
+ 
+ static enum bpf_tramp_prog_type bpf_attach_type_to_tramp(struct bpf_prog *prog)
 -- 
 2.39.2
 
