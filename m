@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA248F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:48:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1D8C433C7;
-	Sun, 16 Jul 2023 20:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEFB8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:48:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21720C433C8;
+	Sun, 16 Jul 2023 20:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540498;
-	bh=PqoHqylkvKeyqihceY6ozM+TZjJhLGixMqK3mvawCsM=;
+	s=korg; t=1689540501;
+	bh=gbepNwzUiPT8KkoIjbwymTet91H+gx3Nw+PekQtK9vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VKMxR5huXETh6Kl51JermCuqtRBRH/795MNz+ppvonvmEkfgi8D/ifIC8uUcGY2l3
-	 KYBkkvM6UszH6VrffIJapBOQBbRG1/sDeguwJFIOTlDTR9uMTIWTh8kciN+Oa2shbH
-	 TRBG9fdgOGUoQpBmGFEcvGm9LHBMd8Kg0f/ESxsI=
+	b=cwqDaMTtd6MXpp+hq71HEDrO0tBLNkEICYwsdNqqcWm3Pmb4ClhR3HW9ceDzwevGw
+	 HuKiO1pjJz0SmKbRHHT1u68dViwyUYxGEmV3Nr8JrZIN/VBzpGJfSDLb43yAGR1Bsf
+	 2pemOwzllMv0w+X7gjJrHm1+AtPq4kL0VT7qpncc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Han <hanqi@vivo.com>,
-	Yangtao Li <frank.li@vivo.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Rob Landley <rob@landley.net>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 385/591] f2fs: do not allow to defragment files have FI_COMPRESS_RELEASED
-Date: Sun, 16 Jul 2023 21:48:44 +0200
-Message-ID: <20230716194933.881210856@linuxfoundation.org>
+Subject: [PATCH 6.1 386/591] sh: j2: Use ioremap() to translate device tree address into kernel memory
+Date: Sun, 16 Jul 2023 21:48:45 +0200
+Message-ID: <20230716194933.906265458@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,47 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yangtao Li <frank.li@vivo.com>
+From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 
-[ Upstream commit 7cd2e5f75b86a1befa99834f3ed1d735eeff69e6 ]
+[ Upstream commit bc9d1f0cecd2407cfb2364a7d4be2f52d1d46a9d ]
 
-If a file has FI_COMPRESS_RELEASED, all writes for it should not be
-allowed.
+Addresses the following warning when building j2_defconfig:
 
-Fixes: 5fdb322ff2c2 ("f2fs: add F2FS_IOC_DECOMPRESS_FILE and F2FS_IOC_COMPRESS_FILE")
-Signed-off-by: Qi Han <hanqi@vivo.com>
-Signed-off-by: Yangtao Li <frank.li@vivo.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+arch/sh/kernel/cpu/sh2/probe.c: In function 'scan_cache':
+arch/sh/kernel/cpu/sh2/probe.c:24:16: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+   24 |  j2_ccr_base = (u32 __iomem *)of_flat_dt_translate_address(node);
+      |
+
+Fixes: 5a846abad07f ("sh: add support for J-Core J2 processor")
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Rob Landley <rob@landley.net>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/r/20230503125746.331835-1-glaubitz@physik.fu-berlin.de
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/sh/kernel/cpu/sh2/probe.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index dbad2db68f1bc..370c40858b42f 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -2588,6 +2588,11 @@ static int f2fs_defragment_range(struct f2fs_sb_info *sbi,
+diff --git a/arch/sh/kernel/cpu/sh2/probe.c b/arch/sh/kernel/cpu/sh2/probe.c
+index d342ea08843f6..70a07f4f2142f 100644
+--- a/arch/sh/kernel/cpu/sh2/probe.c
++++ b/arch/sh/kernel/cpu/sh2/probe.c
+@@ -21,7 +21,7 @@ static int __init scan_cache(unsigned long node, const char *uname,
+ 	if (!of_flat_dt_is_compatible(node, "jcore,cache"))
+ 		return 0;
  
- 	inode_lock(inode);
+-	j2_ccr_base = (u32 __iomem *)of_flat_dt_translate_address(node);
++	j2_ccr_base = ioremap(of_flat_dt_translate_address(node), 4);
  
-+	if (is_inode_flag_set(inode, FI_COMPRESS_RELEASED)) {
-+		err = -EINVAL;
-+		goto unlock_out;
-+	}
-+
- 	/* if in-place-update policy is enabled, don't waste time here */
- 	set_inode_flag(inode, FI_OPU_WRITE);
- 	if (f2fs_should_update_inplace(inode, NULL)) {
-@@ -2712,6 +2717,7 @@ static int f2fs_defragment_range(struct f2fs_sb_info *sbi,
- 	clear_inode_flag(inode, FI_SKIP_WRITES);
- out:
- 	clear_inode_flag(inode, FI_OPU_WRITE);
-+unlock_out:
- 	inode_unlock(inode);
- 	if (!err)
- 		range->len = (u64)total << PAGE_SHIFT;
+ 	return 1;
+ }
 -- 
 2.39.2
 
