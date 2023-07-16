@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9603F8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:45:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F1AC433C7;
-	Sun, 16 Jul 2023 20:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8228F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:45:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E161DC433C8;
+	Sun, 16 Jul 2023 20:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540302;
-	bh=NGvdTmxaNyf5Fp6TrIthmgVZfGQ63NyS2Cte8J9IvJI=;
+	s=korg; t=1689540305;
+	bh=r6c/BdVJB/+BwY1ChJ00Kem47Qvnf0+VTDcSPqCtIHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AnOz9ZssWiV9zEDR+nfHWF+omr3kjA21WffA3RXfC9jFgkckg7I5ymzx4ZSie3Yy2
-	 TaltLtVms1fFDaU7hhcKufGJrLcbV3MpCfXyr5JVZJchJ9cjVZjgO6rCYrEmNma+vS
-	 hdk6RMoSRC3p6CijEyPfABdnwR82C6uGHXju7lDw=
+	b=Bqp7oSJD28oUQqt45gtQDFI/ce8hf+YpH6Zmcw7wPRGEa/22Jdjt5mZ0zCBEBtbxZ
+	 uHilRAb1AZ1VSini8i5m6NH+4vhwi/THY76GxfcvpEd+MBo6PFu9FgeTWerkoJ3dsL
+	 ueNlk5E85ogzCyodWOPOQpgy9flFVJruQetaE5GY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinhong Zhu <jinhongzhu@hust.edu.cn>,
-	Dan Carpenter <error27@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 287/591] scsi: qedf: Fix NULL dereference in error handling
-Date: Sun, 16 Jul 2023 21:47:06 +0200
-Message-ID: <20230716194931.318052907@linuxfoundation.org>
+Subject: [PATCH 6.1 288/591] pinctrl: bcm2835: Handle gpiochip_add_pin_range() errors
+Date: Sun, 16 Jul 2023 21:47:07 +0200
+Message-ID: <20230716194931.344264292@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,45 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jinhong Zhu <jinhongzhu@hust.edu.cn>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit f025312b089474a54e4859f3453771314d9e3d4f ]
+[ Upstream commit cdf7e616120065007687fe1df0412154f259daec ]
 
-Smatch reported:
+gpiochip_add_pin_range() can fail, so better return its error code than
+a hard coded '0'.
 
-drivers/scsi/qedf/qedf_main.c:3056 qedf_alloc_global_queues()
-warn: missing unwind goto?
-
-At this point in the function, nothing has been allocated so we can return
-directly. In particular the "qedf->global_queues" have not been allocated
-so calling qedf_free_global_queues() will lead to a NULL dereference when
-we check if (!gl[i]) and "gl" is NULL.
-
-Fixes: 61d8658b4a43 ("scsi: qedf: Add QLogic FastLinQ offload FCoE driver framework.")
-Signed-off-by: Jinhong Zhu <jinhongzhu@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230502140022.2852-1-jinhongzhu@hust.edu.cn
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: d2b67744fd99 ("pinctrl: bcm2835: implement hook for missing gpio-ranges")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/98c3b5890bb72415145c9fe4e1d974711edae376.1681681402.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qedf/qedf_main.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/pinctrl/bcm/pinctrl-bcm2835.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/qedf/qedf_main.c b/drivers/scsi/qedf/qedf_main.c
-index e045c6e250902..ecff2ec83a002 100644
---- a/drivers/scsi/qedf/qedf_main.c
-+++ b/drivers/scsi/qedf/qedf_main.c
-@@ -3046,9 +3046,8 @@ static int qedf_alloc_global_queues(struct qedf_ctx *qedf)
- 	 * addresses of our queues
- 	 */
- 	if (!qedf->p_cpuq) {
--		status = -EINVAL;
- 		QEDF_ERR(&qedf->dbg_ctx, "p_cpuq is NULL.\n");
--		goto mem_alloc_failure;
-+		return -EINVAL;
- 	}
+diff --git a/drivers/pinctrl/bcm/pinctrl-bcm2835.c b/drivers/pinctrl/bcm/pinctrl-bcm2835.c
+index 0f1ab0829ffe6..fe8da3ccb0b5a 100644
+--- a/drivers/pinctrl/bcm/pinctrl-bcm2835.c
++++ b/drivers/pinctrl/bcm/pinctrl-bcm2835.c
+@@ -376,10 +376,8 @@ static int bcm2835_of_gpio_ranges_fallback(struct gpio_chip *gc,
+ 	if (!pctldev)
+ 		return 0;
  
- 	qedf->global_queues = kzalloc((sizeof(struct global_queue *)
+-	gpiochip_add_pin_range(gc, pinctrl_dev_get_devname(pctldev), 0, 0,
+-			       gc->ngpio);
+-
+-	return 0;
++	return gpiochip_add_pin_range(gc, pinctrl_dev_get_devname(pctldev), 0, 0,
++				      gc->ngpio);
+ }
+ 
+ static const struct gpio_chip bcm2835_gpio_chip = {
 -- 
 2.39.2
 
