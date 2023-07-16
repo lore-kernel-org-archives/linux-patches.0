@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765DD8F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:33:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D9FC433C7;
-	Sun, 16 Jul 2023 20:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FFF8F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:33:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB2C5C433C8;
+	Sun, 16 Jul 2023 20:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539619;
-	bh=ra0ecAm9GDyk6lKFoXIankzZKDENIX6CFYXplPwUS7U=;
+	s=korg; t=1689539622;
+	bh=XZxRv0Z4vEuORBLah3djlAkLJdsyBjNhm0Ao32rLkDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tx+kBy1+i026x4MJaNQlB/5jvAajQH4xK7BNHXvIkIbD1b6Ykpv5dMpHxvb8n1xbO
-	 nbCB2y1jddhAG2JXi5nDiS4b4+6rEd2wG9ntm7DeicU/5GcY23AegJ4p/1HU84bru6
-	 yjEnqLyb7g/dRp3N3cUe2I22cbNb3YmxLg1g6AnM=
+	b=XiMPsHngTwsyQThQ9cY+quOGhCa78OfnaLXuuuQT7zxuvpyIxUzXXfRD/emxzIIBe
+	 dObVKGO6i6wHb8MQNh+7fZuPamXoKEENVGbKZKlos9koA9C4PfsNLnmmGKVrAR7xqG
+	 USTujqyc6jLpFU/Mrst6Xr5aDCrI3XLrBMokq7V8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengcheng Yang <yangpc@wangsu.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 071/591] samples/bpf: Fix buffer overflow in tcp_basertt
-Date: Sun, 16 Jul 2023 21:43:30 +0200
-Message-ID: <20230716194925.721758181@linuxfoundation.org>
+Subject: [PATCH 6.1 045/591] x86/tdx: Fix race between set_memory_encrypted() and load_unaligned_zeropad()
+Date: Sun, 16 Jul 2023 21:43:04 +0200
+Message-ID: <20230716194925.048326642@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,34 +36,139 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengcheng Yang <yangpc@wangsu.com>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-[ Upstream commit f4dea9689c5fea3d07170c2cb0703e216f1a0922 ]
+[ Upstream commit 195edce08b63d293377f615f4f7f086715d2d212 ]
 
-Using sizeof(nv) or strlen(nv)+1 is correct.
+tl;dr: There is a race in the TDX private<=>shared conversion code
+       which could kill the TDX guest.  Fix it by changing conversion
+       ordering to eliminate the window.
 
-Fixes: c890063e4404 ("bpf: sample BPF_SOCKET_OPS_BASE_RTT program")
-Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
-Link: https://lore.kernel.org/r/1683276658-2860-1-git-send-email-yangpc@wangsu.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+TDX hardware maintains metadata to track which pages are private and
+shared. Additionally, TDX guests use the guest x86 page tables to
+specify whether a given mapping is intended to be private or shared.
+Bad things happen when the intent and metadata do not match.
+
+So there are two thing in play:
+ 1. "the page" -- the physical TDX page metadata
+ 2. "the mapping" -- the guest-controlled x86 page table intent
+
+For instance, an unrecoverable exit to VMM occurs if a guest touches a
+private mapping that points to a shared physical page.
+
+In summary:
+	* Private mapping => Private Page == OK (obviously)
+	* Shared mapping  => Shared Page  == OK (obviously)
+	* Private mapping => Shared Page  == BIG BOOM!
+	* Shared mapping  => Private Page == OK-ish
+	  (It will read generate a recoverable #VE via handle_mmio())
+
+Enter load_unaligned_zeropad(). It can touch memory that is adjacent but
+otherwise unrelated to the memory it needs to touch. It will cause one
+of those unrecoverable exits (aka. BIG BOOM) if it blunders into a
+shared mapping pointing to a private page.
+
+This is a problem when __set_memory_enc_pgtable() converts pages from
+shared to private. It first changes the mapping and second modifies
+the TDX page metadata.  It's moving from:
+
+        * Shared mapping  => Shared Page  == OK
+to:
+        * Private mapping => Shared Page  == BIG BOOM!
+
+This means that there is a window with a shared mapping pointing to a
+private page where load_unaligned_zeropad() can strike.
+
+Add a TDX handler for guest.enc_status_change_prepare(). This converts
+the page from shared to private *before* the page becomes private.  This
+ensures that there is never a private mapping to a shared page.
+
+Leave a guest.enc_status_change_finish() in place but only use it for
+private=>shared conversions.  This will delay updating the TDX metadata
+marking the page private until *after* the mapping matches the metadata.
+This also ensures that there is never a private mapping to a shared page.
+
+[ dhansen: rewrite changelog ]
+
+Fixes: 7dbde7631629 ("x86/mm/cpa: Add support for TDX shared memory")
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Link: https://lore.kernel.org/all/20230606095622.1939-3-kirill.shutemov%40linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/bpf/tcp_basertt_kern.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/coco/tdx/tdx.c | 51 ++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 48 insertions(+), 3 deletions(-)
 
-diff --git a/samples/bpf/tcp_basertt_kern.c b/samples/bpf/tcp_basertt_kern.c
-index 8dfe09a92feca..822b0742b8154 100644
---- a/samples/bpf/tcp_basertt_kern.c
-+++ b/samples/bpf/tcp_basertt_kern.c
-@@ -47,7 +47,7 @@ int bpf_basertt(struct bpf_sock_ops *skops)
- 		case BPF_SOCK_OPS_BASE_RTT:
- 			n = bpf_getsockopt(skops, SOL_TCP, TCP_CONGESTION,
- 					   cong, sizeof(cong));
--			if (!n && !__builtin_memcmp(cong, nv, sizeof(nv)+1)) {
-+			if (!n && !__builtin_memcmp(cong, nv, sizeof(nv))) {
- 				/* Set base_rtt to 80us */
- 				rv = 80;
- 			} else if (n) {
+diff --git a/arch/x86/coco/tdx/tdx.c b/arch/x86/coco/tdx/tdx.c
+index b8998cf0508a6..8a1d48b8c2a3e 100644
+--- a/arch/x86/coco/tdx/tdx.c
++++ b/arch/x86/coco/tdx/tdx.c
+@@ -756,6 +756,30 @@ static bool tdx_enc_status_changed(unsigned long vaddr, int numpages, bool enc)
+ 	return true;
+ }
+ 
++static bool tdx_enc_status_change_prepare(unsigned long vaddr, int numpages,
++					  bool enc)
++{
++	/*
++	 * Only handle shared->private conversion here.
++	 * See the comment in tdx_early_init().
++	 */
++	if (enc)
++		return tdx_enc_status_changed(vaddr, numpages, enc);
++	return true;
++}
++
++static bool tdx_enc_status_change_finish(unsigned long vaddr, int numpages,
++					 bool enc)
++{
++	/*
++	 * Only handle private->shared conversion here.
++	 * See the comment in tdx_early_init().
++	 */
++	if (!enc)
++		return tdx_enc_status_changed(vaddr, numpages, enc);
++	return true;
++}
++
+ void __init tdx_early_init(void)
+ {
+ 	u64 cc_mask;
+@@ -780,9 +804,30 @@ void __init tdx_early_init(void)
+ 	 */
+ 	physical_mask &= cc_mask - 1;
+ 
+-	x86_platform.guest.enc_cache_flush_required = tdx_cache_flush_required;
+-	x86_platform.guest.enc_tlb_flush_required   = tdx_tlb_flush_required;
+-	x86_platform.guest.enc_status_change_finish = tdx_enc_status_changed;
++	/*
++	 * The kernel mapping should match the TDX metadata for the page.
++	 * load_unaligned_zeropad() can touch memory *adjacent* to that which is
++	 * owned by the caller and can catch even _momentary_ mismatches.  Bad
++	 * things happen on mismatch:
++	 *
++	 *   - Private mapping => Shared Page  == Guest shutdown
++         *   - Shared mapping  => Private Page == Recoverable #VE
++	 *
++	 * guest.enc_status_change_prepare() converts the page from
++	 * shared=>private before the mapping becomes private.
++	 *
++	 * guest.enc_status_change_finish() converts the page from
++	 * private=>shared after the mapping becomes private.
++	 *
++	 * In both cases there is a temporary shared mapping to a private page,
++	 * which can result in a #VE.  But, there is never a private mapping to
++	 * a shared page.
++	 */
++	x86_platform.guest.enc_status_change_prepare = tdx_enc_status_change_prepare;
++	x86_platform.guest.enc_status_change_finish  = tdx_enc_status_change_finish;
++
++	x86_platform.guest.enc_cache_flush_required  = tdx_cache_flush_required;
++	x86_platform.guest.enc_tlb_flush_required    = tdx_tlb_flush_required;
+ 
+ 	pr_info("Guest detected\n");
+ }
 -- 
 2.39.2
 
