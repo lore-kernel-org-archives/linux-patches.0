@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD1A8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:55:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7274FC433C8;
-	Sun, 16 Jul 2023 20:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9D78F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:55:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 414BEC433C7;
+	Sun, 16 Jul 2023 20:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540915;
-	bh=3l40eiHJj/NNMHQm6yEZpJZ2YspLPD7oLd4/khaIQdU=;
+	s=korg; t=1689540918;
+	bh=E0GuzGEfM6pI5WVJ40Y+SbSHRs1OzO2IVWHt2HE58Bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GumDwm6+8+nazfuc9q/ZPk7i3JGAnIjjMH0NImNhpb3p1gKyppVrqFlv+ykHmjeII
-	 Zl+uFQhQjxjk1UE1+4hlvDw4SRiGC2vrfguHjyeLov+g+fYefLHlshQUgZ6HgXhXcN
-	 d6knw68fPvGCvBk0rhp8TqRIBPRUFDFfkA3jZGmA=
+	b=EJKEdryYcYSe6hR/DtewjGamdFSDwpuea96kOpfkY/WMaFaywnDUjRnMxBqgSNDd3
+	 D0aDRsHNIyA8IqDV7pwD/GIF2q60ME8lZlQYCA9lNkke+hZ76cSsVYGOVOwhT4dOli
+	 1OwJ5bCrJUSTUN4F3OrrZSNI+P/j5dQd+GKTjj2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Alexander Wetzel <alexander@wetzel-home.de>,
-	Kalle Valo <quic_kvalo@quicinc.com>
-Subject: [PATCH 6.1 534/591] wifi: ath10k: Serialize wake_tx_queue ops
-Date: Sun, 16 Jul 2023 21:51:13 +0200
-Message-ID: <20230716194937.683811653@linuxfoundation.org>
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	Juan Martinez <juan.martinez@amd.com>,
+	Leon Yen <leon.yen@mediatek.com>,
+	Quan Zhou <quan.zhou@mediatek.com>,
+	Deren Wu <deren.wu@mediatek.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 535/591] wifi: mt76: mt7921e: fix init command fail with enabled device
+Date: Sun, 16 Jul 2023 21:51:14 +0200
+Message-ID: <20230716194937.708911663@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,86 +38,123 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Wetzel <alexander@wetzel-home.de>
+From: Quan Zhou <quan.zhou@mediatek.com>
 
-commit b719ebc37a1eacd4fd4f1264f731b016e5ec0c6e upstream.
+commit 525c469e5de9bf7e53574396196e80fc716ac9eb upstream.
 
-Serialize the ath10k implementation of the wake_tx_queue ops.
-ath10k_mac_op_wake_tx_queue() must not run concurrent since it's using
-ieee80211_txq_schedule_start().
+For some cases as below, we may encounter the unpreditable chip stats
+in driver probe()
+* The system reboot flow do not work properly, such as kernel oops while
+  rebooting, and then the driver do not go back to default status at
+  this moment.
+* Similar to the flow above. If the device was enabled in BIOS or UEFI,
+  the system may switch to Linux without driver fully shutdown.
 
-The intend of this patch is to sort out an issue discovered in the discussion
-referred to by the Link tag.
+To avoid the problem, force push the device back to default in probe()
+* mt7921e_mcu_fw_pmctrl() : return control privilege to chip side.
+* mt7921_wfsys_reset()    : cleanup chip config before resource init.
 
-I can't test it with real hardware and thus just implemented the per-ac queue
-lock Felix suggested. One obvious alternative to the per-ac lock would be to
-bring back the txqs_lock commit bb2edb733586 ("ath10k: migrate to mac80211 txq
-scheduling") dropped.
+Error log
+[59007.600714] mt7921e 0000:02:00.0: ASIC revision: 79220010
+[59010.889773] mt7921e 0000:02:00.0: Message 00000010 (seq 1) timeout
+[59010.889786] mt7921e 0000:02:00.0: Failed to get patch semaphore
+[59014.217839] mt7921e 0000:02:00.0: Message 00000010 (seq 2) timeout
+[59014.217852] mt7921e 0000:02:00.0: Failed to get patch semaphore
+[59017.545880] mt7921e 0000:02:00.0: Message 00000010 (seq 3) timeout
+[59017.545893] mt7921e 0000:02:00.0: Failed to get patch semaphore
+[59020.874086] mt7921e 0000:02:00.0: Message 00000010 (seq 4) timeout
+[59020.874099] mt7921e 0000:02:00.0: Failed to get patch semaphore
+[59024.202019] mt7921e 0000:02:00.0: Message 00000010 (seq 5) timeout
+[59024.202033] mt7921e 0000:02:00.0: Failed to get patch semaphore
+[59027.530082] mt7921e 0000:02:00.0: Message 00000010 (seq 6) timeout
+[59027.530096] mt7921e 0000:02:00.0: Failed to get patch semaphore
+[59030.857888] mt7921e 0000:02:00.0: Message 00000010 (seq 7) timeout
+[59030.857904] mt7921e 0000:02:00.0: Failed to get patch semaphore
+[59034.185946] mt7921e 0000:02:00.0: Message 00000010 (seq 8) timeout
+[59034.185961] mt7921e 0000:02:00.0: Failed to get patch semaphore
+[59037.514249] mt7921e 0000:02:00.0: Message 00000010 (seq 9) timeout
+[59037.514262] mt7921e 0000:02:00.0: Failed to get patch semaphore
+[59040.842362] mt7921e 0000:02:00.0: Message 00000010 (seq 10) timeout
+[59040.842375] mt7921e 0000:02:00.0: Failed to get patch semaphore
+[59040.923845] mt7921e 0000:02:00.0: hardware init failed
 
-Fixes: bb2edb733586 ("ath10k: migrate to mac80211 txq scheduling")
-Reported-by: Felix Fietkau <nbd@nbd.name>
-Link: https://lore.kernel.org/r/519b5bb9-8899-ae7c-4eff-f3116cdfdb56@nbd.name
-CC: <stable@vger.kernel.org>
-Signed-off-by: Alexander Wetzel <alexander@wetzel-home.de>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230323165527.156414-1-alexander@wetzel-home.de
+Cc: stable@vger.kernel.org
+Fixes: 5c14a5f944b9 ("mt76: mt7921: introduce mt7921e support")
+Tested-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Tested-by: Juan Martinez <juan.martinez@amd.com>
+Co-developed-by: Leon Yen <leon.yen@mediatek.com>
+Signed-off-by: Leon Yen <leon.yen@mediatek.com>
+Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Message-ID: <39fcb7cee08d4ab940d38d82f21897483212483f.1688569385.git.deren.wu@mediatek.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath10k/core.c |    3 +++
- drivers/net/wireless/ath/ath10k/core.h |    3 +++
- drivers/net/wireless/ath/ath10k/mac.c  |    6 ++++--
- 3 files changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/dma.c |    4 ----
+ drivers/net/wireless/mediatek/mt76/mt7921/mcu.c |    8 --------
+ drivers/net/wireless/mediatek/mt76/mt7921/pci.c |    8 ++++++++
+ 3 files changed, 8 insertions(+), 12 deletions(-)
 
---- a/drivers/net/wireless/ath/ath10k/core.c
-+++ b/drivers/net/wireless/ath/ath10k/core.c
-@@ -3634,6 +3634,9 @@ struct ath10k *ath10k_core_create(size_t
- 	mutex_init(&ar->dump_mutex);
- 	spin_lock_init(&ar->data_lock);
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/dma.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/dma.c
+@@ -231,10 +231,6 @@ int mt7921_dma_init(struct mt7921_dev *d
+ 	if (ret)
+ 		return ret;
  
-+	for (int ac = 0; ac < IEEE80211_NUM_ACS; ac++)
-+		spin_lock_init(&ar->queue_lock[ac]);
-+
- 	INIT_LIST_HEAD(&ar->peers);
- 	init_waitqueue_head(&ar->peer_mapping_wq);
- 	init_waitqueue_head(&ar->htt.empty_tx_wq);
---- a/drivers/net/wireless/ath/ath10k/core.h
-+++ b/drivers/net/wireless/ath/ath10k/core.h
-@@ -1170,6 +1170,9 @@ struct ath10k {
- 	/* protects shared structure data */
- 	spinlock_t data_lock;
- 
-+	/* serialize wake_tx_queue calls per ac */
-+	spinlock_t queue_lock[IEEE80211_NUM_ACS];
-+
- 	struct list_head arvifs;
- 	struct list_head peers;
- 	struct ath10k_peer *peer_map[ATH10K_MAX_NUM_PEER_IDS];
---- a/drivers/net/wireless/ath/ath10k/mac.c
-+++ b/drivers/net/wireless/ath/ath10k/mac.c
-@@ -4732,13 +4732,14 @@ static void ath10k_mac_op_wake_tx_queue(
+-	ret = mt7921_wfsys_reset(dev);
+-	if (ret)
+-		return ret;
+-
+ 	/* init tx queue */
+ 	ret = mt76_connac_init_tx_queues(dev->phy.mt76, MT7921_TXQ_BAND0,
+ 					 MT7921_TX_RING_SIZE,
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+@@ -449,12 +449,6 @@ static int mt7921_load_firmware(struct m
  {
- 	struct ath10k *ar = hw->priv;
  	int ret;
--	u8 ac;
-+	u8 ac = txq->ac;
  
- 	ath10k_htt_tx_txq_update(hw, txq);
- 	if (ar->htt.tx_q_state.mode != HTT_TX_MODE_SWITCH_PUSH)
- 		return;
+-	ret = mt76_get_field(dev, MT_CONN_ON_MISC, MT_TOP_MISC2_FW_N9_RDY);
+-	if (ret && mt76_is_mmio(&dev->mt76)) {
+-		dev_dbg(dev->mt76.dev, "Firmware is already download\n");
+-		goto fw_loaded;
+-	}
+-
+ 	ret = mt76_connac2_load_patch(&dev->mt76, mt7921_patch_name(dev));
+ 	if (ret)
+ 		return ret;
+@@ -477,8 +471,6 @@ static int mt7921_load_firmware(struct m
+ 		return -EIO;
+ 	}
  
--	ac = txq->ac;
-+	spin_lock_bh(&ar->queue_lock[ac]);
+-fw_loaded:
+-
+ #ifdef CONFIG_PM
+ 	dev->mt76.hw->wiphy->wowlan = &mt76_connac_wowlan_support;
+ #endif /* CONFIG_PM */
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
+@@ -316,6 +316,10 @@ static int mt7921_pci_probe(struct pci_d
+ 	bus_ops->rmw = mt7921_rmw;
+ 	dev->mt76.bus = bus_ops;
+ 
++	ret = mt7921e_mcu_fw_pmctrl(dev);
++	if (ret)
++		goto err_free_dev;
 +
- 	ieee80211_txq_schedule_start(hw, ac);
- 	txq = ieee80211_next_txq(hw, ac);
- 	if (!txq)
-@@ -4753,6 +4754,7 @@ static void ath10k_mac_op_wake_tx_queue(
- 	ath10k_htt_tx_txq_update(hw, txq);
- out:
- 	ieee80211_txq_schedule_end(hw, ac);
-+	spin_unlock_bh(&ar->queue_lock[ac]);
- }
+ 	ret = __mt7921e_mcu_drv_pmctrl(dev);
+ 	if (ret)
+ 		goto err_free_dev;
+@@ -324,6 +328,10 @@ static int mt7921_pci_probe(struct pci_d
+ 		    (mt7921_l1_rr(dev, MT_HW_REV) & 0xff);
+ 	dev_info(mdev->dev, "ASIC revision: %04x\n", mdev->rev);
  
- /* Must not be called with conf_mutex held as workers can use that also. */
++	ret = mt7921_wfsys_reset(dev);
++	if (ret)
++		goto err_free_dev;
++
+ 	mt76_wr(dev, MT_WFDMA0_HOST_INT_ENA, 0);
+ 
+ 	mt76_wr(dev, MT_PCIE_MAC_INT_ENABLE, 0xff);
 
 
