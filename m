@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328EC8F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:58:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E30C433C8;
-	Sun, 16 Jul 2023 19:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23C78F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:58:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749F2C433C7;
+	Sun, 16 Jul 2023 19:58:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537502;
-	bh=VHsxXXCr2Qjp99LS03mMQsWyWU8tiXQthxzWivfPO1o=;
+	s=korg; t=1689537504;
+	bh=RDxd5pRMeCnw5JaVFr6qETN7PBB5c5j/W4mG5vJOfLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eNtA1Uch67A3W7h6cJhGD/bzNLGFb7q6XGExgicUi14VFVtgPCnL0w2NBrJ7Kos60
-	 XInbA4ZesLQFer9kigFvWSeHJnmXjEven4GO1LIawHvx4oiklcvWqUU64XqgwEjuUg
-	 gO/ERKhjHwjzr8+wu2LQ/dUxxdj5iNlEjjMhUpPA=
+	b=Zb886fG1HtOQZ2qeMDwnuKarJN4B2XiLaNC6dqm4B/xvVCIsDBpyhjZYUstN21DG/
+	 05zGpVtJeBTC6MYFXymdrcKQbzD1UKJB0gweijGyU6uCSa3AVTGru0rPqZ8ErL3C6O
+	 73ioselI8VbTLhclBrFG4MXoWtviY1B1Cpu5K5bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-	Michael Kelley <mikelley@microsoft.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 091/800] x86/xen: Set MTRR state when running as Xen PV initial domain
-Date: Sun, 16 Jul 2023 21:39:04 +0200
-Message-ID: <20230716194951.224366586@linuxfoundation.org>
+Subject: [PATCH 6.4 082/800] rcu: Make rcu_cpu_starting() rely on interrupts being disabled
+Date: Sun, 16 Jul 2023 21:38:55 +0200
+Message-ID: <20230716194951.013491264@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,121 +34,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juergen Gross <jgross@suse.com>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit a153f254e5cdf8fa3a1df90a6ffed3063fede154 ]
+[ Upstream commit 15d44dfa40305da1648de4bf001e91cc63148725 ]
 
-When running as Xen PV initial domain (aka dom0), MTRRs are disabled
-by the hypervisor, but the system should nevertheless use correct
-cache memory types. This has always kind of worked, as disabled MTRRs
-resulted in disabled PAT, too, so that the kernel avoided code paths
-resulting in inconsistencies. This bypassed all of the sanity checks
-the kernel is doing with enabled MTRRs in order to avoid memory
-mappings with conflicting memory types.
+Currently, rcu_cpu_starting() is written so that it might be invoked
+with interrupts enabled.  However, it is always called when interrupts
+are disabled, either by rcu_init(), notify_cpu_starting(), or from a
+call point prior to the call to notify_cpu_starting().
 
-This has been changed recently, leading to PAT being accepted to be
-enabled, while MTRRs stayed disabled. The result is that
-mtrr_type_lookup() no longer is accepting all memory type requests,
-but started to return WB even if UC- was requested. This led to
-driver failures during initialization of some devices.
+But why bother requiring that interrupts be disabled?  The purpose is
+to allow the rcu_data structure's ->beenonline flag to be set after all
+early processing has completed for the incoming CPU, thus allowing this
+flag to be used to determine when workqueues have been set up for the
+incoming CPU, while still allowing this flag to be used as a diagnostic
+within rcu_core().
 
-In reality MTRRs are still in effect, but they are under complete
-control of the Xen hypervisor. It is possible, however, to retrieve
-the MTRR settings from the hypervisor.
+This commit therefore makes rcu_cpu_starting() rely on interrupts being
+disabled.
 
-In order to fix those problems, overwrite the MTRR state via
-mtrr_overwrite_state() with the MTRR data from the hypervisor, if the
-system is running as a Xen dom0.
-
-Fixes: 72cbc8f04fe2 ("x86/PAT: Have pat_enabled() properly reflect state when running on Xen")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Boris Ostrovsky <boris.ostrovsky@oracle.com>
-Tested-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/20230502120931.20719-6-jgross@suse.com
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Stable-dep-of: 401b0de3ae4f ("rcu-tasks: Stop rcu_tasks_invoke_cbs() from using never-onlined CPUs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/enlighten_pv.c | 52 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 52 insertions(+)
+ kernel/rcu/tree.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/xen/enlighten_pv.c b/arch/x86/xen/enlighten_pv.c
-index 093b78c8bbec0..8732b85d56505 100644
---- a/arch/x86/xen/enlighten_pv.c
-+++ b/arch/x86/xen/enlighten_pv.c
-@@ -68,6 +68,7 @@
- #include <asm/reboot.h>
- #include <asm/hypervisor.h>
- #include <asm/mach_traps.h>
-+#include <asm/mtrr.h>
- #include <asm/mwait.h>
- #include <asm/pci_x86.h>
- #include <asm/cpu.h>
-@@ -119,6 +120,54 @@ static int __init parse_xen_msr_safe(char *str)
- }
- early_param("xen_msr_safe", parse_xen_msr_safe);
- 
-+/* Get MTRR settings from Xen and put them into mtrr_state. */
-+static void __init xen_set_mtrr_data(void)
-+{
-+#ifdef CONFIG_MTRR
-+	struct xen_platform_op op = {
-+		.cmd = XENPF_read_memtype,
-+		.interface_version = XENPF_INTERFACE_VERSION,
-+	};
-+	unsigned int reg;
-+	unsigned long mask;
-+	uint32_t eax, width;
-+	static struct mtrr_var_range var[MTRR_MAX_VAR_RANGES] __initdata;
-+
-+	/* Get physical address width (only 64-bit cpus supported). */
-+	width = 36;
-+	eax = cpuid_eax(0x80000000);
-+	if ((eax >> 16) == 0x8000 && eax >= 0x80000008) {
-+		eax = cpuid_eax(0x80000008);
-+		width = eax & 0xff;
-+	}
-+
-+	for (reg = 0; reg < MTRR_MAX_VAR_RANGES; reg++) {
-+		op.u.read_memtype.reg = reg;
-+		if (HYPERVISOR_platform_op(&op))
-+			break;
-+
-+		/*
-+		 * Only called in dom0, which has all RAM PFNs mapped at
-+		 * RAM MFNs, and all PCI space etc. is identity mapped.
-+		 * This means we can treat MFN == PFN regarding MTRR settings.
-+		 */
-+		var[reg].base_lo = op.u.read_memtype.type;
-+		var[reg].base_lo |= op.u.read_memtype.mfn << PAGE_SHIFT;
-+		var[reg].base_hi = op.u.read_memtype.mfn >> (32 - PAGE_SHIFT);
-+		mask = ~((op.u.read_memtype.nr_mfns << PAGE_SHIFT) - 1);
-+		mask &= (1UL << width) - 1;
-+		if (mask)
-+			mask |= MTRR_PHYSMASK_V;
-+		var[reg].mask_lo = mask;
-+		var[reg].mask_hi = mask >> 32;
-+	}
-+
-+	/* Only overwrite MTRR state if any MTRR could be got from Xen. */
-+	if (reg)
-+		mtrr_overwrite_state(var, reg, MTRR_TYPE_UNCACHABLE);
-+#endif
-+}
-+
- static void __init xen_pv_init_platform(void)
+diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
+index f52ff72410416..d5c9afa8adfbd 100644
+--- a/kernel/rcu/tree.c
++++ b/kernel/rcu/tree.c
+@@ -4368,15 +4368,16 @@ int rcutree_offline_cpu(unsigned int cpu)
+  * Note that this function is special in that it is invoked directly
+  * from the incoming CPU rather than from the cpuhp_step mechanism.
+  * This is because this function must be invoked at a precise location.
++ * This incoming CPU must not have enabled interrupts yet.
+  */
+ void rcu_cpu_starting(unsigned int cpu)
  {
- 	/* PV guests can't operate virtio devices without grants. */
-@@ -135,6 +184,9 @@ static void __init xen_pv_init_platform(void)
+-	unsigned long flags;
+ 	unsigned long mask;
+ 	struct rcu_data *rdp;
+ 	struct rcu_node *rnp;
+ 	bool newcpu;
  
- 	/* pvclock is in shared info area */
- 	xen_init_time_ops();
-+
-+	if (xen_initial_domain())
-+		xen_set_mtrr_data();
++	lockdep_assert_irqs_disabled();
+ 	rdp = per_cpu_ptr(&rcu_data, cpu);
+ 	if (rdp->cpu_started)
+ 		return;
+@@ -4384,7 +4385,6 @@ void rcu_cpu_starting(unsigned int cpu)
+ 
+ 	rnp = rdp->mynode;
+ 	mask = rdp->grpmask;
+-	local_irq_save(flags);
+ 	arch_spin_lock(&rcu_state.ofl_lock);
+ 	rcu_dynticks_eqs_online();
+ 	raw_spin_lock(&rcu_state.barrier_lock);
+@@ -4403,17 +4403,16 @@ void rcu_cpu_starting(unsigned int cpu)
+ 	/* An incoming CPU should never be blocking a grace period. */
+ 	if (WARN_ON_ONCE(rnp->qsmask & mask)) { /* RCU waiting on incoming CPU? */
+ 		/* rcu_report_qs_rnp() *really* wants some flags to restore */
+-		unsigned long flags2;
++		unsigned long flags;
+ 
+-		local_irq_save(flags2);
++		local_irq_save(flags);
+ 		rcu_disable_urgency_upon_qs(rdp);
+ 		/* Report QS -after- changing ->qsmaskinitnext! */
+-		rcu_report_qs_rnp(mask, rnp, rnp->gp_seq, flags2);
++		rcu_report_qs_rnp(mask, rnp, rnp->gp_seq, flags);
+ 	} else {
+ 		raw_spin_unlock_rcu_node(rnp);
+ 	}
+ 	arch_spin_unlock(&rcu_state.ofl_lock);
+-	local_irq_restore(flags);
+ 	smp_mb(); /* Ensure RCU read-side usage follows above initialization. */
  }
  
- static void __init xen_pv_guest_late_init(void)
 -- 
 2.39.2
 
