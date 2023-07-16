@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7B48F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:32:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30533C433C7;
-	Sun, 16 Jul 2023 20:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F098F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:32:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6F7C433C8;
+	Sun, 16 Jul 2023 20:32:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539534;
-	bh=JHT+iMQO8LqS+kJkeHNuaxe3v0vmIk4Xw3W1hDP7sx0=;
+	s=korg; t=1689539537;
+	bh=07SUWhg/e3h0ngKq0/29/n0cgKYansyBHZBlRJt5eGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RoI7rbw+DZujKZaZhMRMTEaXUvttvSUk4yHIlDUGy8yYTw9uPdRO2eqPZQf7ZNJYy
-	 hatnuK5Sf4kYy6B38qlGylrezlfOh/YzArU6dSUhmiFAfuIqWMbPEvmMRQpaHV+Lnz
-	 G+qz6Zm35h6paaV6dlJ+H2NM1BUy3FQscY/b3yys=
+	b=KmFvXlzQyMKpv4lx3Zw1LUbI29F2+AIsTSp0H5Ngd40E1WGMKr8Y+mcZRCIucrGmI
+	 UOAb0U1iq6ZaLu29q8BdxZ1L/XJfIB9QZWEWoFzneWq7c6S43S4kEfTpWzIbOD7jzh
+	 gTPQVGU/P/oT8rijJt2eF5up4Yoo+78a5uuu2B5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Mingxi <m202271825@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Michal Simek <michal.simek@amd.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/591] clocksource/drivers/cadence-ttc: Fix memory leak in ttc_timer_probe
-Date: Sun, 16 Jul 2023 21:43:00 +0200
-Message-ID: <20230716194924.945181725@linuxfoundation.org>
+Subject: [PATCH 6.1 015/591] nvme-auth: rename __nvme_auth_[reset|free] to nvme_auth[reset|free]_dhchap
+Date: Sun, 16 Jul 2023 21:42:34 +0200
+Message-ID: <20230716194924.260141960@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,79 +37,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Feng Mingxi <m202271825@hust.edu.cn>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit 8b5bf64c89c7100c921bd807ba39b2eb003061ab ]
+[ Upstream commit 0a7ce375f83f4ade7c2a835444093b6870fb8257 ]
 
-Smatch reports:
-drivers/clocksource/timer-cadence-ttc.c:529 ttc_timer_probe()
-warn: 'timer_baseaddr' from of_iomap() not released on lines: 498,508,516.
+nvme_auth_[reset|free] operate on the controller while
+__nvme_auth_[reset|free] operate on a chap struct (which maps to a queue
+context). Rename it for clarity.
 
-timer_baseaddr may have the problem of not being released after use,
-I replaced it with the devm_of_iomap() function and added the clk_put()
-function to cleanup the "clk_ce" and "clk_cs".
-
-Fixes: e932900a3279 ("arm: zynq: Use standard timer binding")
-Fixes: 70504f311d4b ("clocksource/drivers/cadence_ttc: Convert init function to return error")
-Signed-off-by: Feng Mingxi <m202271825@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20230425065611.702917-1-m202271825@hust.edu.cn
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Stable-dep-of: a836ca33c5b0 ("nvme-core: fix memory leak in dhchap_secret_store")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-cadence-ttc.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/nvme/host/auth.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/clocksource/timer-cadence-ttc.c b/drivers/clocksource/timer-cadence-ttc.c
-index 4efd0cf3b602d..0d52e28fea4de 100644
---- a/drivers/clocksource/timer-cadence-ttc.c
-+++ b/drivers/clocksource/timer-cadence-ttc.c
-@@ -486,10 +486,10 @@ static int __init ttc_timer_probe(struct platform_device *pdev)
- 	 * and use it. Note that the event timer uses the interrupt and it's the
- 	 * 2nd TTC hence the irq_of_parse_and_map(,1)
- 	 */
--	timer_baseaddr = of_iomap(timer, 0);
--	if (!timer_baseaddr) {
-+	timer_baseaddr = devm_of_iomap(&pdev->dev, timer, 0, NULL);
-+	if (IS_ERR(timer_baseaddr)) {
- 		pr_err("ERROR: invalid timer base address\n");
--		return -ENXIO;
-+		return PTR_ERR(timer_baseaddr);
- 	}
- 
- 	irq = irq_of_parse_and_map(timer, 1);
-@@ -513,20 +513,27 @@ static int __init ttc_timer_probe(struct platform_device *pdev)
- 	clk_ce = of_clk_get(timer, clksel);
- 	if (IS_ERR(clk_ce)) {
- 		pr_err("ERROR: timer input clock not found\n");
--		return PTR_ERR(clk_ce);
-+		ret = PTR_ERR(clk_ce);
-+		goto put_clk_cs;
- 	}
- 
- 	ret = ttc_setup_clocksource(clk_cs, timer_baseaddr, timer_width);
- 	if (ret)
--		return ret;
-+		goto put_clk_ce;
- 
- 	ret = ttc_setup_clockevent(clk_ce, timer_baseaddr + 4, irq);
- 	if (ret)
--		return ret;
-+		goto put_clk_ce;
- 
- 	pr_info("%pOFn #0 at %p, irq=%d\n", timer, timer_baseaddr, irq);
- 
+diff --git a/drivers/nvme/host/auth.c b/drivers/nvme/host/auth.c
+index c8a6db7c44980..d45333268fcf6 100644
+--- a/drivers/nvme/host/auth.c
++++ b/drivers/nvme/host/auth.c
+@@ -654,7 +654,7 @@ static int nvme_auth_dhchap_exponential(struct nvme_ctrl *ctrl,
  	return 0;
-+
-+put_clk_ce:
-+	clk_put(clk_ce);
-+put_clk_cs:
-+	clk_put(clk_cs);
-+	return ret;
  }
  
- static const struct of_device_id ttc_timer_of_match[] = {
+-static void __nvme_auth_reset(struct nvme_dhchap_queue_context *chap)
++static void nvme_auth_reset_dhchap(struct nvme_dhchap_queue_context *chap)
+ {
+ 	kfree_sensitive(chap->host_response);
+ 	chap->host_response = NULL;
+@@ -676,9 +676,9 @@ static void __nvme_auth_reset(struct nvme_dhchap_queue_context *chap)
+ 	memset(chap->c2, 0, sizeof(chap->c2));
+ }
+ 
+-static void __nvme_auth_free(struct nvme_dhchap_queue_context *chap)
++static void nvme_auth_free_dhchap(struct nvme_dhchap_queue_context *chap)
+ {
+-	__nvme_auth_reset(chap);
++	nvme_auth_reset_dhchap(chap);
+ 	if (chap->shash_tfm)
+ 		crypto_free_shash(chap->shash_tfm);
+ 	if (chap->dh_tfm)
+@@ -868,7 +868,7 @@ int nvme_auth_negotiate(struct nvme_ctrl *ctrl, int qid)
+ 			dev_dbg(ctrl->device, "qid %d: re-using context\n", qid);
+ 			mutex_unlock(&ctrl->dhchap_auth_mutex);
+ 			flush_work(&chap->auth_work);
+-			__nvme_auth_reset(chap);
++			nvme_auth_reset_dhchap(chap);
+ 			queue_work(nvme_wq, &chap->auth_work);
+ 			return 0;
+ 		}
+@@ -928,7 +928,7 @@ void nvme_auth_reset(struct nvme_ctrl *ctrl)
+ 	list_for_each_entry(chap, &ctrl->dhchap_auth_list, entry) {
+ 		mutex_unlock(&ctrl->dhchap_auth_mutex);
+ 		flush_work(&chap->auth_work);
+-		__nvme_auth_reset(chap);
++		nvme_auth_reset_dhchap(chap);
+ 	}
+ 	mutex_unlock(&ctrl->dhchap_auth_mutex);
+ }
+@@ -1002,7 +1002,7 @@ void nvme_auth_free(struct nvme_ctrl *ctrl)
+ 	list_for_each_entry_safe(chap, tmp, &ctrl->dhchap_auth_list, entry) {
+ 		list_del_init(&chap->entry);
+ 		flush_work(&chap->auth_work);
+-		__nvme_auth_free(chap);
++		nvme_auth_free_dhchap(chap);
+ 	}
+ 	mutex_unlock(&ctrl->dhchap_auth_mutex);
+ 	if (ctrl->host_key) {
 -- 
 2.39.2
 
