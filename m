@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685A28F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:18:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF1A1C433C7;
-	Sun, 16 Jul 2023 20:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF808F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:18:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F21C433C8;
+	Sun, 16 Jul 2023 20:18:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538730;
-	bh=8Hr3iyO+/36/RjL9z8EGbDr9VxBl2y5tHy+jZxsREd0=;
+	s=korg; t=1689538733;
+	bh=E/83GT2Yh6gB5M00dSWsw4qpqdS/Zp2L1iZb8b9Pfxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qpIMMre8VMHJJmRrnnONu+kf4h6pm8jm0E65mXdik6t5V1kmH+tel2OOZXOkSLUA8
-	 lBfG4JriGgyIWSZmnmR0SgFRmFoMtDH305FYrgFpmug0nujxeEZp6uGV/Y0RxrCsUu
-	 RgUFns71kf++29kLH2pJt14W8eCFurebd29EI22U=
+	b=M3b+wqP6LpcBqcNr7QbddG5bN6rO2xVfzgfU8KvVdRy8TIbZZsfTI1Vq2P/6g8ysc
+	 l4qD2T5EWMCivtSVFEJ+4qAJrvOscwtxeoAW25a9mhhR9vtS+DfZ7UJ1ZYAYtJNb97
+	 w8hEaHaDoPSZsbjYEOskcNIqDtA1OiyJC7QQBCwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 555/800] xhci: Improve the XHCI system resume time
-Date: Sun, 16 Jul 2023 21:46:48 +0200
-Message-ID: <20230716195001.982147177@linuxfoundation.org>
+Subject: [PATCH 6.4 556/800] usb: dwc2: Fix some error handling paths
+Date: Sun, 16 Jul 2023 21:46:49 +0200
+Message-ID: <20230716195002.005041234@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,45 +34,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 1c024241d018cf9fc17aa8d95c3fe77d671d7142 ]
+[ Upstream commit ada050c69108bc34be13ecc11f7fad0f20ebadc4 ]
 
-Avoid extra 120ms delay during system resume.
+dwc2_driver_probe() calls dwc2_lowlevel_hw_init() which deassert some reset
+lines.
+Should an error happen in dwc2_lowlevel_hw_init() after calling
+reset_control_deassert() or in the probe after calling
+dwc2_lowlevel_hw_init(), the reset lines remain deasserted.
 
-The xHC controller may signal wake up to 120ms before showing which usb
-device caused the wake on the xHC port registers.
+Add some devm_add_action_or_reset() calls to re-assert the lines if needed.
 
-The xhci driver therefore checks for port activity up to 120ms during
-resume, making sure that the hub driver can see the port change, and
-won't immediately runtime suspend back due to no port activity.
+Update the remove function accordingly.
 
-This is however only needed for runtime resume as system resume will
-resume all child hubs and other child usb devices anyway.
+This change is compile-tested only.
 
-Fixes: 253f588c70f6 ("xhci: Improve detection of device initiated wake signal.")
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20230428140056.1318981-3-Basavaraj.Natikar@amd.com
+Fixes: 83f8da562f8b ("usb: dwc2: Add reset control to dwc2")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/c64537b5339342bd00f7c2152b8fc23792b9f95a.1683306479.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc2/platform.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
-index 65d54c8a24928..b81313ffeb768 100644
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -1117,7 +1117,7 @@ int xhci_resume(struct xhci_hcd *xhci, pm_message_t msg)
- 		 * the first wake signalling failed, give it that chance.
- 		 */
- 		pending_portevent = xhci_pending_portevent(xhci);
--		if (!pending_portevent) {
-+		if (!pending_portevent && msg.event == PM_EVENT_AUTO_RESUME) {
- 			msleep(120);
- 			pending_portevent = xhci_pending_portevent(xhci);
- 		}
+diff --git a/drivers/usb/dwc2/platform.c b/drivers/usb/dwc2/platform.c
+index 5aee284018c00..5cf025511cce6 100644
+--- a/drivers/usb/dwc2/platform.c
++++ b/drivers/usb/dwc2/platform.c
+@@ -203,6 +203,11 @@ int dwc2_lowlevel_hw_disable(struct dwc2_hsotg *hsotg)
+ 	return ret;
+ }
+ 
++static void dwc2_reset_control_assert(void *data)
++{
++	reset_control_assert(data);
++}
++
+ static int dwc2_lowlevel_hw_init(struct dwc2_hsotg *hsotg)
+ {
+ 	int i, ret;
+@@ -213,6 +218,10 @@ static int dwc2_lowlevel_hw_init(struct dwc2_hsotg *hsotg)
+ 				     "error getting reset control\n");
+ 
+ 	reset_control_deassert(hsotg->reset);
++	ret = devm_add_action_or_reset(hsotg->dev, dwc2_reset_control_assert,
++				       hsotg->reset);
++	if (ret)
++		return ret;
+ 
+ 	hsotg->reset_ecc = devm_reset_control_get_optional(hsotg->dev, "dwc2-ecc");
+ 	if (IS_ERR(hsotg->reset_ecc))
+@@ -220,6 +229,10 @@ static int dwc2_lowlevel_hw_init(struct dwc2_hsotg *hsotg)
+ 				     "error getting reset control for ecc\n");
+ 
+ 	reset_control_deassert(hsotg->reset_ecc);
++	ret = devm_add_action_or_reset(hsotg->dev, dwc2_reset_control_assert,
++				       hsotg->reset_ecc);
++	if (ret)
++		return ret;
+ 
+ 	/*
+ 	 * Attempt to find a generic PHY, then look for an old style
+@@ -339,9 +352,6 @@ static int dwc2_driver_remove(struct platform_device *dev)
+ 	if (hsotg->ll_hw_enabled)
+ 		dwc2_lowlevel_hw_disable(hsotg);
+ 
+-	reset_control_assert(hsotg->reset);
+-	reset_control_assert(hsotg->reset_ecc);
+-
+ 	return 0;
+ }
+ 
 -- 
 2.39.2
 
