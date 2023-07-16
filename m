@@ -1,36 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48C38F70;
-	Sun, 16 Jul 2023 19:59:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A8D5C433C7;
-	Sun, 16 Jul 2023 19:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13C39442
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:59:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6DEC433CB;
+	Sun, 16 Jul 2023 19:59:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537585;
-	bh=CfvX07BV0hbFAZLUURjGpPig0lkEpFxstEfCfTwUF1Q=;
+	s=korg; t=1689537588;
+	bh=P5n6vrhK8gYC0Go8G7Ou+8N9VkeXprPXCA1VtA/QWXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g7K3WX019gqubbnwpTe5iDaUNp9uzbIzuuBreihLfzMxUgGMDSkXInuHH2Z3qmKyn
-	 TN2Qj241XFnJDylz2zk+Ckd5LCT7PrOg0bq78/S1GlRxd94V1UVGmuuGwvm1umWHyn
-	 UvLavhBREuJg/HVOO3ZKZwP/n0CLIkwg6bncvBZs=
+	b=tPbgJWkK0i7YiJkArXnUrAfnDvqAy2MqVakhcD9PpfsM/VqNXwPScTQ6ONb1muYlT
+	 QvZI4HBSkonEMl9j4+KjnuXtKyBeGLMbi92u3Lbzsm90cP8Tb7dmmwIW9RNQq8Rr8a
+	 QZ2Z2fhuQokF2tCDvnrOz6wntsaRgsfjJkI+G0Ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Christian Brauner <brauner@kernel.org>,
-	Stanislav Fomichev <sdf@google.com>,
-	Neil Horman <nhorman@tuxdriver.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	linux-sctp@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org,
-	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
+	Edward Cree <ecree.xilinx@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 119/800] sctp: add bpf_bypass_getsockopt proto callback
-Date: Sun, 16 Jul 2023 21:39:32 +0200
-Message-ID: <20230716194951.871294090@linuxfoundation.org>
+Subject: [PATCH 6.4 120/800] sfc: release encap match in efx_tc_flow_free()
+Date: Sun, 16 Jul 2023 21:39:33 +0200
+Message-ID: <20230716194951.894731334@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -44,91 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+From: Edward Cree <ecree.xilinx@gmail.com>
 
-[ Upstream commit 2598619e012cee5273a2821441b9a051ad931249 ]
+[ Upstream commit 28fa3ac487c6d30aaa10570481c27b6adfc492b3 ]
 
-Implement ->bpf_bypass_getsockopt proto callback and filter out
-SCTP_SOCKOPT_PEELOFF, SCTP_SOCKOPT_PEELOFF_FLAGS and SCTP_SOCKOPT_CONNECTX3
-socket options from running eBPF hook on them.
+When force-freeing leftover entries from our match_action_ht, call
+ efx_tc_delete_rule(), which releases all the rule's resources, rather
+ than open-coding it.  The open-coded version was missing a call to
+ release the rule's encap match (if any).
+It probably doesn't matter as everything's being torn down anyway, but
+ it's cleaner this way and prevents further error messages potentially
+ being logged by efx_tc_encap_match_free() later on.
+Move efx_tc_flow_free() further down the file to avoid introducing a
+ forward declaration of efx_tc_delete_rule().
 
-SCTP_SOCKOPT_PEELOFF and SCTP_SOCKOPT_PEELOFF_FLAGS options do fd_install(),
-and if BPF_CGROUP_RUN_PROG_GETSOCKOPT hook returns an error after success of
-the original handler sctp_getsockopt(...), userspace will receive an error
-from getsockopt syscall and will be not aware that fd was successfully
-installed into a fdtable.
-
-As pointed by Marcelo Ricardo Leitner it seems reasonable to skip
-bpf getsockopt hook for SCTP_SOCKOPT_CONNECTX3 sockopt too.
-Because internaly, it triggers connect() and if error is masked
-then userspace will be confused.
-
-This patch was born as a result of discussion around a new SCM_PIDFD interface:
-https://lore.kernel.org/all/20230413133355.350571-3-aleksandr.mikhalitsyn@canonical.com/
-
-Fixes: 0d01da6afc54 ("bpf: implement getsockopt and setsockopt hooks")
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Stanislav Fomichev <sdf@google.com>
-Cc: Neil Horman <nhorman@tuxdriver.com>
-Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Cc: Xin Long <lucien.xin@gmail.com>
-Cc: linux-sctp@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Cc: netdev@vger.kernel.org
-Suggested-by: Stanislav Fomichev <sdf@google.com>
-Acked-by: Stanislav Fomichev <sdf@google.com>
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
+Fixes: 17654d84b47c ("sfc: add offloading of 'foreign' TC (decap) rules")
+Signed-off-by: Edward Cree <ecree.xilinx@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/net/ethernet/sfc/tc.c | 32 +++++++++++++++-----------------
+ 1 file changed, 15 insertions(+), 17 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index cda8c2874691d..a68e1d541b128 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -8281,6 +8281,22 @@ static int sctp_getsockopt(struct sock *sk, int level, int optname,
- 	return retval;
+diff --git a/drivers/net/ethernet/sfc/tc.c b/drivers/net/ethernet/sfc/tc.c
+index c004443c1d58c..d7827ab3761f9 100644
+--- a/drivers/net/ethernet/sfc/tc.c
++++ b/drivers/net/ethernet/sfc/tc.c
+@@ -132,23 +132,6 @@ static void efx_tc_free_action_set_list(struct efx_nic *efx,
+ 	/* Don't kfree, as acts is embedded inside a struct efx_tc_flow_rule */
  }
  
-+static bool sctp_bpf_bypass_getsockopt(int level, int optname)
+-static void efx_tc_flow_free(void *ptr, void *arg)
+-{
+-	struct efx_tc_flow_rule *rule = ptr;
+-	struct efx_nic *efx = arg;
+-
+-	netif_err(efx, drv, efx->net_dev,
+-		  "tc rule %lx still present at teardown, removing\n",
+-		  rule->cookie);
+-
+-	efx_mae_delete_rule(efx, rule->fw_id);
+-
+-	/* Release entries in subsidiary tables */
+-	efx_tc_free_action_set_list(efx, &rule->acts, true);
+-
+-	kfree(rule);
+-}
+-
+ /* Boilerplate for the simple 'copy a field' cases */
+ #define _MAP_KEY_AND_MASK(_name, _type, _tcget, _tcfield, _field)	\
+ if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_##_name)) {		\
+@@ -1451,6 +1434,21 @@ static void efx_tc_encap_match_free(void *ptr, void *__unused)
+ 	kfree(encap);
+ }
+ 
++static void efx_tc_flow_free(void *ptr, void *arg)
 +{
-+	if (level == SOL_SCTP) {
-+		switch (optname) {
-+		case SCTP_SOCKOPT_PEELOFF:
-+		case SCTP_SOCKOPT_PEELOFF_FLAGS:
-+		case SCTP_SOCKOPT_CONNECTX3:
-+			return true;
-+		default:
-+			return false;
-+		}
-+	}
++	struct efx_tc_flow_rule *rule = ptr;
++	struct efx_nic *efx = arg;
 +
-+	return false;
++	netif_err(efx, drv, efx->net_dev,
++		  "tc rule %lx still present at teardown, removing\n",
++		  rule->cookie);
++
++	/* Also releases entries in subsidiary tables */
++	efx_tc_delete_rule(efx, rule);
++
++	kfree(rule);
 +}
 +
- static int sctp_hash(struct sock *sk)
+ int efx_init_struct_tc(struct efx_nic *efx)
  {
- 	/* STUB */
-@@ -9650,6 +9666,7 @@ struct proto sctp_prot = {
- 	.shutdown    =	sctp_shutdown,
- 	.setsockopt  =	sctp_setsockopt,
- 	.getsockopt  =	sctp_getsockopt,
-+	.bpf_bypass_getsockopt	= sctp_bpf_bypass_getsockopt,
- 	.sendmsg     =	sctp_sendmsg,
- 	.recvmsg     =	sctp_recvmsg,
- 	.bind        =	sctp_bind,
-@@ -9705,6 +9722,7 @@ struct proto sctpv6_prot = {
- 	.shutdown	= sctp_shutdown,
- 	.setsockopt	= sctp_setsockopt,
- 	.getsockopt	= sctp_getsockopt,
-+	.bpf_bypass_getsockopt	= sctp_bpf_bypass_getsockopt,
- 	.sendmsg	= sctp_sendmsg,
- 	.recvmsg	= sctp_recvmsg,
- 	.bind		= sctp_bind,
+ 	int rc;
 -- 
 2.39.2
 
