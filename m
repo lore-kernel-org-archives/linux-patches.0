@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ADB08F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:28:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EBA7C433C7;
-	Sun, 16 Jul 2023 20:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE9E8F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:28:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41900C433C8;
+	Sun, 16 Jul 2023 20:28:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539279;
-	bh=0ARajWaNcWFoAuNsUVljS/+4XY1iBYRcAn9orpaZVyo=;
+	s=korg; t=1689539282;
+	bh=nAGxizrJ1pgVm6a4R4Y70MTLSdUnbCFnc1q7DrFlZZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0GOUVT+DrNQv6VlykOdWg6GrOCMrS1IrtjbmODjC6cysQ6EZ5qxFEh3tq1mTKWvK9
-	 YOLXAYOQCh52ChSAY+P4S5Zj/FSLEBM1Q7oTHRlnCi4Xae4eRqatG9GKbvIDHJJo4Q
-	 bXgcYjZKGjLVVeViJWKuUEChX3/eWp4ksTyxL13k=
+	b=jFZI0wFtI8Qaab1tgQhKtb1fU7+N4R7EhjosdtFSNcub29d08pyysDn0bsXJd+W/b
+	 MLU3SIeY6qehsJiFBDLvawc00JsB8sKQybLdUCwUTsxfse5DbPlHdsw+ANcvB6G0Nz
+	 JQawwtw++2UIvYx+ZiH1J886d8By4grDbd86q8gk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.4 750/800] fs: Lock moved directories
-Date: Sun, 16 Jul 2023 21:50:03 +0200
-Message-ID: <20230716195006.542914982@linuxfoundation.org>
+	Evan Quan <evan.quan@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 6.4 751/800] usb: typec: ucsi: Mark dGPUs as DEVICE scope
+Date: Sun, 16 Jul 2023 21:50:04 +0200
+Message-ID: <20230716195006.566940940@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -34,126 +38,128 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 28eceeda130f5058074dd007d9c59d2e8bc5af2e upstream.
+commit a7fbfd44c0204f0629288edfd0d77829edb4a2f8 upstream.
 
-When a directory is moved to a different directory, some filesystems
-(udf, ext4, ocfs2, f2fs, and likely gfs2, reiserfs, and others) need to
-update their pointer to the parent and this must not race with other
-operations on the directory. Lock the directories when they are moved.
-Although not all filesystems need this locking, we perform it in
-vfs_rename() because getting the lock ordering right is really difficult
-and we don't want to expose these locking details to filesystems.
+power_supply_is_system_supplied() checks whether any power
+supplies are present that aren't batteries to decide whether
+the system is running on DC or AC.  Downstream drivers use
+this to make performance decisions.
 
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20230601105830.13168-5-jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Navi dGPUs include an UCSI function that has been exported
+since commit 17631e8ca2d3 ("i2c: designware: Add driver
+support for AMD NAVI GPU").
+
+This UCSI function registers a power supply since commit
+992a60ed0d5e ("usb: typec: ucsi: register with power_supply class")
+but this is not a system power supply.
+
+As the power supply for a dGPU is only for powering devices connected
+to dGPU, create a device property to indicate that the UCSI endpoint
+is only for the scope of `POWER_SUPPLY_SCOPE_DEVICE`.
+
+Link: https://lore.kernel.org/lkml/20230516182541.5836-2-mario.limonciello@amd.com/
+Reviewed-by: Evan Quan <evan.quan@amd.com>
+Tested-by: Evan Quan <evan.quan@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Acked-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/filesystems/directory-locking.rst |   26 ++++++++++++------------
- fs/namei.c                                      |   22 ++++++++++++--------
- 2 files changed, 28 insertions(+), 20 deletions(-)
+ drivers/i2c/busses/i2c-designware-pcidrv.c |   13 ++++++++++++-
+ drivers/i2c/busses/i2c-nvidia-gpu.c        |    3 +++
+ drivers/usb/typec/ucsi/psy.c               |   14 ++++++++++++++
+ 3 files changed, 29 insertions(+), 1 deletion(-)
 
---- a/Documentation/filesystems/directory-locking.rst
-+++ b/Documentation/filesystems/directory-locking.rst
-@@ -22,12 +22,11 @@ exclusive.
- 3) object removal.  Locking rules: caller locks parent, finds victim,
- locks victim and calls the method.  Locks are exclusive.
+--- a/drivers/i2c/busses/i2c-designware-pcidrv.c
++++ b/drivers/i2c/busses/i2c-designware-pcidrv.c
+@@ -20,6 +20,7 @@
+ #include <linux/module.h>
+ #include <linux/pci.h>
+ #include <linux/pm_runtime.h>
++#include <linux/power_supply.h>
+ #include <linux/sched.h>
+ #include <linux/slab.h>
  
--4) rename() that is _not_ cross-directory.  Locking rules: caller locks
--the parent and finds source and target.  In case of exchange (with
--RENAME_EXCHANGE in flags argument) lock both.  In any case,
--if the target already exists, lock it.  If the source is a non-directory,
--lock it.  If we need to lock both, lock them in inode pointer order.
--Then call the method.  All locks are exclusive.
-+4) rename() that is _not_ cross-directory.  Locking rules: caller locks the
-+parent and finds source and target.  We lock both (provided they exist).  If we
-+need to lock two inodes of different type (dir vs non-dir), we lock directory
-+first.  If we need to lock two inodes of the same type, lock them in inode
-+pointer order.  Then call the method.  All locks are exclusive.
- NB: we might get away with locking the source (and target in exchange
- case) shared.
+@@ -234,6 +235,16 @@ static const struct dev_pm_ops i2c_dw_pm
+ 	SET_RUNTIME_PM_OPS(i2c_dw_pci_runtime_suspend, i2c_dw_pci_runtime_resume, NULL)
+ };
  
-@@ -44,15 +43,17 @@ All locks are exclusive.
- rules:
- 
- 	* lock the filesystem
--	* lock parents in "ancestors first" order.
-+	* lock parents in "ancestors first" order. If one is not ancestor of
-+	  the other, lock them in inode pointer order.
- 	* find source and target.
- 	* if old parent is equal to or is a descendent of target
- 	  fail with -ENOTEMPTY
- 	* if new parent is equal to or is a descendent of source
- 	  fail with -ELOOP
--	* If it's an exchange, lock both the source and the target.
--	* If the target exists, lock it.  If the source is a non-directory,
--	  lock it.  If we need to lock both, do so in inode pointer order.
-+	* Lock both the source and the target provided they exist. If we
-+	  need to lock two inodes of different type (dir vs non-dir), we lock
-+	  the directory first. If we need to lock two inodes of the same type,
-+	  lock them in inode pointer order.
- 	* call the method.
- 
- All ->i_rwsem are taken exclusive.  Again, we might get away with locking
-@@ -66,8 +67,9 @@ If no directory is its own ancestor, the
- 
- Proof:
- 
--	First of all, at any moment we have a partial ordering of the
--	objects - A < B iff A is an ancestor of B.
-+	First of all, at any moment we have a linear ordering of the
-+	objects - A < B iff (A is an ancestor of B) or (B is not an ancestor
-+        of A and ptr(A) < ptr(B)).
- 
- 	That ordering can change.  However, the following is true:
- 
---- a/fs/namei.c
-+++ b/fs/namei.c
-@@ -4731,7 +4731,7 @@ SYSCALL_DEFINE2(link, const char __user
-  *	   sb->s_vfs_rename_mutex. We might be more accurate, but that's another
-  *	   story.
-  *	c) we have to lock _four_ objects - parents and victim (if it exists),
-- *	   and source (if it is not a directory).
-+ *	   and source.
-  *	   And that - after we got ->i_mutex on parents (until then we don't know
-  *	   whether the target exists).  Solution: try to be smart with locking
-  *	   order for inodes.  We rely on the fact that tree topology may change
-@@ -4815,10 +4815,16 @@ int vfs_rename(struct renamedata *rd)
- 
- 	take_dentry_name_snapshot(&old_name, old_dentry);
- 	dget(new_dentry);
--	if (!is_dir || (flags & RENAME_EXCHANGE))
--		lock_two_nondirectories(source, target);
--	else if (target)
--		inode_lock(target);
-+	/*
-+	 * Lock all moved children. Moved directories may need to change parent
-+	 * pointer so they need the lock to prevent against concurrent
-+	 * directory changes moving parent pointer. For regular files we've
-+	 * historically always done this. The lockdep locking subclasses are
-+	 * somewhat arbitrary but RENAME_EXCHANGE in particular can swap
-+	 * regular files and directories so it's difficult to tell which
-+	 * subclasses to use.
-+	 */
-+	lock_two_inodes(source, target, I_MUTEX_NORMAL, I_MUTEX_NONDIR2);
- 
- 	error = -EPERM;
- 	if (IS_SWAPFILE(source) || (target && IS_SWAPFILE(target)))
-@@ -4866,9 +4872,9 @@ int vfs_rename(struct renamedata *rd)
- 			d_exchange(old_dentry, new_dentry);
++static const struct property_entry dgpu_properties[] = {
++	/* USB-C doesn't power the system */
++	PROPERTY_ENTRY_U8("scope", POWER_SUPPLY_SCOPE_DEVICE),
++	{}
++};
++
++static const struct software_node dgpu_node = {
++	.properties = dgpu_properties,
++};
++
+ static int i2c_dw_pci_probe(struct pci_dev *pdev,
+ 			    const struct pci_device_id *id)
+ {
+@@ -325,7 +336,7 @@ static int i2c_dw_pci_probe(struct pci_d
  	}
- out:
--	if (!is_dir || (flags & RENAME_EXCHANGE))
--		unlock_two_nondirectories(source, target);
--	else if (target)
-+	if (source)
-+		inode_unlock(source);
-+	if (target)
- 		inode_unlock(target);
- 	dput(new_dentry);
- 	if (!error) {
+ 
+ 	if ((dev->flags & MODEL_MASK) == MODEL_AMD_NAVI_GPU) {
+-		dev->slave = i2c_new_ccgx_ucsi(&dev->adapter, dev->irq, NULL);
++		dev->slave = i2c_new_ccgx_ucsi(&dev->adapter, dev->irq, &dgpu_node);
+ 		if (IS_ERR(dev->slave))
+ 			return dev_err_probe(dev->dev, PTR_ERR(dev->slave),
+ 					     "register UCSI failed\n");
+--- a/drivers/i2c/busses/i2c-nvidia-gpu.c
++++ b/drivers/i2c/busses/i2c-nvidia-gpu.c
+@@ -14,6 +14,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/pm.h>
+ #include <linux/pm_runtime.h>
++#include <linux/power_supply.h>
+ 
+ #include <asm/unaligned.h>
+ 
+@@ -261,6 +262,8 @@ MODULE_DEVICE_TABLE(pci, gpu_i2c_ids);
+ static const struct property_entry ccgx_props[] = {
+ 	/* Use FW built for NVIDIA GPU only */
+ 	PROPERTY_ENTRY_STRING("firmware-name", "nvidia,gpu"),
++	/* USB-C doesn't power the system */
++	PROPERTY_ENTRY_U8("scope", POWER_SUPPLY_SCOPE_DEVICE),
+ 	{ }
+ };
+ 
+--- a/drivers/usb/typec/ucsi/psy.c
++++ b/drivers/usb/typec/ucsi/psy.c
+@@ -27,8 +27,20 @@ static enum power_supply_property ucsi_p
+ 	POWER_SUPPLY_PROP_VOLTAGE_NOW,
+ 	POWER_SUPPLY_PROP_CURRENT_MAX,
+ 	POWER_SUPPLY_PROP_CURRENT_NOW,
++	POWER_SUPPLY_PROP_SCOPE,
+ };
+ 
++static int ucsi_psy_get_scope(struct ucsi_connector *con,
++			      union power_supply_propval *val)
++{
++	u8 scope = POWER_SUPPLY_SCOPE_UNKNOWN;
++	struct device *dev = con->ucsi->dev;
++
++	device_property_read_u8(dev, "scope", &scope);
++	val->intval = scope;
++	return 0;
++}
++
+ static int ucsi_psy_get_online(struct ucsi_connector *con,
+ 			       union power_supply_propval *val)
+ {
+@@ -194,6 +206,8 @@ static int ucsi_psy_get_prop(struct powe
+ 		return ucsi_psy_get_current_max(con, val);
+ 	case POWER_SUPPLY_PROP_CURRENT_NOW:
+ 		return ucsi_psy_get_current_now(con, val);
++	case POWER_SUPPLY_PROP_SCOPE:
++		return ucsi_psy_get_scope(con, val);
+ 	default:
+ 		return -EINVAL;
+ 	}
 
 
