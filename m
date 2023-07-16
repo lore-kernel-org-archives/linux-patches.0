@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FA88F55
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:40:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A65C433C7;
-	Sun, 16 Jul 2023 20:40:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1D78F55
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:40:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE94C433C7;
+	Sun, 16 Jul 2023 20:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540043;
-	bh=PEoYblEoyK1g+c5UGnk93yy0p1fN/B4mHPfke64jCls=;
+	s=korg; t=1689540045;
+	bh=OIKGTJaaRAdzVI6pT3FCln6/I1Gcbt32AxXRxcrRIDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i/nTDVRH2k4HW6pyJNLqSziCfB/YUG/C+VbnFOFnYYhJbOfkkXDp2DNfMRYw8MDNN
-	 URFD5A91FyE6iBmS7NEZiMm2mIN49+X0R2XqvsKe0CoRRGjLaHEuiKkorgkUlMmOrF
-	 ct3vb08aSyF2pSJ5X4XYnV3lSdcy4PZwQSKPYuSY=
+	b=wvKiye5AMEFdbS4COeGKXKVPlIDTGUGMm6jK4TDnVoLEQ8brLZWGefMTtWWOO7gNw
+	 H+p9GelxhKXURohcD/di3DGb8OVXkip/OEPZUdKNwARBgAXd+RTTfcA/cXuyFcK9jn
+	 kQ/MQb6Q49LUYNeSwXcoBwkCRKsn64aoTHAR9A0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 195/591] arm64: dts: qcom: msm8916: correct MMC unit address
-Date: Sun, 16 Jul 2023 21:45:34 +0200
-Message-ID: <20230716194928.920178758@linuxfoundation.org>
+Subject: [PATCH 6.1 196/591] arm64: dts: qcom: msm8994: correct SPMI unit address
+Date: Sun, 16 Jul 2023 21:45:35 +0200
+Message-ID: <20230716194928.944398385@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,45 +38,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 72644bc76d5145c098c268829554a0b98fab1de1 ]
+[ Upstream commit 24f0f6a8059c7108d4ee3476c95db1e7ff4feb79 ]
 
 Match unit-address to reg entry to fix dtbs W=1 warnings:
 
-  Warning (simple_bus_reg): /soc@0/mmc@7824000: simple-bus unit address format error, expected "7824900"
-  Warning (simple_bus_reg): /soc@0/mmc@7864000: simple-bus unit address format error, expected "7864900"
+  Warning (simple_bus_reg): /soc/spmi@fc4c0000: simple-bus unit address format error, expected "fc4cf000"
 
-Fixes: c4da5a561627 ("arm64: dts: qcom: Add msm8916 sdhci configuration nodes")
+Fixes: b0ad598f8ec0 ("arm64: dts: qcom: msm8994: Add SPMI PMIC arbiter device")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230419211856.79332-3-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20230419211856.79332-8-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8994.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 99aa9b4dce8aa..f84b3c1a03c53 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1480,7 +1480,7 @@ lpass_codec: audio-codec@771c000 {
- 			#sound-dai-cells = <1>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+index 7ed59e698c14d..3c6c2cf99fb9d 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+@@ -746,7 +746,7 @@ restart@fc4ab000 {
+ 			reg = <0xfc4ab000 0x4>;
  		};
  
--		sdhc_1: mmc@7824000 {
-+		sdhc_1: mmc@7824900 {
- 			compatible = "qcom,msm8916-sdhci", "qcom,sdhci-msm-v4";
- 			reg = <0x07824900 0x11c>, <0x07824000 0x800>;
- 			reg-names = "hc", "core";
-@@ -1498,7 +1498,7 @@ sdhc_1: mmc@7824000 {
- 			status = "disabled";
- 		};
- 
--		sdhc_2: mmc@7864000 {
-+		sdhc_2: mmc@7864900 {
- 			compatible = "qcom,msm8916-sdhci", "qcom,sdhci-msm-v4";
- 			reg = <0x07864900 0x11c>, <0x07864000 0x800>;
- 			reg-names = "hc", "core";
+-		spmi_bus: spmi@fc4c0000 {
++		spmi_bus: spmi@fc4cf000 {
+ 			compatible = "qcom,spmi-pmic-arb";
+ 			reg = <0xfc4cf000 0x1000>,
+ 			      <0xfc4cb000 0x1000>,
 -- 
 2.39.2
 
