@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B47E8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:49:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C1EC433C7;
-	Sun, 16 Jul 2023 20:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508D78F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:49:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E20C433C7;
+	Sun, 16 Jul 2023 20:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540560;
-	bh=TXdBClRXVvi48yJrwfyN5ghEtX7rxVGUBD6tVegiZis=;
+	s=korg; t=1689540563;
+	bh=5QApwTPCH18XXVwku9TAguAgPztDNXCF9f0eH1QGCts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r1vbL5xDa2/bGP7tHBQpN8jW8drxQgll7f/fnLQs6t6QkOYqhSA5KMX2IE1qXoDSk
-	 JHuuPfZFIc2dyTTCummSMwF2lxLoyDgTinuYkgzXEYetCbPatuOIDibt/8YyrExQ4t
-	 Cn+UJJJpvmWrpvtAUrbk8E0EMiHKph78lGE6fz5o=
+	b=AF9RFQtD3l1h4YgizJ9JAoZ5wYT5EgqetCG08iBmnpgFyUXPi2UzWgK9o79Ze9WZq
+	 oy/USrYfgZh1XJBO7w9DpI4h6T+i6oaxFx+RGv3bZFi0Amfab4WLl1JXdjRLWpP30M
+	 1l9MHMiSIhtBGUfPOs9YY4y/WzMIl5HZa1QnF1ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@infradead.org>,
-	Demi Marie Obenour <demi@invisiblethingslab.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 379/591] block: increment diskseq on all media change events
-Date: Sun, 16 Jul 2023 21:48:38 +0200
-Message-ID: <20230716194933.726121320@linuxfoundation.org>
+	Hersen Wu <hersenxs.wu@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 370/591] Revert "drm/amd/display: edp do not add non-edid timings"
+Date: Sun, 16 Jul 2023 21:48:29 +0200
+Message-ID: <20230716194933.492224780@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,55 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
+From: Hersen Wu <hersenxs.wu@amd.com>
 
-commit b90ecc0379eb7bbe79337b0c7289390a98752646 upstream.
+commit d6149086b45e150c170beaa4546495fd1880724c upstream.
 
-Currently, associating a loop device with a different file descriptor
-does not increment its diskseq.  This allows the following race
-condition:
+This change causes regression when eDP and external display in mirror
+mode. When external display supports low resolution than eDP, use eDP
+timing to driver external display may cause corruption on external
+display.
 
-1. Program X opens a loop device
-2. Program X gets the diskseq of the loop device.
-3. Program X associates a file with the loop device.
-4. Program X passes the loop device major, minor, and diskseq to
-   something.
-5. Program X exits.
-6. Program Y detaches the file from the loop device.
-7. Program Y attaches a different file to the loop device.
-8. The opener finally gets around to opening the loop device and checks
-   that the diskseq is what it expects it to be.  Even though the
-   diskseq is the expected value, the result is that the opener is
-   accessing the wrong file.
+This reverts commit e749dd10e5f292061ad63d2b030194bf7d7d452c.
 
->From discussions with Christoph Hellwig, it appears that
-disk_force_media_change() was supposed to call inc_diskseq(), but in
-fact it does not.  Adding a Fixes: tag to indicate this.  Christoph's
-Reported-by is because he stated that disk_force_media_change()
-calls inc_diskseq(), which is what led me to discover that it should but
-does not.
-
-Reported-by: Christoph Hellwig <hch@infradead.org>
-Signed-off-by: Demi Marie Obenour <demi@invisiblethingslab.com>
-Fixes: e6138dc12de9 ("block: add a helper to raise a media changed event")
-Cc: stable@vger.kernel.org # 5.15+
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230607170837.1559-1-demi@invisiblethingslab.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: stable@vger.kernel.org
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2655
+Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/disk-events.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/block/disk-events.c
-+++ b/block/disk-events.c
-@@ -307,6 +307,7 @@ bool disk_force_media_change(struct gend
- 	if (!(events & DISK_EVENT_MEDIA_CHANGE))
- 		return false;
- 
-+	inc_diskseq(disk);
- 	if (__invalidate_device(disk->part0, true))
- 		pr_warn("VFS: busy inodes on changed media %s\n",
- 			disk->disk_name);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -6972,13 +6972,7 @@ static int amdgpu_dm_connector_get_modes
+ 				drm_add_modes_noedid(connector, 640, 480);
+ 	} else {
+ 		amdgpu_dm_connector_ddc_get_modes(connector, edid);
+-		/* most eDP supports only timings from its edid,
+-		 * usually only detailed timings are available
+-		 * from eDP edid. timings which are not from edid
+-		 * may damage eDP
+-		 */
+-		if (connector->connector_type != DRM_MODE_CONNECTOR_eDP)
+-			amdgpu_dm_connector_add_common_modes(encoder, connector);
++		amdgpu_dm_connector_add_common_modes(encoder, connector);
+ 		amdgpu_dm_connector_add_freesync_modes(connector, edid);
+ 	}
+ 	amdgpu_dm_fbc_init(connector);
 
 
