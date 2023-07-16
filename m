@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C648F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:16:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0545AC433C8;
-	Sun, 16 Jul 2023 20:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469D38F75
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:16:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCF2BC433C7;
+	Sun, 16 Jul 2023 20:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538565;
-	bh=B32SVhQMe+FpiMbO6keH5Pk5eWOnQv6AS1MyQdnAyUk=;
+	s=korg; t=1689538568;
+	bh=Pi8GV7qEk1ibPzj4Wp2ILk8Di4v2NlFk0/HEY21e4wA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B6tGgzOe2R4tPs3+CGxGwL1gNpOOryaAF+FB/OlHwBtppxum/or/4RtO1iPO3uSWV
-	 WjbpCdKcwF0umS0urDjoLap2uzEF5cJFzyTrnHprJvCQpdKmcMQ9k6Jwvig/OSCt0p
-	 g+xr4VvTQk6m70TV+YeEGP0Ez23ea532buysCN7Q=
+	b=iHyXg2Y4waU181tAVcDbrqXdavcO+KqddltEAUf+gC6k5Y4WXPsVbuNloDcy5Q0SM
+	 zb3V+Wk5wYurSPSnngiN/jA5eNZf24UJqvV4AI0bcCb/Yv5ogxSeytsuCBoOxBxEy7
+	 KIGNVOst9bBMFjEutHdO6iPBGFYsetsCPMKbVce4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 465/800] powerpc/signal32: Force inlining of __unsafe_save_user_regs() and save_tm_user_regs_unsafe()
-Date: Sun, 16 Jul 2023 21:45:18 +0200
-Message-ID: <20230716194959.881427999@linuxfoundation.org>
+Subject: [PATCH 6.4 456/800] pinctrl: cherryview: Return correct value if pin in push-pull mode
+Date: Sun, 16 Jul 2023 21:45:09 +0200
+Message-ID: <20230716194959.674525788@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,76 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit a03b1a0b19398a47489fdcef02ec19c2ba05a15d ]
+[ Upstream commit 5835196a17be5cfdcad0b617f90cf4abe16951a4 ]
 
-Looking at generated code for handle_signal32() shows calls to a
-function called __unsafe_save_user_regs.constprop.0 while user access
-is open.
+Currently the getter returns ENOTSUPP on pin configured in
+the push-pull mode. Fix this by adding the missed switch case.
 
-And that __unsafe_save_user_regs.constprop.0 function has two nops at
-the begining, allowing it to be traced, which is unexpected during
-user access open window.
-
-The solution could be to mark __unsafe_save_user_regs() no trace, but
-to be on the safe side the most efficient is to flag it __always_inline
-as already done for function __unsafe_restore_general_regs(). The
-function is relatively small and only called twice, so the size
-increase will remain in the noise.
-
-Do the same with save_tm_user_regs_unsafe() as it may suffer the
-same issue.
-
-Fixes: ef75e7318294 ("powerpc/signal32: Transform save_user_regs() and save_tm_user_regs() in 'unsafe' version")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/7e469c8f01860a69c1ada3ca6a5e2aa65f0f74b2.1685955220.git.christophe.leroy@csgroup.eu
+Fixes: ccdf81d08dbe ("pinctrl: cherryview: add option to set open-drain pin config")
+Fixes: 6e08d6bbebeb ("pinctrl: Add Intel Cherryview/Braswell pin controller support")
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/signal_32.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/pinctrl/intel/pinctrl-cherryview.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/arch/powerpc/kernel/signal_32.c b/arch/powerpc/kernel/signal_32.c
-index c114c7f25645c..7a718ed32b277 100644
---- a/arch/powerpc/kernel/signal_32.c
-+++ b/arch/powerpc/kernel/signal_32.c
-@@ -264,8 +264,9 @@ static void prepare_save_user_regs(int ctx_has_vsx_region)
- #endif
- }
+diff --git a/drivers/pinctrl/intel/pinctrl-cherryview.c b/drivers/pinctrl/intel/pinctrl-cherryview.c
+index 722990e278361..87cf1e7403979 100644
+--- a/drivers/pinctrl/intel/pinctrl-cherryview.c
++++ b/drivers/pinctrl/intel/pinctrl-cherryview.c
+@@ -949,11 +949,6 @@ static int chv_config_get(struct pinctrl_dev *pctldev, unsigned int pin,
  
--static int __unsafe_save_user_regs(struct pt_regs *regs, struct mcontext __user *frame,
--				   struct mcontext __user *tm_frame, int ctx_has_vsx_region)
-+static __always_inline int
-+__unsafe_save_user_regs(struct pt_regs *regs, struct mcontext __user *frame,
-+			struct mcontext __user *tm_frame, int ctx_has_vsx_region)
- {
- 	unsigned long msr = regs->msr;
+ 		break;
  
-@@ -364,8 +365,9 @@ static void prepare_save_tm_user_regs(void)
- 		current->thread.ckvrsave = mfspr(SPRN_VRSAVE);
- }
+-	case PIN_CONFIG_DRIVE_OPEN_DRAIN:
+-		if (!(ctrl1 & CHV_PADCTRL1_ODEN))
+-			return -EINVAL;
+-		break;
+-
+ 	case PIN_CONFIG_BIAS_HIGH_IMPEDANCE: {
+ 		u32 cfg;
  
--static int save_tm_user_regs_unsafe(struct pt_regs *regs, struct mcontext __user *frame,
--				    struct mcontext __user *tm_frame, unsigned long msr)
-+static __always_inline int
-+save_tm_user_regs_unsafe(struct pt_regs *regs, struct mcontext __user *frame,
-+			 struct mcontext __user *tm_frame, unsigned long msr)
- {
- 	/* Save both sets of general registers */
- 	unsafe_save_general_regs(&current->thread.ckpt_regs, frame, failed);
-@@ -444,8 +446,9 @@ static int save_tm_user_regs_unsafe(struct pt_regs *regs, struct mcontext __user
- #else
- static void prepare_save_tm_user_regs(void) { }
+@@ -963,6 +958,16 @@ static int chv_config_get(struct pinctrl_dev *pctldev, unsigned int pin,
+ 			return -EINVAL;
  
--static int save_tm_user_regs_unsafe(struct pt_regs *regs, struct mcontext __user *frame,
--				    struct mcontext __user *tm_frame, unsigned long msr)
-+static __always_inline int
-+save_tm_user_regs_unsafe(struct pt_regs *regs, struct mcontext __user *frame,
-+			 struct mcontext __user *tm_frame, unsigned long msr)
- {
- 	return 0;
- }
+ 		break;
++
++	case PIN_CONFIG_DRIVE_PUSH_PULL:
++		if (ctrl1 & CHV_PADCTRL1_ODEN)
++			return -EINVAL;
++		break;
++
++	case PIN_CONFIG_DRIVE_OPEN_DRAIN:
++		if (!(ctrl1 & CHV_PADCTRL1_ODEN))
++			return -EINVAL;
++		break;
+ 	}
+ 
+ 	default:
 -- 
 2.39.2
 
