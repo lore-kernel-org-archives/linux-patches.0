@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DF78F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:56:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48CF6C433C9;
-	Sun, 16 Jul 2023 19:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D838F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:56:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B17C433C7;
+	Sun, 16 Jul 2023 19:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537414;
-	bh=MtxnVlsEN6GGFF26TPDSYZHWhUBTVm/57MZO07suUVI=;
+	s=korg; t=1689537417;
+	bh=JHT+iMQO8LqS+kJkeHNuaxe3v0vmIk4Xw3W1hDP7sx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v2j031PIGUCN8dQs7JAh3eksRcwPfaMYvHRab6qksq21Fhw4YkU4TH7YgreXScNSW
-	 R2gadeH7jLis5SpLM1u3Y2AEgqBzep9ZYpGb8CwTZBUBjfHUCnGUjMSbvH8ENmi7Ee
-	 BfdCTRRQjj9IvvwiKnVL+6L7JUmruo5haASlmjcQ=
+	b=hOckJOMJSwcFU8Wqf5cCvcnYzPy13RzPkmdbq2/AnOVitFiroUyiBGsSDKCSjZGpU
+	 8WSjDdjH7HEJfCxNIBL6+hWF96nMipbX523OQPC+sXnDKfryoL8w6tsuAbo424YmOg
+	 IPexxqRCEAPbXuBIHcEr+VwIUnv0B4udmku1reP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangwu Zhang <guazhang@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Feng Mingxi <m202271825@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Michal Simek <michal.simek@amd.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 060/800] blk-mq: dont insert passthrough request into sw queue
-Date: Sun, 16 Jul 2023 21:38:33 +0200
-Message-ID: <20230716194950.481685843@linuxfoundation.org>
+Subject: [PATCH 6.4 061/800] clocksource/drivers/cadence-ttc: Fix memory leak in ttc_timer_probe
+Date: Sun, 16 Jul 2023 21:38:34 +0200
+Message-ID: <20230716194950.504612139@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,46 +37,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Feng Mingxi <m202271825@hust.edu.cn>
 
-[ Upstream commit 2293cae703cda162684ae966db6b1b4a11b5e88f ]
+[ Upstream commit 8b5bf64c89c7100c921bd807ba39b2eb003061ab ]
 
-In case of real io scheduler, q->elevator is set, so blk_mq_run_hw_queue()
-may just check if scheduler queue has request to dispatch, see
-__blk_mq_sched_dispatch_requests(). Then IO hang may be caused because
-all passthorugh requests may stay in sw queue.
+Smatch reports:
+drivers/clocksource/timer-cadence-ttc.c:529 ttc_timer_probe()
+warn: 'timer_baseaddr' from of_iomap() not released on lines: 498,508,516.
 
-And any passthrough request should have been inserted to hctx->dispatch
-always.
+timer_baseaddr may have the problem of not being released after use,
+I replaced it with the devm_of_iomap() function and added the clk_put()
+function to cleanup the "clk_ce" and "clk_cs".
 
-Reported-by: Guangwu Zhang <guazhang@redhat.com>
-Fixes: d97217e7f024 ("blk-mq: don't queue plugged passthrough requests into scheduler")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20230621132208.1142318-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: e932900a3279 ("arm: zynq: Use standard timer binding")
+Fixes: 70504f311d4b ("clocksource/drivers/cadence_ttc: Convert init function to return error")
+Signed-off-by: Feng Mingxi <m202271825@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://lore.kernel.org/r/20230425065611.702917-1-m202271825@hust.edu.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/clocksource/timer-cadence-ttc.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index c763f0bc66371..b9f4546139894 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -2735,7 +2735,12 @@ static void blk_mq_dispatch_plug_list(struct blk_plug *plug, bool from_sched)
+diff --git a/drivers/clocksource/timer-cadence-ttc.c b/drivers/clocksource/timer-cadence-ttc.c
+index 4efd0cf3b602d..0d52e28fea4de 100644
+--- a/drivers/clocksource/timer-cadence-ttc.c
++++ b/drivers/clocksource/timer-cadence-ttc.c
+@@ -486,10 +486,10 @@ static int __init ttc_timer_probe(struct platform_device *pdev)
+ 	 * and use it. Note that the event timer uses the interrupt and it's the
+ 	 * 2nd TTC hence the irq_of_parse_and_map(,1)
+ 	 */
+-	timer_baseaddr = of_iomap(timer, 0);
+-	if (!timer_baseaddr) {
++	timer_baseaddr = devm_of_iomap(&pdev->dev, timer, 0, NULL);
++	if (IS_ERR(timer_baseaddr)) {
+ 		pr_err("ERROR: invalid timer base address\n");
+-		return -ENXIO;
++		return PTR_ERR(timer_baseaddr);
+ 	}
  
- 	percpu_ref_get(&this_hctx->queue->q_usage_counter);
- 	/* passthrough requests should never be issued to the I/O scheduler */
--	if (this_hctx->queue->elevator && !is_passthrough) {
-+	if (is_passthrough) {
-+		spin_lock(&this_hctx->lock);
-+		list_splice_tail_init(&list, &this_hctx->dispatch);
-+		spin_unlock(&this_hctx->lock);
-+		blk_mq_run_hw_queue(this_hctx, from_sched);
-+	} else if (this_hctx->queue->elevator) {
- 		this_hctx->queue->elevator->type->ops.insert_requests(this_hctx,
- 				&list, 0);
- 		blk_mq_run_hw_queue(this_hctx, from_sched);
+ 	irq = irq_of_parse_and_map(timer, 1);
+@@ -513,20 +513,27 @@ static int __init ttc_timer_probe(struct platform_device *pdev)
+ 	clk_ce = of_clk_get(timer, clksel);
+ 	if (IS_ERR(clk_ce)) {
+ 		pr_err("ERROR: timer input clock not found\n");
+-		return PTR_ERR(clk_ce);
++		ret = PTR_ERR(clk_ce);
++		goto put_clk_cs;
+ 	}
+ 
+ 	ret = ttc_setup_clocksource(clk_cs, timer_baseaddr, timer_width);
+ 	if (ret)
+-		return ret;
++		goto put_clk_ce;
+ 
+ 	ret = ttc_setup_clockevent(clk_ce, timer_baseaddr + 4, irq);
+ 	if (ret)
+-		return ret;
++		goto put_clk_ce;
+ 
+ 	pr_info("%pOFn #0 at %p, irq=%d\n", timer, timer_baseaddr, irq);
+ 
+ 	return 0;
++
++put_clk_ce:
++	clk_put(clk_ce);
++put_clk_cs:
++	clk_put(clk_cs);
++	return ret;
+ }
+ 
+ static const struct of_device_id ttc_timer_of_match[] = {
 -- 
 2.39.2
 
