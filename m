@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D6F8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:58:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D23F4C433C7;
-	Sun, 16 Jul 2023 20:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A878F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:58:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AEF4C433C8;
+	Sun, 16 Jul 2023 20:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689541089;
-	bh=0rP2/jCBcjbswwtuDI399GFcDfrMxjV75FNm5xKNqHY=;
+	s=korg; t=1689541092;
+	bh=RItXigIFTFqs8p6vAoDFKMRc7IwutNXRdSWAfjHFpak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z/ltfMneO4my+DEECgpuetsinmWEaRempxLRtZ1xh75u+QibCBpzyoHaCWYCij/8p
-	 SeDlXXNseGpSUGWmFP96V3UQVvZfgi3RcppTf/dNRFwSrflOY6vsA3URSOfbSWDUgp
-	 9XgwyuJSVvGphRk2Q8Bh5rLQd/qynqyZuPNflacE=
+	b=vhxLfMMSgtZX5bkb3VD3qryKMRxNjdI8K49dYy7/skZyiHDDQYXzqTfFHw5gpWEGg
+	 Hibwjbt6goK6I1UP6Hr5hQdEpSMrsV1SEuqHldDZoOQOhhra/aLtWHA6Y0TIjcrtM/
+	 XGYqZ6BAoofe/h54VJ9BFZPgwN1H1AkEKL+JU0TY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Jay Shin <jaeshin@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
-	Waiman Long <longman@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 585/591] block: make sure local irq is disabled when calling __blkcg_rstat_flush
-Date: Sun, 16 Jul 2023 21:52:04 +0200
-Message-ID: <20230716194938.987630904@linuxfoundation.org>
+	Florent Revest <revest@chromium.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.1 586/591] netfilter: conntrack: Avoid nf_ct_helper_hash uses after free
+Date: Sun, 16 Jul 2023 21:52:05 +0200
+Message-ID: <20230716194939.013910045@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,64 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Florent Revest <revest@chromium.org>
 
-commit 9c39b7a905d84b7da5f59d80f2e455853fea7217 upstream.
+commit 6eef7a2b933885a17679eb8ed0796ddf0ee5309b upstream.
 
-When __blkcg_rstat_flush() is called from cgroup_rstat_flush*() code
-path, interrupt is always disabled.
+If nf_conntrack_init_start() fails (for example due to a
+register_nf_conntrack_bpf() failure), the nf_conntrack_helper_fini()
+clean-up path frees the nf_ct_helper_hash map.
 
-When we start to flush blkcg per-cpu stats list in __blkg_release()
-for avoiding to leak blkcg_gq's reference in commit 20cb1c2fb756
-("blk-cgroup: Flush stats before releasing blkcg_gq"), local irq
-isn't disabled yet, then lockdep warning may be triggered because
-the dependent cgroup locks may be acquired from irq(soft irq) handler.
+When built with NF_CONNTRACK=y, further netfilter modules (e.g:
+netfilter_conntrack_ftp) can still be loaded and call
+nf_conntrack_helpers_register(), independently of whether nf_conntrack
+initialized correctly. This accesses the nf_ct_helper_hash dangling
+pointer and causes a uaf, possibly leading to random memory corruption.
 
-Fix the issue by disabling local irq always.
+This patch guards nf_conntrack_helper_register() from accessing a freed
+or uninitialized nf_ct_helper_hash pointer and fixes possible
+uses-after-free when loading a conntrack module.
 
-Fixes: 20cb1c2fb756 ("blk-cgroup: Flush stats before releasing blkcg_gq")
-Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Closes: https://lore.kernel.org/linux-block/pz2wzwnmn5tk3pwpskmjhli6g3qly7eoknilb26of376c7kwxy@qydzpvt6zpis/T/#u
 Cc: stable@vger.kernel.org
-Cc: Jay Shin <jaeshin@redhat.com>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Waiman Long <longman@redhat.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Link: https://lore.kernel.org/r/20230622084249.1208005-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 12f7a505331e ("netfilter: add user-space connection tracking helper infrastructure")
+Signed-off-by: Florent Revest <revest@chromium.org>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-cgroup.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/netfilter/nf_conntrack_helper.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -886,6 +886,7 @@ static void __blkcg_rstat_flush(struct b
- 	struct llist_head *lhead = per_cpu_ptr(blkcg->lhead, cpu);
- 	struct llist_node *lnode;
- 	struct blkg_iostat_set *bisc, *next_bisc;
-+	unsigned long flags;
+--- a/net/netfilter/nf_conntrack_helper.c
++++ b/net/netfilter/nf_conntrack_helper.c
+@@ -358,6 +358,9 @@ int nf_conntrack_helper_register(struct
+ 	BUG_ON(me->expect_class_max >= NF_CT_MAX_EXPECT_CLASSES);
+ 	BUG_ON(strlen(me->name) > NF_CT_HELPER_NAME_LEN - 1);
  
- 	rcu_read_lock();
++	if (!nf_ct_helper_hash)
++		return -ENOENT;
++
+ 	if (me->expect_policy->max_expected > NF_CT_EXPECT_MAX_CNT)
+ 		return -EINVAL;
  
-@@ -899,7 +900,7 @@ static void __blkcg_rstat_flush(struct b
- 	 * When flushing from cgroup, cgroup_rstat_lock is always held, so
- 	 * this lock won't cause contention most of time.
- 	 */
--	raw_spin_lock(&blkg_stat_lock);
-+	raw_spin_lock_irqsave(&blkg_stat_lock, flags);
- 
- 	/*
- 	 * Iterate only the iostat_cpu's queued in the lockless list.
-@@ -925,7 +926,7 @@ static void __blkcg_rstat_flush(struct b
- 			blkcg_iostat_update(parent, &blkg->iostat.cur,
- 					    &blkg->iostat.last);
- 	}
--	raw_spin_unlock(&blkg_stat_lock);
-+	raw_spin_unlock_irqrestore(&blkg_stat_lock, flags);
- out:
- 	rcu_read_unlock();
+@@ -513,4 +516,5 @@ int nf_conntrack_helper_init(void)
+ void nf_conntrack_helper_fini(void)
+ {
+ 	kvfree(nf_ct_helper_hash);
++	nf_ct_helper_hash = NULL;
  }
 
 
