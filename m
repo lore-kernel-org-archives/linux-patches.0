@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2468F55
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:39:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F186CC433C7;
-	Sun, 16 Jul 2023 20:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432828F55
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:39:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB204C433C7;
+	Sun, 16 Jul 2023 20:39:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539995;
-	bh=pZWZKPiUp8/1kVpMgmvuHqXbHXJWvnktMhYROObtNTY=;
+	s=korg; t=1689539998;
+	bh=/G/qLtXpDDx/5coR0e4vtX5Sbq428Jsu6+aE1Z4OviU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GpF+EK8ddSDYcXhnisipNU0UabpRwbpLPVUbYbCja4NIv4lp060d9jkOmnt7E2jLm
-	 jUgIKmxJMsEBl41p1D/PBNCIUoAapUBuYJ5vTf8ZKl3ClvBymFxQp8t+TwoK6bZ+5S
-	 Oneu13OA9zPLfDz3EcZRzsI+aiLVCiAnE6I18a9M=
+	b=bp9AdRo1YFl8RGuuEXzkvBqe89VO4cxszIekZ7Ji3cWyyFAV9rscZmACQo/QAh/kv
+	 SDxUciZhqqBl9/8NrWbEMG8akjo4WOBGKB6W09OGmgBd5J/4sJuzckHVxxoDL1JsLu
+	 900DOhCvxHZ4u2v2OAZDp3eA/ejUnnCIgEocaUVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>
-Subject: [PATCH 6.1 206/591] drm/bridge: ti-sn65dsi83: Fix enable/disable flow to meet spec
-Date: Sun, 16 Jul 2023 21:45:45 +0200
-Message-ID: <20230716194929.199262898@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 207/591] drm/panel: simple: fix active size for Ampire AM-480272H3TMQW-T01H
+Date: Sun, 16 Jul 2023 21:45:46 +0200
+Message-ID: <20230716194929.227641811@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,95 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frieder Schrempf <frieder.schrempf@kontron.de>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit dd9e329af7236e34c566d3705ea32a63069b9b13 ]
+[ Upstream commit f24b49550814fdee4a98b9552e35e243ccafd4a8 ]
 
-The datasheet describes the following initialization flow including
-minimum delay times between each step:
+The previous setting was related to the overall dimension and not to the
+active display area.
+In the "PHYSICAL SPECIFICATIONS" section, the datasheet shows the
+following parameters:
 
-1. DSI data lanes need to be in LP-11 and the clock lane in HS mode
-2. toggle EN signal
-3. initialize registers
-4. enable PLL
-5. soft reset
-6. enable DSI stream
-7. check error status register
+ ----------------------------------------------------------
+|       Item        |         Specifications        | unit |
+ ----------------------------------------------------------
+| Display area      | 98.7 (W) x 57.5 (H)           |  mm  |
+ ----------------------------------------------------------
+| Overall dimension | 105.5(W) x 67.2(H) x 4.96(D)  |  mm  |
+ ----------------------------------------------------------
 
-To meet this requirement we need to make sure the host bridge's
-pre_enable() is called first by using the pre_enable_prev_first
-flag.
-
-Furthermore we need to split enable() into pre_enable() which covers
-steps 2-5 from above and enable() which covers step 7 and is called
-after the host bridge's enable().
-
-Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Fixes: ceb515ba29ba ("drm/bridge: ti-sn65dsi83: Add TI SN65DSI83 and SN65DSI84 driver")
-Tested-by: Alexander Stein <alexander.stein@ew.tq-group.com> #TQMa8MxML/MBa8Mx
+Fixes: 966fea78adf2 ("drm/panel: simple: Add support for Ampire AM-480272H3TMQW-T01H")
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+[narmstrong: fixed Fixes commit id length]
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230503163313.2640898-3-frieder@fris.de
+Link: https://patchwork.freedesktop.org/patch/msgid/20230516085039.3797303-1-dario.binacchi@amarulasolutions.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi83.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/panel/panel-simple.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi83.c b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-index 0635b824e3682..55efd3eb66723 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-@@ -321,8 +321,8 @@ static u8 sn65dsi83_get_dsi_div(struct sn65dsi83 *ctx)
- 	return dsi_div - 1;
- }
- 
--static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
--				    struct drm_bridge_state *old_bridge_state)
-+static void sn65dsi83_atomic_pre_enable(struct drm_bridge *bridge,
-+					struct drm_bridge_state *old_bridge_state)
- {
- 	struct sn65dsi83 *ctx = bridge_to_sn65dsi83(bridge);
- 	struct drm_atomic_state *state = old_bridge_state->base.state;
-@@ -485,11 +485,22 @@ static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
- 	/* Trigger reset after CSR register update. */
- 	regmap_write(ctx->regmap, REG_RC_RESET, REG_RC_RESET_SOFT_RESET);
- 
-+	/* Wait for 10ms after soft reset as specified in datasheet */
-+	usleep_range(10000, 12000);
-+}
-+
-+static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
-+				    struct drm_bridge_state *old_bridge_state)
-+{
-+	struct sn65dsi83 *ctx = bridge_to_sn65dsi83(bridge);
-+	unsigned int pval;
-+
- 	/* Clear all errors that got asserted during initialization. */
- 	regmap_read(ctx->regmap, REG_IRQ_STAT, &pval);
- 	regmap_write(ctx->regmap, REG_IRQ_STAT, pval);
- 
--	usleep_range(10000, 12000);
-+	/* Wait for 1ms and check for errors in status register */
-+	usleep_range(1000, 1100);
- 	regmap_read(ctx->regmap, REG_IRQ_STAT, &pval);
- 	if (pval)
- 		dev_err(ctx->dev, "Unexpected link status 0x%02x\n", pval);
-@@ -556,6 +567,7 @@ static const struct drm_bridge_funcs sn65dsi83_funcs = {
- 	.attach			= sn65dsi83_attach,
- 	.detach			= sn65dsi83_detach,
- 	.atomic_enable		= sn65dsi83_atomic_enable,
-+	.atomic_pre_enable	= sn65dsi83_atomic_pre_enable,
- 	.atomic_disable		= sn65dsi83_atomic_disable,
- 	.mode_valid		= sn65dsi83_mode_valid,
- 
-@@ -696,6 +708,7 @@ static int sn65dsi83_probe(struct i2c_client *client,
- 
- 	ctx->bridge.funcs = &sn65dsi83_funcs;
- 	ctx->bridge.of_node = dev->of_node;
-+	ctx->bridge.pre_enable_prev_first = true;
- 	drm_bridge_add(&ctx->bridge);
- 
- 	ret = sn65dsi83_host_attach(ctx);
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 8a3b685c2fcc0..7ca00b0323362 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -759,8 +759,8 @@ static const struct panel_desc ampire_am_480272h3tmqw_t01h = {
+ 	.num_modes = 1,
+ 	.bpc = 8,
+ 	.size = {
+-		.width = 105,
+-		.height = 67,
++		.width = 99,
++		.height = 58,
+ 	},
+ 	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
+ };
 -- 
 2.39.2
 
