@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4127B8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:08:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7970C433C7;
-	Sun, 16 Jul 2023 20:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D72F8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:08:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2F3C433C8;
+	Sun, 16 Jul 2023 20:08:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538133;
-	bh=KcBpM8J5Pu+ZN25/Iyzq7G9uhhMRC1zgW7mZ5v7eGJs=;
+	s=korg; t=1689538135;
+	bh=hDYVcA37Jsjq4DxGhrkLzFD8ntrUeRutJplVYvDg37g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ODNNvc1GDUKzyxopiiJWiFVhmPmMrWFEJ56tyH1EGYmqw0/Ah2VDotS14alKk6BiL
-	 Gfhl/CSloqHJzmKZZ7rhshrjrYj6d3MGAzkQajYwEzXPUwtxGxCu1tA6Drk6QYgphL
-	 v+GX5INDAsDBDf+JRqJXUGAcy15xmrPTCJSC4Enk=
+	b=W4NjIGvaISVkk0zu+Wdc+4WIxRdpZtkTKlNO7uLwXqq03Jnwc7LxlrJSlGeX9ptaR
+	 GzFLhnSV+AfbM5hufZxKjOGqtjVgBwfm3m4Zxign25Dxp3lJAd4LNxFVi8mgDcpKlh
+	 GoR33mqSG0cezrgkug3RrASq13MYNhazIkZC3pP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 341/800] arm64: dts: renesas: ulcb-kf: Remove flow control for SCIF1
-Date: Sun, 16 Jul 2023 21:43:14 +0200
-Message-ID: <20230716194957.001722777@linuxfoundation.org>
+Subject: [PATCH 6.4 342/800] drm/msm/dpu: set DSC flush bit correctly at MDP CTL flush register
+Date: Sun, 16 Jul 2023 21:43:15 +0200
+Message-ID: <20230716194957.024917542@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,44 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Kuogee Hsieh <quic_khsieh@quicinc.com>
 
-[ Upstream commit 1a2c4e5635177939a088d22fa35c6a7032725663 ]
+[ Upstream commit 12cef323c903bd8b13d1f6ff24a9695c2cdc360b ]
 
-The schematics are misleading, the flow control is for HSCIF1. We need
-SCIF1 for GNSS/GPS which does not use flow control.
+The CTL_FLUSH register should be programmed with the 22th bit
+(DSC_IDX) to flush the DSC hardware blocks, not the literal value of
+22 (which corresponds to flushing VIG1, VIG2 and RGB1 instead).
 
-Fixes: c6c816e22bc8 ("arm64: dts: ulcb-kf: enable SCIF1")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230525084823.4195-2-wsa+renesas@sang-engineering.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Changes in V12:
+-- split this patch out of "separate DSC flush update out of interface"
+
+Changes in V13:
+-- rewording the commit text
+
+Changes in V14:
+-- drop 'DSC" from "The DSC CTL_FLUSH register" at commit text
+
+Fixes: 77f6da90487c ("drm/msm/disp/dpu1: Add DSC support in hw_ctl")
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Patchwork: https://patchwork.freedesktop.org/patch/539496/
+Link: https://lore.kernel.org/r/1685036458-22683-2-git-send-email-quic_khsieh@quicinc.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/ulcb-kf.dtsi | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/ulcb-kf.dtsi b/arch/arm64/boot/dts/renesas/ulcb-kf.dtsi
-index efc80960380f4..c78b7a5c2e2aa 100644
---- a/arch/arm64/boot/dts/renesas/ulcb-kf.dtsi
-+++ b/arch/arm64/boot/dts/renesas/ulcb-kf.dtsi
-@@ -367,7 +367,7 @@ hscif0_pins: hscif0 {
- 	};
- 
- 	scif1_pins: scif1 {
--		groups = "scif1_data_b", "scif1_ctrl";
-+		groups = "scif1_data_b";
- 		function = "scif1";
- 	};
- 
-@@ -397,7 +397,6 @@ &sound_clk_pins
- &scif1 {
- 	pinctrl-0 = <&scif1_pins>;
- 	pinctrl-names = "default";
--	uart-has-rtscts;
- 
- 	status = "okay";
- };
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+index bbdc95ce374a7..e57faf5906a8b 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+@@ -542,7 +542,7 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
+ 		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
+ 			      BIT(cfg->merge_3d - MERGE_3D_0));
+ 	if (cfg->dsc) {
+-		DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, DSC_IDX);
++		DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, BIT(DSC_IDX));
+ 		DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
+ 	}
+ }
 -- 
 2.39.2
 
