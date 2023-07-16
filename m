@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5FC8F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:25:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D53CC433C7;
-	Sun, 16 Jul 2023 20:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810438F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:25:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06C7EC433C8;
+	Sun, 16 Jul 2023 20:25:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539108;
-	bh=ae0FNF8BgrzFP3Moios+vQ25h06mx2/p8mhO9UerDDM=;
+	s=korg; t=1689539111;
+	bh=jooB9f2UUfNrDrT9W/2rEGMLLbq+wtdriwsqDDXK9Pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bxoj2XnFA66fwYp++br8ml7HTfnptBWAkNNFy/BCwx82i3t6xYYxAKH2bAkbML/zH
-	 u6CTw/axZhh93Kt+nv9ih5/+YJVFDs7xflUEm035BfLK8TdskbRx6GeIvBlXR3yoxa
-	 ZqV0ZMPQqw+D+WvJpFsuUNqFMYc81YmVfzkRo2Zo=
+	b=mfUrIDYNZ3YqmBFi/mCh90lHBm2IFljvzjseLbHgrhagIo7xSN7jVC0Z2lI5eeDkx
+	 37MA9P09T8dvnT+ZRLg4H7v/VU8txV7mbHe91iJ58m38lBZVLF5yOXu9ciOjMOy3Md
+	 eS+z9eZv8g+MzYPtR5rSXAdwU+kr7kG/g+t0SLno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 661/800] sctp: fix potential deadlock on &net->sctp.addr_wq_lock
-Date: Sun, 16 Jul 2023 21:48:34 +0200
-Message-ID: <20230716195004.465895516@linuxfoundation.org>
+Subject: [PATCH 6.4 662/800] net/sched: act_ipt: add sanity checks on table name and hook locations
+Date: Sun, 16 Jul 2023 21:48:35 +0200
+Message-ID: <20230716195004.488838108@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,55 +37,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 6feb37b3b06e9049e20dcf7e23998f92c9c5be9a ]
+[ Upstream commit b4ee93380b3c891fea996af8d1d3ca0e36ad31f0 ]
 
-As &net->sctp.addr_wq_lock is also acquired by the timer
-sctp_addr_wq_timeout_handler() in protocal.c, the same lock acquisition
-at sctp_auto_asconf_init() seems should disable irq since it is called
-from sctp_accept() under process context.
+Looks like "tc" hard-codes "mangle" as the only supported table
+name, but on kernel side there are no checks.
 
-Possible deadlock scenario:
-sctp_accept()
-    -> sctp_sock_migrate()
-    -> sctp_auto_asconf_init()
-    -> spin_lock(&net->sctp.addr_wq_lock)
-        <timer interrupt>
-        -> sctp_addr_wq_timeout_handler()
-        -> spin_lock_bh(&net->sctp.addr_wq_lock); (deadlock here)
+This is wrong.  Not all xtables targets are safe to call from tc.
+E.g. "nat" targets assume skb has a conntrack object assigned to it.
+Normally those get called from netfilter nat core which consults the
+nat table to obtain the address mapping.
 
-This flaw was found using an experimental static analysis tool we are
-developing for irq-related deadlock.
+"tc" userspace either sets PRE or POSTROUTING as hook number, but there
+is no validation of this on kernel side, so update netlink policy to
+reject bogus numbers.  Some targets may assume skb_dst is set for
+input/forward hooks, so prevent those from being used.
 
-The tentative patch fix the potential deadlock by spin_lock_bh().
+act_ipt uses the hook number in two places:
+1. the state hook number, this is fine as-is
+2. to set par.hook_mask
 
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Fixes: 34e5b0118685 ("sctp: delay auto_asconf init until binding the first addr")
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/20230627120340.19432-1-dg573847474@gmail.com
+The latter is a bit mask, so update the assignment to make
+xt_check_target() to the right thing.
+
+Followup patch adds required checks for the skb/packet headers before
+calling the targets evaluation function.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sched/act_ipt.c | 27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index a68e1d541b128..ee15eff6364ee 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -364,9 +364,9 @@ static void sctp_auto_asconf_init(struct sctp_sock *sp)
- 	struct net *net = sock_net(&sp->inet.sk);
+diff --git a/net/sched/act_ipt.c b/net/sched/act_ipt.c
+index 5d96ffebd40f0..ea7f151e7dd29 100644
+--- a/net/sched/act_ipt.c
++++ b/net/sched/act_ipt.c
+@@ -48,7 +48,7 @@ static int ipt_init_target(struct net *net, struct xt_entry_target *t,
+ 	par.entryinfo = &e;
+ 	par.target    = target;
+ 	par.targinfo  = t->data;
+-	par.hook_mask = hook;
++	par.hook_mask = 1 << hook;
+ 	par.family    = NFPROTO_IPV4;
  
- 	if (net->sctp.default_auto_asconf) {
--		spin_lock(&net->sctp.addr_wq_lock);
-+		spin_lock_bh(&net->sctp.addr_wq_lock);
- 		list_add_tail(&sp->auto_asconf_list, &net->sctp.auto_asconf_splist);
--		spin_unlock(&net->sctp.addr_wq_lock);
-+		spin_unlock_bh(&net->sctp.addr_wq_lock);
- 		sp->do_auto_asconf = 1;
+ 	ret = xt_check_target(&par, t->u.target_size - sizeof(*t), 0, false);
+@@ -85,7 +85,8 @@ static void tcf_ipt_release(struct tc_action *a)
+ 
+ static const struct nla_policy ipt_policy[TCA_IPT_MAX + 1] = {
+ 	[TCA_IPT_TABLE]	= { .type = NLA_STRING, .len = IFNAMSIZ },
+-	[TCA_IPT_HOOK]	= { .type = NLA_U32 },
++	[TCA_IPT_HOOK]	= NLA_POLICY_RANGE(NLA_U32, NF_INET_PRE_ROUTING,
++					   NF_INET_NUMHOOKS),
+ 	[TCA_IPT_INDEX]	= { .type = NLA_U32 },
+ 	[TCA_IPT_TARG]	= { .len = sizeof(struct xt_entry_target) },
+ };
+@@ -158,15 +159,27 @@ static int __tcf_ipt_init(struct net *net, unsigned int id, struct nlattr *nla,
+ 			return -EEXIST;
+ 		}
  	}
- }
++
++	err = -EINVAL;
+ 	hook = nla_get_u32(tb[TCA_IPT_HOOK]);
++	switch (hook) {
++	case NF_INET_PRE_ROUTING:
++		break;
++	case NF_INET_POST_ROUTING:
++		break;
++	default:
++		goto err1;
++	}
++
++	if (tb[TCA_IPT_TABLE]) {
++		/* mangle only for now */
++		if (nla_strcmp(tb[TCA_IPT_TABLE], "mangle"))
++			goto err1;
++	}
+ 
+-	err = -ENOMEM;
+-	tname = kmalloc(IFNAMSIZ, GFP_KERNEL);
++	tname = kstrdup("mangle", GFP_KERNEL);
+ 	if (unlikely(!tname))
+ 		goto err1;
+-	if (tb[TCA_IPT_TABLE] == NULL ||
+-	    nla_strscpy(tname, tb[TCA_IPT_TABLE], IFNAMSIZ) >= IFNAMSIZ)
+-		strcpy(tname, "mangle");
+ 
+ 	t = kmemdup(td, td->u.target_size, GFP_KERNEL);
+ 	if (unlikely(!t))
 -- 
 2.39.2
 
