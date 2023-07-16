@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71378F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:12:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08BC4C433C8;
-	Sun, 16 Jul 2023 20:12:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646498F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:13:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F3EC433C7;
+	Sun, 16 Jul 2023 20:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538378;
-	bh=jBI0J247DjJExCj7GLAqUJ1bBj9RLJva4hacAEW1Fzw=;
+	s=korg; t=1689538381;
+	bh=U6n4qS2WkNKTkJoSo+P2QgboCRjXibKI8IcjGgPpB3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ubY1Z3xc/+pS4wuR556p9gDrScpx+DLEa+Y9rUrcX2oJZEVnDRpFnQzW8+6Lc2f2x
-	 8fiy+F3B1cvfSClkJUzkbcRMSj+/g0RYlLyVzYOakrNmD8mSP209Hj891GJrPCyYxz
-	 zVYJWohs8lCu5paItBCnMgAWUFpBBSoo3XJarJD4=
+	b=KlfcDqMu5oZ25ctmC8w0VVOmEw+3N0Q/gKI1TEQEMsnhE9ZqPXUh6C46lj6u6W9Bh
+	 0x4Fgv3RtZOt54UH64OrZi6ZBb2JGRXW78AtB+VQzfAKfLnhBLbwbEHk2aDrSbUhL7
+	 eo3Bs+cw1ChLM376gbP1AmvSiwItfF1Cte3aMGKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 400/800] drm/msm/dsi: Remove incorrect references to slice_count
-Date: Sun, 16 Jul 2023 21:44:13 +0200
-Message-ID: <20230716194958.362602099@linuxfoundation.org>
+Subject: [PATCH 6.4 401/800] drm/msm/dp: Drop aux devices together with DP controller
+Date: Sun, 16 Jul 2023 21:44:14 +0200
+Message-ID: <20230716194958.385531119@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,81 +36,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jessica Zhang <quic_jesszhan@quicinc.com>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-[ Upstream commit 155fa3a91d64221eb0885fd221cc8085dbef908f ]
+[ Upstream commit a7bfb2ad2184a1fba78be35209b6019aa8cc8d4d ]
 
-Currently, slice_count is being used to calculate word count and
-pkt_per_line. Instead, these values should be calculated using slice per
-packet, which is not the same as slice_count.
+Using devres to depopulate the aux bus made sure that upon a probe
+deferral the EDP panel device would be destroyed and recreated upon next
+attempt.
 
-Slice count represents the number of slices per interface, and its value
-will not always match that of slice per packet. For example, it is possible
-to have cases where there are multiple slices per interface but the panel
-specifies only one slice per packet.
+But the struct device which the devres is tied to is the DPUs
+(drm_dev->dev), which may be happen after the DP controller is torn
+down.
 
-Thus, use the default value of one slice per packet and remove slice_count
-from the aforementioned calculations.
+Indications of this can be seen in the commonly seen EDID-hexdump full
+of zeros in the log, or the occasional/rare KASAN fault where the
+panel's attempt to read the EDID information causes a use after free on
+DP resources.
 
-Fixes: 08802f515c3c ("drm/msm/dsi: Add support for DSC configuration")
-Fixes: bc6b6ff8135c ("drm/msm/dsi: Use DSC slice(s) packet size to compute word count")
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/541965/
-Link: https://lore.kernel.org/r/20230405-add-dsc-support-v6-5-95eab864d1b6@quicinc.com
+It's tempting to move the devres to the DP controller's struct device,
+but the resources used by the device(s) on the aux bus are explicitly
+torn down in the error path. The KASAN-reported use-after-free also
+remains, as the DP aux "module" explicitly frees its devres-allocated
+memory in this code path.
+
+As such, explicitly depopulate the aux bus in the error path, and in the
+component unbind path, to avoid these issues.
+
+Fixes: 2b57f726611e ("drm/msm/dp: fix aux-bus EP lifetime")
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Patchwork: https://patchwork.freedesktop.org/patch/542163/
+Link: https://lore.kernel.org/r/20230612220106.1884039-1-quic_bjorande@quicinc.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_display.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 961689a255c47..735a7f6386df8 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -850,18 +850,17 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 	 */
- 	slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->slice_width);
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 03b0eda6df54a..294ab2bd856de 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -329,6 +329,8 @@ static void dp_display_unbind(struct device *dev, struct device *master,
  
--	/*
--	 * If slice_count is greater than slice_per_intf
--	 * then default to 1. This can happen during partial
--	 * update.
--	 */
--	if (dsc->slice_count > slice_per_intf)
--		dsc->slice_count = 1;
--
- 	total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
+ 	kthread_stop(dp->ev_tsk);
  
- 	eol_byte_num = total_bytes_per_intf % 3;
--	pkt_per_line = slice_per_intf / dsc->slice_count;
++	of_dp_aux_depopulate_bus(dp->aux);
 +
-+	/*
-+	 * Typically, pkt_per_line = slice_per_intf * slice_per_pkt.
-+	 *
-+	 * Since the current driver only supports slice_per_pkt = 1,
-+	 * pkt_per_line will be equal to slice per intf for now.
-+	 */
-+	pkt_per_line = slice_per_intf;
+ 	dp_power_client_deinit(dp->power);
+ 	dp_unregister_audio_driver(dev, dp->audio);
+ 	dp_aux_unregister(dp->aux);
+@@ -1509,11 +1511,6 @@ void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
+ 	}
+ }
  
- 	if (is_cmd_mode) /* packet data type */
- 		reg = DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE(MIPI_DSI_DCS_LONG_WRITE);
-@@ -985,7 +984,14 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 		if (!msm_host->dsc)
- 			wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
- 		else
--			wc = msm_host->dsc->slice_chunk_size * msm_host->dsc->slice_count + 1;
-+			/*
-+			 * When DSC is enabled, WC = slice_chunk_size * slice_per_pkt + 1.
-+			 * Currently, the driver only supports default value of slice_per_pkt = 1
-+			 *
-+			 * TODO: Expand mipi_dsi_device struct to hold slice_per_pkt info
-+			 *       and adjust DSC math to account for slice_per_pkt.
-+			 */
-+			wc = msm_host->dsc->slice_chunk_size + 1;
+-static void of_dp_aux_depopulate_bus_void(void *data)
+-{
+-	of_dp_aux_depopulate_bus(data);
+-}
+-
+ static int dp_display_get_next_bridge(struct msm_dp *dp)
+ {
+ 	int rc;
+@@ -1541,12 +1538,6 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
+ 		of_node_put(aux_bus);
+ 		if (rc)
+ 			goto error;
+-
+-		rc = devm_add_action_or_reset(dp->drm_dev->dev,
+-						of_dp_aux_depopulate_bus_void,
+-						dp_priv->aux);
+-		if (rc)
+-			goto error;
+ 	} else if (dp->is_edp) {
+ 		DRM_ERROR("eDP aux_bus not found\n");
+ 		return -ENODEV;
+@@ -1570,6 +1561,7 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
  
- 		dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL,
- 			DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
+ error:
+ 	if (dp->is_edp) {
++		of_dp_aux_depopulate_bus(dp_priv->aux);
+ 		dp_display_host_phy_exit(dp_priv);
+ 		dp_display_host_deinit(dp_priv);
+ 	}
 -- 
 2.39.2
 
