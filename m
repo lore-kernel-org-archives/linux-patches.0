@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDAC8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:50:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3030C433C7;
-	Sun, 16 Jul 2023 20:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E91A8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:50:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C6ABC433C7;
+	Sun, 16 Jul 2023 20:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540630;
-	bh=5w/SXJvSSN0lvDF8NdC5CubC4dBvV/ZW1pOyj+a4LPA=;
+	s=korg; t=1689540632;
+	bh=d32Qe1cU+B+kLM+MRRRaKSd6S9nkufTBX3Tc8MhuGso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iFA9xMJVpob9prenSD/RJpnDzJ3amLzH+khoWIAps+A/XTnUCYroopdJwfxCRoCgD
-	 zi7Az6Y7xcHemRK4fB6s3a6/T1Fkd4EbPS1x2V9uoFq5qdbziTFVbbSaklgG8hmpti
-	 MGUkoNRCFyh7IqThwQxZm20YXlWotf73IINhW/3E=
+	b=QsUxksIXWzuHpS9uHrPk9+gFl/Qt3euXNpo+UhBdKyqQWTY1QNgPxEiBlFR91t/8S
+	 779G58o8nFcmrSrJtZS5hb+pqu5J/BqW5zdV8crA0iEj7j2uSRt0gccNbbCPoiTDHX
+	 la9DAf3s/H9HygSYP8KJRhFVT2o8M8B0UjOE/vtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Marko <robimarko@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 404/591] clk: qcom: ipq6018: fix networking resets
-Date: Sun, 16 Jul 2023 21:49:03 +0200
-Message-ID: <20230716194934.369766237@linuxfoundation.org>
+Subject: [PATCH 6.1 405/591] clk: qcom: dispcc-qcm2290: Fix BI_TCXO_AO handling
+Date: Sun, 16 Jul 2023 21:49:04 +0200
+Message-ID: <20230716194934.395662476@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,70 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Marko <robimarko@gmail.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 349b5bed539b491b7894a5186a895751fd8ba6c7 ]
+[ Upstream commit 92dfee0fc889b5b00ffb6b1de87ce64c483bcb7b ]
 
-Networking resets in IPQ6018 all use bitmask as they require multiple
-bits to be set and cleared instead of a single bit.
+BI_TCXO_AO (.fw_name = "bi_tcxo_ao") was previously made to reuse the
+same parent enum entry as BI_TCXO (.fw_name = "bi_tcxo") in parent_map_2.
 
-So, current networking resets have the same register and bit 0 set which
-is clearly incorrect.
+Resolve it by introducing its own entry in the parent enum and
+correctly assigning it in disp_cc_parent_map_2[].
 
-Fixes: d9db07f088af ("clk: qcom: Add ipq6018 Global Clock Controller support")
-Signed-off-by: Robert Marko <robimarko@gmail.com>
+Fixes: cc517ea3333f ("clk: qcom: Add display clock controller driver for QCM2290")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230526190855.2941291-2-robimarko@gmail.com
+Link: https://lore.kernel.org/r/20230412-topic-qcm_dispcc-v2-1-bce7dd512fe4@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-ipq6018.c | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ drivers/clk/qcom/dispcc-qcm2290.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-ipq6018.c b/drivers/clk/qcom/gcc-ipq6018.c
-index 5c5d1b04ea7af..cde62a11f5736 100644
---- a/drivers/clk/qcom/gcc-ipq6018.c
-+++ b/drivers/clk/qcom/gcc-ipq6018.c
-@@ -4517,24 +4517,24 @@ static const struct qcom_reset_map gcc_ipq6018_resets[] = {
- 	[GCC_PCIE0_AHB_ARES] = { 0x75040, 5 },
- 	[GCC_PCIE0_AXI_MASTER_STICKY_ARES] = { 0x75040, 6 },
- 	[GCC_PCIE0_AXI_SLAVE_STICKY_ARES] = { 0x75040, 7 },
--	[GCC_PPE_FULL_RESET] = { 0x68014, 0 },
--	[GCC_UNIPHY0_SOFT_RESET] = { 0x56004, 0 },
-+	[GCC_PPE_FULL_RESET] = { .reg = 0x68014, .bitmask = 0xf0000 },
-+	[GCC_UNIPHY0_SOFT_RESET] = { .reg = 0x56004, .bitmask = 0x3ff2 },
- 	[GCC_UNIPHY0_XPCS_RESET] = { 0x56004, 2 },
--	[GCC_UNIPHY1_SOFT_RESET] = { 0x56104, 0 },
-+	[GCC_UNIPHY1_SOFT_RESET] = { .reg = 0x56104, .bitmask = 0x32 },
- 	[GCC_UNIPHY1_XPCS_RESET] = { 0x56104, 2 },
--	[GCC_EDMA_HW_RESET] = { 0x68014, 0 },
--	[GCC_NSSPORT1_RESET] = { 0x68014, 0 },
--	[GCC_NSSPORT2_RESET] = { 0x68014, 0 },
--	[GCC_NSSPORT3_RESET] = { 0x68014, 0 },
--	[GCC_NSSPORT4_RESET] = { 0x68014, 0 },
--	[GCC_NSSPORT5_RESET] = { 0x68014, 0 },
--	[GCC_UNIPHY0_PORT1_ARES] = { 0x56004, 0 },
--	[GCC_UNIPHY0_PORT2_ARES] = { 0x56004, 0 },
--	[GCC_UNIPHY0_PORT3_ARES] = { 0x56004, 0 },
--	[GCC_UNIPHY0_PORT4_ARES] = { 0x56004, 0 },
--	[GCC_UNIPHY0_PORT5_ARES] = { 0x56004, 0 },
--	[GCC_UNIPHY0_PORT_4_5_RESET] = { 0x56004, 0 },
--	[GCC_UNIPHY0_PORT_4_RESET] = { 0x56004, 0 },
-+	[GCC_EDMA_HW_RESET] = { .reg = 0x68014, .bitmask = 0x300000 },
-+	[GCC_NSSPORT1_RESET] = { .reg = 0x68014, .bitmask = 0x1000003 },
-+	[GCC_NSSPORT2_RESET] = { .reg = 0x68014, .bitmask = 0x200000c },
-+	[GCC_NSSPORT3_RESET] = { .reg = 0x68014, .bitmask = 0x4000030 },
-+	[GCC_NSSPORT4_RESET] = { .reg = 0x68014, .bitmask = 0x8000300 },
-+	[GCC_NSSPORT5_RESET] = { .reg = 0x68014, .bitmask = 0x10000c00 },
-+	[GCC_UNIPHY0_PORT1_ARES] = { .reg = 0x56004, .bitmask = 0x30 },
-+	[GCC_UNIPHY0_PORT2_ARES] = { .reg = 0x56004, .bitmask = 0xc0 },
-+	[GCC_UNIPHY0_PORT3_ARES] = { .reg = 0x56004, .bitmask = 0x300 },
-+	[GCC_UNIPHY0_PORT4_ARES] = { .reg = 0x56004, .bitmask = 0xc00 },
-+	[GCC_UNIPHY0_PORT5_ARES] = { .reg = 0x56004, .bitmask = 0x3000 },
-+	[GCC_UNIPHY0_PORT_4_5_RESET] = { .reg = 0x56004, .bitmask = 0x3c02 },
-+	[GCC_UNIPHY0_PORT_4_RESET] = { .reg = 0x56004, .bitmask = 0xc02 },
- 	[GCC_LPASS_BCR] = {0x1F000, 0},
- 	[GCC_UBI32_TBU_BCR] = {0x65000, 0},
- 	[GCC_LPASS_TBU_BCR] = {0x6C000, 0},
+diff --git a/drivers/clk/qcom/dispcc-qcm2290.c b/drivers/clk/qcom/dispcc-qcm2290.c
+index 24755dc841f9d..4a4993470852b 100644
+--- a/drivers/clk/qcom/dispcc-qcm2290.c
++++ b/drivers/clk/qcom/dispcc-qcm2290.c
+@@ -23,6 +23,7 @@
+ 
+ enum {
+ 	P_BI_TCXO,
++	P_BI_TCXO_AO,
+ 	P_DISP_CC_PLL0_OUT_MAIN,
+ 	P_DSI0_PHY_PLL_OUT_BYTECLK,
+ 	P_DSI0_PHY_PLL_OUT_DSICLK,
+@@ -81,7 +82,7 @@ static const struct clk_parent_data disp_cc_parent_data_1[] = {
+ };
+ 
+ static const struct parent_map disp_cc_parent_map_2[] = {
+-	{ P_BI_TCXO, 0 },
++	{ P_BI_TCXO_AO, 0 },
+ 	{ P_GPLL0_OUT_MAIN, 4 },
+ };
+ 
+@@ -150,7 +151,7 @@ static struct clk_regmap_div disp_cc_mdss_byte0_div_clk_src = {
+ };
+ 
+ static const struct freq_tbl ftbl_disp_cc_mdss_ahb_clk_src[] = {
+-	F(19200000, P_BI_TCXO, 1, 0, 0),
++	F(19200000, P_BI_TCXO_AO, 1, 0, 0),
+ 	F(37500000, P_GPLL0_OUT_MAIN, 8, 0, 0),
+ 	F(75000000, P_GPLL0_OUT_MAIN, 4, 0, 0),
+ 	{ }
 -- 
 2.39.2
 
