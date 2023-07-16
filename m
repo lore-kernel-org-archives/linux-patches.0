@@ -1,36 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E718F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:16:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E407BC433C8;
-	Sun, 16 Jul 2023 20:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AADF8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:16:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F348AC433C8;
+	Sun, 16 Jul 2023 20:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538576;
-	bh=Oc4BTr5K3vTeSxq00miA1QYT23jOa88djcW0k/clk4w=;
+	s=korg; t=1689538579;
+	bh=36Jb0ECvCjsUN1MaQrM17AQKhClLRU6tjgI8Ie/Ffks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bGe9napxUyK/4tdwao8Ae0nlmRu8cUIHeGLMfCpCr7ZKkCeySuWJr5K4YVpA28qUB
-	 05N+GvS6GuaPl2r/KaQChWPhC6pJ7YaUVJfgeCbVbgKmFRfoV9ydzuK7VfasySDEZ4
-	 kj9DtzAILC/lvl83hekEBnG1NUpHvBeAkGnXOU/4=
+	b=CSytb5DE0GlqkEJ63MwC6EkHm04pEoRqjOWvlBlshuIHh9+uLttIsWK5SG53ortYc
+	 DEzvieIl9AkNXvaA4i9zCmlyE4mD3kT7CzVuii02RL5dhXQiF13JDNdC+2E0/uCxZs
+	 Yc7r2kxWG+yspMbAx4i/SCqIPi+mXHzonZZYPsj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	=?UTF-8?q?Breno=20Leit=C3=A3o?= <leitao@debian.org>,
-	Nayna Jain <nayna@linux.ibm.com>,
-	Paulo Flabiano Smorigo <pfsmorigo@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	linux-crypto@vger.kernel.org,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	linuxppc-dev@lists.ozlabs.org,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 501/800] crypto: nx - fix build warnings when DEBUG_FS is not enabled
-Date: Sun, 16 Jul 2023 21:45:54 +0200
-Message-ID: <20230716195000.731459159@linuxfoundation.org>
+Subject: [PATCH 6.4 502/800] modpost: fix section mismatch message for R_ARM_ABS32
+Date: Sun, 16 Jul 2023 21:45:55 +0200
+Message-ID: <20230716195000.754923044@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -44,83 +34,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit b04b076fb56560b39d695ac3744db457e12278fd ]
+[ Upstream commit b7c63520f6703a25eebb4f8138fed764fcae1c6f ]
 
-Fix build warnings when DEBUG_FS is not enabled by using an empty
-do-while loop instead of a value:
+addend_arm_rel() processes R_ARM_ABS32 in a wrong way.
 
-In file included from ../drivers/crypto/nx/nx.c:27:
-../drivers/crypto/nx/nx.c: In function 'nx_register_algs':
-../drivers/crypto/nx/nx.h:173:33: warning: statement with no effect [-Wunused-value]
-  173 | #define NX_DEBUGFS_INIT(drv)    (0)
-../drivers/crypto/nx/nx.c:573:9: note: in expansion of macro 'NX_DEBUGFS_INIT'
-  573 |         NX_DEBUGFS_INIT(&nx_driver);
-../drivers/crypto/nx/nx.c: In function 'nx_remove':
-../drivers/crypto/nx/nx.h:174:33: warning: statement with no effect [-Wunused-value]
-  174 | #define NX_DEBUGFS_FINI(drv)    (0)
-../drivers/crypto/nx/nx.c:793:17: note: in expansion of macro 'NX_DEBUGFS_FINI'
-  793 |                 NX_DEBUGFS_FINI(&nx_driver);
+Here, test code.
 
-Also, there is no need to build nx_debugfs.o when DEBUG_FS is not
-enabled, so change the Makefile to accommodate that.
+  [test code 1]
 
-Fixes: ae0222b7289d ("powerpc/crypto: nx driver code supporting nx encryption")
-Fixes: aef7b31c8833 ("powerpc/crypto: Build files for the nx device driver")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Breno Leitão <leitao@debian.org>
-Cc: Nayna Jain <nayna@linux.ibm.com>
-Cc: Paulo Flabiano Smorigo <pfsmorigo@gmail.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: linux-crypto@vger.kernel.org
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: linuxppc-dev@lists.ozlabs.org
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+    #include <linux/init.h>
+
+    int __initdata foo;
+    int get_foo(void) { return foo; }
+
+If you compile it with ARM versatile_defconfig, modpost will show the
+symbol name, (unknown).
+
+  WARNING: modpost: vmlinux.o: section mismatch in reference: get_foo (section: .text) -> (unknown) (section: .init.data)
+
+(You need to use GNU linker instead of LLD to reproduce it.)
+
+If you compile it for other architectures, modpost will show the correct
+symbol name.
+
+  WARNING: modpost: vmlinux.o: section mismatch in reference: get_foo (section: .text) -> foo (section: .init.data)
+
+For R_ARM_ABS32, addend_arm_rel() sets r->r_addend to a wrong value.
+
+I just mimicked the code in arch/arm/kernel/module.c.
+
+However, there is more difficulty for ARM.
+
+Here, test code.
+
+  [test code 2]
+
+    #include <linux/init.h>
+
+    int __initdata foo;
+    int get_foo(void) { return foo; }
+
+    int __initdata bar;
+    int get_bar(void) { return bar; }
+
+With this commit applied, modpost will show the following messages
+for ARM versatile_defconfig:
+
+  WARNING: modpost: vmlinux.o: section mismatch in reference: get_foo (section: .text) -> foo (section: .init.data)
+  WARNING: modpost: vmlinux.o: section mismatch in reference: get_bar (section: .text) -> foo (section: .init.data)
+
+The reference from 'get_bar' to 'foo' seems wrong.
+
+I have no solution for this because it is true in assembly level.
+
+In the following output, relocation at 0x1c is no longer associated
+with 'bar'. The two relocation entries point to the same symbol, and
+the offset to 'bar' is encoded in the instruction 'r0, [r3, #4]'.
+
+  Disassembly of section .text:
+
+  00000000 <get_foo>:
+     0: e59f3004          ldr     r3, [pc, #4]   @ c <get_foo+0xc>
+     4: e5930000          ldr     r0, [r3]
+     8: e12fff1e          bx      lr
+     c: 00000000          .word   0x00000000
+
+  00000010 <get_bar>:
+    10: e59f3004          ldr     r3, [pc, #4]   @ 1c <get_bar+0xc>
+    14: e5930004          ldr     r0, [r3, #4]
+    18: e12fff1e          bx      lr
+    1c: 00000000          .word   0x00000000
+
+  Relocation section '.rel.text' at offset 0x244 contains 2 entries:
+   Offset     Info    Type            Sym.Value  Sym. Name
+  0000000c  00000c02 R_ARM_ABS32       00000000   .init.data
+  0000001c  00000c02 R_ARM_ABS32       00000000   .init.data
+
+When find_elf_symbol() gets into a situation where relsym->st_name is
+zero, there is no guarantee to get the symbol name as written in C.
+
+I am keeping the current logic because it is useful in many architectures,
+but the symbol name is not always correct depending on the optimization.
+I left some comments in find_tosym().
+
+Fixes: 56a974fa2d59 ("kbuild: make better section mismatch reports on arm")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/nx/Makefile | 2 +-
- drivers/crypto/nx/nx.h     | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ scripts/mod/modpost.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/crypto/nx/Makefile b/drivers/crypto/nx/Makefile
-index d00181a26dd65..483cef62acee8 100644
---- a/drivers/crypto/nx/Makefile
-+++ b/drivers/crypto/nx/Makefile
-@@ -1,7 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0
- obj-$(CONFIG_CRYPTO_DEV_NX_ENCRYPT) += nx-crypto.o
- nx-crypto-objs := nx.o \
--		  nx_debugfs.o \
- 		  nx-aes-cbc.o \
- 		  nx-aes-ecb.o \
- 		  nx-aes-gcm.o \
-@@ -11,6 +10,7 @@ nx-crypto-objs := nx.o \
- 		  nx-sha256.o \
- 		  nx-sha512.o
+diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
+index 9b6e8109af83f..6c2371f684a94 100644
+--- a/scripts/mod/modpost.c
++++ b/scripts/mod/modpost.c
+@@ -1150,6 +1150,10 @@ static Elf_Sym *find_elf_symbol(struct elf_info *elf, Elf64_Sword addr,
+ 	if (relsym->st_name != 0)
+ 		return relsym;
  
-+nx-crypto-$(CONFIG_DEBUG_FS) += nx_debugfs.o
- obj-$(CONFIG_CRYPTO_DEV_NX_COMPRESS_PSERIES) += nx-compress-pseries.o nx-compress.o
- obj-$(CONFIG_CRYPTO_DEV_NX_COMPRESS_POWERNV) += nx-compress-powernv.o nx-compress.o
- nx-compress-objs := nx-842.o
-diff --git a/drivers/crypto/nx/nx.h b/drivers/crypto/nx/nx.h
-index c6233173c612e..2697baebb6a35 100644
---- a/drivers/crypto/nx/nx.h
-+++ b/drivers/crypto/nx/nx.h
-@@ -170,8 +170,8 @@ struct nx_sg *nx_walk_and_build(struct nx_sg *, unsigned int,
- void nx_debugfs_init(struct nx_crypto_driver *);
- void nx_debugfs_fini(struct nx_crypto_driver *);
- #else
--#define NX_DEBUGFS_INIT(drv)	(0)
--#define NX_DEBUGFS_FINI(drv)	(0)
-+#define NX_DEBUGFS_INIT(drv)	do {} while (0)
-+#define NX_DEBUGFS_FINI(drv)	do {} while (0)
- #endif
++	/*
++	 * Strive to find a better symbol name, but the resulting name may not
++	 * match the symbol referenced in the original code.
++	 */
+ 	relsym_secindex = get_secindex(elf, relsym);
+ 	for (sym = elf->symtab_start; sym < elf->symtab_stop; sym++) {
+ 		if (get_secindex(elf, sym) != relsym_secindex)
+@@ -1410,12 +1414,14 @@ static int addend_386_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
+ static int addend_arm_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
+ {
+ 	unsigned int r_typ = ELF_R_TYPE(r->r_info);
++	Elf_Sym *sym = elf->symtab_start + ELF_R_SYM(r->r_info);
++	void *loc = reloc_location(elf, sechdr, r);
++	uint32_t inst;
  
- #define NX_PAGE_NUM(x)		((u64)(x) & 0xfffffffffffff000ULL)
+ 	switch (r_typ) {
+ 	case R_ARM_ABS32:
+-		/* From ARM ABI: (S + A) | T */
+-		r->r_addend = (int)(long)
+-			      (elf->symtab_start + ELF_R_SYM(r->r_info));
++		inst = TO_NATIVE(*(uint32_t *)loc);
++		r->r_addend = inst + sym->st_value;
+ 		break;
+ 	case R_ARM_PC24:
+ 	case R_ARM_CALL:
 -- 
 2.39.2
 
