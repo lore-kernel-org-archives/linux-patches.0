@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06518F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:15:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 216C5C433C7;
-	Sun, 16 Jul 2023 20:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604F48F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:15:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D786DC433C8;
+	Sun, 16 Jul 2023 20:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538512;
-	bh=jXJXyTPnfzD3E87H7ZSgoAAWIucKoAZyuDP9xss2pFs=;
+	s=korg; t=1689538515;
+	bh=To9bNd2JTYZ+mreilwJbdLU3Qjzpy3d9eUON6y2dxQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ODSxHaKBXREODBW7gLCoXpFwzNDxUTWsrpsiAj7bO2o2sKztyX6Phn7/Zxwf3b2zp
-	 z43Zh4ZnU815n5LLXXMB/3y/QBvsN/tluZIZmChOTbfLn8XkG+ZO6saZF8i70Q59qs
-	 tJjzshVUMkwVDddtODgTBOUiNMkRM5zBO3aZ9aJo=
+	b=FtB99isDV8QBzvmNlr0UkIRperE3mrUISVWfrx6hzVMJ9aFO027o2Dh3PC9yu7oOc
+	 EN26WrFGCJJ4R3r1Z+JMOEKI+VSswlxfIECd240RzndS7ANiby8K7j+LjDLk7bVm2j
+	 U+3B6NYRIOaGgkhPLJZCKZYJcKDJ3wc5Wn3+DfBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sachin Sant <sachinp@linux.ibm.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 477/800] powerpc/64s: Fix VAS mm use after free
-Date: Sun, 16 Jul 2023 21:45:30 +0200
-Message-ID: <20230716195000.158769348@linuxfoundation.org>
+Subject: [PATCH 6.4 478/800] pinctrl: freescale: Fix a memory out of bounds when num_configs is 1
+Date: Sun, 16 Jul 2023 21:45:31 +0200
+Message-ID: <20230716195000.181227933@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,53 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-[ Upstream commit b4bda59b47879cce38a6ec5a01cd3cac702b5331 ]
+[ Upstream commit 9063777ca1e2e895c5fdd493ee0c3f18fa710ed4 ]
 
-The refcount on mm is dropped before the coprocessor is detached.
+The config passed in by pad wakeup is 1, when num_configs is 1,
+Configuration [1] should not be fetched, which will be detected
+by KASAN as a memory out of bounds condition. Modify to get
+configs[1] when num_configs is 2.
 
-Reported-by: Sachin Sant <sachinp@linux.ibm.com>
-Fixes: 7bc6f71bdff5f ("powerpc/vas: Define and use common vas_window struct")
-Fixes: b22f2d88e435c ("powerpc/pseries/vas: Integrate API with open/close windows")
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Tested-by: Sachin Sant <sachinp@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230607101024.14559-1-npiggin@gmail.com
+Fixes: f60c9eac54af ("gpio: mxc: enable pad wakeup on i.MX8x platforms")
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Link: https://lore.kernel.org/r/20230504233736.3766296-1-xiaolei.wang@windriver.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/powernv/vas-window.c | 2 +-
- arch/powerpc/platforms/pseries/vas.c        | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/pinctrl/freescale/pinctrl-scu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/platforms/powernv/vas-window.c b/arch/powerpc/platforms/powernv/vas-window.c
-index 0072682531d80..b664838008c12 100644
---- a/arch/powerpc/platforms/powernv/vas-window.c
-+++ b/arch/powerpc/platforms/powernv/vas-window.c
-@@ -1310,8 +1310,8 @@ int vas_win_close(struct vas_window *vwin)
- 	/* if send window, drop reference to matching receive window */
- 	if (window->tx_win) {
- 		if (window->user_win) {
--			put_vas_user_win_ref(&vwin->task_ref);
- 			mm_context_remove_vas_window(vwin->task_ref.mm);
-+			put_vas_user_win_ref(&vwin->task_ref);
- 		}
- 		put_rx_win(window->rxwin);
- 	}
-diff --git a/arch/powerpc/platforms/pseries/vas.c b/arch/powerpc/platforms/pseries/vas.c
-index 513180467562b..9a44a98ba3420 100644
---- a/arch/powerpc/platforms/pseries/vas.c
-+++ b/arch/powerpc/platforms/pseries/vas.c
-@@ -507,8 +507,8 @@ static int vas_deallocate_window(struct vas_window *vwin)
- 	vascaps[win->win_type].nr_open_windows--;
- 	mutex_unlock(&vas_pseries_mutex);
+diff --git a/drivers/pinctrl/freescale/pinctrl-scu.c b/drivers/pinctrl/freescale/pinctrl-scu.c
+index ea261b6e74581..3b252d684d723 100644
+--- a/drivers/pinctrl/freescale/pinctrl-scu.c
++++ b/drivers/pinctrl/freescale/pinctrl-scu.c
+@@ -90,7 +90,7 @@ int imx_pinconf_set_scu(struct pinctrl_dev *pctldev, unsigned pin_id,
+ 	struct imx_sc_msg_req_pad_set msg;
+ 	struct imx_sc_rpc_msg *hdr = &msg.hdr;
+ 	unsigned int mux = configs[0];
+-	unsigned int conf = configs[1];
++	unsigned int conf;
+ 	unsigned int val;
+ 	int ret;
  
--	put_vas_user_win_ref(&vwin->task_ref);
- 	mm_context_remove_vas_window(vwin->task_ref.mm);
-+	put_vas_user_win_ref(&vwin->task_ref);
+@@ -115,6 +115,7 @@ int imx_pinconf_set_scu(struct pinctrl_dev *pctldev, unsigned pin_id,
+ 	 * Set mux and conf together in one IPC call
+ 	 */
+ 	WARN_ON(num_configs != 2);
++	conf = configs[1];
  
- 	kfree(win);
- 	return 0;
+ 	val = conf | BM_PAD_CTL_IFMUX_ENABLE | BM_PAD_CTL_GP_ENABLE;
+ 	val |= mux << BP_PAD_CTL_IFMUX;
 -- 
 2.39.2
 
