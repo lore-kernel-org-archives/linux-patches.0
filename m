@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A50D8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:09:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F074EC433C8;
-	Sun, 16 Jul 2023 20:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB5A8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:09:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61FCC433C8;
+	Sun, 16 Jul 2023 20:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538169;
-	bh=rJ54VsJpc/Chgin/VuG+dC3jgJlOjK1fMvUINC7qfbg=;
+	s=korg; t=1689538172;
+	bh=KtVhGJhDVd3HVCDUKdnIWJHxpAUglmwaN93GfO5MUrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U4hCLeaQjj5aE8VJ+VDz+KT0q0Ts2sr2SYi+L/cLZ4z7p+QSIKHNIe0314xMozj34
-	 enisoFRF6eVJXC1GVN7bXTlBRkFdF2XvICigHe57PDpzlHbylKG7npPCjvdIEdSjtH
-	 /5QLTfMWts91J6hnNbBaXDbiX0x9Xq7RmfAeAPXU=
+	b=szkY0PLxfVdrBIGaqppc59hHIC/Q6U5+qDODtB9Rzgq9xhshNq6MdbjzGkNLMuPMY
+	 adrPACAMUkCPI8Kz5I+dsqUm1yim17tu0IiQurKTTJTPxZU0VknmNi6pF5OaYqNY4a
+	 AIgwE36WCltB7BhQF7Z9uHvEjU3RJ5XpKq5cjRHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Marek Vasut <marex@denx.de>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 356/800] arm64: dts: rockchip: Fix compatible for Bluetooth on rk3566-anbernic
-Date: Sun, 16 Jul 2023 21:43:29 +0200
-Message-ID: <20230716194957.347470052@linuxfoundation.org>
+Subject: [PATCH 6.4 357/800] ARM: dts: stm32: Fix audio routing on STM32MP15xx DHCOM PDK2
+Date: Sun, 16 Jul 2023 21:43:30 +0200
+Message-ID: <20230716194957.370752397@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,40 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chris Morgan <macromorgan@hotmail.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit a325956fa7048906e26a4535ac2e87e111788fe8 ]
+[ Upstream commit e3f2778b1b6ced649bffdc7cbb05b80bb92f2108 ]
 
-The realtek Bluetooth module uses the same driver as the
-realtek,rtl8822cs-bt and the realtek,rtl8723bs-bt, however by selecting
-the 8723bs advanced power saving features are disabled that appear
-to interfere with normal operation of the bluetooth module. This
-change switches the compatible string to disable power saving. Without
-this patch evtest of a paired bluetooth controller fails, with this
-patch the controller operates as expected.
+The audio routing flow is not correct, the flow should be from source
+(second element in the pair) to sink (first element in the pair). The
+flow now is from "HP_OUT" to "Playback", where "Playback" is source
+and "HP_OUT" is sink, i.e. the direction is swapped and there is no
+direct link between the two either.
 
-Fixes: b6986b7920bb ("arm64: dts: rockchip: Update compatible for bluetooth")
-Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
-Link: https://lore.kernel.org/r/20230508160811.3568213-3-macroalpha82@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fill in the correct routing, where "HP_OUT" supplies the "Headphone Jack",
+"Line In Jack" supplies "LINE_IN" input, "Microphone Jack" supplies "MIC_IN"
+input and "Mic Bias" supplies "Microphone Jack".
+
+Fixes: 34e0c7847dcf ("ARM: dts: stm32: Add DH Electronics DHCOM STM32MP1 SoM and PDK2 board")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3566-anbernic-rgxx3.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/stm32mp15xx-dhcom-pdk2.dtsi | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rgxx3.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rgxx3.dtsi
-index 8fadd8afb1906..ad43fa199ca55 100644
---- a/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rgxx3.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rgxx3.dtsi
-@@ -716,7 +716,7 @@ &uart1 {
- 	status = "okay";
+diff --git a/arch/arm/boot/dts/stm32mp15xx-dhcom-pdk2.dtsi b/arch/arm/boot/dts/stm32mp15xx-dhcom-pdk2.dtsi
+index 4709677151aac..46b87a27d8b37 100644
+--- a/arch/arm/boot/dts/stm32mp15xx-dhcom-pdk2.dtsi
++++ b/arch/arm/boot/dts/stm32mp15xx-dhcom-pdk2.dtsi
+@@ -137,10 +137,13 @@ reg_panel_supply: regulator-panel-supply {
  
- 	bluetooth {
--		compatible = "realtek,rtl8821cs-bt", "realtek,rtl8822cs-bt";
-+		compatible = "realtek,rtl8821cs-bt", "realtek,rtl8723bs-bt";
- 		device-wake-gpios = <&gpio4 4 GPIO_ACTIVE_HIGH>;
- 		enable-gpios = <&gpio4 3 GPIO_ACTIVE_HIGH>;
- 		host-wake-gpios = <&gpio4 5 GPIO_ACTIVE_HIGH>;
+ 	sound {
+ 		compatible = "audio-graph-card";
+-		routing =
+-			"MIC_IN", "Capture",
+-			"Capture", "Mic Bias",
+-			"Playback", "HP_OUT";
++		widgets = "Headphone", "Headphone Jack",
++			  "Line", "Line In Jack",
++			  "Microphone", "Microphone Jack";
++		routing = "Headphone Jack", "HP_OUT",
++			  "LINE_IN", "Line In Jack",
++			  "MIC_IN", "Microphone Jack",
++			  "Microphone Jack", "Mic Bias";
+ 		dais = <&sai2a_port &sai2b_port>;
+ 		status = "okay";
+ 	};
 -- 
 2.39.2
 
