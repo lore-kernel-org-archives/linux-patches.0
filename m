@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD918F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:57:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F174FC433C8;
-	Sun, 16 Jul 2023 19:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413F28F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:57:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA459C433C8;
+	Sun, 16 Jul 2023 19:57:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537420;
-	bh=FCQ2w1F4hRZMege5MJF0U/G0w5afIh3Nso9C8UJDEd0=;
+	s=korg; t=1689537423;
+	bh=j3E/ItlzibZLH621om9kna0FmEXYkwZ5ml6F+947IlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2kdMIO7Tl/p9elk0/tzKVesgiaNVL4vFn9613yx0Y7HXLyjFi5zpyrsStG/GOODKJ
-	 qz6hZlo7Zb1co4JGvr359X/q4jRLlheoUwdPPpNxUVljUo55jujfSjrksXu67Lh5CL
-	 vJaB8DWm33Sw+SLpqeqkufDS+K6IjsX6MuDK76/8=
+	b=fj1QJI6lJdIvwIfR5zXDvllWqJDIGM9NWasvarnYNoRkBJmy/yCN0j0Cj7HkNZ8ij
+	 +1cCFPm+Vb2wmrGGsGi7G6KOlRGcosoTpaLQ4iQ8CHlsBY3Vt5h3cvi0ZPaeARqwzI
+	 Og1NHLzPYQctMqDP1FVYe8Wgz9CHqvx/mxdxFVKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Christoph Hellwig <hch@lst.de>,
-	David Sterba <dsterba@suse.com>,
+	Tejun Heo <tj@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 052/800] btrfs: dont use btrfs_bio_ctrl for extent buffer reading
-Date: Sun, 16 Jul 2023 21:38:25 +0200
-Message-ID: <20230716194950.299311715@linuxfoundation.org>
+Subject: [PATCH 6.4 083/800] rcu-tasks: Stop rcu_tasks_invoke_cbs() from using never-onlined CPUs
+Date: Sun, 16 Jul 2023 21:38:56 +0200
+Message-ID: <20230716194951.036517887@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -38,201 +35,123 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit b78b98e06fb7f9860da5a7c28e1edbaefc2f7be1 ]
+[ Upstream commit 401b0de3ae4fa49d1014c8941e26d9a25f37e7cf ]
 
-The btrfs_bio_ctrl machinery is overkill for reading extent_buffers
-as we always operate on PAGE_SIZE chunks (or one smaller one for the
-subpage case) that are contiguous and are guaranteed to fit into a
-single bio.  Replace it with open coded btrfs_bio_alloc, __bio_add_page
-and btrfs_submit_bio calls in a helper function shared between
-the subpage and node size >= PAGE_SIZE cases.
+The rcu_tasks_invoke_cbs() function relies on queue_work_on() to silently
+fall back to WORK_CPU_UNBOUND when the specified CPU is offline.  However,
+the queue_work_on() function's silent fallback mechanism relies on that
+CPU having been online at some time in the past.  When queue_work_on()
+is passed a CPU that has never been online, workqueue lockups ensue,
+which can be bad for your kernel's general health and well-being.
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 7027f87108ce ("btrfs: don't treat zoned writeback as being from an async helper thread")
+This commit therefore checks whether a given CPU has ever been online,
+and, if not substitutes WORK_CPU_UNBOUND in the subsequent call to
+queue_work_on().  Why not simply omit the queue_work_on() call entirely?
+Because this function is flooding callback-invocation notifications
+to all CPUs, and must deal with possibilities that include a sparse
+cpu_possible_mask.
+
+This commit also moves the setting of the rcu_data structure's
+->beenonline field to rcu_cpu_starting(), which executes on the
+incoming CPU before that CPU has ever enabled interrupts.  This ensures
+that the required workqueues are present.  In addition, because the
+incoming CPU has not yet enabled its interrupts, there cannot yet have
+been any softirq handlers running on this CPU, which means that the
+WARN_ON_ONCE(!rdp->beenonline) within the RCU_SOFTIRQ handler cannot
+have triggered yet.
+
+Fixes: d363f833c6d88 ("rcu-tasks: Use workqueues for multiple rcu_tasks_invoke_cbs() invocations")
+Reported-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.c | 99 ++++++++++++++++----------------------------
- 1 file changed, 36 insertions(+), 63 deletions(-)
+ kernel/rcu/rcu.h   |  6 ++++++
+ kernel/rcu/tasks.h |  7 +++++--
+ kernel/rcu/tree.c  | 12 +++++++++++-
+ 3 files changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index d1a635f237688..51f0f28fb9b2c 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -98,22 +98,12 @@ void btrfs_extent_buffer_leak_debug_check(struct btrfs_fs_info *fs_info)
-  */
- struct btrfs_bio_ctrl {
- 	struct btrfs_bio *bbio;
--	int mirror_num;
- 	enum btrfs_compression_type compress_type;
- 	u32 len_to_oe_boundary;
- 	blk_opf_t opf;
- 	btrfs_bio_end_io_t end_io_func;
- 	struct writeback_control *wbc;
+diff --git a/kernel/rcu/rcu.h b/kernel/rcu/rcu.h
+index 4a1b9622598be..98c1544cf572b 100644
+--- a/kernel/rcu/rcu.h
++++ b/kernel/rcu/rcu.h
+@@ -642,4 +642,10 @@ void show_rcu_tasks_trace_gp_kthread(void);
+ static inline void show_rcu_tasks_trace_gp_kthread(void) {}
+ #endif
  
--	/*
--	 * This is for metadata read, to provide the extra needed verification
--	 * info.  This has to be provided for submit_one_bio(), as
--	 * submit_one_bio() can submit a bio if it ends at stripe boundary.  If
--	 * no such parent_check is provided, the metadata can hit false alert at
--	 * endio time.
--	 */
--	struct btrfs_tree_parent_check *parent_check;
--
- 	/*
- 	 * Tell writepage not to lock the state bits for this range, it still
- 	 * does the unlocking.
-@@ -124,7 +114,6 @@ struct btrfs_bio_ctrl {
- static void submit_one_bio(struct btrfs_bio_ctrl *bio_ctrl)
++#ifdef CONFIG_TINY_RCU
++static inline bool rcu_cpu_beenfullyonline(int cpu) { return true; }
++#else
++bool rcu_cpu_beenfullyonline(int cpu);
++#endif
++
+ #endif /* __LINUX_RCU_H */
+diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+index 5f4fc8184dd0b..8f08c087142b0 100644
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -463,6 +463,7 @@ static void rcu_tasks_invoke_cbs(struct rcu_tasks *rtp, struct rcu_tasks_percpu
  {
- 	struct btrfs_bio *bbio = bio_ctrl->bbio;
--	int mirror_num = bio_ctrl->mirror_num;
- 
- 	if (!bbio)
- 		return;
-@@ -132,25 +121,14 @@ static void submit_one_bio(struct btrfs_bio_ctrl *bio_ctrl)
- 	/* Caller should ensure the bio has at least some range added */
- 	ASSERT(bbio->bio.bi_iter.bi_size);
- 
--	if (!is_data_inode(&bbio->inode->vfs_inode)) {
--		if (btrfs_op(&bbio->bio) != BTRFS_MAP_WRITE) {
--			/*
--			 * For metadata read, we should have the parent_check,
--			 * and copy it to bbio for metadata verification.
--			 */
--			ASSERT(bio_ctrl->parent_check);
--			memcpy(&bbio->parent_check,
--			       bio_ctrl->parent_check,
--			       sizeof(struct btrfs_tree_parent_check));
--		}
-+	if (!is_data_inode(&bbio->inode->vfs_inode))
- 		bbio->bio.bi_opf |= REQ_META;
--	}
- 
- 	if (btrfs_op(&bbio->bio) == BTRFS_MAP_READ &&
- 	    bio_ctrl->compress_type != BTRFS_COMPRESS_NONE)
--		btrfs_submit_compressed_read(bbio, mirror_num);
-+		btrfs_submit_compressed_read(bbio, 0);
- 	else
--		btrfs_submit_bio(bbio, mirror_num);
-+		btrfs_submit_bio(bbio, 0);
- 
- 	/* The bbio is owned by the end_io handler now */
- 	bio_ctrl->bbio = NULL;
-@@ -4242,6 +4220,36 @@ void set_extent_buffer_uptodate(struct extent_buffer *eb)
+ 	int cpu;
+ 	int cpunext;
++	int cpuwq;
+ 	unsigned long flags;
+ 	int len;
+ 	struct rcu_head *rhp;
+@@ -473,11 +474,13 @@ static void rcu_tasks_invoke_cbs(struct rcu_tasks *rtp, struct rcu_tasks_percpu
+ 	cpunext = cpu * 2 + 1;
+ 	if (cpunext < smp_load_acquire(&rtp->percpu_dequeue_lim)) {
+ 		rtpcp_next = per_cpu_ptr(rtp->rtpcpu, cpunext);
+-		queue_work_on(cpunext, system_wq, &rtpcp_next->rtp_work);
++		cpuwq = rcu_cpu_beenfullyonline(cpunext) ? cpunext : WORK_CPU_UNBOUND;
++		queue_work_on(cpuwq, system_wq, &rtpcp_next->rtp_work);
+ 		cpunext++;
+ 		if (cpunext < smp_load_acquire(&rtp->percpu_dequeue_lim)) {
+ 			rtpcp_next = per_cpu_ptr(rtp->rtpcpu, cpunext);
+-			queue_work_on(cpunext, system_wq, &rtpcp_next->rtp_work);
++			cpuwq = rcu_cpu_beenfullyonline(cpunext) ? cpunext : WORK_CPU_UNBOUND;
++			queue_work_on(cpuwq, system_wq, &rtpcp_next->rtp_work);
+ 		}
  	}
+ 
+diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
+index d5c9afa8adfbd..ce51f85f0d5e4 100644
+--- a/kernel/rcu/tree.c
++++ b/kernel/rcu/tree.c
+@@ -4283,7 +4283,6 @@ int rcutree_prepare_cpu(unsigned int cpu)
+ 	 */
+ 	rnp = rdp->mynode;
+ 	raw_spin_lock_rcu_node(rnp);		/* irqs already disabled. */
+-	rdp->beenonline = true;	 /* We have now been online. */
+ 	rdp->gp_seq = READ_ONCE(rnp->gp_seq);
+ 	rdp->gp_seq_needed = rdp->gp_seq;
+ 	rdp->cpu_no_qs.b.norm = true;
+@@ -4310,6 +4309,16 @@ static void rcutree_affinity_setting(unsigned int cpu, int outgoing)
+ 	rcu_boost_kthread_setaffinity(rdp->mynode, outgoing);
  }
  
-+static void __read_extent_buffer_pages(struct extent_buffer *eb, int mirror_num,
-+				       struct btrfs_tree_parent_check *check)
++/*
++ * Has the specified (known valid) CPU ever been fully online?
++ */
++bool rcu_cpu_beenfullyonline(int cpu)
 +{
-+	int num_pages = num_extent_pages(eb), i;
-+	struct btrfs_bio *bbio;
++	struct rcu_data *rdp = per_cpu_ptr(&rcu_data, cpu);
 +
-+	clear_bit(EXTENT_BUFFER_READ_ERR, &eb->bflags);
-+	eb->read_mirror = 0;
-+	atomic_set(&eb->io_pages, num_pages);
-+	check_buffer_tree_ref(eb);
-+
-+	bbio = btrfs_bio_alloc(INLINE_EXTENT_BUFFER_PAGES,
-+			       REQ_OP_READ | REQ_META, eb->fs_info,
-+			       end_bio_extent_readpage, NULL);
-+	bbio->bio.bi_iter.bi_sector = eb->start >> SECTOR_SHIFT;
-+	bbio->inode = BTRFS_I(eb->fs_info->btree_inode);
-+	bbio->file_offset = eb->start;
-+	memcpy(&bbio->parent_check, check, sizeof(*check));
-+	if (eb->fs_info->nodesize < PAGE_SIZE) {
-+		__bio_add_page(&bbio->bio, eb->pages[0], eb->len,
-+			       eb->start - page_offset(eb->pages[0]));
-+	} else {
-+		for (i = 0; i < num_pages; i++) {
-+			ClearPageError(eb->pages[i]);
-+			__bio_add_page(&bbio->bio, eb->pages[i], PAGE_SIZE, 0);
-+		}
-+	}
-+	btrfs_submit_bio(bbio, mirror_num);
++	return smp_load_acquire(&rdp->beenonline);
 +}
 +
- static int read_extent_buffer_subpage(struct extent_buffer *eb, int wait,
- 				      int mirror_num,
- 				      struct btrfs_tree_parent_check *check)
-@@ -4250,11 +4258,6 @@ static int read_extent_buffer_subpage(struct extent_buffer *eb, int wait,
- 	struct extent_io_tree *io_tree;
- 	struct page *page = eb->pages[0];
- 	struct extent_state *cached_state = NULL;
--	struct btrfs_bio_ctrl bio_ctrl = {
--		.opf = REQ_OP_READ,
--		.mirror_num = mirror_num,
--		.parent_check = check,
--	};
- 	int ret;
- 
- 	ASSERT(!test_bit(EXTENT_BUFFER_UNMAPPED, &eb->bflags));
-@@ -4282,18 +4285,10 @@ static int read_extent_buffer_subpage(struct extent_buffer *eb, int wait,
- 		return 0;
+ /*
+  * Near the end of the CPU-online process.  Pretty much all services
+  * enabled, and the CPU is now very much alive.
+@@ -4413,6 +4422,7 @@ void rcu_cpu_starting(unsigned int cpu)
+ 		raw_spin_unlock_rcu_node(rnp);
  	}
+ 	arch_spin_unlock(&rcu_state.ofl_lock);
++	smp_store_release(&rdp->beenonline, true);
+ 	smp_mb(); /* Ensure RCU read-side usage follows above initialization. */
+ }
  
--	clear_bit(EXTENT_BUFFER_READ_ERR, &eb->bflags);
--	eb->read_mirror = 0;
--	atomic_set(&eb->io_pages, 1);
--	check_buffer_tree_ref(eb);
--	bio_ctrl.end_io_func = end_bio_extent_readpage;
--
- 	btrfs_subpage_clear_error(fs_info, page, eb->start, eb->len);
--
- 	btrfs_subpage_start_reader(fs_info, page, eb->start, eb->len);
--	submit_extent_page(&bio_ctrl, eb->start, page, eb->len,
--			   eb->start - page_offset(page));
--	submit_one_bio(&bio_ctrl);
-+
-+	__read_extent_buffer_pages(eb, mirror_num, check);
- 	if (wait != WAIT_COMPLETE) {
- 		free_extent_state(cached_state);
- 		return 0;
-@@ -4314,11 +4309,6 @@ int read_extent_buffer_pages(struct extent_buffer *eb, int wait, int mirror_num,
- 	int locked_pages = 0;
- 	int all_uptodate = 1;
- 	int num_pages;
--	struct btrfs_bio_ctrl bio_ctrl = {
--		.opf = REQ_OP_READ,
--		.mirror_num = mirror_num,
--		.parent_check = check,
--	};
- 
- 	if (test_bit(EXTENT_BUFFER_UPTODATE, &eb->bflags))
- 		return 0;
-@@ -4368,24 +4358,7 @@ int read_extent_buffer_pages(struct extent_buffer *eb, int wait, int mirror_num,
- 		goto unlock_exit;
- 	}
- 
--	clear_bit(EXTENT_BUFFER_READ_ERR, &eb->bflags);
--	eb->read_mirror = 0;
--	atomic_set(&eb->io_pages, num_pages);
--	/*
--	 * It is possible for release_folio to clear the TREE_REF bit before we
--	 * set io_pages. See check_buffer_tree_ref for a more detailed comment.
--	 */
--	check_buffer_tree_ref(eb);
--	bio_ctrl.end_io_func = end_bio_extent_readpage;
--	for (i = 0; i < num_pages; i++) {
--		page = eb->pages[i];
--
--		ClearPageError(page);
--		submit_extent_page(&bio_ctrl, page_offset(page), page,
--				   PAGE_SIZE, 0);
--	}
--
--	submit_one_bio(&bio_ctrl);
-+	__read_extent_buffer_pages(eb, mirror_num, check);
- 
- 	if (wait != WAIT_COMPLETE)
- 		return 0;
 -- 
 2.39.2
 
