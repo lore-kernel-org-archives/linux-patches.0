@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381998F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:48:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE803C433C8;
-	Sun, 16 Jul 2023 20:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28728F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:48:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74FF4C433C8;
+	Sun, 16 Jul 2023 20:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540535;
-	bh=I+3OQkLs442Tg4i9RReKM4Qa60xNpw0cpAap41heIeE=;
+	s=korg; t=1689540537;
+	bh=uqzcoGTQxWhlqcdiTjuBwRgVzV99Yg6+MGtQFxaFySs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TM4oHZv0/ReUK72QepgD4b1JL/hN+268bvidg7zPB07JRtlyJFAEPbJfx8jWgGRT5
-	 FvdKnX1r4HU+9zrZwRMKXflZcNUa90+HqOdUewbQRAgJjUH73i7NSOgaGsrAgQZk2W
-	 A2S3mqQ4ZsG9sBRU78L5FV20ZkGOxiaDElVU8mas=
+	b=J9KyGpw93RtuIBFvA02V8veYJL2W+qi/GsgGrj1IELhUqL3WlgJXGUwmUYgGHeKBn
+	 fIZqQ/fhq8TOMu/3tCRf1O7iS5/Tvkoj8Dp8wsy5Ta+52WtpXjD+f/Xxr6TBlTC2w5
+	 QaFtA/no147OF6NW9kGpYtanDrrHY0jUPCSJzgBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@nxp.com>,
+	Marek Vasut <marex@denx.de>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 397/591] media: amphion: initiate a drain of the capture queue in dynamic resolution change
-Date: Sun, 16 Jul 2023 21:48:56 +0200
-Message-ID: <20230716194934.189414617@linuxfoundation.org>
+Subject: [PATCH 6.1 398/591] media: videodev2.h: Fix struct v4l2_input tuner index comment
+Date: Sun, 16 Jul 2023 21:48:57 +0200
+Message-ID: <20230716194934.216099490@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,124 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Qian <ming.qian@nxp.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 076b6289b2c12d76fab248659896682830fa7766 ]
+[ Upstream commit 26ae58f65e64fa7ba61d64bae752e59e08380c6a ]
 
-The last buffer from before the change must be marked
-with the V4L2_BUF_FLAG_LAST flag,
-similarly to the Drain sequence above.
+VIDIOC_ENUMINPUT documentation describes the tuner field of
+struct v4l2_input as index:
 
-initiate a drain of the capture queue in dynamic resolution change
+Documentation/userspace-api/media/v4l/vidioc-enuminput.rst
+"
+* - __u32
+  - ``tuner``
+  - Capture devices can have zero or more tuners (RF demodulators).
+    When the ``type`` is set to ``V4L2_INPUT_TYPE_TUNER`` this is an
+    RF connector and this field identifies the tuner. It corresponds
+    to struct :c:type:`v4l2_tuner` field ``index``. For
+    details on tuners see :ref:`tuner`.
+"
 
-Fixes: 6de8d628df6e ("media: amphion: add v4l2 m2m vpu decoder stateful driver")
-Signed-off-by: Ming Qian <ming.qian@nxp.com>
+Drivers I could find also use the 'tuner' field as an index, e.g.:
+drivers/media/pci/bt8xx/bttv-driver.c bttv_enum_input()
+drivers/media/usb/go7007/go7007-v4l2.c vidioc_enum_input()
+
+However, the UAPI comment claims this field is 'enum v4l2_tuner_type':
+include/uapi/linux/videodev2.h
+
+This field being 'enum v4l2_tuner_type' is unlikely as it seems to be
+never used that way in drivers, and documentation confirms it. It seem
+this comment got in accidentally in the commit which this patch fixes.
+Fix the UAPI comment to stop confusion.
+
+This was pointed out by Dmitry while reviewing VIDIOC_ENUMINPUT
+support for strace.
+
+Fixes: 6016af82eafc ("[media] v4l2: use __u32 rather than enums in ioctl() structs")
+Signed-off-by: Marek Vasut <marex@denx.de>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vdec.c     | 7 ++++---
- drivers/media/platform/amphion/venc.c     | 4 ++--
- drivers/media/platform/amphion/vpu_v4l2.c | 5 +++--
- drivers/media/platform/amphion/vpu_v4l2.h | 2 +-
- 4 files changed, 10 insertions(+), 8 deletions(-)
+ include/uapi/linux/videodev2.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/amphion/vdec.c b/drivers/media/platform/amphion/vdec.c
-index 4918547793dc1..c08b5a2bfc1df 100644
---- a/drivers/media/platform/amphion/vdec.c
-+++ b/drivers/media/platform/amphion/vdec.c
-@@ -229,6 +229,7 @@ static void vdec_handle_resolution_change(struct vpu_inst *inst)
- 
- 	vdec->source_change--;
- 	vpu_notify_source_change(inst);
-+	vpu_set_last_buffer_dequeued(inst, false);
- }
- 
- static int vdec_update_state(struct vpu_inst *inst, enum vpu_codec_state state, u32 force)
-@@ -264,7 +265,7 @@ static void vdec_set_last_buffer_dequeued(struct vpu_inst *inst)
- 		return;
- 
- 	if (vdec->eos_received) {
--		if (!vpu_set_last_buffer_dequeued(inst)) {
-+		if (!vpu_set_last_buffer_dequeued(inst, true)) {
- 			vdec->eos_received--;
- 			vdec_update_state(inst, VPU_CODEC_STATE_DRAIN, 0);
- 		}
-@@ -517,7 +518,7 @@ static int vdec_drain(struct vpu_inst *inst)
- 		return 0;
- 
- 	if (!vdec->params.frame_count) {
--		vpu_set_last_buffer_dequeued(inst);
-+		vpu_set_last_buffer_dequeued(inst, true);
- 		return 0;
- 	}
- 
-@@ -556,7 +557,7 @@ static int vdec_cmd_stop(struct vpu_inst *inst)
- 	vpu_trace(inst->dev, "[%d]\n", inst->id);
- 
- 	if (inst->state == VPU_CODEC_STATE_DEINIT) {
--		vpu_set_last_buffer_dequeued(inst);
-+		vpu_set_last_buffer_dequeued(inst, true);
- 	} else {
- 		vdec->drain = 1;
- 		vdec_drain(inst);
-diff --git a/drivers/media/platform/amphion/venc.c b/drivers/media/platform/amphion/venc.c
-index 37212f087fdd9..e8cb22da938e6 100644
---- a/drivers/media/platform/amphion/venc.c
-+++ b/drivers/media/platform/amphion/venc.c
-@@ -468,7 +468,7 @@ static int venc_encoder_cmd(struct file *file, void *fh, struct v4l2_encoder_cmd
- 	vpu_inst_lock(inst);
- 	if (cmd->cmd == V4L2_ENC_CMD_STOP) {
- 		if (inst->state == VPU_CODEC_STATE_DEINIT)
--			vpu_set_last_buffer_dequeued(inst);
-+			vpu_set_last_buffer_dequeued(inst, true);
- 		else
- 			venc_request_eos(inst);
- 	}
-@@ -888,7 +888,7 @@ static void venc_set_last_buffer_dequeued(struct vpu_inst *inst)
- 	struct venc_t *venc = inst->priv;
- 
- 	if (venc->stopped && list_empty(&venc->frames))
--		vpu_set_last_buffer_dequeued(inst);
-+		vpu_set_last_buffer_dequeued(inst, true);
- }
- 
- static void venc_stop_done(struct vpu_inst *inst)
-diff --git a/drivers/media/platform/amphion/vpu_v4l2.c b/drivers/media/platform/amphion/vpu_v4l2.c
-index 590d1084e5a5d..a74953191c221 100644
---- a/drivers/media/platform/amphion/vpu_v4l2.c
-+++ b/drivers/media/platform/amphion/vpu_v4l2.c
-@@ -100,7 +100,7 @@ int vpu_notify_source_change(struct vpu_inst *inst)
- 	return 0;
- }
- 
--int vpu_set_last_buffer_dequeued(struct vpu_inst *inst)
-+int vpu_set_last_buffer_dequeued(struct vpu_inst *inst, bool eos)
- {
- 	struct vb2_queue *q;
- 
-@@ -116,7 +116,8 @@ int vpu_set_last_buffer_dequeued(struct vpu_inst *inst)
- 	vpu_trace(inst->dev, "last buffer dequeued\n");
- 	q->last_buffer_dequeued = true;
- 	wake_up(&q->done_wq);
--	vpu_notify_eos(inst);
-+	if (eos)
-+		vpu_notify_eos(inst);
- 	return 0;
- }
- 
-diff --git a/drivers/media/platform/amphion/vpu_v4l2.h b/drivers/media/platform/amphion/vpu_v4l2.h
-index 795ca33a6a507..000af24a06ba0 100644
---- a/drivers/media/platform/amphion/vpu_v4l2.h
-+++ b/drivers/media/platform/amphion/vpu_v4l2.h
-@@ -26,7 +26,7 @@ struct vb2_v4l2_buffer *vpu_find_buf_by_idx(struct vpu_inst *inst, u32 type, u32
- void vpu_v4l2_set_error(struct vpu_inst *inst);
- int vpu_notify_eos(struct vpu_inst *inst);
- int vpu_notify_source_change(struct vpu_inst *inst);
--int vpu_set_last_buffer_dequeued(struct vpu_inst *inst);
-+int vpu_set_last_buffer_dequeued(struct vpu_inst *inst, bool eos);
- void vpu_vb2_buffers_return(struct vpu_inst *inst, unsigned int type, enum vb2_buffer_state state);
- int vpu_get_num_buffers(struct vpu_inst *inst, u32 type);
- bool vpu_is_source_empty(struct vpu_inst *inst);
+diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+index 29da1f4b4578e..45fa03882ef18 100644
+--- a/include/uapi/linux/videodev2.h
++++ b/include/uapi/linux/videodev2.h
+@@ -1693,7 +1693,7 @@ struct v4l2_input {
+ 	__u8	     name[32];		/*  Label */
+ 	__u32	     type;		/*  Type of input */
+ 	__u32	     audioset;		/*  Associated audios (bitfield) */
+-	__u32        tuner;             /*  enum v4l2_tuner_type */
++	__u32        tuner;             /*  Tuner index */
+ 	v4l2_std_id  std;
+ 	__u32	     status;
+ 	__u32	     capabilities;
 -- 
 2.39.2
 
