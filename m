@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D3F8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:45:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2690C433C7;
-	Sun, 16 Jul 2023 20:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49448F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:45:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6879CC433C9;
+	Sun, 16 Jul 2023 20:45:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540308;
-	bh=9P9kM6IpkhDOKDcWf9Bqdy+aX30Bqt56Q+QC3y7SJRM=;
+	s=korg; t=1689540310;
+	bh=H6AQEucR+NeeiJtWOFSzGLNQac2h7ccUxIC3aOhoBbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i+p9e42uXjIw1EVsz9Q/IcUyJMG/bDFzbGT77q7uc40NS731KkkzLlO51V9u0SQh6
-	 uORCDcHA/FaMc+mJiF3lHsn1fEb2mmKLqTReLUpu+4OB1Ct5w7aeoj7OHyyBP0OXd7
-	 g6fLB83mEZylOwmPTlOHLfwQk/31LdWRIhiolSPM=
+	b=wKpXxyfBTSUH7ergWkP0qw1a9AAs9OVHtKE9VB9d6gRC3GBGIyKQn7fh6VYghf1Bt
+	 ryc5VBRXtPCjasCU9pkltZKLgv2FQPrsTu0uKg6XkjfMtj0BcLS87FarFgyk2IAL2b
+	 /pNP10gXu9ldZDen8/Q1g7zlGUYLSfUO3TtuUCx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 289/591] platform/x86: lenovo-yogabook: Fix work race on remove()
-Date: Sun, 16 Jul 2023 21:47:08 +0200
-Message-ID: <20230716194931.371101807@linuxfoundation.org>
+Subject: [PATCH 6.1 290/591] platform/x86: lenovo-yogabook: Reprobe devices on remove()
+Date: Sun, 16 Jul 2023 21:47:09 +0200
+Message-ID: <20230716194931.396837388@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,86 +36,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 9148cd2eb4450a8e9c49c8a14201fb82f651128f ]
+[ Upstream commit 711bcc0cb34e96a60e88d7b0260862781de3e530 ]
 
-When yogabook_wmi_remove() runs yogabook_wmi_work might still be running
-and using the devices which yogabook_wmi_remove() puts.
-
-To avoid this move to explicitly cancelling the work rather then using
-devm_work_autocancel().
-
-This requires also making the yogabook_backside_hall_irq handler non
-devm managed, so that it cannot re-queue the work while
-yogabook_wmi_remove() runs.
+Ensure that both the keyboard touchscreen and the digitizer have their
+driver bound after remove(). Without this modprobing lenovo-yogabook-wmi
+after a rmmod fails because lenovo-yogabook-wmi defers probing until
+both devices have their driver bound.
 
 Fixes: c0549b72d99d ("platform/x86: lenovo-yogabook-wmi: Add driver for Lenovo Yoga Book")
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230430165807.472798-3-hdegoede@redhat.com
+Link: https://lore.kernel.org/r/20230430165807.472798-4-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/lenovo-yogabook-wmi.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/platform/x86/lenovo-yogabook-wmi.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/drivers/platform/x86/lenovo-yogabook-wmi.c b/drivers/platform/x86/lenovo-yogabook-wmi.c
-index 5f4bd1eec38a9..3a6de4ab74a41 100644
+index 3a6de4ab74a41..5948ffa74acd5 100644
 --- a/drivers/platform/x86/lenovo-yogabook-wmi.c
 +++ b/drivers/platform/x86/lenovo-yogabook-wmi.c
-@@ -2,7 +2,6 @@
- /* WMI driver for Lenovo Yoga Book YB1-X90* / -X91* tablets */
- 
- #include <linux/acpi.h>
--#include <linux/devm-helpers.h>
- #include <linux/gpio/consumer.h>
- #include <linux/gpio/machine.h>
- #include <linux/interrupt.h>
-@@ -248,10 +247,7 @@ static int yogabook_wmi_probe(struct wmi_device *wdev, const void *context)
- 	data->brightness = YB_KBD_BL_DEFAULT;
- 	set_bit(YB_KBD_IS_ON, &data->flags);
- 	set_bit(YB_DIGITIZER_IS_ON, &data->flags);
--
--	r = devm_work_autocancel(&wdev->dev, &data->work, yogabook_wmi_work);
--	if (r)
--		return r;
-+	INIT_WORK(&data->work, yogabook_wmi_work);
- 
- 	data->kbd_adev = acpi_dev_get_first_match_dev("GDIX1001", NULL, -1);
- 	if (!data->kbd_adev) {
-@@ -299,10 +295,9 @@ static int yogabook_wmi_probe(struct wmi_device *wdev, const void *context)
- 	}
- 	data->backside_hall_irq = r;
- 
--	r = devm_request_irq(&wdev->dev, data->backside_hall_irq,
--			     yogabook_backside_hall_irq,
--			     IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING,
--			     "backside_hall_sw", data);
-+	r = request_irq(data->backside_hall_irq, yogabook_backside_hall_irq,
-+			IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING,
-+			"backside_hall_sw", data);
- 	if (r) {
- 		dev_err_probe(&wdev->dev, r, "Requesting backside_hall_sw IRQ\n");
- 		goto error_put_devs;
-@@ -318,11 +313,14 @@ static int yogabook_wmi_probe(struct wmi_device *wdev, const void *context)
- 	r = devm_led_classdev_register(&wdev->dev, &data->kbd_bl_led);
- 	if (r < 0) {
- 		dev_err_probe(&wdev->dev, r, "Registering backlight LED device\n");
--		goto error_put_devs;
-+		goto error_free_irq;
- 	}
- 
- 	return 0;
- 
-+error_free_irq:
-+	free_irq(data->backside_hall_irq, data);
-+	cancel_work_sync(&data->work);
- error_put_devs:
- 	put_device(data->dig_dev);
- 	put_device(data->kbd_dev);
-@@ -335,6 +333,8 @@ static void yogabook_wmi_remove(struct wmi_device *wdev)
+@@ -332,9 +332,20 @@ static int yogabook_wmi_probe(struct wmi_device *wdev, const void *context)
+ static void yogabook_wmi_remove(struct wmi_device *wdev)
  {
  	struct yogabook_wmi *data = dev_get_drvdata(&wdev->dev);
++	int r = 0;
  
-+	free_irq(data->backside_hall_irq, data);
-+	cancel_work_sync(&data->work);
+ 	free_irq(data->backside_hall_irq, data);
+ 	cancel_work_sync(&data->work);
++
++	if (!test_bit(YB_KBD_IS_ON, &data->flags))
++		r |= device_reprobe(data->kbd_dev);
++
++	if (!test_bit(YB_DIGITIZER_IS_ON, &data->flags))
++		r |= device_reprobe(data->dig_dev);
++
++	if (r)
++		dev_warn(&wdev->dev, "Reprobe of devices failed\n");
++
  	put_device(data->dig_dev);
  	put_device(data->kbd_dev);
  	acpi_dev_put(data->dig_adev);
