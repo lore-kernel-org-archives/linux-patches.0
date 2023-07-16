@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A22F8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:53:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5BFC433C7;
-	Sun, 16 Jul 2023 20:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CAD68F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:53:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94FBBC433C7;
+	Sun, 16 Jul 2023 20:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540796;
-	bh=thcaNabwn2qKu0ks9ymYLEOkstvw9jFVYeEqR+TIaB0=;
+	s=korg; t=1689540799;
+	bh=oyTpk6QWYS8R1ZC3mGdP27MFibbw1ulX2WFlmU42itc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bshiw9NwP1YBMzdxWi7c9wWuc3nxqsuEJf0rgyNTd51HXCrlZ2obRWmk12kOcqUuG
-	 9Lv9O4TcihnlIGa5MmOsTg2usmLYCSz8gCTmA11cMQY6gEhEWZxmTjPwJT1rLAx3C4
-	 J10R1occZ48dxB2mnf0wH6CypFB543VcQ8BxV8nc=
+	b=gkTacNys3g4yn8InoFE2q3QPOu/MLyk6LziiEQiJOSGBSpp9zeR2OiJVYyEYIPS45
+	 2zoxbzFzS4Yf6bUXRyrg0gbuxnCU6r7/CjcvEXZvKHEzjPybVuTkZEC6vAyZZ0jvsX
+	 P/lunuBjQbzM6FvGUbPAim1LFjdc2DZoPvugb3uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart van Assche <bvanassche@acm.org>,
+	Andrea Righi <andrea.righi@canonical.com>,
+	Jinke Han <hanjinke.666@bytedance.com>,
+	Muchun Song <songmuchun@bytedance.com>,
 	Tejun Heo <tj@kernel.org>,
-	Waiman Long <longman@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 463/591] blk-cgroup: dont update io stat for root cgroup
-Date: Sun, 16 Jul 2023 21:50:02 +0200
-Message-ID: <20230716194935.881304644@linuxfoundation.org>
+Subject: [PATCH 6.1 464/591] blk-throttle: Fix io statistics for cgroup v1
+Date: Sun, 16 Jul 2023 21:50:03 +0200
+Message-ID: <20230716194935.907582674@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,47 +38,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Jinke Han <hanjinke.666@bytedance.com>
 
-[ Upstream commit 0416f3be58c6b1ea066cd52e354b857693feb01e ]
+[ Upstream commit ad7c3b41e86b59943a903d23c7b037d820e6270c ]
 
-We source root cgroup stats from the system-wide stats, see blkcg_print_stat
-and blkcg_rstat_flush, so don't update io state for root cgroup.
+After commit f382fb0bcef4 ("block: remove legacy IO schedulers"),
+blkio.throttle.io_serviced and blkio.throttle.io_service_bytes become
+the only stable io stats interface of cgroup v1, and these statistics
+are done in the blk-throttle code. But the current code only counts the
+bios that are actually throttled. When the user does not add the throttle
+limit, the io stats for cgroup v1 has nothing. I fix it according to the
+statistical method of v2, and made it count all ios accurately.
 
-Fixes blkg leak issue introduced in commit 3b8cc6298724 ("blk-cgroup: Optimize blkcg_rstat_flush()")
-which starts to grab blkg's reference when adding iostat_cpu into percpu
-blkcg list, but this state won't be consumed by blkcg_rstat_flush() where
-the blkg reference is dropped.
-
-Tested-by: Bart van Assche <bvanassche@acm.org>
-Reported-by: Bart van Assche <bvanassche@acm.org>
-Fixes: 3b8cc6298724 ("blk-cgroup: Optimize blkcg_rstat_flush()")
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Waiman Long <longman@redhat.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20230202021804.278582-1-ming.lei@redhat.com
+Fixes: a7b36ee6ba29 ("block: move blk-throtl fast path inline")
+Tested-by: Andrea Righi <andrea.righi@canonical.com>
+Signed-off-by: Jinke Han <hanjinke.666@bytedance.com>
+Acked-by: Muchun Song <songmuchun@bytedance.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20230507170631.89607-1-hanjinke.666@bytedance.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: ad7c3b41e86b ("blk-throttle: Fix io statistics for cgroup v1")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ block/blk-cgroup.c   | 6 ++++--
+ block/blk-throttle.c | 6 ------
+ block/blk-throttle.h | 9 +++++++++
+ 3 files changed, 13 insertions(+), 8 deletions(-)
 
 diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 2c7be256ff879..5ee0ae8ddbf6f 100644
+index 5ee0ae8ddbf6f..e812e48d5bb8a 100644
 --- a/block/blk-cgroup.c
 +++ b/block/blk-cgroup.c
-@@ -2008,6 +2008,10 @@ void blk_cgroup_bio_start(struct bio *bio)
+@@ -2008,6 +2008,9 @@ void blk_cgroup_bio_start(struct bio *bio)
  	struct blkg_iostat_set *bis;
  	unsigned long flags;
  
-+	/* Root-level stats are sourced from system-wide IO stats */
-+	if (!cgroup_parent(blkcg->css.cgroup))
++	if (!cgroup_subsys_on_dfl(io_cgrp_subsys))
 +		return;
 +
- 	cpu = get_cpu();
- 	bis = per_cpu_ptr(bio->bi_blkg->iostat_cpu, cpu);
- 	flags = u64_stats_update_begin_irqsave(&bis->sync);
+ 	/* Root-level stats are sourced from system-wide IO stats */
+ 	if (!cgroup_parent(blkcg->css.cgroup))
+ 		return;
+@@ -2039,8 +2042,7 @@ void blk_cgroup_bio_start(struct bio *bio)
+ 	}
+ 
+ 	u64_stats_update_end_irqrestore(&bis->sync, flags);
+-	if (cgroup_subsys_on_dfl(io_cgrp_subsys))
+-		cgroup_rstat_updated(blkcg->css.cgroup, cpu);
++	cgroup_rstat_updated(blkcg->css.cgroup, cpu);
+ 	put_cpu();
+ }
+ 
+diff --git a/block/blk-throttle.c b/block/blk-throttle.c
+index f1bc600c4ded6..d88147d1358fc 100644
+--- a/block/blk-throttle.c
++++ b/block/blk-throttle.c
+@@ -2167,12 +2167,6 @@ bool __blk_throtl_bio(struct bio *bio)
+ 
+ 	rcu_read_lock();
+ 
+-	if (!cgroup_subsys_on_dfl(io_cgrp_subsys)) {
+-		blkg_rwstat_add(&tg->stat_bytes, bio->bi_opf,
+-				bio->bi_iter.bi_size);
+-		blkg_rwstat_add(&tg->stat_ios, bio->bi_opf, 1);
+-	}
+-
+ 	spin_lock_irq(&q->queue_lock);
+ 
+ 	throtl_update_latency_buckets(td);
+diff --git a/block/blk-throttle.h b/block/blk-throttle.h
+index ef4b7a4de987d..d1ccbfe9f7978 100644
+--- a/block/blk-throttle.h
++++ b/block/blk-throttle.h
+@@ -185,6 +185,15 @@ static inline bool blk_should_throtl(struct bio *bio)
+ 	struct throtl_grp *tg = blkg_to_tg(bio->bi_blkg);
+ 	int rw = bio_data_dir(bio);
+ 
++	if (!cgroup_subsys_on_dfl(io_cgrp_subsys)) {
++		if (!bio_flagged(bio, BIO_CGROUP_ACCT)) {
++			bio_set_flag(bio, BIO_CGROUP_ACCT);
++			blkg_rwstat_add(&tg->stat_bytes, bio->bi_opf,
++					bio->bi_iter.bi_size);
++		}
++		blkg_rwstat_add(&tg->stat_ios, bio->bi_opf, 1);
++	}
++
+ 	/* iops limit is always counted */
+ 	if (tg->has_rules_iops[rw])
+ 		return true;
 -- 
 2.39.2
 
