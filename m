@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA4A8F6D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:22:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC7AC433C7;
-	Sun, 16 Jul 2023 20:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736B28F6D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:22:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDFD4C433C8;
+	Sun, 16 Jul 2023 20:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538946;
-	bh=h7lyFq8xZGhC9qU+LWkGE/WGzRs6Euv83NI8571DTQY=;
+	s=korg; t=1689538949;
+	bh=ovsVGoeoAa0d9EmzQZ+CP1CIdKhNhgufnXhm2TYSfOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LM/GAGGMal5i++ca42FtNgwTjt1xHv706en06JCiky81Q5fRGtfog6rYUzffWLGrR
-	 fGQY4N7ebQ/GQ69Z5K0i+LJP81X4fKaMpI3FxoWMoljlh1RBUgAGJGh7SQtS1rIuUp
-	 jnuNm+t43f9DjknAkG0KwAqMOGma2RIPh1698Vw0=
+	b=e7HIX5y5YcIaT6hvdNiXib+Dvjj1nklWx+uQDtMxA0ZNSAG59wDq4/7V0lj4CbwNZ
+	 a3njq4VIr7qPuE7mNoAobHGjS0O/6c+lXQ4WvlesA5EBbIxSM7UNZQGfnfh4niiQB1
+	 FMf6x+Jq/8sk5QbtLQJ1BoPMfXwFUKdJxflwTazk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurentiu Tudor <laurentiu.tudor@nxp.com>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 633/800] bus: fsl-mc: dont assume child devices are all fsl-mc devices
-Date: Sun, 16 Jul 2023 21:48:06 +0200
-Message-ID: <20230716195003.815944158@linuxfoundation.org>
+Subject: [PATCH 6.4 634/800] mfd: stmfx: Fix error path in stmfx_chip_init
+Date: Sun, 16 Jul 2023 21:48:07 +0200
+Message-ID: <20230716195003.839156559@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,96 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurentiu Tudor <laurentiu.tudor@nxp.com>
+From: Amelie Delaunay <amelie.delaunay@foss.st.com>
 
-[ Upstream commit 303c9c63abb9390e906052863f82bb4e9824e5c0 ]
+[ Upstream commit f592cf624531286f8b52e40dcfc157a5a7fb115c ]
 
-Changes in VFIO caused a pseudo-device to be created as child of
-fsl-mc devices causing a crash [1] when trying to bind a fsl-mc
-device to VFIO. Fix this by checking the device type when enumerating
-fsl-mc child devices.
+In error path, disable vdd regulator if it exists, but don't overload ret.
+Because if regulator_disable() is successful, stmfx_chip_init will exit
+successfully while chip init failed.
 
-[1]
-Modules linked in:
-Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
-CPU: 6 PID: 1289 Comm: sh Not tainted 6.2.0-rc5-00047-g7c46948a6e9c #2
-Hardware name: NXP Layerscape LX2160ARDB (DT)
-pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : mc_send_command+0x24/0x1f0
-lr : dprc_get_obj_region+0xfc/0x1c0
-sp : ffff80000a88b900
-x29: ffff80000a88b900 x28: ffff48a9429e1400 x27: 00000000000002b2
-x26: ffff48a9429e1718 x25: 0000000000000000 x24: 0000000000000000
-x23: ffffd59331ba3918 x22: ffffd59331ba3000 x21: 0000000000000000
-x20: ffff80000a88b9b8 x19: 0000000000000000 x18: 0000000000000001
-x17: 7270642f636d2d6c x16: 73662e3030303030 x15: ffffffffffffffff
-x14: ffffd59330f1d668 x13: ffff48a8727dc389 x12: ffff48a8727dc386
-x11: 0000000000000002 x10: 00008ceaf02f35d4 x9 : 0000000000000012
-x8 : 0000000000000000 x7 : 0000000000000006 x6 : ffff80000a88bab0
-x5 : 0000000000000000 x4 : 0000000000000000 x3 : ffff80000a88b9e8
-x2 : ffff80000a88b9e8 x1 : 0000000000000000 x0 : ffff48a945142b80
-Call trace:
- mc_send_command+0x24/0x1f0
- dprc_get_obj_region+0xfc/0x1c0
- fsl_mc_device_add+0x340/0x590
- fsl_mc_obj_device_add+0xd0/0xf8
- dprc_scan_objects+0x1c4/0x340
- dprc_scan_container+0x38/0x60
- vfio_fsl_mc_probe+0x9c/0xf8
- fsl_mc_driver_probe+0x24/0x70
- really_probe+0xbc/0x2a8
- __driver_probe_device+0x78/0xe0
- device_driver_attach+0x30/0x68
- bind_store+0xa8/0x130
- drv_attr_store+0x24/0x38
- sysfs_kf_write+0x44/0x60
- kernfs_fop_write_iter+0x128/0x1b8
- vfs_write+0x334/0x448
- ksys_write+0x68/0xf0
- __arm64_sys_write+0x1c/0x28
- invoke_syscall+0x44/0x108
- el0_svc_common.constprop.1+0x94/0xf8
- do_el0_svc+0x38/0xb0
- el0_svc+0x20/0x50
- el0t_64_sync_handler+0x98/0xc0
- el0t_64_sync+0x174/0x178
-Code: aa0103f4 a9025bf5 d5384100 b9400801 (79401260)
----[ end trace 0000000000000000 ]---
-
-Fixes: 3c28a76124b2 ("vfio: Add struct device to vfio_device")
-Signed-off-by: Laurentiu Tudor <laurentiu.tudor@nxp.com>
-Tested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Message-ID: <20230613160718.29500-1-laurentiu.tudor@nxp.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 06252ade9156 ("mfd: Add ST Multi-Function eXpander (STMFX) core driver")
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Link: https://lore.kernel.org/r/20230609092804.793100-1-amelie.delaunay@foss.st.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/fsl-mc/dprc-driver.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/mfd/stmfx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bus/fsl-mc/dprc-driver.c b/drivers/bus/fsl-mc/dprc-driver.c
-index 4c84be378bf27..ec5f26a45641b 100644
---- a/drivers/bus/fsl-mc/dprc-driver.c
-+++ b/drivers/bus/fsl-mc/dprc-driver.c
-@@ -45,6 +45,9 @@ static int __fsl_mc_device_remove_if_not_in_mc(struct device *dev, void *data)
- 	struct fsl_mc_child_objs *objs;
- 	struct fsl_mc_device *mc_dev;
+diff --git a/drivers/mfd/stmfx.c b/drivers/mfd/stmfx.c
+index e281971ba54ed..bfe89df276112 100644
+--- a/drivers/mfd/stmfx.c
++++ b/drivers/mfd/stmfx.c
+@@ -387,7 +387,7 @@ static int stmfx_chip_init(struct i2c_client *client)
  
-+	if (!dev_is_fsl_mc(dev))
-+		return 0;
-+
- 	mc_dev = to_fsl_mc_device(dev);
- 	objs = data;
+ err:
+ 	if (stmfx->vdd)
+-		return regulator_disable(stmfx->vdd);
++		regulator_disable(stmfx->vdd);
  
-@@ -64,6 +67,9 @@ static int __fsl_mc_device_remove_if_not_in_mc(struct device *dev, void *data)
- 
- static int __fsl_mc_device_remove(struct device *dev, void *data)
- {
-+	if (!dev_is_fsl_mc(dev))
-+		return 0;
-+
- 	fsl_mc_device_remove(to_fsl_mc_device(dev));
- 	return 0;
+ 	return ret;
  }
 -- 
 2.39.2
