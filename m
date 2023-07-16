@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0624C8F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:55:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DFEDC433C8;
-	Sun, 16 Jul 2023 19:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D998F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:55:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4552FC433C8;
+	Sun, 16 Jul 2023 19:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537336;
-	bh=0kUJoWCMRh/RGq76dsiLIp2oNW5tows7X5i+WJu5LTE=;
+	s=korg; t=1689537339;
+	bh=f8S7KZuukXt7H/DNDWo6ajFuqzJYxJ12szC5z26tHlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h79s3v51Y0ocZuMnu0LSlgscN48TuegQUA0ux4rmC7ZMXkxURuDxupbpofK7wfOne
-	 Ye4MxlG4JeSz5VUCQ8Jqru6cVTKyLaZZpyvkTevQlFHoxLizfHvOM+n/5rCbCWsyn1
-	 DVD3ETepX6w8cGBFs8vPcACrIEFXdlYO4edqjeZU=
+	b=Kjg3Xb1116DZt4CwsmJxinY7cG1abC7gDqRagAK5NQxaqLe8/XmNRvrQbmqSHL+Vr
+	 AADPlMFoszGqU8S1hI0JPSwR5jObxOVvkjtPVZ8SGfADFdaBPjl8o404JWV2WS7vdi
+	 v5sAWly9r5U6gFFJdbV9gnbHQebOZWmBnd7wfgc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Eric Biggers <ebiggers@google.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Christoph Hellwig <hch@lst.de>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 022/800] fsverity: dont use bio_first_page_all() in fsverity_verify_bio()
-Date: Sun, 16 Jul 2023 21:37:55 +0200
-Message-ID: <20230716194949.618101607@linuxfoundation.org>
+Subject: [PATCH 6.4 053/800] btrfs: return bool from lock_extent_buffer_for_io
+Date: Sun, 16 Jul 2023 21:38:26 +0200
+Message-ID: <20230716194950.322140132@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,73 +37,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit d1f0c5ea04cd0a93309de0246278f0b22394692d ]
+[ Upstream commit 9fdd160160f002ac2604c5b8f90598febad44ae7 ]
 
-bio_first_page_all(bio)->mapping->host is not compatible with large
-folios, since the first page of the bio is not necessarily the head page
-of the folio, and therefore it might not have the mapping pointer set.
+lock_extent_buffer_for_io never returns a negative error value, so switch
+the return value to a simple bool.
 
-Therefore, move the dereference of ->mapping->host into
-verify_data_blocks(), which works with a folio.
-
-(Like the commit that this Fixes, this hasn't actually been tested with
-large folios yet, since the filesystems that use fs/verity/ don't
-support that yet.  But based on code review, I think this is needed.)
-
-Fixes: 5d0f0e57ed90 ("fsverity: support verifying data from large folios")
-Link: https://lore.kernel.org/r/20230604022101.48342-1-ebiggers@kernel.org
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: David Sterba <dsterba@suse.com>
+[ keep noinline_for_stack ]
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 7027f87108ce ("btrfs: don't treat zoned writeback as being from an async helper thread")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/verity/verify.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/btrfs/extent_io.c | 37 +++++++++++--------------------------
+ 1 file changed, 11 insertions(+), 26 deletions(-)
 
-diff --git a/fs/verity/verify.c b/fs/verity/verify.c
-index e9ae1eef5f191..cf40e2fe6ace7 100644
---- a/fs/verity/verify.c
-+++ b/fs/verity/verify.c
-@@ -256,9 +256,10 @@ verify_data_block(struct inode *inode, struct fsverity_info *vi,
- }
- 
- static bool
--verify_data_blocks(struct inode *inode, struct folio *data_folio,
--		   size_t len, size_t offset, unsigned long max_ra_pages)
-+verify_data_blocks(struct folio *data_folio, size_t len, size_t offset,
-+		   unsigned long max_ra_pages)
- {
-+	struct inode *inode = data_folio->mapping->host;
- 	struct fsverity_info *vi = inode->i_verity_info;
- 	const unsigned int block_size = vi->tree_params.block_size;
- 	u64 pos = (u64)data_folio->index << PAGE_SHIFT;
-@@ -298,7 +299,7 @@ verify_data_blocks(struct inode *inode, struct folio *data_folio,
+diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
+index 51f0f28fb9b2c..28d0792359968 100644
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -1671,18 +1671,17 @@ static void end_extent_buffer_writeback(struct extent_buffer *eb)
+  *
+  * May try to flush write bio if we can't get the lock.
+  *
+- * Return  0 if the extent buffer doesn't need to be submitted.
+- *           (E.g. the extent buffer is not dirty)
+- * Return >0 is the extent buffer is submitted to bio.
+- * Return <0 if something went wrong, no page is locked.
++ * Return %false if the extent buffer doesn't need to be submitted (e.g. the
++ * extent buffer is not dirty)
++ * Return %true is the extent buffer is submitted to bio.
   */
- bool fsverity_verify_blocks(struct folio *folio, size_t len, size_t offset)
+-static noinline_for_stack int lock_extent_buffer_for_io(struct extent_buffer *eb,
++static noinline_for_stack bool lock_extent_buffer_for_io(struct extent_buffer *eb,
+ 			  struct btrfs_bio_ctrl *bio_ctrl)
  {
--	return verify_data_blocks(folio->mapping->host, folio, len, offset, 0);
-+	return verify_data_blocks(folio, len, offset, 0);
- }
- EXPORT_SYMBOL_GPL(fsverity_verify_blocks);
+ 	struct btrfs_fs_info *fs_info = eb->fs_info;
+ 	int i, num_pages;
+ 	int flush = 0;
+-	int ret = 0;
++	bool ret = false;
  
-@@ -319,7 +320,6 @@ EXPORT_SYMBOL_GPL(fsverity_verify_blocks);
-  */
- void fsverity_verify_bio(struct bio *bio)
- {
--	struct inode *inode = bio_first_page_all(bio)->mapping->host;
- 	struct folio_iter fi;
- 	unsigned long max_ra_pages = 0;
- 
-@@ -337,7 +337,7 @@ void fsverity_verify_bio(struct bio *bio)
+ 	if (!btrfs_try_tree_write_lock(eb)) {
+ 		submit_write_bio(bio_ctrl, 0);
+@@ -1693,7 +1692,7 @@ static noinline_for_stack int lock_extent_buffer_for_io(struct extent_buffer *eb
+ 	if (test_bit(EXTENT_BUFFER_WRITEBACK, &eb->bflags)) {
+ 		btrfs_tree_unlock(eb);
+ 		if (bio_ctrl->wbc->sync_mode != WB_SYNC_ALL)
+-			return 0;
++			return false;
+ 		if (!flush) {
+ 			submit_write_bio(bio_ctrl, 0);
+ 			flush = 1;
+@@ -1720,7 +1719,7 @@ static noinline_for_stack int lock_extent_buffer_for_io(struct extent_buffer *eb
+ 		percpu_counter_add_batch(&fs_info->dirty_metadata_bytes,
+ 					 -eb->len,
+ 					 fs_info->dirty_metadata_batch);
+-		ret = 1;
++		ret = true;
+ 	} else {
+ 		spin_unlock(&eb->refs_lock);
  	}
+@@ -2053,7 +2052,6 @@ static int submit_eb_subpage(struct page *page, struct btrfs_bio_ctrl *bio_ctrl)
+ 	u64 page_start = page_offset(page);
+ 	int bit_start = 0;
+ 	int sectors_per_node = fs_info->nodesize >> fs_info->sectorsize_bits;
+-	int ret;
  
- 	bio_for_each_folio_all(fi, bio) {
--		if (!verify_data_blocks(inode, fi.folio, fi.length, fi.offset,
-+		if (!verify_data_blocks(fi.folio, fi.length, fi.offset,
- 					max_ra_pages)) {
- 			bio->bi_status = BLK_STS_IOERR;
- 			break;
+ 	/* Lock and write each dirty extent buffers in the range */
+ 	while (bit_start < fs_info->subpage_info->bitmap_nr_bits) {
+@@ -2099,25 +2097,13 @@ static int submit_eb_subpage(struct page *page, struct btrfs_bio_ctrl *bio_ctrl)
+ 		if (!eb)
+ 			continue;
+ 
+-		ret = lock_extent_buffer_for_io(eb, bio_ctrl);
+-		if (ret == 0) {
+-			free_extent_buffer(eb);
+-			continue;
++		if (lock_extent_buffer_for_io(eb, bio_ctrl)) {
++			write_one_subpage_eb(eb, bio_ctrl);
++			submitted++;
+ 		}
+-		if (ret < 0) {
+-			free_extent_buffer(eb);
+-			goto cleanup;
+-		}
+-		write_one_subpage_eb(eb, bio_ctrl);
+ 		free_extent_buffer(eb);
+-		submitted++;
+ 	}
+ 	return submitted;
+-
+-cleanup:
+-	/* We hit error, end bio for the submitted extent buffers */
+-	submit_write_bio(bio_ctrl, ret);
+-	return ret;
+ }
+ 
+ /*
+@@ -2196,8 +2182,7 @@ static int submit_eb_page(struct page *page, struct btrfs_bio_ctrl *bio_ctrl,
+ 
+ 	*eb_context = eb;
+ 
+-	ret = lock_extent_buffer_for_io(eb, bio_ctrl);
+-	if (ret <= 0) {
++	if (!lock_extent_buffer_for_io(eb, bio_ctrl)) {
+ 		btrfs_revert_meta_write_pointer(cache, eb);
+ 		if (cache)
+ 			btrfs_put_block_group(cache);
 -- 
 2.39.2
 
