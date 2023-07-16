@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447B38F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:17:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7FEC433C7;
-	Sun, 16 Jul 2023 20:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB0F8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:17:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 995B6C433C7;
+	Sun, 16 Jul 2023 20:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538669;
-	bh=7XT1lu2g6szgXOZYRbd+fY//JrpY8FXG0L9cecd3r2M=;
+	s=korg; t=1689538671;
+	bh=Z8wTJDecwhHadfa82ZPgW5IPax1ypUq/yEt4smLHJrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zOeww2XQE6xTt2kglx1R98qfsCJqMiBSAelCOWW4bqiJWeorNC6c3XrCAQZ4Vu42E
-	 KybBi+0YHHCGNgD1n+wGYCZodbDE6ycoW1AYRXAW+DnI59lDeD7r+1W/+ml/JVF15t
-	 oUhlCwn4dX2gTRojmQffogDVYC1kk/1Xy+WIKBC0=
+	b=nqg4Bpsu4nain1SoyKDSgt/B7ruvTHK9dEdL0IOOlCAHKhf7J3W4TW6+4MdGcDYd1
+	 bL44ROGqIMC0jVilxepyI2d5fCP8Xjyimew/LdhHyATjdYr8lEtz4Yp7zPCFIA+Z4k
+	 BZH+Qzp0WHcwqdkDaZfR4N3w/wneg1hxMG05ZaxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Egorenkov <egorenar@linux.ibm.com>,
-	Eric Farman <farman@linux.ibm.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Tony Krowiak <akrowiak@linux.ibm.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	syzbot+726dc8c62c3536431ceb@syzkaller.appspotmail.com,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 498/800] vfio/mdev: Move the compat_class initialization to module init
-Date: Sun, 16 Jul 2023 21:45:51 +0200
-Message-ID: <20230716195000.655841403@linuxfoundation.org>
+Subject: [PATCH 6.4 499/800] hwrng: virtio - Fix race on data_avail and actual data
+Date: Sun, 16 Jul 2023 21:45:52 +0200
+Message-ID: <20230716195000.684312101@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -40,114 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Farman <farman@linux.ibm.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit ff598081e5b9d0bdd6874bfe340811bbb75b35e4 ]
+[ Upstream commit ac52578d6e8d300dd50f790f29a24169b1edd26c ]
 
-The pointer to mdev_bus_compat_class is statically defined at the top
-of mdev_core, and was originally (commit 7b96953bc640 ("vfio: Mediated
-device Core driver") serialized by the parent_list_lock. The blamed
-commit removed this mutex, leaving the pointer initialization
-unserialized. As a result, the creation of multiple MDEVs in parallel
-(such as during boot) can encounter errors during the creation of the
-sysfs entries, such as:
+The virtio rng device kicks off a new entropy request whenever the
+data available reaches zero.  When a new request occurs at the end
+of a read operation, that is, when the result of that request is
+only needed by the next reader, then there is a race between the
+writing of the new data and the next reader.
 
-  [    8.337509] sysfs: cannot create duplicate filename '/class/mdev_bus'
-  [    8.337514] vfio_ccw 0.0.01d8: MDEV: Registered
-  [    8.337516] CPU: 13 PID: 946 Comm: driverctl Not tainted 6.4.0-rc7 #20
-  [    8.337522] Hardware name: IBM 3906 M05 780 (LPAR)
-  [    8.337525] Call Trace:
-  [    8.337528]  [<0000000162b0145a>] dump_stack_lvl+0x62/0x80
-  [    8.337540]  [<00000001622aeb30>] sysfs_warn_dup+0x78/0x88
-  [    8.337549]  [<00000001622aeca6>] sysfs_create_dir_ns+0xe6/0xf8
-  [    8.337552]  [<0000000162b04504>] kobject_add_internal+0xf4/0x340
-  [    8.337557]  [<0000000162b04d48>] kobject_add+0x78/0xd0
-  [    8.337561]  [<0000000162b04e0a>] kobject_create_and_add+0x6a/0xb8
-  [    8.337565]  [<00000001627a110e>] class_compat_register+0x5e/0x90
-  [    8.337572]  [<000003ff7fd815da>] mdev_register_parent+0x102/0x130 [mdev]
-  [    8.337581]  [<000003ff7fdc7f2c>] vfio_ccw_sch_probe+0xe4/0x178 [vfio_ccw]
-  [    8.337588]  [<0000000162a7833c>] css_probe+0x44/0x80
-  [    8.337599]  [<000000016279f4da>] really_probe+0xd2/0x460
-  [    8.337603]  [<000000016279fa08>] driver_probe_device+0x40/0xf0
-  [    8.337606]  [<000000016279fb78>] __device_attach_driver+0xc0/0x140
-  [    8.337610]  [<000000016279cbe0>] bus_for_each_drv+0x90/0xd8
-  [    8.337618]  [<00000001627a00b0>] __device_attach+0x110/0x190
-  [    8.337621]  [<000000016279c7c8>] bus_rescan_devices_helper+0x60/0xb0
-  [    8.337626]  [<000000016279cd48>] drivers_probe_store+0x48/0x80
-  [    8.337632]  [<00000001622ac9b0>] kernfs_fop_write_iter+0x138/0x1f0
-  [    8.337635]  [<00000001621e5e14>] vfs_write+0x1ac/0x2f8
-  [    8.337645]  [<00000001621e61d8>] ksys_write+0x70/0x100
-  [    8.337650]  [<0000000162b2bdc4>] __do_syscall+0x1d4/0x200
-  [    8.337656]  [<0000000162b3c828>] system_call+0x70/0x98
-  [    8.337664] kobject: kobject_add_internal failed for mdev_bus with -EEXIST, don't try to register things with the same name in the same directory.
-  [    8.337668] kobject: kobject_create_and_add: kobject_add error: -17
-  [    8.337674] vfio_ccw: probe of 0.0.01d9 failed with error -12
-  [    8.342941] vfio_ccw_mdev aeb9ca91-10c6-42bc-a168-320023570aea: Adding to iommu group 2
+This is because there is no synchronisation whatsoever between the
+writer and the reader.
 
-Move the initialization of the mdev_bus_compat_class pointer to the
-init path, to match the cleanup in module exit. This way the code
-in mdev_register_parent() can simply link the new parent to it,
-rather than determining whether initialization is required first.
+Fix this by writing data_avail with smp_store_release and reading
+it with smp_load_acquire when we first enter read.  The subsequent
+reads are safe because they're either protected by the first load
+acquire, or by the completion mechanism.
 
-Fixes: 89345d5177aa ("vfio/mdev: embedd struct mdev_parent in the parent data structure")
-Reported-by: Alexander Egorenkov <egorenar@linux.ibm.com>
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Tony Krowiak <akrowiak@linux.ibm.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/20230626133642.2939168-1-farman@linux.ibm.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Also remove the redundant zeroing of data_idx in random_recv_done
+(data_idx must already be zero at this point) and data_avail in
+request_entropy (ditto).
+
+Reported-by: syzbot+726dc8c62c3536431ceb@syzkaller.appspotmail.com
+Fixes: f7f510ec1957 ("virtio: An entropy device, as suggested by hpa.")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/mdev/mdev_core.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ drivers/char/hw_random/virtio-rng.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/vfio/mdev/mdev_core.c b/drivers/vfio/mdev/mdev_core.c
-index 58f91b3bd670c..ed4737de45289 100644
---- a/drivers/vfio/mdev/mdev_core.c
-+++ b/drivers/vfio/mdev/mdev_core.c
-@@ -72,12 +72,6 @@ int mdev_register_parent(struct mdev_parent *parent, struct device *dev,
- 	parent->nr_types = nr_types;
- 	atomic_set(&parent->available_instances, mdev_driver->max_instances);
+diff --git a/drivers/char/hw_random/virtio-rng.c b/drivers/char/hw_random/virtio-rng.c
+index f7690e0f92ede..e41a84e6b4b56 100644
+--- a/drivers/char/hw_random/virtio-rng.c
++++ b/drivers/char/hw_random/virtio-rng.c
+@@ -4,6 +4,7 @@
+  *  Copyright (C) 2007, 2008 Rusty Russell IBM Corporation
+  */
  
--	if (!mdev_bus_compat_class) {
--		mdev_bus_compat_class = class_compat_register("mdev_bus");
--		if (!mdev_bus_compat_class)
--			return -ENOMEM;
--	}
++#include <asm/barrier.h>
+ #include <linux/err.h>
+ #include <linux/hw_random.h>
+ #include <linux/scatterlist.h>
+@@ -37,13 +38,13 @@ struct virtrng_info {
+ static void random_recv_done(struct virtqueue *vq)
+ {
+ 	struct virtrng_info *vi = vq->vdev->priv;
++	unsigned int len;
+ 
+ 	/* We can get spurious callbacks, e.g. shared IRQs + virtio_pci. */
+-	if (!virtqueue_get_buf(vi->vq, &vi->data_avail))
++	if (!virtqueue_get_buf(vi->vq, &len))
+ 		return;
+ 
+-	vi->data_idx = 0;
 -
- 	ret = parent_create_sysfs_files(parent);
- 	if (ret)
- 		return ret;
-@@ -251,13 +245,24 @@ int mdev_device_remove(struct mdev_device *mdev)
- 
- static int __init mdev_init(void)
- {
--	return bus_register(&mdev_bus_type);
-+	int ret;
-+
-+	ret = bus_register(&mdev_bus_type);
-+	if (ret)
-+		return ret;
-+
-+	mdev_bus_compat_class = class_compat_register("mdev_bus");
-+	if (!mdev_bus_compat_class) {
-+		bus_unregister(&mdev_bus_type);
-+		return -ENOMEM;
-+	}
-+
-+	return 0;
++	smp_store_release(&vi->data_avail, len);
+ 	complete(&vi->have_data);
  }
  
- static void __exit mdev_exit(void)
- {
--	if (mdev_bus_compat_class)
--		class_compat_unregister(mdev_bus_compat_class);
-+	class_compat_unregister(mdev_bus_compat_class);
- 	bus_unregister(&mdev_bus_type);
- }
+@@ -52,7 +53,6 @@ static void request_entropy(struct virtrng_info *vi)
+ 	struct scatterlist sg;
  
+ 	reinit_completion(&vi->have_data);
+-	vi->data_avail = 0;
+ 	vi->data_idx = 0;
+ 
+ 	sg_init_one(&sg, vi->data, sizeof(vi->data));
+@@ -88,7 +88,7 @@ static int virtio_read(struct hwrng *rng, void *buf, size_t size, bool wait)
+ 	read = 0;
+ 
+ 	/* copy available data */
+-	if (vi->data_avail) {
++	if (smp_load_acquire(&vi->data_avail)) {
+ 		chunk = copy_data(vi, buf, size);
+ 		size -= chunk;
+ 		read += chunk;
 -- 
 2.39.2
 
