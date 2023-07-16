@@ -1,34 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F318F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:04:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA453C433C8;
-	Sun, 16 Jul 2023 20:04:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EF18F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:04:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10FCC433C7;
+	Sun, 16 Jul 2023 20:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537860;
-	bh=ou/S/4/+1QUYBlAR2OQqqhXP1X7F3n/R8j5ylY0esbA=;
+	s=korg; t=1689537863;
+	bh=5aTeKyXvANEJZRkfhVinKmKB3XeZdIyA2OgfN2Jxnac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BwZC4lHcnBC0U35KKm1XSwpIeit6MZWUM7BVZvoHeHsV6ZsIfhI6thSxVXuV213pe
-	 Wx5sWCbUEHtnBUqpmRcqfg2MqlauZ2Y/DtScl+ocZJLm5uFDm8SSOzfg+h45GKwqbu
-	 VLGMojDjmJX4rmmiEVwKUIrT0rbzQ3XXjannmp9M=
+	b=jlZmf21qzVLdhVsmfRqYzlnLneDMAhyQ2obZwAiP9aqCb7V4K4JSuxgnSGBM6hBB7
+	 shN9pKbNOVrg34iKCzR4Ii/sdCeI4hXbr6HbAX23uFDemcgeEwSJIUvxML38O0FUFg
+	 AmUr8N24ieiNlo6Iv8/57iy/Rd6y+HzUe9Fxn64o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jarod Wilson <jarod@redhat.com>,
-	Moshe Tal <moshet@nvidia.com>,
-	Jussi Maki <joamaki@gmail.com>,
-	Jay Vosburgh <j.vosburgh@gmail.com>,
-	Andy Gospodarek <andy@greyhouse.net>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 206/800] bonding: do not assume skb mac_header is set
-Date: Sun, 16 Jul 2023 21:40:59 +0200
-Message-ID: <20230716194953.882518496@linuxfoundation.org>
+Subject: [PATCH 6.4 240/800] drm/bridge: tc358768: fix TCLK_TRAILCNT computation
+Date: Sun, 16 Jul 2023 21:41:33 +0200
+Message-ID: <20230716194954.674265312@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -42,89 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit 6a940abdef3162e5723f1495b8a49859d1708f79 ]
+[ Upstream commit ee18698e212b1659dd0850d7e2ae0f22e16ed3d3 ]
 
-Drivers must not assume in their ndo_start_xmit() that
-skbs have their mac_header set. skb->data is all what is needed.
+Correct computation of TCLK_TRAILCNT register.
 
-bonding seems to be one of the last offender as caught by syzbot:
+The driver does not implement non-continuous clock mode, so the actual
+value doesn't make a practical difference yet. However this change also
+ensures that the value does not write to reserved registers bits in case
+of under/overflow.
 
-WARNING: CPU: 1 PID: 12155 at include/linux/skbuff.h:2907 skb_mac_offset include/linux/skbuff.h:2913 [inline]
-WARNING: CPU: 1 PID: 12155 at include/linux/skbuff.h:2907 bond_xmit_hash drivers/net/bonding/bond_main.c:4170 [inline]
-WARNING: CPU: 1 PID: 12155 at include/linux/skbuff.h:2907 bond_xmit_3ad_xor_slave_get drivers/net/bonding/bond_main.c:5149 [inline]
-WARNING: CPU: 1 PID: 12155 at include/linux/skbuff.h:2907 bond_3ad_xor_xmit drivers/net/bonding/bond_main.c:5186 [inline]
-WARNING: CPU: 1 PID: 12155 at include/linux/skbuff.h:2907 __bond_start_xmit drivers/net/bonding/bond_main.c:5442 [inline]
-WARNING: CPU: 1 PID: 12155 at include/linux/skbuff.h:2907 bond_start_xmit+0x14ab/0x19d0 drivers/net/bonding/bond_main.c:5470
-Modules linked in:
-CPU: 1 PID: 12155 Comm: syz-executor.3 Not tainted 6.1.30-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/25/2023
-RIP: 0010:skb_mac_header include/linux/skbuff.h:2907 [inline]
-RIP: 0010:skb_mac_offset include/linux/skbuff.h:2913 [inline]
-RIP: 0010:bond_xmit_hash drivers/net/bonding/bond_main.c:4170 [inline]
-RIP: 0010:bond_xmit_3ad_xor_slave_get drivers/net/bonding/bond_main.c:5149 [inline]
-RIP: 0010:bond_3ad_xor_xmit drivers/net/bonding/bond_main.c:5186 [inline]
-RIP: 0010:__bond_start_xmit drivers/net/bonding/bond_main.c:5442 [inline]
-RIP: 0010:bond_start_xmit+0x14ab/0x19d0 drivers/net/bonding/bond_main.c:5470
-Code: 8b 7c 24 30 e8 76 dd 1a 01 48 85 c0 74 0d 48 89 c3 e8 29 67 2e fe e9 15 ef ff ff e8 1f 67 2e fe e9 10 ef ff ff e8 15 67 2e fe <0f> 0b e9 45 f8 ff ff e8 09 67 2e fe e9 dc fa ff ff e8 ff 66 2e fe
-RSP: 0018:ffffc90002fff6e0 EFLAGS: 00010283
-RAX: ffffffff835874db RBX: 000000000000ffff RCX: 0000000000040000
-RDX: ffffc90004dcf000 RSI: 00000000000000b5 RDI: 00000000000000b6
-RBP: ffffc90002fff8b8 R08: ffffffff83586d16 R09: ffffffff83586584
-R10: 0000000000000007 R11: ffff8881599fc780 R12: ffff88811b6a7b7e
-R13: 1ffff110236d4f6f R14: ffff88811b6a7ac0 R15: 1ffff110236d4f76
-FS: 00007f2e9eb47700(0000) GS:ffff8881f6b00000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000001b2e421000 CR3: 000000010e6d4000 CR4: 00000000003526e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<TASK>
-[<ffffffff8471a49f>] netdev_start_xmit include/linux/netdevice.h:4925 [inline]
-[<ffffffff8471a49f>] __dev_direct_xmit+0x4ef/0x850 net/core/dev.c:4380
-[<ffffffff851d845b>] dev_direct_xmit include/linux/netdevice.h:3043 [inline]
-[<ffffffff851d845b>] packet_direct_xmit+0x18b/0x300 net/packet/af_packet.c:284
-[<ffffffff851c7472>] packet_snd net/packet/af_packet.c:3112 [inline]
-[<ffffffff851c7472>] packet_sendmsg+0x4a22/0x64d0 net/packet/af_packet.c:3143
-[<ffffffff8467a4b2>] sock_sendmsg_nosec net/socket.c:716 [inline]
-[<ffffffff8467a4b2>] sock_sendmsg net/socket.c:736 [inline]
-[<ffffffff8467a4b2>] __sys_sendto+0x472/0x5f0 net/socket.c:2139
-[<ffffffff8467a715>] __do_sys_sendto net/socket.c:2151 [inline]
-[<ffffffff8467a715>] __se_sys_sendto net/socket.c:2147 [inline]
-[<ffffffff8467a715>] __x64_sys_sendto+0xe5/0x100 net/socket.c:2147
-[<ffffffff8553071f>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-[<ffffffff8553071f>] do_syscall_64+0x2f/0x50 arch/x86/entry/common.c:80
-[<ffffffff85600087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+This register must be set to a value that ensures that
 
-Fixes: 7b8fc0103bb5 ("bonding: add a vlan+srcmac tx hashing option")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Jarod Wilson <jarod@redhat.com>
-Cc: Moshe Tal <moshet@nvidia.com>
-Cc: Jussi Maki <joamaki@gmail.com>
-Cc: Jay Vosburgh <j.vosburgh@gmail.com>
-Cc: Andy Gospodarek <andy@greyhouse.net>
-Cc: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://lore.kernel.org/r/20230622152304.2137482-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+TCLK-TRAIL > 60ns
+ and
+TEOT <= (105 ns + 12 x UI)
+
+with the actual value of TCLK-TRAIL being
+
+(TCLK_TRAILCNT + (1 to 2)) xHSByteClkCycle +
+ (2 + (1 to 2)) * HSBYTECLKCycle - (PHY output delay)
+
+with PHY output delay being about
+
+(2 to 3) x MIPIBitClk cycle in the BitClk conversion.
+
+Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-2-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-3-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-4-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-5-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-2-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-3-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-4-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-5-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-2-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-3-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-4-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-5-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-2-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-3-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-4-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-5-francesco@dolcini.it
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/tc358768.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index edbaa1444f8ec..091e035c76a6f 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -4197,7 +4197,7 @@ u32 bond_xmit_hash(struct bonding *bond, struct sk_buff *skb)
- 		return skb->hash;
+diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
+index 487bfe33edc88..4cb46a3e6be8c 100644
+--- a/drivers/gpu/drm/bridge/tc358768.c
++++ b/drivers/gpu/drm/bridge/tc358768.c
+@@ -10,6 +10,7 @@
+ #include <linux/i2c.h>
+ #include <linux/kernel.h>
+ #include <linux/media-bus-format.h>
++#include <linux/minmax.h>
+ #include <linux/module.h>
+ #include <linux/regmap.h>
+ #include <linux/regulator/consumer.h>
+@@ -639,6 +640,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 	struct mipi_dsi_device *dsi_dev = priv->output.dev;
+ 	unsigned long mode_flags = dsi_dev->mode_flags;
+ 	u32 val, val2, lptxcnt, hact, data_type;
++	s32 raw_val;
+ 	const struct drm_display_mode *mode;
+ 	u32 dsibclk_nsk, dsiclk_nsk, ui_nsk, phy_delay_nsk;
+ 	u32 dsiclk, dsibclk, video_start;
+@@ -750,9 +752,9 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 	dev_dbg(priv->dev, "TCLK_HEADERCNT: 0x%x\n", val);
+ 	tc358768_write(priv, TC358768_TCLK_HEADERCNT, val);
  
- 	return __bond_xmit_hash(bond, skb, skb->data, skb->protocol,
--				skb_mac_offset(skb), skb_network_offset(skb),
-+				0, skb_network_offset(skb),
- 				skb_headlen(skb));
- }
+-	/* TCLK_TRAIL > 60ns + 3*UI */
+-	val = 60 + tc358768_to_ns(3 * ui_nsk);
+-	val = tc358768_ns_to_cnt(val, dsibclk_nsk) - 5;
++	/* TCLK_TRAIL > 60ns AND TEOT <= 105 ns + 12*UI */
++	raw_val = tc358768_ns_to_cnt(60 + tc358768_to_ns(2 * ui_nsk), dsibclk_nsk) - 5;
++	val = clamp(raw_val, 0, 127);
+ 	dev_dbg(priv->dev, "TCLK_TRAILCNT: 0x%x\n", val);
+ 	tc358768_write(priv, TC358768_TCLK_TRAILCNT, val);
  
 -- 
 2.39.2
