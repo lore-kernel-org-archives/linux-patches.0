@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7728F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:21:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92117C433C7;
-	Sun, 16 Jul 2023 20:21:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CA48F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:21:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C276C433C7;
+	Sun, 16 Jul 2023 20:21:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538890;
-	bh=HHTOsYWhoGpBSzfPfgcOq5LUyZPm2PblHSIIFFK1/RE=;
+	s=korg; t=1689538892;
+	bh=TvDhzK0rh/LWwMNXTvx3p95jQgw4njYPjLMzFlx/ZAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d1Y181JzQVppHWlaVNq3kPGg3753K6iDJOLvqlSvWM9B4Vt+UtRg7j/Rvlo9zyXp0
-	 zKrhr/dOGlttSLKBJ8wfgl25OYdN55E3iKApPjKpcYQIV85xFjk7OVygYCe/6fkqaX
-	 +5SeZBzlaoJ9TV18T6slHSECu+XLbeMtH0KjO0dU=
+	b=gNfmG8ICKiARgZC8d4vubCuAdY4ia5XLDUWOhXJwsW8uIpcNZdWQcXpuLd5fUrIa/
+	 exUzUnkklPFBjDrw3v9FYDS3qOEdfPO+KSenU+QuIh3HvAgZn3IJk3qv1d3ovuuutQ
+	 w9c6QFISBsYJTLwTlgOslTBHhR0lgRBBAtLc27O0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	butt3rflyh4ck <butterflyhuangxx@gmail.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 612/800] f2fs: fix potential deadlock due to unpaired node_write lock use
-Date: Sun, 16 Jul 2023 21:47:45 +0200
-Message-ID: <20230716195003.324850694@linuxfoundation.org>
+Subject: [PATCH 6.4 613/800] f2fs: fix to avoid NULL pointer dereference f2fs_write_end_io()
+Date: Sun, 16 Jul 2023 21:47:46 +0200
+Message-ID: <20230716195003.348698347@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,104 +38,157 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit f082c6b205a06953f26c40bdc7621cc5a58ceb7c ]
+[ Upstream commit d8189834d4348ae608083e1f1f53792cfcc2a9bc ]
 
-If S_NOQUOTA is cleared from inode during data page writeback of quota
-file, it may miss to unlock node_write lock, result in potential
-deadlock, fix to use the lock in paired.
+butt3rflyh4ck reports a bug as below:
 
-Kworker					Thread
-- writepage
- if (IS_NOQUOTA())
-   f2fs_down_read(&sbi->node_write);
-					- vfs_cleanup_quota_inode
-					 - inode->i_flags &= ~S_NOQUOTA;
- if (IS_NOQUOTA())
-   f2fs_up_read(&sbi->node_write);
+When a thread always calls F2FS_IOC_RESIZE_FS to resize fs, if resize fs is
+failed, f2fs kernel thread would invoke callback function to update f2fs io
+info, it would call  f2fs_write_end_io and may trigger null-ptr-deref in
+NODE_MAPPING.
 
-Fixes: 79963d967b49 ("f2fs: shrink node_write lock coverage")
+general protection fault, probably for non-canonical address
+KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
+RIP: 0010:NODE_MAPPING fs/f2fs/f2fs.h:1972 [inline]
+RIP: 0010:f2fs_write_end_io+0x727/0x1050 fs/f2fs/data.c:370
+ <TASK>
+ bio_endio+0x5af/0x6c0 block/bio.c:1608
+ req_bio_endio block/blk-mq.c:761 [inline]
+ blk_update_request+0x5cc/0x1690 block/blk-mq.c:906
+ blk_mq_end_request+0x59/0x4c0 block/blk-mq.c:1023
+ lo_complete_rq+0x1c6/0x280 drivers/block/loop.c:370
+ blk_complete_reqs+0xad/0xe0 block/blk-mq.c:1101
+ __do_softirq+0x1d4/0x8ef kernel/softirq.c:571
+ run_ksoftirqd kernel/softirq.c:939 [inline]
+ run_ksoftirqd+0x31/0x60 kernel/softirq.c:931
+ smpboot_thread_fn+0x659/0x9e0 kernel/smpboot.c:164
+ kthread+0x33e/0x440 kernel/kthread.c:379
+ ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
+
+The root cause is below race case can cause leaving dirty metadata
+in f2fs after filesystem is remount as ro:
+
+Thread A				Thread B
+- f2fs_ioc_resize_fs
+ - f2fs_readonly   --- return false
+ - f2fs_resize_fs
+					- f2fs_remount
+					 - write_checkpoint
+					 - set f2fs as ro
+  - free_segment_range
+   - update meta_inode's data
+
+Then, if f2fs_put_super()  fails to write_checkpoint due to readonly
+status, and meta_inode's dirty data will be writebacked after node_inode
+is put, finally, f2fs_write_end_io will access NULL pointer on
+sbi->node_inode.
+
+Thread A				IRQ context
+- f2fs_put_super
+ - write_checkpoint fails
+ - iput(node_inode)
+ - node_inode = NULL
+ - iput(meta_inode)
+  - write_inode_now
+   - f2fs_write_meta_page
+					- f2fs_write_end_io
+					 - NODE_MAPPING(sbi)
+					 : access NULL pointer on node_inode
+
+Fixes: b4b10061ef98 ("f2fs: refactor resize_fs to avoid meta updates in progress")
+Reported-by: butt3rflyh4ck <butterflyhuangxx@gmail.com>
+Closes: https://lore.kernel.org/r/1684480657-2375-1-git-send-email-yangtiezhu@loongson.cn
+Tested-by: butt3rflyh4ck <butterflyhuangxx@gmail.com>
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/compress.c | 7 ++++---
- fs/f2fs/data.c     | 7 ++++---
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ fs/f2fs/f2fs.h |  2 +-
+ fs/f2fs/file.c |  2 +-
+ fs/f2fs/gc.c   | 21 ++++++++++++++++++---
+ 3 files changed, 20 insertions(+), 5 deletions(-)
 
-diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
-index 11653fa792897..2ec7cf4544180 100644
---- a/fs/f2fs/compress.c
-+++ b/fs/f2fs/compress.c
-@@ -1215,6 +1215,7 @@ static int f2fs_write_compressed_pages(struct compress_ctx *cc,
- 	unsigned int last_index = cc->cluster_size - 1;
- 	loff_t psize;
- 	int i, err;
-+	bool quota_inode = IS_NOQUOTA(inode);
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index d211ee89c1586..25999ed2c4258 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -3815,7 +3815,7 @@ void f2fs_stop_gc_thread(struct f2fs_sb_info *sbi);
+ block_t f2fs_start_bidx_of_node(unsigned int node_ofs, struct inode *inode);
+ int f2fs_gc(struct f2fs_sb_info *sbi, struct f2fs_gc_control *gc_control);
+ void f2fs_build_gc_manager(struct f2fs_sb_info *sbi);
+-int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count);
++int f2fs_resize_fs(struct file *filp, __u64 block_count);
+ int __init f2fs_create_garbage_collection_cache(void);
+ void f2fs_destroy_garbage_collection_cache(void);
+ /* victim selection function for cleaning and SSR */
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index fa50c6475876c..7482af51ab408 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -3284,7 +3284,7 @@ static int f2fs_ioc_resize_fs(struct file *filp, unsigned long arg)
+ 			   sizeof(block_count)))
+ 		return -EFAULT;
  
- 	/* we should bypass data pages to proceed the kworker jobs */
- 	if (unlikely(f2fs_cp_error(sbi))) {
-@@ -1222,7 +1223,7 @@ static int f2fs_write_compressed_pages(struct compress_ctx *cc,
- 		goto out_free;
+-	return f2fs_resize_fs(sbi, block_count);
++	return f2fs_resize_fs(filp, block_count);
+ }
+ 
+ static int f2fs_ioc_enable_verity(struct file *filp, unsigned long arg)
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 61c5f9d26018e..48cb4700ba3f5 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -2099,8 +2099,9 @@ static void update_fs_metadata(struct f2fs_sb_info *sbi, int secs)
+ 	}
+ }
+ 
+-int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
++int f2fs_resize_fs(struct file *filp, __u64 block_count)
+ {
++	struct f2fs_sb_info *sbi = F2FS_I_SB(file_inode(filp));
+ 	__u64 old_block_count, shrunk_blocks;
+ 	struct cp_control cpc = { CP_RESIZE, 0, 0, 0 };
+ 	unsigned int secs;
+@@ -2138,12 +2139,18 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
+ 		return -EINVAL;
  	}
  
--	if (IS_NOQUOTA(inode)) {
-+	if (quota_inode) {
- 		/*
- 		 * We need to wait for node_write to avoid block allocation during
- 		 * checkpoint. This can only happen to quota writes which can cause
-@@ -1344,7 +1345,7 @@ static int f2fs_write_compressed_pages(struct compress_ctx *cc,
- 		set_inode_flag(inode, FI_FIRST_BLOCK_WRITTEN);
++	err = mnt_want_write_file(filp);
++	if (err)
++		return err;
++
+ 	shrunk_blocks = old_block_count - block_count;
+ 	secs = div_u64(shrunk_blocks, BLKS_PER_SEC(sbi));
  
- 	f2fs_put_dnode(&dn);
--	if (IS_NOQUOTA(inode))
-+	if (quota_inode)
- 		f2fs_up_read(&sbi->node_write);
- 	else
- 		f2fs_unlock_op(sbi);
-@@ -1370,7 +1371,7 @@ static int f2fs_write_compressed_pages(struct compress_ctx *cc,
- out_put_dnode:
- 	f2fs_put_dnode(&dn);
- out_unlock_op:
--	if (IS_NOQUOTA(inode))
-+	if (quota_inode)
- 		f2fs_up_read(&sbi->node_write);
- 	else
- 		f2fs_unlock_op(sbi);
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 7165b1202f539..4a0ee9cc43b5d 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -2775,6 +2775,7 @@ int f2fs_write_single_data_page(struct page *page, int *submitted,
- 	loff_t psize = (loff_t)(page->index + 1) << PAGE_SHIFT;
- 	unsigned offset = 0;
- 	bool need_balance_fs = false;
-+	bool quota_inode = IS_NOQUOTA(inode);
- 	int err = 0;
- 	struct f2fs_io_info fio = {
- 		.sbi = sbi,
-@@ -2832,19 +2833,19 @@ int f2fs_write_single_data_page(struct page *page, int *submitted,
- 		goto out;
+ 	/* stop other GC */
+-	if (!f2fs_down_write_trylock(&sbi->gc_lock))
+-		return -EAGAIN;
++	if (!f2fs_down_write_trylock(&sbi->gc_lock)) {
++		err = -EAGAIN;
++		goto out_drop_write;
++	}
  
- 	/* Dentry/quota blocks are controlled by checkpoint */
--	if (S_ISDIR(inode->i_mode) || IS_NOQUOTA(inode)) {
-+	if (S_ISDIR(inode->i_mode) || quota_inode) {
- 		/*
- 		 * We need to wait for node_write to avoid block allocation during
- 		 * checkpoint. This can only happen to quota writes which can cause
- 		 * the below discard race condition.
- 		 */
--		if (IS_NOQUOTA(inode))
-+		if (quota_inode)
- 			f2fs_down_read(&sbi->node_write);
+ 	/* stop CP to protect MAIN_SEC in free_segment_range */
+ 	f2fs_lock_op(sbi);
+@@ -2163,10 +2170,18 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
+ out_unlock:
+ 	f2fs_unlock_op(sbi);
+ 	f2fs_up_write(&sbi->gc_lock);
++out_drop_write:
++	mnt_drop_write_file(filp);
+ 	if (err)
+ 		return err;
  
- 		fio.need_lock = LOCK_DONE;
- 		err = f2fs_do_write_data_page(&fio);
+ 	freeze_super(sbi->sb);
++
++	if (f2fs_readonly(sbi->sb)) {
++		thaw_super(sbi->sb);
++		return -EROFS;
++	}
++
+ 	f2fs_down_write(&sbi->gc_lock);
+ 	f2fs_down_write(&sbi->cp_global_sem);
  
--		if (IS_NOQUOTA(inode))
-+		if (quota_inode)
- 			f2fs_up_read(&sbi->node_write);
- 
- 		goto done;
 -- 
 2.39.2
 
