@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D858F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:33:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10C7C433C8;
-	Sun, 16 Jul 2023 20:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E16F8F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:33:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5104C433C8;
+	Sun, 16 Jul 2023 20:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539588;
-	bh=CB6BsmXIdFZ8HNKNBv0Zv9kANptIDDpS437LKNLLTOg=;
+	s=korg; t=1689539591;
+	bh=Rz3Bh1FvmYG/o8d2aUI5ZPrMPe/50XASaKSddmGXEwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b1BSxfK9VVmJ3SShCup4UC//nYcK/bDW3okTkz1pheAIbXwTkORsJS3JChucCJOg7
-	 2BJFreMyHvtx/44hUPk5dL2r5HwJdnZuE9pqQ4SviAmrOnMO9GXXb7d4qCBczlHK2T
-	 UOJig3z/XegVqRHNhO3WxFoPyG/w53hIroLNII7E=
+	b=hzcYPlVq09FFDikNEa5fPz9uv2nCJZ5BGWfXaCuryET+YLtAYZvBaim4UwOT68DXa
+	 4EQfQ9hFehiw1PliuU+gjVaz/WLq0WQL0D+pGhJuYFASJwKvTYybhDW/3Lkza+EKcQ
+	 shLD6g8B99d6QOn/1kzpXw4jNNyYOkGpQ3ZEyisk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/591] x86/mm: Fix __swp_entry_to_pte() for Xen PV guests
-Date: Sun, 16 Jul 2023 21:43:20 +0200
-Message-ID: <20230716194925.458842044@linuxfoundation.org>
+Subject: [PATCH 6.1 044/591] x86/mm: Allow guest.enc_status_change_prepare() to fail
+Date: Sun, 16 Jul 2023 21:43:03 +0200
+Message-ID: <20230716194925.020895407@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,45 +36,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juergen Gross <jgross@suse.com>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-[ Upstream commit 0f88130e8a6fd185b0aeb5d8e286083735f2585a ]
+[ Upstream commit 3f6819dd192ef4f0c568ec3e9d6d408b3fa1ad3d ]
 
-Normally __swp_entry_to_pte() is never called with a value translating
-to a valid PTE. The only known exception is pte_swap_tests(), resulting
-in a WARN splat in Xen PV guests, as __pte_to_swp_entry() did
-translate the PFN of the valid PTE to a guest local PFN, while
-__swp_entry_to_pte() doesn't do the opposite translation.
+TDX code is going to provide guest.enc_status_change_prepare() that is
+able to fail. TDX will use the call to convert the GPA range from shared
+to private. This operation can fail.
 
-Fix that by using __pte() in __swp_entry_to_pte() instead of open
-coding the native variant of it.
+Add a way to return an error from the callback.
 
-For correctness do the similar conversion for __swp_entry_to_pmd().
-
-Fixes: 05289402d717 ("mm/debug_vm_pgtable: add tests validating arch helpers for core MM features")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230306123259.12461-1-jgross@suse.com
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Link: https://lore.kernel.org/all/20230606095622.1939-2-kirill.shutemov%40linux.intel.com
+Stable-dep-of: 195edce08b63 ("x86/tdx: Fix race between set_memory_encrypted() and load_unaligned_zeropad()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/pgtable_64.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/x86_init.h | 2 +-
+ arch/x86/kernel/x86_init.c      | 2 +-
+ arch/x86/mm/mem_encrypt_amd.c   | 4 +++-
+ arch/x86/mm/pat/set_memory.c    | 3 ++-
+ 4 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/include/asm/pgtable_64.h b/arch/x86/include/asm/pgtable_64.h
-index e479491da8d51..07cd53eeec770 100644
---- a/arch/x86/include/asm/pgtable_64.h
-+++ b/arch/x86/include/asm/pgtable_64.h
-@@ -237,8 +237,8 @@ static inline void native_pgd_clear(pgd_t *pgd)
+diff --git a/arch/x86/include/asm/x86_init.h b/arch/x86/include/asm/x86_init.h
+index c1c8c581759d6..034e62838b284 100644
+--- a/arch/x86/include/asm/x86_init.h
++++ b/arch/x86/include/asm/x86_init.h
+@@ -150,7 +150,7 @@ struct x86_init_acpi {
+  * @enc_cache_flush_required	Returns true if a cache flush is needed before changing page encryption status
+  */
+ struct x86_guest {
+-	void (*enc_status_change_prepare)(unsigned long vaddr, int npages, bool enc);
++	bool (*enc_status_change_prepare)(unsigned long vaddr, int npages, bool enc);
+ 	bool (*enc_status_change_finish)(unsigned long vaddr, int npages, bool enc);
+ 	bool (*enc_tlb_flush_required)(bool enc);
+ 	bool (*enc_cache_flush_required)(void);
+diff --git a/arch/x86/kernel/x86_init.c b/arch/x86/kernel/x86_init.c
+index 10622cf2b30f4..41e5b4cb898c3 100644
+--- a/arch/x86/kernel/x86_init.c
++++ b/arch/x86/kernel/x86_init.c
+@@ -130,7 +130,7 @@ struct x86_cpuinit_ops x86_cpuinit = {
  
- #define __pte_to_swp_entry(pte)		((swp_entry_t) { pte_val((pte)) })
- #define __pmd_to_swp_entry(pmd)		((swp_entry_t) { pmd_val((pmd)) })
--#define __swp_entry_to_pte(x)		((pte_t) { .pte = (x).val })
--#define __swp_entry_to_pmd(x)		((pmd_t) { .pmd = (x).val })
-+#define __swp_entry_to_pte(x)		(__pte((x).val))
-+#define __swp_entry_to_pmd(x)		(__pmd((x).val))
+ static void default_nmi_init(void) { };
  
- extern int kern_addr_valid(unsigned long addr);
- extern void cleanup_highmap(void);
+-static void enc_status_change_prepare_noop(unsigned long vaddr, int npages, bool enc) { }
++static bool enc_status_change_prepare_noop(unsigned long vaddr, int npages, bool enc) { return true; }
+ static bool enc_status_change_finish_noop(unsigned long vaddr, int npages, bool enc) { return false; }
+ static bool enc_tlb_flush_required_noop(bool enc) { return false; }
+ static bool enc_cache_flush_required_noop(void) { return false; }
+diff --git a/arch/x86/mm/mem_encrypt_amd.c b/arch/x86/mm/mem_encrypt_amd.c
+index 9c4d8dbcb1296..ff6c0462beee7 100644
+--- a/arch/x86/mm/mem_encrypt_amd.c
++++ b/arch/x86/mm/mem_encrypt_amd.c
+@@ -319,7 +319,7 @@ static void enc_dec_hypercall(unsigned long vaddr, int npages, bool enc)
+ #endif
+ }
+ 
+-static void amd_enc_status_change_prepare(unsigned long vaddr, int npages, bool enc)
++static bool amd_enc_status_change_prepare(unsigned long vaddr, int npages, bool enc)
+ {
+ 	/*
+ 	 * To maintain the security guarantees of SEV-SNP guests, make sure
+@@ -327,6 +327,8 @@ static void amd_enc_status_change_prepare(unsigned long vaddr, int npages, bool
+ 	 */
+ 	if (cc_platform_has(CC_ATTR_GUEST_SEV_SNP) && !enc)
+ 		snp_set_memory_shared(vaddr, npages);
++
++	return true;
+ }
+ 
+ /* Return true unconditionally: return value doesn't matter for the SEV side */
+diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
+index 2e5a045731dec..5f0ce77a259d8 100644
+--- a/arch/x86/mm/pat/set_memory.c
++++ b/arch/x86/mm/pat/set_memory.c
+@@ -2096,7 +2096,8 @@ static int __set_memory_enc_pgtable(unsigned long addr, int numpages, bool enc)
+ 		cpa_flush(&cpa, x86_platform.guest.enc_cache_flush_required());
+ 
+ 	/* Notify hypervisor that we are about to set/clr encryption attribute. */
+-	x86_platform.guest.enc_status_change_prepare(addr, numpages, enc);
++	if (!x86_platform.guest.enc_status_change_prepare(addr, numpages, enc))
++		return -EIO;
+ 
+ 	ret = __change_page_attr_set_clr(&cpa, 1);
+ 
 -- 
 2.39.2
 
