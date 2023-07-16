@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4C08F6D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:23:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85113C433C8;
-	Sun, 16 Jul 2023 20:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AB48F6D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:23:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD59C433C7;
+	Sun, 16 Jul 2023 20:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539032;
-	bh=db8/g5L7JsHUPENpLQha8mxIbhmiKm43MFGVbFYOT1c=;
+	s=korg; t=1689539035;
+	bh=15Ww9JzwZFyKJ37u2c8y8UIlSsnBC4+pR60qbDapO/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y9GmZ8H8X2VKfL8atxuqN8QFDAiBzSeGRL8rpCOhuVBRbxsJALL1+GUbgYR2baq6D
-	 w3d9z2xsm7+MSRySuJhppziAP8u1B4v48VBETKKrl4dL41UNpp58Nid4R3/OtuiHPU
-	 5Td99GatpyeFLgkxv1MBn1O0Q5dv/XMQSPMv0bYI=
+	b=w51PF8bWIcVTavWOCaOvxalimUGiU6EsgHBowcnaKiysCJECgPV8OkChoN+v5x/4s
+	 HlGPsjTBs4ztbaz0kT9Y3bUSE8nI++chJZ2MDAYR803PaC8ExoMYwv4U9i1nE52Lmp
+	 R0u9g9Ko0Yy+or/862YQUdojQyY8rXko0Ub+inaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Lee Jones <lee@kernel.org>,
+	Gal Pressman <gal@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Feng Liu <feliu@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 623/800] mfd: wcd934x: Fix an error handling path in wcd934x_slim_probe()
-Date: Sun, 16 Jul 2023 21:47:56 +0200
-Message-ID: <20230716195003.584031450@linuxfoundation.org>
+Subject: [PATCH 6.4 657/800] virtio-vdpa: Fix unchecked call to NULL set_vq_affinity
+Date: Sun, 16 Jul 2023 21:48:30 +0200
+Message-ID: <20230716195004.371909670@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,52 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit f190b4891a3f9fac123a7afd378d4143a2723313 ]
+[ Upstream commit fe37efba475375caa2dbc71cb06f53f7086277ef ]
 
-If devm_gpiod_get_optional() fails, some resources need to be released, as
-already done in the .remove() function.
+The referenced patch calls set_vq_affinity without checking if the op is
+valid. This patch adds the check.
 
-While at it, remove the unneeded error code from a dev_err_probe() call.
-It is already added in a human readable way by dev_err_probe() itself.
-
-Fixes: 6a0ee2a61a31 ("mfd: wcd934x: Replace legacy gpio interface for gpiod")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/02d8447f6d1df52cc8357aae698152e9a9be67c6.1684565021.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 3dad56823b53 ("virtio-vdpa: Support interrupt affinity spreading mechanism")
+Reviewed-by: Gal Pressman <gal@nvidia.com>
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Message-Id: <20230504135053.2283816-1-dtatulea@nvidia.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Feng Liu <feliu@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/wcd934x.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/virtio/virtio_vdpa.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/wcd934x.c b/drivers/mfd/wcd934x.c
-index 07e884087f2c7..281470d6b0b99 100644
---- a/drivers/mfd/wcd934x.c
-+++ b/drivers/mfd/wcd934x.c
-@@ -258,8 +258,9 @@ static int wcd934x_slim_probe(struct slim_device *sdev)
- 	usleep_range(600, 650);
- 	reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_LOW);
- 	if (IS_ERR(reset_gpio)) {
--		return dev_err_probe(dev, PTR_ERR(reset_gpio),
--				"Failed to get reset gpio: err = %ld\n", PTR_ERR(reset_gpio));
-+		ret = dev_err_probe(dev, PTR_ERR(reset_gpio),
-+				    "Failed to get reset gpio\n");
-+		goto err_disable_regulators;
- 	}
- 	msleep(20);
- 	gpiod_set_value(reset_gpio, 1);
-@@ -269,6 +270,10 @@ static int wcd934x_slim_probe(struct slim_device *sdev)
- 	dev_set_drvdata(dev, ddata);
- 
- 	return 0;
+diff --git a/drivers/virtio/virtio_vdpa.c b/drivers/virtio/virtio_vdpa.c
+index eb6aee8c06b2c..989e2d7184ce4 100644
+--- a/drivers/virtio/virtio_vdpa.c
++++ b/drivers/virtio/virtio_vdpa.c
+@@ -385,7 +385,9 @@ static int virtio_vdpa_find_vqs(struct virtio_device *vdev, unsigned int nvqs,
+ 			err = PTR_ERR(vqs[i]);
+ 			goto err_setup_vq;
+ 		}
+-		ops->set_vq_affinity(vdpa, i, &masks[i]);
 +
-+err_disable_regulators:
-+	regulator_bulk_disable(WCD934X_MAX_SUPPLY, ddata->supplies);
-+	return ret;
- }
++		if (ops->set_vq_affinity)
++			ops->set_vq_affinity(vdpa, i, &masks[i]);
+ 	}
  
- static void wcd934x_slim_remove(struct slim_device *sdev)
+ 	cb.callback = virtio_vdpa_config_cb;
 -- 
 2.39.2
 
