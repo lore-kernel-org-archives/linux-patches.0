@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C618F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:32:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B0FC433C8;
-	Sun, 16 Jul 2023 20:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85BC8F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:32:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BCAC433C7;
+	Sun, 16 Jul 2023 20:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539554;
-	bh=YXvYdF+Qwxgwp1C3JL3h5U5vYkGcLm1MqW0tFTIq1Sk=;
+	s=korg; t=1689539557;
+	bh=NnW+CSPdz5l/g8gIeBXAk5L6kXTHROrX+7vJitTNmlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BUutq2mCxEh8GEPXSaqsLjBdBRTSyvypKGfo9IWibDbKqzJZSYh6qkiNIuvI7DrRy
-	 RJ0Z2FwHSQOCdhBUIO3LJ+tfiv6VpQJE5g8b2fTVQzZDMcZQ36Rlbs5h7bGizpDj2q
-	 QyOLqIsl+XZ7qqMyAZ7dgw7F2tQ4rKyzISbQqp9Q=
+	b=rjyTjArXNlUYmBQOa9WETVRoNRaBQEw/x3KBwNeCmzhp1Qp8AsFGfsLCvF088v4Cr
+	 2ZH7g4wpwEcIzbsqPlGLXZ+9rw6EfBoVPVa1tBdT2ebjerRgO22GGfkYo4mO7+fi09
+	 JPmXxu4DbKlu/0lADS/MV3nzh758JOFIc3g8/XTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/591] nvme-auth: dont ignore key generation failures when initializing ctrl keys
-Date: Sun, 16 Jul 2023 21:42:40 +0200
-Message-ID: <20230716194924.412386163@linuxfoundation.org>
+Subject: [PATCH 6.1 012/591] virt: sevguest: Add CONFIG_CRYPTO dependency
+Date: Sun, 16 Jul 2023 21:42:31 +0200
+Message-ID: <20230716194924.182219201@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,101 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 193a8c7e5f1a8481841636cec9c185543ec5c759 ]
+[ Upstream commit 84b9b44b99780d35fe72ac63c4724f158771e898 ]
 
-nvme_auth_generate_key can fail, don't ignore it upon initialization.
+This driver fails to link when CRYPTO is disabled, or in a loadable
+module:
 
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Stable-dep-of: 7ed5cf8e6d9b ("nvme-core: fix dev_pm_qos memleak")
+  WARNING: unmet direct dependencies detected for CRYPTO_GCM
+  WARNING: unmet direct dependencies detected for CRYPTO_AEAD2
+    Depends on [m]: CRYPTO [=m]
+    Selected by [y]:
+    - SEV_GUEST [=y] && VIRT_DRIVERS [=y] && AMD_MEM_ENCRYPT [=y]
+
+x86_64-linux-ld: crypto/aead.o: in function `crypto_register_aeads':
+
+Fixes: fce96cf04430 ("virt: Add SEV-SNP guest driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230117171416.2715125-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/auth.c | 19 +++++++++++++++----
- drivers/nvme/host/core.c |  6 +++++-
- drivers/nvme/host/nvme.h |  7 +++++--
- 3 files changed, 25 insertions(+), 7 deletions(-)
+ drivers/virt/coco/sev-guest/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvme/host/auth.c b/drivers/nvme/host/auth.c
-index 1a27d7fb4fa91..9dfd3d0293054 100644
---- a/drivers/nvme/host/auth.c
-+++ b/drivers/nvme/host/auth.c
-@@ -956,15 +956,26 @@ static void nvme_ctrl_auth_work(struct work_struct *work)
- 	 */
- }
- 
--void nvme_auth_init_ctrl(struct nvme_ctrl *ctrl)
-+int nvme_auth_init_ctrl(struct nvme_ctrl *ctrl)
- {
-+	int ret;
-+
- 	INIT_LIST_HEAD(&ctrl->dhchap_auth_list);
- 	INIT_WORK(&ctrl->dhchap_auth_work, nvme_ctrl_auth_work);
- 	mutex_init(&ctrl->dhchap_auth_mutex);
- 	if (!ctrl->opts)
--		return;
--	nvme_auth_generate_key(ctrl->opts->dhchap_secret, &ctrl->host_key);
--	nvme_auth_generate_key(ctrl->opts->dhchap_ctrl_secret, &ctrl->ctrl_key);
-+		return 0;
-+	ret = nvme_auth_generate_key(ctrl->opts->dhchap_secret,
-+			&ctrl->host_key);
-+	if (ret)
-+		return ret;
-+	ret = nvme_auth_generate_key(ctrl->opts->dhchap_ctrl_secret,
-+			&ctrl->ctrl_key);
-+	if (ret) {
-+		nvme_auth_free_key(ctrl->host_key);
-+		ctrl->host_key = NULL;
-+	}
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(nvme_auth_init_ctrl);
- 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 2b07a67958b46..09ff0d75aaf38 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -5171,9 +5171,13 @@ int nvme_init_ctrl(struct nvme_ctrl *ctrl, struct device *dev,
- 
- 	nvme_fault_inject_init(&ctrl->fault_inject, dev_name(ctrl->device));
- 	nvme_mpath_init_ctrl(ctrl);
--	nvme_auth_init_ctrl(ctrl);
-+	ret = nvme_auth_init_ctrl(ctrl);
-+	if (ret)
-+		goto out_free_cdev;
- 
- 	return 0;
-+out_free_cdev:
-+	cdev_device_del(&ctrl->cdev, ctrl->device);
- out_free_name:
- 	nvme_put_ctrl(ctrl);
- 	kfree_const(ctrl->device->kobj.name);
-diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
-index 5ed771d576c6d..69f9e69208f68 100644
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -1028,13 +1028,16 @@ static inline bool nvme_ctrl_sgl_supported(struct nvme_ctrl *ctrl)
- }
- 
- #ifdef CONFIG_NVME_AUTH
--void nvme_auth_init_ctrl(struct nvme_ctrl *ctrl);
-+int nvme_auth_init_ctrl(struct nvme_ctrl *ctrl);
- void nvme_auth_stop(struct nvme_ctrl *ctrl);
- int nvme_auth_negotiate(struct nvme_ctrl *ctrl, int qid);
- int nvme_auth_wait(struct nvme_ctrl *ctrl, int qid);
- void nvme_auth_free(struct nvme_ctrl *ctrl);
- #else
--static inline void nvme_auth_init_ctrl(struct nvme_ctrl *ctrl) {};
-+static inline int nvme_auth_init_ctrl(struct nvme_ctrl *ctrl)
-+{
-+	return 0;
-+}
- static inline void nvme_auth_stop(struct nvme_ctrl *ctrl) {};
- static inline int nvme_auth_negotiate(struct nvme_ctrl *ctrl, int qid)
- {
+diff --git a/drivers/virt/coco/sev-guest/Kconfig b/drivers/virt/coco/sev-guest/Kconfig
+index f9db0799ae67c..da2d7ca531f0f 100644
+--- a/drivers/virt/coco/sev-guest/Kconfig
++++ b/drivers/virt/coco/sev-guest/Kconfig
+@@ -2,6 +2,7 @@ config SEV_GUEST
+ 	tristate "AMD SEV Guest driver"
+ 	default m
+ 	depends on AMD_MEM_ENCRYPT
++	select CRYPTO
+ 	select CRYPTO_AEAD2
+ 	select CRYPTO_GCM
+ 	help
 -- 
 2.39.2
 
