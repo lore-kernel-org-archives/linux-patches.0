@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1428F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:21:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B41C433C7;
-	Sun, 16 Jul 2023 20:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C401D8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:21:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47774C433C7;
+	Sun, 16 Jul 2023 20:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538906;
-	bh=EtXBL588rAZue7eXHuBVVNlYaLjtCL31FUVUTsGisoA=;
+	s=korg; t=1689538909;
+	bh=rdJAI9EbsBAXhn0C9LVplba24PBsH/+/m+vs0Edv/XU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQRuEHTTQSnApD32kxB++rZrRDEIFB+UTMxb64zJV3JNlY0GiZQV2JN0LiFL+gr9M
-	 EqlpdvTTZuaaEERVdnEGRCDDPinhHGcGLnpdmj1o/R2yDwu5o+Ch3b4NvqyPGu0ll3
-	 McJs+bODRyJl+BkULmtk6i50ElJye0TunqWlQHw0=
+	b=Lo8ZFME0PAHEdvHnnKyyv8ZQCZqvRICh+7DGhgpNTIlpKMBp0fBbpJg9GUsHUN2Sf
+	 NRZxSP6MnGH3ET1CAr94XszGRj0bi2h/MHWmrArT1DCjqdlt1du1SSZ/t27Q9ZeFOV
+	 GokVebus7TjhWS72bYpu2Vt4c0m4rLY/I7Lhe8KY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Andrew Halaney <ahalaney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 618/800] usb: dwc3: qcom: Release the correct resources in dwc3_qcom_remove()
-Date: Sun, 16 Jul 2023 21:47:51 +0200
-Message-ID: <20230716195003.468642917@linuxfoundation.org>
+Subject: [PATCH 6.4 619/800] usb: dwc3: qcom: Fix an error handling path in dwc3_qcom_probe()
+Date: Sun, 16 Jul 2023 21:47:52 +0200
+Message-ID: <20230716195003.491788482@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,46 +37,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 8fd95da2cfb5046c4bb5a3cdc9eb7963ba8b10dd ]
+[ Upstream commit 4a944da707123686d372ec01ea60056902fadf35 ]
 
-In the probe, some resources are allocated with
-dwc3_qcom_of_register_core() or dwc3_qcom_acpi_register_core(). The
-corresponding resources are already coorectly freed in the error handling
-path of the probe, but not in the remove function.
+If dwc3_qcom_create_urs_usb_platdev() fails, some resources still need to
+be released, as already done in the other error handling path of the
+probe.
 
-Fix it.
-
-Fixes: 2bc02355f8ba ("usb: dwc3: qcom: Add support for booting with ACPI")
+Fixes: c25c210f590e ("usb: dwc3: qcom: add URS Host support for sdm845 ACPI boot")
 Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
-Message-ID: <c0215a84cdf18fb3514c81842783ec53cf149deb.1685891059.git.christophe.jaillet@wanadoo.fr>
+Message-ID: <b69fa8dd68d816e7d24c88d3eda776ceb28c5dc5.1685890571.git.christophe.jaillet@wanadoo.fr>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-qcom.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/dwc3-qcom.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 482260182d656..9c01e963ae467 100644
+index 9c01e963ae467..72c22851d7eef 100644
 --- a/drivers/usb/dwc3/dwc3-qcom.c
 +++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -950,11 +950,15 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- static int dwc3_qcom_remove(struct platform_device *pdev)
- {
- 	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
-+	struct device_node *np = pdev->dev.of_node;
- 	struct device *dev = &pdev->dev;
- 	int i;
- 
- 	device_remove_software_node(&qcom->dwc3->dev);
--	of_platform_depopulate(dev);
-+	if (np)
-+		of_platform_depopulate(&pdev->dev);
-+	else
-+		platform_device_put(pdev);
- 
- 	for (i = qcom->num_clocks - 1; i >= 0; i--) {
- 		clk_disable_unprepare(qcom->clks[i]);
+@@ -865,9 +865,10 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+ 			if (IS_ERR_OR_NULL(qcom->urs_usb)) {
+ 				dev_err(dev, "failed to create URS USB platdev\n");
+ 				if (!qcom->urs_usb)
+-					return -ENODEV;
++					ret = -ENODEV;
+ 				else
+-					return PTR_ERR(qcom->urs_usb);
++					ret = PTR_ERR(qcom->urs_usb);
++				goto clk_disable;
+ 			}
+ 		}
+ 	}
 -- 
 2.39.2
 
