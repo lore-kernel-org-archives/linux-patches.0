@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30DC9442
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:59:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4671FC433C8;
-	Sun, 16 Jul 2023 19:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828A59442
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:59:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0404BC433C8;
+	Sun, 16 Jul 2023 19:59:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537591;
-	bh=rTzKhQTKx3K9M/sdAMsUbVcPFIgeaZbAXQqdkXyp330=;
+	s=korg; t=1689537594;
+	bh=MadIgmNYIgoiNF38A9g8sWRuWgD1M5IN5qDNF2STTOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SsCM7wDa98xkZH8Ga13HD2Yt0emPxkejgrI/3pLkqovq5lfz4cBC9ai515ZgpRIIp
-	 As3pf5e5/uOhzzQykeK9SgS/90ZdQsNttdlOF6siV7nKJ4NXraI8tAMC6dBQkeY4Gj
-	 4tmJW/jbIVHEPX55mXgPWo8+Ph7vCgHyra/F54GI=
+	b=nTgio9jF1tzj9QNB8vOQknaODxHtEiRnnlqmIS6X7I9sqaa2VUuXg5AYIZIV8rlWi
+	 3l4kx2ZAra9uPRRUX9uBxkl3IE9droTzDS9/MJ8ACPyh2S53fsoGVicKxBRMkqIF5w
+	 54z/1BgUblxfj7bDQTr8Z1l/KR9RCz/52XsSLSq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lennart Poettering <lennart@poettering.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Yonghong Song <yhs@fb.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 121/800] libbpf: fix offsetof() and container_of() to work with CO-RE
-Date: Sun, 16 Jul 2023 21:39:34 +0200
-Message-ID: <20230716194951.917244816@linuxfoundation.org>
+Subject: [PATCH 6.4 112/800] wifi: rtw89: fix rtw89_read_chip_ver() for RTL8852B and RTL8851B
+Date: Sun, 16 Jul 2023 21:39:25 +0200
+Message-ID: <20230716194951.712514935@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,60 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit bdeeed3498c7871c17465bb4f11d1bc67f9098af ]
+[ Upstream commit 9d4f491b860ea6d04471c3342093b86a46eee63e ]
 
-It seems like __builtin_offset() doesn't preserve CO-RE field
-relocations properly. So if offsetof() macro is defined through
-__builtin_offset(), CO-RE-enabled BPF code using container_of() will be
-subtly and silently broken.
+The if statement is reversed so it will not record the chip version.
+This was detected using Smatch:
 
-To avoid this problem, redefine offsetof() and container_of() in the
-form that works with CO-RE relocations more reliably.
+    drivers/net/wireless/realtek/rtw89/core.c:3593 rtw89_read_chip_ver()
+    error: uninitialized symbol 'val'.
 
-Fixes: 5fbc220862fc ("tools/libpf: Add offsetof/container_of macro in bpf_helpers.h")
-Reported-by: Lennart Poettering <lennart@poettering.net>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/r/20230509065502.2306180-1-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: a6fb2bb84654 ("wifi: rtw89: read version of analog hardware")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/e4d912a2-37f8-4068-8861-7b9494ae731b@kili.mountain
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/bpf_helpers.h | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/net/wireless/realtek/rtw89/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/bpf_helpers.h b/tools/lib/bpf/bpf_helpers.h
-index 929a3baca8ef3..bbab9ad9dc5a7 100644
---- a/tools/lib/bpf/bpf_helpers.h
-+++ b/tools/lib/bpf/bpf_helpers.h
-@@ -77,16 +77,21 @@
- /*
-  * Helper macros to manipulate data structures
-  */
--#ifndef offsetof
--#define offsetof(TYPE, MEMBER)	((unsigned long)&((TYPE *)0)->MEMBER)
--#endif
--#ifndef container_of
-+
-+/* offsetof() definition that uses __builtin_offset() might not preserve field
-+ * offset CO-RE relocation properly, so force-redefine offsetof() using
-+ * old-school approach which works with CO-RE correctly
-+ */
-+#undef offsetof
-+#define offsetof(type, member)	((unsigned long)&((type *)0)->member)
-+
-+/* redefined container_of() to ensure we use the above offsetof() macro */
-+#undef container_of
- #define container_of(ptr, type, member)				\
- 	({							\
- 		void *__mptr = (void *)(ptr);			\
- 		((type *)(__mptr - offsetof(type, member)));	\
- 	})
--#endif
+diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
+index bad864d56bd5c..5423f8ae187f1 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.c
++++ b/drivers/net/wireless/realtek/rtw89/core.c
+@@ -3584,7 +3584,7 @@ static void rtw89_read_chip_ver(struct rtw89_dev *rtwdev)
  
- /*
-  * Compiler (optimization) barrier.
+ 	if (chip->chip_id == RTL8852B || chip->chip_id == RTL8851B) {
+ 		ret = rtw89_mac_read_xtal_si(rtwdev, XTAL_SI_CV, &val);
+-		if (!ret)
++		if (ret)
+ 			return;
+ 
+ 		rtwdev->hal.acv = u8_get_bits(val, XTAL_SI_ACV_MASK);
 -- 
 2.39.2
 
