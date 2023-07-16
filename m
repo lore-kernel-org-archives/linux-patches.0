@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0FE8F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:26:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1B7C433C7;
-	Sun, 16 Jul 2023 20:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DBF8F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:26:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D34C433C8;
+	Sun, 16 Jul 2023 20:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539193;
-	bh=BqRPCCjNx5edPFKIYGK+vZcrn/MO1EpQ+6LPMAEEsGs=;
+	s=korg; t=1689539195;
+	bh=1UpT1TWBV9x2CjhQDZg9Hsh676ijJdpM5Dh07HXkiek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RPOhdzYLlwt0b/oQt48V/xQBtJPZoVFhw49iZaGH0O5RVPn++25UU4GSNfKN9XPOr
-	 cheMRgYtbSa3aS18QhjC79unCLrzNDzAj1dM93tFFdVikpjcL9ZMKMwNvyVYeAciON
-	 XHWnibG1wyRXDm7mQKvPDhShYc/0osySFIpySZyY=
+	b=BrE/LD/sqXLUXIGVOPIFbaU9FRpnIp3oU9mQqL6BCDfXpZno/oqoOJS4piD+StDiQ
+	 VXpt1UuxKpaZ/g+/rDuySKPu/rtp2zLymZCB5QCgc4fVIwiKbODYwL7xRlrVMKqtHn
+	 e0cv0PYWNQR0ixUk91NTYTX4aGwZ2BRepcNp7TRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@kernel.org>,
-	Chong Qiao <qiaochong@loongson.cn>,
-	Jianmin Lv <lvjianmin@loongson.cn>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.4 719/800] irqchip/loongson-liointc: Fix IRQ trigger polarity
-Date: Sun, 16 Jul 2023 21:49:32 +0200
-Message-ID: <20230716195005.819777587@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 692/800] net: dsa: tag_sja1105: fix source port decoding in vlan_filtering=0 bridge mode
+Date: Sun, 16 Jul 2023 21:49:05 +0200
+Message-ID: <20230716195005.196480300@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,77 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jianmin Lv <lvjianmin@loongson.cn>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-commit 1d7471b4e0ebba5a4bf9db4ade43619e8f2d333d upstream.
+[ Upstream commit a398b9ea0c3b791b7a0f4c6029a62cf628f97f22 ]
 
-For the INT_POLARITY register of Loongson-2K series IRQ
-controller, '0' indicates high level or rising edge triggered,
-'1' indicates low level or falling edge triggered, and we
-can find out the information from the Loongson 2K1000LA User
-Manual v1.0, Table 9-2, Section 9.3 (中断寄存器描述 / Description
-of the Interrupt Registers).
+There was a regression introduced by the blamed commit, where pinging to
+a VLAN-unaware bridge would fail with the repeated message "Couldn't
+decode source port" coming from the tagging protocol driver.
 
-For Loongson-3 CPU series, setting INT_POLARITY register is not
-supported and writting it has no effect.
+When receiving packets with a bridge_vid as determined by
+dsa_tag_8021q_bridge_join(), dsa_8021q_rcv() will decode:
+- source_port = 0 (which isn't really valid, more like "don't know")
+- switch_id = 0 (which isn't really valid, more like "don't know")
+- vbid = value in range 1-7
 
-So trigger polarity setting shouled be fixed for Loongson-2K CPU
-series.
+Since the blamed patch has reversed the order of the checks, we are now
+going to believe that source_port != -1 and switch_id != -1, so they're
+valid, but they aren't.
 
-Fixes: 17343d0b4039 ("irqchip/loongson-liointc: Support to set IRQ type for ACPI path")
-Cc: stable@vger.kernel.org
-Reviewed-by: Huacai Chen <chenhuacai@kernel.org>
-Co-developed-by: Chong Qiao <qiaochong@loongson.cn>
-Signed-off-by: Chong Qiao <qiaochong@loongson.cn>
-Signed-off-by: Jianmin Lv <lvjianmin@loongson.cn>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230614115936.5950-4-lvjianmin@loongson.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The minimal solution to the problem is to only populate source_port and
+switch_id with what dsa_8021q_rcv() came up with, if the vbid is zero,
+i.e. the source port information is trustworthy.
+
+Fixes: c1ae02d87689 ("net: dsa: tag_sja1105: always prefer source port information from INCL_SRCPT")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-loongson-liointc.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/dsa/tag_sja1105.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/irqchip/irq-loongson-liointc.c b/drivers/irqchip/irq-loongson-liointc.c
-index 8d00a9ad5b00..5dd9db8f8fa8 100644
---- a/drivers/irqchip/irq-loongson-liointc.c
-+++ b/drivers/irqchip/irq-loongson-liointc.c
-@@ -32,6 +32,10 @@
- #define LIOINTC_REG_INTC_EN_STATUS	(LIOINTC_INTC_CHIP_START + 0x04)
- #define LIOINTC_REG_INTC_ENABLE	(LIOINTC_INTC_CHIP_START + 0x08)
- #define LIOINTC_REG_INTC_DISABLE	(LIOINTC_INTC_CHIP_START + 0x0c)
-+/*
-+ * LIOINTC_REG_INTC_POL register is only valid for Loongson-2K series, and
-+ * Loongson-3 series behave as noops.
-+ */
- #define LIOINTC_REG_INTC_POL	(LIOINTC_INTC_CHIP_START + 0x10)
- #define LIOINTC_REG_INTC_EDGE	(LIOINTC_INTC_CHIP_START + 0x14)
- 
-@@ -116,19 +120,19 @@ static int liointc_set_type(struct irq_data *data, unsigned int type)
- 	switch (type) {
- 	case IRQ_TYPE_LEVEL_HIGH:
- 		liointc_set_bit(gc, LIOINTC_REG_INTC_EDGE, mask, false);
--		liointc_set_bit(gc, LIOINTC_REG_INTC_POL, mask, true);
-+		liointc_set_bit(gc, LIOINTC_REG_INTC_POL, mask, false);
- 		break;
- 	case IRQ_TYPE_LEVEL_LOW:
- 		liointc_set_bit(gc, LIOINTC_REG_INTC_EDGE, mask, false);
--		liointc_set_bit(gc, LIOINTC_REG_INTC_POL, mask, false);
-+		liointc_set_bit(gc, LIOINTC_REG_INTC_POL, mask, true);
- 		break;
- 	case IRQ_TYPE_EDGE_RISING:
- 		liointc_set_bit(gc, LIOINTC_REG_INTC_EDGE, mask, true);
--		liointc_set_bit(gc, LIOINTC_REG_INTC_POL, mask, true);
-+		liointc_set_bit(gc, LIOINTC_REG_INTC_POL, mask, false);
- 		break;
- 	case IRQ_TYPE_EDGE_FALLING:
- 		liointc_set_bit(gc, LIOINTC_REG_INTC_EDGE, mask, true);
--		liointc_set_bit(gc, LIOINTC_REG_INTC_POL, mask, false);
-+		liointc_set_bit(gc, LIOINTC_REG_INTC_POL, mask, true);
- 		break;
- 	default:
- 		irq_gc_unlock_irqrestore(gc, flags);
+diff --git a/net/dsa/tag_sja1105.c b/net/dsa/tag_sja1105.c
+index 92a626a05e829..db0a6ac674708 100644
+--- a/net/dsa/tag_sja1105.c
++++ b/net/dsa/tag_sja1105.c
+@@ -573,11 +573,14 @@ static struct sk_buff *sja1105_rcv(struct sk_buff *skb,
+ 		 * if available. This allows us to not overwrite a valid source
+ 		 * port and switch ID with zeroes when receiving link-local
+ 		 * frames from a VLAN-unaware bridged port (non-zero vbid) or a
+-		 * VLAN-aware bridged port (non-zero vid).
++		 * VLAN-aware bridged port (non-zero vid). Furthermore, the
++		 * tag_8021q source port information is only of trust when the
++		 * vbid is 0 (precise port). Otherwise, tmp_source_port and
++		 * tmp_switch_id will be zeroes.
+ 		 */
+-		if (source_port == -1)
++		if (vbid == 0 && source_port == -1)
+ 			source_port = tmp_source_port;
+-		if (switch_id == -1)
++		if (vbid == 0 && switch_id == -1)
+ 			switch_id = tmp_switch_id;
+ 	} else if (source_port == -1 && switch_id == -1) {
+ 		/* Packets with no source information have no chance of
 -- 
-2.41.0
+2.39.2
 
 
 
