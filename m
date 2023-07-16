@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67BF8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:19:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEBE3C433C7;
-	Sun, 16 Jul 2023 20:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CEB38F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:19:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3277C433C8;
+	Sun, 16 Jul 2023 20:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538775;
-	bh=b575pVZTQFRMo/Hrj7Ee35AI6sOk8zBbmfES1jRteZY=;
+	s=korg; t=1689538778;
+	bh=8M/JMwttDdJna+e2sGSEmjJKf9t9p0CDBzIIaqsNmXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dWGpRSuDpejeprvaho4Yn3Yh+klLfYqpnJXfWRDguQs8HeUNyH2T3bDWa8v+TrQ+E
-	 fQRLu0luWhN5po8xDNtlbXjxeRoDL9oHNe7fpUP4gON/Wv7jh8e5kjKjmvejNzxDHy
-	 ibDDZXmXZ/09z169pA1Ade+OchTioScKrICG/Onc=
+	b=FL/PSY+0y6f18OkCF+WDSVBe4MlyMUZTW+TT1YBLNaidU/06PXF2369gJmjaHUrl9
+	 8TG1/xvqWcOe5buL3fd27FfBQsWJAYPtBLEEJ/SzABUksgHeSrYw+0gql8k4gvZNDd
+	 +lHlFe618YiRQqre+YR3yni/IENK3iOtEG3gU4Ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+27b0b464864741b18b99@syzkaller.appspotmail.com,
-	Duoming Zhou <duoming@zju.edu.cn>,
+	Dan Carpenter <error27@gmail.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 572/800] media: usb: siano: Fix warning due to null work_func_t function pointer
-Date: Sun, 16 Jul 2023 21:47:05 +0200
-Message-ID: <20230716195002.372128678@linuxfoundation.org>
+Subject: [PATCH 6.4 573/800] media: i2c: imx296: fix error checking in imx296_read_temperature()
+Date: Sun, 16 Jul 2023 21:47:06 +0200
+Message-ID: <20230716195002.395194927@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,80 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 6f489a966fbeb0da63d45c2c66a8957eab604bf6 ]
+[ Upstream commit 1b3565dbc6aa124f34674e3dcf6966f663817e05 ]
 
-The previous commit ebad8e731c1c ("media: usb: siano: Fix use after
-free bugs caused by do_submit_urb") adds cancel_work_sync() in
-smsusb_stop_streaming(). But smsusb_stop_streaming() may be called,
-even if the work_struct surb->wq has not been initialized. As a result,
-the warning will occur. One of the processes that could lead to warning
-is shown below:
+The "& IMX296_TMDOUT_MASK" means that "tmdout" can't be negative so the
+error checking will not work.
 
-smsusb_probe()
-  smsusb_init_device()
-    if (!dev->in_ep || !dev->out_ep || align < 0) {
-         smsusb_term_device(intf);
-           smsusb_stop_streaming()
-             cancel_work_sync(&dev->surbs[i].wq);
-               __cancel_work_timer()
-                 __flush_work()
-                   if (WARN_ON(!work->func)) // work->func is null
-
-The log reported by syzbot is shown below:
-
-WARNING: CPU: 0 PID: 897 at kernel/workqueue.c:3066 __flush_work+0x798/0xa80 kernel/workqueue.c:3063
-Modules linked in:
-CPU: 0 PID: 897 Comm: kworker/0:2 Not tainted 6.2.0-rc1-syzkaller #0
-RIP: 0010:__flush_work+0x798/0xa80 kernel/workqueue.c:3066
-...
-RSP: 0018:ffffc9000464ebf8 EFLAGS: 00010246
-RAX: 1ffff11002dbb420 RBX: 0000000000000021 RCX: 1ffffffff204fa4e
-RDX: dffffc0000000000 RSI: 0000000000000001 RDI: ffff888016dda0e8
-RBP: ffffc9000464ed98 R08: 0000000000000001 R09: ffffffff90253b2f
-R10: 0000000000000001 R11: 0000000000000000 R12: ffff888016dda0e8
-R13: ffff888016dda0e8 R14: ffff888016dda100 R15: 0000000000000001
-FS:  0000000000000000(0000) GS:ffff8880b9a00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ffd4331efe8 CR3: 000000000b48e000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- __cancel_work_timer+0x315/0x460 kernel/workqueue.c:3160
- smsusb_stop_streaming drivers/media/usb/siano/smsusb.c:182 [inline]
- smsusb_term_device+0xda/0x2d0 drivers/media/usb/siano/smsusb.c:344
- smsusb_init_device+0x400/0x9ce drivers/media/usb/siano/smsusb.c:419
- smsusb_probe+0xbbd/0xc55 drivers/media/usb/siano/smsusb.c:567
-...
-
-This patch adds check before cancel_work_sync(). If surb->wq has not
-been initialized, the cancel_work_sync() will not be executed.
-
-Reported-by: syzbot+27b0b464864741b18b99@syzkaller.appspotmail.com
-Fixes: ebad8e731c1c ("media: usb: siano: Fix use after free bugs caused by do_submit_urb")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Fixes: cb33db2b6ccf ("media: i2c: IMX296 camera sensor driver")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/siano/smsusb.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/i2c/imx296.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/siano/smsusb.c b/drivers/media/usb/siano/smsusb.c
-index 6f443c542c6da..640737d3b8aeb 100644
---- a/drivers/media/usb/siano/smsusb.c
-+++ b/drivers/media/usb/siano/smsusb.c
-@@ -179,7 +179,8 @@ static void smsusb_stop_streaming(struct smsusb_device_t *dev)
+diff --git a/drivers/media/i2c/imx296.c b/drivers/media/i2c/imx296.c
+index 4f22c0515ef8d..c3d6d52fc7727 100644
+--- a/drivers/media/i2c/imx296.c
++++ b/drivers/media/i2c/imx296.c
+@@ -922,10 +922,12 @@ static int imx296_read_temperature(struct imx296 *sensor, int *temp)
+ 	if (ret < 0)
+ 		return ret;
  
- 	for (i = 0; i < MAX_URBS; i++) {
- 		usb_kill_urb(&dev->surbs[i].urb);
--		cancel_work_sync(&dev->surbs[i].wq);
-+		if (dev->surbs[i].wq.func)
-+			cancel_work_sync(&dev->surbs[i].wq);
+-	tmdout = imx296_read(sensor, IMX296_TMDOUT) & IMX296_TMDOUT_MASK;
++	tmdout = imx296_read(sensor, IMX296_TMDOUT);
+ 	if (tmdout < 0)
+ 		return tmdout;
  
- 		if (dev->surbs[i].cb) {
- 			smscore_putbuffer(dev->coredev, dev->surbs[i].cb);
++	tmdout &= IMX296_TMDOUT_MASK;
++
+ 	/* T(°C) = 246.312 - 0.304 * TMDOUT */;
+ 	*temp = 246312 - 304 * tmdout;
+ 
 -- 
 2.39.2
 
