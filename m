@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D838F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:56:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B17C433C7;
-	Sun, 16 Jul 2023 19:56:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD918F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:57:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F174FC433C8;
+	Sun, 16 Jul 2023 19:56:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537417;
-	bh=JHT+iMQO8LqS+kJkeHNuaxe3v0vmIk4Xw3W1hDP7sx0=;
+	s=korg; t=1689537420;
+	bh=FCQ2w1F4hRZMege5MJF0U/G0w5afIh3Nso9C8UJDEd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hOckJOMJSwcFU8Wqf5cCvcnYzPy13RzPkmdbq2/AnOVitFiroUyiBGsSDKCSjZGpU
-	 8WSjDdjH7HEJfCxNIBL6+hWF96nMipbX523OQPC+sXnDKfryoL8w6tsuAbo424YmOg
-	 IPexxqRCEAPbXuBIHcEr+VwIUnv0B4udmku1reP8=
+	b=2kdMIO7Tl/p9elk0/tzKVesgiaNVL4vFn9613yx0Y7HXLyjFi5zpyrsStG/GOODKJ
+	 qz6hZlo7Zb1co4JGvr359X/q4jRLlheoUwdPPpNxUVljUo55jujfSjrksXu67Lh5CL
+	 vJaB8DWm33Sw+SLpqeqkufDS+K6IjsX6MuDK76/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Mingxi <m202271825@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Michal Simek <michal.simek@amd.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Christoph Hellwig <hch@lst.de>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 061/800] clocksource/drivers/cadence-ttc: Fix memory leak in ttc_timer_probe
-Date: Sun, 16 Jul 2023 21:38:34 +0200
-Message-ID: <20230716194950.504612139@linuxfoundation.org>
+Subject: [PATCH 6.4 052/800] btrfs: dont use btrfs_bio_ctrl for extent buffer reading
+Date: Sun, 16 Jul 2023 21:38:25 +0200
+Message-ID: <20230716194950.299311715@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,79 +38,201 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Feng Mingxi <m202271825@hust.edu.cn>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 8b5bf64c89c7100c921bd807ba39b2eb003061ab ]
+[ Upstream commit b78b98e06fb7f9860da5a7c28e1edbaefc2f7be1 ]
 
-Smatch reports:
-drivers/clocksource/timer-cadence-ttc.c:529 ttc_timer_probe()
-warn: 'timer_baseaddr' from of_iomap() not released on lines: 498,508,516.
+The btrfs_bio_ctrl machinery is overkill for reading extent_buffers
+as we always operate on PAGE_SIZE chunks (or one smaller one for the
+subpage case) that are contiguous and are guaranteed to fit into a
+single bio.  Replace it with open coded btrfs_bio_alloc, __bio_add_page
+and btrfs_submit_bio calls in a helper function shared between
+the subpage and node size >= PAGE_SIZE cases.
 
-timer_baseaddr may have the problem of not being released after use,
-I replaced it with the devm_of_iomap() function and added the clk_put()
-function to cleanup the "clk_ce" and "clk_cs".
-
-Fixes: e932900a3279 ("arm: zynq: Use standard timer binding")
-Fixes: 70504f311d4b ("clocksource/drivers/cadence_ttc: Convert init function to return error")
-Signed-off-by: Feng Mingxi <m202271825@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20230425065611.702917-1-m202271825@hust.edu.cn
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 7027f87108ce ("btrfs: don't treat zoned writeback as being from an async helper thread")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-cadence-ttc.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ fs/btrfs/extent_io.c | 99 ++++++++++++++++----------------------------
+ 1 file changed, 36 insertions(+), 63 deletions(-)
 
-diff --git a/drivers/clocksource/timer-cadence-ttc.c b/drivers/clocksource/timer-cadence-ttc.c
-index 4efd0cf3b602d..0d52e28fea4de 100644
---- a/drivers/clocksource/timer-cadence-ttc.c
-+++ b/drivers/clocksource/timer-cadence-ttc.c
-@@ -486,10 +486,10 @@ static int __init ttc_timer_probe(struct platform_device *pdev)
- 	 * and use it. Note that the event timer uses the interrupt and it's the
- 	 * 2nd TTC hence the irq_of_parse_and_map(,1)
- 	 */
--	timer_baseaddr = of_iomap(timer, 0);
--	if (!timer_baseaddr) {
-+	timer_baseaddr = devm_of_iomap(&pdev->dev, timer, 0, NULL);
-+	if (IS_ERR(timer_baseaddr)) {
- 		pr_err("ERROR: invalid timer base address\n");
--		return -ENXIO;
-+		return PTR_ERR(timer_baseaddr);
+diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
+index d1a635f237688..51f0f28fb9b2c 100644
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -98,22 +98,12 @@ void btrfs_extent_buffer_leak_debug_check(struct btrfs_fs_info *fs_info)
+  */
+ struct btrfs_bio_ctrl {
+ 	struct btrfs_bio *bbio;
+-	int mirror_num;
+ 	enum btrfs_compression_type compress_type;
+ 	u32 len_to_oe_boundary;
+ 	blk_opf_t opf;
+ 	btrfs_bio_end_io_t end_io_func;
+ 	struct writeback_control *wbc;
+ 
+-	/*
+-	 * This is for metadata read, to provide the extra needed verification
+-	 * info.  This has to be provided for submit_one_bio(), as
+-	 * submit_one_bio() can submit a bio if it ends at stripe boundary.  If
+-	 * no such parent_check is provided, the metadata can hit false alert at
+-	 * endio time.
+-	 */
+-	struct btrfs_tree_parent_check *parent_check;
+-
+ 	/*
+ 	 * Tell writepage not to lock the state bits for this range, it still
+ 	 * does the unlocking.
+@@ -124,7 +114,6 @@ struct btrfs_bio_ctrl {
+ static void submit_one_bio(struct btrfs_bio_ctrl *bio_ctrl)
+ {
+ 	struct btrfs_bio *bbio = bio_ctrl->bbio;
+-	int mirror_num = bio_ctrl->mirror_num;
+ 
+ 	if (!bbio)
+ 		return;
+@@ -132,25 +121,14 @@ static void submit_one_bio(struct btrfs_bio_ctrl *bio_ctrl)
+ 	/* Caller should ensure the bio has at least some range added */
+ 	ASSERT(bbio->bio.bi_iter.bi_size);
+ 
+-	if (!is_data_inode(&bbio->inode->vfs_inode)) {
+-		if (btrfs_op(&bbio->bio) != BTRFS_MAP_WRITE) {
+-			/*
+-			 * For metadata read, we should have the parent_check,
+-			 * and copy it to bbio for metadata verification.
+-			 */
+-			ASSERT(bio_ctrl->parent_check);
+-			memcpy(&bbio->parent_check,
+-			       bio_ctrl->parent_check,
+-			       sizeof(struct btrfs_tree_parent_check));
+-		}
++	if (!is_data_inode(&bbio->inode->vfs_inode))
+ 		bbio->bio.bi_opf |= REQ_META;
+-	}
+ 
+ 	if (btrfs_op(&bbio->bio) == BTRFS_MAP_READ &&
+ 	    bio_ctrl->compress_type != BTRFS_COMPRESS_NONE)
+-		btrfs_submit_compressed_read(bbio, mirror_num);
++		btrfs_submit_compressed_read(bbio, 0);
+ 	else
+-		btrfs_submit_bio(bbio, mirror_num);
++		btrfs_submit_bio(bbio, 0);
+ 
+ 	/* The bbio is owned by the end_io handler now */
+ 	bio_ctrl->bbio = NULL;
+@@ -4242,6 +4220,36 @@ void set_extent_buffer_uptodate(struct extent_buffer *eb)
  	}
- 
- 	irq = irq_of_parse_and_map(timer, 1);
-@@ -513,20 +513,27 @@ static int __init ttc_timer_probe(struct platform_device *pdev)
- 	clk_ce = of_clk_get(timer, clksel);
- 	if (IS_ERR(clk_ce)) {
- 		pr_err("ERROR: timer input clock not found\n");
--		return PTR_ERR(clk_ce);
-+		ret = PTR_ERR(clk_ce);
-+		goto put_clk_cs;
- 	}
- 
- 	ret = ttc_setup_clocksource(clk_cs, timer_baseaddr, timer_width);
- 	if (ret)
--		return ret;
-+		goto put_clk_ce;
- 
- 	ret = ttc_setup_clockevent(clk_ce, timer_baseaddr + 4, irq);
- 	if (ret)
--		return ret;
-+		goto put_clk_ce;
- 
- 	pr_info("%pOFn #0 at %p, irq=%d\n", timer, timer_baseaddr, irq);
- 
- 	return 0;
-+
-+put_clk_ce:
-+	clk_put(clk_ce);
-+put_clk_cs:
-+	clk_put(clk_cs);
-+	return ret;
  }
  
- static const struct of_device_id ttc_timer_of_match[] = {
++static void __read_extent_buffer_pages(struct extent_buffer *eb, int mirror_num,
++				       struct btrfs_tree_parent_check *check)
++{
++	int num_pages = num_extent_pages(eb), i;
++	struct btrfs_bio *bbio;
++
++	clear_bit(EXTENT_BUFFER_READ_ERR, &eb->bflags);
++	eb->read_mirror = 0;
++	atomic_set(&eb->io_pages, num_pages);
++	check_buffer_tree_ref(eb);
++
++	bbio = btrfs_bio_alloc(INLINE_EXTENT_BUFFER_PAGES,
++			       REQ_OP_READ | REQ_META, eb->fs_info,
++			       end_bio_extent_readpage, NULL);
++	bbio->bio.bi_iter.bi_sector = eb->start >> SECTOR_SHIFT;
++	bbio->inode = BTRFS_I(eb->fs_info->btree_inode);
++	bbio->file_offset = eb->start;
++	memcpy(&bbio->parent_check, check, sizeof(*check));
++	if (eb->fs_info->nodesize < PAGE_SIZE) {
++		__bio_add_page(&bbio->bio, eb->pages[0], eb->len,
++			       eb->start - page_offset(eb->pages[0]));
++	} else {
++		for (i = 0; i < num_pages; i++) {
++			ClearPageError(eb->pages[i]);
++			__bio_add_page(&bbio->bio, eb->pages[i], PAGE_SIZE, 0);
++		}
++	}
++	btrfs_submit_bio(bbio, mirror_num);
++}
++
+ static int read_extent_buffer_subpage(struct extent_buffer *eb, int wait,
+ 				      int mirror_num,
+ 				      struct btrfs_tree_parent_check *check)
+@@ -4250,11 +4258,6 @@ static int read_extent_buffer_subpage(struct extent_buffer *eb, int wait,
+ 	struct extent_io_tree *io_tree;
+ 	struct page *page = eb->pages[0];
+ 	struct extent_state *cached_state = NULL;
+-	struct btrfs_bio_ctrl bio_ctrl = {
+-		.opf = REQ_OP_READ,
+-		.mirror_num = mirror_num,
+-		.parent_check = check,
+-	};
+ 	int ret;
+ 
+ 	ASSERT(!test_bit(EXTENT_BUFFER_UNMAPPED, &eb->bflags));
+@@ -4282,18 +4285,10 @@ static int read_extent_buffer_subpage(struct extent_buffer *eb, int wait,
+ 		return 0;
+ 	}
+ 
+-	clear_bit(EXTENT_BUFFER_READ_ERR, &eb->bflags);
+-	eb->read_mirror = 0;
+-	atomic_set(&eb->io_pages, 1);
+-	check_buffer_tree_ref(eb);
+-	bio_ctrl.end_io_func = end_bio_extent_readpage;
+-
+ 	btrfs_subpage_clear_error(fs_info, page, eb->start, eb->len);
+-
+ 	btrfs_subpage_start_reader(fs_info, page, eb->start, eb->len);
+-	submit_extent_page(&bio_ctrl, eb->start, page, eb->len,
+-			   eb->start - page_offset(page));
+-	submit_one_bio(&bio_ctrl);
++
++	__read_extent_buffer_pages(eb, mirror_num, check);
+ 	if (wait != WAIT_COMPLETE) {
+ 		free_extent_state(cached_state);
+ 		return 0;
+@@ -4314,11 +4309,6 @@ int read_extent_buffer_pages(struct extent_buffer *eb, int wait, int mirror_num,
+ 	int locked_pages = 0;
+ 	int all_uptodate = 1;
+ 	int num_pages;
+-	struct btrfs_bio_ctrl bio_ctrl = {
+-		.opf = REQ_OP_READ,
+-		.mirror_num = mirror_num,
+-		.parent_check = check,
+-	};
+ 
+ 	if (test_bit(EXTENT_BUFFER_UPTODATE, &eb->bflags))
+ 		return 0;
+@@ -4368,24 +4358,7 @@ int read_extent_buffer_pages(struct extent_buffer *eb, int wait, int mirror_num,
+ 		goto unlock_exit;
+ 	}
+ 
+-	clear_bit(EXTENT_BUFFER_READ_ERR, &eb->bflags);
+-	eb->read_mirror = 0;
+-	atomic_set(&eb->io_pages, num_pages);
+-	/*
+-	 * It is possible for release_folio to clear the TREE_REF bit before we
+-	 * set io_pages. See check_buffer_tree_ref for a more detailed comment.
+-	 */
+-	check_buffer_tree_ref(eb);
+-	bio_ctrl.end_io_func = end_bio_extent_readpage;
+-	for (i = 0; i < num_pages; i++) {
+-		page = eb->pages[i];
+-
+-		ClearPageError(page);
+-		submit_extent_page(&bio_ctrl, page_offset(page), page,
+-				   PAGE_SIZE, 0);
+-	}
+-
+-	submit_one_bio(&bio_ctrl);
++	__read_extent_buffer_pages(eb, mirror_num, check);
+ 
+ 	if (wait != WAIT_COMPLETE)
+ 		return 0;
 -- 
 2.39.2
 
