@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24AE18F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:33:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987B9C433C7;
-	Sun, 16 Jul 2023 20:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34F78F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:33:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668C1C433CB;
+	Sun, 16 Jul 2023 20:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539625;
-	bh=89SQEVf0lQM8880A6H8IGfJKnr6zGoUg/V5DVQri4fc=;
+	s=korg; t=1689539627;
+	bh=awaN+eUt8VBn8UW12/r6g0Imd9YTTN2BmBDDs9KghAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PnWJBszzdEU5Txk/iLm4by1e+oszjALRbZQYOi9dKZjVnY/3iRCgXc4HWJ5omPswn
-	 ohwgoXJm+0ynFE/4K//TNmippu+X11KS65Lcbxd8/P9W2IJ/skeF1kY0dfQCbK2jdN
-	 dwN3Zscl4spgM5Hp9ek4IlA+kYkzUahxxaoxfOos=
+	b=o7R7IlNyjFwbz5MW8TI/32UOwY7DVI27bXJWkDJ5P2qqovRF57+994Uw0y3J8xtH3
+	 DomUqUMTSKhq4Dw1KDAVwp1//RgYoMkNYc0YxID8D/z6uxLv+JxmCCpbUD8GjwRZpi
+	 m27uzS5Kt2XZ3DS1QDVUfib6EWAxKvjprP8P/a0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhao He <hejunhao3@huawei.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Zhang Rui <rui.zhang@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 046/591] drivers/perf: hisi: Dont migrate perf to the CPU going to teardown
-Date: Sun, 16 Jul 2023 21:43:05 +0200
-Message-ID: <20230716194925.074393372@linuxfoundation.org>
+Subject: [PATCH 6.1 047/591] powercap: RAPL: Fix CONFIG_IOSF_MBI dependency
+Date: Sun, 16 Jul 2023 21:43:06 +0200
+Message-ID: <20230716194925.099914069@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,63 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Junhao He <hejunhao3@huawei.com>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit 7a6a9f1c5a0a875a421db798d4b2ee022dc1ee1a ]
+[ Upstream commit 4658fe81b3f8afe8adf37734ec5fe595d90415c6 ]
 
-The driver needs to migrate the perf context if the current using CPU going
-to teardown. By the time calling the cpuhp::teardown() callback the
-cpu_online_mask() hasn't updated yet and still includes the CPU going to
-teardown. In current driver's implementation we may migrate the context
-to the teardown CPU and leads to the below calltrace:
+After commit 3382388d7148 ("intel_rapl: abstract RAPL common code"),
+accessing to IOSF_MBI interface is done in the RAPL common code.
 
-...
-[  368.104662][  T932] task:cpuhp/0         state:D stack:    0 pid:   15 ppid:     2 flags:0x00000008
-[  368.113699][  T932] Call trace:
-[  368.116834][  T932]  __switch_to+0x7c/0xbc
-[  368.120924][  T932]  __schedule+0x338/0x6f0
-[  368.125098][  T932]  schedule+0x50/0xe0
-[  368.128926][  T932]  schedule_preempt_disabled+0x18/0x24
-[  368.134229][  T932]  __mutex_lock.constprop.0+0x1d4/0x5dc
-[  368.139617][  T932]  __mutex_lock_slowpath+0x1c/0x30
-[  368.144573][  T932]  mutex_lock+0x50/0x60
-[  368.148579][  T932]  perf_pmu_migrate_context+0x84/0x2b0
-[  368.153884][  T932]  hisi_pcie_pmu_offline_cpu+0x90/0xe0 [hisi_pcie_pmu]
-[  368.160579][  T932]  cpuhp_invoke_callback+0x2a0/0x650
-[  368.165707][  T932]  cpuhp_thread_fun+0xe4/0x190
-[  368.170316][  T932]  smpboot_thread_fn+0x15c/0x1a0
-[  368.175099][  T932]  kthread+0x108/0x13c
-[  368.179012][  T932]  ret_from_fork+0x10/0x18
-...
+Thus it is the CONFIG_INTEL_RAPL_CORE that has dependency of
+CONFIG_IOSF_MBI, while CONFIG_INTEL_RAPL_MSR does not.
 
-Use function cpumask_any_but() to find one correct active cpu to fixes
-this issue.
+This problem was not exposed previously because all the previous RAPL
+common code users, aka, the RAPL MSR and MMIO I/F drivers, have
+CONFIG_IOSF_MBI selected.
 
-Fixes: 8404b0fbc7fb ("drivers/perf: hisi: Add driver for HiSilicon PCIe PMU")
-Signed-off-by: Junhao He <hejunhao3@huawei.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Yicong Yang <yangyicong@hisilicon.com>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20230608114326.27649-1-hejunhao3@huawei.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fix the CONFIG_IOSF_MBI dependency in RAPL code. This also fixes a build
+time failure when the RAPL TPMI I/F driver is introduced without
+selecting CONFIG_IOSF_MBI.
+
+x86_64-linux-ld: vmlinux.o: in function `set_floor_freq_atom':
+intel_rapl_common.c:(.text+0x2dac9b8): undefined reference to `iosf_mbi_write'
+x86_64-linux-ld: intel_rapl_common.c:(.text+0x2daca66): undefined reference to `iosf_mbi_read'
+
+Reference to iosf_mbi.h is also removed from the RAPL MSR I/F driver.
+
+Fixes: 3382388d7148 ("intel_rapl: abstract RAPL common code")
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/all/20230601213246.3271412-1-arnd@kernel.org
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/hisilicon/hisi_pcie_pmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/powercap/Kconfig          | 4 +++-
+ drivers/powercap/intel_rapl_msr.c | 1 -
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/perf/hisilicon/hisi_pcie_pmu.c b/drivers/perf/hisilicon/hisi_pcie_pmu.c
-index 071e63d9a9ac6..b61f1f9aba214 100644
---- a/drivers/perf/hisilicon/hisi_pcie_pmu.c
-+++ b/drivers/perf/hisilicon/hisi_pcie_pmu.c
-@@ -672,7 +672,7 @@ static int hisi_pcie_pmu_offline_cpu(unsigned int cpu, struct hlist_node *node)
+diff --git a/drivers/powercap/Kconfig b/drivers/powercap/Kconfig
+index 515e3ceb3393a..863e240b37e01 100644
+--- a/drivers/powercap/Kconfig
++++ b/drivers/powercap/Kconfig
+@@ -18,10 +18,12 @@ if POWERCAP
+ # Client driver configurations go here.
+ config INTEL_RAPL_CORE
+ 	tristate
++	depends on PCI
++	select IOSF_MBI
  
- 	pcie_pmu->on_cpu = -1;
- 	/* Choose a new CPU from all online cpus. */
--	target = cpumask_first(cpu_online_mask);
-+	target = cpumask_any_but(cpu_online_mask, cpu);
- 	if (target >= nr_cpu_ids) {
- 		pci_err(pcie_pmu->pdev, "There is no CPU to set\n");
- 		return 0;
+ config INTEL_RAPL
+ 	tristate "Intel RAPL Support via MSR Interface"
+-	depends on X86 && IOSF_MBI
++	depends on X86 && PCI
+ 	select INTEL_RAPL_CORE
+ 	help
+ 	  This enables support for the Intel Running Average Power Limit (RAPL)
+diff --git a/drivers/powercap/intel_rapl_msr.c b/drivers/powercap/intel_rapl_msr.c
+index bc6adda588835..65adb4cbaaf8e 100644
+--- a/drivers/powercap/intel_rapl_msr.c
++++ b/drivers/powercap/intel_rapl_msr.c
+@@ -22,7 +22,6 @@
+ #include <linux/processor.h>
+ #include <linux/platform_device.h>
+ 
+-#include <asm/iosf_mbi.h>
+ #include <asm/cpu_device_id.h>
+ #include <asm/intel-family.h>
+ 
 -- 
 2.39.2
 
