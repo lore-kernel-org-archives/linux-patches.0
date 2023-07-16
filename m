@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82208F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:58:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499F7C433C8;
-	Sun, 16 Jul 2023 19:58:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1D88F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:58:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23966C433C7;
+	Sun, 16 Jul 2023 19:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537507;
-	bh=ra0ecAm9GDyk6lKFoXIankzZKDENIX6CFYXplPwUS7U=;
+	s=korg; t=1689537510;
+	bh=CpMhOWXj1IoEz1RHroI/zE/MfEYy+gLPEF1zcL6HKi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2tQmvnzRCViMxiT3NdM1Rrq+M0myAE31Fr8N//qQbyRGdwnRs5YTxFuS2rP1kwo/5
-	 DFI5kEOMqKuyPplj1LMujip9jvmwIRowagU1XtTpAAX+cOokqcAek7vSC/9Z2IRK4V
-	 idBFdoI+Ed0L6yeONK39fagTNXEhaT38UA2wRKr0=
+	b=MHrnDYes/0jGXQbvTuBLimniOKx+3CPP3UiVAd0rrNnsoVFI08H2dQQDwcA5hsuLt
+	 YPiE2McVmBIenMqTQQ3o3itlquW2j72JMy0fIVfrVBWGjhng79kfh38X8MzlBndFej
+	 ZMTe7mjM9K1FDy9S53bHrOJIjKKvtVhn7iVeLx9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengcheng Yang <yangpc@wangsu.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Stanislav Fomichev <sdf@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 113/800] samples/bpf: Fix buffer overflow in tcp_basertt
-Date: Sun, 16 Jul 2023 21:39:26 +0200
-Message-ID: <20230716194951.734741432@linuxfoundation.org>
+Subject: [PATCH 6.4 122/800] bpf: Dont EFAULT for {g,s}setsockopt with wrong optlen
+Date: Sun, 16 Jul 2023 21:39:35 +0200
+Message-ID: <20230716194951.939544347@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,34 +35,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengcheng Yang <yangpc@wangsu.com>
+From: Stanislav Fomichev <sdf@google.com>
 
-[ Upstream commit f4dea9689c5fea3d07170c2cb0703e216f1a0922 ]
+[ Upstream commit 29ebbba7d46136cba324264e513a1e964ca16c0a ]
 
-Using sizeof(nv) or strlen(nv)+1 is correct.
+With the way the hooks implemented right now, we have a special
+condition: optval larger than PAGE_SIZE will expose only first 4k into
+BPF; any modifications to the optval are ignored. If the BPF program
+doesn't handle this condition by resetting optlen to 0,
+the userspace will get EFAULT.
 
-Fixes: c890063e4404 ("bpf: sample BPF_SOCKET_OPS_BASE_RTT program")
-Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
-Link: https://lore.kernel.org/r/1683276658-2860-1-git-send-email-yangpc@wangsu.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+The intention of the EFAULT was to make it apparent to the
+developers that the program is doing something wrong.
+However, this inadvertently might affect production workloads
+with the BPF programs that are not too careful (i.e., returning EFAULT
+for perfectly valid setsockopt/getsockopt calls).
+
+Let's try to minimize the chance of BPF program screwing up userspace
+by ignoring the output of those BPF programs (instead of returning
+EFAULT to the userspace). pr_info_once those cases to
+the dmesg to help with figuring out what's going wrong.
+
+Fixes: 0d01da6afc54 ("bpf: implement getsockopt and setsockopt hooks")
+Suggested-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/r/20230511170456.1759459-2-sdf@google.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/bpf/tcp_basertt_kern.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/cgroup.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/samples/bpf/tcp_basertt_kern.c b/samples/bpf/tcp_basertt_kern.c
-index 8dfe09a92feca..822b0742b8154 100644
---- a/samples/bpf/tcp_basertt_kern.c
-+++ b/samples/bpf/tcp_basertt_kern.c
-@@ -47,7 +47,7 @@ int bpf_basertt(struct bpf_sock_ops *skops)
- 		case BPF_SOCK_OPS_BASE_RTT:
- 			n = bpf_getsockopt(skops, SOL_TCP, TCP_CONGESTION,
- 					   cong, sizeof(cong));
--			if (!n && !__builtin_memcmp(cong, nv, sizeof(nv)+1)) {
-+			if (!n && !__builtin_memcmp(cong, nv, sizeof(nv))) {
- 				/* Set base_rtt to 80us */
- 				rv = 80;
- 			} else if (n) {
+diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
+index 517b6a5928cc0..5b2741aa0d9bb 100644
+--- a/kernel/bpf/cgroup.c
++++ b/kernel/bpf/cgroup.c
+@@ -1826,6 +1826,12 @@ int __cgroup_bpf_run_filter_setsockopt(struct sock *sk, int *level,
+ 		ret = 1;
+ 	} else if (ctx.optlen > max_optlen || ctx.optlen < -1) {
+ 		/* optlen is out of bounds */
++		if (*optlen > PAGE_SIZE && ctx.optlen >= 0) {
++			pr_info_once("bpf setsockopt: ignoring program buffer with optlen=%d (max_optlen=%d)\n",
++				     ctx.optlen, max_optlen);
++			ret = 0;
++			goto out;
++		}
+ 		ret = -EFAULT;
+ 	} else {
+ 		/* optlen within bounds, run kernel handler */
+@@ -1881,8 +1887,10 @@ int __cgroup_bpf_run_filter_getsockopt(struct sock *sk, int level,
+ 		.optname = optname,
+ 		.current_task = current,
+ 	};
++	int orig_optlen;
+ 	int ret;
+ 
++	orig_optlen = max_optlen;
+ 	ctx.optlen = max_optlen;
+ 	max_optlen = sockopt_alloc_buf(&ctx, max_optlen, &buf);
+ 	if (max_optlen < 0)
+@@ -1905,6 +1913,7 @@ int __cgroup_bpf_run_filter_getsockopt(struct sock *sk, int level,
+ 			ret = -EFAULT;
+ 			goto out;
+ 		}
++		orig_optlen = ctx.optlen;
+ 
+ 		if (copy_from_user(ctx.optval, optval,
+ 				   min(ctx.optlen, max_optlen)) != 0) {
+@@ -1922,6 +1931,12 @@ int __cgroup_bpf_run_filter_getsockopt(struct sock *sk, int level,
+ 		goto out;
+ 
+ 	if (optval && (ctx.optlen > max_optlen || ctx.optlen < 0)) {
++		if (orig_optlen > PAGE_SIZE && ctx.optlen >= 0) {
++			pr_info_once("bpf getsockopt: ignoring program buffer with optlen=%d (max_optlen=%d)\n",
++				     ctx.optlen, max_optlen);
++			ret = retval;
++			goto out;
++		}
+ 		ret = -EFAULT;
+ 		goto out;
+ 	}
 -- 
 2.39.2
 
