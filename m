@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9CE8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:02:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A51C433C8;
-	Sun, 16 Jul 2023 20:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7371F8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:02:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D85C433C8;
+	Sun, 16 Jul 2023 20:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537756;
-	bh=T7QuHIQQWefRsr/dZ7kQb+KcdXHGLck2qkZhhNoJOtg=;
+	s=korg; t=1689537759;
+	bh=M7ASOLJ764P1fQuqBmKF2Bcs/nYFjGOOVTvH1vW/aBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RP8PKAsRMurlqS0tNGa9RctBH74tzsGwHjvM1XLVexOkut7bnYg4jcrUUOkS+uU/F
-	 4BkDgfMgTSxzn3I8SQB1aBAt1JX0TepMOwkBmZRhTcNkWt7hoDpUeMALidy9uiZAFL
-	 fRlYU6I76tJ3b/mENYSTh0oSrps5QHXLohSXKTJ0=
+	b=2kxpdWhu0I4XrA5XdSo/Ak/G1vpAwbv4Ur07tfZiLcfnrcYcEFmSAZwhHlycb5yOB
+	 8/czs2e0Oghf5q/L8ZhlzDjbzOk49PUtjDfDdDcczcdBvQCBcFW4UA12tH4BzkJwA5
+	 iW50TjBbhYPsAYAyeuiStIN/BZESB3yVmpj9yof8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ilan Peer <ilan.peer@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 180/800] wifi: cfg80211: fix regulatory disconnect with OCB/NAN
-Date: Sun, 16 Jul 2023 21:40:33 +0200
-Message-ID: <20230716194953.284867596@linuxfoundation.org>
+Subject: [PATCH 6.4 181/800] wifi: ieee80211: Fix the common size calculation for reconfiguration ML
+Date: Sun, 16 Jul 2023 21:40:34 +0200
+Message-ID: <20230716194953.308093723@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -34,121 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit e8c2af660ba0790afd14d5cbc2fd05c6dc85e207 ]
+[ Upstream commit ce6e1f600b0cfc563a7d607de702262a58cd835d ]
 
-Since regulatory disconnect was added, OCB and NAN interface
-types were added, which made it completely unusable for any
-driver that allowed OCB/NAN. Add OCB/NAN (though NAN doesn't
-do anything, we don't have any info) and also remove all the
-logic that opts out, so it won't be broken again if/when new
-interface types are added.
+The common information length is found in the first octet of the common
+information.
 
-Fixes: 6e0bd6c35b02 ("cfg80211: 802.11p OCB mode handling")
-Fixes: cb3b7d87652a ("cfg80211: add start / stop NAN commands")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://lore.kernel.org/r/20230616222844.2794d1625a26.I8e78a3789a29e6149447b3139df724a6f1b46fc3@changeid
+Fixes: 0f48b8b88aa9 ("wifi: ieee80211: add definitions for multi-link element")
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230618214435.3c7ed4817338.I42ef706cb827b4dade6e4ffbb6e7f341eaccd398@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/regulatory.h | 13 +------------
- net/wireless/core.c      | 16 ----------------
- net/wireless/reg.c       | 14 ++++++++++----
- 3 files changed, 11 insertions(+), 32 deletions(-)
+ include/linux/ieee80211.h | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/include/net/regulatory.h b/include/net/regulatory.h
-index 896191f420d50..b2cb4a9eb04dc 100644
---- a/include/net/regulatory.h
-+++ b/include/net/regulatory.h
-@@ -140,17 +140,6 @@ struct regulatory_request {
-  *      otherwise initiating radiation is not allowed. This will enable the
-  *      relaxations enabled under the CFG80211_REG_RELAX_NO_IR configuration
-  *      option
-- * @REGULATORY_IGNORE_STALE_KICKOFF: the regulatory core will _not_ make sure
-- *	all interfaces on this wiphy reside on allowed channels. If this flag
-- *	is not set, upon a regdomain change, the interfaces are given a grace
-- *	period (currently 60 seconds) to disconnect or move to an allowed
-- *	channel. Interfaces on forbidden channels are forcibly disconnected.
-- *	Currently these types of interfaces are supported for enforcement:
-- *	NL80211_IFTYPE_ADHOC, NL80211_IFTYPE_STATION, NL80211_IFTYPE_AP,
-- *	NL80211_IFTYPE_AP_VLAN, NL80211_IFTYPE_MONITOR,
-- *	NL80211_IFTYPE_P2P_CLIENT, NL80211_IFTYPE_P2P_GO,
-- *	NL80211_IFTYPE_P2P_DEVICE. The flag will be set by default if a device
-- *	includes any modes unsupported for enforcement checking.
-  * @REGULATORY_WIPHY_SELF_MANAGED: for devices that employ wiphy-specific
-  *	regdom management. These devices will ignore all regdom changes not
-  *	originating from their own wiphy.
-@@ -177,7 +166,7 @@ enum ieee80211_regulatory_flags {
- 	REGULATORY_COUNTRY_IE_FOLLOW_POWER	= BIT(3),
- 	REGULATORY_COUNTRY_IE_IGNORE		= BIT(4),
- 	REGULATORY_ENABLE_RELAX_NO_IR           = BIT(5),
--	REGULATORY_IGNORE_STALE_KICKOFF         = BIT(6),
-+	/* reuse bit 6 next time */
- 	REGULATORY_WIPHY_SELF_MANAGED		= BIT(7),
- };
- 
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index b3ec9eaec36b3..609b79fe4a748 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -721,22 +721,6 @@ int wiphy_register(struct wiphy *wiphy)
- 			return -EINVAL;
- 	}
- 
--	/*
--	 * if a wiphy has unsupported modes for regulatory channel enforcement,
--	 * opt-out of enforcement checking
--	 */
--	if (wiphy->interface_modes & ~(BIT(NL80211_IFTYPE_STATION) |
--				       BIT(NL80211_IFTYPE_P2P_CLIENT) |
--				       BIT(NL80211_IFTYPE_AP) |
--				       BIT(NL80211_IFTYPE_MESH_POINT) |
--				       BIT(NL80211_IFTYPE_P2P_GO) |
--				       BIT(NL80211_IFTYPE_ADHOC) |
--				       BIT(NL80211_IFTYPE_P2P_DEVICE) |
--				       BIT(NL80211_IFTYPE_NAN) |
--				       BIT(NL80211_IFTYPE_AP_VLAN) |
--				       BIT(NL80211_IFTYPE_MONITOR)))
--		wiphy->regulatory_flags |= REGULATORY_IGNORE_STALE_KICKOFF;
--
- 	if (WARN_ON((wiphy->regulatory_flags & REGULATORY_WIPHY_SELF_MANAGED) &&
- 		    (wiphy->regulatory_flags &
- 					(REGULATORY_CUSTOM_REG |
-diff --git a/net/wireless/reg.c b/net/wireless/reg.c
-index 26f11e4746c05..c8a1b925413b3 100644
---- a/net/wireless/reg.c
-+++ b/net/wireless/reg.c
-@@ -2391,9 +2391,17 @@ static bool reg_wdev_chan_valid(struct wiphy *wiphy, struct wireless_dev *wdev)
- 		case NL80211_IFTYPE_P2P_DEVICE:
- 			/* no enforcement required */
- 			break;
-+		case NL80211_IFTYPE_OCB:
-+			if (!wdev->u.ocb.chandef.chan)
-+				continue;
-+			chandef = wdev->u.ocb.chandef;
-+			break;
-+		case NL80211_IFTYPE_NAN:
-+			/* we have no info, but NAN is also pretty universal */
-+			continue;
- 		default:
- 			/* others not implemented for now */
--			WARN_ON(1);
-+			WARN_ON_ONCE(1);
- 			break;
- 		}
- 
-@@ -2452,9 +2460,7 @@ static void reg_check_chans_work(struct work_struct *work)
- 	rtnl_lock();
- 
- 	list_for_each_entry(rdev, &cfg80211_rdev_list, list)
--		if (!(rdev->wiphy.regulatory_flags &
--		      REGULATORY_IGNORE_STALE_KICKOFF))
--			reg_leave_invalid_chans(&rdev->wiphy);
-+		reg_leave_invalid_chans(&rdev->wiphy);
- 
- 	rtnl_unlock();
- }
+diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
+index 141c0cf65f2d9..4cda32ac3116a 100644
+--- a/include/linux/ieee80211.h
++++ b/include/linux/ieee80211.h
+@@ -4612,15 +4612,12 @@ static inline u8 ieee80211_mle_common_size(const u8 *data)
+ 	case IEEE80211_ML_CONTROL_TYPE_BASIC:
+ 	case IEEE80211_ML_CONTROL_TYPE_PREQ:
+ 	case IEEE80211_ML_CONTROL_TYPE_TDLS:
++	case IEEE80211_ML_CONTROL_TYPE_RECONF:
+ 		/*
+ 		 * The length is the first octet pointed by mle->variable so no
+ 		 * need to add anything
+ 		 */
+ 		break;
+-	case IEEE80211_ML_CONTROL_TYPE_RECONF:
+-		if (control & IEEE80211_MLC_RECONF_PRES_MLD_MAC_ADDR)
+-			common += ETH_ALEN;
+-		return common;
+ 	case IEEE80211_ML_CONTROL_TYPE_PRIO_ACCESS:
+ 		if (control & IEEE80211_MLC_PRIO_ACCESS_PRES_AP_MLD_MAC_ADDR)
+ 			common += ETH_ALEN;
 -- 
 2.39.2
 
