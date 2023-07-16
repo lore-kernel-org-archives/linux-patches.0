@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744298F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:12:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2CBFC433C8;
-	Sun, 16 Jul 2023 20:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A12D8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:12:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0658C433C7;
+	Sun, 16 Jul 2023 20:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538364;
-	bh=E+o87KNxCfTBEnyE+gF/Z3QTgmEvlLDwlURGDvXgTao=;
+	s=korg; t=1689538367;
+	bh=MEjax2E3uwZ/Q7uTHGyL3toADYhbdwMSK5uHSBlQBd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DujFptJ5ChD5DJaK4vDKzX2yYFmZGq7I58ao1wwQM6BzKjKHmmzRVtBUam5ARGO/k
-	 wB3XPDtUhwZrWR/Z8u+FUPTOdbOt1LyOUcO+w7eWa3lsjGpQOg8MplMmVg/PnuYiEl
-	 eikX7KFTqnO8qp8J7RSb74jXM4Iw9RjOzo+zkxPA=
+	b=gZ47hK/U3BD2U9H/OQagbnuumvL5eF6qeUScGLigEClqs/S5FW+n0sUOTXmWWpdnO
+	 nXurzfYRdplCAuHVqyDTrlhFv09dF6E4Ltvzyemzf4n2sGH4neNuAf6c5bJjmMnU5z
+	 Jtzgako/CPrrSjJwoykCfuuwyboUB8ZRZ6nq7jwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Nishanth Menon <nm@ti.com>,
+	Udit Kumar <u-kumar1@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 423/800] clk: clocking-wizard: check return value of devm_kasprintf()
-Date: Sun, 16 Jul 2023 21:44:36 +0200
-Message-ID: <20230716194958.914688292@linuxfoundation.org>
+Subject: [PATCH 6.4 396/800] arm64: dts: ti: k3-am69-sk: Fix main_i2c0 alias
+Date: Sun, 16 Jul 2023 21:44:09 +0200
+Message-ID: <20230716194958.268848727@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,39 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Nishanth Menon <nm@ti.com>
 
-[ Upstream commit b1356ed1a4461de06dfdc02bf549c3e8750162e5 ]
+[ Upstream commit b38c6ced4ec5b3f6260ff6cc2b71e8a3d8c897d7 ]
 
-devm_kasprintf() returns a pointer to dynamically allocated memory.
-Pointer could be NULL in case allocation fails. Check pointer validity.
-Identified with coccinelle (kmerr.cocci script).
+main_i2c0 is aliased as i2c0 which creates a problem for u-boot R5
+SPL attempting to reuse the same definition in the common board
+detection logic as it looks for the first i2c instance as the bus on
+which to detect the eeprom to understand the board variant involved.
+Switch main_i2c0 to i2c3 alias allowing us to introduce wkup_i2c0
+and potentially space for mcu_i2c instances in the gap for follow on
+patches.
 
-Fixes: 2046338dcbc6 ("ARM: mxs: Use soc bus infrastructure")
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230530093913.1656095-9-claudiu.beznea@microchip.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 635fb18ba008 ("arch: arm64: dts: Add support for AM69 Starter Kit")
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Reviewed-by: Udit Kumar <u-kumar1@ti.com>
+Link: https://lore.kernel.org/r/20230602214937.2349545-5-nm@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/xilinx/clk-xlnx-clock-wizard.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/ti/k3-am69-sk.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/xilinx/clk-xlnx-clock-wizard.c b/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
-index 16df34f46280f..d56822ce6126c 100644
---- a/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
-+++ b/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
-@@ -648,6 +648,11 @@ static int clk_wzrd_probe(struct platform_device *pdev)
- 	}
+diff --git a/arch/arm64/boot/dts/ti/k3-am69-sk.dts b/arch/arm64/boot/dts/ti/k3-am69-sk.dts
+index bc49ba534790e..f364b7803115d 100644
+--- a/arch/arm64/boot/dts/ti/k3-am69-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am69-sk.dts
+@@ -23,7 +23,7 @@ chosen {
+ 	aliases {
+ 		serial2 = &main_uart8;
+ 		mmc1 = &main_sdhci1;
+-		i2c0 = &main_i2c0;
++		i2c3 = &main_i2c0;
+ 	};
  
- 	clkout_name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%s_out0", dev_name(&pdev->dev));
-+	if (!clkout_name) {
-+		ret = -ENOMEM;
-+		goto err_disable_clk;
-+	}
-+
- 	if (nr_outputs == 1) {
- 		clk_wzrd->clkout[0] = clk_wzrd_register_divider
- 				(&pdev->dev, clkout_name,
+ 	memory@80000000 {
 -- 
 2.39.2
 
