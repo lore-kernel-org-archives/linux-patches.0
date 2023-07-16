@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47D18833
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:47:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299F5C433C7;
-	Sun, 16 Jul 2023 20:47:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 857DC8833
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:47:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F99C433C8;
+	Sun, 16 Jul 2023 20:47:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540425;
-	bh=6BNnVQEwf5HEmGmAczCKRHIpmcGRVlbnLKzShfPXdc8=;
+	s=korg; t=1689540428;
+	bh=1bI9VTkb064C9miAHigDSoX5dmCr6mkoMBRm9f4279A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G2WzG7ToyptQs2Y5bQSFGmfYT7BdralZ+QLCXpe8N56FZls84WxKA8wbkXPcyxLcc
-	 Z30+b9PQuOH+THe1PUqZa8bxeIF+Vd/mKvcr7EO6Mh+8RVItH2nFwtv3f+3pUXQntt
-	 lJS76qjEueT9i4ntjKfg/sfJTKtXaAIpBhG7Pm8Q=
+	b=uef7UscPt76LBKzADKaytT9F42ntWO2+E0OVhQGWYacJddEoHID0AaOQlqhVBHLWk
+	 edrky77guGkv9FPF44svG2fDKHAewvyjtrxGJjvPGTBMCaYqdeuTMoS6FRcNZzpnEA
+	 gOfp9W+PBvCI8O6j6+4gOFsgWBNRGXD+qqyLWvr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 359/591] ksmbd: avoid field overflow warning
-Date: Sun, 16 Jul 2023 21:48:18 +0200
-Message-ID: <20230716194933.201663221@linuxfoundation.org>
+Subject: [PATCH 6.1 342/591] ARC: define ASM_NL and __ALIGN(_STR) outside #ifdef __ASSEMBLY__ guard
+Date: Sun, 16 Jul 2023 21:48:01 +0200
+Message-ID: <20230716194932.757549128@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,45 +34,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 9cedc58bdbe9fff9aacd0ca19ee5777659f28fd7 ]
+[ Upstream commit 92e2921eeafdfca9acd9b83f07d2b7ca099bac24 ]
 
-clang warns about a possible field overflow in a memcpy:
+ASM_NL is useful not only in *.S files but also in .c files for using
+inline assembler in C code.
 
-In file included from fs/smb/server/smb_common.c:7:
-include/linux/fortify-string.h:583:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
-                        __write_overflow_field(p_size_field, size);
+On ARC, however, ASM_NL is evaluated inconsistently. It is expanded to
+a backquote (`) in *.S files, but a semicolon (;) in *.c files because
+arch/arc/include/asm/linkage.h defines it inside #ifdef __ASSEMBLY__,
+so the definition for C code falls back to the default value defined in
+include/linux/linkage.h.
 
-It appears to interpret the "&out[baselen + 4]" as referring to a single
-byte of the character array, while the equivalen "out + baselen + 4" is
-seen as an offset into the array.
+If ASM_NL is used in inline assembler in .c files, it will result in
+wrong assembly code because a semicolon is not an instruction separator,
+but the start of a comment for ARC.
 
-I don't see that kind of warning elsewhere, so just go with the simple
-rework.
+Move ASM_NL (also __ALIGN and __ALIGN_STR) out of the #ifdef.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 9df62f054406 ("arch: use ASM_NL instead of ';' for assembler new line character in the macro")
+Fixes: 8d92e992a785 ("ARC: define __ALIGN_STR and __ALIGN symbols for ARC")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb_common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arc/include/asm/linkage.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/smb/server/smb_common.c b/fs/smb/server/smb_common.c
-index 05d7f3e910bf4..d937e2f45c829 100644
---- a/fs/smb/server/smb_common.c
-+++ b/fs/smb/server/smb_common.c
-@@ -536,7 +536,7 @@ int ksmbd_extract_shortname(struct ksmbd_conn *conn, const char *longname,
- 	out[baselen + 3] = PERIOD;
+diff --git a/arch/arc/include/asm/linkage.h b/arch/arc/include/asm/linkage.h
+index c9434ff3aa4ce..8a3fb71e9cfad 100644
+--- a/arch/arc/include/asm/linkage.h
++++ b/arch/arc/include/asm/linkage.h
+@@ -8,6 +8,10 @@
  
- 	if (dot_present)
--		memcpy(&out[baselen + 4], extension, 4);
-+		memcpy(out + baselen + 4, extension, 4);
- 	else
- 		out[baselen + 4] = '\0';
- 	smbConvertToUTF16((__le16 *)shortname, out, PATH_MAX,
+ #include <asm/dwarf.h>
+ 
++#define ASM_NL		 `	/* use '`' to mark new line in macro */
++#define __ALIGN		.align 4
++#define __ALIGN_STR	__stringify(__ALIGN)
++
+ #ifdef __ASSEMBLY__
+ 
+ .macro ST2 e, o, off
+@@ -28,10 +32,6 @@
+ #endif
+ .endm
+ 
+-#define ASM_NL		 `	/* use '`' to mark new line in macro */
+-#define __ALIGN		.align 4
+-#define __ALIGN_STR	__stringify(__ALIGN)
+-
+ /* annotation for data we want in DCCM - if enabled in .config */
+ .macro ARCFP_DATA nm
+ #ifdef CONFIG_ARC_HAS_DCCM
 -- 
 2.39.2
 
