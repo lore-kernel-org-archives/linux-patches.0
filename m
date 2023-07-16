@@ -1,35 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD328F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:17:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CBDC433C8;
-	Sun, 16 Jul 2023 20:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00938F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:17:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253A6C433C7;
+	Sun, 16 Jul 2023 20:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538632;
-	bh=/eCpOHVdDejXBXh6t0gTTlmuVTbygfJ3hKHPWPmuelg=;
+	s=korg; t=1689538635;
+	bh=TzzLNrg9q+AQP2isG22Oxm9uZNLbvn2aDiiLqrzC5s8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W7drjnIcFZu+wpWt4dl7fu40BT/VYDObEtHr45sQpg/F8zwNIj+5+KjjTFnwVaqZc
-	 EWE7plI5LNiFruB6Iu+m2CqEFtdnirgVO1m4eYPaqjaROpkiHVxxRaT/kP5sqNHZKV
-	 Sim5nkJ+XX5QisYu7Iw/S68UDU3eXua4l0dhRpiI=
+	b=ooXXlwTn0mb54kR7iIWWEGGrDFqq3di3c1X85PBsKuq2drV5b3hyTTYYtuY9h2IQx
+	 61TBepPNPS5G8xzjPt4cn7qaRPlhKBrfoX5NGpXiTxJKQhJcnOueKfxqC9YKn8IEvX
+	 J2xYKCmLUAV05NhrQ/3UuCrrxVDMj2bNx1CS6rxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petar Gligoric <petar.gligoric@rohde-schwarz.com>,
-	Hagen Paul Pfeifer <hagen@jauu.net>,
-	Aditya Gupta <adityag@linux.ibm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 493/800] perf test: Set PERF_EXEC_PATH for script execution
-Date: Sun, 16 Jul 2023 21:45:46 +0200
-Message-ID: <20230716195000.532023390@linuxfoundation.org>
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.4 520/800] ALSA: hda/realtek: Add quirk for Clevo NPx0SNx
+Date: Sun, 16 Jul 2023 21:46:13 +0200
+Message-ID: <20230716195001.172413150@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -43,53 +34,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-[ Upstream commit e4ef3ef1bc0a3d2535427da78b8095ef657eb474 ]
+commit 22065e4214c1196b54fc164892c2e193a743caf3 upstream.
 
-The task-analyzer.py script (actually every other scripts too) requires
-PERF_EXEC_PATH env to find dependent libraries and scripts. For scripts
-test to run correctly, it needs to set PERF_EXEC_PATH to the perf tool
-source directory.
+This applies a SND_PCI_QUIRK(...) to the Clevo NPx0SNx barebones fixing the
+microphone not being detected on the headset combo port.
 
-Instead of blindly update the env, let's check the directory structure
-to make sure it points to the correct location.
-
-Fixes: e8478b84d6ba ("perf test: add new task-analyzer tests")
-Cc: Petar Gligoric <petar.gligoric@rohde-schwarz.com>
-Cc: Hagen Paul Pfeifer <hagen@jauu.net>
-Cc: Aditya Gupta <adityag@linux.ibm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Arnaldo Carvalho de Melo <acme@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Ingo Molnar <mingo@kernel.org>
-Acked-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230628155434.584159-1-wse@tuxedocomputers.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/tests/shell/test_task_analyzer.sh | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/tests/shell/test_task_analyzer.sh b/tools/perf/tests/shell/test_task_analyzer.sh
-index 1b7f3c1ec218b..365b61aea519a 100755
---- a/tools/perf/tests/shell/test_task_analyzer.sh
-+++ b/tools/perf/tests/shell/test_task_analyzer.sh
-@@ -5,6 +5,12 @@
- tmpdir=$(mktemp -d /tmp/perf-script-task-analyzer-XXXXX)
- err=0
- 
-+# set PERF_EXEC_PATH to find scripts in the source directory
-+perfdir=$(dirname "$0")/../..
-+if [ -e "$perfdir/scripts/python/Perf-Trace-Util" ]; then
-+  export PERF_EXEC_PATH=$perfdir
-+fi
-+
- cleanup() {
-   rm -f perf.data
-   rm -f perf.data.old
--- 
-2.39.2
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9682,6 +9682,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1558, 0x971d, "Clevo N970T[CDF]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xa500, "Clevo NL5[03]RU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xa600, "Clevo NL50NU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1558, 0xa650, "Clevo NP[567]0SN[CD]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xa671, "Clevo NP70SN[CDE]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xb018, "Clevo NP50D[BE]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xb019, "Clevo NH77D[BE]Q", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
 
 
