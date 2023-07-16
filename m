@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F299B8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:43:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74234C433C7;
-	Sun, 16 Jul 2023 20:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B718F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:43:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484CDC433C7;
+	Sun, 16 Jul 2023 20:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540197;
-	bh=3snP4T0v2pRmorPOa1JRHEQl2CKk0lThyGvASpsau4o=;
+	s=korg; t=1689540200;
+	bh=+nvfuXGaWBc5EfdQEZttQ/wkcL89p5cqfTmmq3UQDLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c6xJGJmw8aZgve6HIbavydWBqsTHs5D2tXfL4dqPMg7uVx+eYNxxOpOIAZ5SDpq8H
-	 Xz2KYKqkQPUPwK/+1rI3TjjPaaXsMKMgW3CgU/twFAbKzNJ4M0afIRiaaaQqoZBYQT
-	 NLy9CvZcJ9fA6cUgLYcTqH4ALwivQnHeyfwarLuM=
+	b=LLiotFkGmoi0vEX+5H49+NjTm62ip2PObSz/QABSDIhyqgfmPqIcBYd19hGP2ShkK
+	 ut4aPjatnWQ0pkvGM6J/a2isHjrsFB3v8XBErQcpX0BCv47MxQKEsvSsqMnwEIIpT+
+	 07BK1hbabsxFNO4D3G5ovaQMEKdU/fUiPcs9B+8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Tony Lindgren <tony@atomide.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Alexey Romanov <avromanov@sberdevices.ru>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 277/591] clk: ti: clkctrl: check return value of kasprintf()
-Date: Sun, 16 Jul 2023 21:46:56 +0200
-Message-ID: <20230716194931.061669866@linuxfoundation.org>
+Subject: [PATCH 6.1 278/591] drivers: meson: secure-pwrc: always enable DMA domain
+Date: Sun, 16 Jul 2023 21:46:57 +0200
+Message-ID: <20230716194931.087760029@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,50 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Alexey Romanov <avromanov@sberdevices.ru>
 
-[ Upstream commit bd46cd0b802d9c9576ca78007aa084ae3e74907b ]
+[ Upstream commit 0bb4644d583789c97e74d3e3047189f0c59c4742 ]
 
-kasprintf() returns a pointer to dynamically allocated memory.
-Pointer could be NULL in case allocation fails. Check pointer validity.
-Identified with coccinelle (kmerr.cocci script).
+Starting from commit e45f243409db ("firmware: meson_sm:
+populate platform devices from sm device tree data") pwrc
+is probed successfully and disables unused pwr domains.
+By A1 SoC family design, any TEE requires DMA pwr domain
+always enabled.
 
-Fixes: 852049594b9a ("clk: ti: clkctrl: convert subclocks to use proper names also")
-Fixes: 6c3090520554 ("clk: ti: clkctrl: Fix hidden dependency to node name")
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230530093913.1656095-8-claudiu.beznea@microchip.com
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: b3dde5013e13 ("soc: amlogic: Add support for Secure power domains controller")
+Signed-off-by: Alexey Romanov <avromanov@sberdevices.ru>
+Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20230610090414.90529-1-avromanov@sberdevices.ru
+[narmstrong: added fixes tag]
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/ti/clkctrl.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/soc/amlogic/meson-secure-pwrc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/ti/clkctrl.c b/drivers/clk/ti/clkctrl.c
-index ae58628794176..57611bfb299c1 100644
---- a/drivers/clk/ti/clkctrl.c
-+++ b/drivers/clk/ti/clkctrl.c
-@@ -258,6 +258,9 @@ static const char * __init clkctrl_get_clock_name(struct device_node *np,
- 	if (clkctrl_name && !legacy_naming) {
- 		clock_name = kasprintf(GFP_KERNEL, "%s-clkctrl:%04x:%d",
- 				       clkctrl_name, offset, index);
-+		if (!clock_name)
-+			return NULL;
-+
- 		strreplace(clock_name, '_', '-');
- 
- 		return clock_name;
-@@ -586,6 +589,10 @@ static void __init _ti_omap4_clkctrl_setup(struct device_node *node)
- 	if (clkctrl_name) {
- 		provider->clkdm_name = kasprintf(GFP_KERNEL,
- 						 "%s_clkdm", clkctrl_name);
-+		if (!provider->clkdm_name) {
-+			kfree(provider);
-+			return;
-+		}
- 		goto clkdm_found;
- 	}
- 
+diff --git a/drivers/soc/amlogic/meson-secure-pwrc.c b/drivers/soc/amlogic/meson-secure-pwrc.c
+index e935187635267..25b4b71df9b89 100644
+--- a/drivers/soc/amlogic/meson-secure-pwrc.c
++++ b/drivers/soc/amlogic/meson-secure-pwrc.c
+@@ -105,7 +105,7 @@ static struct meson_secure_pwrc_domain_desc a1_pwrc_domains[] = {
+ 	SEC_PD(ACODEC,	0),
+ 	SEC_PD(AUDIO,	0),
+ 	SEC_PD(OTP,	0),
+-	SEC_PD(DMA,	0),
++	SEC_PD(DMA,	GENPD_FLAG_ALWAYS_ON | GENPD_FLAG_IRQ_SAFE),
+ 	SEC_PD(SD_EMMC,	0),
+ 	SEC_PD(RAMA,	0),
+ 	/* SRAMB is used as ATF runtime memory, and should be always on */
 -- 
 2.39.2
 
