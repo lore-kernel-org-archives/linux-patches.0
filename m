@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA048F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:25:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB11C433C8;
-	Sun, 16 Jul 2023 20:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5FC8F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:25:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D53CC433C7;
+	Sun, 16 Jul 2023 20:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539105;
-	bh=pPqpxxxsNpwJRfOJB1PFI12LmyEANEKEm/1TgvXf3qE=;
+	s=korg; t=1689539108;
+	bh=ae0FNF8BgrzFP3Moios+vQ25h06mx2/p8mhO9UerDDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x0JI+tcRB79fWEY3OikplS6zmy+Ozu1RGiK3OXxKXbGZMyxVKwLnFWJ+9pmQTEEh8
-	 04AbfuKvINjuX5ZIGSMyaiz5sqqfkw9KPONoCxl0m7uOFSh3RRVNPub05yPh+6Dq4Y
-	 bOmFHoBmYWKDVs0PDe+p3/IilxD/S1+lRYK20ofo=
+	b=bxoj2XnFA66fwYp++br8ml7HTfnptBWAkNNFy/BCwx82i3t6xYYxAKH2bAkbML/zH
+	 u6CTw/axZhh93Kt+nv9ih5/+YJVFDs7xflUEm035BfLK8TdskbRx6GeIvBlXR3yoxa
+	 ZqV0ZMPQqw+D+WvJpFsuUNqFMYc81YmVfzkRo2Zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jeff Chase <jnchase@google.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Joe Tessler <jrt@google.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Mark Brown <broonie@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Chengfeng Ye <dg573847474@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 660/800] media: cec: i2c: ch7322: also select REGMAP
-Date: Sun, 16 Jul 2023 21:48:33 +0200
-Message-ID: <20230716195004.441771499@linuxfoundation.org>
+Subject: [PATCH 6.4 661/800] sctp: fix potential deadlock on &net->sctp.addr_wq_lock
+Date: Sun, 16 Jul 2023 21:48:34 +0200
+Message-ID: <20230716195004.465895516@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -41,67 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Chengfeng Ye <dg573847474@gmail.com>
 
-[ Upstream commit 29f96ac23648b2259f42d40703c47dd18fd172ca ]
+[ Upstream commit 6feb37b3b06e9049e20dcf7e23998f92c9c5be9a ]
 
-Selecting only REGMAP_I2C can leave REGMAP unset, causing build errors,
-so also select REGMAP to prevent the build errors.
+As &net->sctp.addr_wq_lock is also acquired by the timer
+sctp_addr_wq_timeout_handler() in protocal.c, the same lock acquisition
+at sctp_auto_asconf_init() seems should disable irq since it is called
+from sctp_accept() under process context.
 
-../drivers/media/cec/i2c/ch7322.c:158:21: error: variable 'ch7322_regmap' has initializer but incomplete type
-  158 | static const struct regmap_config ch7322_regmap = {
-../drivers/media/cec/i2c/ch7322.c:159:10: error: 'const struct regmap_config' has no member named 'reg_bits'
-  159 |         .reg_bits = 8,
-../drivers/media/cec/i2c/ch7322.c:159:21: warning: excess elements in struct initializer
-  159 |         .reg_bits = 8,
-../drivers/media/cec/i2c/ch7322.c:160:10: error: 'const struct regmap_config' has no member named 'val_bits'
-  160 |         .val_bits = 8,
-../drivers/media/cec/i2c/ch7322.c:160:21: warning: excess elements in struct initializer
-  160 |         .val_bits = 8,
-../drivers/media/cec/i2c/ch7322.c:161:10: error: 'const struct regmap_config' has no member named 'max_register'
-  161 |         .max_register = 0x7f,
-../drivers/media/cec/i2c/ch7322.c:161:25: warning: excess elements in struct initializer
-  161 |         .max_register = 0x7f,
-../drivers/media/cec/i2c/ch7322.c:162:10: error: 'const struct regmap_config' has no member named 'disable_locking'
-  162 |         .disable_locking = true,
-../drivers/media/cec/i2c/ch7322.c:162:28: warning: excess elements in struct initializer
-  162 |         .disable_locking = true,
-../drivers/media/cec/i2c/ch7322.c: In function 'ch7322_probe':
-../drivers/media/cec/i2c/ch7322.c:468:26: error: implicit declaration of function 'devm_regmap_init_i2c' [-Werror=implicit-function-declaration]
-  468 |         ch7322->regmap = devm_regmap_init_i2c(client, &ch7322_regmap);
-../drivers/media/cec/i2c/ch7322.c:468:24: warning: assignment to 'struct regmap *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
-  468 |         ch7322->regmap = devm_regmap_init_i2c(client, &ch7322_regmap);
-../drivers/media/cec/i2c/ch7322.c: At top level:
-../drivers/media/cec/i2c/ch7322.c:158:35: error: storage size of 'ch7322_regmap' isn't known
-  158 | static const struct regmap_config ch7322_regmap = {
+Possible deadlock scenario:
+sctp_accept()
+    -> sctp_sock_migrate()
+    -> sctp_auto_asconf_init()
+    -> spin_lock(&net->sctp.addr_wq_lock)
+        <timer interrupt>
+        -> sctp_addr_wq_timeout_handler()
+        -> spin_lock_bh(&net->sctp.addr_wq_lock); (deadlock here)
 
-Link: https://lore.kernel.org/linux-media/20230608025435.29249-1-rdunlap@infradead.org
-Fixes: 21b9a47e0ec7 ("media: cec: i2c: ch7322: Add ch7322 CEC controller driver")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Jeff Chase <jnchase@google.com>
-Cc: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Cc: Joe Tessler <jrt@google.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+This flaw was found using an experimental static analysis tool we are
+developing for irq-related deadlock.
+
+The tentative patch fix the potential deadlock by spin_lock_bh().
+
+Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+Fixes: 34e5b0118685 ("sctp: delay auto_asconf init until binding the first addr")
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/20230627120340.19432-1-dg573847474@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/cec/i2c/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ net/sctp/socket.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/cec/i2c/Kconfig b/drivers/media/cec/i2c/Kconfig
-index 70432a1d69186..d912d143fb312 100644
---- a/drivers/media/cec/i2c/Kconfig
-+++ b/drivers/media/cec/i2c/Kconfig
-@@ -5,6 +5,7 @@
- config CEC_CH7322
- 	tristate "Chrontel CH7322 CEC controller"
- 	depends on I2C
-+	select REGMAP
- 	select REGMAP_I2C
- 	select CEC_CORE
- 	help
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index a68e1d541b128..ee15eff6364ee 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -364,9 +364,9 @@ static void sctp_auto_asconf_init(struct sctp_sock *sp)
+ 	struct net *net = sock_net(&sp->inet.sk);
+ 
+ 	if (net->sctp.default_auto_asconf) {
+-		spin_lock(&net->sctp.addr_wq_lock);
++		spin_lock_bh(&net->sctp.addr_wq_lock);
+ 		list_add_tail(&sp->auto_asconf_list, &net->sctp.auto_asconf_splist);
+-		spin_unlock(&net->sctp.addr_wq_lock);
++		spin_unlock_bh(&net->sctp.addr_wq_lock);
+ 		sp->do_auto_asconf = 1;
+ 	}
+ }
 -- 
 2.39.2
 
