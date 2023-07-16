@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451E28F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:56:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0D5C433C9;
-	Sun, 16 Jul 2023 19:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107D88F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:56:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87676C433C8;
+	Sun, 16 Jul 2023 19:56:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537409;
-	bh=uUvAuPd1gtkCACbnUzoDUt2rvqd95ocRlAL/LKiDz4Y=;
+	s=korg; t=1689537411;
+	bh=SJsOHt8BOFwNN6Z7WOr6qMxOobgPom4z1awsDZI7qMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J4Rrc1qvF4rghxY9NtSUaHSI19QGshSLQDlUcesPKiA6VyHvzBLiZxpxVW+I63WL2
-	 yBU4IfonjHFfQ9uYS/gFwEuyZr/tc1oO/Lei1eztOA8Z3WfPIHQNzWsK0Ged/Th4wz
-	 6BN5D5Yf2Ug2xMPLii35agozKK3MQ9B+knmrwCEQ=
+	b=Nuv4XWvmmhvW64che+NEXRsJKPH0s49Q7GkEWXnooP5nr7apSTvXEcUIvqxEqpG9Q
+	 /4uICKTxc+K6wzLkK+B46GtoXNPVXfMZo8YGmLymU/buHhzGD2HPIqLeaTfZYpmkDr
+	 /eTDYoWakb3FKv1hUlfsut6ftc7hD6PwcuWgCpy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Christoph Hellwig <hch@lst.de>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 058/800] btrfs: dont treat zoned writeback as being from an async helper thread
-Date: Sun, 16 Jul 2023 21:38:31 +0200
-Message-ID: <20230716194950.436876831@linuxfoundation.org>
+Subject: [PATCH 6.4 059/800] btrfs: fix file_offset for REQ_BTRFS_ONE_ORDERED bios that get split
+Date: Sun, 16 Jul 2023 21:38:32 +0200
+Message-ID: <20230716194950.459268887@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -38,151 +39,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 7027f87108ce3d23ea542e1a9a79056530db4a87 ]
+[ Upstream commit c731cd0b6d255e4855a7cac9f276864032ab2387 ]
 
-When extent_write_locked_range was originally added, it was only used
-writing back compressed pages from an async helper thread.  But it is
-now also used for writing back pages on zoned devices, where it is
-called directly from the ->writepage context.  In this case we want to
-be able to pass on the writeback_control instead of creating a new one,
-and more importantly want to use all the normal cgroup interaction
-instead of potentially deferring writeback to another helper.
+If a bio gets split, it needs to have a proper file_offset for checksum
+validation and repair to work properly.
 
-Fixes: 898793d992c2 ("btrfs: zoned: write out partially allocated region")
+Based on feedback from Josef, commit 852eee62d31a ("btrfs: allow
+btrfs_submit_bio to split bios") skipped this adjustment for ONE_ORDERED
+bios.  But if we actually ever need to split a ONE_ORDERED read bio, this
+will lead to a wrong file offset in the repair code.  Right now the only
+user of the file_offset is logging of an error message so this is mostly
+harmless, but the wrong offset might be more problematic for additional
+users in the future.
+
+Fixes: 852eee62d31a ("btrfs: allow btrfs_submit_bio to split bios")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Reviewed-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.c | 20 +++++++-------------
- fs/btrfs/extent_io.h |  3 ++-
- fs/btrfs/inode.c     | 20 +++++++++++++++-----
- 3 files changed, 24 insertions(+), 19 deletions(-)
+ fs/btrfs/bio.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index 6116da5d0a1ed..a69a488605b21 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -2432,7 +2432,8 @@ static int extent_write_cache_pages(struct address_space *mapping,
-  * already been ran (aka, ordered extent inserted) and all pages are still
-  * locked.
-  */
--int extent_write_locked_range(struct inode *inode, u64 start, u64 end)
-+int extent_write_locked_range(struct inode *inode, u64 start, u64 end,
-+			      struct writeback_control *wbc)
- {
- 	bool found_error = false;
- 	int first_error = 0;
-@@ -2442,22 +2443,16 @@ int extent_write_locked_range(struct inode *inode, u64 start, u64 end)
- 	const u32 sectorsize = fs_info->sectorsize;
- 	loff_t i_size = i_size_read(inode);
- 	u64 cur = start;
--	struct writeback_control wbc_writepages = {
--		.sync_mode	= WB_SYNC_ALL,
--		.range_start	= start,
--		.range_end	= end,
--		.no_cgroup_owner = 1,
--	};
- 	struct btrfs_bio_ctrl bio_ctrl = {
--		.wbc = &wbc_writepages,
--		/* We're called from an async helper function */
--		.opf = REQ_OP_WRITE | REQ_BTRFS_CGROUP_PUNT |
--			wbc_to_write_flags(&wbc_writepages),
-+		.wbc = wbc,
-+		.opf = REQ_OP_WRITE | wbc_to_write_flags(wbc),
- 	};
+diff --git a/fs/btrfs/bio.c b/fs/btrfs/bio.c
+index b3ad0f51e6162..b86faf8126e77 100644
+--- a/fs/btrfs/bio.c
++++ b/fs/btrfs/bio.c
+@@ -95,8 +95,7 @@ static struct btrfs_bio *btrfs_split_bio(struct btrfs_fs_info *fs_info,
+ 	btrfs_bio_init(bbio, fs_info, NULL, orig_bbio);
+ 	bbio->inode = orig_bbio->inode;
+ 	bbio->file_offset = orig_bbio->file_offset;
+-	if (!(orig_bbio->bio.bi_opf & REQ_BTRFS_ONE_ORDERED))
+-		orig_bbio->file_offset += map_length;
++	orig_bbio->file_offset += map_length;
  
-+	if (wbc->no_cgroup_owner)
-+		bio_ctrl.opf |= REQ_BTRFS_CGROUP_PUNT;
-+
- 	ASSERT(IS_ALIGNED(start, sectorsize) && IS_ALIGNED(end + 1, sectorsize));
- 
--	wbc_attach_fdatawrite_inode(&wbc_writepages, inode);
- 	while (cur <= end) {
- 		u64 cur_end = min(round_down(cur, PAGE_SIZE) + PAGE_SIZE - 1, end);
- 		struct page *page;
-@@ -2497,7 +2492,6 @@ int extent_write_locked_range(struct inode *inode, u64 start, u64 end)
- 
- 	submit_write_bio(&bio_ctrl, found_error ? ret : 0);
- 
--	wbc_detach_inode(&wbc_writepages);
- 	if (found_error)
- 		return first_error;
- 	return ret;
-diff --git a/fs/btrfs/extent_io.h b/fs/btrfs/extent_io.h
-index 4341ad978fb8e..aac7e6817e8ff 100644
---- a/fs/btrfs/extent_io.h
-+++ b/fs/btrfs/extent_io.h
-@@ -179,7 +179,8 @@ int try_release_extent_mapping(struct page *page, gfp_t mask);
- int try_release_extent_buffer(struct page *page);
- 
- int btrfs_read_folio(struct file *file, struct folio *folio);
--int extent_write_locked_range(struct inode *inode, u64 start, u64 end);
-+int extent_write_locked_range(struct inode *inode, u64 start, u64 end,
-+			      struct writeback_control *wbc);
- int extent_writepages(struct address_space *mapping,
- 		      struct writeback_control *wbc);
- int btree_write_cache_pages(struct address_space *mapping,
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 3d12dba145152..2e6eed4b1b3cc 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -934,6 +934,12 @@ static int submit_uncompressed_range(struct btrfs_inode *inode,
- 	unsigned long nr_written = 0;
- 	int page_started = 0;
- 	int ret;
-+	struct writeback_control wbc = {
-+		.sync_mode		= WB_SYNC_ALL,
-+		.range_start		= start,
-+		.range_end		= end,
-+		.no_cgroup_owner	= 1,
-+	};
- 
- 	/*
- 	 * Call cow_file_range() to run the delalloc range directly, since we
-@@ -965,7 +971,10 @@ static int submit_uncompressed_range(struct btrfs_inode *inode,
- 	}
- 
- 	/* All pages will be unlocked, including @locked_page */
--	return extent_write_locked_range(&inode->vfs_inode, start, end);
-+	wbc_attach_fdatawrite_inode(&wbc, &inode->vfs_inode);
-+	ret = extent_write_locked_range(&inode->vfs_inode, start, end, &wbc);
-+	wbc_detach_inode(&wbc);
-+	return ret;
- }
- 
- static int submit_one_async_extent(struct btrfs_inode *inode,
-@@ -1617,7 +1626,8 @@ static bool cow_file_range_async(struct btrfs_inode *inode,
- static noinline int run_delalloc_zoned(struct btrfs_inode *inode,
- 				       struct page *locked_page, u64 start,
- 				       u64 end, int *page_started,
--				       unsigned long *nr_written)
-+				       unsigned long *nr_written,
-+				       struct writeback_control *wbc)
- {
- 	u64 done_offset = end;
- 	int ret;
-@@ -1649,8 +1659,8 @@ static noinline int run_delalloc_zoned(struct btrfs_inode *inode,
- 			account_page_redirty(locked_page);
- 		}
- 		locked_page_done = true;
--		extent_write_locked_range(&inode->vfs_inode, start, done_offset);
--
-+		extent_write_locked_range(&inode->vfs_inode, start, done_offset,
-+					  wbc);
- 		start = done_offset + 1;
- 	}
- 
-@@ -2224,7 +2234,7 @@ int btrfs_run_delalloc_range(struct btrfs_inode *inode, struct page *locked_page
- 
- 	if (zoned)
- 		ret = run_delalloc_zoned(inode, locked_page, start, end,
--					 page_started, nr_written);
-+					 page_started, nr_written, wbc);
- 	else
- 		ret = cow_file_range(inode, locked_page, start, end,
- 				     page_started, nr_written, 1, NULL);
+ 	atomic_inc(&orig_bbio->pending_ios);
+ 	return bbio;
 -- 
 2.39.2
 
