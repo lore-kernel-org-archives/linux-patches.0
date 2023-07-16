@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CEF8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:00:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD511C433C7;
-	Sun, 16 Jul 2023 20:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070248F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:00:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ECD4C433C7;
+	Sun, 16 Jul 2023 20:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537622;
-	bh=ZxwFepWlDRQl2Oc8lPMRRVaOFFGWS5VyGj/xBTj7UvE=;
+	s=korg; t=1689537624;
+	bh=GSGTPXpgDhOBh+tKmFL6tz3IFmmkU76XJhz7gRjsEeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lK5qEWOTPvkjD7Io1MO5UISQFg/QnQPALbTsiappSVQfnuM5G0+OtX6nQduutimSZ
-	 xDaJwHmOl8tvb5xo924OVo6waiSPNUAPiWGoOoEe65qwSUNzA4ot1IEaC8F7fipB10
-	 mmChzs+gUHiwzOQNyVth40GfsIagb8jXwyNUGGuM=
+	b=kRoAQivCjVPBfVmyg7ZVYbA/Vd3ZHP+qYBI8oQsyT0eRTKTO/HTl7PP6e/ANepys/
+	 Nfo5B9mNrT8bM1y8Ka2c1/0OikNsjc2RdcbqtRYy07eqB03NFXV8yntz531gNoD6MS
+	 ABlTg7h1OjDoy1VTA2xZOkY6w07oycCum2/JIPbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eduard Zingerman <eddyz87@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 162/800] bpf: Use scalar ids in mark_chain_precision()
-Date: Sun, 16 Jul 2023 21:40:15 +0200
-Message-ID: <20230716194952.873757267@linuxfoundation.org>
+Subject: [PATCH 6.4 163/800] bpf: Verify scalar ids mapping in regsafe() using check_ids()
+Date: Sun, 16 Jul 2023 21:40:16 +0200
+Message-ID: <20230716194952.896525878@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,231 +37,302 @@ Content-Transfer-Encoding: 8bit
 
 From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 904e6ddf4133c52fdb9654c2cd2ad90f320d48b9 ]
+[ Upstream commit 1ffc85d9298e0ca0137ba65c93a786143fe167b8 ]
 
-Change mark_chain_precision() to track precision in situations
-like below:
+Make sure that the following unsafe example is rejected by verifier:
 
-    r2 = unknown value
-    ...
-  --- state #0 ---
-    ...
-    r1 = r2                 // r1 and r2 now share the same ID
-    ...
-  --- state #1 {r1.id = A, r2.id = A} ---
-    ...
-    if (r2 > 10) goto exit; // find_equal_scalars() assigns range to r1
-    ...
-  --- state #2 {r1.id = A, r2.id = A} ---
-    r3 = r10
-    r3 += r1                // need to mark both r1 and r2
+1: r9 = ... some pointer with range X ...
+2: r6 = ... unbound scalar ID=a ...
+3: r7 = ... unbound scalar ID=b ...
+4: if (r6 > r7) goto +1
+5: r6 = r7
+6: if (r6 > X) goto ...
+--- checkpoint ---
+7: r9 += r7
+8: *(u64 *)r9 = Y
 
-At the beginning of the processing of each state, ensure that if a
-register with a scalar ID is marked as precise, all registers sharing
-this ID are also marked as precise.
+This example is unsafe because not all execution paths verify r7 range.
+Because of the jump at (4) the verifier would arrive at (6) in two states:
+I.  r6{.id=b}, r7{.id=b} via path 1-6;
+II. r6{.id=a}, r7{.id=b} via path 1-4, 6.
 
-This property would be used by a follow-up change in regsafe().
+Currently regsafe() does not call check_ids() for scalar registers,
+thus from POV of regsafe() states (I) and (II) are identical. If the
+path 1-6 is taken by verifier first, and checkpoint is created at (6)
+the path [1-4, 6] would be considered safe.
 
+Changes in this commit:
+- check_ids() is modified to disallow mapping multiple old_id to the
+  same cur_id.
+- check_scalar_ids() is added, unlike check_ids() it treats ID zero as
+  a unique scalar ID.
+- check_scalar_ids() needs to generate temporary unique IDs, field
+  'tmp_id_gen' is added to bpf_verifier_env::idmap_scratch to
+  facilitate this.
+- regsafe() is updated to:
+  - use check_scalar_ids() for precise scalar registers.
+  - compare scalar registers using memcmp only for explore_alu_limits
+    branch. This simplifies control flow for scalar case, and has no
+    measurable performance impact.
+- check_alu_op() is updated to avoid generating bpf_reg_state::id for
+  constant scalar values when processing BPF_MOV. ID is needed to
+  propagate range information for identical values, but there is
+  nothing to propagate for constants.
+
+Fixes: 75748837b7e5 ("bpf: Propagate scalar ranges through register assignments.")
 Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
 Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20230613153824.3324830-2-eddyz87@gmail.com
-Stable-dep-of: 1ffc85d9298e ("bpf: Verify scalar ids mapping in regsafe() using check_ids()")
+Link: https://lore.kernel.org/bpf/20230613153824.3324830-4-eddyz87@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf_verifier.h                  |  10 +-
- kernel/bpf/verifier.c                         | 115 ++++++++++++++++++
- .../testing/selftests/bpf/verifier/precise.c  |   8 +-
- 3 files changed, 128 insertions(+), 5 deletions(-)
+ include/linux/bpf_verifier.h | 17 ++++---
+ kernel/bpf/verifier.c        | 91 +++++++++++++++++++++++++++---------
+ 2 files changed, 79 insertions(+), 29 deletions(-)
 
 diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
-index 5b11a3b0fec0b..22fb13c738a9a 100644
+index 22fb13c738a9a..f70f9ac884d24 100644
 --- a/include/linux/bpf_verifier.h
 +++ b/include/linux/bpf_verifier.h
-@@ -557,6 +557,11 @@ struct backtrack_state {
+@@ -313,11 +313,6 @@ struct bpf_idx_pair {
+ 	u32 idx;
+ };
+ 
+-struct bpf_id_pair {
+-	u32 old;
+-	u32 cur;
+-};
+-
+ #define MAX_CALL_FRAMES 8
+ /* Maximum number of register states that can exist at once */
+ #define BPF_ID_MAP_SIZE ((MAX_BPF_REG + MAX_BPF_STACK / BPF_REG_SIZE) * MAX_CALL_FRAMES)
+@@ -557,6 +552,16 @@ struct backtrack_state {
  	u64 stack_masks[MAX_CALL_FRAMES];
  };
  
-+struct bpf_idset {
-+	u32 count;
-+	u32 ids[BPF_ID_MAP_SIZE];
++struct bpf_id_pair {
++	u32 old;
++	u32 cur;
 +};
 +
- /* single container for all structs
-  * one verifier_env per bpf_check() call
-  */
-@@ -588,7 +593,10 @@ struct bpf_verifier_env {
- 	const struct bpf_line_info *prev_linfo;
++struct bpf_idmap {
++	u32 tmp_id_gen;
++	struct bpf_id_pair map[BPF_ID_MAP_SIZE];
++};
++
+ struct bpf_idset {
+ 	u32 count;
+ 	u32 ids[BPF_ID_MAP_SIZE];
+@@ -594,7 +599,7 @@ struct bpf_verifier_env {
  	struct bpf_verifier_log log;
  	struct bpf_subprog_info subprog_info[BPF_MAX_SUBPROGS + 1];
--	struct bpf_id_pair idmap_scratch[BPF_ID_MAP_SIZE];
-+	union {
-+		struct bpf_id_pair idmap_scratch[BPF_ID_MAP_SIZE];
-+		struct bpf_idset idset_scratch;
-+	};
+ 	union {
+-		struct bpf_id_pair idmap_scratch[BPF_ID_MAP_SIZE];
++		struct bpf_idmap idmap_scratch;
+ 		struct bpf_idset idset_scratch;
+ 	};
  	struct {
- 		int *insn_state;
- 		int *insn_stack;
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 8e4ccbc0ae604..70056b7d5960c 100644
+index 70056b7d5960c..30fabae47a07b 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -3603,6 +3603,96 @@ static void mark_all_scalars_imprecise(struct bpf_verifier_env *env, struct bpf_
+@@ -12718,12 +12718,14 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
+ 		if (BPF_SRC(insn->code) == BPF_X) {
+ 			struct bpf_reg_state *src_reg = regs + insn->src_reg;
+ 			struct bpf_reg_state *dst_reg = regs + insn->dst_reg;
++			bool need_id = src_reg->type == SCALAR_VALUE && !src_reg->id &&
++				       !tnum_is_const(src_reg->var_off);
+ 
+ 			if (BPF_CLASS(insn->code) == BPF_ALU64) {
+ 				/* case: R1 = R2
+ 				 * copy register state to dest reg
+ 				 */
+-				if (src_reg->type == SCALAR_VALUE && !src_reg->id)
++				if (need_id)
+ 					/* Assign src and dst registers the same ID
+ 					 * that will be used by find_equal_scalars()
+ 					 * to propagate min/max range.
+@@ -12742,7 +12744,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
+ 				} else if (src_reg->type == SCALAR_VALUE) {
+ 					bool is_src_reg_u32 = src_reg->umax_value <= U32_MAX;
+ 
+-					if (is_src_reg_u32 && !src_reg->id)
++					if (is_src_reg_u32 && need_id)
+ 						src_reg->id = ++env->id_gen;
+ 					copy_register_state(dst_reg, src_reg);
+ 					/* Make sure ID is cleared if src_reg is not in u32 range otherwise
+@@ -14898,8 +14900,9 @@ static bool range_within(struct bpf_reg_state *old,
+  * So we look through our idmap to see if this old id has been seen before.  If
+  * so, we require the new id to match; otherwise, we add the id pair to the map.
+  */
+-static bool check_ids(u32 old_id, u32 cur_id, struct bpf_id_pair *idmap)
++static bool check_ids(u32 old_id, u32 cur_id, struct bpf_idmap *idmap)
+ {
++	struct bpf_id_pair *map = idmap->map;
+ 	unsigned int i;
+ 
+ 	/* either both IDs should be set or both should be zero */
+@@ -14910,20 +14913,34 @@ static bool check_ids(u32 old_id, u32 cur_id, struct bpf_id_pair *idmap)
+ 		return true;
+ 
+ 	for (i = 0; i < BPF_ID_MAP_SIZE; i++) {
+-		if (!idmap[i].old) {
++		if (!map[i].old) {
+ 			/* Reached an empty slot; haven't seen this id before */
+-			idmap[i].old = old_id;
+-			idmap[i].cur = cur_id;
++			map[i].old = old_id;
++			map[i].cur = cur_id;
+ 			return true;
+ 		}
+-		if (idmap[i].old == old_id)
+-			return idmap[i].cur == cur_id;
++		if (map[i].old == old_id)
++			return map[i].cur == cur_id;
++		if (map[i].cur == cur_id)
++			return false;
  	}
+ 	/* We ran out of idmap slots, which should be impossible */
+ 	WARN_ON_ONCE(1);
+ 	return false;
  }
  
-+static bool idset_contains(struct bpf_idset *s, u32 id)
-+{
-+	u32 i;
-+
-+	for (i = 0; i < s->count; ++i)
-+		if (s->ids[i] == id)
-+			return true;
-+
-+	return false;
-+}
-+
-+static int idset_push(struct bpf_idset *s, u32 id)
-+{
-+	if (WARN_ON_ONCE(s->count >= ARRAY_SIZE(s->ids)))
-+		return -EFAULT;
-+	s->ids[s->count++] = id;
-+	return 0;
-+}
-+
-+static void idset_reset(struct bpf_idset *s)
-+{
-+	s->count = 0;
-+}
-+
-+/* Collect a set of IDs for all registers currently marked as precise in env->bt.
-+ * Mark all registers with these IDs as precise.
++/* Similar to check_ids(), but allocate a unique temporary ID
++ * for 'old_id' or 'cur_id' of zero.
++ * This makes pairs like '0 vs unique ID', 'unique ID vs 0' valid.
 + */
-+static int mark_precise_scalar_ids(struct bpf_verifier_env *env, struct bpf_verifier_state *st)
++static bool check_scalar_ids(u32 old_id, u32 cur_id, struct bpf_idmap *idmap)
 +{
-+	struct bpf_idset *precise_ids = &env->idset_scratch;
-+	struct backtrack_state *bt = &env->bt;
-+	struct bpf_func_state *func;
-+	struct bpf_reg_state *reg;
-+	DECLARE_BITMAP(mask, 64);
-+	int i, fr;
++	old_id = old_id ? old_id : ++idmap->tmp_id_gen;
++	cur_id = cur_id ? cur_id : ++idmap->tmp_id_gen;
 +
-+	idset_reset(precise_ids);
-+
-+	for (fr = bt->frame; fr >= 0; fr--) {
-+		func = st->frame[fr];
-+
-+		bitmap_from_u64(mask, bt_frame_reg_mask(bt, fr));
-+		for_each_set_bit(i, mask, 32) {
-+			reg = &func->regs[i];
-+			if (!reg->id || reg->type != SCALAR_VALUE)
-+				continue;
-+			if (idset_push(precise_ids, reg->id))
-+				return -EFAULT;
-+		}
-+
-+		bitmap_from_u64(mask, bt_frame_stack_mask(bt, fr));
-+		for_each_set_bit(i, mask, 64) {
-+			if (i >= func->allocated_stack / BPF_REG_SIZE)
-+				break;
-+			if (!is_spilled_scalar_reg(&func->stack[i]))
-+				continue;
-+			reg = &func->stack[i].spilled_ptr;
-+			if (!reg->id)
-+				continue;
-+			if (idset_push(precise_ids, reg->id))
-+				return -EFAULT;
-+		}
-+	}
-+
-+	for (fr = 0; fr <= st->curframe; ++fr) {
-+		func = st->frame[fr];
-+
-+		for (i = BPF_REG_0; i < BPF_REG_10; ++i) {
-+			reg = &func->regs[i];
-+			if (!reg->id)
-+				continue;
-+			if (!idset_contains(precise_ids, reg->id))
-+				continue;
-+			bt_set_frame_reg(bt, fr, i);
-+		}
-+		for (i = 0; i < func->allocated_stack / BPF_REG_SIZE; ++i) {
-+			if (!is_spilled_scalar_reg(&func->stack[i]))
-+				continue;
-+			reg = &func->stack[i].spilled_ptr;
-+			if (!reg->id)
-+				continue;
-+			if (!idset_contains(precise_ids, reg->id))
-+				continue;
-+			bt_set_frame_slot(bt, fr, i);
-+		}
-+	}
-+
-+	return 0;
++	return check_ids(old_id, cur_id, idmap);
 +}
 +
- /*
-  * __mark_chain_precision() backtracks BPF program instruction sequence and
-  * chain of verifier states making sure that register *regno* (if regno >= 0)
-@@ -3733,6 +3823,31 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno)
- 				bt->frame, last_idx, first_idx);
- 		}
+ static void clean_func_state(struct bpf_verifier_env *env,
+ 			     struct bpf_func_state *st)
+ {
+@@ -15022,7 +15039,7 @@ static void clean_live_states(struct bpf_verifier_env *env, int insn,
  
-+		/* If some register with scalar ID is marked as precise,
-+		 * make sure that all registers sharing this ID are also precise.
-+		 * This is needed to estimate effect of find_equal_scalars().
-+		 * Do this at the last instruction of each state,
-+		 * bpf_reg_state::id fields are valid for these instructions.
+ static bool regs_exact(const struct bpf_reg_state *rold,
+ 		       const struct bpf_reg_state *rcur,
+-		       struct bpf_id_pair *idmap)
++		       struct bpf_idmap *idmap)
+ {
+ 	return memcmp(rold, rcur, offsetof(struct bpf_reg_state, id)) == 0 &&
+ 	       check_ids(rold->id, rcur->id, idmap) &&
+@@ -15031,7 +15048,7 @@ static bool regs_exact(const struct bpf_reg_state *rold,
+ 
+ /* Returns true if (rold safe implies rcur safe) */
+ static bool regsafe(struct bpf_verifier_env *env, struct bpf_reg_state *rold,
+-		    struct bpf_reg_state *rcur, struct bpf_id_pair *idmap)
++		    struct bpf_reg_state *rcur, struct bpf_idmap *idmap)
+ {
+ 	if (!(rold->live & REG_LIVE_READ))
+ 		/* explored state didn't use this */
+@@ -15068,15 +15085,42 @@ static bool regsafe(struct bpf_verifier_env *env, struct bpf_reg_state *rold,
+ 
+ 	switch (base_type(rold->type)) {
+ 	case SCALAR_VALUE:
+-		if (regs_exact(rold, rcur, idmap))
+-			return true;
+-		if (env->explore_alu_limits)
+-			return false;
++		if (env->explore_alu_limits) {
++			/* explore_alu_limits disables tnum_in() and range_within()
++			 * logic and requires everything to be strict
++			 */
++			return memcmp(rold, rcur, offsetof(struct bpf_reg_state, id)) == 0 &&
++			       check_scalar_ids(rold->id, rcur->id, idmap);
++		}
+ 		if (!rold->precise)
+ 			return true;
+-		/* new val must satisfy old val knowledge */
++		/* Why check_ids() for scalar registers?
 +		 *
-+		 * Allows to track precision in situation like below:
++		 * Consider the following BPF code:
++		 *   1: r6 = ... unbound scalar, ID=a ...
++		 *   2: r7 = ... unbound scalar, ID=b ...
++		 *   3: if (r6 > r7) goto +1
++		 *   4: r6 = r7
++		 *   5: if (r6 > X) goto ...
++		 *   6: ... memory operation using r7 ...
 +		 *
-+		 *     r2 = unknown value
-+		 *     ...
-+		 *   --- state #0 ---
-+		 *     ...
-+		 *     r1 = r2                 // r1 and r2 now share the same ID
-+		 *     ...
-+		 *   --- state #1 {r1.id = A, r2.id = A} ---
-+		 *     ...
-+		 *     if (r2 > 10) goto exit; // find_equal_scalars() assigns range to r1
-+		 *     ...
-+		 *   --- state #2 {r1.id = A, r2.id = A} ---
-+		 *     r3 = r10
-+		 *     r3 += r1                // need to mark both r1 and r2
++		 * First verification path is [1-6]:
++		 * - at (4) same bpf_reg_state::id (b) would be assigned to r6 and r7;
++		 * - at (5) r6 would be marked <= X, find_equal_scalars() would also mark
++		 *   r7 <= X, because r6 and r7 share same id.
++		 * Next verification path is [1-4, 6].
++		 *
++		 * Instruction (6) would be reached in two states:
++		 *   I.  r6{.id=b}, r7{.id=b} via path 1-6;
++		 *   II. r6{.id=a}, r7{.id=b} via path 1-4, 6.
++		 *
++		 * Use check_ids() to distinguish these states.
++		 * ---
++		 * Also verify that new value satisfies old value range knowledge.
 +		 */
-+		if (mark_precise_scalar_ids(env, st))
-+			return -EFAULT;
-+
- 		if (last_idx < 0) {
- 			/* we are at the entry into subprog, which
- 			 * is expected for global funcs, but only if
-diff --git a/tools/testing/selftests/bpf/verifier/precise.c b/tools/testing/selftests/bpf/verifier/precise.c
-index a928c53432999..ac5eeea094683 100644
---- a/tools/testing/selftests/bpf/verifier/precise.c
-+++ b/tools/testing/selftests/bpf/verifier/precise.c
-@@ -46,7 +46,7 @@
- 	mark_precise: frame0: regs=r2 stack= before 20\
- 	mark_precise: frame0: parent state regs=r2 stack=:\
- 	mark_precise: frame0: last_idx 19 first_idx 10\
--	mark_precise: frame0: regs=r2 stack= before 19\
-+	mark_precise: frame0: regs=r2,r9 stack= before 19\
- 	mark_precise: frame0: regs=r9 stack= before 18\
- 	mark_precise: frame0: regs=r8,r9 stack= before 17\
- 	mark_precise: frame0: regs=r0,r9 stack= before 15\
-@@ -106,10 +106,10 @@
- 	mark_precise: frame0: regs=r2 stack= before 22\
- 	mark_precise: frame0: parent state regs=r2 stack=:\
- 	mark_precise: frame0: last_idx 20 first_idx 20\
--	mark_precise: frame0: regs=r2 stack= before 20\
--	mark_precise: frame0: parent state regs=r2 stack=:\
-+	mark_precise: frame0: regs=r2,r9 stack= before 20\
-+	mark_precise: frame0: parent state regs=r2,r9 stack=:\
- 	mark_precise: frame0: last_idx 19 first_idx 17\
--	mark_precise: frame0: regs=r2 stack= before 19\
-+	mark_precise: frame0: regs=r2,r9 stack= before 19\
- 	mark_precise: frame0: regs=r9 stack= before 18\
- 	mark_precise: frame0: regs=r8,r9 stack= before 17\
- 	mark_precise: frame0: parent state regs= stack=:",
+ 		return range_within(rold, rcur) &&
+-		       tnum_in(rold->var_off, rcur->var_off);
++		       tnum_in(rold->var_off, rcur->var_off) &&
++		       check_scalar_ids(rold->id, rcur->id, idmap);
+ 	case PTR_TO_MAP_KEY:
+ 	case PTR_TO_MAP_VALUE:
+ 	case PTR_TO_MEM:
+@@ -15122,7 +15166,7 @@ static bool regsafe(struct bpf_verifier_env *env, struct bpf_reg_state *rold,
+ }
+ 
+ static bool stacksafe(struct bpf_verifier_env *env, struct bpf_func_state *old,
+-		      struct bpf_func_state *cur, struct bpf_id_pair *idmap)
++		      struct bpf_func_state *cur, struct bpf_idmap *idmap)
+ {
+ 	int i, spi;
+ 
+@@ -15225,7 +15269,7 @@ static bool stacksafe(struct bpf_verifier_env *env, struct bpf_func_state *old,
+ }
+ 
+ static bool refsafe(struct bpf_func_state *old, struct bpf_func_state *cur,
+-		    struct bpf_id_pair *idmap)
++		    struct bpf_idmap *idmap)
+ {
+ 	int i;
+ 
+@@ -15273,13 +15317,13 @@ static bool func_states_equal(struct bpf_verifier_env *env, struct bpf_func_stat
+ 
+ 	for (i = 0; i < MAX_BPF_REG; i++)
+ 		if (!regsafe(env, &old->regs[i], &cur->regs[i],
+-			     env->idmap_scratch))
++			     &env->idmap_scratch))
+ 			return false;
+ 
+-	if (!stacksafe(env, old, cur, env->idmap_scratch))
++	if (!stacksafe(env, old, cur, &env->idmap_scratch))
+ 		return false;
+ 
+-	if (!refsafe(old, cur, env->idmap_scratch))
++	if (!refsafe(old, cur, &env->idmap_scratch))
+ 		return false;
+ 
+ 	return true;
+@@ -15294,7 +15338,8 @@ static bool states_equal(struct bpf_verifier_env *env,
+ 	if (old->curframe != cur->curframe)
+ 		return false;
+ 
+-	memset(env->idmap_scratch, 0, sizeof(env->idmap_scratch));
++	env->idmap_scratch.tmp_id_gen = env->id_gen;
++	memset(&env->idmap_scratch.map, 0, sizeof(env->idmap_scratch.map));
+ 
+ 	/* Verification state from speculative execution simulation
+ 	 * must never prune a non-speculative execution one.
+@@ -15312,7 +15357,7 @@ static bool states_equal(struct bpf_verifier_env *env,
+ 		return false;
+ 
+ 	if (old->active_lock.id &&
+-	    !check_ids(old->active_lock.id, cur->active_lock.id, env->idmap_scratch))
++	    !check_ids(old->active_lock.id, cur->active_lock.id, &env->idmap_scratch))
+ 		return false;
+ 
+ 	if (old->active_rcu_lock != cur->active_rcu_lock)
 -- 
 2.39.2
 
