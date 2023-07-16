@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8B88F6D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:24:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67C2C433C8;
-	Sun, 16 Jul 2023 20:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B7F8F6D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:24:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E03C433C8;
+	Sun, 16 Jul 2023 20:24:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539044;
-	bh=2ISJhy1RPwVrHQ5L+W5GHrJMWJ5qw92udeM5B/UO4wY=;
+	s=korg; t=1689539047;
+	bh=+oiNfMe20yn5AQbcMXrRJa2L2IPU8mEqSlpz6Sv9gu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xq7Ey8izkZklCzfXCr7LQhgV1B2md/zQD9LHSKLu83sUDkd9h+go3kHLy0NGacvCm
-	 Xso18lgS1K27IorfdXGYa/ye6njTDd4/C0cWHCfKsTvRntvI60aHT7v8pKANoTOQyZ
-	 WHzy53HjhBoOHVuVLLd76xLg+USyyPLcDFpFf1H4=
+	b=NrbWNRCsAXVVYMsO0eWnHEXdzGmhrjI8+0Qrk0PjKpiNr0WpT2xd96W+k3BLc9d8Z
+	 VUwaud0NeDTOhm40oaOXYtuzIVcNzq2YMpoQjsoPRdC+EAgu1ATYL4jYW0cFA9nZLA
+	 2tPJuFtg65Hkh0jagwsHzq53/8l8z7yl5tqpZ1Q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 668/800] net: dsa: felix: dont drop PTP frames with tag_8021q when RX timestamping is disabled
-Date: Sun, 16 Jul 2023 21:48:41 +0200
-Message-ID: <20230716195004.627556754@linuxfoundation.org>
+Subject: [PATCH 6.4 669/800] net: dsa: sja1105: always enable the INCL_SRCPT option
+Date: Sun, 16 Jul 2023 21:48:42 +0200
+Message-ID: <20230716195004.655033520@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,66 +38,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 2edcfcbb3c5946609be1d8875473a240b170673b ]
+[ Upstream commit b4638af8885af93cd70351081da1909c59342440 ]
 
-The driver implements a workaround for the fact that it doesn't have an
-IRQ source to tell it whether PTP frames are available through the
-extraction registers, for those frames to be processed and passed
-towards the network stack. That workaround is to configure the switch,
-through felix_hwtstamp_set() -> felix_update_trapping_destinations(),
-to create two copies of PTP packets: one sent over Ethernet to the DSA
-master, and one to be consumed through the aforementioned CPU extraction
-queue registers.
+Link-local traffic on bridged SJA1105 ports is sometimes tagged by the
+hardware with source port information (when the port is under a VLAN
+aware bridge).
 
-The reason why we want PTP packets to be consumed through the CPU
-extraction registers in the first place is because we want to see their
-hardware RX timestamp. With tag_8021q, that is only visible that way,
-and it isn't visible with the copy of the packet that's transmitted over
-Ethernet.
+The tag_8021q source port identification has become more loose
+("imprecise") and will report a plausible rather than exact bridge port,
+when under a bridge (be it VLAN-aware or VLAN-unaware). But link-local
+traffic always needs to know the precise source port.
 
-The problem with the workaround implementation is that it drops the
-packet received over Ethernet, in expectation of its copy being present
-in the CPU extraction registers. However, if felix_hwtstamp_set() hasn't
-run (aka PTP RX timestamping is disabled), the driver will drop the
-original PTP frame and there will be no copy of it in the CPU extraction
-registers. So, the network stack will simply not see any PTP frame.
+Modify the driver logic (and therefore: the tagging protocol itself) to
+always include the source port information with link-local packets,
+regardless of whether the port is standalone, under a VLAN-aware or
+VLAN-unaware bridge. This makes it possible for the tagging driver to
+give priority to that information over the tag_8021q VLAN header.
 
-Look at the port's trapping configuration to see whether the driver has
-previously enabled the CPU extraction registers. If it hasn't, just
-don't RX timestamp the frame and let it be passed up the stack by DSA,
-which is perfectly fine.
+The big drawback with INCL_SRCPT is that it makes it impossible to
+distinguish between an original MAC DA of 01:80:C2:XX:YY:ZZ and
+01:80:C2:AA:BB:ZZ, because the tagger just patches MAC DA bytes 3 and 4
+with zeroes. Only if PTP RX timestamping is enabled, the switch will
+generate a META follow-up frame containing the RX timestamp and the
+original bytes 3 and 4 of the MAC DA. Those will be used to patch up the
+original packet. Nonetheless, in the absence of PTP RX timestamping, we
+have to live with this limitation, since it is more important to have
+the more precise source port information for link-local traffic.
 
-Fixes: 0a6f17c6ae21 ("net: dsa: tag_ocelot_8021q: add support for PTP timestamping")
+Fixes: d7f9787a763f ("net: dsa: tag_8021q: add support for imprecise RX based on the VBID")
+Fixes: 91495f21fcec ("net: dsa: tag_8021q: replace the SVL bridging with VLAN-unaware IVL bridging")
 Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/ocelot/felix.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/dsa/sja1105/sja1105_main.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/dsa/ocelot/felix.c b/drivers/net/dsa/ocelot/felix.c
-index 80861ac090ae3..70c0e2b1936b3 100644
---- a/drivers/net/dsa/ocelot/felix.c
-+++ b/drivers/net/dsa/ocelot/felix.c
-@@ -1725,6 +1725,18 @@ static bool felix_rxtstamp(struct dsa_switch *ds, int port,
- 	u32 tstamp_hi;
- 	u64 tstamp;
+diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
+index b70dcf32a26dc..8bd61f2ebb2ad 100644
+--- a/drivers/net/dsa/sja1105/sja1105_main.c
++++ b/drivers/net/dsa/sja1105/sja1105_main.c
+@@ -866,11 +866,11 @@ static int sja1105_init_general_params(struct sja1105_private *priv)
+ 		.hostprio = 7,
+ 		.mac_fltres1 = SJA1105_LINKLOCAL_FILTER_A,
+ 		.mac_flt1    = SJA1105_LINKLOCAL_FILTER_A_MASK,
+-		.incl_srcpt1 = false,
++		.incl_srcpt1 = true,
+ 		.send_meta1  = false,
+ 		.mac_fltres0 = SJA1105_LINKLOCAL_FILTER_B,
+ 		.mac_flt0    = SJA1105_LINKLOCAL_FILTER_B_MASK,
+-		.incl_srcpt0 = false,
++		.incl_srcpt0 = true,
+ 		.send_meta0  = false,
+ 		/* Default to an invalid value */
+ 		.mirr_port = priv->ds->num_ports,
+@@ -2407,11 +2407,6 @@ int sja1105_vlan_filtering(struct dsa_switch *ds, int port, bool enabled,
+ 	general_params->tpid = tpid;
+ 	/* EtherType used to identify outer tagged (S-tag) VLAN traffic */
+ 	general_params->tpid2 = tpid2;
+-	/* When VLAN filtering is on, we need to at least be able to
+-	 * decode management traffic through the "backup plan".
+-	 */
+-	general_params->incl_srcpt1 = enabled;
+-	general_params->incl_srcpt0 = enabled;
  
-+	switch (type & PTP_CLASS_PMASK) {
-+	case PTP_CLASS_L2:
-+		if (!(ocelot->ports[port]->trap_proto & OCELOT_PROTO_PTP_L2))
-+			return false;
-+		break;
-+	case PTP_CLASS_IPV4:
-+	case PTP_CLASS_IPV6:
-+		if (!(ocelot->ports[port]->trap_proto & OCELOT_PROTO_PTP_L4))
-+			return false;
-+		break;
-+	}
-+
- 	/* If the "no XTR IRQ" workaround is in use, tell DSA to defer this skb
- 	 * for RX timestamping. Then free it, and poll for its copy through
- 	 * MMIO in the CPU port module, and inject that into the stack from
+ 	for (port = 0; port < ds->num_ports; port++) {
+ 		if (dsa_is_unused_port(ds, port))
 -- 
 2.39.2
 
