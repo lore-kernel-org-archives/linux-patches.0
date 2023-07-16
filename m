@@ -1,36 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34AB48F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:53:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77CABC433C8;
-	Sun, 16 Jul 2023 19:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A1D8F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:53:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746C2C433C8;
+	Sun, 16 Jul 2023 19:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537218;
-	bh=K5rHq1LfKc4VZBVAHSnPR42oWNHNTxIJfGEJlkEBi4Y=;
+	s=korg; t=1689537220;
+	bh=shx8iCj00+VawBYC+dQ3NqKn3KpJEfSvXQCLIhZa2Lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WlTeRr3nQnyKkp6WCG8HyBdjR4h29WNNlwSta4f1Cv3798vWcznKPgqckh5Oa+VqS
-	 HIJi3AgJQpAQk4zah9chWfRQAPPPAZ/0c5Hpwjhf8nZSYOv7k1JbqAfGTM1a4jm5Td
-	 MzGmapLYg8XK0CRjzryjo0oIW843j5w9/eMZm7EQ=
+	b=lfk58AgbspVh3hvPDkG1vlN+K7BI8T48GPnJ/PLWMEcK176qrPHmAzP4xqLGYsPta
+	 QDiWVBhVPZF0usat1R+B0Md+SnlJRcvtsHgPQYBgFfj0XS0qJpnE0tzXAoY5VMrTNP
+	 lFL5Xhg1W98E4bCQXLaGrIkfboqaua9r2IL3NfNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Christian Brauner <brauner@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	David Hildenbrand <david@redhat.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	linux-mm@kvack.org,
-	linux-block@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Yue Hu <huyue2@coolpad.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 018/800] splice: Fix filemap_splice_read() to use the correct inode
-Date: Sun, 16 Jul 2023 21:37:51 +0200
-Message-ID: <20230716194949.527681049@linuxfoundation.org>
+Subject: [PATCH 6.4 019/800] erofs: kill hooked chains to avoid loops on deduplicated compressed images
+Date: Sun, 16 Jul 2023 21:37:52 +0200
+Message-ID: <20230716194949.550932814@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -44,56 +35,221 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit c37222082f23c456664d1c3182a714670ab8f9a4 ]
+[ Upstream commit 967c28b23f6c89bb8eef6a046ea88afe0d7c1029 ]
 
-Fix filemap_splice_read() to use file->f_mapping->host, not file->f_inode,
-as the source of the file size because in the case of a block device,
-file->f_inode points to the block-special file (which is typically 0
-length) and not the backing store.
+After heavily stressing EROFS with several images which include a
+hand-crafted image of repeated patterns for more than 46 days, I found
+two chains could be linked with each other almost simultaneously and
+form a loop so that the entire loop won't be submitted.  As a
+consequence, the corresponding file pages will remain locked forever.
 
-Fixes: 07073eb01c5f ("splice: Add a func to do a splice from a buffered file without ITER_PIPE")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-cc: Steve French <stfrench@microsoft.com>
-cc: Jens Axboe <axboe@kernel.dk>
-cc: Al Viro <viro@zeniv.linux.org.uk>
-cc: David Hildenbrand <david@redhat.com>
-cc: John Hubbard <jhubbard@nvidia.com>
-cc: linux-mm@kvack.org
-cc: linux-block@vger.kernel.org
-cc: linux-fsdevel@vger.kernel.org
-Link: https://lore.kernel.org/r/20230522135018.2742245-2-dhowells@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+It can be _only_ observed on data-deduplicated compressed images.
+For example, consider two chains with five pclusters in total:
+	Chain 1:  2->3->4->5    -- The tail pcluster is 5;
+        Chain 2:  5->1->2       -- The tail pcluster is 2.
+
+Chain 2 could link to Chain 1 with pcluster 5; and Chain 1 could link
+to Chain 2 at the same time with pcluster 2.
+
+Since hooked chains are all linked locklessly now, I have no idea how
+to simply avoid the race.  Instead, let's avoid hooked chains completely
+until I could work out a proper way to fix this and end users finally
+tell us that it's needed to add it back.
+
+Actually, this optimization can be found with multi-threaded workloads
+(especially even more often on deduplicated compressed images), yet I'm
+not sure about the overall system impacts of not having this compared
+with implementation complexity.
+
+Fixes: 267f2492c8f7 ("erofs: introduce multi-reference pclusters (fully-referenced)")
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Yue Hu <huyue2@coolpad.com>
+Link: https://lore.kernel.org/r/20230526201459.128169-4-hsiangkao@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/filemap.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/erofs/zdata.c | 72 ++++++++----------------------------------------
+ 1 file changed, 11 insertions(+), 61 deletions(-)
 
-diff --git a/mm/filemap.c b/mm/filemap.c
-index 83dda76d1fc36..8abce63b259c9 100644
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -2906,7 +2906,7 @@ ssize_t filemap_splice_read(struct file *in, loff_t *ppos,
- 	do {
- 		cond_resched();
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index 160b3da43aecd..502893e3da010 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -94,11 +94,8 @@ struct z_erofs_pcluster {
  
--		if (*ppos >= i_size_read(file_inode(in)))
-+		if (*ppos >= i_size_read(in->f_mapping->host))
- 			break;
+ /* let's avoid the valid 32-bit kernel addresses */
  
- 		iocb.ki_pos = *ppos;
-@@ -2922,7 +2922,7 @@ ssize_t filemap_splice_read(struct file *in, loff_t *ppos,
- 		 * part of the page is not copied back to userspace (unless
- 		 * another truncate extends the file - this is desired though).
- 		 */
--		isize = i_size_read(file_inode(in));
-+		isize = i_size_read(in->f_mapping->host);
- 		if (unlikely(*ppos >= isize))
- 			break;
- 		end_offset = min_t(loff_t, isize, *ppos + len);
+-/* the chained workgroup has't submitted io (still open) */
++/* the end of a chain of pclusters */
+ #define Z_EROFS_PCLUSTER_TAIL           ((void *)0x5F0ECAFE)
+-/* the chained workgroup has already submitted io */
+-#define Z_EROFS_PCLUSTER_TAIL_CLOSED    ((void *)0x5F0EDEAD)
+-
+ #define Z_EROFS_PCLUSTER_NIL            (NULL)
+ 
+ struct z_erofs_decompressqueue {
+@@ -499,20 +496,6 @@ int __init z_erofs_init_zip_subsystem(void)
+ 
+ enum z_erofs_pclustermode {
+ 	Z_EROFS_PCLUSTER_INFLIGHT,
+-	/*
+-	 * The current pclusters was the tail of an exist chain, in addition
+-	 * that the previous processed chained pclusters are all decided to
+-	 * be hooked up to it.
+-	 * A new chain will be created for the remaining pclusters which are
+-	 * not processed yet, so different from Z_EROFS_PCLUSTER_FOLLOWED,
+-	 * the next pcluster cannot reuse the whole page safely for inplace I/O
+-	 * in the following scenario:
+-	 *  ________________________________________________________________
+-	 * |      tail (partial) page     |       head (partial) page       |
+-	 * |   (belongs to the next pcl)  |   (belongs to the current pcl)  |
+-	 * |_______PCLUSTER_FOLLOWED______|________PCLUSTER_HOOKED__________|
+-	 */
+-	Z_EROFS_PCLUSTER_HOOKED,
+ 	/*
+ 	 * a weak form of Z_EROFS_PCLUSTER_FOLLOWED, the difference is that it
+ 	 * could be dispatched into bypass queue later due to uptodated managed
+@@ -530,8 +513,8 @@ enum z_erofs_pclustermode {
+ 	 *  ________________________________________________________________
+ 	 * |  tail (partial) page |          head (partial) page           |
+ 	 * |  (of the current cl) |      (of the previous collection)      |
+-	 * | PCLUSTER_FOLLOWED or |                                        |
+-	 * |_____PCLUSTER_HOOKED__|___________PCLUSTER_FOLLOWED____________|
++	 * |                      |                                        |
++	 * |__PCLUSTER_FOLLOWED___|___________PCLUSTER_FOLLOWED____________|
+ 	 *
+ 	 * [  (*) the above page can be used as inplace I/O.               ]
+ 	 */
+@@ -544,7 +527,7 @@ struct z_erofs_decompress_frontend {
+ 	struct z_erofs_bvec_iter biter;
+ 
+ 	struct page *candidate_bvpage;
+-	struct z_erofs_pcluster *pcl, *tailpcl;
++	struct z_erofs_pcluster *pcl;
+ 	z_erofs_next_pcluster_t owned_head;
+ 	enum z_erofs_pclustermode mode;
+ 
+@@ -750,19 +733,7 @@ static void z_erofs_try_to_claim_pcluster(struct z_erofs_decompress_frontend *f)
+ 		return;
+ 	}
+ 
+-	/*
+-	 * type 2, link to the end of an existing open chain, be careful
+-	 * that its submission is controlled by the original attached chain.
+-	 */
+-	if (*owned_head != &pcl->next && pcl != f->tailpcl &&
+-	    cmpxchg(&pcl->next, Z_EROFS_PCLUSTER_TAIL,
+-		    *owned_head) == Z_EROFS_PCLUSTER_TAIL) {
+-		*owned_head = Z_EROFS_PCLUSTER_TAIL;
+-		f->mode = Z_EROFS_PCLUSTER_HOOKED;
+-		f->tailpcl = NULL;
+-		return;
+-	}
+-	/* type 3, it belongs to a chain, but it isn't the end of the chain */
++	/* type 2, it belongs to an ongoing chain */
+ 	f->mode = Z_EROFS_PCLUSTER_INFLIGHT;
+ }
+ 
+@@ -823,9 +794,6 @@ static int z_erofs_register_pcluster(struct z_erofs_decompress_frontend *fe)
+ 			goto err_out;
+ 		}
+ 	}
+-	/* used to check tail merging loop due to corrupted images */
+-	if (fe->owned_head == Z_EROFS_PCLUSTER_TAIL)
+-		fe->tailpcl = pcl;
+ 	fe->owned_head = &pcl->next;
+ 	fe->pcl = pcl;
+ 	return 0;
+@@ -846,7 +814,6 @@ static int z_erofs_collector_begin(struct z_erofs_decompress_frontend *fe)
+ 
+ 	/* must be Z_EROFS_PCLUSTER_TAIL or pointed to previous pcluster */
+ 	DBG_BUGON(fe->owned_head == Z_EROFS_PCLUSTER_NIL);
+-	DBG_BUGON(fe->owned_head == Z_EROFS_PCLUSTER_TAIL_CLOSED);
+ 
+ 	if (!(map->m_flags & EROFS_MAP_META)) {
+ 		grp = erofs_find_workgroup(fe->inode->i_sb,
+@@ -865,10 +832,6 @@ static int z_erofs_collector_begin(struct z_erofs_decompress_frontend *fe)
+ 
+ 	if (ret == -EEXIST) {
+ 		mutex_lock(&fe->pcl->lock);
+-		/* used to check tail merging loop due to corrupted images */
+-		if (fe->owned_head == Z_EROFS_PCLUSTER_TAIL)
+-			fe->tailpcl = fe->pcl;
+-
+ 		z_erofs_try_to_claim_pcluster(fe);
+ 	} else if (ret) {
+ 		return ret;
+@@ -1025,8 +988,7 @@ static int z_erofs_do_read_page(struct z_erofs_decompress_frontend *fe,
+ 	 * those chains are handled asynchronously thus the page cannot be used
+ 	 * for inplace I/O or bvpage (should be processed in a strict order.)
+ 	 */
+-	tight &= (fe->mode >= Z_EROFS_PCLUSTER_HOOKED &&
+-		  fe->mode != Z_EROFS_PCLUSTER_FOLLOWED_NOINPLACE);
++	tight &= (fe->mode > Z_EROFS_PCLUSTER_FOLLOWED_NOINPLACE);
+ 
+ 	cur = end - min_t(unsigned int, offset + end - map->m_la, end);
+ 	if (!(map->m_flags & EROFS_MAP_MAPPED)) {
+@@ -1404,10 +1366,7 @@ static void z_erofs_decompress_queue(const struct z_erofs_decompressqueue *io,
+ 	};
+ 	z_erofs_next_pcluster_t owned = io->head;
+ 
+-	while (owned != Z_EROFS_PCLUSTER_TAIL_CLOSED) {
+-		/* impossible that 'owned' equals Z_EROFS_WORK_TPTR_TAIL */
+-		DBG_BUGON(owned == Z_EROFS_PCLUSTER_TAIL);
+-		/* impossible that 'owned' equals Z_EROFS_PCLUSTER_NIL */
++	while (owned != Z_EROFS_PCLUSTER_TAIL) {
+ 		DBG_BUGON(owned == Z_EROFS_PCLUSTER_NIL);
+ 
+ 		be.pcl = container_of(owned, struct z_erofs_pcluster, next);
+@@ -1424,7 +1383,7 @@ static void z_erofs_decompressqueue_work(struct work_struct *work)
+ 		container_of(work, struct z_erofs_decompressqueue, u.work);
+ 	struct page *pagepool = NULL;
+ 
+-	DBG_BUGON(bgq->head == Z_EROFS_PCLUSTER_TAIL_CLOSED);
++	DBG_BUGON(bgq->head == Z_EROFS_PCLUSTER_TAIL);
+ 	z_erofs_decompress_queue(bgq, &pagepool);
+ 	erofs_release_pages(&pagepool);
+ 	kvfree(bgq);
+@@ -1612,7 +1571,7 @@ static struct z_erofs_decompressqueue *jobqueue_init(struct super_block *sb,
+ 		q->sync = true;
+ 	}
+ 	q->sb = sb;
+-	q->head = Z_EROFS_PCLUSTER_TAIL_CLOSED;
++	q->head = Z_EROFS_PCLUSTER_TAIL;
+ 	return q;
+ }
+ 
+@@ -1630,11 +1589,7 @@ static void move_to_bypass_jobqueue(struct z_erofs_pcluster *pcl,
+ 	z_erofs_next_pcluster_t *const submit_qtail = qtail[JQ_SUBMIT];
+ 	z_erofs_next_pcluster_t *const bypass_qtail = qtail[JQ_BYPASS];
+ 
+-	DBG_BUGON(owned_head == Z_EROFS_PCLUSTER_TAIL_CLOSED);
+-	if (owned_head == Z_EROFS_PCLUSTER_TAIL)
+-		owned_head = Z_EROFS_PCLUSTER_TAIL_CLOSED;
+-
+-	WRITE_ONCE(pcl->next, Z_EROFS_PCLUSTER_TAIL_CLOSED);
++	WRITE_ONCE(pcl->next, Z_EROFS_PCLUSTER_TAIL);
+ 
+ 	WRITE_ONCE(*submit_qtail, owned_head);
+ 	WRITE_ONCE(*bypass_qtail, &pcl->next);
+@@ -1705,15 +1660,10 @@ static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
+ 		unsigned int i = 0;
+ 		bool bypass = true;
+ 
+-		/* no possible 'owned_head' equals the following */
+-		DBG_BUGON(owned_head == Z_EROFS_PCLUSTER_TAIL_CLOSED);
+ 		DBG_BUGON(owned_head == Z_EROFS_PCLUSTER_NIL);
+-
+ 		pcl = container_of(owned_head, struct z_erofs_pcluster, next);
++		owned_head = READ_ONCE(pcl->next);
+ 
+-		/* close the main owned chain at first */
+-		owned_head = cmpxchg(&pcl->next, Z_EROFS_PCLUSTER_TAIL,
+-				     Z_EROFS_PCLUSTER_TAIL_CLOSED);
+ 		if (z_erofs_is_inline_pcluster(pcl)) {
+ 			move_to_bypass_jobqueue(pcl, qtail, owned_head);
+ 			continue;
 -- 
 2.39.2
 
