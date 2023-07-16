@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558FB8F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:53:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9066C433C8;
-	Sun, 16 Jul 2023 19:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BC58F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:53:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0EDBC433C7;
+	Sun, 16 Jul 2023 19:53:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537209;
-	bh=z/ZsT1jcYwNb7ax/VtNUfQkxQ/eId54uF8d1+B3/YiM=;
+	s=korg; t=1689537212;
+	bh=uD9fgh1Ctw0wf5mPtyPbdIBYrqfeEYr/4nZiGttqgWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EkmnAHHy9gPPenOOO98/VuxA7u//WYQLTXKfUJmuXRxPNGAsGCIldUUqTaNRSelrE
-	 ixaYYCo00JfYaHUiSs/wrTUYc4tl5MjWwvyqOVp/SEf3556nw/ux1OTYqmL/psfNfx
-	 8T0fZxHovSc+rB/PqkGF8tbcQ5elk62pWGO+A7S4=
+	b=PWmNnoT1D0Z+SQG/OxbmNMGOijpTJItWUpXvA9TEXPSiV11pEAqNnHepMha/ppCC2
+	 hrJHRFMYGEZ0EUoHKpq2BPYIS8grp4kfEOq5gpJ/r3+hfDvAgkTcxx+2Pso8MLeTKU
+	 Ms4N/qq6V7j/lapDGOkzOFy4zfKokKKbrOlp6jtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangwu Zhang <guazhang@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Pankaj Raghav <p.raghav@samsung.com>,
 	Christoph Hellwig <hch@lst.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
 	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>,
-	Yu Kuai <yukuai1@huaweicloud.com>
-Subject: [PATCH 6.4 015/800] blk-mq: dont queue plugged passthrough requests into scheduler
-Date: Sun, 16 Jul 2023 21:37:48 +0200
-Message-ID: <20230716194949.458921693@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 016/800] block: Fix the type of the second bdev_op_is_zoned_write() argument
+Date: Sun, 16 Jul 2023 21:37:49 +0200
+Message-ID: <20230716194949.482129168@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -38,67 +41,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit d97217e7f024bbe9aa62aea070771234c2879358 ]
+[ Upstream commit 3ddbe2a7e0d4a155a805f69c906c9beed30d4cc4 ]
 
-Passthrough requests should never be queued to the I/O scheduler,
-as scheduling these opaque requests doesn't make sense, and I/O
-schedulers might require req->bio to be always valid.
+Change the type of the second argument of bdev_op_is_zoned_write() from
+blk_opf_t into enum req_op because this function expects an operation
+without flags as second argument.
 
-We never let passthrough requests insert into the scheduler before
-commit 1c2d2fff6dc0 ("block: wire-up support for passthrough plugging"),
-restore this behavior even for passthrough requests issued under a plug.
-
-[hch: use blk_mq_insert_requests for passthrough requests,
-      fix up the commit message and comments]
-
-Reported-by: Guangwu Zhang <guazhang@redhat.com>
-Closes: https://lore.kernel.org/linux-block/CAGS2=YosaYaUTEMU3uaf+y=8MqSrhL7sYsJn8EwbaM=76p_4Qg@mail.gmail.com/
-Investigated-by: Yu Kuai <yukuai1@huaweicloud.com>
-Fixes: 1c2d2fff6dc0 ("block: wire-up support for passthrough plugging")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230518053101.760632-2-hch@lst.de
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Pankaj Raghav <p.raghav@samsung.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Cc: Ming Lei <ming.lei@redhat.com>
+Fixes: 8cafdb5ab94c ("block: adapt blk_mq_plug() to not plug for writes that require a zone lock")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20230517174230.897144-4-bvanassche@acm.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/linux/blkdev.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 850bfb844ed2f..c763f0bc66371 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -2711,6 +2711,7 @@ static void blk_mq_dispatch_plug_list(struct blk_plug *plug, bool from_sched)
- 	struct request *requeue_list = NULL;
- 	struct request **requeue_lastp = &requeue_list;
- 	unsigned int depth = 0;
-+	bool is_passthrough = false;
- 	LIST_HEAD(list);
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index c0ffe203a6022..be9d7d8237b33 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -1282,7 +1282,7 @@ static inline unsigned int bdev_zone_no(struct block_device *bdev, sector_t sec)
+ }
  
- 	do {
-@@ -2719,7 +2720,9 @@ static void blk_mq_dispatch_plug_list(struct blk_plug *plug, bool from_sched)
- 		if (!this_hctx) {
- 			this_hctx = rq->mq_hctx;
- 			this_ctx = rq->mq_ctx;
--		} else if (this_hctx != rq->mq_hctx || this_ctx != rq->mq_ctx) {
-+			is_passthrough = blk_rq_is_passthrough(rq);
-+		} else if (this_hctx != rq->mq_hctx || this_ctx != rq->mq_ctx ||
-+			   is_passthrough != blk_rq_is_passthrough(rq)) {
- 			rq_list_add_tail(&requeue_lastp, rq);
- 			continue;
- 		}
-@@ -2731,7 +2734,8 @@ static void blk_mq_dispatch_plug_list(struct blk_plug *plug, bool from_sched)
- 	trace_block_unplug(this_hctx->queue, depth, !from_sched);
- 
- 	percpu_ref_get(&this_hctx->queue->q_usage_counter);
--	if (this_hctx->queue->elevator) {
-+	/* passthrough requests should never be issued to the I/O scheduler */
-+	if (this_hctx->queue->elevator && !is_passthrough) {
- 		this_hctx->queue->elevator->type->ops.insert_requests(this_hctx,
- 				&list, 0);
- 		blk_mq_run_hw_queue(this_hctx, from_sched);
+ static inline bool bdev_op_is_zoned_write(struct block_device *bdev,
+-					  blk_opf_t op)
++					  enum req_op op)
+ {
+ 	if (!bdev_is_zoned(bdev))
+ 		return false;
 -- 
 2.39.2
 
