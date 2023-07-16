@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5829C8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:43:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF586C433C7;
-	Sun, 16 Jul 2023 20:43:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EACD8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:43:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94AE7C433C8;
+	Sun, 16 Jul 2023 20:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540226;
-	bh=apYsJ9uMQjoKy+CbYvrJWCFlxzwKzcrYaDUz1wThMik=;
+	s=korg; t=1689540229;
+	bh=MCU+K2N6IKjEAkbCEcnD8tPP63m8GUvvIacphHuSZd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bFs7hVq76eKf44xOXEE3ngrLHTZ54HFvsmqP8w4r3KwHsUzF42shFeB2ZYJ4DqW5b
-	 dyPtFOKeDEib0ZDDxhIZVnO3M/cMxZvaA2SIs+olzj6i0c3/fhgBipPgdHcSp0rhMg
-	 fZuNnerjzyPl/SNTbngIjnDKEoFHSttEuEeagPwA=
+	b=ALQPnF9fk5HfjAoImX/xPgTaF/CT7IRIqWOw6cgSjhdBMAg+q7lyJQzeYdaD+hRqX
+	 kDGe6I/m7M17xWC7J3ENkRiJXYCGm38+gqHWZpYw5h8ighK20+OzSiyW7qwiU+DeQP
+	 h8YHHsL9UQY80WuekQSPicGkwNXrl+WYCs/K+pC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongqin Liu <yongqin.liu@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
+	Hao Luo <m202171776@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Peng Fan <peng.fan@nxp.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 260/591] drm/msm/dpu: do not enable color-management if DSPPs are not available
-Date: Sun, 16 Jul 2023 21:46:39 +0200
-Message-ID: <20230716194930.609331824@linuxfoundation.org>
+Subject: [PATCH 6.1 251/591] clk: imx: clk-imx8mn: fix memory leak in imx8mn_clocks_probe
+Date: Sun, 16 Jul 2023 21:46:30 +0200
+Message-ID: <20230716194930.366419584@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,51 +37,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Hao Luo <m202171776@hust.edu.cn>
 
-[ Upstream commit 3bcfc7b90465efd337d39b91b43972162f0d1908 ]
+[ Upstream commit 188d070de9132667956f5aadd98d2bd87d3eac89 ]
 
-We can not support color management without DSPP blocks being provided
-in the HW catalog. Do not enable color management for CRTCs if num_dspps
-is 0.
+Use devm_of_iomap() instead of of_iomap() to automatically handle
+the unused ioremap region.
 
-Fixes: 4259ff7ae509 ("drm/msm/dpu: add support for pcc color block in dpu driver")
-Reported-by: Yongqin Liu <yongqin.liu@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Sumit Semwal <sumit.semwal@linaro.org>
-Tested-by: Yongqin Liu <yongqin.liu@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/542141/
-Link: https://lore.kernel.org/r/20230612182534.3345805-1-dmitry.baryshkov@linaro.org
+If any error occurs, regions allocated by kzalloc() will leak,
+but using devm_kzalloc() instead will automatically free the memory
+using devm_kfree().
+
+Fixes: daeb14545514 ("clk: imx: imx8mn: Switch to clk_hw based API")
+Fixes: 96d6392b54db ("clk: imx: Add support for i.MX8MN clock driver")
+Signed-off-by: Hao Luo <m202171776@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Link: https://lore.kernel.org/r/20230411015107.2645-1-m202171776@hust.edu.cn
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/clk/imx/clk-imx8mn.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index c9d1c412628e9..6c0ffe8e4adbd 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -1579,6 +1579,8 @@ static const struct drm_crtc_helper_funcs dpu_crtc_helper_funcs = {
- struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
- 				struct drm_plane *cursor)
- {
-+	struct msm_drm_private *priv = dev->dev_private;
-+	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
- 	struct drm_crtc *crtc = NULL;
- 	struct dpu_crtc *dpu_crtc = NULL;
- 	int i;
-@@ -1610,7 +1612,8 @@ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
+diff --git a/drivers/clk/imx/clk-imx8mn.c b/drivers/clk/imx/clk-imx8mn.c
+index 2afea905f7f3c..b2b8b8b3f0ab8 100644
+--- a/drivers/clk/imx/clk-imx8mn.c
++++ b/drivers/clk/imx/clk-imx8mn.c
+@@ -323,7 +323,7 @@ static int imx8mn_clocks_probe(struct platform_device *pdev)
+ 	void __iomem *base;
+ 	int ret;
  
- 	drm_crtc_helper_add(crtc, &dpu_crtc_helper_funcs);
+-	clk_hw_data = kzalloc(struct_size(clk_hw_data, hws,
++	clk_hw_data = devm_kzalloc(dev, struct_size(clk_hw_data, hws,
+ 					  IMX8MN_CLK_END), GFP_KERNEL);
+ 	if (WARN_ON(!clk_hw_data))
+ 		return -ENOMEM;
+@@ -340,10 +340,10 @@ static int imx8mn_clocks_probe(struct platform_device *pdev)
+ 	hws[IMX8MN_CLK_EXT4] = imx_obtain_fixed_clk_hw(np, "clk_ext4");
  
--	drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
-+	if (dpu_kms->catalog->dspp_count)
-+		drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
+ 	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mn-anatop");
+-	base = of_iomap(np, 0);
++	base = devm_of_iomap(dev, np, 0, NULL);
+ 	of_node_put(np);
+-	if (WARN_ON(!base)) {
+-		ret = -ENOMEM;
++	if (WARN_ON(IS_ERR(base))) {
++		ret = PTR_ERR(base);
+ 		goto unregister_hws;
+ 	}
  
- 	/* save user friendly CRTC name for later */
- 	snprintf(dpu_crtc->name, DPU_CRTC_NAME_SIZE, "crtc%u", crtc->base.id);
 -- 
 2.39.2
 
