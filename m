@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87908F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:50:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E13C433C7;
-	Sun, 16 Jul 2023 20:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7809A8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:50:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE58C433C7;
+	Sun, 16 Jul 2023 20:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540624;
-	bh=lLXcF4hRbzFMzyPYAWRYx6IlvZ5bXZ4CReogufbvYi4=;
+	s=korg; t=1689540627;
+	bh=FaqdUIyMkvgk6FJ8+pmVw35p6XeNUShefM2Z/+8wY4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZBkxUlPDEZ7W74Q8mNVHTkWSOx4nWlJ6CD3KHHg/G7Kbof8SBJKPqEyvkHrZFL/Ir
-	 yVUMMmtd1MmF3OVycVW4QKEb1kI22dS/SDXq1IZgF9rDxHrQTWPMvcVV4KSzNREu4+
-	 QDkvCfvy7q1qkW37HLARc2zI8uVAeIPKIPuFEDVI=
+	b=Em/siksayBDteC8eXUF1UeEuBDoePXiy4hlsd072Fu6+51D3bH/Gtz3LCq0zBLNBm
+	 K/fDa3yLY3wicmgTwUwrvIyOtxV2XLjA9hSXMJzv9fVUDzCQP2MbJSTFl3BJrmAlb9
+	 yCOYLTXh7gku53jG/DK/SqmJQFO1HkBEM1BiKOZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Robert Marko <robimarko@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 429/591] f2fs: fix potential deadlock due to unpaired node_write lock use
-Date: Sun, 16 Jul 2023 21:49:28 +0200
-Message-ID: <20230716194935.015494345@linuxfoundation.org>
+Subject: [PATCH 6.1 403/591] clk: qcom: reset: support resetting multiple bits
+Date: Sun, 16 Jul 2023 21:49:02 +0200
+Message-ID: <20230716194934.345237089@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,106 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Robert Marko <robimarko@gmail.com>
 
-[ Upstream commit f082c6b205a06953f26c40bdc7621cc5a58ceb7c ]
+[ Upstream commit 4a5210893625f89723ea210d7c630b730abb37ad ]
 
-If S_NOQUOTA is cleared from inode during data page writeback of quota
-file, it may miss to unlock node_write lock, result in potential
-deadlock, fix to use the lock in paired.
+This patch adds the support for giving the complete bitmask
+in reset structure and reset operation will use this bitmask
+for all reset operations.
 
-Kworker					Thread
-- writepage
- if (IS_NOQUOTA())
-   f2fs_down_read(&sbi->node_write);
-					- vfs_cleanup_quota_inode
-					 - inode->i_flags &= ~S_NOQUOTA;
- if (IS_NOQUOTA())
-   f2fs_up_read(&sbi->node_write);
+Currently, reset structure only takes a single bit for each reset
+and then calculates the bitmask by using the BIT() macro.
 
-Fixes: 79963d967b49 ("f2fs: shrink node_write lock coverage")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+However, this is not sufficient anymore for newer SoC-s like IPQ8074,
+IPQ6018 and more, since their networking resets require multiple bits
+to be asserted in order to properly reset the HW block completely.
+
+So, in order to allow asserting multiple bits add "bitmask" field to
+qcom_reset_map, and then use that bitmask value if its populated in the
+driver, if its not populated, then we just default to existing behaviour
+and calculate the bitmask on the fly.
+
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221107132901.489240-1-robimarko@gmail.com
+Stable-dep-of: 349b5bed539b ("clk: qcom: ipq6018: fix networking resets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/compress.c | 7 ++++---
- fs/f2fs/data.c     | 7 ++++---
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ drivers/clk/qcom/reset.c | 4 ++--
+ drivers/clk/qcom/reset.h | 1 +
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
-index b160863eca141..e50d5848c1001 100644
---- a/fs/f2fs/compress.c
-+++ b/fs/f2fs/compress.c
-@@ -1235,6 +1235,7 @@ static int f2fs_write_compressed_pages(struct compress_ctx *cc,
- 	unsigned int last_index = cc->cluster_size - 1;
- 	loff_t psize;
- 	int i, err;
-+	bool quota_inode = IS_NOQUOTA(inode);
+diff --git a/drivers/clk/qcom/reset.c b/drivers/clk/qcom/reset.c
+index 2a16adb572d2b..0e914ec7aeae1 100644
+--- a/drivers/clk/qcom/reset.c
++++ b/drivers/clk/qcom/reset.c
+@@ -30,7 +30,7 @@ qcom_reset_assert(struct reset_controller_dev *rcdev, unsigned long id)
  
- 	/* we should bypass data pages to proceed the kworkder jobs */
- 	if (unlikely(f2fs_cp_error(sbi))) {
-@@ -1242,7 +1243,7 @@ static int f2fs_write_compressed_pages(struct compress_ctx *cc,
- 		goto out_free;
- 	}
+ 	rst = to_qcom_reset_controller(rcdev);
+ 	map = &rst->reset_map[id];
+-	mask = BIT(map->bit);
++	mask = map->bitmask ? map->bitmask : BIT(map->bit);
  
--	if (IS_NOQUOTA(inode)) {
-+	if (quota_inode) {
- 		/*
- 		 * We need to wait for node_write to avoid block allocation during
- 		 * checkpoint. This can only happen to quota writes which can cause
-@@ -1364,7 +1365,7 @@ static int f2fs_write_compressed_pages(struct compress_ctx *cc,
- 		set_inode_flag(inode, FI_FIRST_BLOCK_WRITTEN);
+ 	return regmap_update_bits(rst->regmap, map->reg, mask, mask);
+ }
+@@ -44,7 +44,7 @@ qcom_reset_deassert(struct reset_controller_dev *rcdev, unsigned long id)
  
- 	f2fs_put_dnode(&dn);
--	if (IS_NOQUOTA(inode))
-+	if (quota_inode)
- 		f2fs_up_read(&sbi->node_write);
- 	else
- 		f2fs_unlock_op(sbi);
-@@ -1390,7 +1391,7 @@ static int f2fs_write_compressed_pages(struct compress_ctx *cc,
- out_put_dnode:
- 	f2fs_put_dnode(&dn);
- out_unlock_op:
--	if (IS_NOQUOTA(inode))
-+	if (quota_inode)
- 		f2fs_up_read(&sbi->node_write);
- 	else
- 		f2fs_unlock_op(sbi);
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 36db9aab47790..c230824ab5e6e 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -2759,6 +2759,7 @@ int f2fs_write_single_data_page(struct page *page, int *submitted,
- 	loff_t psize = (loff_t)(page->index + 1) << PAGE_SHIFT;
- 	unsigned offset = 0;
- 	bool need_balance_fs = false;
-+	bool quota_inode = IS_NOQUOTA(inode);
- 	int err = 0;
- 	struct f2fs_io_info fio = {
- 		.sbi = sbi,
-@@ -2816,19 +2817,19 @@ int f2fs_write_single_data_page(struct page *page, int *submitted,
- 		goto out;
+ 	rst = to_qcom_reset_controller(rcdev);
+ 	map = &rst->reset_map[id];
+-	mask = BIT(map->bit);
++	mask = map->bitmask ? map->bitmask : BIT(map->bit);
  
- 	/* Dentry/quota blocks are controlled by checkpoint */
--	if (S_ISDIR(inode->i_mode) || IS_NOQUOTA(inode)) {
-+	if (S_ISDIR(inode->i_mode) || quota_inode) {
- 		/*
- 		 * We need to wait for node_write to avoid block allocation during
- 		 * checkpoint. This can only happen to quota writes which can cause
- 		 * the below discard race condition.
- 		 */
--		if (IS_NOQUOTA(inode))
-+		if (quota_inode)
- 			f2fs_down_read(&sbi->node_write);
+ 	return regmap_update_bits(rst->regmap, map->reg, mask, 0);
+ }
+diff --git a/drivers/clk/qcom/reset.h b/drivers/clk/qcom/reset.h
+index b8c113582072b..9a47c838d9b1b 100644
+--- a/drivers/clk/qcom/reset.h
++++ b/drivers/clk/qcom/reset.h
+@@ -12,6 +12,7 @@ struct qcom_reset_map {
+ 	unsigned int reg;
+ 	u8 bit;
+ 	u8 udelay;
++	u32 bitmask;
+ };
  
- 		fio.need_lock = LOCK_DONE;
- 		err = f2fs_do_write_data_page(&fio);
- 
--		if (IS_NOQUOTA(inode))
-+		if (quota_inode)
- 			f2fs_up_read(&sbi->node_write);
- 
- 		goto done;
+ struct regmap;
 -- 
 2.39.2
 
