@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A51D8F6D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:23:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8125EC433C9;
-	Sun, 16 Jul 2023 20:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73F08F6D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:23:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E49C433C8;
+	Sun, 16 Jul 2023 20:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539021;
-	bh=UDFHIa//qAXE0YJ441616BDGSkFA+R0YV+9DQ3865zk=;
+	s=korg; t=1689539024;
+	bh=Q28LyStVbehDrWtWY3BQfU9sutZfWqRYpn2cxnh32Io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fvqO/luV3/KvyWPZm/wCm1SZOZLVRMk9YcKpp881EzZDhiNQOMRCQpz7PUbCt5axm
-	 1NhTpAYf0GVAR6Xad4HANaISe9FtA5oQtPwU0PNnIQ9jfife1c83450DRfqIimLLCg
-	 3cZNgR75PDHHjDpbNWaCG5CnFBnfUrc5Mem7MVNY=
+	b=Lg2XSDCo0H2vLXdHbS3Lq3czBYXwEIDjJGxoOP7whu7rrAAQXmoBEWk4cY+VSLzPy
+	 rMl3HWtKgmgHO+/nJBAWJjXNfrA6kKyMiELK9rgmKjj5KV62PG5iG23/Txn2nXrsjS
+	 nTokMeknRxsA9GvKn0jg0HvS0METTpM+Olg/iqMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Yingao <m202271736@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 629/800] nvmem: sunplus-ocotp: release otp->clk before return
-Date: Sun, 16 Jul 2023 21:48:02 +0200
-Message-ID: <20230716195003.721735561@linuxfoundation.org>
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Richard Leitner <richard.leitner@skidata.com>
+Subject: [PATCH 6.4 630/800] nvmem: imx-ocotp: Reverse MAC addresses on all i.MX derivates
+Date: Sun, 16 Jul 2023 21:48:03 +0200
+Message-ID: <20230716195003.745083865@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,57 +36,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yi Yingao <m202271736@hust.edu.cn>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 095bb8ba45f28ed15296eb5b7662e03e57d5e34e ]
+[ Upstream commit 8a00fc606312c68b98add8fe8e6f7a013ce29e78 ]
 
-Smatch reports:
-drivers/nvmem/sunplus-ocotp.c:205 sp_ocotp_probe()
-warn: 'otp->clk' from clk_prepare() not released on lines: 196.
+Not just i.MX8M, but all i.MX6/7 (and subtypes) need to reverse the
+MAC address read from fuses. Exceptions are i.MX6SLL and i.MX7ULP which
+do not support ethernet at all.
 
-In the function sp_ocotp_probe(struct platform_device *pdev), otp->clk may
-not be released before return.
-
-To fix this issue, using function clk_unprepare() to release otp->clk.
-
-Fixes: 8747ec2e9762 ("nvmem: Add driver for OCOTP in Sunplus SP7021")
-Signed-off-by: Yi Yingao <m202271736@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Message-ID: <20230509085237.5917-1-m202271736@hust.edu.cn>
+Fixes: d0221a780cbc ("nvmem: imx-ocotp: add support for post processing")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Tested-by: Richard Leitner <richard.leitner@skidata.com> # imx6q
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <20230611140330.154222-3-srinivas.kandagatla@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/sunplus-ocotp.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/nvmem/imx-ocotp.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/nvmem/sunplus-ocotp.c b/drivers/nvmem/sunplus-ocotp.c
-index 52b928a7a6d58..f85350b17d672 100644
---- a/drivers/nvmem/sunplus-ocotp.c
-+++ b/drivers/nvmem/sunplus-ocotp.c
-@@ -192,9 +192,11 @@ static int sp_ocotp_probe(struct platform_device *pdev)
- 	sp_ocotp_nvmem_config.dev = dev;
+diff --git a/drivers/nvmem/imx-ocotp.c b/drivers/nvmem/imx-ocotp.c
+index ac0edb6398f1e..c1af271052276 100644
+--- a/drivers/nvmem/imx-ocotp.c
++++ b/drivers/nvmem/imx-ocotp.c
+@@ -97,7 +97,6 @@ struct ocotp_params {
+ 	unsigned int bank_address_words;
+ 	void (*set_timing)(struct ocotp_priv *priv);
+ 	struct ocotp_ctrl_reg ctrl;
+-	bool reverse_mac_address;
+ };
  
- 	nvmem = devm_nvmem_register(dev, &sp_ocotp_nvmem_config);
--	if (IS_ERR(nvmem))
--		return dev_err_probe(&pdev->dev, PTR_ERR(nvmem),
-+	if (IS_ERR(nvmem)) {
-+		ret = dev_err_probe(&pdev->dev, PTR_ERR(nvmem),
- 						"register nvmem device fail\n");
-+		goto err;
-+	}
+ static int imx_ocotp_wait_for_busy(struct ocotp_priv *priv, u32 flags)
+@@ -545,7 +544,6 @@ static const struct ocotp_params imx8mq_params = {
+ 	.bank_address_words = 0,
+ 	.set_timing = imx_ocotp_set_imx6_timing,
+ 	.ctrl = IMX_OCOTP_BM_CTRL_DEFAULT,
+-	.reverse_mac_address = true,
+ };
  
- 	platform_set_drvdata(pdev, nvmem);
+ static const struct ocotp_params imx8mm_params = {
+@@ -553,7 +551,6 @@ static const struct ocotp_params imx8mm_params = {
+ 	.bank_address_words = 0,
+ 	.set_timing = imx_ocotp_set_imx6_timing,
+ 	.ctrl = IMX_OCOTP_BM_CTRL_DEFAULT,
+-	.reverse_mac_address = true,
+ };
  
-@@ -203,6 +205,9 @@ static int sp_ocotp_probe(struct platform_device *pdev)
- 		(int)OTP_WORD_SIZE, (int)QAC628_OTP_SIZE);
+ static const struct ocotp_params imx8mn_params = {
+@@ -561,7 +558,6 @@ static const struct ocotp_params imx8mn_params = {
+ 	.bank_address_words = 0,
+ 	.set_timing = imx_ocotp_set_imx6_timing,
+ 	.ctrl = IMX_OCOTP_BM_CTRL_DEFAULT,
+-	.reverse_mac_address = true,
+ };
  
- 	return 0;
-+err:
-+	clk_unprepare(otp->clk);
-+	return ret;
- }
+ static const struct ocotp_params imx8mp_params = {
+@@ -569,7 +565,6 @@ static const struct ocotp_params imx8mp_params = {
+ 	.bank_address_words = 0,
+ 	.set_timing = imx_ocotp_set_imx6_timing,
+ 	.ctrl = IMX_OCOTP_BM_CTRL_8MP,
+-	.reverse_mac_address = true,
+ };
  
- static const struct of_device_id sp_ocotp_dt_ids[] = {
+ static const struct of_device_id imx_ocotp_dt_ids[] = {
+@@ -624,8 +619,7 @@ static int imx_ocotp_probe(struct platform_device *pdev)
+ 	imx_ocotp_nvmem_config.size = 4 * priv->params->nregs;
+ 	imx_ocotp_nvmem_config.dev = dev;
+ 	imx_ocotp_nvmem_config.priv = priv;
+-	if (priv->params->reverse_mac_address)
+-		imx_ocotp_nvmem_config.layout = &imx_ocotp_layout;
++	imx_ocotp_nvmem_config.layout = &imx_ocotp_layout;
+ 
+ 	priv->config = &imx_ocotp_nvmem_config;
+ 
 -- 
 2.39.2
 
