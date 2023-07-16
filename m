@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469D38F75
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:16:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCF2BC433C7;
-	Sun, 16 Jul 2023 20:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1040F8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:16:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A31C433C9;
+	Sun, 16 Jul 2023 20:16:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538568;
-	bh=Pi8GV7qEk1ibPzj4Wp2ILk8Di4v2NlFk0/HEY21e4wA=;
+	s=korg; t=1689538570;
+	bh=0fh7Yam5IVU8UfPlqlQM3hQVJp6SmJDyBYvkyiCizWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iHyXg2Y4waU181tAVcDbrqXdavcO+KqddltEAUf+gC6k5Y4WXPsVbuNloDcy5Q0SM
-	 zb3V+Wk5wYurSPSnngiN/jA5eNZf24UJqvV4AI0bcCb/Yv5ogxSeytsuCBoOxBxEy7
-	 KIGNVOst9bBMFjEutHdO6iPBGFYsetsCPMKbVce4=
+	b=LXQwci9hpRdWTDxKBNiHOmeP4s6CZST+ZEp0BPy4UuqVy6s4qkCrFpAEHM9kKpeo0
+	 NzgjeveNvMoLOKEU5bymCQk1aZaDxc5qUsRymu9eP7d48wwfLk2mOuRPWVks6LXivX
+	 frfk7Mk1/UDZgoiLdN1i/KW9G7zue1+rgoLYX6pI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 456/800] pinctrl: cherryview: Return correct value if pin in push-pull mode
-Date: Sun, 16 Jul 2023 21:45:09 +0200
-Message-ID: <20230716194959.674525788@linuxfoundation.org>
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>,
+	Sachin Sant <sachinp@linux.ibm.commailto:sachinp@linux.ibm.com>
+Subject: [PATCH 6.4 491/800] powerpc/book3s64/mm: Fix DirectMap stats in /proc/meminfo
+Date: Sun, 16 Jul 2023 21:45:44 +0200
+Message-ID: <20230716195000.484740813@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,55 +36,156 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
 
-[ Upstream commit 5835196a17be5cfdcad0b617f90cf4abe16951a4 ]
+[ Upstream commit 0da90af431abc3f497a38ec9ef6e43b0d0dabe80 ]
 
-Currently the getter returns ENOTSUPP on pin configured in
-the push-pull mode. Fix this by adding the missed switch case.
+On memory unplug reduce DirectMap page count correctly.
+root@ubuntu-guest:# grep Direct /proc/meminfo
+DirectMap4k:           0 kB
+DirectMap64k:           0 kB
+DirectMap2M:    115343360 kB
+DirectMap1G:           0 kB
 
-Fixes: ccdf81d08dbe ("pinctrl: cherryview: add option to set open-drain pin config")
-Fixes: 6e08d6bbebeb ("pinctrl: Add Intel Cherryview/Braswell pin controller support")
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Before fix:
+root@ubuntu-guest:# ndctl disable-namespace all
+disabled 1 namespace
+root@ubuntu-guest:# grep Direct /proc/meminfo
+DirectMap4k:           0 kB
+DirectMap64k:           0 kB
+DirectMap2M:    115343360 kB
+DirectMap1G:           0 kB
+
+After fix:
+root@ubuntu-guest:# ndctl disable-namespace all
+disabled 1 namespace
+root@ubuntu-guest:# grep Direct /proc/meminfo
+DirectMap4k:           0 kB
+DirectMap64k:           0 kB
+DirectMap2M:    104857600 kB
+DirectMap1G:           0 kB
+
+Fixes: a2dc009afa9a ("powerpc/mm/book3s/radix: Add mapping statistics")
+Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+Tested-by: Sachin Sant <sachinp@linux.ibm.com <mailto:sachinp@linux.ibm.com>>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230616110826.344417-4-aneesh.kumar@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/intel/pinctrl-cherryview.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ arch/powerpc/mm/book3s64/radix_pgtable.c | 34 +++++++++++++++---------
+ 1 file changed, 22 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/pinctrl/intel/pinctrl-cherryview.c b/drivers/pinctrl/intel/pinctrl-cherryview.c
-index 722990e278361..87cf1e7403979 100644
---- a/drivers/pinctrl/intel/pinctrl-cherryview.c
-+++ b/drivers/pinctrl/intel/pinctrl-cherryview.c
-@@ -949,11 +949,6 @@ static int chv_config_get(struct pinctrl_dev *pctldev, unsigned int pin,
+diff --git a/arch/powerpc/mm/book3s64/radix_pgtable.c b/arch/powerpc/mm/book3s64/radix_pgtable.c
+index 2297aa764ecdb..e8db8c8efe359 100644
+--- a/arch/powerpc/mm/book3s64/radix_pgtable.c
++++ b/arch/powerpc/mm/book3s64/radix_pgtable.c
+@@ -745,9 +745,9 @@ static void free_pud_table(pud_t *pud_start, p4d_t *p4d)
+ }
  
- 		break;
+ static void remove_pte_table(pte_t *pte_start, unsigned long addr,
+-			     unsigned long end)
++			     unsigned long end, bool direct)
+ {
+-	unsigned long next;
++	unsigned long next, pages = 0;
+ 	pte_t *pte;
  
--	case PIN_CONFIG_DRIVE_OPEN_DRAIN:
--		if (!(ctrl1 & CHV_PADCTRL1_ODEN))
--			return -EINVAL;
--		break;
--
- 	case PIN_CONFIG_BIAS_HIGH_IMPEDANCE: {
- 		u32 cfg;
+ 	pte = pte_start + pte_index(addr);
+@@ -769,13 +769,16 @@ static void remove_pte_table(pte_t *pte_start, unsigned long addr,
+ 		}
  
-@@ -963,6 +958,16 @@ static int chv_config_get(struct pinctrl_dev *pctldev, unsigned int pin,
- 			return -EINVAL;
+ 		pte_clear(&init_mm, addr, pte);
++		pages++;
+ 	}
++	if (direct)
++		update_page_count(mmu_virtual_psize, -pages);
+ }
  
- 		break;
-+
-+	case PIN_CONFIG_DRIVE_PUSH_PULL:
-+		if (ctrl1 & CHV_PADCTRL1_ODEN)
-+			return -EINVAL;
-+		break;
-+
-+	case PIN_CONFIG_DRIVE_OPEN_DRAIN:
-+		if (!(ctrl1 & CHV_PADCTRL1_ODEN))
-+			return -EINVAL;
-+		break;
+ static void __meminit remove_pmd_table(pmd_t *pmd_start, unsigned long addr,
+-			     unsigned long end)
++				       unsigned long end, bool direct)
+ {
+-	unsigned long next;
++	unsigned long next, pages = 0;
+ 	pte_t *pte_base;
+ 	pmd_t *pmd;
+ 
+@@ -793,19 +796,22 @@ static void __meminit remove_pmd_table(pmd_t *pmd_start, unsigned long addr,
+ 				continue;
+ 			}
+ 			pte_clear(&init_mm, addr, (pte_t *)pmd);
++			pages++;
+ 			continue;
+ 		}
+ 
+ 		pte_base = (pte_t *)pmd_page_vaddr(*pmd);
+-		remove_pte_table(pte_base, addr, next);
++		remove_pte_table(pte_base, addr, next, direct);
+ 		free_pte_table(pte_base, pmd);
+ 	}
++	if (direct)
++		update_page_count(MMU_PAGE_2M, -pages);
+ }
+ 
+ static void __meminit remove_pud_table(pud_t *pud_start, unsigned long addr,
+-			     unsigned long end)
++				       unsigned long end, bool direct)
+ {
+-	unsigned long next;
++	unsigned long next, pages = 0;
+ 	pmd_t *pmd_base;
+ 	pud_t *pud;
+ 
+@@ -823,16 +829,20 @@ static void __meminit remove_pud_table(pud_t *pud_start, unsigned long addr,
+ 				continue;
+ 			}
+ 			pte_clear(&init_mm, addr, (pte_t *)pud);
++			pages++;
+ 			continue;
+ 		}
+ 
+ 		pmd_base = pud_pgtable(*pud);
+-		remove_pmd_table(pmd_base, addr, next);
++		remove_pmd_table(pmd_base, addr, next, direct);
+ 		free_pmd_table(pmd_base, pud);
+ 	}
++	if (direct)
++		update_page_count(MMU_PAGE_1G, -pages);
+ }
+ 
+-static void __meminit remove_pagetable(unsigned long start, unsigned long end)
++static void __meminit remove_pagetable(unsigned long start, unsigned long end,
++				       bool direct)
+ {
+ 	unsigned long addr, next;
+ 	pud_t *pud_base;
+@@ -861,7 +871,7 @@ static void __meminit remove_pagetable(unsigned long start, unsigned long end)
+ 		}
+ 
+ 		pud_base = p4d_pgtable(*p4d);
+-		remove_pud_table(pud_base, addr, next);
++		remove_pud_table(pud_base, addr, next, direct);
+ 		free_pud_table(pud_base, p4d);
  	}
  
- 	default:
+@@ -884,7 +894,7 @@ int __meminit radix__create_section_mapping(unsigned long start,
+ 
+ int __meminit radix__remove_section_mapping(unsigned long start, unsigned long end)
+ {
+-	remove_pagetable(start, end);
++	remove_pagetable(start, end, true);
+ 	return 0;
+ }
+ #endif /* CONFIG_MEMORY_HOTPLUG */
+@@ -920,7 +930,7 @@ int __meminit radix__vmemmap_create_mapping(unsigned long start,
+ #ifdef CONFIG_MEMORY_HOTPLUG
+ void __meminit radix__vmemmap_remove_mapping(unsigned long start, unsigned long page_size)
+ {
+-	remove_pagetable(start, start + page_size);
++	remove_pagetable(start, start + page_size, false);
+ }
+ #endif
+ #endif
 -- 
 2.39.2
 
