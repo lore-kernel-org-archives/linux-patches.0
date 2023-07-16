@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2665A8F6D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:23:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CCF2C433C7;
-	Sun, 16 Jul 2023 20:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00888F6D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:23:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACB4C433C7;
+	Sun, 16 Jul 2023 20:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538994;
-	bh=yQ7AZJ+Z8icOdPlhcOSKZ3kRxEo3o9pTocU+Wvm6l+w=;
+	s=korg; t=1689538996;
+	bh=k0TOuhxos0JrL/VOJne01SVXGH/erMui/Lzn2RLo0aE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NYmPRTAFNUx4sFbIJHb6kFvKShERCZrEdt8cAVhHplrvq40E8wR4lllzcOuIV4IZa
-	 06Gibk0vaHINPcbWLp/FtdNw+igbClht6ypbDOYjihbngzO8fZDEvtQ0/6HwBWOAaV
-	 47S1Xo672ZZkuN64UnW3ecdhfFZavBEdtLT4oMIg=
+	b=PAPPmht9IpLooesr2w7YBqYxg62S0K269d9C8VtNpKIRIwqAIEoaD8InIP9pBAl0E
+	 im2kutERchQAuU2HCh9qUBqB1ylBSae82kM4rbhAKdJ97nkHu3odtuEHAOa6xXw2fc
+	 DoHkLZJiscp1gaZRNaBqakxOW2O5+J5EuE50TY8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuijing Li <shuijing.li@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Fei Shao <fshao@chromium.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Li Nan <linan122@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 649/800] pwm: mtk_disp: Fix the disable flow of disp_pwm
-Date: Sun, 16 Jul 2023 21:48:22 +0200
-Message-ID: <20230716195004.188728473@linuxfoundation.org>
+Subject: [PATCH 6.4 650/800] md/raid10: fix the condition to call bio_end_io_acct()
+Date: Sun, 16 Jul 2023 21:48:23 +0200
+Message-ID: <20230716195004.212411239@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -40,52 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shuijing Li <shuijing.li@mediatek.com>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit bc13d60e4e1e945b34769a4a4c2b172e8552abe5 ]
+[ Upstream commit 125bfc7cd750e68c99f1d446e2c22abea08c237f ]
 
-There is a flow error in the original mtk_disp_pwm_apply() function.
-If this function is called when the clock is disabled, there will be a
-chance to operate the disp_pwm register, resulting in disp_pwm exception.
-Fix this accordingly.
+/sys/block/[device]/queue/iostats is used to control whether to count io
+stat. Write 0 to it will clear queue_flags QUEUE_FLAG_IO_STAT which means
+iostats is disabled. If we disable iostats and later endable it, the io
+issued during this period will be counted incorrectly, inflight will be
+decreased to -1.
 
-Fixes: 888a623db5d0 ("pwm: mtk-disp: Implement atomic API .apply()")
-Signed-off-by: Shuijing Li <shuijing.li@mediatek.com>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Tested-by: Fei Shao <fshao@chromium.org>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+  //T1 set iostats
+  echo 0 > /sys/block/md0/queue/iostats
+   clear QUEUE_FLAG_IO_STAT
+
+			//T2 issue io
+			if (QUEUE_FLAG_IO_STAT) -> false
+			 bio_start_io_acct
+			  inflight++
+
+  echo 1 > /sys/block/md0/queue/iostats
+   set QUEUE_FLAG_IO_STAT
+
+					//T3 io end
+					if (QUEUE_FLAG_IO_STAT) -> true
+					 bio_end_io_acct
+					  inflight--	-> -1
+
+Also, if iostats is enabled while issuing io but disabled while io end,
+inflight will never be decreased.
+
+Fix it by checking start_time when io end. If start_time is not 0, call
+bio_end_io_acct().
+
+Fixes: 528bc2cf2fcc ("md/raid10: enable io accounting")
+Signed-off-by: Li Nan <linan122@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230609094320.2397604-1-linan666@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-mtk-disp.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ drivers/md/raid10.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
-index 79e321e96f56a..2401b67332417 100644
---- a/drivers/pwm/pwm-mtk-disp.c
-+++ b/drivers/pwm/pwm-mtk-disp.c
-@@ -79,14 +79,11 @@ static int mtk_disp_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 	if (state->polarity != PWM_POLARITY_NORMAL)
- 		return -EINVAL;
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index 9d11a52367d17..9d23963496194 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -325,7 +325,7 @@ static void raid_end_bio_io(struct r10bio *r10_bio)
+ 	if (!test_bit(R10BIO_Uptodate, &r10_bio->state))
+ 		bio->bi_status = BLK_STS_IOERR;
  
--	if (!state->enabled) {
--		mtk_disp_pwm_update_bits(mdp, DISP_PWM_EN, mdp->data->enable_mask,
--					 0x0);
--
--		if (mdp->enabled) {
--			clk_disable_unprepare(mdp->clk_mm);
--			clk_disable_unprepare(mdp->clk_main);
--		}
-+	if (!state->enabled && mdp->enabled) {
-+		mtk_disp_pwm_update_bits(mdp, DISP_PWM_EN,
-+					 mdp->data->enable_mask, 0x0);
-+		clk_disable_unprepare(mdp->clk_mm);
-+		clk_disable_unprepare(mdp->clk_main);
- 
- 		mdp->enabled = false;
- 		return 0;
+-	if (blk_queue_io_stat(bio->bi_bdev->bd_disk->queue))
++	if (r10_bio->start_time)
+ 		bio_end_io_acct(bio, r10_bio->start_time);
+ 	bio_endio(bio);
+ 	/*
 -- 
 2.39.2
 
