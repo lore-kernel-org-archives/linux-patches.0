@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE978F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:44:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9622C433C7;
-	Sun, 16 Jul 2023 20:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3918F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:44:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99C82C433C9;
+	Sun, 16 Jul 2023 20:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540274;
-	bh=1sw3kHkQWLbdKu9iT7kE2JQu/DG5YM3rSRfH0Vyb7+U=;
+	s=korg; t=1689540277;
+	bh=KdiG2Q4pYq81Bk281qEmONgr4UuReyTtJy5mHeFCm/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MZ/i4oqo9C7N1N5N99YTfoAJrX9duNs31Jyp0T/aT1nbmAKXogdta6ybgCh0ePMcN
-	 /ilR4E/csxJOwZEkRnawnRqtsm/alYr+pCJvmSrF5GQbHBlQFssvYwian2ryXS5Koq
-	 ieorLul0EWa2CdH/9ivv7A78F67d7owX5+ouC0D0=
+	b=sazMYt4zwkNG1RsCqTU0hRlUMznhrf0xQ+xuDnZSpvYyWmVxfsaQaVO8QfEJCbShV
+	 N2qStu/J35G/JB7FA308+P8Z0EEXDc4Ohcdh2UGY9X5uh/7GAhye+cGU/O2oj09rCs
+	 etEul9UH0pnHA4MKHboazj+lmwJy5ZnAXkYIx6D8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wells Lu <wellslutw@gmail.com>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
 	Andy Shevchenko <andy.shevchenko@gmail.com>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 304/591] pinctrl:sunplus: Add check for kmalloc
-Date: Sun, 16 Jul 2023 21:47:23 +0200
-Message-ID: <20230716194931.758106511@linuxfoundation.org>
+Subject: [PATCH 6.1 305/591] pinctrl: npcm7xx: Add missing check for ioremap
+Date: Sun, 16 Jul 2023 21:47:24 +0200
+Message-ID: <20230716194931.783189719@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,42 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wells Lu <wellslutw@gmail.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 73f8ce7f961afcb3be49352efeb7c26cc1c00cc4 ]
+[ Upstream commit ad64639417161e90b30dda00486570eb150aeee5 ]
 
-Fix Smatch static checker warning:
-potential null dereference 'configs'. (kmalloc returns null)
+Add check for ioremap() and return the error if it fails in order to
+guarantee the success of ioremap().
 
-Changes in v2:
-1. Add free allocated memory before returned -ENOMEM.
-2. Add call of_node_put() before returned -ENOMEM.
-
-Fixes: aa74c44be19c ("pinctrl: Add driver for Sunplus SP7021")
-Signed-off-by: Wells Lu <wellslutw@gmail.com>
+Fixes: 3b588e43ee5c ("pinctrl: nuvoton: add NPCM7xx pinctrl and GPIO driver")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Link: https://lore.kernel.org/r/1685277277-12209-1-git-send-email-wellslutw@gmail.com
-[Rebased on the patch from Lu Hongfei]
+Link: https://lore.kernel.org/r/20230607095829.1345-1-jiasheng@iscas.ac.cn
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/sunplus/sppctl.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pinctrl/sunplus/sppctl.c b/drivers/pinctrl/sunplus/sppctl.c
-index 0449595b943cf..6b24fa0e63c0f 100644
---- a/drivers/pinctrl/sunplus/sppctl.c
-+++ b/drivers/pinctrl/sunplus/sppctl.c
-@@ -975,8 +975,7 @@ static int sppctl_dt_node_to_map(struct pinctrl_dev *pctldev, struct device_node
+diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
+index 1c4e89b046de1..ac4c69132fa03 100644
+--- a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
++++ b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
+@@ -1878,6 +1878,8 @@ static int npcm7xx_gpio_of(struct npcm7xx_pinctrl *pctrl)
+ 		}
  
- sppctl_map_err:
- 	for (i = 0; i < (*num_maps); i++)
--		if (((*map)[i].type == PIN_MAP_TYPE_CONFIGS_PIN) &&
--		    (*map)[i].data.configs.configs)
-+		if ((*map)[i].type == PIN_MAP_TYPE_CONFIGS_PIN)
- 			kfree((*map)[i].data.configs.configs);
- 	kfree(*map);
- 	of_node_put(parent);
+ 		pctrl->gpio_bank[id].base = ioremap(res.start, resource_size(&res));
++		if (!pctrl->gpio_bank[id].base)
++			return -EINVAL;
+ 
+ 		ret = bgpio_init(&pctrl->gpio_bank[id].gc, dev, 4,
+ 				 pctrl->gpio_bank[id].base + NPCM7XX_GP_N_DIN,
 -- 
 2.39.2
 
