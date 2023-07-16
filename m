@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E608F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:19:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B2DFC433C7;
-	Sun, 16 Jul 2023 20:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6B28F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:19:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31853C433C8;
+	Sun, 16 Jul 2023 20:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538755;
-	bh=jRSihTJI2EMdEgMB0WWBFvNNICXqTi0ER/XzAzwH8v4=;
+	s=korg; t=1689538758;
+	bh=lt5HWPIjcvCctemT5STo5edq6WnYIWwxJ4lMFRWcoJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BykCqFZIcxIo7m43yWUltrZkRcXKvkDvXFJ6yQ77ygGoZg0kqHg0A7yBx1g1RTfrO
-	 e4OXZZO1Vv1xJuSfNUDOEvdWjbKXd7HFSmBqp7s+94GPjAq4JXGXGzz/6/4go/q1vY
-	 6LaVuU/vyqFLJxrgWqccwPgVVvj5NIMDjwP8AmYw=
+	b=EP8AwPOLXBUY31PlmhN7BlcgWoYuZEcAlG6MrYWzeXMqa0sgZ0Hv6NiSCLPmM11LQ
+	 m7y/8C3oXCFsnU8qBfp/SmqPpDed5mlX8kJyGrP+yWNj4/5w8Rqtsis7ei2z5fd06H
+	 hqEHEoZXui1zY2nV2pxxzdiOUHx1hsPUPc0JvtNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jonathan Cameron <Jonathan.Cameron@Huawei.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 535/800] cxl/region: Flag partially torn down regions as unusable
-Date: Sun, 16 Jul 2023 21:46:28 +0200
-Message-ID: <20230716195001.521202249@linuxfoundation.org>
+Subject: [PATCH 6.4 536/800] cxl/region: Fix state transitions after reset failure
+Date: Sun, 16 Jul 2023 21:46:29 +0200
+Message-ID: <20230716195001.544142915@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -38,90 +39,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit 2ab47045ac96a605e3037d479a7d5854570ee5bf ]
+[ Upstream commit adfe19738b71a893da62cb2e30bd6bdb4299ea67 ]
 
-cxl_region_decode_reset() walks all the decoders associated with a given
-region and disables them. Due to decoder ordering rules it is possible
-that a switch in the topology notices that a given decoder can not be
-shutdown before another region with a higher HPA is shutdown first. That
-can leave the region in a partially committed state.
+Jonathan reports that failed attempts to reset a region (teardown its
+HDM decoder configuration) mistakenly advance the state of the region
+to "not committed". Revert to the previous state of the region on reset
+failure so that the reset can be re-attempted.
 
-Capture that state in a new CXL_REGION_F_NEEDS_RESET flag and require
-that a successful cxl_region_decode_reset() attempt must be completed
-before cxl_region_probe() accepts the region.
-
-This is a corollary for the bug that Jonathan identified in "CXL/region
-:  commit reset of out of order region appears to succeed." [1].
-
-Cc: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-Link: http://lore.kernel.org/r/20230316171441.0000205b@Huawei.com [1]
+Reported-by: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+Closes: http://lore.kernel.org/r/20230316171441.0000205b@Huawei.com
 Fixes: 176baefb2eb5 ("cxl/hdm: Commit decoder state to hardware")
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/168696507423.3590522.16254212607926684429.stgit@dwillia2-xfh.jf.intel.com
+Link: https://lore.kernel.org/r/168696507968.3590522.14484000711718573626.stgit@dwillia2-xfh.jf.intel.com
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/region.c | 12 ++++++++++++
- drivers/cxl/cxl.h         |  8 ++++++++
- 2 files changed, 20 insertions(+)
+ drivers/cxl/core/region.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index 594ce3c2565df..fa29bd2ec3227 100644
+index fa29bd2ec3227..bfdd424d68970 100644
 --- a/drivers/cxl/core/region.c
 +++ b/drivers/cxl/core/region.c
-@@ -182,14 +182,19 @@ static int cxl_region_decode_reset(struct cxl_region *cxlr, int count)
- 				rc = cxld->reset(cxld);
- 			if (rc)
- 				return rc;
-+			set_bit(CXL_REGION_F_NEEDS_RESET, &cxlr->flags);
- 		}
+@@ -296,9 +296,11 @@ static ssize_t commit_store(struct device *dev, struct device_attribute *attr,
+ 	if (rc)
+ 		return rc;
  
- endpoint_reset:
- 		rc = cxled->cxld.reset(&cxled->cxld);
- 		if (rc)
- 			return rc;
-+		set_bit(CXL_REGION_F_NEEDS_RESET, &cxlr->flags);
+-	if (commit)
++	if (commit) {
+ 		rc = cxl_region_decode_commit(cxlr);
+-	else {
++		if (rc == 0)
++			p->state = CXL_CONFIG_COMMIT;
++	} else {
+ 		p->state = CXL_CONFIG_RESET_PENDING;
+ 		up_write(&cxl_region_rwsem);
+ 		device_release_driver(&cxlr->dev);
+@@ -308,18 +310,20 @@ static ssize_t commit_store(struct device *dev, struct device_attribute *attr,
+ 		 * The lock was dropped, so need to revalidate that the reset is
+ 		 * still pending.
+ 		 */
+-		if (p->state == CXL_CONFIG_RESET_PENDING)
++		if (p->state == CXL_CONFIG_RESET_PENDING) {
+ 			rc = cxl_region_decode_reset(cxlr, p->interleave_ways);
++			/*
++			 * Revert to committed since there may still be active
++			 * decoders associated with this region, or move forward
++			 * to active to mark the reset successful
++			 */
++			if (rc)
++				p->state = CXL_CONFIG_COMMIT;
++			else
++				p->state = CXL_CONFIG_ACTIVE;
++		}
  	}
  
-+	/* all decoders associated with this region have been torn down */
-+	clear_bit(CXL_REGION_F_NEEDS_RESET, &cxlr->flags);
-+
- 	return 0;
- }
+-	if (rc)
+-		goto out;
+-
+-	if (commit)
+-		p->state = CXL_CONFIG_COMMIT;
+-	else if (p->state == CXL_CONFIG_RESET_PENDING)
+-		p->state = CXL_CONFIG_ACTIVE;
+-
+ out:
+ 	up_write(&cxl_region_rwsem);
  
-@@ -2864,6 +2869,13 @@ static int cxl_region_probe(struct device *dev)
- 		goto out;
- 	}
- 
-+	if (test_bit(CXL_REGION_F_NEEDS_RESET, &cxlr->flags)) {
-+		dev_err(&cxlr->dev,
-+			"failed to activate, re-commit region and retry\n");
-+		rc = -ENXIO;
-+		goto out;
-+	}
-+
- 	/*
- 	 * From this point on any path that changes the region's state away from
- 	 * CXL_CONFIG_COMMIT is also responsible for releasing the driver.
-diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
-index 70ab8fcd0377c..dcebe48bb5bb5 100644
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -469,6 +469,14 @@ struct cxl_region_params {
-  */
- #define CXL_REGION_F_AUTO 0
- 
-+/*
-+ * Require that a committed region successfully complete a teardown once
-+ * any of its associated decoders have been torn down. This maintains
-+ * the commit state for the region since there are committed decoders,
-+ * but blocks cxl_region_probe().
-+ */
-+#define CXL_REGION_F_NEEDS_RESET 1
-+
- /**
-  * struct cxl_region - CXL region
-  * @dev: This region's device
 -- 
 2.39.2
 
