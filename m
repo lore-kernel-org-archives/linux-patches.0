@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34F68F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:20:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E2D2C433C8;
-	Sun, 16 Jul 2023 20:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A6C8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:20:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C9CC433C8;
+	Sun, 16 Jul 2023 20:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538850;
-	bh=R7YhuNAAvshuejcLFVFLZf//fiL8d3wI/DJ0Wu47wxM=;
+	s=korg; t=1689538853;
+	bh=7jsq5kicvkJ4PImkuR14h7n1quMms7GQLz7ONQp0CSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PeS4ttaKKGrWKT+ACAz5Dhj5rQV5QzoDdp9dESIqITKWm0dGmZDmCTfDwvriyXtYI
-	 nV4R8bwyfzzvYvht8rOSrtLZ1uGeiDZXPrHbogb8tDfBlAzHs4PLa7EO2OB6QZn+6R
-	 uS/X4HWAzgt773nv+RmQqN3UDKjpHZ5i3j9hI76Q=
+	b=DVsYZCKsxQXcdLBuzWE27SuJSwelBP+pUL8Ks316rg4yW0tB2sQSOMoeSFDfeFvzJ
+	 Jn5mSzAWBBnOamrUCWjTaBX1N3J4ntr7I8FqKoCGgtXt458xbdFgecoS4ZrZhIULXv
+	 YMPh+1OCmynUznzXQw26m2j2WKKjKmfb+L7qp4Q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kathiravan T <quic_kathirav@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Li Yang <lidaxian@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 560/800] clk: qcom: gcc: ipq5332: Use floor ops for SDCC clocks
-Date: Sun, 16 Jul 2023 21:46:53 +0200
-Message-ID: <20230716195002.096499501@linuxfoundation.org>
+Subject: [PATCH 6.4 592/800] usb: phy: phy-tahvo: fix memory leak in tahvo_usb_probe()
+Date: Sun, 16 Jul 2023 21:47:25 +0200
+Message-ID: <20230716195002.851352763@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,35 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kathiravan T <quic_kathirav@quicinc.com>
+From: Li Yang <lidaxian@hust.edu.cn>
 
-[ Upstream commit a30e62bf6bf4d3230fa9164c7e174e32b9be7ba5 ]
+[ Upstream commit 342161c11403ea00e9febc16baab1d883d589d04 ]
 
-SDCC clocks must be rounded down to avoid overclocking the controller.
+Smatch reports:
+drivers/usb/phy/phy-tahvo.c: tahvo_usb_probe()
+warn: missing unwind goto?
 
-Fixes: 3d89d52970fd ("clk: qcom: add Global Clock controller (GCC) driver for IPQ5332 SoC")
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230508163145.9678-1-quic_kathirav@quicinc.com
+After geting irq, if ret < 0, it will return without error handling to
+free memory.
+Just add error handling to fix this problem.
+
+Fixes: 0d45a1373e66 ("usb: phy: tahvo: add IRQ check")
+Signed-off-by: Li Yang <lidaxian@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Link: https://lore.kernel.org/r/20230420140832.9110-1-lidaxian@hust.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-ipq5332.c | 2 +-
+ drivers/usb/phy/phy-tahvo.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq5332.c
-index bdb4a0a11d07b..1ad23aa8aa5a9 100644
---- a/drivers/clk/qcom/gcc-ipq5332.c
-+++ b/drivers/clk/qcom/gcc-ipq5332.c
-@@ -963,7 +963,7 @@ static struct clk_rcg2 gcc_sdcc1_apps_clk_src = {
- 		.name = "gcc_sdcc1_apps_clk_src",
- 		.parent_data = gcc_parent_data_9,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_9),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_floor_ops,
- 	},
- };
+diff --git a/drivers/usb/phy/phy-tahvo.c b/drivers/usb/phy/phy-tahvo.c
+index 47562d49dfc1b..5cac31c6029b3 100644
+--- a/drivers/usb/phy/phy-tahvo.c
++++ b/drivers/usb/phy/phy-tahvo.c
+@@ -391,7 +391,7 @@ static int tahvo_usb_probe(struct platform_device *pdev)
  
+ 	tu->irq = ret = platform_get_irq(pdev, 0);
+ 	if (ret < 0)
+-		return ret;
++		goto err_remove_phy;
+ 	ret = request_threaded_irq(tu->irq, NULL, tahvo_usb_vbus_interrupt,
+ 				   IRQF_ONESHOT,
+ 				   "tahvo-vbus", tu);
 -- 
 2.39.2
 
