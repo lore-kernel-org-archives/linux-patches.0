@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75B68F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:09:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC04C433C8;
-	Sun, 16 Jul 2023 20:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874228F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:09:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA63C433C7;
+	Sun, 16 Jul 2023 20:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538183;
-	bh=Zzo5s1DtmZHbxvr46nB1pAS3A2hZO+KEbeElB69G4WY=;
+	s=korg; t=1689538186;
+	bh=h7wSZcCXv4nXf65tj7RLqZPvATNaJNRzTCdnu8XReZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=miyr9Qe+KDEA/AEJ5Eut3ovf7P2jCyS2O7OdnlH+rbmQSd8Ek4TQDs1R7Yg61HP+6
-	 MICAQekb8j96sW+pnQQuvkQ7x5MV9LO/hzND57dBnuRUa3MPUGJywyMmZiUXQx0r/E
-	 LdFgDNMwxK+3tY5VBerJf1znlo1Tr4F5+74mgNGs=
+	b=R1uT5TuLolMnG3J/Gjt9+u3G1wfcyL0Y+40UZST5H3yR9a93La9YyH1DFfe/4XPCe
+	 8X4rsxuI24hwsqAz5ZkaGUiZGHUMRAQSnXlwQ3EAs6/PFcUjTHMebFITSZ7u4iw01p
+	 UXk9aiIQBfOndT/+hJPkRrLnQ0iXBywaXbb24Asc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
+	Christian Lamparter <chunkeey@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 361/800] hwmon: (pmbus/adm1275) Fix problems with temperature monitoring on ADM1272
-Date: Sun, 16 Jul 2023 21:43:34 +0200
-Message-ID: <20230716194957.464933706@linuxfoundation.org>
+Subject: [PATCH 6.4 362/800] ARM: dts: BCM5301X: fix duplex-full => full-duplex
+Date: Sun, 16 Jul 2023 21:43:35 +0200
+Message-ID: <20230716194957.487491561@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -34,125 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Christian Lamparter <chunkeey@gmail.com>
 
-[ Upstream commit b153a0bb4199566abd337119207f82b59a8cd1ca ]
+[ Upstream commit fd274b733bfdde3ca72f0fa2a37f032f3a8c402c ]
 
-The PMON_CONFIG register on ADM1272 is a 16 bit register. Writing a 8 bit
-value into it clears the upper 8 bits of the register, resulting in
-unexpected side effects. Fix by writing the 16 bit register value.
+this typo was found by the dtbs_check
+| ports:port@5:fixed-link: 'oneOf' conditional failed,
+|  {'speed': [[1000]], 'duplex-full': True} is not of type 'array'
+| 'duplex-full' does not match any of the regexes: 'pinctrl-[0-]..."
 
-Also, it has been reported that temperature readings are sometimes widely
-inaccurate, to the point where readings may result in device shutdown due
-to errant overtemperature faults. Improve by enabling temperature sampling.
+this should have been full-duplex;
 
-While at it, move the common code for ADM1272 and ADM1278 into a separate
-function, and clarify in the error message that an attempt was made to
-enable both VOUT and temperature monitoring.
-
-Last but not least, return the error code reported by the underlying I2C
-controller and not -ENODEV if updating the PMON_CONFIG register fails.
-After all, this does not indicate that the chip is not present, but an
-error in the communication with the chip.
-
-Fixes: 4ff0ce227a1e ("hwmon: (pmbus/adm1275) Add support for ADM1272")
-Fixes: 9da9c2dc57b2 ("hwmon: (adm1275) enable adm1272 temperature reporting")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230602213447.3557346-1-linux@roeck-us.net
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 935327a73553 ("ARM: dts: BCM5301X: Add DT for Meraki MR26")
+Fixes: ec88a9c344d9 ("ARM: BCM5301X: Add DT for Meraki MR32")
+Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
+Link: https://lore.kernel.org/r/50522f45566951a9eabd22820647924cc6b4a264.1686238550.git.chunkeey@gmail.com
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/adm1275.c | 52 +++++++++++++++++------------------
- 1 file changed, 26 insertions(+), 26 deletions(-)
+ arch/arm/boot/dts/bcm53015-meraki-mr26.dts | 2 +-
+ arch/arm/boot/dts/bcm53016-meraki-mr32.dts | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
-index 3b07bfb43e937..b8543c06d022a 100644
---- a/drivers/hwmon/pmbus/adm1275.c
-+++ b/drivers/hwmon/pmbus/adm1275.c
-@@ -37,10 +37,13 @@ enum chips { adm1075, adm1272, adm1275, adm1276, adm1278, adm1293, adm1294 };
+diff --git a/arch/arm/boot/dts/bcm53015-meraki-mr26.dts b/arch/arm/boot/dts/bcm53015-meraki-mr26.dts
+index 14f58033efeb9..ca2266b936ee2 100644
+--- a/arch/arm/boot/dts/bcm53015-meraki-mr26.dts
++++ b/arch/arm/boot/dts/bcm53015-meraki-mr26.dts
+@@ -128,7 +128,7 @@ port@5 {
  
- #define ADM1272_IRANGE			BIT(0)
+ 			fixed-link {
+ 				speed = <1000>;
+-				duplex-full;
++				full-duplex;
+ 			};
+ 		};
+ 	};
+diff --git a/arch/arm/boot/dts/bcm53016-meraki-mr32.dts b/arch/arm/boot/dts/bcm53016-meraki-mr32.dts
+index 46c2c93b01d88..a34e1746a6c59 100644
+--- a/arch/arm/boot/dts/bcm53016-meraki-mr32.dts
++++ b/arch/arm/boot/dts/bcm53016-meraki-mr32.dts
+@@ -187,7 +187,7 @@ port@5 {
  
-+#define ADM1278_TSFILT			BIT(15)
- #define ADM1278_TEMP1_EN		BIT(3)
- #define ADM1278_VIN_EN			BIT(2)
- #define ADM1278_VOUT_EN			BIT(1)
- 
-+#define ADM1278_PMON_DEFCONFIG		(ADM1278_VOUT_EN | ADM1278_TEMP1_EN | ADM1278_TSFILT)
-+
- #define ADM1293_IRANGE_25		0
- #define ADM1293_IRANGE_50		BIT(6)
- #define ADM1293_IRANGE_100		BIT(7)
-@@ -462,6 +465,22 @@ static const struct i2c_device_id adm1275_id[] = {
- };
- MODULE_DEVICE_TABLE(i2c, adm1275_id);
- 
-+/* Enable VOUT & TEMP1 if not enabled (disabled by default) */
-+static int adm1275_enable_vout_temp(struct i2c_client *client, int config)
-+{
-+	int ret;
-+
-+	if ((config & ADM1278_PMON_DEFCONFIG) != ADM1278_PMON_DEFCONFIG) {
-+		config |= ADM1278_PMON_DEFCONFIG;
-+		ret = i2c_smbus_write_word_data(client, ADM1275_PMON_CONFIG, config);
-+		if (ret < 0) {
-+			dev_err(&client->dev, "Failed to enable VOUT/TEMP1 monitoring\n");
-+			return ret;
-+		}
-+	}
-+	return 0;
-+}
-+
- static int adm1275_probe(struct i2c_client *client)
- {
- 	s32 (*config_read_fn)(const struct i2c_client *client, u8 reg);
-@@ -615,19 +634,10 @@ static int adm1275_probe(struct i2c_client *client)
- 			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT |
- 			PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
- 
--		/* Enable VOUT & TEMP1 if not enabled (disabled by default) */
--		if ((config & (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) !=
--		    (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) {
--			config |= ADM1278_VOUT_EN | ADM1278_TEMP1_EN;
--			ret = i2c_smbus_write_byte_data(client,
--							ADM1275_PMON_CONFIG,
--							config);
--			if (ret < 0) {
--				dev_err(&client->dev,
--					"Failed to enable VOUT monitoring\n");
--				return -ENODEV;
--			}
--		}
-+		ret = adm1275_enable_vout_temp(client, config);
-+		if (ret)
-+			return ret;
-+
- 		if (config & ADM1278_VIN_EN)
- 			info->func[0] |= PMBUS_HAVE_VIN;
- 		break;
-@@ -684,19 +694,9 @@ static int adm1275_probe(struct i2c_client *client)
- 			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT |
- 			PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
- 
--		/* Enable VOUT & TEMP1 if not enabled (disabled by default) */
--		if ((config & (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) !=
--		    (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) {
--			config |= ADM1278_VOUT_EN | ADM1278_TEMP1_EN;
--			ret = i2c_smbus_write_word_data(client,
--							ADM1275_PMON_CONFIG,
--							config);
--			if (ret < 0) {
--				dev_err(&client->dev,
--					"Failed to enable VOUT monitoring\n");
--				return -ENODEV;
--			}
--		}
-+		ret = adm1275_enable_vout_temp(client, config);
-+		if (ret)
-+			return ret;
- 
- 		if (config & ADM1278_VIN_EN)
- 			info->func[0] |= PMBUS_HAVE_VIN;
+ 			fixed-link {
+ 				speed = <1000>;
+-				duplex-full;
++				full-duplex;
+ 			};
+ 		};
+ 	};
 -- 
 2.39.2
 
