@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40FF8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:10:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58968C433C8;
-	Sun, 16 Jul 2023 20:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8438F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:10:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 315B0C433C9;
+	Sun, 16 Jul 2023 20:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538242;
-	bh=aGLB9fTFXhPlTP2UmPn6OU4wIC/bJYMGi5N8HJQwZjo=;
+	s=korg; t=1689538245;
+	bh=ZOmRidyhuEmK41QAJu2xoGUIVe+XPR0nxZB6XSn9Sec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MQcSyzp0SDjTWcRU8dIBvTDNnBAz0YzpI5pUoM6ksmAP2Mj+10VoBIU4fPjIYs929
-	 F9ojXv/sJttFtiGDzVEYwhPmjZuksA2wCRubIcjtlg5XRhXL7D4zxVenC5YHNrdrrl
-	 LumRGO5pri3I+ceLGoE3SkWYExp+69xTfOdqiaz8=
+	b=lXMkc1ITMr+8nDZ108105cuqJ52UWrAX3ilzshk+oXtdJASrtIDZO7m9kC3j47DSk
+	 eVLnwTD0HwnrHgml2d8wjxq1Z7GQ/+Oable8KtWe0xVar0Uyk0hKkTgEPvXJjCAmjo
+	 QRZkx0O3FTb/M8SYr13VGryPasz7m575w/kFJifY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Luo <m202171776@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Peng Fan <peng.fan@nxp.com>,
+	Zhanhao Hu <zero12113@hust.edu.cn>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 380/800] clk: imx: clk-imx8mn: fix memory leak in imx8mn_clocks_probe
-Date: Sun, 16 Jul 2023 21:43:53 +0200
-Message-ID: <20230716194957.901693352@linuxfoundation.org>
+Subject: [PATCH 6.4 381/800] clk: imx93: fix memory leak and missing unwind goto in imx93_clocks_probe
+Date: Sun, 16 Jul 2023 21:43:54 +0200
+Message-ID: <20230716194957.924875865@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,56 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hao Luo <m202171776@hust.edu.cn>
+From: Zhanhao Hu <zero12113@hust.edu.cn>
 
-[ Upstream commit 188d070de9132667956f5aadd98d2bd87d3eac89 ]
+[ Upstream commit e02ba11b457647050cb16e7cad16cec3c252fade ]
 
-Use devm_of_iomap() instead of of_iomap() to automatically handle
-the unused ioremap region.
+In function probe(), it returns directly without unregistered hws
+when error occurs.
 
-If any error occurs, regions allocated by kzalloc() will leak,
-but using devm_kzalloc() instead will automatically free the memory
-using devm_kfree().
+Fix this by adding 'goto unregister_hws;' on line 295 and
+line 310.
 
-Fixes: daeb14545514 ("clk: imx: imx8mn: Switch to clk_hw based API")
-Fixes: 96d6392b54db ("clk: imx: Add support for i.MX8MN clock driver")
-Signed-off-by: Hao Luo <m202171776@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20230411015107.2645-1-m202171776@hust.edu.cn
+Use devm_kzalloc() instead of kzalloc() to automatically
+free the memory using devm_kfree() when error occurs.
+
+Replace of_iomap() with devm_of_iomap() to automatically
+handle the unused ioremap region and delete 'iounmap(anatop_base);'
+in unregister_hws.
+
+Fixes: 24defbe194b6 ("clk: imx: add i.MX93 clk")
+Signed-off-by: Zhanhao Hu <zero12113@hust.edu.cn>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20230601033825.336558-1-zero12113@hust.edu.cn
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mn.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/clk/imx/clk-imx93.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx8mn.c b/drivers/clk/imx/clk-imx8mn.c
-index 4b23a46486004..4bd1ed11353b3 100644
---- a/drivers/clk/imx/clk-imx8mn.c
-+++ b/drivers/clk/imx/clk-imx8mn.c
-@@ -323,7 +323,7 @@ static int imx8mn_clocks_probe(struct platform_device *pdev)
- 	void __iomem *base;
- 	int ret;
+diff --git a/drivers/clk/imx/clk-imx93.c b/drivers/clk/imx/clk-imx93.c
+index 07b4a043e4495..b6c7c2725906c 100644
+--- a/drivers/clk/imx/clk-imx93.c
++++ b/drivers/clk/imx/clk-imx93.c
+@@ -264,7 +264,7 @@ static int imx93_clocks_probe(struct platform_device *pdev)
+ 	void __iomem *base, *anatop_base;
+ 	int i, ret;
  
 -	clk_hw_data = kzalloc(struct_size(clk_hw_data, hws,
 +	clk_hw_data = devm_kzalloc(dev, struct_size(clk_hw_data, hws,
- 					  IMX8MN_CLK_END), GFP_KERNEL);
- 	if (WARN_ON(!clk_hw_data))
+ 					  IMX93_CLK_END), GFP_KERNEL);
+ 	if (!clk_hw_data)
  		return -ENOMEM;
-@@ -340,10 +340,10 @@ static int imx8mn_clocks_probe(struct platform_device *pdev)
- 	hws[IMX8MN_CLK_EXT4] = imx_get_clk_hw_by_name(np, "clk_ext4");
+@@ -288,10 +288,12 @@ static int imx93_clocks_probe(struct platform_device *pdev)
+ 								    "sys_pll_pfd2", 1, 2);
  
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mn-anatop");
--	base = of_iomap(np, 0);
-+	base = devm_of_iomap(dev, np, 0, NULL);
+ 	np = of_find_compatible_node(NULL, NULL, "fsl,imx93-anatop");
+-	anatop_base = of_iomap(np, 0);
++	anatop_base = devm_of_iomap(dev, np, 0, NULL);
  	of_node_put(np);
--	if (WARN_ON(!base)) {
--		ret = -ENOMEM;
-+	if (WARN_ON(IS_ERR(base))) {
+-	if (WARN_ON(!anatop_base))
+-		return -ENOMEM;
++	if (WARN_ON(IS_ERR(anatop_base))) {
 +		ret = PTR_ERR(base);
- 		goto unregister_hws;
++		goto unregister_hws;
++	}
+ 
+ 	clks[IMX93_CLK_ARM_PLL] = imx_clk_fracn_gppll_integer("arm_pll", "osc_24m",
+ 							      anatop_base + 0x1000,
+@@ -304,8 +306,8 @@ static int imx93_clocks_probe(struct platform_device *pdev)
+ 	np = dev->of_node;
+ 	base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (WARN_ON(IS_ERR(base))) {
+-		iounmap(anatop_base);
+-		return PTR_ERR(base);
++		ret = PTR_ERR(base);
++		goto unregister_hws;
  	}
  
+ 	for (i = 0; i < ARRAY_SIZE(root_array); i++) {
+@@ -345,7 +347,6 @@ static int imx93_clocks_probe(struct platform_device *pdev)
+ 
+ unregister_hws:
+ 	imx_unregister_hw_clocks(clks, IMX93_CLK_END);
+-	iounmap(anatop_base);
+ 
+ 	return ret;
+ }
 -- 
 2.39.2
 
