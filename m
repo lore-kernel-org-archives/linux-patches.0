@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD728F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:49:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21C08C433CA;
-	Sun, 16 Jul 2023 20:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B47E8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:49:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C1EC433C7;
+	Sun, 16 Jul 2023 20:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540557;
-	bh=W9lKpO2hpnjOaCep9TJPM21+VDoQMnHx66l/UlLwexw=;
+	s=korg; t=1689540560;
+	bh=TXdBClRXVvi48yJrwfyN5ghEtX7rxVGUBD6tVegiZis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zJ19ggJ2AQ5jwse1ZcNZHKT7mFa0a7aTiJNODIENUWDJWnX3thdlm3uK44tHdBmax
-	 j5Is8SVxy76/KRDG3f9qsKfUH0jZksjyjVyBczNYD8Z6THa1Xyv48+/tCxDRFIlYA+
-	 P2z/xdXvArXEtkQVcbW48BkvV9SSf+ZDNqgY9Qyk=
+	b=r1vbL5xDa2/bGP7tHBQpN8jW8drxQgll7f/fnLQs6t6QkOYqhSA5KMX2IE1qXoDSk
+	 JHuuPfZFIc2dyTTCummSMwF2lxLoyDgTinuYkgzXEYetCbPatuOIDibt/8YyrExQ4t
+	 Cn+UJJJpvmWrpvtAUrbk8E0EMiHKph78lGE6fz5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Steigerwald <Martin@lichtvoll.de>,
-	Michael Schmitz <schmitzmic@gmail.com>,
+	Christoph Hellwig <hch@infradead.org>,
+	Demi Marie Obenour <demi@invisiblethingslab.com>,
 	Christoph Hellwig <hch@lst.de>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 378/591] block: change all __u32 annotations to __be32 in affs_hardblocks.h
-Date: Sun, 16 Jul 2023 21:48:37 +0200
-Message-ID: <20230716194933.699597146@linuxfoundation.org>
+Subject: [PATCH 6.1 379/591] block: increment diskseq on all media change events
+Date: Sun, 16 Jul 2023 21:48:38 +0200
+Message-ID: <20230716194933.726121320@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,142 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Schmitz <schmitzmic@gmail.com>
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
 
-commit 95a55437dc49fb3342c82e61f5472a71c63d9ed0 upstream.
+commit b90ecc0379eb7bbe79337b0c7289390a98752646 upstream.
 
-The Amiga partition parser module uses signed int for partition sector
-address and count, which will overflow for disks larger than 1 TB.
+Currently, associating a loop device with a different file descriptor
+does not increment its diskseq.  This allows the following race
+condition:
 
-Use u64 as type for sector address and size to allow using disks up to
-2 TB without LBD support, and disks larger than 2 TB with LBD. The RBD
-format allows to specify disk sizes up to 2^128 bytes (though native
-OS limitations reduce this somewhat, to max 2^68 bytes), so check for
-u64 overflow carefully to protect against overflowing sector_t.
+1. Program X opens a loop device
+2. Program X gets the diskseq of the loop device.
+3. Program X associates a file with the loop device.
+4. Program X passes the loop device major, minor, and diskseq to
+   something.
+5. Program X exits.
+6. Program Y detaches the file from the loop device.
+7. Program Y attaches a different file to the loop device.
+8. The opener finally gets around to opening the loop device and checks
+   that the diskseq is what it expects it to be.  Even though the
+   diskseq is the expected value, the result is that the opener is
+   accessing the wrong file.
 
-This bug was reported originally in 2012, and the fix was created by
-the RDB author, Joanne Dow <jdow@earthlink.net>. A patch had been
-discussed and reviewed on linux-m68k at that time but never officially
-submitted (now resubmitted as patch 1 of this series).
+>From discussions with Christoph Hellwig, it appears that
+disk_force_media_change() was supposed to call inc_diskseq(), but in
+fact it does not.  Adding a Fixes: tag to indicate this.  Christoph's
+Reported-by is because he stated that disk_force_media_change()
+calls inc_diskseq(), which is what led me to discover that it should but
+does not.
 
-Patch 3 (this series) adds additional error checking and warning
-messages. One of the error checks now makes use of the previously
-unused rdb_CylBlocks field, which causes a 'sparse' warning
-(cast to restricted __be32).
-
-Annotate all 32 bit fields in affs_hardblocks.h as __be32, as the
-on-disk format of RDB and partition blocks is always big endian.
-
-Reported-by: Martin Steigerwald <Martin@lichtvoll.de>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=43511
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Message-ID: <201206192146.09327.Martin@lichtvoll.de>
-Cc: <stable@vger.kernel.org> # 5.2
-Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
+Reported-by: Christoph Hellwig <hch@infradead.org>
+Signed-off-by: Demi Marie Obenour <demi@invisiblethingslab.com>
+Fixes: e6138dc12de9 ("block: add a helper to raise a media changed event")
+Cc: stable@vger.kernel.org # 5.15+
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/20230620201725.7020-3-schmitzmic@gmail.com
+Link: https://lore.kernel.org/r/20230607170837.1559-1-demi@invisiblethingslab.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/affs_hardblocks.h |   68 +++++++++++++++++------------------
- 1 file changed, 34 insertions(+), 34 deletions(-)
+ block/disk-events.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/uapi/linux/affs_hardblocks.h
-+++ b/include/uapi/linux/affs_hardblocks.h
-@@ -7,42 +7,42 @@
- /* Just the needed definitions for the RDB of an Amiga HD. */
+--- a/block/disk-events.c
++++ b/block/disk-events.c
+@@ -307,6 +307,7 @@ bool disk_force_media_change(struct gend
+ 	if (!(events & DISK_EVENT_MEDIA_CHANGE))
+ 		return false;
  
- struct RigidDiskBlock {
--	__u32	rdb_ID;
-+	__be32	rdb_ID;
- 	__be32	rdb_SummedLongs;
--	__s32	rdb_ChkSum;
--	__u32	rdb_HostID;
-+	__be32	rdb_ChkSum;
-+	__be32	rdb_HostID;
- 	__be32	rdb_BlockBytes;
--	__u32	rdb_Flags;
--	__u32	rdb_BadBlockList;
-+	__be32	rdb_Flags;
-+	__be32	rdb_BadBlockList;
- 	__be32	rdb_PartitionList;
--	__u32	rdb_FileSysHeaderList;
--	__u32	rdb_DriveInit;
--	__u32	rdb_Reserved1[6];
--	__u32	rdb_Cylinders;
--	__u32	rdb_Sectors;
--	__u32	rdb_Heads;
--	__u32	rdb_Interleave;
--	__u32	rdb_Park;
--	__u32	rdb_Reserved2[3];
--	__u32	rdb_WritePreComp;
--	__u32	rdb_ReducedWrite;
--	__u32	rdb_StepRate;
--	__u32	rdb_Reserved3[5];
--	__u32	rdb_RDBBlocksLo;
--	__u32	rdb_RDBBlocksHi;
--	__u32	rdb_LoCylinder;
--	__u32	rdb_HiCylinder;
--	__u32	rdb_CylBlocks;
--	__u32	rdb_AutoParkSeconds;
--	__u32	rdb_HighRDSKBlock;
--	__u32	rdb_Reserved4;
-+	__be32	rdb_FileSysHeaderList;
-+	__be32	rdb_DriveInit;
-+	__be32	rdb_Reserved1[6];
-+	__be32	rdb_Cylinders;
-+	__be32	rdb_Sectors;
-+	__be32	rdb_Heads;
-+	__be32	rdb_Interleave;
-+	__be32	rdb_Park;
-+	__be32	rdb_Reserved2[3];
-+	__be32	rdb_WritePreComp;
-+	__be32	rdb_ReducedWrite;
-+	__be32	rdb_StepRate;
-+	__be32	rdb_Reserved3[5];
-+	__be32	rdb_RDBBlocksLo;
-+	__be32	rdb_RDBBlocksHi;
-+	__be32	rdb_LoCylinder;
-+	__be32	rdb_HiCylinder;
-+	__be32	rdb_CylBlocks;
-+	__be32	rdb_AutoParkSeconds;
-+	__be32	rdb_HighRDSKBlock;
-+	__be32	rdb_Reserved4;
- 	char	rdb_DiskVendor[8];
- 	char	rdb_DiskProduct[16];
- 	char	rdb_DiskRevision[4];
- 	char	rdb_ControllerVendor[8];
- 	char	rdb_ControllerProduct[16];
- 	char	rdb_ControllerRevision[4];
--	__u32	rdb_Reserved5[10];
-+	__be32	rdb_Reserved5[10];
- };
- 
- #define	IDNAME_RIGIDDISK	0x5244534B	/* "RDSK" */
-@@ -50,16 +50,16 @@ struct RigidDiskBlock {
- struct PartitionBlock {
- 	__be32	pb_ID;
- 	__be32	pb_SummedLongs;
--	__s32	pb_ChkSum;
--	__u32	pb_HostID;
-+	__be32	pb_ChkSum;
-+	__be32	pb_HostID;
- 	__be32	pb_Next;
--	__u32	pb_Flags;
--	__u32	pb_Reserved1[2];
--	__u32	pb_DevFlags;
-+	__be32	pb_Flags;
-+	__be32	pb_Reserved1[2];
-+	__be32	pb_DevFlags;
- 	__u8	pb_DriveName[32];
--	__u32	pb_Reserved2[15];
-+	__be32	pb_Reserved2[15];
- 	__be32	pb_Environment[17];
--	__u32	pb_EReserved[15];
-+	__be32	pb_EReserved[15];
- };
- 
- #define	IDNAME_PARTITION	0x50415254	/* "PART" */
++	inc_diskseq(disk);
+ 	if (__invalidate_device(disk->part0, true))
+ 		pr_warn("VFS: busy inodes on changed media %s\n",
+ 			disk->disk_name);
 
 
