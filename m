@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C518F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:04:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC606C433C8;
-	Sun, 16 Jul 2023 20:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6018F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:04:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A83C433C8;
+	Sun, 16 Jul 2023 20:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537891;
-	bh=lsqHt4dfl38J/s65Bso9NL5TZg7K8Gt0FKHpojw550Q=;
+	s=korg; t=1689537893;
+	bh=ZrTO2D649V22guiTiFjgN8XIFXokbdp1orrBK6M/tvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uIc491YaXDXbE9irG0esJc8O+28sBaoIEn/t0WYs3+n3AXOPtFHUh9OG8aTgp5hh7
-	 0ocFrKOBlnmGyAlSuTcGI1/6KgUdbCL4EkZIGJsJj7xZej2x2qZaT83ySROo6qfYG7
-	 CPrRQIcnUt8cgBD2okK0rGWi2LPZL5SYSizcrt+Y=
+	b=zb/+v1VCO8RCQ3RLusCnXZQ2rgUfY+4DubTytuPkQwVPbuNtUf/antLlII+4ztNsc
+	 RSOCy1c0VyfkloirdUVVDY9BxkwtwS0QOtU7GkIGFHJoi3X0OCSj94uIHqdOGLsk5O
+	 /JyZIwiRW1lYRFveKdeGwTDmLLhxPDEsAXWDEzw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arthur Grillo <arthurgrillo@riseup.net>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mairacanal@riseup.net>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 258/800] drm/vkms: isolate pixel conversion functionality
-Date: Sun, 16 Jul 2023 21:41:51 +0200
-Message-ID: <20230716194955.089576197@linuxfoundation.org>
+Subject: [PATCH 6.4 241/800] drm/bridge: tc358768: fix THS_ZEROCNT computation
+Date: Sun, 16 Jul 2023 21:41:34 +0200
+Message-ID: <20230716194954.700009797@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,263 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit 322d716a3e8a74fb75cd0f657647be4df253fd2f ]
+[ Upstream commit 77a089328da791118af9692543a5eedc79eb5fd4 ]
 
-Currently, the pixel conversion functions repeat the same loop to
-iterate the rows. Instead of repeating the same code for each pixel
-format, create a function to wrap the loop and isolate the pixel
-conversion functionality.
+Correct computation of THS_ZEROCNT register.
 
-Suggested-by: Arthur Grillo <arthurgrillo@riseup.net>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Reviewed-by: Arthur Grillo <arthurgrillo@riseup.net>
-Signed-off-by: Maíra Canal <mairacanal@riseup.net>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230418130525.128733-2-mcanal@igalia.com
-Stable-dep-of: ab87f558dcfb ("drm/vkms: Fix RGB565 pixel conversion")
+This register must be set to a value that ensure that
+THS_PREPARE + THS_ZERO > 145ns + 10*UI
+
+with the actual value of (THS_PREPARE + THS_ZERO) being
+
+((1 to 2) + 1 + (TCLK_ZEROCNT + 1) + (3 to 4)) x ByteClk cycle +
+  + HSByteClk x (2 + (1 to 2)) + (PHY delay)
+
+with PHY delay being about
+
+(8 + (5 to 6)) x MIPIBitClk cycle in the BitClk conversion.
+
+Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-7-francesco@dolcini.it
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vkms/vkms_composer.c |   4 +-
- drivers/gpu/drm/vkms/vkms_drv.h      |   4 +-
- drivers/gpu/drm/vkms/vkms_formats.c  | 125 +++++++++++----------------
- drivers/gpu/drm/vkms/vkms_formats.h  |   2 +-
- drivers/gpu/drm/vkms/vkms_plane.c    |   2 +-
- 5 files changed, 56 insertions(+), 81 deletions(-)
+ drivers/gpu/drm/bridge/tc358768.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/vkms/vkms_composer.c b/drivers/gpu/drm/vkms/vkms_composer.c
-index 8e53fa80742b2..80164e79af006 100644
---- a/drivers/gpu/drm/vkms/vkms_composer.c
-+++ b/drivers/gpu/drm/vkms/vkms_composer.c
-@@ -99,7 +99,7 @@ static void blend(struct vkms_writeback_job *wb,
- 			if (!check_y_limit(plane[i]->frame_info, y))
- 				continue;
+diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
+index 4cb46a3e6be8c..e3f456bfb90c1 100644
+--- a/drivers/gpu/drm/bridge/tc358768.c
++++ b/drivers/gpu/drm/bridge/tc358768.c
+@@ -761,9 +761,10 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 	/* 40ns + 4*UI < THS_PREPARE < 85ns + 6*UI */
+ 	val = 50 + tc358768_to_ns(4 * ui_nsk);
+ 	val = tc358768_ns_to_cnt(val, dsibclk_nsk) - 1;
+-	/* THS_ZERO > 145ns + 10*UI */
+-	val2 = tc358768_ns_to_cnt(145 - tc358768_to_ns(ui_nsk), dsibclk_nsk);
+-	val |= (val2 - tc358768_to_ns(phy_delay_nsk)) << 8;
++	/* THS_PREPARE + THS_ZERO > 145ns + 10*UI */
++	raw_val = tc358768_ns_to_cnt(145 - tc358768_to_ns(3 * ui_nsk), dsibclk_nsk) - 10;
++	val2 = clamp(raw_val, 0, 127);
++	val |= val2 << 8;
+ 	dev_dbg(priv->dev, "THS_HEADERCNT: 0x%x\n", val);
+ 	tc358768_write(priv, TC358768_THS_HEADERCNT, val);
  
--			plane[i]->plane_read(stage_buffer, plane[i]->frame_info, y);
-+			vkms_compose_row(stage_buffer, plane[i], y);
- 			pre_mul_alpha_blend(plane[i]->frame_info, stage_buffer,
- 					    output_buffer);
- 		}
-@@ -118,7 +118,7 @@ static int check_format_funcs(struct vkms_crtc_state *crtc_state,
- 	u32 n_active_planes = crtc_state->num_active_planes;
- 
- 	for (size_t i = 0; i < n_active_planes; i++)
--		if (!planes[i]->plane_read)
-+		if (!planes[i]->pixel_read)
- 			return -1;
- 
- 	if (active_wb && !active_wb->wb_write)
-diff --git a/drivers/gpu/drm/vkms/vkms_drv.h b/drivers/gpu/drm/vkms/vkms_drv.h
-index 4a248567efb26..f152d54baf769 100644
---- a/drivers/gpu/drm/vkms/vkms_drv.h
-+++ b/drivers/gpu/drm/vkms/vkms_drv.h
-@@ -56,8 +56,7 @@ struct vkms_writeback_job {
- struct vkms_plane_state {
- 	struct drm_shadow_plane_state base;
- 	struct vkms_frame_info *frame_info;
--	void (*plane_read)(struct line_buffer *buffer,
--			   const struct vkms_frame_info *frame_info, int y);
-+	void (*pixel_read)(u8 *src_buffer, struct pixel_argb_u16 *out_pixel);
- };
- 
- struct vkms_plane {
-@@ -155,6 +154,7 @@ int vkms_verify_crc_source(struct drm_crtc *crtc, const char *source_name,
- /* Composer Support */
- void vkms_composer_worker(struct work_struct *work);
- void vkms_set_composer(struct vkms_output *out, bool enabled);
-+void vkms_compose_row(struct line_buffer *stage_buffer, struct vkms_plane_state *plane, int y);
- 
- /* Writeback */
- int vkms_enable_writeback_connector(struct vkms_device *vkmsdev);
-diff --git a/drivers/gpu/drm/vkms/vkms_formats.c b/drivers/gpu/drm/vkms/vkms_formats.c
-index d4950688b3f17..8d948c73741ef 100644
---- a/drivers/gpu/drm/vkms/vkms_formats.c
-+++ b/drivers/gpu/drm/vkms/vkms_formats.c
-@@ -42,100 +42,75 @@ static void *get_packed_src_addr(const struct vkms_frame_info *frame_info, int y
- 	return packed_pixels_addr(frame_info, x_src, y_src);
- }
- 
--static void ARGB8888_to_argb_u16(struct line_buffer *stage_buffer,
--				 const struct vkms_frame_info *frame_info, int y)
-+static void ARGB8888_to_argb_u16(u8 *src_pixels, struct pixel_argb_u16 *out_pixel)
- {
--	struct pixel_argb_u16 *out_pixels = stage_buffer->pixels;
--	u8 *src_pixels = get_packed_src_addr(frame_info, y);
--	int x_limit = min_t(size_t, drm_rect_width(&frame_info->dst),
--			    stage_buffer->n_pixels);
--
--	for (size_t x = 0; x < x_limit; x++, src_pixels += 4) {
--		/*
--		 * The 257 is the "conversion ratio". This number is obtained by the
--		 * (2^16 - 1) / (2^8 - 1) division. Which, in this case, tries to get
--		 * the best color value in a pixel format with more possibilities.
--		 * A similar idea applies to others RGB color conversions.
--		 */
--		out_pixels[x].a = (u16)src_pixels[3] * 257;
--		out_pixels[x].r = (u16)src_pixels[2] * 257;
--		out_pixels[x].g = (u16)src_pixels[1] * 257;
--		out_pixels[x].b = (u16)src_pixels[0] * 257;
--	}
-+	/*
-+	 * The 257 is the "conversion ratio". This number is obtained by the
-+	 * (2^16 - 1) / (2^8 - 1) division. Which, in this case, tries to get
-+	 * the best color value in a pixel format with more possibilities.
-+	 * A similar idea applies to others RGB color conversions.
-+	 */
-+	out_pixel->a = (u16)src_pixels[3] * 257;
-+	out_pixel->r = (u16)src_pixels[2] * 257;
-+	out_pixel->g = (u16)src_pixels[1] * 257;
-+	out_pixel->b = (u16)src_pixels[0] * 257;
- }
- 
--static void XRGB8888_to_argb_u16(struct line_buffer *stage_buffer,
--				 const struct vkms_frame_info *frame_info, int y)
-+static void XRGB8888_to_argb_u16(u8 *src_pixels, struct pixel_argb_u16 *out_pixel)
- {
--	struct pixel_argb_u16 *out_pixels = stage_buffer->pixels;
--	u8 *src_pixels = get_packed_src_addr(frame_info, y);
--	int x_limit = min_t(size_t, drm_rect_width(&frame_info->dst),
--			    stage_buffer->n_pixels);
--
--	for (size_t x = 0; x < x_limit; x++, src_pixels += 4) {
--		out_pixels[x].a = (u16)0xffff;
--		out_pixels[x].r = (u16)src_pixels[2] * 257;
--		out_pixels[x].g = (u16)src_pixels[1] * 257;
--		out_pixels[x].b = (u16)src_pixels[0] * 257;
--	}
-+	out_pixel->a = (u16)0xffff;
-+	out_pixel->r = (u16)src_pixels[2] * 257;
-+	out_pixel->g = (u16)src_pixels[1] * 257;
-+	out_pixel->b = (u16)src_pixels[0] * 257;
- }
- 
--static void ARGB16161616_to_argb_u16(struct line_buffer *stage_buffer,
--				     const struct vkms_frame_info *frame_info,
--				     int y)
-+static void ARGB16161616_to_argb_u16(u8 *src_pixels, struct pixel_argb_u16 *out_pixel)
- {
--	struct pixel_argb_u16 *out_pixels = stage_buffer->pixels;
--	u16 *src_pixels = get_packed_src_addr(frame_info, y);
--	int x_limit = min_t(size_t, drm_rect_width(&frame_info->dst),
--			    stage_buffer->n_pixels);
-+	u16 *pixels = (u16 *)src_pixels;
- 
--	for (size_t x = 0; x < x_limit; x++, src_pixels += 4) {
--		out_pixels[x].a = le16_to_cpu(src_pixels[3]);
--		out_pixels[x].r = le16_to_cpu(src_pixels[2]);
--		out_pixels[x].g = le16_to_cpu(src_pixels[1]);
--		out_pixels[x].b = le16_to_cpu(src_pixels[0]);
--	}
-+	out_pixel->a = le16_to_cpu(pixels[3]);
-+	out_pixel->r = le16_to_cpu(pixels[2]);
-+	out_pixel->g = le16_to_cpu(pixels[1]);
-+	out_pixel->b = le16_to_cpu(pixels[0]);
- }
- 
--static void XRGB16161616_to_argb_u16(struct line_buffer *stage_buffer,
--				     const struct vkms_frame_info *frame_info,
--				     int y)
-+static void XRGB16161616_to_argb_u16(u8 *src_pixels, struct pixel_argb_u16 *out_pixel)
- {
--	struct pixel_argb_u16 *out_pixels = stage_buffer->pixels;
--	u16 *src_pixels = get_packed_src_addr(frame_info, y);
--	int x_limit = min_t(size_t, drm_rect_width(&frame_info->dst),
--			    stage_buffer->n_pixels);
-+	u16 *pixels = (u16 *)src_pixels;
- 
--	for (size_t x = 0; x < x_limit; x++, src_pixels += 4) {
--		out_pixels[x].a = (u16)0xffff;
--		out_pixels[x].r = le16_to_cpu(src_pixels[2]);
--		out_pixels[x].g = le16_to_cpu(src_pixels[1]);
--		out_pixels[x].b = le16_to_cpu(src_pixels[0]);
--	}
-+	out_pixel->a = (u16)0xffff;
-+	out_pixel->r = le16_to_cpu(pixels[2]);
-+	out_pixel->g = le16_to_cpu(pixels[1]);
-+	out_pixel->b = le16_to_cpu(pixels[0]);
- }
- 
--static void RGB565_to_argb_u16(struct line_buffer *stage_buffer,
--			       const struct vkms_frame_info *frame_info, int y)
-+static void RGB565_to_argb_u16(u8 *src_pixels, struct pixel_argb_u16 *out_pixel)
- {
--	struct pixel_argb_u16 *out_pixels = stage_buffer->pixels;
--	u16 *src_pixels = get_packed_src_addr(frame_info, y);
--	int x_limit = min_t(size_t, drm_rect_width(&frame_info->dst),
--			       stage_buffer->n_pixels);
-+	u16 *pixels = (u16 *)src_pixels;
- 
- 	s64 fp_rb_ratio = drm_fixp_div(drm_int2fixp(65535), drm_int2fixp(31));
- 	s64 fp_g_ratio = drm_fixp_div(drm_int2fixp(65535), drm_int2fixp(63));
- 
--	for (size_t x = 0; x < x_limit; x++, src_pixels++) {
--		u16 rgb_565 = le16_to_cpu(*src_pixels);
--		s64 fp_r = drm_int2fixp((rgb_565 >> 11) & 0x1f);
--		s64 fp_g = drm_int2fixp((rgb_565 >> 5) & 0x3f);
--		s64 fp_b = drm_int2fixp(rgb_565 & 0x1f);
-+	u16 rgb_565 = le16_to_cpu(*pixels);
-+	s64 fp_r = drm_int2fixp((rgb_565 >> 11) & 0x1f);
-+	s64 fp_g = drm_int2fixp((rgb_565 >> 5) & 0x3f);
-+	s64 fp_b = drm_int2fixp(rgb_565 & 0x1f);
- 
--		out_pixels[x].a = (u16)0xffff;
--		out_pixels[x].r = drm_fixp2int(drm_fixp_mul(fp_r, fp_rb_ratio));
--		out_pixels[x].g = drm_fixp2int(drm_fixp_mul(fp_g, fp_g_ratio));
--		out_pixels[x].b = drm_fixp2int(drm_fixp_mul(fp_b, fp_rb_ratio));
--	}
-+	out_pixel->a = (u16)0xffff;
-+	out_pixel->r = drm_fixp2int(drm_fixp_mul(fp_r, fp_rb_ratio));
-+	out_pixel->g = drm_fixp2int(drm_fixp_mul(fp_g, fp_g_ratio));
-+	out_pixel->b = drm_fixp2int(drm_fixp_mul(fp_b, fp_rb_ratio));
-+}
-+
-+void vkms_compose_row(struct line_buffer *stage_buffer, struct vkms_plane_state *plane, int y)
-+{
-+	struct pixel_argb_u16 *out_pixels = stage_buffer->pixels;
-+	struct vkms_frame_info *frame_info = plane->frame_info;
-+	u8 *src_pixels = get_packed_src_addr(frame_info, y);
-+	int limit = min_t(size_t, drm_rect_width(&frame_info->dst), stage_buffer->n_pixels);
-+
-+	for (size_t x = 0; x < limit; x++, src_pixels += frame_info->cpp)
-+		plane->pixel_read(src_pixels, &out_pixels[x]);
- }
- 
- /*
-@@ -249,7 +224,7 @@ static void argb_u16_to_RGB565(struct vkms_frame_info *frame_info,
- 	}
- }
- 
--void *get_frame_to_line_function(u32 format)
-+void *get_pixel_conversion_function(u32 format)
- {
- 	switch (format) {
- 	case DRM_FORMAT_ARGB8888:
-diff --git a/drivers/gpu/drm/vkms/vkms_formats.h b/drivers/gpu/drm/vkms/vkms_formats.h
-index 43b7c19790181..c5b113495d0c0 100644
---- a/drivers/gpu/drm/vkms/vkms_formats.h
-+++ b/drivers/gpu/drm/vkms/vkms_formats.h
-@@ -5,7 +5,7 @@
- 
- #include "vkms_drv.h"
- 
--void *get_frame_to_line_function(u32 format);
-+void *get_pixel_conversion_function(u32 format);
- 
- void *get_line_to_frame_function(u32 format);
- 
-diff --git a/drivers/gpu/drm/vkms/vkms_plane.c b/drivers/gpu/drm/vkms/vkms_plane.c
-index c41cec7dcb703..0a23875900ec5 100644
---- a/drivers/gpu/drm/vkms/vkms_plane.c
-+++ b/drivers/gpu/drm/vkms/vkms_plane.c
-@@ -123,7 +123,7 @@ static void vkms_plane_atomic_update(struct drm_plane *plane,
- 	frame_info->offset = fb->offsets[0];
- 	frame_info->pitch = fb->pitches[0];
- 	frame_info->cpp = fb->format->cpp[0];
--	vkms_plane_state->plane_read = get_frame_to_line_function(fmt);
-+	vkms_plane_state->pixel_read = get_pixel_conversion_function(fmt);
- }
- 
- static int vkms_plane_atomic_check(struct drm_plane *plane,
 -- 
 2.39.2
 
