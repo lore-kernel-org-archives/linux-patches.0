@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9D78F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:55:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 414BEC433C7;
-	Sun, 16 Jul 2023 20:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813EA8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:55:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0685FC433C7;
+	Sun, 16 Jul 2023 20:55:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540918;
-	bh=E0GuzGEfM6pI5WVJ40Y+SbSHRs1OzO2IVWHt2HE58Bg=;
+	s=korg; t=1689540921;
+	bh=lpKjYR8YtBNqgcYQ1biYaEaYfki/fu2fE6kWjePgTPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EJKEdryYcYSe6hR/DtewjGamdFSDwpuea96kOpfkY/WMaFaywnDUjRnMxBqgSNDd3
-	 D0aDRsHNIyA8IqDV7pwD/GIF2q60ME8lZlQYCA9lNkke+hZ76cSsVYGOVOwhT4dOli
-	 1OwJ5bCrJUSTUN4F3OrrZSNI+P/j5dQd+GKTjj2k=
+	b=m8RK0NLWRUyhsXlnekqncqEafzg9lCsrzSKX5RXwj2zfUodrx2MUzWIVZxAEFk6Os
+	 /ZI6nbHmBK96C8Sb6I8VUvDUqDJ/cLI3Ey2aDIb9LyQwzci+c2iZynjQY2dlpmSv0x
+	 4ePJTpinBHAqSXWn6RBtk/dCl3/jotiekKvzAcxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	Juan Martinez <juan.martinez@amd.com>,
-	Leon Yen <leon.yen@mediatek.com>,
-	Quan Zhou <quan.zhou@mediatek.com>,
-	Deren Wu <deren.wu@mediatek.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 535/591] wifi: mt76: mt7921e: fix init command fail with enabled device
-Date: Sun, 16 Jul 2023 21:51:14 +0200
-Message-ID: <20230716194937.708911663@linuxfoundation.org>
+	Mingzhe Zou <mingzhe.zou@easystack.cn>,
+	Coly Li <colyli@suse.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 536/591] bcache: fixup btree_cache_wait list damage
+Date: Sun, 16 Jul 2023 21:51:15 +0200
+Message-ID: <20230716194937.733300027@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,123 +35,120 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Quan Zhou <quan.zhou@mediatek.com>
+From: Mingzhe Zou <mingzhe.zou@easystack.cn>
 
-commit 525c469e5de9bf7e53574396196e80fc716ac9eb upstream.
+commit f0854489fc07d2456f7cc71a63f4faf9c716ffbe upstream.
 
-For some cases as below, we may encounter the unpreditable chip stats
-in driver probe()
-* The system reboot flow do not work properly, such as kernel oops while
-  rebooting, and then the driver do not go back to default status at
-  this moment.
-* Similar to the flow above. If the device was enabled in BIOS or UEFI,
-  the system may switch to Linux without driver fully shutdown.
+We get a kernel crash about "list_add corruption. next->prev should be
+prev (ffff9c801bc01210), but was ffff9c77b688237c.
+(next=ffffae586d8afe68)."
 
-To avoid the problem, force push the device back to default in probe()
-* mt7921e_mcu_fw_pmctrl() : return control privilege to chip side.
-* mt7921_wfsys_reset()    : cleanup chip config before resource init.
+crash> struct list_head 0xffff9c801bc01210
+struct list_head {
+  next = 0xffffae586d8afe68,
+  prev = 0xffffae586d8afe68
+}
+crash> struct list_head 0xffff9c77b688237c
+struct list_head {
+  next = 0x0,
+  prev = 0x0
+}
+crash> struct list_head 0xffffae586d8afe68
+struct list_head struct: invalid kernel virtual address: ffffae586d8afe68  type: "gdb_readmem_callback"
+Cannot access memory at address 0xffffae586d8afe68
 
-Error log
-[59007.600714] mt7921e 0000:02:00.0: ASIC revision: 79220010
-[59010.889773] mt7921e 0000:02:00.0: Message 00000010 (seq 1) timeout
-[59010.889786] mt7921e 0000:02:00.0: Failed to get patch semaphore
-[59014.217839] mt7921e 0000:02:00.0: Message 00000010 (seq 2) timeout
-[59014.217852] mt7921e 0000:02:00.0: Failed to get patch semaphore
-[59017.545880] mt7921e 0000:02:00.0: Message 00000010 (seq 3) timeout
-[59017.545893] mt7921e 0000:02:00.0: Failed to get patch semaphore
-[59020.874086] mt7921e 0000:02:00.0: Message 00000010 (seq 4) timeout
-[59020.874099] mt7921e 0000:02:00.0: Failed to get patch semaphore
-[59024.202019] mt7921e 0000:02:00.0: Message 00000010 (seq 5) timeout
-[59024.202033] mt7921e 0000:02:00.0: Failed to get patch semaphore
-[59027.530082] mt7921e 0000:02:00.0: Message 00000010 (seq 6) timeout
-[59027.530096] mt7921e 0000:02:00.0: Failed to get patch semaphore
-[59030.857888] mt7921e 0000:02:00.0: Message 00000010 (seq 7) timeout
-[59030.857904] mt7921e 0000:02:00.0: Failed to get patch semaphore
-[59034.185946] mt7921e 0000:02:00.0: Message 00000010 (seq 8) timeout
-[59034.185961] mt7921e 0000:02:00.0: Failed to get patch semaphore
-[59037.514249] mt7921e 0000:02:00.0: Message 00000010 (seq 9) timeout
-[59037.514262] mt7921e 0000:02:00.0: Failed to get patch semaphore
-[59040.842362] mt7921e 0000:02:00.0: Message 00000010 (seq 10) timeout
-[59040.842375] mt7921e 0000:02:00.0: Failed to get patch semaphore
-[59040.923845] mt7921e 0000:02:00.0: hardware init failed
+[230469.019492] Call Trace:
+[230469.032041]  prepare_to_wait+0x8a/0xb0
+[230469.044363]  ? bch_btree_keys_free+0x6c/0xc0 [escache]
+[230469.056533]  mca_cannibalize_lock+0x72/0x90 [escache]
+[230469.068788]  mca_alloc+0x2ae/0x450 [escache]
+[230469.080790]  bch_btree_node_get+0x136/0x2d0 [escache]
+[230469.092681]  bch_btree_check_thread+0x1e1/0x260 [escache]
+[230469.104382]  ? finish_wait+0x80/0x80
+[230469.115884]  ? bch_btree_check_recurse+0x1a0/0x1a0 [escache]
+[230469.127259]  kthread+0x112/0x130
+[230469.138448]  ? kthread_flush_work_fn+0x10/0x10
+[230469.149477]  ret_from_fork+0x35/0x40
 
+bch_btree_check_thread() and bch_dirty_init_thread() may call
+mca_cannibalize() to cannibalize other cached btree nodes. Only one thread
+can do it at a time, so the op of other threads will be added to the
+btree_cache_wait list.
+
+We must call finish_wait() to remove op from btree_cache_wait before free
+it's memory address. Otherwise, the list will be damaged. Also should call
+bch_cannibalize_unlock() to release the btree_cache_alloc_lock and wake_up
+other waiters.
+
+Fixes: 8e7102273f59 ("bcache: make bch_btree_check() to be multithreaded")
+Fixes: b144e45fc576 ("bcache: make bch_sectors_dirty_init() to be multithreaded")
 Cc: stable@vger.kernel.org
-Fixes: 5c14a5f944b9 ("mt76: mt7921: introduce mt7921e support")
-Tested-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Tested-by: Juan Martinez <juan.martinez@amd.com>
-Co-developed-by: Leon Yen <leon.yen@mediatek.com>
-Signed-off-by: Leon Yen <leon.yen@mediatek.com>
-Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
-Signed-off-by: Deren Wu <deren.wu@mediatek.com>
-Message-ID: <39fcb7cee08d4ab940d38d82f21897483212483f.1688569385.git.deren.wu@mediatek.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Mingzhe Zou <mingzhe.zou@easystack.cn>
+Signed-off-by: Coly Li <colyli@suse.de>
+Link: https://lore.kernel.org/r/20230615121223.22502-7-colyli@suse.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/dma.c |    4 ----
- drivers/net/wireless/mediatek/mt76/mt7921/mcu.c |    8 --------
- drivers/net/wireless/mediatek/mt76/mt7921/pci.c |    8 ++++++++
- 3 files changed, 8 insertions(+), 12 deletions(-)
+ drivers/md/bcache/btree.c     |   11 ++++++++++-
+ drivers/md/bcache/btree.h     |    1 +
+ drivers/md/bcache/writeback.c |   10 ++++++++++
+ 3 files changed, 21 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7921/dma.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/dma.c
-@@ -231,10 +231,6 @@ int mt7921_dma_init(struct mt7921_dev *d
- 	if (ret)
- 		return ret;
- 
--	ret = mt7921_wfsys_reset(dev);
--	if (ret)
--		return ret;
--
- 	/* init tx queue */
- 	ret = mt76_connac_init_tx_queues(dev->phy.mt76, MT7921_TXQ_BAND0,
- 					 MT7921_TX_RING_SIZE,
---- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-@@ -449,12 +449,6 @@ static int mt7921_load_firmware(struct m
+--- a/drivers/md/bcache/btree.c
++++ b/drivers/md/bcache/btree.c
+@@ -885,7 +885,7 @@ static struct btree *mca_cannibalize(str
+  * cannibalize_bucket() will take. This means every time we unlock the root of
+  * the btree, we need to release this lock if we have it held.
+  */
+-static void bch_cannibalize_unlock(struct cache_set *c)
++void bch_cannibalize_unlock(struct cache_set *c)
  {
- 	int ret;
+ 	spin_lock(&c->btree_cannibalize_lock);
+ 	if (c->btree_cache_alloc_lock == current) {
+@@ -1968,6 +1968,15 @@ static int bch_btree_check_thread(void *
+ 			c->gc_stats.nodes++;
+ 			bch_btree_op_init(&op, 0);
+ 			ret = bcache_btree(check_recurse, p, c->root, &op);
++			/*
++			 * The op may be added to cache_set's btree_cache_wait
++			 * in mca_cannibalize(), must ensure it is removed from
++			 * the list and release btree_cache_alloc_lock before
++			 * free op memory.
++			 * Otherwise, the btree_cache_wait will be damaged.
++			 */
++			bch_cannibalize_unlock(c);
++			finish_wait(&c->btree_cache_wait, &(&op)->wait);
+ 			if (ret)
+ 				goto out;
+ 		}
+--- a/drivers/md/bcache/btree.h
++++ b/drivers/md/bcache/btree.h
+@@ -282,6 +282,7 @@ void bch_initial_gc_finish(struct cache_
+ void bch_moving_gc(struct cache_set *c);
+ int bch_btree_check(struct cache_set *c);
+ void bch_initial_mark_key(struct cache_set *c, int level, struct bkey *k);
++void bch_cannibalize_unlock(struct cache_set *c);
  
--	ret = mt76_get_field(dev, MT_CONN_ON_MISC, MT_TOP_MISC2_FW_N9_RDY);
--	if (ret && mt76_is_mmio(&dev->mt76)) {
--		dev_dbg(dev->mt76.dev, "Firmware is already download\n");
--		goto fw_loaded;
--	}
--
- 	ret = mt76_connac2_load_patch(&dev->mt76, mt7921_patch_name(dev));
- 	if (ret)
- 		return ret;
-@@ -477,8 +471,6 @@ static int mt7921_load_firmware(struct m
- 		return -EIO;
- 	}
+ static inline void wake_up_gc(struct cache_set *c)
+ {
+--- a/drivers/md/bcache/writeback.c
++++ b/drivers/md/bcache/writeback.c
+@@ -890,6 +890,16 @@ static int bch_root_node_dirty_init(stru
+ 	if (ret < 0)
+ 		pr_warn("sectors dirty init failed, ret=%d!\n", ret);
  
--fw_loaded:
--
- #ifdef CONFIG_PM
- 	dev->mt76.hw->wiphy->wowlan = &mt76_connac_wowlan_support;
- #endif /* CONFIG_PM */
---- a/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
-@@ -316,6 +316,10 @@ static int mt7921_pci_probe(struct pci_d
- 	bus_ops->rmw = mt7921_rmw;
- 	dev->mt76.bus = bus_ops;
- 
-+	ret = mt7921e_mcu_fw_pmctrl(dev);
-+	if (ret)
-+		goto err_free_dev;
++	/*
++	 * The op may be added to cache_set's btree_cache_wait
++	 * in mca_cannibalize(), must ensure it is removed from
++	 * the list and release btree_cache_alloc_lock before
++	 * free op memory.
++	 * Otherwise, the btree_cache_wait will be damaged.
++	 */
++	bch_cannibalize_unlock(c);
++	finish_wait(&c->btree_cache_wait, &(&op.op)->wait);
 +
- 	ret = __mt7921e_mcu_drv_pmctrl(dev);
- 	if (ret)
- 		goto err_free_dev;
-@@ -324,6 +328,10 @@ static int mt7921_pci_probe(struct pci_d
- 		    (mt7921_l1_rr(dev, MT_HW_REV) & 0xff);
- 	dev_info(mdev->dev, "ASIC revision: %04x\n", mdev->rev);
+ 	return ret;
+ }
  
-+	ret = mt7921_wfsys_reset(dev);
-+	if (ret)
-+		goto err_free_dev;
-+
- 	mt76_wr(dev, MT_WFDMA0_HOST_INT_ENA, 0);
- 
- 	mt76_wr(dev, MT_PCIE_MAC_INT_ENABLE, 0xff);
 
 
