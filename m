@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98BC8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:03:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1BAC433C7;
-	Sun, 16 Jul 2023 20:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87DD58F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:03:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5CDC433C8;
+	Sun, 16 Jul 2023 20:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537801;
-	bh=TukPhmvxnHNVGIj+rydqQQiaM1s8jdt/fw4LTDA9EXM=;
+	s=korg; t=1689537804;
+	bh=CeWq2Sf9QMRyOiVTZyEMY9ZJsIy9IKrB/6j3O0b7qIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2abMgscLumxuESFfvIIBEKZvS3Effzq80/78orFhkORH4pU/Vmzi3KioD/gk61TKD
-	 XRMTlotJ4M0/NzVj69fjg3IoHKDdaYwyrnis8zLM2xzRgau+gMH8eemI7BdlkYIXgK
-	 tB52y5sLnqp1o5Af3DE3UiOcEVB2bgQugbzxBZiU=
+	b=L4aHZtijnVRZGfZUEkw9MlzU4U6BzMYoH+FT2H8xfMY1mfCqZQ1Ip0VFXSBXwNM2P
+	 lcT7l9jM9jvZ2IsnSp9sit4CdVONE/IiqINbfAOBKTibRkXSRGkPUhN33CiVMMHJ5P
+	 yPZ70j3QWFopu7aBev84MJKN5QaDfP3n7dvp77IQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 208/800] selftests: rtnetlink: remove netdevsim device after ipsec offload test
-Date: Sun, 16 Jul 2023 21:41:01 +0200
-Message-ID: <20230716194953.928966895@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Natalia Petrova <n.petrova@fintech.ru>
+Subject: [PATCH 6.4 226/800] radeon: avoid double free in ci_dpm_init()
+Date: Sun, 16 Jul 2023 21:41:19 +0200
+Message-ID: <20230716194954.339810286@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,37 +36,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 5f789f103671fec3733ebe756e56adf15c90c21d ]
+[ Upstream commit 20c3dffdccbd494e0dd631d1660aeecbff6775f2 ]
 
-On systems where netdevsim is built-in or loaded before the test
-starts, kci_test_ipsec_offload doesn't remove the netdevsim device it
-created during the test.
+Several calls to ci_dpm_fini() will attempt to free resources that
+either have been freed before or haven't been allocated yet. This
+may lead to undefined or dangerous behaviour.
 
-Fixes: e05b2d141fef ("netdevsim: move netdev creation/destruction to dev probe")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://lore.kernel.org/r/e1cb94f4f82f4eca4a444feec4488a1323396357.1687466906.git.sd@queasysnail.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+For instance, if r600_parse_extended_power_table() fails, it might
+call r600_free_extended_power_table() as will ci_dpm_fini() later
+during error handling.
+
+Fix this by only freeing pointers to objects previously allocated.
+
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: cc8dbbb4f62a ("drm/radeon: add dpm support for CI dGPUs (v2)")
+Co-developed-by: Natalia Petrova <n.petrova@fintech.ru>
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/rtnetlink.sh | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/radeon/ci_dpm.c | 28 ++++++++++++++++++++--------
+ 1 file changed, 20 insertions(+), 8 deletions(-)
 
-diff --git a/tools/testing/selftests/net/rtnetlink.sh b/tools/testing/selftests/net/rtnetlink.sh
-index 383ac6fc037d0..ba286d680fd9a 100755
---- a/tools/testing/selftests/net/rtnetlink.sh
-+++ b/tools/testing/selftests/net/rtnetlink.sh
-@@ -860,6 +860,7 @@ EOF
- 	fi
+diff --git a/drivers/gpu/drm/radeon/ci_dpm.c b/drivers/gpu/drm/radeon/ci_dpm.c
+index 8ef25ab305ae7..b8f4dac68d850 100644
+--- a/drivers/gpu/drm/radeon/ci_dpm.c
++++ b/drivers/gpu/drm/radeon/ci_dpm.c
+@@ -5517,6 +5517,7 @@ static int ci_parse_power_table(struct radeon_device *rdev)
+ 	u8 frev, crev;
+ 	u8 *power_state_offset;
+ 	struct ci_ps *ps;
++	int ret;
  
- 	# clean up any leftovers
-+	echo 0 > /sys/bus/netdevsim/del_device
- 	$probed && rmmod netdevsim
+ 	if (!atom_parse_data_header(mode_info->atom_context, index, NULL,
+ 				   &frev, &crev, &data_offset))
+@@ -5546,11 +5547,15 @@ static int ci_parse_power_table(struct radeon_device *rdev)
+ 		non_clock_array_index = power_state->v2.nonClockInfoIndex;
+ 		non_clock_info = (struct _ATOM_PPLIB_NONCLOCK_INFO *)
+ 			&non_clock_info_array->nonClockInfo[non_clock_array_index];
+-		if (!rdev->pm.power_state[i].clock_info)
+-			return -EINVAL;
++		if (!rdev->pm.power_state[i].clock_info) {
++			ret = -EINVAL;
++			goto err_free_ps;
++		}
+ 		ps = kzalloc(sizeof(struct ci_ps), GFP_KERNEL);
+-		if (ps == NULL)
+-			return -ENOMEM;
++		if (ps == NULL) {
++			ret = -ENOMEM;
++			goto err_free_ps;
++		}
+ 		rdev->pm.dpm.ps[i].ps_priv = ps;
+ 		ci_parse_pplib_non_clock_info(rdev, &rdev->pm.dpm.ps[i],
+ 					      non_clock_info,
+@@ -5590,6 +5595,12 @@ static int ci_parse_power_table(struct radeon_device *rdev)
+ 	}
  
- 	if [ $ret -ne 0 ]; then
+ 	return 0;
++
++err_free_ps:
++	for (i = 0; i < rdev->pm.dpm.num_ps; i++)
++		kfree(rdev->pm.dpm.ps[i].ps_priv);
++	kfree(rdev->pm.dpm.ps);
++	return ret;
+ }
+ 
+ static int ci_get_vbios_boot_values(struct radeon_device *rdev,
+@@ -5678,25 +5689,26 @@ int ci_dpm_init(struct radeon_device *rdev)
+ 
+ 	ret = ci_get_vbios_boot_values(rdev, &pi->vbios_boot_state);
+ 	if (ret) {
+-		ci_dpm_fini(rdev);
++		kfree(rdev->pm.dpm.priv);
+ 		return ret;
+ 	}
+ 
+ 	ret = r600_get_platform_caps(rdev);
+ 	if (ret) {
+-		ci_dpm_fini(rdev);
++		kfree(rdev->pm.dpm.priv);
+ 		return ret;
+ 	}
+ 
+ 	ret = r600_parse_extended_power_table(rdev);
+ 	if (ret) {
+-		ci_dpm_fini(rdev);
++		kfree(rdev->pm.dpm.priv);
+ 		return ret;
+ 	}
+ 
+ 	ret = ci_parse_power_table(rdev);
+ 	if (ret) {
+-		ci_dpm_fini(rdev);
++		kfree(rdev->pm.dpm.priv);
++		r600_free_extended_power_table(rdev);
+ 		return ret;
+ 	}
+ 
 -- 
 2.39.2
 
