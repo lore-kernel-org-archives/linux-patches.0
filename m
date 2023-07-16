@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CBDD8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:55:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EA8C433C8;
-	Sun, 16 Jul 2023 20:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301BD8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:55:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3786C433C8;
+	Sun, 16 Jul 2023 20:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540938;
-	bh=lgTUt7JDiYkVjOzr8diPbzsXbnxvocxGjGGmQyEAwHs=;
+	s=korg; t=1689540941;
+	bh=NUOwHOtiZLKlkVZLFaYQ97k5Qe7FbI07YlCrhd9ol4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XlheKs/ZIilgs5vueD+4DRkFMHH8sT65W7EUJWKZ2LpxqHgu1m8jb5Dpd17ySFfeD
-	 RptS6dRbz++GSJz4A9PGbW/8TQg7ekV+wPMnvt17rM5n99OmWhisSYYA6hBotirjJ7
-	 KzbgAiV3gIvqZCvPvZuHLVqVKA2ZKJEgdDYxEO6M=
+	b=2RT++gnnJOBrIcWNrsU+w/sWBeszwz0G/SXpMonGL2CZeF1k7suU1k5hRHfMStlb7
+	 oZ7Jkqai+i9YAyjmWHe/vwHWyMkZFf39VUHQlXwKTcMBveoYVlOdhulAdOus2cKsxg
+	 p/3fV8NyGL4RCakCIGRHONjPeVO6YEx2ODad8afo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianjia Zhang <tianjia.zhang@linux.alibaba.com>,
-	Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 6.1 541/591] integrity: Fix possible multiple allocation in integrity_inode_get()
-Date: Sun, 16 Jul 2023 21:51:20 +0200
-Message-ID: <20230716194937.859687883@linuxfoundation.org>
+	Kees Cook <keescook@chromium.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 6.1 542/591] autofs: use flexible array in ioctl structure
+Date: Sun, 16 Jul 2023 21:51:21 +0200
+Message-ID: <20230716194937.885692984@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,62 +35,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 9df6a4870dc371136e90330cfbbc51464ee66993 upstream.
+commit e910c8e3aa02dc456e2f4c32cb479523c326b534 upstream.
 
-When integrity_inode_get() is querying and inserting the cache, there
-is a conditional race in the concurrent environment.
+Commit df8fc4e934c1 ("kbuild: Enable -fstrict-flex-arrays=3") introduced a warning
+for the autofs_dev_ioctl structure:
 
-The race condition is the result of not properly implementing
-"double-checked locking". In this case, it first checks to see if the
-iint cache record exists before taking the lock, but doesn't check
-again after taking the integrity_iint_lock.
+In function 'check_name',
+    inlined from 'validate_dev_ioctl' at fs/autofs/dev-ioctl.c:131:9,
+    inlined from '_autofs_dev_ioctl' at fs/autofs/dev-ioctl.c:624:8:
+fs/autofs/dev-ioctl.c:33:14: error: 'strchr' reading 1 or more bytes from a region of size 0 [-Werror=stringop-overread]
+   33 |         if (!strchr(name, '/'))
+      |              ^~~~~~~~~~~~~~~~~
+In file included from include/linux/auto_dev-ioctl.h:10,
+                 from fs/autofs/autofs_i.h:10,
+                 from fs/autofs/dev-ioctl.c:14:
+include/uapi/linux/auto_dev-ioctl.h: In function '_autofs_dev_ioctl':
+include/uapi/linux/auto_dev-ioctl.h:112:14: note: source object 'path' of size 0
+  112 |         char path[0];
+      |              ^~~~
 
-Fixes: bf2276d10ce5 ("ima: allocating iint improvements")
-Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
-Cc: Dmitry Kasatkin <dmitry.kasatkin@gmail.com>
-Cc: <stable@vger.kernel.org> # v3.10+
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+This is easily fixed by changing the gnu 0-length array into a c99
+flexible array. Since this is a uapi structure, we have to be careful
+about possible regressions but this one should be fine as they are
+equivalent here. While it would break building with ancient gcc versions
+that predate c99, it helps building with --std=c99 and -Wpedantic builds
+in user space, as well as non-gnu compilers. This means we probably
+also want it fixed in stable kernels.
+
+Cc: stable@vger.kernel.org
+Cc: Kees Cook <keescook@chromium.org>
+Cc: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230523081944.581710-1-arnd@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/iint.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ Documentation/filesystems/autofs-mount-control.rst |    2 +-
+ Documentation/filesystems/autofs.rst               |    2 +-
+ include/uapi/linux/auto_dev-ioctl.h                |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/security/integrity/iint.c
-+++ b/security/integrity/iint.c
-@@ -43,12 +43,10 @@ static struct integrity_iint_cache *__in
- 		else if (inode > iint->inode)
- 			n = n->rb_right;
- 		else
--			break;
-+			return iint;
- 	}
--	if (!n)
--		return NULL;
+--- a/Documentation/filesystems/autofs-mount-control.rst
++++ b/Documentation/filesystems/autofs-mount-control.rst
+@@ -196,7 +196,7 @@ information and return operation results
+ 		    struct args_ismountpoint	ismountpoint;
+ 	    };
  
--	return iint;
-+	return NULL;
- }
+-	    char path[0];
++	    char path[];
+     };
  
- /*
-@@ -121,10 +119,15 @@ struct integrity_iint_cache *integrity_i
- 		parent = *p;
- 		test_iint = rb_entry(parent, struct integrity_iint_cache,
- 				     rb_node);
--		if (inode < test_iint->inode)
-+		if (inode < test_iint->inode) {
- 			p = &(*p)->rb_left;
--		else
-+		} else if (inode > test_iint->inode) {
- 			p = &(*p)->rb_right;
-+		} else {
-+			write_unlock(&integrity_iint_lock);
-+			kmem_cache_free(iint_cache, iint);
-+			return test_iint;
-+		}
- 	}
+ The ioctlfd field is a mount point file descriptor of an autofs mount
+--- a/Documentation/filesystems/autofs.rst
++++ b/Documentation/filesystems/autofs.rst
+@@ -467,7 +467,7 @@ Each ioctl is passed a pointer to an `au
+ 			struct args_ismountpoint	ismountpoint;
+ 		};
  
- 	iint->inode = inode;
+-                char path[0];
++                char path[];
+         };
+ 
+ For the **OPEN_MOUNT** and **IS_MOUNTPOINT** commands, the target
+--- a/include/uapi/linux/auto_dev-ioctl.h
++++ b/include/uapi/linux/auto_dev-ioctl.h
+@@ -109,7 +109,7 @@ struct autofs_dev_ioctl {
+ 		struct args_ismountpoint	ismountpoint;
+ 	};
+ 
+-	char path[0];
++	char path[];
+ };
+ 
+ static inline void init_autofs_dev_ioctl(struct autofs_dev_ioctl *in)
 
 
