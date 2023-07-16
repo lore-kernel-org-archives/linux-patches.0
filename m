@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05EFD8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:54:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E8AAC433C7;
-	Sun, 16 Jul 2023 20:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0918F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:54:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40AB6C433C8;
+	Sun, 16 Jul 2023 20:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540854;
-	bh=WFDkFaXOpiA2eRrlqPMFlLO1gpUTL1KgFFtHm/WPDMI=;
+	s=korg; t=1689540857;
+	bh=dQJNXT7z4f+Rc/2+nxexWGiBHtZg0gmSSzhOCGso6Ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rjg/F0XvCkVEf1EwvzDmS2x0aNxK9rp1erUbze4u+scTJ/oceadqd7EX0c2P9MPoy
-	 DoS5eicO/8fzckcxNzcFUD+06RbUR647E7HX8yhu2onHr7rxtDSaFwcgFZwnbwUZUl
-	 iIfcDiOeMpa7VINJZz9TgnDU3NLOzefaxnDejxSk=
+	b=m+j4jUT1KOs1iEc6lZKkRq9q0Wsa3q+rG3RH5Tj/+CeNOWRGquiCaeM8Jf0o2/76F
+	 wIsbVBztJL/5lnrBFnECAwIHCnnmxhyhwbPlxToio9MV49TKtLRFwAJbk49VHDdENG
+	 F0sMoAQoTIsgzn+l0vg4ICDLQnnNEYducfkFR79A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	David Howells <dhowells@redhat.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	linux-afs@lists.infradead.org,
+	linux-fsdevel@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 511/591] octeontx-af: fix hardware timestamp configuration
-Date: Sun, 16 Jul 2023 21:50:50 +0200
-Message-ID: <20230716194937.104357808@linuxfoundation.org>
+Subject: [PATCH 6.1 512/591] afs: Fix accidental truncation when storing data
+Date: Sun, 16 Jul 2023 21:50:51 +0200
+Message-ID: <20230716194937.129813314@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,40 +39,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 14bb236b29922c4f57d8c05bfdbcb82677f917c9 ]
+[ Upstream commit 03275585cabd0240944f19f33d7584a1b099a3a8 ]
 
-MAC block on CN10K (RPM) supports hardware timestamp configuration. The
-previous patch which added timestamp configuration support has a bug.
-Though the netdev driver requests to disable timestamp configuration,
-the driver is always enabling it.
+When an AFS FS.StoreData RPC call is made, amongst other things it is
+given the resultant file size to be.  On the server, this is processed
+by truncating the file to new size and then writing the data.
 
-This patch fixes the same.
+Now, kafs has a lock (vnode->io_lock) that serves to serialise
+operations against a specific vnode (ie.  inode), but the parameters for
+the op are set before the lock is taken.  This allows two writebacks
+(say sync and kswapd) to race - and if writes are ongoing the writeback
+for a later write could occur before the writeback for an earlier one if
+the latter gets interrupted.
 
-Fixes: d1489208681d ("octeontx2-af: cn10k: RPM hardware timestamp configuration")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Note that afs_writepages() cannot take i_mutex and only takes a shared
+lock on vnode->validate_lock.
+
+Also note that the server does the truncation and the write inside a
+lock, so there's no problem at that end.
+
+Fix this by moving the calculation for the proposed new i_size inside
+the vnode->io_lock.  Also reset the iterator (which we might have read
+from) and update the mtime setting there.
+
+Fixes: bd80d8a80e12 ("afs: Use ITER_XARRAY for writing")
+Reported-by: Marc Dionne <marc.dionne@auristor.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
+Reviewed-by: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/3526895.1687960024@warthog.procyon.org.uk/
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/afs/write.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-index e284a14ca1203..c60b9580ca969 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-@@ -751,7 +751,7 @@ static int rvu_cgx_ptp_rx_cfg(struct rvu *rvu, u16 pcifunc, bool enable)
- 	cgxd = rvu_cgx_pdata(cgx_id, rvu);
+diff --git a/fs/afs/write.c b/fs/afs/write.c
+index 08fd456dde67c..3ecc212b62099 100644
+--- a/fs/afs/write.c
++++ b/fs/afs/write.c
+@@ -381,17 +381,19 @@ static int afs_store_data(struct afs_vnode *vnode, struct iov_iter *iter, loff_t
+ 	afs_op_set_vnode(op, 0, vnode);
+ 	op->file[0].dv_delta = 1;
+ 	op->file[0].modification = true;
+-	op->store.write_iter = iter;
+ 	op->store.pos = pos;
+ 	op->store.size = size;
+-	op->store.i_size = max(pos + size, vnode->netfs.remote_i_size);
+ 	op->store.laundering = laundering;
+-	op->mtime = vnode->netfs.inode.i_mtime;
+ 	op->flags |= AFS_OPERATION_UNINTR;
+ 	op->ops = &afs_store_data_operation;
  
- 	mac_ops = get_mac_ops(cgxd);
--	mac_ops->mac_enadis_ptp_config(cgxd, lmac_id, true);
-+	mac_ops->mac_enadis_ptp_config(cgxd, lmac_id, enable);
- 	/* If PTP is enabled then inform NPC that packets to be
- 	 * parsed by this PF will have their data shifted by 8 bytes
- 	 * and if PTP is disabled then no shift is required
+ try_next_key:
+ 	afs_begin_vnode_operation(op);
++
++	op->store.write_iter = iter;
++	op->store.i_size = max(pos + size, vnode->netfs.remote_i_size);
++	op->mtime = vnode->netfs.inode.i_mtime;
++
+ 	afs_wait_for_operation(op);
+ 
+ 	switch (op->error) {
 -- 
 2.39.2
 
