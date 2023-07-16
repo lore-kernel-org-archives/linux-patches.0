@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85BC8F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:32:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BCAC433C7;
-	Sun, 16 Jul 2023 20:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C28F8F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:32:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3643C433C9;
+	Sun, 16 Jul 2023 20:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539557;
-	bh=NnW+CSPdz5l/g8gIeBXAk5L6kXTHROrX+7vJitTNmlU=;
+	s=korg; t=1689539560;
+	bh=HfZJFzmVdjUwRjndIZySjgW0zgCT/1IcbZIgp119qcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rjyTjArXNlUYmBQOa9WETVRoNRaBQEw/x3KBwNeCmzhp1Qp8AsFGfsLCvF088v4Cr
-	 2ZH7g4wpwEcIzbsqPlGLXZ+9rw6EfBoVPVa1tBdT2ebjerRgO22GGfkYo4mO7+fi09
-	 JPmXxu4DbKlu/0lADS/MV3nzh758JOFIc3g8/XTw=
+	b=FKe3znkpF4GCp6YThbRnE35TcUWxHQ1eJTANwkBtzx+8J+ojik8Dfr3J/XMExof1k
+	 gOXMkd936aOcil45FCvjgeViw/hJnUItMCCqevb1PL/DaxYJtiQyPjl00+fvS6/R4A
+	 /eqwvZFOYVQSU6Uq4rH/RDFITDY5bHcdS+On0HHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Geoff Blake <blakgeof@amazon.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 012/591] virt: sevguest: Add CONFIG_CRYPTO dependency
-Date: Sun, 16 Jul 2023 21:42:31 +0200
-Message-ID: <20230716194924.182219201@linuxfoundation.org>
+Subject: [PATCH 6.1 043/591] perf/arm-cmn: Fix DTC reset
+Date: Sun, 16 Jul 2023 21:43:02 +0200
+Message-ID: <20230716194924.995310921@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,42 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit 84b9b44b99780d35fe72ac63c4724f158771e898 ]
+[ Upstream commit 71746c995cac92fcf6a65661b51211cf2009d7f0 ]
 
-This driver fails to link when CRYPTO is disabled, or in a loadable
-module:
+It turns out that my naive DTC reset logic fails to work as intended,
+since, after checking with the hardware designers, the PMU actually
+needs to be fully enabled in order to correctly clear any pending
+overflows. Therefore, invert the sequence to start with turning on both
+enables so that we can reliably get the DTCs into a known state, then
+moving to our normal counters-stopped state from there. Since all the
+DTM counters have already been unpaired during the initial discovery
+pass, we just need to additionally reset the cycle counters to ensure
+that no other unexpected overflows occur during this period.
 
-  WARNING: unmet direct dependencies detected for CRYPTO_GCM
-  WARNING: unmet direct dependencies detected for CRYPTO_AEAD2
-    Depends on [m]: CRYPTO [=m]
-    Selected by [y]:
-    - SEV_GUEST [=y] && VIRT_DRIVERS [=y] && AMD_MEM_ENCRYPT [=y]
-
-x86_64-linux-ld: crypto/aead.o: in function `crypto_register_aeads':
-
-Fixes: fce96cf04430 ("virt: Add SEV-SNP guest driver")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230117171416.2715125-1-arnd@kernel.org
+Fixes: 0ba64770a2f2 ("perf: Add Arm CMN-600 PMU driver")
+Reported-by: Geoff Blake <blakgeof@amazon.com>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://lore.kernel.org/r/0ea4559261ea394f827c9aee5168c77a60aaee03.1684946389.git.robin.murphy@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virt/coco/sev-guest/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/perf/arm-cmn.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/virt/coco/sev-guest/Kconfig b/drivers/virt/coco/sev-guest/Kconfig
-index f9db0799ae67c..da2d7ca531f0f 100644
---- a/drivers/virt/coco/sev-guest/Kconfig
-+++ b/drivers/virt/coco/sev-guest/Kconfig
-@@ -2,6 +2,7 @@ config SEV_GUEST
- 	tristate "AMD SEV Guest driver"
- 	default m
- 	depends on AMD_MEM_ENCRYPT
-+	select CRYPTO
- 	select CRYPTO_AEAD2
- 	select CRYPTO_GCM
- 	help
+diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
+index ff86075edca48..90008e24d1cc7 100644
+--- a/drivers/perf/arm-cmn.c
++++ b/drivers/perf/arm-cmn.c
+@@ -1898,9 +1898,10 @@ static int arm_cmn_init_dtc(struct arm_cmn *cmn, struct arm_cmn_node *dn, int id
+ 	if (dtc->irq < 0)
+ 		return dtc->irq;
+ 
+-	writel_relaxed(0, dtc->base + CMN_DT_PMCR);
++	writel_relaxed(CMN_DT_DTC_CTL_DT_EN, dtc->base + CMN_DT_DTC_CTL);
++	writel_relaxed(CMN_DT_PMCR_PMU_EN | CMN_DT_PMCR_OVFL_INTR_EN, dtc->base + CMN_DT_PMCR);
++	writeq_relaxed(0, dtc->base + CMN_DT_PMCCNTR);
+ 	writel_relaxed(0x1ff, dtc->base + CMN_DT_PMOVSR_CLR);
+-	writel_relaxed(CMN_DT_PMCR_OVFL_INTR_EN, dtc->base + CMN_DT_PMCR);
+ 
+ 	return 0;
+ }
+@@ -1960,7 +1961,7 @@ static int arm_cmn_init_dtcs(struct arm_cmn *cmn)
+ 			dn->type = CMN_TYPE_CCLA;
+ 	}
+ 
+-	writel_relaxed(CMN_DT_DTC_CTL_DT_EN, cmn->dtc[0].base + CMN_DT_DTC_CTL);
++	arm_cmn_set_state(cmn, CMN_STATE_DISABLED);
+ 
+ 	return 0;
+ }
 -- 
 2.39.2
 
