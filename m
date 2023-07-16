@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EC68F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:42:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67BA9C433C8;
-	Sun, 16 Jul 2023 20:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FD28F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:42:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27221C433C7;
+	Sun, 16 Jul 2023 20:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540129;
-	bh=8UujfOAf29YFTX9xsPaFD+wxSYqwmVzoNP+hMt+uvSE=;
+	s=korg; t=1689540132;
+	bh=U5ogyaKs9+E4TZ4ChkVaSQon/5mwnzBoCuQ4OQzC6C0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=012tWJKC0+aV7yWajC836SggDcbr81wbFjXPzJEHL7QuUSKNdAJSOIHKn9FPMTmc8
-	 3BSbka7vjejjyb9E2XpybCs6GqbB3YGyjwd6CCqlUwY7SoOyumfppDDp7N+289O0aL
-	 p4Ka0XyBkh9q3R+8c2S57//ii+c/6CFkFfAckFAQ=
+	b=pog3ir7HUDFUJJtEUdlPjUWdUF9s8mWivKW4YFzPQoj/mDhqgWIadWDD3LxlS9wij
+	 909UhAwel/qceLQtNMJ0WplBWLuQKuxclRjyLOLE7JWNt3LV46Cjjd1I+OqiOTy8Kq
+	 m/rb3jDpsHCb3e2HrRAymNTAgEuRepd6z2N17xFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Helge Deller <deller@gmx.de>,
+	Keerthy <j-keerthy@ti.com>,
+	Udit Kumar <u-kumar1@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 226/591] fbdev: omapfb: lcd_mipid: Fix an error handling path in mipid_spi_probe()
-Date: Sun, 16 Jul 2023 21:46:05 +0200
-Message-ID: <20230716194929.717680709@linuxfoundation.org>
+Subject: [PATCH 6.1 227/591] arm64: dts: ti: k3-j7200: Fix physical address of pin
+Date: Sun, 16 Jul 2023 21:46:06 +0200
+Message-ID: <20230716194929.744708506@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,41 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Keerthy <j-keerthy@ti.com>
 
-[ Upstream commit 79a3908d1ea6c35157a6d907b1a9d8ec06015e7a ]
+[ Upstream commit 3d011933000ed9054c649952d83162d24f020a93 ]
 
-If 'mipid_detect()' fails, we must free 'md' to avoid a memory leak.
+wkup_pmx splits into multiple regions. Like
 
-Fixes: 66d2f99d0bb5 ("omapfb: add support for MIPI-DCS compatible LCDs")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Helge Deller <deller@gmx.de>
+    wkup_pmx0 -> 13 pins (WKUP_PADCONFIG 0 - 12)
+    wkup_pmx1 -> 2 pins (WKUP_PADCONFIG 14 - 15)
+    wkup_pmx2 -> 59 pins (WKUP_PADCONFIG 26 - 84)
+    wkup_pmx3 -> 8 pins (WKUP_PADCONFIG 93 - 100)
+
+With this split, pin offset needs to be adjusted to
+match with new pmx for all pins above wkup_pmx0.
+
+Example a pin under wkup_pmx1 should start from 0 instead of
+old offset(0x38 WKUP_PADCONFIG 14 offset)
+
+J7200 Datasheet (Table 6-106, Section 6.4 Pin Multiplexing) :
+https://www.ti.com/lit/ds/symlink/dra821u.pdf
+
+Fixes: 9ae21ac445e9 ("arm64: dts: ti: k3-j7200: Fix wakeup pinmux range")
+
+Signed-off-by: Keerthy <j-keerthy@ti.com>
+Signed-off-by: Udit Kumar <u-kumar1@ti.com>
+Link: https://lore.kernel.org/r/20230419040007.3022780-2-u-kumar1@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/omap/lcd_mipid.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ .../dts/ti/k3-j7200-common-proc-board.dts     | 28 +++++++++----------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/video/fbdev/omap/lcd_mipid.c b/drivers/video/fbdev/omap/lcd_mipid.c
-index 03cff39d392db..cc1079aad61f2 100644
---- a/drivers/video/fbdev/omap/lcd_mipid.c
-+++ b/drivers/video/fbdev/omap/lcd_mipid.c
-@@ -563,11 +563,15 @@ static int mipid_spi_probe(struct spi_device *spi)
+diff --git a/arch/arm64/boot/dts/ti/k3-j7200-common-proc-board.dts b/arch/arm64/boot/dts/ti/k3-j7200-common-proc-board.dts
+index 50009f963a324..5840063f61293 100644
+--- a/arch/arm64/boot/dts/ti/k3-j7200-common-proc-board.dts
++++ b/arch/arm64/boot/dts/ti/k3-j7200-common-proc-board.dts
+@@ -83,25 +83,25 @@ vdd_sd_dv: gpio-regulator-TLV71033 {
+ &wkup_pmx2 {
+ 	mcu_cpsw_pins_default: mcu-cpsw-pins-default {
+ 		pinctrl-single,pins = <
+-			J721E_WKUP_IOPAD(0x0068, PIN_OUTPUT, 0) /* MCU_RGMII1_TX_CTL */
+-			J721E_WKUP_IOPAD(0x006c, PIN_INPUT, 0) /* MCU_RGMII1_RX_CTL */
+-			J721E_WKUP_IOPAD(0x0070, PIN_OUTPUT, 0) /* MCU_RGMII1_TD3 */
+-			J721E_WKUP_IOPAD(0x0074, PIN_OUTPUT, 0) /* MCU_RGMII1_TD2 */
+-			J721E_WKUP_IOPAD(0x0078, PIN_OUTPUT, 0) /* MCU_RGMII1_TD1 */
+-			J721E_WKUP_IOPAD(0x007c, PIN_OUTPUT, 0) /* MCU_RGMII1_TD0 */
+-			J721E_WKUP_IOPAD(0x0088, PIN_INPUT, 0) /* MCU_RGMII1_RD3 */
+-			J721E_WKUP_IOPAD(0x008c, PIN_INPUT, 0) /* MCU_RGMII1_RD2 */
+-			J721E_WKUP_IOPAD(0x0090, PIN_INPUT, 0) /* MCU_RGMII1_RD1 */
+-			J721E_WKUP_IOPAD(0x0094, PIN_INPUT, 0) /* MCU_RGMII1_RD0 */
+-			J721E_WKUP_IOPAD(0x0080, PIN_OUTPUT, 0) /* MCU_RGMII1_TXC */
+-			J721E_WKUP_IOPAD(0x0084, PIN_INPUT, 0) /* MCU_RGMII1_RXC */
++			J721E_WKUP_IOPAD(0x0000, PIN_OUTPUT, 0) /* MCU_RGMII1_TX_CTL */
++			J721E_WKUP_IOPAD(0x0004, PIN_INPUT, 0) /* MCU_RGMII1_RX_CTL */
++			J721E_WKUP_IOPAD(0x0008, PIN_OUTPUT, 0) /* MCU_RGMII1_TD3 */
++			J721E_WKUP_IOPAD(0x000c, PIN_OUTPUT, 0) /* MCU_RGMII1_TD2 */
++			J721E_WKUP_IOPAD(0x0010, PIN_OUTPUT, 0) /* MCU_RGMII1_TD1 */
++			J721E_WKUP_IOPAD(0x0014, PIN_OUTPUT, 0) /* MCU_RGMII1_TD0 */
++			J721E_WKUP_IOPAD(0x0020, PIN_INPUT, 0) /* MCU_RGMII1_RD3 */
++			J721E_WKUP_IOPAD(0x0024, PIN_INPUT, 0) /* MCU_RGMII1_RD2 */
++			J721E_WKUP_IOPAD(0x0028, PIN_INPUT, 0) /* MCU_RGMII1_RD1 */
++			J721E_WKUP_IOPAD(0x002c, PIN_INPUT, 0) /* MCU_RGMII1_RD0 */
++			J721E_WKUP_IOPAD(0x0018, PIN_OUTPUT, 0) /* MCU_RGMII1_TXC */
++			J721E_WKUP_IOPAD(0x001c, PIN_INPUT, 0) /* MCU_RGMII1_RXC */
+ 		>;
+ 	};
  
- 	r = mipid_detect(md);
- 	if (r < 0)
--		return r;
-+		goto free_md;
- 
- 	omapfb_register_panel(&md->panel);
- 
- 	return 0;
-+
-+free_md:
-+	kfree(md);
-+	return r;
- }
- 
- static void mipid_spi_remove(struct spi_device *spi)
+ 	mcu_mdio_pins_default: mcu-mdio1-pins-default {
+ 		pinctrl-single,pins = <
+-			J721E_WKUP_IOPAD(0x009c, PIN_OUTPUT, 0) /* (L1) MCU_MDIO0_MDC */
+-			J721E_WKUP_IOPAD(0x0098, PIN_INPUT, 0) /* (L4) MCU_MDIO0_MDIO */
++			J721E_WKUP_IOPAD(0x0034, PIN_OUTPUT, 0) /* (L1) MCU_MDIO0_MDC */
++			J721E_WKUP_IOPAD(0x0030, PIN_INPUT, 0) /* (L4) MCU_MDIO0_MDIO */
+ 		>;
+ 	};
+ };
 -- 
 2.39.2
 
