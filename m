@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183048F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:16:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E92CC433C7;
-	Sun, 16 Jul 2023 20:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF738F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:16:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF0AC433C8;
+	Sun, 16 Jul 2023 20:16:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538598;
-	bh=1bI9VTkb064C9miAHigDSoX5dmCr6mkoMBRm9f4279A=;
+	s=korg; t=1689538601;
+	bh=3y7/BJ1dCtwSdXWqU6VB8QYJUMiiM8mE6WtbiFW7h8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GlE7/HoTCgrrhaSRddlHkJfz4ZEjnWPUi5QHRrGuuJPIZk7Txh4ty5r2kpBwqkAWi
-	 B7YQ87AScOezAjNag5SUVmbqMiTp/G9xQKjd8rCQ/6YBHYNSG7Rotgsfo9oxMrPcgh
-	 QjXLWPs96lNq/6eNs3ShiE/1llT82QLv+bxRHGq8=
+	b=p3l/7/Y6MO8B/+pkIeKJzVlakg3UOWrReMb8YmphQqyyYDQb/AIsBhI3/mI8rOsIh
+	 eXp/hff2mIzuRCeJS6AFLFzPeEZ1uQqswxulvxM73JN2b2QjBBmjhMBfH9+CFFhiIc
+	 Wv0l0fmPkQsvZncPbtx6Js1MeAJFOleRLMgRaD2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 509/800] ARC: define ASM_NL and __ALIGN(_STR) outside #ifdef __ASSEMBLY__ guard
-Date: Sun, 16 Jul 2023 21:46:02 +0200
-Message-ID: <20230716195000.915657511@linuxfoundation.org>
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>,
+	Sachin Sant <sachinp@linux.ibm.commailto:sachinp@linux.ibm.com>
+Subject: [PATCH 6.4 492/800] powerpc/mm/dax: Fix the condition when checking if altmap vmemap can cross-boundary
+Date: Sun, 16 Jul 2023 21:45:45 +0200
+Message-ID: <20230716195000.507889162@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -34,59 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
 
-[ Upstream commit 92e2921eeafdfca9acd9b83f07d2b7ca099bac24 ]
+[ Upstream commit c8eebc4a99f15280654f23e914e746c40a516e50 ]
 
-ASM_NL is useful not only in *.S files but also in .c files for using
-inline assembler in C code.
+Without this fix, the last subsection vmemmap can end up in memory even if
+the namespace is created with -M mem and has sufficient space in the altmap
+area.
 
-On ARC, however, ASM_NL is evaluated inconsistently. It is expanded to
-a backquote (`) in *.S files, but a semicolon (;) in *.c files because
-arch/arc/include/asm/linkage.h defines it inside #ifdef __ASSEMBLY__,
-so the definition for C code falls back to the default value defined in
-include/linux/linkage.h.
-
-If ASM_NL is used in inline assembler in .c files, it will result in
-wrong assembly code because a semicolon is not an instruction separator,
-but the start of a comment for ARC.
-
-Move ASM_NL (also __ALIGN and __ALIGN_STR) out of the #ifdef.
-
-Fixes: 9df62f054406 ("arch: use ASM_NL instead of ';' for assembler new line character in the macro")
-Fixes: 8d92e992a785 ("ARC: define __ALIGN_STR and __ALIGN symbols for ARC")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: cf387d9644d8 ("libnvdimm/altmap: Track namespace boundaries in altmap")
+Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+Tested-by: Sachin Sant <sachinp@linux.ibm.com <mailto:sachinp@linux.ibm.com>>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230616110826.344417-6-aneesh.kumar@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arc/include/asm/linkage.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/powerpc/mm/init_64.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arc/include/asm/linkage.h b/arch/arc/include/asm/linkage.h
-index c9434ff3aa4ce..8a3fb71e9cfad 100644
---- a/arch/arc/include/asm/linkage.h
-+++ b/arch/arc/include/asm/linkage.h
-@@ -8,6 +8,10 @@
+diff --git a/arch/powerpc/mm/init_64.c b/arch/powerpc/mm/init_64.c
+index 05b0d584e50b8..fe1b83020e0df 100644
+--- a/arch/powerpc/mm/init_64.c
++++ b/arch/powerpc/mm/init_64.c
+@@ -189,7 +189,7 @@ static bool altmap_cross_boundary(struct vmem_altmap *altmap, unsigned long star
+ 	unsigned long nr_pfn = page_size / sizeof(struct page);
+ 	unsigned long start_pfn = page_to_pfn((struct page *)start);
  
- #include <asm/dwarf.h>
+-	if ((start_pfn + nr_pfn) > altmap->end_pfn)
++	if ((start_pfn + nr_pfn - 1) > altmap->end_pfn)
+ 		return true;
  
-+#define ASM_NL		 `	/* use '`' to mark new line in macro */
-+#define __ALIGN		.align 4
-+#define __ALIGN_STR	__stringify(__ALIGN)
-+
- #ifdef __ASSEMBLY__
- 
- .macro ST2 e, o, off
-@@ -28,10 +32,6 @@
- #endif
- .endm
- 
--#define ASM_NL		 `	/* use '`' to mark new line in macro */
--#define __ALIGN		.align 4
--#define __ALIGN_STR	__stringify(__ALIGN)
--
- /* annotation for data we want in DCCM - if enabled in .config */
- .macro ARCFP_DATA nm
- #ifdef CONFIG_ARC_HAS_DCCM
+ 	if (start_pfn < altmap->base_pfn)
 -- 
 2.39.2
 
