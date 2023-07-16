@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9E88F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:44:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880B6C433C8;
-	Sun, 16 Jul 2023 20:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2DA8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:44:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F963C433C7;
+	Sun, 16 Jul 2023 20:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540262;
-	bh=3zj4oZUJyZWCGWg8Zukn8g9TG9uTMq5TEYYjkZ2RAHc=;
+	s=korg; t=1689540265;
+	bh=wjKjA0s3XKSSNvU7qudBTzAy7cty+bh63U8zU/vCBE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gFxUNRDI0pDUQ5kgPdnjaspiwsYAascg/rfK28zC9naKs+Mrmt/WTPzZx7U4r9tFL
-	 uVnhQ5NmfM0VBIK8vmyr8Cx4iTe25edLQORPuxnhmglBZ35o/Skgs/Rqzb30QqRaEJ
-	 qqTOQCycEsmMdlUMN49WPGIQhHPnFYEad/AYTTa4=
+	b=0kSyHWhlqdpZZmKJbOcN7F2Sn300+btEJ+46P5clkFobOsD6r091ugvLVLICVVnrK
+	 hfEgJ05A4Hmbubz1cbureOlXzAzja/QPvhsM4OkHtxvs4ruLbCxSzCLiqkITbXcb6p
+	 SOGyQjT0pXwKK/nZqdUsuuq3H+1Jg2jtPy4QTtho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <mwalle@kernel.org>,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 283/591] ARM: dts: lan966x: kontron-d10: fix SPI CS
-Date: Sun, 16 Jul 2023 21:47:02 +0200
-Message-ID: <20230716194931.215872458@linuxfoundation.org>
+Subject: [PATCH 6.1 301/591] platform/x86: think-lmi: mutex protection around multiple WMI calls
+Date: Sun, 16 Jul 2023 21:47:20 +0200
+Message-ID: <20230716194931.682607459@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,49 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Walle <mwalle@kernel.org>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-[ Upstream commit fcb79ee3f0b15ed15f35eca5f24e952fdced9c61 ]
+[ Upstream commit c41e0121a1221894a1a9c4666156db9e1def4d6c ]
 
-The pinctrl node was missing which change the pin mux to GPIO mode.
-Add it so we don't have to rely on the bootloader to set the correct
-mode.
+When an attribute is being changed if the Admin account is enabled, or if
+a password is being updated then multiple WMI calls are needed.
+Add mutex protection to ensure no race conditions are introduced.
 
-Fixes: 79d83b3a458e ("ARM: dts: lan966x: add basic Kontron KSwitch D10 support")
-Signed-off-by: Michael Walle <mwalle@kernel.org>
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230616-feature-d10-dt-cleanups-v1-2-50dd0452b8fe@kernel.org
+Fixes: b49f72e7f96d ("platform/x86: think-lmi: Certificate authentication support")
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230601200552.4396-1-mpearson-lenovo@squebb.ca
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/platform/x86/think-lmi.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi b/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi
-index 42be207509a46..f4df4cc1dfa5e 100644
---- a/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi
-+++ b/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi
-@@ -41,7 +41,7 @@ &flx3 {
- 	status = "okay";
+diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
+index 336b9029d1515..4e6040c0a2201 100644
+--- a/drivers/platform/x86/think-lmi.c
++++ b/drivers/platform/x86/think-lmi.c
+@@ -14,6 +14,7 @@
+ #include <linux/acpi.h>
+ #include <linux/errno.h>
+ #include <linux/fs.h>
++#include <linux/mutex.h>
+ #include <linux/string.h>
+ #include <linux/types.h>
+ #include <linux/dmi.h>
+@@ -195,6 +196,7 @@ static const char * const level_options[] = {
+ };
+ static struct think_lmi tlmi_priv;
+ static struct class *fw_attr_class;
++static DEFINE_MUTEX(tlmi_mutex);
  
- 	spi3: spi@400 {
--		pinctrl-0 = <&fc3_b_pins>;
-+		pinctrl-0 = <&fc3_b_pins>, <&spi3_cs_pins>;
- 		pinctrl-names = "default";
- 		status = "okay";
- 		cs-gpios = <&gpio 46 GPIO_ACTIVE_LOW>;
-@@ -79,6 +79,12 @@ sgpio_b_pins: sgpio-b-pins {
- 		function = "sgpio_b";
- 	};
+ /* ------ Utility functions ------------*/
+ /* Strip out CR if one is present */
+@@ -437,6 +439,9 @@ static ssize_t new_password_store(struct kobject *kobj,
+ 	/* Strip out CR if one is present, setting password won't work if it is present */
+ 	strip_cr(new_pwd);
  
-+	spi3_cs_pins: spi3-cs-pins {
-+		/* CS# */
-+		pins = "GPIO_46";
-+		function = "gpio";
-+	};
++	/* Use lock in case multiple WMI operations needed */
++	mutex_lock(&tlmi_mutex);
 +
- 	usart0_pins: usart0-pins {
- 		/* RXD, TXD */
- 		pins = "GPIO_25", "GPIO_26";
+ 	pwdlen = strlen(new_pwd);
+ 	/* pwdlen == 0 is allowed to clear the password */
+ 	if (pwdlen && ((pwdlen < setting->minlen) || (pwdlen > setting->maxlen))) {
+@@ -493,6 +498,7 @@ static ssize_t new_password_store(struct kobject *kobj,
+ 		kfree(auth_str);
+ 	}
+ out:
++	mutex_unlock(&tlmi_mutex);
+ 	kfree(new_pwd);
+ 	return ret ?: count;
+ }
+@@ -982,6 +988,9 @@ static ssize_t current_value_store(struct kobject *kobj,
+ 	/* Strip out CR if one is present */
+ 	strip_cr(new_setting);
+ 
++	/* Use lock in case multiple WMI operations needed */
++	mutex_lock(&tlmi_mutex);
++
+ 	/* Check if certificate authentication is enabled and active */
+ 	if (tlmi_priv.certificate_support && tlmi_priv.pwd_admin->cert_installed) {
+ 		if (!tlmi_priv.pwd_admin->signature || !tlmi_priv.pwd_admin->save_signature) {
+@@ -1040,6 +1049,7 @@ static ssize_t current_value_store(struct kobject *kobj,
+ 		kobject_uevent(&tlmi_priv.class_dev->kobj, KOBJ_CHANGE);
+ 	}
+ out:
++	mutex_unlock(&tlmi_mutex);
+ 	kfree(auth_str);
+ 	kfree(set_str);
+ 	kfree(new_setting);
 -- 
 2.39.2
 
