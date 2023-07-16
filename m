@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5FF8F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:33:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09637C433C7;
-	Sun, 16 Jul 2023 20:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FE78F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:33:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06AFC433C8;
+	Sun, 16 Jul 2023 20:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539605;
-	bh=vakl9FHS1sMgsSzjjCrVeOO6Tj4jT1L6d4TWH13xOXE=;
+	s=korg; t=1689539608;
+	bh=AkErFN6BUJKC+tcfoooSMfA/76h6swvkRxlQiduVSBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rj0nnmUFwJrCeCX9LtkIXUxBgTaApPhNOX3p6M5f7EMuphmatgD8lmnxKUA9yFECO
-	 2twi04cu7ZQAxckcSCseGeOX60gVbEuwrU2FzdN6LpUWqkAdrxLdfDNvWFgWA3AcvY
-	 sjH2IF/l6tfsFp3Y0tSTwo8TRLuK3ebqU7dTjh/0=
+	b=LZSGvQDrPpNZcnwBNWsjkr0e5ThQSqP05jdlKt1OKWTg+jOSdu1bbqYc57KDHpgPy
+	 eqyegKIU4SM3gLuisovOTL3zn5sf0r6DAV3oqqjUD4V4AX+0uh6kCXXTt2plZDVfCA
+	 +1fC/H9Xxu8ZXxEcJJU0G1ElZWbTMSIUfKn7MQnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Kees Cook <keescook@chromium.org>,
+	Jesper Dangaard Brouer <brouer@redhat.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Song Yoong Siang <yoong.siang.song@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 066/591] pstore/ram: Add check for kstrdup
-Date: Sun, 16 Jul 2023 21:43:25 +0200
-Message-ID: <20230716194925.587899460@linuxfoundation.org>
+Subject: [PATCH 6.1 067/591] igc: Enable and fix RX hash usage by netstack
+Date: Sun, 16 Jul 2023 21:43:26 +0200
+Message-ID: <20230716194925.613708766@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,35 +36,147 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Jesper Dangaard Brouer <brouer@redhat.com>
 
-[ Upstream commit d97038d5ec2062733c1e016caf9baaf68cf64ea1 ]
+[ Upstream commit 84214ab4689f962b4bfc47fc9a5838d25ac4274d ]
 
-Add check for the return value of kstrdup() and return the error
-if it fails in order to avoid NULL pointer dereference.
+When function igc_rx_hash() was introduced in v4.20 via commit 0507ef8a0372
+("igc: Add transmit and receive fastpath and interrupt handlers"), the
+hardware wasn't configured to provide RSS hash, thus it made sense to not
+enable net_device NETIF_F_RXHASH feature bit.
 
-Fixes: e163fdb3f7f8 ("pstore/ram: Regularize prz label allocation lifetime")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230614093733.36048-1-jiasheng@iscas.ac.cn
+The NIC hardware was configured to enable RSS hash info in v5.2 via commit
+2121c2712f82 ("igc: Add multiple receive queues control supporting"), but
+forgot to set the NETIF_F_RXHASH feature bit.
+
+The original implementation of igc_rx_hash() didn't extract the associated
+pkt_hash_type, but statically set PKT_HASH_TYPE_L3. The largest portions of
+this patch are about extracting the RSS Type from the hardware and mapping
+this to enum pkt_hash_types. This was based on Foxville i225 software user
+manual rev-1.3.1 and tested on Intel Ethernet Controller I225-LM (rev 03).
+
+For UDP it's worth noting that RSS (type) hashing have been disabled both for
+IPv4 and IPv6 (see IGC_MRQC_RSS_FIELD_IPV4_UDP + IGC_MRQC_RSS_FIELD_IPV6_UDP)
+because hardware RSS doesn't handle fragmented pkts well when enabled (can
+cause out-of-order). This results in PKT_HASH_TYPE_L3 for UDP packets, and
+hash value doesn't include UDP port numbers. Not being PKT_HASH_TYPE_L4, have
+the effect that netstack will do a software based hash calc calling into
+flow_dissect, but only when code calls skb_get_hash(), which doesn't
+necessary happen for local delivery.
+
+For QA verification testing I wrote a small bpftrace prog:
+ [0] https://github.com/xdp-project/xdp-project/blob/master/areas/hints/monitor_skb_hash_on_dev.bt
+
+Fixes: 2121c2712f82 ("igc: Add multiple receive queues control supporting")
+Signed-off-by: Jesper Dangaard Brouer <brouer@redhat.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Song Yoong Siang <yoong.siang.song@intel.com>
+Link: https://lore.kernel.org/bpf/168182464270.616355.11391652654430626584.stgit@firesoul
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram_core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/intel/igc/igc.h      | 28 ++++++++++++++++++++
+ drivers/net/ethernet/intel/igc/igc_main.c | 31 ++++++++++++++++++++---
+ 2 files changed, 55 insertions(+), 4 deletions(-)
 
-diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
-index 8bf09886e7e66..2384de1c2d187 100644
---- a/fs/pstore/ram_core.c
-+++ b/fs/pstore/ram_core.c
-@@ -591,6 +591,8 @@ struct persistent_ram_zone *persistent_ram_new(phys_addr_t start, size_t size,
- 	raw_spin_lock_init(&prz->buffer_lock);
- 	prz->flags = flags;
- 	prz->label = kstrdup(label, GFP_KERNEL);
-+	if (!prz->label)
-+		goto err;
+diff --git a/drivers/net/ethernet/intel/igc/igc.h b/drivers/net/ethernet/intel/igc/igc.h
+index df3e26c0cf01a..f83cbc4a1afa8 100644
+--- a/drivers/net/ethernet/intel/igc/igc.h
++++ b/drivers/net/ethernet/intel/igc/igc.h
+@@ -13,6 +13,7 @@
+ #include <linux/ptp_clock_kernel.h>
+ #include <linux/timecounter.h>
+ #include <linux/net_tstamp.h>
++#include <linux/bitfield.h>
  
- 	ret = persistent_ram_buffer_map(start, size, prz, memtype);
- 	if (ret)
+ #include "igc_hw.h"
+ 
+@@ -311,6 +312,33 @@ extern char igc_driver_name[];
+ #define IGC_MRQC_RSS_FIELD_IPV4_UDP	0x00400000
+ #define IGC_MRQC_RSS_FIELD_IPV6_UDP	0x00800000
+ 
++/* RX-desc Write-Back format RSS Type's */
++enum igc_rss_type_num {
++	IGC_RSS_TYPE_NO_HASH		= 0,
++	IGC_RSS_TYPE_HASH_TCP_IPV4	= 1,
++	IGC_RSS_TYPE_HASH_IPV4		= 2,
++	IGC_RSS_TYPE_HASH_TCP_IPV6	= 3,
++	IGC_RSS_TYPE_HASH_IPV6_EX	= 4,
++	IGC_RSS_TYPE_HASH_IPV6		= 5,
++	IGC_RSS_TYPE_HASH_TCP_IPV6_EX	= 6,
++	IGC_RSS_TYPE_HASH_UDP_IPV4	= 7,
++	IGC_RSS_TYPE_HASH_UDP_IPV6	= 8,
++	IGC_RSS_TYPE_HASH_UDP_IPV6_EX	= 9,
++	IGC_RSS_TYPE_MAX		= 10,
++};
++#define IGC_RSS_TYPE_MAX_TABLE		16
++#define IGC_RSS_TYPE_MASK		GENMASK(3,0) /* 4-bits (3:0) = mask 0x0F */
++
++/* igc_rss_type - Rx descriptor RSS type field */
++static inline u32 igc_rss_type(const union igc_adv_rx_desc *rx_desc)
++{
++	/* RSS Type 4-bits (3:0) number: 0-9 (above 9 is reserved)
++	 * Accessing the same bits via u16 (wb.lower.lo_dword.hs_rss.pkt_info)
++	 * is slightly slower than via u32 (wb.lower.lo_dword.data)
++	 */
++	return le32_get_bits(rx_desc->wb.lower.lo_dword.data, IGC_RSS_TYPE_MASK);
++}
++
+ /* Interrupt defines */
+ #define IGC_START_ITR			648 /* ~6000 ints/sec */
+ #define IGC_4K_ITR			980
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index 3509974c1f8e4..b67a6a81474f5 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -1684,14 +1684,36 @@ static void igc_rx_checksum(struct igc_ring *ring,
+ 		   le32_to_cpu(rx_desc->wb.upper.status_error));
+ }
+ 
++/* Mapping HW RSS Type to enum pkt_hash_types */
++static const enum pkt_hash_types igc_rss_type_table[IGC_RSS_TYPE_MAX_TABLE] = {
++	[IGC_RSS_TYPE_NO_HASH]		= PKT_HASH_TYPE_L2,
++	[IGC_RSS_TYPE_HASH_TCP_IPV4]	= PKT_HASH_TYPE_L4,
++	[IGC_RSS_TYPE_HASH_IPV4]	= PKT_HASH_TYPE_L3,
++	[IGC_RSS_TYPE_HASH_TCP_IPV6]	= PKT_HASH_TYPE_L4,
++	[IGC_RSS_TYPE_HASH_IPV6_EX]	= PKT_HASH_TYPE_L3,
++	[IGC_RSS_TYPE_HASH_IPV6]	= PKT_HASH_TYPE_L3,
++	[IGC_RSS_TYPE_HASH_TCP_IPV6_EX] = PKT_HASH_TYPE_L4,
++	[IGC_RSS_TYPE_HASH_UDP_IPV4]	= PKT_HASH_TYPE_L4,
++	[IGC_RSS_TYPE_HASH_UDP_IPV6]	= PKT_HASH_TYPE_L4,
++	[IGC_RSS_TYPE_HASH_UDP_IPV6_EX] = PKT_HASH_TYPE_L4,
++	[10] = PKT_HASH_TYPE_NONE, /* RSS Type above 9 "Reserved" by HW  */
++	[11] = PKT_HASH_TYPE_NONE, /* keep array sized for SW bit-mask   */
++	[12] = PKT_HASH_TYPE_NONE, /* to handle future HW revisons       */
++	[13] = PKT_HASH_TYPE_NONE,
++	[14] = PKT_HASH_TYPE_NONE,
++	[15] = PKT_HASH_TYPE_NONE,
++};
++
+ static inline void igc_rx_hash(struct igc_ring *ring,
+ 			       union igc_adv_rx_desc *rx_desc,
+ 			       struct sk_buff *skb)
+ {
+-	if (ring->netdev->features & NETIF_F_RXHASH)
+-		skb_set_hash(skb,
+-			     le32_to_cpu(rx_desc->wb.lower.hi_dword.rss),
+-			     PKT_HASH_TYPE_L3);
++	if (ring->netdev->features & NETIF_F_RXHASH) {
++		u32 rss_hash = le32_to_cpu(rx_desc->wb.lower.hi_dword.rss);
++		u32 rss_type = igc_rss_type(rx_desc);
++
++		skb_set_hash(skb, rss_hash, igc_rss_type_table[rss_type]);
++	}
+ }
+ 
+ static void igc_rx_vlan(struct igc_ring *rx_ring,
+@@ -6518,6 +6540,7 @@ static int igc_probe(struct pci_dev *pdev,
+ 	netdev->features |= NETIF_F_TSO;
+ 	netdev->features |= NETIF_F_TSO6;
+ 	netdev->features |= NETIF_F_TSO_ECN;
++	netdev->features |= NETIF_F_RXHASH;
+ 	netdev->features |= NETIF_F_RXCSUM;
+ 	netdev->features |= NETIF_F_HW_CSUM;
+ 	netdev->features |= NETIF_F_SCTP_CRC;
 -- 
 2.39.2
 
