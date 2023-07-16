@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A9E8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:54:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE2DC433C7;
-	Sun, 16 Jul 2023 20:54:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F588F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:54:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060D5C433C8;
+	Sun, 16 Jul 2023 20:54:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540893;
-	bh=n6f4gQXnJyTXONrTcEW4DkSsmxklz1CKXiJjXy79hQw=;
+	s=korg; t=1689540896;
+	bh=Cb3crskSi9C1IyevhmDwIyczH9Lha1jvogc3ajQ8Ud4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0NMU6XRhqbljpABTQDFiAYrhP42eh5RckJ9seGZcem1Nhd6OPxiq4HKHzd3oy8tvj
-	 ooxgnXbe+nSB3Y1QfGWIE85alhtQXNO4m95Q74anHSeJG5VQz3YMRd9fIMGLn8HVWy
-	 0LRUg06mbAmjwlYvn8A6NTQrPievFc/j7UMRmYE8=
+	b=nH0tMV1qhtKaiKq+0c2+sxVO0KipwxGcEZZbSDGzAO+xR7XXdDSA9qkJkZrWIy2TB
+	 MnB486fs9ginR3T2a3VpfWE7QmuhHKoEC0JaOMf+5LfjK7eXztv7wvEVgTmXsc07r2
+	 jr6cHxztGCUQxOveNyMWq2qXQQpAx9fOXd4iv/98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Kamal Dasu <kamal.dasu@broadcom.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 498/591] powerpc: dts: turris1x.dts: Fix PCIe MEM size for pci2 node
-Date: Sun, 16 Jul 2023 21:50:37 +0200
-Message-ID: <20230716194936.779281067@linuxfoundation.org>
+Subject: [PATCH 6.1 489/591] spi: bcm-qspi: return error if neither hif_mspi nor mspi is available
+Date: Sun, 16 Jul 2023 21:50:28 +0200
+Message-ID: <20230716194936.544678717@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,54 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit abaa02fc944f2f9f2c2e1925ddaceaf35c48528c ]
+[ Upstream commit 7c1f23ad34fcdace50275a6aa1e1969b41c6233f ]
 
-Freescale PCIe controllers on their PCIe Root Ports do not have any
-mappable PCI BAR allocate from PCIe MEM.
+If neither a "hif_mspi" nor "mspi" resource is present, the driver will
+just early exit in probe but still return success. Apart from not doing
+anything meaningful, this would then also lead to a null pointer access
+on removal, as platform_get_drvdata() would return NULL, which it would
+then try to dereference when trying to unregister the spi master.
 
-Information about 1MB window on BAR0 of PCIe Root Port was misleading
-because Freescale PCIe controllers have at BAR0 position different register
-PEXCSRBAR, and kernel correctly skipts BAR0 for these Freescale PCIe Root
-Ports.
+Fix this by unconditionally calling devm_ioremap_resource(), as it can
+handle a NULL res and will then return a viable ERR_PTR() if we get one.
 
-So update comment about P2020 PCIe Root Port and decrease PCIe MEM size
-required for PCIe controller (pci2 node) on which is on-board xHCI
-controller.
+The "return 0;" was previously a "goto qspi_resource_err;" where then
+ret was returned, but since ret was still initialized to 0 at this place
+this was a valid conversion in 63c5395bb7a9 ("spi: bcm-qspi: Fix
+use-after-free on unbind"). The issue was not introduced by this commit,
+only made more obvious.
 
-lspci confirms that on P2020 PCIe Root Port is no PCI BAR and /proc/iomem
-sees that only c0000000-c000ffff and c0010000-c0011fff ranges are used.
-
-Fixes: 54c15ec3b738 ("powerpc: dts: Add DTS file for CZ.NIC Turris 1.x routers")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230505172818.18416-1-pali@kernel.org
+Fixes: fa236a7ef240 ("spi: bcm-qspi: Add Broadcom MSPI driver")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Reviewed-by: Kamal Dasu <kamal.dasu@broadcom.com>
+Link: https://lore.kernel.org/r/20230629134306.95823-1-jonas.gorski@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/boot/dts/turris1x.dts | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/spi/spi-bcm-qspi.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/arch/powerpc/boot/dts/turris1x.dts b/arch/powerpc/boot/dts/turris1x.dts
-index e9cda34a140e0..9377055d5565c 100644
---- a/arch/powerpc/boot/dts/turris1x.dts
-+++ b/arch/powerpc/boot/dts/turris1x.dts
-@@ -453,12 +453,12 @@ pci2: pcie@ffe08000 {
- 		 * channel 1 (but only USB 2.0 subset) to USB 2.0 pins on mPCIe
- 		 * slot 1 (CN5), channels 2 and 3 to connector P600.
- 		 *
--		 * P2020 PCIe Root Port uses 1MB of PCIe MEM and xHCI controller
-+		 * P2020 PCIe Root Port does not use PCIe MEM and xHCI controller
- 		 * uses 64kB + 8kB of PCIe MEM. No PCIe IO is used or required.
--		 * So allocate 2MB of PCIe MEM for this PCIe bus.
-+		 * So allocate 128kB of PCIe MEM for this PCIe bus.
- 		 */
- 		reg = <0 0xffe08000 0 0x1000>;
--		ranges = <0x02000000 0x0 0xc0000000 0 0xc0000000 0x0 0x00200000>, /* MEM */
-+		ranges = <0x02000000 0x0 0xc0000000 0 0xc0000000 0x0 0x00020000>, /* MEM */
- 			 <0x01000000 0x0 0x00000000 0 0xffc20000 0x0 0x00010000>; /* IO */
+diff --git a/drivers/spi/spi-bcm-qspi.c b/drivers/spi/spi-bcm-qspi.c
+index cad2d55dcd3d2..137e7315a3cfd 100644
+--- a/drivers/spi/spi-bcm-qspi.c
++++ b/drivers/spi/spi-bcm-qspi.c
+@@ -1543,13 +1543,9 @@ int bcm_qspi_probe(struct platform_device *pdev,
+ 		res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
+ 						   "mspi");
  
- 		pcie@0 {
+-	if (res) {
+-		qspi->base[MSPI]  = devm_ioremap_resource(dev, res);
+-		if (IS_ERR(qspi->base[MSPI]))
+-			return PTR_ERR(qspi->base[MSPI]);
+-	} else {
+-		return 0;
+-	}
++	qspi->base[MSPI]  = devm_ioremap_resource(dev, res);
++	if (IS_ERR(qspi->base[MSPI]))
++		return PTR_ERR(qspi->base[MSPI]);
+ 
+ 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "bspi");
+ 	if (res) {
 -- 
 2.39.2
 
