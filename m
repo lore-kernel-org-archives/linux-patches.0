@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905048F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:57:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DA2C433C8;
-	Sun, 16 Jul 2023 19:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FDCC8F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:57:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D81C4C433C8;
+	Sun, 16 Jul 2023 19:57:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537465;
-	bh=tCRdGOtowNmOk3eFnG/ud7TG6k3TWut8gJV39z4Gmks=;
+	s=korg; t=1689537468;
+	bh=5dAIn7Nr+d7M9/hyO4N8LiqjnNv8Yzt4wctCtt/euJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oh5QPc+SCuUtOnEG6Dg2Wi8s6PaBCRPVkXoya/DHonWlWJlqzerXUNx40efgGMHhe
-	 li0TmjeuxTCwPPiudDVzIQ3xA1LjXTuOPsLyQ2wpZhjeXg1mxie8Tmm8o2MDDqJnP+
-	 vGVtzMovzGtgz2wQ5KEsSy8J2eFgSinZs5uMC+M0=
+	b=xLxDa4OhMa2wKF8KVd5b76DCJxBy4Hlln8ZeH6TkIlAogoER9WLTG/jDYQR31tluB
+	 Ead+e8FOSMW/QZmmXulNLv6tbQ9Cgw50BhvY6xiik0AOA4HeECqkWS+adgAQ4OnDN6
+	 4DEsSHn6lheQ39K8j5IIU/CU9OiskU61aKrbu5pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregg Wonderly <greggwonderly@seqtechllc.com>,
-	Peter Seiderer <ps.report@gmx.net>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
 	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Simon Horman <simon.horman@corigine.com>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 105/800] wifi: ath9k: fix AR9003 mac hardware hang check register offset calculation
-Date: Sun, 16 Jul 2023 21:39:18 +0200
-Message-ID: <20230716194951.553312830@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+f2cb6e0ffdb961921e4d@syzkaller.appspotmail.com
+Subject: [PATCH 6.4 106/800] wifi: ath9k: avoid referencing uninit memory in ath9k_wmi_ctrl_rx
+Date: Sun, 16 Jul 2023 21:39:19 +0200
+Message-ID: <20230716194951.575786311@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -38,89 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Seiderer <ps.report@gmx.net>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 3e56c80931c7615250fe4bf83f93b57881969266 ]
+[ Upstream commit f24292e827088bba8de7158501ac25a59b064953 ]
 
-Fix ath9k_hw_verify_hang()/ar9003_hw_detect_mac_hang() register offset
-calculation (do not overflow the shift for the second register/queues
-above five, use the register layout described in the comments above
-ath9k_hw_verify_hang() instead).
+For the reasons also described in commit b383e8abed41 ("wifi: ath9k: avoid
+uninit memory read in ath9k_htc_rx_msg()"), ath9k_htc_rx_msg() should
+validate pkt_len before accessing the SKB.
 
-Fixes: 222e04830ff0 ("ath9k: Fix MAC HW hang check for AR9003")
+For example, the obtained SKB may have been badly constructed with
+pkt_len = 8. In this case, the SKB can only contain a valid htc_frame_hdr
+but after being processed in ath9k_htc_rx_msg() and passed to
+ath9k_wmi_ctrl_rx() endpoint RX handler, it is expected to have a WMI
+command header which should be located inside its data payload.
 
-Reported-by: Gregg Wonderly <greggwonderly@seqtechllc.com>
-Link: https://lore.kernel.org/linux-wireless/E3A9C354-0CB7-420C-ADEF-F0177FB722F4@seqtechllc.com/
-Signed-off-by: Peter Seiderer <ps.report@gmx.net>
+Implement sanity checking inside ath9k_wmi_ctrl_rx(). Otherwise, uninit
+memory can be referenced.
+
+Tested on Qualcomm Atheros Communications AR9271 802.11n .
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Reported-and-tested-by: syzbot+f2cb6e0ffdb961921e4d@syzkaller.appspotmail.com
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230422212423.26065-1-ps.report@gmx.net
+Link: https://lore.kernel.org/r/20230424183348.111355-1-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/ar9003_hw.c | 27 ++++++++++++++--------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ drivers/net/wireless/ath/ath9k/wmi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath9k/ar9003_hw.c b/drivers/net/wireless/ath/ath9k/ar9003_hw.c
-index 4f27a9fb1482b..e9bd13eeee92f 100644
---- a/drivers/net/wireless/ath/ath9k/ar9003_hw.c
-+++ b/drivers/net/wireless/ath/ath9k/ar9003_hw.c
-@@ -1099,17 +1099,22 @@ static bool ath9k_hw_verify_hang(struct ath_hw *ah, unsigned int queue)
- {
- 	u32 dma_dbg_chain, dma_dbg_complete;
- 	u8 dcu_chain_state, dcu_complete_state;
-+	unsigned int dbg_reg, reg_offset;
- 	int i;
+diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
+index 19345b8f7bfd5..d652c647d56b5 100644
+--- a/drivers/net/wireless/ath/ath9k/wmi.c
++++ b/drivers/net/wireless/ath/ath9k/wmi.c
+@@ -221,6 +221,10 @@ static void ath9k_wmi_ctrl_rx(void *priv, struct sk_buff *skb,
+ 	if (unlikely(wmi->stopped))
+ 		goto free_skb;
  
--	for (i = 0; i < NUM_STATUS_READS; i++) {
--		if (queue < 6)
--			dma_dbg_chain = REG_READ(ah, AR_DMADBG_4);
--		else
--			dma_dbg_chain = REG_READ(ah, AR_DMADBG_5);
-+	if (queue < 6) {
-+		dbg_reg = AR_DMADBG_4;
-+		reg_offset = queue * 5;
-+	} else {
-+		dbg_reg = AR_DMADBG_5;
-+		reg_offset = (queue - 6) * 5;
-+	}
++	/* Validate the obtained SKB. */
++	if (unlikely(skb->len < sizeof(struct wmi_cmd_hdr)))
++		goto free_skb;
++
+ 	hdr = (struct wmi_cmd_hdr *) skb->data;
+ 	cmd_id = be16_to_cpu(hdr->command_id);
  
-+	for (i = 0; i < NUM_STATUS_READS; i++) {
-+		dma_dbg_chain = REG_READ(ah, dbg_reg);
- 		dma_dbg_complete = REG_READ(ah, AR_DMADBG_6);
- 
--		dcu_chain_state = (dma_dbg_chain >> (5 * queue)) & 0x1f;
-+		dcu_chain_state = (dma_dbg_chain >> reg_offset) & 0x1f;
- 		dcu_complete_state = dma_dbg_complete & 0x3;
- 
- 		if ((dcu_chain_state != 0x6) || (dcu_complete_state != 0x1))
-@@ -1128,6 +1133,7 @@ static bool ar9003_hw_detect_mac_hang(struct ath_hw *ah)
- 	u8 dcu_chain_state, dcu_complete_state;
- 	bool dcu_wait_frdone = false;
- 	unsigned long chk_dcu = 0;
-+	unsigned int reg_offset;
- 	unsigned int i = 0;
- 
- 	dma_dbg_4 = REG_READ(ah, AR_DMADBG_4);
-@@ -1139,12 +1145,15 @@ static bool ar9003_hw_detect_mac_hang(struct ath_hw *ah)
- 		goto exit;
- 
- 	for (i = 0; i < ATH9K_NUM_TX_QUEUES; i++) {
--		if (i < 6)
-+		if (i < 6) {
- 			chk_dbg = dma_dbg_4;
--		else
-+			reg_offset = i * 5;
-+		} else {
- 			chk_dbg = dma_dbg_5;
-+			reg_offset = (i - 6) * 5;
-+		}
- 
--		dcu_chain_state = (chk_dbg >> (5 * i)) & 0x1f;
-+		dcu_chain_state = (chk_dbg >> reg_offset) & 0x1f;
- 		if (dcu_chain_state == 0x6) {
- 			dcu_wait_frdone = true;
- 			chk_dcu |= BIT(i);
 -- 
 2.39.2
 
