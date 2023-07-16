@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593F78F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:59:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1FF5C433CB;
-	Sun, 16 Jul 2023 19:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799548F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:59:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DD8BC433C7;
+	Sun, 16 Jul 2023 19:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537577;
-	bh=+8NbRT5L1KKxuEnQSd+1DyIIY1tjUC9/fc9jkMnayr4=;
+	s=korg; t=1689537580;
+	bh=/cbw91GvUaxkY+uphb9z/G+ChWUnLk4wExz/DElnENc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hfWXXLZjgaO0uDu5bl7U32N5ac67SfUMCDcAG/Lwh58DL7wKng7jR0bd9PxVyLBxY
-	 DT9HU24J73xWgcHmqX4Lsn1+Dp94fyN69nkvmWRvAbqrnfqj0y7LiqMNhvX4ufkhz+
-	 o6cI0Gsn6KW2DuWKcaubTunpPMgcmyseebQbZayM=
+	b=IjDQqnzvsBHxZi2DWoMB1N7hq2/en0KVdhz8R2+WmRyPEg51eJMKnn7RXHZbesYp1
+	 YyId5GevrtIVTxTeIzyoIRYfwX/QauluAq6b/lC+spWelEZm5lNjbA6tEwskruD1s/
+	 T+rejPI9ns92VC+c1f3U4enpYtcRBhMHGiGh0+7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Simon Horman <simon.horman@corigine.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 116/800] wifi: rtw88: unlock on error path in rtw_ops_add_interface()
-Date: Sun, 16 Jul 2023 21:39:29 +0200
-Message-ID: <20230716194951.803430706@linuxfoundation.org>
+Subject: [PATCH 6.4 117/800] wifi: mwifiex: Fix the size of a memory allocation in mwifiex_ret_802_11_scan()
+Date: Sun, 16 Jul 2023 21:39:30 +0200
+Message-ID: <20230716194951.825843331@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,38 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit e2ff1181b3d48257aab26bfd2165f3c7d271499f ]
+[ Upstream commit d9aef04fcfa81ee4fb2804a21a3712b7bbd936af ]
 
-Call mutex_unlock(&rtwdev->mutex); before returning on this error path.
+The type of "mwifiex_adapter->nd_info" is "struct cfg80211_wowlan_nd_info",
+not "struct cfg80211_wowlan_nd_match".
 
-Fixes: f0e741e4ddbc ("wifi: rtw88: add bitmap for dynamic port settings")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Use struct_size() to ease the computation of the needed size.
+
+The current code over-allocates some memory, so is safe.
+But it wastes 32 bytes.
+
+Fixes: 7d7f07d8c5d3 ("mwifiex: add wowlan net-detect support")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/ddd10a74-5982-4f65-8c59-c1cca558d239@kili.mountain
+Link: https://lore.kernel.org/r/7a6074fb056d2181e058a3cc6048d8155c20aec7.1683371982.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/mac80211.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/marvell/mwifiex/scan.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/mac80211.c b/drivers/net/wireless/realtek/rtw88/mac80211.c
-index 144618bb94c86..09bcc2345bb05 100644
---- a/drivers/net/wireless/realtek/rtw88/mac80211.c
-+++ b/drivers/net/wireless/realtek/rtw88/mac80211.c
-@@ -164,8 +164,10 @@ static int rtw_ops_add_interface(struct ieee80211_hw *hw,
- 	mutex_lock(&rtwdev->mutex);
+diff --git a/drivers/net/wireless/marvell/mwifiex/scan.c b/drivers/net/wireless/marvell/mwifiex/scan.c
+index ac8001c842935..644b1e134b01c 100644
+--- a/drivers/net/wireless/marvell/mwifiex/scan.c
++++ b/drivers/net/wireless/marvell/mwifiex/scan.c
+@@ -2187,9 +2187,9 @@ int mwifiex_ret_802_11_scan(struct mwifiex_private *priv,
  
- 	port = find_first_zero_bit(rtwdev->hw_port, RTW_PORT_NUM);
--	if (port >= RTW_PORT_NUM)
-+	if (port >= RTW_PORT_NUM) {
-+		mutex_unlock(&rtwdev->mutex);
- 		return -EINVAL;
-+	}
- 	set_bit(port, rtwdev->hw_port);
+ 	if (nd_config) {
+ 		adapter->nd_info =
+-			kzalloc(sizeof(struct cfg80211_wowlan_nd_match) +
+-				sizeof(struct cfg80211_wowlan_nd_match *) *
+-				scan_rsp->number_of_sets, GFP_ATOMIC);
++			kzalloc(struct_size(adapter->nd_info, matches,
++					    scan_rsp->number_of_sets),
++				GFP_ATOMIC);
  
- 	rtwvif->port = port;
+ 		if (adapter->nd_info)
+ 			adapter->nd_info->n_matches = scan_rsp->number_of_sets;
 -- 
 2.39.2
 
