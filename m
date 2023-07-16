@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD858F5D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:36:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89241C433C8;
-	Sun, 16 Jul 2023 20:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22C98F5D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:36:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5691EC433C7;
+	Sun, 16 Jul 2023 20:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539803;
-	bh=6GEVuZfWWc1YdzU9yEQKVK86o+N7zMahUd8Bu+T0CBI=;
+	s=korg; t=1689539806;
+	bh=x68mS2r2gBvCa2ErOvoXX/QObzir5PBJSG0U56DjDiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CR4OTgsTmR/isw7HBcAvTZMVrKpeyq7yVBvNhEStXtey5HJO7YxmusGm5DMTn2rS4
-	 opn6Dj+ooIiKz+cypbv1omfkXUJ214qKQz8zmd4NioOOq4b6vPEgrUptTvoe267WlK
-	 0eG/uBNbSyvK/sv4QAiKwGiWZO1dCouGVYJswOGI=
+	b=XVT2qSOie/6/IR8+OiUj0/fyrOuUjSJtsVuFaHtZ1ltMEdLfw/pH2LTwosDxzE5lp
+	 6YfaUVOoNRvWgsiqWSi6pB7yPHnZC6LpOBQ59+kIboewelQfP6+7z+KgCqIkhe2ogG
+	 xln/Q2mIJxqSRP11FAcCRrNq0sBrNm2PUOE+W1Jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Cavallari <nicolas.cavallari@green-communications.fr>,
-	Simon Horman <simon.horman@corigine.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	Baoquan He <bhe@redhat.com>,
+	Cong Wang <amwang@redhat.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Michael Holzheu <holzheu@linux.vnet.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 111/591] wifi: mac80211: Remove "Missing iftype sband data/EHT cap" spam
-Date: Sun, 16 Jul 2023 21:44:10 +0200
-Message-ID: <20230716194926.751994477@linuxfoundation.org>
+Subject: [PATCH 6.1 102/591] kexec: fix a memory leak in crash_shrink_memory()
+Date: Sun, 16 Jul 2023 21:44:01 +0200
+Message-ID: <20230716194926.515501596@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,47 +39,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-[ Upstream commit 6e21e7b8cd897193cee3c2649640efceb3004ba5 ]
+[ Upstream commit 1cba6c4309f03de570202c46f03df3f73a0d4c82 ]
 
-In mesh mode, ieee80211_chandef_he_6ghz_oper() is called by
-mesh_matches_local() for every received mesh beacon.
+Patch series "kexec: enable kexec_crash_size to support two crash kernel
+regions".
 
-On a 6 GHz mesh of a HE-only phy, this spams that the hardware does not
-have EHT capabilities, even if the received mesh beacon does not have an
-EHT element.
+When crashkernel=X fails to reserve region under 4G, it will fall back to
+reserve region above 4G and a region of the default size will also be
+reserved under 4G.  Unfortunately, /sys/kernel/kexec_crash_size only
+supports one crash kernel region now, the user cannot sense the low memory
+reserved by reading /sys/kernel/kexec_crash_size.  Also, low memory cannot
+be freed by writing this file.
 
-Unlike HE, not supporting EHT in the 6 GHz band is not an error so do
-not print anything in this case.
+For example:
+resource_size(crashk_res) = 512M
+resource_size(crashk_low_res) = 256M
 
-Fixes: 5dca295dd767 ("mac80211: Add initial support for EHT and 320 MHz channels")
+The result of 'cat /sys/kernel/kexec_crash_size' is 512M, but it should be
+768M.  When we execute 'echo 0 > /sys/kernel/kexec_crash_size', the size
+of crashk_res becomes 0 and resource_size(crashk_low_res) is still 256 MB,
+which is incorrect.
 
-Signed-off-by: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230614132648.28995-1-nicolas.cavallari@green-communications.fr
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Since crashk_res manages the memory with high address and crashk_low_res
+manages the memory with low address, crashk_low_res is shrunken only when
+all crashk_res is shrunken.  And because when there is only one crash
+kernel region, crashk_res is always used.  Therefore, if all crashk_res is
+shrunken and crashk_low_res still exists, swap them.
+
+This patch (of 6):
+
+If the value of parameter 'new_size' is in the semi-open and semi-closed
+interval (crashk_res.end - KEXEC_CRASH_MEM_ALIGN + 1, crashk_res.end], the
+calculation result of ram_res is:
+
+	ram_res->start = crashk_res.end + 1
+	ram_res->end   = crashk_res.end
+
+The operation of insert_resource() fails, and ram_res is not added to
+iomem_resource.  As a result, the memory of the control block ram_res is
+leaked.
+
+In fact, on all architectures, the start address and size of crashk_res
+are already aligned by KEXEC_CRASH_MEM_ALIGN.  Therefore, we do not need
+to round up crashk_res.start again.  Instead, we should round up
+'new_size' in advance.
+
+Link: https://lkml.kernel.org/r/20230527123439.772-1-thunder.leizhen@huawei.com
+Link: https://lkml.kernel.org/r/20230527123439.772-2-thunder.leizhen@huawei.com
+Fixes: 6480e5a09237 ("kdump: add missing RAM resource in crash_shrink_memory()")
+Fixes: 06a7f711246b ("kexec: premit reduction of the reserved memory size")
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Acked-by: Baoquan He <bhe@redhat.com>
+Cc: Cong Wang <amwang@redhat.com>
+Cc: Eric W. Biederman <ebiederm@xmission.com>
+Cc: Michael Holzheu <holzheu@linux.vnet.ibm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/util.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ kernel/kexec_core.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/util.c b/net/mac80211/util.c
-index 784b9ba61581e..98806c359b173 100644
---- a/net/mac80211/util.c
-+++ b/net/mac80211/util.c
-@@ -3599,10 +3599,8 @@ bool ieee80211_chandef_he_6ghz_oper(struct ieee80211_sub_if_data *sdata,
+diff --git a/kernel/kexec_core.c b/kernel/kexec_core.c
+index ca2743f9c634e..79c012fbb49c8 100644
+--- a/kernel/kexec_core.c
++++ b/kernel/kexec_core.c
+@@ -1035,6 +1035,7 @@ int crash_shrink_memory(unsigned long new_size)
+ 	start = crashk_res.start;
+ 	end = crashk_res.end;
+ 	old_size = (end == 0) ? 0 : end - start + 1;
++	new_size = roundup(new_size, KEXEC_CRASH_MEM_ALIGN);
+ 	if (new_size >= old_size) {
+ 		ret = (new_size == old_size) ? 0 : -EINVAL;
+ 		goto unlock;
+@@ -1046,9 +1047,7 @@ int crash_shrink_memory(unsigned long new_size)
+ 		goto unlock;
  	}
  
- 	eht_cap = ieee80211_get_eht_iftype_cap(sband, iftype);
--	if (!eht_cap) {
--		sdata_info(sdata, "Missing iftype sband data/EHT cap");
-+	if (!eht_cap)
- 		eht_oper = NULL;
--	}
+-	start = roundup(start, KEXEC_CRASH_MEM_ALIGN);
+-	end = roundup(start + new_size, KEXEC_CRASH_MEM_ALIGN);
+-
++	end = start + new_size;
+ 	crash_free_reserved_phys_range(end, crashk_res.end);
  
- 	he_6ghz_oper = ieee80211_he_6ghz_oper(he_oper);
- 
+ 	if ((start == end) && (crashk_res.parent != NULL))
 -- 
 2.39.2
 
