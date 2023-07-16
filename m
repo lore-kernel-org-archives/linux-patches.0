@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9FA8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:46:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C47C433C7;
-	Sun, 16 Jul 2023 20:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9B98F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:46:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3ECCC433C7;
+	Sun, 16 Jul 2023 20:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540369;
-	bh=uYvE6AeyUxubl+V76Wbl9Igyrqc+4lzCevM35KNBbK8=;
+	s=korg; t=1689540372;
+	bh=Das22z4GLBnvRGB9TZFJek2UaW1AHz7fRpx9uomxse8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ORIs4xsYqF+j7WwL7gAoqRmo0cFObHCv2/HrRvFVlcZnK+Y4R0L/ZXBjgZc3KaNBW
-	 pDGvYZyKTnDbAEMtQ1/X+Owkc5Nrx54c/GxSa8aMDNqwSl+2NsCSlj1kuvpQ8hhTrG
-	 H36aBB7YfdKDXREIWzFCVH/vJRjp4CnYhIw0elEM=
+	b=KQeWl++blVa1cEa0opMv9YVvAZ0fzCTPu6F4G4DEVAvThJBECK31qgbcMxeORPZqX
+	 7WlQBx72b1tEzxKOgF921R+6AD6p07F2neLfuu3zRS0vAc0bxAQnuHRqTzehX87Eu/
+	 cbAyo4yXF1QqFhSn69IVvD2+W6MLDiBMrFPNoOIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 338/591] modpost: fix section mismatch message for R_ARM_{PC24,CALL,JUMP24}
-Date: Sun, 16 Jul 2023 21:47:57 +0200
-Message-ID: <20230716194932.646066219@linuxfoundation.org>
+Subject: [PATCH 6.1 339/591] crypto: marvell/cesa - Fix type mismatch warning
+Date: Sun, 16 Jul 2023 21:47:58 +0200
+Message-ID: <20230716194932.675036978@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -34,104 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 56a24b8ce6a7f9c4a21b2276a8644f6f3d8fc14d ]
+[ Upstream commit efbc7764c4446566edb76ca05e903b5905673d2e ]
 
-addend_arm_rel() processes R_ARM_PC24, R_ARM_CALL, R_ARM_JUMP24 in a
-wrong way.
+Commit df8fc4e934c1 ("kbuild: Enable -fstrict-flex-arrays=3") uncovered
+a type mismatch in cesa 3des support that leads to a memcpy beyond the
+end of a structure:
 
-Here, test code.
+In function 'fortify_memcpy_chk',
+    inlined from 'mv_cesa_des3_ede_setkey' at drivers/crypto/marvell/cesa/cipher.c:307:2:
+include/linux/fortify-string.h:583:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  583 |                         __write_overflow_field(p_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-[test code for R_ARM_JUMP24]
+This is probably harmless as the actual data that is copied has the correct
+type, but clearly worth fixing nonetheless.
 
-  .section .init.text,"ax"
-  bar:
-          bx      lr
-
-  .section .text,"ax"
-  .globl foo
-  foo:
-          b       bar
-
-[test code for R_ARM_CALL]
-
-  .section .init.text,"ax"
-  bar:
-          bx      lr
-
-  .section .text,"ax"
-  .globl foo
-  foo:
-          push    {lr}
-          bl      bar
-          pop     {pc}
-
-If you compile it with ARM multi_v7_defconfig, modpost will show the
-symbol name, (unknown).
-
-  WARNING: modpost: vmlinux.o: section mismatch in reference: foo (section: .text) -> (unknown) (section: .init.text)
-
-(You need to use GNU linker instead of LLD to reproduce it.)
-
-Fix the code to make modpost show the correct symbol name.
-
-I imported (with adjustment) sign_extend32() from include/linux/bitops.h.
-
-The '+8' is the compensation for pc-relative instruction. It is
-documented in "ELF for the Arm Architecture" [1].
-
-  "If the relocation is pc-relative then compensation for the PC bias
-  (the PC value is 8 bytes ahead of the executing instruction in Arm
-  state and 4 bytes in Thumb state) must be encoded in the relocation
-  by the object producer."
-
-[1]: https://github.com/ARM-software/abi-aa/blob/main/aaelf32/aaelf32.rst
-
-Fixes: 56a974fa2d59 ("kbuild: make better section mismatch reports on arm")
-Fixes: 6e2e340b59d2 ("ARM: 7324/1: modpost: Fix section warnings for ARM for many compilers")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: 4ada48397823 ("crypto: marvell/cesa - add Triple-DES support")
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/modpost.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/crypto/marvell/cesa/cipher.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index f7a67f111d846..9e370e77f52d1 100644
---- a/scripts/mod/modpost.c
-+++ b/scripts/mod/modpost.c
-@@ -1419,12 +1419,20 @@ static int addend_386_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
- #define	R_ARM_THM_JUMP19	51
- #endif
- 
-+static int32_t sign_extend32(int32_t value, int index)
-+{
-+	uint8_t shift = 31 - index;
-+
-+	return (int32_t)(value << shift) >> shift;
-+}
-+
- static int addend_arm_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
+diff --git a/drivers/crypto/marvell/cesa/cipher.c b/drivers/crypto/marvell/cesa/cipher.c
+index c6f2fa753b7c0..0f37dfd42d850 100644
+--- a/drivers/crypto/marvell/cesa/cipher.c
++++ b/drivers/crypto/marvell/cesa/cipher.c
+@@ -297,7 +297,7 @@ static int mv_cesa_des_setkey(struct crypto_skcipher *cipher, const u8 *key,
+ static int mv_cesa_des3_ede_setkey(struct crypto_skcipher *cipher,
+ 				   const u8 *key, unsigned int len)
  {
- 	unsigned int r_typ = ELF_R_TYPE(r->r_info);
- 	Elf_Sym *sym = elf->symtab_start + ELF_R_SYM(r->r_info);
- 	void *loc = reloc_location(elf, sechdr, r);
- 	uint32_t inst;
-+	int32_t offset;
+-	struct mv_cesa_des_ctx *ctx = crypto_skcipher_ctx(cipher);
++	struct mv_cesa_des3_ctx *ctx = crypto_skcipher_ctx(cipher);
+ 	int err;
  
- 	switch (r_typ) {
- 	case R_ARM_ABS32:
-@@ -1434,6 +1442,10 @@ static int addend_arm_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
- 	case R_ARM_PC24:
- 	case R_ARM_CALL:
- 	case R_ARM_JUMP24:
-+		inst = TO_NATIVE(*(uint32_t *)loc);
-+		offset = sign_extend32((inst & 0x00ffffff) << 2, 25);
-+		r->r_addend = offset + sym->st_value + 8;
-+		break;
- 	case R_ARM_THM_CALL:
- 	case R_ARM_THM_JUMP24:
- 	case R_ARM_THM_JUMP19:
+ 	err = verify_skcipher_des3_key(cipher, key);
 -- 
 2.39.2
 
