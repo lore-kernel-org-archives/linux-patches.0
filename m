@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133A68F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:51:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CEB4C433C7;
-	Sun, 16 Jul 2023 20:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37418F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:51:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652F2C433C7;
+	Sun, 16 Jul 2023 20:51:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540716;
-	bh=o4g3M1+T1+RobAwEH58yUdTFZodrhMEQJfF9/6uzET8=;
+	s=korg; t=1689540719;
+	bh=Ybfm+uW9wEG43vjWIU7BJwKq6yzjsM/b07/vWWAee48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zOh9F62AKp6waUpAwo/lTIJLlqHEAk1DdWIcmwkURD7f6s5P4EGS0BvBdURooS1Bl
-	 Lem4PVHtfB1AcASjhi8xPi7Q00E8NGF0ALg0UniKm8oYuteKrOLg+bOTD7qxKVG7Ot
-	 ji81C36PbZxyKtFafXkMqDDc9Ns7BXMSZ9utDQVQ=
+	b=LFwnDxaVIXjK2HRi0ErJCI49okvuC3DPB5/YPuzLMJnGHsh9AKjahGb3KdByH4vwY
+	 5ZIMMBz5Bdt3AcKNFrq+EmJs3SYTCrL3XMPsen5G2pPE4CWhBtLeEYrhP27RzdD1pu
+	 nlbMnxBXljaNOZmDt+lgRnW9gtcyX+S7vs0WgHw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 436/591] mfd: wcd934x: Fix an error handling path in wcd934x_slim_probe()
-Date: Sun, 16 Jul 2023 21:49:35 +0200
-Message-ID: <20230716194935.192184228@linuxfoundation.org>
+Subject: [PATCH 6.1 437/591] mfd: intel-lpss: Add missing check for platform_get_resource
+Date: Sun, 16 Jul 2023 21:49:36 +0200
+Message-ID: <20230716194935.217743325@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,52 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit f190b4891a3f9fac123a7afd378d4143a2723313 ]
+[ Upstream commit d918e0d5824495a75d00b879118b098fcab36fdb ]
 
-If devm_gpiod_get_optional() fails, some resources need to be released, as
-already done in the .remove() function.
+Add the missing check for platform_get_resource and return error
+if it fails.
 
-While at it, remove the unneeded error code from a dev_err_probe() call.
-It is already added in a human readable way by dev_err_probe() itself.
-
-Fixes: 6a0ee2a61a31 ("mfd: wcd934x: Replace legacy gpio interface for gpiod")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/02d8447f6d1df52cc8357aae698152e9a9be67c6.1684565021.git.christophe.jaillet@wanadoo.fr
+Fixes: 4b45efe85263 ("mfd: Add support for Intel Sunrisepoint LPSS devices")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20230609014818.28475-1-jiasheng@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/wcd934x.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/mfd/intel-lpss-acpi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/mfd/wcd934x.c b/drivers/mfd/wcd934x.c
-index 68e2fa2fda99c..32ed2bd863758 100644
---- a/drivers/mfd/wcd934x.c
-+++ b/drivers/mfd/wcd934x.c
-@@ -253,8 +253,9 @@ static int wcd934x_slim_probe(struct slim_device *sdev)
- 	usleep_range(600, 650);
- 	reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_LOW);
- 	if (IS_ERR(reset_gpio)) {
--		return dev_err_probe(dev, PTR_ERR(reset_gpio),
--				"Failed to get reset gpio: err = %ld\n", PTR_ERR(reset_gpio));
-+		ret = dev_err_probe(dev, PTR_ERR(reset_gpio),
-+				    "Failed to get reset gpio\n");
-+		goto err_disable_regulators;
- 	}
- 	msleep(20);
- 	gpiod_set_value(reset_gpio, 1);
-@@ -264,6 +265,10 @@ static int wcd934x_slim_probe(struct slim_device *sdev)
- 	dev_set_drvdata(dev, ddata);
+diff --git a/drivers/mfd/intel-lpss-acpi.c b/drivers/mfd/intel-lpss-acpi.c
+index a143c8dca2d93..212818aef93e2 100644
+--- a/drivers/mfd/intel-lpss-acpi.c
++++ b/drivers/mfd/intel-lpss-acpi.c
+@@ -183,6 +183,9 @@ static int intel_lpss_acpi_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
  
- 	return 0;
+ 	info->mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	if (!info->mem)
++		return -ENODEV;
 +
-+err_disable_regulators:
-+	regulator_bulk_disable(WCD934X_MAX_SUPPLY, ddata->supplies);
-+	return ret;
- }
+ 	info->irq = platform_get_irq(pdev, 0);
  
- static void wcd934x_slim_remove(struct slim_device *sdev)
+ 	ret = intel_lpss_probe(&pdev->dev, info);
 -- 
 2.39.2
 
