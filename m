@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA558F55
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:39:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A0DC433C7;
-	Sun, 16 Jul 2023 20:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5157C8F55
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:39:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF844C433C7;
+	Sun, 16 Jul 2023 20:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539981;
-	bh=54IZKhYg/BNLjfv7gezrpKL3c3jLu55J1I3svTMo1D4=;
+	s=korg; t=1689539984;
+	bh=ZeDljBdDc0QoLZkbRj9/vd/LKtwCLqaIdlAM1oGstK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qzxzKsR+7SsSSNsgd9ISUkOuGW2FSfvd/W6O4t3S5GYtNpT2GGpmR05tPjVGfz/Kl
-	 f7vBRc+C+yu3dXEgqi2xxpfmMwRyytDgnQBfFaEHgFGRdQNKd/CTpsaNtbP1NbAlnl
-	 r4E7qLlUKQr033ty0Vhmo84Ldy4RKLVOaR3vYMoQ=
+	b=lN2Y6pXPJoogFdtLaT5zYjDC3ZJwyrzmeiqwgl9oC4kFTKSow8aW0Vt1VI5WfKIvR
+	 GygWGMly3gzPzWP9+EpBIj5IeG14gXHykjp6fiIjN1KiiIy9tinW8PCfliSVf0B6l3
+	 BPokxwQsdjYSvKOIu7FNB2VRftK51as5ISCjJl4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Molly Sophia <mollysophia379@gmail.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 201/591] arm64: dts: qcom: sm8350: correct DMA controller unit address
-Date: Sun, 16 Jul 2023 21:45:40 +0200
-Message-ID: <20230716194929.070642904@linuxfoundation.org>
+Subject: [PATCH 6.1 202/591] arm64: dts: qcom: sdm845-polaris: add missing touchscreen child node reg
+Date: Sun, 16 Jul 2023 21:45:41 +0200
+Message-ID: <20230716194929.095479804@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,35 +39,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 41d6bca799b3f40d4d3c22dd4545aeac7c210e33 ]
+[ Upstream commit 4a0156b8862665a3e31c8280607388e3001ace3d ]
 
-Match unit-address to reg entry to fix dtbs W=1 warnings:
+Add missing reg property to touchscreen child node to fix dtbs W=1 warnings:
 
-  Warning (simple_bus_reg): /soc@0/dma-controller@900000: simple-bus unit address format error, expected "9800000"
+  Warning (unit_address_vs_reg): /soc@0/geniqup@ac0000/i2c@a98000/touchscreen@20/rmi4-f12@12: node has a unit name, but no reg or ranges property
 
-Fixes: bc08fbf49bc8 ("arm64: dts: qcom: sm8350: Define GPI DMA engines")
+Fixes: be497abe19bf ("arm64: dts: qcom: Add support for Xiaomi Mi Mix2s")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Molly Sophia <mollysophia379@gmail.com>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230419211856.79332-13-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20230419211856.79332-18-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 9430166ee45b5..7fd1c3f71c0f8 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -903,7 +903,7 @@ spi19: spi@894000 {
- 			};
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
+index 74c6832e05985..093b04359ec39 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
+@@ -484,6 +484,7 @@ rmi4-f01@1 {
  		};
  
--		gpi_dma0: dma-controller@900000 {
-+		gpi_dma0: dma-controller@9800000 {
- 			compatible = "qcom,sm8350-gpi-dma", "qcom,sm6350-gpi-dma";
- 			reg = <0 0x09800000 0 0x60000>;
- 			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
+ 		rmi4-f12@12 {
++			reg = <0x12>;
+ 			syna,rezero-wait-ms = <0xc8>;
+ 			syna,clip-x-high = <0x438>;
+ 			syna,clip-y-high = <0x870>;
 -- 
 2.39.2
 
