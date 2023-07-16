@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B7F8F6D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:24:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E03C433C8;
-	Sun, 16 Jul 2023 20:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90CA8F6D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:24:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 600F8C433C7;
+	Sun, 16 Jul 2023 20:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539047;
-	bh=+oiNfMe20yn5AQbcMXrRJa2L2IPU8mEqSlpz6Sv9gu4=;
+	s=korg; t=1689539049;
+	bh=iKgop/YqvfTxvVeDM5Pi1BX2sh9/7BWrLHkFRPGWxOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NrbWNRCsAXVVYMsO0eWnHEXdzGmhrjI8+0Qrk0PjKpiNr0WpT2xd96W+k3BLc9d8Z
-	 VUwaud0NeDTOhm40oaOXYtuzIVcNzq2YMpoQjsoPRdC+EAgu1ATYL4jYW0cFA9nZLA
-	 2tPJuFtg65Hkh0jagwsHzq53/8l8z7yl5tqpZ1Q0=
+	b=0RnKTKqMf094w82r6rO6UXQ154RoUHIxlth79g+XTutM8bJAt/iuAj15+8CWdQej1
+	 f2EzoFpmHBjc1tR/aSp6JydpJqCyzePXsnaYDre8CxhO2GE+medx0wj/J2vwIc4XmK
+	 HgMqkTlVtgjjTaArhqbWBscRyuyjtvKs3Q60nH38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <simon.horman@corigine.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 669/800] net: dsa: sja1105: always enable the INCL_SRCPT option
-Date: Sun, 16 Jul 2023 21:48:42 +0200
-Message-ID: <20230716195004.655033520@linuxfoundation.org>
+Subject: [PATCH 6.4 670/800] net: dsa: tag_sja1105: always prefer source port information from INCL_SRCPT
+Date: Sun, 16 Jul 2023 21:48:43 +0200
+Message-ID: <20230716195004.684545892@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -38,32 +38,27 @@ Content-Transfer-Encoding: 8bit
 
 From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit b4638af8885af93cd70351081da1909c59342440 ]
+[ Upstream commit c1ae02d876898b1b8ca1e12c6f84d7b406263800 ]
 
-Link-local traffic on bridged SJA1105 ports is sometimes tagged by the
-hardware with source port information (when the port is under a VLAN
-aware bridge).
+Currently the sja1105 tagging protocol prefers using the source port
+information from the VLAN header if that is available, falling back to
+the INCL_SRCPT option if it isn't. The VLAN header is available for all
+frames except for META frames initiated by the switch (containing RX
+timestamps), and thus, the "if (is_link_local)" branch is practically
+dead.
 
 The tag_8021q source port identification has become more loose
 ("imprecise") and will report a plausible rather than exact bridge port,
 when under a bridge (be it VLAN-aware or VLAN-unaware). But link-local
-traffic always needs to know the precise source port.
+traffic always needs to know the precise source port. With incorrect
+source port reporting, for example PTP traffic over 2 bridged ports will
+all be seen on sockets opened on the first such port, which is incorrect.
 
-Modify the driver logic (and therefore: the tagging protocol itself) to
-always include the source port information with link-local packets,
-regardless of whether the port is standalone, under a VLAN-aware or
-VLAN-unaware bridge. This makes it possible for the tagging driver to
-give priority to that information over the tag_8021q VLAN header.
-
-The big drawback with INCL_SRCPT is that it makes it impossible to
-distinguish between an original MAC DA of 01:80:C2:XX:YY:ZZ and
-01:80:C2:AA:BB:ZZ, because the tagger just patches MAC DA bytes 3 and 4
-with zeroes. Only if PTP RX timestamping is enabled, the switch will
-generate a META follow-up frame containing the RX timestamp and the
-original bytes 3 and 4 of the MAC DA. Those will be used to patch up the
-original packet. Nonetheless, in the absence of PTP RX timestamping, we
-have to live with this limitation, since it is more important to have
-the more precise source port information for link-local traffic.
+Now that the tagging protocol has been changed to make link-local frames
+always contain source port information, we can reverse the order of the
+checks so that we always give precedence to that information (which is
+always precise) in lieu of the tag_8021q VID which is only precise for a
+standalone port.
 
 Fixes: d7f9787a763f ("net: dsa: tag_8021q: add support for imprecise RX based on the VBID")
 Fixes: 91495f21fcec ("net: dsa: tag_8021q: replace the SVL bridging with VLAN-unaware IVL bridging")
@@ -72,39 +67,70 @@ Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/sja1105/sja1105_main.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ net/dsa/tag_sja1105.c | 38 +++++++++++++++++++++++++++++---------
+ 1 file changed, 29 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
-index b70dcf32a26dc..8bd61f2ebb2ad 100644
---- a/drivers/net/dsa/sja1105/sja1105_main.c
-+++ b/drivers/net/dsa/sja1105/sja1105_main.c
-@@ -866,11 +866,11 @@ static int sja1105_init_general_params(struct sja1105_private *priv)
- 		.hostprio = 7,
- 		.mac_fltres1 = SJA1105_LINKLOCAL_FILTER_A,
- 		.mac_flt1    = SJA1105_LINKLOCAL_FILTER_A_MASK,
--		.incl_srcpt1 = false,
-+		.incl_srcpt1 = true,
- 		.send_meta1  = false,
- 		.mac_fltres0 = SJA1105_LINKLOCAL_FILTER_B,
- 		.mac_flt0    = SJA1105_LINKLOCAL_FILTER_B_MASK,
--		.incl_srcpt0 = false,
-+		.incl_srcpt0 = true,
- 		.send_meta0  = false,
- 		/* Default to an invalid value */
- 		.mirr_port = priv->ds->num_ports,
-@@ -2407,11 +2407,6 @@ int sja1105_vlan_filtering(struct dsa_switch *ds, int port, bool enabled,
- 	general_params->tpid = tpid;
- 	/* EtherType used to identify outer tagged (S-tag) VLAN traffic */
- 	general_params->tpid2 = tpid2;
--	/* When VLAN filtering is on, we need to at least be able to
--	 * decode management traffic through the "backup plan".
--	 */
--	general_params->incl_srcpt1 = enabled;
--	general_params->incl_srcpt0 = enabled;
+diff --git a/net/dsa/tag_sja1105.c b/net/dsa/tag_sja1105.c
+index a5f3b73da417f..92a626a05e829 100644
+--- a/net/dsa/tag_sja1105.c
++++ b/net/dsa/tag_sja1105.c
+@@ -545,10 +545,7 @@ static struct sk_buff *sja1105_rcv(struct sk_buff *skb,
+ 	is_link_local = sja1105_is_link_local(skb);
+ 	is_meta = sja1105_is_meta_frame(skb);
  
- 	for (port = 0; port < ds->num_ports; port++) {
- 		if (dsa_is_unused_port(ds, port))
+-	if (sja1105_skb_has_tag_8021q(skb)) {
+-		/* Normal traffic path. */
+-		sja1105_vlan_rcv(skb, &source_port, &switch_id, &vbid, &vid);
+-	} else if (is_link_local) {
++	if (is_link_local) {
+ 		/* Management traffic path. Switch embeds the switch ID and
+ 		 * port ID into bytes of the destination MAC, courtesy of
+ 		 * the incl_srcpt options.
+@@ -562,16 +559,39 @@ static struct sk_buff *sja1105_rcv(struct sk_buff *skb,
+ 		sja1105_meta_unpack(skb, &meta);
+ 		source_port = meta.source_port;
+ 		switch_id = meta.switch_id;
+-	} else {
++	}
++
++	/* Normal data plane traffic and link-local frames are tagged with
++	 * a tag_8021q VLAN which we have to strip
++	 */
++	if (sja1105_skb_has_tag_8021q(skb)) {
++		int tmp_source_port = -1, tmp_switch_id = -1;
++
++		sja1105_vlan_rcv(skb, &tmp_source_port, &tmp_switch_id, &vbid,
++				 &vid);
++		/* Preserve the source information from the INCL_SRCPT option,
++		 * if available. This allows us to not overwrite a valid source
++		 * port and switch ID with zeroes when receiving link-local
++		 * frames from a VLAN-unaware bridged port (non-zero vbid) or a
++		 * VLAN-aware bridged port (non-zero vid).
++		 */
++		if (source_port == -1)
++			source_port = tmp_source_port;
++		if (switch_id == -1)
++			switch_id = tmp_switch_id;
++	} else if (source_port == -1 && switch_id == -1) {
++		/* Packets with no source information have no chance of
++		 * getting accepted, drop them straight away.
++		 */
+ 		return NULL;
+ 	}
+ 
+-	if (vbid >= 1)
++	if (source_port != -1 && switch_id != -1)
++		skb->dev = dsa_master_find_slave(netdev, switch_id, source_port);
++	else if (vbid >= 1)
+ 		skb->dev = dsa_tag_8021q_find_port_by_vbid(netdev, vbid);
+-	else if (source_port == -1 || switch_id == -1)
+-		skb->dev = dsa_find_designated_bridge_port_by_vid(netdev, vid);
+ 	else
+-		skb->dev = dsa_master_find_slave(netdev, switch_id, source_port);
++		skb->dev = dsa_find_designated_bridge_port_by_vid(netdev, vid);
+ 	if (!skb->dev) {
+ 		netdev_warn(netdev, "Couldn't decode source port\n");
+ 		return NULL;
 -- 
 2.39.2
 
