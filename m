@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACD88F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:34:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92083C433C7;
-	Sun, 16 Jul 2023 20:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15498F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:34:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CB3C433C8;
+	Sun, 16 Jul 2023 20:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539695;
-	bh=uDADShCfb9+b+QAGXXurp+fS+Ct/2m5G0eQXuoQ59Ik=;
+	s=korg; t=1689539697;
+	bh=IWkkqNL0D1GaGqrjVuFdx/c/HoEuScii0PqS4uyuKIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UEvb6OgVx9jSXIQ7zKEvf98HsVXjx+/e2YVTFOMhXRLFiKHApLNXrJSAPZ5Nw7oqt
-	 MIFpQAEGPy/6BQzEY4wCXmu+7yhs5/c5twf/23gwuWcPXIIZtoLD+DHJTDx9LIwEtj
-	 oWHgawMUXjCF6htVNLgbMmYnUhEKZA0Tl7tZJfCY=
+	b=BnIlOh1l5d3XC9TA0AP4cmD4A0R8rGHoU161y+9nIds0u2P1kX4aSEmINeJ0PhhR5
+	 4j0Gs4qTIPbl9sVUpFMrnvF0WSGYAgLp5cRjltIN7FwSfHmKAeFrgISVDZuDoheFlN
+	 Jrxey8w4P4S/odnAjtRc1NIsG6Jo+vygn71hZg+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karol Kolacinski <karol.kolacinski@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Arpana Arland <arpanax.arland@intel.com>
-Subject: [PATCH 6.1 098/591] ice: handle extts in the miscellaneous interrupt thread
-Date: Sun, 16 Jul 2023 21:43:57 +0200
-Message-ID: <20230716194926.414359921@linuxfoundation.org>
+	Haifeng Xu <haifeng.xu@shopee.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeelb@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 099/591] selftests: cgroup: fix unexpected failure on test_memcg_low
+Date: Sun, 16 Jul 2023 21:43:58 +0200
+Message-ID: <20230716194926.439929957@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,197 +39,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Karol Kolacinski <karol.kolacinski@intel.com>
+From: Haifeng Xu <haifeng.xu@shopee.com>
 
-[ Upstream commit 6e8b2c88fc8cf95ed09de25946b20b7536c88cd5 ]
+[ Upstream commit 19ab365762c6cc39dfdee9e13ab0d12fe4b5540d ]
 
-The ice_ptp_extts_work() and ice_ptp_periodic_work() functions are both
-scheduled on the same kthread worker, pf.ptp.kworker. The
-ice_ptp_periodic_work() function sends to the firmware to interact with the
-PHY, and must block to wait for responses.
+Since commit f079a020ba95 ("selftests: memcg: factor out common parts of
+memory.{low,min} tests"), the value used in second alloc_anon has changed
+from 148M to 170M.  Because memory.low allows reclaiming page cache in
+child cgroups, so the memory.current is close to 30M instead of 50M.
+Therefore, adjust the expected value of parent cgroup.
 
-This can cause delay in responding to the PFINT_OICR_TSYN_EVNT interrupt
-cause, ultimately resulting in disruption to processing an input signal of
-the frequency is high enough. In our testing, even 100 Hz signals get
-disrupted.
-
-Fix this by instead processing the signal inside the miscellaneous
-interrupt thread prior to handling Tx timestamps.
-
-Use atomic bits in a new pf->misc_thread bitmap in order to safely
-communicate which tasks require processing within the
-ice_misc_intr_thread_fn(). This ensures the communication of desired tasks
-from the ice_misc_intr() are correctly processed without racing even in the
-event that the interrupt triggers again before the thread function exits.
-
-Fixes: 172db5f91d5f ("ice: add support for auxiliary input/output pins")
-Signed-off-by: Karol Kolacinski <karol.kolacinski@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lkml.kernel.org/r/20230522095233.4246-2-haifeng.xu@shopee.com
+Fixes: f079a020ba95 ("selftests: memcg: factor out common parts of memory.{low,min} tests")
+Signed-off-by: Haifeng Xu <haifeng.xu@shopee.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shakeel Butt <shakeelb@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice.h      |  7 ++++++
- drivers/net/ethernet/intel/ice/ice_main.c | 29 ++++++++++++++++-------
- drivers/net/ethernet/intel/ice/ice_ptp.c  | 12 +++-------
- drivers/net/ethernet/intel/ice/ice_ptp.h  |  4 ++--
- 4 files changed, 33 insertions(+), 19 deletions(-)
+ tools/testing/selftests/cgroup/test_memcontrol.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice.h b/drivers/net/ethernet/intel/ice/ice.h
-index ca6b877fdde81..f2be383d97df5 100644
---- a/drivers/net/ethernet/intel/ice/ice.h
-+++ b/drivers/net/ethernet/intel/ice/ice.h
-@@ -491,6 +491,12 @@ enum ice_pf_flags {
- 	ICE_PF_FLAGS_NBITS		/* must be last */
- };
+diff --git a/tools/testing/selftests/cgroup/test_memcontrol.c b/tools/testing/selftests/cgroup/test_memcontrol.c
+index fe4f9f4302822..5a526a8e7d333 100644
+--- a/tools/testing/selftests/cgroup/test_memcontrol.c
++++ b/tools/testing/selftests/cgroup/test_memcontrol.c
+@@ -284,6 +284,7 @@ static int test_memcg_protection(const char *root, bool min)
+ 	char *children[4] = {NULL};
+ 	const char *attribute = min ? "memory.min" : "memory.low";
+ 	long c[4];
++	long current;
+ 	int i, attempts;
+ 	int fd;
  
-+enum ice_misc_thread_tasks {
-+	ICE_MISC_THREAD_EXTTS_EVENT,
-+	ICE_MISC_THREAD_TX_TSTAMP,
-+	ICE_MISC_THREAD_NBITS		/* must be last */
-+};
-+
- struct ice_switchdev_info {
- 	struct ice_vsi *control_vsi;
- 	struct ice_vsi *uplink_vsi;
-@@ -532,6 +538,7 @@ struct ice_pf {
- 	DECLARE_BITMAP(features, ICE_F_MAX);
- 	DECLARE_BITMAP(state, ICE_STATE_NBITS);
- 	DECLARE_BITMAP(flags, ICE_PF_FLAGS_NBITS);
-+	DECLARE_BITMAP(misc_thread, ICE_MISC_THREAD_NBITS);
- 	unsigned long *avail_txqs;	/* bitmap to track PF Tx queue usage */
- 	unsigned long *avail_rxqs;	/* bitmap to track PF Rx queue usage */
- 	unsigned long serv_tmr_period;
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index 4095fe40dfc9b..7a5ec3ce3407a 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -3116,20 +3116,28 @@ static irqreturn_t ice_misc_intr(int __always_unused irq, void *data)
- 
- 	if (oicr & PFINT_OICR_TSYN_TX_M) {
- 		ena_mask &= ~PFINT_OICR_TSYN_TX_M;
--		if (!hw->reset_ongoing)
-+		if (!hw->reset_ongoing) {
-+			set_bit(ICE_MISC_THREAD_TX_TSTAMP, pf->misc_thread);
- 			ret = IRQ_WAKE_THREAD;
-+		}
+@@ -392,7 +393,8 @@ static int test_memcg_protection(const char *root, bool min)
+ 		goto cleanup;
  	}
  
- 	if (oicr & PFINT_OICR_TSYN_EVNT_M) {
- 		u8 tmr_idx = hw->func_caps.ts_func_info.tmr_index_owned;
- 		u32 gltsyn_stat = rd32(hw, GLTSYN_STAT(tmr_idx));
+-	if (!values_close(cg_read_long(parent[1], "memory.current"), MB(50), 3))
++	current = min ? MB(50) : MB(30);
++	if (!values_close(cg_read_long(parent[1], "memory.current"), current, 3))
+ 		goto cleanup;
  
--		/* Save EVENTs from GTSYN register */
--		pf->ptp.ext_ts_irq |= gltsyn_stat & (GLTSYN_STAT_EVENT0_M |
--						     GLTSYN_STAT_EVENT1_M |
--						     GLTSYN_STAT_EVENT2_M);
- 		ena_mask &= ~PFINT_OICR_TSYN_EVNT_M;
--		kthread_queue_work(pf->ptp.kworker, &pf->ptp.extts_work);
-+
-+		if (hw->func_caps.ts_func_info.src_tmr_owned) {
-+			/* Save EVENTs from GLTSYN register */
-+			pf->ptp.ext_ts_irq |= gltsyn_stat &
-+					      (GLTSYN_STAT_EVENT0_M |
-+					       GLTSYN_STAT_EVENT1_M |
-+					       GLTSYN_STAT_EVENT2_M);
-+
-+			set_bit(ICE_MISC_THREAD_EXTTS_EVENT, pf->misc_thread);
-+			ret = IRQ_WAKE_THREAD;
-+		}
- 	}
- 
- #define ICE_AUX_CRIT_ERR (PFINT_OICR_PE_CRITERR_M | PFINT_OICR_HMC_ERR_M | PFINT_OICR_PE_PUSH_M)
-@@ -3173,8 +3181,13 @@ static irqreturn_t ice_misc_intr_thread_fn(int __always_unused irq, void *data)
- 	if (ice_is_reset_in_progress(pf->state))
- 		return IRQ_HANDLED;
- 
--	while (!ice_ptp_process_ts(pf))
--		usleep_range(50, 100);
-+	if (test_and_clear_bit(ICE_MISC_THREAD_EXTTS_EVENT, pf->misc_thread))
-+		ice_ptp_extts_event(pf);
-+
-+	if (test_and_clear_bit(ICE_MISC_THREAD_TX_TSTAMP, pf->misc_thread)) {
-+		while (!ice_ptp_process_ts(pf))
-+			usleep_range(50, 100);
-+	}
- 
- 	return IRQ_HANDLED;
- }
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
-index a3585ede829bb..46b0063a5e128 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
-@@ -1478,15 +1478,11 @@ static int ice_ptp_adjfine(struct ptp_clock_info *info, long scaled_ppm)
- }
- 
- /**
-- * ice_ptp_extts_work - Workqueue task function
-- * @work: external timestamp work structure
-- *
-- * Service for PTP external clock event
-+ * ice_ptp_extts_event - Process PTP external clock event
-+ * @pf: Board private structure
-  */
--static void ice_ptp_extts_work(struct kthread_work *work)
-+void ice_ptp_extts_event(struct ice_pf *pf)
- {
--	struct ice_ptp *ptp = container_of(work, struct ice_ptp, extts_work);
--	struct ice_pf *pf = container_of(ptp, struct ice_pf, ptp);
- 	struct ptp_clock_event event;
- 	struct ice_hw *hw = &pf->hw;
- 	u8 chan, tmr_idx;
-@@ -2512,7 +2508,6 @@ void ice_ptp_prepare_for_reset(struct ice_pf *pf)
- 	ice_ptp_cfg_timestamp(pf, false);
- 
- 	kthread_cancel_delayed_work_sync(&ptp->work);
--	kthread_cancel_work_sync(&ptp->extts_work);
- 
- 	if (test_bit(ICE_PFR_REQ, pf->state))
- 		return;
-@@ -2610,7 +2605,6 @@ static int ice_ptp_init_work(struct ice_pf *pf, struct ice_ptp *ptp)
- 
- 	/* Initialize work functions */
- 	kthread_init_delayed_work(&ptp->work, ice_ptp_periodic_work);
--	kthread_init_work(&ptp->extts_work, ice_ptp_extts_work);
- 
- 	/* Allocate a kworker for handling work required for the ports
- 	 * connected to the PTP hardware clock.
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.h b/drivers/net/ethernet/intel/ice/ice_ptp.h
-index 028349295b719..e689c05bb001f 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp.h
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.h
-@@ -159,7 +159,6 @@ struct ice_ptp_port {
-  * struct ice_ptp - data used for integrating with CONFIG_PTP_1588_CLOCK
-  * @port: data for the PHY port initialization procedure
-  * @work: delayed work function for periodic tasks
-- * @extts_work: work function for handling external Tx timestamps
-  * @cached_phc_time: a cached copy of the PHC time for timestamp extension
-  * @cached_phc_jiffies: jiffies when cached_phc_time was last updated
-  * @ext_ts_chan: the external timestamp channel in use
-@@ -180,7 +179,6 @@ struct ice_ptp_port {
- struct ice_ptp {
- 	struct ice_ptp_port port;
- 	struct kthread_delayed_work work;
--	struct kthread_work extts_work;
- 	u64 cached_phc_time;
- 	unsigned long cached_phc_jiffies;
- 	u8 ext_ts_chan;
-@@ -246,6 +244,7 @@ int ice_ptp_get_ts_config(struct ice_pf *pf, struct ifreq *ifr);
- void ice_ptp_cfg_timestamp(struct ice_pf *pf, bool ena);
- int ice_get_ptp_clock_index(struct ice_pf *pf);
- 
-+void ice_ptp_extts_event(struct ice_pf *pf);
- s8 ice_ptp_request_ts(struct ice_ptp_tx *tx, struct sk_buff *skb);
- bool ice_ptp_process_ts(struct ice_pf *pf);
- 
-@@ -274,6 +273,7 @@ static inline int ice_get_ptp_clock_index(struct ice_pf *pf)
- 	return -1;
- }
- 
-+static inline void ice_ptp_extts_event(struct ice_pf *pf) { }
- static inline s8
- ice_ptp_request_ts(struct ice_ptp_tx *tx, struct sk_buff *skb)
- {
+ 	if (min) {
 -- 
 2.39.2
 
