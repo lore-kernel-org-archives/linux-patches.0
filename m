@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C188F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:42:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060BCC433C7;
-	Sun, 16 Jul 2023 20:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CDEF8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:42:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C34C1C433C7;
+	Sun, 16 Jul 2023 20:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540135;
-	bh=PCQJoRyvc3R9c05aNNHl4zZ12+ROAwrohTuJcYOv/Dk=;
+	s=korg; t=1689540138;
+	bh=dCLzMXIe6DuOXech8x1D6cYxPoqyyaTBEAzn+XVtMLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CaVjPEm8l+7ymsIFrx8rkMJhZzt/9hFwyIKSeI7ga0DprPNBbypUjSU6IAHwB5uhZ
-	 8WOCPVbqXYiC/d0lhDcWTOLkvlj7M7IViurkmcbhgq1PVgf6jsYQV3qC65js7cy/R/
-	 3tKYQaJivWLJLZIayxsddloFJ4gzNnNDppsdqjXM=
+	b=r/Blh7TspyVSZbqO+iLpuzy8DyxjvEQkukZEP1IZmiC41fJyU8uXtVWdl92I9NsVX
+	 A7nkNmqCVyd+BHrKKNIvSpmkELs3A6Zf5X75TtmiAYeSt2+bxJwZHKgQeSB8lgEaFD
+	 4ITQj67z7sSffDHT2YU4yLiMVsQVg2j8/D9X07Zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Marek Vasut <marex@denx.de>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 228/591] Input: pm8941-powerkey - fix debounce on gen2+ PMICs
-Date: Sun, 16 Jul 2023 21:46:07 +0200
-Message-ID: <20230716194929.771150959@linuxfoundation.org>
+Subject: [PATCH 6.1 229/591] ARM: dts: stm32: Fix audio routing on STM32MP15xx DHCOM PDK2
+Date: Sun, 16 Jul 2023 21:46:08 +0200
+Message-ID: <20230716194929.797475734@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,74 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Caleb Connolly <caleb.connolly@linaro.org>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 8c9cce9cb81b5fdc6e66bf3f129727b89e8daab7 ]
+[ Upstream commit e3f2778b1b6ced649bffdc7cbb05b80bb92f2108 ]
 
-Since PM8998/PM660, the power key debounce register was redefined to
-support shorter debounce times. On PM8941 the shortest debounce time
-(represented by register value 0) was 15625us, on PM8998 the shortest
-debounce time is 62us, with the default being 2ms.
+The audio routing flow is not correct, the flow should be from source
+(second element in the pair) to sink (first element in the pair). The
+flow now is from "HP_OUT" to "Playback", where "Playback" is source
+and "HP_OUT" is sink, i.e. the direction is swapped and there is no
+direct link between the two either.
 
-Adjust the bit shift to correctly program debounce on PM8998 and newer.
+Fill in the correct routing, where "HP_OUT" supplies the "Headphone Jack",
+"Line In Jack" supplies "LINE_IN" input, "Microphone Jack" supplies "MIC_IN"
+input and "Mic Bias" supplies "Microphone Jack".
 
-Fixes: 68c581d5e7d8 ("Input: add Qualcomm PM8941 power key driver")
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-Link: https://lore.kernel.org/r/20230529-pm8941-pwrkey-debounce-v1-2-c043a6d5c814@linaro.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 34e0c7847dcf ("ARM: dts: stm32: Add DH Electronics DHCOM STM32MP1 SoM and PDK2 board")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/pm8941-pwrkey.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/stm32mp15xx-dhcom-pdk2.dtsi | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/input/misc/pm8941-pwrkey.c b/drivers/input/misc/pm8941-pwrkey.c
-index 549df01b6ee33..5dd68a02c4451 100644
---- a/drivers/input/misc/pm8941-pwrkey.c
-+++ b/drivers/input/misc/pm8941-pwrkey.c
-@@ -50,7 +50,10 @@
- #define  PON_RESIN_PULL_UP		BIT(0)
+diff --git a/arch/arm/boot/dts/stm32mp15xx-dhcom-pdk2.dtsi b/arch/arm/boot/dts/stm32mp15xx-dhcom-pdk2.dtsi
+index 5f586f024060f..38f46c2c83aa6 100644
+--- a/arch/arm/boot/dts/stm32mp15xx-dhcom-pdk2.dtsi
++++ b/arch/arm/boot/dts/stm32mp15xx-dhcom-pdk2.dtsi
+@@ -137,10 +137,13 @@ reg_panel_supply: regulator-panel-supply {
  
- #define PON_DBC_CTL			0x71
--#define  PON_DBC_DELAY_MASK		0x7
-+#define  PON_DBC_DELAY_MASK_GEN1	0x7
-+#define  PON_DBC_DELAY_MASK_GEN2	0xf
-+#define  PON_DBC_SHIFT_GEN1		6
-+#define  PON_DBC_SHIFT_GEN2		14
- 
- struct pm8941_data {
- 	unsigned int	pull_up_bit;
-@@ -247,7 +250,7 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
- 	struct device *parent;
- 	struct device_node *regmap_node;
- 	const __be32 *addr;
--	u32 req_delay;
-+	u32 req_delay, mask, delay_shift;
- 	int error;
- 
- 	if (of_property_read_u32(pdev->dev.of_node, "debounce", &req_delay))
-@@ -336,12 +339,20 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
- 	pwrkey->input->phys = pwrkey->data->phys;
- 
- 	if (pwrkey->data->supports_debounce_config) {
--		req_delay = (req_delay << 6) / USEC_PER_SEC;
-+		if (pwrkey->subtype >= PON_SUBTYPE_GEN2_PRIMARY) {
-+			mask = PON_DBC_DELAY_MASK_GEN2;
-+			delay_shift = PON_DBC_SHIFT_GEN2;
-+		} else {
-+			mask = PON_DBC_DELAY_MASK_GEN1;
-+			delay_shift = PON_DBC_SHIFT_GEN1;
-+		}
-+
-+		req_delay = (req_delay << delay_shift) / USEC_PER_SEC;
- 		req_delay = ilog2(req_delay);
- 
- 		error = regmap_update_bits(pwrkey->regmap,
- 					   pwrkey->baseaddr + PON_DBC_CTL,
--					   PON_DBC_DELAY_MASK,
-+					   mask,
- 					   req_delay);
- 		if (error) {
- 			dev_err(&pdev->dev, "failed to set debounce: %d\n",
+ 	sound {
+ 		compatible = "audio-graph-card";
+-		routing =
+-			"MIC_IN", "Capture",
+-			"Capture", "Mic Bias",
+-			"Playback", "HP_OUT";
++		widgets = "Headphone", "Headphone Jack",
++			  "Line", "Line In Jack",
++			  "Microphone", "Microphone Jack";
++		routing = "Headphone Jack", "HP_OUT",
++			  "LINE_IN", "Line In Jack",
++			  "MIC_IN", "Microphone Jack",
++			  "Microphone Jack", "Mic Bias";
+ 		dais = <&sai2a_port &sai2b_port>;
+ 		status = "okay";
+ 	};
 -- 
 2.39.2
 
