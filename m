@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F488F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:34:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E23C433C7;
-	Sun, 16 Jul 2023 20:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517788F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:34:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C80CFC433C8;
+	Sun, 16 Jul 2023 20:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539675;
-	bh=/cbw91GvUaxkY+uphb9z/G+ChWUnLk4wExz/DElnENc=;
+	s=korg; t=1689539678;
+	bh=aodLKqIfeAy7x8lErqPn0TghLwhLAwlY0omqe3ICSsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=otUZtVf+IE1p3hP3GNejzUBUNmvBwOecVmatXMqYe8Wst2yf2HZuqbficCp60qTWI
-	 JTx4vbIgI7z0C6OAv3xTTFLsLXFFyrK9DzROORcCAk0aTUDBkfqqQtt77XHTaABuOY
-	 cCJJyvuOZ2TRV2By4Wx6UYl8AGMPKz43XWfZbUIs=
+	b=C3vRUOxkKglAkYorIkHlwGtok2Fk0IP+HSWbX82WYklO0upxgMrRDVEsJs9kcD4GB
+	 OpAF/lO9twUdnKnxMwFb1Sk4WTbttp+QjtrK2fD2+YeN22glHg/QOtPBvc/MnkcFDL
+	 I/QwPonk4T/GOM+iYC+4CG8SCPf3tpt859H6RzXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Jesper Dangaard Brouer <brouer@redhat.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 074/591] wifi: mwifiex: Fix the size of a memory allocation in mwifiex_ret_802_11_scan()
-Date: Sun, 16 Jul 2023 21:43:33 +0200
-Message-ID: <20230716194925.800475528@linuxfoundation.org>
+Subject: [PATCH 6.1 092/591] samples/bpf: xdp1 and xdp2 reduce XDPBUFSIZE to 60
+Date: Sun, 16 Jul 2023 21:43:51 +0200
+Message-ID: <20230716194926.259887787@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,45 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Jesper Dangaard Brouer <brouer@redhat.com>
 
-[ Upstream commit d9aef04fcfa81ee4fb2804a21a3712b7bbd936af ]
+[ Upstream commit 60548b825b082cedf89b275c21c28b1e1d030e50 ]
 
-The type of "mwifiex_adapter->nd_info" is "struct cfg80211_wowlan_nd_info",
-not "struct cfg80211_wowlan_nd_match".
+Default samples/pktgen scripts send 60 byte packets as hardware adds
+4-bytes FCS checksum, which fulfils minimum Ethernet 64 bytes frame
+size.
 
-Use struct_size() to ease the computation of the needed size.
+XDP layer will not necessary have access to the 4-bytes FCS checksum.
 
-The current code over-allocates some memory, so is safe.
-But it wastes 32 bytes.
+This leads to bpf_xdp_load_bytes() failing as it tries to copy 64-bytes
+from an XDP packet that only have 60-bytes available.
 
-Fixes: 7d7f07d8c5d3 ("mwifiex: add wowlan net-detect support")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/7a6074fb056d2181e058a3cc6048d8155c20aec7.1683371982.git.christophe.jaillet@wanadoo.fr
+Fixes: 772251742262 ("samples/bpf: fixup some tools to be able to support xdp multibuffer")
+Signed-off-by: Jesper Dangaard Brouer <brouer@redhat.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://lore.kernel.org/bpf/168545704139.2996228.2516528552939485216.stgit@firesoul
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/scan.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ samples/bpf/xdp1_kern.c | 2 +-
+ samples/bpf/xdp2_kern.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/scan.c b/drivers/net/wireless/marvell/mwifiex/scan.c
-index ac8001c842935..644b1e134b01c 100644
---- a/drivers/net/wireless/marvell/mwifiex/scan.c
-+++ b/drivers/net/wireless/marvell/mwifiex/scan.c
-@@ -2187,9 +2187,9 @@ int mwifiex_ret_802_11_scan(struct mwifiex_private *priv,
+diff --git a/samples/bpf/xdp1_kern.c b/samples/bpf/xdp1_kern.c
+index 0a5c704badd00..d91f27cbcfa99 100644
+--- a/samples/bpf/xdp1_kern.c
++++ b/samples/bpf/xdp1_kern.c
+@@ -39,7 +39,7 @@ static int parse_ipv6(void *data, u64 nh_off, void *data_end)
+ 	return ip6h->nexthdr;
+ }
  
- 	if (nd_config) {
- 		adapter->nd_info =
--			kzalloc(sizeof(struct cfg80211_wowlan_nd_match) +
--				sizeof(struct cfg80211_wowlan_nd_match *) *
--				scan_rsp->number_of_sets, GFP_ATOMIC);
-+			kzalloc(struct_size(adapter->nd_info, matches,
-+					    scan_rsp->number_of_sets),
-+				GFP_ATOMIC);
+-#define XDPBUFSIZE	64
++#define XDPBUFSIZE	60
+ SEC("xdp.frags")
+ int xdp_prog1(struct xdp_md *ctx)
+ {
+diff --git a/samples/bpf/xdp2_kern.c b/samples/bpf/xdp2_kern.c
+index 67804ecf7ce37..8bca674451ed1 100644
+--- a/samples/bpf/xdp2_kern.c
++++ b/samples/bpf/xdp2_kern.c
+@@ -55,7 +55,7 @@ static int parse_ipv6(void *data, u64 nh_off, void *data_end)
+ 	return ip6h->nexthdr;
+ }
  
- 		if (adapter->nd_info)
- 			adapter->nd_info->n_matches = scan_rsp->number_of_sets;
+-#define XDPBUFSIZE	64
++#define XDPBUFSIZE	60
+ SEC("xdp.frags")
+ int xdp_prog1(struct xdp_md *ctx)
+ {
 -- 
 2.39.2
 
