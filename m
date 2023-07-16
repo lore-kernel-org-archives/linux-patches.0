@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B5B8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:05:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11AEC433C8;
-	Sun, 16 Jul 2023 20:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 324DB8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:05:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7BA7C433C8;
+	Sun, 16 Jul 2023 20:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537947;
-	bh=SsQraP3BvkwqFHiG8wLrcDCdS8fyLrN2Cci99QmXN88=;
+	s=korg; t=1689537950;
+	bh=hK6WbM7ak9/4cHluDf2POQTKODUcFiz9WD8OiIVTIpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dW26KewhA5KuT8xfV8sGS/piG5NLhaGHB6nyTrjcqaFi0woRcIjC878L1XPmIWgFU
-	 q8SdCZJLk0HmW8XIUNT+Vx0xmBVSBWmaA4a8Y+du7zR0hFjKwn1LS0kl/Dq6PKA6nm
-	 e+26nHJ3Nm9Hsm+OztxYtrYNUGkADJZ2m/jtDJRc=
+	b=Bs8b/i+zudZePpzTpIhbYH+3IbGEHahV7PM4I+l26i9aMwGbaXUEUUYpojaZd3Fhi
+	 i41F7N/I5knSu0oelSnHyu1Z7Y5Iei27ObVsVC3MRhW8aTRTCS6V7+DcUsimhdRbah
+	 tjHUMkJiXnv9wZ0cuGNTggEPx0TFDRsZt9sC8Hec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 248/800] clk: vc5: Fix .driver_data content in i2c_device_id
-Date: Sun, 16 Jul 2023 21:41:41 +0200
-Message-ID: <20230716194954.861082717@linuxfoundation.org>
+Subject: [PATCH 6.4 239/800] drm/bridge: tc358768: Add atomic_get_input_bus_fmts() implementation
+Date: Sun, 16 Jul 2023 21:41:32 +0200
+Message-ID: <20230716194954.641117180@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,56 +35,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit be3471c5bd9b921c9adfab7948e8021611639164 ]
+[ Upstream commit cec5ccef85bd0128cf895612de54a9d21d2015d0 ]
 
-The .driver_data content in i2c_device_id table must match the
-.data content in of_device_id table, else device_get_match_data()
-would return bogus value on i2c_device_id match. Align the two
-tables.
+Add atomic_get_input_bus_fmts() implementation, tc358768 has a parallel
+RGB input interface with the actual bus format depending on the amount
+of parallel input data lines.
 
-The i2c_device_id table is now converted from of_device_id using
-'s@.compatible = "idt,\([^"]\+"\), .data = \(.*\)@"\1, .driver_data = (kernel_ulong_t)\2@'
+Without this change when the tc358768 is used with less than 24bit the
+color mapping is completely wrong.
 
-Fixes: 9adddb01ce5f ("clk: vc5: Add structure to describe particular chip features")
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Link: https://lore.kernel.org/r/20230507133906.15061-1-marek.vasut+renesas@mailbox.org
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230330095941.428122-7-francesco@dolcini.it
+Stable-dep-of: ee18698e212b ("drm/bridge: tc358768: fix TCLK_TRAILCNT computation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-versaclock5.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/bridge/tc358768.c | 44 +++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-diff --git a/drivers/clk/clk-versaclock5.c b/drivers/clk/clk-versaclock5.c
-index fa71a57875ce8..5452471b7ba55 100644
---- a/drivers/clk/clk-versaclock5.c
-+++ b/drivers/clk/clk-versaclock5.c
-@@ -1271,14 +1271,14 @@ static const struct vc5_chip_info idt_5p49v6975_info = {
+diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
+index aff400c360662..487bfe33edc88 100644
+--- a/drivers/gpu/drm/bridge/tc358768.c
++++ b/drivers/gpu/drm/bridge/tc358768.c
+@@ -9,6 +9,7 @@
+ #include <linux/gpio/consumer.h>
+ #include <linux/i2c.h>
+ #include <linux/kernel.h>
++#include <linux/media-bus-format.h>
+ #include <linux/module.h>
+ #include <linux/regmap.h>
+ #include <linux/regulator/consumer.h>
+@@ -918,6 +919,44 @@ static void tc358768_bridge_enable(struct drm_bridge *bridge)
+ 	}
+ }
+ 
++#define MAX_INPUT_SEL_FORMATS	1
++
++static u32 *
++tc358768_atomic_get_input_bus_fmts(struct drm_bridge *bridge,
++				   struct drm_bridge_state *bridge_state,
++				   struct drm_crtc_state *crtc_state,
++				   struct drm_connector_state *conn_state,
++				   u32 output_fmt,
++				   unsigned int *num_input_fmts)
++{
++	struct tc358768_priv *priv = bridge_to_tc358768(bridge);
++	u32 *input_fmts;
++
++	*num_input_fmts = 0;
++
++	input_fmts = kcalloc(MAX_INPUT_SEL_FORMATS, sizeof(*input_fmts),
++			     GFP_KERNEL);
++	if (!input_fmts)
++		return NULL;
++
++	switch (priv->pd_lines) {
++	case 16:
++		input_fmts[0] = MEDIA_BUS_FMT_RGB565_1X16;
++		break;
++	case 18:
++		input_fmts[0] = MEDIA_BUS_FMT_RGB666_1X18;
++		break;
++	default:
++	case 24:
++		input_fmts[0] = MEDIA_BUS_FMT_RGB888_1X24;
++		break;
++	};
++
++	*num_input_fmts = MAX_INPUT_SEL_FORMATS;
++
++	return input_fmts;
++}
++
+ static const struct drm_bridge_funcs tc358768_bridge_funcs = {
+ 	.attach = tc358768_bridge_attach,
+ 	.mode_valid = tc358768_bridge_mode_valid,
+@@ -925,6 +964,11 @@ static const struct drm_bridge_funcs tc358768_bridge_funcs = {
+ 	.enable = tc358768_bridge_enable,
+ 	.disable = tc358768_bridge_disable,
+ 	.post_disable = tc358768_bridge_post_disable,
++
++	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
++	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
++	.atomic_reset = drm_atomic_helper_bridge_reset,
++	.atomic_get_input_bus_fmts = tc358768_atomic_get_input_bus_fmts,
  };
  
- static const struct i2c_device_id vc5_id[] = {
--	{ "5p49v5923", .driver_data = IDT_VC5_5P49V5923 },
--	{ "5p49v5925", .driver_data = IDT_VC5_5P49V5925 },
--	{ "5p49v5933", .driver_data = IDT_VC5_5P49V5933 },
--	{ "5p49v5935", .driver_data = IDT_VC5_5P49V5935 },
--	{ "5p49v60", .driver_data = IDT_VC6_5P49V60 },
--	{ "5p49v6901", .driver_data = IDT_VC6_5P49V6901 },
--	{ "5p49v6965", .driver_data = IDT_VC6_5P49V6965 },
--	{ "5p49v6975", .driver_data = IDT_VC6_5P49V6975 },
-+	{ "5p49v5923", .driver_data = (kernel_ulong_t)&idt_5p49v5923_info },
-+	{ "5p49v5925", .driver_data = (kernel_ulong_t)&idt_5p49v5925_info },
-+	{ "5p49v5933", .driver_data = (kernel_ulong_t)&idt_5p49v5933_info },
-+	{ "5p49v5935", .driver_data = (kernel_ulong_t)&idt_5p49v5935_info },
-+	{ "5p49v60", .driver_data = (kernel_ulong_t)&idt_5p49v60_info },
-+	{ "5p49v6901", .driver_data = (kernel_ulong_t)&idt_5p49v6901_info },
-+	{ "5p49v6965", .driver_data = (kernel_ulong_t)&idt_5p49v6965_info },
-+	{ "5p49v6975", .driver_data = (kernel_ulong_t)&idt_5p49v6975_info },
- 	{ }
- };
- MODULE_DEVICE_TABLE(i2c, vc5_id);
+ static const struct drm_bridge_timings default_tc358768_timings = {
 -- 
 2.39.2
 
