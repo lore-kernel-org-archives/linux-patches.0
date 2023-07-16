@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB688F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:33:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1327AC433C8;
-	Sun, 16 Jul 2023 20:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5FF8F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:33:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09637C433C7;
+	Sun, 16 Jul 2023 20:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539602;
-	bh=1uN/UOtzFIE/L64BNWX6bk/aKSE64mDvyX0bnS08Tb8=;
+	s=korg; t=1689539605;
+	bh=vakl9FHS1sMgsSzjjCrVeOO6Tj4jT1L6d4TWH13xOXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OscNLSlpCdEdE/mbELvcxGvxtE7PkVDKmiBRFLFW8NAyGCqQ7e0H3XdGxHIAlkZm+
-	 3wu+HbbTwMqxZua3D5FhIoV2u4D6u/MIOii1OwbKq2ltLlgsFg2zKdTZaQexjHwR7/
-	 d4tsMVz3jYcc4WmxfTkgzLD/Rhpw+lVHdn4+lwRg=
+	b=Rj0nnmUFwJrCeCX9LtkIXUxBgTaApPhNOX3p6M5f7EMuphmatgD8lmnxKUA9yFECO
+	 2twi04cu7ZQAxckcSCseGeOX60gVbEuwrU2FzdN6LpUWqkAdrxLdfDNvWFgWA3AcvY
+	 sjH2IF/l6tfsFp3Y0tSTwo8TRLuK3ebqU7dTjh/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 065/591] ima: Fix build warnings
-Date: Sun, 16 Jul 2023 21:43:24 +0200
-Message-ID: <20230716194925.561043359@linuxfoundation.org>
+Subject: [PATCH 6.1 066/591] pstore/ram: Add check for kstrdup
+Date: Sun, 16 Jul 2023 21:43:25 +0200
+Message-ID: <20230716194925.587899460@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,59 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 95526d13038c2bbddd567a4d8e39fac42484e182 ]
+[ Upstream commit d97038d5ec2062733c1e016caf9baaf68cf64ea1 ]
 
-Fix build warnings (function parameters description) for
-ima_collect_modsig(), ima_match_policy() and ima_parse_add_rule().
+Add check for the return value of kstrdup() and return the error
+if it fails in order to avoid NULL pointer dereference.
 
-Fixes: 15588227e086 ("ima: Collect modsig") # v5.4+
-Fixes: 2fe5d6def167 ("ima: integrity appraisal extension") # v5.14+
-Fixes: 4af4662fa4a9 ("integrity: IMA policy") # v3.2+
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Fixes: e163fdb3f7f8 ("pstore/ram: Regularize prz label allocation lifetime")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230614093733.36048-1-jiasheng@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/ima_modsig.c | 3 +++
- security/integrity/ima/ima_policy.c | 3 ++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ fs/pstore/ram_core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/security/integrity/ima/ima_modsig.c b/security/integrity/ima/ima_modsig.c
-index fb25723c65bc4..3e7bee30080f2 100644
---- a/security/integrity/ima/ima_modsig.c
-+++ b/security/integrity/ima/ima_modsig.c
-@@ -89,6 +89,9 @@ int ima_read_modsig(enum ima_hooks func, const void *buf, loff_t buf_len,
+diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
+index 8bf09886e7e66..2384de1c2d187 100644
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -591,6 +591,8 @@ struct persistent_ram_zone *persistent_ram_new(phys_addr_t start, size_t size,
+ 	raw_spin_lock_init(&prz->buffer_lock);
+ 	prz->flags = flags;
+ 	prz->label = kstrdup(label, GFP_KERNEL);
++	if (!prz->label)
++		goto err;
  
- /**
-  * ima_collect_modsig - Calculate the file hash without the appended signature.
-+ * @modsig: parsed module signature
-+ * @buf: data to verify the signature on
-+ * @size: data size
-  *
-  * Since the modsig is part of the file contents, the hash used in its signature
-  * isn't the same one ordinarily calculated by IMA. Therefore PKCS7 code
-diff --git a/security/integrity/ima/ima_policy.c b/security/integrity/ima/ima_policy.c
-index 2edff7f58c25c..bdc40535ff489 100644
---- a/security/integrity/ima/ima_policy.c
-+++ b/security/integrity/ima/ima_policy.c
-@@ -694,6 +694,7 @@ static int get_subaction(struct ima_rule_entry *rule, enum ima_hooks func)
-  * @secid: LSM secid of the task to be validated
-  * @func: IMA hook identifier
-  * @mask: requested action (MAY_READ | MAY_WRITE | MAY_APPEND | MAY_EXEC)
-+ * @flags: IMA actions to consider (e.g. IMA_MEASURE | IMA_APPRAISE)
-  * @pcr: set the pcr to extend
-  * @template_desc: the template that should be used for this rule
-  * @func_data: func specific data, may be NULL
-@@ -1885,7 +1886,7 @@ static int ima_parse_rule(char *rule, struct ima_rule_entry *entry)
- 
- /**
-  * ima_parse_add_rule - add a rule to ima_policy_rules
-- * @rule - ima measurement policy rule
-+ * @rule: ima measurement policy rule
-  *
-  * Avoid locking by allowing just one writer at a time in ima_write_policy()
-  * Returns the length of the rule parsed, an error code on failure
+ 	ret = persistent_ram_buffer_map(start, size, prz, memtype);
+ 	if (ret)
 -- 
 2.39.2
 
