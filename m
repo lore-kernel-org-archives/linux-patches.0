@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF0F8F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:59:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C288C433C7;
-	Sun, 16 Jul 2023 19:59:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461078F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:59:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56146C433C8;
+	Sun, 16 Jul 2023 19:59:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537568;
-	bh=iUSRCU4s9x5u4NXgagCdljN1NamwjsBKrGKdnDzzU4A=;
+	s=korg; t=1689537571;
+	bh=3nyrhwRm6a+EYnTLEq8Gr/gby3jonHe+zCXHUCLvLlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eoi1T4o0dpqbJNvTcN6BD2Zb2Y9N+CCZRz4TlQ1j0BrdmU+QSGJ3TeL2vIyCkCzKQ
-	 tPQ9hOjhtgBRKsoWKrOMamPiPZNzE9rpWOGK4r2teAt2Tizj23lHIZpJ7jtsZO/mtP
-	 XNKw6j4mwQFJQK+8FjBKy9GK5RNuQSJIF4xRO3l4=
+	b=H071vYvM5diQkrrPDIeymW1h0g1JBuacRQKeeYXGbKWMoNHpJtKm8FZf7QDpSzOEy
+	 9Lwy7gfnUVogNPTRIVYRrWxLMbSh8CBOOqSgcVOiznVOSyr+j6NbrMuuN4FXHn46eU
+	 PbcKrfeef2A7G/tjYTgdCH2cSTIvp4MZafXQ6wDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amisha Patel <amisha.patel@microchip.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Dave Marchevsky <davemarchevsky@fb.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 115/800] wifi: wilc1000: fix for absent RSN capabilities WFA testcase
-Date: Sun, 16 Jul 2023 21:39:28 +0200
-Message-ID: <20230716194951.781198174@linuxfoundation.org>
+Subject: [PATCH 6.4 142/800] bpf: Set kptr_struct_meta for node param to list and rbtree insert funcs
+Date: Sun, 16 Jul 2023 21:39:55 +0200
+Message-ID: <20230716194952.394684282@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,53 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amisha Patel <amisha.patel@microchip.com>
+From: Dave Marchevsky <davemarchevsky@fb.com>
 
-[ Upstream commit 9ce4bb09123e9754996e358bd808d39f5d112899 ]
+[ Upstream commit 2140a6e3422de22e6ebe77d4d18b6c0c9c425426 ]
 
-Mandatory WFA testcase
-CT_Security_WPA2Personal_STA_RSNEBoundsVerification-AbsentRSNCap,
-performs bounds verfication on Beacon and/or Probe response frames. It
-failed and observed the reason to be absence of cipher suite and AKM
-suite in RSN information. To fix this, enable the RSN flag before extracting RSN
-capabilities.
+In verifier.c, fixup_kfunc_call uses struct bpf_insn_aux_data's
+kptr_struct_meta field to pass information about local kptr types to
+various helpers and kfuncs at runtime. The recent bpf_refcount series
+added a few functions to the set that need this information:
 
-Fixes: cd21d99e595e ("wifi: wilc1000: validate pairwise and authentication suite offsets")
-Signed-off-by: Amisha Patel <amisha.patel@microchip.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230421181005.4865-1-amisha.patel@microchip.com
+  * bpf_refcount_acquire
+    * Needs to know where the refcount field is in order to increment
+  * Graph collection insert kfuncs: bpf_rbtree_add, bpf_list_push_{front,back}
+    * Were migrated to possibly fail by the bpf_refcount series. If
+      insert fails, the input node is bpf_obj_drop'd. bpf_obj_drop needs
+      the kptr_struct_meta in order to decr refcount and properly free
+      special fields.
+
+Unfortunately the verifier handling of collection insert kfuncs was not
+modified to actually populate kptr_struct_meta. Accordingly, when the
+node input to those kfuncs is passed to bpf_obj_drop, it is done so
+without the information necessary to decr refcount.
+
+This patch fixes the issue by populating kptr_struct_meta for those
+kfuncs.
+
+Fixes: d2dcc67df910 ("bpf: Migrate bpf_rbtree_add and bpf_list_push_{front,back} to possibly fail")
+Signed-off-by: Dave Marchevsky <davemarchevsky@fb.com>
+Link: https://lore.kernel.org/r/20230602022647.1571784-3-davemarchevsky@fb.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/microchip/wilc1000/hif.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/bpf/verifier.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/microchip/wilc1000/hif.c b/drivers/net/wireless/microchip/wilc1000/hif.c
-index 5adc69d5bcae3..a28da59384813 100644
---- a/drivers/net/wireless/microchip/wilc1000/hif.c
-+++ b/drivers/net/wireless/microchip/wilc1000/hif.c
-@@ -485,6 +485,9 @@ void *wilc_parse_join_bss_param(struct cfg80211_bss *bss,
- 		int rsn_ie_len = sizeof(struct element) + rsn_ie[1];
- 		int offset = 8;
- 
-+		param->mode_802_11i = 2;
-+		param->rsn_found = true;
-+
- 		/* extract RSN capabilities */
- 		if (offset < rsn_ie_len) {
- 			/* skip over pairwise suites */
-@@ -494,11 +497,8 @@ void *wilc_parse_join_bss_param(struct cfg80211_bss *bss,
- 				/* skip over authentication suites */
- 				offset += (rsn_ie[offset] * 4) + 2;
- 
--				if (offset + 1 < rsn_ie_len) {
--					param->mode_802_11i = 2;
--					param->rsn_found = true;
-+				if (offset + 1 < rsn_ie_len)
- 					memcpy(param->rsn_cap, &rsn_ie[offset], 2);
--				}
- 			}
- 		}
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 4b3d0ead703f4..405f29079a8cb 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -10286,6 +10286,8 @@ __process_kf_arg_ptr_to_graph_node(struct bpf_verifier_env *env,
+ 			node_off, btf_name_by_offset(reg->btf, t->name_off));
+ 		return -EINVAL;
  	}
++	meta->arg_btf = reg->btf;
++	meta->arg_btf_id = reg->btf_id;
+ 
+ 	if (node_off != field->graph_root.node_offset) {
+ 		verbose(env, "arg#1 offset=%d, but expected %s at offset=%d in struct %s\n",
+@@ -10833,6 +10835,7 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+ 	    meta.func_id == special_kfunc_list[KF_bpf_rbtree_add_impl]) {
+ 		release_ref_obj_id = regs[BPF_REG_2].ref_obj_id;
+ 		insn_aux->insert_off = regs[BPF_REG_2].off;
++		insn_aux->kptr_struct_meta = btf_find_struct_meta(meta.arg_btf, meta.arg_btf_id);
+ 		err = ref_convert_owning_non_owning(env, release_ref_obj_id);
+ 		if (err) {
+ 			verbose(env, "kfunc %s#%d conversion of owning ref to non-owning failed\n",
 -- 
 2.39.2
 
