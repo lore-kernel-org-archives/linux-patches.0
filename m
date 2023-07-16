@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603748F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:00:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D515CC433C7;
-	Sun, 16 Jul 2023 20:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F028F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:00:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A47C433C8;
+	Sun, 16 Jul 2023 20:00:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537608;
-	bh=Xw1ldOvh5cxXQOHAzdqNI9rFo1LD/6yRyJjj0pFFMi0=;
+	s=korg; t=1689537611;
+	bh=Zci2n30MyAXDmjYQLmou7yO1S0q6uFFBCdCyVxVfHWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yfRdDgqvp/l05xSPbj/qLXsBwrv/lm6OFU8jjGiGbOAlJ0KwBmZapTR5iw0sXmU7Q
-	 h6R1jO2JzyVflMK5CqiW/CeJOXjzdP3kl0UHWI40WZ5/jSm4RY5oUyHzM6yO+yOn7+
-	 IDb8r1QuPYHcqev2DbB9OU3d6g4VcNTS1qK+4U10=
+	b=0piHUg/MYgVwpS3sOHQMPvxHcEkMCHyMLiBpVI8ben4RUqWpCX/Uw5ja/ib0W2u63
+	 4eq1WGM7umBcy5KS2Nxd2aL9kauINK7VV5v56fgLRWupeS1Zfv2hgbDdZ3tyZHC/wl
+	 tvYm/Tvq4Im/XZLdX78YgliiJ6GUAxifoQpCzkpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Lei <thunder.leizhen@huawei.com>,
-	Baoquan He <bhe@redhat.com>,
-	Cong Wang <amwang@redhat.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Michael Holzheu <holzheu@linux.vnet.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 157/800] kexec: fix a memory leak in crash_shrink_memory()
-Date: Sun, 16 Jul 2023 21:40:10 +0200
-Message-ID: <20230716194952.759387198@linuxfoundation.org>
+Subject: [PATCH 6.4 158/800] mmc: mediatek: Avoid ugly error message when SDIO wakeup IRQ isnt used
+Date: Sun, 16 Jul 2023 21:40:11 +0200
+Message-ID: <20230716194952.782484047@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -39,91 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhen Lei <thunder.leizhen@huawei.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 1cba6c4309f03de570202c46f03df3f73a0d4c82 ]
+[ Upstream commit a3332b7aad346b14770797e03ddd02ebdb14db41 ]
 
-Patch series "kexec: enable kexec_crash_size to support two crash kernel
-regions".
+When I boot a kukui-kodama board, I see an ugly warning in my kernel
+log:
+  mtk-msdc 11240000.mmc: error -ENXIO: IRQ sdio_wakeup not found
 
-When crashkernel=X fails to reserve region under 4G, it will fall back to
-reserve region above 4G and a region of the default size will also be
-reserved under 4G.  Unfortunately, /sys/kernel/kexec_crash_size only
-supports one crash kernel region now, the user cannot sense the low memory
-reserved by reading /sys/kernel/kexec_crash_size.  Also, low memory cannot
-be freed by writing this file.
+It's pretty normal not to have an "sdio_wakeup" IRQ defined. In fact,
+no device trees in mainline seem to have it. Let's use the
+platform_get_irq_byname_optional() to avoid the error message.
 
-For example:
-resource_size(crashk_res) = 512M
-resource_size(crashk_low_res) = 256M
-
-The result of 'cat /sys/kernel/kexec_crash_size' is 512M, but it should be
-768M.  When we execute 'echo 0 > /sys/kernel/kexec_crash_size', the size
-of crashk_res becomes 0 and resource_size(crashk_low_res) is still 256 MB,
-which is incorrect.
-
-Since crashk_res manages the memory with high address and crashk_low_res
-manages the memory with low address, crashk_low_res is shrunken only when
-all crashk_res is shrunken.  And because when there is only one crash
-kernel region, crashk_res is always used.  Therefore, if all crashk_res is
-shrunken and crashk_low_res still exists, swap them.
-
-This patch (of 6):
-
-If the value of parameter 'new_size' is in the semi-open and semi-closed
-interval (crashk_res.end - KEXEC_CRASH_MEM_ALIGN + 1, crashk_res.end], the
-calculation result of ram_res is:
-
-	ram_res->start = crashk_res.end + 1
-	ram_res->end   = crashk_res.end
-
-The operation of insert_resource() fails, and ram_res is not added to
-iomem_resource.  As a result, the memory of the control block ram_res is
-leaked.
-
-In fact, on all architectures, the start address and size of crashk_res
-are already aligned by KEXEC_CRASH_MEM_ALIGN.  Therefore, we do not need
-to round up crashk_res.start again.  Instead, we should round up
-'new_size' in advance.
-
-Link: https://lkml.kernel.org/r/20230527123439.772-1-thunder.leizhen@huawei.com
-Link: https://lkml.kernel.org/r/20230527123439.772-2-thunder.leizhen@huawei.com
-Fixes: 6480e5a09237 ("kdump: add missing RAM resource in crash_shrink_memory()")
-Fixes: 06a7f711246b ("kexec: premit reduction of the reserved memory size")
-Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
-Acked-by: Baoquan He <bhe@redhat.com>
-Cc: Cong Wang <amwang@redhat.com>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Cc: Michael Holzheu <holzheu@linux.vnet.ibm.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 527f36f5efa4 ("mmc: mediatek: add support for SDIO eint wakup IRQ")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Link: https://lore.kernel.org/r/20230510064434.1.I935404c5396e6bf952e99bb7ffb744c6f7fd430b@changeid
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kexec_core.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/mmc/host/mtk-sd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/kexec_core.c b/kernel/kexec_core.c
-index 3d578c6fefee3..22acee18195a5 100644
---- a/kernel/kexec_core.c
-+++ b/kernel/kexec_core.c
-@@ -1122,6 +1122,7 @@ int crash_shrink_memory(unsigned long new_size)
- 	start = crashk_res.start;
- 	end = crashk_res.end;
- 	old_size = (end == 0) ? 0 : end - start + 1;
-+	new_size = roundup(new_size, KEXEC_CRASH_MEM_ALIGN);
- 	if (new_size >= old_size) {
- 		ret = (new_size == old_size) ? 0 : -EINVAL;
- 		goto unlock;
-@@ -1133,9 +1134,7 @@ int crash_shrink_memory(unsigned long new_size)
- 		goto unlock;
- 	}
+diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
+index 9785ec91654f7..97c42aacaf346 100644
+--- a/drivers/mmc/host/mtk-sd.c
++++ b/drivers/mmc/host/mtk-sd.c
+@@ -2707,7 +2707,7 @@ static int msdc_drv_probe(struct platform_device *pdev)
  
--	start = roundup(start, KEXEC_CRASH_MEM_ALIGN);
--	end = roundup(start + new_size, KEXEC_CRASH_MEM_ALIGN);
--
-+	end = start + new_size;
- 	crash_free_reserved_phys_range(end, crashk_res.end);
- 
- 	if ((start == end) && (crashk_res.parent != NULL))
+ 	/* Support for SDIO eint irq ? */
+ 	if ((mmc->pm_caps & MMC_PM_WAKE_SDIO_IRQ) && (mmc->pm_caps & MMC_PM_KEEP_POWER)) {
+-		host->eint_irq = platform_get_irq_byname(pdev, "sdio_wakeup");
++		host->eint_irq = platform_get_irq_byname_optional(pdev, "sdio_wakeup");
+ 		if (host->eint_irq > 0) {
+ 			host->pins_eint = pinctrl_lookup_state(host->pinctrl, "state_eint");
+ 			if (IS_ERR(host->pins_eint)) {
 -- 
 2.39.2
 
