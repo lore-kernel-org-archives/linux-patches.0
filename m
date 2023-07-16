@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158868F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:28:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C18FC433C7;
-	Sun, 16 Jul 2023 20:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D929B8F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:28:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60699C433C8;
+	Sun, 16 Jul 2023 20:28:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539293;
-	bh=fr9tjqv66lJRa/6aTa5Dna/KfbpxsxmUd81zJSlCMgY=;
+	s=korg; t=1689539296;
+	bh=ydMKwpmqX27pSEKaKFl/BhNnMeo6f0eTuu/5tsKX/24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w94TPuLZEJPA++4guNwh5v3Tv+FOieAQFQ2eHdHVC3BjTQQKyelj1IfIFlxee6w8w
-	 dmupveXeVC57k0FuEt1tN1xEopMYHHX3kS3e23O31H/HgL89HSl6GF4PmyeGJL55kL
-	 zQwBo7U0eTxEL3hgm8v9WKfT8oNtOXOV+rvk2g0Y=
+	b=tZIRaVJEf7vc/b1QmiLgf9ngh7or32wZdCK3d47xxBxTstzV81H9oXwyqcmgQ+dpp
+	 Ua0UOHElXHeQ5BTpUDQELOv+X7Fsfzg2XBv3d0W0HfjQc8F4n8FS3j/nPd/0QUicpg
+	 1Df0IsUYV9AGLLOhHgSPzhjO+VD+ZpP4AnLZuz9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Zhao <yuzhao@google.com>,
-	syzbot+87c490fd2be656269b6a@syzkaller.appspotmail.com,
-	Yosry Ahmed <yosryahmed@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.4 725/800] mm/mglru: make memcg_lru->lock irq safe
-Date: Sun, 16 Jul 2023 21:49:38 +0200
-Message-ID: <20230716195005.958642380@linuxfoundation.org>
+	Robert Marko <robimarko@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.4 726/800] mmc: core: disable TRIM on Kingston EMMC04G-M627
+Date: Sun, 16 Jul 2023 21:49:39 +0200
+Message-ID: <20230716195005.981656184@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,93 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Zhao <yuzhao@google.com>
+From: Robert Marko <robimarko@gmail.com>
 
-commit 814bc1de03ea4361101408e63a68e4b82aef22cb upstream.
+commit f1738a1f816233e6dfc2407f24a31d596643fd90 upstream.
 
-lru_gen_rotate_memcg() can happen in softirq if memory.soft_limit_in_bytes
-is set.  This requires memcg_lru->lock to be irq safe.  Lockdep warns on
-this.
+It seems that Kingston EMMC04G-M627 despite advertising TRIM support does
+not work when the core is trying to use REQ_OP_WRITE_ZEROES.
 
-This problem only affects memcg v1.
+We are seeing I/O errors in OpenWrt under 6.1 on Zyxel NBG7815 that we did
+not previously have and tracked it down to REQ_OP_WRITE_ZEROES.
 
-Link: https://lkml.kernel.org/r/20230619193821.2710944-1-yuzhao@google.com
-Fixes: e4dde56cd208 ("mm: multi-gen LRU: per-node lru_gen_folio lists")
-Signed-off-by: Yu Zhao <yuzhao@google.com>
-Reported-by: syzbot+87c490fd2be656269b6a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=87c490fd2be656269b6a
-Reviewed-by: Yosry Ahmed <yosryahmed@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Trying to use fstrim seems to also throw errors like:
+[93010.835112] I/O error, dev loop0, sector 16902 op 0x3:(DISCARD) flags 0x800 phys_seg 1 prio class 2
+
+Disabling TRIM makes the error go away, so lets add a quirk for this eMMC
+to disable TRIM.
+
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230619193621.437358-1-robimarko@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmscan.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/mmc/core/quirks.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 5bf98d0a22c9..6114a1fc6c68 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -4728,10 +4728,11 @@ static void lru_gen_rotate_memcg(struct lruvec *lruvec, int op)
- {
- 	int seg;
- 	int old, new;
-+	unsigned long flags;
- 	int bin = get_random_u32_below(MEMCG_NR_BINS);
- 	struct pglist_data *pgdat = lruvec_pgdat(lruvec);
+--- a/drivers/mmc/core/quirks.h
++++ b/drivers/mmc/core/quirks.h
+@@ -110,6 +110,13 @@ static const struct mmc_fixup __maybe_un
+ 		  MMC_QUIRK_TRIM_BROKEN),
  
--	spin_lock(&pgdat->memcg_lru.lock);
-+	spin_lock_irqsave(&pgdat->memcg_lru.lock, flags);
- 
- 	VM_WARN_ON_ONCE(hlist_nulls_unhashed(&lruvec->lrugen.list));
- 
-@@ -4766,7 +4767,7 @@ static void lru_gen_rotate_memcg(struct lruvec *lruvec, int op)
- 	if (!pgdat->memcg_lru.nr_memcgs[old] && old == get_memcg_gen(pgdat->memcg_lru.seq))
- 		WRITE_ONCE(pgdat->memcg_lru.seq, pgdat->memcg_lru.seq + 1);
- 
--	spin_unlock(&pgdat->memcg_lru.lock);
-+	spin_unlock_irqrestore(&pgdat->memcg_lru.lock, flags);
- }
- 
- void lru_gen_online_memcg(struct mem_cgroup *memcg)
-@@ -4779,7 +4780,7 @@ void lru_gen_online_memcg(struct mem_cgroup *memcg)
- 		struct pglist_data *pgdat = NODE_DATA(nid);
- 		struct lruvec *lruvec = get_lruvec(memcg, nid);
- 
--		spin_lock(&pgdat->memcg_lru.lock);
-+		spin_lock_irq(&pgdat->memcg_lru.lock);
- 
- 		VM_WARN_ON_ONCE(!hlist_nulls_unhashed(&lruvec->lrugen.list));
- 
-@@ -4790,7 +4791,7 @@ void lru_gen_online_memcg(struct mem_cgroup *memcg)
- 
- 		lruvec->lrugen.gen = gen;
- 
--		spin_unlock(&pgdat->memcg_lru.lock);
-+		spin_unlock_irq(&pgdat->memcg_lru.lock);
- 	}
- }
- 
-@@ -4814,7 +4815,7 @@ void lru_gen_release_memcg(struct mem_cgroup *memcg)
- 		struct pglist_data *pgdat = NODE_DATA(nid);
- 		struct lruvec *lruvec = get_lruvec(memcg, nid);
- 
--		spin_lock(&pgdat->memcg_lru.lock);
-+		spin_lock_irq(&pgdat->memcg_lru.lock);
- 
- 		VM_WARN_ON_ONCE(hlist_nulls_unhashed(&lruvec->lrugen.list));
- 
-@@ -4826,7 +4827,7 @@ void lru_gen_release_memcg(struct mem_cgroup *memcg)
- 		if (!pgdat->memcg_lru.nr_memcgs[gen] && gen == get_memcg_gen(pgdat->memcg_lru.seq))
- 			WRITE_ONCE(pgdat->memcg_lru.seq, pgdat->memcg_lru.seq + 1);
- 
--		spin_unlock(&pgdat->memcg_lru.lock);
-+		spin_unlock_irq(&pgdat->memcg_lru.lock);
- 	}
- }
- 
--- 
-2.41.0
-
+ 	/*
++	 * Kingston EMMC04G-M627 advertises TRIM but it does not seems to
++	 * support being used to offload WRITE_ZEROES.
++	 */
++	MMC_FIXUP("M62704", CID_MANFID_KINGSTON, 0x0100, add_quirk_mmc,
++		  MMC_QUIRK_TRIM_BROKEN),
++
++	/*
+ 	 * Some SD cards reports discard support while they don't
+ 	 */
+ 	MMC_FIXUP(CID_NAME_ANY, CID_MANFID_SANDISK_SD, 0x5344, add_quirk_sd,
 
 
