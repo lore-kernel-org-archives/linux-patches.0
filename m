@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72748F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:51:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33AC3C433C9;
-	Sun, 16 Jul 2023 20:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18BF8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:51:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C067C433C7;
+	Sun, 16 Jul 2023 20:51:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540694;
-	bh=EgkuOQ49oC2rYDhzHjrA0Hd1D7BKH/Asa18dwOd5oAM=;
+	s=korg; t=1689540697;
+	bh=Gd6l5MMjY2xJq3zFKQbLITh/6CNVLhiVIuhuclbDH5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2OQ7zmS8ETltTgntR9RwbqUDH0fD+gHLI4nex3ixBMVNwuBTbi0ZWj0lfVg2Zk3rY
-	 dOj9jwpcMldMlK7I83PWS6DNRHQwNmU+eYsNSgB/pUbYRzAz4B3iLyQOcJDbaNpNJ2
-	 hLw34A2wsomhkmwcHk2a7m9zptv/jp6Hxn2GXFT4=
+	b=hjQEdaqQ3OQG47Tfaw2O7JlUt5aw/cbGQEwMlmiVwIupjQ853JvHaP/1/6lMnLmB2
+	 APj42COj1/5wjm6U4kWwitApIEYGmWa98csVT6eLLaY3MmsZTHwo+V9QVDvot2Istv
+	 QcyA47adfoXrE8TbQPcr8ngdFud8gbme9YtfE3JI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Lee Jones <lee@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 454/591] mfd: stmpe: Only disable the regulators if they are enabled
-Date: Sun, 16 Jul 2023 21:49:53 +0200
-Message-ID: <20230716194935.653261917@linuxfoundation.org>
+Subject: [PATCH 6.1 455/591] phy: tegra: xusb: check return value of devm_kzalloc()
+Date: Sun, 16 Jul 2023 21:49:54 +0200
+Message-ID: <20230716194935.677992889@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,43 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit 104d32bd81f620bb9f67fbf7d1159c414e89f05f ]
+[ Upstream commit 44faada0f38fc333d392af04c343b0e23f8f5d81 ]
 
-In stmpe_probe(), if some regulator_enable() calls fail, probing continues
-and there is only a dev_warn().
+devm_kzalloc() returns a pointer to dynamically allocated memory.
+Pointer could be NULL in case allocation fails. Check pointer validity.
+Identified with coccinelle (kmerr.cocci script).
 
-So, if stmpe_probe() is called the regulator may not be enabled. It is
-cleaner to test it before calling regulator_disable() in the remove
-function.
-
-Fixes: 9c9e321455fb ("mfd: stmpe: add optional regulators")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/8de3aaf297931d655b9ad6aed548f4de8b85425a.1686998575.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: f67213cee2b3 ("phy: tegra: xusb: Add usb-role-switch support")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20230531073950.145339-1-claudiu.beznea@microchip.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/stmpe.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/phy/tegra/xusb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/mfd/stmpe.c b/drivers/mfd/stmpe.c
-index 0c4f74197d3e0..aef29221d7c12 100644
---- a/drivers/mfd/stmpe.c
-+++ b/drivers/mfd/stmpe.c
-@@ -1485,9 +1485,9 @@ int stmpe_probe(struct stmpe_client_info *ci, enum stmpe_partnum partnum)
+diff --git a/drivers/phy/tegra/xusb.c b/drivers/phy/tegra/xusb.c
+index c3fa22ee2d8d4..4d5b4071d47d5 100644
+--- a/drivers/phy/tegra/xusb.c
++++ b/drivers/phy/tegra/xusb.c
+@@ -670,6 +670,9 @@ static int tegra_xusb_setup_usb_role_switch(struct tegra_xusb_port *port)
+ 	port->dev.driver = devm_kzalloc(&port->dev,
+ 					sizeof(struct device_driver),
+ 					GFP_KERNEL);
++	if (!port->dev.driver)
++		return -ENOMEM;
++
+ 	port->dev.driver->owner	 = THIS_MODULE;
  
- void stmpe_remove(struct stmpe *stmpe)
- {
--	if (!IS_ERR(stmpe->vio))
-+	if (!IS_ERR(stmpe->vio) && regulator_is_enabled(stmpe->vio))
- 		regulator_disable(stmpe->vio);
--	if (!IS_ERR(stmpe->vcc))
-+	if (!IS_ERR(stmpe->vcc) && regulator_is_enabled(stmpe->vcc))
- 		regulator_disable(stmpe->vcc);
- 
- 	__stmpe_disable(stmpe, STMPE_BLOCK_ADC);
+ 	port->usb_role_sw = usb_role_switch_register(&port->dev,
 -- 
 2.39.2
 
