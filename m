@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615488F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:28:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D520EC433C8;
-	Sun, 16 Jul 2023 20:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCD58F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:28:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E98C433C7;
+	Sun, 16 Jul 2023 20:28:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539288;
-	bh=enMMDHpShdt2cP7fUH14f5wWJ9G1pcFxrLXF94ANYHg=;
+	s=korg; t=1689539291;
+	bh=2ToeI4h8HJSyPcpKchTff4xkYB9cZXaSoxGZQ4BbGO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hz2/I3u7BMCCFhofnBxgR2me8+Nic4nBA9lcp/kuSYGbpkjk5DxZHkK8kS/pdah0f
-	 ZgVL/yzDn5Gn/Mg3sRfHAANLp8xbHsAhUpflwkwTHlkOcTlBwF0tnV0q4aoGYduNT1
-	 1LJBdzZJWhusHOhJH4UMa4fC0XCtl/vMFSyBYi24=
+	b=LDJr6t90+Hsc/An+7ZasQ0gjkaTcf1vcvRVxZJMl7Fq7HwMX5CFe6wjTed83xOAKf
+	 yGZL5WMYblK5v23dDyumbnw+/xDG7om3mh0Sb3f6kRh2wAbUic+uQveyC74bNo8BDC
+	 l+LmSigws/q/m6/wdqgIC01mkz7xe40afcmuJ3V0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Corallo <blnxfsl@bluematt.me>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 753/800] btrfs: add handling for RAID1C23/DUP to btrfs_reduce_alloc_profile
-Date: Sun, 16 Jul 2023 21:50:06 +0200
-Message-ID: <20230716195006.614147985@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.4 724/800] io_uring: wait interruptibly for request completions on exit
+Date: Sun, 16 Jul 2023 21:49:37 +0200
+Message-ID: <20230716195005.935347253@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -34,140 +33,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matt Corallo <blnxfsl@bluematt.me>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 160fe8f6fdb13da6111677be6263e5d65e875987 upstream.
+commit 4826c59453b3b4677d6bf72814e7ababdea86949 upstream.
 
-Callers of `btrfs_reduce_alloc_profile` expect it to return exactly
-one allocation profile flag, and failing to do so may ultimately
-result in a WARN_ON and remount-ro when allocating new blocks, like
-the below transaction abort on 6.1.
+WHen the ring exits, cleanup is done and the final cancelation and
+waiting on completions is done by io_ring_exit_work. That function is
+invoked by kworker, which doesn't take any signals. Because of that, it
+doesn't really matter if we wait for completions in TASK_INTERRUPTIBLE
+or TASK_UNINTERRUPTIBLE state. However, it does matter to the hung task
+detection checker!
 
-`btrfs_reduce_alloc_profile` has two ways of determining the profile,
-first it checks if a conversion balance is currently running and
-uses the profile we're converting to. If no balance is currently
-running, it returns the max-redundancy profile which at least one
-block in the selected block group has.
+Normally we expect cancelations and completions to happen rather
+quickly. Some test cases, however, will exit the ring and park the
+owning task stopped (eg via SIGSTOP). If the owning task needs to run
+task_work to complete requests, then io_ring_exit_work won't make any
+progress until the task is runnable again. Hence io_ring_exit_work can
+trigger the hung task detection, which is particularly problematic if
+panic-on-hung-task is enabled.
 
-This works by simply checking each known allocation profile bit in
-redundancy order. However, `btrfs_reduce_alloc_profile` has not been
-updated as new flags have been added - first with the `DUP` profile
-and later with the RAID1C34 profiles.
+As the ring exit doesn't take signals to begin with, have it wait
+interruptibly rather than uninterruptibly. io_uring has a separate
+stuck-exit warning that triggers independently anyway, so we're not
+really missing anything by making this switch.
 
-Because of the way it checks, if we have blocks with different
-profiles and at least one is known, that profile will be selected.
-However, if none are known we may return a flag set with multiple
-allocation profiles set.
-
-This is currently only possible when a balance from one of the three
-unhandled profiles to another of the unhandled profiles is canceled
-after allocating at least one block using the new profile.
-
-In that case, a transaction abort like the below will occur and the
-filesystem will need to be mounted with -o skip_balance to get it
-mounted rw again (but the balance cannot be resumed without a
-similar abort).
-
-  [770.648] ------------[ cut here ]------------
-  [770.648] BTRFS: Transaction aborted (error -22)
-  [770.648] WARNING: CPU: 43 PID: 1159593 at fs/btrfs/extent-tree.c:4122 find_free_extent+0x1d94/0x1e00 [btrfs]
-  [770.648] CPU: 43 PID: 1159593 Comm: btrfs Tainted: G        W 6.1.0-0.deb11.7-powerpc64le #1  Debian 6.1.20-2~bpo11+1a~test
-  [770.648] Hardware name: T2P9D01 REV 1.00 POWER9 0x4e1202 opal:skiboot-bc106a0 PowerNV
-  [770.648] NIP:  c00800000f6784fc LR: c00800000f6784f8 CTR: c000000000d746c0
-  [770.648] REGS: c000200089afe9a0 TRAP: 0700   Tainted: G        W (6.1.0-0.deb11.7-powerpc64le Debian 6.1.20-2~bpo11+1a~test)
-  [770.648] MSR:  9000000002029033 <SF,HV,VEC,EE,ME,IR,DR,RI,LE>  CR: 28848282  XER: 20040000
-  [770.648] CFAR: c000000000135110 IRQMASK: 0
-	    GPR00: c00800000f6784f8 c000200089afec40 c00800000f7ea800 0000000000000026
-	    GPR04: 00000001004820c2 c000200089afea00 c000200089afe9f8 0000000000000027
-	    GPR08: c000200ffbfe7f98 c000000002127f90 ffffffffffffffd8 0000000026d6a6e8
-	    GPR12: 0000000028848282 c000200fff7f3800 5deadbeef0000122 c00000002269d000
-	    GPR16: c0002008c7797c40 c000200089afef17 0000000000000000 0000000000000000
-	    GPR20: 0000000000000000 0000000000000001 c000200008bc5a98 0000000000000001
-	    GPR24: 0000000000000000 c0000003c73088d0 c000200089afef17 c000000016d3a800
-	    GPR28: c0000003c7308800 c00000002269d000 ffffffffffffffea 0000000000000001
-  [770.648] NIP [c00800000f6784fc] find_free_extent+0x1d94/0x1e00 [btrfs]
-  [770.648] LR [c00800000f6784f8] find_free_extent+0x1d90/0x1e00 [btrfs]
-  [770.648] Call Trace:
-  [770.648] [c000200089afec40] [c00800000f6784f8] find_free_extent+0x1d90/0x1e00 [btrfs] (unreliable)
-  [770.648] [c000200089afed30] [c00800000f681398] btrfs_reserve_extent+0x1a0/0x2f0 [btrfs]
-  [770.648] [c000200089afeea0] [c00800000f681bf0] btrfs_alloc_tree_block+0x108/0x670 [btrfs]
-  [770.648] [c000200089afeff0] [c00800000f66bd68] __btrfs_cow_block+0x170/0x850 [btrfs]
-  [770.648] [c000200089aff100] [c00800000f66c58c] btrfs_cow_block+0x144/0x288 [btrfs]
-  [770.648] [c000200089aff1b0] [c00800000f67113c] btrfs_search_slot+0x6b4/0xcb0 [btrfs]
-  [770.648] [c000200089aff2a0] [c00800000f679f60] lookup_inline_extent_backref+0x128/0x7c0 [btrfs]
-  [770.648] [c000200089aff3b0] [c00800000f67b338] lookup_extent_backref+0x70/0x190 [btrfs]
-  [770.648] [c000200089aff470] [c00800000f67b54c] __btrfs_free_extent+0xf4/0x1490 [btrfs]
-  [770.648] [c000200089aff5a0] [c00800000f67d770] __btrfs_run_delayed_refs+0x328/0x1530 [btrfs]
-  [770.648] [c000200089aff740] [c00800000f67ea2c] btrfs_run_delayed_refs+0xb4/0x3e0 [btrfs]
-  [770.648] [c000200089aff800] [c00800000f699aa4] btrfs_commit_transaction+0x8c/0x12b0 [btrfs]
-  [770.648] [c000200089aff8f0] [c00800000f6dc628] reset_balance_state+0x1c0/0x290 [btrfs]
-  [770.648] [c000200089aff9a0] [c00800000f6e2f7c] btrfs_balance+0x1164/0x1500 [btrfs]
-  [770.648] [c000200089affb40] [c00800000f6f8e4c] btrfs_ioctl+0x2b54/0x3100 [btrfs]
-  [770.648] [c000200089affc80] [c00000000053be14] sys_ioctl+0x794/0x1310
-  [770.648] [c000200089affd70] [c00000000002af98] system_call_exception+0x138/0x250
-  [770.648] [c000200089affe10] [c00000000000c654] system_call_common+0xf4/0x258
-  [770.648] --- interrupt: c00 at 0x7fff94126800
-  [770.648] NIP:  00007fff94126800 LR: 0000000107e0b594 CTR: 0000000000000000
-  [770.648] REGS: c000200089affe80 TRAP: 0c00   Tainted: G        W (6.1.0-0.deb11.7-powerpc64le Debian 6.1.20-2~bpo11+1a~test)
-  [770.648] MSR:  900000000000d033 <SF,HV,EE,PR,ME,IR,DR,RI,LE>  CR: 24002848  XER: 00000000
-  [770.648] IRQMASK: 0
-	    GPR00: 0000000000000036 00007fffc9439da0 00007fff94217100 0000000000000003
-	    GPR04: 00000000c4009420 00007fffc9439ee8 0000000000000000 0000000000000000
-	    GPR08: 00000000803c7416 0000000000000000 0000000000000000 0000000000000000
-	    GPR12: 0000000000000000 00007fff9467d120 0000000107e64c9c 0000000107e64d0a
-	    GPR16: 0000000107e64d06 0000000107e64cf1 0000000107e64cc4 0000000107e64c73
-	    GPR20: 0000000107e64c31 0000000107e64bf1 0000000107e64be7 0000000000000000
-	    GPR24: 0000000000000000 00007fffc9439ee0 0000000000000003 0000000000000001
-	    GPR28: 00007fffc943f713 0000000000000000 00007fffc9439ee8 0000000000000000
-  [770.648] NIP [00007fff94126800] 0x7fff94126800
-  [770.648] LR [0000000107e0b594] 0x107e0b594
-  [770.648] --- interrupt: c00
-  [770.648] Instruction dump:
-  [770.648] 3b00ffe4 e8898828 481175f5 60000000 4bfff4fc 3be00000 4bfff570 3d220000
-  [770.648] 7fc4f378 e8698830 4811cd95 e8410018 <0fe00000> f9c10060 f9e10068 fa010070
-  [770.648] ---[ end trace 0000000000000000 ]---
-  [770.648] BTRFS: error (device dm-2: state A) in find_free_extent_update_loop:4122: errno=-22 unknown
-  [770.648] BTRFS info (device dm-2: state EA): forced readonly
-  [770.648] BTRFS: error (device dm-2: state EA) in __btrfs_free_extent:3070: errno=-22 unknown
-  [770.648] BTRFS error (device dm-2: state EA): failed to run delayed ref for logical 17838685708288 num_bytes 24576 type 184 action 2 ref_mod 1: -22
-  [770.648] BTRFS: error (device dm-2: state EA) in btrfs_run_delayed_refs:2144: errno=-22 unknown
-  [770.648] BTRFS: error (device dm-2: state EA) in reset_balance_state:3599: errno=-22 unknown
-
-Fixes: 47e6f7423b91 ("btrfs: add support for 3-copy replication (raid1c3)")
-Fixes: 8d6fac0087e5 ("btrfs: add support for 4-copy replication (raid1c4)")
-CC: stable@vger.kernel.org # 5.10+
-Signed-off-by: Matt Corallo <blnxfsl@bluematt.me>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org # 5.10+
+Link: https://lore.kernel.org/r/b0e4aaef-7088-56ce-244c-976edeac0e66@kernel.dk
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/block-group.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ io_uring/io_uring.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -95,14 +95,21 @@ static u64 btrfs_reduce_alloc_profile(st
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -3050,7 +3050,18 @@ static __cold void io_ring_exit_work(str
+ 			/* there is little hope left, don't run it too often */
+ 			interval = HZ * 60;
+ 		}
+-	} while (!wait_for_completion_timeout(&ctx->ref_comp, interval));
++		/*
++		 * This is really an uninterruptible wait, as it has to be
++		 * complete. But it's also run from a kworker, which doesn't
++		 * take signals, so it's fine to make it interruptible. This
++		 * avoids scenarios where we knowingly can wait much longer
++		 * on completions, for example if someone does a SIGSTOP on
++		 * a task that needs to finish task_work to make this loop
++		 * complete. That's a synthetic situation that should not
++		 * cause a stuck task backtrace, and hence a potential panic
++		 * on stuck tasks if that is enabled.
++		 */
++	} while (!wait_for_completion_interruptible_timeout(&ctx->ref_comp, interval));
+ 
+ 	init_completion(&exit.completion);
+ 	init_task_work(&exit.task_work, io_tctx_exit_cb);
+@@ -3074,7 +3085,12 @@ static __cold void io_ring_exit_work(str
+ 			continue;
+ 
+ 		mutex_unlock(&ctx->uring_lock);
+-		wait_for_completion(&exit.completion);
++		/*
++		 * See comment above for
++		 * wait_for_completion_interruptible_timeout() on why this
++		 * wait is marked as interruptible.
++		 */
++		wait_for_completion_interruptible(&exit.completion);
+ 		mutex_lock(&ctx->uring_lock);
  	}
- 	allowed &= flags;
- 
--	if (allowed & BTRFS_BLOCK_GROUP_RAID6)
-+	/* Select the highest-redundancy RAID level. */
-+	if (allowed & BTRFS_BLOCK_GROUP_RAID1C4)
-+		allowed = BTRFS_BLOCK_GROUP_RAID1C4;
-+	else if (allowed & BTRFS_BLOCK_GROUP_RAID6)
- 		allowed = BTRFS_BLOCK_GROUP_RAID6;
-+	else if (allowed & BTRFS_BLOCK_GROUP_RAID1C3)
-+		allowed = BTRFS_BLOCK_GROUP_RAID1C3;
- 	else if (allowed & BTRFS_BLOCK_GROUP_RAID5)
- 		allowed = BTRFS_BLOCK_GROUP_RAID5;
- 	else if (allowed & BTRFS_BLOCK_GROUP_RAID10)
- 		allowed = BTRFS_BLOCK_GROUP_RAID10;
- 	else if (allowed & BTRFS_BLOCK_GROUP_RAID1)
- 		allowed = BTRFS_BLOCK_GROUP_RAID1;
-+	else if (allowed & BTRFS_BLOCK_GROUP_DUP)
-+		allowed = BTRFS_BLOCK_GROUP_DUP;
- 	else if (allowed & BTRFS_BLOCK_GROUP_RAID0)
- 		allowed = BTRFS_BLOCK_GROUP_RAID0;
- 
+ 	mutex_unlock(&ctx->uring_lock);
 
 
