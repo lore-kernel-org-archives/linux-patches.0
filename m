@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F878F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:18:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 439A3C433C7;
-	Sun, 16 Jul 2023 20:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F228F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:19:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19B3BC433C8;
+	Sun, 16 Jul 2023 20:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538738;
-	bh=e1hzWDr5yruFlKZBTPl82JhEFaK/Tl22tnzYuMa7L10=;
+	s=korg; t=1689538741;
+	bh=LsdgNpeKysMlH/N3ZdTnTi1UBt9tjoC0VqSwvNgojdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NQga6i4MQ9T4OEiOCq2erAGrfXn2Q2NV+UGk8Eb13gg5QYKTj2rbrwutctGhwnlDj
-	 Wqo93zK4z0u0FqoJ6yfA/PnankQwWDOUJxn9rz6GORok69hxG8M9yR33G6/yTXw0q9
-	 zeW4rEUu1a4mQmM9LndtE6ssQxc4CzAv1e3SeZBQ=
+	b=ARXVanDx+4kWl4L0lOqhlxuMq2bY7WoSg/oNCZpl2ELzs3Ry5nUnfoOH+ZUUVZNNl
+	 WyqiJYnRkNxRyKpwrc9DRJEP1w3AuSVRaHdn+/w3B/5iM3yXF4sNvefVjcn/1RHQzE
+	 99cNMWJ3kZOnvuc6DJEV5+sh8S+pd1h/jNE3oCnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ding Hui <dinghui@sangfor.com.cn>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.4 531/800] SUNRPC: Fix UAF in svc_tcp_listen_data_ready()
-Date: Sun, 16 Jul 2023 21:46:24 +0200
-Message-ID: <20230716195001.429537604@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 558/800] interconnect: qcom: rpm: Rename icc provider num_clocks to num_bus_clocks
+Date: Sun, 16 Jul 2023 21:46:51 +0200
+Message-ID: <20230716195002.050216378@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -34,138 +35,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ding Hui <dinghui@sangfor.com.cn>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-commit fc80fc2d4e39137869da3150ee169b40bf879287 upstream.
+[ Upstream commit 1a12928e25627e02126ad2d1c12cfdba79d6bd94 ]
 
-After the listener svc_sock is freed, and before invoking svc_tcp_accept()
-for the established child sock, there is a window that the newsock
-retaining a freed listener svc_sock in sk_user_data which cloning from
-parent. In the race window, if data is received on the newsock, we will
-observe use-after-free report in svc_tcp_listen_data_ready().
+In preparation for handling non-scaling clocks that we still have to
+enable, rename num_clocks to more descriptive num_bus_clocks.
 
-Reproduce by two tasks:
-
-1. while :; do rpc.nfsd 0 ; rpc.nfsd; done
-2. while :; do echo "" | ncat -4 127.0.0.1 2049 ; done
-
-KASAN report:
-
-  ==================================================================
-  BUG: KASAN: slab-use-after-free in svc_tcp_listen_data_ready+0x1cf/0x1f0 [sunrpc]
-  Read of size 8 at addr ffff888139d96228 by task nc/102553
-  CPU: 7 PID: 102553 Comm: nc Not tainted 6.3.0+ #18
-  Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
-  Call Trace:
-   <IRQ>
-   dump_stack_lvl+0x33/0x50
-   print_address_description.constprop.0+0x27/0x310
-   print_report+0x3e/0x70
-   kasan_report+0xae/0xe0
-   svc_tcp_listen_data_ready+0x1cf/0x1f0 [sunrpc]
-   tcp_data_queue+0x9f4/0x20e0
-   tcp_rcv_established+0x666/0x1f60
-   tcp_v4_do_rcv+0x51c/0x850
-   tcp_v4_rcv+0x23fc/0x2e80
-   ip_protocol_deliver_rcu+0x62/0x300
-   ip_local_deliver_finish+0x267/0x350
-   ip_local_deliver+0x18b/0x2d0
-   ip_rcv+0x2fb/0x370
-   __netif_receive_skb_one_core+0x166/0x1b0
-   process_backlog+0x24c/0x5e0
-   __napi_poll+0xa2/0x500
-   net_rx_action+0x854/0xc90
-   __do_softirq+0x1bb/0x5de
-   do_softirq+0xcb/0x100
-   </IRQ>
-   <TASK>
-   ...
-   </TASK>
-
-  Allocated by task 102371:
-   kasan_save_stack+0x1e/0x40
-   kasan_set_track+0x21/0x30
-   __kasan_kmalloc+0x7b/0x90
-   svc_setup_socket+0x52/0x4f0 [sunrpc]
-   svc_addsock+0x20d/0x400 [sunrpc]
-   __write_ports_addfd+0x209/0x390 [nfsd]
-   write_ports+0x239/0x2c0 [nfsd]
-   nfsctl_transaction_write+0xac/0x110 [nfsd]
-   vfs_write+0x1c3/0xae0
-   ksys_write+0xed/0x1c0
-   do_syscall_64+0x38/0x90
-   entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-  Freed by task 102551:
-   kasan_save_stack+0x1e/0x40
-   kasan_set_track+0x21/0x30
-   kasan_save_free_info+0x2a/0x50
-   __kasan_slab_free+0x106/0x190
-   __kmem_cache_free+0x133/0x270
-   svc_xprt_free+0x1e2/0x350 [sunrpc]
-   svc_xprt_destroy_all+0x25a/0x440 [sunrpc]
-   nfsd_put+0x125/0x240 [nfsd]
-   nfsd_svc+0x2cb/0x3c0 [nfsd]
-   write_threads+0x1ac/0x2a0 [nfsd]
-   nfsctl_transaction_write+0xac/0x110 [nfsd]
-   vfs_write+0x1c3/0xae0
-   ksys_write+0xed/0x1c0
-   do_syscall_64+0x38/0x90
-   entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-Fix the UAF by simply doing nothing in svc_tcp_listen_data_ready()
-if state != TCP_LISTEN, that will avoid dereferencing svsk for all
-child socket.
-
-Link: https://lore.kernel.org/lkml/20230507091131.23540-1-dinghui@sangfor.com.cn/
-Fixes: fa9251afc33c ("SUNRPC: Call the default socket callbacks instead of open coding")
-Signed-off-by: Ding Hui <dinghui@sangfor.com.cn>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230228-topic-qos-v8-2-ee696a2c15a9@linaro.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Stable-dep-of: 1ff7aedcdcdd ("interconnect: qcom: rpm: Don't use clk_get_optional for bus clocks anymore")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/svcsock.c |   23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ drivers/interconnect/qcom/icc-rpm.c | 12 ++++++------
+ drivers/interconnect/qcom/icc-rpm.h |  4 ++--
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
---- a/net/sunrpc/svcsock.c
-+++ b/net/sunrpc/svcsock.c
-@@ -826,12 +826,6 @@ static void svc_tcp_listen_data_ready(st
- 
- 	trace_sk_data_ready(sk);
- 
--	if (svsk) {
--		/* Refer to svc_setup_socket() for details. */
--		rmb();
--		svsk->sk_odata(sk);
--	}
--
- 	/*
- 	 * This callback may called twice when a new connection
- 	 * is established as a child socket inherits everything
-@@ -840,13 +834,18 @@ static void svc_tcp_listen_data_ready(st
- 	 *    when one of child sockets become ESTABLISHED.
- 	 * 2) data_ready method of the child socket may be called
- 	 *    when it receives data before the socket is accepted.
--	 * In case of 2, we should ignore it silently.
-+	 * In case of 2, we should ignore it silently and DO NOT
-+	 * dereference svsk.
- 	 */
--	if (sk->sk_state == TCP_LISTEN) {
--		if (svsk) {
--			set_bit(XPT_CONN, &svsk->sk_xprt.xpt_flags);
--			svc_xprt_enqueue(&svsk->sk_xprt);
--		}
-+	if (sk->sk_state != TCP_LISTEN)
-+		return;
-+
-+	if (svsk) {
-+		/* Refer to svc_setup_socket() for details. */
-+		rmb();
-+		svsk->sk_odata(sk);
-+		set_bit(XPT_CONN, &svsk->sk_xprt.xpt_flags);
-+		svc_xprt_enqueue(&svsk->sk_xprt);
+diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
+index 5341fa169dbf1..ec39861c1764c 100644
+--- a/drivers/interconnect/qcom/icc-rpm.c
++++ b/drivers/interconnect/qcom/icc-rpm.c
+@@ -379,7 +379,7 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
+ 			return ret;
  	}
- }
  
+-	for (i = 0; i < qp->num_clks; i++) {
++	for (i = 0; i < qp->num_bus_clks; i++) {
+ 		/*
+ 		 * Use WAKE bucket for active clock, otherwise, use SLEEP bucket
+ 		 * for other clocks.  If a platform doesn't set interconnect
+@@ -464,7 +464,7 @@ int qnoc_probe(struct platform_device *pdev)
+ 
+ 	for (i = 0; i < cd_num; i++)
+ 		qp->bus_clks[i].id = cds[i];
+-	qp->num_clks = cd_num;
++	qp->num_bus_clks = cd_num;
+ 
+ 	qp->type = desc->type;
+ 	qp->qos_offset = desc->qos_offset;
+@@ -494,11 +494,11 @@ int qnoc_probe(struct platform_device *pdev)
+ 	}
+ 
+ regmap_done:
+-	ret = devm_clk_bulk_get_optional(dev, qp->num_clks, qp->bus_clks);
++	ret = devm_clk_bulk_get_optional(dev, qp->num_bus_clks, qp->bus_clks);
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = clk_bulk_prepare_enable(qp->num_clks, qp->bus_clks);
++	ret = clk_bulk_prepare_enable(qp->num_bus_clks, qp->bus_clks);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -551,7 +551,7 @@ int qnoc_probe(struct platform_device *pdev)
+ 	icc_provider_deregister(provider);
+ err_remove_nodes:
+ 	icc_nodes_remove(provider);
+-	clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
++	clk_bulk_disable_unprepare(qp->num_bus_clks, qp->bus_clks);
+ 
+ 	return ret;
+ }
+@@ -563,7 +563,7 @@ int qnoc_remove(struct platform_device *pdev)
+ 
+ 	icc_provider_deregister(&qp->provider);
+ 	icc_nodes_remove(&qp->provider);
+-	clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
++	clk_bulk_disable_unprepare(qp->num_bus_clks, qp->bus_clks);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
+index 22bdb1e4bb123..838f3fa82278e 100644
+--- a/drivers/interconnect/qcom/icc-rpm.h
++++ b/drivers/interconnect/qcom/icc-rpm.h
+@@ -23,7 +23,7 @@ enum qcom_icc_type {
+ /**
+  * struct qcom_icc_provider - Qualcomm specific interconnect provider
+  * @provider: generic interconnect provider
+- * @num_clks: the total number of clk_bulk_data entries
++ * @num_bus_clks: the total number of bus_clks clk_bulk_data entries
+  * @type: the ICC provider type
+  * @regmap: regmap for QoS registers read/write access
+  * @qos_offset: offset to QoS registers
+@@ -32,7 +32,7 @@ enum qcom_icc_type {
+  */
+ struct qcom_icc_provider {
+ 	struct icc_provider provider;
+-	int num_clks;
++	int num_bus_clks;
+ 	enum qcom_icc_type type;
+ 	struct regmap *regmap;
+ 	unsigned int qos_offset;
+-- 
+2.39.2
+
 
 
