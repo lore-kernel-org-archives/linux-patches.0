@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FED8F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:25:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BD9C433C7;
-	Sun, 16 Jul 2023 20:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5348F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:25:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4913C433C8;
+	Sun, 16 Jul 2023 20:25:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539128;
-	bh=+aryLilSdAnChRkUz33OrU7Na/71UW0OeNh41NvgzNc=;
+	s=korg; t=1689539131;
+	bh=3Xze7UEVyzESiKgn+fuNt4hPDpK2OF1bCcjDGNa1HDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OFbVplS/m+zKD33MCHnzZ5N9417usmOWaRdgF252qo577pzEbEZgls9UhdnZDyl3H
-	 xQ9vxWRQQQonRVjyCcx/U5X9bdUtTfwx7+gRULH26W1nMP8LFF68nWhZc24zzmNtxQ
-	 b4TmxfKG1aY1QIoWWO0pWbNMOKKaNf4lVzoHh9To=
+	b=XGvrxXB4+hni8OrjRjjx99+hEkShLekgs1f5+2T8fFB5/xyeSGOgLeq1lDsqIe0KU
+	 HrXWQFrncKo7yCUaXRH9fLlL9eR7Dp/nL54QJkbbI+yllrJ/YGBYO70phjrNh27JLC
+	 JCIrktC+4k2afWtrHNoyZezOFaXSd1IjBbdHa/4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 698/800] net/sched: act_pedit: Add size check for TCA_PEDIT_PARMS_EX
-Date: Sun, 16 Jul 2023 21:49:11 +0200
-Message-ID: <20230716195005.333942574@linuxfoundation.org>
+Subject: [PATCH 6.4 699/800] drm/i915/psr: Fix BDW PSR AUX CH data register offsets
+Date: Sun, 16 Jul 2023 21:49:12 +0200
+Message-ID: <20230716195005.356222546@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,55 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 30c45b5361d39b4b793780ffac5538090b9e2eb1 ]
+[ Upstream commit fdffb7dbc74f48cb1d404d9ab0c9fd769a59caf0 ]
 
-The attribute TCA_PEDIT_PARMS_EX is not be included in pedit_policy and
-one malicious user could fake a TCA_PEDIT_PARMS_EX whose length is
-smaller than the intended sizeof(struct tc_pedit). Hence, the
-dereference in tcf_pedit_init() could access dirty heap data.
+The multiplication got replaced by an addition in some cleanup.
+This means we never write the correct data to some of the BDW
+PSR data registers and thus we fail to actually wake up the
+panel from PSR.
 
-static int tcf_pedit_init(...)
-{
-  // ...
-  pattr = tb[TCA_PEDIT_PARMS]; // TCA_PEDIT_PARMS is included
-  if (!pattr)
-    pattr = tb[TCA_PEDIT_PARMS_EX]; // but this is not
-
-  // ...
-  parm = nla_data(pattr);
-
-  index = parm->index; // parm is able to be smaller than 4 bytes
-                       // and this dereference gets dirty skb_buff
-                       // data created in netlink_sendmsg
-}
-
-This commit adds TCA_PEDIT_PARMS_EX length in pedit_policy which avoid
-the above case, just like the TCA_PEDIT_PARMS.
-
-Fixes: 71d0ed7079df ("net/act_pedit: Support using offset relative to the conventional network headers")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
-Link: https://lore.kernel.org/r/20230703110842.590282-1-linma@zju.edu.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 4ab4fa103217 ("drm/i915/psr: Make PSR registers relative to transcoders")
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230609141404.12729-3-ville.syrjala@linux.intel.com
+Reviewed-by: Jouni Högander <jouni.hogander@intel.com>
+(cherry picked from commit 460dc4ba1442b3e5e543328d11db2702b98d3d7c)
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_pedit.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/i915/display/intel_psr_regs.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
-index c819b812a899c..399d4643a940e 100644
---- a/net/sched/act_pedit.c
-+++ b/net/sched/act_pedit.c
-@@ -29,6 +29,7 @@ static struct tc_action_ops act_pedit_ops;
+diff --git a/drivers/gpu/drm/i915/display/intel_psr_regs.h b/drivers/gpu/drm/i915/display/intel_psr_regs.h
+index 958d8cabc44b5..5e3fe23ef8eb2 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr_regs.h
++++ b/drivers/gpu/drm/i915/display/intel_psr_regs.h
+@@ -75,7 +75,7 @@
  
- static const struct nla_policy pedit_policy[TCA_PEDIT_MAX + 1] = {
- 	[TCA_PEDIT_PARMS]	= { .len = sizeof(struct tc_pedit) },
-+	[TCA_PEDIT_PARMS_EX]	= { .len = sizeof(struct tc_pedit) },
- 	[TCA_PEDIT_KEYS_EX]   = { .type = NLA_NESTED },
- };
+ #define _SRD_AUX_DATA_A				0x60814
+ #define _SRD_AUX_DATA_EDP			0x6f814
+-#define EDP_PSR_AUX_DATA(tran, i)		_MMIO_TRANS2(tran, _SRD_AUX_DATA_A + (i) + 4) /* 5 registers */
++#define EDP_PSR_AUX_DATA(tran, i)		_MMIO_TRANS2(tran, _SRD_AUX_DATA_A + (i) * 4) /* 5 registers */
  
+ #define _SRD_STATUS_A				0x60840
+ #define _SRD_STATUS_EDP				0x6f840
 -- 
 2.39.2
 
