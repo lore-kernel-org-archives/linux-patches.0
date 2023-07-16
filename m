@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01178F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:54:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24EEFC433C8;
-	Sun, 16 Jul 2023 19:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD5B8F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:54:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2091C433C7;
+	Sun, 16 Jul 2023 19:54:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537246;
-	bh=M84ekuT7Cb7RhAZxSytDctHfhv38MDwLFCUaZF6bMl4=;
+	s=korg; t=1689537249;
+	bh=mH7JnNKVrsqHJTiG319XKCpfLvwO8+v7IfKF4AJUIHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZACP6zazaQ0UHJekGc98XTvw2Yr/jL/z4uLO50ZMb9PnXJoMH+71lzgPCpI+i+G/
-	 PMS8zNIF3ETOjfZUY1AE6aXYM9WwXISPNHuV4UK8RLaJmI4H2E2eYLsnMjCpKTh/K9
-	 MRYVhdeyfV8lDKwcNfHzKDQpx64mcUJ66VXtlY8E=
+	b=bcb3f90BqNWc6/eTSd0x9X0lMvW/glVXKnGACBsoqNgWMiOjgLNkWJiUJTnOC8l5R
+	 9Qi8VG50PVWWOG+ZtJ8g1TYX2apljXBk45am+GAnBz7I3L8oIWWCkzDYMvKCqGgLvG
+	 AnKH4RwhD6ip2agAUdenssgJB7YNGTQLvWCMXqi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nuno Sa <nuno.sa@analog.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.4 008/800] iio: adc: ad7192: Fix null ad7192_state pointer access
-Date: Sun, 16 Jul 2023 21:37:41 +0200
-Message-ID: <20230716194949.300173920@linuxfoundation.org>
+Subject: [PATCH 6.4 009/800] iio: adc: ad7192: Fix internal/external clock selection
+Date: Sun, 16 Jul 2023 21:37:42 +0200
+Message-ID: <20230716194949.322611857@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -38,48 +38,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Fabrizio Lamarque <fl.scratchpad@gmail.com>
 
-commit 9e58e3a6f8e1c483c86a04903b7b7aa0923e4426 upstream.
+commit f7d9e21dd274b97dc0a8dbc136a2ea8506063a96 upstream.
 
-Pointer to indio_dev structure is obtained via spi_get_drvdata() at
-the beginning of function ad7192_setup(), but the spi->dev->driver_data
-member is not initialized, hence a NULL pointer is returned.
+Fix wrong selection of internal clock when mclk is defined.
 
-Fix by changing ad7192_setup() signature to take pointer to struct
-iio_dev, and get ad7192_state pointer via st = iio_priv(indio_dev);
+Resolve a logical inversion introduced in c9ec2cb328e3.
 
-Fixes: bd5dcdeb3fd0 ("iio: adc: ad7192: convert to device-managed functions")
+Fixes: c9ec2cb328e3 ("iio: adc: ad7192: use devm_clk_get_optional() for mclk")
 Signed-off-by: Fabrizio Lamarque <fl.scratchpad@gmail.com>
 Reviewed-by: Nuno Sa <nuno.sa@analog.com>
 Cc: <Stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230530075311.400686-2-fl.scratchpad@gmail.com
+Link: https://lore.kernel.org/r/20230530075311.400686-3-fl.scratchpad@gmail.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7192.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/iio/adc/ad7192.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/iio/adc/ad7192.c
 +++ b/drivers/iio/adc/ad7192.c
-@@ -380,9 +380,9 @@ static int ad7192_of_clock_select(struct
- 	return clock_sel;
- }
+@@ -367,7 +367,7 @@ static int ad7192_of_clock_select(struct
+ 	clock_sel = AD7192_CLK_INT;
  
--static int ad7192_setup(struct ad7192_state *st, struct device_node *np)
-+static int ad7192_setup(struct iio_dev *indio_dev, struct device_node *np)
- {
--	struct iio_dev *indio_dev = spi_get_drvdata(st->sd.spi);
-+	struct ad7192_state *st = iio_priv(indio_dev);
- 	bool rej60_en, refin2_en;
- 	bool buf_en, bipolar, burnout_curr_en;
- 	unsigned long long scale_uv;
-@@ -1069,7 +1069,7 @@ static int ad7192_probe(struct spi_devic
- 		}
- 	}
- 
--	ret = ad7192_setup(st, spi->dev.of_node);
-+	ret = ad7192_setup(indio_dev, spi->dev.of_node);
- 	if (ret)
- 		return ret;
- 
+ 	/* use internal clock */
+-	if (st->mclk) {
++	if (!st->mclk) {
+ 		if (of_property_read_bool(np, "adi,int-clock-output-enable"))
+ 			clock_sel = AD7192_CLK_INT_CO;
+ 	} else {
 
 
