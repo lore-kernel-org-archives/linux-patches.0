@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E628F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:05:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3D9C433C8;
-	Sun, 16 Jul 2023 20:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D088F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:05:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B6EC433C9;
+	Sun, 16 Jul 2023 20:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537902;
-	bh=5bSjYU4IPcgj+0gWhEfrQaWUF+A2w5lIfQCaRQELUs4=;
+	s=korg; t=1689537905;
+	bh=WeDdmF1jhn9s0NSur76mXO6jxWqYLBUPJNatxsTRSEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z6xiqAsU+y0VBYY1fhusFLYYofhOG43s6gNESQ2FERtn+dc1j9aizleOPZSp3dPoQ
-	 fttg7oPEHjXFxA4H0bNOKUKs4UzioUnN7T7TX9S1Gp/ztOvFym0dqmrKYkdP5kzlqY
-	 Gl3PWTdYv+nvNJxtWI+GsAZg67Q36KSbz8VPcTzU=
+	b=HQaD0RGeVOLtPoAgDzTg8E7gaphQLX+ExEYdCRVibReYnPkC9uYxGjSMGBOUqH8ss
+	 xOIw84Yyh1ssJkItxeoGk5PneBgaYTOb1FaD8KMqRX7pzHypFFXejKHNECHvb6Fx5t
+	 J/YGy6td6gVkHa3rXAM9vdhj3wbce4eZl8gCHU74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 261/800] ARM: dts: stm32: Move ethernet MAC EEPROM from SoM to carrier boards
-Date: Sun, 16 Jul 2023 21:41:54 +0200
-Message-ID: <20230716194955.158801328@linuxfoundation.org>
+Subject: [PATCH 6.4 262/800] bus: ti-sysc: Fix dispc quirk masking bool variables
+Date: Sun, 16 Jul 2023 21:41:55 +0200
+Message-ID: <20230716194955.182387583@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,95 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 9660efc2af37f3c12dc6e6a5511ad99e0addc297 ]
+[ Upstream commit f620596fa347170852da499e778a5736d79a4b79 ]
 
-The ethernet MAC EEPROM is not populated on the SoM itself, it has to be
-populated on each carrier board. Move the EEPROM into the correct place
-in DTs, i.e. the carrier board DTs. Add label to the EEPROM too.
+Fix warning drivers/bus/ti-sysc.c:1806 sysc_quirk_dispc()
+warn: masking a bool.
 
-Fixes: 7e76f82acd9e1 ("ARM: dts: stm32: Split Avenger96 into DHCOR SoM and Avenger96 board")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+While at it let's add a comment for what were doing to make
+the code a bit easier to follow.
+
+Fixes: 7324a7a0d5e2 ("bus: ti-sysc: Implement display subsystem reset quirk")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/linux-omap/a8ec8a68-9c2c-4076-bf47-09fccce7659f@kili.mountain/
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi   | 6 ++++++
- arch/arm/boot/dts/stm32mp15xx-dhcor-drc-compact.dtsi | 6 ++++++
- arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi         | 6 ------
- arch/arm/boot/dts/stm32mp15xx-dhcor-testbench.dtsi   | 8 ++++++++
- 4 files changed, 20 insertions(+), 6 deletions(-)
+ drivers/bus/ti-sysc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi b/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi
-index 50af4a27d6be4..e67c0fa209cde 100644
---- a/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi
-+++ b/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi
-@@ -321,6 +321,12 @@ adv7513_i2s0: endpoint {
- 			};
- 		};
- 	};
-+
-+	dh_mac_eeprom: eeprom@53 {
-+		compatible = "atmel,24c02";
-+		reg = <0x53>;
-+		pagesize = <16>;
-+	};
- };
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index 6c49de37d5e90..21fe9854703f9 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -1791,7 +1791,7 @@ static u32 sysc_quirk_dispc(struct sysc *ddata, int dispc_offset,
+ 	if (!ddata->module_va)
+ 		return -EIO;
  
- &ltdc {
-diff --git a/arch/arm/boot/dts/stm32mp15xx-dhcor-drc-compact.dtsi b/arch/arm/boot/dts/stm32mp15xx-dhcor-drc-compact.dtsi
-index c32c160f97f20..39af79dc654cc 100644
---- a/arch/arm/boot/dts/stm32mp15xx-dhcor-drc-compact.dtsi
-+++ b/arch/arm/boot/dts/stm32mp15xx-dhcor-drc-compact.dtsi
-@@ -192,6 +192,12 @@ eeprom@50 {
- 		reg = <0x50>;
- 		pagesize = <16>;
- 	};
-+
-+	dh_mac_eeprom: eeprom@53 {
-+		compatible = "atmel,24c02";
-+		reg = <0x53>;
-+		pagesize = <16>;
-+	};
- };
+-	/* DISP_CONTROL */
++	/* DISP_CONTROL, shut down lcd and digit on disable if enabled */
+ 	val = sysc_read(ddata, dispc_offset + 0x40);
+ 	lcd_en = val & lcd_en_mask;
+ 	digit_en = val & digit_en_mask;
+@@ -1803,7 +1803,7 @@ static u32 sysc_quirk_dispc(struct sysc *ddata, int dispc_offset,
+ 		else
+ 			irq_mask |= BIT(2) | BIT(3);	/* EVSYNC bits */
+ 	}
+-	if (disable & (lcd_en | digit_en))
++	if (disable && (lcd_en || digit_en))
+ 		sysc_write(ddata, dispc_offset + 0x40,
+ 			   val & ~(lcd_en_mask | digit_en_mask));
  
- &sdmmc1 {	/* MicroSD */
-diff --git a/arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi b/arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi
-index bb40fb46da81d..bba19f21e5277 100644
---- a/arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi
-+++ b/arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi
-@@ -213,12 +213,6 @@ watchdog {
- 			status = "disabled";
- 		};
- 	};
--
--	eeprom@53 {
--		compatible = "atmel,24c02";
--		reg = <0x53>;
--		pagesize = <16>;
--	};
- };
- 
- &ipcc {
-diff --git a/arch/arm/boot/dts/stm32mp15xx-dhcor-testbench.dtsi b/arch/arm/boot/dts/stm32mp15xx-dhcor-testbench.dtsi
-index 5fdb74b652aca..faed31b6d84a1 100644
---- a/arch/arm/boot/dts/stm32mp15xx-dhcor-testbench.dtsi
-+++ b/arch/arm/boot/dts/stm32mp15xx-dhcor-testbench.dtsi
-@@ -90,6 +90,14 @@ phy0: ethernet-phy@7 {
- 	};
- };
- 
-+&i2c4 {
-+	dh_mac_eeprom: eeprom@53 {
-+		compatible = "atmel,24c02";
-+		reg = <0x53>;
-+		pagesize = <16>;
-+	};
-+};
-+
- &sdmmc1 {
- 	pinctrl-names = "default", "opendrain", "sleep";
- 	pinctrl-0 = <&sdmmc1_b4_pins_a &sdmmc1_dir_pins_b>;
 -- 
 2.39.2
 
