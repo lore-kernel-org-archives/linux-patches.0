@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3748F8F55
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:40:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEEE1C433C8;
-	Sun, 16 Jul 2023 20:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B928F55
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:40:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828F9C433C7;
+	Sun, 16 Jul 2023 20:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540023;
-	bh=H0bl3O/5mTtwmdTDLAGX/Fc6KG7K1WQ4xenjjATDrA0=;
+	s=korg; t=1689540025;
+	bh=10j1Frk/ueb+VoqDTk2nuLV2V3gqO5AUO/J0HVVXp3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cpPanpn68fmV/LZfDpleyo28iRofNOvz3kqoj1D0u1VHeR7sk7p+LgZfoKBpcTPEm
-	 7qhlIUghTl6zQJRoIja0iVvw4kXwfN1p91Yrn/ZTzvxS75PU71osK7LNdAmOKPHUHq
-	 Wu3uONWxK2FvsQyfl45C2umsrTJFZsQv7JtHIFaY=
+	b=AgiLjslEHeGH9UbXfADCsmxuye66fX9h4SBlrZQL1xVWhF/TNJKRjjm9H6V8Q5Erl
+	 6cv8BpIhgyIbD9riOx3Ca/AwT9YrHc1rIt7uLoFQByGZvaC2lLurymfHE1664bY4jL
+	 wOXc0yELZxdnhQ7f6DiYk8fxr7fNsjw2/il5LGs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 215/591] ARM: dts: qcom: apq8074-dragonboard: Set DMA as remotely controlled
-Date: Sun, 16 Jul 2023 21:45:54 +0200
-Message-ID: <20230716194929.432597584@linuxfoundation.org>
+Subject: [PATCH 6.1 216/591] ASoC: es8316: Increment max value for ALC Capture Target Volume control
+Date: Sun, 16 Jul 2023 21:45:55 +0200
+Message-ID: <20230716194929.458719974@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,40 +35,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit e60c230588d88036f974cec7e93361e2c4f62226 ]
+[ Upstream commit 6f073429037cd79d7311cd8236311c53f5ea8f01 ]
 
-Add the qcom,controlled-remotely property for the blsp2_bam
-controller node. This board requires this, otherwise the board stalls
-during the boot for some reason (most probably because TZ mishandles the
-protection error and keeps on looping somewhere inside).
+The following error occurs when trying to restore a previously saved
+ALSA mixer state (tested on a Rock 5B board):
 
-Fixes: 62bc81792223 dts: msm8974: Add blsp2_bam dma node
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230507190735.2333145-3-dmitry.baryshkov@linaro.org
+  $ alsactl --no-ucm -f /tmp/asound.state store hw:Analog
+  $ alsactl --no-ucm -I -f /tmp/asound.state restore hw:Analog
+  alsactl: set_control:1475: Cannot write control '2:0:0:ALC Capture Target Volume:0' : Invalid argument
+
+According to ES8316 datasheet, the register at address 0x2B, which is
+related to the above mixer control, contains by default the value 0xB0.
+Considering the corresponding ALC target bits (ALCLVL) are 7:4, the
+control is initialized with 11, which is one step above the maximum
+value allowed by the driver:
+
+ ALCLVL | dB gain
+ -------+--------
+  0000  |  -16.5
+  0001  |  -15.0
+  0010  |  -13.5
+  ....  |  .....
+  0111  |   -6.0
+  1000  |   -4.5
+  1001  |   -3.0
+  1010  |   -1.5
+  ....  |  .....
+  1111  |   -1.5
+
+The tests performed using the VU meter feature (--vumeter=TYPE) of
+arecord/aplay confirm the specs are correct and there is no measured
+gain if the 1011-1111 range would have been mapped to 0 dB:
+
+ dB gain | VU meter %
+ --------+-----------
+   -6.0  |  30-31
+   -4.5  |  35-36
+   -3.0  |  42-43
+   -1.5  |  50-51
+    0.0  |  50-51
+
+Increment the max value allowed for ALC Capture Target Volume control,
+so that it matches the hardware default.  Additionally, update the
+related TLV to prevent an artificial extension of the dB gain range.
+
+Fixes: b8b88b70875a ("ASoC: add es8316 codec driver")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://lore.kernel.org/r/20230530181140.483936-2-cristian.ciocaltea@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/qcom-apq8074-dragonboard.dts | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/codecs/es8316.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-index 91716298ec5ed..be1ab7eff8ff4 100644
---- a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-+++ b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-@@ -23,6 +23,10 @@ &blsp1_uart2 {
- 	status = "okay";
- };
- 
-+&blsp2_dma {
-+	qcom,controlled-remotely;
-+};
+diff --git a/sound/soc/codecs/es8316.c b/sound/soc/codecs/es8316.c
+index f7d7a9c91e04c..2bfcd9af39172 100644
+--- a/sound/soc/codecs/es8316.c
++++ b/sound/soc/codecs/es8316.c
+@@ -52,7 +52,12 @@ static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(dac_vol_tlv, -9600, 50, 1);
+ static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(adc_vol_tlv, -9600, 50, 1);
+ static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(alc_max_gain_tlv, -650, 150, 0);
+ static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(alc_min_gain_tlv, -1200, 150, 0);
+-static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(alc_target_tlv, -1650, 150, 0);
 +
- &blsp2_i2c5 {
- 	status = "okay";
- 	clock-frequency = <200000>;
++static const SNDRV_CTL_TLVD_DECLARE_DB_RANGE(alc_target_tlv,
++	0, 10, TLV_DB_SCALE_ITEM(-1650, 150, 0),
++	11, 11, TLV_DB_SCALE_ITEM(-150, 0, 0),
++);
++
+ static const SNDRV_CTL_TLVD_DECLARE_DB_RANGE(hpmixer_gain_tlv,
+ 	0, 4, TLV_DB_SCALE_ITEM(-1200, 150, 0),
+ 	8, 11, TLV_DB_SCALE_ITEM(-450, 150, 0),
+@@ -115,7 +120,7 @@ static const struct snd_kcontrol_new es8316_snd_controls[] = {
+ 		       alc_max_gain_tlv),
+ 	SOC_SINGLE_TLV("ALC Capture Min Volume", ES8316_ADC_ALC2, 0, 28, 0,
+ 		       alc_min_gain_tlv),
+-	SOC_SINGLE_TLV("ALC Capture Target Volume", ES8316_ADC_ALC3, 4, 10, 0,
++	SOC_SINGLE_TLV("ALC Capture Target Volume", ES8316_ADC_ALC3, 4, 11, 0,
+ 		       alc_target_tlv),
+ 	SOC_SINGLE("ALC Capture Hold Time", ES8316_ADC_ALC3, 0, 10, 0),
+ 	SOC_SINGLE("ALC Capture Decay Time", ES8316_ADC_ALC4, 4, 10, 0),
 -- 
 2.39.2
 
