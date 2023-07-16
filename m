@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E9A8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:05:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6129AC433C7;
-	Sun, 16 Jul 2023 20:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC788F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:05:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3255EC433C8;
+	Sun, 16 Jul 2023 20:05:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537955;
-	bh=7z9SRfbe1tYC5eS4HAH/2/vS9f9PK65CMHQgQH18KoU=;
+	s=korg; t=1689537958;
+	bh=56f1In5tbzygGHl5qDvchEX5W2hG6dnIKV1N39LOWoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SC27uGAa2vwaJRAUc8dCtSy/k8Ik66awNh4HG37/YmNxjru+khiWJKvPO4iqIU8a/
-	 3l7eaGRj8fWnzr2Rmm2nIa4gm8k9gEyjHFZut+N3av5EA7i29lwqVh4lBqtruygPLV
-	 VbCj6NANSsNln92Iyw1WVyDZx89inizqAEgAhuYo=
+	b=v9QQRmNGOEU3izx4mNO6gXxu2pbOtuwak+tL1es/O5V8Rb1OO1aDDAPjm/najsbWo
+	 cD97mnMjV3Y1BKs//qMXPV9jlV5xfiXYbIx0agJszAAuJo8YfzXIYhCWj9J/oFE/ab
+	 UheaH9I7dBLDNHYbJMiNeTHWlmVTzOHZwTpu6OAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	"H. Nikolaus Schaller" <hns@goldelico.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 281/800] clk: renesas: rzg2l: Fix CPG_SIPLL5_CLK1 register write
-Date: Sun, 16 Jul 2023 21:42:14 +0200
-Message-ID: <20230716194955.615895970@linuxfoundation.org>
+Subject: [PATCH 6.4 282/800] ARM: dts: gta04: Move model property out of pinctrl node
+Date: Sun, 16 Jul 2023 21:42:15 +0200
+Message-ID: <20230716194955.638790458@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,56 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit d1c20885d3b01e6a62e920af4b227abd294d22f3 ]
+[ Upstream commit 4ffec92e70ac5097b9f67ec154065305b16a3b46 ]
 
-As per the RZ/G2L HW(Rev.1.30 May2023) manual, there are no "write enable"
-bits in the CPG_SIPLL5_CLK1 register.  So fix the CPG_SIPLL5_CLK register
-write by removing the "write enable" bits.
+The model property should be at the top level, let's move it out
+of the pinctrl node.
 
-Fixes: 1561380ee72f ("clk: renesas: rzg2l: Add FOUTPOSTDIV clk support")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230518152334.514922-1-biju.das.jz@bp.renesas.com
-[geert: Remove CPG_SIPLL5_CLK1_*_WEN bit definitions]
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: d2eaf949d2c3 ("ARM: dts: omap3-gta04a5one: define GTA04A5 variant with OneNAND")
+Cc: Andreas Kemnade <andreas@kemnade.info>
+Cc: H. Nikolaus Schaller <hns@goldelico.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/rzg2l-cpg.c | 6 ++----
- drivers/clk/renesas/rzg2l-cpg.h | 3 ---
- 2 files changed, 2 insertions(+), 7 deletions(-)
+ arch/arm/boot/dts/omap3-gta04a5one.dts | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
-index 93b02cdc98c25..ca8b921c77625 100644
---- a/drivers/clk/renesas/rzg2l-cpg.c
-+++ b/drivers/clk/renesas/rzg2l-cpg.c
-@@ -603,10 +603,8 @@ static int rzg2l_cpg_sipll5_set_rate(struct clk_hw *hw,
- 	}
+diff --git a/arch/arm/boot/dts/omap3-gta04a5one.dts b/arch/arm/boot/dts/omap3-gta04a5one.dts
+index 9db9fe67cd63b..95df45cc70c09 100644
+--- a/arch/arm/boot/dts/omap3-gta04a5one.dts
++++ b/arch/arm/boot/dts/omap3-gta04a5one.dts
+@@ -5,9 +5,11 @@
  
- 	/* Output clock setting 1 */
--	writel(CPG_SIPLL5_CLK1_POSTDIV1_WEN | CPG_SIPLL5_CLK1_POSTDIV2_WEN |
--	       CPG_SIPLL5_CLK1_REFDIV_WEN  | (params.pl5_postdiv1 << 0) |
--	       (params.pl5_postdiv2 << 4) | (params.pl5_refdiv << 8),
--	       priv->base + CPG_SIPLL5_CLK1);
-+	writel((params.pl5_postdiv1 << 0) | (params.pl5_postdiv2 << 4) |
-+	       (params.pl5_refdiv << 8), priv->base + CPG_SIPLL5_CLK1);
+ #include "omap3-gta04a5.dts"
  
- 	/* Output clock setting, SSCG modulation value setting 3 */
- 	writel((params.pl5_fracin << 8), priv->base + CPG_SIPLL5_CLK3);
-diff --git a/drivers/clk/renesas/rzg2l-cpg.h b/drivers/clk/renesas/rzg2l-cpg.h
-index eee780276a9e2..6cee9e56acc72 100644
---- a/drivers/clk/renesas/rzg2l-cpg.h
-+++ b/drivers/clk/renesas/rzg2l-cpg.h
-@@ -32,9 +32,6 @@
- #define CPG_SIPLL5_STBY_RESETB_WEN	BIT(16)
- #define CPG_SIPLL5_STBY_SSCG_EN_WEN	BIT(18)
- #define CPG_SIPLL5_STBY_DOWNSPREAD_WEN	BIT(20)
--#define CPG_SIPLL5_CLK1_POSTDIV1_WEN	BIT(16)
--#define CPG_SIPLL5_CLK1_POSTDIV2_WEN	BIT(20)
--#define CPG_SIPLL5_CLK1_REFDIV_WEN	BIT(24)
- #define CPG_SIPLL5_CLK4_RESV_LSB	(0xFF)
- #define CPG_SIPLL5_MON_PLL5_LOCK	BIT(4)
+-&omap3_pmx_core {
++/ {
+ 	model = "Goldelico GTA04A5/Letux 2804 with OneNAND";
++};
+ 
++&omap3_pmx_core {
+ 	gpmc_pins: pinmux_gpmc_pins {
+ 		pinctrl-single,pins = <
  
 -- 
 2.39.2
