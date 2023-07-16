@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9478F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:05:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6A1C433C8;
-	Sun, 16 Jul 2023 20:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B198F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:05:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68E73C433C7;
+	Sun, 16 Jul 2023 20:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537936;
-	bh=xg7FdGgVeH2L7lcNu9O/62PQ5D/txcCZrPj4g/Koj18=;
+	s=korg; t=1689537938;
+	bh=9lbaMDWZGLpGJX0hdsSHJuoEaAKsXcgSiUIsnKdb9Bs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=buGrC0QUSDkR1GzkoGTRSp9Yo/L84Qvp+EG0OSXgwJwFOKaoATWuVW9QW6z2HM6IX
-	 aOy5YrjqmH3F/E2eLr+MuGX53y4Phky9C/oYY7TDeCyYEm95ACGveHE0hYU2McJdAj
-	 hBLUw7SIc1FD+NkLBAsgQM4uE7P8oAqmZQ0TDs2E=
+	b=Od2REWXxcdQWePX9H8OwtnlIAGXL+Sc+SM7DCMeOY5OsoB1GK8fwWU6IOQ/HJMEh6
+	 wOv2AEKMveSLdm7bx3pGD0gzOwJBOi5Nafjr7TM33Ajk4Yj1/gn9ZxZIWAg/xIjTRp
+	 GPujohKtwAJCS0DxImRGaKdE9tssw+oxxtrgCHDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Luc Ma <luc@sietium.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 244/800] Input: tests - fix input_test_match_device_id test
-Date: Sun, 16 Jul 2023 21:41:37 +0200
-Message-ID: <20230716194954.769029259@linuxfoundation.org>
+Subject: [PATCH 6.4 245/800] drm/vram-helper: fix function names in vram helper doc
+Date: Sun, 16 Jul 2023 21:41:38 +0200
+Message-ID: <20230716194954.791991765@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,38 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Luc Ma <luc@sietium.com>
 
-[ Upstream commit c73b4db076faf827d0656665ef5e97b76926b60f ]
+[ Upstream commit b8e392245105b50706f18418054821e71e637288 ]
 
-Properly initialize input_device_id structure in
-input_test_match_device_id test to make sure it contains no garbage
-causing the test to randomly fail.
+Refer to drmm_vram_helper_init() instead of the non-existent
+drmm_vram_helper_alloc_mm().
 
-Fixes: fdefcbdd6f36 ("Input: Add KUnit tests for some of the input core helper functions")
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://lore.kernel.org/r/ZFLI7T2qZTGJ1UUK@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: a5f23a72355d ("drm/vram-helper: Managed vram helpers")
+Signed-off-by: Luc Ma <luc@sietium.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/64583db2.630a0220.eb75d.8f51@mx.google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/tests/input_test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_gem_vram_helper.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/input/tests/input_test.c b/drivers/input/tests/input_test.c
-index 8b8ac3412a70d..0540225f02886 100644
---- a/drivers/input/tests/input_test.c
-+++ b/drivers/input/tests/input_test.c
-@@ -87,7 +87,7 @@ static void input_test_timestamp(struct kunit *test)
- static void input_test_match_device_id(struct kunit *test)
- {
- 	struct input_dev *input_dev = test->priv;
--	struct input_device_id id;
-+	struct input_device_id id = { 0 };
- 
- 	/*
- 	 * Must match when the input device bus, vendor, product, version
+diff --git a/drivers/gpu/drm/drm_gem_vram_helper.c b/drivers/gpu/drm/drm_gem_vram_helper.c
+index 0bea3df2a16dc..b67eafa557159 100644
+--- a/drivers/gpu/drm/drm_gem_vram_helper.c
++++ b/drivers/gpu/drm/drm_gem_vram_helper.c
+@@ -45,7 +45,7 @@ static const struct drm_gem_object_funcs drm_gem_vram_object_funcs;
+  * the frame's scanout buffer or the cursor image. If there's no more space
+  * left in VRAM, inactive GEM objects can be moved to system memory.
+  *
+- * To initialize the VRAM helper library call drmm_vram_helper_alloc_mm().
++ * To initialize the VRAM helper library call drmm_vram_helper_init().
+  * The function allocates and initializes an instance of &struct drm_vram_mm
+  * in &struct drm_device.vram_mm . Use &DRM_GEM_VRAM_DRIVER to initialize
+  * &struct drm_driver and  &DRM_VRAM_MM_FILE_OPERATIONS to initialize
+@@ -73,7 +73,7 @@ static const struct drm_gem_object_funcs drm_gem_vram_object_funcs;
+  *		// setup device, vram base and size
+  *		// ...
+  *
+- *		ret = drmm_vram_helper_alloc_mm(dev, vram_base, vram_size);
++ *		ret = drmm_vram_helper_init(dev, vram_base, vram_size);
+  *		if (ret)
+  *			return ret;
+  *		return 0;
+@@ -86,7 +86,7 @@ static const struct drm_gem_object_funcs drm_gem_vram_object_funcs;
+  * to userspace.
+  *
+  * You don't have to clean up the instance of VRAM MM.
+- * drmm_vram_helper_alloc_mm() is a managed interface that installs a
++ * drmm_vram_helper_init() is a managed interface that installs a
+  * clean-up handler to run during the DRM device's release.
+  *
+  * For drawing or scanout operations, rsp. buffer objects have to be pinned
 -- 
 2.39.2
 
