@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F588F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:54:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060D5C433C8;
-	Sun, 16 Jul 2023 20:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF418F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:54:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C073CC433C8;
+	Sun, 16 Jul 2023 20:54:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540896;
-	bh=Cb3crskSi9C1IyevhmDwIyczH9Lha1jvogc3ajQ8Ud4=;
+	s=korg; t=1689540899;
+	bh=7h3ps/8rf6pSCI5kAYkeV4m0IwPiEw8qoVMslOdfBfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nH0tMV1qhtKaiKq+0c2+sxVO0KipwxGcEZZbSDGzAO+xR7XXdDSA9qkJkZrWIy2TB
-	 MnB486fs9ginR3T2a3VpfWE7QmuhHKoEC0JaOMf+5LfjK7eXztv7wvEVgTmXsc07r2
-	 jr6cHxztGCUQxOveNyMWq2qXQQpAx9fOXd4iv/98=
+	b=PqXC0s/8EMM3IOd0G6zthDjMqsj+vZt8cRJDWO+CXbNUAkANDhLxI6TfH8tuWuz0O
+	 4f0ZcjJH4vNmboXvC2qP+04O35MS188+3akJeyzBlyfP2/4CRTaxoB0T0lhOGVbap0
+	 OeH+lp71gf9oxVzRvfKgYrJxkhKvNnMYJ+gpFbE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	Mark Brown <broonie@kernel.org>,
+	Demi Marie Obenour <demi@invisiblethingslab.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 489/591] spi: bcm-qspi: return error if neither hif_mspi nor mspi is available
-Date: Sun, 16 Jul 2023 21:50:28 +0200
-Message-ID: <20230716194936.544678717@linuxfoundation.org>
+Subject: [PATCH 6.1 520/591] dm ioctl: Avoid double-fetch of version
+Date: Sun, 16 Jul 2023 21:50:59 +0200
+Message-ID: <20230716194937.328964223@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,56 +35,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
 
-[ Upstream commit 7c1f23ad34fcdace50275a6aa1e1969b41c6233f ]
+[ Upstream commit 249bed821b4db6d95a99160f7d6d236ea5fe6362 ]
 
-If neither a "hif_mspi" nor "mspi" resource is present, the driver will
-just early exit in probe but still return success. Apart from not doing
-anything meaningful, this would then also lead to a null pointer access
-on removal, as platform_get_drvdata() would return NULL, which it would
-then try to dereference when trying to unregister the spi master.
+The version is fetched once in check_version(), which then does some
+validation and then overwrites the version in userspace with the API
+version supported by the kernel.  copy_params() then fetches the version
+from userspace *again*, and this time no validation is done.  The result
+is that the kernel's version number is completely controllable by
+userspace, provided that userspace can win a race condition.
 
-Fix this by unconditionally calling devm_ioremap_resource(), as it can
-handle a NULL res and will then return a viable ERR_PTR() if we get one.
+Fix this flaw by not copying the version back to the kernel the second
+time.  This is not exploitable as the version is not further used in the
+kernel.  However, it could become a problem if future patches start
+relying on the version field.
 
-The "return 0;" was previously a "goto qspi_resource_err;" where then
-ret was returned, but since ret was still initialized to 0 at this place
-this was a valid conversion in 63c5395bb7a9 ("spi: bcm-qspi: Fix
-use-after-free on unbind"). The issue was not introduced by this commit,
-only made more obvious.
-
-Fixes: fa236a7ef240 ("spi: bcm-qspi: Add Broadcom MSPI driver")
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Kamal Dasu <kamal.dasu@broadcom.com>
-Link: https://lore.kernel.org/r/20230629134306.95823-1-jonas.gorski@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Demi Marie Obenour <demi@invisiblethingslab.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm-qspi.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ drivers/md/dm-ioctl.c | 33 +++++++++++++++++++++------------
+ 1 file changed, 21 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/spi/spi-bcm-qspi.c b/drivers/spi/spi-bcm-qspi.c
-index cad2d55dcd3d2..137e7315a3cfd 100644
---- a/drivers/spi/spi-bcm-qspi.c
-+++ b/drivers/spi/spi-bcm-qspi.c
-@@ -1543,13 +1543,9 @@ int bcm_qspi_probe(struct platform_device *pdev,
- 		res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
- 						   "mspi");
+diff --git a/drivers/md/dm-ioctl.c b/drivers/md/dm-ioctl.c
+index 6aeae095086d7..2afd2d2a0f407 100644
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -1811,30 +1811,36 @@ static ioctl_fn lookup_ioctl(unsigned int cmd, int *ioctl_flags)
+  * As well as checking the version compatibility this always
+  * copies the kernel interface version out.
+  */
+-static int check_version(unsigned int cmd, struct dm_ioctl __user *user)
++static int check_version(unsigned int cmd, struct dm_ioctl __user *user,
++			 struct dm_ioctl *kernel_params)
+ {
+-	uint32_t version[3];
+ 	int r = 0;
  
--	if (res) {
--		qspi->base[MSPI]  = devm_ioremap_resource(dev, res);
--		if (IS_ERR(qspi->base[MSPI]))
--			return PTR_ERR(qspi->base[MSPI]);
--	} else {
--		return 0;
--	}
-+	qspi->base[MSPI]  = devm_ioremap_resource(dev, res);
-+	if (IS_ERR(qspi->base[MSPI]))
-+		return PTR_ERR(qspi->base[MSPI]);
+-	if (copy_from_user(version, user->version, sizeof(version)))
++	/* Make certain version is first member of dm_ioctl struct */
++	BUILD_BUG_ON(offsetof(struct dm_ioctl, version) != 0);
++
++	if (copy_from_user(kernel_params->version, user->version, sizeof(kernel_params->version)))
+ 		return -EFAULT;
  
- 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "bspi");
- 	if (res) {
+-	if ((version[0] != DM_VERSION_MAJOR) ||
+-	    (version[1] > DM_VERSION_MINOR)) {
++	if ((kernel_params->version[0] != DM_VERSION_MAJOR) ||
++	    (kernel_params->version[1] > DM_VERSION_MINOR)) {
+ 		DMERR("ioctl interface mismatch: kernel(%u.%u.%u), user(%u.%u.%u), cmd(%d)",
+ 		      DM_VERSION_MAJOR, DM_VERSION_MINOR,
+ 		      DM_VERSION_PATCHLEVEL,
+-		      version[0], version[1], version[2], cmd);
++		      kernel_params->version[0],
++		      kernel_params->version[1],
++		      kernel_params->version[2],
++		      cmd);
+ 		r = -EINVAL;
+ 	}
+ 
+ 	/*
+ 	 * Fill in the kernel version.
+ 	 */
+-	version[0] = DM_VERSION_MAJOR;
+-	version[1] = DM_VERSION_MINOR;
+-	version[2] = DM_VERSION_PATCHLEVEL;
+-	if (copy_to_user(user->version, version, sizeof(version)))
++	kernel_params->version[0] = DM_VERSION_MAJOR;
++	kernel_params->version[1] = DM_VERSION_MINOR;
++	kernel_params->version[2] = DM_VERSION_PATCHLEVEL;
++	if (copy_to_user(user->version, kernel_params->version, sizeof(kernel_params->version)))
+ 		return -EFAULT;
+ 
+ 	return r;
+@@ -1860,7 +1866,10 @@ static int copy_params(struct dm_ioctl __user *user, struct dm_ioctl *param_kern
+ 	const size_t minimum_data_size = offsetof(struct dm_ioctl, data);
+ 	unsigned int noio_flag;
+ 
+-	if (copy_from_user(param_kernel, user, minimum_data_size))
++	/* check_version() already copied version from userspace, avoid TOCTOU */
++	if (copy_from_user((char *)param_kernel + sizeof(param_kernel->version),
++			   (char __user *)user + sizeof(param_kernel->version),
++			   minimum_data_size - sizeof(param_kernel->version)))
+ 		return -EFAULT;
+ 
+ 	if (param_kernel->data_size < minimum_data_size) {
+@@ -1972,7 +1981,7 @@ static int ctl_ioctl(struct file *file, uint command, struct dm_ioctl __user *us
+ 	 * Check the interface version passed in.  This also
+ 	 * writes out the kernel's interface version.
+ 	 */
+-	r = check_version(cmd, user);
++	r = check_version(cmd, user, &param_kernel);
+ 	if (r)
+ 		return r;
+ 
 -- 
 2.39.2
 
