@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB8C8F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:26:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2BAC433C7;
-	Sun, 16 Jul 2023 20:26:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6761D8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:26:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A22AC433C7;
+	Sun, 16 Jul 2023 20:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539212;
-	bh=N4CVBkMxDrtiSX+ZatOSbQiYI1jf/jVkmPCvSlcFw/E=;
+	s=korg; t=1689539217;
+	bh=17Ifbts8QW9KEUGf80N5/Da3hggWorhsoIEWwn0omTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m0oqAWV1dox7gES4UH9Ejr+huUaIK69HgOlnAHq26rJ+dXBboBtmyN2Gpo6pVhs95
-	 1VwyIRyBBAcpZ77+dRrrIsoZeEDHJGa5vGpyM7jR/fDaL3qIhe4LWcpDFE5CGPQO4E
-	 RslcZSnBxDbL5XUnhlrCAmXsfmb/318vjHdg12NU=
+	b=vSbBS9XvVL/p9yWubylQ1s44o3RsA4UfPx8N3cVMiNS28Yr5BG69kEerFa0P1m+WJ
+	 tAhtiHF+ORNYPOUjv+dZA1fV9ERBrvxIJJdwiW+gBfdmQGXZSI70IdtsoeUQ9mFGfw
+	 74spjiXYESlz8R4WH2B+ZVZYV2KHP+q0zZScwGKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9fcea5ef6dc4dc72d334@syzkaller.appspotmail.com,
-	Zeng Heng <zengheng4@huawei.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 688/800] ntfs: Fix panic about slab-out-of-bounds caused by ntfs_listxattr()
-Date: Sun, 16 Jul 2023 21:49:01 +0200
-Message-ID: <20230716195005.105417401@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.4 730/800] wifi: cfg80211: fix regulatory disconnect for non-MLO
+Date: Sun, 16 Jul 2023 21:49:43 +0200
+Message-ID: <20230716195006.074433484@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,52 +33,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 3c675ddffb17a8b1e32efad5c983254af18b12c2 ]
+commit b22552fcaf1970360005c805d7fba4046cf2ab4a upstream.
 
-Here is a BUG report from syzbot:
+The multi-link loop here broke disconnect when multi-link
+operation (MLO) isn't active for a given interface, since
+in that case valid_links is 0 (indicating no links, i.e.
+no MLO.)
 
-BUG: KASAN: slab-out-of-bounds in ntfs_list_ea fs/ntfs3/xattr.c:191 [inline]
-BUG: KASAN: slab-out-of-bounds in ntfs_listxattr+0x401/0x570 fs/ntfs3/xattr.c:710
-Read of size 1 at addr ffff888021acaf3d by task syz-executor128/3632
+Fix this by taking that into account properly and skipping
+the link only if there are valid_links in the first place.
 
-Call Trace:
- ntfs_list_ea fs/ntfs3/xattr.c:191 [inline]
- ntfs_listxattr+0x401/0x570 fs/ntfs3/xattr.c:710
- vfs_listxattr fs/xattr.c:457 [inline]
- listxattr+0x293/0x2d0 fs/xattr.c:804
-
-Fix the logic of ea_all iteration. When the ea->name_len is 0,
-return immediately, or Add2Ptr() would visit invalid memory
-in the next loop.
-
-Fixes: be71b5cba2e6 ("fs/ntfs3: Add attrib operations")
-Reported-by: syzbot+9fcea5ef6dc4dc72d334@syzkaller.appspotmail.com
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-[almaz.alexandrovich@paragon-software.com: lines of the patch have changed]
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 7b0a0e3c3a88 ("wifi: cfg80211: do some rework towards MLO link APIs")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://lore.kernel.org/r/20230616222844.eb073d650c75.I72739923ef80919889ea9b50de9e4ba4baa836ae@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/xattr.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/wireless/reg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
-index c3de60a4543fa..fd02fcf4d4091 100644
---- a/fs/ntfs3/xattr.c
-+++ b/fs/ntfs3/xattr.c
-@@ -214,6 +214,9 @@ static ssize_t ntfs_list_ea(struct ntfs_inode *ni, char *buffer,
- 		ea = Add2Ptr(ea_all, off);
- 		ea_size = unpacked_ea_size(ea);
+--- a/net/wireless/reg.c
++++ b/net/wireless/reg.c
+@@ -2352,7 +2352,7 @@ static bool reg_wdev_chan_valid(struct w
  
-+		if (!ea->name_len)
-+			break;
-+
- 		if (buffer) {
- 			if (ret + ea->name_len + 1 > bytes_per_buffer) {
- 				err = -ERANGE;
--- 
-2.39.2
-
+ 		if (!wdev->valid_links && link > 0)
+ 			break;
+-		if (!(wdev->valid_links & BIT(link)))
++		if (wdev->valid_links && !(wdev->valid_links & BIT(link)))
+ 			continue;
+ 		switch (iftype) {
+ 		case NL80211_IFTYPE_AP:
 
 
