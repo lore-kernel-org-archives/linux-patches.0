@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8423E8F5D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:37:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05C77C433C7;
-	Sun, 16 Jul 2023 20:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F548F5D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:37:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF03C433C8;
+	Sun, 16 Jul 2023 20:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539823;
-	bh=QPRrWe63QBYg7dzwsjmM9xLMzbOEzZ+m92C/dZzbynM=;
+	s=korg; t=1689539826;
+	bh=+QVoBGjCHwHyp0NZ0tsRY2KoP61YcdYpqRxaf/wZ3yY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bxqSZxBdGCo2rXIVQbep32RSt4/1fw1KwiUXCbJxBtdgJj4Xk2gunH5xmxLHkR40a
-	 vSSt5VuYc+csXTN7tzTKRLAZFUi3xsC27z3KK8eQuj+Og9khZy+cLZVm3THAofNvT1
-	 gwCLq+irFhEtFZP0x9EPckILyTHMSnPlYb8vp86k=
+	b=Kg8r2vY+rJp7ajYJQqUAOX7M894+8zuwNbGCYbn5v0s9lVJbxHiWDxaYaYFpGWNfM
+	 e5UZO6di7VAGe7Hm/FiwuXzd+eICUX1gCDiXoJg4otHJsry75Powpsj8WFj1lYCVrH
+	 1tSTqqPiY7BTNdFpPk9fKUR+zZvxADBEV+zi5P+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca@z3ntu.xyz>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 145/591] Input: drv260x - sleep between polling GO bit
-Date: Sun, 16 Jul 2023 21:44:44 +0200
-Message-ID: <20230716194927.622735984@linuxfoundation.org>
+Subject: [PATCH 6.1 146/591] drm/bridge: ti-sn65dsi83: Fix enable error path
+Date: Sun, 16 Jul 2023 21:44:45 +0200
+Message-ID: <20230716194927.649018897@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,37 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luca Weiss <luca@z3ntu.xyz>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit efef661dfa6bf8cbafe4cd6a97433fcef0118967 ]
+[ Upstream commit 8a91b29f1f50ce7742cdbe5cf11d17f128511f3f ]
 
-When doing the initial startup there's no need to poll without any
-delay and spam the I2C bus.
+If PLL locking failed, the regulator needs to be disabled again.
 
-Let's sleep 15ms between each attempt, which is the same time as used
-in the vendor driver.
-
-Fixes: 7132fe4f5687 ("Input: drv260x - add TI drv260x haptics driver")
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-Link: https://lore.kernel.org/r/20230430-drv260x-improvements-v1-2-1fb28b4cc698@z3ntu.xyz
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 5664e3c907e2 ("drm/bridge: ti-sn65dsi83: Add vcc supply regulator support")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230504065316.2640739-1-alexander.stein@ew.tq-group.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/drv260x.c | 1 +
+ drivers/gpu/drm/bridge/ti-sn65dsi83.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/input/misc/drv260x.c b/drivers/input/misc/drv260x.c
-index 0efe56f49aa94..1923924fdd444 100644
---- a/drivers/input/misc/drv260x.c
-+++ b/drivers/input/misc/drv260x.c
-@@ -435,6 +435,7 @@ static int drv260x_init(struct drv260x_data *haptics)
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi83.c b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+index 047c14ddbbf11..0635b824e3682 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+@@ -478,6 +478,7 @@ static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
+ 		dev_err(ctx->dev, "failed to lock PLL, ret=%i\n", ret);
+ 		/* On failure, disable PLL again and exit. */
+ 		regmap_write(ctx->regmap, REG_RC_PLL_EN, 0x00);
++		regulator_disable(ctx->vcc);
+ 		return;
  	}
  
- 	do {
-+		usleep_range(15000, 15500);
- 		error = regmap_read(haptics->regmap, DRV260X_GO, &cal_buf);
- 		if (error) {
- 			dev_err(&haptics->client->dev,
 -- 
 2.39.2
 
