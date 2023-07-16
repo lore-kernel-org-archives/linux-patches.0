@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CE88F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:19:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D8C4C433C7;
-	Sun, 16 Jul 2023 20:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E098F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:19:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4707EC433C8;
+	Sun, 16 Jul 2023 20:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538780;
-	bh=5rpOE4GsLknOK2Wrlcnwwt9DRdRQzV7IFxCEADy54xc=;
+	s=korg; t=1689538783;
+	bh=Z7FqE+dNtUks2C40lAWap4JAMGa2mWZpEKcEUP9fDJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1GA7bkVNc/9L7SBUzxLCXKfR5s9tQwRmI/UyP7yTFgEn4X/oBOAktCuskNEMz2pHX
-	 zj7jgsyp6vbD64L+bAhthY0W00za8ADxVjDBwlEyyZ+D+zpGts6BGRPblT2id4hGCO
-	 9Hcm2iN8tmg9ylr4LB6eySefmBYWupmfEtUe5rHI=
+	b=G462JHF/lzdQuXAzM88fjSY9obCfZIFWyDdd7HJFamr9pmtaTwyXpPh3TakARMKqL
+	 c2cljiHC+qsxPJFDNhOMqtSYji0Cxlmb1Vi6Ulx1AcM1VmsNIkDLNpZdjtYDbCWU96
+	 /w0pdn8JIIhJceNYWo5vH9swgrDPX1TD4XAZvp3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Scally <dan.scally@ideasonboard.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Kieran Bingham <kieran.bingham@ideasonboard.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 574/800] media: i2c: Correct format propagation for st-mipid02
-Date: Sun, 16 Jul 2023 21:47:07 +0200
-Message-ID: <20230716195002.418306573@linuxfoundation.org>
+Subject: [PATCH 6.4 575/800] media: renesas: fdp1: Identify R-Car Gen2 versions
+Date: Sun, 16 Jul 2023 21:47:08 +0200
+Message-ID: <20230716195002.440750920@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,45 +39,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Scally <dan.scally@ideasonboard.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 306c3190b30d4d6a098888b9d7d4cefaa0ddcb91 ]
+[ Upstream commit 59a95979638664a905cd46845e7cac1b3ff942f7 ]
 
-Format propagation in the st-mipid02 driver is incorrect in that when
-setting format for V4L2_SUBDEV_FORMAT_TRY on the source pad, the
-_active_ rather than _try_ format from the sink pad is propagated.
-This causes problems with format negotiation - update the function to
-propagate the correct format.
+On R-Car M2-W:
 
-Fixes: 642bb5e88fed ("media: st-mipid02: MIPID02 CSI-2 to PARALLEL bridge driver")
-Signed-off-by: Daniel Scally <dan.scally@ideasonboard.com>
+    rcar_fdp1 fe940000.fdp1: FDP1 Unidentifiable (0x02010101)
+    rcar_fdp1 fe944000.fdp1: FDP1 Unidentifiable (0x02010101)
+
+Although the IP Internal Data Register on R-Car Gen2 is documented to
+contain all zeros, the actual register contents seem to match the FDP1
+version ID of R-Car H3 ES1.*, which has just been removed.
+Fortunately this version is not used for any other purposes yet.
+
+Fix this by re-adding the ID, now using an R-Car Gen2-specific name.
+
+Fixes: af4273b43f2b ("media: renesas: fdp1: remove R-Car H3 ES1.* handling")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/st-mipid02.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/media/platform/renesas/rcar_fdp1.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/media/i2c/st-mipid02.c b/drivers/media/i2c/st-mipid02.c
-index 31b89aff0e86a..f20f87562bf11 100644
---- a/drivers/media/i2c/st-mipid02.c
-+++ b/drivers/media/i2c/st-mipid02.c
-@@ -736,8 +736,13 @@ static void mipid02_set_fmt_source(struct v4l2_subdev *sd,
- {
- 	struct mipid02_dev *bridge = to_mipid02_dev(sd);
+diff --git a/drivers/media/platform/renesas/rcar_fdp1.c b/drivers/media/platform/renesas/rcar_fdp1.c
+index f43e458590b8c..ab39cd2201c85 100644
+--- a/drivers/media/platform/renesas/rcar_fdp1.c
++++ b/drivers/media/platform/renesas/rcar_fdp1.c
+@@ -254,6 +254,8 @@ MODULE_PARM_DESC(debug, "activate debug info");
  
--	/* source pad mirror active sink pad */
--	format->format = bridge->fmt;
-+	/* source pad mirror sink pad */
-+	if (format->which == V4L2_SUBDEV_FORMAT_ACTIVE)
-+		format->format = bridge->fmt;
-+	else
-+		format->format = *v4l2_subdev_get_try_format(sd, sd_state,
-+							     MIPID02_SINK_0);
-+
- 	/* but code may need to be converted */
- 	format->format.code = serial_to_parallel_code(format->format.code);
+ /* Internal Data (HW Version) */
+ #define FD1_IP_INTDATA			0x0800
++/* R-Car Gen2 HW manual says zero, but actual value matches R-Car H3 ES1.x */
++#define FD1_IP_GEN2			0x02010101
+ #define FD1_IP_M3W			0x02010202
+ #define FD1_IP_H3			0x02010203
+ #define FD1_IP_M3N			0x02010204
+@@ -2360,6 +2362,9 @@ static int fdp1_probe(struct platform_device *pdev)
  
+ 	hw_version = fdp1_read(fdp1, FD1_IP_INTDATA);
+ 	switch (hw_version) {
++	case FD1_IP_GEN2:
++		dprintk(fdp1, "FDP1 Version R-Car Gen2\n");
++		break;
+ 	case FD1_IP_M3W:
+ 		dprintk(fdp1, "FDP1 Version R-Car M3-W\n");
+ 		break;
 -- 
 2.39.2
 
