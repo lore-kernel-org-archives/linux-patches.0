@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AB48F6D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:23:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD59C433C7;
-	Sun, 16 Jul 2023 20:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955448F6D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:23:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 142E1C433C8;
+	Sun, 16 Jul 2023 20:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539035;
-	bh=15Ww9JzwZFyKJ37u2c8y8UIlSsnBC4+pR60qbDapO/s=;
+	s=korg; t=1689539038;
+	bh=oNcKor8YxzGCcaFkm4zYjmsdqphe2u6l+7pp4eimGvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w51PF8bWIcVTavWOCaOvxalimUGiU6EsgHBowcnaKiysCJECgPV8OkChoN+v5x/4s
-	 HlGPsjTBs4ztbaz0kT9Y3bUSE8nI++chJZ2MDAYR803PaC8ExoMYwv4U9i1nE52Lmp
-	 R0u9g9Ko0Yy+or/862YQUdojQyY8rXko0Ub+inaw=
+	b=FotKYHEe+zHRQYkx1ynPPW5ir+/oYjcbWwVMj81E5o0ZzTrVqumjTu65ZITnTcqoa
+	 KQQKaHE9e/HojcqocicyYfhgu4EPKlRqMvi3NRL9/IE+07cBbBy4xqgq0gmAMuCASZ
+	 ZvaK2vIxituPEpXmGnnoj2WkuhP+dPq0zTQ7jTnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gal Pressman <gal@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Feng Liu <feliu@nvidia.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 657/800] virtio-vdpa: Fix unchecked call to NULL set_vq_affinity
-Date: Sun, 16 Jul 2023 21:48:30 +0200
-Message-ID: <20230716195004.371909670@linuxfoundation.org>
+Subject: [PATCH 6.4 666/800] net: mscc: ocelot: dont report that RX timestamping is enabled by default
+Date: Sun, 16 Jul 2023 21:48:39 +0200
+Message-ID: <20230716195004.581790745@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,39 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit fe37efba475375caa2dbc71cb06f53f7086277ef ]
+[ Upstream commit 4fd44b82b7aceaa35c2901c6546d2c4198e0799d ]
 
-The referenced patch calls set_vq_affinity without checking if the op is
-valid. This patch adds the check.
+PTP RX timestamping should be enabled when the user requests it, not by
+default. If it is enabled by default, it can be problematic when the
+ocelot driver is a DSA master, and it sidesteps what DSA tries to avoid
+through __dsa_master_hwtstamp_validate().
 
-Fixes: 3dad56823b53 ("virtio-vdpa: Support interrupt affinity spreading mechanism")
-Reviewed-by: Gal Pressman <gal@nvidia.com>
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Message-Id: <20230504135053.2283816-1-dtatulea@nvidia.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Feng Liu <feliu@nvidia.com>
+Additionally, after the change which made ocelot trap PTP packets only
+to the CPU at ocelot_hwtstamp_set() time, it is no longer even true that
+RX timestamping is enabled by default, because until ocelot_hwtstamp_set()
+is called, the PTP traps are actually not set up. So the rx_filter field
+of ocelot->hwtstamp_config reflects an incorrect reality.
+
+Fixes: 96ca08c05838 ("net: mscc: ocelot: set up traps for PTP packets")
+Fixes: 4e3b0468e6d7 ("net: mscc: PTP Hardware Clock (PHC) support")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_vdpa.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mscc/ocelot_ptp.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/virtio/virtio_vdpa.c b/drivers/virtio/virtio_vdpa.c
-index eb6aee8c06b2c..989e2d7184ce4 100644
---- a/drivers/virtio/virtio_vdpa.c
-+++ b/drivers/virtio/virtio_vdpa.c
-@@ -385,7 +385,9 @@ static int virtio_vdpa_find_vqs(struct virtio_device *vdev, unsigned int nvqs,
- 			err = PTR_ERR(vqs[i]);
- 			goto err_setup_vq;
- 		}
--		ops->set_vq_affinity(vdpa, i, &masks[i]);
-+
-+		if (ops->set_vq_affinity)
-+			ops->set_vq_affinity(vdpa, i, &masks[i]);
- 	}
+diff --git a/drivers/net/ethernet/mscc/ocelot_ptp.c b/drivers/net/ethernet/mscc/ocelot_ptp.c
+index 2180ae94c7447..673bfd70867a6 100644
+--- a/drivers/net/ethernet/mscc/ocelot_ptp.c
++++ b/drivers/net/ethernet/mscc/ocelot_ptp.c
+@@ -824,11 +824,6 @@ int ocelot_init_timestamp(struct ocelot *ocelot,
  
- 	cb.callback = virtio_vdpa_config_cb;
+ 	ocelot_write(ocelot, PTP_CFG_MISC_PTP_EN, PTP_CFG_MISC);
+ 
+-	/* There is no device reconfiguration, PTP Rx stamping is always
+-	 * enabled.
+-	 */
+-	ocelot->hwtstamp_config.rx_filter = HWTSTAMP_FILTER_PTP_V2_EVENT;
+-
+ 	return 0;
+ }
+ EXPORT_SYMBOL(ocelot_init_timestamp);
 -- 
 2.39.2
 
