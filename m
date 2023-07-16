@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63958F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:24:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D9BC433C8;
-	Sun, 16 Jul 2023 20:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713318F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:24:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8D90C433C7;
+	Sun, 16 Jul 2023 20:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539083;
-	bh=JYMdX+FjnYWvL3DpBpxUt/OcuqecO4ZzHWLddzt6qyU=;
+	s=korg; t=1689539086;
+	bh=yTFUlZDJjTcr1C1DRjOI2O99KYizK97NKDf20O2z42Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e66f/ERvuK73yrlJX3rLkjrp5PvOEFZF8m6YR7SMUkO+0zun7n9PUpv/1Hnugnx9z
-	 drfl77PdHRSHUqzDNAp92PdzoUrfNDnMhSK0K6AUSpH829L3iFdVhakcvEh04a4x+V
-	 vxbqgjpgRBkOyDN3EKK3SWG30KBQEN9JscFZ7Nco=
+	b=FLMRHZkU9oRM/P6b2M0CcnyMmnzYpfRaERH3/7ByzNmKoGN1UL8PU+UdYycmkPdaf
+	 qsqPhDGshzY9VBpp8FKuJgMqmVTU3HerVHtenMpClhPhVeptag/iTENH8MFA05SWa6
+	 d6zlRax3GEy1xiJ3aS74N8i3anKmhVoxJ81ZQIY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filip Hejsek <filip.hejsek@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Nishanth Menon <nm@ti.com>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 681/800] drm/amd: Dont try to enable secure display TA multiple times
-Date: Sun, 16 Jul 2023 21:48:54 +0200
-Message-ID: <20230716195004.943236832@linuxfoundation.org>
+Subject: [PATCH 6.4 682/800] mailbox: ti-msgmgr: Fill non-message tx data fields with 0x0
+Date: Sun, 16 Jul 2023 21:48:55 +0200
+Message-ID: <20230716195004.965482796@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,38 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Nishanth Menon <nm@ti.com>
 
-[ Upstream commit 5c6d52ff4b61e5267b25be714eb5a9ba2a338199 ]
+[ Upstream commit 1b712f18c461bd75f018033a15cf381e712806b5 ]
 
-If the securedisplay TA failed to load the first time, it's unlikely
-to work again after a suspend/resume cycle or reset cycle and it appears
-to be causing problems in futher attempts.
+Sec proxy/message manager data buffer is 60 bytes with the last of the
+registers indicating transmission completion. This however poses a bit
+of a challenge.
 
-Fixes: e42dfa66d592 ("drm/amdgpu: Add secure display TA load for Renoir")
-Reported-by: Filip Hejsek <filip.hejsek@gmail.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2633
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The backing memory for sec_proxy / message manager is regular memory,
+and all sec proxy does is to trigger a burst of all 60 bytes of data
+over to the target thread backing ring accelerator. It doesn't do a
+memory scrub when it moves data out in the burst. When we transmit
+multiple messages, remnants of previous message is also transmitted
+which results in some random data being set in TISCI fields of
+messages that have been expanded forward.
+
+The entire concept of backward compatibility hinges on the fact that
+the unused message fields remain 0x0 allowing for 0x0 value to be
+specially considered when backward compatibility of message extension
+is done.
+
+So, instead of just writing the completion register, we continue
+to fill the message buffer up with 0x0 (note: for partial message
+involving completion, we already do this).
+
+This allows us to scale and introduce ABI changes back also work with
+other boot stages that may have left data in the internal memory.
+
+While at this, be consistent and explicit with the data_reg pointer
+increment.
+
+Fixes: aace66b170ce ("mailbox: Introduce TI message manager driver")
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mailbox/ti-msgmgr.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-index a150b7a4b4aae..e4757a2807d9a 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-@@ -1947,6 +1947,8 @@ static int psp_securedisplay_initialize(struct psp_context *psp)
- 		psp_securedisplay_parse_resp_status(psp, securedisplay_cmd->status);
- 		dev_err(psp->adev->dev, "SECUREDISPLAY: query securedisplay TA failed. ret 0x%x\n",
- 			securedisplay_cmd->securedisplay_out_message.query_ta.query_cmd_ret);
-+		/* don't try again */
-+		psp->securedisplay_context.context.bin_desc.size_bytes = 0;
+diff --git a/drivers/mailbox/ti-msgmgr.c b/drivers/mailbox/ti-msgmgr.c
+index ddac423ac1a91..03048cbda525e 100644
+--- a/drivers/mailbox/ti-msgmgr.c
++++ b/drivers/mailbox/ti-msgmgr.c
+@@ -430,14 +430,20 @@ static int ti_msgmgr_send_data(struct mbox_chan *chan, void *data)
+ 		/* Ensure all unused data is 0 */
+ 		data_trail &= 0xFFFFFFFF >> (8 * (sizeof(u32) - trail_bytes));
+ 		writel(data_trail, data_reg);
+-		data_reg++;
++		data_reg += sizeof(u32);
  	}
++
+ 	/*
+ 	 * 'data_reg' indicates next register to write. If we did not already
+ 	 * write on tx complete reg(last reg), we must do so for transmit
++	 * In addition, we also need to make sure all intermediate data
++	 * registers(if any required), are reset to 0 for TISCI backward
++	 * compatibility to be maintained.
+ 	 */
+-	if (data_reg <= qinst->queue_buff_end)
+-		writel(0, qinst->queue_buff_end);
++	while (data_reg <= qinst->queue_buff_end) {
++		writel(0, data_reg);
++		data_reg += sizeof(u32);
++	}
  
- 	return 0;
+ 	/* If we are in polled mode, wait for a response before proceeding */
+ 	if (ti_msgmgr_chan_has_polled_queue_rx(message->chan_rx))
 -- 
 2.39.2
 
