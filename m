@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348138F6D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:22:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4F2C433C8;
-	Sun, 16 Jul 2023 20:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001888F6D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:22:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 748D8C433C8;
+	Sun, 16 Jul 2023 20:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538938;
-	bh=I/OFoFv17kJnFy4vrXrjKYDJqDnIUd9a4CPtVf08Ftk=;
+	s=korg; t=1689538940;
+	bh=Or0qWWw9I9R3T4enKIpxcMeDn1ngPxzrF0S+FtIYdAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BHOHqqVYI9WH/gal+zm9xCriPgVr8crnWTV9t4nRDzAxD+j7rB3Vu/95WdixYVIwg
-	 meucln3mdAcqsiMgbFyinoDF1rnGQDQD86hRZSyKn769kVqAPDMo60DPPhCSLAJ3Yn
-	 08fHCtU02wEcK1SiXxEGtyMgojEXEvNXGd0x+5kE=
+	b=HnywVahSoe9OPf+AeCEv9hpFZvLXcHLlxMiYdnv6T/uzzLeDH6Bh9CxrJjgieeFg+
+	 BJ2tmxbm6Qc+d2bc3VODJAf6OB15PeZ92bNNwFL7lXxRJvAHaPM4FUFhQ4NxAviGn5
+	 AQS/fXuILi2CLTOPuQMOtVLdHJHXbhZSrY38o+WM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Zhao <findns94@gmail.com>,
-	Kees Cook <keescook@chromium.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 600/800] lkdtm: replace ll_rw_block with submit_bh
-Date: Sun, 16 Jul 2023 21:47:33 +0200
-Message-ID: <20230716195003.039161767@linuxfoundation.org>
+Subject: [PATCH 6.4 591/800] extcon: Fix kernel doc of property capability fields to avoid warnings
+Date: Sun, 16 Jul 2023 21:47:24 +0200
+Message-ID: <20230716195002.827867961@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,54 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yue Zhao <findns94@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit b290df06811852d4cc36f4b8a2a30c2063197a74 ]
+[ Upstream commit 73346b9965ebda2feb7fef8629e9b28baee820e3 ]
 
-Function ll_rw_block was removed in commit 79f597842069 ("fs/buffer:
-remove ll_rw_block() helper"). There is no unified function to sumbit
-read or write buffer in block layer for now. Consider similar sematics,
-we can choose submit_bh() to replace ll_rw_block() as predefined crash
-point. In submit_bh(), it also takes read or write flag as the first
-argument and invoke submit_bio() to submit I/O request to block layer.
+Kernel documentation has to be synchronized with a code, otherwise
+the validator is not happy:
 
-Fixes: 79f597842069 ("fs/buffer: remove ll_rw_block() helper")
-Signed-off-by: Yue Zhao <findns94@gmail.com>
-Acked-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230503162944.3969-1-findns94@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+     Function parameter or member 'usb_bits' not described in 'extcon_cable'
+     Function parameter or member 'chg_bits' not described in 'extcon_cable'
+     Function parameter or member 'jack_bits' not described in 'extcon_cable'
+     Function parameter or member 'disp_bits' not described in 'extcon_cable'
+
+Describe the fields added in the past.
+
+Fixes: ceaa98f442cf ("extcon: Add the support for the capability of each property")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/fault-injection/provoke-crashes.rst | 2 +-
- drivers/misc/lkdtm/core.c                         | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/extcon/extcon.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/Documentation/fault-injection/provoke-crashes.rst b/Documentation/fault-injection/provoke-crashes.rst
-index 3abe842256139..1f087e502ca6d 100644
---- a/Documentation/fault-injection/provoke-crashes.rst
-+++ b/Documentation/fault-injection/provoke-crashes.rst
-@@ -29,7 +29,7 @@ recur_count
- cpoint_name
- 	Where in the kernel to trigger the action. It can be
- 	one of INT_HARDWARE_ENTRY, INT_HW_IRQ_EN, INT_TASKLET_ENTRY,
--	FS_DEVRW, MEM_SWAPOUT, TIMERADD, SCSI_QUEUE_RQ, or DIRECT.
-+	FS_SUBMIT_BH, MEM_SWAPOUT, TIMERADD, SCSI_QUEUE_RQ, or DIRECT.
- 
- cpoint_type
- 	Indicates the action to be taken on hitting the crash point.
-diff --git a/drivers/misc/lkdtm/core.c b/drivers/misc/lkdtm/core.c
-index b4712ff196b4e..0772e4a4757e9 100644
---- a/drivers/misc/lkdtm/core.c
-+++ b/drivers/misc/lkdtm/core.c
-@@ -79,7 +79,7 @@ static struct crashpoint crashpoints[] = {
- 	CRASHPOINT("INT_HARDWARE_ENTRY", "do_IRQ"),
- 	CRASHPOINT("INT_HW_IRQ_EN",	 "handle_irq_event"),
- 	CRASHPOINT("INT_TASKLET_ENTRY",	 "tasklet_action"),
--	CRASHPOINT("FS_DEVRW",		 "ll_rw_block"),
-+	CRASHPOINT("FS_SUBMIT_BH",		 "submit_bh"),
- 	CRASHPOINT("MEM_SWAPOUT",	 "shrink_inactive_list"),
- 	CRASHPOINT("TIMERADD",		 "hrtimer_start"),
- 	CRASHPOINT("SCSI_QUEUE_RQ",	 "scsi_queue_rq"),
+diff --git a/drivers/extcon/extcon.c b/drivers/extcon/extcon.c
+index efaf234582d97..370b5b26d10b7 100644
+--- a/drivers/extcon/extcon.c
++++ b/drivers/extcon/extcon.c
+@@ -210,6 +210,10 @@ static const struct __extcon_info {
+  * @chg_propval:	the array of charger connector properties
+  * @jack_propval:	the array of jack connector properties
+  * @disp_propval:	the array of display connector properties
++ * @usb_bits:		the bit array of the USB connector property capabilities
++ * @chg_bits:		the bit array of the charger connector property capabilities
++ * @jack_bits:		the bit array of the jack connector property capabilities
++ * @disp_bits:		the bit array of the display connector property capabilities
+  */
+ struct extcon_cable {
+ 	struct extcon_dev *edev;
 -- 
 2.39.2
 
