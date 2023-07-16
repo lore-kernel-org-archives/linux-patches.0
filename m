@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4F28F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:00:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6859C433C7;
-	Sun, 16 Jul 2023 20:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF558F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:00:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A72C433C7;
+	Sun, 16 Jul 2023 20:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537639;
-	bh=3b3GCNZaPSGbbNLBdsSyTuswl96THpfWg5MISQx20HQ=;
+	s=korg; t=1689537642;
+	bh=pliFVdMuf51GMDN9egQxiP92mH1yOS+LjzSYlEzTJBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XYvV4a/ZQ1svKsDzyaj41NzpTzt0BFi2VaB0lHS61tcF35T+zpcWI6F9fyN6d67Un
-	 UGRKl68L0EREWug8BqylMgJpquNNhrjx5y2pMPc83B47cniB+difS2B9BVDHTzu7K/
-	 7fOieM2uQTf2H0VRQTfB6Zi4HvgZrozwF42c6hEo=
+	b=XlXUSFFBVBJ/txBb+dkhqk2OOYxLGsbhXy5dfzZTEgRkJF1pDA46BeTjiRZEcibJC
+	 pv0GfTDSL401ZMZBa5fAnOWm6MzZprH1E5EGWTSxYmk8h/tmJDslHRyIamCIbajnWV
+	 9P4MJMbIlgCX9QDrD/bZi7vJ8Y9qmsAsuB1YMoLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edwin Peer <edwin.peer@broadcom.com>,
-	Edwin Peer <espeer@gmail.com>,
-	Gal Pressman <gal@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 167/800] rtnetlink: extend RTEXT_FILTER_SKIP_STATS to IFLA_VF_INFO
-Date: Sun, 16 Jul 2023 21:40:20 +0200
-Message-ID: <20230716194952.987735329@linuxfoundation.org>
+Subject: [PATCH 6.4 168/800] wifi: ath11k: Add missing check for ioremap
+Date: Sun, 16 Jul 2023 21:40:21 +0200
+Message-ID: <20230716194953.011425951@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,165 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edwin Peer <edwin.peer@broadcom.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit fa0e21fa44438a0e856d42224bfa24641d37b979 ]
+[ Upstream commit 16e0077e14a73866e9b0f4a6bf4ad3d4a5cb0f2a ]
 
-This filter already exists for excluding IPv6 SNMP stats. Extend its
-definition to also exclude IFLA_VF_INFO stats in RTM_GETLINK.
+Add check for ioremap() and return the error if it fails in order to
+guarantee the success of ioremap(), same as in
+ath11k_qmi_load_file_target_mem().
 
-This patch constitutes a partial fix for a netlink attribute nesting
-overflow bug in IFLA_VFINFO_LIST. By excluding the stats when the
-requester doesn't need them, the truncation of the VF list is avoided.
-
-While it was technically only the stats added in commit c5a9f6f0ab40
-("net/core: Add drop counters to VF statistics") breaking the camel's
-back, the appreciable size of the stats data should never have been
-included without due consideration for the maximum number of VFs
-supported by PCI.
-
-Fixes: 3b766cd83232 ("net/core: Add reading VF statistics through the PF netdevice")
-Fixes: c5a9f6f0ab40 ("net/core: Add drop counters to VF statistics")
-Signed-off-by: Edwin Peer <edwin.peer@broadcom.com>
-Cc: Edwin Peer <espeer@gmail.com>
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Link: https://lore.kernel.org/r/20230611105108.122586-1-gal@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 6ac04bdc5edb ("ath11k: Use reserved host DDR addresses from DT for PCI devices")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230608022858.27405-1-jiasheng@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/rtnetlink.c | 96 +++++++++++++++++++++++---------------------
- 1 file changed, 51 insertions(+), 45 deletions(-)
+ drivers/net/wireless/ath/ath11k/qmi.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 41de3a2f29e15..d1815122298d5 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -961,24 +961,27 @@ static inline int rtnl_vfinfo_size(const struct net_device *dev,
- 			 nla_total_size(sizeof(struct ifla_vf_rate)) +
- 			 nla_total_size(sizeof(struct ifla_vf_link_state)) +
- 			 nla_total_size(sizeof(struct ifla_vf_rss_query_en)) +
--			 nla_total_size(0) + /* nest IFLA_VF_STATS */
--			 /* IFLA_VF_STATS_RX_PACKETS */
--			 nla_total_size_64bit(sizeof(__u64)) +
--			 /* IFLA_VF_STATS_TX_PACKETS */
--			 nla_total_size_64bit(sizeof(__u64)) +
--			 /* IFLA_VF_STATS_RX_BYTES */
--			 nla_total_size_64bit(sizeof(__u64)) +
--			 /* IFLA_VF_STATS_TX_BYTES */
--			 nla_total_size_64bit(sizeof(__u64)) +
--			 /* IFLA_VF_STATS_BROADCAST */
--			 nla_total_size_64bit(sizeof(__u64)) +
--			 /* IFLA_VF_STATS_MULTICAST */
--			 nla_total_size_64bit(sizeof(__u64)) +
--			 /* IFLA_VF_STATS_RX_DROPPED */
--			 nla_total_size_64bit(sizeof(__u64)) +
--			 /* IFLA_VF_STATS_TX_DROPPED */
--			 nla_total_size_64bit(sizeof(__u64)) +
- 			 nla_total_size(sizeof(struct ifla_vf_trust)));
-+		if (~ext_filter_mask & RTEXT_FILTER_SKIP_STATS) {
-+			size += num_vfs *
-+				(nla_total_size(0) + /* nest IFLA_VF_STATS */
-+				 /* IFLA_VF_STATS_RX_PACKETS */
-+				 nla_total_size_64bit(sizeof(__u64)) +
-+				 /* IFLA_VF_STATS_TX_PACKETS */
-+				 nla_total_size_64bit(sizeof(__u64)) +
-+				 /* IFLA_VF_STATS_RX_BYTES */
-+				 nla_total_size_64bit(sizeof(__u64)) +
-+				 /* IFLA_VF_STATS_TX_BYTES */
-+				 nla_total_size_64bit(sizeof(__u64)) +
-+				 /* IFLA_VF_STATS_BROADCAST */
-+				 nla_total_size_64bit(sizeof(__u64)) +
-+				 /* IFLA_VF_STATS_MULTICAST */
-+				 nla_total_size_64bit(sizeof(__u64)) +
-+				 /* IFLA_VF_STATS_RX_DROPPED */
-+				 nla_total_size_64bit(sizeof(__u64)) +
-+				 /* IFLA_VF_STATS_TX_DROPPED */
-+				 nla_total_size_64bit(sizeof(__u64)));
-+		}
- 		return size;
- 	} else
- 		return 0;
-@@ -1270,7 +1273,8 @@ static noinline_for_stack int rtnl_fill_stats(struct sk_buff *skb,
- static noinline_for_stack int rtnl_fill_vfinfo(struct sk_buff *skb,
- 					       struct net_device *dev,
- 					       int vfs_num,
--					       struct nlattr *vfinfo)
-+					       struct nlattr *vfinfo,
-+					       u32 ext_filter_mask)
- {
- 	struct ifla_vf_rss_query_en vf_rss_query_en;
- 	struct nlattr *vf, *vfstats, *vfvlanlist;
-@@ -1376,33 +1380,35 @@ static noinline_for_stack int rtnl_fill_vfinfo(struct sk_buff *skb,
- 		goto nla_put_vf_failure;
- 	}
- 	nla_nest_end(skb, vfvlanlist);
--	memset(&vf_stats, 0, sizeof(vf_stats));
--	if (dev->netdev_ops->ndo_get_vf_stats)
--		dev->netdev_ops->ndo_get_vf_stats(dev, vfs_num,
--						&vf_stats);
--	vfstats = nla_nest_start_noflag(skb, IFLA_VF_STATS);
--	if (!vfstats)
--		goto nla_put_vf_failure;
--	if (nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_PACKETS,
--			      vf_stats.rx_packets, IFLA_VF_STATS_PAD) ||
--	    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_PACKETS,
--			      vf_stats.tx_packets, IFLA_VF_STATS_PAD) ||
--	    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_BYTES,
--			      vf_stats.rx_bytes, IFLA_VF_STATS_PAD) ||
--	    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_BYTES,
--			      vf_stats.tx_bytes, IFLA_VF_STATS_PAD) ||
--	    nla_put_u64_64bit(skb, IFLA_VF_STATS_BROADCAST,
--			      vf_stats.broadcast, IFLA_VF_STATS_PAD) ||
--	    nla_put_u64_64bit(skb, IFLA_VF_STATS_MULTICAST,
--			      vf_stats.multicast, IFLA_VF_STATS_PAD) ||
--	    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_DROPPED,
--			      vf_stats.rx_dropped, IFLA_VF_STATS_PAD) ||
--	    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_DROPPED,
--			      vf_stats.tx_dropped, IFLA_VF_STATS_PAD)) {
--		nla_nest_cancel(skb, vfstats);
--		goto nla_put_vf_failure;
-+	if (~ext_filter_mask & RTEXT_FILTER_SKIP_STATS) {
-+		memset(&vf_stats, 0, sizeof(vf_stats));
-+		if (dev->netdev_ops->ndo_get_vf_stats)
-+			dev->netdev_ops->ndo_get_vf_stats(dev, vfs_num,
-+							  &vf_stats);
-+		vfstats = nla_nest_start_noflag(skb, IFLA_VF_STATS);
-+		if (!vfstats)
-+			goto nla_put_vf_failure;
-+		if (nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_PACKETS,
-+				      vf_stats.rx_packets, IFLA_VF_STATS_PAD) ||
-+		    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_PACKETS,
-+				      vf_stats.tx_packets, IFLA_VF_STATS_PAD) ||
-+		    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_BYTES,
-+				      vf_stats.rx_bytes, IFLA_VF_STATS_PAD) ||
-+		    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_BYTES,
-+				      vf_stats.tx_bytes, IFLA_VF_STATS_PAD) ||
-+		    nla_put_u64_64bit(skb, IFLA_VF_STATS_BROADCAST,
-+				      vf_stats.broadcast, IFLA_VF_STATS_PAD) ||
-+		    nla_put_u64_64bit(skb, IFLA_VF_STATS_MULTICAST,
-+				      vf_stats.multicast, IFLA_VF_STATS_PAD) ||
-+		    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_DROPPED,
-+				      vf_stats.rx_dropped, IFLA_VF_STATS_PAD) ||
-+		    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_DROPPED,
-+				      vf_stats.tx_dropped, IFLA_VF_STATS_PAD)) {
-+			nla_nest_cancel(skb, vfstats);
-+			goto nla_put_vf_failure;
-+		}
-+		nla_nest_end(skb, vfstats);
- 	}
--	nla_nest_end(skb, vfstats);
- 	nla_nest_end(skb, vf);
- 	return 0;
- 
-@@ -1435,7 +1441,7 @@ static noinline_for_stack int rtnl_fill_vf(struct sk_buff *skb,
- 		return -EMSGSIZE;
- 
- 	for (i = 0; i < num_vfs; i++) {
--		if (rtnl_fill_vfinfo(skb, dev, i, vfinfo))
-+		if (rtnl_fill_vfinfo(skb, dev, i, vfinfo, ext_filter_mask))
- 			return -EMSGSIZE;
- 	}
- 
+diff --git a/drivers/net/wireless/ath/ath11k/qmi.c b/drivers/net/wireless/ath/ath11k/qmi.c
+index ab923e24b0a9c..2328b9447cf1b 100644
+--- a/drivers/net/wireless/ath/ath11k/qmi.c
++++ b/drivers/net/wireless/ath/ath11k/qmi.c
+@@ -2058,6 +2058,9 @@ static int ath11k_qmi_assign_target_mem_chunk(struct ath11k_base *ab)
+ 			ab->qmi.target_mem[idx].iaddr =
+ 				ioremap(ab->qmi.target_mem[idx].paddr,
+ 					ab->qmi.target_mem[i].size);
++			if (!ab->qmi.target_mem[idx].iaddr)
++				return -EIO;
++
+ 			ab->qmi.target_mem[idx].size = ab->qmi.target_mem[i].size;
+ 			host_ddr_sz = ab->qmi.target_mem[i].size;
+ 			ab->qmi.target_mem[idx].type = ab->qmi.target_mem[i].type;
+@@ -2083,6 +2086,8 @@ static int ath11k_qmi_assign_target_mem_chunk(struct ath11k_base *ab)
+ 					ab->qmi.target_mem[idx].iaddr =
+ 						ioremap(ab->qmi.target_mem[idx].paddr,
+ 							ab->qmi.target_mem[i].size);
++					if (!ab->qmi.target_mem[idx].iaddr)
++						return -EIO;
+ 				} else {
+ 					ab->qmi.target_mem[idx].paddr =
+ 						ATH11K_QMI_CALDB_ADDRESS;
 -- 
 2.39.2
 
