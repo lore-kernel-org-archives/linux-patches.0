@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25CF8F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:55:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72CE3C433C7;
-	Sun, 16 Jul 2023 19:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35298F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:55:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417A6C433C7;
+	Sun, 16 Jul 2023 19:55:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537350;
-	bh=DSow8DOZxsMUcdmjX5J3+DIhPRMPGY+3x8kQcWMZzGg=;
+	s=korg; t=1689537353;
+	bh=aNxoazp4NMcFeDS9Hr4NkTVxUVnTXHuucJk+6VkprIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g0biVBqtLPikcld/ZBfLjKHwrKdv7VJgh/pXAtj40fPS5sQq+DBScOurd0byAOeG+
-	 K771+Jkwj0sMb8LXXaS23OhV/qCXa7tREBL0rnop4jahEHqIeARVWzMhBeG5C8oUEw
-	 t4atHN79DujK6k9JLpJlJ2MymltSRXb6+JH9rsjY=
+	b=iGOzR4XFfw0XoZbB6QzFZy11+bkWrpgr0fniHQ+6Hq3jN7VbjH8l09olFYHK9zU9C
+	 Lt+vwjueCcycsAqy/gFdAvOaSl6wRIfRJFDjMz3kqnIn/qUI+pl/wrqsZ9ePEh3+5a
+	 BukyMKhfr5RjbN8Swx+Nlf5U35BwKOE3VN1IdTVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 065/800] x86/mm: Allow guest.enc_status_change_prepare() to fail
-Date: Sun, 16 Jul 2023 21:38:38 +0200
-Message-ID: <20230716194950.601847215@linuxfoundation.org>
+Subject: [PATCH 6.4 066/800] x86/tdx: Fix race between set_memory_encrypted() and load_unaligned_zeropad()
+Date: Sun, 16 Jul 2023 21:38:39 +0200
+Message-ID: <20230716194950.625896578@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -38,89 +38,137 @@ Content-Transfer-Encoding: 8bit
 
 From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-[ Upstream commit 3f6819dd192ef4f0c568ec3e9d6d408b3fa1ad3d ]
+[ Upstream commit 195edce08b63d293377f615f4f7f086715d2d212 ]
 
-TDX code is going to provide guest.enc_status_change_prepare() that is
-able to fail. TDX will use the call to convert the GPA range from shared
-to private. This operation can fail.
+tl;dr: There is a race in the TDX private<=>shared conversion code
+       which could kill the TDX guest.  Fix it by changing conversion
+       ordering to eliminate the window.
 
-Add a way to return an error from the callback.
+TDX hardware maintains metadata to track which pages are private and
+shared. Additionally, TDX guests use the guest x86 page tables to
+specify whether a given mapping is intended to be private or shared.
+Bad things happen when the intent and metadata do not match.
 
+So there are two thing in play:
+ 1. "the page" -- the physical TDX page metadata
+ 2. "the mapping" -- the guest-controlled x86 page table intent
+
+For instance, an unrecoverable exit to VMM occurs if a guest touches a
+private mapping that points to a shared physical page.
+
+In summary:
+	* Private mapping => Private Page == OK (obviously)
+	* Shared mapping  => Shared Page  == OK (obviously)
+	* Private mapping => Shared Page  == BIG BOOM!
+	* Shared mapping  => Private Page == OK-ish
+	  (It will read generate a recoverable #VE via handle_mmio())
+
+Enter load_unaligned_zeropad(). It can touch memory that is adjacent but
+otherwise unrelated to the memory it needs to touch. It will cause one
+of those unrecoverable exits (aka. BIG BOOM) if it blunders into a
+shared mapping pointing to a private page.
+
+This is a problem when __set_memory_enc_pgtable() converts pages from
+shared to private. It first changes the mapping and second modifies
+the TDX page metadata.  It's moving from:
+
+        * Shared mapping  => Shared Page  == OK
+to:
+        * Private mapping => Shared Page  == BIG BOOM!
+
+This means that there is a window with a shared mapping pointing to a
+private page where load_unaligned_zeropad() can strike.
+
+Add a TDX handler for guest.enc_status_change_prepare(). This converts
+the page from shared to private *before* the page becomes private.  This
+ensures that there is never a private mapping to a shared page.
+
+Leave a guest.enc_status_change_finish() in place but only use it for
+private=>shared conversions.  This will delay updating the TDX metadata
+marking the page private until *after* the mapping matches the metadata.
+This also ensures that there is never a private mapping to a shared page.
+
+[ dhansen: rewrite changelog ]
+
+Fixes: 7dbde7631629 ("x86/mm/cpa: Add support for TDX shared memory")
 Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
 Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Link: https://lore.kernel.org/all/20230606095622.1939-2-kirill.shutemov%40linux.intel.com
-Stable-dep-of: 195edce08b63 ("x86/tdx: Fix race between set_memory_encrypted() and load_unaligned_zeropad()")
+Link: https://lore.kernel.org/all/20230606095622.1939-3-kirill.shutemov%40linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/x86_init.h | 2 +-
- arch/x86/kernel/x86_init.c      | 2 +-
- arch/x86/mm/mem_encrypt_amd.c   | 4 +++-
- arch/x86/mm/pat/set_memory.c    | 3 ++-
- 4 files changed, 7 insertions(+), 4 deletions(-)
+ arch/x86/coco/tdx/tdx.c | 51 ++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 48 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/include/asm/x86_init.h b/arch/x86/include/asm/x86_init.h
-index 88085f369ff6f..1ca9701917c55 100644
---- a/arch/x86/include/asm/x86_init.h
-+++ b/arch/x86/include/asm/x86_init.h
-@@ -150,7 +150,7 @@ struct x86_init_acpi {
-  * @enc_cache_flush_required	Returns true if a cache flush is needed before changing page encryption status
-  */
- struct x86_guest {
--	void (*enc_status_change_prepare)(unsigned long vaddr, int npages, bool enc);
-+	bool (*enc_status_change_prepare)(unsigned long vaddr, int npages, bool enc);
- 	bool (*enc_status_change_finish)(unsigned long vaddr, int npages, bool enc);
- 	bool (*enc_tlb_flush_required)(bool enc);
- 	bool (*enc_cache_flush_required)(void);
-diff --git a/arch/x86/kernel/x86_init.c b/arch/x86/kernel/x86_init.c
-index d82f4fa2f1bfe..f230d4d7d8eb4 100644
---- a/arch/x86/kernel/x86_init.c
-+++ b/arch/x86/kernel/x86_init.c
-@@ -130,7 +130,7 @@ struct x86_cpuinit_ops x86_cpuinit = {
- 
- static void default_nmi_init(void) { };
- 
--static void enc_status_change_prepare_noop(unsigned long vaddr, int npages, bool enc) { }
-+static bool enc_status_change_prepare_noop(unsigned long vaddr, int npages, bool enc) { return true; }
- static bool enc_status_change_finish_noop(unsigned long vaddr, int npages, bool enc) { return false; }
- static bool enc_tlb_flush_required_noop(bool enc) { return false; }
- static bool enc_cache_flush_required_noop(void) { return false; }
-diff --git a/arch/x86/mm/mem_encrypt_amd.c b/arch/x86/mm/mem_encrypt_amd.c
-index e0b51c09109f6..4f95c449a406e 100644
---- a/arch/x86/mm/mem_encrypt_amd.c
-+++ b/arch/x86/mm/mem_encrypt_amd.c
-@@ -319,7 +319,7 @@ static void enc_dec_hypercall(unsigned long vaddr, int npages, bool enc)
- #endif
+diff --git a/arch/x86/coco/tdx/tdx.c b/arch/x86/coco/tdx/tdx.c
+index e146b599260f8..64f1343df062f 100644
+--- a/arch/x86/coco/tdx/tdx.c
++++ b/arch/x86/coco/tdx/tdx.c
+@@ -840,6 +840,30 @@ static bool tdx_enc_status_changed(unsigned long vaddr, int numpages, bool enc)
+ 	return true;
  }
  
--static void amd_enc_status_change_prepare(unsigned long vaddr, int npages, bool enc)
-+static bool amd_enc_status_change_prepare(unsigned long vaddr, int npages, bool enc)
- {
- 	/*
- 	 * To maintain the security guarantees of SEV-SNP guests, make sure
-@@ -327,6 +327,8 @@ static void amd_enc_status_change_prepare(unsigned long vaddr, int npages, bool
- 	 */
- 	if (cc_platform_has(CC_ATTR_GUEST_SEV_SNP) && !enc)
- 		snp_set_memory_shared(vaddr, npages);
-+
++static bool tdx_enc_status_change_prepare(unsigned long vaddr, int numpages,
++					  bool enc)
++{
++	/*
++	 * Only handle shared->private conversion here.
++	 * See the comment in tdx_early_init().
++	 */
++	if (enc)
++		return tdx_enc_status_changed(vaddr, numpages, enc);
 +	return true;
++}
++
++static bool tdx_enc_status_change_finish(unsigned long vaddr, int numpages,
++					 bool enc)
++{
++	/*
++	 * Only handle private->shared conversion here.
++	 * See the comment in tdx_early_init().
++	 */
++	if (!enc)
++		return tdx_enc_status_changed(vaddr, numpages, enc);
++	return true;
++}
++
+ void __init tdx_early_init(void)
+ {
+ 	u64 cc_mask;
+@@ -867,9 +891,30 @@ void __init tdx_early_init(void)
+ 	 */
+ 	physical_mask &= cc_mask - 1;
+ 
+-	x86_platform.guest.enc_cache_flush_required = tdx_cache_flush_required;
+-	x86_platform.guest.enc_tlb_flush_required   = tdx_tlb_flush_required;
+-	x86_platform.guest.enc_status_change_finish = tdx_enc_status_changed;
++	/*
++	 * The kernel mapping should match the TDX metadata for the page.
++	 * load_unaligned_zeropad() can touch memory *adjacent* to that which is
++	 * owned by the caller and can catch even _momentary_ mismatches.  Bad
++	 * things happen on mismatch:
++	 *
++	 *   - Private mapping => Shared Page  == Guest shutdown
++         *   - Shared mapping  => Private Page == Recoverable #VE
++	 *
++	 * guest.enc_status_change_prepare() converts the page from
++	 * shared=>private before the mapping becomes private.
++	 *
++	 * guest.enc_status_change_finish() converts the page from
++	 * private=>shared after the mapping becomes private.
++	 *
++	 * In both cases there is a temporary shared mapping to a private page,
++	 * which can result in a #VE.  But, there is never a private mapping to
++	 * a shared page.
++	 */
++	x86_platform.guest.enc_status_change_prepare = tdx_enc_status_change_prepare;
++	x86_platform.guest.enc_status_change_finish  = tdx_enc_status_change_finish;
++
++	x86_platform.guest.enc_cache_flush_required  = tdx_cache_flush_required;
++	x86_platform.guest.enc_tlb_flush_required    = tdx_tlb_flush_required;
+ 
+ 	pr_info("Guest detected\n");
  }
- 
- /* Return true unconditionally: return value doesn't matter for the SEV side */
-diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
-index 7159cf7876130..b8f48ebe753c7 100644
---- a/arch/x86/mm/pat/set_memory.c
-+++ b/arch/x86/mm/pat/set_memory.c
-@@ -2151,7 +2151,8 @@ static int __set_memory_enc_pgtable(unsigned long addr, int numpages, bool enc)
- 		cpa_flush(&cpa, x86_platform.guest.enc_cache_flush_required());
- 
- 	/* Notify hypervisor that we are about to set/clr encryption attribute. */
--	x86_platform.guest.enc_status_change_prepare(addr, numpages, enc);
-+	if (!x86_platform.guest.enc_status_change_prepare(addr, numpages, enc))
-+		return -EIO;
- 
- 	ret = __change_page_attr_set_clr(&cpa, 1);
- 
 -- 
 2.39.2
 
