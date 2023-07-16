@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC868F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:55:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4752C433C8;
-	Sun, 16 Jul 2023 20:55:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CBDD8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:55:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EA8C433C8;
+	Sun, 16 Jul 2023 20:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540935;
-	bh=x3HDupK+SDlDL81Sjk2JanGEtg2Epo7RPhzhOePIP3c=;
+	s=korg; t=1689540938;
+	bh=lgTUt7JDiYkVjOzr8diPbzsXbnxvocxGjGGmQyEAwHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HOQLji8IX09/1ROb+k36esw2EZxAqqBf1B87aJoWQFY96t4/cYqe03Yty0g8zsMcs
-	 gj5qA1K3EvX0YPYp7XQR6XDC69y4dFM9Xy8vB7wqdWdnRkpZdAwUyJMEURXvZ6yDXH
-	 zvj4Gpfkzcg0K5z23DJcfjGLQvFftpFNB6hTmFcA=
+	b=XlheKs/ZIilgs5vueD+4DRkFMHH8sT65W7EUJWKZ2LpxqHgu1m8jb5Dpd17ySFfeD
+	 RptS6dRbz++GSJz4A9PGbW/8TQg7ekV+wPMnvt17rM5n99OmWhisSYYA6hBotirjJ7
+	 KzbgAiV3gIvqZCvPvZuHLVqVKA2ZKJEgdDYxEO6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Weinberger <richard@nod.at>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Azeem Shaikh <azeemshaikh38@gmail.com>,
-	linux-um@lists.infradead.org,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 6.1 540/591] um: Use HOST_DIR for mrproper
-Date: Sun, 16 Jul 2023 21:51:19 +0200
-Message-ID: <20230716194937.834689949@linuxfoundation.org>
+	Tianjia Zhang <tianjia.zhang@linux.alibaba.com>,
+	Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 6.1 541/591] integrity: Fix possible multiple allocation in integrity_inode_get()
+Date: Sun, 16 Jul 2023 21:51:20 +0200
+Message-ID: <20230716194937.859687883@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,40 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
 
-commit a5a319ec2c2236bb96d147c16196d2f1f3799301 upstream.
+commit 9df6a4870dc371136e90330cfbbc51464ee66993 upstream.
 
-When HEADER_ARCH was introduced, the MRPROPER_FILES (then MRPROPER_DIRS)
-list wasn't adjusted, leaving SUBARCH as part of the path argument.
-This resulted in the "mrproper" target not cleaning up arch/x86/... when
-SUBARCH was specified. Since HOST_DIR is arch/$(HEADER_ARCH), use it
-instead to get the correct path.
+When integrity_inode_get() is querying and inserting the cache, there
+is a conditional race in the concurrent environment.
 
-Cc: Richard Weinberger <richard@nod.at>
-Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-Cc: Johannes Berg <johannes@sipsolutions.net>
-Cc: Azeem Shaikh <azeemshaikh38@gmail.com>
-Cc: linux-um@lists.infradead.org
-Fixes: 7bbe7204e937 ("um: merge Makefile-{i386,x86_64}")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230606222442.never.807-kees@kernel.org
+The race condition is the result of not properly implementing
+"double-checked locking". In this case, it first checks to see if the
+iint cache record exists before taking the lock, but doesn't check
+again after taking the integrity_iint_lock.
+
+Fixes: bf2276d10ce5 ("ima: allocating iint improvements")
+Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+Cc: Dmitry Kasatkin <dmitry.kasatkin@gmail.com>
+Cc: <stable@vger.kernel.org> # v3.10+
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/um/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/integrity/iint.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/arch/um/Makefile
-+++ b/arch/um/Makefile
-@@ -148,7 +148,7 @@ export LDFLAGS_vmlinux := $(LDFLAGS_EXEC
- # When cleaning we don't include .config, so we don't include
- # TT or skas makefiles and don't clean skas_ptregs.h.
- CLEAN_FILES += linux x.i gmon.out
--MRPROPER_FILES += arch/$(SUBARCH)/include/generated
-+MRPROPER_FILES += $(HOST_DIR)/include/generated
+--- a/security/integrity/iint.c
++++ b/security/integrity/iint.c
+@@ -43,12 +43,10 @@ static struct integrity_iint_cache *__in
+ 		else if (inode > iint->inode)
+ 			n = n->rb_right;
+ 		else
+-			break;
++			return iint;
+ 	}
+-	if (!n)
+-		return NULL;
  
- archclean:
- 	@find . \( -name '*.bb' -o -name '*.bbg' -o -name '*.da' \
+-	return iint;
++	return NULL;
+ }
+ 
+ /*
+@@ -121,10 +119,15 @@ struct integrity_iint_cache *integrity_i
+ 		parent = *p;
+ 		test_iint = rb_entry(parent, struct integrity_iint_cache,
+ 				     rb_node);
+-		if (inode < test_iint->inode)
++		if (inode < test_iint->inode) {
+ 			p = &(*p)->rb_left;
+-		else
++		} else if (inode > test_iint->inode) {
+ 			p = &(*p)->rb_right;
++		} else {
++			write_unlock(&integrity_iint_lock);
++			kmem_cache_free(iint_cache, iint);
++			return test_iint;
++		}
+ 	}
+ 
+ 	iint->inode = inode;
 
 
