@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3BB8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:07:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4FB5C433C7;
-	Sun, 16 Jul 2023 20:07:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D3DB8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:07:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B668EC433C8;
+	Sun, 16 Jul 2023 20:07:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538066;
-	bh=B1naQgSahwWWgmZEuznMPDHjuX/lQ8siFyUav+WJBtU=;
+	s=korg; t=1689538069;
+	bh=JnkK3gyGzfKD9yviY1Po7S7wka5ZMhCU7Qz5j3A+TOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vNi6oqcswv6NszJqNbzsa+KrUHFWZRP4yXOB2Na+u8idb3sNz9Zc5U0OuBhcyNGq5
-	 gowFDHHSIBHFpNnyjbjNVz55dy+/qr/KksZX8vxtXqNo8yAPjTFPCrSRGq+dr4LwTH
-	 FLXSn35lWntguJzujnN/IXfjsvhtvgrNCuLEe8JE=
+	b=Tps9fRAIxZiUjOb1FjQqudyRjfK7NDEfiV9h7mN0A7VLBg3x/CKazJEiVbAupvq42
+	 CRXycv3lX0Yydy7MuW4ZJHdN11Sdo0G/pF/egXE/DMTSWLkj+3PzhLjejTIRxjHGs7
+	 kaHvzP5wbw0TamrY3Kr8/K2zpOVZWk8IfpjnL+40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 319/800] arm64: dts: qcom: apq8016-sbc: Fix 1.8V power rail on LS expansion
-Date: Sun, 16 Jul 2023 21:42:52 +0200
-Message-ID: <20230716194956.481626683@linuxfoundation.org>
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>
+Subject: [PATCH 6.4 320/800] drm/bridge: ti-sn65dsi83: Fix enable/disable flow to meet spec
+Date: Sun, 16 Jul 2023 21:42:53 +0200
+Message-ID: <20230716194956.503886245@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,79 +36,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephan Gerhold <stephan@gerhold.net>
+From: Frieder Schrempf <frieder.schrempf@kontron.de>
 
-[ Upstream commit 5500f823db38db073d30557af159b77fb1f2bf26 ]
+[ Upstream commit dd9e329af7236e34c566d3705ea32a63069b9b13 ]
 
-The 96Boards specification expects a 1.8V power rail on the low-speed
-expansion connector that is able to provide at least 0.18W / 100 mA.
-According to the DB410c hardware user manual this is done by connecting
-both L15 and L16 in parallel with up to 55mA each (for 110 mA total) [1].
+The datasheet describes the following initialization flow including
+minimum delay times between each step:
 
-Unfortunately the current regulator setup in the DB410c device tree
-does not implement the specification correctly and only provides 5 mA:
+1. DSI data lanes need to be in LP-11 and the clock lane in HS mode
+2. toggle EN signal
+3. initialize registers
+4. enable PLL
+5. soft reset
+6. enable DSI stream
+7. check error status register
 
-  - Only L15 is marked always-on, so L16 is never enabled.
-  - Without specifying a load the regulator is put into LPM where
-    it can only provide 5 mA.
+To meet this requirement we need to make sure the host bridge's
+pre_enable() is called first by using the pre_enable_prev_first
+flag.
 
-Fix this by:
+Furthermore we need to split enable() into pre_enable() which covers
+steps 2-5 from above and enable() which covers step 7 and is called
+after the host bridge's enable().
 
-  - Adding proper voltage constraints for L16.
-  - Making L16 always-on.
-  - Adding regulator-system-load for both L15 and L16. 100 mA should be
-    available in total, so specify 50 mA for each. (The regulator
-    hardware can only be in normal (55 mA) or low-power mode (5 mA) so
-    this will actually result in the expected 110 mA total...)
-
-[1]: https://www.96boards.org/documentation/consumer/dragonboard/dragonboard410c/hardware-docs/hardware-user-manual.md.html#power-supplies
-
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Fixes: 828dd5d66f0f ("arm64: dts: apq8016-sbc: make 1.8v available on LS expansion")
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230510-msm8916-regulators-v1-2-54d4960a05fc@gerhold.net
+Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Fixes: ceb515ba29ba ("drm/bridge: ti-sn65dsi83: Add TI SN65DSI83 and SN65DSI84 driver")
+Tested-by: Alexander Stein <alexander.stein@ew.tq-group.com> #TQMa8MxML/MBa8Mx
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230503163313.2640898-3-frieder@fris.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/apq8016-sbc.dts | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi83.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-index 14cb217a13c1e..3ec449f5cab78 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-@@ -526,19 +526,27 @@ l14 {
- 		regulator-max-microvolt = <3300000>;
- 	};
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi83.c b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+index 1f5c07989e2bf..6e125ba4f0d75 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+@@ -321,8 +321,8 @@ static u8 sn65dsi83_get_dsi_div(struct sn65dsi83 *ctx)
+ 	return dsi_div - 1;
+ }
  
--	/**
--	 * 1.8v required on LS expansion
--	 * for mezzanine boards
-+	/*
-+	 * The 96Boards specification expects a 1.8V power rail on the low-speed
-+	 * expansion connector that is able to provide at least 0.18W / 100 mA.
-+	 * L15/L16 are connected in parallel to provide 55 mA each. A minimum load
-+	 * must be specified to ensure the regulators are not put in LPM where they
-+	 * would only provide 5 mA.
- 	 */
- 	l15 {
- 		regulator-min-microvolt = <1800000>;
- 		regulator-max-microvolt = <1800000>;
-+		regulator-system-load = <50000>;
-+		regulator-allow-set-load;
- 		regulator-always-on;
- 	};
+-static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
+-				    struct drm_bridge_state *old_bridge_state)
++static void sn65dsi83_atomic_pre_enable(struct drm_bridge *bridge,
++					struct drm_bridge_state *old_bridge_state)
+ {
+ 	struct sn65dsi83 *ctx = bridge_to_sn65dsi83(bridge);
+ 	struct drm_atomic_state *state = old_bridge_state->base.state;
+@@ -485,11 +485,22 @@ static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
+ 	/* Trigger reset after CSR register update. */
+ 	regmap_write(ctx->regmap, REG_RC_RESET, REG_RC_RESET_SOFT_RESET);
  
- 	l16 {
- 		regulator-min-microvolt = <1800000>;
--		regulator-max-microvolt = <3300000>;
-+		regulator-max-microvolt = <1800000>;
-+		regulator-system-load = <50000>;
-+		regulator-allow-set-load;
-+		regulator-always-on;
- 	};
++	/* Wait for 10ms after soft reset as specified in datasheet */
++	usleep_range(10000, 12000);
++}
++
++static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
++				    struct drm_bridge_state *old_bridge_state)
++{
++	struct sn65dsi83 *ctx = bridge_to_sn65dsi83(bridge);
++	unsigned int pval;
++
+ 	/* Clear all errors that got asserted during initialization. */
+ 	regmap_read(ctx->regmap, REG_IRQ_STAT, &pval);
+ 	regmap_write(ctx->regmap, REG_IRQ_STAT, pval);
  
- 	l17 {
+-	usleep_range(10000, 12000);
++	/* Wait for 1ms and check for errors in status register */
++	usleep_range(1000, 1100);
+ 	regmap_read(ctx->regmap, REG_IRQ_STAT, &pval);
+ 	if (pval)
+ 		dev_err(ctx->dev, "Unexpected link status 0x%02x\n", pval);
+@@ -556,6 +567,7 @@ static const struct drm_bridge_funcs sn65dsi83_funcs = {
+ 	.attach			= sn65dsi83_attach,
+ 	.detach			= sn65dsi83_detach,
+ 	.atomic_enable		= sn65dsi83_atomic_enable,
++	.atomic_pre_enable	= sn65dsi83_atomic_pre_enable,
+ 	.atomic_disable		= sn65dsi83_atomic_disable,
+ 	.mode_valid		= sn65dsi83_mode_valid,
+ 
+@@ -698,6 +710,7 @@ static int sn65dsi83_probe(struct i2c_client *client)
+ 
+ 	ctx->bridge.funcs = &sn65dsi83_funcs;
+ 	ctx->bridge.of_node = dev->of_node;
++	ctx->bridge.pre_enable_prev_first = true;
+ 	drm_bridge_add(&ctx->bridge);
+ 
+ 	ret = sn65dsi83_host_attach(ctx);
 -- 
 2.39.2
 
