@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6046C8F6D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:22:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64B1C433C8;
-	Sun, 16 Jul 2023 20:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB538F6D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:22:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2580C433C8;
+	Sun, 16 Jul 2023 20:22:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538963;
-	bh=FUuAnzOv50s8PZIxEX+8QPPRrmavaKFDTWKqABI7x5c=;
+	s=korg; t=1689538966;
+	bh=KrIBqy1Ot0TB8Xp0dMdP9cDe8NFmNetwgzdvTQsGgr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NySUcWeg4e42yLoz0G20q6dj/BebuII/CMxJSkRMI4XdANsaKzeELN6WKe1+Y1hId
-	 m6BFwnIwUuPBWg5CRknf6WqRatAX7Brw7IzM9jQpm+BF5xgk2TDRBaKxXkGuvGV16f
-	 Lh365XBwyTCYjPAEyKq9D4cyRlvF1YzxAkSt1KKM=
+	b=gKk44ptJrSmvM0OOSJQBaPcxqusBQzOB3LAE2DbsBQxNfoVvwHca1HKV00ththHp/
+	 wQd1JwEMkqGfPwIZvbLhW6dZtWjcIhPTEx316P2afPKfTJ9BumqZUWkLqsh9G+dstT
+	 qWTzF+AHk6Se1l7+ps3NkYoqvKYMTWRxd016tFv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Luca Weiss <luca@z3ntu.xyz>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 639/800] misc: fastrpc: check return value of devm_kasprintf()
-Date: Sun, 16 Jul 2023 21:48:12 +0200
-Message-ID: <20230716195003.955948935@linuxfoundation.org>
+Subject: [PATCH 6.4 640/800] clk: qcom: mmcc-msm8974: fix MDSS_GDSC power flags
+Date: Sun, 16 Jul 2023 21:48:13 +0200
+Message-ID: <20230716195003.979250326@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -34,37 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit af2e19d82a116bc622eea84c9faadd5f7e20bec4 ]
+[ Upstream commit 4e13c7a55cf752887f2b8d8008711dbbc64ea796 ]
 
-devm_kasprintf() returns a pointer to dynamically allocated memory.
-Pointer could be NULL in case allocation fails. Check pointer validity.
-Identified with coccinelle (kmerr.cocci script).
+Using PWRSTS_RET on msm8974's MDSS_GDSC causes display to stop working.
+The gdsc doesn't fully come out of retention mode. Change it's pwrsts
+flags to PWRSTS_OFF_ON.
 
-Fixes: 3abe3ab3cdab ("misc: fastrpc: add secure domain support")
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230615102546.581899-1-claudiu.beznea@microchip.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d399723950c4 ("clk: qcom: gdsc: Fix the handling of PWRSTS_RET support")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+Tested-by: Luca Weiss <luca@z3ntu.xyz>
+Link: https://lore.kernel.org/r/20230507175335.2321503-2-dmitry.baryshkov@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/fastrpc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/clk/qcom/mmcc-msm8974.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 30d4d0476248f..9051551d99373 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -2225,6 +2225,9 @@ static int fastrpc_device_register(struct device *dev, struct fastrpc_channel_ct
- 	fdev->miscdev.fops = &fastrpc_fops;
- 	fdev->miscdev.name = devm_kasprintf(dev, GFP_KERNEL, "fastrpc-%s%s",
- 					    domain, is_secured ? "-secure" : "");
-+	if (!fdev->miscdev.name)
-+		return -ENOMEM;
-+
- 	err = misc_register(&fdev->miscdev);
- 	if (!err) {
- 		if (is_secured)
+diff --git a/drivers/clk/qcom/mmcc-msm8974.c b/drivers/clk/qcom/mmcc-msm8974.c
+index d2fec5d5b22e2..82f6bad144a9a 100644
+--- a/drivers/clk/qcom/mmcc-msm8974.c
++++ b/drivers/clk/qcom/mmcc-msm8974.c
+@@ -2384,7 +2384,7 @@ static struct gdsc mdss_gdsc = {
+ 	.pd = {
+ 		.name = "mdss",
+ 	},
+-	.pwrsts = PWRSTS_RET_ON,
++	.pwrsts = PWRSTS_OFF_ON,
+ };
+ 
+ static struct gdsc camss_jpeg_gdsc = {
 -- 
 2.39.2
 
