@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F86E8F55
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:40:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72C0C433C8;
-	Sun, 16 Jul 2023 20:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096448F55
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:40:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822A1C433C7;
+	Sun, 16 Jul 2023 20:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540054;
-	bh=andwomOxNVYznthqKl6+TKJI7xc4ylJNYc5tXGc+P00=;
+	s=korg; t=1689540056;
+	bh=E1Tp7pLUqn+2cX9FbA9td496pDIY1nEkO+0u5Pme7e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yipVIvW0WvwZkkEIo3ipxtbH/plkLuLDkBdRuM0gKNym3Ozna8bs78PVD3hufzlpm
-	 wchLNx3T5vOC/zNrJW/b1+IyAaDFliqML1PSjFGvtCW69A6HQjFUouaCGZ9MaIg/z/
-	 ZX8ShHi6WBsSUexuRbsZ4VPAZDtsGHWqoi23o56g=
+	b=md7/WAef9w/NDqLQOLRal28lM/2TK6SR/CeR8XOEk+bFaXppZom9wbEASUYAC8u4l
+	 J1ulHldEwKjU529brauW2by1zZb1wmwsUFfr7rJKGE9LPTOE4CWyhHffJ8cu9SkB99
+	 qvvpq62P3Y7Qt0tn+05ix/Kmgao+KagEE4J23cCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 199/591] arm64: dts: qcom: sdm845: correct camss unit address
-Date: Sun, 16 Jul 2023 21:45:38 +0200
-Message-ID: <20230716194929.021987793@linuxfoundation.org>
+Subject: [PATCH 6.1 200/591] arm64: dts: qcom: sm8350: Add GPI DMA compatible fallback
+Date: Sun, 16 Jul 2023 21:45:39 +0200
+Message-ID: <20230716194929.046683397@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,35 +38,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit a05b913a27e46926ba60ba2bcacc7ec7a8403e4c ]
+[ Upstream commit b561e225dee5412609fd98340ca71ba0ab2e4b36 ]
 
-Match unit-address to reg entry to fix dtbs W=1 warnings:
+Use SM6350 as fallback for GPI DMA, to indicate devices are compatible
+and that drivers can bind with only one compatible.
 
-  Warning (simple_bus_reg): /soc@0/camss@a00000: simple-bus unit address format error, expected "acb3000"
-
-Fixes: d48a6698a6b7 ("arm64: dts: qcom: sdm845: Add CAMSS ISP node")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230419211856.79332-11-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20221018230352.1238479-5-krzysztof.kozlowski@linaro.org
+Stable-dep-of: 41d6bca799b3 ("arm64: dts: qcom: sm8350: correct DMA controller unit address")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index a99eda4971010..6f4cc3329400c 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -4207,7 +4207,7 @@ videocc: clock-controller@ab00000 {
- 			#reset-cells = <1>;
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index ca7c428a741d4..9430166ee45b5 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -678,7 +678,7 @@ ipcc: mailbox@408000 {
  		};
  
--		camss: camss@a00000 {
-+		camss: camss@acb3000 {
- 			compatible = "qcom,sdm845-camss";
+ 		gpi_dma2: dma-controller@800000 {
+-			compatible = "qcom,sm8350-gpi-dma";
++			compatible = "qcom,sm8350-gpi-dma", "qcom,sm6350-gpi-dma";
+ 			reg = <0 0x00800000 0 0x60000>;
+ 			interrupts = <GIC_SPI 588 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 589 IRQ_TYPE_LEVEL_HIGH>,
+@@ -904,7 +904,7 @@ spi19: spi@894000 {
+ 		};
  
- 			reg = <0 0xacb3000 0 0x1000>,
+ 		gpi_dma0: dma-controller@900000 {
+-			compatible = "qcom,sm8350-gpi-dma";
++			compatible = "qcom,sm8350-gpi-dma", "qcom,sm6350-gpi-dma";
+ 			reg = <0 0x09800000 0 0x60000>;
+ 			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
+@@ -1207,7 +1207,7 @@ spi7: spi@99c000 {
+ 		};
+ 
+ 		gpi_dma1: dma-controller@a00000 {
+-			compatible = "qcom,sm8350-gpi-dma";
++			compatible = "qcom,sm8350-gpi-dma", "qcom,sm6350-gpi-dma";
+ 			reg = <0 0x00a00000 0 0x60000>;
+ 			interrupts = <GIC_SPI 279 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 280 IRQ_TYPE_LEVEL_HIGH>,
 -- 
 2.39.2
 
