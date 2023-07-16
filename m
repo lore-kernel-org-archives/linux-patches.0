@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E738F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:20:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE18BC433C7;
-	Sun, 16 Jul 2023 20:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E65A8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:20:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0525C433C7;
+	Sun, 16 Jul 2023 20:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538828;
-	bh=+1hMspF/G9VnTE1U8jAUe9oapUDtIFZeqHZj3czvEns=;
+	s=korg; t=1689538831;
+	bh=ySBpyD4vhc5XOzrhzFV1GKvekQKG/7f60M0NhKX/vMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qyKX0lt9mpZiXMnAV3zQF4102SbufOu0ugWSEYxNMGf4IShQCKaNz+p3khsJC0cp5
-	 mWHGeSbcAtEdAvWP+6jPHJsgU7lFTapKPtGk6na4ZHGzC2tasFgT+a7DNUOiV5gEv7
-	 H8Z9CUDlEfKzoI2kwhPcjr6HcbiIYKQFfAgXSdeg=
+	b=Hh0w2E3qm9Fw2K/SC3au0HSRCdPZGqiKFkKuIVueXqYii/KAQDOMRojWUe+1MRmK/
+	 XxNIvpXz63EaBYYxSfPJlrAKIhOj7/QCm3uBpLSVMFq57Hh/Sv+xLzCTCokvvAAoBQ
+	 pQ2okK/L59bRD0pIMCkVK1oqSeEXuETDM1WMc+yA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mantas Pucka <mantas@8devices.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 563/800] clk: qcom: gcc-ipq6018: Use floor ops for sdcc clocks
-Date: Sun, 16 Jul 2023 21:46:56 +0200
-Message-ID: <20230716195002.165330481@linuxfoundation.org>
+Subject: [PATCH 6.4 590/800] extcon: Fix kernel doc of property fields to avoid warnings
+Date: Sun, 16 Jul 2023 21:47:23 +0200
+Message-ID: <20230716195002.804385825@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,35 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mantas Pucka <mantas@8devices.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 56e5ae0116aef87273cf1812d608645b076e4f02 ]
+[ Upstream commit 7e77e0b7a9f4cdf91cb0950749b40c840ea63efc ]
 
-SDCC clocks must be rounded down to avoid overclocking the controller.
+Kernel documentation has to be synchronized with a code, otherwise
+the validator is not happy:
 
-Fixes: d9db07f088af ("clk: qcom: Add ipq6018 Global Clock Controller support")
-Signed-off-by: Mantas Pucka <mantas@8devices.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/1682413909-24927-1-git-send-email-mantas@8devices.com
+     Function parameter or member 'usb_propval' not described in 'extcon_cable'
+     Function parameter or member 'chg_propval' not described in 'extcon_cable'
+     Function parameter or member 'jack_propval' not described in 'extcon_cable'
+     Function parameter or member 'disp_propval' not described in 'extcon_cable'
+
+Describe the fields added in the past.
+
+Fixes: 067c1652e7a7 ("extcon: Add the support for extcon property according to extcon type")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-ipq6018.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/extcon/extcon.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/clk/qcom/gcc-ipq6018.c b/drivers/clk/qcom/gcc-ipq6018.c
-index 3f9c2f61a5d93..5c5d1b04ea7af 100644
---- a/drivers/clk/qcom/gcc-ipq6018.c
-+++ b/drivers/clk/qcom/gcc-ipq6018.c
-@@ -1654,7 +1654,7 @@ static struct clk_rcg2 sdcc1_apps_clk_src = {
- 		.name = "sdcc1_apps_clk_src",
- 		.parent_data = gcc_xo_gpll0_gpll2_gpll0_out_main_div2,
- 		.num_parents = 4,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_floor_ops,
- 	},
- };
- 
+diff --git a/drivers/extcon/extcon.c b/drivers/extcon/extcon.c
+index d43ba8e7260dd..efaf234582d97 100644
+--- a/drivers/extcon/extcon.c
++++ b/drivers/extcon/extcon.c
+@@ -206,6 +206,10 @@ static const struct __extcon_info {
+  * @attr_name:		"name" sysfs entry
+  * @attr_state:		"state" sysfs entry
+  * @attrs:		the array pointing to attr_name and attr_state for attr_g
++ * @usb_propval:	the array of USB connector properties
++ * @chg_propval:	the array of charger connector properties
++ * @jack_propval:	the array of jack connector properties
++ * @disp_propval:	the array of display connector properties
+  */
+ struct extcon_cable {
+ 	struct extcon_dev *edev;
 -- 
 2.39.2
 
