@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91DE48F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:49:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B82C433C7;
-	Sun, 16 Jul 2023 20:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541248F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:50:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB2DFC433C8;
+	Sun, 16 Jul 2023 20:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540599;
-	bh=aYFIyF4lF9UfaJ/GskV3fQtES6jdTktAb2fzE5Eu/ik=;
+	s=korg; t=1689540602;
+	bh=I/OFoFv17kJnFy4vrXrjKYDJqDnIUd9a4CPtVf08Ftk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cyeDquEkMzjg8Y+jX42LRVx+GEiuEVXUkVZ89BhD0AuisJV951g3yapmI+tZ1oP1y
-	 vIXKe/XkL2ugIbFTayd5TwS5r8Yxn8lA4sCodrrzC9G9Th7Cg2rOdrgTLKHLi/LlYw
-	 64RPrCW5xX9TyDgMDN/QqbVG0Nj3wxH4tFBLXFyY=
+	b=KDuL77QRFchycsxcPAiQEY5+3f/Z4oLrK8Slt8JrS0NK8BmpV+nL3TtDns1KR3b22
+	 kdZqOtvESpsr2Ang6m6/S6TjC/TUs/UaucXy4T4t6gW7oU5R9NK/uX2PWebiKtIFx/
+	 Al5Q15cklVktJlacUeD28fPApXNB9pV1mlKVYCUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <songmuchun@bytedance.com>,
-	Tejun Heo <tj@kernel.org>,
+	Yue Zhao <findns94@gmail.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 420/591] kernfs: fix missing kernfs_idr_lock to remove an ID from the IDR
-Date: Sun, 16 Jul 2023 21:49:19 +0200
-Message-ID: <20230716194934.782207995@linuxfoundation.org>
+Subject: [PATCH 6.1 421/591] lkdtm: replace ll_rw_block with submit_bh
+Date: Sun, 16 Jul 2023 21:49:20 +0200
+Message-ID: <20230716194934.807908043@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,37 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Yue Zhao <findns94@gmail.com>
 
-[ Upstream commit 30480b988f88c279752f3202a26b6fee5f586aef ]
+[ Upstream commit b290df06811852d4cc36f4b8a2a30c2063197a74 ]
 
-The root->ino_idr is supposed to be protected by kernfs_idr_lock, fix
-it.
+Function ll_rw_block was removed in commit 79f597842069 ("fs/buffer:
+remove ll_rw_block() helper"). There is no unified function to sumbit
+read or write buffer in block layer for now. Consider similar sematics,
+we can choose submit_bh() to replace ll_rw_block() as predefined crash
+point. In submit_bh(), it also takes read or write flag as the first
+argument and invoke submit_bio() to submit I/O request to block layer.
 
-Fixes: 488dee96bb62 ("kernfs: allow creating kernfs objects with arbitrary uid/gid")
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20230523024017.24851-1-songmuchun@bytedance.com
+Fixes: 79f597842069 ("fs/buffer: remove ll_rw_block() helper")
+Signed-off-by: Yue Zhao <findns94@gmail.com>
+Acked-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230503162944.3969-1-findns94@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/kernfs/dir.c | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/fault-injection/provoke-crashes.rst | 2 +-
+ drivers/misc/lkdtm/core.c                         | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/kernfs/dir.c b/fs/kernfs/dir.c
-index f33b3baad07cb..44842e6cf0a9b 100644
---- a/fs/kernfs/dir.c
-+++ b/fs/kernfs/dir.c
-@@ -652,7 +652,9 @@ static struct kernfs_node *__kernfs_new_node(struct kernfs_root *root,
- 	return kn;
+diff --git a/Documentation/fault-injection/provoke-crashes.rst b/Documentation/fault-injection/provoke-crashes.rst
+index 3abe842256139..1f087e502ca6d 100644
+--- a/Documentation/fault-injection/provoke-crashes.rst
++++ b/Documentation/fault-injection/provoke-crashes.rst
+@@ -29,7 +29,7 @@ recur_count
+ cpoint_name
+ 	Where in the kernel to trigger the action. It can be
+ 	one of INT_HARDWARE_ENTRY, INT_HW_IRQ_EN, INT_TASKLET_ENTRY,
+-	FS_DEVRW, MEM_SWAPOUT, TIMERADD, SCSI_QUEUE_RQ, or DIRECT.
++	FS_SUBMIT_BH, MEM_SWAPOUT, TIMERADD, SCSI_QUEUE_RQ, or DIRECT.
  
-  err_out3:
-+	spin_lock(&kernfs_idr_lock);
- 	idr_remove(&root->ino_idr, (u32)kernfs_ino(kn));
-+	spin_unlock(&kernfs_idr_lock);
-  err_out2:
- 	kmem_cache_free(kernfs_node_cache, kn);
-  err_out1:
+ cpoint_type
+ 	Indicates the action to be taken on hitting the crash point.
+diff --git a/drivers/misc/lkdtm/core.c b/drivers/misc/lkdtm/core.c
+index b4712ff196b4e..0772e4a4757e9 100644
+--- a/drivers/misc/lkdtm/core.c
++++ b/drivers/misc/lkdtm/core.c
+@@ -79,7 +79,7 @@ static struct crashpoint crashpoints[] = {
+ 	CRASHPOINT("INT_HARDWARE_ENTRY", "do_IRQ"),
+ 	CRASHPOINT("INT_HW_IRQ_EN",	 "handle_irq_event"),
+ 	CRASHPOINT("INT_TASKLET_ENTRY",	 "tasklet_action"),
+-	CRASHPOINT("FS_DEVRW",		 "ll_rw_block"),
++	CRASHPOINT("FS_SUBMIT_BH",		 "submit_bh"),
+ 	CRASHPOINT("MEM_SWAPOUT",	 "shrink_inactive_list"),
+ 	CRASHPOINT("TIMERADD",		 "hrtimer_start"),
+ 	CRASHPOINT("SCSI_QUEUE_RQ",	 "scsi_queue_rq"),
 -- 
 2.39.2
 
