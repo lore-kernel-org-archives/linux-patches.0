@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F318F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:48:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AECBC433C7;
-	Sun, 16 Jul 2023 20:48:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA248F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:48:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1D8C433C7;
+	Sun, 16 Jul 2023 20:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540495;
-	bh=Dr127yvcE77Ap6Ci6GNJeIIif9hHu6W3bkp0B4tEWKg=;
+	s=korg; t=1689540498;
+	bh=PqoHqylkvKeyqihceY6ozM+TZjJhLGixMqK3mvawCsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SnGdoIhJsTvwiqPxIg4kJfLtBhnz/zOsoeRNl4n7RRKHma9+vY0SYpy+mGB7/ekvx
-	 XKEOe57nZk7oKwHDYDqBs65mfIAuP35Ov0btPFV4lPuAVYGS/qgoFb6UfOpZX9mBvd
-	 hWLqyF4c7IaGeXq6dwlywDvxatEeowk5SIG8xnXk=
+	b=VKMxR5huXETh6Kl51JermCuqtRBRH/795MNz+ppvonvmEkfgi8D/ifIC8uUcGY2l3
+	 KYBkkvM6UszH6VrffIJapBOQBbRG1/sDeguwJFIOTlDTR9uMTIWTh8kciN+Oa2shbH
+	 TRBG9fdgOGUoQpBmGFEcvGm9LHBMd8Kg0f/ESxsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Qi Han <hanqi@vivo.com>,
+	Yangtao Li <frank.li@vivo.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 384/591] dt-bindings: power: reset: qcom-pon: Only allow reboot-mode pre-pmk8350
-Date: Sun, 16 Jul 2023 21:48:43 +0200
-Message-ID: <20230716194933.855685517@linuxfoundation.org>
+Subject: [PATCH 6.1 385/591] f2fs: do not allow to defragment files have FI_COMPRESS_RELEASED
+Date: Sun, 16 Jul 2023 21:48:44 +0200
+Message-ID: <20230716194933.881210856@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,50 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Yangtao Li <frank.li@vivo.com>
 
-[ Upstream commit d41dab4c031edaa460a484113394327aa52dc0bd ]
+[ Upstream commit 7cd2e5f75b86a1befa99834f3ed1d735eeff69e6 ]
 
-As pointed out by Shazad [1], PMICs using a separate HLOS+PBS scheme
-(so PMK8350 and newer) are expected to pass reboot mode data through SDAM,
-as the reboot mode registers are absent in the HLOS reg space.
+If a file has FI_COMPRESS_RELEASED, all writes for it should not be
+allowed.
 
-Limit the reboot-mode.yaml inclusion to PMICs without a separate PBS
-region.
-
-[1] https://lore.kernel.org/linux-arm-msm/12f13183-c381-25f7-459e-62e0c2b19498@quicinc.com/
-
-Fixes: 03fccdc76dce ("dt-bindings: power: reset: qcom-pon: Add new compatible "qcom,pmk8350-pon"")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Acked-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 5fdb322ff2c2 ("f2fs: add F2FS_IOC_DECOMPRESS_FILE and F2FS_IOC_COMPRESS_FILE")
+Signed-off-by: Qi Han <hanqi@vivo.com>
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/power/reset/qcom,pon.yaml | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/f2fs/file.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
-index d96170eecbd22..0b1eca734d3b1 100644
---- a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
-+++ b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
-@@ -56,7 +56,6 @@ required:
- unevaluatedProperties: false
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index dbad2db68f1bc..370c40858b42f 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -2588,6 +2588,11 @@ static int f2fs_defragment_range(struct f2fs_sb_info *sbi,
  
- allOf:
--  - $ref: reboot-mode.yaml#
-   - if:
-       properties:
-         compatible:
-@@ -66,6 +65,9 @@ allOf:
-               - qcom,pms405-pon
-               - qcom,pm8998-pon
-     then:
-+      allOf:
-+        - $ref: reboot-mode.yaml#
+ 	inode_lock(inode);
+ 
++	if (is_inode_flag_set(inode, FI_COMPRESS_RELEASED)) {
++		err = -EINVAL;
++		goto unlock_out;
++	}
 +
-       properties:
-         reg:
-           maxItems: 1
+ 	/* if in-place-update policy is enabled, don't waste time here */
+ 	set_inode_flag(inode, FI_OPU_WRITE);
+ 	if (f2fs_should_update_inplace(inode, NULL)) {
+@@ -2712,6 +2717,7 @@ static int f2fs_defragment_range(struct f2fs_sb_info *sbi,
+ 	clear_inode_flag(inode, FI_SKIP_WRITES);
+ out:
+ 	clear_inode_flag(inode, FI_OPU_WRITE);
++unlock_out:
+ 	inode_unlock(inode);
+ 	if (!err)
+ 		range->len = (u64)total << PAGE_SHIFT;
 -- 
 2.39.2
 
