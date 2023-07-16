@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508D78F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:49:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E20C433C7;
-	Sun, 16 Jul 2023 20:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7B38F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:49:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB4AC433C7;
+	Sun, 16 Jul 2023 20:49:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540563;
-	bh=5QApwTPCH18XXVwku9TAguAgPztDNXCF9f0eH1QGCts=;
+	s=korg; t=1689540565;
+	bh=D8ie1eqjMTmf9EzHLT3urpkwADiWirvrQkEpywxft1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AF9RFQtD3l1h4YgizJ9JAoZ5wYT5EgqetCG08iBmnpgFyUXPi2UzWgK9o79Ze9WZq
-	 oy/USrYfgZh1XJBO7w9DpI4h6T+i6oaxFx+RGv3bZFi0Amfab4WLl1JXdjRLWpP30M
-	 1l9MHMiSIhtBGUfPOs9YY4y/WzMIl5HZa1QnF1ig=
+	b=qOYLLYNWw/Bp+DqTzcHmG9WOUUNC0DmdkG1HYxJMnLRpUUjyxlJS+vBcc2KQx29oP
+	 0ESq7ngy6NhZELvr6C2XiYCy3+lFprsqRGU8pd6rE/tJwM99se0ad//xsJcu0xNCCX
+	 +tTKip+Gh9zNpV8cT6GaH5E5Np6dLM5in9py/xxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hersen Wu <hersenxs.wu@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 370/591] Revert "drm/amd/display: edp do not add non-edid timings"
-Date: Sun, 16 Jul 2023 21:48:29 +0200
-Message-ID: <20230716194933.492224780@linuxfoundation.org>
+	Martin Kepplinger <martin.kepplinger@puri.sm>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 401/591] media: hi846: fix usage of pm_runtime_get_if_in_use()
+Date: Sun, 16 Jul 2023 21:49:00 +0200
+Message-ID: <20230716194934.294632536@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,43 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hersen Wu <hersenxs.wu@amd.com>
+From: Martin Kepplinger <martin.kepplinger@puri.sm>
 
-commit d6149086b45e150c170beaa4546495fd1880724c upstream.
+[ Upstream commit 04fc06f6dc1592ed5d675311ac50d8fba5db62ab ]
 
-This change causes regression when eDP and external display in mirror
-mode. When external display supports low resolution than eDP, use eDP
-timing to driver external display may cause corruption on external
-display.
+pm_runtime_get_if_in_use() does not only return nonzero values when
+the device is in use, it can return a negative errno too.
 
-This reverts commit e749dd10e5f292061ad63d2b030194bf7d7d452c.
+And especially during resuming from system suspend, when runtime pm
+is not yet up again, -EAGAIN is being returned, so the subsequent
+pm_runtime_put() call results in a refcount underflow.
 
-Cc: stable@vger.kernel.org
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2655
-Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix system-resume by handling -EAGAIN of pm_runtime_get_if_in_use().
+
+Signed-off-by: Martin Kepplinger <martin.kepplinger@puri.sm>
+Fixes: e8c0882685f9 ("media: i2c: add driver for the SK Hynix Hi-846 8M pixel camera")
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/media/i2c/hi846.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -6972,13 +6972,7 @@ static int amdgpu_dm_connector_get_modes
- 				drm_add_modes_noedid(connector, 640, 480);
- 	} else {
- 		amdgpu_dm_connector_ddc_get_modes(connector, edid);
--		/* most eDP supports only timings from its edid,
--		 * usually only detailed timings are available
--		 * from eDP edid. timings which are not from edid
--		 * may damage eDP
--		 */
--		if (connector->connector_type != DRM_MODE_CONNECTOR_eDP)
--			amdgpu_dm_connector_add_common_modes(encoder, connector);
-+		amdgpu_dm_connector_add_common_modes(encoder, connector);
- 		amdgpu_dm_connector_add_freesync_modes(connector, edid);
+diff --git a/drivers/media/i2c/hi846.c b/drivers/media/i2c/hi846.c
+index 306dc35e925fd..f8709cdf28b39 100644
+--- a/drivers/media/i2c/hi846.c
++++ b/drivers/media/i2c/hi846.c
+@@ -1353,7 +1353,8 @@ static int hi846_set_ctrl(struct v4l2_ctrl *ctrl)
+ 					 exposure_max);
  	}
- 	amdgpu_dm_fbc_init(connector);
+ 
+-	if (!pm_runtime_get_if_in_use(&client->dev))
++	ret = pm_runtime_get_if_in_use(&client->dev);
++	if (!ret || ret == -EAGAIN)
+ 		return 0;
+ 
+ 	switch (ctrl->id) {
+-- 
+2.39.2
+
 
 
