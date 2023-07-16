@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620E88F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:21:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A34C433C9;
-	Sun, 16 Jul 2023 20:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E988F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:21:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C80CC433C7;
+	Sun, 16 Jul 2023 20:21:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538870;
-	bh=Uhk18Bmsbi7YcOKOtaIXMSdyvYyYn1t8ysq/pQrMDmw=;
+	s=korg; t=1689538873;
+	bh=kHPX4Ov12ZRg1jPFlP8ipf2JA6+9RgVxmjQfkcDvdl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ohfC4kiKpzxncpvfFWm5ZOVgnBGob1bsFSMAqcnHAi72jaAcSd429xvTblJka3x2U
-	 j1gyY9b7D0i4rUMphO4MKrbLgtQ6sFJIKP6CT+tFTYIIS0rRvFwAZv2yQ7sNOev04D
-	 RCitnUtQyDRIeTjaClzIO7CgV5xcsLyOgK3vZhE4=
+	b=AkQV0XaCv2W2P9wEm9hWDZ3E+mBHRhRHBmHeMJl0j9DURROi4z9c796CLdkERt7Rk
+	 BbcVlBRn53Jn37UW6TDWFerSa1fkC6X9eaO/Dci+6zRYub9XKsFHztteJ7rIVeRWiw
+	 5Vwp+SuzOV2ObfresHNgbhXK2sfaaIqOA/ur2NbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rikard Falkeborn <rikard.falkeborn@gmail.com>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 606/800] media: venus: helpers: Fix ALIGN() of non power of two
-Date: Sun, 16 Jul 2023 21:47:39 +0200
-Message-ID: <20230716195003.182400066@linuxfoundation.org>
+Subject: [PATCH 6.4 607/800] media: atomisp: gc0310: Fix double free in gc0310_remove()
+Date: Sun, 16 Jul 2023 21:47:40 +0200
+Message-ID: <20230716195003.206062187@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,49 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rikard Falkeborn <rikard.falkeborn@gmail.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 927e78ac8bc58155316cf6f46026e1912bbbbcfc ]
+[ Upstream commit 2746a966f9f05fdb0727f4e1e8f2d51ec79e071d ]
 
-ALIGN() expects its second argument to be a power of 2, otherwise
-incorrect results are produced for some inputs. The output can be
-both larger or smaller than what is expected.
+gc0310_remove() must not call kfree(dev) since the gc0310_device struct
+is devm managed so explicitly freeing it causes a double free.
 
-For example, ALIGN(304, 192) equals 320 instead of 384, and
-ALIGN(65, 192) equals 256 instead of 192.
+While at it add a missing mutex_destroy() call for the input_lock.
 
-However, nestling two ALIGN() as is done in this case seem to only
-produce results equal to or bigger than the expected result if ALIGN()
-had handled non powers of two, and that in turn results in framesizes
-that are either the correct size or too large.
+Link: https://lore.kernel.org/r/20230518153214.194976-6-hdegoede@redhat.com
 
-Fortunately, since 192 * 4 / 3 equals 256, it turns out that one ALIGN()
-is sufficient.
-
-Fixes: ab1eda449c6e ("media: venus: vdec: handle 10bit bitstreams")
-Signed-off-by: Rikard Falkeborn <rikard.falkeborn@gmail.com>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Fixes: 340b4dd6c183 ("media: atomisp: gc0310: Use devm_kzalloc() for data struct")
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/helpers.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/staging/media/atomisp/i2c/atomisp-gc0310.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index a2ceab7f9ddbf..a68389b0aae0a 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -1036,8 +1036,8 @@ static u32 get_framesize_raw_yuv420_tp10_ubwc(u32 width, u32 height)
- 	u32 extradata = SZ_16K;
- 	u32 size;
+diff --git a/drivers/staging/media/atomisp/i2c/atomisp-gc0310.c b/drivers/staging/media/atomisp/i2c/atomisp-gc0310.c
+index 273155308fe36..eb6db1571dc0d 100644
+--- a/drivers/staging/media/atomisp/i2c/atomisp-gc0310.c
++++ b/drivers/staging/media/atomisp/i2c/atomisp-gc0310.c
+@@ -377,8 +377,8 @@ static void gc0310_remove(struct i2c_client *client)
+ 	v4l2_device_unregister_subdev(sd);
+ 	media_entity_cleanup(&dev->sd.entity);
+ 	v4l2_ctrl_handler_free(&dev->ctrls.handler);
++	mutex_destroy(&dev->input_lock);
+ 	pm_runtime_disable(&client->dev);
+-	kfree(dev);
+ }
  
--	y_stride = ALIGN(ALIGN(width, 192) * 4 / 3, 256);
--	uv_stride = ALIGN(ALIGN(width, 192) * 4 / 3, 256);
-+	y_stride = ALIGN(width * 4 / 3, 256);
-+	uv_stride = ALIGN(width * 4 / 3, 256);
- 	y_sclines = ALIGN(height, 16);
- 	uv_sclines = ALIGN((height + 1) >> 1, 16);
- 
+ static int gc0310_probe(struct i2c_client *client)
 -- 
 2.39.2
 
