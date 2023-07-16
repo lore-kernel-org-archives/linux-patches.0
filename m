@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A5E8F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:25:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75657C433C7;
-	Sun, 16 Jul 2023 20:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE06C8F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:25:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF70C433C8;
+	Sun, 16 Jul 2023 20:25:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539136;
-	bh=c6/cVoWe3D6xvjjZbj67L6GpwG/AxSC9d8/WoTiFvZg=;
+	s=korg; t=1689539139;
+	bh=r+FlfAbIP8ckeXSsm9jCb65xvNDiJ0QbOaXot60pAl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lqD70K3+jDZWgvI7j1KqhM8oJ/M0qklZtt//1SZdzLHNpsRigrHZeoPAaLoKU4IBI
-	 rp/ZoxSgWfRPjRjedqDD3np1/nPD380qdmHxv+GzTNUqRelWGBLomYfsiKbkTs7TZx
-	 ROBh4yjN3fSLXKcXV59jEWXug592SqLqKgV3DA7Y=
+	b=k7R23/APGAnD7W7O78xgdbbb5qX0HaQvFBTi5PJuYRUtc65JqJAAzFUya1Nbb8WKo
+	 dUzbeNINBu/DrryHcPJS5gK4sZi+hj7hNXXJrjI84lcX2N5c2JEva3+Qd004v6OUt7
+	 8aeqXjdxRdtxAbuR6bOBMox8L019gkHChN7/a5m8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Woody Zhang <woodylab@foxmail.com>,
-	Song Shuai <songshuaishuai@tinylab.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 701/800] riscv: move memblock_allow_resize() after linear mapping is ready
-Date: Sun, 16 Jul 2023 21:49:14 +0200
-Message-ID: <20230716195005.402728610@linuxfoundation.org>
+Subject: [PATCH 6.4 702/800] pptp: Fix fib lookup calls.
+Date: Sun, 16 Jul 2023 21:49:15 +0200
+Message-ID: <20230716195005.425442143@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,107 +35,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Woody Zhang <woodylab@foxmail.com>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit 85fadc0d04119c2fe4a20287767ab904c6d21ba1 ]
+[ Upstream commit 84bef5b6037c15180ef88ac4216dc621d16df1a6 ]
 
-The initial memblock metadata is accessed from kernel image mapping. The
-regions arrays need to "reallocated" from memblock and accessed through
-linear mapping to cover more memblock regions. So the resizing should
-not be allowed until linear mapping is ready. Note that there are
-memblock allocations when building linear mapping.
+PPTP uses pppox sockets (struct pppox_sock). These sockets don't embed
+an inet_sock structure, so it's invalid to call inet_sk() on them.
 
-This patch is similar to 24cc61d8cb5a ("arm64: memblock: don't permit
-memblock resizing until linear mapping is up").
+Therefore, the ip_route_output_ports() call in pptp_connect() has two
+problems:
 
-In following log, many memblock regions are reserved before
-create_linear_mapping_page_table(). And then it triggered reallocation
-of memblock.reserved.regions and memcpy the old array in kernel image
-mapping to the new array in linear mapping which caused a page fault.
+  * The tos variable is set with RT_CONN_FLAGS(sk), which calls
+    inet_sk() on the pppox socket.
 
-[    0.000000] memblock_reserve: [0x00000000bf01f000-0x00000000bf01ffff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
-[    0.000000] memblock_reserve: [0x00000000bf021000-0x00000000bf021fff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
-[    0.000000] memblock_reserve: [0x00000000bf023000-0x00000000bf023fff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
-[    0.000000] memblock_reserve: [0x00000000bf025000-0x00000000bf025fff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
-[    0.000000] memblock_reserve: [0x00000000bf027000-0x00000000bf027fff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
-[    0.000000] memblock_reserve: [0x00000000bf029000-0x00000000bf029fff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
-[    0.000000] memblock_reserve: [0x00000000bf02b000-0x00000000bf02bfff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
-[    0.000000] memblock_reserve: [0x00000000bf02d000-0x00000000bf02dfff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
-[    0.000000] memblock_reserve: [0x00000000bf02f000-0x00000000bf02ffff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
-[    0.000000] memblock_reserve: [0x00000000bf030000-0x00000000bf030fff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
-[    0.000000] OF: reserved mem: 0x0000000080000000..0x000000008007ffff (512 KiB) map non-reusable mmode_resv0@80000000
-[    0.000000] memblock_reserve: [0x00000000bf000000-0x00000000bf001fed] paging_init+0x19a/0x5ae
-[    0.000000] memblock_phys_alloc_range: 4096 bytes align=0x1000 from=0x0000000000000000 max_addr=0x0000000000000000 alloc_pmd_fixmap+0x14/0x1c
-[    0.000000] memblock_reserve: [0x000000017ffff000-0x000000017fffffff] memblock_alloc_range_nid+0xb8/0x128
-[    0.000000] memblock: reserved is doubled to 256 at [0x000000017fffd000-0x000000017fffe7ff]
-[    0.000000] Unable to handle kernel paging request at virtual address ff600000ffffd000
-[    0.000000] Oops [#1]
-[    0.000000] Modules linked in:
-[    0.000000] CPU: 0 PID: 0 Comm: swapper Not tainted 6.4.0-rc1-00011-g99a670b2069c #66
-[    0.000000] Hardware name: riscv-virtio,qemu (DT)
-[    0.000000] epc : __memcpy+0x60/0xf8
-[    0.000000]  ra : memblock_double_array+0x192/0x248
-[    0.000000] epc : ffffffff8081d214 ra : ffffffff80a3dfc0 sp : ffffffff81403bd0
-[    0.000000]  gp : ffffffff814fbb38 tp : ffffffff8140dac0 t0 : 0000000001600000
-[    0.000000]  t1 : 0000000000000000 t2 : 000000008f001000 s0 : ffffffff81403c60
-[    0.000000]  s1 : ffffffff80c0bc98 a0 : ff600000ffffd000 a1 : ffffffff80c0bcd8
-[    0.000000]  a2 : 0000000000000c00 a3 : ffffffff80c0c8d8 a4 : 0000000080000000
-[    0.000000]  a5 : 0000000000080000 a6 : 0000000000000000 a7 : 0000000080200000
-[    0.000000]  s2 : ff600000ffffd000 s3 : 0000000000002000 s4 : 0000000000000c00
-[    0.000000]  s5 : ffffffff80c0bc60 s6 : ffffffff80c0bcc8 s7 : 0000000000000000
-[    0.000000]  s8 : ffffffff814fd0a8 s9 : 000000017fffe7ff s10: 0000000000000000
-[    0.000000]  s11: 0000000000001000 t3 : 0000000000001000 t4 : 0000000000000000
-[    0.000000]  t5 : 000000008f003000 t6 : ff600000ffffd000
-[    0.000000] status: 0000000200000100 badaddr: ff600000ffffd000 cause: 000000000000000f
-[    0.000000] [<ffffffff8081d214>] __memcpy+0x60/0xf8
-[    0.000000] [<ffffffff80a3e1a2>] memblock_add_range.isra.14+0x12c/0x162
-[    0.000000] [<ffffffff80a3e36a>] memblock_reserve+0x6e/0x8c
-[    0.000000] [<ffffffff80a123fc>] memblock_alloc_range_nid+0xb8/0x128
-[    0.000000] [<ffffffff80a1256a>] memblock_phys_alloc_range+0x5e/0x6a
-[    0.000000] [<ffffffff80a04732>] alloc_pmd_fixmap+0x14/0x1c
-[    0.000000] [<ffffffff80a0475a>] alloc_p4d_fixmap+0xc/0x14
-[    0.000000] [<ffffffff80a04a36>] create_pgd_mapping+0x98/0x17c
-[    0.000000] [<ffffffff80a04e9e>] create_linear_mapping_range.constprop.10+0xe4/0x112
-[    0.000000] [<ffffffff80a05bb8>] paging_init+0x3ec/0x5ae
-[    0.000000] [<ffffffff80a03354>] setup_arch+0xb2/0x576
-[    0.000000] [<ffffffff80a00726>] start_kernel+0x72/0x57e
-[    0.000000] Code: b303 0285 b383 0305 be03 0385 be83 0405 bf03 0485 (b023) 00ef
-[    0.000000] ---[ end trace 0000000000000000 ]---
-[    0.000000] Kernel panic - not syncing: Attempted to kill the idle task!
-[    0.000000] ---[ end Kernel panic - not syncing: Attempted to kill the idle task! ]---
+  * ip_route_output_ports() tries to retrieve routing flags using
+    inet_sk_flowi_flags(), which is also going to call inet_sk() on the
+    pppox socket.
 
-Fixes: 671f9a3e2e24 ("RISC-V: Setup initial page tables in two stages")
-Signed-off-by: Woody Zhang <woodylab@foxmail.com>
-Tested-by: Song Shuai <songshuaishuai@tinylab.org>
-Link: https://lore.kernel.org/r/tencent_FBB94CE615C5CCE7701CD39C15CCE0EE9706@qq.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+While PPTP doesn't use inet sockets, it's actually really layered on
+top of IP and therefore needs a proper way to do fib lookups. So let's
+define pptp_route_output() to get a struct rtable from a pptp socket.
+Let's also replace the ip_route_output_ports() call of pptp_xmit() for
+consistency.
+
+In practice, this means that:
+
+  * pptp_connect() sets ->flowi4_tos and ->flowi4_flags to zero instead
+    of using bits of unrelated struct pppox_sock fields.
+
+  * pptp_xmit() now respects ->sk_mark and ->sk_uid.
+
+  * pptp_xmit() now calls the security_sk_classify_flow() security
+    hook, thus allowing to set ->flowic_secid.
+
+  * pptp_xmit() now passes the pppox socket to xfrm_lookup_route().
+
+Found by code inspection.
+
+Fixes: 00959ade36ac ("PPTP: PPP over IPv4 (Point-to-Point Tunneling Protocol)")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/mm/init.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ppp/pptp.c | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
-diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
-index 4fa420faa7808..1306149aad57a 100644
---- a/arch/riscv/mm/init.c
-+++ b/arch/riscv/mm/init.c
-@@ -267,7 +267,6 @@ static void __init setup_bootmem(void)
- 	dma_contiguous_reserve(dma32_phys_limit);
- 	if (IS_ENABLED(CONFIG_64BIT))
- 		hugetlb_cma_reserve(PUD_SHIFT - PAGE_SHIFT);
--	memblock_allow_resize();
+diff --git a/drivers/net/ppp/pptp.c b/drivers/net/ppp/pptp.c
+index 0fe78826c8fa4..32183f24e63ff 100644
+--- a/drivers/net/ppp/pptp.c
++++ b/drivers/net/ppp/pptp.c
+@@ -24,6 +24,7 @@
+ #include <linux/in.h>
+ #include <linux/ip.h>
+ #include <linux/rcupdate.h>
++#include <linux/security.h>
+ #include <linux/spinlock.h>
+ 
+ #include <net/sock.h>
+@@ -128,6 +129,23 @@ static void del_chan(struct pppox_sock *sock)
+ 	spin_unlock(&chan_lock);
  }
  
- #ifdef CONFIG_MMU
-@@ -1370,6 +1369,9 @@ void __init paging_init(void)
- {
- 	setup_bootmem();
- 	setup_vm_final();
++static struct rtable *pptp_route_output(struct pppox_sock *po,
++					struct flowi4 *fl4)
++{
++	struct sock *sk = &po->sk;
++	struct net *net;
 +
-+	/* Depend on that Linear Mapping is ready */
-+	memblock_allow_resize();
- }
++	net = sock_net(sk);
++	flowi4_init_output(fl4, sk->sk_bound_dev_if, sk->sk_mark, 0,
++			   RT_SCOPE_UNIVERSE, IPPROTO_GRE, 0,
++			   po->proto.pptp.dst_addr.sin_addr.s_addr,
++			   po->proto.pptp.src_addr.sin_addr.s_addr,
++			   0, 0, sock_net_uid(net, sk));
++	security_sk_classify_flow(sk, flowi4_to_flowi_common(fl4));
++
++	return ip_route_output_flow(net, fl4, sk);
++}
++
+ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
+ {
+ 	struct sock *sk = (struct sock *) chan->private;
+@@ -151,11 +169,7 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
+ 	if (sk_pppox(po)->sk_state & PPPOX_DEAD)
+ 		goto tx_error;
  
- void __init misc_mem_init(void)
+-	rt = ip_route_output_ports(net, &fl4, NULL,
+-				   opt->dst_addr.sin_addr.s_addr,
+-				   opt->src_addr.sin_addr.s_addr,
+-				   0, 0, IPPROTO_GRE,
+-				   RT_TOS(0), sk->sk_bound_dev_if);
++	rt = pptp_route_output(po, &fl4);
+ 	if (IS_ERR(rt))
+ 		goto tx_error;
+ 
+@@ -438,12 +452,7 @@ static int pptp_connect(struct socket *sock, struct sockaddr *uservaddr,
+ 	po->chan.private = sk;
+ 	po->chan.ops = &pptp_chan_ops;
+ 
+-	rt = ip_route_output_ports(sock_net(sk), &fl4, sk,
+-				   opt->dst_addr.sin_addr.s_addr,
+-				   opt->src_addr.sin_addr.s_addr,
+-				   0, 0,
+-				   IPPROTO_GRE, RT_CONN_FLAGS(sk),
+-				   sk->sk_bound_dev_if);
++	rt = pptp_route_output(po, &fl4);
+ 	if (IS_ERR(rt)) {
+ 		error = -EHOSTUNREACH;
+ 		goto end;
 -- 
 2.39.2
 
