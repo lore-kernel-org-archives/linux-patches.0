@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E0B8F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:56:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A213C433C8;
-	Sun, 16 Jul 2023 19:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB698F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:56:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3AAEC433C7;
+	Sun, 16 Jul 2023 19:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537392;
-	bh=ufyWANoUa3tQujcGGw+eOLDZOpX9jy6EhI7FxOoyl48=;
+	s=korg; t=1689537395;
+	bh=00uc4VxCqL8jc+ZE1OaIxA9pIsEQhVcCOJ6PtftcSNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cwaqo3Kf3LLzpHOm9EsiefY55GaOYw1BVrvupNm/RVFYfApw9t0VMuk4DqYcTCBkS
-	 LJgVSWqBYoO4HCem8NYMk7VYvA+J3GnRyR6sZSbEoiXKtRJEqIYKuwdpH7wF7MVYTy
-	 SvCt4BX+mvWMhNW5bsPMPpZuLC1ZlUqoovbMtsrs=
+	b=UX3fwp/svO/x9YMY12trom+GZgWiRzG/k7ZT6N0V0CdQjf7M6+CrN6Qh4cObqdkho
+	 6e72MUdTZTGGoXun0/R8/SUDsErvsdh9wD3P+lzz+3fU3JhCclaju5GBeR6+O7FlMb
+	 CqNy0t5TzLRAVFHjxCUZN79DZoYHxsWoVLDW49Aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Maxime Ripard <maxime@cerno.tech>,
+	Peng Fan <peng.fan@nxp.com>,
 	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 079/800] thermal/drivers/sun8i: Fix some error handling paths in sun8i_ths_probe()
-Date: Sun, 16 Jul 2023 21:38:52 +0200
-Message-ID: <20230716194950.941604975@linuxfoundation.org>
+Subject: [PATCH 6.4 080/800] thermal/drivers/qoriq: Only enable supported sensors
+Date: Sun, 16 Jul 2023 21:38:53 +0200
+Message-ID: <20230716194950.964873427@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,141 +35,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 89382022b370dfd34eaae9c863baa123fcd4d132 ]
+[ Upstream commit 9301575df2509ecf8bd66f601046afaff606b1d5 ]
 
-Should an error occur after calling sun8i_ths_resource_init() in the probe
-function, some resources need to be released, as already done in the
-.remove() function.
+There are MAX 16 sensors, but not all of them supported. Such as
+i.MX8MQ, there are only 3 sensors. Enabling all 16 sensors will
+touch reserved bits from i.MX8MQ reference mannual, and TMU will stuck,
+temperature will not update anymore.
 
-Switch to the devm_clk_get_enabled() helper and add a new devm_action to
-turn sun8i_ths_resource_init() into a fully managed function.
-
-Move the place where reset_control_deassert() is called so that the
-recommended order of reset release/clock enable steps is kept.
-A64 manual states that:
-
-	3.3.6.4. Gating and reset
-
-	Make sure that the reset signal has been released before the release of
-	module clock gating;
-
-This fixes the issue and removes some LoC at the same time.
-
-Fixes: dccc5c3b6f30 ("thermal/drivers/sun8i: Add thermal driver for H6/H5/H3/A64/A83T/R40")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Acked-by: Maxime Ripard <maxime@cerno.tech>
+Fixes: 45038e03d633 ("thermal: qoriq: Enable all sensors before registering them")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/a8ae84bd2dc4b55fe428f8e20f31438bf8bb6762.1684089931.git.christophe.jaillet@wanadoo.fr
+Link: https://lore.kernel.org/r/20230516083746.63436-3-peng.fan@oss.nxp.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/sun8i_thermal.c | 55 +++++++++++----------------------
- 1 file changed, 18 insertions(+), 37 deletions(-)
+ drivers/thermal/qoriq_thermal.c | 30 +++++++++++++++++++-----------
+ 1 file changed, 19 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/thermal/sun8i_thermal.c b/drivers/thermal/sun8i_thermal.c
-index 793ddce72132f..d4d241686c810 100644
---- a/drivers/thermal/sun8i_thermal.c
-+++ b/drivers/thermal/sun8i_thermal.c
-@@ -319,6 +319,11 @@ static int sun8i_ths_calibrate(struct ths_device *tmdev)
- 	return ret;
- }
+diff --git a/drivers/thermal/qoriq_thermal.c b/drivers/thermal/qoriq_thermal.c
+index e58756323457e..3eca7085d9efe 100644
+--- a/drivers/thermal/qoriq_thermal.c
++++ b/drivers/thermal/qoriq_thermal.c
+@@ -31,7 +31,6 @@
+ #define TMR_DISABLE	0x0
+ #define TMR_ME		0x80000000
+ #define TMR_ALPF	0x0c000000
+-#define TMR_MSITE_ALL	GENMASK(15, 0)
  
-+static void sun8i_ths_reset_control_assert(void *data)
-+{
-+	reset_control_assert(data);
-+}
+ #define REGS_TMTMIR	0x008	/* Temperature measurement interval Register */
+ #define TMTMIR_DEFAULT	0x0000000f
+@@ -105,6 +104,11 @@ static int tmu_get_temp(struct thermal_zone_device *tz, int *temp)
+ 	 * within sensor range. TEMP is an 9 bit value representing
+ 	 * temperature in KelVin.
+ 	 */
 +
- static int sun8i_ths_resource_init(struct ths_device *tmdev)
++	regmap_read(qdata->regmap, REGS_TMR, &val);
++	if (!(val & TMR_ME))
++		return -EAGAIN;
++
+ 	if (regmap_read_poll_timeout(qdata->regmap,
+ 				     REGS_TRITSR(qsensor->id),
+ 				     val,
+@@ -128,15 +132,7 @@ static const struct thermal_zone_device_ops tmu_tz_ops = {
+ static int qoriq_tmu_register_tmu_zone(struct device *dev,
+ 				       struct qoriq_tmu_data *qdata)
  {
- 	struct device *dev = tmdev->dev;
-@@ -339,47 +344,35 @@ static int sun8i_ths_resource_init(struct ths_device *tmdev)
- 		if (IS_ERR(tmdev->reset))
- 			return PTR_ERR(tmdev->reset);
+-	int id;
+-
+-	if (qdata->ver == TMU_VER1) {
+-		regmap_write(qdata->regmap, REGS_TMR,
+-			     TMR_MSITE_ALL | TMR_ME | TMR_ALPF);
+-	} else {
+-		regmap_write(qdata->regmap, REGS_V2_TMSR, TMR_MSITE_ALL);
+-		regmap_write(qdata->regmap, REGS_TMR, TMR_ME | TMR_ALPF_V2);
+-	}
++	int id, sites = 0;
  
--		tmdev->bus_clk = devm_clk_get(&pdev->dev, "bus");
-+		ret = reset_control_deassert(tmdev->reset);
-+		if (ret)
-+			return ret;
+ 	for (id = 0; id < SITES_MAX; id++) {
+ 		struct thermal_zone_device *tzd;
+@@ -153,14 +149,26 @@ static int qoriq_tmu_register_tmu_zone(struct device *dev,
+ 			if (ret == -ENODEV)
+ 				continue;
+ 
+-			regmap_write(qdata->regmap, REGS_TMR, TMR_DISABLE);
+ 			return ret;
+ 		}
+ 
++		if (qdata->ver == TMU_VER1)
++			sites |= 0x1 << (15 - id);
++		else
++			sites |= 0x1 << id;
 +
-+		ret = devm_add_action_or_reset(dev, sun8i_ths_reset_control_assert,
-+					       tmdev->reset);
-+		if (ret)
-+			return ret;
-+
-+		tmdev->bus_clk = devm_clk_get_enabled(&pdev->dev, "bus");
- 		if (IS_ERR(tmdev->bus_clk))
- 			return PTR_ERR(tmdev->bus_clk);
+ 		if (devm_thermal_add_hwmon_sysfs(dev, tzd))
+ 			dev_warn(dev,
+ 				 "Failed to add hwmon sysfs attributes\n");
++	}
+ 
++	if (sites) {
++		if (qdata->ver == TMU_VER1) {
++			regmap_write(qdata->regmap, REGS_TMR, TMR_ME | TMR_ALPF | sites);
++		} else {
++			regmap_write(qdata->regmap, REGS_V2_TMSR, sites);
++			regmap_write(qdata->regmap, REGS_TMR, TMR_ME | TMR_ALPF_V2);
++		}
  	}
  
- 	if (tmdev->chip->has_mod_clk) {
--		tmdev->mod_clk = devm_clk_get(&pdev->dev, "mod");
-+		tmdev->mod_clk = devm_clk_get_enabled(&pdev->dev, "mod");
- 		if (IS_ERR(tmdev->mod_clk))
- 			return PTR_ERR(tmdev->mod_clk);
- 	}
- 
--	ret = reset_control_deassert(tmdev->reset);
--	if (ret)
--		return ret;
--
--	ret = clk_prepare_enable(tmdev->bus_clk);
--	if (ret)
--		goto assert_reset;
--
- 	ret = clk_set_rate(tmdev->mod_clk, 24000000);
- 	if (ret)
--		goto bus_disable;
--
--	ret = clk_prepare_enable(tmdev->mod_clk);
--	if (ret)
--		goto bus_disable;
-+		return ret;
- 
- 	ret = sun8i_ths_calibrate(tmdev);
- 	if (ret)
--		goto mod_disable;
-+		return ret;
- 
  	return 0;
--
--mod_disable:
--	clk_disable_unprepare(tmdev->mod_clk);
--bus_disable:
--	clk_disable_unprepare(tmdev->bus_clk);
--assert_reset:
--	reset_control_assert(tmdev->reset);
--
--	return ret;
- }
- 
- static int sun8i_h3_thermal_init(struct ths_device *tmdev)
-@@ -530,17 +523,6 @@ static int sun8i_ths_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int sun8i_ths_remove(struct platform_device *pdev)
--{
--	struct ths_device *tmdev = platform_get_drvdata(pdev);
--
--	clk_disable_unprepare(tmdev->mod_clk);
--	clk_disable_unprepare(tmdev->bus_clk);
--	reset_control_assert(tmdev->reset);
--
--	return 0;
--}
--
- static const struct ths_thermal_chip sun8i_a83t_ths = {
- 	.sensor_num = 3,
- 	.scale = 705,
-@@ -642,7 +624,6 @@ MODULE_DEVICE_TABLE(of, of_ths_match);
- 
- static struct platform_driver ths_driver = {
- 	.probe = sun8i_ths_probe,
--	.remove = sun8i_ths_remove,
- 	.driver = {
- 		.name = "sun8i-thermal",
- 		.of_match_table = of_ths_match,
 -- 
 2.39.2
 
