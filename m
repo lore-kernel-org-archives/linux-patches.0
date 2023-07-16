@@ -1,27 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00888F6D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:23:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACB4C433C7;
-	Sun, 16 Jul 2023 20:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975378F6D;
+	Sun, 16 Jul 2023 20:23:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B39C433C8;
+	Sun, 16 Jul 2023 20:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538996;
-	bh=k0TOuhxos0JrL/VOJne01SVXGH/erMui/Lzn2RLo0aE=;
+	s=korg; t=1689538999;
+	bh=h2DqHnEYLipCEUriIhS7YVQK7VOmNl8Us9VrKPHhJNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PAPPmht9IpLooesr2w7YBqYxg62S0K269d9C8VtNpKIRIwqAIEoaD8InIP9pBAl0E
-	 im2kutERchQAuU2HCh9qUBqB1ylBSae82kM4rbhAKdJ97nkHu3odtuEHAOa6xXw2fc
-	 DoHkLZJiscp1gaZRNaBqakxOW2O5+J5EuE50TY8k=
+	b=Ws7TTyhKV1+9txhmI4yHWH5lKvDBL1EOq4rj0CXO6GClNbOaxRIO6l4QE3oNyo4+C
+	 wKU5eYFkNxJA+aiUrMIjYBrWwRbSi6xLCLxkm7nCmwbJQ+gTLz8DeyditILND9mVx1
+	 aO4lhjUBr59LwtATRYhzS1EDSQ4704ht2H8eKrF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	James Clark <james.clark@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Arnaldo Carvalho de Melo <acme@kernel.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Ingo Molnar <mingo@redhat.com>,
+	bpf@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 650/800] md/raid10: fix the condition to call bio_end_io_acct()
-Date: Sun, 16 Jul 2023 21:48:23 +0200
-Message-ID: <20230716195004.212411239@linuxfoundation.org>
+Subject: [PATCH 6.4 651/800] perf bpf: Move the declaration of struct rq
+Date: Sun, 16 Jul 2023 21:48:24 +0200
+Message-ID: <20230716195004.234781377@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,61 +47,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Nan <linan122@huawei.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 125bfc7cd750e68c99f1d446e2c22abea08c237f ]
+[ Upstream commit 5c45b210479bffe068d38902fcdcb52c4c60a264 ]
 
-/sys/block/[device]/queue/iostats is used to control whether to count io
-stat. Write 0 to it will clear queue_flags QUEUE_FLAG_IO_STAT which means
-iostats is disabled. If we disable iostats and later endable it, the io
-issued during this period will be counted incorrectly, inflight will be
-decreased to -1.
+struct rq is defined in vmlinux.h when the vmlinux.h is generated,
+this causes a redefinition failure if it is declared in
+lock_contention.bpf.c. Move the definition to vmlinux.h for
+consistency with the generated version.
 
-  //T1 set iostats
-  echo 0 > /sys/block/md0/queue/iostats
-   clear QUEUE_FLAG_IO_STAT
-
-			//T2 issue io
-			if (QUEUE_FLAG_IO_STAT) -> false
-			 bio_start_io_acct
-			  inflight++
-
-  echo 1 > /sys/block/md0/queue/iostats
-   set QUEUE_FLAG_IO_STAT
-
-					//T3 io end
-					if (QUEUE_FLAG_IO_STAT) -> true
-					 bio_end_io_acct
-					  inflight--	-> -1
-
-Also, if iostats is enabled while issuing io but disabled while io end,
-inflight will never be decreased.
-
-Fix it by checking start_time when io end. If start_time is not 0, call
-bio_end_io_acct().
-
-Fixes: 528bc2cf2fcc ("md/raid10: enable io accounting")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230609094320.2397604-1-linan666@huaweicloud.com
+Fixes: 760ebc45746b ("perf lock contention: Add empty 'struct rq' to satisfy libbpf 'runqueue' type verification")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Cc: James Clark <james.clark@arm.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Yang Jihong <yangjihong1@huawei.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Arnaldo Carvalho de Melo <acme@kernel.org>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: bpf@vger.kernel.org
+Link: https://lore.kernel.org/r/20230623041405.4039475-3-irogers@google.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/bpf_skel/lock_contention.bpf.c |  2 --
+ tools/perf/util/bpf_skel/vmlinux.h             | 10 ++++++++++
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 9d11a52367d17..9d23963496194 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -325,7 +325,7 @@ static void raid_end_bio_io(struct r10bio *r10_bio)
- 	if (!test_bit(R10BIO_Uptodate, &r10_bio->state))
- 		bio->bi_status = BLK_STS_IOERR;
+diff --git a/tools/perf/util/bpf_skel/lock_contention.bpf.c b/tools/perf/util/bpf_skel/lock_contention.bpf.c
+index 1d48226ae75d4..8d3cfbb3cc65b 100644
+--- a/tools/perf/util/bpf_skel/lock_contention.bpf.c
++++ b/tools/perf/util/bpf_skel/lock_contention.bpf.c
+@@ -416,8 +416,6 @@ int contention_end(u64 *ctx)
+ 	return 0;
+ }
  
--	if (blk_queue_io_stat(bio->bi_bdev->bd_disk->queue))
-+	if (r10_bio->start_time)
- 		bio_end_io_acct(bio, r10_bio->start_time);
- 	bio_endio(bio);
- 	/*
+-struct rq {};
+-
+ extern struct rq runqueues __ksym;
+ 
+ struct rq___old {
+diff --git a/tools/perf/util/bpf_skel/vmlinux.h b/tools/perf/util/bpf_skel/vmlinux.h
+index c7ed51b0c1ef9..ab84a6e1da5ee 100644
+--- a/tools/perf/util/bpf_skel/vmlinux.h
++++ b/tools/perf/util/bpf_skel/vmlinux.h
+@@ -171,4 +171,14 @@ struct bpf_perf_event_data_kern {
+ 	struct perf_sample_data *data;
+ 	struct perf_event	*event;
+ } __attribute__((preserve_access_index));
++
++/*
++ * If 'struct rq' isn't defined for lock_contention.bpf.c, for the sake of
++ * rq___old and rq___new, then the type for the 'runqueue' variable ends up
++ * being a forward declaration (BTF_KIND_FWD) while the kernel has it defined
++ * (BTF_KIND_STRUCT). The definition appears in vmlinux.h rather than
++ * lock_contention.bpf.c for consistency with a generated vmlinux.h.
++ */
++struct rq {};
++
+ #endif // __VMLINUX_H
 -- 
 2.39.2
 
