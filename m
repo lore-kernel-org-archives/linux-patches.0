@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060E38F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:33:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BDDEC433C7;
-	Sun, 16 Jul 2023 20:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE348F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:33:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D56C433C7;
+	Sun, 16 Jul 2023 20:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539593;
-	bh=DPDUfakqA+FzFF03aHcXNLyzPtz0bOWAzWYBgjS6PfA=;
+	s=korg; t=1689539596;
+	bh=sq8JrleU2HlsrO4n4XVvFhISa1ZXG2iv1b3qxEqaQIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xi2O4z11dBGgWArF7IOviiQb/x8fLipz88BFbyo3SwWkbl07+BxmIeM0BzvysIGHq
-	 3+PvlgxsbEaWH6fKGW1UQFErw4xpq2mF43Qo6Vx2127oEB8hpeK0uUcL1EPI1inzwK
-	 R8r6Sowkt3npJGLCcWc/zJyLe9fCVZTnoYy8s+lI=
+	b=eq/3daa939HuyVBhZjmw2x+YoawEiHzVdlyZ/ElBAQO4EmWsY88ld+Xo4RX175/Df
+	 2FE/bln1TXHd4gEUHB/QGj25ZYRN3799ZvN9ohvfL7QpqH5YRceAwx2XZk12Wj9B6S
+	 6rwKtUYeRoOo9KCEO3wM5Gbk02u12AgtII5zKuKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kees Cook <keescook@chromium.org>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 062/591] locking/atomic: arm: fix sync ops
-Date: Sun, 16 Jul 2023 21:43:21 +0200
-Message-ID: <20230716194925.484253327@linuxfoundation.org>
+Subject: [PATCH 6.1 063/591] evm: Complete description of evm_inode_setattr()
+Date: Sun, 16 Jul 2023 21:43:22 +0200
+Message-ID: <20230716194925.509794730@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,189 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-[ Upstream commit dda5f312bb09e56e7a1c3e3851f2000eb2e9c879 ]
+[ Upstream commit b1de86d4248b273cb12c4cd7d20c08d459519f7d ]
 
-The sync_*() ops on arch/arm are defined in terms of the regular bitops
-with no special handling. This is not correct, as UP kernels elide
-barriers for the fully-ordered operations, and so the required ordering
-is lost when such UP kernels are run under a hypervsior on an SMP
-system.
+Add the description for missing parameters of evm_inode_setattr() to
+avoid the warning arising with W=n compile option.
 
-Fix this by defining sync ops with the required barriers.
-
-Note: On 32-bit arm, the sync_*() ops are currently only used by Xen,
-which requires ARMv7, but the semantics can be implemented for ARMv6+.
-
-Fixes: e54d2f61528165bb ("xen/arm: sync_bitops")
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230605070124.3741859-2-mark.rutland@arm.com
+Fixes: 817b54aa45db ("evm: add evm_inode_setattr to prevent updating an invalid security.evm") # v3.2+
+Fixes: c1632a0f1120 ("fs: port ->setattr() to pass mnt_idmap") # v6.3+
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/include/asm/assembler.h   | 17 +++++++++++++++++
- arch/arm/include/asm/sync_bitops.h | 29 +++++++++++++++++++++++++----
- arch/arm/lib/bitops.h              | 14 +++++++++++---
- arch/arm/lib/testchangebit.S       |  4 ++++
- arch/arm/lib/testclearbit.S        |  4 ++++
- arch/arm/lib/testsetbit.S          |  4 ++++
- 6 files changed, 65 insertions(+), 7 deletions(-)
+ security/integrity/evm/evm_main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm/include/asm/assembler.h b/arch/arm/include/asm/assembler.h
-index 90fbe4a3f9c84..84912b19cac85 100644
---- a/arch/arm/include/asm/assembler.h
-+++ b/arch/arm/include/asm/assembler.h
-@@ -402,6 +402,23 @@ ALT_UP_B(.L0_\@)
- #endif
- 	.endm
+diff --git a/security/integrity/evm/evm_main.c b/security/integrity/evm/evm_main.c
+index 23d484e05e6f2..f1a26d50c1d58 100644
+--- a/security/integrity/evm/evm_main.c
++++ b/security/integrity/evm/evm_main.c
+@@ -776,7 +776,9 @@ static int evm_attr_change(struct user_namespace *mnt_userns,
  
-+/*
-+ * Raw SMP data memory barrier
-+ */
-+	.macro	__smp_dmb mode
-+#if __LINUX_ARM_ARCH__ >= 7
-+	.ifeqs "\mode","arm"
-+	dmb	ish
-+	.else
-+	W(dmb)	ish
-+	.endif
-+#elif __LINUX_ARM_ARCH__ == 6
-+	mcr	p15, 0, r0, c7, c10, 5	@ dmb
-+#else
-+	.error "Incompatible SMP platform"
-+#endif
-+	.endm
-+
- #if defined(CONFIG_CPU_V7M)
- 	/*
- 	 * setmode is used to assert to be in svc mode during boot. For v7-M
-diff --git a/arch/arm/include/asm/sync_bitops.h b/arch/arm/include/asm/sync_bitops.h
-index 6f5d627c44a3c..f46b3c570f92e 100644
---- a/arch/arm/include/asm/sync_bitops.h
-+++ b/arch/arm/include/asm/sync_bitops.h
-@@ -14,14 +14,35 @@
-  * ops which are SMP safe even on a UP kernel.
-  */
- 
-+/*
-+ * Unordered
-+ */
-+
- #define sync_set_bit(nr, p)		_set_bit(nr, p)
- #define sync_clear_bit(nr, p)		_clear_bit(nr, p)
- #define sync_change_bit(nr, p)		_change_bit(nr, p)
--#define sync_test_and_set_bit(nr, p)	_test_and_set_bit(nr, p)
--#define sync_test_and_clear_bit(nr, p)	_test_and_clear_bit(nr, p)
--#define sync_test_and_change_bit(nr, p)	_test_and_change_bit(nr, p)
- #define sync_test_bit(nr, addr)		test_bit(nr, addr)
--#define arch_sync_cmpxchg		arch_cmpxchg
- 
-+/*
-+ * Fully ordered
-+ */
-+
-+int _sync_test_and_set_bit(int nr, volatile unsigned long * p);
-+#define sync_test_and_set_bit(nr, p)	_sync_test_and_set_bit(nr, p)
-+
-+int _sync_test_and_clear_bit(int nr, volatile unsigned long * p);
-+#define sync_test_and_clear_bit(nr, p)	_sync_test_and_clear_bit(nr, p)
-+
-+int _sync_test_and_change_bit(int nr, volatile unsigned long * p);
-+#define sync_test_and_change_bit(nr, p)	_sync_test_and_change_bit(nr, p)
-+
-+#define arch_sync_cmpxchg(ptr, old, new)				\
-+({									\
-+	__typeof__(*(ptr)) __ret;					\
-+	__smp_mb__before_atomic();					\
-+	__ret = arch_cmpxchg_relaxed((ptr), (old), (new));		\
-+	__smp_mb__after_atomic();					\
-+	__ret;								\
-+})
- 
- #endif
-diff --git a/arch/arm/lib/bitops.h b/arch/arm/lib/bitops.h
-index 95bd359912889..f069d1b2318e6 100644
---- a/arch/arm/lib/bitops.h
-+++ b/arch/arm/lib/bitops.h
-@@ -28,7 +28,7 @@ UNWIND(	.fnend		)
- ENDPROC(\name		)
- 	.endm
- 
--	.macro	testop, name, instr, store
-+	.macro	__testop, name, instr, store, barrier
- ENTRY(	\name		)
- UNWIND(	.fnstart	)
- 	ands	ip, r1, #3
-@@ -38,7 +38,7 @@ UNWIND(	.fnstart	)
- 	mov	r0, r0, lsr #5
- 	add	r1, r1, r0, lsl #2	@ Get word offset
- 	mov	r3, r2, lsl r3		@ create mask
--	smp_dmb
-+	\barrier
- #if __LINUX_ARM_ARCH__ >= 7 && defined(CONFIG_SMP)
- 	.arch_extension	mp
- 	ALT_SMP(W(pldw)	[r1])
-@@ -50,13 +50,21 @@ UNWIND(	.fnstart	)
- 	strex	ip, r2, [r1]
- 	cmp	ip, #0
- 	bne	1b
--	smp_dmb
-+	\barrier
- 	cmp	r0, #0
- 	movne	r0, #1
- 2:	bx	lr
- UNWIND(	.fnend		)
- ENDPROC(\name		)
- 	.endm
-+
-+	.macro	testop, name, instr, store
-+	__testop \name, \instr, \store, smp_dmb
-+	.endm
-+
-+	.macro	sync_testop, name, instr, store
-+	__testop \name, \instr, \store, __smp_dmb
-+	.endm
- #else
- 	.macro	bitop, name, instr
- ENTRY(	\name		)
-diff --git a/arch/arm/lib/testchangebit.S b/arch/arm/lib/testchangebit.S
-index 4ebecc67e6e04..f13fe9bc2399a 100644
---- a/arch/arm/lib/testchangebit.S
-+++ b/arch/arm/lib/testchangebit.S
-@@ -10,3 +10,7 @@
-                 .text
- 
- testop	_test_and_change_bit, eor, str
-+
-+#if __LINUX_ARM_ARCH__ >= 6
-+sync_testop	_sync_test_and_change_bit, eor, str
-+#endif
-diff --git a/arch/arm/lib/testclearbit.S b/arch/arm/lib/testclearbit.S
-index 009afa0f5b4a7..4d2c5ca620ebf 100644
---- a/arch/arm/lib/testclearbit.S
-+++ b/arch/arm/lib/testclearbit.S
-@@ -10,3 +10,7 @@
-                 .text
- 
- testop	_test_and_clear_bit, bicne, strne
-+
-+#if __LINUX_ARM_ARCH__ >= 6
-+sync_testop	_sync_test_and_clear_bit, bicne, strne
-+#endif
-diff --git a/arch/arm/lib/testsetbit.S b/arch/arm/lib/testsetbit.S
-index f3192e55acc87..649dbab65d8d0 100644
---- a/arch/arm/lib/testsetbit.S
-+++ b/arch/arm/lib/testsetbit.S
-@@ -10,3 +10,7 @@
-                 .text
- 
- testop	_test_and_set_bit, orreq, streq
-+
-+#if __LINUX_ARM_ARCH__ >= 6
-+sync_testop	_sync_test_and_set_bit, orreq, streq
-+#endif
+ /**
+  * evm_inode_setattr - prevent updating an invalid EVM extended attribute
++ * @idmap: idmap of the mount
+  * @dentry: pointer to the affected dentry
++ * @attr: iattr structure containing the new file attributes
+  *
+  * Permit update of file attributes when files have a valid EVM signature,
+  * except in the case of them having an immutable portable signature.
 -- 
 2.39.2
 
