@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AC98F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:09:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8EAAC433C7;
-	Sun, 16 Jul 2023 20:09:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FF48F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:09:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A7FC433C8;
+	Sun, 16 Jul 2023 20:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538158;
-	bh=F11Lv/KOcAXa/goDhHh/oGgwOaDND8Cf8UuGclx3iVU=;
+	s=korg; t=1689538160;
+	bh=Xpx9YY6YGd+aohkVd8fMuCNdNsMg5l+Hiqtde0WDD+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y2ja/pKtyr0VEMFPgC0cAWrt1kBJs/z8CGMJh++Cx4fhu3qrqULRorgmWn/F/EDJq
-	 YfK7Fv6P6Yw8t/ZavVdLd3jj6mgoxHQegI1lF+GEndEsw0ChL9BwHiz2rPRZLga0Ws
-	 N8hhoZQLHp2uUWMrv2W2NMBS9Wo8b55/b1dvDVUE=
+	b=UkLee35k7qaC8uuiT1BGMvZE5OaMVCgvM4VyoxcB8AvkqS2mWZKrrqSoh8BlPVRP6
+	 TJgPGq8JZfBlSkH1z6fQPVqofcunVqbhQqUmFvzLWpsxFveBzl1m7rrrksznik0rGQ
+	 ELwztP9br4FekXJdUbEzEOh2/2Xj3VRfvA086wGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Molly Sophia <mollysophia379@gmail.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Stephan Gerhold <stephan@gerhold.net>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 317/800] arm64: dts: qcom: sdm845-polaris: add missing touchscreen child node reg
-Date: Sun, 16 Jul 2023 21:42:50 +0200
-Message-ID: <20230716194956.435343537@linuxfoundation.org>
+Subject: [PATCH 6.4 318/800] arm64: dts: qcom: apq8016-sbc: Fix regulator constraints
+Date: Sun, 16 Jul 2023 21:42:51 +0200
+Message-ID: <20230716194956.458741473@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,37 +36,184 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Stephan Gerhold <stephan@gerhold.net>
 
-[ Upstream commit 4a0156b8862665a3e31c8280607388e3001ace3d ]
+[ Upstream commit e27654df20d77ad7549a3cf6739ebaa3aa59a088 ]
 
-Add missing reg property to touchscreen child node to fix dtbs W=1 warnings:
+For some reason DB410c has completely bogus regulator constraints that
+actually just correspond to the programmable voltages which are already
+provided by the regulator driver. Some of them are not just outside the
+recommended operating conditions of the APQ8016E SoC but even exceed
+the absolute maximum ratings, potentially risking permanent device
+damage.
 
-  Warning (unit_address_vs_reg): /soc@0/geniqup@ac0000/i2c@a98000/touchscreen@20/rmi4-f12@12: node has a unit name, but no reg or ranges property
+In practice it's not quite as dangerous thanks to the RPM firmware:
+It turns out that it has its own voltage constraints and silently
+clamps all regulator requests. For example, requesting 3.3V for L5
+(allowed by the current regulator constraints!) still results in 1.8V
+being programmed in the actual regulator hardware.
 
-Fixes: be497abe19bf ("arm64: dts: qcom: Add support for Xiaomi Mi Mix2s")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Molly Sophia <mollysophia379@gmail.com>
+Experimentation with various voltages shows that the internal RPM
+voltage constraints roughly correspond to the safe "specified range"
+in the PM8916 Device Specification (rather than the "programmable
+range" used inside apq8016-sbc.dtsi right now).
+
+Combine those together with some fixed voltages used in the old
+msm-3.10 device tree from Qualcomm to give DB410c some actually valid
+voltage constraints.
+
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Fixes: 4c7d53d16d77 ("arm64: dts: apq8016-sbc: add regulators support")
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230419211856.79332-18-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20230510-msm8916-regulators-v1-1-54d4960a05fc@gerhold.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts | 64 ++++++++++++------------
+ 1 file changed, 32 insertions(+), 32 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-index 8ae0ffccaab22..576f0421824f4 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-@@ -483,6 +483,7 @@ rmi4-f01@1 {
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+index 59860a2223b83..14cb217a13c1e 100644
+--- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
++++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+@@ -447,21 +447,21 @@ &smd_rpm_regulators {
+ 	vdd_l7-supply = <&pm8916_s4>;
  
- 		rmi4-f12@12 {
-+			reg = <0x12>;
- 			syna,rezero-wait-ms = <0xc8>;
- 			syna,clip-x-high = <0x438>;
- 			syna,clip-y-high = <0x870>;
+ 	s3 {
+-		regulator-min-microvolt = <375000>;
+-		regulator-max-microvolt = <1562000>;
++		regulator-min-microvolt = <1250000>;
++		regulator-max-microvolt = <1350000>;
+ 	};
+ 
+ 	s4 {
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <1800000>;
++		regulator-min-microvolt = <1850000>;
++		regulator-max-microvolt = <2150000>;
+ 
+ 		regulator-always-on;
+ 		regulator-boot-on;
+ 	};
+ 
+ 	l1 {
+-		regulator-min-microvolt = <375000>;
+-		regulator-max-microvolt = <1525000>;
++		regulator-min-microvolt = <1225000>;
++		regulator-max-microvolt = <1225000>;
+ 	};
+ 
+ 	l2 {
+@@ -470,13 +470,13 @@ l2 {
+ 	};
+ 
+ 	l4 {
+-		regulator-min-microvolt = <1750000>;
+-		regulator-max-microvolt = <3337000>;
++		regulator-min-microvolt = <2050000>;
++		regulator-max-microvolt = <2050000>;
+ 	};
+ 
+ 	l5 {
+-		regulator-min-microvolt = <1750000>;
+-		regulator-max-microvolt = <3337000>;
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
+ 	};
+ 
+ 	l6 {
+@@ -485,45 +485,45 @@ l6 {
+ 	};
+ 
+ 	l7 {
+-		regulator-min-microvolt = <1750000>;
+-		regulator-max-microvolt = <3337000>;
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
+ 	};
+ 
+ 	l8 {
+-		regulator-min-microvolt = <1750000>;
+-		regulator-max-microvolt = <3337000>;
++		regulator-min-microvolt = <2900000>;
++		regulator-max-microvolt = <2900000>;
+ 	};
+ 
+ 	l9 {
+-		regulator-min-microvolt = <1750000>;
+-		regulator-max-microvolt = <3337000>;
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
+ 	};
+ 
+ 	l10 {
+-		regulator-min-microvolt = <1750000>;
+-		regulator-max-microvolt = <3337000>;
++		regulator-min-microvolt = <2800000>;
++		regulator-max-microvolt = <2800000>;
+ 	};
+ 
+ 	l11 {
+-		regulator-min-microvolt = <1750000>;
+-		regulator-max-microvolt = <3337000>;
++		regulator-min-microvolt = <2950000>;
++		regulator-max-microvolt = <2950000>;
+ 		regulator-allow-set-load;
+ 		regulator-system-load = <200000>;
+ 	};
+ 
+ 	l12 {
+-		regulator-min-microvolt = <1750000>;
+-		regulator-max-microvolt = <3337000>;
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <2950000>;
+ 	};
+ 
+ 	l13 {
+-		regulator-min-microvolt = <1750000>;
+-		regulator-max-microvolt = <3337000>;
++		regulator-min-microvolt = <3075000>;
++		regulator-max-microvolt = <3075000>;
+ 	};
+ 
+ 	l14 {
+-		regulator-min-microvolt = <1750000>;
+-		regulator-max-microvolt = <3337000>;
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <3300000>;
+ 	};
+ 
+ 	/**
+@@ -531,14 +531,14 @@ l14 {
+ 	 * for mezzanine boards
+ 	 */
+ 	l15 {
+-		regulator-min-microvolt = <1750000>;
+-		regulator-max-microvolt = <3337000>;
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
+ 		regulator-always-on;
+ 	};
+ 
+ 	l16 {
+-		regulator-min-microvolt = <1750000>;
+-		regulator-max-microvolt = <3337000>;
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <3300000>;
+ 	};
+ 
+ 	l17 {
+@@ -547,8 +547,8 @@ l17 {
+ 	};
+ 
+ 	l18 {
+-		regulator-min-microvolt = <1750000>;
+-		regulator-max-microvolt = <3337000>;
++		regulator-min-microvolt = <2700000>;
++		regulator-max-microvolt = <2700000>;
+ 	};
+ };
+ 
 -- 
 2.39.2
 
