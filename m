@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656B58F5D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:51:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC549C433C8;
-	Sun, 16 Jul 2023 20:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FF48F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:51:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC94C433C8;
+	Sun, 16 Jul 2023 20:51:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540669;
-	bh=psR+bjbwNvL14+nreRgGFqbA/qg/06F4bl1HgzGtGns=;
+	s=korg; t=1689540672;
+	bh=dcZe0kwwzgnQiIyhOpmQ+jtE7EzkbofqGzpTj2WWe58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HpafFDvsAuT+htcx74DzV4UTyt/QZvqWFm6nLHBB0rlqPw18ohw5FiTuUPGf1saYi
-	 9oZmx6xb5VPrZ68Fb6p+0F88B3JPB2yXf/N4jCc67dP/kfoCYbKY1c+vhDWu4aN41N
-	 nj5dEiSOFTu5RBTEXzkztOC89se+sEDECv0HZQ5Q=
+	b=WUehK6hVlkfFUrBS46MId2cSBCg0vZsYyGCwow3sYd1mAOJ9wMS0ht4jgN75fwJx2
+	 1aiewUj8J1R7i7MbEwdO3ydfq3bjG/JOhcPxwCRrY/7EDTbfIajCcRVMFxuqQ9gEQI
+	 hbwX+hjvyWd5PdjHjqrngum5JJd327hzzv9fSQUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Amelie Delaunay <amelie.delaunay@foss.st.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 446/591] mfd: stmfx: Fix error path in stmfx_chip_init
-Date: Sun, 16 Jul 2023 21:49:45 +0200
-Message-ID: <20230716194935.447030390@linuxfoundation.org>
+Subject: [PATCH 6.1 447/591] mfd: stmfx: Nullify stmfx->vdd in case of error
+Date: Sun, 16 Jul 2023 21:49:46 +0200
+Message-ID: <20230716194935.473307142@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,34 +37,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Amelie Delaunay <amelie.delaunay@foss.st.com>
 
-[ Upstream commit f592cf624531286f8b52e40dcfc157a5a7fb115c ]
+[ Upstream commit 7c81582c0bccb4757186176f0ee12834597066ad ]
 
-In error path, disable vdd regulator if it exists, but don't overload ret.
-Because if regulator_disable() is successful, stmfx_chip_init will exit
-successfully while chip init failed.
+Nullify stmfx->vdd in case devm_regulator_get_optional() returns an error.
+And simplify code by returning an error only if return code is not -ENODEV,
+which means there is no vdd regulator and it is not an issue.
 
-Fixes: 06252ade9156 ("mfd: Add ST Multi-Function eXpander (STMFX) core driver")
+Fixes: d75846ed08e6 ("mfd: stmfx: Fix dev_err_probe() call in stmfx_chip_init()")
 Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Link: https://lore.kernel.org/r/20230609092804.793100-1-amelie.delaunay@foss.st.com
+Link: https://lore.kernel.org/r/20230609092804.793100-2-amelie.delaunay@foss.st.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/stmfx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mfd/stmfx.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/mfd/stmfx.c b/drivers/mfd/stmfx.c
-index 5dd7d96884596..61a8aad564a4e 100644
+index 61a8aad564a4e..b1ecd85ad2a8a 100644
 --- a/drivers/mfd/stmfx.c
 +++ b/drivers/mfd/stmfx.c
-@@ -387,7 +387,7 @@ static int stmfx_chip_init(struct i2c_client *client)
+@@ -330,9 +330,8 @@ static int stmfx_chip_init(struct i2c_client *client)
+ 	stmfx->vdd = devm_regulator_get_optional(&client->dev, "vdd");
+ 	ret = PTR_ERR_OR_ZERO(stmfx->vdd);
+ 	if (ret) {
+-		if (ret == -ENODEV)
+-			stmfx->vdd = NULL;
+-		else
++		stmfx->vdd = NULL;
++		if (ret != -ENODEV)
+ 			return dev_err_probe(&client->dev, ret, "Failed to get VDD regulator\n");
+ 	}
  
- err:
- 	if (stmfx->vdd)
--		return regulator_disable(stmfx->vdd);
-+		regulator_disable(stmfx->vdd);
- 
- 	return ret;
- }
 -- 
 2.39.2
 
