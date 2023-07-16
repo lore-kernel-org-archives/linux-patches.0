@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5698F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:10:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A35E0C433C8;
-	Sun, 16 Jul 2023 20:10:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4B98F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:10:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8218AC433C7;
+	Sun, 16 Jul 2023 20:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538251;
-	bh=V1aIh/4uBNdWElqBuGBZI+ZpWsYxEObAmq2KGrIKBwA=;
+	s=korg; t=1689538253;
+	bh=frsJeiiVIP81AALRxp/8OqiSqUC6C0yZ+J42aElDjwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VaKTeykkW/XQGcFAAnotJlhlz1g4w7CuJ/KywGdHHc7w+33R60RrpJE7JndCd0dqn
-	 f29r+GbWrowWVN/wha6nadtD8C6myG6oKBqxwSXP11zZTzLYTJTMC3fWGN/gl0IhZi
-	 jepNIj1+Sz4W8CIFyivJDFVUIe9Uu9wNzBKlwHnE=
+	b=dMm4tZ2I8ItXLvNpK42mZANLSDq0AJDuZQIzpBUGayodW1//169Tw/s068c5CmxP9
+	 0IFWQ0vlbcn0bLUSk2YDNsYmKhitxNcl6A3nu+TeQNFaXeqk9skqtLzktVDzkZ+O0L
+	 stovQHuVaHkBZ4GqK7+W3TEIM7BOVIUu1qL7u+0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bosi Zhang <u201911157@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 383/800] clk: mediatek: fix of_iomap memory leak
-Date: Sun, 16 Jul 2023 21:43:56 +0200
-Message-ID: <20230716194957.971100651@linuxfoundation.org>
+Subject: [PATCH 6.4 384/800] arm64: dts: qcom: qdu1000: Flush RSC sleep & wake votes
+Date: Sun, 16 Jul 2023 21:43:57 +0200
+Message-ID: <20230716194957.994208226@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,54 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bosi Zhang <u201911157@hust.edu.cn>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 3db7285e044144fd88a356f5b641b9cd4b231a77 ]
+[ Upstream commit ab033e7846f91953244d0626b28ce66412b813b3 ]
 
-Smatch reports:
-drivers/clk/mediatek/clk-mtk.c:583 mtk_clk_simple_probe() warn:
-    'base' from of_iomap() not released on lines: 496.
+The rpmh driver will cache sleep and wake votes until the cluster
+power-domain is about to enter idle, to avoid unnecessary writes. So
+associate the apps_rsc with the cluster pd, so that it can be notified
+about this event.
 
-This problem was also found in linux-next. In mtk_clk_simple_probe(),
-base is not released when handling errors
-if clk_data is not existed, which may cause a leak.
-So free_base should be added here to release base.
+Without this, only AMC votes are being commited.
 
-Fixes: c58cd0e40ffa ("clk: mediatek: Add mtk_clk_simple_probe() to simplify clock providers")
-Signed-off-by: Bosi Zhang <u201911157@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230422084331.47198-1-u201911157@hust.edu.cn
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 6bd20c54b589 ("arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230531-topic-rsc-v1-3-b4a985f57b8b@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mtk.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/qdu1000.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/mediatek/clk-mtk.c b/drivers/clk/mediatek/clk-mtk.c
-index fd2214c3242f2..3c50f48e93a7b 100644
---- a/drivers/clk/mediatek/clk-mtk.c
-+++ b/drivers/clk/mediatek/clk-mtk.c
-@@ -500,8 +500,10 @@ static int __mtk_clk_simple_probe(struct platform_device *pdev,
- 	num_clks += mcd->num_mux_clks + mcd->num_divider_clks;
+diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+index fb553f0bb17aa..6a6830777d8a8 100644
+--- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
++++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+@@ -1252,6 +1252,7 @@ apps_rsc: rsc@17a00000 {
+ 			qcom,tcs-config = <ACTIVE_TCS    2>, <SLEEP_TCS     3>,
+ 					  <WAKE_TCS      3>, <CONTROL_TCS   0>;
+ 			label = "apps_rsc";
++			power-domains = <&CLUSTER_PD>;
  
- 	clk_data = mtk_alloc_clk_data(num_clks);
--	if (!clk_data)
--		return -ENOMEM;
-+	if (!clk_data) {
-+		r = -ENOMEM;
-+		goto free_base;
-+	}
- 
- 	if (mcd->fixed_clks) {
- 		r = mtk_clk_register_fixed_clks(mcd->fixed_clks,
-@@ -599,6 +601,7 @@ static int __mtk_clk_simple_probe(struct platform_device *pdev,
- 					      mcd->num_fixed_clks, clk_data);
- free_data:
- 	mtk_free_clk_data(clk_data);
-+free_base:
- 	if (mcd->shared_io && base)
- 		iounmap(base);
- 	return r;
+ 			apps_bcm_voter: bcm-voter {
+ 				compatible = "qcom,bcm-voter";
 -- 
 2.39.2
 
