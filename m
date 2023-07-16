@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390838F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:28:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A81C433C8;
-	Sun, 16 Jul 2023 20:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2AD88F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:28:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73BEAC433C9;
+	Sun, 16 Jul 2023 20:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539316;
-	bh=efCbspyroixbJA/CraV/nl7DXydC2xlMfnXf3gnB8+Q=;
+	s=korg; t=1689539318;
+	bh=9FBOnYlV1vOsCEiHdLxBqp2xAsYcouRYRzBJ+cgCiMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dzkXnizzog+cGdIwiHQzc1wcFTzkXfRjvSB7aOw1zc/Amc9ItL0wQC+71tYplfGgn
-	 Se2YL/RZSF4HMM+QGHvzZ0Hgs08wS/zLkh//Ir7S7fYsFTG+Ypx6X5RBZ1B+51E4Rd
-	 1PFw3Jhnuz2Xi51/3UIfTLZcllw4kBTeGq8eh4/E=
+	b=otUauleSnJF+8hBSlUfEeNwKbs9CktPEIDLn0P9ChUHOsfOAfONTCDOw55XiYpeik
+	 iyT81d0NPwSLprwlefJGK1IRSmSojayI1TkbR1/xujEN4aYe/e8X7s5U7BPK1TPkX5
+	 LtcFNO1tS1CDgODtwuQgjPfa15b9UdX5dyfTreJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 765/800] btrfs: do not BUG_ON() on tree mod log failure at __btrfs_cow_block()
-Date: Sun, 16 Jul 2023 21:50:18 +0200
-Message-ID: <20230716195006.919201337@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	stable@kernel.org,
+	Ricardo Ribalda Delgado <ribalda@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.4 766/800] ASoC: mediatek: mt8173: Fix irq error path
+Date: Sun, 16 Jul 2023 21:50:19 +0200
+Message-ID: <20230716195006.942406525@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,44 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Ricardo Ribalda Delgado <ribalda@chromium.org>
 
-commit 40b0a749388517de244643c09bdbb98f7dcb6ef1 upstream.
+commit f9c058d14f4fe23ef523a7ff73734d51c151683c upstream.
 
-At __btrfs_cow_block(), instead of doing a BUG_ON() in case we fail to
-record a tree mod log root insertion operation, do a transaction abort
-instead. There's really no need for the BUG_ON(), we can properly
-release all resources in this context and turn the filesystem to RO mode
-and in an error state instead.
+After reordering the irq probe, the error path was not properly done.
+Lets fix it.
 
-CC: stable@vger.kernel.org # 5.4+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: stable@kernel.org
+Fixes: 4cbb264d4e91 ("ASoC: mediatek: mt8173: Enable IRQ when pdata is ready")
+Signed-off-by: Ricardo Ribalda Delgado <ribalda@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230612-mt8173-fixup-v2-2-432aa99ce24d@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ctree.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ sound/soc/mediatek/mt8173/mt8173-afe-pcm.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/fs/btrfs/ctree.c
-+++ b/fs/btrfs/ctree.c
-@@ -583,9 +583,14 @@ static noinline int __btrfs_cow_block(st
- 		    btrfs_header_backref_rev(buf) < BTRFS_MIXED_BACKREF_REV)
- 			parent_start = buf->start;
+--- a/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
++++ b/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
+@@ -1070,6 +1070,10 @@ static int mt8173_afe_pcm_dev_probe(stru
  
--		atomic_inc(&cow->refs);
- 		ret = btrfs_tree_mod_log_insert_root(root->node, cow, true);
--		BUG_ON(ret < 0);
-+		if (ret < 0) {
-+			btrfs_tree_unlock(cow);
-+			free_extent_buffer(cow);
-+			btrfs_abort_transaction(trans, ret);
-+			return ret;
-+		}
-+		atomic_inc(&cow->refs);
- 		rcu_assign_pointer(root->node, cow);
+ 	afe->dev = &pdev->dev;
  
- 		btrfs_free_tree_block(trans, btrfs_root_id(root), buf,
++	irq_id = platform_get_irq(pdev, 0);
++	if (irq_id <= 0)
++		return irq_id < 0 ? irq_id : -ENXIO;
++
+ 	afe->base_addr = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(afe->base_addr))
+ 		return PTR_ERR(afe->base_addr);
+@@ -1175,14 +1179,11 @@ static int mt8173_afe_pcm_dev_probe(stru
+ 	if (ret)
+ 		goto err_cleanup_components;
+ 
+-	irq_id = platform_get_irq(pdev, 0);
+-	if (irq_id <= 0)
+-		return irq_id < 0 ? irq_id : -ENXIO;
+ 	ret = devm_request_irq(afe->dev, irq_id, mt8173_afe_irq_handler,
+ 			       0, "Afe_ISR_Handle", (void *)afe);
+ 	if (ret) {
+ 		dev_err(afe->dev, "could not request_irq\n");
+-		goto err_pm_disable;
++		goto err_cleanup_components;
+ 	}
+ 
+ 	dev_info(&pdev->dev, "MT8173 AFE driver initialized.\n");
 
 
