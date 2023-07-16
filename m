@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8E98F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:11:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36FEC433C7;
-	Sun, 16 Jul 2023 20:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000A98F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:11:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77E62C433C8;
+	Sun, 16 Jul 2023 20:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538316;
-	bh=rA9VdaFnEnEmgSlQ1VWi6+beP01FCDZyIPfzin2sG/I=;
+	s=korg; t=1689538318;
+	bh=wTRtK6xKP4/nQYyscEZ57AW2dXjCKqpLUrVd7m5Vw64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c8z/Qv1cZ6M/7MPxBHcazWDCnrJR9iZ0FP2bh8DDaZiq2CSafTyvILovJ000CMBpC
-	 eNJRudOSAqSWC25SSd7xoRetE0q3RENQK94f1ISf4Lx+M7xEcdpFjTj80cD0g4Ys2g
-	 4pj8w5KRSHH4ExFLgznYEfvyS/04a6RtjXGlLJAE=
+	b=drVD+hgolfQR0d8/9gucLUxC+/5GK0U9pUvw162b3K9RvInVQDgQ5GGSwc2EXXm0a
+	 eG3WUXne45cVi0WYUq5GSLqgbIUk3JpoxlUQ8WrER4CTL9jhS7Wsnf5O8tGsEQO3jr
+	 F/esWvQ5mX4vWkVLvsi506/bjcsKgrnvOTV3AeW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Marijn Suijten <marijn.suijten@somainline.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 408/800] drm/msm/dpu: Drop unused poll_timeout_wr_ptr PINGPONG callback
-Date: Sun, 16 Jul 2023 21:44:21 +0200
-Message-ID: <20230716194958.548592881@linuxfoundation.org>
+Subject: [PATCH 6.4 409/800] drm/msm/dpu: Move autorefresh disable from CMD encoder to pingpong
+Date: Sun, 16 Jul 2023 21:44:22 +0200
+Message-ID: <20230716194958.572192407@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -38,79 +37,250 @@ Content-Transfer-Encoding: 8bit
 
 From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit a2623e72c52b2cf258b34675a8ff38c66e7d26fb ]
+[ Upstream commit 4a7c38ec7d8efe96c4d8b4d5fc0efb5b06db58e9 ]
 
-This callback was migrated from downstream when DPU1 was first
-introduced to mainline, but never used by any component.  Drop it to
-save some lines and unnecessary confusion.
+This autorefresh disable logic in the physical command-mode encoder
+consumes three callbacks to the pingpong block, and will explode in
+unnecessary complexity when the same callbacks need to be called on the
+interface block instead to accommodate INTF TE support.  To clean this
+up, move the logic into the pingpong block under a disable_autorefresh
+callback, replacing the aforementioned three get_autorefresh,
+setup_autorefresh and get_vsync_info callbacks.
+
+The same logic will have to be replicated to the interface block when it
+receives INTF TE support, but it is less complex than constantly
+switching on a "has_intf_te" boolean to choose a callback.
 
 Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/534215/
-Link: https://lore.kernel.org/r/20230411-dpu-intf-te-v4-12-27ce1a5ab5c6@somainline.org
+Patchwork: https://patchwork.freedesktop.org/patch/534230/
+Link: https://lore.kernel.org/r/20230411-dpu-intf-te-v4-13-27ce1a5ab5c6@somainline.org
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Stable-dep-of: 0b78be614c50 ("drm/msm/dpu: fix sc7280 and sc7180 PINGPONG done interrupts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    | 18 ------------------
- .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h    |  6 ------
- 2 files changed, 24 deletions(-)
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 60 ++-----------------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   | 47 ++++++++++++++-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   | 25 ++------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |  4 ++
+ 4 files changed, 57 insertions(+), 79 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-index 0fcad9760b6fc..b18efd640abd6 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-@@ -144,23 +144,6 @@ static bool dpu_hw_pp_get_autorefresh_config(struct dpu_hw_pingpong *pp,
- 	return !!((val & BIT(31)) >> 31);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+index 74470d068622e..a60fb8d3736b5 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+@@ -36,10 +36,6 @@
+ #define DEFAULT_TEARCHECK_SYNC_THRESH_START	4
+ #define DEFAULT_TEARCHECK_SYNC_THRESH_CONTINUE	4
+ 
+-#define DPU_ENC_WR_PTR_START_TIMEOUT_US 20000
+-
+-#define DPU_ENC_MAX_POLL_TIMEOUT_US	2000
+-
+ static void dpu_encoder_phys_cmd_enable_te(struct dpu_encoder_phys *phys_enc);
+ 
+ static bool dpu_encoder_phys_cmd_is_master(struct dpu_encoder_phys *phys_enc)
+@@ -574,28 +570,8 @@ static void dpu_encoder_phys_cmd_prepare_for_kickoff(
+ 			atomic_read(&phys_enc->pending_kickoff_cnt));
  }
  
--static int dpu_hw_pp_poll_timeout_wr_ptr(struct dpu_hw_pingpong *pp,
--		u32 timeout_us)
+-static bool dpu_encoder_phys_cmd_is_ongoing_pptx(
+-		struct dpu_encoder_phys *phys_enc)
 -{
--	struct dpu_hw_blk_reg_map *c;
--	u32 val;
--	int rc;
+-	struct dpu_hw_pp_vsync_info info;
 -
--	if (!pp)
--		return -EINVAL;
+-	if (!phys_enc)
+-		return false;
 -
--	c = &pp->hw;
--	rc = readl_poll_timeout(c->blk_addr + PP_LINE_COUNT,
--			val, (val & 0xffff) >= 1, 10, timeout_us);
+-	phys_enc->hw_pp->ops.get_vsync_info(phys_enc->hw_pp, &info);
+-	if (info.wr_ptr_line_count > 0 &&
+-	    info.wr_ptr_line_count < phys_enc->cached_mode.vdisplay)
+-		return true;
 -
--	return rc;
+-	return false;
 -}
 -
- static int dpu_hw_pp_enable_te(struct dpu_hw_pingpong *pp, bool enable)
+ static void dpu_encoder_phys_cmd_enable_te(struct dpu_encoder_phys *phys_enc)
  {
- 	struct dpu_hw_blk_reg_map *c;
-@@ -280,7 +263,6 @@ static void _setup_pingpong_ops(struct dpu_hw_pingpong *c,
- 	c->ops.get_vsync_info = dpu_hw_pp_get_vsync_info;
- 	c->ops.setup_autorefresh = dpu_hw_pp_setup_autorefresh_config;
- 	c->ops.get_autorefresh = dpu_hw_pp_get_autorefresh_config;
--	c->ops.poll_timeout_wr_ptr = dpu_hw_pp_poll_timeout_wr_ptr;
+-	struct dpu_encoder_phys_cmd *cmd_enc =
+-		to_dpu_encoder_phys_cmd(phys_enc);
+-	int trial = 0;
+-
+ 	if (!phys_enc)
+ 		return;
+ 	if (!phys_enc->hw_pp)
+@@ -603,37 +579,11 @@ static void dpu_encoder_phys_cmd_enable_te(struct dpu_encoder_phys *phys_enc)
+ 	if (!dpu_encoder_phys_cmd_is_master(phys_enc))
+ 		return;
+ 
+-	/* If autorefresh is already disabled, we have nothing to do */
+-	if (!phys_enc->hw_pp->ops.get_autorefresh(phys_enc->hw_pp, NULL))
+-		return;
+-
+-	/*
+-	 * If autorefresh is enabled, disable it and make sure it is safe to
+-	 * proceed with current frame commit/push. Sequence fallowed is,
+-	 * 1. Disable TE
+-	 * 2. Disable autorefresh config
+-	 * 4. Poll for frame transfer ongoing to be false
+-	 * 5. Enable TE back
+-	 */
+-	_dpu_encoder_phys_cmd_connect_te(phys_enc, false);
+-	phys_enc->hw_pp->ops.setup_autorefresh(phys_enc->hw_pp, 0, false);
+-
+-	do {
+-		udelay(DPU_ENC_MAX_POLL_TIMEOUT_US);
+-		if ((trial * DPU_ENC_MAX_POLL_TIMEOUT_US)
+-				> (KICKOFF_TIMEOUT_MS * USEC_PER_MSEC)) {
+-			DPU_ERROR_CMDENC(cmd_enc,
+-					"disable autorefresh failed\n");
+-			break;
+-		}
+-
+-		trial++;
+-	} while (dpu_encoder_phys_cmd_is_ongoing_pptx(phys_enc));
+-
+-	_dpu_encoder_phys_cmd_connect_te(phys_enc, true);
+-
+-	DPU_DEBUG_CMDENC(to_dpu_encoder_phys_cmd(phys_enc),
+-			 "disabled autorefresh\n");
++	if (phys_enc->hw_pp->ops.disable_autorefresh) {
++		phys_enc->hw_pp->ops.disable_autorefresh(phys_enc->hw_pp,
++							 DRMID(phys_enc->parent),
++							 phys_enc->cached_mode.vdisplay);
++	}
+ }
+ 
+ static int _dpu_encoder_phys_cmd_wait_for_ctl_start(
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+index b18efd640abd6..dea270c0936f4 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+@@ -228,6 +228,49 @@ static u32 dpu_hw_pp_get_line_count(struct dpu_hw_pingpong *pp)
+ 	return line;
+ }
+ 
++static void dpu_hw_pp_disable_autorefresh(struct dpu_hw_pingpong *pp,
++					  uint32_t encoder_id, u16 vdisplay)
++{
++	struct dpu_hw_pp_vsync_info info;
++	int trial = 0;
++
++	/* If autorefresh is already disabled, we have nothing to do */
++	if (!dpu_hw_pp_get_autorefresh_config(pp, NULL))
++		return;
++
++	/*
++	 * If autorefresh is enabled, disable it and make sure it is safe to
++	 * proceed with current frame commit/push. Sequence followed is,
++	 * 1. Disable TE
++	 * 2. Disable autorefresh config
++	 * 4. Poll for frame transfer ongoing to be false
++	 * 5. Enable TE back
++	 */
++
++	dpu_hw_pp_connect_external_te(pp, false);
++	dpu_hw_pp_setup_autorefresh_config(pp, 0, false);
++
++	do {
++		udelay(DPU_ENC_MAX_POLL_TIMEOUT_US);
++		if ((trial * DPU_ENC_MAX_POLL_TIMEOUT_US)
++				> (KICKOFF_TIMEOUT_MS * USEC_PER_MSEC)) {
++			DPU_ERROR("enc%d pp%d disable autorefresh failed\n",
++				  encoder_id, pp->idx - PINGPONG_0);
++			break;
++		}
++
++		trial++;
++
++		dpu_hw_pp_get_vsync_info(pp, &info);
++	} while (info.wr_ptr_line_count > 0 &&
++		 info.wr_ptr_line_count < vdisplay);
++
++	dpu_hw_pp_connect_external_te(pp, true);
++
++	DPU_DEBUG("enc%d pp%d disabled autorefresh\n",
++		  encoder_id, pp->idx - PINGPONG_0);
++}
++
+ static int dpu_hw_pp_dsc_enable(struct dpu_hw_pingpong *pp)
+ {
+ 	struct dpu_hw_blk_reg_map *c = &pp->hw;
+@@ -260,10 +303,8 @@ static void _setup_pingpong_ops(struct dpu_hw_pingpong *c,
+ 	c->ops.setup_tearcheck = dpu_hw_pp_setup_te_config;
+ 	c->ops.enable_tearcheck = dpu_hw_pp_enable_te;
+ 	c->ops.connect_external_te = dpu_hw_pp_connect_external_te;
+-	c->ops.get_vsync_info = dpu_hw_pp_get_vsync_info;
+-	c->ops.setup_autorefresh = dpu_hw_pp_setup_autorefresh_config;
+-	c->ops.get_autorefresh = dpu_hw_pp_get_autorefresh_config;
  	c->ops.get_line_count = dpu_hw_pp_get_line_count;
++	c->ops.disable_autorefresh = dpu_hw_pp_disable_autorefresh;
  	c->ops.setup_dsc = dpu_hw_pp_setup_dsc;
  	c->ops.enable_dsc = dpu_hw_pp_dsc_enable;
+ 	c->ops.disable_dsc = dpu_hw_pp_dsc_disable;
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
-index c00223441d990..cf94b4ab603b5 100644
+index cf94b4ab603b5..851b013c4c4b6 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
-@@ -107,12 +107,6 @@ struct dpu_hw_pingpong_ops {
- 	bool (*get_autorefresh)(struct dpu_hw_pingpong *pp,
- 				u32 *frame_count);
+@@ -61,9 +61,6 @@ struct dpu_hw_dither_cfg {
+  *  Assumption is these functions will be called after clocks are enabled
+  *  @setup_tearcheck : program tear check values
+  *  @enable_tearcheck : enables tear check
+- *  @get_vsync_info : retries timing info of the panel
+- *  @setup_autorefresh : configure and enable the autorefresh config
+- *  @get_autorefresh : retrieve autorefresh config from hardware
+  *  @setup_dither : function to program the dither hw block
+  *  @get_line_count: obtain current vertical line counter
+  */
+@@ -89,28 +86,14 @@ struct dpu_hw_pingpong_ops {
+ 			bool enable_external_te);
  
--	/**
--	 * poll until write pointer transmission starts
--	 * @Return: 0 on success, -ETIMEDOUT on timeout
--	 */
--	int (*poll_timeout_wr_ptr)(struct dpu_hw_pingpong *pp, u32 timeout_us);
--
  	/**
- 	 * Obtain current vertical line counter
+-	 * provides the programmed and current
+-	 * line_count
+-	 */
+-	int (*get_vsync_info)(struct dpu_hw_pingpong *pp,
+-			struct dpu_hw_pp_vsync_info  *info);
+-
+-	/**
+-	 * configure and enable the autorefresh config
+-	 */
+-	void (*setup_autorefresh)(struct dpu_hw_pingpong *pp,
+-				  u32 frame_count, bool enable);
+-
+-	/**
+-	 * retrieve autorefresh config from hardware
++	 * Obtain current vertical line counter
  	 */
+-	bool (*get_autorefresh)(struct dpu_hw_pingpong *pp,
+-				u32 *frame_count);
++	u32 (*get_line_count)(struct dpu_hw_pingpong *pp);
+ 
+ 	/**
+-	 * Obtain current vertical line counter
++	 * Disable autorefresh if enabled
+ 	 */
+-	u32 (*get_line_count)(struct dpu_hw_pingpong *pp);
++	void (*disable_autorefresh)(struct dpu_hw_pingpong *pp, uint32_t encoder_id, u16 vdisplay);
+ 
+ 	/**
+ 	 * Setup dither matix for pingpong block
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+index aca39a4689f48..e7fc67381c2bd 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+@@ -118,6 +118,10 @@ struct vsync_info {
+ 	u32 line_count;
+ };
+ 
++#define DPU_ENC_WR_PTR_START_TIMEOUT_US 20000
++
++#define DPU_ENC_MAX_POLL_TIMEOUT_US	2000
++
+ #define to_dpu_kms(x) container_of(x, struct dpu_kms, base)
+ 
+ #define to_dpu_global_state(x) container_of(x, struct dpu_global_state, base)
 -- 
 2.39.2
 
