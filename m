@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6761D8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:26:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A22AC433C7;
-	Sun, 16 Jul 2023 20:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9748F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:26:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6071C433C8;
+	Sun, 16 Jul 2023 20:26:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539217;
-	bh=17Ifbts8QW9KEUGf80N5/Da3hggWorhsoIEWwn0omTA=;
+	s=korg; t=1689539215;
+	bh=/r9coQI/c86bfz2AzFJBAcdPN/2Tw5gNz52TjejPKc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vSbBS9XvVL/p9yWubylQ1s44o3RsA4UfPx8N3cVMiNS28Yr5BG69kEerFa0P1m+WJ
-	 tAhtiHF+ORNYPOUjv+dZA1fV9ERBrvxIJJdwiW+gBfdmQGXZSI70IdtsoeUQ9mFGfw
-	 74spjiXYESlz8R4WH2B+ZVZYV2KHP+q0zZScwGKs=
+	b=cDPzBuAW0BRGMuEnepMqNMF24y39d/7GiH7tFi7QcQJACTujAiOw12s84oUMa3iN4
+	 jh41tNxRDX+D7M12x3hY0uJ/wWD7abMMqrj1SGLKiu3Q0ocp8+I+eMnG7eckImy7Hp
+	 LQXNUuZg8S2YHUEJtSTPlRL9+XLmzpf7RFGl+hAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.4 730/800] wifi: cfg80211: fix regulatory disconnect for non-MLO
-Date: Sun, 16 Jul 2023 21:49:43 +0200
-Message-ID: <20230716195006.074433484@linuxfoundation.org>
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Liu Peibao <liupeibao@loongson.cn>,
+	Jianmin Lv <lvjianmin@loongson.cn>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.4 721/800] irqchip/loongson-pch-pic: Fix potential incorrect hwirq assignment
+Date: Sun, 16 Jul 2023 21:49:34 +0200
+Message-ID: <20230716195005.866220856@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -33,38 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Liu Peibao <liupeibao@loongson.cn>
 
-commit b22552fcaf1970360005c805d7fba4046cf2ab4a upstream.
+commit 783422e704ca0fa41cb2fe9ed79e46b6fe7eae29 upstream.
 
-The multi-link loop here broke disconnect when multi-link
-operation (MLO) isn't active for a given interface, since
-in that case valid_links is 0 (indicating no links, i.e.
-no MLO.)
+In DeviceTree path, when ht_vec_base is not zero, the hwirq of PCH PIC
+will be assigned incorrectly. Because when pch_pic_domain_translate()
+adds the ht_vec_base to hwirq, the hwirq does not have the ht_vec_base
+subtracted when calling irq_domain_set_info().
 
-Fix this by taking that into account properly and skipping
-the link only if there are valid_links in the first place.
+The ht_vec_base is designed for the parent irq chip/domain of the PCH PIC.
+It seems not proper to deal this in callbacks of the PCH PIC domain and
+let's put this back like the initial commit ef8c01eb64ca ("irqchip: Add
+Loongson PCH PIC controller").
 
+Fixes: bcdd75c596c8 ("irqchip/loongson-pch-pic: Add ACPI init support")
 Cc: stable@vger.kernel.org
-Fixes: 7b0a0e3c3a88 ("wifi: cfg80211: do some rework towards MLO link APIs")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://lore.kernel.org/r/20230616222844.eb073d650c75.I72739923ef80919889ea9b50de9e4ba4baa836ae@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Liu Peibao <liupeibao@loongson.cn>
+Signed-off-by: Jianmin Lv <lvjianmin@loongson.cn>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230614115936.5950-3-lvjianmin@loongson.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/reg.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/irqchip/irq-loongson-pch-pic.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/wireless/reg.c
-+++ b/net/wireless/reg.c
-@@ -2352,7 +2352,7 @@ static bool reg_wdev_chan_valid(struct w
+--- a/drivers/irqchip/irq-loongson-pch-pic.c
++++ b/drivers/irqchip/irq-loongson-pch-pic.c
+@@ -164,7 +164,7 @@ static int pch_pic_domain_translate(stru
+ 		if (fwspec->param_count < 2)
+ 			return -EINVAL;
  
- 		if (!wdev->valid_links && link > 0)
- 			break;
--		if (!(wdev->valid_links & BIT(link)))
-+		if (wdev->valid_links && !(wdev->valid_links & BIT(link)))
- 			continue;
- 		switch (iftype) {
- 		case NL80211_IFTYPE_AP:
+-		*hwirq = fwspec->param[0] + priv->ht_vec_base;
++		*hwirq = fwspec->param[0];
+ 		*type = fwspec->param[1] & IRQ_TYPE_SENSE_MASK;
+ 	} else {
+ 		if (fwspec->param_count < 1)
+@@ -196,7 +196,7 @@ static int pch_pic_alloc(struct irq_doma
+ 
+ 	parent_fwspec.fwnode = domain->parent->fwnode;
+ 	parent_fwspec.param_count = 1;
+-	parent_fwspec.param[0] = hwirq;
++	parent_fwspec.param[0] = hwirq + priv->ht_vec_base;
+ 
+ 	err = irq_domain_alloc_irqs_parent(domain, virq, 1, &parent_fwspec);
+ 	if (err)
 
 
