@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91EC8F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:27:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C1A3C433C8;
-	Sun, 16 Jul 2023 20:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 904D68F7D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:27:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B47C433C7;
+	Sun, 16 Jul 2023 20:27:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539243;
-	bh=O5o3b4gcUFWn+/ktM9C3pTBLd3cgRLIVvrL8KTk/yoQ=;
+	s=korg; t=1689539246;
+	bh=q4gBomRWSHlLu2mgdTVXvd7/P42V9agy63QCWCx4iHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r7HOzUYL+OgKUmB4gq9sN1XkDgWjjsk+rRV4ajOPxCnYrry7pfbq5CVA0+x6xWlcN
-	 5/7JNnAAL8BSHwkeLC6xnuW/HjJNBPKZL9pXoeJT3XGlQlXbLBbXGnjVET3+GLSBrz
-	 UYYHx8ESDyGopWXJ0n4r9HZ1hoD11YpnCqLEit8M=
+	b=yr6dZdoZi9Z68TFyalNXZB7RaKBms0MfgO1sX1cUyP7YieCRTQiVj627vrDs5Pvj6
+	 74g/Q5vybM7ed1K/YyWs9m4NmcSLXgIn1CeEdDUkA8eThsAlS3dLjwzd4gnmOgC6Jn
+	 mav7jGZfESf9Kxv/1ScAZaW7LoJO17uxFLq4efbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianjia Zhang <tianjia.zhang@linux.alibaba.com>,
-	Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 6.4 739/800] integrity: Fix possible multiple allocation in integrity_inode_get()
-Date: Sun, 16 Jul 2023 21:49:52 +0200
-Message-ID: <20230716195006.282244093@linuxfoundation.org>
+	Dai Ngo <dai.ngo@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.4 722/800] NFSD: add encoding of op_recall flag for write delegation
+Date: Sun, 16 Jul 2023 21:49:35 +0200
+Message-ID: <20230716195005.888785217@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,62 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-commit 9df6a4870dc371136e90330cfbbc51464ee66993 upstream.
+commit 58f5d894006d82ed7335e1c37182fbc5f08c2f51 upstream.
 
-When integrity_inode_get() is querying and inserting the cache, there
-is a conditional race in the concurrent environment.
+Modified nfsd4_encode_open to encode the op_recall flag properly
+for OPEN result with write delegation granted.
 
-The race condition is the result of not properly implementing
-"double-checked locking". In this case, it first checks to see if the
-iint cache record exists before taking the lock, but doesn't check
-again after taking the integrity_iint_lock.
-
-Fixes: bf2276d10ce5 ("ima: allocating iint improvements")
-Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
-Cc: Dmitry Kasatkin <dmitry.kasatkin@gmail.com>
-Cc: <stable@vger.kernel.org> # v3.10+
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/iint.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ fs/nfsd/nfs4xdr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/security/integrity/iint.c
-+++ b/security/integrity/iint.c
-@@ -43,12 +43,10 @@ static struct integrity_iint_cache *__in
- 		else if (inode > iint->inode)
- 			n = n->rb_right;
- 		else
--			break;
-+			return iint;
- 	}
--	if (!n)
--		return NULL;
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -3956,7 +3956,7 @@ nfsd4_encode_open(struct nfsd4_compoundr
+ 		p = xdr_reserve_space(xdr, 32);
+ 		if (!p)
+ 			return nfserr_resource;
+-		*p++ = cpu_to_be32(0);
++		*p++ = cpu_to_be32(open->op_recall);
  
--	return iint;
-+	return NULL;
- }
- 
- /*
-@@ -113,10 +111,15 @@ struct integrity_iint_cache *integrity_i
- 		parent = *p;
- 		test_iint = rb_entry(parent, struct integrity_iint_cache,
- 				     rb_node);
--		if (inode < test_iint->inode)
-+		if (inode < test_iint->inode) {
- 			p = &(*p)->rb_left;
--		else
-+		} else if (inode > test_iint->inode) {
- 			p = &(*p)->rb_right;
-+		} else {
-+			write_unlock(&integrity_iint_lock);
-+			kmem_cache_free(iint_cache, iint);
-+			return test_iint;
-+		}
- 	}
- 
- 	iint->inode = inode;
+ 		/*
+ 		 * TODO: space_limit's in delegations
 
 
