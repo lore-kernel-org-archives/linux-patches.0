@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13C39442
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:59:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6DEC433CB;
-	Sun, 16 Jul 2023 19:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30DC9442
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:59:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4671FC433C8;
+	Sun, 16 Jul 2023 19:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537588;
-	bh=P5n6vrhK8gYC0Go8G7Ou+8N9VkeXprPXCA1VtA/QWXY=;
+	s=korg; t=1689537591;
+	bh=rTzKhQTKx3K9M/sdAMsUbVcPFIgeaZbAXQqdkXyp330=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tPbgJWkK0i7YiJkArXnUrAfnDvqAy2MqVakhcD9PpfsM/VqNXwPScTQ6ONb1muYlT
-	 QvZI4HBSkonEMl9j4+KjnuXtKyBeGLMbi92u3Lbzsm90cP8Tb7dmmwIW9RNQq8Rr8a
-	 QZ2Z2fhuQokF2tCDvnrOz6wntsaRgsfjJkI+G0Ys=
+	b=SsCM7wDa98xkZH8Ga13HD2Yt0emPxkejgrI/3pLkqovq5lfz4cBC9ai515ZgpRIIp
+	 As3pf5e5/uOhzzQykeK9SgS/90ZdQsNttdlOF6siV7nKJ4NXraI8tAMC6dBQkeY4Gj
+	 4tmJW/jbIVHEPX55mXgPWo8+Ph7vCgHyra/F54GI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Cree <ecree.xilinx@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Lennart Poettering <lennart@poettering.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Yonghong Song <yhs@fb.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 120/800] sfc: release encap match in efx_tc_flow_free()
-Date: Sun, 16 Jul 2023 21:39:33 +0200
-Message-ID: <20230716194951.894731334@linuxfoundation.org>
+Subject: [PATCH 6.4 121/800] libbpf: fix offsetof() and container_of() to work with CO-RE
+Date: Sun, 16 Jul 2023 21:39:34 +0200
+Message-ID: <20230716194951.917244816@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,78 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edward Cree <ecree.xilinx@gmail.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 28fa3ac487c6d30aaa10570481c27b6adfc492b3 ]
+[ Upstream commit bdeeed3498c7871c17465bb4f11d1bc67f9098af ]
 
-When force-freeing leftover entries from our match_action_ht, call
- efx_tc_delete_rule(), which releases all the rule's resources, rather
- than open-coding it.  The open-coded version was missing a call to
- release the rule's encap match (if any).
-It probably doesn't matter as everything's being torn down anyway, but
- it's cleaner this way and prevents further error messages potentially
- being logged by efx_tc_encap_match_free() later on.
-Move efx_tc_flow_free() further down the file to avoid introducing a
- forward declaration of efx_tc_delete_rule().
+It seems like __builtin_offset() doesn't preserve CO-RE field
+relocations properly. So if offsetof() macro is defined through
+__builtin_offset(), CO-RE-enabled BPF code using container_of() will be
+subtly and silently broken.
 
-Fixes: 17654d84b47c ("sfc: add offloading of 'foreign' TC (decap) rules")
-Signed-off-by: Edward Cree <ecree.xilinx@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+To avoid this problem, redefine offsetof() and container_of() in the
+form that works with CO-RE relocations more reliably.
+
+Fixes: 5fbc220862fc ("tools/libpf: Add offsetof/container_of macro in bpf_helpers.h")
+Reported-by: Lennart Poettering <lennart@poettering.net>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Yonghong Song <yhs@fb.com>
+Link: https://lore.kernel.org/r/20230509065502.2306180-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/tc.c | 32 +++++++++++++++-----------------
- 1 file changed, 15 insertions(+), 17 deletions(-)
+ tools/lib/bpf/bpf_helpers.h | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/sfc/tc.c b/drivers/net/ethernet/sfc/tc.c
-index c004443c1d58c..d7827ab3761f9 100644
---- a/drivers/net/ethernet/sfc/tc.c
-+++ b/drivers/net/ethernet/sfc/tc.c
-@@ -132,23 +132,6 @@ static void efx_tc_free_action_set_list(struct efx_nic *efx,
- 	/* Don't kfree, as acts is embedded inside a struct efx_tc_flow_rule */
- }
+diff --git a/tools/lib/bpf/bpf_helpers.h b/tools/lib/bpf/bpf_helpers.h
+index 929a3baca8ef3..bbab9ad9dc5a7 100644
+--- a/tools/lib/bpf/bpf_helpers.h
++++ b/tools/lib/bpf/bpf_helpers.h
+@@ -77,16 +77,21 @@
+ /*
+  * Helper macros to manipulate data structures
+  */
+-#ifndef offsetof
+-#define offsetof(TYPE, MEMBER)	((unsigned long)&((TYPE *)0)->MEMBER)
+-#endif
+-#ifndef container_of
++
++/* offsetof() definition that uses __builtin_offset() might not preserve field
++ * offset CO-RE relocation properly, so force-redefine offsetof() using
++ * old-school approach which works with CO-RE correctly
++ */
++#undef offsetof
++#define offsetof(type, member)	((unsigned long)&((type *)0)->member)
++
++/* redefined container_of() to ensure we use the above offsetof() macro */
++#undef container_of
+ #define container_of(ptr, type, member)				\
+ 	({							\
+ 		void *__mptr = (void *)(ptr);			\
+ 		((type *)(__mptr - offsetof(type, member)));	\
+ 	})
+-#endif
  
--static void efx_tc_flow_free(void *ptr, void *arg)
--{
--	struct efx_tc_flow_rule *rule = ptr;
--	struct efx_nic *efx = arg;
--
--	netif_err(efx, drv, efx->net_dev,
--		  "tc rule %lx still present at teardown, removing\n",
--		  rule->cookie);
--
--	efx_mae_delete_rule(efx, rule->fw_id);
--
--	/* Release entries in subsidiary tables */
--	efx_tc_free_action_set_list(efx, &rule->acts, true);
--
--	kfree(rule);
--}
--
- /* Boilerplate for the simple 'copy a field' cases */
- #define _MAP_KEY_AND_MASK(_name, _type, _tcget, _tcfield, _field)	\
- if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_##_name)) {		\
-@@ -1451,6 +1434,21 @@ static void efx_tc_encap_match_free(void *ptr, void *__unused)
- 	kfree(encap);
- }
- 
-+static void efx_tc_flow_free(void *ptr, void *arg)
-+{
-+	struct efx_tc_flow_rule *rule = ptr;
-+	struct efx_nic *efx = arg;
-+
-+	netif_err(efx, drv, efx->net_dev,
-+		  "tc rule %lx still present at teardown, removing\n",
-+		  rule->cookie);
-+
-+	/* Also releases entries in subsidiary tables */
-+	efx_tc_delete_rule(efx, rule);
-+
-+	kfree(rule);
-+}
-+
- int efx_init_struct_tc(struct efx_nic *efx)
- {
- 	int rc;
+ /*
+  * Compiler (optimization) barrier.
 -- 
 2.39.2
 
