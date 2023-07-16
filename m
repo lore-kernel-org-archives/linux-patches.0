@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AEA78F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:50:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCBBC433C8;
-	Sun, 16 Jul 2023 20:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F014D8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:51:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7576DC433C7;
+	Sun, 16 Jul 2023 20:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540657;
-	bh=FISp+/7jh8TA3yVCR71QOZDw5MPMquYEOVGRdKn/YRM=;
+	s=korg; t=1689540660;
+	bh=UDFHIa//qAXE0YJ441616BDGSkFA+R0YV+9DQ3865zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BstQ22ARVk+TKu8GI5qccudWnvVdz4mgxkyyQHyg0CLGJP9Y5vS6UgmY0Cf8H413O
-	 QtJX1PndNJQr3Nn/yyWwzbKWxnX50U6IZgIbUEWwKialmcbSqLIjPW18K75E4F7+nD
-	 ohexIvVXWdFotYB8wPKB8gfFR5foLAlpjpwdj3vM=
+	b=s7sBG22C7GLIxwEAfK2OORCKiqLVpejQ/8Gpw1DshEVvrzG7kPFCJrFyP9cBjjjT6
+	 ZSL1zTdx5X/WxFJpjx8bDSGferCVBVJ7N7b3qRCmmWFeEkhNxRclsHOtKpQEt4K2hV
+	 igF09wfe2X1xVRapXavLcGk8tlH1y35D3zfo36i8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Yi Yingao <m202271736@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 442/591] drivers: fwnode: fix fwnode_irq_get[_byname]()
-Date: Sun, 16 Jul 2023 21:49:41 +0200
-Message-ID: <20230716194935.345323234@linuxfoundation.org>
+Subject: [PATCH 6.1 443/591] nvmem: sunplus-ocotp: release otp->clk before return
+Date: Sun, 16 Jul 2023 21:49:42 +0200
+Message-ID: <20230716194935.370435109@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,73 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Yi Yingao <m202271736@hust.edu.cn>
 
-[ Upstream commit 39d422555e43379516d4d13f5b7162a3dee6e646 ]
+[ Upstream commit 095bb8ba45f28ed15296eb5b7662e03e57d5e34e ]
 
-The fwnode_irq_get() and the fwnode_irq_get_byname() return 0 upon
-device-tree IRQ mapping failure. This is contradicting the
-fwnode_irq_get_byname() function documentation and can potentially be a
-source of errors like:
+Smatch reports:
+drivers/nvmem/sunplus-ocotp.c:205 sp_ocotp_probe()
+warn: 'otp->clk' from clk_prepare() not released on lines: 196.
 
-int probe(...) {
-	...
+In the function sp_ocotp_probe(struct platform_device *pdev), otp->clk may
+not be released before return.
 
-	irq = fwnode_irq_get_byname();
-	if (irq <= 0)
-		return irq;
+To fix this issue, using function clk_unprepare() to release otp->clk.
 
-	...
-}
-
-Here we do correctly check the return value from fwnode_irq_get_byname()
-but the driver probe will now return success. (There was already one
-such user in-tree).
-
-Change the fwnode_irq_get_byname() to work as documented and make also the
-fwnode_irq_get() follow same common convention returning a negative errno
-upon failure.
-
-Fixes: ca0acb511c21 ("device property: Add fwnode_irq_get_byname")
-Suggested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Suggested-by: Jonathan Cameron <jic23@kernel.org>
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
-Message-ID: <3e64fe592dc99e27ef9a0b247fc49fa26b6b8a58.1685340157.git.mazziesaccount@gmail.com>
+Fixes: 8747ec2e9762 ("nvmem: Add driver for OCOTP in Sunplus SP7021")
+Signed-off-by: Yi Yingao <m202271736@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Message-ID: <20230509085237.5917-1-m202271736@hust.edu.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/property.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/nvmem/sunplus-ocotp.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/property.c b/drivers/base/property.c
-index 868adeac2a843..b0c40d9734847 100644
---- a/drivers/base/property.c
-+++ b/drivers/base/property.c
-@@ -979,12 +979,18 @@ EXPORT_SYMBOL(fwnode_iomap);
-  * @fwnode:	Pointer to the firmware node
-  * @index:	Zero-based index of the IRQ
-  *
-- * Return: Linux IRQ number on success. Other values are determined
-- * according to acpi_irq_get() or of_irq_get() operation.
-+ * Return: Linux IRQ number on success. Negative errno on failure.
-  */
- int fwnode_irq_get(const struct fwnode_handle *fwnode, unsigned int index)
- {
--	return fwnode_call_int_op(fwnode, irq_get, index);
-+	int ret;
-+
-+	ret = fwnode_call_int_op(fwnode, irq_get, index);
-+	/* We treat mapping errors as invalid case */
-+	if (ret == 0)
-+		return -EINVAL;
-+
+diff --git a/drivers/nvmem/sunplus-ocotp.c b/drivers/nvmem/sunplus-ocotp.c
+index 52b928a7a6d58..f85350b17d672 100644
+--- a/drivers/nvmem/sunplus-ocotp.c
++++ b/drivers/nvmem/sunplus-ocotp.c
+@@ -192,9 +192,11 @@ static int sp_ocotp_probe(struct platform_device *pdev)
+ 	sp_ocotp_nvmem_config.dev = dev;
+ 
+ 	nvmem = devm_nvmem_register(dev, &sp_ocotp_nvmem_config);
+-	if (IS_ERR(nvmem))
+-		return dev_err_probe(&pdev->dev, PTR_ERR(nvmem),
++	if (IS_ERR(nvmem)) {
++		ret = dev_err_probe(&pdev->dev, PTR_ERR(nvmem),
+ 						"register nvmem device fail\n");
++		goto err;
++	}
+ 
+ 	platform_set_drvdata(pdev, nvmem);
+ 
+@@ -203,6 +205,9 @@ static int sp_ocotp_probe(struct platform_device *pdev)
+ 		(int)OTP_WORD_SIZE, (int)QAC628_OTP_SIZE);
+ 
+ 	return 0;
++err:
++	clk_unprepare(otp->clk);
 +	return ret;
  }
- EXPORT_SYMBOL(fwnode_irq_get);
  
+ static const struct of_device_id sp_ocotp_dt_ids[] = {
 -- 
 2.39.2
 
