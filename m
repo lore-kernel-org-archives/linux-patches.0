@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DCF8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:10:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD367C433C7;
-	Sun, 16 Jul 2023 20:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9A68F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:10:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997BFC433C8;
+	Sun, 16 Jul 2023 20:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538237;
-	bh=+O83bj+OgGfJNcvFRWT3rtQQoG1STKcRYVTC0J7wuKY=;
+	s=korg; t=1689538240;
+	bh=x+npZbv8mH+79cB6bj0I7u9mYEceT9vRQ5CndDDH0Us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bJznwIYiQhGgh/S+8FmxEvnPvdzCiHy6YBjTo2FIl820EK5Q3mnP/l1IrsA310ONw
-	 bxT/COS5/a4bYfWmKFV1vj2ce5CLzbgt69Noo8tukeafFBDV/P364bphGWxc9H3aGt
-	 NBVexJccSpFYrS5h1nw3Q3HDF3JdSLKHVx4oCaec=
+	b=TuNGoVb6VJdVO62KlTHU4PVKkBToYquKJLGJ3YL7TtcJ/PD9Z02zPDuOvGSDtcm7p
+	 6y82Y04qGUr5ifggtjldbwsu5QCnXPZ9grYrW5YpeimKbJ2+jC8VzBvx+HMkNZ+1t/
+	 etdzMW5NmV9BlEMVxX3WNDHP76dGwsVqYBmvaQ6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
+	Kai Ma <kaima@hust.edu.cn>,
+	Peng Fan <peng.fan@nxp.com>,
+	Jesse Taube <Mr.Bossman075@gmail.com>,
 	Abel Vesa <abel.vesa@linaro.org>,
-	Fabio Estevam <festevam@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 378/800] clk: imx: composite-8m: Add imx8m_divider_determine_rate
-Date: Sun, 16 Jul 2023 21:43:51 +0200
-Message-ID: <20230716194957.854868113@linuxfoundation.org>
+Subject: [PATCH 6.4 379/800] clk: imx: clk-imxrt1050: fix memory leak in imxrt1050_clocks_probe
+Date: Sun, 16 Jul 2023 21:43:52 +0200
+Message-ID: <20230716194957.877760837@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,111 +37,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adam Ford <aford173@gmail.com>
+From: Kai Ma <kaima@hust.edu.cn>
 
-[ Upstream commit 8208181fe536bba3b411508f81c4426fc9c71d9a ]
+[ Upstream commit 1b280598ab3bd8a2dc8b96a12530d5b1ee7a8f4a ]
 
-Currently, certain clocks are derrived as a divider from their
-parent clock.  For some clocks, even when CLK_SET_RATE_PARENT
-is set, the parent clock is not properly set which can lead
-to some relatively inaccurate clock values.
+Use devm_of_iomap() instead of of_iomap() to automatically
+handle the unused ioremap region. If any error occurs, regions allocated by
+kzalloc() will leak, but using devm_kzalloc() instead will automatically
+free the memory using devm_kfree().
 
-Unlike imx/clk-composite-93 and imx/clk-divider-gate, it
-cannot rely on calling a standard determine_rate function,
-because the 8m composite clocks have a pre-divider and
-post-divider. Because of this, a custom determine_rate
-function is necessary to determine the maximum clock
-division which is equivalent to pre-divider * the
-post-divider.
+Also, fix error handling of hws by adding unregister_hws label, which
+unregisters remaining hws when iomap failed.
 
-With this added, the system can attempt to adjust the parent rate
-when the proper flags are set which can lead to a more precise clock
-value.
-
-On the imx8mplus, no clock changes are present.
-On the Mini and Nano, this can help achieve more accurate
-lcdif clocks. When trying to get a pixel clock of 31.500MHz
-on an imx8m Nano, the clocks divided the 594MHz down, but
-left the parent rate untouched which caused a calulation error.
-
-Before:
-video_pll              594000000
-  video_pll_bypass     594000000
-    video_pll_out      594000000
-      disp_pixel       31263158
-        disp_pixel_clk 31263158
-
-Variance = -236842 Hz
-
-After this patch:
-video_pll               31500000
-  video_pll_bypass      31500000
-    video_pll_out       31500000
-      disp_pixel        31500000
-        disp_pixel_clk  31500000
-
-Variance = 0 Hz
-
-All other clocks rates and parent were the same.
-Similar results on imx8mm were found.
-
-Fixes: 690dccc4a0bf ("Revert "clk: imx: composite-8m: Add support to determine_rate"")
-Signed-off-by: Adam Ford <aford173@gmail.com>
+Fixes: 7154b046d8f3 ("clk: imx: Add initial support for i.MXRT1050 clock driver")
+Signed-off-by: Kai Ma <kaima@hust.edu.cn>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Acked-by: Jesse Taube <Mr.Bossman075@gmail.com>
 Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Tested-by: Fabio Estevam <festevam@gmail.com>
-Link: https://lore.kernel.org/r/20230506195325.876871-1-aford173@gmail.com
+Link: https://lore.kernel.org/r/20230418113451.151312-1-kaima@hust.edu.cn
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-composite-8m.c | 31 ++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ drivers/clk/imx/clk-imxrt1050.c | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-composite-8m.c b/drivers/clk/imx/clk-composite-8m.c
-index cbf0d7955a00a..7a6e3ce97133b 100644
---- a/drivers/clk/imx/clk-composite-8m.c
-+++ b/drivers/clk/imx/clk-composite-8m.c
-@@ -119,10 +119,41 @@ static int imx8m_clk_composite_divider_set_rate(struct clk_hw *hw,
+diff --git a/drivers/clk/imx/clk-imxrt1050.c b/drivers/clk/imx/clk-imxrt1050.c
+index fd5c51fc92c0e..08d155feb035a 100644
+--- a/drivers/clk/imx/clk-imxrt1050.c
++++ b/drivers/clk/imx/clk-imxrt1050.c
+@@ -42,7 +42,7 @@ static int imxrt1050_clocks_probe(struct platform_device *pdev)
+ 	struct device_node *anp;
+ 	int ret;
+ 
+-	clk_hw_data = kzalloc(struct_size(clk_hw_data, hws,
++	clk_hw_data = devm_kzalloc(dev, struct_size(clk_hw_data, hws,
+ 					  IMXRT1050_CLK_END), GFP_KERNEL);
+ 	if (WARN_ON(!clk_hw_data))
+ 		return -ENOMEM;
+@@ -53,10 +53,12 @@ static int imxrt1050_clocks_probe(struct platform_device *pdev)
+ 	hws[IMXRT1050_CLK_OSC] = imx_get_clk_hw_by_name(np, "osc");
+ 
+ 	anp = of_find_compatible_node(NULL, NULL, "fsl,imxrt-anatop");
+-	pll_base = of_iomap(anp, 0);
++	pll_base = devm_of_iomap(dev, anp, 0, NULL);
+ 	of_node_put(anp);
+-	if (WARN_ON(!pll_base))
+-		return -ENOMEM;
++	if (WARN_ON(IS_ERR(pll_base))) {
++		ret = PTR_ERR(pll_base);
++		goto unregister_hws;
++	}
+ 
+ 	/* Anatop clocks */
+ 	hws[IMXRT1050_CLK_DUMMY] = imx_clk_hw_fixed("dummy", 0UL);
+@@ -104,8 +106,10 @@ static int imxrt1050_clocks_probe(struct platform_device *pdev)
+ 
+ 	/* CCM clocks */
+ 	ccm_base = devm_platform_ioremap_resource(pdev, 0);
+-	if (WARN_ON(IS_ERR(ccm_base)))
+-		return PTR_ERR(ccm_base);
++	if (WARN_ON(IS_ERR(ccm_base))) {
++		ret = PTR_ERR(ccm_base);
++		goto unregister_hws;
++	}
+ 
+ 	hws[IMXRT1050_CLK_ARM_PODF] = imx_clk_hw_divider("arm_podf", "pll1_arm", ccm_base + 0x10, 0, 3);
+ 	hws[IMXRT1050_CLK_PRE_PERIPH_SEL] = imx_clk_hw_mux("pre_periph_sel", ccm_base + 0x18, 18, 2,
+@@ -149,8 +153,12 @@ static int imxrt1050_clocks_probe(struct platform_device *pdev)
+ 	ret = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, clk_hw_data);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to register clks for i.MXRT1050.\n");
+-		imx_unregister_hw_clocks(hws, IMXRT1050_CLK_END);
++		goto unregister_hws;
+ 	}
++	return 0;
++
++unregister_hws:
++	imx_unregister_hw_clocks(hws, IMXRT1050_CLK_END);
  	return ret;
  }
- 
-+static int imx8m_divider_determine_rate(struct clk_hw *hw,
-+				      struct clk_rate_request *req)
-+{
-+	struct clk_divider *divider = to_clk_divider(hw);
-+	int prediv_value;
-+	int div_value;
-+
-+	/* if read only, just return current value */
-+	if (divider->flags & CLK_DIVIDER_READ_ONLY) {
-+		u32 val;
-+
-+		val = readl(divider->reg);
-+		prediv_value = val >> divider->shift;
-+		prediv_value &= clk_div_mask(divider->width);
-+		prediv_value++;
-+
-+		div_value = val >> PCG_DIV_SHIFT;
-+		div_value &= clk_div_mask(PCG_DIV_WIDTH);
-+		div_value++;
-+
-+		return divider_ro_determine_rate(hw, req, divider->table,
-+						 PCG_PREDIV_WIDTH + PCG_DIV_WIDTH,
-+						 divider->flags, prediv_value * div_value);
-+	}
-+
-+	return divider_determine_rate(hw, req, divider->table,
-+				      PCG_PREDIV_WIDTH + PCG_DIV_WIDTH,
-+				      divider->flags);
-+}
-+
- static const struct clk_ops imx8m_clk_composite_divider_ops = {
- 	.recalc_rate = imx8m_clk_composite_divider_recalc_rate,
- 	.round_rate = imx8m_clk_composite_divider_round_rate,
- 	.set_rate = imx8m_clk_composite_divider_set_rate,
-+	.determine_rate = imx8m_divider_determine_rate,
- };
- 
- static u8 imx8m_clk_composite_mux_get_parent(struct clk_hw *hw)
+ static const struct of_device_id imxrt1050_clk_of_match[] = {
 -- 
 2.39.2
 
