@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294638F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:57:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF24C433CA;
-	Sun, 16 Jul 2023 19:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F032C8F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:57:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70945C433C7;
+	Sun, 16 Jul 2023 19:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537437;
-	bh=G3MfMjPT8TmOP1ULgp5UFNYbOu650UDH9ztQ6U3ZatI=;
+	s=korg; t=1689537439;
+	bh=aNZ79TRuYE9AabEZpTW3AOU83Gak0BtyEQwaFS8AAzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1lKQkfZjS0ltDvk7ShTx8HZcaeFEdVbMqm4Re5S2rn0DODs5KNIV9Hl9UnpL3L0Hw
-	 F/sss6LxKCOU8ExcydfbGSyvD0Swh1ts4YdDmg+4Uzd+JvM6vwOLWidsiaILwpSB74
-	 fygR1ZTfuXv3gt/I+LTF1uVRI61ZTb3G9P4I9kOY=
+	b=jki4sSImLzDALwOyVclPmQteAhwgjF2HuAI9S3nuUH4zalI1F0K8HgNX8ZH4MswU+
+	 CaIJSqQXEczXdawntN7jKurjqAK+QV5w7Qk7SD4SkqtbJAfGJLbf+8iFH59YsGjtl0
+	 GD/Af0ZtqzQ/Ynkdutve37BjjkuVnytN+3l2dggw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	syzbot <syzbot+00a3779539a23cbee38c@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 096/800] x86/mm: Fix __swp_entry_to_pte() for Xen PV guests
-Date: Sun, 16 Jul 2023 21:39:09 +0200
-Message-ID: <20230716194951.343397968@linuxfoundation.org>
+Subject: [PATCH 6.4 097/800] reiserfs: Initialize sec->length in reiserfs_security_init().
+Date: Sun, 16 Jul 2023 21:39:10 +0200
+Message-ID: <20230716194951.366859558@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,45 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juergen Gross <jgross@suse.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 0f88130e8a6fd185b0aeb5d8e286083735f2585a ]
+[ Upstream commit d031f4e8b493df299123fbb4ec13db870584ed28 ]
 
-Normally __swp_entry_to_pte() is never called with a value translating
-to a valid PTE. The only known exception is pte_swap_tests(), resulting
-in a WARN splat in Xen PV guests, as __pte_to_swp_entry() did
-translate the PFN of the valid PTE to a guest local PFN, while
-__swp_entry_to_pte() doesn't do the opposite translation.
+syzbot is reporting that sec->length is not initialized.
 
-Fix that by using __pte() in __swp_entry_to_pte() instead of open
-coding the native variant of it.
+Since security_inode_init_security() returns 0 when initxattrs is provided
+but call_int_hook(inode_init_security) returned -EOPNOTSUPP, control will
+reach to "if (sec->length && ...) {" without initializing sec->length.
 
-For correctness do the similar conversion for __swp_entry_to_pmd().
-
-Fixes: 05289402d717 ("mm/debug_vm_pgtable: add tests validating arch helpers for core MM features")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230306123259.12461-1-jgross@suse.com
+Reported-by: syzbot <syzbot+00a3779539a23cbee38c@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=00a3779539a23cbee38c
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Fixes: 52ca4b6435a4 ("reiserfs: Switch to security_inode_init_security()")
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/pgtable_64.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/reiserfs/xattr_security.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/include/asm/pgtable_64.h b/arch/x86/include/asm/pgtable_64.h
-index 7929327abe009..a629b1b9f65a6 100644
---- a/arch/x86/include/asm/pgtable_64.h
-+++ b/arch/x86/include/asm/pgtable_64.h
-@@ -237,8 +237,8 @@ static inline void native_pgd_clear(pgd_t *pgd)
+diff --git a/fs/reiserfs/xattr_security.c b/fs/reiserfs/xattr_security.c
+index 6e0a099dd7886..078dd8cc312fc 100644
+--- a/fs/reiserfs/xattr_security.c
++++ b/fs/reiserfs/xattr_security.c
+@@ -67,6 +67,7 @@ int reiserfs_security_init(struct inode *dir, struct inode *inode,
  
- #define __pte_to_swp_entry(pte)		((swp_entry_t) { pte_val((pte)) })
- #define __pmd_to_swp_entry(pmd)		((swp_entry_t) { pmd_val((pmd)) })
--#define __swp_entry_to_pte(x)		((pte_t) { .pte = (x).val })
--#define __swp_entry_to_pmd(x)		((pmd_t) { .pmd = (x).val })
-+#define __swp_entry_to_pte(x)		(__pte((x).val))
-+#define __swp_entry_to_pmd(x)		(__pmd((x).val))
+ 	sec->name = NULL;
+ 	sec->value = NULL;
++	sec->length = 0;
  
- extern void cleanup_highmap(void);
- 
+ 	/* Don't add selinux attributes on xattrs - they'll never get used */
+ 	if (IS_PRIVATE(dir))
 -- 
 2.39.2
 
