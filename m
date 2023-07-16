@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5F38F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:49:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5331EC433C7;
-	Sun, 16 Jul 2023 20:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B768F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:49:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367E5C433C7;
+	Sun, 16 Jul 2023 20:49:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540540;
-	bh=b575pVZTQFRMo/Hrj7Ee35AI6sOk8zBbmfES1jRteZY=;
+	s=korg; t=1689540543;
+	bh=f5Si9s2Az76eOV5ttNHDahJEuo+Akxu4IzStsP5Cb3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S7rMewV+5Txyq1SLFr/ONXiTT+CnVX/XpuFZouvqglDLzWjtpwQ+psTEWV8/ZlpQ0
-	 BFlXEpyCsq3wSlQHWhCcAlJPtz3P7Q62tTL+30jIeUxdRsshW0R1f2RIqniAMS7xqA
-	 /L24IMJ8uece19TrVp0VIt6keSHyYIRFAwbbtQY8=
+	b=ofLtBm8tZXpbbzwcdgvmcs4WHUL4sDQnquZA9HnxKRxEp/ulHA6dbC4eeml5NLA9g
+	 ePkwzPMZjwAyIq7xT/M/H0LB3+zpW+BQkCwlia5O6ac+wOdetZ6CgULK2ZkmJPOJuX
+	 JBjQSJ+A9bMQu7ZmGcgslCFliV8KzWfcn+CEBjgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+27b0b464864741b18b99@syzkaller.appspotmail.com,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 399/591] media: usb: siano: Fix warning due to null work_func_t function pointer
-Date: Sun, 16 Jul 2023 21:48:58 +0200
-Message-ID: <20230716194934.242614987@linuxfoundation.org>
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 373/591] ALSA: hda/realtek: Add quirk for Clevo NPx0SNx
+Date: Sun, 16 Jul 2023 21:48:32 +0200
+Message-ID: <20230716194933.570558999@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,82 +34,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-[ Upstream commit 6f489a966fbeb0da63d45c2c66a8957eab604bf6 ]
+commit 22065e4214c1196b54fc164892c2e193a743caf3 upstream.
 
-The previous commit ebad8e731c1c ("media: usb: siano: Fix use after
-free bugs caused by do_submit_urb") adds cancel_work_sync() in
-smsusb_stop_streaming(). But smsusb_stop_streaming() may be called,
-even if the work_struct surb->wq has not been initialized. As a result,
-the warning will occur. One of the processes that could lead to warning
-is shown below:
+This applies a SND_PCI_QUIRK(...) to the Clevo NPx0SNx barebones fixing the
+microphone not being detected on the headset combo port.
 
-smsusb_probe()
-  smsusb_init_device()
-    if (!dev->in_ep || !dev->out_ep || align < 0) {
-         smsusb_term_device(intf);
-           smsusb_stop_streaming()
-             cancel_work_sync(&dev->surbs[i].wq);
-               __cancel_work_timer()
-                 __flush_work()
-                   if (WARN_ON(!work->func)) // work->func is null
-
-The log reported by syzbot is shown below:
-
-WARNING: CPU: 0 PID: 897 at kernel/workqueue.c:3066 __flush_work+0x798/0xa80 kernel/workqueue.c:3063
-Modules linked in:
-CPU: 0 PID: 897 Comm: kworker/0:2 Not tainted 6.2.0-rc1-syzkaller #0
-RIP: 0010:__flush_work+0x798/0xa80 kernel/workqueue.c:3066
-...
-RSP: 0018:ffffc9000464ebf8 EFLAGS: 00010246
-RAX: 1ffff11002dbb420 RBX: 0000000000000021 RCX: 1ffffffff204fa4e
-RDX: dffffc0000000000 RSI: 0000000000000001 RDI: ffff888016dda0e8
-RBP: ffffc9000464ed98 R08: 0000000000000001 R09: ffffffff90253b2f
-R10: 0000000000000001 R11: 0000000000000000 R12: ffff888016dda0e8
-R13: ffff888016dda0e8 R14: ffff888016dda100 R15: 0000000000000001
-FS:  0000000000000000(0000) GS:ffff8880b9a00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ffd4331efe8 CR3: 000000000b48e000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- __cancel_work_timer+0x315/0x460 kernel/workqueue.c:3160
- smsusb_stop_streaming drivers/media/usb/siano/smsusb.c:182 [inline]
- smsusb_term_device+0xda/0x2d0 drivers/media/usb/siano/smsusb.c:344
- smsusb_init_device+0x400/0x9ce drivers/media/usb/siano/smsusb.c:419
- smsusb_probe+0xbbd/0xc55 drivers/media/usb/siano/smsusb.c:567
-...
-
-This patch adds check before cancel_work_sync(). If surb->wq has not
-been initialized, the cancel_work_sync() will not be executed.
-
-Reported-by: syzbot+27b0b464864741b18b99@syzkaller.appspotmail.com
-Fixes: ebad8e731c1c ("media: usb: siano: Fix use after free bugs caused by do_submit_urb")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230628155434.584159-1-wse@tuxedocomputers.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/siano/smsusb.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/usb/siano/smsusb.c b/drivers/media/usb/siano/smsusb.c
-index 6f443c542c6da..640737d3b8aeb 100644
---- a/drivers/media/usb/siano/smsusb.c
-+++ b/drivers/media/usb/siano/smsusb.c
-@@ -179,7 +179,8 @@ static void smsusb_stop_streaming(struct smsusb_device_t *dev)
- 
- 	for (i = 0; i < MAX_URBS; i++) {
- 		usb_kill_urb(&dev->surbs[i].urb);
--		cancel_work_sync(&dev->surbs[i].wq);
-+		if (dev->surbs[i].wq.func)
-+			cancel_work_sync(&dev->surbs[i].wq);
- 
- 		if (dev->surbs[i].cb) {
- 			smscore_putbuffer(dev->coredev, dev->surbs[i].cb);
--- 
-2.39.2
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9680,6 +9680,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1558, 0x971d, "Clevo N970T[CDF]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xa500, "Clevo NL5[03]RU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xa600, "Clevo NL50NU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1558, 0xa650, "Clevo NP[567]0SN[CD]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xa671, "Clevo NP70SN[CDE]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xb018, "Clevo NP50D[BE]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xb019, "Clevo NH77D[BE]Q", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
 
 
