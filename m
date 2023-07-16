@@ -1,33 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B8A8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:46:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32BFFC433C8;
-	Sun, 16 Jul 2023 20:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772678F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:46:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE994C433C7;
+	Sun, 16 Jul 2023 20:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540394;
-	bh=CH5DEweYHX0LUIOWbpBKevN/oAp45+7KbrxM3N0eaG0=;
+	s=korg; t=1689540397;
+	bh=dGwZ3X4u0r5uuysRh/4+zBwfddZLS52aHSW5pleXJRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RcmWU5E9PIPncnL+qwGaYbWyBId/J7VGCnguC0wg71S98q3P3IdQC60jzALqvS+M7
-	 r0pLshfknj2KEw5CATcwzfq3HfkO/iebB/VJfuJsb7OsDPCIaBoieADZnIaH8k39GV
-	 QBNZfF5tAPfJR0F5SL8n5dsx3jcXNfL7vdn9ADpU=
+	b=Bk6+NnOD8vqy2pCyN8MdcifaKBFIg9KwUqniRBV6IQv+t6DLZzIHyBPXJRg/1X2AB
+	 jsRSbyy+/9+NdnMS//yE6L366o+Jslf3wzeUYNXuxtVoItmMBP9KxftLVSC/+BzeV3
+	 0FOL3GzW96ORAu0sAertMliFMlIn39xNuGMXKGOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 311/591] perf dwarf-aux: Fix off-by-one in die_get_varname()
-Date: Sun, 16 Jul 2023 21:47:30 +0200
-Message-ID: <20230716194931.936191711@linuxfoundation.org>
+Subject: [PATCH 6.1 341/591] modpost: fix off by one in is_executable_section()
+Date: Sun, 16 Jul 2023 21:48:00 +0200
+Message-ID: <20230716194932.730342846@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -41,43 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 3abfcfd847717d232e36963f31a361747c388fe7 ]
+[ Upstream commit 3a3f1e573a105328a2cca45a7cfbebabbf5e3192 ]
 
-The die_get_varname() returns "(unknown_type)" string if it failed to
-find a type for the variable.  But it had a space before the opening
-parenthesis and it made the closing parenthesis cut off due to the
-off-by-one in the string length (14).
+The > comparison should be >= to prevent an out of bounds array
+access.
 
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Fixes: 88fd633cdfa19060 ("perf probe: No need to use formatting strbuf method")
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20230612234102.3909116-1-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 52dc0595d540 ("modpost: handle relocations mismatch in __ex_table.")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dwarf-aux.c | 2 +-
+ scripts/mod/modpost.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
-index 623527edeac1e..b125eaadcec4d 100644
---- a/tools/perf/util/dwarf-aux.c
-+++ b/tools/perf/util/dwarf-aux.c
-@@ -1081,7 +1081,7 @@ int die_get_varname(Dwarf_Die *vr_die, struct strbuf *buf)
- 	ret = die_get_typename(vr_die, buf);
- 	if (ret < 0) {
- 		pr_debug("Failed to get type, make it unknown.\n");
--		ret = strbuf_add(buf, " (unknown_type)", 14);
-+		ret = strbuf_add(buf, "(unknown_type)", 14);
- 	}
+diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
+index 9e370e77f52d1..e6be7fc2625fd 100644
+--- a/scripts/mod/modpost.c
++++ b/scripts/mod/modpost.c
+@@ -1297,7 +1297,7 @@ static void default_mismatch_handler(const char *modname, struct elf_info *elf,
  
- 	return ret < 0 ? ret : strbuf_addf(buf, "\t%s", dwarf_diename(vr_die));
+ static int is_executable_section(struct elf_info* elf, unsigned int section_index)
+ {
+-	if (section_index > elf->num_sections)
++	if (section_index >= elf->num_sections)
+ 		fatal("section_index is outside elf->num_sections!\n");
+ 
+ 	return ((elf->sechdrs[section_index].sh_flags & SHF_EXECINSTR) == SHF_EXECINSTR);
 -- 
 2.39.2
 
