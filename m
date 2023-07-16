@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4572A8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:01:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA813C433C7;
-	Sun, 16 Jul 2023 20:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2931E8F75
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:01:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A089BC433C7;
+	Sun, 16 Jul 2023 20:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537667;
-	bh=72Wdag3HtINeUPKkZpzVSkCAH0zOhcVQ60Ga7Sn8XSw=;
+	s=korg; t=1689537670;
+	bh=HFRw48G4DtXnPqIuIC57uDqU175yi+0rBLI+YnZvbfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LUdb3a6ynYuUKbxV3AAktLnnO+rZqHouStFGpJCTlCEtZrzFouNYKxP8iVMrS3Aq1
-	 SC0sa4+7WW6As0ZchHnEBTukqG3We7ArJiyR33XxQLWIU6BYWPMKCotv7SYCwvHLen
-	 r3XhCOYNympTtUm3NJbb85C9AV9YuRTI7vjSeIyU=
+	b=fjIdCGaP1RsUUfNl0B4RXAj0ROHaBryenZsKtYuo7xQjI9aWRfR8ejAJnsp8Zn2oc
+	 ugyTtYp6KySfGnH+J5KSLPwvIeE+qibkg20XMxOsXfIix9sEHByPubdrsqmdPNvxsB
+	 Zu8U+g/UjYaN8xGgbOrm3V8GEeeBL41gi3Z66ZMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Marek Vasut <marex@denx.de>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 150/800] spi: spi-geni-qcom: Do not do DMA map/unmap inside driver, use framework instead
-Date: Sun, 16 Jul 2023 21:40:03 +0200
-Message-ID: <20230716194952.578266316@linuxfoundation.org>
+Subject: [PATCH 6.4 151/800] wifi: rsi: Do not configure WoWlan in shutdown hook if not enabled
+Date: Sun, 16 Jul 2023 21:40:04 +0200
+Message-ID: <20230716194952.601228635@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,226 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 3a76c7ca9e77269dd10cf21465a055274cfa40c6 ]
+[ Upstream commit b241e260820b68c09586e8a0ae0fc23c0e3215bd ]
 
-The spi geni driver in SE DMA mode, unlike GSI DMA, is not making use of
-DMA mapping functionality available in the framework.
-The driver does mapping internally which makes dma buffer fields available
-in spi_transfer struct superfluous while requiring additional members in
-spi_geni_master struct.
+In case WoWlan was never configured during the operation of the system,
+the hw->wiphy->wowlan_config will be NULL. rsi_config_wowlan() checks
+whether wowlan_config is non-NULL and if it is not, then WARNs about it.
+The warning is valid, as during normal operation the rsi_config_wowlan()
+should only ever be called with non-NULL wowlan_config. In shutdown this
+rsi_config_wowlan() should only ever be called if WoWlan was configured
+before by the user.
 
-Conform to the design by having framework handle map/unmap and do only
-DMA transfer in the driver; this also simplifies code a bit.
+Add checks for non-NULL wowlan_config into the shutdown hook. While at it,
+check whether the wiphy is also non-NULL before accessing wowlan_config .
+Drop the single-use wowlan_config variable, just inline it into function
+call.
 
-Fixes: e5f0dfa78ac7 ("spi: spi-geni-qcom: Add support for SE DMA mode")
-Suggested-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/1684325894-30252-3-git-send-email-quic_vnivarth@quicinc.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 16bbc3eb8372 ("rsi: fix null pointer dereference during rsi_shutdown()")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230527222833.273741-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-geni-qcom.c | 103 +++++++++++++++++-------------------
- 1 file changed, 50 insertions(+), 53 deletions(-)
+ drivers/net/wireless/rsi/rsi_91x_sdio.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 08672a961fbbe..26ce959d98dfa 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -97,8 +97,6 @@ struct spi_geni_master {
- 	struct dma_chan *tx;
- 	struct dma_chan *rx;
- 	int cur_xfer_mode;
--	dma_addr_t tx_se_dma;
--	dma_addr_t rx_se_dma;
- };
+diff --git a/drivers/net/wireless/rsi/rsi_91x_sdio.c b/drivers/net/wireless/rsi/rsi_91x_sdio.c
+index d09998796ac08..6e33a2563fdbd 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_sdio.c
++++ b/drivers/net/wireless/rsi/rsi_91x_sdio.c
+@@ -1463,10 +1463,8 @@ static void rsi_shutdown(struct device *dev)
  
- static int get_spi_clk_cfg(unsigned int speed_hz,
-@@ -174,7 +172,7 @@ static void handle_se_timeout(struct spi_master *spi,
- unmap_if_dma:
- 	if (mas->cur_xfer_mode == GENI_SE_DMA) {
- 		if (xfer) {
--			if (xfer->tx_buf && mas->tx_se_dma) {
-+			if (xfer->tx_buf) {
- 				spin_lock_irq(&mas->lock);
- 				reinit_completion(&mas->tx_reset_done);
- 				writel(1, se->base + SE_DMA_TX_FSM_RST);
-@@ -182,9 +180,8 @@ static void handle_se_timeout(struct spi_master *spi,
- 				time_left = wait_for_completion_timeout(&mas->tx_reset_done, HZ);
- 				if (!time_left)
- 					dev_err(mas->dev, "DMA TX RESET failed\n");
--				geni_se_tx_dma_unprep(se, mas->tx_se_dma, xfer->len);
- 			}
--			if (xfer->rx_buf && mas->rx_se_dma) {
-+			if (xfer->rx_buf) {
- 				spin_lock_irq(&mas->lock);
- 				reinit_completion(&mas->rx_reset_done);
- 				writel(1, se->base + SE_DMA_RX_FSM_RST);
-@@ -192,7 +189,6 @@ static void handle_se_timeout(struct spi_master *spi,
- 				time_left = wait_for_completion_timeout(&mas->rx_reset_done, HZ);
- 				if (!time_left)
- 					dev_err(mas->dev, "DMA RX RESET failed\n");
--				geni_se_rx_dma_unprep(se, mas->rx_se_dma, xfer->len);
- 			}
- 		} else {
- 			/*
-@@ -523,17 +519,36 @@ static int setup_gsi_xfer(struct spi_transfer *xfer, struct spi_geni_master *mas
- 	return 1;
- }
+ 	rsi_dbg(ERR_ZONE, "SDIO Bus shutdown =====>\n");
  
-+static u32 get_xfer_len_in_words(struct spi_transfer *xfer,
-+				struct spi_geni_master *mas)
-+{
-+	u32 len;
-+
-+	if (!(mas->cur_bits_per_word % MIN_WORD_LEN))
-+		len = xfer->len * BITS_PER_BYTE / mas->cur_bits_per_word;
-+	else
-+		len = xfer->len / (mas->cur_bits_per_word / BITS_PER_BYTE + 1);
-+	len &= TRANS_LEN_MSK;
-+
-+	return len;
-+}
-+
- static bool geni_can_dma(struct spi_controller *ctlr,
- 			 struct spi_device *slv, struct spi_transfer *xfer)
- {
- 	struct spi_geni_master *mas = spi_master_get_devdata(slv->master);
-+	u32 len, fifo_size;
- 
--	/*
--	 * Return true if transfer needs to be mapped prior to
--	 * calling transfer_one which is the case only for GPI_DMA.
--	 * For SE_DMA mode, map/unmap is done in geni_se_*x_dma_prep.
--	 */
--	return mas->cur_xfer_mode == GENI_GPI_DMA;
-+	if (mas->cur_xfer_mode == GENI_GPI_DMA)
-+		return true;
-+
-+	len = get_xfer_len_in_words(xfer, mas);
-+	fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits / mas->cur_bits_per_word;
-+
-+	if (len > fifo_size)
-+		return true;
-+	else
-+		return false;
- }
- 
- static int spi_geni_prepare_message(struct spi_master *spi,
-@@ -774,7 +789,7 @@ static int setup_se_xfer(struct spi_transfer *xfer,
- 				u16 mode, struct spi_master *spi)
- {
- 	u32 m_cmd = 0;
--	u32 len, fifo_size;
-+	u32 len;
- 	struct geni_se *se = &mas->se;
- 	int ret;
- 
-@@ -806,11 +821,7 @@ static int setup_se_xfer(struct spi_transfer *xfer,
- 	mas->tx_rem_bytes = 0;
- 	mas->rx_rem_bytes = 0;
- 
--	if (!(mas->cur_bits_per_word % MIN_WORD_LEN))
--		len = xfer->len * BITS_PER_BYTE / mas->cur_bits_per_word;
--	else
--		len = xfer->len / (mas->cur_bits_per_word / BITS_PER_BYTE + 1);
--	len &= TRANS_LEN_MSK;
-+	len = get_xfer_len_in_words(xfer, mas);
- 
- 	mas->cur_xfer = xfer;
- 	if (xfer->tx_buf) {
-@@ -825,9 +836,20 @@ static int setup_se_xfer(struct spi_transfer *xfer,
- 		mas->rx_rem_bytes = xfer->len;
+-	if (hw) {
+-		struct cfg80211_wowlan *wowlan = hw->wiphy->wowlan_config;
+-
+-		if (rsi_config_wowlan(adapter, wowlan))
++	if (hw && hw->wiphy && hw->wiphy->wowlan_config) {
++		if (rsi_config_wowlan(adapter, hw->wiphy->wowlan_config))
+ 			rsi_dbg(ERR_ZONE, "Failed to configure WoWLAN\n");
  	}
  
--	/* Select transfer mode based on transfer length */
--	fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits / mas->cur_bits_per_word;
--	mas->cur_xfer_mode = (len <= fifo_size) ? GENI_SE_FIFO : GENI_SE_DMA;
-+	/*
-+	 * Select DMA mode if sgt are present; and with only 1 entry
-+	 * This is not a serious limitation because the xfer buffers are
-+	 * expected to fit into in 1 entry almost always, and if any
-+	 * doesn't for any reason we fall back to FIFO mode anyway
-+	 */
-+	if (!xfer->tx_sg.nents && !xfer->rx_sg.nents)
-+		mas->cur_xfer_mode = GENI_SE_FIFO;
-+	else if (xfer->tx_sg.nents > 1 || xfer->rx_sg.nents > 1) {
-+		dev_warn_once(mas->dev, "Doing FIFO, cannot handle tx_nents-%d, rx_nents-%d\n",
-+			xfer->tx_sg.nents, xfer->rx_sg.nents);
-+		mas->cur_xfer_mode = GENI_SE_FIFO;
-+	} else
-+		mas->cur_xfer_mode = GENI_SE_DMA;
- 	geni_se_select_mode(se, mas->cur_xfer_mode);
- 
- 	/*
-@@ -838,35 +860,17 @@ static int setup_se_xfer(struct spi_transfer *xfer,
- 	geni_se_setup_m_cmd(se, m_cmd, FRAGMENTATION);
- 
- 	if (mas->cur_xfer_mode == GENI_SE_DMA) {
--		if (m_cmd & SPI_RX_ONLY) {
--			ret =  geni_se_rx_dma_prep(se, xfer->rx_buf,
--				xfer->len, &mas->rx_se_dma);
--			if (ret) {
--				dev_err(mas->dev, "Failed to setup Rx dma %d\n", ret);
--				mas->rx_se_dma = 0;
--				goto unlock_and_return;
--			}
--		}
--		if (m_cmd & SPI_TX_ONLY) {
--			ret =  geni_se_tx_dma_prep(se, (void *)xfer->tx_buf,
--				xfer->len, &mas->tx_se_dma);
--			if (ret) {
--				dev_err(mas->dev, "Failed to setup Tx dma %d\n", ret);
--				mas->tx_se_dma = 0;
--				if (m_cmd & SPI_RX_ONLY) {
--					/* Unmap rx buffer if duplex transfer */
--					geni_se_rx_dma_unprep(se, mas->rx_se_dma, xfer->len);
--					mas->rx_se_dma = 0;
--				}
--				goto unlock_and_return;
--			}
--		}
-+		if (m_cmd & SPI_RX_ONLY)
-+			geni_se_rx_init_dma(se, sg_dma_address(xfer->rx_sg.sgl),
-+				sg_dma_len(xfer->rx_sg.sgl));
-+		if (m_cmd & SPI_TX_ONLY)
-+			geni_se_tx_init_dma(se, sg_dma_address(xfer->tx_sg.sgl),
-+				sg_dma_len(xfer->tx_sg.sgl));
- 	} else if (m_cmd & SPI_TX_ONLY) {
- 		if (geni_spi_handle_tx(mas))
- 			writel(mas->tx_wm, se->base + SE_GENI_TX_WATERMARK_REG);
- 	}
- 
--unlock_and_return:
- 	spin_unlock_irq(&mas->lock);
- 	return ret;
- }
-@@ -967,14 +971,6 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
- 		if (dma_rx_status & RX_RESET_DONE)
- 			complete(&mas->rx_reset_done);
- 		if (!mas->tx_rem_bytes && !mas->rx_rem_bytes && xfer) {
--			if (xfer->tx_buf && mas->tx_se_dma) {
--				geni_se_tx_dma_unprep(se, mas->tx_se_dma, xfer->len);
--				mas->tx_se_dma = 0;
--			}
--			if (xfer->rx_buf && mas->rx_se_dma) {
--				geni_se_rx_dma_unprep(se, mas->rx_se_dma, xfer->len);
--				mas->rx_se_dma = 0;
--			}
- 			spi_finalize_current_transfer(spi);
- 			mas->cur_xfer = NULL;
- 		}
-@@ -1059,6 +1055,7 @@ static int spi_geni_probe(struct platform_device *pdev)
- 	spi->bits_per_word_mask = SPI_BPW_RANGE_MASK(4, 32);
- 	spi->num_chipselect = 4;
- 	spi->max_speed_hz = 50000000;
-+	spi->max_dma_len = 0xffff0; /* 24 bits for tx/rx dma length */
- 	spi->prepare_message = spi_geni_prepare_message;
- 	spi->transfer_one = spi_geni_transfer_one;
- 	spi->can_dma = geni_can_dma;
 -- 
 2.39.2
 
