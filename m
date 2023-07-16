@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E16F8F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:33:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5104C433C8;
-	Sun, 16 Jul 2023 20:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060E38F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:33:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BDDEC433C7;
+	Sun, 16 Jul 2023 20:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539591;
-	bh=Rz3Bh1FvmYG/o8d2aUI5ZPrMPe/50XASaKSddmGXEwk=;
+	s=korg; t=1689539593;
+	bh=DPDUfakqA+FzFF03aHcXNLyzPtz0bOWAzWYBgjS6PfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hzcYPlVq09FFDikNEa5fPz9uv2nCJZ5BGWfXaCuryET+YLtAYZvBaim4UwOT68DXa
-	 4EQfQ9hFehiw1PliuU+gjVaz/WLq0WQL0D+pGhJuYFASJwKvTYybhDW/3Lkza+EKcQ
-	 shLD6g8B99d6QOn/1kzpXw4jNNyYOkGpQ3ZEyisk=
+	b=Xi2O4z11dBGgWArF7IOviiQb/x8fLipz88BFbyo3SwWkbl07+BxmIeM0BzvysIGHq
+	 3+PvlgxsbEaWH6fKGW1UQFErw4xpq2mF43Qo6Vx2127oEB8hpeK0uUcL1EPI1inzwK
+	 R8r6Sowkt3npJGLCcWc/zJyLe9fCVZTnoYy8s+lI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 044/591] x86/mm: Allow guest.enc_status_change_prepare() to fail
-Date: Sun, 16 Jul 2023 21:43:03 +0200
-Message-ID: <20230716194925.020895407@linuxfoundation.org>
+Subject: [PATCH 6.1 062/591] locking/atomic: arm: fix sync ops
+Date: Sun, 16 Jul 2023 21:43:21 +0200
+Message-ID: <20230716194925.484253327@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,91 +36,189 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 3f6819dd192ef4f0c568ec3e9d6d408b3fa1ad3d ]
+[ Upstream commit dda5f312bb09e56e7a1c3e3851f2000eb2e9c879 ]
 
-TDX code is going to provide guest.enc_status_change_prepare() that is
-able to fail. TDX will use the call to convert the GPA range from shared
-to private. This operation can fail.
+The sync_*() ops on arch/arm are defined in terms of the regular bitops
+with no special handling. This is not correct, as UP kernels elide
+barriers for the fully-ordered operations, and so the required ordering
+is lost when such UP kernels are run under a hypervsior on an SMP
+system.
 
-Add a way to return an error from the callback.
+Fix this by defining sync ops with the required barriers.
 
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Link: https://lore.kernel.org/all/20230606095622.1939-2-kirill.shutemov%40linux.intel.com
-Stable-dep-of: 195edce08b63 ("x86/tdx: Fix race between set_memory_encrypted() and load_unaligned_zeropad()")
+Note: On 32-bit arm, the sync_*() ops are currently only used by Xen,
+which requires ARMv7, but the semantics can be implemented for ARMv6+.
+
+Fixes: e54d2f61528165bb ("xen/arm: sync_bitops")
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230605070124.3741859-2-mark.rutland@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/x86_init.h | 2 +-
- arch/x86/kernel/x86_init.c      | 2 +-
- arch/x86/mm/mem_encrypt_amd.c   | 4 +++-
- arch/x86/mm/pat/set_memory.c    | 3 ++-
- 4 files changed, 7 insertions(+), 4 deletions(-)
+ arch/arm/include/asm/assembler.h   | 17 +++++++++++++++++
+ arch/arm/include/asm/sync_bitops.h | 29 +++++++++++++++++++++++++----
+ arch/arm/lib/bitops.h              | 14 +++++++++++---
+ arch/arm/lib/testchangebit.S       |  4 ++++
+ arch/arm/lib/testclearbit.S        |  4 ++++
+ arch/arm/lib/testsetbit.S          |  4 ++++
+ 6 files changed, 65 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/include/asm/x86_init.h b/arch/x86/include/asm/x86_init.h
-index c1c8c581759d6..034e62838b284 100644
---- a/arch/x86/include/asm/x86_init.h
-+++ b/arch/x86/include/asm/x86_init.h
-@@ -150,7 +150,7 @@ struct x86_init_acpi {
-  * @enc_cache_flush_required	Returns true if a cache flush is needed before changing page encryption status
-  */
- struct x86_guest {
--	void (*enc_status_change_prepare)(unsigned long vaddr, int npages, bool enc);
-+	bool (*enc_status_change_prepare)(unsigned long vaddr, int npages, bool enc);
- 	bool (*enc_status_change_finish)(unsigned long vaddr, int npages, bool enc);
- 	bool (*enc_tlb_flush_required)(bool enc);
- 	bool (*enc_cache_flush_required)(void);
-diff --git a/arch/x86/kernel/x86_init.c b/arch/x86/kernel/x86_init.c
-index 10622cf2b30f4..41e5b4cb898c3 100644
---- a/arch/x86/kernel/x86_init.c
-+++ b/arch/x86/kernel/x86_init.c
-@@ -130,7 +130,7 @@ struct x86_cpuinit_ops x86_cpuinit = {
- 
- static void default_nmi_init(void) { };
- 
--static void enc_status_change_prepare_noop(unsigned long vaddr, int npages, bool enc) { }
-+static bool enc_status_change_prepare_noop(unsigned long vaddr, int npages, bool enc) { return true; }
- static bool enc_status_change_finish_noop(unsigned long vaddr, int npages, bool enc) { return false; }
- static bool enc_tlb_flush_required_noop(bool enc) { return false; }
- static bool enc_cache_flush_required_noop(void) { return false; }
-diff --git a/arch/x86/mm/mem_encrypt_amd.c b/arch/x86/mm/mem_encrypt_amd.c
-index 9c4d8dbcb1296..ff6c0462beee7 100644
---- a/arch/x86/mm/mem_encrypt_amd.c
-+++ b/arch/x86/mm/mem_encrypt_amd.c
-@@ -319,7 +319,7 @@ static void enc_dec_hypercall(unsigned long vaddr, int npages, bool enc)
+diff --git a/arch/arm/include/asm/assembler.h b/arch/arm/include/asm/assembler.h
+index 90fbe4a3f9c84..84912b19cac85 100644
+--- a/arch/arm/include/asm/assembler.h
++++ b/arch/arm/include/asm/assembler.h
+@@ -402,6 +402,23 @@ ALT_UP_B(.L0_\@)
  #endif
- }
+ 	.endm
  
--static void amd_enc_status_change_prepare(unsigned long vaddr, int npages, bool enc)
-+static bool amd_enc_status_change_prepare(unsigned long vaddr, int npages, bool enc)
- {
- 	/*
- 	 * To maintain the security guarantees of SEV-SNP guests, make sure
-@@ -327,6 +327,8 @@ static void amd_enc_status_change_prepare(unsigned long vaddr, int npages, bool
- 	 */
- 	if (cc_platform_has(CC_ATTR_GUEST_SEV_SNP) && !enc)
- 		snp_set_memory_shared(vaddr, npages);
++/*
++ * Raw SMP data memory barrier
++ */
++	.macro	__smp_dmb mode
++#if __LINUX_ARM_ARCH__ >= 7
++	.ifeqs "\mode","arm"
++	dmb	ish
++	.else
++	W(dmb)	ish
++	.endif
++#elif __LINUX_ARM_ARCH__ == 6
++	mcr	p15, 0, r0, c7, c10, 5	@ dmb
++#else
++	.error "Incompatible SMP platform"
++#endif
++	.endm
 +
-+	return true;
- }
+ #if defined(CONFIG_CPU_V7M)
+ 	/*
+ 	 * setmode is used to assert to be in svc mode during boot. For v7-M
+diff --git a/arch/arm/include/asm/sync_bitops.h b/arch/arm/include/asm/sync_bitops.h
+index 6f5d627c44a3c..f46b3c570f92e 100644
+--- a/arch/arm/include/asm/sync_bitops.h
++++ b/arch/arm/include/asm/sync_bitops.h
+@@ -14,14 +14,35 @@
+  * ops which are SMP safe even on a UP kernel.
+  */
  
- /* Return true unconditionally: return value doesn't matter for the SEV side */
-diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
-index 2e5a045731dec..5f0ce77a259d8 100644
---- a/arch/x86/mm/pat/set_memory.c
-+++ b/arch/x86/mm/pat/set_memory.c
-@@ -2096,7 +2096,8 @@ static int __set_memory_enc_pgtable(unsigned long addr, int numpages, bool enc)
- 		cpa_flush(&cpa, x86_platform.guest.enc_cache_flush_required());
++/*
++ * Unordered
++ */
++
+ #define sync_set_bit(nr, p)		_set_bit(nr, p)
+ #define sync_clear_bit(nr, p)		_clear_bit(nr, p)
+ #define sync_change_bit(nr, p)		_change_bit(nr, p)
+-#define sync_test_and_set_bit(nr, p)	_test_and_set_bit(nr, p)
+-#define sync_test_and_clear_bit(nr, p)	_test_and_clear_bit(nr, p)
+-#define sync_test_and_change_bit(nr, p)	_test_and_change_bit(nr, p)
+ #define sync_test_bit(nr, addr)		test_bit(nr, addr)
+-#define arch_sync_cmpxchg		arch_cmpxchg
  
- 	/* Notify hypervisor that we are about to set/clr encryption attribute. */
--	x86_platform.guest.enc_status_change_prepare(addr, numpages, enc);
-+	if (!x86_platform.guest.enc_status_change_prepare(addr, numpages, enc))
-+		return -EIO;
++/*
++ * Fully ordered
++ */
++
++int _sync_test_and_set_bit(int nr, volatile unsigned long * p);
++#define sync_test_and_set_bit(nr, p)	_sync_test_and_set_bit(nr, p)
++
++int _sync_test_and_clear_bit(int nr, volatile unsigned long * p);
++#define sync_test_and_clear_bit(nr, p)	_sync_test_and_clear_bit(nr, p)
++
++int _sync_test_and_change_bit(int nr, volatile unsigned long * p);
++#define sync_test_and_change_bit(nr, p)	_sync_test_and_change_bit(nr, p)
++
++#define arch_sync_cmpxchg(ptr, old, new)				\
++({									\
++	__typeof__(*(ptr)) __ret;					\
++	__smp_mb__before_atomic();					\
++	__ret = arch_cmpxchg_relaxed((ptr), (old), (new));		\
++	__smp_mb__after_atomic();					\
++	__ret;								\
++})
  
- 	ret = __change_page_attr_set_clr(&cpa, 1);
+ #endif
+diff --git a/arch/arm/lib/bitops.h b/arch/arm/lib/bitops.h
+index 95bd359912889..f069d1b2318e6 100644
+--- a/arch/arm/lib/bitops.h
++++ b/arch/arm/lib/bitops.h
+@@ -28,7 +28,7 @@ UNWIND(	.fnend		)
+ ENDPROC(\name		)
+ 	.endm
  
+-	.macro	testop, name, instr, store
++	.macro	__testop, name, instr, store, barrier
+ ENTRY(	\name		)
+ UNWIND(	.fnstart	)
+ 	ands	ip, r1, #3
+@@ -38,7 +38,7 @@ UNWIND(	.fnstart	)
+ 	mov	r0, r0, lsr #5
+ 	add	r1, r1, r0, lsl #2	@ Get word offset
+ 	mov	r3, r2, lsl r3		@ create mask
+-	smp_dmb
++	\barrier
+ #if __LINUX_ARM_ARCH__ >= 7 && defined(CONFIG_SMP)
+ 	.arch_extension	mp
+ 	ALT_SMP(W(pldw)	[r1])
+@@ -50,13 +50,21 @@ UNWIND(	.fnstart	)
+ 	strex	ip, r2, [r1]
+ 	cmp	ip, #0
+ 	bne	1b
+-	smp_dmb
++	\barrier
+ 	cmp	r0, #0
+ 	movne	r0, #1
+ 2:	bx	lr
+ UNWIND(	.fnend		)
+ ENDPROC(\name		)
+ 	.endm
++
++	.macro	testop, name, instr, store
++	__testop \name, \instr, \store, smp_dmb
++	.endm
++
++	.macro	sync_testop, name, instr, store
++	__testop \name, \instr, \store, __smp_dmb
++	.endm
+ #else
+ 	.macro	bitop, name, instr
+ ENTRY(	\name		)
+diff --git a/arch/arm/lib/testchangebit.S b/arch/arm/lib/testchangebit.S
+index 4ebecc67e6e04..f13fe9bc2399a 100644
+--- a/arch/arm/lib/testchangebit.S
++++ b/arch/arm/lib/testchangebit.S
+@@ -10,3 +10,7 @@
+                 .text
+ 
+ testop	_test_and_change_bit, eor, str
++
++#if __LINUX_ARM_ARCH__ >= 6
++sync_testop	_sync_test_and_change_bit, eor, str
++#endif
+diff --git a/arch/arm/lib/testclearbit.S b/arch/arm/lib/testclearbit.S
+index 009afa0f5b4a7..4d2c5ca620ebf 100644
+--- a/arch/arm/lib/testclearbit.S
++++ b/arch/arm/lib/testclearbit.S
+@@ -10,3 +10,7 @@
+                 .text
+ 
+ testop	_test_and_clear_bit, bicne, strne
++
++#if __LINUX_ARM_ARCH__ >= 6
++sync_testop	_sync_test_and_clear_bit, bicne, strne
++#endif
+diff --git a/arch/arm/lib/testsetbit.S b/arch/arm/lib/testsetbit.S
+index f3192e55acc87..649dbab65d8d0 100644
+--- a/arch/arm/lib/testsetbit.S
++++ b/arch/arm/lib/testsetbit.S
+@@ -10,3 +10,7 @@
+                 .text
+ 
+ testop	_test_and_set_bit, orreq, streq
++
++#if __LINUX_ARM_ARCH__ >= 6
++sync_testop	_sync_test_and_set_bit, orreq, streq
++#endif
 -- 
 2.39.2
 
