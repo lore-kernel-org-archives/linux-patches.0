@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC2B8F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:58:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22348C433C8;
-	Sun, 16 Jul 2023 19:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9748F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:58:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF401C433C7;
+	Sun, 16 Jul 2023 19:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537535;
-	bh=9nGbXmZvx1u7pEzcB0/QPws2XQCSm7pTG8nu4rnChRk=;
+	s=korg; t=1689537538;
+	bh=DmujuvevHEXHn+CpBSu+q2de/wLK2/lwoaOy8cjTqck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tKFNSNrmXleYYVo5ana6t/JHVR4n99EBe3Vb5T3iKHX3/wYdARijkGeYzrYwhwbxS
-	 3joLGgtt6vaSAOBiNS49uI8cck/AZJjAFrEFbMhulRdjflR1k1hThv3q0W/KlJnNzl
-	 ly3a3jcZ4ZXuaXQiqYYidbl+8vZi7hmKXyLHASlA=
+	b=uAyQAr44V7ZmzMo2KNL52gyexIMPDkw5nPGajjFedHRSO0w80ARBxjfJtH1jPlQp7
+	 C3AMklqMiC+Hu1nxlEF0HiFgl2Bb5kUebPsEwVaUQDlTrlWZ5PeUI7a0V9B1IhPdmD
+	 sWujvWR8LXPdN7ZsIsv6lflzXDmPKVesUJD/1bzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 131/800] regulator: core: Streamline debugfs operations
-Date: Sun, 16 Jul 2023 21:39:44 +0200
-Message-ID: <20230716194952.144907458@linuxfoundation.org>
+Subject: [PATCH 6.4 114/800] spi: spi-geni-qcom: Correct CS_TOGGLE bit in SPI_TRANS_CFG
+Date: Sun, 16 Jul 2023 21:39:27 +0200
+Message-ID: <20230716194951.757655690@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,98 +33,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
 
-[ Upstream commit 08880713ceec023dd94d634f1e8902728c385939 ]
+[ Upstream commit 5fd7c99ecf45c8ee8a9b1268f0ffc91cc6271da2 ]
 
-If CONFIG_DEBUG_FS is not set:
+The CS_TOGGLE bit when set is supposed to instruct FW to
+toggle CS line between words. The driver with intent of
+disabling this behaviour has been unsetting BIT(0). This has
+not caused any trouble so far because the original BIT(1)
+is untouched and BIT(0) likely wasn't being used.
 
-    regulator: Failed to create debugfs directory
-    ...
-    regulator-dummy: Failed to create debugfs directory
+Correct this to prevent a potential future bug.
 
-As per the comments for debugfs_create_dir(), errors returned by this
-function should be expected, and ignored:
-
- * If debugfs is not enabled in the kernel, the value -%ENODEV will be
- * returned.
- *
- * NOTE: it's expected that most callers should _ignore_ the errors returned
- * by this function. Other debugfs functions handle the fact that the "dentry"
- * passed to them could be an error and they don't crash in that case.
- * Drivers should generally work fine even if debugfs fails to init anyway.
-
-Adhere to the debugfs spirit, and streamline all operations by:
-  1. Demoting the importance of the printed error messages to debug
-     level, like is already done in create_regulator(),
-  2. Further ignoring any returned errors, as by design, all debugfs
-     functions are no-ops when passed an error pointer.
-
-Fixes: 2bf1c45be3b8f3a3 ("regulator: Fix error checking for debugfs_create_dir")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/2f8bb6e113359ddfab7b59e4d4274bd4c06d6d0a.1685013051.git.geert+renesas@glider.be
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org
+Fixes: 561de45f72bd ("spi: spi-geni-qcom: Add SPI driver support for GENI based QUP")
+Reviewed-by: Douglas Anderson <dianders@chromium.org
+Link: https://lore.kernel.org/r/1682412128-1913-1-git-send-email-quic_vnivarth@quicinc.com
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 30 +++++++++++++-----------------
- 1 file changed, 13 insertions(+), 17 deletions(-)
+ drivers/spi/spi-geni-qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index c1bc4729301d5..d8e1caaf207e1 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -1911,19 +1911,17 @@ static struct regulator *create_regulator(struct regulator_dev *rdev,
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index b293428760bc6..08672a961fbbe 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -35,7 +35,7 @@
+ #define CS_DEMUX_OUTPUT_SEL	GENMASK(3, 0)
  
- 	if (err != -EEXIST)
- 		regulator->debugfs = debugfs_create_dir(supply_name, rdev->debugfs);
--	if (IS_ERR(regulator->debugfs)) {
-+	if (IS_ERR(regulator->debugfs))
- 		rdev_dbg(rdev, "Failed to create debugfs directory\n");
--	} else {
--		debugfs_create_u32("uA_load", 0444, regulator->debugfs,
--				   &regulator->uA_load);
--		debugfs_create_u32("min_uV", 0444, regulator->debugfs,
--				   &regulator->voltage[PM_SUSPEND_ON].min_uV);
--		debugfs_create_u32("max_uV", 0444, regulator->debugfs,
--				   &regulator->voltage[PM_SUSPEND_ON].max_uV);
--		debugfs_create_file("constraint_flags", 0444,
--				    regulator->debugfs, regulator,
--				    &constraint_flags_fops);
--	}
-+
-+	debugfs_create_u32("uA_load", 0444, regulator->debugfs,
-+			   &regulator->uA_load);
-+	debugfs_create_u32("min_uV", 0444, regulator->debugfs,
-+			   &regulator->voltage[PM_SUSPEND_ON].min_uV);
-+	debugfs_create_u32("max_uV", 0444, regulator->debugfs,
-+			   &regulator->voltage[PM_SUSPEND_ON].max_uV);
-+	debugfs_create_file("constraint_flags", 0444, regulator->debugfs,
-+			    regulator, &constraint_flags_fops);
+ #define SE_SPI_TRANS_CFG	0x25c
+-#define CS_TOGGLE		BIT(0)
++#define CS_TOGGLE		BIT(1)
  
- 	/*
- 	 * Check now if the regulator is an always on regulator - if
-@@ -5256,10 +5254,8 @@ static void rdev_init_debugfs(struct regulator_dev *rdev)
- 	}
- 
- 	rdev->debugfs = debugfs_create_dir(rname, debugfs_root);
--	if (IS_ERR(rdev->debugfs)) {
--		rdev_warn(rdev, "Failed to create debugfs directory\n");
--		return;
--	}
-+	if (IS_ERR(rdev->debugfs))
-+		rdev_dbg(rdev, "Failed to create debugfs directory\n");
- 
- 	debugfs_create_u32("use_count", 0444, rdev->debugfs,
- 			   &rdev->use_count);
-@@ -6179,7 +6175,7 @@ static int __init regulator_init(void)
- 
- 	debugfs_root = debugfs_create_dir("regulator", NULL);
- 	if (IS_ERR(debugfs_root))
--		pr_warn("regulator: Failed to create debugfs directory\n");
-+		pr_debug("regulator: Failed to create debugfs directory\n");
- 
- #ifdef CONFIG_DEBUG_FS
- 	debugfs_create_file("supply_map", 0444, debugfs_root, NULL,
+ #define SE_SPI_WORD_LEN		0x268
+ #define WORD_LEN_MSK		GENMASK(9, 0)
 -- 
 2.39.2
 
