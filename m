@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514268F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:10:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9561C433C8;
-	Sun, 16 Jul 2023 20:10:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F708F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:10:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E4FEC433C8;
+	Sun, 16 Jul 2023 20:10:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538214;
-	bh=5Xs0rP7IrtOLhUV4Wke7GmulTfWYdBbBkBkJ00NlK0M=;
+	s=korg; t=1689538216;
+	bh=SML7ZeZSwp5kkA8sla9Afe2oM7xoLvyaBJCjP+3g0YA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q6NZ3TuUtvTQ7U8fRTh40L/P1coIzPd1ujCgY4Q28rtjsGsoG+RWwz2XKMBXcCppv
-	 ozNz4FedYgR8KtUEwD3PvJzq8ZdhUu97Ebl+3KMPsOQOr2K7aaQVcbR7Tk0SgWkSNh
-	 yC27VUQMcJtFs9ptfhrOGoJQys0Hk/KvAjoNRXzc=
+	b=QR31vwUgFqLmqG3M4YZS0dJ9JXs15DXPhE6r04UqrV5SJSeefqGnzldEFyPjhOc6g
+	 i6z9n646BGvayKYQhR+nsCZhiaQhzRY7EXy9XILfdt2qcYJGE1EkhtpyrEAhp3+XWG
+	 +2A6Yr815jwfRY4nEpCnY6nujGPIIpVsUrQNtqvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	David Gow <davidgow@google.com>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 371/800] HID: uclogic: Modular KUnit tests should not depend on KUNIT=y
-Date: Sun, 16 Jul 2023 21:43:44 +0200
-Message-ID: <20230716194957.692816284@linuxfoundation.org>
+Subject: [PATCH 6.4 372/800] RDMA/rxe: Fix access checks in rxe_check_bind_mw
+Date: Sun, 16 Jul 2023 21:43:45 +0200
+Message-ID: <20230716194957.715334686@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,39 +35,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit 49904a0ebf23b15aad288a10f5354e7cd8193121 ]
+[ Upstream commit 425e1c9018fdf25cb4531606cc92d9d01a55534f ]
 
-While KUnit tests that cannot be built as a loadable module must depend
-on "KUNIT=y", this is not true for modular tests, where it adds an
-unnecessary limitation.
+The subroutine rxe_check_bind_mw() in rxe_mw.c performs checks on the mw
+access flags before they are set so they always succeed.  This patch
+instead checks the access flags passed in the send wqe.
 
-Fix this by relaxing the dependency to "KUNIT".
-
-Fixes: 08809e482a1c44d9 ("HID: uclogic: KUnit best practices and naming conventions")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: David Gow <davidgow@google.com>
-Reviewed-by: José Expósito <jose.exposito89@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Fixes: 32a577b4c3a9 ("RDMA/rxe: Add support for bind MW work requests")
+Link: https://lore.kernel.org/r/20230530221334.89432-4-rpearsonhpe@gmail.com
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/sw/rxe/rxe_mw.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/hid/Kconfig b/drivers/hid/Kconfig
-index 4ce012f83253e..b977450cac752 100644
---- a/drivers/hid/Kconfig
-+++ b/drivers/hid/Kconfig
-@@ -1285,7 +1285,7 @@ config HID_MCP2221
+diff --git a/drivers/infiniband/sw/rxe/rxe_mw.c b/drivers/infiniband/sw/rxe/rxe_mw.c
+index afa5ce1a71166..a7ec57ab8fadd 100644
+--- a/drivers/infiniband/sw/rxe/rxe_mw.c
++++ b/drivers/infiniband/sw/rxe/rxe_mw.c
+@@ -48,7 +48,7 @@ int rxe_dealloc_mw(struct ib_mw *ibmw)
+ }
  
- config HID_KUNIT_TEST
- 	tristate "KUnit tests for HID" if !KUNIT_ALL_TESTS
--	depends on KUNIT=y
-+	depends on KUNIT
- 	depends on HID_BATTERY_STRENGTH
- 	depends on HID_UCLOGIC
- 	default KUNIT_ALL_TESTS
+ static int rxe_check_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
+-			 struct rxe_mw *mw, struct rxe_mr *mr)
++			 struct rxe_mw *mw, struct rxe_mr *mr, int access)
+ {
+ 	if (mw->ibmw.type == IB_MW_TYPE_1) {
+ 		if (unlikely(mw->state != RXE_MW_STATE_VALID)) {
+@@ -58,7 +58,7 @@ static int rxe_check_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
+ 		}
+ 
+ 		/* o10-36.2.2 */
+-		if (unlikely((mw->access & IB_ZERO_BASED))) {
++		if (unlikely((access & IB_ZERO_BASED))) {
+ 			rxe_dbg_mw(mw, "attempt to bind a zero based type 1 MW\n");
+ 			return -EINVAL;
+ 		}
+@@ -104,7 +104,7 @@ static int rxe_check_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
+ 	}
+ 
+ 	/* C10-74 */
+-	if (unlikely((mw->access &
++	if (unlikely((access &
+ 		      (IB_ACCESS_REMOTE_WRITE | IB_ACCESS_REMOTE_ATOMIC)) &&
+ 		     !(mr->access & IB_ACCESS_LOCAL_WRITE))) {
+ 		rxe_dbg_mw(mw,
+@@ -113,7 +113,7 @@ static int rxe_check_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
+ 	}
+ 
+ 	/* C10-75 */
+-	if (mw->access & IB_ZERO_BASED) {
++	if (access & IB_ZERO_BASED) {
+ 		if (unlikely(wqe->wr.wr.mw.length > mr->ibmr.length)) {
+ 			rxe_dbg_mw(mw,
+ 				"attempt to bind a ZB MW outside of the MR\n");
+@@ -133,12 +133,12 @@ static int rxe_check_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
+ }
+ 
+ static void rxe_do_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
+-		      struct rxe_mw *mw, struct rxe_mr *mr)
++		      struct rxe_mw *mw, struct rxe_mr *mr, int access)
+ {
+ 	u32 key = wqe->wr.wr.mw.rkey & 0xff;
+ 
+ 	mw->rkey = (mw->rkey & ~0xff) | key;
+-	mw->access = wqe->wr.wr.mw.access;
++	mw->access = access;
+ 	mw->state = RXE_MW_STATE_VALID;
+ 	mw->addr = wqe->wr.wr.mw.addr;
+ 	mw->length = wqe->wr.wr.mw.length;
+@@ -169,6 +169,7 @@ int rxe_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe)
+ 	struct rxe_dev *rxe = to_rdev(qp->ibqp.device);
+ 	u32 mw_rkey = wqe->wr.wr.mw.mw_rkey;
+ 	u32 mr_lkey = wqe->wr.wr.mw.mr_lkey;
++	int access = wqe->wr.wr.mw.access;
+ 
+ 	mw = rxe_pool_get_index(&rxe->mw_pool, mw_rkey >> 8);
+ 	if (unlikely(!mw)) {
+@@ -198,11 +199,11 @@ int rxe_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe)
+ 
+ 	spin_lock_bh(&mw->lock);
+ 
+-	ret = rxe_check_bind_mw(qp, wqe, mw, mr);
++	ret = rxe_check_bind_mw(qp, wqe, mw, mr, access);
+ 	if (ret)
+ 		goto err_unlock;
+ 
+-	rxe_do_bind_mw(qp, wqe, mw, mr);
++	rxe_do_bind_mw(qp, wqe, mw, mr, access);
+ err_unlock:
+ 	spin_unlock_bh(&mw->lock);
+ err_drop_mr:
 -- 
 2.39.2
 
