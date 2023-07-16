@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7481A8F5D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:38:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB01C433C8;
-	Sun, 16 Jul 2023 20:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7BE8F5D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:38:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09B2C433C7;
+	Sun, 16 Jul 2023 20:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539922;
-	bh=xNCwMWciGskOXqgafz38fG8flMZa59fR/gSEK5tPP4Y=;
+	s=korg; t=1689539925;
+	bh=/f/qe/x5uw5guA6TWeQzDNDdWGfZFolipMOvbV/kCZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KkUYmo24wCqi4fjsIej1NNqMwLfVlLG7Z24RoglJuj1jfSgsG+oocU+U2mrNy+XIq
-	 zLRbQu7+oeOMKGUxYihGNFc1Ly5uG2VnxFgdS0EpDnpi2uBfRLQfWhEQb1dcZN6YmU
-	 dMrh5JszIKSuNZUbsYz2TbTKygRlyhTYQcXFl19M=
+	b=wJ/d0tPRjrpejvNXw/oFn/eh7nGUvNLsYFxEculYG9QJbVbLr/EXtXzdb6aGo1qoy
+	 c9TpNOyiMTOjc8fBrocNDXyNG999Ev2e3eoEJeEAQHhbcdwV2BQTVg8XGtDH13iWF7
+	 ARLUPeqv60iyFwnImNh9cmCEiygpCoqNDmgKPGEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 180/591] RDMA/bnxt_re: Fix to remove unnecessary return labels
-Date: Sun, 16 Jul 2023 21:45:19 +0200
-Message-ID: <20230716194928.523428535@linuxfoundation.org>
+Subject: [PATCH 6.1 163/591] clk: vc7: Fix .driver_data content in i2c_device_id
+Date: Sun, 16 Jul 2023 21:45:02 +0200
+Message-ID: <20230716194928.082850237@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,64 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit 9b3ee47796f529e5bc31a355d6cb756d68a7079a ]
+[ Upstream commit b5e10beeafaa3266559c582dde7534ae3fe8cefb ]
 
-If there is no cleanup needed then just return directly.  This cleans up
-the code and improve readability.
+The .driver_data content in i2c_device_id table must match the
+.data content in of_device_id table, else device_get_match_data()
+would return bogus value on i2c_device_id match. Align the two
+tables.
 
-Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Link: https://lore.kernel.org/r/1684478897-12247-3-git-send-email-selvin.xavier@broadcom.com
-Reviewed-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Reviewed-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+The i2c_device_id table is now converted from of_device_id using
+'s@.compatible = "renesas,\([^"]\+"\), .data = \(.*\)@"\1, .driver_data = (kernel_ulong_t)\2@'
+
+Fixes: 48c5e98fedd9 ("clk: Renesas versaclock7 ccf device driver")
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Link: https://lore.kernel.org/r/20230507133906.15061-2-marek.vasut+renesas@mailbox.org
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_fp.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/clk/clk-versaclock7.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-index a143bd3580a27..4abe1f59b3689 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-@@ -1605,7 +1605,7 @@ static int bnxt_qplib_put_inline(struct bnxt_qplib_qp *qp,
- 		il_src = (void *)wqe->sg_list[indx].addr;
- 		t_len += len;
- 		if (t_len > qp->max_inline_data)
--			goto bad;
-+			return -ENOMEM;
- 		while (len) {
- 			if (pull_dst) {
- 				pull_dst = false;
-@@ -1629,8 +1629,6 @@ static int bnxt_qplib_put_inline(struct bnxt_qplib_qp *qp,
- 	}
+diff --git a/drivers/clk/clk-versaclock7.c b/drivers/clk/clk-versaclock7.c
+index 8e4f86e852aa0..0ae191f50b4b2 100644
+--- a/drivers/clk/clk-versaclock7.c
++++ b/drivers/clk/clk-versaclock7.c
+@@ -1282,7 +1282,7 @@ static const struct regmap_config vc7_regmap_config = {
+ };
  
- 	return t_len;
--bad:
--	return -ENOMEM;
- }
- 
- static u32 bnxt_qplib_put_sges(struct bnxt_qplib_hwq *hwq,
-@@ -2060,7 +2058,7 @@ int bnxt_qplib_create_cq(struct bnxt_qplib_res *res, struct bnxt_qplib_cq *cq)
- 	hwq_attr.sginfo = &cq->sg_info;
- 	rc = bnxt_qplib_alloc_init_hwq(&cq->hwq, &hwq_attr);
- 	if (rc)
--		goto exit;
-+		return rc;
- 
- 	RCFW_CMD_PREP(req, CREATE_CQ, cmd_flags);
- 
-@@ -2101,7 +2099,6 @@ int bnxt_qplib_create_cq(struct bnxt_qplib_res *res, struct bnxt_qplib_cq *cq)
- 
- fail:
- 	bnxt_qplib_free_hwq(res, &cq->hwq);
--exit:
- 	return rc;
- }
- 
+ static const struct i2c_device_id vc7_i2c_id[] = {
+-	{ "rc21008a", VC7_RC21008A },
++	{ "rc21008a", .driver_data = (kernel_ulong_t)&vc7_rc21008a_info },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(i2c, vc7_i2c_id);
 -- 
 2.39.2
 
