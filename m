@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC998F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:47:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5AAC433C8;
-	Sun, 16 Jul 2023 20:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 642D68F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:47:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFCBC433C8;
+	Sun, 16 Jul 2023 20:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540459;
-	bh=0tcqVNSTf99UKfOObiqCCc26cJ6qUzBuwXHjnm5pMvg=;
+	s=korg; t=1689540462;
+	bh=9wUHqV2X2sdeCrpS+UNSLmXXTqCaWp+y1iS0yra1TFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JUuSpqxzfpFKpmhszJRJKpWLNrZ2U+ehTRr9poXX3cuMI2NZsCgfjEZLnU3Mf+5ct
-	 Ph/F4SCD6SlOtuzrlUjah90Hf0XcRACCjCdVH52zRnP0BDTiNcKIZ4He30njB8HUiG
-	 tDD6Yz1FAkNV5nKiMsbHHEVcH9u82W0a+TbWx/NM=
+	b=0KzhcBvPFhquLsWSKI4+WqRW8vNJUsp2RAe+6J9NDgAOSkIuKgI+y6arpz0COxOg1
+	 uDvXe7+2HxuB4pshaCR426qOcBOGZ9ndhIajke7njQpuVycORxcNRuMP7HDb3oOMcb
+	 SzCjRk71vVVapPUssbcT06TsAbhpBCGK8tVzIHnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Herbert Xu <herbert@gondor.apana.org.au>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 343/591] crypto: kpp - Add helper to set reqsize
-Date: Sun, 16 Jul 2023 21:48:02 +0200
-Message-ID: <20230716194932.784082721@linuxfoundation.org>
+Subject: [PATCH 6.1 344/591] crypto: qat - Use helper to set reqsize
+Date: Sun, 16 Jul 2023 21:48:03 +0200
+Message-ID: <20230716194932.811427039@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,35 +37,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 56861cbde1b9f3b34d300e6ba87f2c3de1a9c309 ]
+[ Upstream commit 80e62ad58db084920d8cf23323b713391e09f374 ]
 
-The value of reqsize should only be changed through a helper.
-To do so we need to first add a helper for this.
+The value of reqsize must only be changed through the helper.
 
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Stable-dep-of: eb7713f5ca97 ("crypto: qat - unmap buffer before free for DH")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/crypto/internal/kpp.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/crypto/qat/qat_common/qat_asym_algs.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/crypto/internal/kpp.h b/include/crypto/internal/kpp.h
-index 9cb0662ebe871..31ff3c1986ef0 100644
---- a/include/crypto/internal/kpp.h
-+++ b/include/crypto/internal/kpp.h
-@@ -50,6 +50,12 @@ static inline void *kpp_request_ctx(struct kpp_request *req)
- 	return req->__ctx;
- }
+diff --git a/drivers/crypto/qat/qat_common/qat_asym_algs.c b/drivers/crypto/qat/qat_common/qat_asym_algs.c
+index 94a26702aeae1..935a7e012946e 100644
+--- a/drivers/crypto/qat/qat_common/qat_asym_algs.c
++++ b/drivers/crypto/qat/qat_common/qat_asym_algs.c
+@@ -494,6 +494,8 @@ static int qat_dh_init_tfm(struct crypto_kpp *tfm)
+ 	if (!inst)
+ 		return -EINVAL;
  
-+static inline void kpp_set_reqsize(struct crypto_kpp *kpp,
-+				   unsigned int reqsize)
-+{
-+	crypto_kpp_alg(kpp)->reqsize = reqsize;
-+}
++	kpp_set_reqsize(tfm, sizeof(struct qat_asym_request) + 64);
 +
- static inline void *kpp_tfm_ctx(struct crypto_kpp *tfm)
- {
- 	return tfm->base.__crt_ctx;
+ 	ctx->p_size = 0;
+ 	ctx->g2 = false;
+ 	ctx->inst = inst;
+@@ -1230,6 +1232,8 @@ static int qat_rsa_init_tfm(struct crypto_akcipher *tfm)
+ 	if (!inst)
+ 		return -EINVAL;
+ 
++	akcipher_set_reqsize(tfm, sizeof(struct qat_asym_request) + 64);
++
+ 	ctx->key_sz = 0;
+ 	ctx->inst = inst;
+ 	return 0;
+@@ -1252,7 +1256,6 @@ static struct akcipher_alg rsa = {
+ 	.max_size = qat_rsa_max_size,
+ 	.init = qat_rsa_init_tfm,
+ 	.exit = qat_rsa_exit_tfm,
+-	.reqsize = sizeof(struct qat_asym_request) + 64,
+ 	.base = {
+ 		.cra_name = "rsa",
+ 		.cra_driver_name = "qat-rsa",
+@@ -1269,7 +1272,6 @@ static struct kpp_alg dh = {
+ 	.max_size = qat_dh_max_size,
+ 	.init = qat_dh_init_tfm,
+ 	.exit = qat_dh_exit_tfm,
+-	.reqsize = sizeof(struct qat_asym_request) + 64,
+ 	.base = {
+ 		.cra_name = "dh",
+ 		.cra_driver_name = "qat-dh",
 -- 
 2.39.2
 
