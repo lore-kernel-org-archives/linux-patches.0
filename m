@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1040F8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:16:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A31C433C9;
-	Sun, 16 Jul 2023 20:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37B78F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:16:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44EC6C433C7;
+	Sun, 16 Jul 2023 20:16:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538570;
-	bh=0fh7Yam5IVU8UfPlqlQM3hQVJp6SmJDyBYvkyiCizWY=;
+	s=korg; t=1689538573;
+	bh=llTlCzM7qVZO9ZtCK1keGAC3stq2SMv5PEPDyQtoHNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LXQwci9hpRdWTDxKBNiHOmeP4s6CZST+ZEp0BPy4UuqVy6s4qkCrFpAEHM9kKpeo0
-	 NzgjeveNvMoLOKEU5bymCQk1aZaDxc5qUsRymu9eP7d48wwfLk2mOuRPWVks6LXivX
-	 frfk7Mk1/UDZgoiLdN1i/KW9G7zue1+rgoLYX6pI=
+	b=IKwL4zoYw7OIUszXgoG7QUFBz2s+6BNSZc8RRnFLgvE4hmh55A3e/j8nPYKmAu6qV
+	 tB+Fds6tgUwCbSrY6cC3twn9DvAb2sS6MLhAe6TJvIyWJ3R+1pyDbPtXVxdpP5ch5C
+	 tM7Ewkcdp7OpANvs7WbJsPWpHUh6RhiGXSWH9h+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>,
-	Sachin Sant <sachinp@linux.ibm.commailto:sachinp@linux.ibm.com>
-Subject: [PATCH 6.4 491/800] powerpc/book3s64/mm: Fix DirectMap stats in /proc/meminfo
-Date: Sun, 16 Jul 2023 21:45:44 +0200
-Message-ID: <20230716195000.484740813@linuxfoundation.org>
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 500/800] modpost: remove broken calculation of exception_table_entry size
+Date: Sun, 16 Jul 2023 21:45:53 +0200
+Message-ID: <20230716195000.708275561@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,156 +34,159 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 0da90af431abc3f497a38ec9ef6e43b0d0dabe80 ]
+[ Upstream commit d0acc76a49aa917c1a455d11d32d34a01e8b2835 ]
 
-On memory unplug reduce DirectMap page count correctly.
-root@ubuntu-guest:# grep Direct /proc/meminfo
-DirectMap4k:           0 kB
-DirectMap64k:           0 kB
-DirectMap2M:    115343360 kB
-DirectMap1G:           0 kB
+find_extable_entry_size() is completely broken. It has awesome comments
+about how to calculate sizeof(struct exception_table_entry).
 
-Before fix:
-root@ubuntu-guest:# ndctl disable-namespace all
-disabled 1 namespace
-root@ubuntu-guest:# grep Direct /proc/meminfo
-DirectMap4k:           0 kB
-DirectMap64k:           0 kB
-DirectMap2M:    115343360 kB
-DirectMap1G:           0 kB
+It was based on these assumptions:
 
-After fix:
-root@ubuntu-guest:# ndctl disable-namespace all
-disabled 1 namespace
-root@ubuntu-guest:# grep Direct /proc/meminfo
-DirectMap4k:           0 kB
-DirectMap64k:           0 kB
-DirectMap2M:    104857600 kB
-DirectMap1G:           0 kB
+  - struct exception_table_entry has two fields
+  - both of the fields have the same size
 
-Fixes: a2dc009afa9a ("powerpc/mm/book3s/radix: Add mapping statistics")
-Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
-Tested-by: Sachin Sant <sachinp@linux.ibm.com <mailto:sachinp@linux.ibm.com>>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230616110826.344417-4-aneesh.kumar@linux.ibm.com
+Then, we came up with this equation:
+
+  (offset of the second field) * 2 == (size of struct)
+
+It was true for all architectures when commit 52dc0595d540 ("modpost:
+handle relocations mismatch in __ex_table.") was applied.
+
+Our mathematics broke when commit 548acf19234d ("x86/mm: Expand the
+exception table logic to allow new handling options") introduced the
+third field.
+
+Now, the definition of exception_table_entry is highly arch-dependent.
+
+For x86, sizeof(struct exception_table_entry) is apparently 12, but
+find_extable_entry_size() sets extable_entry_size to 8.
+
+I could fix it, but I do not see much value in this code.
+
+extable_entry_size is used just for selecting a slightly different
+error message.
+
+If the first field ("insn") references to a non-executable section,
+
+    The relocation at %s+0x%lx references
+    section "%s" which is not executable, IOW
+    it is not possible for the kernel to fault
+    at that address.  Something is seriously wrong
+    and should be fixed.
+
+If the second field ("fixup") references to a non-executable section,
+
+    The relocation at %s+0x%lx references
+    section "%s" which is not executable, IOW
+    the kernel will fault if it ever tries to
+    jump to it.  Something is seriously wrong
+    and should be fixed.
+
+Merge the two error messages rather than adding even more complexity.
+
+Change fatal() to error() to make it continue running and catch more
+possible errors.
+
+Fixes: 548acf19234d ("x86/mm: Expand the exception table logic to allow new handling options")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/book3s64/radix_pgtable.c | 34 +++++++++++++++---------
- 1 file changed, 22 insertions(+), 12 deletions(-)
+ scripts/mod/modpost.c | 60 +++----------------------------------------
+ 1 file changed, 3 insertions(+), 57 deletions(-)
 
-diff --git a/arch/powerpc/mm/book3s64/radix_pgtable.c b/arch/powerpc/mm/book3s64/radix_pgtable.c
-index 2297aa764ecdb..e8db8c8efe359 100644
---- a/arch/powerpc/mm/book3s64/radix_pgtable.c
-+++ b/arch/powerpc/mm/book3s64/radix_pgtable.c
-@@ -745,9 +745,9 @@ static void free_pud_table(pud_t *pud_start, p4d_t *p4d)
+diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
+index c12150f96b884..9b6e8109af83f 100644
+--- a/scripts/mod/modpost.c
++++ b/scripts/mod/modpost.c
+@@ -1292,43 +1292,6 @@ static int is_executable_section(struct elf_info* elf, unsigned int section_inde
+ 	return ((elf->sechdrs[section_index].sh_flags & SHF_EXECINSTR) == SHF_EXECINSTR);
  }
  
- static void remove_pte_table(pte_t *pte_start, unsigned long addr,
--			     unsigned long end)
-+			     unsigned long end, bool direct)
- {
--	unsigned long next;
-+	unsigned long next, pages = 0;
- 	pte_t *pte;
- 
- 	pte = pte_start + pte_index(addr);
-@@ -769,13 +769,16 @@ static void remove_pte_table(pte_t *pte_start, unsigned long addr,
- 		}
- 
- 		pte_clear(&init_mm, addr, pte);
-+		pages++;
- 	}
-+	if (direct)
-+		update_page_count(mmu_virtual_psize, -pages);
+-/*
+- * We rely on a gross hack in section_rel[a]() calling find_extable_entry_size()
+- * to know the sizeof(struct exception_table_entry) for the target architecture.
+- */
+-static unsigned int extable_entry_size = 0;
+-static void find_extable_entry_size(const char* const sec, const Elf_Rela* r)
+-{
+-	/*
+-	 * If we're currently checking the second relocation within __ex_table,
+-	 * that relocation offset tells us the offsetof(struct
+-	 * exception_table_entry, fixup) which is equal to sizeof(struct
+-	 * exception_table_entry) divided by two.  We use that to our advantage
+-	 * since there's no portable way to get that size as every architecture
+-	 * seems to go with different sized types.  Not pretty but better than
+-	 * hard-coding the size for every architecture..
+-	 */
+-	if (!extable_entry_size)
+-		extable_entry_size = r->r_offset * 2;
+-}
+-
+-static inline bool is_extable_fault_address(Elf_Rela *r)
+-{
+-	/*
+-	 * extable_entry_size is only discovered after we've handled the
+-	 * _second_ relocation in __ex_table, so only abort when we're not
+-	 * handling the first reloc and extable_entry_size is zero.
+-	 */
+-	if (r->r_offset && extable_entry_size == 0)
+-		fatal("extable_entry size hasn't been discovered!\n");
+-
+-	return ((r->r_offset == 0) ||
+-		(r->r_offset % extable_entry_size == 0));
+-}
+-
+-#define is_second_extable_reloc(Start, Cur, Sec)			\
+-	(((Cur) == (Start) + 1) && (strcmp("__ex_table", (Sec)) == 0))
+-
+ static void report_extable_warnings(const char* modname, struct elf_info* elf,
+ 				    const struct sectioncheck* const mismatch,
+ 				    Elf_Rela* r, Elf_Sym* sym,
+@@ -1384,22 +1347,9 @@ static void extable_mismatch_handler(const char* modname, struct elf_info *elf,
+ 		      "You might get more information about where this is\n"
+ 		      "coming from by using scripts/check_extable.sh %s\n",
+ 		      fromsec, (long)r->r_offset, tosec, modname);
+-	else if (!is_executable_section(elf, get_secindex(elf, sym))) {
+-		if (is_extable_fault_address(r))
+-			fatal("The relocation at %s+0x%lx references\n"
+-			      "section \"%s\" which is not executable, IOW\n"
+-			      "it is not possible for the kernel to fault\n"
+-			      "at that address.  Something is seriously wrong\n"
+-			      "and should be fixed.\n",
+-			      fromsec, (long)r->r_offset, tosec);
+-		else
+-			fatal("The relocation at %s+0x%lx references\n"
+-			      "section \"%s\" which is not executable, IOW\n"
+-			      "the kernel will fault if it ever tries to\n"
+-			      "jump to it.  Something is seriously wrong\n"
+-			      "and should be fixed.\n",
+-			      fromsec, (long)r->r_offset, tosec);
+-	}
++	else if (!is_executable_section(elf, get_secindex(elf, sym)))
++		error("%s+0x%lx references non-executable section '%s'\n",
++		      fromsec, (long)r->r_offset, tosec);
  }
  
- static void __meminit remove_pmd_table(pmd_t *pmd_start, unsigned long addr,
--			     unsigned long end)
-+				       unsigned long end, bool direct)
- {
--	unsigned long next;
-+	unsigned long next, pages = 0;
- 	pte_t *pte_base;
- 	pmd_t *pmd;
- 
-@@ -793,19 +796,22 @@ static void __meminit remove_pmd_table(pmd_t *pmd_start, unsigned long addr,
- 				continue;
- 			}
- 			pte_clear(&init_mm, addr, (pte_t *)pmd);
-+			pages++;
+ static void check_section_mismatch(const char *modname, struct elf_info *elf,
+@@ -1574,8 +1524,6 @@ static void section_rela(const char *modname, struct elf_info *elf,
+ 		/* Skip special sections */
+ 		if (is_shndx_special(sym->st_shndx))
  			continue;
- 		}
- 
- 		pte_base = (pte_t *)pmd_page_vaddr(*pmd);
--		remove_pte_table(pte_base, addr, next);
-+		remove_pte_table(pte_base, addr, next, direct);
- 		free_pte_table(pte_base, pmd);
+-		if (is_second_extable_reloc(start, rela, fromsec))
+-			find_extable_entry_size(fromsec, &r);
+ 		check_section_mismatch(modname, elf, &r, sym, fromsec);
  	}
-+	if (direct)
-+		update_page_count(MMU_PAGE_2M, -pages);
  }
- 
- static void __meminit remove_pud_table(pud_t *pud_start, unsigned long addr,
--			     unsigned long end)
-+				       unsigned long end, bool direct)
- {
--	unsigned long next;
-+	unsigned long next, pages = 0;
- 	pmd_t *pmd_base;
- 	pud_t *pud;
- 
-@@ -823,16 +829,20 @@ static void __meminit remove_pud_table(pud_t *pud_start, unsigned long addr,
- 				continue;
- 			}
- 			pte_clear(&init_mm, addr, (pte_t *)pud);
-+			pages++;
+@@ -1633,8 +1581,6 @@ static void section_rel(const char *modname, struct elf_info *elf,
+ 		/* Skip special sections */
+ 		if (is_shndx_special(sym->st_shndx))
  			continue;
- 		}
- 
- 		pmd_base = pud_pgtable(*pud);
--		remove_pmd_table(pmd_base, addr, next);
-+		remove_pmd_table(pmd_base, addr, next, direct);
- 		free_pmd_table(pmd_base, pud);
+-		if (is_second_extable_reloc(start, rel, fromsec))
+-			find_extable_entry_size(fromsec, &r);
+ 		check_section_mismatch(modname, elf, &r, sym, fromsec);
  	}
-+	if (direct)
-+		update_page_count(MMU_PAGE_1G, -pages);
  }
- 
--static void __meminit remove_pagetable(unsigned long start, unsigned long end)
-+static void __meminit remove_pagetable(unsigned long start, unsigned long end,
-+				       bool direct)
- {
- 	unsigned long addr, next;
- 	pud_t *pud_base;
-@@ -861,7 +871,7 @@ static void __meminit remove_pagetable(unsigned long start, unsigned long end)
- 		}
- 
- 		pud_base = p4d_pgtable(*p4d);
--		remove_pud_table(pud_base, addr, next);
-+		remove_pud_table(pud_base, addr, next, direct);
- 		free_pud_table(pud_base, p4d);
- 	}
- 
-@@ -884,7 +894,7 @@ int __meminit radix__create_section_mapping(unsigned long start,
- 
- int __meminit radix__remove_section_mapping(unsigned long start, unsigned long end)
- {
--	remove_pagetable(start, end);
-+	remove_pagetable(start, end, true);
- 	return 0;
- }
- #endif /* CONFIG_MEMORY_HOTPLUG */
-@@ -920,7 +930,7 @@ int __meminit radix__vmemmap_create_mapping(unsigned long start,
- #ifdef CONFIG_MEMORY_HOTPLUG
- void __meminit radix__vmemmap_remove_mapping(unsigned long start, unsigned long page_size)
- {
--	remove_pagetable(start, start + page_size);
-+	remove_pagetable(start, start + page_size, false);
- }
- #endif
- #endif
 -- 
 2.39.2
 
