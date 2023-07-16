@@ -1,67 +1,123 @@
-Received: from abi149hd126.arn1.oracleemaildelivery.com (abi149hd126.arn1.oracleemaildelivery.com [129.149.84.126])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAF98F55
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:30:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=oci-arn1-20220924;
- d=augustwikerfors.se;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender;
- bh=1X2J9Yn20F/BEmGq9y/x0FBrrb96P1AoI6JRoNuLx48=;
- b=hhYQHeWeU3tWLwkcoWUkS7C8RqLLTN6gdAl5d6RHOsD6mFDYNN8KTBTyAWR1eU5dwokmiavsFfW3
-   vaVh+c1pvIKb0/s449uLlfHT75ASed294nTe6MVD72MtEHaIUizStnmLW2MMRLDGQaOOYbTZRfdx
-   4TG6s9sGdM1hM7dXn/dvWh0YijIczoFWwn+0CR0uRS5EsoUOBGipTodMsYTCzc4OXH1UeQSSspC/
-   gL57Z5mEtHYUIjERn1ZS7VYl6DQUgwMoM94eezODEqvOMNDYxRjbPt/BK+qPiZNXd2ZCL8D/MCJz
-   tGab/fg6WDylUfGRsWgR1YD0Ns8z2bMUR9lz0w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-arn-20211201;
- d=arn1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender;
- bh=1X2J9Yn20F/BEmGq9y/x0FBrrb96P1AoI6JRoNuLx48=;
- b=MTAHRUN67jyzpHcQ1EHcYebCrL+Zrea6rPHGTQrZrZydIfK3QTKJUkEdwF/jYpwcsSLEzv4ndYAy
-   oNGWRfebaxV6iVN23mJ2mWABO6rDERU7zT81tw7cEHeVILT0oqndir+WvHhjf25x9rzdqd0FYMe0
-   oR/PUQlQ7NRn6jcXvDR6MuPaC8PYjMHGsU79z+go/9wHjSqf0ku2vqKsDXTQXG9A8B45KrinkjVt
-   aTmxrs0AnN21QifSEZfaH58rgBxE7PbDE6Ycp8ifPWiF5r7oCFuAliujU1ivrOT2xH8XWwV6CK9/
-   BOCgtNbV7xdiyA/SnSWn6kQIB2wROYijXjCZLg==
-Received: by omta-ad1-fd3-401-eu-stockholm-1.omtaad1.vcndparn.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20230629 64bit (built Jun 29
- 2023))
- with ESMTPS id <0RXW0073ZM78V730@omta-ad1-fd3-401-eu-stockholm-1.omtaad1.vcndparn.oraclevcn.com>
- for patches@lists.linux.dev; Sun, 16 Jul 2023 19:30:44 +0000 (GMT)
-Message-id: <0206e2ce-ff33-6017-15ab-cc89f1eb7485@augustwikerfors.se>
-Date: Sun, 16 Jul 2023 21:30:41 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54DEB748C
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:53:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A31DC433C7;
+	Sun, 16 Jul 2023 19:53:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1689537191;
+	bh=yMDW8IhSgAO9rglIFLE4uReLKt9ufgZmD6SWgslRtCs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=hdPOt1ezifu7kJN8qZBW3d/gHFfbuJeIEWNoamENKv2BzIjhuE/0cVAcBDY4AJ8d8
+	 h8O+EnYBxc/gK7MHo4S/H1wTWtc8gM+rpLEb8uHU96uVbbHTt9djayDLd2wnSQGLUo
+	 25O2dd+uRiyteijd+LkiAFX9aOJLduZTQgOQGui8=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Nathan Chancellor <nathan@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.4 001/800] start_kernel: Add __no_stack_protector function attribute
+Date: Sun, 16 Jul 2023 21:37:34 +0200
+Message-ID: <20230716194949.144206741@linuxfoundation.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
+References: <20230716194949.099592437@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-version: 1.0
-From: August Wikerfors <git@augustwikerfors.se>
-Subject: Re: [PATCH] nvme-pci: Add quirk for Samsung PM9B1 256G and 512G SSD
-To: Nils Kruse <nilskruse97@gmail.com>
-Cc: stable@vger.kernel.org, Keith Busch <kbusch@kernel.org>,
- Jens Axboe <axboe@fb.com>, Christoph Hellwig <hch@lst.de>,
- Sagi Grimberg <sagi@grimberg.me>, linux-nvme@lists.infradead.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <b99a5149-c3d6-2a9b-1298-576a1b4b22c1@gmail.com>
-Content-language: en-US
-In-reply-to: <b99a5149-c3d6-2a9b-1298-576a1b4b22c1@gmail.com>
-Content-type: text/plain; charset=UTF-8; format=flowed
-Content-transfer-encoding: 7bit
-Reporting-Meta:
- AAEqHmCrKsOnH195OEdwrfg9FTxZzACbRkpk03nDz2o7ewDk7A9Vjq6UenQjGOdN
- kAaYT+day+D9LnofH23wmNDd3QZ5lX8jc6pjaI5su1zrpUl23gXFdchnRkybaBpm
- 0onSwBtO7FP+fNKgMc9NfBUaXca4AEJ4WQtbMs5Qg0/CRSe9VXS+49p/O4u7OrNr
- EiH15TvMGY3a+UB8z89JqkEdoPxBBB7MndUO2K85v1o/3kGOnWnKfvXlSoWXs6lw
- nTZrRXhNwhbAWm52rUT/4wOixkLy9Y6XGMkOox7BjI6tCam3mL3hIPay1iVSH1db
- D0VvcTi1Pfx+JFX3bSufYTaFEY/TpgWa6iuKSSSyEix4+KypCDqkYGl7A7IUDqF9
- TQhwKHRRo057GucwkQv9R1Ae4gTIIJbzgB2zfJyaYZmtGPMWy39S6W6vk7YYjKkW NT4=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 2023-06-11 13:41, Nils Kruse wrote:
-> Add a quirk for Samsung PM9B1 256G and 512G that reports duplicate ids 
-> for disk.
+From: ndesaulniers@google.com <ndesaulniers@google.com>
 
-Is this the same issue with suspend as [1], [2] and [3] or is it a
-different case?
+commit 514ca14ed5444b911de59ed3381dfd195d99fe4b upstream.
 
-[1] https://lore.kernel.org/all/20221116171727.4083-1-git@augustwikerfors.se/t/
-[2] https://github.com/tomsom/yoga-linux/issues/9
-[3] https://lore.kernel.org/all/d0ce0f3b-9407-9207-73a4-3536f0948653@augustwikerfors.se/
+Back during the discussion of
+commit a9a3ed1eff36 ("x86: Fix early boot crash on gcc-10, third try")
+we discussed the need for a function attribute to control the omission
+of stack protectors on a per-function basis; at the time Clang had
+support for no_stack_protector but GCC did not. This was fixed in
+gcc-11. Now that the function attribute is available, let's start using
+it.
+
+Callers of boot_init_stack_canary need to use this function attribute
+unless they're compiled with -fno-stack-protector, otherwise the canary
+stored in the stack slot of the caller will differ upon the call to
+boot_init_stack_canary. This will lead to a call to __stack_chk_fail()
+then panic.
+
+Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=94722
+Link: https://lore.kernel.org/all/20200316130414.GC12561@hirez.programming.kicks-ass.net/
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Michael Ellerman <mpe@ellerman.id.au> (powerpc)
+Acked-by: Miguel Ojeda <ojeda@kernel.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/r/20230412-no_stackp-v2-1-116f9fe4bbe7@google.com
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+
+Signed-off-by: ndesaulniers@google.com <ndesaulniers@google.com>
+---
+ arch/powerpc/kernel/smp.c           |    1 +
+ include/linux/compiler_attributes.h |   12 ++++++++++++
+ init/main.c                         |    3 ++-
+ 3 files changed, 15 insertions(+), 1 deletion(-)
+
+--- a/arch/powerpc/kernel/smp.c
++++ b/arch/powerpc/kernel/smp.c
+@@ -1605,6 +1605,7 @@ static void add_cpu_to_masks(int cpu)
+ }
+ 
+ /* Activate a secondary processor. */
++__no_stack_protector
+ void start_secondary(void *unused)
+ {
+ 	unsigned int cpu = raw_smp_processor_id();
+--- a/include/linux/compiler_attributes.h
++++ b/include/linux/compiler_attributes.h
+@@ -256,6 +256,18 @@
+ #define __noreturn                      __attribute__((__noreturn__))
+ 
+ /*
++ * Optional: only supported since GCC >= 11.1, clang >= 7.0.
++ *
++ *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-no_005fstack_005fprotector-function-attribute
++ *   clang: https://clang.llvm.org/docs/AttributeReference.html#no-stack-protector-safebuffers
++ */
++#if __has_attribute(__no_stack_protector__)
++# define __no_stack_protector		__attribute__((__no_stack_protector__))
++#else
++# define __no_stack_protector
++#endif
++
++/*
+  * Optional: not supported by gcc.
+  *
+  * clang: https://clang.llvm.org/docs/AttributeReference.html#overloadable
+--- a/init/main.c
++++ b/init/main.c
+@@ -877,7 +877,8 @@ static void __init print_unknown_bootopt
+ 	memblock_free(unknown_options, len);
+ }
+ 
+-asmlinkage __visible void __init __no_sanitize_address __noreturn start_kernel(void)
++asmlinkage __visible __init __no_sanitize_address __noreturn __no_stack_protector
++void start_kernel(void)
+ {
+ 	char *command_line;
+ 	char *after_dashes;
+
+
