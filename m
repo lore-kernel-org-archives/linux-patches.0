@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7F38F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:51:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C391BC433C7;
-	Sun, 16 Jul 2023 20:51:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133A68F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:51:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CEB4C433C7;
+	Sun, 16 Jul 2023 20:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540714;
-	bh=idIg/BBJfsxnWNgLXXxjhl0qTe+yXQAeXnMDUsDeXJI=;
+	s=korg; t=1689540716;
+	bh=o4g3M1+T1+RobAwEH58yUdTFZodrhMEQJfF9/6uzET8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=APepyZKPrwQeE3eIsDOaT1a1T+jfR/dleVuDAXrAZDT3sukdiAt5cTVJ5sE2UB8Nq
-	 74FRoLrZL/HvAvhuWJMy0mmipMVFflhqYZ4yc4qelM9w8lNATNfZCWoDlsVC+iGYlf
-	 zn4P+gnJxFuRIzPTdGB3QA8WQqKdVca+1OUeGUFE=
+	b=zOh9F62AKp6waUpAwo/lTIJLlqHEAk1DdWIcmwkURD7f6s5P4EGS0BvBdURooS1Bl
+	 Lem4PVHtfB1AcASjhi8xPi7Q00E8NGF0ALg0UniKm8oYuteKrOLg+bOTD7qxKVG7Ot
+	 ji81C36PbZxyKtFafXkMqDDc9Ns7BXMSZ9utDQVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 435/591] usb: dwc3-meson-g12a: Fix an error handling path in dwc3_meson_g12a_probe()
-Date: Sun, 16 Jul 2023 21:49:34 +0200
-Message-ID: <20230716194935.167163595@linuxfoundation.org>
+Subject: [PATCH 6.1 436/591] mfd: wcd934x: Fix an error handling path in wcd934x_slim_probe()
+Date: Sun, 16 Jul 2023 21:49:35 +0200
+Message-ID: <20230716194935.192184228@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,46 +37,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 01052b91c9808e3c3b068ae2721cb728ec9aa4c0 ]
+[ Upstream commit f190b4891a3f9fac123a7afd378d4143a2723313 ]
 
-If dwc3_meson_g12a_otg_init() fails, resources allocated by the previous
-of_platform_populate() call should be released, as already done in the
-error handling path.
+If devm_gpiod_get_optional() fails, some resources need to be released, as
+already done in the .remove() function.
 
-Fixes: 1e355f21d3fb ("usb: dwc3: Add Amlogic A1 DWC3 glue")
+While at it, remove the unneeded error code from a dev_err_probe() call.
+It is already added in a human readable way by dev_err_probe() itself.
+
+Fixes: 6a0ee2a61a31 ("mfd: wcd934x: Replace legacy gpio interface for gpiod")
 Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Message-ID: <9d28466de1808ccc756b4cc25fc72c482d133d13.1686403934.git.christophe.jaillet@wanadoo.fr>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/02d8447f6d1df52cc8357aae698152e9a9be67c6.1684565021.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-meson-g12a.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/mfd/wcd934x.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/dwc3/dwc3-meson-g12a.c b/drivers/usb/dwc3/dwc3-meson-g12a.c
-index b282ad0e69c6d..eaea944ebd2ce 100644
---- a/drivers/usb/dwc3/dwc3-meson-g12a.c
-+++ b/drivers/usb/dwc3/dwc3-meson-g12a.c
-@@ -805,7 +805,7 @@ static int dwc3_meson_g12a_probe(struct platform_device *pdev)
- 
- 	ret = dwc3_meson_g12a_otg_init(pdev, priv);
- 	if (ret)
--		goto err_phys_power;
-+		goto err_plat_depopulate;
- 
- 	pm_runtime_set_active(dev);
- 	pm_runtime_enable(dev);
-@@ -813,6 +813,9 @@ static int dwc3_meson_g12a_probe(struct platform_device *pdev)
+diff --git a/drivers/mfd/wcd934x.c b/drivers/mfd/wcd934x.c
+index 68e2fa2fda99c..32ed2bd863758 100644
+--- a/drivers/mfd/wcd934x.c
++++ b/drivers/mfd/wcd934x.c
+@@ -253,8 +253,9 @@ static int wcd934x_slim_probe(struct slim_device *sdev)
+ 	usleep_range(600, 650);
+ 	reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_LOW);
+ 	if (IS_ERR(reset_gpio)) {
+-		return dev_err_probe(dev, PTR_ERR(reset_gpio),
+-				"Failed to get reset gpio: err = %ld\n", PTR_ERR(reset_gpio));
++		ret = dev_err_probe(dev, PTR_ERR(reset_gpio),
++				    "Failed to get reset gpio\n");
++		goto err_disable_regulators;
+ 	}
+ 	msleep(20);
+ 	gpiod_set_value(reset_gpio, 1);
+@@ -264,6 +265,10 @@ static int wcd934x_slim_probe(struct slim_device *sdev)
+ 	dev_set_drvdata(dev, ddata);
  
  	return 0;
- 
-+err_plat_depopulate:
-+	of_platform_depopulate(dev);
 +
- err_phys_power:
- 	for (i = 0 ; i < PHY_COUNT ; ++i)
- 		phy_power_off(priv->phys[i]);
++err_disable_regulators:
++	regulator_bulk_disable(WCD934X_MAX_SUPPLY, ddata->supplies);
++	return ret;
+ }
+ 
+ static void wcd934x_slim_remove(struct slim_device *sdev)
 -- 
 2.39.2
 
