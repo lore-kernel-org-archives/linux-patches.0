@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6ED08F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:55:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A87AC433C7;
-	Sun, 16 Jul 2023 19:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B4E8F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:55:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA719C433C8;
+	Sun, 16 Jul 2023 19:55:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537314;
-	bh=dSJV2Pt02hqcoAgLSATVio9w1Ze7tmF/AomDT8ytcm4=;
+	s=korg; t=1689537317;
+	bh=n3mjNrRdYPZjVCaZ26+2/LJVYpoPXJARseaCyIu8qlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZWQkHgdtuJeXXj1UJrpd91V4QNTZseLg9LniBP3aGNIR5CAhV9jCAeU85zJpu9my
-	 mGTljCZgaEgPFycgaQ5ozQ9MUV7i0ju6RYgiosLMibmjfF/rP4NuekuVK76u2SVKld
-	 ZdWwayklaBGBTX1Z2EQAGgnuIOmmYYrmllhelzuA=
+	b=Rgv4Mh3VWerOueeg3qVnCBt0DV+I5mL1rdLd/26p3SwEDHmcEec3FWgy60xyIaxYn
+	 TcidP35qYRRucJa2z3E73m3oYJ6fQPrIoXpjMsz7mawpfu8iDjrPeF7OZ/GAcRnbPD
+	 ztaMyhkC0LVQ6OazSoCjqlHb/tRrT/6Z/IYREAVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Christoph Hellwig <hch@lst.de>,
-	David Sterba <dsterba@suse.com>,
+	Waiman Long <longman@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 051/800] btrfs: always read the entire extent_buffer
-Date: Sun, 16 Jul 2023 21:38:24 +0200
-Message-ID: <20230716194950.276988598@linuxfoundation.org>
+Subject: [PATCH 6.4 025/800] blk-cgroup: Reinit blkg_iostat_set after clearing in blkcg_reset_stats()
+Date: Sun, 16 Jul 2023 21:37:58 +0200
+Message-ID: <20230716194949.685543197@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,85 +37,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit e95382834cf885b478dbe14a66451b863eb35c94 ]
+[ Upstream commit 3d2af77e31ade05ff7ccc3658c3635ec1bea0979 ]
 
-Currently read_extent_buffer_pages skips pages that are already uptodate
-when reading in an extent_buffer.  While this reduces the amount of data
-read, it increases the number of I/O operations as we now need to do
-multiple I/Os when reading an extent buffer with one or more uptodate
-pages in the middle of it.  On any modern storage device, be that hard
-drives or SSDs this actually decreases I/O performance.  Fortunately
-this case is pretty rare as the pages are always initially read together
-and then aged the same way.  Besides simplifying the code a bit as-is
-this will allow for major simplifications to the I/O completion handler
-later on.
+When blkg_alloc() is called to allocate a blkcg_gq structure
+with the associated blkg_iostat_set's, there are 2 fields within
+blkg_iostat_set that requires proper initialization - blkg & sync.
+The former field was introduced by commit 3b8cc6298724 ("blk-cgroup:
+Optimize blkcg_rstat_flush()") while the later one was introduced by
+commit f73316482977 ("blk-cgroup: reimplement basic IO stats using
+cgroup rstat").
 
-Note that the case where all pages are uptodate is still handled by an
-optimized fast path that does not read any data from disk.
+Unfortunately those fields in the blkg_iostat_set's are not properly
+re-initialized when they are cleared in v1's blkcg_reset_stats(). This
+can lead to a kernel panic due to NULL pointer access of the blkg
+pointer. The missing initialization of sync is less problematic and
+can be a problem in a debug kernel due to missing lockdep initialization.
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 7027f87108ce ("btrfs: don't treat zoned writeback as being from an async helper thread")
+Fix these problems by re-initializing them after memory clearing.
+
+Fixes: 3b8cc6298724 ("blk-cgroup: Optimize blkcg_rstat_flush()")
+Fixes: f73316482977 ("blk-cgroup: reimplement basic IO stats using cgroup rstat")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20230606180724.2455066-1-longman@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.c | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ block/blk-cgroup.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index a1adadd5d25dd..d1a635f237688 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -4314,7 +4314,6 @@ int read_extent_buffer_pages(struct extent_buffer *eb, int wait, int mirror_num,
- 	int locked_pages = 0;
- 	int all_uptodate = 1;
- 	int num_pages;
--	unsigned long num_reads = 0;
- 	struct btrfs_bio_ctrl bio_ctrl = {
- 		.opf = REQ_OP_READ,
- 		.mirror_num = mirror_num,
-@@ -4360,10 +4359,8 @@ int read_extent_buffer_pages(struct extent_buffer *eb, int wait, int mirror_num,
- 	 */
- 	for (i = 0; i < num_pages; i++) {
- 		page = eb->pages[i];
--		if (!PageUptodate(page)) {
--			num_reads++;
-+		if (!PageUptodate(page))
- 			all_uptodate = 0;
--		}
- 	}
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index 5215bc7af5514..aaf9903ad7b2f 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -624,8 +624,13 @@ static int blkcg_reset_stats(struct cgroup_subsys_state *css,
+ 			struct blkg_iostat_set *bis =
+ 				per_cpu_ptr(blkg->iostat_cpu, cpu);
+ 			memset(bis, 0, sizeof(*bis));
++
++			/* Re-initialize the cleared blkg_iostat_set */
++			u64_stats_init(&bis->sync);
++			bis->blkg = blkg;
+ 		}
+ 		memset(&blkg->iostat, 0, sizeof(blkg->iostat));
++		u64_stats_init(&blkg->iostat.sync);
  
- 	if (all_uptodate) {
-@@ -4373,7 +4370,7 @@ int read_extent_buffer_pages(struct extent_buffer *eb, int wait, int mirror_num,
- 
- 	clear_bit(EXTENT_BUFFER_READ_ERR, &eb->bflags);
- 	eb->read_mirror = 0;
--	atomic_set(&eb->io_pages, num_reads);
-+	atomic_set(&eb->io_pages, num_pages);
- 	/*
- 	 * It is possible for release_folio to clear the TREE_REF bit before we
- 	 * set io_pages. See check_buffer_tree_ref for a more detailed comment.
-@@ -4383,13 +4380,9 @@ int read_extent_buffer_pages(struct extent_buffer *eb, int wait, int mirror_num,
- 	for (i = 0; i < num_pages; i++) {
- 		page = eb->pages[i];
- 
--		if (!PageUptodate(page)) {
--			ClearPageError(page);
--			submit_extent_page(&bio_ctrl, page_offset(page), page,
--					   PAGE_SIZE, 0);
--		} else {
--			unlock_page(page);
--		}
-+		ClearPageError(page);
-+		submit_extent_page(&bio_ctrl, page_offset(page), page,
-+				   PAGE_SIZE, 0);
- 	}
- 
- 	submit_one_bio(&bio_ctrl);
+ 		for (i = 0; i < BLKCG_MAX_POLS; i++) {
+ 			struct blkcg_policy *pol = blkcg_policy[i];
 -- 
 2.39.2
 
