@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3128F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:55:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A79C433C7;
-	Sun, 16 Jul 2023 19:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 969A48F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:55:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B0DFC433C8;
+	Sun, 16 Jul 2023 19:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537300;
-	bh=wFVCP8xLdTVwR7tZEWX5SG3VupPhy39YBsBy+xjiscs=;
+	s=korg; t=1689537303;
+	bh=r6t4BpU2mP7memIF4RCNfk92RxSjqKS0prJvXYQEx0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S67qM68dTGcwDKs2PXOObYRg4bmrz9Q8jlYYN9+lavYALXihgz+lbQeLw2ixxAidx
-	 PqiTzjoOEKrNSG7vczc9WLklVQVScdlS2wGy1iqV9t6NeUbQE4OQ7ysDc5l/XG97Yy
-	 utt/Ao69qbTLgEjGfaZUp1AedXyTpGC1h2MQ4E8Q=
+	b=Lhg+JAIcY3M+Q8RCfNj1Y/wyg4/SI/D5kJdH6KYi2dmuxU+5rcGAnFFH0L0I6RhKQ
+	 6ADx7ZTExdeNpdntuuF3Lb3SAo5LPxOAHgDXnlSiX/GDRbuAW5Mk6S5iDISSZxw+ND
+	 cdmXmWeDETHKIfljkmHgUgaI3FveN+l2ZPVyJ8d4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 046/800] svcrdma: Prevent page release when nothing was received
-Date: Sun, 16 Jul 2023 21:38:19 +0200
-Message-ID: <20230716194950.162266227@linuxfoundation.org>
+Subject: [PATCH 6.4 047/800] erofs: fix compact 4B support for 16k block size
+Date: Sun, 16 Jul 2023 21:38:20 +0200
+Message-ID: <20230716194950.185374769@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,51 +34,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit baf6d18b116b7dc84ed5e212c3a89f17cdc3f28c ]
+[ Upstream commit 001b8ccd0650727e54ec16ef72bf1b8eeab7168e ]
 
-I noticed that svc_rqst_release_pages() was still unnecessarily
-releasing a page when svc_rdma_recvfrom() returns zero.
+In compact 4B, two adjacent lclusters are packed together as a unit to
+form on-disk indexes for effective random access, as below:
 
-Fixes: a53d5cb0646a ("svcrdma: Avoid releasing a page in svc_xprt_release()")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+(amortized = 4, vcnt = 2)
+       _____________________________________________
+      |___@_____ encoded bits __________|_ blkaddr _|
+      0        .                                    amortized * vcnt = 8
+      .             .
+      .                  .              amortized * vcnt - 4 = 4
+      .                        .
+      .____________________________.
+      |_type (2 bits)_|_clusterofs_|
+
+Therefore, encoded bits for each pack are 32 bits (4 bytes). IOWs,
+since each lcluster can get 16 bits for its type and clusterofs, the
+maximum supported lclustersize for compact 4B format is 16k (14 bits).
+
+Fix this to enable compact 4B format for 16k lclusters (blocks), which
+is tested on an arm64 server with 16k page size.
+
+Fixes: 152a333a5895 ("staging: erofs: add compacted compression indexes support")
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20230601112341.56960-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_recvfrom.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/erofs/zmap.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-index a22fe7587fa6f..70207d8a318a4 100644
---- a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-@@ -796,6 +796,12 @@ int svc_rdma_recvfrom(struct svc_rqst *rqstp)
- 	struct svc_rdma_recv_ctxt *ctxt;
- 	int ret;
+diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
+index d37c5c89c7287..920fb4dbc731c 100644
+--- a/fs/erofs/zmap.c
++++ b/fs/erofs/zmap.c
+@@ -129,7 +129,7 @@ static int unpack_compacted_index(struct z_erofs_maprecorder *m,
+ 	u8 *in, type;
+ 	bool big_pcluster;
  
-+	/* Prevent svc_xprt_release() from releasing pages in rq_pages
-+	 * when returning 0 or an error.
-+	 */
-+	rqstp->rq_respages = rqstp->rq_pages;
-+	rqstp->rq_next_page = rqstp->rq_respages;
-+
- 	rqstp->rq_xprt_ctxt = NULL;
+-	if (1 << amortizedshift == 4)
++	if (1 << amortizedshift == 4 && lclusterbits <= 14)
+ 		vcnt = 2;
+ 	else if (1 << amortizedshift == 2 && lclusterbits == 12)
+ 		vcnt = 16;
+@@ -231,7 +231,6 @@ static int compacted_load_cluster_from_disk(struct z_erofs_maprecorder *m,
+ {
+ 	struct inode *const inode = m->inode;
+ 	struct erofs_inode *const vi = EROFS_I(inode);
+-	const unsigned int lclusterbits = vi->z_logical_clusterbits;
+ 	const erofs_off_t ebase = sizeof(struct z_erofs_map_header) +
+ 		ALIGN(erofs_iloc(inode) + vi->inode_isize + vi->xattr_isize, 8);
+ 	unsigned int totalidx = erofs_iblks(inode);
+@@ -239,9 +238,6 @@ static int compacted_load_cluster_from_disk(struct z_erofs_maprecorder *m,
+ 	unsigned int amortizedshift;
+ 	erofs_off_t pos;
  
- 	ctxt = NULL;
-@@ -819,12 +825,6 @@ int svc_rdma_recvfrom(struct svc_rqst *rqstp)
- 				   DMA_FROM_DEVICE);
- 	svc_rdma_build_arg_xdr(rqstp, ctxt);
- 
--	/* Prevent svc_xprt_release from releasing pages in rq_pages
--	 * if we return 0 or an error.
--	 */
--	rqstp->rq_respages = rqstp->rq_pages;
--	rqstp->rq_next_page = rqstp->rq_respages;
+-	if (lclusterbits != 12)
+-		return -EOPNOTSUPP;
 -
- 	ret = svc_rdma_xdr_decode_req(&rqstp->rq_arg, ctxt);
- 	if (ret < 0)
- 		goto out_err;
+ 	if (lcn >= totalidx)
+ 		return -EINVAL;
+ 
 -- 
 2.39.2
 
