@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB71E8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:18:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40537C433C7;
-	Sun, 16 Jul 2023 20:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C408F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:18:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D76C433C7;
+	Sun, 16 Jul 2023 20:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538710;
-	bh=7zDQq9YlMZNjdo/ueWRSgcT7+mIdw9btaxgvLORz2Fg=;
+	s=korg; t=1689538713;
+	bh=jbkL9H+v2Rmm3BhK/XZ6qAhSq0/p5rIFyQNKe93sQX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NBphDjb8jt1zxIJ5yPAxVIDTVcTi8IXexlLGh6mqq1qCOHp0e9aUV8psF7ehTsM05
-	 0uA+/Kl+618Cr4dwCq9RmmjvdGU5huUIhxuZ3cmlp3zBgT9TVRxt8kDsQWJkgNwpTm
-	 9jsVzgf23MWxY+P9mLQ/jENslUczR2u1B6T6XRT8=
+	b=JEY5h4fhIxbL6LxNXDD2kW/KvwMuB3M7+gv1QQHu0gJGCN6oiH8NOGnatiqvNRiFm
+	 qbeNcvuPZ1B0RyCdY60cNoHXBhH2Pcp4eX3debjHOg1zPf8RbBjfGwXBHDLttAxf4e
+	 PxJnKjgOEvB0N9Zp4x0b984OyxmSQ/tmFd1O0r6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <stefan.wahren@i2se.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 548/800] w1: w1_therm: fix locking behavior in convert_t
-Date: Sun, 16 Jul 2023 21:46:41 +0200
-Message-ID: <20230716195001.820995556@linuxfoundation.org>
+Subject: [PATCH 6.4 549/800] w1: fix loop in w1_fini()
+Date: Sun, 16 Jul 2023 21:46:42 +0200
+Message-ID: <20230716195001.843705744@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,89 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Wahren <stefan.wahren@i2se.com>
+From: Dan Carpenter <dan.carpenter@oracle.com>
 
-[ Upstream commit dca5480ab7b77a889088ab7cac81934604510ac7 ]
+[ Upstream commit 83f3fcf96fcc7e5405b37d9424c7ef26bfa203f8 ]
 
-The commit 67b392f7b8ed ("w1_therm: optimizing temperature read timings")
-accidentially inverted the logic for lock handling of the bus mutex.
+The __w1_remove_master_device() function calls:
 
-Before:
-  pullup -> release lock before sleep
-  no pullup -> release lock after sleep
+	list_del(&dev->w1_master_entry);
 
-After:
-  pullup -> release lock after sleep
-  no pullup -> release lock before sleep
+So presumably this can cause an endless loop.
 
-This cause spurious measurements of 85 degree (powerup value) on the
-Tarragon board with connected 1-w temperature sensor
-(w1_therm.w1_strong_pull=0).
-
-In the meantime a new feature for polling the conversion
-completion has been integrated in these branches with
-commit 021da53e65fd ("w1: w1_therm: Add sysfs entries to control
-conversion time and driver features"). But this feature isn't
-available for parasite power mode, so handle this separately.
-
-Link: https://lore.kernel.org/regressions/2023042645-attentive-amends-7b0b@gregkh/T/
-Fixes: 67b392f7b8ed ("w1_therm: optimizing temperature read timings")
-Signed-off-by: Stefan Wahren <stefan.wahren@i2se.com>
-Link: https://lore.kernel.org/r/20230427112152.12313-1-stefan.wahren@i2se.com
+Fixes: 7785925dd8e0 ("[PATCH] w1: cleanups.")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/w1/slaves/w1_therm.c | 31 ++++++++++++++-----------------
- 1 file changed, 14 insertions(+), 17 deletions(-)
+ drivers/w1/w1.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/w1/slaves/w1_therm.c b/drivers/w1/slaves/w1_therm.c
-index 067692626cf07..99c58bd9d2df0 100644
---- a/drivers/w1/slaves/w1_therm.c
-+++ b/drivers/w1/slaves/w1_therm.c
-@@ -1159,29 +1159,26 @@ static int convert_t(struct w1_slave *sl, struct therm_info *info)
+diff --git a/drivers/w1/w1.c b/drivers/w1/w1.c
+index 9d199fed96287..2c766bdc68cc5 100644
+--- a/drivers/w1/w1.c
++++ b/drivers/w1/w1.c
+@@ -1263,10 +1263,10 @@ static int __init w1_init(void)
  
- 			w1_write_8(dev_master, W1_CONVERT_TEMP);
+ static void __exit w1_fini(void)
+ {
+-	struct w1_master *dev;
++	struct w1_master *dev, *n;
  
--			if (strong_pullup) { /*some device need pullup */
-+			if (SLAVE_FEATURES(sl) & W1_THERM_POLL_COMPLETION) {
-+				ret = w1_poll_completion(dev_master, W1_POLL_CONVERT_TEMP);
-+				if (ret) {
-+					dev_dbg(&sl->dev, "%s: Timeout\n", __func__);
-+					goto mt_unlock;
-+				}
-+				mutex_unlock(&dev_master->bus_mutex);
-+			} else if (!strong_pullup) { /*no device need pullup */
- 				sleep_rem = msleep_interruptible(t_conv);
- 				if (sleep_rem != 0) {
- 					ret = -EINTR;
- 					goto mt_unlock;
- 				}
- 				mutex_unlock(&dev_master->bus_mutex);
--			} else { /*no device need pullup */
--				if (SLAVE_FEATURES(sl) & W1_THERM_POLL_COMPLETION) {
--					ret = w1_poll_completion(dev_master, W1_POLL_CONVERT_TEMP);
--					if (ret) {
--						dev_dbg(&sl->dev, "%s: Timeout\n", __func__);
--						goto mt_unlock;
--					}
--					mutex_unlock(&dev_master->bus_mutex);
--				} else {
--					/* Fixed delay */
--					mutex_unlock(&dev_master->bus_mutex);
--					sleep_rem = msleep_interruptible(t_conv);
--					if (sleep_rem != 0) {
--						ret = -EINTR;
--						goto dec_refcnt;
--					}
-+			} else { /*some device need pullup */
-+				mutex_unlock(&dev_master->bus_mutex);
-+				sleep_rem = msleep_interruptible(t_conv);
-+				if (sleep_rem != 0) {
-+					ret = -EINTR;
-+					goto dec_refcnt;
- 				}
- 			}
- 			ret = read_scratchpad(sl, info);
+ 	/* Set netlink removal messages and some cleanup */
+-	list_for_each_entry(dev, &w1_masters, w1_master_entry)
++	list_for_each_entry_safe(dev, n, &w1_masters, w1_master_entry)
+ 		__w1_remove_master_device(dev);
+ 
+ 	w1_fini_netlink();
 -- 
 2.39.2
 
