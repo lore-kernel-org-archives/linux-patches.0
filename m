@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889AA8F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:54:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B339C433C8;
-	Sun, 16 Jul 2023 19:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E688F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:54:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18C8C433C7;
+	Sun, 16 Jul 2023 19:54:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537289;
-	bh=K1siVKNB3d1m+Yh8/Yfv/RBxHJNTSknrNiMiUqxPb4c=;
+	s=korg; t=1689537292;
+	bh=Dgb7shysDvLNrp5RWso/gvtw8tYZnQZN85CE5HOQZx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZSQA9XH5hF4abN2AWBGIhCuVeXQiKl+0vm1jgeR7zmj3XbnfDB5L8gUmb6OaIFdQf
-	 Yeheqr39NcDysedbFEUjTB1+CcTtRD6k9C5M5DmCLJov05+tUpi41jV9ovg8eeySN8
-	 zVK3htYKYSt0/PhmS8X+lwxwT8sft9JyBqlhNVy4=
+	b=xEePdrWetV7h2LCmiULmPRare98n2K1h9CFiYjLGAHfjxbN8nvdgCZ8TU1+n/ByWC
+	 K5NGqrxLdGbskeJh2AmQiCD0fKqU8XS6Ci/sjfcV3D9MeWbyNzBePD3Olj4k6/DUQp
+	 QFuQkzAD9liarVCljCkTt8S75SGn5uqgqCIIJKd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yangqiming <yangqiming@loongson.cn>,
-	Jianmin Lv <lvjianmin@loongson.cn>,
-	Marc Zyngier <maz@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Christian Brauner <brauner@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 042/800] irqchip/loongson-eiointc: Fix irq affinity setting during resume
-Date: Sun, 16 Jul 2023 21:38:15 +0200
-Message-ID: <20230716194950.071060952@linuxfoundation.org>
+Subject: [PATCH 6.4 043/800] splice: dont call file_accessed in copy_splice_read
+Date: Sun, 16 Jul 2023 21:38:16 +0200
+Message-ID: <20230716194950.093140399@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,50 +38,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jianmin Lv <lvjianmin@loongson.cn>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit fb07b8f83441febeb0daf199b5f18c6de9bbab03 ]
+[ Upstream commit 0b24be4691c9e6ea13ca70050d42a9f9032fa788 ]
 
-The hierarchy of PCH PIC, PCH PCI MSI and EIONTC is as following:
+copy_splice_read calls into ->read_iter to read the data, which already
+calls file_accessed.
 
-        PCH PIC ------->|
-                        |---->EIOINTC
-        PCH PCI MSI --->|
-
-so the irq_data list of irq_desc for IRQs on PCH PIC and PCH PCI MSI
-is like this:
-
-irq_desc->irq_data(domain: PCH PIC)->parent_data(domain: EIOINTC)
-irq_desc->irq_data(domain: PCH PCI MSI)->parent_data(domain: EIOINTC)
-
-In eiointc_resume(), the irq_data passed into eiointc_set_irq_affinity()
-should be matched to EIOINTC domain instead of PCH PIC or PCH PCI MSI
-domain, so fix it.
-
-Fixes: a90335c2dfb4 ("irqchip/loongson-eiointc: Add suspend/resume support")
-
-Reported-by: yangqiming <yangqiming@loongson.cn>
-Signed-off-by: Jianmin Lv <lvjianmin@loongson.cn>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230614115936.5950-6-lvjianmin@loongson.cn
+Fixes: 33b3b041543e ("splice: Add a func to do a splice from an O_DIRECT file without ITER_PIPE")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/20230614140341.521331-2-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-loongson-eiointc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/splice.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-loongson-eiointc.c b/drivers/irqchip/irq-loongson-eiointc.c
-index 71ef19f77a5a0..a7fcde3e3ecc7 100644
---- a/drivers/irqchip/irq-loongson-eiointc.c
-+++ b/drivers/irqchip/irq-loongson-eiointc.c
-@@ -314,7 +314,7 @@ static void eiointc_resume(void)
- 			desc = irq_resolve_mapping(eiointc_priv[i]->eiointc_domain, j);
- 			if (desc && desc->handle_irq && desc->handle_irq != handle_bad_irq) {
- 				raw_spin_lock(&desc->lock);
--				irq_data = &desc->irq_data;
-+				irq_data = irq_domain_get_irq_data(eiointc_priv[i]->eiointc_domain, irq_desc_get_irq(desc));
- 				eiointc_set_irq_affinity(irq_data, irq_data->common->affinity, 0);
- 				raw_spin_unlock(&desc->lock);
- 			}
+diff --git a/fs/splice.c b/fs/splice.c
+index 3e06611d19ae5..030e162985b5d 100644
+--- a/fs/splice.c
++++ b/fs/splice.c
+@@ -355,7 +355,6 @@ ssize_t direct_splice_read(struct file *in, loff_t *ppos,
+ 		reclaim -= ret;
+ 		remain = ret;
+ 		*ppos = kiocb.ki_pos;
+-		file_accessed(in);
+ 	} else if (ret < 0) {
+ 		/*
+ 		 * callers of ->splice_read() expect -EAGAIN on
 -- 
 2.39.2
 
