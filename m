@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894118F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:33:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC140C433C8;
-	Sun, 16 Jul 2023 20:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F978F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:34:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DDACC433C7;
+	Sun, 16 Jul 2023 20:34:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539639;
-	bh=wXX39XtfGkYOMTtEjX8I3ajDCGTHNevEJpR1+Z6o13w=;
+	s=korg; t=1689539641;
+	bh=pNZQUXElj2tqSANVpFjUZ+qmXArUN07ARQ5sikHBHp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WAPlcDkSH/CajOfVQegCUC2kNK0WXHkoiTMx4QAZa05q9v7i0IjTPFDSBF38RVxDl
-	 AqdNC+A5eX0imgoyhgb4Rx6PrUIBXwcKoUzD/C3/jL+UumNNt5Vh3ik0RURskCq0rd
-	 sIRhdOJ7rBq9/EP2tCvNyHf/7MQJsDRnpevj97Ok=
+	b=MnEp7lEYq2n8cx5rNsejXYr6a69hm4gSpAfMz+JF4uV6tz9quyuL/TdGJvhVSZ8Sc
+	 AAwpHZIwBWWaRdb6AvxTUM1gThnbbj2IVdGkdWIErr9A5asCip//sFa3a8a90aKHld
+	 +wV01vB97qayy2WLF1Sp4P1pRg8VLTGlovp0Q96g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Balsam CHIHI <bchihi@baylibre.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 051/591] thermal/drivers/mediatek: Relocate driver to mediatek folder
-Date: Sun, 16 Jul 2023 21:43:10 +0200
-Message-ID: <20230716194925.207410899@linuxfoundation.org>
+Subject: [PATCH 6.1 042/591] PM: domains: fix integer overflow issues in genpd_parse_state()
+Date: Sun, 16 Jul 2023 21:43:01 +0200
+Message-ID: <20230716194924.970438201@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,120 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Balsam CHIHI <bchihi@baylibre.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit fad399ebdd67f602f306b524e6f62c3570943a48 ]
+[ Upstream commit e5d1c8722083f0332dcd3c85fa1273d85fb6bed8 ]
 
-Add MediaTek proprietary folder to upstream more thermal zone and cooler
-drivers, relocate the original thermal controller driver to it, and rename it
-as "auxadc_thermal.c" to show its purpose more clearly.
+Currently, while calculating residency and latency values, right
+operands may overflow if resulting values are big enough.
 
-Signed-off-by: Balsam CHIHI <bchihi@baylibre.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230209105628.50294-2-bchihi@baylibre.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+To prevent this, albeit unlikely case, play it safe and convert
+right operands to left ones' type s64.
+
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: 30f604283e05 ("PM / Domains: Allow domain power states to be read from DT")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 86edac7d3888 ("Revert "thermal/drivers/mediatek: Use devm_of_iomap to avoid resource leak in mtk_thermal_probe"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/Kconfig                       | 14 ++++---------
- drivers/thermal/Makefile                      |  2 +-
- drivers/thermal/mediatek/Kconfig              | 21 +++++++++++++++++++
- drivers/thermal/mediatek/Makefile             |  1 +
- .../auxadc_thermal.c}                         |  2 +-
- 5 files changed, 28 insertions(+), 12 deletions(-)
- create mode 100644 drivers/thermal/mediatek/Kconfig
- create mode 100644 drivers/thermal/mediatek/Makefile
- rename drivers/thermal/{mtk_thermal.c => mediatek/auxadc_thermal.c} (99%)
+ drivers/base/power/domain.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/thermal/Kconfig b/drivers/thermal/Kconfig
-index e052dae614ebb..d35f63daca3b7 100644
---- a/drivers/thermal/Kconfig
-+++ b/drivers/thermal/Kconfig
-@@ -412,16 +412,10 @@ config DA9062_THERMAL
- 	  zone.
- 	  Compatible with the DA9062 and DA9061 PMICs.
+diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+index b411201f75bfb..b33fc322e0928 100644
+--- a/drivers/base/power/domain.c
++++ b/drivers/base/power/domain.c
+@@ -2923,10 +2923,10 @@ static int genpd_parse_state(struct genpd_power_state *genpd_state,
  
--config MTK_THERMAL
--	tristate "Temperature sensor driver for mediatek SoCs"
--	depends on ARCH_MEDIATEK || COMPILE_TEST
--	depends on HAS_IOMEM
--	depends on NVMEM || NVMEM=n
--	depends on RESET_CONTROLLER
--	default y
--	help
--	  Enable this option if you want to have support for thermal management
--	  controller present in Mediatek SoCs
-+menu "Mediatek thermal drivers"
-+depends on ARCH_MEDIATEK || COMPILE_TEST
-+source "drivers/thermal/mediatek/Kconfig"
-+endmenu
+ 	err = of_property_read_u32(state_node, "min-residency-us", &residency);
+ 	if (!err)
+-		genpd_state->residency_ns = 1000 * residency;
++		genpd_state->residency_ns = 1000LL * residency;
  
- config AMLOGIC_THERMAL
- 	tristate "Amlogic Thermal Support"
-diff --git a/drivers/thermal/Makefile b/drivers/thermal/Makefile
-index 2506c6c8ca83a..766ce38ff4f33 100644
---- a/drivers/thermal/Makefile
-+++ b/drivers/thermal/Makefile
-@@ -55,7 +55,7 @@ obj-y				+= st/
- obj-y				+= qcom/
- obj-y				+= tegra/
- obj-$(CONFIG_HISI_THERMAL)     += hisi_thermal.o
--obj-$(CONFIG_MTK_THERMAL)	+= mtk_thermal.o
-+obj-y				+= mediatek/
- obj-$(CONFIG_GENERIC_ADC_THERMAL)	+= thermal-generic-adc.o
- obj-$(CONFIG_UNIPHIER_THERMAL)	+= uniphier_thermal.o
- obj-$(CONFIG_AMLOGIC_THERMAL)     += amlogic_thermal.o
-diff --git a/drivers/thermal/mediatek/Kconfig b/drivers/thermal/mediatek/Kconfig
-new file mode 100644
-index 0000000000000..7558a847d4e92
---- /dev/null
-+++ b/drivers/thermal/mediatek/Kconfig
-@@ -0,0 +1,21 @@
-+config MTK_THERMAL
-+	tristate "MediaTek thermal drivers"
-+	depends on THERMAL_OF
-+	help
-+	  This is the option for MediaTek thermal software solutions.
-+	  Please enable corresponding options to get temperature
-+	  information from thermal sensors or turn on throttle
-+	  mechaisms for thermal mitigation.
-+
-+if MTK_THERMAL
-+
-+config MTK_SOC_THERMAL
-+	tristate "AUXADC temperature sensor driver for MediaTek SoCs"
-+	depends on HAS_IOMEM
-+	help
-+	  Enable this option if you want to get SoC temperature
-+	  information for MediaTek platforms.
-+	  This driver configures thermal controllers to collect
-+	  temperature via AUXADC interface.
-+
-+endif
-diff --git a/drivers/thermal/mediatek/Makefile b/drivers/thermal/mediatek/Makefile
-new file mode 100644
-index 0000000000000..53e86e30b26ff
---- /dev/null
-+++ b/drivers/thermal/mediatek/Makefile
-@@ -0,0 +1 @@
-+obj-$(CONFIG_MTK_SOC_THERMAL)	+= auxadc_thermal.o
-diff --git a/drivers/thermal/mtk_thermal.c b/drivers/thermal/mediatek/auxadc_thermal.c
-similarity index 99%
-rename from drivers/thermal/mtk_thermal.c
-rename to drivers/thermal/mediatek/auxadc_thermal.c
-index 8440692e3890d..b4ef57fa9183e 100644
---- a/drivers/thermal/mtk_thermal.c
-+++ b/drivers/thermal/mediatek/auxadc_thermal.c
-@@ -23,7 +23,7 @@
- #include <linux/reset.h>
- #include <linux/types.h>
+-	genpd_state->power_on_latency_ns = 1000 * exit_latency;
+-	genpd_state->power_off_latency_ns = 1000 * entry_latency;
++	genpd_state->power_on_latency_ns = 1000LL * exit_latency;
++	genpd_state->power_off_latency_ns = 1000LL * entry_latency;
+ 	genpd_state->fwnode = &state_node->fwnode;
  
--#include "thermal_hwmon.h"
-+#include "../thermal_hwmon.h"
- 
- /* AUXADC Registers */
- #define AUXADC_CON1_SET_V	0x008
+ 	return 0;
 -- 
 2.39.2
 
