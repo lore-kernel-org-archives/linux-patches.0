@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC468F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:06:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D95C433C7;
-	Sun, 16 Jul 2023 20:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECC78F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:06:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED77BC433C7;
+	Sun, 16 Jul 2023 20:06:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537994;
-	bh=tsJwQTjv4AJmvjMGeXqrH2J3KknpHCsAeO4KFwjLEVc=;
+	s=korg; t=1689537997;
+	bh=LIcEAnNH69o9qLl0PIVTrlKQQJQ+EothrVxaTcUAPT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rg6g2pkeFIB/4V9MSuUb2OBkPlo+OcD6pwTCS8DGJ2yohQLAfCGwdL+W+x0ZUE6Dn
-	 BT3UunJIOctNFdVaqSKC8jlC6ACsRv+eNtVkNtSo4IUJnYPOPGbON+VFkjNODYVBDm
-	 8Lj2YFyiSdlI0tD/JdCrzdyhy8beY7cQXMVmrFsA=
+	b=DFXF9Ggn+dy/b1M1lW5/ZEe921NlaR3JWAJc0Zl/tdcTZA8Rrv6BPhQdIuh8yfgW1
+	 dBzLeNjpDQWOs0YVn+aYLXmM9H61lAS8G3bUT49duAQAN7k/z8YF0EVwLgd8GVg73r
+	 plRAT6gn0conxDYxIUgFSA5sPLN6siAoDLD1/eXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 294/800] ARM/gpio: Push OMAP2 quirk down into TWL4030 driver
-Date: Sun, 16 Jul 2023 21:42:27 +0200
-Message-ID: <20230716194955.911524275@linuxfoundation.org>
+Subject: [PATCH 6.4 295/800] ARM: omap2: Get USB hub reset GPIO from descriptor
+Date: Sun, 16 Jul 2023 21:42:28 +0200
+Message-ID: <20230716194955.934271857@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,247 +36,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit d5f4fa60d63aa54ae33339895b88d8932b6037ed ]
+[ Upstream commit 94075d16beefc2304e756e3b23d8ecf0f36eecd7 ]
 
-The TWL4030 GPIO driver has a custom platform data .set_up()
-callback to call back into the platform and do misc stuff such
-as hog and export a GPIO for WLAN PWR on a specific OMAP3 board.
+This switches the USB hub GPIO reset line handling in the
+OMAP2 pdata quirks over to using GPIO descriptors to avoid using
+the global GPIO numberspace.
 
-Avoid all the kludgery in the platform data and the boardfile
-and just put the quirks right into the driver. Make it
-conditional on OMAP3.
-
-I think the exported GPIO is used by some kind of userspace
-so ordinary DTS hogs will probably not work.
+Since the GPIOs are exported and assumedly used by some kind
+of userspace we cannot simply use hogs in the device tree.
 
 Fixes: 92bf78b33b0b ("gpio: omap: use dynamic allocation of base")
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap2/omap_device.c  |  1 -
- arch/arm/mach-omap2/pdata-quirks.c | 41 +----------------------
- drivers/gpio/gpio-twl4030.c        | 52 +++++++++++++++++++++---------
- include/linux/mfd/twl.h            |  3 --
- 4 files changed, 37 insertions(+), 60 deletions(-)
+ arch/arm/mach-omap2/pdata-quirks.c | 50 ++++++++++++++++++++++--------
+ 1 file changed, 37 insertions(+), 13 deletions(-)
 
-diff --git a/arch/arm/mach-omap2/omap_device.c b/arch/arm/mach-omap2/omap_device.c
-index 4afa2f08e6681..fca7869c8075a 100644
---- a/arch/arm/mach-omap2/omap_device.c
-+++ b/arch/arm/mach-omap2/omap_device.c
-@@ -244,7 +244,6 @@ static int _omap_device_notifier_call(struct notifier_block *nb,
- 	case BUS_NOTIFY_ADD_DEVICE:
- 		if (pdev->dev.of_node)
- 			omap_device_build_from_dt(pdev);
--		omap_auxdata_legacy_init(dev);
- 		fallthrough;
- 	default:
- 		od = to_omap_device(pdev);
 diff --git a/arch/arm/mach-omap2/pdata-quirks.c b/arch/arm/mach-omap2/pdata-quirks.c
-index 04208cc52784e..c363ad8d6a06c 100644
+index c363ad8d6a06c..3264c4e77a8aa 100644
 --- a/arch/arm/mach-omap2/pdata-quirks.c
 +++ b/arch/arm/mach-omap2/pdata-quirks.c
-@@ -6,6 +6,7 @@
-  */
- #include <linux/clk.h>
- #include <linux/davinci_emac.h>
-+#include <linux/gpio/machine.h>
- #include <linux/gpio/consumer.h>
- #include <linux/gpio.h>
- #include <linux/init.h>
-@@ -41,7 +42,6 @@ struct pdata_init {
- };
- 
- static struct of_dev_auxdata omap_auxdata_lookup[];
--static struct twl4030_gpio_platform_data twl_gpio_auxdata;
- 
- #ifdef CONFIG_MACH_NOKIA_N8X0
- static void __init omap2420_n8x0_legacy_init(void)
-@@ -98,22 +98,6 @@ static struct iommu_platform_data omap3_iommu_isp_pdata = {
+@@ -98,31 +98,43 @@ static struct iommu_platform_data omap3_iommu_isp_pdata = {
  };
  #endif
  
--static int omap3_sbc_t3730_twl_callback(struct device *dev,
--					   unsigned gpio,
--					   unsigned ngpio)
--{
--	int res;
--
--	res = gpio_request_one(gpio + 2, GPIOF_OUT_INIT_HIGH,
--			       "wlan pwr");
--	if (res)
--		return res;
+-static void __init omap3_sbc_t3x_usb_hub_init(int gpio, char *hub_name)
++static void __init omap3_sbc_t3x_usb_hub_init(char *hub_name, int idx)
+ {
+-	int err = gpio_request_one(gpio, GPIOF_OUT_INIT_LOW, hub_name);
++	struct gpio_desc *d;
+ 
+-	if (err) {
+-		pr_err("SBC-T3x: %s reset gpio request failed: %d\n",
+-			hub_name, err);
++	/* This asserts the RESET line (reverse polarity) */
++	d = gpiod_get_index(NULL, "reset", idx, GPIOD_OUT_HIGH);
++	if (IS_ERR(d)) {
++		pr_err("Unable to get T3x USB reset GPIO descriptor\n");
+ 		return;
+ 	}
 -
 -	gpiod_export(gpio_to_desc(gpio), 0);
 -
--	return 0;
--}
--
- static void __init omap3_sbc_t3x_usb_hub_init(int gpio, char *hub_name)
- {
- 	int err = gpio_request_one(gpio, GPIOF_OUT_INIT_LOW, hub_name);
-@@ -131,11 +115,6 @@ static void __init omap3_sbc_t3x_usb_hub_init(int gpio, char *hub_name)
++	gpiod_set_consumer_name(d, hub_name);
++	gpiod_export(d, 0);
+ 	udelay(10);
+-	gpio_set_value(gpio, 1);
++	/* De-assert RESET */
++	gpiod_set_value(d, 0);
  	msleep(1);
  }
  
--static void __init omap3_sbc_t3730_twl_init(void)
--{
--	twl_gpio_auxdata.setup = omap3_sbc_t3730_twl_callback;
--}
--
++static struct gpiod_lookup_table omap3_sbc_t3x_usb_gpio_table = {
++	.dev_id = NULL,
++	.table = {
++		GPIO_LOOKUP_IDX("gpio-160-175", 7, "reset", 0,
++				GPIO_ACTIVE_LOW),
++		{ }
++	},
++};
++
  static void __init omap3_sbc_t3730_legacy_init(void)
  {
- 	omap3_sbc_t3x_usb_hub_init(167, "sb-t35 usb hub");
-@@ -393,21 +372,6 @@ static struct ti_prm_platform_data ti_prm_pdata = {
- 	.clkdm_lookup = clkdm_lookup,
- };
- 
--/*
-- * GPIOs for TWL are initialized by the I2C bus and need custom
-- * handing until DSS has device tree bindings.
-- */
--void omap_auxdata_legacy_init(struct device *dev)
--{
--	if (dev->platform_data)
--		return;
--
--	if (strcmp("twl4030-gpio", dev_name(dev)))
--		return;
--
--	dev->platform_data = &twl_gpio_auxdata;
--}
--
- #if defined(CONFIG_ARCH_OMAP3) && IS_ENABLED(CONFIG_SND_SOC_OMAP_MCBSP)
- static struct omap_mcbsp_platform_data mcbsp_pdata;
- static void __init omap3_mcbsp_init(void)
-@@ -427,9 +391,6 @@ static struct pdata_init auxdata_quirks[] __initdata = {
- 	{ "nokia,n800", omap2420_n8x0_legacy_init, },
- 	{ "nokia,n810", omap2420_n8x0_legacy_init, },
- 	{ "nokia,n810-wimax", omap2420_n8x0_legacy_init, },
--#endif
--#ifdef CONFIG_ARCH_OMAP3
--	{ "compulab,omap3-sbc-t3730", omap3_sbc_t3730_twl_init, },
- #endif
- 	{ /* sentinel */ },
- };
-diff --git a/drivers/gpio/gpio-twl4030.c b/drivers/gpio/gpio-twl4030.c
-index c1bb2c3ca6f29..446599ac234a9 100644
---- a/drivers/gpio/gpio-twl4030.c
-+++ b/drivers/gpio/gpio-twl4030.c
-@@ -17,7 +17,9 @@
- #include <linux/interrupt.h>
- #include <linux/kthread.h>
- #include <linux/irq.h>
-+#include <linux/gpio/machine.h>
- #include <linux/gpio/driver.h>
-+#include <linux/gpio/consumer.h>
- #include <linux/platform_device.h>
- #include <linux/of.h>
- #include <linux/irqdomain.h>
-@@ -465,8 +467,7 @@ static int gpio_twl4030_debounce(u32 debounce, u8 mmc_cd)
- 				REG_GPIO_DEBEN1, 3);
+-	omap3_sbc_t3x_usb_hub_init(167, "sb-t35 usb hub");
++	gpiod_add_lookup_table(&omap3_sbc_t3x_usb_gpio_table);
++	omap3_sbc_t3x_usb_hub_init("sb-t35 usb hub", 0);
  }
  
--static struct twl4030_gpio_platform_data *of_gpio_twl4030(struct device *dev,
--				struct twl4030_gpio_platform_data *pdata)
-+static struct twl4030_gpio_platform_data *of_gpio_twl4030(struct device *dev)
+ static void __init omap3_sbc_t3530_legacy_init(void)
  {
- 	struct twl4030_gpio_platform_data *omap_twl_info;
- 
-@@ -474,9 +475,6 @@ static struct twl4030_gpio_platform_data *of_gpio_twl4030(struct device *dev,
- 	if (!omap_twl_info)
- 		return NULL;
- 
--	if (pdata)
--		*omap_twl_info = *pdata;
--
- 	omap_twl_info->use_leds = of_property_read_bool(dev->of_node,
- 			"ti,use-leds");
- 
-@@ -504,9 +502,18 @@ static int gpio_twl4030_remove(struct platform_device *pdev)
- 	return 0;
+-	omap3_sbc_t3x_usb_hub_init(167, "sb-t35 usb hub");
++	gpiod_add_lookup_table(&omap3_sbc_t3x_usb_gpio_table);
++	omap3_sbc_t3x_usb_hub_init("sb-t35 usb hub", 0);
  }
  
-+/* Called from the registered devm action */
-+static void gpio_twl4030_power_off_action(void *data)
-+{
-+	struct gpio_desc *d = data;
+ static void __init omap3_evm_legacy_init(void)
+@@ -187,10 +199,22 @@ static void __init omap3_sbc_t3517_wifi_init(void)
+ 	gpio_set_value(cm_t3517_wlan_gpios[1].gpio, 0);
+ }
+ 
++static struct gpiod_lookup_table omap3_sbc_t3517_usb_gpio_table = {
++	.dev_id = NULL,
++	.table = {
++		GPIO_LOOKUP_IDX("gpio-144-159", 8, "reset", 0,
++				GPIO_ACTIVE_LOW),
++		GPIO_LOOKUP_IDX("gpio-96-111", 2, "reset", 1,
++				GPIO_ACTIVE_LOW),
++		{ }
++	},
++};
 +
-+	gpiod_unexport(d);
-+	gpiochip_free_own_desc(d);
-+}
-+
- static int gpio_twl4030_probe(struct platform_device *pdev)
+ static void __init omap3_sbc_t3517_legacy_init(void)
  {
--	struct twl4030_gpio_platform_data *pdata = dev_get_platdata(&pdev->dev);
-+	struct twl4030_gpio_platform_data *pdata;
- 	struct device_node *node = pdev->dev.of_node;
- 	struct gpio_twl4030_priv *priv;
- 	int ret, irq_base;
-@@ -546,9 +553,7 @@ static int gpio_twl4030_probe(struct platform_device *pdev)
- 
- 	mutex_init(&priv->mutex);
- 
--	if (node)
--		pdata = of_gpio_twl4030(&pdev->dev, pdata);
--
-+	pdata = of_gpio_twl4030(&pdev->dev);
- 	if (pdata == NULL) {
- 		dev_err(&pdev->dev, "Platform data is missing\n");
- 		return -ENXIO;
-@@ -585,17 +590,32 @@ static int gpio_twl4030_probe(struct platform_device *pdev)
- 		goto out;
- 	}
- 
--	platform_set_drvdata(pdev, priv);
-+	/*
-+	 * Special quirk for the OMAP3 to hog and export a WLAN power
-+	 * GPIO.
-+	 */
-+	if (IS_ENABLED(CONFIG_ARCH_OMAP3) &&
-+	    of_machine_is_compatible("compulab,omap3-sbc-t3730")) {
-+		struct gpio_desc *d;
- 
--	if (pdata->setup) {
--		int status;
-+		d = gpiochip_request_own_desc(&priv->gpio_chip,
-+						 2, "wlan pwr",
-+						 GPIO_ACTIVE_HIGH,
-+						 GPIOD_OUT_HIGH);
-+		if (IS_ERR(d))
-+			return dev_err_probe(&pdev->dev, PTR_ERR(d),
-+					     "unable to hog wlan pwr GPIO\n");
-+
-+		gpiod_export(d, 0);
-+
-+		ret = devm_add_action_or_reset(&pdev->dev, gpio_twl4030_power_off_action, d);
-+		if (ret)
-+			return dev_err_probe(&pdev->dev, ret,
-+					     "failed to install power off handler\n");
- 
--		status = pdata->setup(&pdev->dev, priv->gpio_chip.base,
--				      TWL4030_GPIO_MAX);
--		if (status)
--			dev_dbg(&pdev->dev, "setup --> %d\n", status);
- 	}
- 
-+	platform_set_drvdata(pdev, priv);
- out:
- 	return ret;
- }
-diff --git a/include/linux/mfd/twl.h b/include/linux/mfd/twl.h
-index 6e3d99b7a0ee6..c062d91a67d92 100644
---- a/include/linux/mfd/twl.h
-+++ b/include/linux/mfd/twl.h
-@@ -593,9 +593,6 @@ struct twl4030_gpio_platform_data {
- 	 */
- 	u32		pullups;
- 	u32		pulldowns;
--
--	int		(*setup)(struct device *dev,
--				unsigned gpio, unsigned ngpio);
- };
- 
- struct twl4030_madc_platform_data {
+-	omap3_sbc_t3x_usb_hub_init(152, "cm-t3517 usb hub");
+-	omap3_sbc_t3x_usb_hub_init(98, "sb-t35 usb hub");
++	gpiod_add_lookup_table(&omap3_sbc_t3517_usb_gpio_table);
++	omap3_sbc_t3x_usb_hub_init("cm-t3517 usb hub", 0);
++	omap3_sbc_t3x_usb_hub_init("sb-t35 usb hub", 1);
+ 	am35xx_emac_reset();
+ 	hsmmc2_internal_input_clk();
+ 	omap3_sbc_t3517_wifi_init();
 -- 
 2.39.2
 
