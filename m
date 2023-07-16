@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340248F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:52:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E64C433C8;
-	Sun, 16 Jul 2023 20:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646348F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:52:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 853D8C433C7;
+	Sun, 16 Jul 2023 20:52:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540754;
-	bh=5xkpUM/r8vbT8mcVQYPXwGudlbYN3iTdorIMwuvPkm0=;
+	s=korg; t=1689540756;
+	bh=3+uk3lHB9I/y/j0MUypH9xNqMEo4gsLCJGi55I5rWzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sg96fMP9S8DoAJU4lgLbpFA1/Wwq3rCOrSMbAVJwg9IS+NyFV5rVc00G+qJwQ7+QD
-	 EL2bM9NEx/EgUpT6PnUJle2jPnaP8in3ONuoUCII77czE8GtlrcILYjfFpi47ThHld
-	 DTRNB5eYzE4TDrLkcdbsyqmg02Hp6/C0QUKmZPC0=
+	b=t5T29BsTV+vHMGUE1z9X8RtCvp2ZNT1pval8DGU2T4g5n8wSQ1om90LwbiPusfSNT
+	 fOXMvmqQYum07Je/RHaoYnYZHLlPfCuAqzaNsEs/ueWAti7IGxPDqkVH8cNq3jIkM8
+	 JJFMPSBFeHXqmE8LIqHo4muyzKWGtGHy2jvFxZGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 476/591] net: mscc: ocelot: dont keep PTP configuration of all ports in single structure
-Date: Sun, 16 Jul 2023 21:50:15 +0200
-Message-ID: <20230716194936.216308922@linuxfoundation.org>
+Subject: [PATCH 6.1 477/591] net: dsa: felix: dont drop PTP frames with tag_8021q when RX timestamping is disabled
+Date: Sun, 16 Jul 2023 21:50:16 +0200
+Message-ID: <20230716194936.242136742@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,198 +37,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 45d0fcb5bc9558d0bf3d2fa7fabc5d8a88d35439 ]
+[ Upstream commit 2edcfcbb3c5946609be1d8875473a240b170673b ]
 
-In a future change, the driver will need to determine whether PTP RX
-timestamping is enabled on a port (including whether traps were set up
-on that port in particular) and that is currently not possible.
+The driver implements a workaround for the fact that it doesn't have an
+IRQ source to tell it whether PTP frames are available through the
+extraction registers, for those frames to be processed and passed
+towards the network stack. That workaround is to configure the switch,
+through felix_hwtstamp_set() -> felix_update_trapping_destinations(),
+to create two copies of PTP packets: one sent over Ethernet to the DSA
+master, and one to be consumed through the aforementioned CPU extraction
+queue registers.
 
-The driver supports different RX filters (L2, L4) and kinds of TX
-timestamping (one-step, two-step) on its ports, but it saves all
-configuration in a single struct hwtstamp_config that is global to the
-switch. So, the latest timestamping configuration on one port
-(including a request to disable timestamping) affects what gets reported
-for all ports, even though the configuration itself is still individual
-to each port.
+The reason why we want PTP packets to be consumed through the CPU
+extraction registers in the first place is because we want to see their
+hardware RX timestamp. With tag_8021q, that is only visible that way,
+and it isn't visible with the copy of the packet that's transmitted over
+Ethernet.
 
-The port timestamping configurations are only coupled because of the
-common structure, so replace the hwtstamp_config with a mask of trapped
-protocols saved per port. We also have the ptp_cmd to distinguish
-between one-step and two-step PTP timestamping, so with those 2 bits of
-information we can fully reconstruct a descriptive struct
-hwtstamp_config for each port, during the SIOCGHWTSTAMP ioctl.
+The problem with the workaround implementation is that it drops the
+packet received over Ethernet, in expectation of its copy being present
+in the CPU extraction registers. However, if felix_hwtstamp_set() hasn't
+run (aka PTP RX timestamping is disabled), the driver will drop the
+original PTP frame and there will be no copy of it in the CPU extraction
+registers. So, the network stack will simply not see any PTP frame.
 
-Fixes: 4e3b0468e6d7 ("net: mscc: PTP Hardware Clock (PHC) support")
-Fixes: 96ca08c05838 ("net: mscc: ocelot: set up traps for PTP packets")
+Look at the port's trapping configuration to see whether the driver has
+previously enabled the CPU extraction registers. If it hasn't, just
+don't RX timestamp the frame and let it be passed up the stack by DSA,
+which is perfectly fine.
+
+Fixes: 0a6f17c6ae21 ("net: dsa: tag_ocelot_8021q: add support for PTP timestamping")
 Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mscc/ocelot.c     |  1 -
- drivers/net/ethernet/mscc/ocelot_ptp.c | 61 +++++++++++++++++---------
- include/soc/mscc/ocelot.h              | 10 +++--
- 3 files changed, 48 insertions(+), 24 deletions(-)
+ drivers/net/dsa/ocelot/felix.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/mscc/ocelot.c b/drivers/net/ethernet/mscc/ocelot.c
-index 13b14110a0603..01b6e13f4692f 100644
---- a/drivers/net/ethernet/mscc/ocelot.c
-+++ b/drivers/net/ethernet/mscc/ocelot.c
-@@ -2728,7 +2728,6 @@ int ocelot_init(struct ocelot *ocelot)
- 		}
- 	}
+diff --git a/drivers/net/dsa/ocelot/felix.c b/drivers/net/dsa/ocelot/felix.c
+index dd3a18cc89dd2..4faabc4364aa7 100644
+--- a/drivers/net/dsa/ocelot/felix.c
++++ b/drivers/net/dsa/ocelot/felix.c
+@@ -1705,6 +1705,18 @@ static bool felix_rxtstamp(struct dsa_switch *ds, int port,
+ 	u32 tstamp_hi;
+ 	u64 tstamp;
  
--	mutex_init(&ocelot->ptp_lock);
- 	mutex_init(&ocelot->mact_lock);
- 	mutex_init(&ocelot->fwd_domain_lock);
- 	mutex_init(&ocelot->tas_lock);
-diff --git a/drivers/net/ethernet/mscc/ocelot_ptp.c b/drivers/net/ethernet/mscc/ocelot_ptp.c
-index 673bfd70867a6..cb32234a5bf1b 100644
---- a/drivers/net/ethernet/mscc/ocelot_ptp.c
-+++ b/drivers/net/ethernet/mscc/ocelot_ptp.c
-@@ -439,8 +439,12 @@ static int ocelot_ipv6_ptp_trap_del(struct ocelot *ocelot, int port)
- static int ocelot_setup_ptp_traps(struct ocelot *ocelot, int port,
- 				  bool l2, bool l4)
- {
-+	struct ocelot_port *ocelot_port = ocelot->ports[port];
- 	int err;
- 
-+	ocelot_port->trap_proto &= ~(OCELOT_PROTO_PTP_L2 |
-+				     OCELOT_PROTO_PTP_L4);
-+
- 	if (l2)
- 		err = ocelot_l2_ptp_trap_add(ocelot, port);
- 	else
-@@ -464,6 +468,11 @@ static int ocelot_setup_ptp_traps(struct ocelot *ocelot, int port,
- 	if (err)
- 		return err;
- 
-+	if (l2)
-+		ocelot_port->trap_proto |= OCELOT_PROTO_PTP_L2;
-+	if (l4)
-+		ocelot_port->trap_proto |= OCELOT_PROTO_PTP_L4;
-+
- 	return 0;
- 
- err_ipv6:
-@@ -474,10 +483,38 @@ static int ocelot_setup_ptp_traps(struct ocelot *ocelot, int port,
- 	return err;
- }
- 
-+static int ocelot_traps_to_ptp_rx_filter(unsigned int proto)
-+{
-+	if ((proto & OCELOT_PROTO_PTP_L2) && (proto & OCELOT_PROTO_PTP_L4))
-+		return HWTSTAMP_FILTER_PTP_V2_EVENT;
-+	else if (proto & OCELOT_PROTO_PTP_L2)
-+		return HWTSTAMP_FILTER_PTP_V2_L2_EVENT;
-+	else if (proto & OCELOT_PROTO_PTP_L4)
-+		return HWTSTAMP_FILTER_PTP_V2_L4_EVENT;
-+
-+	return HWTSTAMP_FILTER_NONE;
-+}
-+
- int ocelot_hwstamp_get(struct ocelot *ocelot, int port, struct ifreq *ifr)
- {
--	return copy_to_user(ifr->ifr_data, &ocelot->hwtstamp_config,
--			    sizeof(ocelot->hwtstamp_config)) ? -EFAULT : 0;
-+	struct ocelot_port *ocelot_port = ocelot->ports[port];
-+	struct hwtstamp_config cfg = {};
-+
-+	switch (ocelot_port->ptp_cmd) {
-+	case IFH_REW_OP_TWO_STEP_PTP:
-+		cfg.tx_type = HWTSTAMP_TX_ON;
++	switch (type & PTP_CLASS_PMASK) {
++	case PTP_CLASS_L2:
++		if (!(ocelot->ports[port]->trap_proto & OCELOT_PROTO_PTP_L2))
++			return false;
 +		break;
-+	case IFH_REW_OP_ORIGIN_PTP:
-+		cfg.tx_type = HWTSTAMP_TX_ONESTEP_SYNC;
-+		break;
-+	default:
-+		cfg.tx_type = HWTSTAMP_TX_OFF;
++	case PTP_CLASS_IPV4:
++	case PTP_CLASS_IPV6:
++		if (!(ocelot->ports[port]->trap_proto & OCELOT_PROTO_PTP_L4))
++			return false;
 +		break;
 +	}
 +
-+	cfg.rx_filter = ocelot_traps_to_ptp_rx_filter(ocelot_port->trap_proto);
-+
-+	return copy_to_user(ifr->ifr_data, &cfg, sizeof(cfg)) ? -EFAULT : 0;
- }
- EXPORT_SYMBOL(ocelot_hwstamp_get);
- 
-@@ -509,8 +546,6 @@ int ocelot_hwstamp_set(struct ocelot *ocelot, int port, struct ifreq *ifr)
- 		return -ERANGE;
- 	}
- 
--	mutex_lock(&ocelot->ptp_lock);
--
- 	switch (cfg.rx_filter) {
- 	case HWTSTAMP_FILTER_NONE:
- 		break;
-@@ -531,28 +566,14 @@ int ocelot_hwstamp_set(struct ocelot *ocelot, int port, struct ifreq *ifr)
- 		l4 = true;
- 		break;
- 	default:
--		mutex_unlock(&ocelot->ptp_lock);
- 		return -ERANGE;
- 	}
- 
- 	err = ocelot_setup_ptp_traps(ocelot, port, l2, l4);
--	if (err) {
--		mutex_unlock(&ocelot->ptp_lock);
-+	if (err)
- 		return err;
--	}
--
--	if (l2 && l4)
--		cfg.rx_filter = HWTSTAMP_FILTER_PTP_V2_EVENT;
--	else if (l2)
--		cfg.rx_filter = HWTSTAMP_FILTER_PTP_V2_L2_EVENT;
--	else if (l4)
--		cfg.rx_filter = HWTSTAMP_FILTER_PTP_V2_L4_EVENT;
--	else
--		cfg.rx_filter = HWTSTAMP_FILTER_NONE;
- 
--	/* Commit back the result & save it */
--	memcpy(&ocelot->hwtstamp_config, &cfg, sizeof(cfg));
--	mutex_unlock(&ocelot->ptp_lock);
-+	cfg.rx_filter = ocelot_traps_to_ptp_rx_filter(ocelot_port->trap_proto);
- 
- 	return copy_to_user(ifr->ifr_data, &cfg, sizeof(cfg)) ? -EFAULT : 0;
- }
-diff --git a/include/soc/mscc/ocelot.h b/include/soc/mscc/ocelot.h
-index 967ba30ea6363..195ca8f0b6f9d 100644
---- a/include/soc/mscc/ocelot.h
-+++ b/include/soc/mscc/ocelot.h
-@@ -902,6 +902,11 @@ enum macaccess_entry_type {
- 	ENTRYTYPE_MACv6,
- };
- 
-+enum ocelot_proto {
-+	OCELOT_PROTO_PTP_L2 = BIT(0),
-+	OCELOT_PROTO_PTP_L4 = BIT(1),
-+};
-+
- #define OCELOT_QUIRK_PCS_PERFORMS_RATE_ADAPTATION	BIT(0)
- #define OCELOT_QUIRK_QSGMII_PORTS_MUST_BE_UP		BIT(1)
- 
-@@ -939,6 +944,8 @@ struct ocelot_port {
- 	unsigned int			ptp_skbs_in_flight;
- 	struct sk_buff_head		tx_skbs;
- 
-+	unsigned int			trap_proto;
-+
- 	u16				mrp_ring_id;
- 
- 	u8				ptp_cmd;
-@@ -1032,12 +1039,9 @@ struct ocelot {
- 	u8				ptp:1;
- 	struct ptp_clock		*ptp_clock;
- 	struct ptp_clock_info		ptp_info;
--	struct hwtstamp_config		hwtstamp_config;
- 	unsigned int			ptp_skbs_in_flight;
- 	/* Protects the 2-step TX timestamp ID logic */
- 	spinlock_t			ts_id_lock;
--	/* Protects the PTP interface state */
--	struct mutex			ptp_lock;
- 	/* Protects the PTP clock */
- 	spinlock_t			ptp_clock_lock;
- 	struct ptp_pin_desc		ptp_pins[OCELOT_PTP_PINS_NUM];
+ 	/* If the "no XTR IRQ" workaround is in use, tell DSA to defer this skb
+ 	 * for RX timestamping. Then free it, and poll for its copy through
+ 	 * MMIO in the CPU port module, and inject that into the stack from
 -- 
 2.39.2
 
