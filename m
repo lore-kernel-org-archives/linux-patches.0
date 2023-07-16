@@ -1,36 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 130858F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:14:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C8CC433C8;
-	Sun, 16 Jul 2023 20:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02978F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:14:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43142C433C7;
+	Sun, 16 Jul 2023 20:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538453;
-	bh=++l7jwRxhPieShiTQC/ShKeGoqfC/0jswl4rq8Qi5jY=;
+	s=korg; t=1689538456;
+	bh=b4aDIJsYHPCcG85cEpSQBYX4Ui66WK5ExCnv8e0O/i0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mWZuUbr1zh0+Ec3qW4JtXIbPSlrfV2VFEJ8ruqgkSabwT5AOX0GLpQqFYejMaz2dS
-	 oOhaGztaN+R/xDo2VlXmrTaI4IY1EcQw9FVuAzihu+ZHteyF4vE5JSy4UTRQYxHfAj
-	 pWCU219grEmO95LVN4gy2n48rsYZ1jc3DmA6mDtQ=
+	b=baRYj7z2VXmk0JPqd/PdaSnQK27Y9pMHFwssGXFVEDEYKdn3Db13ws3oHKua6Jthc
+	 0M5gTAJlGdFG9rZlde6GRP1ONkI+HBZGIOEwjEN7ChVvm4EwOr+13XYMlqWQU8LSuh
+	 OBYu84m9QGfkjUsE1ZNXB0dRV6Q4jOsrE9/W174s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Andre Fredette <anfredet@redhat.com>,
-	Clark Williams <williams@redhat.com>,
-	Dave Tucker <datucker@redhat.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Derek Barbosa <debarbos@redhat.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 455/800] perf bench: Add missing setlocale() call to allow usage of %d style formatting
-Date: Sun, 16 Jul 2023 21:45:08 +0200
-Message-ID: <20230716194959.651735848@linuxfoundation.org>
+Subject: [PATCH 6.4 428/800] ARM: dts: lan966x: kontron-d10: fix board reset
+Date: Sun, 16 Jul 2023 21:44:41 +0200
+Message-ID: <20230716194959.028141065@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -44,76 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit 16203e9cd01896b4244100a8e3fb9f6e612ab2b1 ]
+[ Upstream commit bfcd5714f6424c03e385e0e9296dcd69855cfea7 ]
 
-Without this we were not getting the thousands separator for big
-numbers.
+The pinctrl node was missing which change the pin mux to GPIO mode. Add
+it.
 
-Noticed while developing 'perf bench uprobe', but the use of %' predates
-that, for instance 'perf bench syscall' uses it.
-
-Before:
-
-  # perf bench uprobe all
-  # Running uprobe/baseline benchmark...
-  # Executed 1000 usleep(1000) calls
-       Total time: 1054082243ns
-
-   1054082.243000 nsecs/op
-
-  #
-
-After:
-
-  # perf bench uprobe all
-  # Running uprobe/baseline benchmark...
-  # Executed 1,000 usleep(1000) calls
-       Total time: 1,053,715,144ns
-
-   1,053,715.144000 nsecs/op
-
-  #
-
-Fixes: c2a08203052f8975 ("perf bench: Add basic syscall benchmark")
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Andre Fredette <anfredet@redhat.com>
-Cc: Clark Williams <williams@redhat.com>
-Cc: Dave Tucker <datucker@redhat.com>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Derek Barbosa <debarbos@redhat.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
-Link: https://lore.kernel.org/lkml/ZH3lcepZ4tBYr1jv@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 79d83b3a458e ("ARM: dts: lan966x: add basic Kontron KSwitch D10 support")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+[claudiu.beznea: moved pinctrl-* bindings after compatible]
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230616-feature-d10-dt-cleanups-v1-1-50dd0452b8fe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-bench.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/tools/perf/builtin-bench.c b/tools/perf/builtin-bench.c
-index 58f1cfe1eb34b..db435b791a09b 100644
---- a/tools/perf/builtin-bench.c
-+++ b/tools/perf/builtin-bench.c
-@@ -21,6 +21,7 @@
- #include "builtin.h"
- #include "bench/bench.h"
+diff --git a/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi b/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi
+index 0097e72e3fb22..42be207509a46 100644
+--- a/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi
++++ b/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi
+@@ -18,6 +18,8 @@ chosen {
  
-+#include <locale.h>
- #include <stdio.h>
- #include <stdlib.h>
- #include <string.h>
-@@ -260,6 +261,7 @@ int cmd_bench(int argc, const char **argv)
+ 	gpio-restart {
+ 		compatible = "gpio-restart";
++		pinctrl-0 = <&reset_pins>;
++		pinctrl-names = "default";
+ 		gpios = <&gpio 56 GPIO_ACTIVE_LOW>;
+ 		priority = <200>;
+ 	};
+@@ -59,6 +61,12 @@ miim_c_pins: miim-c-pins {
+ 		function = "miim_c";
+ 	};
  
- 	/* Unbuffered output */
- 	setvbuf(stdout, NULL, _IONBF, 0);
-+	setlocale(LC_ALL, "");
- 
- 	if (argc < 2) {
- 		/* No collection specified. */
++	reset_pins: reset-pins {
++		/* SYS_RST# */
++		pins = "GPIO_56";
++		function = "gpio";
++	};
++
+ 	sgpio_a_pins: sgpio-a-pins {
+ 		/* SCK, D0, D1 */
+ 		pins = "GPIO_32", "GPIO_33", "GPIO_34";
 -- 
 2.39.2
 
