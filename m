@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DF08F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:00:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCACEC433C8;
-	Sun, 16 Jul 2023 20:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4F28F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:00:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6859C433C7;
+	Sun, 16 Jul 2023 20:00:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537636;
-	bh=hK3PhZbMy8cFByA6JhpnJEF+lN1/DWhxonLZYMQHvqw=;
+	s=korg; t=1689537639;
+	bh=3b3GCNZaPSGbbNLBdsSyTuswl96THpfWg5MISQx20HQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F9NYnQLz5ChjY66CDczldsaYPs5EJj2Xq2+SSP7ZJt2h0GtldFI8FL3/o/E0pxTfj
-	 zDxtE3d/M5EQja9c8A1d1O7YQ/M2bLccNnl+4ky5u+STCMfA62bkL6JuEe3rezgFcn
-	 B43TpysWgBlam84KDpbf5bXI7HTE1zg2BENXBj74=
+	b=XYvV4a/ZQ1svKsDzyaj41NzpTzt0BFi2VaB0lHS61tcF35T+zpcWI6F9fyN6d67Un
+	 UGRKl68L0EREWug8BqylMgJpquNNhrjx5y2pMPc83B47cniB+difS2B9BVDHTzu7K/
+	 7fOieM2uQTf2H0VRQTfB6Zi4HvgZrozwF42c6hEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Sisodiya <mukesh.sisodiya@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Edwin Peer <edwin.peer@broadcom.com>,
+	Edwin Peer <espeer@gmail.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 166/800] wifi: iwlwifi: fw: print PC register value instead of address
-Date: Sun, 16 Jul 2023 21:40:19 +0200
-Message-ID: <20230716194952.964928846@linuxfoundation.org>
+Subject: [PATCH 6.4 167/800] rtnetlink: extend RTEXT_FILTER_SKIP_STATS to IFLA_VF_INFO
+Date: Sun, 16 Jul 2023 21:40:20 +0200
+Message-ID: <20230716194952.987735329@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,47 +37,165 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mukesh Sisodiya <mukesh.sisodiya@intel.com>
+From: Edwin Peer <edwin.peer@broadcom.com>
 
-[ Upstream commit 2b69d242e29b891b11f1190201f4a08abb0c8342 ]
+[ Upstream commit fa0e21fa44438a0e856d42224bfa24641d37b979 ]
 
-The program counter address is read from the TLV and
-PC address is printed in debug messages.
-Read the value at PC address and print the value
-instead of the register address.
+This filter already exists for excluding IPv6 SNMP stats. Extend its
+definition to also exclude IFLA_VF_INFO stats in RTM_GETLINK.
 
-Fixes: 5e31b3df86ec ("wifi: iwlwifi: dbg: print pc register data once fw dump occurred")
-Signed-off-by: Mukesh Sisodiya <mukesh.sisodiya@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230612184434.e5a5f18f1b2c.Ib6117a4e7f66a075913241cc81477c0059953d5d@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This patch constitutes a partial fix for a netlink attribute nesting
+overflow bug in IFLA_VFINFO_LIST. By excluding the stats when the
+requester doesn't need them, the truncation of the VF list is avoided.
+
+While it was technically only the stats added in commit c5a9f6f0ab40
+("net/core: Add drop counters to VF statistics") breaking the camel's
+back, the appreciable size of the stats data should never have been
+included without due consideration for the maximum number of VFs
+supported by PCI.
+
+Fixes: 3b766cd83232 ("net/core: Add reading VF statistics through the PF netdevice")
+Fixes: c5a9f6f0ab40 ("net/core: Add drop counters to VF statistics")
+Signed-off-by: Edwin Peer <edwin.peer@broadcom.com>
+Cc: Edwin Peer <espeer@gmail.com>
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Link: https://lore.kernel.org/r/20230611105108.122586-1-gal@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/dump.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/core/rtnetlink.c | 96 +++++++++++++++++++++++---------------------
+ 1 file changed, 51 insertions(+), 45 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dump.c b/drivers/net/wireless/intel/iwlwifi/fw/dump.c
-index f86f7b4baa181..f61f1ce7fe795 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/dump.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/dump.c
-@@ -507,11 +507,16 @@ void iwl_fwrt_dump_error_logs(struct iwl_fw_runtime *fwrt)
- 	iwl_fwrt_dump_fseq_regs(fwrt);
- 	if (fwrt->trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_22000) {
- 		pc_data = fwrt->trans->dbg.pc_data;
-+
-+		if (!iwl_trans_grab_nic_access(fwrt->trans))
-+			return;
- 		for (count = 0; count < fwrt->trans->dbg.num_pc;
- 		     count++, pc_data++)
- 			IWL_ERR(fwrt, "%s: 0x%x\n",
- 				pc_data->pc_name,
--				pc_data->pc_address);
-+				iwl_read_prph_no_grab(fwrt->trans,
-+						      pc_data->pc_address));
-+		iwl_trans_release_nic_access(fwrt->trans);
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index 41de3a2f29e15..d1815122298d5 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -961,24 +961,27 @@ static inline int rtnl_vfinfo_size(const struct net_device *dev,
+ 			 nla_total_size(sizeof(struct ifla_vf_rate)) +
+ 			 nla_total_size(sizeof(struct ifla_vf_link_state)) +
+ 			 nla_total_size(sizeof(struct ifla_vf_rss_query_en)) +
+-			 nla_total_size(0) + /* nest IFLA_VF_STATS */
+-			 /* IFLA_VF_STATS_RX_PACKETS */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_TX_PACKETS */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_RX_BYTES */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_TX_BYTES */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_BROADCAST */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_MULTICAST */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_RX_DROPPED */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_TX_DROPPED */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+ 			 nla_total_size(sizeof(struct ifla_vf_trust)));
++		if (~ext_filter_mask & RTEXT_FILTER_SKIP_STATS) {
++			size += num_vfs *
++				(nla_total_size(0) + /* nest IFLA_VF_STATS */
++				 /* IFLA_VF_STATS_RX_PACKETS */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_TX_PACKETS */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_RX_BYTES */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_TX_BYTES */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_BROADCAST */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_MULTICAST */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_RX_DROPPED */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_TX_DROPPED */
++				 nla_total_size_64bit(sizeof(__u64)));
++		}
+ 		return size;
+ 	} else
+ 		return 0;
+@@ -1270,7 +1273,8 @@ static noinline_for_stack int rtnl_fill_stats(struct sk_buff *skb,
+ static noinline_for_stack int rtnl_fill_vfinfo(struct sk_buff *skb,
+ 					       struct net_device *dev,
+ 					       int vfs_num,
+-					       struct nlattr *vfinfo)
++					       struct nlattr *vfinfo,
++					       u32 ext_filter_mask)
+ {
+ 	struct ifla_vf_rss_query_en vf_rss_query_en;
+ 	struct nlattr *vf, *vfstats, *vfvlanlist;
+@@ -1376,33 +1380,35 @@ static noinline_for_stack int rtnl_fill_vfinfo(struct sk_buff *skb,
+ 		goto nla_put_vf_failure;
+ 	}
+ 	nla_nest_end(skb, vfvlanlist);
+-	memset(&vf_stats, 0, sizeof(vf_stats));
+-	if (dev->netdev_ops->ndo_get_vf_stats)
+-		dev->netdev_ops->ndo_get_vf_stats(dev, vfs_num,
+-						&vf_stats);
+-	vfstats = nla_nest_start_noflag(skb, IFLA_VF_STATS);
+-	if (!vfstats)
+-		goto nla_put_vf_failure;
+-	if (nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_PACKETS,
+-			      vf_stats.rx_packets, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_PACKETS,
+-			      vf_stats.tx_packets, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_BYTES,
+-			      vf_stats.rx_bytes, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_BYTES,
+-			      vf_stats.tx_bytes, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_BROADCAST,
+-			      vf_stats.broadcast, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_MULTICAST,
+-			      vf_stats.multicast, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_DROPPED,
+-			      vf_stats.rx_dropped, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_DROPPED,
+-			      vf_stats.tx_dropped, IFLA_VF_STATS_PAD)) {
+-		nla_nest_cancel(skb, vfstats);
+-		goto nla_put_vf_failure;
++	if (~ext_filter_mask & RTEXT_FILTER_SKIP_STATS) {
++		memset(&vf_stats, 0, sizeof(vf_stats));
++		if (dev->netdev_ops->ndo_get_vf_stats)
++			dev->netdev_ops->ndo_get_vf_stats(dev, vfs_num,
++							  &vf_stats);
++		vfstats = nla_nest_start_noflag(skb, IFLA_VF_STATS);
++		if (!vfstats)
++			goto nla_put_vf_failure;
++		if (nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_PACKETS,
++				      vf_stats.rx_packets, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_PACKETS,
++				      vf_stats.tx_packets, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_BYTES,
++				      vf_stats.rx_bytes, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_BYTES,
++				      vf_stats.tx_bytes, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_BROADCAST,
++				      vf_stats.broadcast, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_MULTICAST,
++				      vf_stats.multicast, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_DROPPED,
++				      vf_stats.rx_dropped, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_DROPPED,
++				      vf_stats.tx_dropped, IFLA_VF_STATS_PAD)) {
++			nla_nest_cancel(skb, vfstats);
++			goto nla_put_vf_failure;
++		}
++		nla_nest_end(skb, vfstats);
+ 	}
+-	nla_nest_end(skb, vfstats);
+ 	nla_nest_end(skb, vf);
+ 	return 0;
+ 
+@@ -1435,7 +1441,7 @@ static noinline_for_stack int rtnl_fill_vf(struct sk_buff *skb,
+ 		return -EMSGSIZE;
+ 
+ 	for (i = 0; i < num_vfs; i++) {
+-		if (rtnl_fill_vfinfo(skb, dev, i, vfinfo))
++		if (rtnl_fill_vfinfo(skb, dev, i, vfinfo, ext_filter_mask))
+ 			return -EMSGSIZE;
  	}
  
- 	if (fwrt->trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_BZ) {
 -- 
 2.39.2
 
