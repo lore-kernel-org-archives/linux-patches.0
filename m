@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80498F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:52:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8A5C433C7;
-	Sun, 16 Jul 2023 20:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1558F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:52:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508CDC433C8;
+	Sun, 16 Jul 2023 20:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540742;
-	bh=kbDGWP2ZXHuYkKQqkVxxI7pRF3pOIz3fYnqNxAVKJAU=;
+	s=korg; t=1689540745;
+	bh=VxWXYK5W+H+kk+CJD8Av1oPIjEv2yvNZrh4WyIRiZnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vEOPji0NiJp4jmWGrgQePM8rsLNtf1M5+OUDEjxusQRczgbJTY2EjyLiWj3TfpPP1
-	 0pV+CbxERFPlG61RSjEkTmuszLNVg7ozTqu+pZahElilOPz2eqqT1IqJPbhPoOoPc5
-	 yBd6FuG+jK9qwIArtESKns/mWcW2syMk7d15ovwo=
+	b=ObEsw2R0eIodEHkVhGO6K5pWCtM/XmcK+TaosKmOTmq+POEMVHsOqRaUIaUxry0xY
+	 fE0cACwhjhvOY0svJw6xKAwMYzMz5siOPSYALPdOXHM5cTBYuLhEDoTTIZH6PaRnt6
+	 YwqaSn1tGO+WrLrm+jqq7fusjbhFAZJloxWg6QZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	David Ahern <dsahern@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 472/591] net: add a couple of helpers for iph tot_len
-Date: Sun, 16 Jul 2023 21:50:11 +0200
-Message-ID: <20230716194936.119371762@linuxfoundation.org>
+Subject: [PATCH 6.1 473/591] net/sched: act_ipt: add sanity checks on skb before calling target
+Date: Sun, 16 Jul 2023 21:50:12 +0200
+Message-ID: <20230716194936.144494329@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,74 +37,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 058a8f7f73aae1cc22b53fcefec031b9e391b54d ]
+[ Upstream commit b2dc32dcba08bf55cec600caa76f4afd2e3614df ]
 
-This patch adds three APIs to replace the iph->tot_len setting
-and getting in all places where IPv4 BIG TCP packets may reach,
-they will be used in the following patches.
+Netfilter targets make assumptions on the skb state, for example
+iphdr is supposed to be in the linear area.
 
-Note that iph_totlen() will be used when iph is not in linear
-data of the skb.
+This is normally done by IP stack, but in act_ipt case no
+such checks are made.
 
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: b2dc32dcba08 ("net/sched: act_ipt: add sanity checks on skb before calling target")
+Some targets can even assume that skb_dst will be valid.
+Make a minimum effort to check for this:
+
+- Don't call the targets eval function for non-ipv4 skbs.
+- Don't call the targets eval function for POSTROUTING
+  emulation when the skb has no dst set.
+
+v3: use skb_protocol helper (Davide Caratti)
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ip.h  | 21 +++++++++++++++++++++
- include/net/route.h |  3 ---
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ net/sched/act_ipt.c |   33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
-diff --git a/include/linux/ip.h b/include/linux/ip.h
-index 3d9c6750af627..d11c25f5030a0 100644
---- a/include/linux/ip.h
-+++ b/include/linux/ip.h
-@@ -35,4 +35,25 @@ static inline unsigned int ip_transport_len(const struct sk_buff *skb)
- {
- 	return ntohs(ip_hdr(skb)->tot_len) - skb_network_header_len(skb);
+--- a/net/sched/act_ipt.c
++++ b/net/sched/act_ipt.c
+@@ -229,6 +229,26 @@ static int tcf_xt_init(struct net *net,
+ 			      a, &act_xt_ops, tp, flags);
  }
-+
-+static inline unsigned int iph_totlen(const struct sk_buff *skb, const struct iphdr *iph)
-+{
-+	u32 len = ntohs(iph->tot_len);
-+
-+	return (len || !skb_is_gso(skb) || !skb_is_gso_tcp(skb)) ?
-+	       len : skb->len - skb_network_offset(skb);
-+}
-+
-+static inline unsigned int skb_ip_totlen(const struct sk_buff *skb)
-+{
-+	return iph_totlen(skb, ip_hdr(skb));
-+}
-+
-+/* IPv4 datagram length is stored into 16bit field (tot_len) */
-+#define IP_MAX_MTU	0xFFFFU
-+
-+static inline void iph_set_totlen(struct iphdr *iph, unsigned int len)
-+{
-+	iph->tot_len = len <= IP_MAX_MTU ? htons(len) : 0;
-+}
- #endif	/* _LINUX_IP_H */
-diff --git a/include/net/route.h b/include/net/route.h
-index 6e92dd5bcd613..fe00b0a2e4759 100644
---- a/include/net/route.h
-+++ b/include/net/route.h
-@@ -35,9 +35,6 @@
- #include <linux/cache.h>
- #include <linux/security.h>
  
--/* IPv4 datagram length is stored into 16bit field (tot_len) */
--#define IP_MAX_MTU	0xFFFFU
--
- #define RTO_ONLINK	0x01
++static bool tcf_ipt_act_check(struct sk_buff *skb)
++{
++	const struct iphdr *iph;
++	unsigned int nhoff, len;
++
++	if (!pskb_may_pull(skb, sizeof(struct iphdr)))
++		return false;
++
++	nhoff = skb_network_offset(skb);
++	iph = ip_hdr(skb);
++	if (iph->ihl < 5 || iph->version != 4)
++		return false;
++
++	len = skb_ip_totlen(skb);
++	if (skb->len < nhoff + len || len < (iph->ihl * 4u))
++		return false;
++
++	return pskb_may_pull(skb, iph->ihl * 4u);
++}
++
+ static int tcf_ipt_act(struct sk_buff *skb, const struct tc_action *a,
+ 		       struct tcf_result *res)
+ {
+@@ -242,9 +262,22 @@ static int tcf_ipt_act(struct sk_buff *s
+ 		.pf	= NFPROTO_IPV4,
+ 	};
  
- #define RT_CONN_FLAGS(sk)   (RT_TOS(inet_sk(sk)->tos) | sock_flag(sk, SOCK_LOCALROUTE))
--- 
-2.39.2
-
++	if (skb_protocol(skb, false) != htons(ETH_P_IP))
++		return TC_ACT_UNSPEC;
++
+ 	if (skb_unclone(skb, GFP_ATOMIC))
+ 		return TC_ACT_UNSPEC;
+ 
++	if (!tcf_ipt_act_check(skb))
++		return TC_ACT_UNSPEC;
++
++	if (state.hook == NF_INET_POST_ROUTING) {
++		if (!skb_dst(skb))
++			return TC_ACT_UNSPEC;
++
++		state.out = skb->dev;
++	}
++
+ 	spin_lock(&ipt->tcf_lock);
+ 
+ 	tcf_lastuse_update(&ipt->tcf_tm);
 
 
