@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE048F5D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:36:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C89BC433C8;
-	Sun, 16 Jul 2023 20:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625CB8F5D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:36:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC49DC433C8;
+	Sun, 16 Jul 2023 20:36:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539809;
-	bh=IQtIcNTURUzponNxCrNbImvdqSjS+Ni+1eam1LhYSxk=;
+	s=korg; t=1689539812;
+	bh=t5kppTVDtydrcMnWFPQJieEi7Cy2DCG1zIdibxQNoEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AJSIksSNNFtqc3W10bTULu+NTMT+u+4LIOrk6sreTqmiEbcQSk7aYprCC+5aUm+5K
-	 w9GVdh42aM0rFeFW74VMdpMe8d35Y52o7f/X4ms4iE14vIW0o0bdjTkan1ov6u7PmD
-	 7625tkdKmsGdhuAJdMww2m4re++EyYxsbkWB3aqY=
+	b=MSPExVcujSBSJ8Ll6/Rd6ESm8WBZFkHO1afqUuDJQYAJDjSfJhkBUd7RTj1s32GY3
+	 vftwNIhm/lGNWdTIaLsE6XMcTw+sh+EUbIb7QU4QH4TeAUSUEOsTMENKtsGabSXVMv
+	 lBbuhQf46xn+ZBg88ImNftsfatj9UWNSqS6HmB3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Kochetkov <fido_max@inbox.ru>,
-	Robert Hancock <robert.hancock@calian.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wesley Chalmers <Wesley.Chalmers@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 132/591] net: axienet: Move reset before 64-bit DMA detection
-Date: Sun, 16 Jul 2023 21:44:31 +0200
-Message-ID: <20230716194927.290288566@linuxfoundation.org>
+Subject: [PATCH 6.1 141/591] drm/amd/display: Add logging for display MALL refresh setting
+Date: Sun, 16 Jul 2023 21:44:40 +0200
+Message-ID: <20230716194927.518622526@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,58 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Kochetkov <fido_max@inbox.ru>
+From: Wesley Chalmers <Wesley.Chalmers@amd.com>
 
-[ Upstream commit f1bc9fc4a06de0108e0dca2a9a7e99ba1fc632f9 ]
+[ Upstream commit cd8f067a46d34dee3188da184912ae3d64d98444 ]
 
-64-bit DMA detection will fail if axienet was started before (by boot
-loader, boot ROM, etc). In this state axienet will not start properly.
-XAXIDMA_TX_CDESC_OFFSET + 4 register (MM2S_CURDESC_MSB) is used to detect
-64-bit DMA capability here. But datasheet says: When DMACR.RS is 1
-(axienet is in enabled state), CURDESC_PTR becomes Read Only (RO) and
-is used to fetch the first descriptor. So iowrite32()/ioread32() trick
-to this register to detect 64-bit DMA will not work.
-So move axienet reset before 64-bit DMA detection.
+[WHY]
+Add log entry for when display refresh from MALL
+settings are sent to SMU.
 
-Fixes: f735c40ed93c ("net: axienet: Autodetect 64-bit DMA capability")
-Signed-off-by: Maxim Kochetkov <fido_max@inbox.ru>
-Reviewed-by: Robert Hancock <robert.hancock@calian.com>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://lore.kernel.org/r/20230622192245.116864-1-fido_max@inbox.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1664641ea946 ("drm/amd/display: Add logger for SMU msg")
+Signed-off-by: Wesley Chalmers <Wesley.Chalmers@amd.com>
+Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ .../drm/amd/display/dc/clk_mgr/dcn30/dcn30_clk_mgr_smu_msg.c   | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index d1d772580da98..d14648558338b 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -2043,6 +2043,11 @@ static int axienet_probe(struct platform_device *pdev)
- 		goto cleanup_clk;
- 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn30/dcn30_clk_mgr_smu_msg.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn30/dcn30_clk_mgr_smu_msg.c
+index 1fbf1c105dc12..bdbf183066981 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn30/dcn30_clk_mgr_smu_msg.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn30/dcn30_clk_mgr_smu_msg.c
+@@ -312,6 +312,9 @@ void dcn30_smu_set_display_refresh_from_mall(struct clk_mgr_internal *clk_mgr, b
+ 	/* bits 8:7 for cache timer scale, bits 6:1 for cache timer delay, bit 0 = 1 for enable, = 0 for disable */
+ 	uint32_t param = (cache_timer_scale << 7) | (cache_timer_delay << 1) | (enable ? 1 : 0);
  
-+	/* Reset core now that clocks are enabled, prior to accessing MDIO */
-+	ret = __axienet_device_reset(lp);
-+	if (ret)
-+		goto cleanup_clk;
++	smu_print("SMU Set display refresh from mall: enable = %d, cache_timer_delay = %d, cache_timer_scale = %d\n",
++		enable, cache_timer_delay, cache_timer_scale);
 +
- 	/* Autodetect the need for 64-bit DMA pointers.
- 	 * When the IP is configured for a bus width bigger than 32 bits,
- 	 * writing the MSB registers is mandatory, even if they are all 0.
-@@ -2097,11 +2102,6 @@ static int axienet_probe(struct platform_device *pdev)
- 	lp->coalesce_count_tx = XAXIDMA_DFT_TX_THRESHOLD;
- 	lp->coalesce_usec_tx = XAXIDMA_DFT_TX_USEC;
- 
--	/* Reset core now that clocks are enabled, prior to accessing MDIO */
--	ret = __axienet_device_reset(lp);
--	if (ret)
--		goto cleanup_clk;
--
- 	ret = axienet_mdio_setup(lp);
- 	if (ret)
- 		dev_warn(&pdev->dev,
+ 	dcn30_smu_send_msg_with_param(clk_mgr,
+ 			DALSMC_MSG_SetDisplayRefreshFromMall, param, NULL);
+ }
 -- 
 2.39.2
 
