@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616708F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:58:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8714C433C7;
-	Sun, 16 Jul 2023 19:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328EC8F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:58:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E30C433C8;
+	Sun, 16 Jul 2023 19:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537499;
-	bh=m/DT20/gMOTnxlU5dBx1/olcD1/gcJSwyOGCaAyBqHw=;
+	s=korg; t=1689537502;
+	bh=VHsxXXCr2Qjp99LS03mMQsWyWU8tiXQthxzWivfPO1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=imJznxyd7VfBAf3KjOeFBRluH0bNpMh4I6PhN4w04vYX6T7HhgKd9Em9Jdyxnmnw9
-	 rXW+PHEGs5nybcVA926QQONE9AKGUxt/6jzwcFDzvV0xKYrR7CK3KfDGU1pDsW87qW
-	 /uU2lj3+ISUTL7ver/DJz9+oGZgcoBvSI3AwJFtM=
+	b=eNtA1Uch67A3W7h6cJhGD/bzNLGFb7q6XGExgicUi14VFVtgPCnL0w2NBrJ7Kos60
+	 XInbA4ZesLQFer9kigFvWSeHJnmXjEven4GO1LIawHvx4oiklcvWqUU64XqgwEjuUg
+	 gO/ERKhjHwjzr8+wu2LQ/dUxxdj5iNlEjjMhUpPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Juergen Gross <jgross@suse.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+	Michael Kelley <mikelley@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 090/800] x86/mtrr: Replace size_or_mask and size_and_mask with a much easier concept
-Date: Sun, 16 Jul 2023 21:39:03 +0200
-Message-ID: <20230716194951.200804070@linuxfoundation.org>
+Subject: [PATCH 6.4 091/800] x86/xen: Set MTRR state when running as Xen PV initial domain
+Date: Sun, 16 Jul 2023 21:39:04 +0200
+Message-ID: <20230716194951.224366586@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,352 +39,119 @@ Content-Transfer-Encoding: 8bit
 
 From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit d053b481a5f16dbd4f020c6b3ebdf9173fdef0e2 ]
+[ Upstream commit a153f254e5cdf8fa3a1df90a6ffed3063fede154 ]
 
-Replace size_or_mask and size_and_mask with the much easier concept of
-high reserved bits.
+When running as Xen PV initial domain (aka dom0), MTRRs are disabled
+by the hypervisor, but the system should nevertheless use correct
+cache memory types. This has always kind of worked, as disabled MTRRs
+resulted in disabled PAT, too, so that the kernel avoided code paths
+resulting in inconsistencies. This bypassed all of the sanity checks
+the kernel is doing with enabled MTRRs in order to avoid memory
+mappings with conflicting memory types.
 
-While at it, instead of using constants in the MTRR code, use some new
+This has been changed recently, leading to PAT being accepted to be
+enabled, while MTRRs stayed disabled. The result is that
+mtrr_type_lookup() no longer is accepting all memory type requests,
+but started to return WB even if UC- was requested. This led to
+driver failures during initialization of some devices.
 
-  [ bp:
-   - Drop mtrr_set_mask()
-   - Unbreak long lines
-   - Move struct mtrr_state_type out of the uapi header as it doesn't
-     belong there. It also fixes a HDRTEST breakage "unknown type name ‘bool’"
-     as Reported-by: kernel test robot <lkp@intel.com>
-   - Massage.
-  ]
+In reality MTRRs are still in effect, but they are under complete
+control of the Xen hypervisor. It is possible, however, to retrieve
+the MTRR settings from the hypervisor.
 
+In order to fix those problems, overwrite the MTRR state via
+mtrr_overwrite_state() with the MTRR data from the hypervisor, if the
+system is running as a Xen dom0.
+
+Fixes: 72cbc8f04fe2 ("x86/PAT: Have pat_enabled() properly reflect state when running on Xen")
 Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230502120931.20719-3-jgross@suse.com
+Reviewed-by: Boris Ostrovsky <boris.ostrovsky@oracle.com>
+Tested-by: Michael Kelley <mikelley@microsoft.com>
+Link: https://lore.kernel.org/r/20230502120931.20719-6-jgross@suse.com
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Stable-dep-of: a153f254e5cd ("x86/xen: Set MTRR state when running as Xen PV initial domain")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/mtrr.h        | 32 +++++++++++++-
- arch/x86/include/uapi/asm/mtrr.h   |  8 ----
- arch/x86/kernel/cpu/mtrr/cleanup.c |  2 +-
- arch/x86/kernel/cpu/mtrr/generic.c | 70 +++++++++++++-----------------
- arch/x86/kernel/cpu/mtrr/mtrr.c    |  4 +-
- arch/x86/kernel/cpu/mtrr/mtrr.h    |  2 +-
- 6 files changed, 65 insertions(+), 53 deletions(-)
+ arch/x86/xen/enlighten_pv.c | 52 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
-diff --git a/arch/x86/include/asm/mtrr.h b/arch/x86/include/asm/mtrr.h
-index f1cb81330a645..1bae790a553a5 100644
---- a/arch/x86/include/asm/mtrr.h
-+++ b/arch/x86/include/asm/mtrr.h
-@@ -23,8 +23,35 @@
- #ifndef _ASM_X86_MTRR_H
- #define _ASM_X86_MTRR_H
+diff --git a/arch/x86/xen/enlighten_pv.c b/arch/x86/xen/enlighten_pv.c
+index 093b78c8bbec0..8732b85d56505 100644
+--- a/arch/x86/xen/enlighten_pv.c
++++ b/arch/x86/xen/enlighten_pv.c
+@@ -68,6 +68,7 @@
+ #include <asm/reboot.h>
+ #include <asm/hypervisor.h>
+ #include <asm/mach_traps.h>
++#include <asm/mtrr.h>
+ #include <asm/mwait.h>
+ #include <asm/pci_x86.h>
+ #include <asm/cpu.h>
+@@ -119,6 +120,54 @@ static int __init parse_xen_msr_safe(char *str)
+ }
+ early_param("xen_msr_safe", parse_xen_msr_safe);
  
-+#include <linux/bits.h>
- #include <uapi/asm/mtrr.h>
- 
-+/* Defines for hardware MTRR registers. */
-+#define MTRR_CAP_VCNT		GENMASK(7, 0)
-+#define MTRR_CAP_FIX		BIT_MASK(8)
-+#define MTRR_CAP_WC		BIT_MASK(10)
++/* Get MTRR settings from Xen and put them into mtrr_state. */
++static void __init xen_set_mtrr_data(void)
++{
++#ifdef CONFIG_MTRR
++	struct xen_platform_op op = {
++		.cmd = XENPF_read_memtype,
++		.interface_version = XENPF_INTERFACE_VERSION,
++	};
++	unsigned int reg;
++	unsigned long mask;
++	uint32_t eax, width;
++	static struct mtrr_var_range var[MTRR_MAX_VAR_RANGES] __initdata;
 +
-+#define MTRR_DEF_TYPE_TYPE	GENMASK(7, 0)
-+#define MTRR_DEF_TYPE_FE	BIT_MASK(10)
-+#define MTRR_DEF_TYPE_E		BIT_MASK(11)
++	/* Get physical address width (only 64-bit cpus supported). */
++	width = 36;
++	eax = cpuid_eax(0x80000000);
++	if ((eax >> 16) == 0x8000 && eax >= 0x80000008) {
++		eax = cpuid_eax(0x80000008);
++		width = eax & 0xff;
++	}
 +
-+#define MTRR_DEF_TYPE_ENABLE	(MTRR_DEF_TYPE_FE | MTRR_DEF_TYPE_E)
-+#define MTRR_DEF_TYPE_DISABLE	~(MTRR_DEF_TYPE_TYPE | MTRR_DEF_TYPE_ENABLE)
++	for (reg = 0; reg < MTRR_MAX_VAR_RANGES; reg++) {
++		op.u.read_memtype.reg = reg;
++		if (HYPERVISOR_platform_op(&op))
++			break;
 +
-+#define MTRR_PHYSBASE_TYPE	GENMASK(7, 0)
-+#define MTRR_PHYSBASE_RSVD	GENMASK(11, 8)
++		/*
++		 * Only called in dom0, which has all RAM PFNs mapped at
++		 * RAM MFNs, and all PCI space etc. is identity mapped.
++		 * This means we can treat MFN == PFN regarding MTRR settings.
++		 */
++		var[reg].base_lo = op.u.read_memtype.type;
++		var[reg].base_lo |= op.u.read_memtype.mfn << PAGE_SHIFT;
++		var[reg].base_hi = op.u.read_memtype.mfn >> (32 - PAGE_SHIFT);
++		mask = ~((op.u.read_memtype.nr_mfns << PAGE_SHIFT) - 1);
++		mask &= (1UL << width) - 1;
++		if (mask)
++			mask |= MTRR_PHYSMASK_V;
++		var[reg].mask_lo = mask;
++		var[reg].mask_hi = mask >> 32;
++	}
 +
-+#define MTRR_PHYSMASK_RSVD	GENMASK(10, 0)
-+#define MTRR_PHYSMASK_V		BIT_MASK(11)
++	/* Only overwrite MTRR state if any MTRR could be got from Xen. */
++	if (reg)
++		mtrr_overwrite_state(var, reg, MTRR_TYPE_UNCACHABLE);
++#endif
++}
 +
-+struct mtrr_state_type {
-+	struct mtrr_var_range var_ranges[MTRR_MAX_VAR_RANGES];
-+	mtrr_type fixed_ranges[MTRR_NUM_FIXED_RANGES];
-+	unsigned char enabled;
-+	bool have_fixed;
-+	mtrr_type def_type;
-+};
-+
- /*
-  * The following functions are for use by other drivers that cannot use
-  * arch_phys_wc_add and arch_phys_wc_del.
-@@ -129,7 +156,8 @@ struct mtrr_gentry32 {
- #endif /* CONFIG_COMPAT */
- 
- /* Bit fields for enabled in struct mtrr_state_type */
--#define MTRR_STATE_MTRR_FIXED_ENABLED	0x01
--#define MTRR_STATE_MTRR_ENABLED		0x02
-+#define MTRR_STATE_SHIFT		10
-+#define MTRR_STATE_MTRR_FIXED_ENABLED	(MTRR_DEF_TYPE_FE >> MTRR_STATE_SHIFT)
-+#define MTRR_STATE_MTRR_ENABLED		(MTRR_DEF_TYPE_E >> MTRR_STATE_SHIFT)
- 
- #endif /* _ASM_X86_MTRR_H */
-diff --git a/arch/x86/include/uapi/asm/mtrr.h b/arch/x86/include/uapi/asm/mtrr.h
-index 376563f2bac1f..ab194c8316259 100644
---- a/arch/x86/include/uapi/asm/mtrr.h
-+++ b/arch/x86/include/uapi/asm/mtrr.h
-@@ -81,14 +81,6 @@ typedef __u8 mtrr_type;
- #define MTRR_NUM_FIXED_RANGES 88
- #define MTRR_MAX_VAR_RANGES 256
- 
--struct mtrr_state_type {
--	struct mtrr_var_range var_ranges[MTRR_MAX_VAR_RANGES];
--	mtrr_type fixed_ranges[MTRR_NUM_FIXED_RANGES];
--	unsigned char enabled;
--	unsigned char have_fixed;
--	mtrr_type def_type;
--};
--
- #define MTRRphysBase_MSR(reg) (0x200 + 2 * (reg))
- #define MTRRphysMask_MSR(reg) (0x200 + 2 * (reg) + 1)
- 
-diff --git a/arch/x86/kernel/cpu/mtrr/cleanup.c b/arch/x86/kernel/cpu/mtrr/cleanup.c
-index 70314093bb9b5..ca2d567e729e2 100644
---- a/arch/x86/kernel/cpu/mtrr/cleanup.c
-+++ b/arch/x86/kernel/cpu/mtrr/cleanup.c
-@@ -890,7 +890,7 @@ int __init mtrr_trim_uncached_memory(unsigned long end_pfn)
- 		return 0;
- 
- 	rdmsr(MSR_MTRRdefType, def, dummy);
--	def &= 0xff;
-+	def &= MTRR_DEF_TYPE_TYPE;
- 	if (def != MTRR_TYPE_UNCACHABLE)
- 		return 0;
- 
-diff --git a/arch/x86/kernel/cpu/mtrr/generic.c b/arch/x86/kernel/cpu/mtrr/generic.c
-index fd77c5da4a7a6..e81d832475a1f 100644
---- a/arch/x86/kernel/cpu/mtrr/generic.c
-+++ b/arch/x86/kernel/cpu/mtrr/generic.c
-@@ -40,15 +40,8 @@ u64 mtrr_tom2;
- struct mtrr_state_type mtrr_state;
- EXPORT_SYMBOL_GPL(mtrr_state);
- 
--static u64 size_or_mask, size_and_mask;
--
--void __init mtrr_set_mask(void)
--{
--	unsigned int phys_addr = boot_cpu_data.x86_phys_bits;
--
--	size_or_mask = ~GENMASK_ULL(phys_addr - PAGE_SHIFT - 1, 0);
--	size_and_mask = ~size_or_mask & GENMASK_ULL(39, 20);
--}
-+/* Reserved bits in the high portion of the MTRRphysBaseN MSR. */
-+u32 phys_hi_rsvd;
- 
- /*
-  * BIOS is expected to clear MtrrFixDramModEn bit, see for example
-@@ -81,10 +74,9 @@ static u64 get_mtrr_size(u64 mask)
+ static void __init xen_pv_init_platform(void)
  {
- 	u64 size;
+ 	/* PV guests can't operate virtio devices without grants. */
+@@ -135,6 +184,9 @@ static void __init xen_pv_init_platform(void)
  
--	mask >>= PAGE_SHIFT;
--	mask |= size_or_mask;
-+	mask |= (u64)phys_hi_rsvd << 32;
- 	size = -mask;
--	size <<= PAGE_SHIFT;
+ 	/* pvclock is in shared info area */
+ 	xen_init_time_ops();
 +
- 	return size;
++	if (xen_initial_domain())
++		xen_set_mtrr_data();
  }
  
-@@ -183,7 +175,7 @@ static u8 mtrr_type_lookup_variable(u64 start, u64 end, u64 *partial_end,
- 	for (i = 0; i < num_var_ranges; ++i) {
- 		unsigned short start_state, end_state, inclusive;
- 
--		if (!(mtrr_state.var_ranges[i].mask_lo & (1 << 11)))
-+		if (!(mtrr_state.var_ranges[i].mask_lo & MTRR_PHYSMASK_V))
- 			continue;
- 
- 		base = (((u64)mtrr_state.var_ranges[i].base_hi) << 32) +
-@@ -235,7 +227,7 @@ static u8 mtrr_type_lookup_variable(u64 start, u64 end, u64 *partial_end,
- 		if ((start & mask) != (base & mask))
- 			continue;
- 
--		curr_match = mtrr_state.var_ranges[i].base_lo & 0xff;
-+		curr_match = mtrr_state.var_ranges[i].base_lo & MTRR_PHYSBASE_TYPE;
- 		if (prev_match == MTRR_TYPE_INVALID) {
- 			prev_match = curr_match;
- 			continue;
-@@ -493,7 +485,7 @@ static void __init print_mtrr_state(void)
- 	high_width = (boot_cpu_data.x86_phys_bits - (32 - PAGE_SHIFT) + 3) / 4;
- 
- 	for (i = 0; i < num_var_ranges; ++i) {
--		if (mtrr_state.var_ranges[i].mask_lo & (1 << 11))
-+		if (mtrr_state.var_ranges[i].mask_lo & MTRR_PHYSMASK_V)
- 			pr_debug("  %u base %0*X%05X000 mask %0*X%05X000 %s\n",
- 				 i,
- 				 high_width,
-@@ -502,7 +494,8 @@ static void __init print_mtrr_state(void)
- 				 high_width,
- 				 mtrr_state.var_ranges[i].mask_hi,
- 				 mtrr_state.var_ranges[i].mask_lo >> 12,
--				 mtrr_attrib_to_str(mtrr_state.var_ranges[i].base_lo & 0xff));
-+				 mtrr_attrib_to_str(mtrr_state.var_ranges[i].base_lo &
-+						    MTRR_PHYSBASE_TYPE));
- 		else
- 			pr_debug("  %u disabled\n", i);
- 	}
-@@ -520,7 +513,7 @@ bool __init get_mtrr_state(void)
- 	vrs = mtrr_state.var_ranges;
- 
- 	rdmsr(MSR_MTRRcap, lo, dummy);
--	mtrr_state.have_fixed = (lo >> 8) & 1;
-+	mtrr_state.have_fixed = lo & MTRR_CAP_FIX;
- 
- 	for (i = 0; i < num_var_ranges; i++)
- 		get_mtrr_var_range(i, &vrs[i]);
-@@ -528,8 +521,8 @@ bool __init get_mtrr_state(void)
- 		get_fixed_ranges(mtrr_state.fixed_ranges);
- 
- 	rdmsr(MSR_MTRRdefType, lo, dummy);
--	mtrr_state.def_type = (lo & 0xff);
--	mtrr_state.enabled = (lo & 0xc00) >> 10;
-+	mtrr_state.def_type = lo & MTRR_DEF_TYPE_TYPE;
-+	mtrr_state.enabled = (lo & MTRR_DEF_TYPE_ENABLE) >> MTRR_STATE_SHIFT;
- 
- 	if (amd_special_default_mtrr()) {
- 		unsigned low, high;
-@@ -642,7 +635,7 @@ static void generic_get_mtrr(unsigned int reg, unsigned long *base,
- 
- 	rdmsr(MTRRphysMask_MSR(reg), mask_lo, mask_hi);
- 
--	if ((mask_lo & 0x800) == 0) {
-+	if (!(mask_lo & MTRR_PHYSMASK_V)) {
- 		/*  Invalid (i.e. free) range */
- 		*base = 0;
- 		*size = 0;
-@@ -653,8 +646,8 @@ static void generic_get_mtrr(unsigned int reg, unsigned long *base,
- 	rdmsr(MTRRphysBase_MSR(reg), base_lo, base_hi);
- 
- 	/* Work out the shifted address mask: */
--	tmp = (u64)mask_hi << (32 - PAGE_SHIFT) | mask_lo >> PAGE_SHIFT;
--	mask = size_or_mask | tmp;
-+	tmp = (u64)mask_hi << 32 | (mask_lo & PAGE_MASK);
-+	mask = (u64)phys_hi_rsvd << 32 | tmp;
- 
- 	/* Expand tmp with high bits to all 1s: */
- 	hi = fls64(tmp);
-@@ -672,9 +665,9 @@ static void generic_get_mtrr(unsigned int reg, unsigned long *base,
- 	 * This works correctly if size is a power of two, i.e. a
- 	 * contiguous range:
- 	 */
--	*size = -mask;
-+	*size = -mask >> PAGE_SHIFT;
- 	*base = (u64)base_hi << (32 - PAGE_SHIFT) | base_lo >> PAGE_SHIFT;
--	*type = base_lo & 0xff;
-+	*type = base_lo & MTRR_PHYSBASE_TYPE;
- 
- out_put_cpu:
- 	put_cpu();
-@@ -712,9 +705,8 @@ static bool set_mtrr_var_ranges(unsigned int index, struct mtrr_var_range *vr)
- 	bool changed = false;
- 
- 	rdmsr(MTRRphysBase_MSR(index), lo, hi);
--	if ((vr->base_lo & 0xfffff0ffUL) != (lo & 0xfffff0ffUL)
--	    || (vr->base_hi & (size_and_mask >> (32 - PAGE_SHIFT))) !=
--		(hi & (size_and_mask >> (32 - PAGE_SHIFT)))) {
-+	if ((vr->base_lo & ~MTRR_PHYSBASE_RSVD) != (lo & ~MTRR_PHYSBASE_RSVD)
-+	    || (vr->base_hi & ~phys_hi_rsvd) != (hi & ~phys_hi_rsvd)) {
- 
- 		mtrr_wrmsr(MTRRphysBase_MSR(index), vr->base_lo, vr->base_hi);
- 		changed = true;
-@@ -722,9 +714,8 @@ static bool set_mtrr_var_ranges(unsigned int index, struct mtrr_var_range *vr)
- 
- 	rdmsr(MTRRphysMask_MSR(index), lo, hi);
- 
--	if ((vr->mask_lo & 0xfffff800UL) != (lo & 0xfffff800UL)
--	    || (vr->mask_hi & (size_and_mask >> (32 - PAGE_SHIFT))) !=
--		(hi & (size_and_mask >> (32 - PAGE_SHIFT)))) {
-+	if ((vr->mask_lo & ~MTRR_PHYSMASK_RSVD) != (lo & ~MTRR_PHYSMASK_RSVD)
-+	    || (vr->mask_hi & ~phys_hi_rsvd) != (hi & ~phys_hi_rsvd)) {
- 		mtrr_wrmsr(MTRRphysMask_MSR(index), vr->mask_lo, vr->mask_hi);
- 		changed = true;
- 	}
-@@ -759,11 +750,12 @@ static unsigned long set_mtrr_state(void)
- 	 * Set_mtrr_restore restores the old value of MTRRdefType,
- 	 * so to set it we fiddle with the saved value:
- 	 */
--	if ((deftype_lo & 0xff) != mtrr_state.def_type
--	    || ((deftype_lo & 0xc00) >> 10) != mtrr_state.enabled) {
-+	if ((deftype_lo & MTRR_DEF_TYPE_TYPE) != mtrr_state.def_type ||
-+	    ((deftype_lo & MTRR_DEF_TYPE_ENABLE) >> MTRR_STATE_SHIFT) != mtrr_state.enabled) {
- 
--		deftype_lo = (deftype_lo & ~0xcff) | mtrr_state.def_type |
--			     (mtrr_state.enabled << 10);
-+		deftype_lo = (deftype_lo & MTRR_DEF_TYPE_DISABLE) |
-+			     mtrr_state.def_type |
-+			     (mtrr_state.enabled << MTRR_STATE_SHIFT);
- 		change_mask |= MTRR_CHANGE_MASK_DEFTYPE;
- 	}
- 
-@@ -776,7 +768,7 @@ void mtrr_disable(void)
- 	rdmsr(MSR_MTRRdefType, deftype_lo, deftype_hi);
- 
- 	/* Disable MTRRs, and set the default type to uncached */
--	mtrr_wrmsr(MSR_MTRRdefType, deftype_lo & ~0xcff, deftype_hi);
-+	mtrr_wrmsr(MSR_MTRRdefType, deftype_lo & MTRR_DEF_TYPE_DISABLE, deftype_hi);
- }
- 
- void mtrr_enable(void)
-@@ -830,9 +822,9 @@ static void generic_set_mtrr(unsigned int reg, unsigned long base,
- 		memset(vr, 0, sizeof(struct mtrr_var_range));
- 	} else {
- 		vr->base_lo = base << PAGE_SHIFT | type;
--		vr->base_hi = (base & size_and_mask) >> (32 - PAGE_SHIFT);
--		vr->mask_lo = -size << PAGE_SHIFT | 0x800;
--		vr->mask_hi = (-size & size_and_mask) >> (32 - PAGE_SHIFT);
-+		vr->base_hi = (base >> (32 - PAGE_SHIFT)) & ~phys_hi_rsvd;
-+		vr->mask_lo = -size << PAGE_SHIFT | MTRR_PHYSMASK_V;
-+		vr->mask_hi = (-size >> (32 - PAGE_SHIFT)) & ~phys_hi_rsvd;
- 
- 		mtrr_wrmsr(MTRRphysBase_MSR(reg), vr->base_lo, vr->base_hi);
- 		mtrr_wrmsr(MTRRphysMask_MSR(reg), vr->mask_lo, vr->mask_hi);
-@@ -885,7 +877,7 @@ static int generic_have_wrcomb(void)
- {
- 	unsigned long config, dummy;
- 	rdmsr(MSR_MTRRcap, config, dummy);
--	return config & (1 << 10);
-+	return config & MTRR_CAP_WC;
- }
- 
- int positive_have_wrcomb(void)
-diff --git a/arch/x86/kernel/cpu/mtrr/mtrr.c b/arch/x86/kernel/cpu/mtrr/mtrr.c
-index 8638019f80680..be35a0b09604d 100644
---- a/arch/x86/kernel/cpu/mtrr/mtrr.c
-+++ b/arch/x86/kernel/cpu/mtrr/mtrr.c
-@@ -115,7 +115,7 @@ static void __init set_num_var_ranges(bool use_generic)
- 	else if (is_cpu(CYRIX) || is_cpu(CENTAUR))
- 		config = 8;
- 
--	num_var_ranges = config & 0xff;
-+	num_var_ranges = config & MTRR_CAP_VCNT;
- }
- 
- static void __init init_table(void)
-@@ -628,7 +628,7 @@ void __init mtrr_bp_init(void)
- 	bool generic_mtrrs = cpu_feature_enabled(X86_FEATURE_MTRR);
- 	const char *why = "(not available)";
- 
--	mtrr_set_mask();
-+	phys_hi_rsvd = GENMASK(31, boot_cpu_data.x86_phys_bits - 32);
- 
- 	if (!generic_mtrrs && mtrr_state.enabled) {
- 		/*
-diff --git a/arch/x86/kernel/cpu/mtrr/mtrr.h b/arch/x86/kernel/cpu/mtrr/mtrr.h
-index a00987e6cc1c1..59e8fb26bf9dd 100644
---- a/arch/x86/kernel/cpu/mtrr/mtrr.h
-+++ b/arch/x86/kernel/cpu/mtrr/mtrr.h
-@@ -58,8 +58,8 @@ extern const struct mtrr_ops *mtrr_if;
- extern unsigned int num_var_ranges;
- extern u64 mtrr_tom2;
- extern struct mtrr_state_type mtrr_state;
-+extern u32 phys_hi_rsvd;
- 
--void mtrr_set_mask(void);
- void mtrr_state_warn(void);
- const char *mtrr_attrib_to_str(int x);
- void mtrr_wrmsr(unsigned, unsigned, unsigned);
+ static void __init xen_pv_guest_late_init(void)
 -- 
 2.39.2
 
