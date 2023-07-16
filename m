@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6018F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:04:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A83C433C8;
-	Sun, 16 Jul 2023 20:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F688F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:04:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B99CC433C7;
+	Sun, 16 Jul 2023 20:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537893;
-	bh=ZrTO2D649V22guiTiFjgN8XIFXokbdp1orrBK6M/tvU=;
+	s=korg; t=1689537896;
+	bh=X+kT1oQ8n6bKvVaOHHWJx/EBykQV1Xs7jNl7HikPjmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zb/+v1VCO8RCQ3RLusCnXZQ2rgUfY+4DubTytuPkQwVPbuNtUf/antLlII+4ztNsc
-	 RSOCy1c0VyfkloirdUVVDY9BxkwtwS0QOtU7GkIGFHJoi3X0OCSj94uIHqdOGLsk5O
-	 /JyZIwiRW1lYRFveKdeGwTDmLLhxPDEsAXWDEzw8=
+	b=0Xgz7leJBRaYfm6PpjhwhNB8BzLHJdTzOjBx3ilaTgzF3gPRZsIozx70mXqXIbTTS
+	 zx4//gLVIQe+9AGKmrK+GUlEd0Bl3bIVB6bZ/oPAGgVKLQ8fuht3dT6lwIQclW6lFQ
+	 tbr5ZNgqmFN4aEno4zrZG1i2RJAo5yGvgdnUIAEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Robert Foss <rfoss@kernel.org>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Arthur Grillo <arthurgrillo@riseup.net>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mairacanal@riseup.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 241/800] drm/bridge: tc358768: fix THS_ZEROCNT computation
-Date: Sun, 16 Jul 2023 21:41:34 +0200
-Message-ID: <20230716194954.700009797@linuxfoundation.org>
+Subject: [PATCH 6.4 259/800] drm: Add fixed-point helper to get rounded integer values
+Date: Sun, 16 Jul 2023 21:41:52 +0200
+Message-ID: <20230716194955.112979879@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,52 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 77a089328da791118af9692543a5eedc79eb5fd4 ]
+[ Upstream commit 8b25320887d7feac98875546ea0f521628b745bb ]
 
-Correct computation of THS_ZEROCNT register.
+Create a new fixed-point helper to allow us to return the rounded value
+of our fixed point value.
 
-This register must be set to a value that ensure that
-THS_PREPARE + THS_ZERO > 145ns + 10*UI
+[v2]:
+    * Create the function drm_fixp2int_round() (Melissa Wen).
+[v3]:
+    * Use drm_fixp2int() instead of shifting manually (Arthur Grillo).
 
-with the actual value of (THS_PREPARE + THS_ZERO) being
-
-((1 to 2) + 1 + (TCLK_ZEROCNT + 1) + (3 to 4)) x ByteClk cycle +
-  + HSByteClk x (2 + (1 to 2)) + (PHY delay)
-
-with PHY delay being about
-
-(8 + (5 to 6)) x MIPIBitClk cycle in the BitClk conversion.
-
-Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-7-francesco@dolcini.it
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Reviewed-by: Arthur Grillo <arthurgrillo@riseup.net>
+Signed-off-by: Maíra Canal <mairacanal@riseup.net>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230512104044.65034-1-mcanal@igalia.com
+Stable-dep-of: ab87f558dcfb ("drm/vkms: Fix RGB565 pixel conversion")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ include/drm/drm_fixed.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-index 4cb46a3e6be8c..e3f456bfb90c1 100644
---- a/drivers/gpu/drm/bridge/tc358768.c
-+++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -761,9 +761,10 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
- 	/* 40ns + 4*UI < THS_PREPARE < 85ns + 6*UI */
- 	val = 50 + tc358768_to_ns(4 * ui_nsk);
- 	val = tc358768_ns_to_cnt(val, dsibclk_nsk) - 1;
--	/* THS_ZERO > 145ns + 10*UI */
--	val2 = tc358768_ns_to_cnt(145 - tc358768_to_ns(ui_nsk), dsibclk_nsk);
--	val |= (val2 - tc358768_to_ns(phy_delay_nsk)) << 8;
-+	/* THS_PREPARE + THS_ZERO > 145ns + 10*UI */
-+	raw_val = tc358768_ns_to_cnt(145 - tc358768_to_ns(3 * ui_nsk), dsibclk_nsk) - 10;
-+	val2 = clamp(raw_val, 0, 127);
-+	val |= val2 << 8;
- 	dev_dbg(priv->dev, "THS_HEADERCNT: 0x%x\n", val);
- 	tc358768_write(priv, TC358768_THS_HEADERCNT, val);
+diff --git a/include/drm/drm_fixed.h b/include/drm/drm_fixed.h
+index 255645c1f9a89..6ea339d5de088 100644
+--- a/include/drm/drm_fixed.h
++++ b/include/drm/drm_fixed.h
+@@ -71,6 +71,7 @@ static inline u32 dfixed_div(fixed20_12 A, fixed20_12 B)
+ }
  
+ #define DRM_FIXED_POINT		32
++#define DRM_FIXED_POINT_HALF	16
+ #define DRM_FIXED_ONE		(1ULL << DRM_FIXED_POINT)
+ #define DRM_FIXED_DECIMAL_MASK	(DRM_FIXED_ONE - 1)
+ #define DRM_FIXED_DIGITS_MASK	(~DRM_FIXED_DECIMAL_MASK)
+@@ -87,6 +88,11 @@ static inline int drm_fixp2int(s64 a)
+ 	return ((s64)a) >> DRM_FIXED_POINT;
+ }
+ 
++static inline int drm_fixp2int_round(s64 a)
++{
++	return drm_fixp2int(a + (1 << (DRM_FIXED_POINT_HALF - 1)));
++}
++
+ static inline int drm_fixp2int_ceil(s64 a)
+ {
+ 	if (a > 0)
 -- 
 2.39.2
 
