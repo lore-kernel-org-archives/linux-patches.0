@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2110B8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:51:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A95C433C9;
-	Sun, 16 Jul 2023 20:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E6E8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:51:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727B7C433C7;
+	Sun, 16 Jul 2023 20:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540675;
-	bh=YdoND9kf35TTnY+G+aLubZSQxRjwm/okv8qVVIrRIuo=;
+	s=korg; t=1689540677;
+	bh=q5UAS5Nui34djyXulS6JauA8VFifRPbLLFsoRAI07qU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T2vfAQ/aAdh6NJcId6zuuyGNvBfIaaxR4uivcR8F0tMJqSZnkWRQPXeAVkgsquHSS
-	 m9MfIM9tZLMMTAeakdFiADGWAVnBEBmHM+h/22YjxFtRh7K9KdY9fgK5iy45nHNe+2
-	 YEd9OWXmNVAhjgGNYbpj0JnlcKPgtTPApxhJtSFU=
+	b=D+DDzeKfZbpvtgVutm94L+U0nIIfLKqfUO2J7LjNaUjqd4LQV8sllUi2oAnynujND
+	 iwQjh4IZ5RmlGnQGZrtsdh/XALclcWAWT7zvK8dhlVQPr+THXnU04+ZmtjfiZvAf0g
+	 Pu6kBkIyreIoztfm0pqya9O8rtk5y9yFCXilqGqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pierre Morel <pmorel@linux.ibm.com>,
+	Marc Hartmayer <mhartmay@linux.ibm.com>,
+	Nico Boehr <nrb@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
 	Janosch Frank <frankja@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 448/591] KVM: s390: vsie: fix the length of APCB bitmap
-Date: Sun, 16 Jul 2023 21:49:47 +0200
-Message-ID: <20230716194935.499125662@linuxfoundation.org>
+Subject: [PATCH 6.1 449/591] KVM: s390/diag: fix racy access of physical cpu number in diag 9c handler
+Date: Sun, 16 Jul 2023 21:49:48 +0200
+Message-ID: <20230716194935.525514873@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,50 +38,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pierre Morel <pmorel@linux.ibm.com>
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-[ Upstream commit 246be7d2720ea9a795b576067ecc5e5c7a1e7848 ]
+[ Upstream commit 0bc380beb78aa352eadbc21d934dd9606fcee808 ]
 
-bit_and() uses the count of bits as the woking length.
-Fix the previous implementation and effectively use
-the right bitmap size.
+We do check for target CPU == -1, but this might change at the time we
+are going to use it. Hold the physical target CPU in a local variable to
+avoid out-of-bound accesses to the cpu arrays.
 
-Fixes: 19fd83a64718 ("KVM: s390: vsie: allow CRYCB FORMAT-1")
-Fixes: 56019f9aca22 ("KVM: s390: vsie: Allow CRYCB FORMAT-2")
-
-Signed-off-by: Pierre Morel <pmorel@linux.ibm.com>
-Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
-Link: https://lore.kernel.org/kvm/20230511094719.9691-1-pmorel@linux.ibm.com/
+Cc: Pierre Morel <pmorel@linux.ibm.com>
+Fixes: 87e28a15c42c ("KVM: s390: diag9c (directed yield) forwarding")
+Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
+Reviewed-by: Nico Boehr <nrb@linux.ibm.com>
+Reviewed-by: Pierre Morel <pmorel@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kvm/vsie.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/s390/kvm/diag.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/s390/kvm/vsie.c b/arch/s390/kvm/vsie.c
-index ace2541ababd3..740f8b56e63f9 100644
---- a/arch/s390/kvm/vsie.c
-+++ b/arch/s390/kvm/vsie.c
-@@ -169,7 +169,8 @@ static int setup_apcb00(struct kvm_vcpu *vcpu, unsigned long *apcb_s,
- 			    sizeof(struct kvm_s390_apcb0)))
- 		return -EFAULT;
+diff --git a/arch/s390/kvm/diag.c b/arch/s390/kvm/diag.c
+index 807fa9da1e721..3c65b8258ae67 100644
+--- a/arch/s390/kvm/diag.c
++++ b/arch/s390/kvm/diag.c
+@@ -166,6 +166,7 @@ static int diag9c_forwarding_overrun(void)
+ static int __diag_time_slice_end_directed(struct kvm_vcpu *vcpu)
+ {
+ 	struct kvm_vcpu *tcpu;
++	int tcpu_cpu;
+ 	int tid;
  
--	bitmap_and(apcb_s, apcb_s, apcb_h, sizeof(struct kvm_s390_apcb0));
-+	bitmap_and(apcb_s, apcb_s, apcb_h,
-+		   BITS_PER_BYTE * sizeof(struct kvm_s390_apcb0));
+ 	tid = vcpu->run->s.regs.gprs[(vcpu->arch.sie_block->ipa & 0xf0) >> 4];
+@@ -181,14 +182,15 @@ static int __diag_time_slice_end_directed(struct kvm_vcpu *vcpu)
+ 		goto no_yield;
  
- 	return 0;
- }
-@@ -191,7 +192,8 @@ static int setup_apcb11(struct kvm_vcpu *vcpu, unsigned long *apcb_s,
- 			    sizeof(struct kvm_s390_apcb1)))
- 		return -EFAULT;
+ 	/* target guest VCPU already running */
+-	if (READ_ONCE(tcpu->cpu) >= 0) {
++	tcpu_cpu = READ_ONCE(tcpu->cpu);
++	if (tcpu_cpu >= 0) {
+ 		if (!diag9c_forwarding_hz || diag9c_forwarding_overrun())
+ 			goto no_yield;
  
--	bitmap_and(apcb_s, apcb_s, apcb_h, sizeof(struct kvm_s390_apcb1));
-+	bitmap_and(apcb_s, apcb_s, apcb_h,
-+		   BITS_PER_BYTE * sizeof(struct kvm_s390_apcb1));
- 
- 	return 0;
- }
+ 		/* target host CPU already running */
+-		if (!vcpu_is_preempted(tcpu->cpu))
++		if (!vcpu_is_preempted(tcpu_cpu))
+ 			goto no_yield;
+-		smp_yield_cpu(tcpu->cpu);
++		smp_yield_cpu(tcpu_cpu);
+ 		VCPU_EVENT(vcpu, 5,
+ 			   "diag time slice end directed to %d: yield forwarded",
+ 			   tid);
 -- 
 2.39.2
 
