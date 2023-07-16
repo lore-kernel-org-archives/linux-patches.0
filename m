@@ -1,28 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D61B68F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:08:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0937DC433C7;
-	Sun, 16 Jul 2023 20:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA2D8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:08:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC1CC433C8;
+	Sun, 16 Jul 2023 20:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538113;
-	bh=NhAgypSnH2mRSxDId32hp5JYouWPbWnJIFC/pZFx4dg=;
+	s=korg; t=1689538116;
+	bh=KDJkClUPltn0DE5IynwmEBwnXDOEYKlctZmjCMKsMZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U8f6NpIPaE0z5ijts6xxbPNhWH/B5JqFGUHxJHvFCC4VWCIzorS+3BfZZjqn8VatP
-	 4SNNQdUxEa6DLJEGaUXJGvwE7zScFa/X1JNxugTuF4POpKjJn7onRXxKJfFF48pivJ
-	 7nAZiZB1QyqJ2YVelfruTBZf/1vQfkrsXnnTSTlY=
+	b=DAbPGeWZHUgz7WLUvf/CpJZpNyo0UgZQiRa806LArFN9YOiJrvLTISHDXrdf7QTF4
+	 /KsvNKw6itR3GjGTcOWJ2XG/sTGGHxnI1RuvBb7ZUAd4BxwfBBDj4v35VfjvCL6wJX
+	 Bzv+C1GjNLGnKSbhCRa8hwG7s3WKwHR1lalh3FlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Hans-Frieder Vogt <hfdevel@gmx.net>
-Subject: [PATCH 6.4 335/800] ARM: dts: meson8: correct uart_B and uart_C clock references
-Date: Sun, 16 Jul 2023 21:43:08 +0200
-Message-ID: <20230716194956.863236996@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Leo Li <leoyang.li@nxp.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Qiang Zhao <qiang.zhao@nxp.com>,
+	linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Kumar Gala <galak@kernel.crashing.org>,
+	Nicolas Schier <nicolas@jasle.eu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 336/800] soc/fsl/qe: fix usb.c build errors
+Date: Sun, 16 Jul 2023 21:43:09 +0200
+Message-ID: <20230716194956.887407083@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,49 +45,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 98b503c7fb13a17a47d8ebf15fa8f7c10118e75c ]
+[ Upstream commit 7b1a78babd0d2cd27aa07255dee0c2d7ac0f31e3 ]
 
-On Meson8 uart_B and uart_C do not work, because they are relying on
-incorrect clocks. Change the references of pclk to the correct CLKID
-(UART1 for uart_B and UART2 for uart_C), to allow use of the two uarts.
+Fix build errors in soc/fsl/qe/usb.c when QUICC_ENGINE is not set.
+This happens when PPC_EP88XC is set, which selects CPM1 & CPM.
+When CPM is set, USB_FSL_QE can be set without QUICC_ENGINE
+being set. When USB_FSL_QE is set, QE_USB deafults to y, which
+causes build errors when QUICC_ENGINE is not set. Making
+QE_USB depend on QUICC_ENGINE prevents QE_USB from defaulting to y.
 
-This was originally reported by Hans-Frieder Vogt for Meson8b [0], but
-the same bug is also present in meson8.dtsi
+Fixes these build errors:
 
-[0] https://lore.kernel.org/linux-amlogic/trinity-bf20bcb9-790b-4ab9-99e3-0831ef8257f4-1680878185420@3c-app-gmx-bap55/
+drivers/soc/fsl/qe/usb.o: in function `qe_usb_clock_set':
+usb.c:(.text+0x1e): undefined reference to `qe_immr'
+powerpc-linux-ld: usb.c:(.text+0x2a): undefined reference to `qe_immr'
+powerpc-linux-ld: usb.c:(.text+0xbc): undefined reference to `qe_setbrg'
+powerpc-linux-ld: usb.c:(.text+0xca): undefined reference to `cmxgcr_lock'
+powerpc-linux-ld: usb.c:(.text+0xce): undefined reference to `cmxgcr_lock'
 
-Fixes: 57007bfb5469 ("ARM: dts: meson8: Fix the UART device-tree schema validation")
-Reported-by: Hans-Frieder Vogt <hfdevel@gmx.net> # for meson8b.dtsi
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://lore.kernel.org/r/20230516203029.1031174-1-martin.blumenstingl@googlemail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: 5e41486c408e ("powerpc/QE: add support for QE USB clocks routing")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/all/202301101500.pillNv6R-lkp@intel.com/
+Suggested-by: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Leo Li <leoyang.li@nxp.com>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nicolas Schier <nicolas@fjasle.eu>
+Cc: Qiang Zhao <qiang.zhao@nxp.com>
+Cc: linuxppc-dev <linuxppc-dev@lists.ozlabs.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: Kumar Gala <galak@kernel.crashing.org>
+Acked-by: Nicolas Schier <nicolas@jasle.eu>
+Signed-off-by: Li Yang <leoyang.li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/meson8.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/soc/fsl/qe/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/meson8.dtsi b/arch/arm/boot/dts/meson8.dtsi
-index 4f22ab451aae2..59932fbfd5d5f 100644
---- a/arch/arm/boot/dts/meson8.dtsi
-+++ b/arch/arm/boot/dts/meson8.dtsi
-@@ -769,13 +769,13 @@ &uart_A {
+diff --git a/drivers/soc/fsl/qe/Kconfig b/drivers/soc/fsl/qe/Kconfig
+index e0d096607fefb..fa9ffbed0e929 100644
+--- a/drivers/soc/fsl/qe/Kconfig
++++ b/drivers/soc/fsl/qe/Kconfig
+@@ -62,6 +62,7 @@ config QE_TDM
  
- &uart_B {
- 	compatible = "amlogic,meson8-uart";
--	clocks = <&xtal>, <&clkc CLKID_UART0>, <&clkc CLKID_CLK81>;
-+	clocks = <&xtal>, <&clkc CLKID_UART1>, <&clkc CLKID_CLK81>;
- 	clock-names = "xtal", "pclk", "baud";
- };
- 
- &uart_C {
- 	compatible = "amlogic,meson8-uart";
--	clocks = <&xtal>, <&clkc CLKID_UART0>, <&clkc CLKID_CLK81>;
-+	clocks = <&xtal>, <&clkc CLKID_UART2>, <&clkc CLKID_CLK81>;
- 	clock-names = "xtal", "pclk", "baud";
- };
- 
+ config QE_USB
+ 	bool
++	depends on QUICC_ENGINE
+ 	default y if USB_FSL_QE
+ 	help
+ 	  QE USB Controller support
 -- 
 2.39.2
 
