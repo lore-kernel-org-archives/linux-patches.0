@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCC68F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:47:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59F7C433C9;
-	Sun, 16 Jul 2023 20:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EC28F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:47:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B83F2C433CB;
+	Sun, 16 Jul 2023 20:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540476;
-	bh=ESw5PTgcFGhXVY9B/ul/ln1wXI8h8W1NvvrvvZA0/NY=;
+	s=korg; t=1689540479;
+	bh=GkWTux36hETjWavF7BEv1VhI2waDC62Dp+gNcL3pfn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cYbKXLKf6ePto8vGv6WGI/LHWL5fxM+Smf2Cl0ur/4JsGZt0lF6oSc/jYLriDitTg
-	 pZu7R6lB08F9eWSi6fH+13FzGaQE5q7c2GGpSkZSZxxv2fCHpaDNnYabJaYFVYKhgz
-	 75sswULTJmWgGhbyttQO5afWSofER7fGclpoK9ls=
+	b=cTkR/S9ofkNB7aJn0udT6ZKq/2cYl98R1eioJrpQjjtKoSdB6LHWt5MTVSHi1W+wn
+	 aenRWxejlaBEZkhHnKLvsACXr4rzKYjoIjag25N+I7NS/kUF+BpdNzbiGs7LLRxFYP
+	 oydieAMBqUa0efl+KBwqzRaisQQ+zPCS4eBAcoFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
-	Steve French <stfrench@microsoft.com>,
+	Joachim Vandersmissen <git@jvdsn.com>,
+	Stephan Mueller <smueller@chronox.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 349/591] SMB3: Do not send lease break acknowledgment if all file handles have been closed
-Date: Sun, 16 Jul 2023 21:48:08 +0200
-Message-ID: <20230716194932.940800729@linuxfoundation.org>
+Subject: [PATCH 6.1 340/591] crypto: jitter - correct health test during initialization
+Date: Sun, 16 Jul 2023 21:47:59 +0200
+Message-ID: <20230716194932.702916421@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,63 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bharath SM <bharathsm@microsoft.com>
+From: Stephan Müller <smueller@chronox.de>
 
-[ Upstream commit da787d5b74983f7525d1eb4b9c0b4aff2821511a ]
+[ Upstream commit d23659769ad1bf2cbafaa0efcbae20ef1a74f77e ]
 
-In case if all existing file handles are deferred handles and if all of
-them gets closed due to handle lease break then we dont need to send
-lease break acknowledgment to server, because last handle close will be
-considered as lease break ack.
-After closing deferred handels, we check for openfile list of inode,
-if its empty then we skip sending lease break ack.
+With the update of the permanent and intermittent health errors, the
+actual indicator for the health test indicates a potential error only
+for the one offending time stamp gathered in the current iteration
+round. The next iteration round will "overwrite" the health test result.
 
-Fixes: 59a556aebc43 ("SMB3: drop reference to cfile before sending oplock break")
-Reviewed-by: Tom Talpey <tom@talpey.com>
-Signed-off-by: Bharath SM <bharathsm@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Thus, the entropy collection loop in jent_gen_entropy checks for
+the health test failure upon each loop iteration. However, the
+initialization operation checked for the APT health test once for
+an APT window which implies it would not catch most errors.
+
+Thus, the check for all health errors is now invoked unconditionally
+during each loop iteration for the startup test.
+
+With the change, the error JENT_ERCT becomes unused as all health
+errors are only reported with the JENT_HEALTH return code. This
+allows the removal of the error indicator.
+
+Fixes: 3fde2fe99aa6 ("crypto: jitter - permanent and intermittent health errors"
+)
+Reported-by: Joachim Vandersmissen <git@jvdsn.com>
+Signed-off-by: Stephan Mueller <smueller@chronox.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/file.c | 25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ crypto/jitterentropy.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
-index 87dcffece7623..9a367d4c74e47 100644
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -5140,20 +5140,19 @@ void cifs_oplock_break(struct work_struct *work)
+diff --git a/crypto/jitterentropy.c b/crypto/jitterentropy.c
+index 22f48bf4c6f57..227cedfa4f0ae 100644
+--- a/crypto/jitterentropy.c
++++ b/crypto/jitterentropy.c
+@@ -117,7 +117,6 @@ struct rand_data {
+ 				   * zero). */
+ #define JENT_ESTUCK		8 /* Too many stuck results during init. */
+ #define JENT_EHEALTH		9 /* Health test failed during initialization */
+-#define JENT_ERCT		10 /* RCT failed during initialization */
  
- 	_cifsFileInfo_put(cfile, false /* do not wait for ourself */, false);
- 	/*
--	 * releasing stale oplock after recent reconnect of smb session using
--	 * a now incorrect file handle is not a data integrity issue but do
--	 * not bother sending an oplock release if session to server still is
--	 * disconnected since oplock already released by the server
-+	 * MS-SMB2 3.2.5.19.1 and 3.2.5.19.2 (and MS-CIFS 3.2.5.42) do not require
-+	 * an acknowledgment to be sent when the file has already been closed.
-+	 * check for server null, since can race with kill_sb calling tree disconnect.
- 	 */
--	if (!oplock_break_cancelled) {
--		/* check for server null since can race with kill_sb calling tree disconnect */
--		if (tcon->ses && tcon->ses->server) {
--			rc = tcon->ses->server->ops->oplock_response(tcon, persistent_fid,
--				volatile_fid, net_fid, cinode);
--			cifs_dbg(FYI, "Oplock release rc = %d\n", rc);
--		} else
--			pr_warn_once("lease break not sent for unmounted share\n");
--	}
-+	spin_lock(&cinode->open_file_lock);
-+	if (tcon->ses && tcon->ses->server && !oplock_break_cancelled &&
-+					!list_empty(&cinode->openFileList)) {
-+		spin_unlock(&cinode->open_file_lock);
-+		rc = tcon->ses->server->ops->oplock_response(tcon, persistent_fid,
-+						volatile_fid, net_fid, cinode);
-+		cifs_dbg(FYI, "Oplock release rc = %d\n", rc);
-+	} else
-+		spin_unlock(&cinode->open_file_lock);
+ /*
+  * The output n bits can receive more than n bits of min entropy, of course,
+@@ -762,14 +761,12 @@ int jent_entropy_init(void)
+ 			if ((nonstuck % JENT_APT_WINDOW_SIZE) == 0) {
+ 				jent_apt_reset(&ec,
+ 					       delta & JENT_APT_WORD_MASK);
+-				if (jent_health_failure(&ec))
+-					return JENT_EHEALTH;
+ 			}
+ 		}
  
- 	cifs_done_oplock_break(cinode);
- }
+-		/* Validate RCT */
+-		if (jent_rct_failure(&ec))
+-			return JENT_ERCT;
++		/* Validate health test result */
++		if (jent_health_failure(&ec))
++			return JENT_EHEALTH;
+ 
+ 		/* test whether we have an increasing timer */
+ 		if (!(time2 > time))
 -- 
 2.39.2
 
