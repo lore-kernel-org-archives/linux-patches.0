@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B098F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:07:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24902C433C8;
-	Sun, 16 Jul 2023 20:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3BB8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:07:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4FB5C433C7;
+	Sun, 16 Jul 2023 20:07:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538063;
-	bh=+Bifnd3p8dkdvMLG65c53ARxI6OC1br3E+e61h4GWKs=;
+	s=korg; t=1689538066;
+	bh=B1naQgSahwWWgmZEuznMPDHjuX/lQ8siFyUav+WJBtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ic12W1IcJQkCN5zo0gaDQQWUE8Isu4W8C5YCL5gv82vv1CrG164lRy+Whphz03gmU
-	 HqBOuMYftDgW0hpMfaxZIr+tGjZ+RLPiiRwr15rXqRd7+NMLKQO4IPglCyXBHkoTt2
-	 K29jt+ZPbOG724vijLTyXt0A898qnWZnp78hmqx4=
+	b=vNi6oqcswv6NszJqNbzsa+KrUHFWZRP4yXOB2Na+u8idb3sNz9Zc5U0OuBhcyNGq5
+	 gowFDHHSIBHFpNnyjbjNVz55dy+/qr/KksZX8vxtXqNo8yAPjTFPCrSRGq+dr4LwTH
+	 FLXSn35lWntguJzujnN/IXfjsvhtvgrNCuLEe8JE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Stephan Gerhold <stephan@gerhold.net>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 310/800] arm64: dts: qcom: sdm845: correct camss unit address
-Date: Sun, 16 Jul 2023 21:42:43 +0200
-Message-ID: <20230716194956.275477259@linuxfoundation.org>
+Subject: [PATCH 6.4 319/800] arm64: dts: qcom: apq8016-sbc: Fix 1.8V power rail on LS expansion
+Date: Sun, 16 Jul 2023 21:42:52 +0200
+Message-ID: <20230716194956.481626683@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,37 +36,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Stephan Gerhold <stephan@gerhold.net>
 
-[ Upstream commit a05b913a27e46926ba60ba2bcacc7ec7a8403e4c ]
+[ Upstream commit 5500f823db38db073d30557af159b77fb1f2bf26 ]
 
-Match unit-address to reg entry to fix dtbs W=1 warnings:
+The 96Boards specification expects a 1.8V power rail on the low-speed
+expansion connector that is able to provide at least 0.18W / 100 mA.
+According to the DB410c hardware user manual this is done by connecting
+both L15 and L16 in parallel with up to 55mA each (for 110 mA total) [1].
 
-  Warning (simple_bus_reg): /soc@0/camss@a00000: simple-bus unit address format error, expected "acb3000"
+Unfortunately the current regulator setup in the DB410c device tree
+does not implement the specification correctly and only provides 5 mA:
 
-Fixes: d48a6698a6b7 ("arm64: dts: qcom: sdm845: Add CAMSS ISP node")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+  - Only L15 is marked always-on, so L16 is never enabled.
+  - Without specifying a load the regulator is put into LPM where
+    it can only provide 5 mA.
+
+Fix this by:
+
+  - Adding proper voltage constraints for L16.
+  - Making L16 always-on.
+  - Adding regulator-system-load for both L15 and L16. 100 mA should be
+    available in total, so specify 50 mA for each. (The regulator
+    hardware can only be in normal (55 mA) or low-power mode (5 mA) so
+    this will actually result in the expected 110 mA total...)
+
+[1]: https://www.96boards.org/documentation/consumer/dragonboard/dragonboard410c/hardware-docs/hardware-user-manual.md.html#power-supplies
+
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Fixes: 828dd5d66f0f ("arm64: dts: apq8016-sbc: make 1.8v available on LS expansion")
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230419211856.79332-11-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20230510-msm8916-regulators-v1-2-54d4960a05fc@gerhold.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index cdeb05e95674e..8f99e79ba3fd4 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -4238,7 +4238,7 @@ videocc: clock-controller@ab00000 {
- 			#reset-cells = <1>;
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+index 14cb217a13c1e..3ec449f5cab78 100644
+--- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
++++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+@@ -526,19 +526,27 @@ l14 {
+ 		regulator-max-microvolt = <3300000>;
+ 	};
  
--		camss: camss@a00000 {
-+		camss: camss@acb3000 {
- 			compatible = "qcom,sdm845-camss";
+-	/**
+-	 * 1.8v required on LS expansion
+-	 * for mezzanine boards
++	/*
++	 * The 96Boards specification expects a 1.8V power rail on the low-speed
++	 * expansion connector that is able to provide at least 0.18W / 100 mA.
++	 * L15/L16 are connected in parallel to provide 55 mA each. A minimum load
++	 * must be specified to ensure the regulators are not put in LPM where they
++	 * would only provide 5 mA.
+ 	 */
+ 	l15 {
+ 		regulator-min-microvolt = <1800000>;
+ 		regulator-max-microvolt = <1800000>;
++		regulator-system-load = <50000>;
++		regulator-allow-set-load;
+ 		regulator-always-on;
+ 	};
  
- 			reg = <0 0x0acb3000 0 0x1000>,
+ 	l16 {
+ 		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <3300000>;
++		regulator-max-microvolt = <1800000>;
++		regulator-system-load = <50000>;
++		regulator-allow-set-load;
++		regulator-always-on;
+ 	};
+ 
+ 	l17 {
 -- 
 2.39.2
 
