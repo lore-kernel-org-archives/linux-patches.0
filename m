@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5378F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:08:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146C5C433C7;
-	Sun, 16 Jul 2023 20:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E378F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:08:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD75EC433C8;
+	Sun, 16 Jul 2023 20:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538088;
-	bh=XAVVqNWA1cFqnzxlsghtjTHTdQEQo27SW9tKe+OTRwM=;
+	s=korg; t=1689538091;
+	bh=f6QhH23ZJM+apLwmgzTxxm/lYrHvOfs730BQX71QjS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tfoSMukV7wYuaxpFx/OYRlv8Iqz97nNqqkMEg+1eBH2Ba/NxVKBJn7JxZtYeyrNFU
-	 6RoQJZ8OCZudT9Nu9Stt1K7WD5lCemZZnh2zbV1CYzZSiv4ynZ4Bq4KFqGdwg3QC2i
-	 YZnw1mM2ByNn+5WezWnFOFRlMzenmIt8gfA81N1k=
+	b=a2UsIzCb+zrEET7cRU14v9d2YITy7C58NnSWI4L/2VjnfIX6Ax7tTmd/iaGz3HINc
+	 IOeOqIyZo78TMdAkRNLiHEpBRCZu6Ehhy8K+Rsgaw6h7cNAzjJOjjl7MxOhzZCbS/T
+	 CXmA+li3H00IjpIw/iFdOUVY6pQqjzAL85tWlajo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 327/800] arm64: dts: mediatek: mt8183: Add mediatek,broken-save-restore-fw to kukui
-Date: Sun, 16 Jul 2023 21:43:00 +0200
-Message-ID: <20230716194956.678024192@linuxfoundation.org>
+Subject: [PATCH 6.4 328/800] arm64: dts: mediatek: mt8192: Add mediatek,broken-save-restore-fw to asurada
+Date: Sun, 16 Jul 2023 21:43:01 +0200
+Message-ID: <20230716194956.703044797@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -39,30 +39,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 42127f578ebde652d1373e0233356fbd351675c4 ]
+[ Upstream commit d72cfbd6fcf7cd02084991eee47ecc9f4b4c1e69 ]
 
-Firmware shipped on mt8183 Chromebooks is affected by the GICR
+Firmware shipped on mt8192 Chromebooks is affected by the GICR
 save/restore issue as described by the patch ("dt-bindings:
 interrupt-controller: arm,gic-v3: Add quirk for Mediatek SoCs w/
 broken FW"). Add the quirk property.
 
-Fixes: cd894e274b74 ("arm64: dts: mt8183: Add krane-sku176 board")
+Fixes: 331fae2fc922 ("arm64: dts: mediatek: Introduce MT8192-based Asurada board family")
 Reviewed-by: Julius Werner <jwerner@chromium.org>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230515131353.v2.3.I525a2ed4260046d43c885ee1275e91707743df1c@changeid
+Link: https://lore.kernel.org/r/20230515131353.v2.4.Ie7e600278ffbed55a1e5a58178203787b1449b35@changeid
 Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi | 4 ++++
+ arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-index 63952c1251dfd..8892b2f64a0f0 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-@@ -292,6 +292,10 @@ dsi_out: endpoint {
- 	};
+diff --git a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
+index 5a440504d4f9b..0e8b341170907 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
+@@ -275,6 +275,10 @@ &dsi_out {
+ 	remote-endpoint = <&anx7625_in>;
  };
  
 +&gic {
@@ -70,8 +70,8 @@ index 63952c1251dfd..8892b2f64a0f0 100644
 +};
 +
  &gpu {
- 	mali-supply = <&mt6358_vgpu_reg>;
- };
+ 	mali-supply = <&mt6315_7_vbuck1>;
+ 	status = "okay";
 -- 
 2.39.2
 
