@@ -1,322 +1,140 @@
-Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320B315CD
-	for <patches@lists.linux.dev>; Sat, 15 Jul 2023 13:38:30 +0000 (UTC)
-Date: Sat, 15 Jul 2023 13:38:18 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1689428301; x=1689687501;
-	bh=jpirCVBI6qvy/LH/4UjZlCb+01S49ZLsrI5kKviC7M0=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=BCXnCNolLjAUDN4TUo1a5DVnR7eb5kQp9AAbklc6gQxEGhDqoKHI/94leyOWx0/t7
-	 EsBMf2biwO4puiSdL/KkBvmJ7ziBf6+BI9sVQDmP1Pq2o6RAfjMirctzOVOprSIP/g
-	 EkwD1NAmaZb5iCV0yDjrYJ3BvR8thJ/0kjQUynQhzsZ/0oS3xW4ga3Hpr9pHNAnMUM
-	 DMfJ7sm5/Amf6Z14XOC5gnAb802W9NmtxD2+tDgaaa2CRQESSF2C2q/rbiGG9ADnsS
-	 wpPgGm096BwGsL+aHIs6jbj3mXQDsTkadH10UA/2eOZ+vLd6gZcceyc9ikbYPl9QUW
-	 IKRc/AQjVAAjA==
-To: Alice Ryhl <aliceryhl@google.com>
-From: Benno Lossin <benno.lossin@proton.me>
-Cc: rust-for-linux@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v1] rust: add improved version of `ForeignOwnable::borrow_mut`
-Message-ID: <ngqoOJ2k3udEHB5h1n7xMP_5LZUvoWaYP1zcTVwcSRYJ8IZYqYK82YMBUAUieYGomPPDPEp-n2MpF3CrAztKunooTU9fkNQ36x3TxrQ5Twc=@proton.me>
-In-Reply-To: <20230710074642.683831-1-aliceryhl@google.com>
-References: <20230710074642.683831-1-aliceryhl@google.com>
-Feedback-ID: 71780778:user:proton
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8EF1FB7
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 15:18:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95A0C433C7;
+	Sun, 16 Jul 2023 15:18:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1689520698;
+	bh=wdzrjiRF1UzNEzLy6JH3W2VtncpZ6QgP8nNgQQA1Eig=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WtygqVOipt1wiISgL4CHSNIVJ+4iNmvt4RugTePJxkAraZ18DtlD1vvwdXyiXzNkk
+	 yPYi+uw2bqsUnrADuWwmuzmbsscUh0AgBZQhl9ueRk+MaEDiVKhR6m3xrbOgImczUS
+	 NqOJ8gK4ld1XtREUjvojRFyTPuXGkXy7GSSiJF2Q=
+Date: Sun, 16 Jul 2023 17:18:10 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+Cc: Jarkko Sakkinen <jarkko@kernel.org>,
+	Felix Riemann <felix.riemann@sma.de>, patches@lists.linux.dev,
+	sashal@kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH 5.15 070/371] tpm, tpm_tis: Claim locality before writing
+ interrupt registers
+Message-ID: <2023071600-backdrop-carless-b990@gregkh>
+References: <20230508094814.897191675@linuxfoundation.org>
+ <20230515153759.2072-1-svc.sw.rte.linux@sma.de>
+ <382309d7c0ae593d507eb816982f6a66c2cda00a.camel@kernel.org>
+ <2023060906-starter-scrounger-1bca@gregkh>
+ <3bdaa40e-16dc-6c04-b9e4-9e5951267e7e@kunbus.com>
+ <2023062100-retrace-kitten-7241@gregkh>
+ <c9c3fe87-9f70-2131-24d3-bbb626042c16@kunbus.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c9c3fe87-9f70-2131-24d3-bbb626042c16@kunbus.com>
 
-On 10.07.23 09:46, Alice Ryhl wrote:
-> Previously, the `ForeignOwnable` trait had a method called `borrow_mut`
-> that was intended to provide mutable access to the inner value. However,
-> the method accidentally made it possible to change the address of the
-> object being modified, which usually isn't what we want. (And when we
-> want that, it can be done by calling `from_foreign` and `into_foreign`,
-> like how the old `borrow_mut` was implemented.)
->=20
-> In this patch, we introduce an alternate definition of `borrow_mut` that
-> solves the previous problem. Conceptually, given a pointer type `P` that
-> implements `ForeignOwnable`, the `borrow_mut` method gives you the same
-> kind of access as an `&mut P` would, except that it does not let you
-> change the pointer `P` itself.
->=20
-> This is analogous to how the existing `borrow` method provides the same
-> kind of access to the inner value as an `&P`.
->=20
-> Note that for types like `Arc`, having an `&mut Arc<T>` only gives you
-> immutable access to the inner `T`. This is because mutable references
-> assume exclusive access, but there might be other handles to the same
-> reference counted value, so the access isn't exclusive. The `Arc` type
-> implements this by making `borrow_mut` return the same type as `borrow`.
->=20
-> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-
-Reviewed-by: Benno Lossin <benno.lossin@proton.me>
-
---=20
-Cheers,
-Benno
-
-> ---
->=20
-> This patch depends on https://lore.kernel.org/all/20230706094615.3080784-=
-1-aliceryhl@google.com/
->=20
->   rust/kernel/sync/arc.rs | 31 +++++++++-----
->   rust/kernel/types.rs    | 93 ++++++++++++++++++++++++++++++-----------
->   2 files changed, 89 insertions(+), 35 deletions(-)
->=20
-> diff --git a/rust/kernel/types.rs b/rust/kernel/types.rs
-> index d479f8da8f38..1c2fb36906b6 100644
-> --- a/rust/kernel/types.rs
-> +++ b/rust/kernel/types.rs
-> @@ -20,66 +20,111 @@
->   /// This trait is meant to be used in cases when Rust objects are store=
-d in C objects and
->   /// eventually "freed" back to Rust.
->   pub trait ForeignOwnable: Sized {
-> -    /// Type of values borrowed between calls to [`ForeignOwnable::into_=
-foreign`] and
-> -    /// [`ForeignOwnable::from_foreign`].
-> +    /// Type used to immutably borrow a value that is currently foreign-=
-owned.
->       type Borrowed<'a>;
->=20
-> +    /// Type used to mutably borrow a value that is currently foreign-ow=
-ned.
-> +    type BorrowedMut<'a>;
-> +
->       /// Converts a Rust-owned object to a foreign-owned one.
->       ///
->       /// The foreign representation is a pointer to void.
->       fn into_foreign(self) -> *const core::ffi::c_void;
->=20
-> -    /// Borrows a foreign-owned object.
-> -    ///
-> -    /// # Safety
-> -    ///
-> -    /// `ptr` must have been returned by a previous call to [`ForeignOwn=
-able::into_foreign`] for
-> -    /// which a previous matching [`ForeignOwnable::from_foreign`] hasn'=
-t been called yet.
-> -    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> Self::Borrowe=
-d<'a>;
-> -
->       /// Converts a foreign-owned object back to a Rust-owned one.
->       ///
->       /// # Safety
->       ///
-> -    /// `ptr` must have been returned by a previous call to [`ForeignOwn=
-able::into_foreign`] for
-> -    /// which a previous matching [`ForeignOwnable::from_foreign`] hasn'=
-t been called yet.
-> -    /// Additionally, all instances (if any) of values returned by [`For=
-eignOwnable::borrow`] for
-> -    /// this object must have been dropped.
-> +    /// The provided pointer must have been returned by a previous call =
-to [`into_foreign`], and it
-> +    /// must not be passed to `from_foreign` more than once.
-> +    ///
-> +    /// [`into_foreign`]: Self::into_foreign
->       unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self;
-> +
-> +    /// Borrows a foreign-owned object immutably.
-> +    ///
-> +    /// This method provides a way to access a foreign-owned value from =
-Rust immutably. It provides
-> +    /// you with exactly the same abilities as an `&Self` when the value=
- is Rust-owned.
-> +    ///
-> +    /// # Safety
-> +    ///
-> +    /// The provided pointer must have been returned by a previous call =
-to [`into_foreign`], and if
-> +    /// the pointer is ever passed to [`from_foreign`], then that call m=
-ust happen after the end of
-> +    /// the lifetime 'a.
-> +    ///
-> +    /// [`into_foreign`]: Self::into_foreign
-> +    /// [`from_foreign`]: Self::from_foreign
-> +    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> Self::Borrowe=
-d<'a>;
-> +
-> +    /// Borrows a foreign-owned object mutably.
-> +    ///
-> +    /// This method provides a way to access a foreign-owned value from =
-Rust mutably. It provides
-> +    /// you with exactly the same abilities as an `&mut Self` when the v=
-alue is Rust-owned, except
-> +    /// that this method does not let you swap the foreign-owned object =
-for another. (That is, it
-> +    /// does not let you change the address of the void pointer that the=
- foreign code is storing.)
-> +    ///
-> +    /// Note that for types like [`Arc`], an `&mut Arc<T>` only gives yo=
-u immutable access to the
-> +    /// inner value, so this method also only provides immutable access =
-in that case.
-> +    ///
-> +    /// In the case of `Box<T>`, this method gives you the ability to mo=
-dify the inner `T`, but it
-> +    /// does not let you change the box itself. That is, you cannot chan=
-ge which allocation the box
-> +    /// points at.
-> +    ///
-> +    /// # Safety
-> +    ///
-> +    /// The provided pointer must have been returned by a previous call =
-to [`into_foreign`], and if
-> +    /// the pointer is ever passed to [`from_foreign`], then that call m=
-ust happen after the end of
-> +    /// the lifetime 'a.
-> +    ///
-> +    /// The lifetime 'a must not overlap with the lifetime of any other =
-call to [`borrow`] or
-> +    /// `borrow_mut` on the same object.
-> +    ///
-> +    /// [`into_foreign`]: Self::into_foreign
-> +    /// [`from_foreign`]: Self::from_foreign
-> +    /// [`borrow`]: Self::borrow
-> +    /// [`Arc`]: crate::sync::Arc
-> +    unsafe fn borrow_mut<'a>(ptr: *const core::ffi::c_void) -> Self::Bor=
-rowedMut<'a>;
->   }
->=20
->   impl<T: 'static> ForeignOwnable for Box<T> {
->       type Borrowed<'a> =3D &'a T;
-> +    type BorrowedMut<'a> =3D &'a mut T;
->=20
->       fn into_foreign(self) -> *const core::ffi::c_void {
->           Box::into_raw(self) as _
->       }
->=20
-> -    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> &'a T {
-> -        // SAFETY: The safety requirements for this function ensure that=
- the object is still alive,
-> -        // so it is safe to dereference the raw pointer.
-> -        // The safety requirements of `from_foreign` also ensure that th=
-e object remains alive for
-> -        // the lifetime of the returned value.
-> -        unsafe { &*ptr.cast() }
-> -    }
-> -
->       unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self {
->           // SAFETY: The safety requirements of this function ensure that=
- `ptr` comes from a previous
->           // call to `Self::into_foreign`.
->           unsafe { Box::from_raw(ptr as _) }
->       }
-> +
-> +    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> &'a T {
-> +        // SAFETY: The safety requirements of this method ensure that th=
-e object remains alive and
-> +        // immutable for the duration of 'a.
-> +        unsafe { &*ptr.cast() }
-> +    }
-> +
-> +    unsafe fn borrow_mut<'a>(ptr: *const core::ffi::c_void) -> &'a mut T=
- {
-> +        // SAFETY: The safety requirements of this method ensure that th=
-e pointer is valid and that
-> +        // nothing else will access the value for the duration of 'a.
-> +        unsafe { &mut *ptr.cast_mut().cast() }
-> +    }
->   }
->=20
->   impl ForeignOwnable for () {
->       type Borrowed<'a> =3D ();
-> +    type BorrowedMut<'a> =3D ();
->=20
->       fn into_foreign(self) -> *const core::ffi::c_void {
->           core::ptr::NonNull::dangling().as_ptr()
->       }
->=20
-> -    unsafe fn borrow<'a>(_: *const core::ffi::c_void) -> Self::Borrowed<=
-'a> {}
-> -
->       unsafe fn from_foreign(_: *const core::ffi::c_void) -> Self {}
-> +
-> +    unsafe fn borrow<'a>(_: *const core::ffi::c_void) -> Self::Borrowed<=
-'a> {}
-> +    unsafe fn borrow_mut<'a>(_: *const core::ffi::c_void) -> Self::Borro=
-wedMut<'a> {}
->   }
->=20
->   /// Runs a cleanup function/closure when dropped.
->=20
-> diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
-> index 172f563976a9..f152a562c9c3 100644
-> --- a/rust/kernel/sync/arc.rs
-> +++ b/rust/kernel/sync/arc.rs
-> @@ -232,26 +232,35 @@ pub fn ptr_eq(this: &Self, other: &Self) -> bool {
->=20
->   impl<T: 'static> ForeignOwnable for Arc<T> {
->       type Borrowed<'a> =3D ArcBorrow<'a, T>;
-> +    // Mutable access to the `Arc` does not give any extra abilities ove=
-r
-> +    // immutable access.
-> +    type BorrowedMut<'a> =3D ArcBorrow<'a, T>;
->=20
->       fn into_foreign(self) -> *const core::ffi::c_void {
->           ManuallyDrop::new(self).ptr.as_ptr() as _
->       }
->=20
-> -    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> ArcBorrow<'a,=
- T> {
-> -        // SAFETY: By the safety requirement of this function, we know t=
-hat `ptr` came from
-> -        // a previous call to `Arc::into_foreign`.
-> -        let inner =3D NonNull::new(ptr as *mut ArcInner<T>).unwrap();
-> -
-> -        // SAFETY: The safety requirements of `from_foreign` ensure that=
- the object remains alive
-> -        // for the lifetime of the returned value.
-> -        unsafe { ArcBorrow::new(inner) }
-> -    }
-> -
->       unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self {
->           // SAFETY: By the safety requirement of this function, we know =
-that `ptr` came from
->           // a previous call to `Arc::into_foreign`, which guarantees tha=
-t `ptr` is valid and
->           // holds a reference count increment that is transferrable to u=
-s.
-> -        unsafe { Self::from_inner(NonNull::new(ptr as _).unwrap()) }
-> +        unsafe { Self::from_inner(NonNull::new_unchecked(ptr as _)) }
->       }
-> +
-> +    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> ArcBorrow<'a,=
- T> {
-> +        // SAFETY: By the safety requirement of this function, we know t=
-hat `ptr` came from
-> +        // a previous call to `Arc::into_foreign`.
-> +        let inner =3D unsafe { NonNull::new_unchecked(ptr as *mut ArcInn=
-er<T>) };
-> +
-> +        // SAFETY: The safety requirements ensure that we will not give =
-up our
-> +        // foreign-owned refcount while the `ArcBorrow` is still live.
-> +        unsafe { ArcBorrow::new(inner) }
-> +    }
-> +
-> +    unsafe fn borrow_mut<'a>(ptr: *const core::ffi::c_void) -> ArcBorrow=
-<'a, T> {
-> +        // SAFETY: The safety requirements for `borrow_mut` are a supers=
-et of the safety
-> +        // requirements for `borrow`.
-> +        unsafe { Self::borrow(ptr) }
-> +    }
->   }
->=20
-> base-commit: d2e3115d717197cb2bc020dd1f06b06538474ac3
-> prerequisite-patch-id: b493b9015cb19f599c4bc03127733193b11ca822
-> --
-> 2.41.0.255.g8b1d071c50-goog
+On Fri, Jul 14, 2023 at 07:15:38PM +0200, Lino Sanfilippo wrote:
+> Hi Greg,
 > 
+> On 21.06.23 20:45, Greg KH wrote:
+> 
+> > On Fri, Jun 09, 2023 at 05:42:20PM +0200, Lino Sanfilippo wrote:
+> >> Hi,
+> >>
+> >> On 09.06.23 11:07, Greg KH wrote:
+> >>>
+> >>> On Wed, May 24, 2023 at 04:07:41AM +0300, Jarkko Sakkinen wrote:
+> >>>> On Mon, 2023-05-15 at 17:37 +0200, Felix Riemann wrote:
+> >>>>> Hi!
+> >>>>>
+> >>>>>> [ Upstream commit 15d7aa4e46eba87242a320f39773aa16faddadee ]
+> >>>>>>
+> >>>>>> In tpm_tis_probe_single_irq() interrupt registers TPM_INT_VECTOR,
+> >>>>>> TPM_INT_STATUS and TPM_INT_ENABLE are modified to setup the interrupts.
+> >>>>>> Currently these modifications are done without holding a locality thus they
+> >>>>>> have no effect. Fix this by claiming the (default) locality before the
+> >>>>>> registers are written.
+> >>>>>>
+> >>>>>> Since now tpm_tis_gen_interrupt() is called with the locality already
+> >>>>>> claimed remove locality request and release from this function.
+> >>>>>
+> >>>>> On systems with SPI-connected TPM and the interrupt still configured
+> >>>>> (despite it not working before) this may introduce a kernel crash.
+> >>>>> The issue is that it will now trigger an SPI transfer (which will wait)
+> >>>>> from the IRQ handler:
+> >>>>>
+> >>>>> BUG: scheduling while atomic: systemd-journal/272/0x00010001
+> >>>>> Modules linked in: spi_fsl_lpspi
+> >>>>> CPU: 0 PID: 272 Comm: systemd-journal Not tainted 5.15.111-06679-g56b9923f2840 #50
+> >>>>> Call trace:
+> >>>>>  dump_backtrace+0x0/0x1e0
+> >>>>>  show_stack+0x18/0x40
+> >>>>>  dump_stack_lvl+0x68/0x84
+> >>>>>  dump_stack+0x18/0x34
+> >>>>>  __schedule_bug+0x54/0x70
+> >>>>>  __schedule+0x664/0x760
+> >>>>>  schedule+0x88/0x100
+> >>>>>  schedule_timeout+0x80/0xf0
+> >>>>>  wait_for_completion_timeout+0x80/0x10c
+> >>>>>  fsl_lpspi_transfer_one+0x25c/0x4ac [spi_fsl_lpspi]
+> >>>>>  spi_transfer_one_message+0x22c/0x440
+> >>>>>  __spi_pump_messages+0x330/0x5b4
+> >>>>>  __spi_sync+0x230/0x264
+> >>>>>  spi_sync_locked+0x10/0x20
+> >>>>>  tpm_tis_spi_transfer+0x1ec/0x250
+> >>>>>  tpm_tis_spi_read_bytes+0x14/0x20
+> >>>>>  tpm_tis_spi_read32+0x38/0x70
+> >>>>>  tis_int_handler+0x48/0x15c
+> >>>>>  *snip*
+> >>>>>
+> >>>>> The immediate error is fixable by also picking 0c7e66e5fd ("tpm, tpm_tis:
+> >>>>> Request threaded interrupt handler") from the same patchset[1].
+> >>>>> However, as
+> >>>>> the driver's IRQ test logic is still faulty it will fail the check and fall
+> >>>>> back to the polling behaviour without actually disabling the IRQ in hard-
+> >>>>> and software again. For this at least e644b2f498 ("tpm, tpm_tis: Enable
+> >>>>> interrupt test") and 0e069265bc ("tpm, tpm_tis: Claim locality in interrupt
+> >>>>> handler") are necessary.
+> >>>>>
+> >>>>> At this point 9 of the set's 14 patches are applied and I am not sure
+> >>>>> whether it's better to pick the remaining five patches as well or just
+> >>>>> revert the initial six patches. Especially considering there were initially
+> >>>>> no plans to submit these patches to stable[2] and the IRQ feature was (at
+> >>>>> least on SPI) not working before.
+> >>>>
+> >>>> I think the right thing to do would be to revert 6 initial patches.
+> >>>
+> >>> Ok, I think this isn't needed anymore with the latest 5.15.116 release,
+> >>> right?  If not, please let me know.
+> >>>
+> >>
+> >>
+> 
+> 
+> >> With 0c7e66e5fd ("tpm, tpm_tis: Request threaded interrupt handler") applied the
+> >> above bug is fixed in 5.15.y. There is however still the issue that the interrupts may
+> >> not be acknowledged properly in the interrupt handler, since the concerning register is written
+> >> without the required locality held (Felix mentions this above).
+> >> This can be fixed with 0e069265bce5 ("tpm, tpm_tis: Claim locality in interrupt handler").
+> >>
+> >> So instead of reverting the initial patches, I suggest to
+> >>
+> >> 1. also apply 0e069265bce5 ("tpm, tpm_tis: Claim locality in interrupt handler")
+> > 
+> > I've now done this, thanks.
+> > 
+> > greg k-h
+> 
+> While 5.15.y, 6.1.y and 6.3.y should be fine AFAICS commit 
+> 0e069265bc ("tpm, tpm_tis: Claim locality in interrupt handler") is
+> still missing in 5.10.y. This commit is needed to make sure that TPM interrupts
+> are properly acknowledge (see text above).
+
+Ok, now queued up, thanks.
+
+greg k-h
