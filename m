@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342BD8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:57:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB919C433C8;
-	Sun, 16 Jul 2023 20:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BD08F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:57:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F848C433C7;
+	Sun, 16 Jul 2023 20:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689541033;
-	bh=mogxLIaZ7xFb1sQ1LnVRXJT2iYdMQiXNwXptcGPvl8A=;
+	s=korg; t=1689541035;
+	bh=onCFm98c81/Vnl+zEOGckQqZnJ1rAGitlR8pEVSZX18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hSGnQehr119XNlmHzBbZ0XdkNSiCscEYALW0sbI051aefgt3204SRdzdWUWNqOsGY
-	 3DZSTE+O/CxQjch8jQLQPtNJjETgJjqd3mNgpGoAdCJWjaktV26TvKklso37vUWFPN
-	 2OUfoLWX2CTS+6A+vvVaj8gss4gBBDwSY/12Mzdg=
+	b=t/V8VK1Da77zcRkoCUffbAM14sXbboRWNzU0ZuSlvIRc/xxdfGNeXsUTe9C5rJvQC
+	 szql7EjMVei1Z9XsITfSqNPTQ5DHroWVXFXj7sayWWXcPENjuSbLS8/BvnfOJdZqIR
+	 iSrEuXNzTpcGxle6o0wBaNJpbDCwCfzxsl376KdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	linux-kernel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Dave Chinner <dchinner@redhat.com>,
-	Dave Chinner <david@fromorbit.com>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.1 575/591] xfs: fix xfs_inodegc_stop racing with mod_delayed_work
-Date: Sun, 16 Jul 2023 21:51:54 +0200
-Message-ID: <20230716194938.736731677@linuxfoundation.org>
+	John Hsu <John.Hsu@mediatek.com>,
+	linux-mm@kvack.org,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>
+Subject: [PATCH 6.1 576/591] mm/mmap: Fix extra maple tree write
+Date: Sun, 16 Jul 2023 21:51:55 +0200
+Message-ID: <20230716194938.761629385@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,183 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: "Liam R. Howlett" <Liam.Howlett@oracle.com>
 
-commit 2254a7396a0ca6309854948ee1c0a33fa4268cec upstream.
+based on commit 0503ea8f5ba73eb3ab13a81c1eefbaf51405385a upstream.
 
-syzbot reported this warning from the faux inodegc shrinker that tries
-to kick off inodegc work:
+This was inadvertently fixed during the removal of __vma_adjust().
 
-------------[ cut here ]------------
-WARNING: CPU: 1 PID: 102 at kernel/workqueue.c:1445 __queue_work+0xd44/0x1120 kernel/workqueue.c:1444
-RIP: 0010:__queue_work+0xd44/0x1120 kernel/workqueue.c:1444
-Call Trace:
- __queue_delayed_work+0x1c8/0x270 kernel/workqueue.c:1672
- mod_delayed_work_on+0xe1/0x220 kernel/workqueue.c:1746
- xfs_inodegc_shrinker_scan fs/xfs/xfs_icache.c:2212 [inline]
- xfs_inodegc_shrinker_scan+0x250/0x4f0 fs/xfs/xfs_icache.c:2191
- do_shrink_slab+0x428/0xaa0 mm/vmscan.c:853
- shrink_slab+0x175/0x660 mm/vmscan.c:1013
- shrink_one+0x502/0x810 mm/vmscan.c:5343
- shrink_many mm/vmscan.c:5394 [inline]
- lru_gen_shrink_node mm/vmscan.c:5511 [inline]
- shrink_node+0x2064/0x35f0 mm/vmscan.c:6459
- kswapd_shrink_node mm/vmscan.c:7262 [inline]
- balance_pgdat+0xa02/0x1ac0 mm/vmscan.c:7452
- kswapd+0x677/0xd60 mm/vmscan.c:7712
- kthread+0x2e8/0x3a0 kernel/kthread.c:376
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
+When __vma_adjust() is adjusting next with a negative value (pushing
+vma->vm_end lower), there would be two writes to the maple tree.  The
+first write is unnecessary and uses all allocated nodes in the maple
+state.  The second write is necessary but will need to allocate nodes
+since the first write has used the allocated nodes.  This may be a
+problem as it may not be safe to allocate at this time, such as a low
+memory situation.  Fix the issue by avoiding the first write and only
+write the adjusted "next" VMA.
 
-This warning corresponds to this code in __queue_work:
-
-	/*
-	 * For a draining wq, only works from the same workqueue are
-	 * allowed. The __WQ_DESTROYING helps to spot the issue that
-	 * queues a new work item to a wq after destroy_workqueue(wq).
-	 */
-	if (unlikely(wq->flags & (__WQ_DESTROYING | __WQ_DRAINING) &&
-		     WARN_ON_ONCE(!is_chained_work(wq))))
-		return;
-
-For this to trip, we must have a thread draining the inodedgc workqueue
-and a second thread trying to queue inodegc work to that workqueue.
-This can happen if freezing or a ro remount race with reclaim poking our
-faux inodegc shrinker and another thread dropping an unlinked O_RDONLY
-file:
-
-Thread 0	Thread 1	Thread 2
-
-xfs_inodegc_stop
-
-				xfs_inodegc_shrinker_scan
-				xfs_is_inodegc_enabled
-				<yes, will continue>
-
-xfs_clear_inodegc_enabled
-xfs_inodegc_queue_all
-<list empty, do not queue inodegc worker>
-
-		xfs_inodegc_queue
-		<add to list>
-		xfs_is_inodegc_enabled
-		<no, returns>
-
-drain_workqueue
-<set WQ_DRAINING>
-
-				llist_empty
-				<no, will queue list>
-				mod_delayed_work_on(..., 0)
-				__queue_work
-				<sees WQ_DRAINING, kaboom>
-
-In other words, everything between the access to inodegc_enabled state
-and the decision to poke the inodegc workqueue requires some kind of
-coordination to avoid the WQ_DRAINING state.  We could perhaps introduce
-a lock here, but we could also try to eliminate WQ_DRAINING from the
-picture.
-
-We could replace the drain_workqueue call with a loop that flushes the
-workqueue and queues workers as long as there is at least one inode
-present in the per-cpu inodegc llists.  We've disabled inodegc at this
-point, so we know that the number of queued inodes will eventually hit
-zero as long as xfs_inodegc_start cannot reactivate the workers.
-
-There are four callers of xfs_inodegc_start.  Three of them come from the
-VFS with s_umount held: filesystem thawing, failed filesystem freezing,
-and the rw remount transition.  The fourth caller is mounting rw (no
-remount or freezing possible).
-
-There are three callers ofs xfs_inodegc_stop.  One is unmounting (no
-remount or thaw possible).  Two of them come from the VFS with s_umount
-held: fs freezing and ro remount transition.
-
-Hence, it is correct to replace the drain_workqueue call with a loop
-that drains the inodegc llists.
-
-Fixes: 6191cf3ad59f ("xfs: flush inodegc workqueue tasks before cancel")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
-Signed-off-by: Dave Chinner <david@fromorbit.com>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
+Reported-by: John Hsu <John.Hsu@mediatek.com>
+Link: https://lore.kernel.org/lkml/9cb8c599b1d7f9c1c300d1a334d5eb70ec4d7357.camel@mediatek.com/
+Cc: stable@vger.kernel.org
+Cc: linux-mm@kvack.org
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_icache.c |   32 +++++++++++++++++++++++++++-----
- 1 file changed, 27 insertions(+), 5 deletions(-)
+ mm/mmap.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_icache.c
-+++ b/fs/xfs/xfs_icache.c
-@@ -431,18 +431,23 @@ xfs_iget_check_free_state(
- }
- 
- /* Make all pending inactivation work start immediately. */
--static void
-+static bool
- xfs_inodegc_queue_all(
- 	struct xfs_mount	*mp)
- {
- 	struct xfs_inodegc	*gc;
- 	int			cpu;
-+	bool			ret = false;
- 
- 	for_each_online_cpu(cpu) {
- 		gc = per_cpu_ptr(mp->m_inodegc, cpu);
--		if (!llist_empty(&gc->list))
-+		if (!llist_empty(&gc->list)) {
- 			mod_delayed_work_on(cpu, mp->m_inodegc_wq, &gc->work, 0);
-+			ret = true;
-+		}
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -767,7 +767,8 @@ int __vma_adjust(struct vm_area_struct *
  	}
-+
-+	return ret;
- }
- 
- /*
-@@ -1894,24 +1899,41 @@ xfs_inodegc_flush(
- 
- /*
-  * Flush all the pending work and then disable the inode inactivation background
-- * workers and wait for them to stop.
-+ * workers and wait for them to stop.  Caller must hold sb->s_umount to
-+ * coordinate changes in the inodegc_enabled state.
-  */
- void
- xfs_inodegc_stop(
- 	struct xfs_mount	*mp)
- {
-+	bool			rerun;
-+
- 	if (!xfs_clear_inodegc_enabled(mp))
- 		return;
- 
-+	/*
-+	 * Drain all pending inodegc work, including inodes that could be
-+	 * queued by racing xfs_inodegc_queue or xfs_inodegc_shrinker_scan
-+	 * threads that sample the inodegc state just prior to us clearing it.
-+	 * The inodegc flag state prevents new threads from queuing more
-+	 * inodes, so we queue pending work items and flush the workqueue until
-+	 * all inodegc lists are empty.  IOWs, we cannot use drain_workqueue
-+	 * here because it does not allow other unserialized mechanisms to
-+	 * reschedule inodegc work while this draining is in progress.
-+	 */
- 	xfs_inodegc_queue_all(mp);
--	drain_workqueue(mp->m_inodegc_wq);
-+	do {
-+		flush_workqueue(mp->m_inodegc_wq);
-+		rerun = xfs_inodegc_queue_all(mp);
-+	} while (rerun);
- 
- 	trace_xfs_inodegc_stop(mp, __return_address);
- }
- 
- /*
-  * Enable the inode inactivation background workers and schedule deferred inode
-- * inactivation work if there is any.
-+ * inactivation work if there is any.  Caller must hold sb->s_umount to
-+ * coordinate changes in the inodegc_enabled state.
-  */
- void
- xfs_inodegc_start(
+ 	if (end != vma->vm_end) {
+ 		if (vma->vm_end > end) {
+-			if (!insert || (insert->vm_start != end)) {
++			if ((vma->vm_end + adjust_next != end) &&
++			    (!insert || (insert->vm_start != end))) {
+ 				vma_mas_szero(&mas, end, vma->vm_end);
+ 				mas_reset(&mas);
+ 				VM_WARN_ON(insert &&
 
 
