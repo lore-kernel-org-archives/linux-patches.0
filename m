@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9398F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:10:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62E87C433C7;
-	Sun, 16 Jul 2023 20:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C4E8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:10:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1CFC433C8;
+	Sun, 16 Jul 2023 20:10:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538219;
-	bh=pet4bQ96FU+mO67pXG+SxTj6XWoxXYI0iWQ4UlqGX0o=;
+	s=korg; t=1689538222;
+	bh=JJ0HmW8b+19dY/qbpyRFzjTaGbi1t7XWabwtuZLT5d0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YgAkgZ4JdhoTSHmVGRxjr9ocN9ESz36Ebj8JJuasErAIZuZEAzvp4BlPGtHes+wwt
-	 CDtAN6h/x66E6zujk6fq01wJFRL3mMLT7Eujp5sg24cwtQWRoOJE5LjUoRm5zssqOM
-	 cghTfg8kKOpgoLEsD9NZ6MADWekl9nz8xZAnT1og=
+	b=D4MCtyc+B0ZbSgal7OMWGwE22+u2lKepAqy4vuStJ2nBY33cgD925xVH3a+FdRRzG
+	 JIp4uY3tjBQ0rXAGNOxcw7Pz3S6B1H1tEbQS3HgD78WCnoEXHOspWr0xHKZb12LJ2M
+	 QBVjyDkKZv8h+Mcjk1BifkDahCymBC/2x2Z17k1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Chia-I Wu <olvaffe@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	David Heidelberg <david@ixit.cz>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 373/800] amdgpu: validate offset_in_bo of drm_amdgpu_gem_va
-Date: Sun, 16 Jul 2023 21:43:46 +0200
-Message-ID: <20230716194957.738485308@linuxfoundation.org>
+Subject: [PATCH 6.4 374/800] drm/msm/a6xx: dont set IO_PGTABLE_QUIRK_ARM_OUTER_WBWA with coherent SMMU
+Date: Sun, 16 Jul 2023 21:43:47 +0200
+Message-ID: <20230716194957.761329011@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,68 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chia-I Wu <olvaffe@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 9f0bcf49e9895cb005d78b33a5eebfa11711b425 ]
+[ Upstream commit 38e27a6fbf2206b18417c5985dbcdeca0f2026b8 ]
 
-This is motivated by OOB access in amdgpu_vm_update_range when
-offset_in_bo+map_size overflows.
+If the Adreno SMMU is dma-coherent, allocation will fail unless we
+disable IO_PGTABLE_QUIRK_ARM_OUTER_WBWA. Skip setting this quirk for the
+coherent SMMUs (like we have on sm8350 platform).
 
-v2: keep the validations in amdgpu_vm_bo_map
-v3: add the validations to amdgpu_vm_bo_map/amdgpu_vm_bo_replace_map
-    rather than to amdgpu_gem_va_ioctl
-
-Fixes: 9f7eb5367d00 ("drm/amdgpu: actually use the VM map parameters")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 54af0ceb7595 ("arm64: dts: qcom: sm8350: add GPU, GMU, GPU CC and SMMU nodes")
+Reported-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: David Heidelberg <david@ixit.cz>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org> # SM8450 HDK
+Patchwork: https://patchwork.freedesktop.org/patch/531562/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-index 5b3a70becbdf4..90605938e8951 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -1433,14 +1433,14 @@ int amdgpu_vm_bo_map(struct amdgpu_device *adev,
- 	uint64_t eaddr;
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 52da3795b175d..411b7a5fa2f32 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1744,7 +1744,8 @@ a6xx_create_address_space(struct msm_gpu *gpu, struct platform_device *pdev)
+ 	 * This allows GPU to set the bus attributes required to use system
+ 	 * cache on behalf of the iommu page table walker.
+ 	 */
+-	if (!IS_ERR_OR_NULL(a6xx_gpu->htw_llc_slice))
++	if (!IS_ERR_OR_NULL(a6xx_gpu->htw_llc_slice) &&
++	    !device_iommu_capable(&pdev->dev, IOMMU_CAP_CACHE_COHERENCY))
+ 		quirks |= IO_PGTABLE_QUIRK_ARM_OUTER_WBWA;
  
- 	/* validate the parameters */
--	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK ||
--	    size == 0 || size & ~PAGE_MASK)
-+	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK || size & ~PAGE_MASK)
-+		return -EINVAL;
-+	if (saddr + size <= saddr || offset + size <= offset)
- 		return -EINVAL;
- 
- 	/* make sure object fit at this offset */
- 	eaddr = saddr + size - 1;
--	if (saddr >= eaddr ||
--	    (bo && offset + size > amdgpu_bo_size(bo)) ||
-+	if ((bo && offset + size > amdgpu_bo_size(bo)) ||
- 	    (eaddr >= adev->vm_manager.max_pfn << AMDGPU_GPU_PAGE_SHIFT))
- 		return -EINVAL;
- 
-@@ -1499,14 +1499,14 @@ int amdgpu_vm_bo_replace_map(struct amdgpu_device *adev,
- 	int r;
- 
- 	/* validate the parameters */
--	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK ||
--	    size == 0 || size & ~PAGE_MASK)
-+	if (saddr & ~PAGE_MASK || offset & ~PAGE_MASK || size & ~PAGE_MASK)
-+		return -EINVAL;
-+	if (saddr + size <= saddr || offset + size <= offset)
- 		return -EINVAL;
- 
- 	/* make sure object fit at this offset */
- 	eaddr = saddr + size - 1;
--	if (saddr >= eaddr ||
--	    (bo && offset + size > amdgpu_bo_size(bo)) ||
-+	if ((bo && offset + size > amdgpu_bo_size(bo)) ||
- 	    (eaddr >= adev->vm_manager.max_pfn << AMDGPU_GPU_PAGE_SHIFT))
- 		return -EINVAL;
- 
+ 	return adreno_iommu_create_address_space(gpu, pdev, quirks);
 -- 
 2.39.2
 
