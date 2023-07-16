@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C6A8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:52:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09692C433C7;
-	Sun, 16 Jul 2023 20:52:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5168D8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:52:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C70D9C433C8;
+	Sun, 16 Jul 2023 20:52:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540765;
-	bh=FOQOEFcuSzgNjGAZPn1nOWIwBt3ImZzTz39Bmy7khPM=;
+	s=korg; t=1689540768;
+	bh=dvmDkkIMjAbvuS8dX0ytcHnRr3MbbRjea2lElvc+UJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qsbNRu1NSWDqXoQOsDsnAjJKdyvQHWBeCUjf+ZVnKfzu6RkU6kQrmIizHaReJu80n
-	 MAIdar7uyIbttwxg5sHmYEiwIaRdnpvVtIBduXXRbteH5AwWtaxuUMsAQFZgV2kr0Z
-	 S9yezfkCUdDyoOFpfRSbjAtDPd9KhZYXjsbLP62Y=
+	b=E1RcOByHbvwHk9GD72UkOXHSih5zSquqHVFdXNsmLQEubPlIKNj2Mn+PjmLB6MXCh
+	 +xlgR+szJe4eMD3TU+kmGJ6O4oXDkNNhK32avfBQLCD1oD2X6NtiESGKXPYKOOgk46
+	 hVHY5RUeqbwPK5FE120uiRBjBYlOf929ye/VaPuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tobias Heider <me@tobhe.de>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 479/591] net: dsa: tag_sja1105: always prefer source port information from INCL_SRCPT
-Date: Sun, 16 Jul 2023 21:50:18 +0200
-Message-ID: <20230716194936.294304138@linuxfoundation.org>
+Subject: [PATCH 6.1 480/591] Add MODULE_FIRMWARE() for FIRMWARE_TG357766.
+Date: Sun, 16 Jul 2023 21:50:19 +0200
+Message-ID: <20230716194936.319130057@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,101 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Tobias Heider <me@tobhe.de>
 
-[ Upstream commit c1ae02d876898b1b8ca1e12c6f84d7b406263800 ]
+[ Upstream commit 046f753da6143ee16452966915087ec8b0de3c70 ]
 
-Currently the sja1105 tagging protocol prefers using the source port
-information from the VLAN header if that is available, falling back to
-the INCL_SRCPT option if it isn't. The VLAN header is available for all
-frames except for META frames initiated by the switch (containing RX
-timestamps), and thus, the "if (is_link_local)" branch is practically
-dead.
+Fixes a bug where on the M1 mac mini initramfs-tools fails to
+include the necessary firmware into the initrd.
 
-The tag_8021q source port identification has become more loose
-("imprecise") and will report a plausible rather than exact bridge port,
-when under a bridge (be it VLAN-aware or VLAN-unaware). But link-local
-traffic always needs to know the precise source port. With incorrect
-source port reporting, for example PTP traffic over 2 bridged ports will
-all be seen on sockets opened on the first such port, which is incorrect.
-
-Now that the tagging protocol has been changed to make link-local frames
-always contain source port information, we can reverse the order of the
-checks so that we always give precedence to that information (which is
-always precise) in lieu of the tag_8021q VID which is only precise for a
-standalone port.
-
-Fixes: d7f9787a763f ("net: dsa: tag_8021q: add support for imprecise RX based on the VBID")
-Fixes: 91495f21fcec ("net: dsa: tag_8021q: replace the SVL bridging with VLAN-unaware IVL bridging")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: c4dab50697ff ("tg3: Download 57766 EEE service patch firmware")
+Signed-off-by: Tobias Heider <me@tobhe.de>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://lore.kernel.org/r/ZJt7LKzjdz8+dClx@tobhe.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dsa/tag_sja1105.c | 38 +++++++++++++++++++++++++++++---------
- 1 file changed, 29 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/dsa/tag_sja1105.c b/net/dsa/tag_sja1105.c
-index 1a85125bda6da..731dc3a111ef3 100644
---- a/net/dsa/tag_sja1105.c
-+++ b/net/dsa/tag_sja1105.c
-@@ -540,10 +540,7 @@ static struct sk_buff *sja1105_rcv(struct sk_buff *skb,
- 	is_link_local = sja1105_is_link_local(skb);
- 	is_meta = sja1105_is_meta_frame(skb);
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index af9ea5e4371b3..9609041016776 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -224,6 +224,7 @@ MODULE_AUTHOR("David S. Miller (davem@redhat.com) and Jeff Garzik (jgarzik@pobox
+ MODULE_DESCRIPTION("Broadcom Tigon3 ethernet driver");
+ MODULE_LICENSE("GPL");
+ MODULE_FIRMWARE(FIRMWARE_TG3);
++MODULE_FIRMWARE(FIRMWARE_TG357766);
+ MODULE_FIRMWARE(FIRMWARE_TG3TSO);
+ MODULE_FIRMWARE(FIRMWARE_TG3TSO5);
  
--	if (sja1105_skb_has_tag_8021q(skb)) {
--		/* Normal traffic path. */
--		sja1105_vlan_rcv(skb, &source_port, &switch_id, &vbid, &vid);
--	} else if (is_link_local) {
-+	if (is_link_local) {
- 		/* Management traffic path. Switch embeds the switch ID and
- 		 * port ID into bytes of the destination MAC, courtesy of
- 		 * the incl_srcpt options.
-@@ -557,16 +554,39 @@ static struct sk_buff *sja1105_rcv(struct sk_buff *skb,
- 		sja1105_meta_unpack(skb, &meta);
- 		source_port = meta.source_port;
- 		switch_id = meta.switch_id;
--	} else {
-+	}
-+
-+	/* Normal data plane traffic and link-local frames are tagged with
-+	 * a tag_8021q VLAN which we have to strip
-+	 */
-+	if (sja1105_skb_has_tag_8021q(skb)) {
-+		int tmp_source_port = -1, tmp_switch_id = -1;
-+
-+		sja1105_vlan_rcv(skb, &tmp_source_port, &tmp_switch_id, &vbid,
-+				 &vid);
-+		/* Preserve the source information from the INCL_SRCPT option,
-+		 * if available. This allows us to not overwrite a valid source
-+		 * port and switch ID with zeroes when receiving link-local
-+		 * frames from a VLAN-unaware bridged port (non-zero vbid) or a
-+		 * VLAN-aware bridged port (non-zero vid).
-+		 */
-+		if (source_port == -1)
-+			source_port = tmp_source_port;
-+		if (switch_id == -1)
-+			switch_id = tmp_switch_id;
-+	} else if (source_port == -1 && switch_id == -1) {
-+		/* Packets with no source information have no chance of
-+		 * getting accepted, drop them straight away.
-+		 */
- 		return NULL;
- 	}
- 
--	if (vbid >= 1)
-+	if (source_port != -1 && switch_id != -1)
-+		skb->dev = dsa_master_find_slave(netdev, switch_id, source_port);
-+	else if (vbid >= 1)
- 		skb->dev = dsa_tag_8021q_find_port_by_vbid(netdev, vbid);
--	else if (source_port == -1 || switch_id == -1)
--		skb->dev = dsa_find_designated_bridge_port_by_vid(netdev, vid);
- 	else
--		skb->dev = dsa_master_find_slave(netdev, switch_id, source_port);
-+		skb->dev = dsa_find_designated_bridge_port_by_vid(netdev, vid);
- 	if (!skb->dev) {
- 		netdev_warn(netdev, "Couldn't decode source port\n");
- 		return NULL;
 -- 
 2.39.2
 
