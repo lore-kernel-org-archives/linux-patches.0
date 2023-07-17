@@ -1,153 +1,90 @@
-Received: from mail.netfilter.org (mail.netfilter.org [217.70.188.207])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA1EAA927
-	for <patches@lists.linux.dev>; Mon, 17 Jul 2023 10:10:02 +0000 (UTC)
-Date: Mon, 17 Jul 2023 12:02:07 +0200
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AABEA94B
+	for <patches@lists.linux.dev>; Mon, 17 Jul 2023 11:19:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+  t=1689592798; x=1721128798;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Agv739FsKb/t4lRY/iTsFiStP+D83yl/GQ08JzH9gl8=;
+  b=TBZF7OLGrjuh3hMct7zunT4iosPttcX+C/HUo6dT6Qx2z0eXYRd4wLJY
+   5XUYk+uipch29+d41pQ+IEEQMd3896tU60jd7Ot5XA2Ke3ki/b/4fYVWK
+   dk2kdL/JBUeBQVmiedh226b8032ZOA7RxbyKP/saY8s8LjpJfW23RJ2ug
+   WWhXv7u16afeRswkp/EkrjAP5GFQnZJQ95bSESpR0Q0yuSjuHsG/1WHsu
+   9SIckO/+0cXAy+dH9LsR3rnO68MkzedvABxJ9uzbYMlxsQBOG0JbbLVev
+   xstKD2H4Y9b9U7S/VM7VaNXrOXjGhak2IxP/vKSe3/Kh3MTFk1IcHsri2
+   A==;
+X-IronPort-AV: E=Sophos;i="6.01,211,1684825200"; 
+   d="asc'?scan'208";a="235937339"
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
+  by esa1.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 17 Jul 2023 04:18:47 -0700
+Received: from chn-vm-ex02.mchp-main.com (10.10.87.72) by
+ chn-vm-ex02.mchp-main.com (10.10.87.72) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.21; Mon, 17 Jul 2023 04:18:47 -0700
+Received: from wendy (10.10.115.15) by chn-vm-ex02.mchp-main.com
+ (10.10.85.144) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21 via Frontend
+ Transport; Mon, 17 Jul 2023 04:18:44 -0700
+Date: Mon, 17 Jul 2023 12:18:11 +0100
+From: Conor Dooley <conor.dooley@microchip.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>,
-	Florian Westphal <fw@strlen.de>
-Subject: Re: [PATCH 6.1 587/591] netfilter: nf_tables: do not ignore genmask
- when looking up chain by id
-Message-ID: <ZLURnzHumJDX5N0F@calendula>
+CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
+	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
+	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
+	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
+	<srw@sladewatkins.net>, <rwarsow@gmx.de>, <conor@kernel.org>
+Subject: Re: [PATCH 6.1 000/591] 6.1.39-rc1 review
+Message-ID: <20230717-irritant-daily-7eb1e398ae8b@wendy>
 References: <20230716194923.861634455@linuxfoundation.org>
- <20230716194939.039111086@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="GmTatSP0oHOhqa/V"
 Content-Disposition: inline
-In-Reply-To: <20230716194939.039111086@linuxfoundation.org>
+In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 
-Hi Greg,
+--GmTatSP0oHOhqa/V
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Sun, Jul 16, 2023 at 09:52:06PM +0200, Greg Kroah-Hartman wrote:
-> From: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
-> 
-> commit 515ad530795c118f012539ed76d02bacfd426d89 upstream.
+Hey,
 
-You can cherry-pick this commit to:
+On Sun, Jul 16, 2023 at 09:42:19PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.39 release.
+> There are 591 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-- 5.15.y
-- 5.10.y
+Fails to build w/ clang on RISC-V:
+block/blk-cgroup.c:1238:6: error: variable 'ret' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
 
-Just tested here and it is good, no hunks are reported.
+Guenter already pointed out the culprit.
 
-Thanks.
+Other than that,
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
 
-> When adding a rule to a chain referring to its ID, if that chain had been
-> deleted on the same batch, the rule might end up referring to a deleted
-> chain.
-> 
-> This will lead to a WARNING like following:
-> 
-> [   33.098431] ------------[ cut here ]------------
-> [   33.098678] WARNING: CPU: 5 PID: 69 at net/netfilter/nf_tables_api.c:2037 nf_tables_chain_destroy+0x23d/0x260
-> [   33.099217] Modules linked in:
-> [   33.099388] CPU: 5 PID: 69 Comm: kworker/5:1 Not tainted 6.4.0+ #409
-> [   33.099726] Workqueue: events nf_tables_trans_destroy_work
-> [   33.100018] RIP: 0010:nf_tables_chain_destroy+0x23d/0x260
-> [   33.100306] Code: 8b 7c 24 68 e8 64 9c ed fe 4c 89 e7 e8 5c 9c ed fe 48 83 c4 08 5b 41 5c 41 5d 41 5e 41 5f 5d 31 c0 89 c6 89 c7 c3 cc cc cc cc <0f> 0b 48 83 c4 08 5b 41 5c 41 5d 41 5e 41 5f 5d 31 c0 89 c6 89 c7
-> [   33.101271] RSP: 0018:ffffc900004ffc48 EFLAGS: 00010202
-> [   33.101546] RAX: 0000000000000001 RBX: ffff888006fc0a28 RCX: 0000000000000000
-> [   33.101920] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-> [   33.102649] RBP: ffffc900004ffc78 R08: 0000000000000000 R09: 0000000000000000
-> [   33.103018] R10: 0000000000000000 R11: 0000000000000000 R12: ffff8880135ef500
-> [   33.103385] R13: 0000000000000000 R14: dead000000000122 R15: ffff888006fc0a10
-> [   33.103762] FS:  0000000000000000(0000) GS:ffff888024c80000(0000) knlGS:0000000000000000
-> [   33.104184] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> [   33.104493] CR2: 00007fe863b56a50 CR3: 00000000124b0001 CR4: 0000000000770ee0
-> [   33.104872] PKRU: 55555554
-> [   33.104999] Call Trace:
-> [   33.105113]  <TASK>
-> [   33.105214]  ? show_regs+0x72/0x90
-> [   33.105371]  ? __warn+0xa5/0x210
-> [   33.105520]  ? nf_tables_chain_destroy+0x23d/0x260
-> [   33.105732]  ? report_bug+0x1f2/0x200
-> [   33.105902]  ? handle_bug+0x46/0x90
-> [   33.106546]  ? exc_invalid_op+0x19/0x50
-> [   33.106762]  ? asm_exc_invalid_op+0x1b/0x20
-> [   33.106995]  ? nf_tables_chain_destroy+0x23d/0x260
-> [   33.107249]  ? nf_tables_chain_destroy+0x30/0x260
-> [   33.107506]  nf_tables_trans_destroy_work+0x669/0x680
-> [   33.107782]  ? mark_held_locks+0x28/0xa0
-> [   33.107996]  ? __pfx_nf_tables_trans_destroy_work+0x10/0x10
-> [   33.108294]  ? _raw_spin_unlock_irq+0x28/0x70
-> [   33.108538]  process_one_work+0x68c/0xb70
-> [   33.108755]  ? lock_acquire+0x17f/0x420
-> [   33.108977]  ? __pfx_process_one_work+0x10/0x10
-> [   33.109218]  ? do_raw_spin_lock+0x128/0x1d0
-> [   33.109435]  ? _raw_spin_lock_irq+0x71/0x80
-> [   33.109634]  worker_thread+0x2bd/0x700
-> [   33.109817]  ? __pfx_worker_thread+0x10/0x10
-> [   33.110254]  kthread+0x18b/0x1d0
-> [   33.110410]  ? __pfx_kthread+0x10/0x10
-> [   33.110581]  ret_from_fork+0x29/0x50
-> [   33.110757]  </TASK>
-> [   33.110866] irq event stamp: 1651
-> [   33.111017] hardirqs last  enabled at (1659): [<ffffffffa206a209>] __up_console_sem+0x79/0xa0
-> [   33.111379] hardirqs last disabled at (1666): [<ffffffffa206a1ee>] __up_console_sem+0x5e/0xa0
-> [   33.111740] softirqs last  enabled at (1616): [<ffffffffa1f5d40e>] __irq_exit_rcu+0x9e/0xe0
-> [   33.112094] softirqs last disabled at (1367): [<ffffffffa1f5d40e>] __irq_exit_rcu+0x9e/0xe0
-> [   33.112453] ---[ end trace 0000000000000000 ]---
-> 
-> This is due to the nft_chain_lookup_byid ignoring the genmask. After this
-> change, adding the new rule will fail as it will not find the chain.
-> 
-> Fixes: 837830a4b439 ("netfilter: nf_tables: add NFTA_RULE_CHAIN_ID attribute")
-> Cc: stable@vger.kernel.org
-> Reported-by: Mingi Cho of Theori working with ZDI
-> Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
-> Reviewed-by: Florian Westphal <fw@strlen.de>
-> Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->  net/netfilter/nf_tables_api.c |   11 +++++++----
->  1 file changed, 7 insertions(+), 4 deletions(-)
-> 
-> --- a/net/netfilter/nf_tables_api.c
-> +++ b/net/netfilter/nf_tables_api.c
-> @@ -2628,7 +2628,7 @@ err:
->  
->  static struct nft_chain *nft_chain_lookup_byid(const struct net *net,
->  					       const struct nft_table *table,
-> -					       const struct nlattr *nla)
-> +					       const struct nlattr *nla, u8 genmask)
->  {
->  	struct nftables_pernet *nft_net = nft_pernet(net);
->  	u32 id = ntohl(nla_get_be32(nla));
-> @@ -2639,7 +2639,8 @@ static struct nft_chain *nft_chain_looku
->  
->  		if (trans->msg_type == NFT_MSG_NEWCHAIN &&
->  		    chain->table == table &&
-> -		    id == nft_trans_chain_id(trans))
-> +		    id == nft_trans_chain_id(trans) &&
-> +		    nft_active_genmask(chain, genmask))
->  			return chain;
->  	}
->  	return ERR_PTR(-ENOENT);
-> @@ -3629,7 +3630,8 @@ static int nf_tables_newrule(struct sk_b
->  			return -EOPNOTSUPP;
->  
->  	} else if (nla[NFTA_RULE_CHAIN_ID]) {
-> -		chain = nft_chain_lookup_byid(net, table, nla[NFTA_RULE_CHAIN_ID]);
-> +		chain = nft_chain_lookup_byid(net, table, nla[NFTA_RULE_CHAIN_ID],
-> +					      genmask);
->  		if (IS_ERR(chain)) {
->  			NL_SET_BAD_ATTR(extack, nla[NFTA_RULE_CHAIN_ID]);
->  			return PTR_ERR(chain);
-> @@ -10137,7 +10139,8 @@ static int nft_verdict_init(const struct
->  						 genmask);
->  		} else if (tb[NFTA_VERDICT_CHAIN_ID]) {
->  			chain = nft_chain_lookup_byid(ctx->net, ctx->table,
-> -						      tb[NFTA_VERDICT_CHAIN_ID]);
-> +						      tb[NFTA_VERDICT_CHAIN_ID],
-> +						      genmask);
->  			if (IS_ERR(chain))
->  				return PTR_ERR(chain);
->  		} else {
-> 
-> 
+Thanks,
+Conor.
+
+--GmTatSP0oHOhqa/V
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZLUjcwAKCRB4tDGHoIJi
+0joBAP4mOChOU9drzaBU3WQ6oLYYDe/AZHnrBdiPXkn403OAawEAhURGaXFiU+6M
+MYJzOb6fedutcQ7upIa8+Gv7KCOg2gY=
+=C8TV
+-----END PGP SIGNATURE-----
+
+--GmTatSP0oHOhqa/V--
