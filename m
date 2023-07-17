@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5E71878
-	for <patches@lists.linux.dev>; Mon, 17 Jul 2023 17:10:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72EDC433C8;
-	Mon, 17 Jul 2023 17:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D6E1FD7
+	for <patches@lists.linux.dev>; Mon, 17 Jul 2023 17:24:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147CEC433CB;
+	Mon, 17 Jul 2023 17:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689613819;
-	bh=z2vzLydecjU2OYGpMchMuMhs//ZntnTizbXwVeEWhc0=;
+	s=korg; t=1689614685;
+	bh=eKvWRw2XtpYNOht9yXs2yAvYu/XhiCso30jY/pgjAAA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UnD6OY3XGKvN8SlGxezgxN8zsBMbgZq4i2tvUDSWq7PDbJvWBShoxHFqDG6MezFx3
-	 Hkf065B3o0lbJ4D19g1FuC0dWqvAvJRV1XvyQu/5EHAFwTQVHE6DsBsr4Ub5ICEkg7
-	 NPdkNQRPqFSBGy7ECqG/j201s0OMv2ezqqWJVhpI=
-Date: Mon, 17 Jul 2023 19:10:16 +0200
+	b=cyGXct3/nL7GHmbWqrzVVaJI77QnQaJdq7XtmFJEA+rgr2JQxWB2fL5LuebsxeMpb
+	 L4Wukwc9i/Ga3xZ260o7a955/MdCcpZrxAqPRW5g87USog3u4jSi6qjZAAib02IoWD
+	 8FO/0AsNmy/wdH0ww+psl8KLwVtG2w7T/kZjImWE=
+Date: Mon, 17 Jul 2023 19:24:42 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Chuck Lever III <chuck.lever@oracle.com>
-Cc: Sasha Levin <sashal@kernel.org>, linux-stable <stable@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	Jakub Kacinski <kuba@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: Re: [PATCH 6.4 118/800] net/handshake: Unpin sock->file if a
- handshake is cancelled
-Message-ID: <2023071733-eligibly-altitude-4050@gregkh>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 6.4 000/800] 6.4.4-rc1 review
+Message-ID: <2023071736-fiber-recipient-61b0@gregkh>
 References: <20230716194949.099592437@linuxfoundation.org>
- <20230716194951.848894569@linuxfoundation.org>
- <6B82BD28-1891-499A-8721-1567612EF553@oracle.com>
+ <6e31d62f-21b0-874b-a2e2-3c74a0b587c0@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -33,78 +33,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6B82BD28-1891-499A-8721-1567612EF553@oracle.com>
+In-Reply-To: <6e31d62f-21b0-874b-a2e2-3c74a0b587c0@roeck-us.net>
 
-On Sun, Jul 16, 2023 at 08:43:58PM +0000, Chuck Lever III wrote:
-> 
-> 
-> > On Jul 16, 2023, at 3:39 PM, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Mon, Jul 17, 2023 at 06:37:37AM -0700, Guenter Roeck wrote:
+> On 7/16/23 12:37, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.4.4 release.
+> > There are 800 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > > 
-> > From: Chuck Lever <chuck.lever@oracle.com>
-> > 
-> > [ Upstream commit f921bd41001ccff2249f5f443f2917f7ef937daf ]
-> > 
-> > If user space never calls DONE, sock->file's reference count remains
-> > elevated. Enable sock->file to be freed eventually in this case.
-> > 
-> > Reported-by: Jakub Kacinski <kuba@kernel.org>
-> > Fixes: 3b3009ea8abb ("net/handshake: Create a NETLINK service for handling handshake requests")
-> > Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-> > Signed-off-by: David S. Miller <davem@davemloft.net>
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > ---
-> > net/handshake/handshake.h | 1 +
-> > net/handshake/request.c   | 4 ++++
-> > 2 files changed, 5 insertions(+)
-> > 
-> > diff --git a/net/handshake/handshake.h b/net/handshake/handshake.h
-> > index 4dac965c99df0..8aeaadca844fd 100644
-> > --- a/net/handshake/handshake.h
-> > +++ b/net/handshake/handshake.h
-> > @@ -31,6 +31,7 @@ struct handshake_req {
-> > struct list_head hr_list;
-> > struct rhash_head hr_rhash;
-> > unsigned long hr_flags;
-> > + struct file *hr_file;
-> > const struct handshake_proto *hr_proto;
-> > struct sock *hr_sk;
-> > void (*hr_odestruct)(struct sock *sk);
-> > diff --git a/net/handshake/request.c b/net/handshake/request.c
-> > index 94d5cef3e048b..d78d41abb3d99 100644
-> > --- a/net/handshake/request.c
-> > +++ b/net/handshake/request.c
-> > @@ -239,6 +239,7 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
-> > }
-> > req->hr_odestruct = req->hr_sk->sk_destruct;
-> > req->hr_sk->sk_destruct = handshake_sk_destruct;
-> > + req->hr_file = sock->file;
-> > 
-> > ret = -EOPNOTSUPP;
-> > net = sock_net(req->hr_sk);
-> > @@ -334,6 +335,9 @@ bool handshake_req_cancel(struct sock *sk)
-> > return false;
-> > }
-> > 
-> > + /* Request accepted and waiting for DONE */
-> > + fput(req->hr_file);
-> > +
-> > out_true:
-> > trace_handshake_cancel(net, req, sk);
-> > 
-> > -- 
-> > 2.39.2
-> > 
-> > 
+> > Responses should be made by Tue, 18 Jul 2023 19:48:07 +0000.
+> > Anything received after that time might be too late.
 > > 
 > 
-> Don't take this one. It's fixed by a later commit:
+> As I had already reported:
 > 
-> 361b6889ae636926cdff517add240c3c8e24593a
+> Building mips:allmodconfig ... failed
+> --------------
+> Error log:
+> arch/mips/boot/dts/ingenic/ci20.dts:242.19-247.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/DCDC1: Reference to non-existent node or label "vcc_33v"
+> arch/mips/boot/dts/ingenic/ci20.dts:248.18-253.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/DCDC2: Reference to non-existent node or label "vcc_33v"
+> arch/mips/boot/dts/ingenic/ci20.dts:254.18-259.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/DCDC3: Reference to non-existent node or label "vcc_33v"
+> arch/mips/boot/dts/ingenic/ci20.dts:265.17-270.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/LDO5: Reference to non-existent node or label "vcc_33v"
+> arch/mips/boot/dts/ingenic/ci20.dts:271.18-276.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/LDO6: Reference to non-existent node or label "vcc_33v"
+> arch/mips/boot/dts/ingenic/ci20.dts:277.20-282.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/LDO7: Reference to non-existent node or label "vcc_33v"
+> arch/mips/boot/dts/ingenic/ci20.dts:283.20-288.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/LDO8: Reference to non-existent node or label "vcc_33v"
+> ERROR: Input tree has errors, aborting (use -f to force output)
+> make[3]: [scripts/Makefile.lib:419: arch/mips/boot/dts/ingenic/ci20.dtb] Error 2 (ignored)
+> arch/mips/boot/dts/ingenic/ci20.dts:242.19-247.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/DCDC1: Reference to non-existent node or label "vcc_33v"
+> arch/mips/boot/dts/ingenic/ci20.dts:248.18-253.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/DCDC2: Reference to non-existent node or label "vcc_33v"
+> arch/mips/boot/dts/ingenic/ci20.dts:254.18-259.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/DCDC3: Reference to non-existent node or label "vcc_33v"
+> arch/mips/boot/dts/ingenic/ci20.dts:265.17-270.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/LDO5: Reference to non-existent node or label "vcc_33v"
+> arch/mips/boot/dts/ingenic/ci20.dts:271.18-276.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/LDO6: Reference to non-existent node or label "vcc_33v"
+> arch/mips/boot/dts/ingenic/ci20.dts:277.20-282.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/LDO7: Reference to non-existent node or label "vcc_33v"
+> arch/mips/boot/dts/ingenic/ci20.dts:283.20-288.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/LDO8: Reference to non-existent node or label "vcc_33v"
+> ERROR: Input tree has errors, aborting (use -f to force output)
+> make[4]: [scripts/Makefile.lib:419: arch/mips/boot/dts/ingenic/ci20.dtb] Error 2 (ignored)
 > 
-> that reverts it.
+> This is the same error as reported for 6.3.13-rc3, introduced with "MIPS: DTS:
+> CI20: Add parent supplies to ACT8600 regulators" which uses vcc_33v without
+> introducing it (it was introduced with commit c9f4b25272843).
 
-How?  That commit is in 6.4 already, yet this commit, is from 6.5-rc1.
+Ah, ick, sorry, I tried to fix this up but I applied a different "fix".
+I'll go drop this one, and the "fix up" patch as well and push out a
+-rc2 soon.
 
-confused,
+thanks,
 
 greg k-h
