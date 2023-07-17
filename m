@@ -1,102 +1,105 @@
-Received: from progateway7-pub.mail.pro1.eigbox.com (gproxy5-pub.mail.unifiedlayer.com [67.222.38.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B73A92C
-	for <patches@lists.linux.dev>; Mon, 17 Jul 2023 11:51:25 +0000 (UTC)
-Received: from cmgw11.mail.unifiedlayer.com (unknown [10.0.90.126])
-	by progateway7.mail.pro1.eigbox.com (Postfix) with ESMTP id 45C4F10042F80
-	for <patches@lists.linux.dev>; Mon, 17 Jul 2023 11:51:19 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id LMl5qX5ngnxiuLMl5qm2dG; Mon, 17 Jul 2023 11:51:19 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=NLcQR22g c=1 sm=1 tr=0 ts=64b52b37
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10:nop_charset_1 a=ws7JD89P4LkA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=89RRq+ra4BlON9EVwqnKJekcTY/ywsBHb8kUotYEHaM=; b=M8rgweEsg4ZJuXQ/b37H8GxiN3
-	Ouv+jfef+BirAmbKr4GYdUl+kEZbanHx5wOYVGHeIu441jgleJlaREZqJYrrXXOwHZRwssvKP7PDm
-	8Me9y4doQkpG95sQrPTrK0vGB5BpPAySKHsYxGPyZYUYXBMIGzTrQWq8kZjESfYtocZ8FD0Xfc1NM
-	relcFpcFn63sStz8nTmftBKFcFyFG0BQqEIq1XANQ/fBRQJmiW3Nj9A+zrh7ky0/Wb67IThgGi9Mz
-	ES5En4yRlksb/FpOp+g4FZMFplSVV/UsuK488Biy13EpFwmRevvFVeC1p+bGIeD8kWnJHoQqJG8VA
-	9c/Mb1yw==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:48204 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96)
-	(envelope-from <re@w6rz.net>)
-	id 1qLMl3-002GPL-2a;
-	Mon, 17 Jul 2023 05:51:17 -0600
-Subject: Re: [PATCH 6.4 000/800] 6.4.4-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org
-References: <20230716194949.099592437@linuxfoundation.org>
-In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <7aad5565-2134-e050-927f-9f5a62dd05f6@w6rz.net>
-Date: Mon, 17 Jul 2023 04:51:15 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366678F7D
+	for <patches@lists.linux.dev>; Mon, 17 Jul 2023 13:37:39 +0000 (UTC)
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-6682909acadso2896443b3a.3
+        for <patches@lists.linux.dev>; Mon, 17 Jul 2023 06:37:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689601059; x=1692193059;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:sender
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OI/Xw9Oicm1E8Ha3XK2fs7XQtbSia/OTSUWNe+imDac=;
+        b=LbMijjLqkqmTy7jFt/n0fblCOEIiLfEIVCD572knoSJ0e373Ejrqs8JnFW/cFqHT54
+         ienXb/kLLFGNIlG7xMXxVXpSHBL8i+443V1lgAW/8I0CSAgn3J72zgO5xpWMpjW6kQbK
+         sPBxsboQ1NCi1ZAp+ZHbY16Ae1k2DX7lVW3RmwCFwdzsBVMZHyaTYcV2mFN0SgKbEXrZ
+         W5LNN3Ny0G/qng58yZhKGpylh3bxjkhHzNpJ8dj/xEuUeC7hJrIZzMuCicTTDRDaqHJ1
+         YRC2mjSkYvoIce2PFkrqXiautPcEhLr2NxQr69XeK22HALpiVmuI0HLEM8gZu8Z/QbEP
+         qe6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689601059; x=1692193059;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OI/Xw9Oicm1E8Ha3XK2fs7XQtbSia/OTSUWNe+imDac=;
+        b=cGHMtda/cChfwU6nwGyRRAMze2WJVOer44lZa0WwShUVy4i2bprOW/xLJFQWBMBZl6
+         mRT8LmlUlpRTkOmqVPMZP5jBnnSlWGfDymFcHWLSH8+Q6y8sMb9LvvBvJfZnTm37o46z
+         uIhw/hZkrGvAW5xlo8llaJP13i/5zbt33cYMW0p0gorpHmqVtsAq3p5fOeUVvH1j3fZX
+         voUa1Bjkyy7eyxieAKH7YWb56ywk2249KkEeabqlOhErOE7v0Wy6TbJZyzQ0wecxDYlS
+         7VKXasz1ATWdDFRm/s9L7HIiEEiJRAcX4mICZ4Z1cIw7czcrAHuKYEeVT4lHyVX9Cp+g
+         mzEQ==
+X-Gm-Message-State: ABy/qLYFuGIaibU28CZFtpHo3Hc9tRyInCNTxYASH6TUz5Iz3QD4mQNp
+	lhdKAkt4+YYamkkdZsv1dS8=
+X-Google-Smtp-Source: APBJJlF2SrL7/3Qh/n/vEQoz7ob2kbKIvFUB8Uep1MfYD53kuHoWJwVwcgrr+ndE16iyNyZhrDJltg==
+X-Received: by 2002:a05:6a00:10c6:b0:63b:5c82:e209 with SMTP id d6-20020a056a0010c600b0063b5c82e209mr12258518pfu.10.1689601059435;
+        Mon, 17 Jul 2023 06:37:39 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id u22-20020aa78396000000b0068285a7f107sm12305636pfm.177.2023.07.17.06.37.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Jul 2023 06:37:38 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <6e31d62f-21b0-874b-a2e2-3c74a0b587c0@roeck-us.net>
+Date: Mon, 17 Jul 2023 06:37:37 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
 Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1qLMl3-002GPL-2a
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:48204
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+References: <20230716194949.099592437@linuxfoundation.org>
+From: Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH 6.4 000/800] 6.4.4-rc1 review
+In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 7/16/23 12:37 PM, Greg Kroah-Hartman wrote:
+On 7/16/23 12:37, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.4.4 release.
 > There are 800 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Tue, 18 Jul 2023 19:48:07 +0000.
 > Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.4-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+> 
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+As I had already reported:
 
-Tested-by: Ron Economos <re@w6rz.net>
+Building mips:allmodconfig ... failed
+--------------
+Error log:
+arch/mips/boot/dts/ingenic/ci20.dts:242.19-247.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/DCDC1: Reference to non-existent node or label "vcc_33v"
+arch/mips/boot/dts/ingenic/ci20.dts:248.18-253.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/DCDC2: Reference to non-existent node or label "vcc_33v"
+arch/mips/boot/dts/ingenic/ci20.dts:254.18-259.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/DCDC3: Reference to non-existent node or label "vcc_33v"
+arch/mips/boot/dts/ingenic/ci20.dts:265.17-270.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/LDO5: Reference to non-existent node or label "vcc_33v"
+arch/mips/boot/dts/ingenic/ci20.dts:271.18-276.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/LDO6: Reference to non-existent node or label "vcc_33v"
+arch/mips/boot/dts/ingenic/ci20.dts:277.20-282.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/LDO7: Reference to non-existent node or label "vcc_33v"
+arch/mips/boot/dts/ingenic/ci20.dts:283.20-288.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/LDO8: Reference to non-existent node or label "vcc_33v"
+ERROR: Input tree has errors, aborting (use -f to force output)
+make[3]: [scripts/Makefile.lib:419: arch/mips/boot/dts/ingenic/ci20.dtb] Error 2 (ignored)
+arch/mips/boot/dts/ingenic/ci20.dts:242.19-247.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/DCDC1: Reference to non-existent node or label "vcc_33v"
+arch/mips/boot/dts/ingenic/ci20.dts:248.18-253.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/DCDC2: Reference to non-existent node or label "vcc_33v"
+arch/mips/boot/dts/ingenic/ci20.dts:254.18-259.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/DCDC3: Reference to non-existent node or label "vcc_33v"
+arch/mips/boot/dts/ingenic/ci20.dts:265.17-270.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/LDO5: Reference to non-existent node or label "vcc_33v"
+arch/mips/boot/dts/ingenic/ci20.dts:271.18-276.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/LDO6: Reference to non-existent node or label "vcc_33v"
+arch/mips/boot/dts/ingenic/ci20.dts:277.20-282.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/LDO7: Reference to non-existent node or label "vcc_33v"
+arch/mips/boot/dts/ingenic/ci20.dts:283.20-288.6: ERROR (phandle_references): /i2c@10050000/act8600@5a/regulators/LDO8: Reference to non-existent node or label "vcc_33v"
+ERROR: Input tree has errors, aborting (use -f to force output)
+make[4]: [scripts/Makefile.lib:419: arch/mips/boot/dts/ingenic/ci20.dtb] Error 2 (ignored)
+
+This is the same error as reported for 6.3.13-rc3, introduced with "MIPS: DTS:
+CI20: Add parent supplies to ACT8600 regulators" which uses vcc_33v without
+introducing it (it was introduced with commit c9f4b25272843).
+
+Guenter
 
