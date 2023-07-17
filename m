@@ -1,94 +1,110 @@
-Received: from mail-ed1-f74.google.com (mail-ed1-f74.google.com [209.85.208.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14CC253B0
-	for <patches@lists.linux.dev>; Mon, 17 Jul 2023 14:49:08 +0000 (UTC)
-Received: by mail-ed1-f74.google.com with SMTP id 4fb4d7f45d1cf-51e278a3a2dso3090021a12.3
-        for <patches@lists.linux.dev>; Mon, 17 Jul 2023 07:49:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1689605346; x=1690210146;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y4JVBrFfRISuz38C6eY0UVY6Fr1oXZLiDCBYqS66fUc=;
-        b=AFwtAUXxavdRcfXLXYjDr6Bt17+SrIPjz+6ScXk60mtDaQqym9R7hOYdKRSyg1C/eL
-         8RqQu41wCmuPobt0EURwT3lf8WeRo+4T/6KlMl6uicp8STNfAqIw+jlG/bVjt/dElIaq
-         5LYptw3ZflWJoBKeaXw/OEhCIuedWjfikP1iuThYZ9X+cYYJWmmQEBUR3hEroy7TpK62
-         5ZZiJymHTJlsQfBeA38wCTu5BI1DaBTAxqbt2CD5jdNbsWHtQQ70hc/mQJvcvPsKmMiy
-         14fcRNSshM8RVD5zJb1/hL2SF1iu5agIePDfmWwxe9Ct7PqRfJH/AKklhp9F+uriNJr+
-         2/RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689605346; x=1690210146;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y4JVBrFfRISuz38C6eY0UVY6Fr1oXZLiDCBYqS66fUc=;
-        b=gW5BqW0H7spbvBBnkCJGWakguXPkNHDPDaYdx7yD/7x7wiy2EsXxkUiU90hmKLEtXg
-         diCRvvY6gORhsHxBqvoGxcMMBQsTPRyYxmbw10oxRhx0vzgjX7OOYZWRAVWR+5YPu73M
-         b7X84U0uR/8DAqoZJ3jNcz1sMgS46q2yUnWH1DoAOSwmz+lwUFog36fyAOd9jVCFa7kO
-         1PHfYJbG3dNiZoxyn0ALKvN+vrMxk1o01bM2FxmRAr4w9ukd6u+/q8Q8IkY9DtxWEOwY
-         zs52SNlKGf26DmKNp9IckmHw/acUxKXxkN2p1bgUOYTU/aHOZRL/gkrUoHvNnIB+nNUu
-         1WPw==
-X-Gm-Message-State: ABy/qLZyLbPpNZT0Ske5ubXA/EqNzygtydvCtAY5TiRrVNTNOyws5oij
-	Env9MieJ0HUpqba4eL8IBIk4P7o+6L1WHdg=
-X-Google-Smtp-Source: APBJJlF/KCpsCV/2YIFa7djpxohGDinVuI+bknFgmFlVcG4ErNHMdBT/lnGY7RXpwPOaaurI0nnc+/OpNijt8O4=
-X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a50:9f6e:0:b0:50b:c4b5:bb77 with SMTP id
- b101-20020a509f6e000000b0050bc4b5bb77mr67283edf.1.1689605346438; Mon, 17 Jul
- 2023 07:49:06 -0700 (PDT)
-Date: Mon, 17 Jul 2023 14:49:04 +0000
-In-Reply-To: <vyrVN334oIXneb9VWievGpPTOCy0irxvoG-mDR0sQX5-xN-TL2Hngl0cl_XrVUwjDB3rXkXfR9Mdjy_no6fzhe4yIf_c7xpKa5OURt43k9c=@proton.me>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5E71878
+	for <patches@lists.linux.dev>; Mon, 17 Jul 2023 17:10:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72EDC433C8;
+	Mon, 17 Jul 2023 17:10:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1689613819;
+	bh=z2vzLydecjU2OYGpMchMuMhs//ZntnTizbXwVeEWhc0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=UnD6OY3XGKvN8SlGxezgxN8zsBMbgZq4i2tvUDSWq7PDbJvWBShoxHFqDG6MezFx3
+	 Hkf065B3o0lbJ4D19g1FuC0dWqvAvJRV1XvyQu/5EHAFwTQVHE6DsBsr4Ub5ICEkg7
+	 NPdkNQRPqFSBGy7ECqG/j201s0OMv2ezqqWJVhpI=
+Date: Mon, 17 Jul 2023 19:10:16 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Chuck Lever III <chuck.lever@oracle.com>
+Cc: Sasha Levin <sashal@kernel.org>, linux-stable <stable@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	Jakub Kacinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: Re: [PATCH 6.4 118/800] net/handshake: Unpin sock->file if a
+ handshake is cancelled
+Message-ID: <2023071733-eligibly-altitude-4050@gregkh>
+References: <20230716194949.099592437@linuxfoundation.org>
+ <20230716194951.848894569@linuxfoundation.org>
+ <6B82BD28-1891-499A-8721-1567612EF553@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <vyrVN334oIXneb9VWievGpPTOCy0irxvoG-mDR0sQX5-xN-TL2Hngl0cl_XrVUwjDB3rXkXfR9Mdjy_no6fzhe4yIf_c7xpKa5OURt43k9c=@proton.me>
-X-Mailer: git-send-email 2.41.0.255.g8b1d071c50-goog
-Message-ID: <20230717144904.1857663-1-aliceryhl@google.com>
-Subject: Re: [PATCH v3 6/9] rust: workqueue: add helper for defining
- work_struct fields
-From: Alice Ryhl <aliceryhl@google.com>
-To: benno.lossin@proton.me
-Cc: alex.gaynor@gmail.com, aliceryhl@google.com, bjorn3_gh@protonmail.com, 
-	boqun.feng@gmail.com, gary@garyguo.net, jiangshanlai@gmail.com, 
-	linux-kernel@vger.kernel.org, ojeda@kernel.org, patches@lists.linux.dev, 
-	rust-for-linux@vger.kernel.org, tj@kernel.org, wedsonaf@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6B82BD28-1891-499A-8721-1567612EF553@oracle.com>
 
-Benno Lossin <benno.lossin@proton.me> writes:
->> +/// Links for a work item.
->> +///
->> +/// This struct contains a function pointer to the `run` function from the [`WorkItemPointer`]
->> +/// trait, and defines the linked list pointers necessary to enqueue a work item in a workqueue.
->> +///
->> +/// Wraps the kernel's C `struct work_struct`.
->> +///
->> +/// This is a helper type used to associate a `work_struct` with the [`WorkItem`] that uses it.
->> +#[repr(transparent)]
->> +pub struct Work<T: ?Sized, const ID: u64 = 0> {
->> +    work: Opaque<bindings::work_struct>,
->> +    _inner: PhantomData<T>,
->
-> Should this really be `PhantomData<T>`? Are you dropping `T`s in the 
-> destructor of `Work<T>`? I do not think so `PhantomData<fn() -> Box<T>>`
-> should do the trick.
-
-Hmm. The `work_struct` effectively has a field of type `fn(T::Pointer)`,
-so arguably, that's the type that should be used for the `PhantomData`.
-This makes `Work` contravariant instead.
-
-That said, the type `T` is going to be the struct itself, so, for
-example, a `MyStruct<'a>` might have a `&'a i32` and a
-`Work<MyStruct<'a>>` field, so it ends up being invariant.
-
-By that argument, perhaps we should just make `Work` invariant instead?
-We can do that with `PhantomData<*mut T>`.
-
->> +pub unsafe trait HasWork<T, const ID: u64 = 0> {
+On Sun, Jul 16, 2023 at 08:43:58PM +0000, Chuck Lever III wrote:
 > 
-> Is there a reason that `T` is `Sized` here?
+> 
+> > On Jul 16, 2023, at 3:39 PM, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> > 
+> > From: Chuck Lever <chuck.lever@oracle.com>
+> > 
+> > [ Upstream commit f921bd41001ccff2249f5f443f2917f7ef937daf ]
+> > 
+> > If user space never calls DONE, sock->file's reference count remains
+> > elevated. Enable sock->file to be freed eventually in this case.
+> > 
+> > Reported-by: Jakub Kacinski <kuba@kernel.org>
+> > Fixes: 3b3009ea8abb ("net/handshake: Create a NETLINK service for handling handshake requests")
+> > Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+> > Signed-off-by: David S. Miller <davem@davemloft.net>
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > ---
+> > net/handshake/handshake.h | 1 +
+> > net/handshake/request.c   | 4 ++++
+> > 2 files changed, 5 insertions(+)
+> > 
+> > diff --git a/net/handshake/handshake.h b/net/handshake/handshake.h
+> > index 4dac965c99df0..8aeaadca844fd 100644
+> > --- a/net/handshake/handshake.h
+> > +++ b/net/handshake/handshake.h
+> > @@ -31,6 +31,7 @@ struct handshake_req {
+> > struct list_head hr_list;
+> > struct rhash_head hr_rhash;
+> > unsigned long hr_flags;
+> > + struct file *hr_file;
+> > const struct handshake_proto *hr_proto;
+> > struct sock *hr_sk;
+> > void (*hr_odestruct)(struct sock *sk);
+> > diff --git a/net/handshake/request.c b/net/handshake/request.c
+> > index 94d5cef3e048b..d78d41abb3d99 100644
+> > --- a/net/handshake/request.c
+> > +++ b/net/handshake/request.c
+> > @@ -239,6 +239,7 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
+> > }
+> > req->hr_odestruct = req->hr_sk->sk_destruct;
+> > req->hr_sk->sk_destruct = handshake_sk_destruct;
+> > + req->hr_file = sock->file;
+> > 
+> > ret = -EOPNOTSUPP;
+> > net = sock_net(req->hr_sk);
+> > @@ -334,6 +335,9 @@ bool handshake_req_cancel(struct sock *sk)
+> > return false;
+> > }
+> > 
+> > + /* Request accepted and waiting for DONE */
+> > + fput(req->hr_file);
+> > +
+> > out_true:
+> > trace_handshake_cancel(net, req, sk);
+> > 
+> > -- 
+> > 2.39.2
+> > 
+> > 
+> > 
+> 
+> Don't take this one. It's fixed by a later commit:
+> 
+> 361b6889ae636926cdff517add240c3c8e24593a
+> 
+> that reverts it.
 
-Hmm, that's an oversight. In v1 of this patchset, the Sized requirement
-was correct since T was the pointer type, but now it isn't anymore.
+How?  That commit is in 6.4 already, yet this commit, is from 6.5-rc1.
 
-Alice
+confused,
+
+greg k-h
