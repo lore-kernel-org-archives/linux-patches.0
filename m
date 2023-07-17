@@ -1,73 +1,86 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4699456
-	for <patches@lists.linux.dev>; Mon, 17 Jul 2023 08:02:02 +0000 (UTC)
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-991f956fb5aso528494066b.0
-        for <patches@lists.linux.dev>; Mon, 17 Jul 2023 01:02:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689580920; x=1692172920;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Md2k3SrB9PFNNZtXw1D5bjJvxlmODL3oFcv29rGU+0w=;
-        b=Tj9ESHlAIEY5Ok+t1+UQEqgXZpFohXw53hftfkkBeDtkJIo0nBvLvFnisMxq5Rj2iQ
-         8PdNEnjyaoS3UOEi9nMjIifEQFGggbFY24svukX5rnVJOCICfNyxM2s59REzz8UWfsIp
-         ZawCt/JduBAq7tD9sQFEtpyhZCVMxmJef/ARUOi/5XgDoiiri8ZVk3Ooe/THn+zFXcTM
-         z4EiPvrbE/5ScWF5My9n5UAxbY+/u23lKTRQJM9dJ7+ItLjDQcSZkrc1jpUqsaxNIZmm
-         zG/iJhwiSZQr96qBLHcF2SeD/Hsp4E00qsw5D1bKsKirfD/yPzGiMrlGRgYG+Tvf2j6d
-         BgYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689580920; x=1692172920;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Md2k3SrB9PFNNZtXw1D5bjJvxlmODL3oFcv29rGU+0w=;
-        b=kysSqEozzFohlGL+RFakrGHo9EPULOApHbg7DQsjcfzKgM5EcI9uknmDUspX8DKsgX
-         03RCdu6OdH5YuzAYKD7OvNwnLf0Z/MLD8CId4hmF7Evqpn56xnhxlzlXBTYuTkuMbzF+
-         QFoaRqT6U1sRIGUp2QqJsyeaU5TvNiWjY0M/Fhm56Czoa+6/4if88Ib23yH4ybuESdoG
-         Y0tWY1SuhkOSAn5UMpeCZF3ImxYw3lLbzzt5ce33EM7cKAwSb8aNW+O1zE8C8sY/JC9H
-         m0UZL521ATDIlLn23zxjbeLbVvNfGU0MzU/tC8iEow9b9Vslnj65luPGxU6vF50XyCXi
-         lC/Q==
-X-Gm-Message-State: ABy/qLYb2K9CqOpIGfLpXSG0XheVyCPyF/Dc5DPvCe4ffY7UZw3vL5dN
-	nqIrr7gt6gKlnqCn89MjgYF10Z6eeWN+zJylbiA=
-X-Google-Smtp-Source: APBJJlHZQRmdkq0uytrbJpI4dB8Hr+FJMXkrPe3TaMiMWBSlVina9KNg9TPqxFql3z1+rKwkjMtlLgZZSjtgMCU/25g=
-X-Received: by 2002:a17:906:20d6:b0:994:4e9c:30c6 with SMTP id
- c22-20020a17090620d600b009944e9c30c6mr3743404ejc.57.1689580920270; Mon, 17
- Jul 2023 01:02:00 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550D5946D
+	for <patches@lists.linux.dev>; Mon, 17 Jul 2023 08:58:54 +0000 (UTC)
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 349421EC0D07;
+	Mon, 17 Jul 2023 10:58:47 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1689584327;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=kF/W+amDBG2o5DajPDMR3bUWIkTNTpEPwQF8fpDPL2g=;
+	b=K1lvRZU0Q6joX1WxiVMc4KY3MOdNF5HV5lxyL0AyfPuMDm4VsWIlqUZLx1jNyIzw9IT0Gg
+	1MuPMEUtULLxhWt/oMb7g9UblNK65mWSSzYY1yaikVD84HKJq8g7vINyJ/XbwKt5QAY3Wq
+	XIuArlnvKtyl9P1asiinm+Twr9ng1fU=
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id bc0QwP2YFfnS; Mon, 17 Jul 2023 08:58:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1689584324; bh=kF/W+amDBG2o5DajPDMR3bUWIkTNTpEPwQF8fpDPL2g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fR298Cre1+6wERBkTxJXDzLOUySa7lONCTAjiF1wD9KgiP9ggDJuSPjut8Vk+KAFo
+	 JRdEQV7dyNqvCf6/rn7pew9EgHSIa8MKVzBIjk21m52b7zJaL138hTAxi7TfHrvAix
+	 i6bnfpPhrEJSDpAKnuNF6EWwlRnWM7PwvOKJeswBtKmCSdl//6Iv+YFBkReuvQbk2X
+	 EjCnAzC1TQMEmnkSBmxfy5PZTRzNklOfNXCQejr3eavdSC4Qp5A7SJllDtCPxiUO93
+	 w4AkXWEqkZYQ5UduAaeNmYhZMThpJRf80ckur1C4IZPh/9mHVJK8MkJcn8NWKlCtJ6
+	 G6rxlcUm+Xyn3kdmotleU3nMHTik9HcnGfLeBXyLu2k7zd9e6L5vTSRaP+N8JvAMBG
+	 m09q5Zsa34QRkBWqHLJv/HIOBPXbvP9l/v04XQ4pY442ZV0vBDkah5dIFAV10XHEoU
+	 WvV/nzFPnnJfkFRUoTD7ZfCcuwo2nMlGTQlU+r1PSszoBej857GKEpOJ9xgfmw433z
+	 mMR33TC+t+OhJfQdMq2GXCIyoMEahXFe1y+QFPQ5p7HCwCgNvUulbY+RLFxI1E2jBZ
+	 pTBhx4SomIZeNBdkX8N+esbSjFBsl8TX/mT+mYEtpm1fBQl7DX4v8kbMfz0Z3R3irI
+	 KYopiexJa59hZaTUPZ1HdLco=
+Received: from zn.tnic (pd9530d32.dip0.t-ipconnect.de [217.83.13.50])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 4E50D40E0033;
+	Mon, 17 Jul 2023 08:58:36 +0000 (UTC)
+Date: Mon, 17 Jul 2023 10:58:30 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: "Luck, Tony" <tony.luck@intel.com>
+Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Smita.KoralahalliChannabasappa@amd.com" <Smita.KoralahalliChannabasappa@amd.com>,
+	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
+	"x86@kernel.org" <x86@kernel.org>,
+	"linux-edac@vger.kernel.org" <linux-edac@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [PATCH v6 2/4] x86/mce: Add per-bank CMCI storm mitigation
+Message-ID: <20230717085830.GAZLUCtnXOFyZONLXU@fat_crate.local>
+References: <20230411173841.70491-1-tony.luck@intel.com>
+ <20230616182744.17632-1-tony.luck@intel.com>
+ <20230616182744.17632-3-tony.luck@intel.com>
+ <20230623120904.GAZJWLYMP0XxIr5k7s@fat_crate.local>
+ <SJ1PR11MB6083EA4CED8706C77622AAF2FC23A@SJ1PR11MB6083.namprd11.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <b99a5149-c3d6-2a9b-1298-576a1b4b22c1@gmail.com> <0206e2ce-ff33-6017-15ab-cc89f1eb7485@augustwikerfors.se>
-In-Reply-To: <0206e2ce-ff33-6017-15ab-cc89f1eb7485@augustwikerfors.se>
-From: Nils Kruse <nilskruse97@gmail.com>
-Date: Mon, 17 Jul 2023 10:01:49 +0200
-Message-ID: <CAKVFSw+_EFNaYjOjNDQ0zOGoSFMt3yZctR47Rcss2KhkfNQJ9g@mail.gmail.com>
-Subject: Re: [PATCH] nvme-pci: Add quirk for Samsung PM9B1 256G and 512G SSD
-To: August Wikerfors <git@augustwikerfors.se>
-Cc: stable@vger.kernel.org, Keith Busch <kbusch@kernel.org>, Jens Axboe <axboe@fb.com>, 
-	Christoph Hellwig <hch@lst.de>, Sagi Grimberg <sagi@grimberg.me>, linux-nvme@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <SJ1PR11MB6083EA4CED8706C77622AAF2FC23A@SJ1PR11MB6083.namprd11.prod.outlook.com>
 
-On Sun, Jul 16, 2023 at 9:30=E2=80=AFPM August Wikerfors <git@augustwikerfo=
-rs.se> wrote:
->
-> On 2023-06-11 13:41, Nils Kruse wrote:
-> > Add a quirk for Samsung PM9B1 256G and 512G that reports duplicate ids
-> > for disk.
->
-> Is this the same issue with suspend as [1], [2] and [3] or is it a
-> different case?
->
-> [1] https://lore.kernel.org/all/20221116171727.4083-1-git@augustwikerfors=
-.se/t/
-> [2] https://github.com/tomsom/yoga-linux/issues/9
-> [3] https://lore.kernel.org/all/d0ce0f3b-9407-9207-73a4-3536f0948653@augu=
-stwikerfors.se/
+On Fri, Jun 23, 2023 at 03:40:25PM +0000, Luck, Tony wrote:
+> I'll wait for you to finish this analysis before I spin up v7 of the series.
 
-Yes, this is the same issue.
+You can go ahead and do the Intel side only:
+
+https://lore.kernel.org/r/04c921ad-e651-e1fc-a3bd-8c40a77a4ea8@amd.com, at the end.
+
+Thx.
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
