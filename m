@@ -1,99 +1,139 @@
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D50C2C4
-	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 16:55:45 +0000 (UTC)
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-4fbf09a9139so9568899e87.2
-        for <patches@lists.linux.dev>; Tue, 18 Jul 2023 09:55:45 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F776C2C4
+	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 16:58:10 +0000 (UTC)
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2b703caf344so87762361fa.1
+        for <patches@lists.linux.dev>; Tue, 18 Jul 2023 09:58:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689699343; x=1692291343;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=JIndIIsHZdBsI82FGjgzN3aCzq+aMlyvKWLxj8Qz9aY=;
-        b=VpfD2xPGeXFrsUMOAFJrtVhv3f8Z4MZm+RaTMwv/z5vZScyldkBj2GVf/WaYsoW2pE
-         /bgiT+HYhcwyL9cXsqG+mLf3HK6QDpBzj0fTR42+nQYKuOOknGenF2kMWY+pBJ9FtWOR
-         ABc7beAtrkMBlykXcwniKtnS34psSo9tgz/Ed2EC4maPoF7Jl1XUJQVxRyBfbi4KqTWm
-         i040rAkjbcN6gFgsY8q76yYw0ykmGxPMwmmXLojHyhyxQxODbEng/S2D4F1bI0zQyC+w
-         cfqgbRLbFZu43RFERcW6WEI6hTByCarCIqk8zw/K5xOWVcUAmTPRlb5jx801Cq9L/89G
-         KB+w==
+        d=gmail.com; s=20221208; t=1689699489; x=1692291489;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :feedback-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=piv6yKOZr5H8L6Z/MbrhVqXE/T2un3gN3bixhhcUgIQ=;
+        b=sLfjoWtxXgfmoCM5uzN+QiAV7s5rvyuzl0uF1pmtgPoTK3sCb2Lg4bDEZBGyqBlmpE
+         arbksOOJ6sSphZBdsJqH9NBXCDYADqXDtveYunhtiv2SYLJ5dAZINEEco98eiY3kqqLU
+         11PLXOgsJwCPx2/Bn4Q2molGMAH1Z2YdiLXWUyNfAP+MFKRXp5oopBaboPTFTLuryl7z
+         9kAjnHQww6CHF/rP5Wte/mtC9466XO7FoJlg6qzgt5GLrE4wlwQsSmRqUBCljeL/dzoq
+         q4gP7MITlAp84eNr8F/ZzvO3iciZhmTSFJqaVEaZVDZv3/qCJwb+B3vdhU4bVTir96Mh
+         WvYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689699343; x=1692291343;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1689699489; x=1692291489;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :feedback-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=JIndIIsHZdBsI82FGjgzN3aCzq+aMlyvKWLxj8Qz9aY=;
-        b=hm/Z19ztQzdbHWZvDAlx9C7GjdM9EwCzEJkPv2QZqc1KdkMfpebn/eagf7mn+unWiS
-         1xIyTemQsXgA6lU+kZt60jbUNPbKn3av2v2ertWLSWuf7RDtEQV4C7pt5S38bLO+hD5S
-         /MRceWeufLpQ1k+JWCE8u3728ugmU5QeQZoaH5CwRFQ9BKnnQKBdojF29q9R8oa2wknp
-         NnzScSHul8DUlCtQ5xv+LjQIp7PjWZf0NltAJVCTOaHa1JS0hXtwIKdyNvMb59Kq/or9
-         HaDCaN+7RgHMfVhx93Hl6TM5lCyFBRAirMZdLU+vhUl7scw/GoEh482ARv4vxiBIKMhl
-         vUfw==
-X-Gm-Message-State: ABy/qLY61geZPhP0XxlNT1hl6vOqvYoRBTn7vSTKdUqyRo4sHrkVjTKp
-	LNoeOEaN2gBHeQxm0rcqMzQL5LJXaJAb9JkuFxLwWQ==
-X-Google-Smtp-Source: APBJJlE2uBeZwHdgwglSOep4/2Gj6tnEJTFOcNjZ6zIc3XLIKjD4I3fOhnp1lMuSNDsRNLskn1riZiAySK+ngZ9ZOTM=
-X-Received: by 2002:ac2:5450:0:b0:4fb:8afa:4dc9 with SMTP id
- d16-20020ac25450000000b004fb8afa4dc9mr10304140lfn.49.1689699343057; Tue, 18
- Jul 2023 09:55:43 -0700 (PDT)
+        bh=piv6yKOZr5H8L6Z/MbrhVqXE/T2un3gN3bixhhcUgIQ=;
+        b=ItDWZ+cd7X+o5Fzmn0PurXbEx9TXDc0Hi39pWtBq1eo8NRi9JqG7sZblD/+YafFLtQ
+         1ZfSiYqw4B+AY5bF41DslNsFmlnru1lGqhQTt2f4iMwUOyuGijkstoSvL0UmsgEdaUrv
+         CsWbEvzA2ZLL3sMR/cuUxFnZL9GqbQkkWBmBdcsXj68X8Mn8oTSEhLJeB31MzfMW9C1O
+         587OtQolvxD951CP0BfzUhothve1e3cm1wtTOByW7vypPbtk2i+emJ6X5vNPy2D/vWvu
+         abeUUcDkWYANpss6R37sbaJI34GX/csUhdBhM8FZKMH9kGQc21nsnSddiyvRuvWRbFCG
+         R2BQ==
+X-Gm-Message-State: ABy/qLawJv3RiEkH0Au5+htA8fycaOOzVmffQsdjkX6oHpoHBA4+HsAj
+	cMAwAbkPEhlRPkJ2C9FTWRk=
+X-Google-Smtp-Source: APBJJlG5yyD8I8l6zeLQe93Zg8PVfJF/JTKVcMdHGj6BJR9ybouT9eDKpFSOEWA1LVLrxTx7lbfEdA==
+X-Received: by 2002:a2e:9643:0:b0:2b6:bb08:91c4 with SMTP id z3-20020a2e9643000000b002b6bb0891c4mr2392746ljh.42.1689699488508;
+        Tue, 18 Jul 2023 09:58:08 -0700 (PDT)
+Received: from auth2-smtp.messagingengine.com (auth2-smtp.messagingengine.com. [66.111.4.228])
+        by smtp.gmail.com with ESMTPSA id rp25-20020a170906d97900b009786ae9ed50sm1224355ejb.194.2023.07.18.09.58.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Jul 2023 09:58:07 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailauth.nyi.internal (Postfix) with ESMTP id 0F75427C0054;
+	Tue, 18 Jul 2023 12:58:06 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Tue, 18 Jul 2023 12:58:06 -0400
+X-ME-Sender: <xms:ncS2ZOoddD4MhECzZzMmALo3k_mSuMVLeqj8Iw6m9j9ofRCLZVDQ-g>
+    <xme:ncS2ZMoU_7FqoUBAZNS_Wa2ZBOItFbr7PmJYvyZmpoVQqJRCVcG_RQCZEgXmndIbS
+    Ph_cRRLjHjUkemqvg>
+X-ME-Received: <xmr:ncS2ZDOu4UPtZkmTvGLPwQd-2pY4aVidryZbJeIY1a2xxMwxlwJjNo9zGuw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrgeeggddutdefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggugfgjsehtkeortddttddunecuhfhrohhmpeeuohhq
+    uhhnucfhvghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrf
+    grthhtvghrnhepvdekueeuleeigfejffeiieefudejjeekkeejjefgfedvtdekfffgvdfh
+    uefghfetnecuffhomhgrihhnpehruhhsthdqfhhorhdqlhhinhhugidrtghomhdplhhptg
+    drvghvvghnthhspdihohhuthhusggvrdgtohhmpdhkrghnghhrvghjohhsrdgtohhmpdhk
+    vghrnhgvlhdrohhrghdpghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepsghoqhhunhdomhgvshhmthhprghuthhhphgv
+    rhhsohhnrghlihhthidqieelvdeghedtieegqddujeejkeehheehvddqsghoqhhunhdrfh
+    gvnhhgpeepghhmrghilhdrtghomhesfhhigihmvgdrnhgrmhgv
+X-ME-Proxy: <xmx:ncS2ZN5pgL-baAFhBQB5R8_BurpKGxSLmCpsqOUmx8kEkKIfIU14RA>
+    <xmx:ncS2ZN5LtkFr5RKnMGhGo7COHTaJO288OW1pDa-DF3rGYBdAYFe4pQ>
+    <xmx:ncS2ZNhdVrgVyU4fat3nOrD9zint1eAcL4fuFfqI9QRWfbRg5ch58w>
+    <xmx:nsS2ZKyR30zW5LJwXpSeJKWjkwySGO7ZRewaiemCvjrXrkAUTIbqgw>
+Feedback-ID: iad51458e:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 18 Jul 2023 12:58:04 -0400 (EDT)
+Date: Tue, 18 Jul 2023 09:58:01 -0700
+From: Boqun Feng <boqun.feng@gmail.com>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] MAINTAINERS: add Andreas Hindborg as Rust reviewer
+Message-ID: <ZLbEmdMcAjQUmOFF@boqun-archlinux>
+References: <20230718054426.1048583-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230717201547.359923764@linuxfoundation.org> <CA+G9fYujXH8J99m8ZKoijGhWJAS+r1SPqd8y+gB-B9DVjsgAzA@mail.gmail.com>
-In-Reply-To: <CA+G9fYujXH8J99m8ZKoijGhWJAS+r1SPqd8y+gB-B9DVjsgAzA@mail.gmail.com>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 18 Jul 2023 22:25:30 +0530
-Message-ID: <CA+G9fYuxBPbDbgyr+oo_5OJwwYO7c53zEXfJKA9doT7XJAFA-w@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/589] 6.1.39-rc3 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	Michal Luczaj <mhal@rbox.co>, Sean Christopherson <seanjc@google.com>, Aaron Lewis <aaronlewis@google.com>, 
-	Mark Brown <broonie@kernel.org>, Marc Zyngier <maz@kernel.org>, kvm list <kvm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230718054426.1048583-1-ojeda@kernel.org>
 
-On Tue, 18 Jul 2023 at 20:07, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
->
-> On Tue, 18 Jul 2023 at 02:04, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 6.1.39 release.
-> > There are 589 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Wed, 19 Jul 2023 20:14:46 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.39-rc3.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
->
->
-> As you know LKFT runs latest kselftests from stable 6.4 on
-> stable rc 6.1 branches and found two test failures on this
-> round of stable rc review 6.1.39-rc3 compared with 6.1.37.
->
-> Test regressions:
->
-> * bcm2711-rpi-4-b, kselftest-kvm
->   - kvm_get-reg-list
->
-> * x86, kselftest-kvm
->   - kvm_vmx_pmu_caps_test
+On Tue, Jul 18, 2023 at 07:44:25AM +0200, Miguel Ojeda wrote:
+> Andreas has been involved with the Rust for Linux project for more than
+> a year now. He has been primarily working on the Rust NVMe driver [1],
+> presenting it in several places (such as LPC [2][3] and Kangrejos [4]).
+> 
+> In addition, he recently submitted the Rust null block driver [5] and
+> has been reviewing patches in the mailing list for some months.
+> 
+> Thus add him to the `RUST` entry as reviewer.
+> 
+> Link: https://rust-for-linux.com/nvme-driver [1]
+> Link: https://lpc.events/event/16/contributions/1180/attachments/1017/1961/deck.pdf [2]
+> Link: https://www.youtube.com/watch?v=BwywU1MqW38 [3]
+> Link: https://kangrejos.com/A%20Linux%20(PCI)%20NVMe%20Driver%20in%20Rust.pdf [4]
+> Link: https://lore.kernel.org/rust-for-linux/20230503090708.2524310-1-nmi@metaspace.dk/ [5]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-These two test failures are not kernel regressions.
-However, these are due to latest kselftests on older kernels.
+Acked-by: Boqun Feng <boqun.feng@gmail.com>
 
-- Naresh
+Welcome!
+
+Regards,
+Boqun
+
+> ---
+>  MAINTAINERS | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 3be1bdfe8ecc..f2f0426258f3 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -18542,6 +18542,7 @@ R:	Boqun Feng <boqun.feng@gmail.com>
+>  R:	Gary Guo <gary@garyguo.net>
+>  R:	Björn Roy Baron <bjorn3_gh@protonmail.com>
+>  R:	Benno Lossin <benno.lossin@proton.me>
+> +R:	Andreas Hindborg <a.hindborg@samsung.com>
+>  L:	rust-for-linux@vger.kernel.org
+>  S:	Supported
+>  W:	https://github.com/Rust-for-Linux/linux
+> 
+> base-commit: 06c2afb862f9da8dc5efa4b6076a0e48c3fbaaa5
+> -- 
+> 2.41.0
+> 
