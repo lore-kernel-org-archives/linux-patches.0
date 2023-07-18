@@ -1,231 +1,103 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3079CD518
-	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 15:38:52 +0000 (UTC)
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-51ff0e3d8c1so7937733a12.0
-        for <patches@lists.linux.dev>; Tue, 18 Jul 2023 08:38:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689694731; x=1692286731;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eLioVgA1gUOrbornlU5isW1iy/mYKUMhb3XwnGxISqM=;
-        b=BzugDmWybXG2LrJG1qrtQETWyKAh9ufRsq+N1Zj8JniX0fCV7aqopO/5FPQ2KWaa1R
-         RK/H508Mym1XQBCtY0AEclIQ0hQJjA6OTMmtmbzfHkX6aNRkgaLbeEQvAHBUXSW0pyp8
-         u/aE6Epy5RO5a7j9oVVUKHIsGPvzvyPaREFlESg255uL2gHCotlyyfO0gQbYwXjJD/jR
-         htDUqhGhNAftoa6b5p5otcwcp/OQAaEju5qL9s3FKBsmNGchPaa3A9SZj2ZXvEqhYC/k
-         pxckryTPgj7u4wwCrC6wQM2piqV5tY/BXXDJkbyawzI2F0wgnMNiB+AKP904nDuOPPej
-         lsYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689694731; x=1692286731;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eLioVgA1gUOrbornlU5isW1iy/mYKUMhb3XwnGxISqM=;
-        b=iBhyA6OVQcYHvLUxrQDU51XPfyw6aNx9CU1vnqxsNlUi0elzeDJyv4T3HFNbDw/Xfv
-         pfADpMEQtq9sttFuVRq8xTennP9MFYskZpcntmgWU5fKyyM7kFvwSlH3mS1SxbUPR94j
-         PmgwSmw4ZwDEYU+3tm4XfwWjdjYTEXDiThF2VAnQT8kFpY0WimDbak3dl4WdBP0Mw/8l
-         p1cgr+XNNK4kQjcbV4YfP1nuRW1WHDn2mxHtZMfOthOb8i9dAnk4jFQvlNhZWT0jdECo
-         lgsXa9ZV76YiQewUftZ530AOarHDgLHg7nhzIy5N4ipbrOY+xLuWkujCdiKCcABM7otr
-         Y16g==
-X-Gm-Message-State: ABy/qLaPbjkKKzWfwsOq3+sOEkPq0v9a7tIGtXd2tpRp+7aVr9Wyxp6s
-	Tf2pI1eOspRadkNVUJpIoNcQ/HSO8N2I7FiO4IH4ig==
-X-Google-Smtp-Source: APBJJlEhaj4EMbuNXR+5V2FXW2eoMOaK2lG9dG/p2NP/RlQMJ2MU1iasTF1aYVc3PWjBSe6nvMN3ccShiGxt1LR6T5k=
-X-Received: by 2002:a05:6402:882:b0:51f:e92a:62ba with SMTP id
- e2-20020a056402088200b0051fe92a62bamr269135edy.9.1689694730940; Tue, 18 Jul
- 2023 08:38:50 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91FDC8CD
+	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 16:43:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D878C433C8;
+	Tue, 18 Jul 2023 16:43:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1689698586;
+	bh=6GmurqX2i9JM34BQa9X30FmQHtnrur89oQ3WxbydzJo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PM2FYJSNOlfl7ajifO/Zb7gliIo6DLh1mRbpPrgh3TRoUhoZ6rlj70Lej34Ftn+AG
+	 NytoIB0ziTr1RxHoweF9CvObomaiakj6hnRjYm3NUbcmMWRfNJ7HtyDClA2v5P8XZm
+	 X4xajyR8KQeor6hPjr+IlvLImDEm6Hm3N4frcSeBH5QhHXH95p6YgWrjfyUqkej+RE
+	 21SNU0aMQWNo+K01+12GvN0Up50PZYIR9v23LinCvoOrGh8w916WIZ3kQjRQbix0Ou
+	 ld8g8iYvORM3N/IGSc0R/KuItkXyIpRuoiEhI1S6Q8VaNrBIBdYw2tqjia3OBybawT
+	 R4nsCEcyw1haA==
+Date: Tue, 18 Jul 2023 09:43:03 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Masahiro Yamada <masahiroy@kernel.org>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	linux-kbuild@vger.kernel.org, rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Raphael Nestler <raphael.nestler@gmail.com>,
+	Andrea Righi <andrea.righi@canonical.com>, stable@vger.kernel.org
+Subject: Re: [PATCH] kbuild: rust: avoid creating temporary files
+Message-ID: <20230718164303.GB1279879@dev-arch.thelio-3990X>
+References: <20230718055235.1050223-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230717201608.814406187@linuxfoundation.org>
-In-Reply-To: <20230717201608.814406187@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 18 Jul 2023 21:08:38 +0530
-Message-ID: <CA+G9fYs56L1OzJA=kmXmtTGXnhfjX0Va0bu5An-b5Fxcjnioqw@mail.gmail.com>
-Subject: Re: [PATCH 6.4 000/801] 6.4.4-rc3 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230718055235.1050223-1-ojeda@kernel.org>
 
-On Tue, 18 Jul 2023 at 02:04, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.4.4 release.
-> There are 801 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 19 Jul 2023 20:14:44 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.4.4-rc3.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.4.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Tue, Jul 18, 2023 at 07:52:35AM +0200, Miguel Ojeda wrote:
+> `rustc` outputs by default the temporary files (i.e. the ones saved
+> by `-Csave-temps`, such as `*.rcgu*` files) in the current working
+> directory when `-o` and `--out-dir` are not given (even if
+> `--emit=x=path` is given, i.e. it does not use those for temporaries).
+> 
+> Since out-of-tree modules are compiled from the `linux` tree,
+> `rustc` then tries to create them there, which may not be accessible.
+> 
+> Thus pass `--out-dir` explicitly, even if it is just for the temporary
+> files.
+> 
+> Reported-by: Raphael Nestler <raphael.nestler@gmail.com>
+> Closes: https://github.com/Rust-for-Linux/linux/issues/1015
+> Reported-by: Andrea Righi <andrea.righi@canonical.com>
+> Tested-by: Raphael Nestler <raphael.nestler@gmail.com>
+> Tested-by: Andrea Righi <andrea.righi@canonical.com>
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
+Seems reasonable to me.
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-## Build
-* kernel: 6.4.4-rc3
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-6.4.y
-* git commit: 0e8d2fdfb18871a5de031927a37af3cacbaf1d16
-* git describe: v6.4.3-802-g0e8d2fdfb188
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.4.y/build/v6.4.3=
--802-g0e8d2fdfb188
-
-## Test Regressions (compared to v6.4.1-22-g3e37df3ffd9a)
-
-## Metric Regressions (compared to v6.4.1-22-g3e37df3ffd9a)
-
-## Test Fixes (compared to v6.4.1-22-g3e37df3ffd9a)
-
-## Metric Fixes (compared to v6.4.1-22-g3e37df3ffd9a)
-
-## Test result summary
-total: 175129, pass: 150209, fail: 2026, skip: 22723, xfail: 171
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 145 total, 145 passed, 0 failed
-* arm64: 54 total, 53 passed, 1 failed
-* i386: 41 total, 41 passed, 0 failed
-* mips: 30 total, 28 passed, 2 failed
-* parisc: 4 total, 4 passed, 0 failed
-* powerpc: 38 total, 36 passed, 2 failed
-* riscv: 26 total, 25 passed, 1 failed
-* s390: 16 total, 14 passed, 2 failed
-* sh: 14 total, 12 passed, 2 failed
-* sparc: 8 total, 8 passed, 0 failed
-* x86_64: 46 total, 46 passed, 0 failed
-
-## Test suites summary
-* boot
-* fwts
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-splice
-* kselftest-static_keys
-* kselftest-sync
-* kselftest-sysctl
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-watchdog
-* kselftest-x86
-* kselftest-zram
-* kunit
-* kvm-unit-tests
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* perf
-* rcutorture
-* v4l2-compliance
-* vdso
-
---
-Linaro LKFT
-https://lkft.linaro.org
+> ---
+>  scripts/Makefile.build | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/scripts/Makefile.build b/scripts/Makefile.build
+> index 6413342a03f4..82e3fb19fdaf 100644
+> --- a/scripts/Makefile.build
+> +++ b/scripts/Makefile.build
+> @@ -264,6 +264,9 @@ $(obj)/%.lst: $(src)/%.c FORCE
+>  
+>  rust_allowed_features := new_uninit
+>  
+> +# `--out-dir` is required to avoid temporaries being created by `rustc` in the
+> +# current working directory, which may be not accessible in the out-of-tree
+> +# modules case.
+>  rust_common_cmd = \
+>  	RUST_MODFILE=$(modfile) $(RUSTC_OR_CLIPPY) $(rust_flags) \
+>  	-Zallow-features=$(rust_allowed_features) \
+> @@ -272,7 +275,7 @@ rust_common_cmd = \
+>  	--extern alloc --extern kernel \
+>  	--crate-type rlib -L $(objtree)/rust/ \
+>  	--crate-name $(basename $(notdir $@)) \
+> -	--emit=dep-info=$(depfile)
+> +	--out-dir $(dir $@) --emit=dep-info=$(depfile)
+>  
+>  # `--emit=obj`, `--emit=asm` and `--emit=llvm-ir` imply a single codegen unit
+>  # will be used. We explicitly request `-Ccodegen-units=1` in any case, and
+> 
+> base-commit: 06c2afb862f9da8dc5efa4b6076a0e48c3fbaaa5
+> -- 
+> 2.41.0
+> 
