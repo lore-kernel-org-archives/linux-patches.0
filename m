@@ -1,305 +1,136 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2074.outbound.protection.outlook.com [40.107.237.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17A91FA9
-	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 08:38:43 +0000 (UTC)
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-51e55517de3so6694a12.1
-        for <patches@lists.linux.dev>; Tue, 18 Jul 2023 01:38:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1689669522; x=1692261522;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=IC9Qx2eYb6y8dX14UyWbs7Z7VigEBl7MSwqQMnyddDI=;
-        b=ejeJrRQn793aIlw0fDvI94Lo57lUcUqZgiativ37px6lHadcHQ2LpUhfIB72AWKQFI
-         W5uGxD8ZZSdi228jMCmfWEtF7xISXy/iCL1PgN7YQUhbZncTk9ZqLnmNh6oKLIc52gTw
-         M3H8LiUONZXaHpFQkkwxA21eO87mOqYcVHTj7ecFo3H/lKZ//4b/gvjlaY5jrOQkAaTV
-         Col1E9gaFYhyZE3tKUyv+9GE5tIil+9XOPN2H6f05CA/sNFrD7r7KssJ8Ou5T2RtCm0L
-         xrWixgueKuA0tTxZc/qfNB4tdGCoxAGJqy4oKcxQpDpPtjz6JexjkUqNzaaEzMEd/Btu
-         HFdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689669522; x=1692261522;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IC9Qx2eYb6y8dX14UyWbs7Z7VigEBl7MSwqQMnyddDI=;
-        b=CiHFJg0izpZY0qcqFkr9thfJVx/Ud7NslyQSM+8r/IN52v3wyOQrnMz0FlsQcAyYMd
-         jHZKCThXSsZF9sg3G+crKW7zhbb/xHhsX+czmrRYDLHvKCPNrPdbjz7+VDAqZu7y0MFB
-         xibi9TbaicjvCzvotR/nl+s8zmzg+c1PpeGp8i3g3ujzmaAyLH4+gi3h6iNY4Ziu5zp4
-         +7/x2e0I2z2ZcFw9N8CJAhP1cCSvWfu6NHrgG7+yQ3s+zlnHYa7h9qgbahhKWhCv2P0a
-         6HywzfTfctv9XBKYnwXtTDQWbxVUPwOY6mBCBAzsV7Yz+3MqnG76FQfsesEY4drPdG0p
-         ZGKw==
-X-Gm-Message-State: ABy/qLb07Bdvni/lIZL6UxG0N6Zq3uDCTXRxkqVNN5ekEMHPtATPIO2p
-	abD13GUX+7C9NqoG4V364e0+oJCBt1MqG4Cmt5VUOw==
-X-Google-Smtp-Source: APBJJlELxqy4p6FfNJYs0goPKVXBJfIsLgM+mD9tNuIBZTJs/qI2calR4cQTqLiotqBf9FqHEHRFKqoKNgY1LQvUBpA=
-X-Received: by 2002:a50:8e02:0:b0:51e:5773:891d with SMTP id
- 2-20020a508e02000000b0051e5773891dmr83977edw.4.1689669521576; Tue, 18 Jul
- 2023 01:38:41 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FEBFBE55
+	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 08:59:42 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=eTAi8LlDcl6MRWEy0bQdDl5n6WxAAKnzT9yVH6Yo9o6i8Sb14WsfLFM3jo7jJK6DmJhx47qE2biPpVsdldE0hH9kopH0/IHbL4lvklIlkutj8jlV+W937y/hu7jXDIoCV66iDTORApauG2D3nneHzgK4lqEziSuPcsyFms6xmrbq2AQs3NTzPxj/nUvl+QdeSjYoQcfGpsUJl7T9EyCu5EfDE6afraU7Hn+lgfrJMs/Y2P5f2I1Yz5VEPwvG1hHSkLByAD/3dzkXya3qkkHVSlBRERqcw6R/av2VcoKv8YfvkSWGSVsBT+3dA6fxJn5jQopFS3E5109L+bdIpOuXsg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=bIyIRjGKx7PJh2GUtj2zTJGRUlziKpwjHPbwd92fsHg=;
+ b=l+/33Har2GdjLeQk5OV22+8TyERIXJ1uXERk/k0N++lYJ2d7WdAqQytOaeFaMJzrz31RT+XA6BBSkqHPziYzaxrEFETNJIyd18j1K4pvhXpBcBRRaBcQ4fbHsQt2tIT7GLqItYsnK9iJ7k4n0SOkI7nIHGHkjZoMw77/oZNLQRx8CEJArNvUZ6tVaAdOnweVqg+6H10wt6UuWYCgeTfS8k9P6U0SlgI/AqEP+oOBuIZ45o1/0oARjiZuMRa5lMysP/OOI+qs7dmUt9ZypXDitmitSocZ6ARcHplugpKCsi6rstxj/ta6jticCBmnx52tpT7otZFoBcgIy3R+phulrw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bIyIRjGKx7PJh2GUtj2zTJGRUlziKpwjHPbwd92fsHg=;
+ b=UV62iY4OV+uh4ZVxXjSUBgkJU0G5bcTTClIxl/oyD3PJcldz6SxdiFfbGJpD5yd5fDUiOw4nVNpEhXt1FJYMR/z4DQ6kAjk4A3l/1itPs2yJfchJzroEMz81Hwce8zI6+4i6flVXB/Dug+N5XANCloOsXxBLOXusbKVnD3yNodfzOHOisqFCkzOOcXiv7S26h9gZmqZCGuMhcRKiamIwDMPlfmU8KIZKeE5/7LPmUtV9/sywmUnFZVYJhDU6ZGYJi1n+0ziNiJNdO2pAZC/rZh12R74SelVuSFcMLq5YTlBqkTio77UHFQqZAwnXI3jn8Cz3Tmp0t3jtzVbkpFAu/g==
+Received: from BN9PR03CA0197.namprd03.prod.outlook.com (2603:10b6:408:f9::22)
+ by PH7PR12MB7284.namprd12.prod.outlook.com (2603:10b6:510:20b::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6588.31; Tue, 18 Jul
+ 2023 08:59:39 +0000
+Received: from BN8NAM11FT007.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:408:f9:cafe::2e) by BN9PR03CA0197.outlook.office365.com
+ (2603:10b6:408:f9::22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6588.33 via Frontend
+ Transport; Tue, 18 Jul 2023 08:59:39 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ BN8NAM11FT007.mail.protection.outlook.com (10.13.177.109) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6588.33 via Frontend Transport; Tue, 18 Jul 2023 08:59:39 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Tue, 18 Jul 2023
+ 01:59:29 -0700
+Received: from drhqmail202.nvidia.com (10.126.190.181) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.37; Tue, 18 Jul 2023 01:59:28 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37 via Frontend
+ Transport; Tue, 18 Jul 2023 01:59:28 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <linux-tegra@vger.kernel.org>,
+	<stable@vger.kernel.org>
+Subject: Re: [PATCH 6.1 000/589] 6.1.39-rc3 review
+In-Reply-To: <20230717201547.359923764@linuxfoundation.org>
+References: <20230717201547.359923764@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230718052752.1045248-1-ojeda@kernel.org>
-In-Reply-To: <20230718052752.1045248-1-ojeda@kernel.org>
-From: David Gow <davidgow@google.com>
-Date: Tue, 18 Jul 2023 16:38:28 +0800
-Message-ID: <CABVgOSk+YOdmpnBpLcx2sC3NN7amdpLf-C35EpvYmzq3SWHAqA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/7] KUnit integration for Rust doctests
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
-	Andreas Hindborg <nmi@metaspace.dk>, kunit-dev@googlegroups.com, 
-	linux-kselftest@vger.kernel.org, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Shuah Khan <skhan@linuxfoundation.org>
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000a5b5530600bed700"
+Message-ID: <f6955e78-c23b-457e-a635-126f5fdab4ca@drhqmail202.nvidia.com>
+Date: Tue, 18 Jul 2023 01:59:28 -0700
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN8NAM11FT007:EE_|PH7PR12MB7284:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6f4455f6-1d45-4a96-595b-08db876d51a6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	Q5jD7IkTggOaNab+fjVDXI6p6MEpaBpEDnmLc2W0I4x4GkWh558H6hZw78HY+BzNOuxQtS7e20bX7PayRTFWe1q1Ue9KcqgZDMLMEnUtWqZrMEVur6GN+ws+zwe16W+NmNaCalgWHhCvVwJZFy13qMPC7W0KQbwoQalkjbXV3CNQrL8kdP4sPyPmK6sQcYl2nimTfDDEs+tA+0IGTqfd9CrKgUe/1Y8rZz1OCpzJiI/ABQUJVSbHY81HqVXnqJ8PkRJDZcaAOm6ZxNcIdPjM2ryjdsjSZIwycJ/OVwCHF07C1JHyWL+bh8omQaYN1PU0WYiuOCBe/IJ4WP/msTRdHikTkKu17RoYgjEC47ZPUULEBctJhY9rgPsNu0zsdTibd4ky1HgCzZvJx0XVrDCBkWOgcV3+qganrRQ85ixIlOExEfdeqOjfFH3XeBBi1By62Ncm5I+ijQsJjN7CBLCN0nrnsMbC7QsWtP4rhebQznYL0IcnqClkyvZZoToOdEDFqpiGMtqHpN5jKo3AEwO58MrqHjrAHyIPByEIBgnuL4fITA51v5E9tNat87ylkh6cKO9l8MJyNpGD3EGRbcvhDA0UqDGMBc9j1QSURr/b8e7qXoi2ABkg3OwhWTLThOp4hcdMeXYL7BGbWU29rsq6OLVfbPR8KUGTTQqtDBYl2rslxJdngZBc9hbhPK7Eu3hEj8ZkN6xlRADzgU5XsdRn+r+6BqSQY2WfJ4y4/+5cMRYFOIqVGxQej1oOwqcVOFowXAcWLWFyFYoKmaMTObSiYQZu94SUTHWkMj+RpGJAhzQ=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.233;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge2.nvidia.com;CAT:NONE;SFS:(13230028)(4636009)(136003)(396003)(346002)(39860400002)(376002)(82310400008)(451199021)(46966006)(40470700004)(36840700001)(966005)(40480700001)(26005)(40460700003)(70206006)(70586007)(5660300002)(54906003)(7416002)(31696002)(2906002)(316002)(41300700001)(4326008)(8676002)(8936002)(6916009)(86362001)(478600001)(82740400003)(7636003)(356005)(31686004)(36860700001)(47076005)(426003)(186003)(336012);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jul 2023 08:59:39.2223
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6f4455f6-1d45-4a96-595b-08db876d51a6
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.233];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN8NAM11FT007.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7284
 
---000000000000a5b5530600bed700
-Content-Type: text/plain; charset="UTF-8"
+On Mon, 17 Jul 2023 22:34:23 +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.39 release.
+> There are 589 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 19 Jul 2023 20:14:46 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.39-rc3.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-On Tue, 18 Jul 2023 at 13:28, Miguel Ojeda <ojeda@kernel.org> wrote:
->
-> v1: https://lore.kernel.org/rust-for-linux/20230614180837.630180-1-ojeda@kernel.org/
-> v2:
->
->   - Rebased on top of v6.5-rc1, which requires a change from
->     `kunit_do_failed_assertion` to `__kunit_do_failed_assertion` (since
->     the former became a macro) and the addition of a call to
->     `__kunit_abort` (since previously the call was done by the old
->     function which we cannot use anymore since it is a macro). (David)
->
->   - Added prerequisite patch to KUnit header to include `stddef.h` to
->     support the `KUNIT=y` case. (Reported by Boqun)
->
->   - Added comment on the purpose of `trait FromErrno`. (Martin asked
->     about it)
->
->   - Simplify code to use `std::fs::write` instead of `write!`, which
->     improves code size too. (Suggested by Alice)
->
->   - Fix copy-paste type in docs from "error" to "info" and, to make it
->     proper English, copy the `printk` docs style, i.e. from "info"
->     to "info-level message" -- and same for the "error" one. (Miguel)
->
->   - Swap `FILE` and `LINE` `static`s to keep the same order as done
->     elsewhere. (Miguel)
->
->   - Rename config option from `RUST_KERNEL_KUNIT_TEST` to
->     `RUST_KERNEL_DOCTESTS` (and update its title), so that we can use
->     the former for the "normal" (i.e. non-doctests, e.g. `#[test]` ones)
->     tests in the future. (David)
->
->   - Follow the syntax proposed for declaring test metadata in the KTAP
->     v2 spec, which may also get used for the KUnit test attributes API.
->
->     Thus, instead of "# Doctest from line {line}", use
->     "# {test_name}.location: {file}.{line}", which ideally will allow to
->     migrate to a KUnit attribute later.
->
->     This is done in all cases, i.e. when the tests succeeds, because
->     it may be useful for users running KUnit manually, or when passing
->     `--raw_output` to `kunit.py`. (David)
->
->     David: I used "location" instead of your suggested "line" alone, in
->     order to have both in a single line, which looked nice and closer to
->     the "ASSERTION FAILURE" case/line, since now we do have the original
->     file (please see below).
+All tests passing for Tegra ...
 
-I like "location" better, personally. The attributes work is still
-ongoing, and while there's some benefit to having "file" and "line"
-separate (it could potentially simplify some implementation on the C
-side), we'll cross that bridge when we come to it.
+Test results for stable-v6.1:
+    7 builds:	7 pass, 0 fail
+    22 boots:	22 pass, 0 fail
+    104 tests:	104 pass, 0 fail
 
->
->   - Figure out the original line. This is done by deploying an anchor
->     so that the difference in lines between the beginning of the test
->     and the assert, in the generated file, can be computed. Then, we
->     offset the line number of the original test, which is given by
->     `rustdoc`. (developed by Boqun)
->
->   - Figure out the original file. This is done by walking the
->     filesystem, checking directory prefixes to reduce the amount of
->     combinations to check, and it is only done once per file (rather
->     than per test).
->
->     Ambiguities are detected and reported. It does limit the filenames
->     (module names) we can use, but it is unlikely we will hit it soon
->     and this should be temporary anyway until `rustdoc` provides us
->     with the real path. (Miguel)
->
->     Tested with both in-tree and `O=` builds, but I would appreciate
->     extra testing on this one, including via the `kunit.py` script.
->
+Linux version:	6.1.39-rc3-gce7ec1011187
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra210-p2371-2180, tegra210-p3450-0000,
+                tegra30-cardhu-a04
 
-This seems to be working well on the existing cases under kunit.py
-here. I'll continue to play with it, but no worries on my end thus
-far.
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
 
->   - The three last items combined means that we now see this output even
->     for successful cases:
->
->         # rust_doctest_kernel_sync_locked_by_rs_0.location: rust/kernel/sync/locked_by.rs:28
->         ok 53 rust_doctest_kernel_sync_locked_by_rs_0
->
->     Which basically gives the user all the information they need to go
->     back to the source code of the doctest, while keeping them fairly
->     stable for bisection, and while avoiding to require users to write
->     test names manually. (David + Boqun + Miguel)
->
->     David: from what I saw in v2 of the RFC for the test attributes API,
->     the syntax still contains the test name when it is not a suite, so
->     I followed that, but if you prefer to omit it, please feel free to
->     do so (for me either way it is fine, and if this is the expected
->     attribute syntax, I guess it is worth to follow it to make migration
->     easier later on):
->
->         # location: rust/kernel/sync/locked_by.rs:28
->         ok 53 rust_doctest_kernel_sync_locked_by_rs_0
-
-Thanks: while we're still arguing a bit about exactly what the format
-of these will look like in the KUnit/KTAP attributes spec/patches,
-what you've used matches what we've been proposing so far.
-
-Let's stick with <test name>.location for now, and change it if needed
-when the attributes spec is finalised.
-
->
->   - Collected `Reviewed-by`s and `Tested-by`s, except for the main
->     commit due to the substantial changes.
->
-> Miguel Ojeda (7):
->   kunit: test-bug.h: include `stddef.h` for `NULL`
->   rust: init: make doctests compilable/testable
->   rust: str: make doctests compilable/testable
->   rust: sync: make doctests compilable/testable
->   rust: types: make doctests compilable/testable
->   rust: support running Rust documentation tests as KUnit ones
->   MAINTAINERS: add Rust KUnit files to the KUnit entry
-
-These are all (still) looking pretty good to me. If there are no
-objections, I'd like to take these into kselftest/kunit as-is and if
-we need to change anything (e.g. for consistency with attributes when
-they land), do that as a follow-up.
-
-Thanks again, Miguel, for all the work getting this going!
-
-Cheers,
--- David
-
->
->  MAINTAINERS                       |   2 +
->  include/kunit/test-bug.h          |   2 +
->  lib/Kconfig.debug                 |  13 ++
->  rust/.gitignore                   |   2 +
->  rust/Makefile                     |  29 ++++
->  rust/bindings/bindings_helper.h   |   1 +
->  rust/helpers.c                    |   7 +
->  rust/kernel/init.rs               |  26 +--
->  rust/kernel/kunit.rs              | 163 +++++++++++++++++++
->  rust/kernel/lib.rs                |   2 +
->  rust/kernel/str.rs                |   4 +-
->  rust/kernel/sync/arc.rs           |   9 +-
->  rust/kernel/sync/lock/mutex.rs    |   1 +
->  rust/kernel/sync/lock/spinlock.rs |   1 +
->  rust/kernel/types.rs              |   6 +-
->  scripts/.gitignore                |   2 +
->  scripts/Makefile                  |   4 +
->  scripts/rustdoc_test_builder.rs   |  72 +++++++++
->  scripts/rustdoc_test_gen.rs       | 260 ++++++++++++++++++++++++++++++
->  19 files changed, 591 insertions(+), 15 deletions(-)
->  create mode 100644 rust/kernel/kunit.rs
->  create mode 100644 scripts/rustdoc_test_builder.rs
->  create mode 100644 scripts/rustdoc_test_gen.rs
->
->
-> base-commit: 06c2afb862f9da8dc5efa4b6076a0e48c3fbaaa5
-> --
-> 2.41.0
->
-> --
-> You received this message because you are subscribed to the Google Groups "KUnit Development" group.
-> To unsubscribe from this group and stop receiving emails from it, send an email to kunit-dev+unsubscribe@googlegroups.com.
-> To view this discussion on the web visit https://groups.google.com/d/msgid/kunit-dev/20230718052752.1045248-1-ojeda%40kernel.org.
-
---000000000000a5b5530600bed700
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
-
-MIIPnwYJKoZIhvcNAQcCoIIPkDCCD4wCAQExDzANBglghkgBZQMEAgEFADALBgkqhkiG9w0BBwGg
-ggz5MIIEtjCCA56gAwIBAgIQeAMYYHb81ngUVR0WyMTzqzANBgkqhkiG9w0BAQsFADBMMSAwHgYD
-VQQLExdHbG9iYWxTaWduIFJvb3QgQ0EgLSBSMzETMBEGA1UEChMKR2xvYmFsU2lnbjETMBEGA1UE
-AxMKR2xvYmFsU2lnbjAeFw0yMDA3MjgwMDAwMDBaFw0yOTAzMTgwMDAwMDBaMFQxCzAJBgNVBAYT
-AkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMSowKAYDVQQDEyFHbG9iYWxTaWduIEF0bGFz
-IFIzIFNNSU1FIENBIDIwMjAwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCvLe9xPU9W
-dpiHLAvX7kFnaFZPuJLey7LYaMO8P/xSngB9IN73mVc7YiLov12Fekdtn5kL8PjmDBEvTYmWsuQS
-6VBo3vdlqqXZ0M9eMkjcKqijrmDRleudEoPDzTumwQ18VB/3I+vbN039HIaRQ5x+NHGiPHVfk6Rx
-c6KAbYceyeqqfuJEcq23vhTdium/Bf5hHqYUhuJwnBQ+dAUcFndUKMJrth6lHeoifkbw2bv81zxJ
-I9cvIy516+oUekqiSFGfzAqByv41OrgLV4fLGCDH3yRh1tj7EtV3l2TngqtrDLUs5R+sWIItPa/4
-AJXB1Q3nGNl2tNjVpcSn0uJ7aFPbAgMBAAGjggGKMIIBhjAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0l
-BBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMBIGA1UdEwEB/wQIMAYBAf8CAQAwHQYDVR0OBBYEFHzM
-CmjXouseLHIb0c1dlW+N+/JjMB8GA1UdIwQYMBaAFI/wS3+oLkUkrk1Q+mOai97i3Ru8MHsGCCsG
-AQUFBwEBBG8wbTAuBggrBgEFBQcwAYYiaHR0cDovL29jc3AyLmdsb2JhbHNpZ24uY29tL3Jvb3Ry
-MzA7BggrBgEFBQcwAoYvaHR0cDovL3NlY3VyZS5nbG9iYWxzaWduLmNvbS9jYWNlcnQvcm9vdC1y
-My5jcnQwNgYDVR0fBC8wLTAroCmgJ4YlaHR0cDovL2NybC5nbG9iYWxzaWduLmNvbS9yb290LXIz
-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
-9IGQSBx2i4m+hGXJpET+MEwGA1UdIARFMEMwQQYJKwYBBAGgMgEoMDQwMgYIKwYBBQUHAgEWJmh0
-dHBzOi8vd3d3Lmdsb2JhbHNpZ24uY29tL3JlcG9zaXRvcnkvMAwGA1UdEwEB/wQCMAAwgZoGCCsG
-AQUFBwEBBIGNMIGKMD4GCCsGAQUFBzABhjJodHRwOi8vb2NzcC5nbG9iYWxzaWduLmNvbS9jYS9n
-c2F0bGFzcjNzbWltZWNhMjAyMDBIBggrBgEFBQcwAoY8aHR0cDovL3NlY3VyZS5nbG9iYWxzaWdu
-LmNvbS9jYWNlcnQvZ3NhdGxhc3Izc21pbWVjYTIwMjAuY3J0MB8GA1UdIwQYMBaAFHzMCmjXouse
-LHIb0c1dlW+N+/JjMEYGA1UdHwQ/MD0wO6A5oDeGNWh0dHA6Ly9jcmwuZ2xvYmFsc2lnbi5jb20v
-Y2EvZ3NhdGxhc3Izc21pbWVjYTIwMjAuY3JsMA0GCSqGSIb3DQEBCwUAA4IBAQCRI3Z4cAidgFcv
-Usqdz765x6KMZSfg/WtFrYg8ewsP2NpCxVM2+EhPyyEQ0k0DhtzdtGoI/Ug+jdFDyCKB9P2+EPLh
-iMjMnFILp7Zs4r18ECHlvZuDZfH9m0BchXIxu5jLIuQyKUWrCRDZZEDNr510ZhhVfYSFPA8ms1nk
-jyzYFOHYQyv5IfML/3IBFKlON5OZa+V8EZYULYcNkp03DdWglafj7SXZ1/XgAbVYrC381UvrsYN8
-jndVvoa1GWwe+NVlIIK7Q3uAjV3qLEDQpaNPg1rr0oAn6YmvTccjVMqj2YNwN+RHhKNzgRGxY5ct
-FaN+8fXZhRhpv3bVbAWuPZXoMYICajCCAmYCAQEwaDBUMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQ
-R2xvYmFsU2lnbiBudi1zYTEqMCgGA1UEAxMhR2xvYmFsU2lnbiBBdGxhcyBSMyBTTUlNRSBDQSAy
-MDIwAhABAz5xDls09r2CKyYRqnNbMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCBU
-/Kej+GuGGXDnTLvxu6bkGrQf8lVKtiJd9KuXLwDAojAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcB
-MBwGCSqGSIb3DQEJBTEPFw0yMzA3MTgwODM4NDJaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUD
-BAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsG
-CSqGSIb3DQEBBzALBglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAK/pldqEKqu8x4YvHaPWf
-pmFHWBrsSBSFPqIrPEseiJRLRO2DYZ846i6fQEgUGwNU1sAqWrsJUWE0hjw/lfop+FdbPP+vJpz3
-26fL1LIBgmnvabn6nGjNBKuumKibXnEt0Eedv3zbpSG4SZBbG9x7Oygt6tqqDgvVWAmTVyyqhGfm
-Ft2CYjqiLoN0uvW36OpQ7wcRbOM5UxTk/iSXS20JKauA61+4RdopgYcoE49W4QgoRdBSXtCgvWE8
-9lbFZuc170vwqzCQaufhEgk8u97w6UBaHoywpKKy5/wuz2e5yAWa8uNNLj0SAjyCfciA8jsYyGnL
-U43CEIyKWZi80TZTlA==
---000000000000a5b5530600bed700--
+Jon
