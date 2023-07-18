@@ -1,24 +1,22 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635711FA0
-	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 05:28:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC44C433B9;
-	Tue, 18 Jul 2023 05:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DF51FA5
+	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 05:44:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329F3C433C7;
+	Tue, 18 Jul 2023 05:44:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1689658128;
-	bh=5/I2Oo1+eHlrU9kha5F8okWuBWfq/jmwWetfxpBFOJE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jdH81+504C2TaP6gx9HufIlfw8IIMaE9uFiGR3yaVJJRfnpL3rpnKiANN+/eBP7hl
-	 m15PXsyYE1OfIkODRedBtuxMAQtsq3BqcMPqD0pO1aF5Bh9J3vHTISRGHE4fc2LAky
-	 F7HdpvrowMyClU6BmlV4JZrM8BZh7poS7VgHThJxlII8LreS/vzyTsQcxJSTVK9bwb
-	 ipNAID5mW1qj68kXATmFM5b+ncEcRB70jS5eEmD0Q4w9VatpCWakqWR3YxtTNg7YeE
-	 ppfrzrjUBXAWMd/qereojk/RCkrT4PuDKMnVTnE8U/AkfHnY2nS7kbJmnHOfmAgltX
-	 L2MtbmqHjEKVg==
+	s=k20201202; t=1689659082;
+	bh=fMxCFJdsUJm8JBt25eJ62JnVPqBMNzOsIhTVtRXpBFg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=AeLUpJrvbntC/9V1r8aaaRBAa4dOcdWTTmtDAdmwEnVw1CN4SGsmmtzsLg1CtUszm
+	 JgYZhV9okcXuAMGW8Zl6MDBxesukgHZNL8SVxX2+5hZ2Yxlcg2x/kQU8Tqbpz7wO+L
+	 K2nv6XjXC/4cGG3Dqq/vyq2OK1Q3xWy6ItFleXN4gNa+2OvJ4YR9cOuiuNqPZelo1i
+	 uC/2QiD37dwh6X8zeH+WSaYEvFUpXFO4ADEVJVbtvYR5BJQmxGoXZQguKIpx4MRCqU
+	 nHu31sVaSq89Nrjdr5StYvTDycYQJHMbN1vqi9zwRP+GaaviRQSCE0pbE5lCgndorw
+	 Wp9NNcGKcav7w==
 From: Miguel Ojeda <ojeda@kernel.org>
-To: David Gow <davidgow@google.com>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	Miguel Ojeda <ojeda@kernel.org>,
+To: Miguel Ojeda <ojeda@kernel.org>,
 	Wedson Almeida Filho <wedsonaf@gmail.com>,
 	Alex Gaynor <alex.gaynor@gmail.com>
 Cc: Boqun Feng <boqun.feng@gmail.com>,
@@ -26,55 +24,55 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
 	Benno Lossin <benno.lossin@proton.me>,
 	Alice Ryhl <aliceryhl@google.com>,
-	Andreas Hindborg <nmi@metaspace.dk>,
-	kunit-dev@googlegroups.com,
-	linux-kselftest@vger.kernel.org,
+	Andreas Hindborg <a.hindborg@samsung.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
-	Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
-Subject: [PATCH v2 7/7] MAINTAINERS: add Rust KUnit files to the KUnit entry
-Date: Tue, 18 Jul 2023 07:27:52 +0200
-Message-ID: <20230718052752.1045248-8-ojeda@kernel.org>
-In-Reply-To: <20230718052752.1045248-1-ojeda@kernel.org>
-References: <20230718052752.1045248-1-ojeda@kernel.org>
+	patches@lists.linux.dev
+Subject: [PATCH] MAINTAINERS: add Andreas Hindborg as Rust reviewer
+Date: Tue, 18 Jul 2023 07:44:25 +0200
+Message-ID: <20230718054426.1048583-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-The KUnit maintainers would like to maintain these files on their
-side too (thanks!), so add them to their entry.
+Andreas has been involved with the Rust for Linux project for more than
+a year now. He has been primarily working on the Rust NVMe driver [1],
+presenting it in several places (such as LPC [2][3] and Kangrejos [4]).
 
-With this in place, `scripts/get_maintainer.pl` prints both sets
-of maintainers/reviewers (i.e. KUnit and Rust) for those files,
-which is the behavior we are looking for.
+In addition, he recently submitted the Rust null block driver [5] and
+has been reviewing patches in the mailing list for some months.
 
-Reviewed-by: David Gow <davidgow@google.com>
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Reviewed-by: Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
+Thus add him to the `RUST` entry as reviewer.
+
+Link: https://rust-for-linux.com/nvme-driver [1]
+Link: https://lpc.events/event/16/contributions/1180/attachments/1017/1961/deck.pdf [2]
+Link: https://www.youtube.com/watch?v=BwywU1MqW38 [3]
+Link: https://kangrejos.com/A%20Linux%20(PCI)%20NVMe%20Driver%20in%20Rust.pdf [4]
+Link: https://lore.kernel.org/rust-for-linux/20230503090708.2524310-1-nmi@metaspace.dk/ [5]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- MAINTAINERS | 2 ++
- 1 file changed, 2 insertions(+)
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 3be1bdfe8ecc..2a942fe59144 100644
+index 3be1bdfe8ecc..f2f0426258f3 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -11372,6 +11372,8 @@ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/shuah/linux-kselftest.git k
- F:	Documentation/dev-tools/kunit/
- F:	include/kunit/
- F:	lib/kunit/
-+F:	rust/kernel/kunit.rs
-+F:	scripts/rustdoc_test_*
- F:	tools/testing/kunit/
- 
- KERNEL USERMODE HELPER
+@@ -18542,6 +18542,7 @@ R:	Boqun Feng <boqun.feng@gmail.com>
+ R:	Gary Guo <gary@garyguo.net>
+ R:	Björn Roy Baron <bjorn3_gh@protonmail.com>
+ R:	Benno Lossin <benno.lossin@proton.me>
++R:	Andreas Hindborg <a.hindborg@samsung.com>
+ L:	rust-for-linux@vger.kernel.org
+ S:	Supported
+ W:	https://github.com/Rust-for-Linux/linux
+
+base-commit: 06c2afb862f9da8dc5efa4b6076a0e48c3fbaaa5
 -- 
 2.41.0
 
