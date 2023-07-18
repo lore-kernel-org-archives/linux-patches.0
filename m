@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DF51FA5
-	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 05:44:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329F3C433C7;
-	Tue, 18 Jul 2023 05:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AFF15A9
+	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 05:45:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55082C433C8;
+	Tue, 18 Jul 2023 05:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1689659082;
-	bh=fMxCFJdsUJm8JBt25eJ62JnVPqBMNzOsIhTVtRXpBFg=;
+	s=k20201202; t=1689659130;
+	bh=rG22R8r6LRo0ObZRqQ+DyJg6OJ/9CbzLbTaVWOW+Q48=;
 	h=From:To:Cc:Subject:Date:From;
-	b=AeLUpJrvbntC/9V1r8aaaRBAa4dOcdWTTmtDAdmwEnVw1CN4SGsmmtzsLg1CtUszm
-	 JgYZhV9okcXuAMGW8Zl6MDBxesukgHZNL8SVxX2+5hZ2Yxlcg2x/kQU8Tqbpz7wO+L
-	 K2nv6XjXC/4cGG3Dqq/vyq2OK1Q3xWy6ItFleXN4gNa+2OvJ4YR9cOuiuNqPZelo1i
-	 uC/2QiD37dwh6X8zeH+WSaYEvFUpXFO4ADEVJVbtvYR5BJQmxGoXZQguKIpx4MRCqU
-	 nHu31sVaSq89Nrjdr5StYvTDycYQJHMbN1vqi9zwRP+GaaviRQSCE0pbE5lCgndorw
-	 Wp9NNcGKcav7w==
+	b=PlDOpjFkgaKeFdzOuRfhUHkzO3TU8RKJCum72TPLwRdgZz3+mcH93+Jo+gD4nOvBx
+	 trjQu6jGXTfZKjYDYLh2eSw4NEX0vBVoQCcnBvxLikc8hyrSepwbLOypUdTEhuzVoy
+	 FX9qjc0z92WrHAWCQe5wiUSMZ5yNDgi/MqDH3NqzNO9T2giumCQU9r0UgD7AQN/Mvn
+	 Mu/0jHXGkT4tsoO/n+o9pP8qwD5vueS8NAQbhJxc23tfaI6JpJ7Z2EwOS01Ro0w6BK
+	 yzjt8wwMKqjs9DLphKQWDXR9Gl1pr4Vpgw5wU6dqDNkZTaO3yRmph6ONbwzJJ1gvtN
+	 IEV5Sowcwq9eQ==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Wedson Almeida Filho <wedsonaf@gmail.com>,
@@ -28,9 +28,9 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH] MAINTAINERS: add Andreas Hindborg as Rust reviewer
-Date: Tue, 18 Jul 2023 07:44:25 +0200
-Message-ID: <20230718054426.1048583-1-ojeda@kernel.org>
+Subject: [PATCH] MAINTAINERS: add Alice Ryhl as Rust reviewer
+Date: Tue, 18 Jul 2023 07:45:20 +0200
+Message-ID: <20230718054521.1048785-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -40,34 +40,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Andreas has been involved with the Rust for Linux project for more than
-a year now. He has been primarily working on the Rust NVMe driver [1],
-presenting it in several places (such as LPC [2][3] and Kangrejos [4]).
+Alice has been involved with the Rust for Linux project for
+almost a year now. She has been primarily working on the
+Android Binder Driver [1].
 
-In addition, he recently submitted the Rust null block driver [5] and
-has been reviewing patches in the mailing list for some months.
+In addition, she has been reviewing patches in the mailing
+list for some months and has submitted improvements to the
+core Rust support.
 
-Thus add him to the `RUST` entry as reviewer.
+She is also part of the core maintainer team for the widely
+used library Tokio [2], an asynchronous Rust runtime.
 
-Link: https://rust-for-linux.com/nvme-driver [1]
-Link: https://lpc.events/event/16/contributions/1180/attachments/1017/1961/deck.pdf [2]
-Link: https://www.youtube.com/watch?v=BwywU1MqW38 [3]
-Link: https://kangrejos.com/A%20Linux%20(PCI)%20NVMe%20Driver%20in%20Rust.pdf [4]
-Link: https://lore.kernel.org/rust-for-linux/20230503090708.2524310-1-nmi@metaspace.dk/ [5]
+Her expertise with the language will be very useful to have
+around in the future if Rust grows within the kernel, thus
+add her to the `RUST` entry as reviewer.
+
+Link: https://rust-for-linux.com/android-binder-driver [1]
+Link: https://tokio.rs [2]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
  MAINTAINERS | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 3be1bdfe8ecc..f2f0426258f3 100644
+index 3be1bdfe8ecc..f19f34e3926d 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
 @@ -18542,6 +18542,7 @@ R:	Boqun Feng <boqun.feng@gmail.com>
  R:	Gary Guo <gary@garyguo.net>
  R:	Björn Roy Baron <bjorn3_gh@protonmail.com>
  R:	Benno Lossin <benno.lossin@proton.me>
-+R:	Andreas Hindborg <a.hindborg@samsung.com>
++R:	Alice Ryhl <aliceryhl@google.com>
  L:	rust-for-linux@vger.kernel.org
  S:	Supported
  W:	https://github.com/Rust-for-Linux/linux
