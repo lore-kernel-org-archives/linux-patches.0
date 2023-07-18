@@ -1,52 +1,51 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE9F947A
-	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 08:17:41 +0000 (UTC)
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-3fbd33a1819so44655e9.1
-        for <patches@lists.linux.dev>; Tue, 18 Jul 2023 01:17:41 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17A91FA9
+	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 08:38:43 +0000 (UTC)
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-51e55517de3so6694a12.1
+        for <patches@lists.linux.dev>; Tue, 18 Jul 2023 01:38:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1689668259; x=1692260259;
+        d=google.com; s=20221208; t=1689669522; x=1692261522;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=oYRPaAQYPiQ4haPKUkObXAQPD4rkvwwYXqOiFtdJHp4=;
-        b=NvG/AmFp0DGGMR4xFcUTZQAPBKYhF5fqRQaAwCJgM9v4GB9orLuCe279A7SeZjhzfO
-         82j/W/8Bx8Xo8N15aBdmB3oF/tc09SLDlA9nIRpj687U+lnQfPFWcQ/mRl35V0vWPE7X
-         qjGKvcJ8yHVuPHdx4hj/XSHVYiSoU17YU9fHv62GQQrqFJ+7GOiq2jU1dif1NY4iO3Ja
-         UORbUGdwzpW2wb3dZZXfIs46z0booIw2BSwkgMUVXdtg031x01c5H+hvACbm1gwwC7e1
-         XEuFd03tbUVe9zXcO6hHprVWGqsy/yQOdrSStN3zZbRvvUOIHW2bSe4FUYdRxiZycFeq
-         Chyw==
+        bh=IC9Qx2eYb6y8dX14UyWbs7Z7VigEBl7MSwqQMnyddDI=;
+        b=ejeJrRQn793aIlw0fDvI94Lo57lUcUqZgiativ37px6lHadcHQ2LpUhfIB72AWKQFI
+         W5uGxD8ZZSdi228jMCmfWEtF7xISXy/iCL1PgN7YQUhbZncTk9ZqLnmNh6oKLIc52gTw
+         M3H8LiUONZXaHpFQkkwxA21eO87mOqYcVHTj7ecFo3H/lKZ//4b/gvjlaY5jrOQkAaTV
+         Col1E9gaFYhyZE3tKUyv+9GE5tIil+9XOPN2H6f05CA/sNFrD7r7KssJ8Ou5T2RtCm0L
+         xrWixgueKuA0tTxZc/qfNB4tdGCoxAGJqy4oKcxQpDpPtjz6JexjkUqNzaaEzMEd/Btu
+         HFdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689668259; x=1692260259;
+        d=1e100.net; s=20221208; t=1689669522; x=1692261522;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=oYRPaAQYPiQ4haPKUkObXAQPD4rkvwwYXqOiFtdJHp4=;
-        b=TEi6N5UVDABCj8n75CxReh7h4TUTY1ApQASXXrgFKv46MlCWD/jEnUKgzvAktl5xkJ
-         OZDGvbK2vuVL2/aNOQSXI5uJa/hvOWhXRDlPoHckzd1YM4z7n0DaHtF0Fx1kn2tBfZGp
-         rdcELOYUmrxh2JbpFpcYe6dnoeMhDb8S+7QXgAxgOA+Hsw2GyxYwvN3E16CAWi7k1dJK
-         JFqbQkiGs/Rmq4EGFpmeNXd4VQey27Trz8j1f6ZOa16nSEV3gImpydQJH59ykJbHnW9R
-         +smNQPb+9J9EzIsSoaVTgMnuN8vLBS/jPBCtL6772txEF6k82P2n0VLGATUeuU2lKn5m
-         gk+w==
-X-Gm-Message-State: ABy/qLajwdB97lpnSPMxbdTusTENsbMDypuU16t4pqw9ddIISupjXQMh
-	umteHEXMUHt4W/uq8C23HSk3KaykLuZ7fwJfi0qvXA==
-X-Google-Smtp-Source: APBJJlEVrOa0RQfLgrzvdlXhovdOcXmooAjAfCYaCEDQeGFuBgG0rfPrst/hRufmAbn2t9xDVwjfzsDv7qkbc++8Y+c=
-X-Received: by 2002:a05:600c:a39e:b0:3fb:ccae:cd4b with SMTP id
- hn30-20020a05600ca39e00b003fbccaecd4bmr76572wmb.2.1689668259064; Tue, 18 Jul
- 2023 01:17:39 -0700 (PDT)
+        bh=IC9Qx2eYb6y8dX14UyWbs7Z7VigEBl7MSwqQMnyddDI=;
+        b=CiHFJg0izpZY0qcqFkr9thfJVx/Ud7NslyQSM+8r/IN52v3wyOQrnMz0FlsQcAyYMd
+         jHZKCThXSsZF9sg3G+crKW7zhbb/xHhsX+czmrRYDLHvKCPNrPdbjz7+VDAqZu7y0MFB
+         xibi9TbaicjvCzvotR/nl+s8zmzg+c1PpeGp8i3g3ujzmaAyLH4+gi3h6iNY4Ziu5zp4
+         +7/x2e0I2z2ZcFw9N8CJAhP1cCSvWfu6NHrgG7+yQ3s+zlnHYa7h9qgbahhKWhCv2P0a
+         6HywzfTfctv9XBKYnwXtTDQWbxVUPwOY6mBCBAzsV7Yz+3MqnG76FQfsesEY4drPdG0p
+         ZGKw==
+X-Gm-Message-State: ABy/qLb07Bdvni/lIZL6UxG0N6Zq3uDCTXRxkqVNN5ekEMHPtATPIO2p
+	abD13GUX+7C9NqoG4V364e0+oJCBt1MqG4Cmt5VUOw==
+X-Google-Smtp-Source: APBJJlELxqy4p6FfNJYs0goPKVXBJfIsLgM+mD9tNuIBZTJs/qI2calR4cQTqLiotqBf9FqHEHRFKqoKNgY1LQvUBpA=
+X-Received: by 2002:a50:8e02:0:b0:51e:5773:891d with SMTP id
+ 2-20020a508e02000000b0051e5773891dmr83977edw.4.1689669521576; Tue, 18 Jul
+ 2023 01:38:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230718052752.1045248-1-ojeda@kernel.org> <20230718052752.1045248-7-ojeda@kernel.org>
-In-Reply-To: <20230718052752.1045248-7-ojeda@kernel.org>
+References: <20230718052752.1045248-1-ojeda@kernel.org>
+In-Reply-To: <20230718052752.1045248-1-ojeda@kernel.org>
 From: David Gow <davidgow@google.com>
-Date: Tue, 18 Jul 2023 16:17:27 +0800
-Message-ID: <CABVgOSnCY66C5wza-ZXb8c8UHg8ydbFv4U_7A14UU_gXeESKZg@mail.gmail.com>
-Subject: Re: [PATCH v2 6/7] rust: support running Rust documentation tests as
- KUnit ones
+Date: Tue, 18 Jul 2023 16:38:28 +0800
+Message-ID: <CABVgOSk+YOdmpnBpLcx2sC3NN7amdpLf-C35EpvYmzq3SWHAqA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/7] KUnit integration for Rust doctests
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Brendan Higgins <brendan.higgins@linux.dev>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
 	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
@@ -54,864 +53,179 @@ Cc: Brendan Higgins <brendan.higgins@linux.dev>, Wedson Almeida Filho <wedsonaf@
 	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
 	Andreas Hindborg <nmi@metaspace.dk>, kunit-dev@googlegroups.com, 
 	linux-kselftest@vger.kernel.org, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Shuah Khan <skhan@linuxfoundation.org>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000698e240600be8caf"
+	boundary="000000000000a5b5530600bed700"
 
---000000000000698e240600be8caf
+--000000000000a5b5530600bed700
 Content-Type: text/plain; charset="UTF-8"
 
 On Tue, 18 Jul 2023 at 13:28, Miguel Ojeda <ojeda@kernel.org> wrote:
 >
-> Rust has documentation tests: these are typically examples of
-> usage of any item (e.g. function, struct, module...).
+> v1: https://lore.kernel.org/rust-for-linux/20230614180837.630180-1-ojeda@kernel.org/
+> v2:
 >
-> They are very convenient because they are just written
-> alongside the documentation. For instance:
+>   - Rebased on top of v6.5-rc1, which requires a change from
+>     `kunit_do_failed_assertion` to `__kunit_do_failed_assertion` (since
+>     the former became a macro) and the addition of a call to
+>     `__kunit_abort` (since previously the call was done by the old
+>     function which we cannot use anymore since it is a macro). (David)
 >
->     /// Sums two numbers.
->     ///
->     /// ```
->     /// assert_eq!(mymod::f(10, 20), 30);
->     /// ```
->     pub fn f(a: i32, b: i32) -> i32 {
->         a + b
->     }
+>   - Added prerequisite patch to KUnit header to include `stddef.h` to
+>     support the `KUNIT=y` case. (Reported by Boqun)
 >
-> In userspace, the tests are collected and run via `rustdoc`.
-> Using the tool as-is would be useful already, since it allows
-> to compile-test most tests (thus enforcing they are kept
-> in sync with the code they document) and run those that do not
-> depend on in-kernel APIs.
+>   - Added comment on the purpose of `trait FromErrno`. (Martin asked
+>     about it)
 >
-> However, by transforming the tests into a KUnit test suite,
-> they can also be run inside the kernel. Moreover, the tests
-> get to be compiled as other Rust kernel objects instead of
-> targeting userspace.
+>   - Simplify code to use `std::fs::write` instead of `write!`, which
+>     improves code size too. (Suggested by Alice)
 >
-> On top of that, the integration with KUnit means the Rust
-> support gets to reuse the existing testing facilities. For
-> instance, the kernel log would look like:
+>   - Fix copy-paste type in docs from "error" to "info" and, to make it
+>     proper English, copy the `printk` docs style, i.e. from "info"
+>     to "info-level message" -- and same for the "error" one. (Miguel)
 >
->     KTAP version 1
->     1..1
->         KTAP version 1
->         # Subtest: rust_doctests_kernel
->         1..59
->         # rust_doctest_kernel_build_assert_rs_0.location: rust/kernel/build_assert.rs:13
->         ok 1 rust_doctest_kernel_build_assert_rs_0
->         # rust_doctest_kernel_build_assert_rs_1.location: rust/kernel/build_assert.rs:56
->         ok 2 rust_doctest_kernel_build_assert_rs_1
->         # rust_doctest_kernel_init_rs_0.location: rust/kernel/init.rs:122
->         ok 3 rust_doctest_kernel_init_rs_0
->         ...
->         # rust_doctest_kernel_types_rs_2.location: rust/kernel/types.rs:150
->         ok 59 rust_doctest_kernel_types_rs_2
->     # rust_doctests_kernel: pass:59 fail:0 skip:0 total:59
->     # Totals: pass:59 fail:0 skip:0 total:59
->     ok 1 rust_doctests_kernel
+>   - Swap `FILE` and `LINE` `static`s to keep the same order as done
+>     elsewhere. (Miguel)
 >
-> Therefore, add support for running Rust documentation tests
-> in KUnit. Some other notes about the current implementation
-> and support follow.
+>   - Rename config option from `RUST_KERNEL_KUNIT_TEST` to
+>     `RUST_KERNEL_DOCTESTS` (and update its title), so that we can use
+>     the former for the "normal" (i.e. non-doctests, e.g. `#[test]` ones)
+>     tests in the future. (David)
 >
-> The transformation is performed by a couple scripts written
-> as Rust hostprogs.
+>   - Follow the syntax proposed for declaring test metadata in the KTAP
+>     v2 spec, which may also get used for the KUnit test attributes API.
 >
-> Tests using the `?` operator are also supported as usual, e.g.:
+>     Thus, instead of "# Doctest from line {line}", use
+>     "# {test_name}.location: {file}.{line}", which ideally will allow to
+>     migrate to a KUnit attribute later.
 >
->     /// ```
->     /// # use kernel::{spawn_work_item, workqueue};
->     /// spawn_work_item!(workqueue::system(), || pr_info!("x"))?;
->     /// # Ok::<(), Error>(())
->     /// ```
+>     This is done in all cases, i.e. when the tests succeeds, because
+>     it may be useful for users running KUnit manually, or when passing
+>     `--raw_output` to `kunit.py`. (David)
 >
-> The tests are also compiled with Clippy under `CLIPPY=1`, just
-> like normal code, thus also benefitting from extra linting.
->
-> The names of the tests are currently automatically generated.
-> This allows to reduce the burden for documentation writers,
-> while keeping them fairly stable for bisection. This is an
-> improvement over the `rustdoc`-generated names, which include
-> the line number; but ideally we would like to get `rustdoc` to
-> provide the Rust item path and a number (for multiple examples
-> in a single documented Rust item).
->
-> In order for developers to easily see from which original line
-> a failed doctests came from, a KTAP diagnostic line is printed
-> to the log, containing the location (file and line) of the
-> original test (i.e. instead of the location in the generated
-> Rust file):
->
->     # rust_doctest_kernel_types_rs_2.location: rust/kernel/types.rs:150
->
-> This line follows the syntax for declaring test metadata in the
-> proposed KTAP v2 spec [1], which may be used for the proposed
-> KUnit test attributes API [2]. Thus hopefully this will make
-> migration easier later on (suggested by David [3]).
->
-> The original line in that test attribute is figured out by
-> providing an anchor (suggested by Boqun [4]). The original file
-> is found by walking the filesystem, checking directory prefixes
-> to reduce the amount of combinations to check, and it is only
-> done once per file. Ambiguities are detected and reported.
->
-> A notable difference from KUnit C tests is that the Rust tests
-> appear to assert using the usual `assert!` and `assert_eq!`
-> macros from the Rust standard library (`core`). We provide
-> a custom version that forwards the call to KUnit instead.
-> Importantly, these macros do not require passing context,
-> unlike the KUnit C ones (i.e. `struct kunit *`). This makes
-> them easier to use, and readers of the documentation do not need
-> to care about which testing framework is used. In addition, it
-> may allow us to test third-party code more easily in the future.
->
-> However, a current limitation is that KUnit does not support
-> assertions in other tasks. Thus we presently simply print an
-> error to the kernel log if an assertion actually failed. This
-> should be revisited to properly fail the test, perhaps saving
-> the context somewhere else, or letting KUnit handle it.
->
-> Link: https://lore.kernel.org/lkml/20230420205734.1288498-1-rmoar@google.com/ [1]
-> Link: https://lore.kernel.org/linux-kselftest/20230707210947.1208717-1-rmoar@google.com/ [2]
-> Link: https://lore.kernel.org/rust-for-linux/CABVgOSkOLO-8v6kdAGpmYnZUb+LKOX0CtYCo-Bge7r_2YTuXDQ@mail.gmail.com/ [3]
-> Link: https://lore.kernel.org/rust-for-linux/ZIps86MbJF%2FiGIzd@boqun-archlinux/ [4]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
+>     David: I used "location" instead of your suggested "line" alone, in
+>     order to have both in a single line, which looked nice and closer to
+>     the "ASSERTION FAILURE" case/line, since now we do have the original
+>     file (please see below).
 
-This is looking good and working well here.
+I like "location" better, personally. The attributes work is still
+ongoing, and while there's some benefit to having "file" and "line"
+separate (it could potentially simplify some implementation on the C
+side), we'll cross that bridge when we come to it.
 
-One super-minor thought below (the generated C file seems to be using
-4-space indentation, not tabs), but it's not something that worries me
-enough to hold the patch up if there are no other issues.
+>
+>   - Figure out the original line. This is done by deploying an anchor
+>     so that the difference in lines between the beginning of the test
+>     and the assert, in the generated file, can be computed. Then, we
+>     offset the line number of the original test, which is given by
+>     `rustdoc`. (developed by Boqun)
+>
+>   - Figure out the original file. This is done by walking the
+>     filesystem, checking directory prefixes to reduce the amount of
+>     combinations to check, and it is only done once per file (rather
+>     than per test).
+>
+>     Ambiguities are detected and reported. It does limit the filenames
+>     (module names) we can use, but it is unlikely we will hit it soon
+>     and this should be temporary anyway until `rustdoc` provides us
+>     with the real path. (Miguel)
+>
+>     Tested with both in-tree and `O=` builds, but I would appreciate
+>     extra testing on this one, including via the `kunit.py` script.
+>
 
-Reviewed-by: David Gow <davidgow@google.com>
+This seems to be working well on the existing cases under kunit.py
+here. I'll continue to play with it, but no worries on my end thus
+far.
 
+>   - The three last items combined means that we now see this output even
+>     for successful cases:
+>
+>         # rust_doctest_kernel_sync_locked_by_rs_0.location: rust/kernel/sync/locked_by.rs:28
+>         ok 53 rust_doctest_kernel_sync_locked_by_rs_0
+>
+>     Which basically gives the user all the information they need to go
+>     back to the source code of the doctest, while keeping them fairly
+>     stable for bisection, and while avoiding to require users to write
+>     test names manually. (David + Boqun + Miguel)
+>
+>     David: from what I saw in v2 of the RFC for the test attributes API,
+>     the syntax still contains the test name when it is not a suite, so
+>     I followed that, but if you prefer to omit it, please feel free to
+>     do so (for me either way it is fine, and if this is the expected
+>     attribute syntax, I guess it is worth to follow it to make migration
+>     easier later on):
+>
+>         # location: rust/kernel/sync/locked_by.rs:28
+>         ok 53 rust_doctest_kernel_sync_locked_by_rs_0
+
+Thanks: while we're still arguing a bit about exactly what the format
+of these will look like in the KUnit/KTAP attributes spec/patches,
+what you've used matches what we've been proposing so far.
+
+Let's stick with <test name>.location for now, and change it if needed
+when the attributes spec is finalised.
+
+>
+>   - Collected `Reviewed-by`s and `Tested-by`s, except for the main
+>     commit due to the substantial changes.
+>
+> Miguel Ojeda (7):
+>   kunit: test-bug.h: include `stddef.h` for `NULL`
+>   rust: init: make doctests compilable/testable
+>   rust: str: make doctests compilable/testable
+>   rust: sync: make doctests compilable/testable
+>   rust: types: make doctests compilable/testable
+>   rust: support running Rust documentation tests as KUnit ones
+>   MAINTAINERS: add Rust KUnit files to the KUnit entry
+
+These are all (still) looking pretty good to me. If there are no
+objections, I'd like to take these into kselftest/kunit as-is and if
+we need to change anything (e.g. for consistency with attributes when
+they land), do that as a follow-up.
+
+Thanks again, Miguel, for all the work getting this going!
+
+Cheers,
 -- David
 
->  lib/Kconfig.debug               |  13 ++
->  rust/.gitignore                 |   2 +
->  rust/Makefile                   |  29 ++++
->  rust/bindings/bindings_helper.h |   1 +
->  rust/helpers.c                  |   7 +
->  rust/kernel/kunit.rs            | 163 ++++++++++++++++++++
->  rust/kernel/lib.rs              |   2 +
->  scripts/.gitignore              |   2 +
->  scripts/Makefile                |   4 +
->  scripts/rustdoc_test_builder.rs |  72 +++++++++
->  scripts/rustdoc_test_gen.rs     | 260 ++++++++++++++++++++++++++++++++
->  11 files changed, 555 insertions(+)
+>
+>  MAINTAINERS                       |   2 +
+>  include/kunit/test-bug.h          |   2 +
+>  lib/Kconfig.debug                 |  13 ++
+>  rust/.gitignore                   |   2 +
+>  rust/Makefile                     |  29 ++++
+>  rust/bindings/bindings_helper.h   |   1 +
+>  rust/helpers.c                    |   7 +
+>  rust/kernel/init.rs               |  26 +--
+>  rust/kernel/kunit.rs              | 163 +++++++++++++++++++
+>  rust/kernel/lib.rs                |   2 +
+>  rust/kernel/str.rs                |   4 +-
+>  rust/kernel/sync/arc.rs           |   9 +-
+>  rust/kernel/sync/lock/mutex.rs    |   1 +
+>  rust/kernel/sync/lock/spinlock.rs |   1 +
+>  rust/kernel/types.rs              |   6 +-
+>  scripts/.gitignore                |   2 +
+>  scripts/Makefile                  |   4 +
+>  scripts/rustdoc_test_builder.rs   |  72 +++++++++
+>  scripts/rustdoc_test_gen.rs       | 260 ++++++++++++++++++++++++++++++
+>  19 files changed, 591 insertions(+), 15 deletions(-)
 >  create mode 100644 rust/kernel/kunit.rs
 >  create mode 100644 scripts/rustdoc_test_builder.rs
 >  create mode 100644 scripts/rustdoc_test_gen.rs
 >
-> diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-> index fbc89baf7de6..550cb967b668 100644
-> --- a/lib/Kconfig.debug
-> +++ b/lib/Kconfig.debug
-> @@ -3010,6 +3010,19 @@ config RUST_BUILD_ASSERT_ALLOW
 >
->           If unsure, say N.
->
-> +config RUST_KERNEL_DOCTESTS
-> +       bool "Doctests for the `kernel` crate" if !KUNIT_ALL_TESTS
-> +       depends on RUST && KUNIT=y
-> +       default KUNIT_ALL_TESTS
-> +       help
-> +         This builds the documentation tests of the `kernel` crate
-> +         as KUnit tests.
-> +
-> +         For more information on KUnit and unit tests in general,
-> +         please refer to the KUnit documentation in Documentation/dev-tools/kunit/.
-> +
-> +         If unsure, say N.
-> +
->  endmenu # "Rust"
->
->  endmenu # Kernel hacking
-> diff --git a/rust/.gitignore b/rust/.gitignore
-> index 21552992b401..d3829ffab80b 100644
-> --- a/rust/.gitignore
-> +++ b/rust/.gitignore
-> @@ -2,6 +2,8 @@
->
->  bindings_generated.rs
->  bindings_helpers_generated.rs
-> +doctests_kernel_generated.rs
-> +doctests_kernel_generated_kunit.c
->  uapi_generated.rs
->  exports_*_generated.h
->  doc/
-> diff --git a/rust/Makefile b/rust/Makefile
-> index 7c9d9f11aec5..92482144c0bb 100644
-> --- a/rust/Makefile
-> +++ b/rust/Makefile
-> @@ -27,6 +27,12 @@ endif
->
->  obj-$(CONFIG_RUST) += exports.o
->
-> +always-$(CONFIG_RUST_KERNEL_DOCTESTS) += doctests_kernel_generated.rs
-> +always-$(CONFIG_RUST_KERNEL_DOCTESTS) += doctests_kernel_generated_kunit.c
-> +
-> +obj-$(CONFIG_RUST_KERNEL_DOCTESTS) += doctests_kernel_generated.o
-> +obj-$(CONFIG_RUST_KERNEL_DOCTESTS) += doctests_kernel_generated_kunit.o
-> +
->  # Avoids running `$(RUSTC)` for the sysroot when it may not be available.
->  ifdef CONFIG_RUST
->
-> @@ -39,9 +45,11 @@ ifeq ($(quiet),silent_)
->  cargo_quiet=-q
->  rust_test_quiet=-q
->  rustdoc_test_quiet=--test-args -q
-> +rustdoc_test_kernel_quiet=>/dev/null
->  else ifeq ($(quiet),quiet_)
->  rust_test_quiet=-q
->  rustdoc_test_quiet=--test-args -q
-> +rustdoc_test_kernel_quiet=>/dev/null
->  else
->  cargo_quiet=--verbose
->  endif
-> @@ -157,6 +165,27 @@ quiet_cmd_rustdoc_test = RUSTDOC T $<
->                 -L$(objtree)/$(obj)/test --output $(objtree)/$(obj)/doc \
->                 --crate-name $(subst rusttest-,,$@) $<
->
-> +quiet_cmd_rustdoc_test_kernel = RUSTDOC TK $<
-> +      cmd_rustdoc_test_kernel = \
-> +       rm -rf $(objtree)/$(obj)/test/doctests/kernel; \
-> +       mkdir -p $(objtree)/$(obj)/test/doctests/kernel; \
-> +       OBJTREE=$(abspath $(objtree)) \
-> +       $(RUSTDOC) --test $(rust_flags) \
-> +               @$(objtree)/include/generated/rustc_cfg \
-> +               -L$(objtree)/$(obj) --extern alloc --extern kernel \
-> +               --extern build_error --extern macros \
-> +               --extern bindings --extern uapi \
-> +               --no-run --crate-name kernel -Zunstable-options \
-> +               --test-builder $(objtree)/scripts/rustdoc_test_builder \
-> +               $< $(rustdoc_test_kernel_quiet); \
-> +       $(objtree)/scripts/rustdoc_test_gen
-> +
-> +%/doctests_kernel_generated.rs %/doctests_kernel_generated_kunit.c: \
-> +    $(src)/kernel/lib.rs $(obj)/kernel.o \
-> +    $(objtree)/scripts/rustdoc_test_builder \
-> +    $(objtree)/scripts/rustdoc_test_gen FORCE
-> +       $(call if_changed,rustdoc_test_kernel)
-> +
->  # We cannot use `-Zpanic-abort-tests` because some tests are dynamic,
->  # so for the moment we skip `-Cpanic=abort`.
->  quiet_cmd_rustc_test = RUSTC T  $<
-> diff --git a/rust/bindings/bindings_helper.h b/rust/bindings/bindings_helper.h
-> index 3e601ce2548d..0f8d37c31ac2 100644
-> --- a/rust/bindings/bindings_helper.h
-> +++ b/rust/bindings/bindings_helper.h
-> @@ -6,6 +6,7 @@
->   * Sorted alphabetically.
->   */
->
-> +#include <kunit/test.h>
->  #include <linux/errname.h>
->  #include <linux/slab.h>
->  #include <linux/refcount.h>
-> diff --git a/rust/helpers.c b/rust/helpers.c
-> index bb594da56137..49a5e1a4f0ae 100644
-> --- a/rust/helpers.c
-> +++ b/rust/helpers.c
-> @@ -18,6 +18,7 @@
->   * accidentally exposed.
->   */
->
-> +#include <kunit/test-bug.h>
->  #include <linux/bug.h>
->  #include <linux/build_bug.h>
->  #include <linux/err.h>
-> @@ -135,6 +136,12 @@ void rust_helper_put_task_struct(struct task_struct *t)
->  }
->  EXPORT_SYMBOL_GPL(rust_helper_put_task_struct);
->
-> +struct kunit *rust_helper_kunit_get_current_test(void)
-> +{
-> +       return kunit_get_current_test();
-> +}
-> +EXPORT_SYMBOL_GPL(rust_helper_kunit_get_current_test);
-> +
->  /*
->   * We use `bindgen`'s `--size_t-is-usize` option to bind the C `size_t` type
->   * as the Rust `usize` type, so we can use it in contexts where Rust
-> diff --git a/rust/kernel/kunit.rs b/rust/kernel/kunit.rs
-> new file mode 100644
-> index 000000000000..722655b2d62d
-> --- /dev/null
-> +++ b/rust/kernel/kunit.rs
-> @@ -0,0 +1,163 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +
-> +//! KUnit-based macros for Rust unit tests.
-> +//!
-> +//! C header: [`include/kunit/test.h`](../../../../../include/kunit/test.h)
-> +//!
-> +//! Reference: <https://docs.kernel.org/dev-tools/kunit/index.html>
-> +
-> +use core::{ffi::c_void, fmt};
-> +
-> +/// Prints a KUnit error-level message.
-> +///
-> +/// Public but hidden since it should only be used from KUnit generated code.
-> +#[doc(hidden)]
-> +pub fn err(args: fmt::Arguments<'_>) {
-> +    // SAFETY: The format string is null-terminated and the `%pA` specifier matches the argument we
-> +    // are passing.
-> +    #[cfg(CONFIG_PRINTK)]
-> +    unsafe {
-> +        bindings::_printk(
-> +            b"\x013%pA\0".as_ptr() as _,
-> +            &args as *const _ as *const c_void,
-> +        );
-> +    }
-> +}
-> +
-> +/// Prints a KUnit info-level message.
-> +///
-> +/// Public but hidden since it should only be used from KUnit generated code.
-> +#[doc(hidden)]
-> +pub fn info(args: fmt::Arguments<'_>) {
-> +    // SAFETY: The format string is null-terminated and the `%pA` specifier matches the argument we
-> +    // are passing.
-> +    #[cfg(CONFIG_PRINTK)]
-> +    unsafe {
-> +        bindings::_printk(
-> +            b"\x016%pA\0".as_ptr() as _,
-> +            &args as *const _ as *const c_void,
-> +        );
-> +    }
-> +}
-> +
-> +/// Asserts that a boolean expression is `true` at runtime.
-> +///
-> +/// Public but hidden since it should only be used from generated tests.
-> +///
-> +/// Unlike the one in `core`, this one does not panic; instead, it is mapped to the KUnit
-> +/// facilities. See [`assert!`] for more details.
-> +#[doc(hidden)]
-> +#[macro_export]
-> +macro_rules! kunit_assert {
-> +    ($name:literal, $file:literal, $diff:expr, $condition:expr $(,)?) => {
-> +        'out: {
-> +            // Do nothing if the condition is `true`.
-> +            if $condition {
-> +                break 'out;
-> +            }
-> +
-> +            static FILE: &'static $crate::str::CStr = $crate::c_str!($file);
-> +            static LINE: i32 = core::line!() as i32 - $diff;
-> +            static CONDITION: &'static $crate::str::CStr = $crate::c_str!(stringify!($condition));
-> +
-> +            // SAFETY: FFI call without safety requirements.
-> +            let kunit_test = unsafe { $crate::bindings::kunit_get_current_test() };
-> +            if kunit_test.is_null() {
-> +                // The assertion failed but this task is not running a KUnit test, so we cannot call
-> +                // KUnit, but at least print an error to the kernel log. This may happen if this
-> +                // macro is called from an spawned thread in a test (see
-> +                // `scripts/rustdoc_test_gen.rs`) or if some non-test code calls this macro by
-> +                // mistake (it is hidden to prevent that).
-> +                //
-> +                // This mimics KUnit's failed assertion format.
-> +                $crate::kunit::err(format_args!(
-> +                    "    # {}: ASSERTION FAILED at {FILE}:{LINE}\n",
-> +                    $name
-> +                ));
-> +                $crate::kunit::err(format_args!(
-> +                    "    Expected {CONDITION} to be true, but is false\n"
-> +                ));
-> +                $crate::kunit::err(format_args!(
-> +                    "    Failure not reported to KUnit since this is a non-KUnit task\n"
-> +                ));
-> +                break 'out;
-> +            }
-> +
-> +            #[repr(transparent)]
-> +            struct Location($crate::bindings::kunit_loc);
-> +
-> +            #[repr(transparent)]
-> +            struct UnaryAssert($crate::bindings::kunit_unary_assert);
-> +
-> +            // SAFETY: There is only a static instance and in that one the pointer field points to
-> +            // an immutable C string.
-> +            unsafe impl Sync for Location {}
-> +
-> +            // SAFETY: There is only a static instance and in that one the pointer field points to
-> +            // an immutable C string.
-> +            unsafe impl Sync for UnaryAssert {}
-> +
-> +            static LOCATION: Location = Location($crate::bindings::kunit_loc {
-> +                file: FILE.as_char_ptr(),
-> +                line: LINE,
-> +            });
-> +            static ASSERTION: UnaryAssert = UnaryAssert($crate::bindings::kunit_unary_assert {
-> +                assert: $crate::bindings::kunit_assert {},
-> +                condition: CONDITION.as_char_ptr(),
-> +                expected_true: true,
-> +            });
-> +
-> +            // SAFETY:
-> +            //   - FFI call.
-> +            //   - The `kunit_test` pointer is valid because we got it from
-> +            //     `kunit_get_current_test()` and it was not null. This means we are in a KUnit
-> +            //     test, and that the pointer can be passed to KUnit functions and assertions.
-> +            //   - The string pointers (`file` and `condition` above) point to null-terminated
-> +            //     strings since they are `CStr`s.
-> +            //   - The function pointer (`format`) points to the proper function.
-> +            //   - The pointers passed will remain valid since they point to `static`s.
-> +            //   - The format string is allowed to be null.
-> +            //   - There are, however, problems with this: first of all, this will end up stopping
-> +            //     the thread, without running destructors. While that is problematic in itself,
-> +            //     it is considered UB to have what is effectively a forced foreign unwind
-> +            //     with `extern "C"` ABI. One could observe the stack that is now gone from
-> +            //     another thread. We should avoid pinning stack variables to prevent library UB,
-> +            //     too. For the moment, given that test failures are reported immediately before the
-> +            //     next test runs, that test failures should be fixed and that KUnit is explicitly
-> +            //     documented as not suitable for production environments, we feel it is reasonable.
-> +            unsafe {
-> +                $crate::bindings::__kunit_do_failed_assertion(
-> +                    kunit_test,
-> +                    core::ptr::addr_of!(LOCATION.0),
-> +                    $crate::bindings::kunit_assert_type_KUNIT_ASSERTION,
-> +                    core::ptr::addr_of!(ASSERTION.0.assert),
-> +                    Some($crate::bindings::kunit_unary_assert_format),
-> +                    core::ptr::null(),
-> +                );
-> +            }
-> +
-> +            // SAFETY: FFI call; the `test` pointer is valid because this hidden macro should only
-> +            // be called by the generated documentation tests which forward the test pointer given
-> +            // by KUnit.
-> +            unsafe {
-> +                $crate::bindings::__kunit_abort(kunit_test);
-> +            }
-> +        }
-> +    };
-> +}
-> +
-> +/// Asserts that two expressions are equal to each other (using [`PartialEq`]).
-> +///
-> +/// Public but hidden since it should only be used from generated tests.
-> +///
-> +/// Unlike the one in `core`, this one does not panic; instead, it is mapped to the KUnit
-> +/// facilities. See [`assert!`] for more details.
-> +#[doc(hidden)]
-> +#[macro_export]
-> +macro_rules! kunit_assert_eq {
-> +    ($name:literal, $file:literal, $diff:expr, $left:expr, $right:expr $(,)?) => {{
-> +        // For the moment, we just forward to the expression assert because, for binary asserts,
-> +        // KUnit supports only a few types (e.g. integers).
-> +        $crate::kunit_assert!($name, $file, $diff, $left == $right);
-> +    }};
-> +}
-> diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
-> index 85b261209977..3642cadc34b1 100644
-> --- a/rust/kernel/lib.rs
-> +++ b/rust/kernel/lib.rs
-> @@ -34,6 +34,8 @@
->  pub mod error;
->  pub mod init;
->  pub mod ioctl;
-> +#[cfg(CONFIG_KUNIT)]
-> +pub mod kunit;
->  pub mod prelude;
->  pub mod print;
->  mod static_assert;
-> diff --git a/scripts/.gitignore b/scripts/.gitignore
-> index 6e9ce6720a05..3dbb8bb2457b 100644
-> --- a/scripts/.gitignore
-> +++ b/scripts/.gitignore
-> @@ -5,6 +5,8 @@
->  /kallsyms
->  /module.lds
->  /recordmcount
-> +/rustdoc_test_builder
-> +/rustdoc_test_gen
->  /sign-file
->  /sorttable
->  /target.json
-> diff --git a/scripts/Makefile b/scripts/Makefile
-> index 32b6ba722728..576cf64be667 100644
-> --- a/scripts/Makefile
-> +++ b/scripts/Makefile
-> @@ -9,6 +9,8 @@ hostprogs-always-$(CONFIG_BUILDTIME_TABLE_SORT)         += sorttable
->  hostprogs-always-$(CONFIG_ASN1)                                += asn1_compiler
->  hostprogs-always-$(CONFIG_MODULE_SIG_FORMAT)           += sign-file
->  hostprogs-always-$(CONFIG_SYSTEM_EXTRA_CERTIFICATE)    += insert-sys-cert
-> +hostprogs-always-$(CONFIG_RUST_KERNEL_DOCTESTS)                += rustdoc_test_builder
-> +hostprogs-always-$(CONFIG_RUST_KERNEL_DOCTESTS)                += rustdoc_test_gen
->  always-$(CONFIG_RUST)                                  += target.json
->
->  filechk_rust_target = $< < include/config/auto.conf
-> @@ -18,6 +20,8 @@ $(obj)/target.json: scripts/generate_rust_target include/config/auto.conf FORCE
->
->  hostprogs += generate_rust_target
->  generate_rust_target-rust := y
-> +rustdoc_test_builder-rust := y
-> +rustdoc_test_gen-rust := y
->
->  HOSTCFLAGS_sorttable.o = -I$(srctree)/tools/include
->  HOSTLDLIBS_sorttable = -lpthread
-> diff --git a/scripts/rustdoc_test_builder.rs b/scripts/rustdoc_test_builder.rs
-> new file mode 100644
-> index 000000000000..e5894652f12c
-> --- /dev/null
-> +++ b/scripts/rustdoc_test_builder.rs
-> @@ -0,0 +1,72 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +
-> +//! Test builder for `rustdoc`-generated tests.
-> +//!
-> +//! This script is a hack to extract the test from `rustdoc`'s output. Ideally, `rustdoc` would
-> +//! have an option to generate this information instead, e.g. as JSON output.
-> +//!
-> +//! The `rustdoc`-generated test names look like `{file}_{line}_{number}`, e.g.
-> +//! `...path_rust_kernel_sync_arc_rs_42_0`. `number` is the "test number", needed in cases like
-> +//! a macro that expands into items with doctests is invoked several times within the same line.
-> +//!
-> +//! However, since these names are used for bisection in CI, the line number makes it not stable
-> +//! at all. In the future, we would like `rustdoc` to give us the Rust item path associated with
-> +//! the test, plus a "test number" (for cases with several examples per item) and generate a name
-> +//! from that. For the moment, we generate ourselves a new name, `{file}_{number}` instead, in
-> +//! the `gen` script (done there since we need to be aware of all the tests in a given file).
-> +
-> +use std::io::Read;
-> +
-> +fn main() {
-> +    let mut stdin = std::io::stdin().lock();
-> +    let mut body = String::new();
-> +    stdin.read_to_string(&mut body).unwrap();
-> +
-> +    // Find the generated function name looking for the inner function inside `main()`.
-> +    //
-> +    // The line we are looking for looks like one of the following:
-> +    //
-> +    // ```
-> +    // fn main() { #[allow(non_snake_case)] fn _doctest_main_rust_kernel_file_rs_28_0() {
-> +    // fn main() { #[allow(non_snake_case)] fn _doctest_main_rust_kernel_file_rs_37_0() -> Result<(), impl core::fmt::Debug> {
-> +    // ```
-> +    //
-> +    // It should be unlikely that doctest code matches such lines (when code is formatted properly).
-> +    let rustdoc_function_name = body
-> +        .lines()
-> +        .find_map(|line| {
-> +            Some(
-> +                line.split_once("fn main() {")?
-> +                    .1
-> +                    .split_once("fn ")?
-> +                    .1
-> +                    .split_once("()")?
-> +                    .0,
-> +            )
-> +            .filter(|x| x.chars().all(|c| c.is_alphanumeric() || c == '_'))
-> +        })
-> +        .expect("No test function found in `rustdoc`'s output.");
-> +
-> +    // Qualify `Result` to avoid the collision with our own `Result` coming from the prelude.
-> +    let body = body.replace(
-> +        &format!("{rustdoc_function_name}() -> Result<(), impl core::fmt::Debug> {{"),
-> +        &format!("{rustdoc_function_name}() -> core::result::Result<(), impl core::fmt::Debug> {{"),
-> +    );
-> +
-> +    // For tests that get generated with `Result`, like above, `rustdoc` generates an `unwrap()` on
-> +    // the return value to check there were no returned errors. Instead, we use our assert macro
-> +    // since we want to just fail the test, not panic the kernel.
-> +    //
-> +    // We save the result in a variable so that the failed assertion message looks nicer.
-> +    let body = body.replace(
-> +        &format!("}} {rustdoc_function_name}().unwrap() }}"),
-> +        &format!("}} let test_return_value = {rustdoc_function_name}(); assert!(test_return_value.is_ok()); }}"),
-> +    );
-> +
-> +    // Figure out a smaller test name based on the generated function name.
-> +    let name = rustdoc_function_name.split_once("_rust_kernel_").unwrap().1;
-> +
-> +    let path = format!("rust/test/doctests/kernel/{name}");
-> +
-> +    std::fs::write(path, body.as_bytes()).unwrap();
-> +}
-> diff --git a/scripts/rustdoc_test_gen.rs b/scripts/rustdoc_test_gen.rs
-> new file mode 100644
-> index 000000000000..5ebd42ae4a3f
-> --- /dev/null
-> +++ b/scripts/rustdoc_test_gen.rs
-> @@ -0,0 +1,260 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +
-> +//! Generates KUnit tests from saved `rustdoc`-generated tests.
-> +//!
-> +//! KUnit passes a context (`struct kunit *`) to each test, which should be forwarded to the other
-> +//! KUnit functions and macros.
-> +//!
-> +//! However, we want to keep this as an implementation detail because:
-> +//!
-> +//!   - Test code should not care about the implementation.
-> +//!
-> +//!   - Documentation looks worse if it needs to carry extra details unrelated to the piece
-> +//!     being described.
-> +//!
-> +//!   - Test code should be able to define functions and call them, without having to carry
-> +//!     the context.
-> +//!
-> +//!   - Later on, we may want to be able to test non-kernel code (e.g. `core`, `alloc` or
-> +//!     third-party crates) which likely use the standard library `assert*!` macros.
-> +//!
-> +//! For this reason, instead of the passed context, `kunit_get_current_test()` is used instead
-> +//! (i.e. `current->kunit_test`).
-> +//!
-> +//! Note that this means other threads/tasks potentially spawned by a given test, if failing, will
-> +//! report the failure in the kernel log but will not fail the actual test. Saving the pointer in
-> +//! e.g. a `static` per test does not fully solve the issue either, because currently KUnit does
-> +//! not support assertions (only expectations) from other tasks. Thus leave that feature for
-> +//! the future, which simplifies the code here too. We could also simply not allow `assert`s in
-> +//! other tasks, but that seems overly constraining, and we do want to support them, eventually.
-> +
-> +use std::{
-> +    fs,
-> +    fs::File,
-> +    io::{BufWriter, Read, Write},
-> +    path::{Path, PathBuf},
-> +};
-> +
-> +/// Find the real path to the original file based on the `file` portion of the test name.
-> +///
-> +/// `rustdoc` generated `file`s look like `sync_locked_by_rs`. Underscores (except the last one)
-> +/// may represent an actual underscore in a directory/file, or a path separator. Thus the actual
-> +/// file might be `sync_locked_by.rs`, `sync/locked_by.rs`, `sync_locked/by.rs` or
-> +/// `sync/locked/by.rs`. This function walks the file system to determine which is the real one.
-> +///
-> +/// This does require that ambiguities do not exist, but that seems fair, especially since this is
-> +/// all supposed to be temporary until `rustdoc` gives us proper metadata to build this. If such
-> +/// ambiguities are detected, they are diagnosed and the script panics.
-> +fn find_real_path<'a>(srctree: &Path, valid_paths: &'a mut Vec<PathBuf>, file: &str) -> &'a str {
-> +    valid_paths.clear();
-> +
-> +    let potential_components: Vec<&str> = file.strip_suffix("_rs").unwrap().split('_').collect();
-> +
-> +    find_candidates(srctree, valid_paths, Path::new(""), &potential_components);
-> +    fn find_candidates(
-> +        srctree: &Path,
-> +        valid_paths: &mut Vec<PathBuf>,
-> +        prefix: &Path,
-> +        potential_components: &[&str],
-> +    ) {
-> +        // The base case: check whether all the potential components left, joined by underscores,
-> +        // is a file.
-> +        let joined_potential_components = potential_components.join("_") + ".rs";
-> +        if srctree
-> +            .join("rust/kernel")
-> +            .join(prefix)
-> +            .join(&joined_potential_components)
-> +            .is_file()
-> +        {
-> +            // Avoid `srctree` here in order to keep paths relative to it in the KTAP output.
-> +            valid_paths.push(
-> +                Path::new("rust/kernel")
-> +                    .join(prefix)
-> +                    .join(joined_potential_components),
-> +            );
-> +        }
-> +
-> +        // In addition, check whether each component prefix, joined by underscores, is a directory.
-> +        // If not, there is no need to check for combinations with that prefix.
-> +        for i in 1..potential_components.len() {
-> +            let (components_prefix, components_rest) = potential_components.split_at(i);
-> +            let prefix = prefix.join(components_prefix.join("_"));
-> +            if srctree.join("rust/kernel").join(&prefix).is_dir() {
-> +                find_candidates(srctree, valid_paths, &prefix, components_rest);
-> +            }
-> +        }
-> +    }
-> +
-> +    assert!(
-> +        valid_paths.len() > 0,
-> +        "No path candidates found. This is likely a bug in the build system, or some files went \
-> +        away while compiling."
-> +    );
-> +
-> +    if valid_paths.len() > 1 {
-> +        eprintln!("Several path candidates found:");
-> +        for path in valid_paths {
-> +            eprintln!("    {path:?}");
-> +        }
-> +        panic!(
-> +            "Several path candidates found, please resolve the ambiguity by renaming a file or \
-> +            folder."
-> +        );
-> +    }
-> +
-> +    valid_paths[0].to_str().unwrap()
-> +}
-> +
-> +fn main() {
-> +    let srctree = std::env::var("srctree").unwrap();
-> +    let srctree = Path::new(&srctree);
-> +
-> +    let mut paths = fs::read_dir("rust/test/doctests/kernel")
-> +        .unwrap()
-> +        .map(|entry| entry.unwrap().path())
-> +        .collect::<Vec<_>>();
-> +
-> +    // Sort paths.
-> +    paths.sort();
-> +
-> +    let mut rust_tests = String::new();
-> +    let mut c_test_declarations = String::new();
-> +    let mut c_test_cases = String::new();
-> +    let mut body = String::new();
-> +    let mut last_file = String::new();
-> +    let mut number = 0;
-> +    let mut valid_paths: Vec<PathBuf> = Vec::new();
-> +    let mut real_path: &str = "";
-> +    for path in paths {
-> +        // The `name` follows the `{file}_{line}_{number}` pattern (see description in
-> +        // `scripts/rustdoc_test_builder.rs`). Discard the `number`.
-> +        let name = path.file_name().unwrap().to_str().unwrap().to_string();
-> +
-> +        // Extract the `file` and the `line`, discarding the `number`.
-> +        let (file, line) = name.rsplit_once('_').unwrap().0.rsplit_once('_').unwrap();
-> +
-> +        // Generate an ID sequence ("test number") for each one in the file.
-> +        if file == last_file {
-> +            number += 1;
-> +        } else {
-> +            number = 0;
-> +            last_file = file.to_string();
-> +
-> +            // Figure out the real path, only once per file.
-> +            real_path = find_real_path(srctree, &mut valid_paths, file);
-> +        }
-> +
-> +        // Generate a KUnit name (i.e. test name and C symbol) for this test.
-> +        //
-> +        // We avoid the line number, like `rustdoc` does, to make things slightly more stable for
-> +        // bisection purposes. However, to aid developers in mapping back what test failed, we will
-> +        // print a diagnostics line in the KTAP report.
-> +        let kunit_name = format!("rust_doctest_kernel_{file}_{number}");
-> +
-> +        // Read the test's text contents to dump it below.
-> +        body.clear();
-> +        File::open(path).unwrap().read_to_string(&mut body).unwrap();
-> +
-> +        // Calculate how many lines before `main` function (including the `main` function line).
-> +        let body_offset = body
-> +            .lines()
-> +            .take_while(|line| !line.contains("fn main() {"))
-> +            .count()
-> +            + 1;
-> +
-> +        use std::fmt::Write;
-> +        write!(
-> +            rust_tests,
-> +            r#"/// Generated `{name}` KUnit test case from a Rust documentation test.
-> +#[no_mangle]
-> +pub extern "C" fn {kunit_name}(__kunit_test: *mut kernel::bindings::kunit) {{
-> +    /// Overrides the usual [`assert!`] macro with one that calls KUnit instead.
-> +    #[allow(unused)]
-> +    macro_rules! assert {{
-> +        ($cond:expr $(,)?) => {{{{
-> +            kernel::kunit_assert!("{kunit_name}", "{real_path}", __DOCTEST_ANCHOR - {line}, $cond);
-> +        }}}}
-> +    }}
-> +
-> +    /// Overrides the usual [`assert_eq!`] macro with one that calls KUnit instead.
-> +    #[allow(unused)]
-> +    macro_rules! assert_eq {{
-> +        ($left:expr, $right:expr $(,)?) => {{{{
-> +            kernel::kunit_assert_eq!("{kunit_name}", "{real_path}", __DOCTEST_ANCHOR - {line}, $left, $right);
-> +        }}}}
-> +    }}
-> +
-> +    // Many tests need the prelude, so provide it by default.
-> +    #[allow(unused)]
-> +    use kernel::prelude::*;
-> +
-> +    // Unconditionally print the location of the original doctest (i.e. rather than the location in
-> +    // the generated file) so that developers can easily map the test back to the source code.
-> +    //
-> +    // This information is also printed when assertions fail, but this helps in the successful cases
-> +    // when the user is running KUnit manually, or when passing `--raw_output` to `kunit.py`.
-> +    //
-> +    // This follows the syntax for declaring test metadata in the proposed KTAP v2 spec, which may
-> +    // be used for the proposed KUnit test attributes API. Thus hopefully this will make migration
-> +    // easier later on.
-> +    kernel::kunit::info(format_args!("    # {kunit_name}.location: {real_path}:{line}\n"));
-> +
-> +    /// The anchor where the test code body starts.
-> +    #[allow(unused)]
-> +    static __DOCTEST_ANCHOR: i32 = core::line!() as i32 + {body_offset} + 1;
-> +    {{
-> +        {body}
-> +        main();
-> +    }}
-> +}}
-> +
-> +"#
-> +        )
-> +        .unwrap();
-> +
-> +        write!(c_test_declarations, "void {kunit_name}(struct kunit *);\n").unwrap();
-> +        write!(c_test_cases, "    KUNIT_CASE({kunit_name}),\n").unwrap();
-> +    }
-> +
-> +    let rust_tests = rust_tests.trim();
-> +    let c_test_declarations = c_test_declarations.trim();
-> +    let c_test_cases = c_test_cases.trim();
-> +
-> +    write!(
-> +        BufWriter::new(File::create("rust/doctests_kernel_generated.rs").unwrap()),
-> +        r#"//! `kernel` crate documentation tests.
-> +
-> +const __LOG_PREFIX: &[u8] = b"rust_doctests_kernel\0";
-> +
-> +{rust_tests}
-> +"#
-> +    )
-> +    .unwrap();
-> +
-> +    write!(
-> +        BufWriter::new(File::create("rust/doctests_kernel_generated_kunit.c").unwrap()),
-> +        r#"/*
-> + * `kernel` crate documentation tests.
-> + */
-> +
-> +#include <kunit/test.h>
-> +
-> +{c_test_declarations}
-> +
-> +static struct kunit_case test_cases[] = {{
-> +    {c_test_cases}
-> +    {{ }}
-
-As this is a C file, it might be better to indent this with a tab.
-
-> +}};
-> +
-> +static struct kunit_suite test_suite = {{
-> +    .name = "rust_doctests_kernel",
-> +    .test_cases = test_cases,
-
-As above, since this is a C file, it might be better to indent this with a tab.
-
-> +}};
-> +
-> +kunit_test_suite(test_suite);
-> +
-> +MODULE_LICENSE("GPL");
-> +"#
-> +    )
-> +    .unwrap();
-> +}
+> base-commit: 06c2afb862f9da8dc5efa4b6076a0e48c3fbaaa5
 > --
 > 2.41.0
 >
 > --
 > You received this message because you are subscribed to the Google Groups "KUnit Development" group.
 > To unsubscribe from this group and stop receiving emails from it, send an email to kunit-dev+unsubscribe@googlegroups.com.
-> To view this discussion on the web visit https://groups.google.com/d/msgid/kunit-dev/20230718052752.1045248-7-ojeda%40kernel.org.
+> To view this discussion on the web visit https://groups.google.com/d/msgid/kunit-dev/20230718052752.1045248-1-ojeda%40kernel.org.
 
---000000000000698e240600be8caf
+--000000000000a5b5530600bed700
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -978,14 +292,14 @@ jyzYFOHYQyv5IfML/3IBFKlON5OZa+V8EZYULYcNkp03DdWglafj7SXZ1/XgAbVYrC381UvrsYN8
 jndVvoa1GWwe+NVlIIK7Q3uAjV3qLEDQpaNPg1rr0oAn6YmvTccjVMqj2YNwN+RHhKNzgRGxY5ct
 FaN+8fXZhRhpv3bVbAWuPZXoMYICajCCAmYCAQEwaDBUMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQ
 R2xvYmFsU2lnbiBudi1zYTEqMCgGA1UEAxMhR2xvYmFsU2lnbiBBdGxhcyBSMyBTTUlNRSBDQSAy
-MDIwAhABAz5xDls09r2CKyYRqnNbMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCCl
-pZWlaqUU2BPV4fifUXaAX4EeYjytXAVsQW55Q5ltLzAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcB
-MBwGCSqGSIb3DQEJBTEPFw0yMzA3MTgwODE3MzlaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUD
+MDIwAhABAz5xDls09r2CKyYRqnNbMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCBU
+/Kej+GuGGXDnTLvxu6bkGrQf8lVKtiJd9KuXLwDAojAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcB
+MBwGCSqGSIb3DQEJBTEPFw0yMzA3MTgwODM4NDJaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUD
 BAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsG
-CSqGSIb3DQEBBzALBglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAHJsSdldFN1OkDogewgSV
-egr2y9Y9pMnGTMAD6qPssg6ULRfURZvQb7uST7v2G8yAGZ4b11NYXM/J5xyY5h30NvUY6vefPSaa
-HKq+7GpfGE5kdyEc5AK8ReyLzV2bgFcR4FeTcmwCHi/KecLw25F4IFoAXp2WAniJdyRLBzYvzgu7
-EFOcszrzgBLB58NNo4vTem3GMDAPCwS2t8WPUB7Vc/mhn2cCFGevNdZd4D8IFoNdJIMjUwCzd61l
-OP3rbctZ7Ffh3Avlowfw7AG6zNua3/fn2myJwJAH83qcRWcl7pQVo/+aJ4fQq9QM9OYw3KBnAE3J
-Rw9zufet3a2WlglifA==
---000000000000698e240600be8caf--
+CSqGSIb3DQEBBzALBglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAK/pldqEKqu8x4YvHaPWf
+pmFHWBrsSBSFPqIrPEseiJRLRO2DYZ846i6fQEgUGwNU1sAqWrsJUWE0hjw/lfop+FdbPP+vJpz3
+26fL1LIBgmnvabn6nGjNBKuumKibXnEt0Eedv3zbpSG4SZBbG9x7Oygt6tqqDgvVWAmTVyyqhGfm
+Ft2CYjqiLoN0uvW36OpQ7wcRbOM5UxTk/iSXS20JKauA61+4RdopgYcoE49W4QgoRdBSXtCgvWE8
+9lbFZuc170vwqzCQaufhEgk8u97w6UBaHoywpKKy5/wuz2e5yAWa8uNNLj0SAjyCfciA8jsYyGnL
+U43CEIyKWZi80TZTlA==
+--000000000000a5b5530600bed700--
