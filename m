@@ -1,103 +1,99 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91FDC8CD
-	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 16:43:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D878C433C8;
-	Tue, 18 Jul 2023 16:43:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1689698586;
-	bh=6GmurqX2i9JM34BQa9X30FmQHtnrur89oQ3WxbydzJo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PM2FYJSNOlfl7ajifO/Zb7gliIo6DLh1mRbpPrgh3TRoUhoZ6rlj70Lej34Ftn+AG
-	 NytoIB0ziTr1RxHoweF9CvObomaiakj6hnRjYm3NUbcmMWRfNJ7HtyDClA2v5P8XZm
-	 X4xajyR8KQeor6hPjr+IlvLImDEm6Hm3N4frcSeBH5QhHXH95p6YgWrjfyUqkej+RE
-	 21SNU0aMQWNo+K01+12GvN0Up50PZYIR9v23LinCvoOrGh8w916WIZ3kQjRQbix0Ou
-	 ld8g8iYvORM3N/IGSc0R/KuItkXyIpRuoiEhI1S6Q8VaNrBIBdYw2tqjia3OBybawT
-	 R4nsCEcyw1haA==
-Date: Tue, 18 Jul 2023 09:43:03 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	linux-kbuild@vger.kernel.org, rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	Raphael Nestler <raphael.nestler@gmail.com>,
-	Andrea Righi <andrea.righi@canonical.com>, stable@vger.kernel.org
-Subject: Re: [PATCH] kbuild: rust: avoid creating temporary files
-Message-ID: <20230718164303.GB1279879@dev-arch.thelio-3990X>
-References: <20230718055235.1050223-1-ojeda@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D50C2C4
+	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 16:55:45 +0000 (UTC)
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-4fbf09a9139so9568899e87.2
+        for <patches@lists.linux.dev>; Tue, 18 Jul 2023 09:55:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689699343; x=1692291343;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=JIndIIsHZdBsI82FGjgzN3aCzq+aMlyvKWLxj8Qz9aY=;
+        b=VpfD2xPGeXFrsUMOAFJrtVhv3f8Z4MZm+RaTMwv/z5vZScyldkBj2GVf/WaYsoW2pE
+         /bgiT+HYhcwyL9cXsqG+mLf3HK6QDpBzj0fTR42+nQYKuOOknGenF2kMWY+pBJ9FtWOR
+         ABc7beAtrkMBlykXcwniKtnS34psSo9tgz/Ed2EC4maPoF7Jl1XUJQVxRyBfbi4KqTWm
+         i040rAkjbcN6gFgsY8q76yYw0ykmGxPMwmmXLojHyhyxQxODbEng/S2D4F1bI0zQyC+w
+         cfqgbRLbFZu43RFERcW6WEI6hTByCarCIqk8zw/K5xOWVcUAmTPRlb5jx801Cq9L/89G
+         KB+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689699343; x=1692291343;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JIndIIsHZdBsI82FGjgzN3aCzq+aMlyvKWLxj8Qz9aY=;
+        b=hm/Z19ztQzdbHWZvDAlx9C7GjdM9EwCzEJkPv2QZqc1KdkMfpebn/eagf7mn+unWiS
+         1xIyTemQsXgA6lU+kZt60jbUNPbKn3av2v2ertWLSWuf7RDtEQV4C7pt5S38bLO+hD5S
+         /MRceWeufLpQ1k+JWCE8u3728ugmU5QeQZoaH5CwRFQ9BKnnQKBdojF29q9R8oa2wknp
+         NnzScSHul8DUlCtQ5xv+LjQIp7PjWZf0NltAJVCTOaHa1JS0hXtwIKdyNvMb59Kq/or9
+         HaDCaN+7RgHMfVhx93Hl6TM5lCyFBRAirMZdLU+vhUl7scw/GoEh482ARv4vxiBIKMhl
+         vUfw==
+X-Gm-Message-State: ABy/qLY61geZPhP0XxlNT1hl6vOqvYoRBTn7vSTKdUqyRo4sHrkVjTKp
+	LNoeOEaN2gBHeQxm0rcqMzQL5LJXaJAb9JkuFxLwWQ==
+X-Google-Smtp-Source: APBJJlE2uBeZwHdgwglSOep4/2Gj6tnEJTFOcNjZ6zIc3XLIKjD4I3fOhnp1lMuSNDsRNLskn1riZiAySK+ngZ9ZOTM=
+X-Received: by 2002:ac2:5450:0:b0:4fb:8afa:4dc9 with SMTP id
+ d16-20020ac25450000000b004fb8afa4dc9mr10304140lfn.49.1689699343057; Tue, 18
+ Jul 2023 09:55:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230718055235.1050223-1-ojeda@kernel.org>
+References: <20230717201547.359923764@linuxfoundation.org> <CA+G9fYujXH8J99m8ZKoijGhWJAS+r1SPqd8y+gB-B9DVjsgAzA@mail.gmail.com>
+In-Reply-To: <CA+G9fYujXH8J99m8ZKoijGhWJAS+r1SPqd8y+gB-B9DVjsgAzA@mail.gmail.com>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 18 Jul 2023 22:25:30 +0530
+Message-ID: <CA+G9fYuxBPbDbgyr+oo_5OJwwYO7c53zEXfJKA9doT7XJAFA-w@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/589] 6.1.39-rc3 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
+	Michal Luczaj <mhal@rbox.co>, Sean Christopherson <seanjc@google.com>, Aaron Lewis <aaronlewis@google.com>, 
+	Mark Brown <broonie@kernel.org>, Marc Zyngier <maz@kernel.org>, kvm list <kvm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Jul 18, 2023 at 07:52:35AM +0200, Miguel Ojeda wrote:
-> `rustc` outputs by default the temporary files (i.e. the ones saved
-> by `-Csave-temps`, such as `*.rcgu*` files) in the current working
-> directory when `-o` and `--out-dir` are not given (even if
-> `--emit=x=path` is given, i.e. it does not use those for temporaries).
-> 
-> Since out-of-tree modules are compiled from the `linux` tree,
-> `rustc` then tries to create them there, which may not be accessible.
-> 
-> Thus pass `--out-dir` explicitly, even if it is just for the temporary
-> files.
-> 
-> Reported-by: Raphael Nestler <raphael.nestler@gmail.com>
-> Closes: https://github.com/Rust-for-Linux/linux/issues/1015
-> Reported-by: Andrea Righi <andrea.righi@canonical.com>
-> Tested-by: Raphael Nestler <raphael.nestler@gmail.com>
-> Tested-by: Andrea Righi <andrea.righi@canonical.com>
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+On Tue, 18 Jul 2023 at 20:07, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+>
+> On Tue, 18 Jul 2023 at 02:04, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 6.1.39 release.
+> > There are 589 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Wed, 19 Jul 2023 20:14:46 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.39-rc3.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
+>
+>
+> As you know LKFT runs latest kselftests from stable 6.4 on
+> stable rc 6.1 branches and found two test failures on this
+> round of stable rc review 6.1.39-rc3 compared with 6.1.37.
+>
+> Test regressions:
+>
+> * bcm2711-rpi-4-b, kselftest-kvm
+>   - kvm_get-reg-list
+>
+> * x86, kselftest-kvm
+>   - kvm_vmx_pmu_caps_test
 
-Seems reasonable to me.
+These two test failures are not kernel regressions.
+However, these are due to latest kselftests on older kernels.
 
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-
-> ---
->  scripts/Makefile.build | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/scripts/Makefile.build b/scripts/Makefile.build
-> index 6413342a03f4..82e3fb19fdaf 100644
-> --- a/scripts/Makefile.build
-> +++ b/scripts/Makefile.build
-> @@ -264,6 +264,9 @@ $(obj)/%.lst: $(src)/%.c FORCE
->  
->  rust_allowed_features := new_uninit
->  
-> +# `--out-dir` is required to avoid temporaries being created by `rustc` in the
-> +# current working directory, which may be not accessible in the out-of-tree
-> +# modules case.
->  rust_common_cmd = \
->  	RUST_MODFILE=$(modfile) $(RUSTC_OR_CLIPPY) $(rust_flags) \
->  	-Zallow-features=$(rust_allowed_features) \
-> @@ -272,7 +275,7 @@ rust_common_cmd = \
->  	--extern alloc --extern kernel \
->  	--crate-type rlib -L $(objtree)/rust/ \
->  	--crate-name $(basename $(notdir $@)) \
-> -	--emit=dep-info=$(depfile)
-> +	--out-dir $(dir $@) --emit=dep-info=$(depfile)
->  
->  # `--emit=obj`, `--emit=asm` and `--emit=llvm-ir` imply a single codegen unit
->  # will be used. We explicitly request `-Ccodegen-units=1` in any case, and
-> 
-> base-commit: 06c2afb862f9da8dc5efa4b6076a0e48c3fbaaa5
-> -- 
-> 2.41.0
-> 
+- Naresh
