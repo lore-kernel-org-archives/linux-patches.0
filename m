@@ -1,105 +1,324 @@
-Received: from qproxy2-pub.mail.unifiedlayer.com (qproxy2-pub.mail.unifiedlayer.com [69.89.16.161])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7631FD8
-	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 11:21:29 +0000 (UTC)
-Received: from gproxy3-pub.mail.unifiedlayer.com (gproxy3-pub.mail.unifiedlayer.com [69.89.30.42])
-	by qproxy2.mail.unifiedlayer.com (Postfix) with ESMTP id D7EBE8047FB2
-	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 10:56:30 +0000 (UTC)
-Received: from cmgw10.mail.unifiedlayer.com (unknown [10.0.90.125])
-	by progateway5.mail.pro1.eigbox.com (Postfix) with ESMTP id 669AC1004829C
-	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 10:56:23 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id LiNTqYJn33S70LiNTqjOIo; Tue, 18 Jul 2023 10:56:23 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=YL5adTKx c=1 sm=1 tr=0 ts=64b66fd7
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10:nop_charset_1 a=ws7JD89P4LkA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=sUJxAGu+f8u+604DGNTPtuQEd9oznjPk40LYg1C3mJo=; b=14YDcwd6g8uMC7/K6GuWffXBS2
-	N/ZxM/fp8/x9dnT3vJZ3euhianOpJCaDziCs13lWg8lfcSAftFyXQBXeATLG3aJG3trj05nG7rBE7
-	osgL6wMbBwLYQR25WTOEmoIe/AN+gCwMdFiw1cpoIUMpbuAkKRAzB8s7eDVMLSgfCSmYrPRnf1OCd
-	YYuMHAmwb7E83psD7YOxw446lkYhSuw/wbmxXZh9VOPScWE+p6gLULEZo7eThFKsdvKuA5WQCKIzK
-	Kf+7UbGiMAw9NcbwqVN0fXmlJgr6b66XKCPqLtiIZcV4xMQ1yIuGKBhQNPv25as2pEupSIb1jhtyX
-	p08aX4dg==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:48322 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96)
-	(envelope-from <re@w6rz.net>)
-	id 1qLiNS-001iw8-1m;
-	Tue, 18 Jul 2023 04:56:22 -0600
-Subject: Re: [PATCH 6.4 000/801] 6.4.4-rc3 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org
-References: <20230717201608.814406187@linuxfoundation.org>
-In-Reply-To: <20230717201608.814406187@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <00c4f8c8-273f-75da-af83-249726beeaed@w6rz.net>
-Date: Tue, 18 Jul 2023 03:56:20 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90030AD4B
+	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 14:38:03 +0000 (UTC)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-51e526e0fe4so8779521a12.3
+        for <patches@lists.linux.dev>; Tue, 18 Jul 2023 07:38:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1689691081; x=1692283081;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=75L/3OVtvZjuTDZO1U5NULzORO9HoUjrPecBU88kFVg=;
+        b=s6UQ+0D+YlNZU5kMLy7TOrWhyfunsVOoqmewL6INjtZt+yul2arKXwZrb77/8pX/uc
+         xVBjSC/kxi5n/dBfttJmZ5rVkEwpaaPjfIdulQelmfsTMrqPpKW8yu6C43HXrzDNWPcP
+         FZYEXjbxSvXQHC9mq7KCjp/XhVHRIvhc6/dAmmeAFq1J5//ISpLWG4VHw8zCAYJp8wFc
+         2l6eRTZE2d1vPFtwRcsX3I7ca5S+OIq3/gAG3awTn36P4K9qAWOQLnAtY++qvkIsg/fS
+         vKZXyWLlYzX4WDCK4A+Qo8aMrZnHyYLgN9Bdwz0DkV2WOhU0DJpHfvuOqUJLk0d7hmab
+         3WBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689691081; x=1692283081;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=75L/3OVtvZjuTDZO1U5NULzORO9HoUjrPecBU88kFVg=;
+        b=CViG2plQcfLOni6BF8vIRa11M9CGfXAZQpGQhHtdM7FqSLqBLaqR5C/wJMUmb1pDqA
+         sqfumTzxL3ftLYwOmQ6Cn+VxxwXvVeFcSPzbxq/fk8ie9X7jb7Zw4D8IAjgYLzqaB+tB
+         xLoY0Zt6h7G6f+eEvrIBaPndTKzDO8S4QlKIN20jsBVRTUST2LYrtLHI03bZD02H0Ro7
+         P8KmF6gVmSTt/xJI0l13LaOFE1az9uO/4bdYZ19cPGEm8p4qHy8DtizjYG1p147mGjJY
+         QbwLTJeyiid8LLcobLkjqjXFpDeHHj+1xCsWXVLVzRyeDyQ9AGeXdu2UwOkCiDul7c3U
+         SwDA==
+X-Gm-Message-State: ABy/qLbhD/YfRo1A5e/CAgQxqhmI/BrYOH+Bigptd3FboGwVpFzxcqwy
+	55CtlM0Ziecr7rPzp/kTE+zRsx5seVcNOCT4WnGlhQ==
+X-Google-Smtp-Source: APBJJlF7p9wEN9sukd1YSop4aAYl8/qlgo9aJIhNuJpIH0XfrkjYqMQFEB7+XzJiNM59aUYsL91Zx6WoKY9MwC3uf9A=
+X-Received: by 2002:aa7:d5d4:0:b0:51e:3558:5eb8 with SMTP id
+ d20-20020aa7d5d4000000b0051e35585eb8mr106354eds.19.1689691081360; Tue, 18 Jul
+ 2023 07:38:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1qLiNS-001iw8-1m
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:48322
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+References: <20230717201547.359923764@linuxfoundation.org>
+In-Reply-To: <20230717201547.359923764@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 18 Jul 2023 20:07:49 +0530
+Message-ID: <CA+G9fYujXH8J99m8ZKoijGhWJAS+r1SPqd8y+gB-B9DVjsgAzA@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/589] 6.1.39-rc3 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
+	Michal Luczaj <mhal@rbox.co>, Sean Christopherson <seanjc@google.com>, Aaron Lewis <aaronlewis@google.com>, 
+	Mark Brown <broonie@kernel.org>, Marc Zyngier <maz@kernel.org>, kvm list <kvm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 7/17/23 1:34 PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.4.4 release.
-> There are 801 patches in this series, all will be posted as a response
+On Tue, 18 Jul 2023 at 02:04, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.39 release.
+> There are 589 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
-> Responses should be made by Wed, 19 Jul 2023 20:14:44 +0000.
+> Responses should be made by Wed, 19 Jul 2023 20:14:46 +0000.
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.4-rc3.gz
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.39-rc3.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Tested-by: Ron Economos <re@w6rz.net>
+As you know LKFT runs latest kselftests from stable 6.4 on
+stable rc 6.1 branches and found two test failures on this
+round of stable rc review 6.1.39-rc3 compared with 6.1.37.
 
+Test regressions:
+
+* bcm2711-rpi-4-b, kselftest-kvm
+  - kvm_get-reg-list
+
+* x86, kselftest-kvm
+  - kvm_vmx_pmu_caps_test
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Build
+* kernel: 6.1.39-rc3
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.1.y
+* git commit: ce7ec101118789331617601d680d905c318b4ab6
+* git describe: v6.1.38-590-gce7ec1011187
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.38-590-gce7ec1011187
+
+## Test Regressions (compared to v6.1.37-14-g185484ee4c4f)
+* bcm2711-rpi-4-b, kselftest-kvm
+  - kvm_get-reg-list
+
+logs:
+--
+# selftests: kvm: get-reg-list
+# vregs: Number blessed registers:   242
+# vregs: Number registers:           242 (includes 3 filtered registers)
+#
+# vregs: There are 3 missing registers.
+# The following lines are missing registers:
+#
+# ARM64_SYS_REG(3, 3, 14, 0, 1),
+# ARM64_SYS_REG(3, 3, 14, 2, 1),
+# ARM64_SYS_REG(3, 3, 14, 2, 2),
+#
+# ==== Test Assertion Failure ====
+#   aarch64/get-reg-list.c:541: !missing_regs && !failed_get &&
+!failed_set && !failed_reject
+#   pid=658 tid=658 errno=7 - Argument list too long
+#      1 0x0000000000402def: ?? ??:0
+#      2 0x0000000000401aff: ?? ??:0
+#      3 0x0000ffff81dfb22f: ?? ??:0
+#      4 0x0000ffff81dfb30b: ?? ??:0
+#      5 0x0000000000401bef: ?? ??:0
+#   vregs: There are 3 missing registers; 0 registers failed get; 0
+registers failed set; 0 registers failed reject
+# vregs+pmu: Number blessed registers:   316
+# vregs+pmu: Number registers:           316 (includes 3 filtered registers)
+#
+# vregs+pmu: There are 3 missing registers.
+# The following lines are missing registers:
+#
+# ARM64_SYS_REG(3, 3, 14, 0, 1),
+# ARM64_SYS_REG(3, 3, 14, 2, 1),
+# ARM64_SYS_REG(3, 3, 14, 2, 2),
+#
+# ==== Test Assertion Failure ====
+#   aarch64/get-reg-list.c:541: !missing_regs && !failed_get &&
+!failed_set && !failed_reject
+#   pid=662 tid=662 errno=7 - Argument list too long
+#      1 0x0000000000402def: ?? ??:0
+#      2 0x0000000000401aff: ?? ??:0
+#      3 0x0000ffff81dfb22f: ?? ??:0
+#      4 0x0000ffff81dfb30b: ?? ??:0
+#      5 0x0000000000401bef: ?? ??:0
+#   vregs+pmu: There are 3 missing registers; 0 registers failed get;
+0 registers failed set; 0 registers failed reject
+# 1..0 # SKIP - sve: sve not available, skipping tests
+#
+# 1..0 # SKIP - sve+pmu: sve not available, skipping tests
+#
+# 1..0 # SKIP - vregs+pauth_address+pauth_generic: pauth_address not
+available, skipping tests
+#
+# 1..0 # SKIP - vregs+pauth_address+pauth_generic+pmu: pauth_address
+not available, skipping tests
+#
+not ok 4 selftests: kvm: get-reg-list # exit=1
+
+Links:
+  - https://lkft.validation.linaro.org/scheduler/job/6596193#L1173
+  - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.38-590-gce7ec1011187/testrun/18431257/suite/kselftest-kvm/test/kvm_get-reg-list/history/
+  - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.38-590-gce7ec1011187/testrun/18431257/suite/kselftest-kvm/test/kvm_get-reg-list/details/
+
+* x86, kselftest-kvm
+  - kvm_vmx_pmu_caps_test
+
+Test log:
+--------
+# selftests: kvm: vmx_pmu_caps_test
+# ==== Test Assertion Failure ====
+#   x86_64/vmx_pmu_caps_test.c:111: !r
+#   pid=2323 tid=2323 errno=4 - Interrupted system call
+#      1 0x0000000000402c5c: ?? ??:0
+#      2 0x00007f229a0af57a: ?? ??:0
+#      3 0x00007f229a0af62f: ?? ??:0
+#      4 0x0000000000402f14: ?? ??:0
+#   Post-KVM_RUN write '0' didn't fail
+not ok 51 selftests: kvm: vmx_pmu_caps_test # exit=254
+
+links:
+ - https://lkft.validation.linaro.org/scheduler/job/6595836#L1841
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.38-590-gce7ec1011187/testrun/18434308/suite/kselftest-kvm/test/kvm_vmx_pmu_caps_test/history/
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.38-590-gce7ec1011187/testrun/18434308/suite/kselftest-kvm/test/kvm_vmx_pmu_caps_test/details/
+
+
+
+## Metric Regressions (compared to v6.1.37-14-g185484ee4c4f)
+
+## Test Fixes (compared to v6.1.37-14-g185484ee4c4f)
+
+## Metric Fixes (compared to v6.1.37-14-g185484ee4c4f)
+
+## Test result summary
+total: 170933, pass: 143114, fail: 2918, skip: 24710, xfail: 191
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 151 total, 150 passed, 1 failed
+* arm64: 57 total, 56 passed, 1 failed
+* i386: 41 total, 38 passed, 3 failed
+* mips: 30 total, 28 passed, 2 failed
+* parisc: 4 total, 4 passed, 0 failed
+* powerpc: 38 total, 36 passed, 2 failed
+* riscv: 16 total, 15 passed, 1 failed
+* s390: 16 total, 16 passed, 0 failed
+* sh: 14 total, 12 passed, 2 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 46 total, 46 passed, 0 failed
+
+## Test suites summary
+* boot
+* fwts
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesytems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-watchdog
+* kselftest-x86
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
