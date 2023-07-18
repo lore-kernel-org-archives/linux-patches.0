@@ -1,100 +1,105 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from qproxy2-pub.mail.unifiedlayer.com (qproxy2-pub.mail.unifiedlayer.com [69.89.16.161])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FC0C2E0
-	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 10:50:51 +0000 (UTC)
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-579de633419so51126117b3.3
-        for <patches@lists.linux.dev>; Tue, 18 Jul 2023 03:50:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689677450; x=1692269450;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=k1QDt0Sf7l7pQV8orH0tWzg0eiS7P4OmFAqlO08Oj7A=;
-        b=OwEuP7K0L6BBLEOoRWNgc13+QZSqASstXZdoqrCVLhfxwQx+f8AtBu0wLOadrkZwWF
-         dSbXadM46AKh+Jkifu77ufI5Ul+C6u0Db1lGML54C4Pow0W0QSX/upPygTmQhJXMolRH
-         7bp9XlsKFhbpUPK5TgMaFIcx3tdBF8j0YyYxHnpCHAAxI2KQjZNCQreecd2OFYzJuR3T
-         KyDdKON0f0Dn8v4vCo47CXbYE8h2MmWcprU8kBn1Y7Ivd3zGOfXNIOif2eMeG5gkU9dj
-         fdHxozKZFkl+0huY8jaG5V4pSJ7iO3C/gttf0ydiApMaLiWb1LO41KfA7sC846XgDfpZ
-         opLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689677450; x=1692269450;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=k1QDt0Sf7l7pQV8orH0tWzg0eiS7P4OmFAqlO08Oj7A=;
-        b=YGCNv3n68Dn2skozTerk1R+sp+YMe7OCkhsE2YyDmh+7MnPoW0eYcyC/y5qWe556wA
-         SWa58h21XlwjGuetAoZutBbGB0TZwdLor9eiLL2qI962NR1ql783VgVQTkeON+RqJFay
-         NuIFvZxmeUH610QZe87vHQdveHapqXDjPdnUR9NxjBYaL4ArwWL3Y4sTU73vKAaiHwBX
-         hBCTOhjXkPH4T3LFe0zR68mpeCi6/++tzuAVH5xMUmS3iOsls0HxQPxCLPvrNuWhkyPd
-         vV/2RarbBQuB0rQv0yH7Lv4+ZXkw+NcAjH7bjEF5DPHzTXgV5ZjTsDSr4ug/F5vQDGME
-         zt3A==
-X-Gm-Message-State: ABy/qLY5YlFMoV6XLXkW3MkBb+Cd3TQNX1RHewOrBDjJbbNzDwKETKO4
-	pXSLRe2Uc0eIy/+Dgp2qZ9cZKtbDyRQq1e4BHvS4JAqBrj8=
-X-Google-Smtp-Source: APBJJlEEHZSBU905UJoBlQ0tbX9EIC+PNtKEcVq973I/wi35dpixqOtiOfiXL+/VGe6/40ITgyhg8C5o3fny82zoAC4=
-X-Received: by 2002:a0d:ce07:0:b0:577:cd0:681f with SMTP id
- q7-20020a0dce07000000b005770cd0681fmr12915048ywd.26.1689677450701; Tue, 18
- Jul 2023 03:50:50 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C6423BC
+	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 10:59:39 +0000 (UTC)
+Received: from outbound-ss-761.bluehost.com (outbound-ss-761.bluehost.com [74.220.211.250])
+	by qproxy2.mail.unifiedlayer.com (Postfix) with ESMTP id CE31D8027A85
+	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 10:59:38 +0000 (UTC)
+Received: from cmgw13.mail.unifiedlayer.com (unknown [10.0.90.128])
+	by progateway8.mail.pro1.eigbox.com (Postfix) with ESMTP id 07C3D1004959F
+	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 10:59:32 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id LiQVqME9GNX2aLiQVqmocm; Tue, 18 Jul 2023 10:59:32 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=Zt4ol/3G c=1 sm=1 tr=0 ts=64b67094
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
+ a=IkcTkHD0fZMA:10:nop_charset_1 a=ws7JD89P4LkA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=d5lI99YLm0d/LNFjltWNEnBVtKyeA7OaEk8346W5IIM=; b=v+I2ulIN8T99Kz++/4cCKI06aQ
+	C7E3mvGPrArNIDaMI8/+pVh+tW2keVA3pfPzOqikX3PfkzQVpo6O4nqOkaB3TMmARqe/ISUJyhYQm
+	zmFx012L22QGtV7A/f3C5bo5TFOhjc7DeU8HWuDudi8TDU9i2+IIKX/WwaTSTR0J9oWHuP7W0lD2w
+	izTX6T2MmMkZHGmBHpD9/Fcf6pRmdWLqxvR596xOY43XhdCrTCyOUf6zQjF2OC8Ctg7gpmOP4AJJK
+	kkVFIGkbuxDluB/DfFaO6SMh0Hh4ZPPoVJAuxp+TfU2Z0hZM02F6vxx1Rz1jMQlgQLPunDj2a7AwA
+	L4cUhpSg==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:48330 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96)
+	(envelope-from <re@w6rz.net>)
+	id 1qLiQU-001k1u-2L;
+	Tue, 18 Jul 2023 04:59:30 -0600
+Subject: Re: [PATCH 6.1 000/589] 6.1.39-rc3 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org
+References: <20230717201547.359923764@linuxfoundation.org>
+In-Reply-To: <20230717201547.359923764@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <06132b8d-6df0-17b0-bc5d-5ac748367661@w6rz.net>
+Date: Tue, 18 Jul 2023 03:59:28 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230718052752.1045248-1-ojeda@kernel.org> <CABVgOSk+YOdmpnBpLcx2sC3NN7amdpLf-C35EpvYmzq3SWHAqA@mail.gmail.com>
-In-Reply-To: <CABVgOSk+YOdmpnBpLcx2sC3NN7amdpLf-C35EpvYmzq3SWHAqA@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 18 Jul 2023 12:50:39 +0200
-Message-ID: <CANiq72=7X7nooVnoS6JxXBwwFGGGJU5eNVNUu=g33-YQjR9vnQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/7] KUnit integration for Rust doctests
-To: David Gow <davidgow@google.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Brendan Higgins <brendan.higgins@linux.dev>, 
-	Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
-	Andreas Hindborg <nmi@metaspace.dk>, kunit-dev@googlegroups.com, 
-	linux-kselftest@vger.kernel.org, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Shuah Khan <skhan@linuxfoundation.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1qLiQU-001k1u-2L
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:48330
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 20
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-On Tue, Jul 18, 2023 at 10:38=E2=80=AFAM David Gow <davidgow@google.com> wr=
-ote:
+On 7/17/23 1:34 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.39 release.
+> There are 589 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> I like "location" better, personally. The attributes work is still
-> ongoing, and while there's some benefit to having "file" and "line"
-> separate (it could potentially simplify some implementation on the C
-> side), we'll cross that bridge when we come to it.
-
-Yeah, I felt it looked a bit better, but if later on it ends up making
-things too hard, then yeah, we can definitely simplify it.
-
-> This seems to be working well on the existing cases under kunit.py
-> here. I'll continue to play with it, but no worries on my end thus
-> far.
-
-Thanks for trying it out!
-
-> Thanks: while we're still arguing a bit about exactly what the format
-> of these will look like in the KUnit/KTAP attributes spec/patches,
-> what you've used matches what we've been proposing so far.
+> Responses should be made by Wed, 19 Jul 2023 20:14:46 +0000.
+> Anything received after that time might be too late.
 >
-> Let's stick with <test name>.location for now, and change it if needed
-> when the attributes spec is finalised.
-
-Sounds good.
-
-> These are all (still) looking pretty good to me. If there are no
-> objections, I'd like to take these into kselftest/kunit as-is and if
-> we need to change anything (e.g. for consistency with attributes when
-> they land), do that as a follow-up.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.39-rc3.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
 >
-> Thanks again, Miguel, for all the work getting this going!
+> thanks,
+>
+> greg k-h
 
-My pleasure -- and thanks for reviewing it so quickly and all your feedback=
-!
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Cheers,
-Miguel
+Tested-by: Ron Economos <re@w6rz.net>
+
