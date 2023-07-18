@@ -1,54 +1,52 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB43A253AC
-	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 10:50:39 +0000 (UTC)
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-579de633419so51124247b3.3
-        for <patches@lists.linux.dev>; Tue, 18 Jul 2023 03:50:39 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FC0C2E0
+	for <patches@lists.linux.dev>; Tue, 18 Jul 2023 10:50:51 +0000 (UTC)
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-579de633419so51126117b3.3
+        for <patches@lists.linux.dev>; Tue, 18 Jul 2023 03:50:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689677438; x=1692269438;
+        d=gmail.com; s=20221208; t=1689677450; x=1692269450;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=sTu0pAKim/A7bk9vOOQJzSwY4RU25mujed63Z040/Wc=;
-        b=M5N/eMDG1/kcW3eSG03fAOT6edP/BE9g4cI4JE49bCv1y57yRaoC68wX4AyPNN7x5h
-         Ys1FUc72GHCNLVGQgsM0T75veXDpw8SFoi2C9z+BhOLD0+whFqCWE7/D/IN446FyuNRf
-         sV6+rhj+XJ+cf8bkYuSqvTC8o09vR/llHnqUTGCJE+JMYxmkVwBYTGBcli9aL6pZukzk
-         wt1VnsRfDzBXVvIgccrUNLasqjlOjwknb3C+3UzBRm43Z5LGnrWY2l/LUSEYVUDn/iBx
-         NbXNZimTB7Ng71gyXAzE8SVGSAjraxBtDkKhTlxhk6frz5QHC+kRPnt3l8XOUa8xMm6t
-         5GhA==
+        bh=k1QDt0Sf7l7pQV8orH0tWzg0eiS7P4OmFAqlO08Oj7A=;
+        b=OwEuP7K0L6BBLEOoRWNgc13+QZSqASstXZdoqrCVLhfxwQx+f8AtBu0wLOadrkZwWF
+         dSbXadM46AKh+Jkifu77ufI5Ul+C6u0Db1lGML54C4Pow0W0QSX/upPygTmQhJXMolRH
+         7bp9XlsKFhbpUPK5TgMaFIcx3tdBF8j0YyYxHnpCHAAxI2KQjZNCQreecd2OFYzJuR3T
+         KyDdKON0f0Dn8v4vCo47CXbYE8h2MmWcprU8kBn1Y7Ivd3zGOfXNIOif2eMeG5gkU9dj
+         fdHxozKZFkl+0huY8jaG5V4pSJ7iO3C/gttf0ydiApMaLiWb1LO41KfA7sC846XgDfpZ
+         opLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689677438; x=1692269438;
+        d=1e100.net; s=20221208; t=1689677450; x=1692269450;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=sTu0pAKim/A7bk9vOOQJzSwY4RU25mujed63Z040/Wc=;
-        b=QX9czKN2+ZKO3RB1F7NU1YxDQc5CCL9Ww1jN+Prk8G3p0MaU+WGj7ZtjV6TA926Cco
-         VErYRLqE+g8qF1H6q+8/J4bjiQACsXAtC+/Zv+AsPEk9+3q46o2Vsop89EhVuubgu5iL
-         nPLV9hg8rskNUDl92ukjj/zPw0MCKl/Bw2nxCkHcz2krpX8+jUcE/wXsssYz3++3oIzu
-         /btTrS48KuRMNsreTrarCNIfkRD2Xzbl/KSbZaN3z/j/6cAmRan+HgYv9oVtt/um4jLk
-         q4KuGmfQlOMS+ftJVpQI4l4BYVl2WhYW8I1Y2jurfeD1Tt8y7tRqF1Q/PUjkN2yf9DnF
-         IwGw==
-X-Gm-Message-State: ABy/qLY4Va6Tw77CkJI6yIQiQr5ck4oo/H1VeEHs+FKIgDXW6u5Kq1QU
-	MvQqxuQ4HAaNbacPAmJldqxlH4FBCttUCnoUjqY=
-X-Google-Smtp-Source: APBJJlGNcgDopzSyU763xeq2Rqhv/iipQR9HeEhrKycYfBFUkhb9gOIE0XtXjI2boC04P9ttrOhZdAw7klVYgvj9JGY=
-X-Received: by 2002:a25:a4c4:0:b0:ce4:5f48:a24d with SMTP id
- g62-20020a25a4c4000000b00ce45f48a24dmr2543364ybi.5.1689677438709; Tue, 18 Jul
- 2023 03:50:38 -0700 (PDT)
+        bh=k1QDt0Sf7l7pQV8orH0tWzg0eiS7P4OmFAqlO08Oj7A=;
+        b=YGCNv3n68Dn2skozTerk1R+sp+YMe7OCkhsE2YyDmh+7MnPoW0eYcyC/y5qWe556wA
+         SWa58h21XlwjGuetAoZutBbGB0TZwdLor9eiLL2qI962NR1ql783VgVQTkeON+RqJFay
+         NuIFvZxmeUH610QZe87vHQdveHapqXDjPdnUR9NxjBYaL4ArwWL3Y4sTU73vKAaiHwBX
+         hBCTOhjXkPH4T3LFe0zR68mpeCi6/++tzuAVH5xMUmS3iOsls0HxQPxCLPvrNuWhkyPd
+         vV/2RarbBQuB0rQv0yH7Lv4+ZXkw+NcAjH7bjEF5DPHzTXgV5ZjTsDSr4ug/F5vQDGME
+         zt3A==
+X-Gm-Message-State: ABy/qLY5YlFMoV6XLXkW3MkBb+Cd3TQNX1RHewOrBDjJbbNzDwKETKO4
+	pXSLRe2Uc0eIy/+Dgp2qZ9cZKtbDyRQq1e4BHvS4JAqBrj8=
+X-Google-Smtp-Source: APBJJlEEHZSBU905UJoBlQ0tbX9EIC+PNtKEcVq973I/wi35dpixqOtiOfiXL+/VGe6/40ITgyhg8C5o3fny82zoAC4=
+X-Received: by 2002:a0d:ce07:0:b0:577:cd0:681f with SMTP id
+ q7-20020a0dce07000000b005770cd0681fmr12915048ywd.26.1689677450701; Tue, 18
+ Jul 2023 03:50:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230718052752.1045248-1-ojeda@kernel.org> <20230718052752.1045248-7-ojeda@kernel.org>
- <CABVgOSnCY66C5wza-ZXb8c8UHg8ydbFv4U_7A14UU_gXeESKZg@mail.gmail.com>
-In-Reply-To: <CABVgOSnCY66C5wza-ZXb8c8UHg8ydbFv4U_7A14UU_gXeESKZg@mail.gmail.com>
+References: <20230718052752.1045248-1-ojeda@kernel.org> <CABVgOSk+YOdmpnBpLcx2sC3NN7amdpLf-C35EpvYmzq3SWHAqA@mail.gmail.com>
+In-Reply-To: <CABVgOSk+YOdmpnBpLcx2sC3NN7amdpLf-C35EpvYmzq3SWHAqA@mail.gmail.com>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 18 Jul 2023 12:50:27 +0200
-Message-ID: <CANiq72m08qGAa7k37A0rQNf7vvBc1o8JjSY8jNd+m2XzVOT9rw@mail.gmail.com>
-Subject: Re: [PATCH v2 6/7] rust: support running Rust documentation tests as
- KUnit ones
+Date: Tue, 18 Jul 2023 12:50:39 +0200
+Message-ID: <CANiq72=7X7nooVnoS6JxXBwwFGGGJU5eNVNUu=g33-YQjR9vnQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/7] KUnit integration for Rust doctests
 To: David Gow <davidgow@google.com>
 Cc: Miguel Ojeda <ojeda@kernel.org>, Brendan Higgins <brendan.higgins@linux.dev>, 
 	Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
@@ -57,22 +55,46 @@ Cc: Miguel Ojeda <ojeda@kernel.org>, Brendan Higgins <brendan.higgins@linux.dev>
 	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
 	Andreas Hindborg <nmi@metaspace.dk>, kunit-dev@googlegroups.com, 
 	linux-kselftest@vger.kernel.org, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Shuah Khan <skhan@linuxfoundation.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 18, 2023 at 10:17=E2=80=AFAM David Gow <davidgow@google.com> wr=
+On Tue, Jul 18, 2023 at 10:38=E2=80=AFAM David Gow <davidgow@google.com> wr=
 ote:
 >
-> This is looking good and working well here.
->
-> One super-minor thought below (the generated C file seems to be using
-> 4-space indentation, not tabs), but it's not something that worries me
-> enough to hold the patch up if there are no other issues.
+> I like "location" better, personally. The attributes work is still
+> ongoing, and while there's some benefit to having "file" and "line"
+> separate (it could potentially simplify some implementation on the C
+> side), we'll cross that bridge when we come to it.
 
-Good eye! Of course, please feel free to change it when applying
-(though from a quick grep I don't see "[ ... ]" comments in commits in
-the KUnit tree). I am also happy to send a v3.
+Yeah, I felt it looked a bit better, but if later on it ends up making
+things too hard, then yeah, we can definitely simplify it.
+
+> This seems to be working well on the existing cases under kunit.py
+> here. I'll continue to play with it, but no worries on my end thus
+> far.
+
+Thanks for trying it out!
+
+> Thanks: while we're still arguing a bit about exactly what the format
+> of these will look like in the KUnit/KTAP attributes spec/patches,
+> what you've used matches what we've been proposing so far.
+>
+> Let's stick with <test name>.location for now, and change it if needed
+> when the attributes spec is finalised.
+
+Sounds good.
+
+> These are all (still) looking pretty good to me. If there are no
+> objections, I'd like to take these into kselftest/kunit as-is and if
+> we need to change anything (e.g. for consistency with attributes when
+> they land), do that as a follow-up.
+>
+> Thanks again, Miguel, for all the work getting this going!
+
+My pleasure -- and thanks for reviewing it so quickly and all your feedback=
+!
 
 Cheers,
 Miguel
