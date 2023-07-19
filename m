@@ -1,92 +1,127 @@
-Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF2D1BB25
-	for <patches@lists.linux.dev>; Wed, 19 Jul 2023 18:35:18 +0000 (UTC)
-Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-3a3efebcc24so5286163b6e.1
-        for <patches@lists.linux.dev>; Wed, 19 Jul 2023 11:35:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689791717; x=1690396517;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=WPhThja73rMrwtCLzLlEodMjDA/ciBfmdIGUhDH+5vQ=;
-        b=X+Z+q0Ps8A7gvg57y6lo4X3jlA2aRilCfFsCwdxkuxGPIk3h0dhuB0CfJYcvPVaLHT
-         tQYWNvqAMkdWsYjU/X+IzJMmLjQ+ZOsaZ3iB9O5IzCj/U+OYN1eZP0xT0wgqpP1ipMA7
-         OCktBzVSn6oy0dgLtG9dvQsWApnxlWn83JZANN2J3pjWHxQJ63i/vm+zbongHy0TJMUI
-         JxRQ4IgT2HaSnqsBCRrKBBE+9gaa6hGPmqjHKwb/LHmQBPM/CABIdr0rBJ/8fj1HISR8
-         9ChmX8tSa9KeoSWfSd9eqzLAKW97WbX8wt4zHLhbPI1XNSbZAMyTYyNtl91nbdrjVPFR
-         Nu4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689791717; x=1690396517;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WPhThja73rMrwtCLzLlEodMjDA/ciBfmdIGUhDH+5vQ=;
-        b=e79bRvF+WWUDxzQaSsz+Fgc05d2XiAMcC9nxZF2eDd6+HyepBHKg6vNfbFB4fRPoTj
-         OgBxD/jYf/6eda6mtj8+Xyy7AiZ+f6JEieboZSjtEfdRCzPoW3ghU3oV11neJArWmwTR
-         QEBxzFlCFfdZaRwRMDlDagY3Y27iZkWvr7puqs0BYwvGY7IbTeB9BBL6t/wf+qqYHYYw
-         9oxhqUBWKzZKl/my/SMiqfE4GNVdeP37990RZatVFCEx+sV1Y3m0PfKrw2SeIanBmOss
-         KDn9tvPox3MiyyWBQ7dVb+3vBbaAqdcAoJ1AtkaDZyyvehtzSsHqpJzhtpVNYsEqpSwV
-         mg9A==
-X-Gm-Message-State: ABy/qLaFrZftiQCfSlAHIoss1QMFEhMrCKvgz/3XLNBcwOMQ662zgE0T
-	FZj9rDbkp2xADXCRtUrIy5k=
-X-Google-Smtp-Source: APBJJlHVEHlTyIvqzFTB4W0vefUBSAK+mOmKyVCwFbKOOhaY3peS5u1nNan1QlfcMHTg8RLq496Rcw==
-X-Received: by 2002:a05:6808:157:b0:3a3:79ef:e2d3 with SMTP id h23-20020a056808015700b003a379efe2d3mr6395705oie.29.1689791717505;
-        Wed, 19 Jul 2023 11:35:17 -0700 (PDT)
-Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id y7-20020a056808130700b003a3860b375esm2042016oiv.34.2023.07.19.11.35.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Jul 2023 11:35:17 -0700 (PDT)
-Message-ID: <c3385c4a-1864-e602-379d-fc0184053ea6@gmail.com>
-Date: Wed, 19 Jul 2023 14:44:12 -0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780671BB20
+	for <patches@lists.linux.dev>; Wed, 19 Jul 2023 21:16:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1689801401; x=1721337401;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=KOlYhSQQf0n27vCrrgt8YCZyUuX7bCxCVC7N0wOP1Jw=;
+  b=C1jv2hadUjV4P8vdlE5j63P43iT5wbq3KrOr5iSZPg/jDmtaE6PtFAk5
+   PN1JUvB3JS9FGyLn99UUnE6R/b7tM3m9SsB9JcrJ/8fipJkpqQupzwAyn
+   PdtNqOfLo5/wKe1mF7oY//ABwmd4g/HEzv4kKCm3NAQLGYkQiqj/PCTwA
+   gUhHBHmmSpt8xsvEQd9RXsORmbQhsKzDzBohk0RaL/LnHOoWH7K8RPM1u
+   MgeQ4WIAZp8rgcoCtKxyxNunF/xW6PQnbkpCKRAKg5KWHjfp1EHKpmSlp
+   u2FxFx6PvnuedpPR2ebe4XZoTl6z5MUbwiMkhPFLIN2dE3Ev/aOSbhwKo
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10776"; a="351435332"
+X-IronPort-AV: E=Sophos;i="6.01,216,1684825200"; 
+   d="scan'208";a="351435332"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jul 2023 14:16:40 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10776"; a="724150548"
+X-IronPort-AV: E=Sophos;i="6.01,216,1684825200"; 
+   d="scan'208";a="724150548"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
+  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jul 2023 14:16:40 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Borislav Petkov <bp@alien8.de>
+Cc: HORIGUCHI NAOYA  <naoya.horiguchi@nec.com>,
+	"Li, Zhiquan1" <zhiquan1.li@intel.com>,
+	"Song, Youquan" <youquan.song@intel.com>,
+	x86@kernel.org,
+	linux-edac@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v2] x86/mce: Set PG_hwpoison page flag to avoid the capture kernel panic
+Date: Wed, 19 Jul 2023 14:16:25 -0700
+Message-Id: <20230719211625.298785-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20230127015030.30074-1-tony.luck@intel.com>
+References: <20230127015030.30074-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Subject: Re: [PATCH] kbuild: rust: avoid creating temporary files
-To: Miguel Ojeda <ojeda@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>,
- Wedson Almeida Filho <wedsonaf@gmail.com>,
- Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Nathan Chancellor <nathan@kernel.org>,
- Nick Desaulniers <ndesaulniers@google.com>,
- Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>,
- Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?=
- <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
- Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg
- <a.hindborg@samsung.com>, linux-kbuild@vger.kernel.org,
- rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, Raphael Nestler <raphael.nestler@gmail.com>,
- Andrea Righi <andrea.righi@canonical.com>, stable@vger.kernel.org
-References: <20230718055235.1050223-1-ojeda@kernel.org>
-Content-Language: en-US
-In-Reply-To: <20230718055235.1050223-1-ojeda@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 7/18/23 02:52, Miguel Ojeda wrote:
-> `rustc` outputs by default the temporary files (i.e. the ones saved
-> by `-Csave-temps`, such as `*.rcgu*` files) in the current working
-> directory when `-o` and `--out-dir` are not given (even if
-> `--emit=x=path` is given, i.e. it does not use those for temporaries).
-> 
-> Since out-of-tree modules are compiled from the `linux` tree,
-> `rustc` then tries to create them there, which may not be accessible.
-> 
-> Thus pass `--out-dir` explicitly, even if it is just for the temporary
-> files.
-> 
-> Reported-by: Raphael Nestler <raphael.nestler@gmail.com>
-> Closes: https://github.com/Rust-for-Linux/linux/issues/1015
-> Reported-by: Andrea Righi <andrea.righi@canonical.com>
-> Tested-by: Raphael Nestler <raphael.nestler@gmail.com>
-> Tested-by: Andrea Righi <andrea.righi@canonical.com>
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
-> [...]
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+From: Zhiquan Li <zhiquan1.li@intel.com>
+
+Kdump can exclude the HWPosion page to avoid touch the error page
+again, the prerequisite is the PG_hwpoison page flag is set.
+However, for some MCE fatal error cases, there are no opportunity
+to queue a task for calling memory_failure(), as a result,
+the capture kernel touches the error page again and panics.
+
+Add function mce_set_page_hwpoison_now() which mark a page as
+HWPoison before kernel panic() for MCE error, so that the dump
+program can check and skip the error page and prevent the capture
+kernel panic.
+
+[Tony: Changed TestSetPageHWPoison() to SetPageHWPoison()]
+
+Co-developed-by: Youquan Song <youquan.song@intel.com>
+Signed-off-by: Youquan Song <youquan.song@intel.com>
+Signed-off-by: Zhiquan Li <zhiquan1.li@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+
+v2: Replaced "TODO" comment in code with comments based on mailing
+list discussion on the lack of value in covering other page types
+
+ arch/x86/kernel/cpu/mce/core.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+
+diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
+index 89e2aab5d34d..766f64fade51 100644
+--- a/arch/x86/kernel/cpu/mce/core.c
++++ b/arch/x86/kernel/cpu/mce/core.c
+@@ -156,6 +156,30 @@ void mce_unregister_decode_chain(struct notifier_block *nb)
+ }
+ EXPORT_SYMBOL_GPL(mce_unregister_decode_chain);
+ 
++/*
++ * Kdump can exclude the HWPosion page to avoid touch the error page again,
++ * the prerequisite is the PG_hwpoison page flag is set. However, for some
++ * MCE fatal error cases, there are no opportunity to queue a task
++ * for calling memory_failure(), as a result, the capture kernel panic.
++ * This function mark the page as HWPoison before kernel panic() for MCE.
++ *
++ * This covers normal 4KByte pages. There is little/no value in covering
++ * other page types. E.g.
++ * SGX: These cannot be dumped.
++ * PMEM: Pointless to dump these. Persistent memory contents remain
++ * available across reboots.
++ * HugeTLB: These are user pages. Generally filtered out of the kdump
++ * to keep size small. Not helpful to debug kernel issues.
++ */
++static void mce_set_page_hwpoison_now(unsigned long pfn)
++{
++	struct page *p;
++
++	p = pfn_to_online_page(pfn);
++	if (p)
++		SetPageHWPoison(p);
++}
++
+ static void __print_mce(struct mce *m)
+ {
+ 	pr_emerg(HW_ERR "CPU %d: Machine Check%s: %Lx Bank %d: %016Lx\n",
+@@ -286,6 +310,8 @@ static noinstr void mce_panic(const char *msg, struct mce *final, char *exp)
+ 	if (!fake_panic) {
+ 		if (panic_timeout == 0)
+ 			panic_timeout = mca_cfg.panic_timeout;
++		if (final && (final->status & MCI_STATUS_ADDRV))
++			mce_set_page_hwpoison_now(final->addr >> PAGE_SHIFT);
+ 		panic(msg);
+ 	} else
+ 		pr_emerg(HW_ERR "Fake kernel panic: %s\n", msg);
+-- 
+2.40.1
+
