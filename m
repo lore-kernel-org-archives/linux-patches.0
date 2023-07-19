@@ -1,60 +1,92 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25AC814AA8
-	for <patches@lists.linux.dev>; Wed, 19 Jul 2023 13:58:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA56C433C8;
-	Wed, 19 Jul 2023 13:58:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689775103;
-	bh=qF9T+TxmPhvIREK/PC887MsMJ3U1Z1uIdylm0SBg8iQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=miJ/Oo0xB/FKAML6+AS97e1XsJhMdo7UHCwdFjRA8e96LgCp+UPu0kInH3OAV0JPV
-	 uk6t0Nx2Qu9dLnOuphtGnFLlX8l4PoTUsVp/U/ps6cW65ZTBZufEP2dndzFU0BlrBt
-	 oiRrYpeDPhNgNx1AJV9+e7HaojA+QuKOa2jDNQHc=
-Date: Wed, 19 Jul 2023 15:58:19 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Pavel Machek <pavel@denx.de>
-Cc: bchihi@baylibre.com, stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org
-Subject: Re: [PATCH 6.1 000/589] 6.1.39-rc3 review
-Message-ID: <2023071956-sequel-chitchat-3f86@gregkh>
-References: <20230717201547.359923764@linuxfoundation.org>
- <ZLevLou0rjhSJkZb@duo.ucw.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF2D1BB25
+	for <patches@lists.linux.dev>; Wed, 19 Jul 2023 18:35:18 +0000 (UTC)
+Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-3a3efebcc24so5286163b6e.1
+        for <patches@lists.linux.dev>; Wed, 19 Jul 2023 11:35:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689791717; x=1690396517;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=WPhThja73rMrwtCLzLlEodMjDA/ciBfmdIGUhDH+5vQ=;
+        b=X+Z+q0Ps8A7gvg57y6lo4X3jlA2aRilCfFsCwdxkuxGPIk3h0dhuB0CfJYcvPVaLHT
+         tQYWNvqAMkdWsYjU/X+IzJMmLjQ+ZOsaZ3iB9O5IzCj/U+OYN1eZP0xT0wgqpP1ipMA7
+         OCktBzVSn6oy0dgLtG9dvQsWApnxlWn83JZANN2J3pjWHxQJ63i/vm+zbongHy0TJMUI
+         JxRQ4IgT2HaSnqsBCRrKBBE+9gaa6hGPmqjHKwb/LHmQBPM/CABIdr0rBJ/8fj1HISR8
+         9ChmX8tSa9KeoSWfSd9eqzLAKW97WbX8wt4zHLhbPI1XNSbZAMyTYyNtl91nbdrjVPFR
+         Nu4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689791717; x=1690396517;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WPhThja73rMrwtCLzLlEodMjDA/ciBfmdIGUhDH+5vQ=;
+        b=e79bRvF+WWUDxzQaSsz+Fgc05d2XiAMcC9nxZF2eDd6+HyepBHKg6vNfbFB4fRPoTj
+         OgBxD/jYf/6eda6mtj8+Xyy7AiZ+f6JEieboZSjtEfdRCzPoW3ghU3oV11neJArWmwTR
+         QEBxzFlCFfdZaRwRMDlDagY3Y27iZkWvr7puqs0BYwvGY7IbTeB9BBL6t/wf+qqYHYYw
+         9oxhqUBWKzZKl/my/SMiqfE4GNVdeP37990RZatVFCEx+sV1Y3m0PfKrw2SeIanBmOss
+         KDn9tvPox3MiyyWBQ7dVb+3vBbaAqdcAoJ1AtkaDZyyvehtzSsHqpJzhtpVNYsEqpSwV
+         mg9A==
+X-Gm-Message-State: ABy/qLaFrZftiQCfSlAHIoss1QMFEhMrCKvgz/3XLNBcwOMQ662zgE0T
+	FZj9rDbkp2xADXCRtUrIy5k=
+X-Google-Smtp-Source: APBJJlHVEHlTyIvqzFTB4W0vefUBSAK+mOmKyVCwFbKOOhaY3peS5u1nNan1QlfcMHTg8RLq496Rcw==
+X-Received: by 2002:a05:6808:157:b0:3a3:79ef:e2d3 with SMTP id h23-20020a056808015700b003a379efe2d3mr6395705oie.29.1689791717505;
+        Wed, 19 Jul 2023 11:35:17 -0700 (PDT)
+Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
+        by smtp.gmail.com with ESMTPSA id y7-20020a056808130700b003a3860b375esm2042016oiv.34.2023.07.19.11.35.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Jul 2023 11:35:17 -0700 (PDT)
+Message-ID: <c3385c4a-1864-e602-379d-fc0184053ea6@gmail.com>
+Date: Wed, 19 Jul 2023 14:44:12 -0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZLevLou0rjhSJkZb@duo.ucw.cz>
+User-Agent: Mozilla Thunderbird
+From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Subject: Re: [PATCH] kbuild: rust: avoid creating temporary files
+To: Miguel Ojeda <ojeda@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>,
+ Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Nathan Chancellor <nathan@kernel.org>,
+ Nick Desaulniers <ndesaulniers@google.com>,
+ Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>,
+ Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?=
+ <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
+ Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg
+ <a.hindborg@samsung.com>, linux-kbuild@vger.kernel.org,
+ rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev, Raphael Nestler <raphael.nestler@gmail.com>,
+ Andrea Righi <andrea.righi@canonical.com>, stable@vger.kernel.org
+References: <20230718055235.1050223-1-ojeda@kernel.org>
+Content-Language: en-US
+In-Reply-To: <20230718055235.1050223-1-ojeda@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jul 19, 2023 at 11:38:54AM +0200, Pavel Machek wrote:
-> Hi!
+On 7/18/23 02:52, Miguel Ojeda wrote:
+> `rustc` outputs by default the temporary files (i.e. the ones saved
+> by `-Csave-temps`, such as `*.rcgu*` files) in the current working
+> directory when `-o` and `--out-dir` are not given (even if
+> `--emit=x=path` is given, i.e. it does not use those for temporaries).
 > 
-> > This is the start of the stable review cycle for the 6.1.39 release.
-> > There are 589 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Wed, 19 Jul 2023 20:14:46 +0000.
-> > Anything received after that time might be too late.
+> Since out-of-tree modules are compiled from the `linux` tree,
+> `rustc` then tries to create them there, which may not be accessible.
 > 
+> Thus pass `--out-dir` explicitly, even if it is just for the temporary
+> files.
 > 
-> > Balsam CHIHI <bchihi@baylibre.com>
-> >     thermal/drivers/mediatek: Relocate driver to mediatek folder
-> 
-> This is big rename in preparation for patch that is not queued for
-> 6.1.
-
-Good catch, I dropped the patch it was needed for but missed this
-dependency.
-
-greg k-h
+> Reported-by: Raphael Nestler <raphael.nestler@gmail.com>
+> Closes: https://github.com/Rust-for-Linux/linux/issues/1015
+> Reported-by: Andrea Righi <andrea.righi@canonical.com>
+> Tested-by: Raphael Nestler <raphael.nestler@gmail.com>
+> Tested-by: Andrea Righi <andrea.righi@canonical.com>
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+> [...]
+Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
