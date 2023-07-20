@@ -1,107 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f73.google.com (mail-ej1-f73.google.com [209.85.218.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA5018AF6;
-	Thu, 20 Jul 2023 15:16:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54165C433C7;
-	Thu, 20 Jul 2023 15:16:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1689866199;
-	bh=cVe5IVCXrI2dTRFYJoEnl0cnQpuSELuvSLGYYEvbTf4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UKcPq9XCIwquJcL3mnGYr3evcDeveAHebalY3TcoJFLG8nvrsD8jh2Wlm9u1eGA7L
-	 UmAkmsfQPf55yk8+oH6CFiL52EN+h760zhead+InEDJRosFzUvX7/kBYtzcXiowwFp
-	 wMRJamotYNIceen6wFkHvKV1Z/FOXdJr2EcBZ+dmAceP2NXZgu/AfbOaRVaIxb2Tmg
-	 kaCqFfkcOvDaihJ1211vVCLMhqh+QVvsPRKSzKq+oTHUlFpjvG7TgZUoITqkJFNjit
-	 z/XTixs6VEeqTliLic5ED2ORon889x1b7MvtbmZ+GuvN/9e5xTdFEunHMW+fCDAx/1
-	 eyC3SCSoy3Qkg==
-Date: Thu, 20 Jul 2023 08:16:36 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc: jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
-	rodrigo.vivi@intel.com, emma@anholt.net, mwen@igalia.com,
-	ndesaulniers@google.com, justinstitt@google.com, trix@redhat.com,
-	intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH 2/2] drm/i915: Avoid -Wconstant-logical-operand in
- nsecs_to_jiffies_timeout()
-Message-ID: <20230720151636.GA511202@dev-arch.thelio-3990X>
-References: <20230718-nsecs_to_jiffies_timeout-constant-logical-operand-v1-0-36ed8fc8faea@kernel.org>
- <20230718-nsecs_to_jiffies_timeout-constant-logical-operand-v1-2-36ed8fc8faea@kernel.org>
- <1a2aeca6-12f7-6316-c6e2-8474fd17255e@linux.intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6277818B03
+	for <patches@lists.linux.dev>; Thu, 20 Jul 2023 15:28:40 +0000 (UTC)
+Received: by mail-ej1-f73.google.com with SMTP id a640c23a62f3a-978a991c3f5so76937766b.0
+        for <patches@lists.linux.dev>; Thu, 20 Jul 2023 08:28:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1689866918; x=1690471718;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=IWv9CLtWtTznOku5eHmfJC2LsM6xPb33sZCLyzCmpPY=;
+        b=c1JgmH+tNZLWMbTCSosM+iUVmcQSKnrVa80UTDLEeP9RITnb103bfyCMD8vc/lrM8u
+         rY8MgTzI/P9CbtUQ2K0sOFQUHS9dh7r2J+vsYz33TKkgfNGDR4z8kfUnTFTsZTPpX2VQ
+         9T8wonC5Rcnr7VEQzRZKGi3yjjpOlzaMV3TicsPfoOOnuSjoQE2h0gBe6vtwHWmELenj
+         DWhnODkj6bF24upvhB7OsZU/y+sk1JWZdzY4vs+pYwItk0t+kii4mJ+oxxT/VOK+bLYG
+         Q3VKxY2KMgjSRJDs37zhwH8FL0+glfOM/Z3T5VALtt6KUhECeTXa2cY6q/tyv7Jw+g8D
+         NWBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689866918; x=1690471718;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IWv9CLtWtTznOku5eHmfJC2LsM6xPb33sZCLyzCmpPY=;
+        b=NLHitnzIl/mXfCeuHGMA4jspjEMRLSNemsjjtzWsJKzkXqIBNhSsSom7xLQjJ6+cML
+         tMafcqEpPjcfJcAxOrfoEwEPV06arzKi88k59p8buvkD4YNZEaPKYwCBtQjPMNoS8Zdi
+         CYuxTdW7LimYjeMv5MlIaAyy9vbWvrxjqUckKG2Tn9xknDtiYhhAz64ey9+X14uDIo6y
+         xNfCkdSSgiH6OEiq6yRSmX8bisFHhxmfUYZSDK19gQU0xnjBvjFUJkG0KCWCDSmbUUvr
+         SKqnZOsFPM+uGNyGOpEw7W52heiVU0wKQlIyYvZ1aH5luh3yXpAqp2FJtBKdoIMJJFrJ
+         iswQ==
+X-Gm-Message-State: ABy/qLbYEb2wRoEFal2garR9jGG6dEWLIyvJemFuy6u8czcO1Dd+Kgkj
+	SaMsjjcBTwtL9lNVwZklfBbiZwKmpbXnut4=
+X-Google-Smtp-Source: APBJJlEE/YmhmLOm4Cd/eTebUZ59Cs4ErdANqkMNW39DQ5rwt41f7azTnmHcpd4tPQ6pTIci1P5DT3t0P2tGkHU=
+X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
+ (user=aliceryhl job=sendgmr) by 2002:a17:906:8a62:b0:98e:78ce:2979 with SMTP
+ id hy2-20020a1709068a6200b0098e78ce2979mr13545ejc.12.1689866918147; Thu, 20
+ Jul 2023 08:28:38 -0700 (PDT)
+Date: Thu, 20 Jul 2023 15:28:15 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1a2aeca6-12f7-6316-c6e2-8474fd17255e@linux.intel.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.41.0.255.g8b1d071c50-goog
+Message-ID: <20230720152820.3566078-1-aliceryhl@google.com>
+Subject: [RFC PATCH v1 0/5] Various Rust bindings for files
+From: Alice Ryhl <aliceryhl@google.com>
+To: rust-for-linux@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+	Miguel Ojeda <ojeda@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Christian Brauner <brauner@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	"=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?=" <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, 
+	Alice Ryhl <aliceryhl@google.com>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Jul 20, 2023 at 09:43:05AM +0100, Tvrtko Ursulin wrote:
-> 
-> On 18/07/2023 22:44, Nathan Chancellor wrote:
-> > A proposed update to clang's -Wconstant-logical-operand to warn when the
-> > left hand side is a constant shows the following instance in
-> > nsecs_to_jiffies_timeout() when NSEC_PER_SEC is not a multiple of HZ,
-> > such as CONFIG_HZ=300:
-> > 
-> >    drivers/gpu/drm/i915/gem/i915_gem_wait.c:189:24: warning: use of logical '&&' with constant operand [-Wconstant-logical-operand]
-> >      189 |         if (NSEC_PER_SEC % HZ &&
-> >          |             ~~~~~~~~~~~~~~~~~ ^
-> >    drivers/gpu/drm/i915/gem/i915_gem_wait.c:189:24: note: use '&' for a bitwise operation
-> >      189 |         if (NSEC_PER_SEC % HZ &&
-> >          |                               ^~
-> >          |                               &
-> >    drivers/gpu/drm/i915/gem/i915_gem_wait.c:189:24: note: remove constant to silence this warning
-> >    1 warning generated.
-> > 
-> > Turn this into an explicit comparison against zero to make the
-> > expression a boolean to make it clear this should be a logical check,
-> > not a bitwise one.
-> 
-> So -Wconstant-logical-operand only triggers when it is a
-> constant but not zero constant? Why does that make sense is not
-> a kludge to avoid too much noise?
+This contains bindings for various file related things that binder needs
+to use.
 
-Yes, the warning purposefully does not trigger when the constant is a 1
-or 0 (as those are usually indicative of an intentional logical
-operation):
+I would especially like feedback on the SAFETY comments. Particularly,
+the safety comments in patch 4 and 5 are non-trivial. For example:
 
-https://github.com/llvm/llvm-project/blob/dfdfd306cfaf54fbc43e2d5eb36489dac3eb9976/clang/lib/Sema/SemaExpr.cpp#L13917-L13919
+ * In patch 4, I claim that passing POLLHUP|POLLFREE to __wake_up is
+   enough to ensure that we can now destroy the wait_list without
+   risking any use-after-frees, even if we have registered it with
+   epoll. Is that correct?
 
-In this case, it is 100, so I kind of understand why this might be
-ambiguous to the compiler.
+ * In patch 5, I implement a utility for closing fds that might be held
+   using `fdget`. This is rather non-trivial, and I would be happy to
+   hear suggestions about alternate solutions.
 
-> Personally, it all feels a bit over the top as a warning,
-> since code in both cases should optimise away. And we may end
+This patch is based on top of
+https://lore.kernel.org/all/20230426204923.16195-1-amiculas@cisco.com/
+which is currently the top commit on rust-next.
 
-I do not necessarily disagree, as you can see from the differential
-review that I linked in the message, but I also understand it is a fine
-line to tread when writing compiler warnings between wanting to catch
-as many potential problems as possible and having too much noise for
-developers to sift through. I think this is erring on the side of
-caution.
+Alice Ryhl (2):
+  rust: file: add bindings for `poll_table`
+  rust: file: add `DeferredFdCloser`
 
-> up papering over it if it becomes a default.
+Wedson Almeida Filho (3):
+  rust: file: add bindings for `struct file`
+  rust: cred: add Rust bindings for `struct cred`
+  rust: file: add `FileDescriptorReservation`
 
-diagtool tree tells me this warning is already on by default.
+ rust/bindings/bindings_helper.h |   8 +
+ rust/bindings/lib.rs            |   1 +
+ rust/helpers.c                  |  36 ++++
+ rust/kernel/cred.rs             |  66 +++++++
+ rust/kernel/file.rs             | 331 ++++++++++++++++++++++++++++++++
+ rust/kernel/file/poll_table.rs  |  93 +++++++++
+ rust/kernel/lib.rs              |   2 +
+ rust/kernel/sync/condvar.rs     |   2 +-
+ 8 files changed, 538 insertions(+), 1 deletion(-)
+ create mode 100644 rust/kernel/cred.rs
+ create mode 100644 rust/kernel/file.rs
+ create mode 100644 rust/kernel/file/poll_table.rs
 
-> Then again this patch IMO does make the code more readable, so
 
-I think so too.
+base-commit: 341faf2b45ba266d52c1ca886c4ffca52d666786
+-- 
+2.41.0.255.g8b1d071c50-goog
 
-> I am happy to take this one via our tree. Or either give ack to
-> bring it in via drm-misc-next:
-> 
-> Acked-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-> 
-> Let me know which route works best.
-
-Thanks for the feedback! Either route is fine with me but if the v3d
-patch is going to go in via drm-misc-next, it seems like it would not be
-too much trouble to push this one with it.
-
-Cheers,
-Nathan
