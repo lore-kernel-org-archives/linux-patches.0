@@ -1,134 +1,106 @@
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF3019BBA
-	for <patches@lists.linux.dev>; Thu, 20 Jul 2023 18:22:46 +0000 (UTC)
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-c2cf4e61bc6so1017849276.3
-        for <patches@lists.linux.dev>; Thu, 20 Jul 2023 11:22:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689877365; x=1690482165;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qaaTOawpbvAs3scekOheOCulUUyQ5i5x8diZ424R8KA=;
-        b=DzKtpXpaTGbmDG4g4m5lt6k2cKGfz5lSFSGzN1OFgBBNFveVQPq4CE3nQab1JJWe7T
-         TRywX9UU92VZ4Ary76zgRmnt3vYoUklp95fz7JLM9dKwfa18xcBLMeLh8gJ8pPju1RT6
-         YyhFfvjrAfe47xZKVBSgLF4PWyYMW66yIiuof+4OEOYDQTA8pH6kjAve0FuKcLQaloxa
-         6k2b4iVChuYXMevrFlMSDSs9x2lGh5VuWtKw7r/oioBsG4KKyjpkF3HnvRoN7TtUjJ3h
-         VQE9z4dGgAMLph6IYgzKZy7v/8PkYEJA3gEn7WJx3cMaZsV/CKR7hhV3Iy30znFDLj7c
-         tLjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689877365; x=1690482165;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qaaTOawpbvAs3scekOheOCulUUyQ5i5x8diZ424R8KA=;
-        b=Az3AEenWDYBpr1Zi/NBfoIJTVkFCCSbqhdd4oWWAAgWaHrJI7UDzemfG94rEGdvKmq
-         Jk8FQSgLBOVYYy28efyVIq5dZ8kkK34cQ7A8zZr9vxdqEllyfr40/xdny2MY4be7zznv
-         vDoDgQVJwvlD45tURhi52MbE1FYAl2GXnLpHr21tfOeZITVrIjpcbVmTS+ODEC9JRB15
-         CNG1AlcqMmzD1dhYKxqe5lpXV/6k22+F+eSxed4UoIy4DGfz21kBowkW2FVMrtVxcq2l
-         yod5yd/A82W0klm3pWu+2clb/9PIdPcXolNQ+VLHKCWCkcYtiOMeErd7L0V8I1ijAeXq
-         fl/Q==
-X-Gm-Message-State: ABy/qLaJPY2DstFCddVBkO+xIq1w1p0/Gli1RSiG3jETaGWvuYiiicBR
-	SS2xZ56c620RvO2JruGvFT7A6Kc/NbstYWths3Khm4oB8nU=
-X-Google-Smtp-Source: APBJJlE4tPonjU9hTwY71OUKgZOb1kZwax3RvvXv0ygTUmjvrjmH4dByhftfzf5InAGBXErO6GXpOOP7PXyLo0QCOF4=
-X-Received: by 2002:a25:4ed7:0:b0:ced:ab16:15ee with SMTP id
- c206-20020a254ed7000000b00cedab1615eemr5474463ybb.17.1689877365489; Thu, 20
- Jul 2023 11:22:45 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FEBF2FA5B
+	for <patches@lists.linux.dev>; Thu, 20 Jul 2023 18:35:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0DD8C433D9
+	for <patches@lists.linux.dev>; Thu, 20 Jul 2023 18:35:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1689878106;
+	bh=81m5ZIcvfNL0FEFJ3Nuqam7BZthequgHa1BosBTrhVw=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=eR20BcHuZY0XWxQd8OtfDbxHXKUyGrqY6D71W9u8tdWPnfELSbHVV1tBRaP9lmxDg
+	 tiMLZnjMzSW4HatYlHq00xWkjjIi73SBzYbDiDfowPta/b1gLCTzwbAJ3u+wrD+ZlG
+	 Riuzp/GE5I3Bejkjezf/ewhZgeugbFtAT97csbHzTUTEFuHdRzCdutM5oUYK2IdTPH
+	 4tDocR27uLB7HJjf7h1N1XMsTDpmH9d/DosiRegxbZdcndZnVQfMX32uAu6jSMInkt
+	 lzuf3gvPWO8EnAdnWODZdOy9UK9ERf23QSDC8KbK54VPBqtojTS9xeMFOAJRK3wNd7
+	 WC8KATBqWYxog==
+Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-3a38953c928so802557b6e.1
+        for <patches@lists.linux.dev>; Thu, 20 Jul 2023 11:35:06 -0700 (PDT)
+X-Gm-Message-State: ABy/qLZ9IJIkhUVlko5EavZP69FV1tI+s5ELvbf0Bp9gmF3H03tMJ87N
+	SB/nbwQVUS5AEX3nbYzyHfDkfV2cPZmhOyxlMKI=
+X-Google-Smtp-Source: APBJJlHKVWn9kDYcjOUOHIW70le7sgGdHBkr9p1Ep42APR+8uWupNFlwMZpme2w+wFD7onPJrRcdfhAUjJJ/+Q0LkTw=
+X-Received: by 2002:a05:6808:19a9:b0:3a3:baf8:5b8a with SMTP id
+ bj41-20020a05680819a900b003a3baf85b8amr450324oib.13.1689878106023; Thu, 20
+ Jul 2023 11:35:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230720152820.3566078-1-aliceryhl@google.com> <20230720152820.3566078-6-aliceryhl@google.com>
-In-Reply-To: <20230720152820.3566078-6-aliceryhl@google.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Thu, 20 Jul 2023 20:22:34 +0200
-Message-ID: <CANiq72=44YaQ--QV7+H5cQUY4o9i6hbz3OD_F_u0JGV4PzV-OQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v1 5/5] rust: file: add `DeferredFdCloser`
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: rust-for-linux@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	Miguel Ojeda <ojeda@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
-	Christian Brauner <brauner@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
+References: <20230718055235.1050223-1-ojeda@kernel.org> <CAK7LNAQ-hjW_19fjA+E-bQCrXcVPdN4-GvzAnEnYzna5KRVXew@mail.gmail.com>
+ <CANiq72kZjOGvRKoRxtgG=2DhJnMJK9TCQtTmeef_B=nLcLQD6g@mail.gmail.com>
+In-Reply-To: <CANiq72kZjOGvRKoRxtgG=2DhJnMJK9TCQtTmeef_B=nLcLQD6g@mail.gmail.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Fri, 21 Jul 2023 03:34:29 +0900
+X-Gmail-Original-Message-ID: <CAK7LNASqumGb0xvSa8n4Heasz9BKxgk4mvzNXsfFhZE1G+Bxbg@mail.gmail.com>
+Message-ID: <CAK7LNASqumGb0xvSa8n4Heasz9BKxgk4mvzNXsfFhZE1G+Bxbg@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: rust: avoid creating temporary files
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
+	Nick Desaulniers <ndesaulniers@google.com>, Nicolas Schier <nicolas@fjasle.eu>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
+	Andreas Hindborg <a.hindborg@samsung.com>, linux-kbuild@vger.kernel.org, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, Raphael Nestler <raphael.nestler@gmail.com>, 
+	Andrea Righi <andrea.righi@canonical.com>, stable@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Alice,
-
-A quick comment on referencing commits:
-
-On Thu, Jul 20, 2023 at 5:29=E2=80=AFPM Alice Ryhl <aliceryhl@google.com> w=
-rote:
+On Fri, Jul 21, 2023 at 2:30=E2=80=AFAM Miguel Ojeda
+<miguel.ojeda.sandonis@gmail.com> wrote:
 >
-> See comments on `binder_do_fd_close` and commit `80cd795630d65` for
-> motivation.
+> On Thu, Jul 20, 2023 at 7:18=E2=80=AFPM Masahiro Yamada <masahiroy@kernel=
+.org> wrote:
+> >
+> > Applied to linux-kbuild/fixes. Thanks.
+> >
+> > I believe this is a fix, so I will include it
+> > in my next pull request.
+>
+> Thanks Masahiro! Yeah, it can be considered a fix. By the way, in case yo=
+u want:
+>
+>     Fixes: 2f7ab1267dc9 ("Kbuild: add Rust support")
 
-The convention is to write these commit references like this:
 
-    commit 80cd795630d6 ("binder: fix use-after-free due to
-ksys_close() during fdget()")
+Maybe, the following was a breakage.
 
-I recommend generating them with a Git pretty format -- see the config
-in the bottom part of the section at
-https://docs.kernel.org/process/submitting-patches.html#describe-your-chang=
-es.
 
-Also, given it is a kernel convention, please avoid the Markdown
-backticks in this case.
+commit 295d8398c67e314d99bb070f38883f83fe94a97a
+Author: Masahiro Yamada <masahiroy@kernel.org>
+Date:   Sat Jan 7 18:18:15 2023 +0900
 
-> +/// See comments on `binder_do_fd_close` and commit `80cd795630d65`.
+    kbuild: specify output names separately for each emission type from rus=
+tc
 
-Same here, i.e. in comments and documentation too (and emails too,
-especially if not referenced elsewhere).
 
-While I am at it, a few other notes below too I noticed:
 
-> +    /// Create a new `DeferredFdCloser`.
 
-[`DeferredFdCloser`]
+Before that, rust_common_cmd had --out-dir.
 
-> +    /// Schedule a task work that closes the file descriptor when this t=
-ask returns to userspace.
-> +    pub fn close_fd(mut self, fd: u32) {
-> +        let file =3D unsafe { bindings::close_fd_get_file(fd) };
-> +        if !file.is_null() {
 
-Please use the early return style here, if possible, to unindent all this.
+BTW, do we also need to fix scripts/Makefile.host
+in case the external module Makefile creates host programs?
 
-> +            // SAFETY: Since DeferredFdCloserInner is `#[repr(C)]`, cast=
-ing the pointers gives a
 
-`DeferredFdCloserInner`
 
-> +            // Note: fl_owner_t is currently a void pointer.
 
-`fl_owner_t`
 
-> +            // SAFETY: The `inner` pointer is compatible with the `do_cl=
-ose_fd` method.
-> +            //
-> +            // The call to `task_work_add` can't fail, because we are sc=
-heduling the task work to
-> +            // the current task.
-> +            unsafe {
-> +                bindings::init_task_work(inner, Some(Self::do_close_fd))=
-;
-> +                bindings::task_work_add(current, inner, bindings::task_w=
-ork_notify_mode_TWA_RESUME);
-> +            }
 
-Should this block be split?
 
->  /// Represents the EBADF error code.
->  ///
->  /// Used for methods that can only fail with EBADF.
+> I guess it can be also considered a feature (e.g. "supporting more
+> setups"), but having the temporaries created where they were was
+> unintentional.
 
-Doclink them if possible; otherwise `EBADF`.
 
-Cheers,
-Miguel
+
+
+
+--=20
+Best Regards
+Masahiro Yamada
