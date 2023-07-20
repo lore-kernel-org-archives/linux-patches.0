@@ -1,40 +1,40 @@
-Received: from mail-ej1-f73.google.com (mail-ej1-f73.google.com [209.85.218.73])
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA54118B03
-	for <patches@lists.linux.dev>; Thu, 20 Jul 2023 15:28:52 +0000 (UTC)
-Received: by mail-ej1-f73.google.com with SMTP id a640c23a62f3a-997d144f31dso71864966b.0
-        for <patches@lists.linux.dev>; Thu, 20 Jul 2023 08:28:52 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7967018B03
+	for <patches@lists.linux.dev>; Thu, 20 Jul 2023 15:28:55 +0000 (UTC)
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-c386ccab562so761441276.3
+        for <patches@lists.linux.dev>; Thu, 20 Jul 2023 08:28:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1689866931; x=1690471731;
+        d=google.com; s=20221208; t=1689866934; x=1690471734;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EyZV70aSLRGUBSW3Idz74sX+TofVqWIQD1mh1640q38=;
-        b=RqS707yH9iuG7p6GJXSLRTbTgG0a3UfXdNmkgzKXyq+LZAk/vDmF962f9cun/ZxZCg
-         7d44NcEuve934uCnCmHBq7kvmoXcMgE8vYD2El840R8evkmUt6iB4SguESYzPUmKs136
-         pcRKzjfCHFo51fe3uLQ8VtOzzYCmY7RUStmHPVdkrUlC+8ku7Pp6CEefLRS5aIo53e8p
-         OY9bAVtCRHmJh/24zpIY+BvIeuDWITw0KryIPXViTV+QktgVYIYQbQaYHISUNt6cyX5Z
-         KJiJ81aEPRXETKLR/BgpiqXSvxeDfS6e4nf+/0XDdPzyofbowKZ44ErJDP1tOrhygDtm
-         fGDg==
+        bh=8tH3XEerZJwrZmU22bF8N/0qUJWteANYMAoh9Uhhjis=;
+        b=iIbHUoHVCIkaKMm/BUsR4YwpCcAILtijBEEpiPzLGsxFloPgn0f7EOrpei60KDIcvk
+         8t9TBzVqQs+AkQvHturJdtqihaNRMzMFCKXFW+yYzJtUuSGFzvt6b7X4xrQ742/qZmKU
+         PvEKOBKF4OD/QkC7sV6V53SmlhclUJxyOXH9z0797NDGNgsxIgCVTE77X5wl3hBXbpX4
+         CUYQc58iS7Vz7i0p4RGy5F1G9zOILpr96cQBOoIdxky3VX2EsWb49rl1/kluJqBrvrQt
+         WqjWtykIW08YaMiVbMm4RK5QZ+3LafZMQodf7O1gjLNykfiDOSypoIOhwMpCer+173uW
+         j3fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689866931; x=1690471731;
+        d=1e100.net; s=20221208; t=1689866934; x=1690471734;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EyZV70aSLRGUBSW3Idz74sX+TofVqWIQD1mh1640q38=;
-        b=It/O1jFWFbUkzNF6FMdMyEA/vLVLoBA65lPan2WQdF+EOeKP8vTyEGI8TFp6JSUwzj
-         33cUV7YIoJes6p5CtNi46/gVf8hsKXUO9Nee3mQJoQ6Fu+nFuCaJxjcyFpaPwRx+gI8+
-         kT9tMCxZjNfBN7bDdd+p3wYabuDEER/BobO/W1XilHP9C4Tq5W9f0XIeG0WD/5GmuyaH
-         YInPs2/dR/GOdAMOg1NNvA45LwA2P1VUOJTR3sWgg6/6034+kl6qJ6RMTqTFbrKajARA
-         QuB22+iMGndg0ugcI96UhEE3SUv5DQ3ysE78LB1jrtEHIIUoehAYVOJaJi6dQDcfbas4
-         76iQ==
-X-Gm-Message-State: ABy/qLbE3CA+UJIYVmVF9NC5OscZGakgiLbFMn4SClS/eU8LY89IMraJ
-	05pNSLCGD4fuLIyYfx+/hMPgKXBC2eTEZ8w=
-X-Google-Smtp-Source: APBJJlFcX1Wvv8T28heLGJIvE2Ykm8T7nFeE/WdA341Y+SWLJMzAB39fF5oIw+mdh2BWhXmtFjKIfxadaKRwNy4=
+        bh=8tH3XEerZJwrZmU22bF8N/0qUJWteANYMAoh9Uhhjis=;
+        b=UtjcfTiLVSX+6+fdcy12f64mg9qi20b9WZhs8jAHBZ7d8IB/dFnzJGmvvO5dK+Slac
+         Q+iosVBjnZnSisy62dFZ0gDY/V/tzc//2dbqdmlUtLqGTteJJ5kqszdanmRQqrZllh7V
+         8fKAia/iNvASmVLAujzj4cy/Zf5uzTVIVMW1mC9Nn+LVT6BnnN5/vJFsSDEH4nadG+/K
+         gOfqBr/ew55/yZ+rBI/KBms8hG+dkkMTvNpeTuWSQ6/B+S2BrrBWIwoj9XYpH2GES0D7
+         eIf8cGS0qvrv0ZQ2cLPjOJCZyuMhnnfAJLG39EbbzrRrL6Aj5UapT8jlG3FHvuO/tacj
+         0kJw==
+X-Gm-Message-State: ABy/qLZ+RLdoNGKaLOzgSuSWCFcIq+dczVYFTj5TRCU6fpmMQ/jNWVDr
+	Bv4ZhieqOTHNvQM9deyvHf4o3ELydu1JKSc=
+X-Google-Smtp-Source: APBJJlF6cATeLhYEkc+Kltokpd6Fuo8ex9iPNH0A4q6at8KTHctN4S63Ew8lL0snobh9IN2IF6MQLjmL7RBatPk=
 X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a17:907:2bd7:b0:98e:1a1b:9c21 with SMTP
- id gv23-20020a1709072bd700b0098e1a1b9c21mr15466ejc.5.1689866930843; Thu, 20
- Jul 2023 08:28:50 -0700 (PDT)
-Date: Thu, 20 Jul 2023 15:28:18 +0000
+ (user=aliceryhl job=sendgmr) by 2002:a25:2551:0:b0:c86:e7cf:4064 with SMTP id
+ l78-20020a252551000000b00c86e7cf4064mr39916ybl.6.1689866934433; Thu, 20 Jul
+ 2023 08:28:54 -0700 (PDT)
+Date: Thu, 20 Jul 2023 15:28:19 +0000
 In-Reply-To: <20230720152820.3566078-1-aliceryhl@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -44,8 +44,8 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 References: <20230720152820.3566078-1-aliceryhl@google.com>
 X-Mailer: git-send-email 2.41.0.255.g8b1d071c50-goog
-Message-ID: <20230720152820.3566078-4-aliceryhl@google.com>
-Subject: [RFC PATCH v1 3/5] rust: file: add `FileDescriptorReservation`
+Message-ID: <20230720152820.3566078-5-aliceryhl@google.com>
+Subject: [RFC PATCH v1 4/5] rust: file: add bindings for `poll_table`
 From: Alice Ryhl <aliceryhl@google.com>
 To: rust-for-linux@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
 	Miguel Ojeda <ojeda@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
@@ -54,102 +54,186 @@ Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.co
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
 	"=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?=" <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, 
 	Alice Ryhl <aliceryhl@google.com>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Wedson Almeida Filho <walmeida@microsoft.com>
+	patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 
-From: Wedson Almeida Filho <walmeida@microsoft.com>
+These bindings make it possible to register a `struct poll_table` with a
+`CondVar` so that notifying the condition variable will mark a given
+file as notified in the poll table.
 
-This allows the creation of a file descriptor in two steps: first, we
-reserve a slot for it, then we commit or drop the reservation. The first
-step may fail (e.g., the current process ran out of available slots),
-but commit and drop never fail (and are mutually exclusive).
+This patch introduces a wrapper around `CondVar` (which is just a
+wrapper around `wait_list`) rather than extending `CondVar` itself
+because using the condition variable with poll tables makes it necessary
+to use `POLLHUP | POLLFREE` to clear the wait list when the condition
+variable is destroyed.
 
-Co-Developed-by: Alice Ryhl <aliceryhl@google.com>
-Signed-off-by: Wedson Almeida Filho <walmeida@microsoft.com>
+This is not necessary with the ordinary `CondVar` because all of its
+methods will borrow the `CondVar` for longer than the duration in which
+it enqueues something to the wait list. This is not the case when
+registering a `PollTable`.
+
 Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 ---
- rust/kernel/file.rs | 61 ++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 60 insertions(+), 1 deletion(-)
+ rust/bindings/bindings_helper.h |  2 +
+ rust/bindings/lib.rs            |  1 +
+ rust/kernel/file.rs             |  3 ++
+ rust/kernel/file/poll_table.rs  | 93 +++++++++++++++++++++++++++++++++
+ rust/kernel/sync/condvar.rs     |  2 +-
+ 5 files changed, 100 insertions(+), 1 deletion(-)
+ create mode 100644 rust/kernel/file/poll_table.rs
 
-diff --git a/rust/kernel/file.rs b/rust/kernel/file.rs
-index d379ae2906d9..8ddf8f04ae0f 100644
---- a/rust/kernel/file.rs
-+++ b/rust/kernel/file.rs
-@@ -11,7 +11,7 @@
-     error::{code::*, Error, Result},
-     types::{ARef, AlwaysRefCounted, Opaque},
- };
--use core::ptr;
-+use core::{marker::PhantomData, ptr};
- 
- /// Flags associated with a [`File`].
- pub mod flags {
-@@ -179,6 +179,65 @@ unsafe fn dec_ref(obj: ptr::NonNull<Self>) {
-     }
- }
- 
-+/// A file descriptor reservation.
-+///
-+/// This allows the creation of a file descriptor in two steps: first, we reserve a slot for it,
-+/// then we commit or drop the reservation. The first step may fail (e.g., the current process ran
-+/// out of available slots), but commit and drop never fail (and are mutually exclusive).
-+///
-+/// # Invariants
-+///
-+/// The fd stored in this struct must correspond to a reserved file descriptor of the current task.
-+pub struct FileDescriptorReservation {
-+    fd: u32,
-+    /// Prevent values of this type from being moved to a different task.
-+    ///
-+    /// This is necessary because the C FFI calls assume that `current` is set to the task that
-+    /// owns the fd in question.
-+    _not_send_sync: PhantomData<*mut ()>,
+diff --git a/rust/kernel/file/poll_table.rs b/rust/kernel/file/poll_table.rs
+new file mode 100644
+index 000000000000..d6d134355088
+--- /dev/null
++++ b/rust/kernel/file/poll_table.rs
+@@ -0,0 +1,93 @@
++// SPDX-License-Identifier: GPL-2.0
++
++//! Utilities for working with `struct poll_table`.
++
++use crate::{
++    bindings,
++    file::File,
++    prelude::*,
++    sync::{CondVar, LockClassKey},
++    types::Opaque,
++};
++use core::ops::Deref;
++
++/// Creates a [`PollCondVar`] initialiser with the given name and a newly-created lock class.
++#[macro_export]
++macro_rules! new_poll_condvar {
++    ($($name:literal)?) => {
++        $crate::file::PollCondVar::new($crate::optional_name!($($name)?), $crate::static_lock_class!())
++    };
 +}
 +
-+impl FileDescriptorReservation {
-+    /// Creates a new file descriptor reservation.
-+    pub fn new(flags: u32) -> Result<Self> {
-+        // SAFETY: FFI call, there are no safety requirements on `flags`.
-+        let fd: i32 = unsafe { bindings::get_unused_fd_flags(flags) };
-+        if fd < 0 {
-+            return Err(Error::from_errno(fd));
++/// Wraps the kernel's `struct poll_table`.
++#[repr(transparent)]
++pub struct PollTable(Opaque<bindings::poll_table>);
++
++impl PollTable {
++    /// Creates a reference to a [`PollTable`] from a valid pointer.
++    ///
++    /// # Safety
++    ///
++    /// The caller must ensure that for the duration of 'a, the pointer will point at a valid poll
++    /// table, and that it is only accessed via the returned reference.
++    pub unsafe fn from_ptr<'a>(ptr: *mut bindings::poll_table) -> &'a mut PollTable {
++        // SAFETY: The safety requirements guarantee the validity of the dereference, while the
++        // `PollTable` type being transparent makes the cast ok.
++        unsafe { &mut *ptr.cast() }
++    }
++
++    fn get_qproc(&self) -> bindings::poll_queue_proc {
++        let ptr = self.0.get();
++        // SAFETY: The `ptr` is valid because it originates from a reference, and the `_qproc`
++        // field is not modified concurrently with this call.
++        unsafe { (*ptr)._qproc }
++    }
++
++    /// Register this [`PollTable`] with the provided [`PollCondVar`], so that it can be notified
++    /// using the condition variable.
++    pub fn register_wait(&mut self, file: &File, cv: &PollCondVar) {
++        if let Some(qproc) = self.get_qproc() {
++            // SAFETY: The pointers to `self` and `file` are valid because they are references.
++            //
++            // Before the wait list is destroyed, the destructor of `PollCondVar` will clear
++            // everything in the wait list, so the wait list is not used after it is freed.
++            unsafe { qproc(file.0.get() as _, cv.wait_list.get(), self.0.get()) };
 +        }
-+        Ok(Self {
-+            fd: fd as _,
-+            _not_send_sync: PhantomData,
++    }
++}
++
++/// A wrapper around [`CondVar`] that makes it usable with [`PollTable`].
++///
++/// [`CondVar`]: crate::sync::CondVar
++#[pin_data(PinnedDrop)]
++pub struct PollCondVar {
++    #[pin]
++    inner: CondVar,
++}
++
++impl PollCondVar {
++    /// Constructs a new condvar initialiser.
++    #[allow(clippy::new_ret_no_self)]
++    pub fn new(name: &'static CStr, key: &'static LockClassKey) -> impl PinInit<Self> {
++        pin_init!(Self {
++            inner <- CondVar::new(name, key),
 +        })
 +    }
++}
 +
-+    /// Returns the file descriptor number that was reserved.
-+    pub fn reserved_fd(&self) -> u32 {
-+        self.fd
-+    }
++// Make the `CondVar` methods callable on `PollCondVar`.
++impl Deref for PollCondVar {
++    type Target = CondVar;
 +
-+    /// Commits the reservation.
-+    ///
-+    /// The previously reserved file descriptor is bound to `file`.
-+    pub fn commit(self, file: ARef<File>) {
-+        // SAFETY: `self.fd` was previously returned by `get_unused_fd_flags`, and `file.ptr` is
-+        // guaranteed to have an owned ref count by its type invariants.
-+        unsafe { bindings::fd_install(self.fd, file.0.get()) };
-+
-+        // `fd_install` consumes both the file descriptor and the file reference, so we cannot run
-+        // the destructors.
-+        core::mem::forget(self);
-+        core::mem::forget(file);
++    fn deref(&self) -> &CondVar {
++        &self.inner
 +    }
 +}
 +
-+impl Drop for FileDescriptorReservation {
-+    fn drop(&mut self) {
-+        // SAFETY: `self.fd` was returned by a previous call to `get_unused_fd_flags`.
-+        unsafe { bindings::put_unused_fd(self.fd) };
++#[pinned_drop]
++impl PinnedDrop for PollCondVar {
++    fn drop(self: Pin<&mut Self>) {
++        // Clear anything registered using `register_wait`.
++        self.inner.notify(1, bindings::POLLHUP | bindings::POLLFREE);
 +    }
 +}
+diff --git a/rust/kernel/sync/condvar.rs b/rust/kernel/sync/condvar.rs
+index ed353399c4e5..699ecac2db89 100644
+--- a/rust/kernel/sync/condvar.rs
++++ b/rust/kernel/sync/condvar.rs
+@@ -144,7 +144,7 @@ pub fn wait_uninterruptible<T: ?Sized, B: Backend>(&self, guard: &mut Guard<'_,
+     }
+ 
+     /// Calls the kernel function to notify the appropriate number of threads with the given flags.
+-    fn notify(&self, count: i32, flags: u32) {
++    pub(crate) fn notify(&self, count: i32, flags: u32) {
+         // SAFETY: `wait_list` points to valid memory.
+         unsafe {
+             bindings::__wake_up(
+diff --git a/rust/kernel/file.rs b/rust/kernel/file.rs
+index 8ddf8f04ae0f..7281264cbaa1 100644
+--- a/rust/kernel/file.rs
++++ b/rust/kernel/file.rs
+@@ -13,6 +13,9 @@
+ };
+ use core::{marker::PhantomData, ptr};
+ 
++mod poll_table;
++pub use self::poll_table::{PollCondVar, PollTable};
 +
- /// Represents the EBADF error code.
- ///
- /// Used for methods that can only fail with EBADF.
+ /// Flags associated with a [`File`].
+ pub mod flags {
+     /// File is opened in append mode.
+diff --git a/rust/bindings/bindings_helper.h b/rust/bindings/bindings_helper.h
+index d89f0df93615..7d83e1a7a362 100644
+--- a/rust/bindings/bindings_helper.h
++++ b/rust/bindings/bindings_helper.h
+@@ -10,6 +10,7 @@
+ #include <linux/errname.h>
+ #include <linux/file.h>
+ #include <linux/fs.h>
++#include <linux/poll.h>
+ #include <linux/security.h>
+ #include <linux/slab.h>
+ #include <linux/refcount.h>
+@@ -19,3 +20,4 @@
+ /* `bindgen` gets confused at certain things. */
+ const gfp_t BINDINGS_GFP_KERNEL = GFP_KERNEL;
+ const gfp_t BINDINGS___GFP_ZERO = __GFP_ZERO;
++const __poll_t BINDINGS_POLLFREE = POLLFREE;
+diff --git a/rust/bindings/lib.rs b/rust/bindings/lib.rs
+index 9bcbea04dac3..eeb291cc60db 100644
+--- a/rust/bindings/lib.rs
++++ b/rust/bindings/lib.rs
+@@ -51,3 +51,4 @@ mod bindings_helper {
+ 
+ pub const GFP_KERNEL: gfp_t = BINDINGS_GFP_KERNEL;
+ pub const __GFP_ZERO: gfp_t = BINDINGS___GFP_ZERO;
++pub const POLLFREE: __poll_t = BINDINGS_POLLFREE;
 -- 
 2.41.0.255.g8b1d071c50-goog
 
