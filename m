@@ -1,230 +1,126 @@
-Received: from mail-ed1-f74.google.com (mail-ed1-f74.google.com [209.85.208.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6A418C09
-	for <patches@lists.linux.dev>; Thu, 20 Jul 2023 15:29:00 +0000 (UTC)
-Received: by mail-ed1-f74.google.com with SMTP id 4fb4d7f45d1cf-51e3713ce6eso2548260a12.0
-        for <patches@lists.linux.dev>; Thu, 20 Jul 2023 08:28:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1689866938; x=1690471738;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=d/u9EQyW+X21UxdbxspElMqoKZgJyUHYdK5EQ3Z7BOw=;
-        b=3Hwd44nZ28dd7XQpwbotYQrWBx55skJp3Gg5KtDbRpDdMOffpWdvgIzNW860/54HaT
-         Azxf/5by8rXcrok2m41Mqp1TMzDWRinsNR8PQskZDazzTs+Gp7tZqhBOc1yUUgTuJmRr
-         kksHZP3kh1tFtsq2GBDhXDOpYxYoVGwh08aplvBGp9TKQ48GqSDmZqAyZ2GTmAZhYpJ1
-         o2H8FoOGoPqkY2ao9JEaJJHSfeUSbfw+8DSGPm6uorPl8pnz36deNwerOjK72eTjgqXq
-         PVbSr14PujluBch8hecMx3je20sH5Q9iXokyshWyBaVVH59tY43OZqL9Vt46qTAXsIUY
-         M1Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689866938; x=1690471738;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=d/u9EQyW+X21UxdbxspElMqoKZgJyUHYdK5EQ3Z7BOw=;
-        b=L/PeSm4i6fityIb4+FUPlhHhVo/CH/+/Uhu4oUAI7HQ4fG3dL61Oqg0cWRz9wKaJXZ
-         SK7ZS63PJ0AHWmrwkkyqnJKT4lcHyrg9wPv5HSTNZ0CEAqacGykYby7lkCcs5pTqPsB8
-         adgY09lzrB/MM1uCRgZXVOJrezNQB7e5AR0NnPovJXrkCmvyZ9CWlTeOckQnIVpkWHqF
-         9pp/8lUCupxj4Fcw8ktSxiycA8LZPS0a9mmC9TdjLOth0hkw4/H/1eELZ9S5YDHeg0Kt
-         dqvl70i+fwhFV/nOn0IAPfyO5nn2vZabBLjlRp2JsNmNEa+NVtKyYGDcKl7PVtcxIgth
-         3peA==
-X-Gm-Message-State: ABy/qLavjZyPsmc4bVspnU7NNUa3RhKrP4+zwoT7nN+DaUqcVTftwnCP
-	SyYSpkfdDhJ4ApXJJkR9qkIQ5xO79uu/YW4=
-X-Google-Smtp-Source: APBJJlHVWjVGueX9/R76s//0Z49bMtlWlMtdOLYEUW5lsDUqEawxcfhDALGNUuPtRnFpdXqSHdO1FkhKZsz5mhM=
-X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a05:6402:e9c:b0:51e:3810:e3b1 with SMTP
- id h28-20020a0564020e9c00b0051e3810e3b1mr39802eda.1.1689866938115; Thu, 20
- Jul 2023 08:28:58 -0700 (PDT)
-Date: Thu, 20 Jul 2023 15:28:20 +0000
-In-Reply-To: <20230720152820.3566078-1-aliceryhl@google.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01FA22FA35
+	for <patches@lists.linux.dev>; Thu, 20 Jul 2023 17:18:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83452C433C7
+	for <patches@lists.linux.dev>; Thu, 20 Jul 2023 17:18:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1689873512;
+	bh=F/C+gSA5qZQ2B3LD6hPsWWKc+LdUI/ORd3hYIi+2pCk=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=G/aM/MIVcGavKF4lp/Kw/NvJHOYMkWcPmqmnfq2tTt4jUPEyUOqXto8dOZeP+Kmz4
+	 jH9qq3XHoJhEIQqvmC91ylyW+5FNi3VT70Xb3Zn9eAVdiPdOzf8HTdjjy4JNTXOmW3
+	 w6qIiXQnCzDYjOWHgZB+kSa60j+gYbHNoeIiA2zA/0pX+HuYmgPQ3ubl04UMDWM2fn
+	 96JpcgohHgYDHdgG0sbjWO6GZy6BNpoWIZ+fKAXb4A0OoY7EtjtRc28JH0UxNvP4qc
+	 VzQL3libBcNrfP7AcOUbYSEmpHgT2WdfhQ0pba5M3olycbtAVB8Sk8aTE2vIBO8NBN
+	 PfztX40rKq2wQ==
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-55e04a83465so722267eaf.3
+        for <patches@lists.linux.dev>; Thu, 20 Jul 2023 10:18:32 -0700 (PDT)
+X-Gm-Message-State: ABy/qLa4UdVL+tZUMnABrlaHY6aK1EwTPfSfOTFXVIYOF1s0/oEZQRdb
+	fb1Hl/oruNiGL3kHpgc88yMCKXKX/phpR2OZmEg=
+X-Google-Smtp-Source: APBJJlEcVFHNbYhoO24bj9DeyyO+DlNSschkMud5gv9dgwfJtxiGAo0mniIt2fy3hzGZOCnveB++u9BFc+HyVXcQPbQ=
+X-Received: by 2002:a4a:5541:0:b0:566:efc4:e4fb with SMTP id
+ e62-20020a4a5541000000b00566efc4e4fbmr554052oob.4.1689873511842; Thu, 20 Jul
+ 2023 10:18:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20230720152820.3566078-1-aliceryhl@google.com>
-X-Mailer: git-send-email 2.41.0.255.g8b1d071c50-goog
-Message-ID: <20230720152820.3566078-6-aliceryhl@google.com>
-Subject: [RFC PATCH v1 5/5] rust: file: add `DeferredFdCloser`
-From: Alice Ryhl <aliceryhl@google.com>
-To: rust-for-linux@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	Miguel Ojeda <ojeda@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
-	Christian Brauner <brauner@kernel.org>
+MIME-Version: 1.0
+References: <20230718055235.1050223-1-ojeda@kernel.org>
+In-Reply-To: <20230718055235.1050223-1-ojeda@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Fri, 21 Jul 2023 02:17:55 +0900
+X-Gmail-Original-Message-ID: <CAK7LNAQ-hjW_19fjA+E-bQCrXcVPdN4-GvzAnEnYzna5KRVXew@mail.gmail.com>
+Message-ID: <CAK7LNAQ-hjW_19fjA+E-bQCrXcVPdN4-GvzAnEnYzna5KRVXew@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: rust: avoid creating temporary files
+To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	"=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?=" <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, 
-	Alice Ryhl <aliceryhl@google.com>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
+	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
+	Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
+	Andreas Hindborg <a.hindborg@samsung.com>, linux-kbuild@vger.kernel.org, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, Raphael Nestler <raphael.nestler@gmail.com>, 
+	Andrea Righi <andrea.righi@canonical.com>, stable@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This adds a new type called `DeferredFdCloser` that can be used to close
-files by their fd in a way that is safe even if the file is currently
-held using `fdget`.
+On Tue, Jul 18, 2023 at 2:52=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> `rustc` outputs by default the temporary files (i.e. the ones saved
+> by `-Csave-temps`, such as `*.rcgu*` files) in the current working
+> directory when `-o` and `--out-dir` are not given (even if
+> `--emit=3Dx=3Dpath` is given, i.e. it does not use those for temporaries)=
+.
+>
+> Since out-of-tree modules are compiled from the `linux` tree,
+> `rustc` then tries to create them there, which may not be accessible.
+>
+> Thus pass `--out-dir` explicitly, even if it is just for the temporary
+> files.
+>
+> Reported-by: Raphael Nestler <raphael.nestler@gmail.com>
+> Closes: https://github.com/Rust-for-Linux/linux/issues/1015
+> Reported-by: Andrea Righi <andrea.righi@canonical.com>
+> Tested-by: Raphael Nestler <raphael.nestler@gmail.com>
+> Tested-by: Andrea Righi <andrea.righi@canonical.com>
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
 
-This is done by grabbing an extra refcount to the file and dropping it
-in a task work once we return to userspace.
 
-See comments on `binder_do_fd_close` and commit `80cd795630d65` for
-motivation.
 
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
----
-This is an implementation of `binder_deferred_fd_close` in Rust.
+Applied to linux-kbuild/fixes. Thanks.
 
-I think the fact that binder needs to close fds in this way raises the
-question of how we want the Rust APIs for closing files to look.
-Apparently, fdget is not just used in easily reviewable regions, but
-also around things like the ioctl syscall, meaning that all ioctls must
-abide by the fdget safety requirements.
+I believe this is a fix, so I will include it
+in my next pull request.
 
- rust/bindings/bindings_helper.h |  2 +
- rust/helpers.c                  |  7 +++
- rust/kernel/file.rs             | 80 ++++++++++++++++++++++++++++++++-
- 3 files changed, 88 insertions(+), 1 deletion(-)
 
-diff --git a/rust/kernel/file.rs b/rust/kernel/file.rs
-index 7281264cbaa1..9b1f4efdf7ac 100644
---- a/rust/kernel/file.rs
-+++ b/rust/kernel/file.rs
-@@ -11,7 +11,8 @@
-     error::{code::*, Error, Result},
-     types::{ARef, AlwaysRefCounted, Opaque},
- };
--use core::{marker::PhantomData, ptr};
-+use alloc::boxed::Box;
-+use core::{alloc::AllocError, marker::PhantomData, mem, ptr};
- 
- mod poll_table;
- pub use self::poll_table::{PollCondVar, PollTable};
-@@ -241,6 +242,83 @@ fn drop(&mut self) {
-     }
- }
- 
-+/// Helper used for closing file descriptors in a way that is safe even if the file is currently
-+/// held using `fdget`.
-+///
-+/// See comments on `binder_do_fd_close` and commit `80cd795630d65`.
-+pub struct DeferredFdCloser {
-+    inner: Box<DeferredFdCloserInner>,
-+}
-+
-+/// SAFETY: This just holds an allocation with no real content, so there's no safety issue with
-+/// moving it across threads.
-+unsafe impl Send for DeferredFdCloser {}
-+unsafe impl Sync for DeferredFdCloser {}
-+
-+#[repr(C)]
-+struct DeferredFdCloserInner {
-+    twork: mem::MaybeUninit<bindings::callback_head>,
-+    file: *mut bindings::file,
-+}
-+
-+impl DeferredFdCloser {
-+    /// Create a new `DeferredFdCloser`.
-+    pub fn new() -> Result<Self, AllocError> {
-+        Ok(Self {
-+            inner: Box::try_new(DeferredFdCloserInner {
-+                twork: mem::MaybeUninit::uninit(),
-+                file: core::ptr::null_mut(),
-+            })?,
-+        })
-+    }
-+
-+    /// Schedule a task work that closes the file descriptor when this task returns to userspace.
-+    pub fn close_fd(mut self, fd: u32) {
-+        let file = unsafe { bindings::close_fd_get_file(fd) };
-+        if !file.is_null() {
-+            self.inner.file = file;
-+
-+            // SAFETY: Since DeferredFdCloserInner is `#[repr(C)]`, casting the pointers gives a
-+            // pointer to the `twork` field.
-+            let inner = Box::into_raw(self.inner) as *mut bindings::callback_head;
-+
-+            // SAFETY: Getting a pointer to current is always safe.
-+            let current = unsafe { bindings::get_current() };
-+            // SAFETY: The `file` pointer points at a valid file.
-+            unsafe { bindings::get_file(file) };
-+            // SAFETY: Due to the above `get_file`, even if the current task holds an `fdget` to
-+            // this file right now, the refcount will not drop to zero until after it is released
-+            // with `fdput`. This is because when using `fdget`, you must always use `fdput` before
-+            // returning to userspace, and our task work runs after any `fdget` users have returned
-+            // to user space.
-+            //
-+            // Note: fl_owner_t is currently a void pointer.
-+            unsafe { bindings::filp_close(file, current as bindings::fl_owner_t) };
-+            // SAFETY: The `inner` pointer is compatible with the `do_close_fd` method.
-+            //
-+            // The call to `task_work_add` can't fail, because we are scheduling the task work to
-+            // the current task.
-+            unsafe {
-+                bindings::init_task_work(inner, Some(Self::do_close_fd));
-+                bindings::task_work_add(current, inner, bindings::task_work_notify_mode_TWA_RESUME);
-+            }
-+        } else {
-+            // Free the allocation.
-+            drop(self.inner);
-+        }
-+    }
-+
-+    unsafe extern "C" fn do_close_fd(inner: *mut bindings::callback_head) {
-+        // SAFETY: In `close_fd` we use this method together with a pointer that originates from a
-+        // `Box<DeferredFdCloserInner>`, and we have just been given ownership of that allocation.
-+        let inner = unsafe { Box::from_raw(inner as *mut DeferredFdCloserInner) };
-+        // SAFETY: This drops a refcount we acquired in `close_fd`.
-+        unsafe { bindings::fput(inner.file) };
-+        // Free the allocation.
-+        drop(inner);
-+    }
-+}
-+
- /// Represents the EBADF error code.
- ///
- /// Used for methods that can only fail with EBADF.
-diff --git a/rust/bindings/bindings_helper.h b/rust/bindings/bindings_helper.h
-index 7d83e1a7a362..6d0d044fa8cd 100644
---- a/rust/bindings/bindings_helper.h
-+++ b/rust/bindings/bindings_helper.h
-@@ -8,6 +8,7 @@
- 
- #include <linux/cred.h>
- #include <linux/errname.h>
-+#include <linux/fdtable.h>
- #include <linux/file.h>
- #include <linux/fs.h>
- #include <linux/poll.h>
-@@ -16,6 +17,7 @@
- #include <linux/refcount.h>
- #include <linux/wait.h>
- #include <linux/sched.h>
-+#include <linux/task_work.h>
- 
- /* `bindgen` gets confused at certain things. */
- const gfp_t BINDINGS_GFP_KERNEL = GFP_KERNEL;
-diff --git a/rust/helpers.c b/rust/helpers.c
-index e13a7da430b1..d147ec5bc0a3 100644
---- a/rust/helpers.c
-+++ b/rust/helpers.c
-@@ -31,6 +31,7 @@
- #include <linux/sched/signal.h>
- #include <linux/security.h>
- #include <linux/spinlock.h>
-+#include <linux/task_work.h>
- #include <linux/wait.h>
- 
- __noreturn void rust_helper_BUG(void)
-@@ -166,6 +167,12 @@ void rust_helper_security_cred_getsecid(const struct cred *c, u32 *secid)
- EXPORT_SYMBOL_GPL(rust_helper_security_cred_getsecid);
- #endif
- 
-+void rust_helper_init_task_work(struct callback_head *twork, task_work_func_t func)
-+{
-+	init_task_work(twork, func);
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_init_task_work);
-+
- /*
-  * We use `bindgen`'s `--size_t-is-usize` option to bind the C `size_t` type
-  * as the Rust `usize` type, so we can use it in contexts where Rust
--- 
-2.41.0.255.g8b1d071c50-goog
 
+
+
+>  scripts/Makefile.build | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/scripts/Makefile.build b/scripts/Makefile.build
+> index 6413342a03f4..82e3fb19fdaf 100644
+> --- a/scripts/Makefile.build
+> +++ b/scripts/Makefile.build
+> @@ -264,6 +264,9 @@ $(obj)/%.lst: $(src)/%.c FORCE
+>
+>  rust_allowed_features :=3D new_uninit
+>
+> +# `--out-dir` is required to avoid temporaries being created by `rustc` =
+in the
+> +# current working directory, which may be not accessible in the out-of-t=
+ree
+> +# modules case.
+>  rust_common_cmd =3D \
+>         RUST_MODFILE=3D$(modfile) $(RUSTC_OR_CLIPPY) $(rust_flags) \
+>         -Zallow-features=3D$(rust_allowed_features) \
+> @@ -272,7 +275,7 @@ rust_common_cmd =3D \
+>         --extern alloc --extern kernel \
+>         --crate-type rlib -L $(objtree)/rust/ \
+>         --crate-name $(basename $(notdir $@)) \
+> -       --emit=3Ddep-info=3D$(depfile)
+> +       --out-dir $(dir $@) --emit=3Ddep-info=3D$(depfile)
+>
+>  # `--emit=3Dobj`, `--emit=3Dasm` and `--emit=3Dllvm-ir` imply a single c=
+odegen unit
+>  # will be used. We explicitly request `-Ccodegen-units=3D1` in any case,=
+ and
+>
+> base-commit: 06c2afb862f9da8dc5efa4b6076a0e48c3fbaaa5
+> --
+> 2.41.0
+>
+
+
+--=20
+Best Regards
+Masahiro Yamada
