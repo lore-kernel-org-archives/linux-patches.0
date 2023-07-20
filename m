@@ -1,82 +1,88 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5063A2FA3C
-	for <patches@lists.linux.dev>; Thu, 20 Jul 2023 17:30:07 +0000 (UTC)
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-c84fd44593aso969416276.0
-        for <patches@lists.linux.dev>; Thu, 20 Jul 2023 10:30:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689874206; x=1690479006;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SCJQ65+7aQZac8L3veadNqaoOqxg9236xCtIGRaxWKA=;
-        b=Vy0VLb8pBIRmkm/OCgFwCyVIHkdJkylVc+Hzceus7ZHA7wAZiPd1yx84YA+isdig02
-         n9d9fo6a3ztiX81rtlbE20h6PR9YIXVXeKpFms6fadk9pnq9odSijinC8O/JL+qCQSfR
-         GbXl9Jh2DBWBEY55CWGUmif9q5enGEF9UAZTNBxb43g2mc6d5RHI96pDNXMsBClswwcF
-         gOxagc+I8oyWGwbWwVm7aPra4KhexdMQ+m4We2YQOKcTOuQD3JPKt9EsLzSa5hmW6mZh
-         jetcV+WhXoikm5YfxU5IUZOjB0KTBO4K9rCS0l+KV/TWbY4eENQVyaYl7r7yjZpuOK+X
-         TbwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689874206; x=1690479006;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SCJQ65+7aQZac8L3veadNqaoOqxg9236xCtIGRaxWKA=;
-        b=F4Nu5ezYDh/KOIkcYQpIJhc37WIkjvwUXooHE+BR4AcDAHw62uztwzpQ3nLakMOlTw
-         nL7RMK57ANUysBA3StxTy6wpfgTV+UcY6p2YzBTbzj9eNqo1WCyMgDQ9zwPwPldY9rw6
-         Y0S7C5JUdZyEi3W014qU/O5vR7yeRFAK8EM30Xw/Ef1DlOf7cvusTH3MvIOihsR6gFAu
-         zyMXKBIMUizDKTS4R6haUXhY1jO4E0LdvmcTEFhHGi3im0YYgc4esA+ExERo6x2yri3C
-         gkqTKdFtZhcoKRrmnowflakLc6tO51+QVsN0Bg6L1y8dj+r3otwfw6mKxLvfJbVtqgkY
-         ZfiA==
-X-Gm-Message-State: ABy/qLa95Gd0znEirOI82WxqPr31DYofnVcl1p75jk2/qH9USnXtNvOg
-	NdC1pT6UECwbVzG1B0NEXaaNMtBCaGPhjN8Frj4=
-X-Google-Smtp-Source: APBJJlHbTOValRmB/GshYtHb4Ajg/BgY2O7fJVdJ6AqgyDWmi+wB4sVPiYYN+prjLl1boydok0lSDcaStxx1GIZ4igs=
-X-Received: by 2002:a25:910:0:b0:ce7:ee46:debd with SMTP id
- 16-20020a250910000000b00ce7ee46debdmr2953145ybj.16.1689874206039; Thu, 20 Jul
- 2023 10:30:06 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4653918C0D
+	for <patches@lists.linux.dev>; Thu, 20 Jul 2023 17:50:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29110C433C7;
+	Thu, 20 Jul 2023 17:50:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1689875438;
+	bh=tA6jPNyslJC+LUacjwi2kvTq/6NHCcqxlljp7wunIe8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jK80v0ACTaeStmC6h4QNp1pZrzv0tbJx9pDdZTutOEZSz2o5PaUnz5Kcu7rhsAnhZ
+	 CH112eu/lWtwN+YI1/fu8p2HLNVx1ex9Y5PfK75MzFEVV2tkMeum5SaE35yS7yoM5/
+	 6C0yuU8Se2inio0BdvdVD5rjpF2PxM0LFbnmnPrQ=
+Date: Thu, 20 Jul 2023 19:50:36 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: Paul Barker <paul.barker.ct@bp.renesas.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 6.1 000/589] 6.1.39-rc3 review
+Message-ID: <2023072028-elevation-undead-bb94@gregkh>
+References: <20230717201547.359923764@linuxfoundation.org>
+ <9da5f8cb-5ed0-1854-0a0a-252794e01ce3@bp.renesas.com>
+ <9705c130-997d-6356-18bc-ee5ce5d8b325@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230718055235.1050223-1-ojeda@kernel.org> <CAK7LNAQ-hjW_19fjA+E-bQCrXcVPdN4-GvzAnEnYzna5KRVXew@mail.gmail.com>
-In-Reply-To: <CAK7LNAQ-hjW_19fjA+E-bQCrXcVPdN4-GvzAnEnYzna5KRVXew@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Thu, 20 Jul 2023 19:29:55 +0200
-Message-ID: <CANiq72kZjOGvRKoRxtgG=2DhJnMJK9TCQtTmeef_B=nLcLQD6g@mail.gmail.com>
-Subject: Re: [PATCH] kbuild: rust: avoid creating temporary files
-To: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
-	Nick Desaulniers <ndesaulniers@google.com>, Nicolas Schier <nicolas@fjasle.eu>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
-	Andreas Hindborg <a.hindborg@samsung.com>, linux-kbuild@vger.kernel.org, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Raphael Nestler <raphael.nestler@gmail.com>, 
-	Andrea Righi <andrea.righi@canonical.com>, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9705c130-997d-6356-18bc-ee5ce5d8b325@roeck-us.net>
 
-On Thu, Jul 20, 2023 at 7:18=E2=80=AFPM Masahiro Yamada <masahiroy@kernel.o=
-rg> wrote:
->
-> Applied to linux-kbuild/fixes. Thanks.
->
-> I believe this is a fix, so I will include it
-> in my next pull request.
+On Mon, Jul 17, 2023 at 03:50:06PM -0700, Guenter Roeck wrote:
+> On 7/17/23 15:39, Paul Barker wrote:
+> > Hi Greg,
+> > 
+> > On 17/07/2023 21:34, Greg Kroah-Hartman wrote:
+> > > This is the start of the stable review cycle for the 6.1.39 release.
+> > > There are 589 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > > 
+> > > Responses should be made by Wed, 19 Jul 2023 20:14:46 +0000.
+> > > Anything received after that time might be too late.
+> > > 
+> > > The whole patch series can be found in one patch at:
+> > >     https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.39-rc3.gz
+> > > or in the git tree and branch at:
+> > >     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> > > and the diffstat can be found below.
+> > > 
+> > > thanks,
+> > > 
+> > > greg k-h
+> > > 
+> > 
+> > Building i386_defconfig in my Yocto Project environment (with gcc 13) fails:
+> > 
+> > | /.../kernel/workqueue.c: In function 'get_work_pwq':
+> > | /.../kernel/workqueue.c:706:24: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
+> > |   706 |                 return (void *)(data & WORK_STRUCT_WQ_DATA_MASK);
+> > |       |                        ^
+> > | /.../kernel/workqueue.c: In function 'get_work_pool':
+> > | /.../kernel/workqueue.c:734:25: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
+> > |   734 |                 return ((struct pool_workqueue *)
+> > |       |                         ^
+> > | /.../kernel/workqueue.c: In function 'get_work_pool_id':
+> > | /.../kernel/workqueue.c:756:25: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
+> > |   756 |                 return ((struct pool_workqueue *)
+> > |       |                         ^
+> > 
+> > Cherry-picking afa4bb778e48d79e4a642ed41e3b4e0de7489a6c from mainline fixes the build for me.
+> > 
+> 
+> That is not a new problem, though. I see the same problem with v6.1.38
+> and with v6.1 if I try to build with gcc 13.1.
 
-Thanks Masahiro! Yeah, it can be considered a fix. By the way, in case you =
-want:
+Thanks, now queued up.
 
-    Fixes: 2f7ab1267dc9 ("Kbuild: add Rust support")
-
-I guess it can be also considered a feature (e.g. "supporting more
-setups"), but having the temporaries created where they were was
-unintentional.
-
-Cheers,
-Miguel
+greg k-h
