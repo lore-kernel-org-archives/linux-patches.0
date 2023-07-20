@@ -1,117 +1,82 @@
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E43D199EF;
-	Thu, 20 Jul 2023 08:43:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1689842592; x=1721378592;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=di9h+46ohxqoEGRZiCGzN9lOQ5UWLl/5Mvmelef0gBg=;
-  b=Ip7OJqiTK7jPtNhY75k+qypLcxQijaY6SA2oRrbQt9WPIb+Vo09OK5k9
-   T6OIyCupR6wEsUWg69Gd7EK1firwbHAQHFHtVlBNsfjp2DK4gKrbwiPDB
-   c7BrbUQNEz3XpvHQSSrV1tUDYjE9BHi8vWd16d08Bxju8XMyr00+787QV
-   yKSchrHf1sd+e2xvjVjM6lEodMULGC0G0Jfv9636wWB52fhVm/J2875ut
-   z+w77MhG51mqxvI27I2+ZLRQ9wYskX1gSXqNwuWB4mUWZL+M6mUhysy33
-   chxvk0sALwXV3xRi3p8JtnpK6umx2xz0fCgAPxsRtz5mo83Ch2LgV64Hq
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10776"; a="365558096"
-X-IronPort-AV: E=Sophos;i="6.01,218,1684825200"; 
-   d="scan'208";a="365558096"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jul 2023 01:43:10 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10776"; a="718317662"
-X-IronPort-AV: E=Sophos;i="6.01,218,1684825200"; 
-   d="scan'208";a="718317662"
-Received: from ctuohy-mobl1.ger.corp.intel.com (HELO [10.213.193.21]) ([10.213.193.21])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jul 2023 01:43:07 -0700
-Message-ID: <1a2aeca6-12f7-6316-c6e2-8474fd17255e@linux.intel.com>
-Date: Thu, 20 Jul 2023 09:43:05 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45526199F1
+	for <patches@lists.linux.dev>; Thu, 20 Jul 2023 09:59:34 +0000 (UTC)
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-cefa8fe4cc2so558638276.1
+        for <patches@lists.linux.dev>; Thu, 20 Jul 2023 02:59:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689847173; x=1690451973;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YKuuwxkODmr9Zm8vKZysQKHD2KRDyuArZZruCry8jeM=;
+        b=pznHFrr9YJM+RHqmlxyNJKXxI4h342lvODnvMjAwuIofkBABz6uKv0WMDFNup1Hdc5
+         5jGNH94K9B+Rdq7apgK9JIPzNCMfE47B4efwzN1blJcyOvW5k+w7RNxm6GsYvCBiz6eE
+         ru6042+DSrI4b2jXhoy+5yFR82uGwSOZQg3nZ7WW22sD0VRAT6YotZm0b3UrbqB56Lo5
+         7Tl9NAu2AU2ZXHdBK8cc3AZn9EkoMqZBp07R2tX17t6r08TDzyqbPk/NYWnRyWZ2OZHf
+         peAvgMcRRPDWHOXzDrVsjhQOT6RITDpkkWGFJ2yn7YiDlfV31DI5tSHrEQIezLGG95Qu
+         C3CQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689847173; x=1690451973;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YKuuwxkODmr9Zm8vKZysQKHD2KRDyuArZZruCry8jeM=;
+        b=ZdHyRn4rU14ynQXNMDeU4USzyq9T2JzUx3tTFmfrteimsgUe0QVutHOMZBc06AKLpb
+         zH5MMlH42o6tkcBeuYb9TnoL3YOB3cT9xSVunIw/o50SGYDnkyPhPePbcSJCGPYi5Zt6
+         wc9Xy4MCHIMRyfrqZry+KZncwsbiLAy57PpZa7YunX5IcXn1uC8s0NNGYyY+GiYT2Iyk
+         vwfagZOW2zE5po3zkrlBd3hC/6f2Ggl+8FtWzq1yMFSbmDXnQ1u5TsdJunKjQrC30GrG
+         /lGOkDP4dkKHjyC6BTtvMBrsDL2VD2G6UM6Z81XXIdtsc97snvAY9XuKkaZ669mro4gQ
+         xAyw==
+X-Gm-Message-State: ABy/qLZTykWtXuswOFMWDw0610pvMPSmy39umvIPsbS/e11AZ6KG68bm
+	i755/luBzp77mMUueuuMUAt/yfQnrNsoVVb8+jM=
+X-Google-Smtp-Source: APBJJlFkbKzQpdC8KXGZW/X7uIsPXOLOYb3PRWFlS+ylspA7+yj85YcX50IxoR5pIDz0zccZqnOiHBLqWmdgKO1t4Ag=
+X-Received: by 2002:a5b:3ce:0:b0:c60:1036:2082 with SMTP id
+ t14-20020a5b03ce000000b00c6010362082mr4195170ybp.22.1689847172885; Thu, 20
+ Jul 2023 02:59:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 2/2] drm/i915: Avoid -Wconstant-logical-operand in
- nsecs_to_jiffies_timeout()
-Content-Language: en-US
-To: Nathan Chancellor <nathan@kernel.org>, jani.nikula@linux.intel.com,
- joonas.lahtinen@linux.intel.com, rodrigo.vivi@intel.com, emma@anholt.net,
- mwen@igalia.com
-Cc: ndesaulniers@google.com, justinstitt@google.com, trix@redhat.com,
- intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- llvm@lists.linux.dev, patches@lists.linux.dev
-References: <20230718-nsecs_to_jiffies_timeout-constant-logical-operand-v1-0-36ed8fc8faea@kernel.org>
- <20230718-nsecs_to_jiffies_timeout-constant-logical-operand-v1-2-36ed8fc8faea@kernel.org>
-From: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Organization: Intel Corporation UK Plc
-In-Reply-To: <20230718-nsecs_to_jiffies_timeout-constant-logical-operand-v1-2-36ed8fc8faea@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20230718052752.1045248-1-ojeda@kernel.org> <20230718052752.1045248-7-ojeda@kernel.org>
+ <CABVgOSnCY66C5wza-ZXb8c8UHg8ydbFv4U_7A14UU_gXeESKZg@mail.gmail.com>
+ <CANiq72m08qGAa7k37A0rQNf7vvBc1o8JjSY8jNd+m2XzVOT9rw@mail.gmail.com> <CABVgOSnL0Kiv1Mo6feCLYVq6bGUjxN3gUVrW4ZKD4Fh1wUhWrQ@mail.gmail.com>
+In-Reply-To: <CABVgOSnL0Kiv1Mo6feCLYVq6bGUjxN3gUVrW4ZKD4Fh1wUhWrQ@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Thu, 20 Jul 2023 11:59:21 +0200
+Message-ID: <CANiq72nSy2r-sv_4EFJUsFB67WOiMTeaMoER0wKQBRtVx7jzNA@mail.gmail.com>
+Subject: Re: [PATCH v2 6/7] rust: support running Rust documentation tests as
+ KUnit ones
+To: David Gow <davidgow@google.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Brendan Higgins <brendan.higgins@linux.dev>, 
+	Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
+	Andreas Hindborg <nmi@metaspace.dk>, kunit-dev@googlegroups.com, 
+	linux-kselftest@vger.kernel.org, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, Jul 20, 2023 at 8:37=E2=80=AFAM David Gow <davidgow@google.com> wro=
+te:
+>
+> We merged this as-is, and I've sent out a fixup patch here:
+> https://lore.kernel.org/linux-kselftest/20230720062939.2411889-1-davidgow=
+@google.com/T/#u
 
-On 18/07/2023 22:44, Nathan Chancellor wrote:
-> A proposed update to clang's -Wconstant-logical-operand to warn when the
-> left hand side is a constant shows the following instance in
-> nsecs_to_jiffies_timeout() when NSEC_PER_SEC is not a multiple of HZ,
-> such as CONFIG_HZ=300:
-> 
->    drivers/gpu/drm/i915/gem/i915_gem_wait.c:189:24: warning: use of logical '&&' with constant operand [-Wconstant-logical-operand]
->      189 |         if (NSEC_PER_SEC % HZ &&
->          |             ~~~~~~~~~~~~~~~~~ ^
->    drivers/gpu/drm/i915/gem/i915_gem_wait.c:189:24: note: use '&' for a bitwise operation
->      189 |         if (NSEC_PER_SEC % HZ &&
->          |                               ^~
->          |                               &
->    drivers/gpu/drm/i915/gem/i915_gem_wait.c:189:24: note: remove constant to silence this warning
->    1 warning generated.
-> 
-> Turn this into an explicit comparison against zero to make the
-> expression a boolean to make it clear this should be a logical check,
-> not a bitwise one.
+Thanks!
 
-So -Wconstant-logical-operand only triggers when it is a constant but 
-not zero constant? Why does that make sense is not a kludge to avoid too 
-much noise?
+> I wasn't able to find any issues with changing the indentation, but
+> let me know if there's some tool which complains about seeing tabs in
+> .rs files we need to worry about.
 
-Personally, it all feels a bit over the top as a warning,  since code in 
-both cases should optimise away. And we may end up papering over it if 
-it becomes a default.
+Given it is inside a literal, I would expect it to work (I replied in
+the thread).
 
-Then again this patch IMO does make the code more readable, so I am 
-happy to take this one via our tree. Or either give ack to bring it in 
-via drm-misc-next:
-
-Acked-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-
-Let me know which route works best.
-
-Regards,
-
-Tvrtko
-
-> Link: https://reviews.llvm.org/D142609
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->   drivers/gpu/drm/i915/gem/i915_gem_wait.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/i915/gem/i915_gem_wait.c b/drivers/gpu/drm/i915/gem/i915_gem_wait.c
-> index 4a33ad2d122b..d4b918fb11ce 100644
-> --- a/drivers/gpu/drm/i915/gem/i915_gem_wait.c
-> +++ b/drivers/gpu/drm/i915/gem/i915_gem_wait.c
-> @@ -186,7 +186,7 @@ i915_gem_object_wait(struct drm_i915_gem_object *obj,
->   static inline unsigned long nsecs_to_jiffies_timeout(const u64 n)
->   {
->   	/* nsecs_to_jiffies64() does not guard against overflow */
-> -	if (NSEC_PER_SEC % HZ &&
-> +	if ((NSEC_PER_SEC % HZ) != 0 &&
->   	    div_u64(n, NSEC_PER_SEC) >= MAX_JIFFY_OFFSET / HZ)
->   		return MAX_JIFFY_OFFSET;
->   
-> 
+Cheers,
+Miguel
