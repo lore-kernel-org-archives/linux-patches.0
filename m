@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C6620F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B3A0C433C7;
-	Fri, 21 Jul 2023 19:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFA720F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1152EC433C7;
+	Fri, 21 Jul 2023 19:16:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967009;
-	bh=KhKVUp/PMjUyc1PDHVa/c/a+uFm73de/M+jpXghe7hU=;
+	s=korg; t=1689967012;
+	bh=WOXTcPDKFZM097Ql6o+F/PEkDaOaIS6IXAxVgpEDrMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wUxve8SnL9gN4h9KPjl8MTxXCfBsudIrw7akWQKLkDTw8jxZd7oA44sWsVukPYKZK
-	 MVCX/kp+FnI2x4wPlj/KK8QU45i0yc5J0Ja2QzQHPK0xN0b40DHmSanQcxnwcsHnM2
-	 +wQNRTYsnL29Dn9F0yL5fgJ6O9HLroqF2C8JsfWo=
+	b=2cmSf6rnL/OM0qkJkXjKOdCHi2pjY7dPGcCYC8lWmLjj8U9+vi4imukfRrS2LsFYf
+	 fwYReNY8qolFLhAntmwqTwjpMcc+s4ZDir2gFwHMB7k6CxeHXRq8HDkXkuSpluKupj
+	 n0ed+hzt0H1HV6pTmSXk689ktCsS/QUX8ubqYCc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sridhar Samudrala <sridhar.samudrala@intel.com>,
+	Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>,
+	Bharathi Sreenivas <bharathi.sreenivas@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/223] drm/panel: simple: Add Powertip PH800480T013 drm_display_mode flags
-Date: Fri, 21 Jul 2023 18:04:26 +0200
-Message-ID: <20230721160521.441393477@linuxfoundation.org>
+Subject: [PATCH 6.1 014/223] ice: Fix max_rate check while configuring TX rate limits
+Date: Fri, 21 Jul 2023 18:04:27 +0200
+Message-ID: <20230721160521.482848510@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -36,36 +37,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Sridhar Samudrala <sridhar.samudrala@intel.com>
 
-[ Upstream commit 1c519980aced3da1fae37c1339cf43b24eccdee7 ]
+[ Upstream commit 5f16da6ee6ac32e6c8098bc4cfcc4f170694f9da ]
 
-Add missing drm_display_mode DRM_MODE_FLAG_NVSYNC | DRM_MODE_FLAG_NHSYNC
-flags. Those are used by various bridges in the pipeline to correctly
-configure its sync signals polarity.
+Remove incorrect check in ice_validate_mqprio_opt() that limits
+filter configuration when sum of max_rates of all TCs exceeds
+the link speed. The max rate of each TC is unrelated to value
+used by other TCs and is valid as long as it is less than link
+speed.
 
-Fixes: d69de69f2be1 ("drm/panel: simple: Add Powertip PH800480T013 panel")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230615201602.565948-1-marex@denx.de
+Fixes: fbc7b27af0f9 ("ice: enable ndo_setup_tc support for mqprio_qdisc")
+Signed-off-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
+Signed-off-by: Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>
+Tested-by: Bharathi Sreenivas <bharathi.sreenivas@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/ice/ice_main.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index e49d352339ff8..f851aaf2c5917 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -3110,6 +3110,7 @@ static const struct drm_display_mode powertip_ph800480t013_idf02_mode = {
- 	.vsync_start = 480 + 49,
- 	.vsync_end = 480 + 49 + 2,
- 	.vtotal = 480 + 49 + 2 + 22,
-+	.flags = DRM_MODE_FLAG_NVSYNC | DRM_MODE_FLAG_NHSYNC,
- };
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 7a5ec3ce3407a..8f77088900e94 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -7852,10 +7852,10 @@ static int
+ ice_validate_mqprio_qopt(struct ice_vsi *vsi,
+ 			 struct tc_mqprio_qopt_offload *mqprio_qopt)
+ {
+-	u64 sum_max_rate = 0, sum_min_rate = 0;
+ 	int non_power_of_2_qcount = 0;
+ 	struct ice_pf *pf = vsi->back;
+ 	int max_rss_q_cnt = 0;
++	u64 sum_min_rate = 0;
+ 	struct device *dev;
+ 	int i, speed;
+ 	u8 num_tc;
+@@ -7871,6 +7871,7 @@ ice_validate_mqprio_qopt(struct ice_vsi *vsi,
+ 	dev = ice_pf_to_dev(pf);
+ 	vsi->ch_rss_size = 0;
+ 	num_tc = mqprio_qopt->qopt.num_tc;
++	speed = ice_get_link_speed_kbps(vsi);
  
- static const struct panel_desc powertip_ph800480t013_idf02  = {
+ 	for (i = 0; num_tc; i++) {
+ 		int qcount = mqprio_qopt->qopt.count[i];
+@@ -7911,7 +7912,6 @@ ice_validate_mqprio_qopt(struct ice_vsi *vsi,
+ 		 */
+ 		max_rate = mqprio_qopt->max_rate[i];
+ 		max_rate = div_u64(max_rate, ICE_BW_KBPS_DIVISOR);
+-		sum_max_rate += max_rate;
+ 
+ 		/* min_rate is minimum guaranteed rate and it can't be zero */
+ 		min_rate = mqprio_qopt->min_rate[i];
+@@ -7924,6 +7924,12 @@ ice_validate_mqprio_qopt(struct ice_vsi *vsi,
+ 			return -EINVAL;
+ 		}
+ 
++		if (max_rate && max_rate > speed) {
++			dev_err(dev, "TC%d: max_rate(%llu Kbps) > link speed of %u Kbps\n",
++				i, max_rate, speed);
++			return -EINVAL;
++		}
++
+ 		iter_div_u64_rem(min_rate, ICE_MIN_BW_LIMIT, &rem);
+ 		if (rem) {
+ 			dev_err(dev, "TC%d: Min Rate not multiple of %u Kbps",
+@@ -7961,12 +7967,6 @@ ice_validate_mqprio_qopt(struct ice_vsi *vsi,
+ 	    (mqprio_qopt->qopt.offset[i] + mqprio_qopt->qopt.count[i]))
+ 		return -EINVAL;
+ 
+-	speed = ice_get_link_speed_kbps(vsi);
+-	if (sum_max_rate && sum_max_rate > (u64)speed) {
+-		dev_err(dev, "Invalid max Tx rate(%llu) Kbps > speed(%u) Kbps specified\n",
+-			sum_max_rate, speed);
+-		return -EINVAL;
+-	}
+ 	if (sum_min_rate && sum_min_rate > (u64)speed) {
+ 		dev_err(dev, "Invalid min Tx rate(%llu) Kbps > speed (%u) Kbps specified\n",
+ 			sum_min_rate, speed);
 -- 
 2.39.2
 
