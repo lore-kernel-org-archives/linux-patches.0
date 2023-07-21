@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8859120F98
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:13:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B599C433C7;
-	Fri, 21 Jul 2023 19:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF5C20F98
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:13:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8794C433C7;
+	Fri, 21 Jul 2023 19:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966801;
-	bh=x2QMGagkIxkYBe8jEuNG2cE4kJgjgDXVmAslJaKKCm4=;
+	s=korg; t=1689966804;
+	bh=914J9IonftyI8kXIwYxtXjo3XX4hexMAHCqqEnE1Um8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fygM7ZuHf6E7ynJm6KQFA266RWeRUyvxguKocNBELRm82++Zmnk3Re47eoFjj6Jj/
-	 kaZFpOzj1WS1zcn1pCnvwYygLfgtRp/T8eQWFT9cuSTSCFAkAHcPcB8L98QdbbTjLX
-	 q0/b6YRe8r55K0eUKROTY25Fp2m3pDo9MXUpzlhk=
+	b=fhLkibFUYdJcHyRvCenu5+hHcP47fPAiMm0JHg2XL6kONqOUDu0Qaehb2Y+++o/LC
+	 vqgfCyVU8BswalZ1G0zoHrvTmj7R9O1znMV2PXQFRBdD6NF4iavsyGG0mperVKdWJk
+	 4+TuigFuGOdPW1DdYDQSXjE6CWpmrLOehLB8kEC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	van fantasy <g1042620637@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 5.15 444/532] fs/ntfs3: Check fields while reading
-Date: Fri, 21 Jul 2023 18:05:48 +0200
-Message-ID: <20230721160638.634519058@linuxfoundation.org>
+	butt3rflyh4ck <butterflyhuangxx@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Stefan Ghinea <stefan.ghinea@windriver.com>
+Subject: [PATCH 5.15 445/532] f2fs: fix to avoid NULL pointer dereference f2fs_write_end_io()
+Date: Fri, 21 Jul 2023 18:05:49 +0200
+Message-ID: <20230721160638.686048385@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,487 +36,153 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Chao Yu <chao@kernel.org>
 
-commit 0e8235d28f3a0e9eda9f02ff67ee566d5f42b66b upstream.
+commit d8189834d4348ae608083e1f1f53792cfcc2a9bc upstream.
 
-Added new functions index_hdr_check and index_buf_check.
-Now we check all stuff for correctness while reading from disk.
-Also fixed bug with stale nfs data.
+butt3rflyh4ck reports a bug as below:
 
-Reported-by: van fantasy <g1042620637@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Fixes: 82cae269cfa95 ("fs/ntfs3: Add initialization of super block")
-Signed-off-by: Lee Jones <lee@kernel.org>
+When a thread always calls F2FS_IOC_RESIZE_FS to resize fs, if resize fs is
+failed, f2fs kernel thread would invoke callback function to update f2fs io
+info, it would call  f2fs_write_end_io and may trigger null-ptr-deref in
+NODE_MAPPING.
+
+general protection fault, probably for non-canonical address
+KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
+RIP: 0010:NODE_MAPPING fs/f2fs/f2fs.h:1972 [inline]
+RIP: 0010:f2fs_write_end_io+0x727/0x1050 fs/f2fs/data.c:370
+ <TASK>
+ bio_endio+0x5af/0x6c0 block/bio.c:1608
+ req_bio_endio block/blk-mq.c:761 [inline]
+ blk_update_request+0x5cc/0x1690 block/blk-mq.c:906
+ blk_mq_end_request+0x59/0x4c0 block/blk-mq.c:1023
+ lo_complete_rq+0x1c6/0x280 drivers/block/loop.c:370
+ blk_complete_reqs+0xad/0xe0 block/blk-mq.c:1101
+ __do_softirq+0x1d4/0x8ef kernel/softirq.c:571
+ run_ksoftirqd kernel/softirq.c:939 [inline]
+ run_ksoftirqd+0x31/0x60 kernel/softirq.c:931
+ smpboot_thread_fn+0x659/0x9e0 kernel/smpboot.c:164
+ kthread+0x33e/0x440 kernel/kthread.c:379
+ ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
+
+The root cause is below race case can cause leaving dirty metadata
+in f2fs after filesystem is remount as ro:
+
+Thread A				Thread B
+- f2fs_ioc_resize_fs
+ - f2fs_readonly   --- return false
+ - f2fs_resize_fs
+					- f2fs_remount
+					 - write_checkpoint
+					 - set f2fs as ro
+  - free_segment_range
+   - update meta_inode's data
+
+Then, if f2fs_put_super()  fails to write_checkpoint due to readonly
+status, and meta_inode's dirty data will be writebacked after node_inode
+is put, finally, f2fs_write_end_io will access NULL pointer on
+sbi->node_inode.
+
+Thread A				IRQ context
+- f2fs_put_super
+ - write_checkpoint fails
+ - iput(node_inode)
+ - node_inode = NULL
+ - iput(meta_inode)
+  - write_inode_now
+   - f2fs_write_meta_page
+					- f2fs_write_end_io
+					 - NODE_MAPPING(sbi)
+					 : access NULL pointer on node_inode
+
+Fixes: b4b10061ef98 ("f2fs: refactor resize_fs to avoid meta updates in progress")
+Reported-by: butt3rflyh4ck <butterflyhuangxx@gmail.com>
+Closes: https://lore.kernel.org/r/1684480657-2375-1-git-send-email-yangtiezhu@loongson.cn
+Tested-by: butt3rflyh4ck <butterflyhuangxx@gmail.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Stefan Ghinea <stefan.ghinea@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/index.c   |   84 ++++++++++++++++++++++++++++++++++++----
- fs/ntfs3/inode.c   |   18 ++++----
- fs/ntfs3/ntfs_fs.h |    4 -
- fs/ntfs3/run.c     |    7 ++-
- fs/ntfs3/xattr.c   |  109 ++++++++++++++++++++++++++++++++++-------------------
- 5 files changed, 164 insertions(+), 58 deletions(-)
+ fs/f2fs/f2fs.h |    2 +-
+ fs/f2fs/file.c |    2 +-
+ fs/f2fs/gc.c   |   21 ++++++++++++++++++---
+ 3 files changed, 20 insertions(+), 5 deletions(-)
 
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -605,11 +605,58 @@ static const struct NTFS_DE *hdr_insert_
- 	return e;
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -3660,7 +3660,7 @@ block_t f2fs_start_bidx_of_node(unsigned
+ int f2fs_gc(struct f2fs_sb_info *sbi, bool sync, bool background, bool force,
+ 			unsigned int segno);
+ void f2fs_build_gc_manager(struct f2fs_sb_info *sbi);
+-int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count);
++int f2fs_resize_fs(struct file *filp, __u64 block_count);
+ int __init f2fs_create_garbage_collection_cache(void);
+ void f2fs_destroy_garbage_collection_cache(void);
+ 
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -3251,7 +3251,7 @@ static int f2fs_ioc_resize_fs(struct fil
+ 			   sizeof(block_count)))
+ 		return -EFAULT;
+ 
+-	return f2fs_resize_fs(sbi, block_count);
++	return f2fs_resize_fs(filp, block_count);
  }
  
-+/*
-+ * index_hdr_check
-+ *
-+ * return true if INDEX_HDR is valid
-+ */
-+static bool index_hdr_check(const struct INDEX_HDR *hdr, u32 bytes)
-+{
-+	u32 end = le32_to_cpu(hdr->used);
-+	u32 tot = le32_to_cpu(hdr->total);
-+	u32 off = le32_to_cpu(hdr->de_off);
-+
-+	if (!IS_ALIGNED(off, 8) || tot > bytes || end > tot ||
-+	    off + sizeof(struct NTFS_DE) > end) {
-+		/* incorrect index buffer. */
-+		return false;
-+	}
-+
-+	return true;
-+}
-+
-+/*
-+ * index_buf_check
-+ *
-+ * return true if INDEX_BUFFER seems is valid
-+ */
-+static bool index_buf_check(const struct INDEX_BUFFER *ib, u32 bytes,
-+			    const CLST *vbn)
-+{
-+	const struct NTFS_RECORD_HEADER *rhdr = &ib->rhdr;
-+	u16 fo = le16_to_cpu(rhdr->fix_off);
-+	u16 fn = le16_to_cpu(rhdr->fix_num);
-+
-+	if (bytes <= offsetof(struct INDEX_BUFFER, ihdr) ||
-+	    rhdr->sign != NTFS_INDX_SIGNATURE ||
-+	    fo < sizeof(struct INDEX_BUFFER)
-+	    /* Check index buffer vbn. */
-+	    || (vbn && *vbn != le64_to_cpu(ib->vbn)) || (fo % sizeof(short)) ||
-+	    fo + fn * sizeof(short) >= bytes ||
-+	    fn != ((bytes >> SECTOR_SHIFT) + 1)) {
-+		/* incorrect index buffer. */
-+		return false;
-+	}
-+
-+	return index_hdr_check(&ib->ihdr,
-+			       bytes - offsetof(struct INDEX_BUFFER, ihdr));
-+}
-+
- void fnd_clear(struct ntfs_fnd *fnd)
- {
- 	int i;
- 
--	for (i = 0; i < fnd->level; i++) {
-+	for (i = fnd->level - 1; i >= 0; i--) {
- 		struct indx_node *n = fnd->nodes[i];
- 
- 		if (!n)
-@@ -828,9 +875,16 @@ int indx_init(struct ntfs_index *indx, s
- 	u32 t32;
- 	const struct INDEX_ROOT *root = resident_data(attr);
- 
-+	t32 = le32_to_cpu(attr->res.data_size);
-+	if (t32 <= offsetof(struct INDEX_ROOT, ihdr) ||
-+	    !index_hdr_check(&root->ihdr,
-+			     t32 - offsetof(struct INDEX_ROOT, ihdr))) {
-+		goto out;
-+	}
-+
- 	/* Check root fields. */
- 	if (!root->index_block_clst)
--		return -EINVAL;
-+		goto out;
- 
- 	indx->type = type;
- 	indx->idx2vbn_bits = __ffs(root->index_block_clst);
-@@ -842,19 +896,19 @@ int indx_init(struct ntfs_index *indx, s
- 	if (t32 < sbi->cluster_size) {
- 		/* Index record is smaller than a cluster, use 512 blocks. */
- 		if (t32 != root->index_block_clst * SECTOR_SIZE)
--			return -EINVAL;
-+			goto out;
- 
- 		/* Check alignment to a cluster. */
- 		if ((sbi->cluster_size >> SECTOR_SHIFT) &
- 		    (root->index_block_clst - 1)) {
--			return -EINVAL;
-+			goto out;
- 		}
- 
- 		indx->vbn2vbo_bits = SECTOR_SHIFT;
- 	} else {
- 		/* Index record must be a multiple of cluster size. */
- 		if (t32 != root->index_block_clst << sbi->cluster_bits)
--			return -EINVAL;
-+			goto out;
- 
- 		indx->vbn2vbo_bits = sbi->cluster_bits;
+ static int f2fs_ioc_enable_verity(struct file *filp, unsigned long arg)
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -1992,8 +1992,9 @@ static void update_fs_metadata(struct f2
  	}
-@@ -862,7 +916,14 @@ int indx_init(struct ntfs_index *indx, s
- 	init_rwsem(&indx->run_lock);
- 
- 	indx->cmp = get_cmp_func(root);
--	return indx->cmp ? 0 : -EINVAL;
-+	if (!indx->cmp)
-+		goto out;
-+
-+	return 0;
-+
-+out:
-+	ntfs_set_state(sbi, NTFS_DIRTY_DIRTY);
-+	return -EINVAL;
  }
  
- static struct indx_node *indx_new(struct ntfs_index *indx,
-@@ -1029,6 +1090,13 @@ int indx_read(struct ntfs_index *indx, s
- 		goto out;
- 
- ok:
-+	if (!index_buf_check(ib, bytes, &vbn)) {
-+		ntfs_inode_err(&ni->vfs_inode, "directory corrupted");
-+		ntfs_set_state(ni->mi.sbi, NTFS_DIRTY_ERROR);
-+		err = -EINVAL;
-+		goto out;
-+	}
-+
- 	if (err == -E_NTFS_FIXUP) {
- 		ntfs_write_bh(ni->mi.sbi, &ib->rhdr, &in->nb, 0);
- 		err = 0;
-@@ -1623,9 +1691,9 @@ static int indx_insert_into_root(struct
- 
- 	if (err) {
- 		/* Restore root. */
--		if (mi_resize_attr(mi, attr, -ds_root))
-+		if (mi_resize_attr(mi, attr, -ds_root)) {
- 			memcpy(attr, a_root, asize);
--		else {
-+		} else {
- 			/* Bug? */
- 			ntfs_set_state(sbi, NTFS_DIRTY_ERROR);
- 		}
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -81,7 +81,7 @@ static struct inode *ntfs_read_mft(struc
- 			 le16_to_cpu(ref->seq), le16_to_cpu(rec->seq));
- 		goto out;
- 	} else if (!is_rec_inuse(rec)) {
--		err = -EINVAL;
-+		err = -ESTALE;
- 		ntfs_err(sb, "Inode r=%x is not in use!", (u32)ino);
- 		goto out;
- 	}
-@@ -92,8 +92,10 @@ static struct inode *ntfs_read_mft(struc
- 		goto out;
- 	}
- 
--	if (!is_rec_base(rec))
--		goto Ok;
-+	if (!is_rec_base(rec)) {
-+		err = -EINVAL;
-+		goto out;
-+	}
- 
- 	/* Record should contain $I30 root. */
- 	is_dir = rec->flags & RECORD_FLAG_DIR;
-@@ -472,7 +474,6 @@ end_enum:
- 		inode->i_flags |= S_NOSEC;
- 	}
- 
--Ok:
- 	if (ino == MFT_REC_MFT && !sb->s_root)
- 		sbi->mft.ni = NULL;
- 
-@@ -526,6 +527,9 @@ struct inode *ntfs_iget5(struct super_bl
- 		make_bad_inode(inode);
- 	}
- 
-+	if (IS_ERR(inode) && name)
-+		ntfs_set_state(sb->s_fs_info, NTFS_DIRTY_ERROR);
-+
- 	return inode;
- }
- 
-@@ -1647,10 +1651,8 @@ out6:
- 		ntfs_remove_reparse(sbi, IO_REPARSE_TAG_SYMLINK, &new_de->ref);
- 
- out5:
--	if (S_ISDIR(mode) || run_is_empty(&ni->file.run))
--		goto out4;
--
--	run_deallocate(sbi, &ni->file.run, false);
-+	if (!S_ISDIR(mode))
-+		run_deallocate(sbi, &ni->file.run, false);
- 
- out4:
- 	clear_rec_inuse(rec);
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -789,12 +789,12 @@ int run_pack(const struct runs_tree *run
- 	     u32 run_buf_size, CLST *packed_vcns);
- int run_unpack(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
- 	       CLST svcn, CLST evcn, CLST vcn, const u8 *run_buf,
--	       u32 run_buf_size);
-+	       int run_buf_size);
- 
- #ifdef NTFS3_CHECK_FREE_CLST
- int run_unpack_ex(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
- 		  CLST svcn, CLST evcn, CLST vcn, const u8 *run_buf,
--		  u32 run_buf_size);
-+		  int run_buf_size);
- #else
- #define run_unpack_ex run_unpack
- #endif
---- a/fs/ntfs3/run.c
-+++ b/fs/ntfs3/run.c
-@@ -872,12 +872,15 @@ error:
-  */
- int run_unpack(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
- 	       CLST svcn, CLST evcn, CLST vcn, const u8 *run_buf,
--	       u32 run_buf_size)
-+	       int run_buf_size)
+-int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
++int f2fs_resize_fs(struct file *filp, __u64 block_count)
  {
- 	u64 prev_lcn, vcn64, lcn, next_vcn;
- 	const u8 *run_last, *run_0;
- 	bool is_mft = ino == MFT_REC_MFT;
- 
-+	if (run_buf_size < 0)
-+		return -EINVAL;
-+
- 	/* Check for empty. */
- 	if (evcn + 1 == svcn)
- 		return 0;
-@@ -999,7 +1002,7 @@ int run_unpack(struct runs_tree *run, st
-  */
- int run_unpack_ex(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
- 		  CLST svcn, CLST evcn, CLST vcn, const u8 *run_buf,
--		  u32 run_buf_size)
-+		  int run_buf_size)
- {
- 	int ret, err;
- 	CLST next_vcn, lcn, len;
---- a/fs/ntfs3/xattr.c
-+++ b/fs/ntfs3/xattr.c
-@@ -42,28 +42,26 @@ static inline size_t packed_ea_size(cons
-  * Assume there is at least one xattr in the list.
-  */
- static inline bool find_ea(const struct EA_FULL *ea_all, u32 bytes,
--			   const char *name, u8 name_len, u32 *off)
-+			   const char *name, u8 name_len, u32 *off, u32 *ea_sz)
- {
--	*off = 0;
-+	u32 ea_size;
- 
--	if (!ea_all || !bytes)
-+	*off = 0;
-+	if (!ea_all)
- 		return false;
- 
--	for (;;) {
-+	for (; *off < bytes; *off += ea_size) {
- 		const struct EA_FULL *ea = Add2Ptr(ea_all, *off);
--		u32 next_off = *off + unpacked_ea_size(ea);
--
--		if (next_off > bytes)
--			return false;
--
-+		ea_size = unpacked_ea_size(ea);
- 		if (ea->name_len == name_len &&
--		    !memcmp(ea->name, name, name_len))
-+		    !memcmp(ea->name, name, name_len)) {
-+			if (ea_sz)
-+				*ea_sz = ea_size;
- 			return true;
--
--		*off = next_off;
--		if (next_off >= bytes)
--			return false;
-+		}
- 	}
-+
-+	return false;
- }
- 
- /*
-@@ -74,12 +72,12 @@ static inline bool find_ea(const struct
- static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,
- 			size_t add_bytes, const struct EA_INFO **info)
- {
--	int err;
-+	int err = -EINVAL;
- 	struct ntfs_sb_info *sbi = ni->mi.sbi;
- 	struct ATTR_LIST_ENTRY *le = NULL;
- 	struct ATTRIB *attr_info, *attr_ea;
- 	void *ea_p;
--	u32 size;
-+	u32 size, off, ea_size;
- 
- 	static_assert(le32_to_cpu(ATTR_EA_INFO) < le32_to_cpu(ATTR_EA));
- 
-@@ -96,24 +94,31 @@ static int ntfs_read_ea(struct ntfs_inod
- 
- 	*info = resident_data_ex(attr_info, sizeof(struct EA_INFO));
- 	if (!*info)
--		return -EINVAL;
-+		goto out;
- 
- 	/* Check Ea limit. */
- 	size = le32_to_cpu((*info)->size);
--	if (size > sbi->ea_max_size)
--		return -EFBIG;
-+	if (size > sbi->ea_max_size) {
-+		err = -EFBIG;
-+		goto out;
-+	}
- 
--	if (attr_size(attr_ea) > sbi->ea_max_size)
--		return -EFBIG;
-+	if (attr_size(attr_ea) > sbi->ea_max_size) {
-+		err = -EFBIG;
-+		goto out;
-+	}
-+
-+	if (!size) {
-+		/* EA info persists, but xattr is empty. Looks like EA problem. */
-+		goto out;
-+	}
- 
- 	/* Allocate memory for packed Ea. */
- 	ea_p = kmalloc(size_add(size, add_bytes), GFP_NOFS);
- 	if (!ea_p)
- 		return -ENOMEM;
- 
--	if (!size) {
--		/* EA info persists, but xattr is empty. Looks like EA problem. */
--	} else if (attr_ea->non_res) {
-+	if (attr_ea->non_res) {
- 		struct runs_tree run;
- 
- 		run_init(&run);
-@@ -124,24 +129,52 @@ static int ntfs_read_ea(struct ntfs_inod
- 		run_close(&run);
- 
- 		if (err)
--			goto out;
-+			goto out1;
- 	} else {
- 		void *p = resident_data_ex(attr_ea, size);
- 
--		if (!p) {
--			err = -EINVAL;
--			goto out;
--		}
-+		if (!p)
-+			goto out1;
- 		memcpy(ea_p, p, size);
++	struct f2fs_sb_info *sbi = F2FS_I_SB(file_inode(filp));
+ 	__u64 old_block_count, shrunk_blocks;
+ 	struct cp_control cpc = { CP_RESIZE, 0, 0, 0 };
+ 	unsigned int secs;
+@@ -2031,12 +2032,18 @@ int f2fs_resize_fs(struct f2fs_sb_info *
+ 		return -EINVAL;
  	}
  
- 	memset(Add2Ptr(ea_p, size), 0, add_bytes);
++	err = mnt_want_write_file(filp);
++	if (err)
++		return err;
 +
-+	/* Check all attributes for consistency. */
-+	for (off = 0; off < size; off += ea_size) {
-+		const struct EA_FULL *ef = Add2Ptr(ea_p, off);
-+		u32 bytes = size - off;
+ 	shrunk_blocks = old_block_count - block_count;
+ 	secs = div_u64(shrunk_blocks, BLKS_PER_SEC(sbi));
+ 
+ 	/* stop other GC */
+-	if (!down_write_trylock(&sbi->gc_lock))
+-		return -EAGAIN;
++	if (!down_write_trylock(&sbi->gc_lock)) {
++		err = -EAGAIN;
++		goto out_drop_write;
++	}
+ 
+ 	/* stop CP to protect MAIN_SEC in free_segment_range */
+ 	f2fs_lock_op(sbi);
+@@ -2056,10 +2063,18 @@ int f2fs_resize_fs(struct f2fs_sb_info *
+ out_unlock:
+ 	f2fs_unlock_op(sbi);
+ 	up_write(&sbi->gc_lock);
++out_drop_write:
++	mnt_drop_write_file(filp);
+ 	if (err)
+ 		return err;
+ 
+ 	freeze_super(sbi->sb);
 +
-+		/* Check if we can use field ea->size. */
-+		if (bytes < sizeof(ef->size))
-+			goto out1;
-+
-+		if (ef->size) {
-+			ea_size = le32_to_cpu(ef->size);
-+			if (ea_size > bytes)
-+				goto out1;
-+			continue;
-+		}
-+
-+		/* Check if we can use fields ef->name_len and ef->elength. */
-+		if (bytes < offsetof(struct EA_FULL, name))
-+			goto out1;
-+
-+		ea_size = ALIGN(struct_size(ef, name,
-+					    1 + ef->name_len +
-+						    le16_to_cpu(ef->elength)),
-+				4);
-+		if (ea_size > bytes)
-+			goto out1;
++	if (f2fs_readonly(sbi->sb)) {
++		thaw_super(sbi->sb);
++		return -EROFS;
 +	}
 +
- 	*ea = ea_p;
- 	return 0;
+ 	down_write(&sbi->gc_lock);
+ 	down_write(&sbi->cp_global_sem);
  
--out:
-+out1:
- 	kfree(ea_p);
--	*ea = NULL;
-+out:
-+	ntfs_set_state(sbi, NTFS_DIRTY_DIRTY);
- 	return err;
- }
- 
-@@ -163,6 +196,7 @@ static ssize_t ntfs_list_ea(struct ntfs_
- 	const struct EA_FULL *ea;
- 	u32 off, size;
- 	int err;
-+	int ea_size;
- 	size_t ret;
- 
- 	err = ntfs_read_ea(ni, &ea_all, 0, &info);
-@@ -175,8 +209,9 @@ static ssize_t ntfs_list_ea(struct ntfs_
- 	size = le32_to_cpu(info->size);
- 
- 	/* Enumerate all xattrs. */
--	for (ret = 0, off = 0; off < size; off += unpacked_ea_size(ea)) {
-+	for (ret = 0, off = 0; off < size; off += ea_size) {
- 		ea = Add2Ptr(ea_all, off);
-+		ea_size = unpacked_ea_size(ea);
- 
- 		if (!ea->name_len)
- 			break;
-@@ -230,7 +265,8 @@ static int ntfs_get_ea(struct inode *ino
- 		goto out;
- 
- 	/* Enumerate all xattrs. */
--	if (!find_ea(ea_all, le32_to_cpu(info->size), name, name_len, &off)) {
-+	if (!find_ea(ea_all, le32_to_cpu(info->size), name, name_len, &off,
-+		     NULL)) {
- 		err = -ENODATA;
- 		goto out;
- 	}
-@@ -272,7 +308,7 @@ static noinline int ntfs_set_ea(struct i
- 	struct EA_FULL *new_ea;
- 	struct EA_FULL *ea_all = NULL;
- 	size_t add, new_pack;
--	u32 off, size;
-+	u32 off, size, ea_sz;
- 	__le16 size_pack;
- 	struct ATTRIB *attr;
- 	struct ATTR_LIST_ENTRY *le;
-@@ -306,9 +342,8 @@ static noinline int ntfs_set_ea(struct i
- 		size_pack = ea_info.size_pack;
- 	}
- 
--	if (info && find_ea(ea_all, size, name, name_len, &off)) {
-+	if (info && find_ea(ea_all, size, name, name_len, &off, &ea_sz)) {
- 		struct EA_FULL *ea;
--		size_t ea_sz;
- 
- 		if (flags & XATTR_CREATE) {
- 			err = -EEXIST;
-@@ -331,8 +366,6 @@ static noinline int ntfs_set_ea(struct i
- 		if (ea->flags & FILE_NEED_EA)
- 			le16_add_cpu(&ea_info.count, -1);
- 
--		ea_sz = unpacked_ea_size(ea);
--
- 		le16_add_cpu(&ea_info.size_pack, 0 - packed_ea_size(ea));
- 
- 		memmove(ea, Add2Ptr(ea, ea_sz), size - off - ea_sz);
 
 
