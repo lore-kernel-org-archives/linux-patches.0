@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105BD1F942
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:21:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86009C433CA;
-	Fri, 21 Jul 2023 16:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE00A1F942
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:21:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D91CC433CA;
+	Fri, 21 Jul 2023 16:21:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956495;
-	bh=87cetG0UIiVPLQJMh2i7MQAWKPVMeVdZFJMa9ES1B+4=;
+	s=korg; t=1689956498;
+	bh=ViVK/A1ivXTOnHA73U5uv1cUvjuK/tk1XdW8eHlOPEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nhFZwMBf5DIHRnpwo4khiQVrp8Bt6SvnEnCMvChrN/yt3Fg7sRj9MQdT/OJ4Poxdh
-	 JLvyl1XYXUvGvYvBVpHMXASSqVIn3cV50U5dSImRGLRbQIq9tgkVePNNCNAe+jenO0
-	 HqVd3Rsk6u7b0NQWeXGZMzCbMxOpHquxaSRyHxWE=
+	b=ajNgj4iVg2TmFLLYRVVYpXc8F+chTat5zUZJZZycgrNrPB6EgmspaPWZdg+Z05srN
+	 HrMaPD6RYk4O45fsTlQLXDiMFmvrmGhlDPybkKErR77DY+5vnSJzqkrTi74u2B1PJm
+	 mlSviPF6HzI8B/UHH9bLQ0xiSJzvE7SSszckHBW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>,
-	dri-devel@lists.freedesktop.org,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>
-Subject: [PATCH 6.4 212/292] drm/ttm: Dont leak a resource on swapout move error
-Date: Fri, 21 Jul 2023 18:05:21 +0200
-Message-ID: <20230721160537.983415194@linuxfoundation.org>
+	"Pelloux-Prayer, Pierre-Eric" <Pierre-eric.Pelloux-prayer@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Pelloux-Prayer
+Subject: [PATCH 6.4 213/292] drm/ttm: never consider pinned BOs for eviction&swap
+Date: Fri, 21 Jul 2023 18:05:22 +0200
+Message-ID: <20230721160538.025887603@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -38,37 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+From: Christian König <christian.koenig@amd.com>
 
-commit a590f03d8de7c4cb7ce4916dc7f2fd10711faabe upstream.
+commit a2848d08742c8e8494675892c02c0d22acbe3cf8 upstream.
 
-If moving the bo to system for swapout failed, we were leaking
-a resource. Fix.
+There is a small window where we have already incremented the pin count
+but not yet moved the bo from the lru to the pinned list.
 
-Fixes: bfa3357ef9ab ("drm/ttm: allocate resource object instead of embedding it v2")
-Cc: Christian König <christian.koenig@amd.com>
-Cc: "Christian König" <ckoenig.leichtzumerken@gmail.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v5.14+
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230626091450.14757-5-thomas.hellstrom@linux.intel.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reported-by: Pelloux-Prayer, Pierre-Eric <Pierre-eric.Pelloux-prayer@amd.com>
+Tested-by: Pelloux-Prayer, Pierre-Eric <Pierre-eric.Pelloux-prayer@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Link: https://patchwork.freedesktop.org/patch/msgid/20230707120826.3701-1-christian.koenig@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ttm/ttm_bo.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/ttm/ttm_bo.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/drivers/gpu/drm/ttm/ttm_bo.c
 +++ b/drivers/gpu/drm/ttm/ttm_bo.c
-@@ -1167,6 +1167,7 @@ int ttm_bo_swapout(struct ttm_buffer_obj
- 		ret = ttm_bo_handle_move_mem(bo, evict_mem, true, &ctx, &hop);
- 		if (unlikely(ret != 0)) {
- 			WARN(ret == -EMULTIHOP, "Unexpected multihop in swaput - likely driver bug.\n");
-+			ttm_resource_free(bo, &evict_mem);
- 			goto out;
- 		}
- 	}
+@@ -517,6 +517,12 @@ static bool ttm_bo_evict_swapout_allowab
+ {
+ 	bool ret = false;
+ 
++	if (bo->pin_count) {
++		*locked = false;
++		*busy = false;
++		return false;
++	}
++
+ 	if (bo->base.resv == ctx->resv) {
+ 		dma_resv_assert_held(bo->base.resv);
+ 		if (ctx->allow_res_evict)
 
 
