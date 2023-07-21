@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F067200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:03:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD07C433C8;
-	Fri, 21 Jul 2023 19:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1135A200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:03:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876F5C433C7;
+	Fri, 21 Jul 2023 19:03:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966194;
-	bh=ckNveTtXFt4/P5uHTFJy+WNMLw28kF0ApSIgi06/4lA=;
+	s=korg; t=1689966196;
+	bh=1bI9VTkb064C9miAHigDSoX5dmCr6mkoMBRm9f4279A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pn3GokMDd4bpP2IxPiPu4fGRQpas1UJgmN1okokZTNlpWFY4od14hXVMjB4NCH0hM
-	 N/RxeabuoBINWEag7JFqRdJA2/wpOltE6YCua2gTRuhgcXCSXT4iN1SLSLcNOEc4hZ
-	 lncGzbUXobcL76dMPrJU8MAS9HL/mpmlGq9Eb+kE=
+	b=YhAz2m0c1JzLukKKUpZZ8hIKHiQjDmDiut7TJ5oBAX66qXNtVU3usCWFRtu9hrLwJ
+	 ZTujpNRRtQiju7Ll5WsePTXoKpzke0tN2X9rJrzdBKLQCpEQIPI+OKS2SojEMXzxuJ
+	 XY2dfs//I2LjjqwZmXlHg/h+5gsbF4LG4oPo1Uq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
 	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 229/532] modpost: fix off by one in is_executable_section()
-Date: Fri, 21 Jul 2023 18:02:13 +0200
-Message-ID: <20230721160626.802367884@linuxfoundation.org>
+Subject: [PATCH 5.15 230/532] ARC: define ASM_NL and __ALIGN(_STR) outside #ifdef __ASSEMBLY__ guard
+Date: Fri, 21 Jul 2023 18:02:14 +0200
+Message-ID: <20230721160626.856101563@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,34 +34,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 3a3f1e573a105328a2cca45a7cfbebabbf5e3192 ]
+[ Upstream commit 92e2921eeafdfca9acd9b83f07d2b7ca099bac24 ]
 
-The > comparison should be >= to prevent an out of bounds array
-access.
+ASM_NL is useful not only in *.S files but also in .c files for using
+inline assembler in C code.
 
-Fixes: 52dc0595d540 ("modpost: handle relocations mismatch in __ex_table.")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+On ARC, however, ASM_NL is evaluated inconsistently. It is expanded to
+a backquote (`) in *.S files, but a semicolon (;) in *.c files because
+arch/arc/include/asm/linkage.h defines it inside #ifdef __ASSEMBLY__,
+so the definition for C code falls back to the default value defined in
+include/linux/linkage.h.
+
+If ASM_NL is used in inline assembler in .c files, it will result in
+wrong assembly code because a semicolon is not an instruction separator,
+but the start of a comment for ARC.
+
+Move ASM_NL (also __ALIGN and __ALIGN_STR) out of the #ifdef.
+
+Fixes: 9df62f054406 ("arch: use ASM_NL instead of ';' for assembler new line character in the macro")
+Fixes: 8d92e992a785 ("ARC: define __ALIGN_STR and __ALIGN symbols for ARC")
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/modpost.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arc/include/asm/linkage.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index 78859ef4e03ad..c6e655e0ed988 100644
---- a/scripts/mod/modpost.c
-+++ b/scripts/mod/modpost.c
-@@ -1610,7 +1610,7 @@ static void default_mismatch_handler(const char *modname, struct elf_info *elf,
+diff --git a/arch/arc/include/asm/linkage.h b/arch/arc/include/asm/linkage.h
+index c9434ff3aa4ce..8a3fb71e9cfad 100644
+--- a/arch/arc/include/asm/linkage.h
++++ b/arch/arc/include/asm/linkage.h
+@@ -8,6 +8,10 @@
  
- static int is_executable_section(struct elf_info* elf, unsigned int section_index)
- {
--	if (section_index > elf->num_sections)
-+	if (section_index >= elf->num_sections)
- 		fatal("section_index is outside elf->num_sections!\n");
+ #include <asm/dwarf.h>
  
- 	return ((elf->sechdrs[section_index].sh_flags & SHF_EXECINSTR) == SHF_EXECINSTR);
++#define ASM_NL		 `	/* use '`' to mark new line in macro */
++#define __ALIGN		.align 4
++#define __ALIGN_STR	__stringify(__ALIGN)
++
+ #ifdef __ASSEMBLY__
+ 
+ .macro ST2 e, o, off
+@@ -28,10 +32,6 @@
+ #endif
+ .endm
+ 
+-#define ASM_NL		 `	/* use '`' to mark new line in macro */
+-#define __ALIGN		.align 4
+-#define __ALIGN_STR	__stringify(__ALIGN)
+-
+ /* annotation for data we want in DCCM - if enabled in .config */
+ .macro ARCFP_DATA nm
+ #ifdef CONFIG_ARC_HAS_DCCM
 -- 
 2.39.2
 
