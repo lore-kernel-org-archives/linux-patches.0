@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E82200A9
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:17:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29341C433C8;
-	Fri, 21 Jul 2023 19:17:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC24200A9
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:17:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9E6C433C8;
+	Fri, 21 Jul 2023 19:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967052;
-	bh=ACj0LKtOXM9UF51BatyewBRGZC6YeE+ghIg8iWszAgQ=;
+	s=korg; t=1689967055;
+	bh=DW+p4sDZ9al6hk/RgXf6uC+edNJdi8mops/Q12KA5D4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J6k4j4stAKnr3X1QyV64p6cuQYfOY+bFTaenaGrvMBsByiV4tlOqfzjdD4OcGmQDX
-	 DKJlIr8GLCLPY81c/lDaUTAAkVPn3BrUKOLWG3skg/ruvqoqR6eQ6pTMZt+q0GMrrG
-	 3vL+8JlCoCjVNcxDHhc5C55HR2d7IO1ktwLHiHtI=
+	b=qqfamoTJqZ/RhMM2f2JU+Hs98IeVFk+wwWj30D+mlBYSymUl5dIsw8A7eZrm9liSs
+	 8O6UpqEk+NRen6iXBVoFQtIpMHF/vhygTNyi2NGDm3RLmLAn8gOoQlvQwOCtvM1hOK
+	 QoRkZkXtgvAd+qXqd6rrAXREpI6rZ+KhP+lWVfoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junfeng Guo <junfeng.guo@intel.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
 	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 028/223] gve: Set default duplex configuration to full
-Date: Fri, 21 Jul 2023 18:04:41 +0200
-Message-ID: <20230721160522.070390625@linuxfoundation.org>
+Subject: [PATCH 6.1 029/223] octeontx2-af: Promisc enable/disable through mbox
+Date: Fri, 21 Jul 2023 18:04:42 +0200
+Message-ID: <20230721160522.112036837@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -36,39 +37,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Junfeng Guo <junfeng.guo@intel.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 0503efeadbf6bb8bf24397613a73b67e665eac5f ]
+[ Upstream commit af42088bdaf292060b8d8a00d8644ca7b2b3f2d1 ]
 
-Current duplex mode was unset in the driver, resulting in the default
-parameter being set to 0, which corresponds to half duplex. It might
-mislead users to have incorrect expectation about the driver's
-transmission capabilities.
-Set the default duplex configuration to full, as the driver runs in
-full duplex mode at this point.
+In legacy silicon, promiscuous mode is only modified
+through CGX mbox messages. In CN10KB silicon, it is modified
+from CGX mbox and NIX. This breaks legacy application
+behaviour. Fix this by removing call from NIX.
 
-Fixes: 7e074d5a76ca ("gve: Enable Link Speed Reporting in the driver.")
-Signed-off-by: Junfeng Guo <junfeng.guo@intel.com>
+Fixes: d6c9784baf59 ("octeontx2-af: Invoke exact match functions if supported")
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
 Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Message-ID: <20230706044128.2726747-1-junfeng.guo@intel.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_ethtool.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../ethernet/marvell/octeontx2/af/rvu_nix.c   | 11 ++-------
+ .../marvell/octeontx2/af/rvu_npc_hash.c       | 23 +++++++++++++++++--
+ 2 files changed, 23 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_ethtool.c b/drivers/net/ethernet/google/gve/gve_ethtool.c
-index 38df602f2869c..033f17cb96be0 100644
---- a/drivers/net/ethernet/google/gve/gve_ethtool.c
-+++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
-@@ -541,6 +541,9 @@ static int gve_get_link_ksettings(struct net_device *netdev,
- 		err = gve_adminq_report_link_speed(priv);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+index 8cb2a0181fb9b..705325431dec3 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+@@ -3804,21 +3804,14 @@ int rvu_mbox_handler_nix_set_rx_mode(struct rvu *rvu, struct nix_rx_mode *req,
+ 	}
  
- 	cmd->base.speed = priv->link_speed;
+ 	/* install/uninstall promisc entry */
+-	if (promisc) {
++	if (promisc)
+ 		rvu_npc_install_promisc_entry(rvu, pcifunc, nixlf,
+ 					      pfvf->rx_chan_base,
+ 					      pfvf->rx_chan_cnt);
+-
+-		if (rvu_npc_exact_has_match_table(rvu))
+-			rvu_npc_exact_promisc_enable(rvu, pcifunc);
+-	} else {
++	else
+ 		if (!nix_rx_multicast)
+ 			rvu_npc_enable_promisc_entry(rvu, pcifunc, nixlf, false);
+ 
+-		if (rvu_npc_exact_has_match_table(rvu))
+-			rvu_npc_exact_promisc_disable(rvu, pcifunc);
+-	}
+-
+ 	return 0;
+ }
+ 
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
+index 3b48b635977f6..3b0a66c0977a7 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
+@@ -1168,8 +1168,10 @@ static u16 __rvu_npc_exact_cmd_rules_cnt_update(struct rvu *rvu, int drop_mcam_i
+ {
+ 	struct npc_exact_table *table;
+ 	u16 *cnt, old_cnt;
++	bool promisc;
+ 
+ 	table = rvu->hw->table;
++	promisc = table->promisc_mode[drop_mcam_idx];
+ 
+ 	cnt = &table->cnt_cmd_rules[drop_mcam_idx];
+ 	old_cnt = *cnt;
+@@ -1181,13 +1183,18 @@ static u16 __rvu_npc_exact_cmd_rules_cnt_update(struct rvu *rvu, int drop_mcam_i
+ 
+ 	*enable_or_disable_cam = false;
+ 
+-	/* If all rules are deleted, disable cam */
++	if (promisc)
++		goto done;
 +
-+	cmd->base.duplex = DUPLEX_FULL;
++	/* If all rules are deleted and not already in promisc mode;
++	 * disable cam
++	 */
+ 	if (!*cnt && val < 0) {
+ 		*enable_or_disable_cam = true;
+ 		goto done;
+ 	}
+ 
+-	/* If rule got added, enable cam */
++	/* If rule got added and not already in promisc mode; enable cam */
+ 	if (!old_cnt && val > 0) {
+ 		*enable_or_disable_cam = true;
+ 		goto done;
+@@ -1466,6 +1473,12 @@ int rvu_npc_exact_promisc_disable(struct rvu *rvu, u16 pcifunc)
+ 	*promisc = false;
+ 	mutex_unlock(&table->lock);
+ 
++	/* Enable drop rule */
++	rvu_npc_enable_mcam_by_entry_index(rvu, drop_mcam_idx, NIX_INTF_RX,
++					   true);
 +
- 	return err;
++	dev_dbg(rvu->dev, "%s: disabled  promisc mode (cgx=%d lmac=%d)\n",
++		__func__, cgx_id, lmac_id);
+ 	return 0;
+ }
+ 
+@@ -1507,6 +1520,12 @@ int rvu_npc_exact_promisc_enable(struct rvu *rvu, u16 pcifunc)
+ 	*promisc = true;
+ 	mutex_unlock(&table->lock);
+ 
++	/*  disable drop rule */
++	rvu_npc_enable_mcam_by_entry_index(rvu, drop_mcam_idx, NIX_INTF_RX,
++					   false);
++
++	dev_dbg(rvu->dev, "%s: Enabled promisc mode (cgx=%d lmac=%d)\n",
++		__func__, cgx_id, lmac_id);
+ 	return 0;
  }
  
 -- 
