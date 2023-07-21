@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5278F20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C889FC433C9;
-	Fri, 21 Jul 2023 19:16:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAD620F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD003C433C7;
+	Fri, 21 Jul 2023 19:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966972;
-	bh=fmv0643ko+EClKdwiKENopOTvYCTwpTIGx8A3KHE9PQ=;
+	s=korg; t=1689966975;
+	bh=UEXJ3fbx8etc1Ydp4Z9DA0Iej5T633509STnRX/d/8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N/q2klRXuCSJcVIFWQoA61fbD+n5T7maOXGakYku8IeL2UD6Zr1cE/lHHLe48eDac
-	 6Y3YfoT0jhNz/ZefSQwpgeWMZPQHJywQc2soCJkw/us7g2BeqBziDZNf+Lw2lxN2PQ
-	 KLo+UbR/UNFBofZiKWUG7kYLZVCIZbR+HJZQl09s=
+	b=0HY6RKEkanooeoa86W5V65Cv8wZpA2Lc4mi3ILlHzb4XNTtY02G6zwr2HxuybmfQH
+	 eKzCPKEamRjplk4LEZURiNe0rvVtvg/MpeTyv3AleKCHhS5UFzim1EnH9xDpRWG7kG
+	 X0ETuhuhp0+LO+LV+kJ7HqBwppecgEE6l3J4huJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 5.15 531/532] MIPS: kvm: Fix build error with KVM_MIPS_DEBUG_COP0_COUNTERS enabled
-Date: Fri, 21 Jul 2023 18:07:15 +0200
-Message-ID: <20230721160643.416461142@linuxfoundation.org>
+	George Stark <GNStark@sberdevices.ru>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 504/532] meson saradc: fix clock divider mask length
+Date: Fri, 21 Jul 2023 18:06:48 +0200
+Message-ID: <20230721160641.950013816@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -34,40 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+From: George Stark <gnstark@sberdevices.ru>
 
-commit 3a6dbb691782e88e07e5c70b327495dbd58a2e7f upstream.
+commit c57fa0037024c92c2ca34243e79e857da5d2c0a9 upstream.
 
-Commit e4de20576986 ("MIPS: KVM: Fix NULL pointer dereference") missed
-converting one place accessing cop0 registers, which results in a build
-error, if KVM_MIPS_DEBUG_COP0_COUNTERS is enabled.
+According to the datasheets of supported meson SoCs length of ADC_CLK_DIV
+field is 6-bit. Although all supported SoCs have the register
+with that field documented later SoCs use external clock rather than
+ADC internal clock so this patch affects only meson8 family (S8* SoCs).
 
-Fixes: e4de20576986 ("MIPS: KVM: Fix NULL pointer dereference")
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Fixes: 3adbf3427330 ("iio: adc: add a driver for the SAR ADC found in Amlogic Meson SoCs")
+Signed-off-by: George Stark <GNStark@sberdevices.ru>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20230606165357.42417-1-gnstark@sberdevices.ru
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/kvm/stats.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/adc/meson_saradc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/kvm/stats.c b/arch/mips/kvm/stats.c
-index 53f851a61554..3e6682018fbe 100644
---- a/arch/mips/kvm/stats.c
-+++ b/arch/mips/kvm/stats.c
-@@ -54,9 +54,9 @@ void kvm_mips_dump_stats(struct kvm_vcpu *vcpu)
- 	kvm_info("\nKVM VCPU[%d] COP0 Access Profile:\n", vcpu->vcpu_id);
- 	for (i = 0; i < N_MIPS_COPROC_REGS; i++) {
- 		for (j = 0; j < N_MIPS_COPROC_SEL; j++) {
--			if (vcpu->arch.cop0->stat[i][j])
-+			if (vcpu->arch.cop0.stat[i][j])
- 				kvm_info("%s[%d]: %lu\n", kvm_cop0_str[i], j,
--					 vcpu->arch.cop0->stat[i][j]);
-+					 vcpu->arch.cop0.stat[i][j]);
- 		}
- 	}
- #endif
--- 
-2.41.0
-
+--- a/drivers/iio/adc/meson_saradc.c
++++ b/drivers/iio/adc/meson_saradc.c
+@@ -71,7 +71,7 @@
+ 	#define MESON_SAR_ADC_REG3_PANEL_DETECT_COUNT_MASK	GENMASK(20, 18)
+ 	#define MESON_SAR_ADC_REG3_PANEL_DETECT_FILTER_TB_MASK	GENMASK(17, 16)
+ 	#define MESON_SAR_ADC_REG3_ADC_CLK_DIV_SHIFT		10
+-	#define MESON_SAR_ADC_REG3_ADC_CLK_DIV_WIDTH		5
++	#define MESON_SAR_ADC_REG3_ADC_CLK_DIV_WIDTH		6
+ 	#define MESON_SAR_ADC_REG3_BLOCK_DLY_SEL_MASK		GENMASK(9, 8)
+ 	#define MESON_SAR_ADC_REG3_BLOCK_DLY_MASK		GENMASK(7, 0)
+ 
 
 
