@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F281420F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:24:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780DDC433C9;
-	Fri, 21 Jul 2023 19:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4EB020F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:24:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36DDBC433C7;
+	Fri, 21 Jul 2023 19:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967446;
-	bh=1i2FOhYFo2yxVMwN7eIXPosGo0H08fgwxF877f2JEfI=;
+	s=korg; t=1689967449;
+	bh=nmtVQuKlD8EpJmtybrj/cZDBI1k8Z6kOrx3VJC/zcjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yhPez6dOqWbe3GyKVnbH0HNt4hL2192fZQBXl/WRTnGCya2kB+8V8QNJhMnWakDhp
-	 IuT7cOJN3Xm9pI4fNrbIobeaAjSFNeQ4O+N5EPi4TmHtUpw02sWvY5pYUpTF875vsv
-	 GTcePCXHxO/p3ebu7rG6yUq+xyPFiUR6zrZmRDXI=
+	b=lZg0XBZOwLp85UpWuxqkFlsAz92+DkX7wTJhnIhLLO0XhuH3wmgMoOStyxFm++95+
+	 owHMCmtcjGsjuqzMFCzH1KpGkbFTiGnUfiAD5HDtbysygTQr/uc6KLeBZoUvImM0Uj
+	 m8RQ7q+EcHuN+l/8A+EP79VPtN2ocUKPEDTYHOGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubli@redhat.com>,
-	Milind Changire <mchangir@redhat.com>,
-	Patrick Donnelly <pdonnell@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.1 165/223] ceph: dont let check_caps skip sending responses for revoke msgs
-Date: Fri, 21 Jul 2023 18:06:58 +0200
-Message-ID: <20230721160527.912109359@linuxfoundation.org>
+	Weitao Wang <WeitaoWang-oc@zhaoxin.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.1 166/223] xhci: Fix resume issue of some ZHAOXIN hosts
+Date: Fri, 21 Jul 2023 18:06:59 +0200
+Message-ID: <20230721160527.954073752@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -36,47 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
 
-commit 257e6172ab36ebbe295a6c9ee9a9dd0fe54c1dc2 upstream.
+commit f927728186f0de1167262d6a632f9f7e96433d1a upstream.
 
-If a client sends out a cap update dropping caps with the prior 'seq'
-just before an incoming cap revoke request, then the client may drop
-the revoke because it believes it's already released the requested
-capabilities.
-
-This causes the MDS to wait indefinitely for the client to respond
-to the revoke. It's therefore always a good idea to ack the cap
-revoke request with the bumped up 'seq'.
+On ZHAOXIN ZX-100 project, xHCI can't work normally after resume
+from system Sx state. To fix this issue, when resume from system
+Sx state, reinitialize xHCI instead of restore.
+So, Add XHCI_RESET_ON_RESUME quirk for ZX-100 to fix issue of
+resuming from system Sx state.
 
 Cc: stable@vger.kernel.org
-Link: https://tracker.ceph.com/issues/61782
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Milind Changire <mchangir@redhat.com>
-Reviewed-by: Patrick Donnelly <pdonnell@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Message-ID: <20230602144009.1225632-9-mathias.nyman@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/caps.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/usb/host/xhci-pci.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -3561,6 +3561,15 @@ static void handle_cap_grant(struct inod
- 	}
- 	BUG_ON(cap->issued & ~cap->implemented);
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -335,6 +335,11 @@ static void xhci_pci_quirks(struct devic
+ 	     pdev->device == PCI_DEVICE_ID_AMD_PROMONTORYA_4))
+ 		xhci->quirks |= XHCI_NO_SOFT_RETRY;
  
-+	/* don't let check_caps skip sending a response to MDS for revoke msgs */
-+	if (le32_to_cpu(grant->op) == CEPH_CAP_OP_REVOKE) {
-+		cap->mds_wanted = 0;
-+		if (cap == ci->i_auth_cap)
-+			check_caps = 1; /* check auth cap only */
-+		else
-+			check_caps = 2; /* check all caps */
++	if (pdev->vendor == PCI_VENDOR_ID_ZHAOXIN) {
++		if (pdev->device == 0x9202)
++			xhci->quirks |= XHCI_RESET_ON_RESUME;
 +	}
 +
- 	if (extra_info->inline_version > 0 &&
- 	    extra_info->inline_version >= ci->i_inline_version) {
- 		ci->i_inline_version = extra_info->inline_version;
+ 	/* xHC spec requires PCI devices to support D3hot and D3cold */
+ 	if (xhci->hci_version >= 0x120)
+ 		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
 
 
