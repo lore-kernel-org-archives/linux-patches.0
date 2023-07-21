@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972D31F94D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:23:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19633C433C8;
-	Fri, 21 Jul 2023 16:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65FA1F94D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:23:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D45C5C433C7;
+	Fri, 21 Jul 2023 16:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956615;
-	bh=XhjwwU0wiMuLFM/sEWtgdKu+P0pI/5gfo51tGMAsON8=;
+	s=korg; t=1689956618;
+	bh=76vKWCsM1/KpX1GgX9YgkvuQQEH/ceGW4EVWQ23J8OQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nhI4qIVcDPkUZBZPVTqn3NttMGcIZPvRG+Psjefd8GK3QVR4ZRC3/ngruj4vMrfZ/
-	 fnLJ9fxs5BioOn90bayqeV4VcoBVWkJOxMVGPlhBxt0o1mz5z2vDkGjUmd4GrZTiYb
-	 zPtRYs73JjS9WvYs2809DxYARU4rKvzgvanb0jSw=
+	b=tUpzO8v1z7femh+KwWt6z2q3yAngX1Uj0rcIpP6THVY3aNKObzpGim9vJ5NSttgY1
+	 AvOwdpu4zYrE6dyh90vntW9IxkJYy/XWNmhIX7E/mFelFR8oLef7wT+NPHPHlK4XKf
+	 f/hapWjtiqQU+c13BTaBbihWtsKvsjZ6hLS3hXjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>
-Subject: [PATCH 6.4 239/292] nvme: dont reject probe due to duplicate IDs for single-ported PCIe devices
-Date: Fri, 21 Jul 2023 18:05:48 +0200
-Message-ID: <20230721160539.156897251@linuxfoundation.org>
+	Xiubo Li <xiubli@redhat.com>,
+	Milind Changire <mchangir@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Hu Weiwen <sehuww@mail.scut.edu.cn>
+Subject: [PATCH 6.4 222/292] ceph: fix blindly expanding the readahead windows
+Date: Fri, 21 Jul 2023 18:05:31 +0200
+Message-ID: <20230721160538.405416763@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -35,77 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Xiubo Li <xiubli@redhat.com>
 
-commit ac522fc6c3165fd0daa2f8da7e07d5f800586daa upstream.
+commit dc94bb8f271c079f69583d0f12a489aaf5202751 upstream.
 
-While duplicate IDs are still very harmful, including the potential to easily
-see changing devices in /dev/disk/by-id, it turn out they are extremely
-common for cheap end user NVMe devices.
+Blindly expanding the readahead windows will cause unneccessary
+pagecache thrashing and also will introduce the network workload.
+We should disable expanding the windows if the readahead is disabled
+and also shouldn't expand the windows too much.
 
-Relax our check for them for so that it doesn't reject the probe on
-single-ported PCIe devices, but prints a big warning instead.  In doubt
-we'd still like to see quirk entries to disable the potential for
-changing supposed stable device identifier links, but this will at least
-allow users how have two (or more) of these devices to use them without
-having to manually add a new PCI ID entry with the quirk through sysfs or
-by patching the kernel.
+Expanding forward firstly instead of expanding backward for possible
+sequential reads.
 
-Fixes: 2079f41ec6ff ("nvme: check that EUI/GUID/UUID are globally unique")
-Cc: stable@vger.kernel.org # 6.0+
-Co-developed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Bound `rreq->len` to the actual file size to restore the previous page
+cache usage.
+
+The posix_fadvise may change the maximum size of a file readahead.
+
+Cc: stable@vger.kernel.org
+Fixes: 49870056005c ("ceph: convert ceph_readpages to ceph_readahead")
+Link: https://lore.kernel.org/ceph-devel/20230504082510.247-1-sehuww@mail.scut.edu.cn
+Link: https://www.spinics.net/lists/ceph-users/msg76183.html
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-and-tested-by: Hu Weiwen <sehuww@mail.scut.edu.cn>
+Reviewed-by: Milind Changire <mchangir@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/core.c |   36 +++++++++++++++++++++++++++++++++---
- 1 file changed, 33 insertions(+), 3 deletions(-)
+ fs/ceph/addr.c |   40 +++++++++++++++++++++++++++++++++-------
+ 1 file changed, 33 insertions(+), 7 deletions(-)
 
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4226,10 +4226,40 @@ static int nvme_init_ns_head(struct nvme
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -187,16 +187,42 @@ static void ceph_netfs_expand_readahead(
+ 	struct inode *inode = rreq->inode;
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+ 	struct ceph_file_layout *lo = &ci->i_layout;
++	unsigned long max_pages = inode->i_sb->s_bdi->ra_pages;
++	loff_t end = rreq->start + rreq->len, new_end;
++	struct ceph_netfs_request_data *priv = rreq->netfs_priv;
++	unsigned long max_len;
+ 	u32 blockoff;
+-	u64 blockno;
  
- 	ret = nvme_global_check_duplicate_ids(ctrl->subsys, &info->ids);
- 	if (ret) {
--		dev_err(ctrl->device,
--			"globally duplicate IDs for nsid %d\n", info->nsid);
-+		/*
-+		 * We've found two different namespaces on two different
-+		 * subsystems that report the same ID.  This is pretty nasty
-+		 * for anything that actually requires unique device
-+		 * identification.  In the kernel we need this for multipathing,
-+		 * and in user space the /dev/disk/by-id/ links rely on it.
-+		 *
-+		 * If the device also claims to be multi-path capable back off
-+		 * here now and refuse the probe the second device as this is a
-+		 * recipe for data corruption.  If not this is probably a
-+		 * cheap consumer device if on the PCIe bus, so let the user
-+		 * proceed and use the shiny toy, but warn that with changing
-+		 * probing order (which due to our async probing could just be
-+		 * device taking longer to startup) the other device could show
-+		 * up at any time.
-+		 */
- 		nvme_print_device_info(ctrl);
--		return ret;
-+		if ((ns->ctrl->ops->flags & NVME_F_FABRICS) || /* !PCIe */
-+		    ((ns->ctrl->subsys->cmic & NVME_CTRL_CMIC_MULTI_CTRL) &&
-+		     info->is_shared)) {
-+			dev_err(ctrl->device,
-+				"ignoring nsid %d because of duplicate IDs\n",
-+				info->nsid);
-+			return ret;
-+		}
+-	/* Expand the start downward */
+-	blockno = div_u64_rem(rreq->start, lo->stripe_unit, &blockoff);
+-	rreq->start = blockno * lo->stripe_unit;
+-	rreq->len += blockoff;
++	if (priv) {
++		/* Readahead is disabled by posix_fadvise POSIX_FADV_RANDOM */
++		if (priv->file_ra_disabled)
++			max_pages = 0;
++		else
++			max_pages = priv->file_ra_pages;
+ 
+-	/* Now, round up the length to the next block */
+-	rreq->len = roundup(rreq->len, lo->stripe_unit);
++	}
 +
-+		dev_err(ctrl->device,
-+			"clearing duplicate IDs for nsid %d\n", info->nsid);
-+		dev_err(ctrl->device,
-+			"use of /dev/disk/by-id/ may cause data corruption\n");
-+		memset(&info->ids.nguid, 0, sizeof(info->ids.nguid));
-+		memset(&info->ids.uuid, 0, sizeof(info->ids.uuid));
-+		memset(&info->ids.eui64, 0, sizeof(info->ids.eui64));
-+		ctrl->quirks |= NVME_QUIRK_BOGUS_NID;
- 	}
++	/* Readahead is disabled */
++	if (!max_pages)
++		return;
++
++	max_len = max_pages << PAGE_SHIFT;
++
++	/*
++	 * Try to expand the length forward by rounding up it to the next
++	 * block, but do not exceed the file size, unless the original
++	 * request already exceeds it.
++	 */
++	new_end = min(round_up(end, lo->stripe_unit), rreq->i_size);
++	if (new_end > end && new_end <= rreq->start + max_len)
++		rreq->len = new_end - rreq->start;
++
++	/* Try to expand the start downward */
++	div_u64_rem(rreq->start, lo->stripe_unit, &blockoff);
++	if (rreq->len + blockoff <= max_len) {
++		rreq->start -= blockoff;
++		rreq->len += blockoff;
++	}
+ }
  
- 	mutex_lock(&ctrl->subsys->lock);
+ static bool ceph_netfs_clamp_length(struct netfs_io_subrequest *subreq)
 
 
