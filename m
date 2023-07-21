@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C9A1F94D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:23:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B24C433C9;
-	Fri, 21 Jul 2023 16:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59C51F94D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:23:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27311C433C7;
+	Fri, 21 Jul 2023 16:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956626;
-	bh=f0Qr11iPJIPBDUPg1J9SulqY2KnXwnDj7V5QHayMICo=;
+	s=korg; t=1689956629;
+	bh=WjA1bGH1z7X+onK7YlGAUrilWkzEXOrdXbWPhLZn5e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=keDlZB4LKP6uvV+fzLOz+xDrGn3wyAKSWbVuTv8zNRm6guy15cYU+UD4HJzrTHnUy
-	 XJ6FXOgWmWo6WG5Gf6x79q/7/UohuFVxUx3LEdn3CjkAMefwzBjArO2i9coh0topmJ
-	 p5/ngTiygYKGWXjMqJTwhmTFHXt6yz9TENJvCSKU=
+	b=GRspxDOV/PXshm8y/cafLMTTtnfId1k8T2UC8iNIC0WXEnNOElFeBcfggxxZ3iICM
+	 EWjNX5HVNYoffZG8ttkUdFzvSNOxSfnVZc+fzcATw7EPjNnkDMyAxsV8o/X6v6Pv/+
+	 nYMg3Nh3bJ6EdVJYdYePM2FibH7Ik9exqghLH52M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Pundir <amit.pundir@linaro.org>,
-	John Stultz <jstultz@google.com>,
-	Aidan MacDonald <aidanmacdonald.0x0@gmail.com>,
-	Saravana Kannan <saravanak@google.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.4 242/292] regmap-irq: Fix out-of-bounds access when allocating config buffers
-Date: Fri, 21 Jul 2023 18:05:51 +0200
-Message-ID: <20230721160539.294007134@linuxfoundation.org>
+	Krister Johansen <kjlx@templeofstupid.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Shay Agroskin <shayagr@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.4 243/292] net: ena: fix shift-out-of-bounds in exponential backoff
+Date: Fri, 21 Jul 2023 18:05:52 +0200
+Message-ID: <20230721160539.336860422@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -39,66 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Isaac J. Manjarres <isaacmanjarres@google.com>
+From: Krister Johansen <kjlx@templeofstupid.com>
 
-commit 963b54df82b6d6206d7def273390bf3f7af558e1 upstream.
+commit 1e9cb763e9bacf0c932aa948f50dcfca6f519a26 upstream.
 
-When allocating the 2D array for handling IRQ type registers in
-regmap_add_irq_chip_fwnode(), the intent is to allocate a matrix
-with num_config_bases rows and num_config_regs columns.
+The ENA adapters on our instances occasionally reset.  Once recently
+logged a UBSAN failure to console in the process:
 
-This is currently handled by allocating a buffer to hold a pointer for
-each row (i.e. num_config_bases). After that, the logic attempts to
-allocate the memory required to hold the register configuration for
-each row. However, instead of doing this allocation for each row
-(i.e. num_config_bases allocations), the logic erroneously does this
-allocation num_config_regs number of times.
+  UBSAN: shift-out-of-bounds in build/linux/drivers/net/ethernet/amazon/ena/ena_com.c:540:13
+  shift exponent 32 is too large for 32-bit type 'unsigned int'
+  CPU: 28 PID: 70012 Comm: kworker/u72:2 Kdump: loaded not tainted 5.15.117
+  Hardware name: Amazon EC2 c5d.9xlarge/, BIOS 1.0 10/16/2017
+  Workqueue: ena ena_fw_reset_device [ena]
+  Call Trace:
+  <TASK>
+  dump_stack_lvl+0x4a/0x63
+  dump_stack+0x10/0x16
+  ubsan_epilogue+0x9/0x36
+  __ubsan_handle_shift_out_of_bounds.cold+0x61/0x10e
+  ? __const_udelay+0x43/0x50
+  ena_delay_exponential_backoff_us.cold+0x16/0x1e [ena]
+  wait_for_reset_state+0x54/0xa0 [ena]
+  ena_com_dev_reset+0xc8/0x110 [ena]
+  ena_down+0x3fe/0x480 [ena]
+  ena_destroy_device+0xeb/0xf0 [ena]
+  ena_fw_reset_device+0x30/0x50 [ena]
+  process_one_work+0x22b/0x3d0
+  worker_thread+0x4d/0x3f0
+  ? process_one_work+0x3d0/0x3d0
+  kthread+0x12a/0x150
+  ? set_kthread_struct+0x50/0x50
+  ret_from_fork+0x22/0x30
+  </TASK>
 
-This scenario can lead to out-of-bounds accesses when num_config_regs
-is greater than num_config_bases. Fix this by updating the terminating
-condition of the loop that allocates the memory for holding the register
-configuration to allocate memory only for each row in the matrix.
+Apparently, the reset delays are getting so large they can trigger a
+UBSAN panic.
 
-Amit Pundir reported a crash that was occurring on his db845c device
-due to memory corruption (see "Closes" tag for Amit's report). The KASAN
-report below helped narrow it down to this issue:
+Looking at the code, the current timeout is capped at 5000us.  Using a
+base value of 100us, the current code will overflow after (1<<29).  Even
+at values before 32, this function wraps around, perhaps
+unintentionally.
 
-[   14.033877][    T1] ==================================================================
-[   14.042507][    T1] BUG: KASAN: invalid-access in regmap_add_irq_chip_fwnode+0x594/0x1364
-[   14.050796][    T1] Write of size 8 at addr 06ffff8081021850 by task init/1
+Cap the value of the exponent used for this backoff at (1<<16) which is
+larger than currently necessary, but large enough to support bigger
+values in the future.
 
-[   14.242004][    T1] The buggy address belongs to the object at ffffff8081021850
-[   14.242004][    T1]  which belongs to the cache kmalloc-8 of size 8
-[   14.255669][    T1] The buggy address is located 0 bytes inside of
-[   14.255669][    T1]  8-byte region [ffffff8081021850, ffffff8081021858)
-
-Fixes: faa87ce9196d ("regmap-irq: Introduce config registers for irq types")
-Reported-by: Amit Pundir <amit.pundir@linaro.org>
-Closes: https://lore.kernel.org/all/CAMi1Hd04mu6JojT3y6wyN2YeVkPR5R3qnkKJ8iR8if_YByCn4w@mail.gmail.com/
-Tested-by: John Stultz <jstultz@google.com>
-Tested-by: Amit Pundir <amit.pundir@linaro.org> # tested on Dragonboard 845c
-Cc: stable@vger.kernel.org # v6.0+
-Cc: Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
-Cc: Saravana Kannan <saravanak@google.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: "Isaac J. Manjarres" <isaacmanjarres@google.com>
-Link: https://lore.kernel.org/r/20230711193059.2480971-1-isaacmanjarres@google.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 4bb7f4cf60e3 ("net: ena: reduce driver load time")
+Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Shay Agroskin <shayagr@amazon.com>
+Link: https://lore.kernel.org/r/20230711013621.GE1926@templeofstupid.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/regmap/regmap-irq.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/amazon/ena/ena_com.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/base/regmap/regmap-irq.c
-+++ b/drivers/base/regmap/regmap-irq.c
-@@ -852,7 +852,7 @@ int regmap_add_irq_chip_fwnode(struct fw
- 		if (!d->config_buf)
- 			goto err_alloc;
+--- a/drivers/net/ethernet/amazon/ena/ena_com.c
++++ b/drivers/net/ethernet/amazon/ena/ena_com.c
+@@ -35,6 +35,8 @@
  
--		for (i = 0; i < chip->num_config_regs; i++) {
-+		for (i = 0; i < chip->num_config_bases; i++) {
- 			d->config_buf[i] = kcalloc(chip->num_config_regs,
- 						   sizeof(**d->config_buf),
- 						   GFP_KERNEL);
+ #define ENA_REGS_ADMIN_INTR_MASK 1
+ 
++#define ENA_MAX_BACKOFF_DELAY_EXP 16U
++
+ #define ENA_MIN_ADMIN_POLL_US 100
+ 
+ #define ENA_MAX_ADMIN_POLL_US 5000
+@@ -536,6 +538,7 @@ static int ena_com_comp_status_to_errno(
+ 
+ static void ena_delay_exponential_backoff_us(u32 exp, u32 delay_us)
+ {
++	exp = min_t(u32, exp, ENA_MAX_BACKOFF_DELAY_EXP);
+ 	delay_us = max_t(u32, ENA_MIN_ADMIN_POLL_US, delay_us);
+ 	delay_us = min_t(u32, delay_us * (1U << exp), ENA_MAX_ADMIN_POLL_US);
+ 	usleep_range(delay_us, 2 * delay_us);
 
 
