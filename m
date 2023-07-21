@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FF920F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:10:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31ED1C433C7;
-	Fri, 21 Jul 2023 19:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EB420F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:10:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05E3C433C7;
+	Fri, 21 Jul 2023 19:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966643;
-	bh=WobzbKCo3HNo/CQqTM7PQ6upSAaCKLi2CbsS297v0Ko=;
+	s=korg; t=1689966646;
+	bh=asfKbqMDfDPadBTgOSrlDM5YIFGvx7EU/j2CfBH+Ca8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mn6zIJQNaWPHqi+HnAa70NZTOI4ZTccsSWizIVR/Z7K541luO7YGOi48BSiAbmCxz
-	 Wl6qFtGr7zUXSkogkesmygQxIpZo/9HDzxvX9jg/QiZcwWo4aBHzozahYLQzGaMiit
-	 ubKr8mhWfC7769Z1tf7kSzNnnS5nJNnOSeh+fVzs=
+	b=Wooj4eIBTHGiI//LGYZWSTqw5tW+uTzXh7OlJtQg3us+rr5zl16iYuhx8HEbck09w
+	 EQOryxlZYBp2KGHFb1AdwtXfe+qVEHsqTGRoFc1Riv3GDqc+4S4S6FYyFJHKf4b0Na
+	 dJNaE/7tl0jqt7vWiuYz23OiBF7dPve9mhbElDW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Serge Semin <fancer.lancer@gmail.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Jon Mason <jdmason@kudzu.us>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 417/532] NTB: ntb_transport: fix possible memory leak while device_register() fails
-Date: Fri, 21 Jul 2023 18:05:21 +0200
-Message-ID: <20230721160637.093343960@linuxfoundation.org>
+Subject: [PATCH 5.15 418/532] NTB: ntb_tool: Add check for devm_kcalloc
+Date: Fri, 21 Jul 2023 18:05:22 +0200
+Message-ID: <20230721160637.168165504@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,39 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 8623ccbfc55d962e19a3537652803676ad7acb90 ]
+[ Upstream commit 2790143f09938776a3b4f69685b380bae8fd06c7 ]
 
-If device_register() returns error, the name allocated by
-dev_set_name() need be freed. As comment of device_register()
-says, it should use put_device() to give up the reference in
-the error path. So fix this by calling put_device(), then the
-name can be freed in kobject_cleanup(), and client_dev is freed
-in ntb_transport_client_release().
+As the devm_kcalloc may return NULL pointer,
+it should be better to add check for the return
+value, as same as the others.
 
-Fixes: fce8a7bb5b4b ("PCI-Express Non-Transparent Bridge Support")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Fixes: 7f46c8b3a552 ("NTB: ntb_tool: Add full multi-port NTB API support")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/ntb_transport.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ntb/test/ntb_tool.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/ntb/ntb_transport.c b/drivers/ntb/ntb_transport.c
-index a9b97ebc71ac5..2abd2235bbcab 100644
---- a/drivers/ntb/ntb_transport.c
-+++ b/drivers/ntb/ntb_transport.c
-@@ -410,7 +410,7 @@ int ntb_transport_register_client_dev(char *device_name)
+diff --git a/drivers/ntb/test/ntb_tool.c b/drivers/ntb/test/ntb_tool.c
+index 5ee0afa621a95..eeeb4b1c97d2c 100644
+--- a/drivers/ntb/test/ntb_tool.c
++++ b/drivers/ntb/test/ntb_tool.c
+@@ -998,6 +998,8 @@ static int tool_init_mws(struct tool_ctx *tc)
+ 		tc->peers[pidx].outmws =
+ 			devm_kcalloc(&tc->ntb->dev, tc->peers[pidx].outmw_cnt,
+ 				   sizeof(*tc->peers[pidx].outmws), GFP_KERNEL);
++		if (tc->peers[pidx].outmws == NULL)
++			return -ENOMEM;
  
- 		rc = device_register(dev);
- 		if (rc) {
--			kfree(client_dev);
-+			put_device(dev);
- 			goto err;
- 		}
- 
+ 		for (widx = 0; widx < tc->peers[pidx].outmw_cnt; widx++) {
+ 			tc->peers[pidx].outmws[widx].pidx = pidx;
 -- 
 2.39.2
 
