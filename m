@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F237723BC3
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:20:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B91C433B6;
-	Fri, 21 Jul 2023 16:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D961EA8A
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:20:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DC1C433AB;
+	Fri, 21 Jul 2023 16:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956441;
-	bh=oa3iO1nPbfLCvElIjFjHzo1iylcs/bug4Qjocgd38Wk=;
+	s=korg; t=1689956444;
+	bh=eCsDnf1oQhVzWVgJLDqVu4WT5qNqn9sFUv95P53tH7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S6reVMMyxDTPnd+OiM5+1b6WYtdWpU2dxkcwQJzaQmOkDTRKd9G4vyqkeCMH9NE8m
-	 pIm//tgnFRnIQqmWwTVDQmw99TlbwhGAZw6XXfrjV3UedAftqgfonBArlTossVYc6R
-	 DkSMqEFuhAHL9K4XPpf5a3a5qU4jBrVGWAi/Cbl0=
+	b=nkdYyrSCAvgqBqt0kaGtxFp4UAI/eWZt1P0DkwPM9yTbannTI1mcsBQzSpgDYJ4Tl
+	 3/v+pxjGePGWuKP9s3O2FMyEF636PpAfyVTddJ/SFoSW1gXVcpqFduVVRUkie4QKD0
+	 sbUnwr4e+jcAW0ASltyaaXcXNfPThzl/5AgqIvI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.4 166/292] dm integrity: reduce vmalloc space footprint on 32-bit architectures
-Date: Fri, 21 Jul 2023 18:04:35 +0200
-Message-ID: <20230721160536.044071554@linuxfoundation.org>
+	Sathya Prakash <sathya.prakash@broadcom.com>,
+	Sumit Saxena <sumit.saxena@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.4 167/292] scsi: mpi3mr: Propagate sense data for admin queue SCSI I/O
+Date: Fri, 21 Jul 2023 18:04:36 +0200
+Message-ID: <20230721160536.085039803@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -34,42 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Sathya Prakash <sathya.prakash@broadcom.com>
 
-commit 6d50eb4725934fd22f5eeccb401000687c790fd0 upstream.
+commit f762326b2baa86ae647e2ba6832bc87e238f68ad upstream.
 
-It was reported that dm-integrity runs out of vmalloc space on 32-bit
-architectures. On x86, there is only 128MiB vmalloc space and dm-integrity
-consumes it quickly because it has a 64MiB journal and 8MiB recalculate
-buffer.
+Copy the sense data to internal driver buffer when the firmware completes
+any SCSI I/O command sent through admin queue with sense data for further
+use.
 
-Fix this by reducing the size of the journal to 4MiB and the size of
-the recalculate buffer to 1MiB, so that multiple dm-integrity devices
-can be created and activated on 32-bit architectures.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: 506bc1a0d6ba ("scsi: mpi3mr: Add support for MPT commands")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Sathya Prakash <sathya.prakash@broadcom.com>
+Signed-off-by: Sumit Saxena <sumit.saxena@broadcom.com>
+Link: https://lore.kernel.org/r/20230531184025.3803-1-sumit.saxena@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_fw.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -34,11 +34,11 @@
- #define DEFAULT_BUFFER_SECTORS		128
- #define DEFAULT_JOURNAL_WATERMARK	50
- #define DEFAULT_SYNC_MSEC		10000
--#define DEFAULT_MAX_JOURNAL_SECTORS	131072
-+#define DEFAULT_MAX_JOURNAL_SECTORS	(IS_ENABLED(CONFIG_64BIT) ? 131072 : 8192)
- #define MIN_LOG2_INTERLEAVE_SECTORS	3
- #define MAX_LOG2_INTERLEAVE_SECTORS	31
- #define METADATA_WORKQUEUE_MAX_ACTIVE	16
--#define RECALC_SECTORS			32768
-+#define RECALC_SECTORS			(IS_ENABLED(CONFIG_64BIT) ? 32768 : 2048)
- #define RECALC_WRITE_SUPER		16
- #define BITMAP_BLOCK_SIZE		4096	/* don't change it */
- #define BITMAP_FLUSH_INTERVAL		(10 * HZ)
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -402,6 +402,11 @@ static void mpi3mr_process_admin_reply_d
+ 				memcpy((u8 *)cmdptr->reply, (u8 *)def_reply,
+ 				    mrioc->reply_sz);
+ 			}
++			if (sense_buf && cmdptr->sensebuf) {
++				cmdptr->is_sense = 1;
++				memcpy(cmdptr->sensebuf, sense_buf,
++				       MPI3MR_SENSE_BUF_SZ);
++			}
+ 			if (cmdptr->is_waiting) {
+ 				complete(&cmdptr->done);
+ 				cmdptr->is_waiting = 0;
 
 
