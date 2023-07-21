@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3D320FA4
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:05:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7678C433CD;
-	Fri, 21 Jul 2023 19:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E23C20F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:05:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F93C433C7;
+	Fri, 21 Jul 2023 19:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966341;
-	bh=60XPIcNlGnhMKU3gMnOvVNCgEaWji4YYk+vu0/CWXgQ=;
+	s=korg; t=1689966344;
+	bh=Ucb5BUBDnq3iN6NGj3A3kYKifBDtWdqXd9hdkBkQgfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bvtaP4bADNFQV3nVYUF3tTZwNVCqff47/q74y8xzrY3dKFrE4MRX3x+uyH6qirj4D
-	 +t7+d5BtbMTdRzeb0WPJfTpk0mM6+W1+z3zC1G5btf3fUJ2/USLQ7Vq9QPlrNRpoWG
-	 2FcSOa0fPZ0SksBnpglzWbztB2Ljz09ohb3i/U+g=
+	b=MKNh82j/1WOkNk+BXHiVc9c32BgXVPoJgBtKaJ8FnS2/gw7IB3gvX5cFUOWSL8T+h
+	 XYz17xtCKAO0TsQ7VobiJAJA6jQi+YEG9x1D4ifziI/u+dRG/0q201oTqGNrrGBnvB
+	 RM8uI5PHHfFoQSuMmoC0wLXiBRWomuyZt3wmW7Kw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Brian Norris <briannorris@chromium.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 309/532] pwm: sysfs: Do not apply state to already disabled PWMs
-Date: Fri, 21 Jul 2023 18:03:33 +0200
-Message-ID: <20230721160631.168005157@linuxfoundation.org>
+Subject: [PATCH 5.15 310/532] pwm: ab8500: Fix error code in probe()
+Date: Fri, 21 Jul 2023 18:03:34 +0200
+Message-ID: <20230721160631.219542146@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,85 +37,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 38ba83598633373f47951384cfc389181c8d1bed ]
+[ Upstream commit cdcffafc4d845cc0c6392cba168c7a942734cce7 ]
 
-If the PWM is exported but not enabled, do not call pwm_class_apply_state().
-First of all, in this case, period may still be unconfigured and this would
-make pwm_class_apply_state() return -EINVAL, and then suspend would fail.
-Second, it makes little sense to apply state onto PWM that is not enabled
-before suspend.
+This code accidentally return positive EINVAL instead of negative
+-EINVAL.
 
-Failing case:
-"
-$ echo 1 > /sys/class/pwm/pwmchip4/export
-$ echo mem > /sys/power/state
-...
-pwm pwmchip4: PM: dpm_run_callback(): pwm_class_suspend+0x1/0xa8 returns -22
-pwm pwmchip4: PM: failed to suspend: error -22
-PM: Some devices failed to suspend, or early wake event detected
-"
-
-Working case:
-"
-$ echo 1 > /sys/class/pwm/pwmchip4/export
-$ echo 100 > /sys/class/pwm/pwmchip4/pwm1/period
-$ echo 10 > /sys/class/pwm/pwmchip4/pwm1/duty_cycle
-$ echo mem > /sys/power/state
-...
-"
-
-Do not call pwm_class_apply_state() in case the PWM is disabled
-to fix this issue.
-
-Fixes: 7fd4edc57bbae ("pwm: sysfs: Add suspend/resume support")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Fixes: ef2bf4997f7d ("pwm: Improve args checking in pwm_apply_state()")
-Reviewed-by: Brian Norris <briannorris@chromium.org>
+Fixes: eb41f334589d ("pwm: ab8500: Fix register offset calculation to not depend on probe order")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/sysfs.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/pwm/pwm-ab8500.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/sysfs.c b/drivers/pwm/sysfs.c
-index 9903c3a7ecedc..b8417a8d2ef97 100644
---- a/drivers/pwm/sysfs.c
-+++ b/drivers/pwm/sysfs.c
-@@ -424,6 +424,13 @@ static int pwm_class_resume_npwm(struct device *parent, unsigned int npwm)
- 		if (!export)
- 			continue;
+diff --git a/drivers/pwm/pwm-ab8500.c b/drivers/pwm/pwm-ab8500.c
+index ad37bc46f2721..5fa91f4cda7ac 100644
+--- a/drivers/pwm/pwm-ab8500.c
++++ b/drivers/pwm/pwm-ab8500.c
+@@ -96,7 +96,7 @@ static int ab8500_pwm_probe(struct platform_device *pdev)
+ 	int err;
  
-+		/* If pwmchip was not enabled before suspend, do nothing. */
-+		if (!export->suspend.enabled) {
-+			/* release lock taken in pwm_class_get_state */
-+			mutex_unlock(&export->lock);
-+			continue;
-+		}
-+
- 		state.enabled = export->suspend.enabled;
- 		ret = pwm_class_apply_state(export, pwm, &state);
- 		if (ret < 0)
-@@ -448,7 +455,17 @@ static int __maybe_unused pwm_class_suspend(struct device *parent)
- 		if (!export)
- 			continue;
+ 	if (pdev->id < 1 || pdev->id > 31)
+-		return dev_err_probe(&pdev->dev, EINVAL, "Invalid device id %d\n", pdev->id);
++		return dev_err_probe(&pdev->dev, -EINVAL, "Invalid device id %d\n", pdev->id);
  
-+		/*
-+		 * If pwmchip was not enabled before suspend, save
-+		 * state for resume time and do nothing else.
-+		 */
- 		export->suspend = state;
-+		if (!state.enabled) {
-+			/* release lock taken in pwm_class_get_state */
-+			mutex_unlock(&export->lock);
-+			continue;
-+		}
-+
- 		state.enabled = false;
- 		ret = pwm_class_apply_state(export, pwm, &state);
- 		if (ret < 0) {
+ 	/*
+ 	 * Nothing to be done in probe, this is required to get the
 -- 
 2.39.2
 
