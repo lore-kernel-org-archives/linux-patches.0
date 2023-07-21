@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAD720F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:20:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F331C433C7;
-	Fri, 21 Jul 2023 19:20:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C729E20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:20:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 405DFC433C8;
+	Fri, 21 Jul 2023 19:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967249;
-	bh=ul0L52/6cMEK2ZNMovbjDrUno3yOLwL7iucOlLhtfE8=;
+	s=korg; t=1689967252;
+	bh=n2cmZDKxFRU5721MQgRaF/SZcBv9QhljQdZd53m0sZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sa7r3nj8PtYQYTxdgeYCDGeKoUnYShffvKl7xyMEg1agYggdsSUlYZlX6aw/9/8nM
-	 Z1i60VrTivRLlmTb9Vd2D2lSPA36ts3GpRyGButzA5x5UVr6SEOd2Ksl0UoxVM6moQ
-	 9bOuUKr2lm/Hodz9CRG7ds1YG5QZuia1TrutcTL0=
+	b=07VDELuLg4HmRKG8evVfA/lxaXQhEkHJMn+s08qwDBRbQK67jw3p3HSan2NG7qS69
+	 7g9m6A84zrNcTpCY/A3jTE8RracRsIN472gVJ01TgfjlpyuE2kkJmXmTPBUfpqH6R4
+	 nLA5ZGWR7AGoa0rPoZd9S/xCEIXkEI3VgrBM3/Ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Marco Elver <elver@google.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 096/223] kasan: add kasan_tag_mismatch prototype
-Date: Fri, 21 Jul 2023 18:05:49 +0200
-Message-ID: <20230721160524.954695577@linuxfoundation.org>
+	Beau Belgrave <beaub@linux.microsoft.com>,
+	sunliming <sunliming@kylinos.cn>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 097/223] tracing/user_events: Fix incorrect return value for writing operation when events are disabled
+Date: Fri, 21 Jul 2023 18:05:50 +0200
+Message-ID: <20230721160524.998807656@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -40,43 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: sunliming <sunliming@kylinos.cn>
 
-commit fb646a4cd3f0ff27d19911bef7b6622263723df6 upstream.
+commit f6d026eea390d59787a6cdc2ef5c983d02e029d0 upstream.
 
-The kasan sw-tags implementation contains one function that is only called
-from assembler and has no prototype in a header.  This causes a W=1
-warning:
+The writing operation return the count of writes regardless of whether events
+are enabled or disabled. Switch it to return -EBADF to indicates that the event
+is disabled.
 
-mm/kasan/sw_tags.c:171:6: warning: no previous prototype for 'kasan_tag_mismatch' [-Wmissing-prototypes]
-  171 | void kasan_tag_mismatch(unsigned long addr, unsigned long access_info,
+Link: https://lkml.kernel.org/r/20230626111344.19136-2-sunliming@kylinos.cn
 
-Add a prototype in the local header to get a clean build.
-
-Link: https://lkml.kernel.org/r/20230509145735.9263-1-arnd@kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+7f5a08c79df35 ("user_events: Add minimal support for trace_event into ftrace")
+Acked-by: Beau Belgrave <beaub@linux.microsoft.com>
+Signed-off-by: sunliming <sunliming@kylinos.cn>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kasan/kasan.h |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/trace/trace_events_user.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/mm/kasan/kasan.h
-+++ b/mm/kasan/kasan.h
-@@ -629,4 +629,7 @@ void __hwasan_storeN_noabort(unsigned lo
+--- a/kernel/trace/trace_events_user.c
++++ b/kernel/trace/trace_events_user.c
+@@ -1456,7 +1456,8 @@ static ssize_t user_events_write_core(st
  
- void __hwasan_tag_memory(unsigned long addr, u8 tag, unsigned long size);
+ 		if (unlikely(faulted))
+ 			return -EFAULT;
+-	}
++	} else
++		return -EBADF;
  
-+void kasan_tag_mismatch(unsigned long addr, unsigned long access_info,
-+			unsigned long ret_ip);
-+
- #endif /* __MM_KASAN_KASAN_H */
+ 	return ret;
+ }
 
 
