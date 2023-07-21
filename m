@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E5E20F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:06:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EACBFC433C8;
-	Fri, 21 Jul 2023 19:06:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373B220F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:06:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB50C433C7;
+	Fri, 21 Jul 2023 19:06:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966406;
-	bh=r+FlfAbIP8ckeXSsm9jCb65xvNDiJ0QbOaXot60pAl0=;
+	s=korg; t=1689966409;
+	bh=pK3w8qX/wKMDtR2SGmvczxsFQkQpmfwgx1AmGtRvBZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ef0B2RZf5kpW26Y6G15GBMn3fYoqYYyReUUtZqfmQi77748pFU2E332OkFsb4kwkV
-	 zi/1oXgCd5g1n1aelBpJvMK6iku/x437KYPk3h/Id6E8rueK+GEUg/VwueCN0mv26d
-	 Ifei76lJ+x7P8TdfHv2faTTavKu+oJ8E0aTlL2H8=
+	b=XlHZIDcXQBRquwFz3gsm56dpv03Cg9F0zXY9iFj81aCItS4nVjuMkL6uP7ydpab0L
+	 da/8kDcQqhSXkk8GhmapsLL8gvaCdtgjulLVACfNrh8HpnjGoUqIl4OUOJhOfoqA92
+	 jbyZx4KxJ3kJCuChDWCi8WWrpXyDzjHrI4GVHXcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Nault <gnault@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Chengfeng Ye <dg573847474@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 333/532] pptp: Fix fib lookup calls.
-Date: Fri, 21 Jul 2023 18:03:57 +0200
-Message-ID: <20230721160632.485845218@linuxfoundation.org>
+Subject: [PATCH 5.15 316/532] sctp: fix potential deadlock on &net->sctp.addr_wq_lock
+Date: Fri, 21 Jul 2023 18:03:40 +0200
+Message-ID: <20230721160631.536322677@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,114 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Chengfeng Ye <dg573847474@gmail.com>
 
-[ Upstream commit 84bef5b6037c15180ef88ac4216dc621d16df1a6 ]
+[ Upstream commit 6feb37b3b06e9049e20dcf7e23998f92c9c5be9a ]
 
-PPTP uses pppox sockets (struct pppox_sock). These sockets don't embed
-an inet_sock structure, so it's invalid to call inet_sk() on them.
+As &net->sctp.addr_wq_lock is also acquired by the timer
+sctp_addr_wq_timeout_handler() in protocal.c, the same lock acquisition
+at sctp_auto_asconf_init() seems should disable irq since it is called
+from sctp_accept() under process context.
 
-Therefore, the ip_route_output_ports() call in pptp_connect() has two
-problems:
+Possible deadlock scenario:
+sctp_accept()
+    -> sctp_sock_migrate()
+    -> sctp_auto_asconf_init()
+    -> spin_lock(&net->sctp.addr_wq_lock)
+        <timer interrupt>
+        -> sctp_addr_wq_timeout_handler()
+        -> spin_lock_bh(&net->sctp.addr_wq_lock); (deadlock here)
 
-  * The tos variable is set with RT_CONN_FLAGS(sk), which calls
-    inet_sk() on the pppox socket.
+This flaw was found using an experimental static analysis tool we are
+developing for irq-related deadlock.
 
-  * ip_route_output_ports() tries to retrieve routing flags using
-    inet_sk_flowi_flags(), which is also going to call inet_sk() on the
-    pppox socket.
+The tentative patch fix the potential deadlock by spin_lock_bh().
 
-While PPTP doesn't use inet sockets, it's actually really layered on
-top of IP and therefore needs a proper way to do fib lookups. So let's
-define pptp_route_output() to get a struct rtable from a pptp socket.
-Let's also replace the ip_route_output_ports() call of pptp_xmit() for
-consistency.
-
-In practice, this means that:
-
-  * pptp_connect() sets ->flowi4_tos and ->flowi4_flags to zero instead
-    of using bits of unrelated struct pppox_sock fields.
-
-  * pptp_xmit() now respects ->sk_mark and ->sk_uid.
-
-  * pptp_xmit() now calls the security_sk_classify_flow() security
-    hook, thus allowing to set ->flowic_secid.
-
-  * pptp_xmit() now passes the pppox socket to xfrm_lookup_route().
-
-Found by code inspection.
-
-Fixes: 00959ade36ac ("PPTP: PPP over IPv4 (Point-to-Point Tunneling Protocol)")
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+Fixes: 34e5b0118685 ("sctp: delay auto_asconf init until binding the first addr")
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/20230627120340.19432-1-dg573847474@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/pptp.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ net/sctp/socket.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ppp/pptp.c b/drivers/net/ppp/pptp.c
-index 0fe78826c8fa4..32183f24e63ff 100644
---- a/drivers/net/ppp/pptp.c
-+++ b/drivers/net/ppp/pptp.c
-@@ -24,6 +24,7 @@
- #include <linux/in.h>
- #include <linux/ip.h>
- #include <linux/rcupdate.h>
-+#include <linux/security.h>
- #include <linux/spinlock.h>
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index ed35d4a4c5253..f10ad80fd6948 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -362,9 +362,9 @@ static void sctp_auto_asconf_init(struct sctp_sock *sp)
+ 	struct net *net = sock_net(&sp->inet.sk);
  
- #include <net/sock.h>
-@@ -128,6 +129,23 @@ static void del_chan(struct pppox_sock *sock)
- 	spin_unlock(&chan_lock);
+ 	if (net->sctp.default_auto_asconf) {
+-		spin_lock(&net->sctp.addr_wq_lock);
++		spin_lock_bh(&net->sctp.addr_wq_lock);
+ 		list_add_tail(&sp->auto_asconf_list, &net->sctp.auto_asconf_splist);
+-		spin_unlock(&net->sctp.addr_wq_lock);
++		spin_unlock_bh(&net->sctp.addr_wq_lock);
+ 		sp->do_auto_asconf = 1;
+ 	}
  }
- 
-+static struct rtable *pptp_route_output(struct pppox_sock *po,
-+					struct flowi4 *fl4)
-+{
-+	struct sock *sk = &po->sk;
-+	struct net *net;
-+
-+	net = sock_net(sk);
-+	flowi4_init_output(fl4, sk->sk_bound_dev_if, sk->sk_mark, 0,
-+			   RT_SCOPE_UNIVERSE, IPPROTO_GRE, 0,
-+			   po->proto.pptp.dst_addr.sin_addr.s_addr,
-+			   po->proto.pptp.src_addr.sin_addr.s_addr,
-+			   0, 0, sock_net_uid(net, sk));
-+	security_sk_classify_flow(sk, flowi4_to_flowi_common(fl4));
-+
-+	return ip_route_output_flow(net, fl4, sk);
-+}
-+
- static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
- {
- 	struct sock *sk = (struct sock *) chan->private;
-@@ -151,11 +169,7 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
- 	if (sk_pppox(po)->sk_state & PPPOX_DEAD)
- 		goto tx_error;
- 
--	rt = ip_route_output_ports(net, &fl4, NULL,
--				   opt->dst_addr.sin_addr.s_addr,
--				   opt->src_addr.sin_addr.s_addr,
--				   0, 0, IPPROTO_GRE,
--				   RT_TOS(0), sk->sk_bound_dev_if);
-+	rt = pptp_route_output(po, &fl4);
- 	if (IS_ERR(rt))
- 		goto tx_error;
- 
-@@ -438,12 +452,7 @@ static int pptp_connect(struct socket *sock, struct sockaddr *uservaddr,
- 	po->chan.private = sk;
- 	po->chan.ops = &pptp_chan_ops;
- 
--	rt = ip_route_output_ports(sock_net(sk), &fl4, sk,
--				   opt->dst_addr.sin_addr.s_addr,
--				   opt->src_addr.sin_addr.s_addr,
--				   0, 0,
--				   IPPROTO_GRE, RT_CONN_FLAGS(sk),
--				   sk->sk_bound_dev_if);
-+	rt = pptp_route_output(po, &fl4);
- 	if (IS_ERR(rt)) {
- 		error = -EHOSTUNREACH;
- 		goto end;
 -- 
 2.39.2
 
