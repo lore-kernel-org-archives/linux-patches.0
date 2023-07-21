@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302EC20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A733FC433C8;
-	Fri, 21 Jul 2023 19:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082AF20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:17:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E349C433C8;
+	Fri, 21 Jul 2023 19:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967018;
-	bh=t2TJGkDEytuG3/r72mXr+I4BXJtbdUedn/LoaUTEn5Q=;
+	s=korg; t=1689967020;
+	bh=McjRgZ/WKDZ7bKVgxaylvT91AHbvU+Y93SW/nZyQheA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IS9xf27wjA97fx54Z64IImV5Wh5I02pU+QjMhncm4UdcB//LUr1WalmP7sMQaBf9E
-	 B4mxNUy5OkK7wEnsrwcQaxFTJypuFXKHgbhZS52FgMXyMA3tN5JkUvEbSovwmPYgGq
-	 gKVEP0WIJcSgB2s5AKlqXbvfpVmgn5f8b+qS3sg0=
+	b=W/Iat7Vh3GMOcS06ZzmASsFwUgI6H+nOaUdNepJbeTUo7LV/YYshkYz4EFDt6+pCf
+	 Ej1Z0kaerhZA32+ttsUtrxSzRCL46DYKLV2vOQ3pSebsavs7Gs8lfPqRcQd8aqwM3r
+	 M6U8UEu8RqkR5nxcDRJH4PMg/b0sFvtgsA+vM0ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Akshata MukundShetty <akshata.mukundshetty@amd.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.1 003/223] HID: amd_sfh: Fix for shift-out-of-bounds
-Date: Fri, 21 Jul 2023 18:04:16 +0200
-Message-ID: <20230721160521.018583854@linuxfoundation.org>
+	Bryan Whitehead <bryan.whitehead@microchip.com>,
+	UNGLinuxDriver@microchip.com,
+	Moritz Fischer <moritzf@google.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 004/223] net: lan743x: Dont sleep in atomic context
+Date: Fri, 21 Jul 2023 18:04:17 +0200
+Message-ID: <20230721160521.060661083@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -36,95 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Moritz Fischer <moritzf@google.com>
 
-commit 87854366176403438d01f368b09de3ec2234e0f5 upstream.
+commit 7a8227b2e76be506b2ac64d2beac950ca04892a5 upstream.
 
-Shift operation of 'exp' and 'shift' variables exceeds the maximum number
-of shift values in the u32 range leading to UBSAN shift-out-of-bounds.
+dev_set_rx_mode() grabs a spin_lock, and the lan743x implementation
+proceeds subsequently to go to sleep using readx_poll_timeout().
 
-...
-[    6.120512] UBSAN: shift-out-of-bounds in drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c:149:50
-[    6.120598] shift exponent 104 is too large for 64-bit type 'long unsigned int'
-[    6.120659] CPU: 4 PID: 96 Comm: kworker/4:1 Not tainted 6.4.0amd_1-next-20230519-dirty #10
-[    6.120665] Hardware name: AMD Birman-PHX/Birman-PHX, BIOS SFH_with_HPD_SEN.FD 04/05/2023
-[    6.120667] Workqueue: events amd_sfh_work_buffer [amd_sfh]
-[    6.120687] Call Trace:
-[    6.120690]  <TASK>
-[    6.120694]  dump_stack_lvl+0x48/0x70
-[    6.120704]  dump_stack+0x10/0x20
-[    6.120707]  ubsan_epilogue+0x9/0x40
-[    6.120716]  __ubsan_handle_shift_out_of_bounds+0x10f/0x170
-[    6.120720]  ? psi_group_change+0x25f/0x4b0
-[    6.120729]  float_to_int.cold+0x18/0xba [amd_sfh]
-[    6.120739]  get_input_rep+0x57/0x340 [amd_sfh]
-[    6.120748]  ? __schedule+0xba7/0x1b60
-[    6.120756]  ? __pfx_get_input_rep+0x10/0x10 [amd_sfh]
-[    6.120764]  amd_sfh_work_buffer+0x91/0x180 [amd_sfh]
-[    6.120772]  process_one_work+0x229/0x430
-[    6.120780]  worker_thread+0x4a/0x3c0
-[    6.120784]  ? __pfx_worker_thread+0x10/0x10
-[    6.120788]  kthread+0xf7/0x130
-[    6.120792]  ? __pfx_kthread+0x10/0x10
-[    6.120795]  ret_from_fork+0x29/0x50
-[    6.120804]  </TASK>
-...
+Introduce a helper wrapping the readx_poll_timeout_atomic() function
+and use it to replace the calls to readx_polL_timeout().
 
-Fix this by adding the condition to validate shift ranges.
-
-Fixes: 93ce5e0231d7 ("HID: amd_sfh: Implement SFH1.1 functionality")
+Fixes: 23f0703c125b ("lan743x: Add main source files for new lan743x driver")
 Cc: stable@vger.kernel.org
-Tested-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Akshata MukundShetty <akshata.mukundshetty@amd.com>
-Link: https://lore.kernel.org/r/20230707065722.9036-3-Basavaraj.Natikar@amd.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Cc: Bryan Whitehead <bryan.whitehead@microchip.com>
+Cc: UNGLinuxDriver@microchip.com
+Signed-off-by: Moritz Fischer <moritzf@google.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20230627035000.1295254-1-moritzf@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c | 20 +++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/microchip/lan743x_main.c |   21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c
-index c81d20cd3081..06bdcf072d10 100644
---- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c
-+++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c
-@@ -143,16 +143,32 @@ static int float_to_int(u32 flt32_val)
- 	if (!exp && !mantissa)
- 		return 0;
+--- a/drivers/net/ethernet/microchip/lan743x_main.c
++++ b/drivers/net/ethernet/microchip/lan743x_main.c
+@@ -144,6 +144,18 @@ static int lan743x_csr_light_reset(struc
+ 				  !(data & HW_CFG_LRST_), 100000, 10000000);
+ }
  
-+	/*
-+	 * Calculate the exponent and fraction part of floating
-+	 * point representation.
-+	 */
- 	exp -= 127;
- 	if (exp < 0) {
- 		exp = -exp;
-+		if (exp >= BITS_PER_TYPE(u32))
-+			return 0;
- 		zeropre = (((BIT(23) + mantissa) * 100) >> 23) >> exp;
- 		return zeropre >= 50 ? sign : 0;
++static int lan743x_csr_wait_for_bit_atomic(struct lan743x_adapter *adapter,
++					   int offset, u32 bit_mask,
++					   int target_value, int udelay_min,
++					   int udelay_max, int count)
++{
++	u32 data;
++
++	return readx_poll_timeout_atomic(LAN743X_CSR_READ_OP, offset, data,
++					 target_value == !!(data & bit_mask),
++					 udelay_max, udelay_min * count);
++}
++
+ static int lan743x_csr_wait_for_bit(struct lan743x_adapter *adapter,
+ 				    int offset, u32 bit_mask,
+ 				    int target_value, int usleep_min,
+@@ -746,8 +758,8 @@ static int lan743x_dp_write(struct lan74
+ 	u32 dp_sel;
+ 	int i;
+ 
+-	if (lan743x_csr_wait_for_bit(adapter, DP_SEL, DP_SEL_DPRDY_,
+-				     1, 40, 100, 100))
++	if (lan743x_csr_wait_for_bit_atomic(adapter, DP_SEL, DP_SEL_DPRDY_,
++					    1, 40, 100, 100))
+ 		return -EIO;
+ 	dp_sel = lan743x_csr_read(adapter, DP_SEL);
+ 	dp_sel &= ~DP_SEL_MASK_;
+@@ -758,8 +770,9 @@ static int lan743x_dp_write(struct lan74
+ 		lan743x_csr_write(adapter, DP_ADDR, addr + i);
+ 		lan743x_csr_write(adapter, DP_DATA_0, buf[i]);
+ 		lan743x_csr_write(adapter, DP_CMD, DP_CMD_WRITE_);
+-		if (lan743x_csr_wait_for_bit(adapter, DP_SEL, DP_SEL_DPRDY_,
+-					     1, 40, 100, 100))
++		if (lan743x_csr_wait_for_bit_atomic(adapter, DP_SEL,
++						    DP_SEL_DPRDY_,
++						    1, 40, 100, 100))
+ 			return -EIO;
  	}
  
- 	shift = 23 - exp;
--	flt32_val = BIT(exp) + (mantissa >> shift);
--	fraction = mantissa & GENMASK(shift - 1, 0);
-+	if (abs(shift) >= BITS_PER_TYPE(u32))
-+		return 0;
-+
-+	if (shift < 0) {
-+		shift = -shift;
-+		flt32_val = BIT(exp) + (mantissa << shift);
-+		shift = 0;
-+	} else {
-+		flt32_val = BIT(exp) + (mantissa >> shift);
-+	}
-+
-+	fraction = (shift == 0) ? 0 : mantissa & GENMASK(shift - 1, 0);
- 
- 	return (((fraction * 100) >> shift) >= 50) ? sign * (flt32_val + 1) : sign * flt32_val;
- }
--- 
-2.41.0
-
 
 
