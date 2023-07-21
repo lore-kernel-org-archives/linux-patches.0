@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EB120F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:08:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7702C433C8;
-	Fri, 21 Jul 2023 19:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0955020F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:08:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E029C433CA;
+	Fri, 21 Jul 2023 19:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966527;
-	bh=6ubGanwdd15hvv0IMK/4jq73YUCYhGOUZo3qKAyn4bA=;
+	s=korg; t=1689966529;
+	bh=01jCrS5B+z6Nw4qJZ5yxfHzFJ9JmhhnKwbAGUAnjkPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ofpJeZexXnEvp0BsJCzfavBvyIFnWTHRcMaQB9iRZ0YXC3Bt/ootvY8HbfkOEhHI7
-	 VOkN4jcKmcNCZmfJt18OFaZRXTDlrM5CU3znTGcDEUIJz1ACSIjnTxW6AAs2UY1/Mn
-	 PUHJ8973fIYV6gbmmgYzAPQVjoBKfQiub/nRGM6I=
+	b=DkHWx0F3Xnht/SJkezDOFXIUZ2W9GL8GewBHbWub31qXCBRAHOANekyeZv1+lSVhf
+	 0tS9CXuCbOYIGFq9FDcDytxRi5mnRhPZasJ+rMl8hSfaEIcGKSWrOJ3WAV+jKdWcdP
+	 h9BES+enPUfA9f9My3eqmvoPjgUrcuF2F51eM0YQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Yann Gautier <yann.gautier@foss.st.com>
-Subject: [PATCH 5.15 348/532] mmc: mmci: Set PROBE_PREFER_ASYNCHRONOUS
-Date: Fri, 21 Jul 2023 18:04:12 +0200
-Message-ID: <20230721160633.317906481@linuxfoundation.org>
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 5.15 375/532] leds: trigger: netdev: Recheck NETDEV_LED_MODE_LINKUP on dev rename
+Date: Fri, 21 Jul 2023 18:04:39 +0200
+Message-ID: <20230721160634.835260166@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,33 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-commit 3108eb2e8aa7e955a9dd3a4c1bf19a7898961822 upstream.
+commit cee4bd16c3195a701be683f7da9e88c6e11acb73 upstream.
 
-All mmc host drivers should have the asynchronous probe option enabled, but
-it seems like we failed to set it for mmci, so let's do that now.
+Dev can be renamed also while up for supported device. We currently
+wrongly clear the NETDEV_LED_MODE_LINKUP flag on NETDEV_CHANGENAME
+event.
 
-Fixes: 21b2cec61c04 ("mmc: Set PROBE_PREFER_ASYNCHRONOUS for drivers that existed in v4.4")
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Tested-by: Linus Walleij <linus.walleij@linaro.org>
-Tested-by: Yann Gautier <yann.gautier@foss.st.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230612143730.210390-1-ulf.hansson@linaro.org
+Fix this by rechecking if the carrier is ok on NETDEV_CHANGENAME and
+correctly set the NETDEV_LED_MODE_LINKUP bit.
+
+Fixes: 5f820ed52371 ("leds: trigger: netdev: fix handling on interface rename")
+Cc: stable@vger.kernel.org # v5.5+
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20230419210743.3594-2-ansuelsmth@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mmci.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/leds/trigger/ledtrig-netdev.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/mmc/host/mmci.c
-+++ b/drivers/mmc/host/mmci.c
-@@ -2449,6 +2449,7 @@ static struct amba_driver mmci_driver =
- 	.drv		= {
- 		.name	= DRIVER_NAME,
- 		.pm	= &mmci_dev_pm_ops,
-+		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
- 	},
- 	.probe		= mmci_probe,
- 	.remove		= mmci_remove,
+--- a/drivers/leds/trigger/ledtrig-netdev.c
++++ b/drivers/leds/trigger/ledtrig-netdev.c
+@@ -318,6 +318,9 @@ static int netdev_trig_notify(struct not
+ 	clear_bit(NETDEV_LED_MODE_LINKUP, &trigger_data->mode);
+ 	switch (evt) {
+ 	case NETDEV_CHANGENAME:
++		if (netif_carrier_ok(dev))
++			set_bit(NETDEV_LED_MODE_LINKUP, &trigger_data->mode);
++		fallthrough;
+ 	case NETDEV_REGISTER:
+ 		if (trigger_data->net_dev)
+ 			dev_put(trigger_data->net_dev);
 
 
