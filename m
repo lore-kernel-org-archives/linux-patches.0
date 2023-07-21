@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F8020F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:22:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE02EC433C7;
-	Fri, 21 Jul 2023 19:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1433920F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:22:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E712C433C9;
+	Fri, 21 Jul 2023 19:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967375;
-	bh=lx0sYJ6p8HimMD0ZHfKMauYEW5ljtaNrXSpa2sHPqTA=;
+	s=korg; t=1689967377;
+	bh=i8UTBl3mjBQ0/x6L3xSnQkIlQSHH35Ae/pt/60VrIPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BGpuXMOC9HljDeODUqPGkVVjcUFJoXI19z0UGnJthCDHABrSLfBDMfld3ABbYQWNV
-	 fG63jWmNhT8wRGzOy/YVVypD0hnXfFVWeANDOAq3AvXEokavMVcdf9ZJjMqmBEaugs
-	 Xm3MnrnDWR2uj08nJFpSsKzS/nVuEvOayNddbkEg=
+	b=PeR2WlqxBiMHmxVrmi/MjdrNk4trcCOO6H3Ta5vaSLMqkcGVszZiF6iLgrbwztxLj
+	 CtiP5n8YHcsoyoo2uNhKRKeesuj4DUCUlfEDLv07VbhgU8cVKVACd6+dty00/hFXq1
+	 Nblixqw8qlY8ciexfS4jiszvUi7GmGkbp46nRLfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Marko <robimarko@gmail.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 112/223] soc: qcom: mdt_loader: Fix unconditional call to scm_pas_mem_setup
-Date: Fri, 21 Jul 2023 18:06:05 +0200
-Message-ID: <20230721160525.642549055@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.1 113/223] ext2/dax: Fix ext2_setsize when len is page aligned
+Date: Fri, 21 Jul 2023 18:06:06 +0200
+Message-ID: <20230721160525.689090100@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -36,83 +35,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 
-commit bcb889891371c3cf767f2b9e8768cfe2fdd3810f upstream.
+commit fcced95b6ba2a507a83b8b3e0358a8ac16b13e35 upstream.
 
-Commit ebeb20a9cd3f ("soc: qcom: mdt_loader: Always invoke PAS
-mem_setup") dropped the relocate check and made pas_mem_setup run
-unconditionally. The code was later moved with commit f4e526ff7e38
-("soc: qcom: mdt_loader: Extract PAS operations") to
-qcom_mdt_pas_init() effectively losing track of what was actually
-done.
+PAGE_ALIGN(x) macro gives the next highest value which is multiple of
+pagesize. But if x is already page aligned then it simply returns x.
+So, if x passed is 0 in dax_zero_range() function, that means the
+length gets passed as 0 to ->iomap_begin().
 
-The assumption that PAS mem_setup can be done anytime was effectively
-wrong, with no good reason and this caused regression on some SoC
-that use remoteproc to bringup ath11k. One example is IPQ8074 SoC that
-effectively broke resulting in remoteproc silently die and ath11k not
-working.
+In ext2 it then calls ext2_get_blocks -> max_blocks as 0 and hits bug_on
+here in ext2_get_blocks().
+	BUG_ON(maxblocks == 0);
 
-On this SoC FW relocate is not enabled and PAS mem_setup was correctly
-skipped in previous kernel version resulting in correct bringup and
-function of remoteproc and ath11k.
+Instead we should be calling dax_truncate_page() here which takes
+care of it. i.e. it only calls dax_zero_range if the offset is not
+page/block aligned.
 
-To fix the regression, reintroduce the relocate check in
-qcom_mdt_pas_init() and correctly skip PAS mem_setup where relocate is
-not enabled.
+This can be easily triggered with following on fsdax mounted pmem
+device.
 
-Fixes: ebeb20a9cd3f ("soc: qcom: mdt_loader: Always invoke PAS mem_setup")
-Tested-by: Robert Marko <robimarko@gmail.com>
-Co-developed-by: Robert Marko <robimarko@gmail.com>
-Signed-off-by: Robert Marko <robimarko@gmail.com>
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230526115511.3328-1-ansuelsmth@gmail.com
+dd if=/dev/zero of=file count=1 bs=512
+truncate -s 0 file
+
+[79.525838] EXT2-fs (pmem0): DAX enabled. Warning: EXPERIMENTAL, use at your own risk
+[79.529376] ext2 filesystem being mounted at /mnt1/test supports timestamps until 2038 (0x7fffffff)
+[93.793207] ------------[ cut here ]------------
+[93.795102] kernel BUG at fs/ext2/inode.c:637!
+[93.796904] invalid opcode: 0000 [#1] PREEMPT SMP PTI
+[93.798659] CPU: 0 PID: 1192 Comm: truncate Not tainted 6.3.0-rc2-xfstests-00056-g131086faa369 #139
+[93.806459] RIP: 0010:ext2_get_blocks.constprop.0+0x524/0x610
+<...>
+[93.835298] Call Trace:
+[93.836253]  <TASK>
+[93.837103]  ? lock_acquire+0xf8/0x110
+[93.838479]  ? d_lookup+0x69/0xd0
+[93.839779]  ext2_iomap_begin+0xa7/0x1c0
+[93.841154]  iomap_iter+0xc7/0x150
+[93.842425]  dax_zero_range+0x6e/0xa0
+[93.843813]  ext2_setsize+0x176/0x1b0
+[93.845164]  ext2_setattr+0x151/0x200
+[93.846467]  notify_change+0x341/0x4e0
+[93.847805]  ? lock_acquire+0xf8/0x110
+[93.849143]  ? do_truncate+0x74/0xe0
+[93.850452]  ? do_truncate+0x84/0xe0
+[93.851739]  do_truncate+0x84/0xe0
+[93.852974]  do_sys_ftruncate+0x2b4/0x2f0
+[93.854404]  do_syscall_64+0x3f/0x90
+[93.855789]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+CC: stable@vger.kernel.org
+Fixes: 2aa3048e03d3 ("iomap: switch iomap_zero_range to use iomap_iter")
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Message-Id: <046a58317f29d9603d1068b2bbae47c2332c17ae.1682069716.git.ritesh.list@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/mdt_loader.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ fs/ext2/inode.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/soc/qcom/mdt_loader.c
-+++ b/drivers/soc/qcom/mdt_loader.c
-@@ -210,6 +210,7 @@ int qcom_mdt_pas_init(struct device *dev
- 	const struct elf32_hdr *ehdr;
- 	phys_addr_t min_addr = PHYS_ADDR_MAX;
- 	phys_addr_t max_addr = 0;
-+	bool relocate = false;
- 	size_t metadata_len;
- 	void *metadata;
- 	int ret;
-@@ -224,6 +225,9 @@ int qcom_mdt_pas_init(struct device *dev
- 		if (!mdt_phdr_valid(phdr))
- 			continue;
+--- a/fs/ext2/inode.c
++++ b/fs/ext2/inode.c
+@@ -1265,9 +1265,8 @@ static int ext2_setsize(struct inode *in
+ 	inode_dio_wait(inode);
  
-+		if (phdr->p_flags & QCOM_MDT_RELOCATABLE)
-+			relocate = true;
-+
- 		if (phdr->p_paddr < min_addr)
- 			min_addr = phdr->p_paddr;
- 
-@@ -246,11 +250,13 @@ int qcom_mdt_pas_init(struct device *dev
- 		goto out;
- 	}
- 
--	ret = qcom_scm_pas_mem_setup(pas_id, mem_phys, max_addr - min_addr);
--	if (ret) {
--		/* Unable to set up relocation */
--		dev_err(dev, "error %d setting up firmware %s\n", ret, fw_name);
--		goto out;
-+	if (relocate) {
-+		ret = qcom_scm_pas_mem_setup(pas_id, mem_phys, max_addr - min_addr);
-+		if (ret) {
-+			/* Unable to set up relocation */
-+			dev_err(dev, "error %d setting up firmware %s\n", ret, fw_name);
-+			goto out;
-+		}
- 	}
- 
- out:
+ 	if (IS_DAX(inode))
+-		error = dax_zero_range(inode, newsize,
+-				       PAGE_ALIGN(newsize) - newsize, NULL,
+-				       &ext2_iomap_ops);
++		error = dax_truncate_page(inode, newsize, NULL,
++					  &ext2_iomap_ops);
+ 	else
+ 		error = block_truncate_page(inode->i_mapping,
+ 				newsize, ext2_get_block);
 
 
