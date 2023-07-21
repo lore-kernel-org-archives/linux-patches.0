@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4ADE20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:15:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24AAAC433C7;
-	Fri, 21 Jul 2023 19:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2A920F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:15:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72C4C433C8;
+	Fri, 21 Jul 2023 19:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966949;
-	bh=qbBbKLRk2YQC+610+ykAsJabttOeyqHNVT1uxo6bt04=;
+	s=korg; t=1689966952;
+	bh=kiYFZ5erZwDBMdEQtGSm8XX+ksLNyIqcuNnfSlqOAu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tYb+6PtMwrBBLkXUXVc0Q8FWQQECLTToNKJKZxSH+r4fylHTZuIPYpcSPHH5nW+tt
-	 RIKZpWnuXfIA1DOPOFgktARmKz19SJhIAAXOET6INC4K9qSyT+bjqrLgv9Tdi4/FNq
-	 itLuQd9sLB2Cx+77TuWkANSxTSn2Ri+DnS0st/NU=
+	b=x7XpkPcpeGfrCRYe8CTpALRcEipFQnX5gYLQG1oDMuBTuW5RwynQ8lIQTOmV2oVvJ
+	 oCrxKuUbmL+n+yZf1AjvLOu7I+hSAj8dvWHlQgl6BCLi73wabzwjeMpgVbrVZ/XqcW
+	 owLo+BJaH7CcS1L1eWKX47NbXN2ZOP8p0VpB/rMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Quinn Tran <qutran@marvell.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 524/532] scsi: qla2xxx: Avoid fcport pointer dereference
-Date: Fri, 21 Jul 2023 18:07:08 +0200
-Message-ID: <20230721160643.078895039@linuxfoundation.org>
+Subject: [PATCH 5.15 525/532] scsi: qla2xxx: Fix buffer overrun
+Date: Fri, 21 Jul 2023 18:07:09 +0200
+Message-ID: <20230721160643.145449672@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,38 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Quinn Tran <qutran@marvell.com>
 
-commit 6b504d06976fe4a61cc05dedc68b84fadb397f77 upstream.
+commit b68710a8094fdffe8dd4f7a82c82649f479bb453 upstream.
 
-Klocwork reported warning of NULL pointer may be dereferenced.  The routine
-exits when sa_ctl is NULL and fcport is allocated after the exit call thus
-causing NULL fcport pointer to dereference at the time of exit.
+Klocwork warning: Buffer Overflow - Array Index Out of Bounds
 
-To avoid fcport pointer dereference, exit the routine when sa_ctl is NULL.
+Driver uses fc_els_flogi to calculate size of buffer.  The actual buffer is
+nested inside of fc_els_flogi which is smaller.
+
+Replace structure name to allow proper size calculation.
 
 Cc: stable@vger.kernel.org
+Signed-off-by: Quinn Tran <qutran@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230607113843.37185-4-njavali@marvell.com
+Link: https://lore.kernel.org/r/20230607113843.37185-6-njavali@marvell.com
 Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_edif.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/qla2xxx/qla_init.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_edif.c
-+++ b/drivers/scsi/qla2xxx/qla_edif.c
-@@ -2230,8 +2230,8 @@ qla24xx_issue_sa_replace_iocb(scsi_qla_h
- 	if (!sa_ctl) {
- 		ql_dbg(ql_dbg_edif, vha, 0x70e6,
- 		    "sa_ctl allocation failed\n");
--		rval =  -ENOMEM;
--		goto done;
-+		rval = -ENOMEM;
-+		return rval;
- 	}
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -5359,7 +5359,7 @@ static void qla_get_login_template(scsi_
+ 	__be32 *q;
  
- 	fcport = sa_ctl->fcport;
+ 	memset(ha->init_cb, 0, ha->init_cb_size);
+-	sz = min_t(int, sizeof(struct fc_els_flogi), ha->init_cb_size);
++	sz = min_t(int, sizeof(struct fc_els_csp), ha->init_cb_size);
+ 	rval = qla24xx_get_port_login_templ(vha, ha->init_cb_dma,
+ 					    ha->init_cb, sz);
+ 	if (rval != QLA_SUCCESS) {
 
 
