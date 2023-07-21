@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741781F93D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:11:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1771C433C9;
-	Fri, 21 Jul 2023 16:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F0D1F93D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:11:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22F4C433C9;
+	Fri, 21 Jul 2023 16:11:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689955875;
-	bh=oINC+a82KR7RUUD6nNEIQt27HVaahwuweoxLWwzWoCQ=;
+	s=korg; t=1689955878;
+	bh=nfYiD4PG/YSJPhWjOHwimzWGBMu6q3Q8TzklgDeScLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RSt9I9eyB7NyiR0uif78Knr0WuToZuiUqKvgfe4YW54bgy9AuX9BmqoGOSYmjNY8Y
-	 gvSrFtzJYFUmKCAwPQqk6xOxYcszO7hn0TcrbTiLwRKCsgT1ilfNLPXbhe1ctOvRe8
-	 X4mEccFIeQi9KAQF4OtpqJGIN2cEFGtOFM7tpsCg=
+	b=cRGPPoSsiet2U63XKI7c6BzAAdNk8/ZQajkd+zYyJFKXzKRY58avt9cwHN3pZLkwO
+	 zKwwGf63tnFwUskuH3OH+kX+ihBzotSSaAHg4YpX9rYrOG0HF1HPExF0b3RxWwG0rp
+	 B74Q5IWDb8gjrK36Ci9++K+tEze6Vk1DTlZjBimw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jon Mason <jdmason@kudzu.us>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 061/292] ntb: intel: Fix error handling in intel_ntb_pci_driver_init()
-Date: Fri, 21 Jul 2023 18:02:50 +0200
-Message-ID: <20230721160531.415850619@linuxfoundation.org>
+Subject: [PATCH 6.4 044/292] net: mscc: ocelot: fix oversize frame dropping for preemptible TCs
+Date: Fri, 21 Jul 2023 18:02:33 +0200
+Message-ID: <20230721160530.695654455@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -36,63 +35,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 4c3c796aca02883ad35bb117468938cc4022ca41 ]
+[ Upstream commit c6efb4ae387c79bf0d4da286108c810b7b40de3c ]
 
-A problem about ntb_hw_intel create debugfs failed is triggered with the
-following log given:
+This switch implements Hold/Release in a strange way, with no control
+from the user as required by IEEE 802.1Q-2018 through Set-And-Hold-MAC
+and Set-And-Release-MAC, but rather, it emits HOLD requests implicitly
+based on the schedule.
 
- [  273.112733] Intel(R) PCI-E Non-Transparent Bridge Driver 2.0
- [  273.115342] debugfs: Directory 'ntb_hw_intel' with parent '/' already present!
+Namely, when the gate of a preemptible TC is about to close (actually
+QSYS::PREEMPTION_CFG.HOLD_ADVANCE octet times in advance of this event),
+the QSYS seems to emit a HOLD request pulse towards the MAC which
+preempts the currently transmitted packet, and further packets are held
+back in the queue system.
 
-The reason is that intel_ntb_pci_driver_init() returns
-pci_register_driver() directly without checking its return value, if
-pci_register_driver() failed, it returns without destroy the newly created
-debugfs, resulting the debugfs of ntb_hw_intel can never be created later.
+This allows large frames to be squeezed through small time slots,
+because HOLD requests initiated by the gate events result in the frame
+being segmented in multiple fragments, the bit time of which is equal to
+the size of the time slot.
 
- intel_ntb_pci_driver_init()
-   debugfs_create_dir() # create debugfs directory
-   pci_register_driver()
-     driver_register()
-       bus_add_driver()
-         priv = kzalloc(...) # OOM happened
-   # return without destroy debugfs directory
+It has been reported that the vsc9959_tas_guard_bands_update() logic
+breaks this, because it doesn't take preemptible TCs into account, and
+enables oversized frame dropping when the time slot doesn't allow a full
+MTU to be sent, but it does allow 2*minFragSize to be sent (128B).
+Packets larger than 128B are dropped instead of being sent in multiple
+fragments.
 
-Fix by removing debugfs when pci_register_driver() returns error.
+Confusingly, the manual says:
 
-Fixes: e26a5843f7f5 ("NTB: Split ntb_hw_intel and ntb_transport drivers")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Acked-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Jon Mason <jdmason@kudzu.us>
+| For guard band, SDU calculation of a traffic class of a port, if
+| preemption is enabled (through 'QSYS::PREEMPTION_CFG.P_QUEUES') then
+| QSYS::PREEMPTION_CFG.HOLD_ADVANCE is used, otherwise
+| QSYS::QMAXSDU_CFG_*.QMAXSDU_* is used.
+
+but this only refers to the static guard band durations, and the
+QMAXSDU_CFG_* registers have dual purpose - the other being oversized
+frame dropping, which takes place irrespective of whether frames are
+preemptible or express.
+
+So, to fix the problem, we need to call vsc9959_tas_guard_bands_update()
+from ocelot_port_update_active_preemptible_tcs(), and modify the guard
+band logic to consider a different (lower) oversize limit for
+preemptible traffic classes.
+
+Fixes: 403ffc2c34de ("net: mscc: ocelot: add support for preemptible traffic classes")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Message-ID: <20230705104422.49025-4-vladimir.oltean@nxp.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/hw/intel/ntb_hw_gen1.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/dsa/ocelot/felix_vsc9959.c | 21 +++++++++++++++++----
+ drivers/net/ethernet/mscc/ocelot_mm.c  |  7 +++++--
+ 2 files changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/ntb/hw/intel/ntb_hw_gen1.c b/drivers/ntb/hw/intel/ntb_hw_gen1.c
-index 84772013812bf..60a4ebc7bf35a 100644
---- a/drivers/ntb/hw/intel/ntb_hw_gen1.c
-+++ b/drivers/ntb/hw/intel/ntb_hw_gen1.c
-@@ -2064,12 +2064,17 @@ static struct pci_driver intel_ntb_pci_driver = {
- 
- static int __init intel_ntb_pci_driver_init(void)
+diff --git a/drivers/net/dsa/ocelot/felix_vsc9959.c b/drivers/net/dsa/ocelot/felix_vsc9959.c
+index 219fb672a68d7..bd11f9fb95e54 100644
+--- a/drivers/net/dsa/ocelot/felix_vsc9959.c
++++ b/drivers/net/dsa/ocelot/felix_vsc9959.c
+@@ -1221,11 +1221,13 @@ static u32 vsc9959_tas_tc_max_sdu(struct tc_taprio_qopt_offload *taprio, int tc)
+ static void vsc9959_tas_guard_bands_update(struct ocelot *ocelot, int port)
  {
-+	int ret;
- 	pr_info("%s %s\n", NTB_DESC, NTB_VER);
+ 	struct ocelot_port *ocelot_port = ocelot->ports[port];
++	struct ocelot_mm_state *mm = &ocelot->mm[port];
+ 	struct tc_taprio_qopt_offload *taprio;
+ 	u64 min_gate_len[OCELOT_NUM_TC];
++	u32 val, maxlen, add_frag_size;
++	u64 needed_min_frag_time_ps;
+ 	int speed, picos_per_byte;
+ 	u64 needed_bit_time_ps;
+-	u32 val, maxlen;
+ 	u8 tas_speed;
+ 	int tc;
  
- 	if (debugfs_initialized())
- 		debugfs_dir = debugfs_create_dir(KBUILD_MODNAME, NULL);
+@@ -1265,9 +1267,18 @@ static void vsc9959_tas_guard_bands_update(struct ocelot *ocelot, int port)
+ 	 */
+ 	needed_bit_time_ps = (u64)(maxlen + 24) * picos_per_byte;
  
--	return pci_register_driver(&intel_ntb_pci_driver);
-+	ret = pci_register_driver(&intel_ntb_pci_driver);
-+	if (ret)
-+		debugfs_remove_recursive(debugfs_dir);
++	/* Preemptible TCs don't need to pass a full MTU, the port will
++	 * automatically emit a HOLD request when a preemptible TC gate closes
++	 */
++	val = ocelot_read_rix(ocelot, QSYS_PREEMPTION_CFG, port);
++	add_frag_size = QSYS_PREEMPTION_CFG_MM_ADD_FRAG_SIZE_X(val);
++	needed_min_frag_time_ps = picos_per_byte *
++		(u64)(24 + 2 * ethtool_mm_frag_size_add_to_min(add_frag_size));
 +
-+	return ret;
- }
- module_init(intel_ntb_pci_driver_init);
+ 	dev_dbg(ocelot->dev,
+-		"port %d: max frame size %d needs %llu ps at speed %d\n",
+-		port, maxlen, needed_bit_time_ps, speed);
++		"port %d: max frame size %d needs %llu ps, %llu ps for mPackets at speed %d\n",
++		port, maxlen, needed_bit_time_ps, needed_min_frag_time_ps,
++		speed);
  
+ 	vsc9959_tas_min_gate_lengths(taprio, min_gate_len);
+ 
+@@ -1281,7 +1292,9 @@ static void vsc9959_tas_guard_bands_update(struct ocelot *ocelot, int port)
+ 		remaining_gate_len_ps =
+ 			vsc9959_tas_remaining_gate_len_ps(min_gate_len[tc]);
+ 
+-		if (remaining_gate_len_ps > needed_bit_time_ps) {
++		if ((mm->active_preemptible_tcs & BIT(tc)) ?
++		    remaining_gate_len_ps > needed_min_frag_time_ps :
++		    remaining_gate_len_ps > needed_bit_time_ps) {
+ 			/* Setting QMAXSDU_CFG to 0 disables oversized frame
+ 			 * dropping.
+ 			 */
+diff --git a/drivers/net/ethernet/mscc/ocelot_mm.c b/drivers/net/ethernet/mscc/ocelot_mm.c
+index fb3145118d686..99b29d1e62449 100644
+--- a/drivers/net/ethernet/mscc/ocelot_mm.c
++++ b/drivers/net/ethernet/mscc/ocelot_mm.c
+@@ -67,10 +67,13 @@ void ocelot_port_update_active_preemptible_tcs(struct ocelot *ocelot, int port)
+ 		val = mm->preemptible_tcs;
+ 
+ 	/* Cut through switching doesn't work for preemptible priorities,
+-	 * so first make sure it is disabled.
++	 * so first make sure it is disabled. Also, changing the preemptible
++	 * TCs affects the oversized frame dropping logic, so that needs to be
++	 * re-triggered. And since tas_guard_bands_update() also implicitly
++	 * calls cut_through_fwd(), we don't need to explicitly call it.
+ 	 */
+ 	mm->active_preemptible_tcs = val;
+-	ocelot->ops->cut_through_fwd(ocelot);
++	ocelot->ops->tas_guard_bands_update(ocelot, port);
+ 
+ 	dev_dbg(ocelot->dev,
+ 		"port %d %s/%s, MM TX %s, preemptible TCs 0x%x, active 0x%x\n",
 -- 
 2.39.2
 
