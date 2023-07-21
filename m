@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6444200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:03:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B1CC433C7;
-	Fri, 21 Jul 2023 19:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FA8200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:03:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29EBFC433C8;
+	Fri, 21 Jul 2023 19:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966199;
-	bh=qUNuOAxYk4ixVpAqTDFUxeAUN5gbxMuWtQSJd8OWX3I=;
+	s=korg; t=1689966202;
+	bh=itNdLFpCd5BcD0nDAxq6C9Cltj3Ho5bFyjnuvW7mpAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gxEy0qIktwz1NnRNUrHBoY7viIeObt5RYBicfuNHbyX/R02cET5gLmH9fl+7OP9JK
-	 d97ne7ssc5wGmMTQFMyrM1FwUvAzCqecRN8a4G4O692QmzzVyrBNOxHX6zKYEIQymj
-	 M1mCKakre8EJgrFmvw7Ur9d1MOV6/+fJ3Xich9iM=
+	b=CPU82BIs0QaAb14ow+/6LQDYH/iLAiBJ4CrigZgPwa9wnqphYJrp7c6lIByrKRzTd
+	 SJPeqSR5op/CoHJ8LFsl/ovBdoZ7SVVLeEY7miYhZwlzJJuzo4tc0D1uPMP0gd6QxC
+	 fmk/g6vvKcNzg5Xodv0vzo3mE6+lIZRZ2r+xrtLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Vivier <lvivier@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 221/532] hwrng: virtio - dont waste entropy
-Date: Fri, 21 Jul 2023 18:02:05 +0200
-Message-ID: <20230721160626.373806893@linuxfoundation.org>
+	Fabrizio Lamarque <fl.scratchpad@gmail.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 253/532] iio: adc: ad7192: Fix null ad7192_state pointer access
+Date: Fri, 21 Jul 2023 18:02:37 +0200
+Message-ID: <20230721160628.074428301@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,130 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Fabrizio Lamarque <fl.scratchpad@gmail.com>
 
-[ Upstream commit 5c8e933050044d6dd2a000f9a5756ae73cbe7c44 ]
+commit 9e58e3a6f8e1c483c86a04903b7b7aa0923e4426 upstream.
 
-if we don't use all the entropy available in the buffer, keep it
-and use it later.
+Pointer to indio_dev structure is obtained via spi_get_drvdata() at
+the beginning of function ad7192_setup(), but the spi->dev->driver_data
+member is not initialized, hence a NULL pointer is returned.
 
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Link: https://lore.kernel.org/r/20211028101111.128049-4-lvivier@redhat.com
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Stable-dep-of: ac52578d6e8d ("hwrng: virtio - Fix race on data_avail and actual data")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix by changing ad7192_setup() signature to take pointer to struct
+iio_dev, and get ad7192_state pointer via st = iio_priv(indio_dev);
+
+Fixes: bd5dcdeb3fd0 ("iio: adc: ad7192: convert to device-managed functions")
+Signed-off-by: Fabrizio Lamarque <fl.scratchpad@gmail.com>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Cc: <Stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230530075311.400686-2-fl.scratchpad@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/hw_random/virtio-rng.c | 52 +++++++++++++++++++----------
- 1 file changed, 35 insertions(+), 17 deletions(-)
+ drivers/iio/adc/ad7192.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/char/hw_random/virtio-rng.c b/drivers/char/hw_random/virtio-rng.c
-index 173aeea835bb6..8ba97cf4ca8fb 100644
---- a/drivers/char/hw_random/virtio-rng.c
-+++ b/drivers/char/hw_random/virtio-rng.c
-@@ -26,6 +26,7 @@ struct virtrng_info {
- 	/* data transfer */
- 	struct completion have_data;
- 	unsigned int data_avail;
-+	unsigned int data_idx;
- 	/* minimal size returned by rng_buffer_size() */
- #if SMP_CACHE_BYTES < 32
- 	u8 data[32];
-@@ -42,6 +43,9 @@ static void random_recv_done(struct virtqueue *vq)
- 	if (!virtqueue_get_buf(vi->vq, &vi->data_avail))
- 		return;
- 
-+	vi->data_idx = 0;
-+	vi->busy = false;
-+
- 	complete(&vi->have_data);
+--- a/drivers/iio/adc/ad7192.c
++++ b/drivers/iio/adc/ad7192.c
+@@ -340,9 +340,9 @@ static int ad7192_of_clock_select(struct
+ 	return clock_sel;
  }
  
-@@ -58,6 +62,16 @@ static void register_buffer(struct virtrng_info *vi)
- 	virtqueue_kick(vi->vq);
- }
- 
-+static unsigned int copy_data(struct virtrng_info *vi, void *buf,
-+			      unsigned int size)
-+{
-+	size = min_t(unsigned int, size, vi->data_avail);
-+	memcpy(buf, vi->data + vi->data_idx, size);
-+	vi->data_idx += size;
-+	vi->data_avail -= size;
-+	return size;
-+}
-+
- static int virtio_read(struct hwrng *rng, void *buf, size_t size, bool wait)
+-static int ad7192_setup(struct ad7192_state *st, struct device_node *np)
++static int ad7192_setup(struct iio_dev *indio_dev, struct device_node *np)
  {
- 	int ret;
-@@ -68,17 +82,29 @@ static int virtio_read(struct hwrng *rng, void *buf, size_t size, bool wait)
- 	if (vi->hwrng_removed)
- 		return -ENODEV;
- 
--	if (!vi->busy) {
--		vi->busy = true;
--		reinit_completion(&vi->have_data);
--		register_buffer(vi);
-+	read = 0;
-+
-+	/* copy available data */
-+	if (vi->data_avail) {
-+		chunk = copy_data(vi, buf, size);
-+		size -= chunk;
-+		read += chunk;
+-	struct iio_dev *indio_dev = spi_get_drvdata(st->sd.spi);
++	struct ad7192_state *st = iio_priv(indio_dev);
+ 	bool rej60_en, refin2_en;
+ 	bool buf_en, bipolar, burnout_curr_en;
+ 	unsigned long long scale_uv;
+@@ -1015,7 +1015,7 @@ static int ad7192_probe(struct spi_devic
+ 		}
  	}
  
- 	if (!wait)
--		return 0;
-+		return read;
+-	ret = ad7192_setup(st, spi->dev.of_node);
++	ret = ad7192_setup(indio_dev, spi->dev.of_node);
+ 	if (ret)
+ 		return ret;
  
--	read = 0;
-+	/* We have already copied available entropy,
-+	 * so either size is 0 or data_avail is 0
-+	 */
- 	while (size != 0) {
-+		/* data_avail is 0 */
-+		if (!vi->busy) {
-+			/* no pending request, ask for more */
-+			vi->busy = true;
-+			reinit_completion(&vi->have_data);
-+			register_buffer(vi);
-+		}
- 		ret = wait_for_completion_killable(&vi->have_data);
- 		if (ret < 0)
- 			return ret;
-@@ -88,20 +114,11 @@ static int virtio_read(struct hwrng *rng, void *buf, size_t size, bool wait)
- 		if (vi->data_avail == 0)
- 			return read;
- 
--		chunk = min_t(unsigned int, size, vi->data_avail);
--		memcpy(buf + read, vi->data, chunk);
--		read += chunk;
-+		chunk = copy_data(vi, buf + read, size);
- 		size -= chunk;
--		vi->data_avail = 0;
--
--		if (size != 0) {
--			reinit_completion(&vi->have_data);
--			register_buffer(vi);
--		}
-+		read += chunk;
- 	}
- 
--	vi->busy = false;
--
- 	return read;
- }
- 
-@@ -161,6 +178,7 @@ static void remove_common(struct virtio_device *vdev)
- 
- 	vi->hwrng_removed = true;
- 	vi->data_avail = 0;
-+	vi->data_idx = 0;
- 	complete(&vi->have_data);
- 	vdev->config->reset(vdev);
- 	vi->busy = false;
--- 
-2.39.2
-
 
 
