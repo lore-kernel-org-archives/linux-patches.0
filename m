@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F7B200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:05:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232D1C433C7;
-	Fri, 21 Jul 2023 19:05:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECC0200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:05:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C7DC433C8;
+	Fri, 21 Jul 2023 19:05:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966318;
-	bh=ds2pkiK9ioYtLMnF1E+bHeq+zdya3OIjPr/fc76HNNo=;
+	s=korg; t=1689966321;
+	bh=qPvkwsL36nViMQZiW77gnKcJ2+2PJE6sORggEDlNmgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rtf5lr/YGXD6hT/TdlzM6WgxL7yZb/jYdIyQM9LJzxUzlhVG46vnbADmlQch4vBK6
-	 NOKfK6L1UedD7ZrtHSB/STioSK7GAeThEiSuatDA+MjvtDi8rab3ZyNmY+0qrxyYFA
-	 qygSDrAW2PF7vgAVfRE/fhSCno9hyT3MNzc4eHD4=
+	b=wJ9ky4l/H0JKKaK4BlC7nM+7C8kUU9Wr1DYiLjJ5CGfgbIgsO8x13OV4f3TbiZ8j8
+	 j4ZyYUxVYknUIqTydzoLboJi4XVpF7Y0opJP2oZ7Kv6p8WOrNo6faIIz96xE9DuLRA
+	 tGc8c/UnP34SGIjzvi8xWBaV7+qUNiorzMDzOlLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	Lee Jones <lee@kernel.org>,
+	John Ogness <john.ogness@linutronix.de>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 302/532] mfd: stmfx: Fix error path in stmfx_chip_init
-Date: Fri, 21 Jul 2023 18:03:26 +0200
-Message-ID: <20230721160630.777884375@linuxfoundation.org>
+Subject: [PATCH 5.15 285/532] serial: 8250: lock port for stop_rx() in omap8250_irq()
+Date: Fri, 21 Jul 2023 18:03:09 +0200
+Message-ID: <20230721160629.882176826@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,36 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amelie Delaunay <amelie.delaunay@foss.st.com>
+From: John Ogness <john.ogness@linutronix.de>
 
-[ Upstream commit f592cf624531286f8b52e40dcfc157a5a7fb115c ]
+[ Upstream commit ca73a892c5bec4b08a2fa22b3015e98ed905abb7 ]
 
-In error path, disable vdd regulator if it exists, but don't overload ret.
-Because if regulator_disable() is successful, stmfx_chip_init will exit
-successfully while chip init failed.
+The uarts_ops stop_rx() callback expects that the port->lock is
+taken and interrupts are disabled.
 
-Fixes: 06252ade9156 ("mfd: Add ST Multi-Function eXpander (STMFX) core driver")
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Link: https://lore.kernel.org/r/20230609092804.793100-1-amelie.delaunay@foss.st.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 1fe0e1fa3209 ("serial: 8250_omap: Handle optional overrun-throttle-ms property")
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20230525093159.223817-4-john.ogness@linutronix.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/stmfx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_omap.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/mfd/stmfx.c b/drivers/mfd/stmfx.c
-index e095a39301423..6e1629beb8094 100644
---- a/drivers/mfd/stmfx.c
-+++ b/drivers/mfd/stmfx.c
-@@ -387,7 +387,7 @@ static int stmfx_chip_init(struct i2c_client *client)
+diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
+index 6fa0e3ca469a0..28e243312286f 100644
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -655,7 +655,9 @@ static irqreturn_t omap8250_irq(int irq, void *dev_id)
  
- err:
- 	if (stmfx->vdd)
--		return regulator_disable(stmfx->vdd);
-+		regulator_disable(stmfx->vdd);
- 
- 	return ret;
- }
+ 		up->ier = port->serial_in(port, UART_IER);
+ 		if (up->ier & (UART_IER_RLSI | UART_IER_RDI)) {
++			spin_lock(&port->lock);
+ 			port->ops->stop_rx(port);
++			spin_unlock(&port->lock);
+ 		} else {
+ 			/* Keep restarting the timer until
+ 			 * the input overrun subsides.
 -- 
 2.39.2
 
