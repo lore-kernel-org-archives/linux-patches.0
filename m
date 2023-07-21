@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896511F941
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:18:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BAEDC433C9;
-	Fri, 21 Jul 2023 16:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571871F941
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:18:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC372C433C8;
+	Fri, 21 Jul 2023 16:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956336;
-	bh=kV7ijnH/EfWaO64KRdEcA+E0ApCo/dnvMC6xWOOuxFQ=;
+	s=korg; t=1689956339;
+	bh=GkksfasfGg5lCqMr5AAUfUNIugLhVZaawz0HSCgmQsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cIc/PoHQohRWns7cRP6BUo+g3WJ5m1kRkGxpNsR7CbDybAHEjhX7TCm/rBPdL2zCh
-	 IzJ2bHvhfNG3toKNjwV3gdczDpePLSw/T/apSUPgsOZEDus3DZ+GZu5gSDvXD+5sk5
-	 nUp3X1sz7q3ID4FciMVCP2ySWwgzAEJMRQ2CigxQ=
+	b=dUQxEbRzKkjTahvtLAMBICmliUYEQYG/M+ZR86qSqQbn1y94OyYCHm3K6JrLKriWo
+	 DT0rAnSF21FA9dKIYi3udQ5NpHrGjoLbdPFk2/epVPEVs74vwqmZgq0dMRdTDARoVi
+	 aaUbBydG8q5EG/CAls7ld4wNbIeYkN97GT3BzOKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Adriaanse <jason_a69@yahoo.co.uk>,
-	Robin Murphy <robin.murphy@arm.com>,
+	Igor Mammedov <imammedo@redhat.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Christoph Hellwig <hch@lst.de>
-Subject: [PATCH 6.4 171/292] PCI: Add function 1 DMA alias quirk for Marvell 88SE9235
-Date: Fri, 21 Jul 2023 18:04:40 +0200
-Message-ID: <20230721160536.252206805@linuxfoundation.org>
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>
+Subject: [PATCH 6.4 172/292] PCI: acpiphp: Reassign resources on bridge if necessary
+Date: Fri, 21 Jul 2023 18:04:41 +0200
+Message-ID: <20230721160536.293573004@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -36,36 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Igor Mammedov <imammedo@redhat.com>
 
-commit 88d341716b83abd355558523186ca488918627ee upstream.
+commit 40613da52b13fb21c5566f10b287e0ca8c12c4e9 upstream.
 
-Marvell's own product brief implies the 92xx series are a closely related
-family, and sure enough it turns out that 9235 seems to need the same quirk
-as the other three, although possibly only when certain ports are used.
+When using ACPI PCI hotplug, hotplugging a device with large BARs may fail
+if bridge windows programmed by firmware are not large enough.
 
-Link: https://lore.kernel.org/linux-iommu/2a699a99-545c-1324-e052-7d2f41fed1ae@yahoo.co.uk/
-Link: https://lore.kernel.org/r/731507e05d70239aec96fcbfab6e65d8ce00edd2.1686157165.git.robin.murphy@arm.com
-Reported-by: Jason Adriaanse <jason_a69@yahoo.co.uk>
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Reproducer:
+  $ qemu-kvm -monitor stdio -M q35  -m 4G \
+      -global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=on \
+      -device id=rp1,pcie-root-port,bus=pcie.0,chassis=4 \
+      disk_image
+
+ wait till linux guest boots, then hotplug device:
+   (qemu) device_add qxl,bus=rp1
+
+ hotplug on guest side fails with:
+   pci 0000:01:00.0: [1b36:0100] type 00 class 0x038000
+   pci 0000:01:00.0: reg 0x10: [mem 0x00000000-0x03ffffff]
+   pci 0000:01:00.0: reg 0x14: [mem 0x00000000-0x03ffffff]
+   pci 0000:01:00.0: reg 0x18: [mem 0x00000000-0x00001fff]
+   pci 0000:01:00.0: reg 0x1c: [io  0x0000-0x001f]
+   pci 0000:01:00.0: BAR 0: no space for [mem size 0x04000000]
+   pci 0000:01:00.0: BAR 0: failed to assign [mem size 0x04000000]
+   pci 0000:01:00.0: BAR 1: no space for [mem size 0x04000000]
+   pci 0000:01:00.0: BAR 1: failed to assign [mem size 0x04000000]
+   pci 0000:01:00.0: BAR 2: assigned [mem 0xfe800000-0xfe801fff]
+   pci 0000:01:00.0: BAR 3: assigned [io  0x1000-0x101f]
+   qxl 0000:01:00.0: enabling device (0000 -> 0003)
+   Unable to create vram_mapping
+   qxl: probe of 0000:01:00.0 failed with error -12
+
+However when using native PCIe hotplug
+  '-global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=off'
+it works fine, since kernel attempts to reassign unused resources.
+
+Use the same machinery as native PCIe hotplug to (re)assign resources.
+
+Link: https://lore.kernel.org/r/20230424191557.2464760-1-imammedo@redhat.com
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/hotplug/acpiphp_glue.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -4174,6 +4174,8 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_M
- /* https://bugzilla.kernel.org/show_bug.cgi?id=42679#c49 */
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_MARVELL_EXT, 0x9230,
- 			 quirk_dma_func1_alias);
-+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_MARVELL_EXT, 0x9235,
-+			 quirk_dma_func1_alias);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_TTI, 0x0642,
- 			 quirk_dma_func1_alias);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_TTI, 0x0645,
+--- a/drivers/pci/hotplug/acpiphp_glue.c
++++ b/drivers/pci/hotplug/acpiphp_glue.c
+@@ -498,7 +498,6 @@ static void enable_slot(struct acpiphp_s
+ 				acpiphp_native_scan_bridge(dev);
+ 		}
+ 	} else {
+-		LIST_HEAD(add_list);
+ 		int max, pass;
+ 
+ 		acpiphp_rescan_slot(slot);
+@@ -512,12 +511,10 @@ static void enable_slot(struct acpiphp_s
+ 				if (pass && dev->subordinate) {
+ 					check_hotplug_bridge(slot, dev);
+ 					pcibios_resource_survey_bus(dev->subordinate);
+-					__pci_bus_size_bridges(dev->subordinate,
+-							       &add_list);
+ 				}
+ 			}
+ 		}
+-		__pci_bus_assign_resources(bus, &add_list, NULL);
++		pci_assign_unassigned_bridge_resources(bus->self);
+ 	}
+ 
+ 	acpiphp_sanitize_bus(bus);
 
 
