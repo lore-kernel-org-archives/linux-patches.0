@@ -1,28 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DAF41ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:53:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 246C0C433C8;
-	Fri, 21 Jul 2023 18:53:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645191ED41
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:54:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B423FC433C8;
+	Fri, 21 Jul 2023 18:54:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965638;
-	bh=Vv6VmNSSZqE2IkQUkNXMXqBZHWnVCCTJs4QrUMBAEHM=;
+	s=korg; t=1689965641;
+	bh=jhKnvOkAxSTcJ7UnS/LapTlVjZYk0R90qGgYvV3xM5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1syXhj26Y+C625EmShHfJTydfjT5wl8fEwgHd12EUK0H1f3lFNcEKuhXEX40IqrMx
-	 jrhJYWNiBX5M4mSjO+MH/Pym+PaBglcH8itnHsHa2HmuKLKygXR6Iqxzc0d4DJg49T
-	 iUauPurJV36TPvG+ANN9OdI3wYvd78SmiOW+b0Tk=
+	b=SkzO0p+j45khbpYxr0ugt+3NrWyOHqvcDdT0XtSL/+D6Jlv+Is3aGM3nYYEMhkCmr
+	 6kio95/CFFbzrLr8e0wW9b6PoJg1uvE3+S40/dE/LH5REZ/8ob5+mZCAPln5sJWVhS
+	 ngZd9oW62/ZPB7nBkV2CAYhumB2gzQiF9EKFiJtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Petr Mladek <pmladek@suse.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Guenter Roeck <groeck@chromium.org>,
+	Ian Rogers <irogers@google.com>,
+	Lecopzer Chen <lecopzer.chen@mediatek.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Masayoshi Mizuma <msys.mizuma@gmail.com>,
+	Matthias Kaehlcke <mka@chromium.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Pingfan Liu <kernelfans@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"Ravi V. Shankar" <ravi.v.shankar@intel.com>,
+	Ricardo Neri <ricardo.neri@intel.com>,
+	Stephane Eranian <eranian@google.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Tzung-Bi Shih <tzungbi@chromium.org>,
+	Will Deacon <will@kernel.org>,
+	Colin Cross <ccross@android.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 061/532] wifi: rsi: Do not set MMC_PM_KEEP_POWER in shutdown
-Date: Fri, 21 Jul 2023 17:59:25 +0200
-Message-ID: <20230721160617.943485615@linuxfoundation.org>
+Subject: [PATCH 5.15 062/532] watchdog/perf: define dummy watchdog_update_hrtimer_threshold() on correct config
+Date: Fri, 21 Jul 2023 17:59:26 +0200
+Message-ID: <20230721160617.994847657@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,39 +61,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit e74f562328b03fbe9cf438f958464dff3a644dfc ]
+[ Upstream commit 5e008df11c55228a86a1bae692cc2002503572c9 ]
 
-It makes no sense to set MMC_PM_KEEP_POWER in shutdown. The flag
-indicates to the MMC subsystem to keep the slot powered on during
-suspend, but in shutdown the slot should actually be powered off.
-Drop this call.
+Patch series "watchdog/hardlockup: Add the buddy hardlockup detector", v5.
 
-Fixes: 063848c3e155 ("rsi: sdio: Add WOWLAN support for S5 shutdown state")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230527222859.273768-1-marex@denx.de
+This patch series adds the "buddy" hardlockup detector.  In brief, the
+buddy hardlockup detector can detect hardlockups without arch-level
+support by having CPUs checkup on a "buddy" CPU periodically.
+
+Given the new design of this patch series, testing all combinations is
+fairly difficult. I've attempted to make sure that all combinations of
+CONFIG_ options are good, but it wouldn't surprise me if I missed
+something. I apologize in advance and I'll do my best to fix any
+problems that are found.
+
+This patch (of 18):
+
+The real watchdog_update_hrtimer_threshold() is defined in
+kernel/watchdog_hld.c.  That file is included if
+CONFIG_HARDLOCKUP_DETECTOR_PERF and the function is defined in that file
+if CONFIG_HARDLOCKUP_CHECK_TIMESTAMP.
+
+The dummy version of the function in "nmi.h" didn't get that quite right.
+While this doesn't appear to be a huge deal, it's nice to make it
+consistent.
+
+It doesn't break builds because CHECK_TIMESTAMP is only defined by x86 so
+others don't get a double definition, and x86 uses perf lockup detector,
+so it gets the out of line version.
+
+Link: https://lkml.kernel.org/r/20230519101840.v5.18.Ia44852044cdcb074f387e80df6b45e892965d4a1@changeid
+Link: https://lkml.kernel.org/r/20230519101840.v5.1.I8cbb2f4fa740528fcfade4f5439b6cdcdd059251@changeid
+Fixes: 7edaeb6841df ("kernel/watchdog: Prevent false positives with turbo modes")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Chen-Yu Tsai <wens@csie.org>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Daniel Thompson <daniel.thompson@linaro.org>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Guenter Roeck <groeck@chromium.org>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Lecopzer Chen <lecopzer.chen@mediatek.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Masayoshi Mizuma <msys.mizuma@gmail.com>
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Pingfan Liu <kernelfans@gmail.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: "Ravi V. Shankar" <ravi.v.shankar@intel.com>
+Cc: Ricardo Neri <ricardo.neri@intel.com>
+Cc: Stephane Eranian <eranian@google.com>
+Cc: Stephen Boyd <swboyd@chromium.org>
+Cc: Sumit Garg <sumit.garg@linaro.org>
+Cc: Tzung-Bi Shih <tzungbi@chromium.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: Colin Cross <ccross@android.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_sdio.c | 3 ---
- 1 file changed, 3 deletions(-)
+ include/linux/nmi.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_sdio.c b/drivers/net/wireless/rsi/rsi_91x_sdio.c
-index 3952c8baba181..670de56c69a26 100644
---- a/drivers/net/wireless/rsi/rsi_91x_sdio.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_sdio.c
-@@ -1479,9 +1479,6 @@ static void rsi_shutdown(struct device *dev)
- 	if (sdev->write_fail)
- 		rsi_dbg(INFO_ZONE, "###### Device is not ready #######\n");
+diff --git a/include/linux/nmi.h b/include/linux/nmi.h
+index f700ff2df074e..0db377ff8f608 100644
+--- a/include/linux/nmi.h
++++ b/include/linux/nmi.h
+@@ -197,7 +197,7 @@ u64 hw_nmi_get_sample_period(int watchdog_thresh);
+ #endif
  
--	if (rsi_set_sdio_pm_caps(adapter))
--		rsi_dbg(INFO_ZONE, "Setting power management caps failed\n");
--
- 	rsi_dbg(INFO_ZONE, "***** RSI module shut down *****\n");
- }
- 
+ #if defined(CONFIG_HARDLOCKUP_CHECK_TIMESTAMP) && \
+-    defined(CONFIG_HARDLOCKUP_DETECTOR)
++    defined(CONFIG_HARDLOCKUP_DETECTOR_PERF)
+ void watchdog_update_hrtimer_threshold(u64 period);
+ #else
+ static inline void watchdog_update_hrtimer_threshold(u64 period) { }
 -- 
 2.39.2
 
