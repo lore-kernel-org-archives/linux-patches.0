@@ -1,111 +1,98 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5057A27F00
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:56:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84586C433C7;
-	Fri, 21 Jul 2023 16:56:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1689958580;
-	bh=vrpISoXSCoIw2PUvAR9xfDypynhbEfrzMQsR4GUaDKI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BYimzUJ0S5IzrjPirShmogGpSXFRBkHMwtwx+RhVWRUDLXEg7OXOD2ndHiQvVzdQq
-	 JtXhlsxIHB02AV5hYFFvpjSQuYOy2u9LR9sErVJQAUTu+P7EUW4gauX25CbbJ3VIFX
-	 x5EcEZ2Tg8uiLTMyA7ES8SW76Kbv8lmUKEWjeRQotUu/Q0irOFOtg5ovhbL6B/rIHb
-	 UVysrWtVkOfApHhKDCMo4rymlPbszdpNFYxmddevh8llYnV9yqhHhHYXDLX3Xy3Vfk
-	 nBcD7C30Kjs/I5oBfX5Q2AS9nHd1X05CT6Ie+Ah1PCS22Ib0w0J8VuqAB1u+imskZy
-	 kaB3EuG2PCtrw==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.4 000/292] 6.4.5-rc1 review
-Date: Fri, 21 Jul 2023 16:56:17 +0000
-Message-Id: <20230721165617.61158-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
-References: 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB19B27F00
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 17:54:47 +0000 (UTC)
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5216f713f8bso2900090a12.2
+        for <patches@lists.linux.dev>; Fri, 21 Jul 2023 10:54:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl-com.20221208.gappssmtp.com; s=20221208; t=1689962085; x=1690566885;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rjkRTaECuNngklkqmuey8QDFNRY+Ib5isKPE9flrp4o=;
+        b=DYlabRZyrBAtigJv1oK1ilQ1nyN4CpyVfMjId24nLyeQwNgBmY/XEjNeVodRL567/0
+         NGAD7R8fk5si13uFZifLYe6C21iKvssMliXk04MZyhhhZNg8sIFoxSG+mWEQ3Oqb0h6n
+         3XvIDwvm33o5CRA+1pYC1nC8LP7Xxth00zKmN6/m6MVsClIEyyHkciTLIagQbOrPnWwh
+         78LP6VDlTZzsoK5zgHhDVT5Qy9zeLL2K7AWOCfN40N3YFH2grtwTa2A/P/fz8SC4ktor
+         xFvSgsWRuun2vdvxtzY4WBsskvgDYcH8L/a3aQHrZs2bqco20mwpVKt2GP/crc7s3BE/
+         8nrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689962085; x=1690566885;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rjkRTaECuNngklkqmuey8QDFNRY+Ib5isKPE9flrp4o=;
+        b=ESrNaTIndKHj+74U7APo/ZwmuKjxYcjmLftL/+1gZUB9MA5OR5b6F+3/tDa4tDc76L
+         PkYa8uhZvhSz0iitu81IHmhv2Cr95b5tgU2o4UWizu3qs6/wTnzsB7qKfBbedVWFIF3Q
+         5zU/uHRVexuEFW22jwYYarkS/jb4QyEioVvtH1LyfpUE5TYZllcBS73Rj9zYqWcdnXUW
+         sREXZ4sSMmBkZQjW8NqmxNvGHFr6Yjx7djYAYSCOLbAc9yFvnlNFFVQsPLNNu684Pmnd
+         S63vRTgrERzYqNfdbs5/AF8RKVfS1nWdTXAmC5Yfh/u5+TLT356h5RBz47DE4fSwAZSc
+         H9hA==
+X-Gm-Message-State: ABy/qLZgEmspmOJU6E2Hiw7kWF2UYhguyKpRmtmIwDiexmEQ9ZpNGsOe
+	EnuWSpJOrDInkQRnEqBe5suFradfYYPLs/phCvBsGA==
+X-Google-Smtp-Source: APBJJlF4l3FSenIHeRPlauSq1HxXG7xMFKq+3I+4+GnzMmk3eVgiT4h/Qip7SqbYCPlEeqqDEiXVZvzaaIgsxpT2pxg=
+X-Received: by 2002:aa7:cd09:0:b0:51e:54d2:b52a with SMTP id
+ b9-20020aa7cd09000000b0051e54d2b52amr1993264edw.26.1689962085413; Fri, 21 Jul
+ 2023 10:54:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230721160528.800311148@linuxfoundation.org>
+In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Sat, 22 Jul 2023 02:54:34 +0900
+Message-ID: <CAKL4bV4J5wK=piP7n8txU9RWR=yiH=fArTEDQHUYTHgvZLDLnQ@mail.gmail.com>
+Subject: Re: [PATCH 6.4 000/292] 6.4.5-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Hi Greg
 
-On Fri, 21 Jul 2023 18:01:49 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
+On Sat, Jul 22, 2023 at 1:09=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
 > This is the start of the stable review cycle for the 6.4.5 release.
 > There are 292 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>
 > Responses should be made by Sun, 23 Jul 2023 16:04:29 +0000.
 > Anything received after that time might be too late.
-> 
+>
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.5-rc1.gz
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.4.5-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.4.y
 > and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-I confirmed that this rc kernel passes DAMON functionality test[1] on my test
-machine.  Attaching the test results summary below.
+6.4.5-rc1 tested.
 
-Tested-by: SeongJae Park <sj@kernel.org>
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64), arch linux)
 
+Thanks
 
-Thanks,
-SJ
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_m68k.sh
-ok 12 selftests: damon-tests: build_arm64.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
-
-PASS
-
-[...]
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
