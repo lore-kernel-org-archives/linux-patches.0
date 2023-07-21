@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB89620F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:22:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59DABC433C7;
-	Fri, 21 Jul 2023 19:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A408E20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:22:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F7DC433C7;
+	Fri, 21 Jul 2023 19:22:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967363;
-	bh=Unv47NniIiIeazTAvZLeKaDyGWL5SwOunDtkZdWrpvI=;
+	s=korg; t=1689967366;
+	bh=evykjSogZc95njv5doJML0wvEN3oslzIzug4rWNW+O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UZhWH5h6cwNiVngRO9TG+ftB54muQJxQ9M4Itf0bwvJ4R/7Fue+aT7lAmqJ2cdWNf
-	 7VDu5l3vc9p7Tbpr/FYjXPsOXJ3yCzGc/N90d2/eJMlpOAlcm4GkrSzGhyyIKiar+j
-	 /YtI8eJoBiuSGTy+ARCJ51Y1k+GzvPVSAYz6Duqs=
+	b=YpfnW/624xqcWb/PzEzA7thNTxjm1FD4RUy++DezxRWaJbADb12NvrNkVIIwcA4SI
+	 54JrFUQI4uhzslsTXj8iwsCVw08+Jd6S7uYz06EjHVhG4Wi48TWkkzoivapRdQUFVv
+	 UT7trQaMBJ6H3eyXJy4o0yDvLhrPLcoOAmspZXbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Mark-PK Tsai <mark-pk.tsai@mediatek.com>
-Subject: [PATCH 6.1 136/223] dm init: add dm-mod.waitfor to wait for asynchronously probed block devices
-Date: Fri, 21 Jul 2023 18:06:29 +0200
-Message-ID: <20230721160526.674339254@linuxfoundation.org>
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 110/223] ext4: only update i_reserved_data_blocks on successful block allocation
+Date: Fri, 21 Jul 2023 18:06:03 +0200
+Message-ID: <20230721160525.559566765@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -35,119 +36,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Korsgaard <peter@korsgaard.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 035641b01e72af4f6c6cf22a4bdb5d7dfc4e8e8e upstream.
+commit de25d6e9610a8b30cce9bbb19b50615d02ebca02 upstream.
 
-Just calling wait_for_device_probe() is not enough to ensure that
-asynchronously probed block devices are available (E.G. mmc, usb), so
-add a "dm-mod.waitfor=<device1>[,..,<deviceN>]" parameter to get
-dm-init to explicitly wait for specific block devices before
-initializing the tables with logic similar to the rootwait logic that
-was introduced with commit  cc1ed7542c8c ("init: wait for
-asynchronously scanned block devices").
+In our fault injection test, we create an ext4 file, migrate it to
+non-extent based file, then punch a hole and finally trigger a WARN_ON
+in the ext4_da_update_reserve_space():
 
-E.G. with dm-verity on mmc using:
-dm-mod.waitfor="PARTLABEL=hash-a,PARTLABEL=root-a"
+EXT4-fs warning (device sda): ext4_da_update_reserve_space:369:
+ino 14, used 11 with only 10 reserved data blocks
 
-[    0.671671] device-mapper: init: waiting for all devices to be available before creating mapped devices
-[    0.671679] device-mapper: init: waiting for device PARTLABEL=hash-a ...
-[    0.710695] mmc0: new HS200 MMC card at address 0001
-[    0.711158] mmcblk0: mmc0:0001 004GA0 3.69 GiB
-[    0.715954] mmcblk0boot0: mmc0:0001 004GA0 partition 1 2.00 MiB
-[    0.722085] mmcblk0boot1: mmc0:0001 004GA0 partition 2 2.00 MiB
-[    0.728093] mmcblk0rpmb: mmc0:0001 004GA0 partition 3 512 KiB, chardev (249:0)
-[    0.738274]  mmcblk0: p1 p2 p3 p4 p5 p6 p7
-[    0.751282] device-mapper: init: waiting for device PARTLABEL=root-a ...
-[    0.751306] device-mapper: init: all devices available
-[    0.751683] device-mapper: verity: sha256 using implementation "sha256-generic"
-[    0.759344] device-mapper: ioctl: dm-0 (vroot) is ready
-[    0.766540] VFS: Mounted root (squashfs filesystem) readonly on device 254:0.
+When writing back a non-extent based file, if we enable delalloc, the
+number of reserved blocks will be subtracted from the number of blocks
+mapped by ext4_ind_map_blocks(), and the extent status tree will be
+updated. We update the extent status tree by first removing the old
+extent_status and then inserting the new extent_status. If the block range
+we remove happens to be in an extent, then we need to allocate another
+extent_status with ext4_es_alloc_extent().
 
-Signed-off-by: Peter Korsgaard <peter@korsgaard.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Cc: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
+       use old    to remove   to add new
+    |----------|------------|------------|
+              old extent_status
+
+The problem is that the allocation of a new extent_status failed due to a
+fault injection, and __es_shrink() did not get free memory, resulting in
+a return of -ENOMEM. Then do_writepages() retries after receiving -ENOMEM,
+we map to the same extent again, and the number of reserved blocks is again
+subtracted from the number of blocks in that extent. Since the blocks in
+the same extent are subtracted twice, we end up triggering WARN_ON at
+ext4_da_update_reserve_space() because used > ei->i_reserved_data_blocks.
+
+For non-extent based file, we update the number of reserved blocks after
+ext4_ind_map_blocks() is executed, which causes a problem that when we call
+ext4_ind_map_blocks() to create a block, it doesn't always create a block,
+but we always reduce the number of reserved blocks. So we move the logic
+for updating reserved blocks to ext4_ind_map_blocks() to ensure that the
+number of reserved blocks is updated only after we do succeed in allocating
+some new blocks.
+
+Fixes: 5f634d064c70 ("ext4: Fix quota accounting error with fallocate")
+Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230424033846.4732-2-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/device-mapper/dm-init.rst |    8 +++++++
- drivers/md/dm-init.c                                |   22 +++++++++++++++++++-
- 2 files changed, 29 insertions(+), 1 deletion(-)
+ fs/ext4/indirect.c |    8 ++++++++
+ fs/ext4/inode.c    |   10 ----------
+ 2 files changed, 8 insertions(+), 10 deletions(-)
 
---- a/Documentation/admin-guide/device-mapper/dm-init.rst
-+++ b/Documentation/admin-guide/device-mapper/dm-init.rst
-@@ -123,3 +123,11 @@ Other examples (per target):
-     0 1638400 verity 1 8:1 8:2 4096 4096 204800 1 sha256
-     fb1a5a0f00deb908d8b53cb270858975e76cf64105d412ce764225d53b8f3cfd
-     51934789604d1b92399c52e7cb149d1b3a1b74bbbcb103b2a0aaacbed5c08584
-+
-+For setups using device-mapper on top of asynchronously probed block
-+devices (MMC, USB, ..), it may be necessary to tell dm-init to
-+explicitly wait for them to become available before setting up the
-+device-mapper tables. This can be done with the "dm-mod.waitfor="
-+module parameter, which takes a list of devices to wait for::
-+
-+  dm-mod.waitfor=<device1>[,..,<deviceN>]
---- a/drivers/md/dm-init.c
-+++ b/drivers/md/dm-init.c
-@@ -8,6 +8,7 @@
-  */
+--- a/fs/ext4/indirect.c
++++ b/fs/ext4/indirect.c
+@@ -651,6 +651,14 @@ int ext4_ind_map_blocks(handle_t *handle
  
- #include <linux/ctype.h>
-+#include <linux/delay.h>
- #include <linux/device.h>
- #include <linux/device-mapper.h>
- #include <linux/init.h>
-@@ -18,12 +19,17 @@
- #define DM_MAX_DEVICES 256
- #define DM_MAX_TARGETS 256
- #define DM_MAX_STR_SIZE 4096
-+#define DM_MAX_WAITFOR 256
- 
- static char *create;
- 
-+static char *waitfor[DM_MAX_WAITFOR];
+ 	ext4_update_inode_fsync_trans(handle, inode, 1);
+ 	count = ar.len;
 +
- /*
-  * Format: dm-mod.create=<name>,<uuid>,<minor>,<flags>,<table>[,<table>+][;<name>,<uuid>,<minor>,<flags>,<table>[,<table>+]+]
-  * Table format: <start_sector> <num_sectors> <target_type> <target_args>
-+ * Block devices to wait for to become available before setting up tables:
-+ * dm-mod.waitfor=<device1>[,..,<deviceN>]
-  *
-  * See Documentation/admin-guide/device-mapper/dm-init.rst for dm-mod.create="..." format
-  * details.
-@@ -266,7 +272,7 @@ static int __init dm_init_init(void)
- 	struct dm_device *dev;
- 	LIST_HEAD(devices);
- 	char *str;
--	int r;
-+	int i, r;
- 
- 	if (!create)
- 		return 0;
-@@ -286,6 +292,17 @@ static int __init dm_init_init(void)
- 	DMINFO("waiting for all devices to be available before creating mapped devices");
- 	wait_for_device_probe();
- 
-+	for (i = 0; i < ARRAY_SIZE(waitfor); i++) {
-+		if (waitfor[i]) {
-+			DMINFO("waiting for device %s ...", waitfor[i]);
-+			while (!dm_get_dev_t(waitfor[i]))
-+				msleep(5);
-+		}
-+	}
++	/*
++	 * Update reserved blocks/metadata blocks after successful block
++	 * allocation which had been deferred till now.
++	 */
++	if (flags & EXT4_GET_BLOCKS_DELALLOC_RESERVE)
++		ext4_da_update_reserve_space(inode, count, 1);
 +
-+	if (waitfor[0])
-+		DMINFO("all devices available");
-+
- 	list_for_each_entry(dev, &devices, list) {
- 		if (dm_early_create(&dev->dmi, dev->table,
- 				    dev->target_args_array))
-@@ -301,3 +318,6 @@ late_initcall(dm_init_init);
+ got_it:
+ 	map->m_flags |= EXT4_MAP_MAPPED;
+ 	map->m_pblk = le32_to_cpu(chain[depth-1].key);
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -660,16 +660,6 @@ found:
+ 			 */
+ 			ext4_clear_inode_state(inode, EXT4_STATE_EXT_MIGRATE);
+ 		}
+-
+-		/*
+-		 * Update reserved blocks/metadata blocks after successful
+-		 * block allocation which had been deferred till now. We don't
+-		 * support fallocate for non extent files. So we can update
+-		 * reserve space here.
+-		 */
+-		if ((retval > 0) &&
+-			(flags & EXT4_GET_BLOCKS_DELALLOC_RESERVE))
+-			ext4_da_update_reserve_space(inode, retval, 1);
+ 	}
  
- module_param(create, charp, 0);
- MODULE_PARM_DESC(create, "Create a mapped device in early boot");
-+
-+module_param_array(waitfor, charp, NULL, 0);
-+MODULE_PARM_DESC(waitfor, "Devices to wait for before setting up tables");
+ 	if (retval > 0) {
 
 
