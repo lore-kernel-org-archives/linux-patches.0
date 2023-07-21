@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10C120F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46308C433C8;
-	Fri, 21 Jul 2023 19:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A46620F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD1DC433C8;
+	Fri, 21 Jul 2023 19:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966584;
-	bh=WzGV3XMmNHknqp3yEaKwhcYUn4VctfG6/sKfRBk6HxY=;
+	s=korg; t=1689966587;
+	bh=LwLt0cW9IMPlCSr1JiP0TmnLeoZiHGJG03HMIFHW2hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XiMUrMq1voDq/dm4zFsBaIfAlTmJF2DppB6rZXXGmJ6+I6CT0RFzL0xq4pwMR/nHG
-	 EQwGKOZhS/T7kfFeEL0unrgcicJS0c36XbrnythRmr6EwZJEYCPTSdHP2Fd1/QiOkS
-	 W1bQhx4GjEimji+A4Lf3PjbHAZCLM/1ASjXStuBg=
+	b=bXWUFsiCuu6LMlKjrd7KSQz6Utwtp9FFzNJDiiyPnkmDfG628Bd2tXJ3mU8I3Vave
+	 lgjvzueYW/mO0rrMl7MwA4NwOFYY0qWTkedNbHUiuWOcQ1FLUbeErFWmw8wCzlnL9j
+	 AwKZ3lVx/Yqy9FItsWSmwX+G5nldY6WyiTZVW2mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <swboyd@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 396/532] drm/bridge: ti-sn65dsi86: Fix auxiliary bus lifetime
-Date: Fri, 21 Jul 2023 18:05:00 +0200
-Message-ID: <20230721160635.951395479@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.15 379/532] netfilter: nf_tables: unbind non-anonymous set if rule construction fails
+Date: Fri, 21 Jul 2023 18:04:43 +0200
+Message-ID: <20230721160635.047991436@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,110 +33,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 7aa83fbd712a6f08ffa67890061f26d140c2a84f ]
+commit 3e70489721b6c870252c9082c496703677240f53 upstream.
 
-Memory for the "struct device" for any given device isn't supposed to
-be released until the device's release() is called. This is important
-because someone might be holding a kobject reference to the "struct
-device" and might try to access one of its members even after any
-other cleanup/uninitialization has happened.
+Otherwise a dangling reference to a rule object that is gone remains
+in the set binding list.
 
-Code analysis of ti-sn65dsi86 shows that this isn't quite right. When
-the code was written, it was believed that we could rely on the fact
-that the child devices would all be freed before the parent devices
-and thus we didn't need to worry about a release() function. While I
-still believe that the parent's "struct device" is guaranteed to
-outlive the child's "struct device" (because the child holds a kobject
-reference to the parent), the parent's "devm" allocated memory is a
-different story. That appears to be freed much earlier.
-
-Let's make this better for ti-sn65dsi86 by allocating each auxiliary
-with kzalloc and then free that memory in the release().
-
-Fixes: bf73537f411b ("drm/bridge: ti-sn65dsi86: Break GPIO and MIPI-to-eDP bridge into sub-drivers")
-Suggested-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230613065812.v2.1.I24b838a5b4151fb32bccd6f36397998ea2df9fbb@changeid
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 26b5a5712eb8 ("netfilter: nf_tables: add NFT_TRANS_PREPARE_ERROR to deal with bound set/chain")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 33 +++++++++++++++++----------
- 1 file changed, 21 insertions(+), 12 deletions(-)
+ net/netfilter/nf_tables_api.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index bbedce0eeddae..22c2ff5272c60 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -147,9 +147,9 @@
-  *                each other's read-modify-write.
-  */
- struct ti_sn65dsi86 {
--	struct auxiliary_device		bridge_aux;
--	struct auxiliary_device		gpio_aux;
--	struct auxiliary_device		aux_aux;
-+	struct auxiliary_device		*bridge_aux;
-+	struct auxiliary_device		*gpio_aux;
-+	struct auxiliary_device		*aux_aux;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -5042,6 +5042,8 @@ void nf_tables_deactivate_set(const stru
+ 		nft_set_trans_unbind(ctx, set);
+ 		if (nft_set_is_anonymous(set))
+ 			nft_deactivate_next(ctx->net, set);
++		else
++			list_del_rcu(&binding->list);
  
- 	struct device			*dev;
- 	struct regmap			*regmap;
-@@ -412,27 +412,34 @@ static void ti_sn65dsi86_delete_aux(void *data)
- 	auxiliary_device_delete(data);
- }
- 
--/*
-- * AUX bus docs say that a non-NULL release is mandatory, but it makes no
-- * sense for the model used here where all of the aux devices are allocated
-- * in the single shared structure. We'll use this noop as a workaround.
-- */
--static void ti_sn65dsi86_noop(struct device *dev) {}
-+static void ti_sn65dsi86_aux_device_release(struct device *dev)
-+{
-+	struct auxiliary_device *aux = container_of(dev, struct auxiliary_device, dev);
-+
-+	kfree(aux);
-+}
- 
- static int ti_sn65dsi86_add_aux_device(struct ti_sn65dsi86 *pdata,
--				       struct auxiliary_device *aux,
-+				       struct auxiliary_device **aux_out,
- 				       const char *name)
- {
- 	struct device *dev = pdata->dev;
-+	struct auxiliary_device *aux;
- 	int ret;
- 
-+	aux = kzalloc(sizeof(*aux), GFP_KERNEL);
-+	if (!aux)
-+		return -ENOMEM;
-+
- 	aux->name = name;
- 	aux->dev.parent = dev;
--	aux->dev.release = ti_sn65dsi86_noop;
-+	aux->dev.release = ti_sn65dsi86_aux_device_release;
- 	device_set_of_node_from_dev(&aux->dev, dev);
- 	ret = auxiliary_device_init(aux);
--	if (ret)
-+	if (ret) {
-+		kfree(aux);
- 		return ret;
-+	}
- 	ret = devm_add_action_or_reset(dev, ti_sn65dsi86_uninit_aux, aux);
- 	if (ret)
- 		return ret;
-@@ -441,6 +448,8 @@ static int ti_sn65dsi86_add_aux_device(struct ti_sn65dsi86 *pdata,
- 	if (ret)
- 		return ret;
- 	ret = devm_add_action_or_reset(dev, ti_sn65dsi86_delete_aux, aux);
-+	if (!ret)
-+		*aux_out = aux;
- 
- 	return ret;
- }
--- 
-2.39.2
-
+ 		set->use--;
+ 		break;
 
 
