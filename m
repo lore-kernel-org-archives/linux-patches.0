@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5071F94D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:24:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B62C433C8;
-	Fri, 21 Jul 2023 16:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A011F94D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:24:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28189C433C9;
+	Fri, 21 Jul 2023 16:24:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956643;
-	bh=bl9aHcecXnQkcti9pLlVMZc1TJclwkOWWv7e+lH1zSk=;
+	s=korg; t=1689956646;
+	bh=EmwsSZd/Jo2MV6L8wgoHDi46G9Ti7gHt520/dumZvG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MC1YHxoIIVyudUcZtig8Y7QoB3yXcXFju46Mr6f+D1xKPHCRg7QxVfLgaBSY/NW5S
-	 gNHelKOJhDO6EQGrKTVfTn08AJAmqioCLaLWNxgHu/vhb8IkopwQMDQHfGiL5Wz5P8
-	 RHte/Z3q7nRBhz6pFM69A+9aXS1gjSSjfPAP1q9E=
+	b=OMWmWgOLGYdsjQ9yhQqJf/fOdGAz8DVibk7LMbEmVBwh81/N5eX2s2kyNF9tYfaDw
+	 +kOGROU/DLM57U2GZAKykYiP6iNByPfddZhGLIs8PicqFckY7Upv7v+Ewi7bMuUhes
+	 XJ4gV8NsJuHGpV9v/tu2HDQP7bjNvyfaCb2teCH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bharath SM <bharathsm@microsoft.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.4 248/292] cifs: if deferred close is disabled then close files immediately
-Date: Fri, 21 Jul 2023 18:05:57 +0200
-Message-ID: <20230721160539.575661002@linuxfoundation.org>
+	Xiubo Li <xiubli@redhat.com>,
+	Milind Changire <mchangir@redhat.com>,
+	Patrick Donnelly <pdonnell@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.4 223/292] ceph: dont let check_caps skip sending responses for revoke msgs
+Date: Fri, 21 Jul 2023 18:05:32 +0200
+Message-ID: <20230721160538.447892496@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -35,36 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bharath SM <bharathsm@microsoft.com>
+From: Xiubo Li <xiubli@redhat.com>
 
-commit df9d70c18616760c6504b97fec66b6379c172dbb upstream.
+commit 257e6172ab36ebbe295a6c9ee9a9dd0fe54c1dc2 upstream.
 
-If defer close timeout value is set to 0, then there is no
-need to include files in the deferred close list and utilize
-the delayed worker for closing. Instead, we can close them
-immediately.
+If a client sends out a cap update dropping caps with the prior 'seq'
+just before an incoming cap revoke request, then the client may drop
+the revoke because it believes it's already released the requested
+capabilities.
 
-Signed-off-by: Bharath SM <bharathsm@microsoft.com>
-Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
+This causes the MDS to wait indefinitely for the client to respond
+to the revoke. It's therefore always a good idea to ack the cap
+revoke request with the bumped up 'seq'.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Link: https://tracker.ceph.com/issues/61782
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Milind Changire <mchangir@redhat.com>
+Reviewed-by: Patrick Donnelly <pdonnell@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ceph/caps.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -1080,8 +1080,8 @@ int cifs_close(struct inode *inode, stru
- 		cfile = file->private_data;
- 		file->private_data = NULL;
- 		dclose = kmalloc(sizeof(struct cifs_deferred_close), GFP_KERNEL);
--		if ((cinode->oplock == CIFS_CACHE_RHW_FLG) &&
--		    cinode->lease_granted &&
-+		if ((cifs_sb->ctx->closetimeo && cinode->oplock == CIFS_CACHE_RHW_FLG)
-+		    && cinode->lease_granted &&
- 		    !test_bit(CIFS_INO_CLOSE_ON_LOCK, &cinode->flags) &&
- 		    dclose) {
- 			if (test_and_clear_bit(CIFS_INO_MODIFIED_ATTR, &cinode->flags)) {
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -3560,6 +3560,15 @@ static void handle_cap_grant(struct inod
+ 	}
+ 	BUG_ON(cap->issued & ~cap->implemented);
+ 
++	/* don't let check_caps skip sending a response to MDS for revoke msgs */
++	if (le32_to_cpu(grant->op) == CEPH_CAP_OP_REVOKE) {
++		cap->mds_wanted = 0;
++		if (cap == ci->i_auth_cap)
++			check_caps = 1; /* check auth cap only */
++		else
++			check_caps = 2; /* check all caps */
++	}
++
+ 	if (extra_info->inline_version > 0 &&
+ 	    extra_info->inline_version >= ci->i_inline_version) {
+ 		ci->i_inline_version = extra_info->inline_version;
 
 
