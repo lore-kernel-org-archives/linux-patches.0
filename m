@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5669E20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:15:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAFE6C433C8;
-	Fri, 21 Jul 2023 19:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3525020F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:15:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B114AC433C8;
+	Fri, 21 Jul 2023 19:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966921;
-	bh=khSIIYbhuy8PA/utIzHISJiWPC+EaRhatyuCXTvhmSs=;
+	s=korg; t=1689966924;
+	bh=npFpegyrrwuj/MaFWb++Y4O9yLqjcLeLYDoUmAW2YqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qqqhMDK0o9VRThLYub591+L7IJeYcEMS8JbHCnDX5OE75ji65uKMpN7psE63Y5iA2
-	 DJY1l5/gTsvHKFDwFPUq4BZ3qin746iTMqORK++yOHjjWVsk4+jpK4WKRkhxK79xe1
-	 OMmyXvdWjBDDxywD5p8KbZtkrrtYwOwpAm99SV90=
+	b=2Gwp0aPMT6nm0abnqJcMRyDntRC9pTZufHMwndrWfonvduQrCYt0oUHBMAiNhwTVK
+	 9QdbjpYCKIUviaKh5feJuUH+rJb1Ehycx07hL1tNvtCri+RKWJxn/CsYtndbTIWP7U
+	 dHDFYp0e7iKMCEze5Hnydy/cTOZaq/eRrlKCqyCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Zheng Yejian <zhengyejian1@huawei.com>
-Subject: [PATCH 5.15 515/532] ftrace: Fix possible warning on checking all pages used in ftrace_process_locs()
-Date: Fri, 21 Jul 2023 18:06:59 +0200
-Message-ID: <20230721160642.597201146@linuxfoundation.org>
+	Max Filippov <jcmvbkbc@gmail.com>
+Subject: [PATCH 5.15 516/532] xtensa: ISS: fix call to split_if_spec
+Date: Fri, 21 Jul 2023 18:07:00 +0200
+Message-ID: <20230721160642.651292687@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -34,131 +33,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Max Filippov <jcmvbkbc@gmail.com>
 
-commit 26efd79c4624294e553aeaa3439c646729bad084 upstream.
+commit bc8d5916541fa19ca5bc598eb51a5f78eb891a36 upstream.
 
-As comments in ftrace_process_locs(), there may be NULL pointers in
-mcount_loc section:
- > Some architecture linkers will pad between
- > the different mcount_loc sections of different
- > object files to satisfy alignments.
- > Skip any NULL pointers.
-
-After commit 20e5227e9f55 ("ftrace: allow NULL pointers in mcount_loc"),
-NULL pointers will be accounted when allocating ftrace pages but skipped
-before adding into ftrace pages, this may result in some pages not being
-used. Then after commit 706c81f87f84 ("ftrace: Remove extra helper
-functions"), warning may occur at:
-  WARN_ON(pg->next);
-
-To fix it, only warn for case that no pointers skipped but pages not used
-up, then free those unused pages after releasing ftrace_lock.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230712060452.3175675-1-zhengyejian1@huawei.com
+split_if_spec expects a NULL-pointer as an end marker for the argument
+list, but tuntap_probe never supplied that terminating NULL. As a result
+incorrectly formatted interface specification string may cause a crash
+because of the random memory access. Fix that by adding NULL terminator
+to the split_if_spec argument list.
 
 Cc: stable@vger.kernel.org
-Fixes: 706c81f87f84 ("ftrace: Remove extra helper functions")
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 7282bee78798 ("[PATCH] xtensa: Architecture support for Tensilica Xtensa Part 8")
+Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |   45 +++++++++++++++++++++++++++++++--------------
- 1 file changed, 31 insertions(+), 14 deletions(-)
+ arch/xtensa/platforms/iss/network.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -3192,6 +3192,22 @@ static int ftrace_allocate_records(struc
- 	return cnt;
- }
+--- a/arch/xtensa/platforms/iss/network.c
++++ b/arch/xtensa/platforms/iss/network.c
+@@ -231,7 +231,7 @@ static int tuntap_probe(struct iss_net_p
  
-+static void ftrace_free_pages(struct ftrace_page *pages)
-+{
-+	struct ftrace_page *pg = pages;
-+
-+	while (pg) {
-+		if (pg->records) {
-+			free_pages((unsigned long)pg->records, pg->order);
-+			ftrace_number_of_pages -= 1 << pg->order;
-+		}
-+		pages = pg->next;
-+		kfree(pg);
-+		pg = pages;
-+		ftrace_number_of_groups--;
-+	}
-+}
-+
- static struct ftrace_page *
- ftrace_allocate_pages(unsigned long num_to_init)
- {
-@@ -3230,17 +3246,7 @@ ftrace_allocate_pages(unsigned long num_
- 	return start_pg;
- 
-  free_pages:
--	pg = start_pg;
--	while (pg) {
--		if (pg->records) {
--			free_pages((unsigned long)pg->records, pg->order);
--			ftrace_number_of_pages -= 1 << pg->order;
--		}
--		start_pg = pg->next;
--		kfree(pg);
--		pg = start_pg;
--		ftrace_number_of_groups--;
--	}
-+	ftrace_free_pages(start_pg);
- 	pr_info("ftrace: FAILED to allocate memory for functions\n");
- 	return NULL;
- }
-@@ -6184,9 +6190,11 @@ static int ftrace_process_locs(struct mo
- 			       unsigned long *start,
- 			       unsigned long *end)
- {
-+	struct ftrace_page *pg_unuse = NULL;
- 	struct ftrace_page *start_pg;
- 	struct ftrace_page *pg;
- 	struct dyn_ftrace *rec;
-+	unsigned long skipped = 0;
- 	unsigned long count;
- 	unsigned long *p;
- 	unsigned long addr;
-@@ -6240,8 +6248,10 @@ static int ftrace_process_locs(struct mo
- 		 * object files to satisfy alignments.
- 		 * Skip any NULL pointers.
- 		 */
--		if (!addr)
-+		if (!addr) {
-+			skipped++;
- 			continue;
-+		}
- 
- 		end_offset = (pg->index+1) * sizeof(pg->records[0]);
- 		if (end_offset > PAGE_SIZE << pg->order) {
-@@ -6255,8 +6265,10 @@ static int ftrace_process_locs(struct mo
- 		rec->ip = addr;
- 	}
- 
--	/* We should have used all pages */
--	WARN_ON(pg->next);
-+	if (pg->next) {
-+		pg_unuse = pg->next;
-+		pg->next = NULL;
-+	}
- 
- 	/* Assign the last page to ftrace_pages */
- 	ftrace_pages = pg;
-@@ -6278,6 +6290,11 @@ static int ftrace_process_locs(struct mo
-  out:
- 	mutex_unlock(&ftrace_lock);
- 
-+	/* We should have used all pages unless we skipped some */
-+	if (pg_unuse) {
-+		WARN_ON(!skipped);
-+		ftrace_free_pages(pg_unuse);
-+	}
- 	return ret;
- }
- 
+ 	init += sizeof(TRANSPORT_TUNTAP_NAME) - 1;
+ 	if (*init == ',') {
+-		rem = split_if_spec(init + 1, &mac_str, &dev_name);
++		rem = split_if_spec(init + 1, &mac_str, &dev_name, NULL);
+ 		if (rem != NULL) {
+ 			pr_err("%s: extra garbage on specification : '%s'\n",
+ 			       dev->name, rem);
 
 
