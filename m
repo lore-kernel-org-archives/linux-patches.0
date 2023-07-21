@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3EF20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:15:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD184C433C7;
-	Fri, 21 Jul 2023 19:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E10220F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:15:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8A9C433C8;
+	Fri, 21 Jul 2023 19:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966941;
-	bh=YRq3MRXQ/9ed3BU9vGD3EL5xWyQL8+zGkJVnrb0ScqQ=;
+	s=korg; t=1689966944;
+	bh=P8mm2aV4hd66rA2FiVtVUIxrJMwP8VehtRjq4jRnZDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r2/orkTrZgQFiobbBw72hg46B5J9FRh/1/vMw4062rVg5Bbj8yhlBCacFe7e9HCwu
-	 nbMRlfKtJ7uMkDLg6okwQvLm8xDxouK6O7lKze5OQqrNrMQbQ18PuOGipZFWkUfV2S
-	 MVnsQalJ9eXr1DawVYWo+RioE+seH8zSXSHfNdgM=
+	b=CCV0YDp5xTTRJBOiyqw8xDhv0C+BBY1R6WboGRBjrnC0uOp/R8M4wN/Hi/VD7gLbe
+	 ZH9D0ybh3TBji+Ye5KPtdC3hKOKgIhTShNNe2Ci+U1e6kSn8eJmuExRXpwapLyl8FP
+	 /FYa4K+qBHzIyFW429+LY0vN3bNKbYNcfGW6JPHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 5.15 521/532] tracing/probes: Fix to update dynamic data counter if fetcharg uses it
-Date: Fri, 21 Jul 2023 18:07:05 +0200
-Message-ID: <20230721160642.919786100@linuxfoundation.org>
+	Quinn Tran <qutran@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.15 522/532] scsi: qla2xxx: Wait for io return on terminate rport
+Date: Fri, 21 Jul 2023 18:07:06 +0200
+Message-ID: <20230721160642.973393514@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -34,48 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Quinn Tran <qutran@marvell.com>
 
-commit e38e2c6a9efc435f9de344b7c91f7697e01b47d5 upstream.
+commit fc0cba0c7be8261a1625098bd1d695077ec621c9 upstream.
 
-Fix to update dynamic data counter ('dyndata') and max length ('maxlen')
-only if the fetcharg uses the dynamic data. Also get out arg->dynamic
-from unlikely(). This makes dynamic data address wrong if
-process_fetch_insn() returns error on !arg->dynamic case.
+System crash due to use after free.
+Current code allows terminate_rport_io to exit before making
+sure all IOs has returned. For FCP-2 device, IO's can hang
+on in HW because driver has not tear down the session in FW at
+first sign of cable pull. When dev_loss_tmo timer pops,
+terminate_rport_io is called and upper layer is about to
+free various resources. Terminate_rport_io trigger qla to do
+the final cleanup, but the cleanup might not be fast enough where it
+leave qla still holding on to the same resource.
 
-Link: https://lore.kernel.org/all/168908494781.123124.8160245359962103684.stgit@devnote2/
+Wait for IO's to return to upper layer before resources are freed.
 
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Link: https://lore.kernel.org/all/20230710233400.5aaf024e@gandalf.local.home/
-Fixes: 9178412ddf5a ("tracing: probeevent: Return consumed bytes of dynamic area")
 Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20230428075339.32551-7-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_probe_tmpl.h |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/scsi/qla2xxx/qla_attr.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/kernel/trace/trace_probe_tmpl.h
-+++ b/kernel/trace/trace_probe_tmpl.h
-@@ -206,11 +206,13 @@ store_trace_args(void *data, struct trac
- 		if (unlikely(arg->dynamic))
- 			*dl = make_data_loc(maxlen, dyndata - base);
- 		ret = process_fetch_insn(arg->code, rec, dl, base);
--		if (unlikely(ret < 0 && arg->dynamic)) {
--			*dl = make_data_loc(0, dyndata - base);
--		} else {
--			dyndata += ret;
--			maxlen -= ret;
-+		if (arg->dynamic) {
-+			if (unlikely(ret < 0)) {
-+				*dl = make_data_loc(0, dyndata - base);
-+			} else {
-+				dyndata += ret;
-+				maxlen -= ret;
-+			}
+--- a/drivers/scsi/qla2xxx/qla_attr.c
++++ b/drivers/scsi/qla2xxx/qla_attr.c
+@@ -2738,6 +2738,7 @@ static void
+ qla2x00_terminate_rport_io(struct fc_rport *rport)
+ {
+ 	fc_port_t *fcport = *(fc_port_t **)rport->dd_data;
++	scsi_qla_host_t *vha;
+ 
+ 	if (!fcport)
+ 		return;
+@@ -2747,9 +2748,12 @@ qla2x00_terminate_rport_io(struct fc_rpo
+ 
+ 	if (test_bit(ABORT_ISP_ACTIVE, &fcport->vha->dpc_flags))
+ 		return;
++	vha = fcport->vha;
+ 
+ 	if (unlikely(pci_channel_offline(fcport->vha->hw->pdev))) {
+ 		qla2x00_abort_all_cmds(fcport->vha, DID_NO_CONNECT << 16);
++		qla2x00_eh_wait_for_pending_commands(fcport->vha, fcport->d_id.b24,
++			0, WAIT_TARGET);
+ 		return;
+ 	}
+ 	/*
+@@ -2774,6 +2778,15 @@ qla2x00_terminate_rport_io(struct fc_rpo
+ 			qla2x00_port_logout(fcport->vha, fcport);
  		}
  	}
++
++	/* check for any straggling io left behind */
++	if (qla2x00_eh_wait_for_pending_commands(fcport->vha, fcport->d_id.b24, 0, WAIT_TARGET)) {
++		ql_log(ql_log_warn, vha, 0x300b,
++		       "IO not return.  Resetting. \n");
++		set_bit(ISP_ABORT_NEEDED, &vha->dpc_flags);
++		qla2xxx_wake_dpc(vha);
++		qla2x00_wait_for_chip_reset(vha);
++	}
  }
+ 
+ static int
 
 
