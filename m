@@ -1,26 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E0F1FB40
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:13:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E0FC433C8;
-	Fri, 21 Jul 2023 16:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E981FB40
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:13:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D258C433C7;
+	Fri, 21 Jul 2023 16:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956033;
-	bh=ewfIobcUYs4//WfZGPH7fDRGHuMKLOIAehwZ/QtgijM=;
+	s=korg; t=1689956035;
+	bh=qbnodRkJmbR4UceeOvYhu4OqsChhMCKncTD483gVVBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uXfg5uJV2OHCfOgG5YdVRP4hQNQWiTKiCO0aGUI1bxJhikecukPj7IF9gS8L6wTq7
-	 9ixjjw/7T2N61KitJRWq5cMz/yx/+6coF+kRyk6QysPxYg5rY2cJZgOZrvPFMK9+NU
-	 7jJIbApA7ChU2duLQkcsJgo14nJsuBW8AZQ16KXk=
+	b=BKJQdgm6wWlvcl36q2AvT84cIFnAUmjcnX4iS32xI7tdvu4zJMBAcEPxfFfxUdInz
+	 TpczzgeEZKj67r4k9VYV3PO8lnYYYZYB3xl121za9h/+UVs+GJPi99z8tcYSbBulIS
+	 LXvvVCbqmq0JpUAqgBi1uDfSvY6nKHPmGEPVNLpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.4 110/292] smb: client: fix parsing of source mount option
-Date: Fri, 21 Jul 2023 18:03:39 +0200
-Message-ID: <20230721160533.540363311@linuxfoundation.org>
+	Moritz Duge <MoritzDuge@kolahilft.de>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Torsten Krah <krah.tm@gmail.com>,
+	Paul Schyska <pschyska@gmail.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	David Airlie <airlied@gmail.com>,
+	=?UTF-8?q?Noralf=20Tr=C3=B8nnes?= <noralf@tronnes.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Inki Dae <inki.dae@samsung.com>,
+	Seung-Woo Kim <sw0312.kim@samsung.com>,
+	Kyungmin Park <kyungmin.park@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	"Pan, Xinhui" <Xinhui.Pan@amd.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	amd-gfx@lists.freedesktop.org,
+	linux-tegra@vger.kernel.org,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.4 111/292] drm/client: Send hotplug event after registering a client
+Date: Fri, 21 Jul 2023 18:03:40 +0200
+Message-ID: <20230721160533.588771953@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -34,316 +66,251 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 49024ec8795ed2bd7217c249ef50a70c4e25d662 upstream.
+commit 27655b9bb9f0d9c32b8de8bec649b676898c52d5 upstream.
 
-Handle trailing and leading separators when parsing UNC and prefix
-paths in smb3_parse_devname().  Then, store the sanitised paths in
-smb3_fs_context::source.
+Generate a hotplug event after registering a client to allow the
+client to configure its display. Remove the hotplug calls from the
+existing clients for fbdev emulation. This change fixes a concurrency
+bug between registering a client and receiving events from the DRM
+core. The bug is present in the fbdev emulation of all drivers.
 
-This fixes the following cases
+The fbdev emulation currently generates a hotplug event before
+registering the client to the device. For each new output, the DRM
+core sends an additional hotplug event to each registered client.
 
-$ mount //srv/share// /mnt/1 -o ...
-$ cat /mnt/1/d0/f0
-cat: /mnt/1/d0/f0: Invalid argument
+If the DRM core detects first output between sending the artificial
+hotplug and registering the device, the output's hotplug event gets
+lost. If this is the first output, the fbdev console display remains
+dark. This has been observed with amdgpu and fbdev-generic.
 
-The -EINVAL was returned because the client sent SMB2_CREATE "\\d0\f0"
-rather than SMB2_CREATE "\d0\f0".
+Fix this by adding hotplug generation directly to the client's
+register helper drm_client_register(). Registering the client and
+receiving events are serialized by struct drm_device.clientlist_mutex.
+So an output is either configured by the initial hotplug event, or
+the client has already been registered.
 
-$ mount //srv//share /mnt/1 -o ...
-mount: Invalid argument
+The bug was originally added in commit 6e3f17ee73f7 ("drm/fb-helper:
+generic: Call drm_client_add() after setup is done"), in which adding
+a client and receiving a hotplug event switched order. It was hidden,
+as most hardware and drivers have at least on static output configured.
+Other drivers didn't use the internal DRM client or still had struct
+drm_mode_config_funcs.output_poll_changed set. That callback handled
+hotplug events as well. After not setting the callback in amdgpu in
+commit 0e3172bac3f4 ("drm/amdgpu: Don't set struct
+drm_driver.output_poll_changed"), amdgpu did not show a framebuffer
+console if output events got lost. The bug got copy-pasted from
+fbdev-generic into the other fbdev emulation.
 
-The -EINVAL was returned correctly although the client only realised
-it after sending a couple of bad requests rather than bailing out
-earlier when parsing mount options.
-
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: Moritz Duge <MoritzDuge@kolahilft.de>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2649
+Fixes: 6e3f17ee73f7 ("drm/fb-helper: generic: Call drm_client_add() after setup is done")
+Fixes: 8ab59da26bc0 ("drm/fb-helper: Move generic fbdev emulation into separate source file")
+Fixes: b79fe9abd58b ("drm/fbdev-dma: Implement fbdev emulation for GEM DMA helpers")
+Fixes: 63c381552f69 ("drm/armada: Implement fbdev emulation as in-kernel client")
+Fixes: 49953b70e7d3 ("drm/exynos: Implement fbdev emulation as in-kernel client")
+Fixes: 8f1aaccb04b7 ("drm/gma500: Implement client-based fbdev emulation")
+Fixes: 940b869c2f2f ("drm/msm: Implement fbdev emulation as in-kernel client")
+Fixes: 9e69bcd88e45 ("drm/omapdrm: Implement fbdev emulation as in-kernel client")
+Fixes: e317a69fe891 ("drm/radeon: Implement client-based fbdev emulation")
+Fixes: 71ec16f45ef8 ("drm/tegra: Implement fbdev emulation as in-kernel client")
+Fixes: 0e3172bac3f4 ("drm/amdgpu: Don't set struct drm_driver.output_poll_changed")
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Tested-by: Moritz Duge <MoritzDuge@kolahilft.de>
+Tested-by: Torsten Krah <krah.tm@gmail.com>
+Tested-by: Paul Schyska <pschyska@gmail.com>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Noralf Trønnes <noralf@tronnes.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: Inki Dae <inki.dae@samsung.com>
+Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
+Cc: Thierry Reding <thierry.reding@gmail.com>
+Cc: Mikko Perttunen <mperttunen@nvidia.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-samsung-soc@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Cc: amd-gfx@lists.freedesktop.org
+Cc: linux-tegra@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v5.2+
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # msm
+Link: https://patchwork.freedesktop.org/patch/msgid/20230710091029.27503-1-tzimmermann@suse.de
+[ Dropped changes to drivers/gpu/drm/armada/armada_fbdev.c as
+  174c3c38e3a2 drm/armada: Initialize fbdev DRM client
+  was introduced in 6.5-rc1 ]
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifs_dfs_ref.c |   20 ++++++++++----
- fs/smb/client/cifsproto.h    |    2 +
- fs/smb/client/dfs.c          |   38 ++-------------------------
- fs/smb/client/fs_context.c   |   59 ++++++++++++++++++++++++++++++++++++-------
- fs/smb/client/misc.c         |   17 ++++++++----
- 5 files changed, 80 insertions(+), 56 deletions(-)
+ drivers/gpu/drm/drm_client.c              |   21 +++++++++++++++++++++
+ drivers/gpu/drm/drm_fbdev_dma.c           |    4 ----
+ drivers/gpu/drm/drm_fbdev_generic.c       |    4 ----
+ drivers/gpu/drm/exynos/exynos_drm_fbdev.c |    4 ----
+ drivers/gpu/drm/gma500/fbdev.c            |    4 ----
+ drivers/gpu/drm/msm/msm_fbdev.c           |    4 ----
+ drivers/gpu/drm/omapdrm/omap_fbdev.c      |    4 ----
+ drivers/gpu/drm/radeon/radeon_fbdev.c     |    4 ----
+ drivers/gpu/drm/tegra/fbdev.c             |    4 ----
+ 9 files changed, 21 insertions(+), 32 deletions(-)
 
---- a/fs/smb/client/cifs_dfs_ref.c
-+++ b/fs/smb/client/cifs_dfs_ref.c
-@@ -118,12 +118,12 @@ cifs_build_devname(char *nodename, const
- 	return dev;
- }
- 
--static int set_dest_addr(struct smb3_fs_context *ctx, const char *full_path)
-+static int set_dest_addr(struct smb3_fs_context *ctx)
- {
- 	struct sockaddr *addr = (struct sockaddr *)&ctx->dstaddr;
- 	int rc;
- 
--	rc = dns_resolve_server_name_to_ip(full_path, addr, NULL);
-+	rc = dns_resolve_server_name_to_ip(ctx->source, addr, NULL);
- 	if (!rc)
- 		cifs_set_port(addr, ctx->port);
- 	return rc;
-@@ -171,10 +171,9 @@ static struct vfsmount *cifs_dfs_do_auto
- 		mnt = ERR_CAST(full_path);
- 		goto out;
- 	}
--	cifs_dbg(FYI, "%s: full_path: %s\n", __func__, full_path);
- 
- 	tmp = *cur_ctx;
--	tmp.source = full_path;
-+	tmp.source = NULL;
- 	tmp.leaf_fullpath = NULL;
- 	tmp.UNC = tmp.prepath = NULL;
- 	tmp.dfs_root_ses = NULL;
-@@ -185,13 +184,22 @@ static struct vfsmount *cifs_dfs_do_auto
- 		goto out;
- 	}
- 
--	rc = set_dest_addr(ctx, full_path);
-+	rc = smb3_parse_devname(full_path, ctx);
- 	if (rc) {
- 		mnt = ERR_PTR(rc);
- 		goto out;
- 	}
- 
--	rc = smb3_parse_devname(full_path, ctx);
-+	ctx->source = smb3_fs_context_fullpath(ctx, '/');
-+	if (IS_ERR(ctx->source)) {
-+		mnt = ERR_CAST(ctx->source);
-+		ctx->source = NULL;
-+		goto out;
-+	}
-+	cifs_dbg(FYI, "%s: ctx: source=%s UNC=%s prepath=%s dstaddr=%pISpc\n",
-+		 __func__, ctx->source, ctx->UNC, ctx->prepath, &ctx->dstaddr);
-+
-+	rc = set_dest_addr(ctx);
- 	if (!rc)
- 		mnt = fc_mount(fc);
- 	else
---- a/fs/smb/client/cifsproto.h
-+++ b/fs/smb/client/cifsproto.h
-@@ -85,6 +85,8 @@ extern void release_mid(struct mid_q_ent
- extern void cifs_wake_up_task(struct mid_q_entry *mid);
- extern int cifs_handle_standard(struct TCP_Server_Info *server,
- 				struct mid_q_entry *mid);
-+extern char *smb3_fs_context_fullpath(const struct smb3_fs_context *ctx,
-+				      char dirsep);
- extern int smb3_parse_devname(const char *devname, struct smb3_fs_context *ctx);
- extern int smb3_parse_opt(const char *options, const char *key, char **val);
- extern int cifs_ipaddr_cmp(struct sockaddr *srcaddr, struct sockaddr *rhs);
---- a/fs/smb/client/dfs.c
-+++ b/fs/smb/client/dfs.c
-@@ -54,39 +54,6 @@ out:
- 	return rc;
- }
- 
--/*
-- * cifs_build_path_to_root returns full path to root when we do not have an
-- * existing connection (tcon)
-- */
--static char *build_unc_path_to_root(const struct smb3_fs_context *ctx,
--				    const struct cifs_sb_info *cifs_sb, bool useppath)
--{
--	char *full_path, *pos;
--	unsigned int pplen = useppath && ctx->prepath ? strlen(ctx->prepath) + 1 : 0;
--	unsigned int unc_len = strnlen(ctx->UNC, MAX_TREE_SIZE + 1);
--
--	if (unc_len > MAX_TREE_SIZE)
--		return ERR_PTR(-EINVAL);
--
--	full_path = kmalloc(unc_len + pplen + 1, GFP_KERNEL);
--	if (full_path == NULL)
--		return ERR_PTR(-ENOMEM);
--
--	memcpy(full_path, ctx->UNC, unc_len);
--	pos = full_path + unc_len;
--
--	if (pplen) {
--		*pos = CIFS_DIR_SEP(cifs_sb);
--		memcpy(pos + 1, ctx->prepath, pplen);
--		pos += pplen;
--	}
--
--	*pos = '\0'; /* add trailing null */
--	convert_delimiter(full_path, CIFS_DIR_SEP(cifs_sb));
--	cifs_dbg(FYI, "%s: full_path=%s\n", __func__, full_path);
--	return full_path;
--}
--
- static int get_session(struct cifs_mount_ctx *mnt_ctx, const char *full_path)
- {
- 	struct smb3_fs_context *ctx = mnt_ctx->fs_ctx;
-@@ -179,6 +146,7 @@ static int __dfs_mount_share(struct cifs
- 	struct TCP_Server_Info *server;
- 	struct cifs_tcon *tcon;
- 	char *origin_fullpath = NULL;
-+	char sep = CIFS_DIR_SEP(cifs_sb);
- 	int num_links = 0;
- 	int rc;
- 
-@@ -186,7 +154,7 @@ static int __dfs_mount_share(struct cifs
- 	if (IS_ERR(ref_path))
- 		return PTR_ERR(ref_path);
- 
--	full_path = build_unc_path_to_root(ctx, cifs_sb, true);
-+	full_path = smb3_fs_context_fullpath(ctx, sep);
- 	if (IS_ERR(full_path)) {
- 		rc = PTR_ERR(full_path);
- 		full_path = NULL;
-@@ -228,7 +196,7 @@ static int __dfs_mount_share(struct cifs
- 				kfree(full_path);
- 				ref_path = full_path = NULL;
- 
--				full_path = build_unc_path_to_root(ctx, cifs_sb, true);
-+				full_path = smb3_fs_context_fullpath(ctx, sep);
- 				if (IS_ERR(full_path)) {
- 					rc = PTR_ERR(full_path);
- 					full_path = NULL;
---- a/fs/smb/client/fs_context.c
-+++ b/fs/smb/client/fs_context.c
-@@ -441,14 +441,17 @@ out:
-  * but there are some bugs that prevent rename from working if there are
-  * multiple delimiters.
-  *
-- * Returns a sanitized duplicate of @path. @gfp indicates the GFP_* flags
-- * for kstrdup.
-+ * Return a sanitized duplicate of @path or NULL for empty prefix paths.
-+ * Otherwise, return ERR_PTR.
+--- a/drivers/gpu/drm/drm_client.c
++++ b/drivers/gpu/drm/drm_client.c
+@@ -122,13 +122,34 @@ EXPORT_SYMBOL(drm_client_init);
+  * drm_client_register() it is no longer permissible to call drm_client_release()
+  * directly (outside the unregister callback), instead cleanup will happen
+  * automatically on driver unload.
 + *
-+ * @gfp indicates the GFP_* flags for kstrdup.
-  * The caller is responsible for freeing the original.
++ * Registering a client generates a hotplug event that allows the client
++ * to set up its display from pre-existing outputs. The client must have
++ * initialized its state to able to handle the hotplug event successfully.
   */
- #define IS_DELIM(c) ((c) == '/' || (c) == '\\')
- char *cifs_sanitize_prepath(char *prepath, gfp_t gfp)
+ void drm_client_register(struct drm_client_dev *client)
  {
- 	char *cursor1 = prepath, *cursor2 = prepath;
-+	char *s;
+ 	struct drm_device *dev = client->dev;
++	int ret;
  
- 	/* skip all prepended delimiters */
- 	while (IS_DELIM(*cursor1))
-@@ -469,8 +472,39 @@ char *cifs_sanitize_prepath(char *prepat
- 	if (IS_DELIM(*(cursor2 - 1)))
- 		cursor2--;
- 
--	*(cursor2) = '\0';
--	return kstrdup(prepath, gfp);
-+	*cursor2 = '\0';
-+	if (!*prepath)
-+		return NULL;
-+	s = kstrdup(prepath, gfp);
-+	if (!s)
-+		return ERR_PTR(-ENOMEM);
-+	return s;
-+}
+ 	mutex_lock(&dev->clientlist_mutex);
+ 	list_add(&client->list, &dev->clientlist);
 +
-+/*
-+ * Return full path based on the values of @ctx->{UNC,prepath}.
-+ *
-+ * It is assumed that both values were already parsed by smb3_parse_devname().
-+ */
-+char *smb3_fs_context_fullpath(const struct smb3_fs_context *ctx, char dirsep)
-+{
-+	size_t ulen, plen;
-+	char *s;
-+
-+	ulen = strlen(ctx->UNC);
-+	plen = ctx->prepath ? strlen(ctx->prepath) + 1 : 0;
-+
-+	s = kmalloc(ulen + plen + 1, GFP_KERNEL);
-+	if (!s)
-+		return ERR_PTR(-ENOMEM);
-+	memcpy(s, ctx->UNC, ulen);
-+	if (plen) {
-+		s[ulen] = dirsep;
-+		memcpy(s + ulen + 1, ctx->prepath, plen);
++	if (client->funcs && client->funcs->hotplug) {
++		/*
++		 * Perform an initial hotplug event to pick up the
++		 * display configuration for the client. This step
++		 * has to be performed *after* registering the client
++		 * in the list of clients, or a concurrent hotplug
++		 * event might be lost; leaving the display off.
++		 *
++		 * Hold the clientlist_mutex as for a regular hotplug
++		 * event.
++		 */
++		ret = client->funcs->hotplug(client);
++		if (ret)
++			drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
 +	}
-+	s[ulen + plen] = '\0';
-+	convert_delimiter(s, dirsep);
-+	return s;
+ 	mutex_unlock(&dev->clientlist_mutex);
  }
+ EXPORT_SYMBOL(drm_client_register);
+--- a/drivers/gpu/drm/drm_fbdev_dma.c
++++ b/drivers/gpu/drm/drm_fbdev_dma.c
+@@ -253,10 +253,6 @@ void drm_fbdev_dma_setup(struct drm_devi
+ 		goto err_drm_client_init;
+ 	}
  
- /*
-@@ -484,6 +518,7 @@ smb3_parse_devname(const char *devname,
- 	char *pos;
- 	const char *delims = "/\\";
- 	size_t len;
-+	int rc;
- 
- 	if (unlikely(!devname || !*devname)) {
- 		cifs_dbg(VFS, "Device name not specified\n");
-@@ -511,6 +546,8 @@ smb3_parse_devname(const char *devname,
- 
- 	/* now go until next delimiter or end of string */
- 	len = strcspn(pos, delims);
-+	if (!len)
-+		return -EINVAL;
- 
- 	/* move "pos" up to delimiter or NULL */
- 	pos += len;
-@@ -533,8 +570,11 @@ smb3_parse_devname(const char *devname,
- 		return 0;
- 
- 	ctx->prepath = cifs_sanitize_prepath(pos, GFP_KERNEL);
--	if (!ctx->prepath)
--		return -ENOMEM;
-+	if (IS_ERR(ctx->prepath)) {
-+		rc = PTR_ERR(ctx->prepath);
-+		ctx->prepath = NULL;
-+		return rc;
-+	}
- 
- 	return 0;
- }
-@@ -1146,12 +1186,13 @@ static int smb3_fs_context_parse_param(s
- 			cifs_errorf(fc, "Unknown error parsing devname\n");
- 			goto cifs_parse_mount_err;
- 		}
--		ctx->source = kstrdup(param->string, GFP_KERNEL);
--		if (ctx->source == NULL) {
-+		ctx->source = smb3_fs_context_fullpath(ctx, '/');
-+		if (IS_ERR(ctx->source)) {
-+			ctx->source = NULL;
- 			cifs_errorf(fc, "OOM when copying UNC string\n");
- 			goto cifs_parse_mount_err;
- 		}
--		fc->source = kstrdup(param->string, GFP_KERNEL);
-+		fc->source = kstrdup(ctx->source, GFP_KERNEL);
- 		if (fc->source == NULL) {
- 			cifs_errorf(fc, "OOM when copying UNC string\n");
- 			goto cifs_parse_mount_err;
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -1211,16 +1211,21 @@ int match_target_ip(struct TCP_Server_In
- 
- int cifs_update_super_prepath(struct cifs_sb_info *cifs_sb, char *prefix)
- {
-+	int rc;
-+
- 	kfree(cifs_sb->prepath);
-+	cifs_sb->prepath = NULL;
- 
- 	if (prefix && *prefix) {
- 		cifs_sb->prepath = cifs_sanitize_prepath(prefix, GFP_ATOMIC);
--		if (!cifs_sb->prepath)
--			return -ENOMEM;
+-	ret = drm_fbdev_dma_client_hotplug(&fb_helper->client);
+-	if (ret)
+-		drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
 -
--		convert_delimiter(cifs_sb->prepath, CIFS_DIR_SEP(cifs_sb));
--	} else
--		cifs_sb->prepath = NULL;
-+		if (IS_ERR(cifs_sb->prepath)) {
-+			rc = PTR_ERR(cifs_sb->prepath);
-+			cifs_sb->prepath = NULL;
-+			return rc;
-+		}
-+		if (cifs_sb->prepath)
-+			convert_delimiter(cifs_sb->prepath, CIFS_DIR_SEP(cifs_sb));
-+	}
+ 	drm_client_register(&fb_helper->client);
  
- 	cifs_sb->mnt_cifs_flags |= CIFS_MOUNT_USE_PREFIX_PATH;
- 	return 0;
+ 	return;
+--- a/drivers/gpu/drm/drm_fbdev_generic.c
++++ b/drivers/gpu/drm/drm_fbdev_generic.c
+@@ -340,10 +340,6 @@ void drm_fbdev_generic_setup(struct drm_
+ 		goto err_drm_client_init;
+ 	}
+ 
+-	ret = drm_fbdev_generic_client_hotplug(&fb_helper->client);
+-	if (ret)
+-		drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
+-
+ 	drm_client_register(&fb_helper->client);
+ 
+ 	return;
+--- a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
+@@ -216,10 +216,6 @@ void exynos_drm_fbdev_setup(struct drm_d
+ 	if (ret)
+ 		goto err_drm_client_init;
+ 
+-	ret = exynos_drm_fbdev_client_hotplug(&fb_helper->client);
+-	if (ret)
+-		drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
+-
+ 	drm_client_register(&fb_helper->client);
+ 
+ 	return;
+--- a/drivers/gpu/drm/gma500/fbdev.c
++++ b/drivers/gpu/drm/gma500/fbdev.c
+@@ -330,10 +330,6 @@ void psb_fbdev_setup(struct drm_psb_priv
+ 		goto err_drm_fb_helper_unprepare;
+ 	}
+ 
+-	ret = psb_fbdev_client_hotplug(&fb_helper->client);
+-	if (ret)
+-		drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
+-
+ 	drm_client_register(&fb_helper->client);
+ 
+ 	return;
+--- a/drivers/gpu/drm/msm/msm_fbdev.c
++++ b/drivers/gpu/drm/msm/msm_fbdev.c
+@@ -227,10 +227,6 @@ void msm_fbdev_setup(struct drm_device *
+ 		goto err_drm_fb_helper_unprepare;
+ 	}
+ 
+-	ret = msm_fbdev_client_hotplug(&helper->client);
+-	if (ret)
+-		drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
+-
+ 	drm_client_register(&helper->client);
+ 
+ 	return;
+--- a/drivers/gpu/drm/omapdrm/omap_fbdev.c
++++ b/drivers/gpu/drm/omapdrm/omap_fbdev.c
+@@ -323,10 +323,6 @@ void omap_fbdev_setup(struct drm_device
+ 
+ 	INIT_WORK(&fbdev->work, pan_worker);
+ 
+-	ret = omap_fbdev_client_hotplug(&helper->client);
+-	if (ret)
+-		drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
+-
+ 	drm_client_register(&helper->client);
+ 
+ 	return;
+--- a/drivers/gpu/drm/radeon/radeon_fbdev.c
++++ b/drivers/gpu/drm/radeon/radeon_fbdev.c
+@@ -386,10 +386,6 @@ void radeon_fbdev_setup(struct radeon_de
+ 		goto err_drm_client_init;
+ 	}
+ 
+-	ret = radeon_fbdev_client_hotplug(&fb_helper->client);
+-	if (ret)
+-		drm_dbg_kms(rdev->ddev, "client hotplug ret=%d\n", ret);
+-
+ 	drm_client_register(&fb_helper->client);
+ 
+ 	return;
+--- a/drivers/gpu/drm/tegra/fbdev.c
++++ b/drivers/gpu/drm/tegra/fbdev.c
+@@ -227,10 +227,6 @@ void tegra_fbdev_setup(struct drm_device
+ 	if (ret)
+ 		goto err_drm_client_init;
+ 
+-	ret = tegra_fbdev_client_hotplug(&helper->client);
+-	if (ret)
+-		drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
+-
+ 	drm_client_register(&helper->client);
+ 
+ 	return;
 
 
