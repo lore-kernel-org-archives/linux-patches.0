@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59C51F94D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:23:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27311C433C7;
-	Fri, 21 Jul 2023 16:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82ACF1F94D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:23:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DDCC433C7;
+	Fri, 21 Jul 2023 16:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956629;
-	bh=WjA1bGH1z7X+onK7YlGAUrilWkzEXOrdXbWPhLZn5e4=;
+	s=korg; t=1689956632;
+	bh=yDlHdlGISj5QdbeEz3UgmuFYWZIIaFYVSPh4amhv3J4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GRspxDOV/PXshm8y/cafLMTTtnfId1k8T2UC8iNIC0WXEnNOElFeBcfggxxZ3iICM
-	 EWjNX5HVNYoffZG8ttkUdFzvSNOxSfnVZc+fzcATw7EPjNnkDMyAxsV8o/X6v6Pv/+
-	 nYMg3Nh3bJ6EdVJYdYePM2FibH7Ik9exqghLH52M=
+	b=gGzg4iwkzkSBWTZhLcT8aFILk1s5JoU9B2sUBvf7JAfmAHoffSO0R0s5rqeQm/+sp
+	 HlHU+Gd8YMEWkLx07Rta7fkWg0wp3HcQibkhsMMFbSaSlJ2Z6yIiUZoJRByEqepPNu
+	 FvrG4flyaQdPMgGxTjMSRZXdjT8JVs1FdULFSV20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krister Johansen <kjlx@templeofstupid.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Shay Agroskin <shayagr@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.4 243/292] net: ena: fix shift-out-of-bounds in exponential backoff
-Date: Fri, 21 Jul 2023 18:05:52 +0200
-Message-ID: <20230721160539.336860422@linuxfoundation.org>
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.4 244/292] ring-buffer: Fix deadloop issue on reading trace_pipe
+Date: Fri, 21 Jul 2023 18:05:53 +0200
+Message-ID: <20230721160539.377970579@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -36,81 +34,128 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krister Johansen <kjlx@templeofstupid.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-commit 1e9cb763e9bacf0c932aa948f50dcfca6f519a26 upstream.
+commit 7e42907f3a7b4ce3a2d1757f6d78336984daf8f5 upstream.
 
-The ENA adapters on our instances occasionally reset.  Once recently
-logged a UBSAN failure to console in the process:
+Soft lockup occurs when reading file 'trace_pipe':
 
-  UBSAN: shift-out-of-bounds in build/linux/drivers/net/ethernet/amazon/ena/ena_com.c:540:13
-  shift exponent 32 is too large for 32-bit type 'unsigned int'
-  CPU: 28 PID: 70012 Comm: kworker/u72:2 Kdump: loaded not tainted 5.15.117
-  Hardware name: Amazon EC2 c5d.9xlarge/, BIOS 1.0 10/16/2017
-  Workqueue: ena ena_fw_reset_device [ena]
+  watchdog: BUG: soft lockup - CPU#6 stuck for 22s! [cat:4488]
+  [...]
+  RIP: 0010:ring_buffer_empty_cpu+0xed/0x170
+  RSP: 0018:ffff88810dd6fc48 EFLAGS: 00000246
+  RAX: 0000000000000000 RBX: 0000000000000246 RCX: ffffffff93d1aaeb
+  RDX: ffff88810a280040 RSI: 0000000000000008 RDI: ffff88811164b218
+  RBP: ffff88811164b218 R08: 0000000000000000 R09: ffff88815156600f
+  R10: ffffed102a2acc01 R11: 0000000000000001 R12: 0000000051651901
+  R13: 0000000000000000 R14: ffff888115e49500 R15: 0000000000000000
+  [...]
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007f8d853c2000 CR3: 000000010dcd8000 CR4: 00000000000006e0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
   Call Trace:
-  <TASK>
-  dump_stack_lvl+0x4a/0x63
-  dump_stack+0x10/0x16
-  ubsan_epilogue+0x9/0x36
-  __ubsan_handle_shift_out_of_bounds.cold+0x61/0x10e
-  ? __const_udelay+0x43/0x50
-  ena_delay_exponential_backoff_us.cold+0x16/0x1e [ena]
-  wait_for_reset_state+0x54/0xa0 [ena]
-  ena_com_dev_reset+0xc8/0x110 [ena]
-  ena_down+0x3fe/0x480 [ena]
-  ena_destroy_device+0xeb/0xf0 [ena]
-  ena_fw_reset_device+0x30/0x50 [ena]
-  process_one_work+0x22b/0x3d0
-  worker_thread+0x4d/0x3f0
-  ? process_one_work+0x3d0/0x3d0
-  kthread+0x12a/0x150
-  ? set_kthread_struct+0x50/0x50
-  ret_from_fork+0x22/0x30
-  </TASK>
+   __find_next_entry+0x1a8/0x4b0
+   ? peek_next_entry+0x250/0x250
+   ? down_write+0xa5/0x120
+   ? down_write_killable+0x130/0x130
+   trace_find_next_entry_inc+0x3b/0x1d0
+   tracing_read_pipe+0x423/0xae0
+   ? tracing_splice_read_pipe+0xcb0/0xcb0
+   vfs_read+0x16b/0x490
+   ksys_read+0x105/0x210
+   ? __ia32_sys_pwrite64+0x200/0x200
+   ? switch_fpu_return+0x108/0x220
+   do_syscall_64+0x33/0x40
+   entry_SYSCALL_64_after_hwframe+0x61/0xc6
 
-Apparently, the reset delays are getting so large they can trigger a
-UBSAN panic.
+Through the vmcore, I found it's because in tracing_read_pipe(),
+ring_buffer_empty_cpu() found some buffer is not empty but then it
+cannot read anything due to "rb_num_of_entries() == 0" always true,
+Then it infinitely loop the procedure due to user buffer not been
+filled, see following code path:
 
-Looking at the code, the current timeout is capped at 5000us.  Using a
-base value of 100us, the current code will overflow after (1<<29).  Even
-at values before 32, this function wraps around, perhaps
-unintentionally.
+  tracing_read_pipe() {
+    ... ...
+    waitagain:
+      tracing_wait_pipe() // 1. find non-empty buffer here
+      trace_find_next_entry_inc()  // 2. loop here try to find an entry
+        __find_next_entry()
+          ring_buffer_empty_cpu();  // 3. find non-empty buffer
+          peek_next_entry()  // 4. but peek always return NULL
+            ring_buffer_peek()
+              rb_buffer_peek()
+                rb_get_reader_page()
+                  // 5. because rb_num_of_entries() == 0 always true here
+                  //    then return NULL
+      // 6. user buffer not been filled so goto 'waitgain'
+      //    and eventually leads to an deadloop in kernel!!!
+  }
 
-Cap the value of the exponent used for this backoff at (1<<16) which is
-larger than currently necessary, but large enough to support bigger
-values in the future.
+By some analyzing, I found that when resetting ringbuffer, the 'entries'
+of its pages are not all cleared (see rb_reset_cpu()). Then when reducing
+the ringbuffer, and if some reduced pages exist dirty 'entries' data, they
+will be added into 'cpu_buffer->overrun' (see rb_remove_pages()), which
+cause wrong 'overrun' count and eventually cause the deadloop issue.
+
+To fix it, we need to clear every pages in rb_reset_cpu().
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230708225144.3785600-1-zhengyejian1@huawei.com
 
 Cc: stable@vger.kernel.org
-Fixes: 4bb7f4cf60e3 ("net: ena: reduce driver load time")
-Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Shay Agroskin <shayagr@amazon.com>
-Link: https://lore.kernel.org/r/20230711013621.GE1926@templeofstupid.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a5fb833172eca ("ring-buffer: Fix uninitialized read_stamp")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_com.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/trace/ring_buffer.c |   24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
---- a/drivers/net/ethernet/amazon/ena/ena_com.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_com.c
-@@ -35,6 +35,8 @@
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -5242,28 +5242,34 @@ unsigned long ring_buffer_size(struct tr
+ }
+ EXPORT_SYMBOL_GPL(ring_buffer_size);
  
- #define ENA_REGS_ADMIN_INTR_MASK 1
- 
-+#define ENA_MAX_BACKOFF_DELAY_EXP 16U
++static void rb_clear_buffer_page(struct buffer_page *page)
++{
++	local_set(&page->write, 0);
++	local_set(&page->entries, 0);
++	rb_init_page(page->page);
++	page->read = 0;
++}
 +
- #define ENA_MIN_ADMIN_POLL_US 100
- 
- #define ENA_MAX_ADMIN_POLL_US 5000
-@@ -536,6 +538,7 @@ static int ena_com_comp_status_to_errno(
- 
- static void ena_delay_exponential_backoff_us(u32 exp, u32 delay_us)
+ static void
+ rb_reset_cpu(struct ring_buffer_per_cpu *cpu_buffer)
  {
-+	exp = min_t(u32, exp, ENA_MAX_BACKOFF_DELAY_EXP);
- 	delay_us = max_t(u32, ENA_MIN_ADMIN_POLL_US, delay_us);
- 	delay_us = min_t(u32, delay_us * (1U << exp), ENA_MAX_ADMIN_POLL_US);
- 	usleep_range(delay_us, 2 * delay_us);
++	struct buffer_page *page;
++
+ 	rb_head_page_deactivate(cpu_buffer);
+ 
+ 	cpu_buffer->head_page
+ 		= list_entry(cpu_buffer->pages, struct buffer_page, list);
+-	local_set(&cpu_buffer->head_page->write, 0);
+-	local_set(&cpu_buffer->head_page->entries, 0);
+-	local_set(&cpu_buffer->head_page->page->commit, 0);
+-
+-	cpu_buffer->head_page->read = 0;
++	rb_clear_buffer_page(cpu_buffer->head_page);
++	list_for_each_entry(page, cpu_buffer->pages, list) {
++		rb_clear_buffer_page(page);
++	}
+ 
+ 	cpu_buffer->tail_page = cpu_buffer->head_page;
+ 	cpu_buffer->commit_page = cpu_buffer->head_page;
+ 
+ 	INIT_LIST_HEAD(&cpu_buffer->reader_page->list);
+ 	INIT_LIST_HEAD(&cpu_buffer->new_pages);
+-	local_set(&cpu_buffer->reader_page->write, 0);
+-	local_set(&cpu_buffer->reader_page->entries, 0);
+-	local_set(&cpu_buffer->reader_page->page->commit, 0);
+-	cpu_buffer->reader_page->read = 0;
++	rb_clear_buffer_page(cpu_buffer->reader_page);
+ 
+ 	local_set(&cpu_buffer->entries_bytes, 0);
+ 	local_set(&cpu_buffer->overrun, 0);
 
 
