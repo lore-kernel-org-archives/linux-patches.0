@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCAE1FB40
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:14:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C405C433C7;
-	Fri, 21 Jul 2023 16:14:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8EB1FB40
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:14:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D41C433C9;
+	Fri, 21 Jul 2023 16:14:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956056;
-	bh=oytDSgUuT7xYCf3cXJP0kRhgXITYLduCI35TG+iGW8Q=;
+	s=korg; t=1689956059;
+	bh=TEX6HUfV86tTPLtWaO610ZY6mQiUHIezW58BwXc8wcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p42NZ8d1XsX1QBd5J1uI+j2MEzPJN03H9e2CN/hqkTbV6+NgRgxg+dTcf3+yfLRLx
-	 IadGZEjJCI/024RUTUNV+Um2JS6WbeWaOYhcHxGlAro/SKU2M7VmonfVWyiKUkS1D0
-	 YzvGYL1Cn5PiZNdIVY0CdLgUwJyORiQHLmNiJqRw=
+	b=FnLGFcxVwRdUDA6JF/pZVujK4yU7++HXObOcwn2HkBz/m5AJUj7cJWZzzwrmWKER6
+	 dmBfLAHGrwrv4hzYjxgeoS3PG37OGgVjq4CUMi+2vIqma2dN9gi7rUnTGBpOderLoo
+	 +MDCzrJOSh5y8mA1LG2SQFqku/uCGZ8etZhZBijQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karol Herbst <kherbst@redhat.com>,
-	Dave Airlie <airlied@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 100/292] drm/nouveau/acr: Abort loading ACR if no firmware was found
-Date: Fri, 21 Jul 2023 18:03:29 +0200
-Message-ID: <20230721160533.091378955@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.4 118/292] pinctrl: amd: Revert "pinctrl: amd: disable and mask interrupts on probe"
+Date: Fri, 21 Jul 2023 18:03:47 +0200
+Message-ID: <20230721160533.900043738@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -35,38 +34,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Karol Herbst <kherbst@redhat.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 938a06c8b7913455073506c33ae3bff029c3c4ef ]
+commit 65f6c7c91cb2ebacbf155e0f881f81e79f90d138 upstream.
 
-This fixes a NULL pointer access inside nvkm_acr_oneinit in case necessary
-firmware files couldn't be loaded.
+commit 4e5a04be88fe ("pinctrl: amd: disable and mask interrupts on probe")
+was well intentioned to mask a firmware issue on a surface laptop, but it
+has a few problems:
+1. It had a bug in the loop handling for iteration 63 that lead to other
+   problems with GPIO0 handling.
+2. It disables interrupts that are used internally by the SOC but masked
+   by default.
+3. It masked a real firmware problem in some chromebooks that should have
+   been caught during development but wasn't.
 
-Closes: https://gitlab.freedesktop.org/drm/nouveau/-/issues/212
-Fixes: 4b569ded09fd ("drm/nouveau/acr/ga102: initial support")
-Signed-off-by: Karol Herbst <kherbst@redhat.com>
-Reviewed-by: Dave Airlie <airlied@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230522201838.1496622-1-kherbst@redhat.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+There has been a lot of other development around s2idle; particularly
+around handling of the spurious wakeups.  If there is still a problem on
+the original reported surface laptop it should be avoided by adding a quirk
+to gpiolib-acpi for that system instead.
+
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20230421120625.3366-5-mario.limonciello@amd.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-amd.c |   31 -------------------------------
+ 1 file changed, 31 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c b/drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c
-index 795f3a649b122..9b8ca4e898f90 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c
-@@ -224,7 +224,7 @@ nvkm_acr_oneinit(struct nvkm_subdev *subdev)
- 	u64 falcons;
- 	int ret, i;
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -877,34 +877,6 @@ static const struct pinconf_ops amd_pinc
+ 	.pin_config_group_set = amd_pinconf_group_set,
+ };
  
--	if (list_empty(&acr->hsfw)) {
-+	if (list_empty(&acr->hsfw) || !acr->func || !acr->func->wpr_layout) {
- 		nvkm_debug(subdev, "No HSFW(s)\n");
- 		nvkm_acr_cleanup(acr);
- 		return 0;
--- 
-2.39.2
-
+-static void amd_gpio_irq_init(struct amd_gpio *gpio_dev)
+-{
+-	struct pinctrl_desc *desc = gpio_dev->pctrl->desc;
+-	unsigned long flags;
+-	u32 pin_reg, mask;
+-	int i;
+-
+-	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3) |
+-		BIT(INTERRUPT_MASK_OFF) | BIT(INTERRUPT_ENABLE_OFF) |
+-		BIT(WAKE_CNTRL_OFF_S4);
+-
+-	for (i = 0; i < desc->npins; i++) {
+-		int pin = desc->pins[i].number;
+-		const struct pin_desc *pd = pin_desc_get(gpio_dev->pctrl, pin);
+-
+-		if (!pd)
+-			continue;
+-
+-		raw_spin_lock_irqsave(&gpio_dev->lock, flags);
+-
+-		pin_reg = readl(gpio_dev->base + pin * 4);
+-		pin_reg &= ~mask;
+-		writel(pin_reg, gpio_dev->base + pin * 4);
+-
+-		raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
+-	}
+-}
+-
+ #ifdef CONFIG_PM_SLEEP
+ static bool amd_gpio_should_save(struct amd_gpio *gpio_dev, unsigned int pin)
+ {
+@@ -1142,9 +1114,6 @@ static int amd_gpio_probe(struct platfor
+ 		return PTR_ERR(gpio_dev->pctrl);
+ 	}
+ 
+-	/* Disable and mask interrupts */
+-	amd_gpio_irq_init(gpio_dev);
+-
+ 	girq = &gpio_dev->gc.irq;
+ 	gpio_irq_chip_set_chip(girq, &amd_gpio_irqchip);
+ 	/* This will let us handle the parent IRQ in the driver */
 
 
