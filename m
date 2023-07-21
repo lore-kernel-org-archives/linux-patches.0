@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F39720F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22380C433C8;
-	Fri, 21 Jul 2023 19:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64AA920F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D872EC433C8;
+	Fri, 21 Jul 2023 19:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966998;
-	bh=HOHt3h1k6j4IvmVeEXjr5UPiomF3r1nFxGNIIV+CHsk=;
+	s=korg; t=1689967001;
+	bh=be4P8mjr2MtFcJes8CoYAS0u3xj9cnSVHmzGULIAeis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Yjb47b2ODRdKHB8qPZOQw037Hczx2GJSpQsHM+fY6hosnQMbO3KW3b4BnbnDvYQa
-	 osz1qCY5RGFpjVoguH149eFQiUeJ5pf1LvGPkfLYKEZbJmpkGtQjDx57Dn0ih9fByV
-	 130dTs9BnJ97hSkwctXyCLVDIjtR1VQ5ItqeJgYU=
+	b=YXQUhIWg+osoSZXKLtTGzDT37VwRgzhwmlhQd3LOpBIIG4YJsaG3e3gzGfKheeHQR
+	 D4KJrPRr4yn4FRTX0sICPRvvpxYS9qvzwuGeF9CdMK+WKZpYLQvf3ysUoo6mx6SMtV
+	 mtJ5IgFs0GN+rNXs+6lEBgWSl95Sv9DaTMzkNbu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Fertser <fercerpav@gmail.com>,
-	Ivan Mikhaylov <fr0st61te@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 001/223] net/ncsi: change from ndo_set_mac_address to dev_set_mac_address
-Date: Fri, 21 Jul 2023 18:04:14 +0200
-Message-ID: <20230721160520.933089261@linuxfoundation.org>
+	Petr Tesarik <petr.tesarik.ext@huawei.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 010/223] swiotlb: always set the number of areas before allocating the pool
+Date: Fri, 21 Jul 2023 18:04:23 +0200
+Message-ID: <20230721160521.313553893@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,50 +36,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivan Mikhaylov <fr0st61te@gmail.com>
+From: Petr Tesarik <petr.tesarik.ext@huawei.com>
 
-commit 790071347a0a1a89e618eedcd51c687ea783aeb3 upstream.
+[ Upstream commit aabd12609f91155f26584508b01f548215cc3c0c ]
 
-Change ndo_set_mac_address to dev_set_mac_address because
-dev_set_mac_address provides a way to notify network layer about MAC
-change. In other case, services may not aware about MAC change and keep
-using old one which set from network adapter driver.
+The number of areas defaults to the number of possible CPUs. However, the
+total number of slots may have to be increased after adjusting the number
+of areas. Consequently, the number of areas must be determined before
+allocating the memory pool. This is even explained with a comment in
+swiotlb_init_remap(), but swiotlb_init_late() adjusts the number of areas
+after slots are already allocated. The areas may end up being smaller than
+IO_TLB_SEGSIZE, which breaks per-area locking.
 
-As example, DHCP client from systemd do not update MAC address without
-notification from net subsystem which leads to the problem with acquiring
-the right address from DHCP server.
+While fixing swiotlb_init_late(), move all relevant comments before the
+definition of swiotlb_adjust_nareas() and convert them to kernel-doc.
 
-Fixes: cb10c7c0dfd9e ("net/ncsi: Add NCSI Broadcom OEM command")
-Cc: stable@vger.kernel.org # v6.0+ 2f38e84 net/ncsi: make one oem_gma function for all mfr id
-Signed-off-by: Paul Fertser <fercerpav@gmail.com>
-Signed-off-by: Ivan Mikhaylov <fr0st61te@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 20347fca71a3 ("swiotlb: split up the global swiotlb lock")
+Signed-off-by: Petr Tesarik <petr.tesarik.ext@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/ncsi-rsp.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/dma/swiotlb.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -616,7 +616,6 @@ static int ncsi_rsp_handler_oem_mlx_gma(
+diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
+index 7f4ad5e70b40c..3961065412542 100644
+--- a/kernel/dma/swiotlb.c
++++ b/kernel/dma/swiotlb.c
+@@ -117,9 +117,16 @@ static bool round_up_default_nslabs(void)
+ 	return true;
+ }
+ 
++/**
++ * swiotlb_adjust_nareas() - adjust the number of areas and slots
++ * @nareas:	Desired number of areas. Zero is treated as 1.
++ *
++ * Adjust the default number of areas in a memory pool.
++ * The default size of the memory pool may also change to meet minimum area
++ * size requirements.
++ */
+ static void swiotlb_adjust_nareas(unsigned int nareas)
  {
- 	struct ncsi_dev_priv *ndp = nr->ndp;
- 	struct net_device *ndev = ndp->ndev.dev;
--	const struct net_device_ops *ops = ndev->netdev_ops;
- 	struct ncsi_rsp_oem_pkt *rsp;
- 	struct sockaddr saddr;
- 	int ret = 0;
-@@ -630,7 +629,9 @@ static int ncsi_rsp_handler_oem_mlx_gma(
- 	/* Set the flag for GMA command which should only be called once */
- 	ndp->gma_flag = 1;
+-	/* use a single area when non is specified */
+ 	if (!nareas)
+ 		nareas = 1;
+ 	else if (!is_power_of_2(nareas))
+@@ -318,10 +325,6 @@ void __init swiotlb_init_remap(bool addressing_limit, unsigned int flags,
+ 	if (swiotlb_force_disable)
+ 		return;
  
--	ret = ops->ndo_set_mac_address(ndev, &saddr);
-+	rtnl_lock();
-+	ret = dev_set_mac_address(ndev, &saddr, NULL);
-+	rtnl_unlock();
- 	if (ret < 0)
- 		netdev_warn(ndev, "NCSI: 'Writing mac address to device failed\n");
+-	/*
+-	 * default_nslabs maybe changed when adjust area number.
+-	 * So allocate bounce buffer after adjusting area number.
+-	 */
+ 	if (!default_nareas)
+ 		swiotlb_adjust_nareas(num_possible_cpus());
  
+@@ -398,6 +401,9 @@ int swiotlb_init_late(size_t size, gfp_t gfp_mask,
+ 	if (swiotlb_force_disable)
+ 		return 0;
+ 
++	if (!default_nareas)
++		swiotlb_adjust_nareas(num_possible_cpus());
++
+ retry:
+ 	order = get_order(nslabs << IO_TLB_SHIFT);
+ 	nslabs = SLABS_PER_PAGE << order;
+@@ -432,9 +438,6 @@ int swiotlb_init_late(size_t size, gfp_t gfp_mask,
+ 			(PAGE_SIZE << order) >> 20);
+ 	}
+ 
+-	if (!default_nareas)
+-		swiotlb_adjust_nareas(num_possible_cpus());
+-
+ 	area_order = get_order(array_size(sizeof(*mem->areas),
+ 		default_nareas));
+ 	mem->areas = (struct io_tlb_area *)
+-- 
+2.39.2
+
 
 
