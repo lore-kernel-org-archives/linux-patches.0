@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5266520F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:21:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1777C433C9;
-	Fri, 21 Jul 2023 19:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B4320F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:21:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7ECC433C8;
+	Fri, 21 Jul 2023 19:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967261;
-	bh=QKg4sBedqvhdy39FPwOEy1xhGOjxj8ogiro2joN9/Ug=;
+	s=korg; t=1689967264;
+	bh=TUhUFKLrrhnUuSGQxaBFeYSPyZCzeYC5iVMggf0LJaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kMLfwcUmjoc/xO/TJL274xaCKXFhr3yl8LvWIm4o1aUhq6MHVnTSZ2v6X+Ym0D9Vt
-	 qNeyxaxQ+57wAhqXpfw7n6KRuiMklHTDZwhCh5uW0s4BPehu8+8bIclMzpPpeUKE2O
-	 PkC7OvX5CpeZ+b6qQhcLm2w2wnBUOvp8MlDLDzkw=
+	b=FKgqqoNWU3ciPFH1c6uqjQ6FmlInlH25YbWdH8zSMtP0hEKGl9zIbOzwKDJ6AI3yO
+	 4gtZCElhWB/e/BFTSRQkgGQdXHFCZJjrauaxWuAlscp+dCktSIz7ld6rj4p8D853Ji
+	 pywu2y2hNhOP8hgdtbHB+IuEWL47pWQ2n1LPQvZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nageswara R Sastry <rnsastry@linux.ibm.com>,
-	Russell Currey <ruscur@russell.cc>,
 	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.1 100/223] powerpc/security: Fix Speculation_Store_Bypass reporting on Power10
-Date: Fri, 21 Jul 2023 18:05:53 +0200
-Message-ID: <20230721160525.128954345@linuxfoundation.org>
+Subject: [PATCH 6.1 101/223] powerpc/64s: Fix native_hpte_remove() to be irq-safe
+Date: Fri, 21 Jul 2023 18:05:54 +0200
+Message-ID: <20230721160525.171124303@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -37,87 +35,119 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit 5bcedc5931e7bd6928a2d8207078d4cb476b3b55 upstream.
+commit 8bbe9fee5848371d4af101be445303cac8d880c5 upstream.
 
-Nageswara reported that /proc/self/status was showing "vulnerable" for
-the Speculation_Store_Bypass feature on Power10, eg:
+Lockdep warns that the use of the hpte_lock in native_hpte_remove() is
+not safe against an IRQ coming in:
 
-  $ grep Speculation_Store_Bypass: /proc/self/status
-  Speculation_Store_Bypass:       vulnerable
+  ================================
+  WARNING: inconsistent lock state
+  6.4.0-rc2-g0c54f4d30ecc #1 Not tainted
+  --------------------------------
+  inconsistent {IN-SOFTIRQ-W} -> {SOFTIRQ-ON-W} usage.
+  qemu-system-ppc/93865 [HC0[0]:SC0[0]:HE1:SE1] takes:
+  c0000000021f5180 (hpte_lock){+.?.}-{0:0}, at: native_lock_hpte+0x8/0xd0
+  {IN-SOFTIRQ-W} state was registered at:
+    lock_acquire+0x134/0x3f0
+    native_lock_hpte+0x44/0xd0
+    native_hpte_insert+0xd4/0x2a0
+    __hash_page_64K+0x218/0x4f0
+    hash_page_mm+0x464/0x840
+    do_hash_fault+0x11c/0x260
+    data_access_common_virt+0x210/0x220
+    __ip_select_ident+0x140/0x150
+    ...
+    net_rx_action+0x3bc/0x440
+    __do_softirq+0x180/0x534
+    ...
+    sys_sendmmsg+0x34/0x50
+    system_call_exception+0x128/0x320
+    system_call_common+0x160/0x2e4
+  ...
+   Possible unsafe locking scenario:
 
-But at the same time the sysfs files, and lscpu, were showing "Not
-affected".
+         CPU0
+         ----
+    lock(hpte_lock);
+    <Interrupt>
+      lock(hpte_lock);
 
-This turns out to simply be a bug in the reporting of the
-Speculation_Store_Bypass, aka. PR_SPEC_STORE_BYPASS, case.
+   *** DEADLOCK ***
+  ...
+  Call Trace:
+    dump_stack_lvl+0x98/0xe0 (unreliable)
+    print_usage_bug.part.0+0x250/0x278
+    mark_lock+0xc9c/0xd30
+    __lock_acquire+0x440/0x1ca0
+    lock_acquire+0x134/0x3f0
+    native_lock_hpte+0x44/0xd0
+    native_hpte_remove+0xb0/0x190
+    kvmppc_mmu_map_page+0x650/0x698 [kvm_pr]
+    kvmppc_handle_pagefault+0x534/0x6e8 [kvm_pr]
+    kvmppc_handle_exit_pr+0x6d8/0xe90 [kvm_pr]
+    after_sprg3_load+0x80/0x90 [kvm_pr]
+    kvmppc_vcpu_run_pr+0x108/0x270 [kvm_pr]
+    kvmppc_vcpu_run+0x34/0x48 [kvm]
+    kvm_arch_vcpu_ioctl_run+0x340/0x470 [kvm]
+    kvm_vcpu_ioctl+0x338/0x8b8 [kvm]
+    sys_ioctl+0x7c4/0x13e0
+    system_call_exception+0x128/0x320
+    system_call_common+0x160/0x2e4
 
-When SEC_FTR_STF_BARRIER was added, so that firmware could communicate
-the vulnerability was not present, the code in ssb_prctl_get() was not
-updated to check the new flag.
+I suspect kvm_pr is the only caller that doesn't already have IRQs
+disabled, which is why this hasn't been reported previously.
 
-So add the check for SEC_FTR_STF_BARRIER being disabled. Rather than
-adding the new check to the existing if block and expanding the comment
-to cover both cases, rewrite the three cases to be separate so they can
-be commented separately for clarity.
+Fix it by disabling IRQs in native_hpte_remove().
 
-Fixes: 84ed26fd00c5 ("powerpc/security: Add a security feature for STF barrier")
-Cc: stable@vger.kernel.org # v5.14+
-Reported-by: Nageswara R Sastry <rnsastry@linux.ibm.com>
-Tested-by: Nageswara R Sastry <rnsastry@linux.ibm.com>
-Reviewed-by: Russell Currey <ruscur@russell.cc>
+Fixes: 35159b5717fa ("powerpc/64s: make HPTE lock and native_tlbie_lock irq-safe")
+Cc: stable@vger.kernel.org # v6.1+
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230517074945.53188-1-mpe@ellerman.id.au
+Link: https://msgid.link/20230517123033.18430-1-mpe@ellerman.id.au
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/security.c |   35 ++++++++++++++++++-----------------
- 1 file changed, 18 insertions(+), 17 deletions(-)
+ arch/powerpc/mm/book3s64/hash_native.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/arch/powerpc/kernel/security.c
-+++ b/arch/powerpc/kernel/security.c
-@@ -364,26 +364,27 @@ ssize_t cpu_show_spec_store_bypass(struc
+diff --git a/arch/powerpc/mm/book3s64/hash_native.c b/arch/powerpc/mm/book3s64/hash_native.c
+index 9342e79870df..430d1d935a7c 100644
+--- a/arch/powerpc/mm/book3s64/hash_native.c
++++ b/arch/powerpc/mm/book3s64/hash_native.c
+@@ -328,10 +328,12 @@ static long native_hpte_insert(unsigned long hpte_group, unsigned long vpn,
  
- static int ssb_prctl_get(struct task_struct *task)
+ static long native_hpte_remove(unsigned long hpte_group)
  {
-+	/*
-+	 * The STF_BARRIER feature is on by default, so if it's off that means
-+	 * firmware has explicitly said the CPU is not vulnerable via either
-+	 * the hypercall or device tree.
-+	 */
-+	if (!security_ftr_enabled(SEC_FTR_STF_BARRIER))
-+		return PR_SPEC_NOT_AFFECTED;
++	unsigned long hpte_v, flags;
+ 	struct hash_pte *hptep;
+ 	int i;
+ 	int slot_offset;
+-	unsigned long hpte_v;
 +
-+	/*
-+	 * If the system's CPU has no known barrier (see setup_stf_barrier())
-+	 * then assume that the CPU is not vulnerable.
-+	 */
- 	if (stf_enabled_flush_types == STF_BARRIER_NONE)
--		/*
--		 * We don't have an explicit signal from firmware that we're
--		 * vulnerable or not, we only have certain CPU revisions that
--		 * are known to be vulnerable.
--		 *
--		 * We assume that if we're on another CPU, where the barrier is
--		 * NONE, then we are not vulnerable.
--		 */
- 		return PR_SPEC_NOT_AFFECTED;
--	else
--		/*
--		 * If we do have a barrier type then we are vulnerable. The
--		 * barrier is not a global or per-process mitigation, so the
--		 * only value we can report here is PR_SPEC_ENABLE, which
--		 * appears as "vulnerable" in /proc.
--		 */
--		return PR_SPEC_ENABLE;
++	local_irq_save(flags);
  
--	return -EINVAL;
-+	/*
-+	 * Otherwise the CPU is vulnerable. The barrier is not a global or
-+	 * per-process mitigation, so the only value that can be reported here
-+	 * is PR_SPEC_ENABLE, which appears as "vulnerable" in /proc.
-+	 */
-+	return PR_SPEC_ENABLE;
+ 	DBG_LOW("    remove(group=%lx)\n", hpte_group);
+ 
+@@ -356,13 +358,16 @@ static long native_hpte_remove(unsigned long hpte_group)
+ 		slot_offset &= 0x7;
+ 	}
+ 
+-	if (i == HPTES_PER_GROUP)
+-		return -1;
++	if (i == HPTES_PER_GROUP) {
++		i = -1;
++		goto out;
++	}
+ 
+ 	/* Invalidate the hpte. NOTE: this also unlocks it */
+ 	release_hpte_lock();
+ 	hptep->v = 0;
+-
++out:
++	local_irq_restore(flags);
+ 	return i;
  }
  
- int arch_prctl_spec_ctrl_get(struct task_struct *task, unsigned long which)
+-- 
+2.41.0
+
 
 
