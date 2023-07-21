@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32E4200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:10:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33212C433C7;
-	Fri, 21 Jul 2023 19:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2F8200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:10:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C80BC433C8;
+	Fri, 21 Jul 2023 19:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966612;
-	bh=LULTxCY0NcejywFFwB/9TLPN3NVh1iQ0Padl4avB77U=;
+	s=korg; t=1689966615;
+	bh=zI1p02K+PSAkTWWyxC/hspYjyeaGvotusTpg1Xgy2Rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u4kBKRtkORzNXHOO8IQs4GjIQQo4YjE1tGVrcH0pg2h9sSo2cFm8r652wsaSQgFx2
-	 yUJJZZBKh53PMoDRECj9NRnb0oQvBTsrmEKDfjczlPJZW6rv18EEq8jxfcBLleYdzW
-	 siiXRX9o8JDA+uPajQw2s15saKNt+l/7zWmJdbD4=
+	b=AMC0qUM3/0+Tob9tzC6GSXGruphq1yH3WLGEgbIdW/EeGqIPE4dfo/f5stOl5toBq
+	 0knLV0C/CSHN/qbk+DxiCAHjIvzazeYD/eML9mhX5W1lTMMGaGmnKt3Bw3rjUsPTwA
+	 dU2thr5X3iLQ1YZVjMCqXiGWBU/fZ2qhguA+D41Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Klaus Kudielka <klaus.kudielka@gmail.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 405/532] bpf: Fix max stack depth check for async callbacks
-Date: Fri, 21 Jul 2023 18:05:09 +0200
-Message-ID: <20230721160636.432083300@linuxfoundation.org>
+Subject: [PATCH 5.15 406/532] net: mvneta: fix txq_map in case of txq_number==1
+Date: Fri, 21 Jul 2023 18:05:10 +0200
+Message-ID: <20230721160636.486247257@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,57 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Klaus Kudielka <klaus.kudielka@gmail.com>
 
-[ Upstream commit 5415ccd50a8620c8cbaa32d6f18c946c453566f5 ]
+[ Upstream commit 21327f81db6337c8843ce755b01523c7d3df715b ]
 
-The check_max_stack_depth pass happens after the verifier's symbolic
-execution, and attempts to walk the call graph of the BPF program,
-ensuring that the stack usage stays within bounds for all possible call
-chains. There are two cases to consider: bpf_pseudo_func and
-bpf_pseudo_call. In the former case, the callback pointer is loaded into
-a register, and is assumed that it is passed to some helper later which
-calls it (however there is no way to be sure), but the check remains
-conservative and accounts the stack usage anyway. For this particular
-case, asynchronous callbacks are skipped as they execute asynchronously
-when their corresponding event fires.
+If we boot with mvneta.txq_number=1, the txq_map is set incorrectly:
+MVNETA_CPU_TXQ_ACCESS(1) refers to TX queue 1, but only TX queue 0 is
+initialized. Fix this.
 
-The case of bpf_pseudo_call is simpler and we know that the call is
-definitely made, hence the stack depth of the subprog is accounted for.
-
-However, the current check still skips an asynchronous callback even if
-a bpf_pseudo_call was made for it. This is erroneous, as it will miss
-accounting for the stack usage of the asynchronous callback, which can
-be used to breach the maximum stack depth limit.
-
-Fix this by only skipping asynchronous callbacks when the instruction is
-not a pseudo call to the subprog.
-
-Fixes: 7ddc80a476c2 ("bpf: Teach stack depth check about async callbacks.")
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20230705144730.235802-2-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 50bf8cb6fc9c ("net: mvneta: Configure XPS support")
+Signed-off-by: Klaus Kudielka <klaus.kudielka@gmail.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Link: https://lore.kernel.org/r/20230705053712.3914-1-klaus.kudielka@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/mvneta.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 7a70595c3c15a..bd31aa6407a78 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -3765,8 +3765,9 @@ static int check_max_stack_depth(struct bpf_verifier_env *env)
- 				verbose(env, "verifier bug. subprog has tail_call and async cb\n");
- 				return -EFAULT;
- 			}
--			 /* async callbacks don't increase bpf prog stack size */
--			continue;
-+			/* async callbacks don't increase bpf prog stack size unless called directly */
-+			if (!bpf_pseudo_call(insn + i))
-+				continue;
- 		}
- 		i = next_insn;
+diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
+index 5c431a3697622..f5b5ae58c2691 100644
+--- a/drivers/net/ethernet/marvell/mvneta.c
++++ b/drivers/net/ethernet/marvell/mvneta.c
+@@ -1474,7 +1474,7 @@ static void mvneta_defaults_set(struct mvneta_port *pp)
+ 			 */
+ 			if (txq_number == 1)
+ 				txq_map = (cpu == pp->rxq_def) ?
+-					MVNETA_CPU_TXQ_ACCESS(1) : 0;
++					MVNETA_CPU_TXQ_ACCESS(0) : 0;
  
+ 		} else {
+ 			txq_map = MVNETA_CPU_TXQ_ACCESS_ALL_MASK;
+@@ -4185,7 +4185,7 @@ static void mvneta_percpu_elect(struct mvneta_port *pp)
+ 		 */
+ 		if (txq_number == 1)
+ 			txq_map = (cpu == elected_cpu) ?
+-				MVNETA_CPU_TXQ_ACCESS(1) : 0;
++				MVNETA_CPU_TXQ_ACCESS(0) : 0;
+ 		else
+ 			txq_map = mvreg_read(pp, MVNETA_CPU_MAP(cpu)) &
+ 				MVNETA_CPU_TXQ_ACCESS_ALL_MASK;
 -- 
 2.39.2
 
