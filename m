@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A42200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:03:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5304C433C8;
-	Fri, 21 Jul 2023 19:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30790200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:03:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C84C433C8;
+	Fri, 21 Jul 2023 19:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966236;
-	bh=tOFIa/fxNLcAu6h6GuVST2YWjk38g77k1sRQ6RyZxeI=;
+	s=korg; t=1689966239;
+	bh=iO5Y1I7rjtwDVR5qYKnTiSPF516KD9sxCndywiRCvYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cHG7FMZ99TJqSz4ZM6Jkbe7/s5hY55w9hxEFhTi4PspJds0bCPqRtxulwnlN5b306
-	 9qQRBLJd+j5PP2f/oMn/fkAkbUq+CP0Z+0kOlJIMZSLKDO9VqI/S8x3Cu1QwbPOz85
-	 uRNbJks8y1rfA4hEWK8ZAGXm79yI0eJGFV2u+fgE=
+	b=16A/qQHMWTuPFABtob0LWm6BdiT4oXM1mCSlEcA7jvoNPAgU0+XTOUlsU3I/rsI8D
+	 fwF9Ff5Iyxc54TnxDF5B1+xYRIXArCco07/wj9Je9nWP+Myx6AOwpBqTbdySDKKk14
+	 6MsopI5uOATn0XwWHp1VUd8Agu2Kg4rHCtpnqO5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Dulov <d.dulov@aladdin.ru>,
+	Marek Vasut <marex@denx.de>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 272/532] media: usb: Check az6007_read() return value
-Date: Fri, 21 Jul 2023 18:02:56 +0200
-Message-ID: <20230721160629.109537437@linuxfoundation.org>
+Subject: [PATCH 5.15 273/532] media: videodev2.h: Fix struct v4l2_input tuner index comment
+Date: Fri, 21 Jul 2023 18:02:57 +0200
+Message-ID: <20230721160629.174049606@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,36 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniil Dulov <d.dulov@aladdin.ru>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit fdaca63186f59fc664b346c45b76576624b48e57 ]
+[ Upstream commit 26ae58f65e64fa7ba61d64bae752e59e08380c6a ]
 
-If az6007_read() returns error, there is no sence to continue.
+VIDIOC_ENUMINPUT documentation describes the tuner field of
+struct v4l2_input as index:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Documentation/userspace-api/media/v4l/vidioc-enuminput.rst
+"
+* - __u32
+  - ``tuner``
+  - Capture devices can have zero or more tuners (RF demodulators).
+    When the ``type`` is set to ``V4L2_INPUT_TYPE_TUNER`` this is an
+    RF connector and this field identifies the tuner. It corresponds
+    to struct :c:type:`v4l2_tuner` field ``index``. For
+    details on tuners see :ref:`tuner`.
+"
 
-Fixes: 3af2f4f15a61 ("[media] az6007: Change the az6007 read/write routine parameter")
-Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Drivers I could find also use the 'tuner' field as an index, e.g.:
+drivers/media/pci/bt8xx/bttv-driver.c bttv_enum_input()
+drivers/media/usb/go7007/go7007-v4l2.c vidioc_enum_input()
+
+However, the UAPI comment claims this field is 'enum v4l2_tuner_type':
+include/uapi/linux/videodev2.h
+
+This field being 'enum v4l2_tuner_type' is unlikely as it seems to be
+never used that way in drivers, and documentation confirms it. It seem
+this comment got in accidentally in the commit which this patch fixes.
+Fix the UAPI comment to stop confusion.
+
+This was pointed out by Dmitry while reviewing VIDIOC_ENUMINPUT
+support for strace.
+
+Fixes: 6016af82eafc ("[media] v4l2: use __u32 rather than enums in ioctl() structs")
+Signed-off-by: Marek Vasut <marex@denx.de>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb-v2/az6007.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/uapi/linux/videodev2.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/dvb-usb-v2/az6007.c b/drivers/media/usb/dvb-usb-v2/az6007.c
-index 62ee09f28a0bc..7524c90f5da61 100644
---- a/drivers/media/usb/dvb-usb-v2/az6007.c
-+++ b/drivers/media/usb/dvb-usb-v2/az6007.c
-@@ -202,7 +202,8 @@ static int az6007_rc_query(struct dvb_usb_device *d)
- 	unsigned code;
- 	enum rc_proto proto;
- 
--	az6007_read(d, AZ6007_READ_IR, 0, 0, st->data, 10);
-+	if (az6007_read(d, AZ6007_READ_IR, 0, 0, st->data, 10) < 0)
-+		return -EIO;
- 
- 	if (st->data[1] == 0x44)
- 		return 0;
+diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+index 61c5011dfc13d..f5c6758464f25 100644
+--- a/include/uapi/linux/videodev2.h
++++ b/include/uapi/linux/videodev2.h
+@@ -1652,7 +1652,7 @@ struct v4l2_input {
+ 	__u8	     name[32];		/*  Label */
+ 	__u32	     type;		/*  Type of input */
+ 	__u32	     audioset;		/*  Associated audios (bitfield) */
+-	__u32        tuner;             /*  enum v4l2_tuner_type */
++	__u32        tuner;             /*  Tuner index */
+ 	v4l2_std_id  std;
+ 	__u32	     status;
+ 	__u32	     capabilities;
 -- 
 2.39.2
 
