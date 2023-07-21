@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6EA20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:26:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851C5C433D9;
-	Fri, 21 Jul 2023 19:26:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C9D20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:26:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52696C433C8;
+	Fri, 21 Jul 2023 19:26:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967611;
-	bh=ElAdtHySEFrLacSBSTpAbBVBu8ZxFEA9lWL3++5Ezrk=;
+	s=korg; t=1689967614;
+	bh=YRq3MRXQ/9ed3BU9vGD3EL5xWyQL8+zGkJVnrb0ScqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lwXhxE7FCTPJ/wZBx2Tu2Af9WerFPmYIPu9eCgqHAWGeOnd1iz8c8TeqAeTpK2yC9
-	 hRCk6K5hd3qyC5oF3l89rUrYWM1Ya/+dAZDoIWnJoab2ygLtt4qgqelp62b9oKkxVy
-	 W2qWVOpzKu6RNYNxLZ62KUeR5zIR72bAf+YAc0Jg=
+	b=bj1ZVV9ZAQUU8lUMsgacbOUQU2U++AfCPRUxfJ5C6ugTK/f4skormQqVHkQ7rR+1a
+	 51/XkWwcGJDOvxrFfkAao6bqNI0CTEzFfDYyUDd1+GyHuhAG0MnP1pC1EsLQssiyQa
+	 8YwqRvmQ+hjGSFLbEvf6ri9CKzVMnTiqTft+RJ9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 223/223] net/sched: sch_qfq: reintroduce lmax bound check for MTU
-Date: Fri, 21 Jul 2023 18:07:56 +0200
-Message-ID: <20230721160530.374546656@linuxfoundation.org>
+	Steven Rostedt <rostedt@goodmis.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.1 203/223] tracing/probes: Fix to update dynamic data counter if fetcharg uses it
+Date: Fri, 21 Jul 2023 18:07:36 +0200
+Message-ID: <20230721160529.530074643@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -37,47 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 158810b261d02fc7dd92ca9c392d8f8a211a2401 upstream.
+commit e38e2c6a9efc435f9de344b7c91f7697e01b47d5 upstream.
 
-25369891fcef deletes a check for the case where no 'lmax' is
-specified which 3037933448f6 previously fixed as 'lmax'
-could be set to the device's MTU without any bound checking
-for QFQ_LMAX_MIN and QFQ_LMAX_MAX. Therefore, reintroduce the check.
+Fix to update dynamic data counter ('dyndata') and max length ('maxlen')
+only if the fetcharg uses the dynamic data. Also get out arg->dynamic
+from unlikely(). This makes dynamic data address wrong if
+process_fetch_insn() returns error on !arg->dynamic case.
 
-Fixes: 25369891fcef ("net/sched: sch_qfq: refactor parsing of netlink parameters")
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/all/168908494781.123124.8160245359962103684.stgit@devnote2/
+
+Suggested-by: Steven Rostedt <rostedt@goodmis.org>
+Link: https://lore.kernel.org/all/20230710233400.5aaf024e@gandalf.local.home/
+Fixes: 9178412ddf5a ("tracing: probeevent: Return consumed bytes of dynamic area")
+Cc: stable@vger.kernel.org
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_qfq.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ kernel/trace/trace_probe_tmpl.h |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/net/sched/sch_qfq.c
-+++ b/net/sched/sch_qfq.c
-@@ -428,10 +428,17 @@ static int qfq_change_class(struct Qdisc
- 	else
- 		weight = 1;
- 
--	if (tb[TCA_QFQ_LMAX])
-+	if (tb[TCA_QFQ_LMAX]) {
- 		lmax = nla_get_u32(tb[TCA_QFQ_LMAX]);
--	else
-+	} else {
-+		/* MTU size is user controlled */
- 		lmax = psched_mtu(qdisc_dev(sch));
-+		if (lmax < QFQ_MIN_LMAX || lmax > QFQ_MAX_LMAX) {
-+			NL_SET_ERR_MSG_MOD(extack,
-+					   "MTU size out of bounds for qfq");
-+			return -EINVAL;
-+		}
-+	}
- 
- 	inv_w = ONE_FP / weight;
- 	weight = ONE_FP / inv_w;
+--- a/kernel/trace/trace_probe_tmpl.h
++++ b/kernel/trace/trace_probe_tmpl.h
+@@ -206,11 +206,13 @@ store_trace_args(void *data, struct trac
+ 		if (unlikely(arg->dynamic))
+ 			*dl = make_data_loc(maxlen, dyndata - base);
+ 		ret = process_fetch_insn(arg->code, rec, dl, base);
+-		if (unlikely(ret < 0 && arg->dynamic)) {
+-			*dl = make_data_loc(0, dyndata - base);
+-		} else {
+-			dyndata += ret;
+-			maxlen -= ret;
++		if (arg->dynamic) {
++			if (unlikely(ret < 0)) {
++				*dl = make_data_loc(0, dyndata - base);
++			} else {
++				dyndata += ret;
++				maxlen -= ret;
++			}
+ 		}
+ 	}
+ }
 
 
