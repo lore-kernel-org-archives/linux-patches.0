@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCB51F923
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:55:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B180C433C8;
-	Fri, 21 Jul 2023 18:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC4A1F923
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:55:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF78C433C8;
+	Fri, 21 Jul 2023 18:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965706;
-	bh=ZOTt8pW0dI/iGuEKohkw2+dZCwnnulYjW/CJlt7l1gA=;
+	s=korg; t=1689965709;
+	bh=d79wVLmJKTqcUfOeTfiLiviudnimvNoWGvnBd5i5l3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=08cRIWOLBFEZCv5wyhfwUmZqyWkkuYjvYf8sgD7PFAJkvxpF8L4rTuJ86WRmn0I+K
-	 ltXMZ4/cDVmj1mqwzrUJVc1e8cxSCS8BEjaD3bX/ouuSoFBB9JLAq5msG/sfvTb0yq
-	 Ysl7JrRomRtRdd8GqYvTK4fMPoGCG/68F2ctYHak=
+	b=w09TAYBgcYIFJlNZtPNjYslNFKWfDhwSWV5nJ+51ncnxNCv4vUdikiHpJQAfvzkIq
+	 m0pRIEwY3MqdYLPgsrUIQ1cHS2ww0QJtyqtQs2Y+FsXiGz9VYfn3iIB0n2hmzRX1Hm
+	 fW8iEjWJzicLpZQFSgkc+9hl5POYzcjzjtXtm7Sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Kochetkov <fido_max@inbox.ru>,
-	Robert Hancock <robert.hancock@calian.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Luca Coelho <luciano.coelho@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 086/532] net: axienet: Move reset before 64-bit DMA detection
-Date: Fri, 21 Jul 2023 17:59:50 +0200
-Message-ID: <20230721160619.245923451@linuxfoundation.org>
+Subject: [PATCH 5.15 069/532] iwlwifi: dont dump_stack() when we get an unexpected interrupt
+Date: Fri, 21 Jul 2023 17:59:33 +0200
+Message-ID: <20230721160618.360561089@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,58 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Kochetkov <fido_max@inbox.ru>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit f1bc9fc4a06de0108e0dca2a9a7e99ba1fc632f9 ]
+[ Upstream commit 91ca9c3ade1be665f5ce88594ee687c56b0357d5 ]
 
-64-bit DMA detection will fail if axienet was started before (by boot
-loader, boot ROM, etc). In this state axienet will not start properly.
-XAXIDMA_TX_CDESC_OFFSET + 4 register (MM2S_CURDESC_MSB) is used to detect
-64-bit DMA capability here. But datasheet says: When DMACR.RS is 1
-(axienet is in enabled state), CURDESC_PTR becomes Read Only (RO) and
-is used to fetch the first descriptor. So iowrite32()/ioread32() trick
-to this register to detect 64-bit DMA will not work.
-So move axienet reset before 64-bit DMA detection.
+It is yet unclear if the WARNING really points to a real problem,
+but for sure the stack dump doesn't help fixing it.
+Just use a regular error print instead.
 
-Fixes: f735c40ed93c ("net: axienet: Autodetect 64-bit DMA capability")
-Signed-off-by: Maxim Kochetkov <fido_max@inbox.ru>
-Reviewed-by: Robert Hancock <robert.hancock@calian.com>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://lore.kernel.org/r/20230622192245.116864-1-fido_max@inbox.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Luca Coelho <luciano.coelho@intel.com>
+Link: https://lore.kernel.org/r/iwlwifi.20220205112029.a79e733a12f7.I8189344294222be0589fa43cc70fdf38e3057045@changeid
+Signed-off-by: Luca Coelho <luciano.coelho@intel.com>
+Stable-dep-of: 1902f1953b8b ("wifi: iwlwifi: pcie: fix NULL pointer dereference in iwl_pcie_irq_rx_msix_handler()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/rx.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index fbbbcfe0e891e..e7f6c29b8dd82 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -2075,6 +2075,11 @@ static int axienet_probe(struct platform_device *pdev)
- 		goto cleanup_clk;
- 	}
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
+index fea89330f692c..8885b19fd8de6 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
+@@ -1608,10 +1608,13 @@ irqreturn_t iwl_pcie_irq_rx_msix_handler(int irq, void *dev_id)
+ 	if (WARN_ON(entry->entry >= trans->num_rx_queues))
+ 		return IRQ_NONE;
  
-+	/* Reset core now that clocks are enabled, prior to accessing MDIO */
-+	ret = __axienet_device_reset(lp);
-+	if (ret)
-+		goto cleanup_clk;
-+
- 	/* Autodetect the need for 64-bit DMA pointers.
- 	 * When the IP is configured for a bus width bigger than 32 bits,
- 	 * writing the MSB registers is mandatory, even if they are all 0.
-@@ -2122,11 +2127,6 @@ static int axienet_probe(struct platform_device *pdev)
- 	lp->coalesce_count_rx = XAXIDMA_DFT_RX_THRESHOLD;
- 	lp->coalesce_count_tx = XAXIDMA_DFT_TX_THRESHOLD;
+-	if (WARN_ONCE(!rxq,
+-		      "[%d] Got MSI-X interrupt before we have Rx queues",
+-		      entry->entry))
++	if (!rxq) {
++		if (net_ratelimit())
++			IWL_ERR(trans,
++				"[%d] Got MSI-X interrupt before we have Rx queues\n",
++				entry->entry);
+ 		return IRQ_NONE;
++	}
  
--	/* Reset core now that clocks are enabled, prior to accessing MDIO */
--	ret = __axienet_device_reset(lp);
--	if (ret)
--		goto cleanup_clk;
--
- 	ret = axienet_mdio_setup(lp);
- 	if (ret)
- 		dev_warn(&pdev->dev,
+ 	lock_map_acquire(&trans->sync_cmd_lockdep_map);
+ 	IWL_DEBUG_ISR(trans, "[%d] Got interrupt\n", entry->entry);
 -- 
 2.39.2
 
