@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD92200A7
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:58:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C12C433CA;
-	Fri, 21 Jul 2023 18:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 259B9200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:58:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD9FC433C8;
+	Fri, 21 Jul 2023 18:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965890;
-	bh=HAtSyEFBJH2eReCYhRqfxJV1hIVZMtjjLLgMJB/wHTA=;
+	s=korg; t=1689965893;
+	bh=rKzrU8+lPVT8nUymsQLyRqZ2nEpc/h35yJi+voZh4Gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mGEPuhVqNVRO4dHgVcsffS7E1PZG2MYBMLO1njX+6gqX6Yjiyq7n/nSySJ5IAXuOz
-	 JlrUraV5Y5B7pFvi+KBZV0kFr8V5UiXRwN8ASr/usHvNuhucGfIHjJuRbdsBsys7Gd
-	 4lVc0NwO26jJ8gj1z5tr/leTFJPR9cRLdqUrfs4c=
+	b=BY8kEhGn0FiMjqhbCsNUP6Mo5Rg/P4cL8ofIV+x/x27y+FP8gQD68Jo+jhXg3ju4j
+	 f3I+qcEXX2zYqENlFDFfj9OPKJE16uSN6zJwQ7JuyDdipqePQDYUyfzK3QuUR8InDJ
+	 9SkLhdofOniKrJgJfc335EFSTIhlDZDynavEdbvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 150/532] RDMA/irdma: avoid fortify-string warning in irdma_clr_wqes
-Date: Fri, 21 Jul 2023 18:00:54 +0200
-Message-ID: <20230721160622.572526405@linuxfoundation.org>
+Subject: [PATCH 5.15 151/532] IB/hfi1: Use bitmap_zalloc() when applicable
+Date: Fri, 21 Jul 2023 18:00:55 +0200
+Message-ID: <20230721160622.624612317@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,62 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit b002760f877c0d91ecd3c78565b52f4bbac379dd ]
+[ Upstream commit f86dbc9fc5d83384eae7eda0de17f823e8c81ca0 ]
 
-Commit df8fc4e934c1 ("kbuild: Enable -fstrict-flex-arrays=3") triggers a
-warning for fortified memset():
+Use 'bitmap_zalloc()' to simplify code, improve the semantic and avoid
+some open-coded arithmetic in allocator arguments.
 
-In function 'fortify_memset_chk',
-    inlined from 'irdma_clr_wqes' at drivers/infiniband/hw/irdma/uk.c:103:4:
-include/linux/fortify-string.h:493:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
-  493 |                         __write_overflow_field(p_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Also change the corresponding 'kfree()' into 'bitmap_free()' to keep
+consistency.
 
-The problem here isthat the inner array only has four 8-byte elements, so
-clearing 4096 bytes overflows that. As this structure is part of an outer
-array, change the code to pass a pointer to the irdma_qp_quanta instead,
-and change the size argument for readability, matching the comment above
-it.
-
-Fixes: 551c46edc769 ("RDMA/irdma: Add user/kernel shared libraries")
-Link: https://lore.kernel.org/r/20230523111859.2197825-1-arnd@kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Link: https://lore.kernel.org/r/d46c6bc1869b8869244fa71943d2cad4104b3668.1637869925.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: c9358de193ec ("IB/hfi1: Fix wrong mmu_node used for user SDMA packet after invalidate")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/uk.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/hfi1/user_sdma.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/uk.c b/drivers/infiniband/hw/irdma/uk.c
-index aecd64a7dbbaf..a348f0c010ab3 100644
---- a/drivers/infiniband/hw/irdma/uk.c
-+++ b/drivers/infiniband/hw/irdma/uk.c
-@@ -94,16 +94,18 @@ static enum irdma_status_code irdma_nop_1(struct irdma_qp_uk *qp)
-  */
- void irdma_clr_wqes(struct irdma_qp_uk *qp, u32 qp_wqe_idx)
- {
--	__le64 *wqe;
-+	struct irdma_qp_quanta *sq;
- 	u32 wqe_idx;
+diff --git a/drivers/infiniband/hw/hfi1/user_sdma.c b/drivers/infiniband/hw/hfi1/user_sdma.c
+index a932ae1e03af5..ae58b48afe074 100644
+--- a/drivers/infiniband/hw/hfi1/user_sdma.c
++++ b/drivers/infiniband/hw/hfi1/user_sdma.c
+@@ -161,9 +161,7 @@ int hfi1_user_sdma_alloc_queues(struct hfi1_ctxtdata *uctxt,
+ 	if (!pq->reqs)
+ 		goto pq_reqs_nomem;
  
- 	if (!(qp_wqe_idx & 0x7F)) {
- 		wqe_idx = (qp_wqe_idx + 128) % qp->sq_ring.size;
--		wqe = qp->sq_base[wqe_idx].elem;
-+		sq = qp->sq_base + wqe_idx;
- 		if (wqe_idx)
--			memset(wqe, qp->swqe_polarity ? 0 : 0xFF, 0x1000);
-+			memset(sq, qp->swqe_polarity ? 0 : 0xFF,
-+			       128 * sizeof(*sq));
- 		else
--			memset(wqe, qp->swqe_polarity ? 0xFF : 0, 0x1000);
-+			memset(sq, qp->swqe_polarity ? 0xFF : 0,
-+			       128 * sizeof(*sq));
- 	}
- }
+-	pq->req_in_use = kcalloc(BITS_TO_LONGS(hfi1_sdma_comp_ring_size),
+-				 sizeof(*pq->req_in_use),
+-				 GFP_KERNEL);
++	pq->req_in_use = bitmap_zalloc(hfi1_sdma_comp_ring_size, GFP_KERNEL);
+ 	if (!pq->req_in_use)
+ 		goto pq_reqs_no_in_use;
  
+@@ -210,7 +208,7 @@ int hfi1_user_sdma_alloc_queues(struct hfi1_ctxtdata *uctxt,
+ cq_nomem:
+ 	kmem_cache_destroy(pq->txreq_cache);
+ pq_txreq_nomem:
+-	kfree(pq->req_in_use);
++	bitmap_free(pq->req_in_use);
+ pq_reqs_no_in_use:
+ 	kfree(pq->reqs);
+ pq_reqs_nomem:
+@@ -257,7 +255,7 @@ int hfi1_user_sdma_free_queues(struct hfi1_filedata *fd,
+ 			pq->wait,
+ 			!atomic_read(&pq->n_reqs));
+ 		kfree(pq->reqs);
+-		kfree(pq->req_in_use);
++		bitmap_free(pq->req_in_use);
+ 		kmem_cache_destroy(pq->txreq_cache);
+ 		flush_pq_iowait(pq);
+ 		kfree(pq);
 -- 
 2.39.2
 
