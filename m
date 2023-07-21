@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DD01ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:52:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCCFCC433C8;
-	Fri, 21 Jul 2023 18:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1331ED41
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:52:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE73C433C8;
+	Fri, 21 Jul 2023 18:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965562;
-	bh=oldZELv8MzE1lgcF7xhKtd48p3LoRN19d+FP67Q9PO4=;
+	s=korg; t=1689965564;
+	bh=BIiR+O4iH9YKbcSq1ysbM+TURaD5foYBudwOThLEXmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c/Xhu6PGroaOp10jDY9lC+kv2GKFUnUpepXd0V57+KIgK4cSwQfYnbJzEH49pVR4q
-	 UlwRmhgKGTDhxlXDykIPReFvYASW8X7iDTduFHxD52M5g6MjMJ/pN5EBpK7GmxAO1i
-	 Rd+C6itHG8DGuvVf+Kq0s+OKjuJGXhgZxOK32bO8=
+	b=uswJVRREx1plp70giosgxRD2z1TeT5CLS0iWYYJAh7qjeX/qGAFVNipouLjb2ynxO
+	 dyMT2X7hfCtwzhQpKuTMAgxZlPWZ4KEwl6CdHCijhmwk/I2GN/4/zFMJOuSaR3vQcI
+	 4Tdh2bOxmkU5OxqZZ2z8a7leA/qoXtePiR7Y+uzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesper Dangaard Brouer <brouer@redhat.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Song Yoong Siang <yoong.siang.song@intel.com>,
+	Gregg Wonderly <greggwonderly@seqtechllc.com>,
+	Peter Seiderer <ps.report@gmx.net>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 034/532] igc: Enable and fix RX hash usage by netstack
-Date: Fri, 21 Jul 2023 17:58:58 +0200
-Message-ID: <20230721160616.505109694@linuxfoundation.org>
+Subject: [PATCH 5.15 035/532] wifi: ath9k: fix AR9003 mac hardware hang check register offset calculation
+Date: Fri, 21 Jul 2023 17:58:59 +0200
+Message-ID: <20230721160616.562245925@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,147 +38,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jesper Dangaard Brouer <brouer@redhat.com>
+From: Peter Seiderer <ps.report@gmx.net>
 
-[ Upstream commit 84214ab4689f962b4bfc47fc9a5838d25ac4274d ]
+[ Upstream commit 3e56c80931c7615250fe4bf83f93b57881969266 ]
 
-When function igc_rx_hash() was introduced in v4.20 via commit 0507ef8a0372
-("igc: Add transmit and receive fastpath and interrupt handlers"), the
-hardware wasn't configured to provide RSS hash, thus it made sense to not
-enable net_device NETIF_F_RXHASH feature bit.
+Fix ath9k_hw_verify_hang()/ar9003_hw_detect_mac_hang() register offset
+calculation (do not overflow the shift for the second register/queues
+above five, use the register layout described in the comments above
+ath9k_hw_verify_hang() instead).
 
-The NIC hardware was configured to enable RSS hash info in v5.2 via commit
-2121c2712f82 ("igc: Add multiple receive queues control supporting"), but
-forgot to set the NETIF_F_RXHASH feature bit.
+Fixes: 222e04830ff0 ("ath9k: Fix MAC HW hang check for AR9003")
 
-The original implementation of igc_rx_hash() didn't extract the associated
-pkt_hash_type, but statically set PKT_HASH_TYPE_L3. The largest portions of
-this patch are about extracting the RSS Type from the hardware and mapping
-this to enum pkt_hash_types. This was based on Foxville i225 software user
-manual rev-1.3.1 and tested on Intel Ethernet Controller I225-LM (rev 03).
-
-For UDP it's worth noting that RSS (type) hashing have been disabled both for
-IPv4 and IPv6 (see IGC_MRQC_RSS_FIELD_IPV4_UDP + IGC_MRQC_RSS_FIELD_IPV6_UDP)
-because hardware RSS doesn't handle fragmented pkts well when enabled (can
-cause out-of-order). This results in PKT_HASH_TYPE_L3 for UDP packets, and
-hash value doesn't include UDP port numbers. Not being PKT_HASH_TYPE_L4, have
-the effect that netstack will do a software based hash calc calling into
-flow_dissect, but only when code calls skb_get_hash(), which doesn't
-necessary happen for local delivery.
-
-For QA verification testing I wrote a small bpftrace prog:
- [0] https://github.com/xdp-project/xdp-project/blob/master/areas/hints/monitor_skb_hash_on_dev.bt
-
-Fixes: 2121c2712f82 ("igc: Add multiple receive queues control supporting")
-Signed-off-by: Jesper Dangaard Brouer <brouer@redhat.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Song Yoong Siang <yoong.siang.song@intel.com>
-Link: https://lore.kernel.org/bpf/168182464270.616355.11391652654430626584.stgit@firesoul
+Reported-by: Gregg Wonderly <greggwonderly@seqtechllc.com>
+Link: https://lore.kernel.org/linux-wireless/E3A9C354-0CB7-420C-ADEF-F0177FB722F4@seqtechllc.com/
+Signed-off-by: Peter Seiderer <ps.report@gmx.net>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230422212423.26065-1-ps.report@gmx.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc.h      | 28 ++++++++++++++++++++
- drivers/net/ethernet/intel/igc/igc_main.c | 31 ++++++++++++++++++++---
- 2 files changed, 55 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath9k/ar9003_hw.c | 27 ++++++++++++++--------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc.h b/drivers/net/ethernet/intel/igc/igc.h
-index 66678cd72a6cd..486e1ce609cd5 100644
---- a/drivers/net/ethernet/intel/igc/igc.h
-+++ b/drivers/net/ethernet/intel/igc/igc.h
-@@ -13,6 +13,7 @@
- #include <linux/ptp_clock_kernel.h>
- #include <linux/timecounter.h>
- #include <linux/net_tstamp.h>
-+#include <linux/bitfield.h>
- 
- #include "igc_hw.h"
- 
-@@ -312,6 +313,33 @@ extern char igc_driver_name[];
- #define IGC_MRQC_RSS_FIELD_IPV4_UDP	0x00400000
- #define IGC_MRQC_RSS_FIELD_IPV6_UDP	0x00800000
- 
-+/* RX-desc Write-Back format RSS Type's */
-+enum igc_rss_type_num {
-+	IGC_RSS_TYPE_NO_HASH		= 0,
-+	IGC_RSS_TYPE_HASH_TCP_IPV4	= 1,
-+	IGC_RSS_TYPE_HASH_IPV4		= 2,
-+	IGC_RSS_TYPE_HASH_TCP_IPV6	= 3,
-+	IGC_RSS_TYPE_HASH_IPV6_EX	= 4,
-+	IGC_RSS_TYPE_HASH_IPV6		= 5,
-+	IGC_RSS_TYPE_HASH_TCP_IPV6_EX	= 6,
-+	IGC_RSS_TYPE_HASH_UDP_IPV4	= 7,
-+	IGC_RSS_TYPE_HASH_UDP_IPV6	= 8,
-+	IGC_RSS_TYPE_HASH_UDP_IPV6_EX	= 9,
-+	IGC_RSS_TYPE_MAX		= 10,
-+};
-+#define IGC_RSS_TYPE_MAX_TABLE		16
-+#define IGC_RSS_TYPE_MASK		GENMASK(3,0) /* 4-bits (3:0) = mask 0x0F */
-+
-+/* igc_rss_type - Rx descriptor RSS type field */
-+static inline u32 igc_rss_type(const union igc_adv_rx_desc *rx_desc)
-+{
-+	/* RSS Type 4-bits (3:0) number: 0-9 (above 9 is reserved)
-+	 * Accessing the same bits via u16 (wb.lower.lo_dword.hs_rss.pkt_info)
-+	 * is slightly slower than via u32 (wb.lower.lo_dword.data)
-+	 */
-+	return le32_get_bits(rx_desc->wb.lower.lo_dword.data, IGC_RSS_TYPE_MASK);
-+}
-+
- /* Interrupt defines */
- #define IGC_START_ITR			648 /* ~6000 ints/sec */
- #define IGC_4K_ITR			980
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index eb7aa8c13f7e5..32e4ebac4b693 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -1683,14 +1683,36 @@ static void igc_rx_checksum(struct igc_ring *ring,
- 		   le32_to_cpu(rx_desc->wb.upper.status_error));
- }
- 
-+/* Mapping HW RSS Type to enum pkt_hash_types */
-+static const enum pkt_hash_types igc_rss_type_table[IGC_RSS_TYPE_MAX_TABLE] = {
-+	[IGC_RSS_TYPE_NO_HASH]		= PKT_HASH_TYPE_L2,
-+	[IGC_RSS_TYPE_HASH_TCP_IPV4]	= PKT_HASH_TYPE_L4,
-+	[IGC_RSS_TYPE_HASH_IPV4]	= PKT_HASH_TYPE_L3,
-+	[IGC_RSS_TYPE_HASH_TCP_IPV6]	= PKT_HASH_TYPE_L4,
-+	[IGC_RSS_TYPE_HASH_IPV6_EX]	= PKT_HASH_TYPE_L3,
-+	[IGC_RSS_TYPE_HASH_IPV6]	= PKT_HASH_TYPE_L3,
-+	[IGC_RSS_TYPE_HASH_TCP_IPV6_EX] = PKT_HASH_TYPE_L4,
-+	[IGC_RSS_TYPE_HASH_UDP_IPV4]	= PKT_HASH_TYPE_L4,
-+	[IGC_RSS_TYPE_HASH_UDP_IPV6]	= PKT_HASH_TYPE_L4,
-+	[IGC_RSS_TYPE_HASH_UDP_IPV6_EX] = PKT_HASH_TYPE_L4,
-+	[10] = PKT_HASH_TYPE_NONE, /* RSS Type above 9 "Reserved" by HW  */
-+	[11] = PKT_HASH_TYPE_NONE, /* keep array sized for SW bit-mask   */
-+	[12] = PKT_HASH_TYPE_NONE, /* to handle future HW revisons       */
-+	[13] = PKT_HASH_TYPE_NONE,
-+	[14] = PKT_HASH_TYPE_NONE,
-+	[15] = PKT_HASH_TYPE_NONE,
-+};
-+
- static inline void igc_rx_hash(struct igc_ring *ring,
- 			       union igc_adv_rx_desc *rx_desc,
- 			       struct sk_buff *skb)
+diff --git a/drivers/net/wireless/ath/ath9k/ar9003_hw.c b/drivers/net/wireless/ath/ath9k/ar9003_hw.c
+index 42f00a2a8c800..cf5648188459c 100644
+--- a/drivers/net/wireless/ath/ath9k/ar9003_hw.c
++++ b/drivers/net/wireless/ath/ath9k/ar9003_hw.c
+@@ -1099,17 +1099,22 @@ static bool ath9k_hw_verify_hang(struct ath_hw *ah, unsigned int queue)
  {
--	if (ring->netdev->features & NETIF_F_RXHASH)
--		skb_set_hash(skb,
--			     le32_to_cpu(rx_desc->wb.lower.hi_dword.rss),
--			     PKT_HASH_TYPE_L3);
-+	if (ring->netdev->features & NETIF_F_RXHASH) {
-+		u32 rss_hash = le32_to_cpu(rx_desc->wb.lower.hi_dword.rss);
-+		u32 rss_type = igc_rss_type(rx_desc);
-+
-+		skb_set_hash(skb, rss_hash, igc_rss_type_table[rss_type]);
-+	}
- }
+ 	u32 dma_dbg_chain, dma_dbg_complete;
+ 	u8 dcu_chain_state, dcu_complete_state;
++	unsigned int dbg_reg, reg_offset;
+ 	int i;
  
- static void igc_rx_vlan(struct igc_ring *rx_ring,
-@@ -6525,6 +6547,7 @@ static int igc_probe(struct pci_dev *pdev,
- 	netdev->features |= NETIF_F_TSO;
- 	netdev->features |= NETIF_F_TSO6;
- 	netdev->features |= NETIF_F_TSO_ECN;
-+	netdev->features |= NETIF_F_RXHASH;
- 	netdev->features |= NETIF_F_RXCSUM;
- 	netdev->features |= NETIF_F_HW_CSUM;
- 	netdev->features |= NETIF_F_SCTP_CRC;
+-	for (i = 0; i < NUM_STATUS_READS; i++) {
+-		if (queue < 6)
+-			dma_dbg_chain = REG_READ(ah, AR_DMADBG_4);
+-		else
+-			dma_dbg_chain = REG_READ(ah, AR_DMADBG_5);
++	if (queue < 6) {
++		dbg_reg = AR_DMADBG_4;
++		reg_offset = queue * 5;
++	} else {
++		dbg_reg = AR_DMADBG_5;
++		reg_offset = (queue - 6) * 5;
++	}
+ 
++	for (i = 0; i < NUM_STATUS_READS; i++) {
++		dma_dbg_chain = REG_READ(ah, dbg_reg);
+ 		dma_dbg_complete = REG_READ(ah, AR_DMADBG_6);
+ 
+-		dcu_chain_state = (dma_dbg_chain >> (5 * queue)) & 0x1f;
++		dcu_chain_state = (dma_dbg_chain >> reg_offset) & 0x1f;
+ 		dcu_complete_state = dma_dbg_complete & 0x3;
+ 
+ 		if ((dcu_chain_state != 0x6) || (dcu_complete_state != 0x1))
+@@ -1128,6 +1133,7 @@ static bool ar9003_hw_detect_mac_hang(struct ath_hw *ah)
+ 	u8 dcu_chain_state, dcu_complete_state;
+ 	bool dcu_wait_frdone = false;
+ 	unsigned long chk_dcu = 0;
++	unsigned int reg_offset;
+ 	unsigned int i = 0;
+ 
+ 	dma_dbg_4 = REG_READ(ah, AR_DMADBG_4);
+@@ -1139,12 +1145,15 @@ static bool ar9003_hw_detect_mac_hang(struct ath_hw *ah)
+ 		goto exit;
+ 
+ 	for (i = 0; i < ATH9K_NUM_TX_QUEUES; i++) {
+-		if (i < 6)
++		if (i < 6) {
+ 			chk_dbg = dma_dbg_4;
+-		else
++			reg_offset = i * 5;
++		} else {
+ 			chk_dbg = dma_dbg_5;
++			reg_offset = (i - 6) * 5;
++		}
+ 
+-		dcu_chain_state = (chk_dbg >> (5 * i)) & 0x1f;
++		dcu_chain_state = (chk_dbg >> reg_offset) & 0x1f;
+ 		if (dcu_chain_state == 0x6) {
+ 			dcu_wait_frdone = true;
+ 			chk_dcu |= BIT(i);
 -- 
 2.39.2
 
