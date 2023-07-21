@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B2320F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:25:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 233DCC433C7;
-	Fri, 21 Jul 2023 19:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C117920F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:25:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEDD5C433C8;
+	Fri, 21 Jul 2023 19:25:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967523;
-	bh=ucrisWmY7SYXQLOMoDDvvfr7cUK3XRoWG9xkr+XV0f0=;
+	s=korg; t=1689967529;
+	bh=5i9kiCk8TDfUKL36m3HOkdT/dr+K+/NrZSQ7g9ejV7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a27giwg2r6FHi4GeBI/39Z08Sj/1yV+bc46RYk6XReDQ7kGZ7WcmWrXQwlVadPeIN
-	 RKTYbAM1zf7GRlcSQmAdpEsU8dkfErOXpfgcTyBNns2ljCkgQhFWdTO2CZI5Kq9O8O
-	 7V1IoQjagTDxd1/UXnfIblvlAuBiU+Yne2Z1VEvw=
+	b=RqODkb9XSd6Zcprjo+TLDChUQeZ754ejOgIeMHrsDT52W6FF503CCKyd/COGFP5jV
+	 V13p41LDkhPueovxuDvTjP5+/UGR7SuboHYj0FdPNExMpxNxWufsPUhToLFcqcHcap
+	 8ZtDQ7t7DxjvP+OEpgLKGOtpiTCzTQ3tVP0BSk7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Thierry Reding <thierry.reding@gmail.com>
-Subject: [PATCH 6.1 192/223] pwm: meson: fix handling of period/duty if greater than UINT_MAX
-Date: Fri, 21 Jul 2023 18:07:25 +0200
-Message-ID: <20230721160529.071110202@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 194/223] fprobe: Ensure running fprobe_exit_handler() finished before calling rethook_free()
+Date: Fri, 21 Jul 2023 18:07:27 +0200
+Message-ID: <20230721160529.154964344@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -36,77 +34,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 87a2cbf02d7701255f9fcca7e5bd864a7bb397cf upstream.
+commit 195b9cb5b288fec1c871ef89f78cc9a7461aad3a upstream.
 
-state->period/duty are of type u64, and if their value is greater than
-UINT_MAX, then the cast to uint will cause problems. Fix this by
-changing the type of the respective local variables to u64.
+Ensure running fprobe_exit_handler() has finished before
+calling rethook_free() in the unregister_fprobe() so that caller can free
+the fprobe right after unregister_fprobe().
 
-Fixes: b79c3670e120 ("pwm: meson: Don't duplicate the polarity internally")
+unregister_fprobe() ensured that all running fprobe_entry/exit_handler()
+have finished by calling unregister_ftrace_function() which synchronizes
+RCU. But commit 5f81018753df ("fprobe: Release rethook after the ftrace_ops
+is unregistered") changed to call rethook_free() after
+unregister_ftrace_function(). So call rethook_stop() to make rethook
+disabled before unregister_ftrace_function() and ensure it again.
+
+Here is the possible code flow that can call the exit handler after
+unregister_fprobe().
+
+------
+ CPU1                              CPU2
+ call unregister_fprobe(fp)
+ ...
+                                   __fprobe_handler()
+                                   rethook_hook() on probed function
+ unregister_ftrace_function()
+                                   return from probed function
+                                   rethook hooks
+                                   find rh->handler == fprobe_exit_handler
+                                   call fprobe_exit_handler()
+ rethook_free():
+   set rh->handler = NULL;
+ return from unreigster_fprobe;
+                                   call fp->exit_handler() <- (*)
+------
+
+(*) At this point, the exit handler is called after returning from
+unregister_fprobe().
+
+This fixes it as following;
+------
+ CPU1                              CPU2
+ call unregister_fprobe()
+ ...
+ rethook_stop():
+   set rh->handler = NULL;
+                                   __fprobe_handler()
+                                   rethook_hook() on probed function
+ unregister_ftrace_function()
+                                   return from probed function
+                                   rethook hooks
+                                   find rh->handler == NULL
+                                   return from rethook
+ rethook_free()
+ return from unreigster_fprobe;
+------
+
+Link: https://lore.kernel.org/all/168873859949.156157.13039240432299335849.stgit@devnote2/
+
+Fixes: 5f81018753df ("fprobe: Release rethook after the ftrace_ops is unregistered")
 Cc: stable@vger.kernel.org
-Suggested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-meson.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ include/linux/rethook.h |    1 +
+ kernel/trace/fprobe.c   |    3 +++
+ kernel/trace/rethook.c  |   13 +++++++++++++
+ 3 files changed, 17 insertions(+)
 
---- a/drivers/pwm/pwm-meson.c
-+++ b/drivers/pwm/pwm-meson.c
-@@ -156,8 +156,9 @@ static int meson_pwm_calc(struct meson_p
- 			  const struct pwm_state *state)
- {
- 	struct meson_pwm_channel *channel = &meson->channels[pwm->hwpwm];
--	unsigned int duty, period, pre_div, cnt, duty_cnt;
-+	unsigned int pre_div, cnt, duty_cnt;
- 	unsigned long fin_freq;
-+	u64 duty, period;
+--- a/include/linux/rethook.h
++++ b/include/linux/rethook.h
+@@ -59,6 +59,7 @@ struct rethook_node {
+ };
  
- 	duty = state->duty_cycle;
- 	period = state->period;
-@@ -179,19 +180,19 @@ static int meson_pwm_calc(struct meson_p
- 
- 	dev_dbg(meson->chip.dev, "fin_freq: %lu Hz\n", fin_freq);
- 
--	pre_div = div64_u64(fin_freq * (u64)period, NSEC_PER_SEC * 0xffffLL);
-+	pre_div = div64_u64(fin_freq * period, NSEC_PER_SEC * 0xffffLL);
- 	if (pre_div > MISC_CLK_DIV_MASK) {
- 		dev_err(meson->chip.dev, "unable to get period pre_div\n");
+ struct rethook *rethook_alloc(void *data, rethook_handler_t handler);
++void rethook_stop(struct rethook *rh);
+ void rethook_free(struct rethook *rh);
+ void rethook_add_node(struct rethook *rh, struct rethook_node *node);
+ struct rethook_node *rethook_try_get(struct rethook *rh);
+--- a/kernel/trace/fprobe.c
++++ b/kernel/trace/fprobe.c
+@@ -307,6 +307,9 @@ int unregister_fprobe(struct fprobe *fp)
+ 		    fp->ops.saved_func != fprobe_kprobe_handler))
  		return -EINVAL;
- 	}
  
--	cnt = div64_u64(fin_freq * (u64)period, NSEC_PER_SEC * (pre_div + 1));
-+	cnt = div64_u64(fin_freq * period, NSEC_PER_SEC * (pre_div + 1));
- 	if (cnt > 0xffff) {
- 		dev_err(meson->chip.dev, "unable to get period cnt\n");
- 		return -EINVAL;
- 	}
++	if (fp->rethook)
++		rethook_stop(fp->rethook);
++
+ 	ret = unregister_ftrace_function(&fp->ops);
+ 	if (ret < 0)
+ 		return ret;
+--- a/kernel/trace/rethook.c
++++ b/kernel/trace/rethook.c
+@@ -54,6 +54,19 @@ static void rethook_free_rcu(struct rcu_
+ }
  
--	dev_dbg(meson->chip.dev, "period=%u pre_div=%u cnt=%u\n", period,
-+	dev_dbg(meson->chip.dev, "period=%llu pre_div=%u cnt=%u\n", period,
- 		pre_div, cnt);
- 
- 	if (duty == period) {
-@@ -204,14 +205,13 @@ static int meson_pwm_calc(struct meson_p
- 		channel->lo = cnt;
- 	} else {
- 		/* Then check is we can have the duty with the same pre_div */
--		duty_cnt = div64_u64(fin_freq * (u64)duty,
--				     NSEC_PER_SEC * (pre_div + 1));
-+		duty_cnt = div64_u64(fin_freq * duty, NSEC_PER_SEC * (pre_div + 1));
- 		if (duty_cnt > 0xffff) {
- 			dev_err(meson->chip.dev, "unable to get duty cycle\n");
- 			return -EINVAL;
- 		}
- 
--		dev_dbg(meson->chip.dev, "duty=%u pre_div=%u duty_cnt=%u\n",
-+		dev_dbg(meson->chip.dev, "duty=%llu pre_div=%u duty_cnt=%u\n",
- 			duty, pre_div, duty_cnt);
- 
- 		channel->pre_div = pre_div;
+ /**
++ * rethook_stop() - Stop using a rethook.
++ * @rh: the struct rethook to stop.
++ *
++ * Stop using a rethook to prepare for freeing it. If you want to wait for
++ * all running rethook handler before calling rethook_free(), you need to
++ * call this first and wait RCU, and call rethook_free().
++ */
++void rethook_stop(struct rethook *rh)
++{
++	WRITE_ONCE(rh->handler, NULL);
++}
++
++/**
+  * rethook_free() - Free struct rethook.
+  * @rh: the struct rethook to be freed.
+  *
 
 
