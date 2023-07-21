@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7224520F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:22:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4FBC433C8;
-	Fri, 21 Jul 2023 19:22:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F8020F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:22:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE02EC433C7;
+	Fri, 21 Jul 2023 19:22:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967372;
-	bh=m4xvG7VFHe0Lw5vYmCBDncicCFG0EE9jzmO8pylEd78=;
+	s=korg; t=1689967375;
+	bh=lx0sYJ6p8HimMD0ZHfKMauYEW5ljtaNrXSpa2sHPqTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dHAOAVGVct7e2ZEoPuCgBSv7t15IwVrq9yDY9q+JmyttsbBDBQ8RbLYzkqz2BBY2R
-	 bFCLwuYI4sMOWE8MDNXLT5nnBieF3K6EG08pZuXPaRPrl0Ve/eYS9yo/UnctLibihZ
-	 +V4f/yloIv93lg5xtZ0yRuY87Rteze6vI65cgWT8=
+	b=BGpuXMOC9HljDeODUqPGkVVjcUFJoXI19z0UGnJthCDHABrSLfBDMfld3ABbYQWNV
+	 fG63jWmNhT8wRGzOy/YVVypD0hnXfFVWeANDOAq3AvXEokavMVcdf9ZJjMqmBEaugs
+	 Xm3MnrnDWR2uj08nJFpSsKzS/nVuEvOayNddbkEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>
-Subject: [PATCH 6.1 111/223] fs: dlm: revert check required context while close
-Date: Fri, 21 Jul 2023 18:06:04 +0200
-Message-ID: <20230721160525.601103162@linuxfoundation.org>
+	Robert Marko <robimarko@gmail.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.1 112/223] soc: qcom: mdt_loader: Fix unconditional call to scm_pas_mem_setup
+Date: Fri, 21 Jul 2023 18:06:05 +0200
+Message-ID: <20230721160525.642549055@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -34,81 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-commit c6b6d6dcc7f32767d57740e0552337c8de40610b upstream.
+commit bcb889891371c3cf767f2b9e8768cfe2fdd3810f upstream.
 
-This patch reverts commit 2c3fa6ae4d52 ("dlm: check required context
-while close"). The function dlm_midcomms_close(), which will call later
-dlm_lowcomms_close(), is called when the cluster manager tells the node
-got fenced which means on midcomms/lowcomms layer to disconnect the node
-from the cluster communication. The node can rejoin the cluster later.
-This patch was ensuring no new message were able to be triggered when we
-are in the close() function context. This was done by checking if the
-lockspace has been stopped. However there is a missing check that we
-only need to check specific lockspaces where the fenced node is member
-of. This is currently complicated because there is no way to easily
-check if a node is part of a specific lockspace without stopping the
-recovery. For now we just revert this commit as it is just a check to
-finding possible leaks of stopping lockspaces before close() is called.
+Commit ebeb20a9cd3f ("soc: qcom: mdt_loader: Always invoke PAS
+mem_setup") dropped the relocate check and made pas_mem_setup run
+unconditionally. The code was later moved with commit f4e526ff7e38
+("soc: qcom: mdt_loader: Extract PAS operations") to
+qcom_mdt_pas_init() effectively losing track of what was actually
+done.
 
+The assumption that PAS mem_setup can be done anytime was effectively
+wrong, with no good reason and this caused regression on some SoC
+that use remoteproc to bringup ath11k. One example is IPQ8074 SoC that
+effectively broke resulting in remoteproc silently die and ath11k not
+working.
+
+On this SoC FW relocate is not enabled and PAS mem_setup was correctly
+skipped in previous kernel version resulting in correct bringup and
+function of remoteproc and ath11k.
+
+To fix the regression, reintroduce the relocate check in
+qcom_mdt_pas_init() and correctly skip PAS mem_setup where relocate is
+not enabled.
+
+Fixes: ebeb20a9cd3f ("soc: qcom: mdt_loader: Always invoke PAS mem_setup")
+Tested-by: Robert Marko <robimarko@gmail.com>
+Co-developed-by: Robert Marko <robimarko@gmail.com>
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 Cc: stable@vger.kernel.org
-Fixes: 2c3fa6ae4d52 ("dlm: check required context while close")
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230526115511.3328-1-ansuelsmth@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dlm/lockspace.c |   12 ------------
- fs/dlm/lockspace.h |    1 -
- fs/dlm/midcomms.c  |    3 ---
- 3 files changed, 16 deletions(-)
+ drivers/soc/qcom/mdt_loader.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/fs/dlm/lockspace.c
-+++ b/fs/dlm/lockspace.c
-@@ -958,15 +958,3 @@ void dlm_stop_lockspaces(void)
- 		log_print("dlm user daemon left %d lockspaces", count);
- }
+--- a/drivers/soc/qcom/mdt_loader.c
++++ b/drivers/soc/qcom/mdt_loader.c
+@@ -210,6 +210,7 @@ int qcom_mdt_pas_init(struct device *dev
+ 	const struct elf32_hdr *ehdr;
+ 	phys_addr_t min_addr = PHYS_ADDR_MAX;
+ 	phys_addr_t max_addr = 0;
++	bool relocate = false;
+ 	size_t metadata_len;
+ 	void *metadata;
+ 	int ret;
+@@ -224,6 +225,9 @@ int qcom_mdt_pas_init(struct device *dev
+ 		if (!mdt_phdr_valid(phdr))
+ 			continue;
  
--void dlm_stop_lockspaces_check(void)
--{
--	struct dlm_ls *ls;
--
--	spin_lock(&lslist_lock);
--	list_for_each_entry(ls, &lslist, ls_list) {
--		if (WARN_ON(!rwsem_is_locked(&ls->ls_in_recovery) ||
--			    !dlm_locking_stopped(ls)))
--			break;
--	}
--	spin_unlock(&lslist_lock);
--}
---- a/fs/dlm/lockspace.h
-+++ b/fs/dlm/lockspace.h
-@@ -27,7 +27,6 @@ struct dlm_ls *dlm_find_lockspace_local(
- struct dlm_ls *dlm_find_lockspace_device(int minor);
- void dlm_put_lockspace(struct dlm_ls *ls);
- void dlm_stop_lockspaces(void);
--void dlm_stop_lockspaces_check(void);
- int dlm_new_user_lockspace(const char *name, const char *cluster,
- 			   uint32_t flags, int lvblen,
- 			   const struct dlm_lockspace_ops *ops,
---- a/fs/dlm/midcomms.c
-+++ b/fs/dlm/midcomms.c
-@@ -136,7 +136,6 @@
- #include <net/tcp.h>
++		if (phdr->p_flags & QCOM_MDT_RELOCATABLE)
++			relocate = true;
++
+ 		if (phdr->p_paddr < min_addr)
+ 			min_addr = phdr->p_paddr;
  
- #include "dlm_internal.h"
--#include "lockspace.h"
- #include "lowcomms.h"
- #include "config.h"
- #include "memory.h"
-@@ -1458,8 +1457,6 @@ int dlm_midcomms_close(int nodeid)
- 	if (nodeid == dlm_our_nodeid())
- 		return 0;
+@@ -246,11 +250,13 @@ int qcom_mdt_pas_init(struct device *dev
+ 		goto out;
+ 	}
  
--	dlm_stop_lockspaces_check();
--
- 	idx = srcu_read_lock(&nodes_srcu);
- 	/* Abort pending close/remove operation */
- 	node = nodeid2node(nodeid, 0);
+-	ret = qcom_scm_pas_mem_setup(pas_id, mem_phys, max_addr - min_addr);
+-	if (ret) {
+-		/* Unable to set up relocation */
+-		dev_err(dev, "error %d setting up firmware %s\n", ret, fw_name);
+-		goto out;
++	if (relocate) {
++		ret = qcom_scm_pas_mem_setup(pas_id, mem_phys, max_addr - min_addr);
++		if (ret) {
++			/* Unable to set up relocation */
++			dev_err(dev, "error %d setting up firmware %s\n", ret, fw_name);
++			goto out;
++		}
+ 	}
+ 
+ out:
 
 
