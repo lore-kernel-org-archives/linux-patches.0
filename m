@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5885720F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB176C433C8;
-	Fri, 21 Jul 2023 19:16:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D36620F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04E0C433C8;
+	Fri, 21 Jul 2023 19:16:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966992;
-	bh=9LPssMiLNs/tHQ8Sc/nRME01aeMFnWeLw2gFKdW+weU=;
+	s=korg; t=1689966995;
+	bh=ElAdtHySEFrLacSBSTpAbBVBu8ZxFEA9lWL3++5Ezrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dd3UIwaoW/JU2xOEoScmqvQWMdxESkFMG3plEUcIFTpb7b/MhkYJ1tIEaaXrG4EYZ
-	 D5ttd0WISYqo3umqsjj4aKBQ4hqLb0UAFNhHJEFGd5adILMYhnwrfAHibzik0RI+Ox
-	 R1LZKjtp9w1U+cXwb4VgEBOx9fP7uTDTQBU2N8cU=
+	b=OHpzFencMf5hCjKGUrM8my2ZXke+LWlFMa8zm0bnhsCNleDRrIn4HkmhjwAEL+rSQ
+	 zsA3yKom/F4qXSyhazpCjiXwB8s+P5K4Xh/pKgM5elYnFSVWN0kYkhBlMEn05RMQCw
+	 kHBl6zCYKvdGNJy17FEi/nZqpaMU+YUJoBmp/D7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubli@redhat.com>,
-	Milind Changire <mchangir@redhat.com>,
-	Patrick Donnelly <pdonnell@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.15 500/532] ceph: dont let check_caps skip sending responses for revoke msgs
-Date: Fri, 21 Jul 2023 18:06:44 +0200
-Message-ID: <20230721160641.716276099@linuxfoundation.org>
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 532/532] net/sched: sch_qfq: reintroduce lmax bound check for MTU
+Date: Fri, 21 Jul 2023 18:07:16 +0200
+Message-ID: <20230721160643.463604601@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,47 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-commit 257e6172ab36ebbe295a6c9ee9a9dd0fe54c1dc2 upstream.
+commit 158810b261d02fc7dd92ca9c392d8f8a211a2401 upstream.
 
-If a client sends out a cap update dropping caps with the prior 'seq'
-just before an incoming cap revoke request, then the client may drop
-the revoke because it believes it's already released the requested
-capabilities.
+25369891fcef deletes a check for the case where no 'lmax' is
+specified which 3037933448f6 previously fixed as 'lmax'
+could be set to the device's MTU without any bound checking
+for QFQ_LMAX_MIN and QFQ_LMAX_MAX. Therefore, reintroduce the check.
 
-This causes the MDS to wait indefinitely for the client to respond
-to the revoke. It's therefore always a good idea to ack the cap
-revoke request with the bumped up 'seq'.
-
-Cc: stable@vger.kernel.org
-Link: https://tracker.ceph.com/issues/61782
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Milind Changire <mchangir@redhat.com>
-Reviewed-by: Patrick Donnelly <pdonnell@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: 25369891fcef ("net/sched: sch_qfq: refactor parsing of netlink parameters")
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/caps.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/sched/sch_qfq.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -3517,6 +3517,15 @@ static void handle_cap_grant(struct inod
- 	}
- 	BUG_ON(cap->issued & ~cap->implemented);
+--- a/net/sched/sch_qfq.c
++++ b/net/sched/sch_qfq.c
+@@ -428,10 +428,17 @@ static int qfq_change_class(struct Qdisc
+ 	else
+ 		weight = 1;
  
-+	/* don't let check_caps skip sending a response to MDS for revoke msgs */
-+	if (le32_to_cpu(grant->op) == CEPH_CAP_OP_REVOKE) {
-+		cap->mds_wanted = 0;
-+		if (cap == ci->i_auth_cap)
-+			check_caps = 1; /* check auth cap only */
-+		else
-+			check_caps = 2; /* check all caps */
+-	if (tb[TCA_QFQ_LMAX])
++	if (tb[TCA_QFQ_LMAX]) {
+ 		lmax = nla_get_u32(tb[TCA_QFQ_LMAX]);
+-	else
++	} else {
++		/* MTU size is user controlled */
+ 		lmax = psched_mtu(qdisc_dev(sch));
++		if (lmax < QFQ_MIN_LMAX || lmax > QFQ_MAX_LMAX) {
++			NL_SET_ERR_MSG_MOD(extack,
++					   "MTU size out of bounds for qfq");
++			return -EINVAL;
++		}
 +	}
-+
- 	if (extra_info->inline_version > 0 &&
- 	    extra_info->inline_version >= ci->i_inline_version) {
- 		ci->i_inline_version = extra_info->inline_version;
+ 
+ 	inv_w = ONE_FP / weight;
+ 	weight = ONE_FP / inv_w;
 
 
