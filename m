@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5295200A7
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:04:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20C17C433C9;
-	Fri, 21 Jul 2023 19:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FBC200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:04:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 336B4C433C7;
+	Fri, 21 Jul 2023 19:04:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966270;
-	bh=O1lYQPx+/r9tSAiOW6Wy1ShJrAzu+S1Eg8VEPkIQAGo=;
+	s=korg; t=1689966267;
+	bh=pUDx32jMgVGVXpcOrqcmaoyvJr+Gcc7wslI7cwjPAgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bf5ZF84xkFSHNOKQ68nVxAIkTe7nlHcxk3rmRhPq5qh92wc+dFzY5U7iawdbIj6dK
-	 +Tm9gB6NXMTbkiH5sKYleFfJzydO2DTguQqYKvqTW+9QdD/FRQt/LGeQuQkjZ8Wo3s
-	 1Tm0Fv+OsmV+0NqwGKaeGgzpegETpE3rgJ+OX1Y8=
+	b=QftUp+VEtN0STGr0r4ze+RxxizVoQAtdh79OJ5ZbABWo3sMxkaCtGMu7rQ+MOmdb5
+	 fYqZNpr0E8d6ACaVBVWfzYmFgYg3ftAwnoDXk9oxlL7zxZxxXKe1ecPDph7am+cKOz
+	 +6OXrCMR5e6y/fq63gEHSiLiaYJ9Mw1EBHyrEwMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Nyekjaer <sean@geanix.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 256/532] iio: accel: fxls8962af: fixup buffer scan element type
-Date: Fri, 21 Jul 2023 18:02:40 +0200
-Message-ID: <20230721160628.229636121@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 282/532] extcon: Fix kernel doc of property capability fields to avoid warnings
+Date: Fri, 21 Jul 2023 18:03:06 +0200
+Message-ID: <20230721160629.702775849@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -34,35 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Nyekjaer <sean@geanix.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit d1cfbd52ede5e5fabc09992894c5733b4057f159 upstream.
+[ Upstream commit 73346b9965ebda2feb7fef8629e9b28baee820e3 ]
 
-Scan elements for x,y,z channels is little endian and requires no bit shifts.
-LE vs. BE is controlled in register SENS_CONFIG2 and bit LE_BE, default
-value is LE.
+Kernel documentation has to be synchronized with a code, otherwise
+the validator is not happy:
 
-Fixes: a3e0b51884ee ("iio: accel: add support for FXLS8962AF/FXLS8964AF accelerometers")
-Signed-off-by: Sean Nyekjaer <sean@geanix.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230605103223.1400980-1-sean@geanix.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+     Function parameter or member 'usb_bits' not described in 'extcon_cable'
+     Function parameter or member 'chg_bits' not described in 'extcon_cable'
+     Function parameter or member 'jack_bits' not described in 'extcon_cable'
+     Function parameter or member 'disp_bits' not described in 'extcon_cable'
+
+Describe the fields added in the past.
+
+Fixes: ceaa98f442cf ("extcon: Add the support for the capability of each property")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/fxls8962af-core.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/extcon/extcon.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/iio/accel/fxls8962af-core.c
-+++ b/drivers/iio/accel/fxls8962af-core.c
-@@ -486,8 +486,7 @@ static int fxls8962af_set_watermark(stru
- 		.sign = 's', \
- 		.realbits = 12, \
- 		.storagebits = 16, \
--		.shift = 4, \
--		.endianness = IIO_BE, \
-+		.endianness = IIO_LE, \
- 	}, \
- }
- 
+diff --git a/drivers/extcon/extcon.c b/drivers/extcon/extcon.c
+index 6b0681666e8e1..6a0d55d627ad0 100644
+--- a/drivers/extcon/extcon.c
++++ b/drivers/extcon/extcon.c
+@@ -200,6 +200,10 @@ static const struct __extcon_info {
+  * @chg_propval:	the array of charger connector properties
+  * @jack_propval:	the array of jack connector properties
+  * @disp_propval:	the array of display connector properties
++ * @usb_bits:		the bit array of the USB connector property capabilities
++ * @chg_bits:		the bit array of the charger connector property capabilities
++ * @jack_bits:		the bit array of the jack connector property capabilities
++ * @disp_bits:		the bit array of the display connector property capabilities
+  */
+ struct extcon_cable {
+ 	struct extcon_dev *edev;
+-- 
+2.39.2
+
 
 
