@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03FF920F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:22:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1ADC433C8;
-	Fri, 21 Jul 2023 19:22:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883B920F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:22:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09AC3C433C7;
+	Fri, 21 Jul 2023 19:22:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967349;
-	bh=4OOsQUp3bPzcAklVGfXwhL/65/jhre1NfMusWXH1HiE=;
+	s=korg; t=1689967352;
+	bh=FWTLXzLWpbzz89U/aOE5R4B16dN6LDhJv+0kAAtSWIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yEMhCx+c3IbFXm1VJL2kRKDDZjMdZaC2GFllb+W+wCBP2nZl39F5blzbUkmLt2dRh
-	 Yy4yEPAOzyCPvULbb/sRsbUUJ8cT7Vm4AVMGaLVc5D/jt8cA1OB04MPXIcRhE/RlU0
-	 8EXdkACIez3XB+axPFV6UJOye3h8EMkS5D5r9FJo=
+	b=sVujXcBeRAUND8RyylCcD6r5SKjAYtkJ167sxt7ifKbEdTcEW1lBUCQhkFWotWBdh
+	 wLmsyxV0hptZevRPBr4uCnT7OxVuvAiPFZbjP3x5k64CTYeljiFPloUg4M8bLcmkOu
+	 s8kRYfqNK+Q/vLbpNjLc78eQGGRxVma6shphZcRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Damien Le Moal <dlemoal@kernel.org>,
-	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>
-Subject: [PATCH 6.1 131/223] PCI: rockchip: Set address alignment for endpoint mode
-Date: Fri, 21 Jul 2023 18:06:24 +0200
-Message-ID: <20230721160526.461626836@linuxfoundation.org>
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <mani@kernel.org>
+Subject: [PATCH 6.1 132/223] misc: pci_endpoint_test: Free IRQs before removing the device
+Date: Fri, 21 Jul 2023 18:06:25 +0200
+Message-ID: <20230721160526.503464255@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -37,33 +38,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 7e6689b34a815bd379dfdbe9855d36f395ef056c upstream.
+commit f61b7634a3249d12b9daa36ffbdb9965b6f24c6c upstream.
 
-The address translation unit of the rockchip EP controller does not use
-the lower 8 bits of a PCIe-space address to map local memory. Thus we
-must set the align feature field to 256 to let the user know about this
-constraint.
+In pci_endpoint_test_remove(), freeing the IRQs after removing the device
+creates a small race window for IRQs to be received with the test device
+memory already released, causing the IRQ handler to access invalid memory,
+resulting in an oops.
 
-Link: https://lore.kernel.org/r/20230418074700.1083505-12-rick.wertenbroek@gmail.com
-Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
+Free the device IRQs before removing the device to avoid this issue.
+
+Link: https://lore.kernel.org/r/20230415023542.77601-15-dlemoal@kernel.org
+Fixes: e03327122e2c ("pci_endpoint_test: Add 2 ioctl commands")
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
 Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-rockchip-ep.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/misc/pci_endpoint_test.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/pci/controller/pcie-rockchip-ep.c
-+++ b/drivers/pci/controller/pcie-rockchip-ep.c
-@@ -485,6 +485,7 @@ static const struct pci_epc_features roc
- 	.linkup_notifier = false,
- 	.msi_capable = true,
- 	.msix_capable = false,
-+	.align = 256,
- };
+--- a/drivers/misc/pci_endpoint_test.c
++++ b/drivers/misc/pci_endpoint_test.c
+@@ -937,6 +937,9 @@ static void pci_endpoint_test_remove(str
+ 	if (id < 0)
+ 		return;
  
- static const struct pci_epc_features*
++	pci_endpoint_test_release_irq(test);
++	pci_endpoint_test_free_irq_vectors(test);
++
+ 	misc_deregister(&test->miscdev);
+ 	kfree(misc_device->name);
+ 	kfree(test->name);
+@@ -946,9 +949,6 @@ static void pci_endpoint_test_remove(str
+ 			pci_iounmap(pdev, test->bar[bar]);
+ 	}
+ 
+-	pci_endpoint_test_release_irq(test);
+-	pci_endpoint_test_free_irq_vectors(test);
+-
+ 	pci_release_regions(pdev);
+ 	pci_disable_device(pdev);
+ }
 
 
