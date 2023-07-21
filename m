@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5441ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:51:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF17AC433C9;
-	Fri, 21 Jul 2023 18:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2C01ED41
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:51:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DB71C433C7;
+	Fri, 21 Jul 2023 18:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965477;
-	bh=WftD9UiUfSb1fIJPEYRCQp8wCzCyy6HFMgbr0isyeTc=;
+	s=korg; t=1689965480;
+	bh=1bp4mcbyfyuHgmBdtxd23TPGM8/xiFn+s3nKr+Z5mYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JVUvPphatwDquoFAEGaoC/UWW5+BMeOkLgXNHmMgLcLZqSE1D6FaQh7rJvLrp+i1b
-	 R95UmHT3FfobcnnFI6Eedu09nyW8zoLeJMJTpEWjypA8l07sC0Ym32i4OvM0wd9SkX
-	 z8S/Ix/B/cz3+1FCOWNkuozTgQasYxDzUBnCdpYQ=
+	b=o1M4RH8wRMFlY4uKqRLMidevGroNGjLZYgrBF1HHtqbwLa/7zDa/HdkfgPs0cnE2p
+	 v52zjBUyiVnaedCDXFYZceNOQg3z51qVsIquWT80l7cHIIabSBJ65unY6OFMhmTT7/
+	 fp7Y0lm/bhSMxtzxKCAE4JNfLWA4b20jECafwtv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shreyas Deodhar <sdeodhar@marvell.com>,
+	Manish Rangankar <mrangankar@marvell.com>,
 	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.4 287/292] scsi: qla2xxx: Pointer may be dereferenced
-Date: Fri, 21 Jul 2023 18:06:36 +0200
-Message-ID: <20230721160541.291138288@linuxfoundation.org>
+Subject: [PATCH 6.4 288/292] scsi: qla2xxx: Remove unused nvme_ls_waitq wait queue
+Date: Fri, 21 Jul 2023 18:06:37 +0200
+Message-ID: <20230721160541.334237924@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -36,36 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shreyas Deodhar <sdeodhar@marvell.com>
+From: Manish Rangankar <mrangankar@marvell.com>
 
-commit 00eca15319d9ce8c31cdf22f32a3467775423df4 upstream.
+commit 20fce500b232b970e40312a9c97e7f3b6d7a709c upstream.
 
-Klocwork tool reported pointer 'rport' returned from call to function
-fc_bsg_to_rport() may be NULL and will be dereferenced.
+System crash when qla2x00_start_sp(sp) returns error code EGAIN and wake_up
+gets called for uninitialized wait queue sp->nvme_ls_waitq.
 
-Add a fix to validate rport before dereferencing.
+    qla2xxx [0000:37:00.1]-2121:5: Returning existing qpair of ffff8ae2c0513400 for idx=0
+    qla2xxx [0000:37:00.1]-700e:5: qla2x00_start_sp failed = 11
+    BUG: unable to handle kernel NULL pointer dereference at 0000000000000000
+    PGD 0 P4D 0
+    Oops: 0000 [#1] SMP NOPTI
+    Hardware name: HPE ProLiant DL360 Gen10/ProLiant DL360 Gen10, BIOS U32 09/03/2021
+    Workqueue: nvme-wq nvme_fc_connect_ctrl_work [nvme_fc]
+    RIP: 0010:__wake_up_common+0x4c/0x190
+    RSP: 0018:ffff95f3e0cb7cd0 EFLAGS: 00010086
+    RAX: 0000000000000000 RBX: ffff8b08d3b26328 RCX: 0000000000000000
+    RDX: 0000000000000001 RSI: 0000000000000003 RDI: ffff8b08d3b26320
+    RBP: 0000000000000001 R08: 0000000000000000 R09: ffffffffffffffe8
+    R10: 0000000000000000 R11: ffff95f3e0cb7a60 R12: ffff95f3e0cb7d20
+    R13: 0000000000000003 R14: 0000000000000000 R15: 0000000000000000
+    FS:  0000000000000000(0000) GS:ffff8b2fdf6c0000(0000) knlGS:0000000000000000
+    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    CR2: 0000000000000000 CR3: 0000002f1e410002 CR4: 00000000007706e0
+    DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+    DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+    PKRU: 55555554
+    Call Trace:
+     __wake_up_common_lock+0x7c/0xc0
+     qla_nvme_ls_req+0x355/0x4c0 [qla2xxx]
+     ? __nvme_fc_send_ls_req+0x260/0x380 [nvme_fc]
+     ? nvme_fc_send_ls_req.constprop.42+0x1a/0x45 [nvme_fc]
+     ? nvme_fc_connect_ctrl_work.cold.63+0x1e3/0xa7d [nvme_fc]
 
+Remove unused nvme_ls_waitq wait queue. nvme_ls_waitq logic was removed
+previously in the commits tagged Fixed: below.
+
+Fixes: 219d27d7147e ("scsi: qla2xxx: Fix race conditions in the code for aborting SCSI commands")
+Fixes: 5621b0dd7453 ("scsi: qla2xxx: Simpify unregistration of FC-NVMe local/remote ports")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shreyas Deodhar <sdeodhar@marvell.com>
+Signed-off-by: Manish Rangankar <mrangankar@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230607113843.37185-7-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Link: https://lore.kernel.org/r/20230615074633.12721-1-njavali@marvell.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/qla2xxx/qla_def.h  |    1 -
+ drivers/scsi/qla2xxx/qla_nvme.c |    3 ---
+ 2 files changed, 4 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_bsg.c
-+++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -2996,6 +2996,8 @@ qla24xx_bsg_request(struct bsg_job *bsg_
+--- a/drivers/scsi/qla2xxx/qla_def.h
++++ b/drivers/scsi/qla2xxx/qla_def.h
+@@ -703,7 +703,6 @@ typedef struct srb {
+ 	struct iocb_resource iores;
+ 	struct kref cmd_kref;	/* need to migrate ref_count over to this */
+ 	void *priv;
+-	wait_queue_head_t nvme_ls_waitq;
+ 	struct fc_port *fcport;
+ 	struct scsi_qla_host *vha;
+ 	unsigned int start_timer:1;
+--- a/drivers/scsi/qla2xxx/qla_nvme.c
++++ b/drivers/scsi/qla2xxx/qla_nvme.c
+@@ -360,7 +360,6 @@ static int qla_nvme_ls_req(struct nvme_f
+ 	if (rval != QLA_SUCCESS) {
+ 		ql_log(ql_log_warn, vha, 0x700e,
+ 		    "qla2x00_start_sp failed = %d\n", rval);
+-		wake_up(&sp->nvme_ls_waitq);
+ 		sp->priv = NULL;
+ 		priv->sp = NULL;
+ 		qla2x00_rel_sp(sp);
+@@ -652,7 +651,6 @@ static int qla_nvme_post_cmd(struct nvme
+ 	if (!sp)
+ 		return -EBUSY;
  
- 	if (bsg_request->msgcode == FC_BSG_RPT_ELS) {
- 		rport = fc_bsg_to_rport(bsg_job);
-+		if (!rport)
-+			return ret;
- 		host = rport_to_shost(rport);
- 		vha = shost_priv(host);
- 	} else {
+-	init_waitqueue_head(&sp->nvme_ls_waitq);
+ 	kref_init(&sp->cmd_kref);
+ 	spin_lock_init(&priv->cmd_lock);
+ 	sp->priv = priv;
+@@ -671,7 +669,6 @@ static int qla_nvme_post_cmd(struct nvme
+ 	if (rval != QLA_SUCCESS) {
+ 		ql_log(ql_log_warn, vha, 0x212d,
+ 		    "qla2x00_start_nvme_mq failed = %d\n", rval);
+-		wake_up(&sp->nvme_ls_waitq);
+ 		sp->priv = NULL;
+ 		priv->sp = NULL;
+ 		qla2xxx_rel_qpair_sp(sp->qpair, sp);
 
 
