@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D278A1ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:51:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47183C433C8;
-	Fri, 21 Jul 2023 18:51:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926661ED41
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:51:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1347BC433C8;
+	Fri, 21 Jul 2023 18:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965485;
-	bh=Pr7oD9LtS5P2DZ2H8C+acER3S3F3nZjLpzDMYdn62Oc=;
+	s=korg; t=1689965488;
+	bh=M9hJng1l+YKLIRdh6Y4zoD7LjS5WHiiSFc5FpDXagC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=coxoQ19pV95BFsEfxKnaTWPza/oKHBqSF4Qxx70U3Kmuc8MRzH/5xd1nhd9MK/ttY
-	 50urE5udBw5dKpdmFgeRoR2bXzDeonDWZaeIUJq0vdSl0TI2H5aCQn6Yi+5i6gaeTy
-	 ec90OiI9kZVSllditpEbYPu9biuZtyZJB4Pg4LBw=
+	b=WpQTMXQ1aKjg74Y8/W0/I+Esd8OU3DYyXiOvcx6rEx0HjL81qiCgoizITmsyb8A6i
+	 U6ITGpAUH8fEzLWXHsDJgTVBfEMyVqbyCtDcP4FC1EG08J6PPcZbEBUeffxOO6FRVX
+	 j5FoHPPbQ+uyBjAhKF0IxuuJHckHGlRMhSEfuTHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quinn Tran <qutran@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.4 280/292] scsi: qla2xxx: Fix mem access after free
-Date: Fri, 21 Jul 2023 18:06:29 +0200
-Message-ID: <20230721160540.972558014@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.15 001/532] netfilter: nf_tables: drop map element references from preparation phase
+Date: Fri, 21 Jul 2023 17:58:25 +0200
+Message-ID: <20230721160614.775636500@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
-References: <20230721160528.800311148@linuxfoundation.org>
+In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
+References: <20230721160614.695323302@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,301 +35,443 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Quinn Tran <qutran@marvell.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit b843adde8d490934d042fbe9e3e46697cb3a64d2 upstream.
+commit 628bd3e49cba1c066228e23d71a852c23e26da73 upstream.
 
-System crash, where driver is accessing scsi layer's
-memory (scsi_cmnd->device->host) to search for a well known internal
-pointer (vha). The scsi_cmnd was released back to upper layer which
-could be freed, but the driver is still accessing it.
+set .destroy callback releases the references to other objects in maps.
+This is very late and it results in spurious EBUSY errors. Drop refcount
+from the preparation phase instead, update set backend not to drop
+reference counter from set .destroy path.
 
-7 [ffffa8e8d2c3f8d0] page_fault at ffffffff86c010fe
-  [exception RIP: __qla2x00_eh_wait_for_pending_commands+240]
-  RIP: ffffffffc0642350  RSP: ffffa8e8d2c3f988  RFLAGS: 00010286
-  RAX: 0000000000000165  RBX: 0000000000000002  RCX: 00000000000036d8
-  RDX: 0000000000000000  RSI: ffff9c5c56535188  RDI: 0000000000000286
-  RBP: ffff9c5bf7aa4a58   R8: ffff9c589aecdb70   R9: 00000000000003d1
-  R10: 0000000000000001  R11: 0000000000380000 R12: ffff9c5c5392bc78
-  R13: ffff9c57044ff5c0 R14: ffff9c56b5a3aa00  R15: 00000000000006db
-  ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
-8 [ffffa8e8d2c3f9c8] qla2x00_eh_wait_for_pending_commands at ffffffffc0646dd5 [qla2xxx]
-9 [ffffa8e8d2c3fa00] __qla2x00_async_tm_cmd at ffffffffc0658094 [qla2xxx]
+Exceptions: NFT_TRANS_PREPARE_ERROR does not require to drop the
+reference counter because the transaction abort path releases the map
+references for each element since the set is unbound. The abort path
+also deals with releasing reference counter for new elements added to
+unbound sets.
 
-Remove access of freed memory. Currently the driver was checking to see if
-scsi_done was called by seeing if the sp->type has changed. Instead,
-check to see if the command has left the  oustanding_cmds[] array as
-sign of scsi_done was called.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Quinn Tran <qutran@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230428075339.32551-6-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 591054469b3e ("netfilter: nf_tables: revisit chain/object refcounting from elements")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_isr.c |   38 +++++++++--
- drivers/scsi/qla2xxx/qla_os.c  |  130 ++++++++++++++++++++---------------------
- 2 files changed, 95 insertions(+), 73 deletions(-)
+ include/net/netfilter/nf_tables.h |    5 +
+ net/netfilter/nf_tables_api.c     |  145 +++++++++++++++++++++++++++++++++-----
+ net/netfilter/nft_set_bitmap.c    |    5 -
+ net/netfilter/nft_set_hash.c      |   23 ++++--
+ net/netfilter/nft_set_pipapo.c    |   14 ++-
+ net/netfilter/nft_set_rbtree.c    |    5 -
+ 6 files changed, 166 insertions(+), 31 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_isr.c
-+++ b/drivers/scsi/qla2xxx/qla_isr.c
-@@ -1862,9 +1862,9 @@ qla2x00_process_completed_request(struct
- 	}
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -437,7 +437,8 @@ struct nft_set_ops {
+ 	int				(*init)(const struct nft_set *set,
+ 						const struct nft_set_desc *desc,
+ 						const struct nlattr * const nla[]);
+-	void				(*destroy)(const struct nft_set *set);
++	void				(*destroy)(const struct nft_ctx *ctx,
++						   const struct nft_set *set);
+ 	void				(*gc_init)(const struct nft_set *set);
+ 
+ 	unsigned int			elemsize;
+@@ -772,6 +773,8 @@ int nft_set_elem_expr_clone(const struct
+ 			    struct nft_expr *expr_array[]);
+ void nft_set_elem_destroy(const struct nft_set *set, void *elem,
+ 			  bool destroy_expr);
++void nf_tables_set_elem_destroy(const struct nft_ctx *ctx,
++				const struct nft_set *set, void *elem);
+ 
+ /**
+  *	struct nft_set_gc_batch_head - nf_tables set garbage collection batch
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -581,6 +581,58 @@ static int nft_trans_set_add(const struc
+ 	return __nft_trans_set_add(ctx, msg_type, set, NULL);
  }
  
--srb_t *
--qla2x00_get_sp_from_handle(scsi_qla_host_t *vha, const char *func,
--    struct req_que *req, void *iocb)
-+static srb_t *
-+qla_get_sp_from_handle(scsi_qla_host_t *vha, const char *func,
-+		       struct req_que *req, void *iocb, u16 *ret_index)
- {
- 	struct qla_hw_data *ha = vha->hw;
- 	sts_entry_t *pkt = iocb;
-@@ -1899,12 +1899,25 @@ qla2x00_get_sp_from_handle(scsi_qla_host
- 		return NULL;
- 	}
- 
--	req->outstanding_cmds[index] = NULL;
--
-+	*ret_index = index;
- 	qla_put_fw_resources(sp->qpair, &sp->iores);
- 	return sp;
- }
- 
-+srb_t *
-+qla2x00_get_sp_from_handle(scsi_qla_host_t *vha, const char *func,
-+			   struct req_que *req, void *iocb)
++static void nft_setelem_data_deactivate(const struct net *net,
++					const struct nft_set *set,
++					struct nft_set_elem *elem);
++
++static int nft_mapelem_deactivate(const struct nft_ctx *ctx,
++				  struct nft_set *set,
++				  const struct nft_set_iter *iter,
++				  struct nft_set_elem *elem)
 +{
-+	uint16_t index;
-+	srb_t *sp;
++	nft_setelem_data_deactivate(ctx->net, set, elem);
 +
-+	sp = qla_get_sp_from_handle(vha, func, req, iocb, &index);
-+	if (sp)
-+		req->outstanding_cmds[index] = NULL;
-+
-+	return sp;
++	return 0;
 +}
 +
- static void
- qla2x00_mbx_iocb_entry(scsi_qla_host_t *vha, struct req_que *req,
-     struct mbx_entry *mbx)
-@@ -3237,13 +3250,13 @@ qla2x00_status_entry(scsi_qla_host_t *vh
- 		return;
- 	}
- 
--	req->outstanding_cmds[handle] = NULL;
- 	cp = GET_CMD_SP(sp);
- 	if (cp == NULL) {
- 		ql_dbg(ql_dbg_io, vha, 0x3018,
- 		    "Command already returned (0x%x/%p).\n",
- 		    sts->handle, sp);
- 
-+		req->outstanding_cmds[handle] = NULL;
- 		return;
- 	}
- 
-@@ -3514,6 +3527,9 @@ out:
- 
- 	if (rsp->status_srb == NULL)
- 		sp->done(sp, res);
++struct nft_set_elem_catchall {
++	struct list_head	list;
++	struct rcu_head		rcu;
++	void			*elem;
++};
 +
-+	/* for io's, clearing of outstanding_cmds[handle] means scsi_done was called */
-+	req->outstanding_cmds[handle] = NULL;
++static void nft_map_catchall_deactivate(const struct nft_ctx *ctx,
++					struct nft_set *set)
++{
++	u8 genmask = nft_genmask_next(ctx->net);
++	struct nft_set_elem_catchall *catchall;
++	struct nft_set_elem elem;
++	struct nft_set_ext *ext;
++
++	list_for_each_entry(catchall, &set->catchall_list, list) {
++		ext = nft_set_elem_ext(set, catchall->elem);
++		if (!nft_set_elem_active(ext, genmask))
++			continue;
++
++		elem.priv = catchall->elem;
++		nft_setelem_data_deactivate(ctx->net, set, &elem);
++		break;
++	}
++}
++
++static void nft_map_deactivate(const struct nft_ctx *ctx, struct nft_set *set)
++{
++	struct nft_set_iter iter = {
++		.genmask	= nft_genmask_next(ctx->net),
++		.fn		= nft_mapelem_deactivate,
++	};
++
++	set->ops->walk(ctx, set, &iter);
++	WARN_ON_ONCE(iter.err);
++
++	nft_map_catchall_deactivate(ctx, set);
++}
++
+ static int nft_delset(const struct nft_ctx *ctx, struct nft_set *set)
+ {
+ 	int err;
+@@ -589,6 +641,9 @@ static int nft_delset(const struct nft_c
+ 	if (err < 0)
+ 		return err;
+ 
++	if (set->flags & (NFT_SET_MAP | NFT_SET_OBJECT))
++		nft_map_deactivate(ctx, set);
++
+ 	nft_deactivate_next(ctx->net, set);
+ 	ctx->table->use--;
+ 
+@@ -3407,12 +3462,6 @@ int nft_setelem_validate(const struct nf
+ 	return 0;
+ }
+ 
+-struct nft_set_elem_catchall {
+-	struct list_head	list;
+-	struct rcu_head		rcu;
+-	void			*elem;
+-};
+-
+ int nft_set_catchall_validate(const struct nft_ctx *ctx, struct nft_set *set)
+ {
+ 	u8 genmask = nft_genmask_next(ctx->net);
+@@ -4734,7 +4783,7 @@ err_set_expr_alloc:
+ 	for (i = 0; i < set->num_exprs; i++)
+ 		nft_expr_destroy(&ctx, set->exprs[i]);
+ err_set_destroy:
+-	ops->destroy(set);
++	ops->destroy(&ctx, set);
+ err_set_init:
+ 	kfree(set->name);
+ err_set_name:
+@@ -4749,7 +4798,7 @@ static void nft_set_catchall_destroy(con
+ 
+ 	list_for_each_entry_safe(catchall, next, &set->catchall_list, list) {
+ 		list_del_rcu(&catchall->list);
+-		nft_set_elem_destroy(set, catchall->elem, true);
++		nf_tables_set_elem_destroy(ctx, set, catchall->elem);
+ 		kfree_rcu(catchall, rcu);
+ 	}
+ }
+@@ -4764,7 +4813,7 @@ static void nft_set_destroy(const struct
+ 	for (i = 0; i < set->num_exprs; i++)
+ 		nft_expr_destroy(ctx, set->exprs[i]);
+ 
+-	set->ops->destroy(set);
++	set->ops->destroy(ctx, set);
+ 	nft_set_catchall_destroy(ctx, set);
+ 	kfree(set->name);
+ 	kvfree(set);
+@@ -4925,10 +4974,60 @@ static void nf_tables_unbind_set(const s
+ 	}
+ }
+ 
++static void nft_setelem_data_activate(const struct net *net,
++				      const struct nft_set *set,
++				      struct nft_set_elem *elem);
++
++static int nft_mapelem_activate(const struct nft_ctx *ctx,
++				struct nft_set *set,
++				const struct nft_set_iter *iter,
++				struct nft_set_elem *elem)
++{
++	nft_setelem_data_activate(ctx->net, set, elem);
++
++	return 0;
++}
++
++static void nft_map_catchall_activate(const struct nft_ctx *ctx,
++				      struct nft_set *set)
++{
++	u8 genmask = nft_genmask_next(ctx->net);
++	struct nft_set_elem_catchall *catchall;
++	struct nft_set_elem elem;
++	struct nft_set_ext *ext;
++
++	list_for_each_entry(catchall, &set->catchall_list, list) {
++		ext = nft_set_elem_ext(set, catchall->elem);
++		if (!nft_set_elem_active(ext, genmask))
++			continue;
++
++		elem.priv = catchall->elem;
++		nft_setelem_data_activate(ctx->net, set, &elem);
++		break;
++	}
++}
++
++static void nft_map_activate(const struct nft_ctx *ctx, struct nft_set *set)
++{
++	struct nft_set_iter iter = {
++		.genmask	= nft_genmask_next(ctx->net),
++		.fn		= nft_mapelem_activate,
++	};
++
++	set->ops->walk(ctx, set, &iter);
++	WARN_ON_ONCE(iter.err);
++
++	nft_map_catchall_activate(ctx, set);
++}
++
+ void nf_tables_activate_set(const struct nft_ctx *ctx, struct nft_set *set)
+ {
+-	if (nft_set_is_anonymous(set))
++	if (nft_set_is_anonymous(set)) {
++		if (set->flags & (NFT_SET_MAP | NFT_SET_OBJECT))
++			nft_map_activate(ctx, set);
++
+ 		nft_clear(ctx->net, set);
++	}
+ 
+ 	set->use++;
+ }
+@@ -4947,13 +5046,20 @@ void nf_tables_deactivate_set(const stru
+ 		set->use--;
+ 		break;
+ 	case NFT_TRANS_PREPARE:
+-		if (nft_set_is_anonymous(set))
+-			nft_deactivate_next(ctx->net, set);
++		if (nft_set_is_anonymous(set)) {
++			if (set->flags & (NFT_SET_MAP | NFT_SET_OBJECT))
++				nft_map_deactivate(ctx, set);
+ 
++			nft_deactivate_next(ctx->net, set);
++		}
+ 		set->use--;
+ 		return;
+ 	case NFT_TRANS_ABORT:
+ 	case NFT_TRANS_RELEASE:
++		if (nft_set_is_anonymous(set) &&
++		    set->flags & (NFT_SET_MAP | NFT_SET_OBJECT))
++			nft_map_deactivate(ctx, set);
++
+ 		set->use--;
+ 		fallthrough;
+ 	default:
+@@ -5669,6 +5775,7 @@ static void nft_set_elem_expr_destroy(co
+ 		__nft_set_elem_expr_destroy(ctx, expr);
+ }
+ 
++/* Drop references and destroy. Called from gc, dynset and abort path. */
+ void nft_set_elem_destroy(const struct nft_set *set, void *elem,
+ 			  bool destroy_expr)
+ {
+@@ -5690,11 +5797,11 @@ void nft_set_elem_destroy(const struct n
+ }
+ EXPORT_SYMBOL_GPL(nft_set_elem_destroy);
+ 
+-/* Only called from commit path, nft_setelem_data_deactivate() already deals
+- * with the refcounting from the preparation phase.
++/* Destroy element. References have been already dropped in the preparation
++ * path via nft_setelem_data_deactivate().
+  */
+-static void nf_tables_set_elem_destroy(const struct nft_ctx *ctx,
+-				       const struct nft_set *set, void *elem)
++void nf_tables_set_elem_destroy(const struct nft_ctx *ctx,
++				const struct nft_set *set, void *elem)
+ {
+ 	struct nft_set_ext *ext = nft_set_elem_ext(set, elem);
+ 
+@@ -9323,6 +9430,9 @@ static int __nf_tables_abort(struct net
+ 		case NFT_MSG_DELSET:
+ 			trans->ctx.table->use++;
+ 			nft_clear(trans->ctx.net, nft_trans_set(trans));
++			if (nft_trans_set(trans)->flags & (NFT_SET_MAP | NFT_SET_OBJECT))
++				nft_map_activate(&trans->ctx, nft_trans_set(trans));
++
+ 			nft_trans_destroy(trans);
+ 			break;
+ 		case NFT_MSG_NEWSETELEM:
+@@ -10089,6 +10199,9 @@ static void __nft_release_table(struct n
+ 	list_for_each_entry_safe(set, ns, &table->sets, list) {
+ 		list_del(&set->list);
+ 		table->use--;
++		if (set->flags & (NFT_SET_MAP | NFT_SET_OBJECT))
++			nft_map_deactivate(&ctx, set);
++
+ 		nft_set_destroy(&ctx, set);
+ 	}
+ 	list_for_each_entry_safe(obj, ne, &table->objects, list) {
+--- a/net/netfilter/nft_set_bitmap.c
++++ b/net/netfilter/nft_set_bitmap.c
+@@ -271,13 +271,14 @@ static int nft_bitmap_init(const struct
+ 	return 0;
+ }
+ 
+-static void nft_bitmap_destroy(const struct nft_set *set)
++static void nft_bitmap_destroy(const struct nft_ctx *ctx,
++			       const struct nft_set *set)
+ {
+ 	struct nft_bitmap *priv = nft_set_priv(set);
+ 	struct nft_bitmap_elem *be, *n;
+ 
+ 	list_for_each_entry_safe(be, n, &priv->list, head)
+-		nft_set_elem_destroy(set, be, true);
++		nf_tables_set_elem_destroy(ctx, set, be);
+ }
+ 
+ static bool nft_bitmap_estimate(const struct nft_set_desc *desc, u32 features,
+--- a/net/netfilter/nft_set_hash.c
++++ b/net/netfilter/nft_set_hash.c
+@@ -400,19 +400,31 @@ static int nft_rhash_init(const struct n
+ 	return 0;
+ }
+ 
++struct nft_rhash_ctx {
++	const struct nft_ctx	ctx;
++	const struct nft_set	*set;
++};
++
+ static void nft_rhash_elem_destroy(void *ptr, void *arg)
+ {
+-	nft_set_elem_destroy(arg, ptr, true);
++	struct nft_rhash_ctx *rhash_ctx = arg;
++
++	nf_tables_set_elem_destroy(&rhash_ctx->ctx, rhash_ctx->set, ptr);
+ }
+ 
+-static void nft_rhash_destroy(const struct nft_set *set)
++static void nft_rhash_destroy(const struct nft_ctx *ctx,
++			      const struct nft_set *set)
+ {
+ 	struct nft_rhash *priv = nft_set_priv(set);
++	struct nft_rhash_ctx rhash_ctx = {
++		.ctx	= *ctx,
++		.set	= set,
++	};
+ 
+ 	cancel_delayed_work_sync(&priv->gc_work);
+ 	rcu_barrier();
+ 	rhashtable_free_and_destroy(&priv->ht, nft_rhash_elem_destroy,
+-				    (void *)set);
++				    (void *)&rhash_ctx);
+ }
+ 
+ /* Number of buckets is stored in u32, so cap our result to 1U<<31 */
+@@ -643,7 +655,8 @@ static int nft_hash_init(const struct nf
+ 	return 0;
+ }
+ 
+-static void nft_hash_destroy(const struct nft_set *set)
++static void nft_hash_destroy(const struct nft_ctx *ctx,
++			     const struct nft_set *set)
+ {
+ 	struct nft_hash *priv = nft_set_priv(set);
+ 	struct nft_hash_elem *he;
+@@ -653,7 +666,7 @@ static void nft_hash_destroy(const struc
+ 	for (i = 0; i < priv->buckets; i++) {
+ 		hlist_for_each_entry_safe(he, next, &priv->table[i], node) {
+ 			hlist_del_rcu(&he->node);
+-			nft_set_elem_destroy(set, he, true);
++			nf_tables_set_elem_destroy(ctx, set, he);
+ 		}
+ 	}
+ }
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -2152,10 +2152,12 @@ out_scratch:
+ 
+ /**
+  * nft_set_pipapo_match_destroy() - Destroy elements from key mapping array
++ * @ctx:	context
+  * @set:	nftables API set representation
+  * @m:		matching data pointing to key mapping array
+  */
+-static void nft_set_pipapo_match_destroy(const struct nft_set *set,
++static void nft_set_pipapo_match_destroy(const struct nft_ctx *ctx,
++					 const struct nft_set *set,
+ 					 struct nft_pipapo_match *m)
+ {
+ 	struct nft_pipapo_field *f;
+@@ -2172,15 +2174,17 @@ static void nft_set_pipapo_match_destroy
+ 
+ 		e = f->mt[r].e;
+ 
+-		nft_set_elem_destroy(set, e, true);
++		nf_tables_set_elem_destroy(ctx, set, e);
+ 	}
  }
  
  /**
-@@ -3590,6 +3606,7 @@ qla2x00_error_entry(scsi_qla_host_t *vha
- 	uint16_t que = MSW(pkt->handle);
- 	struct req_que *req = NULL;
- 	int res = DID_ERROR << 16;
-+	u16 index;
- 
- 	ql_dbg(ql_dbg_async, vha, 0x502a,
- 	    "iocb type %xh with error status %xh, handle %xh, rspq id %d\n",
-@@ -3608,7 +3625,6 @@ qla2x00_error_entry(scsi_qla_host_t *vha
- 
- 	switch (pkt->entry_type) {
- 	case NOTIFY_ACK_TYPE:
--	case STATUS_TYPE:
- 	case STATUS_CONT_TYPE:
- 	case LOGINOUT_PORT_IOCB_TYPE:
- 	case CT_IOCB_TYPE:
-@@ -3628,6 +3644,14 @@ qla2x00_error_entry(scsi_qla_host_t *vha
- 	case CTIO_TYPE7:
- 	case CTIO_CRC2:
- 		return 1;
-+	case STATUS_TYPE:
-+		sp = qla_get_sp_from_handle(vha, func, req, pkt, &index);
-+		if (sp) {
-+			sp->done(sp, res);
-+			req->outstanding_cmds[index] = NULL;
-+			return 0;
-+		}
-+		break;
- 	}
- fatal:
- 	ql_log(ql_log_warn, vha, 0x5030,
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -1079,43 +1079,6 @@ qc24_fail_command:
- }
- 
- /*
-- * qla2x00_eh_wait_on_command
-- *    Waits for the command to be returned by the Firmware for some
-- *    max time.
-- *
-- * Input:
-- *    cmd = Scsi Command to wait on.
-- *
-- * Return:
-- *    Completed in time : QLA_SUCCESS
-- *    Did not complete in time : QLA_FUNCTION_FAILED
-- */
--static int
--qla2x00_eh_wait_on_command(struct scsi_cmnd *cmd)
--{
--#define ABORT_POLLING_PERIOD	1000
--#define ABORT_WAIT_ITER		((2 * 1000) / (ABORT_POLLING_PERIOD))
--	unsigned long wait_iter = ABORT_WAIT_ITER;
--	scsi_qla_host_t *vha = shost_priv(cmd->device->host);
--	struct qla_hw_data *ha = vha->hw;
--	srb_t *sp = scsi_cmd_priv(cmd);
--	int ret = QLA_SUCCESS;
--
--	if (unlikely(pci_channel_offline(ha->pdev)) || ha->flags.eeh_busy) {
--		ql_dbg(ql_dbg_taskm, vha, 0x8005,
--		    "Return:eh_wait.\n");
--		return ret;
--	}
--
--	while (sp->type && wait_iter--)
--		msleep(ABORT_POLLING_PERIOD);
--	if (sp->type)
--		ret = QLA_FUNCTION_FAILED;
--
--	return ret;
--}
--
--/*
-  * qla2x00_wait_for_hba_online
-  *    Wait till the HBA is online after going through
-  *    <= MAX_RETRIES_OF_ISP_ABORT  or
-@@ -1365,6 +1328,9 @@ qla2xxx_eh_abort(struct scsi_cmnd *cmd)
- 	return ret;
- }
- 
-+#define ABORT_POLLING_PERIOD	1000
-+#define ABORT_WAIT_ITER		((2 * 1000) / (ABORT_POLLING_PERIOD))
-+
- /*
-  * Returns: QLA_SUCCESS or QLA_FUNCTION_FAILED.
+  * nft_pipapo_destroy() - Free private data for set and all committed elements
++ * @ctx:	context
+  * @set:	nftables API set representation
   */
-@@ -1378,41 +1344,73 @@ __qla2x00_eh_wait_for_pending_commands(s
- 	struct req_que *req = qpair->req;
- 	srb_t *sp;
- 	struct scsi_cmnd *cmd;
-+	unsigned long wait_iter = ABORT_WAIT_ITER;
-+	bool found;
-+	struct qla_hw_data *ha = vha->hw;
+-static void nft_pipapo_destroy(const struct nft_set *set)
++static void nft_pipapo_destroy(const struct nft_ctx *ctx,
++			       const struct nft_set *set)
+ {
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+ 	struct nft_pipapo_match *m;
+@@ -2190,7 +2194,7 @@ static void nft_pipapo_destroy(const str
+ 	if (m) {
+ 		rcu_barrier();
  
- 	status = QLA_SUCCESS;
+-		nft_set_pipapo_match_destroy(set, m);
++		nft_set_pipapo_match_destroy(ctx, set, m);
  
--	spin_lock_irqsave(qpair->qp_lock_ptr, flags);
--	for (cnt = 1; status == QLA_SUCCESS &&
--		cnt < req->num_outstanding_cmds; cnt++) {
--		sp = req->outstanding_cmds[cnt];
--		if (!sp)
--			continue;
--		if (sp->type != SRB_SCSI_CMD)
--			continue;
--		if (vha->vp_idx != sp->vha->vp_idx)
--			continue;
--		match = 0;
--		cmd = GET_CMD_SP(sp);
--		switch (type) {
--		case WAIT_HOST:
--			match = 1;
--			break;
--		case WAIT_TARGET:
--			match = cmd->device->id == t;
--			break;
--		case WAIT_LUN:
--			match = (cmd->device->id == t &&
--				cmd->device->lun == l);
--			break;
--		}
--		if (!match)
--			continue;
-+	while (wait_iter--) {
-+		found = false;
+ #ifdef NFT_PIPAPO_ALIGN
+ 		free_percpu(m->scratch_aligned);
+@@ -2207,7 +2211,7 @@ static void nft_pipapo_destroy(const str
+ 		m = priv->clone;
  
--		spin_unlock_irqrestore(qpair->qp_lock_ptr, flags);
--		status = qla2x00_eh_wait_on_command(cmd);
- 		spin_lock_irqsave(qpair->qp_lock_ptr, flags);
-+		for (cnt = 1; cnt < req->num_outstanding_cmds; cnt++) {
-+			sp = req->outstanding_cmds[cnt];
-+			if (!sp)
-+				continue;
-+			if (sp->type != SRB_SCSI_CMD)
-+				continue;
-+			if (vha->vp_idx != sp->vha->vp_idx)
-+				continue;
-+			match = 0;
-+			cmd = GET_CMD_SP(sp);
-+			switch (type) {
-+			case WAIT_HOST:
-+				match = 1;
-+				break;
-+			case WAIT_TARGET:
-+				if (sp->fcport)
-+					match = sp->fcport->d_id.b24 == t;
-+				else
-+					match = 0;
-+				break;
-+			case WAIT_LUN:
-+				if (sp->fcport)
-+					match = (sp->fcport->d_id.b24 == t &&
-+						cmd->device->lun == l);
-+				else
-+					match = 0;
-+				break;
-+			}
-+			if (!match)
-+				continue;
-+
-+			spin_unlock_irqrestore(qpair->qp_lock_ptr, flags);
-+
-+			if (unlikely(pci_channel_offline(ha->pdev)) ||
-+			    ha->flags.eeh_busy) {
-+				ql_dbg(ql_dbg_taskm, vha, 0x8005,
-+				    "Return:eh_wait.\n");
-+				return status;
-+			}
-+
-+			/*
-+			 * SRB_SCSI_CMD is still in the outstanding_cmds array.
-+			 * it means scsi_done has not called. Wait for it to
-+			 * clear from outstanding_cmds.
-+			 */
-+			msleep(ABORT_POLLING_PERIOD);
-+			spin_lock_irqsave(qpair->qp_lock_ptr, flags);
-+			found = true;
-+		}
-+		spin_unlock_irqrestore(qpair->qp_lock_ptr, flags);
-+
-+		if (!found)
-+			break;
- 	}
--	spin_unlock_irqrestore(qpair->qp_lock_ptr, flags);
-+
-+	if (!wait_iter && found)
-+		status = QLA_FUNCTION_FAILED;
+ 		if (priv->dirty)
+-			nft_set_pipapo_match_destroy(set, m);
++			nft_set_pipapo_match_destroy(ctx, set, m);
  
- 	return status;
+ #ifdef NFT_PIPAPO_ALIGN
+ 		free_percpu(priv->clone->scratch_aligned);
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -664,7 +664,8 @@ static int nft_rbtree_init(const struct
+ 	return 0;
  }
+ 
+-static void nft_rbtree_destroy(const struct nft_set *set)
++static void nft_rbtree_destroy(const struct nft_ctx *ctx,
++			       const struct nft_set *set)
+ {
+ 	struct nft_rbtree *priv = nft_set_priv(set);
+ 	struct nft_rbtree_elem *rbe;
+@@ -675,7 +676,7 @@ static void nft_rbtree_destroy(const str
+ 	while ((node = priv->root.rb_node) != NULL) {
+ 		rb_erase(node, &priv->root);
+ 		rbe = rb_entry(node, struct nft_rbtree_elem, node);
+-		nft_set_elem_destroy(set, rbe, true);
++		nf_tables_set_elem_destroy(ctx, set, rbe);
+ 	}
+ }
+ 
 
 
