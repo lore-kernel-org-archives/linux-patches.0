@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1C71ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:50:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0028C433C7;
-	Fri, 21 Jul 2023 18:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085C51ED41
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:50:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C657C433C7;
+	Fri, 21 Jul 2023 18:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965449;
-	bh=EjewOMFgqtIdvNOu1km6Tffffy+X6G1QaFapHl6hHcU=;
+	s=korg; t=1689965451;
+	bh=pzyLeGqdbsFuDGEuR/TN6sXm4G4X0+CiRXQGeC919Yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=behHJoQHq3PGgwbUiqGFg0ms6qmy3LCA3mFJ7G1teKZhxWlxALPxoGP3CbSWUeBgX
-	 PK1QzRXocSZrBIi1N4WQ3/1UTEXzJKrFLk+jT8/YMT7cE80Ym7IRzRzgFF5+N6ALjO
-	 SwqHEZu472c6k2r5WjZsA8E7Nd9j6AuXw1FVHKr4=
+	b=NyhZTDxZNj+2pygG8hiW1aY6FD7msAKAfNxMbkebcdxeJDrvuAMXaFroPO/CJyA1Q
+	 BCmOtoQGU8/oQA7YQLnBqcmy6pSfQuuMYLj5NzMQC3w1ol8lmPU0yAPx4PCLVF7Klp
+	 8g6IGZhgZ3hw+jcZv4ApiZ4eriLeertT5IGqJiWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH 6.4 249/292] xtensa: ISS: fix call to split_if_spec
-Date: Fri, 21 Jul 2023 18:05:58 +0200
-Message-ID: <20230721160539.616552320@linuxfoundation.org>
+	Bikash Hazarika <bhazarika@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.4 281/292] scsi: qla2xxx: Array index may go out of bound
+Date: Fri, 21 Jul 2023 18:06:30 +0200
+Message-ID: <20230721160541.026223191@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -33,34 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit bc8d5916541fa19ca5bc598eb51a5f78eb891a36 upstream.
+commit d721b591b95cf3f290f8a7cbe90aa2ee0368388d upstream.
 
-split_if_spec expects a NULL-pointer as an end marker for the argument
-list, but tuntap_probe never supplied that terminating NULL. As a result
-incorrectly formatted interface specification string may cause a crash
-because of the random memory access. Fix that by adding NULL terminator
-to the split_if_spec argument list.
+Klocwork reports array 'vha->host_str' of size 16 may use index value(s)
+16..19.  Use snprintf() instead of sprintf().
 
 Cc: stable@vger.kernel.org
-Fixes: 7282bee78798 ("[PATCH] xtensa: Architecture support for Tensilica Xtensa Part 8")
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+Co-developed-by: Bikash Hazarika <bhazarika@marvell.com>
+Signed-off-by: Bikash Hazarika <bhazarika@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20230607113843.37185-2-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/xtensa/platforms/iss/network.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_os.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/xtensa/platforms/iss/network.c
-+++ b/arch/xtensa/platforms/iss/network.c
-@@ -237,7 +237,7 @@ static int tuntap_probe(struct iss_net_p
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -5088,7 +5088,8 @@ struct scsi_qla_host *qla2x00_create_hos
+ 	}
+ 	INIT_DELAYED_WORK(&vha->scan.scan_work, qla_scan_work_fn);
  
- 	init += sizeof(TRANSPORT_TUNTAP_NAME) - 1;
- 	if (*init == ',') {
--		rem = split_if_spec(init + 1, &mac_str, &dev_name);
-+		rem = split_if_spec(init + 1, &mac_str, &dev_name, NULL);
- 		if (rem != NULL) {
- 			pr_err("%s: extra garbage on specification : '%s'\n",
- 			       dev->name, rem);
+-	sprintf(vha->host_str, "%s_%lu", QLA2XXX_DRIVER_NAME, vha->host_no);
++	snprintf(vha->host_str, sizeof(vha->host_str), "%s_%lu",
++		 QLA2XXX_DRIVER_NAME, vha->host_no);
+ 	ql_dbg(ql_dbg_init, vha, 0x0041,
+ 	    "Allocated the host=%p hw=%p vha=%p dev_name=%s",
+ 	    vha->host, vha->hw, vha,
 
 
