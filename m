@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186361F923
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:56:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25384C433C8;
-	Fri, 21 Jul 2023 18:56:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6813A1F923
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:56:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC9A7C433C7;
+	Fri, 21 Jul 2023 18:56:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965763;
-	bh=5UWzVjExUpaguz9sjkC+Hv6zH81y76mv5ZV5XtxkQok=;
+	s=korg; t=1689965766;
+	bh=vqnhxvAeBAYSJYjlSdb7rlddWn5NSgz57k71kpeqTk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jXMIGl0BE8a9oVStNXrysjeAL4ApPReS5KmW/6QyG7JmmmsdiXvGdn1xfhvgm7V0D
-	 +wDSz8lTfuLR0cyt75UK4umdI/ajZ7Esioyl7Bj1zhFQO9cUspjcTDC3+dS3aImenJ
-	 m4fBVnCbCD+Sl6VQWhN2+r54XZrLeGwC032vmInQ=
+	b=j0Dt+D7gV65zGK/WbOfDut6U47y2NJmYGZTzG/ExBULKFSqtXfa0sGxUp7FwjvZtB
+	 9kdTus9LHeJFjirjR0h8z8OEbBFX82uP0DJNZ8yQ/mB4ffzpfLf4PZOOAmDpW6O6b4
+	 /TOebkz0qh8/E1sQedGfmlSQOIFRWdYDDB3dXlkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edwin Peer <edwin.peer@broadcom.com>,
-	Edwin Peer <espeer@gmail.com>,
-	Gal Pressman <gal@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 067/532] rtnetlink: extend RTEXT_FILTER_SKIP_STATS to IFLA_VF_INFO
-Date: Fri, 21 Jul 2023 17:59:31 +0200
-Message-ID: <20230721160618.257118012@linuxfoundation.org>
+Subject: [PATCH 5.15 099/532] drm/bridge: tc358768: always enable HS video mode
+Date: Fri, 21 Jul 2023 18:00:03 +0200
+Message-ID: <20230721160619.937242402@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,165 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edwin Peer <edwin.peer@broadcom.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit fa0e21fa44438a0e856d42224bfa24641d37b979 ]
+[ Upstream commit 75a8aeac2573ab258c53676eba9b3796ea691988 ]
 
-This filter already exists for excluding IPv6 SNMP stats. Extend its
-definition to also exclude IFLA_VF_INFO stats in RTM_GETLINK.
+Always enable HS video mode setting the TXMD bit, without this change no
+video output is present with DSI sinks that are setting
+MIPI_DSI_MODE_LPM flag (tested with LT8912B DSI-HDMI bridge).
 
-This patch constitutes a partial fix for a netlink attribute nesting
-overflow bug in IFLA_VFINFO_LIST. By excluding the stats when the
-requester doesn't need them, the truncation of the VF list is avoided.
+Previously the driver was enabling HS mode only when the DSI sink was
+not explicitly setting the MIPI_DSI_MODE_LPM, however this is not
+correct.
 
-While it was technically only the stats added in commit c5a9f6f0ab40
-("net/core: Add drop counters to VF statistics") breaking the camel's
-back, the appreciable size of the stats data should never have been
-included without due consideration for the maximum number of VFs
-supported by PCI.
+The MIPI_DSI_MODE_LPM is supposed to indicate that the sink is willing
+to receive data in low power mode, however clearing the
+TC358768_DSI_CONTROL_TXMD bit will make the TC358768 send video in
+LP mode that is not the intended behavior.
 
-Fixes: 3b766cd83232 ("net/core: Add reading VF statistics through the PF netdevice")
-Fixes: c5a9f6f0ab40 ("net/core: Add drop counters to VF statistics")
-Signed-off-by: Edwin Peer <edwin.peer@broadcom.com>
-Cc: Edwin Peer <espeer@gmail.com>
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Link: https://lore.kernel.org/r/20230611105108.122586-1-gal@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-2-francesco@dolcini.it
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/rtnetlink.c | 96 +++++++++++++++++++++++---------------------
- 1 file changed, 51 insertions(+), 45 deletions(-)
+ drivers/gpu/drm/bridge/tc358768.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index bc187289bf64b..0ab558501290b 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -922,24 +922,27 @@ static inline int rtnl_vfinfo_size(const struct net_device *dev,
- 			 nla_total_size(sizeof(struct ifla_vf_rate)) +
- 			 nla_total_size(sizeof(struct ifla_vf_link_state)) +
- 			 nla_total_size(sizeof(struct ifla_vf_rss_query_en)) +
--			 nla_total_size(0) + /* nest IFLA_VF_STATS */
--			 /* IFLA_VF_STATS_RX_PACKETS */
--			 nla_total_size_64bit(sizeof(__u64)) +
--			 /* IFLA_VF_STATS_TX_PACKETS */
--			 nla_total_size_64bit(sizeof(__u64)) +
--			 /* IFLA_VF_STATS_RX_BYTES */
--			 nla_total_size_64bit(sizeof(__u64)) +
--			 /* IFLA_VF_STATS_TX_BYTES */
--			 nla_total_size_64bit(sizeof(__u64)) +
--			 /* IFLA_VF_STATS_BROADCAST */
--			 nla_total_size_64bit(sizeof(__u64)) +
--			 /* IFLA_VF_STATS_MULTICAST */
--			 nla_total_size_64bit(sizeof(__u64)) +
--			 /* IFLA_VF_STATS_RX_DROPPED */
--			 nla_total_size_64bit(sizeof(__u64)) +
--			 /* IFLA_VF_STATS_TX_DROPPED */
--			 nla_total_size_64bit(sizeof(__u64)) +
- 			 nla_total_size(sizeof(struct ifla_vf_trust)));
-+		if (~ext_filter_mask & RTEXT_FILTER_SKIP_STATS) {
-+			size += num_vfs *
-+				(nla_total_size(0) + /* nest IFLA_VF_STATS */
-+				 /* IFLA_VF_STATS_RX_PACKETS */
-+				 nla_total_size_64bit(sizeof(__u64)) +
-+				 /* IFLA_VF_STATS_TX_PACKETS */
-+				 nla_total_size_64bit(sizeof(__u64)) +
-+				 /* IFLA_VF_STATS_RX_BYTES */
-+				 nla_total_size_64bit(sizeof(__u64)) +
-+				 /* IFLA_VF_STATS_TX_BYTES */
-+				 nla_total_size_64bit(sizeof(__u64)) +
-+				 /* IFLA_VF_STATS_BROADCAST */
-+				 nla_total_size_64bit(sizeof(__u64)) +
-+				 /* IFLA_VF_STATS_MULTICAST */
-+				 nla_total_size_64bit(sizeof(__u64)) +
-+				 /* IFLA_VF_STATS_RX_DROPPED */
-+				 nla_total_size_64bit(sizeof(__u64)) +
-+				 /* IFLA_VF_STATS_TX_DROPPED */
-+				 nla_total_size_64bit(sizeof(__u64)));
-+		}
- 		return size;
- 	} else
- 		return 0;
-@@ -1214,7 +1217,8 @@ static noinline_for_stack int rtnl_fill_stats(struct sk_buff *skb,
- static noinline_for_stack int rtnl_fill_vfinfo(struct sk_buff *skb,
- 					       struct net_device *dev,
- 					       int vfs_num,
--					       struct nlattr *vfinfo)
-+					       struct nlattr *vfinfo,
-+					       u32 ext_filter_mask)
- {
- 	struct ifla_vf_rss_query_en vf_rss_query_en;
- 	struct nlattr *vf, *vfstats, *vfvlanlist;
-@@ -1320,33 +1324,35 @@ static noinline_for_stack int rtnl_fill_vfinfo(struct sk_buff *skb,
- 		goto nla_put_vf_failure;
- 	}
- 	nla_nest_end(skb, vfvlanlist);
--	memset(&vf_stats, 0, sizeof(vf_stats));
--	if (dev->netdev_ops->ndo_get_vf_stats)
--		dev->netdev_ops->ndo_get_vf_stats(dev, vfs_num,
--						&vf_stats);
--	vfstats = nla_nest_start_noflag(skb, IFLA_VF_STATS);
--	if (!vfstats)
--		goto nla_put_vf_failure;
--	if (nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_PACKETS,
--			      vf_stats.rx_packets, IFLA_VF_STATS_PAD) ||
--	    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_PACKETS,
--			      vf_stats.tx_packets, IFLA_VF_STATS_PAD) ||
--	    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_BYTES,
--			      vf_stats.rx_bytes, IFLA_VF_STATS_PAD) ||
--	    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_BYTES,
--			      vf_stats.tx_bytes, IFLA_VF_STATS_PAD) ||
--	    nla_put_u64_64bit(skb, IFLA_VF_STATS_BROADCAST,
--			      vf_stats.broadcast, IFLA_VF_STATS_PAD) ||
--	    nla_put_u64_64bit(skb, IFLA_VF_STATS_MULTICAST,
--			      vf_stats.multicast, IFLA_VF_STATS_PAD) ||
--	    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_DROPPED,
--			      vf_stats.rx_dropped, IFLA_VF_STATS_PAD) ||
--	    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_DROPPED,
--			      vf_stats.tx_dropped, IFLA_VF_STATS_PAD)) {
--		nla_nest_cancel(skb, vfstats);
--		goto nla_put_vf_failure;
-+	if (~ext_filter_mask & RTEXT_FILTER_SKIP_STATS) {
-+		memset(&vf_stats, 0, sizeof(vf_stats));
-+		if (dev->netdev_ops->ndo_get_vf_stats)
-+			dev->netdev_ops->ndo_get_vf_stats(dev, vfs_num,
-+							  &vf_stats);
-+		vfstats = nla_nest_start_noflag(skb, IFLA_VF_STATS);
-+		if (!vfstats)
-+			goto nla_put_vf_failure;
-+		if (nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_PACKETS,
-+				      vf_stats.rx_packets, IFLA_VF_STATS_PAD) ||
-+		    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_PACKETS,
-+				      vf_stats.tx_packets, IFLA_VF_STATS_PAD) ||
-+		    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_BYTES,
-+				      vf_stats.rx_bytes, IFLA_VF_STATS_PAD) ||
-+		    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_BYTES,
-+				      vf_stats.tx_bytes, IFLA_VF_STATS_PAD) ||
-+		    nla_put_u64_64bit(skb, IFLA_VF_STATS_BROADCAST,
-+				      vf_stats.broadcast, IFLA_VF_STATS_PAD) ||
-+		    nla_put_u64_64bit(skb, IFLA_VF_STATS_MULTICAST,
-+				      vf_stats.multicast, IFLA_VF_STATS_PAD) ||
-+		    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_DROPPED,
-+				      vf_stats.rx_dropped, IFLA_VF_STATS_PAD) ||
-+		    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_DROPPED,
-+				      vf_stats.tx_dropped, IFLA_VF_STATS_PAD)) {
-+			nla_nest_cancel(skb, vfstats);
-+			goto nla_put_vf_failure;
-+		}
-+		nla_nest_end(skb, vfstats);
- 	}
--	nla_nest_end(skb, vfstats);
- 	nla_nest_end(skb, vf);
- 	return 0;
+diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
+index a3db532bbdd16..8de7d9764ba88 100644
+--- a/drivers/gpu/drm/bridge/tc358768.c
++++ b/drivers/gpu/drm/bridge/tc358768.c
+@@ -819,8 +819,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 	val = TC358768_DSI_CONFW_MODE_SET | TC358768_DSI_CONFW_ADDR_DSI_CONTROL;
+ 	val |= (dsi_dev->lanes - 1) << 1;
  
-@@ -1379,7 +1385,7 @@ static noinline_for_stack int rtnl_fill_vf(struct sk_buff *skb,
- 		return -EMSGSIZE;
+-	if (!(dsi_dev->mode_flags & MIPI_DSI_MODE_LPM))
+-		val |= TC358768_DSI_CONTROL_TXMD;
++	val |= TC358768_DSI_CONTROL_TXMD;
  
- 	for (i = 0; i < num_vfs; i++) {
--		if (rtnl_fill_vfinfo(skb, dev, i, vfinfo))
-+		if (rtnl_fill_vfinfo(skb, dev, i, vfinfo, ext_filter_mask))
- 			return -EMSGSIZE;
- 	}
- 
+ 	if (!(dsi_dev->mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
+ 		val |= TC358768_DSI_CONTROL_HSCKMD;
 -- 
 2.39.2
 
