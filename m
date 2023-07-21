@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02E61F941
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:16:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B925C433C7;
-	Fri, 21 Jul 2023 16:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CBB51F941
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:16:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F53C433C7;
+	Fri, 21 Jul 2023 16:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956198;
-	bh=dyKuhQhlV5d3kAXSRkCM3nRbTQ32/vgTiYLr9H2YHjk=;
+	s=korg; t=1689956218;
+	bh=GVtVLrK9maAzf3Xy3t0Yt0vf78NOzRHSPYvqN1oY9Hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kt2wXfjyf1PbjsnRoJ3rEeVFf9CrsPA0DoZvvlyxo0GsZ4K1YOjfG6I8kvDWGFrm4
-	 OrVdFo+vOJy3vnzEtLBFpEvTr0s5gRgfvD/4VS/kRwYbf7+s0h4P4zxY5heDtpiW4p
-	 aMgFIfVuM9mJ5I8RsYAqbMS6iegWFdgAR/k4td5Y=
+	b=zY9fqQrD/xEXflh6zJ5u0JIj6bMSt3gpX5kg4zwHXaZsy1T/3/ZT7imwnXKLWhGV3
+	 kbmwOber9k1EDHPlPgHkLbMhLIKzn3VS7mrnlDR6Ze1Rub5FwiIcStt3zMlHyWsMZy
+	 nBV1jhigN3RtqiWTq/nuMtksmyQlc20jhw1YVQU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joel Stanley <joel@jms.id.au>,
-	Naveen N Rao <naveen@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.4 141/292] powerpc: Fail build if using recordmcount with binutils v2.37
-Date: Fri, 21 Jul 2023 18:04:10 +0200
-Message-ID: <20230721160534.922058559@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ekansh Gupta <quic_ekangupt@quicinc.com>
+Subject: [PATCH 6.4 142/292] misc: fastrpc: Create fastrpc scalar with correct buffer count
+Date: Fri, 21 Jul 2023 18:04:11 +0200
+Message-ID: <20230721160534.983925781@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -35,49 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Naveen N Rao <naveen@kernel.org>
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
 
-commit 25ea739ea1d4d3de41acc4f4eb2d1a97eee0eb75 upstream.
+commit 0b4e32df3e09406b835d8230b9331273f2805058 upstream.
 
-binutils v2.37 drops unused section symbols, which prevents recordmcount
-from capturing mcount locations in sections that have no non-weak
-symbols. This results in a build failure with a message such as:
-	Cannot find symbol for section 12: .text.perf_callchain_kernel.
-	kernel/events/callchain.o: failed
+A process can spawn a PD on DSP with some attributes that can be
+associated with the PD during spawn and run. The invocation
+corresponding to the create request with attributes has total
+4 buffers at the DSP side implementation. If this number is not
+correct, the invocation is expected to fail on DSP. Added change
+to use correct number of buffer count for creating fastrpc scalar.
 
-The change to binutils was reverted for v2.38, so this behavior is
-specific to binutils v2.37:
-https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=c09c8b42021180eee9495bd50d8b35e683d3901b
-
-Objtool is able to cope with such sections, so this issue is specific to
-recordmcount.
-
-Fail the build and print a warning if binutils v2.37 is detected and if
-we are using recordmcount.
-
-Cc: stable@vger.kernel.org
-Suggested-by: Joel Stanley <joel@jms.id.au>
-Signed-off-by: Naveen N Rao <naveen@kernel.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230530061436.56925-1-naveen@kernel.org
+Fixes: d73f71c7c6ee ("misc: fastrpc: Add support for create remote init process")
+Cc: stable <stable@kernel.org>
+Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Message-ID: <1686743685-21715-1-git-send-email-quic_ekangupt@quicinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/Makefile |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/misc/fastrpc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/powerpc/Makefile
-+++ b/arch/powerpc/Makefile
-@@ -409,3 +409,11 @@ checkbin:
- 		echo -n '*** Please use a different binutils version.' ; \
- 		false ; \
- 	fi
-+	@if test "x${CONFIG_FTRACE_MCOUNT_USE_RECORDMCOUNT}" = "xy" -a \
-+		"x${CONFIG_LD_IS_BFD}" = "xy" -a \
-+		"${CONFIG_LD_VERSION}" = "23700" ; then \
-+		echo -n '*** binutils 2.37 drops unused section symbols, which recordmcount ' ; \
-+		echo 'is unable to handle.' ; \
-+		echo '*** Please use a different binutils version.' ; \
-+		false ; \
-+	fi
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index 30d4d0476248..37f32d20fcd0 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1437,7 +1437,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
+ 
+ 	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE, 4, 0);
+ 	if (init.attrs)
+-		sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE_ATTR, 6, 0);
++		sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE_ATTR, 4, 0);
+ 
+ 	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
+ 				      sc, args);
+-- 
+2.41.0
+
 
 
