@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1B127F1D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:49:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D81CEC433C8;
-	Fri, 21 Jul 2023 18:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8895A27F1D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:49:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0157DC433C7;
+	Fri, 21 Jul 2023 18:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965388;
-	bh=2x0h1M7yJjUt9I8Q0Orf/aaFaD9NALueae8pLTBFBHc=;
+	s=korg; t=1689965391;
+	bh=dE/YRUR/M90BfMeVJ6/rHgGLSZA89KLMIfVg5T+jt+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E6ms9QW0jq1Z3RvxEW+yv7yoZ2BHu8h0ua7z2P/lM19FQKErfzyl4mlizDFcpD83P
-	 JcUZpy0G+a0v1Yon3asdq/gA9K+fLTd0gc0MeCKF1fCw8KADXZeHctXnsDG1aP+b3p
-	 QEDNjTi0GV5Vz7UUYtA0ByoODIOJhNvt/m8qgaxI=
+	b=AXwfKVjjYgANOyi2SrIuq0L00YSuxlmkS/BXju/anyEaE2S0saIvURlDj1WZDSlZE
+	 6Wmobx14orFDTv3AAG3z/7VUKfsE7rnnuXekKCf0v98q0YfElY6oFW2cWZ9kSHBQ/N
+	 MufhH8BpgcyjRZSef8ZhpptZ0gWtg5Kgiq2qjXEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.4 267/292] selftests: mptcp: pm_nl_ctl: fix 32-bit support
-Date: Fri, 21 Jul 2023 18:06:16 +0200
-Message-ID: <20230721160540.398787322@linuxfoundation.org>
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.4 268/292] smb: client: Fix -Wstringop-overflow issues
+Date: Fri, 21 Jul 2023 18:06:17 +0200
+Message-ID: <20230721160540.444353902@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -34,85 +35,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-commit 61d9658050260dbcbf9055479b7ac5bbbe1e8831 upstream.
+commit f1f047bd7ce0d73788e04ac02268060a565f7ecb upstream.
 
-When using pm_nl_ctl to validate userspace path-manager's behaviours, it
-was failing on 32-bit architectures ~half of the time.
+pSMB->hdr.Protocol is an array of size 4 bytes, hence when the compiler
+analyzes this line of code
 
-pm_nl_ctl was not reporting any error but the command was not doing what
-it was expected to do. As a result, the expected linked event was not
-triggered after and the test failed.
+	parm_data = ((char *) &pSMB->hdr.Protocol) + offset;
 
-This is due to the fact the token given in argument to the application
-was parsed as an integer with atoi(): in a 32-bit arch, if the number
-was bigger than INT_MAX, 2147483647 was used instead.
+it legitimately complains about the fact that offset points outside the
+bounds of the array. Notice that the compiler gives priority to the object
+as an array, rather than merely the address of one more byte in a structure
+to wich offset should be added (which seems to be the actual intention of
+the original implementation).
 
-This can simply be fixed by using strtoul() instead of atoi().
+Fix this by explicitly instructing the compiler to treat the code as a
+sequence of bytes in struct smb_com_transaction2_spi_req, and not as an
+array accessed through pointer notation.
 
-The errors have been seen "by chance" when manually looking at the
-results from LKFT.
+Notice that ((char *)pSMB) + sizeof(pSMB->hdr.smb_buf_length) points to
+the same address as ((char *) &pSMB->hdr.Protocol), therefore this results
+in no differences in binary output.
 
-Fixes: 9a0b36509df0 ("selftests: mptcp: support MPTCP_PM_CMD_ANNOUNCE")
+Fixes the following -Wstringop-overflow warnings when built s390
+architecture with defconfig (GCC 13):
+  CC [M]  fs/smb/client/cifssmb.o
+In function 'cifs_init_ace',
+    inlined from 'posix_acl_to_cifs' at fs/smb/client/cifssmb.c:3046:3,
+    inlined from 'cifs_do_set_acl' at fs/smb/client/cifssmb.c:3191:15:
+fs/smb/client/cifssmb.c:2987:31: warning: writing 1 byte into a region of size 0 [-Wstringop-overflow=]
+ 2987 |         cifs_ace->cifs_e_perm = local_ace->e_perm;
+      |         ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
+In file included from fs/smb/client/cifssmb.c:27:
+fs/smb/client/cifspdu.h: In function 'cifs_do_set_acl':
+fs/smb/client/cifspdu.h:384:14: note: at offset [7, 11] into destination object 'Protocol' of size 4
+  384 |         __u8 Protocol[4];
+      |              ^~~~~~~~
+In function 'cifs_init_ace',
+    inlined from 'posix_acl_to_cifs' at fs/smb/client/cifssmb.c:3046:3,
+    inlined from 'cifs_do_set_acl' at fs/smb/client/cifssmb.c:3191:15:
+fs/smb/client/cifssmb.c:2988:30: warning: writing 1 byte into a region of size 0 [-Wstringop-overflow=]
+ 2988 |         cifs_ace->cifs_e_tag =  local_ace->e_tag;
+      |         ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
+fs/smb/client/cifspdu.h: In function 'cifs_do_set_acl':
+fs/smb/client/cifspdu.h:384:14: note: at offset [6, 10] into destination object 'Protocol' of size 4
+  384 |         __u8 Protocol[4];
+      |              ^~~~~~~~
+
+This helps with the ongoing efforts to globally enable
+-Wstringop-overflow.
+
+Link: https://github.com/KSPP/linux/issues/310
+Fixes: dc1af4c4b472 ("cifs: implement set acl method")
 Cc: stable@vger.kernel.org
-Fixes: ecd2a77d672f ("selftests: mptcp: support MPTCP_PM_CMD_REMOVE")
-Fixes: cf8d0a6dfd64 ("selftests: mptcp: support MPTCP_PM_CMD_SUBFLOW_CREATE")
-Fixes: 57cc361b8d38 ("selftests: mptcp: support MPTCP_PM_CMD_SUBFLOW_DESTROY")
-Fixes: ca188a25d43f ("selftests: mptcp: userspace PM support for MP_PRIO signals")
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/pm_nl_ctl.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/smb/client/cifssmb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/pm_nl_ctl.c
-+++ b/tools/testing/selftests/net/mptcp/pm_nl_ctl.c
-@@ -425,7 +425,7 @@ int dsf(int fd, int pm_family, int argc,
- 	}
+diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
+index 19f7385abeec..9dee267f1893 100644
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -3184,7 +3184,7 @@ setAclRetry:
+ 	param_offset = offsetof(struct smb_com_transaction2_spi_req,
+ 				InformationLevel) - 4;
+ 	offset = param_offset + params;
+-	parm_data = ((char *) &pSMB->hdr.Protocol) + offset;
++	parm_data = ((char *)pSMB) + sizeof(pSMB->hdr.smb_buf_length) + offset;
+ 	pSMB->ParameterOffset = cpu_to_le16(param_offset);
  
- 	/* token */
--	token = atoi(params[4]);
-+	token = strtoul(params[4], NULL, 10);
- 	rta = (void *)(data + off);
- 	rta->rta_type = MPTCP_PM_ATTR_TOKEN;
- 	rta->rta_len = RTA_LENGTH(4);
-@@ -551,7 +551,7 @@ int csf(int fd, int pm_family, int argc,
- 	}
- 
- 	/* token */
--	token = atoi(params[4]);
-+	token = strtoul(params[4], NULL, 10);
- 	rta = (void *)(data + off);
- 	rta->rta_type = MPTCP_PM_ATTR_TOKEN;
- 	rta->rta_len = RTA_LENGTH(4);
-@@ -598,7 +598,7 @@ int remove_addr(int fd, int pm_family, i
- 			if (++arg >= argc)
- 				error(1, 0, " missing token value");
- 
--			token = atoi(argv[arg]);
-+			token = strtoul(argv[arg], NULL, 10);
- 			rta = (void *)(data + off);
- 			rta->rta_type = MPTCP_PM_ATTR_TOKEN;
- 			rta->rta_len = RTA_LENGTH(4);
-@@ -710,7 +710,7 @@ int announce_addr(int fd, int pm_family,
- 			if (++arg >= argc)
- 				error(1, 0, " missing token value");
- 
--			token = atoi(argv[arg]);
-+			token = strtoul(argv[arg], NULL, 10);
- 		} else
- 			error(1, 0, "unknown keyword %s", argv[arg]);
- 	}
-@@ -1347,7 +1347,7 @@ int set_flags(int fd, int pm_family, int
- 				error(1, 0, " missing token value");
- 
- 			/* token */
--			token = atoi(argv[arg]);
-+			token = strtoul(argv[arg], NULL, 10);
- 		} else if (!strcmp(argv[arg], "flags")) {
- 			char *tok, *str;
- 
+ 	/* convert to on the wire format for POSIX ACL */
+-- 
+2.41.0
+
 
 
