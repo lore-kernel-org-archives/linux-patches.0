@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2F8200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:10:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C80BC433C8;
-	Fri, 21 Jul 2023 19:10:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51767200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:10:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8132C433C7;
+	Fri, 21 Jul 2023 19:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966615;
-	bh=zI1p02K+PSAkTWWyxC/hspYjyeaGvotusTpg1Xgy2Rk=;
+	s=korg; t=1689966618;
+	bh=MJ8HLrCDxprasW1LpGoGY00A/Ud1Pxcfoh+1wfxwNHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AMC0qUM3/0+Tob9tzC6GSXGruphq1yH3WLGEgbIdW/EeGqIPE4dfo/f5stOl5toBq
-	 0knLV0C/CSHN/qbk+DxiCAHjIvzazeYD/eML9mhX5W1lTMMGaGmnKt3Bw3rjUsPTwA
-	 dU2thr5X3iLQ1YZVjMCqXiGWBU/fZ2qhguA+D41Y=
+	b=2OK49ntPcfjI5dFM2bOB9LtvgoxtnCOIetH5hyctnTQLc3/kJ88eqYBUvWb1//5//
+	 +dbkHozwl8InlCPzIN+mTlFRZX6zv+QuLlzOWP7xnDmEY897inS68L/g5HD2tiGEFz
+	 XqIlinxGtj0UhKozTttwClbzxIx7rP0m9kbeKdsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Klaus Kudielka <klaus.kudielka@gmail.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 406/532] net: mvneta: fix txq_map in case of txq_number==1
-Date: Fri, 21 Jul 2023 18:05:10 +0200
-Message-ID: <20230721160636.486247257@linuxfoundation.org>
+	Florent Revest <revest@chromium.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.15 380/532] netfilter: conntrack: Avoid nf_ct_helper_hash uses after free
+Date: Fri, 21 Jul 2023 18:04:44 +0200
+Message-ID: <20230721160635.100180420@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,48 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Klaus Kudielka <klaus.kudielka@gmail.com>
+From: Florent Revest <revest@chromium.org>
 
-[ Upstream commit 21327f81db6337c8843ce755b01523c7d3df715b ]
+commit 6eef7a2b933885a17679eb8ed0796ddf0ee5309b upstream.
 
-If we boot with mvneta.txq_number=1, the txq_map is set incorrectly:
-MVNETA_CPU_TXQ_ACCESS(1) refers to TX queue 1, but only TX queue 0 is
-initialized. Fix this.
+If nf_conntrack_init_start() fails (for example due to a
+register_nf_conntrack_bpf() failure), the nf_conntrack_helper_fini()
+clean-up path frees the nf_ct_helper_hash map.
 
-Fixes: 50bf8cb6fc9c ("net: mvneta: Configure XPS support")
-Signed-off-by: Klaus Kudielka <klaus.kudielka@gmail.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Link: https://lore.kernel.org/r/20230705053712.3914-1-klaus.kudielka@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+When built with NF_CONNTRACK=y, further netfilter modules (e.g:
+netfilter_conntrack_ftp) can still be loaded and call
+nf_conntrack_helpers_register(), independently of whether nf_conntrack
+initialized correctly. This accesses the nf_ct_helper_hash dangling
+pointer and causes a uaf, possibly leading to random memory corruption.
+
+This patch guards nf_conntrack_helper_register() from accessing a freed
+or uninitialized nf_ct_helper_hash pointer and fixes possible
+uses-after-free when loading a conntrack module.
+
+Cc: stable@vger.kernel.org
+Fixes: 12f7a505331e ("netfilter: add user-space connection tracking helper infrastructure")
+Signed-off-by: Florent Revest <revest@chromium.org>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/mvneta.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nf_conntrack_helper.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
-index 5c431a3697622..f5b5ae58c2691 100644
---- a/drivers/net/ethernet/marvell/mvneta.c
-+++ b/drivers/net/ethernet/marvell/mvneta.c
-@@ -1474,7 +1474,7 @@ static void mvneta_defaults_set(struct mvneta_port *pp)
- 			 */
- 			if (txq_number == 1)
- 				txq_map = (cpu == pp->rxq_def) ?
--					MVNETA_CPU_TXQ_ACCESS(1) : 0;
-+					MVNETA_CPU_TXQ_ACCESS(0) : 0;
+--- a/net/netfilter/nf_conntrack_helper.c
++++ b/net/netfilter/nf_conntrack_helper.c
+@@ -405,6 +405,9 @@ int nf_conntrack_helper_register(struct
+ 	BUG_ON(me->expect_class_max >= NF_CT_MAX_EXPECT_CLASSES);
+ 	BUG_ON(strlen(me->name) > NF_CT_HELPER_NAME_LEN - 1);
  
- 		} else {
- 			txq_map = MVNETA_CPU_TXQ_ACCESS_ALL_MASK;
-@@ -4185,7 +4185,7 @@ static void mvneta_percpu_elect(struct mvneta_port *pp)
- 		 */
- 		if (txq_number == 1)
- 			txq_map = (cpu == elected_cpu) ?
--				MVNETA_CPU_TXQ_ACCESS(1) : 0;
-+				MVNETA_CPU_TXQ_ACCESS(0) : 0;
- 		else
- 			txq_map = mvreg_read(pp, MVNETA_CPU_MAP(cpu)) &
- 				MVNETA_CPU_TXQ_ACCESS_ALL_MASK;
--- 
-2.39.2
-
++	if (!nf_ct_helper_hash)
++		return -ENOENT;
++
+ 	if (me->expect_policy->max_expected > NF_CT_EXPECT_MAX_CNT)
+ 		return -EINVAL;
+ 
+@@ -595,4 +598,5 @@ void nf_conntrack_helper_fini(void)
+ {
+ 	nf_ct_extend_unregister(&helper_extend);
+ 	kvfree(nf_ct_helper_hash);
++	nf_ct_helper_hash = NULL;
+ }
 
 
