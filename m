@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E4620F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:19:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D884EC433C7;
-	Fri, 21 Jul 2023 19:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9438020F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:19:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF268C433C7;
+	Fri, 21 Jul 2023 19:19:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967147;
-	bh=5fkggPlNbQ0k0vvbXEFpuwiTvt59q3T69+l6vifkhNQ=;
+	s=korg; t=1689967150;
+	bh=4YtOT0CP2taM6fcDokuqxma2j4jxgRYmLmvu9vEgk4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VwIF9d1ICd4NRtbeiHGuMaePmgWSjpr6bDD1zfznpgy9AOdhyXuGkENRiZKqtvC5O
-	 jwRdIV9haEmj2xgDpcSmvj816VvwZcVeEux6XW2ILT5N8YFTvj++rsywFUI15XwujO
-	 icFFJVqxPvkO0Up7jSTXBqyawzoEDYfYIVLAl0S8=
+	b=uCh697GGtKcZ/C4pGNjznWG1ikc3EJ6+oGHRIxzfMR/FGxmwQk0MFG0ZbV2h7F/wh
+	 Cvbpap2ipSvq9EhXBKLpMCkmtsxUuNNsCC2CtdxrZRyaoZY0GS8p8YUF4KHmHILqWI
+	 qxooUOk8a5rQpC5rryRiwuTD2sne4LALcC8xBfLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/223] wifi: rtw89: debug: fix error code in rtw89_debug_priv_send_h2c_set()
-Date: Fri, 21 Jul 2023 18:05:14 +0200
-Message-ID: <20230721160523.460771702@linuxfoundation.org>
+Subject: [PATCH 6.1 062/223] net/sched: sch_qfq: refactor parsing of netlink parameters
+Date: Fri, 21 Jul 2023 18:05:15 +0200
+Message-ID: <20230721160523.504387562@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -36,49 +37,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-[ Upstream commit 4f4626cd049576af1276c7568d5b44eb3f7bb1b1 ]
+[ Upstream commit 25369891fcef373540f8b4e0b3bccf77a04490d5 ]
 
-If there is a failure during rtw89_fw_h2c_raw() rtw89_debug_priv_send_h2c
-should return negative error code instead of a positive value count.
-Fix this bug by returning correct error code.
+Two parameters can be transformed into netlink policies and
+validated while parsing the netlink message.
 
-Fixes: e3ec7017f6a2 ("rtw89: add Realtek 802.11ax driver")
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://lore.kernel.org/r/tencent_AD09A61BC4DA92AD1EB0790F5C850E544D07@qq.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 3e337087c3b5 ("net/sched: sch_qfq: account for stab overhead in qfq_enqueue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/debug.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/sched/sch_qfq.c | 25 +++++++++++--------------
+ 1 file changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/debug.c b/drivers/net/wireless/realtek/rtw89/debug.c
-index 50701c55ed602..ec0af903961f0 100644
---- a/drivers/net/wireless/realtek/rtw89/debug.c
-+++ b/drivers/net/wireless/realtek/rtw89/debug.c
-@@ -2130,17 +2130,18 @@ static ssize_t rtw89_debug_priv_send_h2c_set(struct file *filp,
- 	struct rtw89_debugfs_priv *debugfs_priv = filp->private_data;
- 	struct rtw89_dev *rtwdev = debugfs_priv->rtwdev;
- 	u8 *h2c;
-+	int ret;
- 	u16 h2c_len = count / 2;
+diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
+index 02098a02943eb..2f3629c851584 100644
+--- a/net/sched/sch_qfq.c
++++ b/net/sched/sch_qfq.c
+@@ -113,6 +113,7 @@
  
- 	h2c = rtw89_hex2bin_user(rtwdev, user_buf, count);
- 	if (IS_ERR(h2c))
- 		return -EFAULT;
+ #define QFQ_MTU_SHIFT		16	/* to support TSO/GSO */
+ #define QFQ_MIN_LMAX		512	/* see qfq_slot_insert */
++#define QFQ_MAX_LMAX		(1UL << QFQ_MTU_SHIFT)
  
--	rtw89_fw_h2c_raw(rtwdev, h2c, h2c_len);
-+	ret = rtw89_fw_h2c_raw(rtwdev, h2c, h2c_len);
+ #define QFQ_MAX_AGG_CLASSES	8 /* max num classes per aggregate allowed */
  
- 	kfree(h2c);
- 
--	return count;
-+	return ret ? ret : count;
+@@ -214,9 +215,14 @@ static struct qfq_class *qfq_find_class(struct Qdisc *sch, u32 classid)
+ 	return container_of(clc, struct qfq_class, common);
  }
  
- static int
++static struct netlink_range_validation lmax_range = {
++	.min = QFQ_MIN_LMAX,
++	.max = QFQ_MAX_LMAX,
++};
++
+ static const struct nla_policy qfq_policy[TCA_QFQ_MAX + 1] = {
+-	[TCA_QFQ_WEIGHT] = { .type = NLA_U32 },
+-	[TCA_QFQ_LMAX] = { .type = NLA_U32 },
++	[TCA_QFQ_WEIGHT] = NLA_POLICY_RANGE(NLA_U32, 1, QFQ_MAX_WEIGHT),
++	[TCA_QFQ_LMAX] = NLA_POLICY_FULL_RANGE(NLA_U32, &lmax_range),
+ };
+ 
+ /*
+@@ -408,17 +414,13 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+ 	}
+ 
+ 	err = nla_parse_nested_deprecated(tb, TCA_QFQ_MAX, tca[TCA_OPTIONS],
+-					  qfq_policy, NULL);
++					  qfq_policy, extack);
+ 	if (err < 0)
+ 		return err;
+ 
+-	if (tb[TCA_QFQ_WEIGHT]) {
++	if (tb[TCA_QFQ_WEIGHT])
+ 		weight = nla_get_u32(tb[TCA_QFQ_WEIGHT]);
+-		if (!weight || weight > (1UL << QFQ_MAX_WSHIFT)) {
+-			pr_notice("qfq: invalid weight %u\n", weight);
+-			return -EINVAL;
+-		}
+-	} else
++	else
+ 		weight = 1;
+ 
+ 	if (tb[TCA_QFQ_LMAX])
+@@ -426,11 +428,6 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+ 	else
+ 		lmax = psched_mtu(qdisc_dev(sch));
+ 
+-	if (lmax < QFQ_MIN_LMAX || lmax > (1UL << QFQ_MTU_SHIFT)) {
+-		pr_notice("qfq: invalid max length %u\n", lmax);
+-		return -EINVAL;
+-	}
+-
+ 	inv_w = ONE_FP / weight;
+ 	weight = ONE_FP / inv_w;
+ 
 -- 
 2.39.2
 
