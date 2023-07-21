@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A244820F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:07:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2674C433C7;
-	Fri, 21 Jul 2023 19:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28EF020F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:07:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4DCC433C8;
+	Fri, 21 Jul 2023 19:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966465;
-	bh=wnlgDXWIWD6rr3Qd44elRYOiUWbCtK88EFRy2Re/IK8=;
+	s=korg; t=1689966468;
+	bh=NUOwHOtiZLKlkVZLFaYQ97k5Qe7FbI07YlCrhd9ol4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SGxVBU/6TTbGWzZCgoccg41QbkNFCIlYVyLHj+1wrnlDm4dkGXO9Fk0i99UQoh/3b
-	 tHjlIQjm2fweZnCwk7kl2IhS20WIfTz5VSH1aNYWfIlejejsvKzGtlXgYMIBp5071N
-	 jprdoEtQsJ4Fmhp9i3K0jmG/tcUgDGKC2dPjn4NM=
+	b=gHQ50n7t9Znjs/Cb4Jp/k4sqOcLKoLEVujVw0xqaW4Z04Dgd/wrGC3rxDilkci02z
+	 SI4BsfS0n4jl2udqr0v+aE+2FkfppnGdxsLdDlYGzVX+GYXVNAqdJP2mMqG5d9mZLq
+	 baMmsqWUqr0ztzJbFqcpdYUSPTgnBrLk5iGFI3FQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Marko <robimarko@gmail.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 346/532] mmc: core: disable TRIM on Kingston EMMC04G-M627
-Date: Fri, 21 Jul 2023 18:04:10 +0200
-Message-ID: <20230721160633.206439705@linuxfoundation.org>
+	Kees Cook <keescook@chromium.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 5.15 355/532] autofs: use flexible array in ioctl structure
+Date: Fri, 21 Jul 2023 18:04:19 +0200
+Message-ID: <20230721160633.717313951@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -34,46 +35,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Marko <robimarko@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit f1738a1f816233e6dfc2407f24a31d596643fd90 upstream.
+commit e910c8e3aa02dc456e2f4c32cb479523c326b534 upstream.
 
-It seems that Kingston EMMC04G-M627 despite advertising TRIM support does
-not work when the core is trying to use REQ_OP_WRITE_ZEROES.
+Commit df8fc4e934c1 ("kbuild: Enable -fstrict-flex-arrays=3") introduced a warning
+for the autofs_dev_ioctl structure:
 
-We are seeing I/O errors in OpenWrt under 6.1 on Zyxel NBG7815 that we did
-not previously have and tracked it down to REQ_OP_WRITE_ZEROES.
+In function 'check_name',
+    inlined from 'validate_dev_ioctl' at fs/autofs/dev-ioctl.c:131:9,
+    inlined from '_autofs_dev_ioctl' at fs/autofs/dev-ioctl.c:624:8:
+fs/autofs/dev-ioctl.c:33:14: error: 'strchr' reading 1 or more bytes from a region of size 0 [-Werror=stringop-overread]
+   33 |         if (!strchr(name, '/'))
+      |              ^~~~~~~~~~~~~~~~~
+In file included from include/linux/auto_dev-ioctl.h:10,
+                 from fs/autofs/autofs_i.h:10,
+                 from fs/autofs/dev-ioctl.c:14:
+include/uapi/linux/auto_dev-ioctl.h: In function '_autofs_dev_ioctl':
+include/uapi/linux/auto_dev-ioctl.h:112:14: note: source object 'path' of size 0
+  112 |         char path[0];
+      |              ^~~~
 
-Trying to use fstrim seems to also throw errors like:
-[93010.835112] I/O error, dev loop0, sector 16902 op 0x3:(DISCARD) flags 0x800 phys_seg 1 prio class 2
+This is easily fixed by changing the gnu 0-length array into a c99
+flexible array. Since this is a uapi structure, we have to be careful
+about possible regressions but this one should be fine as they are
+equivalent here. While it would break building with ancient gcc versions
+that predate c99, it helps building with --std=c99 and -Wpedantic builds
+in user space, as well as non-gnu compilers. This means we probably
+also want it fixed in stable kernels.
 
-Disabling TRIM makes the error go away, so lets add a quirk for this eMMC
-to disable TRIM.
-
-Signed-off-by: Robert Marko <robimarko@gmail.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230619193621.437358-1-robimarko@gmail.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230523081944.581710-1-arnd@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/quirks.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ Documentation/filesystems/autofs-mount-control.rst |    2 +-
+ Documentation/filesystems/autofs.rst               |    2 +-
+ include/uapi/linux/auto_dev-ioctl.h                |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/mmc/core/quirks.h
-+++ b/drivers/mmc/core/quirks.h
-@@ -100,6 +100,13 @@ static const struct mmc_fixup __maybe_un
- 		  MMC_QUIRK_TRIM_BROKEN),
+--- a/Documentation/filesystems/autofs-mount-control.rst
++++ b/Documentation/filesystems/autofs-mount-control.rst
+@@ -196,7 +196,7 @@ information and return operation results
+ 		    struct args_ismountpoint	ismountpoint;
+ 	    };
  
- 	/*
-+	 * Kingston EMMC04G-M627 advertises TRIM but it does not seems to
-+	 * support being used to offload WRITE_ZEROES.
-+	 */
-+	MMC_FIXUP("M62704", CID_MANFID_KINGSTON, 0x0100, add_quirk_mmc,
-+		  MMC_QUIRK_TRIM_BROKEN),
-+
-+	/*
- 	 * Some SD cards reports discard support while they don't
- 	 */
- 	MMC_FIXUP(CID_NAME_ANY, CID_MANFID_SANDISK_SD, 0x5344, add_quirk_sd,
+-	    char path[0];
++	    char path[];
+     };
+ 
+ The ioctlfd field is a mount point file descriptor of an autofs mount
+--- a/Documentation/filesystems/autofs.rst
++++ b/Documentation/filesystems/autofs.rst
+@@ -467,7 +467,7 @@ Each ioctl is passed a pointer to an `au
+ 			struct args_ismountpoint	ismountpoint;
+ 		};
+ 
+-                char path[0];
++                char path[];
+         };
+ 
+ For the **OPEN_MOUNT** and **IS_MOUNTPOINT** commands, the target
+--- a/include/uapi/linux/auto_dev-ioctl.h
++++ b/include/uapi/linux/auto_dev-ioctl.h
+@@ -109,7 +109,7 @@ struct autofs_dev_ioctl {
+ 		struct args_ismountpoint	ismountpoint;
+ 	};
+ 
+-	char path[0];
++	char path[];
+ };
+ 
+ static inline void init_autofs_dev_ioctl(struct autofs_dev_ioctl *in)
 
 
