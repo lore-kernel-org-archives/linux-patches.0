@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77731ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:52:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F4DC433C8;
-	Fri, 21 Jul 2023 18:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822AE1ED41
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:52:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0458CC433C7;
+	Fri, 21 Jul 2023 18:52:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965533;
-	bh=WiAsJfa7Zu4N4T9wJCL1iTU7iA7RTvT8LKWUSG5hEvU=;
+	s=korg; t=1689965536;
+	bh=OkCEQ1P3nhhOGFzfupHvoY1X023WwFbRQsk+NqwAz30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mNfL293V74fRILwlbwHKx/Pd/GzWPnSYUtAe80OWXRsLZGvmxoDEWZJgG3pjGxy+J
-	 1QXJRuvCvwWS0/ag2caWZelwRkIU+nsRA2oFX7raedIkwYyIscc9df1ih9g622JQph
-	 UL+eg0gP11ui6PB0ZStGvGEQqizMQlbGvl7pvyv4=
+	b=y0jzZdWGwVpjsEV9qQRV+JjX4PfX4X4aXhOgHzXP0LOSqlqNwiyBrh08n8x3BGVky
+	 qw9RPwppksduBHNYa2+8Zg4r9FohIBkAIQT3tNChyAEw4QmSy914ZP9Qgu4KMj91zE
+	 I60pesZWQPZzrLwqw745Z9kMqrSzDH0EHv4+QDdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 025/532] rcu/rcuscale: Stop kfree_scale_thread thread(s) after unloading rcuscale
-Date: Fri, 21 Jul 2023 17:58:49 +0200
-Message-ID: <20230721160616.031831625@linuxfoundation.org>
+Subject: [PATCH 5.15 008/532] md/raid10: fix null-ptr-deref of mreplace in raid10_sync_request
+Date: Fri, 21 Jul 2023 17:58:32 +0200
+Message-ID: <20230721160615.135386712@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,78 +36,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 23fc8df26dead16687ae6eb47b0561a4a832e2f6 ]
+[ Upstream commit 34817a2441747b48e444cb0e05d84e14bc9443da ]
 
-Running the 'kfree_rcu_test' test case [1] results in a splat [2].
-The root cause is the kfree_scale_thread thread(s) continue running
-after unloading the rcuscale module.  This commit fixes that isue by
-invoking kfree_scale_cleanup() from rcu_scale_cleanup() when removing
-the rcuscale module.
+There are two check of 'mreplace' in raid10_sync_request(). In the first
+check, 'need_replace' will be set and 'mreplace' will be used later if
+no-Faulty 'mreplace' exists, In the second check, 'mreplace' will be
+set to NULL if it is Faulty, but 'need_replace' will not be changed
+accordingly. null-ptr-deref occurs if Faulty is set between two check.
 
-[1] modprobe rcuscale kfree_rcu_test=1
-    // After some time
-    rmmod rcuscale
-    rmmod torture
+Fix it by merging two checks into one. And replace 'need_replace' with
+'mreplace' because their values are always the same.
 
-[2] BUG: unable to handle page fault for address: ffffffffc0601a87
-    #PF: supervisor instruction fetch in kernel mode
-    #PF: error_code(0x0010) - not-present page
-    PGD 11de4f067 P4D 11de4f067 PUD 11de51067 PMD 112f4d067 PTE 0
-    Oops: 0010 [#1] PREEMPT SMP NOPTI
-    CPU: 1 PID: 1798 Comm: kfree_scale_thr Not tainted 6.3.0-rc1-rcu+ #1
-    Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 0.0.0 02/06/2015
-    RIP: 0010:0xffffffffc0601a87
-    Code: Unable to access opcode bytes at 0xffffffffc0601a5d.
-    RSP: 0018:ffffb25bc2e57e18 EFLAGS: 00010297
-    RAX: 0000000000000000 RBX: ffffffffc061f0b6 RCX: 0000000000000000
-    RDX: 0000000000000000 RSI: ffffffff962fd0de RDI: ffffffff962fd0de
-    RBP: ffffb25bc2e57ea8 R08: 0000000000000000 R09: 0000000000000000
-    R10: 0000000000000001 R11: 0000000000000001 R12: 0000000000000000
-    R13: 0000000000000000 R14: 000000000000000a R15: 00000000001c1dbe
-    FS:  0000000000000000(0000) GS:ffff921fa2200000(0000) knlGS:0000000000000000
-    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    CR2: ffffffffc0601a5d CR3: 000000011de4c006 CR4: 0000000000370ee0
-    DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-    DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-    Call Trace:
-     <TASK>
-     ? kvfree_call_rcu+0xf0/0x3a0
-     ? kthread+0xf3/0x120
-     ? kthread_complete_and_exit+0x20/0x20
-     ? ret_from_fork+0x1f/0x30
-     </TASK>
-    Modules linked in: rfkill sunrpc ... [last unloaded: torture]
-    CR2: ffffffffc0601a87
-    ---[ end trace 0000000000000000 ]---
-
-Fixes: e6e78b004fa7 ("rcuperf: Add kfree_rcu() performance Tests")
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Fixes: ee37d7314a32 ("md/raid10: Fix raid10 replace hang when new added disk faulty")
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230527072218.2365857-2-linan666@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/rcuscale.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/md/raid10.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/rcu/rcuscale.c b/kernel/rcu/rcuscale.c
-index 3509aabac942e..57ec414710bbc 100644
---- a/kernel/rcu/rcuscale.c
-+++ b/kernel/rcu/rcuscale.c
-@@ -713,6 +713,11 @@ rcu_scale_cleanup(void)
- 	if (gp_exp && gp_async)
- 		SCALEOUT_ERRSTRING("No expedited async GPs, so went with async!");
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index 1f5589c5294dc..d3f8156da44e5 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -3412,7 +3412,6 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
+ 			int must_sync;
+ 			int any_working;
+ 			int need_recover = 0;
+-			int need_replace = 0;
+ 			struct raid10_info *mirror = &conf->mirrors[i];
+ 			struct md_rdev *mrdev, *mreplace;
  
-+	if (kfree_rcu_test) {
-+		kfree_scale_cleanup();
-+		return;
-+	}
-+
- 	if (torture_cleanup_begin())
- 		return;
- 	if (!cur_ops) {
+@@ -3424,11 +3423,10 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
+ 			    !test_bit(Faulty, &mrdev->flags) &&
+ 			    !test_bit(In_sync, &mrdev->flags))
+ 				need_recover = 1;
+-			if (mreplace != NULL &&
+-			    !test_bit(Faulty, &mreplace->flags))
+-				need_replace = 1;
++			if (mreplace && test_bit(Faulty, &mreplace->flags))
++				mreplace = NULL;
+ 
+-			if (!need_recover && !need_replace) {
++			if (!need_recover && !mreplace) {
+ 				rcu_read_unlock();
+ 				continue;
+ 			}
+@@ -3444,8 +3442,6 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
+ 				rcu_read_unlock();
+ 				continue;
+ 			}
+-			if (mreplace && test_bit(Faulty, &mreplace->flags))
+-				mreplace = NULL;
+ 			/* Unless we are doing a full sync, or a replacement
+ 			 * we only need to recover the block if it is set in
+ 			 * the bitmap
+@@ -3568,11 +3564,11 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
+ 				bio = r10_bio->devs[1].repl_bio;
+ 				if (bio)
+ 					bio->bi_end_io = NULL;
+-				/* Note: if need_replace, then bio
++				/* Note: if replace is not NULL, then bio
+ 				 * cannot be NULL as r10buf_pool_alloc will
+ 				 * have allocated it.
+ 				 */
+-				if (!need_replace)
++				if (!mreplace)
+ 					break;
+ 				bio->bi_next = biolist;
+ 				biolist = bio;
 -- 
 2.39.2
 
