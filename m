@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D63C20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:15:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 104CEC433C8;
-	Fri, 21 Jul 2023 19:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9CB20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:15:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0357DC433C8;
+	Fri, 21 Jul 2023 19:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966932;
-	bh=wYrqmWgN19T5t7BD4m3fsxuRLxtBHhazbVunZU+MTQU=;
+	s=korg; t=1689966935;
+	bh=SW3JGuU/ABh/sNBYLBadGN7yeDT7WrSMLJkX0aKlaII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EhwU/O4NbinLqPZelfXcJCA461DHZLZ71iFZPKLnmR0ZXM4eF+GftFK7DjToo2tSm
-	 QqcSE3hdCKKqo9wGfSGXnvmxZ5+oEPT6c4pTg9kDsTpRhaE2ZRs9AIA0SS09FcCk/o
-	 NxLt1bOMvvRJoR//n1bS8iO/i9xzcCuv9S+hkOJE=
+	b=Tb+2aq3LaDh+5k5NVh+e4q9Ws0bxUZG+m5icBgYiZST99bj9Qdju8vnvroV26fBfC
+	 PdL6V8JJGf1e53LHcT0dr6GTpRrjjoNEg7f/UMYZ6mzlQB/O+mdEYsz0n0Dw0FWm7U
+	 rdhZ0+VhP7UQl8q87eR9wjJpVv5MXPURltXeJavg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 519/532] selftests: mptcp: depend on SYN_COOKIES
-Date: Fri, 21 Jul 2023 18:07:03 +0200
-Message-ID: <20230721160642.809429303@linuxfoundation.org>
+	Weitao Wang <WeitaoWang-oc@zhaoxin.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.15 502/532] xhci: Fix TRB prefetch issue of ZHAOXIN hosts
+Date: Fri, 21 Jul 2023 18:06:46 +0200
+Message-ID: <20230721160641.826167735@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -34,40 +34,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
 
-commit 6c8880fcaa5c45355179b759c1d11737775e31fc upstream.
+commit 2a865a652299f5666f3b785cbe758c5f57453036 upstream.
 
-MPTCP selftests are using TCP SYN Cookies for quite a while now, since
-v5.9.
+On some ZHAOXIN hosts, xHCI will prefetch TRB for performance
+improvement. However this TRB prefetch mechanism may cross page boundary,
+which may access memory not allocated by xHCI driver. In order to fix
+this issue, two pages was allocated for a segment and only the first
+page will be used. And add a quirk XHCI_ZHAOXIN_TRB_FETCH for this issue.
 
-Some CIs don't have this config option enabled and this is causing
-issues in the tests:
-
-  # ns1 MPTCP -> ns1 (10.0.1.1:10000      ) MPTCP     (duration   167ms) sysctl: cannot stat /proc/sys/net/ipv4/tcp_syncookies: No such file or directory
-  # [ OK ]./mptcp_connect.sh: line 554: [: -eq: unary operator expected
-
-There is no impact in the results but the test is not doing what it is
-supposed to do.
-
-Fixes: fed61c4b584c ("selftests: mptcp: make 2nd net namespace use tcp syn cookies unconditionally")
 Cc: stable@vger.kernel.org
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Message-ID: <20230602144009.1225632-10-mathias.nyman@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/config |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/host/xhci-mem.c |    8 ++++++--
+ drivers/usb/host/xhci-pci.c |    7 ++++++-
+ drivers/usb/host/xhci.h     |    1 +
+ 3 files changed, 13 insertions(+), 3 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/config
-+++ b/tools/testing/selftests/net/mptcp/config
-@@ -6,6 +6,7 @@ CONFIG_INET_DIAG=m
- CONFIG_INET_MPTCP_DIAG=m
- CONFIG_VETH=y
- CONFIG_NET_SCH_NETEM=m
-+CONFIG_SYN_COOKIES=y
- CONFIG_NETFILTER=y
- CONFIG_NETFILTER_ADVANCED=y
- CONFIG_NETFILTER_NETLINK=m
+--- a/drivers/usb/host/xhci-mem.c
++++ b/drivers/usb/host/xhci-mem.c
+@@ -2454,8 +2454,12 @@ int xhci_mem_init(struct xhci_hcd *xhci,
+ 	 * and our use of dma addresses in the trb_address_map radix tree needs
+ 	 * TRB_SEGMENT_SIZE alignment, so we pick the greater alignment need.
+ 	 */
+-	xhci->segment_pool = dma_pool_create("xHCI ring segments", dev,
+-			TRB_SEGMENT_SIZE, TRB_SEGMENT_SIZE, xhci->page_size);
++	if (xhci->quirks & XHCI_ZHAOXIN_TRB_FETCH)
++		xhci->segment_pool = dma_pool_create("xHCI ring segments", dev,
++				TRB_SEGMENT_SIZE * 2, TRB_SEGMENT_SIZE * 2, xhci->page_size * 2);
++	else
++		xhci->segment_pool = dma_pool_create("xHCI ring segments", dev,
++				TRB_SEGMENT_SIZE, TRB_SEGMENT_SIZE, xhci->page_size);
+ 
+ 	/* See Table 46 and Note on Figure 55 */
+ 	xhci->device_pool = dma_pool_create("xHCI input/output contexts", dev,
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -337,8 +337,13 @@ static void xhci_pci_quirks(struct devic
+ 		xhci->quirks |= XHCI_NO_SOFT_RETRY;
+ 
+ 	if (pdev->vendor == PCI_VENDOR_ID_ZHAOXIN) {
+-		if (pdev->device == 0x9202)
++		if (pdev->device == 0x9202) {
+ 			xhci->quirks |= XHCI_RESET_ON_RESUME;
++			xhci->quirks |= XHCI_ZHAOXIN_TRB_FETCH;
++		}
++
++		if (pdev->device == 0x9203)
++			xhci->quirks |= XHCI_ZHAOXIN_TRB_FETCH;
+ 	}
+ 
+ 	/* xHC spec requires PCI devices to support D3hot and D3cold */
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1906,6 +1906,7 @@ struct xhci_hcd {
+ #define XHCI_EP_CTX_BROKEN_DCS	BIT_ULL(42)
+ #define XHCI_SUSPEND_RESUME_CLKS	BIT_ULL(43)
+ #define XHCI_RESET_TO_DEFAULT	BIT_ULL(44)
++#define XHCI_ZHAOXIN_TRB_FETCH	BIT_ULL(45)
+ 
+ 	unsigned int		num_active_eps;
+ 	unsigned int		limit_active_eps;
 
 
