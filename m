@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89031F94D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:23:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB05DC433C8;
-	Fri, 21 Jul 2023 16:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE291F94D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:23:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7282C433C8;
+	Fri, 21 Jul 2023 16:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956635;
-	bh=RM49dZlFA77E8cYeu4lb0uB/JQlKFzkGqRIyHFvJcME=;
+	s=korg; t=1689956638;
+	bh=m8s45yT7QbcSoN8/2MAh6VHnv++8beixKZt/KOHfKL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gf2gfUcnVGe/sJqpMfn4dYG/NaqiWrwFpt10qQP+P8QnHeEo2sEMyCzkqg9n9Oud/
-	 JY0AYuIXIB6E+3FSvOrr24lDf+T0Mj9TzVNEakDJW9txBIQt0u9YI1fOj+tVWlWsLj
-	 Xky1FKgRK/zkPVUfGAQjY7LT6P2AUQSy7eTpDNlg=
+	b=zAlVHixWBjathogszNMs5LxA3HKdweselS/vW9JuKxWGtgANU2Bzk+B9MUs5s+YxU
+	 6zpmJMU6I8XyoBPSpgMB+4pHZ9FtjPCA+AvbCBePHYLc7zkRM2pPaCwDVSbTfojRbB
+	 l11AnQLsZmKj13XTHhqjwDywAnV8tijq3YMCGXfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Zheng Yejian <zhengyejian1@huawei.com>
-Subject: [PATCH 6.4 245/292] ftrace: Fix possible warning on checking all pages used in ftrace_process_locs()
-Date: Fri, 21 Jul 2023 18:05:54 +0200
-Message-ID: <20230721160539.426754238@linuxfoundation.org>
+	Evan Quan <evan.quan@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.4 246/292] drm/amd/pm: share the code around SMU13 pcie parameters update
+Date: Fri, 21 Jul 2023 18:05:55 +0200
+Message-ID: <20230721160539.472020383@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -34,131 +35,171 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Evan Quan <evan.quan@amd.com>
 
-commit 26efd79c4624294e553aeaa3439c646729bad084 upstream.
+commit dcb489bae65d92cfd26da22c7a0d6665b06ecc63 upstream.
 
-As comments in ftrace_process_locs(), there may be NULL pointers in
-mcount_loc section:
- > Some architecture linkers will pad between
- > the different mcount_loc sections of different
- > object files to satisfy alignments.
- > Skip any NULL pointers.
+So that SMU13.0.0 and SMU13.0.7 do not need to have one copy each.
 
-After commit 20e5227e9f55 ("ftrace: allow NULL pointers in mcount_loc"),
-NULL pointers will be accounted when allocating ftrace pages but skipped
-before adding into ftrace pages, this may result in some pages not being
-used. Then after commit 706c81f87f84 ("ftrace: Remove extra helper
-functions"), warning may occur at:
-  WARN_ON(pg->next);
-
-To fix it, only warn for case that no pointers skipped but pages not used
-up, then free those unused pages after releasing ftrace_lock.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230712060452.3175675-1-zhengyejian1@huawei.com
-
-Cc: stable@vger.kernel.org
-Fixes: 706c81f87f84 ("ftrace: Remove extra helper functions")
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Evan Quan <evan.quan@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |   45 +++++++++++++++++++++++++++++++--------------
- 1 file changed, 31 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h         |    4 ++
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c       |   31 +++++++++++++++++
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |   33 -------------------
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c |   33 -------------------
+ 4 files changed, 37 insertions(+), 64 deletions(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -3305,6 +3305,22 @@ static int ftrace_allocate_records(struc
- 	return cnt;
- }
+--- a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
++++ b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
+@@ -303,5 +303,9 @@ int smu_v13_0_get_pptable_from_firmware(
+ 					uint32_t *size,
+ 					uint32_t pptable_id);
  
-+static void ftrace_free_pages(struct ftrace_page *pages)
++int smu_v13_0_update_pcie_parameters(struct smu_context *smu,
++				     uint32_t pcie_gen_cap,
++				     uint32_t pcie_width_cap);
++
+ #endif
+ #endif
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
+@@ -2453,3 +2453,34 @@ int smu_v13_0_mode1_reset(struct smu_con
+ 
+ 	return ret;
+ }
++
++int smu_v13_0_update_pcie_parameters(struct smu_context *smu,
++				     uint32_t pcie_gen_cap,
++				     uint32_t pcie_width_cap)
 +{
-+	struct ftrace_page *pg = pages;
++	struct smu_13_0_dpm_context *dpm_context = smu->smu_dpm.dpm_context;
++	struct smu_13_0_pcie_table *pcie_table =
++				&dpm_context->dpm_tables.pcie_table;
++	uint32_t smu_pcie_arg;
++	int ret, i;
 +
-+	while (pg) {
-+		if (pg->records) {
-+			free_pages((unsigned long)pg->records, pg->order);
-+			ftrace_number_of_pages -= 1 << pg->order;
-+		}
-+		pages = pg->next;
-+		kfree(pg);
-+		pg = pages;
-+		ftrace_number_of_groups--;
++	for (i = 0; i < pcie_table->num_of_link_levels; i++) {
++		if (pcie_table->pcie_gen[i] > pcie_gen_cap)
++			pcie_table->pcie_gen[i] = pcie_gen_cap;
++		if (pcie_table->pcie_lane[i] > pcie_width_cap)
++			pcie_table->pcie_lane[i] = pcie_width_cap;
++
++		smu_pcie_arg = i << 16;
++		smu_pcie_arg |= pcie_table->pcie_gen[i] << 8;
++		smu_pcie_arg |= pcie_table->pcie_lane[i];
++
++		ret = smu_cmn_send_smc_msg_with_param(smu,
++						      SMU_MSG_OverridePcieParameters,
++						      smu_pcie_arg,
++						      NULL);
++		if (ret)
++			return ret;
 +	}
++
++	return 0;
 +}
-+
- static struct ftrace_page *
- ftrace_allocate_pages(unsigned long num_to_init)
- {
-@@ -3343,17 +3359,7 @@ ftrace_allocate_pages(unsigned long num_
- 	return start_pg;
- 
-  free_pages:
--	pg = start_pg;
--	while (pg) {
--		if (pg->records) {
--			free_pages((unsigned long)pg->records, pg->order);
--			ftrace_number_of_pages -= 1 << pg->order;
--		}
--		start_pg = pg->next;
--		kfree(pg);
--		pg = start_pg;
--		ftrace_number_of_groups--;
--	}
-+	ftrace_free_pages(start_pg);
- 	pr_info("ftrace: FAILED to allocate memory for functions\n");
- 	return NULL;
- }
-@@ -6434,9 +6440,11 @@ static int ftrace_process_locs(struct mo
- 			       unsigned long *start,
- 			       unsigned long *end)
- {
-+	struct ftrace_page *pg_unuse = NULL;
- 	struct ftrace_page *start_pg;
- 	struct ftrace_page *pg;
- 	struct dyn_ftrace *rec;
-+	unsigned long skipped = 0;
- 	unsigned long count;
- 	unsigned long *p;
- 	unsigned long addr;
-@@ -6499,8 +6507,10 @@ static int ftrace_process_locs(struct mo
- 		 * object files to satisfy alignments.
- 		 * Skip any NULL pointers.
- 		 */
--		if (!addr)
-+		if (!addr) {
-+			skipped++;
- 			continue;
-+		}
- 
- 		end_offset = (pg->index+1) * sizeof(pg->records[0]);
- 		if (end_offset > PAGE_SIZE << pg->order) {
-@@ -6514,8 +6524,10 @@ static int ftrace_process_locs(struct mo
- 		rec->ip = addr;
- 	}
- 
--	/* We should have used all pages */
--	WARN_ON(pg->next);
-+	if (pg->next) {
-+		pg_unuse = pg->next;
-+		pg->next = NULL;
-+	}
- 
- 	/* Assign the last page to ftrace_pages */
- 	ftrace_pages = pg;
-@@ -6537,6 +6549,11 @@ static int ftrace_process_locs(struct mo
-  out:
- 	mutex_unlock(&ftrace_lock);
- 
-+	/* We should have used all pages unless we skipped some */
-+	if (pg_unuse) {
-+		WARN_ON(!skipped);
-+		ftrace_free_pages(pg_unuse);
-+	}
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -1235,37 +1235,6 @@ static int smu_v13_0_0_force_clk_levels(
  	return ret;
  }
  
+-static int smu_v13_0_0_update_pcie_parameters(struct smu_context *smu,
+-					      uint32_t pcie_gen_cap,
+-					      uint32_t pcie_width_cap)
+-{
+-	struct smu_13_0_dpm_context *dpm_context = smu->smu_dpm.dpm_context;
+-	struct smu_13_0_pcie_table *pcie_table =
+-				&dpm_context->dpm_tables.pcie_table;
+-	uint32_t smu_pcie_arg;
+-	int ret, i;
+-
+-	for (i = 0; i < pcie_table->num_of_link_levels; i++) {
+-		if (pcie_table->pcie_gen[i] > pcie_gen_cap)
+-			pcie_table->pcie_gen[i] = pcie_gen_cap;
+-		if (pcie_table->pcie_lane[i] > pcie_width_cap)
+-			pcie_table->pcie_lane[i] = pcie_width_cap;
+-
+-		smu_pcie_arg = i << 16;
+-		smu_pcie_arg |= pcie_table->pcie_gen[i] << 8;
+-		smu_pcie_arg |= pcie_table->pcie_lane[i];
+-
+-		ret = smu_cmn_send_smc_msg_with_param(smu,
+-						      SMU_MSG_OverridePcieParameters,
+-						      smu_pcie_arg,
+-						      NULL);
+-		if (ret)
+-			return ret;
+-	}
+-
+-	return 0;
+-}
+-
+ static const struct smu_temperature_range smu13_thermal_policy[] = {
+ 	{-273150,  99000, 99000, -273150, 99000, 99000, -273150, 99000, 99000},
+ 	{ 120000, 120000, 120000, 120000, 120000, 120000, 120000, 120000, 120000},
+@@ -2172,7 +2141,7 @@ static const struct pptable_funcs smu_v1
+ 	.feature_is_enabled = smu_cmn_feature_is_enabled,
+ 	.print_clk_levels = smu_v13_0_0_print_clk_levels,
+ 	.force_clk_levels = smu_v13_0_0_force_clk_levels,
+-	.update_pcie_parameters = smu_v13_0_0_update_pcie_parameters,
++	.update_pcie_parameters = smu_v13_0_update_pcie_parameters,
+ 	.get_thermal_temperature_range = smu_v13_0_0_get_thermal_temperature_range,
+ 	.register_irq_handler = smu_v13_0_register_irq_handler,
+ 	.enable_thermal_alert = smu_v13_0_enable_thermal_alert,
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+@@ -1225,37 +1225,6 @@ static int smu_v13_0_7_force_clk_levels(
+ 	return ret;
+ }
+ 
+-static int smu_v13_0_7_update_pcie_parameters(struct smu_context *smu,
+-					      uint32_t pcie_gen_cap,
+-					      uint32_t pcie_width_cap)
+-{
+-	struct smu_13_0_dpm_context *dpm_context = smu->smu_dpm.dpm_context;
+-	struct smu_13_0_pcie_table *pcie_table =
+-				&dpm_context->dpm_tables.pcie_table;
+-	uint32_t smu_pcie_arg;
+-	int ret, i;
+-
+-	for (i = 0; i < pcie_table->num_of_link_levels; i++) {
+-		if (pcie_table->pcie_gen[i] > pcie_gen_cap)
+-			pcie_table->pcie_gen[i] = pcie_gen_cap;
+-		if (pcie_table->pcie_lane[i] > pcie_width_cap)
+-			pcie_table->pcie_lane[i] = pcie_width_cap;
+-
+-		smu_pcie_arg = i << 16;
+-		smu_pcie_arg |= pcie_table->pcie_gen[i] << 8;
+-		smu_pcie_arg |= pcie_table->pcie_lane[i];
+-
+-		ret = smu_cmn_send_smc_msg_with_param(smu,
+-						      SMU_MSG_OverridePcieParameters,
+-						      smu_pcie_arg,
+-						      NULL);
+-		if (ret)
+-			return ret;
+-	}
+-
+-	return 0;
+-}
+-
+ static const struct smu_temperature_range smu13_thermal_policy[] =
+ {
+ 	{-273150,  99000, 99000, -273150, 99000, 99000, -273150, 99000, 99000},
+@@ -1752,7 +1721,7 @@ static const struct pptable_funcs smu_v1
+ 	.feature_is_enabled = smu_cmn_feature_is_enabled,
+ 	.print_clk_levels = smu_v13_0_7_print_clk_levels,
+ 	.force_clk_levels = smu_v13_0_7_force_clk_levels,
+-	.update_pcie_parameters = smu_v13_0_7_update_pcie_parameters,
++	.update_pcie_parameters = smu_v13_0_update_pcie_parameters,
+ 	.get_thermal_temperature_range = smu_v13_0_7_get_thermal_temperature_range,
+ 	.register_irq_handler = smu_v13_0_register_irq_handler,
+ 	.enable_thermal_alert = smu_v13_0_enable_thermal_alert,
 
 
