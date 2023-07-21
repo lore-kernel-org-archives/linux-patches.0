@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D40420F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:08:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DC7C433C7;
-	Fri, 21 Jul 2023 19:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED77520F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:08:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D43BC433C7;
+	Fri, 21 Jul 2023 19:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966499;
-	bh=e4oizSaJ7jiN3cP57f4spJYsSWWI6MY52EER6wwRUlA=;
+	s=korg; t=1689966501;
+	bh=kPbn4J4G8uY9G5Ogdk3PRbIL9htjcim/f27hwH11jEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XYZB/WnXlQBr98YFy4RvwLaZdQ8XJPNVcajrSz2pSV9G752MvVlA8UVdWz0bppytB
-	 lOfeDyZ2EK6HFyMARlcZZzdMj0Dx2kMfxg7kaARbfRCwhSn/AMphWOpL1U7X8jzPy3
-	 ZF9PPhPgO+uBAVfCvwjgnjUHJohpBmiRxRccuJ3w=
+	b=enpu3gaYXxK2B5M3DfxkGVDahp880FlNEAJaynrE788xbWP0Pc1O/lqXh9mgfH7Bd
+	 SW/gWq5puGy6eT2xxea5JgDVx3Ekoew5wNTl6i3oYHsAKX+poND6kXnSvsex4PUste
+	 UYCWL8YB/d3IdcxtFjxXhGvuLkotPx189eNhTYWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Naohiro Aota <naohiro.aota@wdc.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 365/532] btrfs: delete unused BGs while reclaiming BGs
-Date: Fri, 21 Jul 2023 18:04:29 +0200
-Message-ID: <20230721160634.259580414@linuxfoundation.org>
+Subject: [PATCH 5.15 366/532] btrfs: bail out reclaim process if filesystem is read-only
+Date: Fri, 21 Jul 2023 18:04:30 +0200
+Message-ID: <20230721160634.325880189@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -38,23 +38,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Naohiro Aota <naota@elisp.net>
 
-commit 3ed01616bad6c7e3de196676b542ae3df8058592 upstream.
+commit 93463ff7b54626f8276c0bd3d3f968fbf8d5d380 upstream.
 
-The reclaiming process only starts after the filesystem volumes are
-allocated to a certain level (75% by default). Thus, the list of
-reclaiming target block groups can build up so huge at the time the
-reclaim process kicks in. On a test run, there were over 1000 BGs in the
-reclaim list.
+When a filesystem is read-only, we cannot reclaim a block group as it
+cannot rewrite the data. Just bail out in that case.
 
-As the reclaim involves rewriting the data, it takes really long time to
-reclaim the BGs. While the reclaim is running, btrfs_delete_unused_bgs()
-won't proceed because the reclaim side is holding
-fs_info->reclaim_bgs_lock. As a result, we will have a large number of
-unused BGs kept in the unused list. On my test run, I got 1057 unused BGs.
-
-Since deleting a block group is relatively easy and fast work, we can call
-btrfs_delete_unused_bgs() while it reclaims BGs, to avoid building up
-unused BGs.
+Note that it can drop block groups in this case. As we did
+sb_start_write(), read-only filesystem means we got a fatal error and
+forced read-only. There is no chance to reclaim them again.
 
 Fixes: 18bb8bbf13c1 ("btrfs: zoned: automatically reclaim zones")
 CC: stable@vger.kernel.org # 5.15+
@@ -64,35 +55,28 @@ Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/block-group.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/btrfs/block-group.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 --- a/fs/btrfs/block-group.c
 +++ b/fs/btrfs/block-group.c
-@@ -1574,10 +1574,24 @@ void btrfs_reclaim_bgs_work(struct work_
+@@ -1541,8 +1541,15 @@ void btrfs_reclaim_bgs_work(struct work_
+ 		}
+ 		spin_unlock(&bg->lock);
  
- next:
- 		btrfs_put_block_group(bg);
-+
-+		mutex_unlock(&fs_info->reclaim_bgs_lock);
+-		/* Get out fast, in case we're unmounting the filesystem */
+-		if (btrfs_fs_closing(fs_info)) {
 +		/*
-+		 * Reclaiming all the block groups in the list can take really
-+		 * long.  Prioritize cleaning up unused block groups.
++		 * Get out fast, in case we're read-only or unmounting the
++		 * filesystem. It is OK to drop block groups from the list even
++		 * for the read-only case. As we did sb_start_write(),
++		 * "mount -o remount,ro" won't happen and read-only filesystem
++		 * means it is forced read-only due to a fatal error. So, it
++		 * never gets back to read-write to let us reclaim again.
 +		 */
-+		btrfs_delete_unused_bgs(fs_info);
-+		/*
-+		 * If we are interrupted by a balance, we can just bail out. The
-+		 * cleaner thread restart again if necessary.
-+		 */
-+		if (!mutex_trylock(&fs_info->reclaim_bgs_lock))
-+			goto end;
- 		spin_lock(&fs_info->unused_bgs_lock);
- 	}
- 	spin_unlock(&fs_info->unused_bgs_lock);
- 	mutex_unlock(&fs_info->reclaim_bgs_lock);
-+end:
- 	btrfs_exclop_finish(fs_info);
- 	sb_end_write(fs_info->sb);
- }
++		if (btrfs_need_cleaner_sleep(fs_info)) {
+ 			up_write(&space_info->groups_sem);
+ 			goto next;
+ 		}
 
 
