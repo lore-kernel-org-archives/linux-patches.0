@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD131ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:53:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2E7C433C8;
-	Fri, 21 Jul 2023 18:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F861ED41
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:53:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40A57C433C8;
+	Fri, 21 Jul 2023 18:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965618;
-	bh=ynN6yc6sqIpjNZ5aHj8igFd/+9WlMo2kTnvEjlBG++Y=;
+	s=korg; t=1689965621;
+	bh=ra0ecAm9GDyk6lKFoXIankzZKDENIX6CFYXplPwUS7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ooDgNhDFZ5ikW4OAUHLj43Qqwma6qSijtQp/kcRl7CjG69DouBBAOaDy1PpD2vfja
-	 1X8+z7uDaDx7JDx04xTEcExUq3N6zol8ZfIXpfDKG0Q5Bw0qVl93uVYB0Uhv6Thbf7
-	 yDCyMPzzwe4oGkw36BAEFykSkKTD6sX+Ni/wdqXU=
+	b=E0roF+o9BcPbIg84ItA+S5mmzBls4Z+uRzKrIqJKRjoWarjopD1CdlhQDpE7Ci8sQ
+	 kzZApZuX4nmVgzwEwRTjIW01mZ0Q3X2LSWGJi5wXgt/2eJZaoUNbMNcNGPnHNfx75Z
+	 e76yD88bwyd96iBrheW3YpFGhkDFViONDwJp8uHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Pengcheng Yang <yangpc@wangsu.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 055/532] wifi: ray_cs: Utilize strnlen() in parse_addr()
-Date: Fri, 21 Jul 2023 17:59:19 +0200
-Message-ID: <20230721160617.630405487@linuxfoundation.org>
+Subject: [PATCH 5.15 038/532] samples/bpf: Fix buffer overflow in tcp_basertt
+Date: Fri, 21 Jul 2023 17:59:02 +0200
+Message-ID: <20230721160616.719196427@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,65 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Pengcheng Yang <yangpc@wangsu.com>
 
-[ Upstream commit 9e8e9187673cb24324f9165dd47b2b28f60b0b10 ]
+[ Upstream commit f4dea9689c5fea3d07170c2cb0703e216f1a0922 ]
 
-Instead of doing simple operations and using an additional variable on stack,
-utilize strnlen() and reuse len variable.
+Using sizeof(nv) or strlen(nv)+1 is correct.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20220603164414.48436-1-andriy.shevchenko@linux.intel.com
-Stable-dep-of: 4f8d66a9fb2e ("wifi: ray_cs: Fix an error handling path in ray_probe()")
+Fixes: c890063e4404 ("bpf: sample BPF_SOCKET_OPS_BASE_RTT program")
+Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
+Link: https://lore.kernel.org/r/1683276658-2860-1-git-send-email-yangpc@wangsu.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ray_cs.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ samples/bpf/tcp_basertt_kern.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ray_cs.c b/drivers/net/wireless/ray_cs.c
-index f8409e93fe33e..98741b06707b6 100644
---- a/drivers/net/wireless/ray_cs.c
-+++ b/drivers/net/wireless/ray_cs.c
-@@ -1643,31 +1643,29 @@ static void authenticate_timeout(struct timer_list *t)
- /*===========================================================================*/
- static int parse_addr(char *in_str, UCHAR *out)
- {
-+	int i, k;
- 	int len;
--	int i, j, k;
- 	int status;
- 
- 	if (in_str == NULL)
- 		return 0;
--	if ((len = strlen(in_str)) < 2)
-+	len = strnlen(in_str, ADDRLEN * 2 + 1) - 1;
-+	if (len < 1)
- 		return 0;
- 	memset(out, 0, ADDRLEN);
- 
- 	status = 1;
--	j = len - 1;
--	if (j > 12)
--		j = 12;
- 	i = 5;
- 
--	while (j > 0) {
--		if ((k = hex_to_bin(in_str[j--])) != -1)
-+	while (len > 0) {
-+		if ((k = hex_to_bin(in_str[len--])) != -1)
- 			out[i] = k;
- 		else
- 			return 0;
- 
--		if (j == 0)
-+		if (len == 0)
- 			break;
--		if ((k = hex_to_bin(in_str[j--])) != -1)
-+		if ((k = hex_to_bin(in_str[len--])) != -1)
- 			out[i] += k << 4;
- 		else
- 			return 0;
+diff --git a/samples/bpf/tcp_basertt_kern.c b/samples/bpf/tcp_basertt_kern.c
+index 8dfe09a92feca..822b0742b8154 100644
+--- a/samples/bpf/tcp_basertt_kern.c
++++ b/samples/bpf/tcp_basertt_kern.c
+@@ -47,7 +47,7 @@ int bpf_basertt(struct bpf_sock_ops *skops)
+ 		case BPF_SOCK_OPS_BASE_RTT:
+ 			n = bpf_getsockopt(skops, SOL_TCP, TCP_CONGESTION,
+ 					   cong, sizeof(cong));
+-			if (!n && !__builtin_memcmp(cong, nv, sizeof(nv)+1)) {
++			if (!n && !__builtin_memcmp(cong, nv, sizeof(nv))) {
+ 				/* Set base_rtt to 80us */
+ 				rv = 80;
+ 			} else if (n) {
 -- 
 2.39.2
 
