@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F17E20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:15:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83FBBC433C9;
-	Fri, 21 Jul 2023 19:15:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C642020F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:15:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49937C433C8;
+	Fri, 21 Jul 2023 19:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966926;
-	bh=Dv3Sa7qctz+UUZS5CPwDgCzaDM79EbEwbBPSyohKMYE=;
+	s=korg; t=1689966929;
+	bh=p+LhXIf+jKbP0K5B+2mrnmJEyYoKs1iPfx5zeIbayfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BbK84Zf2n2n2mJUYzNW8Mis5PFiKQMAm6zZ9Sun0mAaVZnb/xJyZzLT/1N0ALntVf
-	 PfXuSOf3Rk4FeSF7NBu2gWkWK+ASt/Bmdu/1RuFaKEPhd4YXh9kX1khaRWsXcZjqUW
-	 cMSwCWiD9Hr2BMUy/RFAZx1OuYV632jLFVQD9W8I=
+	b=THEnypyf66DFRyKKBqKqPLzQA3HOaoTBCJ7qe8Xy8J3qM/RihowrSkX9gLjCH2i6C
+	 2/ejOjybbs/fauvkp9GXMKVC8F01YyAdsIhrtfpxTQNWR3TLbvoMipbuD690GYXHN0
+	 CNGkZMyrHOjR4Fv/YPwhQ+TV4jZIjpxEp4hgsN2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mateusz Stachyra <m.stachyra@samsung.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 5.15 517/532] tracing: Fix null pointer dereference in tracing_err_log_open()
-Date: Fri, 21 Jul 2023 18:07:01 +0200
-Message-ID: <20230721160642.703036205@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 518/532] selftests: mptcp: sockopt: return error if wrong mark
+Date: Fri, 21 Jul 2023 18:07:02 +0200
+Message-ID: <20230721160642.756778804@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,61 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mateusz Stachyra <m.stachyra@samsung.com>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 02b0095e2fbbc060560c1065f86a211d91e27b26 upstream.
+commit 9ac4c28eb70cd5ea5472a5e1c495dcdd597d4597 upstream.
 
-Fix an issue in function 'tracing_err_log_open'.
-The function doesn't call 'seq_open' if the file is opened only with
-write permissions, which results in 'file->private_data' being left as null.
-If we then use 'lseek' on that opened file, 'seq_lseek' dereferences
-'file->private_data' in 'mutex_lock(&m->lock)', resulting in a kernel panic.
-Writing to this node requires root privileges, therefore this bug
-has very little security impact.
+When an error was detected when checking the marks, a message was
+correctly printed mentioning the error but followed by another one
+saying everything was OK and the selftest was not marked as failed as
+expected.
 
-Tracefs node: /sys/kernel/tracing/error_log
+Now the 'ret' variable is directly set to 1 in order to make sure the
+exit is done with an error, similar to what is done in other functions.
+While at it, the error is correctly propagated to the caller.
 
-Example Kernel panic:
-
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000038
-Call trace:
- mutex_lock+0x30/0x110
- seq_lseek+0x34/0xb8
- __arm64_sys_lseek+0x6c/0xb8
- invoke_syscall+0x58/0x13c
- el0_svc_common+0xc4/0x10c
- do_el0_svc+0x24/0x98
- el0_svc+0x24/0x88
- el0t_64_sync_handler+0x84/0xe4
- el0t_64_sync+0x1b4/0x1b8
-Code: d503201f aa0803e0 aa1f03e1 aa0103e9 (c8e97d02)
----[ end trace 561d1b49c12cf8a5 ]---
-Kernel panic - not syncing: Oops: Fatal exception
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230703155237eucms1p4dfb6a19caa14c79eb6c823d127b39024@eucms1p4
-Link: https://lore.kernel.org/linux-trace-kernel/20230704102706eucms1p30d7ecdcc287f46ad67679fc8491b2e0f@eucms1p3
-
+Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
+Fixes: dc65fe82fb07 ("selftests: mptcp: add packet mark test case")
 Cc: stable@vger.kernel.org
-Fixes: 8a062902be725 ("tracing: Add tracing error log")
-Signed-off-by: Mateusz Stachyra <m.stachyra@samsung.com>
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/mptcp/mptcp_sockopt.sh |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -8014,7 +8014,7 @@ static const struct file_operations trac
- 	.open           = tracing_err_log_open,
- 	.write		= tracing_err_log_write,
- 	.read           = seq_read,
--	.llseek         = seq_lseek,
-+	.llseek         = tracing_lseek,
- 	.release        = tracing_err_log_release,
- };
+--- a/tools/testing/selftests/net/mptcp/mptcp_sockopt.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_sockopt.sh
+@@ -119,6 +119,7 @@ check_mark()
+ 	for v in $values; do
+ 		if [ $v -ne 0 ]; then
+ 			echo "FAIL: got $tables $values in ns $ns , not 0 - not all expected packets marked" 1>&2
++			ret=1
+ 			return 1
+ 		fi
+ 	done
+@@ -213,11 +214,11 @@ do_transfer()
+ 	fi
  
+ 	if [ $local_addr = "::" ];then
+-		check_mark $listener_ns 6
+-		check_mark $connector_ns 6
++		check_mark $listener_ns 6 || retc=1
++		check_mark $connector_ns 6 || retc=1
+ 	else
+-		check_mark $listener_ns 4
+-		check_mark $connector_ns 4
++		check_mark $listener_ns 4 || retc=1
++		check_mark $connector_ns 4 || retc=1
+ 	fi
+ 
+ 	check_transfer $cin $sout "file received by server"
 
 
