@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99151F94B
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:00:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27DACC433C7;
-	Fri, 21 Jul 2023 19:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F21E1F94B
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:00:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E31C433C8;
+	Fri, 21 Jul 2023 19:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966001;
-	bh=4qeVGfiu3HEHsZINfor1TDsMfxYVrmPF6s0XHR7JebI=;
+	s=korg; t=1689966004;
+	bh=LEdffPMU1XOW/eLMvFHLdP/lvTHAhsAN/JRfak7SEfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S2pPGrv7m70D9hAx8MIoimNLm3qv+mzZpHREvgnloN4QVQgmGa2+vedmDntjgvUdt
-	 /gnyGVhuwqUrSOfVJLVpntd/DoUEG30a88Zw80AWPMruE71QHdjzMKDnBiNJa2Cl5c
-	 sB87QZN5RQ3lA49KLYvAt7vXGwetXPZYXc46qelY=
+	b=0t01xDpyJ1yx7rxDM3eGJ7RMwnUsn76czpFJPfv1MNOEv80vT2BvfmKdq/+KymQkv
+	 q4mSIpw78rdYwJRbuliiMU+xpNYRJN2roIBw++LosZ8fK2g3UFanTZMfTAk5wgxXww
+	 ksnEt9u2ECZ4u4rfzEVOTaZURJqUIJ+egAYL/yYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Romanov <avromanov@sberdevices.ru>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Christian Lamparter <chunkeey@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 189/532] drivers: meson: secure-pwrc: always enable DMA domain
-Date: Fri, 21 Jul 2023 18:01:33 +0200
-Message-ID: <20230721160624.661924793@linuxfoundation.org>
+Subject: [PATCH 5.15 163/532] ARM: dts: BCM5301X: fix duplex-full => full-duplex
+Date: Fri, 21 Jul 2023 18:01:07 +0200
+Message-ID: <20230721160623.246360531@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,40 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexey Romanov <avromanov@sberdevices.ru>
+From: Christian Lamparter <chunkeey@gmail.com>
 
-[ Upstream commit 0bb4644d583789c97e74d3e3047189f0c59c4742 ]
+[ Upstream commit fd274b733bfdde3ca72f0fa2a37f032f3a8c402c ]
 
-Starting from commit e45f243409db ("firmware: meson_sm:
-populate platform devices from sm device tree data") pwrc
-is probed successfully and disables unused pwr domains.
-By A1 SoC family design, any TEE requires DMA pwr domain
-always enabled.
+this typo was found by the dtbs_check
+| ports:port@5:fixed-link: 'oneOf' conditional failed,
+|  {'speed': [[1000]], 'duplex-full': True} is not of type 'array'
+| 'duplex-full' does not match any of the regexes: 'pinctrl-[0-]..."
 
-Fixes: b3dde5013e13 ("soc: amlogic: Add support for Secure power domains controller")
-Signed-off-by: Alexey Romanov <avromanov@sberdevices.ru>
-Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20230610090414.90529-1-avromanov@sberdevices.ru
-[narmstrong: added fixes tag]
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+this should have been full-duplex;
+
+Fixes: 935327a73553 ("ARM: dts: BCM5301X: Add DT for Meraki MR26")
+Fixes: ec88a9c344d9 ("ARM: BCM5301X: Add DT for Meraki MR32")
+Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
+Link: https://lore.kernel.org/r/50522f45566951a9eabd22820647924cc6b4a264.1686238550.git.chunkeey@gmail.com
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/amlogic/meson-secure-pwrc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/bcm53015-meraki-mr26.dts | 2 +-
+ arch/arm/boot/dts/bcm53016-meraki-mr32.dts | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/amlogic/meson-secure-pwrc.c b/drivers/soc/amlogic/meson-secure-pwrc.c
-index 2eeea5e1b3b7f..2f3ca5531fa96 100644
---- a/drivers/soc/amlogic/meson-secure-pwrc.c
-+++ b/drivers/soc/amlogic/meson-secure-pwrc.c
-@@ -104,7 +104,7 @@ static struct meson_secure_pwrc_domain_desc a1_pwrc_domains[] = {
- 	SEC_PD(ACODEC,	0),
- 	SEC_PD(AUDIO,	0),
- 	SEC_PD(OTP,	0),
--	SEC_PD(DMA,	0),
-+	SEC_PD(DMA,	GENPD_FLAG_ALWAYS_ON | GENPD_FLAG_IRQ_SAFE),
- 	SEC_PD(SD_EMMC,	0),
- 	SEC_PD(RAMA,	0),
- 	/* SRAMB is used as ATF runtime memory, and should be always on */
+diff --git a/arch/arm/boot/dts/bcm53015-meraki-mr26.dts b/arch/arm/boot/dts/bcm53015-meraki-mr26.dts
+index 14f58033efeb9..ca2266b936ee2 100644
+--- a/arch/arm/boot/dts/bcm53015-meraki-mr26.dts
++++ b/arch/arm/boot/dts/bcm53015-meraki-mr26.dts
+@@ -128,7 +128,7 @@ port@5 {
+ 
+ 			fixed-link {
+ 				speed = <1000>;
+-				duplex-full;
++				full-duplex;
+ 			};
+ 		};
+ 	};
+diff --git a/arch/arm/boot/dts/bcm53016-meraki-mr32.dts b/arch/arm/boot/dts/bcm53016-meraki-mr32.dts
+index 577a4dc604d93..edf9910100b02 100644
+--- a/arch/arm/boot/dts/bcm53016-meraki-mr32.dts
++++ b/arch/arm/boot/dts/bcm53016-meraki-mr32.dts
+@@ -212,7 +212,7 @@ port@5 {
+ 
+ 			fixed-link {
+ 				speed = <1000>;
+-				duplex-full;
++				full-duplex;
+ 			};
+ 		};
+ 	};
 -- 
 2.39.2
 
