@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC7627F1D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:50:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27536C433C8;
-	Fri, 21 Jul 2023 18:50:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE9927F1D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:50:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E48C6C433C7;
+	Fri, 21 Jul 2023 18:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965437;
-	bh=P/QOKet2IXFOzQDsvn9iswRk0oX6SAGOSiSlBmr2c1o=;
+	s=korg; t=1689965440;
+	bh=bAhStFhzlqoxQsyZRbak5m/yVq038vBGexsGtZpeKG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QOQbXXe+vOf07qnHiUArTZvWQ68g/YShfRgmED2gaRHaSiItzxeTmGZOWfgWO3Q00
-	 DnmqgNgWpJaGXP3NtMlGTbQtr9/u6f2pK/6KbmzhGwmXW38kECUx0VxaXcUqvjJNru
-	 iH4Mlsx5csCwwqymxQ3AOm7UIUIfVKA+jbU2aO58=
+	b=M7lvAylHsXe6SymkNPlMUXE5s7KvZZb663P8Xt9Ugsd/Jg4mGSQks8/kMeDr5A4Bb
+	 2NkS7pDHN9KZTEHE/RicKxV4mDWQ8O8QgyBXkScLkdtF/9b72utScRSl7/VxL9halL
+	 05nA1FtKjv/xHrzaz1oJpy+HKSzIR/USwkCYfRVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karol Wachowski <karol.wachowski@linux.intel.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Subject: [PATCH 6.4 255/292] accel/ivpu: Clear specific interrupt status bits on C0
-Date: Fri, 21 Jul 2023 18:06:04 +0200
-Message-ID: <20230721160539.894596981@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.4 256/292] fprobe: Release rethook after the ftrace_ops is unregistered
+Date: Fri, 21 Jul 2023 18:06:05 +0200
+Message-ID: <20230721160539.939199525@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -35,71 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Karol Wachowski <karol.wachowski@linux.intel.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit 7f34e01f77f811ecb2ef83e60301b38cf89af466 upstream.
+commit 5f81018753dfd4989e33ece1f0cb6b8aae498b82 upstream.
 
-MTL C0 stepping fixed issue related to butrress interrupt status clearing,
-to clear an interrupt status it is required to write 1 to specific
-status bit field. This allows to execute read, modify and write routine.
+While running bpf selftests it's possible to get following fault:
 
-Writing 0 will not clear the interrupt and will cause interrupt storm.
+  general protection fault, probably for non-canonical address \
+  0x6b6b6b6b6b6b6b6b: 0000 [#1] PREEMPT SMP DEBUG_PAGEALLOC NOPTI
+  ...
+  Call Trace:
+   <TASK>
+   fprobe_handler+0xc1/0x270
+   ? __pfx_bpf_testmod_init+0x10/0x10
+   ? __pfx_bpf_testmod_init+0x10/0x10
+   ? bpf_fentry_test1+0x5/0x10
+   ? bpf_fentry_test1+0x5/0x10
+   ? bpf_testmod_init+0x22/0x80
+   ? do_one_initcall+0x63/0x2e0
+   ? rcu_is_watching+0xd/0x40
+   ? kmalloc_trace+0xaf/0xc0
+   ? do_init_module+0x60/0x250
+   ? __do_sys_finit_module+0xac/0x120
+   ? do_syscall_64+0x37/0x90
+   ? entry_SYSCALL_64_after_hwframe+0x72/0xdc
+   </TASK>
 
-Fixes: 35b137630f08 ("accel/ivpu: Introduce a new DRM driver for Intel VPU")
-Cc: stable@vger.kernel.org # 6.3.x
-Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230703080725.2065635-2-stanislaw.gruszka@linux.intel.com
+In unregister_fprobe function we can't release fp->rethook while it's
+possible there are some of its users still running on another cpu.
+
+Moving rethook_free call after fp->ops is unregistered with
+unregister_ftrace_function call.
+
+Link: https://lore.kernel.org/all/20230615115236.3476617-1-jolsa@kernel.org/
+
+Fixes: 5b0ab78998e3 ("fprobe: Add exit_handler support")
+Cc: stable@vger.kernel.org
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_drv.h    |    1 +
- drivers/accel/ivpu/ivpu_hw_mtl.c |   18 ++++++++++++------
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ kernel/trace/fprobe.c |   12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
---- a/drivers/accel/ivpu/ivpu_drv.h
-+++ b/drivers/accel/ivpu/ivpu_drv.h
-@@ -75,6 +75,7 @@ struct ivpu_wa_table {
- 	bool punit_disabled;
- 	bool clear_runtime_mem;
- 	bool d3hot_after_power_off;
-+	bool interrupt_clear_with_0;
- };
- 
- struct ivpu_hw_info;
---- a/drivers/accel/ivpu/ivpu_hw_mtl.c
-+++ b/drivers/accel/ivpu/ivpu_hw_mtl.c
-@@ -101,6 +101,9 @@ static void ivpu_hw_wa_init(struct ivpu_
- 	vdev->wa.punit_disabled = ivpu_is_fpga(vdev);
- 	vdev->wa.clear_runtime_mem = false;
- 	vdev->wa.d3hot_after_power_off = true;
-+
-+	if (ivpu_device_id(vdev) == PCI_DEVICE_ID_MTL && ivpu_revision(vdev) < 4)
-+		vdev->wa.interrupt_clear_with_0 = true;
- }
- 
- static void ivpu_hw_timeouts_init(struct ivpu_device *vdev)
-@@ -973,12 +976,15 @@ static u32 ivpu_hw_mtl_irqb_handler(stru
- 		schedule_recovery = true;
- 	}
+--- a/kernel/trace/fprobe.c
++++ b/kernel/trace/fprobe.c
+@@ -366,19 +366,13 @@ int unregister_fprobe(struct fprobe *fp)
+ 		    fp->ops.saved_func != fprobe_kprobe_handler))
+ 		return -EINVAL;
  
 -	/*
--	 * Clear local interrupt status by writing 0 to all bits.
--	 * This must be done after interrupts are cleared at the source.
--	 * Writing 1 triggers an interrupt, so we can't perform read update write.
+-	 * rethook_free() starts disabling the rethook, but the rethook handlers
+-	 * may be running on other processors at this point. To make sure that all
+-	 * current running handlers are finished, call unregister_ftrace_function()
+-	 * after this.
 -	 */
--	REGB_WR32(MTL_BUTTRESS_INTERRUPT_STAT, 0x0);
-+	/* This must be done after interrupts are cleared at the source. */
-+	if (IVPU_WA(interrupt_clear_with_0))
-+		/*
-+		 * Writing 1 triggers an interrupt, so we can't perform read update write.
-+		 * Clear local interrupt status by writing 0 to all bits.
-+		 */
-+		REGB_WR32(MTL_BUTTRESS_INTERRUPT_STAT, 0x0);
-+	else
-+		REGB_WR32(MTL_BUTTRESS_INTERRUPT_STAT, status);
+-	if (fp->rethook)
+-		rethook_free(fp->rethook);
+-
+ 	ret = unregister_ftrace_function(&fp->ops);
+ 	if (ret < 0)
+ 		return ret;
  
- 	/* Re-enable global interrupt */
- 	REGB_WR32(MTL_BUTTRESS_GLOBAL_INT_MASK, 0x0);
++	if (fp->rethook)
++		rethook_free(fp->rethook);
++
+ 	ftrace_free_filter(&fp->ops);
+ 
+ 	return ret;
 
 
