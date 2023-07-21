@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529E8200AE
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:13:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95D5C433C8;
-	Fri, 21 Jul 2023 19:13:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7244220F98
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:13:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E4FC433C9;
+	Fri, 21 Jul 2023 19:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966790;
-	bh=jYnfvi0E7W5UKQ+INbKbn5kYpfCbjd1t4nc6nl/hUs4=;
+	s=korg; t=1689966793;
+	bh=PX000U1omiXGjurskrbDWLCkoEUtNBAG2bzqTT0cDuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lIuGopzczDHIGqu94Uq0DuqNe1XOOyeqywgPZwPDzMNTqDqziMd0rnbBCJzzOkX1c
-	 DdzChSChPoxue3OpM6Kd9zm7+qusrffzIyAmu5DUrKzoqwC+zGdx5S6YfiZZLwcknY
-	 CNpAWlbpQCUTcjOljZZ6v9Ixam3Ie6SrUs64vNFU=
+	b=hD12pcb2BTcSPK5twM6e+EgUstSTMlu4vQVZl6tp2GVTjcTG5Fan9SDP8mvcxA3Sy
+	 pp4IIYoWRNPhXKkorrq4ENlpSuDPJoVqpubm5ypvBHJViJTmPJrzLgE2lGOt15fJLE
+	 7hSI8tHZzjyJAFBk+GTrcI2eOF3NT5QtNbq4oFD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lion <nnamrec@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 441/532] net/sched: sch_qfq: account for stab overhead in qfq_enqueue
-Date: Fri, 21 Jul 2023 18:05:45 +0200
-Message-ID: <20230721160638.480552593@linuxfoundation.org>
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Siddh Raman Pant <code@siddh.me>,
+	syzbot+d2cd27dcf8e04b232eb2@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 468/532] jfs: jfs_dmap: Validate db_l2nbperpage while mounting
+Date: Fri, 21 Jul 2023 18:06:12 +0200
+Message-ID: <20230721160639.915379668@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -39,96 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Siddh Raman Pant <code@siddh.me>
 
-[ Upstream commit 3e337087c3b5805fe0b8a46ba622a962880b5d64 ]
+commit 11509910c599cbd04585ec35a6d5e1a0053d84c1 upstream.
 
-Lion says:
--------
-In the QFQ scheduler a similar issue to CVE-2023-31436
-persists.
+In jfs_dmap.c at line 381, BLKTODMAP is used to get a logical block
+number inside dbFree(). db_l2nbperpage, which is the log2 number of
+blocks per page, is passed as an argument to BLKTODMAP which uses it
+for shifting.
 
-Consider the following code in net/sched/sch_qfq.c:
+Syzbot reported a shift out-of-bounds crash because db_l2nbperpage is
+too big. This happens because the large value is set without any
+validation in dbMount() at line 181.
 
-static int qfq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
-                struct sk_buff **to_free)
-{
-     unsigned int len = qdisc_pkt_len(skb), gso_segs;
+Thus, make sure that db_l2nbperpage is correct while mounting.
 
-    // ...
+Max number of blocks per page = Page size / Min block size
+=> log2(Max num_block per page) = log2(Page size / Min block size)
+				= log2(Page size) - log2(Min block size)
 
-     if (unlikely(cl->agg->lmax < len)) {
-         pr_debug("qfq: increasing maxpkt from %u to %u for class %u",
-              cl->agg->lmax, len, cl->common.classid);
-         err = qfq_change_agg(sch, cl, cl->agg->class_weight, len);
-         if (err) {
-             cl->qstats.drops++;
-             return qdisc_drop(skb, sch, to_free);
-         }
+=> Max db_l2nbperpage = L2PSIZE - L2MINBLOCKSIZE
 
-    // ...
-
-     }
-
-Similarly to CVE-2023-31436, "lmax" is increased without any bounds
-checks according to the packet length "len". Usually this would not
-impose a problem because packet sizes are naturally limited.
-
-This is however not the actual packet length, rather the
-"qdisc_pkt_len(skb)" which might apply size transformations according to
-"struct qdisc_size_table" as created by "qdisc_get_stab()" in
-net/sched/sch_api.c if the TCA_STAB option was set when modifying the qdisc.
-
-A user may choose virtually any size using such a table.
-
-As a result the same issue as in CVE-2023-31436 can occur, allowing heap
-out-of-bounds read / writes in the kmalloc-8192 cache.
--------
-
-We can create the issue with the following commands:
-
-tc qdisc add dev $DEV root handle 1: stab mtu 2048 tsize 512 mpu 0 \
-overhead 999999999 linklayer ethernet qfq
-tc class add dev $DEV parent 1: classid 1:1 htb rate 6mbit burst 15k
-tc filter add dev $DEV parent 1: matchall classid 1:1
-ping -I $DEV 1.1.1.2
-
-This is caused by incorrectly assuming that qdisc_pkt_len() returns a
-length within the QFQ_MIN_LMAX < len < QFQ_MAX_LMAX.
-
-Fixes: 462dbc9101ac ("pkt_sched: QFQ Plus: fair-queueing service at DRR cost")
-Reported-by: Lion <nnamrec@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-and-tested-by: syzbot+d2cd27dcf8e04b232eb2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?id=2a70a453331db32ed491f5cbb07e81bf2d225715
+Cc: stable@vger.kernel.org
+Suggested-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Siddh Raman Pant <code@siddh.me>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_qfq.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/jfs/jfs_dmap.c   |    6 ++++++
+ fs/jfs/jfs_filsys.h |    2 ++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
-index 8fb30b20425f8..3ba6a766601cf 100644
---- a/net/sched/sch_qfq.c
-+++ b/net/sched/sch_qfq.c
-@@ -381,8 +381,13 @@ static int qfq_change_agg(struct Qdisc *sch, struct qfq_class *cl, u32 weight,
- 			   u32 lmax)
- {
- 	struct qfq_sched *q = qdisc_priv(sch);
--	struct qfq_aggregate *new_agg = qfq_find_agg(q, lmax, weight);
-+	struct qfq_aggregate *new_agg;
- 
-+	/* 'lmax' can range from [QFQ_MIN_LMAX, pktlen + stab overhead] */
-+	if (lmax > QFQ_MAX_LMAX)
-+		return -EINVAL;
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -178,7 +178,13 @@ int dbMount(struct inode *ipbmap)
+ 	dbmp_le = (struct dbmap_disk *) mp->data;
+ 	bmp->db_mapsize = le64_to_cpu(dbmp_le->dn_mapsize);
+ 	bmp->db_nfree = le64_to_cpu(dbmp_le->dn_nfree);
 +
-+	new_agg = qfq_find_agg(q, lmax, weight);
- 	if (new_agg == NULL) { /* create new aggregate */
- 		new_agg = kzalloc(sizeof(*new_agg), GFP_ATOMIC);
- 		if (new_agg == NULL)
--- 
-2.39.2
-
+ 	bmp->db_l2nbperpage = le32_to_cpu(dbmp_le->dn_l2nbperpage);
++	if (bmp->db_l2nbperpage > L2PSIZE - L2MINBLOCKSIZE) {
++		err = -EINVAL;
++		goto err_release_metapage;
++	}
++
+ 	bmp->db_numag = le32_to_cpu(dbmp_le->dn_numag);
+ 	if (!bmp->db_numag) {
+ 		err = -EINVAL;
+--- a/fs/jfs/jfs_filsys.h
++++ b/fs/jfs/jfs_filsys.h
+@@ -122,7 +122,9 @@
+ #define NUM_INODE_PER_IAG	INOSPERIAG
+ 
+ #define MINBLOCKSIZE		512
++#define L2MINBLOCKSIZE		9
+ #define MAXBLOCKSIZE		4096
++#define L2MAXBLOCKSIZE		12
+ #define	MAXFILESIZE		((s64)1 << 52)
+ 
+ #define JFS_LINK_MAX		0xffffffff
 
 
