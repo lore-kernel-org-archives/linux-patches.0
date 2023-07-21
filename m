@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FC320F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:14:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 096B0C433C9;
-	Fri, 21 Jul 2023 19:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669EB20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:14:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB236C433C7;
+	Fri, 21 Jul 2023 19:14:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966881;
-	bh=8kb1Y7EZC3A2SX2lHu4hFXa2Y5W3q45OguU46MGspDQ=;
+	s=korg; t=1689966884;
+	bh=yYrIhPktRi9FlzJUhDsXFVnuxjLa4jXBu8Cp6uIws8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d8ca9bASZ9Z/fyiTXlW0qO+K86mvs9SPci0BJJP5pnFueccq52hvLPGs7/SGoSQWl
-	 dnjgE6z+C15svxEcllCMTdBeohc+Ti1mvaOWgytYSk+UHlISx/ziqZATiKohtJzZ8o
-	 Q5aXHYDGl8y7BkAllpc8C0MRaWL+Rl4Rrwqhdcuo=
+	b=2aHru+mu0/fOpWNdeE4KljHnXKNpqAwFhP3ukivNCCjLNFnPLRWoqRYEszlPRg/0L
+	 BwtCqp5APNffcWVrXLRky+9HBnz5xyzmtkNzhCUC9sy7fYR3MBbmjjHNc+7Sado5wb
+	 TuIRABLcoqPs4K9+yuj073yFs32uuTzCOa0K2CIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thelford Williams <thelford@google.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Xiubo Li <xiubli@redhat.com>
-Subject: [PATCH 5.15 499/532] libceph: harden msgr2.1 frame segment length checks
-Date: Fri, 21 Jul 2023 18:06:43 +0200
-Message-ID: <20230721160641.654530845@linuxfoundation.org>
+	Igor Mammedov <imammedo@redhat.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>
+Subject: [PATCH 5.15 473/532] PCI: acpiphp: Reassign resources on bridge if necessary
+Date: Fri, 21 Jul 2023 18:06:17 +0200
+Message-ID: <20230721160640.172320404@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,100 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Igor Mammedov <imammedo@redhat.com>
 
-commit a282a2f10539dce2aa619e71e1817570d557fc97 upstream.
+commit 40613da52b13fb21c5566f10b287e0ca8c12c4e9 upstream.
 
-ceph_frame_desc::fd_lens is an int array.  decode_preamble() thus
-effectively casts u32 -> int but the checks for segment lengths are
-written as if on unsigned values.  While reading in HELLO or one of the
-AUTH frames (before authentication is completed), arithmetic in
-head_onwire_len() can get duped by negative ctrl_len and produce
-head_len which is less than CEPH_PREAMBLE_LEN but still positive.
-This would lead to a buffer overrun in prepare_read_control() as the
-preamble gets copied to the newly allocated buffer of size head_len.
+When using ACPI PCI hotplug, hotplugging a device with large BARs may fail
+if bridge windows programmed by firmware are not large enough.
 
+Reproducer:
+  $ qemu-kvm -monitor stdio -M q35  -m 4G \
+      -global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=on \
+      -device id=rp1,pcie-root-port,bus=pcie.0,chassis=4 \
+      disk_image
+
+ wait till linux guest boots, then hotplug device:
+   (qemu) device_add qxl,bus=rp1
+
+ hotplug on guest side fails with:
+   pci 0000:01:00.0: [1b36:0100] type 00 class 0x038000
+   pci 0000:01:00.0: reg 0x10: [mem 0x00000000-0x03ffffff]
+   pci 0000:01:00.0: reg 0x14: [mem 0x00000000-0x03ffffff]
+   pci 0000:01:00.0: reg 0x18: [mem 0x00000000-0x00001fff]
+   pci 0000:01:00.0: reg 0x1c: [io  0x0000-0x001f]
+   pci 0000:01:00.0: BAR 0: no space for [mem size 0x04000000]
+   pci 0000:01:00.0: BAR 0: failed to assign [mem size 0x04000000]
+   pci 0000:01:00.0: BAR 1: no space for [mem size 0x04000000]
+   pci 0000:01:00.0: BAR 1: failed to assign [mem size 0x04000000]
+   pci 0000:01:00.0: BAR 2: assigned [mem 0xfe800000-0xfe801fff]
+   pci 0000:01:00.0: BAR 3: assigned [io  0x1000-0x101f]
+   qxl 0000:01:00.0: enabling device (0000 -> 0003)
+   Unable to create vram_mapping
+   qxl: probe of 0000:01:00.0 failed with error -12
+
+However when using native PCIe hotplug
+  '-global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=off'
+it works fine, since kernel attempts to reassign unused resources.
+
+Use the same machinery as native PCIe hotplug to (re)assign resources.
+
+Link: https://lore.kernel.org/r/20230424191557.2464760-1-imammedo@redhat.com
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: cd1a677cad99 ("libceph, ceph: implement msgr2.1 protocol (crc and secure modes)")
-Reported-by: Thelford Williams <thelford@google.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Xiubo Li <xiubli@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/messenger_v2.c |   41 ++++++++++++++++++++++++++---------------
- 1 file changed, 26 insertions(+), 15 deletions(-)
+ drivers/pci/hotplug/acpiphp_glue.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/net/ceph/messenger_v2.c
-+++ b/net/ceph/messenger_v2.c
-@@ -391,6 +391,8 @@ static int head_onwire_len(int ctrl_len,
- 	int head_len;
- 	int rem_len;
+--- a/drivers/pci/hotplug/acpiphp_glue.c
++++ b/drivers/pci/hotplug/acpiphp_glue.c
+@@ -489,7 +489,6 @@ static void enable_slot(struct acpiphp_s
+ 				acpiphp_native_scan_bridge(dev);
+ 		}
+ 	} else {
+-		LIST_HEAD(add_list);
+ 		int max, pass;
  
-+	BUG_ON(ctrl_len < 0 || ctrl_len > CEPH_MSG_MAX_CONTROL_LEN);
-+
- 	if (secure) {
- 		head_len = CEPH_PREAMBLE_SECURE_LEN;
- 		if (ctrl_len > CEPH_PREAMBLE_INLINE_LEN) {
-@@ -409,6 +411,10 @@ static int head_onwire_len(int ctrl_len,
- static int __tail_onwire_len(int front_len, int middle_len, int data_len,
- 			     bool secure)
- {
-+	BUG_ON(front_len < 0 || front_len > CEPH_MSG_MAX_FRONT_LEN ||
-+	       middle_len < 0 || middle_len > CEPH_MSG_MAX_MIDDLE_LEN ||
-+	       data_len < 0 || data_len > CEPH_MSG_MAX_DATA_LEN);
-+
- 	if (!front_len && !middle_len && !data_len)
- 		return 0;
- 
-@@ -521,29 +527,34 @@ static int decode_preamble(void *p, stru
- 		desc->fd_aligns[i] = ceph_decode_16(&p);
+ 		acpiphp_rescan_slot(slot);
+@@ -503,12 +502,10 @@ static void enable_slot(struct acpiphp_s
+ 				if (pass && dev->subordinate) {
+ 					check_hotplug_bridge(slot, dev);
+ 					pcibios_resource_survey_bus(dev->subordinate);
+-					__pci_bus_size_bridges(dev->subordinate,
+-							       &add_list);
+ 				}
+ 			}
+ 		}
+-		__pci_bus_assign_resources(bus, &add_list, NULL);
++		pci_assign_unassigned_bridge_resources(bus->self);
  	}
  
--	/*
--	 * This would fire for FRAME_TAG_WAIT (it has one empty
--	 * segment), but we should never get it as client.
--	 */
--	if (!desc->fd_lens[desc->fd_seg_cnt - 1]) {
--		pr_err("last segment empty\n");
-+	if (desc->fd_lens[0] < 0 ||
-+	    desc->fd_lens[0] > CEPH_MSG_MAX_CONTROL_LEN) {
-+		pr_err("bad control segment length %d\n", desc->fd_lens[0]);
- 		return -EINVAL;
- 	}
--
--	if (desc->fd_lens[0] > CEPH_MSG_MAX_CONTROL_LEN) {
--		pr_err("control segment too big %d\n", desc->fd_lens[0]);
-+	if (desc->fd_lens[1] < 0 ||
-+	    desc->fd_lens[1] > CEPH_MSG_MAX_FRONT_LEN) {
-+		pr_err("bad front segment length %d\n", desc->fd_lens[1]);
- 		return -EINVAL;
- 	}
--	if (desc->fd_lens[1] > CEPH_MSG_MAX_FRONT_LEN) {
--		pr_err("front segment too big %d\n", desc->fd_lens[1]);
-+	if (desc->fd_lens[2] < 0 ||
-+	    desc->fd_lens[2] > CEPH_MSG_MAX_MIDDLE_LEN) {
-+		pr_err("bad middle segment length %d\n", desc->fd_lens[2]);
- 		return -EINVAL;
- 	}
--	if (desc->fd_lens[2] > CEPH_MSG_MAX_MIDDLE_LEN) {
--		pr_err("middle segment too big %d\n", desc->fd_lens[2]);
-+	if (desc->fd_lens[3] < 0 ||
-+	    desc->fd_lens[3] > CEPH_MSG_MAX_DATA_LEN) {
-+		pr_err("bad data segment length %d\n", desc->fd_lens[3]);
- 		return -EINVAL;
- 	}
--	if (desc->fd_lens[3] > CEPH_MSG_MAX_DATA_LEN) {
--		pr_err("data segment too big %d\n", desc->fd_lens[3]);
-+
-+	/*
-+	 * This would fire for FRAME_TAG_WAIT (it has one empty
-+	 * segment), but we should never get it as client.
-+	 */
-+	if (!desc->fd_lens[desc->fd_seg_cnt - 1]) {
-+		pr_err("last segment empty, segment count %d\n",
-+		       desc->fd_seg_cnt);
- 		return -EINVAL;
- 	}
- 
+ 	acpiphp_sanitize_bus(bus);
 
 
