@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135EB1F941
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:15:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8902DC433C9;
-	Fri, 21 Jul 2023 16:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0CA1F941
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:15:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CDAC433C8;
+	Fri, 21 Jul 2023 16:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956140;
-	bh=P5osZbV/yO3ne+1piUV03kgXN0IdBQUvkU+egyQjWRA=;
+	s=korg; t=1689956143;
+	bh=j+lhCQDjnFl3aEG4Bo/KFDm6e3CaRFvxMWFYY88P/MM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SPg8I53m6mcOd7ydJJ2jn8rLzOt7UmMm9uvFfvVBF7o4gizuJpYlTX9kd+H8/EHK1
-	 Ywgq8CZbwi+wlRQOkUM7BnF18HYZjodtORejqsw2MHUP7puO7NmWkYToJroO+csRUu
-	 YCgRjgnQi+97MiwKp8TlpQo3I9yaUGuLy16+Jnc4=
+	b=g56F9J/mGoWHvI9UfUIn4+z3Cc5OzV6ADK2qExDU/2H5e9peJ4lOQeSxjuUpciq0s
+	 AV6T3X/DQ90KausPEzlsW+c/ZFTnw0v6a72dXV/6Jrnw9pya4k1HGcoMqYwBIDFfXA
+	 IPCH25F3abWOcmfLkq/eE0ZHYa2T3E4a/A9qhMK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Konovalov <andreyknvl@google.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Marco Elver <elver@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.4 139/292] kasan: fix type cast in memory_is_poisoned_n
-Date: Fri, 21 Jul 2023 18:04:08 +0200
-Message-ID: <20230721160534.825782816@linuxfoundation.org>
+	Beau Belgrave <beaub@linux.microsoft.com>,
+	sunliming <sunliming@kylinos.cn>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.4 140/292] tracing/user_events: Fix incorrect return value for writing operation when events are disabled
+Date: Fri, 21 Jul 2023 18:04:09 +0200
+Message-ID: <20230721160534.871438682@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -39,49 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrey Konovalov <andreyknvl@google.com>
+From: sunliming <sunliming@kylinos.cn>
 
-commit 05c56e7b4319d7f6352f27da876a1acdc8fa5cc4 upstream.
+commit f6d026eea390d59787a6cdc2ef5c983d02e029d0 upstream.
 
-Commit bb6e04a173f0 ("kasan: use internal prototypes matching gcc-13
-builtins") introduced a bug into the memory_is_poisoned_n implementation:
-it effectively removed the cast to a signed integer type after applying
-KASAN_GRANULE_MASK.
+The writing operation return the count of writes regardless of whether events
+are enabled or disabled. Switch it to return -EBADF to indicates that the event
+is disabled.
 
-As a result, KASAN started failing to properly check memset, memcpy, and
-other similar functions.
+Link: https://lkml.kernel.org/r/20230626111344.19136-2-sunliming@kylinos.cn
 
-Fix the bug by adding the cast back (through an additional signed integer
-variable to make the code more readable).
-
-Link: https://lkml.kernel.org/r/8c9e0251c2b8b81016255709d4ec42942dcaf018.1688431866.git.andreyknvl@google.com
-Fixes: bb6e04a173f0 ("kasan: use internal prototypes matching gcc-13 builtins")
-Signed-off-by: Andrey Konovalov <andreyknvl@google.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+7f5a08c79df35 ("user_events: Add minimal support for trace_event into ftrace")
+Acked-by: Beau Belgrave <beaub@linux.microsoft.com>
+Signed-off-by: sunliming <sunliming@kylinos.cn>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kasan/generic.c |    3 ++-
+ kernel/trace/trace_events_user.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/mm/kasan/generic.c
-+++ b/mm/kasan/generic.c
-@@ -130,9 +130,10 @@ static __always_inline bool memory_is_po
- 	if (unlikely(ret)) {
- 		const void *last_byte = addr + size - 1;
- 		s8 *last_shadow = (s8 *)kasan_mem_to_shadow(last_byte);
-+		s8 last_accessible_byte = (unsigned long)last_byte & KASAN_GRANULE_MASK;
+--- a/kernel/trace/trace_events_user.c
++++ b/kernel/trace/trace_events_user.c
+@@ -2096,7 +2096,8 @@ static ssize_t user_events_write_core(st
  
- 		if (unlikely(ret != (unsigned long)last_shadow ||
--			(((long)last_byte & KASAN_GRANULE_MASK) >= *last_shadow)))
-+			     last_accessible_byte >= *last_shadow))
- 			return true;
- 	}
- 	return false;
+ 		if (unlikely(faulted))
+ 			return -EFAULT;
+-	}
++	} else
++		return -EBADF;
+ 
+ 	return ret;
+ }
 
 
