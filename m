@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E493920F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:23:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6744AC433C7;
-	Fri, 21 Jul 2023 19:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B526620F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:23:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39939C433C7;
+	Fri, 21 Jul 2023 19:23:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967380;
-	bh=PX000U1omiXGjurskrbDWLCkoEUtNBAG2bzqTT0cDuE=;
+	s=korg; t=1689967383;
+	bh=viQbu28BKhZYsbP+3JclZSbWNLzAYwxI0QvJNUO/MwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1N2ylK0jP55V2wAiva9YQSEIWrN7IafA3Hq4/3iKlSJ/jjjWGZBcO8rx52M6mQWc5
-	 E/o6oMnQNGEUr6mvdc4Q0+jTX2y4JsbGO5xf+C94CIQPnIN7NxSrvpqkb89RVDE4aW
-	 F35jtsOoY+PUL2IbOr6bUFYiUlB3vn/UXtEK35eY=
+	b=QwLaSG6E0lzpAJSh4kdCMd1ffWon3BPOjdZs+gb+sqGFtVhll6f8dL4iQf+/3TNZd
+	 HbiNfwV9oI+20I81Go84xT8p9m1eJYeaU/yhM1j2+YsMKbjh3hDaYIveuxKkCTs2MQ
+	 oppNi8NUP8cj8z7IjdMlk5Uxe/OAQbA5u/vO/HgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Siddh Raman Pant <code@siddh.me>,
-	syzbot+d2cd27dcf8e04b232eb2@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 114/223] jfs: jfs_dmap: Validate db_l2nbperpage while mounting
-Date: Fri, 21 Jul 2023 18:06:07 +0200
-Message-ID: <20230721160525.733566286@linuxfoundation.org>
+	Martin Kaiser <martin@kaiser.cx>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.1 115/223] hwrng: imx-rngc - fix the timeout for init and self check
+Date: Fri, 21 Jul 2023 18:06:08 +0200
+Message-ID: <20230721160525.775223954@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -35,66 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Siddh Raman Pant <code@siddh.me>
+From: Martin Kaiser <martin@kaiser.cx>
 
-commit 11509910c599cbd04585ec35a6d5e1a0053d84c1 upstream.
+commit d744ae7477190967a3ddc289e2cd4ae59e8b1237 upstream.
 
-In jfs_dmap.c at line 381, BLKTODMAP is used to get a logical block
-number inside dbFree(). db_l2nbperpage, which is the log2 number of
-blocks per page, is passed as an argument to BLKTODMAP which uses it
-for shifting.
+Fix the timeout that is used for the initialisation and for the self
+test. wait_for_completion_timeout expects a timeout in jiffies, but
+RNGC_TIMEOUT is in milliseconds. Call msecs_to_jiffies to do the
+conversion.
 
-Syzbot reported a shift out-of-bounds crash because db_l2nbperpage is
-too big. This happens because the large value is set without any
-validation in dbMount() at line 181.
-
-Thus, make sure that db_l2nbperpage is correct while mounting.
-
-Max number of blocks per page = Page size / Min block size
-=> log2(Max num_block per page) = log2(Page size / Min block size)
-				= log2(Page size) - log2(Min block size)
-
-=> Max db_l2nbperpage = L2PSIZE - L2MINBLOCKSIZE
-
-Reported-and-tested-by: syzbot+d2cd27dcf8e04b232eb2@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?id=2a70a453331db32ed491f5cbb07e81bf2d225715
 Cc: stable@vger.kernel.org
-Suggested-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-Signed-off-by: Siddh Raman Pant <code@siddh.me>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Fixes: 1d5449445bd0 ("hwrng: mx-rngc - add a driver for Freescale RNGC")
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/jfs_dmap.c   |    6 ++++++
- fs/jfs/jfs_filsys.h |    2 ++
- 2 files changed, 8 insertions(+)
+ drivers/char/hw_random/imx-rngc.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -178,7 +178,13 @@ int dbMount(struct inode *ipbmap)
- 	dbmp_le = (struct dbmap_disk *) mp->data;
- 	bmp->db_mapsize = le64_to_cpu(dbmp_le->dn_mapsize);
- 	bmp->db_nfree = le64_to_cpu(dbmp_le->dn_nfree);
-+
- 	bmp->db_l2nbperpage = le32_to_cpu(dbmp_le->dn_l2nbperpage);
-+	if (bmp->db_l2nbperpage > L2PSIZE - L2MINBLOCKSIZE) {
-+		err = -EINVAL;
-+		goto err_release_metapage;
-+	}
-+
- 	bmp->db_numag = le32_to_cpu(dbmp_le->dn_numag);
- 	if (!bmp->db_numag) {
- 		err = -EINVAL;
---- a/fs/jfs/jfs_filsys.h
-+++ b/fs/jfs/jfs_filsys.h
-@@ -122,7 +122,9 @@
- #define NUM_INODE_PER_IAG	INOSPERIAG
+--- a/drivers/char/hw_random/imx-rngc.c
++++ b/drivers/char/hw_random/imx-rngc.c
+@@ -110,7 +110,7 @@ static int imx_rngc_self_test(struct imx
+ 	cmd = readl(rngc->base + RNGC_COMMAND);
+ 	writel(cmd | RNGC_CMD_SELF_TEST, rngc->base + RNGC_COMMAND);
  
- #define MINBLOCKSIZE		512
-+#define L2MINBLOCKSIZE		9
- #define MAXBLOCKSIZE		4096
-+#define L2MAXBLOCKSIZE		12
- #define	MAXFILESIZE		((s64)1 << 52)
+-	ret = wait_for_completion_timeout(&rngc->rng_op_done, RNGC_TIMEOUT);
++	ret = wait_for_completion_timeout(&rngc->rng_op_done, msecs_to_jiffies(RNGC_TIMEOUT));
+ 	imx_rngc_irq_mask_clear(rngc);
+ 	if (!ret)
+ 		return -ETIMEDOUT;
+@@ -187,9 +187,7 @@ static int imx_rngc_init(struct hwrng *r
+ 		cmd = readl(rngc->base + RNGC_COMMAND);
+ 		writel(cmd | RNGC_CMD_SEED, rngc->base + RNGC_COMMAND);
  
- #define JFS_LINK_MAX		0xffffffff
+-		ret = wait_for_completion_timeout(&rngc->rng_op_done,
+-				RNGC_TIMEOUT);
+-
++		ret = wait_for_completion_timeout(&rngc->rng_op_done, msecs_to_jiffies(RNGC_TIMEOUT));
+ 		if (!ret) {
+ 			ret = -ETIMEDOUT;
+ 			goto err;
 
 
