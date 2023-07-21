@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9780A1DDDB
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:08:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18066C433CD;
-	Fri, 21 Jul 2023 16:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00211DDDB
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:08:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FFFAC433C7;
+	Fri, 21 Jul 2023 16:08:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689955735;
-	bh=l1GxayzkjNFbbVRCC3dbNBdKSYwmlJ124hMRq/5p2ig=;
+	s=korg; t=1689955738;
+	bh=IDnESwUJm/lDI2qWCyoVhjPxoKFgbhbGilgHOUjkqRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YfO5zsxciErStsGU2t7uS1OCgrtz0nTKKHLOvmhpC0dVwky5NsLjvVZSNmoJE3VQa
-	 2nLyHXUCWyAI3yL4aTGq8MZ3veNh/8NpmCaXXat73cKCKbrB8MiaVdS+emD1K1fUoO
-	 hcxUREIcuj5yLqydfYtoaCXXbxBP2EijetnLE0wE=
+	b=klaWKorXutPlGWi5AGvPIkPFgdZuvsaU6jwdahtKQusE2fbmFiaRpugP+zUAWeIVY
+	 HlgUI5jX0mCCohuv8X5EY019CBy7p4l9pjGfbwS+Cl8VXNjguH825dLAGZslREYVRR
+	 zx+F9H7L5YjdTNoq9swlDn9Gwo6KeeANz033643k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <swboyd@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
+	Petr Tesarik <petr.tesarik.ext@huawei.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 012/292] drm/bridge: ti-sn65dsi86: Fix auxiliary bus lifetime
-Date: Fri, 21 Jul 2023 18:02:01 +0200
-Message-ID: <20230721160529.340707893@linuxfoundation.org>
+Subject: [PATCH 6.4 013/292] swiotlb: always set the number of areas before allocating the pool
+Date: Fri, 21 Jul 2023 18:02:02 +0200
+Message-ID: <20230721160529.382327747@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -35,110 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Petr Tesarik <petr.tesarik.ext@huawei.com>
 
-[ Upstream commit 7aa83fbd712a6f08ffa67890061f26d140c2a84f ]
+[ Upstream commit aabd12609f91155f26584508b01f548215cc3c0c ]
 
-Memory for the "struct device" for any given device isn't supposed to
-be released until the device's release() is called. This is important
-because someone might be holding a kobject reference to the "struct
-device" and might try to access one of its members even after any
-other cleanup/uninitialization has happened.
+The number of areas defaults to the number of possible CPUs. However, the
+total number of slots may have to be increased after adjusting the number
+of areas. Consequently, the number of areas must be determined before
+allocating the memory pool. This is even explained with a comment in
+swiotlb_init_remap(), but swiotlb_init_late() adjusts the number of areas
+after slots are already allocated. The areas may end up being smaller than
+IO_TLB_SEGSIZE, which breaks per-area locking.
 
-Code analysis of ti-sn65dsi86 shows that this isn't quite right. When
-the code was written, it was believed that we could rely on the fact
-that the child devices would all be freed before the parent devices
-and thus we didn't need to worry about a release() function. While I
-still believe that the parent's "struct device" is guaranteed to
-outlive the child's "struct device" (because the child holds a kobject
-reference to the parent), the parent's "devm" allocated memory is a
-different story. That appears to be freed much earlier.
+While fixing swiotlb_init_late(), move all relevant comments before the
+definition of swiotlb_adjust_nareas() and convert them to kernel-doc.
 
-Let's make this better for ti-sn65dsi86 by allocating each auxiliary
-with kzalloc and then free that memory in the release().
-
-Fixes: bf73537f411b ("drm/bridge: ti-sn65dsi86: Break GPIO and MIPI-to-eDP bridge into sub-drivers")
-Suggested-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230613065812.v2.1.I24b838a5b4151fb32bccd6f36397998ea2df9fbb@changeid
+Fixes: 20347fca71a3 ("swiotlb: split up the global swiotlb lock")
+Signed-off-by: Petr Tesarik <petr.tesarik.ext@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 35 +++++++++++++++++----------
- 1 file changed, 22 insertions(+), 13 deletions(-)
+ kernel/dma/swiotlb.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index 4676cf2900dfd..3c8fd6ea6d6a4 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -170,10 +170,10 @@
-  * @pwm_refclk_freq: Cache for the reference clock input to the PWM.
-  */
- struct ti_sn65dsi86 {
--	struct auxiliary_device		bridge_aux;
--	struct auxiliary_device		gpio_aux;
--	struct auxiliary_device		aux_aux;
--	struct auxiliary_device		pwm_aux;
-+	struct auxiliary_device		*bridge_aux;
-+	struct auxiliary_device		*gpio_aux;
-+	struct auxiliary_device		*aux_aux;
-+	struct auxiliary_device		*pwm_aux;
- 
- 	struct device			*dev;
- 	struct regmap			*regmap;
-@@ -468,27 +468,34 @@ static void ti_sn65dsi86_delete_aux(void *data)
- 	auxiliary_device_delete(data);
+diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
+index af2e304c672c4..16f53d8c51bcf 100644
+--- a/kernel/dma/swiotlb.c
++++ b/kernel/dma/swiotlb.c
+@@ -115,9 +115,16 @@ static bool round_up_default_nslabs(void)
+ 	return true;
  }
  
--/*
-- * AUX bus docs say that a non-NULL release is mandatory, but it makes no
-- * sense for the model used here where all of the aux devices are allocated
-- * in the single shared structure. We'll use this noop as a workaround.
-- */
--static void ti_sn65dsi86_noop(struct device *dev) {}
-+static void ti_sn65dsi86_aux_device_release(struct device *dev)
-+{
-+	struct auxiliary_device *aux = container_of(dev, struct auxiliary_device, dev);
-+
-+	kfree(aux);
-+}
- 
- static int ti_sn65dsi86_add_aux_device(struct ti_sn65dsi86 *pdata,
--				       struct auxiliary_device *aux,
-+				       struct auxiliary_device **aux_out,
- 				       const char *name)
++/**
++ * swiotlb_adjust_nareas() - adjust the number of areas and slots
++ * @nareas:	Desired number of areas. Zero is treated as 1.
++ *
++ * Adjust the default number of areas in a memory pool.
++ * The default size of the memory pool may also change to meet minimum area
++ * size requirements.
++ */
+ static void swiotlb_adjust_nareas(unsigned int nareas)
  {
- 	struct device *dev = pdata->dev;
-+	struct auxiliary_device *aux;
- 	int ret;
+-	/* use a single area when non is specified */
+ 	if (!nareas)
+ 		nareas = 1;
+ 	else if (!is_power_of_2(nareas))
+@@ -298,10 +305,6 @@ void __init swiotlb_init_remap(bool addressing_limit, unsigned int flags,
+ 	if (swiotlb_force_disable)
+ 		return;
  
-+	aux = kzalloc(sizeof(*aux), GFP_KERNEL);
-+	if (!aux)
-+		return -ENOMEM;
+-	/*
+-	 * default_nslabs maybe changed when adjust area number.
+-	 * So allocate bounce buffer after adjusting area number.
+-	 */
+ 	if (!default_nareas)
+ 		swiotlb_adjust_nareas(num_possible_cpus());
+ 
+@@ -363,6 +366,9 @@ int swiotlb_init_late(size_t size, gfp_t gfp_mask,
+ 	if (swiotlb_force_disable)
+ 		return 0;
+ 
++	if (!default_nareas)
++		swiotlb_adjust_nareas(num_possible_cpus());
 +
- 	aux->name = name;
- 	aux->dev.parent = dev;
--	aux->dev.release = ti_sn65dsi86_noop;
-+	aux->dev.release = ti_sn65dsi86_aux_device_release;
- 	device_set_of_node_from_dev(&aux->dev, dev);
- 	ret = auxiliary_device_init(aux);
--	if (ret)
-+	if (ret) {
-+		kfree(aux);
- 		return ret;
-+	}
- 	ret = devm_add_action_or_reset(dev, ti_sn65dsi86_uninit_aux, aux);
- 	if (ret)
- 		return ret;
-@@ -497,6 +504,8 @@ static int ti_sn65dsi86_add_aux_device(struct ti_sn65dsi86 *pdata,
- 	if (ret)
- 		return ret;
- 	ret = devm_add_action_or_reset(dev, ti_sn65dsi86_delete_aux, aux);
-+	if (!ret)
-+		*aux_out = aux;
+ retry:
+ 	order = get_order(nslabs << IO_TLB_SHIFT);
+ 	nslabs = SLABS_PER_PAGE << order;
+@@ -397,9 +403,6 @@ int swiotlb_init_late(size_t size, gfp_t gfp_mask,
+ 			(PAGE_SIZE << order) >> 20);
+ 	}
  
- 	return ret;
- }
+-	if (!default_nareas)
+-		swiotlb_adjust_nareas(num_possible_cpus());
+-
+ 	area_order = get_order(array_size(sizeof(*mem->areas),
+ 		default_nareas));
+ 	mem->areas = (struct io_tlb_area *)
 -- 
 2.39.2
 
