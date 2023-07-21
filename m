@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8457320F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:12:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08262C433C9;
-	Fri, 21 Jul 2023 19:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD9A20F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:12:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8048C433C8;
+	Fri, 21 Jul 2023 19:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966733;
-	bh=fu8CJD/THZTXHNlEh0mtEDWCdNvQyzUavi+Geh1wHzM=;
+	s=korg; t=1689966736;
+	bh=6UA4hZAMCAhify68Xgy63LXOEN6KZ/j/YhyOZbo334I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yOYjlTWgFPwoavyi4cSw0Rs+m9+QkYzq/QonKc2XL1FK+ygDNRNYO+H0O55SfOUUk
-	 VXp419zAzGlxqEiqFaXhCLSFl3Iptx5/UT1UjrToqgigtG1TPM9nxDnYJHYyYIPaBd
-	 wklAv+tZQf5xBq0rodXgOxDVl8XA5CCsUNDN9WnI=
+	b=q11Ha6zngfY3JW3dILYhxu7QcNj/y+NWi3+DewQB0gZWtnvEX+aD+4vTe6DewnamT
+	 1YXy3WUubLXfLPROdJndBTNrcQkalSUDXuENYlCC2xwdAsrF6zZP2s0+s/sTBxshle
+	 a9oYP6YGQEvy0tCOZqEAcw6qkF+5865f5P92/GWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Visser <starquake@linuxeverywhere.org>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 5.15 449/532] pinctrl: amd: Only use special debounce behavior for GPIO 0
-Date: Fri, 21 Jul 2023 18:05:53 +0200
-Message-ID: <20230721160638.898722761@linuxfoundation.org>
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Jarkko Sakkinen <jarkko.sakkinen@tuni.fi>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 5.15 450/532] tpm: tpm_vtpm_proxy: fix a race condition in /dev/vtpmx creation
+Date: Fri, 21 Jul 2023 18:05:54 +0200
+Message-ID: <20230721160638.951154135@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,40 +35,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Jarkko Sakkinen <jarkko.sakkinen@tuni.fi>
 
-commit 0d5ace1a07f7e846d0f6d972af60d05515599d0b upstream.
+commit f4032d615f90970d6c3ac1d9c0bce3351eb4445c upstream.
 
-It's uncommon to use debounce on any other pin, but technically
-we should only set debounce to 0 when working off GPIO0.
+/dev/vtpmx is made visible before 'workqueue' is initialized, which can
+lead to a memory corruption in the worst case scenario.
+
+Address this by initializing 'workqueue' as the very first step of the
+driver initialization.
 
 Cc: stable@vger.kernel.org
-Tested-by: Jan Visser <starquake@linuxeverywhere.org>
-Fixes: 968ab9261627 ("pinctrl: amd: Detect internal GPIO0 debounce handling")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20230705133005.577-2-mario.limonciello@amd.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 6f99612e2500 ("tpm: Proxy driver for supporting multiple emulated TPMs")
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Signed-off-by: Jarkko Sakkinen <jarkko.sakkinen@tuni.fi>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-amd.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/char/tpm/tpm_vtpm_proxy.c |   30 +++++++-----------------------
+ 1 file changed, 7 insertions(+), 23 deletions(-)
 
---- a/drivers/pinctrl/pinctrl-amd.c
-+++ b/drivers/pinctrl/pinctrl-amd.c
-@@ -128,9 +128,11 @@ static int amd_gpio_set_debounce(struct
- 	raw_spin_lock_irqsave(&gpio_dev->lock, flags);
+--- a/drivers/char/tpm/tpm_vtpm_proxy.c
++++ b/drivers/char/tpm/tpm_vtpm_proxy.c
+@@ -683,37 +683,21 @@ static struct miscdevice vtpmx_miscdev =
+ 	.fops = &vtpmx_fops,
+ };
  
- 	/* Use special handling for Pin0 debounce */
--	pin_reg = readl(gpio_dev->base + WAKE_INT_MASTER_REG);
--	if (pin_reg & INTERNAL_GPIO0_DEBOUNCE)
--		debounce = 0;
-+	if (offset == 0) {
-+		pin_reg = readl(gpio_dev->base + WAKE_INT_MASTER_REG);
-+		if (pin_reg & INTERNAL_GPIO0_DEBOUNCE)
-+			debounce = 0;
+-static int vtpmx_init(void)
+-{
+-	return misc_register(&vtpmx_miscdev);
+-}
+-
+-static void vtpmx_cleanup(void)
+-{
+-	misc_deregister(&vtpmx_miscdev);
+-}
+-
+ static int __init vtpm_module_init(void)
+ {
+ 	int rc;
+ 
+-	rc = vtpmx_init();
+-	if (rc) {
+-		pr_err("couldn't create vtpmx device\n");
+-		return rc;
+-	}
+-
+ 	workqueue = create_workqueue("tpm-vtpm");
+ 	if (!workqueue) {
+ 		pr_err("couldn't create workqueue\n");
+-		rc = -ENOMEM;
+-		goto err_vtpmx_cleanup;
++		return -ENOMEM;
+ 	}
+ 
+-	return 0;
+-
+-err_vtpmx_cleanup:
+-	vtpmx_cleanup();
++	rc = misc_register(&vtpmx_miscdev);
++	if (rc) {
++		pr_err("couldn't create vtpmx device\n");
++		destroy_workqueue(workqueue);
 +	}
  
- 	pin_reg = readl(gpio_dev->base + offset * 4);
+ 	return rc;
+ }
+@@ -721,7 +705,7 @@ err_vtpmx_cleanup:
+ static void __exit vtpm_module_exit(void)
+ {
+ 	destroy_workqueue(workqueue);
+-	vtpmx_cleanup();
++	misc_deregister(&vtpmx_miscdev);
+ }
  
+ module_init(vtpm_module_init);
 
 
