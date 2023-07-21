@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6512C20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:17:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC9E2C433C8;
-	Fri, 21 Jul 2023 19:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6429C20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:17:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1BC9C433D9;
+	Fri, 21 Jul 2023 19:17:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967058;
-	bh=FIE3/D9OrZ5uH+sU0DI4Nm49GNzophq9am5GziQGifQ=;
+	s=korg; t=1689967061;
+	bh=FikZU/UiE6Epn8Bq35ecz+4S6NsnxwlAwh6akol+NNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=skFyqWooX9Ceh0kJ/9JnDyh+WJCbG99Vr1akqTm3rKx0gaw21rnwk6LdClTvXiUVk
-	 2WRF7SxkUHWSet19E+vc707Qoj0Hxgix1z+airFMb42uGCqYpXfpkf9WsLHp8STGfM
-	 2cLYV6Oaa1A76BtbG1l3DXsTorzvK/kxtBx7w6Wk=
+	b=majwEGLEU9KuWyDZ6c6985eWpLNPjpycUqverv9jiweCrccSC0APOSpsoDOyRjcdI
+	 sOocVIGoGZao3tbhD4RqzCDhxTomBzcqIludy5EEnGqWWhRBJb9cu3E4D3V06a66yo
+	 61UPwQ0wfDjVgUg/52R9wFYCJdSVFZZqhGdWunok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naveen Mamindlapalli <naveenm@marvell.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Sai Krishna <saikrishnag@marvell.com>,
+	Nitya Sunkad <nitya.sunkad@amd.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/223] octeontx2-af: Move validation of ptp pointer before its usage
-Date: Fri, 21 Jul 2023 18:04:43 +0200
-Message-ID: <20230721160522.153919080@linuxfoundation.org>
+Subject: [PATCH 6.1 031/223] ionic: remove WARN_ON to prevent panic_on_warn
+Date: Fri, 21 Jul 2023 18:04:44 +0200
+Message-ID: <20230721160522.195454190@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -37,108 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sai Krishna <saikrishnag@marvell.com>
+From: Nitya Sunkad <nitya.sunkad@amd.com>
 
-[ Upstream commit 7709fbd4922c197efabda03660d93e48a3e80323 ]
+[ Upstream commit abfb2a58a5377ebab717d4362d6180f901b6e5c1 ]
 
-Moved PTP pointer validation before its use to avoid smatch warning.
-Also used kzalloc/kfree instead of devm_kzalloc/devm_kfree.
+Remove unnecessary early code development check and the WARN_ON
+that it uses.  The irq alloc and free paths have long been
+cleaned up and this check shouldn't have stuck around so long.
 
-Fixes: 2ef4e45d99b1 ("octeontx2-af: Add PTP PPS Errata workaround on CN10K silicon")
-Signed-off-by: Naveen Mamindlapalli <naveenm@marvell.com>
-Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
-Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
+Fixes: 77ceb68e29cc ("ionic: Add notifyq support")
+Signed-off-by: Nitya Sunkad <nitya.sunkad@amd.com>
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/af/ptp.c   | 19 +++++++++----------
- .../net/ethernet/marvell/octeontx2/af/rvu.c   |  2 +-
- 2 files changed, 10 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/pensando/ionic/ionic_lif.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/ptp.c b/drivers/net/ethernet/marvell/octeontx2/af/ptp.c
-index 3411e2e47d46b..0ee420a489fc4 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/ptp.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/ptp.c
-@@ -208,7 +208,7 @@ struct ptp *ptp_get(void)
- 	/* Check driver is bound to PTP block */
- 	if (!ptp)
- 		ptp = ERR_PTR(-EPROBE_DEFER);
--	else
-+	else if (!IS_ERR(ptp))
- 		pci_dev_get(ptp->pdev);
- 
- 	return ptp;
-@@ -388,11 +388,10 @@ static int ptp_extts_on(struct ptp *ptp, int on)
- static int ptp_probe(struct pci_dev *pdev,
- 		     const struct pci_device_id *ent)
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+index 159bfcc76498c..a89ab455af67d 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+@@ -462,11 +462,6 @@ static void ionic_qcqs_free(struct ionic_lif *lif)
+ static void ionic_link_qcq_interrupts(struct ionic_qcq *src_qcq,
+ 				      struct ionic_qcq *n_qcq)
  {
--	struct device *dev = &pdev->dev;
- 	struct ptp *ptp;
- 	int err;
- 
--	ptp = devm_kzalloc(dev, sizeof(*ptp), GFP_KERNEL);
-+	ptp = kzalloc(sizeof(*ptp), GFP_KERNEL);
- 	if (!ptp) {
- 		err = -ENOMEM;
- 		goto error;
-@@ -428,20 +427,19 @@ static int ptp_probe(struct pci_dev *pdev,
- 	return 0;
- 
- error_free:
--	devm_kfree(dev, ptp);
-+	kfree(ptp);
- 
- error:
- 	/* For `ptp_get()` we need to differentiate between the case
- 	 * when the core has not tried to probe this device and the case when
--	 * the probe failed.  In the later case we pretend that the
--	 * initialization was successful and keep the error in
-+	 * the probe failed.  In the later case we keep the error in
- 	 * `dev->driver_data`.
- 	 */
- 	pci_set_drvdata(pdev, ERR_PTR(err));
- 	if (!first_ptp_block)
- 		first_ptp_block = ERR_PTR(err);
- 
--	return 0;
-+	return err;
- }
- 
- static void ptp_remove(struct pci_dev *pdev)
-@@ -449,16 +447,17 @@ static void ptp_remove(struct pci_dev *pdev)
- 	struct ptp *ptp = pci_get_drvdata(pdev);
- 	u64 clock_cfg;
- 
--	if (cn10k_ptp_errata(ptp) && hrtimer_active(&ptp->hrtimer))
--		hrtimer_cancel(&ptp->hrtimer);
+-	if (WARN_ON(n_qcq->flags & IONIC_QCQ_F_INTR)) {
+-		ionic_intr_free(n_qcq->cq.lif->ionic, n_qcq->intr.index);
+-		n_qcq->flags &= ~IONIC_QCQ_F_INTR;
+-	}
 -
- 	if (IS_ERR_OR_NULL(ptp))
- 		return;
- 
-+	if (cn10k_ptp_errata(ptp) && hrtimer_active(&ptp->hrtimer))
-+		hrtimer_cancel(&ptp->hrtimer);
-+
- 	/* Disable PTP clock */
- 	clock_cfg = readq(ptp->reg_base + PTP_CLOCK_CFG);
- 	clock_cfg &= ~PTP_CLOCK_CFG_PTP_EN;
- 	writeq(clock_cfg, ptp->reg_base + PTP_CLOCK_CFG);
-+	kfree(ptp);
- }
- 
- static const struct pci_device_id ptp_id_table[] = {
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-index 873f081c030de..733add3a9dc6b 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-@@ -3244,7 +3244,7 @@ static int rvu_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	rvu->ptp = ptp_get();
- 	if (IS_ERR(rvu->ptp)) {
- 		err = PTR_ERR(rvu->ptp);
--		if (err == -EPROBE_DEFER)
-+		if (err)
- 			goto err_release_regions;
- 		rvu->ptp = NULL;
- 	}
+ 	n_qcq->intr.vector = src_qcq->intr.vector;
+ 	n_qcq->intr.index = src_qcq->intr.index;
+ 	n_qcq->napi_qcq = src_qcq->napi_qcq;
 -- 
 2.39.2
 
