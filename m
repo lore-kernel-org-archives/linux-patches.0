@@ -1,27 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC73200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:05:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D328EC433C7;
-	Fri, 21 Jul 2023 19:05:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D956200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:05:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ADF6C433C8;
+	Fri, 21 Jul 2023 19:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966310;
-	bh=8Xf50rlCfY3lWmuK08GUKg5pchhYV8FQzUQMqf+w/hg=;
+	s=korg; t=1689966313;
+	bh=w/y9tb2lQ1ew5uriU0ahHKP/27LdKVIXQ95/qAgOcB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iYoIBqcsiuIPWLg/sQleqARTEjSy12l3jhSQEHIQVMg5moZxKZesx3Wf6yqXUe2wY
-	 sE515QKG5h88UqBpo/F3TQjk73gWJIs82IUDIz55V2MB1/w8dtsiKPhcCJFeCoeMrN
-	 PvyVycPGd4j+75cKp3tNhJaKE6iQbJgPKzzz+XX4=
+	b=rY6gJr5vOJ47TaD13rFENXzLfgbsMU962paGHoK39mL1JWVmnJl4mm/+vPz4J0uMv
+	 Svsw2kSnnRav3ydvWzjId/OYc+HJ4fL78JwR0pfc1XGj9tuARd4v9pDU+NlDgAf5eY
+	 vzZzZTJi4pxKIrfqk7VDwi+d7Crwt9u2nYrHP4pA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Lindgren <tony@atomide.com>,
-	Dhruva Gole <d-gole@ti.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Kees Cook <keescook@chromium.org>,
+	"Luis R. Rodriguez" <mcgrof@ruslug.rutgers.edu>,
+	Scott Branden <sbranden@broadcom.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Brian Norris <briannorris@chromium.org>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 299/532] serial: 8250_omap: Use force_suspend and resume for system suspend
-Date: Fri, 21 Jul 2023 18:03:23 +0200
-Message-ID: <20230721160630.614235885@linuxfoundation.org>
+Subject: [PATCH 5.15 300/532] test_firmware: return ENOMEM instead of ENOSPC on failed memory allocation
+Date: Fri, 21 Jul 2023 18:03:24 +0200
+Message-ID: <20230721160630.668952292@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,76 +42,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Lindgren <tony@atomide.com>
+From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 
-[ Upstream commit 20a41a62618df85f3a2981008edec5cadd785e0a ]
+[ Upstream commit 7dae593cd226a0bca61201cf85ceb9335cf63682 ]
 
-We should not rely on autosuspend timeout for system suspend. Instead,
-let's use force_suspend and force_resume functions. Otherwise the serial
-port controller device may not be idled on suspend.
+In a couple of situations like
 
-As we are doing a register write on suspend to configure the serial port,
-we still need to runtime PM resume the port on suspend.
+	name = kstrndup(buf, count, GFP_KERNEL);
+	if (!name)
+		return -ENOSPC;
 
-While at it, let's switch to pm_runtime_resume_and_get() and check for
-errors returned. And let's add the missing line break before return to the
-suspend function while at it.
+the error is not actually "No space left on device", but "Out of memory".
 
-Fixes: 09d8b2bdbc5c ("serial: 8250: omap: Provide ability to enable/disable UART as wakeup source")
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Tested-by: Dhruva Gole <d-gole@ti.com>
-Message-ID: <20230614045922.4798-1-tony@atomide.com>
+It is semantically correct to return -ENOMEM in all failed kstrndup()
+and kzalloc() cases in this driver, as it is not a problem with disk
+space, but with kernel memory allocator failing allocation.
+
+The semantically correct should be:
+
+        name = kstrndup(buf, count, GFP_KERNEL);
+        if (!name)
+                return -ENOMEM;
+
+Cc: Dan Carpenter <error27@gmail.com>
+Cc: Takashi Iwai <tiwai@suse.de>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: "Luis R. Rodriguez" <mcgrof@ruslug.rutgers.edu>
+Cc: Scott Branden <sbranden@broadcom.com>
+Cc: Hans de Goede <hdegoede@redhat.com>
+Cc: Brian Norris <briannorris@chromium.org>
+Fixes: c92316bf8e948 ("test_firmware: add batched firmware tests")
+Fixes: 0a8adf584759c ("test: add firmware_class loader test")
+Fixes: 548193cba2a7d ("test_firmware: add support for firmware_request_platform")
+Fixes: eb910947c82f9 ("test: firmware_class: add asynchronous request trigger")
+Fixes: 061132d2b9c95 ("test_firmware: add test custom fallback trigger")
+Fixes: 7feebfa487b92 ("test_firmware: add support for request_firmware_into_buf")
+Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Message-ID: <20230606070808.9300-1-mirsad.todorovac@alu.unizg.hr>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_omap.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ lib/test_firmware.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
-index de0447c87846b..a6b374c026a87 100644
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -1521,25 +1521,35 @@ static int omap8250_suspend(struct device *dev)
+diff --git a/lib/test_firmware.c b/lib/test_firmware.c
+index 2a4078946a3fd..b64f87f4f2284 100644
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -183,7 +183,7 @@ static int __kstrncpy(char **dst, const char *name, size_t count, gfp_t gfp)
  {
- 	struct omap8250_priv *priv = dev_get_drvdata(dev);
- 	struct uart_8250_port *up = serial8250_get_port(priv->line);
-+	int err;
- 
- 	serial8250_suspend_port(priv->line);
- 
--	pm_runtime_get_sync(dev);
-+	err = pm_runtime_resume_and_get(dev);
-+	if (err)
-+		return err;
- 	if (!device_may_wakeup(dev))
- 		priv->wer = 0;
- 	serial_out(up, UART_OMAP_WER, priv->wer);
--	pm_runtime_mark_last_busy(dev);
--	pm_runtime_put_autosuspend(dev);
--
-+	err = pm_runtime_force_suspend(dev);
- 	flush_work(&priv->qos_work);
--	return 0;
-+
-+	return err;
+ 	*dst = kstrndup(name, count, gfp);
+ 	if (!*dst)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 	return count;
  }
  
- static int omap8250_resume(struct device *dev)
- {
- 	struct omap8250_priv *priv = dev_get_drvdata(dev);
-+	int err;
+@@ -606,7 +606,7 @@ static ssize_t trigger_request_store(struct device *dev,
  
-+	err = pm_runtime_force_resume(dev);
-+	if (err)
-+		return err;
- 	serial8250_resume_port(priv->line);
-+	/* Paired with pm_runtime_resume_and_get() in omap8250_suspend() */
-+	pm_runtime_mark_last_busy(dev);
-+	pm_runtime_put_autosuspend(dev);
-+
- 	return 0;
- }
- #else
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 
+ 	pr_info("loading '%s'\n", name);
+ 
+@@ -654,7 +654,7 @@ static ssize_t trigger_request_platform_store(struct device *dev,
+ 
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 
+ 	pr_info("inserting test platform fw '%s'\n", name);
+ 	efi_embedded_fw.name = name;
+@@ -707,7 +707,7 @@ static ssize_t trigger_async_request_store(struct device *dev,
+ 
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 
+ 	pr_info("loading '%s'\n", name);
+ 
+@@ -752,7 +752,7 @@ static ssize_t trigger_custom_fallback_store(struct device *dev,
+ 
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 
+ 	pr_info("loading '%s' using custom fallback mechanism\n", name);
+ 
+@@ -803,7 +803,7 @@ static int test_fw_run_batch_request(void *data)
+ 
+ 		test_buf = kzalloc(TEST_FIRMWARE_BUF_SIZE, GFP_KERNEL);
+ 		if (!test_buf)
+-			return -ENOSPC;
++			return -ENOMEM;
+ 
+ 		if (test_fw_config->partial)
+ 			req->rc = request_partial_firmware_into_buf
 -- 
 2.39.2
 
