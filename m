@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44971F946
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:21:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21DB1C433C9;
-	Fri, 21 Jul 2023 16:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E704F1F94D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:21:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21C1EC433C8;
+	Fri, 21 Jul 2023 16:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956504;
-	bh=8XYiI7zIjoIiK8ToguutGqRTbzVzY0Fm4miowsDU7fw=;
+	s=korg; t=1689956517;
+	bh=VDemd7EAuN3D3iK5ILf5Tdas7GdUY/PST+ff+Qwx7d0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OVUI64/hoiRAYmwuHEH+peYrYXi2v9KV02DgtJO8Sju/QaCTM15iFUij6b/M09HS8
-	 yZ4rEck/+HZWGlPUIgOqCBWy/hiWi9D5BhcyjJ8W41+ZljV2LCNV0FdGeg6yyk+c1d
-	 EskAQSpY4wzNawfrlVL9k4oz1hPo/Ua6GatgyKLg=
+	b=sA7HlC66+C5jA9DQhghPEwM0NKjhIVUX65r9AYnNN5Vv6fPW8Q9UHncxZ2pfRjO+A
+	 7NCABjSLrMJqUmHTFpC+NaaWKLTDqaF3V3JVLBPbRF8Bh74JEQsBU7Cv7E/yETNaHb
+	 4BIYpYZuAsRLxWYDFU3deE1QECK4m4KVcMBzzjm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andi Shyti <andi.shyti@kernel.org>,
 	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Jiri Slaby <jirislaby@kernel.org>
-Subject: [PATCH 6.4 215/292] tty: serial: samsung_tty: Fix a memory leak in s3c24xx_serial_getclk() in case of error
-Date: Fri, 21 Jul 2023 18:05:24 +0200
-Message-ID: <20230721160538.110018173@linuxfoundation.org>
+Subject: [PATCH 6.4 216/292] tty: serial: samsung_tty: Fix a memory leak in s3c24xx_serial_getclk() when iterating clk
+Date: Fri, 21 Jul 2023 18:05:25 +0200
+Message-ID: <20230721160538.153118273@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -38,10 +38,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit a9c09546e903f1068acfa38e1ee18bded7114b37 upstream.
+commit 832e231cff476102e8204a9e7bddfe5c6154a375 upstream.
 
-If clk_get_rate() fails, the clk that has just been allocated needs to be
-freed.
+When the best clk is searched, we iterate over all possible clk.
+
+If we find a better match, the previous one, if any, needs to be freed.
+If a better match has already been found, we still need to free the new
+one, otherwise it leaks.
 
 Cc: <stable@vger.kernel.org> # v3.3+
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
@@ -49,27 +52,38 @@ Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
 Fixes: 5f5a7a5578c5 ("serial: samsung: switch to clkdev based clock lookup")
 Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Message-ID: <e4baf6039368f52e5a5453982ddcb9a330fc689e.1686412569.git.christophe.jaillet@wanadoo.fr>
+Message-ID: <cf3e0053d2fc7391b2d906a86cd01a5ef15fb9dc.1686412569.git.christophe.jaillet@wanadoo.fr>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/samsung_tty.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/tty/serial/samsung_tty.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
+diff --git a/drivers/tty/serial/samsung_tty.c b/drivers/tty/serial/samsung_tty.c
+index a92a23e1964e..0b37019820b4 100644
 --- a/drivers/tty/serial/samsung_tty.c
 +++ b/drivers/tty/serial/samsung_tty.c
-@@ -1459,8 +1459,12 @@ static unsigned int s3c24xx_serial_getcl
- 			continue;
+@@ -1490,10 +1490,18 @@ static unsigned int s3c24xx_serial_getclk(struct s3c24xx_uart_port *ourport,
+ 			calc_deviation = -calc_deviation;
  
- 		rate = clk_get_rate(clk);
--		if (!rate)
-+		if (!rate) {
-+			dev_err(ourport->port.dev,
-+				"Failed to get clock rate for %s.\n", clkname);
+ 		if (calc_deviation < deviation) {
++			/*
++			 * If we find a better clk, release the previous one, if
++			 * any.
++			 */
++			if (!IS_ERR(*best_clk))
++				clk_put(*best_clk);
+ 			*best_clk = clk;
+ 			best_quot = quot;
+ 			*clk_num = cnt;
+ 			deviation = calc_deviation;
++		} else {
 +			clk_put(clk);
- 			continue;
-+		}
+ 		}
+ 	}
  
- 		if (ourport->info->has_divslot) {
- 			unsigned long div = rate / req_baud;
+-- 
+2.41.0
+
 
 
