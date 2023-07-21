@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A1F20F9D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:25:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760EAC433CD;
-	Fri, 21 Jul 2023 19:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E035D20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:25:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D793C433D9;
+	Fri, 21 Jul 2023 19:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967551;
-	bh=WHKpEHO3pGTM8hBvykkXGqWRseUZVZwmxk/uprVTlN8=;
+	s=korg; t=1689967554;
+	bh=SLVMyE0WW45pIT1xpGg8NavF7sD3ELJS4bM28l8AHhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fe+dmIRaTomSxS39bon1S2gqjAaO0Yr9oargmJvE+4YkLrExBUV0AUyAxqhoeXBgh
-	 x60s8NrM+J76HvbOiBuOieL9W0UaIhuayEljNcMFif/7GitL/0FcB4uFMy0XbDjOJH
-	 ozcO1x1fy0EF5a381D3a8/sj9GP/A5mZ5bASFRfs=
+	b=t4bdxgxliffyyXaAxXmzOmfkHzgSJhBP14t86LMRXXzun1uN8JrkynmFFLeBlCEjg
+	 o6U08LJFaqr9DVsAGC+HS+Ciw+mxhoTXb/TINtYwIn2CI9vy9kerD4QVlWn0znX3Cx
+	 DouYa22H+Evd7EjE+IxqLDo2o3K9JBk98nvW4EHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 6.1 173/223] bus: ixp4xx: fix IXP4XX_EXP_T1_MASK
-Date: Fri, 21 Jul 2023 18:07:06 +0200
-Message-ID: <20230721160528.255288570@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	CKI <cki-project@redhat.com>,
+	Ulrich Weigand <Ulrich.Weigand@de.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 6.1 174/223] s390/decompressor: fix misaligned symbol build error
+Date: Fri, 21 Jul 2023 18:07:07 +0200
+Message-ID: <20230721160528.295780494@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -35,40 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 6722e46513e0af8e2fff4698f7cb78bc50a9f13f upstream.
+commit 938f0c35d7d93a822ab9c9728e3205e8e57409d0 upstream.
 
-The IXP4XX_EXP_T1_MASK was shifted one bit to the right, overlapping
-IXP4XX_EXP_T2_MASK and leaving bit 29 unused. The offset being wrong is
-also confirmed at least by the datasheet of IXP45X/46X [1].
+Nathan Chancellor reported a kernel build error on Fedora 39:
 
-Fix this by aligning it to IXP4XX_EXP_T1_SHIFT.
+$ clang --version | head -1
+clang version 16.0.5 (Fedora 16.0.5-1.fc39)
 
-[1] https://www.intel.com/content/dam/www/public/us/en/documents/manuals/ixp45x-ixp46x-developers-manual.pdf
+$ s390x-linux-gnu-ld --version | head -1
+GNU ld version 2.40-1.fc39
 
-Cc: stable@vger.kernel.org
-Fixes: 1c953bda90ca ("bus: ixp4xx: Add a driver for IXP4xx expansion bus")
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Link: https://lore.kernel.org/r/20230624112958.27727-1-jonas.gorski@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20230624122139.3229642-1-linus.walleij@linaro.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+$ make -skj"$(nproc)" ARCH=s390 CC=clang CROSS_COMPILE=s390x-linux-gnu- olddefconfig all
+s390x-linux-gnu-ld: arch/s390/boot/startup.o(.text+0x5b4): misaligned symbol `_decompressor_end' (0x35b0f) for relocation R_390_PC32DBL
+make[3]: *** [.../arch/s390/boot/Makefile:78: arch/s390/boot/vmlinux] Error 1
+
+It turned out that the problem with misaligned symbols on s390 was fixed
+with commit 80ddf5ce1c92 ("s390: always build relocatable kernel") for the
+kernel image, but did not take into account that the decompressor uses its
+own set of CFLAGS, which come without -fPIE.
+
+Add the -fPIE flag also to the decompresser CFLAGS to fix this.
+
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Reported-by: CKI <cki-project@redhat.com>
+Suggested-by: Ulrich Weigand <Ulrich.Weigand@de.ibm.com>
+Link: https://github.com/ClangBuiltLinux/linux/issues/1747
+Link: https://lore.kernel.org/32935.123062114500601371@us-mta-9.us.mimecast.lan/
+Link: https://lore.kernel.org/r/20230622125508.1068457-1-hca@linux.ibm.com
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/intel-ixp4xx-eb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/Makefile |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/bus/intel-ixp4xx-eb.c
-+++ b/drivers/bus/intel-ixp4xx-eb.c
-@@ -33,7 +33,7 @@
- #define IXP4XX_EXP_TIMING_STRIDE	0x04
- #define IXP4XX_EXP_CS_EN		BIT(31)
- #define IXP456_EXP_PAR_EN		BIT(30) /* Only on IXP45x and IXP46x */
--#define IXP4XX_EXP_T1_MASK		GENMASK(28, 27)
-+#define IXP4XX_EXP_T1_MASK		GENMASK(29, 28)
- #define IXP4XX_EXP_T1_SHIFT		28
- #define IXP4XX_EXP_T2_MASK		GENMASK(27, 26)
- #define IXP4XX_EXP_T2_SHIFT		26
+--- a/arch/s390/Makefile
++++ b/arch/s390/Makefile
+@@ -27,6 +27,7 @@ KBUILD_CFLAGS_DECOMPRESSOR += -fno-delet
+ KBUILD_CFLAGS_DECOMPRESSOR += -fno-asynchronous-unwind-tables
+ KBUILD_CFLAGS_DECOMPRESSOR += -ffreestanding
+ KBUILD_CFLAGS_DECOMPRESSOR += -fno-stack-protector
++KBUILD_CFLAGS_DECOMPRESSOR += -fPIE
+ KBUILD_CFLAGS_DECOMPRESSOR += $(call cc-disable-warning, address-of-packed-member)
+ KBUILD_CFLAGS_DECOMPRESSOR += $(if $(CONFIG_DEBUG_INFO),-g)
+ KBUILD_CFLAGS_DECOMPRESSOR += $(if $(CONFIG_DEBUG_INFO_DWARF4), $(call cc-option, -gdwarf-4,))
 
 
