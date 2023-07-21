@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19A71ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:50:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534FBC433C7;
-	Fri, 21 Jul 2023 18:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F941ED41
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:51:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B38C433C8;
+	Fri, 21 Jul 2023 18:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965457;
-	bh=FUvP6rMKOTXHGMi3/QsWtxDR24XoV2zguEGGI8mDKT0=;
+	s=korg; t=1689965460;
+	bh=Doll1Y7F/5/srrB7VRQS5YRY1jME9rb1fWNcFQqoUzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WmLUshJSdlxQPtZp7Ac13CEPk9tPPbB8Iv8kuTc3eFeNXJ2QeaC/7Kcxs/VJ+yPz4
-	 Q2KOmLfC6UiIp39D1v+D1XfYWUeTrM23YgjKj8J9guT21UrzIKMQmJ69QPuF14F0u5
-	 qjQgaK6MS5HjuZzbY04waq0LfBdAtFYhDUC3UUj0=
+	b=AkM6XhBH4ES1cB5gZvWGLGvuTYPUlj77EB5EJ3QoQDkxD8lzeKBgKOlzBPtvyfyoR
+	 S3BQq/EGjeDBdOyEL07N0kqzhSkBjI1UsWNQnh+oxuGXLe+otfeZH4HgGp10B1906w
+	 RSueDPsWwYxWXUcgf1Nx3V510eCb3Kh+w1bjkzTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 6.4 291/292] MIPS: kvm: Fix build error with KVM_MIPS_DEBUG_COP0_COUNTERS enabled
-Date: Fri, 21 Jul 2023 18:06:40 +0200
-Message-ID: <20230721160541.464078644@linuxfoundation.org>
+	Sean Wang <sean.ns.wang@amd.com>,
+	Marc Rossi <Marc.Rossi@amd.com>,
+	Hamza Mahfooz <Hamza.Mahfooz@amd.com>,
+	"Tsung-hua (Ryan) Lin" <Tsung-hua.Lin@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.4 292/292] Revert "drm/amd: Disable PSR-SU on Parade 0803 TCON"
+Date: Fri, 21 Jul 2023 18:06:41 +0200
+Message-ID: <20230721160541.505230954@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -34,35 +39,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 3a6dbb691782e88e07e5c70b327495dbd58a2e7f upstream.
+commit 1e66a17ce546eabad753178bbd4175cb52bafca8 upstream.
 
-Commit e4de20576986 ("MIPS: KVM: Fix NULL pointer dereference") missed
-converting one place accessing cop0 registers, which results in a build
-error, if KVM_MIPS_DEBUG_COP0_COUNTERS is enabled.
+This reverts commit 072030b1783056b5de8b0fac5303a5e9dbc6cfde.
+This is no longer necessary when using newer DMUB F/W.
 
-Fixes: e4de20576986 ("MIPS: KVM: Fix NULL pointer dereference")
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: stable@vger.kernel.org
+Cc: Sean Wang <sean.ns.wang@amd.com>
+Cc: Marc Rossi <Marc.Rossi@amd.com>
+Cc: Hamza Mahfooz <Hamza.Mahfooz@amd.com>
+Cc: Tsung-hua (Ryan) Lin <Tsung-hua.Lin@amd.com>
+Reviewed-by: Leo Li <sunpeng.li@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/kvm/stats.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/modules/power/power_helpers.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/arch/mips/kvm/stats.c
-+++ b/arch/mips/kvm/stats.c
-@@ -54,9 +54,9 @@ void kvm_mips_dump_stats(struct kvm_vcpu
- 	kvm_info("\nKVM VCPU[%d] COP0 Access Profile:\n", vcpu->vcpu_id);
- 	for (i = 0; i < N_MIPS_COPROC_REGS; i++) {
- 		for (j = 0; j < N_MIPS_COPROC_SEL; j++) {
--			if (vcpu->arch.cop0->stat[i][j])
-+			if (vcpu->arch.cop0.stat[i][j])
- 				kvm_info("%s[%d]: %lu\n", kvm_cop0_str[i], j,
--					 vcpu->arch.cop0->stat[i][j]);
-+					 vcpu->arch.cop0.stat[i][j]);
+--- a/drivers/gpu/drm/amd/display/modules/power/power_helpers.c
++++ b/drivers/gpu/drm/amd/display/modules/power/power_helpers.c
+@@ -818,8 +818,6 @@ bool is_psr_su_specific_panel(struct dc_
+ 				((dpcd_caps->sink_dev_id_str[1] == 0x08 && dpcd_caps->sink_dev_id_str[0] == 0x08) ||
+ 				(dpcd_caps->sink_dev_id_str[1] == 0x08 && dpcd_caps->sink_dev_id_str[0] == 0x07)))
+ 				isPSRSUSupported = false;
+-			else if (dpcd_caps->sink_dev_id_str[1] == 0x08 && dpcd_caps->sink_dev_id_str[0] == 0x03)
+-				isPSRSUSupported = false;
+ 			else if (dpcd_caps->psr_info.force_psrsu_cap == 0x1)
+ 				isPSRSUSupported = true;
  		}
- 	}
- #endif
 
 
