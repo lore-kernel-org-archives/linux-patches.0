@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509D220F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:11:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52DFC433C7;
-	Fri, 21 Jul 2023 19:11:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E41320F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:11:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D41DC433C7;
+	Fri, 21 Jul 2023 19:11:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966683;
-	bh=BYzRZsnPw4y4/aXoMMYbnsSFm3LcPKoc1zgXW/qJzB4=;
+	s=korg; t=1689966685;
+	bh=IHlKxgpKj0V/qygCdICbHFoQq6hU6twhCfxP2OmUNFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XyBYwdbBHcPvvjMtfNQQbuhfGEuEvdqzydmQLJXuwHazFLC74vlnkQz/rZaL2fZK0
-	 z/0czKjHaOXddUX3iUVh4HE8JbpGsXVxB/fZU9uMp7ridfhKi0GidU7syprPUIKIqB
-	 XqBzuny/mzCnfXpFzHkjH0/eyuDfJLkMV5a/uyTA=
+	b=f+32N6pKBfHLuE3iVNAhvcnCFSPtAzNJOOQLws2zWQi/n6v8n4J5DQvKWV+TYk0kf
+	 MCX1rUqp3WZzo0fjoqMM+b4b31M5tXVcJxBVMPG/rHmGpoLwSaseuzZNNgogwB8tLr
+	 FL8R8UPb3ZP4WaHye56i3AaqEVrR88f/9X2RsCqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Ghosh <sumang@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Chunhai Guo <guochunhai@vivo.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Chao Yu <chao@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 430/532] octeontx2-pf: Add additional check for MCAM rules
-Date: Fri, 21 Jul 2023 18:05:34 +0200
-Message-ID: <20230721160637.895570421@linuxfoundation.org>
+Subject: [PATCH 5.15 431/532] erofs: avoid infinite loop in z_erofs_do_read_page() when reading beyond EOF
+Date: Fri, 21 Jul 2023 18:05:35 +0200
+Message-ID: <20230721160637.947935516@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,69 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Suman Ghosh <sumang@marvell.com>
+From: Chunhai Guo <guochunhai@vivo.com>
 
-[ Upstream commit 8278ee2a2646b9acf747317895e47a640ba933c9 ]
+[ Upstream commit 8191213a5835b0317c5e4d0d337ae1ae00c75253 ]
 
-Due to hardware limitation, MCAM drop rule with
-ether_type == 802.1Q and vlan_id == 0 is not supported. Hence rejecting
-such rules.
+z_erofs_do_read_page() may loop infinitely due to the inappropriate
+truncation in the below statement. Since the offset is 64 bits and min_t()
+truncates the result to 32 bits. The solution is to replace unsigned int
+with a 64-bit type, such as erofs_off_t.
+    cur = end - min_t(unsigned int, offset + end - map->m_la, end);
 
-Fixes: dce677da57c0 ("octeontx2-pf: Add vlan-etype to ntuple filters")
-Signed-off-by: Suman Ghosh <sumang@marvell.com>
-Link: https://lore.kernel.org/r/20230710103027.2244139-1-sumang@marvell.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+    - For example:
+        - offset = 0x400160000
+        - end = 0x370
+        - map->m_la = 0x160370
+        - offset + end - map->m_la = 0x400000000
+        - offset + end - map->m_la = 0x00000000 (truncated as unsigned int)
+    - Expected result:
+        - cur = 0
+    - Actual result:
+        - cur = 0x370
+
+Signed-off-by: Chunhai Guo <guochunhai@vivo.com>
+Fixes: 3883a79abd02 ("staging: erofs: introduce VLE decompression support")
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Link: https://lore.kernel.org/r/20230710093410.44071-1-guochunhai@vivo.com
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeontx2/nic/otx2_flows.c   |  8 ++++++++
- .../net/ethernet/marvell/octeontx2/nic/otx2_tc.c  | 15 +++++++++++++++
- 2 files changed, 23 insertions(+)
+ fs/erofs/zdata.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
-index 63889449b8f61..483f660cebc40 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
-@@ -827,6 +827,14 @@ static int otx2_prepare_flow_request(struct ethtool_rx_flow_spec *fsp,
- 				return -EINVAL;
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index eb51df4a9f770..3fd91a0efdbb7 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -713,7 +713,7 @@ static int z_erofs_do_read_page(struct z_erofs_decompress_frontend *fe,
+ 	tight &= (clt->mode >= COLLECT_PRIMARY_HOOKED &&
+ 		  clt->mode != COLLECT_PRIMARY_FOLLOWED_NOINPLACE);
  
- 			vlan_etype = be16_to_cpu(fsp->h_ext.vlan_etype);
-+
-+			/* Drop rule with vlan_etype == 802.1Q
-+			 * and vlan_id == 0 is not supported
-+			 */
-+			if (vlan_etype == ETH_P_8021Q && !fsp->m_ext.vlan_tci &&
-+			    fsp->ring_cookie == RX_CLS_FLOW_DISC)
-+				return -EINVAL;
-+
- 			/* Only ETH_P_8021Q and ETH_P_802AD types supported */
- 			if (vlan_etype != ETH_P_8021Q &&
- 			    vlan_etype != ETH_P_8021AD)
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-index a42373e6f2593..26231c59b0241 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-@@ -536,6 +536,21 @@ static int otx2_tc_prepare_flow(struct otx2_nic *nic, struct otx2_tc_flow *node,
- 			return -EOPNOTSUPP;
- 		}
- 
-+		if (!match.mask->vlan_id) {
-+			struct flow_action_entry *act;
-+			int i;
-+
-+			flow_action_for_each(i, act, &rule->action) {
-+				if (act->id == FLOW_ACTION_DROP) {
-+					netdev_err(nic->netdev,
-+						   "vlan tpid 0x%x with vlan_id %d is not supported for DROP rule.\n",
-+						   ntohs(match.key->vlan_tpid),
-+						   match.key->vlan_id);
-+					return -EOPNOTSUPP;
-+				}
-+			}
-+		}
-+
- 		if (match.mask->vlan_id ||
- 		    match.mask->vlan_dei ||
- 		    match.mask->vlan_priority) {
+-	cur = end - min_t(unsigned int, offset + end - map->m_la, end);
++	cur = end - min_t(erofs_off_t, offset + end - map->m_la, end);
+ 	if (!(map->m_flags & EROFS_MAP_MAPPED)) {
+ 		zero_user_segment(page, cur, end);
+ 		goto next_part;
 -- 
 2.39.2
 
