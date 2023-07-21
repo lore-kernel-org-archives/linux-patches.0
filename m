@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD8C20F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:11:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E0E9C433C8;
-	Fri, 21 Jul 2023 19:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC79120F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:11:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 027CBC433C8;
+	Fri, 21 Jul 2023 19:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966691;
-	bh=11gGV1VhW3M9MNepyMs1k8kyAU2zsN6uJmK2Br0CyPc=;
+	s=korg; t=1689966694;
+	bh=0TNsAN0Xle2nWCvj36nLLx5Z6jaUj9tE7/DgPfD4bhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IakUnzTkBCW2LAPktUGQ3eF/9/2iSWjOpLk2LhOi1KxNqTlfn/EY07TPj28N8PPP7
-	 EdTm3HAvFsGV7MRwOmb0elaqDHOQbT+iCAZZwUbE9rdBCWIcWHTjDtRwT7lYV7Bhlo
-	 7en9yXvFAxNE1fTixp2+4ObjsV+6xADlewlODusk=
+	b=DV63BF9Qx5lWXpQXiIvI1SkAjbnOarKZ3T9cWG/HK8Y74RAi+aJb7KOyuNYWjEU51
+	 1ZRX83po6ZBV1c89f7biEzRFOso34dG76Zlm7Y39EZcA4mL64TzRjqteztHMuIQk3B
+	 06/+DV96mWXP2mGXGhLvZt47R9N9IsFeqrVwOPb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Yin <yinxin.x@bytedance.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Chao Yu <chao@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 433/532] erofs: fix fsdax unavailability for chunk-based regular files
-Date: Fri, 21 Jul 2023 18:05:37 +0200
-Message-ID: <20230721160638.054555629@linuxfoundation.org>
+Subject: [PATCH 5.15 434/532] wifi: airo: avoid uninitialized warning in airo_get_rate()
+Date: Fri, 21 Jul 2023 18:05:38 +0200
+Message-ID: <20230721160638.107595151@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,40 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Yin <yinxin.x@bytedance.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 18bddc5b67038722cb88fcf51fbf41a0277092cb ]
+[ Upstream commit 9373771aaed17f5c2c38485f785568abe3a9f8c1 ]
 
-DAX can be used to share page cache between VMs, reducing guest memory
-overhead. And chunk based data format is widely used for VM and
-container image. So enable dax support for it, make erofs better used
-for VM scenarios.
+Quieten a gcc (11.3.0) build error or warning by checking the function
+call status and returning -EBUSY if the function call failed.
+This is similar to what several other wireless drivers do for the
+SIOCGIWRATE ioctl call when there is a locking problem.
 
-Fixes: c5aa903a59db ("erofs: support reading chunk-based uncompressed files")
-Signed-off-by: Xin Yin <yinxin.x@bytedance.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Link: https://lore.kernel.org/r/20230711062130.7860-1-yinxin.x@bytedance.com
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+drivers/net/wireless/cisco/airo.c: error: 'status_rid.currentXmitRate' is used uninitialized [-Werror=uninitialized]
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/39abf2c7-24a-f167-91da-ed4c5435d1c4@linux-m68k.org
+Link: https://lore.kernel.org/r/20230709133154.26206-1-rdunlap@infradead.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/inode.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/cisco/airo.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/erofs/inode.c b/fs/erofs/inode.c
-index 3ff36514cff25..638bb70d0d65b 100644
---- a/fs/erofs/inode.c
-+++ b/fs/erofs/inode.c
-@@ -193,7 +193,8 @@ static struct page *erofs_read_inode(struct inode *inode,
+diff --git a/drivers/net/wireless/cisco/airo.c b/drivers/net/wireless/cisco/airo.c
+index fc19ecbc4c088..bcbf197fa9372 100644
+--- a/drivers/net/wireless/cisco/airo.c
++++ b/drivers/net/wireless/cisco/airo.c
+@@ -6147,8 +6147,11 @@ static int airo_get_rate(struct net_device *dev,
+ {
+ 	struct airo_info *local = dev->ml_priv;
+ 	StatusRid status_rid;		/* Card status info */
++	int ret;
  
- 	inode->i_flags &= ~S_DAX;
- 	if (test_opt(&sbi->opt, DAX_ALWAYS) && S_ISREG(inode->i_mode) &&
--	    vi->datalayout == EROFS_INODE_FLAT_PLAIN)
-+	    (vi->datalayout == EROFS_INODE_FLAT_PLAIN ||
-+	     vi->datalayout == EROFS_INODE_CHUNK_BASED))
- 		inode->i_flags |= S_DAX;
- 	if (!nblks)
- 		/* measure inode.i_blocks as generic filesystems */
+-	readStatusRid(local, &status_rid, 1);
++	ret = readStatusRid(local, &status_rid, 1);
++	if (ret)
++		return -EBUSY;
+ 
+ 	vwrq->value = le16_to_cpu(status_rid.currentXmitRate) * 500000;
+ 	/* If more than one rate, set auto */
 -- 
 2.39.2
 
