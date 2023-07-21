@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C811ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:50:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A502EC433C7;
-	Fri, 21 Jul 2023 18:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0371ED41
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:50:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA7DC433C7;
+	Fri, 21 Jul 2023 18:50:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965412;
-	bh=feYMWgQ6hmqnIpf9xz6ddBfNzTOy4Q7lLVEwF7oy/2Y=;
+	s=korg; t=1689965415;
+	bh=q6nec2SyZzRJZJmjUOk9rABNIDVS2uM3xyIyXAzjCgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0DqmgZzNwv8bl57/6GKNf2S1LycItikLzuy/zOlCyjUZsxP8kA75JpjqPo3fK9suI
-	 Hse2TlkHNahGYhTnuQoJ5bMSzZ8+yFEpCVCzinDRFaB54nzyeksUQp+MU4T1SXLGLz
-	 rXoIK/kPh5EPjoKKHoDue9ysBvlLgXNo8miH+gwc=
+	b=kdfpCirW+kjKbwkX/qgsH/kvtw7iE0ijBaqgq/yKUvLM1+0XPl2jfety0KKMVeLc8
+	 E9+/UMcNJhe/7pSuy1q2ELc8JE0nddiKW2l9021XcGgoFHybUvKrCRSwkUpGlj93bL
+	 813h/OgQmbAgQd6j307amGhD3gQh/bk9Yq086OyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Beau Belgrave <beaub@linux.microsoft.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.4 274/292] tracing/user_events: Fix struct arg size match check
-Date: Fri, 21 Jul 2023 18:06:23 +0200
-Message-ID: <20230721160540.706505889@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Quinn Tran <qutran@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.commailto:himanshu.madhani@oracle.com>
+Subject: [PATCH 6.4 275/292] scsi: qla2xxx: Multi-que support for TMF
+Date: Fri, 21 Jul 2023 18:06:24 +0200
+Message-ID: <20230721160540.752016469@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -34,49 +37,188 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Beau Belgrave <beaub@linux.microsoft.com>
+From: Quinn Tran <qutran@marvell.com>
 
-commit d0a3022f30629a208e5944022caeca3568add9e7 upstream.
+commit d90171dd0da50212f5950cc708240831e82f2f91 upstream.
 
-When users register an event the name of the event and it's argument are
-checked to ensure they match if the event already exists. Normally all
-arguments are in the form of "type name", except for when the type
-starts with "struct ". In those cases, the size of the struct is passed
-in addition to the name, IE: "struct my_struct a 20" for an argument
-that is of type "struct my_struct" with a field name of "a" and has the
-size of 20 bytes.
+Add queue flush for task management command, before
+placing it on the wire.
+Do IO flush for all Request Q's.
 
-The current code does not honor the above case properly when comparing
-a match. This causes the event register to fail even when the same
-string was used for events that contain a struct argument within them.
-The example above "struct my_struct a 20" generates a match string of
-"struct my_struct a" omitting the size field.
-
-Add the struct size of the existing field when generating a comparison
-string for a struct field to ensure proper match checking.
-
-Link: https://lkml.kernel.org/r/20230629235049.581-2-beaub@linux.microsoft.com
-
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/oe-kbuild-all/202304271702.GpIL391S-lkp@intel.com/
 Cc: stable@vger.kernel.org
-Fixes: e6f89a149872 ("tracing/user_events: Ensure user provided strings are safely formatted")
-Signed-off-by: Beau Belgrave <beaub@linux.microsoft.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20230428075339.32551-2-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com <mailto:himanshu.madhani@oracle.com>>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_user.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/scsi/qla2xxx/qla_def.h  |    8 ++++
+ drivers/scsi/qla2xxx/qla_gbl.h  |    2 -
+ drivers/scsi/qla2xxx/qla_init.c |   69 +++++++++++++++++++++++++++++++---------
+ drivers/scsi/qla2xxx/qla_iocb.c |    5 +-
+ 4 files changed, 66 insertions(+), 18 deletions(-)
 
---- a/kernel/trace/trace_events_user.c
-+++ b/kernel/trace/trace_events_user.c
-@@ -1317,6 +1317,9 @@ static int user_field_set_string(struct
- 	pos += snprintf(buf + pos, LEN_OR_ZERO, " ");
- 	pos += snprintf(buf + pos, LEN_OR_ZERO, "%s", field->name);
+--- a/drivers/scsi/qla2xxx/qla_def.h
++++ b/drivers/scsi/qla2xxx/qla_def.h
+@@ -465,6 +465,14 @@ static inline be_id_t port_id_to_be_id(p
+ 	return res;
+ }
  
-+	if (str_has_prefix(field->type, "struct "))
-+		pos += snprintf(buf + pos, LEN_OR_ZERO, " %d", field->size);
++struct tmf_arg {
++	struct qla_qpair *qpair;
++	struct fc_port *fcport;
++	struct scsi_qla_host *vha;
++	u64 lun;
++	u32 flags;
++};
 +
- 	if (colon)
- 		pos += snprintf(buf + pos, LEN_OR_ZERO, ";");
+ struct els_logo_payload {
+ 	uint8_t opcode;
+ 	uint8_t rsvd[3];
+--- a/drivers/scsi/qla2xxx/qla_gbl.h
++++ b/drivers/scsi/qla2xxx/qla_gbl.h
+@@ -69,7 +69,7 @@ extern int qla2x00_async_logout(struct s
+ extern int qla2x00_async_prlo(struct scsi_qla_host *, fc_port_t *);
+ extern int qla2x00_async_adisc(struct scsi_qla_host *, fc_port_t *,
+     uint16_t *);
+-extern int qla2x00_async_tm_cmd(fc_port_t *, uint32_t, uint32_t, uint32_t);
++extern int qla2x00_async_tm_cmd(fc_port_t *, uint32_t, uint64_t, uint32_t);
+ struct qla_work_evt *qla2x00_alloc_work(struct scsi_qla_host *,
+     enum qla_work_type);
+ extern int qla24xx_async_gnl(struct scsi_qla_host *, fc_port_t *);
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -2020,17 +2020,19 @@ static void qla2x00_tmf_sp_done(srb_t *s
+ 	complete(&tmf->u.tmf.comp);
+ }
  
+-int
+-qla2x00_async_tm_cmd(fc_port_t *fcport, uint32_t flags, uint32_t lun,
+-	uint32_t tag)
++static int
++__qla2x00_async_tm_cmd(struct tmf_arg *arg)
+ {
+-	struct scsi_qla_host *vha = fcport->vha;
++	struct scsi_qla_host *vha = arg->vha;
+ 	struct srb_iocb *tm_iocb;
+ 	srb_t *sp;
++	unsigned long flags;
+ 	int rval = QLA_FUNCTION_FAILED;
+ 
++	fc_port_t *fcport = arg->fcport;
++
+ 	/* ref: INIT */
+-	sp = qla2x00_get_sp(vha, fcport, GFP_KERNEL);
++	sp = qla2xxx_get_qpair_sp(vha, arg->qpair, fcport, GFP_KERNEL);
+ 	if (!sp)
+ 		goto done;
+ 
+@@ -2043,15 +2045,15 @@ qla2x00_async_tm_cmd(fc_port_t *fcport,
+ 
+ 	tm_iocb = &sp->u.iocb_cmd;
+ 	init_completion(&tm_iocb->u.tmf.comp);
+-	tm_iocb->u.tmf.flags = flags;
+-	tm_iocb->u.tmf.lun = lun;
++	tm_iocb->u.tmf.flags = arg->flags;
++	tm_iocb->u.tmf.lun = arg->lun;
+ 
++	rval = qla2x00_start_sp(sp);
+ 	ql_dbg(ql_dbg_taskm, vha, 0x802f,
+-	    "Async-tmf hdl=%x loop-id=%x portid=%02x%02x%02x.\n",
++	    "Async-tmf hdl=%x loop-id=%x portid=%02x%02x%02x ctrl=%x.\n",
+ 	    sp->handle, fcport->loop_id, fcport->d_id.b.domain,
+-	    fcport->d_id.b.area, fcport->d_id.b.al_pa);
++	    fcport->d_id.b.area, fcport->d_id.b.al_pa, arg->flags);
+ 
+-	rval = qla2x00_start_sp(sp);
+ 	if (rval != QLA_SUCCESS)
+ 		goto done_free_sp;
+ 	wait_for_completion(&tm_iocb->u.tmf.comp);
+@@ -2065,12 +2067,14 @@ qla2x00_async_tm_cmd(fc_port_t *fcport,
+ 
+ 	if (!test_bit(UNLOADING, &vha->dpc_flags) && !IS_QLAFX00(vha->hw)) {
+ 		flags = tm_iocb->u.tmf.flags;
+-		lun = (uint16_t)tm_iocb->u.tmf.lun;
++		if (flags & (TCF_LUN_RESET|TCF_ABORT_TASK_SET|
++			TCF_CLEAR_TASK_SET|TCF_CLEAR_ACA))
++			flags = MK_SYNC_ID_LUN;
++		else
++			flags = MK_SYNC_ID;
+ 
+-		/* Issue Marker IOCB */
+-		qla2x00_marker(vha, vha->hw->base_qpair,
+-		    fcport->loop_id, lun,
+-		    flags == TCF_LUN_RESET ? MK_SYNC_ID_LUN : MK_SYNC_ID);
++		qla2x00_marker(vha, sp->qpair,
++		    sp->fcport->loop_id, arg->lun, flags);
+ 	}
+ 
+ done_free_sp:
+@@ -2080,6 +2084,41 @@ done:
+ 	return rval;
+ }
+ 
++int
++qla2x00_async_tm_cmd(fc_port_t *fcport, uint32_t flags, uint64_t lun,
++		     uint32_t tag)
++{
++	struct scsi_qla_host *vha = fcport->vha;
++	struct qla_qpair *qpair;
++	struct tmf_arg a;
++	struct completion comp;
++	int i, rval;
++
++	init_completion(&comp);
++	a.vha = fcport->vha;
++	a.fcport = fcport;
++	a.lun = lun;
++
++	if (vha->hw->mqenable) {
++		for (i = 0; i < vha->hw->num_qpairs; i++) {
++			qpair = vha->hw->queue_pair_map[i];
++			if (!qpair)
++				continue;
++			a.qpair = qpair;
++			a.flags = flags|TCF_NOTMCMD_TO_TARGET;
++			rval = __qla2x00_async_tm_cmd(&a);
++			if (rval)
++				break;
++		}
++	}
++
++	a.qpair = vha->hw->base_qpair;
++	a.flags = flags;
++	rval = __qla2x00_async_tm_cmd(&a);
++
++	return rval;
++}
++
+ int
+ qla24xx_async_abort_command(srb_t *sp)
+ {
+--- a/drivers/scsi/qla2xxx/qla_iocb.c
++++ b/drivers/scsi/qla2xxx/qla_iocb.c
+@@ -2541,7 +2541,7 @@ qla24xx_tm_iocb(srb_t *sp, struct tsk_mg
+ 	scsi_qla_host_t *vha = fcport->vha;
+ 	struct qla_hw_data *ha = vha->hw;
+ 	struct srb_iocb *iocb = &sp->u.iocb_cmd;
+-	struct req_que *req = vha->req;
++	struct req_que *req = sp->qpair->req;
+ 
+ 	flags = iocb->u.tmf.flags;
+ 	lun = iocb->u.tmf.lun;
+@@ -2557,7 +2557,8 @@ qla24xx_tm_iocb(srb_t *sp, struct tsk_mg
+ 	tsk->port_id[2] = fcport->d_id.b.domain;
+ 	tsk->vp_index = fcport->vha->vp_idx;
+ 
+-	if (flags == TCF_LUN_RESET) {
++	if (flags & (TCF_LUN_RESET | TCF_ABORT_TASK_SET|
++	    TCF_CLEAR_TASK_SET|TCF_CLEAR_ACA)) {
+ 		int_to_scsilun(lun, &tsk->lun);
+ 		host_to_fcp_swap((uint8_t *)&tsk->lun,
+ 			sizeof(tsk->lun));
 
 
