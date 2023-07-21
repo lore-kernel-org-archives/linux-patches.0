@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E58120F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:17:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC84C433C8;
-	Fri, 21 Jul 2023 19:17:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDDE20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:17:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48D7C433C8;
+	Fri, 21 Jul 2023 19:17:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967026;
-	bh=q8/XJ4k2zPafyQJFHApBD0absJa1MqmZfN6G2YbqkJM=;
+	s=korg; t=1689967029;
+	bh=Evfy/0vkzm/yKk7+pB8pOTjSIqcyEmbffWvNoq7g0MA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ji5sygHM0taCMbWrHc8PbGlqO62zNllO62dImP30HMv7QSzpZ9+IOnjz0+cVYv9N0
-	 SOpGirRiHXPYGGzwXnFDyzhdIChTltTTJffJKCo4TIYG/2imjmnVwGCVBxOhHUNbhK
-	 Mx28Oqnc6zOcJVrZv4z40JAYRdVhPsxOsXKFGe28=
+	b=k3N2jNY6Ma/rJxb3EWKsr/4ZOOPXtM3T+VotdD8jOys8GlIPLm/CjtGm4SZ2vfYLa
+	 PUl7rx3awkYa0JAHTJkEiU2DJZG/+c6VCi6XHA6Ns5ed5lZ25aaiPIVixgUmDk7Ixb
+	 6g1jaZtDQqmWMt/A9tE0WolRSNGt7zFa2pLzH46c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 006/223] ksmbd: add missing compound request handing in some commands
-Date: Fri, 21 Jul 2023 18:04:19 +0200
-Message-ID: <20230721160521.144490247@linuxfoundation.org>
+	Steve French <stfrench@microsoft.com>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.1 007/223] ksmbd: fix out of bounds read in smb2_sess_setup
+Date: Fri, 21 Jul 2023 18:04:20 +0200
+Message-ID: <20230721160521.186427988@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -36,237 +37,120 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 7b7d709ef7cf285309157fb94c33f625dd22c5e1 upstream.
+commit 98422bdd4cb3ca4d08844046f6507d7ec2c2b8d8 upstream.
 
-This patch add the compound request handling to the some commands.
-Existing clients do not send these commands as compound requests,
-but ksmbd should consider that they may come.
+ksmbd does not consider the case of that smb2 session setup is
+in compound request. If this is the second payload of the compound,
+OOB read issue occurs while processing the first payload in
+the smb2_sess_setup().
 
 Cc: stable@vger.kernel.org
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-21355
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   78 ++++++++++++++++++++++++++++++++----------------
- 1 file changed, 53 insertions(+), 25 deletions(-)
+ fs/smb/server/smb2pdu.c |   31 +++++++++++++++++--------------
+ 1 file changed, 17 insertions(+), 14 deletions(-)
 
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -1926,14 +1926,16 @@ out_err:
- int smb2_tree_connect(struct ksmbd_work *work)
+@@ -1339,9 +1339,8 @@ static int decode_negotiation_token(stru
+ 
+ static int ntlm_negotiate(struct ksmbd_work *work,
+ 			  struct negotiate_message *negblob,
+-			  size_t negblob_len)
++			  size_t negblob_len, struct smb2_sess_setup_rsp *rsp)
+ {
+-	struct smb2_sess_setup_rsp *rsp = smb2_get_msg(work->response_buf);
+ 	struct challenge_message *chgblob;
+ 	unsigned char *spnego_blob = NULL;
+ 	u16 spnego_blob_len;
+@@ -1446,10 +1445,10 @@ static struct ksmbd_user *session_user(s
+ 	return user;
+ }
+ 
+-static int ntlm_authenticate(struct ksmbd_work *work)
++static int ntlm_authenticate(struct ksmbd_work *work,
++			     struct smb2_sess_setup_req *req,
++			     struct smb2_sess_setup_rsp *rsp)
+ {
+-	struct smb2_sess_setup_req *req = smb2_get_msg(work->request_buf);
+-	struct smb2_sess_setup_rsp *rsp = smb2_get_msg(work->response_buf);
+ 	struct ksmbd_conn *conn = work->conn;
+ 	struct ksmbd_session *sess = work->sess;
+ 	struct channel *chann = NULL;
+@@ -1582,10 +1581,10 @@ binding_session:
+ }
+ 
+ #ifdef CONFIG_SMB_SERVER_KERBEROS5
+-static int krb5_authenticate(struct ksmbd_work *work)
++static int krb5_authenticate(struct ksmbd_work *work,
++			     struct smb2_sess_setup_req *req,
++			     struct smb2_sess_setup_rsp *rsp)
+ {
+-	struct smb2_sess_setup_req *req = smb2_get_msg(work->request_buf);
+-	struct smb2_sess_setup_rsp *rsp = smb2_get_msg(work->response_buf);
+ 	struct ksmbd_conn *conn = work->conn;
+ 	struct ksmbd_session *sess = work->sess;
+ 	char *in_blob, *out_blob;
+@@ -1662,7 +1661,9 @@ static int krb5_authenticate(struct ksmb
+ 	return 0;
+ }
+ #else
+-static int krb5_authenticate(struct ksmbd_work *work)
++static int krb5_authenticate(struct ksmbd_work *work,
++			     struct smb2_sess_setup_req *req,
++			     struct smb2_sess_setup_rsp *rsp)
+ {
+ 	return -EOPNOTSUPP;
+ }
+@@ -1671,8 +1672,8 @@ static int krb5_authenticate(struct ksmb
+ int smb2_sess_setup(struct ksmbd_work *work)
  {
  	struct ksmbd_conn *conn = work->conn;
--	struct smb2_tree_connect_req *req = smb2_get_msg(work->request_buf);
--	struct smb2_tree_connect_rsp *rsp = smb2_get_msg(work->response_buf);
-+	struct smb2_tree_connect_req *req;
-+	struct smb2_tree_connect_rsp *rsp;
- 	struct ksmbd_session *sess = work->sess;
- 	char *treename = NULL, *name = NULL;
- 	struct ksmbd_tree_conn_status status;
- 	struct ksmbd_share_config *share;
- 	int rc = -EINVAL;
- 
-+	WORK_BUFFERS(work, req, rsp);
-+
- 	treename = smb_strndup_from_utf16(req->Buffer,
- 					  le16_to_cpu(req->PathLength), true,
- 					  conn->local_nls);
-@@ -2102,19 +2104,19 @@ static int smb2_create_open_flags(bool f
-  */
- int smb2_tree_disconnect(struct ksmbd_work *work)
- {
--	struct smb2_tree_disconnect_rsp *rsp = smb2_get_msg(work->response_buf);
-+	struct smb2_tree_disconnect_rsp *rsp;
-+	struct smb2_tree_disconnect_req *req;
- 	struct ksmbd_session *sess = work->sess;
- 	struct ksmbd_tree_connect *tcon = work->tcon;
- 
-+	WORK_BUFFERS(work, req, rsp);
-+
- 	rsp->StructureSize = cpu_to_le16(4);
- 	inc_rfc1001_len(work->response_buf, 4);
- 
- 	ksmbd_debug(SMB, "request\n");
- 
- 	if (!tcon || test_and_set_bit(TREE_CONN_EXPIRE, &tcon->status)) {
--		struct smb2_tree_disconnect_req *req =
--			smb2_get_msg(work->request_buf);
--
- 		ksmbd_debug(SMB, "Invalid tid %d\n", req->hdr.Id.SyncId.TreeId);
- 
- 		rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
-@@ -2137,10 +2139,14 @@ int smb2_tree_disconnect(struct ksmbd_wo
- int smb2_session_logoff(struct ksmbd_work *work)
- {
- 	struct ksmbd_conn *conn = work->conn;
--	struct smb2_logoff_rsp *rsp = smb2_get_msg(work->response_buf);
-+	struct smb2_logoff_req *req;
-+	struct smb2_logoff_rsp *rsp;
+-	struct smb2_sess_setup_req *req = smb2_get_msg(work->request_buf);
+-	struct smb2_sess_setup_rsp *rsp = smb2_get_msg(work->response_buf);
++	struct smb2_sess_setup_req *req;
++	struct smb2_sess_setup_rsp *rsp;
  	struct ksmbd_session *sess;
--	struct smb2_logoff_req *req = smb2_get_msg(work->request_buf);
--	u64 sess_id = le64_to_cpu(req->hdr.SessionId);
-+	u64 sess_id;
-+
-+	WORK_BUFFERS(work, req, rsp);
-+
-+	sess_id = le64_to_cpu(req->hdr.SessionId);
+ 	struct negotiate_message *negblob;
+ 	unsigned int negblob_len, negblob_off;
+@@ -1680,6 +1681,8 @@ int smb2_sess_setup(struct ksmbd_work *w
  
- 	rsp->StructureSize = cpu_to_le16(4);
- 	inc_rfc1001_len(work->response_buf, 4);
-@@ -2180,12 +2186,14 @@ int smb2_session_logoff(struct ksmbd_wor
-  */
- static noinline int create_smb2_pipe(struct ksmbd_work *work)
- {
--	struct smb2_create_rsp *rsp = smb2_get_msg(work->response_buf);
--	struct smb2_create_req *req = smb2_get_msg(work->request_buf);
-+	struct smb2_create_rsp *rsp;
-+	struct smb2_create_req *req;
- 	int id;
- 	int err;
- 	char *name;
+ 	ksmbd_debug(SMB, "Received request for session setup\n");
  
 +	WORK_BUFFERS(work, req, rsp);
 +
- 	name = smb_strndup_from_utf16(req->Buffer, le16_to_cpu(req->NameLength),
- 				      1, work->conn->local_nls);
- 	if (IS_ERR(name)) {
-@@ -5321,8 +5329,10 @@ int smb2_query_info(struct ksmbd_work *w
- static noinline int smb2_close_pipe(struct ksmbd_work *work)
- {
- 	u64 id;
--	struct smb2_close_req *req = smb2_get_msg(work->request_buf);
--	struct smb2_close_rsp *rsp = smb2_get_msg(work->response_buf);
-+	struct smb2_close_req *req;
-+	struct smb2_close_rsp *rsp;
-+
-+	WORK_BUFFERS(work, req, rsp);
+ 	rsp->StructureSize = cpu_to_le16(9);
+ 	rsp->SessionFlags = 0;
+ 	rsp->SecurityBufferOffset = cpu_to_le16(72);
+@@ -1801,7 +1804,7 @@ int smb2_sess_setup(struct ksmbd_work *w
  
- 	id = req->VolatileFileId;
- 	ksmbd_session_rpc_close(work->sess, id);
-@@ -5464,6 +5474,9 @@ int smb2_echo(struct ksmbd_work *work)
- {
- 	struct smb2_echo_rsp *rsp = smb2_get_msg(work->response_buf);
+ 		if (conn->preferred_auth_mech &
+ 				(KSMBD_AUTH_KRB5 | KSMBD_AUTH_MSKRB5)) {
+-			rc = krb5_authenticate(work);
++			rc = krb5_authenticate(work, req, rsp);
+ 			if (rc) {
+ 				rc = -EINVAL;
+ 				goto out_err;
+@@ -1815,7 +1818,7 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 			sess->Preauth_HashValue = NULL;
+ 		} else if (conn->preferred_auth_mech == KSMBD_AUTH_NTLMSSP) {
+ 			if (negblob->MessageType == NtLmNegotiate) {
+-				rc = ntlm_negotiate(work, negblob, negblob_len);
++				rc = ntlm_negotiate(work, negblob, negblob_len, rsp);
+ 				if (rc)
+ 					goto out_err;
+ 				rsp->hdr.Status =
+@@ -1828,7 +1831,7 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 						le16_to_cpu(rsp->SecurityBufferLength) - 1);
  
-+	if (work->next_smb2_rcv_hdr_off)
-+		rsp = ksmbd_resp_buf_next(work);
-+
- 	rsp->StructureSize = cpu_to_le16(4);
- 	rsp->Reserved = 0;
- 	inc_rfc1001_len(work->response_buf, 4);
-@@ -6178,8 +6191,10 @@ static noinline int smb2_read_pipe(struc
- 	int nbytes = 0, err;
- 	u64 id;
- 	struct ksmbd_rpc_command *rpc_resp;
--	struct smb2_read_req *req = smb2_get_msg(work->request_buf);
--	struct smb2_read_rsp *rsp = smb2_get_msg(work->response_buf);
-+	struct smb2_read_req *req;
-+	struct smb2_read_rsp *rsp;
-+
-+	WORK_BUFFERS(work, req, rsp);
+ 			} else if (negblob->MessageType == NtLmAuthenticate) {
+-				rc = ntlm_authenticate(work);
++				rc = ntlm_authenticate(work, req, rsp);
+ 				if (rc)
+ 					goto out_err;
  
- 	id = req->VolatileFileId;
- 
-@@ -6427,14 +6442,16 @@ out:
-  */
- static noinline int smb2_write_pipe(struct ksmbd_work *work)
- {
--	struct smb2_write_req *req = smb2_get_msg(work->request_buf);
--	struct smb2_write_rsp *rsp = smb2_get_msg(work->response_buf);
-+	struct smb2_write_req *req;
-+	struct smb2_write_rsp *rsp;
- 	struct ksmbd_rpc_command *rpc_resp;
- 	u64 id = 0;
- 	int err = 0, ret = 0;
- 	char *data_buf;
- 	size_t length;
- 
-+	WORK_BUFFERS(work, req, rsp);
-+
- 	length = le32_to_cpu(req->Length);
- 	id = req->VolatileFileId;
- 
-@@ -6703,6 +6720,9 @@ int smb2_cancel(struct ksmbd_work *work)
- 	struct ksmbd_work *iter;
- 	struct list_head *command_list;
- 
-+	if (work->next_smb2_rcv_hdr_off)
-+		hdr = ksmbd_resp_buf_next(work);
-+
- 	ksmbd_debug(SMB, "smb2 cancel called on mid %llu, async flags 0x%x\n",
- 		    hdr->MessageId, hdr->Flags);
- 
-@@ -6862,8 +6882,8 @@ static inline bool lock_defer_pending(st
-  */
- int smb2_lock(struct ksmbd_work *work)
- {
--	struct smb2_lock_req *req = smb2_get_msg(work->request_buf);
--	struct smb2_lock_rsp *rsp = smb2_get_msg(work->response_buf);
-+	struct smb2_lock_req *req;
-+	struct smb2_lock_rsp *rsp;
- 	struct smb2_lock_element *lock_ele;
- 	struct ksmbd_file *fp = NULL;
- 	struct file_lock *flock = NULL;
-@@ -6880,6 +6900,8 @@ int smb2_lock(struct ksmbd_work *work)
- 	LIST_HEAD(rollback_list);
- 	int prior_lock = 0;
- 
-+	WORK_BUFFERS(work, req, rsp);
-+
- 	ksmbd_debug(SMB, "Received lock request\n");
- 	fp = ksmbd_lookup_fd_slow(work, req->VolatileFileId, req->PersistentFileId);
- 	if (!fp) {
-@@ -7992,8 +8014,8 @@ out:
-  */
- static void smb20_oplock_break_ack(struct ksmbd_work *work)
- {
--	struct smb2_oplock_break *req = smb2_get_msg(work->request_buf);
--	struct smb2_oplock_break *rsp = smb2_get_msg(work->response_buf);
-+	struct smb2_oplock_break *req;
-+	struct smb2_oplock_break *rsp;
- 	struct ksmbd_file *fp;
- 	struct oplock_info *opinfo = NULL;
- 	__le32 err = 0;
-@@ -8002,6 +8024,8 @@ static void smb20_oplock_break_ack(struc
- 	char req_oplevel = 0, rsp_oplevel = 0;
- 	unsigned int oplock_change_type;
- 
-+	WORK_BUFFERS(work, req, rsp);
-+
- 	volatile_id = req->VolatileFid;
- 	persistent_id = req->PersistentFid;
- 	req_oplevel = req->OplockLevel;
-@@ -8136,8 +8160,8 @@ static int check_lease_state(struct leas
- static void smb21_lease_break_ack(struct ksmbd_work *work)
- {
- 	struct ksmbd_conn *conn = work->conn;
--	struct smb2_lease_ack *req = smb2_get_msg(work->request_buf);
--	struct smb2_lease_ack *rsp = smb2_get_msg(work->response_buf);
-+	struct smb2_lease_ack *req;
-+	struct smb2_lease_ack *rsp;
- 	struct oplock_info *opinfo;
- 	__le32 err = 0;
- 	int ret = 0;
-@@ -8145,6 +8169,8 @@ static void smb21_lease_break_ack(struct
- 	__le32 lease_state;
- 	struct lease *lease;
- 
-+	WORK_BUFFERS(work, req, rsp);
-+
- 	ksmbd_debug(OPLOCK, "smb21 lease break, lease state(0x%x)\n",
- 		    le32_to_cpu(req->LeaseState));
- 	opinfo = lookup_lease_in_table(conn, req->LeaseKey);
-@@ -8270,8 +8296,10 @@ err_out:
-  */
- int smb2_oplock_break(struct ksmbd_work *work)
- {
--	struct smb2_oplock_break *req = smb2_get_msg(work->request_buf);
--	struct smb2_oplock_break *rsp = smb2_get_msg(work->response_buf);
-+	struct smb2_oplock_break *req;
-+	struct smb2_oplock_break *rsp;
-+
-+	WORK_BUFFERS(work, req, rsp);
- 
- 	switch (le16_to_cpu(req->StructureSize)) {
- 	case OP_BREAK_STRUCT_SIZE_20:
 
 
