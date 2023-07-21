@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40302200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:03:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3493C433C8;
-	Fri, 21 Jul 2023 19:03:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D7D200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:03:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CEF4C433C9;
+	Fri, 21 Jul 2023 19:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966222;
-	bh=EIAn2JUUCUq2MrFuOL8GPXe0oP1N3e/slTzw+FQMeW0=;
+	s=korg; t=1689966224;
+	bh=aGWAJdA4UGhYuvO+CutXyqZZMSESuj3kgaCsoS2Yjuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IrLcsDiB0lQJ6OW8OqxVbcAugkku2A/08hjBhip5n+lkTg++FClczzQuSXrEZn/c+
-	 lMES8FYH9/Ty8dGJGaKHaETInUzHjksCO72T/XKasM4qw74/ELbfdKvXFwrGy0B+kz
-	 PqCyIZg2vyGD1BTp/ilV7O4MRwFu+DUin+maIIkk=
+	b=zgOUCewpM9uC1fk8Sb8txhy6C3o2OFsKHW1c/DOdg/xmmFgIUIdTELelsgq94SUF5
+	 QhBIHAkcNQkm5xdVr2CnfEnDpIXZAlCPsBM0StpTzpRhI5nDOuOTryOnj8NFzHGSUb
+	 KZHjMN3zLJ+z7ntFsdxmR5AFiBNYg4fy49czCWak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Tony Lindgren <tony@atomide.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 268/532] usb: dwc2: Fix some error handling paths
-Date: Fri, 21 Jul 2023 18:02:52 +0200
-Message-ID: <20230721160628.879848669@linuxfoundation.org>
+Subject: [PATCH 5.15 269/532] serial: 8250: omap: Fix freeing of resources on failed register
+Date: Fri, 21 Jul 2023 18:02:53 +0200
+Message-ID: <20230721160628.933847940@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -34,77 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit ada050c69108bc34be13ecc11f7fad0f20ebadc4 ]
+[ Upstream commit b9ab22c2bc8652324a803b3e2be69838920b4025 ]
 
-dwc2_driver_probe() calls dwc2_lowlevel_hw_init() which deassert some reset
-lines.
-Should an error happen in dwc2_lowlevel_hw_init() after calling
-reset_control_deassert() or in the probe after calling
-dwc2_lowlevel_hw_init(), the reset lines remain deasserted.
+If serial8250_register_8250_port() fails, the SoC can hang as the
+deferred PMQoS work will still run as is not flushed and removed.
 
-Add some devm_add_action_or_reset() calls to re-assert the lines if needed.
-
-Update the remove function accordingly.
-
-This change is compile-tested only.
-
-Fixes: 83f8da562f8b ("usb: dwc2: Add reset control to dwc2")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/c64537b5339342bd00f7c2152b8fc23792b9f95a.1683306479.git.christophe.jaillet@wanadoo.fr
+Fixes: 61929cf0169d ("tty: serial: Add 8250-core based omap driver")
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20230508082014.23083-2-tony@atomide.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc2/platform.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/tty/serial/8250/8250_omap.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/usb/dwc2/platform.c b/drivers/usb/dwc2/platform.c
-index ad8c7de4bfb19..6496bfbd34ed9 100644
---- a/drivers/usb/dwc2/platform.c
-+++ b/drivers/usb/dwc2/platform.c
-@@ -205,6 +205,11 @@ int dwc2_lowlevel_hw_disable(struct dwc2_hsotg *hsotg)
+diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
+index 078a7028ee5a2..6fa0e3ca469a0 100644
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -1469,7 +1469,9 @@ static int omap8250_probe(struct platform_device *pdev)
+ err:
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 	pm_runtime_put_sync(&pdev->dev);
++	flush_work(&priv->qos_work);
+ 	pm_runtime_disable(&pdev->dev);
++	cpu_latency_qos_remove_request(&priv->pm_qos_request);
  	return ret;
- }
- 
-+static void dwc2_reset_control_assert(void *data)
-+{
-+	reset_control_assert(data);
-+}
-+
- static int dwc2_lowlevel_hw_init(struct dwc2_hsotg *hsotg)
- {
- 	int i, ret;
-@@ -217,6 +222,10 @@ static int dwc2_lowlevel_hw_init(struct dwc2_hsotg *hsotg)
- 	}
- 
- 	reset_control_deassert(hsotg->reset);
-+	ret = devm_add_action_or_reset(hsotg->dev, dwc2_reset_control_assert,
-+				       hsotg->reset);
-+	if (ret)
-+		return ret;
- 
- 	hsotg->reset_ecc = devm_reset_control_get_optional(hsotg->dev, "dwc2-ecc");
- 	if (IS_ERR(hsotg->reset_ecc)) {
-@@ -226,6 +235,10 @@ static int dwc2_lowlevel_hw_init(struct dwc2_hsotg *hsotg)
- 	}
- 
- 	reset_control_deassert(hsotg->reset_ecc);
-+	ret = devm_add_action_or_reset(hsotg->dev, dwc2_reset_control_assert,
-+				       hsotg->reset_ecc);
-+	if (ret)
-+		return ret;
- 
- 	/*
- 	 * Attempt to find a generic PHY, then look for an old style
-@@ -352,9 +365,6 @@ static int dwc2_driver_remove(struct platform_device *dev)
- 	if (hsotg->ll_hw_enabled)
- 		dwc2_lowlevel_hw_disable(hsotg);
- 
--	reset_control_assert(hsotg->reset);
--	reset_control_assert(hsotg->reset_ecc);
--
- 	return 0;
  }
  
 -- 
