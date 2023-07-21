@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC0C20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:21:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0613EC433C8;
-	Fri, 21 Jul 2023 19:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B13120F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:21:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21B8C433C8;
+	Fri, 21 Jul 2023 19:21:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967281;
-	bh=1TyHJhm/cKUKXYfoT2LHqgNFgWf6b4bWWeS9DwREL/E=;
+	s=korg; t=1689967284;
+	bh=ZuR7ks4lBmY8dy1kOwpq48U15G2f5gp7Ivorv0FyQdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s/yBpafjI2KZx+pTfAJqhmjcp2grrsdxPHIg/BcSUwwFamQlSkLyIQYuVpzbuUyYN
-	 q4NQBefYODcnocgY4WLaUPcPBOCooQVwZS44J68lYb/GxKtMGTSmOiqssXfP82lc1E
-	 MSg2dW+wBrothR1+IKveGfZhJenpODJhcbPo3XUk=
+	b=iioqHh3cnzWyhribbSc1gUcOJGQYGUUouywMIeHtzxL17D4pYkULAK6R4t3WsuNF5
+	 e1rpm2XRN4KwElem4+TG4nhuuiAyQlUegynByUEmYxUgthKYop+DjfuM3kxWm1qWW1
+	 0UXhccD406xmBpOrcJcndgP1ucO8opTmgMVm5z1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	stable@kernel.org,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 106/223] ext4: get block from bh in ext4_free_blocks for fast commit replay
-Date: Fri, 21 Jul 2023 18:05:59 +0200
-Message-ID: <20230721160525.390376717@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.1 080/223] pinctrl: amd: Detect internal GPIO0 debounce handling
+Date: Fri, 21 Jul 2023 18:05:33 +0200
+Message-ID: <20230721160524.273614461@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -36,52 +34,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 11b6890be0084ad4df0e06d89a9fdcc948472c65 upstream.
+commit 968ab9261627fa305307e3935ca1a32fcddd36cb upstream.
 
-ext4_free_blocks will retrieve block from bh if block parameter is zero.
-Retrieve block before ext4_free_blocks_simple to avoid potentially
-passing wrong block to ext4_free_blocks_simple.
+commit 4e5a04be88fe ("pinctrl: amd: disable and mask interrupts on probe")
+had a mistake in loop iteration 63 that it would clear offset 0xFC instead
+of 0x100.  Offset 0xFC is actually `WAKE_INT_MASTER_REG`.  This was
+clearing bits 13 and 15 from the register which significantly changed the
+expected handling for some platforms for GPIO0.
 
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Cc: stable@kernel.org
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230603150327.3596033-9-shikemeng@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+commit b26cd9325be4 ("pinctrl: amd: Disable and mask interrupts on resume")
+actually fixed this bug, but lead to regressions on Lenovo Z13 and some
+other systems.  This is because there was no handling in the driver for bit
+15 debounce behavior.
+
+Quoting a public BKDG:
+```
+EnWinBlueBtn. Read-write. Reset: 0. 0=GPIO0 detect debounced power button;
+Power button override is 4 seconds. 1=GPIO0 detect debounced power button
+in S3/S5/S0i3, and detect "pressed less than 2 seconds" and "pressed 2~10
+seconds" in S0; Power button override is 10 seconds
+```
+
+Cross referencing the same master register in Windows it's obvious that
+Windows doesn't use debounce values in this configuration.  So align the
+Linux driver to do this as well.  This fixes wake on lid when
+WAKE_INT_MASTER_REG is properly programmed.
+
+Cc: stable@vger.kernel.org
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217315
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20230421120625.3366-2-mario.limonciello@amd.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/pinctrl/pinctrl-amd.c |    7 +++++++
+ drivers/pinctrl/pinctrl-amd.h |    1 +
+ 2 files changed, 8 insertions(+)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -6158,12 +6158,6 @@ void ext4_free_blocks(handle_t *handle,
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -125,6 +125,12 @@ static int amd_gpio_set_debounce(struct
+ 	struct amd_gpio *gpio_dev = gpiochip_get_data(gc);
  
- 	sbi = EXT4_SB(sb);
- 
--	if (sbi->s_mount_state & EXT4_FC_REPLAY) {
--		ext4_free_blocks_simple(inode, block, count);
--		return;
--	}
--
--	might_sleep();
- 	if (bh) {
- 		if (block)
- 			BUG_ON(block != bh->b_blocknr);
-@@ -6171,6 +6165,13 @@ void ext4_free_blocks(handle_t *handle,
- 			block = bh->b_blocknr;
- 	}
- 
-+	if (sbi->s_mount_state & EXT4_FC_REPLAY) {
-+		ext4_free_blocks_simple(inode, block, count);
-+		return;
-+	}
+ 	raw_spin_lock_irqsave(&gpio_dev->lock, flags);
 +
-+	might_sleep();
++	/* Use special handling for Pin0 debounce */
++	pin_reg = readl(gpio_dev->base + WAKE_INT_MASTER_REG);
++	if (pin_reg & INTERNAL_GPIO0_DEBOUNCE)
++		debounce = 0;
 +
- 	if (!(flags & EXT4_FREE_BLOCKS_VALIDATED) &&
- 	    !ext4_inode_block_valid(inode, block, count)) {
- 		ext4_error(sb, "Freeing blocks not in datazone - "
+ 	pin_reg = readl(gpio_dev->base + offset * 4);
+ 
+ 	if (debounce) {
+@@ -219,6 +225,7 @@ static void amd_gpio_dbg_show(struct seq
+ 	char *debounce_enable;
+ 	char *wake_cntrlz;
+ 
++	seq_printf(s, "WAKE_INT_MASTER_REG: 0x%08x\n", readl(gpio_dev->base + WAKE_INT_MASTER_REG));
+ 	for (bank = 0; bank < gpio_dev->hwbank_num; bank++) {
+ 		unsigned int time = 0;
+ 		unsigned int unit = 0;
+--- a/drivers/pinctrl/pinctrl-amd.h
++++ b/drivers/pinctrl/pinctrl-amd.h
+@@ -17,6 +17,7 @@
+ #define AMD_GPIO_PINS_BANK3     32
+ 
+ #define WAKE_INT_MASTER_REG 0xfc
++#define INTERNAL_GPIO0_DEBOUNCE (1 << 15)
+ #define EOI_MASK (1 << 29)
+ 
+ #define WAKE_INT_STATUS_REG0 0x2f8
 
 
