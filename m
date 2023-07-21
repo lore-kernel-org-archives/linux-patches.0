@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B10F1F941
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:19:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5981C433CA;
-	Fri, 21 Jul 2023 16:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B9D1F941
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:19:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8544EC433AB;
+	Fri, 21 Jul 2023 16:19:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956353;
-	bh=mNu5QaphbBnivVKW+01oDsYHM/eLvSgHeT48q0NBm28=;
+	s=korg; t=1689956374;
+	bh=lx0sYJ6p8HimMD0ZHfKMauYEW5ljtaNrXSpa2sHPqTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kkvvO6qC4QzX/VcpCtbGKLXUrJ0Cw5wR4yTvcbf49q8dvkB8a6v3A+bbZuN6XQX6I
-	 qmEFOcVJ4Q4vKyzemvKsG45hGZp/psqSFL4kbVqnhgOr+tEnGaOVkvDiupR8J58xTt
-	 +whql3H8bfmYyGscCYmMpxWnaLpIF1aTok8Lgs9k=
+	b=aH2LhNRYGSLBdY2QUV91mLSba0/TCIqSdlvod6uUJgCyApMn5wgz3W2yTQitL7Yts
+	 bqZoNEtNiIQBF8f6mqOATOw9NMO8jFHxArVjCfVg7stmqaeodfoK/e+0ySc0hLwzY1
+	 jdn4x4qtifYE1K8rpjNd6V3Psc+BERvcUKf4LUR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>
-Subject: [PATCH 6.4 177/292] PCI: rockchip: Write PCI Device ID to correct register
-Date: Fri, 21 Jul 2023 18:04:46 +0200
-Message-ID: <20230721160536.505649080@linuxfoundation.org>
+	Robert Marko <robimarko@gmail.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.4 160/292] soc: qcom: mdt_loader: Fix unconditional call to scm_pas_mem_setup
+Date: Fri, 21 Jul 2023 18:04:29 +0200
+Message-ID: <20230721160535.779053898@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -35,60 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-commit 1f1c42ece18de365c976a060f3c8eb481b038e3a upstream.
+commit bcb889891371c3cf767f2b9e8768cfe2fdd3810f upstream.
 
-Write PCI Device ID (DID) to the correct register. The Device ID was not
-updated through the correct register. Device ID was written to a read-only
-register and therefore did not work. The Device ID is now set through the
-correct register. This is documented in the RK3399 TRM section 17.6.6.1.1
+Commit ebeb20a9cd3f ("soc: qcom: mdt_loader: Always invoke PAS
+mem_setup") dropped the relocate check and made pas_mem_setup run
+unconditionally. The code was later moved with commit f4e526ff7e38
+("soc: qcom: mdt_loader: Extract PAS operations") to
+qcom_mdt_pas_init() effectively losing track of what was actually
+done.
 
-Link: https://lore.kernel.org/r/20230418074700.1083505-3-rick.wertenbroek@gmail.com
-Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
-Tested-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+The assumption that PAS mem_setup can be done anytime was effectively
+wrong, with no good reason and this caused regression on some SoC
+that use remoteproc to bringup ath11k. One example is IPQ8074 SoC that
+effectively broke resulting in remoteproc silently die and ath11k not
+working.
+
+On this SoC FW relocate is not enabled and PAS mem_setup was correctly
+skipped in previous kernel version resulting in correct bringup and
+function of remoteproc and ath11k.
+
+To fix the regression, reintroduce the relocate check in
+qcom_mdt_pas_init() and correctly skip PAS mem_setup where relocate is
+not enabled.
+
+Fixes: ebeb20a9cd3f ("soc: qcom: mdt_loader: Always invoke PAS mem_setup")
+Tested-by: Robert Marko <robimarko@gmail.com>
+Co-developed-by: Robert Marko <robimarko@gmail.com>
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 Cc: stable@vger.kernel.org
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230526115511.3328-1-ansuelsmth@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-rockchip-ep.c |    6 ++++--
- drivers/pci/controller/pcie-rockchip.h    |    2 ++
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/soc/qcom/mdt_loader.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/drivers/pci/controller/pcie-rockchip-ep.c
-+++ b/drivers/pci/controller/pcie-rockchip-ep.c
-@@ -125,6 +125,7 @@ static void rockchip_pcie_prog_ep_ob_atu
- static int rockchip_pcie_ep_write_header(struct pci_epc *epc, u8 fn, u8 vfn,
- 					 struct pci_epf_header *hdr)
- {
-+	u32 reg;
- 	struct rockchip_pcie_ep *ep = epc_get_drvdata(epc);
- 	struct rockchip_pcie *rockchip = &ep->rockchip;
+--- a/drivers/soc/qcom/mdt_loader.c
++++ b/drivers/soc/qcom/mdt_loader.c
+@@ -210,6 +210,7 @@ int qcom_mdt_pas_init(struct device *dev
+ 	const struct elf32_hdr *ehdr;
+ 	phys_addr_t min_addr = PHYS_ADDR_MAX;
+ 	phys_addr_t max_addr = 0;
++	bool relocate = false;
+ 	size_t metadata_len;
+ 	void *metadata;
+ 	int ret;
+@@ -224,6 +225,9 @@ int qcom_mdt_pas_init(struct device *dev
+ 		if (!mdt_phdr_valid(phdr))
+ 			continue;
  
-@@ -137,8 +138,9 @@ static int rockchip_pcie_ep_write_header
- 				    PCIE_CORE_CONFIG_VENDOR);
++		if (phdr->p_flags & QCOM_MDT_RELOCATABLE)
++			relocate = true;
++
+ 		if (phdr->p_paddr < min_addr)
+ 			min_addr = phdr->p_paddr;
+ 
+@@ -246,11 +250,13 @@ int qcom_mdt_pas_init(struct device *dev
+ 		goto out;
  	}
  
--	rockchip_pcie_write(rockchip, hdr->deviceid << 16,
--			    ROCKCHIP_PCIE_EP_FUNC_BASE(fn) + PCI_VENDOR_ID);
-+	reg = rockchip_pcie_read(rockchip, PCIE_EP_CONFIG_DID_VID);
-+	reg = (reg & 0xFFFF) | (hdr->deviceid << 16);
-+	rockchip_pcie_write(rockchip, reg, PCIE_EP_CONFIG_DID_VID);
+-	ret = qcom_scm_pas_mem_setup(pas_id, mem_phys, max_addr - min_addr);
+-	if (ret) {
+-		/* Unable to set up relocation */
+-		dev_err(dev, "error %d setting up firmware %s\n", ret, fw_name);
+-		goto out;
++	if (relocate) {
++		ret = qcom_scm_pas_mem_setup(pas_id, mem_phys, max_addr - min_addr);
++		if (ret) {
++			/* Unable to set up relocation */
++			dev_err(dev, "error %d setting up firmware %s\n", ret, fw_name);
++			goto out;
++		}
+ 	}
  
- 	rockchip_pcie_write(rockchip,
- 			    hdr->revid |
---- a/drivers/pci/controller/pcie-rockchip.h
-+++ b/drivers/pci/controller/pcie-rockchip.h
-@@ -133,6 +133,8 @@
- #define PCIE_RC_RP_ATS_BASE		0x400000
- #define PCIE_RC_CONFIG_NORMAL_BASE	0x800000
- #define PCIE_RC_CONFIG_BASE		0xa00000
-+#define PCIE_EP_CONFIG_BASE		0xa00000
-+#define PCIE_EP_CONFIG_DID_VID		(PCIE_EP_CONFIG_BASE + 0x00)
- #define PCIE_RC_CONFIG_RID_CCR		(PCIE_RC_CONFIG_BASE + 0x08)
- #define PCIE_RC_CONFIG_DCR		(PCIE_RC_CONFIG_BASE + 0xc4)
- #define   PCIE_RC_CONFIG_DCR_CSPL_SHIFT		18
+ out:
 
 
