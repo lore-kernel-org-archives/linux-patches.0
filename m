@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D2C1EA8A
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:21:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9484CC43395;
-	Fri, 21 Jul 2023 16:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE0A1EA8A
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:21:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFB02C43397;
+	Fri, 21 Jul 2023 16:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956460;
-	bh=fOk4TtPQ00xcnVxjBFG2/79tzX745u1MGI8ciu6g3RM=;
+	s=korg; t=1689956463;
+	bh=tgFzvKUHYoeAKS0GWZZZ+yXSaLZV1Ogk6qV2XcgO2DU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ropXCmwNTFibgP9TMM4HeoXgZH7BNmh4FWPZHNREBORRcLTM6NtWqhBGxnUf/HR1z
-	 BT6E+zaKW3aoo/dCSXLN0StorUHqItYxXg2h2ox+uaCa1IpkWaj+otLNQjKc2bi3WX
-	 cxH/wirDX4J/vCU93hWt8mDQw80oXn38kdb57bIY=
+	b=s1PbsFtH4AEoQFyG1MKx3Uf/GVfbFxCkSyuzdZHP2RXXgnJAFPXgZXYQzMp4RU35r
+	 4WicLRnpJzQoma9x9SEm5fQZ9gtjegOxX12C+v1a5wkN4IoKnw8sGSGai0132PVOHf
+	 LLbxjXH+E0FYC3AAYrMTXFpDz5QjYEDdWE7MeyUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Austin Zheng <austin.zheng@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Leo Chen <sancchen@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.4 201/292] drm/amd/display: Remove Phantom Pipe Check When Calculating K1 and K2
-Date: Fri, 21 Jul 2023 18:05:10 +0200
-Message-ID: <20230721160537.519027291@linuxfoundation.org>
+Subject: [PATCH 6.4 202/292] drm/amd/display: disable seamless boot if force_odm_combine is enabled
+Date: Fri, 21 Jul 2023 18:05:11 +0200
+Message-ID: <20230721160537.560584988@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -37,40 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Austin Zheng <austin.zheng@amd.com>
+From: Leo Chen <sancchen@amd.com>
 
-commit 1966bbfdfe476d271b338336254854c5edd5a907 upstream.
+commit 26518b39181876064850209ecdab48c0ee5924b1 upstream.
 
-[Why]
-K1 and K2 not being setting properly when subVP is active.
+[Why & How]
+Having seamless boot on while forcing debug option ODM combine 2 to 1
+will cause some corruptions because of some missing programmings.
 
-[How]
-Have phantom pipes use the same programing as the main pipes without
-checking the paired stream
-
-Cc: stable@vger.kernel.org
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Acked-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Austin Zheng <austin.zheng@amd.com>
+Cc: stable@vger.kernel.org # 6.1+
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Leo Chen <sancchen@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c |    4 ----
- 1 file changed, 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-@@ -1125,10 +1125,6 @@ unsigned int dcn32_calculate_dccg_k1_k2_
- 	unsigned int odm_combine_factor = 0;
- 	bool two_pix_per_container = false;
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -1602,6 +1602,9 @@ bool dc_validate_boot_timing(const struc
+ 		return false;
+ 	}
  
--	// For phantom pipes, use the same programming as the main pipes
--	if (pipe_ctx->stream->mall_stream_config.type == SUBVP_PHANTOM) {
--		stream = pipe_ctx->stream->mall_stream_config.paired_stream;
--	}
- 	two_pix_per_container = optc2_is_two_pixels_per_containter(&stream->timing);
- 	odm_combine_factor = get_odm_config(pipe_ctx, NULL);
- 
++	if (dc->debug.force_odm_combine)
++		return false;
++
+ 	/* Check for enabled DIG to identify enabled display */
+ 	if (!link->link_enc->funcs->is_dig_enabled(link->link_enc))
+ 		return false;
 
 
