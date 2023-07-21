@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6401200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62FFCC433C9;
-	Fri, 21 Jul 2023 19:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F592200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4405DC433C7;
+	Fri, 21 Jul 2023 19:09:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966569;
-	bh=jFePZwF/0puxAcEyc4/KW8vKQAMNFxT7bwIjOohPr20=;
+	s=korg; t=1689966572;
+	bh=HvZUa077giHemqNzcSICA/4gLZG1ZBMbr9f7lLX6Sg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UwKyqr8NXddozjuUMzK6NdTpChkjKmA/FKyaEeQCOLPMNAeilYIcV9O71HsFuHXSP
-	 cxL70C1f7bAQBDclQzRgT9HTGltdV85Ffj9wKC9nzC9yFLLGV7nR/G3MuL7RAKp6Nf
-	 1MrNfNzjbW39XAso1SslyEVB9CSes8Arvh5Tl6Q0=
+	b=fH0f8+9S7yJ+TEoEhpZPjXbeeWSaoU1sEYfXnASNm78HubQ+uGS/TQxVrUsE5Hkcn
+	 dAJcg+GvC0izPfT5/bx7vOrSTzKEXrzLaRJhRVsvSXJ/3AwI17gnHVM1ZVdtIcr7HG
+	 nL6LLLbKbSSHcsnl2wJkqjp95OGD+AslHw5orrgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Talpey <tom@talpey.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Steve French <smfrench@gmail.com>,
-	Hyunchul Lee <hyc.lee@gmail.com>,
+	Chih-Yen Chang <cc85nod@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Ralph Boehme <slow@samba.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 391/532] ksmbd: use ksmbd_req_buf_next() in ksmbd_smb2_check_message()
-Date: Fri, 21 Jul 2023 18:04:55 +0200
-Message-ID: <20230721160635.688537672@linuxfoundation.org>
+Subject: [PATCH 5.15 392/532] ksmbd: validate command payload size
+Date: Fri, 21 Jul 2023 18:04:56 +0200
+Message-ID: <20230721160635.740534714@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -39,44 +35,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ralph Boehme <slow@samba.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit b83b27909e74d27796de19c802fbc3b65ab4ba9a upstream.
+commit 2b9b8f3b68edb3d67d79962f02e26dbb5ae3808d upstream.
 
-Use ksmbd_req_buf_next() in ksmbd_smb2_check_message().
+->StructureSize2 indicates command payload size. ksmbd should validate
+this size with rfc1002 length before accessing it.
+This patch remove unneeded check and add the validation for this.
 
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Steve French <smfrench@gmail.com>
-Cc: Hyunchul Lee <hyc.lee@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Ralph Boehme <slow@samba.org>
+[    8.912583] BUG: KASAN: slab-out-of-bounds in ksmbd_smb2_check_message+0x12a/0xc50
+[    8.913051] Read of size 2 at addr ffff88800ac7d92c by task kworker/0:0/7
+...
+[    8.914967] Call Trace:
+[    8.915126]  <TASK>
+[    8.915267]  dump_stack_lvl+0x33/0x50
+[    8.915506]  print_report+0xcc/0x620
+[    8.916558]  kasan_report+0xae/0xe0
+[    8.917080]  kasan_check_range+0x35/0x1b0
+[    8.917334]  ksmbd_smb2_check_message+0x12a/0xc50
+[    8.917935]  ksmbd_verify_smb_message+0xae/0xd0
+[    8.918223]  handle_ksmbd_work+0x192/0x820
+[    8.918478]  process_one_work+0x419/0x760
+[    8.918727]  worker_thread+0x2a2/0x6f0
+[    8.919222]  kthread+0x187/0x1d0
+[    8.919723]  ret_from_fork+0x1f/0x30
+[    8.919954]  </TASK>
+
+Cc: stable@vger.kernel.org
+Reported-by: Chih-Yen Chang <cc85nod@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2misc.c |    9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ fs/ksmbd/smb2misc.c |   23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
 --- a/fs/ksmbd/smb2misc.c
 +++ b/fs/ksmbd/smb2misc.c
-@@ -347,16 +347,11 @@ static int smb2_validate_credit_charge(s
- 
- int ksmbd_smb2_check_message(struct ksmbd_work *work)
- {
--	struct smb2_pdu *pdu = work->request_buf;
-+	struct smb2_pdu *pdu = ksmbd_req_buf_next(work);
- 	struct smb2_hdr *hdr = &pdu->hdr;
+@@ -352,6 +352,7 @@ int ksmbd_smb2_check_message(struct ksmb
  	int command;
  	__u32 clc_len;  /* calculated length */
--	__u32 len = get_rfc1002_len(pdu);
--
--	if (work->next_smb2_rcv_hdr_off) {
--		pdu = ksmbd_req_buf_next(work);
--		hdr = &pdu->hdr;
--	}
-+	__u32 len = get_rfc1002_len(work->request_buf);
+ 	__u32 len = get_rfc1002_len(work->request_buf);
++	__u32 req_struct_size;
  
  	if (le32_to_cpu(hdr->NextCommand) > 0)
  		len = le32_to_cpu(hdr->NextCommand);
+@@ -374,17 +375,9 @@ int ksmbd_smb2_check_message(struct ksmb
+ 	}
+ 
+ 	if (smb2_req_struct_sizes[command] != pdu->StructureSize2) {
+-		if (command != SMB2_OPLOCK_BREAK_HE &&
+-		    (hdr->Status == 0 || pdu->StructureSize2 != SMB2_ERROR_STRUCTURE_SIZE2_LE)) {
+-			/* error packets have 9 byte structure size */
+-			ksmbd_debug(SMB,
+-				    "Illegal request size %u for command %d\n",
+-				    le16_to_cpu(pdu->StructureSize2), command);
+-			return 1;
+-		} else if (command == SMB2_OPLOCK_BREAK_HE &&
+-			   hdr->Status == 0 &&
+-			   le16_to_cpu(pdu->StructureSize2) != OP_BREAK_STRUCT_SIZE_20 &&
+-			   le16_to_cpu(pdu->StructureSize2) != OP_BREAK_STRUCT_SIZE_21) {
++		if (command == SMB2_OPLOCK_BREAK_HE &&
++		    le16_to_cpu(pdu->StructureSize2) != OP_BREAK_STRUCT_SIZE_20 &&
++		    le16_to_cpu(pdu->StructureSize2) != OP_BREAK_STRUCT_SIZE_21) {
+ 			/* special case for SMB2.1 lease break message */
+ 			ksmbd_debug(SMB,
+ 				    "Illegal request size %d for oplock break\n",
+@@ -393,6 +386,14 @@ int ksmbd_smb2_check_message(struct ksmb
+ 		}
+ 	}
+ 
++	req_struct_size = le16_to_cpu(pdu->StructureSize2) +
++		__SMB2_HEADER_STRUCTURE_SIZE;
++	if (command == SMB2_LOCK_HE)
++		req_struct_size -= sizeof(struct smb2_lock_element);
++
++	if (req_struct_size > len + 1)
++		return 1;
++
+ 	if (smb2_calc_size(hdr, &clc_len))
+ 		return 1;
+ 
 
 
