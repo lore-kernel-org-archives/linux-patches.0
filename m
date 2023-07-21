@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E3E1F93D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:10:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F5AC433C7;
-	Fri, 21 Jul 2023 16:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D264A1F93D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:10:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5FEC433C8;
+	Fri, 21 Jul 2023 16:10:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689955806;
-	bh=vFb9m783xJIvC3aPlcuyv0v0nqHaFfFynC8gtJKsVr4=;
+	s=korg; t=1689955809;
+	bh=Z6QI8tI2UFG1tVvgBs2BL0MuqpupASmZdaUNhiQ8R98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u/UwlIY9/8qWPaF3yRzwMnS573EgDGRgrY+vWt0BbCdz4RsNjeWsgvR//wqegIBEm
-	 iWI34aAg9fVY6QllvAGjXjVLHrOZ2W0JB+rGPAX1On85mLDhTWwQmUS52QlF0yRpxc
-	 s3merYR5wtXNit/CNMGDZZaCLxF1CsyiMel6VXbA=
+	b=vsXOCcAosvKKQ+HR6D8OMTZ/ktJf+WO7IKNPwvMQjyUZvOxxoOFi+MLbCgPc/pLoy
+	 iRlQFFJpSKQnq9k/tt9wPyMpOoNkFcfQhN23m5L6Ab0xU3t3T4SClibNMaNgoigU3G
+	 9ubTDcUCc/oUEXw1pgw6j82ZjlrqUHVsjBAopWuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tan Tee Min <tee.min.tan@linux.intel.com>,
+	Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>,
 	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
 	Naama Meir <naamax.meir@linux.intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 036/292] igc: Include the length/type field and VLAN tag in queueMaxSDU
-Date: Fri, 21 Jul 2023 18:02:25 +0200
-Message-ID: <20230721160530.350071548@linuxfoundation.org>
+Subject: [PATCH 6.4 037/292] igc: Handle PPS start time programming for past time values
+Date: Fri, 21 Jul 2023 18:02:26 +0200
+Message-ID: <20230721160530.391357382@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -37,66 +37,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tan Tee Min <tee.min.tan@linux.intel.com>
+From: Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>
 
-[ Upstream commit 25102893e409bc02761ab82dbcfa092006404790 ]
+[ Upstream commit 84a192e46106355de1a314d709e657231d4b1026 ]
 
-IEEE 802.1Q does not have clear definitions of what constitutes an
-SDU (Service Data Unit), but IEEE Std 802.3 clause 3.1.2 does define
-the MAC service primitives and clause 3.2.7 does define the MAC Client
-Data for Q-tagged frames.
+I225/6 hardware can be programmed to start PPS output once
+the time in Target Time registers is reached. The time
+programmed in these registers should always be into future.
+Only then PPS output is triggered when SYSTIM register
+reaches the programmed value. There are two modes in i225/6
+hardware to program PPS, pulse and clock mode.
 
-It shows that the mac_service_data_unit (MSDU) does NOT contain the
-preamble, destination and source address, or FCS. The MSDU does contain
-the length/type field, MAC client data, VLAN tag and any padding
-data (prior to the FCS).
+There were issues reported where PPS is not generated when
+start time is in past.
 
-Thus, the maximum 802.3 frame size that is allowed to be transmitted
-should be QueueMaxSDU (MSDU) + 16 (6 byte SA + 6 byte DA + 4 byte FCS).
+Example 1, "echo 0 0 0 2 0 > /sys/class/ptp/ptp0/period"
 
-Fixes: 92a0dcb8427d ("igc: offload queue max SDU from tc-taprio")
-Signed-off-by: Tan Tee Min <tee.min.tan@linux.intel.com>
+In the current implementation, a value of '0' is programmed
+into Target time registers and PPS output is in pulse mode.
+Eventually an interrupt which is triggered upon SYSTIM
+register reaching Target time is not fired. Thus no PPS
+output is generated.
+
+Example 2, "echo 0 0 0 1 0 > /sys/class/ptp/ptp0/period"
+
+Above case, a value of '0' is programmed into Target time
+registers and PPS output is in clock mode. Here, HW tries to
+catch-up the current time by incrementing Target Time
+register. This catch-up time seem to vary according to
+programmed PPS period time as per the HW design. In my
+experiments, the delay ranged between few tens of seconds to
+few minutes. The PPS output is only generated after the
+Target time register reaches current time.
+
+In my experiments, I also observed PPS stopped working with
+below test and could not recover until module is removed and
+loaded again.
+
+1) echo 0 <future time> 0 1 0 > /sys/class/ptp/ptp1/period
+2) echo 0 0 0 1 0 > /sys/class/ptp/ptp1/period
+3) echo 0 0 0 1 0 > /sys/class/ptp/ptp1/period
+
+After this PPS did not work even if i re-program with proper
+values. I could only get this back working by reloading the
+driver.
+
+This patch takes care of calculating and programming
+appropriate future time value into Target Time registers.
+
+Fixes: 5e91c72e560c ("igc: Fix PPS delta between two synchronized end-points")
+Signed-off-by: Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>
 Reviewed-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
 Tested-by: Naama Meir <naamax.meir@linux.intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_ptp.c | 25 +++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 826556e609800..e7bd2c60ee383 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -1575,16 +1575,9 @@ static netdev_tx_t igc_xmit_frame_ring(struct sk_buff *skb,
- 	if (adapter->qbv_transition || tx_ring->oper_gate_closed)
- 		goto out_drop;
+diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
+index 32ef112f8291a..f0b979a706552 100644
+--- a/drivers/net/ethernet/intel/igc/igc_ptp.c
++++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
+@@ -356,16 +356,35 @@ static int igc_ptp_feature_enable_i225(struct ptp_clock_info *ptp,
+ 			tsim &= ~IGC_TSICR_TT0;
+ 		}
+ 		if (on) {
++			struct timespec64 safe_start;
+ 			int i = rq->perout.index;
  
--	if (tx_ring->max_sdu > 0) {
--		u32 max_sdu = 0;
--
--		max_sdu = tx_ring->max_sdu +
--			  (skb_vlan_tagged(first->skb) ? VLAN_HLEN : 0);
--
--		if (first->bytecount > max_sdu) {
--			adapter->stats.txdrop++;
--			goto out_drop;
--		}
-+	if (tx_ring->max_sdu > 0 && first->bytecount > tx_ring->max_sdu) {
-+		adapter->stats.txdrop++;
-+		goto out_drop;
- 	}
- 
- 	if (unlikely(test_bit(IGC_RING_FLAG_TX_HWTSTAMP, &tx_ring->flags) &&
-@@ -6215,7 +6208,7 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
- 		struct net_device *dev = adapter->netdev;
- 
- 		if (qopt->max_sdu[i])
--			ring->max_sdu = qopt->max_sdu[i] + dev->hard_header_len;
-+			ring->max_sdu = qopt->max_sdu[i] + dev->hard_header_len - ETH_TLEN;
- 		else
- 			ring->max_sdu = 0;
- 	}
+ 			igc_pin_perout(igc, i, pin, use_freq);
+-			igc->perout[i].start.tv_sec = rq->perout.start.sec;
++			igc_ptp_read(igc, &safe_start);
++
++			/* PPS output start time is triggered by Target time(TT)
++			 * register. Programming any past time value into TT
++			 * register will cause PPS to never start. Need to make
++			 * sure we program the TT register a time ahead in
++			 * future. There isn't a stringent need to fire PPS out
++			 * right away. Adding +2 seconds should take care of
++			 * corner cases. Let's say if the SYSTIML is close to
++			 * wrap up and the timer keeps ticking as we program the
++			 * register, adding +2seconds is safe bet.
++			 */
++			safe_start.tv_sec += 2;
++
++			if (rq->perout.start.sec < safe_start.tv_sec)
++				igc->perout[i].start.tv_sec = safe_start.tv_sec;
++			else
++				igc->perout[i].start.tv_sec = rq->perout.start.sec;
+ 			igc->perout[i].start.tv_nsec = rq->perout.start.nsec;
+ 			igc->perout[i].period.tv_sec = ts.tv_sec;
+ 			igc->perout[i].period.tv_nsec = ts.tv_nsec;
+-			wr32(trgttimh, rq->perout.start.sec);
++			wr32(trgttimh, (u32)igc->perout[i].start.tv_sec);
+ 			/* For now, always select timer 0 as source. */
+-			wr32(trgttiml, rq->perout.start.nsec | IGC_TT_IO_TIMER_SEL_SYSTIM0);
++			wr32(trgttiml, (u32)(igc->perout[i].start.tv_nsec |
++					     IGC_TT_IO_TIMER_SEL_SYSTIM0));
+ 			if (use_freq)
+ 				wr32(freqout, ns);
+ 			tsauxc |= tsauxc_mask;
 -- 
 2.39.2
 
