@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF131F94B
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:59:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F19D7C433C8;
-	Fri, 21 Jul 2023 18:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3EE1F94B
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:59:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D212BC433C7;
+	Fri, 21 Jul 2023 18:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965970;
-	bh=TIoUDTCuSLsIFXgJbFALJzRmlfUQo0JvUeBVbYwVta8=;
+	s=korg; t=1689965973;
+	bh=Zzo5s1DtmZHbxvr46nB1pAS3A2hZO+KEbeElB69G4WY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G9w7CpZHC8iPRIsFPHzawe01+h0WDO/0v0u4kvfPzewv5tHM3JvnK/+S3f53/sgHw
-	 dUAPjw+Ov+78iPXsbmJlUYXRRf0Rebth8lPqbKhBN6vzyxNAU2HdzjpdLIEBqU3ZlM
-	 4++9oPJAl7pNepsFmh3VYpt2Fi5wsBVyXXmwQemw=
+	b=ayKsjWf5eeQ+/wGkHfHfs7t1PcP1c2arQ463h8cvsq+6B4taZxdqCRdckmzkQ42G8
+	 1betNVoUWknG4tFAYfFqL9hkQx8t8oQW9pHZoZ0IaVO/B4E86Zw3Gbawh/Ec+EQgSU
+	 NXCtPkt9aj2ROdCBUdlCm7S/2c2JhUrAbeZioVW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allen-KH Cheng <allen-kh.cheng@mediatek.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 179/532] arm64: dts: mediatek: Add cpufreq nodes for MT8192
-Date: Fri, 21 Jul 2023 18:01:23 +0200
-Message-ID: <20230721160624.090747810@linuxfoundation.org>
+Subject: [PATCH 5.15 162/532] hwmon: (pmbus/adm1275) Fix problems with temperature monitoring on ADM1272
+Date: Fri, 21 Jul 2023 18:01:06 +0200
+Message-ID: <20230721160623.193945730@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -38,107 +34,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Allen-KH Cheng <allen-kh.cheng@mediatek.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 9d498cce9298a71e3896e2d1aee24a1a4c531d81 ]
+[ Upstream commit b153a0bb4199566abd337119207f82b59a8cd1ca ]
 
-Add the cpufreq nodes for MT8192 SoC.
+The PMON_CONFIG register on ADM1272 is a 16 bit register. Writing a 8 bit
+value into it clears the upper 8 bits of the register, resulting in
+unexpected side effects. Fix by writing the 16 bit register value.
 
-Signed-off-by: Allen-KH Cheng <allen-kh.cheng@mediatek.com>
-Tested-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230317061944.15434-1-allen-kh.cheng@mediatek.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
-Stable-dep-of: a4366b5695c9 ("arm64: dts: mediatek: mt8192: Fix CPUs capacity-dmips-mhz")
+Also, it has been reported that temperature readings are sometimes widely
+inaccurate, to the point where readings may result in device shutdown due
+to errant overtemperature faults. Improve by enabling temperature sampling.
+
+While at it, move the common code for ADM1272 and ADM1278 into a separate
+function, and clarify in the error message that an attempt was made to
+enable both VOUT and temperature monitoring.
+
+Last but not least, return the error code reported by the underlying I2C
+controller and not -ENODEV if updating the PMON_CONFIG register fails.
+After all, this does not indicate that the chip is not present, but an
+error in the communication with the chip.
+
+Fixes: 4ff0ce227a1e ("hwmon: (pmbus/adm1275) Add support for ADM1272")
+Fixes: 9da9c2dc57b2 ("hwmon: (adm1275) enable adm1272 temperature reporting")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20230602213447.3557346-1-linux@roeck-us.net
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8192.dtsi | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/hwmon/pmbus/adm1275.c | 52 +++++++++++++++++------------------
+ 1 file changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8192.dtsi b/arch/arm64/boot/dts/mediatek/mt8192.dtsi
-index 9ed1a72295747..19ba781729722 100644
---- a/arch/arm64/boot/dts/mediatek/mt8192.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8192.dtsi
-@@ -41,6 +41,7 @@ cpu0: cpu@0 {
- 			clock-frequency = <1701000000>;
- 			cpu-idle-states = <&cpu_sleep_l &cluster_sleep_l>;
- 			next-level-cache = <&l2_0>;
-+			performance-domains = <&performance 0>;
- 			capacity-dmips-mhz = <530>;
- 		};
+diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
+index 3b07bfb43e937..b8543c06d022a 100644
+--- a/drivers/hwmon/pmbus/adm1275.c
++++ b/drivers/hwmon/pmbus/adm1275.c
+@@ -37,10 +37,13 @@ enum chips { adm1075, adm1272, adm1275, adm1276, adm1278, adm1293, adm1294 };
  
-@@ -52,6 +53,7 @@ cpu1: cpu@100 {
- 			clock-frequency = <1701000000>;
- 			cpu-idle-states = <&cpu_sleep_l &cluster_sleep_l>;
- 			next-level-cache = <&l2_0>;
-+			performance-domains = <&performance 0>;
- 			capacity-dmips-mhz = <530>;
- 		};
+ #define ADM1272_IRANGE			BIT(0)
  
-@@ -63,6 +65,7 @@ cpu2: cpu@200 {
- 			clock-frequency = <1701000000>;
- 			cpu-idle-states = <&cpu_sleep_l &cluster_sleep_l>;
- 			next-level-cache = <&l2_0>;
-+			performance-domains = <&performance 0>;
- 			capacity-dmips-mhz = <530>;
- 		};
++#define ADM1278_TSFILT			BIT(15)
+ #define ADM1278_TEMP1_EN		BIT(3)
+ #define ADM1278_VIN_EN			BIT(2)
+ #define ADM1278_VOUT_EN			BIT(1)
  
-@@ -74,6 +77,7 @@ cpu3: cpu@300 {
- 			clock-frequency = <1701000000>;
- 			cpu-idle-states = <&cpu_sleep_l &cluster_sleep_l>;
- 			next-level-cache = <&l2_0>;
-+			performance-domains = <&performance 0>;
- 			capacity-dmips-mhz = <530>;
- 		};
- 
-@@ -85,6 +89,7 @@ cpu4: cpu@400 {
- 			clock-frequency = <2171000000>;
- 			cpu-idle-states = <&cpu_sleep_b &cluster_sleep_b>;
- 			next-level-cache = <&l2_1>;
-+			performance-domains = <&performance 1>;
- 			capacity-dmips-mhz = <1024>;
- 		};
- 
-@@ -96,6 +101,7 @@ cpu5: cpu@500 {
- 			clock-frequency = <2171000000>;
- 			cpu-idle-states = <&cpu_sleep_b &cluster_sleep_b>;
- 			next-level-cache = <&l2_1>;
-+			performance-domains = <&performance 1>;
- 			capacity-dmips-mhz = <1024>;
- 		};
- 
-@@ -107,6 +113,7 @@ cpu6: cpu@600 {
- 			clock-frequency = <2171000000>;
- 			cpu-idle-states = <&cpu_sleep_b &cluster_sleep_b>;
- 			next-level-cache = <&l2_1>;
-+			performance-domains = <&performance 1>;
- 			capacity-dmips-mhz = <1024>;
- 		};
- 
-@@ -118,6 +125,7 @@ cpu7: cpu@700 {
- 			clock-frequency = <2171000000>;
- 			cpu-idle-states = <&cpu_sleep_b &cluster_sleep_b>;
- 			next-level-cache = <&l2_1>;
-+			performance-domains = <&performance 1>;
- 			capacity-dmips-mhz = <1024>;
- 		};
- 
-@@ -234,6 +242,12 @@ soc {
- 		compatible = "simple-bus";
- 		ranges;
- 
-+		performance: performance-controller@11bc10 {
-+			compatible = "mediatek,cpufreq-hw";
-+			reg = <0 0x0011bc10 0 0x120>, <0 0x0011bd30 0 0x120>;
-+			#performance-domain-cells = <1>;
-+		};
++#define ADM1278_PMON_DEFCONFIG		(ADM1278_VOUT_EN | ADM1278_TEMP1_EN | ADM1278_TSFILT)
 +
- 		gic: interrupt-controller@c000000 {
- 			compatible = "arm,gic-v3";
- 			#interrupt-cells = <4>;
+ #define ADM1293_IRANGE_25		0
+ #define ADM1293_IRANGE_50		BIT(6)
+ #define ADM1293_IRANGE_100		BIT(7)
+@@ -462,6 +465,22 @@ static const struct i2c_device_id adm1275_id[] = {
+ };
+ MODULE_DEVICE_TABLE(i2c, adm1275_id);
+ 
++/* Enable VOUT & TEMP1 if not enabled (disabled by default) */
++static int adm1275_enable_vout_temp(struct i2c_client *client, int config)
++{
++	int ret;
++
++	if ((config & ADM1278_PMON_DEFCONFIG) != ADM1278_PMON_DEFCONFIG) {
++		config |= ADM1278_PMON_DEFCONFIG;
++		ret = i2c_smbus_write_word_data(client, ADM1275_PMON_CONFIG, config);
++		if (ret < 0) {
++			dev_err(&client->dev, "Failed to enable VOUT/TEMP1 monitoring\n");
++			return ret;
++		}
++	}
++	return 0;
++}
++
+ static int adm1275_probe(struct i2c_client *client)
+ {
+ 	s32 (*config_read_fn)(const struct i2c_client *client, u8 reg);
+@@ -615,19 +634,10 @@ static int adm1275_probe(struct i2c_client *client)
+ 			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT |
+ 			PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
+ 
+-		/* Enable VOUT & TEMP1 if not enabled (disabled by default) */
+-		if ((config & (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) !=
+-		    (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) {
+-			config |= ADM1278_VOUT_EN | ADM1278_TEMP1_EN;
+-			ret = i2c_smbus_write_byte_data(client,
+-							ADM1275_PMON_CONFIG,
+-							config);
+-			if (ret < 0) {
+-				dev_err(&client->dev,
+-					"Failed to enable VOUT monitoring\n");
+-				return -ENODEV;
+-			}
+-		}
++		ret = adm1275_enable_vout_temp(client, config);
++		if (ret)
++			return ret;
++
+ 		if (config & ADM1278_VIN_EN)
+ 			info->func[0] |= PMBUS_HAVE_VIN;
+ 		break;
+@@ -684,19 +694,9 @@ static int adm1275_probe(struct i2c_client *client)
+ 			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT |
+ 			PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
+ 
+-		/* Enable VOUT & TEMP1 if not enabled (disabled by default) */
+-		if ((config & (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) !=
+-		    (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) {
+-			config |= ADM1278_VOUT_EN | ADM1278_TEMP1_EN;
+-			ret = i2c_smbus_write_word_data(client,
+-							ADM1275_PMON_CONFIG,
+-							config);
+-			if (ret < 0) {
+-				dev_err(&client->dev,
+-					"Failed to enable VOUT monitoring\n");
+-				return -ENODEV;
+-			}
+-		}
++		ret = adm1275_enable_vout_temp(client, config);
++		if (ret)
++			return ret;
+ 
+ 		if (config & ADM1278_VIN_EN)
+ 			info->func[0] |= PMBUS_HAVE_VIN;
 -- 
 2.39.2
 
