@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D632220F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:10:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 517C6C433C8;
-	Fri, 21 Jul 2023 19:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FF920F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:10:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31ED1C433C7;
+	Fri, 21 Jul 2023 19:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966640;
-	bh=eoZRbh0h2Jfl9teXnIUwlKQFTa47yCVPXx2tjvwB5Ys=;
+	s=korg; t=1689966643;
+	bh=WobzbKCo3HNo/CQqTM7PQ6upSAaCKLi2CbsS297v0Ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DoXAGOYyYCzmJk75GXCtR2JlUsWGxu/EajIWhf64VvbQhaS+z8ifu8nd+p6zEguyv
-	 9PqUHG+Cqil9j0Cnv6DuTDfZiDEUhMQ40wblsEJKfzNXgp6Ud8IsmiKQsN64gOIRNK
-	 621Nbw+LAOt7rBL8RzeQ0td2QGvicIJs32flormU=
+	b=mn6zIJQNaWPHqi+HnAa70NZTOI4ZTccsSWizIVR/Z7K541luO7YGOi48BSiAbmCxz
+	 Wl6qFtGr7zUXSkogkesmygQxIpZo/9HDzxvX9jg/QiZcwWo4aBHzozahYLQzGaMiit
+	 ubKr8mhWfC7769Z1tf7kSzNnnS5nJNnOSeh+fVzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junfeng Guo <junfeng.guo@intel.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jon Mason <jdmason@kudzu.us>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 408/532] gve: Set default duplex configuration to full
-Date: Fri, 21 Jul 2023 18:05:12 +0200
-Message-ID: <20230721160636.593697717@linuxfoundation.org>
+Subject: [PATCH 5.15 417/532] NTB: ntb_transport: fix possible memory leak while device_register() fails
+Date: Fri, 21 Jul 2023 18:05:21 +0200
+Message-ID: <20230721160637.093343960@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,40 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Junfeng Guo <junfeng.guo@intel.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 0503efeadbf6bb8bf24397613a73b67e665eac5f ]
+[ Upstream commit 8623ccbfc55d962e19a3537652803676ad7acb90 ]
 
-Current duplex mode was unset in the driver, resulting in the default
-parameter being set to 0, which corresponds to half duplex. It might
-mislead users to have incorrect expectation about the driver's
-transmission capabilities.
-Set the default duplex configuration to full, as the driver runs in
-full duplex mode at this point.
+If device_register() returns error, the name allocated by
+dev_set_name() need be freed. As comment of device_register()
+says, it should use put_device() to give up the reference in
+the error path. So fix this by calling put_device(), then the
+name can be freed in kobject_cleanup(), and client_dev is freed
+in ntb_transport_client_release().
 
-Fixes: 7e074d5a76ca ("gve: Enable Link Speed Reporting in the driver.")
-Signed-off-by: Junfeng Guo <junfeng.guo@intel.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Message-ID: <20230706044128.2726747-1-junfeng.guo@intel.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: fce8a7bb5b4b ("PCI-Express Non-Transparent Bridge Support")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_ethtool.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/ntb/ntb_transport.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_ethtool.c b/drivers/net/ethernet/google/gve/gve_ethtool.c
-index 6a0663aadd1e9..1f8cc722aae30 100644
---- a/drivers/net/ethernet/google/gve/gve_ethtool.c
-+++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
-@@ -532,6 +532,9 @@ static int gve_get_link_ksettings(struct net_device *netdev,
- 		err = gve_adminq_report_link_speed(priv);
+diff --git a/drivers/ntb/ntb_transport.c b/drivers/ntb/ntb_transport.c
+index a9b97ebc71ac5..2abd2235bbcab 100644
+--- a/drivers/ntb/ntb_transport.c
++++ b/drivers/ntb/ntb_transport.c
+@@ -410,7 +410,7 @@ int ntb_transport_register_client_dev(char *device_name)
  
- 	cmd->base.speed = priv->link_speed;
-+
-+	cmd->base.duplex = DUPLEX_FULL;
-+
- 	return err;
- }
+ 		rc = device_register(dev);
+ 		if (rc) {
+-			kfree(client_dev);
++			put_device(dev);
+ 			goto err;
+ 		}
  
 -- 
 2.39.2
