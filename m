@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4FC1F941
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:14:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F252C433C9;
-	Fri, 21 Jul 2023 16:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE5C1F941
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:14:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80ABCC433C7;
+	Fri, 21 Jul 2023 16:14:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956084;
-	bh=s4qekzqvjL/7jc55eW6LyrJDVhpMjcPXFei8oxa2TaM=;
+	s=korg; t=1689956092;
+	bh=Tnx13kqMBfRMyWaxR7sW2CwdK2gp+0xy10lJUb/9w4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZtI8XMzI65jrWI3iIo5F9GBv2iUfEz+gf9YsJ9BdWBL2tqWQGUrotjGZKQ4r0jJLh
-	 GU5l2widQ7sAgGnToCKqHznStBl/iDY5eB4g6U2ysrCUe3WkxufX3fzxu6UMnA1KgV
-	 8KjFjG/YMR31JHKX5kEXp99W+rIgN/vSdEKZEaxI=
+	b=l5W+/xoE0dMZYISBvL37O9jhdUBapmmt12lvGL4MJZ6EhPYEFg8MehQyhTR1qZwMy
+	 Ta3KVp5NaAr9+dFBeTTDFYqK+Df3DW+CqCEKNBDq9wEvMJVrd3QMIiCjsxNh4zz3RK
+	 wpRuQWKJaootkRWTwHmLrsLlMMXTZJUoZvBaTCtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	roubro1991@gmail.com,
-	Christian Hesse <mail@eworm.de>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.4 127/292] tpm/tpm_tis: Disable interrupts for Framework Laptop Intel 12th gen
-Date: Fri, 21 Jul 2023 18:03:56 +0200
-Message-ID: <20230721160534.281900124@linuxfoundation.org>
+	Karol Herbst <kherbst@redhat.com>,
+	Ben Skeggs <bskeggs@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 101/292] drm/nouveau: bring back blit subchannel for pre nv50 GPUs
+Date: Fri, 21 Jul 2023 18:03:30 +0200
+Message-ID: <20230721160533.133092186@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -35,46 +35,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Hesse <mail@eworm.de>
+From: Karol Herbst <kherbst@redhat.com>
 
-commit 08b0af4478bacb8bb701c172c99a34ea32da89f5 upstream.
+[ Upstream commit 835a65f51790e1f72b1ab106ec89db9ac15b47d6 ]
 
-This device suffer an irq storm, so add it in tpm_tis_dmi_table to
-force polling.
+1ba6113a90a0 removed a lot of the kernel GPU channel, but method 0x128
+was important as otherwise the GPU spams us with `CACHE_ERROR` messages.
 
-Cc: stable@vger.kernel.org # v6.4+
-Link: https://community.frame.work/t/boot-and-shutdown-hangs-with-arch-linux-kernel-6-4-1-mainline-and-arch/33118
-Fixes: e644b2f498d2 ("tpm, tpm_tis: Enable interrupt test")
-Reported-by: <roubro1991@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217631
-Signed-off-by: Christian Hesse <mail@eworm.de>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+We use the blit subchannel inside our vblank handling, so we should keep
+at least this part.
+
+v2: Only do it for NV11+ GPUs
+
+Closes: https://gitlab.freedesktop.org/drm/nouveau/-/issues/201
+Fixes: 4a16dd9d18a0 ("drm/nouveau/kms: switch to drm fbdev helpers")
+Signed-off-by: Karol Herbst <kherbst@redhat.com>
+Reviewed-by: Ben Skeggs <bskeggs@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230526091052.2169044-1-kherbst@redhat.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/nouveau/nouveau_chan.c |  1 +
+ drivers/gpu/drm/nouveau/nouveau_chan.h |  1 +
+ drivers/gpu/drm/nouveau/nouveau_drm.c  | 20 +++++++++++++++++---
+ 3 files changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm_tis.c b/drivers/char/tpm/tpm_tis.c
-index 9cb4e81fc548..5dd391ed3320 100644
---- a/drivers/char/tpm/tpm_tis.c
-+++ b/drivers/char/tpm/tpm_tis.c
-@@ -114,6 +114,14 @@ static int tpm_tis_disable_irq(const struct dmi_system_id *d)
- }
+diff --git a/drivers/gpu/drm/nouveau/nouveau_chan.c b/drivers/gpu/drm/nouveau/nouveau_chan.c
+index e648ecd0c1a03..3dfbc374478e6 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_chan.c
++++ b/drivers/gpu/drm/nouveau/nouveau_chan.c
+@@ -90,6 +90,7 @@ nouveau_channel_del(struct nouveau_channel **pchan)
+ 		if (cli)
+ 			nouveau_svmm_part(chan->vmm->svmm, chan->inst);
  
- static const struct dmi_system_id tpm_tis_dmi_table[] = {
-+	{
-+		.callback = tpm_tis_disable_irq,
-+		.ident = "Framework Laptop (12th Gen Intel Core)",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Framework"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Laptop (12th Gen Intel Core)"),
-+		},
-+	},
- 	{
- 		.callback = tpm_tis_disable_irq,
- 		.ident = "ThinkPad T490s",
++		nvif_object_dtor(&chan->blit);
+ 		nvif_object_dtor(&chan->nvsw);
+ 		nvif_object_dtor(&chan->gart);
+ 		nvif_object_dtor(&chan->vram);
+diff --git a/drivers/gpu/drm/nouveau/nouveau_chan.h b/drivers/gpu/drm/nouveau/nouveau_chan.h
+index e06a8ffed31a8..bad7466bd0d59 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_chan.h
++++ b/drivers/gpu/drm/nouveau/nouveau_chan.h
+@@ -53,6 +53,7 @@ struct nouveau_channel {
+ 	u32 user_put;
+ 
+ 	struct nvif_object user;
++	struct nvif_object blit;
+ 
+ 	struct nvif_event kill;
+ 	atomic_t killed;
+diff --git a/drivers/gpu/drm/nouveau/nouveau_drm.c b/drivers/gpu/drm/nouveau/nouveau_drm.c
+index 7aac9384600ed..40fb9a8349180 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_drm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
+@@ -375,15 +375,29 @@ nouveau_accel_gr_init(struct nouveau_drm *drm)
+ 		ret = nvif_object_ctor(&drm->channel->user, "drmNvsw",
+ 				       NVDRM_NVSW, nouveau_abi16_swclass(drm),
+ 				       NULL, 0, &drm->channel->nvsw);
++
++		if (ret == 0 && device->info.chipset >= 0x11) {
++			ret = nvif_object_ctor(&drm->channel->user, "drmBlit",
++					       0x005f, 0x009f,
++					       NULL, 0, &drm->channel->blit);
++		}
++
+ 		if (ret == 0) {
+ 			struct nvif_push *push = drm->channel->chan.push;
+-			ret = PUSH_WAIT(push, 2);
+-			if (ret == 0)
++			ret = PUSH_WAIT(push, 8);
++			if (ret == 0) {
++				if (device->info.chipset >= 0x11) {
++					PUSH_NVSQ(push, NV05F, 0x0000, drm->channel->blit.handle);
++					PUSH_NVSQ(push, NV09F, 0x0120, 0,
++							       0x0124, 1,
++							       0x0128, 2);
++				}
+ 				PUSH_NVSQ(push, NV_SW, 0x0000, drm->channel->nvsw.handle);
++			}
+ 		}
+ 
+ 		if (ret) {
+-			NV_ERROR(drm, "failed to allocate sw class, %d\n", ret);
++			NV_ERROR(drm, "failed to allocate sw or blit class, %d\n", ret);
+ 			nouveau_accel_gr_fini(drm);
+ 			return;
+ 		}
 -- 
-2.41.0
+2.39.2
 
 
 
