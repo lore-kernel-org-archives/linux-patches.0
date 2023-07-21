@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647E620F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:26:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD7AC433C8;
-	Fri, 21 Jul 2023 19:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3767D20F8F;
+	Fri, 21 Jul 2023 19:26:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0000C433C9;
+	Fri, 21 Jul 2023 19:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967606;
-	bh=REy10FehBq/L/PHVGuHrp/iA9tlOS2y107De3PNWjWc=;
+	s=korg; t=1689967609;
+	bh=yCtRCcKJvemSyJ7Qpgn3h+W1BSH1bLS7t//DEQ3eAmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qo+DjWholSFKX+6szIS6jvjHauVmJ/UR67DHUdsh2iY83s9C1+evJMOrjUAhvgtON
-	 v1oj+Njctkj5PB+X91B2ikP/b/g11THl7/jOHZOC4DTYEweibC8WkxmDF1pj6HY7Af
-	 HcFtEc6DlX1QYHe3vVcpLnYDRaX5TFHW//cIJwv8=
+	b=tBvFsCsZ34HS+D9KMDmthRPCtkpRRBLk6DSd87iNZdD5Mvg7PLLvwHEL3Pp3+MUBZ
+	 w0CoiDzF08qQjDedXDFqs9GzGBAU4P7mEqcmh5Z0KnNNa8t/dyP4bUH4pa0gcdJajz
+	 cZX4r2Hqp9CjLW+aW2a4qMdHCjD+QgdKS1FvZbC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Wang <sean.ns.wang@amd.com>,
-	Marc Rossi <Marc.Rossi@amd.com>,
-	Hamza Mahfooz <Hamza.Mahfooz@amd.com>,
-	"Tsung-hua (Ryan) Lin" <Tsung-hua.Lin@amd.com>,
-	Leo Li <sunpeng.li@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 221/223] Revert "drm/amd: Disable PSR-SU on Parade 0803 TCON"
-Date: Fri, 21 Jul 2023 18:07:54 +0200
-Message-ID: <20230721160530.291542370@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Alexey Kardashevskiy <aik@amd.com>,
+	Christoph Hellwig <hch@lst.de>,
+	iommu@lists.linux.dev,
+	Mike Rapoport <rppt@kernel.org>,
+	linux-mm@kvack.org
+Subject: [PATCH 6.1 222/223] swiotlb: mark swiotlb_memblock_alloc() as __init
+Date: Fri, 21 Jul 2023 18:07:55 +0200
+Message-ID: <20230721160530.333242277@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -39,36 +38,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit 1e66a17ce546eabad753178bbd4175cb52bafca8 upstream.
+commit 9b07d27d0fbb7f7441aa986859a0f53ec93a0335 upstream.
 
-This reverts commit 072030b1783056b5de8b0fac5303a5e9dbc6cfde.
-This is no longer necessary when using newer DMUB F/W.
+swiotlb_memblock_alloc() calls memblock_alloc(), which calls
+(__init) memblock_alloc_try_nid(). However, swiotlb_membloc_alloc()
+can be marked as __init since it is only called by swiotlb_init_remap(),
+which is already marked as __init. This prevents a modpost build
+warning/error:
 
-Cc: stable@vger.kernel.org
-Cc: Sean Wang <sean.ns.wang@amd.com>
-Cc: Marc Rossi <Marc.Rossi@amd.com>
-Cc: Hamza Mahfooz <Hamza.Mahfooz@amd.com>
-Cc: Tsung-hua (Ryan) Lin <Tsung-hua.Lin@amd.com>
-Reviewed-by: Leo Li <sunpeng.li@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+WARNING: modpost: vmlinux.o: section mismatch in reference: swiotlb_memblock_alloc (section: .text) -> memblock_alloc_try_nid (section: .init.text)
+WARNING: modpost: vmlinux.o: section mismatch in reference: swiotlb_memblock_alloc (section: .text) -> memblock_alloc_try_nid (section: .init.text)
+
+This fixes the build warning/error seen on ARM64, PPC64, S390, i386,
+and x86_64.
+
+Fixes: 8d58aa484920 ("swiotlb: reduce the swiotlb buffer size on allocation failure")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Alexey Kardashevskiy <aik@amd.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: iommu@lists.linux.dev
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: linux-mm@kvack.org
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/modules/power/power_helpers.c |    2 --
- 1 file changed, 2 deletions(-)
+ kernel/dma/swiotlb.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/modules/power/power_helpers.c
-+++ b/drivers/gpu/drm/amd/display/modules/power/power_helpers.c
-@@ -816,8 +816,6 @@ bool is_psr_su_specific_panel(struct dc_
- 				((dpcd_caps->sink_dev_id_str[1] == 0x08 && dpcd_caps->sink_dev_id_str[0] == 0x08) ||
- 				(dpcd_caps->sink_dev_id_str[1] == 0x08 && dpcd_caps->sink_dev_id_str[0] == 0x07)))
- 				isPSRSUSupported = false;
--			else if (dpcd_caps->sink_dev_id_str[1] == 0x08 && dpcd_caps->sink_dev_id_str[0] == 0x03)
--				isPSRSUSupported = false;
- 			else if (dpcd_caps->psr_info.force_psrsu_cap == 0x1)
- 				isPSRSUSupported = true;
- 		}
+--- a/kernel/dma/swiotlb.c
++++ b/kernel/dma/swiotlb.c
+@@ -324,7 +324,8 @@ static void swiotlb_init_io_tlb_mem(stru
+ 	return;
+ }
+ 
+-static void *swiotlb_memblock_alloc(unsigned long nslabs, unsigned int flags,
++static void __init *swiotlb_memblock_alloc(unsigned long nslabs,
++		unsigned int flags,
+ 		int (*remap)(void *tlb, unsigned long nslabs))
+ {
+ 	size_t bytes = PAGE_ALIGN(nslabs << IO_TLB_SHIFT);
 
 
