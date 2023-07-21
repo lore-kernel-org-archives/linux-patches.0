@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A49420F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:17:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF772C433C8;
-	Fri, 21 Jul 2023 19:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203A1200A9
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:17:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C57C433C7;
+	Fri, 21 Jul 2023 19:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967041;
-	bh=VCbQJPePoQt7iXxQ7RmNudRQG62FB1jkCHSvbVnZfXg=;
+	s=korg; t=1689967044;
+	bh=ESlclx3JYXnBNs2Xvw0JRc3lJedi38/dwFQKrt4Qfr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XHzAuG1jL+dLj2U8itX7WIFC6wXBKMUNsHt14rPUC89sbU5sU62w+jLrdJgzU7OaU
-	 qEeZ4dwCP1HGC9WDlxDqgxAtcrvJd/KbtxB9i3R3vBaehEho9mwlJrSfsdt2pwy3WR
-	 9HLZRyMERFDN7jAG99cvqcAA0U+wR4pXbnKzniTk=
+	b=LhfEg3vVPZ7uC+RpQD0HIhfIasuLicNsE/A15vnTYPdOLGBAQvBewJn1COP1v+M9Q
+	 Ql/WaaYiv+ORxFqthKfCQQfm/18aqx9BugEisZsMXu4wXka//V48YFwOWjHHeTYC1S
+	 zFd9ChPf1fMx5y7cOMkGTIU7+DeSA/sFgnUvCstE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 016/223] net/mlx5e: fix double free in mlx5e_destroy_flow_table
-Date: Fri, 21 Jul 2023 18:04:29 +0200
-Message-ID: <20230721160521.571596127@linuxfoundation.org>
+Subject: [PATCH 6.1 025/223] bpf: Fix max stack depth check for async callbacks
+Date: Fri, 21 Jul 2023 18:04:38 +0200
+Message-ID: <20230721160521.945603088@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -35,36 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit 884abe45a9014d0de2e6edb0630dfd64f23f1d1b ]
+[ Upstream commit 5415ccd50a8620c8cbaa32d6f18c946c453566f5 ]
 
-In function accel_fs_tcp_create_groups(), when the ft->g memory is
-successfully allocated but the 'in' memory fails to be allocated, the
-memory pointed to by ft->g is released once. And in function
-accel_fs_tcp_create_table, mlx5e_destroy_flow_table is called to release
-the memory pointed to by ft->g again. This will cause double free problem.
+The check_max_stack_depth pass happens after the verifier's symbolic
+execution, and attempts to walk the call graph of the BPF program,
+ensuring that the stack usage stays within bounds for all possible call
+chains. There are two cases to consider: bpf_pseudo_func and
+bpf_pseudo_call. In the former case, the callback pointer is loaded into
+a register, and is assumed that it is passed to some helper later which
+calls it (however there is no way to be sure), but the check remains
+conservative and accounts the stack usage anyway. For this particular
+case, asynchronous callbacks are skipped as they execute asynchronously
+when their corresponding event fires.
 
-Fixes: c062d52ac24c ("net/mlx5e: Receive flow steering framework for accelerated TCP flows")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+The case of bpf_pseudo_call is simpler and we know that the call is
+definitely made, hence the stack depth of the subprog is accounted for.
+
+However, the current check still skips an asynchronous callback even if
+a bpf_pseudo_call was made for it. This is erroneous, as it will miss
+accounting for the stack usage of the asynchronous callback, which can
+be used to breach the maximum stack depth limit.
+
+Fix this by only skipping asynchronous callbacks when the instruction is
+not a pseudo call to the subprog.
+
+Fixes: 7ddc80a476c2 ("bpf: Teach stack depth check about async callbacks.")
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20230705144730.235802-2-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/bpf/verifier.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c
-index d7c020f724013..06c47404996bb 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c
-@@ -190,6 +190,7 @@ static int accel_fs_tcp_create_groups(struct mlx5e_flow_table *ft,
- 	in = kvzalloc(inlen, GFP_KERNEL);
- 	if  (!in || !ft->g) {
- 		kfree(ft->g);
-+		ft->g = NULL;
- 		kvfree(in);
- 		return -ENOMEM;
- 	}
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 49c6b5e0855cd..8c3ededef3172 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -4357,8 +4357,9 @@ static int check_max_stack_depth(struct bpf_verifier_env *env)
+ 				verbose(env, "verifier bug. subprog has tail_call and async cb\n");
+ 				return -EFAULT;
+ 			}
+-			 /* async callbacks don't increase bpf prog stack size */
+-			continue;
++			/* async callbacks don't increase bpf prog stack size unless called directly */
++			if (!bpf_pseudo_call(insn + i))
++				continue;
+ 		}
+ 		i = next_insn;
+ 
 -- 
 2.39.2
 
