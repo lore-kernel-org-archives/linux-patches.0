@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99EC1F93D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:11:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856B6C433C8;
-	Fri, 21 Jul 2023 16:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C0E1F93D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:11:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24615C433C7;
+	Fri, 21 Jul 2023 16:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689955897;
-	bh=c3DsV54k+3PaNxj9GZ+uBLu8LsynM9IfjBZ16qG3qHY=;
+	s=korg; t=1689955900;
+	bh=azicUGBre4qZNswhllZo79IgZ8CE3tezHTdkpEYd+Z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZY2b2gXWOx6xX5VNMy5K/90Cjfgn6auh1lIMveZBeLsNAQhsKkCZL/+to0RnMMkiu
-	 v61si9lZjNKIy3NTvP3EV6ehVnKOXs3OJxofuDoxEaKPejldQQkY/RnT6FVF/wwg9y
-	 zpblsZ4VoXgUhAhEaFB0jOTFRiOHSDd5THogBNgQ=
+	b=R/joa9XxVsENSER67FTCUPgXFsyHB3xSyJnMEX0nUF0PgOqXcK2hMcUoVk7j3t2Wk
+	 jZWa+y58C6+1O2Yn/XPVaySDx6AA6o285RyzxGgZW2njM7SlDvget/5KFfwVdes97K
+	 x7r922OZrOMYLZDvDYatY5XX2c6sIWaqIo8UtyFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Armin Wolf <W_Armin@gmx.de>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 068/292] platform/x86: wmi: Break possible infinite loop when parsing GUID
-Date: Fri, 21 Jul 2023 18:02:57 +0200
-Message-ID: <20230721160531.711850645@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
+	Gerhard Engleder <gerhard@engleder-embedded.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Kurt Kanzenbach <kurt@linutronix.de>
+Subject: [PATCH 6.4 069/292] net/sched: taprio: replace tc_taprio_qopt_offload :: enable with a "cmd" enum
+Date: Fri, 21 Jul 2023 18:02:58 +0200
+Message-ID: <20230721160531.763920658@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -36,82 +39,387 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 028e6e204ace1f080cfeacd72c50397eb8ae8883 ]
+[ Upstream commit 2d800bc500fb3fb07a0fb42e2d0a1356fb9e1e8f ]
 
-The while-loop may break on one of the two conditions, either ID string
-is empty or GUID matches. The second one, may never be reached if the
-parsed string is not correct GUID. In such a case the loop will never
-advance to check the next ID.
+Inspired from struct flow_cls_offload :: cmd, in order for taprio to be
+able to report statistics (which is future work), it seems that we need
+to drill one step further with the ndo_setup_tc(TC_SETUP_QDISC_TAPRIO)
+multiplexing, and pass the command as part of the common portion of the
+muxed structure.
 
-Break possible infinite loop by factoring out guid_parse_and_compare()
-helper which may be moved to the generic header for everyone later on
-and preventing from similar mistake in the future.
+Since we already have an "enable" variable in tc_taprio_qopt_offload,
+refactor all drivers to check for "cmd" instead of "enable", and reject
+every other command except "replace" and "destroy" - to be future proof.
 
-Interestingly that firstly it appeared when WMI was turned into a bus
-driver, but later when duplicated GUIDs were checked, the while-loop
-has been replaced by for-loop and hence no mistake made again.
-
-Fixes: a48e23385fcf ("platform/x86: wmi: add context pointer field to struct wmi_device_id")
-Fixes: 844af950da94 ("platform/x86: wmi: Turn WMI into a bus driver")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230621151155.78279-1-andriy.shevchenko@linux.intel.com
-Tested-by: Armin Wolf <W_Armin@gmx.de>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com> # for lan966x
+Acked-by: Kurt Kanzenbach <kurt@linutronix.de> # hellcreek
+Reviewed-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+Reviewed-by: Gerhard Engleder <gerhard@engleder-embedded.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 8046063df887 ("igc: Rename qbv_enable to taprio_offload_enable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/wmi.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/net/dsa/hirschmann/hellcreek.c             | 14 +++++++++-----
+ drivers/net/dsa/ocelot/felix_vsc9959.c             |  4 +++-
+ drivers/net/dsa/sja1105/sja1105_tas.c              |  7 +++++--
+ drivers/net/ethernet/engleder/tsnep_selftests.c    | 12 ++++++------
+ drivers/net/ethernet/engleder/tsnep_tc.c           |  4 +++-
+ drivers/net/ethernet/freescale/enetc/enetc_qos.c   |  6 +++++-
+ drivers/net/ethernet/intel/igc/igc_main.c          | 13 +++++++++++--
+ .../net/ethernet/microchip/lan966x/lan966x_tc.c    | 10 ++++++++--
+ drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c    |  7 +++++--
+ drivers/net/ethernet/ti/am65-cpsw-qos.c            | 11 ++++++++---
+ include/net/pkt_sched.h                            |  7 ++++++-
+ net/sched/sch_taprio.c                             |  4 ++--
+ 12 files changed, 71 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/platform/x86/wmi.c b/drivers/platform/x86/wmi.c
-index d81319a502efc..e1a3bfeeed529 100644
---- a/drivers/platform/x86/wmi.c
-+++ b/drivers/platform/x86/wmi.c
-@@ -136,6 +136,16 @@ static acpi_status find_guid(const char *guid_string, struct wmi_block **out)
- 	return AE_NOT_FOUND;
+diff --git a/drivers/net/dsa/hirschmann/hellcreek.c b/drivers/net/dsa/hirschmann/hellcreek.c
+index 595a548bb0a80..af50001ccdd4e 100644
+--- a/drivers/net/dsa/hirschmann/hellcreek.c
++++ b/drivers/net/dsa/hirschmann/hellcreek.c
+@@ -1885,13 +1885,17 @@ static int hellcreek_port_setup_tc(struct dsa_switch *ds, int port,
+ 	case TC_SETUP_QDISC_TAPRIO: {
+ 		struct tc_taprio_qopt_offload *taprio = type_data;
+ 
+-		if (!hellcreek_validate_schedule(hellcreek, taprio))
+-			return -EOPNOTSUPP;
++		switch (taprio->cmd) {
++		case TAPRIO_CMD_REPLACE:
++			if (!hellcreek_validate_schedule(hellcreek, taprio))
++				return -EOPNOTSUPP;
+ 
+-		if (taprio->enable)
+ 			return hellcreek_port_set_schedule(ds, port, taprio);
+-
+-		return hellcreek_port_del_schedule(ds, port);
++		case TAPRIO_CMD_DESTROY:
++			return hellcreek_port_del_schedule(ds, port);
++		default:
++			return -EOPNOTSUPP;
++		}
+ 	}
+ 	default:
+ 		return -EOPNOTSUPP;
+diff --git a/drivers/net/dsa/ocelot/felix_vsc9959.c b/drivers/net/dsa/ocelot/felix_vsc9959.c
+index bd11f9fb95e54..772f8b817390b 100644
+--- a/drivers/net/dsa/ocelot/felix_vsc9959.c
++++ b/drivers/net/dsa/ocelot/felix_vsc9959.c
+@@ -1436,7 +1436,7 @@ static int vsc9959_qos_port_tas_set(struct ocelot *ocelot, int port,
+ 
+ 	mutex_lock(&ocelot->tas_lock);
+ 
+-	if (!taprio->enable) {
++	if (taprio->cmd == TAPRIO_CMD_DESTROY) {
+ 		ocelot_port_mqprio(ocelot, port, &taprio->mqprio);
+ 		ocelot_rmw_rix(ocelot, 0, QSYS_TAG_CONFIG_ENABLE,
+ 			       QSYS_TAG_CONFIG, port);
+@@ -1448,6 +1448,8 @@ static int vsc9959_qos_port_tas_set(struct ocelot *ocelot, int port,
+ 
+ 		mutex_unlock(&ocelot->tas_lock);
+ 		return 0;
++	} else if (taprio->cmd != TAPRIO_CMD_REPLACE) {
++		return -EOPNOTSUPP;
+ 	}
+ 
+ 	ret = ocelot_port_mqprio(ocelot, port, &taprio->mqprio);
+diff --git a/drivers/net/dsa/sja1105/sja1105_tas.c b/drivers/net/dsa/sja1105/sja1105_tas.c
+index e6153848a9509..d7818710bc028 100644
+--- a/drivers/net/dsa/sja1105/sja1105_tas.c
++++ b/drivers/net/dsa/sja1105/sja1105_tas.c
+@@ -516,10 +516,11 @@ int sja1105_setup_tc_taprio(struct dsa_switch *ds, int port,
+ 	/* Can't change an already configured port (must delete qdisc first).
+ 	 * Can't delete the qdisc from an unconfigured port.
+ 	 */
+-	if (!!tas_data->offload[port] == admin->enable)
++	if ((!!tas_data->offload[port] && admin->cmd == TAPRIO_CMD_REPLACE) ||
++	    (!tas_data->offload[port] && admin->cmd == TAPRIO_CMD_DESTROY))
+ 		return -EINVAL;
+ 
+-	if (!admin->enable) {
++	if (admin->cmd == TAPRIO_CMD_DESTROY) {
+ 		taprio_offload_free(tas_data->offload[port]);
+ 		tas_data->offload[port] = NULL;
+ 
+@@ -528,6 +529,8 @@ int sja1105_setup_tc_taprio(struct dsa_switch *ds, int port,
+ 			return rc;
+ 
+ 		return sja1105_static_config_reload(priv, SJA1105_SCHEDULING);
++	} else if (admin->cmd != TAPRIO_CMD_REPLACE) {
++		return -EOPNOTSUPP;
+ 	}
+ 
+ 	/* The cycle time extension is the amount of time the last cycle from
+diff --git a/drivers/net/ethernet/engleder/tsnep_selftests.c b/drivers/net/ethernet/engleder/tsnep_selftests.c
+index 1581d6b222320..8a9145f93147c 100644
+--- a/drivers/net/ethernet/engleder/tsnep_selftests.c
++++ b/drivers/net/ethernet/engleder/tsnep_selftests.c
+@@ -329,7 +329,7 @@ static bool disable_taprio(struct tsnep_adapter *adapter)
+ 	int retval;
+ 
+ 	memset(&qopt, 0, sizeof(qopt));
+-	qopt.enable = 0;
++	qopt.cmd = TAPRIO_CMD_DESTROY;
+ 	retval = tsnep_tc_setup(adapter->netdev, TC_SETUP_QDISC_TAPRIO, &qopt);
+ 	if (retval)
+ 		return false;
+@@ -360,7 +360,7 @@ static bool tsnep_test_taprio(struct tsnep_adapter *adapter)
+ 	for (i = 0; i < 255; i++)
+ 		qopt->entries[i].command = TC_TAPRIO_CMD_SET_GATES;
+ 
+-	qopt->enable = 1;
++	qopt->cmd = TAPRIO_CMD_REPLACE;
+ 	qopt->base_time = ktime_set(0, 0);
+ 	qopt->cycle_time = 1500000;
+ 	qopt->cycle_time_extension = 0;
+@@ -382,7 +382,7 @@ static bool tsnep_test_taprio(struct tsnep_adapter *adapter)
+ 	if (!run_taprio(adapter, qopt, 100))
+ 		goto failed;
+ 
+-	qopt->enable = 1;
++	qopt->cmd = TAPRIO_CMD_REPLACE;
+ 	qopt->base_time = ktime_set(0, 0);
+ 	qopt->cycle_time = 411854;
+ 	qopt->cycle_time_extension = 0;
+@@ -406,7 +406,7 @@ static bool tsnep_test_taprio(struct tsnep_adapter *adapter)
+ 	if (!run_taprio(adapter, qopt, 100))
+ 		goto failed;
+ 
+-	qopt->enable = 1;
++	qopt->cmd = TAPRIO_CMD_REPLACE;
+ 	qopt->base_time = ktime_set(0, 0);
+ 	delay_base_time(adapter, qopt, 12);
+ 	qopt->cycle_time = 125000;
+@@ -457,7 +457,7 @@ static bool tsnep_test_taprio_change(struct tsnep_adapter *adapter)
+ 	for (i = 0; i < 255; i++)
+ 		qopt->entries[i].command = TC_TAPRIO_CMD_SET_GATES;
+ 
+-	qopt->enable = 1;
++	qopt->cmd = TAPRIO_CMD_REPLACE;
+ 	qopt->base_time = ktime_set(0, 0);
+ 	qopt->cycle_time = 100000;
+ 	qopt->cycle_time_extension = 0;
+@@ -610,7 +610,7 @@ static bool tsnep_test_taprio_extension(struct tsnep_adapter *adapter)
+ 	for (i = 0; i < 255; i++)
+ 		qopt->entries[i].command = TC_TAPRIO_CMD_SET_GATES;
+ 
+-	qopt->enable = 1;
++	qopt->cmd = TAPRIO_CMD_REPLACE;
+ 	qopt->base_time = ktime_set(0, 0);
+ 	qopt->cycle_time = 100000;
+ 	qopt->cycle_time_extension = 50000;
+diff --git a/drivers/net/ethernet/engleder/tsnep_tc.c b/drivers/net/ethernet/engleder/tsnep_tc.c
+index d083e6684f120..745b191a55402 100644
+--- a/drivers/net/ethernet/engleder/tsnep_tc.c
++++ b/drivers/net/ethernet/engleder/tsnep_tc.c
+@@ -325,7 +325,7 @@ static int tsnep_taprio(struct tsnep_adapter *adapter,
+ 	if (!adapter->gate_control)
+ 		return -EOPNOTSUPP;
+ 
+-	if (!qopt->enable) {
++	if (qopt->cmd == TAPRIO_CMD_DESTROY) {
+ 		/* disable gate control if active */
+ 		mutex_lock(&adapter->gate_control_lock);
+ 
+@@ -337,6 +337,8 @@ static int tsnep_taprio(struct tsnep_adapter *adapter,
+ 		mutex_unlock(&adapter->gate_control_lock);
+ 
+ 		return 0;
++	} else if (qopt->cmd != TAPRIO_CMD_REPLACE) {
++		return -EOPNOTSUPP;
+ 	}
+ 
+ 	retval = tsnep_validate_gcl(qopt);
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_qos.c b/drivers/net/ethernet/freescale/enetc/enetc_qos.c
+index 126007ab70f61..dfec50106106f 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_qos.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_qos.c
+@@ -65,7 +65,7 @@ static int enetc_setup_taprio(struct net_device *ndev,
+ 	gcl_len = admin_conf->num_entries;
+ 
+ 	tge = enetc_rd(hw, ENETC_PTGCR);
+-	if (!admin_conf->enable) {
++	if (admin_conf->cmd == TAPRIO_CMD_DESTROY) {
+ 		enetc_wr(hw, ENETC_PTGCR, tge & ~ENETC_PTGCR_TGE);
+ 		enetc_reset_ptcmsdur(hw);
+ 
+@@ -138,6 +138,10 @@ int enetc_setup_tc_taprio(struct net_device *ndev, void *type_data)
+ 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
+ 	int err, i;
+ 
++	if (taprio->cmd != TAPRIO_CMD_REPLACE &&
++	    taprio->cmd != TAPRIO_CMD_DESTROY)
++		return -EOPNOTSUPP;
++
+ 	/* TSD and Qbv are mutually exclusive in hardware */
+ 	for (i = 0; i < priv->num_tx_rings; i++)
+ 		if (priv->tx_ring[i]->tsd_enable)
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index e7bd2c60ee383..ae986e44a4718 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -6117,9 +6117,18 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
+ 	size_t n;
+ 	int i;
+ 
+-	adapter->qbv_enable = qopt->enable;
++	switch (qopt->cmd) {
++	case TAPRIO_CMD_REPLACE:
++		adapter->qbv_enable = true;
++		break;
++	case TAPRIO_CMD_DESTROY:
++		adapter->qbv_enable = false;
++		break;
++	default:
++		return -EOPNOTSUPP;
++	}
+ 
+-	if (!qopt->enable)
++	if (!adapter->qbv_enable)
+ 		return igc_tsn_clear_schedule(adapter);
+ 
+ 	if (qopt->base_time < 0)
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_tc.c b/drivers/net/ethernet/microchip/lan966x/lan966x_tc.c
+index cf0cc7562d042..ee652f2d23595 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_tc.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_tc.c
+@@ -21,8 +21,14 @@ static int lan966x_tc_setup_qdisc_mqprio(struct lan966x_port *port,
+ static int lan966x_tc_setup_qdisc_taprio(struct lan966x_port *port,
+ 					 struct tc_taprio_qopt_offload *taprio)
+ {
+-	return taprio->enable ? lan966x_taprio_add(port, taprio) :
+-				lan966x_taprio_del(port);
++	switch (taprio->cmd) {
++	case TAPRIO_CMD_REPLACE:
++		return lan966x_taprio_add(port, taprio);
++	case TAPRIO_CMD_DESTROY:
++		return lan966x_taprio_del(port);
++	default:
++		return -EOPNOTSUPP;
++	}
  }
  
-+static bool guid_parse_and_compare(const char *string, const guid_t *guid)
-+{
-+	guid_t guid_input;
-+
-+	if (guid_parse(string, &guid_input))
-+		return false;
-+
-+	return guid_equal(&guid_input, guid);
-+}
-+
- static const void *find_guid_context(struct wmi_block *wblock,
- 				     struct wmi_driver *wdriver)
- {
-@@ -146,11 +156,7 @@ static const void *find_guid_context(struct wmi_block *wblock,
- 		return NULL;
- 
- 	while (*id->guid_string) {
--		guid_t guid_input;
--
--		if (guid_parse(id->guid_string, &guid_input))
--			continue;
--		if (guid_equal(&wblock->gblock.guid, &guid_input))
-+		if (guid_parse_and_compare(id->guid_string, &wblock->gblock.guid))
- 			return id->context;
- 		id++;
+ static int lan966x_tc_setup_qdisc_tbf(struct lan966x_port *port,
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+index 9d55226479b4a..ac41ef4cbd2f0 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+@@ -966,8 +966,11 @@ static int tc_setup_taprio(struct stmmac_priv *priv,
+ 		return -EOPNOTSUPP;
  	}
-@@ -827,11 +833,7 @@ static int wmi_dev_match(struct device *dev, struct device_driver *driver)
- 		return 0;
  
- 	while (*id->guid_string) {
--		guid_t driver_guid;
--
--		if (WARN_ON(guid_parse(id->guid_string, &driver_guid)))
--			continue;
--		if (guid_equal(&driver_guid, &wblock->gblock.guid))
-+		if (guid_parse_and_compare(id->guid_string, &wblock->gblock.guid))
- 			return 1;
+-	if (!qopt->enable)
++	if (qopt->cmd == TAPRIO_CMD_DESTROY)
+ 		goto disable;
++	else if (qopt->cmd != TAPRIO_CMD_REPLACE)
++		return -EOPNOTSUPP;
++
+ 	if (qopt->num_entries >= dep)
+ 		return -EINVAL;
+ 	if (!qopt->cycle_time)
+@@ -988,7 +991,7 @@ static int tc_setup_taprio(struct stmmac_priv *priv,
  
- 		id++;
+ 	mutex_lock(&priv->plat->est->lock);
+ 	priv->plat->est->gcl_size = size;
+-	priv->plat->est->enable = qopt->enable;
++	priv->plat->est->enable = qopt->cmd == TAPRIO_CMD_REPLACE;
+ 	mutex_unlock(&priv->plat->est->lock);
+ 
+ 	for (i = 0; i < size; i++) {
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-qos.c b/drivers/net/ethernet/ti/am65-cpsw-qos.c
+index 3a908db6e5b22..eced87fa261c9 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-qos.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-qos.c
+@@ -450,7 +450,7 @@ static int am65_cpsw_configure_taprio(struct net_device *ndev,
+ 
+ 	am65_cpsw_est_update_state(ndev);
+ 
+-	if (!est_new->taprio.enable) {
++	if (est_new->taprio.cmd == TAPRIO_CMD_DESTROY) {
+ 		am65_cpsw_stop_est(ndev);
+ 		return ret;
+ 	}
+@@ -476,7 +476,7 @@ static int am65_cpsw_configure_taprio(struct net_device *ndev,
+ 	am65_cpsw_est_set_sched_list(ndev, est_new);
+ 	am65_cpsw_port_est_assign_buf_num(ndev, est_new->buf);
+ 
+-	am65_cpsw_est_set(ndev, est_new->taprio.enable);
++	am65_cpsw_est_set(ndev, est_new->taprio.cmd == TAPRIO_CMD_REPLACE);
+ 
+ 	if (tact == TACT_PROG) {
+ 		ret = am65_cpsw_timer_set(ndev, est_new);
+@@ -520,7 +520,7 @@ static int am65_cpsw_set_taprio(struct net_device *ndev, void *type_data)
+ 	am65_cpsw_cp_taprio(taprio, &est_new->taprio);
+ 	ret = am65_cpsw_configure_taprio(ndev, est_new);
+ 	if (!ret) {
+-		if (taprio->enable) {
++		if (taprio->cmd == TAPRIO_CMD_REPLACE) {
+ 			devm_kfree(&ndev->dev, port->qos.est_admin);
+ 
+ 			port->qos.est_admin = est_new;
+@@ -564,8 +564,13 @@ static void am65_cpsw_est_link_up(struct net_device *ndev, int link_speed)
+ static int am65_cpsw_setup_taprio(struct net_device *ndev, void *type_data)
+ {
+ 	struct am65_cpsw_port *port = am65_ndev_to_port(ndev);
++	struct tc_taprio_qopt_offload *taprio = type_data;
+ 	struct am65_cpsw_common *common = port->common;
+ 
++	if (taprio->cmd != TAPRIO_CMD_REPLACE &&
++	    taprio->cmd != TAPRIO_CMD_DESTROY)
++		return -EOPNOTSUPP;
++
+ 	if (!IS_ENABLED(CONFIG_TI_AM65_CPSW_TAS))
+ 		return -ENODEV;
+ 
+diff --git a/include/net/pkt_sched.h b/include/net/pkt_sched.h
+index 5722931d83d43..7dba1c3a7b801 100644
+--- a/include/net/pkt_sched.h
++++ b/include/net/pkt_sched.h
+@@ -187,6 +187,11 @@ struct tc_taprio_caps {
+ 	bool broken_mqprio:1;
+ };
+ 
++enum tc_taprio_qopt_cmd {
++	TAPRIO_CMD_REPLACE,
++	TAPRIO_CMD_DESTROY,
++};
++
+ struct tc_taprio_sched_entry {
+ 	u8 command; /* TC_TAPRIO_CMD_* */
+ 
+@@ -198,7 +203,7 @@ struct tc_taprio_sched_entry {
+ struct tc_taprio_qopt_offload {
+ 	struct tc_mqprio_qopt_offload mqprio;
+ 	struct netlink_ext_ack *extack;
+-	u8 enable;
++	enum tc_taprio_qopt_cmd cmd;
+ 	ktime_t base_time;
+ 	u64 cycle_time;
+ 	u64 cycle_time_extension;
+diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
+index cf0e61ed92253..4caf80ddc6721 100644
+--- a/net/sched/sch_taprio.c
++++ b/net/sched/sch_taprio.c
+@@ -1527,7 +1527,7 @@ static int taprio_enable_offload(struct net_device *dev,
+ 			       "Not enough memory for enabling offload mode");
+ 		return -ENOMEM;
+ 	}
+-	offload->enable = 1;
++	offload->cmd = TAPRIO_CMD_REPLACE;
+ 	offload->extack = extack;
+ 	mqprio_qopt_reconstruct(dev, &offload->mqprio.qopt);
+ 	offload->mqprio.extack = extack;
+@@ -1575,7 +1575,7 @@ static int taprio_disable_offload(struct net_device *dev,
+ 			       "Not enough memory to disable offload mode");
+ 		return -ENOMEM;
+ 	}
+-	offload->enable = 0;
++	offload->cmd = TAPRIO_CMD_DESTROY;
+ 
+ 	err = ops->ndo_setup_tc(dev, TC_SETUP_QDISC_TAPRIO, offload);
+ 	if (err < 0) {
 -- 
 2.39.2
 
