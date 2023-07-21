@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C59120F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F392C433C9;
-	Fri, 21 Jul 2023 19:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0056120F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76AE2C433C8;
+	Fri, 21 Jul 2023 19:09:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966579;
-	bh=5B6b6aB6G/l3jHrt9mLMJ0MUvdC4KXa4vv2VfsfBUls=;
+	s=korg; t=1689966581;
+	bh=HFJkboNVScMIer6GJwhPiugsKjD1S612PvTeEmdS/YM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NaTWresIh1yffoifX9q1GhIKyqlBWLFst2E21UNKgXx2lEoHN9Zr9UR2hH9JZagja
-	 nC1sRSR7PeuEdzxzPH0o8qAyaXCsx+t92BUWbQ9l546qOOzgCisc1SXv4MGpx8L6eA
-	 OtH65Mob2vlCKbI8RYj/kBFgYjNfeQb0XtRvfX38=
+	b=s2gVMGz0MGumm/tkS+vdbJD/dwrQF9Sl8/jNgJCZlyL1GhjDpj2ZdTVfP6VGBOD/y
+	 0umPCKYluYITH/nFgsK6ivB66MS/HHoJsNvxe0nyx7lNGibu1foVnzcFpYLoUNYSD5
+	 NHuQzAJj8nDyk+gPL2b9IpeZ51NiPfP7oVyqu5vE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 5.15 394/532] ksmbd: validate session id and tree id in the compound request
-Date: Fri, 21 Jul 2023 18:04:58 +0200
-Message-ID: <20230721160635.845338613@linuxfoundation.org>
+	Fabio Estevam <festevam@denx.de>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 395/532] drm/panel: simple: Add connector_type for innolux_at043tn24
+Date: Fri, 21 Jul 2023 18:04:59 +0200
+Message-ID: <20230721160635.899665170@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,156 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Fabio Estevam <festevam@denx.de>
 
-commit 5005bcb4219156f1bf7587b185080ec1da08518e upstream.
+[ Upstream commit 2c56a751845ddfd3078ebe79981aaaa182629163 ]
 
-This patch validate session id and tree id in compound request.
-If first operation in the compound is SMB2 ECHO request, ksmbd bypass
-session and tree validation. So work->sess and work->tcon could be NULL.
-If secound request in the compound access work->sess or tcon, It cause
-NULL pointer dereferecing error.
+The innolux at043tn24 display is a parallel LCD. Pass the 'connector_type'
+information to avoid the following warning:
 
-Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-21165
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+panel-simple panel: Specify missing connector_type
+
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Fixes: 41bcceb4de9c ("drm/panel: simple: Add support for Innolux AT043TN24")
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230620112202.654981-1-festevam@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/server.c  |   33 ++++++++++++++++++++-------------
- fs/ksmbd/smb2pdu.c |   44 +++++++++++++++++++++++++++++++++++++++-----
- 2 files changed, 59 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/panel/panel-simple.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ksmbd/server.c
-+++ b/fs/ksmbd/server.c
-@@ -184,24 +184,31 @@ static void __handle_ksmbd_work(struct k
- 		goto send;
- 	}
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 2f85266cdb2e3..2b628b6be08f3 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -2469,6 +2469,7 @@ static const struct panel_desc innolux_at043tn24 = {
+ 		.height = 54,
+ 	},
+ 	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
++	.connector_type = DRM_MODE_CONNECTOR_DPI,
+ 	.bus_flags = DRM_BUS_FLAG_DE_HIGH | DRM_BUS_FLAG_PIXDATA_DRIVE_POSEDGE,
+ };
  
--	if (conn->ops->check_user_session) {
--		rc = conn->ops->check_user_session(work);
--		if (rc < 0) {
--			command = conn->ops->get_cmd_val(work);
--			conn->ops->set_rsp_status(work,
--					STATUS_USER_SESSION_DELETED);
--			goto send;
--		} else if (rc > 0) {
--			rc = conn->ops->get_ksmbd_tcon(work);
-+	do {
-+		if (conn->ops->check_user_session) {
-+			rc = conn->ops->check_user_session(work);
- 			if (rc < 0) {
--				conn->ops->set_rsp_status(work,
--					STATUS_NETWORK_NAME_DELETED);
-+				if (rc == -EINVAL)
-+					conn->ops->set_rsp_status(work,
-+						STATUS_INVALID_PARAMETER);
-+				else
-+					conn->ops->set_rsp_status(work,
-+						STATUS_USER_SESSION_DELETED);
- 				goto send;
-+			} else if (rc > 0) {
-+				rc = conn->ops->get_ksmbd_tcon(work);
-+				if (rc < 0) {
-+					if (rc == -EINVAL)
-+						conn->ops->set_rsp_status(work,
-+							STATUS_INVALID_PARAMETER);
-+					else
-+						conn->ops->set_rsp_status(work,
-+							STATUS_NETWORK_NAME_DELETED);
-+					goto send;
-+				}
- 			}
- 		}
--	}
- 
--	do {
- 		rc = __process_request(work, conn, &command);
- 		if (rc == SERVER_HANDLER_ABORT)
- 			break;
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -97,7 +97,6 @@ int smb2_get_ksmbd_tcon(struct ksmbd_wor
- 	struct smb2_hdr *req_hdr = work->request_buf;
- 	int tree_id;
- 
--	work->tcon = NULL;
- 	if (work->conn->ops->get_cmd_val(work) == SMB2_TREE_CONNECT_HE ||
- 	    work->conn->ops->get_cmd_val(work) ==  SMB2_CANCEL_HE ||
- 	    work->conn->ops->get_cmd_val(work) ==  SMB2_LOGOFF_HE) {
-@@ -111,10 +110,28 @@ int smb2_get_ksmbd_tcon(struct ksmbd_wor
- 	}
- 
- 	tree_id = le32_to_cpu(req_hdr->Id.SyncId.TreeId);
-+
-+	/*
-+	 * If request is not the first in Compound request,
-+	 * Just validate tree id in header with work->tcon->id.
-+	 */
-+	if (work->next_smb2_rcv_hdr_off) {
-+		if (!work->tcon) {
-+			pr_err("The first operation in the compound does not have tcon\n");
-+			return -EINVAL;
-+		}
-+		if (work->tcon->id != tree_id) {
-+			pr_err("tree id(%u) is different with id(%u) in first operation\n",
-+					tree_id, work->tcon->id);
-+			return -EINVAL;
-+		}
-+		return 1;
-+	}
-+
- 	work->tcon = ksmbd_tree_conn_lookup(work->sess, tree_id);
- 	if (!work->tcon) {
- 		pr_err("Invalid tid %d\n", tree_id);
--		return -EINVAL;
-+		return -ENOENT;
- 	}
- 
- 	return 1;
-@@ -569,7 +586,6 @@ int smb2_check_user_session(struct ksmbd
- 	unsigned int cmd = conn->ops->get_cmd_val(work);
- 	unsigned long long sess_id;
- 
--	work->sess = NULL;
- 	/*
- 	 * SMB2_ECHO, SMB2_NEGOTIATE, SMB2_SESSION_SETUP command do not
- 	 * require a session id, so no need to validate user session's for
-@@ -580,15 +596,33 @@ int smb2_check_user_session(struct ksmbd
- 		return 0;
- 
- 	if (!ksmbd_conn_good(work))
--		return -EINVAL;
-+		return -EIO;
- 
- 	sess_id = le64_to_cpu(req_hdr->SessionId);
-+
-+	/*
-+	 * If request is not the first in Compound request,
-+	 * Just validate session id in header with work->sess->id.
-+	 */
-+	if (work->next_smb2_rcv_hdr_off) {
-+		if (!work->sess) {
-+			pr_err("The first operation in the compound does not have sess\n");
-+			return -EINVAL;
-+		}
-+		if (work->sess->id != sess_id) {
-+			pr_err("session id(%llu) is different with the first operation(%lld)\n",
-+					sess_id, work->sess->id);
-+			return -EINVAL;
-+		}
-+		return 1;
-+	}
-+
- 	/* Check for validity of user session */
- 	work->sess = ksmbd_session_lookup_all(conn, sess_id);
- 	if (work->sess)
- 		return 1;
- 	ksmbd_debug(SMB, "Invalid user session, Uid %llu\n", sess_id);
--	return -EINVAL;
-+	return -ENOENT;
- }
- 
- static void destroy_previous_session(struct ksmbd_conn *conn,
+-- 
+2.39.2
+
 
 
