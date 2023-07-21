@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCB420F98
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:14:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C5AC433C8;
-	Fri, 21 Jul 2023 19:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E372F20F98
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:14:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659B0C433C8;
+	Fri, 21 Jul 2023 19:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966844;
-	bh=7AAy/zsIGWhDsGyaCGsrrIAYvAvWdZ43Qi0IoHN7vwk=;
+	s=korg; t=1689966846;
+	bh=94t/qQ7UT9yXpD/OkKqaGHZP2nKFey1wTUy2/hs81y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aILBafmN31q2VB3RcCxCnCFG2NXr2qhHQYOsqRTfowxyxZHoTCyydEKn5iNpOeKoE
-	 ACZnOneEcQmy+/mm8TqJZESqtoi97IxaWk6kqiTag+UWd7WLc65KKZ5OwZfDLTyhrH
-	 IFVO/NFiax/Y+zpVdvEUodA89ph7nFRt4qOM42/U=
+	b=VQowccS5r91mqeLRm18DMwJGuV0ZuIZE198UMWjZ74q7b1LMh5LLuveTt/mKYMMX0
+	 YSUR3V9NuOs10WlZsNQH8G1FF9JsEwk8VHI5JfANlW4gQ68tJWIZjlCkV9M2L0+l7u
+	 BkyFM4dJcyEi4uGY4XMKxs61cp6H27vmj3VwD28A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"kernelci.org bot" <bot@kernelci.org>,
-	Brian Norris <briannorris@chromium.org>,
-	Sean Paul <seanpaul@chromium.org>
-Subject: [PATCH 5.15 488/532] drm/rockchip: vop: Leave vblank enabled in self-refresh
-Date: Fri, 21 Jul 2023 18:06:32 +0200
-Message-ID: <20230721160640.993296184@linuxfoundation.org>
+	Ondrej Zary <linux@zary.sk>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 5.15 471/532] PCI/PM: Avoid putting EloPOS E2/S2/H2 PCIe Ports in D3cold
+Date: Fri, 21 Jul 2023 18:06:15 +0200
+Message-ID: <20230721160640.071641472@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,94 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Norris <briannorris@chromium.org>
+From: Ondrej Zary <linux@zary.sk>
 
-commit 2bdba9d4a3baa758c2ca7f5b37b35c7b3391dc42 upstream.
+commit 9e30fd26f43b89cb6b4e850a86caa2e50dedb454 upstream.
 
-If we disable vblank when entering self-refresh, vblank APIs (like
-DRM_IOCTL_WAIT_VBLANK) no longer work. But user space is not aware when
-we enter self-refresh, so this appears to be an API violation -- that
-DRM_IOCTL_WAIT_VBLANK fails with EINVAL whenever the display is idle and
-enters self-refresh.
+The quirk for Elo i2 introduced in commit 92597f97a40b ("PCI/PM: Avoid
+putting Elo i2 PCIe Ports in D3cold") is also needed by EloPOS E2/S2/H2
+which uses the same Continental Z2 board.
 
-The downstream driver used by many of these systems never used to
-disable vblank for PSR, and in fact, even upstream, we didn't do that
-until radically redesigning the state machine in commit 6c836d965bad
-("drm/rockchip: Use the helpers for PSR").
+Change the quirk to match the board instead of system.
 
-Thus, it seems like a reasonable API fix to simply restore that
-behavior, and leave vblank enabled.
-
-Note that this appears to potentially unbalance the
-drm_crtc_vblank_{off,on}() calls in some cases, but:
-(a) drm_crtc_vblank_on() documents this as OK and
-(b) if I do the naive balancing, I find state machine issues such that
-    we're not in sync properly; so it's easier to take advantage of (a).
-
-This issue was exposed by IGT's kms_vblank tests, and reported by
-KernelCI. The bug has been around a while (longer than KernelCI
-noticed), but was only exposed once self-refresh was bugfixed more
-recently, and so KernelCI could properly test it. Some other notes in:
-
-  https://lore.kernel.org/dri-devel/Y6OCg9BPnJvimQLT@google.com/
-  Re: renesas/master bisection: igt-kms-rockchip.kms_vblank.pipe-A-wait-forked on rk3399-gru-kevin
-
-== Backporting notes: ==
-
-Marking as 'Fixes' commit 6c836d965bad ("drm/rockchip: Use the helpers
-for PSR"), but it probably depends on commit bed030a49f3e
-("drm/rockchip: Don't fully disable vop on self refresh") as well.
-
-We also need the previous patch ("drm/atomic: Allow vblank-enabled +
-self-refresh "disable""), of course.
-
-v3:
- * no update
-
-v2:
- * skip unnecessary lock/unlock
-
-Fixes: 6c836d965bad ("drm/rockchip: Use the helpers for PSR")
-Cc: <stable@vger.kernel.org>
-Reported-by: "kernelci.org bot" <bot@kernelci.org>
-Link: https://lore.kernel.org/dri-devel/Y5itf0+yNIQa6fU4@sirena.org.uk/
-Signed-off-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Sean Paul <seanpaul@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230109171809.v3.2.Ic07cba4ab9a7bd3618a9e4258b8f92ea7d10ae5a@changeid
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=215715
+Link: https://lore.kernel.org/r/20230614074253.22318-1-linux@zary.sk
+Signed-off-by: Ondrej Zary <linux@zary.sk>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pci/pci.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-@@ -703,13 +703,13 @@ static void vop_crtc_atomic_disable(stru
- 	if (crtc->state->self_refresh_active)
- 		rockchip_drm_set_win_enabled(crtc, false);
- 
-+	if (crtc->state->self_refresh_active)
-+		goto out;
-+
- 	mutex_lock(&vop->vop_lock);
- 
- 	drm_crtc_vblank_off(crtc);
- 
--	if (crtc->state->self_refresh_active)
--		goto out;
--
- 	/*
- 	 * Vop standby will take effect at end of current frame,
- 	 * if dsp hold valid irq happen, it means standby complete.
-@@ -741,9 +741,9 @@ static void vop_crtc_atomic_disable(stru
- 	vop_core_clks_disable(vop);
- 	pm_runtime_put(vop->dev);
- 
--out:
- 	mutex_unlock(&vop->vop_lock);
- 
-+out:
- 	if (crtc->state->event && !crtc->state->active) {
- 		spin_lock_irq(&crtc->dev->event_lock);
- 		drm_crtc_send_vblank_event(crtc, crtc->state->event);
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -2886,13 +2886,13 @@ static const struct dmi_system_id bridge
+ 	{
+ 		/*
+ 		 * Downstream device is not accessible after putting a root port
+-		 * into D3cold and back into D0 on Elo i2.
++		 * into D3cold and back into D0 on Elo Continental Z2 board
+ 		 */
+-		.ident = "Elo i2",
++		.ident = "Elo Continental Z2",
+ 		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "Elo Touch Solutions"),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "Elo i2"),
+-			DMI_MATCH(DMI_PRODUCT_VERSION, "RevB"),
++			DMI_MATCH(DMI_BOARD_VENDOR, "Elo Touch Solutions"),
++			DMI_MATCH(DMI_BOARD_NAME, "Geminilake"),
++			DMI_MATCH(DMI_BOARD_VERSION, "Continental Z2"),
+ 		},
+ 	},
+ #endif
 
 
