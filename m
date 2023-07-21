@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9821F95E
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:13:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37963C43395;
-	Fri, 21 Jul 2023 16:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E9C1FB40
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:13:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52974C433C9;
+	Fri, 21 Jul 2023 16:13:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956001;
-	bh=0tycj6EYHAPttNRdVGvxskym1z71zYcOh6eVBFL0ffw=;
+	s=korg; t=1689956004;
+	bh=fcJKqd2+Lm0CxymUN4dde9zVyvViQfmRIZmeB3lW6G8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EyC5E81TrCxmdzZ7uJRqEB/TTOpCqesGAA/kHkq0irKttjO78NlPCjoM/GQ4mRazz
-	 mHjEaU5X7HpVgs5NjnahIYx3TMyAlEz4X8DBOmQNzE1kJwTB2OWqS/Z+MY6dUff03t
-	 rpCl+FN2MfJzdwr058fk2cqL/FFBLU6As38noNRM=
+	b=VfRVpHvxoinXm/ayvbaYBYb75ZYVVnajoK2YQrv9RgK/iTPL952nyWWcl+hSc0kHE
+	 gG6NMOJt83EM5hSVqT5uhnlES2nDHaq2ddg2LvhIpx9QR530guFQAsWFQ3jaz+ZPVO
+	 fjSJSGd7g/QY9jc7ul4PdVstHtzkVVIIyDOdzqJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Kauer <florian.kauer@linutronix.de>,
-	Kurt Kanzenbach <kurt@linutronix.de>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 072/292] igc: Handle already enabled taprio offload for basetime 0
-Date: Fri, 21 Jul 2023 18:03:01 +0200
-Message-ID: <20230721160531.892612046@linuxfoundation.org>
+Subject: [PATCH 6.4 099/292] netdevsim: fix uninitialized data in nsim_dev_trap_fa_cookie_write()
+Date: Fri, 21 Jul 2023 18:03:28 +0200
+Message-ID: <20230721160533.049239401@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -37,60 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Kauer <florian.kauer@linutronix.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit e5d88c53d03f8df864776431175d08c053645f50 ]
+[ Upstream commit f72207a5c0dbaaf6921cf9a6c0d2fd0bc249ea78 ]
 
-Since commit e17090eb2494 ("igc: allow BaseTime 0 enrollment for Qbv")
-it is possible to enable taprio offload with a basetime of 0.
-However, the check if taprio offload is already enabled (and thus -EALREADY
-should be returned for igc_save_qbv_schedule) still relied on
-adapter->base_time > 0.
+The simple_write_to_buffer() function is designed to handle partial
+writes.  It returns negatives on error, otherwise it returns the number
+of bytes that were able to be copied.  This code doesn't check the
+return properly.  We only know that the first byte is written, the rest
+of the buffer might be uninitialized.
 
-This can be reproduced as follows:
+There is no need to use the simple_write_to_buffer() function.
+Partial writes are prohibited by the "if (*ppos != 0)" check at the
+start of the function.  Just use memdup_user() and copy the whole
+buffer.
 
-    # TAPRIO offload (flags == 0x2) and base-time = 0
-    sudo tc qdisc replace dev enp1s0 parent root handle 100 stab overhead 24 taprio \
-	    num_tc 1 \
-	    map 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 \
-	    queues 1@0 \
-	    base-time 0 \
-	    sched-entry S 01 300000 \
-	    flags 0x2
-
-    # The second call should fail with "Error: Device failed to setup taprio offload."
-    # But that only happens if base-time was != 0
-    sudo tc qdisc replace dev enp1s0 parent root handle 100 stab overhead 24 taprio \
-	    num_tc 1 \
-	    map 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 \
-	    queues 1@0 \
-	    base-time 0 \
-	    sched-entry S 01 300000 \
-	    flags 0x2
-
-Fixes: e17090eb2494 ("igc: allow BaseTime 0 enrollment for Qbv")
-Signed-off-by: Florian Kauer <florian.kauer@linutronix.de>
-Reviewed-by: Kurt Kanzenbach <kurt@linutronix.de>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: d3cbb907ae57 ("netdevsim: add ACL trap reporting cookie as a metadata")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/r/7c1f950b-3a7d-4252-82a6-876e53078ef7@moroto.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/netdevsim/dev.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index f051ca733af1b..97eb3c390de9a 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -6127,7 +6127,7 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
- 	if (qopt->base_time < 0)
- 		return -ERANGE;
+diff --git a/drivers/net/netdevsim/dev.c b/drivers/net/netdevsim/dev.c
+index 6045bece2654d..b4d3b9cde8bd6 100644
+--- a/drivers/net/netdevsim/dev.c
++++ b/drivers/net/netdevsim/dev.c
+@@ -184,13 +184,10 @@ static ssize_t nsim_dev_trap_fa_cookie_write(struct file *file,
+ 	cookie_len = (count - 1) / 2;
+ 	if ((count - 1) % 2)
+ 		return -EINVAL;
+-	buf = kmalloc(count, GFP_KERNEL | __GFP_NOWARN);
+-	if (!buf)
+-		return -ENOMEM;
  
--	if (igc_is_device_id_i225(hw) && adapter->base_time)
-+	if (igc_is_device_id_i225(hw) && adapter->taprio_offload_enable)
- 		return -EALREADY;
+-	ret = simple_write_to_buffer(buf, count, ppos, data, count);
+-	if (ret < 0)
+-		goto free_buf;
++	buf = memdup_user(data, count);
++	if (IS_ERR(buf))
++		return PTR_ERR(buf);
  
- 	if (!validate_schedule(adapter, qopt))
+ 	fa_cookie = kmalloc(sizeof(*fa_cookie) + cookie_len,
+ 			    GFP_KERNEL | __GFP_NOWARN);
 -- 
 2.39.2
 
