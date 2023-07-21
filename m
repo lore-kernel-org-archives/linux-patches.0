@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDDE20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:17:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48D7C433C8;
-	Fri, 21 Jul 2023 19:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D4920F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:17:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B988BC433C9;
+	Fri, 21 Jul 2023 19:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967029;
-	bh=Evfy/0vkzm/yKk7+pB8pOTjSIqcyEmbffWvNoq7g0MA=;
+	s=korg; t=1689967032;
+	bh=rxaSJbEhLR3kfz6t+Bg6N3f+C+i8nScxRPNis1D7JGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k3N2jNY6Ma/rJxb3EWKsr/4ZOOPXtM3T+VotdD8jOys8GlIPLm/CjtGm4SZ2vfYLa
-	 PUl7rx3awkYa0JAHTJkEiU2DJZG/+c6VCi6XHA6Ns5ed5lZ25aaiPIVixgUmDk7Ixb
-	 6g1jaZtDQqmWMt/A9tE0WolRSNGt7zFa2pLzH46c=
+	b=pU551Y1QPShm3bSMTZ3P2U4GgdVNjnn6JlfHX4KkaZiiPjzXS0+NDMK3IaGa3Z92W
+	 9vhi9uEOGXTfmssV7gebgefvk0ZPjSDniR4UCuG75oe5XZn4lIyd4OVPXqOoO1/De1
+	 NESdTzwDnAuLoFur3VWjsPnK62zXkLGaS3rW4mFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.1 007/223] ksmbd: fix out of bounds read in smb2_sess_setup
-Date: Fri, 21 Jul 2023 18:04:20 +0200
-Message-ID: <20230721160521.186427988@linuxfoundation.org>
+	Fabio Estevam <festevam@denx.de>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 008/223] drm/panel: simple: Add connector_type for innolux_at043tn24
+Date: Fri, 21 Jul 2023 18:04:21 +0200
+Message-ID: <20230721160521.230063340@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -35,122 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Fabio Estevam <festevam@denx.de>
 
-commit 98422bdd4cb3ca4d08844046f6507d7ec2c2b8d8 upstream.
+[ Upstream commit 2c56a751845ddfd3078ebe79981aaaa182629163 ]
 
-ksmbd does not consider the case of that smb2 session setup is
-in compound request. If this is the second payload of the compound,
-OOB read issue occurs while processing the first payload in
-the smb2_sess_setup().
+The innolux at043tn24 display is a parallel LCD. Pass the 'connector_type'
+information to avoid the following warning:
 
-Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-21355
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+panel-simple panel: Specify missing connector_type
+
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Fixes: 41bcceb4de9c ("drm/panel: simple: Add support for Innolux AT043TN24")
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230620112202.654981-1-festevam@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c |   31 +++++++++++++++++--------------
- 1 file changed, 17 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/panel/panel-simple.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1339,9 +1339,8 @@ static int decode_negotiation_token(stru
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 7ca00b0323362..e49d352339ff8 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -2117,6 +2117,7 @@ static const struct panel_desc innolux_at043tn24 = {
+ 		.height = 54,
+ 	},
+ 	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
++	.connector_type = DRM_MODE_CONNECTOR_DPI,
+ 	.bus_flags = DRM_BUS_FLAG_DE_HIGH | DRM_BUS_FLAG_PIXDATA_DRIVE_POSEDGE,
+ };
  
- static int ntlm_negotiate(struct ksmbd_work *work,
- 			  struct negotiate_message *negblob,
--			  size_t negblob_len)
-+			  size_t negblob_len, struct smb2_sess_setup_rsp *rsp)
- {
--	struct smb2_sess_setup_rsp *rsp = smb2_get_msg(work->response_buf);
- 	struct challenge_message *chgblob;
- 	unsigned char *spnego_blob = NULL;
- 	u16 spnego_blob_len;
-@@ -1446,10 +1445,10 @@ static struct ksmbd_user *session_user(s
- 	return user;
- }
- 
--static int ntlm_authenticate(struct ksmbd_work *work)
-+static int ntlm_authenticate(struct ksmbd_work *work,
-+			     struct smb2_sess_setup_req *req,
-+			     struct smb2_sess_setup_rsp *rsp)
- {
--	struct smb2_sess_setup_req *req = smb2_get_msg(work->request_buf);
--	struct smb2_sess_setup_rsp *rsp = smb2_get_msg(work->response_buf);
- 	struct ksmbd_conn *conn = work->conn;
- 	struct ksmbd_session *sess = work->sess;
- 	struct channel *chann = NULL;
-@@ -1582,10 +1581,10 @@ binding_session:
- }
- 
- #ifdef CONFIG_SMB_SERVER_KERBEROS5
--static int krb5_authenticate(struct ksmbd_work *work)
-+static int krb5_authenticate(struct ksmbd_work *work,
-+			     struct smb2_sess_setup_req *req,
-+			     struct smb2_sess_setup_rsp *rsp)
- {
--	struct smb2_sess_setup_req *req = smb2_get_msg(work->request_buf);
--	struct smb2_sess_setup_rsp *rsp = smb2_get_msg(work->response_buf);
- 	struct ksmbd_conn *conn = work->conn;
- 	struct ksmbd_session *sess = work->sess;
- 	char *in_blob, *out_blob;
-@@ -1662,7 +1661,9 @@ static int krb5_authenticate(struct ksmb
- 	return 0;
- }
- #else
--static int krb5_authenticate(struct ksmbd_work *work)
-+static int krb5_authenticate(struct ksmbd_work *work,
-+			     struct smb2_sess_setup_req *req,
-+			     struct smb2_sess_setup_rsp *rsp)
- {
- 	return -EOPNOTSUPP;
- }
-@@ -1671,8 +1672,8 @@ static int krb5_authenticate(struct ksmb
- int smb2_sess_setup(struct ksmbd_work *work)
- {
- 	struct ksmbd_conn *conn = work->conn;
--	struct smb2_sess_setup_req *req = smb2_get_msg(work->request_buf);
--	struct smb2_sess_setup_rsp *rsp = smb2_get_msg(work->response_buf);
-+	struct smb2_sess_setup_req *req;
-+	struct smb2_sess_setup_rsp *rsp;
- 	struct ksmbd_session *sess;
- 	struct negotiate_message *negblob;
- 	unsigned int negblob_len, negblob_off;
-@@ -1680,6 +1681,8 @@ int smb2_sess_setup(struct ksmbd_work *w
- 
- 	ksmbd_debug(SMB, "Received request for session setup\n");
- 
-+	WORK_BUFFERS(work, req, rsp);
-+
- 	rsp->StructureSize = cpu_to_le16(9);
- 	rsp->SessionFlags = 0;
- 	rsp->SecurityBufferOffset = cpu_to_le16(72);
-@@ -1801,7 +1804,7 @@ int smb2_sess_setup(struct ksmbd_work *w
- 
- 		if (conn->preferred_auth_mech &
- 				(KSMBD_AUTH_KRB5 | KSMBD_AUTH_MSKRB5)) {
--			rc = krb5_authenticate(work);
-+			rc = krb5_authenticate(work, req, rsp);
- 			if (rc) {
- 				rc = -EINVAL;
- 				goto out_err;
-@@ -1815,7 +1818,7 @@ int smb2_sess_setup(struct ksmbd_work *w
- 			sess->Preauth_HashValue = NULL;
- 		} else if (conn->preferred_auth_mech == KSMBD_AUTH_NTLMSSP) {
- 			if (negblob->MessageType == NtLmNegotiate) {
--				rc = ntlm_negotiate(work, negblob, negblob_len);
-+				rc = ntlm_negotiate(work, negblob, negblob_len, rsp);
- 				if (rc)
- 					goto out_err;
- 				rsp->hdr.Status =
-@@ -1828,7 +1831,7 @@ int smb2_sess_setup(struct ksmbd_work *w
- 						le16_to_cpu(rsp->SecurityBufferLength) - 1);
- 
- 			} else if (negblob->MessageType == NtLmAuthenticate) {
--				rc = ntlm_authenticate(work);
-+				rc = ntlm_authenticate(work, req, rsp);
- 				if (rc)
- 					goto out_err;
- 
+-- 
+2.39.2
+
 
 
