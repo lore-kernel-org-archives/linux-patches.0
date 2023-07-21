@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C9D20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:26:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52696C433C8;
-	Fri, 21 Jul 2023 19:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A896720F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:26:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A543C433C7;
+	Fri, 21 Jul 2023 19:26:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967614;
-	bh=YRq3MRXQ/9ed3BU9vGD3EL5xWyQL8+zGkJVnrb0ScqQ=;
+	s=korg; t=1689967617;
+	bh=wA0prljJF1cN1cCMaff2uIYX4Q9AnQ0u0FuY9KEZGdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bj1ZVV9ZAQUU8lUMsgacbOUQU2U++AfCPRUxfJ5C6ugTK/f4skormQqVHkQ7rR+1a
-	 51/XkWwcGJDOvxrFfkAao6bqNI0CTEzFfDYyUDd1+GyHuhAG0MnP1pC1EsLQssiyQa
-	 8YwqRvmQ+hjGSFLbEvf6ri9CKzVMnTiqTft+RJ9o=
+	b=KixE8IekwDOzmUJkfhu/Vj0J7srBsW8IhlV72yaaMA8CiatFZCtpYhz3tToZZFt+2
+	 CppoJ9y4/I3f5siRZKCVnzyv0wPkaafXSB4JSMlpv4EzZT1MEblpE46KYhw8FBx7zf
+	 cF/rMkplD2togPgh7Q9D9ngQpsL2UtzZbKZpzxO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.1 203/223] tracing/probes: Fix to update dynamic data counter if fetcharg uses it
-Date: Fri, 21 Jul 2023 18:07:36 +0200
-Message-ID: <20230721160529.530074643@linuxfoundation.org>
+	Beau Belgrave <beaub@linux.microsoft.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 204/223] tracing/user_events: Fix struct arg size match check
+Date: Fri, 21 Jul 2023 18:07:37 +0200
+Message-ID: <20230721160529.572184399@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -34,48 +34,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Beau Belgrave <beaub@linux.microsoft.com>
 
-commit e38e2c6a9efc435f9de344b7c91f7697e01b47d5 upstream.
+commit d0a3022f30629a208e5944022caeca3568add9e7 upstream.
 
-Fix to update dynamic data counter ('dyndata') and max length ('maxlen')
-only if the fetcharg uses the dynamic data. Also get out arg->dynamic
-from unlikely(). This makes dynamic data address wrong if
-process_fetch_insn() returns error on !arg->dynamic case.
+When users register an event the name of the event and it's argument are
+checked to ensure they match if the event already exists. Normally all
+arguments are in the form of "type name", except for when the type
+starts with "struct ". In those cases, the size of the struct is passed
+in addition to the name, IE: "struct my_struct a 20" for an argument
+that is of type "struct my_struct" with a field name of "a" and has the
+size of 20 bytes.
 
-Link: https://lore.kernel.org/all/168908494781.123124.8160245359962103684.stgit@devnote2/
+The current code does not honor the above case properly when comparing
+a match. This causes the event register to fail even when the same
+string was used for events that contain a struct argument within them.
+The example above "struct my_struct a 20" generates a match string of
+"struct my_struct a" omitting the size field.
 
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Link: https://lore.kernel.org/all/20230710233400.5aaf024e@gandalf.local.home/
-Fixes: 9178412ddf5a ("tracing: probeevent: Return consumed bytes of dynamic area")
+Add the struct size of the existing field when generating a comparison
+string for a struct field to ensure proper match checking.
+
+Link: https://lkml.kernel.org/r/20230629235049.581-2-beaub@linux.microsoft.com
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: e6f89a149872 ("tracing/user_events: Ensure user provided strings are safely formatted")
+Signed-off-by: Beau Belgrave <beaub@linux.microsoft.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_probe_tmpl.h |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ kernel/trace/trace_events_user.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/trace/trace_probe_tmpl.h
-+++ b/kernel/trace/trace_probe_tmpl.h
-@@ -206,11 +206,13 @@ store_trace_args(void *data, struct trac
- 		if (unlikely(arg->dynamic))
- 			*dl = make_data_loc(maxlen, dyndata - base);
- 		ret = process_fetch_insn(arg->code, rec, dl, base);
--		if (unlikely(ret < 0 && arg->dynamic)) {
--			*dl = make_data_loc(0, dyndata - base);
--		} else {
--			dyndata += ret;
--			maxlen -= ret;
-+		if (arg->dynamic) {
-+			if (unlikely(ret < 0)) {
-+				*dl = make_data_loc(0, dyndata - base);
-+			} else {
-+				dyndata += ret;
-+				maxlen -= ret;
-+			}
- 		}
- 	}
- }
+--- a/kernel/trace/trace_events_user.c
++++ b/kernel/trace/trace_events_user.c
+@@ -707,6 +707,9 @@ static int user_field_set_string(struct
+ 	pos += snprintf(buf + pos, LEN_OR_ZERO, " ");
+ 	pos += snprintf(buf + pos, LEN_OR_ZERO, "%s", field->name);
+ 
++	if (str_has_prefix(field->type, "struct "))
++		pos += snprintf(buf + pos, LEN_OR_ZERO, " %d", field->size);
++
+ 	if (colon)
+ 		pos += snprintf(buf + pos, LEN_OR_ZERO, ";");
+ 
 
 
