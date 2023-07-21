@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3F920F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:11:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B0F3C433C8;
-	Fri, 21 Jul 2023 19:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878B520F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:11:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6ECC433C8;
+	Fri, 21 Jul 2023 19:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966677;
-	bh=2VFBAWZKYN75KrXqNixr0sGsfFJsFL/09SO4otoS7xI=;
+	s=korg; t=1689966680;
+	bh=TVfaeV+ks4o3miTCbPXHXe1/1XS5YoK7MAOAL3l2Njo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NkPSp5F6XHsu32Zg82y+bBReByg4eB/PnsjIYI3C6EOSZrC04KOIdW0sTjY8/7tvD
-	 pX11+ehj0qPmZlP88UCjX7UlFBoWrGShUPjFK7EBf+RT7VMHl8haid/zsm6uW9ruG6
-	 gouxC00ubT/eBp0SdLt6nBkSjbA92PGwTaEBRfsw=
+	b=Hi6tZAVSsPBusTlDkZ7buqRpxZx3fH9sGy8GDuQGXO4KeB896D4ABXdRaV2V1nNO6
+	 05OVI1uepS+X203O1GeFK0+r6RhA4aR8KiK187oWolUTFe69muSdIdEwjE4UARctaY
+	 UBTwGGKOYc5+hXt5+EDFsnyH2+4QIBysQoYRQnE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 428/532] riscv, bpf: Fix inconsistent JIT image generation
-Date: Fri, 21 Jul 2023 18:05:32 +0200
-Message-ID: <20230721160637.783900469@linuxfoundation.org>
+Subject: [PATCH 5.15 429/532] drm/i915: Fix one wrong caching mode enum usage
+Date: Fri, 21 Jul 2023 18:05:33 +0200
+Message-ID: <20230721160637.840956454@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,132 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Björn Töpel <bjorn@rivosinc.com>
+From: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 
-[ Upstream commit c56fb2aab23505bb7160d06097c8de100b82b851 ]
+[ Upstream commit 113899c2669dff148b2a5bea4780123811aecc13 ]
 
-In order to generate the prologue and epilogue, the BPF JIT needs to
-know which registers that are clobbered. Therefore, the during
-pre-final passes, the prologue is generated after the body of the
-program body-prologue-epilogue. Then, in the final pass, a proper
-prologue-body-epilogue JITted image is generated.
+Commit a4d86249c773 ("drm/i915/gt: Provide a utility to create a scratch
+buffer") mistakenly passed in uapi I915_CACHING_CACHED as argument to
+i915_gem_object_set_cache_coherency(), which actually takes internal
+enum i915_cache_level.
 
-This scheme has worked most of the time. However, for some large
-programs with many jumps, e.g. the test_kmod.sh BPF selftest with
-hardening enabled (blinding constants), this has shown to be
-incorrect. For the final pass, when the proper prologue-body-epilogue
-is generated, the image has not converged. This will lead to that the
-final image will have incorrect jump offsets. The following is an
-excerpt from an incorrect image:
+No functional issue since the value matches I915_CACHE_LLC (1 == 1), which
+is the intended caching mode, but lets clean it up nevertheless.
 
-  | ...
-  |     3b8:       00c50663                beq     a0,a2,3c4 <.text+0x3c4>
-  |     3bc:       0020e317                auipc   t1,0x20e
-  |     3c0:       49630067                jalr    zero,1174(t1) # 20e852 <.text+0x20e852>
-  | ...
-  |  20e84c:       8796                    c.mv    a5,t0
-  |  20e84e:       6422                    c.ldsp  s0,8(sp)    # Epilogue start
-  |  20e850:       6141                    c.addi16sp      sp,16
-  |  20e852:       853e                    c.mv    a0,a5       # Incorrect jump target
-  |  20e854:       8082                    c.jr    ra
-
-The image has shrunk, and the epilogue offset is incorrect in the
-final pass.
-
-Correct the problem by always generating proper prologue-body-epilogue
-outputs, which means that the first pass will only generate the body
-to track what registers that are touched.
-
-Fixes: 2353ecc6f91f ("bpf, riscv: add BPF JIT for RV64G")
-Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230710074131.19596-1-bjorn@kernel.org
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Fixes: a4d86249c773 ("drm/i915/gt: Provide a utility to create a scratch buffer")
+Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Reviewed-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230707125503.3965817-1-tvrtko.ursulin@linux.intel.com
+(cherry picked from commit 49c60b2f0867ac36fd54d513882a48431aeccae7)
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/net/bpf_jit.h      |  6 +++---
- arch/riscv/net/bpf_jit_core.c | 19 +++++++++++++------
- 2 files changed, 16 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_gtt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/net/bpf_jit.h b/arch/riscv/net/bpf_jit.h
-index ab0cd6d10ccf3..ef336fe160044 100644
---- a/arch/riscv/net/bpf_jit.h
-+++ b/arch/riscv/net/bpf_jit.h
-@@ -69,7 +69,7 @@ struct rv_jit_context {
- 	struct bpf_prog *prog;
- 	u16 *insns;		/* RV insns */
- 	int ninsns;
--	int body_len;
-+	int prologue_len;
- 	int epilogue_offset;
- 	int *offset;		/* BPF to RV */
- 	unsigned long flags;
-@@ -215,8 +215,8 @@ static inline int rv_offset(int insn, int off, struct rv_jit_context *ctx)
- 	int from, to;
+diff --git a/drivers/gpu/drm/i915/gt/intel_gtt.c b/drivers/gpu/drm/i915/gt/intel_gtt.c
+index 2d3a979736cc1..f9d4094916e3d 100644
+--- a/drivers/gpu/drm/i915/gt/intel_gtt.c
++++ b/drivers/gpu/drm/i915/gt/intel_gtt.c
+@@ -547,7 +547,7 @@ __vm_create_scratch_for_read(struct i915_address_space *vm, unsigned long size)
+ 	if (IS_ERR(obj))
+ 		return ERR_CAST(obj);
  
- 	off++; /* BPF branch is from PC+1, RV is from PC */
--	from = (insn > 0) ? ctx->offset[insn - 1] : 0;
--	to = (insn + off > 0) ? ctx->offset[insn + off - 1] : 0;
-+	from = (insn > 0) ? ctx->offset[insn - 1] : ctx->prologue_len;
-+	to = (insn + off > 0) ? ctx->offset[insn + off - 1] : ctx->prologue_len;
- 	return ninsns_rvoff(to - from);
- }
+-	i915_gem_object_set_cache_coherency(obj, I915_CACHING_CACHED);
++	i915_gem_object_set_cache_coherency(obj, I915_CACHE_LLC);
  
-diff --git a/arch/riscv/net/bpf_jit_core.c b/arch/riscv/net/bpf_jit_core.c
-index ff644452b88db..b95c60f663d44 100644
---- a/arch/riscv/net/bpf_jit_core.c
-+++ b/arch/riscv/net/bpf_jit_core.c
-@@ -43,7 +43,7 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *prog)
- {
- 	bool tmp_blinded = false, extra_pass = false;
- 	struct bpf_prog *tmp, *orig_prog = prog;
--	int pass = 0, prev_ninsns = 0, prologue_len, i;
-+	int pass = 0, prev_ninsns = 0, i;
- 	struct rv_jit_data *jit_data;
- 	struct rv_jit_context *ctx;
- 	unsigned int image_size = 0;
-@@ -83,6 +83,12 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *prog)
- 		prog = orig_prog;
- 		goto out_offset;
- 	}
-+
-+	if (build_body(ctx, extra_pass, NULL)) {
-+		prog = orig_prog;
-+		goto out_offset;
-+	}
-+
- 	for (i = 0; i < prog->len; i++) {
- 		prev_ninsns += 32;
- 		ctx->offset[i] = prev_ninsns;
-@@ -91,12 +97,15 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *prog)
- 	for (i = 0; i < NR_JIT_ITERATIONS; i++) {
- 		pass++;
- 		ctx->ninsns = 0;
-+
-+		bpf_jit_build_prologue(ctx);
-+		ctx->prologue_len = ctx->ninsns;
-+
- 		if (build_body(ctx, extra_pass, ctx->offset)) {
- 			prog = orig_prog;
- 			goto out_offset;
- 		}
--		ctx->body_len = ctx->ninsns;
--		bpf_jit_build_prologue(ctx);
-+
- 		ctx->epilogue_offset = ctx->ninsns;
- 		bpf_jit_build_epilogue(ctx);
- 
-@@ -155,10 +164,8 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *prog)
- 
- 	if (!prog->is_func || extra_pass) {
- 		bpf_jit_binary_lock_ro(jit_data->header);
--		prologue_len = ctx->epilogue_offset - ctx->body_len;
- 		for (i = 0; i < prog->len; i++)
--			ctx->offset[i] = ninsns_rvoff(prologue_len +
--						      ctx->offset[i]);
-+			ctx->offset[i] = ninsns_rvoff(ctx->offset[i]);
- 		bpf_prog_fill_jited_linfo(prog, ctx->offset);
- out_offset:
- 		kfree(ctx->offset);
+ 	vma = i915_vma_instance(obj, vm, NULL);
+ 	if (IS_ERR(vma)) {
 -- 
 2.39.2
 
