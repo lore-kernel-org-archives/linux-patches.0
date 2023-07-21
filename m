@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526881ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:57:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8DBAC433C7;
-	Fri, 21 Jul 2023 18:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206911F94E
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:57:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 919F5C433C7;
+	Fri, 21 Jul 2023 18:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965853;
-	bh=KmjO8brKmn1SnkmwT+FaaT5MpJXuZd+9RdVIjg6TA8Q=;
+	s=korg; t=1689965856;
+	bh=vyNGbMg9qCwTb3T2v/kXkqodhozj29sCOnIDiuv0FJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=khWgQ5I4tFu2fnLsWG3vKr/8dUFP7wOhVd+2FXT9d9F/OtbvmOJTWqITpwVr9jI7s
-	 j/n0ao5jHhxh5UctjHR+JEc4irnKodUgmDJo4N5MiyMv46cKwJigRSiajRG68dNP7u
-	 j9YWDbQBMV0dUXbCDmHH7Azr4PcSr0SDVGGkQRnE=
+	b=W0temeTUFyeHLe+f7RvxHryIcpVyJ6sZCPw7PtFfS/dK3e6bPOnMH9J1qgDed1Iee
+	 VIFbaMkkNtCUYbqYovQfPEFZs0330rrVz8ESt29Ode/vnY0rDayp1qifiaWx9jT36l
+	 MHyFLcrkQvF7jSB6qzsZoJT88MdVF8OkwS489F9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 130/532] arm64: dts: qcom: sdm630: correct camss unit address
-Date: Fri, 21 Jul 2023 18:00:34 +0200
-Message-ID: <20230721160621.514128429@linuxfoundation.org>
+Subject: [PATCH 5.15 139/532] drm/panel: simple: fix active size for Ampire AM-480272H3TMQW-T01H
+Date: Fri, 21 Jul 2023 18:00:43 +0200
+Message-ID: <20230721160621.999575049@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,38 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit c8b7faa7e9913a94444b3f00b6480e53a174fcfd ]
+[ Upstream commit f24b49550814fdee4a98b9552e35e243ccafd4a8 ]
 
-Match unit-address to reg entry to fix dtbs W=1 warnings:
+The previous setting was related to the overall dimension and not to the
+active display area.
+In the "PHYSICAL SPECIFICATIONS" section, the datasheet shows the
+following parameters:
 
-  Warning (simple_bus_reg): /soc/camss@ca00000: simple-bus unit address format error, expected "ca00020"
+ ----------------------------------------------------------
+|       Item        |         Specifications        | unit |
+ ----------------------------------------------------------
+| Display area      | 98.7 (W) x 57.5 (H)           |  mm  |
+ ----------------------------------------------------------
+| Overall dimension | 105.5(W) x 67.2(H) x 4.96(D)  |  mm  |
+ ----------------------------------------------------------
 
-Fixes: f3d5d3cc6971 ("arm64: dts: qcom: sdm630: Configure the camera subsystem")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230419211856.79332-10-krzysztof.kozlowski@linaro.org
+Fixes: 966fea78adf2 ("drm/panel: simple: Add support for Ampire AM-480272H3TMQW-T01H")
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+[narmstrong: fixed Fixes commit id length]
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230516085039.3797303-1-dario.binacchi@amarulasolutions.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-simple.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index c2e1a0d9a2725..e00c0577cef70 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1834,7 +1834,7 @@ pil-reloc@94c {
- 			};
- 		};
- 
--		camss: camss@ca00000 {
-+		camss: camss@ca00020 {
- 			compatible = "qcom,sdm660-camss";
- 			reg = <0x0c824000 0x1000>,
- 			      <0x0ca00120 0x4>,
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index fb785f5a106ac..2f85266cdb2e3 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -890,8 +890,8 @@ static const struct panel_desc ampire_am_480272h3tmqw_t01h = {
+ 	.num_modes = 1,
+ 	.bpc = 8,
+ 	.size = {
+-		.width = 105,
+-		.height = 67,
++		.width = 99,
++		.height = 58,
+ 	},
+ 	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
+ };
 -- 
 2.39.2
 
