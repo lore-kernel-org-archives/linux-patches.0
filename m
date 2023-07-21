@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCDC20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:20:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C49C43397;
-	Fri, 21 Jul 2023 19:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA75D20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:20:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A929C433C8;
+	Fri, 21 Jul 2023 19:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967232;
-	bh=+RsjphFFg7pVLQ9ePTZLAZWQN410QFyG4FwkD9G1pKI=;
+	s=korg; t=1689967235;
+	bh=cLVnscSZzd4+xNdDB9Yip0knvi+t/y96oFzaBcpgx8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wctvyAjo6YfhrrZLdzF3VD32UBZYDw581zD0abeWpyhXd1GIvCKPWFHTJqcUPwEtI
-	 p3HnenvhwhtlwDblHc6FEK8cy+3XuZK6+iKJK6Rdn9sBca99CAg7YwA3scndz9N7JU
-	 SU8q9UAyKgkwzaseJcEMRPatKP8BnsDspgxmwidI=
+	b=JGu+fj1Wwe5dxq2EVa58DuCZjTN8x3oEifPFiM2HB51ngMbpzpQLA91ALFoxPfx3q
+	 OvMQd9BiWI9W0P//WlyT64NUQh22u+6q0KYpMjj0kk+ljyI8dEMwudvWs9SuVIqtnF
+	 ovA4N3pwensxZLRjOEGJ1iRXBdnUPvYzNFO/LEmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Haener <michael.haener@siemens.com>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Jerry Snitselaar <jsnitsel@redhat.com>
-Subject: [PATCH 6.1 091/223] tpm: tis_i2c: Limit write bursts to I2C_SMBUS_BLOCK_MAX (32) bytes
-Date: Fri, 21 Jul 2023 18:05:44 +0200
-Message-ID: <20230721160524.742237208@linuxfoundation.org>
+	Sachin Sant <sachinp@linux.ibm.com>,
+	"Aneesh Kumar K. V" <aneesh.kumar@linux.ibm.com>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.1 092/223] tpm: return false from tpm_amd_is_rng_defective on non-x86 platforms
+Date: Fri, 21 Jul 2023 18:05:45 +0200
+Message-ID: <20230721160524.785552133@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -36,62 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Jerry Snitselaar <jsnitsel@redhat.com>
 
-commit 83e7e5d89f04d1c417492940f7922bc8416a8cc4 upstream.
+commit ecff6813d2bcf0c670881a9ba3f51cb032dd405a upstream.
 
-Underlying I2C bus drivers not always support longer transfers and
-imx-lpi2c for instance doesn't. The fix is symmetric to previous patch
-which fixed the read direction.
+tpm_amd_is_rng_defective is for dealing with an issue related to the
+AMD firmware TPM, so on non-x86 architectures just have it inline and
+return false.
 
-Cc: stable@vger.kernel.org # v5.20+
-Fixes: bbc23a07b072 ("tpm: Add tpm_tis_i2c backend for tpm_tis_core")
-Tested-by: Michael Haener <michael.haener@siemens.com>
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Cc: stable@vger.kernel.org # v6.3+
+Reported-by: Sachin Sant <sachinp@linux.ibm.com>
+Reported-by: Aneesh Kumar K. V <aneesh.kumar@linux.ibm.com>
+Closes: https://lore.kernel.org/lkml/99B81401-DB46-49B9-B321-CF832B50CAC3@linux.ibm.com/
+Fixes: f1324bbc4011 ("tpm: disable hwrng for fTPM on some AMD designs")
+Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm_tis_i2c.c |   22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ drivers/char/tpm/tpm-chip.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/char/tpm/tpm_tis_i2c.c
-+++ b/drivers/char/tpm/tpm_tis_i2c.c
-@@ -230,19 +230,27 @@ static int tpm_tis_i2c_write_bytes(struc
- 	struct i2c_msg msg = { .addr = phy->i2c_client->addr };
- 	u8 reg = tpm_tis_i2c_address_to_register(addr);
- 	int ret;
-+	u16 wrote = 0;
+--- a/drivers/char/tpm/tpm-chip.c
++++ b/drivers/char/tpm/tpm-chip.c
+@@ -515,6 +515,7 @@ static int tpm_add_legacy_sysfs(struct t
+  * 6.x.y.z series: 6.0.18.6 +
+  * 3.x.y.z series: 3.57.y.5 +
+  */
++#ifdef CONFIG_X86
+ static bool tpm_amd_is_rng_defective(struct tpm_chip *chip)
+ {
+ 	u32 val1, val2;
+@@ -563,6 +564,12 @@ release:
  
- 	if (len > TPM_BUFSIZE - 1)
- 		return -EIO;
- 
--	/* write register and data in one go */
- 	phy->io_buf[0] = reg;
--	memcpy(phy->io_buf + sizeof(reg), value, len);
--
--	msg.len = sizeof(reg) + len;
- 	msg.buf = phy->io_buf;
--	ret = tpm_tis_i2c_retry_transfer_until_ack(data, &msg);
--	if (ret < 0)
--		return ret;
-+	while (wrote < len) {
-+		/* write register and data in one go */
-+		msg.len = sizeof(reg) + len - wrote;
-+		if (msg.len > I2C_SMBUS_BLOCK_MAX)
-+			msg.len = I2C_SMBUS_BLOCK_MAX;
-+
-+		memcpy(phy->io_buf + sizeof(reg), value + wrote,
-+		       msg.len - sizeof(reg));
-+
-+		ret = tpm_tis_i2c_retry_transfer_until_ack(data, &msg);
-+		if (ret < 0)
-+			return ret;
-+		wrote += msg.len - sizeof(reg);
-+	}
- 
- 	return 0;
+ 	return true;
  }
++#else
++static inline bool tpm_amd_is_rng_defective(struct tpm_chip *chip)
++{
++	return false;
++}
++#endif /* CONFIG_X86 */
+ 
+ static int tpm_hwrng_read(struct hwrng *rng, void *data, size_t max, bool wait)
+ {
 
 
