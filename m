@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFB120F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:19:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109D4C433C8;
-	Fri, 21 Jul 2023 19:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E4620F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:19:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D884EC433C7;
+	Fri, 21 Jul 2023 19:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967144;
-	bh=N9R7/4Mm/Xk6IoOEBGe9eyWF+WYfzufWX5i2w+hA/OI=;
+	s=korg; t=1689967147;
+	bh=5fkggPlNbQ0k0vvbXEFpuwiTvt59q3T69+l6vifkhNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bmFnWeY4/etaImLj+IN0FLRt2D+Q9AkWo3XmbPvJqjnS5TeEpu+UXtVJ+1ZpDqLO/
-	 lchgl5oXiZgIDmJvO6P89jNZebGt9uQZx8KJDmhELaMt2XV7NAhDdT1a6mX36bCzGJ
-	 wIGDqicx6dy9JVyL6SQhBLACXih/fB0aKNC2gOyU=
+	b=VwIF9d1ICd4NRtbeiHGuMaePmgWSjpr6bDD1zfznpgy9AOdhyXuGkENRiZKqtvC5O
+	 jwRdIV9haEmj2xgDpcSmvj816VvwZcVeEux6XW2ILT5N8YFTvj++rsywFUI15XwujO
+	 icFFJVqxPvkO0Up7jSTXBqyawzoEDYfYIVLAl0S8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 060/223] net/sched: make psched_mtu() RTNL-less safe
-Date: Fri, 21 Jul 2023 18:05:13 +0200
-Message-ID: <20230721160523.415217728@linuxfoundation.org>
+Subject: [PATCH 6.1 061/223] wifi: rtw89: debug: fix error code in rtw89_debug_priv_send_h2c_set()
+Date: Fri, 21 Jul 2023 18:05:14 +0200
+Message-ID: <20230721160523.460771702@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -37,47 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit 150e33e62c1fa4af5aaab02776b6c3812711d478 ]
+[ Upstream commit 4f4626cd049576af1276c7568d5b44eb3f7bb1b1 ]
 
-Eric Dumazet says[1]:
--------
-Speaking of psched_mtu(), I see that net/sched/sch_pie.c is using it
-without holding RTNL, so dev->mtu can be changed underneath.
-KCSAN could issue a warning.
--------
+If there is a failure during rtw89_fw_h2c_raw() rtw89_debug_priv_send_h2c
+should return negative error code instead of a positive value count.
+Fix this bug by returning correct error code.
 
-Annotate dev->mtu with READ_ONCE() so KCSAN don't issue a warning.
-
-[1] https://lore.kernel.org/all/CANn89iJoJO5VtaJ-2=_d2aOQhb0Xw8iBT_Cxqp2HyuS-zj6azw@mail.gmail.com/
-
-v1 -> v2: Fix commit message
-
-Fixes: d4b36210c2e6 ("net: pkt_sched: PIE AQM scheme")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230711021634.561598-1-pctammela@mojatatu.com
+Fixes: e3ec7017f6a2 ("rtw89: add Realtek 802.11ax driver")
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://lore.kernel.org/r/tencent_AD09A61BC4DA92AD1EB0790F5C850E544D07@qq.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/pkt_sched.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw89/debug.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/pkt_sched.h b/include/net/pkt_sched.h
-index 8ab75128512ab..f99a513b40a92 100644
---- a/include/net/pkt_sched.h
-+++ b/include/net/pkt_sched.h
-@@ -135,7 +135,7 @@ extern const struct nla_policy rtm_tca_policy[TCA_MAX + 1];
-  */
- static inline unsigned int psched_mtu(const struct net_device *dev)
- {
--	return dev->mtu + dev->hard_header_len;
-+	return READ_ONCE(dev->mtu) + dev->hard_header_len;
+diff --git a/drivers/net/wireless/realtek/rtw89/debug.c b/drivers/net/wireless/realtek/rtw89/debug.c
+index 50701c55ed602..ec0af903961f0 100644
+--- a/drivers/net/wireless/realtek/rtw89/debug.c
++++ b/drivers/net/wireless/realtek/rtw89/debug.c
+@@ -2130,17 +2130,18 @@ static ssize_t rtw89_debug_priv_send_h2c_set(struct file *filp,
+ 	struct rtw89_debugfs_priv *debugfs_priv = filp->private_data;
+ 	struct rtw89_dev *rtwdev = debugfs_priv->rtwdev;
+ 	u8 *h2c;
++	int ret;
+ 	u16 h2c_len = count / 2;
+ 
+ 	h2c = rtw89_hex2bin_user(rtwdev, user_buf, count);
+ 	if (IS_ERR(h2c))
+ 		return -EFAULT;
+ 
+-	rtw89_fw_h2c_raw(rtwdev, h2c, h2c_len);
++	ret = rtw89_fw_h2c_raw(rtwdev, h2c, h2c_len);
+ 
+ 	kfree(h2c);
+ 
+-	return count;
++	return ret ? ret : count;
  }
  
- static inline struct net *qdisc_net(struct Qdisc *q)
+ static int
 -- 
 2.39.2
 
