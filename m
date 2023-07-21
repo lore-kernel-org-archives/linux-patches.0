@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7488420F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:26:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6480C433CD;
-	Fri, 21 Jul 2023 19:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4363D20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:26:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4FFC433C8;
+	Fri, 21 Jul 2023 19:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967563;
-	bh=ZOQXdNmGbuVkk2O3AMLUfEnO8BJM69fpGFBy8Y77HSc=;
+	s=korg; t=1689967566;
+	bh=fVudTSnJqQnsEcNKFy5LJX20gWeLRyUWOHvzTQWPwNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hEVIMsBoZTFcFsN3xFvH/wCyHQMVGXhm/mOv9a6nu7k7oAydg3qTCDkPUzvgls6Wj
-	 1lxJLoVCT7V9uQxHMVXBnt7fG1D7bVofeC/rg/5H25P+hYTy5qQRXZ6dn4pK3s8auv
-	 dylqgFf8sBGxD0Hj+NWzOIcl1XM/NWR0CV39ePo8=
+	b=OihBVzGPxz6u8yEOmmx3aUMy7QY+EkR3Skg2de9HL8TFZT1LOTclWSmda3+G3PfXs
+	 M4WZeCI5ikl6zgYzi/kTQIPusp3DxiyWVngi0GcdZKyj1V1MpMlnWYOfADS+wWGhFE
+	 sLz31U3OLTpU0ElsDm2WY+qH3d1f/45zYpbfY1cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 177/223] tracing: Fix memory leak of iter->temp when reading trace_pipe
-Date: Fri, 21 Jul 2023 18:07:10 +0200
-Message-ID: <20230721160528.424507955@linuxfoundation.org>
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Weitao Wang <WeitaoWang-oc@zhaoxin.com>
+Subject: [PATCH 6.1 168/223] xhci: Show ZHAOXIN xHCI root hub speed correctly
+Date: Fri, 21 Jul 2023 18:07:01 +0200
+Message-ID: <20230721160528.040640250@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -34,52 +34,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
 
-commit d5a821896360cc8b93a15bd888fabc858c038dc0 upstream.
+commit d9b0328d0b8b8298dfdc97cd8e0e2371d4bcc97b upstream.
 
-kmemleak reports:
-  unreferenced object 0xffff88814d14e200 (size 256):
-    comm "cat", pid 336, jiffies 4294871818 (age 779.490s)
-    hex dump (first 32 bytes):
-      04 00 01 03 00 00 00 00 08 00 00 00 00 00 00 00  ................
-      0c d8 c8 9b ff ff ff ff 04 5a ca 9b ff ff ff ff  .........Z......
-    backtrace:
-      [<ffffffff9bdff18f>] __kmalloc+0x4f/0x140
-      [<ffffffff9bc9238b>] trace_find_next_entry+0xbb/0x1d0
-      [<ffffffff9bc9caef>] trace_print_lat_context+0xaf/0x4e0
-      [<ffffffff9bc94490>] print_trace_line+0x3e0/0x950
-      [<ffffffff9bc95499>] tracing_read_pipe+0x2d9/0x5a0
-      [<ffffffff9bf03a43>] vfs_read+0x143/0x520
-      [<ffffffff9bf04c2d>] ksys_read+0xbd/0x160
-      [<ffffffff9d0f0edf>] do_syscall_64+0x3f/0x90
-      [<ffffffff9d2000aa>] entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+Some ZHAOXIN xHCI controllers follow usb3.1 spec, but only support
+gen1 speed 5Gbps. While in Linux kernel, if xHCI suspport usb3.1,
+root hub speed will show on 10Gbps.
+To fix this issue of ZHAOXIN xHCI platforms, read usb speed ID
+supported by xHCI to determine root hub speed. And add a quirk
+XHCI_ZHAOXIN_HOST for this issue.
 
-when reading file 'trace_pipe', 'iter->temp' is allocated or relocated
-in trace_find_next_entry() but not freed before 'trace_pipe' is closed.
+[fix warning about uninitialized symbol -Mathias]
 
-To fix it, free 'iter->temp' in tracing_release_pipe().
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230713141435.1133021-1-zhengyejian1@huawei.com
-
+Suggested-by: Mathias Nyman <mathias.nyman@linux.intel.com>
 Cc: stable@vger.kernel.org
-Fixes: ff895103a84ab ("tracing: Save off entry when peeking at next entry")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Message-ID: <20230602144009.1225632-11-mathias.nyman@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/host/xhci-mem.c |   31 ++++++++++++++++++++++++-------
+ drivers/usb/host/xhci-pci.c |    2 ++
+ drivers/usb/host/xhci.h     |    1 +
+ 3 files changed, 27 insertions(+), 7 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -6679,6 +6679,7 @@ static int tracing_release_pipe(struct i
+--- a/drivers/usb/host/xhci-mem.c
++++ b/drivers/usb/host/xhci-mem.c
+@@ -2116,7 +2116,7 @@ static void xhci_add_in_port(struct xhci
+ {
+ 	u32 temp, port_offset, port_count;
+ 	int i;
+-	u8 major_revision, minor_revision;
++	u8 major_revision, minor_revision, tmp_minor_revision;
+ 	struct xhci_hub *rhub;
+ 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
+ 	struct xhci_port_cap *port_cap;
+@@ -2136,6 +2136,15 @@ static void xhci_add_in_port(struct xhci
+ 		 */
+ 		if (minor_revision > 0x00 && minor_revision < 0x10)
+ 			minor_revision <<= 4;
++		/*
++		 * Some zhaoxin's xHCI controller that follow usb3.1 spec
++		 * but only support Gen1.
++		 */
++		if (xhci->quirks & XHCI_ZHAOXIN_HOST) {
++			tmp_minor_revision = minor_revision;
++			minor_revision = 0;
++		}
++
+ 	} else if (major_revision <= 0x02) {
+ 		rhub = &xhci->usb2_rhub;
+ 	} else {
+@@ -2145,10 +2154,6 @@ static void xhci_add_in_port(struct xhci
+ 		/* Ignoring port protocol we can't understand. FIXME */
+ 		return;
+ 	}
+-	rhub->maj_rev = XHCI_EXT_PORT_MAJOR(temp);
+-
+-	if (rhub->min_rev < minor_revision)
+-		rhub->min_rev = minor_revision;
  
- 	free_cpumask_var(iter->started);
- 	kfree(iter->fmt);
-+	kfree(iter->temp);
- 	mutex_destroy(&iter->mutex);
- 	kfree(iter);
+ 	/* Port offset and count in the third dword, see section 7.2 */
+ 	temp = readl(addr + 2);
+@@ -2167,8 +2172,6 @@ static void xhci_add_in_port(struct xhci
+ 	if (xhci->num_port_caps > max_caps)
+ 		return;
  
+-	port_cap->maj_rev = major_revision;
+-	port_cap->min_rev = minor_revision;
+ 	port_cap->psi_count = XHCI_EXT_PORT_PSIC(temp);
+ 
+ 	if (port_cap->psi_count) {
+@@ -2189,6 +2192,11 @@ static void xhci_add_in_port(struct xhci
+ 				  XHCI_EXT_PORT_PSIV(port_cap->psi[i - 1])))
+ 				port_cap->psi_uid_count++;
+ 
++			if (xhci->quirks & XHCI_ZHAOXIN_HOST &&
++			    major_revision == 0x03 &&
++			    XHCI_EXT_PORT_PSIV(port_cap->psi[i]) >= 5)
++				minor_revision = tmp_minor_revision;
++
+ 			xhci_dbg(xhci, "PSIV:%d PSIE:%d PLT:%d PFD:%d LP:%d PSIM:%d\n",
+ 				  XHCI_EXT_PORT_PSIV(port_cap->psi[i]),
+ 				  XHCI_EXT_PORT_PSIE(port_cap->psi[i]),
+@@ -2198,6 +2206,15 @@ static void xhci_add_in_port(struct xhci
+ 				  XHCI_EXT_PORT_PSIM(port_cap->psi[i]));
+ 		}
+ 	}
++
++	rhub->maj_rev = major_revision;
++
++	if (rhub->min_rev < minor_revision)
++		rhub->min_rev = minor_revision;
++
++	port_cap->maj_rev = major_revision;
++	port_cap->min_rev = minor_revision;
++
+ 	/* cache usb2 port capabilities */
+ 	if (major_revision < 0x03 && xhci->num_ext_caps < max_caps)
+ 		xhci->ext_caps[xhci->num_ext_caps++] = temp;
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -336,6 +336,8 @@ static void xhci_pci_quirks(struct devic
+ 		xhci->quirks |= XHCI_NO_SOFT_RETRY;
+ 
+ 	if (pdev->vendor == PCI_VENDOR_ID_ZHAOXIN) {
++		xhci->quirks |= XHCI_ZHAOXIN_HOST;
++
+ 		if (pdev->device == 0x9202) {
+ 			xhci->quirks |= XHCI_RESET_ON_RESUME;
+ 			xhci->quirks |= XHCI_ZHAOXIN_TRB_FETCH;
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1900,6 +1900,7 @@ struct xhci_hcd {
+ #define XHCI_SUSPEND_RESUME_CLKS	BIT_ULL(43)
+ #define XHCI_RESET_TO_DEFAULT	BIT_ULL(44)
+ #define XHCI_ZHAOXIN_TRB_FETCH	BIT_ULL(45)
++#define XHCI_ZHAOXIN_HOST	BIT_ULL(46)
+ 
+ 	unsigned int		num_active_eps;
+ 	unsigned int		limit_active_eps;
 
 
