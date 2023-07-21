@@ -1,27 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF46A20F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:12:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74AF3C433C7;
-	Fri, 21 Jul 2023 19:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7E920F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:12:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26C8FC433CB;
+	Fri, 21 Jul 2023 19:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966741;
-	bh=QkbuGSPvcUoNi/AC3AC86lrTH5h/enBeOj47DLwhH4Y=;
+	s=korg; t=1689966744;
+	bh=6GGXTQ9muik6pDc4jpUit5pJjAdyxFU9aGvn4wKDsE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J5GuLipNQC1ryOVYOBxPtQav0w9hANGhSCPySjhoQ/PsMebow/xgxusjVKCme/tJi
-	 1FHu65C1PMm8/s/Or5+cj3GLPHfM/s5DF2sPM1kgnsGe6oU/6Ek1UTGzFiRFsXQK1H
-	 XKhGpAJpVTU6/01+N0fjJoVQQwc1nTWhWA8Z0j1s=
+	b=2ngtlGf9e2msouO4V1kyWbHQu4CBmkLH2aINE3pRJqUc1KBIBAWk31xNyCCmIFx6t
+	 kO6ZLwhuikacMwy+KPpMhzIKME5oJiJulFk/R35Rmwlrkiua0m5ToJB6VcWTowKxz4
+	 CG3M1uj6IaOTJZ9hUvpJMlT1TdFK/PzBMXelbJOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 452/532] net: bcmgenet: Ensure MDIO unregistration has clocks enabled
-Date: Fri, 21 Jul 2023 18:05:56 +0200
-Message-ID: <20230721160639.058763539@linuxfoundation.org>
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Zi Yan <ziy@nvidia.com>,
+	SeongJae Park <sj@kernel.org>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Lorenzo Stoakes <lstoakes@gmail.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Yu Zhao <yuzhao@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 453/532] mm/damon/ops-common: atomically test and clear young on ptes and pmds
+Date: Fri, 21 Jul 2023 18:05:57 +0200
+Message-ID: <20230721160639.111033639@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,39 +43,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-commit 1b5ea7ffb7a3bdfffb4b7f40ce0d20a3372ee405 upstream.
+commit c11d34fa139e4b0fb4249a30f37b178353533fa1 upstream.
 
-With support for Ethernet PHY LEDs having been added, while
-unregistering a MDIO bus and its child device liks PHYs there may be
-"late" accesses to the MDIO bus. One typical use case is setting the PHY
-LEDs brightness to OFF for instance.
+It is racy to non-atomically read a pte, then clear the young bit, then
+write it back as this could discard dirty information.  Further, it is bad
+practice to directly set a pte entry within a table.  Instead clearing
+young must go through the arch-provided helper,
+ptep_test_and_clear_young() to ensure it is modified atomically and to
+give the arch code visibility and allow it to check (and potentially
+modify) the operation.
 
-We need to ensure that the MDIO bus controller remains entirely
-functional since it runs off the main GENET adapter clock.
-
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20230617155500.4005881-1-andrew@lunn.ch/
-Fixes: 9a4e79697009 ("net: bcmgenet: utilize generic Broadcom UniMAC MDIO controller driver")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20230622103107.1760280-1-florian.fainelli@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20230602092949.545577-3-ryan.roberts@arm.com
+Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces").
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Reviewed-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Cc: Lorenzo Stoakes <lstoakes@gmail.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SeongJae Park <sj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmmii.c |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/damon/vaddr.c |   20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
---- a/drivers/net/ethernet/broadcom/genet/bcmmii.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmmii.c
-@@ -627,5 +627,7 @@ void bcmgenet_mii_exit(struct net_device
- 	if (of_phy_is_fixed_link(dn))
- 		of_phy_deregister_fixed_link(dn);
- 	of_node_put(priv->phy_dn);
-+	clk_prepare_enable(priv->clk);
- 	platform_device_unregister(priv->mii_pdev);
-+	clk_disable_unprepare(priv->clk);
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -393,7 +393,7 @@ static struct page *damon_get_page(unsig
+ 	return page;
  }
+ 
+-static void damon_ptep_mkold(pte_t *pte, struct mm_struct *mm,
++static void damon_ptep_mkold(pte_t *pte, struct vm_area_struct *vma,
+ 			     unsigned long addr)
+ {
+ 	bool referenced = false;
+@@ -402,13 +402,11 @@ static void damon_ptep_mkold(pte_t *pte,
+ 	if (!page)
+ 		return;
+ 
+-	if (pte_young(*pte)) {
++	if (ptep_test_and_clear_young(vma, addr, pte))
+ 		referenced = true;
+-		*pte = pte_mkold(*pte);
+-	}
+ 
+ #ifdef CONFIG_MMU_NOTIFIER
+-	if (mmu_notifier_clear_young(mm, addr, addr + PAGE_SIZE))
++	if (mmu_notifier_clear_young(vma->vm_mm, addr, addr + PAGE_SIZE))
+ 		referenced = true;
+ #endif /* CONFIG_MMU_NOTIFIER */
+ 
+@@ -419,7 +417,7 @@ static void damon_ptep_mkold(pte_t *pte,
+ 	put_page(page);
+ }
+ 
+-static void damon_pmdp_mkold(pmd_t *pmd, struct mm_struct *mm,
++static void damon_pmdp_mkold(pmd_t *pmd, struct vm_area_struct *vma,
+ 			     unsigned long addr)
+ {
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+@@ -429,13 +427,11 @@ static void damon_pmdp_mkold(pmd_t *pmd,
+ 	if (!page)
+ 		return;
+ 
+-	if (pmd_young(*pmd)) {
++	if (pmdp_test_and_clear_young(vma, addr, pmd))
+ 		referenced = true;
+-		*pmd = pmd_mkold(*pmd);
+-	}
+ 
+ #ifdef CONFIG_MMU_NOTIFIER
+-	if (mmu_notifier_clear_young(mm, addr,
++	if (mmu_notifier_clear_young(vma->vm_mm, addr,
+ 				addr + ((1UL) << HPAGE_PMD_SHIFT)))
+ 		referenced = true;
+ #endif /* CONFIG_MMU_NOTIFIER */
+@@ -462,7 +458,7 @@ static int damon_mkold_pmd_entry(pmd_t *
+ 		}
+ 
+ 		if (pmd_huge(*pmd)) {
+-			damon_pmdp_mkold(pmd, walk->mm, addr);
++			damon_pmdp_mkold(pmd, walk->vma, addr);
+ 			spin_unlock(ptl);
+ 			return 0;
+ 		}
+@@ -474,7 +470,7 @@ static int damon_mkold_pmd_entry(pmd_t *
+ 	pte = pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
+ 	if (!pte_present(*pte))
+ 		goto out;
+-	damon_ptep_mkold(pte, walk->mm, addr);
++	damon_ptep_mkold(pte, walk->vma, addr);
+ out:
+ 	pte_unmap_unlock(pte, ptl);
+ 	return 0;
 
 
