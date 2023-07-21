@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3767D20F8F;
-	Fri, 21 Jul 2023 19:26:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0000C433C9;
-	Fri, 21 Jul 2023 19:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6EA20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:26:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851C5C433D9;
+	Fri, 21 Jul 2023 19:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967609;
-	bh=yCtRCcKJvemSyJ7Qpgn3h+W1BSH1bLS7t//DEQ3eAmQ=;
+	s=korg; t=1689967611;
+	bh=ElAdtHySEFrLacSBSTpAbBVBu8ZxFEA9lWL3++5Ezrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tBvFsCsZ34HS+D9KMDmthRPCtkpRRBLk6DSd87iNZdD5Mvg7PLLvwHEL3Pp3+MUBZ
-	 w0CoiDzF08qQjDedXDFqs9GzGBAU4P7mEqcmh5Z0KnNNa8t/dyP4bUH4pa0gcdJajz
-	 cZX4r2Hqp9CjLW+aW2a4qMdHCjD+QgdKS1FvZbC8=
+	b=lwXhxE7FCTPJ/wZBx2Tu2Af9WerFPmYIPu9eCgqHAWGeOnd1iz8c8TeqAeTpK2yC9
+	 hRCk6K5hd3qyC5oF3l89rUrYWM1Ya/+dAZDoIWnJoab2ygLtt4qgqelp62b9oKkxVy
+	 W2qWVOpzKu6RNYNxLZ62KUeR5zIR72bAf+YAc0Jg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Alexey Kardashevskiy <aik@amd.com>,
-	Christoph Hellwig <hch@lst.de>,
-	iommu@lists.linux.dev,
-	Mike Rapoport <rppt@kernel.org>,
-	linux-mm@kvack.org
-Subject: [PATCH 6.1 222/223] swiotlb: mark swiotlb_memblock_alloc() as __init
-Date: Fri, 21 Jul 2023 18:07:55 +0200
-Message-ID: <20230721160530.333242277@linuxfoundation.org>
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 223/223] net/sched: sch_qfq: reintroduce lmax bound check for MTU
+Date: Fri, 21 Jul 2023 18:07:56 +0200
+Message-ID: <20230721160530.374546656@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -38,46 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-commit 9b07d27d0fbb7f7441aa986859a0f53ec93a0335 upstream.
+commit 158810b261d02fc7dd92ca9c392d8f8a211a2401 upstream.
 
-swiotlb_memblock_alloc() calls memblock_alloc(), which calls
-(__init) memblock_alloc_try_nid(). However, swiotlb_membloc_alloc()
-can be marked as __init since it is only called by swiotlb_init_remap(),
-which is already marked as __init. This prevents a modpost build
-warning/error:
+25369891fcef deletes a check for the case where no 'lmax' is
+specified which 3037933448f6 previously fixed as 'lmax'
+could be set to the device's MTU without any bound checking
+for QFQ_LMAX_MIN and QFQ_LMAX_MAX. Therefore, reintroduce the check.
 
-WARNING: modpost: vmlinux.o: section mismatch in reference: swiotlb_memblock_alloc (section: .text) -> memblock_alloc_try_nid (section: .init.text)
-WARNING: modpost: vmlinux.o: section mismatch in reference: swiotlb_memblock_alloc (section: .text) -> memblock_alloc_try_nid (section: .init.text)
-
-This fixes the build warning/error seen on ARM64, PPC64, S390, i386,
-and x86_64.
-
-Fixes: 8d58aa484920 ("swiotlb: reduce the swiotlb buffer size on allocation failure")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Alexey Kardashevskiy <aik@amd.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: iommu@lists.linux.dev
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: linux-mm@kvack.org
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: 25369891fcef ("net/sched: sch_qfq: refactor parsing of netlink parameters")
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/dma/swiotlb.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/sch_qfq.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/kernel/dma/swiotlb.c
-+++ b/kernel/dma/swiotlb.c
-@@ -324,7 +324,8 @@ static void swiotlb_init_io_tlb_mem(stru
- 	return;
- }
+--- a/net/sched/sch_qfq.c
++++ b/net/sched/sch_qfq.c
+@@ -428,10 +428,17 @@ static int qfq_change_class(struct Qdisc
+ 	else
+ 		weight = 1;
  
--static void *swiotlb_memblock_alloc(unsigned long nslabs, unsigned int flags,
-+static void __init *swiotlb_memblock_alloc(unsigned long nslabs,
-+		unsigned int flags,
- 		int (*remap)(void *tlb, unsigned long nslabs))
- {
- 	size_t bytes = PAGE_ALIGN(nslabs << IO_TLB_SHIFT);
+-	if (tb[TCA_QFQ_LMAX])
++	if (tb[TCA_QFQ_LMAX]) {
+ 		lmax = nla_get_u32(tb[TCA_QFQ_LMAX]);
+-	else
++	} else {
++		/* MTU size is user controlled */
+ 		lmax = psched_mtu(qdisc_dev(sch));
++		if (lmax < QFQ_MIN_LMAX || lmax > QFQ_MAX_LMAX) {
++			NL_SET_ERR_MSG_MOD(extack,
++					   "MTU size out of bounds for qfq");
++			return -EINVAL;
++		}
++	}
+ 
+ 	inv_w = ONE_FP / weight;
+ 	weight = ONE_FP / inv_w;
 
 
