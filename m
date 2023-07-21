@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082AF20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:17:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E349C433C8;
-	Fri, 21 Jul 2023 19:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C784720F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:17:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A050C433C9;
+	Fri, 21 Jul 2023 19:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967020;
-	bh=McjRgZ/WKDZ7bKVgxaylvT91AHbvU+Y93SW/nZyQheA=;
+	s=korg; t=1689967023;
+	bh=bWifgF7O/ICfufidwxmhTYDKZPONgX2pN/42hIZIQBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W/Iat7Vh3GMOcS06ZzmASsFwUgI6H+nOaUdNepJbeTUo7LV/YYshkYz4EFDt6+pCf
-	 Ej1Z0kaerhZA32+ttsUtrxSzRCL46DYKLV2vOQ3pSebsavs7Gs8lfPqRcQd8aqwM3r
-	 M6U8UEu8RqkR5nxcDRJH4PMg/b0sFvtgsA+vM0ys=
+	b=ld8wxUZeLCNPOg50zOHyh2TbRap/hzRAqNgdSi6/pJ/9BGGc5G5BSEsTrbINpIysD
+	 N5QufgObWPh3BEp6BJqprj7ceNFgMOiz/LGlCsWtiDVmvE/C5GL4iqOjsa1wyTBWVW
+	 h/q/S3o46Em7/hz4rzSGV5dnw5WpUc3XzdWp1TP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan Whitehead <bryan.whitehead@microchip.com>,
-	UNGLinuxDriver@microchip.com,
-	Moritz Fischer <moritzf@google.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 004/223] net: lan743x: Dont sleep in atomic context
-Date: Fri, 21 Jul 2023 18:04:17 +0200
-Message-ID: <20230721160521.060661083@linuxfoundation.org>
+	Dave Airlie <airlied@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Tejun Heo <tj@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.1 005/223] workqueue: clean up WORK_* constant types, clarify masking
+Date: Fri, 21 Jul 2023 18:04:18 +0200
+Message-ID: <20230721160521.102513119@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -37,72 +38,137 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Moritz Fischer <moritzf@google.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 7a8227b2e76be506b2ac64d2beac950ca04892a5 upstream.
+commit afa4bb778e48d79e4a642ed41e3b4e0de7489a6c upstream.
 
-dev_set_rx_mode() grabs a spin_lock, and the lan743x implementation
-proceeds subsequently to go to sleep using readx_poll_timeout().
+Dave Airlie reports that gcc-13.1.1 has started complaining about some
+of the workqueue code in 32-bit arm builds:
 
-Introduce a helper wrapping the readx_poll_timeout_atomic() function
-and use it to replace the calls to readx_polL_timeout().
+  kernel/workqueue.c: In function ‘get_work_pwq’:
+  kernel/workqueue.c:713:24: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
+    713 |                 return (void *)(data & WORK_STRUCT_WQ_DATA_MASK);
+        |                        ^
+  [ ... a couple of other cases ... ]
 
-Fixes: 23f0703c125b ("lan743x: Add main source files for new lan743x driver")
-Cc: stable@vger.kernel.org
-Cc: Bryan Whitehead <bryan.whitehead@microchip.com>
-Cc: UNGLinuxDriver@microchip.com
-Signed-off-by: Moritz Fischer <moritzf@google.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20230627035000.1295254-1-moritzf@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+and while it's not immediately clear exactly why gcc started complaining
+about it now, I suspect it's some C23-induced enum type handlign fixup in
+gcc-13 is the cause.
+
+Whatever the reason for starting to complain, the code and data types
+are indeed disgusting enough that the complaint is warranted.
+
+The wq code ends up creating various "helper constants" (like that
+WORK_STRUCT_WQ_DATA_MASK) using an enum type, which is all kinds of
+confused.  The mask needs to be 'unsigned long', not some unspecified
+enum type.
+
+To make matters worse, the actual "mask and cast to a pointer" is
+repeated a couple of times, and the cast isn't even always done to the
+right pointer, but - as the error case above - to a 'void *' with then
+the compiler finishing the job.
+
+That's now how we roll in the kernel.
+
+So create the masks using the proper types rather than some ambiguous
+enumeration, and use a nice helper that actually does the type
+conversion in one well-defined place.
+
+Incidentally, this magically makes clang generate better code.  That,
+admittedly, is really just a sign of clang having been seriously
+confused before, and cleaning up the typing unconfuses the compiler too.
+
+Reported-by: Dave Airlie <airlied@gmail.com>
+Link: https://lore.kernel.org/lkml/CAPM=9twNnV4zMCvrPkw3H-ajZOH-01JVh_kDrxdPYQErz8ZTdA@mail.gmail.com/
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microchip/lan743x_main.c |   21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ include/linux/workqueue.h |   15 ++++++++-------
+ kernel/workqueue.c        |   13 ++++++++-----
+ 2 files changed, 16 insertions(+), 12 deletions(-)
 
---- a/drivers/net/ethernet/microchip/lan743x_main.c
-+++ b/drivers/net/ethernet/microchip/lan743x_main.c
-@@ -144,6 +144,18 @@ static int lan743x_csr_light_reset(struc
- 				  !(data & HW_CFG_LRST_), 100000, 10000000);
+--- a/include/linux/workqueue.h
++++ b/include/linux/workqueue.h
+@@ -68,7 +68,6 @@ enum {
+ 	WORK_OFFQ_FLAG_BASE	= WORK_STRUCT_COLOR_SHIFT,
+ 
+ 	__WORK_OFFQ_CANCELING	= WORK_OFFQ_FLAG_BASE,
+-	WORK_OFFQ_CANCELING	= (1 << __WORK_OFFQ_CANCELING),
+ 
+ 	/*
+ 	 * When a work item is off queue, its high bits point to the last
+@@ -79,12 +78,6 @@ enum {
+ 	WORK_OFFQ_POOL_SHIFT	= WORK_OFFQ_FLAG_BASE + WORK_OFFQ_FLAG_BITS,
+ 	WORK_OFFQ_LEFT		= BITS_PER_LONG - WORK_OFFQ_POOL_SHIFT,
+ 	WORK_OFFQ_POOL_BITS	= WORK_OFFQ_LEFT <= 31 ? WORK_OFFQ_LEFT : 31,
+-	WORK_OFFQ_POOL_NONE	= (1LU << WORK_OFFQ_POOL_BITS) - 1,
+-
+-	/* convenience constants */
+-	WORK_STRUCT_FLAG_MASK	= (1UL << WORK_STRUCT_FLAG_BITS) - 1,
+-	WORK_STRUCT_WQ_DATA_MASK = ~WORK_STRUCT_FLAG_MASK,
+-	WORK_STRUCT_NO_POOL	= (unsigned long)WORK_OFFQ_POOL_NONE << WORK_OFFQ_POOL_SHIFT,
+ 
+ 	/* bit mask for work_busy() return values */
+ 	WORK_BUSY_PENDING	= 1 << 0,
+@@ -94,6 +87,14 @@ enum {
+ 	WORKER_DESC_LEN		= 24,
+ };
+ 
++/* Convenience constants - of type 'unsigned long', not 'enum'! */
++#define WORK_OFFQ_CANCELING	(1ul << __WORK_OFFQ_CANCELING)
++#define WORK_OFFQ_POOL_NONE	((1ul << WORK_OFFQ_POOL_BITS) - 1)
++#define WORK_STRUCT_NO_POOL	(WORK_OFFQ_POOL_NONE << WORK_OFFQ_POOL_SHIFT)
++
++#define WORK_STRUCT_FLAG_MASK    ((1ul << WORK_STRUCT_FLAG_BITS) - 1)
++#define WORK_STRUCT_WQ_DATA_MASK (~WORK_STRUCT_FLAG_MASK)
++
+ struct work_struct {
+ 	atomic_long_t data;
+ 	struct list_head entry;
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -698,12 +698,17 @@ static void clear_work_data(struct work_
+ 	set_work_data(work, WORK_STRUCT_NO_POOL, 0);
  }
  
-+static int lan743x_csr_wait_for_bit_atomic(struct lan743x_adapter *adapter,
-+					   int offset, u32 bit_mask,
-+					   int target_value, int udelay_min,
-+					   int udelay_max, int count)
++static inline struct pool_workqueue *work_struct_pwq(unsigned long data)
 +{
-+	u32 data;
-+
-+	return readx_poll_timeout_atomic(LAN743X_CSR_READ_OP, offset, data,
-+					 target_value == !!(data & bit_mask),
-+					 udelay_max, udelay_min * count);
++	return (struct pool_workqueue *)(data & WORK_STRUCT_WQ_DATA_MASK);
 +}
 +
- static int lan743x_csr_wait_for_bit(struct lan743x_adapter *adapter,
- 				    int offset, u32 bit_mask,
- 				    int target_value, int usleep_min,
-@@ -746,8 +758,8 @@ static int lan743x_dp_write(struct lan74
- 	u32 dp_sel;
- 	int i;
+ static struct pool_workqueue *get_work_pwq(struct work_struct *work)
+ {
+ 	unsigned long data = atomic_long_read(&work->data);
  
--	if (lan743x_csr_wait_for_bit(adapter, DP_SEL, DP_SEL_DPRDY_,
--				     1, 40, 100, 100))
-+	if (lan743x_csr_wait_for_bit_atomic(adapter, DP_SEL, DP_SEL_DPRDY_,
-+					    1, 40, 100, 100))
- 		return -EIO;
- 	dp_sel = lan743x_csr_read(adapter, DP_SEL);
- 	dp_sel &= ~DP_SEL_MASK_;
-@@ -758,8 +770,9 @@ static int lan743x_dp_write(struct lan74
- 		lan743x_csr_write(adapter, DP_ADDR, addr + i);
- 		lan743x_csr_write(adapter, DP_DATA_0, buf[i]);
- 		lan743x_csr_write(adapter, DP_CMD, DP_CMD_WRITE_);
--		if (lan743x_csr_wait_for_bit(adapter, DP_SEL, DP_SEL_DPRDY_,
--					     1, 40, 100, 100))
-+		if (lan743x_csr_wait_for_bit_atomic(adapter, DP_SEL,
-+						    DP_SEL_DPRDY_,
-+						    1, 40, 100, 100))
- 			return -EIO;
- 	}
+ 	if (data & WORK_STRUCT_PWQ)
+-		return (void *)(data & WORK_STRUCT_WQ_DATA_MASK);
++		return work_struct_pwq(data);
+ 	else
+ 		return NULL;
+ }
+@@ -731,8 +736,7 @@ static struct worker_pool *get_work_pool
+ 	assert_rcu_or_pool_mutex();
  
+ 	if (data & WORK_STRUCT_PWQ)
+-		return ((struct pool_workqueue *)
+-			(data & WORK_STRUCT_WQ_DATA_MASK))->pool;
++		return work_struct_pwq(data)->pool;
+ 
+ 	pool_id = data >> WORK_OFFQ_POOL_SHIFT;
+ 	if (pool_id == WORK_OFFQ_POOL_NONE)
+@@ -753,8 +757,7 @@ static int get_work_pool_id(struct work_
+ 	unsigned long data = atomic_long_read(&work->data);
+ 
+ 	if (data & WORK_STRUCT_PWQ)
+-		return ((struct pool_workqueue *)
+-			(data & WORK_STRUCT_WQ_DATA_MASK))->pool->id;
++		return work_struct_pwq(data)->pool->id;
+ 
+ 	return data >> WORK_OFFQ_POOL_SHIFT;
+ }
 
 
