@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCB320F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:17:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F163C433C7;
-	Fri, 21 Jul 2023 19:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC08820F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:17:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70111C433C7;
+	Fri, 21 Jul 2023 19:17:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967072;
-	bh=PpKYSH7zt/h6PgL18rq2cpJGVnwbNBV60ArGAvc48UU=;
+	s=korg; t=1689967075;
+	bh=HWRFJ3XkNz1VfdjMuFUzPXdciVm7PKG5YNggZJtILxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PPrSz5HCjilwDntS9RgrKRU4lS3qre1BhaI/VcF7t0ncMZPu7x8QpWczVgQM88nVS
-	 XuWox8RQg4Nku6B8sy208HKMNX6JkOxPogtQpUD+kNSe7ubLdZMtg5Y0fXkCQP/4ml
-	 BS8p5KvA4p9TiWZgIfp7aF70KfWD+hMQ9Ix18meU=
+	b=yhHL9NIuDhX1QHjhjFqyNjxn8Btx3P93aOW+QKBTqc3Gh3hnmAloS5t53aIDHwnTW
+	 kS98aGlW09m0dTXeE3WDzXxGZXiGSHwyMm/gvSEdDyN8rJI8GUbiwl401a1pf6vaGt
+	 hXe9sdY10HwWjL0UBTgbf+mD+f5znl77FIxoE97o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Amit Klein <aksecurity@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willy Tarreau <w@1wt.eu>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	Hannes Frederic Sowa <hannes@stressinduktion.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 017/223] net/mlx5e: fix memory leak in mlx5e_fs_tt_redirect_any_create
-Date: Fri, 21 Jul 2023 18:04:30 +0200
-Message-ID: <20230721160521.613089605@linuxfoundation.org>
+Subject: [PATCH 6.1 035/223] udp6: fix udp6_ehashfn() typo
+Date: Fri, 21 Jul 2023 18:04:48 +0200
+Message-ID: <20230721160522.363035796@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -37,49 +40,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3250affdc658557a41df9c5fb567723e421f8bf2 ]
+[ Upstream commit 51d03e2f2203e76ed02d33fb5ffbb5fc85ffaf54 ]
 
-The memory pointed to by the fs->any pointer is not freed in the error
-path of mlx5e_fs_tt_redirect_any_create, which can lead to a memory leak.
-Fix by freeing the memory in the error path, thereby making the error path
-identical to mlx5e_fs_tt_redirect_any_destroy().
+Amit Klein reported that udp6_ehash_secret was initialized but never used.
 
-Fixes: 0f575c20bf06 ("net/mlx5e: Introduce Flow Steering ANY API")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 1bbdceef1e53 ("inet: convert inet_ehash_secret and ipv6_hash_secret to net_get_random_once")
+Reported-by: Amit Klein <aksecurity@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Willy Tarreau <w@1wt.eu>
+Cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Cc: David Ahern <dsahern@kernel.org>
+Cc: Hannes Frederic Sowa <hannes@stressinduktion.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/ipv6/udp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c b/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c
-index 03cb79adf912f..be83ad9db82a4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c
-@@ -594,7 +594,7 @@ int mlx5e_fs_tt_redirect_any_create(struct mlx5e_flow_steering *fs)
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index c029222ce46b0..04f1d696503cd 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -90,7 +90,7 @@ static u32 udp6_ehashfn(const struct net *net,
+ 	fhash = __ipv6_addr_jhash(faddr, udp_ipv6_hash_secret);
  
- 	err = fs_any_create_table(fs);
- 	if (err)
--		return err;
-+		goto err_free_any;
- 
- 	err = fs_any_enable(fs);
- 	if (err)
-@@ -606,8 +606,8 @@ int mlx5e_fs_tt_redirect_any_create(struct mlx5e_flow_steering *fs)
- 
- err_destroy_table:
- 	fs_any_destroy_table(fs_any);
--
--	kfree(fs_any);
-+err_free_any:
- 	mlx5e_fs_set_any(fs, NULL);
-+	kfree(fs_any);
- 	return err;
+ 	return __inet6_ehashfn(lhash, lport, fhash, fport,
+-			       udp_ipv6_hash_secret + net_hash_mix(net));
++			       udp6_ehash_secret + net_hash_mix(net));
  }
+ 
+ int udp_v6_get_port(struct sock *sk, unsigned short snum)
 -- 
 2.39.2
 
