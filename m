@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3F2200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 704F4C433C7;
-	Fri, 21 Jul 2023 19:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCF520F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4450CC433C7;
+	Fri, 21 Jul 2023 19:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966549;
-	bh=lgTUt7JDiYkVjOzr8diPbzsXbnxvocxGjGGmQyEAwHs=;
+	s=korg; t=1689966552;
+	bh=1Py5AHatNU3Bh007LbBLqzwgglpFtI8aSaLBIBVeL6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M0qjOu7Sbb+EUyEtv76l78OOpOlonp3HJAREqzSp7so9Uuj+oq3tbLE00qQce7dwj
-	 DNnYBx/B/adSBdYCY0Fbv++9vQVEizYbOJ9P3tVL5AKMxSsbLkTGbb3xrcxKqFYrDG
-	 MuD+cyN4HW5PMlLxNVI3knKIP5f7G8MNko6vh4IM=
+	b=WTLnTjv3IhAB6WPq4WuJMppslYW8WqQf7hYbfFId80dGEf7PIcZJ6JUK1CAN2zcB0
+	 8j/nN7hC54a+5xUyRVpCJS9vMF2Th8nSKv0+YaWiC84VK3bn94U2+RwkL6I42N+JU3
+	 /soPX2TyUSYBWSY516fA0OYfoNWiSjAj5fRhSISk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianjia Zhang <tianjia.zhang@linux.alibaba.com>,
-	Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 5.15 354/532] integrity: Fix possible multiple allocation in integrity_inode_get()
-Date: Fri, 21 Jul 2023 18:04:18 +0200
-Message-ID: <20230721160633.646700412@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 345/532] io_uring: wait interruptibly for request completions on exit
+Date: Fri, 21 Jul 2023 18:04:09 +0200
+Message-ID: <20230721160633.150447529@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,62 +33,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 9df6a4870dc371136e90330cfbbc51464ee66993 upstream.
+commit 4826c59453b3b4677d6bf72814e7ababdea86949 upstream.
 
-When integrity_inode_get() is querying and inserting the cache, there
-is a conditional race in the concurrent environment.
+WHen the ring exits, cleanup is done and the final cancelation and
+waiting on completions is done by io_ring_exit_work. That function is
+invoked by kworker, which doesn't take any signals. Because of that, it
+doesn't really matter if we wait for completions in TASK_INTERRUPTIBLE
+or TASK_UNINTERRUPTIBLE state. However, it does matter to the hung task
+detection checker!
 
-The race condition is the result of not properly implementing
-"double-checked locking". In this case, it first checks to see if the
-iint cache record exists before taking the lock, but doesn't check
-again after taking the integrity_iint_lock.
+Normally we expect cancelations and completions to happen rather
+quickly. Some test cases, however, will exit the ring and park the
+owning task stopped (eg via SIGSTOP). If the owning task needs to run
+task_work to complete requests, then io_ring_exit_work won't make any
+progress until the task is runnable again. Hence io_ring_exit_work can
+trigger the hung task detection, which is particularly problematic if
+panic-on-hung-task is enabled.
 
-Fixes: bf2276d10ce5 ("ima: allocating iint improvements")
-Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
-Cc: Dmitry Kasatkin <dmitry.kasatkin@gmail.com>
-Cc: <stable@vger.kernel.org> # v3.10+
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+As the ring exit doesn't take signals to begin with, have it wait
+interruptibly rather than uninterruptibly. io_uring has a separate
+stuck-exit warning that triggers independently anyway, so we're not
+really missing anything by making this switch.
+
+Cc: stable@vger.kernel.org # 5.10+
+Link: https://lore.kernel.org/r/b0e4aaef-7088-56ce-244c-976edeac0e66@kernel.dk
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/iint.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ io_uring/io_uring.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
---- a/security/integrity/iint.c
-+++ b/security/integrity/iint.c
-@@ -43,12 +43,10 @@ static struct integrity_iint_cache *__in
- 		else if (inode > iint->inode)
- 			n = n->rb_right;
- 		else
--			break;
-+			return iint;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -9714,7 +9714,18 @@ static void io_ring_exit_work(struct wor
+ 			/* there is little hope left, don't run it too often */
+ 			interval = HZ * 60;
+ 		}
+-	} while (!wait_for_completion_timeout(&ctx->ref_comp, interval));
++		/*
++		 * This is really an uninterruptible wait, as it has to be
++		 * complete. But it's also run from a kworker, which doesn't
++		 * take signals, so it's fine to make it interruptible. This
++		 * avoids scenarios where we knowingly can wait much longer
++		 * on completions, for example if someone does a SIGSTOP on
++		 * a task that needs to finish task_work to make this loop
++		 * complete. That's a synthetic situation that should not
++		 * cause a stuck task backtrace, and hence a potential panic
++		 * on stuck tasks if that is enabled.
++		 */
++	} while (!wait_for_completion_interruptible_timeout(&ctx->ref_comp, interval));
+ 
+ 	init_completion(&exit.completion);
+ 	init_task_work(&exit.task_work, io_tctx_exit_cb);
+@@ -9739,7 +9750,12 @@ static void io_ring_exit_work(struct wor
+ 		wake_up_process(node->task);
+ 
+ 		mutex_unlock(&ctx->uring_lock);
+-		wait_for_completion(&exit.completion);
++		/*
++		 * See comment above for
++		 * wait_for_completion_interruptible_timeout() on why this
++		 * wait is marked as interruptible.
++		 */
++		wait_for_completion_interruptible(&exit.completion);
+ 		mutex_lock(&ctx->uring_lock);
  	}
--	if (!n)
--		return NULL;
- 
--	return iint;
-+	return NULL;
- }
- 
- /*
-@@ -121,10 +119,15 @@ struct integrity_iint_cache *integrity_i
- 		parent = *p;
- 		test_iint = rb_entry(parent, struct integrity_iint_cache,
- 				     rb_node);
--		if (inode < test_iint->inode)
-+		if (inode < test_iint->inode) {
- 			p = &(*p)->rb_left;
--		else
-+		} else if (inode > test_iint->inode) {
- 			p = &(*p)->rb_right;
-+		} else {
-+			write_unlock(&integrity_iint_lock);
-+			kmem_cache_free(iint_cache, iint);
-+			return test_iint;
-+		}
- 	}
- 
- 	iint->inode = inode;
+ 	mutex_unlock(&ctx->uring_lock);
 
 
