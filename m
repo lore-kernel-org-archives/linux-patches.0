@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65811ED25
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:12:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48936C433C7;
-	Fri, 21 Jul 2023 16:12:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C52A1ED25
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:12:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C2C2C433CD;
+	Fri, 21 Jul 2023 16:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689955934;
-	bh=YOhcJ8tC+IWpkw7UpEG7iyAIYK7lwu66O2MwBeCMo8Q=;
+	s=korg; t=1689955937;
+	bh=CYtgyVZqPNKNh0yj03VZsd5tZ/Deo7DRhcXRfHqa/i0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RB/Pqx2dLOuCtulYNuqB+/HQjZyf1dYxPLvRwFSw7nLyz+laLPyLj2vHfrbv4ddbl
-	 8MnnkVyDXMRMVYGhV9uHvYKxgK5erdaFHwey2dn6xmB7fuhpr/R+LN+F0MXMZSZnph
-	 qTI0zh1YAWdkqgkDIFV8eSuSXev5gueHmO1LU4H8=
+	b=XKb8rnrK7J0aO/BrgWtPEKFVtPgFS2Fu14baGGnV3R9UDyoJoaUfZi5s4StQJMVQQ
+	 edkIj53Pxs/fuSFpvTuZNUdcnltNmgdVRhyL+XjtwFf6vC39VBbpNRZaHQ8MIZ+Xta
+	 qGBpNAo5GaghG5ESwkEnh9phDZf5DyPl1hYh/VHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Wei Fang <wei.fang@nxp.com>,
-	Simon Horman <simon.horman@corigine.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 082/292] net: fec: remove last_bdp from fec_enet_txq_xmit_frame()
-Date: Fri, 21 Jul 2023 18:03:11 +0200
-Message-ID: <20230721160532.329075140@linuxfoundation.org>
+Subject: [PATCH 6.4 083/292] net: fec: recycle pages for transmitted XDP frames
+Date: Fri, 21 Jul 2023 18:03:12 +0200
+Message-ID: <20230721160532.371353127@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -38,60 +37,293 @@ Content-Transfer-Encoding: 8bit
 
 From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit bc638eabfed90fdc798fd5765e67e41abea76152 ]
+[ Upstream commit 20f797399035a8052dbd7297fdbe094079a9482e ]
 
-The last_bdp is initialized to bdp, and both last_bdp and bdp are
-not changed. That is to say that last_bdp and bdp are always equal.
-So bdp can be used directly.
+Once the XDP frames have been successfully transmitted through the
+ndo_xdp_xmit() interface, it's the driver responsibility to free
+the frames so that the page_pool can recycle the pages and reuse
+them. However, this action is not implemented in the fec driver.
+This leads to a user-visible problem that the console will print
+the following warning log.
 
+[  157.568851] page_pool_release_retry() stalled pool shutdown 1389 inflight 60 sec
+[  217.983446] page_pool_release_retry() stalled pool shutdown 1389 inflight 120 sec
+[  278.399006] page_pool_release_retry() stalled pool shutdown 1389 inflight 181 sec
+[  338.812885] page_pool_release_retry() stalled pool shutdown 1389 inflight 241 sec
+[  399.226946] page_pool_release_retry() stalled pool shutdown 1389 inflight 302 sec
+
+Therefore, to solve this issue, we free XDP frames via xdp_return_frame()
+while cleaning the tx BD ring.
+
+Fixes: 6d6b39f180b8 ("net: fec: add initial XDP support")
 Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230529022615.669589-1-wei.fang@nxp.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 20f797399035 ("net: fec: recycle pages for transmitted XDP frames")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/freescale/fec.h      |  15 ++-
+ drivers/net/ethernet/freescale/fec_main.c | 148 +++++++++++++++-------
+ 2 files changed, 115 insertions(+), 48 deletions(-)
 
+diff --git a/drivers/net/ethernet/freescale/fec.h b/drivers/net/ethernet/freescale/fec.h
+index 9939ccafb5566..8c0226d061fec 100644
+--- a/drivers/net/ethernet/freescale/fec.h
++++ b/drivers/net/ethernet/freescale/fec.h
+@@ -544,10 +544,23 @@ enum {
+ 	XDP_STATS_TOTAL,
+ };
+ 
++enum fec_txbuf_type {
++	FEC_TXBUF_T_SKB,
++	FEC_TXBUF_T_XDP_NDO,
++};
++
++struct fec_tx_buffer {
++	union {
++		struct sk_buff *skb;
++		struct xdp_frame *xdp;
++	};
++	enum fec_txbuf_type type;
++};
++
+ struct fec_enet_priv_tx_q {
+ 	struct bufdesc_prop bd;
+ 	unsigned char *tx_bounce[TX_RING_SIZE];
+-	struct  sk_buff *tx_skbuff[TX_RING_SIZE];
++	struct fec_tx_buffer tx_buf[TX_RING_SIZE];
+ 
+ 	unsigned short tx_stop_threshold;
+ 	unsigned short tx_wake_threshold;
 diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index c08331f7da7b3..40d71be45f604 100644
+index 40d71be45f604..e6ed36e5daefa 100644
 --- a/drivers/net/ethernet/freescale/fec_main.c
 +++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -3770,7 +3770,7 @@ static int fec_enet_txq_xmit_frame(struct fec_enet_private *fep,
- 				   struct xdp_frame *frame)
+@@ -397,7 +397,7 @@ static void fec_dump(struct net_device *ndev)
+ 			fec16_to_cpu(bdp->cbd_sc),
+ 			fec32_to_cpu(bdp->cbd_bufaddr),
+ 			fec16_to_cpu(bdp->cbd_datlen),
+-			txq->tx_skbuff[index]);
++			txq->tx_buf[index].skb);
+ 		bdp = fec_enet_get_nextdesc(bdp, &txq->bd);
+ 		index++;
+ 	} while (bdp != txq->bd.base);
+@@ -654,7 +654,7 @@ static int fec_enet_txq_submit_skb(struct fec_enet_priv_tx_q *txq,
+ 
+ 	index = fec_enet_get_bd_index(last_bdp, &txq->bd);
+ 	/* Save skb pointer */
+-	txq->tx_skbuff[index] = skb;
++	txq->tx_buf[index].skb = skb;
+ 
+ 	/* Make sure the updates to rest of the descriptor are performed before
+ 	 * transferring ownership.
+@@ -672,9 +672,7 @@ static int fec_enet_txq_submit_skb(struct fec_enet_priv_tx_q *txq,
+ 
+ 	skb_tx_timestamp(skb);
+ 
+-	/* Make sure the update to bdp and tx_skbuff are performed before
+-	 * txq->bd.cur.
+-	 */
++	/* Make sure the update to bdp is performed before txq->bd.cur. */
+ 	wmb();
+ 	txq->bd.cur = bdp;
+ 
+@@ -862,7 +860,7 @@ static int fec_enet_txq_submit_tso(struct fec_enet_priv_tx_q *txq,
+ 	}
+ 
+ 	/* Save skb pointer */
+-	txq->tx_skbuff[index] = skb;
++	txq->tx_buf[index].skb = skb;
+ 
+ 	skb_tx_timestamp(skb);
+ 	txq->bd.cur = bdp;
+@@ -952,16 +950,33 @@ static void fec_enet_bd_init(struct net_device *dev)
+ 		for (i = 0; i < txq->bd.ring_size; i++) {
+ 			/* Initialize the BD for every fragment in the page. */
+ 			bdp->cbd_sc = cpu_to_fec16(0);
+-			if (bdp->cbd_bufaddr &&
+-			    !IS_TSO_HEADER(txq, fec32_to_cpu(bdp->cbd_bufaddr)))
+-				dma_unmap_single(&fep->pdev->dev,
+-						 fec32_to_cpu(bdp->cbd_bufaddr),
+-						 fec16_to_cpu(bdp->cbd_datlen),
+-						 DMA_TO_DEVICE);
+-			if (txq->tx_skbuff[i]) {
+-				dev_kfree_skb_any(txq->tx_skbuff[i]);
+-				txq->tx_skbuff[i] = NULL;
++			if (txq->tx_buf[i].type == FEC_TXBUF_T_SKB) {
++				if (bdp->cbd_bufaddr &&
++				    !IS_TSO_HEADER(txq, fec32_to_cpu(bdp->cbd_bufaddr)))
++					dma_unmap_single(&fep->pdev->dev,
++							 fec32_to_cpu(bdp->cbd_bufaddr),
++							 fec16_to_cpu(bdp->cbd_datlen),
++							 DMA_TO_DEVICE);
++				if (txq->tx_buf[i].skb) {
++					dev_kfree_skb_any(txq->tx_buf[i].skb);
++					txq->tx_buf[i].skb = NULL;
++				}
++			} else {
++				if (bdp->cbd_bufaddr)
++					dma_unmap_single(&fep->pdev->dev,
++							 fec32_to_cpu(bdp->cbd_bufaddr),
++							 fec16_to_cpu(bdp->cbd_datlen),
++							 DMA_TO_DEVICE);
++
++				if (txq->tx_buf[i].xdp) {
++					xdp_return_frame(txq->tx_buf[i].xdp);
++					txq->tx_buf[i].xdp = NULL;
++				}
++
++				/* restore default tx buffer type: FEC_TXBUF_T_SKB */
++				txq->tx_buf[i].type = FEC_TXBUF_T_SKB;
+ 			}
++
+ 			bdp->cbd_bufaddr = cpu_to_fec32(0);
+ 			bdp = fec_enet_get_nextdesc(bdp, &txq->bd);
+ 		}
+@@ -1360,6 +1375,7 @@ static void
+ fec_enet_tx_queue(struct net_device *ndev, u16 queue_id)
  {
- 	unsigned int index, status, estatus;
--	struct bufdesc *bdp, *last_bdp;
-+	struct bufdesc *bdp;
- 	dma_addr_t dma_addr;
- 	int entries_free;
+ 	struct	fec_enet_private *fep;
++	struct xdp_frame *xdpf;
+ 	struct bufdesc *bdp;
+ 	unsigned short status;
+ 	struct	sk_buff	*skb;
+@@ -1387,16 +1403,31 @@ fec_enet_tx_queue(struct net_device *ndev, u16 queue_id)
  
-@@ -3782,7 +3782,6 @@ static int fec_enet_txq_xmit_frame(struct fec_enet_private *fep,
+ 		index = fec_enet_get_bd_index(bdp, &txq->bd);
  
- 	/* Fill in a Tx ring entry */
- 	bdp = txq->bd.cur;
--	last_bdp = bdp;
- 	status = fec16_to_cpu(bdp->cbd_sc);
- 	status &= ~BD_ENET_TX_STATS;
+-		skb = txq->tx_skbuff[index];
+-		txq->tx_skbuff[index] = NULL;
+-		if (!IS_TSO_HEADER(txq, fec32_to_cpu(bdp->cbd_bufaddr)))
+-			dma_unmap_single(&fep->pdev->dev,
+-					 fec32_to_cpu(bdp->cbd_bufaddr),
+-					 fec16_to_cpu(bdp->cbd_datlen),
+-					 DMA_TO_DEVICE);
+-		bdp->cbd_bufaddr = cpu_to_fec32(0);
+-		if (!skb)
+-			goto skb_done;
++		if (txq->tx_buf[index].type == FEC_TXBUF_T_SKB) {
++			skb = txq->tx_buf[index].skb;
++			txq->tx_buf[index].skb = NULL;
++			if (bdp->cbd_bufaddr &&
++			    !IS_TSO_HEADER(txq, fec32_to_cpu(bdp->cbd_bufaddr)))
++				dma_unmap_single(&fep->pdev->dev,
++						 fec32_to_cpu(bdp->cbd_bufaddr),
++						 fec16_to_cpu(bdp->cbd_datlen),
++						 DMA_TO_DEVICE);
++			bdp->cbd_bufaddr = cpu_to_fec32(0);
++			if (!skb)
++				goto tx_buf_done;
++		} else {
++			xdpf = txq->tx_buf[index].xdp;
++			if (bdp->cbd_bufaddr)
++				dma_unmap_single(&fep->pdev->dev,
++						 fec32_to_cpu(bdp->cbd_bufaddr),
++						 fec16_to_cpu(bdp->cbd_datlen),
++						 DMA_TO_DEVICE);
++			bdp->cbd_bufaddr = cpu_to_fec32(0);
++			if (!xdpf) {
++				txq->tx_buf[index].type = FEC_TXBUF_T_SKB;
++				goto tx_buf_done;
++			}
++		}
  
-@@ -3810,7 +3809,6 @@ static int fec_enet_txq_xmit_frame(struct fec_enet_private *fep,
+ 		/* Check for errors. */
+ 		if (status & (BD_ENET_TX_HB | BD_ENET_TX_LC |
+@@ -1415,21 +1446,11 @@ fec_enet_tx_queue(struct net_device *ndev, u16 queue_id)
+ 				ndev->stats.tx_carrier_errors++;
+ 		} else {
+ 			ndev->stats.tx_packets++;
+-			ndev->stats.tx_bytes += skb->len;
+-		}
+ 
+-		/* NOTE: SKBTX_IN_PROGRESS being set does not imply it's we who
+-		 * are to time stamp the packet, so we still need to check time
+-		 * stamping enabled flag.
+-		 */
+-		if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_IN_PROGRESS &&
+-			     fep->hwts_tx_en) &&
+-		    fep->bufdesc_ex) {
+-			struct skb_shared_hwtstamps shhwtstamps;
+-			struct bufdesc_ex *ebdp = (struct bufdesc_ex *)bdp;
+-
+-			fec_enet_hwtstamp(fep, fec32_to_cpu(ebdp->ts), &shhwtstamps);
+-			skb_tstamp_tx(skb, &shhwtstamps);
++			if (txq->tx_buf[index].type == FEC_TXBUF_T_SKB)
++				ndev->stats.tx_bytes += skb->len;
++			else
++				ndev->stats.tx_bytes += xdpf->len;
+ 		}
+ 
+ 		/* Deferred means some collisions occurred during transmit,
+@@ -1438,10 +1459,32 @@ fec_enet_tx_queue(struct net_device *ndev, u16 queue_id)
+ 		if (status & BD_ENET_TX_DEF)
+ 			ndev->stats.collisions++;
+ 
+-		/* Free the sk buffer associated with this last transmit */
+-		dev_kfree_skb_any(skb);
+-skb_done:
+-		/* Make sure the update to bdp and tx_skbuff are performed
++		if (txq->tx_buf[index].type == FEC_TXBUF_T_SKB) {
++			/* NOTE: SKBTX_IN_PROGRESS being set does not imply it's we who
++			 * are to time stamp the packet, so we still need to check time
++			 * stamping enabled flag.
++			 */
++			if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_IN_PROGRESS &&
++				     fep->hwts_tx_en) && fep->bufdesc_ex) {
++				struct skb_shared_hwtstamps shhwtstamps;
++				struct bufdesc_ex *ebdp = (struct bufdesc_ex *)bdp;
++
++				fec_enet_hwtstamp(fep, fec32_to_cpu(ebdp->ts), &shhwtstamps);
++				skb_tstamp_tx(skb, &shhwtstamps);
++			}
++
++			/* Free the sk buffer associated with this last transmit */
++			dev_kfree_skb_any(skb);
++		} else {
++			xdp_return_frame(xdpf);
++
++			txq->tx_buf[index].xdp = NULL;
++			/* restore default tx buffer type: FEC_TXBUF_T_SKB */
++			txq->tx_buf[index].type = FEC_TXBUF_T_SKB;
++		}
++
++tx_buf_done:
++		/* Make sure the update to bdp and tx_buf are performed
+ 		 * before dirty_tx
+ 		 */
+ 		wmb();
+@@ -3247,9 +3290,19 @@ static void fec_enet_free_buffers(struct net_device *ndev)
+ 		for (i = 0; i < txq->bd.ring_size; i++) {
+ 			kfree(txq->tx_bounce[i]);
+ 			txq->tx_bounce[i] = NULL;
+-			skb = txq->tx_skbuff[i];
+-			txq->tx_skbuff[i] = NULL;
+-			dev_kfree_skb(skb);
++
++			if (txq->tx_buf[i].type == FEC_TXBUF_T_SKB) {
++				skb = txq->tx_buf[i].skb;
++				txq->tx_buf[i].skb = NULL;
++				dev_kfree_skb(skb);
++			} else {
++				if (txq->tx_buf[i].xdp) {
++					xdp_return_frame(txq->tx_buf[i].xdp);
++					txq->tx_buf[i].xdp = NULL;
++				}
++
++				txq->tx_buf[i].type = FEC_TXBUF_T_SKB;
++			}
+ 		}
+ 	}
+ }
+@@ -3809,7 +3862,8 @@ static int fec_enet_txq_xmit_frame(struct fec_enet_private *fep,
  		ebdp->cbd_esc = cpu_to_fec32(estatus);
  	}
  
--	index = fec_enet_get_bd_index(last_bdp, &txq->bd);
- 	txq->tx_skbuff[index] = NULL;
+-	txq->tx_skbuff[index] = NULL;
++	txq->tx_buf[index].type = FEC_TXBUF_T_XDP_NDO;
++	txq->tx_buf[index].xdp = frame;
  
  	/* Make sure the updates to rest of the descriptor are performed before
-@@ -3825,7 +3823,7 @@ static int fec_enet_txq_xmit_frame(struct fec_enet_private *fep,
- 	bdp->cbd_sc = cpu_to_fec16(status);
- 
- 	/* If this was the last BD in the ring, start at the beginning again. */
--	bdp = fec_enet_get_nextdesc(last_bdp, &txq->bd);
-+	bdp = fec_enet_get_nextdesc(bdp, &txq->bd);
- 
- 	/* Make sure the update to bdp are performed before txq->bd.cur. */
- 	dma_wmb();
+ 	 * transferring ownership.
 -- 
 2.39.2
 
