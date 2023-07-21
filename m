@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727CD200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:02:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E276AC433C7;
-	Fri, 21 Jul 2023 19:01:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E84200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:02:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF448C433CB;
+	Fri, 21 Jul 2023 19:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966120;
-	bh=Wu6RO+w72wZbV4pMlzMZ3AHV9YOH2/poFvnStYIEdaA=;
+	s=korg; t=1689966123;
+	bh=6MR7BegXIZH9K/T33qUZZMYphL1zrRvn4emK0DmjG6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ce11XHVvbREgNptTuHAgB1Yylg+XtfsEx1Cgmt8i6nXkngXfeWlESq3lHlKO/eK3D
-	 KcasbVHn1ppE1s2s2wPqYe824e7Y5ycQUirvazwRVOpfMxBImXqaaXZAFGDNfhN2vG
-	 Qb1msbKSMQcNlim/jbwe9o3VGWNENhizu8xMmfc0=
+	b=aqdXkdEOuJKPvd7QQgPTWbd34dQKIGzYKKKQVtseCx7TB7GYT1cnL8Fj7umMmrLAQ
+	 3LZXIxzXNJmUUu4eCCeinELHGP0vvxHK0GrJOFpcJG8CfS8nHq7J2pDy2nUonUwT6v
+	 Ysh/XO1O4JDUXCZ74WqQP0l0vZ8+ktEMRjmm4mkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoan Picchi <Yoan.Picchi@arm.com>,
-	Andre Przywara <andre.przywara@arm.com>,
-	Yoan Picchi <yoan.picchi@arm.com>,
+	Damian Muszynski <damian.muszynski@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Adam Guerin <adam.guerin@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 232/532] crypto: qat - replace get_current_node() with numa_node_id()
-Date: Fri, 21 Jul 2023 18:02:16 +0200
-Message-ID: <20230721160626.958761474@linuxfoundation.org>
+Subject: [PATCH 5.15 233/532] crypto: qat - use reference to structure in dma_map_single()
+Date: Fri, 21 Jul 2023 18:02:17 +0200
+Message-ID: <20230721160627.009471465@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,94 +37,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andre Przywara <andre.przywara@arm.com>
+From: Damian Muszynski <damian.muszynski@intel.com>
 
-[ Upstream commit c2a1b91e47984e477298912ffd55570095d67318 ]
+[ Upstream commit 072d36eefd6fde17928d214df64fdac32f60b4f4 ]
 
-Currently the QAT driver code uses a self-defined wrapper function
-called get_current_node() when it wants to learn the current NUMA node.
-This implementation references the topology_physical_package_id[] array,
-which more or less coincidentally contains the NUMA node id, at least
-on x86.
+When mapping the input and output parameters, the implementations of RSA
+and DH pass to the function dma_map_single() a pointer to the first
+member of the structure they want to map instead of a pointer to the
+actual structure.
+This results in set of warnings reported by the static analyser Smatch:
 
-Because this is not universal, and Linux offers a direct function to
-learn the NUMA node ID, replace that function with a call to
-numa_node_id(), which would work everywhere.
+    drivers/crypto/qat/qat_common/qat_asym_algs.c:335 qat_dh_compute_value() error: dma_map_single_attrs() '&qat_req->in.dh.in.b' too small (8 vs 64)
+    drivers/crypto/qat/qat_common/qat_asym_algs.c:341 qat_dh_compute_value() error: dma_map_single_attrs() '&qat_req->out.dh.r' too small (8 vs 64)
+    drivers/crypto/qat/qat_common/qat_asym_algs.c:732 qat_rsa_enc() error: dma_map_single_attrs() '&qat_req->in.rsa.enc.m' too small (8 vs 64)
+    drivers/crypto/qat/qat_common/qat_asym_algs.c:738 qat_rsa_enc() error: dma_map_single_attrs() '&qat_req->out.rsa.enc.c' too small (8 vs 64)
+    drivers/crypto/qat/qat_common/qat_asym_algs.c:878 qat_rsa_dec() error: dma_map_single_attrs() '&qat_req->in.rsa.dec.c' too small (8 vs 64)
+    drivers/crypto/qat/qat_common/qat_asym_algs.c:884 qat_rsa_dec() error: dma_map_single_attrs() '&qat_req->out.rsa.dec.m' too small (8 vs 64)
 
-This fixes the QAT driver operation on arm64 machines.
+Where the address of the first element of a structure is used as an
+input for the function dma_map_single(), replace it with the address of
+the structure. This fix does not introduce any functional change as the
+addresses are the same.
 
-Reported-by: Yoan Picchi <Yoan.Picchi@arm.com>
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Signed-off-by: Yoan Picchi <yoan.picchi@arm.com>
+Signed-off-by: Damian Muszynski <damian.muszynski@intel.com>
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Adam Guerin <adam.guerin@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Stable-dep-of: eb7713f5ca97 ("crypto: qat - unmap buffer before free for DH")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/qat/qat_common/adf_common_drv.h | 5 -----
- drivers/crypto/qat/qat_common/qat_algs.c       | 4 ++--
- drivers/crypto/qat/qat_common/qat_asym_algs.c  | 4 ++--
- 3 files changed, 4 insertions(+), 9 deletions(-)
+ drivers/crypto/qat/qat_common/qat_asym_algs.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/crypto/qat/qat_common/adf_common_drv.h b/drivers/crypto/qat/qat_common/adf_common_drv.h
-index 4261749fae8d4..75693ca4afea1 100644
---- a/drivers/crypto/qat/qat_common/adf_common_drv.h
-+++ b/drivers/crypto/qat/qat_common/adf_common_drv.h
-@@ -49,11 +49,6 @@ struct service_hndl {
- 	struct list_head list;
- };
- 
--static inline int get_current_node(void)
--{
--	return topology_physical_package_id(raw_smp_processor_id());
--}
--
- int adf_service_register(struct service_hndl *service);
- int adf_service_unregister(struct service_hndl *service);
- 
-diff --git a/drivers/crypto/qat/qat_common/qat_algs.c b/drivers/crypto/qat/qat_common/qat_algs.c
-index d36f90628603c..f56ee4cc5ae8b 100644
---- a/drivers/crypto/qat/qat_common/qat_algs.c
-+++ b/drivers/crypto/qat/qat_common/qat_algs.c
-@@ -605,7 +605,7 @@ static int qat_alg_aead_newkey(struct crypto_aead *tfm, const u8 *key,
- {
- 	struct qat_alg_aead_ctx *ctx = crypto_aead_ctx(tfm);
- 	struct qat_crypto_instance *inst = NULL;
--	int node = get_current_node();
-+	int node = numa_node_id();
- 	struct device *dev;
- 	int ret;
- 
-@@ -1071,7 +1071,7 @@ static int qat_alg_skcipher_newkey(struct qat_alg_skcipher_ctx *ctx,
- {
- 	struct qat_crypto_instance *inst = NULL;
- 	struct device *dev;
--	int node = get_current_node();
-+	int node = numa_node_id();
- 	int ret;
- 
- 	inst = qat_crypto_get_instance_node(node);
 diff --git a/drivers/crypto/qat/qat_common/qat_asym_algs.c b/drivers/crypto/qat/qat_common/qat_asym_algs.c
-index 11c7f2b6e5975..85b0f30712e16 100644
+index 85b0f30712e16..94a26702aeae1 100644
 --- a/drivers/crypto/qat/qat_common/qat_asym_algs.c
 +++ b/drivers/crypto/qat/qat_common/qat_asym_algs.c
-@@ -489,7 +489,7 @@ static int qat_dh_init_tfm(struct crypto_kpp *tfm)
- {
- 	struct qat_dh_ctx *ctx = kpp_tfm_ctx(tfm);
- 	struct qat_crypto_instance *inst =
--			qat_crypto_get_instance_node(get_current_node());
-+			qat_crypto_get_instance_node(numa_node_id());
+@@ -332,13 +332,13 @@ static int qat_dh_compute_value(struct kpp_request *req)
+ 	qat_req->in.dh.in_tab[n_input_params] = 0;
+ 	qat_req->out.dh.out_tab[1] = 0;
+ 	/* Mapping in.in.b or in.in_g2.xa is the same */
+-	qat_req->phy_in = dma_map_single(dev, &qat_req->in.dh.in.b,
++	qat_req->phy_in = dma_map_single(dev, &qat_req->in.dh,
+ 					 sizeof(struct qat_dh_input_params),
+ 					 DMA_TO_DEVICE);
+ 	if (unlikely(dma_mapping_error(dev, qat_req->phy_in)))
+ 		goto unmap_dst;
  
- 	if (!inst)
- 		return -EINVAL;
-@@ -1225,7 +1225,7 @@ static int qat_rsa_init_tfm(struct crypto_akcipher *tfm)
- {
- 	struct qat_rsa_ctx *ctx = akcipher_tfm_ctx(tfm);
- 	struct qat_crypto_instance *inst =
--			qat_crypto_get_instance_node(get_current_node());
-+			qat_crypto_get_instance_node(numa_node_id());
+-	qat_req->phy_out = dma_map_single(dev, &qat_req->out.dh.r,
++	qat_req->phy_out = dma_map_single(dev, &qat_req->out.dh,
+ 					  sizeof(struct qat_dh_output_params),
+ 					  DMA_TO_DEVICE);
+ 	if (unlikely(dma_mapping_error(dev, qat_req->phy_out)))
+@@ -729,13 +729,13 @@ static int qat_rsa_enc(struct akcipher_request *req)
  
- 	if (!inst)
- 		return -EINVAL;
+ 	qat_req->in.rsa.in_tab[3] = 0;
+ 	qat_req->out.rsa.out_tab[1] = 0;
+-	qat_req->phy_in = dma_map_single(dev, &qat_req->in.rsa.enc.m,
++	qat_req->phy_in = dma_map_single(dev, &qat_req->in.rsa,
+ 					 sizeof(struct qat_rsa_input_params),
+ 					 DMA_TO_DEVICE);
+ 	if (unlikely(dma_mapping_error(dev, qat_req->phy_in)))
+ 		goto unmap_dst;
+ 
+-	qat_req->phy_out = dma_map_single(dev, &qat_req->out.rsa.enc.c,
++	qat_req->phy_out = dma_map_single(dev, &qat_req->out.rsa,
+ 					  sizeof(struct qat_rsa_output_params),
+ 					  DMA_TO_DEVICE);
+ 	if (unlikely(dma_mapping_error(dev, qat_req->phy_out)))
+@@ -875,13 +875,13 @@ static int qat_rsa_dec(struct akcipher_request *req)
+ 	else
+ 		qat_req->in.rsa.in_tab[3] = 0;
+ 	qat_req->out.rsa.out_tab[1] = 0;
+-	qat_req->phy_in = dma_map_single(dev, &qat_req->in.rsa.dec.c,
++	qat_req->phy_in = dma_map_single(dev, &qat_req->in.rsa,
+ 					 sizeof(struct qat_rsa_input_params),
+ 					 DMA_TO_DEVICE);
+ 	if (unlikely(dma_mapping_error(dev, qat_req->phy_in)))
+ 		goto unmap_dst;
+ 
+-	qat_req->phy_out = dma_map_single(dev, &qat_req->out.rsa.dec.m,
++	qat_req->phy_out = dma_map_single(dev, &qat_req->out.rsa,
+ 					  sizeof(struct qat_rsa_output_params),
+ 					  DMA_TO_DEVICE);
+ 	if (unlikely(dma_mapping_error(dev, qat_req->phy_out)))
 -- 
 2.39.2
 
