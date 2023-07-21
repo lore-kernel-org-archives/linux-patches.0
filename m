@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B9D1F941
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:19:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8544EC433AB;
-	Fri, 21 Jul 2023 16:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE68020F81
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:19:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5ECAC43391;
+	Fri, 21 Jul 2023 16:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956374;
-	bh=lx0sYJ6p8HimMD0ZHfKMauYEW5ljtaNrXSpa2sHPqTA=;
+	s=korg; t=1689956392;
+	bh=IWwB1kBcSgRN1dABsKJwHmuwaoxUMxzLLWHGbnlZTQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aH2LhNRYGSLBdY2QUV91mLSba0/TCIqSdlvod6uUJgCyApMn5wgz3W2yTQitL7Yts
-	 bqZoNEtNiIQBF8f6mqOATOw9NMO8jFHxArVjCfVg7stmqaeodfoK/e+0ySc0hLwzY1
-	 jdn4x4qtifYE1K8rpjNd6V3Psc+BERvcUKf4LUR4=
+	b=P9iMw8pVeJCb3aJNJlpcReo65yP3WyT81ixytqsepkecr7/7YhpXO+nrGBkw1NlZS
+	 q2rohhCp+KTFNgac6c9oyANkOSh0GNM0ZFQsFNdMHssfWqnbrBmdKqg6hUbWWfHDey
+	 G2+S1bgCmTkwvPMuxlONcKa0fBWumHAh6vq0o40A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Marko <robimarko@gmail.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.4 160/292] soc: qcom: mdt_loader: Fix unconditional call to scm_pas_mem_setup
-Date: Fri, 21 Jul 2023 18:04:29 +0200
-Message-ID: <20230721160535.779053898@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>
+Subject: [PATCH 6.4 178/292] PCI: rockchip: Add poll and timeout to wait for PHY PLLs to be locked
+Date: Fri, 21 Jul 2023 18:04:47 +0200
+Message-ID: <20230721160536.551033061@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -36,83 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
 
-commit bcb889891371c3cf767f2b9e8768cfe2fdd3810f upstream.
+commit 9dd3c7c4c8c3f7f010d9cdb7c3f42506d93c9527 upstream.
 
-Commit ebeb20a9cd3f ("soc: qcom: mdt_loader: Always invoke PAS
-mem_setup") dropped the relocate check and made pas_mem_setup run
-unconditionally. The code was later moved with commit f4e526ff7e38
-("soc: qcom: mdt_loader: Extract PAS operations") to
-qcom_mdt_pas_init() effectively losing track of what was actually
-done.
+The RK3399 PCIe controller should wait until the PHY PLLs are locked.
+Add poll and timeout to wait for PHY PLLs to be locked. If they cannot
+be locked generate error message and jump to error handler. Accessing
+registers in the PHY clock domain when PLLs are not locked causes hang
+The PHY PLLs status is checked through a side channel register.
+This is documented in the TRM section 17.5.8.1 "PCIe Initialization
+Sequence".
 
-The assumption that PAS mem_setup can be done anytime was effectively
-wrong, with no good reason and this caused regression on some SoC
-that use remoteproc to bringup ath11k. One example is IPQ8074 SoC that
-effectively broke resulting in remoteproc silently die and ath11k not
-working.
-
-On this SoC FW relocate is not enabled and PAS mem_setup was correctly
-skipped in previous kernel version resulting in correct bringup and
-function of remoteproc and ath11k.
-
-To fix the regression, reintroduce the relocate check in
-qcom_mdt_pas_init() and correctly skip PAS mem_setup where relocate is
-not enabled.
-
-Fixes: ebeb20a9cd3f ("soc: qcom: mdt_loader: Always invoke PAS mem_setup")
-Tested-by: Robert Marko <robimarko@gmail.com>
-Co-developed-by: Robert Marko <robimarko@gmail.com>
-Signed-off-by: Robert Marko <robimarko@gmail.com>
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Link: https://lore.kernel.org/r/20230418074700.1083505-5-rick.wertenbroek@gmail.com
+Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
+Tested-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Cc: stable@vger.kernel.org
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230526115511.3328-1-ansuelsmth@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/mdt_loader.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/pci/controller/pcie-rockchip.c |   17 +++++++++++++++++
+ drivers/pci/controller/pcie-rockchip.h |    2 ++
+ 2 files changed, 19 insertions(+)
 
---- a/drivers/soc/qcom/mdt_loader.c
-+++ b/drivers/soc/qcom/mdt_loader.c
-@@ -210,6 +210,7 @@ int qcom_mdt_pas_init(struct device *dev
- 	const struct elf32_hdr *ehdr;
- 	phys_addr_t min_addr = PHYS_ADDR_MAX;
- 	phys_addr_t max_addr = 0;
-+	bool relocate = false;
- 	size_t metadata_len;
- 	void *metadata;
- 	int ret;
-@@ -224,6 +225,9 @@ int qcom_mdt_pas_init(struct device *dev
- 		if (!mdt_phdr_valid(phdr))
- 			continue;
+--- a/drivers/pci/controller/pcie-rockchip.c
++++ b/drivers/pci/controller/pcie-rockchip.c
+@@ -14,6 +14,7 @@
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/gpio/consumer.h>
++#include <linux/iopoll.h>
+ #include <linux/of_pci.h>
+ #include <linux/phy/phy.h>
+ #include <linux/platform_device.h>
+@@ -153,6 +154,12 @@ int rockchip_pcie_parse_dt(struct rockch
+ }
+ EXPORT_SYMBOL_GPL(rockchip_pcie_parse_dt);
  
-+		if (phdr->p_flags & QCOM_MDT_RELOCATABLE)
-+			relocate = true;
++#define rockchip_pcie_read_addr(addr) rockchip_pcie_read(rockchip, addr)
++/* 100 ms max wait time for PHY PLLs to lock */
++#define RK_PHY_PLL_LOCK_TIMEOUT_US 100000
++/* Sleep should be less than 20ms */
++#define RK_PHY_PLL_LOCK_SLEEP_US 1000
 +
- 		if (phdr->p_paddr < min_addr)
- 			min_addr = phdr->p_paddr;
- 
-@@ -246,11 +250,13 @@ int qcom_mdt_pas_init(struct device *dev
- 		goto out;
+ int rockchip_pcie_init_port(struct rockchip_pcie *rockchip)
+ {
+ 	struct device *dev = rockchip->dev;
+@@ -254,6 +261,16 @@ int rockchip_pcie_init_port(struct rockc
+ 		}
  	}
  
--	ret = qcom_scm_pas_mem_setup(pas_id, mem_phys, max_addr - min_addr);
--	if (ret) {
--		/* Unable to set up relocation */
--		dev_err(dev, "error %d setting up firmware %s\n", ret, fw_name);
--		goto out;
-+	if (relocate) {
-+		ret = qcom_scm_pas_mem_setup(pas_id, mem_phys, max_addr - min_addr);
-+		if (ret) {
-+			/* Unable to set up relocation */
-+			dev_err(dev, "error %d setting up firmware %s\n", ret, fw_name);
-+			goto out;
-+		}
- 	}
- 
- out:
++	err = readx_poll_timeout(rockchip_pcie_read_addr,
++				 PCIE_CLIENT_SIDE_BAND_STATUS,
++				 regs, !(regs & PCIE_CLIENT_PHY_ST),
++				 RK_PHY_PLL_LOCK_SLEEP_US,
++				 RK_PHY_PLL_LOCK_TIMEOUT_US);
++	if (err) {
++		dev_err(dev, "PHY PLLs could not lock, %d\n", err);
++		goto err_power_off_phy;
++	}
++
+ 	/*
+ 	 * Please don't reorder the deassert sequence of the following
+ 	 * four reset pins.
+--- a/drivers/pci/controller/pcie-rockchip.h
++++ b/drivers/pci/controller/pcie-rockchip.h
+@@ -38,6 +38,8 @@
+ #define   PCIE_CLIENT_MODE_EP            HIWORD_UPDATE(0x0040, 0)
+ #define   PCIE_CLIENT_GEN_SEL_1		  HIWORD_UPDATE(0x0080, 0)
+ #define   PCIE_CLIENT_GEN_SEL_2		  HIWORD_UPDATE_BIT(0x0080)
++#define PCIE_CLIENT_SIDE_BAND_STATUS	(PCIE_CLIENT_BASE + 0x20)
++#define   PCIE_CLIENT_PHY_ST			BIT(12)
+ #define PCIE_CLIENT_DEBUG_OUT_0		(PCIE_CLIENT_BASE + 0x3c)
+ #define   PCIE_CLIENT_DEBUG_LTSSM_MASK		GENMASK(5, 0)
+ #define   PCIE_CLIENT_DEBUG_LTSSM_L1		0x18
 
 
