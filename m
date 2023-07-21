@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67F220F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26DB8C433C7;
-	Fri, 21 Jul 2023 19:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD11920F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0272C433C8;
+	Fri, 21 Jul 2023 19:16:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966966;
-	bh=iG8v+Hhcwd6x516GQymi6SmvXrwlUJ0bCxNgK79PWE4=;
+	s=korg; t=1689966969;
+	bh=DJPAuEM50nUKpPPfjFWNaDhwWGHgEjIiZoPJiHj84bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hhvCc8L3DMcBtBkhnn/8jnkgyXOCRvUdddx19+IA2xcNsUhivQQkBizq24i+Iv2U1
-	 oTtSLup22y7GeIq94kBKnLoD3X88rPpFL+a6vCCtJwQyJn069yWAYp5k3jSBR+fV6J
-	 0ediYdlB/DuNSc/WVXJuqCqzlH5qkZuDcbrnYd3U=
+	b=KdRqB7SHCUUZfdqVVCKVRotfPuLPmNn4zawoFftNX5yj7Sle4a3Tg88oeytBP6Ywz
+	 Q2bPEXiW8MNWUxh581S+pwzTa+5oK5WDzAqcZjMTEgfnltPjQRw9n5LtEk1ZncNyK5
+	 kynGJehzwA6SvvUIpYH97S7ED0QggdN9w8zI1rAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Weitao Wang <WeitaoWang-oc@zhaoxin.com>
-Subject: [PATCH 5.15 503/532] xhci: Show ZHAOXIN xHCI root hub speed correctly
-Date: Fri, 21 Jul 2023 18:06:47 +0200
-Message-ID: <20230721160641.889669958@linuxfoundation.org>
+	Manish Rangankar <mrangankar@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.15 530/532] scsi: qla2xxx: Remove unused nvme_ls_waitq wait queue
+Date: Fri, 21 Jul 2023 18:07:14 +0200
+Message-ID: <20230721160643.363390536@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -34,127 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
+From: Manish Rangankar <mrangankar@marvell.com>
 
-commit d9b0328d0b8b8298dfdc97cd8e0e2371d4bcc97b upstream.
+commit 20fce500b232b970e40312a9c97e7f3b6d7a709c upstream.
 
-Some ZHAOXIN xHCI controllers follow usb3.1 spec, but only support
-gen1 speed 5Gbps. While in Linux kernel, if xHCI suspport usb3.1,
-root hub speed will show on 10Gbps.
-To fix this issue of ZHAOXIN xHCI platforms, read usb speed ID
-supported by xHCI to determine root hub speed. And add a quirk
-XHCI_ZHAOXIN_HOST for this issue.
+System crash when qla2x00_start_sp(sp) returns error code EGAIN and wake_up
+gets called for uninitialized wait queue sp->nvme_ls_waitq.
 
-[fix warning about uninitialized symbol -Mathias]
+    qla2xxx [0000:37:00.1]-2121:5: Returning existing qpair of ffff8ae2c0513400 for idx=0
+    qla2xxx [0000:37:00.1]-700e:5: qla2x00_start_sp failed = 11
+    BUG: unable to handle kernel NULL pointer dereference at 0000000000000000
+    PGD 0 P4D 0
+    Oops: 0000 [#1] SMP NOPTI
+    Hardware name: HPE ProLiant DL360 Gen10/ProLiant DL360 Gen10, BIOS U32 09/03/2021
+    Workqueue: nvme-wq nvme_fc_connect_ctrl_work [nvme_fc]
+    RIP: 0010:__wake_up_common+0x4c/0x190
+    RSP: 0018:ffff95f3e0cb7cd0 EFLAGS: 00010086
+    RAX: 0000000000000000 RBX: ffff8b08d3b26328 RCX: 0000000000000000
+    RDX: 0000000000000001 RSI: 0000000000000003 RDI: ffff8b08d3b26320
+    RBP: 0000000000000001 R08: 0000000000000000 R09: ffffffffffffffe8
+    R10: 0000000000000000 R11: ffff95f3e0cb7a60 R12: ffff95f3e0cb7d20
+    R13: 0000000000000003 R14: 0000000000000000 R15: 0000000000000000
+    FS:  0000000000000000(0000) GS:ffff8b2fdf6c0000(0000) knlGS:0000000000000000
+    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    CR2: 0000000000000000 CR3: 0000002f1e410002 CR4: 00000000007706e0
+    DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+    DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+    PKRU: 55555554
+    Call Trace:
+     __wake_up_common_lock+0x7c/0xc0
+     qla_nvme_ls_req+0x355/0x4c0 [qla2xxx]
+     ? __nvme_fc_send_ls_req+0x260/0x380 [nvme_fc]
+     ? nvme_fc_send_ls_req.constprop.42+0x1a/0x45 [nvme_fc]
+     ? nvme_fc_connect_ctrl_work.cold.63+0x1e3/0xa7d [nvme_fc]
 
-Suggested-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Remove unused nvme_ls_waitq wait queue. nvme_ls_waitq logic was removed
+previously in the commits tagged Fixed: below.
+
+Fixes: 219d27d7147e ("scsi: qla2xxx: Fix race conditions in the code for aborting SCSI commands")
+Fixes: 5621b0dd7453 ("scsi: qla2xxx: Simpify unregistration of FC-NVMe local/remote ports")
 Cc: stable@vger.kernel.org
-Signed-off-by: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Message-ID: <20230602144009.1225632-11-mathias.nyman@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Manish Rangankar <mrangankar@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20230615074633.12721-1-njavali@marvell.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-mem.c |   31 ++++++++++++++++++++++++-------
- drivers/usb/host/xhci-pci.c |    2 ++
- drivers/usb/host/xhci.h     |    1 +
- 3 files changed, 27 insertions(+), 7 deletions(-)
+ drivers/scsi/qla2xxx/qla_def.h  |    1 -
+ drivers/scsi/qla2xxx/qla_nvme.c |    3 ---
+ 2 files changed, 4 deletions(-)
 
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -2128,7 +2128,7 @@ static void xhci_add_in_port(struct xhci
- {
- 	u32 temp, port_offset, port_count;
- 	int i;
--	u8 major_revision, minor_revision;
-+	u8 major_revision, minor_revision, tmp_minor_revision;
- 	struct xhci_hub *rhub;
- 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
- 	struct xhci_port_cap *port_cap;
-@@ -2148,6 +2148,15 @@ static void xhci_add_in_port(struct xhci
- 		 */
- 		if (minor_revision > 0x00 && minor_revision < 0x10)
- 			minor_revision <<= 4;
-+		/*
-+		 * Some zhaoxin's xHCI controller that follow usb3.1 spec
-+		 * but only support Gen1.
-+		 */
-+		if (xhci->quirks & XHCI_ZHAOXIN_HOST) {
-+			tmp_minor_revision = minor_revision;
-+			minor_revision = 0;
-+		}
-+
- 	} else if (major_revision <= 0x02) {
- 		rhub = &xhci->usb2_rhub;
- 	} else {
-@@ -2157,10 +2166,6 @@ static void xhci_add_in_port(struct xhci
- 		/* Ignoring port protocol we can't understand. FIXME */
- 		return;
- 	}
--	rhub->maj_rev = XHCI_EXT_PORT_MAJOR(temp);
--
--	if (rhub->min_rev < minor_revision)
--		rhub->min_rev = minor_revision;
+--- a/drivers/scsi/qla2xxx/qla_def.h
++++ b/drivers/scsi/qla2xxx/qla_def.h
+@@ -676,7 +676,6 @@ typedef struct srb {
+ 	struct iocb_resource iores;
+ 	struct kref cmd_kref;	/* need to migrate ref_count over to this */
+ 	void *priv;
+-	wait_queue_head_t nvme_ls_waitq;
+ 	struct fc_port *fcport;
+ 	struct scsi_qla_host *vha;
+ 	unsigned int start_timer:1;
+--- a/drivers/scsi/qla2xxx/qla_nvme.c
++++ b/drivers/scsi/qla2xxx/qla_nvme.c
+@@ -355,7 +355,6 @@ static int qla_nvme_ls_req(struct nvme_f
+ 	if (rval != QLA_SUCCESS) {
+ 		ql_log(ql_log_warn, vha, 0x700e,
+ 		    "qla2x00_start_sp failed = %d\n", rval);
+-		wake_up(&sp->nvme_ls_waitq);
+ 		sp->priv = NULL;
+ 		priv->sp = NULL;
+ 		qla2x00_rel_sp(sp);
+@@ -637,7 +636,6 @@ static int qla_nvme_post_cmd(struct nvme
+ 	if (!sp)
+ 		return -EBUSY;
  
- 	/* Port offset and count in the third dword, see section 7.2 */
- 	temp = readl(addr + 2);
-@@ -2179,8 +2184,6 @@ static void xhci_add_in_port(struct xhci
- 	if (xhci->num_port_caps > max_caps)
- 		return;
- 
--	port_cap->maj_rev = major_revision;
--	port_cap->min_rev = minor_revision;
- 	port_cap->psi_count = XHCI_EXT_PORT_PSIC(temp);
- 
- 	if (port_cap->psi_count) {
-@@ -2201,6 +2204,11 @@ static void xhci_add_in_port(struct xhci
- 				  XHCI_EXT_PORT_PSIV(port_cap->psi[i - 1])))
- 				port_cap->psi_uid_count++;
- 
-+			if (xhci->quirks & XHCI_ZHAOXIN_HOST &&
-+			    major_revision == 0x03 &&
-+			    XHCI_EXT_PORT_PSIV(port_cap->psi[i]) >= 5)
-+				minor_revision = tmp_minor_revision;
-+
- 			xhci_dbg(xhci, "PSIV:%d PSIE:%d PLT:%d PFD:%d LP:%d PSIM:%d\n",
- 				  XHCI_EXT_PORT_PSIV(port_cap->psi[i]),
- 				  XHCI_EXT_PORT_PSIE(port_cap->psi[i]),
-@@ -2210,6 +2218,15 @@ static void xhci_add_in_port(struct xhci
- 				  XHCI_EXT_PORT_PSIM(port_cap->psi[i]));
- 		}
- 	}
-+
-+	rhub->maj_rev = major_revision;
-+
-+	if (rhub->min_rev < minor_revision)
-+		rhub->min_rev = minor_revision;
-+
-+	port_cap->maj_rev = major_revision;
-+	port_cap->min_rev = minor_revision;
-+
- 	/* cache usb2 port capabilities */
- 	if (major_revision < 0x03 && xhci->num_ext_caps < max_caps)
- 		xhci->ext_caps[xhci->num_ext_caps++] = temp;
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -337,6 +337,8 @@ static void xhci_pci_quirks(struct devic
- 		xhci->quirks |= XHCI_NO_SOFT_RETRY;
- 
- 	if (pdev->vendor == PCI_VENDOR_ID_ZHAOXIN) {
-+		xhci->quirks |= XHCI_ZHAOXIN_HOST;
-+
- 		if (pdev->device == 0x9202) {
- 			xhci->quirks |= XHCI_RESET_ON_RESUME;
- 			xhci->quirks |= XHCI_ZHAOXIN_TRB_FETCH;
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1907,6 +1907,7 @@ struct xhci_hcd {
- #define XHCI_SUSPEND_RESUME_CLKS	BIT_ULL(43)
- #define XHCI_RESET_TO_DEFAULT	BIT_ULL(44)
- #define XHCI_ZHAOXIN_TRB_FETCH	BIT_ULL(45)
-+#define XHCI_ZHAOXIN_HOST	BIT_ULL(46)
- 
- 	unsigned int		num_active_eps;
- 	unsigned int		limit_active_eps;
+-	init_waitqueue_head(&sp->nvme_ls_waitq);
+ 	kref_init(&sp->cmd_kref);
+ 	spin_lock_init(&priv->cmd_lock);
+ 	sp->priv = priv;
+@@ -656,7 +654,6 @@ static int qla_nvme_post_cmd(struct nvme
+ 	if (rval != QLA_SUCCESS) {
+ 		ql_log(ql_log_warn, vha, 0x212d,
+ 		    "qla2x00_start_nvme_mq failed = %d\n", rval);
+-		wake_up(&sp->nvme_ls_waitq);
+ 		sp->priv = NULL;
+ 		priv->sp = NULL;
+ 		qla2xxx_rel_qpair_sp(sp->qpair, sp);
 
 
