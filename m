@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C4420F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:21:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30DF0C433C7;
-	Fri, 21 Jul 2023 19:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8737320F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:21:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D7FC433C8;
+	Fri, 21 Jul 2023 19:21:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967275;
-	bh=WJY+zMHRBFtW8hOPP4ihXMDxOeFqUXZ3rJVrFbrELzs=;
+	s=korg; t=1689967278;
+	bh=hlxwbAxZHnNv3G2CKMRV4ejAE0sEv3+SY+Nix9/tL7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nrwp2qG31UBQsVTgZ1+DfXoJraAKWK9GCYWZ/y4/btF+4ofIraMgzCt+9C8sWNKFo
-	 n+fIBeQREMd7QRbPCGGJY6bA9mD3BiGPbYycz4/uNaJ7wgdlcr0/rxpw8lbOGWbidl
-	 GJPbBKoMj/+0J9cqgUnf32Ahn3AbtZVe+yvT3ctg=
+	b=z8N92/K9Ir8v8BoZ1CdEWEg8qK9cbz3pNQ2zloipb4SCmAyByAns3pbaTciyK1zhF
+	 ipWB4xUhC+v+GEWbhG4sCnX6Z8SAO7OKl8e7rxN+EdzTCAqqfoyFJXzawIYfdJFTml
+	 zaAS/AtA/gRKyELag3Uree+PTyK4ziqkG3YfhDv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	stable@kernel.org,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 105/223] ext4: fix wrong unit use in ext4_mb_clear_bb
-Date: Fri, 21 Jul 2023 18:05:58 +0200
-Message-ID: <20230721160525.347399124@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.1 079/223] pinctrl: amd: Add fields for interrupt status and wake status
+Date: Fri, 21 Jul 2023 18:05:32 +0200
+Message-ID: <20230721160524.230930854@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -36,35 +34,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 247c3d214c23dfeeeb892e91a82ac1188bdaec9f upstream.
+commit 010f493d90ee1dbc32fa1ce51398f20d494c20c2 upstream.
 
-Function ext4_issue_discard need count in cluster. Pass count_clusters
-instead of count to fix the mismatch.
+If the firmware has misconfigured a GPIO it may cause interrupt
+status or wake status bits to be set and not asserted. Add these
+to debug output to catch this case.
 
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Cc: stable@kernel.org
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230603150327.3596033-11-shikemeng@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20230328174231.8924-3-mario.limonciello@amd.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pinctrl/pinctrl-amd.c |   20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -6073,8 +6073,8 @@ do_more:
- 		 * them with group lock_held
- 		 */
- 		if (test_opt(sb, DISCARD)) {
--			err = ext4_issue_discard(sb, block_group, bit, count,
--						 NULL);
-+			err = ext4_issue_discard(sb, block_group, bit,
-+						 count_clusters, NULL);
- 			if (err && err != -EOPNOTSUPP)
- 				ext4_msg(sb, KERN_WARNING, "discard request in"
- 					 " group:%u block:%d count:%lu failed"
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -211,6 +211,8 @@ static void amd_gpio_dbg_show(struct seq
+ 	char *wake_cntrl1;
+ 	char *wake_cntrl2;
+ 	char *pin_sts;
++	char *interrupt_sts;
++	char *wake_sts;
+ 	char *pull_up_sel;
+ 	char *orientation;
+ 	char debounce_value[40];
+@@ -243,7 +245,7 @@ static void amd_gpio_dbg_show(struct seq
+ 			continue;
+ 		}
+ 		seq_printf(s, "GPIO bank%d\n", bank);
+-		seq_puts(s, "gpio\tint|active|trigger|S0i3| S3|S4/S5| Z|wake|pull|  orient|       debounce|reg\n");
++		seq_puts(s, "gpio\t  int|active|trigger|S0i3| S3|S4/S5| Z|wake|pull|  orient|       debounce|reg\n");
+ 		for (; i < pin_num; i++) {
+ 			seq_printf(s, "#%d\t", i);
+ 			raw_spin_lock_irqsave(&gpio_dev->lock, flags);
+@@ -274,12 +276,18 @@ static void amd_gpio_dbg_show(struct seq
+ 				else
+ 					interrupt_mask = "😷";
+ 
+-				seq_printf(s, "%s|     %s|  %s|",
++				if (pin_reg & BIT(INTERRUPT_STS_OFF))
++					interrupt_sts = "🔥";
++				else
++					interrupt_sts = "  ";
++
++				seq_printf(s, "%s %s|     %s|  %s|",
++				   interrupt_sts,
+ 				   interrupt_mask,
+ 				   active_level,
+ 				   level_trig);
+ 			} else
+-				seq_puts(s, "  ∅|      |       |");
++				seq_puts(s, "    ∅|      |       |");
+ 
+ 			if (pin_reg & BIT(WAKE_CNTRL_OFF_S0I3))
+ 				wake_cntrl0 = "⏰";
+@@ -305,6 +313,12 @@ static void amd_gpio_dbg_show(struct seq
+ 				wake_cntrlz = "  ";
+ 			seq_printf(s, "%s|", wake_cntrlz);
+ 
++			if (pin_reg & BIT(WAKE_STS_OFF))
++				wake_sts = "🔥";
++			else
++				wake_sts = " ";
++			seq_printf(s, "   %s|", wake_sts);
++
+ 			if (pin_reg & BIT(PULL_UP_ENABLE_OFF)) {
+ 				if (pin_reg & BIT(PULL_UP_SEL_OFF))
+ 					pull_up_sel = "8k";
 
 
