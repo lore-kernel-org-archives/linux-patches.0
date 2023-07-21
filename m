@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C44820F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:18:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A509FC433C7;
-	Fri, 21 Jul 2023 19:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C3920F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:18:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A4DC433CA;
+	Fri, 21 Jul 2023 19:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967093;
-	bh=EN4zunWOUQ/UeqdQbsx3/N32g3is52DZAMMUeMwJRv8=;
+	s=korg; t=1689967095;
+	bh=bSKPCJrYnZhzDos6VxBQxxfHOLqM85Ge9AEQG3UYQdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G8oSu2gAlpnuLArI7ujnOIJ4mnCRaPl9n/snXcWylmLJd4/HvuU2Ay4iu4iDk+Pgh
-	 w5d0QNgdd+YWUP/PpcOXh51V8lc8frDi2xySwwEhJvsFrC4EYErN3lKfazfgJdJsHE
-	 tKk/uNy5FrYb3106jTXRSG3smbcYP9SdKGhoJh94=
+	b=yL61wm2wGAXsmg+hzE3lOTUsM029B3suK0mIQNgmvSaW67acr7B8T11g9yP86Y85J
+	 pdC+yP8gA24UX+/x0QIN2IGgoK/CBLNfcH3T/TjL54KsZncjT+OyNEgnlTRBk1Zv2Y
+	 yMmAr1iFpLEzLQgMSwTFv0XY4/uRbjMYEghsCtlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/223] ipv6/addrconf: fix a potential refcount underflow for idev
-Date: Fri, 21 Jul 2023 18:04:54 +0200
-Message-ID: <20230721160522.612235844@linuxfoundation.org>
+Subject: [PATCH 6.1 042/223] net: dsa: qca8k: Add check for skb_copy
+Date: Fri, 21 Jul 2023 18:04:55 +0200
+Message-ID: <20230721160522.653180149@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -36,51 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 06a0716949c22e2aefb648526580671197151acc ]
+[ Upstream commit 87355b7c3da9bfd81935caba0ab763355147f7b0 ]
 
-Now in addrconf_mod_rs_timer(), reference idev depends on whether
-rs_timer is not pending. Then modify rs_timer timeout.
+Add check for the return value of skb_copy in order to avoid NULL pointer
+dereference.
 
-There is a time gap in [1], during which if the pending rs_timer
-becomes not pending. It will miss to hold idev, but the rs_timer
-is activated. Thus rs_timer callback function addrconf_rs_timer()
-will be executed and put idev later without holding idev. A refcount
-underflow issue for idev can be caused by this.
-
-	if (!timer_pending(&idev->rs_timer))
-		in6_dev_hold(idev);
-		  <--------------[1]
-	mod_timer(&idev->rs_timer, jiffies + when);
-
-To fix the issue, hold idev if mod_timer() return 0.
-
-Fixes: b7b1bfce0bb6 ("ipv6: split duplicate address detection and router solicitation timer")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
+Fixes: 2cd548566384 ("net: dsa: qca8k: add support for phy read/write with mgmt Ethernet")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/dsa/qca/qca8k-8xxx.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index e6c7edcf68343..51bfc74805ecf 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -318,9 +318,8 @@ static void addrconf_del_dad_work(struct inet6_ifaddr *ifp)
- static void addrconf_mod_rs_timer(struct inet6_dev *idev,
- 				  unsigned long when)
- {
--	if (!timer_pending(&idev->rs_timer))
-+	if (!mod_timer(&idev->rs_timer, jiffies + when))
- 		in6_dev_hold(idev);
--	mod_timer(&idev->rs_timer, jiffies + when);
- }
+diff --git a/drivers/net/dsa/qca/qca8k-8xxx.c b/drivers/net/dsa/qca/qca8k-8xxx.c
+index 7a6166a0c9bcc..b3f7988668996 100644
+--- a/drivers/net/dsa/qca/qca8k-8xxx.c
++++ b/drivers/net/dsa/qca/qca8k-8xxx.c
+@@ -469,6 +469,9 @@ qca8k_phy_eth_busy_wait(struct qca8k_mgmt_eth_data *mgmt_eth_data,
+ 	bool ack;
+ 	int ret;
  
- static void addrconf_mod_dad_work(struct inet6_ifaddr *ifp,
++	if (!skb)
++		return -ENOMEM;
++
+ 	reinit_completion(&mgmt_eth_data->rw_done);
+ 
+ 	/* Increment seq_num and set it in the copy pkt */
 -- 
 2.39.2
 
