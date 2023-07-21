@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56AE020F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:20:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE9B7C433C7;
-	Fri, 21 Jul 2023 19:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BABC20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:20:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A10CBC433C7;
+	Fri, 21 Jul 2023 19:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967227;
-	bh=6UA4hZAMCAhify68Xgy63LXOEN6KZ/j/YhyOZbo334I=;
+	s=korg; t=1689967230;
+	bh=zQ9vyPPsAm83hfZGIgmAi3Wx4iQ3/nUJvyP6XGYBxd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CM1lVMAKPt3+WNczceSNebFpf3YoDvA6ikXqPv/LU/NR6CB/2/wMq2rsFBWslaGek
-	 MFKShPbgoq0Xeoo+CV3o7oCwSSmOaBiHnDhgTUWXA7JEA8t5LSTON1HL52covZ/LiS
-	 MhKz+B31CG4fkN0EyzTF8bp3d/MjK914zvaFscFE=
+	b=H5hQSmmuuTFZTK/978a9dlosP536D9ypGl2rehzAk8gQmQRoTyISe51gQsUhqKSo/
+	 Yk2cwYgliy2rJGdNPuseXHNJs9IIKnzNAg1vdt37mY9c6ARK3C9sRKphR0iD/aBtNQ
+	 ztoawZsekyg+a2DOXAgm7R6QnBVVXMlHYWDUu/LM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Jarkko Sakkinen <jarkko.sakkinen@tuni.fi>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.1 089/223] tpm: tpm_vtpm_proxy: fix a race condition in /dev/vtpmx creation
-Date: Fri, 21 Jul 2023 18:05:42 +0200
-Message-ID: <20230721160524.657079655@linuxfoundation.org>
+	Michael Haener <michael.haener@siemens.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Jerry Snitselaar <jsnitsel@redhat.com>
+Subject: [PATCH 6.1 090/223] tpm: tis_i2c: Limit read bursts to I2C_SMBUS_BLOCK_MAX (32) bytes
+Date: Fri, 21 Jul 2023 18:05:43 +0200
+Message-ID: <20230721160524.698730965@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -35,80 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jarkko Sakkinen <jarkko.sakkinen@tuni.fi>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-commit f4032d615f90970d6c3ac1d9c0bce3351eb4445c upstream.
+commit f3b70b6e3390bfdf18fdd7d278a72a12784fdcce upstream.
 
-/dev/vtpmx is made visible before 'workqueue' is initialized, which can
-lead to a memory corruption in the worst case scenario.
+Underlying I2C bus drivers not always support longer transfers and
+imx-lpi2c for instance doesn't. SLB 9673 offers 427-bytes packets.
 
-Address this by initializing 'workqueue' as the very first step of the
-driver initialization.
+Visible symptoms are:
 
-Cc: stable@vger.kernel.org
-Fixes: 6f99612e2500 ("tpm: Proxy driver for supporting multiple emulated TPMs")
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Jarkko Sakkinen <jarkko.sakkinen@tuni.fi>
+tpm tpm0: Error left over data
+tpm tpm0: tpm_transmit: tpm_recv: error -5
+tpm_tis_i2c: probe of 1-002e failed with error -5
+
+Cc: stable@vger.kernel.org # v5.20+
+Fixes: bbc23a07b072 ("tpm: Add tpm_tis_i2c backend for tpm_tis_core")
+Tested-by: Michael Haener <michael.haener@siemens.com>
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm_vtpm_proxy.c |   30 +++++++-----------------------
- 1 file changed, 7 insertions(+), 23 deletions(-)
+ drivers/char/tpm/tpm_tis_i2c.c | 37 ++++++++++++++++++++--------------
+ 1 file changed, 22 insertions(+), 15 deletions(-)
 
---- a/drivers/char/tpm/tpm_vtpm_proxy.c
-+++ b/drivers/char/tpm/tpm_vtpm_proxy.c
-@@ -683,37 +683,21 @@ static struct miscdevice vtpmx_miscdev =
- 	.fops = &vtpmx_fops,
- };
+diff --git a/drivers/char/tpm/tpm_tis_i2c.c b/drivers/char/tpm/tpm_tis_i2c.c
+index c8c34adc14c0..106fd20d94e4 100644
+--- a/drivers/char/tpm/tpm_tis_i2c.c
++++ b/drivers/char/tpm/tpm_tis_i2c.c
+@@ -189,21 +189,28 @@ static int tpm_tis_i2c_read_bytes(struct tpm_tis_data *data, u32 addr, u16 len,
+ 	int ret;
  
--static int vtpmx_init(void)
--{
--	return misc_register(&vtpmx_miscdev);
--}
+ 	for (i = 0; i < TPM_RETRY; i++) {
+-		/* write register */
+-		msg.len = sizeof(reg);
+-		msg.buf = &reg;
+-		msg.flags = 0;
+-		ret = tpm_tis_i2c_retry_transfer_until_ack(data, &msg);
+-		if (ret < 0)
+-			return ret;
 -
--static void vtpmx_cleanup(void)
--{
--	misc_deregister(&vtpmx_miscdev);
--}
--
- static int __init vtpm_module_init(void)
- {
- 	int rc;
+-		/* read data */
+-		msg.buf = result;
+-		msg.len = len;
+-		msg.flags = I2C_M_RD;
+-		ret = tpm_tis_i2c_retry_transfer_until_ack(data, &msg);
+-		if (ret < 0)
+-			return ret;
++		u16 read = 0;
++
++		while (read < len) {
++			/* write register */
++			msg.len = sizeof(reg);
++			msg.buf = &reg;
++			msg.flags = 0;
++			ret = tpm_tis_i2c_retry_transfer_until_ack(data, &msg);
++			if (ret < 0)
++				return ret;
++
++			/* read data */
++			msg.buf = result + read;
++			msg.len = len - read;
++			msg.flags = I2C_M_RD;
++			if (msg.len > I2C_SMBUS_BLOCK_MAX)
++				msg.len = I2C_SMBUS_BLOCK_MAX;
++			ret = tpm_tis_i2c_retry_transfer_until_ack(data, &msg);
++			if (ret < 0)
++				return ret;
++			read += msg.len;
++		}
  
--	rc = vtpmx_init();
--	if (rc) {
--		pr_err("couldn't create vtpmx device\n");
--		return rc;
--	}
--
- 	workqueue = create_workqueue("tpm-vtpm");
- 	if (!workqueue) {
- 		pr_err("couldn't create workqueue\n");
--		rc = -ENOMEM;
--		goto err_vtpmx_cleanup;
-+		return -ENOMEM;
- 	}
- 
--	return 0;
--
--err_vtpmx_cleanup:
--	vtpmx_cleanup();
-+	rc = misc_register(&vtpmx_miscdev);
-+	if (rc) {
-+		pr_err("couldn't create vtpmx device\n");
-+		destroy_workqueue(workqueue);
-+	}
- 
- 	return rc;
- }
-@@ -721,7 +705,7 @@ err_vtpmx_cleanup:
- static void __exit vtpm_module_exit(void)
- {
- 	destroy_workqueue(workqueue);
--	vtpmx_cleanup();
-+	misc_deregister(&vtpmx_miscdev);
- }
- 
- module_init(vtpm_module_init);
+ 		ret = tpm_tis_i2c_sanity_check_read(reg, len, result);
+ 		if (ret == 0)
+-- 
+2.41.0
+
 
 
