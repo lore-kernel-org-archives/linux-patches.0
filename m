@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87DB9200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:03:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07FA3C433C8;
-	Fri, 21 Jul 2023 19:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A42200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:03:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5304C433C8;
+	Fri, 21 Jul 2023 19:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966233;
-	bh=3Jkdv2zZwOvjXdUADsMIVF9Op7AXx6iXuV1brvJ1xV8=;
+	s=korg; t=1689966236;
+	bh=tOFIa/fxNLcAu6h6GuVST2YWjk38g77k1sRQ6RyZxeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QPPsex6V2X+nEYezLndZS8DhxXKTZoeiSztYAyxHdRerDxllLKnVeQa98R0/LA73t
-	 joiQAAmUdShhP3zkbeeui7++6Nm/qlXMPWdNtoP8YbASWekgrROJg8hkz2bEGMnkCo
-	 p+MlpMWZQXhqkvA1MOLyNS3zePiSRSqw+ivgC34s=
+	b=cHG7FMZ99TJqSz4ZM6Jkbe7/s5hY55w9hxEFhTi4PspJds0bCPqRtxulwnlN5b306
+	 9qQRBLJd+j5PP2f/oMn/fkAkbUq+CP0Z+0kOlJIMZSLKDO9VqI/S8x3Cu1QwbPOz85
+	 uRNbJks8y1rfA4hEWK8ZAGXm79yI0eJGFV2u+fgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrizio Lamarque <fl.scratchpad@gmail.com>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 254/532] iio: adc: ad7192: Fix internal/external clock selection
-Date: Fri, 21 Jul 2023 18:02:38 +0200
-Message-ID: <20230721160628.125372553@linuxfoundation.org>
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 272/532] media: usb: Check az6007_read() return value
+Date: Fri, 21 Jul 2023 18:02:56 +0200
+Message-ID: <20230721160629.109537437@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,35 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabrizio Lamarque <fl.scratchpad@gmail.com>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-commit f7d9e21dd274b97dc0a8dbc136a2ea8506063a96 upstream.
+[ Upstream commit fdaca63186f59fc664b346c45b76576624b48e57 ]
 
-Fix wrong selection of internal clock when mclk is defined.
+If az6007_read() returns error, there is no sence to continue.
 
-Resolve a logical inversion introduced in c9ec2cb328e3.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: c9ec2cb328e3 ("iio: adc: ad7192: use devm_clk_get_optional() for mclk")
-Signed-off-by: Fabrizio Lamarque <fl.scratchpad@gmail.com>
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Cc: <Stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230530075311.400686-3-fl.scratchpad@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3af2f4f15a61 ("[media] az6007: Change the az6007 read/write routine parameter")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7192.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/dvb-usb-v2/az6007.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ad7192.c
-+++ b/drivers/iio/adc/ad7192.c
-@@ -327,7 +327,7 @@ static int ad7192_of_clock_select(struct
- 	clock_sel = AD7192_CLK_INT;
+diff --git a/drivers/media/usb/dvb-usb-v2/az6007.c b/drivers/media/usb/dvb-usb-v2/az6007.c
+index 62ee09f28a0bc..7524c90f5da61 100644
+--- a/drivers/media/usb/dvb-usb-v2/az6007.c
++++ b/drivers/media/usb/dvb-usb-v2/az6007.c
+@@ -202,7 +202,8 @@ static int az6007_rc_query(struct dvb_usb_device *d)
+ 	unsigned code;
+ 	enum rc_proto proto;
  
- 	/* use internal clock */
--	if (st->mclk) {
-+	if (!st->mclk) {
- 		if (of_property_read_bool(np, "adi,int-clock-output-enable"))
- 			clock_sel = AD7192_CLK_INT_CO;
- 	} else {
+-	az6007_read(d, AZ6007_READ_IR, 0, 0, st->data, 10);
++	if (az6007_read(d, AZ6007_READ_IR, 0, 0, st->data, 10) < 0)
++		return -EIO;
+ 
+ 	if (st->data[1] == 0x44)
+ 		return 0;
+-- 
+2.39.2
+
 
 
