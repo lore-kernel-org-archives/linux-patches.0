@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF0C20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:24:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C517C433C7;
-	Fri, 21 Jul 2023 19:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2AB20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:24:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3ED2C433C7;
+	Fri, 21 Jul 2023 19:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967452;
-	bh=SMTAppfj/r0OY9yqMV5R0quq6ukbQG+AriRPkhYqBDE=;
+	s=korg; t=1689967455;
+	bh=JbA93C6NzBDshDfk+TXqI6V3ql1pqZ+3l+jUfNiPG0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DZPmlfaciOo1p7+oPUGvg7xgTtWNzcyE4vkzTZMKHXGPzQ7cLh9/IiHbahFK5B5ON
-	 /W4ce7dcHGwVFg3JXO9kJCk6iu59rxjKIfdGLnABm01XIFPx/8kMvsgnZyGBetLRGH
-	 yvNYrmtSyPTmtlJT4ukubs3wOoUD0NfVOsgNnhRA=
+	b=L4btjeRT5sHTvbTvqEkOVd3MWs7Q59O7zCrlrVhVmussq5cNEpx38VhQ+8e2HRuTE
+	 KMb1YmsDJkDy8Bcm3OuWInuRSjGaZTu1uwD6RZP3p6kT1DV0l+XYatB7753sbr2lFh
+	 HHYLaoM+2afBHjEmqaRyJvnWMyoMeeWWlu0fPTm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weitao Wang <WeitaoWang-oc@zhaoxin.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.1 167/223] xhci: Fix TRB prefetch issue of ZHAOXIN hosts
-Date: Fri, 21 Jul 2023 18:07:00 +0200
-Message-ID: <20230721160527.996293409@linuxfoundation.org>
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>
+Subject: [PATCH 6.1 141/223] fs: dlm: fix mismatch of plock results from userspace
+Date: Fri, 21 Jul 2023 18:06:34 +0200
+Message-ID: <20230721160526.883389336@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -34,71 +34,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-commit 2a865a652299f5666f3b785cbe758c5f57453036 upstream.
+commit 57e2c2f2d94cfd551af91cedfa1af6d972487197 upstream.
 
-On some ZHAOXIN hosts, xHCI will prefetch TRB for performance
-improvement. However this TRB prefetch mechanism may cross page boundary,
-which may access memory not allocated by xHCI driver. In order to fix
-this issue, two pages was allocated for a segment and only the first
-page will be used. And add a quirk XHCI_ZHAOXIN_TRB_FETCH for this issue.
+When a waiting plock request (F_SETLKW) is sent to userspace
+for processing (dlm_controld), the result is returned at a
+later time. That result could be incorrectly matched to a
+different waiting request in cases where the owner field is
+the same (e.g. different threads in a process.) This is fixed
+by comparing all the properties in the request and reply.
+
+The results for non-waiting plock requests are now matched
+based on list order because the results are returned in the
+same order they were sent.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Message-ID: <20230602144009.1225632-10-mathias.nyman@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-mem.c |    8 ++++++--
- drivers/usb/host/xhci-pci.c |    7 ++++++-
- drivers/usb/host/xhci.h     |    1 +
- 3 files changed, 13 insertions(+), 3 deletions(-)
+ fs/dlm/plock.c |   58 ++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 45 insertions(+), 13 deletions(-)
 
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -2439,8 +2439,12 @@ int xhci_mem_init(struct xhci_hcd *xhci,
- 	 * and our use of dma addresses in the trb_address_map radix tree needs
- 	 * TRB_SEGMENT_SIZE alignment, so we pick the greater alignment need.
- 	 */
--	xhci->segment_pool = dma_pool_create("xHCI ring segments", dev,
--			TRB_SEGMENT_SIZE, TRB_SEGMENT_SIZE, xhci->page_size);
-+	if (xhci->quirks & XHCI_ZHAOXIN_TRB_FETCH)
-+		xhci->segment_pool = dma_pool_create("xHCI ring segments", dev,
-+				TRB_SEGMENT_SIZE * 2, TRB_SEGMENT_SIZE * 2, xhci->page_size * 2);
-+	else
-+		xhci->segment_pool = dma_pool_create("xHCI ring segments", dev,
-+				TRB_SEGMENT_SIZE, TRB_SEGMENT_SIZE, xhci->page_size);
- 
- 	/* See Table 46 and Note on Figure 55 */
- 	xhci->device_pool = dma_pool_create("xHCI input/output contexts", dev,
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -336,8 +336,13 @@ static void xhci_pci_quirks(struct devic
- 		xhci->quirks |= XHCI_NO_SOFT_RETRY;
- 
- 	if (pdev->vendor == PCI_VENDOR_ID_ZHAOXIN) {
--		if (pdev->device == 0x9202)
-+		if (pdev->device == 0x9202) {
- 			xhci->quirks |= XHCI_RESET_ON_RESUME;
-+			xhci->quirks |= XHCI_ZHAOXIN_TRB_FETCH;
-+		}
-+
-+		if (pdev->device == 0x9203)
-+			xhci->quirks |= XHCI_ZHAOXIN_TRB_FETCH;
+--- a/fs/dlm/plock.c
++++ b/fs/dlm/plock.c
+@@ -394,7 +394,7 @@ static ssize_t dev_read(struct file *fil
+ 		if (op->info.flags & DLM_PLOCK_FL_CLOSE)
+ 			list_del(&op->list);
+ 		else
+-			list_move(&op->list, &recv_list);
++			list_move_tail(&op->list, &recv_list);
+ 		memcpy(&info, &op->info, sizeof(info));
  	}
+ 	spin_unlock(&ops_lock);
+@@ -432,20 +432,52 @@ static ssize_t dev_write(struct file *fi
+ 	if (check_version(&info))
+ 		return -EINVAL;
  
- 	/* xHC spec requires PCI devices to support D3hot and D3cold */
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1899,6 +1899,7 @@ struct xhci_hcd {
- #define XHCI_EP_CTX_BROKEN_DCS	BIT_ULL(42)
- #define XHCI_SUSPEND_RESUME_CLKS	BIT_ULL(43)
- #define XHCI_RESET_TO_DEFAULT	BIT_ULL(44)
-+#define XHCI_ZHAOXIN_TRB_FETCH	BIT_ULL(45)
++	/*
++	 * The results for waiting ops (SETLKW) can be returned in any
++	 * order, so match all fields to find the op.  The results for
++	 * non-waiting ops are returned in the order that they were sent
++	 * to userspace, so match the result with the first non-waiting op.
++	 */
+ 	spin_lock(&ops_lock);
+-	list_for_each_entry(iter, &recv_list, list) {
+-		if (iter->info.fsid == info.fsid &&
+-		    iter->info.number == info.number &&
+-		    iter->info.owner == info.owner) {
+-			list_del_init(&iter->list);
+-			memcpy(&iter->info, &info, sizeof(info));
+-			if (iter->data)
+-				do_callback = 1;
+-			else
+-				iter->done = 1;
+-			op = iter;
+-			break;
++	if (info.wait) {
++		list_for_each_entry(iter, &recv_list, list) {
++			if (iter->info.fsid == info.fsid &&
++			    iter->info.number == info.number &&
++			    iter->info.owner == info.owner &&
++			    iter->info.pid == info.pid &&
++			    iter->info.start == info.start &&
++			    iter->info.end == info.end &&
++			    iter->info.ex == info.ex &&
++			    iter->info.wait) {
++				op = iter;
++				break;
++			}
+ 		}
++	} else {
++		list_for_each_entry(iter, &recv_list, list) {
++			if (!iter->info.wait) {
++				op = iter;
++				break;
++			}
++		}
++	}
++
++	if (op) {
++		/* Sanity check that op and info match. */
++		if (info.wait)
++			WARN_ON(op->info.optype != DLM_PLOCK_OP_LOCK);
++		else
++			WARN_ON(op->info.fsid != info.fsid ||
++				op->info.number != info.number ||
++				op->info.owner != info.owner ||
++				op->info.optype != info.optype);
++
++		list_del_init(&op->list);
++		memcpy(&op->info, &info, sizeof(info));
++		if (op->data)
++			do_callback = 1;
++		else
++			op->done = 1;
+ 	}
+ 	spin_unlock(&ops_lock);
  
- 	unsigned int		num_active_eps;
- 	unsigned int		limit_active_eps;
 
 
