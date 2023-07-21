@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0C41F94B
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:59:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F298CC433C7;
-	Fri, 21 Jul 2023 18:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5651F94B
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:59:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6477C433C8;
+	Fri, 21 Jul 2023 18:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965961;
-	bh=2f1mDZaPCVIep0BxXdNZPeekjlv/oElBRFQ5P+U2C3Y=;
+	s=korg; t=1689965964;
+	bh=lBUxmHwEbRk4pXWSik+LYXm0C4G84yalt0hAQwvHWWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NQDxV69cGr0Imyb2/KaQjpDH/cHCfJCf+9ZG5fJTGCTTCbVcdKc28xjfZGtveLZEm
-	 YdvGd/cbVNqCtBPqDuUujfpjSpZZnc7Bs8UcmRtCZ12gwYyaXD8ug1xX5nCaL9F/wh
-	 o+WySEpwj0f67qx1wm1zGPWI5YMJ3M4UH+fBsFxQ=
+	b=EIWcS4KwkBIeNCasWGNFy/LjBwj69OGY+hDxjM9hXAVFxduuWAK7ELo/OI2y/Yo6Q
+	 kz1mwE7PDkifkw4eArv7fftQVaW4Kr5inAKVbKRk9I7SlEQvU95leE/u4ISa69/Aan
+	 hZCvrq4NrNmcnesxAPaMONYaiV/NmpVo/Wh+ucFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Yongqin Liu <yongqin.liu@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 176/532] ALSA: ac97: Fix possible NULL dereference in snd_ac97_mixer
-Date: Fri, 21 Jul 2023 18:01:20 +0200
-Message-ID: <20230721160623.935545628@linuxfoundation.org>
+Subject: [PATCH 5.15 177/532] drm/msm/dpu: do not enable color-management if DSPPs are not available
+Date: Fri, 21 Jul 2023 18:01:21 +0200
+Message-ID: <20230721160623.986677292@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,40 +38,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Su Hui <suhui@nfschina.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 79597c8bf64ca99eab385115743131d260339da5 ]
+[ Upstream commit 3bcfc7b90465efd337d39b91b43972162f0d1908 ]
 
-smatch error:
-sound/pci/ac97/ac97_codec.c:2354 snd_ac97_mixer() error:
-we previously assumed 'rac97' could be null (see line 2072)
+We can not support color management without DSPP blocks being provided
+in the HW catalog. Do not enable color management for CRTCs if num_dspps
+is 0.
 
-remove redundant assignment, return error if rac97 is NULL.
-
-Fixes: da3cec35dd3c ("ALSA: Kill snd_assert() in sound/pci/*")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Link: https://lore.kernel.org/r/20230615021732.1972194-1-suhui@nfschina.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 4259ff7ae509 ("drm/msm/dpu: add support for pcc color block in dpu driver")
+Reported-by: Yongqin Liu <yongqin.liu@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Sumit Semwal <sumit.semwal@linaro.org>
+Tested-by: Yongqin Liu <yongqin.liu@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/542141/
+Link: https://lore.kernel.org/r/20230612182534.3345805-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ac97/ac97_codec.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/ac97/ac97_codec.c b/sound/pci/ac97/ac97_codec.c
-index ceead55f13ab1..58ae0c3ce1e49 100644
---- a/sound/pci/ac97/ac97_codec.c
-+++ b/sound/pci/ac97/ac97_codec.c
-@@ -2070,8 +2070,8 @@ int snd_ac97_mixer(struct snd_ac97_bus *bus, struct snd_ac97_template *template,
- 		.dev_disconnect =	snd_ac97_dev_disconnect,
- 	};
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index 4194689b6b35d..8be941c9b6a94 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -1380,6 +1380,8 @@ static const struct drm_crtc_helper_funcs dpu_crtc_helper_funcs = {
+ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
+ 				struct drm_plane *cursor)
+ {
++	struct msm_drm_private *priv = dev->dev_private;
++	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
+ 	struct drm_crtc *crtc = NULL;
+ 	struct dpu_crtc *dpu_crtc = NULL;
+ 	int i;
+@@ -1411,7 +1413,8 @@ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
  
--	if (rac97)
--		*rac97 = NULL;
-+	if (!rac97)
-+		return -EINVAL;
- 	if (snd_BUG_ON(!bus || !template))
- 		return -EINVAL;
- 	if (snd_BUG_ON(template->num >= 4))
+ 	drm_crtc_helper_add(crtc, &dpu_crtc_helper_funcs);
+ 
+-	drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
++	if (dpu_kms->catalog->dspp_count)
++		drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
+ 
+ 	/* save user friendly CRTC name for later */
+ 	snprintf(dpu_crtc->name, DPU_CRTC_NAME_SIZE, "crtc%u", crtc->base.id);
 -- 
 2.39.2
 
