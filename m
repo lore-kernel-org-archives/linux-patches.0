@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB07F1F923
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:55:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B121C433C8;
-	Fri, 21 Jul 2023 18:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9893B1F923
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:55:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B4CC433C7;
+	Fri, 21 Jul 2023 18:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965746;
-	bh=zNz5qwLOqLmyp8aBVLx8exoG9RDSeu95v6SqT69G9N0=;
+	s=korg; t=1689965749;
+	bh=7Nub6IRMr7RxPsdN4mJ/jnSqzgD35cyxPA7HqbhQ6ig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IhkxhOeAH31mrcZVcjlQ9pjBIc/L5Mt0zRYdNRcOosxgON/0UPommsuUZimB2FtYw
-	 L7n5MOEbDgDdnPBaeX4cPjtU/a32x43HV7QP2xzo414cv+sgoa4u9aUOzzO/d1LuiM
-	 Hghino+xNdmBbt9YLFlmf4bx911OhWsbe7cncnR4=
+	b=IZunowKel4MrbAScCjZNwx8xq6v7SA1tZwxmJRZrk5bNr3GtvkZfkXXzkSyP478EM
+	 DUwMTpV70jbZeP21pViMMrlH6CTaj5QpUSaaWiVjqaelDD+ReClZ8vems+zv5lmnfG
+	 ThM7fV9iSOPiTtuLYuosTnTU22lVmsIWv3PTC12U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 071/532] wifi: cfg80211: rewrite merging of inherited elements
-Date: Fri, 21 Jul 2023 17:59:35 +0200
-Message-ID: <20230721160618.467810318@linuxfoundation.org>
+Subject: [PATCH 5.15 072/532] wifi: iwlwifi: mvm: indicate HW decrypt for beacon protection
+Date: Fri, 21 Jul 2023 17:59:36 +0200
+Message-ID: <20230721160618.520477391@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,288 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit dfd9aa3e7a456d57b18021d66472ab7ff8373ab7 ]
+[ Upstream commit 2db72b8a700943aa54dce0aabe6ff1b72b615162 ]
 
-The cfg80211_gen_new_ie function merges the IEs using inheritance rules.
-Rewrite this function to fix issues around inheritance rules. In
-particular, vendor elements do not require any special handling, as they
-are either all inherited or overridden by the subprofile.
-Also, add fragmentation handling as this may be needed in some cases.
+We've already done the 'decryption' here, so tell
+mac80211 it need not do it again.
 
-This also changes the function to not require making a copy. The new
-version could be optimized a bit by explicitly tracking which IEs have
-been handled already rather than looking that up again every time.
-
-Note that a small behavioural change is the removal of the SSID special
-handling. This should be fine for the MBSSID element, as the SSID must
-be included in the subelement.
-
-Fixes: 0b8fb8235be8 ("cfg80211: Parsing of Multiple BSSID information in scanning")
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Fixes: b1fdc2505abc ("iwlwifi: mvm: advertise BIGTK client support if available")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230616094949.bc6152e146db.I2b5f3bc45085e1901e5b5192a674436adaf94748@changeid
+Link: https://lore.kernel.org/r/20230620125813.a50cf68fbf2e.Ieceacbe3789d81ea02ae085ad8d1f8813a33c31b@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 213 ++++++++++++++++++++++++++------------------
- 1 file changed, 124 insertions(+), 89 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index ef31e401d7914..a565476809f02 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -262,117 +262,152 @@ bool cfg80211_is_element_inherited(const struct element *elem,
- }
- EXPORT_SYMBOL(cfg80211_is_element_inherited);
- 
--static size_t cfg80211_gen_new_ie(const u8 *ie, size_t ielen,
--				  const u8 *subelement, size_t subie_len,
--				  u8 *new_ie, gfp_t gfp)
-+static size_t cfg80211_copy_elem_with_frags(const struct element *elem,
-+					    const u8 *ie, size_t ie_len,
-+					    u8 **pos, u8 *buf, size_t buf_len)
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
+index 49c28c96fdf28..411254e9e603f 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
+@@ -302,7 +302,8 @@ static void iwl_mvm_get_signal_strength(struct iwl_mvm *mvm,
+ static int iwl_mvm_rx_mgmt_prot(struct ieee80211_sta *sta,
+ 				struct ieee80211_hdr *hdr,
+ 				struct iwl_rx_mpdu_desc *desc,
+-				u32 status)
++				u32 status,
++				struct ieee80211_rx_status *stats)
  {
--	u8 *pos, *tmp;
--	const u8 *tmp_old, *tmp_new;
--	const struct element *non_inherit_elem;
--	u8 *sub_copy;
-+	if (WARN_ON((u8 *)elem < ie || elem->data > ie + ie_len ||
-+		    elem->data + elem->datalen > ie + ie_len))
-+		return 0;
+ 	struct iwl_mvm_sta *mvmsta;
+ 	struct iwl_mvm_vif *mvmvif;
+@@ -331,8 +332,10 @@ static int iwl_mvm_rx_mgmt_prot(struct ieee80211_sta *sta,
  
--	/* copy subelement as we need to change its content to
--	 * mark an ie after it is processed.
--	 */
--	sub_copy = kmemdup(subelement, subie_len, gfp);
--	if (!sub_copy)
-+	if (elem->datalen + 2 > buf + buf_len - *pos)
+ 	/* good cases */
+ 	if (likely(status & IWL_RX_MPDU_STATUS_MIC_OK &&
+-		   !(status & IWL_RX_MPDU_STATUS_REPLAY_ERROR)))
++		   !(status & IWL_RX_MPDU_STATUS_REPLAY_ERROR))) {
++		stats->flag |= RX_FLAG_DECRYPTED;
  		return 0;
++	}
  
--	pos = &new_ie[0];
-+	memcpy(*pos, elem, elem->datalen + 2);
-+	*pos += elem->datalen + 2;
+ 	if (!sta)
+ 		return -1;
+@@ -401,7 +404,7 @@ static int iwl_mvm_rx_crypto(struct iwl_mvm *mvm, struct ieee80211_sta *sta,
  
--	/* set new ssid */
--	tmp_new = cfg80211_find_ie(WLAN_EID_SSID, sub_copy, subie_len);
--	if (tmp_new) {
--		memcpy(pos, tmp_new, tmp_new[1] + 2);
--		pos += (tmp_new[1] + 2);
-+	/* Finish if it is not fragmented  */
-+	if (elem->datalen != 255)
-+		return *pos - buf;
-+
-+	ie_len = ie + ie_len - elem->data - elem->datalen;
-+	ie = (const u8 *)elem->data + elem->datalen;
-+
-+	for_each_element(elem, ie, ie_len) {
-+		if (elem->id != WLAN_EID_FRAGMENT)
-+			break;
-+
-+		if (elem->datalen + 2 > buf + buf_len - *pos)
-+			return 0;
-+
-+		memcpy(*pos, elem, elem->datalen + 2);
-+		*pos += elem->datalen + 2;
-+
-+		if (elem->datalen != 255)
-+			break;
- 	}
+ 	if (unlikely(ieee80211_is_mgmt(hdr->frame_control) &&
+ 		     !ieee80211_has_protected(hdr->frame_control)))
+-		return iwl_mvm_rx_mgmt_prot(sta, hdr, desc, status);
++		return iwl_mvm_rx_mgmt_prot(sta, hdr, desc, status, stats);
  
--	/* get non inheritance list if exists */
--	non_inherit_elem =
--		cfg80211_find_ext_elem(WLAN_EID_EXT_NON_INHERITANCE,
--				       sub_copy, subie_len);
-+	return *pos - buf;
-+}
- 
--	/* go through IEs in ie (skip SSID) and subelement,
--	 * merge them into new_ie
-+static size_t cfg80211_gen_new_ie(const u8 *ie, size_t ielen,
-+				  const u8 *subie, size_t subie_len,
-+				  u8 *new_ie, size_t new_ie_len)
-+{
-+	const struct element *non_inherit_elem, *parent, *sub;
-+	u8 *pos = new_ie;
-+	u8 id, ext_id;
-+	unsigned int match_len;
-+
-+	non_inherit_elem = cfg80211_find_ext_elem(WLAN_EID_EXT_NON_INHERITANCE,
-+						  subie, subie_len);
-+
-+	/* We copy the elements one by one from the parent to the generated
-+	 * elements.
-+	 * If they are not inherited (included in subie or in the non
-+	 * inheritance element), then we copy all occurrences the first time
-+	 * we see this element type.
- 	 */
--	tmp_old = cfg80211_find_ie(WLAN_EID_SSID, ie, ielen);
--	tmp_old = (tmp_old) ? tmp_old + tmp_old[1] + 2 : ie;
--
--	while (tmp_old + 2 - ie <= ielen &&
--	       tmp_old + tmp_old[1] + 2 - ie <= ielen) {
--		if (tmp_old[0] == 0) {
--			tmp_old++;
-+	for_each_element(parent, ie, ielen) {
-+		if (parent->id == WLAN_EID_FRAGMENT)
- 			continue;
-+
-+		if (parent->id == WLAN_EID_EXTENSION) {
-+			if (parent->datalen < 1)
-+				continue;
-+
-+			id = WLAN_EID_EXTENSION;
-+			ext_id = parent->data[0];
-+			match_len = 1;
-+		} else {
-+			id = parent->id;
-+			match_len = 0;
- 		}
- 
--		if (tmp_old[0] == WLAN_EID_EXTENSION)
--			tmp = (u8 *)cfg80211_find_ext_ie(tmp_old[2], sub_copy,
--							 subie_len);
--		else
--			tmp = (u8 *)cfg80211_find_ie(tmp_old[0], sub_copy,
--						     subie_len);
-+		/* Find first occurrence in subie */
-+		sub = cfg80211_find_elem_match(id, subie, subie_len,
-+					       &ext_id, match_len, 0);
- 
--		if (!tmp) {
--			const struct element *old_elem = (void *)tmp_old;
-+		/* Copy from parent if not in subie and inherited */
-+		if (!sub &&
-+		    cfg80211_is_element_inherited(parent, non_inherit_elem)) {
-+			if (!cfg80211_copy_elem_with_frags(parent,
-+							   ie, ielen,
-+							   &pos, new_ie,
-+							   new_ie_len))
-+				return 0;
- 
--			/* ie in old ie but not in subelement */
--			if (cfg80211_is_element_inherited(old_elem,
--							  non_inherit_elem)) {
--				memcpy(pos, tmp_old, tmp_old[1] + 2);
--				pos += tmp_old[1] + 2;
--			}
--		} else {
--			/* ie in transmitting ie also in subelement,
--			 * copy from subelement and flag the ie in subelement
--			 * as copied (by setting eid field to WLAN_EID_SSID,
--			 * which is skipped anyway).
--			 * For vendor ie, compare OUI + type + subType to
--			 * determine if they are the same ie.
--			 */
--			if (tmp_old[0] == WLAN_EID_VENDOR_SPECIFIC) {
--				if (tmp_old[1] >= 5 && tmp[1] >= 5 &&
--				    !memcmp(tmp_old + 2, tmp + 2, 5)) {
--					/* same vendor ie, copy from
--					 * subelement
--					 */
--					memcpy(pos, tmp, tmp[1] + 2);
--					pos += tmp[1] + 2;
--					tmp[0] = WLAN_EID_SSID;
--				} else {
--					memcpy(pos, tmp_old, tmp_old[1] + 2);
--					pos += tmp_old[1] + 2;
--				}
--			} else {
--				/* copy ie from subelement into new ie */
--				memcpy(pos, tmp, tmp[1] + 2);
--				pos += tmp[1] + 2;
--				tmp[0] = WLAN_EID_SSID;
--			}
-+			continue;
- 		}
- 
--		if (tmp_old + tmp_old[1] + 2 - ie == ielen)
--			break;
-+		/* Already copied if an earlier element had the same type */
-+		if (cfg80211_find_elem_match(id, ie, (u8 *)parent - ie,
-+					     &ext_id, match_len, 0))
-+			continue;
- 
--		tmp_old += tmp_old[1] + 2;
-+		/* Not inheriting, copy all similar elements from subie */
-+		while (sub) {
-+			if (!cfg80211_copy_elem_with_frags(sub,
-+							   subie, subie_len,
-+							   &pos, new_ie,
-+							   new_ie_len))
-+				return 0;
-+
-+			sub = cfg80211_find_elem_match(id,
-+						       sub->data + sub->datalen,
-+						       subie_len + subie -
-+						       (sub->data +
-+							sub->datalen),
-+						       &ext_id, match_len, 0);
-+		}
- 	}
- 
--	/* go through subelement again to check if there is any ie not
--	 * copied to new ie, skip ssid, capability, bssid-index ie
-+	/* The above misses elements that are included in subie but not in the
-+	 * parent, so do a pass over subie and append those.
-+	 * Skip the non-tx BSSID caps and non-inheritance element.
- 	 */
--	tmp_new = sub_copy;
--	while (tmp_new + 2 - sub_copy <= subie_len &&
--	       tmp_new + tmp_new[1] + 2 - sub_copy <= subie_len) {
--		if (!(tmp_new[0] == WLAN_EID_NON_TX_BSSID_CAP ||
--		      tmp_new[0] == WLAN_EID_SSID)) {
--			memcpy(pos, tmp_new, tmp_new[1] + 2);
--			pos += tmp_new[1] + 2;
-+	for_each_element(sub, subie, subie_len) {
-+		if (sub->id == WLAN_EID_NON_TX_BSSID_CAP)
-+			continue;
-+
-+		if (sub->id == WLAN_EID_FRAGMENT)
-+			continue;
-+
-+		if (sub->id == WLAN_EID_EXTENSION) {
-+			if (sub->datalen < 1)
-+				continue;
-+
-+			id = WLAN_EID_EXTENSION;
-+			ext_id = sub->data[0];
-+			match_len = 1;
-+
-+			if (ext_id == WLAN_EID_EXT_NON_INHERITANCE)
-+				continue;
-+		} else {
-+			id = sub->id;
-+			match_len = 0;
- 		}
--		if (tmp_new + tmp_new[1] + 2 - sub_copy == subie_len)
--			break;
--		tmp_new += tmp_new[1] + 2;
-+
-+		/* Processed if one was included in the parent */
-+		if (cfg80211_find_elem_match(id, ie, ielen,
-+					     &ext_id, match_len, 0))
-+			continue;
-+
-+		if (!cfg80211_copy_elem_with_frags(sub, subie, subie_len,
-+						   &pos, new_ie, new_ie_len))
-+			return 0;
- 	}
- 
--	kfree(sub_copy);
- 	return pos - new_ie;
- }
- 
-@@ -2180,7 +2215,7 @@ static void cfg80211_parse_mbssid_data(struct wiphy *wiphy,
- 			new_ie_len = cfg80211_gen_new_ie(ie, ielen,
- 							 profile,
- 							 profile_len, new_ie,
--							 gfp);
-+							 IEEE80211_MAX_DATA_LEN);
- 			if (!new_ie_len)
- 				continue;
- 
+ 	if (!ieee80211_has_protected(hdr->frame_control) ||
+ 	    (status & IWL_RX_MPDU_STATUS_SEC_MASK) ==
 -- 
 2.39.2
 
