@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60670200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:00:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC495C433C7;
-	Fri, 21 Jul 2023 19:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22861200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:00:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 977DFC433C7;
+	Fri, 21 Jul 2023 19:00:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966024;
-	bh=3bWOXFNycvTg51YlQThkRNr4GZ4tVRJM3V2cIC31SGE=;
+	s=korg; t=1689966027;
+	bh=j7hs9kLr0wrnq1imMUgfeZx++DjoJBKsKrOc/w5Oyns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XIkZSHCw6RF4poM9yNuo5lcHjCBZlmY/GEo/y3rEXMl1h5ONT/oRMDkRrwgVMiMv8
-	 1xowGyK+v/UvnVsRchwbwJdb0TviuKHZLVrbYXWP13hZJCxnXj/5sXwrYuaOqnHAo6
-	 xYwx/Aps9fOgAwfY7w0dyc7Ayz1JeepDHo3crsS8=
+	b=vDVeTFPxv8JU/SQy47pb+s6Dj0LX8YfeegXxpX/4Z/5d+UxusKFgAi1nWj1zlITNs
+	 0YuPtcL8qRcljTMfXLSxAnGSEoPc4DQRVJxESt8yId35AEUUHRCHGC0RsYsOWCrdLK
+	 K51w9MqarKWSqfh2oxJ45t9b/40BJejpnrLU/WEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Harvey <tharvey@gateworks.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 160/532] hwmon: (gsc-hwmon) fix fan pwm temperature scaling
-Date: Fri, 21 Jul 2023 18:01:04 +0200
-Message-ID: <20230721160623.090119352@linuxfoundation.org>
+Subject: [PATCH 5.15 191/532] ASoC: imx-audmix: check return value of devm_kasprintf()
+Date: Fri, 21 Jul 2023 18:01:35 +0200
+Message-ID: <20230721160624.770226138@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,46 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tim Harvey <tharvey@gateworks.com>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit a6d80df47ee2c69db99e4f2f8871aa4db154620b ]
+[ Upstream commit 2f76e1d6ca524a888d29aafe29f2ad2003857971 ]
 
-The GSC fan pwm temperature register is in centidegrees celcius but the
-Linux hwmon convention is to use milidegrees celcius. Fix the scaling.
+devm_kasprintf() returns a pointer to dynamically allocated memory.
+Pointer could be NULL in case allocation fails. Check pointer validity.
+Identified with coccinelle (kmerr.cocci script).
 
-Fixes: 3bce5377ef66 ("hwmon: Add Gateworks System Controller support")
-Signed-off-by: Tim Harvey <tharvey@gateworks.com>
-Link: https://lore.kernel.org/r/20230606153004.1448086-1-tharvey@gateworks.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: b86ef5367761 ("ASoC: fsl: Add Audio Mixer machine driver")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230614121509.443926-1-claudiu.beznea@microchip.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/gsc-hwmon.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/fsl/imx-audmix.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/hwmon/gsc-hwmon.c b/drivers/hwmon/gsc-hwmon.c
-index f29ce49294daf..89d036bf88df7 100644
---- a/drivers/hwmon/gsc-hwmon.c
-+++ b/drivers/hwmon/gsc-hwmon.c
-@@ -82,8 +82,8 @@ static ssize_t pwm_auto_point_temp_store(struct device *dev,
- 	if (kstrtol(buf, 10, &temp))
- 		return -EINVAL;
+diff --git a/sound/soc/fsl/imx-audmix.c b/sound/soc/fsl/imx-audmix.c
+index a364e2415de02..d991e457060c7 100644
+--- a/sound/soc/fsl/imx-audmix.c
++++ b/sound/soc/fsl/imx-audmix.c
+@@ -228,6 +228,8 @@ static int imx_audmix_probe(struct platform_device *pdev)
  
--	temp = clamp_val(temp, 0, 10000);
--	temp = DIV_ROUND_CLOSEST(temp, 10);
-+	temp = clamp_val(temp, 0, 100000);
-+	temp = DIV_ROUND_CLOSEST(temp, 100);
+ 		dai_name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%s%s",
+ 					  fe_name_pref, args.np->full_name + 1);
++		if (!dai_name)
++			return -ENOMEM;
  
- 	regs[0] = temp & 0xff;
- 	regs[1] = (temp >> 8) & 0xff;
-@@ -100,7 +100,7 @@ static ssize_t pwm_auto_point_pwm_show(struct device *dev,
- {
- 	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+ 		dev_info(pdev->dev.parent, "DAI FE name:%s\n", dai_name);
  
--	return sprintf(buf, "%d\n", 255 * (50 + (attr->index * 10)) / 100);
-+	return sprintf(buf, "%d\n", 255 * (50 + (attr->index * 10)));
- }
+@@ -236,6 +238,8 @@ static int imx_audmix_probe(struct platform_device *pdev)
+ 			capture_dai_name =
+ 				devm_kasprintf(&pdev->dev, GFP_KERNEL, "%s %s",
+ 					       dai_name, "CPU-Capture");
++			if (!capture_dai_name)
++				return -ENOMEM;
+ 		}
  
- static SENSOR_DEVICE_ATTR_RO(pwm1_auto_point1_pwm, pwm_auto_point_pwm, 0);
+ 		priv->dai[i].cpus = &dlc[0];
+@@ -266,6 +270,8 @@ static int imx_audmix_probe(struct platform_device *pdev)
+ 				       "AUDMIX-Playback-%d", i);
+ 		be_cp = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+ 				       "AUDMIX-Capture-%d", i);
++		if (!be_name || !be_pb || !be_cp)
++			return -ENOMEM;
+ 
+ 		priv->dai[num_dai + i].cpus = &dlc[3];
+ 		priv->dai[num_dai + i].codecs = &dlc[4];
+@@ -293,6 +299,9 @@ static int imx_audmix_probe(struct platform_device *pdev)
+ 		priv->dapm_routes[i].source =
+ 			devm_kasprintf(&pdev->dev, GFP_KERNEL, "%s %s",
+ 				       dai_name, "CPU-Playback");
++		if (!priv->dapm_routes[i].source)
++			return -ENOMEM;
++
+ 		priv->dapm_routes[i].sink = be_pb;
+ 		priv->dapm_routes[num_dai + i].source   = be_pb;
+ 		priv->dapm_routes[num_dai + i].sink     = be_cp;
 -- 
 2.39.2
 
