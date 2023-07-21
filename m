@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133CE1F93D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:13:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D1DC433C9;
-	Fri, 21 Jul 2023 16:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F811F93D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:13:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C687C433C7;
+	Fri, 21 Jul 2023 16:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689955981;
-	bh=zhTXA1Xv7tGlYLYz13x98c08ZeGZI4qjcSs/S4P/M6U=;
+	s=korg; t=1689955984;
+	bh=ADwtXdWigSKTz4p8FBIE3IB2ugR86Bi9UXrC+ArSIHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fS2dPWwqbZaD6H9oDmFywTeL/CggKtBndGJSHBtAbdnJ5pJWA2UrKNtQiIWKD0Wtv
-	 /umwQfBRCpwgXlLjQVJS3L0ONE4Tqv00LS15iTrpg5p1CEoIlw3aBPznzN58d9FjfZ
-	 cdkvjhDMlsRTe6vM/opEq69OsI84ZIvyWFH3vpK0=
+	b=ufx6A/z61WfKIUWFknntSEb0zbQxaDTEB65XcSaWwbw6tmRsfxHalfrXGxZIifx7a
+	 cuKehH2ahGZlFN1I+Jn4PHoL3aH0VQkughySycdaYuP6f91MhqRzwx+1iLCN2nQRaL
+	 0W6rUqe0HHcygs5VXsWz4ZLaxEnJP607nest4yXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Naama Meir <naamax.meir@linux.intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 075/292] igc: No strict mode in pure launchtime/CBS offload
-Date: Fri, 21 Jul 2023 18:03:04 +0200
-Message-ID: <20230721160532.025773965@linuxfoundation.org>
+Subject: [PATCH 6.4 076/292] igc: Fix launchtime before start of cycle
+Date: Fri, 21 Jul 2023 18:03:05 +0200
+Message-ID: <20230721160532.067072275@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -39,149 +39,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Kauer <florian.kauer@linutronix.de>
 
-[ Upstream commit 8b86f10ab64eca0287ea8f7c94e9ad8b2e101c01 ]
+[ Upstream commit c1bca9ac0bcb355be11354c2e68bc7bf31f5ac5a ]
 
-The flags IGC_TXQCTL_STRICT_CYCLE and IGC_TXQCTL_STRICT_END
-prevent the packet transmission over slot and cycle boundaries.
-This is important for taprio offload where the slots and
-cycles correspond to the slots and cycles configured for the
-network.
+It is possible (verified on a running system) that frames are processed
+by igc_tx_launchtime with a txtime before the start of the cycle
+(baset_est).
 
-However, the Qbv offload feature of the i225 is also used for
-enabling TX launchtime / ETF offload. In that case, however,
-the cycle has no meaning for the network and is only used
-internally to adapt the base time register after a second has
-passed.
+However, the result of txtime - baset_est is written into a u32,
+leading to a wrap around to a positive number. The following
+launchtime > 0 check will only branch to executing launchtime = 0
+if launchtime is already 0.
 
-Enabling strict mode in this case would unnecessarily prevent
-the transmission of certain packets (i.e. at the boundary of a
-second) and thus interferes with the ETF qdisc that promises
-transmission at a certain point in time.
+Fix it by using a s32 before checking launchtime > 0.
 
-Similar to ETF, this also applies to CBS offload that also should
-not be influenced by strict mode unless taprio offload would be
-enabled at the same time.
-
-This fully reverts
-commit d8f45be01dd9 ("igc: Use strict cycles for Qbv scheduling")
-but its commit message only describes what was already implemented
-before that commit. The difference to a plain revert of that commit
-is that it now copes with the base_time = 0 case that was fixed with
-commit e17090eb2494 ("igc: allow BaseTime 0 enrollment for Qbv")
-
-In particular, enabling strict mode leads to TX hang situations
-under high traffic if taprio is applied WITHOUT taprio offload
-but WITH ETF offload, e.g. as in
-
-    sudo tc qdisc replace dev enp1s0 parent root handle 100 taprio \
-	    num_tc 1 \
-	    map 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 \
-	    queues 1@0 \
-	    base-time 0 \
-	    sched-entry S 01 300000 \
-	    flags 0x1 \
-	    txtime-delay 500000 \
-	    clockid CLOCK_TAI
-    sudo tc qdisc replace dev enp1s0 parent 100:1 etf \
-	    clockid CLOCK_TAI \
-	    delta 500000 \
-	    offload \
-	    skip_sock_check
-
-and traffic generator
-
-    sudo trafgen -i traffic.cfg -o enp1s0 --cpp -n0 -q -t1400ns
-
-with traffic.cfg
-
-    #define ETH_P_IP        0x0800
-
-    {
-      /* Ethernet Header */
-      0x30, 0x1f, 0x9a, 0xd0, 0xf0, 0x0e,  # MAC Dest - adapt as needed
-      0x24, 0x5e, 0xbe, 0x57, 0x2e, 0x36,  # MAC Src  - adapt as needed
-      const16(ETH_P_IP),
-
-      /* IPv4 Header */
-      0b01000101, 0,   # IPv4 version, IHL, TOS
-      const16(1028),   # IPv4 total length (UDP length + 20 bytes (IP header))
-      const16(2),      # IPv4 ident
-      0b01000000, 0,   # IPv4 flags, fragmentation off
-      64,              # IPv4 TTL
-      17,              # Protocol UDP
-      csumip(14, 33),  # IPv4 checksum
-
-      /* UDP Header */
-      10,  0, 48, 1,   # IP Src - adapt as needed
-      10,  0, 48, 10,  # IP Dest - adapt as needed
-      const16(5555),   # UDP Src Port
-      const16(6666),   # UDP Dest Port
-      const16(1008),   # UDP length (UDP header 8 bytes + payload length)
-      csumudp(14, 34), # UDP checksum
-
-      /* Payload */
-      fill('W', 1000),
-    }
-
-and the observed message with that is for example
-
- igc 0000:01:00.0 enp1s0: Detected Tx Unit Hang
-   Tx Queue             <0>
-   TDH                  <d0>
-   TDT                  <f0>
-   next_to_use          <f0>
-   next_to_clean        <d0>
- buffer_info[next_to_clean]
-   time_stamp           <ffff661f>
-   next_to_watch        <00000000245a4efb>
-   jiffies              <ffff6e48>
-   desc.status          <1048000>
-
-Fixes: d8f45be01dd9 ("igc: Use strict cycles for Qbv scheduling")
+Fixes: db0b124f02ba ("igc: Enhance Qbv scheduling by using first flag bit")
 Signed-off-by: Florian Kauer <florian.kauer@linutronix.de>
 Reviewed-by: Kurt Kanzenbach <kurt@linutronix.de>
 Tested-by: Naama Meir <naamax.meir@linux.intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_tsn.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
-index b76ebfc10b1d5..a9c08321aca90 100644
---- a/drivers/net/ethernet/intel/igc/igc_tsn.c
-+++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
-@@ -132,8 +132,28 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
- 		wr32(IGC_STQT(i), ring->start_time);
- 		wr32(IGC_ENDQT(i), ring->end_time);
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index 97eb3c390de9a..96a2f6e6f6b8a 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -1016,7 +1016,7 @@ static __le32 igc_tx_launchtime(struct igc_ring *ring, ktime_t txtime,
+ 	ktime_t base_time = adapter->base_time;
+ 	ktime_t now = ktime_get_clocktai();
+ 	ktime_t baset_est, end_of_cycle;
+-	u32 launchtime;
++	s32 launchtime;
+ 	s64 n;
  
--		txqctl |= IGC_TXQCTL_STRICT_CYCLE |
--			IGC_TXQCTL_STRICT_END;
-+		if (adapter->taprio_offload_enable) {
-+			/* If taprio_offload_enable is set we are in "taprio"
-+			 * mode and we need to be strict about the
-+			 * cycles: only transmit a packet if it can be
-+			 * completed during that cycle.
-+			 *
-+			 * If taprio_offload_enable is NOT true when
-+			 * enabling TSN offload, the cycle should have
-+			 * no external effects, but is only used internally
-+			 * to adapt the base time register after a second
-+			 * has passed.
-+			 *
-+			 * Enabling strict mode in this case would
-+			 * unnecessarily prevent the transmission of
-+			 * certain packets (i.e. at the boundary of a
-+			 * second) and thus interfere with the launchtime
-+			 * feature that promises transmission at a
-+			 * certain point in time.
-+			 */
-+			txqctl |= IGC_TXQCTL_STRICT_CYCLE |
-+				IGC_TXQCTL_STRICT_END;
-+		}
- 
- 		if (ring->launchtime_enable)
- 			txqctl |= IGC_TXQCTL_QUEUE_MODE_LAUNCHT;
+ 	n = div64_s64(ktime_sub_ns(now, base_time), cycle_time);
 -- 
 2.39.2
 
