@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E531D1ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:52:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6507CC433C8;
-	Fri, 21 Jul 2023 18:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C1A1ED41
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:52:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43085C433C7;
+	Fri, 21 Jul 2023 18:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965567;
-	bh=Nw1CEkNRUGJt0L9gF5SexNV6yGJkdVB64CF+mIXsSU4=;
+	s=korg; t=1689965570;
+	bh=+SoqVG6RoguNPN15+w6YkeW507traoDvh9eGkjN/N3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gFWYkpNqlZ/JJhBm/Vlpo9YNGq7+dHDWSafoxZ9qaWlsjeQ8MEErCkCN7ztGKVA/d
-	 QkVwwP6YcCM5oRauGQtcKKIxigyXHmXdrCl4vsrPvX6o0O/596YbWEukStHHO/6pnA
-	 KNXg6DbU8IjHRHHOwz7WnSVIvDEY7j5NEyo/2Oq0=
+	b=RmRhFhwt7P0HxzBTj//uVb+Q+jdU7TKwKXNN24uV6u6Erc+2+SCvhSAEB77WwMUVT
+	 dafp0XZI2ulZ128gDfduXtWffvuBJA3esn9vp70geUr1ulxo9z5AzBUIDk8NBeayn2
+	 wdJhjWSl4uklWvK/UvGuRIeRHcEeK8RqrxR5A5EM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Rob Landley <rob@landley.net>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 009/532] md/raid10: fix io loss while replacement replace rdev
-Date: Fri, 21 Jul 2023 17:58:33 +0200
-Message-ID: <20230721160615.186698090@linuxfoundation.org>
+Subject: [PATCH 5.15 010/532] irqchip/jcore-aic: Fix missing allocation of IRQ descriptors
+Date: Fri, 21 Jul 2023 17:58:34 +0200
+Message-ID: <20230721160615.239224325@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,77 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Nan <linan122@huawei.com>
+From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 
-[ Upstream commit 2ae6aaf76912bae53c74b191569d2ab484f24bf3 ]
+[ Upstream commit 4848229494a323eeaab62eee5574ef9f7de80374 ]
 
-When removing a disk with replacement, the replacement will be used to
-replace rdev. During this process, there is a brief window in which both
-rdev and replacement are read as NULL in raid10_write_request(). This
-will result in io not being submitted but it should be.
+The initialization function for the J-Core AIC aic_irq_of_init() is
+currently missing the call to irq_alloc_descs() which allocates and
+initializes all the IRQ descriptors. Add missing function call and
+return the error code from irq_alloc_descs() in case the allocation
+fails.
 
-  //remove				//write
-  raid10_remove_disk			raid10_write_request
-   mirror->rdev = NULL
-					 read rdev -> NULL
-   mirror->rdev = mirror->replacement
-   mirror->replacement = NULL
-					 read replacement -> NULL
-
-Fix it by reading replacement first and rdev later, meanwhile, use smp_mb()
-to prevent memory reordering.
-
-Fixes: 475b0321a4df ("md/raid10: writes should get directed to replacement as well as original.")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230602091839.743798-3-linan666@huaweicloud.com
+Fixes: 981b58f66cfc ("irqchip/jcore-aic: Add J-Core AIC driver")
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Tested-by: Rob Landley <rob@landley.net>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230510163343.43090-1-glaubitz@physik.fu-berlin.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ drivers/irqchip/irq-jcore-aic.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index d3f8156da44e5..99607d51d128d 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -752,8 +752,16 @@ static struct md_rdev *read_balance(struct r10conf *conf,
- 		disk = r10_bio->devs[slot].devnum;
- 		rdev = rcu_dereference(conf->mirrors[disk].replacement);
- 		if (rdev == NULL || test_bit(Faulty, &rdev->flags) ||
--		    r10_bio->devs[slot].addr + sectors > rdev->recovery_offset)
-+		    r10_bio->devs[slot].addr + sectors >
-+		    rdev->recovery_offset) {
-+			/*
-+			 * Read replacement first to prevent reading both rdev
-+			 * and replacement as NULL during replacement replace
-+			 * rdev.
-+			 */
-+			smp_mb();
- 			rdev = rcu_dereference(conf->mirrors[disk].rdev);
-+		}
- 		if (rdev == NULL ||
- 		    test_bit(Faulty, &rdev->flags))
- 			continue;
-@@ -1449,9 +1457,15 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
+diff --git a/drivers/irqchip/irq-jcore-aic.c b/drivers/irqchip/irq-jcore-aic.c
+index 5f47d8ee4ae39..b9dcc8e78c750 100644
+--- a/drivers/irqchip/irq-jcore-aic.c
++++ b/drivers/irqchip/irq-jcore-aic.c
+@@ -68,6 +68,7 @@ static int __init aic_irq_of_init(struct device_node *node,
+ 	unsigned min_irq = JCORE_AIC2_MIN_HWIRQ;
+ 	unsigned dom_sz = JCORE_AIC_MAX_HWIRQ+1;
+ 	struct irq_domain *domain;
++	int ret;
  
- 	for (i = 0;  i < conf->copies; i++) {
- 		int d = r10_bio->devs[i].devnum;
--		struct md_rdev *rdev = rcu_dereference(conf->mirrors[d].rdev);
--		struct md_rdev *rrdev = rcu_dereference(
--			conf->mirrors[d].replacement);
-+		struct md_rdev *rdev, *rrdev;
+ 	pr_info("Initializing J-Core AIC\n");
+ 
+@@ -100,6 +101,12 @@ static int __init aic_irq_of_init(struct device_node *node,
+ 	jcore_aic.irq_unmask = noop;
+ 	jcore_aic.name = "AIC";
+ 
++	ret = irq_alloc_descs(-1, min_irq, dom_sz - min_irq,
++			      of_node_to_nid(node));
 +
-+		rrdev = rcu_dereference(conf->mirrors[d].replacement);
-+		/*
-+		 * Read replacement first to prevent reading both rdev and
-+		 * replacement as NULL during replacement replace rdev.
-+		 */
-+		smp_mb();
-+		rdev = rcu_dereference(conf->mirrors[d].rdev);
- 		if (rdev == rrdev)
- 			rrdev = NULL;
- 		if (rdev && (test_bit(Faulty, &rdev->flags)))
++	if (ret < 0)
++		return ret;
++
+ 	domain = irq_domain_add_legacy(node, dom_sz - min_irq, min_irq, min_irq,
+ 				       &jcore_aic_irqdomain_ops,
+ 				       &jcore_aic);
 -- 
 2.39.2
 
