@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7E81F94E
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:00:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA0CC433C7;
-	Fri, 21 Jul 2023 19:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E67A1F94E
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:00:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F54AC433C8;
+	Fri, 21 Jul 2023 19:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966055;
-	bh=CH5DEweYHX0LUIOWbpBKevN/oAp45+7KbrxM3N0eaG0=;
+	s=korg; t=1689966058;
+	bh=/78/qhcMa4y6aBTxScimRcTrwwt75RaAY1kWMjSizCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U/Fbp4G/SHw/dvyaMD8CkRq00MGIunE/xKf0RV7CagLkbmd70tcL67fiQHsa2Sjs1
-	 +K8rVOK/TvR46RzwVt0D6VG68YFO7agToMvMbtkJxD+NSshc9oYRerRNZUKFrkE700
-	 IuApvFLctuTaGgmVrwOMh2xNwHeMKr6WOWKJ1zE4=
+	b=goMACUgeUpadkXLW2kS+vYPnBZNyH1t2Rn+HSudDt3HPMyyykdejTE6DmZMrWBGDG
+	 Xld9G3BqbVBYYpBGYPQmBI4bbjH1n7m8IMktTEvjCwp/XK69Wgb0XZucEMJ224mus2
+	 WN8d6e64hHAtvJDSapb9FZLS1mAOtltGsElp3Blk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Fei Shao <fshao@chromium.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 209/532] perf dwarf-aux: Fix off-by-one in die_get_varname()
-Date: Fri, 21 Jul 2023 18:01:53 +0200
-Message-ID: <20230721160625.746420321@linuxfoundation.org>
+Subject: [PATCH 5.15 192/532] clk: Fix memory leak in devm_clk_notifier_register()
+Date: Fri, 21 Jul 2023 18:01:36 +0200
+Message-ID: <20230721160624.824080771@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -41,43 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Fei Shao <fshao@chromium.org>
 
-[ Upstream commit 3abfcfd847717d232e36963f31a361747c388fe7 ]
+[ Upstream commit 7fb933e56f77a57ef7cfc59fc34cbbf1b1fa31ff ]
 
-The die_get_varname() returns "(unknown_type)" string if it failed to
-find a type for the variable.  But it had a space before the opening
-parenthesis and it made the closing parenthesis cut off due to the
-off-by-one in the string length (14).
+devm_clk_notifier_register() allocates a devres resource for clk
+notifier but didn't register that to the device, so the notifier didn't
+get unregistered on device detach and the allocated resource was leaked.
 
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Fixes: 88fd633cdfa19060 ("perf probe: No need to use formatting strbuf method")
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20230612234102.3909116-1-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fix the issue by registering the resource through devres_add().
+
+This issue was found with kmemleak on a Chromebook.
+
+Fixes: 6d30d50d037d ("clk: add devm variant of clk_notifier_register")
+Signed-off-by: Fei Shao <fshao@chromium.org>
+Link: https://lore.kernel.org/r/20230619112253.v2.1.I13f060c10549ef181603e921291bdea95f83033c@changeid
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dwarf-aux.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/clk.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
-index 623527edeac1e..b125eaadcec4d 100644
---- a/tools/perf/util/dwarf-aux.c
-+++ b/tools/perf/util/dwarf-aux.c
-@@ -1081,7 +1081,7 @@ int die_get_varname(Dwarf_Die *vr_die, struct strbuf *buf)
- 	ret = die_get_typename(vr_die, buf);
- 	if (ret < 0) {
- 		pr_debug("Failed to get type, make it unknown.\n");
--		ret = strbuf_add(buf, " (unknown_type)", 14);
-+		ret = strbuf_add(buf, "(unknown_type)", 14);
+diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+index 0674dbc62eb55..5eba83745d8de 100644
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -4504,6 +4504,7 @@ int devm_clk_notifier_register(struct device *dev, struct clk *clk,
+ 	if (!ret) {
+ 		devres->clk = clk;
+ 		devres->nb = nb;
++		devres_add(dev, devres);
+ 	} else {
+ 		devres_free(devres);
  	}
- 
- 	return ret < 0 ? ret : strbuf_addf(buf, "\t%s", dwarf_diename(vr_die));
 -- 
 2.39.2
 
