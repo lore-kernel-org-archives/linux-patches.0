@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE0A1EA8A
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:21:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFB02C43397;
-	Fri, 21 Jul 2023 16:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A971EA8A
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:21:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF76C433C8;
+	Fri, 21 Jul 2023 16:21:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956463;
-	bh=tgFzvKUHYoeAKS0GWZZZ+yXSaLZV1Ogk6qV2XcgO2DU=;
+	s=korg; t=1689956466;
+	bh=gnRde1v4sHoYHaddTqCtOKtldUM3sgAJo5rFFOOO7pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s1PbsFtH4AEoQFyG1MKx3Uf/GVfbFxCkSyuzdZHP2RXXgnJAFPXgZXYQzMp4RU35r
-	 4WicLRnpJzQoma9x9SEm5fQZ9gtjegOxX12C+v1a5wkN4IoKnw8sGSGai0132PVOHf
-	 LLbxjXH+E0FYC3AAYrMTXFpDz5QjYEDdWE7MeyUM=
+	b=qbUaR5UizsUXqIdNRGjhupC51PZykL6+9XEvwqtHCBSGFCcqCuWCffi8ZzJAWChrm
+	 7SBVXxyn4e3peQ/mwOlIhz8toTl1LqdGtaC4i857V0xeT6+KkAkv0sBUX5QPU3H/ad
+	 xGWakmHGr0xW9/ef7wjYmEGrz4GSqtmez7M2LE0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Leo Chen <sancchen@amd.com>,
+	Samuel Pitoiset <samuel.pitoiset@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.4 202/292] drm/amd/display: disable seamless boot if force_odm_combine is enabled
-Date: Fri, 21 Jul 2023 18:05:11 +0200
-Message-ID: <20230721160537.560584988@linuxfoundation.org>
+Subject: [PATCH 6.4 203/292] drm/amdgpu: fix clearing mappings for BOs that are always valid in VM
+Date: Fri, 21 Jul 2023 18:05:12 +0200
+Message-ID: <20230721160537.602468731@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -36,35 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leo Chen <sancchen@amd.com>
+From: Samuel Pitoiset <samuel.pitoiset@gmail.com>
 
-commit 26518b39181876064850209ecdab48c0ee5924b1 upstream.
+commit ea2c3c08554601b051d91403a241266e1cf490a5 upstream.
 
-[Why & How]
-Having seamless boot on while forcing debug option ODM combine 2 to 1
-will cause some corruptions because of some missing programmings.
+Per VM BOs must be marked as moved or otherwise their ranges are not
+updated on use which might be necessary when the replace operation
+splits mappings.
 
-Cc: stable@vger.kernel.org # 6.1+
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Leo Chen <sancchen@amd.com>
+This fixes random GPU hangs when replacing sparse mappings from the
+userspace, while OP_MAP/OP_UNMAP works fine because always valid BOs
+are correctly handled there.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Samuel Pitoiset <samuel.pitoiset@gmail.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -1602,6 +1602,9 @@ bool dc_validate_boot_timing(const struc
- 		return false;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -1683,18 +1683,30 @@ int amdgpu_vm_bo_clear_mappings(struct a
+ 
+ 	/* Insert partial mapping before the range */
+ 	if (!list_empty(&before->list)) {
++		struct amdgpu_bo *bo = before->bo_va->base.bo;
++
+ 		amdgpu_vm_it_insert(before, &vm->va);
+ 		if (before->flags & AMDGPU_PTE_PRT)
+ 			amdgpu_vm_prt_get(adev);
++
++		if (bo && bo->tbo.base.resv == vm->root.bo->tbo.base.resv &&
++		    !before->bo_va->base.moved)
++			amdgpu_vm_bo_moved(&before->bo_va->base);
+ 	} else {
+ 		kfree(before);
  	}
  
-+	if (dc->debug.force_odm_combine)
-+		return false;
+ 	/* Insert partial mapping after the range */
+ 	if (!list_empty(&after->list)) {
++		struct amdgpu_bo *bo = after->bo_va->base.bo;
 +
- 	/* Check for enabled DIG to identify enabled display */
- 	if (!link->link_enc->funcs->is_dig_enabled(link->link_enc))
- 		return false;
+ 		amdgpu_vm_it_insert(after, &vm->va);
+ 		if (after->flags & AMDGPU_PTE_PRT)
+ 			amdgpu_vm_prt_get(adev);
++
++		if (bo && bo->tbo.base.resv == vm->root.bo->tbo.base.resv &&
++		    !after->bo_va->base.moved)
++			amdgpu_vm_bo_moved(&after->bo_va->base);
+ 	} else {
+ 		kfree(after);
+ 	}
 
 
