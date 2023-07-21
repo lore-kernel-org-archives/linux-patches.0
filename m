@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669EB20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:14:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB236C433C7;
-	Fri, 21 Jul 2023 19:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5058E20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:14:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC4BC433C8;
+	Fri, 21 Jul 2023 19:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966884;
-	bh=yYrIhPktRi9FlzJUhDsXFVnuxjLa4jXBu8Cp6uIws8w=;
+	s=korg; t=1689966887;
+	bh=1p7n331KiUYPbTmEB4zBJQTSpxFqwCB1H6h/eV6QxWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2aHru+mu0/fOpWNdeE4KljHnXKNpqAwFhP3ukivNCCjLNFnPLRWoqRYEszlPRg/0L
-	 BwtCqp5APNffcWVrXLRky+9HBnz5xyzmtkNzhCUC9sy7fYR3MBbmjjHNc+7Sado5wb
-	 TuIRABLcoqPs4K9+yuj073yFs32uuTzCOa0K2CIA=
+	b=Fr1iNgoWAhKtqQyXMCWEzRqBLyOEtoscoA/6zTskGXJ+pvt0omrI1nPg0oo5ugass
+	 uXjEezPwWWtrCrMg/Z5XgSfGqmwWkoDTCNjMXXtf8CruinWqbvSOkZFmm01zgzW+DT
+	 aV70hL8iug5vR5369D8aFFT5QTDDh1GeAN3FSXdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Mammedov <imammedo@redhat.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>
-Subject: [PATCH 5.15 473/532] PCI: acpiphp: Reassign resources on bridge if necessary
-Date: Fri, 21 Jul 2023 18:06:17 +0200
-Message-ID: <20230721160640.172320404@linuxfoundation.org>
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>
+Subject: [PATCH 5.15 474/532] PCI: qcom: Disable write access to read only registers for IP v2.3.3
+Date: Fri, 21 Jul 2023 18:06:18 +0200
+Message-ID: <20230721160640.224289645@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,78 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Igor Mammedov <imammedo@redhat.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit 40613da52b13fb21c5566f10b287e0ca8c12c4e9 upstream.
+commit a33d700e8eea76c62120cb3dbf5e01328f18319a upstream.
 
-When using ACPI PCI hotplug, hotplugging a device with large BARs may fail
-if bridge windows programmed by firmware are not large enough.
+In the post init sequence of v2.9.0, write access to read only registers
+are not disabled after updating the registers. Fix it by disabling the
+access after register update.
 
-Reproducer:
-  $ qemu-kvm -monitor stdio -M q35  -m 4G \
-      -global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=on \
-      -device id=rp1,pcie-root-port,bus=pcie.0,chassis=4 \
-      disk_image
-
- wait till linux guest boots, then hotplug device:
-   (qemu) device_add qxl,bus=rp1
-
- hotplug on guest side fails with:
-   pci 0000:01:00.0: [1b36:0100] type 00 class 0x038000
-   pci 0000:01:00.0: reg 0x10: [mem 0x00000000-0x03ffffff]
-   pci 0000:01:00.0: reg 0x14: [mem 0x00000000-0x03ffffff]
-   pci 0000:01:00.0: reg 0x18: [mem 0x00000000-0x00001fff]
-   pci 0000:01:00.0: reg 0x1c: [io  0x0000-0x001f]
-   pci 0000:01:00.0: BAR 0: no space for [mem size 0x04000000]
-   pci 0000:01:00.0: BAR 0: failed to assign [mem size 0x04000000]
-   pci 0000:01:00.0: BAR 1: no space for [mem size 0x04000000]
-   pci 0000:01:00.0: BAR 1: failed to assign [mem size 0x04000000]
-   pci 0000:01:00.0: BAR 2: assigned [mem 0xfe800000-0xfe801fff]
-   pci 0000:01:00.0: BAR 3: assigned [io  0x1000-0x101f]
-   qxl 0000:01:00.0: enabling device (0000 -> 0003)
-   Unable to create vram_mapping
-   qxl: probe of 0000:01:00.0 failed with error -12
-
-However when using native PCIe hotplug
-  '-global ICH9-LPC.acpi-pci-hotplug-with-bridge-support=off'
-it works fine, since kernel attempts to reassign unused resources.
-
-Use the same machinery as native PCIe hotplug to (re)assign resources.
-
-Link: https://lore.kernel.org/r/20230424191557.2464760-1-imammedo@redhat.com
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230619150408.8468-2-manivannan.sadhasivam@linaro.org
+Fixes: 5d76117f070d ("PCI: qcom: Add support for IPQ8074 PCIe controller")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/hotplug/acpiphp_glue.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/pci/controller/dwc/pcie-qcom.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/pci/hotplug/acpiphp_glue.c
-+++ b/drivers/pci/hotplug/acpiphp_glue.c
-@@ -489,7 +489,6 @@ static void enable_slot(struct acpiphp_s
- 				acpiphp_native_scan_bridge(dev);
- 		}
- 	} else {
--		LIST_HEAD(add_list);
- 		int max, pass;
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1134,6 +1134,8 @@ static int qcom_pcie_post_init_2_3_3(str
+ 	writel(PCI_EXP_DEVCTL2_COMP_TMOUT_DIS, pci->dbi_base + offset +
+ 		PCI_EXP_DEVCTL2);
  
- 		acpiphp_rescan_slot(slot);
-@@ -503,12 +502,10 @@ static void enable_slot(struct acpiphp_s
- 				if (pass && dev->subordinate) {
- 					check_hotplug_bridge(slot, dev);
- 					pcibios_resource_survey_bus(dev->subordinate);
--					__pci_bus_size_bridges(dev->subordinate,
--							       &add_list);
- 				}
- 			}
- 		}
--		__pci_bus_assign_resources(bus, &add_list, NULL);
-+		pci_assign_unassigned_bridge_resources(bus->self);
- 	}
++	dw_pcie_dbi_ro_wr_dis(pci);
++
+ 	return 0;
+ }
  
- 	acpiphp_sanitize_bus(bus);
 
 
