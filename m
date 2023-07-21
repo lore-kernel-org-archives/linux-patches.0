@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D264A1F93D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:10:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5FEC433C8;
-	Fri, 21 Jul 2023 16:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70331F93D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:10:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267FCC433C8;
+	Fri, 21 Jul 2023 16:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689955809;
-	bh=Z6QI8tI2UFG1tVvgBs2BL0MuqpupASmZdaUNhiQ8R98=;
+	s=korg; t=1689955812;
+	bh=yJr6zCjcxADcMcJuqVf4xKDnFt3XUNbLzepWyg0liNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vsXOCcAosvKKQ+HR6D8OMTZ/ktJf+WO7IKNPwvMQjyUZvOxxoOFi+MLbCgPc/pLoy
-	 iRlQFFJpSKQnq9k/tt9wPyMpOoNkFcfQhN23m5L6Ab0xU3t3T4SClibNMaNgoigU3G
-	 9ubTDcUCc/oUEXw1pgw6j82ZjlrqUHVsjBAopWuk=
+	b=Zd2RLy18s8wj7FSF/kLAaSZLH/pcw/ekq8Yl3aNMFKnV0bePUUvdHBOODOsroAoQy
+	 8qyqntOMqChf4ja4KwD+9GSSoReRIcGus2CRM/H/UYrKWLZQE6hQ369v/S9MOMT19e
+	 9inZXDmvXCDSMX5At70f+yfdXuOs4qPfuZmkbJRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Eric Biggers <ebiggers@google.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 037/292] igc: Handle PPS start time programming for past time values
-Date: Fri, 21 Jul 2023 18:02:26 +0200
-Message-ID: <20230721160530.391357382@linuxfoundation.org>
+Subject: [PATCH 6.4 038/292] blk-crypto: use dynamic lock class for blk_crypto_profile::lock
+Date: Fri, 21 Jul 2023 18:02:27 +0200
+Message-ID: <20230721160530.433106150@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -37,107 +36,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit 84a192e46106355de1a314d709e657231d4b1026 ]
+[ Upstream commit 2fb48d88e77f29bf9d278f25bcfe82cf59a0e09b ]
 
-I225/6 hardware can be programmed to start PPS output once
-the time in Target Time registers is reached. The time
-programmed in these registers should always be into future.
-Only then PPS output is triggered when SYSTIM register
-reaches the programmed value. There are two modes in i225/6
-hardware to program PPS, pulse and clock mode.
+When a device-mapper device is passing through the inline encryption
+support of an underlying device, calls to blk_crypto_evict_key() take
+the blk_crypto_profile::lock of the device-mapper device, then take the
+blk_crypto_profile::lock of the underlying device (nested).  This isn't
+a real deadlock, but it causes a lockdep report because there is only
+one lock class for all instances of this lock.
 
-There were issues reported where PPS is not generated when
-start time is in past.
+Lockdep subclasses don't really work here because the hierarchy of block
+devices is dynamic and could have more than 2 levels.
 
-Example 1, "echo 0 0 0 2 0 > /sys/class/ptp/ptp0/period"
+Instead, register a dynamic lock class for each blk_crypto_profile, and
+associate that with the lock.
 
-In the current implementation, a value of '0' is programmed
-into Target time registers and PPS output is in pulse mode.
-Eventually an interrupt which is triggered upon SYSTIM
-register reaching Target time is not fired. Thus no PPS
-output is generated.
+This avoids false-positive lockdep reports like the following:
 
-Example 2, "echo 0 0 0 1 0 > /sys/class/ptp/ptp0/period"
+    ============================================
+    WARNING: possible recursive locking detected
+    6.4.0-rc5 #2 Not tainted
+    --------------------------------------------
+    fscryptctl/1421 is trying to acquire lock:
+    ffffff80829ca418 (&profile->lock){++++}-{3:3}, at: __blk_crypto_evict_key+0x44/0x1c0
 
-Above case, a value of '0' is programmed into Target time
-registers and PPS output is in clock mode. Here, HW tries to
-catch-up the current time by incrementing Target Time
-register. This catch-up time seem to vary according to
-programmed PPS period time as per the HW design. In my
-experiments, the delay ranged between few tens of seconds to
-few minutes. The PPS output is only generated after the
-Target time register reaches current time.
+                   but task is already holding lock:
+    ffffff8086b68ca8 (&profile->lock){++++}-{3:3}, at: __blk_crypto_evict_key+0xc8/0x1c0
 
-In my experiments, I also observed PPS stopped working with
-below test and could not recover until module is removed and
-loaded again.
+                   other info that might help us debug this:
+     Possible unsafe locking scenario:
 
-1) echo 0 <future time> 0 1 0 > /sys/class/ptp/ptp1/period
-2) echo 0 0 0 1 0 > /sys/class/ptp/ptp1/period
-3) echo 0 0 0 1 0 > /sys/class/ptp/ptp1/period
+           CPU0
+           ----
+      lock(&profile->lock);
+      lock(&profile->lock);
 
-After this PPS did not work even if i re-program with proper
-values. I could only get this back working by reloading the
-driver.
+                    *** DEADLOCK ***
 
-This patch takes care of calculating and programming
-appropriate future time value into Target Time registers.
+     May be due to missing lock nesting notation
 
-Fixes: 5e91c72e560c ("igc: Fix PPS delta between two synchronized end-points")
-Signed-off-by: Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>
-Reviewed-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 1b2628397058 ("block: Keyslot Manager for Inline Encryption")
+Reported-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20230610061139.212085-1-ebiggers@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_ptp.c | 25 +++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ block/blk-crypto-profile.c         | 12 ++++++++++--
+ include/linux/blk-crypto-profile.h |  1 +
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
-index 32ef112f8291a..f0b979a706552 100644
---- a/drivers/net/ethernet/intel/igc/igc_ptp.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
-@@ -356,16 +356,35 @@ static int igc_ptp_feature_enable_i225(struct ptp_clock_info *ptp,
- 			tsim &= ~IGC_TSICR_TT0;
- 		}
- 		if (on) {
-+			struct timespec64 safe_start;
- 			int i = rq->perout.index;
+diff --git a/block/blk-crypto-profile.c b/block/blk-crypto-profile.c
+index 2a67d3fb63e5c..7fabc883e39f1 100644
+--- a/block/blk-crypto-profile.c
++++ b/block/blk-crypto-profile.c
+@@ -79,7 +79,14 @@ int blk_crypto_profile_init(struct blk_crypto_profile *profile,
+ 	unsigned int slot_hashtable_size;
  
- 			igc_pin_perout(igc, i, pin, use_freq);
--			igc->perout[i].start.tv_sec = rq->perout.start.sec;
-+			igc_ptp_read(igc, &safe_start);
+ 	memset(profile, 0, sizeof(*profile));
+-	init_rwsem(&profile->lock);
 +
-+			/* PPS output start time is triggered by Target time(TT)
-+			 * register. Programming any past time value into TT
-+			 * register will cause PPS to never start. Need to make
-+			 * sure we program the TT register a time ahead in
-+			 * future. There isn't a stringent need to fire PPS out
-+			 * right away. Adding +2 seconds should take care of
-+			 * corner cases. Let's say if the SYSTIML is close to
-+			 * wrap up and the timer keeps ticking as we program the
-+			 * register, adding +2seconds is safe bet.
-+			 */
-+			safe_start.tv_sec += 2;
-+
-+			if (rq->perout.start.sec < safe_start.tv_sec)
-+				igc->perout[i].start.tv_sec = safe_start.tv_sec;
-+			else
-+				igc->perout[i].start.tv_sec = rq->perout.start.sec;
- 			igc->perout[i].start.tv_nsec = rq->perout.start.nsec;
- 			igc->perout[i].period.tv_sec = ts.tv_sec;
- 			igc->perout[i].period.tv_nsec = ts.tv_nsec;
--			wr32(trgttimh, rq->perout.start.sec);
-+			wr32(trgttimh, (u32)igc->perout[i].start.tv_sec);
- 			/* For now, always select timer 0 as source. */
--			wr32(trgttiml, rq->perout.start.nsec | IGC_TT_IO_TIMER_SEL_SYSTIM0);
-+			wr32(trgttiml, (u32)(igc->perout[i].start.tv_nsec |
-+					     IGC_TT_IO_TIMER_SEL_SYSTIM0));
- 			if (use_freq)
- 				wr32(freqout, ns);
- 			tsauxc |= tsauxc_mask;
++	/*
++	 * profile->lock of an underlying device can nest inside profile->lock
++	 * of a device-mapper device, so use a dynamic lock class to avoid
++	 * false-positive lockdep reports.
++	 */
++	lockdep_register_key(&profile->lockdep_key);
++	__init_rwsem(&profile->lock, "&profile->lock", &profile->lockdep_key);
+ 
+ 	if (num_slots == 0)
+ 		return 0;
+@@ -89,7 +96,7 @@ int blk_crypto_profile_init(struct blk_crypto_profile *profile,
+ 	profile->slots = kvcalloc(num_slots, sizeof(profile->slots[0]),
+ 				  GFP_KERNEL);
+ 	if (!profile->slots)
+-		return -ENOMEM;
++		goto err_destroy;
+ 
+ 	profile->num_slots = num_slots;
+ 
+@@ -435,6 +442,7 @@ void blk_crypto_profile_destroy(struct blk_crypto_profile *profile)
+ {
+ 	if (!profile)
+ 		return;
++	lockdep_unregister_key(&profile->lockdep_key);
+ 	kvfree(profile->slot_hashtable);
+ 	kvfree_sensitive(profile->slots,
+ 			 sizeof(profile->slots[0]) * profile->num_slots);
+diff --git a/include/linux/blk-crypto-profile.h b/include/linux/blk-crypto-profile.h
+index e6802b69cdd64..90ab33cb5d0ef 100644
+--- a/include/linux/blk-crypto-profile.h
++++ b/include/linux/blk-crypto-profile.h
+@@ -111,6 +111,7 @@ struct blk_crypto_profile {
+ 	 * keyslots while ensuring that they can't be changed concurrently.
+ 	 */
+ 	struct rw_semaphore lock;
++	struct lock_class_key lockdep_key;
+ 
+ 	/* List of idle slots, with least recently used slot at front */
+ 	wait_queue_head_t idle_slots_wait_queue;
 -- 
 2.39.2
 
