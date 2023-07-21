@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456501F93D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:11:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8CEC433C7;
-	Fri, 21 Jul 2023 16:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99EC1F93D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:11:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856B6C433C8;
+	Fri, 21 Jul 2023 16:11:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689955895;
-	bh=7qtWjDWk0gFeEToDQMXuWmhw6EeQpWK3JNzLJqGufdA=;
+	s=korg; t=1689955897;
+	bh=c3DsV54k+3PaNxj9GZ+uBLu8LsynM9IfjBZ16qG3qHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kt5x9JQAUkmBKknZm863YOP4QjkIEX22ZFkQGg/3b2ATf/gi1CFS4imy+s3iBp/ge
-	 KOYH5Qm51jsaarpB0KO/prpaOiw25zpN5avublpABDSb8/F+zp4H6jbyYe1w4UP7Ft
-	 khxR50cwvgVO3cNoUK4xyX2Wx4PizdS1IpguDYdo=
+	b=ZY2b2gXWOx6xX5VNMy5K/90Cjfgn6auh1lIMveZBeLsNAQhsKkCZL/+to0RnMMkiu
+	 v61si9lZjNKIy3NTvP3EV6ehVnKOXs3OJxofuDoxEaKPejldQQkY/RnT6FVF/wwg9y
+	 zpblsZ4VoXgUhAhEaFB0jOTFRiOHSDd5THogBNgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Milburn, Alyssa" <alyssa.milburn@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kees Cook <keescook@chromium.org>,
-	Sami Tolvanen <samitolvanen@google.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 067/292] x86/fineibt: Poison ENDBR at +0
-Date: Fri, 21 Jul 2023 18:02:56 +0200
-Message-ID: <20230721160531.667102163@linuxfoundation.org>
+Subject: [PATCH 6.4 068/292] platform/x86: wmi: Break possible infinite loop when parsing GUID
+Date: Fri, 21 Jul 2023 18:02:57 +0200
+Message-ID: <20230721160531.711850645@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -37,87 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 04505bbbbb15da950ea0239e328a76a3ad2376e0 ]
+[ Upstream commit 028e6e204ace1f080cfeacd72c50397eb8ae8883 ]
 
-Alyssa noticed that when building the kernel with CFI_CLANG+IBT and
-booting on IBT enabled hardware to obtain FineIBT, the indirect
-functions look like:
+The while-loop may break on one of the two conditions, either ID string
+is empty or GUID matches. The second one, may never be reached if the
+parsed string is not correct GUID. In such a case the loop will never
+advance to check the next ID.
 
-  __cfi_foo:
-	endbr64
-	subl	$hash, %r10d
-	jz	1f
-	ud2
-	nop
-  1:
-  foo:
-	endbr64
+Break possible infinite loop by factoring out guid_parse_and_compare()
+helper which may be moved to the generic header for everyone later on
+and preventing from similar mistake in the future.
 
-This is because the compiler generates code for kCFI+IBT. In that case
-the caller does the hash check and will jump to +0, so there must be
-an ENDBR there. The compiler doesn't know about FineIBT at all; also
-it is possible to actually use kCFI+IBT when booting with 'cfi=kcfi'
-on IBT enabled hardware.
+Interestingly that firstly it appeared when WMI was turned into a bus
+driver, but later when duplicated GUIDs were checked, the while-loop
+has been replaced by for-loop and hence no mistake made again.
 
-Having this second ENDBR however makes it possible to elide the CFI
-check. Therefore, we should poison this second ENDBR when switching to
-FineIBT mode.
-
-Fixes: 931ab63664f0 ("x86/ibt: Implement FineIBT")
-Reported-by: "Milburn, Alyssa" <alyssa.milburn@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Link: https://lore.kernel.org/r/20230615193722.194131053@infradead.org
+Fixes: a48e23385fcf ("platform/x86: wmi: add context pointer field to struct wmi_device_id")
+Fixes: 844af950da94 ("platform/x86: wmi: Turn WMI into a bus driver")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230621151155.78279-1-andriy.shevchenko@linux.intel.com
+Tested-by: Armin Wolf <W_Armin@gmx.de>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/alternative.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/platform/x86/wmi.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/arch/x86/kernel/alternative.c b/arch/x86/kernel/alternative.c
-index f615e0cb6d932..4e2c70f88e05b 100644
---- a/arch/x86/kernel/alternative.c
-+++ b/arch/x86/kernel/alternative.c
-@@ -940,6 +940,17 @@ static int cfi_rewrite_preamble(s32 *start, s32 *end)
- 	return 0;
+diff --git a/drivers/platform/x86/wmi.c b/drivers/platform/x86/wmi.c
+index d81319a502efc..e1a3bfeeed529 100644
+--- a/drivers/platform/x86/wmi.c
++++ b/drivers/platform/x86/wmi.c
+@@ -136,6 +136,16 @@ static acpi_status find_guid(const char *guid_string, struct wmi_block **out)
+ 	return AE_NOT_FOUND;
  }
  
-+static void cfi_rewrite_endbr(s32 *start, s32 *end)
++static bool guid_parse_and_compare(const char *string, const guid_t *guid)
 +{
-+	s32 *s;
++	guid_t guid_input;
 +
-+	for (s = start; s < end; s++) {
-+		void *addr = (void *)s + *s;
++	if (guid_parse(string, &guid_input))
++		return false;
 +
-+		poison_endbr(addr+16, false);
-+	}
++	return guid_equal(&guid_input, guid);
 +}
 +
- /* .retpoline_sites */
- static int cfi_rand_callers(s32 *start, s32 *end)
+ static const void *find_guid_context(struct wmi_block *wblock,
+ 				     struct wmi_driver *wdriver)
  {
-@@ -1034,14 +1045,19 @@ static void __apply_fineibt(s32 *start_retpoline, s32 *end_retpoline,
- 		return;
+@@ -146,11 +156,7 @@ static const void *find_guid_context(struct wmi_block *wblock,
+ 		return NULL;
  
- 	case CFI_FINEIBT:
-+		/* place the FineIBT preamble at func()-16 */
- 		ret = cfi_rewrite_preamble(start_cfi, end_cfi);
- 		if (ret)
- 			goto err;
+ 	while (*id->guid_string) {
+-		guid_t guid_input;
+-
+-		if (guid_parse(id->guid_string, &guid_input))
+-			continue;
+-		if (guid_equal(&wblock->gblock.guid, &guid_input))
++		if (guid_parse_and_compare(id->guid_string, &wblock->gblock.guid))
+ 			return id->context;
+ 		id++;
+ 	}
+@@ -827,11 +833,7 @@ static int wmi_dev_match(struct device *dev, struct device_driver *driver)
+ 		return 0;
  
-+		/* rewrite the callers to target func()-16 */
- 		ret = cfi_rewrite_callers(start_retpoline, end_retpoline);
- 		if (ret)
- 			goto err;
+ 	while (*id->guid_string) {
+-		guid_t driver_guid;
+-
+-		if (WARN_ON(guid_parse(id->guid_string, &driver_guid)))
+-			continue;
+-		if (guid_equal(&driver_guid, &wblock->gblock.guid))
++		if (guid_parse_and_compare(id->guid_string, &wblock->gblock.guid))
+ 			return 1;
  
-+		/* now that nobody targets func()+0, remove ENDBR there */
-+		cfi_rewrite_endbr(start_cfi, end_cfi);
-+
- 		if (builtin)
- 			pr_info("Using FineIBT CFI\n");
- 		return;
+ 		id++;
 -- 
 2.39.2
 
