@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD72E20F98
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:13:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8BCC433C8;
-	Fri, 21 Jul 2023 19:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE1120F98
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:13:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EDADC433C7;
+	Fri, 21 Jul 2023 19:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966815;
-	bh=u40zzgv33+1v8ZivzQCTf4Snh0Zms/0SyS1Cmm4BLE0=;
+	s=korg; t=1689966818;
+	bh=A4yPjV1zr8jUpprlOFKqpi5Fy03uXanhLGkjbEIe1BY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K4Esp2dhiNdx0nKkt+dDBASMb4oi5qQBNSKiZw8uEzSqRE1I6kf8jQGgEsXXOeoQa
-	 BErZo+3p0RX3bZlukT+T1WtsG0/IjGIv33MUb8zb1uNzQIcNfsIF0wMRINbgwOgx7H
-	 CnruMCja7+YtEwoTJirEDkhOYzJJviSIX4VgTdO4=
+	b=OjKNHkxLi8llgnh9QU96gotR6475xo1fiGRfHkiNIu23lf099X/W6R+UoiCY6KUSG
+	 ekPWRG3O4MoEt8U1Y4y8ph8/PFZ+Pm/LwLp/kzcDKbyU28oOHngO9uhWggKcFonr/c
+	 XyIUOI2KfH6niO6pxICdPk3RvN9vlXOG9n0So16A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.15 470/532] dm integrity: reduce vmalloc space footprint on 32-bit architectures
-Date: Fri, 21 Jul 2023 18:06:14 +0200
-Message-ID: <20230721160640.019094161@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>
+Subject: [PATCH 5.15 479/532] PCI: rockchip: Use u32 variable to access 32-bit registers
+Date: Fri, 21 Jul 2023 18:06:23 +0200
+Message-ID: <20230721160640.502712232@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -34,42 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
 
-commit 6d50eb4725934fd22f5eeccb401000687c790fd0 upstream.
+commit 8962b2cb39119cbda4fc69a1f83957824f102f81 upstream.
 
-It was reported that dm-integrity runs out of vmalloc space on 32-bit
-architectures. On x86, there is only 128MiB vmalloc space and dm-integrity
-consumes it quickly because it has a 64MiB journal and 8MiB recalculate
-buffer.
+Previously u16 variables were used to access 32-bit registers, this
+resulted in not all of the data being read from the registers. Also
+the left shift of more than 16-bits would result in moving data out
+of the variable. Use u32 variables to access 32-bit registers
 
-Fix this by reducing the size of the journal to 4MiB and the size of
-the recalculate buffer to 1MiB, so that multiple dm-integrity devices
-can be created and activated on 32-bit architectures.
-
+Link: https://lore.kernel.org/r/20230418074700.1083505-10-rick.wertenbroek@gmail.com
+Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
+Tested-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pcie-rockchip-ep.c |   10 +++++-----
+ drivers/pci/controller/pcie-rockchip.h    |    1 +
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -31,11 +31,11 @@
- #define DEFAULT_BUFFER_SECTORS		128
- #define DEFAULT_JOURNAL_WATERMARK	50
- #define DEFAULT_SYNC_MSEC		10000
--#define DEFAULT_MAX_JOURNAL_SECTORS	131072
-+#define DEFAULT_MAX_JOURNAL_SECTORS	(IS_ENABLED(CONFIG_64BIT) ? 131072 : 8192)
- #define MIN_LOG2_INTERLEAVE_SECTORS	3
- #define MAX_LOG2_INTERLEAVE_SECTORS	31
- #define METADATA_WORKQUEUE_MAX_ACTIVE	16
--#define RECALC_SECTORS			32768
-+#define RECALC_SECTORS			(IS_ENABLED(CONFIG_64BIT) ? 32768 : 2048)
- #define RECALC_WRITE_SUPER		16
- #define BITMAP_BLOCK_SIZE		4096	/* don't change it */
- #define BITMAP_FLUSH_INTERVAL		(10 * HZ)
+--- a/drivers/pci/controller/pcie-rockchip-ep.c
++++ b/drivers/pci/controller/pcie-rockchip-ep.c
+@@ -314,15 +314,15 @@ static int rockchip_pcie_ep_set_msi(stru
+ {
+ 	struct rockchip_pcie_ep *ep = epc_get_drvdata(epc);
+ 	struct rockchip_pcie *rockchip = &ep->rockchip;
+-	u16 flags;
++	u32 flags;
+ 
+ 	flags = rockchip_pcie_read(rockchip,
+ 				   ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
+ 				   ROCKCHIP_PCIE_EP_MSI_CTRL_REG);
+ 	flags &= ~ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_MASK;
+ 	flags |=
+-	   ((multi_msg_cap << 1) <<  ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_OFFSET) |
+-	   PCI_MSI_FLAGS_64BIT;
++	   (multi_msg_cap << ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_OFFSET) |
++	   (PCI_MSI_FLAGS_64BIT << ROCKCHIP_PCIE_EP_MSI_FLAGS_OFFSET);
+ 	flags &= ~ROCKCHIP_PCIE_EP_MSI_CTRL_MASK_MSI_CAP;
+ 	rockchip_pcie_write(rockchip, flags,
+ 			    ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
+@@ -334,7 +334,7 @@ static int rockchip_pcie_ep_get_msi(stru
+ {
+ 	struct rockchip_pcie_ep *ep = epc_get_drvdata(epc);
+ 	struct rockchip_pcie *rockchip = &ep->rockchip;
+-	u16 flags;
++	u32 flags;
+ 
+ 	flags = rockchip_pcie_read(rockchip,
+ 				   ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
+@@ -395,7 +395,7 @@ static int rockchip_pcie_ep_send_msi_irq
+ 					 u8 interrupt_num)
+ {
+ 	struct rockchip_pcie *rockchip = &ep->rockchip;
+-	u16 flags, mme, data, data_mask;
++	u32 flags, mme, data, data_mask;
+ 	u8 msi_count;
+ 	u64 pci_addr, pci_addr_mask = 0xff;
+ 
+--- a/drivers/pci/controller/pcie-rockchip.h
++++ b/drivers/pci/controller/pcie-rockchip.h
+@@ -226,6 +226,7 @@
+ #define ROCKCHIP_PCIE_EP_CMD_STATUS			0x4
+ #define   ROCKCHIP_PCIE_EP_CMD_STATUS_IS		BIT(19)
+ #define ROCKCHIP_PCIE_EP_MSI_CTRL_REG			0x90
++#define   ROCKCHIP_PCIE_EP_MSI_FLAGS_OFFSET		16
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_OFFSET		17
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_MASK		GENMASK(19, 17)
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MME_OFFSET		20
 
 
