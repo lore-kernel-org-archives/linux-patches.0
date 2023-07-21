@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E8020F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:07:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 100B0C433C7;
-	Fri, 21 Jul 2023 19:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509E020F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:07:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F13C433C7;
+	Fri, 21 Jul 2023 19:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966476;
-	bh=3AHE5zK76oVCkDYqN9+bywSsmT54enXpXYNuKywYX1I=;
+	s=korg; t=1689966479;
+	bh=Ggab/Fb4oT0/P/fmRBL97/i9e37dzda968nsBHGSaOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RbBzg9qystf7eYOgTTPsn2xMfCQqOthikbiV5wRd6f+dWXaVkm5u6fHwUJUbes+++
-	 a0BPQnPO+2umzta5mDyylYkHM6A2peLcBuVk9+o1XxKqqR12tO4QkgEAg+tf++2OaI
-	 ls+PftOKCfxgokP98Kg2yvgNjXhOoEmOPuSOKuIE=
+	b=wBARAQHhgt+/vu63YeF3Bqr5vZ4d9HVLiSDOdgrDEBE7AyQ8mG4re/1AWkiEW+RO1
+	 MGsoFYWJWMrDsXFjtHsv9G6q/IFOOOEexRPvarWxqfN2dxbi0UWqSh4hhVN2Mzh8Ch
+	 XUdil2971boZBF9FTJ1rxHkp45IZIyK07bxeUHyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Jan Kara <jack@suse.cz>,
 	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.15 358/532] Revert "f2fs: fix potential corruption when moving a directory"
-Date: Fri, 21 Jul 2023 18:04:22 +0200
-Message-ID: <20230721160633.883371520@linuxfoundation.org>
+Subject: [PATCH 5.15 359/532] fs: Establish locking order for unrelated directories
+Date: Fri, 21 Jul 2023 18:04:23 +0200
+Message-ID: <20230721160633.936096451@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,64 +36,102 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-commit cde3c9d7e2a359e337216855dcb333a19daaa436 upstream.
+commit f23ce757185319886ca80c4864ce5f81ac6cc9e9 upstream.
 
-This reverts commit d94772154e524b329a168678836745d2773a6e02. The
-locking is going to be provided by VFS.
+Currently the locking order of inode locks for directories that are not
+in ancestor relationship is not defined because all operations that
+needed to lock two directories like this were serialized by
+sb->s_vfs_rename_mutex. However some filesystems need to lock two
+subdirectories for RENAME_EXCHANGE operations and for this we need the
+locking order established even for two tree-unrelated directories.
+Provide a helper function lock_two_inodes() that establishes lock
+ordering for any two inodes and use it in lock_two_directories().
 
-CC: Jaegeuk Kim <jaegeuk@kernel.org>
 CC: stable@vger.kernel.org
 Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20230601105830.13168-3-jack@suse.cz>
+Message-Id: <20230601105830.13168-4-jack@suse.cz>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/namei.c |   16 +---------------
- 1 file changed, 1 insertion(+), 15 deletions(-)
+ fs/inode.c    |   42 ++++++++++++++++++++++++++++++++++++++++++
+ fs/internal.h |    2 ++
+ fs/namei.c    |    4 ++--
+ 3 files changed, 46 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -991,20 +991,12 @@ static int f2fs_rename(struct inode *old
- 			goto out;
+--- a/fs/inode.c
++++ b/fs/inode.c
+@@ -1024,6 +1024,48 @@ void discard_new_inode(struct inode *ino
+ EXPORT_SYMBOL(discard_new_inode);
+ 
+ /**
++ * lock_two_inodes - lock two inodes (may be regular files but also dirs)
++ *
++ * Lock any non-NULL argument. The caller must make sure that if he is passing
++ * in two directories, one is not ancestor of the other.  Zero, one or two
++ * objects may be locked by this function.
++ *
++ * @inode1: first inode to lock
++ * @inode2: second inode to lock
++ * @subclass1: inode lock subclass for the first lock obtained
++ * @subclass2: inode lock subclass for the second lock obtained
++ */
++void lock_two_inodes(struct inode *inode1, struct inode *inode2,
++		     unsigned subclass1, unsigned subclass2)
++{
++	if (!inode1 || !inode2) {
++		/*
++		 * Make sure @subclass1 will be used for the acquired lock.
++		 * This is not strictly necessary (no current caller cares) but
++		 * let's keep things consistent.
++		 */
++		if (!inode1)
++			swap(inode1, inode2);
++		goto lock;
++	}
++
++	/*
++	 * If one object is directory and the other is not, we must make sure
++	 * to lock directory first as the other object may be its child.
++	 */
++	if (S_ISDIR(inode2->i_mode) == S_ISDIR(inode1->i_mode)) {
++		if (inode1 > inode2)
++			swap(inode1, inode2);
++	} else if (!S_ISDIR(inode1->i_mode))
++		swap(inode1, inode2);
++lock:
++	if (inode1)
++		inode_lock_nested(inode1, subclass1);
++	if (inode2 && inode2 != inode1)
++		inode_lock_nested(inode2, subclass2);
++}
++
++/**
+  * lock_two_nondirectories - take two i_mutexes on non-directory objects
+  *
+  * Lock any non-NULL argument that is not a directory.
+--- a/fs/internal.h
++++ b/fs/internal.h
+@@ -152,6 +152,8 @@ extern void inode_add_lru(struct inode *
+ int dentry_needs_remove_privs(struct user_namespace *, struct dentry *dentry);
+ bool in_group_or_capable(struct user_namespace *mnt_userns,
+ 			 const struct inode *inode, kgid_t gid);
++void lock_two_inodes(struct inode *inode1, struct inode *inode2,
++		     unsigned subclass1, unsigned subclass2);
+ 
+ /*
+  * fs-writeback.c
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -2984,8 +2984,8 @@ struct dentry *lock_rename(struct dentry
+ 		return p;
  	}
  
--	/*
--	 * Copied from ext4_rename: we need to protect against old.inode
--	 * directory getting converted from inline directory format into
--	 * a normal one.
--	 */
--	if (S_ISDIR(old_inode->i_mode))
--		inode_lock_nested(old_inode, I_MUTEX_NONDIR2);
--
- 	err = -ENOENT;
- 	old_entry = f2fs_find_entry(old_dir, &old_dentry->d_name, &old_page);
- 	if (!old_entry) {
- 		if (IS_ERR(old_page))
- 			err = PTR_ERR(old_page);
--		goto out_unlock_old;
-+		goto out;
- 	}
- 
- 	if (S_ISDIR(old_inode->i_mode)) {
-@@ -1112,9 +1104,6 @@ static int f2fs_rename(struct inode *old
- 
- 	f2fs_unlock_op(sbi);
- 
--	if (S_ISDIR(old_inode->i_mode))
--		inode_unlock(old_inode);
--
- 	if (IS_DIRSYNC(old_dir) || IS_DIRSYNC(new_dir))
- 		f2fs_sync_fs(sbi->sb, 1);
- 
-@@ -1129,9 +1118,6 @@ out_dir:
- 		f2fs_put_page(old_dir_page, 0);
- out_old:
- 	f2fs_put_page(old_page, 0);
--out_unlock_old:
--	if (S_ISDIR(old_inode->i_mode))
--		inode_unlock(old_inode);
- out:
- 	if (whiteout)
- 		iput(whiteout);
+-	inode_lock_nested(p1->d_inode, I_MUTEX_PARENT);
+-	inode_lock_nested(p2->d_inode, I_MUTEX_PARENT2);
++	lock_two_inodes(p1->d_inode, p2->d_inode,
++			I_MUTEX_PARENT, I_MUTEX_PARENT2);
+ 	return NULL;
+ }
+ EXPORT_SYMBOL(lock_rename);
 
 
