@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0710D1F941
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:17:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C89BC433C7;
-	Fri, 21 Jul 2023 16:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59F91F941
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:17:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 488F9C433C8;
+	Fri, 21 Jul 2023 16:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956254;
-	bh=HJPMXDpv01cAKA9MYhUmAPqdMfx6e5PK/majPaMz8C4=;
+	s=korg; t=1689956257;
+	bh=BSer5YVRj5WFIN0Jr+ULe4F37KEkn/xYkL3yeex9NmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NLZrr4H0OMZNnGFC5OByrmgVANZHDXm39i5F1lMCmHab3Db2cdTH5GJLgZz9uh15l
-	 oxzMC1gqnW01BMwmDKLBFMy3hb9vHdJbb4vboU/M32SpTddWUdN42CICAlBoxjEPo9
-	 mWTCjq1b2MmKwR9IbmbtA28NmJa5Fngbwgtgnsc4=
+	b=gMk27hH4BS5Uoimjrh5HWl4Tc/+8DrevZpnHqGIIFswAR36fwRhOYi72OJZjtCJzC
+	 xH9Hu7XwRE5TNTsCHQDoFKj0e7JV22Hm3O/MKdZSsLqnoBOeDhV8QSzYT//e7WhTuS
+	 BbkOeK2OTYA/IBghkYMiD/pEZ+Sre08SxlK6zTXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Sean Greenslade <sean@seangreenslade.com>,
+	Chao Yu <chao@kernel.org>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.4 154/292] ext4: avoid updating the superblock on a r/o mount if not needed
-Date: Fri, 21 Jul 2023 18:04:23 +0200
-Message-ID: <20230721160535.518020086@linuxfoundation.org>
+Subject: [PATCH 6.4 155/292] ext4: fix to check return value of freeze_bdev() in ext4_shutdown()
+Date: Fri, 21 Jul 2023 18:04:24 +0200
+Message-ID: <20230721160535.560068243@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -35,72 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Chao Yu <chao@kernel.org>
 
-commit 2ef6c32a914b85217b44a0a2418e830e520b085e upstream.
+commit c4d13222afd8a64bf11bc7ec68645496ee8b54b9 upstream.
 
-This was noticed by a user who noticied that the mtime of a file
-backing a loopback device was getting bumped when the loopback device
-is mounted read/only.  Note: This doesn't show up when doing a
-loopback mount of a file directly, via "mount -o ro /tmp/foo.img
-/mnt", since the loop device is set read-only when mount automatically
-creates loop device.  However, this is noticeable for a LUKS loop
-device like this:
+freeze_bdev() can fail due to a lot of reasons, it needs to check its
+reason before later process.
 
-% cryptsetup luksOpen /tmp/foo.img test
-% mount -o ro /dev/loop0 /mnt ; umount /mnt
-
-or, if LUKS is not in use, if the user manually creates the loop
-device like this:
-
-% losetup /dev/loop0 /tmp/foo.img
-% mount -o ro /dev/loop0 /mnt ; umount /mnt
-
-The modified mtime causes rsync to do a rolling checksum scan of the
-file on the local and remote side, incrementally increasing the time
-to rsync the not-modified-but-touched image file.
-
-Fixes: eee00237fa5e ("ext4: commit super block if fs record error when journal record without error")
+Fixes: 783d94854499 ("ext4: add EXT4_IOC_GOINGDOWN ioctl")
 Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/ZIauBR7YiV3rVAHL@glitch
-Reported-by: Sean Greenslade <sean@seangreenslade.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Link: https://lore.kernel.org/r/20230606073203.1310389-1-chao@kernel.org
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/ext4/ioctl.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -5980,19 +5980,27 @@ static int ext4_load_journal(struct supe
- 		err = jbd2_journal_wipe(journal, !really_read_only);
- 	if (!err) {
- 		char *save = kmalloc(EXT4_S_ERR_LEN, GFP_KERNEL);
-+		__le16 orig_state;
-+		bool changed = false;
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -797,6 +797,7 @@ static int ext4_shutdown(struct super_bl
+ {
+ 	struct ext4_sb_info *sbi = EXT4_SB(sb);
+ 	__u32 flags;
++	int ret;
  
- 		if (save)
- 			memcpy(save, ((char *) es) +
- 			       EXT4_S_ERR_START, EXT4_S_ERR_LEN);
- 		err = jbd2_journal_load(journal);
--		if (save)
-+		if (save && memcmp(((char *) es) + EXT4_S_ERR_START,
-+				   save, EXT4_S_ERR_LEN)) {
- 			memcpy(((char *) es) + EXT4_S_ERR_START,
- 			       save, EXT4_S_ERR_LEN);
-+			changed = true;
-+		}
- 		kfree(save);
-+		orig_state = es->s_state;
- 		es->s_state |= cpu_to_le16(EXT4_SB(sb)->s_mount_state &
- 					   EXT4_ERROR_FS);
-+		if (orig_state != es->s_state)
-+			changed = true;
- 		/* Write out restored error information to the superblock */
--		if (!bdev_read_only(sb->s_bdev)) {
-+		if (changed && !really_read_only) {
- 			int err2;
- 			err2 = ext4_commit_super(sb);
- 			err = err ? : err2;
+ 	if (!capable(CAP_SYS_ADMIN))
+ 		return -EPERM;
+@@ -815,7 +816,9 @@ static int ext4_shutdown(struct super_bl
+ 
+ 	switch (flags) {
+ 	case EXT4_GOING_FLAGS_DEFAULT:
+-		freeze_bdev(sb->s_bdev);
++		ret = freeze_bdev(sb->s_bdev);
++		if (ret)
++			return ret;
+ 		set_bit(EXT4_FLAGS_SHUTDOWN, &sbi->s_ext4_flags);
+ 		thaw_bdev(sb->s_bdev);
+ 		break;
 
 
