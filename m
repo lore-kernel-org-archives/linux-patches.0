@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD11920F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0272C433C8;
-	Fri, 21 Jul 2023 19:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5278F20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C889FC433C9;
+	Fri, 21 Jul 2023 19:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966969;
-	bh=DJPAuEM50nUKpPPfjFWNaDhwWGHgEjIiZoPJiHj84bc=;
+	s=korg; t=1689966972;
+	bh=fmv0643ko+EClKdwiKENopOTvYCTwpTIGx8A3KHE9PQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KdRqB7SHCUUZfdqVVCKVRotfPuLPmNn4zawoFftNX5yj7Sle4a3Tg88oeytBP6Ywz
-	 Q2bPEXiW8MNWUxh581S+pwzTa+5oK5WDzAqcZjMTEgfnltPjQRw9n5LtEk1ZncNyK5
-	 kynGJehzwA6SvvUIpYH97S7ED0QggdN9w8zI1rAw=
+	b=N/q2klRXuCSJcVIFWQoA61fbD+n5T7maOXGakYku8IeL2UD6Zr1cE/lHHLe48eDac
+	 6Y3YfoT0jhNz/ZefSQwpgeWMZPQHJywQc2soCJkw/us7g2BeqBziDZNf+Lw2lxN2PQ
+	 KLo+UbR/UNFBofZiKWUG7kYLZVCIZbR+HJZQl09s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manish Rangankar <mrangankar@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 530/532] scsi: qla2xxx: Remove unused nvme_ls_waitq wait queue
-Date: Fri, 21 Jul 2023 18:07:14 +0200
-Message-ID: <20230721160643.363390536@linuxfoundation.org>
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 5.15 531/532] MIPS: kvm: Fix build error with KVM_MIPS_DEBUG_COP0_COUNTERS enabled
+Date: Fri, 21 Jul 2023 18:07:15 +0200
+Message-ID: <20230721160643.416461142@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,91 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manish Rangankar <mrangankar@marvell.com>
+From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 
-commit 20fce500b232b970e40312a9c97e7f3b6d7a709c upstream.
+commit 3a6dbb691782e88e07e5c70b327495dbd58a2e7f upstream.
 
-System crash when qla2x00_start_sp(sp) returns error code EGAIN and wake_up
-gets called for uninitialized wait queue sp->nvme_ls_waitq.
+Commit e4de20576986 ("MIPS: KVM: Fix NULL pointer dereference") missed
+converting one place accessing cop0 registers, which results in a build
+error, if KVM_MIPS_DEBUG_COP0_COUNTERS is enabled.
 
-    qla2xxx [0000:37:00.1]-2121:5: Returning existing qpair of ffff8ae2c0513400 for idx=0
-    qla2xxx [0000:37:00.1]-700e:5: qla2x00_start_sp failed = 11
-    BUG: unable to handle kernel NULL pointer dereference at 0000000000000000
-    PGD 0 P4D 0
-    Oops: 0000 [#1] SMP NOPTI
-    Hardware name: HPE ProLiant DL360 Gen10/ProLiant DL360 Gen10, BIOS U32 09/03/2021
-    Workqueue: nvme-wq nvme_fc_connect_ctrl_work [nvme_fc]
-    RIP: 0010:__wake_up_common+0x4c/0x190
-    RSP: 0018:ffff95f3e0cb7cd0 EFLAGS: 00010086
-    RAX: 0000000000000000 RBX: ffff8b08d3b26328 RCX: 0000000000000000
-    RDX: 0000000000000001 RSI: 0000000000000003 RDI: ffff8b08d3b26320
-    RBP: 0000000000000001 R08: 0000000000000000 R09: ffffffffffffffe8
-    R10: 0000000000000000 R11: ffff95f3e0cb7a60 R12: ffff95f3e0cb7d20
-    R13: 0000000000000003 R14: 0000000000000000 R15: 0000000000000000
-    FS:  0000000000000000(0000) GS:ffff8b2fdf6c0000(0000) knlGS:0000000000000000
-    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    CR2: 0000000000000000 CR3: 0000002f1e410002 CR4: 00000000007706e0
-    DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-    DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-    PKRU: 55555554
-    Call Trace:
-     __wake_up_common_lock+0x7c/0xc0
-     qla_nvme_ls_req+0x355/0x4c0 [qla2xxx]
-     ? __nvme_fc_send_ls_req+0x260/0x380 [nvme_fc]
-     ? nvme_fc_send_ls_req.constprop.42+0x1a/0x45 [nvme_fc]
-     ? nvme_fc_connect_ctrl_work.cold.63+0x1e3/0xa7d [nvme_fc]
-
-Remove unused nvme_ls_waitq wait queue. nvme_ls_waitq logic was removed
-previously in the commits tagged Fixed: below.
-
-Fixes: 219d27d7147e ("scsi: qla2xxx: Fix race conditions in the code for aborting SCSI commands")
-Fixes: 5621b0dd7453 ("scsi: qla2xxx: Simpify unregistration of FC-NVMe local/remote ports")
-Cc: stable@vger.kernel.org
-Signed-off-by: Manish Rangankar <mrangankar@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230615074633.12721-1-njavali@marvell.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: e4de20576986 ("MIPS: KVM: Fix NULL pointer dereference")
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_def.h  |    1 -
- drivers/scsi/qla2xxx/qla_nvme.c |    3 ---
- 2 files changed, 4 deletions(-)
+ arch/mips/kvm/stats.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_def.h
-+++ b/drivers/scsi/qla2xxx/qla_def.h
-@@ -676,7 +676,6 @@ typedef struct srb {
- 	struct iocb_resource iores;
- 	struct kref cmd_kref;	/* need to migrate ref_count over to this */
- 	void *priv;
--	wait_queue_head_t nvme_ls_waitq;
- 	struct fc_port *fcport;
- 	struct scsi_qla_host *vha;
- 	unsigned int start_timer:1;
---- a/drivers/scsi/qla2xxx/qla_nvme.c
-+++ b/drivers/scsi/qla2xxx/qla_nvme.c
-@@ -355,7 +355,6 @@ static int qla_nvme_ls_req(struct nvme_f
- 	if (rval != QLA_SUCCESS) {
- 		ql_log(ql_log_warn, vha, 0x700e,
- 		    "qla2x00_start_sp failed = %d\n", rval);
--		wake_up(&sp->nvme_ls_waitq);
- 		sp->priv = NULL;
- 		priv->sp = NULL;
- 		qla2x00_rel_sp(sp);
-@@ -637,7 +636,6 @@ static int qla_nvme_post_cmd(struct nvme
- 	if (!sp)
- 		return -EBUSY;
- 
--	init_waitqueue_head(&sp->nvme_ls_waitq);
- 	kref_init(&sp->cmd_kref);
- 	spin_lock_init(&priv->cmd_lock);
- 	sp->priv = priv;
-@@ -656,7 +654,6 @@ static int qla_nvme_post_cmd(struct nvme
- 	if (rval != QLA_SUCCESS) {
- 		ql_log(ql_log_warn, vha, 0x212d,
- 		    "qla2x00_start_nvme_mq failed = %d\n", rval);
--		wake_up(&sp->nvme_ls_waitq);
- 		sp->priv = NULL;
- 		priv->sp = NULL;
- 		qla2xxx_rel_qpair_sp(sp->qpair, sp);
+diff --git a/arch/mips/kvm/stats.c b/arch/mips/kvm/stats.c
+index 53f851a61554..3e6682018fbe 100644
+--- a/arch/mips/kvm/stats.c
++++ b/arch/mips/kvm/stats.c
+@@ -54,9 +54,9 @@ void kvm_mips_dump_stats(struct kvm_vcpu *vcpu)
+ 	kvm_info("\nKVM VCPU[%d] COP0 Access Profile:\n", vcpu->vcpu_id);
+ 	for (i = 0; i < N_MIPS_COPROC_REGS; i++) {
+ 		for (j = 0; j < N_MIPS_COPROC_SEL; j++) {
+-			if (vcpu->arch.cop0->stat[i][j])
++			if (vcpu->arch.cop0.stat[i][j])
+ 				kvm_info("%s[%d]: %lu\n", kvm_cop0_str[i], j,
+-					 vcpu->arch.cop0->stat[i][j]);
++					 vcpu->arch.cop0.stat[i][j]);
+ 		}
+ 	}
+ #endif
+-- 
+2.41.0
+
 
 
