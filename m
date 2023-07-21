@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C493120F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D8EC433C9;
-	Fri, 21 Jul 2023 19:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7EC20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C1ECC433C8;
+	Fri, 21 Jul 2023 19:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966983;
-	bh=uUEA6ARi370Ku3JEzQZovqcLj8YGwn/Zittq9G66kX4=;
+	s=korg; t=1689966986;
+	bh=ngsIzsPzrzMX6YbLTUvq4x0WrC59CFbmiljbnGdU1TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JzTUV2Ani6GJEAQwj5EBHsD+O9k6r+CtCUw+ZjBD7WhRV4tF/Hzy6o+3BIXKP1Gxo
-	 1koJX76uoWKUkFDe6nFJeHcWYqbTaQsHE1d7AmwicnBv8ereK1cCVraGeL/XLQA3+W
-	 hUCB1sNIyGy9Q0q28Ol/IbKEAK2JrNBuAoRtlnqw=
+	b=ftZ7Fnr9K7JWjO3Fp3d8OFt8pU68JEEqi2qQVmIEQCfYLGxqqZzTv6I1tutGOYSPE
+	 I26rnw3JpnLBQiJB+Ges6EKps1hZezkIjz3s6k4uRD8pT764plPELAj4V3u3Yk7TtL
+	 +0mh1Fpg5C9nEsCh+hlmmiXZFnRfUw+bE1UBnkRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jiaqing Zhao <jiaqing.zhao@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 5.15 507/532] Revert "8250: add support for ASIX devices with a FIFO bug"
-Date: Fri, 21 Jul 2023 18:06:51 +0200
-Message-ID: <20230721160642.137948456@linuxfoundation.org>
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 5.15 508/532] bus: ixp4xx: fix IXP4XX_EXP_T1_MASK
+Date: Fri, 21 Jul 2023 18:06:52 +0200
+Message-ID: <20230721160642.196620640@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,139 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-commit a82d62f708545d22859584e0e0620da8e3759bbc upstream.
+commit 6722e46513e0af8e2fff4698f7cb78bc50a9f13f upstream.
 
-This reverts commit eb26dfe8aa7eeb5a5aa0b7574550125f8aa4c3b3.
+The IXP4XX_EXP_T1_MASK was shifted one bit to the right, overlapping
+IXP4XX_EXP_T2_MASK and leaving bit 29 unused. The offset being wrong is
+also confirmed at least by the datasheet of IXP45X/46X [1].
 
-Commit eb26dfe8aa7e ("8250: add support for ASIX devices with a FIFO
-bug") merged on Jul 13, 2012 adds a quirk for PCI_VENDOR_ID_ASIX
-(0x9710). But that ID is the same as PCI_VENDOR_ID_NETMOS defined in
-1f8b061050c7 ("[PATCH] Netmos parallel/serial/combo support") merged
-on Mar 28, 2005. In pci_serial_quirks array, the NetMos entry always
-takes precedence over the ASIX entry even since it was initially
-merged, code in that commit is always unreachable.
+Fix this by aligning it to IXP4XX_EXP_T1_SHIFT.
 
-In my tests, adding the FIFO workaround to pci_netmos_init() makes no
-difference, and the vendor driver also does not have such workaround.
-Given that the code was never used for over a decade, it's safe to
-revert it.
+[1] https://www.intel.com/content/dam/www/public/us/en/documents/manuals/ixp45x-ixp46x-developers-manual.pdf
 
-Also, the real PCI_VENDOR_ID_ASIX should be 0x125b, which is used on
-their newer AX99100 PCIe serial controllers released on 2016. The FIFO
-workaround should not be intended for these newer controllers, and it
-was never implemented in vendor driver.
-
-Fixes: eb26dfe8aa7e ("8250: add support for ASIX devices with a FIFO bug")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230619155743.827859-1-jiaqing.zhao@linux.intel.com
+Cc: stable@vger.kernel.org
+Fixes: 1c953bda90ca ("bus: ixp4xx: Add a driver for IXP4xx expansion bus")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Link: https://lore.kernel.org/r/20230624112958.27727-1-jonas.gorski@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20230624122139.3229642-1-linus.walleij@linaro.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250.h      |    1 -
- drivers/tty/serial/8250/8250_pci.c  |   19 -------------------
- drivers/tty/serial/8250/8250_port.c |   11 +++--------
- include/linux/serial_8250.h         |    1 -
- 4 files changed, 3 insertions(+), 29 deletions(-)
+ drivers/bus/intel-ixp4xx-eb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/8250/8250.h
-+++ b/drivers/tty/serial/8250/8250.h
-@@ -90,7 +90,6 @@ struct serial8250_config {
- #define UART_BUG_TXEN	BIT(1)	/* UART has buggy TX IIR status */
- #define UART_BUG_NOMSR	BIT(2)	/* UART has buggy MSR status bits (Au1x00) */
- #define UART_BUG_THRE	BIT(3)	/* UART has buggy THRE reassertion */
--#define UART_BUG_PARITY	BIT(4)	/* UART mishandles parity if FIFO enabled */
- #define UART_BUG_TXRACE	BIT(5)	/* UART Tx fails to set remote DR */
- 
- 
---- a/drivers/tty/serial/8250/8250_pci.c
-+++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -1252,14 +1252,6 @@ static int pci_oxsemi_tornado_setup(stru
- 	return pci_default_setup(priv, board, up, idx);
- }
- 
--static int pci_asix_setup(struct serial_private *priv,
--		  const struct pciserial_board *board,
--		  struct uart_8250_port *port, int idx)
--{
--	port->bugs |= UART_BUG_PARITY;
--	return pci_default_setup(priv, board, port, idx);
--}
--
- /* Quatech devices have their own extra interface features */
- 
- struct quatech_feature {
-@@ -2082,7 +2074,6 @@ pci_moxa_setup(struct serial_private *pr
- #define PCI_DEVICE_ID_WCH_CH355_4S	0x7173
- #define PCI_VENDOR_ID_AGESTAR		0x5372
- #define PCI_DEVICE_ID_AGESTAR_9375	0x6872
--#define PCI_VENDOR_ID_ASIX		0x9710
- #define PCI_DEVICE_ID_BROADCOM_TRUMANAGE 0x160a
- #define PCI_DEVICE_ID_AMCC_ADDIDATA_APCI7800 0x818e
- 
-@@ -2893,16 +2884,6 @@ static struct pci_serial_quirk pci_seria
- 		.setup          = pci_wch_ch38x_setup,
- 	},
- 	/*
--	 * ASIX devices with FIFO bug
--	 */
--	{
--		.vendor		= PCI_VENDOR_ID_ASIX,
--		.device		= PCI_ANY_ID,
--		.subvendor	= PCI_ANY_ID,
--		.subdevice	= PCI_ANY_ID,
--		.setup		= pci_asix_setup,
--	},
--	/*
- 	 * Broadcom TruManage (NetXtreme)
- 	 */
- 	{
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -2620,11 +2620,8 @@ static unsigned char serial8250_compute_
- 
- 	if (c_cflag & CSTOPB)
- 		cval |= UART_LCR_STOP;
--	if (c_cflag & PARENB) {
-+	if (c_cflag & PARENB)
- 		cval |= UART_LCR_PARITY;
--		if (up->bugs & UART_BUG_PARITY)
--			up->fifo_bug = true;
--	}
- 	if (!(c_cflag & PARODD))
- 		cval |= UART_LCR_EPAR;
- #ifdef CMSPAR
-@@ -2787,8 +2784,7 @@ serial8250_do_set_termios(struct uart_po
- 	up->lcr = cval;					/* Save computed LCR */
- 
- 	if (up->capabilities & UART_CAP_FIFO && port->fifosize > 1) {
--		/* NOTE: If fifo_bug is not set, a user can set RX_trigger. */
--		if ((baud < 2400 && !up->dma) || up->fifo_bug) {
-+		if (baud < 2400 && !up->dma) {
- 			up->fcr &= ~UART_FCR_TRIGGER_MASK;
- 			up->fcr |= UART_FCR_TRIGGER_1;
- 		}
-@@ -3124,8 +3120,7 @@ static int do_set_rxtrig(struct tty_port
- 	struct uart_8250_port *up = up_to_u8250p(uport);
- 	int rxtrig;
- 
--	if (!(up->capabilities & UART_CAP_FIFO) || uport->fifosize <= 1 ||
--	    up->fifo_bug)
-+	if (!(up->capabilities & UART_CAP_FIFO) || uport->fifosize <= 1)
- 		return -EINVAL;
- 
- 	rxtrig = bytes_to_fcr_rxtrig(up, bytes);
---- a/include/linux/serial_8250.h
-+++ b/include/linux/serial_8250.h
-@@ -98,7 +98,6 @@ struct uart_8250_port {
- 	struct list_head	list;		/* ports on this IRQ */
- 	u32			capabilities;	/* port capabilities */
- 	unsigned short		bugs;		/* port bugs */
--	bool			fifo_bug;	/* min RX trigger if enabled */
- 	unsigned int		tx_loadsz;	/* transmit fifo load size */
- 	unsigned char		acr;
- 	unsigned char		fcr;
+diff --git a/drivers/bus/intel-ixp4xx-eb.c b/drivers/bus/intel-ixp4xx-eb.c
+index f5ba6bee6fd8..320cf307db05 100644
+--- a/drivers/bus/intel-ixp4xx-eb.c
++++ b/drivers/bus/intel-ixp4xx-eb.c
+@@ -33,7 +33,7 @@
+ #define IXP4XX_EXP_TIMING_STRIDE	0x04
+ #define IXP4XX_EXP_CS_EN		BIT(31)
+ #define IXP456_EXP_PAR_EN		BIT(30) /* Only on IXP45x and IXP46x */
+-#define IXP4XX_EXP_T1_MASK		GENMASK(28, 27)
++#define IXP4XX_EXP_T1_MASK		GENMASK(29, 28)
+ #define IXP4XX_EXP_T1_SHIFT		28
+ #define IXP4XX_EXP_T2_MASK		GENMASK(27, 26)
+ #define IXP4XX_EXP_T2_SHIFT		26
+-- 
+2.41.0
+
 
 
