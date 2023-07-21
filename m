@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D00200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:06:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27246C433C8;
-	Fri, 21 Jul 2023 19:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6121ED41
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:06:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1008C433CA;
+	Fri, 21 Jul 2023 19:06:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966383;
-	bh=nbadC5G980JyFCJLJsQXECqrva+et2+2crCnaUZl3tw=;
+	s=korg; t=1689966386;
+	bh=Hu9a+FozfHuRNYpoMhn2nX+XoUA3yPpv+35xmXbD5aE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iXYrtCXksxvyIin0hHrqdvnA8/4nrDKSkhhlS1bjbN+J+XTzhPiGSXtUDFyqTP+qm
-	 2BAgGBpRvDyhAp+/rLme9natiBAo8eGIs5z+/j4KLoaT6Eymn5h7gpkAeDi9z2971Z
-	 8zd3OGDzUjeCUkAxkeBBFIPLm8UthuIWS7XDZI4Q=
+	b=Fb2zqvJlVOyOtcJP7BtMheaSOCuCL9r+QJfNWqbiO7vK5lithWUXTiz24t1hjeWgP
+	 RSpcA3tqHVp8xBfZ1ot2vpuc8waYbYGp6+pkL43KsoJrjgehW2l5jXULwEDyoiwNZN
+	 XJEUta7M+3SO0QwA8zMZVkiI0OB5IGf/52Kk+EkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot+9fcea5ef6dc4dc72d334@syzkaller.appspotmail.com,
+	Zeng Heng <zengheng4@huawei.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 325/532] octeontx2-af: Add validation before accessing cgx and lmac
-Date: Fri, 21 Jul 2023 18:03:49 +0200
-Message-ID: <20230721160632.052067925@linuxfoundation.org>
+Subject: [PATCH 5.15 326/532] ntfs: Fix panic about slab-out-of-bounds caused by ntfs_listxattr()
+Date: Fri, 21 Jul 2023 18:03:50 +0200
+Message-ID: <20230721160632.105389573@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,61 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Zeng Heng <zengheng4@huawei.com>
 
-[ Upstream commit 79ebb53772c95d3a6ae51b3c65f9985fdd430df6 ]
+[ Upstream commit 3c675ddffb17a8b1e32efad5c983254af18b12c2 ]
 
-with the addition of new MAC blocks like CN10K RPM and CN10KB
-RPM_USX, LMACs are noncontiguous and CGX blocks are also
-noncontiguous. But during RVU driver initialization, the driver
-is assuming they are contiguous and trying to access
-cgx or lmac with their id which is resulting in kernel panic.
+Here is a BUG report from syzbot:
 
-This patch fixes the issue by adding proper checks.
+BUG: KASAN: slab-out-of-bounds in ntfs_list_ea fs/ntfs3/xattr.c:191 [inline]
+BUG: KASAN: slab-out-of-bounds in ntfs_listxattr+0x401/0x570 fs/ntfs3/xattr.c:710
+Read of size 1 at addr ffff888021acaf3d by task syz-executor128/3632
 
-[   23.219150] pc : cgx_lmac_read+0x38/0x70
-[   23.219154] lr : rvu_program_channels+0x3f0/0x498
-[   23.223852] sp : ffff000100d6fc80
-[   23.227158] x29: ffff000100d6fc80 x28: ffff00010009f880 x27:
-000000000000005a
-[   23.234288] x26: ffff000102586768 x25: 0000000000002500 x24:
-fffffffffff0f000
+Call Trace:
+ ntfs_list_ea fs/ntfs3/xattr.c:191 [inline]
+ ntfs_listxattr+0x401/0x570 fs/ntfs3/xattr.c:710
+ vfs_listxattr fs/xattr.c:457 [inline]
+ listxattr+0x293/0x2d0 fs/xattr.c:804
 
-Fixes: 91c6945ea1f9 ("octeontx2-af: cn10k: Add RPM MAC support")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fix the logic of ea_all iteration. When the ea->name_len is 0,
+return immediately, or Add2Ptr() would visit invalid memory
+in the next loop.
+
+Fixes: be71b5cba2e6 ("fs/ntfs3: Add attrib operations")
+Reported-by: syzbot+9fcea5ef6dc4dc72d334@syzkaller.appspotmail.com
+Signed-off-by: Zeng Heng <zengheng4@huawei.com>
+[almaz.alexandrovich@paragon-software.com: lines of the patch have changed]
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/cgx.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/ntfs3/xattr.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-index fd0a31bf94fea..8ac95cb7bbb74 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-@@ -167,6 +167,9 @@ void cgx_lmac_write(int cgx_id, int lmac_id, u64 offset, u64 val)
- {
- 	struct cgx *cgx_dev = cgx_get_pdata(cgx_id);
+diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
+index 8847db0159084..63250a5aae0aa 100644
+--- a/fs/ntfs3/xattr.c
++++ b/fs/ntfs3/xattr.c
+@@ -178,6 +178,9 @@ static ssize_t ntfs_list_ea(struct ntfs_inode *ni, char *buffer,
+ 	for (ret = 0, off = 0; off < size; off += unpacked_ea_size(ea)) {
+ 		ea = Add2Ptr(ea_all, off);
  
-+	/* Software must not access disabled LMAC registers */
-+	if (!is_lmac_valid(cgx_dev, lmac_id))
-+		return;
- 	cgx_write(cgx_dev, lmac_id, offset, val);
- }
- 
-@@ -174,6 +177,10 @@ u64 cgx_lmac_read(int cgx_id, int lmac_id, u64 offset)
- {
- 	struct cgx *cgx_dev = cgx_get_pdata(cgx_id);
- 
-+	/* Software must not access disabled LMAC registers */
-+	if (!is_lmac_valid(cgx_dev, lmac_id))
-+		return 0;
++		if (!ea->name_len)
++			break;
 +
- 	return cgx_read(cgx_dev, lmac_id, offset);
- }
- 
+ 		if (buffer) {
+ 			if (ret + ea->name_len + 1 > bytes_per_buffer) {
+ 				err = -ERANGE;
 -- 
 2.39.2
 
