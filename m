@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68AB20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:15:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45333C433C8;
-	Fri, 21 Jul 2023 19:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8594D20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:15:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08272C433C7;
+	Fri, 21 Jul 2023 19:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966912;
-	bh=yBASZaA9Lmmv8N12sFN4uW04pUiniD6BAOi9EbNojTw=;
+	s=korg; t=1689966915;
+	bh=WjA1bGH1z7X+onK7YlGAUrilWkzEXOrdXbWPhLZn5e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tj1snrDS4g8yqN9PvtCg4mOMsDB5qCwAhc3QhF5I3BUWpmbo6ej1O4OIBReHsaqnA
-	 aEWOvLMQAAlQlmOJLoK1HZ5pm69rLDdu7b5Dgy4i8k29hquoNNA6koKo0qKMNVHWfB
-	 8yH+CtOWJ8H0Yve/28uAu6MeLaWdFPkF8UMfT+Y8=
+	b=jUKah10YSZjjLSfzh6Ac9uV4nj9SYOa7X62ow+SPn9UUklUOIh+vC6RBjlC9mK0Pa
+	 R5O1ATXWyvFM5zLUldS4qpQljy4cLy6RzsP4dgd9qaNrWhkdKcnJcSofTM/oueciKN
+	 e2U0xXSGlyRITa1buWPCMvD132WBsbzm3ayDYoXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Florent Revest <revest@chromium.org>
-Subject: [PATCH 5.15 512/532] samples: ftrace: Save required argument registers in sample trampolines
-Date: Fri, 21 Jul 2023 18:06:56 +0200
-Message-ID: <20230721160642.425349362@linuxfoundation.org>
+	Krister Johansen <kjlx@templeofstupid.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Shay Agroskin <shayagr@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 513/532] net: ena: fix shift-out-of-bounds in exponential backoff
+Date: Fri, 21 Jul 2023 18:06:57 +0200
+Message-ID: <20230721160642.476375220@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,68 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florent Revest <revest@chromium.org>
+From: Krister Johansen <kjlx@templeofstupid.com>
 
-commit 8564c315876ab86fcaf8e7f558d6a84cb2ce5590 upstream.
+commit 1e9cb763e9bacf0c932aa948f50dcfca6f519a26 upstream.
 
-The ftrace-direct-too sample traces the handle_mm_fault function whose
-signature changed since the introduction of the sample. Since:
-commit bce617edecad ("mm: do page fault accounting in handle_mm_fault")
-handle_mm_fault now has 4 arguments. Therefore, the sample trampoline
-should save 4 argument registers.
+The ENA adapters on our instances occasionally reset.  Once recently
+logged a UBSAN failure to console in the process:
 
-s390 saves all argument registers already so it does not need a change
-but x86_64 needs an extra push and pop.
+  UBSAN: shift-out-of-bounds in build/linux/drivers/net/ethernet/amazon/ena/ena_com.c:540:13
+  shift exponent 32 is too large for 32-bit type 'unsigned int'
+  CPU: 28 PID: 70012 Comm: kworker/u72:2 Kdump: loaded not tainted 5.15.117
+  Hardware name: Amazon EC2 c5d.9xlarge/, BIOS 1.0 10/16/2017
+  Workqueue: ena ena_fw_reset_device [ena]
+  Call Trace:
+  <TASK>
+  dump_stack_lvl+0x4a/0x63
+  dump_stack+0x10/0x16
+  ubsan_epilogue+0x9/0x36
+  __ubsan_handle_shift_out_of_bounds.cold+0x61/0x10e
+  ? __const_udelay+0x43/0x50
+  ena_delay_exponential_backoff_us.cold+0x16/0x1e [ena]
+  wait_for_reset_state+0x54/0xa0 [ena]
+  ena_com_dev_reset+0xc8/0x110 [ena]
+  ena_down+0x3fe/0x480 [ena]
+  ena_destroy_device+0xeb/0xf0 [ena]
+  ena_fw_reset_device+0x30/0x50 [ena]
+  process_one_work+0x22b/0x3d0
+  worker_thread+0x4d/0x3f0
+  ? process_one_work+0x3d0/0x3d0
+  kthread+0x12a/0x150
+  ? set_kthread_struct+0x50/0x50
+  ret_from_fork+0x22/0x30
+  </TASK>
 
-This also evolves the signature of the tracing function to make it
-mirror the signature of the traced function.
+Apparently, the reset delays are getting so large they can trigger a
+UBSAN panic.
 
-Link: https://lkml.kernel.org/r/20230427140700.625241-2-revest@chromium.org
+Looking at the code, the current timeout is capped at 5000us.  Using a
+base value of 100us, the current code will overflow after (1<<29).  Even
+at values before 32, this function wraps around, perhaps
+unintentionally.
+
+Cap the value of the exponent used for this backoff at (1<<16) which is
+larger than currently necessary, but large enough to support bigger
+values in the future.
 
 Cc: stable@vger.kernel.org
-Fixes: bce617edecad ("mm: do page fault accounting in handle_mm_fault")
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Reviewed-by: Mark Rutland <mark.rutland@arm.com>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Florent Revest <revest@chromium.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 4bb7f4cf60e3 ("net: ena: reduce driver load time")
+Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Shay Agroskin <shayagr@amazon.com>
+Link: https://lore.kernel.org/r/20230711013621.GE1926@templeofstupid.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- samples/ftrace/ftrace-direct-too.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_com.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/samples/ftrace/ftrace-direct-too.c
-+++ b/samples/ftrace/ftrace-direct-too.c
-@@ -4,14 +4,14 @@
- #include <linux/mm.h> /* for handle_mm_fault() */
- #include <linux/ftrace.h>
+--- a/drivers/net/ethernet/amazon/ena/ena_com.c
++++ b/drivers/net/ethernet/amazon/ena/ena_com.c
+@@ -35,6 +35,8 @@
  
--extern void my_direct_func(struct vm_area_struct *vma,
--			   unsigned long address, unsigned int flags);
-+extern void my_direct_func(struct vm_area_struct *vma, unsigned long address,
-+			   unsigned int flags, struct pt_regs *regs);
+ #define ENA_REGS_ADMIN_INTR_MASK 1
  
--void my_direct_func(struct vm_area_struct *vma,
--			unsigned long address, unsigned int flags)
-+void my_direct_func(struct vm_area_struct *vma, unsigned long address,
-+		    unsigned int flags, struct pt_regs *regs)
++#define ENA_MAX_BACKOFF_DELAY_EXP 16U
++
+ #define ENA_MIN_ADMIN_POLL_US 100
+ 
+ #define ENA_MAX_ADMIN_POLL_US 5000
+@@ -536,6 +538,7 @@ static int ena_com_comp_status_to_errno(
+ 
+ static void ena_delay_exponential_backoff_us(u32 exp, u32 delay_us)
  {
--	trace_printk("handle mm fault vma=%p address=%lx flags=%x\n",
--		     vma, address, flags);
-+	trace_printk("handle mm fault vma=%p address=%lx flags=%x regs=%p\n",
-+		     vma, address, flags, regs);
- }
- 
- extern void my_tramp(void *);
-@@ -26,7 +26,9 @@ asm (
- "	pushq %rdi\n"
- "	pushq %rsi\n"
- "	pushq %rdx\n"
-+"	pushq %rcx\n"
- "	call my_direct_func\n"
-+"	popq %rcx\n"
- "	popq %rdx\n"
- "	popq %rsi\n"
- "	popq %rdi\n"
++	exp = min_t(u32, exp, ENA_MAX_BACKOFF_DELAY_EXP);
+ 	delay_us = max_t(u32, ENA_MIN_ADMIN_POLL_US, delay_us);
+ 	delay_us = min_t(u32, delay_us * (1U << exp), ENA_MAX_ADMIN_POLL_US);
+ 	usleep_range(delay_us, 2 * delay_us);
 
 
