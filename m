@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECBB11ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:52:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2E9C433C8;
-	Fri, 21 Jul 2023 18:52:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F731ED41
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:52:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4990DC433C8;
+	Fri, 21 Jul 2023 18:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965544;
-	bh=cJo8eAjUavLJ/VxXJQjqT+d0kGMzfbYyhc4fuWz21f0=;
+	s=korg; t=1689965547;
+	bh=O6ii9QHhzBZmfEuJkd3kxifIruJiZwgSdr+wrqiBt7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zyFXzXVHWkftlnIwHIb2lStNh3QU0E2oB4DOGGqxYeRFU4SkvZ+tRWrbaGy5he6hf
-	 0V6u1mal08rBdI66VNYPrT759gaTePEvCSlc4DM6P8BOYvD2LAq4rSX4HnNlYjJezd
-	 NWn7ZYL/QT+4VcMrOMoXzLG7GeDoFpFvHurQdOE4=
+	b=2EF0RRaiDu8qhoqFcxnOlPRUAwTozQYzeHUIfwdUC9RH06lGidmM8zwZHA/rGKEBV
+	 Qdsfgu5e87IRarY3LKz5T5dp117u0GUA+528qrFiJBpGPyRzuxGt2xWQA/cnIO7eYL
+	 EenX/OHaLkUnLcqf4Ut0AaXqCQPrFQlLgcB78Ex4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 028/532] x86/mm: Fix __swp_entry_to_pte() for Xen PV guests
-Date: Fri, 21 Jul 2023 17:58:52 +0200
-Message-ID: <20230721160616.186910551@linuxfoundation.org>
+Subject: [PATCH 5.15 029/532] locking/atomic: arm: fix sync ops
+Date: Fri, 21 Jul 2023 17:58:53 +0200
+Message-ID: <20230721160616.239127646@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,45 +36,189 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juergen Gross <jgross@suse.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 0f88130e8a6fd185b0aeb5d8e286083735f2585a ]
+[ Upstream commit dda5f312bb09e56e7a1c3e3851f2000eb2e9c879 ]
 
-Normally __swp_entry_to_pte() is never called with a value translating
-to a valid PTE. The only known exception is pte_swap_tests(), resulting
-in a WARN splat in Xen PV guests, as __pte_to_swp_entry() did
-translate the PFN of the valid PTE to a guest local PFN, while
-__swp_entry_to_pte() doesn't do the opposite translation.
+The sync_*() ops on arch/arm are defined in terms of the regular bitops
+with no special handling. This is not correct, as UP kernels elide
+barriers for the fully-ordered operations, and so the required ordering
+is lost when such UP kernels are run under a hypervsior on an SMP
+system.
 
-Fix that by using __pte() in __swp_entry_to_pte() instead of open
-coding the native variant of it.
+Fix this by defining sync ops with the required barriers.
 
-For correctness do the similar conversion for __swp_entry_to_pmd().
+Note: On 32-bit arm, the sync_*() ops are currently only used by Xen,
+which requires ARMv7, but the semantics can be implemented for ARMv6+.
 
-Fixes: 05289402d717 ("mm/debug_vm_pgtable: add tests validating arch helpers for core MM features")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230306123259.12461-1-jgross@suse.com
+Fixes: e54d2f61528165bb ("xen/arm: sync_bitops")
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230605070124.3741859-2-mark.rutland@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/pgtable_64.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/include/asm/assembler.h   | 17 +++++++++++++++++
+ arch/arm/include/asm/sync_bitops.h | 29 +++++++++++++++++++++++++----
+ arch/arm/lib/bitops.h              | 14 +++++++++++---
+ arch/arm/lib/testchangebit.S       |  4 ++++
+ arch/arm/lib/testclearbit.S        |  4 ++++
+ arch/arm/lib/testsetbit.S          |  4 ++++
+ 6 files changed, 65 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/include/asm/pgtable_64.h b/arch/x86/include/asm/pgtable_64.h
-index 56d0399a0cd16..dd520b44e89cc 100644
---- a/arch/x86/include/asm/pgtable_64.h
-+++ b/arch/x86/include/asm/pgtable_64.h
-@@ -235,8 +235,8 @@ static inline void native_pgd_clear(pgd_t *pgd)
+diff --git a/arch/arm/include/asm/assembler.h b/arch/arm/include/asm/assembler.h
+index 09c241280ed9c..5d52da168ab3a 100644
+--- a/arch/arm/include/asm/assembler.h
++++ b/arch/arm/include/asm/assembler.h
+@@ -326,6 +326,23 @@
+ #endif
+ 	.endm
  
- #define __pte_to_swp_entry(pte)		((swp_entry_t) { pte_val((pte)) })
- #define __pmd_to_swp_entry(pmd)		((swp_entry_t) { pmd_val((pmd)) })
--#define __swp_entry_to_pte(x)		((pte_t) { .pte = (x).val })
--#define __swp_entry_to_pmd(x)		((pmd_t) { .pmd = (x).val })
-+#define __swp_entry_to_pte(x)		(__pte((x).val))
-+#define __swp_entry_to_pmd(x)		(__pmd((x).val))
++/*
++ * Raw SMP data memory barrier
++ */
++	.macro	__smp_dmb mode
++#if __LINUX_ARM_ARCH__ >= 7
++	.ifeqs "\mode","arm"
++	dmb	ish
++	.else
++	W(dmb)	ish
++	.endif
++#elif __LINUX_ARM_ARCH__ == 6
++	mcr	p15, 0, r0, c7, c10, 5	@ dmb
++#else
++	.error "Incompatible SMP platform"
++#endif
++	.endm
++
+ #if defined(CONFIG_CPU_V7M)
+ 	/*
+ 	 * setmode is used to assert to be in svc mode during boot. For v7-M
+diff --git a/arch/arm/include/asm/sync_bitops.h b/arch/arm/include/asm/sync_bitops.h
+index 6f5d627c44a3c..f46b3c570f92e 100644
+--- a/arch/arm/include/asm/sync_bitops.h
++++ b/arch/arm/include/asm/sync_bitops.h
+@@ -14,14 +14,35 @@
+  * ops which are SMP safe even on a UP kernel.
+  */
  
- extern int kern_addr_valid(unsigned long addr);
- extern void cleanup_highmap(void);
++/*
++ * Unordered
++ */
++
+ #define sync_set_bit(nr, p)		_set_bit(nr, p)
+ #define sync_clear_bit(nr, p)		_clear_bit(nr, p)
+ #define sync_change_bit(nr, p)		_change_bit(nr, p)
+-#define sync_test_and_set_bit(nr, p)	_test_and_set_bit(nr, p)
+-#define sync_test_and_clear_bit(nr, p)	_test_and_clear_bit(nr, p)
+-#define sync_test_and_change_bit(nr, p)	_test_and_change_bit(nr, p)
+ #define sync_test_bit(nr, addr)		test_bit(nr, addr)
+-#define arch_sync_cmpxchg		arch_cmpxchg
+ 
++/*
++ * Fully ordered
++ */
++
++int _sync_test_and_set_bit(int nr, volatile unsigned long * p);
++#define sync_test_and_set_bit(nr, p)	_sync_test_and_set_bit(nr, p)
++
++int _sync_test_and_clear_bit(int nr, volatile unsigned long * p);
++#define sync_test_and_clear_bit(nr, p)	_sync_test_and_clear_bit(nr, p)
++
++int _sync_test_and_change_bit(int nr, volatile unsigned long * p);
++#define sync_test_and_change_bit(nr, p)	_sync_test_and_change_bit(nr, p)
++
++#define arch_sync_cmpxchg(ptr, old, new)				\
++({									\
++	__typeof__(*(ptr)) __ret;					\
++	__smp_mb__before_atomic();					\
++	__ret = arch_cmpxchg_relaxed((ptr), (old), (new));		\
++	__smp_mb__after_atomic();					\
++	__ret;								\
++})
+ 
+ #endif
+diff --git a/arch/arm/lib/bitops.h b/arch/arm/lib/bitops.h
+index 95bd359912889..f069d1b2318e6 100644
+--- a/arch/arm/lib/bitops.h
++++ b/arch/arm/lib/bitops.h
+@@ -28,7 +28,7 @@ UNWIND(	.fnend		)
+ ENDPROC(\name		)
+ 	.endm
+ 
+-	.macro	testop, name, instr, store
++	.macro	__testop, name, instr, store, barrier
+ ENTRY(	\name		)
+ UNWIND(	.fnstart	)
+ 	ands	ip, r1, #3
+@@ -38,7 +38,7 @@ UNWIND(	.fnstart	)
+ 	mov	r0, r0, lsr #5
+ 	add	r1, r1, r0, lsl #2	@ Get word offset
+ 	mov	r3, r2, lsl r3		@ create mask
+-	smp_dmb
++	\barrier
+ #if __LINUX_ARM_ARCH__ >= 7 && defined(CONFIG_SMP)
+ 	.arch_extension	mp
+ 	ALT_SMP(W(pldw)	[r1])
+@@ -50,13 +50,21 @@ UNWIND(	.fnstart	)
+ 	strex	ip, r2, [r1]
+ 	cmp	ip, #0
+ 	bne	1b
+-	smp_dmb
++	\barrier
+ 	cmp	r0, #0
+ 	movne	r0, #1
+ 2:	bx	lr
+ UNWIND(	.fnend		)
+ ENDPROC(\name		)
+ 	.endm
++
++	.macro	testop, name, instr, store
++	__testop \name, \instr, \store, smp_dmb
++	.endm
++
++	.macro	sync_testop, name, instr, store
++	__testop \name, \instr, \store, __smp_dmb
++	.endm
+ #else
+ 	.macro	bitop, name, instr
+ ENTRY(	\name		)
+diff --git a/arch/arm/lib/testchangebit.S b/arch/arm/lib/testchangebit.S
+index 4ebecc67e6e04..f13fe9bc2399a 100644
+--- a/arch/arm/lib/testchangebit.S
++++ b/arch/arm/lib/testchangebit.S
+@@ -10,3 +10,7 @@
+                 .text
+ 
+ testop	_test_and_change_bit, eor, str
++
++#if __LINUX_ARM_ARCH__ >= 6
++sync_testop	_sync_test_and_change_bit, eor, str
++#endif
+diff --git a/arch/arm/lib/testclearbit.S b/arch/arm/lib/testclearbit.S
+index 009afa0f5b4a7..4d2c5ca620ebf 100644
+--- a/arch/arm/lib/testclearbit.S
++++ b/arch/arm/lib/testclearbit.S
+@@ -10,3 +10,7 @@
+                 .text
+ 
+ testop	_test_and_clear_bit, bicne, strne
++
++#if __LINUX_ARM_ARCH__ >= 6
++sync_testop	_sync_test_and_clear_bit, bicne, strne
++#endif
+diff --git a/arch/arm/lib/testsetbit.S b/arch/arm/lib/testsetbit.S
+index f3192e55acc87..649dbab65d8d0 100644
+--- a/arch/arm/lib/testsetbit.S
++++ b/arch/arm/lib/testsetbit.S
+@@ -10,3 +10,7 @@
+                 .text
+ 
+ testop	_test_and_set_bit, orreq, streq
++
++#if __LINUX_ARM_ARCH__ >= 6
++sync_testop	_sync_test_and_set_bit, orreq, streq
++#endif
 -- 
 2.39.2
 
