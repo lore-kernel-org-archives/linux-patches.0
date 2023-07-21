@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B20020F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2C9C433C7;
-	Fri, 21 Jul 2023 19:09:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18C520F89
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD18C433C8;
+	Fri, 21 Jul 2023 19:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966555;
-	bh=TQBhKDBqgXOfDHCSx0L0+L5nrBXcAoJtgRfaQv5XGmA=;
+	s=korg; t=1689966558;
+	bh=EdI7fGRw+9RtkPzgYW2VysuSJKvBTQQ/+BHVsl+k9Xg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JB3+YEhvQCVPA5j8bF9rqBhpIGZT+9a5TEXez8XJG0UFLVvN395NiebEwl0qgqba7
-	 zmfQWQ/Hqf3pCp89i+3Jhs3MoSrvyJ/HwTbOYCzo8M76pBW11TCbAaC0lsIjFiMfe/
-	 II6lhpQ9mzoX7YtRcRXDSZIkuSnjAGssrLIP7THk=
+	b=WoWUk4CLqfJ0XSbg8w8K7LF/xaYogSg6ZvfyINkJJX63ql/f8pEqZth2ym9HTeMVi
+	 h64f/LD22geBdEJ+RbZf3p5VGNBJr3yF5kRBnFa13plcdygLKL0ytgd0U+pcnt7oex
+	 u0CXNHREwaAcSiV7J+k19Zzr8R4s1OqhuBpPaFh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.15 378/532] fanotify: disallow mount/sb marks on kernel internal pseudo fs
-Date: Fri, 21 Jul 2023 18:04:42 +0200
-Message-ID: <20230721160634.995402350@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	io-uring@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Andres Freund <andres@anarazel.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 387/532] io_uring: Use io_schedule* in cqring wait
+Date: Fri, 21 Jul 2023 18:04:51 +0200
+Message-ID: <20230721160635.467197216@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,74 +37,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Andres Freund <andres@anarazel.de>
 
-commit 69562eb0bd3e6bb8e522a7b254334e0fb30dff0c upstream.
+Commit 8a796565cec3601071cbbd27d6304e202019d014 upstream.
 
-Hopefully, nobody is trying to abuse mount/sb marks for watching all
-anonymous pipes/inodes.
+I observed poor performance of io_uring compared to synchronous IO. That
+turns out to be caused by deeper CPU idle states entered with io_uring,
+due to io_uring using plain schedule(), whereas synchronous IO uses
+io_schedule().
 
-I cannot think of a good reason to allow this - it looks like an
-oversight that dated back to the original fanotify API.
+The losses due to this are substantial. On my cascade lake workstation,
+t/io_uring from the fio repository e.g. yields regressions between 20%
+and 40% with the following command:
+./t/io_uring -r 5 -X0 -d 1 -s 1 -c 1 -p 0 -S$use_sync -R 0 /mnt/t2/fio/write.0.0
 
-Link: https://lore.kernel.org/linux-fsdevel/20230628101132.kvchg544mczxv2pm@quack3/
-Fixes: 0ff21db9fcc3 ("fanotify: hooks the fanotify_mark syscall to the vfsmount code")
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20230629042044.25723-1-amir73il@gmail.com>
-[backport to 5.x.y]
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+This is repeatable with different filesystems, using raw block devices
+and using different block devices.
+
+Use io_schedule_prepare() / io_schedule_finish() in
+io_cqring_wait_schedule() to address the difference.
+
+After that using io_uring is on par or surpassing synchronous IO (using
+registered files etc makes it reliably win, but arguably is a less fair
+comparison).
+
+There are other calls to schedule() in io_uring/, but none immediately
+jump out to be similarly situated, so I did not touch them. Similarly,
+it's possible that mutex_lock_io() should be used, but it's not clear if
+there are cases where that matters.
+
+Cc: stable@vger.kernel.org # 5.10+
+Cc: Pavel Begunkov <asml.silence@gmail.com>
+Cc: io-uring@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Andres Freund <andres@anarazel.de>
+Link: https://lore.kernel.org/r/20230707162007.194068-1-andres@anarazel.de
+[axboe: minor style fixup]
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fanotify/fanotify_user.c |   22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -1337,8 +1337,11 @@ static int fanotify_test_fid(struct path
- 	return 0;
- }
- 
--static int fanotify_events_supported(struct path *path, __u64 mask)
-+static int fanotify_events_supported(struct path *path, __u64 mask,
-+				     unsigned int flags)
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -7796,7 +7796,7 @@ static inline int io_cqring_wait_schedul
+ 					  struct io_wait_queue *iowq,
+ 					  ktime_t *timeout)
  {
-+	unsigned int mark_type = flags & FANOTIFY_MARK_TYPE_BITS;
-+
- 	/*
- 	 * Some filesystems such as 'proc' acquire unusual locks when opening
- 	 * files. For them fanotify permission events have high chances of
-@@ -1350,6 +1353,21 @@ static int fanotify_events_supported(str
- 	if (mask & FANOTIFY_PERM_EVENTS &&
- 	    path->mnt->mnt_sb->s_type->fs_flags & FS_DISALLOW_NOTIFY_PERM)
- 		return -EINVAL;
-+
+-	int ret;
++	int token, ret;
+ 
+ 	/* make sure we run task_work before checking for signals */
+ 	ret = io_run_task_work_sig();
+@@ -7806,9 +7806,17 @@ static inline int io_cqring_wait_schedul
+ 	if (test_bit(0, &ctx->check_cq_overflow))
+ 		return 1;
+ 
 +	/*
-+	 * mount and sb marks are not allowed on kernel internal pseudo fs,
-+	 * like pipe_mnt, because that would subscribe to events on all the
-+	 * anonynous pipes in the system.
-+	 *
-+	 * SB_NOUSER covers all of the internal pseudo fs whose objects are not
-+	 * exposed to user's mount namespace, but there are other SB_KERNMOUNT
-+	 * fs, like nsfs, debugfs, for which the value of allowing sb and mount
-+	 * mark is questionable. For now we leave them alone.
++	 * Use io_schedule_prepare/finish, so cpufreq can take into account
++	 * that the task is waiting for IO - turns out to be important for low
++	 * QD IO.
 +	 */
-+	if (mark_type != FAN_MARK_INODE &&
-+	    path->mnt->mnt_sb->s_flags & SB_NOUSER)
-+		return -EINVAL;
-+
- 	return 0;
++	token = io_schedule_prepare();
++	ret = 1;
+ 	if (!schedule_hrtimeout(timeout, HRTIMER_MODE_ABS))
+-		return -ETIME;
+-	return 1;
++		ret = -ETIME;
++	io_schedule_finish(token);
++	return ret;
  }
  
-@@ -1476,7 +1494,7 @@ static int do_fanotify_mark(int fanotify
- 		goto fput_and_out;
- 
- 	if (flags & FAN_MARK_ADD) {
--		ret = fanotify_events_supported(&path, mask);
-+		ret = fanotify_events_supported(&path, mask, flags);
- 		if (ret)
- 			goto path_put_and_out;
- 	}
+ /*
 
 
