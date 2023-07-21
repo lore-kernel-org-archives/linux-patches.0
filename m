@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663071ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:52:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D85F4C433C8;
-	Fri, 21 Jul 2023 18:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318E91ED41
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:52:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5E43C433CC;
+	Fri, 21 Jul 2023 18:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965576;
-	bh=4rTdc/T2DNXWxcPuwMno5T5ZJrQ9yC3prMiN+PNcexQ=;
+	s=korg; t=1689965579;
+	bh=3reMpJCmXi7Tx5AeKzTIW3Pbo1CiFaY9ja0+oU0Bxts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vq5NuEsJmHEZjfSdeXFuBsgL5CRJyyScoQoQSgpyF9zQrS/HjC7uBTIiPFjmbi7F9
-	 n7AXWj1a0ujGHnMXpKlXfH4xSBruBTebMbWVLGlfMZF7XeBwt85IgydJK7bJAhm31k
-	 pL+z/Hd+YHnJjLtDu47TryL/129YO9hBVKqe02dE=
+	b=2ijnWYhV414pPXhk/Uz+EDbPOSUjoRNTj6GfwNTQE9a4uLTyqDIFr33CSXSwiFUYQ
+	 JbcKBKCHhUYE2NwIK0AO94QnODSBzd5lHTEjlqzD6adnavRRCQgTvGYAkHVD9smvpc
+	 3MbxpyQOBRmZMvoQPxKzpGdGirSbgLa/d348EoZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 012/532] posix-timers: Prevent RT livelock in itimer_delete()
-Date: Fri, 21 Jul 2023 17:58:36 +0200
-Message-ID: <20230721160615.339281351@linuxfoundation.org>
+Subject: [PATCH 5.15 013/532] tracing/timer: Add missing hrtimer modes to decode_hrtimer_mode().
+Date: Fri, 21 Jul 2023 17:58:37 +0200
+Message-ID: <20230721160615.390353694@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,108 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 9d9e522010eb5685d8b53e8a24320653d9d4cbbf ]
+[ Upstream commit 2951580ba6adb082bb6b7154a5ecb24e7c1f7569 ]
 
-itimer_delete() has a retry loop when the timer is concurrently expired. On
-non-RT kernels this just spin-waits until the timer callback has completed,
-except for posix CPU timers which have HAVE_POSIX_CPU_TIMERS_TASK_WORK
-enabled.
+The trace output for the HRTIMER_MODE_.*_HARD modes is seen as a number
+since these modes are not decoded. The author was not aware of the fancy
+decoding function which makes the life easier.
 
-In that case and on RT kernels the existing task could live lock when
-preempting the task which does the timer delivery.
+Extend decode_hrtimer_mode() with the additional HRTIMER_MODE_.*_HARD
+modes.
 
-Replace spin_unlock() with an invocation of timer_wait_running() to handle
-it the same way as the other retry loops in the posix timer code.
-
-Fixes: ec8f954a40da ("posix-timers: Use a callback for cancel synchronization on PREEMPT_RT")
+Fixes: ae6683d815895 ("hrtimer: Introduce HARD expiry mode")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Link: https://lore.kernel.org/r/87v8g7c50d.ffs@tglx
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lore.kernel.org/r/20230418143854.8vHWQKLM@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/posix-timers.c | 43 +++++++++++++++++++++++++++++++-------
- 1 file changed, 35 insertions(+), 8 deletions(-)
+ include/trace/events/timer.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
-index 808a247205a9a..ed3c4a9543982 100644
---- a/kernel/time/posix-timers.c
-+++ b/kernel/time/posix-timers.c
-@@ -1037,27 +1037,52 @@ SYSCALL_DEFINE1(timer_delete, timer_t, timer_id)
- }
+diff --git a/include/trace/events/timer.h b/include/trace/events/timer.h
+index 1cf012de6442e..d49e44fcc10f2 100644
+--- a/include/trace/events/timer.h
++++ b/include/trace/events/timer.h
+@@ -156,7 +156,11 @@ DEFINE_EVENT(timer_class, timer_cancel,
+ 		{ HRTIMER_MODE_ABS_SOFT,	"ABS|SOFT"	},	\
+ 		{ HRTIMER_MODE_REL_SOFT,	"REL|SOFT"	},	\
+ 		{ HRTIMER_MODE_ABS_PINNED_SOFT,	"ABS|PINNED|SOFT" },	\
+-		{ HRTIMER_MODE_REL_PINNED_SOFT,	"REL|PINNED|SOFT" })
++		{ HRTIMER_MODE_REL_PINNED_SOFT,	"REL|PINNED|SOFT" },	\
++		{ HRTIMER_MODE_ABS_HARD,	"ABS|HARD" },		\
++		{ HRTIMER_MODE_REL_HARD,	"REL|HARD" },		\
++		{ HRTIMER_MODE_ABS_PINNED_HARD, "ABS|PINNED|HARD" },	\
++		{ HRTIMER_MODE_REL_PINNED_HARD,	"REL|PINNED|HARD" })
  
- /*
-- * return timer owned by the process, used by exit_itimers
-+ * Delete a timer if it is armed, remove it from the hash and schedule it
-+ * for RCU freeing.
-  */
- static void itimer_delete(struct k_itimer *timer)
- {
--retry_delete:
--	spin_lock_irq(&timer->it_lock);
-+	unsigned long flags;
-+
-+	/*
-+	 * irqsave is required to make timer_wait_running() work.
-+	 */
-+	spin_lock_irqsave(&timer->it_lock, flags);
- 
-+retry_delete:
-+	/*
-+	 * Even if the timer is not longer accessible from other tasks
-+	 * it still might be armed and queued in the underlying timer
-+	 * mechanism. Worse, that timer mechanism might run the expiry
-+	 * function concurrently.
-+	 */
- 	if (timer_delete_hook(timer) == TIMER_RETRY) {
--		spin_unlock_irq(&timer->it_lock);
-+		/*
-+		 * Timer is expired concurrently, prevent livelocks
-+		 * and pointless spinning on RT.
-+		 *
-+		 * timer_wait_running() drops timer::it_lock, which opens
-+		 * the possibility for another task to delete the timer.
-+		 *
-+		 * That's not possible here because this is invoked from
-+		 * do_exit() only for the last thread of the thread group.
-+		 * So no other task can access and delete that timer.
-+		 */
-+		if (WARN_ON_ONCE(timer_wait_running(timer, &flags) != timer))
-+			return;
-+
- 		goto retry_delete;
- 	}
- 	list_del(&timer->list);
- 
--	spin_unlock_irq(&timer->it_lock);
-+	spin_unlock_irqrestore(&timer->it_lock, flags);
- 	release_posix_timer(timer, IT_ID_SET);
- }
- 
- /*
-- * This is called by do_exit or de_thread, only when nobody else can
-- * modify the signal->posix_timers list. Yet we need sighand->siglock
-- * to prevent the race with /proc/pid/timers.
-+ * Invoked from do_exit() when the last thread of a thread group exits.
-+ * At that point no other task can access the timers of the dying
-+ * task anymore.
-  */
- void exit_itimers(struct task_struct *tsk)
- {
-@@ -1067,10 +1092,12 @@ void exit_itimers(struct task_struct *tsk)
- 	if (list_empty(&tsk->signal->posix_timers))
- 		return;
- 
-+	/* Protect against concurrent read via /proc/$PID/timers */
- 	spin_lock_irq(&tsk->sighand->siglock);
- 	list_replace_init(&tsk->signal->posix_timers, &timers);
- 	spin_unlock_irq(&tsk->sighand->siglock);
- 
-+	/* The timers are not longer accessible via tsk::signal */
- 	while (!list_empty(&timers)) {
- 		tmr = list_first_entry(&timers, struct k_itimer, list);
- 		itimer_delete(tmr);
+ /**
+  * hrtimer_init - called when the hrtimer is initialized
 -- 
 2.39.2
 
