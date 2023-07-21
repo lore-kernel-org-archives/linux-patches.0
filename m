@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D95200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F03C433C7;
-	Fri, 21 Jul 2023 19:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6401200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62FFCC433C9;
+	Fri, 21 Jul 2023 19:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966566;
-	bh=HceHIAAas8UAKL14HDW0cBrI5HZwdb4BSXTyQ8DDSEs=;
+	s=korg; t=1689966569;
+	bh=jFePZwF/0puxAcEyc4/KW8vKQAMNFxT7bwIjOohPr20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=weZ6F8fze8tgAueejfPkHuEgy//aTslUJ1ptnG5zhW9nhaV2T1+vuXzyyk2zT0i17
-	 Co7L/qMujNaFnQM2iHpYIsCD2GQqlHJgsKa6p5RuktJ1HlA5AbiySR7ASK92wBAFe0
-	 ICeYIVbdkUDFIhL7qRBee+5nskUrCQNcADR8ET3A=
+	b=UwKyqr8NXddozjuUMzK6NdTpChkjKmA/FKyaEeQCOLPMNAeilYIcV9O71HsFuHXSP
+	 cxL70C1f7bAQBDclQzRgT9HTGltdV85Ffj9wKC9nzC9yFLLGV7nR/G3MuL7RAKp6Nf
+	 1MrNfNzjbW39XAso1SslyEVB9CSes8Arvh5Tl6Q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Tejun Heo <tj@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.15 390/532] workqueue: clean up WORK_* constant types, clarify masking
-Date: Fri, 21 Jul 2023 18:04:54 +0200
-Message-ID: <20230721160635.634854404@linuxfoundation.org>
+	Tom Talpey <tom@talpey.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Steve French <smfrench@gmail.com>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Ralph Boehme <slow@samba.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.15 391/532] ksmbd: use ksmbd_req_buf_next() in ksmbd_smb2_check_message()
+Date: Fri, 21 Jul 2023 18:04:55 +0200
+Message-ID: <20230721160635.688537672@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -38,137 +39,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Ralph Boehme <slow@samba.org>
 
-commit afa4bb778e48d79e4a642ed41e3b4e0de7489a6c upstream.
+commit b83b27909e74d27796de19c802fbc3b65ab4ba9a upstream.
 
-Dave Airlie reports that gcc-13.1.1 has started complaining about some
-of the workqueue code in 32-bit arm builds:
+Use ksmbd_req_buf_next() in ksmbd_smb2_check_message().
 
-  kernel/workqueue.c: In function ‘get_work_pwq’:
-  kernel/workqueue.c:713:24: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
-    713 |                 return (void *)(data & WORK_STRUCT_WQ_DATA_MASK);
-        |                        ^
-  [ ... a couple of other cases ... ]
-
-and while it's not immediately clear exactly why gcc started complaining
-about it now, I suspect it's some C23-induced enum type handlign fixup in
-gcc-13 is the cause.
-
-Whatever the reason for starting to complain, the code and data types
-are indeed disgusting enough that the complaint is warranted.
-
-The wq code ends up creating various "helper constants" (like that
-WORK_STRUCT_WQ_DATA_MASK) using an enum type, which is all kinds of
-confused.  The mask needs to be 'unsigned long', not some unspecified
-enum type.
-
-To make matters worse, the actual "mask and cast to a pointer" is
-repeated a couple of times, and the cast isn't even always done to the
-right pointer, but - as the error case above - to a 'void *' with then
-the compiler finishing the job.
-
-That's now how we roll in the kernel.
-
-So create the masks using the proper types rather than some ambiguous
-enumeration, and use a nice helper that actually does the type
-conversion in one well-defined place.
-
-Incidentally, this magically makes clang generate better code.  That,
-admittedly, is really just a sign of clang having been seriously
-confused before, and cleaning up the typing unconfuses the compiler too.
-
-Reported-by: Dave Airlie <airlied@gmail.com>
-Link: https://lore.kernel.org/lkml/CAPM=9twNnV4zMCvrPkw3H-ajZOH-01JVh_kDrxdPYQErz8ZTdA@mail.gmail.com/
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Hyunchul Lee <hyc.lee@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Ralph Boehme <slow@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/workqueue.h |   15 ++++++++-------
- kernel/workqueue.c        |   13 ++++++++-----
- 2 files changed, 16 insertions(+), 12 deletions(-)
+ fs/ksmbd/smb2misc.c |    9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
---- a/include/linux/workqueue.h
-+++ b/include/linux/workqueue.h
-@@ -68,7 +68,6 @@ enum {
- 	WORK_OFFQ_FLAG_BASE	= WORK_STRUCT_COLOR_SHIFT,
+--- a/fs/ksmbd/smb2misc.c
++++ b/fs/ksmbd/smb2misc.c
+@@ -347,16 +347,11 @@ static int smb2_validate_credit_charge(s
  
- 	__WORK_OFFQ_CANCELING	= WORK_OFFQ_FLAG_BASE,
--	WORK_OFFQ_CANCELING	= (1 << __WORK_OFFQ_CANCELING),
- 
- 	/*
- 	 * When a work item is off queue, its high bits point to the last
-@@ -79,12 +78,6 @@ enum {
- 	WORK_OFFQ_POOL_SHIFT	= WORK_OFFQ_FLAG_BASE + WORK_OFFQ_FLAG_BITS,
- 	WORK_OFFQ_LEFT		= BITS_PER_LONG - WORK_OFFQ_POOL_SHIFT,
- 	WORK_OFFQ_POOL_BITS	= WORK_OFFQ_LEFT <= 31 ? WORK_OFFQ_LEFT : 31,
--	WORK_OFFQ_POOL_NONE	= (1LU << WORK_OFFQ_POOL_BITS) - 1,
--
--	/* convenience constants */
--	WORK_STRUCT_FLAG_MASK	= (1UL << WORK_STRUCT_FLAG_BITS) - 1,
--	WORK_STRUCT_WQ_DATA_MASK = ~WORK_STRUCT_FLAG_MASK,
--	WORK_STRUCT_NO_POOL	= (unsigned long)WORK_OFFQ_POOL_NONE << WORK_OFFQ_POOL_SHIFT,
- 
- 	/* bit mask for work_busy() return values */
- 	WORK_BUSY_PENDING	= 1 << 0,
-@@ -94,6 +87,14 @@ enum {
- 	WORKER_DESC_LEN		= 24,
- };
- 
-+/* Convenience constants - of type 'unsigned long', not 'enum'! */
-+#define WORK_OFFQ_CANCELING	(1ul << __WORK_OFFQ_CANCELING)
-+#define WORK_OFFQ_POOL_NONE	((1ul << WORK_OFFQ_POOL_BITS) - 1)
-+#define WORK_STRUCT_NO_POOL	(WORK_OFFQ_POOL_NONE << WORK_OFFQ_POOL_SHIFT)
-+
-+#define WORK_STRUCT_FLAG_MASK    ((1ul << WORK_STRUCT_FLAG_BITS) - 1)
-+#define WORK_STRUCT_WQ_DATA_MASK (~WORK_STRUCT_FLAG_MASK)
-+
- struct work_struct {
- 	atomic_long_t data;
- 	struct list_head entry;
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -697,12 +697,17 @@ static void clear_work_data(struct work_
- 	set_work_data(work, WORK_STRUCT_NO_POOL, 0);
- }
- 
-+static inline struct pool_workqueue *work_struct_pwq(unsigned long data)
-+{
-+	return (struct pool_workqueue *)(data & WORK_STRUCT_WQ_DATA_MASK);
-+}
-+
- static struct pool_workqueue *get_work_pwq(struct work_struct *work)
+ int ksmbd_smb2_check_message(struct ksmbd_work *work)
  {
- 	unsigned long data = atomic_long_read(&work->data);
+-	struct smb2_pdu *pdu = work->request_buf;
++	struct smb2_pdu *pdu = ksmbd_req_buf_next(work);
+ 	struct smb2_hdr *hdr = &pdu->hdr;
+ 	int command;
+ 	__u32 clc_len;  /* calculated length */
+-	__u32 len = get_rfc1002_len(pdu);
+-
+-	if (work->next_smb2_rcv_hdr_off) {
+-		pdu = ksmbd_req_buf_next(work);
+-		hdr = &pdu->hdr;
+-	}
++	__u32 len = get_rfc1002_len(work->request_buf);
  
- 	if (data & WORK_STRUCT_PWQ)
--		return (void *)(data & WORK_STRUCT_WQ_DATA_MASK);
-+		return work_struct_pwq(data);
- 	else
- 		return NULL;
- }
-@@ -730,8 +735,7 @@ static struct worker_pool *get_work_pool
- 	assert_rcu_or_pool_mutex();
- 
- 	if (data & WORK_STRUCT_PWQ)
--		return ((struct pool_workqueue *)
--			(data & WORK_STRUCT_WQ_DATA_MASK))->pool;
-+		return work_struct_pwq(data)->pool;
- 
- 	pool_id = data >> WORK_OFFQ_POOL_SHIFT;
- 	if (pool_id == WORK_OFFQ_POOL_NONE)
-@@ -752,8 +756,7 @@ static int get_work_pool_id(struct work_
- 	unsigned long data = atomic_long_read(&work->data);
- 
- 	if (data & WORK_STRUCT_PWQ)
--		return ((struct pool_workqueue *)
--			(data & WORK_STRUCT_WQ_DATA_MASK))->pool->id;
-+		return work_struct_pwq(data)->pool->id;
- 
- 	return data >> WORK_OFFQ_POOL_SHIFT;
- }
+ 	if (le32_to_cpu(hdr->NextCommand) > 0)
+ 		len = le32_to_cpu(hdr->NextCommand);
 
 
