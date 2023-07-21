@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0A820F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:18:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D67AC433C8;
-	Fri, 21 Jul 2023 19:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB63820F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:18:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E5BC433C8;
+	Fri, 21 Jul 2023 19:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967135;
-	bh=vvg3KliSKQ+IjJVWu63yP/znRc4fL5/iIycpe9yd8b4=;
+	s=korg; t=1689967138;
+	bh=tmBqGOkpBHSBnO88dtFUHok2dBwDWO1kAtUCtvXhjWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qNceXBhYGvT+lgj8SbkA5+rFJJ9M1WqtEnMwoxT8OWAbwWxd7bgxsB+7VFrSMnTD4
-	 5KRfcYNJ++hikk/Zpk+fJDTsum/aFWQ60P7Dfcs0Ov7zHIU6bBtc3tJQ1dEfuPfGrw
-	 ypOHwTvjpeT4GwtdDSh/+XvEoyGWSeocqshuTlrw=
+	b=aDR2W6eGD5dBhMTG5YCwvsjmOLh/eoFDOdSZGFgDJmfkMMcG3EaKZ8EtioePWmboL
+	 UcPLf/E2fnubGxjsueO3MzZyP0GFV+gSyb6hKqcKuKQ4qS6Snk2U6sNoN780G3JPDJ
+	 FHkza1Es2CEYbIiBcVd/YXHNVPOsyDGMgJa2OTAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 057/223] net/sched: flower: Ensure both minimum and maximum ports are specified
-Date: Fri, 21 Jul 2023 18:05:10 +0200
-Message-ID: <20230721160523.281319881@linuxfoundation.org>
+Subject: [PATCH 6.1 058/223] riscv: mm: fix truncation warning on RV32
+Date: Fri, 21 Jul 2023 18:05:11 +0200
+Message-ID: <20230721160523.325856087@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -37,79 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit d3f87278bcb80bd7f9519669d928b43320363d4f ]
+[ Upstream commit b690e266dae2f85f4dfea21fa6a05e3500a51054 ]
 
-The kernel does not currently validate that both the minimum and maximum
-ports of a port range are specified. This can lead user space to think
-that a filter matching on a port range was successfully added, when in
-fact it was not. For example, with a patched (buggy) iproute2 that only
-sends the minimum port, the following commands do not return an error:
+lkp reports below sparse warning when building for RV32:
+arch/riscv/mm/init.c:1204:48: sparse: warning: cast truncates bits from
+constant value (100000000 becomes 0)
 
- # tc filter add dev swp1 ingress pref 1 proto ip flower ip_proto udp src_port 100-200 action pass
+IMO, the reason we didn't see this truncates bug in real world is "0"
+means MEMBLOCK_ALLOC_ACCESSIBLE in memblock and there's no RV32 HW
+with more than 4GB memory.
 
- # tc filter add dev swp1 ingress pref 1 proto ip flower ip_proto udp dst_port 100-200 action pass
+Fix it anyway to make sparse happy.
 
- # tc filter show dev swp1 ingress
- filter protocol ip pref 1 flower chain 0
- filter protocol ip pref 1 flower chain 0 handle 0x1
-   eth_type ipv4
-   ip_proto udp
-   not_in_hw
-         action order 1: gact action pass
-          random type none pass val 0
-          index 1 ref 1 bind 1
-
- filter protocol ip pref 1 flower chain 0 handle 0x2
-   eth_type ipv4
-   ip_proto udp
-   not_in_hw
-         action order 1: gact action pass
-          random type none pass val 0
-          index 2 ref 1 bind 1
-
-Fix by returning an error unless both ports are specified:
-
- # tc filter add dev swp1 ingress pref 1 proto ip flower ip_proto udp src_port 100-200 action pass
- Error: Both min and max source ports must be specified.
- We have an error talking to the kernel
-
- # tc filter add dev swp1 ingress pref 1 proto ip flower ip_proto udp dst_port 100-200 action pass
- Error: Both min and max destination ports must be specified.
- We have an error talking to the kernel
-
-Fixes: 5c72299fba9d ("net: sched: cls_flower: Classify packets using port ranges")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: decf89f86ecd ("riscv: try to allocate crashkern region from 32bit addressible memory")
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202306080034.SLiCiOMn-lkp@intel.com/
+Link: https://lore.kernel.org/r/20230709171036.1906-1-jszhang@kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_flower.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/riscv/mm/init.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
-index 3de72e7c1075a..10e6ec0f94981 100644
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -793,6 +793,16 @@ static int fl_set_key_port_range(struct nlattr **tb, struct fl_flow_key *key,
- 		       TCA_FLOWER_KEY_PORT_SRC_MAX, &mask->tp_range.tp_max.src,
- 		       TCA_FLOWER_UNSPEC, sizeof(key->tp_range.tp_max.src));
- 
-+	if (mask->tp_range.tp_min.dst != mask->tp_range.tp_max.dst) {
-+		NL_SET_ERR_MSG(extack,
-+			       "Both min and max destination ports must be specified");
-+		return -EINVAL;
-+	}
-+	if (mask->tp_range.tp_min.src != mask->tp_range.tp_max.src) {
-+		NL_SET_ERR_MSG(extack,
-+			       "Both min and max source ports must be specified");
-+		return -EINVAL;
-+	}
- 	if (mask->tp_range.tp_min.dst && mask->tp_range.tp_max.dst &&
- 	    ntohs(key->tp_range.tp_max.dst) <=
- 	    ntohs(key->tp_range.tp_min.dst)) {
+diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
+index 9390cdff39ffc..7c4852af9e3f1 100644
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -1187,7 +1187,7 @@ static void __init reserve_crashkernel(void)
+ 	 */
+ 	crash_base = memblock_phys_alloc_range(crash_size, PMD_SIZE,
+ 					       search_start,
+-					       min(search_end, (unsigned long) SZ_4G));
++					       min(search_end, (unsigned long)(SZ_4G - 1)));
+ 	if (crash_base == 0) {
+ 		/* Try again without restricting region to 32bit addressible memory */
+ 		crash_base = memblock_phys_alloc_range(crash_size, PMD_SIZE,
 -- 
 2.39.2
 
