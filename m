@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3CF1F93D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:10:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33E4C433C8;
-	Fri, 21 Jul 2023 16:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28EEC1F93D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:10:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C8B0C433C7;
+	Fri, 21 Jul 2023 16:10:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689955824;
-	bh=ai/EerMe1VtJaD2RV1j8gyKVaoPZ4jlZDLWP4ZKmp3k=;
+	s=korg; t=1689955827;
+	bh=/SP5wbYfVTjKpscCAyIdQf7jqut2FT8nOMNUMit9Nvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jmORo+yG3F95Rqqb42yBp0zHZTH3TT/DjaZo969bLisyfKjiPrc7on/ctO7ZjYiLo
-	 kCQEP2g1ESEUOa4nIR6tA+P1bOj/oXoyQCOpoGU/XAsvGI3qZzl6PrQUvtBd7xfnoM
-	 hIgNKGF91UOAS8T9mgRVxjRS25+80PpMvpfP9YtM=
+	b=oG+UDPTkIjjqclfuh8SbbkPYAjDK0NPl/nT3CeqdHrNxk836rwm7thSFWJ+3dwMAa
+	 PScnJFNRm2+XomBr3OiQ/92VFWFqc7btwZsGETqiFatEn3Py9kmQDVInvDA/FMhVk6
+	 4gu1/x5AloyeTYQeQsRTQH6OIw2nEk3Z5jnRGbfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sridhar Samudrala <sridhar.samudrala@intel.com>,
+	Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>,
+	Bharathi Sreenivas <bharathi.sreenivas@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 018/292] netfilter: conntrack: dont fold port numbers into addresses before hashing
-Date: Fri, 21 Jul 2023 18:02:07 +0200
-Message-ID: <20230721160529.590549528@linuxfoundation.org>
+Subject: [PATCH 6.4 019/292] ice: Fix max_rate check while configuring TX rate limits
+Date: Fri, 21 Jul 2023 18:02:08 +0200
+Message-ID: <20230721160529.631986546@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -35,91 +37,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Sridhar Samudrala <sridhar.samudrala@intel.com>
 
-[ Upstream commit eaf9e7192ec9af2fbf1b6eb2299dd0feca6c5f7e ]
+[ Upstream commit 5f16da6ee6ac32e6c8098bc4cfcc4f170694f9da ]
 
-Originally this used jhash2() over tuple and folded the zone id,
-the pernet hash value, destination port and l4 protocol number into the
-32bit seed value.
+Remove incorrect check in ice_validate_mqprio_opt() that limits
+filter configuration when sum of max_rates of all TCs exceeds
+the link speed. The max rate of each TC is unrelated to value
+used by other TCs and is valid as long as it is less than link
+speed.
 
-When the switch to siphash was done, I used an on-stack temporary
-buffer to build a suitable key to be hashed via siphash().
-
-But this showed up as performance regression, so I got rid of
-the temporary copy and collected to-be-hashed data in 4 u64 variables.
-
-This makes it easy to build tuples that produce the same hash, which isn't
-desirable even though chain lengths are limited.
-
-Switch back to plain siphash, but just like with jhash2(), take advantage
-of the fact that most of to-be-hashed data is already in a suitable order.
-
-Use an empty struct as annotation in 'struct nf_conntrack_tuple' to mark
-last member that can be used as hash input.
-
-The only remaining data that isn't present in the tuple structure are the
-zone identifier and the pernet hash: fold those into the key.
-
-Fixes: d2c806abcf0b ("netfilter: conntrack: use siphash_4u64")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: fbc7b27af0f9 ("ice: enable ndo_setup_tc support for mqprio_qdisc")
+Signed-off-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
+Signed-off-by: Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>
+Tested-by: Bharathi Sreenivas <bharathi.sreenivas@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_conntrack_tuple.h |  3 +++
- net/netfilter/nf_conntrack_core.c          | 20 +++++++-------------
- 2 files changed, 10 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/include/net/netfilter/nf_conntrack_tuple.h b/include/net/netfilter/nf_conntrack_tuple.h
-index 9334371c94e2b..f7dd950ff2509 100644
---- a/include/net/netfilter/nf_conntrack_tuple.h
-+++ b/include/net/netfilter/nf_conntrack_tuple.h
-@@ -67,6 +67,9 @@ struct nf_conntrack_tuple {
- 		/* The protocol. */
- 		u_int8_t protonum;
- 
-+		/* The direction must be ignored for the tuplehash */
-+		struct { } __nfct_hash_offsetend;
-+
- 		/* The direction (for tuplehash) */
- 		u_int8_t dir;
- 	} dst;
-diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
-index d119f1d4c2fc8..992393102d5f5 100644
---- a/net/netfilter/nf_conntrack_core.c
-+++ b/net/netfilter/nf_conntrack_core.c
-@@ -211,24 +211,18 @@ static u32 hash_conntrack_raw(const struct nf_conntrack_tuple *tuple,
- 			      unsigned int zoneid,
- 			      const struct net *net)
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index fcc027c938fda..eef7c1224887a 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -8114,10 +8114,10 @@ static int
+ ice_validate_mqprio_qopt(struct ice_vsi *vsi,
+ 			 struct tc_mqprio_qopt_offload *mqprio_qopt)
  {
--	u64 a, b, c, d;
-+	siphash_key_t key;
+-	u64 sum_max_rate = 0, sum_min_rate = 0;
+ 	int non_power_of_2_qcount = 0;
+ 	struct ice_pf *pf = vsi->back;
+ 	int max_rss_q_cnt = 0;
++	u64 sum_min_rate = 0;
+ 	struct device *dev;
+ 	int i, speed;
+ 	u8 num_tc;
+@@ -8133,6 +8133,7 @@ ice_validate_mqprio_qopt(struct ice_vsi *vsi,
+ 	dev = ice_pf_to_dev(pf);
+ 	vsi->ch_rss_size = 0;
+ 	num_tc = mqprio_qopt->qopt.num_tc;
++	speed = ice_get_link_speed_kbps(vsi);
  
- 	get_random_once(&nf_conntrack_hash_rnd, sizeof(nf_conntrack_hash_rnd));
+ 	for (i = 0; num_tc; i++) {
+ 		int qcount = mqprio_qopt->qopt.count[i];
+@@ -8173,7 +8174,6 @@ ice_validate_mqprio_qopt(struct ice_vsi *vsi,
+ 		 */
+ 		max_rate = mqprio_qopt->max_rate[i];
+ 		max_rate = div_u64(max_rate, ICE_BW_KBPS_DIVISOR);
+-		sum_max_rate += max_rate;
  
--	/* The direction must be ignored, handle usable tuplehash members manually */
--	a = (u64)tuple->src.u3.all[0] << 32 | tuple->src.u3.all[3];
--	b = (u64)tuple->dst.u3.all[0] << 32 | tuple->dst.u3.all[3];
-+	key = nf_conntrack_hash_rnd;
+ 		/* min_rate is minimum guaranteed rate and it can't be zero */
+ 		min_rate = mqprio_qopt->min_rate[i];
+@@ -8186,6 +8186,12 @@ ice_validate_mqprio_qopt(struct ice_vsi *vsi,
+ 			return -EINVAL;
+ 		}
  
--	c = (__force u64)tuple->src.u.all << 32 | (__force u64)tuple->dst.u.all << 16;
--	c |= tuple->dst.protonum;
-+	key.key[0] ^= zoneid;
-+	key.key[1] ^= net_hash_mix(net);
++		if (max_rate && max_rate > speed) {
++			dev_err(dev, "TC%d: max_rate(%llu Kbps) > link speed of %u Kbps\n",
++				i, max_rate, speed);
++			return -EINVAL;
++		}
++
+ 		iter_div_u64_rem(min_rate, ICE_MIN_BW_LIMIT, &rem);
+ 		if (rem) {
+ 			dev_err(dev, "TC%d: Min Rate not multiple of %u Kbps",
+@@ -8223,12 +8229,6 @@ ice_validate_mqprio_qopt(struct ice_vsi *vsi,
+ 	    (mqprio_qopt->qopt.offset[i] + mqprio_qopt->qopt.count[i]))
+ 		return -EINVAL;
  
--	d = (u64)zoneid << 32 | net_hash_mix(net);
--
--	/* IPv4: u3.all[1,2,3] == 0 */
--	c ^= (u64)tuple->src.u3.all[1] << 32 | tuple->src.u3.all[2];
--	d += (u64)tuple->dst.u3.all[1] << 32 | tuple->dst.u3.all[2];
--
--	return (u32)siphash_4u64(a, b, c, d, &nf_conntrack_hash_rnd);
-+	return siphash((void *)tuple,
-+			offsetofend(struct nf_conntrack_tuple, dst.__nfct_hash_offsetend),
-+			&key);
- }
- 
- static u32 scale_hash(u32 hash)
+-	speed = ice_get_link_speed_kbps(vsi);
+-	if (sum_max_rate && sum_max_rate > (u64)speed) {
+-		dev_err(dev, "Invalid max Tx rate(%llu) Kbps > speed(%u) Kbps specified\n",
+-			sum_max_rate, speed);
+-		return -EINVAL;
+-	}
+ 	if (sum_min_rate && sum_min_rate > (u64)speed) {
+ 		dev_err(dev, "Invalid min Tx rate(%llu) Kbps > speed (%u) Kbps specified\n",
+ 			sum_min_rate, speed);
 -- 
 2.39.2
 
