@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E45200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:04:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D8ACC433C7;
-	Fri, 21 Jul 2023 19:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3402200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:04:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48216C433C7;
+	Fri, 21 Jul 2023 19:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966241;
-	bh=3kzTfVKWWibrQ+PquFHbQp7KSFHKcdtT0J/DFETlprE=;
+	s=korg; t=1689966244;
+	bh=XrBunZsUmWLliryqiX80EASe8LCgoBdLE9X7NU4WnZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ex0BAK442ux+D0hyMpBcUjasFJGPcPp+mGXPRAypDbTDSz3ALU5Fnhg8oVhHQqT1k
-	 3/rntjQr93iQrESbJPL122FBxtBq3MjNzMfKdHes04RH63ODYbZ3TyGsJ5CodUdXcy
-	 8i913G8Ue4LcCLZy7bFbL1yR1TUbJq9qi6aFVAF8=
+	b=0MCgdifBPBrnN5t7U8naiRR1t3mYAptEwQyIXLC5RcRTq9n16yyqqNlsgUyg9rY7N
+	 9s9hA7wqwyKavnwyQta8gaCPOkHCVhrfTJV+t3ilcIUijXRTS/CmTTL4mDjUgi4GSe
+	 tZAzX0MwJBMlWbj+2LvFdhCahEqQkjkfwEY/CWe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+27b0b464864741b18b99@syzkaller.appspotmail.com,
-	Duoming Zhou <duoming@zju.edu.cn>,
+	Daniel Scally <dan.scally@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 274/532] media: usb: siano: Fix warning due to null work_func_t function pointer
-Date: Fri, 21 Jul 2023 18:02:58 +0200
-Message-ID: <20230721160629.237665466@linuxfoundation.org>
+Subject: [PATCH 5.15 275/532] media: i2c: Correct format propagation for st-mipid02
+Date: Fri, 21 Jul 2023 18:02:59 +0200
+Message-ID: <20230721160629.299692610@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,80 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Daniel Scally <dan.scally@ideasonboard.com>
 
-[ Upstream commit 6f489a966fbeb0da63d45c2c66a8957eab604bf6 ]
+[ Upstream commit 306c3190b30d4d6a098888b9d7d4cefaa0ddcb91 ]
 
-The previous commit ebad8e731c1c ("media: usb: siano: Fix use after
-free bugs caused by do_submit_urb") adds cancel_work_sync() in
-smsusb_stop_streaming(). But smsusb_stop_streaming() may be called,
-even if the work_struct surb->wq has not been initialized. As a result,
-the warning will occur. One of the processes that could lead to warning
-is shown below:
+Format propagation in the st-mipid02 driver is incorrect in that when
+setting format for V4L2_SUBDEV_FORMAT_TRY on the source pad, the
+_active_ rather than _try_ format from the sink pad is propagated.
+This causes problems with format negotiation - update the function to
+propagate the correct format.
 
-smsusb_probe()
-  smsusb_init_device()
-    if (!dev->in_ep || !dev->out_ep || align < 0) {
-         smsusb_term_device(intf);
-           smsusb_stop_streaming()
-             cancel_work_sync(&dev->surbs[i].wq);
-               __cancel_work_timer()
-                 __flush_work()
-                   if (WARN_ON(!work->func)) // work->func is null
-
-The log reported by syzbot is shown below:
-
-WARNING: CPU: 0 PID: 897 at kernel/workqueue.c:3066 __flush_work+0x798/0xa80 kernel/workqueue.c:3063
-Modules linked in:
-CPU: 0 PID: 897 Comm: kworker/0:2 Not tainted 6.2.0-rc1-syzkaller #0
-RIP: 0010:__flush_work+0x798/0xa80 kernel/workqueue.c:3066
-...
-RSP: 0018:ffffc9000464ebf8 EFLAGS: 00010246
-RAX: 1ffff11002dbb420 RBX: 0000000000000021 RCX: 1ffffffff204fa4e
-RDX: dffffc0000000000 RSI: 0000000000000001 RDI: ffff888016dda0e8
-RBP: ffffc9000464ed98 R08: 0000000000000001 R09: ffffffff90253b2f
-R10: 0000000000000001 R11: 0000000000000000 R12: ffff888016dda0e8
-R13: ffff888016dda0e8 R14: ffff888016dda100 R15: 0000000000000001
-FS:  0000000000000000(0000) GS:ffff8880b9a00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ffd4331efe8 CR3: 000000000b48e000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- __cancel_work_timer+0x315/0x460 kernel/workqueue.c:3160
- smsusb_stop_streaming drivers/media/usb/siano/smsusb.c:182 [inline]
- smsusb_term_device+0xda/0x2d0 drivers/media/usb/siano/smsusb.c:344
- smsusb_init_device+0x400/0x9ce drivers/media/usb/siano/smsusb.c:419
- smsusb_probe+0xbbd/0xc55 drivers/media/usb/siano/smsusb.c:567
-...
-
-This patch adds check before cancel_work_sync(). If surb->wq has not
-been initialized, the cancel_work_sync() will not be executed.
-
-Reported-by: syzbot+27b0b464864741b18b99@syzkaller.appspotmail.com
-Fixes: ebad8e731c1c ("media: usb: siano: Fix use after free bugs caused by do_submit_urb")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Fixes: 642bb5e88fed ("media: st-mipid02: MIPID02 CSI-2 to PARALLEL bridge driver")
+Signed-off-by: Daniel Scally <dan.scally@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/siano/smsusb.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/i2c/st-mipid02.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/usb/siano/smsusb.c b/drivers/media/usb/siano/smsusb.c
-index 1babfe6e2c361..5c223b5498b4b 100644
---- a/drivers/media/usb/siano/smsusb.c
-+++ b/drivers/media/usb/siano/smsusb.c
-@@ -179,7 +179,8 @@ static void smsusb_stop_streaming(struct smsusb_device_t *dev)
+diff --git a/drivers/media/i2c/st-mipid02.c b/drivers/media/i2c/st-mipid02.c
+index f630b88cbfaa9..cf55c57a79707 100644
+--- a/drivers/media/i2c/st-mipid02.c
++++ b/drivers/media/i2c/st-mipid02.c
+@@ -710,8 +710,13 @@ static void mipid02_set_fmt_source(struct v4l2_subdev *sd,
+ {
+ 	struct mipid02_dev *bridge = to_mipid02_dev(sd);
  
- 	for (i = 0; i < MAX_URBS; i++) {
- 		usb_kill_urb(&dev->surbs[i].urb);
--		cancel_work_sync(&dev->surbs[i].wq);
-+		if (dev->surbs[i].wq.func)
-+			cancel_work_sync(&dev->surbs[i].wq);
+-	/* source pad mirror active sink pad */
+-	format->format = bridge->fmt;
++	/* source pad mirror sink pad */
++	if (format->which == V4L2_SUBDEV_FORMAT_ACTIVE)
++		format->format = bridge->fmt;
++	else
++		format->format = *v4l2_subdev_get_try_format(sd, sd_state,
++							     MIPID02_SINK_0);
++
+ 	/* but code may need to be converted */
+ 	format->format.code = serial_to_parallel_code(format->format.code);
  
- 		if (dev->surbs[i].cb) {
- 			smscore_putbuffer(dev->coredev, dev->surbs[i].cb);
 -- 
 2.39.2
 
