@@ -1,32 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39C020F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:21:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61797C433CA;
-	Fri, 21 Jul 2023 19:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92DD20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:21:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C422C433C8;
+	Fri, 21 Jul 2023 19:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967298;
-	bh=gF0PcjPSqRyyjOKZmcaYmDOIQbXy0FrBULCVutAziTw=;
+	s=korg; t=1689967301;
+	bh=Me+Lw4RWDsxDNQpA3eUNwL0Rz9p5c8R47szDbs2ilv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vcV+hDaufWLUD18SpavjXgeeWEBHV1AKcvlYeJta6Kp8DnCSZQGcE9l6pxs9oWfws
-	 Nuvf3LQkHv5frkthlksvJ2RZXXt+sAFbjjOxQADRKf/bWiLTxV90EPhUo0E8dGEVSx
-	 rtMOiReWaBhLidw97BwlPwuPr1xn8mReybyrJRTw=
+	b=V0M5DOd0gbL93F0EKc5spjzyTtL/GAVWO2TUzNlz7Ff+A8jISh8kSb/uL8oA1R792
+	 42t+2snz+ZYkiwxjS9XAIwo7msTORnc+92Zl18DTsoVPAPbfbXE6OiaHP7nQck2EcC
+	 PpxyXfWYHrpMTvmOxfsMP72qag3MT2fyBWP1JhxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nik P <npliashechnikov@gmail.com>,
-	Nathan Schulte <nmschulte@gmail.com>,
-	Friedrich Vock <friedrich.vock@gmx.de>,
-	dridri85@gmail.com,
-	Jan Visser <starquake@linuxeverywhere.org>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.1 085/223] pinctrl: amd: Use amd_pinconf_set() for all config options
-Date: Fri, 21 Jul 2023 18:05:38 +0200
-Message-ID: <20230721160524.486584520@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.1 076/223] f2fs: fix deadlock in i_xattr_sem and inode page lock
+Date: Fri, 21 Jul 2023 18:05:29 +0200
+Message-ID: <20230721160524.104265016@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -40,103 +34,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-commit 635a750d958e158e17af0f524bedc484b27fbb93 upstream.
+commit 5eda1ad1aaffdfebdecf7a164e586060a210f74f upstream.
 
-On ASUS TUF A16 it is reported that the ITE5570 ACPI device connected to
-GPIO 7 is causing an interrupt storm.  This issue doesn't happen on
-Windows.
+Thread #1:
 
-Comparing the GPIO register configuration between Windows and Linux
-bit 20 has been configured as a pull up on Windows, but not on Linux.
-Checking GPIO declaration from the firmware it is clear it *should* have
-been a pull up on Linux as well.
+[122554.641906][   T92]  f2fs_getxattr+0xd4/0x5fc
+    -> waiting for f2fs_down_read(&F2FS_I(inode)->i_xattr_sem);
 
-```
-GpioInt (Level, ActiveLow, Exclusive, PullUp, 0x0000,
-	 "\\_SB.GPIO", 0x00, ResourceConsumer, ,)
-{   // Pin list
-0x0007
-}
-```
+[122554.641927][   T92]  __f2fs_get_acl+0x50/0x284
+[122554.641948][   T92]  f2fs_init_acl+0x84/0x54c
+[122554.641969][   T92]  f2fs_init_inode_metadata+0x460/0x5f0
+[122554.641990][   T92]  f2fs_add_inline_entry+0x11c/0x350
+    -> Locked dir->inode_page by f2fs_get_node_page()
 
-On Linux amd_gpio_set_config() is currently only used for programming
-the debounce. Actually the GPIO core calls it with all the arguments
-that are supported by a GPIO, pinctrl-amd just responds `-ENOTSUPP`.
+[122554.642009][   T92]  f2fs_do_add_link+0x100/0x1e4
+[122554.642025][   T92]  f2fs_create+0xf4/0x22c
+[122554.642047][   T92]  vfs_create+0x130/0x1f4
 
-To solve this issue expand amd_gpio_set_config() to support the other
-arguments amd_pinconf_set() supports, namely `PIN_CONFIG_BIAS_PULL_DOWN`,
-`PIN_CONFIG_BIAS_PULL_UP`, and `PIN_CONFIG_DRIVE_STRENGTH`.
+Thread #2:
 
-Reported-by: Nik P <npliashechnikov@gmail.com>
-Reported-by: Nathan Schulte <nmschulte@gmail.com>
-Reported-by: Friedrich Vock <friedrich.vock@gmx.de>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217336
-Reported-by: dridri85@gmail.com
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217493
-Link: https://lore.kernel.org/linux-input/20230530154058.17594-1-friedrich.vock@gmx.de/
-Tested-by: Jan Visser <starquake@linuxeverywhere.org>
-Fixes: 2956b5d94a76 ("pinctrl / gpio: Introduce .set_config() callback for GPIO chips")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230705133005.577-3-mario.limonciello@amd.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+[123996.386358][   T92]  __get_node_page+0x8c/0x504
+    -> waiting for dir->inode_page lock
+
+[123996.386383][   T92]  read_all_xattrs+0x11c/0x1f4
+[123996.386405][   T92]  __f2fs_setxattr+0xcc/0x528
+[123996.386424][   T92]  f2fs_setxattr+0x158/0x1f4
+    -> f2fs_down_write(&F2FS_I(inode)->i_xattr_sem);
+
+[123996.386443][   T92]  __f2fs_set_acl+0x328/0x430
+[123996.386618][   T92]  f2fs_set_acl+0x38/0x50
+[123996.386642][   T92]  posix_acl_chmod+0xc8/0x1c8
+[123996.386669][   T92]  f2fs_setattr+0x5e0/0x6bc
+[123996.386689][   T92]  notify_change+0x4d8/0x580
+[123996.386717][   T92]  chmod_common+0xd8/0x184
+[123996.386748][   T92]  do_fchmodat+0x60/0x124
+[123996.386766][   T92]  __arm64_sys_fchmodat+0x28/0x3c
+
+Cc: <stable@vger.kernel.org>
+Fixes: 27161f13e3c3 "f2fs: avoid race in between read xattr & write xattr"
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-amd.c |   28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ fs/f2fs/dir.c   |    9 ++++++++-
+ fs/f2fs/xattr.c |    6 ++++--
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
---- a/drivers/pinctrl/pinctrl-amd.c
-+++ b/drivers/pinctrl/pinctrl-amd.c
-@@ -188,18 +188,6 @@ static int amd_gpio_set_debounce(struct
- 	return ret;
- }
- 
--static int amd_gpio_set_config(struct gpio_chip *gc, unsigned offset,
--			       unsigned long config)
--{
--	u32 debounce;
--
--	if (pinconf_to_config_param(config) != PIN_CONFIG_INPUT_DEBOUNCE)
--		return -ENOTSUPP;
--
--	debounce = pinconf_to_config_argument(config);
--	return amd_gpio_set_debounce(gc, offset, debounce);
--}
--
- #ifdef CONFIG_DEBUG_FS
- static void amd_gpio_dbg_show(struct seq_file *s, struct gpio_chip *gc)
+--- a/fs/f2fs/dir.c
++++ b/fs/f2fs/dir.c
+@@ -806,8 +806,15 @@ int f2fs_add_dentry(struct inode *dir, c
  {
-@@ -782,7 +770,7 @@ static int amd_pinconf_get(struct pinctr
- }
+ 	int err = -EAGAIN;
  
- static int amd_pinconf_set(struct pinctrl_dev *pctldev, unsigned int pin,
--				unsigned long *configs, unsigned num_configs)
-+			   unsigned long *configs, unsigned int num_configs)
- {
- 	int i;
- 	u32 arg;
-@@ -872,6 +860,20 @@ static int amd_pinconf_group_set(struct
- 	return 0;
- }
- 
-+static int amd_gpio_set_config(struct gpio_chip *gc, unsigned int pin,
-+			       unsigned long config)
-+{
-+	struct amd_gpio *gpio_dev = gpiochip_get_data(gc);
-+
-+	if (pinconf_to_config_param(config) == PIN_CONFIG_INPUT_DEBOUNCE) {
-+		u32 debounce = pinconf_to_config_argument(config);
-+
-+		return amd_gpio_set_debounce(gc, pin, debounce);
+-	if (f2fs_has_inline_dentry(dir))
++	if (f2fs_has_inline_dentry(dir)) {
++		/*
++		 * Should get i_xattr_sem to keep the lock order:
++		 * i_xattr_sem -> inode_page lock used by f2fs_setxattr.
++		 */
++		f2fs_down_read(&F2FS_I(dir)->i_xattr_sem);
+ 		err = f2fs_add_inline_entry(dir, fname, inode, ino, mode);
++		f2fs_up_read(&F2FS_I(dir)->i_xattr_sem);
 +	}
-+
-+	return amd_pinconf_set(gpio_dev->pctrl, pin, &config, 1);
-+}
-+
- static const struct pinconf_ops amd_pinconf_ops = {
- 	.pin_config_get		= amd_pinconf_get,
- 	.pin_config_set		= amd_pinconf_set,
+ 	if (err == -EAGAIN)
+ 		err = f2fs_add_regular_entry(dir, fname, inode, ino, mode);
+ 
+--- a/fs/f2fs/xattr.c
++++ b/fs/f2fs/xattr.c
+@@ -527,10 +527,12 @@ int f2fs_getxattr(struct inode *inode, i
+ 	if (len > F2FS_NAME_LEN)
+ 		return -ERANGE;
+ 
+-	f2fs_down_read(&F2FS_I(inode)->i_xattr_sem);
++	if (!ipage)
++		f2fs_down_read(&F2FS_I(inode)->i_xattr_sem);
+ 	error = lookup_all_xattrs(inode, ipage, index, len, name,
+ 				&entry, &base_addr, &base_size, &is_inline);
+-	f2fs_up_read(&F2FS_I(inode)->i_xattr_sem);
++	if (!ipage)
++		f2fs_up_read(&F2FS_I(inode)->i_xattr_sem);
+ 	if (error)
+ 		return error;
+ 
 
 
