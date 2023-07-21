@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98071F94A
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:10:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16151C433C9;
-	Fri, 21 Jul 2023 16:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AB01F93D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:10:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37A8C433C7;
+	Fri, 21 Jul 2023 16:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689955852;
-	bh=KaD4S1lxzYxrBih7T0Abo9L1FejAwP4bB57SiFMfI8o=;
+	s=korg; t=1689955855;
+	bh=m1jRmP/X+sjq2Vr2SGOPIrFuA6zf9N5KECFmGmsH2S4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ec2q5dRHQqPW6Ki+k6FrtPn05Zfy5RfH53zPVqGIGj//0/foM3qSyDfhv1/YeYhbA
-	 TCgtB1On52jBvZdNJW4m4GOnZWKDbpTyFKVF1N8Dquk7aOQbYdFjlYHQNTzNIB8gpc
-	 Pez986jPG6lrio0+U0lXsJYYbD2GVesBMj+li1l8=
+	b=k39DZiwrEYu9uUNucUjmcTucuG9w6+JP823wN2HHtONNuUA0jzUja1s8FejUAdvyx
+	 sByWW0LJs5mDulkPHB7W4hXWiEb4raOBaPgTjNrcXRpAY79HEQVic3OySqz6NgPPCL
+	 StSo4QhezZP0b03KzMzRDXhZWotbuTmYUDW4lUSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Kumlien <ian.kumlien@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 053/292] net: prevent skb corruption on frag list segmentation
-Date: Fri, 21 Jul 2023 18:02:42 +0200
-Message-ID: <20230721160531.079552078@linuxfoundation.org>
+Subject: [PATCH 6.4 054/292] s390/ism: Fix locking for forwarding of IRQs and events to clients
+Date: Fri, 21 Jul 2023 18:02:43 +0200
+Message-ID: <20230721160531.121345804@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -37,100 +36,207 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-[ Upstream commit c329b261afe71197d9da83c1f18eb45a7e97e089 ]
+[ Upstream commit 6b5c13b591d753c6022fbd12f8c0c0a9a07fc065 ]
 
-Ian reported several skb corruptions triggered by rx-gro-list,
-collecting different oops alike:
+The clients array references all registered clients and is protected by
+the clients_lock. Besides its use as general list of clients the clients
+array is accessed in ism_handle_irq() to forward ISM device events to
+clients.
 
-[   62.624003] BUG: kernel NULL pointer dereference, address: 00000000000000c0
-[   62.631083] #PF: supervisor read access in kernel mode
-[   62.636312] #PF: error_code(0x0000) - not-present page
-[   62.641541] PGD 0 P4D 0
-[   62.644174] Oops: 0000 [#1] PREEMPT SMP NOPTI
-[   62.648629] CPU: 1 PID: 913 Comm: napi/eno2-79 Not tainted 6.4.0 #364
-[   62.655162] Hardware name: Supermicro Super Server/A2SDi-12C-HLN4F, BIOS 1.7a 10/13/2022
-[   62.663344] RIP: 0010:__udp_gso_segment (./include/linux/skbuff.h:2858
-./include/linux/udp.h:23 net/ipv4/udp_offload.c:228 net/ipv4/udp_offload.c:261
-net/ipv4/udp_offload.c:277)
-[   62.687193] RSP: 0018:ffffbd3a83b4f868 EFLAGS: 00010246
-[   62.692515] RAX: 00000000000000ce RBX: 0000000000000000 RCX: 0000000000000000
-[   62.699743] RDX: ffffa124def8a000 RSI: 0000000000000079 RDI: ffffa125952a14d4
-[   62.706970] RBP: ffffa124def8a000 R08: 0000000000000022 R09: 00002000001558c9
-[   62.714199] R10: 0000000000000000 R11: 00000000be554639 R12: 00000000000000e2
-[   62.721426] R13: ffffa125952a1400 R14: ffffa125952a1400 R15: 00002000001558c9
-[   62.728654] FS:  0000000000000000(0000) GS:ffffa127efa40000(0000)
-knlGS:0000000000000000
-[   62.736852] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   62.742702] CR2: 00000000000000c0 CR3: 00000001034b0000 CR4: 00000000003526e0
-[   62.749948] Call Trace:
-[   62.752498]  <TASK>
-[   62.779267] inet_gso_segment (net/ipv4/af_inet.c:1398)
-[   62.787605] skb_mac_gso_segment (net/core/gro.c:141)
-[   62.791906] __skb_gso_segment (net/core/dev.c:3403 (discriminator 2))
-[   62.800492] validate_xmit_skb (./include/linux/netdevice.h:4862
-net/core/dev.c:3659)
-[   62.804695] validate_xmit_skb_list (net/core/dev.c:3710)
-[   62.809158] sch_direct_xmit (net/sched/sch_generic.c:330)
-[   62.813198] __dev_queue_xmit (net/core/dev.c:3805 net/core/dev.c:4210)
-net/netfilter/core.c:626)
-[   62.821093] br_dev_queue_push_xmit (net/bridge/br_forward.c:55)
-[   62.825652] maybe_deliver (net/bridge/br_forward.c:193)
-[   62.829420] br_flood (net/bridge/br_forward.c:233)
-[   62.832758] br_handle_frame_finish (net/bridge/br_input.c:215)
-[   62.837403] br_handle_frame (net/bridge/br_input.c:298
-net/bridge/br_input.c:416)
-[   62.851417] __netif_receive_skb_core.constprop.0 (net/core/dev.c:5387)
-[   62.866114] __netif_receive_skb_list_core (net/core/dev.c:5570)
-[   62.871367] netif_receive_skb_list_internal (net/core/dev.c:5638
-net/core/dev.c:5727)
-[   62.876795] napi_complete_done (./include/linux/list.h:37
-./include/net/gro.h:434 ./include/net/gro.h:429 net/core/dev.c:6067)
-[   62.881004] ixgbe_poll (drivers/net/ethernet/intel/ixgbe/ixgbe_main.c:3191)
-[   62.893534] __napi_poll (net/core/dev.c:6498)
-[   62.897133] napi_threaded_poll (./include/linux/netpoll.h:89
-net/core/dev.c:6640)
-[   62.905276] kthread (kernel/kthread.c:379)
-[   62.913435] ret_from_fork (arch/x86/entry/entry_64.S:314)
-[   62.917119]  </TASK>
+While the clients_lock is taken in the IRQ handler when calling
+handle_event() it is however incorrectly not held during the
+client->handle_irq() call and for the preceding clients[] access leaving
+it unprotected against concurrent client (un-)registration.
 
-In the critical scenario, rx-gro-list GRO-ed packets are fed, via a
-bridge, both to the local input path and to an egress device (tun).
+Furthermore the accesses to ism->sba_client_arr[] in ism_register_dmb()
+and ism_unregister_dmb() are not protected by any lock. This is
+especially problematic as the client ID from the ism->sba_client_arr[]
+is not checked against NO_CLIENT and neither is the client pointer
+checked.
 
-The segmentation of such packets unsafely writes to the cloned skbs
-with shared heads.
+Instead of expanding the use of the clients_lock further add a separate
+array in struct ism_dev which references clients subscribed to the
+device's events and IRQs. This array is protected by ism->lock which is
+already taken in ism_handle_irq() and can be taken outside the IRQ
+handler when adding/removing subscribers or the accessing
+ism->sba_client_arr[]. This also means that the clients_lock is no
+longer taken in IRQ context.
 
-This change addresses the issue by uncloning as needed the
-to-be-segmented skbs.
-
-Reported-by: Ian Kumlien <ian.kumlien@gmail.com>
-Tested-by: Ian Kumlien <ian.kumlien@gmail.com>
-Fixes: 3a1296a38d0c ("net: Support GRO/GSO fraglist chaining.")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
+Fixes: 89e7d2ba61b7 ("net/ism: Add new API for client registration")
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/s390/net/ism_drv.c | 44 +++++++++++++++++++++++++++++++-------
+ include/linux/ism.h        |  1 +
+ 2 files changed, 37 insertions(+), 8 deletions(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index cea28d30abb55..1b6a1d99869dc 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -4270,6 +4270,11 @@ struct sk_buff *skb_segment_list(struct sk_buff *skb,
+diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
+index c2096e4bba319..216eb4b386286 100644
+--- a/drivers/s390/net/ism_drv.c
++++ b/drivers/s390/net/ism_drv.c
+@@ -47,6 +47,15 @@ static struct ism_dev_list ism_dev_list = {
+ 	.mutex = __MUTEX_INITIALIZER(ism_dev_list.mutex),
+ };
  
- 	skb_push(skb, -skb_network_offset(skb) + offset);
- 
-+	/* Ensure the head is writeable before touching the shared info */
-+	err = skb_unclone(skb, GFP_ATOMIC);
-+	if (err)
-+		goto err_linearize;
++static void ism_setup_forwarding(struct ism_client *client, struct ism_dev *ism)
++{
++	unsigned long flags;
 +
- 	skb_shinfo(skb)->frag_list = NULL;
++	spin_lock_irqsave(&ism->lock, flags);
++	ism->subs[client->id] = client;
++	spin_unlock_irqrestore(&ism->lock, flags);
++}
++
+ int ism_register_client(struct ism_client *client)
+ {
+ 	struct ism_dev *ism;
+@@ -71,6 +80,7 @@ int ism_register_client(struct ism_client *client)
+ 		list_for_each_entry(ism, &ism_dev_list.list, list) {
+ 			ism->priv[i] = NULL;
+ 			client->add(ism);
++			ism_setup_forwarding(client, ism);
+ 		}
+ 	}
+ 	mutex_unlock(&ism_dev_list.mutex);
+@@ -92,6 +102,9 @@ int ism_unregister_client(struct ism_client *client)
+ 		max_client--;
+ 	spin_unlock_irqrestore(&clients_lock, flags);
+ 	list_for_each_entry(ism, &ism_dev_list.list, list) {
++		spin_lock_irqsave(&ism->lock, flags);
++		/* Stop forwarding IRQs and events */
++		ism->subs[client->id] = NULL;
+ 		for (int i = 0; i < ISM_NR_DMBS; ++i) {
+ 			if (ism->sba_client_arr[i] == client->id) {
+ 				pr_err("%s: attempt to unregister client '%s'"
+@@ -101,6 +114,7 @@ int ism_unregister_client(struct ism_client *client)
+ 				goto out;
+ 			}
+ 		}
++		spin_unlock_irqrestore(&ism->lock, flags);
+ 	}
+ out:
+ 	mutex_unlock(&ism_dev_list.mutex);
+@@ -328,6 +342,7 @@ int ism_register_dmb(struct ism_dev *ism, struct ism_dmb *dmb,
+ 		     struct ism_client *client)
+ {
+ 	union ism_reg_dmb cmd;
++	unsigned long flags;
+ 	int ret;
  
- 	while (list_skb) {
+ 	ret = ism_alloc_dmb(ism, dmb);
+@@ -351,7 +366,9 @@ int ism_register_dmb(struct ism_dev *ism, struct ism_dmb *dmb,
+ 		goto out;
+ 	}
+ 	dmb->dmb_tok = cmd.response.dmb_tok;
++	spin_lock_irqsave(&ism->lock, flags);
+ 	ism->sba_client_arr[dmb->sba_idx - ISM_DMB_BIT_OFFSET] = client->id;
++	spin_unlock_irqrestore(&ism->lock, flags);
+ out:
+ 	return ret;
+ }
+@@ -360,6 +377,7 @@ EXPORT_SYMBOL_GPL(ism_register_dmb);
+ int ism_unregister_dmb(struct ism_dev *ism, struct ism_dmb *dmb)
+ {
+ 	union ism_unreg_dmb cmd;
++	unsigned long flags;
+ 	int ret;
+ 
+ 	memset(&cmd, 0, sizeof(cmd));
+@@ -368,7 +386,9 @@ int ism_unregister_dmb(struct ism_dev *ism, struct ism_dmb *dmb)
+ 
+ 	cmd.request.dmb_tok = dmb->dmb_tok;
+ 
++	spin_lock_irqsave(&ism->lock, flags);
+ 	ism->sba_client_arr[dmb->sba_idx - ISM_DMB_BIT_OFFSET] = NO_CLIENT;
++	spin_unlock_irqrestore(&ism->lock, flags);
+ 
+ 	ret = ism_cmd(ism, &cmd);
+ 	if (ret && ret != ISM_ERROR)
+@@ -491,6 +511,7 @@ static u16 ism_get_chid(struct ism_dev *ism)
+ static void ism_handle_event(struct ism_dev *ism)
+ {
+ 	struct ism_event *entry;
++	struct ism_client *clt;
+ 	int i;
+ 
+ 	while ((ism->ieq_idx + 1) != READ_ONCE(ism->ieq->header.idx)) {
+@@ -499,21 +520,21 @@ static void ism_handle_event(struct ism_dev *ism)
+ 
+ 		entry = &ism->ieq->entry[ism->ieq_idx];
+ 		debug_event(ism_debug_info, 2, entry, sizeof(*entry));
+-		spin_lock(&clients_lock);
+-		for (i = 0; i < max_client; ++i)
+-			if (clients[i])
+-				clients[i]->handle_event(ism, entry);
+-		spin_unlock(&clients_lock);
++		for (i = 0; i < max_client; ++i) {
++			clt = ism->subs[i];
++			if (clt)
++				clt->handle_event(ism, entry);
++		}
+ 	}
+ }
+ 
+ static irqreturn_t ism_handle_irq(int irq, void *data)
+ {
+ 	struct ism_dev *ism = data;
+-	struct ism_client *clt;
+ 	unsigned long bit, end;
+ 	unsigned long *bv;
+ 	u16 dmbemask;
++	u8 client_id;
+ 
+ 	bv = (void *) &ism->sba->dmb_bits[ISM_DMB_WORD_OFFSET];
+ 	end = sizeof(ism->sba->dmb_bits) * BITS_PER_BYTE - ISM_DMB_BIT_OFFSET;
+@@ -530,8 +551,10 @@ static irqreturn_t ism_handle_irq(int irq, void *data)
+ 		dmbemask = ism->sba->dmbe_mask[bit + ISM_DMB_BIT_OFFSET];
+ 		ism->sba->dmbe_mask[bit + ISM_DMB_BIT_OFFSET] = 0;
+ 		barrier();
+-		clt = clients[ism->sba_client_arr[bit]];
+-		clt->handle_irq(ism, bit + ISM_DMB_BIT_OFFSET, dmbemask);
++		client_id = ism->sba_client_arr[bit];
++		if (unlikely(client_id == NO_CLIENT || !ism->subs[client_id]))
++			continue;
++		ism->subs[client_id]->handle_irq(ism, bit + ISM_DMB_BIT_OFFSET, dmbemask);
+ 	}
+ 
+ 	if (ism->sba->e) {
+@@ -554,6 +577,7 @@ static void ism_dev_add_work_func(struct work_struct *work)
+ 						 add_work);
+ 
+ 	client->add(client->tgt_ism);
++	ism_setup_forwarding(client, client->tgt_ism);
+ 	atomic_dec(&client->tgt_ism->add_dev_cnt);
+ 	wake_up(&client->tgt_ism->waitq);
+ }
+@@ -691,7 +715,11 @@ static void ism_dev_remove_work_func(struct work_struct *work)
+ {
+ 	struct ism_client *client = container_of(work, struct ism_client,
+ 						 remove_work);
++	unsigned long flags;
+ 
++	spin_lock_irqsave(&client->tgt_ism->lock, flags);
++	client->tgt_ism->subs[client->id] = NULL;
++	spin_unlock_irqrestore(&client->tgt_ism->lock, flags);
+ 	client->remove(client->tgt_ism);
+ 	atomic_dec(&client->tgt_ism->free_clients_cnt);
+ 	wake_up(&client->tgt_ism->waitq);
+diff --git a/include/linux/ism.h b/include/linux/ism.h
+index ea2bcdae74012..5160d47e5ea9e 100644
+--- a/include/linux/ism.h
++++ b/include/linux/ism.h
+@@ -44,6 +44,7 @@ struct ism_dev {
+ 	u64 local_gid;
+ 	int ieq_idx;
+ 
++	struct ism_client *subs[MAX_CLIENTS];
+ 	atomic_t free_clients_cnt;
+ 	atomic_t add_dev_cnt;
+ 	wait_queue_head_t waitq;
 -- 
 2.39.2
 
