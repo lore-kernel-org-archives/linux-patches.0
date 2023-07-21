@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C591F942
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:22:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE632C433C8;
-	Fri, 21 Jul 2023 16:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EE31F942
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:22:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9312C433BD;
+	Fri, 21 Jul 2023 16:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956541;
-	bh=ME9rxQU1Sv5UHHN2ILtZZV3cIB+c6AYbbkaNJpgmwQA=;
+	s=korg; t=1689956544;
+	bh=ISuzQutGYB3sJG8Lr2mgwtPyX6hrCQyeX8J1UfJWu20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fbQ3Z7VanNE4R0Lb3kiFHJmNPI7RqYRq2lfT6+c1ka/YeOGZUIw7t6qPDfHKAck42
-	 PKttARtTtnz5qpU2DbKs+La7yyteHTxMOBfvN4/aHZwyNZwL5rh6KKJm9rED5KlxS7
-	 G5CjHTMHsbn4g/Iib7MSPAGkv/78Nd+PDG3Pqj/w=
+	b=isaCMT7hj9MZawgiqC4kfkee0lpAQ3qAUoXU3eD44Eeo7uy6IJFnk0I8wrbaQ/JSz
+	 xWIexE6+kS1p7i6xlGiZxs2nNJ9a1sN5fzq1sUf/ig2hoKI3QOQ4517Pf7vV97pDG9
+	 7eyHyMYEMdbHnGyDMlR3k4ND33JCi5xAf9ar1NSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Lin <Wayne.Lin@amd.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Saaem Rizvi <SyedSaaem.Rizvi@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Alvin Lee <Alvin.Lee2@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.4 196/292] drm/dp_mst: Clear MSG_RDY flag before sending new message
-Date: Fri, 21 Jul 2023 18:05:05 +0200
-Message-ID: <20230721160537.308971363@linuxfoundation.org>
+Subject: [PATCH 6.4 197/292] drm/amd/display: Limit DCN32 8 channel or less parts to DPM1 for FPO
+Date: Fri, 21 Jul 2023 18:05:06 +0200
+Message-ID: <20230721160537.350546440@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -36,282 +37,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Alvin Lee <Alvin.Lee2@amd.com>
 
-commit 72f1de49ffb90b29748284f27f1d6b829ab1de95 upstream.
+commit ee7be8f3de1ccc9665281fe996f9b6d45191ec1a upstream.
 
-[Why]
-The sequence for collecting down_reply from source perspective should
-be:
+- Due to hardware related QoS issues, we need to limit certain
+  SKUs with less memory channels to DPM1 and above.
+- At DPM0 + workload running, the urgent return latency can
+  exceed 15us (the expected maximum is 4us) which results in underflow
 
-Request_n->repeat (get partial reply of Request_n->clear message ready
-flag to ack DPRX that the message is received) till all partial
-replies for Request_n are received->new Request_n+1.
-
-Now there is chance that drm_dp_mst_hpd_irq() will fire new down
-request in the tx queue when the down reply is incomplete. Source is
-restricted to generate interveleaved message transactions so we should
-avoid it.
-
-Also, while assembling partial reply packets, reading out DPCD DOWN_REP
-Sideband MSG buffer + clearing DOWN_REP_MSG_RDY flag should be
-wrapped up as a complete operation for reading out a reply packet.
-Kicking off a new request before clearing DOWN_REP_MSG_RDY flag might
-be risky. e.g. If the reply of the new request has overwritten the
-DPRX DOWN_REP Sideband MSG buffer before source writing one to clear
-DOWN_REP_MSG_RDY flag, source then unintentionally flushes the reply
-for the new request. Should handle the up request in the same way.
-
-[How]
-Separete drm_dp_mst_hpd_irq() into 2 steps. After acking the MST IRQ
-event, driver calls drm_dp_mst_hpd_irq_send_new_request() and might
-trigger drm_dp_mst_kick_tx() only when there is no on going message
-transaction.
-
-Changes since v1:
-* Reworked on review comments received
--> Adjust the fix to let driver explicitly kick off new down request
-when mst irq event is handled and acked
--> Adjust the commit message
-
-Changes since v2:
-* Adjust the commit message
-* Adjust the naming of the divided 2 functions and add a new input
-  parameter "ack".
-* Adjust code flow as per review comments.
-
-Changes since v3:
-* Update the function description of drm_dp_mst_hpd_irq_handle_event
-
-Changes since v4:
-* Change ack of drm_dp_mst_hpd_irq_handle_event() to be an array align
-  the size of esi[]
-
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Acked-by: Jani Nikula <jani.nikula@intel.com>
 Cc: stable@vger.kernel.org
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Saaem Rizvi <SyedSaaem.Rizvi@amd.com>
+Acked-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alvin Lee <Alvin.Lee2@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   30 ++++++------
- drivers/gpu/drm/display/drm_dp_mst_topology.c     |   54 +++++++++++++++++++---
- drivers/gpu/drm/i915/display/intel_dp.c           |    7 +-
- drivers/gpu/drm/nouveau/dispnv50/disp.c           |   12 +++-
- include/drm/display/drm_dp_mst_helper.h           |    7 ++
- 5 files changed, 80 insertions(+), 30 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c |    2 ++
+ drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c  |   15 +++++++++++++++
+ drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.h  |    2 ++
+ 3 files changed, 19 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -3263,6 +3263,7 @@ static void dm_handle_mst_sideband_msg(s
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+@@ -1888,6 +1888,8 @@ bool dcn32_validate_bandwidth(struct dc
  
- 	while (dret == dpcd_bytes_to_read &&
- 		process_count < max_process_count) {
-+		u8 ack[DP_PSR_ERROR_STATUS - DP_SINK_COUNT_ESI] = {};
- 		u8 retry;
- 		dret = 0;
+ 	dc->res_pool->funcs->calculate_wm_and_dlg(dc, context, pipes, pipe_cnt, vlevel);
  
-@@ -3271,28 +3272,29 @@ static void dm_handle_mst_sideband_msg(s
- 		DRM_DEBUG_DRIVER("ESI %02x %02x %02x\n", esi[0], esi[1], esi[2]);
- 		/* handle HPD short pulse irq */
- 		if (aconnector->mst_mgr.mst_state)
--			drm_dp_mst_hpd_irq(
--				&aconnector->mst_mgr,
--				esi,
--				&new_irq_handled);
-+			drm_dp_mst_hpd_irq_handle_event(&aconnector->mst_mgr,
-+							esi,
-+							ack,
-+							&new_irq_handled);
- 
- 		if (new_irq_handled) {
- 			/* ACK at DPCD to notify down stream */
--			const int ack_dpcd_bytes_to_write =
--				dpcd_bytes_to_read - 1;
--
- 			for (retry = 0; retry < 3; retry++) {
--				u8 wret;
-+				ssize_t wret;
- 
--				wret = drm_dp_dpcd_write(
--					&aconnector->dm_dp_aux.aux,
--					dpcd_addr + 1,
--					&esi[1],
--					ack_dpcd_bytes_to_write);
--				if (wret == ack_dpcd_bytes_to_write)
-+				wret = drm_dp_dpcd_writeb(&aconnector->dm_dp_aux.aux,
-+							  dpcd_addr + 1,
-+							  ack[1]);
-+				if (wret == 1)
- 					break;
- 			}
- 
-+			if (retry == 3) {
-+				DRM_ERROR("Failed to ack MST event.\n");
-+				return;
-+			}
++	dcn32_override_min_req_memclk(dc, context);
 +
-+			drm_dp_mst_hpd_irq_send_new_request(&aconnector->mst_mgr);
- 			/* check if there is new irq to be handled */
- 			dret = drm_dp_dpcd_read(
- 				&aconnector->dm_dp_aux.aux,
---- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
-+++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-@@ -4053,17 +4053,28 @@ out:
+ 	BW_VAL_TRACE_END_WATERMARKS();
+ 
+ 	goto validate_out;
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -2882,3 +2882,18 @@ void dcn32_set_clock_limits(const struct
+ 	dc_assert_fp_enabled();
+ 	dcn3_2_soc.clock_limits[0].dcfclk_mhz = 1200.0;
  }
- 
- /**
-- * drm_dp_mst_hpd_irq() - MST hotplug IRQ notify
-+ * drm_dp_mst_hpd_irq_handle_event() - MST hotplug IRQ handle MST event
-  * @mgr: manager to notify irq for.
-  * @esi: 4 bytes from SINK_COUNT_ESI
-+ * @ack: 4 bytes used to ack events starting from SINK_COUNT_ESI
-  * @handled: whether the hpd interrupt was consumed or not
-  *
-- * This should be called from the driver when it detects a short IRQ,
-+ * This should be called from the driver when it detects a HPD IRQ,
-  * along with the value of the DEVICE_SERVICE_IRQ_VECTOR_ESI0. The
-- * topology manager will process the sideband messages received as a result
-- * of this.
-+ * topology manager will process the sideband messages received
-+ * as indicated in the DEVICE_SERVICE_IRQ_VECTOR_ESI0 and set the
-+ * corresponding flags that Driver has to ack the DP receiver later.
-+ *
-+ * Note that driver shall also call
-+ * drm_dp_mst_hpd_irq_send_new_request() if the 'handled' is set
-+ * after calling this function, to try to kick off a new request in
-+ * the queue if the previous message transaction is completed.
-+ *
-+ * See also:
-+ * drm_dp_mst_hpd_irq_send_new_request()
-  */
--int drm_dp_mst_hpd_irq(struct drm_dp_mst_topology_mgr *mgr, u8 *esi, bool *handled)
-+int drm_dp_mst_hpd_irq_handle_event(struct drm_dp_mst_topology_mgr *mgr, const u8 *esi,
-+				    u8 *ack, bool *handled)
- {
- 	int ret = 0;
- 	int sc;
-@@ -4078,18 +4089,47 @@ int drm_dp_mst_hpd_irq(struct drm_dp_mst
- 	if (esi[1] & DP_DOWN_REP_MSG_RDY) {
- 		ret = drm_dp_mst_handle_down_rep(mgr);
- 		*handled = true;
-+		ack[1] |= DP_DOWN_REP_MSG_RDY;
- 	}
- 
- 	if (esi[1] & DP_UP_REQ_MSG_RDY) {
- 		ret |= drm_dp_mst_handle_up_req(mgr);
- 		*handled = true;
-+		ack[1] |= DP_UP_REQ_MSG_RDY;
- 	}
- 
--	drm_dp_mst_kick_tx(mgr);
- 	return ret;
- }
--EXPORT_SYMBOL(drm_dp_mst_hpd_irq);
-+EXPORT_SYMBOL(drm_dp_mst_hpd_irq_handle_event);
 +
-+/**
-+ * drm_dp_mst_hpd_irq_send_new_request() - MST hotplug IRQ kick off new request
-+ * @mgr: manager to notify irq for.
-+ *
-+ * This should be called from the driver when mst irq event is handled
-+ * and acked. Note that new down request should only be sent when
-+ * previous message transaction is completed. Source is not supposed to generate
-+ * interleaved message transactions.
-+ */
-+void drm_dp_mst_hpd_irq_send_new_request(struct drm_dp_mst_topology_mgr *mgr)
++void dcn32_override_min_req_memclk(struct dc *dc, struct dc_state *context)
 +{
-+	struct drm_dp_sideband_msg_tx *txmsg;
-+	bool kick = true;
- 
-+	mutex_lock(&mgr->qlock);
-+	txmsg = list_first_entry_or_null(&mgr->tx_msg_downq,
-+					 struct drm_dp_sideband_msg_tx, next);
-+	/* If last transaction is not completed yet*/
-+	if (!txmsg ||
-+	    txmsg->state == DRM_DP_SIDEBAND_TX_START_SEND ||
-+	    txmsg->state == DRM_DP_SIDEBAND_TX_SENT)
-+		kick = false;
-+	mutex_unlock(&mgr->qlock);
++	// WA: restrict FPO and SubVP to use first non-strobe mode (DCN32 BW issue)
++	if ((context->bw_ctx.bw.dcn.clk.fw_based_mclk_switching || dcn32_subvp_in_use(dc, context)) &&
++			dc->dml.soc.num_chans <= 8) {
++		int num_mclk_levels = dc->clk_mgr->bw_params->clk_table.num_entries_per_clk.num_memclk_levels;
 +
-+	if (kick)
-+		drm_dp_mst_kick_tx(mgr);
++		if (context->bw_ctx.dml.vba.DRAMSpeed <= dc->clk_mgr->bw_params->clk_table.entries[0].memclk_mhz * 16 &&
++				num_mclk_levels > 1) {
++			context->bw_ctx.dml.vba.DRAMSpeed = dc->clk_mgr->bw_params->clk_table.entries[1].memclk_mhz * 16;
++			context->bw_ctx.bw.dcn.clk.dramclk_khz = context->bw_ctx.dml.vba.DRAMSpeed * 1000 / 16;
++		}
++	}
 +}
-+EXPORT_SYMBOL(drm_dp_mst_hpd_irq_send_new_request);
- /**
-  * drm_dp_mst_detect_port() - get connection status for an MST port
-  * @connector: DRM connector for this port
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -3940,9 +3940,7 @@ intel_dp_mst_hpd_irq(struct intel_dp *in
- {
- 	bool handled = false;
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.h
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.h
+@@ -80,6 +80,8 @@ void dcn32_assign_fpo_vactive_candidate(
  
--	drm_dp_mst_hpd_irq(&intel_dp->mst_mgr, esi, &handled);
--	if (handled)
--		ack[1] |= esi[1] & (DP_DOWN_REP_MSG_RDY | DP_UP_REQ_MSG_RDY);
-+	drm_dp_mst_hpd_irq_handle_event(&intel_dp->mst_mgr, esi, ack, &handled);
+ bool dcn32_find_vactive_pipe(struct dc *dc, const struct dc_state *context, uint32_t vactive_margin_req);
  
- 	if (esi[1] & DP_CP_IRQ) {
- 		intel_hdcp_handle_cp_irq(intel_dp->attached_connector);
-@@ -4017,6 +4015,9 @@ intel_dp_check_mst_status(struct intel_d
- 
- 		if (!intel_dp_ack_sink_irq_esi(intel_dp, ack))
- 			drm_dbg_kms(&i915->drm, "Failed to ack ESI\n");
++void dcn32_override_min_req_memclk(struct dc *dc, struct dc_state *context);
 +
-+		if (ack[1] & (DP_DOWN_REP_MSG_RDY | DP_UP_REQ_MSG_RDY))
-+			drm_dp_mst_hpd_irq_send_new_request(&intel_dp->mst_mgr);
- 	}
+ void dcn32_set_clock_limits(const struct _vcs_dpi_soc_bounding_box_st *soc_bb);
  
- 	return link_ok;
---- a/drivers/gpu/drm/nouveau/dispnv50/disp.c
-+++ b/drivers/gpu/drm/nouveau/dispnv50/disp.c
-@@ -1359,22 +1359,26 @@ nv50_mstm_service(struct nouveau_drm *dr
- 	u8 esi[8] = {};
- 
- 	while (handled) {
-+		u8 ack[8] = {};
-+
- 		rc = drm_dp_dpcd_read(aux, DP_SINK_COUNT_ESI, esi, 8);
- 		if (rc != 8) {
- 			ret = false;
- 			break;
- 		}
- 
--		drm_dp_mst_hpd_irq(&mstm->mgr, esi, &handled);
-+		drm_dp_mst_hpd_irq_handle_event(&mstm->mgr, esi, ack, &handled);
- 		if (!handled)
- 			break;
- 
--		rc = drm_dp_dpcd_write(aux, DP_SINK_COUNT_ESI + 1, &esi[1],
--				       3);
--		if (rc != 3) {
-+		rc = drm_dp_dpcd_writeb(aux, DP_SINK_COUNT_ESI + 1, ack[1]);
-+
-+		if (rc != 1) {
- 			ret = false;
- 			break;
- 		}
-+
-+		drm_dp_mst_hpd_irq_send_new_request(&mstm->mgr);
- 	}
- 
- 	if (!ret)
---- a/include/drm/display/drm_dp_mst_helper.h
-+++ b/include/drm/display/drm_dp_mst_helper.h
-@@ -815,8 +815,11 @@ void drm_dp_mst_topology_mgr_destroy(str
- bool drm_dp_read_mst_cap(struct drm_dp_aux *aux, const u8 dpcd[DP_RECEIVER_CAP_SIZE]);
- int drm_dp_mst_topology_mgr_set_mst(struct drm_dp_mst_topology_mgr *mgr, bool mst_state);
- 
--int drm_dp_mst_hpd_irq(struct drm_dp_mst_topology_mgr *mgr, u8 *esi, bool *handled);
--
-+int drm_dp_mst_hpd_irq_handle_event(struct drm_dp_mst_topology_mgr *mgr,
-+				    const u8 *esi,
-+				    u8 *ack,
-+				    bool *handled);
-+void drm_dp_mst_hpd_irq_send_new_request(struct drm_dp_mst_topology_mgr *mgr);
- 
- int
- drm_dp_mst_detect_port(struct drm_connector *connector,
+ #endif
 
 
