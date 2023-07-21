@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59F91F941
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:17:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 488F9C433C8;
-	Fri, 21 Jul 2023 16:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9A61F941
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:17:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17628C433C8;
+	Fri, 21 Jul 2023 16:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956257;
-	bh=BSer5YVRj5WFIN0Jr+ULe4F37KEkn/xYkL3yeex9NmM=;
+	s=korg; t=1689956260;
+	bh=25PB/900QJJeeK5mKulTxt/DPrP+1twzm8dEKpm0WvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gMk27hH4BS5Uoimjrh5HWl4Tc/+8DrevZpnHqGIIFswAR36fwRhOYi72OJZjtCJzC
-	 xH9Hu7XwRE5TNTsCHQDoFKj0e7JV22Hm3O/MKdZSsLqnoBOeDhV8QSzYT//e7WhTuS
-	 BbkOeK2OTYA/IBghkYMiD/pEZ+Sre08SxlK6zTXk=
+	b=qApa3jAxBuLKo0b1zy0NI1w+AS3WJFZCV4sxBYtDwE5MrevDqtZbLtWgU7M2ntPb6
+	 qh1CiHviWVCpPJoNSmnAAesQccJ79Qz8994D+224vcY6PhrcKV3MnqQSSjCSf/AHPR
+	 xYvGKtcfleaPv0s3/SwSiwNIcArRv4O8EaSaYf5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.4 155/292] ext4: fix to check return value of freeze_bdev() in ext4_shutdown()
-Date: Fri, 21 Jul 2023 18:04:24 +0200
-Message-ID: <20230721160535.560068243@linuxfoundation.org>
+Subject: [PATCH 6.4 156/292] ext4: turn quotas off if mount failed after enabling quotas
+Date: Fri, 21 Jul 2023 18:04:25 +0200
+Message-ID: <20230721160535.606776132@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -35,43 +37,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit c4d13222afd8a64bf11bc7ec68645496ee8b54b9 upstream.
+commit d13f99632748462c32fc95d729f5e754bab06064 upstream.
 
-freeze_bdev() can fail due to a lot of reasons, it needs to check its
-reason before later process.
+Yi found during a review of the patch "ext4: don't BUG on inconsistent
+journal feature" that when ext4_mark_recovery_complete() returns an error
+value, the error handling path does not turn off the enabled quotas,
+which triggers the following kmemleak:
 
-Fixes: 783d94854499 ("ext4: add EXT4_IOC_GOINGDOWN ioctl")
+================================================================
+unreferenced object 0xffff8cf68678e7c0 (size 64):
+comm "mount", pid 746, jiffies 4294871231 (age 11.540s)
+hex dump (first 32 bytes):
+00 90 ef 82 f6 8c ff ff 00 00 00 00 41 01 00 00  ............A...
+c7 00 00 00 bd 00 00 00 0a 00 00 00 48 00 00 00  ............H...
+backtrace:
+[<00000000c561ef24>] __kmem_cache_alloc_node+0x4d4/0x880
+[<00000000d4e621d7>] kmalloc_trace+0x39/0x140
+[<00000000837eee74>] v2_read_file_info+0x18a/0x3a0
+[<0000000088f6c877>] dquot_load_quota_sb+0x2ed/0x770
+[<00000000340a4782>] dquot_load_quota_inode+0xc6/0x1c0
+[<0000000089a18bd5>] ext4_enable_quotas+0x17e/0x3a0 [ext4]
+[<000000003a0268fa>] __ext4_fill_super+0x3448/0x3910 [ext4]
+[<00000000b0f2a8a8>] ext4_fill_super+0x13d/0x340 [ext4]
+[<000000004a9489c4>] get_tree_bdev+0x1dc/0x370
+[<000000006e723bf1>] ext4_get_tree+0x1d/0x30 [ext4]
+[<00000000c7cb663d>] vfs_get_tree+0x31/0x160
+[<00000000320e1bed>] do_new_mount+0x1d5/0x480
+[<00000000c074654c>] path_mount+0x22e/0xbe0
+[<0000000003e97a8e>] do_mount+0x95/0xc0
+[<000000002f3d3736>] __x64_sys_mount+0xc4/0x160
+[<0000000027d2140c>] do_syscall_64+0x3f/0x90
+================================================================
+
+To solve this problem, we add a "failed_mount10" tag, and call
+ext4_quota_off_umount() in this tag to release the enabled qoutas.
+
+Fixes: 11215630aada ("ext4: don't BUG on inconsistent journal feature")
 Cc: stable@kernel.org
-Signed-off-by: Chao Yu <chao@kernel.org>
-Link: https://lore.kernel.org/r/20230606073203.1310389-1-chao@kernel.org
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230327141630.156875-2-libaokun1@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ioctl.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/ext4/super.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/ioctl.c
-+++ b/fs/ext4/ioctl.c
-@@ -797,6 +797,7 @@ static int ext4_shutdown(struct super_bl
- {
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
- 	__u32 flags;
-+	int ret;
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -5567,7 +5567,7 @@ static int __ext4_fill_super(struct fs_c
+ 		ext4_msg(sb, KERN_INFO, "recovery complete");
+ 		err = ext4_mark_recovery_complete(sb, es);
+ 		if (err)
+-			goto failed_mount9;
++			goto failed_mount10;
+ 	}
  
- 	if (!capable(CAP_SYS_ADMIN))
- 		return -EPERM;
-@@ -815,7 +816,9 @@ static int ext4_shutdown(struct super_bl
+ 	if (test_opt(sb, DISCARD) && !bdev_max_discard_sectors(sb->s_bdev))
+@@ -5586,7 +5586,9 @@ static int __ext4_fill_super(struct fs_c
  
- 	switch (flags) {
- 	case EXT4_GOING_FLAGS_DEFAULT:
--		freeze_bdev(sb->s_bdev);
-+		ret = freeze_bdev(sb->s_bdev);
-+		if (ret)
-+			return ret;
- 		set_bit(EXT4_FLAGS_SHUTDOWN, &sbi->s_ext4_flags);
- 		thaw_bdev(sb->s_bdev);
- 		break;
+ 	return 0;
+ 
+-failed_mount9:
++failed_mount10:
++	ext4_quota_off_umount(sb);
++failed_mount9: __maybe_unused
+ 	ext4_release_orphan_info(sb);
+ failed_mount8:
+ 	ext4_unregister_sysfs(sb);
 
 
