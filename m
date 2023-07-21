@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04EBB20F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:06:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C93C433C9;
-	Fri, 21 Jul 2023 19:06:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB62C20F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:06:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C755C433C8;
+	Fri, 21 Jul 2023 19:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966411;
-	bh=lxZHhkf1VF2Au62W0WohlTjYjmYhHmr97MDg52ZdFm4=;
+	s=korg; t=1689966414;
+	bh=b9XP0vTFcnCFvikNpaj9l1iL0R++E9BXQDR7hhzmlgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xkXsgYEV5+XmQ+AHnrAjfgcfzY54O13ZBOdVg3r2mN5BUxEMdHpS+HSe61W79g9P2
-	 DHzBe/X4B1Ow4Fagi+4Nca/ZSNxXDj2iW4reFY8Rhe9u+IyRwnapTofj7SQzSqsnvG
-	 rpwdrs0is2usLcKw7ghDhlpW9eHuv6LA5QPdpWB4=
+	b=ZLWYVlaSg5AxJlU2osWFU70TgLvYg7JY0pTJUn8QQ9taAjtbfyzz/UY0tqnj2iB0L
+	 6FGXdK9CfxI5YeHPOfouj3XOb1IREH+9qIYhZ99tWz6c0E7S3XjMvJYt+//p/Myqtz
+	 DFWs0QlNQ7aUCehrwPaoSk7277kCGK50ysquI2n0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Sunil Goutham <sgoutham@marvell.com>,
 	Simon Horman <simon.horman@corigine.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 334/532] net: dsa: tag_sja1105: fix MAC DA patching from meta frames
-Date: Fri, 21 Jul 2023 18:03:58 +0200
-Message-ID: <20230721160632.540493325@linuxfoundation.org>
+Subject: [PATCH 5.15 335/532] octeontx-af: fix hardware timestamp configuration
+Date: Fri, 21 Jul 2023 18:03:59 +0200
+Message-ID: <20230721160632.593501707@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,44 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit 1dcf6efd5f0c1f4496b3ef7ec5a7db104a53b38c ]
+[ Upstream commit 14bb236b29922c4f57d8c05bfdbcb82677f917c9 ]
 
-The SJA1105 manual says that at offset 4 into the meta frame payload we
-have "MAC destination byte 2" and at offset 5 we have "MAC destination
-byte 1". These are counted from the LSB, so byte 1 is h_dest[ETH_HLEN-2]
-aka h_dest[4] and byte 2 is h_dest[ETH_HLEN-3] aka h_dest[3].
+MAC block on CN10K (RPM) supports hardware timestamp configuration. The
+previous patch which added timestamp configuration support has a bug.
+Though the netdev driver requests to disable timestamp configuration,
+the driver is always enabling it.
 
-The sja1105_meta_unpack() function decodes these the other way around,
-so a frame with MAC DA 01:80:c2:11:22:33 is received by the network
-stack as having 01:80:c2:22:11:33.
+This patch fixes the same.
 
-Fixes: e53e18a6fe4d ("net: dsa: sja1105: Receive and decode meta frames")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Fixes: d1489208681d ("octeontx2-af: cn10k: RPM hardware timestamp configuration")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dsa/tag_sja1105.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/dsa/tag_sja1105.c b/net/dsa/tag_sja1105.c
-index d43feadd5fa6b..a163f535697e1 100644
---- a/net/dsa/tag_sja1105.c
-+++ b/net/dsa/tag_sja1105.c
-@@ -100,8 +100,8 @@ static void sja1105_meta_unpack(const struct sk_buff *skb,
- 	 * a unified unpacking command for both device series.
- 	 */
- 	packing(buf,     &meta->tstamp,     31, 0, 4, UNPACK, 0);
--	packing(buf + 4, &meta->dmac_byte_4, 7, 0, 1, UNPACK, 0);
--	packing(buf + 5, &meta->dmac_byte_3, 7, 0, 1, UNPACK, 0);
-+	packing(buf + 4, &meta->dmac_byte_3, 7, 0, 1, UNPACK, 0);
-+	packing(buf + 5, &meta->dmac_byte_4, 7, 0, 1, UNPACK, 0);
- 	packing(buf + 6, &meta->source_port, 7, 0, 1, UNPACK, 0);
- 	packing(buf + 7, &meta->switch_id,   7, 0, 1, UNPACK, 0);
- }
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
+index 5ca4ab5770542..f4c7bb6bf053a 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
+@@ -724,7 +724,7 @@ static int rvu_cgx_ptp_rx_cfg(struct rvu *rvu, u16 pcifunc, bool enable)
+ 	cgxd = rvu_cgx_pdata(cgx_id, rvu);
+ 
+ 	mac_ops = get_mac_ops(cgxd);
+-	mac_ops->mac_enadis_ptp_config(cgxd, lmac_id, true);
++	mac_ops->mac_enadis_ptp_config(cgxd, lmac_id, enable);
+ 	/* If PTP is enabled then inform NPC that packets to be
+ 	 * parsed by this PF will have their data shifted by 8 bytes
+ 	 * and if PTP is disabled then no shift is required
 -- 
 2.39.2
 
