@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAE120F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:07:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09825C433C8;
-	Fri, 21 Jul 2023 19:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A244820F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:07:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2674C433C7;
+	Fri, 21 Jul 2023 19:07:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966462;
-	bh=bplSIesVC6c1/my+CG0DYK97gEFeQW7+z+itEd/VPC0=;
+	s=korg; t=1689966465;
+	bh=wnlgDXWIWD6rr3Qd44elRYOiUWbCtK88EFRy2Re/IK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hu6pOT7sfXcFhxVwpL1FuWjMeHoKRicCiEh+Hp1b2pz7tv77m23jBbLPI+5qh7L3i
-	 iqXBhdNRsuVQFRf9PZGK38u209OeGOqX0YDx1HN6WGbalceuRMA4QnNvpDyk0EBh8w
-	 ixGO5v4zlfURmcfXRG0Xz4bVWnjiOkI+ImSibcJE=
+	b=SGxVBU/6TTbGWzZCgoccg41QbkNFCIlYVyLHj+1wrnlDm4dkGXO9Fk0i99UQoh/3b
+	 tHjlIQjm2fweZnCwk7kl2IhS20WIfTz5VSH1aNYWfIlejejsvKzGtlXgYMIBp5071N
+	 jprdoEtQsJ4Fmhp9i3K0jmG/tcUgDGKC2dPjn4NM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Mika Kahola <mika.kahola@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 314/532] drm/i915/psr: Use hw.adjusted mode when calculating io/fast wake times
-Date: Fri, 21 Jul 2023 18:03:38 +0200
-Message-ID: <20230721160631.429031101@linuxfoundation.org>
+	Robert Marko <robimarko@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 346/532] mmc: core: disable TRIM on Kingston EMMC04G-M627
+Date: Fri, 21 Jul 2023 18:04:10 +0200
+Message-ID: <20230721160633.206439705@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,48 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Robert Marko <robimarko@gmail.com>
 
-[ Upstream commit 5311892a0ad1d301aafd53ca0154091b3eb407ea ]
+commit f1738a1f816233e6dfc2407f24a31d596643fd90 upstream.
 
-Encoder compute config is changing hw.adjusted mode. Uapi.adjusted mode
-doesn't get updated before psr compute config gets called. This causes io
-and fast wake line calculation using adjusted mode containing values before
-encoder adjustments. Fix this by using hw.adjusted mode instead of
-uapi.adjusted mode.
+It seems that Kingston EMMC04G-M627 despite advertising TRIM support does
+not work when the core is trying to use REQ_OP_WRITE_ZEROES.
 
-Cc: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
+We are seeing I/O errors in OpenWrt under 6.1 on Zyxel NBG7815 that we did
+not previously have and tracked it down to REQ_OP_WRITE_ZEROES.
 
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8475
-Fixes: cb42e8ede5b4 ("drm/i915/psr: Use calculated io and fast wake lines")
-Reviewed-by: Mika Kahola <mika.kahola@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230620111745.2870706-1-jouni.hogander@intel.com
-(cherry picked from commit ef0af9db2a21257885116949f471fe5565b2f0ab)
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Trying to use fstrim seems to also throw errors like:
+[93010.835112] I/O error, dev loop0, sector 16902 op 0x3:(DISCARD) flags 0x800 phys_seg 1 prio class 2
+
+Disabling TRIM makes the error go away, so lets add a quirk for this eMMC
+to disable TRIM.
+
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230619193621.437358-1-robimarko@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mmc/core/quirks.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index cf1e92486cbc9..93d2fd4cd16b7 100644
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -862,9 +862,9 @@ static bool _compute_psr2_wake_times(struct intel_dp *intel_dp,
- 	}
+--- a/drivers/mmc/core/quirks.h
++++ b/drivers/mmc/core/quirks.h
+@@ -100,6 +100,13 @@ static const struct mmc_fixup __maybe_un
+ 		  MMC_QUIRK_TRIM_BROKEN),
  
- 	io_wake_lines = intel_usecs_to_scanlines(
--		&crtc_state->uapi.adjusted_mode, io_wake_time);
-+		&crtc_state->hw.adjusted_mode, io_wake_time);
- 	fast_wake_lines = intel_usecs_to_scanlines(
--		&crtc_state->uapi.adjusted_mode, fast_wake_time);
-+		&crtc_state->hw.adjusted_mode, fast_wake_time);
- 
- 	if (io_wake_lines > max_wake_lines ||
- 	    fast_wake_lines > max_wake_lines)
--- 
-2.39.2
-
+ 	/*
++	 * Kingston EMMC04G-M627 advertises TRIM but it does not seems to
++	 * support being used to offload WRITE_ZEROES.
++	 */
++	MMC_FIXUP("M62704", CID_MANFID_KINGSTON, 0x0100, add_quirk_mmc,
++		  MMC_QUIRK_TRIM_BROKEN),
++
++	/*
+ 	 * Some SD cards reports discard support while they don't
+ 	 */
+ 	MMC_FIXUP(CID_NAME_ANY, CID_MANFID_SANDISK_SD, 0x5344, add_quirk_sd,
 
 
