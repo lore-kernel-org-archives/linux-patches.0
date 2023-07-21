@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22861200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:00:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 977DFC433C7;
-	Fri, 21 Jul 2023 19:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD57E200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:00:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF2CC433C7;
+	Fri, 21 Jul 2023 19:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966027;
-	bh=j7hs9kLr0wrnq1imMUgfeZx++DjoJBKsKrOc/w5Oyns=;
+	s=korg; t=1689966029;
+	bh=3XK8S++E5mgH4IdOMhJpnHsxperFT5O/BwLHw8vofcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vDVeTFPxv8JU/SQy47pb+s6Dj0LX8YfeegXxpX/4Z/5d+UxusKFgAi1nWj1zlITNs
-	 0YuPtcL8qRcljTMfXLSxAnGSEoPc4DQRVJxESt8yId35AEUUHRCHGC0RsYsOWCrdLK
-	 K51w9MqarKWSqfh2oxJ45t9b/40BJejpnrLU/WEY=
+	b=JlBbX6ddgBNeF50l6UZv+ducIbk/cuXn7oCrFDVD0A9nA6IUrnOKoDAWeXFSRoJMs
+	 ZhZGwovq6LilBTEi7UzK1zgWv+oOvzPV4IdGeJxoy7/IVBy+IM/Wu2s4WI2oOz3nX4
+	 VuCSpEF+2T8WLBFLhhQGhhCV1t4iGpndWQrN4Gjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Mark Brown <broonie@kernel.org>,
+	Junyan Ye <yejunyan@hust.edu.cn>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 191/532] ASoC: imx-audmix: check return value of devm_kasprintf()
-Date: Fri, 21 Jul 2023 18:01:35 +0200
-Message-ID: <20230721160624.770226138@linuxfoundation.org>
+Subject: [PATCH 5.15 200/532] PCI: ftpci100: Release the clock resources
+Date: Fri, 21 Jul 2023 18:01:44 +0200
+Message-ID: <20230721160625.254409272@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,64 +37,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Junyan Ye <yejunyan@hust.edu.cn>
 
-[ Upstream commit 2f76e1d6ca524a888d29aafe29f2ad2003857971 ]
+[ Upstream commit c60738de85f40b0b9f5cb23c21f9246e5a47908c ]
 
-devm_kasprintf() returns a pointer to dynamically allocated memory.
-Pointer could be NULL in case allocation fails. Check pointer validity.
-Identified with coccinelle (kmerr.cocci script).
+Smatch reported:
+1. drivers/pci/controller/pci-ftpci100.c:526 faraday_pci_probe() warn:
+'clk' from clk_prepare_enable() not released on lines: 442,451,462,478,512,517.
+2. drivers/pci/controller/pci-ftpci100.c:526 faraday_pci_probe() warn:
+'p->bus_clk' from clk_prepare_enable() not released on lines: 451,462,478,512,517.
 
-Fixes: b86ef5367761 ("ASoC: fsl: Add Audio Mixer machine driver")
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230614121509.443926-1-claudiu.beznea@microchip.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The clock resource is obtained by devm_clk_get(), and then
+clk_prepare_enable() makes the clock resource ready for use. After that,
+clk_disable_unprepare() should be called to release the clock resource
+when it is no longer needed. However, while doing some error handling
+in faraday_pci_probe(), clk_disable_unprepare() is not called to release
+clk and p->bus_clk before returning. These return lines are exactly 442,
+451, 462, 478, 512, 517.
+
+Fix this warning by replacing devm_clk_get() with devm_clk_get_enabled(),
+which is equivalent to devm_clk_get() + clk_prepare_enable(). And with
+devm_clk_get_enabled(), the clock will automatically be disabled,
+unprepared and freed when the device is unbound from the bus.
+
+Link: https://lore.kernel.org/r/20230508043641.23807-1-yejunyan@hust.edu.cn
+Fixes: b3c433efb8a3 ("PCI: faraday: Fix wrong pointer passed to PTR_ERR()")
+Fixes: 2eeb02b28579 ("PCI: faraday: Add clock handling")
+Fixes: 783a862563f7 ("PCI: faraday: Use pci_parse_request_of_pci_ranges()")
+Fixes: d3c68e0a7e34 ("PCI: faraday: Add Faraday Technology FTPCI100 PCI Host Bridge driver")
+Fixes: f1e8bd21e39e ("PCI: faraday: Convert IRQ masking to raw PCI config accessors")
+Signed-off-by: Junyan Ye <yejunyan@hust.edu.cn>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/imx-audmix.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/pci/controller/pci-ftpci100.c | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
-diff --git a/sound/soc/fsl/imx-audmix.c b/sound/soc/fsl/imx-audmix.c
-index a364e2415de02..d991e457060c7 100644
---- a/sound/soc/fsl/imx-audmix.c
-+++ b/sound/soc/fsl/imx-audmix.c
-@@ -228,6 +228,8 @@ static int imx_audmix_probe(struct platform_device *pdev)
+diff --git a/drivers/pci/controller/pci-ftpci100.c b/drivers/pci/controller/pci-ftpci100.c
+index 88980a44461df..ca8de44045bbe 100644
+--- a/drivers/pci/controller/pci-ftpci100.c
++++ b/drivers/pci/controller/pci-ftpci100.c
+@@ -442,22 +442,12 @@ static int faraday_pci_probe(struct platform_device *pdev)
+ 	p->dev = dev;
  
- 		dai_name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%s%s",
- 					  fe_name_pref, args.np->full_name + 1);
-+		if (!dai_name)
-+			return -ENOMEM;
+ 	/* Retrieve and enable optional clocks */
+-	clk = devm_clk_get(dev, "PCLK");
++	clk = devm_clk_get_enabled(dev, "PCLK");
+ 	if (IS_ERR(clk))
+ 		return PTR_ERR(clk);
+-	ret = clk_prepare_enable(clk);
+-	if (ret) {
+-		dev_err(dev, "could not prepare PCLK\n");
+-		return ret;
+-	}
+-	p->bus_clk = devm_clk_get(dev, "PCICLK");
++	p->bus_clk = devm_clk_get_enabled(dev, "PCICLK");
+ 	if (IS_ERR(p->bus_clk))
+ 		return PTR_ERR(p->bus_clk);
+-	ret = clk_prepare_enable(p->bus_clk);
+-	if (ret) {
+-		dev_err(dev, "could not prepare PCICLK\n");
+-		return ret;
+-	}
  
- 		dev_info(pdev->dev.parent, "DAI FE name:%s\n", dai_name);
- 
-@@ -236,6 +238,8 @@ static int imx_audmix_probe(struct platform_device *pdev)
- 			capture_dai_name =
- 				devm_kasprintf(&pdev->dev, GFP_KERNEL, "%s %s",
- 					       dai_name, "CPU-Capture");
-+			if (!capture_dai_name)
-+				return -ENOMEM;
- 		}
- 
- 		priv->dai[i].cpus = &dlc[0];
-@@ -266,6 +270,8 @@ static int imx_audmix_probe(struct platform_device *pdev)
- 				       "AUDMIX-Playback-%d", i);
- 		be_cp = devm_kasprintf(&pdev->dev, GFP_KERNEL,
- 				       "AUDMIX-Capture-%d", i);
-+		if (!be_name || !be_pb || !be_cp)
-+			return -ENOMEM;
- 
- 		priv->dai[num_dai + i].cpus = &dlc[3];
- 		priv->dai[num_dai + i].codecs = &dlc[4];
-@@ -293,6 +299,9 @@ static int imx_audmix_probe(struct platform_device *pdev)
- 		priv->dapm_routes[i].source =
- 			devm_kasprintf(&pdev->dev, GFP_KERNEL, "%s %s",
- 				       dai_name, "CPU-Playback");
-+		if (!priv->dapm_routes[i].source)
-+			return -ENOMEM;
-+
- 		priv->dapm_routes[i].sink = be_pb;
- 		priv->dapm_routes[num_dai + i].source   = be_pb;
- 		priv->dapm_routes[num_dai + i].sink     = be_cp;
+ 	p->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(p->base))
 -- 
 2.39.2
 
