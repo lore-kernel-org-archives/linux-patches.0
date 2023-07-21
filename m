@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC699200A9
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:17:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD4DC433C7;
-	Fri, 21 Jul 2023 19:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0252200A9
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:17:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D0BC433C9;
+	Fri, 21 Jul 2023 19:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967046;
-	bh=VZ47bJLsycQ6DL8lfF+lE9osZrsZdj4QyEIueATXpqg=;
+	s=korg; t=1689967049;
+	bh=NWlWgoLsOFbCCbUF/LVNKigqGJsIicxFB6WLovR0iQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i+3XvR+QC0ojY4gxQyhjEQVDRISHGH1T/QE3HJ3UA/FjOUaVXFj00D1ngDKNL3tGT
-	 FnBG3wio7LhVMMRuvgXZ2uGrwrXPdBI9g3EgzAoowycrWJW1AmzoDLz95Y4z5NCgqv
-	 ec9h11K/EHS3kb5BgeAxS+vtblhUPrahqt2J0Y6U=
+	b=WejRVBtndhYOY0veI3aJtgE34o26Ez6dFTAFmfLL/fT5hUj2UVAOZzOnkomnAC/wO
+	 Tp5I0DdNhR501xy+iet7BYnZiVfBftYjM8jVfexwQWV0a+EJdaXpvrtzFiK4c86ma0
+	 MeYPehcBHeCJt9Q3Yp37U+qI7oxMb0YXetrlPKqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Klaus Kudielka <klaus.kudielka@gmail.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	M A Ramdhan <ramdhan@starlabs.sg>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/223] net: mvneta: fix txq_map in case of txq_number==1
-Date: Fri, 21 Jul 2023 18:04:39 +0200
-Message-ID: <20230721160521.987324296@linuxfoundation.org>
+Subject: [PATCH 6.1 027/223] net/sched: cls_fw: Fix improper refcount update leads to use-after-free
+Date: Fri, 21 Jul 2023 18:04:40 +0200
+Message-ID: <20230721160522.028658688@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -36,46 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Klaus Kudielka <klaus.kudielka@gmail.com>
+From: M A Ramdhan <ramdhan@starlabs.sg>
 
-[ Upstream commit 21327f81db6337c8843ce755b01523c7d3df715b ]
+[ Upstream commit 0323bce598eea038714f941ce2b22541c46d488f ]
 
-If we boot with mvneta.txq_number=1, the txq_map is set incorrectly:
-MVNETA_CPU_TXQ_ACCESS(1) refers to TX queue 1, but only TX queue 0 is
-initialized. Fix this.
+In the event of a failure in tcf_change_indev(), fw_set_parms() will
+immediately return an error after incrementing or decrementing
+reference counter in tcf_bind_filter().  If attacker can control
+reference counter to zero and make reference freed, leading to
+use after free.
 
-Fixes: 50bf8cb6fc9c ("net: mvneta: Configure XPS support")
-Signed-off-by: Klaus Kudielka <klaus.kudielka@gmail.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Link: https://lore.kernel.org/r/20230705053712.3914-1-klaus.kudielka@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+In order to prevent this, move the point of possible failure above the
+point where the TC_FW_CLASSID is handled.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: M A Ramdhan <ramdhan@starlabs.sg>
+Signed-off-by: M A Ramdhan <ramdhan@starlabs.sg>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
+Message-ID: <20230705161530.52003-1-ramdhan@starlabs.sg>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvneta.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sched/cls_fw.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
-index 5aefaaff08711..aca5b72cfeec6 100644
---- a/drivers/net/ethernet/marvell/mvneta.c
-+++ b/drivers/net/ethernet/marvell/mvneta.c
-@@ -1505,7 +1505,7 @@ static void mvneta_defaults_set(struct mvneta_port *pp)
- 			 */
- 			if (txq_number == 1)
- 				txq_map = (cpu == pp->rxq_def) ?
--					MVNETA_CPU_TXQ_ACCESS(1) : 0;
-+					MVNETA_CPU_TXQ_ACCESS(0) : 0;
+diff --git a/net/sched/cls_fw.c b/net/sched/cls_fw.c
+index a32351da968cd..1212b057b129c 100644
+--- a/net/sched/cls_fw.c
++++ b/net/sched/cls_fw.c
+@@ -210,11 +210,6 @@ static int fw_set_parms(struct net *net, struct tcf_proto *tp,
+ 	if (err < 0)
+ 		return err;
  
- 		} else {
- 			txq_map = MVNETA_CPU_TXQ_ACCESS_ALL_MASK;
-@@ -4294,7 +4294,7 @@ static void mvneta_percpu_elect(struct mvneta_port *pp)
- 		 */
- 		if (txq_number == 1)
- 			txq_map = (cpu == elected_cpu) ?
--				MVNETA_CPU_TXQ_ACCESS(1) : 0;
-+				MVNETA_CPU_TXQ_ACCESS(0) : 0;
- 		else
- 			txq_map = mvreg_read(pp, MVNETA_CPU_MAP(cpu)) &
- 				MVNETA_CPU_TXQ_ACCESS_ALL_MASK;
+-	if (tb[TCA_FW_CLASSID]) {
+-		f->res.classid = nla_get_u32(tb[TCA_FW_CLASSID]);
+-		tcf_bind_filter(tp, &f->res, base);
+-	}
+-
+ 	if (tb[TCA_FW_INDEV]) {
+ 		int ret;
+ 		ret = tcf_change_indev(net, tb[TCA_FW_INDEV], extack);
+@@ -231,6 +226,11 @@ static int fw_set_parms(struct net *net, struct tcf_proto *tp,
+ 	} else if (head->mask != 0xFFFFFFFF)
+ 		return err;
+ 
++	if (tb[TCA_FW_CLASSID]) {
++		f->res.classid = nla_get_u32(tb[TCA_FW_CLASSID]);
++		tcf_bind_filter(tp, &f->res, base);
++	}
++
+ 	return 0;
+ }
+ 
 -- 
 2.39.2
 
