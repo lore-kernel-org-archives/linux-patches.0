@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E8F20F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:12:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F559C433C8;
-	Fri, 21 Jul 2023 19:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF5620F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:12:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF52C433C9;
+	Fri, 21 Jul 2023 19:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966725;
-	bh=LuZ9YjifZcb11F6DZ6dlDfMtlwi51oPwGsWkR/7MkO4=;
+	s=korg; t=1689966727;
+	bh=M+m7MiydM2ia4HSXZj21M/dC1iZRWupB58WripmwcL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IemWuzlQ7H3LsPsMtPXk8d8/icBL5K4ZLBu6u1MkRwKcPp51WvdPhCQ/XhKuy5LOi
-	 t+BYi3f0kO5DqW9IFcLvvg11UO64HEC6kw5duu1ARZsQZw0v6WU4oRpe1gTtjB9lK1
-	 034klrB70/juWmAK+Hqab1xSkBYo2BMFt0aCey6o=
+	b=Ou8tvHNzpiCLR9aknctM95iuAE44Slh1OnkLfd59e8oUmJ5Ct1jSo1aZrPxJ3gFfM
+	 faIb8ToqzpLpOkM3TlC/FpGLIzEj4zqRou74Noz+kc4OHf/NIhHMqyb57sebsOGRl4
+	 tKbCYYW6cHBn/Ovbw65d1PHXUP6MLUzk9MxoBeq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	M A Ramdhan <ramdhan@starlabs.sg>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Pedro Tammela <pctammela@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 407/532] net/sched: cls_fw: Fix improper refcount update leads to use-after-free
-Date: Fri, 21 Jul 2023 18:05:11 +0200
-Message-ID: <20230721160636.540673312@linuxfoundation.org>
+Subject: [PATCH 5.15 439/532] net/sched: make psched_mtu() RTNL-less safe
+Date: Fri, 21 Jul 2023 18:05:43 +0200
+Message-ID: <20230721160638.374585958@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,59 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: M A Ramdhan <ramdhan@starlabs.sg>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-[ Upstream commit 0323bce598eea038714f941ce2b22541c46d488f ]
+[ Upstream commit 150e33e62c1fa4af5aaab02776b6c3812711d478 ]
 
-In the event of a failure in tcf_change_indev(), fw_set_parms() will
-immediately return an error after incrementing or decrementing
-reference counter in tcf_bind_filter().  If attacker can control
-reference counter to zero and make reference freed, leading to
-use after free.
+Eric Dumazet says[1]:
+-------
+Speaking of psched_mtu(), I see that net/sched/sch_pie.c is using it
+without holding RTNL, so dev->mtu can be changed underneath.
+KCSAN could issue a warning.
+-------
 
-In order to prevent this, move the point of possible failure above the
-point where the TC_FW_CLASSID is handled.
+Annotate dev->mtu with READ_ONCE() so KCSAN don't issue a warning.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: M A Ramdhan <ramdhan@starlabs.sg>
-Signed-off-by: M A Ramdhan <ramdhan@starlabs.sg>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
-Message-ID: <20230705161530.52003-1-ramdhan@starlabs.sg>
+[1] https://lore.kernel.org/all/CANn89iJoJO5VtaJ-2=_d2aOQhb0Xw8iBT_Cxqp2HyuS-zj6azw@mail.gmail.com/
+
+v1 -> v2: Fix commit message
+
+Fixes: d4b36210c2e6 ("net: pkt_sched: PIE AQM scheme")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230711021634.561598-1-pctammela@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_fw.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/net/pkt_sched.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_fw.c b/net/sched/cls_fw.c
-index 8654b0ce997c1..ea52c320f67c4 100644
---- a/net/sched/cls_fw.c
-+++ b/net/sched/cls_fw.c
-@@ -210,11 +210,6 @@ static int fw_set_parms(struct net *net, struct tcf_proto *tp,
- 	if (err < 0)
- 		return err;
- 
--	if (tb[TCA_FW_CLASSID]) {
--		f->res.classid = nla_get_u32(tb[TCA_FW_CLASSID]);
--		tcf_bind_filter(tp, &f->res, base);
--	}
--
- 	if (tb[TCA_FW_INDEV]) {
- 		int ret;
- 		ret = tcf_change_indev(net, tb[TCA_FW_INDEV], extack);
-@@ -231,6 +226,11 @@ static int fw_set_parms(struct net *net, struct tcf_proto *tp,
- 	} else if (head->mask != 0xFFFFFFFF)
- 		return err;
- 
-+	if (tb[TCA_FW_CLASSID]) {
-+		f->res.classid = nla_get_u32(tb[TCA_FW_CLASSID]);
-+		tcf_bind_filter(tp, &f->res, base);
-+	}
-+
- 	return 0;
+diff --git a/include/net/pkt_sched.h b/include/net/pkt_sched.h
+index 9cd2d4e84913f..d0d9dd2483dd3 100644
+--- a/include/net/pkt_sched.h
++++ b/include/net/pkt_sched.h
+@@ -141,7 +141,7 @@ extern const struct nla_policy rtm_tca_policy[TCA_MAX + 1];
+  */
+ static inline unsigned int psched_mtu(const struct net_device *dev)
+ {
+-	return dev->mtu + dev->hard_header_len;
++	return READ_ONCE(dev->mtu) + dev->hard_header_len;
  }
  
+ static inline struct net *qdisc_net(struct Qdisc *q)
 -- 
 2.39.2
 
