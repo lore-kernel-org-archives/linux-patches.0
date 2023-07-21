@@ -1,25 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DA620F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:54:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A09CC433C7;
-	Fri, 21 Jul 2023 18:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AD220F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:54:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A95C433C7;
+	Fri, 21 Jul 2023 18:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965672;
-	bh=BNuzvQl3oyqrwG/CpPmiyJcLlA7+35wE4UK8KuGcERA=;
+	s=korg; t=1689965675;
+	bh=5dAIn7Nr+d7M9/hyO4N8LiqjnNv8Yzt4wctCtt/euJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BCsdlgNLswv27d2H6XtIvPMopkutmvkbX55rZVaE5evaMvucl9CCnXguEuviYBK/2
-	 0YufRhLDroQhsjSFb7ygEOMXk9/dbwZy5Qs+lA2jqoam6lwQ3JnQ2/2q+WeIyZ0gPa
-	 6p6HsKMqYEjaa8rImKCdljsBqXA744d8Y/lr7RPc=
+	b=HEM3yWRhCj+5CxKX4XhFJaibwQAQ81SJclimqu6/PK7SawBk+af28LTvabRo2hwhf
+	 sFa/b0O2RinON9l2xjKMVCHKBtoY2m23U7tmW+4eSlVfVgHNppSxSR6BjClfBMrpLg
+	 OTgqvO5gnFOIYFtxjjd2CgRXq8OzdfCrqSbpF34Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 045/532] spi: dw: Round of n_bytes to power of 2
-Date: Fri, 21 Jul 2023 17:59:09 +0200
-Message-ID: <20230721160617.088756588@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+f2cb6e0ffdb961921e4d@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 036/532] wifi: ath9k: avoid referencing uninit memory in ath9k_wmi_ctrl_rx
+Date: Fri, 21 Jul 2023 17:59:00 +0200
+Message-ID: <20230721160616.615620424@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -33,57 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joy Chakraborty <joychakr@google.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 9f34baf67e4d08908fd94ff29c825bb673295336 ]
+[ Upstream commit f24292e827088bba8de7158501ac25a59b064953 ]
 
-n_bytes variable in the driver represents the number of bytes per word
-that needs to be sent/copied to fifo. Bits/word can be between 8 and 32
-bits from the client but in memory they are a power of 2, same is mentioned
-in spi.h header:
-"
- * @bits_per_word: Data transfers involve one or more words; word sizes
- *      like eight or 12 bits are common.  In-memory wordsizes are
- *      powers of two bytes (e.g. 20 bit samples use 32 bits).
- *      This may be changed by the device's driver, or left at the
- *      default (0) indicating protocol words are eight bit bytes.
- *      The spi_transfer.bits_per_word can override this for each transfer.
-"
+For the reasons also described in commit b383e8abed41 ("wifi: ath9k: avoid
+uninit memory read in ath9k_htc_rx_msg()"), ath9k_htc_rx_msg() should
+validate pkt_len before accessing the SKB.
 
-Hence, round of n_bytes to a power of 2 to avoid values like 3 which
-would generate unalligned/odd accesses to memory/fifo.
+For example, the obtained SKB may have been badly constructed with
+pkt_len = 8. In this case, the SKB can only contain a valid htc_frame_hdr
+but after being processed in ath9k_htc_rx_msg() and passed to
+ath9k_wmi_ctrl_rx() endpoint RX handler, it is expected to have a WMI
+command header which should be located inside its data payload.
 
-* tested on Baikal-T1 based system with DW SPI-looped back interface
-transferring a chunk of data with DFS:8,12,16.
+Implement sanity checking inside ath9k_wmi_ctrl_rx(). Otherwise, uninit
+memory can be referenced.
 
-Fixes: a51acc2400d4 ("spi: dw: Add support for 32-bits max xfer size")
-Suggested-by: Andy Shevchenko <andriy.shevchenko@intel.com
-Signed-off-by: Joy Chakraborty <joychakr@google.com
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com
-Tested-by: Serge Semin <fancer.lancer@gmail.com
-Link: https://lore.kernel.org/r/20230512104746.1797865-4-joychakr@google.com
-Signed-off-by: Mark Brown <broonie@kernel.org
+Tested on Qualcomm Atheros Communications AR9271 802.11n .
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Reported-and-tested-by: syzbot+f2cb6e0ffdb961921e4d@syzkaller.appspotmail.com
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230424183348.111355-1-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-dw-core.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath9k/wmi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/spi/spi-dw-core.c b/drivers/spi/spi-dw-core.c
-index 59e22c6b4b201..8fc598f09a728 100644
---- a/drivers/spi/spi-dw-core.c
-+++ b/drivers/spi/spi-dw-core.c
-@@ -416,7 +416,10 @@ static int dw_spi_transfer_one(struct spi_controller *master,
- 	int ret;
+diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
+index 19345b8f7bfd5..d652c647d56b5 100644
+--- a/drivers/net/wireless/ath/ath9k/wmi.c
++++ b/drivers/net/wireless/ath/ath9k/wmi.c
+@@ -221,6 +221,10 @@ static void ath9k_wmi_ctrl_rx(void *priv, struct sk_buff *skb,
+ 	if (unlikely(wmi->stopped))
+ 		goto free_skb;
  
- 	dws->dma_mapped = 0;
--	dws->n_bytes = DIV_ROUND_UP(transfer->bits_per_word, BITS_PER_BYTE);
-+	dws->n_bytes =
-+		roundup_pow_of_two(DIV_ROUND_UP(transfer->bits_per_word,
-+						BITS_PER_BYTE));
++	/* Validate the obtained SKB. */
++	if (unlikely(skb->len < sizeof(struct wmi_cmd_hdr)))
++		goto free_skb;
 +
- 	dws->tx = (void *)transfer->tx_buf;
- 	dws->tx_len = transfer->len / dws->n_bytes;
- 	dws->rx = transfer->rx_buf;
+ 	hdr = (struct wmi_cmd_hdr *) skb->data;
+ 	cmd_id = be16_to_cpu(hdr->command_id);
+ 
 -- 
 2.39.2
 
