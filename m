@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA8420F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:10:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4F5FC433C9;
-	Fri, 21 Jul 2023 19:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17E620F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:10:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FF5C433C8;
+	Fri, 21 Jul 2023 19:10:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966607;
-	bh=4setY29dJyaeY5Cjv54HMM97ueew3VwNDUVAWJX/wy8=;
+	s=korg; t=1689966609;
+	bh=hI582G+i0LWX88tQw2kmHnNmCTrXP8B7NGbnUFyQgZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o/q6Z+SqiIGWdAE/bFWwRCYQkDqm7tWwSj5dnaHVB6t3Z/6s2AzRSxxBtokq8+Pt4
-	 Fhvwnb2MEXZZcvzAhMvSmCIhU+8zwcx2H+r6u6bx4oVWZpNCU9WRH1gI8xvwF7Bfb/
-	 yG/cwW+Sv/MxY2shR/gxpNXtMHbNBttD1l3o+HoQ=
+	b=MyLzRK2B8J6E0rja+IoCF7SwykcXiixnDuuUsCYZ4WLkDKqLQzp0Y92W7142EYVPm
+	 wyovoZ3qrvoJebeWs+0TzCOfYwwzOA63JW4+7ltjLdM/4MtQATm3F6tSK6BTZ++Y6l
+	 0uwy11WzCpOEcb9WcN3AGMQs8FRerR4ymofQG34g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 403/532] igc: Handle PPS start time programming for past time values
-Date: Fri, 21 Jul 2023 18:05:07 +0200
-Message-ID: <20230721160636.321054984@linuxfoundation.org>
+Subject: [PATCH 5.15 404/532] scsi: qla2xxx: Fix error code in qla2x00_start_sp()
+Date: Fri, 21 Jul 2023 18:05:08 +0200
+Message-ID: <20230721160636.378051072@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,107 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 84a192e46106355de1a314d709e657231d4b1026 ]
+[ Upstream commit e579b007eff3ff8d29d59d16214cd85fb9e573f7 ]
 
-I225/6 hardware can be programmed to start PPS output once
-the time in Target Time registers is reached. The time
-programmed in these registers should always be into future.
-Only then PPS output is triggered when SYSTIM register
-reaches the programmed value. There are two modes in i225/6
-hardware to program PPS, pulse and clock mode.
+This should be negative -EAGAIN instead of positive.  The callers treat
+non-zero error codes the same so it doesn't really impact runtime beyond
+some trivial differences to debug output.
 
-There were issues reported where PPS is not generated when
-start time is in past.
-
-Example 1, "echo 0 0 0 2 0 > /sys/class/ptp/ptp0/period"
-
-In the current implementation, a value of '0' is programmed
-into Target time registers and PPS output is in pulse mode.
-Eventually an interrupt which is triggered upon SYSTIM
-register reaching Target time is not fired. Thus no PPS
-output is generated.
-
-Example 2, "echo 0 0 0 1 0 > /sys/class/ptp/ptp0/period"
-
-Above case, a value of '0' is programmed into Target time
-registers and PPS output is in clock mode. Here, HW tries to
-catch-up the current time by incrementing Target Time
-register. This catch-up time seem to vary according to
-programmed PPS period time as per the HW design. In my
-experiments, the delay ranged between few tens of seconds to
-few minutes. The PPS output is only generated after the
-Target time register reaches current time.
-
-In my experiments, I also observed PPS stopped working with
-below test and could not recover until module is removed and
-loaded again.
-
-1) echo 0 <future time> 0 1 0 > /sys/class/ptp/ptp1/period
-2) echo 0 0 0 1 0 > /sys/class/ptp/ptp1/period
-3) echo 0 0 0 1 0 > /sys/class/ptp/ptp1/period
-
-After this PPS did not work even if i re-program with proper
-values. I could only get this back working by reloading the
-driver.
-
-This patch takes care of calculating and programming
-appropriate future time value into Target Time registers.
-
-Fixes: 5e91c72e560c ("igc: Fix PPS delta between two synchronized end-points")
-Signed-off-by: Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>
-Reviewed-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 80676d054e5a ("scsi: qla2xxx: Fix session cleanup hang")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/49866d28-4cfe-47b0-842b-78f110e61aab@moroto.mountain
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_ptp.c | 25 +++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ drivers/scsi/qla2xxx/qla_iocb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
-index 6803d91cf71cd..556750b61c98f 100644
---- a/drivers/net/ethernet/intel/igc/igc_ptp.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
-@@ -357,16 +357,35 @@ static int igc_ptp_feature_enable_i225(struct ptp_clock_info *ptp,
- 			tsim &= ~IGC_TSICR_TT0;
- 		}
- 		if (on) {
-+			struct timespec64 safe_start;
- 			int i = rq->perout.index;
+diff --git a/drivers/scsi/qla2xxx/qla_iocb.c b/drivers/scsi/qla2xxx/qla_iocb.c
+index 4f48f098ea5a6..605e94f973189 100644
+--- a/drivers/scsi/qla2xxx/qla_iocb.c
++++ b/drivers/scsi/qla2xxx/qla_iocb.c
+@@ -3898,7 +3898,7 @@ qla2x00_start_sp(srb_t *sp)
  
- 			igc_pin_perout(igc, i, pin, use_freq);
--			igc->perout[i].start.tv_sec = rq->perout.start.sec;
-+			igc_ptp_read(igc, &safe_start);
-+
-+			/* PPS output start time is triggered by Target time(TT)
-+			 * register. Programming any past time value into TT
-+			 * register will cause PPS to never start. Need to make
-+			 * sure we program the TT register a time ahead in
-+			 * future. There isn't a stringent need to fire PPS out
-+			 * right away. Adding +2 seconds should take care of
-+			 * corner cases. Let's say if the SYSTIML is close to
-+			 * wrap up and the timer keeps ticking as we program the
-+			 * register, adding +2seconds is safe bet.
-+			 */
-+			safe_start.tv_sec += 2;
-+
-+			if (rq->perout.start.sec < safe_start.tv_sec)
-+				igc->perout[i].start.tv_sec = safe_start.tv_sec;
-+			else
-+				igc->perout[i].start.tv_sec = rq->perout.start.sec;
- 			igc->perout[i].start.tv_nsec = rq->perout.start.nsec;
- 			igc->perout[i].period.tv_sec = ts.tv_sec;
- 			igc->perout[i].period.tv_nsec = ts.tv_nsec;
--			wr32(trgttimh, rq->perout.start.sec);
-+			wr32(trgttimh, (u32)igc->perout[i].start.tv_sec);
- 			/* For now, always select timer 0 as source. */
--			wr32(trgttiml, rq->perout.start.nsec | IGC_TT_IO_TIMER_SEL_SYSTIM0);
-+			wr32(trgttiml, (u32)(igc->perout[i].start.tv_nsec |
-+					     IGC_TT_IO_TIMER_SEL_SYSTIM0));
- 			if (use_freq)
- 				wr32(freqout, ns);
- 			tsauxc |= tsauxc_mask;
+ 	pkt = __qla2x00_alloc_iocbs(sp->qpair, sp);
+ 	if (!pkt) {
+-		rval = EAGAIN;
++		rval = -EAGAIN;
+ 		ql_log(ql_log_warn, vha, 0x700c,
+ 		    "qla2x00_alloc_iocbs failed.\n");
+ 		goto done;
 -- 
 2.39.2
 
