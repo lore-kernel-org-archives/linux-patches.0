@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5651F94B
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:59:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6477C433C8;
-	Fri, 21 Jul 2023 18:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA5D1F94B
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:59:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8EA7C433C7;
+	Fri, 21 Jul 2023 18:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965964;
-	bh=lBUxmHwEbRk4pXWSik+LYXm0C4G84yalt0hAQwvHWWQ=;
+	s=korg; t=1689965967;
+	bh=2S/+jNiwwM9UcJNsl3MwDQjJcCCjOwx8WgBduaZ37qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EIWcS4KwkBIeNCasWGNFy/LjBwj69OGY+hDxjM9hXAVFxduuWAK7ELo/OI2y/Yo6Q
-	 kz1mwE7PDkifkw4eArv7fftQVaW4Kr5inAKVbKRk9I7SlEQvU95leE/u4ISa69/Aan
-	 hZCvrq4NrNmcnesxAPaMONYaiV/NmpVo/Wh+ucFk=
+	b=SCBr9dwdPyMzDraLgM2GuQsxf6gJibPKIP4023d+7mhi3URrvz4cozKh1fqLBJ2NM
+	 nz1vCeqjFm5x/OzFAtv9W1M0ark65BhGBKbeF8YTpdfVIFwMKrbjxiJfR0c0muBNxQ
+	 Mqx4DbIpvL4t4VcTSgeY6y9E5KGyvXKGRtSPwms0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongqin Liu <yongqin.liu@linaro.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 177/532] drm/msm/dpu: do not enable color-management if DSPPs are not available
-Date: Fri, 21 Jul 2023 18:01:21 +0200
-Message-ID: <20230721160623.986677292@linuxfoundation.org>
+Subject: [PATCH 5.15 178/532] drm/msm/dp: Free resources after unregistering them
+Date: Fri, 21 Jul 2023 18:01:22 +0200
+Message-ID: <20230721160624.038650535@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -38,51 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-[ Upstream commit 3bcfc7b90465efd337d39b91b43972162f0d1908 ]
+[ Upstream commit fa0048a4b1fa7a50c8b0e514f5b428abdf69a6f8 ]
 
-We can not support color management without DSPP blocks being provided
-in the HW catalog. Do not enable color management for CRTCs if num_dspps
-is 0.
+The DP component's unbind operation walks through the submodules to
+unregister and clean things up. But if the unbind happens because the DP
+controller itself is being removed, all the memory for those submodules
+has just been freed.
 
-Fixes: 4259ff7ae509 ("drm/msm/dpu: add support for pcc color block in dpu driver")
-Reported-by: Yongqin Liu <yongqin.liu@linaro.org>
+Change the order of these operations to avoid the many use-after-free
+that otherwise happens in this code path.
+
+Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/542166/
+Link: https://lore.kernel.org/r/20230612220259.1884381-1-quic_bjorande@quicinc.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Sumit Semwal <sumit.semwal@linaro.org>
-Tested-by: Yongqin Liu <yongqin.liu@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/542141/
-Link: https://lore.kernel.org/r/20230612182534.3345805-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 4194689b6b35d..8be941c9b6a94 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -1380,6 +1380,8 @@ static const struct drm_crtc_helper_funcs dpu_crtc_helper_funcs = {
- struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
- 				struct drm_plane *cursor)
- {
-+	struct msm_drm_private *priv = dev->dev_private;
-+	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
- 	struct drm_crtc *crtc = NULL;
- 	struct dpu_crtc *dpu_crtc = NULL;
- 	int i;
-@@ -1411,7 +1413,8 @@ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 38d37345c216b..bbe350fab797c 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -1295,9 +1295,9 @@ static int dp_display_remove(struct platform_device *pdev)
+ 	dp = container_of(g_dp_display,
+ 			struct dp_display_private, dp_display);
  
- 	drm_crtc_helper_add(crtc, &dpu_crtc_helper_funcs);
++	component_del(&pdev->dev, &dp_display_comp_ops);
+ 	dp_display_deinit_sub_modules(dp);
  
--	drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
-+	if (dpu_kms->catalog->dspp_count)
-+		drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
+-	component_del(&pdev->dev, &dp_display_comp_ops);
+ 	platform_set_drvdata(pdev, NULL);
  
- 	/* save user friendly CRTC name for later */
- 	snprintf(dpu_crtc->name, DPU_CRTC_NAME_SIZE, "crtc%u", crtc->base.id);
+ 	return 0;
 -- 
 2.39.2
 
