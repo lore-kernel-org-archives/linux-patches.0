@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFA720F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1152EC433C7;
-	Fri, 21 Jul 2023 19:16:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5827A20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCB1EC433C7;
+	Fri, 21 Jul 2023 19:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967012;
-	bh=WOXTcPDKFZM097Ql6o+F/PEkDaOaIS6IXAxVgpEDrMs=;
+	s=korg; t=1689967015;
+	bh=LjHFTjG8i4S7hLbrcbIEp9q9rdzfNsl+uF5IozDekWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2cmSf6rnL/OM0qkJkXjKOdCHi2pjY7dPGcCYC8lWmLjj8U9+vi4imukfRrS2LsFYf
-	 fwYReNY8qolFLhAntmwqTwjpMcc+s4ZDir2gFwHMB7k6CxeHXRq8HDkXkuSpluKupj
-	 n0ed+hzt0H1HV6pTmSXk689ktCsS/QUX8ubqYCc8=
+	b=cgmzoZ4MlleIgl5rp12nDtvJ3q6iJ16syuV4VHVcyED0h0A/9WjPxUmZzx8877PYm
+	 rwHPNQEJaUIxBxW+gXubCxhN+GIbO0Y2v58K3eQGtssAqfVEiE/yTXY351MtmhhZBG
+	 YRwCgNAEoe5NOFYEm7xXbc0/y/S3O1t4ohcT4+vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sridhar Samudrala <sridhar.samudrala@intel.com>,
-	Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>,
-	Bharathi Sreenivas <bharathi.sreenivas@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/223] ice: Fix max_rate check while configuring TX rate limits
-Date: Fri, 21 Jul 2023 18:04:27 +0200
-Message-ID: <20230721160521.482848510@linuxfoundation.org>
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Akshata MukundShetty <akshata.mukundshetty@amd.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.1 002/223] HID: amd_sfh: Rename the float32 variable
+Date: Fri, 21 Jul 2023 18:04:15 +0200
+Message-ID: <20230721160520.977437262@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -37,86 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sridhar Samudrala <sridhar.samudrala@intel.com>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-[ Upstream commit 5f16da6ee6ac32e6c8098bc4cfcc4f170694f9da ]
+commit c1685a862a4bea863537f06abaa37a123aef493c upstream.
 
-Remove incorrect check in ice_validate_mqprio_opt() that limits
-filter configuration when sum of max_rates of all TCs exceeds
-the link speed. The max rate of each TC is unrelated to value
-used by other TCs and is valid as long as it is less than link
-speed.
+As float32 is also used in other places as a data type, it is necessary
+to rename the float32 variable in order to avoid confusion.
 
-Fixes: fbc7b27af0f9 ("ice: enable ndo_setup_tc support for mqprio_qdisc")
-Signed-off-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
-Signed-off-by: Sudheer Mogilappagari <sudheer.mogilappagari@intel.com>
-Tested-by: Bharathi Sreenivas <bharathi.sreenivas@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Tested-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Akshata MukundShetty <akshata.mukundshetty@amd.com>
+Link: https://lore.kernel.org/r/20230707065722.9036-2-Basavaraj.Natikar@amd.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index 7a5ec3ce3407a..8f77088900e94 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -7852,10 +7852,10 @@ static int
- ice_validate_mqprio_qopt(struct ice_vsi *vsi,
- 			 struct tc_mqprio_qopt_offload *mqprio_qopt)
+diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c
+index 6f0d332ccf51..c81d20cd3081 100644
+--- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c
++++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c
+@@ -132,13 +132,13 @@ static void get_common_inputs(struct common_input_property *common, int report_i
+ 	common->event_type = HID_USAGE_SENSOR_EVENT_DATA_UPDATED_ENUM;
+ }
+ 
+-static int float_to_int(u32 float32)
++static int float_to_int(u32 flt32_val)
  {
--	u64 sum_max_rate = 0, sum_min_rate = 0;
- 	int non_power_of_2_qcount = 0;
- 	struct ice_pf *pf = vsi->back;
- 	int max_rss_q_cnt = 0;
-+	u64 sum_min_rate = 0;
- 	struct device *dev;
- 	int i, speed;
- 	u8 num_tc;
-@@ -7871,6 +7871,7 @@ ice_validate_mqprio_qopt(struct ice_vsi *vsi,
- 	dev = ice_pf_to_dev(pf);
- 	vsi->ch_rss_size = 0;
- 	num_tc = mqprio_qopt->qopt.num_tc;
-+	speed = ice_get_link_speed_kbps(vsi);
+ 	int fraction, shift, mantissa, sign, exp, zeropre;
  
- 	for (i = 0; num_tc; i++) {
- 		int qcount = mqprio_qopt->qopt.count[i];
-@@ -7911,7 +7912,6 @@ ice_validate_mqprio_qopt(struct ice_vsi *vsi,
- 		 */
- 		max_rate = mqprio_qopt->max_rate[i];
- 		max_rate = div_u64(max_rate, ICE_BW_KBPS_DIVISOR);
--		sum_max_rate += max_rate;
+-	mantissa = float32 & GENMASK(22, 0);
+-	sign = (float32 & BIT(31)) ? -1 : 1;
+-	exp = (float32 & ~BIT(31)) >> 23;
++	mantissa = flt32_val & GENMASK(22, 0);
++	sign = (flt32_val & BIT(31)) ? -1 : 1;
++	exp = (flt32_val & ~BIT(31)) >> 23;
  
- 		/* min_rate is minimum guaranteed rate and it can't be zero */
- 		min_rate = mqprio_qopt->min_rate[i];
-@@ -7924,6 +7924,12 @@ ice_validate_mqprio_qopt(struct ice_vsi *vsi,
- 			return -EINVAL;
- 		}
+ 	if (!exp && !mantissa)
+ 		return 0;
+@@ -151,10 +151,10 @@ static int float_to_int(u32 float32)
+ 	}
  
-+		if (max_rate && max_rate > speed) {
-+			dev_err(dev, "TC%d: max_rate(%llu Kbps) > link speed of %u Kbps\n",
-+				i, max_rate, speed);
-+			return -EINVAL;
-+		}
-+
- 		iter_div_u64_rem(min_rate, ICE_MIN_BW_LIMIT, &rem);
- 		if (rem) {
- 			dev_err(dev, "TC%d: Min Rate not multiple of %u Kbps",
-@@ -7961,12 +7967,6 @@ ice_validate_mqprio_qopt(struct ice_vsi *vsi,
- 	    (mqprio_qopt->qopt.offset[i] + mqprio_qopt->qopt.count[i]))
- 		return -EINVAL;
+ 	shift = 23 - exp;
+-	float32 = BIT(exp) + (mantissa >> shift);
++	flt32_val = BIT(exp) + (mantissa >> shift);
+ 	fraction = mantissa & GENMASK(shift - 1, 0);
  
--	speed = ice_get_link_speed_kbps(vsi);
--	if (sum_max_rate && sum_max_rate > (u64)speed) {
--		dev_err(dev, "Invalid max Tx rate(%llu) Kbps > speed(%u) Kbps specified\n",
--			sum_max_rate, speed);
--		return -EINVAL;
--	}
- 	if (sum_min_rate && sum_min_rate > (u64)speed) {
- 		dev_err(dev, "Invalid min Tx rate(%llu) Kbps > speed (%u) Kbps specified\n",
- 			sum_min_rate, speed);
+-	return (((fraction * 100) >> shift) >= 50) ? sign * (float32 + 1) : sign * float32;
++	return (((fraction * 100) >> shift) >= 50) ? sign * (flt32_val + 1) : sign * flt32_val;
+ }
+ 
+ static u8 get_input_rep(u8 current_index, int sensor_idx, int report_id,
 -- 
-2.39.2
+2.41.0
 
 
 
