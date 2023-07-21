@@ -1,73 +1,107 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D3B20FA8
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:27:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E8BC433C8;
-	Fri, 21 Jul 2023 19:27:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967634;
-	bh=wYrqmWgN19T5t7BD4m3fsxuRLxtBHhazbVunZU+MTQU=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E620D214FE
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 20:29:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2434FC433C9;
+	Fri, 21 Jul 2023 20:29:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1689971393;
+	bh=XYmhbJIe+hh0dz93/kek9xodyfiBcV/T+AblsXSkuHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ytgzOr28h5hpUZS95FQltoLiZ63LCLzQ0sk34JWxw9OhsrPxcGbBAW2uSGmc4pm3k
-	 XcQjXnDgXFxEERpohwEC7d0z7JZRik5OHvDatpCmAsIlq+yq13hzIIxgQH/CXZwei0
-	 +mNeRo03kofmB+m+zsV6eNxBNfNi2w83akEjAOLo=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	b=HXmEvQOXkkWnlKqGWST0aiMRT/r2Mrji8/dMY+vde/2Fzb12jB6gJMjNg/ywo8oTI
+	 IR98+jQjyxN9Q2HvDSRhjzzFXCT9kzuQZypaZjOyoTfZ8+ZztSBM9Q2KOyRbokqSJB
+	 ZdxI+B9HUnfGfIfN1QXlfrxDjnEWoRiKvTcstQKpolw2vQdlLqzbKtflVEYRaq8Qca
+	 4573Thk7IwWdGNCqunXVkpo/e+8sH9Jh68pZdFLE1FAHNmanRHFlhJ7aLWAjXNckMs
+	 aA/jaWaFdu6hK8guat+evkU12tb4fmKz8FoNgIJsXo2SyPJ0yXbOcZ2LmxxWGMxsJO
+	 nPOxgOJudDTTA==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 200/223] selftests: mptcp: depend on SYN_COOKIES
-Date: Fri, 21 Jul 2023 18:07:33 +0200
-Message-ID: <20230721160529.403073405@linuxfoundation.org>
-X-Mailer: git-send-email 2.41.0
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 6.1 000/223] 6.1.40-rc1 review
+Date: Fri, 21 Jul 2023 20:29:50 +0000
+Message-Id: <20230721202950.61910-1-sj@kernel.org>
+X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
-References: <20230721160520.865493356@linuxfoundation.org>
-User-Agent: quilt/0.67
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+Hi,
 
-commit 6c8880fcaa5c45355179b759c1d11737775e31fc upstream.
+On Fri, 21 Jul 2023 18:04:13 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-MPTCP selftests are using TCP SYN Cookies for quite a while now, since
-v5.9.
+> This is the start of the stable review cycle for the 6.1.40 release.
+> There are 223 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sun, 23 Jul 2023 16:04:33 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.40-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
 
-Some CIs don't have this config option enabled and this is causing
-issues in the tests:
+I confirmed that this rc kernel passes DAMON functionality test[1] on my test
+machine.  Attaching the test results summary below.
 
-  # ns1 MPTCP -> ns1 (10.0.1.1:10000      ) MPTCP     (duration   167ms) sysctl: cannot stat /proc/sys/net/ipv4/tcp_syncookies: No such file or directory
-  # [ OK ]./mptcp_connect.sh: line 554: [: -eq: unary operator expected
+Tested-by: SeongJae Park <sj@kernel.org>
 
-There is no impact in the results but the test is not doing what it is
-supposed to do.
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
 
-Fixes: fed61c4b584c ("selftests: mptcp: make 2nd net namespace use tcp syn cookies unconditionally")
-Cc: stable@vger.kernel.org
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+
+Thanks,
+SJ
+
+[...]
+
 ---
- tools/testing/selftests/net/mptcp/config |    1 +
- 1 file changed, 1 insertion(+)
 
---- a/tools/testing/selftests/net/mptcp/config
-+++ b/tools/testing/selftests/net/mptcp/config
-@@ -6,6 +6,7 @@ CONFIG_INET_DIAG=m
- CONFIG_INET_MPTCP_DIAG=m
- CONFIG_VETH=y
- CONFIG_NET_SCH_NETEM=m
-+CONFIG_SYN_COOKIES=y
- CONFIG_NETFILTER=y
- CONFIG_NETFILTER_ADVANCED=y
- CONFIG_NETFILTER_NETLINK=m
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: sysfs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_m68k.sh
+ok 12 selftests: damon-tests: build_arm64.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
 
-
+PASS
