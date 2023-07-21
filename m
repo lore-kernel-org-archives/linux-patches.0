@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601821ED25
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:12:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62D3C433C8;
-	Fri, 21 Jul 2023 16:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D40D1ED25
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:12:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FEFC433C7;
+	Fri, 21 Jul 2023 16:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689955940;
-	bh=HkSKAFI+ObhILjpjEHW/1SJ+XEGcO3jrcUeprU80YPQ=;
+	s=korg; t=1689955943;
+	bh=7+rYtToEZBfhNGTjKMIX7gmfFZmGxCuJKCHIgCEYuNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qe8wdHfYu8unB7uEXe+sSxn41V7meHxodxhaQGGJUniqWhb3GNTb8EaVazLUWbC3p
-	 V6sKe4S/T56a4DyEFunrGscvNadzWpIJWO50vG0I+vKVe477yepFuxjC+AbkwA1am0
-	 cXWvPLWJRZ1RitFx41rfp61adHYKR+J6Gz3g6fko=
+	b=HXC93Gxwo2dpCy25p9G73NGGFW7i+AEnMIBkV562Of4+qSBJXCegfgBuNSnWg4fjs
+	 E0DEtAnm70gySffP/IGot5hAXa+xW6GwNSEXms4118Ot9og4FIRhij/vMGcab5TgzC
+	 lzsZEXkFC+uouJwYZIjgInTS3RU/RngD3VdlRGkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 084/292] net: fec: increase the size of tx ring and update tx_wake_threshold
-Date: Fri, 21 Jul 2023 18:03:13 +0200
-Message-ID: <20230721160532.414102750@linuxfoundation.org>
+Subject: [PATCH 6.4 085/292] drm/i915: Dont preserve dpll_hw_state for slave crtc in Bigjoiner
+Date: Fri, 21 Jul 2023 18:03:14 +0200
+Message-ID: <20230721160532.455970286@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -35,81 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
 
-[ Upstream commit 56b3c6ba53d0e9649ea5e4089b39cadde13aaef8 ]
+[ Upstream commit 5c413188c68da0e4bffc93de1c80257e20741e69 ]
 
-When the XDP feature is enabled and with heavy XDP frames to be
-transmitted, there is a considerable probability that available
-tx BDs are insufficient. This will lead to some XDP frames to be
-discarded and the "NOT enough BD for SG!" error log will appear
-in the console (as shown below).
+If we are using Bigjoiner dpll_hw_state is supposed to be exactly
+same as for master crtc, so no need to save it's state for slave crtc.
 
-[  160.013112] fec 30be0000.ethernet eth0: NOT enough BD for SG!
-[  160.023116] fec 30be0000.ethernet eth0: NOT enough BD for SG!
-[  160.028926] fec 30be0000.ethernet eth0: NOT enough BD for SG!
-[  160.038946] fec 30be0000.ethernet eth0: NOT enough BD for SG!
-[  160.044758] fec 30be0000.ethernet eth0: NOT enough BD for SG!
-
-In the case of heavy XDP traffic, sometimes the speed of recycling
-tx BDs may be slower than the speed of sending XDP frames. There
-may be several specific reasons, such as the interrupt is not
-responsed in time, the efficiency of the NAPI callback function is
-too low due to all the queues (tx queues and rx queues) share the
-same NAPI, and so on.
-
-After trying various methods, I think that increase the size of tx
-BD ring is simple and effective. Maybe the best resolution is that
-allocate NAPI for each queue to improve the efficiency of the NAPI
-callback, but this change is a bit big and I didn't try this method.
-Perheps this method will be implemented in a future patch.
-
-This patch also updates the tx_wake_threshold of tx ring which is
-related to the size of tx ring in the previous logic. Otherwise,
-the tx_wake_threshold will be too high (403 BDs), which is more
-likely to impact the slow path in the case of heavy XDP traffic,
-because XDP path and slow path share the tx BD rings. According
-to Jakub's suggestion, the tx_wake_threshold is at least equal to
-tx_stop_threshold + 2 * MAX_SKB_FRAGS, if a queue of hundreds of
-entries is overflowing, we should be able to apply a hysteresis
-of a few tens of entries.
-
-Fixes: 6d6b39f180b8 ("net: fec: add initial XDP support")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
+Fixes: 0ff0e219d9b8 ("drm/i915: Compute clocks earlier")
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230628141017.18937-1-stanislav.lisovskiy@intel.com
+(cherry picked from commit cbaf758809952c95ec00e796695049babb08bb60)
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec.h      | 2 +-
- drivers/net/ethernet/freescale/fec_main.c | 3 +--
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec.h b/drivers/net/ethernet/freescale/fec.h
-index 8c0226d061fec..63a053dea819d 100644
---- a/drivers/net/ethernet/freescale/fec.h
-+++ b/drivers/net/ethernet/freescale/fec.h
-@@ -355,7 +355,7 @@ struct bufdesc_ex {
- #define RX_RING_SIZE		(FEC_ENET_RX_FRPPG * FEC_ENET_RX_PAGES)
- #define FEC_ENET_TX_FRSIZE	2048
- #define FEC_ENET_TX_FRPPG	(PAGE_SIZE / FEC_ENET_TX_FRSIZE)
--#define TX_RING_SIZE		512	/* Must be power of two */
-+#define TX_RING_SIZE		1024	/* Must be power of two */
- #define TX_RING_MOD_MASK	511	/*   for this to work */
+diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
+index 7749f95d5d02a..a805b57f3d912 100644
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -4968,7 +4968,6 @@ copy_bigjoiner_crtc_state_modeset(struct intel_atomic_state *state,
+ 	saved_state->uapi = slave_crtc_state->uapi;
+ 	saved_state->scaler_state = slave_crtc_state->scaler_state;
+ 	saved_state->shared_dpll = slave_crtc_state->shared_dpll;
+-	saved_state->dpll_hw_state = slave_crtc_state->dpll_hw_state;
+ 	saved_state->crc_enabled = slave_crtc_state->crc_enabled;
  
- #define BD_ENET_RX_INT		0x00800000
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index e6ed36e5daefa..7659888a96917 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -3347,8 +3347,7 @@ static int fec_enet_alloc_queue(struct net_device *ndev)
- 		fep->total_tx_ring_size += fep->tx_queue[i]->bd.ring_size;
- 
- 		txq->tx_stop_threshold = FEC_MAX_SKB_DESCS;
--		txq->tx_wake_threshold =
--			(txq->bd.ring_size - txq->tx_stop_threshold) / 2;
-+		txq->tx_wake_threshold = FEC_MAX_SKB_DESCS + 2 * MAX_SKB_FRAGS;
- 
- 		txq->tso_hdrs = dma_alloc_coherent(&fep->pdev->dev,
- 					txq->bd.ring_size * TSO_HEADER_SIZE,
+ 	intel_crtc_free_hw_state(slave_crtc_state);
 -- 
 2.39.2
 
