@@ -1,78 +1,83 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC511F946
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:24:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C627C433C7;
-	Fri, 21 Jul 2023 16:24:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956691;
-	bh=vbzANNV2+ZOK6GItPP6dsgwB/lD6n3AoyWgH1a75D8c=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2PCWB38gdPdvLv3IaJoIvDN1Gr6kLF3/CKdtTe91MFsWUh5IzTnEXw40AXTydC6+w
-	 BwEgNOnNMgn5Lqi/mKPvqnE5da3gruJOVjb6k0GPGmLffowhbsfPi/1hhZK4amq/kS
-	 O6+RwE6zcnq529xk43m8JFy2m7zepjCG6PEsUbFk=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.4 265/292] selftests: mptcp: userspace_pm: report errors with remove tests
-Date: Fri, 21 Jul 2023 18:06:14 +0200
-Message-ID: <20230721160540.312399466@linuxfoundation.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
-References: <20230721160528.800311148@linuxfoundation.org>
-User-Agent: quilt/0.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691B727F00
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:51:24 +0000 (UTC)
+Date: Fri, 21 Jul 2023 16:51:01 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tmb.nu;
+	s=protonmail; t=1689958268; x=1690217468;
+	bh=DkpppEg7Zj8m0V7Qrf/Ok1FMsnpB36Swy3jVx327QPQ=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=tceBapAei1mOX2Sg0HsjdKVrftGBKa/+Dw3p5rTg83XlidTSi04U/0KdxoRQdjuC5
+	 v8B86qhhQX75J38Iply8XeanuioFrvPAR+jeQT817f8wE2R4ls84afD+7NWdgVJTtX
+	 XhKyX4dxFAdVdYmBdZM/cOcXqK+9cJkOgM6AgYcQ=
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+From: Thomas Backlund <tmb@tmb.nu>
+Cc: patches@lists.linux.dev, =?utf-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, "Pelloux-Prayer, Pierre-Eric" <Pierre-eric.Pelloux-prayer@amd.com>, Alex Deucher <alexander.deucher@amd.com>, Pelloux-Prayer@vger.kernel.org
+Subject: Re: [PATCH 6.4 213/292] drm/ttm: never consider pinned BOs for eviction&swap
+Message-ID: <ccf59286-1698-3f02-e472-edda5208c58d@tmb.nu>
+Feedback-ID: 19711308:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+Den 2023-07-21 kl. 19:05, skrev Greg Kroah-Hartman:
+> From: Christian K=C3=B6nig <christian.koenig@amd.com>
+>=20
+> commit a2848d08742c8e8494675892c02c0d22acbe3cf8 upstream.
+>=20
+> There is a small window where we have already incremented the pin count
+> but not yet moved the bo from the lru to the pinned list.
+>=20
+> Signed-off-by: Christian K=C3=B6nig <christian.koenig@amd.com>
+> Reported-by: Pelloux-Prayer, Pierre-Eric <Pierre-eric.Pelloux-prayer@amd.=
+com>
+> Tested-by: Pelloux-Prayer, Pierre-Eric <Pierre-eric.Pelloux-prayer@amd.co=
+m>
+> Acked-by: Alex Deucher <alexander.deucher@amd.com>
+> Cc: stable@vger.kernel.org
+> Link: https://patchwork.freedesktop.org/patch/msgid/20230707120826.3701-1=
+-christian.koenig@amd.com
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>   drivers/gpu/drm/ttm/ttm_bo.c |    6 ++++++
+>   1 file changed, 6 insertions(+)
+>=20
+> --- a/drivers/gpu/drm/ttm/ttm_bo.c
+> +++ b/drivers/gpu/drm/ttm/ttm_bo.c
+> @@ -517,6 +517,12 @@ static bool ttm_bo_evict_swapout_allowab
+>   {
+>   =09bool ret =3D false;
+>  =20
+> +=09if (bo->pin_count) {
+> +=09=09*locked =3D false;
+> +=09=09*busy =3D false;
+> +=09=09return false;
+> +=09}
+> +
+>   =09if (bo->base.resv =3D=3D ctx->resv) {
+>   =09=09dma_resv_assert_held(bo->base.resv);
+>   =09=09if (ctx->allow_res_evict)
+>=20
 
-commit 966c6c3adfb1257ea8a839cdfad2b74092cc5532 upstream.
 
-A message was mentioning an issue with the "remove" tests but the
-selftest was not marked as failed.
+This one will trigger GPF and needs a follow-up fix that is not upstream=20
+yet:
+https://patchwork.freedesktop.org/patch/547897/
 
-Directly exit with an error like it is done everywhere else in this
-selftest.
+as reported on LKML in thread:
+[bug/bisected] commit a2848d08742c8e8494675892c02c0d22acbe3cf8 cause=20
+general protection fault, probably for non-canonical address=20
+0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN NOPTI
 
-Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
-Fixes: 259a834fadda ("selftests: mptcp: functional tests for the userspace PM type")
-Cc: stable@vger.kernel.org
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- tools/testing/selftests/net/mptcp/userspace_pm.sh |    2 ++
- 1 file changed, 2 insertions(+)
+--
+Thomas
 
---- a/tools/testing/selftests/net/mptcp/userspace_pm.sh
-+++ b/tools/testing/selftests/net/mptcp/userspace_pm.sh
-@@ -423,6 +423,7 @@ test_remove()
- 		stdbuf -o0 -e0 printf "[OK]\n"
- 	else
- 		stdbuf -o0 -e0 printf "[FAIL]\n"
-+		exit 1
- 	fi
- 
- 	# RM_ADDR using an invalid addr id should result in no action
-@@ -437,6 +438,7 @@ test_remove()
- 		stdbuf -o0 -e0 printf "[OK]\n"
- 	else
- 		stdbuf -o0 -e0 printf "[FAIL]\n"
-+		exit 1
- 	fi
- 
- 	# RM_ADDR from the client to server machine
 
 
