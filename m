@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02E420F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:11:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70BB6C433C8;
-	Fri, 21 Jul 2023 19:11:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB03520F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:11:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F609C433C8;
+	Fri, 21 Jul 2023 19:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966702;
-	bh=45qkGbSl4vvB0L6p20h9SRHKIRdlC2BchvRJxh0wNRA=;
+	s=korg; t=1689966705;
+	bh=hM/GjtUJtB5sdQaHHOKBHqgdX9udWsotpA+gsQRKUeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hhQbpRYwWabECCsAPVLt2RIcAcyGzSGcjT53f5/QNHRCCYPwyImDpmmovwQ+/EQ8H
-	 caUPU+zjJBd+UJ1umejlOlboe6DP/Rw4VarZK3ht2vTbD7Kb1OvzlXnmP5awyGdtZv
-	 eGcIOsq638vrlhRpSq8X6X8GkOz+nPVR1+E5TV6M=
+	b=2XCYRYUhOwNhwF9W+y1wrD+WMaiOLYRFwxihiBZ95WXOeErdnvaL8Vp6bB601oIIK
+	 2ldJtVodrEszTpfxeQ5t38oGHzLbLkyrHUmu2okXr3J6LOSSHVVEffZojOQkJVXbbs
+	 +C5PRZQa45PJPVOgAmgXq923wLhdZG9Jv6CljOv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 410/532] net: bgmac: postpone turning IRQs off to avoid SoC hangs
-Date: Fri, 21 Jul 2023 18:05:14 +0200
-Message-ID: <20230721160636.698770811@linuxfoundation.org>
+Subject: [PATCH 5.15 437/532] riscv: mm: fix truncation warning on RV32
+Date: Fri, 21 Jul 2023 18:05:41 +0200
+Message-ID: <20230721160638.267212451@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,50 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit e7731194fdf085f46d58b1adccfddbd0dfee4873 ]
+[ Upstream commit b690e266dae2f85f4dfea21fa6a05e3500a51054 ]
 
-Turning IRQs off is done by accessing Ethernet controller registers.
-That can't be done until device's clock is enabled. It results in a SoC
-hang otherwise.
+lkp reports below sparse warning when building for RV32:
+arch/riscv/mm/init.c:1204:48: sparse: warning: cast truncates bits from
+constant value (100000000 becomes 0)
 
-This bug remained unnoticed for years as most bootloaders keep all
-Ethernet interfaces turned on. It seems to only affect a niche SoC
-family BCM47189. It has two Ethernet controllers but CFE bootloader uses
-only the first one.
+IMO, the reason we didn't see this truncates bug in real world is "0"
+means MEMBLOCK_ALLOC_ACCESSIBLE in memblock and there's no RV32 HW
+with more than 4GB memory.
 
-Fixes: 34322615cbaa ("net: bgmac: Mask interrupts during probe")
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fix it anyway to make sparse happy.
+
+Fixes: decf89f86ecd ("riscv: try to allocate crashkern region from 32bit addressible memory")
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202306080034.SLiCiOMn-lkp@intel.com/
+Link: https://lore.kernel.org/r/20230709171036.1906-1-jszhang@kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bgmac.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/riscv/mm/init.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
-index f8fd65ab663ee..54ff28c9b2148 100644
---- a/drivers/net/ethernet/broadcom/bgmac.c
-+++ b/drivers/net/ethernet/broadcom/bgmac.c
-@@ -1492,8 +1492,6 @@ int bgmac_enet_probe(struct bgmac *bgmac)
- 
- 	bgmac->in_init = true;
- 
--	bgmac_chip_intrs_off(bgmac);
--
- 	net_dev->irq = bgmac->irq;
- 	SET_NETDEV_DEV(net_dev, bgmac->dev);
- 	dev_set_drvdata(bgmac->dev, bgmac);
-@@ -1511,6 +1509,8 @@ int bgmac_enet_probe(struct bgmac *bgmac)
+diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
+index f8bfbe983517c..d7115acab3501 100644
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -843,7 +843,7 @@ static void __init reserve_crashkernel(void)
  	 */
- 	bgmac_clk_enable(bgmac, 0);
- 
-+	bgmac_chip_intrs_off(bgmac);
-+
- 	/* This seems to be fixing IRQ by assigning OOB #6 to the core */
- 	if (!(bgmac->feature_flags & BGMAC_FEAT_IDM_MASK)) {
- 		if (bgmac->feature_flags & BGMAC_FEAT_IRQ_ID_OOB_6)
+ 	crash_base = memblock_phys_alloc_range(crash_size, PMD_SIZE,
+ 					       search_start,
+-					       min(search_end, (unsigned long) SZ_4G));
++					       min(search_end, (unsigned long)(SZ_4G - 1)));
+ 	if (crash_base == 0) {
+ 		/* Try again without restricting region to 32bit addressible memory */
+ 		crash_base = memblock_phys_alloc_range(crash_size, PMD_SIZE,
 -- 
 2.39.2
 
