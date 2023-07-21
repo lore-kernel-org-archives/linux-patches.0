@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D4027F1D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:49:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA7CC433C8;
-	Fri, 21 Jul 2023 18:49:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D00D27F1D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:49:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2249C433C7;
+	Fri, 21 Jul 2023 18:49:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965394;
-	bh=+UOsnBcpgKz9xa4EYyJ+aRlxF8GlBzUf+ZuVWmMAcDA=;
+	s=korg; t=1689965397;
+	bh=KWeJ2j2Qzfczza2ZXYAH3bXOCfWctf9d36m5bYmngPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f8DOvuDc6V2OMMDZNm9sMDBXW77Sj8Qxfml38dQJpOvYqOZN5FipcEoKJtbL7+hcD
-	 WLxImOLqDOGBQMbK2Sr48dztYdgLrVcYd2sH4tV4stFid8Z4EOxlZarnBcqx5fbNKp
-	 XuSqe4GX0q7ivQ44pyVko/+ZwWEXhbKh3/cuaKUU=
+	b=DUOddvX0xNgUHu/r9hL8ETvRPAwMHbuu6kDwelLyPpMymaDi4HHxyoAKNXUyuH7ea
+	 dCIOrqE/pQmhSrKqn3bj8fL33gdaK9KY/0vAWcmrKPmSXWysp5X34T59ZGz7SFvG4h
+	 krPmk1VQo1dSTgs9LYh0JfyuYBJKx4fYY6ePxiJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chungkai Yang <Chung-kai.Yang@mediatek.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.4 251/292] PM: QoS: Restore support for default value on frequency QoS
-Date: Fri, 21 Jul 2023 18:06:00 +0200
-Message-ID: <20230721160539.700723476@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.4 269/292] tracing/probes: Fix to avoid double count of the string length on the array
+Date: Fri, 21 Jul 2023 18:06:18 +0200
+Message-ID: <20230721160540.496453552@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -34,63 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chungkai Yang <Chung-kai.Yang@mediatek.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 3a8395b565b5b4f019b3dc182be4c4541eb35ac8 upstream.
+commit 66bcf65d6cf0ca6540e2341e88ee7ef02dbdda08 upstream.
 
-Commit 8d36694245f2 ("PM: QoS: Add check to make sure CPU freq is
-non-negative") makes sure CPU freq is non-negative to avoid negative
-value converting to unsigned data type. However, when the value is
-PM_QOS_DEFAULT_VALUE, pm_qos_update_target specifically uses
-c->default_value which is set to FREQ_QOS_MIN/MAX_DEFAULT_VALUE when
-cpufreq_policy_alloc is executed, for this case handling.
+If an array is specified with the ustring or symstr, the length of the
+strings are accumlated on both of 'ret' and 'total', which means the
+length is double counted.
+Just set the length to the 'ret' value for avoiding double counting.
 
-Adding check for PM_QOS_DEFAULT_VALUE to let default setting work will
-fix this problem.
+Link: https://lore.kernel.org/all/168908492917.123124.15076463491122036025.stgit@devnote2/
 
-Fixes: 8d36694245f2 ("PM: QoS: Add check to make sure CPU freq is non-negative")
-Link: https://lore.kernel.org/lkml/20230626035144.19717-1-Chung-kai.Yang@mediatek.com/
-Link: https://lore.kernel.org/lkml/20230627071727.16646-1-Chung-kai.Yang@mediatek.com/
-Link: https://lore.kernel.org/lkml/CAJZ5v0gxNOWhC58PHeUhW_tgf6d1fGJVZ1x91zkDdht11yUv-A@mail.gmail.com/
-Signed-off-by: Chungkai Yang <Chung-kai.Yang@mediatek.com>
-Cc: 6.0+ <stable@vger.kernel.org> # 6.0+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/8819b154-2ba1-43c3-98a2-cbde20892023@moroto.mountain/
+Fixes: 88903c464321 ("tracing/probe: Add ustring type for user-space string")
+Cc: stable@vger.kernel.org
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/power/qos.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ kernel/trace/trace_probe_tmpl.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/power/qos.c
-+++ b/kernel/power/qos.c
-@@ -426,6 +426,11 @@ late_initcall(cpu_latency_qos_init);
- 
- /* Definitions related to the frequency QoS below. */
- 
-+static inline bool freq_qos_value_invalid(s32 value)
-+{
-+	return value < 0 && value != PM_QOS_DEFAULT_VALUE;
-+}
-+
- /**
-  * freq_constraints_init - Initialize frequency QoS constraints.
-  * @qos: Frequency QoS constraints to initialize.
-@@ -531,7 +536,7 @@ int freq_qos_add_request(struct freq_con
- {
- 	int ret;
- 
--	if (IS_ERR_OR_NULL(qos) || !req || value < 0)
-+	if (IS_ERR_OR_NULL(qos) || !req || freq_qos_value_invalid(value))
- 		return -EINVAL;
- 
- 	if (WARN(freq_qos_request_active(req),
-@@ -563,7 +568,7 @@ EXPORT_SYMBOL_GPL(freq_qos_add_request);
-  */
- int freq_qos_update_request(struct freq_qos_request *req, s32 new_value)
- {
--	if (!req || new_value < 0)
-+	if (!req || freq_qos_value_invalid(new_value))
- 		return -EINVAL;
- 
- 	if (WARN(!freq_qos_request_active(req),
+--- a/kernel/trace/trace_probe_tmpl.h
++++ b/kernel/trace/trace_probe_tmpl.h
+@@ -156,11 +156,11 @@ stage3:
+ 			code++;
+ 			goto array;
+ 		case FETCH_OP_ST_USTRING:
+-			ret += fetch_store_strlen_user(val + code->offset);
++			ret = fetch_store_strlen_user(val + code->offset);
+ 			code++;
+ 			goto array;
+ 		case FETCH_OP_ST_SYMSTR:
+-			ret += fetch_store_symstrlen(val + code->offset);
++			ret = fetch_store_symstrlen(val + code->offset);
+ 			code++;
+ 			goto array;
+ 		default:
 
 
