@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771FA20F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:11:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB069C433C8;
-	Fri, 21 Jul 2023 19:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A378C20F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:11:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B818AC433C9;
+	Fri, 21 Jul 2023 19:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966708;
-	bh=5fEhBhM5cwgYgQOOSSV2LgFd9yEvQWAfDVdugBShuX0=;
+	s=korg; t=1689966711;
+	bh=FnMw25Fvlad4sHPsR0n0H26ZmRh9JfYQqeP3U0AQGy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WMjisqblAmWXZ227OA0xAYcLN8/aq7RflpisCDT2pAvacxIv59j5BN0PSKBmT6Qm8
-	 wuTk+V4P/FsvD+3U8OKFpBCM2Uu9bz3Q6DO0XWRqNDwhPiJxouqDOns2kMtljW2/sA
-	 IWOD2//xc2tsyvAyzFHGO7GJ2M/jgGxWRfhYXtng=
+	b=Gb81oZC7FaZwlbH1WLhIrHVJM7tbkDnt1A4pCWwda+1+UALypf4dkidPxf6YmJsRM
+	 xzU74cwd70iS5OgeD57cmFyoNs4g1Q2PLl05r4G+janHF/iPCfBUMySdxsKOp6pVjE
+	 1ZdYMrzDg2+4WUV3aPy1vQAKDo2t2bjs81AdlN2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Kumlien <ian.kumlien@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Wang Yufen <wangyufen@huawei.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	David Ahern <dsahern@kernel.org>,
 	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 411/532] net: prevent skb corruption on frag list segmentation
-Date: Fri, 21 Jul 2023 18:05:15 +0200
-Message-ID: <20230721160636.750883283@linuxfoundation.org>
+Subject: [PATCH 5.15 412/532] icmp6: Fix null-ptr-deref of ip6_null_entry->rt6i_idev in icmp6_dev().
+Date: Fri, 21 Jul 2023 18:05:16 +0200
+Message-ID: <20230721160636.804830542@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,100 +38,142 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit c329b261afe71197d9da83c1f18eb45a7e97e089 ]
+[ Upstream commit 2aaa8a15de73874847d62eb595c6683bface80fd ]
 
-Ian reported several skb corruptions triggered by rx-gro-list,
-collecting different oops alike:
+With some IPv6 Ext Hdr (RPL, SRv6, etc.), we can send a packet that
+has the link-local address as src and dst IP and will be forwarded to
+an external IP in the IPv6 Ext Hdr.
 
-[   62.624003] BUG: kernel NULL pointer dereference, address: 00000000000000c0
-[   62.631083] #PF: supervisor read access in kernel mode
-[   62.636312] #PF: error_code(0x0000) - not-present page
-[   62.641541] PGD 0 P4D 0
-[   62.644174] Oops: 0000 [#1] PREEMPT SMP NOPTI
-[   62.648629] CPU: 1 PID: 913 Comm: napi/eno2-79 Not tainted 6.4.0 #364
-[   62.655162] Hardware name: Supermicro Super Server/A2SDi-12C-HLN4F, BIOS 1.7a 10/13/2022
-[   62.663344] RIP: 0010:__udp_gso_segment (./include/linux/skbuff.h:2858
-./include/linux/udp.h:23 net/ipv4/udp_offload.c:228 net/ipv4/udp_offload.c:261
-net/ipv4/udp_offload.c:277)
-[   62.687193] RSP: 0018:ffffbd3a83b4f868 EFLAGS: 00010246
-[   62.692515] RAX: 00000000000000ce RBX: 0000000000000000 RCX: 0000000000000000
-[   62.699743] RDX: ffffa124def8a000 RSI: 0000000000000079 RDI: ffffa125952a14d4
-[   62.706970] RBP: ffffa124def8a000 R08: 0000000000000022 R09: 00002000001558c9
-[   62.714199] R10: 0000000000000000 R11: 00000000be554639 R12: 00000000000000e2
-[   62.721426] R13: ffffa125952a1400 R14: ffffa125952a1400 R15: 00002000001558c9
-[   62.728654] FS:  0000000000000000(0000) GS:ffffa127efa40000(0000)
-knlGS:0000000000000000
-[   62.736852] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   62.742702] CR2: 00000000000000c0 CR3: 00000001034b0000 CR4: 00000000003526e0
-[   62.749948] Call Trace:
-[   62.752498]  <TASK>
-[   62.779267] inet_gso_segment (net/ipv4/af_inet.c:1398)
-[   62.787605] skb_mac_gso_segment (net/core/gro.c:141)
-[   62.791906] __skb_gso_segment (net/core/dev.c:3403 (discriminator 2))
-[   62.800492] validate_xmit_skb (./include/linux/netdevice.h:4862
-net/core/dev.c:3659)
-[   62.804695] validate_xmit_skb_list (net/core/dev.c:3710)
-[   62.809158] sch_direct_xmit (net/sched/sch_generic.c:330)
-[   62.813198] __dev_queue_xmit (net/core/dev.c:3805 net/core/dev.c:4210)
-net/netfilter/core.c:626)
-[   62.821093] br_dev_queue_push_xmit (net/bridge/br_forward.c:55)
-[   62.825652] maybe_deliver (net/bridge/br_forward.c:193)
-[   62.829420] br_flood (net/bridge/br_forward.c:233)
-[   62.832758] br_handle_frame_finish (net/bridge/br_input.c:215)
-[   62.837403] br_handle_frame (net/bridge/br_input.c:298
-net/bridge/br_input.c:416)
-[   62.851417] __netif_receive_skb_core.constprop.0 (net/core/dev.c:5387)
-[   62.866114] __netif_receive_skb_list_core (net/core/dev.c:5570)
-[   62.871367] netif_receive_skb_list_internal (net/core/dev.c:5638
-net/core/dev.c:5727)
-[   62.876795] napi_complete_done (./include/linux/list.h:37
-./include/net/gro.h:434 ./include/net/gro.h:429 net/core/dev.c:6067)
-[   62.881004] ixgbe_poll (drivers/net/ethernet/intel/ixgbe/ixgbe_main.c:3191)
-[   62.893534] __napi_poll (net/core/dev.c:6498)
-[   62.897133] napi_threaded_poll (./include/linux/netpoll.h:89
-net/core/dev.c:6640)
-[   62.905276] kthread (kernel/kthread.c:379)
-[   62.913435] ret_from_fork (arch/x86/entry/entry_64.S:314)
-[   62.917119]  </TASK>
+For example, the script below generates a packet whose src IP is the
+link-local address and dst is updated to 11::.
 
-In the critical scenario, rx-gro-list GRO-ed packets are fed, via a
-bridge, both to the local input path and to an egress device (tun).
+  # for f in $(find /proc/sys/net/ -name *seg6_enabled*); do echo 1 > $f; done
+  # python3
+  >>> from socket import *
+  >>> from scapy.all import *
+  >>>
+  >>> SRC_ADDR = DST_ADDR = "fe80::5054:ff:fe12:3456"
+  >>>
+  >>> pkt = IPv6(src=SRC_ADDR, dst=DST_ADDR)
+  >>> pkt /= IPv6ExtHdrSegmentRouting(type=4, addresses=["11::", "22::"], segleft=1)
+  >>>
+  >>> sk = socket(AF_INET6, SOCK_RAW, IPPROTO_RAW)
+  >>> sk.sendto(bytes(pkt), (DST_ADDR, 0))
 
-The segmentation of such packets unsafely writes to the cloned skbs
-with shared heads.
+For such a packet, we call ip6_route_input() to look up a route for the
+next destination in these three functions depending on the header type.
 
-This change addresses the issue by uncloning as needed the
-to-be-segmented skbs.
+  * ipv6_rthdr_rcv()
+  * ipv6_rpl_srh_rcv()
+  * ipv6_srh_rcv()
 
-Reported-by: Ian Kumlien <ian.kumlien@gmail.com>
-Tested-by: Ian Kumlien <ian.kumlien@gmail.com>
-Fixes: 3a1296a38d0c ("net: Support GRO/GSO fraglist chaining.")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+If no route is found, ip6_null_entry is set to skb, and the following
+dst_input(skb) calls ip6_pkt_drop().
+
+Finally, in icmp6_dev(), we dereference skb_rt6_info(skb)->rt6i_idev->dev
+as the input device is the loopback interface.  Then, we have to check if
+skb_rt6_info(skb)->rt6i_idev is NULL or not to avoid NULL pointer deref
+for ip6_null_entry.
+
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+ PF: supervisor read access in kernel mode
+ PF: error_code(0x0000) - not-present page
+PGD 0 P4D 0
+Oops: 0000 [#1] PREEMPT SMP PTI
+CPU: 0 PID: 157 Comm: python3 Not tainted 6.4.0-11996-gb121d614371c #35
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+RIP: 0010:icmp6_send (net/ipv6/icmp.c:436 net/ipv6/icmp.c:503)
+Code: fe ff ff 48 c7 40 30 c0 86 5d 83 e8 c6 44 1c 00 e9 c8 fc ff ff 49 8b 46 58 48 83 e0 fe 0f 84 4a fb ff ff 48 8b 80 d0 00 00 00 <48> 8b 00 44 8b 88 e0 00 00 00 e9 34 fb ff ff 4d 85 ed 0f 85 69 01
+RSP: 0018:ffffc90000003c70 EFLAGS: 00000286
+RAX: 0000000000000000 RBX: 0000000000000001 RCX: 00000000000000e0
+RDX: 0000000000000021 RSI: 0000000000000000 RDI: ffff888006d72a18
+RBP: ffffc90000003d80 R08: 0000000000000000 R09: 0000000000000001
+R10: ffffc90000003d98 R11: 0000000000000040 R12: ffff888006d72a10
+R13: 0000000000000000 R14: ffff8880057fb800 R15: ffffffff835d86c0
+FS:  00007f9dc72ee740(0000) GS:ffff88807dc00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000000 CR3: 00000000057b2000 CR4: 00000000007506f0
+PKRU: 55555554
+Call Trace:
+ <IRQ>
+ ip6_pkt_drop (net/ipv6/route.c:4513)
+ ipv6_rthdr_rcv (net/ipv6/exthdrs.c:640 net/ipv6/exthdrs.c:686)
+ ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:437 (discriminator 5))
+ ip6_input_finish (./include/linux/rcupdate.h:781 net/ipv6/ip6_input.c:483)
+ __netif_receive_skb_one_core (net/core/dev.c:5455)
+ process_backlog (./include/linux/rcupdate.h:781 net/core/dev.c:5895)
+ __napi_poll (net/core/dev.c:6460)
+ net_rx_action (net/core/dev.c:6529 net/core/dev.c:6660)
+ __do_softirq (./arch/x86/include/asm/jump_label.h:27 ./include/linux/jump_label.h:207 ./include/trace/events/irq.h:142 kernel/softirq.c:554)
+ do_softirq (kernel/softirq.c:454 kernel/softirq.c:441)
+ </IRQ>
+ <TASK>
+ __local_bh_enable_ip (kernel/softirq.c:381)
+ __dev_queue_xmit (net/core/dev.c:4231)
+ ip6_finish_output2 (./include/net/neighbour.h:544 net/ipv6/ip6_output.c:135)
+ rawv6_sendmsg (./include/net/dst.h:458 ./include/linux/netfilter.h:303 net/ipv6/raw.c:656 net/ipv6/raw.c:914)
+ sock_sendmsg (net/socket.c:725 net/socket.c:748)
+ __sys_sendto (net/socket.c:2134)
+ __x64_sys_sendto (net/socket.c:2146 net/socket.c:2142 net/socket.c:2142)
+ do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+RIP: 0033:0x7f9dc751baea
+Code: d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3 0f 1e fa 41 89 ca 64 8b 04 25 18 00 00 00 85 c0 75 15 b8 2c 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 7e c3 0f 1f 44 00 00 41 54 48 83 ec 30 44 89
+RSP: 002b:00007ffe98712c38 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+RAX: ffffffffffffffda RBX: 00007ffe98712cf8 RCX: 00007f9dc751baea
+RDX: 0000000000000060 RSI: 00007f9dc6460b90 RDI: 0000000000000003
+RBP: 00007f9dc56e8be0 R08: 00007ffe98712d70 R09: 000000000000001c
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: ffffffffc4653600 R14: 0000000000000001 R15: 00007f9dc6af5d1b
+ </TASK>
+Modules linked in:
+CR2: 0000000000000000
+ ---[ end trace 0000000000000000 ]---
+RIP: 0010:icmp6_send (net/ipv6/icmp.c:436 net/ipv6/icmp.c:503)
+Code: fe ff ff 48 c7 40 30 c0 86 5d 83 e8 c6 44 1c 00 e9 c8 fc ff ff 49 8b 46 58 48 83 e0 fe 0f 84 4a fb ff ff 48 8b 80 d0 00 00 00 <48> 8b 00 44 8b 88 e0 00 00 00 e9 34 fb ff ff 4d 85 ed 0f 85 69 01
+RSP: 0018:ffffc90000003c70 EFLAGS: 00000286
+RAX: 0000000000000000 RBX: 0000000000000001 RCX: 00000000000000e0
+RDX: 0000000000000021 RSI: 0000000000000000 RDI: ffff888006d72a18
+RBP: ffffc90000003d80 R08: 0000000000000000 R09: 0000000000000001
+R10: ffffc90000003d98 R11: 0000000000000040 R12: ffff888006d72a10
+R13: 0000000000000000 R14: ffff8880057fb800 R15: ffffffff835d86c0
+FS:  00007f9dc72ee740(0000) GS:ffff88807dc00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000000 CR3: 00000000057b2000 CR4: 00000000007506f0
+PKRU: 55555554
+Kernel panic - not syncing: Fatal exception in interrupt
+Kernel Offset: disabled
+
+Fixes: 4832c30d5458 ("net: ipv6: put host and anycast routes on device with address")
+Reported-by: Wang Yufen <wangyufen@huawei.com>
+Closes: https://lore.kernel.org/netdev/c41403a9-c2f6-3b7e-0c96-e1901e605cd0@huawei.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/ipv6/icmp.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index f3850c88cdda2..e01dd4cad0fc0 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -3882,6 +3882,11 @@ struct sk_buff *skb_segment_list(struct sk_buff *skb,
+diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
+index 716e7717fe8fe..71a69166a6bd2 100644
+--- a/net/ipv6/icmp.c
++++ b/net/ipv6/icmp.c
+@@ -430,7 +430,10 @@ static struct net_device *icmp6_dev(const struct sk_buff *skb)
+ 	if (unlikely(dev->ifindex == LOOPBACK_IFINDEX || netif_is_l3_master(skb->dev))) {
+ 		const struct rt6_info *rt6 = skb_rt6_info(skb);
  
- 	skb_push(skb, -skb_network_offset(skb) + offset);
+-		if (rt6)
++		/* The destination could be an external IP in Ext Hdr (SRv6, RPL, etc.),
++		 * and ip6_null_entry could be set to skb if no route is found.
++		 */
++		if (rt6 && rt6->rt6i_idev)
+ 			dev = rt6->rt6i_idev->dev;
+ 	}
  
-+	/* Ensure the head is writeable before touching the shared info */
-+	err = skb_unclone(skb, GFP_ATOMIC);
-+	if (err)
-+		goto err_linearize;
-+
- 	skb_shinfo(skb)->frag_list = NULL;
- 
- 	while (list_skb) {
 -- 
 2.39.2
 
