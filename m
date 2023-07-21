@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF941F941
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:17:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AECD7C433CA;
-	Fri, 21 Jul 2023 16:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA851F941
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:17:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B8AC433C8;
+	Fri, 21 Jul 2023 16:17:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956224;
-	bh=nYXZSMhhnu5iA7+z3PlljJX3Hm5IHfppWYM4tc1QtCY=;
+	s=korg; t=1689956226;
+	bh=PWF97O/gBhcSPe30b+7dXUBi36jIwlUGrMe4GJI67nE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UqBT9JtnYRngPnLoMKxZM3F0Ms5UNGNoUcWMZ6ph/F2QgH+9SuIdrNzwsoSy8jI1H
-	 i+tyxLVac8fDeJfkZgD6aVdBcmbBcScUUhz7DlLGdmVAeCoc5FxMKGL7cFjM5XG4Ol
-	 kAlmBIYlV+iXSESvufTYUDPJbt+lhecx+ulP+WOM=
+	b=r5q3umWI4EljgOdHu4PtWeXCFudbyPW/K6sGBVnKjRt5iDt6Mdd2XSbylwt1dp4wG
+	 mIvOnWgNxsiWVQsgFnekySko2mfjNjdE/8SciY0ZQW8odqX+G8v1VD+g3GByQGelFG
+	 XGEEZqyRtmSUX/4N6cRvOx1fLuj7OHU04IfMycW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.4 144/292] powerpc/64s: Fix native_hpte_remove() to be irq-safe
-Date: Fri, 21 Jul 2023 18:04:13 +0200
-Message-ID: <20230721160535.074958891@linuxfoundation.org>
+	Leo Li <sunpeng.li@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.4 145/292] drm/amd/display: perform a bounds check before filling dirty rectangles
+Date: Fri, 21 Jul 2023 18:04:14 +0200
+Message-ID: <20230721160535.117430662@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -33,116 +35,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Hamza Mahfooz <hamza.mahfooz@amd.com>
 
-commit 8bbe9fee5848371d4af101be445303cac8d880c5 upstream.
+commit af22d6a869cc26b519bfdcd54293c53f2e491870 upstream.
 
-Lockdep warns that the use of the hpte_lock in native_hpte_remove() is
-not safe against an IRQ coming in:
+Currently, it is possible for us to access memory that we shouldn't.
+Since, we acquire (possibly dangling) pointers to dirty rectangles
+before doing a bounds check to make sure we can actually accommodate the
+number of dirty rectangles userspace has requested to fill. This issue
+is especially evident if a compositor requests both MPO and damage clips
+at the same time, in which case I have observed a soft-hang. So, to
+avoid this issue, perform the bounds check before filling a single dirty
+rectangle and WARN() about it, if it is ever attempted in
+fill_dc_dirty_rect().
 
-  ================================
-  WARNING: inconsistent lock state
-  6.4.0-rc2-g0c54f4d30ecc #1 Not tainted
-  --------------------------------
-  inconsistent {IN-SOFTIRQ-W} -> {SOFTIRQ-ON-W} usage.
-  qemu-system-ppc/93865 [HC0[0]:SC0[0]:HE1:SE1] takes:
-  c0000000021f5180 (hpte_lock){+.?.}-{0:0}, at: native_lock_hpte+0x8/0xd0
-  {IN-SOFTIRQ-W} state was registered at:
-    lock_acquire+0x134/0x3f0
-    native_lock_hpte+0x44/0xd0
-    native_hpte_insert+0xd4/0x2a0
-    __hash_page_64K+0x218/0x4f0
-    hash_page_mm+0x464/0x840
-    do_hash_fault+0x11c/0x260
-    data_access_common_virt+0x210/0x220
-    __ip_select_ident+0x140/0x150
-    ...
-    net_rx_action+0x3bc/0x440
-    __do_softirq+0x180/0x534
-    ...
-    sys_sendmmsg+0x34/0x50
-    system_call_exception+0x128/0x320
-    system_call_common+0x160/0x2e4
-  ...
-   Possible unsafe locking scenario:
-
-         CPU0
-         ----
-    lock(hpte_lock);
-    <Interrupt>
-      lock(hpte_lock);
-
-   *** DEADLOCK ***
-  ...
-  Call Trace:
-    dump_stack_lvl+0x98/0xe0 (unreliable)
-    print_usage_bug.part.0+0x250/0x278
-    mark_lock+0xc9c/0xd30
-    __lock_acquire+0x440/0x1ca0
-    lock_acquire+0x134/0x3f0
-    native_lock_hpte+0x44/0xd0
-    native_hpte_remove+0xb0/0x190
-    kvmppc_mmu_map_page+0x650/0x698 [kvm_pr]
-    kvmppc_handle_pagefault+0x534/0x6e8 [kvm_pr]
-    kvmppc_handle_exit_pr+0x6d8/0xe90 [kvm_pr]
-    after_sprg3_load+0x80/0x90 [kvm_pr]
-    kvmppc_vcpu_run_pr+0x108/0x270 [kvm_pr]
-    kvmppc_vcpu_run+0x34/0x48 [kvm]
-    kvm_arch_vcpu_ioctl_run+0x340/0x470 [kvm]
-    kvm_vcpu_ioctl+0x338/0x8b8 [kvm]
-    sys_ioctl+0x7c4/0x13e0
-    system_call_exception+0x128/0x320
-    system_call_common+0x160/0x2e4
-
-I suspect kvm_pr is the only caller that doesn't already have IRQs
-disabled, which is why this hasn't been reported previously.
-
-Fix it by disabling IRQs in native_hpte_remove().
-
-Fixes: 35159b5717fa ("powerpc/64s: make HPTE lock and native_tlbie_lock irq-safe")
-Cc: stable@vger.kernel.org # v6.1+
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230517123033.18430-1-mpe@ellerman.id.au
+Cc: stable@vger.kernel.org # 6.1+
+Fixes: 30ebe41582d1 ("drm/amd/display: add FB_DAMAGE_CLIPS support")
+Reviewed-by: Leo Li <sunpeng.li@amd.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/mm/book3s64/hash_native.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
---- a/arch/powerpc/mm/book3s64/hash_native.c
-+++ b/arch/powerpc/mm/book3s64/hash_native.c
-@@ -328,10 +328,12 @@ static long native_hpte_insert(unsigned
- 
- static long native_hpte_remove(unsigned long hpte_group)
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -5057,11 +5057,7 @@ static inline void fill_dc_dirty_rect(st
+ 				      s32 y, s32 width, s32 height,
+ 				      int *i, bool ffu)
  {
-+	unsigned long hpte_v, flags;
- 	struct hash_pte *hptep;
- 	int i;
- 	int slot_offset;
--	unsigned long hpte_v;
+-	if (*i > DC_MAX_DIRTY_RECTS)
+-		return;
+-
+-	if (*i == DC_MAX_DIRTY_RECTS)
+-		goto out;
++	WARN_ON(*i >= DC_MAX_DIRTY_RECTS);
+ 
+ 	dirty_rect->x = x;
+ 	dirty_rect->y = y;
+@@ -5077,7 +5073,6 @@ static inline void fill_dc_dirty_rect(st
+ 			"[PLANE:%d] PSR SU dirty rect at (%d, %d) size (%d, %d)",
+ 			plane->base.id, x, y, width, height);
+ 
+-out:
+ 	(*i)++;
+ }
+ 
+@@ -5164,6 +5159,9 @@ static void fill_dc_dirty_rects(struct d
+ 
+ 	*dirty_regions_changed = bb_changed;
+ 
++	if ((num_clips + (bb_changed ? 2 : 0)) > DC_MAX_DIRTY_RECTS)
++		goto ffu;
 +
-+	local_irq_save(flags);
- 
- 	DBG_LOW("    remove(group=%lx)\n", hpte_group);
- 
-@@ -356,13 +358,16 @@ static long native_hpte_remove(unsigned
- 		slot_offset &= 0x7;
+ 	if (bb_changed) {
+ 		fill_dc_dirty_rect(new_plane_state->plane, &dirty_rects[i],
+ 				   new_plane_state->crtc_x,
+@@ -5193,9 +5191,6 @@ static void fill_dc_dirty_rects(struct d
+ 				   new_plane_state->crtc_h, &i, false);
  	}
  
--	if (i == HPTES_PER_GROUP)
--		return -1;
-+	if (i == HPTES_PER_GROUP) {
-+		i = -1;
-+		goto out;
-+	}
- 
- 	/* Invalidate the hpte. NOTE: this also unlocks it */
- 	release_hpte_lock();
- 	hptep->v = 0;
+-	if (i > DC_MAX_DIRTY_RECTS)
+-		goto ffu;
 -
-+out:
-+	local_irq_restore(flags);
- 	return i;
- }
+ 	flip_addrs->dirty_rect_count = i;
+ 	return;
  
 
 
