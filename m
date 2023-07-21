@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FBC200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:04:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 336B4C433C7;
-	Fri, 21 Jul 2023 19:04:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB58E200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:04:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35619C433C8;
+	Fri, 21 Jul 2023 19:04:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966267;
-	bh=pUDx32jMgVGVXpcOrqcmaoyvJr+Gcc7wslI7cwjPAgU=;
+	s=korg; t=1689966273;
+	bh=26Gkp/AZKnDuFFXxpuYjZsZpjmKRauFTyWbOgAXpazw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QftUp+VEtN0STGr0r4ze+RxxizVoQAtdh79OJ5ZbABWo3sMxkaCtGMu7rQ+MOmdb5
-	 fYqZNpr0E8d6ACaVBVWfzYmFgYg3ftAwnoDXk9oxlL7zxZxxXKe1ecPDph7am+cKOz
-	 +6OXrCMR5e6y/fq63gEHSiLiaYJ9Mw1EBHyrEwMc=
+	b=eLXOdEr1lDO5kkLe3oBusQ3y3MR2cexYgffmcOvs4hJQjq8IR5Yi3HRyEKTlXZiQk
+	 NOZvLdlWm7oLCM6LJ4vLcC0LPjxmNsl7hEevKmdI7Xr1vKP8z3xsDmCJmuL/vgveki
+	 ccyTLH1bEes03baI80qhHlZF8vqewCKgURtJINyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 282/532] extcon: Fix kernel doc of property capability fields to avoid warnings
-Date: Fri, 21 Jul 2023 18:03:06 +0200
-Message-ID: <20230721160629.702775849@linuxfoundation.org>
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 257/532] ALSA: hda/realtek: Add quirk for Clevo NPx0SNx
+Date: Fri, 21 Jul 2023 18:02:41 +0200
+Message-ID: <20230721160628.281187247@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,45 +34,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-[ Upstream commit 73346b9965ebda2feb7fef8629e9b28baee820e3 ]
+commit 22065e4214c1196b54fc164892c2e193a743caf3 upstream.
 
-Kernel documentation has to be synchronized with a code, otherwise
-the validator is not happy:
+This applies a SND_PCI_QUIRK(...) to the Clevo NPx0SNx barebones fixing the
+microphone not being detected on the headset combo port.
 
-     Function parameter or member 'usb_bits' not described in 'extcon_cable'
-     Function parameter or member 'chg_bits' not described in 'extcon_cable'
-     Function parameter or member 'jack_bits' not described in 'extcon_cable'
-     Function parameter or member 'disp_bits' not described in 'extcon_cable'
-
-Describe the fields added in the past.
-
-Fixes: ceaa98f442cf ("extcon: Add the support for the capability of each property")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230628155434.584159-1-wse@tuxedocomputers.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/extcon/extcon.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/extcon/extcon.c b/drivers/extcon/extcon.c
-index 6b0681666e8e1..6a0d55d627ad0 100644
---- a/drivers/extcon/extcon.c
-+++ b/drivers/extcon/extcon.c
-@@ -200,6 +200,10 @@ static const struct __extcon_info {
-  * @chg_propval:	the array of charger connector properties
-  * @jack_propval:	the array of jack connector properties
-  * @disp_propval:	the array of display connector properties
-+ * @usb_bits:		the bit array of the USB connector property capabilities
-+ * @chg_bits:		the bit array of the charger connector property capabilities
-+ * @jack_bits:		the bit array of the jack connector property capabilities
-+ * @disp_bits:		the bit array of the display connector property capabilities
-  */
- struct extcon_cable {
- 	struct extcon_dev *edev;
--- 
-2.39.2
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9242,6 +9242,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1558, 0x971d, "Clevo N970T[CDF]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xa500, "Clevo NL5[03]RU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xa600, "Clevo NL50NU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1558, 0xa650, "Clevo NP[567]0SN[CD]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xa671, "Clevo NP70SN[CDE]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xb018, "Clevo NP50D[BE]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xb019, "Clevo NH77D[BE]Q", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
 
 
