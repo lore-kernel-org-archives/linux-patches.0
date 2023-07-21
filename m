@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083701ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:51:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D67C433C7;
-	Fri, 21 Jul 2023 18:51:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A8E1ED41
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:51:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E6DC433CA;
+	Fri, 21 Jul 2023 18:51:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965496;
-	bh=IG2tefunwK86URsLT935eq1E3Smkcld8Y4TuKr40pHM=;
+	s=korg; t=1689965499;
+	bh=bBjZTCUHuvtwSrJRP8pj4kMi+QGNDwQvnDWuAxaEq6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lFBQQZG4j1YUpfqk4ld3CY4qzqiPrsujiC5H8FpL3fWpMhqaE4yqeQCfVQMb8+p5m
-	 b6nHWWdW8vIBe+Z2VrS0WlhFZS1zcFFgI/PWtOOv+EdEN5djdIRFpMMPaiMDteIofZ
-	 jJmNztBvZU9ovuLo/e63qOCIgTuUGj4ol65bYUP0=
+	b=yVHF0J18qxvHGoh5JzAtgbZzANd/Nexhx3KwtXYFSyGj5uaykUWNc+eBnQEkceGvf
+	 Uu25qXRPRJbWixq3vx71m+LT6znwalMBuJ1n1OPehZkLwiMziciJkwJZn5fQkMcbi4
+	 yE4p2gLOvMRd8j1np9eQo0cG+XvPHGNjqyBiyEI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Li Nan <linan122@huawei.com>,
-	Tejun Heo <tj@kernel.org>,
 	Yu Kuai <yukuai3@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 004/532] blk-iocost: use spin_lock_irqsave in adjust_inuse_and_calc_cost
-Date: Fri, 21 Jul 2023 17:58:28 +0200
-Message-ID: <20230721160614.926913586@linuxfoundation.org>
+Subject: [PATCH 5.15 005/532] md/raid10: check slab-out-of-bounds in md_bitmap_get_counter
+Date: Fri, 21 Jul 2023 17:58:29 +0200
+Message-ID: <20230721160614.978882631@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -39,146 +38,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 8d211554679d0b23702bd32ba04aeac0c1c4f660 ]
+[ Upstream commit 301867b1c16805aebbc306aafa6ecdc68b73c7e5 ]
 
-adjust_inuse_and_calc_cost() use spin_lock_irq() and IRQ will be enabled
-when unlock. DEADLOCK might happen if we have held other locks and disabled
-IRQ before invoking it.
+If we write a large number to md/bitmap_set_bits, md_bitmap_checkpage()
+will return -EINVAL because 'page >= bitmap->pages', but the return value
+was not checked immediately in md_bitmap_get_counter() in order to set
+*blocks value and slab-out-of-bounds occurs.
 
-Fix it by using spin_lock_irqsave() instead, which can keep IRQ state
-consistent with before when unlock.
+Move check of 'page >= bitmap->pages' to md_bitmap_get_counter() and
+return directly if true.
 
-  ================================
-  WARNING: inconsistent lock state
-  5.10.0-02758-g8e5f91fd772f #26 Not tainted
-  --------------------------------
-  inconsistent {IN-HARDIRQ-W} -> {HARDIRQ-ON-W} usage.
-  kworker/2:3/388 [HC0[0]:SC0[0]:HE0:SE1] takes:
-  ffff888118c00c28 (&bfqd->lock){?.-.}-{2:2}, at: spin_lock_irq
-  ffff888118c00c28 (&bfqd->lock){?.-.}-{2:2}, at: bfq_bio_merge+0x141/0x390
-  {IN-HARDIRQ-W} state was registered at:
-    __lock_acquire+0x3d7/0x1070
-    lock_acquire+0x197/0x4a0
-    __raw_spin_lock_irqsave
-    _raw_spin_lock_irqsave+0x3b/0x60
-    bfq_idle_slice_timer_body
-    bfq_idle_slice_timer+0x53/0x1d0
-    __run_hrtimer+0x477/0xa70
-    __hrtimer_run_queues+0x1c6/0x2d0
-    hrtimer_interrupt+0x302/0x9e0
-    local_apic_timer_interrupt
-    __sysvec_apic_timer_interrupt+0xfd/0x420
-    run_sysvec_on_irqstack_cond
-    sysvec_apic_timer_interrupt+0x46/0xa0
-    asm_sysvec_apic_timer_interrupt+0x12/0x20
-  irq event stamp: 837522
-  hardirqs last  enabled at (837521): [<ffffffff84b9419d>] __raw_spin_unlock_irqrestore
-  hardirqs last  enabled at (837521): [<ffffffff84b9419d>] _raw_spin_unlock_irqrestore+0x3d/0x40
-  hardirqs last disabled at (837522): [<ffffffff84b93fa3>] __raw_spin_lock_irq
-  hardirqs last disabled at (837522): [<ffffffff84b93fa3>] _raw_spin_lock_irq+0x43/0x50
-  softirqs last  enabled at (835852): [<ffffffff84e00558>] __do_softirq+0x558/0x8ec
-  softirqs last disabled at (835845): [<ffffffff84c010ff>] asm_call_irq_on_stack+0xf/0x20
-
-  other info that might help us debug this:
-   Possible unsafe locking scenario:
-
-         CPU0
-         ----
-    lock(&bfqd->lock);
-    <Interrupt>
-      lock(&bfqd->lock);
-
-   *** DEADLOCK ***
-
-  3 locks held by kworker/2:3/388:
-   #0: ffff888107af0f38 ((wq_completion)kthrotld){+.+.}-{0:0}, at: process_one_work+0x742/0x13f0
-   #1: ffff8881176bfdd8 ((work_completion)(&td->dispatch_work)){+.+.}-{0:0}, at: process_one_work+0x777/0x13f0
-   #2: ffff888118c00c28 (&bfqd->lock){?.-.}-{2:2}, at: spin_lock_irq
-   #2: ffff888118c00c28 (&bfqd->lock){?.-.}-{2:2}, at: bfq_bio_merge+0x141/0x390
-
-  stack backtrace:
-  CPU: 2 PID: 388 Comm: kworker/2:3 Not tainted 5.10.0-02758-g8e5f91fd772f #26
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
-  Workqueue: kthrotld blk_throtl_dispatch_work_fn
-  Call Trace:
-   __dump_stack lib/dump_stack.c:77 [inline]
-   dump_stack+0x107/0x167
-   print_usage_bug
-   valid_state
-   mark_lock_irq.cold+0x32/0x3a
-   mark_lock+0x693/0xbc0
-   mark_held_locks+0x9e/0xe0
-   __trace_hardirqs_on_caller
-   lockdep_hardirqs_on_prepare.part.0+0x151/0x360
-   trace_hardirqs_on+0x5b/0x180
-   __raw_spin_unlock_irq
-   _raw_spin_unlock_irq+0x24/0x40
-   spin_unlock_irq
-   adjust_inuse_and_calc_cost+0x4fb/0x970
-   ioc_rqos_merge+0x277/0x740
-   __rq_qos_merge+0x62/0xb0
-   rq_qos_merge
-   bio_attempt_back_merge+0x12c/0x4a0
-   blk_mq_sched_try_merge+0x1b6/0x4d0
-   bfq_bio_merge+0x24a/0x390
-   __blk_mq_sched_bio_merge+0xa6/0x460
-   blk_mq_sched_bio_merge
-   blk_mq_submit_bio+0x2e7/0x1ee0
-   __submit_bio_noacct_mq+0x175/0x3b0
-   submit_bio_noacct+0x1fb/0x270
-   blk_throtl_dispatch_work_fn+0x1ef/0x2b0
-   process_one_work+0x83e/0x13f0
-   process_scheduled_works
-   worker_thread+0x7e3/0xd80
-   kthread+0x353/0x470
-   ret_from_fork+0x1f/0x30
-
-Fixes: b0853ab4a238 ("blk-iocost: revamp in-period donation snapbacks")
+Fixes: ef4256733506 ("md/bitmap: optimise scanning of empty bitmaps.")
 Signed-off-by: Li Nan <linan122@huawei.com>
-Acked-by: Tejun Heo <tj@kernel.org>
 Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20230527091904.3001833-1-linan666@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230515134808.3936750-2-linan666@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/md/md-bitmap.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index 43cf04966c745..f95feabb3ca88 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -2448,6 +2448,7 @@ static u64 adjust_inuse_and_calc_cost(struct ioc_gq *iocg, u64 vtime,
- 	u32 hwi, adj_step;
- 	s64 margin;
- 	u64 cost, new_inuse;
-+	unsigned long flags;
+diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
+index 062142559caa3..adada558a1b09 100644
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -54,14 +54,7 @@ __acquires(bitmap->lock)
+ {
+ 	unsigned char *mappage;
  
- 	current_hweight(iocg, NULL, &hwi);
- 	old_hwi = hwi;
-@@ -2466,11 +2467,11 @@ static u64 adjust_inuse_and_calc_cost(struct ioc_gq *iocg, u64 vtime,
- 	    iocg->inuse == iocg->active)
- 		return cost;
+-	if (page >= bitmap->pages) {
+-		/* This can happen if bitmap_start_sync goes beyond
+-		 * End-of-device while looking for a whole page.
+-		 * It is harmless.
+-		 */
+-		return -EINVAL;
+-	}
+-
++	WARN_ON_ONCE(page >= bitmap->pages);
+ 	if (bitmap->bp[page].hijacked) /* it's hijacked, don't try to alloc */
+ 		return 0;
  
--	spin_lock_irq(&ioc->lock);
-+	spin_lock_irqsave(&ioc->lock, flags);
+@@ -1365,6 +1358,14 @@ __acquires(bitmap->lock)
+ 	sector_t csize;
+ 	int err;
  
- 	/* we own inuse only when @iocg is in the normal active state */
- 	if (iocg->abs_vdebt || list_empty(&iocg->active_list)) {
--		spin_unlock_irq(&ioc->lock);
-+		spin_unlock_irqrestore(&ioc->lock, flags);
- 		return cost;
- 	}
++	if (page >= bitmap->pages) {
++		/*
++		 * This can happen if bitmap_start_sync goes beyond
++		 * End-of-device while looking for a whole page or
++		 * user set a huge number to sysfs bitmap_set_bits.
++		 */
++		return NULL;
++	}
+ 	err = md_bitmap_checkpage(bitmap, page, create, 0);
  
-@@ -2491,7 +2492,7 @@ static u64 adjust_inuse_and_calc_cost(struct ioc_gq *iocg, u64 vtime,
- 	} while (time_after64(vtime + cost, now->vnow) &&
- 		 iocg->inuse != iocg->active);
- 
--	spin_unlock_irq(&ioc->lock);
-+	spin_unlock_irqrestore(&ioc->lock, flags);
- 
- 	TRACE_IOCG_PATH(inuse_adjust, iocg, now,
- 			old_inuse, iocg->inuse, old_hwi, hwi);
+ 	if (bitmap->bp[page].hijacked ||
 -- 
 2.39.2
 
