@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E2A200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:02:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD62AC433C8;
-	Fri, 21 Jul 2023 19:02:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D42D1ED39
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:02:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A465BC433C9;
+	Fri, 21 Jul 2023 19:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966137;
-	bh=eboyxibNpoCw7evqcnECkxD5Bh4kBBFbq+zPzfO3nrk=;
+	s=korg; t=1689966140;
+	bh=hBxW4Aq5D2Vp7+U9Lxun/wkTGiytYGRzezopo3mc9JA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1eyRlvvH4cqR49Tn3J6OWaIu4lyaLjX1f4012I0g/dDPlKdnT5aiXxWbxvRBHRyLq
-	 c6nbxlpssB0douTM/ye/r15LHnhG17SBB/oY2Jf1e1JLQm8NDNIXl7/bjzkaScY4xx
-	 MvVgcFX2vjFUsfl74/za1TtRP4e8hJ80rgqk4gpU=
+	b=KvNhdpPMUUWLUjLxiiBgrctdvufngIbb5vO4cyXp8PpNr+G8BQ2nUGUA49dcFF9ul
+	 WEVxdeShupapcsZ29hksN/aQcktWwv9YY4l+TJL4gSJEm6+PgnofpodNXifIvu/Adr
+	 ryfFN86yT2wa95oR17JrSgKiML6vZH1pc04wd4C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 238/532] NFSv4.1: freeze the session table upon receiving NFS4ERR_BADSESSION
-Date: Fri, 21 Jul 2023 18:02:22 +0200
-Message-ID: <20230721160627.273058094@linuxfoundation.org>
+Subject: [PATCH 5.15 239/532] SMB3: Do not send lease break acknowledgment if all file handles have been closed
+Date: Fri, 21 Jul 2023 18:02:23 +0200
+Message-ID: <20230721160627.325228599@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,39 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Olga Kornievskaia <kolga@netapp.com>
+From: Bharath SM <bharathsm@microsoft.com>
 
-[ Upstream commit c907e72f58ed979a24a9fdcadfbc447c51d5e509 ]
+[ Upstream commit da787d5b74983f7525d1eb4b9c0b4aff2821511a ]
 
-When the client received NFS4ERR_BADSESSION, it schedules recovery
-and start the state manager thread which in turn freezes the
-session table and does not allow for any new requests to use the
-no-longer valid session. However, it is possible that before
-the state manager thread runs, a new operation would use the
-released slot that received BADSESSION and was therefore not
-updated its sequence number. Such re-use of the slot can lead
-the application errors.
+In case if all existing file handles are deferred handles and if all of
+them gets closed due to handle lease break then we dont need to send
+lease break acknowledgment to server, because last handle close will be
+considered as lease break ack.
+After closing deferred handels, we check for openfile list of inode,
+if its empty then we skip sending lease break ack.
 
-Fixes: 5c441544f045 ("NFSv4.x: Handle bad/dead sessions correctly in nfs41_sequence_process()")
-Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: 59a556aebc43 ("SMB3: drop reference to cfile before sending oplock break")
+Reviewed-by: Tom Talpey <tom@talpey.com>
+Signed-off-by: Bharath SM <bharathsm@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/cifs/file.c | 25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 0546fa1ac98f4..b1ec9b5d06e58 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -923,6 +923,7 @@ static int nfs41_sequence_process(struct rpc_task *task,
- out_noaction:
- 	return ret;
- session_recover:
-+	set_bit(NFS4_SLOT_TBL_DRAINING, &session->fc_slot_table.slot_tbl_state);
- 	nfs4_schedule_session_recovery(session, status);
- 	dprintk("%s ERROR: %d Reset session\n", __func__, status);
- 	nfs41_sequence_free_slot(res);
+diff --git a/fs/cifs/file.c b/fs/cifs/file.c
+index bda1ffe6e41f8..4e4f73a90574b 100644
+--- a/fs/cifs/file.c
++++ b/fs/cifs/file.c
+@@ -4923,20 +4923,19 @@ void cifs_oplock_break(struct work_struct *work)
+ 
+ 	_cifsFileInfo_put(cfile, false /* do not wait for ourself */, false);
+ 	/*
+-	 * releasing stale oplock after recent reconnect of smb session using
+-	 * a now incorrect file handle is not a data integrity issue but do
+-	 * not bother sending an oplock release if session to server still is
+-	 * disconnected since oplock already released by the server
++	 * MS-SMB2 3.2.5.19.1 and 3.2.5.19.2 (and MS-CIFS 3.2.5.42) do not require
++	 * an acknowledgment to be sent when the file has already been closed.
++	 * check for server null, since can race with kill_sb calling tree disconnect.
+ 	 */
+-	if (!oplock_break_cancelled) {
+-		/* check for server null since can race with kill_sb calling tree disconnect */
+-		if (tcon->ses && tcon->ses->server) {
+-			rc = tcon->ses->server->ops->oplock_response(tcon, persistent_fid,
+-				volatile_fid, net_fid, cinode);
+-			cifs_dbg(FYI, "Oplock release rc = %d\n", rc);
+-		} else
+-			pr_warn_once("lease break not sent for unmounted share\n");
+-	}
++	spin_lock(&cinode->open_file_lock);
++	if (tcon->ses && tcon->ses->server && !oplock_break_cancelled &&
++					!list_empty(&cinode->openFileList)) {
++		spin_unlock(&cinode->open_file_lock);
++		rc = tcon->ses->server->ops->oplock_response(tcon, persistent_fid,
++						volatile_fid, net_fid, cinode);
++		cifs_dbg(FYI, "Oplock release rc = %d\n", rc);
++	} else
++		spin_unlock(&cinode->open_file_lock);
+ 
+ 	cifs_done_oplock_break(cinode);
+ }
 -- 
 2.39.2
 
