@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3D91ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:50:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E4CC433CA;
-	Fri, 21 Jul 2023 18:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19A71ED41
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:50:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534FBC433C7;
+	Fri, 21 Jul 2023 18:50:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965454;
-	bh=0pUfJIBp2hc9NQBmlBzlR7LOQhF7dGUU63YKR0g7/MU=;
+	s=korg; t=1689965457;
+	bh=FUvP6rMKOTXHGMi3/QsWtxDR24XoV2zguEGGI8mDKT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jIkovS5mVKlJeynV9uInFx6IV6sivYTvvBhApZ2wbndvFo2WMXUO0mRFMmK+VBSzZ
-	 alwypWuzITttY5ZVpd7MZ9MlpGGvAoqfXXE4vzPTyxxncR3q0jRtXAOIkbtkrTQrjq
-	 Lsy3bp9JAI1Ta/242SkUdpLk6MNH4rxlGch1GE+4=
+	b=WmLUshJSdlxQPtZp7Ac13CEPk9tPPbB8Iv8kuTc3eFeNXJ2QeaC/7Kcxs/VJ+yPz4
+	 Q2KOmLfC6UiIp39D1v+D1XfYWUeTrM23YgjKj8J9guT21UrzIKMQmJ69QPuF14F0u5
+	 qjQgaK6MS5HjuZzbY04waq0LfBdAtFYhDUC3UUj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.4 290/292] net: dsa: ocelot: unlock on error in vsc9959_qos_port_tas_set()
-Date: Fri, 21 Jul 2023 18:06:39 +0200
-Message-ID: <20230721160541.416710183@linuxfoundation.org>
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 6.4 291/292] MIPS: kvm: Fix build error with KVM_MIPS_DEBUG_COP0_COUNTERS enabled
+Date: Fri, 21 Jul 2023 18:06:40 +0200
+Message-ID: <20230721160541.464078644@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -35,33 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 
-commit cad7526f33ce1e7d387d1d0568a089e41deec5c2 upstream.
+commit 3a6dbb691782e88e07e5c70b327495dbd58a2e7f upstream.
 
-This error path needs call mutex_unlock(&ocelot->tas_lock) before
-returning.
+Commit e4de20576986 ("MIPS: KVM: Fix NULL pointer dereference") missed
+converting one place accessing cop0 registers, which results in a build
+error, if KVM_MIPS_DEBUG_COP0_COUNTERS is enabled.
 
-Fixes: 2d800bc500fb ("net/sched: taprio: replace tc_taprio_qopt_offload :: enable with a "cmd" enum")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: e4de20576986 ("MIPS: KVM: Fix NULL pointer dereference")
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/ocelot/felix_vsc9959.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/mips/kvm/stats.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/dsa/ocelot/felix_vsc9959.c
-+++ b/drivers/net/dsa/ocelot/felix_vsc9959.c
-@@ -1449,7 +1449,8 @@ static int vsc9959_qos_port_tas_set(stru
- 		mutex_unlock(&ocelot->tas_lock);
- 		return 0;
- 	} else if (taprio->cmd != TAPRIO_CMD_REPLACE) {
--		return -EOPNOTSUPP;
-+		ret = -EOPNOTSUPP;
-+		goto err_unlock;
+--- a/arch/mips/kvm/stats.c
++++ b/arch/mips/kvm/stats.c
+@@ -54,9 +54,9 @@ void kvm_mips_dump_stats(struct kvm_vcpu
+ 	kvm_info("\nKVM VCPU[%d] COP0 Access Profile:\n", vcpu->vcpu_id);
+ 	for (i = 0; i < N_MIPS_COPROC_REGS; i++) {
+ 		for (j = 0; j < N_MIPS_COPROC_SEL; j++) {
+-			if (vcpu->arch.cop0->stat[i][j])
++			if (vcpu->arch.cop0.stat[i][j])
+ 				kvm_info("%s[%d]: %lu\n", kvm_cop0_str[i], j,
+-					 vcpu->arch.cop0->stat[i][j]);
++					 vcpu->arch.cop0.stat[i][j]);
+ 		}
  	}
- 
- 	ret = ocelot_port_mqprio(ocelot, port, &taprio->mqprio);
+ #endif
 
 
