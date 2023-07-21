@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA47F1F93D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:09:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E79C433CD;
-	Fri, 21 Jul 2023 16:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FAA1EA97
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:09:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E93C433C7;
+	Fri, 21 Jul 2023 16:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689955758;
-	bh=2FrzODuS0GWBD5UrcsQlh8CCM5roADhzsrVxOFDR5Eo=;
+	s=korg; t=1689955761;
+	bh=P7+e/aLbjsaa8Cz97TSE6B9Yp4U24GWx8kx2+MzUEp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vSQkIsCc31YQWADsiEJ3TrIpVm0+HkTsbPYQRKT97jLnEN+k0buJVujL7QslkGgsY
-	 59ae075fw1XWxzeHRLHMDhuqPuH9nsoLEIGOnBA/Urp3lM3CQFOZnth9XGDslNibb7
-	 XZcqiCpynu8Pc47PLuOkpxEpYyWWrG5BRJlgg7hg=
+	b=Q9KMc2nyJVMki1jlPMs2GLBeQE6fUqbP7QRx4vYMSeNxsyg8ACNOMephNhFYlDK2J
+	 x1AWAEJXjCeOmZcthDhY4XAt5vEVLt1w3Xy5N5lhIZDHGJMGEJDP+aDxeTmURIZsHI
+	 peMVnnHCmnrHnhXroic7ZIvt+s1O0InRXKQN01TA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.4 007/292] net: lan743x: select FIXED_PHY
-Date: Fri, 21 Jul 2023 18:01:56 +0200
-Message-ID: <20230721160529.128757662@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.4 008/292] ksmbd: add missing compound request handing in some commands
+Date: Fri, 21 Jul 2023 18:01:57 +0200
+Message-ID: <20230721160529.172445472@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -35,41 +34,239 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Simon Horman <horms@kernel.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 73c4d1b307aeb713e80ab03f90c7df9d417dc0f0 upstream.
+commit 7b7d709ef7cf285309157fb94c33f625dd22c5e1 upstream.
 
-The blamed commit introduces usage of fixed_phy_register() but
-not a corresponding dependency on FIXED_PHY.
+This patch add the compound request handling to the some commands.
+Existing clients do not send these commands as compound requests,
+but ksmbd should consider that they may come.
 
-This can result in a build failure.
-
- s390-linux-ld: drivers/net/ethernet/microchip/lan743x_main.o: in function `lan743x_phy_open':
- drivers/net/ethernet/microchip/lan743x_main.c:1514: undefined reference to `fixed_phy_register'
-
-Fixes: 624864fbff92 ("net: lan743x: add fixed phy support for LAN7431 device")
 Cc: stable@vger.kernel.org
-Reported-by: Randy Dunlap <rdunlap@infradead.org>
-Closes: https://lore.kernel.org/netdev/725bf1c5-b252-7d19-7582-a6809716c7d6@infradead.org/
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
-Signed-off-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microchip/Kconfig |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c |   78 ++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 53 insertions(+), 25 deletions(-)
 
---- a/drivers/net/ethernet/microchip/Kconfig
-+++ b/drivers/net/ethernet/microchip/Kconfig
-@@ -46,7 +46,7 @@ config LAN743X
- 	tristate "LAN743x support"
- 	depends on PCI
- 	depends on PTP_1588_CLOCK_OPTIONAL
--	select PHYLIB
-+	select FIXED_PHY
- 	select CRC16
- 	select CRC32
- 	help
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1911,14 +1911,16 @@ out_err:
+ int smb2_tree_connect(struct ksmbd_work *work)
+ {
+ 	struct ksmbd_conn *conn = work->conn;
+-	struct smb2_tree_connect_req *req = smb2_get_msg(work->request_buf);
+-	struct smb2_tree_connect_rsp *rsp = smb2_get_msg(work->response_buf);
++	struct smb2_tree_connect_req *req;
++	struct smb2_tree_connect_rsp *rsp;
+ 	struct ksmbd_session *sess = work->sess;
+ 	char *treename = NULL, *name = NULL;
+ 	struct ksmbd_tree_conn_status status;
+ 	struct ksmbd_share_config *share;
+ 	int rc = -EINVAL;
+ 
++	WORK_BUFFERS(work, req, rsp);
++
+ 	treename = smb_strndup_from_utf16(req->Buffer,
+ 					  le16_to_cpu(req->PathLength), true,
+ 					  conn->local_nls);
+@@ -2087,19 +2089,19 @@ static int smb2_create_open_flags(bool f
+  */
+ int smb2_tree_disconnect(struct ksmbd_work *work)
+ {
+-	struct smb2_tree_disconnect_rsp *rsp = smb2_get_msg(work->response_buf);
++	struct smb2_tree_disconnect_rsp *rsp;
++	struct smb2_tree_disconnect_req *req;
+ 	struct ksmbd_session *sess = work->sess;
+ 	struct ksmbd_tree_connect *tcon = work->tcon;
+ 
++	WORK_BUFFERS(work, req, rsp);
++
+ 	rsp->StructureSize = cpu_to_le16(4);
+ 	inc_rfc1001_len(work->response_buf, 4);
+ 
+ 	ksmbd_debug(SMB, "request\n");
+ 
+ 	if (!tcon || test_and_set_bit(TREE_CONN_EXPIRE, &tcon->status)) {
+-		struct smb2_tree_disconnect_req *req =
+-			smb2_get_msg(work->request_buf);
+-
+ 		ksmbd_debug(SMB, "Invalid tid %d\n", req->hdr.Id.SyncId.TreeId);
+ 
+ 		rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
+@@ -2122,10 +2124,14 @@ int smb2_tree_disconnect(struct ksmbd_wo
+ int smb2_session_logoff(struct ksmbd_work *work)
+ {
+ 	struct ksmbd_conn *conn = work->conn;
+-	struct smb2_logoff_rsp *rsp = smb2_get_msg(work->response_buf);
++	struct smb2_logoff_req *req;
++	struct smb2_logoff_rsp *rsp;
+ 	struct ksmbd_session *sess;
+-	struct smb2_logoff_req *req = smb2_get_msg(work->request_buf);
+-	u64 sess_id = le64_to_cpu(req->hdr.SessionId);
++	u64 sess_id;
++
++	WORK_BUFFERS(work, req, rsp);
++
++	sess_id = le64_to_cpu(req->hdr.SessionId);
+ 
+ 	rsp->StructureSize = cpu_to_le16(4);
+ 	inc_rfc1001_len(work->response_buf, 4);
+@@ -2165,12 +2171,14 @@ int smb2_session_logoff(struct ksmbd_wor
+  */
+ static noinline int create_smb2_pipe(struct ksmbd_work *work)
+ {
+-	struct smb2_create_rsp *rsp = smb2_get_msg(work->response_buf);
+-	struct smb2_create_req *req = smb2_get_msg(work->request_buf);
++	struct smb2_create_rsp *rsp;
++	struct smb2_create_req *req;
+ 	int id;
+ 	int err;
+ 	char *name;
+ 
++	WORK_BUFFERS(work, req, rsp);
++
+ 	name = smb_strndup_from_utf16(req->Buffer, le16_to_cpu(req->NameLength),
+ 				      1, work->conn->local_nls);
+ 	if (IS_ERR(name)) {
+@@ -5305,8 +5313,10 @@ int smb2_query_info(struct ksmbd_work *w
+ static noinline int smb2_close_pipe(struct ksmbd_work *work)
+ {
+ 	u64 id;
+-	struct smb2_close_req *req = smb2_get_msg(work->request_buf);
+-	struct smb2_close_rsp *rsp = smb2_get_msg(work->response_buf);
++	struct smb2_close_req *req;
++	struct smb2_close_rsp *rsp;
++
++	WORK_BUFFERS(work, req, rsp);
+ 
+ 	id = req->VolatileFileId;
+ 	ksmbd_session_rpc_close(work->sess, id);
+@@ -5448,6 +5458,9 @@ int smb2_echo(struct ksmbd_work *work)
+ {
+ 	struct smb2_echo_rsp *rsp = smb2_get_msg(work->response_buf);
+ 
++	if (work->next_smb2_rcv_hdr_off)
++		rsp = ksmbd_resp_buf_next(work);
++
+ 	rsp->StructureSize = cpu_to_le16(4);
+ 	rsp->Reserved = 0;
+ 	inc_rfc1001_len(work->response_buf, 4);
+@@ -6082,8 +6095,10 @@ static noinline int smb2_read_pipe(struc
+ 	int nbytes = 0, err;
+ 	u64 id;
+ 	struct ksmbd_rpc_command *rpc_resp;
+-	struct smb2_read_req *req = smb2_get_msg(work->request_buf);
+-	struct smb2_read_rsp *rsp = smb2_get_msg(work->response_buf);
++	struct smb2_read_req *req;
++	struct smb2_read_rsp *rsp;
++
++	WORK_BUFFERS(work, req, rsp);
+ 
+ 	id = req->VolatileFileId;
+ 
+@@ -6331,14 +6346,16 @@ out:
+  */
+ static noinline int smb2_write_pipe(struct ksmbd_work *work)
+ {
+-	struct smb2_write_req *req = smb2_get_msg(work->request_buf);
+-	struct smb2_write_rsp *rsp = smb2_get_msg(work->response_buf);
++	struct smb2_write_req *req;
++	struct smb2_write_rsp *rsp;
+ 	struct ksmbd_rpc_command *rpc_resp;
+ 	u64 id = 0;
+ 	int err = 0, ret = 0;
+ 	char *data_buf;
+ 	size_t length;
+ 
++	WORK_BUFFERS(work, req, rsp);
++
+ 	length = le32_to_cpu(req->Length);
+ 	id = req->VolatileFileId;
+ 
+@@ -6607,6 +6624,9 @@ int smb2_cancel(struct ksmbd_work *work)
+ 	struct ksmbd_work *iter;
+ 	struct list_head *command_list;
+ 
++	if (work->next_smb2_rcv_hdr_off)
++		hdr = ksmbd_resp_buf_next(work);
++
+ 	ksmbd_debug(SMB, "smb2 cancel called on mid %llu, async flags 0x%x\n",
+ 		    hdr->MessageId, hdr->Flags);
+ 
+@@ -6766,8 +6786,8 @@ static inline bool lock_defer_pending(st
+  */
+ int smb2_lock(struct ksmbd_work *work)
+ {
+-	struct smb2_lock_req *req = smb2_get_msg(work->request_buf);
+-	struct smb2_lock_rsp *rsp = smb2_get_msg(work->response_buf);
++	struct smb2_lock_req *req;
++	struct smb2_lock_rsp *rsp;
+ 	struct smb2_lock_element *lock_ele;
+ 	struct ksmbd_file *fp = NULL;
+ 	struct file_lock *flock = NULL;
+@@ -6784,6 +6804,8 @@ int smb2_lock(struct ksmbd_work *work)
+ 	LIST_HEAD(rollback_list);
+ 	int prior_lock = 0;
+ 
++	WORK_BUFFERS(work, req, rsp);
++
+ 	ksmbd_debug(SMB, "Received lock request\n");
+ 	fp = ksmbd_lookup_fd_slow(work, req->VolatileFileId, req->PersistentFileId);
+ 	if (!fp) {
+@@ -7897,8 +7919,8 @@ out:
+  */
+ static void smb20_oplock_break_ack(struct ksmbd_work *work)
+ {
+-	struct smb2_oplock_break *req = smb2_get_msg(work->request_buf);
+-	struct smb2_oplock_break *rsp = smb2_get_msg(work->response_buf);
++	struct smb2_oplock_break *req;
++	struct smb2_oplock_break *rsp;
+ 	struct ksmbd_file *fp;
+ 	struct oplock_info *opinfo = NULL;
+ 	__le32 err = 0;
+@@ -7907,6 +7929,8 @@ static void smb20_oplock_break_ack(struc
+ 	char req_oplevel = 0, rsp_oplevel = 0;
+ 	unsigned int oplock_change_type;
+ 
++	WORK_BUFFERS(work, req, rsp);
++
+ 	volatile_id = req->VolatileFid;
+ 	persistent_id = req->PersistentFid;
+ 	req_oplevel = req->OplockLevel;
+@@ -8041,8 +8065,8 @@ static int check_lease_state(struct leas
+ static void smb21_lease_break_ack(struct ksmbd_work *work)
+ {
+ 	struct ksmbd_conn *conn = work->conn;
+-	struct smb2_lease_ack *req = smb2_get_msg(work->request_buf);
+-	struct smb2_lease_ack *rsp = smb2_get_msg(work->response_buf);
++	struct smb2_lease_ack *req;
++	struct smb2_lease_ack *rsp;
+ 	struct oplock_info *opinfo;
+ 	__le32 err = 0;
+ 	int ret = 0;
+@@ -8050,6 +8074,8 @@ static void smb21_lease_break_ack(struct
+ 	__le32 lease_state;
+ 	struct lease *lease;
+ 
++	WORK_BUFFERS(work, req, rsp);
++
+ 	ksmbd_debug(OPLOCK, "smb21 lease break, lease state(0x%x)\n",
+ 		    le32_to_cpu(req->LeaseState));
+ 	opinfo = lookup_lease_in_table(conn, req->LeaseKey);
+@@ -8175,8 +8201,10 @@ err_out:
+  */
+ int smb2_oplock_break(struct ksmbd_work *work)
+ {
+-	struct smb2_oplock_break *req = smb2_get_msg(work->request_buf);
+-	struct smb2_oplock_break *rsp = smb2_get_msg(work->response_buf);
++	struct smb2_oplock_break *req;
++	struct smb2_oplock_break *rsp;
++
++	WORK_BUFFERS(work, req, rsp);
+ 
+ 	switch (le16_to_cpu(req->StructureSize)) {
+ 	case OP_BREAK_STRUCT_SIZE_20:
 
 
