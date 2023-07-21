@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6070A1ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:53:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D483FC433C7;
-	Fri, 21 Jul 2023 18:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5971F1ED41
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:53:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3692C433C7;
+	Fri, 21 Jul 2023 18:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965610;
-	bh=z9LED+L4i+J9jS+02sbR8jZQctezH2+qAXZarr8PeyE=;
+	s=korg; t=1689965613;
+	bh=H9OmMpBErT2Gl4fLi1Rtj80DVab04AVwEVjebRsCOEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iqMFLJsaJYc5367F2Z7Gp1s19f7GW980JgLbzD3O1ls10Hsb9wcsYgDljBA95Tc7y
-	 icMgOBayrZNIidHbj3srKFENWzI4gP+V75Xb0T4RhK6E3FqPhCZwX/zObMftj/AJ+I
-	 XfTFTZxp1gqGqAUYOuQuCuylSjrrAnad/E1Kwf2A=
+	b=P4tozMJpEoH3z4T1narHrVFBa7ImaV1STPiBO97SVHmG+pXEm/0YLyIFDn11H4Spy
+	 yT1lGZbrl/quIw0e7FMSl57J7zi+fPMoN90KPYf97BIAJD9NTa079WZPVVf7/a2PA+
+	 cSXjkyqJaViA3+qmo+IcdaT8w1S9Y+lauZWzlWEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Kalle Valo <kvalo@codeaurora.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 052/532] wifi: atmel: Fix an error handling path in atmel_probe()
-Date: Fri, 21 Jul 2023 17:59:16 +0200
-Message-ID: <20230721160617.458735452@linuxfoundation.org>
+Subject: [PATCH 5.15 053/532] wl3501_cs: use eth_hw_addr_set()
+Date: Fri, 21 Jul 2023 17:59:17 +0200
+Message-ID: <20230721160617.516979208@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,57 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 6b92e4351a29af52c285fe235e6e4d1a75de04b2 ]
+[ Upstream commit 18774612246d036c04ce9fee7f67192f96f48725 ]
 
-Should atmel_config() fail, some resources need to be released as already
-done in the remove function.
+Commit 406f42fa0d3c ("net-next: When a bond have a massive amount
+of VLANs...") introduced a rbtree for faster Ethernet address look
+up. To maintain netdev->dev_addr in this tree we need to make all
+the writes to it got through appropriate helpers.
 
-While at it, remove a useless and erroneous comment. The probe is
-atmel_probe(), not atmel_attach().
-
-Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/1e65f174607a83348034197fa7d603bab10ba4a9.1684569156.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
+Link: https://lore.kernel.org/r/20211018235021.1279697-15-kuba@kernel.org
+Stable-dep-of: 391af06a02e7 ("wifi: wl3501_cs: Fix an error handling path in wl3501_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/atmel/atmel_cs.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/net/wireless/wl3501_cs.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/atmel/atmel_cs.c b/drivers/net/wireless/atmel/atmel_cs.c
-index 453bb84cb3386..58bba9875d366 100644
---- a/drivers/net/wireless/atmel/atmel_cs.c
-+++ b/drivers/net/wireless/atmel/atmel_cs.c
-@@ -72,6 +72,7 @@ struct local_info {
- static int atmel_probe(struct pcmcia_device *p_dev)
- {
- 	struct local_info *local;
-+	int ret;
+diff --git a/drivers/net/wireless/wl3501_cs.c b/drivers/net/wireless/wl3501_cs.c
+index cb71b73853f4e..7351a2c127adc 100644
+--- a/drivers/net/wireless/wl3501_cs.c
++++ b/drivers/net/wireless/wl3501_cs.c
+@@ -1945,8 +1945,7 @@ static int wl3501_config(struct pcmcia_device *link)
+ 		goto failed;
+ 	}
  
- 	dev_dbg(&p_dev->dev, "atmel_attach()\n");
+-	for (i = 0; i < 6; i++)
+-		dev->dev_addr[i] = ((char *)&this->mac_addr)[i];
++	eth_hw_addr_set(dev, this->mac_addr);
  
-@@ -82,8 +83,16 @@ static int atmel_probe(struct pcmcia_device *p_dev)
- 
- 	p_dev->priv = local;
- 
--	return atmel_config(p_dev);
--} /* atmel_attach */
-+	ret = atmel_config(p_dev);
-+	if (ret)
-+		goto err_free_priv;
-+
-+	return 0;
-+
-+err_free_priv:
-+	kfree(p_dev->priv);
-+	return ret;
-+}
- 
- static void atmel_detach(struct pcmcia_device *link)
- {
+ 	/* print probe information */
+ 	printk(KERN_INFO "%s: wl3501 @ 0x%3.3x, IRQ %d, "
 -- 
 2.39.2
 
