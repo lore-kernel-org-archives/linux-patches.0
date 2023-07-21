@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F2B1F94D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:23:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E7AC433CA;
-	Fri, 21 Jul 2023 16:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92CA1F94D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:23:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A289C433C9;
+	Fri, 21 Jul 2023 16:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956609;
-	bh=g8iae+MKw774pQ3VMWg1P+pAQiNJ6lUcrc7kIgPAdzs=;
+	s=korg; t=1689956612;
+	bh=5gfpvdH46UCewjKUXoMbyfgohNJXRJX/aYeohbJERR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=URApTried4z6uMMIHohJS36xutV0NlDI/rB5JQjCXFSMdNoUgwkYa8bhwNloqyxsS
-	 9AsIAsUM0qy4pbeCX+zPUnyunOaWDlKX8vTh2aDx85Y1nNhWOePQud3sZn9b6O7AZD
-	 z6L8J5HwOOk6K3HSpL4hGYpEwh+qWaMEpJfJ4umM=
+	b=HapAcZUYt1YUI+N8XL/fQVapDczFxSoPm4IqQwvpjY7kjwl8sZEqyQQdR3gtr8K5x
+	 4vebVM13u+tkGuFP5sNjehwIpriSIQ6IhGF5dKnm/F8xnVpG06az5Wqe3IaBHYHtDg
+	 XfAR0AS7O7va6l01tqAQCfrJuO6t/Ul5ME5JraNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Khalfella <mkhalfella@purestorage.com>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.4 237/292] tracing/histograms: Add histograms to hist_vars if they have referenced variables
-Date: Fri, 21 Jul 2023 18:05:46 +0200
-Message-ID: <20230721160539.045879382@linuxfoundation.org>
+Subject: [PATCH 6.4 238/292] tracing: Fix memory leak of iter->temp when reading trace_pipe
+Date: Fri, 21 Jul 2023 18:05:47 +0200
+Message-ID: <20230721160539.102181956@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -34,127 +34,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mohamed Khalfella <mkhalfella@purestorage.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-commit 6018b585e8c6fa7d85d4b38d9ce49a5b67be7078 upstream.
+commit d5a821896360cc8b93a15bd888fabc858c038dc0 upstream.
 
-Hist triggers can have referenced variables without having direct
-variables fields. This can be the case if referenced variables are added
-for trigger actions. In this case the newly added references will not
-have field variables. Not taking such referenced variables into
-consideration can result in a bug where it would be possible to remove
-hist trigger with variables being refenced. This will result in a bug
-that is easily reproducable like so
+kmemleak reports:
+  unreferenced object 0xffff88814d14e200 (size 256):
+    comm "cat", pid 336, jiffies 4294871818 (age 779.490s)
+    hex dump (first 32 bytes):
+      04 00 01 03 00 00 00 00 08 00 00 00 00 00 00 00  ................
+      0c d8 c8 9b ff ff ff ff 04 5a ca 9b ff ff ff ff  .........Z......
+    backtrace:
+      [<ffffffff9bdff18f>] __kmalloc+0x4f/0x140
+      [<ffffffff9bc9238b>] trace_find_next_entry+0xbb/0x1d0
+      [<ffffffff9bc9caef>] trace_print_lat_context+0xaf/0x4e0
+      [<ffffffff9bc94490>] print_trace_line+0x3e0/0x950
+      [<ffffffff9bc95499>] tracing_read_pipe+0x2d9/0x5a0
+      [<ffffffff9bf03a43>] vfs_read+0x143/0x520
+      [<ffffffff9bf04c2d>] ksys_read+0xbd/0x160
+      [<ffffffff9d0f0edf>] do_syscall_64+0x3f/0x90
+      [<ffffffff9d2000aa>] entry_SYSCALL_64_after_hwframe+0x6e/0xd8
 
-$ cd /sys/kernel/tracing
-$ echo 'synthetic_sys_enter char[] comm; long id' >> synthetic_events
-$ echo 'hist:keys=common_pid.execname,id.syscall:vals=hitcount:comm=common_pid.execname' >> events/raw_syscalls/sys_enter/trigger
-$ echo 'hist:keys=common_pid.execname,id.syscall:onmatch(raw_syscalls.sys_enter).synthetic_sys_enter($comm, id)' >> events/raw_syscalls/sys_enter/trigger
-$ echo '!hist:keys=common_pid.execname,id.syscall:vals=hitcount:comm=common_pid.execname' >> events/raw_syscalls/sys_enter/trigger
+when reading file 'trace_pipe', 'iter->temp' is allocated or relocated
+in trace_find_next_entry() but not freed before 'trace_pipe' is closed.
 
-[  100.263533] ==================================================================
-[  100.264634] BUG: KASAN: slab-use-after-free in resolve_var_refs+0xc7/0x180
-[  100.265520] Read of size 8 at addr ffff88810375d0f0 by task bash/439
-[  100.266320]
-[  100.266533] CPU: 2 PID: 439 Comm: bash Not tainted 6.5.0-rc1 #4
-[  100.267277] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.0-20220807_005459-localhost 04/01/2014
-[  100.268561] Call Trace:
-[  100.268902]  <TASK>
-[  100.269189]  dump_stack_lvl+0x4c/0x70
-[  100.269680]  print_report+0xc5/0x600
-[  100.270165]  ? resolve_var_refs+0xc7/0x180
-[  100.270697]  ? kasan_complete_mode_report_info+0x80/0x1f0
-[  100.271389]  ? resolve_var_refs+0xc7/0x180
-[  100.271913]  kasan_report+0xbd/0x100
-[  100.272380]  ? resolve_var_refs+0xc7/0x180
-[  100.272920]  __asan_load8+0x71/0xa0
-[  100.273377]  resolve_var_refs+0xc7/0x180
-[  100.273888]  event_hist_trigger+0x749/0x860
-[  100.274505]  ? kasan_save_stack+0x2a/0x50
-[  100.275024]  ? kasan_set_track+0x29/0x40
-[  100.275536]  ? __pfx_event_hist_trigger+0x10/0x10
-[  100.276138]  ? ksys_write+0xd1/0x170
-[  100.276607]  ? do_syscall_64+0x3c/0x90
-[  100.277099]  ? entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-[  100.277771]  ? destroy_hist_data+0x446/0x470
-[  100.278324]  ? event_hist_trigger_parse+0xa6c/0x3860
-[  100.278962]  ? __pfx_event_hist_trigger_parse+0x10/0x10
-[  100.279627]  ? __kasan_check_write+0x18/0x20
-[  100.280177]  ? mutex_unlock+0x85/0xd0
-[  100.280660]  ? __pfx_mutex_unlock+0x10/0x10
-[  100.281200]  ? kfree+0x7b/0x120
-[  100.281619]  ? ____kasan_slab_free+0x15d/0x1d0
-[  100.282197]  ? event_trigger_write+0xac/0x100
-[  100.282764]  ? __kasan_slab_free+0x16/0x20
-[  100.283293]  ? __kmem_cache_free+0x153/0x2f0
-[  100.283844]  ? sched_mm_cid_remote_clear+0xb1/0x250
-[  100.284550]  ? __pfx_sched_mm_cid_remote_clear+0x10/0x10
-[  100.285221]  ? event_trigger_write+0xbc/0x100
-[  100.285781]  ? __kasan_check_read+0x15/0x20
-[  100.286321]  ? __bitmap_weight+0x66/0xa0
-[  100.286833]  ? _find_next_bit+0x46/0xe0
-[  100.287334]  ? task_mm_cid_work+0x37f/0x450
-[  100.287872]  event_triggers_call+0x84/0x150
-[  100.288408]  trace_event_buffer_commit+0x339/0x430
-[  100.289073]  ? ring_buffer_event_data+0x3f/0x60
-[  100.292189]  trace_event_raw_event_sys_enter+0x8b/0xe0
-[  100.295434]  syscall_trace_enter.constprop.0+0x18f/0x1b0
-[  100.298653]  syscall_enter_from_user_mode+0x32/0x40
-[  100.301808]  do_syscall_64+0x1a/0x90
-[  100.304748]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-[  100.307775] RIP: 0033:0x7f686c75c1cb
-[  100.310617] Code: 73 01 c3 48 8b 0d 65 3c 10 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa b8 21 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 35 3c 10 00 f7 d8 64 89 01 48
-[  100.317847] RSP: 002b:00007ffc60137a38 EFLAGS: 00000246 ORIG_RAX: 0000000000000021
-[  100.321200] RAX: ffffffffffffffda RBX: 000055f566469ea0 RCX: 00007f686c75c1cb
-[  100.324631] RDX: 0000000000000001 RSI: 0000000000000001 RDI: 000000000000000a
-[  100.328104] RBP: 00007ffc60137ac0 R08: 00007f686c818460 R09: 000000000000000a
-[  100.331509] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000009
-[  100.334992] R13: 0000000000000007 R14: 000000000000000a R15: 0000000000000007
-[  100.338381]  </TASK>
+To fix it, free 'iter->temp' in tracing_release_pipe().
 
-We hit the bug because when second hist trigger has was created
-has_hist_vars() returned false because hist trigger did not have
-variables. As a result of that save_hist_vars() was not called to add
-the trigger to trace_array->hist_vars. Later on when we attempted to
-remove the first histogram find_any_var_ref() failed to detect it is
-being used because it did not find the second trigger in hist_vars list.
-
-With this change we wait until trigger actions are created so we can take
-into consideration if hist trigger has variable references. Also, now we
-check the return value of save_hist_vars() and fail trigger creation if
-save_hist_vars() fails.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230712223021.636335-1-mkhalfella@purestorage.com
+Link: https://lore.kernel.org/linux-trace-kernel/20230713141435.1133021-1-zhengyejian1@huawei.com
 
 Cc: stable@vger.kernel.org
-Fixes: 067fe038e70f6 ("tracing: Add variable reference handling to hist triggers")
-Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
+Fixes: ff895103a84ab ("tracing: Save off entry when peeking at next entry")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ kernel/trace/trace.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -6663,13 +6663,15 @@ static int event_hist_trigger_parse(stru
- 	if (get_named_trigger_data(trigger_data))
- 		goto enable;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -6753,6 +6753,7 @@ static int tracing_release_pipe(struct i
  
--	if (has_hist_vars(hist_data))
--		save_hist_vars(hist_data);
--
- 	ret = create_actions(hist_data);
- 	if (ret)
- 		goto out_unreg;
+ 	free_cpumask_var(iter->started);
+ 	kfree(iter->fmt);
++	kfree(iter->temp);
+ 	mutex_destroy(&iter->mutex);
+ 	kfree(iter);
  
-+	if (has_hist_vars(hist_data) || hist_data->n_var_refs) {
-+		if (save_hist_vars(hist_data))
-+			goto out_unreg;
-+	}
-+
- 	ret = tracing_map_init(hist_data->map);
- 	if (ret)
- 		goto out_unreg;
 
 
