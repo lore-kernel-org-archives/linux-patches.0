@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B4320F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:21:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7ECC433C8;
-	Fri, 21 Jul 2023 19:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E05D20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:21:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F99C433C7;
+	Fri, 21 Jul 2023 19:21:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967264;
-	bh=TUhUFKLrrhnUuSGQxaBFeYSPyZCzeYC5iVMggf0LJaA=;
+	s=korg; t=1689967266;
+	bh=bnmzvOelThxo+ZKiXE6kDzW9cWHaTm6Gyao2pzGJeN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FKgqqoNWU3ciPFH1c6uqjQ6FmlInlH25YbWdH8zSMtP0hEKGl9zIbOzwKDJ6AI3yO
-	 4gtZCElhWB/e/BFTSRQkgGQdXHFCZJjrauaxWuAlscp+dCktSIz7ld6rj4p8D853Ji
-	 pywu2y2hNhOP8hgdtbHB+IuEWL47pWQ2n1LPQvZM=
+	b=t4Tcsx5ST9OdOfYWzHGu4ffJ+JidgekojWiMtR0o6pfBqpp2P9iJ5lMUDAEQmJwLY
+	 7+rtc91+aqVwbJNF4sgaychstWyRE0t664jKCCvyJCTPwA20pYMm0J4jabSlD+y7vi
+	 mgYMgFRLlGfIyRWAzHJSb4yw7J7YZc2J8DJBiTGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.1 101/223] powerpc/64s: Fix native_hpte_remove() to be irq-safe
-Date: Fri, 21 Jul 2023 18:05:54 +0200
-Message-ID: <20230721160525.171124303@linuxfoundation.org>
+	Huang Pei <huangpei@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.1 102/223] MIPS: Loongson: Fix cpu_probe_loongson() again
+Date: Fri, 21 Jul 2023 18:05:55 +0200
+Message-ID: <20230721160525.213078801@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -33,121 +35,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 8bbe9fee5848371d4af101be445303cac8d880c5 upstream.
+commit 65fee014dc41a774bcd94896f3fb380bc39d8dda upstream.
 
-Lockdep warns that the use of the hpte_lock in native_hpte_remove() is
-not safe against an IRQ coming in:
+Commit 7db5e9e9e5e6c10d7d ("MIPS: loongson64: fix FTLB configuration")
+move decode_configs() from the beginning of cpu_probe_loongson() to the
+end in order to fix FTLB configuration. However, it breaks the CPUCFG
+decoding because decode_configs() use "c->options = xxxx" rather than
+"c->options |= xxxx", all information get from CPUCFG by decode_cpucfg()
+is lost.
 
-  ================================
-  WARNING: inconsistent lock state
-  6.4.0-rc2-g0c54f4d30ecc #1 Not tainted
-  --------------------------------
-  inconsistent {IN-SOFTIRQ-W} -> {SOFTIRQ-ON-W} usage.
-  qemu-system-ppc/93865 [HC0[0]:SC0[0]:HE1:SE1] takes:
-  c0000000021f5180 (hpte_lock){+.?.}-{0:0}, at: native_lock_hpte+0x8/0xd0
-  {IN-SOFTIRQ-W} state was registered at:
-    lock_acquire+0x134/0x3f0
-    native_lock_hpte+0x44/0xd0
-    native_hpte_insert+0xd4/0x2a0
-    __hash_page_64K+0x218/0x4f0
-    hash_page_mm+0x464/0x840
-    do_hash_fault+0x11c/0x260
-    data_access_common_virt+0x210/0x220
-    __ip_select_ident+0x140/0x150
-    ...
-    net_rx_action+0x3bc/0x440
-    __do_softirq+0x180/0x534
-    ...
-    sys_sendmmsg+0x34/0x50
-    system_call_exception+0x128/0x320
-    system_call_common+0x160/0x2e4
-  ...
-   Possible unsafe locking scenario:
+This causes error when creating a KVM guest on Loongson-3A4000:
+Exception Code: 4 not handled @ PC: 0000000087ad5981, inst: 0xcb7a1898 BadVaddr: 0x0 Status: 0x0
 
-         CPU0
-         ----
-    lock(hpte_lock);
-    <Interrupt>
-      lock(hpte_lock);
+Fix this by moving the c->cputype setting to the beginning and moving
+decode_configs() after that.
 
-   *** DEADLOCK ***
-  ...
-  Call Trace:
-    dump_stack_lvl+0x98/0xe0 (unreliable)
-    print_usage_bug.part.0+0x250/0x278
-    mark_lock+0xc9c/0xd30
-    __lock_acquire+0x440/0x1ca0
-    lock_acquire+0x134/0x3f0
-    native_lock_hpte+0x44/0xd0
-    native_hpte_remove+0xb0/0x190
-    kvmppc_mmu_map_page+0x650/0x698 [kvm_pr]
-    kvmppc_handle_pagefault+0x534/0x6e8 [kvm_pr]
-    kvmppc_handle_exit_pr+0x6d8/0xe90 [kvm_pr]
-    after_sprg3_load+0x80/0x90 [kvm_pr]
-    kvmppc_vcpu_run_pr+0x108/0x270 [kvm_pr]
-    kvmppc_vcpu_run+0x34/0x48 [kvm]
-    kvm_arch_vcpu_ioctl_run+0x340/0x470 [kvm]
-    kvm_vcpu_ioctl+0x338/0x8b8 [kvm]
-    sys_ioctl+0x7c4/0x13e0
-    system_call_exception+0x128/0x320
-    system_call_common+0x160/0x2e4
-
-I suspect kvm_pr is the only caller that doesn't already have IRQs
-disabled, which is why this hasn't been reported previously.
-
-Fix it by disabling IRQs in native_hpte_remove().
-
-Fixes: 35159b5717fa ("powerpc/64s: make HPTE lock and native_tlbie_lock irq-safe")
-Cc: stable@vger.kernel.org # v6.1+
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230517123033.18430-1-mpe@ellerman.id.au
+Fixes: 7db5e9e9e5e6c10d7d ("MIPS: loongson64: fix FTLB configuration")
+Cc: stable@vger.kernel.org
+Cc: Huang Pei <huangpei@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/mm/book3s64/hash_native.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ arch/mips/kernel/cpu-probe.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/arch/powerpc/mm/book3s64/hash_native.c b/arch/powerpc/mm/book3s64/hash_native.c
-index 9342e79870df..430d1d935a7c 100644
---- a/arch/powerpc/mm/book3s64/hash_native.c
-+++ b/arch/powerpc/mm/book3s64/hash_native.c
-@@ -328,10 +328,12 @@ static long native_hpte_insert(unsigned long hpte_group, unsigned long vpn,
+--- a/arch/mips/kernel/cpu-probe.c
++++ b/arch/mips/kernel/cpu-probe.c
+@@ -1675,7 +1675,10 @@ static inline void decode_cpucfg(struct
  
- static long native_hpte_remove(unsigned long hpte_group)
+ static inline void cpu_probe_loongson(struct cpuinfo_mips *c, unsigned int cpu)
  {
-+	unsigned long hpte_v, flags;
- 	struct hash_pte *hptep;
- 	int i;
- 	int slot_offset;
--	unsigned long hpte_v;
++	c->cputype = CPU_LOONGSON64;
 +
-+	local_irq_save(flags);
+ 	/* All Loongson processors covered here define ExcCode 16 as GSExc. */
++	decode_configs(c);
+ 	c->options |= MIPS_CPU_GSEXCEX;
  
- 	DBG_LOW("    remove(group=%lx)\n", hpte_group);
- 
-@@ -356,13 +358,16 @@ static long native_hpte_remove(unsigned long hpte_group)
- 		slot_offset &= 0x7;
+ 	switch (c->processor_id & PRID_IMP_MASK) {
+@@ -1685,7 +1688,6 @@ static inline void cpu_probe_loongson(st
+ 		case PRID_REV_LOONGSON2K_R1_1:
+ 		case PRID_REV_LOONGSON2K_R1_2:
+ 		case PRID_REV_LOONGSON2K_R1_3:
+-			c->cputype = CPU_LOONGSON64;
+ 			__cpu_name[cpu] = "Loongson-2K";
+ 			set_elf_platform(cpu, "gs264e");
+ 			set_isa(c, MIPS_CPU_ISA_M64R2);
+@@ -1698,14 +1700,12 @@ static inline void cpu_probe_loongson(st
+ 		switch (c->processor_id & PRID_REV_MASK) {
+ 		case PRID_REV_LOONGSON3A_R2_0:
+ 		case PRID_REV_LOONGSON3A_R2_1:
+-			c->cputype = CPU_LOONGSON64;
+ 			__cpu_name[cpu] = "ICT Loongson-3";
+ 			set_elf_platform(cpu, "loongson3a");
+ 			set_isa(c, MIPS_CPU_ISA_M64R2);
+ 			break;
+ 		case PRID_REV_LOONGSON3A_R3_0:
+ 		case PRID_REV_LOONGSON3A_R3_1:
+-			c->cputype = CPU_LOONGSON64;
+ 			__cpu_name[cpu] = "ICT Loongson-3";
+ 			set_elf_platform(cpu, "loongson3a");
+ 			set_isa(c, MIPS_CPU_ISA_M64R2);
+@@ -1725,7 +1725,6 @@ static inline void cpu_probe_loongson(st
+ 		c->ases &= ~MIPS_ASE_VZ; /* VZ of Loongson-3A2000/3000 is incomplete */
+ 		break;
+ 	case PRID_IMP_LOONGSON_64G:
+-		c->cputype = CPU_LOONGSON64;
+ 		__cpu_name[cpu] = "ICT Loongson-3";
+ 		set_elf_platform(cpu, "loongson3a");
+ 		set_isa(c, MIPS_CPU_ISA_M64R2);
+@@ -1735,8 +1734,6 @@ static inline void cpu_probe_loongson(st
+ 		panic("Unknown Loongson Processor ID!");
+ 		break;
  	}
- 
--	if (i == HPTES_PER_GROUP)
--		return -1;
-+	if (i == HPTES_PER_GROUP) {
-+		i = -1;
-+		goto out;
-+	}
- 
- 	/* Invalidate the hpte. NOTE: this also unlocks it */
- 	release_hpte_lock();
- 	hptep->v = 0;
 -
-+out:
-+	local_irq_restore(flags);
- 	return i;
+-	decode_configs(c);
  }
- 
--- 
-2.41.0
-
+ #else
+ static inline void cpu_probe_loongson(struct cpuinfo_mips *c, unsigned int cpu) { }
 
 
