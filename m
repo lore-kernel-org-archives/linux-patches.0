@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4581A1F923
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:55:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99DAC433C7;
-	Fri, 21 Jul 2023 18:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189461F923
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:55:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB4EC433C8;
+	Fri, 21 Jul 2023 18:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965738;
-	bh=iLFiMCJg5rFUmeEVsbIK7/PBTZMTgdEfXNRayrJxWPY=;
+	s=korg; t=1689965740;
+	bh=kK43EC7XdeOhgPvhdYZXvcb1/bicAJ/QdHp6T1+MB6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZsfiNECT6YD3piIksdj+3BDGTk1Pn7zKwiUJEcSQsORQK5JokbY9kTNwF+OfJb4Z6
-	 lQxjglEWaQ5gWsZDIy2t05ZqQHjqbHuGzvWqAFSZxSxG/D3/sn3I3+s04RGAbntxNj
-	 HJdM5o7NuInpSX2cRJMACMH+w+0OtJa3ruv+YU3Y=
+	b=F/Hkg4AJpDcLKSkVmcdlswRSZMSckeQjcGFYcIGZeOfhRDmoJqRBk8UPrTYFKhQoJ
+	 c/xoVOW90jHUHMefPvcQjuMYa0LMkE4g18lp/88eTA8rXNFoguoeoUOAVYf8wsGXxI
+	 FtddNl8nZdrMc4XgXeg8IYYVWdF9IjIvgC9TilSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Natalia Petrova <n.petrova@fintech.ru>
-Subject: [PATCH 5.15 096/532] radeon: avoid double free in ci_dpm_init()
-Date: Fri, 21 Jul 2023 18:00:00 +0200
-Message-ID: <20230721160619.782071409@linuxfoundation.org>
+	Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 070/532] wifi: iwlwifi: pcie: fix NULL pointer dereference in iwl_pcie_irq_rx_msix_handler()
+Date: Fri, 21 Jul 2023 17:59:34 +0200
+Message-ID: <20230721160618.412727127@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,107 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
 
-[ Upstream commit 20c3dffdccbd494e0dd631d1660aeecbff6775f2 ]
+[ Upstream commit 1902f1953b8ba100ee8705cb8a6f1a9795550eca ]
 
-Several calls to ci_dpm_fini() will attempt to free resources that
-either have been freed before or haven't been allocated yet. This
-may lead to undefined or dangerous behaviour.
+rxq can be NULL only when trans_pcie->rxq is NULL and entry->entry
+is zero. For the case when entry->entry is not equal to 0, rxq
+won't be NULL even if trans_pcie->rxq is NULL. Modify checker to
+check for trans_pcie->rxq.
 
-For instance, if r600_parse_extended_power_table() fails, it might
-call r600_free_extended_power_table() as will ci_dpm_fini() later
-during error handling.
-
-Fix this by only freeing pointers to objects previously allocated.
-
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: cc8dbbb4f62a ("drm/radeon: add dpm support for CI dGPUs (v2)")
-Co-developed-by: Natalia Petrova <n.petrova@fintech.ru>
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: abc599efa67b ("iwlwifi: pcie: don't crash when rx queues aren't allocated in interrupt")
+Signed-off-by: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230614123446.5a5eb3889a4a.I375a1d58f16b48cd2044e7b7caddae512d7c86fd@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/ci_dpm.c | 28 ++++++++++++++++++++--------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/rx.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/ci_dpm.c b/drivers/gpu/drm/radeon/ci_dpm.c
-index f0cfb58da4672..4f93cc81ca7a0 100644
---- a/drivers/gpu/drm/radeon/ci_dpm.c
-+++ b/drivers/gpu/drm/radeon/ci_dpm.c
-@@ -5520,6 +5520,7 @@ static int ci_parse_power_table(struct radeon_device *rdev)
- 	u8 frev, crev;
- 	u8 *power_state_offset;
- 	struct ci_ps *ps;
-+	int ret;
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
+index 8885b19fd8de6..6c6512158813b 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
+@@ -1601,14 +1601,14 @@ irqreturn_t iwl_pcie_irq_rx_msix_handler(int irq, void *dev_id)
+ 	struct msix_entry *entry = dev_id;
+ 	struct iwl_trans_pcie *trans_pcie = iwl_pcie_get_trans_pcie(entry);
+ 	struct iwl_trans *trans = trans_pcie->trans;
+-	struct iwl_rxq *rxq = &trans_pcie->rxq[entry->entry];
++	struct iwl_rxq *rxq;
  
- 	if (!atom_parse_data_header(mode_info->atom_context, index, NULL,
- 				   &frev, &crev, &data_offset))
-@@ -5549,11 +5550,15 @@ static int ci_parse_power_table(struct radeon_device *rdev)
- 		non_clock_array_index = power_state->v2.nonClockInfoIndex;
- 		non_clock_info = (struct _ATOM_PPLIB_NONCLOCK_INFO *)
- 			&non_clock_info_array->nonClockInfo[non_clock_array_index];
--		if (!rdev->pm.power_state[i].clock_info)
--			return -EINVAL;
-+		if (!rdev->pm.power_state[i].clock_info) {
-+			ret = -EINVAL;
-+			goto err_free_ps;
-+		}
- 		ps = kzalloc(sizeof(struct ci_ps), GFP_KERNEL);
--		if (ps == NULL)
--			return -ENOMEM;
-+		if (ps == NULL) {
-+			ret = -ENOMEM;
-+			goto err_free_ps;
-+		}
- 		rdev->pm.dpm.ps[i].ps_priv = ps;
- 		ci_parse_pplib_non_clock_info(rdev, &rdev->pm.dpm.ps[i],
- 					      non_clock_info,
-@@ -5593,6 +5598,12 @@ static int ci_parse_power_table(struct radeon_device *rdev)
+ 	trace_iwlwifi_dev_irq_msix(trans->dev, entry, false, 0, 0);
+ 
+ 	if (WARN_ON(entry->entry >= trans->num_rx_queues))
+ 		return IRQ_NONE;
+ 
+-	if (!rxq) {
++	if (!trans_pcie->rxq) {
+ 		if (net_ratelimit())
+ 			IWL_ERR(trans,
+ 				"[%d] Got MSI-X interrupt before we have Rx queues\n",
+@@ -1616,6 +1616,7 @@ irqreturn_t iwl_pcie_irq_rx_msix_handler(int irq, void *dev_id)
+ 		return IRQ_NONE;
  	}
  
- 	return 0;
-+
-+err_free_ps:
-+	for (i = 0; i < rdev->pm.dpm.num_ps; i++)
-+		kfree(rdev->pm.dpm.ps[i].ps_priv);
-+	kfree(rdev->pm.dpm.ps);
-+	return ret;
- }
- 
- static int ci_get_vbios_boot_values(struct radeon_device *rdev,
-@@ -5681,25 +5692,26 @@ int ci_dpm_init(struct radeon_device *rdev)
- 
- 	ret = ci_get_vbios_boot_values(rdev, &pi->vbios_boot_state);
- 	if (ret) {
--		ci_dpm_fini(rdev);
-+		kfree(rdev->pm.dpm.priv);
- 		return ret;
- 	}
- 
- 	ret = r600_get_platform_caps(rdev);
- 	if (ret) {
--		ci_dpm_fini(rdev);
-+		kfree(rdev->pm.dpm.priv);
- 		return ret;
- 	}
- 
- 	ret = r600_parse_extended_power_table(rdev);
- 	if (ret) {
--		ci_dpm_fini(rdev);
-+		kfree(rdev->pm.dpm.priv);
- 		return ret;
- 	}
- 
- 	ret = ci_parse_power_table(rdev);
- 	if (ret) {
--		ci_dpm_fini(rdev);
-+		kfree(rdev->pm.dpm.priv);
-+		r600_free_extended_power_table(rdev);
- 		return ret;
- 	}
++	rxq = &trans_pcie->rxq[entry->entry];
+ 	lock_map_acquire(&trans->sync_cmd_lockdep_map);
+ 	IWL_DEBUG_ISR(trans, "[%d] Got interrupt\n", entry->entry);
  
 -- 
 2.39.2
