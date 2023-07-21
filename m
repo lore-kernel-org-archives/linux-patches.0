@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C2F1F923
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:55:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D947CC433C8;
-	Fri, 21 Jul 2023 18:55:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4581A1F923
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:55:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99DAC433C7;
+	Fri, 21 Jul 2023 18:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965735;
-	bh=zC1vTmVhfQpcCAsjVQcbENH+0gqeer3DyWKWUYwnyYY=;
+	s=korg; t=1689965738;
+	bh=iLFiMCJg5rFUmeEVsbIK7/PBTZMTgdEfXNRayrJxWPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0NcWhRLj1XR1CnmSx/sKFVNSXz50IsNx3h43SCcKltHAT+fB23+yrv83RycA0duiE
-	 5Y8BAGrN4rcQQKlJZ14xSZEbBh/smudYaQQb79vnEBGAaQM4/22+zyx5sasL9jREr6
-	 gefuIFltaquJBYE1HRj9dq8no+4xQZ2TvIsb2Uhk=
+	b=ZsfiNECT6YD3piIksdj+3BDGTk1Pn7zKwiUJEcSQsORQK5JokbY9kTNwF+OfJb4Z6
+	 lQxjglEWaQ5gWsZDIy2t05ZqQHjqbHuGzvWqAFSZxSxG/D3/sn3I3+s04RGAbntxNj
+	 HJdM5o7NuInpSX2cRJMACMH+w+0OtJa3ruv+YU3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wesley Chalmers <Wesley.Chalmers@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 095/532] drm/amd/display: Add logging for display MALL refresh setting
-Date: Fri, 21 Jul 2023 17:59:59 +0200
-Message-ID: <20230721160619.731045774@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Natalia Petrova <n.petrova@fintech.ru>
+Subject: [PATCH 5.15 096/532] radeon: avoid double free in ci_dpm_init()
+Date: Fri, 21 Jul 2023 18:00:00 +0200
+Message-ID: <20230721160619.782071409@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,38 +36,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wesley Chalmers <Wesley.Chalmers@amd.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit cd8f067a46d34dee3188da184912ae3d64d98444 ]
+[ Upstream commit 20c3dffdccbd494e0dd631d1660aeecbff6775f2 ]
 
-[WHY]
-Add log entry for when display refresh from MALL
-settings are sent to SMU.
+Several calls to ci_dpm_fini() will attempt to free resources that
+either have been freed before or haven't been allocated yet. This
+may lead to undefined or dangerous behaviour.
 
-Fixes: 1664641ea946 ("drm/amd/display: Add logger for SMU msg")
-Signed-off-by: Wesley Chalmers <Wesley.Chalmers@amd.com>
-Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+For instance, if r600_parse_extended_power_table() fails, it might
+call r600_free_extended_power_table() as will ci_dpm_fini() later
+during error handling.
+
+Fix this by only freeing pointers to objects previously allocated.
+
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: cc8dbbb4f62a ("drm/radeon: add dpm support for CI dGPUs (v2)")
+Co-developed-by: Natalia Petrova <n.petrova@fintech.ru>
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/clk_mgr/dcn30/dcn30_clk_mgr_smu_msg.c   | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/radeon/ci_dpm.c | 28 ++++++++++++++++++++--------
+ 1 file changed, 20 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn30/dcn30_clk_mgr_smu_msg.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn30/dcn30_clk_mgr_smu_msg.c
-index 8ecc708bcd9ec..766759420eebb 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn30/dcn30_clk_mgr_smu_msg.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn30/dcn30_clk_mgr_smu_msg.c
-@@ -302,6 +302,9 @@ void dcn30_smu_set_display_refresh_from_mall(struct clk_mgr_internal *clk_mgr, b
- 	/* bits 8:7 for cache timer scale, bits 6:1 for cache timer delay, bit 0 = 1 for enable, = 0 for disable */
- 	uint32_t param = (cache_timer_scale << 7) | (cache_timer_delay << 1) | (enable ? 1 : 0);
+diff --git a/drivers/gpu/drm/radeon/ci_dpm.c b/drivers/gpu/drm/radeon/ci_dpm.c
+index f0cfb58da4672..4f93cc81ca7a0 100644
+--- a/drivers/gpu/drm/radeon/ci_dpm.c
++++ b/drivers/gpu/drm/radeon/ci_dpm.c
+@@ -5520,6 +5520,7 @@ static int ci_parse_power_table(struct radeon_device *rdev)
+ 	u8 frev, crev;
+ 	u8 *power_state_offset;
+ 	struct ci_ps *ps;
++	int ret;
  
-+	smu_print("SMU Set display refresh from mall: enable = %d, cache_timer_delay = %d, cache_timer_scale = %d\n",
-+		enable, cache_timer_delay, cache_timer_scale);
+ 	if (!atom_parse_data_header(mode_info->atom_context, index, NULL,
+ 				   &frev, &crev, &data_offset))
+@@ -5549,11 +5550,15 @@ static int ci_parse_power_table(struct radeon_device *rdev)
+ 		non_clock_array_index = power_state->v2.nonClockInfoIndex;
+ 		non_clock_info = (struct _ATOM_PPLIB_NONCLOCK_INFO *)
+ 			&non_clock_info_array->nonClockInfo[non_clock_array_index];
+-		if (!rdev->pm.power_state[i].clock_info)
+-			return -EINVAL;
++		if (!rdev->pm.power_state[i].clock_info) {
++			ret = -EINVAL;
++			goto err_free_ps;
++		}
+ 		ps = kzalloc(sizeof(struct ci_ps), GFP_KERNEL);
+-		if (ps == NULL)
+-			return -ENOMEM;
++		if (ps == NULL) {
++			ret = -ENOMEM;
++			goto err_free_ps;
++		}
+ 		rdev->pm.dpm.ps[i].ps_priv = ps;
+ 		ci_parse_pplib_non_clock_info(rdev, &rdev->pm.dpm.ps[i],
+ 					      non_clock_info,
+@@ -5593,6 +5598,12 @@ static int ci_parse_power_table(struct radeon_device *rdev)
+ 	}
+ 
+ 	return 0;
 +
- 	dcn30_smu_send_msg_with_param(clk_mgr,
- 			DALSMC_MSG_SetDisplayRefreshFromMall, param, NULL);
++err_free_ps:
++	for (i = 0; i < rdev->pm.dpm.num_ps; i++)
++		kfree(rdev->pm.dpm.ps[i].ps_priv);
++	kfree(rdev->pm.dpm.ps);
++	return ret;
  }
+ 
+ static int ci_get_vbios_boot_values(struct radeon_device *rdev,
+@@ -5681,25 +5692,26 @@ int ci_dpm_init(struct radeon_device *rdev)
+ 
+ 	ret = ci_get_vbios_boot_values(rdev, &pi->vbios_boot_state);
+ 	if (ret) {
+-		ci_dpm_fini(rdev);
++		kfree(rdev->pm.dpm.priv);
+ 		return ret;
+ 	}
+ 
+ 	ret = r600_get_platform_caps(rdev);
+ 	if (ret) {
+-		ci_dpm_fini(rdev);
++		kfree(rdev->pm.dpm.priv);
+ 		return ret;
+ 	}
+ 
+ 	ret = r600_parse_extended_power_table(rdev);
+ 	if (ret) {
+-		ci_dpm_fini(rdev);
++		kfree(rdev->pm.dpm.priv);
+ 		return ret;
+ 	}
+ 
+ 	ret = ci_parse_power_table(rdev);
+ 	if (ret) {
+-		ci_dpm_fini(rdev);
++		kfree(rdev->pm.dpm.priv);
++		r600_free_extended_power_table(rdev);
+ 		return ret;
+ 	}
+ 
 -- 
 2.39.2
 
