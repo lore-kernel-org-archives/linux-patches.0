@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CC8200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:59:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324A1C433CD;
-	Fri, 21 Jul 2023 18:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A055200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:59:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18653C433C7;
+	Fri, 21 Jul 2023 18:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965941;
-	bh=Li6IzjYs3OlBoX2i7n8xUimNZ0sG9kwRPlooSkmT+mY=;
+	s=korg; t=1689965944;
+	bh=4vmFU4N0oz2UOLiZ/BDWM0V/+QAnifm01td0fgn5jIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GuNbx/+Vi+wh6D5MxmSuu5y360dUFnJUPb0fmaHFijneeovzI1KUR8w/uK+rZ++SX
-	 amCIc/fLyzs4eqfLcEe/ivbPD6wr3i8xWy7mnX0znWjhYFKLu79G7noMNqfeMrzAW2
-	 Rr4s6mBA2/uKHrAhy7RR3daIk2w+J8eQBlIc34AA=
+	b=BkFaoduyy9krv/SBWVlsr6Ao5VI34oEpeUqRdnlldUY4K6ra25sfTO/fFIoKBlDYG
+	 sUdrGRUJLJDRl4Jss2dZssYMLP8JxMTLrvqRH1HwHn3SIWFluA0I7KiicpmARNld+B
+	 LdKwMVE7dhZ9zUjV1yu21wynhJi7U9irKyW5OTuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Potin Lai <potin.lai@quantatw.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 161/532] hwmon: (adm1275) Allow setting sample averaging
-Date: Fri, 21 Jul 2023 18:01:05 +0200
-Message-ID: <20230721160623.141881035@linuxfoundation.org>
+Subject: [PATCH 5.15 170/532] RDMA/bnxt_re: Avoid calling wake_up threads from spin_lock context
+Date: Fri, 21 Jul 2023 18:01:14 +0200
+Message-ID: <20230721160623.624477434@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,92 +36,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Potin Lai <potin.lai@quantatw.com>
+From: Kashyap Desai <kashyap.desai@broadcom.com>
 
-[ Upstream commit a3cd66d7cbadcc0c29884f25b754fd22699c719c ]
+[ Upstream commit 3099bcdc19b701f732f638ee45679858c08559bb ]
 
-Current driver assume PWR_AVG and VI_AVG as 1 by default, and user needs
-to set sample averaging via sysfs manually.
+bnxt_qplib_service_creq can be called from interrupt or tasklet or
+process context. So the function take irq variant  of spin_lock.
+But when wake_up is invoked with the lock held, it is putting the
+calling context to sleep.
 
-This patch parses the properties "adi,power-sample-average" and
-"adi,volt-curr-sample-average" from device tree, and setting sample
-averaging during probe. Input value must be one of value in the
-list [1, 2, 4, 8, 16, 32, 64, 128].
+[exception RIP: __wake_up_common+190]
+RIP: ffffffffb7539d7e  RSP: ffffa73300207ad8  RFLAGS: 00000083
+RAX: 0000000000000001  RBX: ffff91fa295f69b8  RCX: dead000000000200
+RDX: ffffa733344af940  RSI: ffffa73336527940  RDI: ffffa73336527940
+RBP: 000000000000001c   R8: 0000000000000002   R9: 00000000000299c0
+R10: 0000017230de82c5  R11: 0000000000000002  R12: ffffa73300207b28
+R13: 0000000000000000  R14: ffffa733341bf928  R15: 0000000000000000
+ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
 
-Signed-off-by: Potin Lai <potin.lai@quantatw.com>
-Link: https://lore.kernel.org/r/20220302123817.27025-2-potin.lai@quantatw.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: b153a0bb4199 ("hwmon: (pmbus/adm1275) Fix problems with temperature monitoring on ADM1272")
+Call the wakeup after releasing the lock.
+
+Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
+Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://lore.kernel.org/r/1686308514-11996-3-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/adm1275.c | 40 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 39 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/bnxt_re/qplib_rcfw.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
-index d311e0557401c..3b07bfb43e937 100644
---- a/drivers/hwmon/pmbus/adm1275.c
-+++ b/drivers/hwmon/pmbus/adm1275.c
-@@ -475,6 +475,7 @@ static int adm1275_probe(struct i2c_client *client)
- 	int vindex = -1, voindex = -1, cindex = -1, pindex = -1;
- 	int tindex = -1;
- 	u32 shunt;
-+	u32 avg;
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
+index abeee7cc7dc6d..3b8cb46551bf2 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
+@@ -299,7 +299,8 @@ static int bnxt_qplib_process_func_event(struct bnxt_qplib_rcfw *rcfw,
+ }
  
- 	if (!i2c_check_functionality(client->adapter,
- 				     I2C_FUNC_SMBUS_READ_BYTE_DATA
-@@ -687,7 +688,7 @@ static int adm1275_probe(struct i2c_client *client)
- 		if ((config & (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) !=
- 		    (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) {
- 			config |= ADM1278_VOUT_EN | ADM1278_TEMP1_EN;
--			ret = i2c_smbus_write_byte_data(client,
-+			ret = i2c_smbus_write_word_data(client,
- 							ADM1275_PMON_CONFIG,
- 							config);
- 			if (ret < 0) {
-@@ -756,6 +757,43 @@ static int adm1275_probe(struct i2c_client *client)
- 		return -ENODEV;
+ static int bnxt_qplib_process_qp_event(struct bnxt_qplib_rcfw *rcfw,
+-				       struct creq_qp_event *qp_event)
++				       struct creq_qp_event *qp_event,
++				       u32 *num_wait)
+ {
+ 	struct creq_qp_error_notification *err_event;
+ 	struct bnxt_qplib_hwq *hwq = &rcfw->cmdq.hwq;
+@@ -308,6 +309,7 @@ static int bnxt_qplib_process_qp_event(struct bnxt_qplib_rcfw *rcfw,
+ 	u16 cbit, blocked = 0;
+ 	struct pci_dev *pdev;
+ 	unsigned long flags;
++	u32 wait_cmds = 0;
+ 	__le16  mcookie;
+ 	u16 cookie;
+ 	int rc = 0;
+@@ -367,9 +369,10 @@ static int bnxt_qplib_process_qp_event(struct bnxt_qplib_rcfw *rcfw,
+ 		crsqe->req_size = 0;
+ 
+ 		if (!blocked)
+-			wake_up(&rcfw->cmdq.waitq);
++			wait_cmds++;
+ 		spin_unlock_irqrestore(&hwq->lock, flags);
  	}
++	*num_wait += wait_cmds;
+ 	return rc;
+ }
  
-+	if (data->have_power_sampling &&
-+	    of_property_read_u32(client->dev.of_node,
-+				 "adi,power-sample-average", &avg) == 0) {
-+		if (!avg || avg > ADM1275_SAMPLES_AVG_MAX ||
-+		    BIT(__fls(avg)) != avg) {
-+			dev_err(&client->dev,
-+				"Invalid number of power samples");
-+			return -EINVAL;
-+		}
-+		ret = adm1275_write_pmon_config(data, client, true,
-+						ilog2(avg));
-+		if (ret < 0) {
-+			dev_err(&client->dev,
-+				"Setting power sample averaging failed with error %d",
-+				ret);
-+			return ret;
-+		}
-+	}
-+
-+	if (of_property_read_u32(client->dev.of_node,
-+				"adi,volt-curr-sample-average", &avg) == 0) {
-+		if (!avg || avg > ADM1275_SAMPLES_AVG_MAX ||
-+		    BIT(__fls(avg)) != avg) {
-+			dev_err(&client->dev,
-+				"Invalid number of voltage/current samples");
-+			return -EINVAL;
-+		}
-+		ret = adm1275_write_pmon_config(data, client, false,
-+						ilog2(avg));
-+		if (ret < 0) {
-+			dev_err(&client->dev,
-+				"Setting voltage and current sample averaging failed with error %d",
-+				ret);
-+			return ret;
-+		}
-+	}
-+
- 	if (voindex < 0)
- 		voindex = vindex;
- 	if (vindex >= 0) {
+@@ -383,6 +386,7 @@ static void bnxt_qplib_service_creq(struct tasklet_struct *t)
+ 	struct creq_base *creqe;
+ 	u32 sw_cons, raw_cons;
+ 	unsigned long flags;
++	u32 num_wakeup = 0;
+ 
+ 	/* Service the CREQ until budget is over */
+ 	spin_lock_irqsave(&hwq->lock, flags);
+@@ -401,7 +405,8 @@ static void bnxt_qplib_service_creq(struct tasklet_struct *t)
+ 		switch (type) {
+ 		case CREQ_BASE_TYPE_QP_EVENT:
+ 			bnxt_qplib_process_qp_event
+-				(rcfw, (struct creq_qp_event *)creqe);
++				(rcfw, (struct creq_qp_event *)creqe,
++				 &num_wakeup);
+ 			creq->stats.creq_qp_event_processed++;
+ 			break;
+ 		case CREQ_BASE_TYPE_FUNC_EVENT:
+@@ -429,6 +434,8 @@ static void bnxt_qplib_service_creq(struct tasklet_struct *t)
+ 				      rcfw->res->cctx, true);
+ 	}
+ 	spin_unlock_irqrestore(&hwq->lock, flags);
++	if (num_wakeup)
++		wake_up_nr(&rcfw->cmdq.waitq, num_wakeup);
+ }
+ 
+ static irqreturn_t bnxt_qplib_creq_irq(int irq, void *dev_instance)
 -- 
 2.39.2
 
