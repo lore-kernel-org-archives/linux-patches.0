@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7844520F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:12:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE8A4C433C7;
-	Fri, 21 Jul 2023 19:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EEED20F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:12:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4EB6C433C8;
+	Fri, 21 Jul 2023 19:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966750;
-	bh=6fFMpH+pGr1JQJF37GBTQCSnjLcCRDVKGWJ7y1ZkIrY=;
+	s=korg; t=1689966753;
+	bh=3QHIuDzI0N/QJ0Fd+PwMz9iDWJPWp+70K1IhadJC0kE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SwKMEYYUcttdEMAtQwkzkp5v2UIYY/gZ4XGFse46Xq3e6GQ0fwZT+uZcWo6OlmlRT
-	 dVxbEqRyqNoEHbzjSThPG2pDeKRUxRnLidCDG1+hEaxrcIagNHggMwv58BCL/WjI2x
-	 vH6NT7QfcyF1nkyhbFVYvjAyvEHl1FEwnkag6W+U=
+	b=gMPqLrTv/fdztYJ/dzbMRkWgsr8Zi6TKowmcBerTZVcySZn+ps1XixzqMifstJwby
+	 LD6/XvgUa4FwzUyJYrMOeCMsi+l8fD+1JJJOmH9Rm6+uej5w3tgK9GgRaFnjvcpjkq
+	 NtAI4AK6sCxlZZeoYMcUCK4P2XArbTA8azhhXZuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ekansh Gupta <quic_ekangupt@quicinc.com>
-Subject: [PATCH 5.15 455/532] misc: fastrpc: Create fastrpc scalar with correct buffer count
-Date: Fri, 21 Jul 2023 18:05:59 +0200
-Message-ID: <20230721160639.215376392@linuxfoundation.org>
+	Nageswara R Sastry <rnsastry@linux.ibm.com>,
+	Russell Currey <ruscur@russell.cc>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 5.15 456/532] powerpc/security: Fix Speculation_Store_Bypass reporting on Power10
+Date: Fri, 21 Jul 2023 18:06:00 +0200
+Message-ID: <20230721160639.267094224@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -34,37 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit 0b4e32df3e09406b835d8230b9331273f2805058 upstream.
+commit 5bcedc5931e7bd6928a2d8207078d4cb476b3b55 upstream.
 
-A process can spawn a PD on DSP with some attributes that can be
-associated with the PD during spawn and run. The invocation
-corresponding to the create request with attributes has total
-4 buffers at the DSP side implementation. If this number is not
-correct, the invocation is expected to fail on DSP. Added change
-to use correct number of buffer count for creating fastrpc scalar.
+Nageswara reported that /proc/self/status was showing "vulnerable" for
+the Speculation_Store_Bypass feature on Power10, eg:
 
-Fixes: d73f71c7c6ee ("misc: fastrpc: Add support for create remote init process")
-Cc: stable <stable@kernel.org>
-Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Message-ID: <1686743685-21715-1-git-send-email-quic_ekangupt@quicinc.com>
+  $ grep Speculation_Store_Bypass: /proc/self/status
+  Speculation_Store_Bypass:       vulnerable
+
+But at the same time the sysfs files, and lscpu, were showing "Not
+affected".
+
+This turns out to simply be a bug in the reporting of the
+Speculation_Store_Bypass, aka. PR_SPEC_STORE_BYPASS, case.
+
+When SEC_FTR_STF_BARRIER was added, so that firmware could communicate
+the vulnerability was not present, the code in ssb_prctl_get() was not
+updated to check the new flag.
+
+So add the check for SEC_FTR_STF_BARRIER being disabled. Rather than
+adding the new check to the existing if block and expanding the comment
+to cover both cases, rewrite the three cases to be separate so they can
+be commented separately for clarity.
+
+Fixes: 84ed26fd00c5 ("powerpc/security: Add a security feature for STF barrier")
+Cc: stable@vger.kernel.org # v5.14+
+Reported-by: Nageswara R Sastry <rnsastry@linux.ibm.com>
+Tested-by: Nageswara R Sastry <rnsastry@linux.ibm.com>
+Reviewed-by: Russell Currey <ruscur@russell.cc>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230517074945.53188-1-mpe@ellerman.id.au
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/kernel/security.c |   35 ++++++++++++++++++-----------------
+ 1 file changed, 18 insertions(+), 17 deletions(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1108,7 +1108,7 @@ static int fastrpc_init_create_process(s
+--- a/arch/powerpc/kernel/security.c
++++ b/arch/powerpc/kernel/security.c
+@@ -363,26 +363,27 @@ ssize_t cpu_show_spec_store_bypass(struc
  
- 	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE, 4, 0);
- 	if (init.attrs)
--		sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE_ATTR, 6, 0);
-+		sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE_ATTR, 4, 0);
+ static int ssb_prctl_get(struct task_struct *task)
+ {
++	/*
++	 * The STF_BARRIER feature is on by default, so if it's off that means
++	 * firmware has explicitly said the CPU is not vulnerable via either
++	 * the hypercall or device tree.
++	 */
++	if (!security_ftr_enabled(SEC_FTR_STF_BARRIER))
++		return PR_SPEC_NOT_AFFECTED;
++
++	/*
++	 * If the system's CPU has no known barrier (see setup_stf_barrier())
++	 * then assume that the CPU is not vulnerable.
++	 */
+ 	if (stf_enabled_flush_types == STF_BARRIER_NONE)
+-		/*
+-		 * We don't have an explicit signal from firmware that we're
+-		 * vulnerable or not, we only have certain CPU revisions that
+-		 * are known to be vulnerable.
+-		 *
+-		 * We assume that if we're on another CPU, where the barrier is
+-		 * NONE, then we are not vulnerable.
+-		 */
+ 		return PR_SPEC_NOT_AFFECTED;
+-	else
+-		/*
+-		 * If we do have a barrier type then we are vulnerable. The
+-		 * barrier is not a global or per-process mitigation, so the
+-		 * only value we can report here is PR_SPEC_ENABLE, which
+-		 * appears as "vulnerable" in /proc.
+-		 */
+-		return PR_SPEC_ENABLE;
  
- 	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
- 				      sc, args);
+-	return -EINVAL;
++	/*
++	 * Otherwise the CPU is vulnerable. The barrier is not a global or
++	 * per-process mitigation, so the only value that can be reported here
++	 * is PR_SPEC_ENABLE, which appears as "vulnerable" in /proc.
++	 */
++	return PR_SPEC_ENABLE;
+ }
+ 
+ int arch_prctl_spec_ctrl_get(struct task_struct *task, unsigned long which)
 
 
