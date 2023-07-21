@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6813A1F923
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:56:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC9A7C433C7;
-	Fri, 21 Jul 2023 18:56:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F66A1F923
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:56:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E78DC433C8;
+	Fri, 21 Jul 2023 18:56:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965766;
-	bh=vqnhxvAeBAYSJYjlSdb7rlddWn5NSgz57k71kpeqTk0=;
+	s=korg; t=1689965769;
+	bh=30VY7ruo+Osv4Z1xF01+9FX5QqD4728v7i+j0fIB97U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j0Dt+D7gV65zGK/WbOfDut6U47y2NJmYGZTzG/ExBULKFSqtXfa0sGxUp7FwjvZtB
-	 9kdTus9LHeJFjirjR0h8z8OEbBFX82uP0DJNZ8yQ/mB4ffzpfLf4PZOOAmDpW6O6b4
-	 /TOebkz0qh8/E1sQedGfmlSQOIFRWdYDDB3dXlkU=
+	b=nx6+GhHSLG/PM85bKJCrFKdmck3NsSxPuo4W97HVy61zMIRyvEGA7ONrLxQC2x5D8
+	 GZYzYrB+C7PLJMt3RuKfhOV4VNW8sTeH53hLNl87hoztGkZevPPmZgPujVCXTvFiST
+	 8ROI3GBw6zoUAhuS186iMzOQQcw2wDwM5Xaah9SE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Luc Ma <luc@sietium.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 099/532] drm/bridge: tc358768: always enable HS video mode
-Date: Fri, 21 Jul 2023 18:00:03 +0200
-Message-ID: <20230721160619.937242402@linuxfoundation.org>
+Subject: [PATCH 5.15 108/532] drm/vram-helper: fix function names in vram helper doc
+Date: Fri, 21 Jul 2023 18:00:12 +0200
+Message-ID: <20230721160620.434311658@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,47 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Luc Ma <luc@sietium.com>
 
-[ Upstream commit 75a8aeac2573ab258c53676eba9b3796ea691988 ]
+[ Upstream commit b8e392245105b50706f18418054821e71e637288 ]
 
-Always enable HS video mode setting the TXMD bit, without this change no
-video output is present with DSI sinks that are setting
-MIPI_DSI_MODE_LPM flag (tested with LT8912B DSI-HDMI bridge).
+Refer to drmm_vram_helper_init() instead of the non-existent
+drmm_vram_helper_alloc_mm().
 
-Previously the driver was enabling HS mode only when the DSI sink was
-not explicitly setting the MIPI_DSI_MODE_LPM, however this is not
-correct.
-
-The MIPI_DSI_MODE_LPM is supposed to indicate that the sink is willing
-to receive data in low power mode, however clearing the
-TC358768_DSI_CONTROL_TXMD bit will make the TC358768 send video in
-LP mode that is not the intended behavior.
-
-Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-2-francesco@dolcini.it
+Fixes: a5f23a72355d ("drm/vram-helper: Managed vram helpers")
+Signed-off-by: Luc Ma <luc@sietium.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/64583db2.630a0220.eb75d.8f51@mx.google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/drm_gem_vram_helper.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-index a3db532bbdd16..8de7d9764ba88 100644
---- a/drivers/gpu/drm/bridge/tc358768.c
-+++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -819,8 +819,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
- 	val = TC358768_DSI_CONFW_MODE_SET | TC358768_DSI_CONFW_ADDR_DSI_CONTROL;
- 	val |= (dsi_dev->lanes - 1) << 1;
- 
--	if (!(dsi_dev->mode_flags & MIPI_DSI_MODE_LPM))
--		val |= TC358768_DSI_CONTROL_TXMD;
-+	val |= TC358768_DSI_CONTROL_TXMD;
- 
- 	if (!(dsi_dev->mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
- 		val |= TC358768_DSI_CONTROL_HSCKMD;
+diff --git a/drivers/gpu/drm/drm_gem_vram_helper.c b/drivers/gpu/drm/drm_gem_vram_helper.c
+index 43cf7e887d1a5..aaf4f7dcc581d 100644
+--- a/drivers/gpu/drm/drm_gem_vram_helper.c
++++ b/drivers/gpu/drm/drm_gem_vram_helper.c
+@@ -43,7 +43,7 @@ static const struct drm_gem_object_funcs drm_gem_vram_object_funcs;
+  * the frame's scanout buffer or the cursor image. If there's no more space
+  * left in VRAM, inactive GEM objects can be moved to system memory.
+  *
+- * To initialize the VRAM helper library call drmm_vram_helper_alloc_mm().
++ * To initialize the VRAM helper library call drmm_vram_helper_init().
+  * The function allocates and initializes an instance of &struct drm_vram_mm
+  * in &struct drm_device.vram_mm . Use &DRM_GEM_VRAM_DRIVER to initialize
+  * &struct drm_driver and  &DRM_VRAM_MM_FILE_OPERATIONS to initialize
+@@ -71,7 +71,7 @@ static const struct drm_gem_object_funcs drm_gem_vram_object_funcs;
+  *		// setup device, vram base and size
+  *		// ...
+  *
+- *		ret = drmm_vram_helper_alloc_mm(dev, vram_base, vram_size);
++ *		ret = drmm_vram_helper_init(dev, vram_base, vram_size);
+  *		if (ret)
+  *			return ret;
+  *		return 0;
+@@ -84,7 +84,7 @@ static const struct drm_gem_object_funcs drm_gem_vram_object_funcs;
+  * to userspace.
+  *
+  * You don't have to clean up the instance of VRAM MM.
+- * drmm_vram_helper_alloc_mm() is a managed interface that installs a
++ * drmm_vram_helper_init() is a managed interface that installs a
+  * clean-up handler to run during the DRM device's release.
+  *
+  * For drawing or scanout operations, rsp. buffer objects have to be pinned
 -- 
 2.39.2
 
