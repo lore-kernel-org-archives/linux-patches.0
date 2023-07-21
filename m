@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A299620F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:08:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ECABC433C7;
-	Fri, 21 Jul 2023 19:08:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6D120F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:08:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E55E2C433C8;
+	Fri, 21 Jul 2023 19:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966521;
-	bh=CHUmsZj+D7+iH6WWNsabthQ41BTDLVjoxVPKlaUQK88=;
+	s=korg; t=1689966524;
+	bh=AHAfLPUTCUUHRsnA2xM2PyG6fmI/bjg4m342f+s8WGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JOsmA9l5+zfQFH4RRQuoSo0H0/9FmuBw7XALUz9p8H/9+pEp0ht5ThgNp7b2biZgv
-	 H68Z+XsgHq5+GtueLTrF5hlNyYYMNEqsXV10EtgMirr8hwLji0kBDYZ4ypTofu2zUx
-	 ewgZPrIi+7Yjy554h+8YsgpwHhL1fhMuPTGCgkgo=
+	b=OkDz4OC7Efd7XVNaK1DxGPz1Egr3Ey9SfpuWTC/IZjEnG+PjqJ80M8+M1gznQEJTR
+	 NZOQ1KjgbJ1zxM6HCOiEmCRG5AYyTrLdKk0C75UmTIruuiVkC2rZO9gR32ZHrk5nXF
+	 6l9uGt/ussPExFutTFU3kNCCJMBcgM8CVX4PRECE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.15 373/532] ARM: dts: qcom: ipq4019: fix broken NAND controller properties override
-Date: Fri, 21 Jul 2023 18:04:37 +0200
-Message-ID: <20230721160634.711964606@linuxfoundation.org>
+	Andrew Lunn <andrew@lunn.ch>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 5.15 374/532] ARM: orion5x: fix d2net gpio initialization
+Date: Fri, 21 Jul 2023 18:04:38 +0200
+Message-ID: <20230721160634.772506589@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,82 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit edcbdd57de499305e2a3737d4a73fe387f71d84c upstream.
+commit f8ef1233939495c405a9faa4bd1ae7d3f581bae4 upstream.
 
-After renaming NAND controller node name from "qpic-nand" to
-"nand-controller", the board DTS/DTSI also have to be updated:
+The DT version of this board has a custom file with the gpio
+device. However, it does nothing because the d2net_init()
+has no caller or prototype:
 
-  Warning (unit_address_vs_reg): /soc/qpic-nand@79b0000: node has a unit name, but no reg or ranges property
+arch/arm/mach-orion5x/board-d2net.c:101:13: error: no previous prototype for 'd2net_init'
 
-Cc: <stable@vger.kernel.org>
-Fixes: 9e1e00f18afc ("ARM: dts: qcom: Fix node name for NAND controller node")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230420072811.36947-1-krzysztof.kozlowski@linaro.org
+Call it from the board-dt file as intended.
+
+Fixes: 94b0bd366e36 ("ARM: orion5x: convert d2net to Device Tree")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230516153109.514251-10-arnd@kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dts |    8 ++++----
- arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1.dtsi   |   10 +++++-----
- arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1.dtsi   |   12 ++++++------
- 3 files changed, 15 insertions(+), 15 deletions(-)
+ arch/arm/mach-orion5x/board-dt.c |    3 +++
+ arch/arm/mach-orion5x/common.h   |    6 ++++++
+ 2 files changed, 9 insertions(+)
 
---- a/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dts
-+++ b/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dts
-@@ -11,9 +11,9 @@
- 		dma@7984000 {
- 			status = "okay";
- 		};
--
--		qpic-nand@79b0000 {
--			status = "okay";
--		};
- 	};
- };
+--- a/arch/arm/mach-orion5x/board-dt.c
++++ b/arch/arm/mach-orion5x/board-dt.c
+@@ -63,6 +63,9 @@ static void __init orion5x_dt_init(void)
+ 	if (of_machine_is_compatible("maxtor,shared-storage-2"))
+ 		mss2_init();
+ 
++	if (of_machine_is_compatible("lacie,d2-network"))
++		d2net_init();
 +
-+&nand {
-+	status = "okay";
-+};
---- a/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1.dtsi
-@@ -102,10 +102,10 @@
- 			status = "okay";
- 			perst-gpio = <&tlmm 38 0x1>;
- 		};
--
--		qpic-nand@79b0000 {
--			pinctrl-0 = <&nand_pins>;
--			pinctrl-names = "default";
--		};
- 	};
- };
+ 	of_platform_default_populate(NULL, orion5x_auxdata_lookup, NULL);
+ }
+ 
+--- a/arch/arm/mach-orion5x/common.h
++++ b/arch/arm/mach-orion5x/common.h
+@@ -75,6 +75,12 @@ extern void mss2_init(void);
+ static inline void mss2_init(void) {}
+ #endif
+ 
++#ifdef CONFIG_MACH_D2NET_DT
++void d2net_init(void);
++#else
++static inline void d2net_init(void) {}
++#endif
 +
-+&nand {
-+	pinctrl-0 = <&nand_pins>;
-+	pinctrl-names = "default";
-+};
---- a/arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1.dtsi
-@@ -65,11 +65,11 @@
- 		dma@7984000 {
- 			status = "okay";
- 		};
--
--		qpic-nand@79b0000 {
--			pinctrl-0 = <&nand_pins>;
--			pinctrl-names = "default";
--			status = "okay";
--		};
- 	};
- };
-+
-+&nand {
-+	pinctrl-0 = <&nand_pins>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+};
+ /*****************************************************************************
+  * Helpers to access Orion registers
+  ****************************************************************************/
 
 
