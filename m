@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A8E1ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:51:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E6DC433CA;
-	Fri, 21 Jul 2023 18:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC06A1ED4E
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:51:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B6F3C433C7;
+	Fri, 21 Jul 2023 18:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965499;
-	bh=bBjZTCUHuvtwSrJRP8pj4kMi+QGNDwQvnDWuAxaEq6U=;
+	s=korg; t=1689965505;
+	bh=lCQs8YBmsivN7d2iKjxwYc7/D6w8+lGZOXoxIwfelbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yVHF0J18qxvHGoh5JzAtgbZzANd/Nexhx3KwtXYFSyGj5uaykUWNc+eBnQEkceGvf
-	 Uu25qXRPRJbWixq3vx71m+LT6znwalMBuJ1n1OPehZkLwiMziciJkwJZn5fQkMcbi4
-	 yE4p2gLOvMRd8j1np9eQo0cG+XvPHGNjqyBiyEI0=
+	b=0BEu1Jbrhe6yG2v/tCcCUOXjMgzPepz6sgIIsJ+TOMM4WaynRKPkwL8/gifibORf7
+	 skia8oI70jXf1PavCnShe383lBQo1H7T/ey8rJsRgYpEWWyzBC8fEzXuBrh6Yvv1VR
+	 hzUFfF8cMW1zeHqYvrRj/dtQypijJd04jjuc83BI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yu Kuai <yukuai3@huawei.com>,
 	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 005/532] md/raid10: check slab-out-of-bounds in md_bitmap_get_counter
-Date: Fri, 21 Jul 2023 17:58:29 +0200
-Message-ID: <20230721160614.978882631@linuxfoundation.org>
+Subject: [PATCH 5.15 007/532] md/raid10: fix wrong setting of max_corr_read_errors
+Date: Fri, 21 Jul 2023 17:58:31 +0200
+Message-ID: <20230721160615.083790625@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -38,61 +38,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 301867b1c16805aebbc306aafa6ecdc68b73c7e5 ]
+[ Upstream commit f8b20a405428803bd9881881d8242c9d72c6b2b2 ]
 
-If we write a large number to md/bitmap_set_bits, md_bitmap_checkpage()
-will return -EINVAL because 'page >= bitmap->pages', but the return value
-was not checked immediately in md_bitmap_get_counter() in order to set
-*blocks value and slab-out-of-bounds occurs.
+There is no input check when echo md/max_read_errors and overflow might
+occur. Add check of input number.
 
-Move check of 'page >= bitmap->pages' to md_bitmap_get_counter() and
-return directly if true.
-
-Fixes: ef4256733506 ("md/bitmap: optimise scanning of empty bitmaps.")
+Fixes: 1e50915fe0bb ("raid: improve MD/raid10 handling of correctable read errors.")
 Signed-off-by: Li Nan <linan122@huawei.com>
 Reviewed-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230515134808.3936750-2-linan666@huaweicloud.com
+Link: https://lore.kernel.org/r/20230522072535.1523740-3-linan666@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-bitmap.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/md/md.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index 062142559caa3..adada558a1b09 100644
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -54,14 +54,7 @@ __acquires(bitmap->lock)
- {
- 	unsigned char *mappage;
- 
--	if (page >= bitmap->pages) {
--		/* This can happen if bitmap_start_sync goes beyond
--		 * End-of-device while looking for a whole page.
--		 * It is harmless.
--		 */
--		return -EINVAL;
--	}
--
-+	WARN_ON_ONCE(page >= bitmap->pages);
- 	if (bitmap->bp[page].hijacked) /* it's hijacked, don't try to alloc */
- 		return 0;
- 
-@@ -1365,6 +1358,14 @@ __acquires(bitmap->lock)
- 	sector_t csize;
- 	int err;
- 
-+	if (page >= bitmap->pages) {
-+		/*
-+		 * This can happen if bitmap_start_sync goes beyond
-+		 * End-of-device while looking for a whole page or
-+		 * user set a huge number to sysfs bitmap_set_bits.
-+		 */
-+		return NULL;
-+	}
- 	err = md_bitmap_checkpage(bitmap, page, create, 0);
- 
- 	if (bitmap->bp[page].hijacked ||
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 9648801e7910a..5a21aeedc1ba7 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -4556,6 +4556,8 @@ max_corrected_read_errors_store(struct mddev *mddev, const char *buf, size_t len
+ 	rv = kstrtouint(buf, 10, &n);
+ 	if (rv < 0)
+ 		return rv;
++	if (n > INT_MAX)
++		return -EINVAL;
+ 	atomic_set(&mddev->max_corr_read_errors, n);
+ 	return len;
+ }
 -- 
 2.39.2
 
