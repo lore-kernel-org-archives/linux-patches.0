@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A46620F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD1DC433C8;
-	Fri, 21 Jul 2023 19:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC3820F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BBCC433C7;
+	Fri, 21 Jul 2023 19:09:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966587;
-	bh=LwLt0cW9IMPlCSr1JiP0TmnLeoZiHGJG03HMIFHW2hw=;
+	s=korg; t=1689966590;
+	bh=CeQ/WBN8j5vOBiq94OO4tC+1yfA8dZgGL7KWQeE4P6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bXWUFsiCuu6LMlKjrd7KSQz6Utwtp9FFzNJDiiyPnkmDfG628Bd2tXJ3mU8I3Vave
-	 lgjvzueYW/mO0rrMl7MwA4NwOFYY0qWTkedNbHUiuWOcQ1FLUbeErFWmw8wCzlnL9j
-	 AwKZ3lVx/Yqy9FItsWSmwX+G5nldY6WyiTZVW2mw=
+	b=0oFOTbytIpewTRblPZWGiV201vH8B+YwX5qCtxSlAxn8V1qViy34CaiaDuVTmvLyP
+	 QA+j31bafEzqoh8+7H3AYEORYG+z5VnOKU1pbEV74i1zOEhY7IxzUG74w9bs58UDCq
+	 LDZp9kRbU0EEp95G/vvraJ8c032ARUrMJAeUkZJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.15 379/532] netfilter: nf_tables: unbind non-anonymous set if rule construction fails
-Date: Fri, 21 Jul 2023 18:04:43 +0200
-Message-ID: <20230721160635.047991436@linuxfoundation.org>
+	Marek Vasut <marex@denx.de>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 397/532] drm/panel: simple: Add Powertip PH800480T013 drm_display_mode flags
+Date: Fri, 21 Jul 2023 18:05:01 +0200
+Message-ID: <20230721160636.002415683@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -33,30 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Marek Vasut <marex@denx.de>
 
-commit 3e70489721b6c870252c9082c496703677240f53 upstream.
+[ Upstream commit 1c519980aced3da1fae37c1339cf43b24eccdee7 ]
 
-Otherwise a dangling reference to a rule object that is gone remains
-in the set binding list.
+Add missing drm_display_mode DRM_MODE_FLAG_NVSYNC | DRM_MODE_FLAG_NHSYNC
+flags. Those are used by various bridges in the pipeline to correctly
+configure its sync signals polarity.
 
-Fixes: 26b5a5712eb8 ("netfilter: nf_tables: add NFT_TRANS_PREPARE_ERROR to deal with bound set/chain")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d69de69f2be1 ("drm/panel: simple: Add Powertip PH800480T013 panel")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230615201602.565948-1-marex@denx.de
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/panel/panel-simple.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -5042,6 +5042,8 @@ void nf_tables_deactivate_set(const stru
- 		nft_set_trans_unbind(ctx, set);
- 		if (nft_set_is_anonymous(set))
- 			nft_deactivate_next(ctx->net, set);
-+		else
-+			list_del_rcu(&binding->list);
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 2b628b6be08f3..391d73d2638a8 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -3651,6 +3651,7 @@ static const struct drm_display_mode powertip_ph800480t013_idf02_mode = {
+ 	.vsync_start = 480 + 49,
+ 	.vsync_end = 480 + 49 + 2,
+ 	.vtotal = 480 + 49 + 2 + 22,
++	.flags = DRM_MODE_FLAG_NVSYNC | DRM_MODE_FLAG_NHSYNC,
+ };
  
- 		set->use--;
- 		break;
+ static const struct panel_desc powertip_ph800480t013_idf02  = {
+-- 
+2.39.2
+
 
 
