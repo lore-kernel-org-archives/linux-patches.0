@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F43D20F9D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:25:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F27EFC433C9;
-	Fri, 21 Jul 2023 19:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B2320F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:25:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 233DCC433C7;
+	Fri, 21 Jul 2023 19:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967526;
-	bh=W+SxhyQ/lc4vWwTT8Ky+kalmGv8L7EwNzoykiwTCfbw=;
+	s=korg; t=1689967523;
+	bh=ucrisWmY7SYXQLOMoDDvvfr7cUK3XRoWG9xkr+XV0f0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JZkQsgfdZLXB4nWrPxcsF7b4GRRvWrJmW19zay3WRWpAnOYfd7Zii40cDcC9CCLtm
-	 X97tpG4Aq4JuEjoosOEnQ+MumheQEMnA/jZUYXF1K1wihIWfmYBNaHqHFSXqzPvMni
-	 Z+OxbQ7TDGbifbUh3PNNmBZz9GF2Ql3tPV+TIbYw=
+	b=a27giwg2r6FHi4GeBI/39Z08Sj/1yV+bc46RYk6XReDQ7kGZ7WcmWrXQwlVadPeIN
+	 RKTYbAM1zf7GRlcSQmAdpEsU8dkfErOXpfgcTyBNns2ljCkgQhFWdTO2CZI5Kq9O8O
+	 7V1IoQjagTDxd1/UXnfIblvlAuBiU+Yne2Z1VEvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.1 193/223] fprobe: Release rethook after the ftrace_ops is unregistered
-Date: Fri, 21 Jul 2023 18:07:26 +0200
-Message-ID: <20230721160529.113510867@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Thierry Reding <thierry.reding@gmail.com>
+Subject: [PATCH 6.1 192/223] pwm: meson: fix handling of period/duty if greater than UINT_MAX
+Date: Fri, 21 Jul 2023 18:07:25 +0200
+Message-ID: <20230721160529.071110202@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -35,75 +36,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit 5f81018753dfd4989e33ece1f0cb6b8aae498b82 upstream.
+commit 87a2cbf02d7701255f9fcca7e5bd864a7bb397cf upstream.
 
-While running bpf selftests it's possible to get following fault:
+state->period/duty are of type u64, and if their value is greater than
+UINT_MAX, then the cast to uint will cause problems. Fix this by
+changing the type of the respective local variables to u64.
 
-  general protection fault, probably for non-canonical address \
-  0x6b6b6b6b6b6b6b6b: 0000 [#1] PREEMPT SMP DEBUG_PAGEALLOC NOPTI
-  ...
-  Call Trace:
-   <TASK>
-   fprobe_handler+0xc1/0x270
-   ? __pfx_bpf_testmod_init+0x10/0x10
-   ? __pfx_bpf_testmod_init+0x10/0x10
-   ? bpf_fentry_test1+0x5/0x10
-   ? bpf_fentry_test1+0x5/0x10
-   ? bpf_testmod_init+0x22/0x80
-   ? do_one_initcall+0x63/0x2e0
-   ? rcu_is_watching+0xd/0x40
-   ? kmalloc_trace+0xaf/0xc0
-   ? do_init_module+0x60/0x250
-   ? __do_sys_finit_module+0xac/0x120
-   ? do_syscall_64+0x37/0x90
-   ? entry_SYSCALL_64_after_hwframe+0x72/0xdc
-   </TASK>
-
-In unregister_fprobe function we can't release fp->rethook while it's
-possible there are some of its users still running on another cpu.
-
-Moving rethook_free call after fp->ops is unregistered with
-unregister_ftrace_function call.
-
-Link: https://lore.kernel.org/all/20230615115236.3476617-1-jolsa@kernel.org/
-
-Fixes: 5b0ab78998e3 ("fprobe: Add exit_handler support")
+Fixes: b79c3670e120 ("pwm: meson: Don't duplicate the polarity internally")
 Cc: stable@vger.kernel.org
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Suggested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/fprobe.c |   12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ drivers/pwm/pwm-meson.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/kernel/trace/fprobe.c
-+++ b/kernel/trace/fprobe.c
-@@ -307,19 +307,13 @@ int unregister_fprobe(struct fprobe *fp)
- 		    fp->ops.saved_func != fprobe_kprobe_handler))
+--- a/drivers/pwm/pwm-meson.c
++++ b/drivers/pwm/pwm-meson.c
+@@ -156,8 +156,9 @@ static int meson_pwm_calc(struct meson_p
+ 			  const struct pwm_state *state)
+ {
+ 	struct meson_pwm_channel *channel = &meson->channels[pwm->hwpwm];
+-	unsigned int duty, period, pre_div, cnt, duty_cnt;
++	unsigned int pre_div, cnt, duty_cnt;
+ 	unsigned long fin_freq;
++	u64 duty, period;
+ 
+ 	duty = state->duty_cycle;
+ 	period = state->period;
+@@ -179,19 +180,19 @@ static int meson_pwm_calc(struct meson_p
+ 
+ 	dev_dbg(meson->chip.dev, "fin_freq: %lu Hz\n", fin_freq);
+ 
+-	pre_div = div64_u64(fin_freq * (u64)period, NSEC_PER_SEC * 0xffffLL);
++	pre_div = div64_u64(fin_freq * period, NSEC_PER_SEC * 0xffffLL);
+ 	if (pre_div > MISC_CLK_DIV_MASK) {
+ 		dev_err(meson->chip.dev, "unable to get period pre_div\n");
  		return -EINVAL;
+ 	}
  
--	/*
--	 * rethook_free() starts disabling the rethook, but the rethook handlers
--	 * may be running on other processors at this point. To make sure that all
--	 * current running handlers are finished, call unregister_ftrace_function()
--	 * after this.
--	 */
--	if (fp->rethook)
--		rethook_free(fp->rethook);
--
- 	ret = unregister_ftrace_function(&fp->ops);
- 	if (ret < 0)
- 		return ret;
+-	cnt = div64_u64(fin_freq * (u64)period, NSEC_PER_SEC * (pre_div + 1));
++	cnt = div64_u64(fin_freq * period, NSEC_PER_SEC * (pre_div + 1));
+ 	if (cnt > 0xffff) {
+ 		dev_err(meson->chip.dev, "unable to get period cnt\n");
+ 		return -EINVAL;
+ 	}
  
-+	if (fp->rethook)
-+		rethook_free(fp->rethook);
-+
- 	ftrace_free_filter(&fp->ops);
+-	dev_dbg(meson->chip.dev, "period=%u pre_div=%u cnt=%u\n", period,
++	dev_dbg(meson->chip.dev, "period=%llu pre_div=%u cnt=%u\n", period,
+ 		pre_div, cnt);
  
- 	return ret;
+ 	if (duty == period) {
+@@ -204,14 +205,13 @@ static int meson_pwm_calc(struct meson_p
+ 		channel->lo = cnt;
+ 	} else {
+ 		/* Then check is we can have the duty with the same pre_div */
+-		duty_cnt = div64_u64(fin_freq * (u64)duty,
+-				     NSEC_PER_SEC * (pre_div + 1));
++		duty_cnt = div64_u64(fin_freq * duty, NSEC_PER_SEC * (pre_div + 1));
+ 		if (duty_cnt > 0xffff) {
+ 			dev_err(meson->chip.dev, "unable to get duty cycle\n");
+ 			return -EINVAL;
+ 		}
+ 
+-		dev_dbg(meson->chip.dev, "duty=%u pre_div=%u duty_cnt=%u\n",
++		dev_dbg(meson->chip.dev, "duty=%llu pre_div=%u duty_cnt=%u\n",
+ 			duty, pre_div, duty_cnt);
+ 
+ 		channel->pre_div = pre_div;
 
 
