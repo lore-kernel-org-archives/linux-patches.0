@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BABC20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:20:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A10CBC433C7;
-	Fri, 21 Jul 2023 19:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCDC20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:20:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C49C43397;
+	Fri, 21 Jul 2023 19:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967230;
-	bh=zQ9vyPPsAm83hfZGIgmAi3Wx4iQ3/nUJvyP6XGYBxd0=;
+	s=korg; t=1689967232;
+	bh=+RsjphFFg7pVLQ9ePTZLAZWQN410QFyG4FwkD9G1pKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H5hQSmmuuTFZTK/978a9dlosP536D9ypGl2rehzAk8gQmQRoTyISe51gQsUhqKSo/
-	 Yk2cwYgliy2rJGdNPuseXHNJs9IIKnzNAg1vdt37mY9c6ARK3C9sRKphR0iD/aBtNQ
-	 ztoawZsekyg+a2DOXAgm7R6QnBVVXMlHYWDUu/LM=
+	b=wctvyAjo6YfhrrZLdzF3VD32UBZYDw581zD0abeWpyhXd1GIvCKPWFHTJqcUPwEtI
+	 p3HnenvhwhtlwDblHc6FEK8cy+3XuZK6+iKJK6Rdn9sBca99CAg7YwA3scndz9N7JU
+	 SU8q9UAyKgkwzaseJcEMRPatKP8BnsDspgxmwidI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Jerry Snitselaar <jsnitsel@redhat.com>
-Subject: [PATCH 6.1 090/223] tpm: tis_i2c: Limit read bursts to I2C_SMBUS_BLOCK_MAX (32) bytes
-Date: Fri, 21 Jul 2023 18:05:43 +0200
-Message-ID: <20230721160524.698730965@linuxfoundation.org>
+Subject: [PATCH 6.1 091/223] tpm: tis_i2c: Limit write bursts to I2C_SMBUS_BLOCK_MAX (32) bytes
+Date: Fri, 21 Jul 2023 18:05:44 +0200
+Message-ID: <20230721160524.742237208@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -38,16 +38,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-commit f3b70b6e3390bfdf18fdd7d278a72a12784fdcce upstream.
+commit 83e7e5d89f04d1c417492940f7922bc8416a8cc4 upstream.
 
 Underlying I2C bus drivers not always support longer transfers and
-imx-lpi2c for instance doesn't. SLB 9673 offers 427-bytes packets.
-
-Visible symptoms are:
-
-tpm tpm0: Error left over data
-tpm tpm0: tpm_transmit: tpm_recv: error -5
-tpm_tis_i2c: probe of 1-002e failed with error -5
+imx-lpi2c for instance doesn't. The fix is symmetric to previous patch
+which fixed the read direction.
 
 Cc: stable@vger.kernel.org # v5.20+
 Fixes: bbc23a07b072 ("tpm: Add tpm_tis_i2c backend for tpm_tis_core")
@@ -58,59 +53,45 @@ Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm_tis_i2c.c | 37 ++++++++++++++++++++--------------
- 1 file changed, 22 insertions(+), 15 deletions(-)
+ drivers/char/tpm/tpm_tis_i2c.c |   22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm_tis_i2c.c b/drivers/char/tpm/tpm_tis_i2c.c
-index c8c34adc14c0..106fd20d94e4 100644
 --- a/drivers/char/tpm/tpm_tis_i2c.c
 +++ b/drivers/char/tpm/tpm_tis_i2c.c
-@@ -189,21 +189,28 @@ static int tpm_tis_i2c_read_bytes(struct tpm_tis_data *data, u32 addr, u16 len,
+@@ -230,19 +230,27 @@ static int tpm_tis_i2c_write_bytes(struc
+ 	struct i2c_msg msg = { .addr = phy->i2c_client->addr };
+ 	u8 reg = tpm_tis_i2c_address_to_register(addr);
  	int ret;
++	u16 wrote = 0;
  
- 	for (i = 0; i < TPM_RETRY; i++) {
--		/* write register */
--		msg.len = sizeof(reg);
--		msg.buf = &reg;
--		msg.flags = 0;
--		ret = tpm_tis_i2c_retry_transfer_until_ack(data, &msg);
--		if (ret < 0)
--			return ret;
+ 	if (len > TPM_BUFSIZE - 1)
+ 		return -EIO;
+ 
+-	/* write register and data in one go */
+ 	phy->io_buf[0] = reg;
+-	memcpy(phy->io_buf + sizeof(reg), value, len);
 -
--		/* read data */
--		msg.buf = result;
--		msg.len = len;
--		msg.flags = I2C_M_RD;
--		ret = tpm_tis_i2c_retry_transfer_until_ack(data, &msg);
--		if (ret < 0)
--			return ret;
-+		u16 read = 0;
+-	msg.len = sizeof(reg) + len;
+ 	msg.buf = phy->io_buf;
+-	ret = tpm_tis_i2c_retry_transfer_until_ack(data, &msg);
+-	if (ret < 0)
+-		return ret;
++	while (wrote < len) {
++		/* write register and data in one go */
++		msg.len = sizeof(reg) + len - wrote;
++		if (msg.len > I2C_SMBUS_BLOCK_MAX)
++			msg.len = I2C_SMBUS_BLOCK_MAX;
 +
-+		while (read < len) {
-+			/* write register */
-+			msg.len = sizeof(reg);
-+			msg.buf = &reg;
-+			msg.flags = 0;
-+			ret = tpm_tis_i2c_retry_transfer_until_ack(data, &msg);
-+			if (ret < 0)
-+				return ret;
++		memcpy(phy->io_buf + sizeof(reg), value + wrote,
++		       msg.len - sizeof(reg));
 +
-+			/* read data */
-+			msg.buf = result + read;
-+			msg.len = len - read;
-+			msg.flags = I2C_M_RD;
-+			if (msg.len > I2C_SMBUS_BLOCK_MAX)
-+				msg.len = I2C_SMBUS_BLOCK_MAX;
-+			ret = tpm_tis_i2c_retry_transfer_until_ack(data, &msg);
-+			if (ret < 0)
-+				return ret;
-+			read += msg.len;
-+		}
++		ret = tpm_tis_i2c_retry_transfer_until_ack(data, &msg);
++		if (ret < 0)
++			return ret;
++		wrote += msg.len - sizeof(reg);
++	}
  
- 		ret = tpm_tis_i2c_sanity_check_read(reg, len, result);
- 		if (ret == 0)
--- 
-2.41.0
-
+ 	return 0;
+ }
 
 
