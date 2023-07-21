@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBAE320F89
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:59:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D65BC433C8;
-	Fri, 21 Jul 2023 18:59:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70661F94B
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:59:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F4DC433C7;
+	Fri, 21 Jul 2023 18:59:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965955;
-	bh=/pEUvOQqKqOct7Amivy8kjyacyn3ofp6ed/JZFI7Sp4=;
+	s=korg; t=1689965958;
+	bh=bWAkDfDK2FZoit3t0CvM1Fh5j1tQCps5OwpjAk4ySL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G9teT3kuB0dO+7TqCZt7R4rYtXyJpvWFqDkU0K3+2FZX6VpPU/NtCPI8LAe82l8D6
-	 KlA3WUuZT0Nf5zkZAScvWhn5L8qJqBS06QYT3nHUnrHyYWjDUtxNvRTARbU76wH6DS
-	 HBQrh0v7RWpZVkiwx3UKmM61WOcdpXCqysh8MLdQ=
+	b=gTDyjOlEkWu55uiedg4geXUKAlX4eeZwDjpe10HsSWUJjUiucJIR3VG0Hh05//MHc
+	 7Dqz8IBQFQPwkeB7cN05fP1Woz5e0fdVW7ALK693VX+3kKnTiTXSjSm8Pd3fNHzjKu
+	 UURDxwEB3qZMVgX9mOkp8UCBfYmGspbhkILs9ZaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Michal Simek <michal.simek@amd.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 174/532] clk: clocking-wizard: Fix Oops in clk_wzrd_register_divider()
-Date: Fri, 21 Jul 2023 18:01:18 +0200
-Message-ID: <20230721160623.832880516@linuxfoundation.org>
+Subject: [PATCH 5.15 175/532] clk: tegra: tegra124-emc: Fix potential memory leak
+Date: Fri, 21 Jul 2023 18:01:19 +0200
+Message-ID: <20230721160623.884520677@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,38 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 9c632a6396505a019ea6d12b5ab45e659a542a93 ]
+[ Upstream commit 53a06e5924c0d43c11379a08c5a78529c3e61595 ]
 
-Smatch detected this potential error pointer dereference
-clk_wzrd_register_divider().  If devm_clk_hw_register() fails then
-it sets "hw" to an error pointer and then dereferences it on the
-next line.  Return the error directly instead.
+The tegra and tegra needs to be freed in the error handling path, otherwise
+it will be leaked.
 
-Fixes: 5a853722eb32 ("staging: clocking-wizard: Add support for dynamic reconfiguration")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/f0e39b5c-4554-41e0-80d9-54ca3fabd060@kili.mountain
-Reviewed-by: Michal Simek <michal.simek@amd.com>
+Fixes: 2db04f16b589 ("clk: tegra: Add EMC clock driver")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Link: https://lore.kernel.org/r/20221209094124.71043-1-yuancan@huawei.com
+Acked-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/clocking-wizard/clk-xlnx-clock-wizard.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/tegra/clk-tegra124-emc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/staging/clocking-wizard/clk-xlnx-clock-wizard.c b/drivers/staging/clocking-wizard/clk-xlnx-clock-wizard.c
-index 39367712ef540..8c1934df70dea 100644
---- a/drivers/staging/clocking-wizard/clk-xlnx-clock-wizard.c
-+++ b/drivers/staging/clocking-wizard/clk-xlnx-clock-wizard.c
-@@ -347,7 +347,7 @@ static struct clk *clk_wzrd_register_divider(struct device *dev,
- 	hw = &div->hw;
- 	ret = devm_clk_hw_register(dev, hw);
- 	if (ret)
--		hw = ERR_PTR(ret);
-+		return ERR_PTR(ret);
+diff --git a/drivers/clk/tegra/clk-tegra124-emc.c b/drivers/clk/tegra/clk-tegra124-emc.c
+index 219c80653dbdb..2a6db04342815 100644
+--- a/drivers/clk/tegra/clk-tegra124-emc.c
++++ b/drivers/clk/tegra/clk-tegra124-emc.c
+@@ -464,6 +464,7 @@ static int load_timings_from_dt(struct tegra_clk_emc *tegra,
+ 		err = load_one_timing_from_dt(tegra, timing, child);
+ 		if (err) {
+ 			of_node_put(child);
++			kfree(tegra->timings);
+ 			return err;
+ 		}
  
- 	return hw->clk;
- }
+@@ -515,6 +516,7 @@ struct clk *tegra124_clk_register_emc(void __iomem *base, struct device_node *np
+ 		err = load_timings_from_dt(tegra, node, node_ram_code);
+ 		if (err) {
+ 			of_node_put(node);
++			kfree(tegra);
+ 			return ERR_PTR(err);
+ 		}
+ 	}
 -- 
 2.39.2
 
