@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8F320F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:14:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F931C433C7;
-	Fri, 21 Jul 2023 19:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44C820F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:14:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5677BC433C8;
+	Fri, 21 Jul 2023 19:14:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966892;
-	bh=zlzS9VZd/1Pb/srnlGe6ZK5AW6b50LjY05WU9rstM7I=;
+	s=korg; t=1689966895;
+	bh=IWwB1kBcSgRN1dABsKJwHmuwaoxUMxzLLWHGbnlZTQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DvUmuXRfu8mb/Uon/VlcUa30EluDASFHK41XjmPDOVyZRM59O4yBVpnGjlTVqMocY
-	 8Xh9dKvssO1x1YgNtY+Xnnj9rZU3e1VnGSCpeA7v53YEJJPjDJHBJiRaAkqrKAE4h8
-	 Jjyli7kTLps3TDMqcanXe+TQJPx4z5ene9c8yEXg=
+	b=BATh4pMqKTfgOsx4MzR/fO794a7JowmPHuy9hDHtqVSPHbv+IeiShpadEgxmI2I/S
+	 27pfO0jg9EFpEGmlY+VuTmtxh1qz1K2yCDdhruHvxKgASrJCAT3mgEjphRlK0YS7yu
+	 1uAO1rSFE7zsUregUzVxhnRg6+v/NQGChh1gHEqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
 	Lorenzo Pieralisi <lpieralisi@kernel.org>
-Subject: [PATCH 5.15 476/532] PCI: rockchip: Write PCI Device ID to correct register
-Date: Fri, 21 Jul 2023 18:06:20 +0200
-Message-ID: <20230721160640.339277043@linuxfoundation.org>
+Subject: [PATCH 5.15 477/532] PCI: rockchip: Add poll and timeout to wait for PHY PLLs to be locked
+Date: Fri, 21 Jul 2023 18:06:21 +0200
+Message-ID: <20230721160640.390935210@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,14 +37,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
 
-commit 1f1c42ece18de365c976a060f3c8eb481b038e3a upstream.
+commit 9dd3c7c4c8c3f7f010d9cdb7c3f42506d93c9527 upstream.
 
-Write PCI Device ID (DID) to the correct register. The Device ID was not
-updated through the correct register. Device ID was written to a read-only
-register and therefore did not work. The Device ID is now set through the
-correct register. This is documented in the RK3399 TRM section 17.6.6.1.1
+The RK3399 PCIe controller should wait until the PHY PLLs are locked.
+Add poll and timeout to wait for PHY PLLs to be locked. If they cannot
+be locked generate error message and jump to error handler. Accessing
+registers in the PHY clock domain when PLLs are not locked causes hang
+The PHY PLLs status is checked through a side channel register.
+This is documented in the TRM section 17.5.8.1 "PCIe Initialization
+Sequence".
 
-Link: https://lore.kernel.org/r/20230418074700.1083505-3-rick.wertenbroek@gmail.com
+Link: https://lore.kernel.org/r/20230418074700.1083505-5-rick.wertenbroek@gmail.com
 Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
 Tested-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
@@ -53,42 +56,60 @@ Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-rockchip-ep.c |    6 ++++--
- drivers/pci/controller/pcie-rockchip.h    |    2 ++
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pcie-rockchip.c |   17 +++++++++++++++++
+ drivers/pci/controller/pcie-rockchip.h |    2 ++
+ 2 files changed, 19 insertions(+)
 
---- a/drivers/pci/controller/pcie-rockchip-ep.c
-+++ b/drivers/pci/controller/pcie-rockchip-ep.c
-@@ -125,6 +125,7 @@ static void rockchip_pcie_prog_ep_ob_atu
- static int rockchip_pcie_ep_write_header(struct pci_epc *epc, u8 fn, u8 vfn,
- 					 struct pci_epf_header *hdr)
- {
-+	u32 reg;
- 	struct rockchip_pcie_ep *ep = epc_get_drvdata(epc);
- 	struct rockchip_pcie *rockchip = &ep->rockchip;
+--- a/drivers/pci/controller/pcie-rockchip.c
++++ b/drivers/pci/controller/pcie-rockchip.c
+@@ -14,6 +14,7 @@
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/gpio/consumer.h>
++#include <linux/iopoll.h>
+ #include <linux/of_pci.h>
+ #include <linux/phy/phy.h>
+ #include <linux/platform_device.h>
+@@ -153,6 +154,12 @@ int rockchip_pcie_parse_dt(struct rockch
+ }
+ EXPORT_SYMBOL_GPL(rockchip_pcie_parse_dt);
  
-@@ -137,8 +138,9 @@ static int rockchip_pcie_ep_write_header
- 				    PCIE_CORE_CONFIG_VENDOR);
++#define rockchip_pcie_read_addr(addr) rockchip_pcie_read(rockchip, addr)
++/* 100 ms max wait time for PHY PLLs to lock */
++#define RK_PHY_PLL_LOCK_TIMEOUT_US 100000
++/* Sleep should be less than 20ms */
++#define RK_PHY_PLL_LOCK_SLEEP_US 1000
++
+ int rockchip_pcie_init_port(struct rockchip_pcie *rockchip)
+ {
+ 	struct device *dev = rockchip->dev;
+@@ -254,6 +261,16 @@ int rockchip_pcie_init_port(struct rockc
+ 		}
  	}
  
--	rockchip_pcie_write(rockchip, hdr->deviceid << 16,
--			    ROCKCHIP_PCIE_EP_FUNC_BASE(fn) + PCI_VENDOR_ID);
-+	reg = rockchip_pcie_read(rockchip, PCIE_EP_CONFIG_DID_VID);
-+	reg = (reg & 0xFFFF) | (hdr->deviceid << 16);
-+	rockchip_pcie_write(rockchip, reg, PCIE_EP_CONFIG_DID_VID);
- 
- 	rockchip_pcie_write(rockchip,
- 			    hdr->revid |
++	err = readx_poll_timeout(rockchip_pcie_read_addr,
++				 PCIE_CLIENT_SIDE_BAND_STATUS,
++				 regs, !(regs & PCIE_CLIENT_PHY_ST),
++				 RK_PHY_PLL_LOCK_SLEEP_US,
++				 RK_PHY_PLL_LOCK_TIMEOUT_US);
++	if (err) {
++		dev_err(dev, "PHY PLLs could not lock, %d\n", err);
++		goto err_power_off_phy;
++	}
++
+ 	/*
+ 	 * Please don't reorder the deassert sequence of the following
+ 	 * four reset pins.
 --- a/drivers/pci/controller/pcie-rockchip.h
 +++ b/drivers/pci/controller/pcie-rockchip.h
-@@ -133,6 +133,8 @@
- #define PCIE_RC_RP_ATS_BASE		0x400000
- #define PCIE_RC_CONFIG_NORMAL_BASE	0x800000
- #define PCIE_RC_CONFIG_BASE		0xa00000
-+#define PCIE_EP_CONFIG_BASE		0xa00000
-+#define PCIE_EP_CONFIG_DID_VID		(PCIE_EP_CONFIG_BASE + 0x00)
- #define PCIE_RC_CONFIG_RID_CCR		(PCIE_RC_CONFIG_BASE + 0x08)
- #define   PCIE_RC_CONFIG_SCC_SHIFT		16
- #define PCIE_RC_CONFIG_DCR		(PCIE_RC_CONFIG_BASE + 0xc4)
+@@ -38,6 +38,8 @@
+ #define   PCIE_CLIENT_MODE_EP            HIWORD_UPDATE(0x0040, 0)
+ #define   PCIE_CLIENT_GEN_SEL_1		  HIWORD_UPDATE(0x0080, 0)
+ #define   PCIE_CLIENT_GEN_SEL_2		  HIWORD_UPDATE_BIT(0x0080)
++#define PCIE_CLIENT_SIDE_BAND_STATUS	(PCIE_CLIENT_BASE + 0x20)
++#define   PCIE_CLIENT_PHY_ST			BIT(12)
+ #define PCIE_CLIENT_DEBUG_OUT_0		(PCIE_CLIENT_BASE + 0x3c)
+ #define   PCIE_CLIENT_DEBUG_LTSSM_MASK		GENMASK(5, 0)
+ #define   PCIE_CLIENT_DEBUG_LTSSM_L1		0x18
 
 
