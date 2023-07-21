@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF1120F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:23:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127E7C433C8;
-	Fri, 21 Jul 2023 19:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D6220F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:23:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF37C433CA;
+	Fri, 21 Jul 2023 19:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967386;
-	bh=sZu3BgkN4wAzWe5i3OrvvCpX8x4HukaZd+Bs6CZvo/8=;
+	s=korg; t=1689967389;
+	bh=3S9jrISaPrsRJmfff4zWgNjYFcvFwb9J+fTiUCmerQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xChqm99mSREYdr+oZzGiAxmkQWpwYQ+VtAH2foiIh0hZ8pp/LBHqS+4BBpmhMOpLJ
-	 3WeZ5FSLRyM71/6IsQubeDX1F9lt1ePRiiUMCPX5QIA3ifAaSEbyi2J9DZ4MPkvlkk
-	 7lMG14maC0qWVD1Aqr0Wr2eqYex5rhr5OjijO7Vw=
+	b=tumX66LBtOqu/fgCuyRy4BLuX7QTmWp4yp+UfzKSOuTx02kj+JBJ+FA++6fZ6WEu0
+	 tVWiTdVrvh5xwW8+Z3jA8uLsaT1ipPaz1FE4nl/r4wHnpnB8lKusQBdD6nm2YoesiZ
+	 HBjP42S/IG3+vlclDoX183gJiv8ANnnrPkSpbk0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.1 116/223] dm integrity: reduce vmalloc space footprint on 32-bit architectures
-Date: Fri, 21 Jul 2023 18:06:09 +0200
-Message-ID: <20230721160525.822053445@linuxfoundation.org>
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	stable@kernel.org,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 107/223] ext4: fix wrong unit use in ext4_mb_new_blocks
+Date: Fri, 21 Jul 2023 18:06:00 +0200
+Message-ID: <20230721160525.433391891@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -34,42 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-commit 6d50eb4725934fd22f5eeccb401000687c790fd0 upstream.
+commit 2ec6d0a5ea72689a79e6f725fd8b443a788ae279 upstream.
 
-It was reported that dm-integrity runs out of vmalloc space on 32-bit
-architectures. On x86, there is only 128MiB vmalloc space and dm-integrity
-consumes it quickly because it has a 64MiB journal and 8MiB recalculate
-buffer.
+Function ext4_free_blocks_simple needs count in cluster. Function
+ext4_free_blocks accepts count in block. Convert count to cluster
+to fix the mismatch.
 
-Fix this by reducing the size of the journal to 4MiB and the size of
-the recalculate buffer to 1MiB, so that multiple dm-integrity devices
-can be created and activated on 32-bit architectures.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Cc: stable@kernel.org
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230603150327.3596033-12-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ext4/mballoc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -33,11 +33,11 @@
- #define DEFAULT_BUFFER_SECTORS		128
- #define DEFAULT_JOURNAL_WATERMARK	50
- #define DEFAULT_SYNC_MSEC		10000
--#define DEFAULT_MAX_JOURNAL_SECTORS	131072
-+#define DEFAULT_MAX_JOURNAL_SECTORS	(IS_ENABLED(CONFIG_64BIT) ? 131072 : 8192)
- #define MIN_LOG2_INTERLEAVE_SECTORS	3
- #define MAX_LOG2_INTERLEAVE_SECTORS	31
- #define METADATA_WORKQUEUE_MAX_ACTIVE	16
--#define RECALC_SECTORS			32768
-+#define RECALC_SECTORS			(IS_ENABLED(CONFIG_64BIT) ? 32768 : 2048)
- #define RECALC_WRITE_SUPER		16
- #define BITMAP_BLOCK_SIZE		4096	/* don't change it */
- #define BITMAP_FLUSH_INTERVAL		(10 * HZ)
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -6166,7 +6166,7 @@ void ext4_free_blocks(handle_t *handle,
+ 	}
+ 
+ 	if (sbi->s_mount_state & EXT4_FC_REPLAY) {
+-		ext4_free_blocks_simple(inode, block, count);
++		ext4_free_blocks_simple(inode, block, EXT4_NUM_B2C(sbi, count));
+ 		return;
+ 	}
+ 
 
 
