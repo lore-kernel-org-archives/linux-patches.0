@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675CB20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:25:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB0BC433C8;
-	Fri, 21 Jul 2023 19:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3969E20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:25:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1522C433C8;
+	Fri, 21 Jul 2023 19:25:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967512;
-	bh=EjewOMFgqtIdvNOu1km6Tffffy+X6G1QaFapHl6hHcU=;
+	s=korg; t=1689967515;
+	bh=nDYDLr6fXg+9iDny7vQDZOufuuFMSNNJIHDv2n2Xd/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vsJ89tr5HKRh3bb4/xHTh7DLZq6uDA2xxbFpD+8SvI5hVCAGgZ/P0hso4bPZKLoP6
-	 4yoyXcw6wSKfKlKuH7ZieMiAsGwuwaJ0sNrnVcNJ2/CJ3hUw9NViVwbBX4vxBBDHaM
-	 jVjg4Npr8VJWuT4u3HGKgox25cfzAIYoBL18Q00U=
+	b=P+8hFUjTC/qIzo2F1qkH3jC86J12K4c9Ny/7OELj1fXH1totHThPucZebZNhVW0KK
+	 TsRjShjgIeEJkRLTAHRoRcrfAWEpHhh1tmqCbSIjQjbZA97I7Y8bLK94V25XUNT1zC
+	 KmpHH2fbwZiLDhLvzmPVZXdMugj3DznXF6szE8uM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH 6.1 188/223] xtensa: ISS: fix call to split_if_spec
-Date: Fri, 21 Jul 2023 18:07:21 +0200
-Message-ID: <20230721160528.903045577@linuxfoundation.org>
+	Greg Thelen <gthelen@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.1 189/223] perf/x86: Fix lockdep warning in for_each_sibling_event() on SPR
+Date: Fri, 21 Jul 2023 18:07:22 +0200
+Message-ID: <20230721160528.943910403@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -33,34 +35,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-commit bc8d5916541fa19ca5bc598eb51a5f78eb891a36 upstream.
+commit 27c68c216ee1f1b086e789a64486e6511e380b8a upstream.
 
-split_if_spec expects a NULL-pointer as an end marker for the argument
-list, but tuntap_probe never supplied that terminating NULL. As a result
-incorrectly formatted interface specification string may cause a crash
-because of the random memory access. Fix that by adding NULL terminator
-to the split_if_spec argument list.
+On SPR, the load latency event needs an auxiliary event in the same
+group to work properly.  There's a check in intel_pmu_hw_config()
+for this to iterate sibling events and find a mem-loads-aux event.
 
+The for_each_sibling_event() has a lockdep assert to make sure if it
+disabled hardirq or hold leader->ctx->mutex.  This works well if the
+given event has a separate leader event since perf_try_init_event()
+grabs the leader->ctx->mutex to protect the sibling list.  But it can
+cause a problem when the event itself is a leader since the event is
+not initialized yet and there's no ctx for the event.
+
+Actually I got a lockdep warning when I run the below command on SPR,
+but I guess it could be a NULL pointer dereference.
+
+  $ perf record -d -e cpu/mem-loads/uP true
+
+The code path to the warning is:
+
+  sys_perf_event_open()
+    perf_event_alloc()
+      perf_init_event()
+        perf_try_init_event()
+          x86_pmu_event_init()
+            hsw_hw_config()
+              intel_pmu_hw_config()
+                for_each_sibling_event()
+                  lockdep_assert_event_ctx()
+
+We don't need for_each_sibling_event() when it's a standalone event.
+Let's return the error code directly.
+
+Fixes: f3c0eba28704 ("perf: Add a few assertions")
+Reported-by: Greg Thelen <gthelen@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Fixes: 7282bee78798 ("[PATCH] xtensa: Architecture support for Tensilica Xtensa Part 8")
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+Link: https://lkml.kernel.org/r/20230704181516.3293665-1-namhyung@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/xtensa/platforms/iss/network.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/events/intel/core.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/arch/xtensa/platforms/iss/network.c
-+++ b/arch/xtensa/platforms/iss/network.c
-@@ -237,7 +237,7 @@ static int tuntap_probe(struct iss_net_p
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -3975,6 +3975,13 @@ static int intel_pmu_hw_config(struct pe
+ 		struct perf_event *leader = event->group_leader;
+ 		struct perf_event *sibling = NULL;
  
- 	init += sizeof(TRANSPORT_TUNTAP_NAME) - 1;
- 	if (*init == ',') {
--		rem = split_if_spec(init + 1, &mac_str, &dev_name);
-+		rem = split_if_spec(init + 1, &mac_str, &dev_name, NULL);
- 		if (rem != NULL) {
- 			pr_err("%s: extra garbage on specification : '%s'\n",
- 			       dev->name, rem);
++		/*
++		 * When this memload event is also the first event (no group
++		 * exists yet), then there is no aux event before it.
++		 */
++		if (leader == event)
++			return -ENODATA;
++
+ 		if (!is_mem_loads_aux_event(leader)) {
+ 			for_each_sibling_event(sibling, leader) {
+ 				if (is_mem_loads_aux_event(sibling))
 
 
