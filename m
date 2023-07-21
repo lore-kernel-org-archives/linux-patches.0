@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0238120FA4
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:05:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA17FC433C7;
-	Fri, 21 Jul 2023 19:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3D320FA4
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:05:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7678C433CD;
+	Fri, 21 Jul 2023 19:05:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966338;
-	bh=UPoST8mwWPrjkScKdvrRIoH3TkxWQ/1zlH5EBqnQK3c=;
+	s=korg; t=1689966341;
+	bh=60XPIcNlGnhMKU3gMnOvVNCgEaWji4YYk+vu0/CWXgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VPwlUJRYKLcAD8bN11Zwfv1S7vG8TFhiKUru6TL5vRezfm2UAN5sM/chBKOs7LloO
-	 yIkNJqtymknOPMp1mEc2Ll8x1hyhe1OiC84C04fBdGCn5V5ECAjiPVirhbNvUgiwIK
-	 n5w3dVQ+BZ/fLaw4eTl+1xwQKiZJHbUEy3Mk+aLM=
+	b=bvtaP4bADNFQV3nVYUF3tTZwNVCqff47/q74y8xzrY3dKFrE4MRX3x+uyH6qirj4D
+	 +t7+d5BtbMTdRzeb0WPJfTpk0mM6+W1+z3zC1G5btf3fUJ2/USLQ7Vq9QPlrNRpoWG
+	 2FcSOa0fPZ0SksBnpglzWbztB2Ljz09ohb3i/U+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fancy Fang <chen.fang@nxp.com>,
-	Clark Wang <xiaoning.wang@nxp.com>,
+	Marek Vasut <marex@denx.de>,
+	Brian Norris <briannorris@chromium.org>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 308/532] pwm: imx-tpm: force real_period to be zero in suspend
-Date: Fri, 21 Jul 2023 18:03:32 +0200
-Message-ID: <20230721160631.115498092@linuxfoundation.org>
+Subject: [PATCH 5.15 309/532] pwm: sysfs: Do not apply state to already disabled PWMs
+Date: Fri, 21 Jul 2023 18:03:33 +0200
+Message-ID: <20230721160631.168005157@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,43 +37,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fancy Fang <chen.fang@nxp.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 661dfb7f46298e53f6c3deaa772fa527aae86193 ]
+[ Upstream commit 38ba83598633373f47951384cfc389181c8d1bed ]
 
-During suspend, all the tpm registers will lose values.
-So the 'real_period' value of struct 'imx_tpm_pwm_chip'
-should be forced to be zero to force the period update
-code can be executed after system resume back.
+If the PWM is exported but not enabled, do not call pwm_class_apply_state().
+First of all, in this case, period may still be unconfigured and this would
+make pwm_class_apply_state() return -EINVAL, and then suspend would fail.
+Second, it makes little sense to apply state onto PWM that is not enabled
+before suspend.
 
-Signed-off-by: Fancy Fang <chen.fang@nxp.com>
-Signed-off-by: Clark Wang <xiaoning.wang@nxp.com>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Fixes: 738a1cfec2ed ("pwm: Add i.MX TPM PWM driver support")
+Failing case:
+"
+$ echo 1 > /sys/class/pwm/pwmchip4/export
+$ echo mem > /sys/power/state
+...
+pwm pwmchip4: PM: dpm_run_callback(): pwm_class_suspend+0x1/0xa8 returns -22
+pwm pwmchip4: PM: failed to suspend: error -22
+PM: Some devices failed to suspend, or early wake event detected
+"
+
+Working case:
+"
+$ echo 1 > /sys/class/pwm/pwmchip4/export
+$ echo 100 > /sys/class/pwm/pwmchip4/pwm1/period
+$ echo 10 > /sys/class/pwm/pwmchip4/pwm1/duty_cycle
+$ echo mem > /sys/power/state
+...
+"
+
+Do not call pwm_class_apply_state() in case the PWM is disabled
+to fix this issue.
+
+Fixes: 7fd4edc57bbae ("pwm: sysfs: Add suspend/resume support")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Fixes: ef2bf4997f7d ("pwm: Improve args checking in pwm_apply_state()")
+Reviewed-by: Brian Norris <briannorris@chromium.org>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-imx-tpm.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/pwm/sysfs.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/pwm/pwm-imx-tpm.c b/drivers/pwm/pwm-imx-tpm.c
-index e5e7b7c339a8f..7a53bf51964f2 100644
---- a/drivers/pwm/pwm-imx-tpm.c
-+++ b/drivers/pwm/pwm-imx-tpm.c
-@@ -397,6 +397,13 @@ static int __maybe_unused pwm_imx_tpm_suspend(struct device *dev)
- 	if (tpm->enable_count > 0)
- 		return -EBUSY;
+diff --git a/drivers/pwm/sysfs.c b/drivers/pwm/sysfs.c
+index 9903c3a7ecedc..b8417a8d2ef97 100644
+--- a/drivers/pwm/sysfs.c
++++ b/drivers/pwm/sysfs.c
+@@ -424,6 +424,13 @@ static int pwm_class_resume_npwm(struct device *parent, unsigned int npwm)
+ 		if (!export)
+ 			continue;
  
-+	/*
-+	 * Force 'real_period' to be zero to force period update code
-+	 * can be executed after system resume back, since suspend causes
-+	 * the period related registers to become their reset values.
-+	 */
-+	tpm->real_period = 0;
++		/* If pwmchip was not enabled before suspend, do nothing. */
++		if (!export->suspend.enabled) {
++			/* release lock taken in pwm_class_get_state */
++			mutex_unlock(&export->lock);
++			continue;
++		}
 +
- 	clk_disable_unprepare(tpm->clk);
+ 		state.enabled = export->suspend.enabled;
+ 		ret = pwm_class_apply_state(export, pwm, &state);
+ 		if (ret < 0)
+@@ -448,7 +455,17 @@ static int __maybe_unused pwm_class_suspend(struct device *parent)
+ 		if (!export)
+ 			continue;
  
- 	return 0;
++		/*
++		 * If pwmchip was not enabled before suspend, save
++		 * state for resume time and do nothing else.
++		 */
+ 		export->suspend = state;
++		if (!state.enabled) {
++			/* release lock taken in pwm_class_get_state */
++			mutex_unlock(&export->lock);
++			continue;
++		}
++
+ 		state.enabled = false;
+ 		ret = pwm_class_apply_state(export, pwm, &state);
+ 		if (ret < 0) {
 -- 
 2.39.2
 
