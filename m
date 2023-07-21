@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80CE1DDDB
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:08:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C29C433C8;
-	Fri, 21 Jul 2023 16:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9780A1DDDB
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:08:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18066C433CD;
+	Fri, 21 Jul 2023 16:08:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689955732;
-	bh=Jyauy269MUlVY1CjK+q/cwEIeNNSWq1E4iftvfEmbkc=;
+	s=korg; t=1689955735;
+	bh=l1GxayzkjNFbbVRCC3dbNBdKSYwmlJ124hMRq/5p2ig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tdHrH5ZoKQGDVzUWEZ7jpTAjfFOno784TNkjcLOSOWxTw1X6OWIHgNGi7MsxEjMz4
-	 86REaOTfW+B6ADDo6l6GoXw3ikczdbCyn69ps8nVMgHaY6fMM+hdLlcthtqEtCNNg8
-	 dABjtT4cbj0/jICox/4trQfy/q+Ye9LqNOaPAcaI=
+	b=YfO5zsxciErStsGU2t7uS1OCgrtz0nTKKHLOvmhpC0dVwky5NsLjvVZSNmoJE3VQa
+	 2nLyHXUCWyAI3yL4aTGq8MZ3veNh/8NpmCaXXat73cKCKbrB8MiaVdS+emD1K1fUoO
+	 hcxUREIcuj5yLqydfYtoaCXXbxBP2EijetnLE0wE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
-	"Lukas F. Hartmann" <lukas@mntre.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 011/292] drm: bridge: dw_hdmi: fix connector access for scdc
-Date: Fri, 21 Jul 2023 18:02:00 +0200
-Message-ID: <20230721160529.298967445@linuxfoundation.org>
+Subject: [PATCH 6.4 012/292] drm/bridge: ti-sn65dsi86: Fix auxiliary bus lifetime
+Date: Fri, 21 Jul 2023 18:02:01 +0200
+Message-ID: <20230721160529.340707893@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -36,76 +35,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrián Larumbe <adrian.larumbe@collabora.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 98703e4e061fb8715c7613cd227e32cdfd136b23 ]
+[ Upstream commit 7aa83fbd712a6f08ffa67890061f26d140c2a84f ]
 
-Commit 5d844091f237 ("drm/scdc-helper: Pimp SCDC debugs") changed the scdc
-interface to pick up an i2c adapter from a connector instead. However, in
-the case of dw-hdmi, the wrong connector was being used to pass i2c adapter
-information, since dw-hdmi's embedded connector structure is only populated
-when the bridge attachment callback explicitly asks for it.
+Memory for the "struct device" for any given device isn't supposed to
+be released until the device's release() is called. This is important
+because someone might be holding a kobject reference to the "struct
+device" and might try to access one of its members even after any
+other cleanup/uninitialization has happened.
 
-drm-meson is handling connector creation, so this won't happen, leading to
-a NULL pointer dereference.
+Code analysis of ti-sn65dsi86 shows that this isn't quite right. When
+the code was written, it was believed that we could rely on the fact
+that the child devices would all be freed before the parent devices
+and thus we didn't need to worry about a release() function. While I
+still believe that the parent's "struct device" is guaranteed to
+outlive the child's "struct device" (because the child holds a kobject
+reference to the parent), the parent's "devm" allocated memory is a
+different story. That appears to be freed much earlier.
 
-Fix it by having scdc functions access dw-hdmi's current connector pointer
-instead, which is assigned during the bridge enablement stage.
+Let's make this better for ti-sn65dsi86 by allocating each auxiliary
+with kzalloc and then free that memory in the release().
 
-Fixes: 5d844091f237 ("drm/scdc-helper: Pimp SCDC debugs")
-Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
-Reported-by: Lukas F. Hartmann <lukas@mntre.com>
-Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
-[narmstrong: moved Fixes tag before first S-o-b and added Reported-by tag]
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230601123153.196867-1-adrian.larumbe@collabora.com
+Fixes: bf73537f411b ("drm/bridge: ti-sn65dsi86: Break GPIO and MIPI-to-eDP bridge into sub-drivers")
+Suggested-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230613065812.v2.1.I24b838a5b4151fb32bccd6f36397998ea2df9fbb@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/synopsys/dw-hdmi.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 35 +++++++++++++++++----------
+ 1 file changed, 22 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
-index 603bb3c51027b..3b40e0fdca5cb 100644
---- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
-+++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
-@@ -1426,9 +1426,9 @@ void dw_hdmi_set_high_tmds_clock_ratio(struct dw_hdmi *hdmi,
- 	/* Control for TMDS Bit Period/TMDS Clock-Period Ratio */
- 	if (dw_hdmi_support_scdc(hdmi, display)) {
- 		if (mtmdsclock > HDMI14_MAX_TMDSCLK)
--			drm_scdc_set_high_tmds_clock_ratio(&hdmi->connector, 1);
-+			drm_scdc_set_high_tmds_clock_ratio(hdmi->curr_conn, 1);
- 		else
--			drm_scdc_set_high_tmds_clock_ratio(&hdmi->connector, 0);
-+			drm_scdc_set_high_tmds_clock_ratio(hdmi->curr_conn, 0);
- 	}
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index 4676cf2900dfd..3c8fd6ea6d6a4 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -170,10 +170,10 @@
+  * @pwm_refclk_freq: Cache for the reference clock input to the PWM.
+  */
+ struct ti_sn65dsi86 {
+-	struct auxiliary_device		bridge_aux;
+-	struct auxiliary_device		gpio_aux;
+-	struct auxiliary_device		aux_aux;
+-	struct auxiliary_device		pwm_aux;
++	struct auxiliary_device		*bridge_aux;
++	struct auxiliary_device		*gpio_aux;
++	struct auxiliary_device		*aux_aux;
++	struct auxiliary_device		*pwm_aux;
+ 
+ 	struct device			*dev;
+ 	struct regmap			*regmap;
+@@ -468,27 +468,34 @@ static void ti_sn65dsi86_delete_aux(void *data)
+ 	auxiliary_device_delete(data);
  }
- EXPORT_SYMBOL_GPL(dw_hdmi_set_high_tmds_clock_ratio);
-@@ -2116,7 +2116,7 @@ static void hdmi_av_composer(struct dw_hdmi *hdmi,
- 				min_t(u8, bytes, SCDC_MIN_SOURCE_VERSION));
  
- 			/* Enabled Scrambling in the Sink */
--			drm_scdc_set_scrambling(&hdmi->connector, 1);
-+			drm_scdc_set_scrambling(hdmi->curr_conn, 1);
+-/*
+- * AUX bus docs say that a non-NULL release is mandatory, but it makes no
+- * sense for the model used here where all of the aux devices are allocated
+- * in the single shared structure. We'll use this noop as a workaround.
+- */
+-static void ti_sn65dsi86_noop(struct device *dev) {}
++static void ti_sn65dsi86_aux_device_release(struct device *dev)
++{
++	struct auxiliary_device *aux = container_of(dev, struct auxiliary_device, dev);
++
++	kfree(aux);
++}
  
- 			/*
- 			 * To activate the scrambler feature, you must ensure
-@@ -2132,7 +2132,7 @@ static void hdmi_av_composer(struct dw_hdmi *hdmi,
- 			hdmi_writeb(hdmi, 0, HDMI_FC_SCRAMBLER_CTRL);
- 			hdmi_writeb(hdmi, (u8)~HDMI_MC_SWRSTZ_TMDSSWRST_REQ,
- 				    HDMI_MC_SWRSTZ);
--			drm_scdc_set_scrambling(&hdmi->connector, 0);
-+			drm_scdc_set_scrambling(hdmi->curr_conn, 0);
- 		}
- 	}
+ static int ti_sn65dsi86_add_aux_device(struct ti_sn65dsi86 *pdata,
+-				       struct auxiliary_device *aux,
++				       struct auxiliary_device **aux_out,
+ 				       const char *name)
+ {
+ 	struct device *dev = pdata->dev;
++	struct auxiliary_device *aux;
+ 	int ret;
  
-@@ -3553,6 +3553,7 @@ struct dw_hdmi *dw_hdmi_probe(struct platform_device *pdev,
- 	hdmi->bridge.ops = DRM_BRIDGE_OP_DETECT | DRM_BRIDGE_OP_EDID
- 			 | DRM_BRIDGE_OP_HPD;
- 	hdmi->bridge.interlace_allowed = true;
-+	hdmi->bridge.ddc = hdmi->ddc;
- #ifdef CONFIG_OF
- 	hdmi->bridge.of_node = pdev->dev.of_node;
- #endif
++	aux = kzalloc(sizeof(*aux), GFP_KERNEL);
++	if (!aux)
++		return -ENOMEM;
++
+ 	aux->name = name;
+ 	aux->dev.parent = dev;
+-	aux->dev.release = ti_sn65dsi86_noop;
++	aux->dev.release = ti_sn65dsi86_aux_device_release;
+ 	device_set_of_node_from_dev(&aux->dev, dev);
+ 	ret = auxiliary_device_init(aux);
+-	if (ret)
++	if (ret) {
++		kfree(aux);
+ 		return ret;
++	}
+ 	ret = devm_add_action_or_reset(dev, ti_sn65dsi86_uninit_aux, aux);
+ 	if (ret)
+ 		return ret;
+@@ -497,6 +504,8 @@ static int ti_sn65dsi86_add_aux_device(struct ti_sn65dsi86 *pdata,
+ 	if (ret)
+ 		return ret;
+ 	ret = devm_add_action_or_reset(dev, ti_sn65dsi86_delete_aux, aux);
++	if (!ret)
++		*aux_out = aux;
+ 
+ 	return ret;
+ }
 -- 
 2.39.2
 
