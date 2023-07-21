@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8E4200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:01:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED6CC433C7;
-	Fri, 21 Jul 2023 19:01:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93550200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:01:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1536EC433C7;
+	Fri, 21 Jul 2023 19:01:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966114;
-	bh=wK8ERDYCVKgckndbYEM3xXclGNqCiXLlUb0KocrbmPA=;
+	s=korg; t=1689966117;
+	bh=YexaRF/olXnEIEVu9T+Gd6nt3KqBVAEXsnHW965ItiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OQ/pqwPdWs2s/vUHwl036BvOzf2X6omrpzlvnmp0DK1qyP5f8druixZH0+KF5TWT9
-	 E6a7JJMbtaPnNJpv7ZGNBHDbNbHG5hAPu18EaVYuKddG3qxbfytErBsDC48AUvXGIe
-	 0qM0ZoBKM2Q9qV+uU3qdonpEstMJih28ou0tNack=
+	b=Dcpe5HJf/cbAI90rA8d99+7TeYmi9IlcRsoS6Fp22f6Vjt1En21gDElA+roSWfyBY
+	 6fSrHWHuLxbSSIkHShwotnBvVLy2i/6Z5kuGroBz4tF8qSnGTrBmHbibhAbHPn5/QP
+	 A+8tOAOvNxbxp+TJZ0q8OAZ27jKdWBMMMy+/kz8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Vivier <lvivier@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Adam Guerin <adam.guerin@intel.com>,
+	Wojciech Ziemba <wojciech.ziemba@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 222/532] hwrng: virtio - always add a pending request
-Date: Fri, 21 Jul 2023 18:02:06 +0200
-Message-ID: <20230721160626.426492264@linuxfoundation.org>
+Subject: [PATCH 5.15 231/532] crypto: qat - honor CRYPTO_TFM_REQ_MAY_SLEEP flag
+Date: Fri, 21 Jul 2023 18:02:15 +0200
+Message-ID: <20230721160626.907658717@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,109 +37,223 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit 9a4b612d675b03f7fc9fa1957ca399c8223f3954 ]
+[ Upstream commit 8fb203c65a795b96faa1836b5086a5d6eb5c5e99 ]
 
-If we ensure we have already some data available by enqueuing
-again the buffer once data are exhausted, we can return what we
-have without waiting for the device answer.
+If a request has the flag CRYPTO_TFM_REQ_MAY_SLEEP set, allocate memory
+using the flag GFP_KERNEL otherwise use GFP_ATOMIC.
 
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Link: https://lore.kernel.org/r/20211028101111.128049-5-lvivier@redhat.com
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Stable-dep-of: ac52578d6e8d ("hwrng: virtio - Fix race on data_avail and actual data")
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Adam Guerin <adam.guerin@intel.com>
+Reviewed-by: Wojciech Ziemba <wojciech.ziemba@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: eb7713f5ca97 ("crypto: qat - unmap buffer before free for DH")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/virtio-rng.c | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ drivers/crypto/qat/qat_common/qat_algs.c      | 19 ++++++++++++-------
+ drivers/crypto/qat/qat_common/qat_asym_algs.c | 17 ++++++++++-------
+ drivers/crypto/qat/qat_common/qat_crypto.h    |  5 +++++
+ 3 files changed, 27 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/char/hw_random/virtio-rng.c b/drivers/char/hw_random/virtio-rng.c
-index 8ba97cf4ca8fb..0a7dde135db19 100644
---- a/drivers/char/hw_random/virtio-rng.c
-+++ b/drivers/char/hw_random/virtio-rng.c
-@@ -20,7 +20,6 @@ struct virtrng_info {
- 	struct virtqueue *vq;
- 	char name[25];
- 	int index;
--	bool busy;
- 	bool hwrng_register_done;
- 	bool hwrng_removed;
- 	/* data transfer */
-@@ -44,16 +43,18 @@ static void random_recv_done(struct virtqueue *vq)
- 		return;
- 
- 	vi->data_idx = 0;
--	vi->busy = false;
- 
- 	complete(&vi->have_data);
- }
- 
--/* The host will fill any buffer we give it with sweet, sweet randomness. */
--static void register_buffer(struct virtrng_info *vi)
-+static void request_entropy(struct virtrng_info *vi)
+diff --git a/drivers/crypto/qat/qat_common/qat_algs.c b/drivers/crypto/qat/qat_common/qat_algs.c
+index 906082fbdd67b..d36f90628603c 100644
+--- a/drivers/crypto/qat/qat_common/qat_algs.c
++++ b/drivers/crypto/qat/qat_common/qat_algs.c
+@@ -706,7 +706,8 @@ static void qat_alg_free_bufl(struct qat_crypto_instance *inst,
+ static int qat_alg_sgl_to_bufl(struct qat_crypto_instance *inst,
+ 			       struct scatterlist *sgl,
+ 			       struct scatterlist *sglout,
+-			       struct qat_crypto_request *qat_req)
++			       struct qat_crypto_request *qat_req,
++			       gfp_t flags)
  {
- 	struct scatterlist sg;
+ 	struct device *dev = &GET_DEV(inst->accel_dev);
+ 	int i, sg_nctr = 0;
+@@ -727,7 +728,7 @@ static int qat_alg_sgl_to_bufl(struct qat_crypto_instance *inst,
+ 	qat_req->buf.sgl_dst_valid = false;
  
-+	reinit_completion(&vi->have_data);
-+	vi->data_avail = 0;
-+	vi->data_idx = 0;
-+
- 	sg_init_one(&sg, vi->data, sizeof(vi->data));
+ 	if (n > QAT_MAX_BUFF_DESC) {
+-		bufl = kzalloc_node(sz, GFP_ATOMIC, node);
++		bufl = kzalloc_node(sz, flags, node);
+ 		if (unlikely(!bufl))
+ 			return -ENOMEM;
+ 	} else {
+@@ -771,7 +772,7 @@ static int qat_alg_sgl_to_bufl(struct qat_crypto_instance *inst,
+ 		sg_nctr = 0;
  
- 	/* There should always be room for one buffer. */
-@@ -69,6 +70,8 @@ static unsigned int copy_data(struct virtrng_info *vi, void *buf,
- 	memcpy(buf, vi->data + vi->data_idx, size);
- 	vi->data_idx += size;
- 	vi->data_avail -= size;
-+	if (vi->data_avail == 0)
-+		request_entropy(vi);
- 	return size;
- }
+ 		if (n > QAT_MAX_BUFF_DESC) {
+-			buflout = kzalloc_node(sz_out, GFP_ATOMIC, node);
++			buflout = kzalloc_node(sz_out, flags, node);
+ 			if (unlikely(!buflout))
+ 				goto err_in;
+ 		} else {
+@@ -972,6 +973,7 @@ static int qat_alg_aead_dec(struct aead_request *areq)
+ 	struct icp_qat_fw_la_auth_req_params *auth_param;
+ 	struct icp_qat_fw_la_bulk_req *msg;
+ 	int digst_size = crypto_aead_authsize(aead_tfm);
++	gfp_t f = qat_algs_alloc_flags(&areq->base);
+ 	int ret;
+ 	u32 cipher_len;
  
-@@ -98,13 +101,7 @@ static int virtio_read(struct hwrng *rng, void *buf, size_t size, bool wait)
- 	 * so either size is 0 or data_avail is 0
- 	 */
- 	while (size != 0) {
--		/* data_avail is 0 */
--		if (!vi->busy) {
--			/* no pending request, ask for more */
--			vi->busy = true;
--			reinit_completion(&vi->have_data);
--			register_buffer(vi);
--		}
-+		/* data_avail is 0 but a request is pending */
- 		ret = wait_for_completion_killable(&vi->have_data);
- 		if (ret < 0)
+@@ -979,7 +981,7 @@ static int qat_alg_aead_dec(struct aead_request *areq)
+ 	if (cipher_len % AES_BLOCK_SIZE != 0)
+ 		return -EINVAL;
+ 
+-	ret = qat_alg_sgl_to_bufl(ctx->inst, areq->src, areq->dst, qat_req);
++	ret = qat_alg_sgl_to_bufl(ctx->inst, areq->src, areq->dst, qat_req, f);
+ 	if (unlikely(ret))
+ 		return ret;
+ 
+@@ -1014,6 +1016,7 @@ static int qat_alg_aead_enc(struct aead_request *areq)
+ 	struct qat_crypto_request *qat_req = aead_request_ctx(areq);
+ 	struct icp_qat_fw_la_cipher_req_params *cipher_param;
+ 	struct icp_qat_fw_la_auth_req_params *auth_param;
++	gfp_t f = qat_algs_alloc_flags(&areq->base);
+ 	struct icp_qat_fw_la_bulk_req *msg;
+ 	u8 *iv = areq->iv;
+ 	int ret;
+@@ -1021,7 +1024,7 @@ static int qat_alg_aead_enc(struct aead_request *areq)
+ 	if (areq->cryptlen % AES_BLOCK_SIZE != 0)
+ 		return -EINVAL;
+ 
+-	ret = qat_alg_sgl_to_bufl(ctx->inst, areq->src, areq->dst, qat_req);
++	ret = qat_alg_sgl_to_bufl(ctx->inst, areq->src, areq->dst, qat_req, f);
+ 	if (unlikely(ret))
+ 		return ret;
+ 
+@@ -1199,13 +1202,14 @@ static int qat_alg_skcipher_encrypt(struct skcipher_request *req)
+ 	struct qat_alg_skcipher_ctx *ctx = crypto_tfm_ctx(tfm);
+ 	struct qat_crypto_request *qat_req = skcipher_request_ctx(req);
+ 	struct icp_qat_fw_la_cipher_req_params *cipher_param;
++	gfp_t f = qat_algs_alloc_flags(&req->base);
+ 	struct icp_qat_fw_la_bulk_req *msg;
+ 	int ret;
+ 
+ 	if (req->cryptlen == 0)
+ 		return 0;
+ 
+-	ret = qat_alg_sgl_to_bufl(ctx->inst, req->src, req->dst, qat_req);
++	ret = qat_alg_sgl_to_bufl(ctx->inst, req->src, req->dst, qat_req, f);
+ 	if (unlikely(ret))
+ 		return ret;
+ 
+@@ -1264,13 +1268,14 @@ static int qat_alg_skcipher_decrypt(struct skcipher_request *req)
+ 	struct qat_alg_skcipher_ctx *ctx = crypto_tfm_ctx(tfm);
+ 	struct qat_crypto_request *qat_req = skcipher_request_ctx(req);
+ 	struct icp_qat_fw_la_cipher_req_params *cipher_param;
++	gfp_t f = qat_algs_alloc_flags(&req->base);
+ 	struct icp_qat_fw_la_bulk_req *msg;
+ 	int ret;
+ 
+ 	if (req->cryptlen == 0)
+ 		return 0;
+ 
+-	ret = qat_alg_sgl_to_bufl(ctx->inst, req->src, req->dst, qat_req);
++	ret = qat_alg_sgl_to_bufl(ctx->inst, req->src, req->dst, qat_req, f);
+ 	if (unlikely(ret))
+ 		return ret;
+ 
+diff --git a/drivers/crypto/qat/qat_common/qat_asym_algs.c b/drivers/crypto/qat/qat_common/qat_asym_algs.c
+index 5f11929cf9bac..11c7f2b6e5975 100644
+--- a/drivers/crypto/qat/qat_common/qat_asym_algs.c
++++ b/drivers/crypto/qat/qat_common/qat_asym_algs.c
+@@ -224,9 +224,10 @@ static int qat_dh_compute_value(struct kpp_request *req)
+ 	struct qat_asym_request *qat_req =
+ 			PTR_ALIGN(kpp_request_ctx(req), 64);
+ 	struct icp_qat_fw_pke_request *msg = &qat_req->req;
+-	int ret;
++	gfp_t flags = qat_algs_alloc_flags(&req->base);
+ 	int n_input_params = 0;
+ 	u8 *vaddr;
++	int ret;
+ 
+ 	if (unlikely(!ctx->xa))
+ 		return -EINVAL;
+@@ -291,7 +292,7 @@ static int qat_dh_compute_value(struct kpp_request *req)
+ 		} else {
+ 			int shift = ctx->p_size - req->src_len;
+ 
+-			qat_req->src_align = kzalloc(ctx->p_size, GFP_KERNEL);
++			qat_req->src_align = kzalloc(ctx->p_size, flags);
+ 			if (unlikely(!qat_req->src_align))
+ 				return ret;
+ 
+@@ -317,7 +318,7 @@ static int qat_dh_compute_value(struct kpp_request *req)
+ 		qat_req->dst_align = NULL;
+ 		vaddr = sg_virt(req->dst);
+ 	} else {
+-		qat_req->dst_align = kzalloc(ctx->p_size, GFP_KERNEL);
++		qat_req->dst_align = kzalloc(ctx->p_size, flags);
+ 		if (unlikely(!qat_req->dst_align))
+ 			goto unmap_src;
+ 
+@@ -650,6 +651,7 @@ static int qat_rsa_enc(struct akcipher_request *req)
+ 	struct qat_asym_request *qat_req =
+ 			PTR_ALIGN(akcipher_request_ctx(req), 64);
+ 	struct icp_qat_fw_pke_request *msg = &qat_req->req;
++	gfp_t flags = qat_algs_alloc_flags(&req->base);
+ 	u8 *vaddr;
+ 	int ret;
+ 
+@@ -696,7 +698,7 @@ static int qat_rsa_enc(struct akcipher_request *req)
+ 	} else {
+ 		int shift = ctx->key_sz - req->src_len;
+ 
+-		qat_req->src_align = kzalloc(ctx->key_sz, GFP_KERNEL);
++		qat_req->src_align = kzalloc(ctx->key_sz, flags);
+ 		if (unlikely(!qat_req->src_align))
  			return ret;
-@@ -126,8 +123,7 @@ static void virtio_cleanup(struct hwrng *rng)
- {
- 	struct virtrng_info *vi = (struct virtrng_info *)rng->priv;
  
--	if (vi->busy)
--		complete(&vi->have_data);
-+	complete(&vi->have_data);
+@@ -714,7 +716,7 @@ static int qat_rsa_enc(struct akcipher_request *req)
+ 		qat_req->dst_align = NULL;
+ 		vaddr = sg_virt(req->dst);
+ 	} else {
+-		qat_req->dst_align = kzalloc(ctx->key_sz, GFP_KERNEL);
++		qat_req->dst_align = kzalloc(ctx->key_sz, flags);
+ 		if (unlikely(!qat_req->dst_align))
+ 			goto unmap_src;
+ 		vaddr = qat_req->dst_align;
+@@ -783,6 +785,7 @@ static int qat_rsa_dec(struct akcipher_request *req)
+ 	struct qat_asym_request *qat_req =
+ 			PTR_ALIGN(akcipher_request_ctx(req), 64);
+ 	struct icp_qat_fw_pke_request *msg = &qat_req->req;
++	gfp_t flags = qat_algs_alloc_flags(&req->base);
+ 	u8 *vaddr;
+ 	int ret;
+ 
+@@ -839,7 +842,7 @@ static int qat_rsa_dec(struct akcipher_request *req)
+ 	} else {
+ 		int shift = ctx->key_sz - req->src_len;
+ 
+-		qat_req->src_align = kzalloc(ctx->key_sz, GFP_KERNEL);
++		qat_req->src_align = kzalloc(ctx->key_sz, flags);
+ 		if (unlikely(!qat_req->src_align))
+ 			return ret;
+ 
+@@ -857,7 +860,7 @@ static int qat_rsa_dec(struct akcipher_request *req)
+ 		qat_req->dst_align = NULL;
+ 		vaddr = sg_virt(req->dst);
+ 	} else {
+-		qat_req->dst_align = kzalloc(ctx->key_sz, GFP_KERNEL);
++		qat_req->dst_align = kzalloc(ctx->key_sz, flags);
+ 		if (unlikely(!qat_req->dst_align))
+ 			goto unmap_src;
+ 		vaddr = qat_req->dst_align;
+diff --git a/drivers/crypto/qat/qat_common/qat_crypto.h b/drivers/crypto/qat/qat_common/qat_crypto.h
+index 245b6d9a36507..df3c738ce323a 100644
+--- a/drivers/crypto/qat/qat_common/qat_crypto.h
++++ b/drivers/crypto/qat/qat_common/qat_crypto.h
+@@ -109,4 +109,9 @@ static inline bool adf_hw_dev_has_crypto(struct adf_accel_dev *accel_dev)
+ 	return true;
  }
  
- static int probe_common(struct virtio_device *vdev)
-@@ -163,6 +159,9 @@ static int probe_common(struct virtio_device *vdev)
- 		goto err_find;
- 	}
- 
-+	/* we always have a pending entropy request */
-+	request_entropy(vi);
++static inline gfp_t qat_algs_alloc_flags(struct crypto_async_request *req)
++{
++	return req->flags & CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL : GFP_ATOMIC;
++}
 +
- 	return 0;
- 
- err_find:
-@@ -181,7 +180,6 @@ static void remove_common(struct virtio_device *vdev)
- 	vi->data_idx = 0;
- 	complete(&vi->have_data);
- 	vdev->config->reset(vdev);
--	vi->busy = false;
- 	if (vi->hwrng_register_done)
- 		hwrng_unregister(&vi->hwrng);
- 	vdev->config->del_vqs(vdev);
+ #endif
 -- 
 2.39.2
 
