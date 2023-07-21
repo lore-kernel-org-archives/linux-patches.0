@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD3A20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:23:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5DF3C433C7;
-	Fri, 21 Jul 2023 19:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC1820F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:23:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940BEC433C8;
+	Fri, 21 Jul 2023 19:23:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967432;
-	bh=BAgm6WRvlXtxDvOALlBp+GypJiNiT5K1hygsApGbHYo=;
+	s=korg; t=1689967435;
+	bh=ewx1tLAXyvBVlnSeiLy7jmaS1gGS6Iwv0KUUcJbycXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wmi696toEkkMU31970YxMv8KG1mU85YEwpDYv5pqfsqDrr/3MsOOM6IgI/2lkJPTt
-	 sVI4qj9zzFUdWw5bjR5/n48dE9x548PUG8OKvY7QysjcMo66HLL0s6yJoC3KXfs7Bk
-	 BRvU0s+bW2iv0Agb/bc41IAW0X60cmOVJStduAQE=
+	b=DZdeIiWaa6T+Ujcip5Slg/m0EV9zMnWLb+CPQCjgntvTkEqmC8+ttAstMxtSULN3W
+	 Z45tS3NXQpHxKYgUPElCra9RR2aZ1Y8S0UkE1/kEZOzFuguj6a6MHNzO2tU7Ie5oyS
+	 PS0lZja5EzYzc14UuTGc2inn9vTuUKFJRwK90c5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Fuzzey <martin.fuzzey@flowbird.group>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.1 160/223] tty: serial: imx: fix rs485 rx after tx
-Date: Fri, 21 Jul 2023 18:06:53 +0200
-Message-ID: <20230721160527.700771637@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Dinh Nguyen <dinguyen@kernel.org>
+Subject: [PATCH 6.1 161/223] firmware: stratix10-svc: Fix a potential resource leak in svc_create_memory_pool()
+Date: Fri, 21 Jul 2023 18:06:54 +0200
+Message-ID: <20230721160527.742235732@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -34,86 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Fuzzey <martin.fuzzey@flowbird.group>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit 639949a7031e04c59ec91614eceb9543e9120f43 upstream.
+commit 1995f15590ca222f91193ed11461862b450abfd6 upstream.
 
-Since commit 79d0224f6bf2 ("tty: serial: imx: Handle RS485 DE signal
-active high") RS485 reception no longer works after a transmission.
+svc_create_memory_pool() is only called from stratix10_svc_drv_probe().
+Most of resources in the probe are managed, but not this memremap() call.
 
-The following scenario shows the problem:
-	1) Open a port in RS485 mode
-	2) Receive data from remote (OK)
-	3) Transmit data to remote (OK)
-	4) Receive data from remote (Nothing received)
+There is also no memunmap() call in the file.
 
-In RS485 mode, imx_uart_start_tx() calls imx_uart_stop_rx() and, when the
-transmission is complete, imx_uart_stop_tx() calls imx_uart_start_rx().
+So switch to devm_memremap() to avoid a resource leak.
 
-Since the above commit imx_uart_stop_rx() now sets the loopback bit but
-imx_uart_start_rx() does not clear it causing the hardware to remain in
-loopback mode and not receive external data.
-
-Fix this by moving the existing loopback disable code to a helper function
-and calling it from imx_uart_start_rx() too.
-
-Fixes: 79d0224f6bf2 ("tty: serial: imx: Handle RS485 DE signal active high")
 Cc: stable@vger.kernel.org
-Signed-off-by: Martin Fuzzey <martin.fuzzey@flowbird.group>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20230616104838.2729694-1-martin.fuzzey@flowbird.group
+Fixes: 7ca5ce896524 ("firmware: add Intel Stratix10 service layer driver")
+Link: https://lore.kernel.org/all/783e9dfbba34e28505c9efa8bba41f97fd0fa1dc.1686109400.git.christophe.jaillet@wanadoo.fr/
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Message-ID: <20230613211521.16366-1-dinguyen@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/imx.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/firmware/stratix10-svc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/imx.c
-+++ b/drivers/tty/serial/imx.c
-@@ -397,6 +397,16 @@ static void start_hrtimer_ms(struct hrti
-        hrtimer_start(hrt, ms_to_ktime(msec), HRTIMER_MODE_REL);
- }
- 
-+static void imx_uart_disable_loopback_rs485(struct imx_port *sport)
-+{
-+	unsigned int uts;
-+
-+	/* See SER_RS485_ENABLED/UTS_LOOP comment in imx_uart_probe() */
-+	uts = imx_uart_readl(sport, imx_uart_uts_reg(sport));
-+	uts &= ~UTS_LOOP;
-+	imx_uart_writel(sport, uts, imx_uart_uts_reg(sport));
-+}
-+
- /* called with port.lock taken and irqs off */
- static void imx_uart_start_rx(struct uart_port *port)
- {
-@@ -418,6 +428,7 @@ static void imx_uart_start_rx(struct uar
- 	/* Write UCR2 first as it includes RXEN */
- 	imx_uart_writel(sport, ucr2, UCR2);
- 	imx_uart_writel(sport, ucr1, UCR1);
-+	imx_uart_disable_loopback_rs485(sport);
- }
- 
- /* called with port.lock taken and irqs off */
-@@ -1404,7 +1415,7 @@ static int imx_uart_startup(struct uart_
- 	int retval, i;
- 	unsigned long flags;
- 	int dma_is_inited = 0;
--	u32 ucr1, ucr2, ucr3, ucr4, uts;
-+	u32 ucr1, ucr2, ucr3, ucr4;
- 
- 	retval = clk_prepare_enable(sport->clk_per);
- 	if (retval)
-@@ -1509,10 +1520,7 @@ static int imx_uart_startup(struct uart_
- 		imx_uart_writel(sport, ucr2, UCR2);
- 	}
- 
--	/* See SER_RS485_ENABLED/UTS_LOOP comment in imx_uart_probe() */
--	uts = imx_uart_readl(sport, imx_uart_uts_reg(sport));
--	uts &= ~UTS_LOOP;
--	imx_uart_writel(sport, uts, imx_uart_uts_reg(sport));
-+	imx_uart_disable_loopback_rs485(sport);
- 
- 	spin_unlock_irqrestore(&sport->port.lock, flags);
- 
+--- a/drivers/firmware/stratix10-svc.c
++++ b/drivers/firmware/stratix10-svc.c
+@@ -755,7 +755,7 @@ svc_create_memory_pool(struct platform_d
+ 	end = rounddown(sh_memory->addr + sh_memory->size, PAGE_SIZE);
+ 	paddr = begin;
+ 	size = end - begin;
+-	va = memremap(paddr, size, MEMREMAP_WC);
++	va = devm_memremap(dev, paddr, size, MEMREMAP_WC);
+ 	if (!va) {
+ 		dev_err(dev, "fail to remap shared memory\n");
+ 		return ERR_PTR(-EINVAL);
 
 
