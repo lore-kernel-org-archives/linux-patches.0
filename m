@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A7820F98
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:00:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE7ACC433C9;
-	Fri, 21 Jul 2023 19:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4206020F98
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:00:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9104C433CA;
+	Fri, 21 Jul 2023 19:00:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966041;
-	bh=hL5TvcU6LnKxDo36onO7Xqol78YqT9gPykhPy4oXQF8=;
+	s=korg; t=1689966044;
+	bh=Uwu90vPEld/EjbMwHbqee28bDfp36CFpciQSQiCSsWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B8/ioErl7CI70CTs0hCumhd78pJVddCfQI/ectgDWZJO2QoSUxnj/KmErCaJ0Dk6e
-	 hhIBLXJWG0T1yNnT0dmzcjgEw23M+DJnOcisfyvpsSvxqTI41fHv7dVA156WIMVKAP
-	 2w+DUccF7h+x9WRTEomQaY68oYO9euEYCkatEJ3s=
+	b=bdna3h0MTt+HvJccRcZSPvyABdtezJoGl7UFK7TcScZ1zbtuUlvZTN/Vx7FRVIYHJ
+	 thYPLL895rdIOp2iXk4hpq7caeorNsT3h0I9GBihCnPd3eOan/ZbUmGoADc+YH+hyD
+	 hJ+SzFO0FFbEEcP3PBOIWqgdMBSnnqFFQTTegIzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Marco Elver <elver@google.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 204/532] pinctrl: cherryview: Return correct value if pin in push-pull mode
-Date: Fri, 21 Jul 2023 18:01:48 +0200
-Message-ID: <20230721160625.465018128@linuxfoundation.org>
+Subject: [PATCH 5.15 205/532] kcsan: Dont expect 64 bits atomic builtins from 32 bits architectures
+Date: Fri, 21 Jul 2023 18:01:49 +0200
+Message-ID: <20230721160625.518495523@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,55 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 5835196a17be5cfdcad0b617f90cf4abe16951a4 ]
+[ Upstream commit 353e7300a1db928e427462f2745f9a2cd1625b3d ]
 
-Currently the getter returns ENOTSUPP on pin configured in
-the push-pull mode. Fix this by adding the missed switch case.
+Activating KCSAN on a 32 bits architecture leads to the following
+link-time failure:
 
-Fixes: ccdf81d08dbe ("pinctrl: cherryview: add option to set open-drain pin config")
-Fixes: 6e08d6bbebeb ("pinctrl: Add Intel Cherryview/Braswell pin controller support")
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+    LD      .tmp_vmlinux.kallsyms1
+  powerpc64-linux-ld: kernel/kcsan/core.o: in function `__tsan_atomic64_load':
+  kernel/kcsan/core.c:1273: undefined reference to `__atomic_load_8'
+  powerpc64-linux-ld: kernel/kcsan/core.o: in function `__tsan_atomic64_store':
+  kernel/kcsan/core.c:1273: undefined reference to `__atomic_store_8'
+  powerpc64-linux-ld: kernel/kcsan/core.o: in function `__tsan_atomic64_exchange':
+  kernel/kcsan/core.c:1273: undefined reference to `__atomic_exchange_8'
+  powerpc64-linux-ld: kernel/kcsan/core.o: in function `__tsan_atomic64_fetch_add':
+  kernel/kcsan/core.c:1273: undefined reference to `__atomic_fetch_add_8'
+  powerpc64-linux-ld: kernel/kcsan/core.o: in function `__tsan_atomic64_fetch_sub':
+  kernel/kcsan/core.c:1273: undefined reference to `__atomic_fetch_sub_8'
+  powerpc64-linux-ld: kernel/kcsan/core.o: in function `__tsan_atomic64_fetch_and':
+  kernel/kcsan/core.c:1273: undefined reference to `__atomic_fetch_and_8'
+  powerpc64-linux-ld: kernel/kcsan/core.o: in function `__tsan_atomic64_fetch_or':
+  kernel/kcsan/core.c:1273: undefined reference to `__atomic_fetch_or_8'
+  powerpc64-linux-ld: kernel/kcsan/core.o: in function `__tsan_atomic64_fetch_xor':
+  kernel/kcsan/core.c:1273: undefined reference to `__atomic_fetch_xor_8'
+  powerpc64-linux-ld: kernel/kcsan/core.o: in function `__tsan_atomic64_fetch_nand':
+  kernel/kcsan/core.c:1273: undefined reference to `__atomic_fetch_nand_8'
+  powerpc64-linux-ld: kernel/kcsan/core.o: in function `__tsan_atomic64_compare_exchange_strong':
+  kernel/kcsan/core.c:1273: undefined reference to `__atomic_compare_exchange_8'
+  powerpc64-linux-ld: kernel/kcsan/core.o: in function `__tsan_atomic64_compare_exchange_weak':
+  kernel/kcsan/core.c:1273: undefined reference to `__atomic_compare_exchange_8'
+  powerpc64-linux-ld: kernel/kcsan/core.o: in function `__tsan_atomic64_compare_exchange_val':
+  kernel/kcsan/core.c:1273: undefined reference to `__atomic_compare_exchange_8'
+
+32 bits architectures don't have 64 bits atomic builtins. Only
+include DEFINE_TSAN_ATOMIC_OPS(64) on 64 bits architectures.
+
+Fixes: 0f8ad5f2e934 ("kcsan: Add support for atomic builtins")
+Suggested-by: Marco Elver <elver@google.com>
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Reviewed-by: Marco Elver <elver@google.com>
+Acked-by: Marco Elver <elver@google.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/d9c6afc28d0855240171a4e0ad9ffcdb9d07fceb.1683892665.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/intel/pinctrl-cherryview.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ kernel/kcsan/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pinctrl/intel/pinctrl-cherryview.c b/drivers/pinctrl/intel/pinctrl-cherryview.c
-index 980099028cf8a..34f0ec784dbe2 100644
---- a/drivers/pinctrl/intel/pinctrl-cherryview.c
-+++ b/drivers/pinctrl/intel/pinctrl-cherryview.c
-@@ -945,11 +945,6 @@ static int chv_config_get(struct pinctrl_dev *pctldev, unsigned int pin,
+diff --git a/kernel/kcsan/core.c b/kernel/kcsan/core.c
+index 526510b3791ed..3f3b5e3ca9eb3 100644
+--- a/kernel/kcsan/core.c
++++ b/kernel/kcsan/core.c
+@@ -1050,7 +1050,9 @@ EXPORT_SYMBOL(__tsan_init);
+ DEFINE_TSAN_ATOMIC_OPS(8);
+ DEFINE_TSAN_ATOMIC_OPS(16);
+ DEFINE_TSAN_ATOMIC_OPS(32);
++#ifdef CONFIG_64BIT
+ DEFINE_TSAN_ATOMIC_OPS(64);
++#endif
  
- 		break;
- 
--	case PIN_CONFIG_DRIVE_OPEN_DRAIN:
--		if (!(ctrl1 & CHV_PADCTRL1_ODEN))
--			return -EINVAL;
--		break;
--
- 	case PIN_CONFIG_BIAS_HIGH_IMPEDANCE: {
- 		u32 cfg;
- 
-@@ -959,6 +954,16 @@ static int chv_config_get(struct pinctrl_dev *pctldev, unsigned int pin,
- 			return -EINVAL;
- 
- 		break;
-+
-+	case PIN_CONFIG_DRIVE_PUSH_PULL:
-+		if (ctrl1 & CHV_PADCTRL1_ODEN)
-+			return -EINVAL;
-+		break;
-+
-+	case PIN_CONFIG_DRIVE_OPEN_DRAIN:
-+		if (!(ctrl1 & CHV_PADCTRL1_ODEN))
-+			return -EINVAL;
-+		break;
- 	}
- 
- 	default:
+ void __tsan_atomic_thread_fence(int memorder);
+ void __tsan_atomic_thread_fence(int memorder)
 -- 
 2.39.2
 
