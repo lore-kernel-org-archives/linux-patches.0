@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B678F20F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:08:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34463C433C8;
-	Fri, 21 Jul 2023 19:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F9F20F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:08:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE9FC433C9;
+	Fri, 21 Jul 2023 19:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966504;
-	bh=0hphxRKA0bVY0j62tPdwg7MJY7Evx7AvAMEiZd2eCd4=;
+	s=korg; t=1689966507;
+	bh=nFcvoWf8Xb7H7iyjt7LXOAgmspWePNWHlbtvLViMv3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=moknSJBlq95RQo2RwDugOWoX3XTgXVI44ncO0c6wfCROHAT3uz+eeQgOrMgJVOoO/
-	 jCgWHkF1sxVjpIBYuMzUeJZh8hBvnF83+mwHUtgS67HzDYENj3IRPyW9tDlj1dOwpv
-	 x1RC5NrYxuxU6JcqdajodqQNxMSacE1zT49LB3jU=
+	b=pOXhkGkhzk2ypeUGMIjG9Z9vCkF0eX7japIy4skgZeDGNM4jlq0tfIa/EG16OKXDl
+	 kpFIsOFMUcmRWU46JsQJedMcAGzmSWNpqvEwhdCmG9Gg/lHa0UzLoBogceHX4VDCK8
+	 6ReTvfbasWfYyBpLDtZd3obdAYykh3e89DgR49kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naohiro Aota <naohiro.aota@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 367/532] btrfs: reinsert BGs failed to reclaim
-Date: Fri, 21 Jul 2023 18:04:31 +0200
-Message-ID: <20230721160634.381658747@linuxfoundation.org>
+Subject: [PATCH 5.15 368/532] btrfs: fix race when deleting quota root from the dirty cow roots list
+Date: Fri, 21 Jul 2023 18:04:32 +0200
+Message-ID: <20230721160634.435980353@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -34,37 +34,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Naohiro Aota <naota@elisp.net>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 7e27180994383b7c741ad87749db01e4989a02ba upstream.
+commit b31cb5a6eb7a48b0a7bfdf06832b1fd5088d8c79 upstream.
 
-The reclaim process can temporarily fail. For example, if the space is
-getting tight, it fails to make the block group read-only. If there are no
-further writes on that block group, the block group will never get back to
-the reclaim list, and the BG never gets reclaimed. In a certain workload,
-we can leave many such block groups never reclaimed.
+When disabling quotas we are deleting the quota root from the list
+fs_info->dirty_cowonly_roots without taking the lock that protects it,
+which is struct btrfs_fs_info::trans_lock. This unsynchronized list
+manipulation may cause chaos if there's another concurrent manipulation
+of this list, such as when adding a root to it with
+ctree.c:add_root_to_dirty_list().
 
-So, let's get it back to the list and give it a chance to be reclaimed.
+This can result in all sorts of weird failures caused by a race, such as
+the following crash:
 
-Fixes: 18bb8bbf13c1 ("btrfs: zoned: automatically reclaim zones")
-CC: stable@vger.kernel.org # 5.15+
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+  [337571.278245] general protection fault, probably for non-canonical address 0xdead000000000108: 0000 [#1] PREEMPT SMP PTI
+  [337571.278933] CPU: 1 PID: 115447 Comm: btrfs Tainted: G        W          6.4.0-rc6-btrfs-next-134+ #1
+  [337571.279153] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
+  [337571.279572] RIP: 0010:commit_cowonly_roots+0x11f/0x250 [btrfs]
+  [337571.279928] Code: 85 38 06 00 (...)
+  [337571.280363] RSP: 0018:ffff9f63446efba0 EFLAGS: 00010206
+  [337571.280582] RAX: ffff942d98ec2638 RBX: ffff9430b82b4c30 RCX: 0000000449e1c000
+  [337571.280798] RDX: dead000000000100 RSI: ffff9430021e4900 RDI: 0000000000036070
+  [337571.281015] RBP: ffff942d98ec2000 R08: ffff942d98ec2000 R09: 000000000000015b
+  [337571.281254] R10: 0000000000000009 R11: 0000000000000001 R12: ffff942fe8fbf600
+  [337571.281476] R13: ffff942dabe23040 R14: ffff942dabe20800 R15: ffff942d92cf3b48
+  [337571.281723] FS:  00007f478adb7340(0000) GS:ffff94349fa40000(0000) knlGS:0000000000000000
+  [337571.281950] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [337571.282184] CR2: 00007f478ab9a3d5 CR3: 000000001e02c001 CR4: 0000000000370ee0
+  [337571.282416] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  [337571.282647] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  [337571.282874] Call Trace:
+  [337571.283101]  <TASK>
+  [337571.283327]  ? __die_body+0x1b/0x60
+  [337571.283570]  ? die_addr+0x39/0x60
+  [337571.283796]  ? exc_general_protection+0x22e/0x430
+  [337571.284022]  ? asm_exc_general_protection+0x22/0x30
+  [337571.284251]  ? commit_cowonly_roots+0x11f/0x250 [btrfs]
+  [337571.284531]  btrfs_commit_transaction+0x42e/0xf90 [btrfs]
+  [337571.284803]  ? _raw_spin_unlock+0x15/0x30
+  [337571.285031]  ? release_extent_buffer+0x103/0x130 [btrfs]
+  [337571.285305]  reset_balance_state+0x152/0x1b0 [btrfs]
+  [337571.285578]  btrfs_balance+0xa50/0x11e0 [btrfs]
+  [337571.285864]  ? __kmem_cache_alloc_node+0x14a/0x410
+  [337571.286086]  btrfs_ioctl+0x249a/0x3320 [btrfs]
+  [337571.286358]  ? mod_objcg_state+0xd2/0x360
+  [337571.286577]  ? refill_obj_stock+0xb0/0x160
+  [337571.286798]  ? seq_release+0x25/0x30
+  [337571.287016]  ? __rseq_handle_notify_resume+0x3ba/0x4b0
+  [337571.287235]  ? percpu_counter_add_batch+0x2e/0xa0
+  [337571.287455]  ? __x64_sys_ioctl+0x88/0xc0
+  [337571.287675]  __x64_sys_ioctl+0x88/0xc0
+  [337571.287901]  do_syscall_64+0x38/0x90
+  [337571.288126]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+  [337571.288352] RIP: 0033:0x7f478aaffe9b
+
+So fix this by locking struct btrfs_fs_info::trans_lock before deleting
+the quota root from that list.
+
+Fixes: bed92eae26cc ("Btrfs: qgroup implementation and prototypes")
+CC: stable@vger.kernel.org # 4.14+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/block-group.c |    2 ++
+ fs/btrfs/qgroup.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -1580,6 +1580,8 @@ void btrfs_reclaim_bgs_work(struct work_
- 		}
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -1269,7 +1269,9 @@ int btrfs_quota_disable(struct btrfs_fs_
+ 		goto out;
+ 	}
  
- next:
-+		if (ret)
-+			btrfs_mark_bg_to_reclaim(bg);
- 		btrfs_put_block_group(bg);
++	spin_lock(&fs_info->trans_lock);
+ 	list_del(&quota_root->dirty_list);
++	spin_unlock(&fs_info->trans_lock);
  
- 		mutex_unlock(&fs_info->reclaim_bgs_lock);
+ 	btrfs_tree_lock(quota_root->node);
+ 	btrfs_clean_tree_block(quota_root->node);
 
 
