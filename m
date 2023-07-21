@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFAF20F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:08:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D53C433C7;
-	Fri, 21 Jul 2023 19:08:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031DA20F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:08:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F4EC433C7;
+	Fri, 21 Jul 2023 19:08:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966482;
-	bh=hCZn1Igi62WKTLvAOF91Lh0RFO02WeyMc0tSTJZ2Gxg=;
+	s=korg; t=1689966484;
+	bh=PdVtJUaHa3Drk5Mew/Yk8w70V32OPhXvOfdVLBN6Lzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yRn4L1xYwBVUWbI8pTLjEZSihWNxhHiChHTfD+bMiIhHjztasQLXpyyfklts8+kOC
-	 kPm92wKTK7erDzEV3eKgblHSM+vyTrFSoSjo3nars6fN3Xp6yzRfg4ohb0Eg5mIzWM
-	 qkbh/vF2M8iv4ooO9fCSoIS1v+wGfLNGQRZFyaxw=
+	b=YKui2eTr2OsdS88Rw9jYmGeFnw15G7aPhVCQ+vfS8q5npHcoIco1MaIx2lHMMRitc
+	 VfPStlf1wS9VIo8GcM+l1JLc2qnqK/70MHgP/Chw9HLNpbjeKQbuSPHG6ZDmY9y00c
+	 mwi7gheU0KSY5E1HPMVrcoCpdHuNDlB4N8XrI3WQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.15 360/532] fs: Lock moved directories
-Date: Fri, 21 Jul 2023 18:04:24 +0200
-Message-ID: <20230721160633.988548317@linuxfoundation.org>
+	Abhijeet Rastogi <abhijeet.1989@gmail.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Simon Horman <horms@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Allen Pais <apais@linux.microsoft.com>
+Subject: [PATCH 5.15 361/532] ipvs: increase ip_vs_conn_tab_bits range for 64BIT
+Date: Fri, 21 Jul 2023 18:04:25 +0200
+Message-ID: <20230721160634.040084429@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -34,126 +37,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Abhijeet Rastogi <abhijeet.1989@gmail.com>
 
-commit 28eceeda130f5058074dd007d9c59d2e8bc5af2e upstream.
+commit 04292c695f82b6cf0d25dd5ae494f16ddbb621f6 upstream.
 
-When a directory is moved to a different directory, some filesystems
-(udf, ext4, ocfs2, f2fs, and likely gfs2, reiserfs, and others) need to
-update their pointer to the parent and this must not race with other
-operations on the directory. Lock the directories when they are moved.
-Although not all filesystems need this locking, we perform it in
-vfs_rename() because getting the lock ordering right is really difficult
-and we don't want to expose these locking details to filesystems.
+Current range [8, 20] is set purely due to historical reasons
+because at the time, ~1M (2^20) was considered sufficient.
+With this change, 27 is the upper limit for 64-bit, 20 otherwise.
 
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20230601105830.13168-5-jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Previous change regarding this limit is here.
+
+Link: https://lore.kernel.org/all/86eabeb9dd62aebf1e2533926fdd13fed48bab1f.1631289960.git.aclaudi@redhat.com/T/#u
+
+Signed-off-by: Abhijeet Rastogi <abhijeet.1989@gmail.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Acked-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Cc: Allen Pais <apais@linux.microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/filesystems/directory-locking.rst |   26 ++++++++++++------------
- fs/namei.c                                      |   22 ++++++++++++--------
- 2 files changed, 28 insertions(+), 20 deletions(-)
+ net/netfilter/ipvs/Kconfig      |   27 ++++++++++++++-------------
+ net/netfilter/ipvs/ip_vs_conn.c |    4 ++--
+ 2 files changed, 16 insertions(+), 15 deletions(-)
 
---- a/Documentation/filesystems/directory-locking.rst
-+++ b/Documentation/filesystems/directory-locking.rst
-@@ -22,12 +22,11 @@ exclusive.
- 3) object removal.  Locking rules: caller locks parent, finds victim,
- locks victim and calls the method.  Locks are exclusive.
+--- a/net/netfilter/ipvs/Kconfig
++++ b/net/netfilter/ipvs/Kconfig
+@@ -44,7 +44,8 @@ config	IP_VS_DEBUG
  
--4) rename() that is _not_ cross-directory.  Locking rules: caller locks
--the parent and finds source and target.  In case of exchange (with
--RENAME_EXCHANGE in flags argument) lock both.  In any case,
--if the target already exists, lock it.  If the source is a non-directory,
--lock it.  If we need to lock both, lock them in inode pointer order.
--Then call the method.  All locks are exclusive.
-+4) rename() that is _not_ cross-directory.  Locking rules: caller locks the
-+parent and finds source and target.  We lock both (provided they exist).  If we
-+need to lock two inodes of different type (dir vs non-dir), we lock directory
-+first.  If we need to lock two inodes of the same type, lock them in inode
-+pointer order.  Then call the method.  All locks are exclusive.
- NB: we might get away with locking the source (and target in exchange
- case) shared.
+ config	IP_VS_TAB_BITS
+ 	int "IPVS connection table size (the Nth power of 2)"
+-	range 8 20
++	range 8 20 if !64BIT
++	range 8 27 if 64BIT
+ 	default 12
+ 	help
+ 	  The IPVS connection hash table uses the chaining scheme to handle
+@@ -54,24 +55,24 @@ config	IP_VS_TAB_BITS
  
-@@ -44,15 +43,17 @@ All locks are exclusive.
- rules:
+ 	  Note the table size must be power of 2. The table size will be the
+ 	  value of 2 to the your input number power. The number to choose is
+-	  from 8 to 20, the default number is 12, which means the table size
+-	  is 4096. Don't input the number too small, otherwise you will lose
+-	  performance on it. You can adapt the table size yourself, according
+-	  to your virtual server application. It is good to set the table size
+-	  not far less than the number of connections per second multiplying
+-	  average lasting time of connection in the table.  For example, your
+-	  virtual server gets 200 connections per second, the connection lasts
+-	  for 200 seconds in average in the connection table, the table size
+-	  should be not far less than 200x200, it is good to set the table
+-	  size 32768 (2**15).
++	  from 8 to 27 for 64BIT(20 otherwise), the default number is 12,
++	  which means the table size is 4096. Don't input the number too
++	  small, otherwise you will lose performance on it. You can adapt the
++	  table size yourself, according to your virtual server application.
++	  It is good to set the table size not far less than the number of
++	  connections per second multiplying average lasting time of
++	  connection in the table.  For example, your virtual server gets 200
++	  connections per second, the connection lasts for 200 seconds in
++	  average in the connection table, the table size should be not far
++	  less than 200x200, it is good to set the table size 32768 (2**15).
  
- 	* lock the filesystem
--	* lock parents in "ancestors first" order.
-+	* lock parents in "ancestors first" order. If one is not ancestor of
-+	  the other, lock them in inode pointer order.
- 	* find source and target.
- 	* if old parent is equal to or is a descendent of target
- 	  fail with -ENOTEMPTY
- 	* if new parent is equal to or is a descendent of source
- 	  fail with -ELOOP
--	* If it's an exchange, lock both the source and the target.
--	* If the target exists, lock it.  If the source is a non-directory,
--	  lock it.  If we need to lock both, do so in inode pointer order.
-+	* Lock both the source and the target provided they exist. If we
-+	  need to lock two inodes of different type (dir vs non-dir), we lock
-+	  the directory first. If we need to lock two inodes of the same type,
-+	  lock them in inode pointer order.
- 	* call the method.
+ 	  Another note that each connection occupies 128 bytes effectively and
+ 	  each hash entry uses 8 bytes, so you can estimate how much memory is
+ 	  needed for your box.
  
- All ->i_rwsem are taken exclusive.  Again, we might get away with locking
-@@ -66,8 +67,9 @@ If no directory is its own ancestor, the
+ 	  You can overwrite this number setting conn_tab_bits module parameter
+-	  or by appending ip_vs.conn_tab_bits=? to the kernel command line
+-	  if IP VS was compiled built-in.
++	  or by appending ip_vs.conn_tab_bits=? to the kernel command line if
++	  IP VS was compiled built-in.
  
- Proof:
+ comment "IPVS transport protocol load balancing support"
  
--	First of all, at any moment we have a partial ordering of the
--	objects - A < B iff A is an ancestor of B.
-+	First of all, at any moment we have a linear ordering of the
-+	objects - A < B iff (A is an ancestor of B) or (B is not an ancestor
-+        of A and ptr(A) < ptr(B)).
+--- a/net/netfilter/ipvs/ip_vs_conn.c
++++ b/net/netfilter/ipvs/ip_vs_conn.c
+@@ -1484,8 +1484,8 @@ int __init ip_vs_conn_init(void)
+ 	int idx;
  
- 	That ordering can change.  However, the following is true:
- 
---- a/fs/namei.c
-+++ b/fs/namei.c
-@@ -4618,7 +4618,7 @@ SYSCALL_DEFINE2(link, const char __user
-  *	   sb->s_vfs_rename_mutex. We might be more accurate, but that's another
-  *	   story.
-  *	c) we have to lock _four_ objects - parents and victim (if it exists),
-- *	   and source (if it is not a directory).
-+ *	   and source.
-  *	   And that - after we got ->i_mutex on parents (until then we don't know
-  *	   whether the target exists).  Solution: try to be smart with locking
-  *	   order for inodes.  We rely on the fact that tree topology may change
-@@ -4702,10 +4702,16 @@ int vfs_rename(struct renamedata *rd)
- 
- 	take_dentry_name_snapshot(&old_name, old_dentry);
- 	dget(new_dentry);
--	if (!is_dir || (flags & RENAME_EXCHANGE))
--		lock_two_nondirectories(source, target);
--	else if (target)
--		inode_lock(target);
-+	/*
-+	 * Lock all moved children. Moved directories may need to change parent
-+	 * pointer so they need the lock to prevent against concurrent
-+	 * directory changes moving parent pointer. For regular files we've
-+	 * historically always done this. The lockdep locking subclasses are
-+	 * somewhat arbitrary but RENAME_EXCHANGE in particular can swap
-+	 * regular files and directories so it's difficult to tell which
-+	 * subclasses to use.
-+	 */
-+	lock_two_inodes(source, target, I_MUTEX_NORMAL, I_MUTEX_NONDIR2);
- 
- 	error = -EPERM;
- 	if (IS_SWAPFILE(source) || (target && IS_SWAPFILE(target)))
-@@ -4753,9 +4759,9 @@ int vfs_rename(struct renamedata *rd)
- 			d_exchange(old_dentry, new_dentry);
+ 	/* Compute size and mask */
+-	if (ip_vs_conn_tab_bits < 8 || ip_vs_conn_tab_bits > 20) {
+-		pr_info("conn_tab_bits not in [8, 20]. Using default value\n");
++	if (ip_vs_conn_tab_bits < 8 || ip_vs_conn_tab_bits > 27) {
++		pr_info("conn_tab_bits not in [8, 27]. Using default value\n");
+ 		ip_vs_conn_tab_bits = CONFIG_IP_VS_TAB_BITS;
  	}
- out:
--	if (!is_dir || (flags & RENAME_EXCHANGE))
--		unlock_two_nondirectories(source, target);
--	else if (target)
-+	if (source)
-+		inode_unlock(source);
-+	if (target)
- 		inode_unlock(target);
- 	dput(new_dentry);
- 	if (!error) {
+ 	ip_vs_conn_tab_size = 1 << ip_vs_conn_tab_bits;
 
 
