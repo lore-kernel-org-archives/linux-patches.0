@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC74E20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:23:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29CF9C433CA;
-	Fri, 21 Jul 2023 19:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FAC20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:23:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DB2C433C7;
+	Fri, 21 Jul 2023 19:23:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967423;
-	bh=zqZ3ixhmer7ENNUnvbJjiC69Y6ScGtQwX9Vczqv5CFI=;
+	s=korg; t=1689967426;
+	bh=fG+Q1NcuxlWg5G/elwfRbM9GWXiextTqP0yyJiqlPOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i3rbv9+opxCAt0fwfyj71YmbCGyMFOPFV1OdK/urdzKNCHdUZ00wypJiQ9LlwRyUl
-	 mbUOKWidkpJptVwpPE7kD418k2C5q1UVSzJukCNpJSZx/xmLhMA2YfCiwCNvi0BTGF
-	 e01iwg/iTgIMdUFe+Mjuy3qxGddgBQA87MU/7ep0=
+	b=12yBEHsIYdhFeFOLsdtj4vsK5t7KJ3zqkLts4HklCKDMM4WE/BTa30N8LvdF14Ne2
+	 efrs63LguGO63OCosE4JUII7XWCD2vAVUQoHG4i123Y0kCh2P1dHSCDc9kFc1OLjvq
+	 Fnaj0aXMptvS66MctXutXwMpeKezMYFUap6LKeN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>
-Subject: [PATCH 6.1 140/223] fs: dlm: make F_SETLK use unkillable wait_event
-Date: Fri, 21 Jul 2023 18:06:33 +0200
-Message-ID: <20230721160526.841616620@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Jiri Slaby <jirislaby@kernel.org>
+Subject: [PATCH 6.1 158/223] tty: serial: samsung_tty: Fix a memory leak in s3c24xx_serial_getclk() in case of error
+Date: Fri, 21 Jul 2023 18:06:51 +0200
+Message-ID: <20230721160527.613149214@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -34,72 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit 0f2b1cb89ccdbdcedf7143f4153a4da700a05f48 upstream.
+commit a9c09546e903f1068acfa38e1ee18bded7114b37 upstream.
 
-While a non-waiting posix lock request (F_SETLK) is waiting for
-user space processing (in dlm_controld), wait for that processing
-to complete with an unkillable wait_event(). This makes F_SETLK
-behave the same way for F_RDLCK, F_WRLCK and F_UNLCK. F_SETLKW
-continues to use wait_event_killable().
+If clk_get_rate() fails, the clk that has just been allocated needs to be
+freed.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+Cc: <stable@vger.kernel.org> # v3.3+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Fixes: 5f5a7a5578c5 ("serial: samsung: switch to clkdev based clock lookup")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Message-ID: <e4baf6039368f52e5a5453982ddcb9a330fc689e.1686412569.git.christophe.jaillet@wanadoo.fr>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dlm/plock.c |   38 +++++++++++++++++++++-----------------
- 1 file changed, 21 insertions(+), 17 deletions(-)
+ drivers/tty/serial/samsung_tty.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/dlm/plock.c
-+++ b/fs/dlm/plock.c
-@@ -154,25 +154,29 @@ int dlm_posix_lock(dlm_lockspace_t *lock
+--- a/drivers/tty/serial/samsung_tty.c
++++ b/drivers/tty/serial/samsung_tty.c
+@@ -1467,8 +1467,12 @@ static unsigned int s3c24xx_serial_getcl
+ 			continue;
  
- 	send_op(op);
- 
--	rv = wait_event_killable(recv_wq, (op->done != 0));
--	if (rv == -ERESTARTSYS) {
--		spin_lock(&ops_lock);
--		/* recheck under ops_lock if we got a done != 0,
--		 * if so this interrupt case should be ignored
--		 */
--		if (op->done != 0) {
-+	if (op->info.wait) {
-+		rv = wait_event_killable(recv_wq, (op->done != 0));
-+		if (rv == -ERESTARTSYS) {
-+			spin_lock(&ops_lock);
-+			/* recheck under ops_lock if we got a done != 0,
-+			 * if so this interrupt case should be ignored
-+			 */
-+			if (op->done != 0) {
-+				spin_unlock(&ops_lock);
-+				goto do_lock_wait;
-+			}
-+			list_del(&op->list);
- 			spin_unlock(&ops_lock);
--			goto do_lock_wait;
--		}
--		list_del(&op->list);
--		spin_unlock(&ops_lock);
- 
--		log_debug(ls, "%s: wait interrupted %x %llx pid %d",
--			  __func__, ls->ls_global_id,
--			  (unsigned long long)number, op->info.pid);
--		do_unlock_close(&op->info);
--		dlm_release_plock_op(op);
--		goto out;
-+			log_debug(ls, "%s: wait interrupted %x %llx pid %d",
-+				  __func__, ls->ls_global_id,
-+				  (unsigned long long)number, op->info.pid);
-+			do_unlock_close(&op->info);
-+			dlm_release_plock_op(op);
-+			goto out;
+ 		rate = clk_get_rate(clk);
+-		if (!rate)
++		if (!rate) {
++			dev_err(ourport->port.dev,
++				"Failed to get clock rate for %s.\n", clkname);
++			clk_put(clk);
+ 			continue;
 +		}
-+	} else {
-+		wait_event(recv_wq, (op->done != 0));
- 	}
  
- do_lock_wait:
+ 		if (ourport->info->has_divslot) {
+ 			unsigned long div = rate / req_baud;
 
 
