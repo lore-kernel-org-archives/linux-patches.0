@@ -1,33 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D36620F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04E0C433C8;
-	Fri, 21 Jul 2023 19:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F39720F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:16:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22380C433C8;
+	Fri, 21 Jul 2023 19:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966995;
-	bh=ElAdtHySEFrLacSBSTpAbBVBu8ZxFEA9lWL3++5Ezrk=;
+	s=korg; t=1689966998;
+	bh=HOHt3h1k6j4IvmVeEXjr5UPiomF3r1nFxGNIIV+CHsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OHpzFencMf5hCjKGUrM8my2ZXke+LWlFMa8zm0bnhsCNleDRrIn4HkmhjwAEL+rSQ
-	 zsA3yKom/F4qXSyhazpCjiXwB8s+P5K4Xh/pKgM5elYnFSVWN0kYkhBlMEn05RMQCw
-	 kHBl6zCYKvdGNJy17FEi/nZqpaMU+YUJoBmp/D7Q=
+	b=2Yjb47b2ODRdKHB8qPZOQw037Hczx2GJSpQsHM+fY6hosnQMbO3KW3b4BnbnDvYQa
+	 osz1qCY5RGFpjVoguH149eFQiUeJ5pf1LvGPkfLYKEZbJmpkGtQjDx57Dn0ih9fByV
+	 130dTs9BnJ97hSkwctXyCLVDIjtR1VQ5ItqeJgYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
+	Paul Fertser <fercerpav@gmail.com>,
+	Ivan Mikhaylov <fr0st61te@gmail.com>,
 	Simon Horman <simon.horman@corigine.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 532/532] net/sched: sch_qfq: reintroduce lmax bound check for MTU
-Date: Fri, 21 Jul 2023 18:07:16 +0200
-Message-ID: <20230721160643.463604601@linuxfoundation.org>
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 001/223] net/ncsi: change from ndo_set_mac_address to dev_set_mac_address
+Date: Fri, 21 Jul 2023 18:04:14 +0200
+Message-ID: <20230721160520.933089261@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
-References: <20230721160614.695323302@linuxfoundation.org>
+In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
+References: <20230721160520.865493356@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,47 +38,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Ivan Mikhaylov <fr0st61te@gmail.com>
 
-commit 158810b261d02fc7dd92ca9c392d8f8a211a2401 upstream.
+commit 790071347a0a1a89e618eedcd51c687ea783aeb3 upstream.
 
-25369891fcef deletes a check for the case where no 'lmax' is
-specified which 3037933448f6 previously fixed as 'lmax'
-could be set to the device's MTU without any bound checking
-for QFQ_LMAX_MIN and QFQ_LMAX_MAX. Therefore, reintroduce the check.
+Change ndo_set_mac_address to dev_set_mac_address because
+dev_set_mac_address provides a way to notify network layer about MAC
+change. In other case, services may not aware about MAC change and keep
+using old one which set from network adapter driver.
 
-Fixes: 25369891fcef ("net/sched: sch_qfq: refactor parsing of netlink parameters")
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+As example, DHCP client from systemd do not update MAC address without
+notification from net subsystem which leads to the problem with acquiring
+the right address from DHCP server.
+
+Fixes: cb10c7c0dfd9e ("net/ncsi: Add NCSI Broadcom OEM command")
+Cc: stable@vger.kernel.org # v6.0+ 2f38e84 net/ncsi: make one oem_gma function for all mfr id
+Signed-off-by: Paul Fertser <fercerpav@gmail.com>
+Signed-off-by: Ivan Mikhaylov <fr0st61te@gmail.com>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_qfq.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/ncsi/ncsi-rsp.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/net/sched/sch_qfq.c
-+++ b/net/sched/sch_qfq.c
-@@ -428,10 +428,17 @@ static int qfq_change_class(struct Qdisc
- 	else
- 		weight = 1;
+--- a/net/ncsi/ncsi-rsp.c
++++ b/net/ncsi/ncsi-rsp.c
+@@ -616,7 +616,6 @@ static int ncsi_rsp_handler_oem_mlx_gma(
+ {
+ 	struct ncsi_dev_priv *ndp = nr->ndp;
+ 	struct net_device *ndev = ndp->ndev.dev;
+-	const struct net_device_ops *ops = ndev->netdev_ops;
+ 	struct ncsi_rsp_oem_pkt *rsp;
+ 	struct sockaddr saddr;
+ 	int ret = 0;
+@@ -630,7 +629,9 @@ static int ncsi_rsp_handler_oem_mlx_gma(
+ 	/* Set the flag for GMA command which should only be called once */
+ 	ndp->gma_flag = 1;
  
--	if (tb[TCA_QFQ_LMAX])
-+	if (tb[TCA_QFQ_LMAX]) {
- 		lmax = nla_get_u32(tb[TCA_QFQ_LMAX]);
--	else
-+	} else {
-+		/* MTU size is user controlled */
- 		lmax = psched_mtu(qdisc_dev(sch));
-+		if (lmax < QFQ_MIN_LMAX || lmax > QFQ_MAX_LMAX) {
-+			NL_SET_ERR_MSG_MOD(extack,
-+					   "MTU size out of bounds for qfq");
-+			return -EINVAL;
-+		}
-+	}
+-	ret = ops->ndo_set_mac_address(ndev, &saddr);
++	rtnl_lock();
++	ret = dev_set_mac_address(ndev, &saddr, NULL);
++	rtnl_unlock();
+ 	if (ret < 0)
+ 		netdev_warn(ndev, "NCSI: 'Writing mac address to device failed\n");
  
- 	inv_w = ONE_FP / weight;
- 	weight = ONE_FP / inv_w;
 
 
