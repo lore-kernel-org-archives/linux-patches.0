@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF53A20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:22:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7FCC433C9;
-	Fri, 21 Jul 2023 19:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9574120F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:22:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18027C433C9;
+	Fri, 21 Jul 2023 19:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967335;
-	bh=lawTK2nqP3aPtKpJ07V3oKPv+2tPg7nrUGQy2uM8iFM=;
+	s=korg; t=1689967338;
+	bh=mNu5QaphbBnivVKW+01oDsYHM/eLvSgHeT48q0NBm28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j+Lhp1kK4yyhWlRo+BioN52GoXsx3IMKUDBV6aSsA/ealS7WGveaipnglZnS8//eu
-	 wtD7eDWiWx7/tGEn5RdQcYFOlfvnQL7puF4kL0RNmHo0Q9lQRMFefUyj/OXSYYfUR6
-	 AmgvgWPHKr+gvgEW0xOMRKa2jW1RfqaMicuobvnU=
+	b=XupDT8JhbIcYJYxRy1RBtvWPlkldIek5l4eWd7P+Mpqbwy9KHRUh1UQm3sQxPXVeg
+	 xUwhqigHuMr9UfqcoAbSh+cBwLmFJkqJQBzAoZoZIMnoOH2jcpVp7aPL87/usfTaDF
+	 vAP+9MMjaR7XdxRWCT3Sw7ZUFSy1watL/UiFvVvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 109/223] ext4: turn quotas off if mount failed after enabling quotas
-Date: Fri, 21 Jul 2023 18:06:02 +0200
-Message-ID: <20230721160525.517533607@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>
+Subject: [PATCH 6.1 127/223] PCI: rockchip: Write PCI Device ID to correct register
+Date: Fri, 21 Jul 2023 18:06:20 +0200
+Message-ID: <20230721160526.293324669@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -37,76 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
 
-commit d13f99632748462c32fc95d729f5e754bab06064 upstream.
+commit 1f1c42ece18de365c976a060f3c8eb481b038e3a upstream.
 
-Yi found during a review of the patch "ext4: don't BUG on inconsistent
-journal feature" that when ext4_mark_recovery_complete() returns an error
-value, the error handling path does not turn off the enabled quotas,
-which triggers the following kmemleak:
+Write PCI Device ID (DID) to the correct register. The Device ID was not
+updated through the correct register. Device ID was written to a read-only
+register and therefore did not work. The Device ID is now set through the
+correct register. This is documented in the RK3399 TRM section 17.6.6.1.1
 
-================================================================
-unreferenced object 0xffff8cf68678e7c0 (size 64):
-comm "mount", pid 746, jiffies 4294871231 (age 11.540s)
-hex dump (first 32 bytes):
-00 90 ef 82 f6 8c ff ff 00 00 00 00 41 01 00 00  ............A...
-c7 00 00 00 bd 00 00 00 0a 00 00 00 48 00 00 00  ............H...
-backtrace:
-[<00000000c561ef24>] __kmem_cache_alloc_node+0x4d4/0x880
-[<00000000d4e621d7>] kmalloc_trace+0x39/0x140
-[<00000000837eee74>] v2_read_file_info+0x18a/0x3a0
-[<0000000088f6c877>] dquot_load_quota_sb+0x2ed/0x770
-[<00000000340a4782>] dquot_load_quota_inode+0xc6/0x1c0
-[<0000000089a18bd5>] ext4_enable_quotas+0x17e/0x3a0 [ext4]
-[<000000003a0268fa>] __ext4_fill_super+0x3448/0x3910 [ext4]
-[<00000000b0f2a8a8>] ext4_fill_super+0x13d/0x340 [ext4]
-[<000000004a9489c4>] get_tree_bdev+0x1dc/0x370
-[<000000006e723bf1>] ext4_get_tree+0x1d/0x30 [ext4]
-[<00000000c7cb663d>] vfs_get_tree+0x31/0x160
-[<00000000320e1bed>] do_new_mount+0x1d5/0x480
-[<00000000c074654c>] path_mount+0x22e/0xbe0
-[<0000000003e97a8e>] do_mount+0x95/0xc0
-[<000000002f3d3736>] __x64_sys_mount+0xc4/0x160
-[<0000000027d2140c>] do_syscall_64+0x3f/0x90
-================================================================
-
-To solve this problem, we add a "failed_mount10" tag, and call
-ext4_quota_off_umount() in this tag to release the enabled qoutas.
-
-Fixes: 11215630aada ("ext4: don't BUG on inconsistent journal feature")
-Cc: stable@kernel.org
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230327141630.156875-2-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://lore.kernel.org/r/20230418074700.1083505-3-rick.wertenbroek@gmail.com
+Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
+Tested-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pcie-rockchip-ep.c |    6 ++++--
+ drivers/pci/controller/pcie-rockchip.h    |    2 ++
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -5544,7 +5544,7 @@ static int __ext4_fill_super(struct fs_c
- 		ext4_msg(sb, KERN_INFO, "recovery complete");
- 		err = ext4_mark_recovery_complete(sb, es);
- 		if (err)
--			goto failed_mount9;
-+			goto failed_mount10;
+--- a/drivers/pci/controller/pcie-rockchip-ep.c
++++ b/drivers/pci/controller/pcie-rockchip-ep.c
+@@ -125,6 +125,7 @@ static void rockchip_pcie_prog_ep_ob_atu
+ static int rockchip_pcie_ep_write_header(struct pci_epc *epc, u8 fn, u8 vfn,
+ 					 struct pci_epf_header *hdr)
+ {
++	u32 reg;
+ 	struct rockchip_pcie_ep *ep = epc_get_drvdata(epc);
+ 	struct rockchip_pcie *rockchip = &ep->rockchip;
+ 
+@@ -137,8 +138,9 @@ static int rockchip_pcie_ep_write_header
+ 				    PCIE_CORE_CONFIG_VENDOR);
  	}
  
- 	if (test_opt(sb, DISCARD) && !bdev_max_discard_sectors(sb->s_bdev))
-@@ -5563,7 +5563,9 @@ static int __ext4_fill_super(struct fs_c
+-	rockchip_pcie_write(rockchip, hdr->deviceid << 16,
+-			    ROCKCHIP_PCIE_EP_FUNC_BASE(fn) + PCI_VENDOR_ID);
++	reg = rockchip_pcie_read(rockchip, PCIE_EP_CONFIG_DID_VID);
++	reg = (reg & 0xFFFF) | (hdr->deviceid << 16);
++	rockchip_pcie_write(rockchip, reg, PCIE_EP_CONFIG_DID_VID);
  
- 	return 0;
- 
--failed_mount9:
-+failed_mount10:
-+	ext4_quota_off_umount(sb);
-+failed_mount9: __maybe_unused
- 	ext4_release_orphan_info(sb);
- failed_mount8:
- 	ext4_unregister_sysfs(sb);
+ 	rockchip_pcie_write(rockchip,
+ 			    hdr->revid |
+--- a/drivers/pci/controller/pcie-rockchip.h
++++ b/drivers/pci/controller/pcie-rockchip.h
+@@ -133,6 +133,8 @@
+ #define PCIE_RC_RP_ATS_BASE		0x400000
+ #define PCIE_RC_CONFIG_NORMAL_BASE	0x800000
+ #define PCIE_RC_CONFIG_BASE		0xa00000
++#define PCIE_EP_CONFIG_BASE		0xa00000
++#define PCIE_EP_CONFIG_DID_VID		(PCIE_EP_CONFIG_BASE + 0x00)
+ #define PCIE_RC_CONFIG_RID_CCR		(PCIE_RC_CONFIG_BASE + 0x08)
+ #define PCIE_RC_CONFIG_DCR		(PCIE_RC_CONFIG_BASE + 0xc4)
+ #define   PCIE_RC_CONFIG_DCR_CSPL_SHIFT		18
 
 
