@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D8820F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:23:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C005C433C8;
-	Fri, 21 Jul 2023 19:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE65E20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:24:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A43C433C8;
+	Fri, 21 Jul 2023 19:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967437;
-	bh=tHXjsyYxD3MMFPz7pn7OcWuIgEpRIzmvUYOE1wVu2Nw=;
+	s=korg; t=1689967440;
+	bh=YPBLTson+rYGv2YUpGQRUUbx4VYOWGuIgOlB0875Vv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M56KEzbHTqnsnhkxcfwafVku5NIV8ErSB0eub8LRCI+jpNLu78r56LkGjLEbfB3FH
-	 RXaFobspBjBKKZp28ZvzpKaqeXa5obSgIdRTmyE+xnc+x9uX66d/TUGTTIgBkVM+wt
-	 +bbnW2hTzQJFqJjFl9Yh7bJ8gb9rOywMOZmOrNqc=
+	b=lPtpd3KTs2pHCBjuaggDfvBn0sb5SVb289xQZWJOzC/QXcvmQKhvr9nhojNUFbojo
+	 /4B+vl7nkURQBvh0IzRq1JyjoPpbx3FjmzRBkyRCmvaC8IbRWUR6ut4yqoYd26FBC4
+	 Dh9a1lLSra8Zr7gvsPxJJYKo9NRvyjWEFo+Y32vM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thelford Williams <thelford@google.com>,
+	Xiubo Li <xiubli@redhat.com>,
+	Milind Changire <mchangir@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
-	Xiubo Li <xiubli@redhat.com>
-Subject: [PATCH 6.1 162/223] libceph: harden msgr2.1 frame segment length checks
-Date: Fri, 21 Jul 2023 18:06:55 +0200
-Message-ID: <20230721160527.785296263@linuxfoundation.org>
+	Hu Weiwen <sehuww@mail.scut.edu.cn>
+Subject: [PATCH 6.1 163/223] ceph: add a dedicated private data for netfs rreq
+Date: Fri, 21 Jul 2023 18:06:56 +0200
+Message-ID: <20230721160527.826363295@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -35,100 +36,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Xiubo Li <xiubli@redhat.com>
 
-commit a282a2f10539dce2aa619e71e1817570d557fc97 upstream.
+commit 23ee27dce30e7d3091d6c3143b79f48dab6f9a3e upstream.
 
-ceph_frame_desc::fd_lens is an int array.  decode_preamble() thus
-effectively casts u32 -> int but the checks for segment lengths are
-written as if on unsigned values.  While reading in HELLO or one of the
-AUTH frames (before authentication is completed), arithmetic in
-head_onwire_len() can get duped by negative ctrl_len and produce
-head_len which is less than CEPH_PREAMBLE_LEN but still positive.
-This would lead to a buffer overrun in prepare_read_control() as the
-preamble gets copied to the newly allocated buffer of size head_len.
+We need to save the 'f_ra.ra_pages' to expand the readahead window
+later.
 
 Cc: stable@vger.kernel.org
-Fixes: cd1a677cad99 ("libceph, ceph: implement msgr2.1 protocol (crc and secure modes)")
-Reported-by: Thelford Williams <thelford@google.com>
+Fixes: 49870056005c ("ceph: convert ceph_readpages to ceph_readahead")
+Link: https://lore.kernel.org/ceph-devel/20230504082510.247-1-sehuww@mail.scut.edu.cn
+Link: https://www.spinics.net/lists/ceph-users/msg76183.html
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-and-tested-by: Hu Weiwen <sehuww@mail.scut.edu.cn>
+Reviewed-by: Milind Changire <mchangir@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Xiubo Li <xiubli@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/messenger_v2.c |   41 ++++++++++++++++++++++++++---------------
- 1 file changed, 26 insertions(+), 15 deletions(-)
+ fs/ceph/addr.c  |   45 ++++++++++++++++++++++++++++++++++-----------
+ fs/ceph/super.h |   13 +++++++++++++
+ 2 files changed, 47 insertions(+), 11 deletions(-)
 
---- a/net/ceph/messenger_v2.c
-+++ b/net/ceph/messenger_v2.c
-@@ -392,6 +392,8 @@ static int head_onwire_len(int ctrl_len,
- 	int head_len;
- 	int rem_len;
- 
-+	BUG_ON(ctrl_len < 0 || ctrl_len > CEPH_MSG_MAX_CONTROL_LEN);
-+
- 	if (secure) {
- 		head_len = CEPH_PREAMBLE_SECURE_LEN;
- 		if (ctrl_len > CEPH_PREAMBLE_INLINE_LEN) {
-@@ -410,6 +412,10 @@ static int head_onwire_len(int ctrl_len,
- static int __tail_onwire_len(int front_len, int middle_len, int data_len,
- 			     bool secure)
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -362,18 +362,28 @@ static int ceph_init_request(struct netf
  {
-+	BUG_ON(front_len < 0 || front_len > CEPH_MSG_MAX_FRONT_LEN ||
-+	       middle_len < 0 || middle_len > CEPH_MSG_MAX_MIDDLE_LEN ||
-+	       data_len < 0 || data_len > CEPH_MSG_MAX_DATA_LEN);
-+
- 	if (!front_len && !middle_len && !data_len)
+ 	struct inode *inode = rreq->inode;
+ 	int got = 0, want = CEPH_CAP_FILE_CACHE;
++	struct ceph_netfs_request_data *priv;
+ 	int ret = 0;
+ 
+ 	if (rreq->origin != NETFS_READAHEAD)
  		return 0;
  
-@@ -522,29 +528,34 @@ static int decode_preamble(void *p, stru
- 		desc->fd_aligns[i] = ceph_decode_16(&p);
++	priv = kzalloc(sizeof(*priv), GFP_NOFS);
++	if (!priv)
++		return -ENOMEM;
++
+ 	if (file) {
+ 		struct ceph_rw_context *rw_ctx;
+ 		struct ceph_file_info *fi = file->private_data;
+ 
++		priv->file_ra_pages = file->f_ra.ra_pages;
++		priv->file_ra_disabled = file->f_mode & FMODE_RANDOM;
++
+ 		rw_ctx = ceph_find_rw_context(fi);
+-		if (rw_ctx)
++		if (rw_ctx) {
++			rreq->netfs_priv = priv;
+ 			return 0;
++		}
  	}
  
--	/*
--	 * This would fire for FRAME_TAG_WAIT (it has one empty
--	 * segment), but we should never get it as client.
--	 */
--	if (!desc->fd_lens[desc->fd_seg_cnt - 1]) {
--		pr_err("last segment empty\n");
-+	if (desc->fd_lens[0] < 0 ||
-+	    desc->fd_lens[0] > CEPH_MSG_MAX_CONTROL_LEN) {
-+		pr_err("bad control segment length %d\n", desc->fd_lens[0]);
- 		return -EINVAL;
+ 	/*
+@@ -383,27 +393,40 @@ static int ceph_init_request(struct netf
+ 	ret = ceph_try_get_caps(inode, CEPH_CAP_FILE_RD, want, true, &got);
+ 	if (ret < 0) {
+ 		dout("start_read %p, error getting cap\n", inode);
+-		return ret;
++		goto out;
  	}
--
--	if (desc->fd_lens[0] > CEPH_MSG_MAX_CONTROL_LEN) {
--		pr_err("control segment too big %d\n", desc->fd_lens[0]);
-+	if (desc->fd_lens[1] < 0 ||
-+	    desc->fd_lens[1] > CEPH_MSG_MAX_FRONT_LEN) {
-+		pr_err("bad front segment length %d\n", desc->fd_lens[1]);
- 		return -EINVAL;
+ 
+ 	if (!(got & want)) {
+ 		dout("start_read %p, no cache cap\n", inode);
+-		return -EACCES;
++		ret = -EACCES;
++		goto out;
++	}
++	if (ret == 0) {
++		ret = -EACCES;
++		goto out;
  	}
--	if (desc->fd_lens[1] > CEPH_MSG_MAX_FRONT_LEN) {
--		pr_err("front segment too big %d\n", desc->fd_lens[1]);
-+	if (desc->fd_lens[2] < 0 ||
-+	    desc->fd_lens[2] > CEPH_MSG_MAX_MIDDLE_LEN) {
-+		pr_err("bad middle segment length %d\n", desc->fd_lens[2]);
- 		return -EINVAL;
- 	}
--	if (desc->fd_lens[2] > CEPH_MSG_MAX_MIDDLE_LEN) {
--		pr_err("middle segment too big %d\n", desc->fd_lens[2]);
-+	if (desc->fd_lens[3] < 0 ||
-+	    desc->fd_lens[3] > CEPH_MSG_MAX_DATA_LEN) {
-+		pr_err("bad data segment length %d\n", desc->fd_lens[3]);
- 		return -EINVAL;
- 	}
--	if (desc->fd_lens[3] > CEPH_MSG_MAX_DATA_LEN) {
--		pr_err("data segment too big %d\n", desc->fd_lens[3]);
+-	if (ret == 0)
+-		return -EACCES;
+ 
+-	rreq->netfs_priv = (void *)(uintptr_t)got;
+-	return 0;
++	priv->caps = got;
++	rreq->netfs_priv = priv;
++
++out:
++	if (ret < 0)
++		kfree(priv);
++
++	return ret;
+ }
+ 
+ static void ceph_netfs_free_request(struct netfs_io_request *rreq)
+ {
+-	struct ceph_inode_info *ci = ceph_inode(rreq->inode);
+-	int got = (uintptr_t)rreq->netfs_priv;
++	struct ceph_netfs_request_data *priv = rreq->netfs_priv;
++
++	if (!priv)
++		return;
+ 
+-	if (got)
+-		ceph_put_cap_refs(ci, got);
++	if (priv->caps)
++		ceph_put_cap_refs(ceph_inode(rreq->inode), priv->caps);
++	kfree(priv);
++	rreq->netfs_priv = NULL;
+ }
+ 
+ const struct netfs_request_ops ceph_netfs_ops = {
+--- a/fs/ceph/super.h
++++ b/fs/ceph/super.h
+@@ -451,6 +451,19 @@ struct ceph_inode_info {
+ 	unsigned long  i_work_mask;
+ };
+ 
++struct ceph_netfs_request_data {
++	int caps;
 +
 +	/*
-+	 * This would fire for FRAME_TAG_WAIT (it has one empty
-+	 * segment), but we should never get it as client.
++	 * Maximum size of a file readahead request.
++	 * The fadvise could update the bdi's default ra_pages.
 +	 */
-+	if (!desc->fd_lens[desc->fd_seg_cnt - 1]) {
-+		pr_err("last segment empty, segment count %d\n",
-+		       desc->fd_seg_cnt);
- 		return -EINVAL;
- 	}
- 
++	unsigned int file_ra_pages;
++
++	/* Set it if fadvise disables file readahead entirely */
++	bool file_ra_disabled;
++};
++
+ static inline struct ceph_inode_info *
+ ceph_inode(const struct inode *inode)
+ {
 
 
