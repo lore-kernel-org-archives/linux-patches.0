@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0056120F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76AE2C433C8;
-	Fri, 21 Jul 2023 19:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10C120F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46308C433C8;
+	Fri, 21 Jul 2023 19:09:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966581;
-	bh=HFJkboNVScMIer6GJwhPiugsKjD1S612PvTeEmdS/YM=;
+	s=korg; t=1689966584;
+	bh=WzGV3XMmNHknqp3yEaKwhcYUn4VctfG6/sKfRBk6HxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s2gVMGz0MGumm/tkS+vdbJD/dwrQF9Sl8/jNgJCZlyL1GhjDpj2ZdTVfP6VGBOD/y
-	 0umPCKYluYITH/nFgsK6ivB66MS/HHoJsNvxe0nyx7lNGibu1foVnzcFpYLoUNYSD5
-	 NHuQzAJj8nDyk+gPL2b9IpeZ51NiPfP7oVyqu5vE=
+	b=XiMUrMq1voDq/dm4zFsBaIfAlTmJF2DppB6rZXXGmJ6+I6CT0RFzL0xq4pwMR/nHG
+	 EQwGKOZhS/T7kfFeEL0unrgcicJS0c36XbrnythRmr6EwZJEYCPTSdHP2Fd1/QiOkS
+	 W1bQhx4GjEimji+A4Lf3PjbHAZCLM/1ASjXStuBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 395/532] drm/panel: simple: Add connector_type for innolux_at043tn24
-Date: Fri, 21 Jul 2023 18:04:59 +0200
-Message-ID: <20230721160635.899665170@linuxfoundation.org>
+Subject: [PATCH 5.15 396/532] drm/bridge: ti-sn65dsi86: Fix auxiliary bus lifetime
+Date: Fri, 21 Jul 2023 18:05:00 +0200
+Message-ID: <20230721160635.951395479@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,37 +35,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabio Estevam <festevam@denx.de>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 2c56a751845ddfd3078ebe79981aaaa182629163 ]
+[ Upstream commit 7aa83fbd712a6f08ffa67890061f26d140c2a84f ]
 
-The innolux at043tn24 display is a parallel LCD. Pass the 'connector_type'
-information to avoid the following warning:
+Memory for the "struct device" for any given device isn't supposed to
+be released until the device's release() is called. This is important
+because someone might be holding a kobject reference to the "struct
+device" and might try to access one of its members even after any
+other cleanup/uninitialization has happened.
 
-panel-simple panel: Specify missing connector_type
+Code analysis of ti-sn65dsi86 shows that this isn't quite right. When
+the code was written, it was believed that we could rely on the fact
+that the child devices would all be freed before the parent devices
+and thus we didn't need to worry about a release() function. While I
+still believe that the parent's "struct device" is guaranteed to
+outlive the child's "struct device" (because the child holds a kobject
+reference to the parent), the parent's "devm" allocated memory is a
+different story. That appears to be freed much earlier.
 
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Fixes: 41bcceb4de9c ("drm/panel: simple: Add support for Innolux AT043TN24")
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230620112202.654981-1-festevam@gmail.com
+Let's make this better for ti-sn65dsi86 by allocating each auxiliary
+with kzalloc and then free that memory in the release().
+
+Fixes: bf73537f411b ("drm/bridge: ti-sn65dsi86: Break GPIO and MIPI-to-eDP bridge into sub-drivers")
+Suggested-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230613065812.v2.1.I24b838a5b4151fb32bccd6f36397998ea2df9fbb@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 33 +++++++++++++++++----------
+ 1 file changed, 21 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 2f85266cdb2e3..2b628b6be08f3 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -2469,6 +2469,7 @@ static const struct panel_desc innolux_at043tn24 = {
- 		.height = 54,
- 	},
- 	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
-+	.connector_type = DRM_MODE_CONNECTOR_DPI,
- 	.bus_flags = DRM_BUS_FLAG_DE_HIGH | DRM_BUS_FLAG_PIXDATA_DRIVE_POSEDGE,
- };
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index bbedce0eeddae..22c2ff5272c60 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -147,9 +147,9 @@
+  *                each other's read-modify-write.
+  */
+ struct ti_sn65dsi86 {
+-	struct auxiliary_device		bridge_aux;
+-	struct auxiliary_device		gpio_aux;
+-	struct auxiliary_device		aux_aux;
++	struct auxiliary_device		*bridge_aux;
++	struct auxiliary_device		*gpio_aux;
++	struct auxiliary_device		*aux_aux;
  
+ 	struct device			*dev;
+ 	struct regmap			*regmap;
+@@ -412,27 +412,34 @@ static void ti_sn65dsi86_delete_aux(void *data)
+ 	auxiliary_device_delete(data);
+ }
+ 
+-/*
+- * AUX bus docs say that a non-NULL release is mandatory, but it makes no
+- * sense for the model used here where all of the aux devices are allocated
+- * in the single shared structure. We'll use this noop as a workaround.
+- */
+-static void ti_sn65dsi86_noop(struct device *dev) {}
++static void ti_sn65dsi86_aux_device_release(struct device *dev)
++{
++	struct auxiliary_device *aux = container_of(dev, struct auxiliary_device, dev);
++
++	kfree(aux);
++}
+ 
+ static int ti_sn65dsi86_add_aux_device(struct ti_sn65dsi86 *pdata,
+-				       struct auxiliary_device *aux,
++				       struct auxiliary_device **aux_out,
+ 				       const char *name)
+ {
+ 	struct device *dev = pdata->dev;
++	struct auxiliary_device *aux;
+ 	int ret;
+ 
++	aux = kzalloc(sizeof(*aux), GFP_KERNEL);
++	if (!aux)
++		return -ENOMEM;
++
+ 	aux->name = name;
+ 	aux->dev.parent = dev;
+-	aux->dev.release = ti_sn65dsi86_noop;
++	aux->dev.release = ti_sn65dsi86_aux_device_release;
+ 	device_set_of_node_from_dev(&aux->dev, dev);
+ 	ret = auxiliary_device_init(aux);
+-	if (ret)
++	if (ret) {
++		kfree(aux);
+ 		return ret;
++	}
+ 	ret = devm_add_action_or_reset(dev, ti_sn65dsi86_uninit_aux, aux);
+ 	if (ret)
+ 		return ret;
+@@ -441,6 +448,8 @@ static int ti_sn65dsi86_add_aux_device(struct ti_sn65dsi86 *pdata,
+ 	if (ret)
+ 		return ret;
+ 	ret = devm_add_action_or_reset(dev, ti_sn65dsi86_delete_aux, aux);
++	if (!ret)
++		*aux_out = aux;
+ 
+ 	return ret;
+ }
 -- 
 2.39.2
 
