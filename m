@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF11120F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:20:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75602C433C7;
-	Fri, 21 Jul 2023 19:20:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36D020F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:20:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47674C433C8;
+	Fri, 21 Jul 2023 19:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967215;
-	bh=qMctiIhFdm1UJKR2caz8af/qpSbzL9udYa5leDsWI34=;
+	s=korg; t=1689967218;
+	bh=8ryoyp9p1FLTIgoJ7+V29JsBT72Rm9wfJiO8W22obeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=02Ucsqo7i1dUfM02W8cVQTLYnuAo+XH3fDLjMqTPTMv9QDO5fN0muIuutengTCa99
-	 yom0jJSghqzrr2LpmNhXjToUxY+v0b2e3drlqSVXclZcKoqo0LTNo4O855PNnUd0l3
-	 PjY2Vra+3DiidU73Ijpc8ygrd4fFMZtRm/pqPHSI=
+	b=yDU5cSxxNSLrXiJ+zjDrOO47k/3UXm6gh1vkREaIbd+KOtzOGcerZZoeo0mzT4Fy5
+	 IDsIMQGrmp0+4kCpB0WPP0vKlJQy4JN84phlXr/X5SnP/oD2HJG1htPvjsh7FvVFM+
+	 DPQsiirPcN+entJDvlzWpewg9yBRR8de8saD16V8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Jan Visser <starquake@linuxeverywhere.org>,
 	Mario Limonciello <mario.limonciello@amd.com>,
-	Guruvendra Punugupati <Guruvendra.Punugupati@amd.com>,
 	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.1 077/223] pinctrl: amd: Add Z-state wake control bits
-Date: Fri, 21 Jul 2023 18:05:30 +0200
-Message-ID: <20230721160524.147094733@linuxfoundation.org>
+Subject: [PATCH 6.1 086/223] pinctrl: amd: Drop pull up select configuration
+Date: Fri, 21 Jul 2023 18:05:39 +0200
+Message-ID: <20230721160524.529997746@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -36,57 +35,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit df72b4a692b60d3e5d99d9ef662b2d03c44bb9c0 upstream.
+commit 3f62312d04d4c68aace9cd06fc135e09573325f3 upstream.
 
-GPIO registers include Bit 27 for WakeCntrlZ used to enable wake in
-Z state. Hence add Z-state wake control bits to debugfs output to
-debug and analyze Z-states problems.
+pinctrl-amd currently tries to program bit 19 of all GPIOs to select
+either a 4kΩ or 8hΩ pull up, but this isn't what bit 19 does.  Bit
+19 is marked as reserved, even in the latest platforms documentation.
 
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Suggested-by: Mario Limonciello <mario.limonciello@amd.com>
-Tested-by: Guruvendra Punugupati <Guruvendra.Punugupati@amd.com>
-Link: https://lore.kernel.org/r/20221208093704.1151928-1-Basavaraj.Natikar@amd.com
+Drop this programming functionality.
+
+Tested-by: Jan Visser <starquake@linuxeverywhere.org>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20230705133005.577-4-mario.limonciello@amd.com
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-amd.c |    7 +++++++
- drivers/pinctrl/pinctrl-amd.h |    1 +
- 2 files changed, 8 insertions(+)
+ drivers/pinctrl/pinctrl-amd.c |   16 ++++------------
+ drivers/pinctrl/pinctrl-amd.h |    1 -
+ 2 files changed, 4 insertions(+), 13 deletions(-)
 
 --- a/drivers/pinctrl/pinctrl-amd.c
 +++ b/drivers/pinctrl/pinctrl-amd.c
-@@ -218,6 +218,7 @@ static void amd_gpio_dbg_show(struct seq
+@@ -209,7 +209,6 @@ static void amd_gpio_dbg_show(struct seq
+ 	char *pin_sts;
+ 	char *interrupt_sts;
+ 	char *wake_sts;
+-	char *pull_up_sel;
  	char *orientation;
  	char debounce_value[40];
  	char *debounce_enable;
-+	char *wake_cntrlz;
+@@ -317,14 +316,9 @@ static void amd_gpio_dbg_show(struct seq
+ 			seq_printf(s, "   %s|", wake_sts);
  
- 	for (bank = 0; bank < gpio_dev->hwbank_num; bank++) {
- 		unsigned int time = 0;
-@@ -305,6 +306,12 @@ static void amd_gpio_dbg_show(struct seq
- 				wake_cntrl2 = " ∅";
- 			seq_printf(s, "S4/S5 %s| ", wake_cntrl2);
- 
-+			if (pin_reg & BIT(WAKECNTRL_Z_OFF))
-+				wake_cntrlz = "⏰";
-+			else
-+				wake_cntrlz = " ∅";
-+			seq_printf(s, "Z %s| ", wake_cntrlz);
-+
  			if (pin_reg & BIT(PULL_UP_ENABLE_OFF)) {
- 				pull_up_enable = "+";
- 				if (pin_reg & BIT(PULL_UP_SEL_OFF))
+-				if (pin_reg & BIT(PULL_UP_SEL_OFF))
+-					pull_up_sel = "8k";
+-				else
+-					pull_up_sel = "4k";
+-				seq_printf(s, "%s ↑|",
+-					   pull_up_sel);
++				seq_puts(s, "  ↑ |");
+ 			} else if (pin_reg & BIT(PULL_DOWN_ENABLE_OFF)) {
+-				seq_puts(s, "   ↓|");
++				seq_puts(s, "  ↓ |");
+ 			} else  {
+ 				seq_puts(s, "    |");
+ 			}
+@@ -751,7 +745,7 @@ static int amd_pinconf_get(struct pinctr
+ 		break;
+ 
+ 	case PIN_CONFIG_BIAS_PULL_UP:
+-		arg = (pin_reg >> PULL_UP_SEL_OFF) & (BIT(0) | BIT(1));
++		arg = (pin_reg >> PULL_UP_ENABLE_OFF) & BIT(0);
+ 		break;
+ 
+ 	case PIN_CONFIG_DRIVE_STRENGTH:
+@@ -798,10 +792,8 @@ static int amd_pinconf_set(struct pinctr
+ 			break;
+ 
+ 		case PIN_CONFIG_BIAS_PULL_UP:
+-			pin_reg &= ~BIT(PULL_UP_SEL_OFF);
+-			pin_reg |= (arg & BIT(0)) << PULL_UP_SEL_OFF;
+ 			pin_reg &= ~BIT(PULL_UP_ENABLE_OFF);
+-			pin_reg |= ((arg>>1) & BIT(0)) << PULL_UP_ENABLE_OFF;
++			pin_reg |= (arg & BIT(0)) << PULL_UP_ENABLE_OFF;
+ 			break;
+ 
+ 		case PIN_CONFIG_DRIVE_STRENGTH:
 --- a/drivers/pinctrl/pinctrl-amd.h
 +++ b/drivers/pinctrl/pinctrl-amd.h
-@@ -42,6 +42,7 @@
- #define OUTPUT_ENABLE_OFF		23
- #define SW_CNTRL_IN_OFF			24
- #define SW_CNTRL_EN_OFF			25
-+#define WAKECNTRL_Z_OFF			27
- #define INTERRUPT_STS_OFF		28
- #define WAKE_STS_OFF			29
- 
+@@ -36,7 +36,6 @@
+ #define WAKE_CNTRL_OFF_S4               15
+ #define PIN_STS_OFF			16
+ #define DRV_STRENGTH_SEL_OFF		17
+-#define PULL_UP_SEL_OFF			19
+ #define PULL_UP_ENABLE_OFF		20
+ #define PULL_DOWN_ENABLE_OFF		21
+ #define OUTPUT_VALUE_OFF		22
 
 
