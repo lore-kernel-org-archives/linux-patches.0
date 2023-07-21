@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B5B20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:15:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F48C433C7;
-	Fri, 21 Jul 2023 19:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7C020F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:15:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0674C433C8;
+	Fri, 21 Jul 2023 19:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966901;
-	bh=viQbu28BKhZYsbP+3JclZSbWNLzAYwxI0QvJNUO/MwI=;
+	s=korg; t=1689966904;
+	bh=Q+4CUHWm3BDzlDzpnZB5TLvS1iSe+P0JFkyz3HJb230=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZQbOpTd2TyBXELRtJfhdcnI7kcwaXegisvr+SNOw4LwJ9ehaTX9/FUaFKemLZ1DO3
-	 L8S4k4i/oy8nSyOaPp+fNBoZ73HYZhrDiRiqoyDF6/8nY6hvg5xAvsCN3C5KJeivAx
-	 /Q+mO0m8rLO2kfR6U074ysmane0VDFIC+tGjPJ3s=
+	b=0pbwNW3L25r8QBuZS/FUK38itArC5PKD6iOCmq0aaYW9c0f7H4aS2hMOy4POxA7QE
+	 MlFA5DVwv0W9Y0Gt9lMmTxMxNUnWG49C6TILquFWbH38OuV+TW0s3mQ1hqORPshTNt
+	 KZzX33dFUzOZr8K3UULf6ctv6QRWL/HHys7Yorw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.15 469/532] hwrng: imx-rngc - fix the timeout for init and self check
-Date: Fri, 21 Jul 2023 18:06:13 +0200
-Message-ID: <20230721160639.967255494@linuxfoundation.org>
+	Weitao Wang <WeitaoWang-oc@zhaoxin.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.15 501/532] xhci: Fix resume issue of some ZHAOXIN hosts
+Date: Fri, 21 Jul 2023 18:06:45 +0200
+Message-ID: <20230721160641.770903213@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -34,45 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
 
-commit d744ae7477190967a3ddc289e2cd4ae59e8b1237 upstream.
+commit f927728186f0de1167262d6a632f9f7e96433d1a upstream.
 
-Fix the timeout that is used for the initialisation and for the self
-test. wait_for_completion_timeout expects a timeout in jiffies, but
-RNGC_TIMEOUT is in milliseconds. Call msecs_to_jiffies to do the
-conversion.
+On ZHAOXIN ZX-100 project, xHCI can't work normally after resume
+from system Sx state. To fix this issue, when resume from system
+Sx state, reinitialize xHCI instead of restore.
+So, Add XHCI_RESET_ON_RESUME quirk for ZX-100 to fix issue of
+resuming from system Sx state.
 
 Cc: stable@vger.kernel.org
-Fixes: 1d5449445bd0 ("hwrng: mx-rngc - add a driver for Freescale RNGC")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Weitao Wang <WeitaoWang-oc@zhaoxin.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Message-ID: <20230602144009.1225632-9-mathias.nyman@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/hw_random/imx-rngc.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/usb/host/xhci-pci.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/char/hw_random/imx-rngc.c
-+++ b/drivers/char/hw_random/imx-rngc.c
-@@ -110,7 +110,7 @@ static int imx_rngc_self_test(struct imx
- 	cmd = readl(rngc->base + RNGC_COMMAND);
- 	writel(cmd | RNGC_CMD_SELF_TEST, rngc->base + RNGC_COMMAND);
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -336,6 +336,11 @@ static void xhci_pci_quirks(struct devic
+ 	     pdev->device == PCI_DEVICE_ID_AMD_PROMONTORYA_4))
+ 		xhci->quirks |= XHCI_NO_SOFT_RETRY;
  
--	ret = wait_for_completion_timeout(&rngc->rng_op_done, RNGC_TIMEOUT);
-+	ret = wait_for_completion_timeout(&rngc->rng_op_done, msecs_to_jiffies(RNGC_TIMEOUT));
- 	imx_rngc_irq_mask_clear(rngc);
- 	if (!ret)
- 		return -ETIMEDOUT;
-@@ -187,9 +187,7 @@ static int imx_rngc_init(struct hwrng *r
- 		cmd = readl(rngc->base + RNGC_COMMAND);
- 		writel(cmd | RNGC_CMD_SEED, rngc->base + RNGC_COMMAND);
- 
--		ret = wait_for_completion_timeout(&rngc->rng_op_done,
--				RNGC_TIMEOUT);
--
-+		ret = wait_for_completion_timeout(&rngc->rng_op_done, msecs_to_jiffies(RNGC_TIMEOUT));
- 		if (!ret) {
- 			ret = -ETIMEDOUT;
- 			goto err;
++	if (pdev->vendor == PCI_VENDOR_ID_ZHAOXIN) {
++		if (pdev->device == 0x9202)
++			xhci->quirks |= XHCI_RESET_ON_RESUME;
++	}
++
+ 	/* xHC spec requires PCI devices to support D3hot and D3cold */
+ 	if (xhci->hci_version >= 0x120)
+ 		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
 
 
