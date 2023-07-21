@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175BA20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:18:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7B1C433C7;
-	Fri, 21 Jul 2023 19:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0A820F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:18:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D67AC433C8;
+	Fri, 21 Jul 2023 19:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967132;
-	bh=FQJQKm8hs8WYMNipejlJ77j77cZKNmuD5C5fJ6GE7mI=;
+	s=korg; t=1689967135;
+	bh=vvg3KliSKQ+IjJVWu63yP/znRc4fL5/iIycpe9yd8b4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=adRgkn01dZPk6hqBJC6LFi/nsOYVhcVUmSppaS/VCmVnEEFXVk8OfBcZJx5ZlsUil
-	 gNTxJPczFtmRX79W2oAkx7hIDySkx9Izh/JcdGIDvZThk+lP1873hoofi9p53kWyZy
-	 QqkKhCqgKaGJjoX9R2fegcPnBZvvBxXfjmOCUta0=
+	b=qNceXBhYGvT+lgj8SbkA5+rFJJ9M1WqtEnMwoxT8OWAbwWxd7bgxsB+7VFrSMnTD4
+	 5KRfcYNJ++hikk/Zpk+fJDTsum/aFWQ60P7Dfcs0Ov7zHIU6bBtc3tJQ1dEfuPfGrw
+	 ypOHwTvjpeT4GwtdDSh/+XvEoyGWSeocqshuTlrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Lehui <pulehui@huawei.com>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 056/223] bpf: cpumap: Fix memory leak in cpu_map_update_elem
-Date: Fri, 21 Jul 2023 18:05:09 +0200
-Message-ID: <20230721160523.239625991@linuxfoundation.org>
+Subject: [PATCH 6.1 057/223] net/sched: flower: Ensure both minimum and maximum ports are specified
+Date: Fri, 21 Jul 2023 18:05:10 +0200
+Message-ID: <20230721160523.281319881@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -37,136 +37,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 4369016497319a9635702da010d02af1ebb1849d ]
+[ Upstream commit d3f87278bcb80bd7f9519669d928b43320363d4f ]
 
-Syzkaller reported a memory leak as follows:
+The kernel does not currently validate that both the minimum and maximum
+ports of a port range are specified. This can lead user space to think
+that a filter matching on a port range was successfully added, when in
+fact it was not. For example, with a patched (buggy) iproute2 that only
+sends the minimum port, the following commands do not return an error:
 
-BUG: memory leak
-unreferenced object 0xff110001198ef748 (size 192):
-  comm "syz-executor.3", pid 17672, jiffies 4298118891 (age 9.906s)
-  hex dump (first 32 bytes):
-    00 00 00 00 4a 19 00 00 80 ad e3 e4 fe ff c0 00  ....J...........
-    00 b2 d3 0c 01 00 11 ff 28 f5 8e 19 01 00 11 ff  ........(.......
-  backtrace:
-    [<ffffffffadd28087>] __cpu_map_entry_alloc+0xf7/0xb00
-    [<ffffffffadd28d8e>] cpu_map_update_elem+0x2fe/0x3d0
-    [<ffffffffadc6d0fd>] bpf_map_update_value.isra.0+0x2bd/0x520
-    [<ffffffffadc7349b>] map_update_elem+0x4cb/0x720
-    [<ffffffffadc7d983>] __se_sys_bpf+0x8c3/0xb90
-    [<ffffffffb029cc80>] do_syscall_64+0x30/0x40
-    [<ffffffffb0400099>] entry_SYSCALL_64_after_hwframe+0x61/0xc6
+ # tc filter add dev swp1 ingress pref 1 proto ip flower ip_proto udp src_port 100-200 action pass
 
-BUG: memory leak
-unreferenced object 0xff110001198ef528 (size 192):
-  comm "syz-executor.3", pid 17672, jiffies 4298118891 (age 9.906s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<ffffffffadd281f0>] __cpu_map_entry_alloc+0x260/0xb00
-    [<ffffffffadd28d8e>] cpu_map_update_elem+0x2fe/0x3d0
-    [<ffffffffadc6d0fd>] bpf_map_update_value.isra.0+0x2bd/0x520
-    [<ffffffffadc7349b>] map_update_elem+0x4cb/0x720
-    [<ffffffffadc7d983>] __se_sys_bpf+0x8c3/0xb90
-    [<ffffffffb029cc80>] do_syscall_64+0x30/0x40
-    [<ffffffffb0400099>] entry_SYSCALL_64_after_hwframe+0x61/0xc6
+ # tc filter add dev swp1 ingress pref 1 proto ip flower ip_proto udp dst_port 100-200 action pass
 
-BUG: memory leak
-unreferenced object 0xff1100010fd93d68 (size 8):
-  comm "syz-executor.3", pid 17672, jiffies 4298118891 (age 9.906s)
-  hex dump (first 8 bytes):
-    00 00 00 00 00 00 00 00                          ........
-  backtrace:
-    [<ffffffffade5db3e>] kvmalloc_node+0x11e/0x170
-    [<ffffffffadd28280>] __cpu_map_entry_alloc+0x2f0/0xb00
-    [<ffffffffadd28d8e>] cpu_map_update_elem+0x2fe/0x3d0
-    [<ffffffffadc6d0fd>] bpf_map_update_value.isra.0+0x2bd/0x520
-    [<ffffffffadc7349b>] map_update_elem+0x4cb/0x720
-    [<ffffffffadc7d983>] __se_sys_bpf+0x8c3/0xb90
-    [<ffffffffb029cc80>] do_syscall_64+0x30/0x40
-    [<ffffffffb0400099>] entry_SYSCALL_64_after_hwframe+0x61/0xc6
+ # tc filter show dev swp1 ingress
+ filter protocol ip pref 1 flower chain 0
+ filter protocol ip pref 1 flower chain 0 handle 0x1
+   eth_type ipv4
+   ip_proto udp
+   not_in_hw
+         action order 1: gact action pass
+          random type none pass val 0
+          index 1 ref 1 bind 1
 
-In the cpu_map_update_elem flow, when kthread_stop is called before
-calling the threadfn of rcpu->kthread, since the KTHREAD_SHOULD_STOP bit
-of kthread has been set by kthread_stop, the threadfn of rcpu->kthread
-will never be executed, and rcpu->refcnt will never be 0, which will
-lead to the allocated rcpu, rcpu->queue and rcpu->queue->queue cannot be
-released.
+ filter protocol ip pref 1 flower chain 0 handle 0x2
+   eth_type ipv4
+   ip_proto udp
+   not_in_hw
+         action order 1: gact action pass
+          random type none pass val 0
+          index 2 ref 1 bind 1
 
-Calling kthread_stop before executing kthread's threadfn will return
--EINTR. We can complete the release of memory resources in this state.
+Fix by returning an error unless both ports are specified:
 
-Fixes: 6710e1126934 ("bpf: introduce new bpf cpu map type BPF_MAP_TYPE_CPUMAP")
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Acked-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20230711115848.2701559-1-pulehui@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+ # tc filter add dev swp1 ingress pref 1 proto ip flower ip_proto udp src_port 100-200 action pass
+ Error: Both min and max source ports must be specified.
+ We have an error talking to the kernel
+
+ # tc filter add dev swp1 ingress pref 1 proto ip flower ip_proto udp dst_port 100-200 action pass
+ Error: Both min and max destination ports must be specified.
+ We have an error talking to the kernel
+
+Fixes: 5c72299fba9d ("net: sched: cls_flower: Classify packets using port ranges")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cpumap.c | 40 ++++++++++++++++++++++++----------------
- 1 file changed, 24 insertions(+), 16 deletions(-)
+ net/sched/cls_flower.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/kernel/bpf/cpumap.c b/kernel/bpf/cpumap.c
-index b5ba34ddd4b64..09141351d5457 100644
---- a/kernel/bpf/cpumap.c
-+++ b/kernel/bpf/cpumap.c
-@@ -127,22 +127,6 @@ static void get_cpu_map_entry(struct bpf_cpu_map_entry *rcpu)
- 	atomic_inc(&rcpu->refcnt);
- }
+diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
+index 3de72e7c1075a..10e6ec0f94981 100644
+--- a/net/sched/cls_flower.c
++++ b/net/sched/cls_flower.c
+@@ -793,6 +793,16 @@ static int fl_set_key_port_range(struct nlattr **tb, struct fl_flow_key *key,
+ 		       TCA_FLOWER_KEY_PORT_SRC_MAX, &mask->tp_range.tp_max.src,
+ 		       TCA_FLOWER_UNSPEC, sizeof(key->tp_range.tp_max.src));
  
--/* called from workqueue, to workaround syscall using preempt_disable */
--static void cpu_map_kthread_stop(struct work_struct *work)
--{
--	struct bpf_cpu_map_entry *rcpu;
--
--	rcpu = container_of(work, struct bpf_cpu_map_entry, kthread_stop_wq);
--
--	/* Wait for flush in __cpu_map_entry_free(), via full RCU barrier,
--	 * as it waits until all in-flight call_rcu() callbacks complete.
--	 */
--	rcu_barrier();
--
--	/* kthread_stop will wake_up_process and wait for it to complete */
--	kthread_stop(rcpu->kthread);
--}
--
- static void __cpu_map_ring_cleanup(struct ptr_ring *ring)
- {
- 	/* The tear-down procedure should have made sure that queue is
-@@ -170,6 +154,30 @@ static void put_cpu_map_entry(struct bpf_cpu_map_entry *rcpu)
- 	}
- }
- 
-+/* called from workqueue, to workaround syscall using preempt_disable */
-+static void cpu_map_kthread_stop(struct work_struct *work)
-+{
-+	struct bpf_cpu_map_entry *rcpu;
-+	int err;
-+
-+	rcpu = container_of(work, struct bpf_cpu_map_entry, kthread_stop_wq);
-+
-+	/* Wait for flush in __cpu_map_entry_free(), via full RCU barrier,
-+	 * as it waits until all in-flight call_rcu() callbacks complete.
-+	 */
-+	rcu_barrier();
-+
-+	/* kthread_stop will wake_up_process and wait for it to complete */
-+	err = kthread_stop(rcpu->kthread);
-+	if (err) {
-+		/* kthread_stop may be called before cpu_map_kthread_run
-+		 * is executed, so we need to release the memory related
-+		 * to rcpu.
-+		 */
-+		put_cpu_map_entry(rcpu);
++	if (mask->tp_range.tp_min.dst != mask->tp_range.tp_max.dst) {
++		NL_SET_ERR_MSG(extack,
++			       "Both min and max destination ports must be specified");
++		return -EINVAL;
 +	}
-+}
-+
- static void cpu_map_bpf_prog_run_skb(struct bpf_cpu_map_entry *rcpu,
- 				     struct list_head *listp,
- 				     struct xdp_cpumap_stats *stats)
++	if (mask->tp_range.tp_min.src != mask->tp_range.tp_max.src) {
++		NL_SET_ERR_MSG(extack,
++			       "Both min and max source ports must be specified");
++		return -EINVAL;
++	}
+ 	if (mask->tp_range.tp_min.dst && mask->tp_range.tp_max.dst &&
+ 	    ntohs(key->tp_range.tp_max.dst) <=
+ 	    ntohs(key->tp_range.tp_min.dst)) {
 -- 
 2.39.2
 
