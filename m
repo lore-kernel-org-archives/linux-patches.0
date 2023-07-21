@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90031F94B
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:56:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB461C433CB;
-	Fri, 21 Jul 2023 18:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1120620F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:56:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B9BC433CA;
+	Fri, 21 Jul 2023 18:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965814;
-	bh=kZDn3Va//mtWou/Bb/sdsIEn7L7sxuQsvevr1LCkYBc=;
+	s=korg; t=1689965816;
+	bh=SnHXs7v6Lj7WhpDlRhW7FTZsiJoFL/acJqe09qN+YKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ek/jzwr/tYXX6i4x0WH5mIkvANbd52yI/kK1SQWzmcgNA5FIhj2pGlPTlryYICcu8
-	 S/GQ3FuTxssli6L2i8O5Ub8KTryQTiRVyrDJ8RvR9zw5EEhJo8IibNDfCOlPi3Np+9
-	 tWwVsxiwgUqsrqFp01UdFyvw/D7sIgBg3veyhPcE=
+	b=iFDJoNBOY1EVERrf7pvWg9lH94mAYi4Fp5d73kReGksFoVcEJW9Ax2FfIjNss5c1h
+	 CbyN5H16J9Iy4Cw5o9ZBVbfmlisvJ/Pphuct9sT0qFd4iuBuo6sXz+s20zq/ind3GH
+	 q7tObbf188lfrsyPkb6IMPjr7BO1oRLV4TXgSvLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Vinod Polimera <quic_vpolimer@quicinc.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 123/532] drm/msm/dsi: dont allow enabling 14nm VCO with unprogrammed rate
-Date: Fri, 21 Jul 2023 18:00:27 +0200
-Message-ID: <20230721160621.146102029@linuxfoundation.org>
+Subject: [PATCH 5.15 124/532] drm/msm/disp/dpu: get timing engine status from intf status register
+Date: Fri, 21 Jul 2023 18:00:28 +0200
+Message-ID: <20230721160621.200526804@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,43 +35,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Vinod Polimera <quic_vpolimer@quicinc.com>
 
-[ Upstream commit 1e0a97f84d73ea1182740f62069690c7f3271abb ]
+[ Upstream commit e3969eadc8ee78a5bdca65b8ed0a421a359e4090 ]
 
-If the dispcc uses CLK_OPS_PARENT_ENABLE (e.g. on QCM2290), CCF can try
-enabling VCO before the rate has been programmed. This can cause clock
-lockups and/or other boot issues. Program the VCO to the minimal PLL
-rate if the read rate is 0 Hz.
+Recommended way of reading the interface timing gen status is via
+status register. Timing gen status register will give a reliable status
+of the interface especially during ON/OFF transitions. This support was
+added from DPU version 5.0.0.
 
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/524724/
+Link: https://lore.kernel.org/r/1677774797-31063-6-git-send-email-quic_vpolimer@quicinc.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reported-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reported-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Fixes: f079f6d999cb ("drm/msm/dsi: Add PHY/PLL for 8x96")
-Patchwork: https://patchwork.freedesktop.org/patch/534813/
-Link: https://lore.kernel.org/r/20230501011257.3460103-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Stable-dep-of: a7129231edf3 ("drm/msm/dpu: Set DPU_DATA_HCTL_EN for in INTF_SC7180_MASK")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  3 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 12 +++++++-----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c    |  8 +++++++-
+ 3 files changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-index 6d3abcdc57bfb..66507eb713048 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-@@ -541,6 +541,9 @@ static int dsi_pll_14nm_vco_prepare(struct clk_hw *hw)
- 	if (unlikely(pll_14nm->phy->pll_on))
- 		return 0;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 4c65259eecb9d..70d14b0db50fa 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -53,7 +53,8 @@
  
-+	if (dsi_pll_14nm_vco_recalc_rate(hw, VCO_REF_CLK_RATE) == 0)
-+		dsi_pll_14nm_vco_set_rate(hw, pll_14nm->phy->cfg->min_pll_rate, VCO_REF_CLK_RATE);
+ #define INTF_SDM845_MASK (0)
+ 
+-#define INTF_SC7180_MASK BIT(DPU_INTF_INPUT_CTRL) | BIT(DPU_INTF_TE)
++#define INTF_SC7180_MASK \
++	(BIT(DPU_INTF_INPUT_CTRL) | BIT(DPU_INTF_TE) | BIT(DPU_INTF_STATUS_SUPPORTED))
+ 
+ #define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN)
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+index d2a945a27cfaa..321b7599fe2d0 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+@@ -191,17 +191,19 @@ enum {
+ 
+ /**
+  * INTF sub-blocks
+- * @DPU_INTF_INPUT_CTRL         Supports the setting of pp block from which
+- *                              pixel data arrives to this INTF
+- * @DPU_INTF_TE                 INTF block has TE configuration support
+- * @DPU_DATA_HCTL_EN            Allows data to be transferred at different rate
+-                                than video timing
++ * @DPU_INTF_INPUT_CTRL             Supports the setting of pp block from which
++ *                                  pixel data arrives to this INTF
++ * @DPU_INTF_TE                     INTF block has TE configuration support
++ * @DPU_DATA_HCTL_EN                Allows data to be transferred at different rate
++ *                                  than video timing
++ * @DPU_INTF_STATUS_SUPPORTED       INTF block has INTF_STATUS register
+  * @DPU_INTF_MAX
+  */
+ enum {
+ 	DPU_INTF_INPUT_CTRL = 0x1,
+ 	DPU_INTF_TE,
+ 	DPU_DATA_HCTL_EN,
++	DPU_INTF_STATUS_SUPPORTED,
+ 	DPU_INTF_MAX
+ };
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+index 916e2a4756c09..7c09d30a62b8d 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+@@ -54,6 +54,7 @@
+ #define   INTF_PROG_FETCH_START         0x170
+ #define   INTF_PROG_ROT_START           0x174
+ #define   INTF_MUX                      0x25C
++#define   INTF_STATUS                   0x26C
+ 
+ static const struct dpu_intf_cfg *_intf_offset(enum dpu_intf intf,
+ 		const struct dpu_mdss_cfg *m,
+@@ -259,8 +260,13 @@ static void dpu_hw_intf_get_status(
+ 		struct intf_status *s)
+ {
+ 	struct dpu_hw_blk_reg_map *c = &intf->hw;
++	unsigned long cap = intf->cap->features;
 +
- 	dsi_phy_write(base + REG_DSI_14nm_PHY_PLL_VREF_CFG1, 0x10);
- 	dsi_phy_write(cmn_base + REG_DSI_14nm_PHY_CMN_PLL_CNTRL, 1);
++	if (cap & BIT(DPU_INTF_STATUS_SUPPORTED))
++		s->is_en = DPU_REG_READ(c, INTF_STATUS) & BIT(0);
++	else
++		s->is_en = DPU_REG_READ(c, INTF_TIMING_ENGINE_EN);
  
+-	s->is_en = DPU_REG_READ(c, INTF_TIMING_ENGINE_EN);
+ 	s->is_prog_fetch_en = !!(DPU_REG_READ(c, INTF_CONFIG) & BIT(31));
+ 	if (s->is_en) {
+ 		s->frame_count = DPU_REG_READ(c, INTF_FRAME_COUNT);
 -- 
 2.39.2
 
