@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D4727F07
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:57:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74360C433C7;
-	Fri, 21 Jul 2023 18:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE82227F07
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:57:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B778C433C8;
+	Fri, 21 Jul 2023 18:57:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965844;
-	bh=JfXTk1QX8Ci7HBLYUWkpgHmnnNjdWupp4/9w8/qgNf8=;
+	s=korg; t=1689965847;
+	bh=fHDODbcfyNgIg6RebuAaesGkZuSAi3NzOlRE61p1Vq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wuNEgByai+MRSzOJ5LmsPZzyyjB7Yh5dUFfdYejD+US4n0ZD1CcojlmHUcsU1+eZ1
-	 PE2g9O7l1emU/QqPAR/3581c+dgPsYcYr2Nmd3s3QAEv8jBvh3hYM15/fWOU3u+1t8
-	 /gCpQUL3sqAoH5x/9clzTl1kXQfj4JdWKkUsO5rE=
+	b=TQV2rlN3uMPHhbli8M+U+C0+4kBWgizckM1q7a6MHG7/naz/O+wSDnrvYCNLKbkib
+	 Sx5h4gz39H6FAAhWjgD0SEJuZ9JRxRyvstF4qKk9x52jhl4TaUd1oBzB3qxEie7Xao
+	 OIEYxpuZyECKPYI2x1ybGqYpFerye8l/EmRylc6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Francesco Dolcini <francesco.dolcini@toradex.com>,
 	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 106/532] drm/bridge: tc358768: fix TXTAGOCNT computation
-Date: Fri, 21 Jul 2023 18:00:10 +0200
-Message-ID: <20230721160620.327031681@linuxfoundation.org>
+Subject: [PATCH 5.15 107/532] drm/bridge: tc358768: fix THS_TRAILCNT computation
+Date: Fri, 21 Jul 2023 18:00:11 +0200
+Message-ID: <20230721160620.379133634@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,40 +37,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit 3666aad8185af8d0ce164fd3c4974235417d6d0b ]
+[ Upstream commit bac7842cd179572e8e0fc2d7b5254e40c6e9e057 ]
 
-Correct computation of TXTAGOCNT register.
+Correct computation of THS_TRAILCNT register.
 
-This register must be set to a value that ensure that the
-TTA-GO period = (4 x TLPX)
+This register must be set to a value that ensure that
+THS_TRAIL > 60 ns + 4 x UI
+ and
+THS_TRAIL > 8 x UI
+ and
+THS_TRAIL < TEOT
+ with
+TEOT = 105 ns + (12 x UI)
 
-with the actual value of TTA-GO being
+with the actual value of THS_TRAIL being
 
-4 x (TXTAGOCNT + 1) x (HSByteClk cycle)
+(1 + THS_TRAILCNT) x ByteClk cycle + ((1 to 2) + 2) xHSBYTECLK cycle +
+ - (PHY output delay)
+
+with PHY output delay being about
+
+(8 + (5 to 6)) x MIPIBitClk cycle in the BitClk conversion.
 
 Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
 Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
 Reviewed-by: Robert Foss <rfoss@kernel.org>
 Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-8-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-9-francesco@dolcini.it
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/tc358768.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-index 151eecbf6027d..c9c2e15c6f4a2 100644
+index c9c2e15c6f4a2..8b1bdffc5005d 100644
 --- a/drivers/gpu/drm/bridge/tc358768.c
 +++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -779,7 +779,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+@@ -763,9 +763,10 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 	dev_dbg(priv->dev, "TCLK_POSTCNT: 0x%x\n", val);
+ 	tc358768_write(priv, TC358768_TCLK_POSTCNT, val);
  
- 	/* TXTAGOCNT[26:16] RXTASURECNT[10:0] */
- 	val = tc358768_to_ns((lptxcnt + 1) * dsibclk_nsk * 4);
--	val = tc358768_ns_to_cnt(val, dsibclk_nsk) - 1;
-+	val = tc358768_ns_to_cnt(val, dsibclk_nsk) / 4 - 1;
- 	val2 = tc358768_ns_to_cnt(tc358768_to_ns((lptxcnt + 1) * dsibclk_nsk),
- 				  dsibclk_nsk) - 2;
- 	val |= val2 << 16;
+-	/* 60ns + 4*UI < THS_PREPARE < 105ns + 12*UI */
+-	val = tc358768_ns_to_cnt(60 + tc358768_to_ns(15 * ui_nsk),
+-				 dsibclk_nsk) - 5;
++	/* max(60ns + 4*UI, 8*UI) < THS_TRAILCNT < 105ns + 12*UI */
++	raw_val = tc358768_ns_to_cnt(60 + tc358768_to_ns(18 * ui_nsk),
++				     dsibclk_nsk) - 4;
++	val = clamp(raw_val, 0, 15);
+ 	dev_dbg(priv->dev, "THS_TRAILCNT: 0x%x\n", val);
+ 	tc358768_write(priv, TC358768_THS_TRAILCNT, val);
+ 
 -- 
 2.39.2
 
