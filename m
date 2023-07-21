@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB7B1F93E
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:20:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B9BBC433C7;
-	Fri, 21 Jul 2023 16:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B09C21511
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:20:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B438BC433CB;
+	Fri, 21 Jul 2023 16:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956411;
-	bh=LD7H9eyyp3eJncPpC27NUvEoR6amhvpT9RBKP81hHcw=;
+	s=korg; t=1689956414;
+	bh=nOeD4hQSPR+l5fTQnpz2Wat5fKmRHM6ZUc2LrwDoQ1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FNlvwfncX4Y2X4Fn+VYzq3VUvLy3sRs3acWWHTcgrmWx23qBSjDvOhySvy3jBj8sq
-	 riY1BYbo78ZGMhxfq5Ar6LswK18ghib2NI5KZFHSYgpfOW0w7uWYr/V+bZhO5mfma8
-	 IkObM0lWWJn5uhB6FwOH6Iosi3k14dHWIs+Vpddw=
+	b=mqpllqgE5M5kYC+pI6OriOiPZebz4ng8GbSfXF1UIg63g4s0qP96PyY+r9f2kPgdc
+	 VxCraho/ABQSd5n5AzJ4NC0snO0ThIxizuqMerryJFdrdKQKlAaER7m9V0zpkGSrhz
+	 o9auNfT/S+XuksQDaznqpcoyHs4HNztlem6EQQfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.4 184/292] mfd: pm8008: Fix module autoloading
-Date: Fri, 21 Jul 2023 18:04:53 +0200
-Message-ID: <20230721160536.802312016@linuxfoundation.org>
+	NeilBrown <neilb@suse.de>,
+	Song Liu <song@kernel.org>,
+	Jason Baron <jbaron@akamai.com>
+Subject: [PATCH 6.4 185/292] md/raid0: add discard support for the original layout
+Date: Fri, 21 Jul 2023 18:04:54 +0200
+Message-ID: <20230721160536.845187514@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -35,33 +35,203 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Jason Baron <jbaron@akamai.com>
 
-commit d420c9886f5369697047b880221789bf0054e438 upstream.
+commit e836007089ba8fdf24e636ef2b007651fb4582e6 upstream.
 
-Add the missing module device table alias to that the driver can be
-autoloaded when built as a module.
+We've found that using raid0 with the 'original' layout and discard
+enabled with different disk sizes (such that at least two zones are
+created) can result in data corruption. This is due to the fact that
+the discard handling in 'raid0_handle_discard()' assumes the 'alternate'
+layout. We've seen this corruption using ext4 but other filesystems are
+likely susceptible as well.
 
-Cc: stable@vger.kernel.org      # 5.14
-Fixes: 6b149f3310a4 ("mfd: pm8008: Add driver for QCOM PM8008 PMIC")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20230526091646.17318-2-johan+linaro@kernel.org
+More specifically, while multiple zones are necessary to create the
+corruption, the corruption may not occur with multiple zones if they
+layout in such a way the layout matches what the 'alternate' layout
+would have produced. Thus, not all raid0 devices with the 'original'
+layout, different size disks and discard enabled will encounter this
+corruption.
+
+The 3.14 kernel inadvertently changed the raid0 disk layout for different
+size disks. Thus, running a pre-3.14 kernel and post-3.14 kernel on the
+same raid0 array could corrupt data. This lead to the creation of the
+'original' layout (to match the pre-3.14 layout) and the 'alternate' layout
+(to match the post 3.14 layout) in the 5.4 kernel time frame and an option
+to tell the kernel which layout to use (since it couldn't be autodetected).
+However, when the 'original' layout was added back to 5.4 discard support
+for the 'original' layout was not added leading this issue.
+
+I've been able to reliably reproduce the corruption with the following
+test case:
+
+1. create raid0 array with different size disks using original layout
+2. mkfs
+3. mount -o discard
+4. create lots of files
+5. remove 1/2 the files
+6. fstrim -a (or just the mount point for the raid0 array)
+7. umount
+8. fsck -fn /dev/md0 (spews all sorts of corruptions)
+
+Let's fix this by adding proper discard support to the 'original' layout.
+The fix 'maps' the 'original' layout disks to the order in which they are
+read/written such that we can compare the disks in the same way that the
+current 'alternate' layout does. A 'disk_shift' field is added to
+'struct strip_zone'. This could be computed on the fly in
+raid0_handle_discard() but by adding this field, we save some computation
+in the discard path.
+
+Note we could also potentially fix this by re-ordering the disks in the
+zones that follow the first one, and then always read/writing them using
+the 'alternate' layout. However, that is seen as a more substantial change,
+and we are attempting the least invasive fix at this time to remedy the
+corruption.
+
+I've verified the change using the reproducer mentioned above. Typically,
+the corruption is seen after less than 3 iterations, while the patch has
+run 500+ iterations.
+
+Cc: NeilBrown <neilb@suse.de>
+Cc: Song Liu <song@kernel.org>
+Fixes: c84a1372df92 ("md/raid0: avoid RAID0 data corruption due to layout confusion.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jason Baron <jbaron@akamai.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230623180523.1901230-1-jbaron@akamai.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/qcom-pm8008.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/raid0.c |   62 ++++++++++++++++++++++++++++++++++++++++++++++-------
+ drivers/md/raid0.h |    1 
+ 2 files changed, 55 insertions(+), 8 deletions(-)
 
---- a/drivers/mfd/qcom-pm8008.c
-+++ b/drivers/mfd/qcom-pm8008.c
-@@ -199,6 +199,7 @@ static const struct of_device_id pm8008_
- 	{ .compatible = "qcom,pm8008", },
- 	{ },
- };
-+MODULE_DEVICE_TABLE(of, pm8008_match);
+--- a/drivers/md/raid0.c
++++ b/drivers/md/raid0.c
+@@ -270,6 +270,18 @@ static int create_strip_zones(struct mdd
+ 		goto abort;
+ 	}
  
- static struct i2c_driver pm8008_mfd_driver = {
- 	.driver = {
++	if (conf->layout == RAID0_ORIG_LAYOUT) {
++		for (i = 1; i < conf->nr_strip_zones; i++) {
++			sector_t first_sector = conf->strip_zone[i-1].zone_end;
++
++			sector_div(first_sector, mddev->chunk_sectors);
++			zone = conf->strip_zone + i;
++			/* disk_shift is first disk index used in the zone */
++			zone->disk_shift = sector_div(first_sector,
++						      zone->nb_dev);
++		}
++	}
++
+ 	pr_debug("md/raid0:%s: done.\n", mdname(mddev));
+ 	*private_conf = conf;
+ 
+@@ -431,6 +443,20 @@ exit_acct_set:
+ 	return ret;
+ }
+ 
++/*
++ * Convert disk_index to the disk order in which it is read/written.
++ *  For example, if we have 4 disks, they are numbered 0,1,2,3. If we
++ *  write the disks starting at disk 3, then the read/write order would
++ *  be disk 3, then 0, then 1, and then disk 2 and we want map_disk_shift()
++ *  to map the disks as follows 0,1,2,3 => 1,2,3,0. So disk 0 would map
++ *  to 1, 1 to 2, 2 to 3, and 3 to 0. That way we can compare disks in
++ *  that 'output' space to understand the read/write disk ordering.
++ */
++static int map_disk_shift(int disk_index, int num_disks, int disk_shift)
++{
++	return ((disk_index + num_disks - disk_shift) % num_disks);
++}
++
+ static void raid0_handle_discard(struct mddev *mddev, struct bio *bio)
+ {
+ 	struct r0conf *conf = mddev->private;
+@@ -444,7 +470,9 @@ static void raid0_handle_discard(struct
+ 	sector_t end_disk_offset;
+ 	unsigned int end_disk_index;
+ 	unsigned int disk;
++	sector_t orig_start, orig_end;
+ 
++	orig_start = start;
+ 	zone = find_zone(conf, &start);
+ 
+ 	if (bio_end_sector(bio) > zone->zone_end) {
+@@ -458,6 +486,7 @@ static void raid0_handle_discard(struct
+ 	} else
+ 		end = bio_end_sector(bio);
+ 
++	orig_end = end;
+ 	if (zone != conf->strip_zone)
+ 		end = end - zone[-1].zone_end;
+ 
+@@ -469,13 +498,26 @@ static void raid0_handle_discard(struct
+ 	last_stripe_index = end;
+ 	sector_div(last_stripe_index, stripe_size);
+ 
+-	start_disk_index = (int)(start - first_stripe_index * stripe_size) /
+-		mddev->chunk_sectors;
++	/* In the first zone the original and alternate layouts are the same */
++	if ((conf->layout == RAID0_ORIG_LAYOUT) && (zone != conf->strip_zone)) {
++		sector_div(orig_start, mddev->chunk_sectors);
++		start_disk_index = sector_div(orig_start, zone->nb_dev);
++		start_disk_index = map_disk_shift(start_disk_index,
++						  zone->nb_dev,
++						  zone->disk_shift);
++		sector_div(orig_end, mddev->chunk_sectors);
++		end_disk_index = sector_div(orig_end, zone->nb_dev);
++		end_disk_index = map_disk_shift(end_disk_index,
++						zone->nb_dev, zone->disk_shift);
++	} else {
++		start_disk_index = (int)(start - first_stripe_index * stripe_size) /
++			mddev->chunk_sectors;
++		end_disk_index = (int)(end - last_stripe_index * stripe_size) /
++			mddev->chunk_sectors;
++	}
+ 	start_disk_offset = ((int)(start - first_stripe_index * stripe_size) %
+ 		mddev->chunk_sectors) +
+ 		first_stripe_index * mddev->chunk_sectors;
+-	end_disk_index = (int)(end - last_stripe_index * stripe_size) /
+-		mddev->chunk_sectors;
+ 	end_disk_offset = ((int)(end - last_stripe_index * stripe_size) %
+ 		mddev->chunk_sectors) +
+ 		last_stripe_index * mddev->chunk_sectors;
+@@ -483,18 +525,22 @@ static void raid0_handle_discard(struct
+ 	for (disk = 0; disk < zone->nb_dev; disk++) {
+ 		sector_t dev_start, dev_end;
+ 		struct md_rdev *rdev;
++		int compare_disk;
++
++		compare_disk = map_disk_shift(disk, zone->nb_dev,
++					      zone->disk_shift);
+ 
+-		if (disk < start_disk_index)
++		if (compare_disk < start_disk_index)
+ 			dev_start = (first_stripe_index + 1) *
+ 				mddev->chunk_sectors;
+-		else if (disk > start_disk_index)
++		else if (compare_disk > start_disk_index)
+ 			dev_start = first_stripe_index * mddev->chunk_sectors;
+ 		else
+ 			dev_start = start_disk_offset;
+ 
+-		if (disk < end_disk_index)
++		if (compare_disk < end_disk_index)
+ 			dev_end = (last_stripe_index + 1) * mddev->chunk_sectors;
+-		else if (disk > end_disk_index)
++		else if (compare_disk > end_disk_index)
+ 			dev_end = last_stripe_index * mddev->chunk_sectors;
+ 		else
+ 			dev_end = end_disk_offset;
+--- a/drivers/md/raid0.h
++++ b/drivers/md/raid0.h
+@@ -6,6 +6,7 @@ struct strip_zone {
+ 	sector_t zone_end;	/* Start of the next zone (in sectors) */
+ 	sector_t dev_start;	/* Zone offset in real dev (in sectors) */
+ 	int	 nb_dev;	/* # of devices attached to the zone */
++	int	 disk_shift;	/* start disk for the original layout */
+ };
+ 
+ /* Linux 3.14 (20d0189b101) made an unintended change to
 
 
