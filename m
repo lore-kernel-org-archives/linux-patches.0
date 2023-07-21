@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9469A1ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:52:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16A73C433C7;
-	Fri, 21 Jul 2023 18:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663071ED41
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:52:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D85F4C433C8;
+	Fri, 21 Jul 2023 18:52:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965573;
-	bh=6yHG8+LKgqiU7Rqk/4lT9ZqUOSLhS76dUidiJa1XynA=;
+	s=korg; t=1689965576;
+	bh=4rTdc/T2DNXWxcPuwMno5T5ZJrQ9yC3prMiN+PNcexQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EEDr5kEMMwGtq+7BnPcXYVKJM4Zv3YzuVD6u3lwltoq6MQBO2/wPgyeuwQjMDTsgX
-	 srD+C00AvXwwhTCLgftpWEwjNf3RB38xMf7PfY56orSd1v/RW5Zu/FoXb27Ybo/iL1
-	 Td8DmRxXpJPKxmtki7cF39OX1xnTO8ZriC2cZm/8=
+	b=Vq5NuEsJmHEZjfSdeXFuBsgL5CRJyyScoQoQSgpyF9zQrS/HjC7uBTIiPFjmbi7F9
+	 n7AXWj1a0ujGHnMXpKlXfH4xSBruBTebMbWVLGlfMZF7XeBwt85IgydJK7bJAhm31k
+	 pL+z/Hd+YHnJjLtDu47TryL/129YO9hBVKqe02dE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 011/532] svcrdma: Prevent page release when nothing was received
-Date: Fri, 21 Jul 2023 17:58:35 +0200
-Message-ID: <20230721160615.290616315@linuxfoundation.org>
+Subject: [PATCH 5.15 012/532] posix-timers: Prevent RT livelock in itimer_delete()
+Date: Fri, 21 Jul 2023 17:58:36 +0200
+Message-ID: <20230721160615.339281351@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,51 +35,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit baf6d18b116b7dc84ed5e212c3a89f17cdc3f28c ]
+[ Upstream commit 9d9e522010eb5685d8b53e8a24320653d9d4cbbf ]
 
-I noticed that svc_rqst_release_pages() was still unnecessarily
-releasing a page when svc_rdma_recvfrom() returns zero.
+itimer_delete() has a retry loop when the timer is concurrently expired. On
+non-RT kernels this just spin-waits until the timer callback has completed,
+except for posix CPU timers which have HAVE_POSIX_CPU_TIMERS_TASK_WORK
+enabled.
 
-Fixes: a53d5cb0646a ("svcrdma: Avoid releasing a page in svc_xprt_release()")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+In that case and on RT kernels the existing task could live lock when
+preempting the task which does the timer delivery.
+
+Replace spin_unlock() with an invocation of timer_wait_running() to handle
+it the same way as the other retry loops in the posix timer code.
+
+Fixes: ec8f954a40da ("posix-timers: Use a callback for cancel synchronization on PREEMPT_RT")
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://lore.kernel.org/r/87v8g7c50d.ffs@tglx
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_recvfrom.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ kernel/time/posix-timers.c | 43 +++++++++++++++++++++++++++++++-------
+ 1 file changed, 35 insertions(+), 8 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-index 3ad4291148a68..0377679678f93 100644
---- a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-@@ -791,6 +791,12 @@ int svc_rdma_recvfrom(struct svc_rqst *rqstp)
- 	struct svc_rdma_recv_ctxt *ctxt;
- 	int ret;
+diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
+index 808a247205a9a..ed3c4a9543982 100644
+--- a/kernel/time/posix-timers.c
++++ b/kernel/time/posix-timers.c
+@@ -1037,27 +1037,52 @@ SYSCALL_DEFINE1(timer_delete, timer_t, timer_id)
+ }
  
-+	/* Prevent svc_xprt_release() from releasing pages in rq_pages
-+	 * when returning 0 or an error.
-+	 */
-+	rqstp->rq_respages = rqstp->rq_pages;
-+	rqstp->rq_next_page = rqstp->rq_respages;
+ /*
+- * return timer owned by the process, used by exit_itimers
++ * Delete a timer if it is armed, remove it from the hash and schedule it
++ * for RCU freeing.
+  */
+ static void itimer_delete(struct k_itimer *timer)
+ {
+-retry_delete:
+-	spin_lock_irq(&timer->it_lock);
++	unsigned long flags;
 +
- 	rqstp->rq_xprt_ctxt = NULL;
++	/*
++	 * irqsave is required to make timer_wait_running() work.
++	 */
++	spin_lock_irqsave(&timer->it_lock, flags);
  
- 	ctxt = NULL;
-@@ -814,12 +820,6 @@ int svc_rdma_recvfrom(struct svc_rqst *rqstp)
- 				   DMA_FROM_DEVICE);
- 	svc_rdma_build_arg_xdr(rqstp, ctxt);
++retry_delete:
++	/*
++	 * Even if the timer is not longer accessible from other tasks
++	 * it still might be armed and queued in the underlying timer
++	 * mechanism. Worse, that timer mechanism might run the expiry
++	 * function concurrently.
++	 */
+ 	if (timer_delete_hook(timer) == TIMER_RETRY) {
+-		spin_unlock_irq(&timer->it_lock);
++		/*
++		 * Timer is expired concurrently, prevent livelocks
++		 * and pointless spinning on RT.
++		 *
++		 * timer_wait_running() drops timer::it_lock, which opens
++		 * the possibility for another task to delete the timer.
++		 *
++		 * That's not possible here because this is invoked from
++		 * do_exit() only for the last thread of the thread group.
++		 * So no other task can access and delete that timer.
++		 */
++		if (WARN_ON_ONCE(timer_wait_running(timer, &flags) != timer))
++			return;
++
+ 		goto retry_delete;
+ 	}
+ 	list_del(&timer->list);
  
--	/* Prevent svc_xprt_release from releasing pages in rq_pages
--	 * if we return 0 or an error.
--	 */
--	rqstp->rq_respages = rqstp->rq_pages;
--	rqstp->rq_next_page = rqstp->rq_respages;
--
- 	ret = svc_rdma_xdr_decode_req(&rqstp->rq_arg, ctxt);
- 	if (ret < 0)
- 		goto out_err;
+-	spin_unlock_irq(&timer->it_lock);
++	spin_unlock_irqrestore(&timer->it_lock, flags);
+ 	release_posix_timer(timer, IT_ID_SET);
+ }
+ 
+ /*
+- * This is called by do_exit or de_thread, only when nobody else can
+- * modify the signal->posix_timers list. Yet we need sighand->siglock
+- * to prevent the race with /proc/pid/timers.
++ * Invoked from do_exit() when the last thread of a thread group exits.
++ * At that point no other task can access the timers of the dying
++ * task anymore.
+  */
+ void exit_itimers(struct task_struct *tsk)
+ {
+@@ -1067,10 +1092,12 @@ void exit_itimers(struct task_struct *tsk)
+ 	if (list_empty(&tsk->signal->posix_timers))
+ 		return;
+ 
++	/* Protect against concurrent read via /proc/$PID/timers */
+ 	spin_lock_irq(&tsk->sighand->siglock);
+ 	list_replace_init(&tsk->signal->posix_timers, &timers);
+ 	spin_unlock_irq(&tsk->sighand->siglock);
+ 
++	/* The timers are not longer accessible via tsk::signal */
+ 	while (!list_empty(&timers)) {
+ 		tmr = list_first_entry(&timers, struct k_itimer, list);
+ 		itimer_delete(tmr);
 -- 
 2.39.2
 
