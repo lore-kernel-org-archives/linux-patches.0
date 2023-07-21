@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A9861F94D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:22:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 917EEC433C8;
-	Fri, 21 Jul 2023 16:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DA31F942
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:22:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68521C433B9;
+	Fri, 21 Jul 2023 16:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956529;
-	bh=qPhXzeDrUw+iAb7ELdNp/Qpnul0bMA+TXX4bF33OMrE=;
+	s=korg; t=1689956532;
+	bh=VxNAr8KE+XRhG0USEkaBq+76wxeRGQGp1aF0Op8RwUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=plQN1x1XNdGJfezgxblxQKbd39UXTS05F4D0rn/Nj3FpKlwtjPxYESstoHM7MfDFX
-	 7lnbVsSx564/3ubz0MpRKh0RTlKp3XihHv8COCh2r2XpvE7UKpOPBXcvQSRFPeqEZQ
-	 uOPYuQKurSbBqm7s6o65T7edcg1JWb/9UZlONHQU=
+	b=XwRW+1Xo4sZ9iMVAoONeVS9aw9820ER7wZmRv8ide3jtKTHOpF1g6iuEfhNS9xkr/
+	 Ep+95Ndsv+bIF7MoI0Cft+WiRfetxAha35Y8s/5KRhTOzq5D0PKN10Tejgqsa/EwOz
+	 LsrEhysduui5ZeLoB12cXaHECUexILeytXEFYYSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Dinh Nguyen <dinguyen@kernel.org>
-Subject: [PATCH 6.4 219/292] firmware: stratix10-svc: Fix a potential resource leak in svc_create_memory_pool()
-Date: Fri, 21 Jul 2023 18:05:28 +0200
-Message-ID: <20230721160538.280988183@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.4 193/292] scsi: lpfc: Fix double free in lpfc_cmpl_els_logo_acc() caused by lpfc_nlp_not_used()
+Date: Fri, 21 Jul 2023 18:05:02 +0200
+Message-ID: <20230721160537.180489812@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -34,44 +35,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Justin Tee <justin.tee@broadcom.com>
 
-commit 1995f15590ca222f91193ed11461862b450abfd6 upstream.
+commit 97f975823f8196d970bd795087b514271214677a upstream.
 
-svc_create_memory_pool() is only called from stratix10_svc_drv_probe().
-Most of resources in the probe are managed, but not this memremap() call.
+Smatch detected a double free path because lpfc_nlp_not_used() releases an
+ndlp object before reaching lpfc_nlp_put() at the end of
+lpfc_cmpl_els_logo_acc().
 
-There is also no memunmap() call in the file.
+Remove the outdated lpfc_nlp_not_used() routine.  In
+lpfc_mbx_cmpl_ns_reg_login(), replace the call with lpfc_nlp_put().  In
+lpfc_cmpl_els_logo_acc(), replace the call with lpfc_unreg_rpi() and keep
+the lpfc_nlp_put() at the end of the routine.  If ndlp's rpi was
+registered, then lpfc_unreg_rpi()'s completion routine performs the final
+ndlp clean up after lpfc_nlp_put() is called from lpfc_cmpl_els_logo_acc().
+Otherwise if ndlp has no rpi registered, the lpfc_nlp_put() at the end of
+lpfc_cmpl_els_logo_acc() is the final ndlp clean up.
 
-So switch to devm_memremap() to avoid a resource leak.
-
-Cc: stable@vger.kernel.org
-Fixes: 7ca5ce896524 ("firmware: add Intel Stratix10 service layer driver")
-Link: https://lore.kernel.org/all/783e9dfbba34e28505c9efa8bba41f97fd0fa1dc.1686109400.git.christophe.jaillet@wanadoo.fr/
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
-Message-ID: <20230613211521.16366-1-dinguyen@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4430f7fd09ec ("scsi: lpfc: Rework locations of ndlp reference taking")
+Cc: <stable@vger.kernel.org> # v5.11+
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/all/Y3OefhyyJNKH%2Fiaf@kili/
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20230417191558.83100-3-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/stratix10-svc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/lpfc/lpfc_crtn.h    |    1 -
+ drivers/scsi/lpfc/lpfc_els.c     |   30 +++++++-----------------------
+ drivers/scsi/lpfc/lpfc_hbadisc.c |   24 +++---------------------
+ 3 files changed, 10 insertions(+), 45 deletions(-)
 
-diff --git a/drivers/firmware/stratix10-svc.c b/drivers/firmware/stratix10-svc.c
-index 80f4e2d14e04..2d674126160f 100644
---- a/drivers/firmware/stratix10-svc.c
-+++ b/drivers/firmware/stratix10-svc.c
-@@ -755,7 +755,7 @@ svc_create_memory_pool(struct platform_device *pdev,
- 	end = rounddown(sh_memory->addr + sh_memory->size, PAGE_SIZE);
- 	paddr = begin;
- 	size = end - begin;
--	va = memremap(paddr, size, MEMREMAP_WC);
-+	va = devm_memremap(dev, paddr, size, MEMREMAP_WC);
- 	if (!va) {
- 		dev_err(dev, "fail to remap shared memory\n");
- 		return ERR_PTR(-EINVAL);
--- 
-2.41.0
-
+--- a/drivers/scsi/lpfc/lpfc_crtn.h
++++ b/drivers/scsi/lpfc/lpfc_crtn.h
+@@ -134,7 +134,6 @@ void lpfc_check_nlp_post_devloss(struct
+ 				 struct lpfc_nodelist *ndlp);
+ void lpfc_ignore_els_cmpl(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
+ 			  struct lpfc_iocbq *rspiocb);
+-int  lpfc_nlp_not_used(struct lpfc_nodelist *ndlp);
+ struct lpfc_nodelist *lpfc_setup_disc_node(struct lpfc_vport *, uint32_t);
+ void lpfc_disc_list_loopmap(struct lpfc_vport *);
+ void lpfc_disc_start(struct lpfc_vport *);
+--- a/drivers/scsi/lpfc/lpfc_els.c
++++ b/drivers/scsi/lpfc/lpfc_els.c
+@@ -5205,14 +5205,9 @@ lpfc_els_free_iocb(struct lpfc_hba *phba
+  *
+  * This routine is the completion callback function to the Logout (LOGO)
+  * Accept (ACC) Response ELS command. This routine is invoked to indicate
+- * the completion of the LOGO process. It invokes the lpfc_nlp_not_used() to
+- * release the ndlp if it has the last reference remaining (reference count
+- * is 1). If succeeded (meaning ndlp released), it sets the iocb ndlp
+- * field to NULL to inform the following lpfc_els_free_iocb() routine no
+- * ndlp reference count needs to be decremented. Otherwise, the ndlp
+- * reference use-count shall be decremented by the lpfc_els_free_iocb()
+- * routine. Finally, the lpfc_els_free_iocb() is invoked to release the
+- * IOCB data structure.
++ * the completion of the LOGO process. If the node has transitioned to NPR,
++ * this routine unregisters the RPI if it is still registered. The
++ * lpfc_els_free_iocb() is invoked to release the IOCB data structure.
+  **/
+ static void
+ lpfc_cmpl_els_logo_acc(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
+@@ -5253,19 +5248,9 @@ lpfc_cmpl_els_logo_acc(struct lpfc_hba *
+ 		    (ndlp->nlp_last_elscmd == ELS_CMD_PLOGI))
+ 			goto out;
+ 
+-		/* NPort Recovery mode or node is just allocated */
+-		if (!lpfc_nlp_not_used(ndlp)) {
+-			/* A LOGO is completing and the node is in NPR state.
+-			 * Just unregister the RPI because the node is still
+-			 * required.
+-			 */
++		if (ndlp->nlp_flag & NLP_RPI_REGISTERED)
+ 			lpfc_unreg_rpi(vport, ndlp);
+-		} else {
+-			/* Indicate the node has already released, should
+-			 * not reference to it from within lpfc_els_free_iocb.
+-			 */
+-			cmdiocb->ndlp = NULL;
+-		}
++
+ 	}
+  out:
+ 	/*
+@@ -5285,9 +5270,8 @@ lpfc_cmpl_els_logo_acc(struct lpfc_hba *
+  * RPI (Remote Port Index) mailbox command to the @phba. It simply releases
+  * the associated lpfc Direct Memory Access (DMA) buffer back to the pool and
+  * decrements the ndlp reference count held for this completion callback
+- * function. After that, it invokes the lpfc_nlp_not_used() to check
+- * whether there is only one reference left on the ndlp. If so, it will
+- * perform one more decrement and trigger the release of the ndlp.
++ * function. After that, it invokes the lpfc_drop_node to check
++ * whether it is appropriate to release the node.
+  **/
+ void
+ lpfc_mbx_cmpl_dflt_rpi(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmb)
+--- a/drivers/scsi/lpfc/lpfc_hbadisc.c
++++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
+@@ -4333,13 +4333,14 @@ out:
+ 
+ 		/* If the node is not registered with the scsi or nvme
+ 		 * transport, remove the fabric node.  The failed reg_login
+-		 * is terminal.
++		 * is terminal and forces the removal of the last node
++		 * reference.
+ 		 */
+ 		if (!(ndlp->fc4_xpt_flags & (SCSI_XPT_REGD | NVME_XPT_REGD))) {
+ 			spin_lock_irq(&ndlp->lock);
+ 			ndlp->nlp_flag &= ~NLP_NPR_2B_DISC;
+ 			spin_unlock_irq(&ndlp->lock);
+-			lpfc_nlp_not_used(ndlp);
++			lpfc_nlp_put(ndlp);
+ 		}
+ 
+ 		if (phba->fc_topology == LPFC_TOPOLOGY_LOOP) {
+@@ -6704,25 +6705,6 @@ lpfc_nlp_put(struct lpfc_nodelist *ndlp)
+ 	return ndlp ? kref_put(&ndlp->kref, lpfc_nlp_release) : 0;
+ }
+ 
+-/* This routine free's the specified nodelist if it is not in use
+- * by any other discovery thread. This routine returns 1 if the
+- * ndlp has been freed. A return value of 0 indicates the ndlp is
+- * not yet been released.
+- */
+-int
+-lpfc_nlp_not_used(struct lpfc_nodelist *ndlp)
+-{
+-	lpfc_debugfs_disc_trc(ndlp->vport, LPFC_DISC_TRC_NODE,
+-		"node not used:   did:x%x flg:x%x refcnt:x%x",
+-		ndlp->nlp_DID, ndlp->nlp_flag,
+-		kref_read(&ndlp->kref));
+-
+-	if (kref_read(&ndlp->kref) == 1)
+-		if (lpfc_nlp_put(ndlp))
+-			return 1;
+-	return 0;
+-}
+-
+ /**
+  * lpfc_fcf_inuse - Check if FCF can be unregistered.
+  * @phba: Pointer to hba context object.
 
 
