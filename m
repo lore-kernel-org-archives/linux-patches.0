@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCF520F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4450CC433C7;
-	Fri, 21 Jul 2023 19:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B20020F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2C9C433C7;
+	Fri, 21 Jul 2023 19:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966552;
-	bh=1Py5AHatNU3Bh007LbBLqzwgglpFtI8aSaLBIBVeL6E=;
+	s=korg; t=1689966555;
+	bh=TQBhKDBqgXOfDHCSx0L0+L5nrBXcAoJtgRfaQv5XGmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WTLnTjv3IhAB6WPq4WuJMppslYW8WqQf7hYbfFId80dGEf7PIcZJ6JUK1CAN2zcB0
-	 8j/nN7hC54a+5xUyRVpCJS9vMF2Th8nSKv0+YaWiC84VK3bn94U2+RwkL6I42N+JU3
-	 /soPX2TyUSYBWSY516fA0OYfoNWiSjAj5fRhSISk=
+	b=JB3+YEhvQCVPA5j8bF9rqBhpIGZT+9a5TEXez8XJG0UFLVvN395NiebEwl0qgqba7
+	 zmfQWQ/Hqf3pCp89i+3Jhs3MoSrvyJ/HwTbOYCzo8M76pBW11TCbAaC0lsIjFiMfe/
+	 II6lhpQ9mzoX7YtRcRXDSZIkuSnjAGssrLIP7THk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 345/532] io_uring: wait interruptibly for request completions on exit
-Date: Fri, 21 Jul 2023 18:04:09 +0200
-Message-ID: <20230721160633.150447529@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 5.15 378/532] fanotify: disallow mount/sb marks on kernel internal pseudo fs
+Date: Fri, 21 Jul 2023 18:04:42 +0200
+Message-ID: <20230721160634.995402350@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -33,73 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit 4826c59453b3b4677d6bf72814e7ababdea86949 upstream.
+commit 69562eb0bd3e6bb8e522a7b254334e0fb30dff0c upstream.
 
-WHen the ring exits, cleanup is done and the final cancelation and
-waiting on completions is done by io_ring_exit_work. That function is
-invoked by kworker, which doesn't take any signals. Because of that, it
-doesn't really matter if we wait for completions in TASK_INTERRUPTIBLE
-or TASK_UNINTERRUPTIBLE state. However, it does matter to the hung task
-detection checker!
+Hopefully, nobody is trying to abuse mount/sb marks for watching all
+anonymous pipes/inodes.
 
-Normally we expect cancelations and completions to happen rather
-quickly. Some test cases, however, will exit the ring and park the
-owning task stopped (eg via SIGSTOP). If the owning task needs to run
-task_work to complete requests, then io_ring_exit_work won't make any
-progress until the task is runnable again. Hence io_ring_exit_work can
-trigger the hung task detection, which is particularly problematic if
-panic-on-hung-task is enabled.
+I cannot think of a good reason to allow this - it looks like an
+oversight that dated back to the original fanotify API.
 
-As the ring exit doesn't take signals to begin with, have it wait
-interruptibly rather than uninterruptibly. io_uring has a separate
-stuck-exit warning that triggers independently anyway, so we're not
-really missing anything by making this switch.
-
-Cc: stable@vger.kernel.org # 5.10+
-Link: https://lore.kernel.org/r/b0e4aaef-7088-56ce-244c-976edeac0e66@kernel.dk
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/linux-fsdevel/20230628101132.kvchg544mczxv2pm@quack3/
+Fixes: 0ff21db9fcc3 ("fanotify: hooks the fanotify_mark syscall to the vfsmount code")
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Message-Id: <20230629042044.25723-1-amir73il@gmail.com>
+[backport to 5.x.y]
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ fs/notify/fanotify/fanotify_user.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -9714,7 +9714,18 @@ static void io_ring_exit_work(struct wor
- 			/* there is little hope left, don't run it too often */
- 			interval = HZ * 60;
- 		}
--	} while (!wait_for_completion_timeout(&ctx->ref_comp, interval));
-+		/*
-+		 * This is really an uninterruptible wait, as it has to be
-+		 * complete. But it's also run from a kworker, which doesn't
-+		 * take signals, so it's fine to make it interruptible. This
-+		 * avoids scenarios where we knowingly can wait much longer
-+		 * on completions, for example if someone does a SIGSTOP on
-+		 * a task that needs to finish task_work to make this loop
-+		 * complete. That's a synthetic situation that should not
-+		 * cause a stuck task backtrace, and hence a potential panic
-+		 * on stuck tasks if that is enabled.
-+		 */
-+	} while (!wait_for_completion_interruptible_timeout(&ctx->ref_comp, interval));
+--- a/fs/notify/fanotify/fanotify_user.c
++++ b/fs/notify/fanotify/fanotify_user.c
+@@ -1337,8 +1337,11 @@ static int fanotify_test_fid(struct path
+ 	return 0;
+ }
  
- 	init_completion(&exit.completion);
- 	init_task_work(&exit.task_work, io_tctx_exit_cb);
-@@ -9739,7 +9750,12 @@ static void io_ring_exit_work(struct wor
- 		wake_up_process(node->task);
+-static int fanotify_events_supported(struct path *path, __u64 mask)
++static int fanotify_events_supported(struct path *path, __u64 mask,
++				     unsigned int flags)
+ {
++	unsigned int mark_type = flags & FANOTIFY_MARK_TYPE_BITS;
++
+ 	/*
+ 	 * Some filesystems such as 'proc' acquire unusual locks when opening
+ 	 * files. For them fanotify permission events have high chances of
+@@ -1350,6 +1353,21 @@ static int fanotify_events_supported(str
+ 	if (mask & FANOTIFY_PERM_EVENTS &&
+ 	    path->mnt->mnt_sb->s_type->fs_flags & FS_DISALLOW_NOTIFY_PERM)
+ 		return -EINVAL;
++
++	/*
++	 * mount and sb marks are not allowed on kernel internal pseudo fs,
++	 * like pipe_mnt, because that would subscribe to events on all the
++	 * anonynous pipes in the system.
++	 *
++	 * SB_NOUSER covers all of the internal pseudo fs whose objects are not
++	 * exposed to user's mount namespace, but there are other SB_KERNMOUNT
++	 * fs, like nsfs, debugfs, for which the value of allowing sb and mount
++	 * mark is questionable. For now we leave them alone.
++	 */
++	if (mark_type != FAN_MARK_INODE &&
++	    path->mnt->mnt_sb->s_flags & SB_NOUSER)
++		return -EINVAL;
++
+ 	return 0;
+ }
  
- 		mutex_unlock(&ctx->uring_lock);
--		wait_for_completion(&exit.completion);
-+		/*
-+		 * See comment above for
-+		 * wait_for_completion_interruptible_timeout() on why this
-+		 * wait is marked as interruptible.
-+		 */
-+		wait_for_completion_interruptible(&exit.completion);
- 		mutex_lock(&ctx->uring_lock);
+@@ -1476,7 +1494,7 @@ static int do_fanotify_mark(int fanotify
+ 		goto fput_and_out;
+ 
+ 	if (flags & FAN_MARK_ADD) {
+-		ret = fanotify_events_supported(&path, mask);
++		ret = fanotify_events_supported(&path, mask, flags);
+ 		if (ret)
+ 			goto path_put_and_out;
  	}
- 	mutex_unlock(&ctx->uring_lock);
 
 
