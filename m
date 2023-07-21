@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB2720F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:25:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D97DC433C7;
-	Fri, 21 Jul 2023 19:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19A220F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:25:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43232C433C9;
+	Fri, 21 Jul 2023 19:25:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967517;
-	bh=zm1+k2QD7Z6ahsCWfXueQiPnEDROfnqi3KDPu5vlm9A=;
+	s=korg; t=1689967520;
+	bh=P2nzFaOh88wi6SizWl8zl/ryn8FlEmXuddHIQ3YIDAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MaxvGv4D2d4hHP4P/6CiYJlUg4dPpy340SucEXVf8ZPHPM4UTU8k/aAnzIEF3xGr5
-	 /o7lgqrJ1YpJFGl5lv2oglJAw2VP5O30+eGtmJ/19sTe4dQbdjfi8qiuAQAwbx1Cw/
-	 Y3Eex0FJzAy6i5iI3WwX/6R7BeTv/SuwiMqqwbUo=
+	b=Gn5EMRyqIv59+5+B6IRclaAZ6Y+lay/jy3lMK0vFfUoeM/WSn6fj5+SMo025E8oxD
+	 2iglUxcJG8F6LmSo7SffownOtTJVLqfeBCNYvNCKSRYXvez3jibVdZ64YZu4BWHIo9
+	 t1Ixkmv6OmnUuyEzqDDJRMOEFJ6Fp8GNEIPHV1PM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chungkai Yang <Chung-kai.Yang@mediatek.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 190/223] PM: QoS: Restore support for default value on frequency QoS
-Date: Fri, 21 Jul 2023 18:07:23 +0200
-Message-ID: <20230721160528.986419565@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Dmitry Rokosov <ddrokosov@sberdevices.ru>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Thierry Reding <thierry.reding@gmail.com>
+Subject: [PATCH 6.1 191/223] pwm: meson: modify and simplify calculation in meson_pwm_get_state
+Date: Fri, 21 Jul 2023 18:07:24 +0200
+Message-ID: <20230721160529.029287883@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -34,68 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chungkai Yang <Chung-kai.Yang@mediatek.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit 3a8395b565b5b4f019b3dc182be4c4541eb35ac8 upstream.
+commit 6b9352f3f8a1a35faf0efc1ad1807ee303467796 upstream.
 
-Commit 8d36694245f2 ("PM: QoS: Add check to make sure CPU freq is
-non-negative") makes sure CPU freq is non-negative to avoid negative
-value converting to unsigned data type. However, when the value is
-PM_QOS_DEFAULT_VALUE, pm_qos_update_target specifically uses
-c->default_value which is set to FREQ_QOS_MIN/MAX_DEFAULT_VALUE when
-cpufreq_policy_alloc is executed, for this case handling.
+I don't see a reason why we should treat the case lo < hi differently
+and return 0 as period and duty_cycle. The current logic was added with
+c375bcbaabdb ("pwm: meson: Read the full hardware state in
+meson_pwm_get_state()"), Martin as original author doesn't remember why
+it was implemented this way back then.
+So let's handle it as normal use case and also remove the optimization
+for lo == 0. I think the improved readability is worth it.
 
-Adding check for PM_QOS_DEFAULT_VALUE to let default setting work will
-fix this problem.
-
-Fixes: 8d36694245f2 ("PM: QoS: Add check to make sure CPU freq is non-negative")
-Link: https://lore.kernel.org/lkml/20230626035144.19717-1-Chung-kai.Yang@mediatek.com/
-Link: https://lore.kernel.org/lkml/20230627071727.16646-1-Chung-kai.Yang@mediatek.com/
-Link: https://lore.kernel.org/lkml/CAJZ5v0gxNOWhC58PHeUhW_tgf6d1fGJVZ1x91zkDdht11yUv-A@mail.gmail.com/
-Signed-off-by: Chungkai Yang <Chung-kai.Yang@mediatek.com>
-Cc: 6.0+ <stable@vger.kernel.org> # 6.0+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: c375bcbaabdb ("pwm: meson: Read the full hardware state in meson_pwm_get_state()")
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Dmitry Rokosov <ddrokosov@sberdevices.ru>
+Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/power/qos.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/pwm/pwm-meson.c |   14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
-diff --git a/kernel/power/qos.c b/kernel/power/qos.c
-index af51ed6d45ef..782d3b41c1f3 100644
---- a/kernel/power/qos.c
-+++ b/kernel/power/qos.c
-@@ -426,6 +426,11 @@ late_initcall(cpu_latency_qos_init);
+--- a/drivers/pwm/pwm-meson.c
++++ b/drivers/pwm/pwm-meson.c
+@@ -351,18 +351,8 @@ static int meson_pwm_get_state(struct pw
+ 	channel->lo = FIELD_GET(PWM_LOW_MASK, value);
+ 	channel->hi = FIELD_GET(PWM_HIGH_MASK, value);
  
- /* Definitions related to the frequency QoS below. */
+-	if (channel->lo == 0) {
+-		state->period = meson_pwm_cnt_to_ns(chip, pwm, channel->hi);
+-		state->duty_cycle = state->period;
+-	} else if (channel->lo >= channel->hi) {
+-		state->period = meson_pwm_cnt_to_ns(chip, pwm,
+-						    channel->lo + channel->hi);
+-		state->duty_cycle = meson_pwm_cnt_to_ns(chip, pwm,
+-							channel->hi);
+-	} else {
+-		state->period = 0;
+-		state->duty_cycle = 0;
+-	}
++	state->period = meson_pwm_cnt_to_ns(chip, pwm, channel->lo + channel->hi);
++	state->duty_cycle = meson_pwm_cnt_to_ns(chip, pwm, channel->hi);
  
-+static inline bool freq_qos_value_invalid(s32 value)
-+{
-+	return value < 0 && value != PM_QOS_DEFAULT_VALUE;
-+}
-+
- /**
-  * freq_constraints_init - Initialize frequency QoS constraints.
-  * @qos: Frequency QoS constraints to initialize.
-@@ -531,7 +536,7 @@ int freq_qos_add_request(struct freq_constraints *qos,
- {
- 	int ret;
+ 	state->polarity = PWM_POLARITY_NORMAL;
  
--	if (IS_ERR_OR_NULL(qos) || !req || value < 0)
-+	if (IS_ERR_OR_NULL(qos) || !req || freq_qos_value_invalid(value))
- 		return -EINVAL;
- 
- 	if (WARN(freq_qos_request_active(req),
-@@ -563,7 +568,7 @@ EXPORT_SYMBOL_GPL(freq_qos_add_request);
-  */
- int freq_qos_update_request(struct freq_qos_request *req, s32 new_value)
- {
--	if (!req || new_value < 0)
-+	if (!req || freq_qos_value_invalid(new_value))
- 		return -EINVAL;
- 
- 	if (WARN(!freq_qos_request_active(req),
--- 
-2.41.0
-
 
 
