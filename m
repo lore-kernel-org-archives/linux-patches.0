@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E23C20F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:05:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F93C433C7;
-	Fri, 21 Jul 2023 19:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC92A20F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:05:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6714BC433C7;
+	Fri, 21 Jul 2023 19:05:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966344;
-	bh=Ucb5BUBDnq3iN6NGj3A3kYKifBDtWdqXd9hdkBkQgfA=;
+	s=korg; t=1689966346;
+	bh=zrBr1JTdWayiambjun45njPeLHYBUFyfaJY+ECqmxlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MKNh82j/1WOkNk+BXHiVc9c32BgXVPoJgBtKaJ8FnS2/gw7IB3gvX5cFUOWSL8T+h
-	 XYz17xtCKAO0TsQ7VobiJAJA6jQi+YEG9x1D4ifziI/u+dRG/0q201oTqGNrrGBnvB
-	 RM8uI5PHHfFoQSuMmoC0wLXiBRWomuyZt3wmW7Kw=
+	b=gyeBAvNG21F51VNvBU3OahRGelUIKsXmeR/RYDBdwP+1Y4VmDr9D6mXqjp8Myjjn+
+	 NBMSv0mJLwjBNhi886/Hz1Wc8dJREoehckamZlSfcxBr7rehOnouzdwzfeoTM37E9i
+	 oIEpPcqoO0Vxst+YMAEaZuVWCkLewDMz1NKRsGiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Shuijing Li <shuijing.li@mediatek.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Fei Shao <fshao@chromium.org>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 310/532] pwm: ab8500: Fix error code in probe()
-Date: Fri, 21 Jul 2023 18:03:34 +0200
-Message-ID: <20230721160631.219542146@linuxfoundation.org>
+Subject: [PATCH 5.15 311/532] pwm: mtk_disp: Fix the disable flow of disp_pwm
+Date: Fri, 21 Jul 2023 18:03:35 +0200
+Message-ID: <20230721160631.271125536@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,36 +40,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Shuijing Li <shuijing.li@mediatek.com>
 
-[ Upstream commit cdcffafc4d845cc0c6392cba168c7a942734cce7 ]
+[ Upstream commit bc13d60e4e1e945b34769a4a4c2b172e8552abe5 ]
 
-This code accidentally return positive EINVAL instead of negative
--EINVAL.
+There is a flow error in the original mtk_disp_pwm_apply() function.
+If this function is called when the clock is disabled, there will be a
+chance to operate the disp_pwm register, resulting in disp_pwm exception.
+Fix this accordingly.
 
-Fixes: eb41f334589d ("pwm: ab8500: Fix register offset calculation to not depend on probe order")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 888a623db5d0 ("pwm: mtk-disp: Implement atomic API .apply()")
+Signed-off-by: Shuijing Li <shuijing.li@mediatek.com>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Tested-by: Fei Shao <fshao@chromium.org>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-ab8500.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pwm/pwm-mtk-disp.c | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pwm/pwm-ab8500.c b/drivers/pwm/pwm-ab8500.c
-index ad37bc46f2721..5fa91f4cda7ac 100644
---- a/drivers/pwm/pwm-ab8500.c
-+++ b/drivers/pwm/pwm-ab8500.c
-@@ -96,7 +96,7 @@ static int ab8500_pwm_probe(struct platform_device *pdev)
- 	int err;
+diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
+index 92ba02cfec92f..a581d8adab59c 100644
+--- a/drivers/pwm/pwm-mtk-disp.c
++++ b/drivers/pwm/pwm-mtk-disp.c
+@@ -79,14 +79,11 @@ static int mtk_disp_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	if (state->polarity != PWM_POLARITY_NORMAL)
+ 		return -EINVAL;
  
- 	if (pdev->id < 1 || pdev->id > 31)
--		return dev_err_probe(&pdev->dev, EINVAL, "Invalid device id %d\n", pdev->id);
-+		return dev_err_probe(&pdev->dev, -EINVAL, "Invalid device id %d\n", pdev->id);
+-	if (!state->enabled) {
+-		mtk_disp_pwm_update_bits(mdp, DISP_PWM_EN, mdp->data->enable_mask,
+-					 0x0);
+-
+-		if (mdp->enabled) {
+-			clk_disable_unprepare(mdp->clk_mm);
+-			clk_disable_unprepare(mdp->clk_main);
+-		}
++	if (!state->enabled && mdp->enabled) {
++		mtk_disp_pwm_update_bits(mdp, DISP_PWM_EN,
++					 mdp->data->enable_mask, 0x0);
++		clk_disable_unprepare(mdp->clk_mm);
++		clk_disable_unprepare(mdp->clk_main);
  
- 	/*
- 	 * Nothing to be done in probe, this is required to get the
+ 		mdp->enabled = false;
+ 		return 0;
 -- 
 2.39.2
 
