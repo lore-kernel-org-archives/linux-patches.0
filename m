@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C171F941
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:12:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936DBC433C8;
-	Fri, 21 Jul 2023 16:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3BC1ED25
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:12:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB52C433C7;
+	Fri, 21 Jul 2023 16:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689955929;
-	bh=1rgrk0atMSjBgI0G4aSAOGxx6F0MGujobWFfH5UHC5o=;
+	s=korg; t=1689955931;
+	bh=xaN0G31/tnl3ORNQWMoo/8mun3E7PTJCk9X0z0UIozs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D7IDe2VOxWIRgJ4WFcX73JyNWRuhr5yE0NZvT+8JaqHv4MZ1Ozb38zFN9oFbmVf2J
-	 CRuGafnQhRXYU4C+b3ZtWuBwiWDVEHJxulwd0Ga9iOA4DQ4aCuVw1W1CTRxEuXAw9x
-	 4rlAO4AOn1oGKXKQ1EyaPtvE45lA33NMDgqxYqD8=
+	b=iEALwQHoHuJPPx9YTPAc4Ul8Hp3s4LsX2UHfaqGhF1ZRE7OAsLqbpPZE5YEI6QX5W
+	 Oj1ibEep7qZ3+4HgcEmu2aSA64DtXsn3fjJG5xwD6FDnmA+ikj7BmK+2satvPUb1Oc
+	 UFS27R5Pg6d4NbOPxqxVMU1HSJt2Jml/ravEJfIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Klaus Kudielka <klaus.kudielka@gmail.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Tzvetomir Stoyanov (VMware)" <tz.stoyanov@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 042/292] net: mvneta: fix txq_map in case of txq_number==1
-Date: Fri, 21 Jul 2023 18:02:31 +0200
-Message-ID: <20230721160530.612527510@linuxfoundation.org>
+Subject: [PATCH 6.4 073/292] kernel/trace: Fix cleanup logic of enable_trace_eprobe
+Date: Fri, 21 Jul 2023 18:03:02 +0200
+Message-ID: <20230721160531.935319450@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -36,46 +37,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Klaus Kudielka <klaus.kudielka@gmail.com>
+From: Tzvetomir Stoyanov (VMware) <tz.stoyanov@gmail.com>
 
-[ Upstream commit 21327f81db6337c8843ce755b01523c7d3df715b ]
+[ Upstream commit cf0a624dc706c306294c14e6b3e7694702f25191 ]
 
-If we boot with mvneta.txq_number=1, the txq_map is set incorrectly:
-MVNETA_CPU_TXQ_ACCESS(1) refers to TX queue 1, but only TX queue 0 is
-initialized. Fix this.
+The enable_trace_eprobe() function enables all event probes, attached
+to given trace probe. If an error occurs in enabling one of the event
+probes, all others should be roll backed. There is a bug in that roll
+back logic - instead of all event probes, only the failed one is
+disabled.
 
-Fixes: 50bf8cb6fc9c ("net: mvneta: Configure XPS support")
-Signed-off-by: Klaus Kudielka <klaus.kudielka@gmail.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Link: https://lore.kernel.org/r/20230705053712.3914-1-klaus.kudielka@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/all/20230703042853.1427493-1-tz.stoyanov@gmail.com/
+
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: 7491e2c44278 ("tracing: Add a probe that attaches to trace events")
+Signed-off-by: Tzvetomir Stoyanov (VMware) <tz.stoyanov@gmail.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvneta.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/trace_eprobe.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
-index 2cad76d0a50ef..4401fad31fb98 100644
---- a/drivers/net/ethernet/marvell/mvneta.c
-+++ b/drivers/net/ethernet/marvell/mvneta.c
-@@ -1505,7 +1505,7 @@ static void mvneta_defaults_set(struct mvneta_port *pp)
- 			 */
- 			if (txq_number == 1)
- 				txq_map = (cpu == pp->rxq_def) ?
--					MVNETA_CPU_TXQ_ACCESS(1) : 0;
-+					MVNETA_CPU_TXQ_ACCESS(0) : 0;
+diff --git a/kernel/trace/trace_eprobe.c b/kernel/trace/trace_eprobe.c
+index 67e854979d53e..3f04f0ffe0d70 100644
+--- a/kernel/trace/trace_eprobe.c
++++ b/kernel/trace/trace_eprobe.c
+@@ -675,6 +675,7 @@ static int enable_trace_eprobe(struct trace_event_call *call,
+ 	struct trace_eprobe *ep;
+ 	bool enabled;
+ 	int ret = 0;
++	int cnt = 0;
  
- 		} else {
- 			txq_map = MVNETA_CPU_TXQ_ACCESS_ALL_MASK;
-@@ -4295,7 +4295,7 @@ static void mvneta_percpu_elect(struct mvneta_port *pp)
- 		 */
- 		if (txq_number == 1)
- 			txq_map = (cpu == elected_cpu) ?
--				MVNETA_CPU_TXQ_ACCESS(1) : 0;
-+				MVNETA_CPU_TXQ_ACCESS(0) : 0;
+ 	tp = trace_probe_primary_from_call(call);
+ 	if (WARN_ON_ONCE(!tp))
+@@ -698,12 +699,25 @@ static int enable_trace_eprobe(struct trace_event_call *call,
+ 		if (ret)
+ 			break;
+ 		enabled = true;
++		cnt++;
+ 	}
+ 
+ 	if (ret) {
+ 		/* Failed to enable one of them. Roll back all */
+-		if (enabled)
+-			disable_eprobe(ep, file->tr);
++		if (enabled) {
++			/*
++			 * It's a bug if one failed for something other than memory
++			 * not being available but another eprobe succeeded.
++			 */
++			WARN_ON_ONCE(ret != -ENOMEM);
++
++			list_for_each_entry(pos, trace_probe_probe_list(tp), list) {
++				ep = container_of(pos, struct trace_eprobe, tp);
++				disable_eprobe(ep, file->tr);
++				if (!--cnt)
++					break;
++			}
++		}
+ 		if (file)
+ 			trace_probe_remove_file(tp, file);
  		else
- 			txq_map = mvreg_read(pp, MVNETA_CPU_MAP(cpu)) &
- 				MVNETA_CPU_TXQ_ACCESS_ALL_MASK;
 -- 
 2.39.2
 
