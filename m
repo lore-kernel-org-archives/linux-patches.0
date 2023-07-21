@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D028B20F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:07:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A59C433BA;
-	Fri, 21 Jul 2023 19:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B11720F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:07:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C65CC433C7;
+	Fri, 21 Jul 2023 19:07:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966428;
-	bh=FjlTzkZP//xVnHlKOvjSPITrFfQHT3/G4FT5OSR0TWU=;
+	s=korg; t=1689966431;
+	bh=YRyv2HMm1P3wTe896p1Pw96XjAeQQKwjsOMocaSndYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ne1OIio1DhlI8Mw44gHnNjkVBHhdK3A3CephhGaQsAFClbMbvaq6na6c4BbBjOybv
-	 71VKqlKvlT2rnwv+kMqDAxapHutgyduIqAhS4LyKVP/a0jt6/pWtqm4jIvBE+e1FXh
-	 75s2WsSTarIyRy9SZlQd13CnEeS/FFvuY08MGQbI=
+	b=RosnqLO6jZT+5yKGt+wVAB9csZL+Tyj24sdQiPvwKm+ub288jPGVd/a/SH3ZQyP60
+	 f2Pr6oD0G5dHWsb9Cp/WTvoBG/NSK5mP+8dBD6e6DyDRjXs3yHfKFkQoV89eS0LuKD
+	 PKopsAAIMdMu4hR6hTuOodCxrqay3Kz2muDEyX9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Hancock <robert.hancock@calian.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 340/532] i2c: xiic: Dont try to handle more interrupt events after error
-Date: Fri, 21 Jul 2023 18:04:04 +0200
-Message-ID: <20230721160632.862941348@linuxfoundation.org>
+Subject: [PATCH 5.15 341/532] extcon: usbc-tusb320: Convert to i2cs .probe_new()
+Date: Fri, 21 Jul 2023 18:04:05 +0200
+Message-ID: <20230721160632.918070019@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,58 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Hancock <robert.hancock@calian.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit cb6e45c9a0ad9e0f8664fd06db0227d185dc76ab ]
+[ Upstream commit 5313121b22fd11db0d14f305c110168b8176efdc ]
 
-In xiic_process, it is possible that error events such as arbitration
-lost or TX error can be raised in conjunction with other interrupt flags
-such as TX FIFO empty or bus not busy. Error events result in the
-controller being reset and the error returned to the calling request,
-but the function could potentially try to keep handling the other
-events, such as by writing more messages into the TX FIFO. Since the
-transaction has already failed, this is not helpful and will just cause
-issues.
+The probe function doesn't make use of the i2c_device_id * parameter so it
+can be trivially converted.
 
-This problem has been present ever since:
-
-commit 7f9906bd7f72 ("i2c: xiic: Service all interrupts in isr")
-
-which allowed non-error events to be handled after errors, but became
-more obvious after:
-
-commit 743e227a8959 ("i2c: xiic: Defer xiic_wakeup() and
-__xiic_start_xfer() in xiic_process()")
-
-which reworked the code to add a WARN_ON which triggers if both the
-xfer_more and wakeup_req flags were set, since this combination is
-not supposed to happen, but was occurring in this scenario.
-
-Skip further interrupt handling after error flags are detected to avoid
-this problem.
-
-Fixes: 7f9906bd7f72 ("i2c: xiic: Service all interrupts in isr")
-Signed-off-by: Robert Hancock <robert.hancock@calian.com>
-Acked-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Stable-dep-of: 3adbaa30d973 ("extcon: usbc-tusb320: Unregister typec port on driver removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-xiic.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/extcon/extcon-usbc-tusb320.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
-index 14926b193e0ee..9652e8bea2d0b 100644
---- a/drivers/i2c/busses/i2c-xiic.c
-+++ b/drivers/i2c/busses/i2c-xiic.c
-@@ -422,6 +422,8 @@ static irqreturn_t xiic_process(int irq, void *dev_id)
- 			wakeup_req = 1;
- 			wakeup_code = STATE_ERROR;
- 		}
-+		/* don't try to handle other events */
-+		goto out;
- 	}
- 	if (pend & XIIC_INTR_RX_FULL_MASK) {
- 		/* Receive register/FIFO is full */
+diff --git a/drivers/extcon/extcon-usbc-tusb320.c b/drivers/extcon/extcon-usbc-tusb320.c
+index 9dfa545427ca1..b408ce989c223 100644
+--- a/drivers/extcon/extcon-usbc-tusb320.c
++++ b/drivers/extcon/extcon-usbc-tusb320.c
+@@ -428,8 +428,7 @@ static int tusb320_typec_probe(struct i2c_client *client,
+ 	return 0;
+ }
+ 
+-static int tusb320_probe(struct i2c_client *client,
+-			 const struct i2c_device_id *id)
++static int tusb320_probe(struct i2c_client *client)
+ {
+ 	struct tusb320_priv *priv;
+ 	const void *match_data;
+@@ -502,7 +501,7 @@ static const struct of_device_id tusb320_extcon_dt_match[] = {
+ MODULE_DEVICE_TABLE(of, tusb320_extcon_dt_match);
+ 
+ static struct i2c_driver tusb320_extcon_driver = {
+-	.probe		= tusb320_probe,
++	.probe_new	= tusb320_probe,
+ 	.driver		= {
+ 		.name	= "extcon-tusb320",
+ 		.of_match_table = tusb320_extcon_dt_match,
 -- 
 2.39.2
 
