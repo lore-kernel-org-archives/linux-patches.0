@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0951F956
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:13:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A9FC433C8;
-	Fri, 21 Jul 2023 19:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529E8200AE
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:13:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95D5C433C8;
+	Fri, 21 Jul 2023 19:13:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966787;
-	bh=ga/tk4+Sc52I/4IUdqv/cI9bSqHNoZlprhx99MIrdtI=;
+	s=korg; t=1689966790;
+	bh=jYnfvi0E7W5UKQ+INbKbn5kYpfCbjd1t4nc6nl/hUs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=19fp1i4qZzPu3N/vwT/p1WP0hLbl6FAkRo+qs8fV5M0Ey7dM0U9DpmWrHNaqfol1X
-	 w+PfQxErxJ2Df4Ae/nMPQFZLHlOlt0IvYz0U2joJVUxFtX/OZStEKXKhf0N19v706/
-	 DeBhSWxKs3IRh1OoRElNyLIc3xzODC22+hLQpldc=
+	b=lIuGopzczDHIGqu94Uq0DuqNe1XOOyeqywgPZwPDzMNTqDqziMd0rnbBCJzzOkX1c
+	 DdzChSChPoxue3OpM6Kd9zm7+qusrffzIyAmu5DUrKzoqwC+zGdx5S6YfiZZLwcknY
+	 CNpAWlbpQCUTcjOljZZ6v9Ixam3Ie6SrUs64vNFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.15 467/532] ext4: only update i_reserved_data_blocks on successful block allocation
-Date: Fri, 21 Jul 2023 18:06:11 +0200
-Message-ID: <20230721160639.864178990@linuxfoundation.org>
+	Lion <nnamrec@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 441/532] net/sched: sch_qfq: account for stab overhead in qfq_enqueue
+Date: Fri, 21 Jul 2023 18:05:45 +0200
+Message-ID: <20230721160638.480552593@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,92 +39,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-commit de25d6e9610a8b30cce9bbb19b50615d02ebca02 upstream.
+[ Upstream commit 3e337087c3b5805fe0b8a46ba622a962880b5d64 ]
 
-In our fault injection test, we create an ext4 file, migrate it to
-non-extent based file, then punch a hole and finally trigger a WARN_ON
-in the ext4_da_update_reserve_space():
+Lion says:
+-------
+In the QFQ scheduler a similar issue to CVE-2023-31436
+persists.
 
-EXT4-fs warning (device sda): ext4_da_update_reserve_space:369:
-ino 14, used 11 with only 10 reserved data blocks
+Consider the following code in net/sched/sch_qfq.c:
 
-When writing back a non-extent based file, if we enable delalloc, the
-number of reserved blocks will be subtracted from the number of blocks
-mapped by ext4_ind_map_blocks(), and the extent status tree will be
-updated. We update the extent status tree by first removing the old
-extent_status and then inserting the new extent_status. If the block range
-we remove happens to be in an extent, then we need to allocate another
-extent_status with ext4_es_alloc_extent().
+static int qfq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+                struct sk_buff **to_free)
+{
+     unsigned int len = qdisc_pkt_len(skb), gso_segs;
 
-       use old    to remove   to add new
-    |----------|------------|------------|
-              old extent_status
+    // ...
 
-The problem is that the allocation of a new extent_status failed due to a
-fault injection, and __es_shrink() did not get free memory, resulting in
-a return of -ENOMEM. Then do_writepages() retries after receiving -ENOMEM,
-we map to the same extent again, and the number of reserved blocks is again
-subtracted from the number of blocks in that extent. Since the blocks in
-the same extent are subtracted twice, we end up triggering WARN_ON at
-ext4_da_update_reserve_space() because used > ei->i_reserved_data_blocks.
+     if (unlikely(cl->agg->lmax < len)) {
+         pr_debug("qfq: increasing maxpkt from %u to %u for class %u",
+              cl->agg->lmax, len, cl->common.classid);
+         err = qfq_change_agg(sch, cl, cl->agg->class_weight, len);
+         if (err) {
+             cl->qstats.drops++;
+             return qdisc_drop(skb, sch, to_free);
+         }
 
-For non-extent based file, we update the number of reserved blocks after
-ext4_ind_map_blocks() is executed, which causes a problem that when we call
-ext4_ind_map_blocks() to create a block, it doesn't always create a block,
-but we always reduce the number of reserved blocks. So we move the logic
-for updating reserved blocks to ext4_ind_map_blocks() to ensure that the
-number of reserved blocks is updated only after we do succeed in allocating
-some new blocks.
+    // ...
 
-Fixes: 5f634d064c70 ("ext4: Fix quota accounting error with fallocate")
-Cc: stable@kernel.org
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230424033846.4732-2-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+     }
+
+Similarly to CVE-2023-31436, "lmax" is increased without any bounds
+checks according to the packet length "len". Usually this would not
+impose a problem because packet sizes are naturally limited.
+
+This is however not the actual packet length, rather the
+"qdisc_pkt_len(skb)" which might apply size transformations according to
+"struct qdisc_size_table" as created by "qdisc_get_stab()" in
+net/sched/sch_api.c if the TCA_STAB option was set when modifying the qdisc.
+
+A user may choose virtually any size using such a table.
+
+As a result the same issue as in CVE-2023-31436 can occur, allowing heap
+out-of-bounds read / writes in the kmalloc-8192 cache.
+-------
+
+We can create the issue with the following commands:
+
+tc qdisc add dev $DEV root handle 1: stab mtu 2048 tsize 512 mpu 0 \
+overhead 999999999 linklayer ethernet qfq
+tc class add dev $DEV parent 1: classid 1:1 htb rate 6mbit burst 15k
+tc filter add dev $DEV parent 1: matchall classid 1:1
+ping -I $DEV 1.1.1.2
+
+This is caused by incorrectly assuming that qdisc_pkt_len() returns a
+length within the QFQ_MIN_LMAX < len < QFQ_MAX_LMAX.
+
+Fixes: 462dbc9101ac ("pkt_sched: QFQ Plus: fair-queueing service at DRR cost")
+Reported-by: Lion <nnamrec@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/indirect.c |    8 ++++++++
- fs/ext4/inode.c    |   10 ----------
- 2 files changed, 8 insertions(+), 10 deletions(-)
+ net/sched/sch_qfq.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/indirect.c
-+++ b/fs/ext4/indirect.c
-@@ -651,6 +651,14 @@ int ext4_ind_map_blocks(handle_t *handle
+diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
+index 8fb30b20425f8..3ba6a766601cf 100644
+--- a/net/sched/sch_qfq.c
++++ b/net/sched/sch_qfq.c
+@@ -381,8 +381,13 @@ static int qfq_change_agg(struct Qdisc *sch, struct qfq_class *cl, u32 weight,
+ 			   u32 lmax)
+ {
+ 	struct qfq_sched *q = qdisc_priv(sch);
+-	struct qfq_aggregate *new_agg = qfq_find_agg(q, lmax, weight);
++	struct qfq_aggregate *new_agg;
  
- 	ext4_update_inode_fsync_trans(handle, inode, 1);
- 	count = ar.len;
++	/* 'lmax' can range from [QFQ_MIN_LMAX, pktlen + stab overhead] */
++	if (lmax > QFQ_MAX_LMAX)
++		return -EINVAL;
 +
-+	/*
-+	 * Update reserved blocks/metadata blocks after successful block
-+	 * allocation which had been deferred till now.
-+	 */
-+	if (flags & EXT4_GET_BLOCKS_DELALLOC_RESERVE)
-+		ext4_da_update_reserve_space(inode, count, 1);
-+
- got_it:
- 	map->m_flags |= EXT4_MAP_MAPPED;
- 	map->m_pblk = le32_to_cpu(chain[depth-1].key);
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -654,16 +654,6 @@ found:
- 			 */
- 			ext4_clear_inode_state(inode, EXT4_STATE_EXT_MIGRATE);
- 		}
--
--		/*
--		 * Update reserved blocks/metadata blocks after successful
--		 * block allocation which had been deferred till now. We don't
--		 * support fallocate for non extent files. So we can update
--		 * reserve space here.
--		 */
--		if ((retval > 0) &&
--			(flags & EXT4_GET_BLOCKS_DELALLOC_RESERVE))
--			ext4_da_update_reserve_space(inode, retval, 1);
- 	}
- 
- 	if (retval > 0) {
++	new_agg = qfq_find_agg(q, lmax, weight);
+ 	if (new_agg == NULL) { /* create new aggregate */
+ 		new_agg = kzalloc(sizeof(*new_agg), GFP_ATOMIC);
+ 		if (new_agg == NULL)
+-- 
+2.39.2
+
 
 
