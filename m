@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30790200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:03:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C84C433C8;
-	Fri, 21 Jul 2023 19:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E45200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:04:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D8ACC433C7;
+	Fri, 21 Jul 2023 19:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966239;
-	bh=iO5Y1I7rjtwDVR5qYKnTiSPF516KD9sxCndywiRCvYE=;
+	s=korg; t=1689966241;
+	bh=3kzTfVKWWibrQ+PquFHbQp7KSFHKcdtT0J/DFETlprE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=16A/qQHMWTuPFABtob0LWm6BdiT4oXM1mCSlEcA7jvoNPAgU0+XTOUlsU3I/rsI8D
-	 fwF9Ff5Iyxc54TnxDF5B1+xYRIXArCco07/wj9Je9nWP+Myx6AOwpBqTbdySDKKk14
-	 6MsopI5uOATn0XwWHp1VUd8Agu2Kg4rHCtpnqO5M=
+	b=Ex0BAK442ux+D0hyMpBcUjasFJGPcPp+mGXPRAypDbTDSz3ALU5Fnhg8oVhHQqT1k
+	 3/rntjQr93iQrESbJPL122FBxtBq3MjNzMfKdHes04RH63ODYbZ3TyGsJ5CodUdXcy
+	 8i913G8Ue4LcCLZy7bFbL1yR1TUbJq9qi6aFVAF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
+	syzbot+27b0b464864741b18b99@syzkaller.appspotmail.com,
+	Duoming Zhou <duoming@zju.edu.cn>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 273/532] media: videodev2.h: Fix struct v4l2_input tuner index comment
-Date: Fri, 21 Jul 2023 18:02:57 +0200
-Message-ID: <20230721160629.174049606@linuxfoundation.org>
+Subject: [PATCH 5.15 274/532] media: usb: siano: Fix warning due to null work_func_t function pointer
+Date: Fri, 21 Jul 2023 18:02:58 +0200
+Message-ID: <20230721160629.237665466@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,60 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 26ae58f65e64fa7ba61d64bae752e59e08380c6a ]
+[ Upstream commit 6f489a966fbeb0da63d45c2c66a8957eab604bf6 ]
 
-VIDIOC_ENUMINPUT documentation describes the tuner field of
-struct v4l2_input as index:
+The previous commit ebad8e731c1c ("media: usb: siano: Fix use after
+free bugs caused by do_submit_urb") adds cancel_work_sync() in
+smsusb_stop_streaming(). But smsusb_stop_streaming() may be called,
+even if the work_struct surb->wq has not been initialized. As a result,
+the warning will occur. One of the processes that could lead to warning
+is shown below:
 
-Documentation/userspace-api/media/v4l/vidioc-enuminput.rst
-"
-* - __u32
-  - ``tuner``
-  - Capture devices can have zero or more tuners (RF demodulators).
-    When the ``type`` is set to ``V4L2_INPUT_TYPE_TUNER`` this is an
-    RF connector and this field identifies the tuner. It corresponds
-    to struct :c:type:`v4l2_tuner` field ``index``. For
-    details on tuners see :ref:`tuner`.
-"
+smsusb_probe()
+  smsusb_init_device()
+    if (!dev->in_ep || !dev->out_ep || align < 0) {
+         smsusb_term_device(intf);
+           smsusb_stop_streaming()
+             cancel_work_sync(&dev->surbs[i].wq);
+               __cancel_work_timer()
+                 __flush_work()
+                   if (WARN_ON(!work->func)) // work->func is null
 
-Drivers I could find also use the 'tuner' field as an index, e.g.:
-drivers/media/pci/bt8xx/bttv-driver.c bttv_enum_input()
-drivers/media/usb/go7007/go7007-v4l2.c vidioc_enum_input()
+The log reported by syzbot is shown below:
 
-However, the UAPI comment claims this field is 'enum v4l2_tuner_type':
-include/uapi/linux/videodev2.h
+WARNING: CPU: 0 PID: 897 at kernel/workqueue.c:3066 __flush_work+0x798/0xa80 kernel/workqueue.c:3063
+Modules linked in:
+CPU: 0 PID: 897 Comm: kworker/0:2 Not tainted 6.2.0-rc1-syzkaller #0
+RIP: 0010:__flush_work+0x798/0xa80 kernel/workqueue.c:3066
+...
+RSP: 0018:ffffc9000464ebf8 EFLAGS: 00010246
+RAX: 1ffff11002dbb420 RBX: 0000000000000021 RCX: 1ffffffff204fa4e
+RDX: dffffc0000000000 RSI: 0000000000000001 RDI: ffff888016dda0e8
+RBP: ffffc9000464ed98 R08: 0000000000000001 R09: ffffffff90253b2f
+R10: 0000000000000001 R11: 0000000000000000 R12: ffff888016dda0e8
+R13: ffff888016dda0e8 R14: ffff888016dda100 R15: 0000000000000001
+FS:  0000000000000000(0000) GS:ffff8880b9a00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007ffd4331efe8 CR3: 000000000b48e000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ __cancel_work_timer+0x315/0x460 kernel/workqueue.c:3160
+ smsusb_stop_streaming drivers/media/usb/siano/smsusb.c:182 [inline]
+ smsusb_term_device+0xda/0x2d0 drivers/media/usb/siano/smsusb.c:344
+ smsusb_init_device+0x400/0x9ce drivers/media/usb/siano/smsusb.c:419
+ smsusb_probe+0xbbd/0xc55 drivers/media/usb/siano/smsusb.c:567
+...
 
-This field being 'enum v4l2_tuner_type' is unlikely as it seems to be
-never used that way in drivers, and documentation confirms it. It seem
-this comment got in accidentally in the commit which this patch fixes.
-Fix the UAPI comment to stop confusion.
+This patch adds check before cancel_work_sync(). If surb->wq has not
+been initialized, the cancel_work_sync() will not be executed.
 
-This was pointed out by Dmitry while reviewing VIDIOC_ENUMINPUT
-support for strace.
-
-Fixes: 6016af82eafc ("[media] v4l2: use __u32 rather than enums in ioctl() structs")
-Signed-off-by: Marek Vasut <marex@denx.de>
+Reported-by: syzbot+27b0b464864741b18b99@syzkaller.appspotmail.com
+Fixes: ebad8e731c1c ("media: usb: siano: Fix use after free bugs caused by do_submit_urb")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/videodev2.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/siano/smsusb.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
-index 61c5011dfc13d..f5c6758464f25 100644
---- a/include/uapi/linux/videodev2.h
-+++ b/include/uapi/linux/videodev2.h
-@@ -1652,7 +1652,7 @@ struct v4l2_input {
- 	__u8	     name[32];		/*  Label */
- 	__u32	     type;		/*  Type of input */
- 	__u32	     audioset;		/*  Associated audios (bitfield) */
--	__u32        tuner;             /*  enum v4l2_tuner_type */
-+	__u32        tuner;             /*  Tuner index */
- 	v4l2_std_id  std;
- 	__u32	     status;
- 	__u32	     capabilities;
+diff --git a/drivers/media/usb/siano/smsusb.c b/drivers/media/usb/siano/smsusb.c
+index 1babfe6e2c361..5c223b5498b4b 100644
+--- a/drivers/media/usb/siano/smsusb.c
++++ b/drivers/media/usb/siano/smsusb.c
+@@ -179,7 +179,8 @@ static void smsusb_stop_streaming(struct smsusb_device_t *dev)
+ 
+ 	for (i = 0; i < MAX_URBS; i++) {
+ 		usb_kill_urb(&dev->surbs[i].urb);
+-		cancel_work_sync(&dev->surbs[i].wq);
++		if (dev->surbs[i].wq.func)
++			cancel_work_sync(&dev->surbs[i].wq);
+ 
+ 		if (dev->surbs[i].cb) {
+ 			smscore_putbuffer(dev->coredev, dev->surbs[i].cb);
 -- 
 2.39.2
 
