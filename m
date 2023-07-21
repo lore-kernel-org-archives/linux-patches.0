@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C52A1ED25
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:12:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C2C2C433CD;
-	Fri, 21 Jul 2023 16:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601821ED25
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:12:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62D3C433C8;
+	Fri, 21 Jul 2023 16:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689955937;
-	bh=CYtgyVZqPNKNh0yj03VZsd5tZ/Deo7DRhcXRfHqa/i0=;
+	s=korg; t=1689955940;
+	bh=HkSKAFI+ObhILjpjEHW/1SJ+XEGcO3jrcUeprU80YPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XKb8rnrK7J0aO/BrgWtPEKFVtPgFS2Fu14baGGnV3R9UDyoJoaUfZi5s4StQJMVQQ
-	 edkIj53Pxs/fuSFpvTuZNUdcnltNmgdVRhyL+XjtwFf6vC39VBbpNRZaHQ8MIZ+Xta
-	 qGBpNAo5GaghG5ESwkEnh9phDZf5DyPl1hYh/VHE=
+	b=qe8wdHfYu8unB7uEXe+sSxn41V7meHxodxhaQGGJUniqWhb3GNTb8EaVazLUWbC3p
+	 V6sKe4S/T56a4DyEFunrGscvNadzWpIJWO50vG0I+vKVe477yepFuxjC+AbkwA1am0
+	 cXWvPLWJRZ1RitFx41rfp61adHYKR+J6Gz3g6fko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wei Fang <wei.fang@nxp.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 083/292] net: fec: recycle pages for transmitted XDP frames
-Date: Fri, 21 Jul 2023 18:03:12 +0200
-Message-ID: <20230721160532.371353127@linuxfoundation.org>
+Subject: [PATCH 6.4 084/292] net: fec: increase the size of tx ring and update tx_wake_threshold
+Date: Fri, 21 Jul 2023 18:03:13 +0200
+Message-ID: <20230721160532.414102750@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -37,293 +37,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 20f797399035a8052dbd7297fdbe094079a9482e ]
+[ Upstream commit 56b3c6ba53d0e9649ea5e4089b39cadde13aaef8 ]
 
-Once the XDP frames have been successfully transmitted through the
-ndo_xdp_xmit() interface, it's the driver responsibility to free
-the frames so that the page_pool can recycle the pages and reuse
-them. However, this action is not implemented in the fec driver.
-This leads to a user-visible problem that the console will print
-the following warning log.
+When the XDP feature is enabled and with heavy XDP frames to be
+transmitted, there is a considerable probability that available
+tx BDs are insufficient. This will lead to some XDP frames to be
+discarded and the "NOT enough BD for SG!" error log will appear
+in the console (as shown below).
 
-[  157.568851] page_pool_release_retry() stalled pool shutdown 1389 inflight 60 sec
-[  217.983446] page_pool_release_retry() stalled pool shutdown 1389 inflight 120 sec
-[  278.399006] page_pool_release_retry() stalled pool shutdown 1389 inflight 181 sec
-[  338.812885] page_pool_release_retry() stalled pool shutdown 1389 inflight 241 sec
-[  399.226946] page_pool_release_retry() stalled pool shutdown 1389 inflight 302 sec
+[  160.013112] fec 30be0000.ethernet eth0: NOT enough BD for SG!
+[  160.023116] fec 30be0000.ethernet eth0: NOT enough BD for SG!
+[  160.028926] fec 30be0000.ethernet eth0: NOT enough BD for SG!
+[  160.038946] fec 30be0000.ethernet eth0: NOT enough BD for SG!
+[  160.044758] fec 30be0000.ethernet eth0: NOT enough BD for SG!
 
-Therefore, to solve this issue, we free XDP frames via xdp_return_frame()
-while cleaning the tx BD ring.
+In the case of heavy XDP traffic, sometimes the speed of recycling
+tx BDs may be slower than the speed of sending XDP frames. There
+may be several specific reasons, such as the interrupt is not
+responsed in time, the efficiency of the NAPI callback function is
+too low due to all the queues (tx queues and rx queues) share the
+same NAPI, and so on.
+
+After trying various methods, I think that increase the size of tx
+BD ring is simple and effective. Maybe the best resolution is that
+allocate NAPI for each queue to improve the efficiency of the NAPI
+callback, but this change is a bit big and I didn't try this method.
+Perheps this method will be implemented in a future patch.
+
+This patch also updates the tx_wake_threshold of tx ring which is
+related to the size of tx ring in the previous logic. Otherwise,
+the tx_wake_threshold will be too high (403 BDs), which is more
+likely to impact the slow path in the case of heavy XDP traffic,
+because XDP path and slow path share the tx BD rings. According
+to Jakub's suggestion, the tx_wake_threshold is at least equal to
+tx_stop_threshold + 2 * MAX_SKB_FRAGS, if a queue of hundreds of
+entries is overflowing, we should be able to apply a hysteresis
+of a few tens of entries.
 
 Fixes: 6d6b39f180b8 ("net: fec: add initial XDP support")
 Signed-off-by: Wei Fang <wei.fang@nxp.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec.h      |  15 ++-
- drivers/net/ethernet/freescale/fec_main.c | 148 +++++++++++++++-------
- 2 files changed, 115 insertions(+), 48 deletions(-)
+ drivers/net/ethernet/freescale/fec.h      | 2 +-
+ drivers/net/ethernet/freescale/fec_main.c | 3 +--
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/ethernet/freescale/fec.h b/drivers/net/ethernet/freescale/fec.h
-index 9939ccafb5566..8c0226d061fec 100644
+index 8c0226d061fec..63a053dea819d 100644
 --- a/drivers/net/ethernet/freescale/fec.h
 +++ b/drivers/net/ethernet/freescale/fec.h
-@@ -544,10 +544,23 @@ enum {
- 	XDP_STATS_TOTAL,
- };
+@@ -355,7 +355,7 @@ struct bufdesc_ex {
+ #define RX_RING_SIZE		(FEC_ENET_RX_FRPPG * FEC_ENET_RX_PAGES)
+ #define FEC_ENET_TX_FRSIZE	2048
+ #define FEC_ENET_TX_FRPPG	(PAGE_SIZE / FEC_ENET_TX_FRSIZE)
+-#define TX_RING_SIZE		512	/* Must be power of two */
++#define TX_RING_SIZE		1024	/* Must be power of two */
+ #define TX_RING_MOD_MASK	511	/*   for this to work */
  
-+enum fec_txbuf_type {
-+	FEC_TXBUF_T_SKB,
-+	FEC_TXBUF_T_XDP_NDO,
-+};
-+
-+struct fec_tx_buffer {
-+	union {
-+		struct sk_buff *skb;
-+		struct xdp_frame *xdp;
-+	};
-+	enum fec_txbuf_type type;
-+};
-+
- struct fec_enet_priv_tx_q {
- 	struct bufdesc_prop bd;
- 	unsigned char *tx_bounce[TX_RING_SIZE];
--	struct  sk_buff *tx_skbuff[TX_RING_SIZE];
-+	struct fec_tx_buffer tx_buf[TX_RING_SIZE];
- 
- 	unsigned short tx_stop_threshold;
- 	unsigned short tx_wake_threshold;
+ #define BD_ENET_RX_INT		0x00800000
 diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index 40d71be45f604..e6ed36e5daefa 100644
+index e6ed36e5daefa..7659888a96917 100644
 --- a/drivers/net/ethernet/freescale/fec_main.c
 +++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -397,7 +397,7 @@ static void fec_dump(struct net_device *ndev)
- 			fec16_to_cpu(bdp->cbd_sc),
- 			fec32_to_cpu(bdp->cbd_bufaddr),
- 			fec16_to_cpu(bdp->cbd_datlen),
--			txq->tx_skbuff[index]);
-+			txq->tx_buf[index].skb);
- 		bdp = fec_enet_get_nextdesc(bdp, &txq->bd);
- 		index++;
- 	} while (bdp != txq->bd.base);
-@@ -654,7 +654,7 @@ static int fec_enet_txq_submit_skb(struct fec_enet_priv_tx_q *txq,
+@@ -3347,8 +3347,7 @@ static int fec_enet_alloc_queue(struct net_device *ndev)
+ 		fep->total_tx_ring_size += fep->tx_queue[i]->bd.ring_size;
  
- 	index = fec_enet_get_bd_index(last_bdp, &txq->bd);
- 	/* Save skb pointer */
--	txq->tx_skbuff[index] = skb;
-+	txq->tx_buf[index].skb = skb;
+ 		txq->tx_stop_threshold = FEC_MAX_SKB_DESCS;
+-		txq->tx_wake_threshold =
+-			(txq->bd.ring_size - txq->tx_stop_threshold) / 2;
++		txq->tx_wake_threshold = FEC_MAX_SKB_DESCS + 2 * MAX_SKB_FRAGS;
  
- 	/* Make sure the updates to rest of the descriptor are performed before
- 	 * transferring ownership.
-@@ -672,9 +672,7 @@ static int fec_enet_txq_submit_skb(struct fec_enet_priv_tx_q *txq,
- 
- 	skb_tx_timestamp(skb);
- 
--	/* Make sure the update to bdp and tx_skbuff are performed before
--	 * txq->bd.cur.
--	 */
-+	/* Make sure the update to bdp is performed before txq->bd.cur. */
- 	wmb();
- 	txq->bd.cur = bdp;
- 
-@@ -862,7 +860,7 @@ static int fec_enet_txq_submit_tso(struct fec_enet_priv_tx_q *txq,
- 	}
- 
- 	/* Save skb pointer */
--	txq->tx_skbuff[index] = skb;
-+	txq->tx_buf[index].skb = skb;
- 
- 	skb_tx_timestamp(skb);
- 	txq->bd.cur = bdp;
-@@ -952,16 +950,33 @@ static void fec_enet_bd_init(struct net_device *dev)
- 		for (i = 0; i < txq->bd.ring_size; i++) {
- 			/* Initialize the BD for every fragment in the page. */
- 			bdp->cbd_sc = cpu_to_fec16(0);
--			if (bdp->cbd_bufaddr &&
--			    !IS_TSO_HEADER(txq, fec32_to_cpu(bdp->cbd_bufaddr)))
--				dma_unmap_single(&fep->pdev->dev,
--						 fec32_to_cpu(bdp->cbd_bufaddr),
--						 fec16_to_cpu(bdp->cbd_datlen),
--						 DMA_TO_DEVICE);
--			if (txq->tx_skbuff[i]) {
--				dev_kfree_skb_any(txq->tx_skbuff[i]);
--				txq->tx_skbuff[i] = NULL;
-+			if (txq->tx_buf[i].type == FEC_TXBUF_T_SKB) {
-+				if (bdp->cbd_bufaddr &&
-+				    !IS_TSO_HEADER(txq, fec32_to_cpu(bdp->cbd_bufaddr)))
-+					dma_unmap_single(&fep->pdev->dev,
-+							 fec32_to_cpu(bdp->cbd_bufaddr),
-+							 fec16_to_cpu(bdp->cbd_datlen),
-+							 DMA_TO_DEVICE);
-+				if (txq->tx_buf[i].skb) {
-+					dev_kfree_skb_any(txq->tx_buf[i].skb);
-+					txq->tx_buf[i].skb = NULL;
-+				}
-+			} else {
-+				if (bdp->cbd_bufaddr)
-+					dma_unmap_single(&fep->pdev->dev,
-+							 fec32_to_cpu(bdp->cbd_bufaddr),
-+							 fec16_to_cpu(bdp->cbd_datlen),
-+							 DMA_TO_DEVICE);
-+
-+				if (txq->tx_buf[i].xdp) {
-+					xdp_return_frame(txq->tx_buf[i].xdp);
-+					txq->tx_buf[i].xdp = NULL;
-+				}
-+
-+				/* restore default tx buffer type: FEC_TXBUF_T_SKB */
-+				txq->tx_buf[i].type = FEC_TXBUF_T_SKB;
- 			}
-+
- 			bdp->cbd_bufaddr = cpu_to_fec32(0);
- 			bdp = fec_enet_get_nextdesc(bdp, &txq->bd);
- 		}
-@@ -1360,6 +1375,7 @@ static void
- fec_enet_tx_queue(struct net_device *ndev, u16 queue_id)
- {
- 	struct	fec_enet_private *fep;
-+	struct xdp_frame *xdpf;
- 	struct bufdesc *bdp;
- 	unsigned short status;
- 	struct	sk_buff	*skb;
-@@ -1387,16 +1403,31 @@ fec_enet_tx_queue(struct net_device *ndev, u16 queue_id)
- 
- 		index = fec_enet_get_bd_index(bdp, &txq->bd);
- 
--		skb = txq->tx_skbuff[index];
--		txq->tx_skbuff[index] = NULL;
--		if (!IS_TSO_HEADER(txq, fec32_to_cpu(bdp->cbd_bufaddr)))
--			dma_unmap_single(&fep->pdev->dev,
--					 fec32_to_cpu(bdp->cbd_bufaddr),
--					 fec16_to_cpu(bdp->cbd_datlen),
--					 DMA_TO_DEVICE);
--		bdp->cbd_bufaddr = cpu_to_fec32(0);
--		if (!skb)
--			goto skb_done;
-+		if (txq->tx_buf[index].type == FEC_TXBUF_T_SKB) {
-+			skb = txq->tx_buf[index].skb;
-+			txq->tx_buf[index].skb = NULL;
-+			if (bdp->cbd_bufaddr &&
-+			    !IS_TSO_HEADER(txq, fec32_to_cpu(bdp->cbd_bufaddr)))
-+				dma_unmap_single(&fep->pdev->dev,
-+						 fec32_to_cpu(bdp->cbd_bufaddr),
-+						 fec16_to_cpu(bdp->cbd_datlen),
-+						 DMA_TO_DEVICE);
-+			bdp->cbd_bufaddr = cpu_to_fec32(0);
-+			if (!skb)
-+				goto tx_buf_done;
-+		} else {
-+			xdpf = txq->tx_buf[index].xdp;
-+			if (bdp->cbd_bufaddr)
-+				dma_unmap_single(&fep->pdev->dev,
-+						 fec32_to_cpu(bdp->cbd_bufaddr),
-+						 fec16_to_cpu(bdp->cbd_datlen),
-+						 DMA_TO_DEVICE);
-+			bdp->cbd_bufaddr = cpu_to_fec32(0);
-+			if (!xdpf) {
-+				txq->tx_buf[index].type = FEC_TXBUF_T_SKB;
-+				goto tx_buf_done;
-+			}
-+		}
- 
- 		/* Check for errors. */
- 		if (status & (BD_ENET_TX_HB | BD_ENET_TX_LC |
-@@ -1415,21 +1446,11 @@ fec_enet_tx_queue(struct net_device *ndev, u16 queue_id)
- 				ndev->stats.tx_carrier_errors++;
- 		} else {
- 			ndev->stats.tx_packets++;
--			ndev->stats.tx_bytes += skb->len;
--		}
- 
--		/* NOTE: SKBTX_IN_PROGRESS being set does not imply it's we who
--		 * are to time stamp the packet, so we still need to check time
--		 * stamping enabled flag.
--		 */
--		if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_IN_PROGRESS &&
--			     fep->hwts_tx_en) &&
--		    fep->bufdesc_ex) {
--			struct skb_shared_hwtstamps shhwtstamps;
--			struct bufdesc_ex *ebdp = (struct bufdesc_ex *)bdp;
--
--			fec_enet_hwtstamp(fep, fec32_to_cpu(ebdp->ts), &shhwtstamps);
--			skb_tstamp_tx(skb, &shhwtstamps);
-+			if (txq->tx_buf[index].type == FEC_TXBUF_T_SKB)
-+				ndev->stats.tx_bytes += skb->len;
-+			else
-+				ndev->stats.tx_bytes += xdpf->len;
- 		}
- 
- 		/* Deferred means some collisions occurred during transmit,
-@@ -1438,10 +1459,32 @@ fec_enet_tx_queue(struct net_device *ndev, u16 queue_id)
- 		if (status & BD_ENET_TX_DEF)
- 			ndev->stats.collisions++;
- 
--		/* Free the sk buffer associated with this last transmit */
--		dev_kfree_skb_any(skb);
--skb_done:
--		/* Make sure the update to bdp and tx_skbuff are performed
-+		if (txq->tx_buf[index].type == FEC_TXBUF_T_SKB) {
-+			/* NOTE: SKBTX_IN_PROGRESS being set does not imply it's we who
-+			 * are to time stamp the packet, so we still need to check time
-+			 * stamping enabled flag.
-+			 */
-+			if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_IN_PROGRESS &&
-+				     fep->hwts_tx_en) && fep->bufdesc_ex) {
-+				struct skb_shared_hwtstamps shhwtstamps;
-+				struct bufdesc_ex *ebdp = (struct bufdesc_ex *)bdp;
-+
-+				fec_enet_hwtstamp(fep, fec32_to_cpu(ebdp->ts), &shhwtstamps);
-+				skb_tstamp_tx(skb, &shhwtstamps);
-+			}
-+
-+			/* Free the sk buffer associated with this last transmit */
-+			dev_kfree_skb_any(skb);
-+		} else {
-+			xdp_return_frame(xdpf);
-+
-+			txq->tx_buf[index].xdp = NULL;
-+			/* restore default tx buffer type: FEC_TXBUF_T_SKB */
-+			txq->tx_buf[index].type = FEC_TXBUF_T_SKB;
-+		}
-+
-+tx_buf_done:
-+		/* Make sure the update to bdp and tx_buf are performed
- 		 * before dirty_tx
- 		 */
- 		wmb();
-@@ -3247,9 +3290,19 @@ static void fec_enet_free_buffers(struct net_device *ndev)
- 		for (i = 0; i < txq->bd.ring_size; i++) {
- 			kfree(txq->tx_bounce[i]);
- 			txq->tx_bounce[i] = NULL;
--			skb = txq->tx_skbuff[i];
--			txq->tx_skbuff[i] = NULL;
--			dev_kfree_skb(skb);
-+
-+			if (txq->tx_buf[i].type == FEC_TXBUF_T_SKB) {
-+				skb = txq->tx_buf[i].skb;
-+				txq->tx_buf[i].skb = NULL;
-+				dev_kfree_skb(skb);
-+			} else {
-+				if (txq->tx_buf[i].xdp) {
-+					xdp_return_frame(txq->tx_buf[i].xdp);
-+					txq->tx_buf[i].xdp = NULL;
-+				}
-+
-+				txq->tx_buf[i].type = FEC_TXBUF_T_SKB;
-+			}
- 		}
- 	}
- }
-@@ -3809,7 +3862,8 @@ static int fec_enet_txq_xmit_frame(struct fec_enet_private *fep,
- 		ebdp->cbd_esc = cpu_to_fec32(estatus);
- 	}
- 
--	txq->tx_skbuff[index] = NULL;
-+	txq->tx_buf[index].type = FEC_TXBUF_T_XDP_NDO;
-+	txq->tx_buf[index].xdp = frame;
- 
- 	/* Make sure the updates to rest of the descriptor are performed before
- 	 * transferring ownership.
+ 		txq->tso_hdrs = dma_alloc_coherent(&fep->pdev->dev,
+ 					txq->bd.ring_size * TSO_HEADER_SIZE,
 -- 
 2.39.2
 
