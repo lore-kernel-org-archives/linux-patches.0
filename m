@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B2421D20
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:20:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F7E5C433C8;
-	Fri, 21 Jul 2023 16:20:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B704A21D50
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:20:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F79C43140;
+	Fri, 21 Jul 2023 16:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956426;
-	bh=PYyTACxITCQYQJtm7I0D1U4MOuUk8AjpkpWfmqdLnEg=;
+	s=korg; t=1689956429;
+	bh=PX000U1omiXGjurskrbDWLCkoEUtNBAG2bzqTT0cDuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UilzqtrX+kLB0n67env2C2617mJQDvxkXrwCM6G6TPnOrHgbvcp9Kz0do576Ik5tF
-	 95LKO6BuWFVGLSKSnC3+bKz+eLWPoEYa8jv0wnLgq2LyFS8gEZhAChgRo6TyEQZxZe
-	 LI6uqFT15JbrEc/tCe3YRPwT/EKVA6qK3rhVikcE=
+	b=TtGEIL3KtFTd4o59eqdbDvGAbIsy1ZTbZiulkOUjwpzjRY/cDIhulnHDmUNnRyiDd
+	 BoqPPPy832V0K2O5MqoyEPApnwnrcOBa/3uXqOm5WLy8vk0NGOAFJy3yE9vUpX5bfA
+	 tHmZffsA+w/4/MLtdAoPBCYmTk7dVJ9dq/KYWzP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>
-Subject: [PATCH 6.4 188/292] fs: dlm: interrupt posix locks only when process is killed
-Date: Fri, 21 Jul 2023 18:04:57 +0200
-Message-ID: <20230721160536.970189251@linuxfoundation.org>
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Siddh Raman Pant <code@siddh.me>,
+	syzbot+d2cd27dcf8e04b232eb2@syzkaller.appspotmail.com
+Subject: [PATCH 6.4 162/292] jfs: jfs_dmap: Validate db_l2nbperpage while mounting
+Date: Fri, 21 Jul 2023 18:04:31 +0200
+Message-ID: <20230721160535.867249843@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -34,39 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Siddh Raman Pant <code@siddh.me>
 
-commit 59e45c758ca1b9893ac923dd63536da946ac333b upstream.
+commit 11509910c599cbd04585ec35a6d5e1a0053d84c1 upstream.
 
-If a posix lock request is waiting for a result from user space
-(dlm_controld), do not let it be interrupted unless the process
-is killed. This reverts commit a6b1533e9a57 ("dlm: make posix locks
-interruptible"). The problem with the interruptible change is
-that all locks were cleared on any signal interrupt. If a signal
-was received that did not terminate the process, the process
-could continue running after all its dlm posix locks had been
-cleared. A future patch will add cancelation to allow proper
-interruption.
+In jfs_dmap.c at line 381, BLKTODMAP is used to get a logical block
+number inside dbFree(). db_l2nbperpage, which is the log2 number of
+blocks per page, is passed as an argument to BLKTODMAP which uses it
+for shifting.
 
+Syzbot reported a shift out-of-bounds crash because db_l2nbperpage is
+too big. This happens because the large value is set without any
+validation in dbMount() at line 181.
+
+Thus, make sure that db_l2nbperpage is correct while mounting.
+
+Max number of blocks per page = Page size / Min block size
+=> log2(Max num_block per page) = log2(Page size / Min block size)
+				= log2(Page size) - log2(Min block size)
+
+=> Max db_l2nbperpage = L2PSIZE - L2MINBLOCKSIZE
+
+Reported-and-tested-by: syzbot+d2cd27dcf8e04b232eb2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?id=2a70a453331db32ed491f5cbb07e81bf2d225715
 Cc: stable@vger.kernel.org
-Fixes: a6b1533e9a57 ("dlm: make posix locks interruptible")
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+Suggested-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Siddh Raman Pant <code@siddh.me>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dlm/plock.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jfs/jfs_dmap.c   |    6 ++++++
+ fs/jfs/jfs_filsys.h |    2 ++
+ 2 files changed, 8 insertions(+)
 
---- a/fs/dlm/plock.c
-+++ b/fs/dlm/plock.c
-@@ -155,7 +155,7 @@ int dlm_posix_lock(dlm_lockspace_t *lock
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -178,7 +178,13 @@ int dbMount(struct inode *ipbmap)
+ 	dbmp_le = (struct dbmap_disk *) mp->data;
+ 	bmp->db_mapsize = le64_to_cpu(dbmp_le->dn_mapsize);
+ 	bmp->db_nfree = le64_to_cpu(dbmp_le->dn_nfree);
++
+ 	bmp->db_l2nbperpage = le32_to_cpu(dbmp_le->dn_l2nbperpage);
++	if (bmp->db_l2nbperpage > L2PSIZE - L2MINBLOCKSIZE) {
++		err = -EINVAL;
++		goto err_release_metapage;
++	}
++
+ 	bmp->db_numag = le32_to_cpu(dbmp_le->dn_numag);
+ 	if (!bmp->db_numag) {
+ 		err = -EINVAL;
+--- a/fs/jfs/jfs_filsys.h
++++ b/fs/jfs/jfs_filsys.h
+@@ -122,7 +122,9 @@
+ #define NUM_INODE_PER_IAG	INOSPERIAG
  
- 	send_op(op);
+ #define MINBLOCKSIZE		512
++#define L2MINBLOCKSIZE		9
+ #define MAXBLOCKSIZE		4096
++#define L2MAXBLOCKSIZE		12
+ #define	MAXFILESIZE		((s64)1 << 52)
  
--	rv = wait_event_interruptible(recv_wq, (op->done != 0));
-+	rv = wait_event_killable(recv_wq, (op->done != 0));
- 	if (rv == -ERESTARTSYS) {
- 		spin_lock(&ops_lock);
- 		/* recheck under ops_lock if we got a done != 0,
+ #define JFS_LINK_MAX		0xffffffff
 
 
