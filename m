@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED77520F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:08:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D43BC433C7;
-	Fri, 21 Jul 2023 19:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B678F20F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:08:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34463C433C8;
+	Fri, 21 Jul 2023 19:08:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966501;
-	bh=kPbn4J4G8uY9G5Ogdk3PRbIL9htjcim/f27hwH11jEY=;
+	s=korg; t=1689966504;
+	bh=0hphxRKA0bVY0j62tPdwg7MJY7Evx7AvAMEiZd2eCd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=enpu3gaYXxK2B5M3DfxkGVDahp880FlNEAJaynrE788xbWP0Pc1O/lqXh9mgfH7Bd
-	 SW/gWq5puGy6eT2xxea5JgDVx3Ekoew5wNTl6i3oYHsAKX+poND6kXnSvsex4PUste
-	 UYCWL8YB/d3IdcxtFjxXhGvuLkotPx189eNhTYWo=
+	b=moknSJBlq95RQo2RwDugOWoX3XTgXVI44ncO0c6wfCROHAT3uz+eeQgOrMgJVOoO/
+	 jCgWHkF1sxVjpIBYuMzUeJZh8hBvnF83+mwHUtgS67HzDYENj3IRPyW9tDlj1dOwpv
+	 x1RC5NrYxuxU6JcqdajodqQNxMSacE1zT49LB3jU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Naohiro Aota <naohiro.aota@wdc.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 366/532] btrfs: bail out reclaim process if filesystem is read-only
-Date: Fri, 21 Jul 2023 18:04:30 +0200
-Message-ID: <20230721160634.325880189@linuxfoundation.org>
+Subject: [PATCH 5.15 367/532] btrfs: reinsert BGs failed to reclaim
+Date: Fri, 21 Jul 2023 18:04:31 +0200
+Message-ID: <20230721160634.381658747@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -38,45 +36,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Naohiro Aota <naota@elisp.net>
 
-commit 93463ff7b54626f8276c0bd3d3f968fbf8d5d380 upstream.
+commit 7e27180994383b7c741ad87749db01e4989a02ba upstream.
 
-When a filesystem is read-only, we cannot reclaim a block group as it
-cannot rewrite the data. Just bail out in that case.
+The reclaim process can temporarily fail. For example, if the space is
+getting tight, it fails to make the block group read-only. If there are no
+further writes on that block group, the block group will never get back to
+the reclaim list, and the BG never gets reclaimed. In a certain workload,
+we can leave many such block groups never reclaimed.
 
-Note that it can drop block groups in this case. As we did
-sb_start_write(), read-only filesystem means we got a fatal error and
-forced read-only. There is no chance to reclaim them again.
+So, let's get it back to the list and give it a chance to be reclaimed.
 
 Fixes: 18bb8bbf13c1 ("btrfs: zoned: automatically reclaim zones")
 CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/block-group.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/btrfs/block-group.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/fs/btrfs/block-group.c
 +++ b/fs/btrfs/block-group.c
-@@ -1541,8 +1541,15 @@ void btrfs_reclaim_bgs_work(struct work_
+@@ -1580,6 +1580,8 @@ void btrfs_reclaim_bgs_work(struct work_
  		}
- 		spin_unlock(&bg->lock);
  
--		/* Get out fast, in case we're unmounting the filesystem */
--		if (btrfs_fs_closing(fs_info)) {
-+		/*
-+		 * Get out fast, in case we're read-only or unmounting the
-+		 * filesystem. It is OK to drop block groups from the list even
-+		 * for the read-only case. As we did sb_start_write(),
-+		 * "mount -o remount,ro" won't happen and read-only filesystem
-+		 * means it is forced read-only due to a fatal error. So, it
-+		 * never gets back to read-write to let us reclaim again.
-+		 */
-+		if (btrfs_need_cleaner_sleep(fs_info)) {
- 			up_write(&space_info->groups_sem);
- 			goto next;
- 		}
+ next:
++		if (ret)
++			btrfs_mark_bg_to_reclaim(bg);
+ 		btrfs_put_block_group(bg);
+ 
+ 		mutex_unlock(&fs_info->reclaim_bgs_lock);
 
 
