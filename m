@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A408E20F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:22:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F7DC433C7;
-	Fri, 21 Jul 2023 19:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701D020F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:22:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3721C433C8;
+	Fri, 21 Jul 2023 19:22:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967366;
-	bh=evykjSogZc95njv5doJML0wvEN3oslzIzug4rWNW+O4=;
+	s=korg; t=1689967369;
+	bh=4xK/OvB/T0/GZx7efTv9a9Ti0PyEP6YYLSt/NMJfXJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YpfnW/624xqcWb/PzEzA7thNTxjm1FD4RUy++DezxRWaJbADb12NvrNkVIIwcA4SI
-	 54JrFUQI4uhzslsTXj8iwsCVw08+Jd6S7uYz06EjHVhG4Wi48TWkkzoivapRdQUFVv
-	 UT7trQaMBJ6H3eyXJy4o0yDvLhrPLcoOAmspZXbI=
+	b=cjWvppJIuMgmrTZmTTVlI8TZ2SpXwmnIeDRCEZzoyLZVwraN15zCEOnhsIHpI1Lg5
+	 p8iZWlFElge7X6qj2z8OFjCmXWAK/0nHzI055u6t7LlX+txKhkFPTpzyNYfea3XNjL
+	 zm2O3Y7ioxFzu/GjwCD7eaixgdbqHlcCSYsIY6JE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 110/223] ext4: only update i_reserved_data_blocks on successful block allocation
-Date: Fri, 21 Jul 2023 18:06:03 +0200
-Message-ID: <20230721160525.559566765@linuxfoundation.org>
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>
+Subject: [PATCH 6.1 137/223] fs: dlm: return positive pid value for F_GETLK
+Date: Fri, 21 Jul 2023 18:06:30 +0200
+Message-ID: <20230721160526.715668507@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -36,92 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-commit de25d6e9610a8b30cce9bbb19b50615d02ebca02 upstream.
+commit 92655fbda5c05950a411eaabc19e025e86e2a291 upstream.
 
-In our fault injection test, we create an ext4 file, migrate it to
-non-extent based file, then punch a hole and finally trigger a WARN_ON
-in the ext4_da_update_reserve_space():
+The GETLK pid values have all been negated since commit 9d5b86ac13c5
+("fs/locks: Remove fl_nspid and use fs-specific l_pid for remote locks").
+Revert this for local pids, and leave in place negative pids for remote
+owners.
 
-EXT4-fs warning (device sda): ext4_da_update_reserve_space:369:
-ino 14, used 11 with only 10 reserved data blocks
-
-When writing back a non-extent based file, if we enable delalloc, the
-number of reserved blocks will be subtracted from the number of blocks
-mapped by ext4_ind_map_blocks(), and the extent status tree will be
-updated. We update the extent status tree by first removing the old
-extent_status and then inserting the new extent_status. If the block range
-we remove happens to be in an extent, then we need to allocate another
-extent_status with ext4_es_alloc_extent().
-
-       use old    to remove   to add new
-    |----------|------------|------------|
-              old extent_status
-
-The problem is that the allocation of a new extent_status failed due to a
-fault injection, and __es_shrink() did not get free memory, resulting in
-a return of -ENOMEM. Then do_writepages() retries after receiving -ENOMEM,
-we map to the same extent again, and the number of reserved blocks is again
-subtracted from the number of blocks in that extent. Since the blocks in
-the same extent are subtracted twice, we end up triggering WARN_ON at
-ext4_da_update_reserve_space() because used > ei->i_reserved_data_blocks.
-
-For non-extent based file, we update the number of reserved blocks after
-ext4_ind_map_blocks() is executed, which causes a problem that when we call
-ext4_ind_map_blocks() to create a block, it doesn't always create a block,
-but we always reduce the number of reserved blocks. So we move the logic
-for updating reserved blocks to ext4_ind_map_blocks() to ensure that the
-number of reserved blocks is updated only after we do succeed in allocating
-some new blocks.
-
-Fixes: 5f634d064c70 ("ext4: Fix quota accounting error with fallocate")
-Cc: stable@kernel.org
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230424033846.4732-2-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@vger.kernel.org
+Fixes: 9d5b86ac13c5 ("fs/locks: Remove fl_nspid and use fs-specific l_pid for remote locks")
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/indirect.c |    8 ++++++++
- fs/ext4/inode.c    |   10 ----------
- 2 files changed, 8 insertions(+), 10 deletions(-)
+ fs/dlm/plock.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/indirect.c
-+++ b/fs/ext4/indirect.c
-@@ -651,6 +651,14 @@ int ext4_ind_map_blocks(handle_t *handle
- 
- 	ext4_update_inode_fsync_trans(handle, inode, 1);
- 	count = ar.len;
-+
-+	/*
-+	 * Update reserved blocks/metadata blocks after successful block
-+	 * allocation which had been deferred till now.
-+	 */
-+	if (flags & EXT4_GET_BLOCKS_DELALLOC_RESERVE)
-+		ext4_da_update_reserve_space(inode, count, 1);
-+
- got_it:
- 	map->m_flags |= EXT4_MAP_MAPPED;
- 	map->m_pblk = le32_to_cpu(chain[depth-1].key);
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -660,16 +660,6 @@ found:
- 			 */
- 			ext4_clear_inode_state(inode, EXT4_STATE_EXT_MIGRATE);
- 		}
--
--		/*
--		 * Update reserved blocks/metadata blocks after successful
--		 * block allocation which had been deferred till now. We don't
--		 * support fallocate for non extent files. So we can update
--		 * reserve space here.
--		 */
--		if ((retval > 0) &&
--			(flags & EXT4_GET_BLOCKS_DELALLOC_RESERVE))
--			ext4_da_update_reserve_space(inode, retval, 1);
- 	}
- 
- 	if (retval > 0) {
+--- a/fs/dlm/plock.c
++++ b/fs/dlm/plock.c
+@@ -359,7 +359,9 @@ int dlm_posix_get(dlm_lockspace_t *locks
+ 		locks_init_lock(fl);
+ 		fl->fl_type = (op->info.ex) ? F_WRLCK : F_RDLCK;
+ 		fl->fl_flags = FL_POSIX;
+-		fl->fl_pid = -op->info.pid;
++		fl->fl_pid = op->info.pid;
++		if (op->info.nodeid != dlm_our_nodeid())
++			fl->fl_pid = -fl->fl_pid;
+ 		fl->fl_start = op->info.start;
+ 		fl->fl_end = op->info.end;
+ 		rv = 0;
 
 
