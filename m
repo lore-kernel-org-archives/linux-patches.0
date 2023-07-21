@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9726920F8F
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:18:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14199C433C8;
-	Fri, 21 Jul 2023 19:18:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC3C20F8F
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:18:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6446C433C7;
+	Fri, 21 Jul 2023 19:18:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689967084;
-	bh=oINC+a82KR7RUUD6nNEIQt27HVaahwuweoxLWwzWoCQ=;
+	s=korg; t=1689967087;
+	bh=WobzbKCo3HNo/CQqTM7PQ6upSAaCKLi2CbsS297v0Ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d1EM7jSDIHfpkNn8lSKS/ycacK3s0k38O0uo/RFNSD0i57R3Ymb7s8VxIwPI4dwQ7
-	 3dNz2Kqxq7a2jSxCkGuX3hzewr0Fhw26ywtIOi39/QCMuenhdiS6uwC91WTbILhVGP
-	 bTwKv8QAhvOwpmBpfCCoYfoj679CkeqT1QcLaqL8=
+	b=zwmd9JoFK+rbTiROm6kqRCtudJtk/wFDCB9VfcTUpqL4rEwNIN9kQwj/3oV+RbceF
+	 BjGySd6bUI5t7GPVLrFCX/oYPJQBU6wvc6RB9CBYeHXR9cfK/iYkCln4eGV3Nn0NmH
+	 VHLwDGdb4+e27waIV/DMl5Fk39JULq81GZa0O6C0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Jon Mason <jdmason@kudzu.us>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/223] ntb: intel: Fix error handling in intel_ntb_pci_driver_init()
-Date: Fri, 21 Jul 2023 18:04:51 +0200
-Message-ID: <20230721160522.488090774@linuxfoundation.org>
+Subject: [PATCH 6.1 039/223] NTB: ntb_transport: fix possible memory leak while device_register() fails
+Date: Fri, 21 Jul 2023 18:04:52 +0200
+Message-ID: <20230721160522.528991972@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 References: <20230721160520.865493356@linuxfoundation.org>
@@ -36,62 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 4c3c796aca02883ad35bb117468938cc4022ca41 ]
+[ Upstream commit 8623ccbfc55d962e19a3537652803676ad7acb90 ]
 
-A problem about ntb_hw_intel create debugfs failed is triggered with the
-following log given:
+If device_register() returns error, the name allocated by
+dev_set_name() need be freed. As comment of device_register()
+says, it should use put_device() to give up the reference in
+the error path. So fix this by calling put_device(), then the
+name can be freed in kobject_cleanup(), and client_dev is freed
+in ntb_transport_client_release().
 
- [  273.112733] Intel(R) PCI-E Non-Transparent Bridge Driver 2.0
- [  273.115342] debugfs: Directory 'ntb_hw_intel' with parent '/' already present!
-
-The reason is that intel_ntb_pci_driver_init() returns
-pci_register_driver() directly without checking its return value, if
-pci_register_driver() failed, it returns without destroy the newly created
-debugfs, resulting the debugfs of ntb_hw_intel can never be created later.
-
- intel_ntb_pci_driver_init()
-   debugfs_create_dir() # create debugfs directory
-   pci_register_driver()
-     driver_register()
-       bus_add_driver()
-         priv = kzalloc(...) # OOM happened
-   # return without destroy debugfs directory
-
-Fix by removing debugfs when pci_register_driver() returns error.
-
-Fixes: e26a5843f7f5 ("NTB: Split ntb_hw_intel and ntb_transport drivers")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Acked-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: fce8a7bb5b4b ("PCI-Express Non-Transparent Bridge Support")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/hw/intel/ntb_hw_gen1.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/ntb/ntb_transport.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ntb/hw/intel/ntb_hw_gen1.c b/drivers/ntb/hw/intel/ntb_hw_gen1.c
-index 84772013812bf..60a4ebc7bf35a 100644
---- a/drivers/ntb/hw/intel/ntb_hw_gen1.c
-+++ b/drivers/ntb/hw/intel/ntb_hw_gen1.c
-@@ -2064,12 +2064,17 @@ static struct pci_driver intel_ntb_pci_driver = {
+diff --git a/drivers/ntb/ntb_transport.c b/drivers/ntb/ntb_transport.c
+index a9b97ebc71ac5..2abd2235bbcab 100644
+--- a/drivers/ntb/ntb_transport.c
++++ b/drivers/ntb/ntb_transport.c
+@@ -410,7 +410,7 @@ int ntb_transport_register_client_dev(char *device_name)
  
- static int __init intel_ntb_pci_driver_init(void)
- {
-+	int ret;
- 	pr_info("%s %s\n", NTB_DESC, NTB_VER);
- 
- 	if (debugfs_initialized())
- 		debugfs_dir = debugfs_create_dir(KBUILD_MODNAME, NULL);
- 
--	return pci_register_driver(&intel_ntb_pci_driver);
-+	ret = pci_register_driver(&intel_ntb_pci_driver);
-+	if (ret)
-+		debugfs_remove_recursive(debugfs_dir);
-+
-+	return ret;
- }
- module_init(intel_ntb_pci_driver_init);
+ 		rc = device_register(dev);
+ 		if (rc) {
+-			kfree(client_dev);
++			put_device(dev);
+ 			goto err;
+ 		}
  
 -- 
 2.39.2
