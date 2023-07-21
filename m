@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E741F93D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:11:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558ECC433C8;
-	Fri, 21 Jul 2023 16:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A278B1F93D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:12:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 228D4C433C7;
+	Fri, 21 Jul 2023 16:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689955917;
-	bh=cqFzTWInx0Co4DALnRL8B6XTaDKz4WSTZU7QpHMgNFU=;
+	s=korg; t=1689955920;
+	bh=b4FfLj9ts42f31xrg4+UTEhT6tlJ8MqWZFQZn0vlAy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f4k6hUP6XhNO1pJEXkSVn0YcWUAelcm/X3Y006E+cXOttFgyYn/ZPNGt2WU4y0YiF
-	 6UYeesbGzu2ekP/gCp56VxgsdP6dj2YdM7n0HzqLodDyk6PLodWTcxmInwXjqYHV2q
-	 reiIfPC9VJI6tD4sc813l9JGO24ulVSZwTR/kFtE=
+	b=QAgD7z2HkgQ/w2DurOel7RUqz6JoMJM/SwB8uT4PBLN7I0YrjZn1bpHGOgKNRyyhY
+	 3RC8xhRPeux+D+ZBwdBbfyKVH3QOtlDapKUttDBDhiscio3Bl731cujcgnYdPDDdwF
+	 KNpywPWWoVwaDYZavwNYVqEQVXDAPBTvrXGlWrZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
+	Naveen Mamindlapalli <naveenm@marvell.com>,
+	Sunil Goutham <sgoutham@marvell.com>,
+	Sai Krishna <saikrishnag@marvell.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 048/292] octeontx2-af: Promisc enable/disable through mbox
-Date: Fri, 21 Jul 2023 18:02:37 +0200
-Message-ID: <20230721160530.868206483@linuxfoundation.org>
+Subject: [PATCH 6.4 049/292] octeontx2-af: Move validation of ptp pointer before its usage
+Date: Fri, 21 Jul 2023 18:02:38 +0200
+Message-ID: <20230721160530.910442638@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -37,116 +37,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Sai Krishna <saikrishnag@marvell.com>
 
-[ Upstream commit af42088bdaf292060b8d8a00d8644ca7b2b3f2d1 ]
+[ Upstream commit 7709fbd4922c197efabda03660d93e48a3e80323 ]
 
-In legacy silicon, promiscuous mode is only modified
-through CGX mbox messages. In CN10KB silicon, it is modified
-from CGX mbox and NIX. This breaks legacy application
-behaviour. Fix this by removing call from NIX.
+Moved PTP pointer validation before its use to avoid smatch warning.
+Also used kzalloc/kfree instead of devm_kzalloc/devm_kfree.
 
-Fixes: d6c9784baf59 ("octeontx2-af: Invoke exact match functions if supported")
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Fixes: 2ef4e45d99b1 ("octeontx2-af: Add PTP PPS Errata workaround on CN10K silicon")
+Signed-off-by: Naveen Mamindlapalli <naveenm@marvell.com>
+Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
+Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeontx2/af/rvu_nix.c   | 11 ++-------
- .../marvell/octeontx2/af/rvu_npc_hash.c       | 23 +++++++++++++++++--
- 2 files changed, 23 insertions(+), 11 deletions(-)
+ .../net/ethernet/marvell/octeontx2/af/ptp.c   | 19 +++++++++----------
+ .../net/ethernet/marvell/octeontx2/af/rvu.c   |  2 +-
+ 2 files changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index f01d057ad025a..8cdf91a5bf44f 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -3815,21 +3815,14 @@ int rvu_mbox_handler_nix_set_rx_mode(struct rvu *rvu, struct nix_rx_mode *req,
- 	}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/ptp.c b/drivers/net/ethernet/marvell/octeontx2/af/ptp.c
+index 3411e2e47d46b..0ee420a489fc4 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/ptp.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/ptp.c
+@@ -208,7 +208,7 @@ struct ptp *ptp_get(void)
+ 	/* Check driver is bound to PTP block */
+ 	if (!ptp)
+ 		ptp = ERR_PTR(-EPROBE_DEFER);
+-	else
++	else if (!IS_ERR(ptp))
+ 		pci_dev_get(ptp->pdev);
  
- 	/* install/uninstall promisc entry */
--	if (promisc) {
-+	if (promisc)
- 		rvu_npc_install_promisc_entry(rvu, pcifunc, nixlf,
- 					      pfvf->rx_chan_base,
- 					      pfvf->rx_chan_cnt);
--
--		if (rvu_npc_exact_has_match_table(rvu))
--			rvu_npc_exact_promisc_enable(rvu, pcifunc);
--	} else {
-+	else
- 		if (!nix_rx_multicast)
- 			rvu_npc_enable_promisc_entry(rvu, pcifunc, nixlf, false);
- 
--		if (rvu_npc_exact_has_match_table(rvu))
--			rvu_npc_exact_promisc_disable(rvu, pcifunc);
--	}
--
- 	return 0;
- }
- 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-index 9f11c1e407373..6fe67f3a7f6f1 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-@@ -1164,8 +1164,10 @@ static u16 __rvu_npc_exact_cmd_rules_cnt_update(struct rvu *rvu, int drop_mcam_i
+ 	return ptp;
+@@ -388,11 +388,10 @@ static int ptp_extts_on(struct ptp *ptp, int on)
+ static int ptp_probe(struct pci_dev *pdev,
+ 		     const struct pci_device_id *ent)
  {
- 	struct npc_exact_table *table;
- 	u16 *cnt, old_cnt;
-+	bool promisc;
+-	struct device *dev = &pdev->dev;
+ 	struct ptp *ptp;
+ 	int err;
  
- 	table = rvu->hw->table;
-+	promisc = table->promisc_mode[drop_mcam_idx];
+-	ptp = devm_kzalloc(dev, sizeof(*ptp), GFP_KERNEL);
++	ptp = kzalloc(sizeof(*ptp), GFP_KERNEL);
+ 	if (!ptp) {
+ 		err = -ENOMEM;
+ 		goto error;
+@@ -428,20 +427,19 @@ static int ptp_probe(struct pci_dev *pdev,
+ 	return 0;
  
- 	cnt = &table->cnt_cmd_rules[drop_mcam_idx];
- 	old_cnt = *cnt;
-@@ -1177,13 +1179,18 @@ static u16 __rvu_npc_exact_cmd_rules_cnt_update(struct rvu *rvu, int drop_mcam_i
+ error_free:
+-	devm_kfree(dev, ptp);
++	kfree(ptp);
  
- 	*enable_or_disable_cam = false;
+ error:
+ 	/* For `ptp_get()` we need to differentiate between the case
+ 	 * when the core has not tried to probe this device and the case when
+-	 * the probe failed.  In the later case we pretend that the
+-	 * initialization was successful and keep the error in
++	 * the probe failed.  In the later case we keep the error in
+ 	 * `dev->driver_data`.
+ 	 */
+ 	pci_set_drvdata(pdev, ERR_PTR(err));
+ 	if (!first_ptp_block)
+ 		first_ptp_block = ERR_PTR(err);
  
--	/* If all rules are deleted, disable cam */
-+	if (promisc)
-+		goto done;
+-	return 0;
++	return err;
+ }
+ 
+ static void ptp_remove(struct pci_dev *pdev)
+@@ -449,16 +447,17 @@ static void ptp_remove(struct pci_dev *pdev)
+ 	struct ptp *ptp = pci_get_drvdata(pdev);
+ 	u64 clock_cfg;
+ 
+-	if (cn10k_ptp_errata(ptp) && hrtimer_active(&ptp->hrtimer))
+-		hrtimer_cancel(&ptp->hrtimer);
+-
+ 	if (IS_ERR_OR_NULL(ptp))
+ 		return;
+ 
++	if (cn10k_ptp_errata(ptp) && hrtimer_active(&ptp->hrtimer))
++		hrtimer_cancel(&ptp->hrtimer);
 +
-+	/* If all rules are deleted and not already in promisc mode;
-+	 * disable cam
-+	 */
- 	if (!*cnt && val < 0) {
- 		*enable_or_disable_cam = true;
- 		goto done;
+ 	/* Disable PTP clock */
+ 	clock_cfg = readq(ptp->reg_base + PTP_CLOCK_CFG);
+ 	clock_cfg &= ~PTP_CLOCK_CFG_PTP_EN;
+ 	writeq(clock_cfg, ptp->reg_base + PTP_CLOCK_CFG);
++	kfree(ptp);
+ }
+ 
+ static const struct pci_device_id ptp_id_table[] = {
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+index b26b013216933..73932e2755bca 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+@@ -3253,7 +3253,7 @@ static int rvu_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	rvu->ptp = ptp_get();
+ 	if (IS_ERR(rvu->ptp)) {
+ 		err = PTR_ERR(rvu->ptp);
+-		if (err == -EPROBE_DEFER)
++		if (err)
+ 			goto err_release_regions;
+ 		rvu->ptp = NULL;
  	}
- 
--	/* If rule got added, enable cam */
-+	/* If rule got added and not already in promisc mode; enable cam */
- 	if (!old_cnt && val > 0) {
- 		*enable_or_disable_cam = true;
- 		goto done;
-@@ -1462,6 +1469,12 @@ int rvu_npc_exact_promisc_disable(struct rvu *rvu, u16 pcifunc)
- 	*promisc = false;
- 	mutex_unlock(&table->lock);
- 
-+	/* Enable drop rule */
-+	rvu_npc_enable_mcam_by_entry_index(rvu, drop_mcam_idx, NIX_INTF_RX,
-+					   true);
-+
-+	dev_dbg(rvu->dev, "%s: disabled  promisc mode (cgx=%d lmac=%d)\n",
-+		__func__, cgx_id, lmac_id);
- 	return 0;
- }
- 
-@@ -1503,6 +1516,12 @@ int rvu_npc_exact_promisc_enable(struct rvu *rvu, u16 pcifunc)
- 	*promisc = true;
- 	mutex_unlock(&table->lock);
- 
-+	/*  disable drop rule */
-+	rvu_npc_enable_mcam_by_entry_index(rvu, drop_mcam_idx, NIX_INTF_RX,
-+					   false);
-+
-+	dev_dbg(rvu->dev, "%s: Enabled promisc mode (cgx=%d lmac=%d)\n",
-+		__func__, cgx_id, lmac_id);
- 	return 0;
- }
- 
 -- 
 2.39.2
 
