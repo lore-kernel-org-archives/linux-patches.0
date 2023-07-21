@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035C420F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7831CC433C7;
-	Fri, 21 Jul 2023 19:09:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA76E20F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:09:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44060C433C8;
+	Fri, 21 Jul 2023 19:09:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966595;
-	bh=aSnoEE6cPZJC9rsiyL+O3RnGxnYgZqMAXwgdzC/u2ck=;
+	s=korg; t=1689966598;
+	bh=S5efc+spB6BW/idYFiowZdu/4EImoy2qmfvtKY7P2nY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gSHJIIf6OKAW01BxKCo19bCGvcaRjy2RZuvK6jD8sMGvMTQWREkKAJxh589Sef0mC
-	 MTZXR1vOEKvEhod0mqVqDWb7GkO3Loau85U/TlF07uslV/KvzNAHyJhrD2YfcutixW
-	 sD8Zfk7SNjyTyWWrjy+gqkUxUYSGigQ03Hc+xlqg=
+	b=S2vwLdXoerAvC7UcaYASH5T5EKhzsIgUThAZ+WlMerJCq1/f0ehnYqlm4TtJDwADX
+	 Aphrwfpdcvh51KrkE0VfjsOwrhZs+x6Rf3FYNnyrnhtPDNdX5863f1/DtdHOn3qhyZ
+	 2kaOnDv5vOMF37mZ7jNe3PGELxgEP4HCd4Uf+4i8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 399/532] net/mlx5e: fix double free in mlx5e_destroy_flow_table
-Date: Fri, 21 Jul 2023 18:05:03 +0200
-Message-ID: <20230721160636.104277767@linuxfoundation.org>
+Subject: [PATCH 5.15 400/532] net/mlx5e: fix memory leak in mlx5e_ptp_open
+Date: Fri, 21 Jul 2023 18:05:04 +0200
+Message-ID: <20230721160636.157165210@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,34 +40,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 884abe45a9014d0de2e6edb0630dfd64f23f1d1b ]
+[ Upstream commit d543b649ffe58a0cb4b6948b3305069c5980a1fa ]
 
-In function accel_fs_tcp_create_groups(), when the ft->g memory is
-successfully allocated but the 'in' memory fails to be allocated, the
-memory pointed to by ft->g is released once. And in function
-accel_fs_tcp_create_table, mlx5e_destroy_flow_table is called to release
-the memory pointed to by ft->g again. This will cause double free problem.
+When kvzalloc_node or kvzalloc failed in mlx5e_ptp_open, the memory
+pointed by "c" or "cparams" is not freed, which can lead to a memory
+leak. Fix by freeing the array in the error path.
 
-Fixes: c062d52ac24c ("net/mlx5e: Receive flow steering framework for accelerated TCP flows")
+Fixes: 145e5637d941 ("net/mlx5e: Add TX PTP port object support")
 Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Reviewed-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+Reviewed-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c
-index 4c4ee524176c7..153c16e3ff3bf 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c
-@@ -194,6 +194,7 @@ static int accel_fs_tcp_create_groups(struct mlx5e_flow_table *ft,
- 	in = kvzalloc(inlen, GFP_KERNEL);
- 	if  (!in || !ft->g) {
- 		kfree(ft->g);
-+		ft->g = NULL;
- 		kvfree(in);
- 		return -ENOMEM;
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
+index ee95cc3a03786..ce941e6091c57 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
+@@ -676,8 +676,10 @@ int mlx5e_ptp_open(struct mlx5e_priv *priv, struct mlx5e_params *params,
+ 
+ 	c = kvzalloc_node(sizeof(*c), GFP_KERNEL, dev_to_node(mlx5_core_dma_dev(mdev)));
+ 	cparams = kvzalloc(sizeof(*cparams), GFP_KERNEL);
+-	if (!c || !cparams)
+-		return -ENOMEM;
++	if (!c || !cparams) {
++		err = -ENOMEM;
++		goto err_free;
++	}
+ 
+ 	c->priv     = priv;
+ 	c->mdev     = priv->mdev;
 -- 
 2.39.2
 
