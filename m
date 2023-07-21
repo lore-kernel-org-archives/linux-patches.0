@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B20920F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:07:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0004C433C7;
-	Fri, 21 Jul 2023 19:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1509D20F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:07:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88E56C433CA;
+	Fri, 21 Jul 2023 19:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966437;
-	bh=o3GiozvMaLRwUcURm6vN3RZNKEP/QS8IXHFwUDfGDTg=;
+	s=korg; t=1689966439;
+	bh=pvOqLVH7cwXwXdPGQKRb27Rg5rni3tIclzI9w5pv01Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kgZqCeBmRmRvukChx8ftdcN/oXDip22S/RgvLyyC9IQMvIxETmlR+rEhOzRkLyRBt
-	 xhyjiFcIp/AuPfE1HLIGp6TUA+S34tBOMvP71QyxDl90wMxdL9PWBvzs9z52B9otE5
-	 WKcp4JeC9642/w+IpVsL6yFg1Dy073hWfJ0ltXkY=
+	b=wKuS7FUBY4jE+Jz0DUn/74Ryv6mHCW4GiCR4rextuF8OomL0Xy1vwm2RfoD0PXzFQ
+	 NFNVYTCHBLhQecOFIv98UNiiyzWAJwbuw8Ny+nUqgJbCgjaHGlwrjOMEC6bIYlnllw
+	 yY7pFC9/LGe3AyFwuaHLSd3Jq10NTE+fTSOmrpbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Jiang <d202180596@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.15 343/532] i2c: qup: Add missing unwind goto in qup_i2c_probe()
-Date: Fri, 21 Jul 2023 18:04:07 +0200
-Message-ID: <20230721160633.038932365@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 317/532] net/sched: act_ipt: add sanity checks on table name and hook locations
+Date: Fri, 21 Jul 2023 18:03:41 +0200
+Message-ID: <20230721160631.590107459@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,75 +37,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shuai Jiang <d202180596@hust.edu.cn>
+From: Florian Westphal <fw@strlen.de>
 
-commit cd9489623c29aa2f8cc07088168afb6e0d5ef06d upstream.
+[ Upstream commit b4ee93380b3c891fea996af8d1d3ca0e36ad31f0 ]
 
-Smatch Warns:
-	drivers/i2c/busses/i2c-qup.c:1784 qup_i2c_probe()
-	warn: missing unwind goto?
+Looks like "tc" hard-codes "mangle" as the only supported table
+name, but on kernel side there are no checks.
 
-The goto label "fail_runtime" and "fail" will disable qup->pclk,
-but here qup->pclk failed to obtain, in order to be consistent,
-change the direct return to goto label "fail_dma".
+This is wrong.  Not all xtables targets are safe to call from tc.
+E.g. "nat" targets assume skb has a conntrack object assigned to it.
+Normally those get called from netfilter nat core which consults the
+nat table to obtain the address mapping.
 
-Fixes: 9cedf3b2f099 ("i2c: qup: Add bam dma capabilities")
-Signed-off-by: Shuai Jiang <d202180596@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Cc: <stable@vger.kernel.org> # v4.6+
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+"tc" userspace either sets PRE or POSTROUTING as hook number, but there
+is no validation of this on kernel side, so update netlink policy to
+reject bogus numbers.  Some targets may assume skb_dst is set for
+input/forward hooks, so prevent those from being used.
+
+act_ipt uses the hook number in two places:
+1. the state hook number, this is fine as-is
+2. to set par.hook_mask
+
+The latter is a bit mask, so update the assignment to make
+xt_check_target() to the right thing.
+
+Followup patch adds required checks for the skb/packet headers before
+calling the targets evaluation function.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-qup.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ net/sched/act_ipt.c | 27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
---- a/drivers/i2c/busses/i2c-qup.c
-+++ b/drivers/i2c/busses/i2c-qup.c
-@@ -1752,16 +1752,21 @@ nodma:
- 	if (!clk_freq || clk_freq > I2C_MAX_FAST_MODE_PLUS_FREQ) {
- 		dev_err(qup->dev, "clock frequency not supported %d\n",
- 			clk_freq);
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto fail_dma;
+diff --git a/net/sched/act_ipt.c b/net/sched/act_ipt.c
+index 2f3d507c24a1f..ebd403f571ea5 100644
+--- a/net/sched/act_ipt.c
++++ b/net/sched/act_ipt.c
+@@ -50,7 +50,7 @@ static int ipt_init_target(struct net *net, struct xt_entry_target *t,
+ 	par.entryinfo = &e;
+ 	par.target    = target;
+ 	par.targinfo  = t->data;
+-	par.hook_mask = hook;
++	par.hook_mask = 1 << hook;
+ 	par.family    = NFPROTO_IPV4;
+ 
+ 	ret = xt_check_target(&par, t->u.target_size - sizeof(*t), 0, false);
+@@ -87,7 +87,8 @@ static void tcf_ipt_release(struct tc_action *a)
+ 
+ static const struct nla_policy ipt_policy[TCA_IPT_MAX + 1] = {
+ 	[TCA_IPT_TABLE]	= { .type = NLA_STRING, .len = IFNAMSIZ },
+-	[TCA_IPT_HOOK]	= { .type = NLA_U32 },
++	[TCA_IPT_HOOK]	= NLA_POLICY_RANGE(NLA_U32, NF_INET_PRE_ROUTING,
++					   NF_INET_NUMHOOKS),
+ 	[TCA_IPT_INDEX]	= { .type = NLA_U32 },
+ 	[TCA_IPT_TARG]	= { .len = sizeof(struct xt_entry_target) },
+ };
+@@ -160,15 +161,27 @@ static int __tcf_ipt_init(struct net *net, unsigned int id, struct nlattr *nla,
+ 			return -EEXIST;
+ 		}
  	}
- 
- 	qup->base = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(qup->base))
--		return PTR_ERR(qup->base);
-+	if (IS_ERR(qup->base)) {
-+		ret = PTR_ERR(qup->base);
-+		goto fail_dma;
++
++	err = -EINVAL;
+ 	hook = nla_get_u32(tb[TCA_IPT_HOOK]);
++	switch (hook) {
++	case NF_INET_PRE_ROUTING:
++		break;
++	case NF_INET_POST_ROUTING:
++		break;
++	default:
++		goto err1;
++	}
++
++	if (tb[TCA_IPT_TABLE]) {
++		/* mangle only for now */
++		if (nla_strcmp(tb[TCA_IPT_TABLE], "mangle"))
++			goto err1;
 +	}
  
- 	qup->irq = platform_get_irq(pdev, 0);
--	if (qup->irq < 0)
--		return qup->irq;
-+	if (qup->irq < 0) {
-+		ret = qup->irq;
-+		goto fail_dma;
-+	}
+-	err = -ENOMEM;
+-	tname = kmalloc(IFNAMSIZ, GFP_KERNEL);
++	tname = kstrdup("mangle", GFP_KERNEL);
+ 	if (unlikely(!tname))
+ 		goto err1;
+-	if (tb[TCA_IPT_TABLE] == NULL ||
+-	    nla_strscpy(tname, tb[TCA_IPT_TABLE], IFNAMSIZ) >= IFNAMSIZ)
+-		strcpy(tname, "mangle");
  
- 	if (has_acpi_companion(qup->dev)) {
- 		ret = device_property_read_u32(qup->dev,
-@@ -1775,13 +1780,15 @@ nodma:
- 		qup->clk = devm_clk_get(qup->dev, "core");
- 		if (IS_ERR(qup->clk)) {
- 			dev_err(qup->dev, "Could not get core clock\n");
--			return PTR_ERR(qup->clk);
-+			ret = PTR_ERR(qup->clk);
-+			goto fail_dma;
- 		}
- 
- 		qup->pclk = devm_clk_get(qup->dev, "iface");
- 		if (IS_ERR(qup->pclk)) {
- 			dev_err(qup->dev, "Could not get iface clock\n");
--			return PTR_ERR(qup->pclk);
-+			ret = PTR_ERR(qup->pclk);
-+			goto fail_dma;
- 		}
- 		qup_i2c_enable_clocks(qup);
- 		src_clk_freq = clk_get_rate(qup->clk);
+ 	t = kmemdup(td, td->u.target_size, GFP_KERNEL);
+ 	if (unlikely(!t))
+-- 
+2.39.2
+
 
 
