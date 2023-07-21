@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585641ED25
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:09:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC440C433C9;
-	Fri, 21 Jul 2023 16:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6031EA97
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:09:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC293C433C9;
+	Fri, 21 Jul 2023 16:09:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689955770;
-	bh=mfkvkEB2v9VF4QmD6LOQdHRTcU23ew7qYAJdIOR6xgE=;
+	s=korg; t=1689955773;
+	bh=252beilAe3JQidUIPxOip29vqbChoOkE7+8YWiCcDOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s1EhuFdgqf+StRxxUe/EyDOImg4jxkEwAoIJ6TZiePzMDxPMdHADCAiorjtgQ4kkY
-	 +T6xCAWhvy7peSMeiKCAZMcfhrdyRuH9w3PK+2w6TDKAa8pGLcai0/+z42TwH6wAhq
-	 CjJU1YLPAPWBCEX24JgVC0CqNqpml3AMZkKdko0E=
+	b=c5u5IY1xUZ+PNjOOs3p3o/znsfC55SHJgUmQHuvbIPy/Enr8C1ynxFBoH/cQwG4pS
+	 lHnf+8XOAJYuM/c7BgRSF50eCNNC8RnItqanoDNW6mP4SU+pNDi+PEGL4KwRvIyo4j
+	 5oP1YmTx751GBDChep+49ZowAugZOO7ZjcMBEMd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Juergen Gross <jgross@suse.com>,
+	Tan Tee Min <tee.min.tan@linux.intel.com>,
+	Chwee Lin Choong <chwee.lin.choong@intel.com>,
+	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 016/292] xen/virtio: Fix NULL deref when a bridge of PCI root bus has no parent
-Date: Fri, 21 Jul 2023 18:02:05 +0200
-Message-ID: <20230721160529.508294376@linuxfoundation.org>
+Subject: [PATCH 6.4 025/292] igc: Fix TX Hang issue when QBV Gate is closed
+Date: Fri, 21 Jul 2023 18:02:14 +0200
+Message-ID: <20230721160529.882522658@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -37,87 +38,314 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Petr Pavlu <petr.pavlu@suse.com>
+From: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
 
-[ Upstream commit 21a235bce12361e64adfc2ef97e4ae2e51ad63d4 ]
+[ Upstream commit 175c241288c09f81eb7b44d65c1ef6045efa4d1a ]
 
-When attempting to run Xen on a QEMU/KVM virtual machine with virtio
-devices (all x86_64), function xen_dt_get_node() crashes on accessing
-bus->bridge->parent->of_node because a bridge of the PCI root bus has no
-parent set:
+If a user schedules a Gate Control List (GCL) to close one of
+the QBV gates while also transmitting a packet to that closed gate,
+TX Hang will be happen. HW would not drop any packet when the gate
+is closed and keep queuing up in HW TX FIFO until the gate is re-opened.
+This patch implements the solution to drop the packet for the closed
+gate.
 
-[    1.694192][    T1] BUG: kernel NULL pointer dereference, address: 0000000000000288
-[    1.695688][    T1] #PF: supervisor read access in kernel mode
-[    1.696297][    T1] #PF: error_code(0x0000) - not-present page
-[    1.696297][    T1] PGD 0 P4D 0
-[    1.696297][    T1] Oops: 0000 [#1] PREEMPT SMP NOPTI
-[    1.696297][    T1] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.3.7-1-default #1 openSUSE Tumbleweed a577eae57964bb7e83477b5a5645a1781df990f0
-[    1.696297][    T1] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.15.0-0-g2dd4b9b-rebuilt.opensuse.org 04/01/2014
-[    1.696297][    T1] RIP: e030:xen_virtio_restricted_mem_acc+0xd9/0x1c0
-[    1.696297][    T1] Code: 45 0c 83 e8 c9 a3 ea ff 31 c0 eb d7 48 8b 87 40 ff ff ff 48 89 c2 48 8b 40 10 48 85 c0 75 f4 48 8b 82 10 01 00 00 48 8b 40 40 <48> 83 b8 88 02 00 00 00 0f 84 45 ff ff ff 66 90 31 c0 eb a5 48 89
-[    1.696297][    T1] RSP: e02b:ffffc90040013cc8 EFLAGS: 00010246
-[    1.696297][    T1] RAX: 0000000000000000 RBX: ffff888006c75000 RCX: 0000000000000029
-[    1.696297][    T1] RDX: ffff888005ed1000 RSI: ffffc900400f100c RDI: ffff888005ee30d0
-[    1.696297][    T1] RBP: ffff888006c75010 R08: 0000000000000001 R09: 0000000330000006
-[    1.696297][    T1] R10: ffff888005850028 R11: 0000000000000002 R12: ffffffff830439a0
-[    1.696297][    T1] R13: 0000000000000000 R14: ffff888005657900 R15: ffff888006e3e1e8
-[    1.696297][    T1] FS:  0000000000000000(0000) GS:ffff88804a000000(0000) knlGS:0000000000000000
-[    1.696297][    T1] CS:  e030 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    1.696297][    T1] CR2: 0000000000000288 CR3: 0000000002e36000 CR4: 0000000000050660
-[    1.696297][    T1] Call Trace:
-[    1.696297][    T1]  <TASK>
-[    1.696297][    T1]  virtio_features_ok+0x1b/0xd0
-[    1.696297][    T1]  virtio_dev_probe+0x19c/0x270
-[    1.696297][    T1]  really_probe+0x19b/0x3e0
-[    1.696297][    T1]  __driver_probe_device+0x78/0x160
-[    1.696297][    T1]  driver_probe_device+0x1f/0x90
-[    1.696297][    T1]  __driver_attach+0xd2/0x1c0
-[    1.696297][    T1]  bus_for_each_dev+0x74/0xc0
-[    1.696297][    T1]  bus_add_driver+0x116/0x220
-[    1.696297][    T1]  driver_register+0x59/0x100
-[    1.696297][    T1]  virtio_console_init+0x7f/0x110
-[    1.696297][    T1]  do_one_initcall+0x47/0x220
-[    1.696297][    T1]  kernel_init_freeable+0x328/0x480
-[    1.696297][    T1]  kernel_init+0x1a/0x1c0
-[    1.696297][    T1]  ret_from_fork+0x29/0x50
-[    1.696297][    T1]  </TASK>
-[    1.696297][    T1] Modules linked in:
-[    1.696297][    T1] CR2: 0000000000000288
-[    1.696297][    T1] ---[ end trace 0000000000000000 ]---
+This patch will also reset the adapter to perform SW initialization
+for each 1st Gate Control List (GCL) to avoid hang.
+This is due to the HW design, where changing to TSN transmit mode
+requires SW initialization. Intel Discrete I225/6 transmit mode
+cannot be changed when in dynamic mode according to Software User
+Manual Section 7.5.2.1. Subsequent Gate Control List (GCL) operations
+will proceed without a reset, as they already are in TSN Mode.
 
-The PCI root bus is in this case created from ACPI description via
-acpi_pci_root_add() -> pci_acpi_scan_root() -> acpi_pci_root_create() ->
-pci_create_root_bus() where the last function is called with
-parent=NULL. It indicates that no parent is present and then
-bus->bridge->parent is NULL too.
+Step to reproduce:
 
-Fix the problem by checking bus->bridge->parent in xen_dt_get_node() for
-NULL first.
+DUT:
+1) Configure GCL List with certain gate close.
 
-Fixes: ef8ae384b4c9 ("xen/virtio: Handle PCI devices which Host controller is described in DT")
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-Reviewed-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Link: https://lore.kernel.org/r/20230621131214.9398-2-petr.pavlu@suse.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+BASE=$(date +%s%N)
+tc qdisc replace dev $IFACE parent root handle 100 taprio \
+    num_tc 4 \
+    map 0 1 2 3 3 3 3 3 3 3 3 3 3 3 3 3 \
+    queues 1@0 1@1 1@2 1@3 \
+    base-time $BASE \
+    sched-entry S 0x8 500000 \
+    sched-entry S 0x4 500000 \
+    flags 0x2
+
+2) Transmit the packet to closed gate. You may use udp_tai
+application to transmit UDP packet to any of the closed gate.
+
+./udp_tai -i <interface> -P 100000 -p 90 -c 1 -t <0/1> -u 30004
+
+Fixes: ec50a9d437f0 ("igc: Add support for taprio offloading")
+Co-developed-by: Tan Tee Min <tee.min.tan@linux.intel.com>
+Signed-off-by: Tan Tee Min <tee.min.tan@linux.intel.com>
+Tested-by: Chwee Lin Choong <chwee.lin.choong@intel.com>
+Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/grant-dma-ops.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/intel/igc/igc.h      |  6 +++
+ drivers/net/ethernet/intel/igc/igc_main.c | 58 +++++++++++++++++++++--
+ drivers/net/ethernet/intel/igc/igc_tsn.c  | 41 ++++++++++------
+ 3 files changed, 87 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/xen/grant-dma-ops.c b/drivers/xen/grant-dma-ops.c
-index 9784a77fa3c99..76f6f26265a3b 100644
---- a/drivers/xen/grant-dma-ops.c
-+++ b/drivers/xen/grant-dma-ops.c
-@@ -303,6 +303,8 @@ static struct device_node *xen_dt_get_node(struct device *dev)
- 		while (!pci_is_root_bus(bus))
- 			bus = bus->parent;
+diff --git a/drivers/net/ethernet/intel/igc/igc.h b/drivers/net/ethernet/intel/igc/igc.h
+index f09c6a65e3ab8..c0a07af36cb23 100644
+--- a/drivers/net/ethernet/intel/igc/igc.h
++++ b/drivers/net/ethernet/intel/igc/igc.h
+@@ -14,6 +14,7 @@
+ #include <linux/timecounter.h>
+ #include <linux/net_tstamp.h>
+ #include <linux/bitfield.h>
++#include <linux/hrtimer.h>
  
-+		if (!bus->bridge->parent)
-+			return NULL;
- 		return of_node_get(bus->bridge->parent->of_node);
+ #include "igc_hw.h"
+ 
+@@ -101,6 +102,8 @@ struct igc_ring {
+ 	u32 start_time;
+ 	u32 end_time;
+ 	u32 max_sdu;
++	bool oper_gate_closed;		/* Operating gate. True if the TX Queue is closed */
++	bool admin_gate_closed;		/* Future gate. True if the TX Queue will be closed */
+ 
+ 	/* CBS parameters */
+ 	bool cbs_enable;                /* indicates if CBS is enabled */
+@@ -160,6 +163,7 @@ struct igc_adapter {
+ 	struct timer_list watchdog_timer;
+ 	struct timer_list dma_err_timer;
+ 	struct timer_list phy_info_timer;
++	struct hrtimer hrtimer;
+ 
+ 	u32 wol;
+ 	u32 en_mng_pt;
+@@ -189,6 +193,8 @@ struct igc_adapter {
+ 	ktime_t cycle_time;
+ 	bool qbv_enable;
+ 	u32 qbv_config_change_errors;
++	bool qbv_transition;
++	unsigned int qbv_count;
+ 
+ 	/* OS defined structs */
+ 	struct pci_dev *pdev;
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index c0e21701e7817..826556e609800 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -1572,6 +1572,9 @@ static netdev_tx_t igc_xmit_frame_ring(struct sk_buff *skb,
+ 	first->bytecount = skb->len;
+ 	first->gso_segs = 1;
+ 
++	if (adapter->qbv_transition || tx_ring->oper_gate_closed)
++		goto out_drop;
++
+ 	if (tx_ring->max_sdu > 0) {
+ 		u32 max_sdu = 0;
+ 
+@@ -3004,8 +3007,8 @@ static bool igc_clean_tx_irq(struct igc_q_vector *q_vector, int napi_budget)
+ 		    time_after(jiffies, tx_buffer->time_stamp +
+ 		    (adapter->tx_timeout_factor * HZ)) &&
+ 		    !(rd32(IGC_STATUS) & IGC_STATUS_TXOFF) &&
+-		    (rd32(IGC_TDH(tx_ring->reg_idx)) !=
+-		     readl(tx_ring->tail))) {
++		    (rd32(IGC_TDH(tx_ring->reg_idx)) != readl(tx_ring->tail)) &&
++		    !tx_ring->oper_gate_closed) {
+ 			/* detected Tx unit hang */
+ 			netdev_err(tx_ring->netdev,
+ 				   "Detected Tx Unit Hang\n"
+@@ -6095,6 +6098,8 @@ static int igc_tsn_clear_schedule(struct igc_adapter *adapter)
+ 	adapter->base_time = 0;
+ 	adapter->cycle_time = NSEC_PER_SEC;
+ 	adapter->qbv_config_change_errors = 0;
++	adapter->qbv_transition = false;
++	adapter->qbv_count = 0;
+ 
+ 	for (i = 0; i < adapter->num_tx_queues; i++) {
+ 		struct igc_ring *ring = adapter->tx_ring[i];
+@@ -6102,6 +6107,8 @@ static int igc_tsn_clear_schedule(struct igc_adapter *adapter)
+ 		ring->start_time = 0;
+ 		ring->end_time = NSEC_PER_SEC;
+ 		ring->max_sdu = 0;
++		ring->oper_gate_closed = false;
++		ring->admin_gate_closed = false;
  	}
  
+ 	return 0;
+@@ -6113,6 +6120,7 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
+ 	bool queue_configured[IGC_MAX_TX_QUEUES] = { };
+ 	struct igc_hw *hw = &adapter->hw;
+ 	u32 start_time = 0, end_time = 0;
++	struct timespec64 now;
+ 	size_t n;
+ 	int i;
+ 
+@@ -6133,6 +6141,8 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
+ 	adapter->cycle_time = qopt->cycle_time;
+ 	adapter->base_time = qopt->base_time;
+ 
++	igc_ptp_read(adapter, &now);
++
+ 	for (n = 0; n < qopt->num_entries; n++) {
+ 		struct tc_taprio_sched_entry *e = &qopt->entries[n];
+ 
+@@ -6167,7 +6177,10 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
+ 				ring->start_time = start_time;
+ 			ring->end_time = end_time;
+ 
+-			queue_configured[i] = true;
++			if (ring->start_time >= adapter->cycle_time)
++				queue_configured[i] = false;
++			else
++				queue_configured[i] = true;
+ 		}
+ 
+ 		start_time += e->interval;
+@@ -6177,8 +6190,20 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
+ 	 * If not, set the start and end time to be end time.
+ 	 */
+ 	for (i = 0; i < adapter->num_tx_queues; i++) {
++		struct igc_ring *ring = adapter->tx_ring[i];
++
++		if (!is_base_time_past(qopt->base_time, &now)) {
++			ring->admin_gate_closed = false;
++		} else {
++			ring->oper_gate_closed = false;
++			ring->admin_gate_closed = false;
++		}
++
+ 		if (!queue_configured[i]) {
+-			struct igc_ring *ring = adapter->tx_ring[i];
++			if (!is_base_time_past(qopt->base_time, &now))
++				ring->admin_gate_closed = true;
++			else
++				ring->oper_gate_closed = true;
+ 
+ 			ring->start_time = end_time;
+ 			ring->end_time = end_time;
+@@ -6542,6 +6567,27 @@ static const struct xdp_metadata_ops igc_xdp_metadata_ops = {
+ 	.xmo_rx_hash			= igc_xdp_rx_hash,
+ };
+ 
++static enum hrtimer_restart igc_qbv_scheduling_timer(struct hrtimer *timer)
++{
++	struct igc_adapter *adapter = container_of(timer, struct igc_adapter,
++						   hrtimer);
++	unsigned int i;
++
++	adapter->qbv_transition = true;
++	for (i = 0; i < adapter->num_tx_queues; i++) {
++		struct igc_ring *tx_ring = adapter->tx_ring[i];
++
++		if (tx_ring->admin_gate_closed) {
++			tx_ring->admin_gate_closed = false;
++			tx_ring->oper_gate_closed = true;
++		} else {
++			tx_ring->oper_gate_closed = false;
++		}
++	}
++	adapter->qbv_transition = false;
++	return HRTIMER_NORESTART;
++}
++
+ /**
+  * igc_probe - Device Initialization Routine
+  * @pdev: PCI device information struct
+@@ -6720,6 +6766,9 @@ static int igc_probe(struct pci_dev *pdev,
+ 	INIT_WORK(&adapter->reset_task, igc_reset_task);
+ 	INIT_WORK(&adapter->watchdog_task, igc_watchdog_task);
+ 
++	hrtimer_init(&adapter->hrtimer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
++	adapter->hrtimer.function = &igc_qbv_scheduling_timer;
++
+ 	/* Initialize link properties that are user-changeable */
+ 	adapter->fc_autoneg = true;
+ 	hw->mac.autoneg = true;
+@@ -6823,6 +6872,7 @@ static void igc_remove(struct pci_dev *pdev)
+ 
+ 	cancel_work_sync(&adapter->reset_task);
+ 	cancel_work_sync(&adapter->watchdog_task);
++	hrtimer_cancel(&adapter->hrtimer);
+ 
+ 	/* Release control of h/w to f/w.  If f/w is AMT enabled, this
+ 	 * would have already happened in close and is redundant.
+diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
+index 6b299b83e7ef2..3cdb0c9887283 100644
+--- a/drivers/net/ethernet/intel/igc/igc_tsn.c
++++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
+@@ -114,7 +114,6 @@ static int igc_tsn_disable_offload(struct igc_adapter *adapter)
+ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
+ {
+ 	struct igc_hw *hw = &adapter->hw;
+-	bool tsn_mode_reconfig = false;
+ 	u32 tqavctrl, baset_l, baset_h;
+ 	u32 sec, nsec, cycle;
+ 	ktime_t base_time, systim;
+@@ -228,11 +227,10 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
+ 
+ 	tqavctrl = rd32(IGC_TQAVCTRL) & ~IGC_TQAVCTRL_FUTSCDDIS;
+ 
+-	if (tqavctrl & IGC_TQAVCTRL_TRANSMIT_MODE_TSN)
+-		tsn_mode_reconfig = true;
+-
+ 	tqavctrl |= IGC_TQAVCTRL_TRANSMIT_MODE_TSN | IGC_TQAVCTRL_ENHANCED_QAV;
+ 
++	adapter->qbv_count++;
++
+ 	cycle = adapter->cycle_time;
+ 	base_time = adapter->base_time;
+ 
+@@ -250,17 +248,28 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
+ 		 */
+ 		if ((rd32(IGC_BASET_H) || rd32(IGC_BASET_L)) &&
+ 		    (adapter->tc_setup_type == TC_SETUP_QDISC_TAPRIO) &&
+-		    tsn_mode_reconfig)
++		    (adapter->qbv_count > 1))
+ 			adapter->qbv_config_change_errors++;
+ 	} else {
+-		/* According to datasheet section 7.5.2.9.3.3, FutScdDis bit
+-		 * has to be configured before the cycle time and base time.
+-		 * Tx won't hang if there is a GCL is already running,
+-		 * so in this case we don't need to set FutScdDis.
+-		 */
+-		if (igc_is_device_id_i226(hw) &&
+-		    !(rd32(IGC_BASET_H) || rd32(IGC_BASET_L)))
+-			tqavctrl |= IGC_TQAVCTRL_FUTSCDDIS;
++		if (igc_is_device_id_i226(hw)) {
++			ktime_t adjust_time, expires_time;
++
++		       /* According to datasheet section 7.5.2.9.3.3, FutScdDis bit
++			* has to be configured before the cycle time and base time.
++			* Tx won't hang if a GCL is already running,
++			* so in this case we don't need to set FutScdDis.
++			*/
++			if (!(rd32(IGC_BASET_H) || rd32(IGC_BASET_L)))
++				tqavctrl |= IGC_TQAVCTRL_FUTSCDDIS;
++
++			nsec = rd32(IGC_SYSTIML);
++			sec = rd32(IGC_SYSTIMH);
++			systim = ktime_set(sec, nsec);
++
++			adjust_time = adapter->base_time;
++			expires_time = ktime_sub_ns(adjust_time, systim);
++			hrtimer_start(&adapter->hrtimer, expires_time, HRTIMER_MODE_REL);
++		}
+ 	}
+ 
+ 	wr32(IGC_TQAVCTRL, tqavctrl);
+@@ -306,7 +315,11 @@ int igc_tsn_offload_apply(struct igc_adapter *adapter)
+ {
+ 	struct igc_hw *hw = &adapter->hw;
+ 
+-	if (netif_running(adapter->netdev) && igc_is_device_id_i225(hw)) {
++	/* Per I225/6 HW Design Section 7.5.2.1, transmit mode
++	 * cannot be changed dynamically. Require reset the adapter.
++	 */
++	if (netif_running(adapter->netdev) &&
++	    (igc_is_device_id_i225(hw) || !adapter->qbv_count)) {
+ 		schedule_work(&adapter->reset_task);
+ 		return 0;
+ 	}
 -- 
 2.39.2
 
