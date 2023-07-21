@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71CA200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:01:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 698D6C433CA;
-	Fri, 21 Jul 2023 19:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8E4200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:01:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED6CC433C7;
+	Fri, 21 Jul 2023 19:01:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966111;
-	bh=FUFFdcCihAjREY5om8AcQbPVKkGfZjVw9bcZOKkN7Gc=;
+	s=korg; t=1689966114;
+	bh=wK8ERDYCVKgckndbYEM3xXclGNqCiXLlUb0KocrbmPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GuiwjOVBgdnL81Dn5+qmdNlN3j6yr31XBUlouryOvbHkByYUP4zc0f1xjMAjjaP6a
-	 I+VJVsnzFIRj5Z8ano9kpgxJxjwr21Y3SQj3efOiXtazn4hU2/7Mghk7hQwg8iJTKx
-	 OycPvbanMj+sLj48XZcWtBxBcPSgNlUMN1oz0DDE=
+	b=OQ/pqwPdWs2s/vUHwl036BvOzf2X6omrpzlvnmp0DK1qyP5f8druixZH0+KF5TWT9
+	 E6a7JJMbtaPnNJpv7ZGNBHDbNbHG5hAPu18EaVYuKddG3qxbfytErBsDC48AUvXGIe
+	 0qM0ZoBKM2Q9qV+uU3qdonpEstMJih28ou0tNack=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Laurent Vivier <lvivier@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 190/532] ovl: update of dentry revalidate flags after copy up
-Date: Fri, 21 Jul 2023 18:01:34 +0200
-Message-ID: <20230721160624.716341640@linuxfoundation.org>
+Subject: [PATCH 5.15 222/532] hwrng: virtio - always add a pending request
+Date: Fri, 21 Jul 2023 18:02:06 +0200
+Message-ID: <20230721160626.426492264@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,161 +35,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-[ Upstream commit b07d5cc93e1b28df47a72c519d09d0a836043613 ]
+[ Upstream commit 9a4b612d675b03f7fc9fa1957ca399c8223f3954 ]
 
-After copy up, we may need to update d_flags if upper dentry is on a
-remote fs and lower dentries are not.
+If we ensure we have already some data available by enqueuing
+again the buffer once data are exhausted, we can return what we
+have without waiting for the device answer.
 
-Add helpers to allow incremental update of the revalidate flags.
-
-Fixes: bccece1ead36 ("ovl: allow remote upper")
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Link: https://lore.kernel.org/r/20211028101111.128049-5-lvivier@redhat.com
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Stable-dep-of: ac52578d6e8d ("hwrng: virtio - Fix race on data_avail and actual data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/copy_up.c   |  2 ++
- fs/overlayfs/dir.c       |  3 +--
- fs/overlayfs/export.c    |  3 +--
- fs/overlayfs/namei.c     |  3 +--
- fs/overlayfs/overlayfs.h |  6 ++++--
- fs/overlayfs/super.c     |  2 +-
- fs/overlayfs/util.c      | 24 ++++++++++++++++++++----
- 7 files changed, 30 insertions(+), 13 deletions(-)
+ drivers/char/hw_random/virtio-rng.c | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
-diff --git a/fs/overlayfs/copy_up.c b/fs/overlayfs/copy_up.c
-index ef0bf98b620d7..46cc429c44f7e 100644
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -542,6 +542,7 @@ static int ovl_link_up(struct ovl_copy_up_ctx *c)
- 			/* Restore timestamps on parent (best effort) */
- 			ovl_set_timestamps(upperdir, &c->pstat);
- 			ovl_dentry_set_upper_alias(c->dentry);
-+			ovl_dentry_update_reval(c->dentry, upper);
- 		}
- 	}
- 	inode_unlock(udir);
-@@ -840,6 +841,7 @@ static int ovl_do_copy_up(struct ovl_copy_up_ctx *c)
- 		inode_unlock(udir);
+diff --git a/drivers/char/hw_random/virtio-rng.c b/drivers/char/hw_random/virtio-rng.c
+index 8ba97cf4ca8fb..0a7dde135db19 100644
+--- a/drivers/char/hw_random/virtio-rng.c
++++ b/drivers/char/hw_random/virtio-rng.c
+@@ -20,7 +20,6 @@ struct virtrng_info {
+ 	struct virtqueue *vq;
+ 	char name[25];
+ 	int index;
+-	bool busy;
+ 	bool hwrng_register_done;
+ 	bool hwrng_removed;
+ 	/* data transfer */
+@@ -44,16 +43,18 @@ static void random_recv_done(struct virtqueue *vq)
+ 		return;
  
- 		ovl_dentry_set_upper_alias(c->dentry);
-+		ovl_dentry_update_reval(c->dentry, ovl_dentry_upper(c->dentry));
- 	}
+ 	vi->data_idx = 0;
+-	vi->busy = false;
  
- out:
-diff --git a/fs/overlayfs/dir.c b/fs/overlayfs/dir.c
-index eca984d6484d1..519193ce7d575 100644
---- a/fs/overlayfs/dir.c
-+++ b/fs/overlayfs/dir.c
-@@ -267,8 +267,7 @@ static int ovl_instantiate(struct dentry *dentry, struct inode *inode,
- 
- 	ovl_dir_modified(dentry->d_parent, false);
- 	ovl_dentry_set_upper_alias(dentry);
--	ovl_dentry_update_reval(dentry, newdentry,
--			DCACHE_OP_REVALIDATE | DCACHE_OP_WEAK_REVALIDATE);
-+	ovl_dentry_init_reval(dentry, newdentry);
- 
- 	if (!hardlink) {
- 		/*
-diff --git a/fs/overlayfs/export.c b/fs/overlayfs/export.c
-index 0cc14ce8c7e83..baa50ece0bc53 100644
---- a/fs/overlayfs/export.c
-+++ b/fs/overlayfs/export.c
-@@ -326,8 +326,7 @@ static struct dentry *ovl_obtain_alias(struct super_block *sb,
- 	if (upper_alias)
- 		ovl_dentry_set_upper_alias(dentry);
- 
--	ovl_dentry_update_reval(dentry, upper,
--			DCACHE_OP_REVALIDATE | DCACHE_OP_WEAK_REVALIDATE);
-+	ovl_dentry_init_reval(dentry, upper);
- 
- 	return d_instantiate_anon(dentry, inode);
- 
-diff --git a/fs/overlayfs/namei.c b/fs/overlayfs/namei.c
-index 1a9b515fc45d4..9c055d11a95de 100644
---- a/fs/overlayfs/namei.c
-+++ b/fs/overlayfs/namei.c
-@@ -1103,8 +1103,7 @@ struct dentry *ovl_lookup(struct inode *dir, struct dentry *dentry,
- 			ovl_set_flag(OVL_UPPERDATA, inode);
- 	}
- 
--	ovl_dentry_update_reval(dentry, upperdentry,
--			DCACHE_OP_REVALIDATE | DCACHE_OP_WEAK_REVALIDATE);
-+	ovl_dentry_init_reval(dentry, upperdentry);
- 
- 	revert_creds(old_cred);
- 	if (origin_path) {
-diff --git a/fs/overlayfs/overlayfs.h b/fs/overlayfs/overlayfs.h
-index ae4876da2ced2..a96b67586f817 100644
---- a/fs/overlayfs/overlayfs.h
-+++ b/fs/overlayfs/overlayfs.h
-@@ -286,8 +286,10 @@ bool ovl_index_all(struct super_block *sb);
- bool ovl_verify_lower(struct super_block *sb);
- struct ovl_entry *ovl_alloc_entry(unsigned int numlower);
- bool ovl_dentry_remote(struct dentry *dentry);
--void ovl_dentry_update_reval(struct dentry *dentry, struct dentry *upperdentry,
--			     unsigned int mask);
-+void ovl_dentry_update_reval(struct dentry *dentry, struct dentry *realdentry);
-+void ovl_dentry_init_reval(struct dentry *dentry, struct dentry *upperdentry);
-+void ovl_dentry_init_flags(struct dentry *dentry, struct dentry *upperdentry,
-+			   unsigned int mask);
- bool ovl_dentry_weird(struct dentry *dentry);
- enum ovl_path_type ovl_path_type(struct dentry *dentry);
- void ovl_path_upper(struct dentry *dentry, struct path *path);
-diff --git a/fs/overlayfs/super.c b/fs/overlayfs/super.c
-index b3675d13c1ac2..5310271cf2e38 100644
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -1965,7 +1965,7 @@ static struct dentry *ovl_get_root(struct super_block *sb,
- 	ovl_dentry_set_flag(OVL_E_CONNECTED, root);
- 	ovl_set_upperdata(d_inode(root));
- 	ovl_inode_init(d_inode(root), &oip, ino, fsid);
--	ovl_dentry_update_reval(root, upperdentry, DCACHE_OP_WEAK_REVALIDATE);
-+	ovl_dentry_init_flags(root, upperdentry, DCACHE_OP_WEAK_REVALIDATE);
- 
- 	return root;
- }
-diff --git a/fs/overlayfs/util.c b/fs/overlayfs/util.c
-index 9d33ce385bef0..d62d5ede60dfd 100644
---- a/fs/overlayfs/util.c
-+++ b/fs/overlayfs/util.c
-@@ -94,14 +94,30 @@ struct ovl_entry *ovl_alloc_entry(unsigned int numlower)
- 	return oe;
+ 	complete(&vi->have_data);
  }
  
-+#define OVL_D_REVALIDATE (DCACHE_OP_REVALIDATE | DCACHE_OP_WEAK_REVALIDATE)
-+
- bool ovl_dentry_remote(struct dentry *dentry)
+-/* The host will fill any buffer we give it with sweet, sweet randomness. */
+-static void register_buffer(struct virtrng_info *vi)
++static void request_entropy(struct virtrng_info *vi)
  {
--	return dentry->d_flags &
--		(DCACHE_OP_REVALIDATE | DCACHE_OP_WEAK_REVALIDATE);
-+	return dentry->d_flags & OVL_D_REVALIDATE;
-+}
+ 	struct scatterlist sg;
+ 
++	reinit_completion(&vi->have_data);
++	vi->data_avail = 0;
++	vi->data_idx = 0;
 +
-+void ovl_dentry_update_reval(struct dentry *dentry, struct dentry *realdentry)
-+{
-+	if (!ovl_dentry_remote(realdentry))
-+		return;
-+
-+	spin_lock(&dentry->d_lock);
-+	dentry->d_flags |= realdentry->d_flags & OVL_D_REVALIDATE;
-+	spin_unlock(&dentry->d_lock);
-+}
-+
-+void ovl_dentry_init_reval(struct dentry *dentry, struct dentry *upperdentry)
-+{
-+	return ovl_dentry_init_flags(dentry, upperdentry, OVL_D_REVALIDATE);
+ 	sg_init_one(&sg, vi->data, sizeof(vi->data));
+ 
+ 	/* There should always be room for one buffer. */
+@@ -69,6 +70,8 @@ static unsigned int copy_data(struct virtrng_info *vi, void *buf,
+ 	memcpy(buf, vi->data + vi->data_idx, size);
+ 	vi->data_idx += size;
+ 	vi->data_avail -= size;
++	if (vi->data_avail == 0)
++		request_entropy(vi);
+ 	return size;
  }
  
--void ovl_dentry_update_reval(struct dentry *dentry, struct dentry *upperdentry,
--			     unsigned int mask)
-+void ovl_dentry_init_flags(struct dentry *dentry, struct dentry *upperdentry,
-+			   unsigned int mask)
+@@ -98,13 +101,7 @@ static int virtio_read(struct hwrng *rng, void *buf, size_t size, bool wait)
+ 	 * so either size is 0 or data_avail is 0
+ 	 */
+ 	while (size != 0) {
+-		/* data_avail is 0 */
+-		if (!vi->busy) {
+-			/* no pending request, ask for more */
+-			vi->busy = true;
+-			reinit_completion(&vi->have_data);
+-			register_buffer(vi);
+-		}
++		/* data_avail is 0 but a request is pending */
+ 		ret = wait_for_completion_killable(&vi->have_data);
+ 		if (ret < 0)
+ 			return ret;
+@@ -126,8 +123,7 @@ static void virtio_cleanup(struct hwrng *rng)
  {
- 	struct ovl_entry *oe = OVL_E(dentry);
- 	unsigned int i, flags = 0;
+ 	struct virtrng_info *vi = (struct virtrng_info *)rng->priv;
+ 
+-	if (vi->busy)
+-		complete(&vi->have_data);
++	complete(&vi->have_data);
+ }
+ 
+ static int probe_common(struct virtio_device *vdev)
+@@ -163,6 +159,9 @@ static int probe_common(struct virtio_device *vdev)
+ 		goto err_find;
+ 	}
+ 
++	/* we always have a pending entropy request */
++	request_entropy(vi);
++
+ 	return 0;
+ 
+ err_find:
+@@ -181,7 +180,6 @@ static void remove_common(struct virtio_device *vdev)
+ 	vi->data_idx = 0;
+ 	complete(&vi->have_data);
+ 	vdev->config->reset(vdev);
+-	vi->busy = false;
+ 	if (vi->hwrng_register_done)
+ 		hwrng_unregister(&vi->hwrng);
+ 	vdev->config->del_vqs(vdev);
 -- 
 2.39.2
 
