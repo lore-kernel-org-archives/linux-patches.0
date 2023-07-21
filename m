@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3FF20F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:07:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80188C433C7;
-	Fri, 21 Jul 2023 19:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94F620F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:07:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC7AC433C8;
+	Fri, 21 Jul 2023 19:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966470;
-	bh=/gVGOLfFzmPMPO42Oa+oNIqgeoENlI8KRGqmiVKk4Gw=;
+	s=korg; t=1689966473;
+	bh=M9yzHAV2iivD5DxK7DwrLTuvy2oESOxU/M39/4+eSnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZ0wvHWYqWqDuP3EsMGxKpOERtBhlqpS6uXn/RDq1bscngTy2dHct6qg7GZbXrjUz
-	 wWaVwCSCHc0jrnwD5hy3T4sptFnxpMDeBn+5RDxjR2VhG9/lw7PqloUU8FbcPEKwyi
-	 p4jiW/uT1WO6SDTwWeZQqTXMw9byRStrbPePAQfE=
+	b=u+ohT2NPOY3Ce/MKmePOUX4Yrf6koa+nscJWu563eoUXMyPAbxH2SyCRUqi6rTsIF
+	 FZbh0ZZi95Awxb6vfULDcExim5CIJmCEHZPH/aKReVSF4NhwJHmhcJHSOOGZiQSb6c
+	 2KrldPFne6eSITJlQU9IlR9dEIbNBJ6xgLB5OVv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Hugh Dickins <hughd@google.com>,
-	David Howells <dhowells@redhat.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 356/532] shmem: use ramfs_kill_sb() for kill_sb method of ramfs-based tmpfs
-Date: Fri, 21 Jul 2023 18:04:20 +0200
-Message-ID: <20230721160633.778387831@linuxfoundation.org>
+	Ted Tso <tytso@mit.edu>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.15 357/532] ext4: Remove ext4 locking of moved directory
+Date: Fri, 21 Jul 2023 18:04:21 +0200
+Message-ID: <20230721160633.832162183@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,60 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Jan Kara <jack@suse.cz>
 
-commit 36ce9d76b0a93bae799e27e4f5ac35478c676592 upstream.
+commit 3658840cd363f2be094f5dfd2f0b174a9055dd0f upstream.
 
-As the ramfs-based tmpfs uses ramfs_init_fs_context() for the
-init_fs_context method, which allocates fc->s_fs_info, use ramfs_kill_sb()
-to free it and avoid a memory leak.
+Remove locking of moved directory in ext4_rename2(). We will take care
+of it in VFS instead. This effectively reverts commit 0813299c586b
+("ext4: Fix possible corruption when moving a directory") and followup
+fixes.
 
-Link: https://lkml.kernel.org/r/20230607161523.2876433-1-roberto.sassu@huaweicloud.com
-Fixes: c3b1b1cbf002 ("ramfs: add support for "mode=" mount option")
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+CC: Ted Tso <tytso@mit.edu>
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
+Message-Id: <20230601105830.13168-1-jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ramfs/inode.c      |    2 +-
- include/linux/ramfs.h |    1 +
- mm/shmem.c            |    2 +-
- 3 files changed, 3 insertions(+), 2 deletions(-)
+ fs/ext4/namei.c |   17 ++---------------
+ 1 file changed, 2 insertions(+), 15 deletions(-)
 
---- a/fs/ramfs/inode.c
-+++ b/fs/ramfs/inode.c
-@@ -274,7 +274,7 @@ int ramfs_init_fs_context(struct fs_cont
- 	return 0;
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -3848,19 +3848,10 @@ static int ext4_rename(struct user_names
+ 			return retval;
+ 	}
+ 
+-	/*
+-	 * We need to protect against old.inode directory getting converted
+-	 * from inline directory format into a normal one.
+-	 */
+-	if (S_ISDIR(old.inode->i_mode))
+-		inode_lock_nested(old.inode, I_MUTEX_NONDIR2);
+-
+ 	old.bh = ext4_find_entry(old.dir, &old.dentry->d_name, &old.de,
+ 				 &old.inlined);
+-	if (IS_ERR(old.bh)) {
+-		retval = PTR_ERR(old.bh);
+-		goto unlock_moved_dir;
+-	}
++	if (IS_ERR(old.bh))
++		return PTR_ERR(old.bh);
+ 
+ 	/*
+ 	 *  Check for inode number is _not_ due to possible IO errors.
+@@ -4050,10 +4041,6 @@ release_bh:
+ 	brelse(old.bh);
+ 	brelse(new.bh);
+ 
+-unlock_moved_dir:
+-	if (S_ISDIR(old.inode->i_mode))
+-		inode_unlock(old.inode);
+-
+ 	return retval;
  }
- 
--static void ramfs_kill_sb(struct super_block *sb)
-+void ramfs_kill_sb(struct super_block *sb)
- {
- 	kfree(sb->s_fs_info);
- 	kill_litter_super(sb);
---- a/include/linux/ramfs.h
-+++ b/include/linux/ramfs.h
-@@ -7,6 +7,7 @@
- struct inode *ramfs_get_inode(struct super_block *sb, const struct inode *dir,
- 	 umode_t mode, dev_t dev);
- extern int ramfs_init_fs_context(struct fs_context *fc);
-+extern void ramfs_kill_sb(struct super_block *sb);
- 
- #ifdef CONFIG_MMU
- static inline int
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -4043,7 +4043,7 @@ static struct file_system_type shmem_fs_
- 	.name		= "tmpfs",
- 	.init_fs_context = ramfs_init_fs_context,
- 	.parameters	= ramfs_fs_parameters,
--	.kill_sb	= kill_litter_super,
-+	.kill_sb	= ramfs_kill_sb,
- 	.fs_flags	= FS_USERNS_MOUNT,
- };
  
 
 
