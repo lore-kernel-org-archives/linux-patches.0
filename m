@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65EE1F923
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:56:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA2AC433C8;
-	Fri, 21 Jul 2023 18:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186361F923
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:56:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25384C433C8;
+	Fri, 21 Jul 2023 18:56:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965760;
-	bh=yqGK+wYqigmAbsLBYc6O0kXFXitunK8vGTM0CuJwc/Q=;
+	s=korg; t=1689965763;
+	bh=5UWzVjExUpaguz9sjkC+Hv6zH81y76mv5ZV5XtxkQok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nizv5Qy+SmZrEpB46gjIjsnKpqgINayVyeqlEPirNjgcExJa6xAAzPMEfPdzokgdP
-	 FBE5JASulHMzBKraWnawItbRmZmfiBYZBcmDk0SxDfeqWI2xj7LyMXa09JUQ+jaTBj
-	 qOhrOnu8FdD+UZjtguwxTvFfIwFp5JVGvgbVrVrs=
+	b=jXMIGl0BE8a9oVStNXrysjeAL4ApPReS5KmW/6QyG7JmmmsdiXvGdn1xfhvgm7V0D
+	 +wDSz8lTfuLR0cyt75UK4umdI/ajZ7Esioyl7Bj1zhFQO9cUspjcTDC3+dS3aImenJ
+	 m4fBVnCbCD+Sl6VQWhN2+r54XZrLeGwC032vmInQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gilad Sever <gilad9366@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Shmulik Ladkani <shmulik.ladkani@gmail.com>,
-	Eyal Birger <eyal.birger@gmail.com>,
-	Stanislav Fomichev <sdf@google.com>,
+	Edwin Peer <edwin.peer@broadcom.com>,
+	Edwin Peer <espeer@gmail.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 076/532] bpf: Call __bpf_sk_lookup()/__bpf_skc_lookup() directly via TC hookpoint
-Date: Fri, 21 Jul 2023 17:59:40 +0200
-Message-ID: <20230721160618.729109243@linuxfoundation.org>
+Subject: [PATCH 5.15 067/532] rtnetlink: extend RTEXT_FILTER_SKIP_STATS to IFLA_VF_INFO
+Date: Fri, 21 Jul 2023 17:59:31 +0200
+Message-ID: <20230721160618.257118012@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -38,76 +37,165 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gilad Sever <gilad9366@gmail.com>
+From: Edwin Peer <edwin.peer@broadcom.com>
 
-[ Upstream commit 97fbfeb86917bdbe9c41d5143e335a929147f405 ]
+[ Upstream commit fa0e21fa44438a0e856d42224bfa24641d37b979 ]
 
-skb->dev always exists in the tc flow. There is no need to use
-bpf_skc_lookup(), bpf_sk_lookup() from this code path.
+This filter already exists for excluding IPv6 SNMP stats. Extend its
+definition to also exclude IFLA_VF_INFO stats in RTM_GETLINK.
 
-This change facilitates fixing the tc flow to be VRF aware.
+This patch constitutes a partial fix for a netlink attribute nesting
+overflow bug in IFLA_VFINFO_LIST. By excluding the stats when the
+requester doesn't need them, the truncation of the VF list is avoided.
 
-Signed-off-by: Gilad Sever <gilad9366@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Shmulik Ladkani <shmulik.ladkani@gmail.com>
-Reviewed-by: Eyal Birger <eyal.birger@gmail.com>
-Acked-by: Stanislav Fomichev <sdf@google.com>
-Link: https://lore.kernel.org/bpf/20230621104211.301902-3-gilad9366@gmail.com
-Stable-dep-of: 9a5cb79762e0 ("bpf: Fix bpf socket lookup from tc/xdp to respect socket VRF bindings")
+While it was technically only the stats added in commit c5a9f6f0ab40
+("net/core: Add drop counters to VF statistics") breaking the camel's
+back, the appreciable size of the stats data should never have been
+included without due consideration for the maximum number of VFs
+supported by PCI.
+
+Fixes: 3b766cd83232 ("net/core: Add reading VF statistics through the PF netdevice")
+Fixes: c5a9f6f0ab40 ("net/core: Add drop counters to VF statistics")
+Signed-off-by: Edwin Peer <edwin.peer@broadcom.com>
+Cc: Edwin Peer <espeer@gmail.com>
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Link: https://lore.kernel.org/r/20230611105108.122586-1-gal@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ net/core/rtnetlink.c | 96 +++++++++++++++++++++++---------------------
+ 1 file changed, 51 insertions(+), 45 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 650214f1d25fa..60c1ad379a0b6 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -6349,8 +6349,12 @@ static const struct bpf_func_proto bpf_sk_lookup_udp_proto = {
- BPF_CALL_5(bpf_tc_skc_lookup_tcp, struct sk_buff *, skb,
- 	   struct bpf_sock_tuple *, tuple, u32, len, u64, netns_id, u64, flags)
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index bc187289bf64b..0ab558501290b 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -922,24 +922,27 @@ static inline int rtnl_vfinfo_size(const struct net_device *dev,
+ 			 nla_total_size(sizeof(struct ifla_vf_rate)) +
+ 			 nla_total_size(sizeof(struct ifla_vf_link_state)) +
+ 			 nla_total_size(sizeof(struct ifla_vf_rss_query_en)) +
+-			 nla_total_size(0) + /* nest IFLA_VF_STATS */
+-			 /* IFLA_VF_STATS_RX_PACKETS */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_TX_PACKETS */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_RX_BYTES */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_TX_BYTES */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_BROADCAST */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_MULTICAST */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_RX_DROPPED */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_TX_DROPPED */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+ 			 nla_total_size(sizeof(struct ifla_vf_trust)));
++		if (~ext_filter_mask & RTEXT_FILTER_SKIP_STATS) {
++			size += num_vfs *
++				(nla_total_size(0) + /* nest IFLA_VF_STATS */
++				 /* IFLA_VF_STATS_RX_PACKETS */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_TX_PACKETS */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_RX_BYTES */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_TX_BYTES */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_BROADCAST */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_MULTICAST */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_RX_DROPPED */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_TX_DROPPED */
++				 nla_total_size_64bit(sizeof(__u64)));
++		}
+ 		return size;
+ 	} else
+ 		return 0;
+@@ -1214,7 +1217,8 @@ static noinline_for_stack int rtnl_fill_stats(struct sk_buff *skb,
+ static noinline_for_stack int rtnl_fill_vfinfo(struct sk_buff *skb,
+ 					       struct net_device *dev,
+ 					       int vfs_num,
+-					       struct nlattr *vfinfo)
++					       struct nlattr *vfinfo,
++					       u32 ext_filter_mask)
  {
--	return (unsigned long)bpf_skc_lookup(skb, tuple, len, IPPROTO_TCP,
--					     netns_id, flags);
-+	struct net *caller_net = dev_net(skb->dev);
-+	int ifindex = skb->dev->ifindex;
-+
-+	return (unsigned long)__bpf_skc_lookup(skb, tuple, len, caller_net,
-+					       ifindex, IPPROTO_TCP, netns_id,
-+					       flags);
- }
+ 	struct ifla_vf_rss_query_en vf_rss_query_en;
+ 	struct nlattr *vf, *vfstats, *vfvlanlist;
+@@ -1320,33 +1324,35 @@ static noinline_for_stack int rtnl_fill_vfinfo(struct sk_buff *skb,
+ 		goto nla_put_vf_failure;
+ 	}
+ 	nla_nest_end(skb, vfvlanlist);
+-	memset(&vf_stats, 0, sizeof(vf_stats));
+-	if (dev->netdev_ops->ndo_get_vf_stats)
+-		dev->netdev_ops->ndo_get_vf_stats(dev, vfs_num,
+-						&vf_stats);
+-	vfstats = nla_nest_start_noflag(skb, IFLA_VF_STATS);
+-	if (!vfstats)
+-		goto nla_put_vf_failure;
+-	if (nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_PACKETS,
+-			      vf_stats.rx_packets, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_PACKETS,
+-			      vf_stats.tx_packets, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_BYTES,
+-			      vf_stats.rx_bytes, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_BYTES,
+-			      vf_stats.tx_bytes, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_BROADCAST,
+-			      vf_stats.broadcast, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_MULTICAST,
+-			      vf_stats.multicast, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_DROPPED,
+-			      vf_stats.rx_dropped, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_DROPPED,
+-			      vf_stats.tx_dropped, IFLA_VF_STATS_PAD)) {
+-		nla_nest_cancel(skb, vfstats);
+-		goto nla_put_vf_failure;
++	if (~ext_filter_mask & RTEXT_FILTER_SKIP_STATS) {
++		memset(&vf_stats, 0, sizeof(vf_stats));
++		if (dev->netdev_ops->ndo_get_vf_stats)
++			dev->netdev_ops->ndo_get_vf_stats(dev, vfs_num,
++							  &vf_stats);
++		vfstats = nla_nest_start_noflag(skb, IFLA_VF_STATS);
++		if (!vfstats)
++			goto nla_put_vf_failure;
++		if (nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_PACKETS,
++				      vf_stats.rx_packets, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_PACKETS,
++				      vf_stats.tx_packets, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_BYTES,
++				      vf_stats.rx_bytes, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_BYTES,
++				      vf_stats.tx_bytes, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_BROADCAST,
++				      vf_stats.broadcast, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_MULTICAST,
++				      vf_stats.multicast, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_DROPPED,
++				      vf_stats.rx_dropped, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_DROPPED,
++				      vf_stats.tx_dropped, IFLA_VF_STATS_PAD)) {
++			nla_nest_cancel(skb, vfstats);
++			goto nla_put_vf_failure;
++		}
++		nla_nest_end(skb, vfstats);
+ 	}
+-	nla_nest_end(skb, vfstats);
+ 	nla_nest_end(skb, vf);
+ 	return 0;
  
- static const struct bpf_func_proto bpf_tc_skc_lookup_tcp_proto = {
-@@ -6368,8 +6372,12 @@ static const struct bpf_func_proto bpf_tc_skc_lookup_tcp_proto = {
- BPF_CALL_5(bpf_tc_sk_lookup_tcp, struct sk_buff *, skb,
- 	   struct bpf_sock_tuple *, tuple, u32, len, u64, netns_id, u64, flags)
- {
--	return (unsigned long)bpf_sk_lookup(skb, tuple, len, IPPROTO_TCP,
--					    netns_id, flags);
-+	struct net *caller_net = dev_net(skb->dev);
-+	int ifindex = skb->dev->ifindex;
-+
-+	return (unsigned long)__bpf_sk_lookup(skb, tuple, len, caller_net,
-+					      ifindex, IPPROTO_TCP, netns_id,
-+					      flags);
- }
+@@ -1379,7 +1385,7 @@ static noinline_for_stack int rtnl_fill_vf(struct sk_buff *skb,
+ 		return -EMSGSIZE;
  
- static const struct bpf_func_proto bpf_tc_sk_lookup_tcp_proto = {
-@@ -6387,8 +6395,12 @@ static const struct bpf_func_proto bpf_tc_sk_lookup_tcp_proto = {
- BPF_CALL_5(bpf_tc_sk_lookup_udp, struct sk_buff *, skb,
- 	   struct bpf_sock_tuple *, tuple, u32, len, u64, netns_id, u64, flags)
- {
--	return (unsigned long)bpf_sk_lookup(skb, tuple, len, IPPROTO_UDP,
--					    netns_id, flags);
-+	struct net *caller_net = dev_net(skb->dev);
-+	int ifindex = skb->dev->ifindex;
-+
-+	return (unsigned long)__bpf_sk_lookup(skb, tuple, len, caller_net,
-+					      ifindex, IPPROTO_UDP, netns_id,
-+					      flags);
- }
+ 	for (i = 0; i < num_vfs; i++) {
+-		if (rtnl_fill_vfinfo(skb, dev, i, vfinfo))
++		if (rtnl_fill_vfinfo(skb, dev, i, vfinfo, ext_filter_mask))
+ 			return -EMSGSIZE;
+ 	}
  
- static const struct bpf_func_proto bpf_tc_sk_lookup_udp_proto = {
 -- 
 2.39.2
 
