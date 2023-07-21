@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF52D200A6
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:06:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B70EC433C8;
-	Fri, 21 Jul 2023 19:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D00200A6
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:06:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27246C433C8;
+	Fri, 21 Jul 2023 19:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966380;
-	bh=fYW27+RooSAZGF5eyO/yPsTSbIHZa8928R1o8azIfRg=;
+	s=korg; t=1689966383;
+	bh=nbadC5G980JyFCJLJsQXECqrva+et2+2crCnaUZl3tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SlYsZ5zu4xaNRFtD3K604JLY22lSLuYB66g4DILo8vydbG6H03dgF+DJ5PYCOZKX4
-	 /PDdnd1sh3/EpxrY4lgPTijf3G+4OzYBm3+QVbQN2eDwRzWKrMoRlfB9lQf3dkNdak
-	 mEH82w7ogZI1Lrwn1MvmlXrLp5CsFlF9ybXEFAoY=
+	b=iXYrtCXksxvyIin0hHrqdvnA8/4nrDKSkhhlS1bjbN+J+XTzhPiGSXtUDFyqTP+qm
+	 2BAgGBpRvDyhAp+/rLme9natiBAo8eGIs5z+/j4KLoaT6Eymn5h7gpkAeDi9z2971Z
+	 8zd3OGDzUjeCUkAxkeBBFIPLm8UthuIWS7XDZI4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <simon.horman@corigine.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 324/532] octeontx2-af: Fix mapping for NIX block from CGX connection
-Date: Fri, 21 Jul 2023 18:03:48 +0200
-Message-ID: <20230721160631.995698017@linuxfoundation.org>
+Subject: [PATCH 5.15 325/532] octeontx2-af: Add validation before accessing cgx and lmac
+Date: Fri, 21 Jul 2023 18:03:49 +0200
+Message-ID: <20230721160632.052067925@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -39,68 +39,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit 2e7bc57b976bb016c6569a54d95c1b8d88f9450a ]
+[ Upstream commit 79ebb53772c95d3a6ae51b3c65f9985fdd430df6 ]
 
-Firmware configures NIX block mapping for all MAC blocks.
-The current implementation reads the configuration and
-creates the mapping between RVU PF  and NIX blocks. But
-this configuration is only valid for silicons that support
-multiple blocks. For all other silicons, all MAC blocks
-map to NIX0.
+with the addition of new MAC blocks like CN10K RPM and CN10KB
+RPM_USX, LMACs are noncontiguous and CGX blocks are also
+noncontiguous. But during RVU driver initialization, the driver
+is assuming they are contiguous and trying to access
+cgx or lmac with their id which is resulting in kernel panic.
 
-This patch corrects the mapping by adding a check for the same.
+This patch fixes the issue by adding proper checks.
 
-Fixes: c5a73b632b90 ("octeontx2-af: Map NIX block from CGX connection")
+[   23.219150] pc : cgx_lmac_read+0x38/0x70
+[   23.219154] lr : rvu_program_channels+0x3f0/0x498
+[   23.223852] sp : ffff000100d6fc80
+[   23.227158] x29: ffff000100d6fc80 x28: ffff00010009f880 x27:
+000000000000005a
+[   23.234288] x26: ffff000102586768 x25: 0000000000002500 x24:
+fffffffffff0f000
+
+Fixes: 91c6945ea1f9 ("octeontx2-af: cn10k: Add RPM MAC support")
 Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
 Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu.h     | 11 +++++++++++
- drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c |  2 +-
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/af/cgx.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-index fed49d6a178d0..9d517e6dac2f0 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-@@ -23,6 +23,7 @@
- #define	PCI_DEVID_OCTEONTX2_LBK			0xA061
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+index fd0a31bf94fea..8ac95cb7bbb74 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+@@ -167,6 +167,9 @@ void cgx_lmac_write(int cgx_id, int lmac_id, u64 offset, u64 val)
+ {
+ 	struct cgx *cgx_dev = cgx_get_pdata(cgx_id);
  
- /* Subsystem Device ID */
-+#define PCI_SUBSYS_DEVID_98XX                  0xB100
- #define PCI_SUBSYS_DEVID_96XX                  0xB200
- #define PCI_SUBSYS_DEVID_CN10K_A	       0xB900
- 
-@@ -614,6 +615,16 @@ static inline u16 rvu_nix_chan_cpt(struct rvu *rvu, u8 chan)
- 	return rvu->hw->cpt_chan_base + chan;
++	/* Software must not access disabled LMAC registers */
++	if (!is_lmac_valid(cgx_dev, lmac_id))
++		return;
+ 	cgx_write(cgx_dev, lmac_id, offset, val);
  }
  
-+static inline bool is_rvu_supports_nix1(struct rvu *rvu)
-+{
-+	struct pci_dev *pdev = rvu->pdev;
+@@ -174,6 +177,10 @@ u64 cgx_lmac_read(int cgx_id, int lmac_id, u64 offset)
+ {
+ 	struct cgx *cgx_dev = cgx_get_pdata(cgx_id);
+ 
++	/* Software must not access disabled LMAC registers */
++	if (!is_lmac_valid(cgx_dev, lmac_id))
++		return 0;
 +
-+	if (pdev->subsystem_device == PCI_SUBSYS_DEVID_98XX)
-+		return true;
-+
-+	return false;
-+}
-+
- /* Function Prototypes
-  * RVU
-  */
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-index 28ff67819566c..5ca4ab5770542 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-@@ -111,7 +111,7 @@ static void rvu_map_cgx_nix_block(struct rvu *rvu, int pf,
- 	p2x = cgx_lmac_get_p2x(cgx_id, lmac_id);
- 	/* Firmware sets P2X_SELECT as either NIX0 or NIX1 */
- 	pfvf->nix_blkaddr = BLKADDR_NIX0;
--	if (p2x == CMR_P2X_SEL_NIX1)
-+	if (is_rvu_supports_nix1(rvu) && p2x == CMR_P2X_SEL_NIX1)
- 		pfvf->nix_blkaddr = BLKADDR_NIX1;
+ 	return cgx_read(cgx_dev, lmac_id, offset);
  }
  
 -- 
