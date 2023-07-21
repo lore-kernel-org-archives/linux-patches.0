@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383821ED41
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:53:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C96C433C7;
-	Fri, 21 Jul 2023 18:53:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBCB1ED41
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:53:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72880C433C7;
+	Fri, 21 Jul 2023 18:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965630;
-	bh=KLo4viXHZ4dMlleTtve+fXKM/WH3MuMEeYx11aXMzEg=;
+	s=korg; t=1689965632;
+	bh=++ns4nNs+c9ftg6r8Za2ltsHbM0UrYXOwk+dDjMLysQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eWStmNntlDByfF4je+s2ajeQ6qRKXCAdL+n3hNOwE2lpJZzKU1lsaJhAskZpWaHHl
-	 Ft7wCRXHyrsoHIKOdo0gE67ZCC9zzX+PZJ3GKxS1gyYd2YHXPt1Ie2eU2K96FX1zJp
-	 tQpvncphuET57GKiwsBdiLGnty3aidu8kpANyxU8=
+	b=gJY6TpQa4uinSmPsa/mVET1st3nXLSX04wa12ZsaYHDrPwcqauzj1PFIC21bW/OFW
+	 KJuQTREFlyNi2PIY5ULLs2Hzf2LtydtvcrGYRFdUnvAPHLJ+tiWIQPc7jLe26O7cSX
+	 GY8pdGydfpEcVYspi5VWBK+T9CUemyH/D6vtzxK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b68fbebe56d8362907e8@syzkaller.appspotmail.com,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jesper Dangaard Brouer <brouer@redhat.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Simon Horman <simon.horman@corigine.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 058/532] wifi: ath9k: dont allow to overwrite ENDPOINT0 attributes
-Date: Fri, 21 Jul 2023 17:59:22 +0200
-Message-ID: <20230721160617.785979775@linuxfoundation.org>
+Subject: [PATCH 5.15 059/532] selftests/bpf: Fix check_mtu using wrong variable type
+Date: Fri, 21 Jul 2023 17:59:23 +0200
+Message-ID: <20230721160617.838322213@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -37,49 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Jesper Dangaard Brouer <brouer@redhat.com>
 
-[ Upstream commit 061b0cb9327b80d7a0f63a33e7c3e2a91a71f142 ]
+[ Upstream commit 095641817e1bf6aa2560e025e47575188ee3edaf ]
 
-A bad USB device is able to construct a service connection response
-message with target endpoint being ENDPOINT0 which is reserved for
-HTC_CTRL_RSVD_SVC and should not be modified to be used for any other
-services.
+Dan Carpenter found via Smatch static checker, that unsigned 'mtu_lo' is
+never less than zero.
 
-Reject such service connection responses.
+Variable mtu_lo should have been an 'int', because read_mtu_device_lo()
+uses minus as error indications.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
-Reported-by: syzbot+b68fbebe56d8362907e8@syzkaller.appspotmail.com
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230516150427.79469-1-pchelkin@ispras.ru
+Fixes: b62eba563229 ("selftests/bpf: Tests using bpf_check_mtu BPF-helper")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Jesper Dangaard Brouer <brouer@redhat.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/bpf/168605104733.3636467.17945947801753092590.stgit@firesoul
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/htc_hst.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/testing/selftests/bpf/prog_tests/check_mtu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/htc_hst.c b/drivers/net/wireless/ath/ath9k/htc_hst.c
-index fe62ff668f757..99667aba289df 100644
---- a/drivers/net/wireless/ath/ath9k/htc_hst.c
-+++ b/drivers/net/wireless/ath/ath9k/htc_hst.c
-@@ -114,7 +114,13 @@ static void htc_process_conn_rsp(struct htc_target *target,
+diff --git a/tools/testing/selftests/bpf/prog_tests/check_mtu.c b/tools/testing/selftests/bpf/prog_tests/check_mtu.c
+index 012068f33a0a8..871971cdd7b75 100644
+--- a/tools/testing/selftests/bpf/prog_tests/check_mtu.c
++++ b/tools/testing/selftests/bpf/prog_tests/check_mtu.c
+@@ -197,7 +197,7 @@ static void test_check_mtu_tc(__u32 mtu, __u32 ifindex)
  
- 	if (svc_rspmsg->status == HTC_SERVICE_SUCCESS) {
- 		epid = svc_rspmsg->endpoint_id;
--		if (epid < 0 || epid >= ENDPOINT_MAX)
-+
-+		/* Check that the received epid for the endpoint to attach
-+		 * a new service is valid. ENDPOINT0 can't be used here as it
-+		 * is already reserved for HTC_CTRL_RSVD_SVC service and thus
-+		 * should not be modified.
-+		 */
-+		if (epid <= ENDPOINT0 || epid >= ENDPOINT_MAX)
- 			return;
+ void test_check_mtu(void)
+ {
+-	__u32 mtu_lo;
++	int mtu_lo;
  
- 		service_id = be16_to_cpu(svc_rspmsg->service_id);
+ 	if (test__start_subtest("bpf_check_mtu XDP-attach"))
+ 		test_check_mtu_xdp_attach();
 -- 
 2.39.2
 
