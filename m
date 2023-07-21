@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D377220F88
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:07:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54600C433C7;
-	Fri, 21 Jul 2023 19:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129F620F88
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 19:07:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B744C433C8;
+	Fri, 21 Jul 2023 19:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689966442;
-	bh=4oYA4QarjJODrSVu7SNKc/gcTKP7ciVNKRrNq+uaXl0=;
+	s=korg; t=1689966445;
+	bh=eyNIJSmmPkG2ultqnZvk3OaXiLLbBoIwK0TDz2bV9kU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O9Ji1fu/XWncg0i7KVUPl4RNtgTklfi10VZcoyRRHIypKT8zVU4YpySg33fFXXYwy
-	 liQY+WKr8YWQkR4jKSv332E5AdS3EZ1eoSfUhOnC1JrNS89z2evVt1U52Clb2OwSs/
-	 x7GIH2lKBJShVp3yj08YTlnuPbxu/Tn7cm3KQK+s=
+	b=B7gtGu6ojYqX2SNi3BRS3tN7yodEsCBCanCwfUVmrCQb7iuVos8PgT8TM7WUQcyRJ
+	 Z/+Xur9zccRrRDt3VgozoJU1uTTiUHKImdGcxFW1IFivuKjzzyyjGdA7/BOBRX07nu
+	 jo1AXQtbsWEVvJRu9+RbSPbOSLQwrDLMAynaSuUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 344/532] NFSD: add encoding of op_recall flag for write delegation
-Date: Fri, 21 Jul 2023 18:04:08 +0200
-Message-ID: <20230721160633.096513550@linuxfoundation.org>
+	Tobias Heider <me@tobhe.de>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 318/532] Add MODULE_FIRMWARE() for FIRMWARE_TG357766.
+Date: Fri, 21 Jul 2023 18:03:42 +0200
+Message-ID: <20230721160631.653223731@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,32 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Tobias Heider <me@tobhe.de>
 
-commit 58f5d894006d82ed7335e1c37182fbc5f08c2f51 upstream.
+[ Upstream commit 046f753da6143ee16452966915087ec8b0de3c70 ]
 
-Modified nfsd4_encode_open to encode the op_recall flag properly
-for OPEN result with write delegation granted.
+Fixes a bug where on the M1 mac mini initramfs-tools fails to
+include the necessary firmware into the initrd.
 
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c4dab50697ff ("tg3: Download 57766 EEE service patch firmware")
+Signed-off-by: Tobias Heider <me@tobhe.de>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://lore.kernel.org/r/ZJt7LKzjdz8+dClx@tobhe.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4xdr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/tg3.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -3816,7 +3816,7 @@ nfsd4_encode_open(struct nfsd4_compoundr
- 		p = xdr_reserve_space(xdr, 32);
- 		if (!p)
- 			return nfserr_resource;
--		*p++ = cpu_to_be32(0);
-+		*p++ = cpu_to_be32(open->op_recall);
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index 50f86bebbc19d..70b1a855273e4 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -224,6 +224,7 @@ MODULE_AUTHOR("David S. Miller (davem@redhat.com) and Jeff Garzik (jgarzik@pobox
+ MODULE_DESCRIPTION("Broadcom Tigon3 ethernet driver");
+ MODULE_LICENSE("GPL");
+ MODULE_FIRMWARE(FIRMWARE_TG3);
++MODULE_FIRMWARE(FIRMWARE_TG357766);
+ MODULE_FIRMWARE(FIRMWARE_TG3TSO);
+ MODULE_FIRMWARE(FIRMWARE_TG3TSO5);
  
- 		/*
- 		 * TODO: space_limit's in delegations
+-- 
+2.39.2
+
 
 
