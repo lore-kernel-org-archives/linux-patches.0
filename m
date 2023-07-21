@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189461F923
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:55:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB4EC433C8;
-	Fri, 21 Jul 2023 18:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC4E1F923
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:55:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AFCFC433C7;
+	Fri, 21 Jul 2023 18:55:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965740;
-	bh=kK43EC7XdeOhgPvhdYZXvcb1/bicAJ/QdHp6T1+MB6A=;
+	s=korg; t=1689965743;
+	bh=QyGMg3/D6zoMi381xYFdlUCXAKM924Oz8dTLCs//7o4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F/Hkg4AJpDcLKSkVmcdlswRSZMSckeQjcGFYcIGZeOfhRDmoJqRBk8UPrTYFKhQoJ
-	 c/xoVOW90jHUHMefPvcQjuMYa0LMkE4g18lp/88eTA8rXNFoguoeoUOAVYf8wsGXxI
-	 FtddNl8nZdrMc4XgXeg8IYYVWdF9IjIvgC9TilSg=
+	b=jMs4wg0fWgPDHDtdv9OOAohD3ILFRzrXaNKiEhjQ2gTpe2dibnwtV+dpcYv46N7gA
+	 30cB1zpAetP7jj+MBTCsDZtLUe3QoZ/04ZmqgH96QQS3sTpD60FeDvHIRYvnCMAwzn
+	 Avi4EPzdkB+2jqJR1oe4K7yZwumebMOKY2hHuGzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/532] wifi: iwlwifi: pcie: fix NULL pointer dereference in iwl_pcie_irq_rx_msix_handler()
-Date: Fri, 21 Jul 2023 17:59:34 +0200
-Message-ID: <20230721160618.412727127@linuxfoundation.org>
+Subject: [PATCH 5.15 097/532] drm/amd/display: Explicitly specify update type per plane info change
+Date: Fri, 21 Jul 2023 18:00:01 +0200
+Message-ID: <20230721160619.832493950@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -36,54 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit 1902f1953b8ba100ee8705cb8a6f1a9795550eca ]
+[ Upstream commit 710cc1e7cd461446a9325c9bd1e9a54daa462952 ]
 
-rxq can be NULL only when trans_pcie->rxq is NULL and entry->entry
-is zero. For the case when entry->entry is not equal to 0, rxq
-won't be NULL even if trans_pcie->rxq is NULL. Modify checker to
-check for trans_pcie->rxq.
+[Why]
+The bit for flip addr is being set causing the determination for
+FAST vs MEDIUM to always return MEDIUM when plane info is provided
+as a surface update. This causes extreme stuttering for the typical
+atomic update path on Linux.
 
-Fixes: abc599efa67b ("iwlwifi: pcie: don't crash when rx queues aren't allocated in interrupt")
-Signed-off-by: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230614123446.5a5eb3889a4a.I375a1d58f16b48cd2044e7b7caddae512d7c86fd@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[How]
+Don't use update_flags->raw for determining FAST vs MEDIUM. It's too
+fragile to changes like this.
+
+Explicitly specify the update type per update flag instead. It's not
+as clever as checking the bits itself but at least it's correct.
+
+Fixes: aa5fdb1ab5b6 ("drm/amd/display: Explicitly specify update type per plane info change")
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/rx.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
-index 8885b19fd8de6..6c6512158813b 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
-@@ -1601,14 +1601,14 @@ irqreturn_t iwl_pcie_irq_rx_msix_handler(int irq, void *dev_id)
- 	struct msix_entry *entry = dev_id;
- 	struct iwl_trans_pcie *trans_pcie = iwl_pcie_get_trans_pcie(entry);
- 	struct iwl_trans *trans = trans_pcie->trans;
--	struct iwl_rxq *rxq = &trans_pcie->rxq[entry->entry];
-+	struct iwl_rxq *rxq;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 220a26e45a284..634640d5c0ff4 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -2111,9 +2111,6 @@ static enum surface_update_type det_surface_update(const struct dc *dc,
+ 	enum surface_update_type overall_type = UPDATE_TYPE_FAST;
+ 	union surface_update_flags *update_flags = &u->surface->update_flags;
  
- 	trace_iwlwifi_dev_irq_msix(trans->dev, entry, false, 0, 0);
- 
- 	if (WARN_ON(entry->entry >= trans->num_rx_queues))
- 		return IRQ_NONE;
- 
--	if (!rxq) {
-+	if (!trans_pcie->rxq) {
- 		if (net_ratelimit())
- 			IWL_ERR(trans,
- 				"[%d] Got MSI-X interrupt before we have Rx queues\n",
-@@ -1616,6 +1616,7 @@ irqreturn_t iwl_pcie_irq_rx_msix_handler(int irq, void *dev_id)
- 		return IRQ_NONE;
- 	}
- 
-+	rxq = &trans_pcie->rxq[entry->entry];
- 	lock_map_acquire(&trans->sync_cmd_lockdep_map);
- 	IWL_DEBUG_ISR(trans, "[%d] Got interrupt\n", entry->entry);
- 
+-	if (u->flip_addr)
+-		update_flags->bits.addr_update = 1;
+-
+ 	if (!is_surface_in_context(context, u->surface) || u->surface->force_full_update) {
+ 		update_flags->raw = 0xFFFFFFFF;
+ 		return UPDATE_TYPE_FULL;
 -- 
 2.39.2
 
