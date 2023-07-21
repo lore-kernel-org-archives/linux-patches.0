@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AB01F93D
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:10:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37A8C433C7;
-	Fri, 21 Jul 2023 16:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD7C1F93D
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:10:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF7A1C433CA;
+	Fri, 21 Jul 2023 16:10:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689955855;
-	bh=m1jRmP/X+sjq2Vr2SGOPIrFuA6zf9N5KECFmGmsH2S4=;
+	s=korg; t=1689955858;
+	bh=aeYFQgmanUmEGO+HZ+oYKGbygruBnAyAtp0ficau7dY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k39DZiwrEYu9uUNucUjmcTucuG9w6+JP823wN2HHtONNuUA0jzUja1s8FejUAdvyx
-	 sByWW0LJs5mDulkPHB7W4hXWiEb4raOBaPgTjNrcXRpAY79HEQVic3OySqz6NgPPCL
-	 StSo4QhezZP0b03KzMzRDXhZWotbuTmYUDW4lUSE=
+	b=KpUV1vn9qbwz9OR18kx6Mmbzym84kFzW74U2RwkqPWWhwzvgw0YMmhGc5ghvCGYHJ
+	 0s/mcHMzD9vtGTsDVNmlSNJ6lURsiDmELhaUK5VQttNkjql19rFa4v+t7uRrMA+B4J
+	 X/AW0F6nf68deAegfLnFR1f+h9OEagPB8+aKpeoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Alexandra Winter <wintera@linux.ibm.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 054/292] s390/ism: Fix locking for forwarding of IRQs and events to clients
-Date: Fri, 21 Jul 2023 18:02:43 +0200
-Message-ID: <20230721160531.121345804@linuxfoundation.org>
+Subject: [PATCH 6.4 055/292] s390/ism: Fix and simplify add()/remove() callback handling
+Date: Fri, 21 Jul 2023 18:02:44 +0200
+Message-ID: <20230721160531.162502524@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -38,205 +37,238 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-[ Upstream commit 6b5c13b591d753c6022fbd12f8c0c0a9a07fc065 ]
+[ Upstream commit 76631ffa2fd2d45bae5ad717eef716b94144e0e7 ]
 
-The clients array references all registered clients and is protected by
-the clients_lock. Besides its use as general list of clients the clients
-array is accessed in ism_handle_irq() to forward ISM device events to
-clients.
+Previously the clients_lock was protecting the clients array against
+concurrent addition/removal of clients but was also accessed from IRQ
+context. This meant that it had to be a spinlock and that the add() and
+remove() callbacks in which clients need to do allocation and take
+mutexes can't be called under the clients_lock. To work around this these
+callbacks were moved to workqueues. This not only introduced significant
+complexity but is also subtly broken in at least one way.
 
-While the clients_lock is taken in the IRQ handler when calling
-handle_event() it is however incorrectly not held during the
-client->handle_irq() call and for the preceding clients[] access leaving
-it unprotected against concurrent client (un-)registration.
+In ism_dev_init() and ism_dev_exit() clients[i]->tgt_ism is used to
+communicate the added/removed ISM device to the work function. While
+write access to client[i]->tgt_ism is protected by the clients_lock and
+the code waits that there is no pending add/remove work before and after
+setting clients[i]->tgt_ism this is not enough. The problem is that the
+wait happens based on per ISM device counters. Thus a concurrent
+ism_dev_init()/ism_dev_exit() for a different ISM device may overwrite
+a clients[i]->tgt_ism between unlocking the clients_lock and the
+subsequent wait for the work to finnish.
 
-Furthermore the accesses to ism->sba_client_arr[] in ism_register_dmb()
-and ism_unregister_dmb() are not protected by any lock. This is
-especially problematic as the client ID from the ism->sba_client_arr[]
-is not checked against NO_CLIENT and neither is the client pointer
-checked.
-
-Instead of expanding the use of the clients_lock further add a separate
-array in struct ism_dev which references clients subscribed to the
-device's events and IRQs. This array is protected by ism->lock which is
-already taken in ism_handle_irq() and can be taken outside the IRQ
-handler when adding/removing subscribers or the accessing
-ism->sba_client_arr[]. This also means that the clients_lock is no
-longer taken in IRQ context.
+Thankfully with the clients_lock no longer held in IRQ context it can be
+turned into a mutex which can be held during the calls to add()/remove()
+completely removing the need for the workqueues and the associated
+broken housekeeping including the per ISM device counters and the
+clients[i]->tgt_ism.
 
 Fixes: 89e7d2ba61b7 ("net/ism: Add new API for client registration")
 Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/net/ism_drv.c | 44 +++++++++++++++++++++++++++++++-------
- include/linux/ism.h        |  1 +
- 2 files changed, 37 insertions(+), 8 deletions(-)
+ drivers/s390/net/ism_drv.c | 86 +++++++++++---------------------------
+ include/linux/ism.h        |  6 ---
+ 2 files changed, 24 insertions(+), 68 deletions(-)
 
 diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
-index c2096e4bba319..216eb4b386286 100644
+index 216eb4b386286..d65571b3d5cad 100644
 --- a/drivers/s390/net/ism_drv.c
 +++ b/drivers/s390/net/ism_drv.c
-@@ -47,6 +47,15 @@ static struct ism_dev_list ism_dev_list = {
- 	.mutex = __MUTEX_INITIALIZER(ism_dev_list.mutex),
- };
- 
-+static void ism_setup_forwarding(struct ism_client *client, struct ism_dev *ism)
-+{
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&ism->lock, flags);
-+	ism->subs[client->id] = client;
-+	spin_unlock_irqrestore(&ism->lock, flags);
-+}
-+
+@@ -36,7 +36,7 @@ static const struct smcd_ops ism_ops;
+ static struct ism_client *clients[MAX_CLIENTS];	/* use an array rather than */
+ 						/* a list for fast mapping  */
+ static u8 max_client;
+-static DEFINE_SPINLOCK(clients_lock);
++static DEFINE_MUTEX(clients_lock);
+ struct ism_dev_list {
+ 	struct list_head list;
+ 	struct mutex mutex; /* protects ism device list */
+@@ -59,11 +59,10 @@ static void ism_setup_forwarding(struct ism_client *client, struct ism_dev *ism)
  int ism_register_client(struct ism_client *client)
  {
  	struct ism_dev *ism;
-@@ -71,6 +80,7 @@ int ism_register_client(struct ism_client *client)
- 		list_for_each_entry(ism, &ism_dev_list.list, list) {
- 			ism->priv[i] = NULL;
- 			client->add(ism);
-+			ism_setup_forwarding(client, ism);
- 		}
- 	}
- 	mutex_unlock(&ism_dev_list.mutex);
-@@ -92,6 +102,9 @@ int ism_unregister_client(struct ism_client *client)
- 		max_client--;
- 	spin_unlock_irqrestore(&clients_lock, flags);
- 	list_for_each_entry(ism, &ism_dev_list.list, list) {
-+		spin_lock_irqsave(&ism->lock, flags);
-+		/* Stop forwarding IRQs and events */
-+		ism->subs[client->id] = NULL;
- 		for (int i = 0; i < ISM_NR_DMBS; ++i) {
- 			if (ism->sba_client_arr[i] == client->id) {
- 				pr_err("%s: attempt to unregister client '%s'"
-@@ -101,6 +114,7 @@ int ism_unregister_client(struct ism_client *client)
- 				goto out;
- 			}
- 		}
-+		spin_unlock_irqrestore(&ism->lock, flags);
- 	}
- out:
- 	mutex_unlock(&ism_dev_list.mutex);
-@@ -328,6 +342,7 @@ int ism_register_dmb(struct ism_dev *ism, struct ism_dmb *dmb,
- 		     struct ism_client *client)
- {
- 	union ism_reg_dmb cmd;
-+	unsigned long flags;
- 	int ret;
+-	unsigned long flags;
+ 	int i, rc = -ENOSPC;
  
- 	ret = ism_alloc_dmb(ism, dmb);
-@@ -351,7 +366,9 @@ int ism_register_dmb(struct ism_dev *ism, struct ism_dmb *dmb,
- 		goto out;
+ 	mutex_lock(&ism_dev_list.mutex);
+-	spin_lock_irqsave(&clients_lock, flags);
++	mutex_lock(&clients_lock);
+ 	for (i = 0; i < MAX_CLIENTS; ++i) {
+ 		if (!clients[i]) {
+ 			clients[i] = client;
+@@ -74,7 +73,8 @@ int ism_register_client(struct ism_client *client)
+ 			break;
+ 		}
  	}
- 	dmb->dmb_tok = cmd.response.dmb_tok;
-+	spin_lock_irqsave(&ism->lock, flags);
- 	ism->sba_client_arr[dmb->sba_idx - ISM_DMB_BIT_OFFSET] = client->id;
-+	spin_unlock_irqrestore(&ism->lock, flags);
- out:
+-	spin_unlock_irqrestore(&clients_lock, flags);
++	mutex_unlock(&clients_lock);
++
+ 	if (i < MAX_CLIENTS) {
+ 		/* initialize with all devices that we got so far */
+ 		list_for_each_entry(ism, &ism_dev_list.list, list) {
+@@ -96,11 +96,11 @@ int ism_unregister_client(struct ism_client *client)
+ 	int rc = 0;
+ 
+ 	mutex_lock(&ism_dev_list.mutex);
+-	spin_lock_irqsave(&clients_lock, flags);
++	mutex_lock(&clients_lock);
+ 	clients[client->id] = NULL;
+ 	if (client->id + 1 == max_client)
+ 		max_client--;
+-	spin_unlock_irqrestore(&clients_lock, flags);
++	mutex_unlock(&clients_lock);
+ 	list_for_each_entry(ism, &ism_dev_list.list, list) {
+ 		spin_lock_irqsave(&ism->lock, flags);
+ 		/* Stop forwarding IRQs and events */
+@@ -571,21 +571,9 @@ static u64 ism_get_local_gid(struct ism_dev *ism)
+ 	return ism->local_gid;
+ }
+ 
+-static void ism_dev_add_work_func(struct work_struct *work)
+-{
+-	struct ism_client *client = container_of(work, struct ism_client,
+-						 add_work);
+-
+-	client->add(client->tgt_ism);
+-	ism_setup_forwarding(client, client->tgt_ism);
+-	atomic_dec(&client->tgt_ism->add_dev_cnt);
+-	wake_up(&client->tgt_ism->waitq);
+-}
+-
+ static int ism_dev_init(struct ism_dev *ism)
+ {
+ 	struct pci_dev *pdev = ism->pdev;
+-	unsigned long flags;
+ 	int i, ret;
+ 
+ 	ret = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_MSI);
+@@ -618,25 +606,16 @@ static int ism_dev_init(struct ism_dev *ism)
+ 		/* hardware is V2 capable */
+ 		ism_create_system_eid();
+ 
+-	init_waitqueue_head(&ism->waitq);
+-	atomic_set(&ism->free_clients_cnt, 0);
+-	atomic_set(&ism->add_dev_cnt, 0);
+-
+-	wait_event(ism->waitq, !atomic_read(&ism->add_dev_cnt));
+-	spin_lock_irqsave(&clients_lock, flags);
+-	for (i = 0; i < max_client; ++i)
++	mutex_lock(&ism_dev_list.mutex);
++	mutex_lock(&clients_lock);
++	for (i = 0; i < max_client; ++i) {
+ 		if (clients[i]) {
+-			INIT_WORK(&clients[i]->add_work,
+-				  ism_dev_add_work_func);
+-			clients[i]->tgt_ism = ism;
+-			atomic_inc(&ism->add_dev_cnt);
+-			schedule_work(&clients[i]->add_work);
++			clients[i]->add(ism);
++			ism_setup_forwarding(clients[i], ism);
+ 		}
+-	spin_unlock_irqrestore(&clients_lock, flags);
+-
+-	wait_event(ism->waitq, !atomic_read(&ism->add_dev_cnt));
++	}
++	mutex_unlock(&clients_lock);
+ 
+-	mutex_lock(&ism_dev_list.mutex);
+ 	list_add(&ism->list, &ism_dev_list.list);
+ 	mutex_unlock(&ism_dev_list.mutex);
+ 
+@@ -711,40 +690,24 @@ static int ism_probe(struct pci_dev *pdev, const struct pci_device_id *id)
  	return ret;
  }
-@@ -360,6 +377,7 @@ EXPORT_SYMBOL_GPL(ism_register_dmb);
- int ism_unregister_dmb(struct ism_dev *ism, struct ism_dmb *dmb)
+ 
+-static void ism_dev_remove_work_func(struct work_struct *work)
+-{
+-	struct ism_client *client = container_of(work, struct ism_client,
+-						 remove_work);
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&client->tgt_ism->lock, flags);
+-	client->tgt_ism->subs[client->id] = NULL;
+-	spin_unlock_irqrestore(&client->tgt_ism->lock, flags);
+-	client->remove(client->tgt_ism);
+-	atomic_dec(&client->tgt_ism->free_clients_cnt);
+-	wake_up(&client->tgt_ism->waitq);
+-}
+-
+-/* Callers must hold ism_dev_list.mutex */
+ static void ism_dev_exit(struct ism_dev *ism)
  {
- 	union ism_unreg_dmb cmd;
-+	unsigned long flags;
- 	int ret;
- 
- 	memset(&cmd, 0, sizeof(cmd));
-@@ -368,7 +386,9 @@ int ism_unregister_dmb(struct ism_dev *ism, struct ism_dmb *dmb)
- 
- 	cmd.request.dmb_tok = dmb->dmb_tok;
- 
-+	spin_lock_irqsave(&ism->lock, flags);
- 	ism->sba_client_arr[dmb->sba_idx - ISM_DMB_BIT_OFFSET] = NO_CLIENT;
-+	spin_unlock_irqrestore(&ism->lock, flags);
- 
- 	ret = ism_cmd(ism, &cmd);
- 	if (ret && ret != ISM_ERROR)
-@@ -491,6 +511,7 @@ static u16 ism_get_chid(struct ism_dev *ism)
- static void ism_handle_event(struct ism_dev *ism)
- {
- 	struct ism_event *entry;
-+	struct ism_client *clt;
+ 	struct pci_dev *pdev = ism->pdev;
+ 	unsigned long flags;
  	int i;
  
- 	while ((ism->ieq_idx + 1) != READ_ONCE(ism->ieq->header.idx)) {
-@@ -499,21 +520,21 @@ static void ism_handle_event(struct ism_dev *ism)
+-	wait_event(ism->waitq, !atomic_read(&ism->free_clients_cnt));
+-	spin_lock_irqsave(&clients_lock, flags);
++	spin_lock_irqsave(&ism->lock, flags);
+ 	for (i = 0; i < max_client; ++i)
+-		if (clients[i]) {
+-			INIT_WORK(&clients[i]->remove_work,
+-				  ism_dev_remove_work_func);
+-			clients[i]->tgt_ism = ism;
+-			atomic_inc(&ism->free_clients_cnt);
+-			schedule_work(&clients[i]->remove_work);
+-		}
+-	spin_unlock_irqrestore(&clients_lock, flags);
++		ism->subs[i] = NULL;
++	spin_unlock_irqrestore(&ism->lock, flags);
  
- 		entry = &ism->ieq->entry[ism->ieq_idx];
- 		debug_event(ism_debug_info, 2, entry, sizeof(*entry));
--		spin_lock(&clients_lock);
--		for (i = 0; i < max_client; ++i)
--			if (clients[i])
--				clients[i]->handle_event(ism, entry);
--		spin_unlock(&clients_lock);
-+		for (i = 0; i < max_client; ++i) {
-+			clt = ism->subs[i];
-+			if (clt)
-+				clt->handle_event(ism, entry);
-+		}
- 	}
+-	wait_event(ism->waitq, !atomic_read(&ism->free_clients_cnt));
++	mutex_lock(&ism_dev_list.mutex);
++	mutex_lock(&clients_lock);
++	for (i = 0; i < max_client; ++i) {
++		if (clients[i])
++			clients[i]->remove(ism);
++	}
++	mutex_unlock(&clients_lock);
+ 
+ 	if (SYSTEM_EID.serial_number[0] != '0' ||
+ 	    SYSTEM_EID.type[0] != '0')
+@@ -755,15 +718,14 @@ static void ism_dev_exit(struct ism_dev *ism)
+ 	kfree(ism->sba_client_arr);
+ 	pci_free_irq_vectors(pdev);
+ 	list_del_init(&ism->list);
++	mutex_unlock(&ism_dev_list.mutex);
  }
  
- static irqreturn_t ism_handle_irq(int irq, void *data)
+ static void ism_remove(struct pci_dev *pdev)
  {
- 	struct ism_dev *ism = data;
--	struct ism_client *clt;
- 	unsigned long bit, end;
- 	unsigned long *bv;
- 	u16 dmbemask;
-+	u8 client_id;
+ 	struct ism_dev *ism = dev_get_drvdata(&pdev->dev);
  
- 	bv = (void *) &ism->sba->dmb_bits[ISM_DMB_WORD_OFFSET];
- 	end = sizeof(ism->sba->dmb_bits) * BITS_PER_BYTE - ISM_DMB_BIT_OFFSET;
-@@ -530,8 +551,10 @@ static irqreturn_t ism_handle_irq(int irq, void *data)
- 		dmbemask = ism->sba->dmbe_mask[bit + ISM_DMB_BIT_OFFSET];
- 		ism->sba->dmbe_mask[bit + ISM_DMB_BIT_OFFSET] = 0;
- 		barrier();
--		clt = clients[ism->sba_client_arr[bit]];
--		clt->handle_irq(ism, bit + ISM_DMB_BIT_OFFSET, dmbemask);
-+		client_id = ism->sba_client_arr[bit];
-+		if (unlikely(client_id == NO_CLIENT || !ism->subs[client_id]))
-+			continue;
-+		ism->subs[client_id]->handle_irq(ism, bit + ISM_DMB_BIT_OFFSET, dmbemask);
- 	}
+-	mutex_lock(&ism_dev_list.mutex);
+ 	ism_dev_exit(ism);
+-	mutex_unlock(&ism_dev_list.mutex);
  
- 	if (ism->sba->e) {
-@@ -554,6 +577,7 @@ static void ism_dev_add_work_func(struct work_struct *work)
- 						 add_work);
- 
- 	client->add(client->tgt_ism);
-+	ism_setup_forwarding(client, client->tgt_ism);
- 	atomic_dec(&client->tgt_ism->add_dev_cnt);
- 	wake_up(&client->tgt_ism->waitq);
- }
-@@ -691,7 +715,11 @@ static void ism_dev_remove_work_func(struct work_struct *work)
- {
- 	struct ism_client *client = container_of(work, struct ism_client,
- 						 remove_work);
-+	unsigned long flags;
- 
-+	spin_lock_irqsave(&client->tgt_ism->lock, flags);
-+	client->tgt_ism->subs[client->id] = NULL;
-+	spin_unlock_irqrestore(&client->tgt_ism->lock, flags);
- 	client->remove(client->tgt_ism);
- 	atomic_dec(&client->tgt_ism->free_clients_cnt);
- 	wake_up(&client->tgt_ism->waitq);
+ 	pci_release_mem_regions(pdev);
+ 	pci_disable_device(pdev);
 diff --git a/include/linux/ism.h b/include/linux/ism.h
-index ea2bcdae74012..5160d47e5ea9e 100644
+index 5160d47e5ea9e..9a4c204df3da1 100644
 --- a/include/linux/ism.h
 +++ b/include/linux/ism.h
-@@ -44,6 +44,7 @@ struct ism_dev {
- 	u64 local_gid;
+@@ -45,9 +45,6 @@ struct ism_dev {
  	int ieq_idx;
  
-+	struct ism_client *subs[MAX_CLIENTS];
- 	atomic_t free_clients_cnt;
- 	atomic_t add_dev_cnt;
- 	wait_queue_head_t waitq;
+ 	struct ism_client *subs[MAX_CLIENTS];
+-	atomic_t free_clients_cnt;
+-	atomic_t add_dev_cnt;
+-	wait_queue_head_t waitq;
+ };
+ 
+ struct ism_event {
+@@ -69,9 +66,6 @@ struct ism_client {
+ 	 */
+ 	void (*handle_irq)(struct ism_dev *dev, unsigned int bit, u16 dmbemask);
+ 	/* Private area - don't touch! */
+-	struct work_struct remove_work;
+-	struct work_struct add_work;
+-	struct ism_dev *tgt_ism;
+ 	u8 id;
+ };
+ 
 -- 
 2.39.2
 
