@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE82227F07
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:57:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B778C433C8;
-	Fri, 21 Jul 2023 18:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B4227F07
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:57:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135D2C433C8;
+	Fri, 21 Jul 2023 18:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689965847;
-	bh=fHDODbcfyNgIg6RebuAaesGkZuSAi3NzOlRE61p1Vq4=;
+	s=korg; t=1689965850;
+	bh=QPRrWe63QBYg7dzwsjmM9xLMzbOEzZ+m92C/dZzbynM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TQV2rlN3uMPHhbli8M+U+C0+4kBWgizckM1q7a6MHG7/naz/O+wSDnrvYCNLKbkib
-	 Sx5h4gz39H6FAAhWjgD0SEJuZ9JRxRyvstF4qKk9x52jhl4TaUd1oBzB3qxEie7Xao
-	 OIEYxpuZyECKPYI2x1ybGqYpFerye8l/EmRylc6U=
+	b=wQ2g1LNqLvf15jLdtg64WdImNhviqsABMBoSISij4CVOqqWXOqsbl4QhedcZ9AcOI
+	 i4XrPGZc3CgnPgH5GhBfa/bFUwJ31ocUy6kzLX9R+doBWSxoo+YICIKaNFsCgvrDea
+	 DoSYj+fELgGUemScpdGy4XVLBgutyiDluPY0OHng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Luca Weiss <luca@z3ntu.xyz>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 107/532] drm/bridge: tc358768: fix THS_TRAILCNT computation
-Date: Fri, 21 Jul 2023 18:00:11 +0200
-Message-ID: <20230721160620.379133634@linuxfoundation.org>
+Subject: [PATCH 5.15 098/532] Input: drv260x - sleep between polling GO bit
+Date: Fri, 21 Jul 2023 18:00:02 +0200
+Message-ID: <20230721160619.884729631@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 References: <20230721160614.695323302@linuxfoundation.org>
@@ -35,58 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Luca Weiss <luca@z3ntu.xyz>
 
-[ Upstream commit bac7842cd179572e8e0fc2d7b5254e40c6e9e057 ]
+[ Upstream commit efef661dfa6bf8cbafe4cd6a97433fcef0118967 ]
 
-Correct computation of THS_TRAILCNT register.
+When doing the initial startup there's no need to poll without any
+delay and spam the I2C bus.
 
-This register must be set to a value that ensure that
-THS_TRAIL > 60 ns + 4 x UI
- and
-THS_TRAIL > 8 x UI
- and
-THS_TRAIL < TEOT
- with
-TEOT = 105 ns + (12 x UI)
+Let's sleep 15ms between each attempt, which is the same time as used
+in the vendor driver.
 
-with the actual value of THS_TRAIL being
-
-(1 + THS_TRAILCNT) x ByteClk cycle + ((1 to 2) + 2) xHSBYTECLK cycle +
- - (PHY output delay)
-
-with PHY output delay being about
-
-(8 + (5 to 6)) x MIPIBitClk cycle in the BitClk conversion.
-
-Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-9-francesco@dolcini.it
+Fixes: 7132fe4f5687 ("Input: drv260x - add TI drv260x haptics driver")
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+Link: https://lore.kernel.org/r/20230430-drv260x-improvements-v1-2-1fb28b4cc698@z3ntu.xyz
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/input/misc/drv260x.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-index c9c2e15c6f4a2..8b1bdffc5005d 100644
---- a/drivers/gpu/drm/bridge/tc358768.c
-+++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -763,9 +763,10 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
- 	dev_dbg(priv->dev, "TCLK_POSTCNT: 0x%x\n", val);
- 	tc358768_write(priv, TC358768_TCLK_POSTCNT, val);
+diff --git a/drivers/input/misc/drv260x.c b/drivers/input/misc/drv260x.c
+index 0efe56f49aa94..1923924fdd444 100644
+--- a/drivers/input/misc/drv260x.c
++++ b/drivers/input/misc/drv260x.c
+@@ -435,6 +435,7 @@ static int drv260x_init(struct drv260x_data *haptics)
+ 	}
  
--	/* 60ns + 4*UI < THS_PREPARE < 105ns + 12*UI */
--	val = tc358768_ns_to_cnt(60 + tc358768_to_ns(15 * ui_nsk),
--				 dsibclk_nsk) - 5;
-+	/* max(60ns + 4*UI, 8*UI) < THS_TRAILCNT < 105ns + 12*UI */
-+	raw_val = tc358768_ns_to_cnt(60 + tc358768_to_ns(18 * ui_nsk),
-+				     dsibclk_nsk) - 4;
-+	val = clamp(raw_val, 0, 15);
- 	dev_dbg(priv->dev, "THS_TRAILCNT: 0x%x\n", val);
- 	tc358768_write(priv, TC358768_THS_TRAILCNT, val);
- 
+ 	do {
++		usleep_range(15000, 15500);
+ 		error = regmap_read(haptics->regmap, DRV260X_GO, &cal_buf);
+ 		if (error) {
+ 			dev_err(&haptics->client->dev,
 -- 
 2.39.2
 
