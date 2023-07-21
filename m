@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966E31F946
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:24:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF3FC433C8;
-	Fri, 21 Jul 2023 16:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0571F946
+	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:24:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A8FC433C9;
+	Fri, 21 Jul 2023 16:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689956666;
-	bh=8kb1Y7EZC3A2SX2lHu4hFXa2Y5W3q45OguU46MGspDQ=;
+	s=korg; t=1689956669;
+	bh=/3SoltwMI42/XF05RtByg7qawtRF9zbf4jhmkfdSWeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bkv94EXd5D5TRCYJKvHRireaWKrKLdS6xuTBXuzCf19uBe4yuaOOrjeMnqHBeyt31
-	 VbOmac5rRXNeBJVF5UV3Iw620iNdoABDE5UVmAECfEiJSr2tv9TlNKkcTBw4hJS/gF
-	 TIIaDzmdsv9XUmgxpxmd3sLOFHeQnbU7BqMpnQmI=
+	b=eNFdb/QQ+eZQ1Zk3XGwWMYU4ejCum/BzASKBn613BL/WBTbMyDEllnP9shlYm8bnH
+	 +alaiEMKb+USrwHB+2AEn0w8JDqQwNcWmfeMdLCptoaSJtAcOsgvblYi3EQuCTaMY3
+	 q4llwMub2CDF0QdLqsWRpitd+egluS+cWGtXYr24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thelford Williams <thelford@google.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Xiubo Li <xiubli@redhat.com>
-Subject: [PATCH 6.4 220/292] libceph: harden msgr2.1 frame segment length checks
-Date: Fri, 21 Jul 2023 18:05:29 +0200
-Message-ID: <20230721160538.323168034@linuxfoundation.org>
+	Greg Thelen <gthelen@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.4 250/292] perf/x86: Fix lockdep warning in for_each_sibling_event() on SPR
+Date: Fri, 21 Jul 2023 18:05:59 +0200
+Message-ID: <20230721160539.657762091@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
 References: <20230721160528.800311148@linuxfoundation.org>
@@ -35,100 +35,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-commit a282a2f10539dce2aa619e71e1817570d557fc97 upstream.
+commit 27c68c216ee1f1b086e789a64486e6511e380b8a upstream.
 
-ceph_frame_desc::fd_lens is an int array.  decode_preamble() thus
-effectively casts u32 -> int but the checks for segment lengths are
-written as if on unsigned values.  While reading in HELLO or one of the
-AUTH frames (before authentication is completed), arithmetic in
-head_onwire_len() can get duped by negative ctrl_len and produce
-head_len which is less than CEPH_PREAMBLE_LEN but still positive.
-This would lead to a buffer overrun in prepare_read_control() as the
-preamble gets copied to the newly allocated buffer of size head_len.
+On SPR, the load latency event needs an auxiliary event in the same
+group to work properly.  There's a check in intel_pmu_hw_config()
+for this to iterate sibling events and find a mem-loads-aux event.
 
+The for_each_sibling_event() has a lockdep assert to make sure if it
+disabled hardirq or hold leader->ctx->mutex.  This works well if the
+given event has a separate leader event since perf_try_init_event()
+grabs the leader->ctx->mutex to protect the sibling list.  But it can
+cause a problem when the event itself is a leader since the event is
+not initialized yet and there's no ctx for the event.
+
+Actually I got a lockdep warning when I run the below command on SPR,
+but I guess it could be a NULL pointer dereference.
+
+  $ perf record -d -e cpu/mem-loads/uP true
+
+The code path to the warning is:
+
+  sys_perf_event_open()
+    perf_event_alloc()
+      perf_init_event()
+        perf_try_init_event()
+          x86_pmu_event_init()
+            hsw_hw_config()
+              intel_pmu_hw_config()
+                for_each_sibling_event()
+                  lockdep_assert_event_ctx()
+
+We don't need for_each_sibling_event() when it's a standalone event.
+Let's return the error code directly.
+
+Fixes: f3c0eba28704 ("perf: Add a few assertions")
+Reported-by: Greg Thelen <gthelen@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Fixes: cd1a677cad99 ("libceph, ceph: implement msgr2.1 protocol (crc and secure modes)")
-Reported-by: Thelford Williams <thelford@google.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Xiubo Li <xiubli@redhat.com>
+Link: https://lkml.kernel.org/r/20230704181516.3293665-1-namhyung@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/messenger_v2.c |   41 ++++++++++++++++++++++++++---------------
- 1 file changed, 26 insertions(+), 15 deletions(-)
+ arch/x86/events/intel/core.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/net/ceph/messenger_v2.c
-+++ b/net/ceph/messenger_v2.c
-@@ -391,6 +391,8 @@ static int head_onwire_len(int ctrl_len,
- 	int head_len;
- 	int rem_len;
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -3993,6 +3993,13 @@ static int intel_pmu_hw_config(struct pe
+ 		struct perf_event *leader = event->group_leader;
+ 		struct perf_event *sibling = NULL;
  
-+	BUG_ON(ctrl_len < 0 || ctrl_len > CEPH_MSG_MAX_CONTROL_LEN);
++		/*
++		 * When this memload event is also the first event (no group
++		 * exists yet), then there is no aux event before it.
++		 */
++		if (leader == event)
++			return -ENODATA;
 +
- 	if (secure) {
- 		head_len = CEPH_PREAMBLE_SECURE_LEN;
- 		if (ctrl_len > CEPH_PREAMBLE_INLINE_LEN) {
-@@ -409,6 +411,10 @@ static int head_onwire_len(int ctrl_len,
- static int __tail_onwire_len(int front_len, int middle_len, int data_len,
- 			     bool secure)
- {
-+	BUG_ON(front_len < 0 || front_len > CEPH_MSG_MAX_FRONT_LEN ||
-+	       middle_len < 0 || middle_len > CEPH_MSG_MAX_MIDDLE_LEN ||
-+	       data_len < 0 || data_len > CEPH_MSG_MAX_DATA_LEN);
-+
- 	if (!front_len && !middle_len && !data_len)
- 		return 0;
- 
-@@ -521,29 +527,34 @@ static int decode_preamble(void *p, stru
- 		desc->fd_aligns[i] = ceph_decode_16(&p);
- 	}
- 
--	/*
--	 * This would fire for FRAME_TAG_WAIT (it has one empty
--	 * segment), but we should never get it as client.
--	 */
--	if (!desc->fd_lens[desc->fd_seg_cnt - 1]) {
--		pr_err("last segment empty\n");
-+	if (desc->fd_lens[0] < 0 ||
-+	    desc->fd_lens[0] > CEPH_MSG_MAX_CONTROL_LEN) {
-+		pr_err("bad control segment length %d\n", desc->fd_lens[0]);
- 		return -EINVAL;
- 	}
--
--	if (desc->fd_lens[0] > CEPH_MSG_MAX_CONTROL_LEN) {
--		pr_err("control segment too big %d\n", desc->fd_lens[0]);
-+	if (desc->fd_lens[1] < 0 ||
-+	    desc->fd_lens[1] > CEPH_MSG_MAX_FRONT_LEN) {
-+		pr_err("bad front segment length %d\n", desc->fd_lens[1]);
- 		return -EINVAL;
- 	}
--	if (desc->fd_lens[1] > CEPH_MSG_MAX_FRONT_LEN) {
--		pr_err("front segment too big %d\n", desc->fd_lens[1]);
-+	if (desc->fd_lens[2] < 0 ||
-+	    desc->fd_lens[2] > CEPH_MSG_MAX_MIDDLE_LEN) {
-+		pr_err("bad middle segment length %d\n", desc->fd_lens[2]);
- 		return -EINVAL;
- 	}
--	if (desc->fd_lens[2] > CEPH_MSG_MAX_MIDDLE_LEN) {
--		pr_err("middle segment too big %d\n", desc->fd_lens[2]);
-+	if (desc->fd_lens[3] < 0 ||
-+	    desc->fd_lens[3] > CEPH_MSG_MAX_DATA_LEN) {
-+		pr_err("bad data segment length %d\n", desc->fd_lens[3]);
- 		return -EINVAL;
- 	}
--	if (desc->fd_lens[3] > CEPH_MSG_MAX_DATA_LEN) {
--		pr_err("data segment too big %d\n", desc->fd_lens[3]);
-+
-+	/*
-+	 * This would fire for FRAME_TAG_WAIT (it has one empty
-+	 * segment), but we should never get it as client.
-+	 */
-+	if (!desc->fd_lens[desc->fd_seg_cnt - 1]) {
-+		pr_err("last segment empty, segment count %d\n",
-+		       desc->fd_seg_cnt);
- 		return -EINVAL;
- 	}
- 
+ 		if (!is_mem_loads_aux_event(leader)) {
+ 			for_each_sibling_event(sibling, leader) {
+ 				if (is_mem_loads_aux_event(sibling))
 
 
