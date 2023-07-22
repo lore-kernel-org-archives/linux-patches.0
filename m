@@ -1,105 +1,133 @@
-Received: from qproxy4-pub.mail.unifiedlayer.com (qproxy4-pub.mail.unifiedlayer.com [66.147.248.250])
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E362908
-	for <patches@lists.linux.dev>; Sat, 22 Jul 2023 16:06:27 +0000 (UTC)
-Received: from outbound-ss-820.bluehost.com (outbound-ss-820.bluehost.com [69.89.24.241])
-	by qproxy4.mail.unifiedlayer.com (Postfix) with ESMTP id 15CA28026287
-	for <patches@lists.linux.dev>; Sat, 22 Jul 2023 15:44:33 +0000 (UTC)
-Received: from cmgw11.mail.unifiedlayer.com (unknown [10.0.90.126])
-	by progateway2.mail.pro1.eigbox.com (Postfix) with ESMTP id 39B9B10046B33
-	for <patches@lists.linux.dev>; Sat, 22 Jul 2023 15:44:24 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id NEmOqQtcvqK42NEmOqO90E; Sat, 22 Jul 2023 15:44:24 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=Uoymi88B c=1 sm=1 tr=0 ts=64bbf958
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10:nop_charset_1 a=ws7JD89P4LkA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=w8XLtf1FCvVzD2GCVTUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=JbFYm2kyNE7xR3TA60Rup6fMtPvix2w6RbrfLGUUkso=; b=rEpvQIqaFZgw0yDEycOpf3Wv1O
-	0t1f2m5UkDjuW7V477WciKNbIcysd4ymgF+NQ35Ia6wDEiZ2QGmUDygNjF76fxG/YLlnp9A8pzIlw
-	eq/QXoqZekN/Lzl501VC216mK2pe7lKE8HhLlBL27vVVblYu9VYVqdAl6UhOLSXkljUaZ529qHXDO
-	gsVswfkFWMDXaqWx7N/NDgQuF1clJfpAyWcW/rexH9CLDmSbKihFKlQRt1rU5pPB0+TrIGSPCc27X
-	uyL9PVCdGQPNDzlONZOPgYxBQoQga71qslESWx9U8m77jqwUmvPxcJBIC3kHVGWifYZD2FNQqXEhe
-	Ba2CtutQ==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:48908 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96)
-	(envelope-from <re@w6rz.net>)
-	id 1qNEmN-002igT-0q;
-	Sat, 22 Jul 2023 09:44:23 -0600
-Subject: Re: [PATCH 6.1 000/223] 6.1.40-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org
-References: <20230721160520.865493356@linuxfoundation.org>
-In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <1cd40a0f-748b-91bc-311f-6598da5e813c@w6rz.net>
-Date: Sat, 22 Jul 2023 08:44:21 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD68366
+	for <patches@lists.linux.dev>; Sat, 22 Jul 2023 19:07:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1690052872; x=1721588872;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=WfglSuPJmhsRxrO7QtQ35doaK6hJqVdmUu6AK9ShvRg=;
+  b=V40/dOrmtlwkX5xbwxPhN3QijWaRXxOQdtZbQWA+FNMpCFB2JxwsWaSM
+   mtdTBzCKAdJRtjfAnx/nwlsLb1U40FkdvvEPfrETgzZv020BozHuHqPzf
+   K9DhA8nsT7FRil8mbih8zyrrA4LIU3qoJIdp4zpT1ulGOpXoVDwmASfP/
+   FeiXW577Ftr/7l68W6qwxMq9L8QqlTOojlVhdyU4KnmIPI1n36oqOluAI
+   QjCWxecTW1XedBmLmiFNFNLEUhdG933q7rDIZjsVa4LCSBM6/EuPtK1rx
+   8MuDVI7g0J4kVc5iElQFqqI+1gW5h+EvH1zHkwjQfLwpQtrONOH/LOlLx
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10779"; a="346823956"
+X-IronPort-AV: E=Sophos;i="6.01,224,1684825200"; 
+   d="scan'208";a="346823956"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2023 12:07:51 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10779"; a="815368074"
+X-IronPort-AV: E=Sophos;i="6.01,224,1684825200"; 
+   d="scan'208";a="815368074"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
+  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2023 12:07:51 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghua.yu@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	x86@kernel.org
+Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v4 0/7] Add support for Sub-NUMA cluster (SNC) systems
+Date: Sat, 22 Jul 2023 12:07:33 -0700
+Message-Id: <20230722190740.326190-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20230713163207.219710-1-tony.luck@intel.com>
+References: <20230713163207.219710-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1qNEmN-002igT-0q
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:48908
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Transfer-Encoding: 8bit
 
-On 7/21/23 9:04 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.40 release.
-> There are 223 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sun, 23 Jul 2023 16:04:33 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.40-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+The Sub-NUMA cluster feature on some Intel processors partitions
+the CPUs that share an L3 cache into two or more sets. This plays
+havoc with the Resource Director Technology (RDT) monitoring features.
+Prior to this patch Intel has advised that SNC and RDT are incompatible.
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Some of these CPU support an MSR that can partition the RMID
+counters in the same way. This allows for monitoring features
+to be used (with the caveat that memory accesses between different
+SNC NUMA nodes may still not be counted accuratlely.
 
-Tested-by: Ron Economos <re@w6rz.net>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+
+---
+
+Changes since v3:
+
+Reinette provided the most excellent suggestion that this series
+could better achieve its objective if it enabled separate domain
+lists for control & monitoring within a resource, rather than
+creating a whole new resource to support separte node scope needed
+for SNC monitoring. Thus all the pre-amble patches from the previous
+version have gone, replaced by patches 1-4 of this new series.
+
+Note to anyone backporting this to some older Linux kernel version.
+You may be able to skip parts 2-4. These provide separate domain
+structures for control and monitor with just the fields needed for
+each. But this is largely cosmetic.
+
+Of the code from v3 that survived to v4 the following changes have
+been made (also from Reinette's review of v3).
+
+1) Rename "snc_ways" to "snc_nodes_per_l3_cache" to avoid the confusing
+use of "ways" which means something entirely different when talking
+about caches.
+2) Move the #define for MSR_RMID_SNC_CONFIG to <asm/msr-index.h> along
+with all the other RDT MSRs.
+3) Don't use a per-CPU variable "rmid_offset". Just calculate value
+needed at the one place where it is used.
+4) Don't create an entire resource structure with package scoped domains
+just to set the SNC MSR.
+5) Add comment in the commit message about adjusting the value shown in
+the "size" files in each resctrl ctrl_mon directory.
+
+This one not from Reinette:
+6) Prevent mounting in "mba_MBps" mode when SNC mode is enabled. This
+would just be confusing since monitoring is done at the node scope while
+control is still at package scope.
+
+Tony Luck (7):
+  x86/resctrl: Create separate domains for control and monitoring
+  x86/resctrl: Split the rdt_domain structures
+  x86/resctrl: Change monitor code to use rdt_mondomain
+  x86/resctrl: Delete unused fields from struct rdt_domain
+  x86/resctrl: Determine if Sub-NUMA Cluster is enabled and initialize.
+  x86/resctrl: Update documentation with Sub-NUMA cluster changes
+  selftests/resctrl: Adjust effective L3 cache size when SNC enabled
+
+ Documentation/arch/x86/resctrl.rst          |  10 +-
+ include/linux/resctrl.h                     |  50 +++-
+ arch/x86/include/asm/msr-index.h            |   1 +
+ arch/x86/kernel/cpu/resctrl/internal.h      |  40 ++-
+ tools/testing/selftests/resctrl/resctrl.h   |   1 +
+ arch/x86/kernel/cpu/resctrl/core.c          | 289 ++++++++++++++++----
+ arch/x86/kernel/cpu/resctrl/ctrlmondata.c   |   6 +-
+ arch/x86/kernel/cpu/resctrl/monitor.c       |  58 ++--
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c      |  54 ++--
+ tools/testing/selftests/resctrl/resctrlfs.c |  57 ++++
+ 10 files changed, 427 insertions(+), 139 deletions(-)
+
+
+base-commit: fdf0eaf11452d72945af31804e2a1048ee1b574c
+-- 
+2.40.1
 
