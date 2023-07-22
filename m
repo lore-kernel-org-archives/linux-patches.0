@@ -1,53 +1,56 @@
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D4963A
-	for <patches@lists.linux.dev>; Sat, 22 Jul 2023 20:21:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1690057280; x=1721593280;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=w3wkQwxgDff1pIzMxFu0mHCGE5IrK6AXlVJ/ZMqnjZA=;
-  b=XeLTy1KDeyONeLg3Hr5XZs2/pNSE2RmABfZJPBLJJJQQ9IdXZ8H0hpK+
-   GvCzJRSFiw3pTsW2rsCbjDW2P7/t4Z6ovTS4Y01e1rs0RIN/bqX85FWv2
-   ItzTr9d7UxCjN4EU3r5ZzTri2EpouKcy/4w/PG6RdA82DuJnJ+W4liaWj
-   JO9oUsZKSYS8htJ7wjopnHbELad5mLN6o1m7NQOrFB8Xk0+PBMw0ibhFw
-   f9qVSBWoPGMy6rQFOSJOpZ9Rtz4mvGyD4ligYnYpdUksR5DkouJewRHBJ
-   HGPSELDdAwRLPIxxvM9JEuT8VjpRmVLpXpv2IyA8KYUhFGcKbD7s5C5Y7
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10779"; a="453599900"
-X-IronPort-AV: E=Sophos;i="6.01,224,1684825200"; 
-   d="scan'208";a="453599900"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2023 13:21:19 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10779"; a="815378869"
-X-IronPort-AV: E=Sophos;i="6.01,224,1684825200"; 
-   d="scan'208";a="815378869"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2023 13:21:19 -0700
-Date: Sat, 22 Jul 2023 13:21:18 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: "Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	"x86@kernel.org" <x86@kernel.org>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH v3 0/8] x86/resctrl: Add support for Sub-NUMA cluster
- (SNC) systems
-Message-ID: <ZLw6PpPV5H546VSJ@agluck-desk3>
-References: <20230713163207.219710-1-tony.luck@intel.com>
- <TYAPR01MB6330A4EB3633B791939EA45E8B39A@TYAPR01MB6330.jpnprd01.prod.outlook.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A372808
+	for <patches@lists.linux.dev>; Sat, 22 Jul 2023 20:39:56 +0000 (UTC)
+Received: by mail-il1-f171.google.com with SMTP id e9e14a558f8ab-34642952736so16853725ab.3
+        for <patches@lists.linux.dev>; Sat, 22 Jul 2023 13:39:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1690058396; x=1690663196;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sheU/pN73man5/rqxD6wz8PZXz+NHmbMVYqD6and/RA=;
+        b=TwmodeBddlMtX5sAq9tJazwTjv9UEdk8GqnWgSR95BB8aIu2J2k5STrz8OGCU75EpP
+         Zsj9UdJaP37rJjmsL/mJF3fWvBqaQwm+CTNmGx4ZFaP14H72Qb4a4Ksu7Yq/+umZP4T7
+         1koH93do9Cu9t9ppHo40UVObdsu2NF4hwE2jAbAv+ZtyTXNHi2TL9/yfjSTPCwoXMxLO
+         ZZt/VGBAUTyGbIaOA4j7pNY7wIvIDlmHZ8qZ7eeehktI2r+7BBCtwlYAo9ZgUfT7aYKO
+         r87qWcO57fYmUgY+g7nPQQyxl80GYv5mLQDG5jVxj4pPU8S/Ycjdy+EcdWtxlYguZu98
+         ALMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690058396; x=1690663196;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sheU/pN73man5/rqxD6wz8PZXz+NHmbMVYqD6and/RA=;
+        b=kNJ48JgzorcuunR2UZ11yteqErdG+BnXmTbsxUL4EKd1WoPXpdkFDWeUxIJXCbplDJ
+         6J7RbGGMZz6SAvXb0ghP1oU5nBUHPxEK7YSHi7I6VpZpK2hAudMc8yjr/SOkLUbtPQbR
+         GelLCEtMSpzTVUH7kxPEL6UZjuFnRr+IPO2lrL0elyqF+LNh4UgjJKt8gwk4NxtpBhr3
+         PE4YLncqomwgmPjFaJX/aWzd71dOHkEuZWfBiz7mVUSVT8yM9rzu5atOnZHV/6XfV6aX
+         SrjKgHEpfiB73VTgwqZzqA3m9AfNciB3I5PDOgtIwQwijrlz37Ki94+RfGbl0kuD4+OI
+         5hAA==
+X-Gm-Message-State: ABy/qLZWFhbB8VECFv8AfcXDcXp7nsudDiSizk57aaaClVMiE/8PdPfW
+	TIAq0iBu3rSX4BS2TifBWCI=
+X-Google-Smtp-Source: APBJJlEnLGewhEaGoGk+H8xEsKCQEYSwxvo94/nG7Z4zmYJS0sHzwrkhPKC/JJ8j1/Ud3VyNZZoxRA==
+X-Received: by 2002:a05:6e02:118b:b0:348:a412:b1e2 with SMTP id y11-20020a056e02118b00b00348a412b1e2mr3973542ili.14.1690058395938;
+        Sat, 22 Jul 2023 13:39:55 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id v14-20020a92d24e000000b003424b3d6d37sm148021ilg.24.2023.07.22.13.39.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 22 Jul 2023 13:39:55 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Sat, 22 Jul 2023 13:39:53 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 5.15 000/532] 5.15.121-rc1 review
+Message-ID: <b07a1b7f-8c54-4e9a-8b35-28fd2b12eb75@roeck-us.net>
+References: <20230721160614.695323302@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -56,45 +59,22 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <TYAPR01MB6330A4EB3633B791939EA45E8B39A@TYAPR01MB6330.jpnprd01.prod.outlook.com>
+In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
 
-On Wed, Jul 19, 2023 at 02:43:20AM +0000, Shaopeng Tan (Fujitsu) wrote:
-> Hi tony,
+On Fri, Jul 21, 2023 at 05:58:24PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.121 release.
+> There are 532 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> I ran selftest/resctrl in my environment,
-> the test result is "not ok".
+> Responses should be made by Sun, 23 Jul 2023 16:04:40 +0000.
+> Anything received after that time might be too late.
 > 
-> Processer in my environment:
-> Intel(R) Xeon(R) Gold 6254 CPU @ 3.10GHz
-> 
-> kernel:
-> $ uname -r
-> 6.5.0-rc1+
-> 
-> Result :
-> Sub-NUMA enable:
-> xxx@xxx:~/linux_v6.5_rc1l$ sudo make -C tools/testing/selftests/resctrl run_tests
-> make: Entering directory '/.../tools/testing/selftests/resctrl'
+Build results:
+	total: 160 pass: 160 fail: 0
+Qemu test results:
+	total: 502 pass: 502 fail: 0
 
-I see most tests pass. Just one fail on my most recent run with the
-v4 patch series:
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
-# # Fail: Check MBA diff within 5% for schemata 10
-# # avg_diff_per: 7%
-# # avg_bw_imc: 883
-# # avg_bw_resc: 815
-# # Fail: Check schemata change using MBA
-
-But just missed the 5% target by a small amount,
-not the near total failures that you see.
-
-I wonder if there is a cross-SNC node memory
-allocation issue.  Can you try running the test
-bound to a CPU in one node:
-
-$ taskset -c 1 sudo make -C tools/testing/selftests/resctrl run_tests
-
-Try with different "-c" arguments to bind to different nodes. Do you
-see different results on differnt nodes?
-
--Tony
+Guenter
