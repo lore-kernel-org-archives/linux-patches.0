@@ -1,152 +1,97 @@
-Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCFDA100A1
-	for <patches@lists.linux.dev>; Fri, 21 Jul 2023 23:29:27 +0000 (UTC)
-Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-3456fda4ed1so12064785ab.0
-        for <patches@lists.linux.dev>; Fri, 21 Jul 2023 16:29:27 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2071C3B
+	for <patches@lists.linux.dev>; Sat, 22 Jul 2023 01:11:31 +0000 (UTC)
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-51e48e1f6d1so3305334a12.1
+        for <patches@lists.linux.dev>; Fri, 21 Jul 2023 18:11:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689982166; x=1690586966;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id:sender
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2HWGARuGkqEQdwec4wVxh4cga8KRSu+tscD+lku9ZUc=;
-        b=VLZ5o+l0fG8iK3OzCCTmVzkfQunTMneXN2K0omC8jPnvlkv5fcpAo0StcIQ1PHGsMS
-         gT1rcKNt4z1ruZNcaO9aEhAgk9xK+bLwmswUbr8+uKAqRRDR8kcBViKSG94d0/SyypFC
-         saVBYJ5HgZxNjBDfswsY0cJWkIl1YLrVlK4KXKQqzOIwjtZbmoYsKx1TSCEO2mR4sYqg
-         KgFg6q6UHOnOJJMTLzsv/a+iig/rjZ+qG+b4tub0nyx3eVtpPyZfPB3hqsDyPWnKxQXK
-         HUHI/OpWJTfuYgnaVxp820BwJX6P62JIbwt/wo8+BjDkueO7NJc87+isN9nxn3x6gMPT
-         rcPQ==
+        d=futuring-girl-com.20221208.gappssmtp.com; s=20221208; t=1689988290; x=1690593090;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=S9g1F7Rjzr2GZN8Ylj8q5DiTwW6elW6eTIsGjXA2qwE=;
+        b=W8/NBX/fQk0h61WHQnhGIAgLwxvdqoRs3ZGolIFAs7huJYmCG3Iw1BdplW0SfZRZvK
+         X2VUA8rMbK7Pdpqfu2LacqRT0GpbM04s+hPyY4fe3mSe71/6gpopP5yHOPzh7rRU1UxN
+         8FI7pBKQY3/4DTwcERKvwdF8zXO14pw203s4yWdJ3EVa+NEajEJbYkgylxfqrYUu3AJL
+         vhv7euns8rAKnbv8WWWSPrfAu01BvjsdeBmz4yzn7DZ9ENY7aezn0eu6BazK0aZcZALf
+         CGRNs0YuDn2kZrsZBCuJfYG8HuYrXPSqMh/CD/VttskHxDPMRTaFWskVfEWgFphC+Oh7
+         XB7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689982166; x=1690586966;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2HWGARuGkqEQdwec4wVxh4cga8KRSu+tscD+lku9ZUc=;
-        b=Mx2abJzUGHdboO6kAVJe++k/7rIWGLydn0nQhgxmz0I3D00OZtzkoFXc588vjpCp83
-         87Yi4OVF+82vlg7QxupYZaiv2UPsq5K2PRkLpu8EsU+sbWsEkVVeiXzFT9TM38PdQv/1
-         YHLV+RnH0Se2l2IsynGrvQgZWTF9qSKL/jYUa9SvRjVv2nFAhgloVSASGkP3YI/eO2k1
-         SvpnDQVTZnpTTlFYW5estzK4CsT9KxFs4Hg7Jqa1Toa2i+RD+Qwxszgv/PkHBXuJQzw0
-         Tf2tMvvl/TUY5p4c1hgA9bNxanD3ftDs6Oiqv8DMnOjfp7wjSnDZrsrUmDR0qjEFnx4L
-         Opyg==
-X-Gm-Message-State: ABy/qLbksQLtCY29o0BN52WRSz74RZAAOSPLHatgIeCplfkHgEeEGQnt
-	s5aZgNvWOV8M9oUhLaA1Du0=
-X-Google-Smtp-Source: APBJJlGbUUfSCFEYZlRSb36o73TmUpSRq6UROhCUu0k4DBZOU/U5Pgop/szMukqykTsBvSEYFB6BtA==
-X-Received: by 2002:a05:6e02:5c3:b0:346:169a:bb4b with SMTP id l3-20020a056e0205c300b00346169abb4bmr1341246ils.4.1689982166564;
-        Fri, 21 Jul 2023 16:29:26 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id kb14-20020a170903338e00b001b9be79729csm4046487plb.165.2023.07.21.16.29.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Jul 2023 16:29:26 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <f268ae1d-f23b-8c3b-8e94-a7ef76fc4990@roeck-us.net>
-Date: Fri, 21 Jul 2023 16:29:24 -0700
+        d=1e100.net; s=20221208; t=1689988290; x=1690593090;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=S9g1F7Rjzr2GZN8Ylj8q5DiTwW6elW6eTIsGjXA2qwE=;
+        b=kNLYopkjUQ30xpoaq3b+3YEkoBhZdKIhXymQ1FkPc9qcSz7U29B/jAAOUcHB1T1w6Z
+         UW2k0kn6IfGki05VE4Tf/099NA8FPYwcbfyMVnrx7R6ps9hALiL41Ud/GZvzhf4F1pyB
+         IK7FYv4ee0JqVtUzYWvuItqOXKw3D8GRED8QUtLop1yUQXd4SsaQ01oZdqls9lNRD5dz
+         kc6/U6VAxTLC8jcDFQwHZfyEvMRNCiAHBZC3jufIoO/apCty6LjUPMnqzWvj7N57jZSr
+         sHwuG+u7sLlfShQvXneJmbaNln2TlMQB490j/rie6nTZGj6ItTXQWMKHZCp1dYt18No2
+         nukg==
+X-Gm-Message-State: ABy/qLZu7Vr2OvzlaGA9i787kludvY+x7JRdTEKjXJ9DlVA19eaDDgEg
+	IwjVpMKpzFB5VttxboGs3MGCAazpTJZu4YtnyTGdwA==
+X-Google-Smtp-Source: APBJJlFdl7Gy2NFxaQ2Q/BDDG/bXCL3RIEVl+F0rKOtgsdGsjzDfzRw+9jUuvXM2lGmD/gbLwv8GunuG5RXybCoArSE=
+X-Received: by 2002:a05:6402:2da:b0:51d:a488:3b3d with SMTP id
+ b26-20020a05640202da00b0051da4883b3dmr2472593edx.35.1689988290037; Fri, 21
+ Jul 2023 18:11:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-References: <20230626180746.943455203@linuxfoundation.org>
-From: Guenter Roeck <linux@roeck-us.net>
-Subject: Re: [PATCH 5.15 00/96] 5.15.119-rc1 review
-In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20230721160520.865493356@linuxfoundation.org>
+In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Sat, 22 Jul 2023 10:11:19 +0900
+Message-ID: <CAKL4bV7r_Of1U7dfiMBN1dkj9Mf0ry0yoCs7Dxu-xyQ-hsdnng@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/223] 6.1.40-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Hi Greg
 
-On 6/26/23 11:11, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.119 release.
-> There are 96 patches in this series, all will be posted as a response
+On Sat, Jul 22, 2023 at 4:17=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.40 release.
+> There are 223 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> Responses should be made by Wed, 28 Jun 2023 18:07:23 +0000.
+>
+> Responses should be made by Sun, 23 Jul 2023 16:04:33 +0000.
 > Anything received after that time might be too late.
-> 
-[ ... ]
-> Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
->      drm/amd/display: Add wrapper to call planes and stream update
-> 
-> Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
->      drm/amd/display: Use dc_update_planes_and_stream
-> 
-> Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
->      drm/amd/display: Add minimal pipe split transition state
-> 
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.1.40-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Just as a heads-up, the above patches result in UI failures when booting
-chromeos-5.15 on a Stoney GPU. I don't know if that is because of other
-ChromeOS specific backports into chromeos-5.15, so there may be no problem
-with linux-5.15.y. I just wanted to report it in case others observe a
-similar problem. For reference, the warning traceback observed with
-chromeos-5.15 is attached below.
+6.1.40-rc1 tested.
 
-Reverting the above patches fixes the problem for us.
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
-Guenter
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
 
----
-[   40.701227] ------------[ cut here ]------------
-[   40.701235] WARNING: CPU: 0 PID: 2026 at drivers/gpu/drm/amd/amdgpu/../display/dc/dce/dce_aux.c:393 dce_aux_transfer_raw+0x54f/0x738 [amdgpu]
-[   40.701417] Modules linked in: xt_cgroup btusb joydev btrtl btintel btbcm xt_MASQUERADE uvcvideo videobuf2_vmalloc ax88179_178a usbnet videobuf2_memops mii videobuf2_v4l2 videobuf2_common rtw88_8821ce rtw88_8821c rtw88_pci rtw88_core psmouse fam15h_power k10temp mac80211 i2c_piix4 r8169 realtek snd_hda_codec_realtek snd_hda_codec_generic snd_hda_codec_hdmi ledtrig_audio snd_hda_intel snd_hda_codec snd_hwdep snd_hda_core ip6table_nat fuse cfg80211 bluetooth ecdh_generic ecc lzo_rle lzo_compress zram nls_iso8859_1 nls_cp437 vfat fat amdgpu drm_buddy gpu_sched drm_ttm_helper ttm hp_wmi drm_display_helper sparse_keymap platform_profile wmi_bmof cec video wmi backlight
-[   40.701477] CPU: 0 PID: 2026 Comm: fwupd Not tainted 5.15.120-20012-g13671c9741ee #1 498f2dc5e165de69fea5f8cdcc6c5b2a52bfbe44
-[   40.701484] Hardware name: HP HP Laptop 15-db0xxx/84AC, BIOS F.21 08/30/2019
-[   40.701487] RIP: 0010:dce_aux_transfer_raw+0x54f/0x738 [amdgpu]
-[   40.701622] Code: 70 18 48 c7 c2 73 d0 67 c0 e8 81 50 f1 ff 41 89 c4 0f ba e0 09 48 8b 4d b8 48 8b 55 88 b8 04 00 00 00 72 28 41 f6 c4 01 75 09 <0f> 0b b8 03 00 00 00 eb 19 b8 03 00 00 00 41 f6 c4 f0 75 0e b8 02
-[   40.701626] RSP: 0018:ffffb36901a5bbf8 EFLAGS: 00010246
-[   40.701630] RAX: 0000000000000004 RBX: ffff8f75c7e23a00 RCX: ffffb36901a5bc84
-[   40.701633] RDX: ffffb36901a5bc88 RSI: ffff8f75c2616580 RDI: ffff8f75c7a40000
-[   40.701636] RBP: ffffb36901a5bc70 R08: 0000000000000001 R09: 000000000000000a
-[   40.701639] R10: 000000000000ff00 R11: ffffffffc02bae29 R12: 0000000000000000
-[   40.701641] R13: 0000000000000000 R14: ffffb36901a5bd3f R15: 0000000000000000
-[   40.701644] FS:  00007afcd2d76780(0000) GS:ffff8f75cdc00000(0000) knlGS:0000000000000000
-[   40.701647] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   40.701650] CR2: 000025cd033e2000 CR3: 000000003dec2000 CR4: 00000000001506f0
-[   40.701653] Call Trace:
-[   40.701657]  <TASK>
-[   40.701661]  ? __warn+0xa3/0x131
-[   40.701670]  ? dce_aux_transfer_raw+0x54f/0x738 [amdgpu a9c22b8374912b6290fb299545c9bc23d10c4dee]
-[   40.701775]  ? report_bug+0x97/0xfa
-[   40.701783]  ? handle_bug+0x41/0x66
-[   40.701787]  ? exc_invalid_op+0x1b/0x4b
-[   40.701791]  ? asm_exc_invalid_op+0x16/0x20
-[   40.701795]  ? amdgpu_cgs_destroy_device+0xf/0xf [amdgpu a9c22b8374912b6290fb299545c9bc23d10c4dee]
-[   40.701895]  ? dce_aux_transfer_raw+0x54f/0x738 [amdgpu a9c22b8374912b6290fb299545c9bc23d10c4dee]
-[   40.701990]  ? dce_aux_transfer_raw+0x533/0x738 [amdgpu a9c22b8374912b6290fb299545c9bc23d10c4dee]
-[   40.702119]  dm_dp_aux_transfer+0xa1/0x127 [amdgpu a9c22b8374912b6290fb299545c9bc23d10c4dee]
-[   40.702255]  drm_dp_dpcd_access+0x8e/0x120 [drm_display_helper bafd2440f737065f4481ed31c70f27c5ee4cb409]
-[   40.702266]  drm_dp_dpcd_probe+0x46/0xfa [drm_display_helper bafd2440f737065f4481ed31c70f27c5ee4cb409]
-[   40.702273]  drm_dp_dpcd_read+0x5b/0x106 [drm_display_helper bafd2440f737065f4481ed31c70f27c5ee4cb409]
-[   40.702280]  auxdev_read_iter+0xe4/0x1a9 [drm_display_helper bafd2440f737065f4481ed31c70f27c5ee4cb409]
-[   40.702287]  vfs_read+0x1d2/0x32d
-[   40.702295]  __x64_sys_read+0x7c/0xe2
-[   40.702299]  do_syscall_64+0x53/0xa1
-[   40.702305]  entry_SYSCALL_64_after_hwframe+0x61/0xcb
-[   40.702310] RIP: 0033:0x7afcd2c8180a
-[   40.702315] Code: 55 48 89 e5 48 83 ec 20 48 89 55 e8 48 89 75 f0 89 7d f8 e8 28 96 f8 ff 48 8b 55 e8 48 8b 75 f0 41 89 c0 8b 7d f8 31 c0 0f 05 <48> 3d 00 f0 ff ff 77 2e 44 89 c7 48 89 45 f8 e8 82 96 f8 ff 48 8b
-[   40.702318] RSP: 002b:00007ffc037fb090 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
-[   40.702322] RAX: ffffffffffffffda RBX: 00007ffc037fb15c RCX: 00007afcd2c8180a
-[   40.702325] RDX: 0000000000000001 RSI: 00007ffc037fb15c RDI: 000000000000000e
-[   40.702328] RBP: 00007ffc037fb0b0 R08: 0000000000000000 R09: 00007ffc037fb1e8
-[   40.702330] R10: 97913fda310400e9 R11: 0000000000000246 R12: 00000000000004b0
-[   40.702333] R13: 0000000000000001 R14: 0000000000000001 R15: 000058833f394ba0
-[   40.702337]  </TASK>
-[   40.702339] ---[ end trace 45d9123147b37667 ]---
-[   40.707210] [drm] REG_WAIT timeout 10us * 240 tries - submit_channel_request line:222
-[   40.728925] [drm] REG_WAIT timeout 10us * 240 tries - submit_channel_request line:222
-[   40.737218] [drm] REG_WAIT timeout 10us * 240 tries - submit_channel_request line:222
-[   40.756655] [drm] REG_WAIT timeout 10us * 240 tries - submit_channel_request line:222
-[   40.760616] [drm] REG_WAIT timeout 10us * 240 tries - submit_channel_request line:222
-[   40.766107] ------------[ cut here ]------------
+Thanks
 
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
