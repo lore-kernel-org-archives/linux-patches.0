@@ -1,94 +1,114 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8121D2E3
-	for <patches@lists.linux.dev>; Sat, 22 Jul 2023 14:49:57 +0000 (UTC)
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-666ecf9a0ceso1729947b3a.2
-        for <patches@lists.linux.dev>; Sat, 22 Jul 2023 07:49:57 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326DC1D2FD
+	for <patches@lists.linux.dev>; Sat, 22 Jul 2023 15:51:58 +0000 (UTC)
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-583ae4818c8so12164817b3.3
+        for <patches@lists.linux.dev>; Sat, 22 Jul 2023 08:51:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690037396; x=1690642196;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=6RbVO1ScgDHvCnnDrduqM9cFNB+8gywma+fRSXcXBlY=;
-        b=EIfc7YC6DTtA0YR8NlLDp3y9nj/fBsmGX5I8vui6vuJu+VdbZMs5PyzkbFngrjiFh7
-         3+TRP/kYDPZx1mcTct6WKy1jyp7G5QsxJWqlfL9mRAiNKcUDKJcp83dzGolqIu0vL5Wv
-         1Qc+Jeklwl6G0lruZIbk8wk9sgKJDzp6Hp3StPLH892xucJEephAmf+WulyufZa6n6kV
-         x8ajlFxxXxZEHxD/9YCMn/yfFfed3oZ921Lov/uyDCiotRey9Lv1jyugQY4IZNB6fqSj
-         pG29UA/351R2OUr/oz4A4sZ/q9/9JsJRgRMH3g9XqKc/cWv6j61VxAX5zdMSApuYAEym
-         QACw==
+        d=gmail.com; s=20221208; t=1690041118; x=1690645918;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GCi1Uz5o7zeVrFMLJ/4tgvXXXKZHZ4kvnCTkqRPWjWA=;
+        b=AOL3KXHdbXZMFcjTHwc6CCED5VEqhzTh4nbizMd7FgDA1zALz3PvEWgSwMKoaAhg/E
+         8ea5/DnMTu1CBpSXbBpUmA6MNnky/bPsaD/vE6Nh6vRNgYta0atW/N18fR4rv6iXVvWY
+         6HrgBGEwSZdbtBmz3NbYCuUfORAJ4sPIXkXcPlGIxNSV5na4JdOImlrzv0R/a8woaWqb
+         ZCeT14KmIN6MYia0WVSbjYApmeCuiXUYDb8qLs5ALA0dhC69NAQDqODLoaMI59sLfW5v
+         9Dfm67dXjr0G9pbEhEataEP3nCRxDNxYeEuUGxg3KGjVT1YKa0t/2bKwCQUqhz5XiQPB
+         6OKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690037396; x=1690642196;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6RbVO1ScgDHvCnnDrduqM9cFNB+8gywma+fRSXcXBlY=;
-        b=PRLpfbAy3Jecdgl+R85en/OsB2Pb0oYAHzu7M4xetmta+/ej0jE1WFB17zwOv5Rr8P
-         bwneduAFd2TdvnyPIDa6SxHVuYHNgON4dZRM1OM0oNk2jy9VhokbO2kssjzjdhEQLZrW
-         C0N7fzXAk9GwIHQuzh399PV0pOyR/Sc5ocYN4nX0jptoc9GSPogOZGJ7HWvBGKhJeo9v
-         MwlcyFm6mIm2jypotw6V+89jQT0ZEoNWzPXySF5iXfI247vuCWDlamba6cjZmEnheDj/
-         ERbcWl1qcGAdNAeK4oLwyV04mtiJpxLUoBCFNELqszTVQ1ZEDNevsEXrka8CPLZzripp
-         2YkQ==
-X-Gm-Message-State: ABy/qLaiGdWyqN+rymtato9jQMf0O1fvzb+k550r6RBjM4z2o9G2W9pN
-	HfHQ6xD9L7mu98KF0w2NiBI=
-X-Google-Smtp-Source: APBJJlFjepFzPi/Ej+rmWsUG4Ww+c3XitwpKU0IkmaAi4l8ffNjPROhART6IL9X12YJZYbYJPCrNJQ==
-X-Received: by 2002:a05:6a20:88:b0:138:2fb8:6c48 with SMTP id 8-20020a056a20008800b001382fb86c48mr4008099pzg.8.1690037396413;
-        Sat, 22 Jul 2023 07:49:56 -0700 (PDT)
-Received: from [192.168.1.3] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
-        by smtp.gmail.com with ESMTPSA id k196-20020a633dcd000000b005501b24b1c9sm4998093pga.62.2023.07.22.07.49.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 Jul 2023 07:49:55 -0700 (PDT)
-Message-ID: <8730178d-fb3e-9841-8c93-c7cc3dc54a3e@gmail.com>
-Date: Sat, 22 Jul 2023 07:49:53 -0700
+        d=1e100.net; s=20221208; t=1690041118; x=1690645918;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GCi1Uz5o7zeVrFMLJ/4tgvXXXKZHZ4kvnCTkqRPWjWA=;
+        b=bAQBDSMk/YGq0dWVuFT8aAjkN3N0QTgVXM33SM4IkBvBlGLneOilHMwk8AGnTuJ8y+
+         vKhKxxj4HeCOR8xGzo0wzz02uPociil3Uekg4ub792IYo8FCixXN8IJXtuMnVZre8eic
+         DTJcmlqHe7FDVBCWddC0+1x21praMElyW6qNijDZUL3OPelaXStjLpRsBx/32xsNZr9b
+         el96I7UqYNP0KqrAxLDI2YKXE5Kk26O4uslA/tt1RFnHd0fa0+GhDJb0ZTycKUVAaciM
+         FAO3XsvovaEqL7O17voKlKYBRnI4ffxPhruGV28tdaOjH8viBT3br/y4fSPSbDjw2/AC
+         vZnw==
+X-Gm-Message-State: ABy/qLZOutret9pgijp34L1eKayGRhm3xDFsuJ6m97uswCjkKKFBHQfp
+	j4DKnrwuTibZL+iMs+5iORiPtVM/HsfsFKMl8to=
+X-Google-Smtp-Source: APBJJlFGtjGwoVBX6T4RZLs+O9K/oMEKrvNEmTfDepBNpMwxth6UkVuiRcQi79TO2WtMS7kRWnjdz58tBZhbRYxqTWo=
+X-Received: by 2002:a25:fc05:0:b0:c41:a05d:5da7 with SMTP id
+ v5-20020a25fc05000000b00c41a05d5da7mr4021208ybd.5.1690041117961; Sat, 22 Jul
+ 2023 08:51:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-From: Florian Fainelli <f.fainelli@gmail.com>
-Subject: Re: [PATCH 6.4 000/292] 6.4.5-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org
-References: <20230721160528.800311148@linuxfoundation.org>
-Content-Language: en-US
-In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20230718055235.1050223-1-ojeda@kernel.org> <CAK7LNAQ-hjW_19fjA+E-bQCrXcVPdN4-GvzAnEnYzna5KRVXew@mail.gmail.com>
+ <CANiq72kZjOGvRKoRxtgG=2DhJnMJK9TCQtTmeef_B=nLcLQD6g@mail.gmail.com> <CAK7LNASqumGb0xvSa8n4Heasz9BKxgk4mvzNXsfFhZE1G+Bxbg@mail.gmail.com>
+In-Reply-To: <CAK7LNASqumGb0xvSa8n4Heasz9BKxgk4mvzNXsfFhZE1G+Bxbg@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Sat, 22 Jul 2023 17:51:46 +0200
+Message-ID: <CANiq72kD2wxXy2ri8sBhVJ4y-JJiq+kYt_MRZwuwB9uGkX-_jQ@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: rust: avoid creating temporary files
+To: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
+	Nick Desaulniers <ndesaulniers@google.com>, Nicolas Schier <nicolas@fjasle.eu>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
+	Andreas Hindborg <a.hindborg@samsung.com>, linux-kbuild@vger.kernel.org, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, Raphael Nestler <raphael.nestler@gmail.com>, 
+	Andrea Righi <andrea.righi@canonical.com>, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, Jul 20, 2023 at 8:35=E2=80=AFPM Masahiro Yamada <masahiroy@kernel.o=
+rg> wrote:
+>
+> Maybe, the following was a breakage.
+>
+> commit 295d8398c67e314d99bb070f38883f83fe94a97a
+> Author: Masahiro Yamada <masahiroy@kernel.org>
+> Date:   Sat Jan 7 18:18:15 2023 +0900
+>
+>     kbuild: specify output names separately for each emission type from r=
+ustc
+>
+> Before that, rust_common_cmd had --out-dir.
 
+That's right, good catch!
 
-On 7/21/2023 9:01 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.4.5 release.
-> There are 292 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sun, 23 Jul 2023 16:04:29 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.5-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+> BTW, do we also need to fix scripts/Makefile.host
+> in case the external module Makefile creates host programs?
 
+Indeed, we need it too. [1] would fix it (tested it with a trivial
+out-of-tree Rust hostprog).
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Do you want me to send it separately? i.e. to avoid losing the
+`Tested-by`s etc. that we already got for this one, which is the
+important one since that actually has users.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+The hostprogs fix is not really critical for stable, since it is
+unlikely there are users at all (we just got the first in-tree real
+user in the Rust+KUnit integration coming into 6.6), but I guess it
+does not hurt for the same reason.
 
+Thanks!
+
+Cheers,
+Miguel
+
+[1]
+
+diff --git a/scripts/Makefile.host b/scripts/Makefile.host
+index 7aea9005e497..54adf2e2ec51 100644
+--- a/scripts/Makefile.host
++++ b/scripts/Makefile.host
+@@ -86,7 +86,7 @@ hostc_flags    =3D -Wp,-MMD,$(depfile) \
+ hostcxx_flags  =3D -Wp,-MMD,$(depfile) \
+                  $(KBUILD_HOSTCXXFLAGS) $(HOST_EXTRACXXFLAGS) \
+                  $(HOSTCXXFLAGS_$(target-stem).o)
+-hostrust_flags =3D --emit=3Ddep-info=3D$(depfile) \
++hostrust_flags =3D --out-dir $(dir $@) --emit=3Ddep-info=3D$(depfile) \
+                  $(KBUILD_HOSTRUSTFLAGS) $(HOST_EXTRARUSTFLAGS) \
+                  $(HOSTRUSTFLAGS_$(target-stem))
