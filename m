@@ -1,203 +1,179 @@
-Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59A2EACB
-	for <patches@lists.linux.dev>; Sat, 22 Jul 2023 08:06:33 +0000 (UTC)
-Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-440bb9bad3cso990080137.0
-        for <patches@lists.linux.dev>; Sat, 22 Jul 2023 01:06:33 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436A81D302
+	for <patches@lists.linux.dev>; Sat, 22 Jul 2023 10:30:41 +0000 (UTC)
+Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-6bb14015560so1020350a34.2
+        for <patches@lists.linux.dev>; Sat, 22 Jul 2023 03:30:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690013192; x=1690617992;
+        d=linaro.org; s=google; t=1690021841; x=1690626641;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tNkbbtsn9qr0Zhw1Ph3h1UXRvjDGkUtBXUzhMVwOQCM=;
-        b=TCO5NuggBbo11qLwjwVJZx9BrZID22Pp1b+5WlEKD11C3dGvngvQG1bpfdu49mLWeg
-         4xCRC61HmKHS1n819+7pCR6TJuJoj165tOkj/3dliSnE2D6Ju5vPxbalAZ9bYpd/198A
-         6KqpCGY/oYD+uvU/bAibuKmd1U80v5OtfRjdqzPVRNDnxHeVpEW8e2Le+e50HrbRjEy2
-         fxAOGwF0KVym4wY81s0Pp4xAa9QawOhejqeI2CuN5do1mbFY4C6tZXj8YYYtDjzJH4Pm
-         hfBILOwD8HAy7DWRwptr6nu4mSxBBealZ1l9KDPrWatflCHxkm9GROPMmUwhy4JqGg2f
-         Degg==
+        bh=OOKl5MdBmvMSYXKLCi5t49QAL09Br/Pxi868eSGFh84=;
+        b=VVu7q7ucD2XFv5rZNuZA8D/e0dguqQKpujw+u6Qu9i5hDemofQ2rfD30TWZi0SZWnl
+         m0nwUPMmN1ZV4NxEGWzW0KzS0YFB2L9Uie+xNlXoJen7/coHvNw/Q2bo4eyHP9DAJmin
+         676XUuKib8GAnB/Q2bgRB5QeQlXEJB3JAnKHFhL6hzjVjS0/paE/lC9gyTkUhiIVWXZM
+         HKj5zVuTVAf2d/C7vUhsPowFUn8hdTa/82Fr6fbLTMbdVGlcAjxabmMlKSjunIk/VR+9
+         DyAODGiVMQksGs/XQ1m48U/fbSq2tLmN4Q96+kwO4MV/cdA5COxbC1ZHDEpimUN9ZN93
+         9zmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690013192; x=1690617992;
+        d=1e100.net; s=20221208; t=1690021841; x=1690626641;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tNkbbtsn9qr0Zhw1Ph3h1UXRvjDGkUtBXUzhMVwOQCM=;
-        b=hNZUAwhJ85sAsmGA+ad8y0OgSyxX5qbtnVUzRTuXmqyF6C5dWrU5Kde8ajLUO5FiXF
-         pY3OTxxQuZDEzNA4ujZnes8xV+UB+u4S7q8r5qE7fwlEYKkQg3qkIfVvoAADLjTVyG+T
-         zpCz8nAd6NiODfZm7+o8Dkzxa7LV6sl72c43HYHujCvBc20OJ7qMmRqP6hJLdTvmfheV
-         /QvSfuNfDKjimoLgXqayrbqeVBZnyFVc7EwoNBN2g41LUdBFLCy/lQnM0J2l7OZtfYeh
-         MZYRohsQjjpwzkaXFgvpPaBqhY3Dq5CeAWwH1GvOSxf+obQGlQ0ffcqjvizPNGMJzzMc
-         /KZw==
-X-Gm-Message-State: ABy/qLbR/BHJhA18XdU51r1P1qgFYKBy06Vkxk5wv5RqLAGDi8i8V0MW
-	uq/IlB4+VdIp6TbAuD2R9DVmInxk+037WEmzis5fEg==
-X-Google-Smtp-Source: APBJJlF8UIHUxYpZE3PJohHSduJIA1z/bkGyIIZJ56buqxFu0dVgG+rd+XtLkGcn0dS5K5vk2WBEAZ9mLAo5bqDv8tI=
-X-Received: by 2002:a1f:d945:0:b0:46e:7158:1cf0 with SMTP id
- q66-20020a1fd945000000b0046e71581cf0mr2170090vkg.10.1690013192242; Sat, 22
- Jul 2023 01:06:32 -0700 (PDT)
+        bh=OOKl5MdBmvMSYXKLCi5t49QAL09Br/Pxi868eSGFh84=;
+        b=MmZ8r3i+jbDTF3G9GjhTRBX7+6r0McbP/Ijbq2ep1MkwAv1cfjK2gmFT7UabJ+2DKk
+         SQvkQw1Up5pCAEwXVDGxAsTp3YKFpqS9iRqdRGivTm3ZbCDEc4vBrRVHghO8WUQIMQmY
+         56LEhhwGOvrp1dIpSrGbBVjzMxNCe/IqQEGVnfeATNT+zj3d8WwI17zsHKrD1T7zJWtg
+         BGOggGjsNu0d98qbQnrAFPO8zSXibQ1U1ALrjvRphUC/DEHcuMQ+I39UfKFsLZ3x8Mn2
+         djnJOZSzF7ZXf37lCLIgy9X7aqCft05uaY78eKtlP2WMCJerzQgX7i8V/Ud7Ib0g/Xq1
+         lrMQ==
+X-Gm-Message-State: ABy/qLZ21txZRNuIsWiWd4tGUzI0a24pfRZqZkYSxCDcXdHUhKNDZMl0
+	5OCGryhkGpDXP+mU8cahqkpLbg0sM7L7dDjqKSL28g==
+X-Google-Smtp-Source: APBJJlHxGRblosjMH4p2+lBC0j3tCcLuo+BldGrVBQsh613zaQjS0djs0GLvvduIJXDNq2dWqwjVUicaWzgXrmoBc6M=
+X-Received: by 2002:a05:6358:5e05:b0:134:ed9b:15a7 with SMTP id
+ q5-20020a0563585e0500b00134ed9b15a7mr1648429rwn.30.1690021840866; Sat, 22 Jul
+ 2023 03:30:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230721160528.800311148@linuxfoundation.org>
-In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
+References: <20230721160520.865493356@linuxfoundation.org>
+In-Reply-To: <20230721160520.865493356@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Sat, 22 Jul 2023 13:36:20 +0530
-Message-ID: <CA+G9fYvgy22wiY=c3wLOrCM6o33636abhtEynXhJkqxJh4ca0A@mail.gmail.com>
-Subject: Re: [PATCH 6.4 000/292] 6.4.5-rc1 review
+Date: Sat, 22 Jul 2023 16:00:29 +0530
+Message-ID: <CA+G9fYuoo8OPNGemxxcWjaGeO3U+xm2+aGOiC=8DiyzETG+1Jg@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/223] 6.1.40-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
 	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
+	"open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>, Anders Roxell <anders.roxell@linaro.org>, 
+	Mark Brown <broonie@kernel.org>, Alexey Dobriyan <adobriyan@gmail.com>, 
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>, Arnd Bergmann <arnd@arndb.de>, 
+	Vlad Buslov <vladbu@nvidia.com>, Pedro Tammela <pctammela@mojatatu.com>, 
+	Jakub Kicinski <kuba@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, 21 Jul 2023 at 21:39, Greg Kroah-Hartman
+On Sat, 22 Jul 2023 at 00:47, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.4.5 release.
-> There are 292 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.1.40 release.
+> There are 223 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
-> Responses should be made by Sun, 23 Jul 2023 16:04:29 +0000.
+> Responses should be made by Sun, 23 Jul 2023 16:04:33 +0000.
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
 >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.4.5-rc1.gz
+6.1.40-rc1.gz
 > or in the git tree and branch at:
 >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.4.y
+-rc.git linux-6.1.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
 
-
 Results from Linaro=E2=80=99s test farm.
 No regressions on arm64, arm, x86_64, and i386.
 
 Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-NOTE:
-The following kernel warning was noticed while booting qemu-arm64
-with these configs enabled on stable rc 6.4.5-rc1.
+NOTES:
+These are not kernel regressions as per the review,
 
- CONFIG_ARM64_64K_PAGES=3Dy
- CONFIG_KFENCE=3Dy
+Following kselfest build regressions noticed on stable-rc 6.1 and 6.4
+The selftests sources are from stable tree 6.4.y branch and version 6.4.4
 
-This crash is not easily reproducible.
+selftest build errors:
+---------------------
 
-boot logs:
---------
-[    0.000000] Booting Linux on physical CPU 0x0000000000 [0x000f0510]
-[    0.000000] Linux version 6.4.5-rc1 (tuxmake@tuxmake)
-(aarch64-linux-gnu-gcc (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils
-for Debian) 2.40) #1 SMP PREEMPT @1689957802
-[    0.000000] random: crng init done
-[    0.000000] Machine model: linux,dummy-virt
-...
-<6>[    0.006821] kfence: initialized - using 33554432 bytes for 255
-objects at 0x(____ptrval____)-0x(____ptrval____)
-...
-<4>[    7.726994] ------------[ cut here ]------------
-<4>[    7.727704] WARNING: CPU: 1 PID: 1 at mm/kfence/core.c:1097
-__kfence_free+0x84/0xc8
-<4>[    7.730078] Modules linked in: ip_tables x_tables
-<4>[    7.732637] CPU: 1 PID: 1 Comm: systemd Not tainted 6.4.5-rc1 #1
-<4>[    7.733334] Hardware name: linux,dummy-virt (DT)
-<4>[    7.734765] pstate: 83400009 (Nzcv daif +PAN -UAO +TCO +DIT
--SSBS BTYPE=3D--)
-<4>[    7.735323] pc : __kfence_free+0x84/0xc8
-<4>[    7.736036] lr : __slab_free+0x490/0x508
-<4>[    7.736374] sp : ffff8000080afb40
-<4>[    7.736657] x29: ffff8000080afb40 x28: ffffffc0003fa100 x27:
-0000000000000000
-<4>[    7.738294] x26: 0000000000000000 x25: 0000000000000001 x24:
-0000000000000000
-<4>[    7.739138] x23: ffffcd8ea7099000 x22: ffffcd8ea45cac38 x21:
-ffff0000fe840000
-<4>[    7.739961] x20: ffffcd8ea45cac38 x19: ffff0000c0012300 x18:
-0000000000000000
-<4>[    7.740778] x17: 0000000000000000 x16: 0000000000000000 x15:
-0000000000000000
-<4>[    7.741636] x14: 0000000000000000 x13: 0000000000000000 x12:
-0000000000000000
-<4>[    7.742474] x11: 0000000000000000 x10: 0000000000000000 x9 :
-ffffcd8ea45601e0
-<4>[    7.743407] x8 : ffff8000080afc20 x7 : 0000000000000000 x6 :
-0000000000009901
-<4>[    7.744268] x5 : ffffcd8ea45cac38 x4 : ffffcd8ea7099000 x3 :
-ffffcd8ea76e7aa0
-<4>[    7.745093] x2 : ffff0000c162e000 x1 : ffffcd8ea76fa5b0 x0 :
-ffff0000fe840000
-<4>[    7.746478] Call trace:
-<4>[    7.746776]  __kfence_free+0x84/0xc8
-<4>[    7.747134]  __slab_free+0x490/0x508
-<4>[    7.748063]  __kmem_cache_free+0x2b4/0x2d0
-<4>[    7.748377]  kfree+0x78/0x140
-<4>[    7.748638]  single_release+0x40/0x60
-<4>[    7.750664]  __fput+0x78/0x260
-<4>[    7.751065]  ____fput+0x18/0x30
-<4>[    7.752086]  task_work_run+0x80/0xe0
-<4>[    7.753122]  do_notify_resume+0x200/0x1398
-<4>[    7.754292]  el0_svc+0xec/0x100
-<4>[    7.754573]  el0t_64_sync_handler+0xf4/0x120
-<4>[    7.755559]  el0t_64_sync+0x190/0x198
-<4>[    7.756643] ---[ end trace 0000000000000000 ]---
+1)
+aarch64-linux-gnu-gcc -Wall -O2 -Wno-unused-function -D_GNU_SOURCE
+-pthread   proc-empty-vm.c  -o kselftest/proc/proc-empty-vm
+proc-empty-vm.c: In function 'main':
+proc-empty-vm.c:350:2: error: #error "implement 'unmap everything'"
+  350 | #error "implement 'unmap everything'"
+      |  ^~~~~
+make[3]: *** [../lib.mk:147: kselftest/proc/proc-empty-vm] Error 1
 
-Links
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.4.y/build/v6.=
-4.4-293-g4f44255da83d/testrun/18526234/suite/log-parser-boot/test/check-ker=
-nel-exception/log
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.4.y/build/v6.=
-4.4-293-g4f44255da83d/testrun/18526234/suite/log-parser-boot/tests/
- - https://storage.tuxsuite.com/public/linaro/lkft/builds/2StEPFnEfoD076PRu=
-8fIxjexhnM/
 
+2)
+
+make[3]: Entering directory 'tools/testing/selftests/tc-testing'
+/bin/sh: 1: llc: not found
+clang -I. -I/include/uapi  -Wno-compare-distinct-pointer-types \
+-O2 -target bpf -emit-llvm -c action.c -o - |      \
+llc -march=3Dbpf -mcpu=3Dprobe  -filetype=3Dobj -o kselftest/tc-testing/act=
+ion.o
+/bin/sh: 1: clang: not found
+/bin/sh: 3: llc: not found
+make[3]: *** [Makefile:26: kselftest/tc-testing/action.o] Error 127
 
 
 ## Build
-* kernel: 6.4.5-rc1
+* kernel: 6.1.40-rc1
 * git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-6.4.y
-* git commit: 4f44255da83d4e0d6c39114e6d90f43705c9159d
-* git describe: v6.4.4-293-g4f44255da83d
+* git branch: linux-6.1.y
+* git commit: e54fe15e179b2cc0f0587e2ef1549295ae7bc3be
+* git describe: v6.1.39-224-ge54fe15e179b
 * test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.4.y/build/v6.4.4=
--293-g4f44255da83d
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.3=
+9-224-ge54fe15e179b
 
-## Test Regressions (compared to v6.4.4-150-g698271d38e0b)
+## Test Regressions (compared to v6.1.39)
+* bcm2711-rpi-4-b, kselftest-proc
+  - shardfile-proc
 
-## Metric Regressions (compared to v6.4.4-150-g698271d38e0b)
+* bcm2711-rpi-4-b, kselftest-tc-testing
+  - shardfile-tc-testing
 
-## Test Fixes (compared to v6.4.4-150-g698271d38e0b)
+* dragonboard-410c, kselftest-proc
+  - shardfile-proc
 
-## Metric Fixes (compared to v6.4.4-150-g698271d38e0b)
+* dragonboard-410c, kselftest-tc-testing
+  - shardfile-tc-testing
+
+* juno-r2, kselftest-proc
+  - shardfile-proc
+
+* juno-r2, kselftest-tc-testing
+  - shardfile-tc-testing
+
+
+## Metric Regressions (compared to v6.1.39)
+
+## Test Fixes (compared to v6.1.39)
+
+## Metric Fixes (compared to v6.1.39)
 
 ## Test result summary
-total: 165616, pass: 143054, fail: 2212, skip: 20190, xfail: 160
+total: 149107, pass: 126633, fail: 2237, skip: 20065, xfail: 172
 
 ## Build Summary
 * arc: 5 total, 5 passed, 0 failed
-* arm: 141 total, 141 passed, 0 failed
-* arm64: 50 total, 50 passed, 0 failed
-* i386: 37 total, 37 passed, 0 failed
-* mips: 26 total, 26 passed, 0 failed
-* parisc: 3 total, 3 passed, 0 failed
-* powerpc: 34 total, 34 passed, 0 failed
-* riscv: 22 total, 22 passed, 0 failed
-* s390: 12 total, 12 passed, 0 failed
-* sh: 12 total, 12 passed, 0 failed
-* sparc: 6 total, 6 passed, 0 failed
-* x86_64: 42 total, 42 passed, 0 failed
+* arm: 151 total, 150 passed, 1 failed
+* arm64: 57 total, 56 passed, 1 failed
+* i386: 41 total, 38 passed, 3 failed
+* mips: 30 total, 28 passed, 2 failed
+* parisc: 4 total, 4 passed, 0 failed
+* powerpc: 38 total, 36 passed, 2 failed
+* riscv: 16 total, 15 passed, 1 failed
+* s390: 16 total, 16 passed, 0 failed
+* sh: 14 total, 12 passed, 2 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 46 total, 46 passed, 0 failed
 
 ## Test suites summary
 * boot
@@ -228,7 +204,6 @@ total: 165616, pass: 143054, fail: 2212, skip: 20190, xfail: 160
 * kselftest-kexec
 * kselftest-kvm
 * kselftest-lib
-* kselftest-livepatch
 * kselftest-membarrier
 * kselftest-memfd
 * kselftest-memory-hotplug
@@ -257,16 +232,12 @@ total: 165616, pass: 143054, fail: 2212, skip: 20190, xfail: 160
 * kselftest-sysctl
 * kselftest-tc-testing
 * kselftest-timens
-* kselftest-timers
 * kselftest-tmpfs
 * kselftest-tpm2
-* kselftest-user
 * kselftest-user_events
 * kselftest-vDSO
-* kselftest-vm
 * kselftest-watchdog
 * kselftest-x86
-* kselftest-zram
 * kunit
 * kvm-unit-tests
 * libgpiod
