@@ -1,88 +1,94 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38C662A
-	for <patches@lists.linux.dev>; Sat, 22 Jul 2023 11:43:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 355ECC433C8;
-	Sat, 22 Jul 2023 11:43:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690026207;
-	bh=6Xf+k8zPjvPWGOfOq+ugj5rX3AEggB3v4zSBYR6lUVM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=F+UWySnfQXczNTVc813Esac68o761t58Tcx25BPV2bm6KsbwM2dFsollOdmmIg8sn
-	 +cwbw0EjHXjl4bdt1cNQM5MrzpZNa8dB9/kYnk92QBg2pObfqdqQJzqT9dOltjxfWU
-	 zoEI3W+88PGlasanf/czLDmbA5raK2OC2jZ4k3s4=
-Date: Sat, 22 Jul 2023 13:43:25 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Thomas Backlund <tmb@tmb.nu>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-	"Pelloux-Prayer, Pierre-Eric" <Pierre-eric.Pelloux-prayer@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Pelloux-Prayer@vger.kernel.org
-Subject: Re: [PATCH 6.4 213/292] drm/ttm: never consider pinned BOs for
- eviction&swap
-Message-ID: <2023072207-bagginess-opal-a71f@gregkh>
-References: <ccf59286-1698-3f02-e472-edda5208c58d@tmb.nu>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8121D2E3
+	for <patches@lists.linux.dev>; Sat, 22 Jul 2023 14:49:57 +0000 (UTC)
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-666ecf9a0ceso1729947b3a.2
+        for <patches@lists.linux.dev>; Sat, 22 Jul 2023 07:49:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1690037396; x=1690642196;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=6RbVO1ScgDHvCnnDrduqM9cFNB+8gywma+fRSXcXBlY=;
+        b=EIfc7YC6DTtA0YR8NlLDp3y9nj/fBsmGX5I8vui6vuJu+VdbZMs5PyzkbFngrjiFh7
+         3+TRP/kYDPZx1mcTct6WKy1jyp7G5QsxJWqlfL9mRAiNKcUDKJcp83dzGolqIu0vL5Wv
+         1Qc+Jeklwl6G0lruZIbk8wk9sgKJDzp6Hp3StPLH892xucJEephAmf+WulyufZa6n6kV
+         x8ajlFxxXxZEHxD/9YCMn/yfFfed3oZ921Lov/uyDCiotRey9Lv1jyugQY4IZNB6fqSj
+         pG29UA/351R2OUr/oz4A4sZ/q9/9JsJRgRMH3g9XqKc/cWv6j61VxAX5zdMSApuYAEym
+         QACw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690037396; x=1690642196;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6RbVO1ScgDHvCnnDrduqM9cFNB+8gywma+fRSXcXBlY=;
+        b=PRLpfbAy3Jecdgl+R85en/OsB2Pb0oYAHzu7M4xetmta+/ej0jE1WFB17zwOv5Rr8P
+         bwneduAFd2TdvnyPIDa6SxHVuYHNgON4dZRM1OM0oNk2jy9VhokbO2kssjzjdhEQLZrW
+         C0N7fzXAk9GwIHQuzh399PV0pOyR/Sc5ocYN4nX0jptoc9GSPogOZGJ7HWvBGKhJeo9v
+         MwlcyFm6mIm2jypotw6V+89jQT0ZEoNWzPXySF5iXfI247vuCWDlamba6cjZmEnheDj/
+         ERbcWl1qcGAdNAeK4oLwyV04mtiJpxLUoBCFNELqszTVQ1ZEDNevsEXrka8CPLZzripp
+         2YkQ==
+X-Gm-Message-State: ABy/qLaiGdWyqN+rymtato9jQMf0O1fvzb+k550r6RBjM4z2o9G2W9pN
+	HfHQ6xD9L7mu98KF0w2NiBI=
+X-Google-Smtp-Source: APBJJlFjepFzPi/Ej+rmWsUG4Ww+c3XitwpKU0IkmaAi4l8ffNjPROhART6IL9X12YJZYbYJPCrNJQ==
+X-Received: by 2002:a05:6a20:88:b0:138:2fb8:6c48 with SMTP id 8-20020a056a20008800b001382fb86c48mr4008099pzg.8.1690037396413;
+        Sat, 22 Jul 2023 07:49:56 -0700 (PDT)
+Received: from [192.168.1.3] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
+        by smtp.gmail.com with ESMTPSA id k196-20020a633dcd000000b005501b24b1c9sm4998093pga.62.2023.07.22.07.49.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 22 Jul 2023 07:49:55 -0700 (PDT)
+Message-ID: <8730178d-fb3e-9841-8c93-c7cc3dc54a3e@gmail.com>
+Date: Sat, 22 Jul 2023 07:49:53 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ccf59286-1698-3f02-e472-edda5208c58d@tmb.nu>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+From: Florian Fainelli <f.fainelli@gmail.com>
+Subject: Re: [PATCH 6.4 000/292] 6.4.5-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org
+References: <20230721160528.800311148@linuxfoundation.org>
+Content-Language: en-US
+In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jul 21, 2023 at 04:51:01PM +0000, Thomas Backlund wrote:
-> Den 2023-07-21 kl. 19:05, skrev Greg Kroah-Hartman:
-> > From: Christian König <christian.koenig@amd.com>
-> > 
-> > commit a2848d08742c8e8494675892c02c0d22acbe3cf8 upstream.
-> > 
-> > There is a small window where we have already incremented the pin count
-> > but not yet moved the bo from the lru to the pinned list.
-> > 
-> > Signed-off-by: Christian König <christian.koenig@amd.com>
-> > Reported-by: Pelloux-Prayer, Pierre-Eric <Pierre-eric.Pelloux-prayer@amd.com>
-> > Tested-by: Pelloux-Prayer, Pierre-Eric <Pierre-eric.Pelloux-prayer@amd.com>
-> > Acked-by: Alex Deucher <alexander.deucher@amd.com>
-> > Cc: stable@vger.kernel.org
-> > Link: https://patchwork.freedesktop.org/patch/msgid/20230707120826.3701-1-christian.koenig@amd.com
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > ---
-> >   drivers/gpu/drm/ttm/ttm_bo.c |    6 ++++++
-> >   1 file changed, 6 insertions(+)
-> > 
-> > --- a/drivers/gpu/drm/ttm/ttm_bo.c
-> > +++ b/drivers/gpu/drm/ttm/ttm_bo.c
-> > @@ -517,6 +517,12 @@ static bool ttm_bo_evict_swapout_allowab
-> >   {
-> >   	bool ret = false;
-> >   
-> > +	if (bo->pin_count) {
-> > +		*locked = false;
-> > +		*busy = false;
-> > +		return false;
-> > +	}
-> > +
-> >   	if (bo->base.resv == ctx->resv) {
-> >   		dma_resv_assert_held(bo->base.resv);
-> >   		if (ctx->allow_res_evict)
-> > 
-> 
-> 
-> This one will trigger GPF and needs a follow-up fix that is not upstream 
-> yet:
-> https://patchwork.freedesktop.org/patch/547897/
-> 
-> as reported on LKML in thread:
-> [bug/bisected] commit a2848d08742c8e8494675892c02c0d22acbe3cf8 cause 
-> general protection fault, probably for non-canonical address 
-> 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN NOPTI
 
-Thanks for letting me know, I've dropped this from the queues now.
-Please let us know when we should add it back.
 
-greg k-h
+On 7/21/2023 9:01 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.4.5 release.
+> There are 292 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sun, 23 Jul 2023 16:04:29 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.5-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+
+
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
+
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
+
