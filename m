@@ -1,125 +1,136 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2089.outbound.protection.outlook.com [40.107.223.89])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2262AA29
-	for <patches@lists.linux.dev>; Sun, 23 Jul 2023 05:06:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 989B8C433C9
-	for <patches@lists.linux.dev>; Sun, 23 Jul 2023 05:06:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1690088792;
-	bh=RcmR2y8+8t1nMaDLo3EG2DyBfOGWDbEYicQEkeAfYL8=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=MMiO041S6v0e4pRkVWpsXAku5y8BstlIdJ9S9dDlSalUwoh60xSTIzlyPx9/dSRGi
-	 lA0A5RxT7oDHLZeii7tX7mHckcc8fP3Qte46jURM3H/AU4EJr/c6NyC0MpV23BWZ+p
-	 VcPIu+UM6QHBZvi70kJQktbFkV9ga1VvzjTHT3oFGlPv8k3vZHIemtHZQopFd+/hYw
-	 3JM3FFM6oEyOzGEa09pQZKHxYio4MlDyC7bnYfWapPqYnK1GWYKR85gKAeZvbejbde
-	 ReisEv5A/5xIhZKls1cdXpRDKOl5IZIi+F+dCxwgI0w9yzxW5dnoGIW/LHeoCrIt88
-	 2szKxw4G7cGJA==
-Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-55e04a83465so2073248eaf.3
-        for <patches@lists.linux.dev>; Sat, 22 Jul 2023 22:06:32 -0700 (PDT)
-X-Gm-Message-State: ABy/qLbNMuzSHSrjc4XHXlEv76OLPTMb1GmVP6120T1CM7E3M/2TM0v7
-	Q5OzdiF8DtnWvyCX0EU+9lGiQrwEX5JFBOEbnPw=
-X-Google-Smtp-Source: APBJJlEaBRLz1z4/yyBQEA47mU5zfWs0viX27L4DZi41LLNZIunKwGHLU39tghd5QO6NenF5flweuZukIFP9Xu723T4=
-X-Received: by 2002:a4a:6f05:0:b0:566:f283:35ad with SMTP id
- h5-20020a4a6f05000000b00566f28335admr4448493ooc.8.1690088791870; Sat, 22 Jul
- 2023 22:06:31 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5245C7C
+	for <patches@lists.linux.dev>; Sun, 23 Jul 2023 09:08:18 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=TZpAUogpAfjlIVzetO5gqNV/lOKDOuAZqcx4ao4L2Ntal/r6mPIuSRjKo7y2EtEIEUygU0meUnW1SKCaLDBOgJprU2jOGu5o8klCcw5bP2DhL48a1o5KDZjhY6IY+oJhuGfMZJziXbfo5CTubLgWLKnRdNxUrKu8TbcsCsUxy+GqeSsvUrySD23JJeCM4LVmKNvJl02YB8SVHq8FczIC5wcZ5itI4mxkaemp0/Lz1RPu7Kv6tgDeZqnlXdwF8N0Sfi5JNQDxWWfRdY4qobs2G5Q1U/vKKnfYLPsf8T5L+wY0w4/9qv/9nbIA7EKZFVG9Hy+DPyAktJc6qWFl4Tispw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=E4Y3ZStcr0+oBCkNjT2W/R3UbAap0tUJlbV6nCt0giY=;
+ b=enRVxhaQ1ZLp5jXzlhTANsBO84Uxh8eqkp8BrPfBeD5NKvm3bquYvuAuRY1Yj0Q0cxR1aJsmEqFKrgcpr6s+if9G5cm5PXuoA9jBVkJLlrtURUVhlCDDVdCQ+FDSYNVb3fZkiHhw7vmW4mDbtiLNiICY2SFKyrUVBSPvnIbo8gDUdVsjnPOSKOl0Do5H4RbmXEXVy4J+1cq6uJZYp1LFCdZ9EH2XxOxoxFQ0gCYMpgTxKaZccNskdSL7tByItZNZGIF6bFsz+WgqfamLpGZVbojlDX+LYL25nLLVxVKV39a0sdMFxmHgxcUm4sSM/Ezo1pC8PKAu0KPQxJ+Oaoe/LA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=E4Y3ZStcr0+oBCkNjT2W/R3UbAap0tUJlbV6nCt0giY=;
+ b=X32IG/4e7rlhZ4ZxFHEHpf7YGkCiIVoWOlhQUhutOl9wCtm/8zTttLLoK+v5jogwZ2FqEYrLi8f1avTHHxTtzSfXF46srfZ/YEikjXbBG+ojw5XLZU6MM7fFN6XMYJgkxt4SKXeChZRbkR37Fy2fRMU7qqjXRM5+TeytMTAK/A+4tnGH1V1N12DsodbCNxYa+OR81hgP+06oMAacXJrQySBTxkLlR9W3exyBNVgN5VEcgV01uqhbZ13u47g5g5+a0Ena1iSK6CXfZ8ucdz/ZNXxIsICDvO2hcVMG3TjHE0FXNAa04wWWX2vN71VlPgSupzz3CW4EORONbDnlHopgag==
+Received: from MW4PR04CA0324.namprd04.prod.outlook.com (2603:10b6:303:82::29)
+ by CH0PR12MB8549.namprd12.prod.outlook.com (2603:10b6:610:182::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6609.29; Sun, 23 Jul
+ 2023 09:08:15 +0000
+Received: from CO1NAM11FT114.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:303:82:cafe::d4) by MW4PR04CA0324.outlook.office365.com
+ (2603:10b6:303:82::29) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6609.30 via Frontend
+ Transport; Sun, 23 Jul 2023 09:08:15 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ CO1NAM11FT114.mail.protection.outlook.com (10.13.174.103) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6631.22 via Frontend Transport; Sun, 23 Jul 2023 09:08:14 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Sun, 23 Jul 2023
+ 02:08:09 -0700
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37; Sun, 23 Jul
+ 2023 02:08:08 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37 via Frontend
+ Transport; Sun, 23 Jul 2023 02:08:08 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <linux-tegra@vger.kernel.org>,
+	<stable@vger.kernel.org>
+Subject: Re: [PATCH 5.15 000/532] 5.15.121-rc1 review
+In-Reply-To: <20230721160614.695323302@linuxfoundation.org>
+References: <20230721160614.695323302@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230718055235.1050223-1-ojeda@kernel.org> <CAK7LNAQ-hjW_19fjA+E-bQCrXcVPdN4-GvzAnEnYzna5KRVXew@mail.gmail.com>
- <CANiq72kZjOGvRKoRxtgG=2DhJnMJK9TCQtTmeef_B=nLcLQD6g@mail.gmail.com>
- <CAK7LNASqumGb0xvSa8n4Heasz9BKxgk4mvzNXsfFhZE1G+Bxbg@mail.gmail.com> <CANiq72kD2wxXy2ri8sBhVJ4y-JJiq+kYt_MRZwuwB9uGkX-_jQ@mail.gmail.com>
-In-Reply-To: <CANiq72kD2wxXy2ri8sBhVJ4y-JJiq+kYt_MRZwuwB9uGkX-_jQ@mail.gmail.com>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Sun, 23 Jul 2023 14:05:55 +0900
-X-Gmail-Original-Message-ID: <CAK7LNARm1LevTQVw1j5pQjp_gP=6-4CiwXLRDXbVH3bnC0OCxg@mail.gmail.com>
-Message-ID: <CAK7LNARm1LevTQVw1j5pQjp_gP=6-4CiwXLRDXbVH3bnC0OCxg@mail.gmail.com>
-Subject: Re: [PATCH] kbuild: rust: avoid creating temporary files
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
-	Nick Desaulniers <ndesaulniers@google.com>, Nicolas Schier <nicolas@fjasle.eu>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
-	Andreas Hindborg <a.hindborg@samsung.com>, linux-kbuild@vger.kernel.org, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Raphael Nestler <raphael.nestler@gmail.com>, 
-	Andrea Righi <andrea.righi@canonical.com>, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <04a3c91c-8b4e-43e3-aa8b-619f9366b285@rnnvmail205.nvidia.com>
+Date: Sun, 23 Jul 2023 02:08:08 -0700
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1NAM11FT114:EE_|CH0PR12MB8549:EE_
+X-MS-Office365-Filtering-Correlation-Id: ab16a304-1379-49cc-7084-08db8b5c5904
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	1IijPJRADaDHM2QsCwaR/hgEjfMOt2XzlZsHaMAtdVPueW/cKT/V8GUAmSthEtbK00nxrx+d78lJj79vvi0R6GOICqBUJVFzGEz1UCFOO97/flkvEcb83G38euTWdLkamTtuWRPX3ZNeWYRrYoUPB3GeosullCVJ+COC2G4WzqjYtFkQ4dtsr9QVmcHEx7rnVHKmPH/z6uzlvieaL2IvTf3jJHPFQ5L6Zl1HfAvbZZJTMl2q6+l6DBKuYTAZqyVo39R8kKqxidnc40offkLAF6rHhrk1wFM849UVR3DORjipWAaQ31Yuclu503pPr2XqSNsqek/yB5ozwvRGyXfNOyuUl2iUJJAZkXtZiNVEwZGPedDUHnmW8TS8xjpTv/dZa5+OhupkGqG+ko/ENU07JG7/kOoeIDxp/7Hvw5rlmsSfTQ1sFdOqU2RQuOVszIjSpJ8H5FQw18hWtbH0wx7cM0vFUlS0ZC5DzCaGAwv5/ROF7K38py6mnXp3ZE/HrHmu/ckiR4xiJHiGkxClH/7oQcCE7phcUsUaWEZ7Ix0UZHXfQ7/uw/ScNqSb73xlKilAv3n3Z3zLfNgywUGe6O9AzxV5ts3lQFgW/ufOBab39/TyxnNEE1hk0nR834FnXorVH5McaHFKs5zTa6LX8gTPZ2mPDdNLLsm6uty/Eqm34rihXaJm/UQuIqPl+/ZHFVi0j0HTQQp4ITRemsAg4hCUjYbbMqDIVgpQ87tvBnjUt0tA7zVxcTs04Djlq5NNfWt4uerBSUrBkDlBkDGPo8tGBHP5JUWHE+5u8XDLs4RJWsk=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230028)(4636009)(136003)(39860400002)(376002)(396003)(346002)(82310400008)(451199021)(36840700001)(40470700004)(46966006)(36860700001)(40480700001)(86362001)(31696002)(82740400003)(40460700003)(7636003)(356005)(54906003)(478600001)(2906002)(336012)(186003)(26005)(966005)(31686004)(8936002)(5660300002)(7416002)(8676002)(316002)(41300700001)(70206006)(70586007)(6916009)(4326008)(47076005)(426003);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jul 2023 09:08:14.8835
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ab16a304-1379-49cc-7084-08db8b5c5904
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CO1NAM11FT114.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR12MB8549
 
-On Sun, Jul 23, 2023 at 12:52=E2=80=AFAM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
->
-> On Thu, Jul 20, 2023 at 8:35=E2=80=AFPM Masahiro Yamada <masahiroy@kernel=
-.org> wrote:
-> >
-> > Maybe, the following was a breakage.
-> >
-> > commit 295d8398c67e314d99bb070f38883f83fe94a97a
-> > Author: Masahiro Yamada <masahiroy@kernel.org>
-> > Date:   Sat Jan 7 18:18:15 2023 +0900
-> >
-> >     kbuild: specify output names separately for each emission type from=
- rustc
-> >
-> > Before that, rust_common_cmd had --out-dir.
->
-> That's right, good catch!
->
-> > BTW, do we also need to fix scripts/Makefile.host
-> > in case the external module Makefile creates host programs?
->
-> Indeed, we need it too. [1] would fix it (tested it with a trivial
-> out-of-tree Rust hostprog).
->
-> Do you want me to send it separately? i.e. to avoid losing the
-> `Tested-by`s etc. that we already got for this one, which is the
-> important one since that actually has users.
->
-> The hostprogs fix is not really critical for stable, since it is
-> unlikely there are users at all (we just got the first in-tree real
-> user in the Rust+KUnit integration coming into 6.6), but I guess it
-> does not hurt for the same reason.
+On Fri, 21 Jul 2023 17:58:24 +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.121 release.
+> There are 532 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sun, 23 Jul 2023 16:04:40 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.121-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
+All tests passing for Tegra ...
 
-Can you send v2 with the following squashed?
+Test results for stable-v5.15:
+    11 builds:	11 pass, 0 fail
+    28 boots:	28 pass, 0 fail
+    114 tests:	114 pass, 0 fail
 
+Linux version:	5.15.121-rc1-g48958c96454b
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
 
-I think it makes sense to fix both if we add
-Fixes: 295d8398c67e ("kbuild: specify output names separately for each
-emission type from rustc")
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
 
-
-
-
-
-> Thanks!
->
-> Cheers,
-> Miguel
->
-> [1]
->
-> diff --git a/scripts/Makefile.host b/scripts/Makefile.host
-> index 7aea9005e497..54adf2e2ec51 100644
-> --- a/scripts/Makefile.host
-> +++ b/scripts/Makefile.host
-> @@ -86,7 +86,7 @@ hostc_flags    =3D -Wp,-MMD,$(depfile) \
->  hostcxx_flags  =3D -Wp,-MMD,$(depfile) \
->                   $(KBUILD_HOSTCXXFLAGS) $(HOST_EXTRACXXFLAGS) \
->                   $(HOSTCXXFLAGS_$(target-stem).o)
-> -hostrust_flags =3D --emit=3Ddep-info=3D$(depfile) \
-> +hostrust_flags =3D --out-dir $(dir $@) --emit=3Ddep-info=3D$(depfile) \
->                   $(KBUILD_HOSTRUSTFLAGS) $(HOST_EXTRARUSTFLAGS) \
->                   $(HOSTRUSTFLAGS_$(target-stem))
-
-
-
---=20
-Best Regards
-Masahiro Yamada
+Jon
