@@ -1,108 +1,123 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C5B1378
-	for <patches@lists.linux.dev>; Sun, 23 Jul 2023 13:36:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7A6C433C8
-	for <patches@lists.linux.dev>; Sun, 23 Jul 2023 13:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5365E15C8;
+	Sun, 23 Jul 2023 14:21:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4A3C433C8;
+	Sun, 23 Jul 2023 14:21:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1690119362;
-	bh=O1IIMN7Y1zRc3XOUmu8VPg3ACsmolQilL9wEXTaUfq0=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=bEohhuLUK1dSi12/IxXfSkxMEfJgOh0hOz+UucGXozkJpf7axqzuCpVb8Y+hXgCNX
-	 SaPf2jkC52Lm1mk0xAnT9v0MwB1AWeT1fEIov9y7rQUG4fEkIlmHDNVR5dhSzy5CU8
-	 sXpyAm/oSnTJAtfE5yzVxKS0Jca0FEXYP2mYBl+HfuyM9gjsltwEXfbjtEIRJ2PiO4
-	 BE8vBu94NSSU4v8qXxvtB/S72Bh16bAakamyFA35uOLtrZTy3Xp0Ai7vsgXS3ij2aj
-	 mx1S+a71fzn2Xa3D33cPycajyhSwu12mbW9UMKHoA4YbLhEUncOv1kBtnGCidfWSwA
-	 sQ/j/u+2oigow==
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-6b9f3b57c4fso2308414a34.1
-        for <patches@lists.linux.dev>; Sun, 23 Jul 2023 06:36:02 -0700 (PDT)
-X-Gm-Message-State: ABy/qLaAG0xAPC00Kbo6fleOe8GjEILjTO/r50e1v+6Qnciq5JPOJJa3
-	eHi5jkvRf1yHIpKTWcBl5Br5yrRQqzKvKfwN7p4=
-X-Google-Smtp-Source: APBJJlEtZ7vv6IbOH84SATHMJCAMxnz2YpuXNOI1/BwoW86mbx9Nm47dGyoVL7wZ1gh1ODC5aHD1JS0QWO0h/EoEPu8=
-X-Received: by 2002:a05:6808:302c:b0:39c:7f78:ba6d with SMTP id
- ay44-20020a056808302c00b0039c7f78ba6dmr6412590oib.19.1690119361932; Sun, 23
- Jul 2023 06:36:01 -0700 (PDT)
+	s=k20201202; t=1690122109;
+	bh=P7IlLhixxEgKf7EpbN4DFFwoc1k1ZVIYZ+hvTtej5ok=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Nf3VNf1VQPkyJzPRuDrzkcf1vm0BYDCgs5u38VttEdibhXOWuzQQSsD3WNFktN6xR
+	 ZgV4t4LN67chHoHXYej97xlQCGNic9iTMRBTL60pA1YBG14IARxvxa7fda8/4kxQK0
+	 0/LBixFhlZKzcYZMAG1r5lA6FebXZvQZGDvoSO+/q2QVl7iJa4IeIhVJV3h/EbuIIy
+	 Ms1nownVv8FuDcm7l+X5tRzAUjtvWzYpdB4YG5OAjRhMGjIDXyZIU5DgUeuuhePlkb
+	 MEavIeV66nZVBoOYLSoc/bPX2f/BwWOdJdREhdEBcorsYvwzxyUZczqxsRtG7ijRo+
+	 WrVow2dPnon/w==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Masahiro Yamada <masahiroy@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	linux-kbuild@vger.kernel.org,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Raphael Nestler <raphael.nestler@gmail.com>,
+	Andrea Righi <andrea.righi@canonical.com>,
+	stable@vger.kernel.org
+Subject: [PATCH v2] kbuild: rust: avoid creating temporary files
+Date: Sun, 23 Jul 2023 16:21:28 +0200
+Message-ID: <20230723142128.194339-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230718055235.1050223-1-ojeda@kernel.org> <CAK7LNAQ-hjW_19fjA+E-bQCrXcVPdN4-GvzAnEnYzna5KRVXew@mail.gmail.com>
- <CANiq72kZjOGvRKoRxtgG=2DhJnMJK9TCQtTmeef_B=nLcLQD6g@mail.gmail.com>
- <CAK7LNASqumGb0xvSa8n4Heasz9BKxgk4mvzNXsfFhZE1G+Bxbg@mail.gmail.com>
- <CANiq72kD2wxXy2ri8sBhVJ4y-JJiq+kYt_MRZwuwB9uGkX-_jQ@mail.gmail.com> <CAK7LNARm1LevTQVw1j5pQjp_gP=6-4CiwXLRDXbVH3bnC0OCxg@mail.gmail.com>
-In-Reply-To: <CAK7LNARm1LevTQVw1j5pQjp_gP=6-4CiwXLRDXbVH3bnC0OCxg@mail.gmail.com>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Sun, 23 Jul 2023 22:35:25 +0900
-X-Gmail-Original-Message-ID: <CAK7LNARZaeJ4SzRFo-GUA4Q7DGHwrDshxEMuEDO_N+SPHvof3A@mail.gmail.com>
-Message-ID: <CAK7LNARZaeJ4SzRFo-GUA4Q7DGHwrDshxEMuEDO_N+SPHvof3A@mail.gmail.com>
-Subject: Re: [PATCH] kbuild: rust: avoid creating temporary files
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
-	Nick Desaulniers <ndesaulniers@google.com>, Nicolas Schier <nicolas@fjasle.eu>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
-	Andreas Hindborg <a.hindborg@samsung.com>, linux-kbuild@vger.kernel.org, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Raphael Nestler <raphael.nestler@gmail.com>, 
-	Andrea Righi <andrea.righi@canonical.com>, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sun, Jul 23, 2023 at 2:05=E2=80=AFPM Masahiro Yamada <masahiroy@kernel.o=
-rg> wrote:
->
-> On Sun, Jul 23, 2023 at 12:52=E2=80=AFAM Miguel Ojeda
-> <miguel.ojeda.sandonis@gmail.com> wrote:
-> >
-> > On Thu, Jul 20, 2023 at 8:35=E2=80=AFPM Masahiro Yamada <masahiroy@kern=
-el.org> wrote:
-> > >
-> > > Maybe, the following was a breakage.
-> > >
-> > > commit 295d8398c67e314d99bb070f38883f83fe94a97a
-> > > Author: Masahiro Yamada <masahiroy@kernel.org>
-> > > Date:   Sat Jan 7 18:18:15 2023 +0900
-> > >
-> > >     kbuild: specify output names separately for each emission type fr=
-om rustc
-> > >
-> > > Before that, rust_common_cmd had --out-dir.
-> >
-> > That's right, good catch!
-> >
-> > > BTW, do we also need to fix scripts/Makefile.host
-> > > in case the external module Makefile creates host programs?
-> >
-> > Indeed, we need it too. [1] would fix it (tested it with a trivial
-> > out-of-tree Rust hostprog).
-> >
-> > Do you want me to send it separately? i.e. to avoid losing the
-> > `Tested-by`s etc. that we already got for this one, which is the
-> > important one since that actually has users.
-> >
-> > The hostprogs fix is not really critical for stable, since it is
-> > unlikely there are users at all (we just got the first in-tree real
-> > user in the Rust+KUnit integration coming into 6.6), but I guess it
-> > does not hurt for the same reason.
->
->
-> Can you send v2 with the following squashed?
->
->
-> I think it makes sense to fix both if we add
-> Fixes: 295d8398c67e ("kbuild: specify output names separately for each
-> emission type from rustc")
+`rustc` outputs by default the temporary files (i.e. the ones saved
+by `-Csave-temps`, such as `*.rcgu*` files) in the current working
+directory when `-o` and `--out-dir` are not given (even if
+`--emit=x=path` is given, i.e. it does not use those for temporaries).
 
+Since out-of-tree modules are compiled from the `linux` tree,
+`rustc` then tries to create them there, which may not be accessible.
 
-I dropped v1 for now,
-expecting to get v2 soon.
+Thus pass `--out-dir` explicitly, even if it is just for the temporary
+files.
 
+Similarly, do so for Rust host programs too.
 
---=20
-Best Regards
-Masahiro Yamada
+Reported-by: Raphael Nestler <raphael.nestler@gmail.com>
+Closes: https://github.com/Rust-for-Linux/linux/issues/1015
+Reported-by: Andrea Righi <andrea.righi@canonical.com>
+Tested-by: Raphael Nestler <raphael.nestler@gmail.com> # non-hostprogs
+Tested-by: Andrea Righi <andrea.righi@canonical.com> # non-hostprogs
+Fixes: 295d8398c67e ("kbuild: specify output names separately for each emission type from rustc")
+Cc: stable@vger.kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+v2:
+  - Add fix for host programs too (Masahiro).
+
+ scripts/Makefile.build | 5 ++++-
+ scripts/Makefile.host  | 6 +++++-
+ 2 files changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/scripts/Makefile.build b/scripts/Makefile.build
+index 6413342a03f4..82e3fb19fdaf 100644
+--- a/scripts/Makefile.build
++++ b/scripts/Makefile.build
+@@ -264,6 +264,9 @@ $(obj)/%.lst: $(src)/%.c FORCE
+ 
+ rust_allowed_features := new_uninit
+ 
++# `--out-dir` is required to avoid temporaries being created by `rustc` in the
++# current working directory, which may be not accessible in the out-of-tree
++# modules case.
+ rust_common_cmd = \
+ 	RUST_MODFILE=$(modfile) $(RUSTC_OR_CLIPPY) $(rust_flags) \
+ 	-Zallow-features=$(rust_allowed_features) \
+@@ -272,7 +275,7 @@ rust_common_cmd = \
+ 	--extern alloc --extern kernel \
+ 	--crate-type rlib -L $(objtree)/rust/ \
+ 	--crate-name $(basename $(notdir $@)) \
+-	--emit=dep-info=$(depfile)
++	--out-dir $(dir $@) --emit=dep-info=$(depfile)
+ 
+ # `--emit=obj`, `--emit=asm` and `--emit=llvm-ir` imply a single codegen unit
+ # will be used. We explicitly request `-Ccodegen-units=1` in any case, and
+diff --git a/scripts/Makefile.host b/scripts/Makefile.host
+index 7aea9005e497..8f7f842b54f9 100644
+--- a/scripts/Makefile.host
++++ b/scripts/Makefile.host
+@@ -86,7 +86,11 @@ hostc_flags    = -Wp,-MMD,$(depfile) \
+ hostcxx_flags  = -Wp,-MMD,$(depfile) \
+                  $(KBUILD_HOSTCXXFLAGS) $(HOST_EXTRACXXFLAGS) \
+                  $(HOSTCXXFLAGS_$(target-stem).o)
+-hostrust_flags = --emit=dep-info=$(depfile) \
++
++# `--out-dir` is required to avoid temporaries being created by `rustc` in the
++# current working directory, which may be not accessible in the out-of-tree
++# modules case.
++hostrust_flags = --out-dir $(dir $@) --emit=dep-info=$(depfile) \
+                  $(KBUILD_HOSTRUSTFLAGS) $(HOST_EXTRARUSTFLAGS) \
+                  $(HOSTRUSTFLAGS_$(target-stem))
+ 
+
+base-commit: 06c2afb862f9da8dc5efa4b6076a0e48c3fbaaa5
+-- 
+2.41.0
+
