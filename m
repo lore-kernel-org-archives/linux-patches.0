@@ -1,68 +1,81 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494F17F
-	for <patches@lists.linux.dev>; Sun, 23 Jul 2023 10:41:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB07C433C8;
-	Sun, 23 Jul 2023 10:41:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1690108912;
-	bh=6pfhjlPTOh6AOzRsJbAp4eRsQEhZQt7xA0hkoqbQ1Kg=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94397F;
+	Sun, 23 Jul 2023 11:08:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90142C433C8;
+	Sun, 23 Jul 2023 11:08:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1690110512;
+	bh=MY3+XIRfy4ch9ILW/sZpzfS0/HM9qWO4gOnXMp7ifi8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BEa+xR13lmIu8EJRQUQjKqCDCGJv3scr1Mo85p1UgRRd0j0mOuMgZE7II8qVsLiM8
-	 MMYN/bQZCKmAoWNyr9n36EaHRjBjlwPh+UKufXwkqA5zg4mevkT+ay5K7erd3zWdBX
-	 xVMH2BOO6h9g+bO21+TFIyckaqp7QMgtryL6AwtrgkJmOA2FjHxp2I9v+AlsLmk4ys
-	 Ffu17WQXZ8KqXFiUy/l6ZrHbMsHJjvJnKW/Rp/rgkJZRrteAtjMwBZTrIVpI4F8ePi
-	 2ud+seIAlKqG9Yu0gCgllpFpLB3fl/NgQvLpYD55W93ivF4rrG3cle/oHZ6aES90DD
-	 RzaSg8/Jy3xsg==
-Date: Sun, 23 Jul 2023 11:41:47 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	b=bTHjlHq/Y5vDLrX1gTya8fksxEE2o2E5CNmHtzErjFJRm2b7phRNejTnvrtYCLUHW
+	 XGfVyPa7v+9AjDAF+UC/qSQapKFSwuCuTCE+hy2q/07TlcPZy7NqiqKJRHHVfbQLva
+	 A319u/06KQ0aaNEUSFb5GATtHH+NQR+e71Pxr47Q=
+Date: Sun, 23 Jul 2023 13:08:29 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Linux regressions mailing list <regressions@lists.linux.dev>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.4 000/292] 6.4.5-rc1 review
-Message-ID: <20230723-antics-disliking-e51f5f376820@spud>
+	Igor Mammedov <imammedo@redhat.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>
+Subject: Re: [PATCH 6.4 172/292] PCI: acpiphp: Reassign resources on bridge
+ if necessary
+Message-ID: <2023072315-lubricate-given-0afa@gregkh>
 References: <20230721160528.800311148@linuxfoundation.org>
+ <20230721160536.293573004@linuxfoundation.org>
+ <9b5838ea-91ef-a758-2d32-481ee3b4345e@leemhuis.info>
+ <67104736-e96f-559d-350d-0d1845d39a5a@leemhuis.info>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="Y23Encm58GYXonbN"
-Content-Disposition: inline
-In-Reply-To: <20230721160528.800311148@linuxfoundation.org>
-
-
---Y23Encm58GYXonbN
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <67104736-e96f-559d-350d-0d1845d39a5a@leemhuis.info>
 
-On Fri, Jul 21, 2023 at 06:01:49PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.4.5 release.
-> There are 292 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Sun, Jul 23, 2023 at 11:25:29AM +0200, Linux regression tracking (Thorsten Leemhuis) wrote:
+> On 23.07.23 11:17, Thorsten Leemhuis wrote:
+> > On 21.07.23 18:04, Greg Kroah-Hartman wrote:
+> >> From: Igor Mammedov <imammedo@redhat.com>
+> >>
+> >> commit 40613da52b13fb21c5566f10b287e0ca8c12c4e9 upstream.
+> >>
+> >> When using ACPI PCI hotplug, hotplugging a device with large BARs may fail
+> >> if bridge windows programmed by firmware are not large enough.
+> >>
+> >> [...]
+> > 
+> > Greg, just so you know, that patch (which is also queued for 6.1 and
+> > 5.15) is known to cause a regression in 6.5-rc. To quote
+> > https://lore.kernel.org/all/11fc981c-af49-ce64-6b43-3e282728bd1a@gmail.com/
+> > 
+> > ```
+> > Laptop shows a kernel crash trace after a first suspend to ram, on a
+> > second attempt to suspend it becomes frozen solid. This is 100%
+> > repeatable with a 6.5-rc2 kernel, not happening with a 6.4 kernel - see
+> > the attached dmesg output.
+> > 
+> > I have bisected the kernel uilds and it points to :
+> > [40613da52b13fb21c5566f10b287e0ca8c12c4e9] PCI: acpiphp: Reassign
+> > resources on bridge if necessary
+> > 
+> > Reversing this patch seems to fix the kernel crash problem on my laptop.
+> > ```
+> 
+> Forgot to mention the reply from Bjorn:
+> 
+> ```
+> I queued up a revert of 40613da52b13 ("PCI: acpiphp: Reassign
+> resources on bridge if necessary") (on my for-linus branch for v6.5).
+> 
+> It looks like a NULL pointer dereference; hopefully the fix is obvious
+> and I can drop the revert and replace it with the fix.
+> ```
 
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
+Thanks, I've dropped this from the stable queues now.
 
-Thanks,
-Conor.
-
---Y23Encm58GYXonbN
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZL0D6wAKCRB4tDGHoIJi
-0nVYAQDmgO+AR8ya6jXYh0BedeWoIedGUWJHT3jqLbDuAiz1DQEAyP6dqAllOe8G
-tJ4PLfA7lJHSEZesgf0NmvY8o75i+wY=
-=AP5S
------END PGP SIGNATURE-----
-
---Y23Encm58GYXonbN--
+greg k-h
