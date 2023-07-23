@@ -1,81 +1,108 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94397F;
-	Sun, 23 Jul 2023 11:08:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90142C433C8;
-	Sun, 23 Jul 2023 11:08:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690110512;
-	bh=MY3+XIRfy4ch9ILW/sZpzfS0/HM9qWO4gOnXMp7ifi8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bTHjlHq/Y5vDLrX1gTya8fksxEE2o2E5CNmHtzErjFJRm2b7phRNejTnvrtYCLUHW
-	 XGfVyPa7v+9AjDAF+UC/qSQapKFSwuCuTCE+hy2q/07TlcPZy7NqiqKJRHHVfbQLva
-	 A319u/06KQ0aaNEUSFb5GATtHH+NQR+e71Pxr47Q=
-Date: Sun, 23 Jul 2023 13:08:29 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Linux regressions mailing list <regressions@lists.linux.dev>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Igor Mammedov <imammedo@redhat.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>
-Subject: Re: [PATCH 6.4 172/292] PCI: acpiphp: Reassign resources on bridge
- if necessary
-Message-ID: <2023072315-lubricate-given-0afa@gregkh>
-References: <20230721160528.800311148@linuxfoundation.org>
- <20230721160536.293573004@linuxfoundation.org>
- <9b5838ea-91ef-a758-2d32-481ee3b4345e@leemhuis.info>
- <67104736-e96f-559d-350d-0d1845d39a5a@leemhuis.info>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C5B1378
+	for <patches@lists.linux.dev>; Sun, 23 Jul 2023 13:36:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7A6C433C8
+	for <patches@lists.linux.dev>; Sun, 23 Jul 2023 13:36:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1690119362;
+	bh=O1IIMN7Y1zRc3XOUmu8VPg3ACsmolQilL9wEXTaUfq0=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=bEohhuLUK1dSi12/IxXfSkxMEfJgOh0hOz+UucGXozkJpf7axqzuCpVb8Y+hXgCNX
+	 SaPf2jkC52Lm1mk0xAnT9v0MwB1AWeT1fEIov9y7rQUG4fEkIlmHDNVR5dhSzy5CU8
+	 sXpyAm/oSnTJAtfE5yzVxKS0Jca0FEXYP2mYBl+HfuyM9gjsltwEXfbjtEIRJ2PiO4
+	 BE8vBu94NSSU4v8qXxvtB/S72Bh16bAakamyFA35uOLtrZTy3Xp0Ai7vsgXS3ij2aj
+	 mx1S+a71fzn2Xa3D33cPycajyhSwu12mbW9UMKHoA4YbLhEUncOv1kBtnGCidfWSwA
+	 sQ/j/u+2oigow==
+Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-6b9f3b57c4fso2308414a34.1
+        for <patches@lists.linux.dev>; Sun, 23 Jul 2023 06:36:02 -0700 (PDT)
+X-Gm-Message-State: ABy/qLaAG0xAPC00Kbo6fleOe8GjEILjTO/r50e1v+6Qnciq5JPOJJa3
+	eHi5jkvRf1yHIpKTWcBl5Br5yrRQqzKvKfwN7p4=
+X-Google-Smtp-Source: APBJJlEtZ7vv6IbOH84SATHMJCAMxnz2YpuXNOI1/BwoW86mbx9Nm47dGyoVL7wZ1gh1ODC5aHD1JS0QWO0h/EoEPu8=
+X-Received: by 2002:a05:6808:302c:b0:39c:7f78:ba6d with SMTP id
+ ay44-20020a056808302c00b0039c7f78ba6dmr6412590oib.19.1690119361932; Sun, 23
+ Jul 2023 06:36:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <67104736-e96f-559d-350d-0d1845d39a5a@leemhuis.info>
+References: <20230718055235.1050223-1-ojeda@kernel.org> <CAK7LNAQ-hjW_19fjA+E-bQCrXcVPdN4-GvzAnEnYzna5KRVXew@mail.gmail.com>
+ <CANiq72kZjOGvRKoRxtgG=2DhJnMJK9TCQtTmeef_B=nLcLQD6g@mail.gmail.com>
+ <CAK7LNASqumGb0xvSa8n4Heasz9BKxgk4mvzNXsfFhZE1G+Bxbg@mail.gmail.com>
+ <CANiq72kD2wxXy2ri8sBhVJ4y-JJiq+kYt_MRZwuwB9uGkX-_jQ@mail.gmail.com> <CAK7LNARm1LevTQVw1j5pQjp_gP=6-4CiwXLRDXbVH3bnC0OCxg@mail.gmail.com>
+In-Reply-To: <CAK7LNARm1LevTQVw1j5pQjp_gP=6-4CiwXLRDXbVH3bnC0OCxg@mail.gmail.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Sun, 23 Jul 2023 22:35:25 +0900
+X-Gmail-Original-Message-ID: <CAK7LNARZaeJ4SzRFo-GUA4Q7DGHwrDshxEMuEDO_N+SPHvof3A@mail.gmail.com>
+Message-ID: <CAK7LNARZaeJ4SzRFo-GUA4Q7DGHwrDshxEMuEDO_N+SPHvof3A@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: rust: avoid creating temporary files
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
+	Nick Desaulniers <ndesaulniers@google.com>, Nicolas Schier <nicolas@fjasle.eu>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
+	Andreas Hindborg <a.hindborg@samsung.com>, linux-kbuild@vger.kernel.org, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, Raphael Nestler <raphael.nestler@gmail.com>, 
+	Andrea Righi <andrea.righi@canonical.com>, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jul 23, 2023 at 11:25:29AM +0200, Linux regression tracking (Thorsten Leemhuis) wrote:
-> On 23.07.23 11:17, Thorsten Leemhuis wrote:
-> > On 21.07.23 18:04, Greg Kroah-Hartman wrote:
-> >> From: Igor Mammedov <imammedo@redhat.com>
-> >>
-> >> commit 40613da52b13fb21c5566f10b287e0ca8c12c4e9 upstream.
-> >>
-> >> When using ACPI PCI hotplug, hotplugging a device with large BARs may fail
-> >> if bridge windows programmed by firmware are not large enough.
-> >>
-> >> [...]
-> > 
-> > Greg, just so you know, that patch (which is also queued for 6.1 and
-> > 5.15) is known to cause a regression in 6.5-rc. To quote
-> > https://lore.kernel.org/all/11fc981c-af49-ce64-6b43-3e282728bd1a@gmail.com/
-> > 
-> > ```
-> > Laptop shows a kernel crash trace after a first suspend to ram, on a
-> > second attempt to suspend it becomes frozen solid. This is 100%
-> > repeatable with a 6.5-rc2 kernel, not happening with a 6.4 kernel - see
-> > the attached dmesg output.
-> > 
-> > I have bisected the kernel uilds and it points to :
-> > [40613da52b13fb21c5566f10b287e0ca8c12c4e9] PCI: acpiphp: Reassign
-> > resources on bridge if necessary
-> > 
-> > Reversing this patch seems to fix the kernel crash problem on my laptop.
-> > ```
-> 
-> Forgot to mention the reply from Bjorn:
-> 
-> ```
-> I queued up a revert of 40613da52b13 ("PCI: acpiphp: Reassign
-> resources on bridge if necessary") (on my for-linus branch for v6.5).
-> 
-> It looks like a NULL pointer dereference; hopefully the fix is obvious
-> and I can drop the revert and replace it with the fix.
-> ```
+On Sun, Jul 23, 2023 at 2:05=E2=80=AFPM Masahiro Yamada <masahiroy@kernel.o=
+rg> wrote:
+>
+> On Sun, Jul 23, 2023 at 12:52=E2=80=AFAM Miguel Ojeda
+> <miguel.ojeda.sandonis@gmail.com> wrote:
+> >
+> > On Thu, Jul 20, 2023 at 8:35=E2=80=AFPM Masahiro Yamada <masahiroy@kern=
+el.org> wrote:
+> > >
+> > > Maybe, the following was a breakage.
+> > >
+> > > commit 295d8398c67e314d99bb070f38883f83fe94a97a
+> > > Author: Masahiro Yamada <masahiroy@kernel.org>
+> > > Date:   Sat Jan 7 18:18:15 2023 +0900
+> > >
+> > >     kbuild: specify output names separately for each emission type fr=
+om rustc
+> > >
+> > > Before that, rust_common_cmd had --out-dir.
+> >
+> > That's right, good catch!
+> >
+> > > BTW, do we also need to fix scripts/Makefile.host
+> > > in case the external module Makefile creates host programs?
+> >
+> > Indeed, we need it too. [1] would fix it (tested it with a trivial
+> > out-of-tree Rust hostprog).
+> >
+> > Do you want me to send it separately? i.e. to avoid losing the
+> > `Tested-by`s etc. that we already got for this one, which is the
+> > important one since that actually has users.
+> >
+> > The hostprogs fix is not really critical for stable, since it is
+> > unlikely there are users at all (we just got the first in-tree real
+> > user in the Rust+KUnit integration coming into 6.6), but I guess it
+> > does not hurt for the same reason.
+>
+>
+> Can you send v2 with the following squashed?
+>
+>
+> I think it makes sense to fix both if we add
+> Fixes: 295d8398c67e ("kbuild: specify output names separately for each
+> emission type from rustc")
 
-Thanks, I've dropped this from the stable queues now.
 
-greg k-h
+I dropped v1 for now,
+expecting to get v2 soon.
+
+
+--=20
+Best Regards
+Masahiro Yamada
