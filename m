@@ -1,95 +1,95 @@
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FB1371
-	for <patches@lists.linux.dev>; Sun, 23 Jul 2023 14:35:01 +0000 (UTC)
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-6bb1ec7945dso632954a34.0
-        for <patches@lists.linux.dev>; Sun, 23 Jul 2023 07:35:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690122900; x=1690727700;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6hVbV6PPK4bQ78C5FPPLzZso3da8dxH89LJc/QzUTSs=;
-        b=JWkEpKntYVBuB6E1XatdkZtXVt73rBdbJGE0d5xAPFTEdSwmf1jYbPKEAkJ5idN9vp
-         rOMBT5zkC+hVmjV9TjJgbwKTmp7UDHFUI9lUvYfO8lUVBuSiayofy8aYl37TXi8X0EKL
-         WLVmd+C8Vq99HWrh5qX7sEBbThTiQQLhrJ8fOvojX0WBR9DtDnHa4oNpR8oEphZg0/eL
-         7TrkmgyrCmaPcgunASu/NKKyV12TUOHmbv+BsHvMg04fCAFCuO8TwyeDa+6nlZwYsQ5s
-         zIXUVVwuEAAdsfPyuHZgq/A6XSg6O9ht63J+4nZY0QH6J+Lz3kbDsbecxAbpRXECwaxR
-         8sgQ==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9421871
+	for <patches@lists.linux.dev>; Mon, 24 Jul 2023 10:58:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1690196293;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=F6TumHjbvlMGzO4xVYnJBJFbMI9Ohdrrske9/1R3NiY=;
+	b=cev9ycAickBsItKoAGqdT5qlT5o1gneS05xhjvz2H6+FZSQUt89bCKV+pg2K8y/wTQ4+LK
+	bAkdgzBRU+79jslFdnFNrxpOQ0XaUIZkfM0W7w2g5IXaRYeeEmVyoYU0YsX0XTWuSvtSMD
+	toEgDT4KDkMi+hklOa9Nj/whd4FT6sY=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-655-rYGS7mNzMRe1kqLpvOnJ5A-1; Mon, 24 Jul 2023 06:58:11 -0400
+X-MC-Unique: rYGS7mNzMRe1kqLpvOnJ5A-1
+Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-3fbb34f7224so26154625e9.2
+        for <patches@lists.linux.dev>; Mon, 24 Jul 2023 03:58:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690122900; x=1690727700;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6hVbV6PPK4bQ78C5FPPLzZso3da8dxH89LJc/QzUTSs=;
-        b=R5MBInFPMfxTycZH0LSMetEVEtTffyR1Y9TiUGh5UKFS30ioFSf/4zeVkqepaBkFxr
-         4AsWWhJfUASNdWsQolULBrt1VbE6ttarovycx72xV4PdO7HRIifNNRdtHO5YTLuzSjdP
-         9rRZFU1/4y43m5VZ+3Hx8v1jFWQzj5qSC8BI2/GHTKKRflXOpQ2KqArMjTVdQVC8psCR
-         W82JbWXrN7DKu25reQxzo8/69bsNS6QqVKlmofkyg15P9z1BFET23R0Ik7iz6YF2EqgL
-         m+/mhchaRjzIgaSOhp5Hi1M6UgPEny6EpLYeewPsgCsXWVnrpE69/S+/Vi/GJho/v0di
-         tWPQ==
-X-Gm-Message-State: ABy/qLamOK9mAdzTLNGtkOx7a3070A/98Gh9B3mhFciQRSdimrY+zZdY
-	aoWMfG/JKVpQ8g01Yj9l/cY=
-X-Google-Smtp-Source: APBJJlG0yD0GorNtcgbwNsnxx1O75lYChESB8+iiUX9xQbMDeKstYsQPW1OQLn7V8L5A70F1wbfuAg==
-X-Received: by 2002:a05:6808:1310:b0:3a1:f18d:2fe8 with SMTP id y16-20020a056808131000b003a1f18d2fe8mr6198281oiv.10.1690122900514;
-        Sun, 23 Jul 2023 07:35:00 -0700 (PDT)
-Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id o204-20020a4a2cd5000000b0055e3dd89c12sm3508157ooo.1.2023.07.23.07.34.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 23 Jul 2023 07:35:00 -0700 (PDT)
-Message-ID: <01d23a2c-1e30-b660-7997-6d9c29b9dcf1@gmail.com>
-Date: Sun, 23 Jul 2023 11:34:54 -0300
+        d=1e100.net; s=20221208; t=1690196290; x=1690801090;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=F6TumHjbvlMGzO4xVYnJBJFbMI9Ohdrrske9/1R3NiY=;
+        b=SbF+7wdPPOpf7rveXIa4JQkvedAoJ6NGJLJOULyCsPk2rYJDE79ApeISCMh1foPGYv
+         46WFnA1fFC/ueiUUs2cnKigY6te/Ze2Na6sXqTYmvAjfmmguniX9Q2u9w2R5y6z6UNn7
+         na7POLDY8vFaQ3Oi8r/Ec5dK727Vkjy3auofEQSiTy+nYkf5yWs8fyEfUrvzbYJeGJJY
+         k8uVQVKKdFVFT9aRJttm9HF3wlCVWEoW8dyQvWjZIqV6Sd2mDOPK84xe3iLjOlbQcHAf
+         vGETQeqStPTX+HgccxW7T1OpuF9yCFBc1LgU6LrDvBx1RbYzYEYjvXRabCJNIM6ltuZa
+         O4lQ==
+X-Gm-Message-State: ABy/qLZwXgRAw+jE8rQj52KahpzaGC/d2JjQO7J3+KGI5Vx4oG0v7haj
+	vBK9rtJ7V2EdfJhK0FaDPENZV3FVBqTX4AfnIf0A+7F3zQw7zZrFeQ0fzlgOOPCQLWpT/VCJgKp
+	NZXwnuZu3fqTIOXA0
+X-Received: by 2002:a05:600c:2116:b0:3fa:8fb1:50fe with SMTP id u22-20020a05600c211600b003fa8fb150femr7689287wml.15.1690196290620;
+        Mon, 24 Jul 2023 03:58:10 -0700 (PDT)
+X-Google-Smtp-Source: APBJJlG3j1Ad2yvF+UnMLXv/6Lw2FRlTF06c6lZtWHJGzEdkPdJIwnZ5I9t8OadERNj+baxM+ax9jQ==
+X-Received: by 2002:a05:600c:2116:b0:3fa:8fb1:50fe with SMTP id u22-20020a05600c211600b003fa8fb150femr7689274wml.15.1690196290272;
+        Mon, 24 Jul 2023 03:58:10 -0700 (PDT)
+Received: from aalbersh.remote.csb ([109.183.6.197])
+        by smtp.gmail.com with ESMTPSA id n11-20020a7bcbcb000000b003fba92fad35sm12576469wmi.26.2023.07.24.03.58.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Jul 2023 03:58:09 -0700 (PDT)
+Date: Mon, 24 Jul 2023 12:58:08 +0200
+From: Andrey Albershteyn <aalbersh@redhat.com>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: fstests@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] fstests: add helper to canonicalize devices used to
+ enable persistent disks
+Message-ID: <20230724105808.dxyszzkzcwf7y7od@aalbersh.remote.csb>
+References: <20230720061727.2363548-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] kbuild: rust: avoid creating temporary files
-Content-Language: en-US
-To: Miguel Ojeda <ojeda@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>,
- Wedson Almeida Filho <wedsonaf@gmail.com>,
- Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Nathan Chancellor <nathan@kernel.org>,
- Nick Desaulniers <ndesaulniers@google.com>,
- Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>,
- Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?=
- <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
- Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg
- <a.hindborg@samsung.com>, linux-kbuild@vger.kernel.org,
- rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, Raphael Nestler <raphael.nestler@gmail.com>,
- Andrea Righi <andrea.righi@canonical.com>, stable@vger.kernel.org
-References: <20230723142128.194339-1-ojeda@kernel.org>
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-In-Reply-To: <20230723142128.194339-1-ojeda@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20230720061727.2363548-1-mcgrof@kernel.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 7/23/23 11:21, Miguel Ojeda wrote:
-> `rustc` outputs by default the temporary files (i.e. the ones saved
-> by `-Csave-temps`, such as `*.rcgu*` files) in the current working
-> directory when `-o` and `--out-dir` are not given (even if
-> `--emit=x=path` is given, i.e. it does not use those for temporaries).
+On 2023-07-19 23:17:27, Luis Chamberlain wrote:
+> The filesystem configuration file does not allow you to use symlinks to
+> devices given the existing sanity checks verify that the target end
+> device matches the source.
 > 
-> Since out-of-tree modules are compiled from the `linux` tree,
-> `rustc` then tries to create them there, which may not be accessible.
+> Using a symlink is desirable if you want to enable persistent tests
+> across reboots. For example you may want to use /dev/disk/by-id/nvme-eui.*
+> so to ensure that the same drives are used even after reboot. This
+> is very useful if you are testing for example with a virtualized
+> environment and are using PCIe passthrough with other qemu NVMe drives
+> with one or many NVMe drives.
 > 
-> Thus pass `--out-dir` explicitly, even if it is just for the temporary
-> files.
+> To enable support just add a helper to canonicalize devices prior to
+> running the tests.
 > 
-> Similarly, do so for Rust host programs too.
+> This allows one test runner, kdevops, which I just extended with
+> support to use real NVMe drives. The drives it uses for the filesystem
+> configuration optionally is with NVMe eui symlinks so to allow
+> the same drives to be used over reboots.
 > 
-> Reported-by: Raphael Nestler <raphael.nestler@gmail.com>
-> Closes: https://github.com/Rust-for-Linux/linux/issues/1015
-> Reported-by: Andrea Righi <andrea.righi@canonical.com>
-> Tested-by: Raphael Nestler <raphael.nestler@gmail.com> # non-hostprogs
-> Tested-by: Andrea Righi <andrea.righi@canonical.com> # non-hostprogs
-> Fixes: 295d8398c67e ("kbuild: specify output names separately for each emission type from rustc")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 > ---
-> [...]
-Tested-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+
+Looks good to me:
+Reviewed-by: Andrey Albershteyn <aalbersh@redhat.com>
+
+-- 
+- Andrey
+
