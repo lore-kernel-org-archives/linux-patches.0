@@ -1,95 +1,121 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com [209.85.161.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9421871
-	for <patches@lists.linux.dev>; Mon, 24 Jul 2023 10:58:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1690196293;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=F6TumHjbvlMGzO4xVYnJBJFbMI9Ohdrrske9/1R3NiY=;
-	b=cev9ycAickBsItKoAGqdT5qlT5o1gneS05xhjvz2H6+FZSQUt89bCKV+pg2K8y/wTQ4+LK
-	bAkdgzBRU+79jslFdnFNrxpOQ0XaUIZkfM0W7w2g5IXaRYeeEmVyoYU0YsX0XTWuSvtSMD
-	toEgDT4KDkMi+hklOa9Nj/whd4FT6sY=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-655-rYGS7mNzMRe1kqLpvOnJ5A-1; Mon, 24 Jul 2023 06:58:11 -0400
-X-MC-Unique: rYGS7mNzMRe1kqLpvOnJ5A-1
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-3fbb34f7224so26154625e9.2
-        for <patches@lists.linux.dev>; Mon, 24 Jul 2023 03:58:11 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D868F9F2
+	for <patches@lists.linux.dev>; Mon, 24 Jul 2023 19:23:19 +0000 (UTC)
+Received: by mail-oo1-f45.google.com with SMTP id 006d021491bc7-55e1ae72dceso3001675eaf.3
+        for <patches@lists.linux.dev>; Mon, 24 Jul 2023 12:23:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1690226599; x=1690831399;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zm6azpD5so/aQhpF9W7ZnuZupkzF/gW9qt6fdIS+xjI=;
+        b=eXqy4N8/i0/BJt5HjkkZl9ZsZqYgfS5GxP3QtHbLjwMTezXd+meQb/6xlXiViQBXnt
+         Aledap/rbpydiotJQ+4HmkPv6+3JqAOPuytmpPhQYPCO2FJrKaMfMMxLB0XWlPR0T/ma
+         ZqOiwG1LVogv4Vk9+Hwbxsc1LpEJM0/DAxJ3f1IQCexLv18PLwdIMmxypek9Xxoll67P
+         V5IIEzflcnHKaw37WVzd1cO6qEk4VR24zGxM9nZZpFONhZvuUFMl0eAtr/jlUBvhy3Wv
+         nw7hfb/U3ax2f1sKGhkbdiFnYI7eKF7ZpX5Hv5F7hmw+UVcrFhRfVMrCnDW62PCIbHFw
+         SrMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690196290; x=1690801090;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=F6TumHjbvlMGzO4xVYnJBJFbMI9Ohdrrske9/1R3NiY=;
-        b=SbF+7wdPPOpf7rveXIa4JQkvedAoJ6NGJLJOULyCsPk2rYJDE79ApeISCMh1foPGYv
-         46WFnA1fFC/ueiUUs2cnKigY6te/Ze2Na6sXqTYmvAjfmmguniX9Q2u9w2R5y6z6UNn7
-         na7POLDY8vFaQ3Oi8r/Ec5dK727Vkjy3auofEQSiTy+nYkf5yWs8fyEfUrvzbYJeGJJY
-         k8uVQVKKdFVFT9aRJttm9HF3wlCVWEoW8dyQvWjZIqV6Sd2mDOPK84xe3iLjOlbQcHAf
-         vGETQeqStPTX+HgccxW7T1OpuF9yCFBc1LgU6LrDvBx1RbYzYEYjvXRabCJNIM6ltuZa
-         O4lQ==
-X-Gm-Message-State: ABy/qLZwXgRAw+jE8rQj52KahpzaGC/d2JjQO7J3+KGI5Vx4oG0v7haj
-	vBK9rtJ7V2EdfJhK0FaDPENZV3FVBqTX4AfnIf0A+7F3zQw7zZrFeQ0fzlgOOPCQLWpT/VCJgKp
-	NZXwnuZu3fqTIOXA0
-X-Received: by 2002:a05:600c:2116:b0:3fa:8fb1:50fe with SMTP id u22-20020a05600c211600b003fa8fb150femr7689287wml.15.1690196290620;
-        Mon, 24 Jul 2023 03:58:10 -0700 (PDT)
-X-Google-Smtp-Source: APBJJlG3j1Ad2yvF+UnMLXv/6Lw2FRlTF06c6lZtWHJGzEdkPdJIwnZ5I9t8OadERNj+baxM+ax9jQ==
-X-Received: by 2002:a05:600c:2116:b0:3fa:8fb1:50fe with SMTP id u22-20020a05600c211600b003fa8fb150femr7689274wml.15.1690196290272;
-        Mon, 24 Jul 2023 03:58:10 -0700 (PDT)
-Received: from aalbersh.remote.csb ([109.183.6.197])
-        by smtp.gmail.com with ESMTPSA id n11-20020a7bcbcb000000b003fba92fad35sm12576469wmi.26.2023.07.24.03.58.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jul 2023 03:58:09 -0700 (PDT)
-Date: Mon, 24 Jul 2023 12:58:08 +0200
-From: Andrey Albershteyn <aalbersh@redhat.com>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: fstests@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] fstests: add helper to canonicalize devices used to
- enable persistent disks
-Message-ID: <20230724105808.dxyszzkzcwf7y7od@aalbersh.remote.csb>
-References: <20230720061727.2363548-1-mcgrof@kernel.org>
+        d=1e100.net; s=20221208; t=1690226599; x=1690831399;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zm6azpD5so/aQhpF9W7ZnuZupkzF/gW9qt6fdIS+xjI=;
+        b=jzUQBu6hWwIPgVOcPY6JDnRPXrPe5p2vOF8z6YsIBu4iCy5fiZqoxaRyBkDoQAXgAb
+         P9KgpBgCpeOJjMoAE8x/I61iyjeSJvAxS/Um+L2fvWvkgSxPbSSED7fMLdiTQzQGQWps
+         TP0z24rVOfMgcLu5kakQhpbG+mBE6nx/t5R+/l09m+auMsOBzltcUq5hNviH27XyQxdm
+         y0FtcwmjJpGfHQrj1Ap9llkKC5KYb+B+3TdHzRCHwCdKoEt4bdiTYq6CyXrVz5nIhkxq
+         ejrym6VOyDSoKzQdww5ccYmzakInDziigkE0/0cA+8Yg1fWrKXQKRyj7aH2iY+P0cOdm
+         vEaQ==
+X-Gm-Message-State: ABy/qLbYJ4bhC/59RbRoEIkHEfEEcK1ZJbCXmAJpnpicqJSM8Y+7S6PC
+	Of9T0OXe1/ZGMsv42SCKGW8=
+X-Google-Smtp-Source: APBJJlEsdE2sFvDlv24LKkg7Bu3OcKYvo6bWMRs8PW64/CFmuFMLmOwlFJbcu1CB4mkhTP8ng+2iKw==
+X-Received: by 2002:a05:6808:1a99:b0:39e:c660:a5fa with SMTP id bm25-20020a0568081a9900b0039ec660a5famr9026693oib.10.1690226598851;
+        Mon, 24 Jul 2023 12:23:18 -0700 (PDT)
+Received: from [192.168.7.168] (c-98-197-58-203.hsd1.tx.comcast.net. [98.197.58.203])
+        by smtp.gmail.com with ESMTPSA id a12-20020a056808128c00b003a44b425c18sm4398631oiw.43.2023.07.24.12.23.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Jul 2023 12:23:18 -0700 (PDT)
+Message-ID: <18e9e042-12ec-8e09-1225-ca44810e2b82@gmail.com>
+Date: Mon, 24 Jul 2023 14:23:17 -0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20230720061727.2363548-1-mcgrof@kernel.org>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [PATCH 6.1 146/223] drm/amd/display: edp do not add non-edid
+ timings
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Mario Limonciello <mario.limonciello@amd.com>,
+ Alex Deucher <alexander.deucher@amd.com>, Stylon Wang <stylon.wang@amd.com>,
+ Hersen Wu <hersenxs.wu@amd.com>, Roman Li <roman.li@amd.com>,
+ Daniel Wheeler <daniel.wheeler@amd.com>, eniac-xw.zhang@hp.com
+References: <20230721160520.865493356@linuxfoundation.org>
+ <20230721160527.097927704@linuxfoundation.org>
+From: "Alex G." <mr.nuke.me@gmail.com>
+In-Reply-To: <20230721160527.097927704@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 2023-07-19 23:17:27, Luis Chamberlain wrote:
-> The filesystem configuration file does not allow you to use symlinks to
-> devices given the existing sanity checks verify that the target end
-> device matches the source.
+Hi Greg,
+
+This patch was
+     * originally added to v6.1.35
+     * reverted in v6.1.39
+     * added back in v6.1.40
+
+This patch is still reverted in mainline. Was this patch re-added by 
+mistake in v6.1.y stable?
+
+Alex
+
+On 7/21/23 11:06, Greg Kroah-Hartman wrote:
+> From: Hersen Wu <hersenxs.wu@amd.com>
 > 
-> Using a symlink is desirable if you want to enable persistent tests
-> across reboots. For example you may want to use /dev/disk/by-id/nvme-eui.*
-> so to ensure that the same drives are used even after reboot. This
-> is very useful if you are testing for example with a virtualized
-> environment and are using PCIe passthrough with other qemu NVMe drives
-> with one or many NVMe drives.
+> commit 7a0e005c7957931689a327b2a4e7333a19f13f95 upstream.
 > 
-> To enable support just add a helper to canonicalize devices prior to
-> running the tests.
+> [Why] most edp support only timings from edid. applying
+> non-edid timings, especially those timings out of edp
+> bandwidth, may damage edp.
 > 
-> This allows one test runner, kdevops, which I just extended with
-> support to use real NVMe drives. The drives it uses for the filesystem
-> configuration optionally is with NVMe eui symlinks so to allow
-> the same drives to be used over reboots.
+> [How] do not add non-edid timings for edp.
 > 
-> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> Cc: Mario Limonciello <mario.limonciello@amd.com>
+> Cc: Alex Deucher <alexander.deucher@amd.com>
+> Cc: stable@vger.kernel.org
+> Acked-by: Stylon Wang <stylon.wang@amd.com>
+> Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
+> Reviewed-by: Roman Li <roman.li@amd.com>
+> Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+> Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 > ---
-
-Looks good to me:
-Reviewed-by: Andrey Albershteyn <aalbersh@redhat.com>
-
--- 
-- Andrey
-
+>   drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    8 +++++++-
+>   1 file changed, 7 insertions(+), 1 deletion(-)
+> 
+> --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+> +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+> @@ -6972,7 +6972,13 @@ static int amdgpu_dm_connector_get_modes
+>   				drm_add_modes_noedid(connector, 640, 480);
+>   	} else {
+>   		amdgpu_dm_connector_ddc_get_modes(connector, edid);
+> -		amdgpu_dm_connector_add_common_modes(encoder, connector);
+> +		/* most eDP supports only timings from its edid,
+> +		 * usually only detailed timings are available
+> +		 * from eDP edid. timings which are not from edid
+> +		 * may damage eDP
+> +		 */
+> +		if (connector->connector_type != DRM_MODE_CONNECTOR_eDP)
+> +			amdgpu_dm_connector_add_common_modes(encoder, connector);
+>   		amdgpu_dm_connector_add_freesync_modes(connector, edid);
+>   	}
+>   	amdgpu_dm_fbc_init(connector);
+> 
+> 
+> 
