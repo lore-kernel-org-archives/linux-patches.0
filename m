@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1DD91ED45
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:39:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65415C433CA;
-	Tue, 25 Jul 2023 11:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DBA1ED45
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:40:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37185C433C8;
+	Tue, 25 Jul 2023 11:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285199;
-	bh=MTCTiG4zcHbQkUQgYCOuZFdyp263Clraks052Ayih3c=;
+	s=korg; t=1690285202;
+	bh=50VYYlN5ZnXPVcTG10Pi+H9zWDwTDrgwuIK4gq47WTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K5WKAASD7Tt7tuouOm1Bd4N5Gmz2LxbhiMU/QtX/Auuuab8CoJwJBA0TKOuErDCey
-	 9F0+oVvMR78foSqlONjl8kI+Hm0F/VN/Sj8wmCppE5td2Q1dGBU8gjqraBSF5KleUp
-	 lFR/FQboJYCyY1XLH02+VpPcn5wbSEFXmqwlIR6M=
+	b=pPNwLSevLQlaX8Cuig1PK7PYK3kWbpv8+77QyuawJU2deJJoWdD8jYIUljvchKdPh
+	 T8a9fdeIaqADcPh0GnDv9IValhUMkqL6aTNXHfUXFfe2rSEwxhubCYSVn8zLU1V6Eb
+	 qCCr1PW/TQ5Wkw0PfFZyF4WHIHqNT6cBNqpzEjR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 092/313] clk: cdce925: check return value of kasprintf()
-Date: Tue, 25 Jul 2023 12:44:05 +0200
-Message-ID: <20230725104524.936860212@linuxfoundation.org>
+Subject: [PATCH 5.4 119/313] hwrng: st - Fix W=1 unused variable warning
+Date: Tue, 25 Jul 2023 12:44:32 +0200
+Message-ID: <20230725104526.156913697@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,61 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit bb7d09ddbf361d51eae46f38e7c8a2b85914ea2a ]
+[ Upstream commit ad23756271d5744a0a0ba556f8aaa70e358d5aa6 ]
 
-kasprintf() returns a pointer to dynamically allocated memory.
-Pointer could be NULL in case allocation fails. Check pointer validity.
-Identified with coccinelle (kmerr.cocci script).
+This patch fixes an unused variable warning when this driver is
+built-in with CONFIG_OF=n.
 
-Fixes: 19fbbbbcd3a3 ("Add TI CDCE925 I2C controlled clock synthesizer driver")
-Depends-on: e665f029a283 ("clk: Convert to using %pOFn instead of device_node.name")
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230530093913.1656095-3-claudiu.beznea@microchip.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 501e197a02d4 ("hwrng: st - keep clock enabled while hwrng is registered")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-cdce925.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/char/hw_random/st-rng.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/clk-cdce925.c b/drivers/clk/clk-cdce925.c
-index 308b353815e17..470d91d7314db 100644
---- a/drivers/clk/clk-cdce925.c
-+++ b/drivers/clk/clk-cdce925.c
-@@ -705,6 +705,10 @@ static int cdce925_probe(struct i2c_client *client,
- 	for (i = 0; i < data->chip_info->num_plls; ++i) {
- 		pll_clk_name[i] = kasprintf(GFP_KERNEL, "%pOFn.pll%d",
- 			client->dev.of_node, i);
-+		if (!pll_clk_name[i]) {
-+			err = -ENOMEM;
-+			goto error;
-+		}
- 		init.name = pll_clk_name[i];
- 		data->pll[i].chip = data;
- 		data->pll[i].hw.init = &init;
-@@ -746,6 +750,10 @@ static int cdce925_probe(struct i2c_client *client,
- 	init.num_parents = 1;
- 	init.parent_names = &parent_name; /* Mux Y1 to input */
- 	init.name = kasprintf(GFP_KERNEL, "%pOFn.Y1", client->dev.of_node);
-+	if (!init.name) {
-+		err = -ENOMEM;
-+		goto error;
-+	}
- 	data->clk[0].chip = data;
- 	data->clk[0].hw.init = &init;
- 	data->clk[0].index = 0;
-@@ -764,6 +772,10 @@ static int cdce925_probe(struct i2c_client *client,
- 	for (i = 1; i < data->chip_info->num_outputs; ++i) {
- 		init.name = kasprintf(GFP_KERNEL, "%pOFn.Y%d",
- 			client->dev.of_node, i+1);
-+		if (!init.name) {
-+			err = -ENOMEM;
-+			goto error;
-+		}
- 		data->clk[i].chip = data;
- 		data->clk[i].hw.init = &init;
- 		data->clk[i].index = i;
+diff --git a/drivers/char/hw_random/st-rng.c b/drivers/char/hw_random/st-rng.c
+index 863448360a7da..50975e761ca58 100644
+--- a/drivers/char/hw_random/st-rng.c
++++ b/drivers/char/hw_random/st-rng.c
+@@ -12,6 +12,7 @@
+ #include <linux/delay.h>
+ #include <linux/hw_random.h>
+ #include <linux/io.h>
++#include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
+@@ -123,7 +124,7 @@ static int st_rng_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static const struct of_device_id st_rng_match[] = {
++static const struct of_device_id st_rng_match[] __maybe_unused = {
+ 	{ .compatible = "st,rng" },
+ 	{},
+ };
 -- 
 2.39.2
 
