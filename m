@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C7014263
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:56:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0EB6C433C8;
-	Tue, 25 Jul 2023 10:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D97914263
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:56:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9206CC433C7;
+	Tue, 25 Jul 2023 10:56:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282578;
-	bh=Brdlo8b9PQ91L9E8OYoZ37v5QyHFrWOJuQKU2DiFZXM=;
+	s=korg; t=1690282580;
+	bh=+WEF1LwouZ63dxdQ8qll2lQm/WA4SkTdlhGj/EPeibI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T/GywvDa6Zanwzgf4CWICV96mlYHGuWdWObzwCmbgXTfYhlz2VJoM85DOFEh2b8J+
-	 QOVBZLAo4o+545Epx3R678+Ia4hZG0balLuAhfAifmlQXiprCg3ar00Sl9I3d0s2Z2
-	 rxEB62fmj4ECqCnDQ0kiafTDWgIfXJvcPCXKqQeU=
+	b=b5KW6c0i9RlZlKlZ8wUKNkd0GyiBrtdQiA91wlwIn6md49qbMWgu++U2x7WEN893t
+	 ulPogPMYyak4KTwqft9K5PUihVtlI4ELG7Kj10EXA7py4mQm9UH84uPOxa4QoRfkUW
+	 dsERS/HA+1cywsYm2sssWIwBDMZAXJJPOx3GeQ50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geetha sowjanya <gakula@marvell.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 179/227] octeontx2-pf: Dont allocate BPIDs for LBK interfaces
-Date: Tue, 25 Jul 2023 12:45:46 +0200
-Message-ID: <20230725104522.235898022@linuxfoundation.org>
+Subject: [PATCH 6.4 180/227] bpf: Fix subprog idx logic in check_max_stack_depth
+Date: Tue, 25 Jul 2023 12:45:47 +0200
+Message-ID: <20230725104522.275834560@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -36,41 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geetha sowjanya <gakula@marvell.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit 8fcd7c7b3a38ab5e452f542fda8f7940e77e479a ]
+[ Upstream commit ba7b3e7d5f9014be65879ede8fd599cb222901c9 ]
 
-Current driver enables backpressure for LBK interfaces.
-But these interfaces do not support this feature.
-Hence, this patch fixes the issue by skipping the
-backpressure configuration for these interfaces.
+The assignment to idx in check_max_stack_depth happens once we see a
+bpf_pseudo_call or bpf_pseudo_func. This is not an issue as the rest of
+the code performs a few checks and then pushes the frame to the frame
+stack, except the case of async callbacks. If the async callback case
+causes the loop iteration to be skipped, the idx assignment will be
+incorrect on the next iteration of the loop. The value stored in the
+frame stack (as the subprogno of the current subprog) will be incorrect.
 
-Fixes: 75f36270990c ("octeontx2-pf: Support to enable/disable pause frames via ethtool").
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
-Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
-Link: https://lore.kernel.org/r/20230716093741.28063-1-gakula@marvell.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This leads to incorrect checks and incorrect tail_call_reachable
+marking. Save the target subprog in a new variable and only assign to
+idx once we are done with the is_async_cb check which may skip pushing
+of frame to the frame stack and subsequent stack depth checks and tail
+call markings.
+
+Fixes: 7ddc80a476c2 ("bpf: Teach stack depth check about async callbacks.")
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20230717161530.1238-2-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/bpf/verifier.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-index 18284ad751572..384d26bee9b23 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -1452,8 +1452,9 @@ static int otx2_init_hw_resources(struct otx2_nic *pf)
- 	if (err)
- 		goto err_free_npa_lf;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index aac31e33323bb..e95bfe45fd890 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -5429,7 +5429,7 @@ static int check_max_stack_depth(struct bpf_verifier_env *env)
+ continue_func:
+ 	subprog_end = subprog[idx + 1].start;
+ 	for (; i < subprog_end; i++) {
+-		int next_insn;
++		int next_insn, sidx;
  
--	/* Enable backpressure */
--	otx2_nix_config_bp(pf, true);
-+	/* Enable backpressure for CGX mapped PF/VFs */
-+	if (!is_otx2_lbkvf(pf->pdev))
-+		otx2_nix_config_bp(pf, true);
+ 		if (!bpf_pseudo_call(insn + i) && !bpf_pseudo_func(insn + i))
+ 			continue;
+@@ -5439,14 +5439,14 @@ static int check_max_stack_depth(struct bpf_verifier_env *env)
  
- 	/* Init Auras and pools used by NIX RQ, for free buffer ptrs */
- 	err = otx2_rq_aura_pool_init(pf);
+ 		/* find the callee */
+ 		next_insn = i + insn[i].imm + 1;
+-		idx = find_subprog(env, next_insn);
+-		if (idx < 0) {
++		sidx = find_subprog(env, next_insn);
++		if (sidx < 0) {
+ 			WARN_ONCE(1, "verifier bug. No program starts at insn %d\n",
+ 				  next_insn);
+ 			return -EFAULT;
+ 		}
+-		if (subprog[idx].is_async_cb) {
+-			if (subprog[idx].has_tail_call) {
++		if (subprog[sidx].is_async_cb) {
++			if (subprog[sidx].has_tail_call) {
+ 				verbose(env, "verifier bug. subprog has tail_call and async cb\n");
+ 				return -EFAULT;
+ 			}
+@@ -5455,6 +5455,7 @@ static int check_max_stack_depth(struct bpf_verifier_env *env)
+ 				continue;
+ 		}
+ 		i = next_insn;
++		idx = sidx;
+ 
+ 		if (subprog[idx].has_tail_call)
+ 			tail_call_reachable = true;
 -- 
 2.39.2
 
