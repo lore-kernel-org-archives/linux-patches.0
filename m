@@ -1,27 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9F01ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:38:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E269DC433C8;
-	Tue, 25 Jul 2023 11:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2741ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:38:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76338C433C8;
+	Tue, 25 Jul 2023 11:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285100;
-	bh=sKN2YdZrnp92FbPJrHWZaSLtk3FKt0PSQyyWdlyVc70=;
+	s=korg; t=1690285103;
+	bh=D3z+YbSLBYG4Wv37bcVW08oLAUKHiJDVBFfasBFqiJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cQRiMkWqWfh8JQ78AiOS1xKu4zQ0v5o9tFqX8sIGNDlWRQeWH52HOnaBamwb/9rT2
-	 6wreJEEnlivtrnW3GJjHgnHvmP4bpbZ0UP99xPYpG6KlRj3+01G9IfTwhBv3yfvCmf
-	 7C/l4G85bwzJB3lF0aioRbLbUgiY9ju3p3ssr3jc=
+	b=rYevm7rHLzaGmV531XrS7f9dO0l+X73HqPVafM+A5+yr/+bvg5XZLRrVR9kEt7T/p
+	 2f6lA8sUvdIQbWZb7M50fPYs0poR99aM9TrhDgdrG0buas6IJ/1BcW6jV3crMumCuS
+	 f9SPgQbQGEKR+JnzRMjo6CIo7DUsCsW0qRSKE71I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Leo Li <leoyang.li@nxp.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Qiang Zhao <qiang.zhao@nxp.com>,
+	linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Kumar Gala <galak@kernel.crashing.org>,
+	Nicolas Schier <nicolas@jasle.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 083/313] ASoC: es8316: Do not set rate constraints for unsupported MCLKs
-Date: Tue, 25 Jul 2023 12:43:56 +0200
-Message-ID: <20230725104524.544361361@linuxfoundation.org>
+Subject: [PATCH 5.4 084/313] soc/fsl/qe: fix usb.c build errors
+Date: Tue, 25 Jul 2023 12:43:57 +0200
+Message-ID: <20230725104524.595666943@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,89 +45,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 60413129ee2b38a80347489270af7f6e1c1de4d0 ]
+[ Upstream commit 7b1a78babd0d2cd27aa07255dee0c2d7ac0f31e3 ]
 
-When using the codec through the generic audio graph card, there are at
-least two calls of es8316_set_dai_sysclk(), with the effect of limiting
-the allowed sample rates according to the MCLK/LRCK ratios supported by
-the codec:
+Fix build errors in soc/fsl/qe/usb.c when QUICC_ENGINE is not set.
+This happens when PPC_EP88XC is set, which selects CPM1 & CPM.
+When CPM is set, USB_FSL_QE can be set without QUICC_ENGINE
+being set. When USB_FSL_QE is set, QE_USB deafults to y, which
+causes build errors when QUICC_ENGINE is not set. Making
+QE_USB depend on QUICC_ENGINE prevents QE_USB from defaulting to y.
 
-1. During audio card setup, to set the initial MCLK - see
-   asoc_simple_init_dai().
+Fixes these build errors:
 
-2. Before opening a stream, to update MCLK, according to the stream
-   sample rate and the multiplication factor - see
-   asoc_simple_hw_params().
+drivers/soc/fsl/qe/usb.o: in function `qe_usb_clock_set':
+usb.c:(.text+0x1e): undefined reference to `qe_immr'
+powerpc-linux-ld: usb.c:(.text+0x2a): undefined reference to `qe_immr'
+powerpc-linux-ld: usb.c:(.text+0xbc): undefined reference to `qe_setbrg'
+powerpc-linux-ld: usb.c:(.text+0xca): undefined reference to `cmxgcr_lock'
+powerpc-linux-ld: usb.c:(.text+0xce): undefined reference to `cmxgcr_lock'
 
-In some cases the initial MCLK might be set to a frequency that doesn't
-match any of the supported ratios, e.g. 12287999 instead of 12288000,
-which is only 1 Hz below the supported clock, as that is what the
-hardware reports. This creates an empty list of rate constraints, which
-is further passed to snd_pcm_hw_constraint_list() via
-es8316_pcm_startup(), and causes the following error on the very first
-access of the sound card:
-
-  $ speaker-test -D hw:Analog,0 -F S16_LE -c 2 -t wav
-  Broken configuration for playback: no configurations available: Invalid argument
-  Setting of hwparams failed: Invalid argument
-
-Note that all subsequent retries succeed thanks to the updated MCLK set
-at point 2 above, which uses a computed frequency value instead of a
-reading from the hardware registers. Normally this would have mitigated
-the issue, but es8316_pcm_startup() executes before the 2nd call to
-es8316_set_dai_sysclk(), hence it cannot make use of the updated
-constraints.
-
-Since es8316_pcm_hw_params() performs anyway a final validation of MCLK
-against the stream sample rate and the supported MCLK/LRCK ratios, fix
-the issue by ensuring that sysclk_constraints list is only set when at
-least one supported sample rate is autodetected by the codec.
-
-Fixes: b8b88b70875a ("ASoC: add es8316 codec driver")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://lore.kernel.org/r/20230530181140.483936-3-cristian.ciocaltea@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 5e41486c408e ("powerpc/QE: add support for QE USB clocks routing")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/all/202301101500.pillNv6R-lkp@intel.com/
+Suggested-by: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Leo Li <leoyang.li@nxp.com>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nicolas Schier <nicolas@fjasle.eu>
+Cc: Qiang Zhao <qiang.zhao@nxp.com>
+Cc: linuxppc-dev <linuxppc-dev@lists.ozlabs.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: Kumar Gala <galak@kernel.crashing.org>
+Acked-by: Nicolas Schier <nicolas@jasle.eu>
+Signed-off-by: Li Yang <leoyang.li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/es8316.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/soc/fsl/qe/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/es8316.c b/sound/soc/codecs/es8316.c
-index 9be667e76e552..131f41cccbe65 100644
---- a/sound/soc/codecs/es8316.c
-+++ b/sound/soc/codecs/es8316.c
-@@ -369,13 +369,11 @@ static int es8316_set_dai_sysclk(struct snd_soc_dai *codec_dai,
- 	int count = 0;
+diff --git a/drivers/soc/fsl/qe/Kconfig b/drivers/soc/fsl/qe/Kconfig
+index cfa4b2939992c..3ed0838607647 100644
+--- a/drivers/soc/fsl/qe/Kconfig
++++ b/drivers/soc/fsl/qe/Kconfig
+@@ -38,6 +38,7 @@ config QE_TDM
  
- 	es8316->sysclk = freq;
-+	es8316->sysclk_constraints.list = NULL;
-+	es8316->sysclk_constraints.count = 0;
- 
--	if (freq == 0) {
--		es8316->sysclk_constraints.list = NULL;
--		es8316->sysclk_constraints.count = 0;
--
-+	if (freq == 0)
- 		return 0;
--	}
- 
- 	ret = clk_set_rate(es8316->mclk, freq);
- 	if (ret)
-@@ -391,8 +389,10 @@ static int es8316_set_dai_sysclk(struct snd_soc_dai *codec_dai,
- 			es8316->allowed_rates[count++] = freq / ratio;
- 	}
- 
--	es8316->sysclk_constraints.list = es8316->allowed_rates;
--	es8316->sysclk_constraints.count = count;
-+	if (count) {
-+		es8316->sysclk_constraints.list = es8316->allowed_rates;
-+		es8316->sysclk_constraints.count = count;
-+	}
- 
- 	return 0;
- }
+ config QE_USB
+ 	bool
++	depends on QUICC_ENGINE
+ 	default y if USB_FSL_QE
+ 	help
+ 	  QE USB Controller support
 -- 
 2.39.2
 
