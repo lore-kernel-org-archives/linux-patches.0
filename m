@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8DE21ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:10:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 571C5C433C9;
-	Tue, 25 Jul 2023 11:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E17B1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:10:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C67C433C7;
+	Tue, 25 Jul 2023 11:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283447;
-	bh=NtllqutifHvK2bDjf2aG+cgzfJSAWPcuNNrZeZBWN6g=;
+	s=korg; t=1690283450;
+	bh=sHtE15PecU2QpaCoVfQN+PYWLcVMakYcm1Moz9PpAqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZU8EQ3oiEU20hogvoRqSELtZnxj6robipxVesfJeQWXetZUH0ZFfGED7w0PztB0H0
-	 wFglFoELCrI4DLdG7uMqxNJrd9D9ksxrtdA5WMRinCV1CEjjrDrFYGL5FRjFnkou/J
-	 9IyDjXq/tvd5wkSdNZsXs+u4U/lsLNYx0QIGA820=
+	b=a02oYUeHd90VHk7weGDY7UPA75vuNLnWX1HuoNyoOuUpBEVyf1ACDcimp6h1304tW
+	 GAGvyZpY2QNTTcv6k7s+PO3QwmuMgMkukCn3n7vcMg8a04oFTb+6Gd/PsF7+NwPgu9
+	 y+m1XvABFiFLjR+c1FF6ibkiIp21eoB0EWGyyKRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 58/78] Revert "tcp: avoid the lookup process failing to get sk in ehash table"
-Date: Tue, 25 Jul 2023 12:46:49 +0200
-Message-ID: <20230725104453.506004557@linuxfoundation.org>
+Subject: [PATCH 5.15 59/78] fbdev: au1200fb: Fix missing IRQ check in au1200fb_drv_probe
+Date: Tue, 25 Jul 2023 12:46:50 +0200
+Message-ID: <20230725104453.546457371@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104451.275227789@linuxfoundation.org>
 References: <20230725104451.275227789@linuxfoundation.org>
@@ -35,110 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit 81b3ade5d2b98ad6e0a473b0e1e420a801275592 ]
+[ Upstream commit 4e88761f5f8c7869f15a2046b1a1116f4fab4ac8 ]
 
-This reverts commit 3f4ca5fafc08881d7a57daa20449d171f2887043.
+This func misses checking for platform_get_irq()'s call and may passes the
+negative error codes to request_irq(), which takes unsigned IRQ #,
+causing it to fail with -EINVAL, overriding an original error code.
 
-Commit 3f4ca5fafc08 ("tcp: avoid the lookup process failing to get sk in
-ehash table") reversed the order in how a socket is inserted into ehash
-to fix an issue that ehash-lookup could fail when reqsk/full sk/twsk are
-swapped.  However, it introduced another lookup failure.
+Fix this by stop calling request_irq() with invalid IRQ #s.
 
-The full socket in ehash is allocated from a slab with SLAB_TYPESAFE_BY_RCU
-and does not have SOCK_RCU_FREE, so the socket could be reused even while
-it is being referenced on another CPU doing RCU lookup.
-
-Let's say a socket is reused and inserted into the same hash bucket during
-lookup.  After the blamed commit, a new socket is inserted at the end of
-the list.  If that happens, we will skip sockets placed after the previous
-position of the reused socket, resulting in ehash lookup failure.
-
-As described in Documentation/RCU/rculist_nulls.rst, we should insert a
-new socket at the head of the list to avoid such an issue.
-
-This issue, the swap-lookup-failure, and another variant reported in [0]
-can all be handled properly by adding a locked ehash lookup suggested by
-Eric Dumazet [1].
-
-However, this issue could occur for every packet, thus more likely than
-the other two races, so let's revert the change for now.
-
-Link: https://lore.kernel.org/netdev/20230606064306.9192-1-duanmuquan@baidu.com/ [0]
-Link: https://lore.kernel.org/netdev/CANn89iK8snOz8TYOhhwfimC7ykYA78GA3Nyv8x06SZYa1nKdyA@mail.gmail.com/ [1]
-Fixes: 3f4ca5fafc08 ("tcp: avoid the lookup process failing to get sk in ehash table")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230717215918.15723-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1630d85a8312 ("au1200fb: fix hardcoded IRQ")
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_hashtables.c    | 17 ++---------------
- net/ipv4/inet_timewait_sock.c |  8 ++++----
- 2 files changed, 6 insertions(+), 19 deletions(-)
+ drivers/video/fbdev/au1200fb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index 39b3db5b61190..2936676f86eb8 100644
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -571,20 +571,8 @@ bool inet_ehash_insert(struct sock *sk, struct sock *osk, bool *found_dup_sk)
- 	spin_lock(lock);
- 	if (osk) {
- 		WARN_ON_ONCE(sk->sk_hash != osk->sk_hash);
--		ret = sk_hashed(osk);
--		if (ret) {
--			/* Before deleting the node, we insert a new one to make
--			 * sure that the look-up-sk process would not miss either
--			 * of them and that at least one node would exist in ehash
--			 * table all the time. Otherwise there's a tiny chance
--			 * that lookup process could find nothing in ehash table.
--			 */
--			__sk_nulls_add_node_tail_rcu(sk, list);
--			sk_nulls_del_node_init_rcu(osk);
--		}
--		goto unlock;
--	}
--	if (found_dup_sk) {
-+		ret = sk_nulls_del_node_init_rcu(osk);
-+	} else if (found_dup_sk) {
- 		*found_dup_sk = inet_ehash_lookup_by_sk(sk, list);
- 		if (*found_dup_sk)
- 			ret = false;
-@@ -593,7 +581,6 @@ bool inet_ehash_insert(struct sock *sk, struct sock *osk, bool *found_dup_sk)
- 	if (ret)
- 		__sk_nulls_add_node_rcu(sk, list);
+diff --git a/drivers/video/fbdev/au1200fb.c b/drivers/video/fbdev/au1200fb.c
+index a8a0a448cdb5e..80f54111baec1 100644
+--- a/drivers/video/fbdev/au1200fb.c
++++ b/drivers/video/fbdev/au1200fb.c
+@@ -1732,6 +1732,9 @@ static int au1200fb_drv_probe(struct platform_device *dev)
  
--unlock:
- 	spin_unlock(lock);
- 
- 	return ret;
-diff --git a/net/ipv4/inet_timewait_sock.c b/net/ipv4/inet_timewait_sock.c
-index fe6340c363b43..437afe392e667 100644
---- a/net/ipv4/inet_timewait_sock.c
-+++ b/net/ipv4/inet_timewait_sock.c
-@@ -81,10 +81,10 @@ void inet_twsk_put(struct inet_timewait_sock *tw)
- }
- EXPORT_SYMBOL_GPL(inet_twsk_put);
- 
--static void inet_twsk_add_node_tail_rcu(struct inet_timewait_sock *tw,
--					struct hlist_nulls_head *list)
-+static void inet_twsk_add_node_rcu(struct inet_timewait_sock *tw,
-+				   struct hlist_nulls_head *list)
- {
--	hlist_nulls_add_tail_rcu(&tw->tw_node, list);
-+	hlist_nulls_add_head_rcu(&tw->tw_node, list);
- }
- 
- static void inet_twsk_add_bind_node(struct inet_timewait_sock *tw,
-@@ -120,7 +120,7 @@ void inet_twsk_hashdance(struct inet_timewait_sock *tw, struct sock *sk,
- 
- 	spin_lock(lock);
- 
--	inet_twsk_add_node_tail_rcu(tw, &ehead->chain);
-+	inet_twsk_add_node_rcu(tw, &ehead->chain);
- 
- 	/* Step 3: Remove SK from hash chain */
- 	if (__sk_nulls_del_node_init_rcu(sk))
+ 	/* Now hook interrupt too */
+ 	irq = platform_get_irq(dev, 0);
++	if (irq < 0)
++		return irq;
++
+ 	ret = request_irq(irq, au1200fb_handle_irq,
+ 			  IRQF_SHARED, "lcd", (void *)dev);
+ 	if (ret) {
 -- 
 2.39.2
 
