@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3A91D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:05:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EEE4C433C9;
-	Tue, 25 Jul 2023 11:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E4E1D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:05:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66400C433C8;
+	Tue, 25 Jul 2023 11:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283150;
-	bh=rESpSAXLLpkL8fKcfq33vMxzNM4rgXyHRy+ZYzqexes=;
+	s=korg; t=1690283152;
+	bh=pOH/AnYFdh+7FnBn8CCYCqksboFsCkA+1derhDHiXVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K0IlYPDgmQzHNsaScJj20/Oa2krMF75ZEA5J+AxcGSJJbrIDGlnsXa0MW7uvU4ZwF
-	 qHaPxV4vvqNYHHBLYAKzamv6srm6lpGLBHCPyv/wbQ1P18ZTu/sx++OYz00zMSOxkV
-	 exzTMXSes7n4ragCiGXjVcbRYCbHe9zD2OAGrJKg=
+	b=lN0pp1CQ4y2iWMAdoPXvq9Ow7b1D6h3kaslJ+ufa2HdR+2WbloR/NsBm1wiB5gxeT
+	 TSpgPA9AyRRs4uFU6cp6Fjmq2ePl2vE/XORCTuF1MLzGLvabzXexuEms6+y2g0EDhb
+	 zLRSvaRkKpqzxiVGurH3Re7eIZZPFhFbuR2UfUlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Sunil Goutham <sgoutham@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 155/183] tcp: annotate data-races around tp->keepalive_intvl
-Date: Tue, 25 Jul 2023 12:46:23 +0200
-Message-ID: <20230725104513.420904677@linuxfoundation.org>
+Subject: [PATCH 6.1 128/183] octeontx2-pf: Dont allocate BPIDs for LBK interfaces
+Date: Tue, 25 Jul 2023 12:45:56 +0200
+Message-ID: <20230725104512.544243616@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -35,66 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Geetha sowjanya <gakula@marvell.com>
 
-[ Upstream commit 5ecf9d4f52ff2f1d4d44c9b68bc75688e82f13b4 ]
+[ Upstream commit 8fcd7c7b3a38ab5e452f542fda8f7940e77e479a ]
 
-do_tcp_getsockopt() reads tp->keepalive_intvl while another cpu
-might change its value.
+Current driver enables backpressure for LBK interfaces.
+But these interfaces do not support this feature.
+Hence, this patch fixes the issue by skipping the
+backpressure configuration for these interfaces.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230719212857.3943972-5-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 75f36270990c ("octeontx2-pf: Support to enable/disable pause frames via ethtool").
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
+Link: https://lore.kernel.org/r/20230716093741.28063-1-gakula@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h | 9 +++++++--
- net/ipv4/tcp.c    | 4 ++--
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 397c248102415..f39c44cbdfe62 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -1511,9 +1511,14 @@ void tcp_leave_memory_pressure(struct sock *sk);
- static inline int keepalive_intvl_when(const struct tcp_sock *tp)
- {
- 	struct net *net = sock_net((struct sock *)tp);
-+	int val;
-+
-+	/* Paired with WRITE_ONCE() in tcp_sock_set_keepintvl()
-+	 * and do_tcp_setsockopt().
-+	 */
-+	val = READ_ONCE(tp->keepalive_intvl);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+index ed911d9946277..c236dba80ff1a 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+@@ -1452,8 +1452,9 @@ static int otx2_init_hw_resources(struct otx2_nic *pf)
+ 	if (err)
+ 		goto err_free_npa_lf;
  
--	return tp->keepalive_intvl ? :
--		READ_ONCE(net->ipv4.sysctl_tcp_keepalive_intvl);
-+	return val ? : READ_ONCE(net->ipv4.sysctl_tcp_keepalive_intvl);
- }
+-	/* Enable backpressure */
+-	otx2_nix_config_bp(pf, true);
++	/* Enable backpressure for CGX mapped PF/VFs */
++	if (!is_otx2_lbkvf(pf->pdev))
++		otx2_nix_config_bp(pf, true);
  
- static inline int keepalive_time_when(const struct tcp_sock *tp)
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index c0d7b226bca1a..d19cfeb78392d 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -3451,7 +3451,7 @@ int tcp_sock_set_keepintvl(struct sock *sk, int val)
- 		return -EINVAL;
- 
- 	lock_sock(sk);
--	tcp_sk(sk)->keepalive_intvl = val * HZ;
-+	WRITE_ONCE(tcp_sk(sk)->keepalive_intvl, val * HZ);
- 	release_sock(sk);
- 	return 0;
- }
-@@ -3665,7 +3665,7 @@ int do_tcp_setsockopt(struct sock *sk, int level, int optname,
- 		if (val < 1 || val > MAX_TCP_KEEPINTVL)
- 			err = -EINVAL;
- 		else
--			tp->keepalive_intvl = val * HZ;
-+			WRITE_ONCE(tp->keepalive_intvl, val * HZ);
- 		break;
- 	case TCP_KEEPCNT:
- 		if (val < 1 || val > MAX_TCP_KEEPCNT)
+ 	/* Init Auras and pools used by NIX RQ, for free buffer ptrs */
+ 	err = otx2_rq_aura_pool_init(pf);
 -- 
 2.39.2
 
