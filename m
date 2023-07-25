@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DBF1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:25:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73675C433C7;
-	Tue, 25 Jul 2023 11:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1BA41ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:25:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 308FAC433C8;
+	Tue, 25 Jul 2023 11:25:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284318;
-	bh=zYNoOPJMh8ggkk+5ZQUOsFyH7CT6cJD8QHQ1TTyo7KU=;
+	s=korg; t=1690284321;
+	bh=z2i4tqGdIBZVJUZBD/ygEiYHnQ2ow9EvNjNGLvwFwhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=guHZ7nfGpzl9GUtNadvIeVpGVI9MKxF+fS4zGVX5qul+GzcsexHYkCJAPcCF6okIw
-	 C18D4kCkRheQxWeJiLSiQObJFB7mJfsaTlFSqQ/Xa28i46lBOEfnQYJWaIcP3QjtaV
-	 9K0s2ZbLDAvPxWFmHNXmwFRCJmQ6cfoAGjWH4jzA=
+	b=KbzW8LhrOn/W4Juyp8o6RDaNkVZVN72JdHIfeHM1k6QQ4LJRCyMz0QzIZrQaq2Wcr
+	 B4VUxESZ+BD3r/f7f3Ri/8wltkvUt67IocHvD27goyhYNXKPPOTv0aYvANwRnpMaR0
+	 6CD6u6ro5o7mpCmheHi1R4tBk+rFdgHNGaFcXbM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Yann Gautier <yann.gautier@foss.st.com>
-Subject: [PATCH 5.10 285/509] mmc: mmci: Set PROBE_PREFER_ASYNCHRONOUS
-Date: Tue, 25 Jul 2023 12:43:44 +0200
-Message-ID: <20230725104606.777095369@linuxfoundation.org>
+	Chevron Li <chevron.li@bayhubtech.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 286/509] mmc: sdhci: fix DMA configure compatibility issue when 64bit DMA mode is used.
+Date: Tue, 25 Jul 2023 12:43:45 +0200
+Message-ID: <20230725104606.826331838@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,33 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Chevron Li <chevron.li@bayhubtech.com>
 
-commit 3108eb2e8aa7e955a9dd3a4c1bf19a7898961822 upstream.
+commit 20dbd07ef0a8bc29eb03d6a95258ac8934cbe52d upstream.
 
-All mmc host drivers should have the asynchronous probe option enabled, but
-it seems like we failed to set it for mmci, so let's do that now.
+Bayhub SD host has hardware limitation:
+1.The upper 32bit address is inhibited to be written at SD Host Register
+  [03E][13]=0 (32bits addressing) mode, is admitted to be written only at
+  SD Host Register [03E][13]=1 (64bits addressing) mode.
+2.Because of above item#1, need to configure SD Host Register [03E][13] to
+  1(64bits addressing mode) before set 64bit ADMA system address's higher
+  32bits SD Host Register [05F~05C] if 64 bits addressing mode is used.
 
-Fixes: 21b2cec61c04 ("mmc: Set PROBE_PREFER_ASYNCHRONOUS for drivers that existed in v4.4")
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Tested-by: Linus Walleij <linus.walleij@linaro.org>
-Tested-by: Yann Gautier <yann.gautier@foss.st.com>
+The hardware limitation is reasonable for below reasons:
+1.Normal flow should set DMA working mode first, then do
+  DMA-transfer-related configuration, such as system address.
+2.The hardware limitation may avoid the software to configure wrong higher
+  32bit address at 32bits addressing mode although it is redundant.
+
+The change that set 32bits/64bits addressing mode before set ADMA address,
+  has no side-effect to other host IPs for below reason:
+The setting order is reasonable and standard: DMA Mode setting first and
+  then DMA address setting. It meets all DMA setting sequence.
+
+Signed-off-by: Chevron Li <chevron.li@bayhubtech.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230612143730.210390-1-ulf.hansson@linaro.org
+Link: https://lore.kernel.org/r/20230523111114.18124-1-chevron_li@126.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mmci.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/host/sdhci.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/mmci.c
-+++ b/drivers/mmc/host/mmci.c
-@@ -2386,6 +2386,7 @@ static struct amba_driver mmci_driver =
- 	.drv		= {
- 		.name	= DRIVER_NAME,
- 		.pm	= &mmci_dev_pm_ops,
-+		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
- 	},
- 	.probe		= mmci_probe,
- 	.remove		= mmci_remove,
+--- a/drivers/mmc/host/sdhci.c
++++ b/drivers/mmc/host/sdhci.c
+@@ -1145,6 +1145,8 @@ static void sdhci_prepare_data(struct sd
+ 		}
+ 	}
+ 
++	sdhci_config_dma(host);
++
+ 	if (host->flags & SDHCI_REQ_USE_DMA) {
+ 		int sg_cnt = sdhci_pre_dma_transfer(host, data, COOKIE_MAPPED);
+ 
+@@ -1164,8 +1166,6 @@ static void sdhci_prepare_data(struct sd
+ 		}
+ 	}
+ 
+-	sdhci_config_dma(host);
+-
+ 	if (!(host->flags & SDHCI_REQ_USE_DMA)) {
+ 		int flags;
+ 
 
 
