@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA99A1EA72
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:48:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C42CC433C7;
-	Tue, 25 Jul 2023 10:48:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A901EA72
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:48:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29B9C433C8;
+	Tue, 25 Jul 2023 10:48:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282115;
-	bh=OOiP1npETSU2Rr+PdIJ6tkix95uz8/D1cO7uRmBMiak=;
+	s=korg; t=1690282118;
+	bh=OeGB2vpmR+6EEy+eat8Zb7yE9C8xEWavSlDEfb2E6YU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZyORU3laIFJ9SNUDhBbu55U1Za589Qjq1DEbzb1xMf2wFxKOEaqK2g4IQ2lxRfj33
-	 gsn9yCz35dO/Yqv7sYES5IhOC1inxoNe34xEZdNAUg7YAKZBtJrrAhrbr34yYO+4vn
-	 8/H6Grs3VOqXcbRlCeLeq6/D9X0mGJoUsHpoahhU=
+	b=z9p2BkR4sczVjrZtjlaX90iTPHogXo2gjy1TGduXwt7po6nBDQL2Qt31nkStDZ9Yn
+	 uQ99q03plVYfeuh04Tts3ThdVbL6MdJd6KkzoBwMiEH5uMuPgQ1n7/hzRM/lNUVePg
+	 cog7RE4i6ABbGon1nENEjtcSMsqmsuge2cAjftrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Josef Bacik <josef@toxicpanda.com>,
+	Qu Wenruo <wqu@suse.com>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 014/227] btrfs: fix iput() on error pointer after error during orphan cleanup
-Date: Tue, 25 Jul 2023 12:43:01 +0200
-Message-ID: <20230725104515.379469864@linuxfoundation.org>
+Subject: [PATCH 6.4 015/227] btrfs: fix warning when putting transaction with qgroups enabled after abort
+Date: Tue, 25 Jul 2023 12:43:02 +0200
+Message-ID: <20230725104515.421151959@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -36,171 +38,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-commit cbaee87f2ef628c10331b69a2f3def6bc32402d7 upstream.
+commit aa84ce8a78a1a5c10cdf9c7a5fb0c999fbc2c8d6 upstream.
 
-At btrfs_orphan_cleanup(), if we can't find an inode (btrfs_iget() returns
-an -ENOENT error pointer), we proceed with 'ret' set to -ENOENT and the
-inode pointer set to ERR_PTR(-ENOENT). Later when we proceed to the body
-of the following if statement:
+If we have a transaction abort with qgroups enabled we get a warning
+triggered when doing the final put on the transaction, like this:
 
-    if (ret == -ENOENT || inode->i_nlink) {
-        (...)
-        trans = btrfs_start_transaction(root, 1);
-        if (IS_ERR(trans)) {
-            ret = PTR_ERR(trans);
-            iput(inode);
-            goto out;
-        }
-        (...)
-        ret = btrfs_del_orphan_item(trans, root,
-                                    found_key.objectid);
-        btrfs_end_transaction(trans);
-        if (ret) {
-            iput(inode);
-            goto out;
-        }
-        continue;
-    }
+  [552.6789] ------------[ cut here ]------------
+  [552.6815] WARNING: CPU: 4 PID: 81745 at fs/btrfs/transaction.c:144 btrfs_put_transaction+0x123/0x130 [btrfs]
+  [552.6817] Modules linked in: btrfs blake2b_generic xor (...)
+  [552.6819] CPU: 4 PID: 81745 Comm: btrfs-transacti Tainted: G        W          6.4.0-rc6-btrfs-next-134+ #1
+  [552.6819] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
+  [552.6819] RIP: 0010:btrfs_put_transaction+0x123/0x130 [btrfs]
+  [552.6821] Code: bd a0 01 00 (...)
+  [552.6821] RSP: 0018:ffffa168c0527e28 EFLAGS: 00010286
+  [552.6821] RAX: ffff936042caed00 RBX: ffff93604a3eb448 RCX: 0000000000000000
+  [552.6821] RDX: ffff93606421b028 RSI: ffffffff92ff0878 RDI: ffff93606421b010
+  [552.6821] RBP: ffff93606421b000 R08: 0000000000000000 R09: ffffa168c0d07c20
+  [552.6821] R10: 0000000000000000 R11: ffff93608dc52950 R12: ffffa168c0527e70
+  [552.6821] R13: ffff93606421b000 R14: ffff93604a3eb420 R15: ffff93606421b028
+  [552.6821] FS:  0000000000000000(0000) GS:ffff93675fb00000(0000) knlGS:0000000000000000
+  [552.6821] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [552.6821] CR2: 0000558ad262b000 CR3: 000000014feda005 CR4: 0000000000370ee0
+  [552.6822] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  [552.6822] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  [552.6822] Call Trace:
+  [552.6822]  <TASK>
+  [552.6822]  ? __warn+0x80/0x130
+  [552.6822]  ? btrfs_put_transaction+0x123/0x130 [btrfs]
+  [552.6824]  ? report_bug+0x1f4/0x200
+  [552.6824]  ? handle_bug+0x42/0x70
+  [552.6824]  ? exc_invalid_op+0x14/0x70
+  [552.6824]  ? asm_exc_invalid_op+0x16/0x20
+  [552.6824]  ? btrfs_put_transaction+0x123/0x130 [btrfs]
+  [552.6826]  btrfs_cleanup_transaction+0xe7/0x5e0 [btrfs]
+  [552.6828]  ? _raw_spin_unlock_irqrestore+0x23/0x40
+  [552.6828]  ? try_to_wake_up+0x94/0x5e0
+  [552.6828]  ? __pfx_process_timeout+0x10/0x10
+  [552.6828]  transaction_kthread+0x103/0x1d0 [btrfs]
+  [552.6830]  ? __pfx_transaction_kthread+0x10/0x10 [btrfs]
+  [552.6832]  kthread+0xee/0x120
+  [552.6832]  ? __pfx_kthread+0x10/0x10
+  [552.6832]  ret_from_fork+0x29/0x50
+  [552.6832]  </TASK>
+  [552.6832] ---[ end trace 0000000000000000 ]---
 
-If we get an error from btrfs_start_transaction() or from the call to
-btrfs_del_orphan_item() we end calling iput() against an inode pointer
-that has a value of ERR_PTR(-ENOENT), resulting in a crash with the
-following trace:
+This corresponds to this line of code:
 
-  [876.667] BUG: kernel NULL pointer dereference, address: 0000000000000096
-  [876.667] #PF: supervisor read access in kernel mode
-  [876.667] #PF: error_code(0x0000) - not-present page
-  [876.667] PGD 0 P4D 0
-  [876.668] Oops: 0000 [#1] PREEMPT SMP PTI
-  [876.668] CPU: 0 PID: 2356187 Comm: mount Tainted: G        W          6.4.0-rc6-btrfs-next-134+ #1
-  [876.668] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
-  [876.668] RIP: 0010:iput+0xa/0x20
-  [876.668] Code: ff ff ff 66 (...)
-  [876.669] RSP: 0018:ffffafa9c0c9f9d0 EFLAGS: 00010282
-  [876.669] RAX: ffffffffffffffe4 RBX: 000000000009453b RCX: 0000000000000000
-  [876.669] RDX: 0000000000000001 RSI: ffffafa9c0c9f930 RDI: fffffffffffffffe
-  [876.669] RBP: ffff95c612f3b800 R08: 0000000000000001 R09: ffffffffffffffe4
-  [876.670] R10: 00018f2a71010000 R11: 000000000ead96e3 R12: ffff95cb7d6909a0
-  [876.670] R13: fffffffffffffffe R14: ffff95c60f477000 R15: 00000000ffffffe4
-  [876.670] FS:  00007f5fbe30a840(0000) GS:ffff95ccdfa00000(0000) knlGS:0000000000000000
-  [876.670] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [876.671] CR2: 0000000000000096 CR3: 000000055e9f6004 CR4: 0000000000370ef0
-  [876.671] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-  [876.671] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-  [876.672] Call Trace:
-  [876.744]  <TASK>
-  [876.744]  ? __die_body+0x1b/0x60
-  [876.744]  ? page_fault_oops+0x15d/0x450
-  [876.745]  ? __kmem_cache_alloc_node+0x47/0x410
-  [876.745]  ? do_user_addr_fault+0x65/0x8a0
-  [876.745]  ? exc_page_fault+0x74/0x170
-  [876.746]  ? asm_exc_page_fault+0x22/0x30
-  [876.746]  ? iput+0xa/0x20
-  [876.746]  btrfs_orphan_cleanup+0x221/0x330 [btrfs]
-  [876.746]  btrfs_lookup_dentry+0x58f/0x5f0 [btrfs]
-  [876.747]  btrfs_lookup+0xe/0x30 [btrfs]
-  [876.747]  __lookup_slow+0x82/0x130
-  [876.785]  walk_component+0xe5/0x160
-  [876.786]  path_lookupat.isra.0+0x6e/0x150
-  [876.786]  filename_lookup+0xcf/0x1a0
-  [876.786]  ? mod_objcg_state+0xd2/0x360
-  [876.786]  ? obj_cgroup_charge+0xf5/0x110
-  [876.787]  ? should_failslab+0xa/0x20
-  [876.787]  ? kmem_cache_alloc+0x47/0x450
-  [876.787]  vfs_path_lookup+0x51/0x90
-  [876.788]  mount_subtree+0x8d/0x130
-  [876.788]  btrfs_mount+0x149/0x410 [btrfs]
-  [876.788]  ? __kmem_cache_alloc_node+0x47/0x410
-  [876.788]  ? vfs_parse_fs_param+0xc0/0x110
-  [876.789]  legacy_get_tree+0x24/0x50
-  [876.834]  vfs_get_tree+0x22/0xd0
-  [876.852]  path_mount+0x2d8/0x9c0
-  [876.852]  do_mount+0x79/0x90
-  [876.852]  __x64_sys_mount+0x8e/0xd0
-  [876.853]  do_syscall_64+0x38/0x90
-  [876.899]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
-  [876.958] RIP: 0033:0x7f5fbe50b76a
-  [876.959] Code: 48 8b 0d a9 (...)
-  [876.959] RSP: 002b:00007fff01925798 EFLAGS: 00000246 ORIG_RAX: 00000000000000a5
-  [876.959] RAX: ffffffffffffffda RBX: 00007f5fbe694264 RCX: 00007f5fbe50b76a
-  [876.960] RDX: 0000561bde6c8720 RSI: 0000561bde6bdec0 RDI: 0000561bde6c31a0
-  [876.960] RBP: 0000561bde6bdc70 R08: 0000000000000000 R09: 0000000000000001
-  [876.960] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-  [876.960] R13: 0000561bde6c31a0 R14: 0000561bde6c8720 R15: 0000561bde6bdc70
-  [876.960]  </TASK>
+  void btrfs_put_transaction(struct btrfs_transaction *transaction)
+  {
+      (...)
+          WARN_ON(!RB_EMPTY_ROOT(
+                          &transaction->delayed_refs.dirty_extent_root));
+      (...)
+  }
 
-So fix this by setting 'inode' to NULL whenever we get an error from
-btrfs_iget(), and to make the code simpler, stop testing for 'ret' being
--ENOENT to check if we have an inode - instead test for 'inode' being NULL
-or not. Having a NULL 'inode' prevents any iput() call from crashing, as
-iput() ignores NULL inode pointers. Also, stop testing for a NULL return
-value from btrfs_iget() with PTR_ERR_OR_ZERO(), because btrfs_iget() never
-returns NULL - in case an inode is not found, it returns ERR_PTR(-ENOENT),
-and in case of memory allocation failure, it returns ERR_PTR(-ENOMEM).
-We also don't need the extra iput() calls on the error branches for the
-btrfs_start_transaction() and btrfs_del_orphan_item() calls, as we have
-already called iput() before, so remove them.
+The warning happens because btrfs_qgroup_destroy_extent_records(), called
+in the transaction abort path, we free all entries from the rbtree
+"dirty_extent_root" with rbtree_postorder_for_each_entry_safe(), but we
+don't actually empty the rbtree - it's still pointing to nodes that were
+freed.
 
-Fixes: a13bb2c03848 ("btrfs: add missing iputs on orphan cleanup failure")
-CC: stable@vger.kernel.org # 6.4
+So set the rbtree's root node to NULL to avoid this warning (assign
+RB_ROOT).
+
+Fixes: 81f7eb00ff5b ("btrfs: destroy qgroup extent records on transaction abort")
+CC: stable@vger.kernel.org # 5.10+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ fs/btrfs/qgroup.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -3546,11 +3546,14 @@ int btrfs_orphan_cleanup(struct btrfs_ro
- 		found_key.type = BTRFS_INODE_ITEM_KEY;
- 		found_key.offset = 0;
- 		inode = btrfs_iget(fs_info->sb, last_objectid, root);
--		ret = PTR_ERR_OR_ZERO(inode);
--		if (ret && ret != -ENOENT)
--			goto out;
-+		if (IS_ERR(inode)) {
-+			ret = PTR_ERR(inode);
-+			inode = NULL;
-+			if (ret != -ENOENT)
-+				goto out;
-+		}
- 
--		if (ret == -ENOENT && root == fs_info->tree_root) {
-+		if (!inode && root == fs_info->tree_root) {
- 			struct btrfs_root *dead_root;
- 			int is_dead_root = 0;
- 
-@@ -3611,8 +3614,8 @@ int btrfs_orphan_cleanup(struct btrfs_ro
- 		 * deleted but wasn't. The inode number may have been reused,
- 		 * but either way, we can delete the orphan item.
- 		 */
--		if (ret == -ENOENT || inode->i_nlink) {
--			if (!ret) {
-+		if (!inode || inode->i_nlink) {
-+			if (inode) {
- 				ret = btrfs_drop_verity_items(BTRFS_I(inode));
- 				iput(inode);
- 				if (ret)
-@@ -3621,7 +3624,6 @@ int btrfs_orphan_cleanup(struct btrfs_ro
- 			trans = btrfs_start_transaction(root, 1);
- 			if (IS_ERR(trans)) {
- 				ret = PTR_ERR(trans);
--				iput(inode);
- 				goto out;
- 			}
- 			btrfs_debug(fs_info, "auto deleting %Lu",
-@@ -3629,10 +3631,8 @@ int btrfs_orphan_cleanup(struct btrfs_ro
- 			ret = btrfs_del_orphan_item(trans, root,
- 						    found_key.objectid);
- 			btrfs_end_transaction(trans);
--			if (ret) {
--				iput(inode);
-+			if (ret)
- 				goto out;
--			}
- 			continue;
- 		}
- 
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -4433,4 +4433,5 @@ void btrfs_qgroup_destroy_extent_records
+ 		ulist_free(entry->old_roots);
+ 		kfree(entry);
+ 	}
++	*root = RB_ROOT;
+ }
 
 
