@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAF11ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:23:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F671C433C7;
-	Tue, 25 Jul 2023 11:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4AB1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:23:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA67C433B6;
+	Tue, 25 Jul 2023 11:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284196;
-	bh=Q5K1Og8ERQuia5Noyd6Sccpob1z6xTNjOAVARBUxTIg=;
+	s=korg; t=1690284199;
+	bh=mcV8RQXqsoigTcj3IIVMalE9Wu/jYg/LIuRb9o/DoEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mb36ZxA2GqS8JIMb0hXfMSMK/MKSNlzzR6VLGY21zw6dYZValcjfh6DKKEWbHgOga
-	 7m7FH4skAE3mSn9cwqc5TAgEZHUK7+CtUuNDbKqBJiLbGIdrl+mUODDbXOXYQkCSWf
-	 /MAGyyF7d4GDNbekixq+H4u7Y7sY9hvDWtVRcVhk=
+	b=Sd+b0Wx0d0Ko2KbcBRHRbIRJpJIucYTJqhrYI93YcJC5UxLGRgPUJ87Ds3JX4KHXE
+	 khbwxT1XpSaPTzrRCTjhQ+eA6TAWHpFFETyczRiMVRaPuQ7mHc3gaUpGR8hpDsERxd
+	 BVKGc8ehN97ERGEE8dQ1GbHRBI7Tq000t8xQ9Apg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Magnus Karlsson <magnus.karlsson@intel.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 269/509] tcp: annotate data races in __tcp_oow_rate_limited()
-Date: Tue, 25 Jul 2023 12:43:28 +0200
-Message-ID: <20230725104606.075065722@linuxfoundation.org>
+Subject: [PATCH 5.10 270/509] xsk: Honor SO_BINDTODEVICE on bind
+Date: Tue, 25 Jul 2023 12:43:29 +0200
+Message-ID: <20230725104606.123462637@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,53 +38,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit 998127cdb4699b9d470a9348ffe9f1154346be5f ]
+[ Upstream commit f7306acec9aae9893d15e745c8791124d42ab10a ]
 
-request sockets are lockless, __tcp_oow_rate_limited() could be called
-on the same object from different cpus. This is harmless.
+Initial creation of an AF_XDP socket requires CAP_NET_RAW capability. A
+privileged process might create the socket and pass it to a non-privileged
+process for later use. However, that process will be able to bind the socket
+to any network interface. Even though it will not be able to receive any
+traffic without modification of the BPF map, the situation is not ideal.
 
-Add READ_ONCE()/WRITE_ONCE() annotations to avoid a KCSAN report.
+Sockets already have a mechanism that can be used to restrict what interface
+they can be attached to. That is SO_BINDTODEVICE.
 
-Fixes: 4ce7e93cb3fe ("tcp: rate limit ACK sent by SYN_RECV request sockets")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+To change the SO_BINDTODEVICE binding the process will need CAP_NET_RAW.
+
+Make xsk_bind() honor the SO_BINDTODEVICE in order to allow safer workflow
+when non-privileged process is using AF_XDP.
+
+The intended workflow is following:
+
+  1. First process creates a bare socket with socket(AF_XDP, ...).
+  2. First process loads the XSK program to the interface.
+  3. First process adds the socket fd to a BPF map.
+  4. First process ties socket fd to a particular interface using
+     SO_BINDTODEVICE.
+  5. First process sends socket fd to a second process.
+  6. Second process allocates UMEM.
+  7. Second process binds socket to the interface with bind(...).
+  8. Second process sends/receives the traffic.
+
+All the steps above are possible today if the first process is privileged
+and the second one has sufficient RLIMIT_MEMLOCK and no capabilities.
+However, the second process will be able to bind the socket to any interface
+it wants on step 7 and send traffic from it. With the proposed change, the
+second process will be able to bind the socket only to a specific interface
+chosen by the first process at step 4.
+
+Fixes: 965a99098443 ("xsk: add support for bind for Rx")
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Link: https://lore.kernel.org/bpf/20230703175329.3259672-1-i.maximets@ovn.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ Documentation/networking/af_xdp.rst | 9 +++++++++
+ net/xdp/xsk.c                       | 5 +++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index b98b7920c4029..d6dfbb88dcf5b 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -3560,8 +3560,11 @@ static int tcp_ack_update_window(struct sock *sk, const struct sk_buff *skb, u32
- static bool __tcp_oow_rate_limited(struct net *net, int mib_idx,
- 				   u32 *last_oow_ack_time)
- {
--	if (*last_oow_ack_time) {
--		s32 elapsed = (s32)(tcp_jiffies32 - *last_oow_ack_time);
-+	/* Paired with the WRITE_ONCE() in this function. */
-+	u32 val = READ_ONCE(*last_oow_ack_time);
+diff --git a/Documentation/networking/af_xdp.rst b/Documentation/networking/af_xdp.rst
+index 2ccc5644cc98a..70623cb135d3c 100644
+--- a/Documentation/networking/af_xdp.rst
++++ b/Documentation/networking/af_xdp.rst
+@@ -433,6 +433,15 @@ start N bytes into the buffer leaving the first N bytes for the
+ application to use. The final option is the flags field, but it will
+ be dealt with in separate sections for each UMEM flag.
+ 
++SO_BINDTODEVICE setsockopt
++--------------------------
 +
-+	if (val) {
-+		s32 elapsed = (s32)(tcp_jiffies32 - val);
++This is a generic SOL_SOCKET option that can be used to tie AF_XDP
++socket to a particular network interface.  It is useful when a socket
++is created by a privileged process and passed to a non-privileged one.
++Once the option is set, kernel will refuse attempts to bind that socket
++to a different interface.  Updating the value requires CAP_NET_RAW.
++
+ XDP_STATISTICS getsockopt
+ -------------------------
  
- 		if (0 <= elapsed &&
- 		    elapsed < READ_ONCE(net->ipv4.sysctl_tcp_invalid_ratelimit)) {
-@@ -3570,7 +3573,10 @@ static bool __tcp_oow_rate_limited(struct net *net, int mib_idx,
- 		}
- 	}
+diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+index 691841dc6d334..d04f91f4d09df 100644
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -667,6 +667,7 @@ static int xsk_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
+ 	struct sock *sk = sock->sk;
+ 	struct xdp_sock *xs = xdp_sk(sk);
+ 	struct net_device *dev;
++	int bound_dev_if;
+ 	u32 flags, qid;
+ 	int err = 0;
  
--	*last_oow_ack_time = tcp_jiffies32;
-+	/* Paired with the prior READ_ONCE() and with itself,
-+	 * as we might be lockless.
-+	 */
-+	WRITE_ONCE(*last_oow_ack_time, tcp_jiffies32);
+@@ -680,6 +681,10 @@ static int xsk_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
+ 		      XDP_USE_NEED_WAKEUP))
+ 		return -EINVAL;
  
- 	return false;	/* not rate-limited: go ahead, send dupack now! */
- }
++	bound_dev_if = READ_ONCE(sk->sk_bound_dev_if);
++	if (bound_dev_if && bound_dev_if != sxdp->sxdp_ifindex)
++		return -EINVAL;
++
+ 	rtnl_lock();
+ 	mutex_lock(&xs->mutex);
+ 	if (xs->state != XSK_READY) {
 -- 
 2.39.2
 
