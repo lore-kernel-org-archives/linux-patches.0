@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B6B1ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:47:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FBE0C433C9;
-	Tue, 25 Jul 2023 11:47:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 545E41ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:47:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0BBC433C8;
+	Tue, 25 Jul 2023 11:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285659;
-	bh=jK4GFuUD6uGjnhOF9I0G4Arw5wnAY86lfBVPEx2TP00=;
+	s=korg; t=1690285662;
+	bh=yFFrRYuObWxpXUe4jw4te5mUJtwHI3A8hz5CrcaMtJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x2OaZ0aKIdX0oU37q4z8h8rQZEIpn9pjv2LU5tozAxvStCwDXZJp1DekgJ8OPJb9A
-	 vSzQQnYlsc6347VaHcMsOVj58Mf7pfGbTTz7QXR8B9J6NjCBloZ38UHOILnGxUCZAF
-	 ZvhcWIYCHQBSk2vX3YHbab2wMt4Xhq7cb5krydkE=
+	b=YwU2wFN2CO+4ICqEZn2WUX2PpBfliQ3gLJ253gxNt7UeEqKnMCWQeo2DQ25TmlXoh
+	 N5JrsUIe+BiDeRGE0TT3SBaZf35V8LGZtvRchIpZ+a43UCArSwxspNmsdG5snCHPyZ
+	 iRXBoVLpaesbG95Bc/PqxQny9k/iSovNmhEgS9iY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"kernelci.org bot" <bot@kernelci.org>,
-	Brian Norris <briannorris@chromium.org>,
-	Sean Paul <seanpaul@chromium.org>
-Subject: [PATCH 5.4 255/313] drm/rockchip: vop: Leave vblank enabled in self-refresh
-Date: Tue, 25 Jul 2023 12:46:48 +0200
-Message-ID: <20230725104532.086631376@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Richard Genoud <richard.genoud@gmail.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.4 256/313] serial: atmel: dont enable IRQs prematurely
+Date: Tue, 25 Jul 2023 12:46:49 +0200
+Message-ID: <20230725104532.123445858@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,94 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Norris <briannorris@chromium.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 2bdba9d4a3baa758c2ca7f5b37b35c7b3391dc42 upstream.
+commit 27a826837ec9a3e94cc44bd9328b8289b0fcecd7 upstream.
 
-If we disable vblank when entering self-refresh, vblank APIs (like
-DRM_IOCTL_WAIT_VBLANK) no longer work. But user space is not aware when
-we enter self-refresh, so this appears to be an API violation -- that
-DRM_IOCTL_WAIT_VBLANK fails with EINVAL whenever the display is idle and
-enters self-refresh.
+The atmel_complete_tx_dma() function disables IRQs at the start
+of the function by calling spin_lock_irqsave(&port->lock, flags);
+There is no need to disable them a second time using the
+spin_lock_irq() function and, in fact, doing so is a bug because
+it will enable IRQs prematurely when we call spin_unlock_irq().
 
-The downstream driver used by many of these systems never used to
-disable vblank for PSR, and in fact, even upstream, we didn't do that
-until radically redesigning the state machine in commit 6c836d965bad
-("drm/rockchip: Use the helpers for PSR").
+Just use spin_lock/unlock() instead without disabling or enabling
+IRQs.
 
-Thus, it seems like a reasonable API fix to simply restore that
-behavior, and leave vblank enabled.
-
-Note that this appears to potentially unbalance the
-drm_crtc_vblank_{off,on}() calls in some cases, but:
-(a) drm_crtc_vblank_on() documents this as OK and
-(b) if I do the naive balancing, I find state machine issues such that
-    we're not in sync properly; so it's easier to take advantage of (a).
-
-This issue was exposed by IGT's kms_vblank tests, and reported by
-KernelCI. The bug has been around a while (longer than KernelCI
-noticed), but was only exposed once self-refresh was bugfixed more
-recently, and so KernelCI could properly test it. Some other notes in:
-
-  https://lore.kernel.org/dri-devel/Y6OCg9BPnJvimQLT@google.com/
-  Re: renesas/master bisection: igt-kms-rockchip.kms_vblank.pipe-A-wait-forked on rk3399-gru-kevin
-
-== Backporting notes: ==
-
-Marking as 'Fixes' commit 6c836d965bad ("drm/rockchip: Use the helpers
-for PSR"), but it probably depends on commit bed030a49f3e
-("drm/rockchip: Don't fully disable vop on self refresh") as well.
-
-We also need the previous patch ("drm/atomic: Allow vblank-enabled +
-self-refresh "disable""), of course.
-
-v3:
- * no update
-
-v2:
- * skip unnecessary lock/unlock
-
-Fixes: 6c836d965bad ("drm/rockchip: Use the helpers for PSR")
-Cc: <stable@vger.kernel.org>
-Reported-by: "kernelci.org bot" <bot@kernelci.org>
-Link: https://lore.kernel.org/dri-devel/Y5itf0+yNIQa6fU4@sirena.org.uk/
-Signed-off-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Sean Paul <seanpaul@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230109171809.v3.2.Ic07cba4ab9a7bd3618a9e4258b8f92ea7d10ae5a@changeid
+Fixes: 08f738be88bb ("serial: at91: add tx dma support")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Acked-by: Richard Genoud <richard.genoud@gmail.com>
+Link: https://lore.kernel.org/r/cb7c39a9-c004-4673-92e1-be4e34b85368@moroto.mountain
+Cc: stable <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/tty/serial/atmel_serial.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-@@ -654,13 +654,13 @@ static void vop_crtc_atomic_disable(stru
- 	if (crtc->state->self_refresh_active)
- 		rockchip_drm_set_win_enabled(crtc, false);
+--- a/drivers/tty/serial/atmel_serial.c
++++ b/drivers/tty/serial/atmel_serial.c
+@@ -884,11 +884,11 @@ static void atmel_complete_tx_dma(void *
  
-+	if (crtc->state->self_refresh_active)
-+		goto out;
-+
- 	mutex_lock(&vop->vop_lock);
+ 	port->icount.tx += atmel_port->tx_len;
  
- 	drm_crtc_vblank_off(crtc);
+-	spin_lock_irq(&atmel_port->lock_tx);
++	spin_lock(&atmel_port->lock_tx);
+ 	async_tx_ack(atmel_port->desc_tx);
+ 	atmel_port->cookie_tx = -EINVAL;
+ 	atmel_port->desc_tx = NULL;
+-	spin_unlock_irq(&atmel_port->lock_tx);
++	spin_unlock(&atmel_port->lock_tx);
  
--	if (crtc->state->self_refresh_active)
--		goto out;
--
- 	/*
- 	 * Vop standby will take effect at end of current frame,
- 	 * if dsp hold valid irq happen, it means standby complete.
-@@ -692,9 +692,9 @@ static void vop_crtc_atomic_disable(stru
- 	vop_core_clks_disable(vop);
- 	pm_runtime_put(vop->dev);
- 
--out:
- 	mutex_unlock(&vop->vop_lock);
- 
-+out:
- 	if (crtc->state->event && !crtc->state->active) {
- 		spin_lock_irq(&crtc->dev->event_lock);
- 		drm_crtc_send_vblank_event(crtc, crtc->state->event);
+ 	if (uart_circ_chars_pending(xmit) < WAKEUP_CHARS)
+ 		uart_write_wakeup(port);
 
 
