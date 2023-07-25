@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5F41ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:20:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81DA5C433C7;
-	Tue, 25 Jul 2023 11:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377871ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:20:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5433CC433C8;
+	Tue, 25 Jul 2023 11:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284032;
-	bh=lrSTKECLh5UyieDOYBCmMbD/hbAb3/C1glw8GSIIOGE=;
+	s=korg; t=1690284035;
+	bh=SLksFrqLNw2Z8rdcW16EYZ+LOjQF+3Ty8z8pGOeF7SI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VQupTpAcUdTqWzSq7ZzYt807Nf21ofYU730VM+p3abU3giTYhXdQZatYqdNz/WWdb
-	 jSHChxybqYd7ov7B89BXFoTW071Gqq/0RAIYUoRpPu1TcQWj0MVx3hYpJ2n6xm4RBx
-	 MuEYdmn4lKVfXuQ4S1o3KEaqKXiJuoz8lLhIB0XU=
+	b=KoWz1PP+XyTWnSvJ2Q9djdv7/dzgd4jiYhneLHUJ9fA3vJaTy8BvteY+3sqClSl0u
+	 Xyg1ylUsLfTmwCoTJEcE0Dm9mLklh5QKbTupQMvMl4ZY8y5WfQMDVcCAkdyIkEu+r0
+	 tkDKmV9bcIx2u7g4UEnsAdmEelCa7XoPBcaxkhVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 210/509] hwrng: st - keep clock enabled while hwrng is registered
-Date: Tue, 25 Jul 2023 12:42:29 +0200
-Message-ID: <20230725104603.348072845@linuxfoundation.org>
+	dghost david <daviduniverse18@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 211/509] io_uring: ensure IOPOLL locks around deferred work
+Date: Tue, 25 Jul 2023 12:42:30 +0200
+Message-ID: <20230725104603.394974632@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,96 +34,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 501e197a02d4aef157f53ba3a0b9049c3e52fedc ]
+No direct upstream commit exists for this issue. It was fixed in
+5.18 as part of a larger rework of the completion side.
 
-The st-rng driver uses devres to register itself with the hwrng core,
-the driver will be unregistered from hwrng when its device goes out of
-scope. This happens after the driver's remove function is called.
+io_commit_cqring() writes the CQ ring tail to make it visible, but it
+also kicks off any deferred work we have. A ring setup with IOPOLL
+does not need any locking around the CQ ring updates, as we're always
+under the ctx uring_lock. But if we have deferred work that needs
+processing, then io_queue_deferred() assumes that the completion_lock
+is held, as it is for !IOPOLL.
 
-However, st-rng's clock is disabled in the remove function. There's a
-short timeframe where st-rng is still registered with the hwrng core
-although its clock is disabled. I suppose the clock must be active to
-access the hardware and serve requests from the hwrng core.
+Add a lockdep assertion to check and document this fact, and have
+io_iopoll_complete() check if we have deferred work and run that
+separately with the appropriate lock grabbed.
 
-Switch to devm_clk_get_enabled and let devres disable the clock and
-unregister the hwrng. This avoids the race condition.
-
-Fixes: 3e75241be808 ("hwrng: drivers - Use device-managed registration API")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # 5.10, 5.15
+Reported-by: dghost david <daviduniverse18@gmail.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/hw_random/st-rng.c | 21 +--------------------
- 1 file changed, 1 insertion(+), 20 deletions(-)
+ io_uring/io_uring.c |   25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/char/hw_random/st-rng.c b/drivers/char/hw_random/st-rng.c
-index 15ba1e6fae4d2..6e9dfac9fc9f4 100644
---- a/drivers/char/hw_random/st-rng.c
-+++ b/drivers/char/hw_random/st-rng.c
-@@ -42,7 +42,6 @@
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1521,6 +1521,8 @@ static void io_kill_timeout(struct io_ki
  
- struct st_rng_data {
- 	void __iomem	*base;
--	struct clk	*clk;
- 	struct hwrng	ops;
- };
- 
-@@ -85,26 +84,18 @@ static int st_rng_probe(struct platform_device *pdev)
- 	if (IS_ERR(base))
- 		return PTR_ERR(base);
- 
--	clk = devm_clk_get(&pdev->dev, NULL);
-+	clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(clk))
- 		return PTR_ERR(clk);
- 
--	ret = clk_prepare_enable(clk);
--	if (ret)
--		return ret;
--
- 	ddata->ops.priv	= (unsigned long)ddata;
- 	ddata->ops.read	= st_rng_read;
- 	ddata->ops.name	= pdev->name;
- 	ddata->base	= base;
--	ddata->clk	= clk;
--
--	dev_set_drvdata(&pdev->dev, ddata);
- 
- 	ret = devm_hwrng_register(&pdev->dev, &ddata->ops);
- 	if (ret) {
- 		dev_err(&pdev->dev, "Failed to register HW RNG\n");
--		clk_disable_unprepare(clk);
- 		return ret;
- 	}
- 
-@@ -113,15 +104,6 @@ static int st_rng_probe(struct platform_device *pdev)
- 	return 0;
+ static void io_queue_deferred(struct io_ring_ctx *ctx)
+ {
++	lockdep_assert_held(&ctx->completion_lock);
++
+ 	while (!list_empty(&ctx->defer_list)) {
+ 		struct io_defer_entry *de = list_first_entry(&ctx->defer_list,
+ 						struct io_defer_entry, list);
+@@ -1572,14 +1574,24 @@ static void __io_commit_cqring_flush(str
+ 		io_queue_deferred(ctx);
  }
  
--static int st_rng_remove(struct platform_device *pdev)
--{
--	struct st_rng_data *ddata = dev_get_drvdata(&pdev->dev);
--
--	clk_disable_unprepare(ddata->clk);
--
--	return 0;
--}
--
- static const struct of_device_id st_rng_match[] __maybe_unused = {
- 	{ .compatible = "st,rng" },
- 	{},
-@@ -134,7 +116,6 @@ static struct platform_driver st_rng_driver = {
- 		.of_match_table = of_match_ptr(st_rng_match),
- 	},
- 	.probe = st_rng_probe,
--	.remove = st_rng_remove
- };
+-static inline void io_commit_cqring(struct io_ring_ctx *ctx)
++static inline bool io_commit_needs_flush(struct io_ring_ctx *ctx)
++{
++	return ctx->off_timeout_used || ctx->drain_active;
++}
++
++static inline void __io_commit_cqring(struct io_ring_ctx *ctx)
+ {
+-	if (unlikely(ctx->off_timeout_used || ctx->drain_active))
+-		__io_commit_cqring_flush(ctx);
+ 	/* order cqe stores with ring update */
+ 	smp_store_release(&ctx->rings->cq.tail, ctx->cached_cq_tail);
+ }
  
- module_platform_driver(st_rng_driver);
--- 
-2.39.2
-
++static inline void io_commit_cqring(struct io_ring_ctx *ctx)
++{
++	if (unlikely(io_commit_needs_flush(ctx)))
++		__io_commit_cqring_flush(ctx);
++	__io_commit_cqring(ctx);
++}
++
+ static inline bool io_sqring_full(struct io_ring_ctx *ctx)
+ {
+ 	struct io_rings *r = ctx->rings;
+@@ -2518,7 +2530,12 @@ static void io_iopoll_complete(struct io
+ 			io_req_free_batch(&rb, req, &ctx->submit_state);
+ 	}
+ 
+-	io_commit_cqring(ctx);
++	if (io_commit_needs_flush(ctx)) {
++		spin_lock(&ctx->completion_lock);
++		__io_commit_cqring_flush(ctx);
++		spin_unlock(&ctx->completion_lock);
++	}
++	__io_commit_cqring(ctx);
+ 	io_cqring_ev_posted_iopoll(ctx);
+ 	io_req_free_batch_finish(ctx, &rb);
+ }
 
 
