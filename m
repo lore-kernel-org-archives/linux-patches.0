@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD0C15AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:50:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9B6C433C7;
-	Tue, 25 Jul 2023 10:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE8E15AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:50:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D9BC433C8;
+	Tue, 25 Jul 2023 10:50:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282213;
-	bh=Gwuv9sdKf0MLjye6unTscqreNr2+mNE7wSo+lcCE+24=;
+	s=korg; t=1690282216;
+	bh=UVkwNolmcCjxm+hOC7M3GnXx9FXFM9MnN2iFGwm4spA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VNnoPwc7AS1e5A/kq8qCk6giDt9DBfHwNJGx7XRxDfEAoks/x0i1lJg9YR2q3cJSn
-	 bvehYhSg/vYLowhCaNGkxCux/iHQVJw4J9cXmfyirzKOhiliek6rM+ZsrH/fV9dMx7
-	 TZbmaD+dOhm++YTp3Kl29NayE76Gf0q4ZVcD9nlU=
+	b=nKTCT72UqHTmyjxSFhfzRIpoi+JiVR80tza8bYJZrLJ1snJMY/SEbB0R0JRjHn+GY
+	 B16di/wKVU5lxg1Gjm7GKOSFH3uezO5I51dy5BVebmEYJdOzhJqGSDowOJAF2oFcYk
+	 HHN/l0A9GkUYiNSd3lvb+jpmhdPHS5KwUx/KxmYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Skeggs <bskeggs@redhat.com>,
-	Karol Herbst <kherbst@redhat.com>
-Subject: [PATCH 6.4 049/227] drm/nouveau/i2c: fix number of aux event slots
-Date: Tue, 25 Jul 2023 12:43:36 +0200
-Message-ID: <20230725104516.831173243@linuxfoundation.org>
+	Zhang Yi <yizhan@redhat.com>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 6.4 050/227] drm/client: Fix memory leak in drm_client_target_cloned
+Date: Tue, 25 Jul 2023 12:43:37 +0200
+Message-ID: <20230725104516.863901716@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -34,83 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ben Skeggs <bskeggs@redhat.com>
+From: Jocelyn Falempe <jfalempe@redhat.com>
 
-commit 752a281032b2d6f4564be827e082bde6f7d2fd4f upstream.
+commit c2a88e8bdf5f6239948d75283d0ae7e0c7945b03 upstream.
 
-This was completely bogus before, using maximum DCB device index rather
-than maximum AUX ID to size the buffer that stores event refcounts.
+dmt_mode is allocated and never freed in this function.
+It was found with the ast driver, but most drivers using generic fbdev
+setup are probably affected.
 
-*Pretty* unlikely to have been an actual problem on most configurations,
-that is, unless you've got one of the rare boards that have off-chip DP.
+This fixes the following kmemleak report:
+  backtrace:
+    [<00000000b391296d>] drm_mode_duplicate+0x45/0x220 [drm]
+    [<00000000e45bb5b3>] drm_client_target_cloned.constprop.0+0x27b/0x480 [drm]
+    [<00000000ed2d3a37>] drm_client_modeset_probe+0x6bd/0xf50 [drm]
+    [<0000000010e5cc9d>] __drm_fb_helper_initial_config_and_unlock+0xb4/0x2c0 [drm_kms_helper]
+    [<00000000909f82ca>] drm_fbdev_client_hotplug+0x2bc/0x4d0 [drm_kms_helper]
+    [<00000000063a69aa>] drm_client_register+0x169/0x240 [drm]
+    [<00000000a8c61525>] ast_pci_probe+0x142/0x190 [ast]
+    [<00000000987f19bb>] local_pci_probe+0xdc/0x180
+    [<000000004fca231b>] work_for_cpu_fn+0x4e/0xa0
+    [<0000000000b85301>] process_one_work+0x8b7/0x1540
+    [<000000003375b17c>] worker_thread+0x70a/0xed0
+    [<00000000b0d43cd9>] kthread+0x29f/0x340
+    [<000000008d770833>] ret_from_fork+0x1f/0x30
+unreferenced object 0xff11000333089a00 (size 128):
 
-There, it'll likely crash.
-
-Cc: stable@vger.kernel.org # 6.4+
-Signed-off-by: Ben Skeggs <bskeggs@redhat.com>
-Reviewed-by: Karol Herbst <kherbst@redhat.com>
-Signed-off-by: Karol Herbst <kherbst@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230719044051.6975-1-skeggsb@gmail.com
+cc: <stable@vger.kernel.org>
+Fixes: 1d42bbc8f7f9 ("drm/fbdev: fix cloning on fbcon")
+Reported-by: Zhang Yi <yizhan@redhat.com>
+Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230711092203.68157-2-jfalempe@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/include/nvkm/subdev/i2c.h |  4 ++--
- drivers/gpu/drm/nouveau/nvkm/subdev/i2c/base.c    | 11 +++++++++--
- 2 files changed, 11 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/drm_client_modeset.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/nouveau/include/nvkm/subdev/i2c.h b/drivers/gpu/drm/nouveau/include/nvkm/subdev/i2c.h
-index 40a1065ae626..ef441dfdea09 100644
---- a/drivers/gpu/drm/nouveau/include/nvkm/subdev/i2c.h
-+++ b/drivers/gpu/drm/nouveau/include/nvkm/subdev/i2c.h
-@@ -16,7 +16,7 @@ struct nvkm_i2c_bus {
- 	const struct nvkm_i2c_bus_func *func;
- 	struct nvkm_i2c_pad *pad;
- #define NVKM_I2C_BUS_CCB(n) /* 'n' is ccb index */                           (n)
--#define NVKM_I2C_BUS_EXT(n) /* 'n' is dcb external encoder type */ ((n) + 0x100)
-+#define NVKM_I2C_BUS_EXT(n) /* 'n' is dcb external encoder type */  ((n) + 0x10)
- #define NVKM_I2C_BUS_PRI /* ccb primary comm. port */                        -1
- #define NVKM_I2C_BUS_SEC /* ccb secondary comm. port */                      -2
- 	int id;
-@@ -38,7 +38,7 @@ struct nvkm_i2c_aux {
- 	const struct nvkm_i2c_aux_func *func;
- 	struct nvkm_i2c_pad *pad;
- #define NVKM_I2C_AUX_CCB(n) /* 'n' is ccb index */                           (n)
--#define NVKM_I2C_AUX_EXT(n) /* 'n' is dcb external encoder type */ ((n) + 0x100)
-+#define NVKM_I2C_AUX_EXT(n) /* 'n' is dcb external encoder type */  ((n) + 0x10)
- 	int id;
+--- a/drivers/gpu/drm/drm_client_modeset.c
++++ b/drivers/gpu/drm/drm_client_modeset.c
+@@ -311,6 +311,9 @@ static bool drm_client_target_cloned(str
+ 	can_clone = true;
+ 	dmt_mode = drm_mode_find_dmt(dev, 1024, 768, 60, false);
  
- 	struct mutex mutex;
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/i2c/base.c b/drivers/gpu/drm/nouveau/nvkm/subdev/i2c/base.c
-index 976539de4220..731b2f68d3db 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/i2c/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/i2c/base.c
-@@ -260,10 +260,11 @@ nvkm_i2c_new_(const struct nvkm_i2c_func *func, struct nvkm_device *device,
- {
- 	struct nvkm_bios *bios = device->bios;
- 	struct nvkm_i2c *i2c;
-+	struct nvkm_i2c_aux *aux;
- 	struct dcb_i2c_entry ccbE;
- 	struct dcb_output dcbE;
- 	u8 ver, hdr;
--	int ret, i;
-+	int ret, i, ids;
- 
- 	if (!(i2c = *pi2c = kzalloc(sizeof(*i2c), GFP_KERNEL)))
- 		return -ENOMEM;
-@@ -406,5 +407,11 @@ nvkm_i2c_new_(const struct nvkm_i2c_func *func, struct nvkm_device *device,
- 		}
- 	}
- 
--	return nvkm_event_init(&nvkm_i2c_intr_func, &i2c->subdev, 4, i, &i2c->event);
-+	ids = 0;
-+	list_for_each_entry(aux, &i2c->aux, head)
-+		ids = max(ids, aux->id + 1);
-+	if (!ids)
-+		return 0;
++	if (!dmt_mode)
++		goto fail;
 +
-+	return nvkm_event_init(&nvkm_i2c_intr_func, &i2c->subdev, 4, ids, &i2c->event);
+ 	for (i = 0; i < connector_count; i++) {
+ 		if (!enabled[i])
+ 			continue;
+@@ -326,11 +329,13 @@ static bool drm_client_target_cloned(str
+ 		if (!modes[i])
+ 			can_clone = false;
+ 	}
++	kfree(dmt_mode);
+ 
+ 	if (can_clone) {
+ 		DRM_DEBUG_KMS("can clone using 1024x768\n");
+ 		return true;
+ 	}
++fail:
+ 	DRM_INFO("kms: can't enable cloning when we probably wanted to.\n");
+ 	return false;
  }
--- 
-2.41.0
-
 
 
