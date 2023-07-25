@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A4C1ED4D
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:43:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34924C433C7;
-	Tue, 25 Jul 2023 11:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8EE1ED4D
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:43:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F358AC433C8;
+	Tue, 25 Jul 2023 11:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285392;
-	bh=WxoOYF56tYy/ZrNceZOrgG786rXMdVj5fr7mUVLNFI4=;
+	s=korg; t=1690285395;
+	bh=0Jm4zx8cDj7Rrq7616P1VosLIs8lMzFLzQhk6QmwGuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B7052Ke9lV66HQHAc3MD2zIqotV60OUe2OFmCVuUxzgBB8O4enFjF3N/AZc1gvaj2
-	 7xqQjQRYaalwSZ6uYW/7MhwnArRg/TsPpEWD0YdF7pbxUTDRIUHxCbPkhvyuqCt4YN
-	 CKT8g/7Vm3QWCkctPtppmemQzpB///ndGyEb5OKw=
+	b=MiPLF0LQP2Xm04ZS72A8aXin/bSNPU4vQ21y57M+rv9l7LGYLfZMXsVllirljtEKs
+	 A/6LgBfkMbDR7CHVfsxabOLr3pUc+mVS9wQPAZTF1kbaRuu9p9fLGg9Oup0YH+/+H0
+	 KUdzSVwbRMgQmpSA73VAiH0+xmV1SZmARFlK+OcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Hancock <robert.hancock@calian.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 160/313] i2c: xiic: Dont try to handle more interrupt events after error
-Date: Tue, 25 Jul 2023 12:45:13 +0200
-Message-ID: <20230725104527.880689224@linuxfoundation.org>
+Subject: [PATCH 5.4 161/313] ALSA: jack: Fix mutex call in snd_jack_report()
+Date: Tue, 25 Jul 2023 12:45:14 +0200
+Message-ID: <20230725104527.921712273@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -36,58 +36,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Hancock <robert.hancock@calian.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit cb6e45c9a0ad9e0f8664fd06db0227d185dc76ab ]
+[ Upstream commit 89dbb335cb6a627a4067bc42caa09c8bc3326d40 ]
 
-In xiic_process, it is possible that error events such as arbitration
-lost or TX error can be raised in conjunction with other interrupt flags
-such as TX FIFO empty or bus not busy. Error events result in the
-controller being reset and the error returned to the calling request,
-but the function could potentially try to keep handling the other
-events, such as by writing more messages into the TX FIFO. Since the
-transaction has already failed, this is not helpful and will just cause
-issues.
+snd_jack_report() is supposed to be callable from an IRQ context, too,
+and it's indeed used in that way from virtsnd driver.  The fix for
+input_dev race in commit 1b6a6fc5280e ("ALSA: jack: Access input_dev
+under mutex"), however, introduced a mutex lock in snd_jack_report(),
+and this resulted in a potential sleep-in-atomic.
 
-This problem has been present ever since:
+For addressing that problem, this patch changes the relevant code to
+use the object get/put and removes the mutex usage.  That is,
+snd_jack_report(), it takes input_get_device() and leaves with
+input_put_device() for assuring the input_dev being assigned.
 
-commit 7f9906bd7f72 ("i2c: xiic: Service all interrupts in isr")
+Although the whole mutex could be reduced, we keep it because it can
+be still a protection for potential races between creation and
+deletion.
 
-which allowed non-error events to be handled after errors, but became
-more obvious after:
-
-commit 743e227a8959 ("i2c: xiic: Defer xiic_wakeup() and
-__xiic_start_xfer() in xiic_process()")
-
-which reworked the code to add a WARN_ON which triggers if both the
-xfer_more and wakeup_req flags were set, since this combination is
-not supposed to happen, but was occurring in this scenario.
-
-Skip further interrupt handling after error flags are detected to avoid
-this problem.
-
-Fixes: 7f9906bd7f72 ("i2c: xiic: Service all interrupts in isr")
-Signed-off-by: Robert Hancock <robert.hancock@calian.com>
-Acked-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Fixes: 1b6a6fc5280e ("ALSA: jack: Access input_dev under mutex")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/cf95f7fe-a748-4990-8378-000491b40329@moroto.mountain
+Tested-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230706155357.3470-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-xiic.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/core/jack.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
-index c3fcaf5decc74..6bcb46cc28cdf 100644
---- a/drivers/i2c/busses/i2c-xiic.c
-+++ b/drivers/i2c/busses/i2c-xiic.c
-@@ -400,6 +400,8 @@ static irqreturn_t xiic_process(int irq, void *dev_id)
- 			wakeup_req = 1;
- 			wakeup_code = STATE_ERROR;
- 		}
-+		/* don't try to handle other events */
-+		goto out;
+diff --git a/sound/core/jack.c b/sound/core/jack.c
+index e7ac82d468216..c2022b13fddc9 100644
+--- a/sound/core/jack.c
++++ b/sound/core/jack.c
+@@ -364,6 +364,7 @@ void snd_jack_report(struct snd_jack *jack, int status)
+ {
+ 	struct snd_jack_kctl *jack_kctl;
+ #ifdef CONFIG_SND_JACK_INPUT_DEV
++	struct input_dev *idev;
+ 	int i;
+ #endif
+ 
+@@ -375,30 +376,28 @@ void snd_jack_report(struct snd_jack *jack, int status)
+ 					    status & jack_kctl->mask_bits);
+ 
+ #ifdef CONFIG_SND_JACK_INPUT_DEV
+-	mutex_lock(&jack->input_dev_lock);
+-	if (!jack->input_dev) {
+-		mutex_unlock(&jack->input_dev_lock);
++	idev = input_get_device(jack->input_dev);
++	if (!idev)
+ 		return;
+-	}
+ 
+ 	for (i = 0; i < ARRAY_SIZE(jack->key); i++) {
+ 		int testbit = SND_JACK_BTN_0 >> i;
+ 
+ 		if (jack->type & testbit)
+-			input_report_key(jack->input_dev, jack->key[i],
++			input_report_key(idev, jack->key[i],
+ 					 status & testbit);
  	}
- 	if (pend & XIIC_INTR_RX_FULL_MASK) {
- 		/* Receive register/FIFO is full */
+ 
+ 	for (i = 0; i < ARRAY_SIZE(jack_switch_types); i++) {
+ 		int testbit = 1 << i;
+ 		if (jack->type & testbit)
+-			input_report_switch(jack->input_dev,
++			input_report_switch(idev,
+ 					    jack_switch_types[i],
+ 					    status & testbit);
+ 	}
+ 
+-	input_sync(jack->input_dev);
+-	mutex_unlock(&jack->input_dev_lock);
++	input_sync(idev);
++	input_put_device(idev);
+ #endif /* CONFIG_SND_JACK_INPUT_DEV */
+ }
+ EXPORT_SYMBOL(snd_jack_report);
 -- 
 2.39.2
 
