@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7481ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:24:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4141CC433C8;
-	Tue, 25 Jul 2023 11:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8399B1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:24:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05C5CC433C8;
+	Tue, 25 Jul 2023 11:24:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284285;
-	bh=rf+1gI0LLedOGo4MgaprYi2hs1BWYASYfIho4UBy+MA=;
+	s=korg; t=1690284288;
+	bh=/qWJng5jEq1NWC8v/HXTW4fqXz0ACcuIAK+LqHxErho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GKez2KDStgFayBrK5SO428DapMjhgCwS2uY0HeHPWtmfFR27dbbmywoc6NNcHuxt9
-	 WpSX5MyXYCGp00BCV5QLraML741X5PlbbbvXd+KyoaUAcB1/zqmqg33SsRDfX7amaf
-	 yy+6SIjyLUP08p+GoOrmgPgBuz1zwlEFy8NWa5G8=
+	b=jiVrIRRXPhIKoIvSk0y3ZGD2yGDbEBRGI9Bnp6BWD80fFtVd/OTKKZOjHD78ywPyT
+	 yFXb52gp0lgN9a4RAm0TlYH58/Ce9b9/8Ib43WWnF0lqjABOK5YACk/wtshq4p/ig0
+	 Oqa8okHdirO29o8npTnXsQZwpIkUyabY774/s99s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.10 301/509] btrfs: fix race when deleting quota root from the dirty cow roots list
-Date: Tue, 25 Jul 2023 12:44:00 +0200
-Message-ID: <20230725104607.528109388@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	stable@kernel.org,
+	Ricardo Ribalda Delgado <ribalda@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 302/509] ASoC: mediatek: mt8173: Fix irq error path
+Date: Tue, 25 Jul 2023 12:44:01 +0200
+Message-ID: <20230725104607.570888736@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -34,84 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Ricardo Ribalda Delgado <ribalda@chromium.org>
 
-commit b31cb5a6eb7a48b0a7bfdf06832b1fd5088d8c79 upstream.
+commit f9c058d14f4fe23ef523a7ff73734d51c151683c upstream.
 
-When disabling quotas we are deleting the quota root from the list
-fs_info->dirty_cowonly_roots without taking the lock that protects it,
-which is struct btrfs_fs_info::trans_lock. This unsynchronized list
-manipulation may cause chaos if there's another concurrent manipulation
-of this list, such as when adding a root to it with
-ctree.c:add_root_to_dirty_list().
+After reordering the irq probe, the error path was not properly done.
+Lets fix it.
 
-This can result in all sorts of weird failures caused by a race, such as
-the following crash:
-
-  [337571.278245] general protection fault, probably for non-canonical address 0xdead000000000108: 0000 [#1] PREEMPT SMP PTI
-  [337571.278933] CPU: 1 PID: 115447 Comm: btrfs Tainted: G        W          6.4.0-rc6-btrfs-next-134+ #1
-  [337571.279153] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
-  [337571.279572] RIP: 0010:commit_cowonly_roots+0x11f/0x250 [btrfs]
-  [337571.279928] Code: 85 38 06 00 (...)
-  [337571.280363] RSP: 0018:ffff9f63446efba0 EFLAGS: 00010206
-  [337571.280582] RAX: ffff942d98ec2638 RBX: ffff9430b82b4c30 RCX: 0000000449e1c000
-  [337571.280798] RDX: dead000000000100 RSI: ffff9430021e4900 RDI: 0000000000036070
-  [337571.281015] RBP: ffff942d98ec2000 R08: ffff942d98ec2000 R09: 000000000000015b
-  [337571.281254] R10: 0000000000000009 R11: 0000000000000001 R12: ffff942fe8fbf600
-  [337571.281476] R13: ffff942dabe23040 R14: ffff942dabe20800 R15: ffff942d92cf3b48
-  [337571.281723] FS:  00007f478adb7340(0000) GS:ffff94349fa40000(0000) knlGS:0000000000000000
-  [337571.281950] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [337571.282184] CR2: 00007f478ab9a3d5 CR3: 000000001e02c001 CR4: 0000000000370ee0
-  [337571.282416] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-  [337571.282647] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-  [337571.282874] Call Trace:
-  [337571.283101]  <TASK>
-  [337571.283327]  ? __die_body+0x1b/0x60
-  [337571.283570]  ? die_addr+0x39/0x60
-  [337571.283796]  ? exc_general_protection+0x22e/0x430
-  [337571.284022]  ? asm_exc_general_protection+0x22/0x30
-  [337571.284251]  ? commit_cowonly_roots+0x11f/0x250 [btrfs]
-  [337571.284531]  btrfs_commit_transaction+0x42e/0xf90 [btrfs]
-  [337571.284803]  ? _raw_spin_unlock+0x15/0x30
-  [337571.285031]  ? release_extent_buffer+0x103/0x130 [btrfs]
-  [337571.285305]  reset_balance_state+0x152/0x1b0 [btrfs]
-  [337571.285578]  btrfs_balance+0xa50/0x11e0 [btrfs]
-  [337571.285864]  ? __kmem_cache_alloc_node+0x14a/0x410
-  [337571.286086]  btrfs_ioctl+0x249a/0x3320 [btrfs]
-  [337571.286358]  ? mod_objcg_state+0xd2/0x360
-  [337571.286577]  ? refill_obj_stock+0xb0/0x160
-  [337571.286798]  ? seq_release+0x25/0x30
-  [337571.287016]  ? __rseq_handle_notify_resume+0x3ba/0x4b0
-  [337571.287235]  ? percpu_counter_add_batch+0x2e/0xa0
-  [337571.287455]  ? __x64_sys_ioctl+0x88/0xc0
-  [337571.287675]  __x64_sys_ioctl+0x88/0xc0
-  [337571.287901]  do_syscall_64+0x38/0x90
-  [337571.288126]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
-  [337571.288352] RIP: 0033:0x7f478aaffe9b
-
-So fix this by locking struct btrfs_fs_info::trans_lock before deleting
-the quota root from that list.
-
-Fixes: bed92eae26cc ("Btrfs: qgroup implementation and prototypes")
-CC: stable@vger.kernel.org # 4.14+
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: stable@kernel.org
+Fixes: 4cbb264d4e91 ("ASoC: mediatek: mt8173: Enable IRQ when pdata is ready")
+Signed-off-by: Ricardo Ribalda Delgado <ribalda@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230612-mt8173-fixup-v2-2-432aa99ce24d@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/qgroup.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/mediatek/mt8173/mt8173-afe-pcm.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -1270,7 +1270,9 @@ int btrfs_quota_disable(struct btrfs_fs_
- 		goto out;
+--- a/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
++++ b/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
+@@ -1072,6 +1072,10 @@ static int mt8173_afe_pcm_dev_probe(stru
+ 
+ 	afe->dev = &pdev->dev;
+ 
++	irq_id = platform_get_irq(pdev, 0);
++	if (irq_id <= 0)
++		return irq_id < 0 ? irq_id : -ENXIO;
++
+ 	afe->base_addr = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(afe->base_addr))
+ 		return PTR_ERR(afe->base_addr);
+@@ -1177,14 +1181,11 @@ static int mt8173_afe_pcm_dev_probe(stru
+ 	if (ret)
+ 		goto err_cleanup_components;
+ 
+-	irq_id = platform_get_irq(pdev, 0);
+-	if (irq_id <= 0)
+-		return irq_id < 0 ? irq_id : -ENXIO;
+ 	ret = devm_request_irq(afe->dev, irq_id, mt8173_afe_irq_handler,
+ 			       0, "Afe_ISR_Handle", (void *)afe);
+ 	if (ret) {
+ 		dev_err(afe->dev, "could not request_irq\n");
+-		goto err_pm_disable;
++		goto err_cleanup_components;
  	}
  
-+	spin_lock(&fs_info->trans_lock);
- 	list_del(&quota_root->dirty_list);
-+	spin_unlock(&fs_info->trans_lock);
- 
- 	btrfs_tree_lock(quota_root->node);
- 	btrfs_clean_tree_block(quota_root->node);
+ 	dev_info(&pdev->dev, "MT8173 AFE driver initialized.\n");
 
 
