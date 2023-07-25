@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5AE1ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:39:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1501C433C8;
-	Tue, 25 Jul 2023 11:39:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6601ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:39:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEFA1C433C8;
+	Tue, 25 Jul 2023 11:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285180;
-	bh=SiT7wg+SW9p5jaHdr/jHcU7/TZiwfsNFTH59k0/g17s=;
+	s=korg; t=1690285183;
+	bh=36xunk0bCtU8L7nauYx48DMxyHj6svzZAjQ5zjRTUT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zQ0FbgjcuFiPKEHZRNq2pylVfh/nhKM7UZ6sWLII6a27C6RQsL/enG6ABv072TiJ1
-	 Msu0GtDuyAhMY8tlhfFuWKT2GAtXJrYMPi2szFm+Ebj2MVbJzxNhXdE3syze5olmNS
-	 FC9nPCwG7bBoANoK9G9yAtW5Aq2m38shzsQPEaDI=
+	b=g25krBOROicMJ5dIR+Xcv/VxAXERJXqcFwQMMSY4pmu6jBNnZpBieocl+SQ/INfez
+	 REO47KqT7wWj/74OVdM/SiAD/QVeviE73kT5EWQEZXlnzetoUQnRL4hGzO1Sn+FiCu
+	 Ln2gaJGETbvQxQwaYWnduXKPt9/CRauwZsjukFOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Eric Biggers <ebiggers@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 112/313] modpost: fix section mismatch message for R_ARM_{PC24,CALL,JUMP24}
-Date: Tue, 25 Jul 2023 12:44:25 +0200
-Message-ID: <20230725104525.858054866@linuxfoundation.org>
+Subject: [PATCH 5.4 113/313] crypto: skcipher - unify the crypto_has_skcipher*() functions
+Date: Tue, 25 Jul 2023 12:44:26 +0200
+Message-ID: <20230725104525.907419883@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -34,104 +35,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit 56a24b8ce6a7f9c4a21b2276a8644f6f3d8fc14d ]
+[ Upstream commit d3ca75a8b3d77f2788e6c119ea7c3e3a1ab1e1ca ]
 
-addend_arm_rel() processes R_ARM_PC24, R_ARM_CALL, R_ARM_JUMP24 in a
-wrong way.
+crypto_has_skcipher() and crypto_has_skcipher2() do the same thing: they
+check for the availability of an algorithm of type skcipher, blkcipher,
+or ablkcipher, which also meets any non-type constraints the caller
+specified.  And they have exactly the same prototype.
 
-Here, test code.
+Therefore, eliminate the redundancy by removing crypto_has_skcipher()
+and renaming crypto_has_skcipher2() to crypto_has_skcipher().
 
-[test code for R_ARM_JUMP24]
-
-  .section .init.text,"ax"
-  bar:
-          bx      lr
-
-  .section .text,"ax"
-  .globl foo
-  foo:
-          b       bar
-
-[test code for R_ARM_CALL]
-
-  .section .init.text,"ax"
-  bar:
-          bx      lr
-
-  .section .text,"ax"
-  .globl foo
-  foo:
-          push    {lr}
-          bl      bar
-          pop     {pc}
-
-If you compile it with ARM multi_v7_defconfig, modpost will show the
-symbol name, (unknown).
-
-  WARNING: modpost: vmlinux.o: section mismatch in reference: foo (section: .text) -> (unknown) (section: .init.text)
-
-(You need to use GNU linker instead of LLD to reproduce it.)
-
-Fix the code to make modpost show the correct symbol name.
-
-I imported (with adjustment) sign_extend32() from include/linux/bitops.h.
-
-The '+8' is the compensation for pc-relative instruction. It is
-documented in "ELF for the Arm Architecture" [1].
-
-  "If the relocation is pc-relative then compensation for the PC bias
-  (the PC value is 8 bytes ahead of the executing instruction in Arm
-  state and 4 bytes in Thumb state) must be encoded in the relocation
-  by the object producer."
-
-[1]: https://github.com/ARM-software/abi-aa/blob/main/aaelf32/aaelf32.rst
-
-Fixes: 56a974fa2d59 ("kbuild: make better section mismatch reports on arm")
-Fixes: 6e2e340b59d2 ("ARM: 7324/1: modpost: Fix section warnings for ARM for many compilers")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: efbc7764c444 ("crypto: marvell/cesa - Fix type mismatch warning")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/modpost.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ crypto/skcipher.c         |  4 ++--
+ include/crypto/skcipher.h | 19 +------------------
+ 2 files changed, 3 insertions(+), 20 deletions(-)
 
-diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index ad955c45d7a53..75d76b8f50302 100644
---- a/scripts/mod/modpost.c
-+++ b/scripts/mod/modpost.c
-@@ -1812,12 +1812,20 @@ static int addend_386_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
- #define	R_ARM_THM_JUMP19	51
- #endif
+diff --git a/crypto/skcipher.c b/crypto/skcipher.c
+index 22753c1c72022..233678d078169 100644
+--- a/crypto/skcipher.c
++++ b/crypto/skcipher.c
+@@ -1017,12 +1017,12 @@ struct crypto_sync_skcipher *crypto_alloc_sync_skcipher(
+ }
+ EXPORT_SYMBOL_GPL(crypto_alloc_sync_skcipher);
  
-+static int32_t sign_extend32(int32_t value, int index)
-+{
-+	uint8_t shift = 31 - index;
-+
-+	return (int32_t)(value << shift) >> shift;
-+}
-+
- static int addend_arm_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
+-int crypto_has_skcipher2(const char *alg_name, u32 type, u32 mask)
++int crypto_has_skcipher(const char *alg_name, u32 type, u32 mask)
  {
- 	unsigned int r_typ = ELF_R_TYPE(r->r_info);
- 	Elf_Sym *sym = elf->symtab_start + ELF_R_SYM(r->r_info);
- 	void *loc = reloc_location(elf, sechdr, r);
- 	uint32_t inst;
-+	int32_t offset;
+ 	return crypto_type_has_alg(alg_name, &crypto_skcipher_type2,
+ 				   type, mask);
+ }
+-EXPORT_SYMBOL_GPL(crypto_has_skcipher2);
++EXPORT_SYMBOL_GPL(crypto_has_skcipher);
  
- 	switch (r_typ) {
- 	case R_ARM_ABS32:
-@@ -1827,6 +1835,10 @@ static int addend_arm_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
- 	case R_ARM_PC24:
- 	case R_ARM_CALL:
- 	case R_ARM_JUMP24:
-+		inst = TO_NATIVE(*(uint32_t *)loc);
-+		offset = sign_extend32((inst & 0x00ffffff) << 2, 25);
-+		r->r_addend = offset + sym->st_value + 8;
-+		break;
- 	case R_ARM_THM_CALL:
- 	case R_ARM_THM_JUMP24:
- 	case R_ARM_THM_JUMP19:
+ static int skcipher_prepare_alg(struct skcipher_alg *alg)
+ {
+diff --git a/include/crypto/skcipher.h b/include/crypto/skcipher.h
+index 0bce6005d325d..6514e32e7c2fd 100644
+--- a/include/crypto/skcipher.h
++++ b/include/crypto/skcipher.h
+@@ -220,30 +220,13 @@ static inline void crypto_free_sync_skcipher(struct crypto_sync_skcipher *tfm)
+  * crypto_has_skcipher() - Search for the availability of an skcipher.
+  * @alg_name: is the cra_name / name or cra_driver_name / driver name of the
+  *	      skcipher
+- * @type: specifies the type of the cipher
+- * @mask: specifies the mask for the cipher
+- *
+- * Return: true when the skcipher is known to the kernel crypto API; false
+- *	   otherwise
+- */
+-static inline int crypto_has_skcipher(const char *alg_name, u32 type,
+-					u32 mask)
+-{
+-	return crypto_has_alg(alg_name, crypto_skcipher_type(type),
+-			      crypto_skcipher_mask(mask));
+-}
+-
+-/**
+- * crypto_has_skcipher2() - Search for the availability of an skcipher.
+- * @alg_name: is the cra_name / name or cra_driver_name / driver name of the
+- *	      skcipher
+  * @type: specifies the type of the skcipher
+  * @mask: specifies the mask for the skcipher
+  *
+  * Return: true when the skcipher is known to the kernel crypto API; false
+  *	   otherwise
+  */
+-int crypto_has_skcipher2(const char *alg_name, u32 type, u32 mask);
++int crypto_has_skcipher(const char *alg_name, u32 type, u32 mask);
+ 
+ static inline const char *crypto_skcipher_driver_name(
+ 	struct crypto_skcipher *tfm)
 -- 
 2.39.2
 
