@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5CDB14263
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:56:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3220CC433C8;
-	Tue, 25 Jul 2023 10:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B63414263
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:56:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1664C433C8;
+	Tue, 25 Jul 2023 10:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282572;
-	bh=9AB+ocDjifGOrKZcWMOMmB0GOz/87uK0rOP0S0Vz0DY=;
+	s=korg; t=1690282575;
+	bh=1ya9FReZrp0uhli1J8I65X06sI6RJIIFU2P4NpZ2Uqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vF0vkUeOh+6Ws37Etajnq9is4xKTEZz2ub8cXEs/PFj5nRtYhnuMXEl0wq8/gmb5U
-	 G88/zlqfn4qM7hpOXAITfnTBgnQZwkt/LqzPyw551vFbTjwVq2uwq0icYw+5sHQtjN
-	 39GqXGMOZbv5khrry7Dp0p9pqTMK9YM30m+fVoSg=
+	b=CdGSUEhqIPcKe7+IAfzLTnRaIaAUTVuwT4ZTNoCyGWZPb+bnpTRfIz+oEAo4Gjs/n
+	 rLAGlPDO73dBpvLCbNOgjq71UBWT5YpjbxVMxwa6oieF8B9XGHMhDYFB4/UT+ZaWnL
+	 Lbt9Rni/0xj2OaFhiopHYW3StWccXhU9miRrHznU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abaci Robot <abaci@linux.alibaba.com>,
-	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 177/227] security: keys: Modify mismatched function name
-Date: Tue, 25 Jul 2023 12:45:44 +0200
-Message-ID: <20230725104522.174997893@linuxfoundation.org>
+Subject: [PATCH 6.4 178/227] vrf: Fix lockdep splat in output path
+Date: Tue, 25 Jul 2023 12:45:45 +0200
+Message-ID: <20230725104522.204982756@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -37,38 +38,154 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 2a4152742025c5f21482e8cebc581702a0fa5b01 ]
+[ Upstream commit 2033ab90380d46e0e9f0520fd6776a73d107fd95 ]
 
-No functional modification involved.
+Cited commit converted the neighbour code to use the standard RCU
+variant instead of the RCU-bh variant, but the VRF code still uses
+rcu_read_lock_bh() / rcu_read_unlock_bh() around the neighbour lookup
+code in its IPv4 and IPv6 output paths, resulting in lockdep splats
+[1][2]. Can be reproduced using [3].
 
-security/keys/trusted-keys/trusted_tpm2.c:203: warning: expecting prototype for tpm_buf_append_auth(). Prototype was for tpm2_buf_append_auth() instead.
+Fix by switching to rcu_read_lock() / rcu_read_unlock().
 
-Fixes: 2e19e10131a0 ("KEYS: trusted: Move TPM2 trusted keys code")
-Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=5524
-Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
-Reviewed-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+[1]
+=============================
+WARNING: suspicious RCU usage
+6.5.0-rc1-custom-g9c099e6dbf98 #403 Not tainted
+-----------------------------
+include/net/neighbour.h:302 suspicious rcu_dereference_check() usage!
+
+other info that might help us debug this:
+
+rcu_scheduler_active = 2, debug_locks = 1
+2 locks held by ping/183:
+ #0: ffff888105ea1d80 (sk_lock-AF_INET){+.+.}-{0:0}, at: raw_sendmsg+0xc6c/0x33c0
+ #1: ffffffff85b46820 (rcu_read_lock_bh){....}-{1:2}, at: vrf_output+0x2e3/0x2030
+
+stack backtrace:
+CPU: 0 PID: 183 Comm: ping Not tainted 6.5.0-rc1-custom-g9c099e6dbf98 #403
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-1.fc37 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xc1/0xf0
+ lockdep_rcu_suspicious+0x211/0x3b0
+ vrf_output+0x1380/0x2030
+ ip_push_pending_frames+0x125/0x2a0
+ raw_sendmsg+0x200d/0x33c0
+ inet_sendmsg+0xa2/0xe0
+ __sys_sendto+0x2aa/0x420
+ __x64_sys_sendto+0xe5/0x1c0
+ do_syscall_64+0x38/0x80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+[2]
+=============================
+WARNING: suspicious RCU usage
+6.5.0-rc1-custom-g9c099e6dbf98 #403 Not tainted
+-----------------------------
+include/net/neighbour.h:302 suspicious rcu_dereference_check() usage!
+
+other info that might help us debug this:
+
+rcu_scheduler_active = 2, debug_locks = 1
+2 locks held by ping6/182:
+ #0: ffff888114b63000 (sk_lock-AF_INET6){+.+.}-{0:0}, at: rawv6_sendmsg+0x1602/0x3e50
+ #1: ffffffff85b46820 (rcu_read_lock_bh){....}-{1:2}, at: vrf_output6+0xe9/0x1310
+
+stack backtrace:
+CPU: 0 PID: 182 Comm: ping6 Not tainted 6.5.0-rc1-custom-g9c099e6dbf98 #403
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-1.fc37 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xc1/0xf0
+ lockdep_rcu_suspicious+0x211/0x3b0
+ vrf_output6+0xd32/0x1310
+ ip6_local_out+0xb4/0x1a0
+ ip6_send_skb+0xbc/0x340
+ ip6_push_pending_frames+0xe5/0x110
+ rawv6_sendmsg+0x2e6e/0x3e50
+ inet_sendmsg+0xa2/0xe0
+ __sys_sendto+0x2aa/0x420
+ __x64_sys_sendto+0xe5/0x1c0
+ do_syscall_64+0x38/0x80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+[3]
+#!/bin/bash
+
+ip link add name vrf-red up numtxqueues 2 type vrf table 10
+ip link add name swp1 up master vrf-red type dummy
+ip address add 192.0.2.1/24 dev swp1
+ip address add 2001:db8:1::1/64 dev swp1
+ip neigh add 192.0.2.2 lladdr 00:11:22:33:44:55 nud perm dev swp1
+ip neigh add 2001:db8:1::2 lladdr 00:11:22:33:44:55 nud perm dev swp1
+ip vrf exec vrf-red ping 192.0.2.2 -c 1 &> /dev/null
+ip vrf exec vrf-red ping6 2001:db8:1::2 -c 1 &> /dev/null
+
+Fixes: 09eed1192cec ("neighbour: switch to standard rcu, instead of rcu_bh")
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Link: https://lore.kernel.org/netdev/CA+G9fYtEr-=GbcXNDYo3XOkwR+uYgehVoDjsP0pFLUpZ_AZcyg@mail.gmail.com/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230715153605.4068066-1-idosch@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/trusted-keys/trusted_tpm2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/vrf.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/security/keys/trusted-keys/trusted_tpm2.c b/security/keys/trusted-keys/trusted_tpm2.c
-index 2b2c8eb258d5b..bc700f85f80be 100644
---- a/security/keys/trusted-keys/trusted_tpm2.c
-+++ b/security/keys/trusted-keys/trusted_tpm2.c
-@@ -186,7 +186,7 @@ int tpm2_key_priv(void *context, size_t hdrlen,
- }
+diff --git a/drivers/net/vrf.c b/drivers/net/vrf.c
+index bdb3a76a352e4..6043e63b42f97 100644
+--- a/drivers/net/vrf.c
++++ b/drivers/net/vrf.c
+@@ -664,7 +664,7 @@ static int vrf_finish_output6(struct net *net, struct sock *sk,
+ 	skb->protocol = htons(ETH_P_IPV6);
+ 	skb->dev = dev;
  
- /**
-- * tpm_buf_append_auth() - append TPMS_AUTH_COMMAND to the buffer.
-+ * tpm2_buf_append_auth() - append TPMS_AUTH_COMMAND to the buffer.
-  *
-  * @buf: an allocated tpm_buf instance
-  * @session_handle: session handle
+-	rcu_read_lock_bh();
++	rcu_read_lock();
+ 	nexthop = rt6_nexthop((struct rt6_info *)dst, &ipv6_hdr(skb)->daddr);
+ 	neigh = __ipv6_neigh_lookup_noref(dst->dev, nexthop);
+ 	if (unlikely(!neigh))
+@@ -672,10 +672,10 @@ static int vrf_finish_output6(struct net *net, struct sock *sk,
+ 	if (!IS_ERR(neigh)) {
+ 		sock_confirm_neigh(skb, neigh);
+ 		ret = neigh_output(neigh, skb, false);
+-		rcu_read_unlock_bh();
++		rcu_read_unlock();
+ 		return ret;
+ 	}
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
+ 
+ 	IP6_INC_STATS(dev_net(dst->dev),
+ 		      ip6_dst_idev(dst), IPSTATS_MIB_OUTNOROUTES);
+@@ -889,7 +889,7 @@ static int vrf_finish_output(struct net *net, struct sock *sk, struct sk_buff *s
+ 		}
+ 	}
+ 
+-	rcu_read_lock_bh();
++	rcu_read_lock();
+ 
+ 	neigh = ip_neigh_for_gw(rt, skb, &is_v6gw);
+ 	if (!IS_ERR(neigh)) {
+@@ -898,11 +898,11 @@ static int vrf_finish_output(struct net *net, struct sock *sk, struct sk_buff *s
+ 		sock_confirm_neigh(skb, neigh);
+ 		/* if crossing protocols, can not use the cached header */
+ 		ret = neigh_output(neigh, skb, is_v6gw);
+-		rcu_read_unlock_bh();
++		rcu_read_unlock();
+ 		return ret;
+ 	}
+ 
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
+ 	vrf_tx_error(skb->dev, skb);
+ 	return -EINVAL;
+ }
 -- 
 2.39.2
 
