@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF76A1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:30:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC4BC433C7;
-	Tue, 25 Jul 2023 11:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6811ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:30:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26858C433C7;
+	Tue, 25 Jul 2023 11:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284626;
-	bh=kYfjBfpg127aEw0UjikM7Tord5pzcpe0kBi/voQBIds=;
+	s=korg; t=1690284629;
+	bh=n94wn2fRCgx71sDS1DsBOFCyDTiChA3lMIo+hAjQ6b8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bSqdhGw8a/Q2TAe3B7sIBywY1LzHQelDcgHkPjO/M5CBHs2pwi03RFzWRI8+ghvQm
-	 twmc5mhxL9Ux3iqA9Ml34wtqFjppKb+XsQiuvzdBlQ7LCZKaN/BzzraVLjkzszMp+6
-	 iSAl1YoGB6WwOKylQ3foCOztv07CZfpiVSkeY36Q=
+	b=fbL7lrzTCuokzSlGUupHpT2YDQ2Btz8fTa4D44JblrnK14x67HPsLlTFp/W8LquBW
+	 94MxrzxlKZoAb6gJrPZCE7OI9FOAH/RRHAbIiAhZAmWWYhS8D+62ms57EjMJvDS/C8
+	 ryCqZc9ReYVbr3GBaGgMGZ5qCpXoEE7NhulNcQFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Song Liu <song@kernel.org>,
-	Jason Baron <jbaron@akamai.com>
-Subject: [PATCH 5.10 406/509] md/raid0: add discard support for the original layout
-Date: Tue, 25 Jul 2023 12:45:45 +0200
-Message-ID: <20230725104612.312839228@linuxfoundation.org>
+	Krister Johansen <kjlx@templeofstupid.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Shay Agroskin <shayagr@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 424/509] net: ena: fix shift-out-of-bounds in exponential backoff
+Date: Tue, 25 Jul 2023 12:46:03 +0200
+Message-ID: <20230725104613.091731741@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,203 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Baron <jbaron@akamai.com>
+From: Krister Johansen <kjlx@templeofstupid.com>
 
-commit e836007089ba8fdf24e636ef2b007651fb4582e6 upstream.
+commit 1e9cb763e9bacf0c932aa948f50dcfca6f519a26 upstream.
 
-We've found that using raid0 with the 'original' layout and discard
-enabled with different disk sizes (such that at least two zones are
-created) can result in data corruption. This is due to the fact that
-the discard handling in 'raid0_handle_discard()' assumes the 'alternate'
-layout. We've seen this corruption using ext4 but other filesystems are
-likely susceptible as well.
+The ENA adapters on our instances occasionally reset.  Once recently
+logged a UBSAN failure to console in the process:
 
-More specifically, while multiple zones are necessary to create the
-corruption, the corruption may not occur with multiple zones if they
-layout in such a way the layout matches what the 'alternate' layout
-would have produced. Thus, not all raid0 devices with the 'original'
-layout, different size disks and discard enabled will encounter this
-corruption.
+  UBSAN: shift-out-of-bounds in build/linux/drivers/net/ethernet/amazon/ena/ena_com.c:540:13
+  shift exponent 32 is too large for 32-bit type 'unsigned int'
+  CPU: 28 PID: 70012 Comm: kworker/u72:2 Kdump: loaded not tainted 5.15.117
+  Hardware name: Amazon EC2 c5d.9xlarge/, BIOS 1.0 10/16/2017
+  Workqueue: ena ena_fw_reset_device [ena]
+  Call Trace:
+  <TASK>
+  dump_stack_lvl+0x4a/0x63
+  dump_stack+0x10/0x16
+  ubsan_epilogue+0x9/0x36
+  __ubsan_handle_shift_out_of_bounds.cold+0x61/0x10e
+  ? __const_udelay+0x43/0x50
+  ena_delay_exponential_backoff_us.cold+0x16/0x1e [ena]
+  wait_for_reset_state+0x54/0xa0 [ena]
+  ena_com_dev_reset+0xc8/0x110 [ena]
+  ena_down+0x3fe/0x480 [ena]
+  ena_destroy_device+0xeb/0xf0 [ena]
+  ena_fw_reset_device+0x30/0x50 [ena]
+  process_one_work+0x22b/0x3d0
+  worker_thread+0x4d/0x3f0
+  ? process_one_work+0x3d0/0x3d0
+  kthread+0x12a/0x150
+  ? set_kthread_struct+0x50/0x50
+  ret_from_fork+0x22/0x30
+  </TASK>
 
-The 3.14 kernel inadvertently changed the raid0 disk layout for different
-size disks. Thus, running a pre-3.14 kernel and post-3.14 kernel on the
-same raid0 array could corrupt data. This lead to the creation of the
-'original' layout (to match the pre-3.14 layout) and the 'alternate' layout
-(to match the post 3.14 layout) in the 5.4 kernel time frame and an option
-to tell the kernel which layout to use (since it couldn't be autodetected).
-However, when the 'original' layout was added back to 5.4 discard support
-for the 'original' layout was not added leading this issue.
+Apparently, the reset delays are getting so large they can trigger a
+UBSAN panic.
 
-I've been able to reliably reproduce the corruption with the following
-test case:
+Looking at the code, the current timeout is capped at 5000us.  Using a
+base value of 100us, the current code will overflow after (1<<29).  Even
+at values before 32, this function wraps around, perhaps
+unintentionally.
 
-1. create raid0 array with different size disks using original layout
-2. mkfs
-3. mount -o discard
-4. create lots of files
-5. remove 1/2 the files
-6. fstrim -a (or just the mount point for the raid0 array)
-7. umount
-8. fsck -fn /dev/md0 (spews all sorts of corruptions)
+Cap the value of the exponent used for this backoff at (1<<16) which is
+larger than currently necessary, but large enough to support bigger
+values in the future.
 
-Let's fix this by adding proper discard support to the 'original' layout.
-The fix 'maps' the 'original' layout disks to the order in which they are
-read/written such that we can compare the disks in the same way that the
-current 'alternate' layout does. A 'disk_shift' field is added to
-'struct strip_zone'. This could be computed on the fly in
-raid0_handle_discard() but by adding this field, we save some computation
-in the discard path.
-
-Note we could also potentially fix this by re-ordering the disks in the
-zones that follow the first one, and then always read/writing them using
-the 'alternate' layout. However, that is seen as a more substantial change,
-and we are attempting the least invasive fix at this time to remedy the
-corruption.
-
-I've verified the change using the reproducer mentioned above. Typically,
-the corruption is seen after less than 3 iterations, while the patch has
-run 500+ iterations.
-
-Cc: NeilBrown <neilb@suse.de>
-Cc: Song Liu <song@kernel.org>
-Fixes: c84a1372df92 ("md/raid0: avoid RAID0 data corruption due to layout confusion.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jason Baron <jbaron@akamai.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230623180523.1901230-1-jbaron@akamai.com
+Fixes: 4bb7f4cf60e3 ("net: ena: reduce driver load time")
+Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Shay Agroskin <shayagr@amazon.com>
+Link: https://lore.kernel.org/r/20230711013621.GE1926@templeofstupid.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid0.c |   62 ++++++++++++++++++++++++++++++++++++++++++++++-------
- drivers/md/raid0.h |    1 
- 2 files changed, 55 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_com.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/md/raid0.c
-+++ b/drivers/md/raid0.c
-@@ -274,6 +274,18 @@ static int create_strip_zones(struct mdd
- 		goto abort;
- 	}
+--- a/drivers/net/ethernet/amazon/ena/ena_com.c
++++ b/drivers/net/ethernet/amazon/ena/ena_com.c
+@@ -35,6 +35,8 @@
  
-+	if (conf->layout == RAID0_ORIG_LAYOUT) {
-+		for (i = 1; i < conf->nr_strip_zones; i++) {
-+			sector_t first_sector = conf->strip_zone[i-1].zone_end;
-+
-+			sector_div(first_sector, mddev->chunk_sectors);
-+			zone = conf->strip_zone + i;
-+			/* disk_shift is first disk index used in the zone */
-+			zone->disk_shift = sector_div(first_sector,
-+						      zone->nb_dev);
-+		}
-+	}
-+
- 	pr_debug("md/raid0:%s: done.\n", mdname(mddev));
- 	*private_conf = conf;
+ #define ENA_REGS_ADMIN_INTR_MASK 1
  
-@@ -427,6 +439,20 @@ static void raid0_free(struct mddev *mdd
- 	kfree(conf);
- }
- 
-+/*
-+ * Convert disk_index to the disk order in which it is read/written.
-+ *  For example, if we have 4 disks, they are numbered 0,1,2,3. If we
-+ *  write the disks starting at disk 3, then the read/write order would
-+ *  be disk 3, then 0, then 1, and then disk 2 and we want map_disk_shift()
-+ *  to map the disks as follows 0,1,2,3 => 1,2,3,0. So disk 0 would map
-+ *  to 1, 1 to 2, 2 to 3, and 3 to 0. That way we can compare disks in
-+ *  that 'output' space to understand the read/write disk ordering.
-+ */
-+static int map_disk_shift(int disk_index, int num_disks, int disk_shift)
-+{
-+	return ((disk_index + num_disks - disk_shift) % num_disks);
-+}
++#define ENA_MAX_BACKOFF_DELAY_EXP 16U
 +
- static void raid0_handle_discard(struct mddev *mddev, struct bio *bio)
+ #define ENA_MIN_ADMIN_POLL_US 100
+ 
+ #define ENA_MAX_ADMIN_POLL_US 5000
+@@ -522,6 +524,7 @@ static int ena_com_comp_status_to_errno(
+ 
+ static void ena_delay_exponential_backoff_us(u32 exp, u32 delay_us)
  {
- 	struct r0conf *conf = mddev->private;
-@@ -440,7 +466,9 @@ static void raid0_handle_discard(struct
- 	sector_t end_disk_offset;
- 	unsigned int end_disk_index;
- 	unsigned int disk;
-+	sector_t orig_start, orig_end;
- 
-+	orig_start = start;
- 	zone = find_zone(conf, &start);
- 
- 	if (bio_end_sector(bio) > zone->zone_end) {
-@@ -454,6 +482,7 @@ static void raid0_handle_discard(struct
- 	} else
- 		end = bio_end_sector(bio);
- 
-+	orig_end = end;
- 	if (zone != conf->strip_zone)
- 		end = end - zone[-1].zone_end;
- 
-@@ -465,13 +494,26 @@ static void raid0_handle_discard(struct
- 	last_stripe_index = end;
- 	sector_div(last_stripe_index, stripe_size);
- 
--	start_disk_index = (int)(start - first_stripe_index * stripe_size) /
--		mddev->chunk_sectors;
-+	/* In the first zone the original and alternate layouts are the same */
-+	if ((conf->layout == RAID0_ORIG_LAYOUT) && (zone != conf->strip_zone)) {
-+		sector_div(orig_start, mddev->chunk_sectors);
-+		start_disk_index = sector_div(orig_start, zone->nb_dev);
-+		start_disk_index = map_disk_shift(start_disk_index,
-+						  zone->nb_dev,
-+						  zone->disk_shift);
-+		sector_div(orig_end, mddev->chunk_sectors);
-+		end_disk_index = sector_div(orig_end, zone->nb_dev);
-+		end_disk_index = map_disk_shift(end_disk_index,
-+						zone->nb_dev, zone->disk_shift);
-+	} else {
-+		start_disk_index = (int)(start - first_stripe_index * stripe_size) /
-+			mddev->chunk_sectors;
-+		end_disk_index = (int)(end - last_stripe_index * stripe_size) /
-+			mddev->chunk_sectors;
-+	}
- 	start_disk_offset = ((int)(start - first_stripe_index * stripe_size) %
- 		mddev->chunk_sectors) +
- 		first_stripe_index * mddev->chunk_sectors;
--	end_disk_index = (int)(end - last_stripe_index * stripe_size) /
--		mddev->chunk_sectors;
- 	end_disk_offset = ((int)(end - last_stripe_index * stripe_size) %
- 		mddev->chunk_sectors) +
- 		last_stripe_index * mddev->chunk_sectors;
-@@ -480,18 +522,22 @@ static void raid0_handle_discard(struct
- 		sector_t dev_start, dev_end;
- 		struct bio *discard_bio = NULL;
- 		struct md_rdev *rdev;
-+		int compare_disk;
-+
-+		compare_disk = map_disk_shift(disk, zone->nb_dev,
-+					      zone->disk_shift);
- 
--		if (disk < start_disk_index)
-+		if (compare_disk < start_disk_index)
- 			dev_start = (first_stripe_index + 1) *
- 				mddev->chunk_sectors;
--		else if (disk > start_disk_index)
-+		else if (compare_disk > start_disk_index)
- 			dev_start = first_stripe_index * mddev->chunk_sectors;
- 		else
- 			dev_start = start_disk_offset;
- 
--		if (disk < end_disk_index)
-+		if (compare_disk < end_disk_index)
- 			dev_end = (last_stripe_index + 1) * mddev->chunk_sectors;
--		else if (disk > end_disk_index)
-+		else if (compare_disk > end_disk_index)
- 			dev_end = last_stripe_index * mddev->chunk_sectors;
- 		else
- 			dev_end = end_disk_offset;
---- a/drivers/md/raid0.h
-+++ b/drivers/md/raid0.h
-@@ -6,6 +6,7 @@ struct strip_zone {
- 	sector_t zone_end;	/* Start of the next zone (in sectors) */
- 	sector_t dev_start;	/* Zone offset in real dev (in sectors) */
- 	int	 nb_dev;	/* # of devices attached to the zone */
-+	int	 disk_shift;	/* start disk for the original layout */
- };
- 
- /* Linux 3.14 (20d0189b101) made an unintended change to
++	exp = min_t(u32, exp, ENA_MAX_BACKOFF_DELAY_EXP);
+ 	delay_us = max_t(u32, ENA_MIN_ADMIN_POLL_US, delay_us);
+ 	delay_us = min_t(u32, delay_us * (1U << exp), ENA_MAX_ADMIN_POLL_US);
+ 	usleep_range(delay_us, 2 * delay_us);
 
 
