@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36241ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:45:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73FCBC433C8;
-	Tue, 25 Jul 2023 11:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16871ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:45:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34737C433C7;
+	Tue, 25 Jul 2023 11:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285517;
-	bh=1iTHff+N8IX1+1OvFednUGNhDNsr6HHHanxakhRvK7o=;
+	s=korg; t=1690285520;
+	bh=n2NDlU/1mwXOiBseKVksErruWK7lg0rO2o201BIBVDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j/7BN4f9ZcdUpXB8GpCM2H+2Vu7lEI5OXnLsm1oEi6jtPPJlS+duH7T3Vae4HraNo
-	 TjFJY+nUcRDhVfrxrgbdCbp4DXxlFmXcvDSHV/xKHKKubvy1pdXWFJ6a6FWQXlnDCf
-	 CoFspbW+LzAIIBpoQ3Vk8AWnKcRbtSJvrkqTWxMw=
+	b=CI1PWoZaBSdTsRYRFVYfuD9V1Gy32KNNV67Vgv54I317DG3hRr95asc5F2fRUCxh8
+	 +5LXqrJeN3RWKS4Yr4KRBP4VhcleuqNHuNq0lMdviXo+tMjvsE6AXOvq+1oy7Nz6sP
+	 he7mKfzxWGp1NXinCCHuf4GxSgOy7pwlGd/dLQ4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ekansh Gupta <quic_ekangupt@quicinc.com>
-Subject: [PATCH 5.4 234/313] misc: fastrpc: Create fastrpc scalar with correct buffer count
-Date: Tue, 25 Jul 2023 12:46:27 +0200
-Message-ID: <20230725104531.173085539@linuxfoundation.org>
+	Ding Hui <dinghui@sangfor.com.cn>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.4 235/313] SUNRPC: Fix UAF in svc_tcp_listen_data_ready()
+Date: Tue, 25 Jul 2023 12:46:28 +0200
+Message-ID: <20230725104531.222219998@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -34,37 +34,142 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+From: Ding Hui <dinghui@sangfor.com.cn>
 
-commit 0b4e32df3e09406b835d8230b9331273f2805058 upstream.
+commit fc80fc2d4e39137869da3150ee169b40bf879287 upstream.
 
-A process can spawn a PD on DSP with some attributes that can be
-associated with the PD during spawn and run. The invocation
-corresponding to the create request with attributes has total
-4 buffers at the DSP side implementation. If this number is not
-correct, the invocation is expected to fail on DSP. Added change
-to use correct number of buffer count for creating fastrpc scalar.
+After the listener svc_sock is freed, and before invoking svc_tcp_accept()
+for the established child sock, there is a window that the newsock
+retaining a freed listener svc_sock in sk_user_data which cloning from
+parent. In the race window, if data is received on the newsock, we will
+observe use-after-free report in svc_tcp_listen_data_ready().
 
-Fixes: d73f71c7c6ee ("misc: fastrpc: Add support for create remote init process")
-Cc: stable <stable@kernel.org>
-Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Message-ID: <1686743685-21715-1-git-send-email-quic_ekangupt@quicinc.com>
+Reproduce by two tasks:
+
+1. while :; do rpc.nfsd 0 ; rpc.nfsd; done
+2. while :; do echo "" | ncat -4 127.0.0.1 2049 ; done
+
+KASAN report:
+
+  ==================================================================
+  BUG: KASAN: slab-use-after-free in svc_tcp_listen_data_ready+0x1cf/0x1f0 [sunrpc]
+  Read of size 8 at addr ffff888139d96228 by task nc/102553
+  CPU: 7 PID: 102553 Comm: nc Not tainted 6.3.0+ #18
+  Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
+  Call Trace:
+   <IRQ>
+   dump_stack_lvl+0x33/0x50
+   print_address_description.constprop.0+0x27/0x310
+   print_report+0x3e/0x70
+   kasan_report+0xae/0xe0
+   svc_tcp_listen_data_ready+0x1cf/0x1f0 [sunrpc]
+   tcp_data_queue+0x9f4/0x20e0
+   tcp_rcv_established+0x666/0x1f60
+   tcp_v4_do_rcv+0x51c/0x850
+   tcp_v4_rcv+0x23fc/0x2e80
+   ip_protocol_deliver_rcu+0x62/0x300
+   ip_local_deliver_finish+0x267/0x350
+   ip_local_deliver+0x18b/0x2d0
+   ip_rcv+0x2fb/0x370
+   __netif_receive_skb_one_core+0x166/0x1b0
+   process_backlog+0x24c/0x5e0
+   __napi_poll+0xa2/0x500
+   net_rx_action+0x854/0xc90
+   __do_softirq+0x1bb/0x5de
+   do_softirq+0xcb/0x100
+   </IRQ>
+   <TASK>
+   ...
+   </TASK>
+
+  Allocated by task 102371:
+   kasan_save_stack+0x1e/0x40
+   kasan_set_track+0x21/0x30
+   __kasan_kmalloc+0x7b/0x90
+   svc_setup_socket+0x52/0x4f0 [sunrpc]
+   svc_addsock+0x20d/0x400 [sunrpc]
+   __write_ports_addfd+0x209/0x390 [nfsd]
+   write_ports+0x239/0x2c0 [nfsd]
+   nfsctl_transaction_write+0xac/0x110 [nfsd]
+   vfs_write+0x1c3/0xae0
+   ksys_write+0xed/0x1c0
+   do_syscall_64+0x38/0x90
+   entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+  Freed by task 102551:
+   kasan_save_stack+0x1e/0x40
+   kasan_set_track+0x21/0x30
+   kasan_save_free_info+0x2a/0x50
+   __kasan_slab_free+0x106/0x190
+   __kmem_cache_free+0x133/0x270
+   svc_xprt_free+0x1e2/0x350 [sunrpc]
+   svc_xprt_destroy_all+0x25a/0x440 [sunrpc]
+   nfsd_put+0x125/0x240 [nfsd]
+   nfsd_svc+0x2cb/0x3c0 [nfsd]
+   write_threads+0x1ac/0x2a0 [nfsd]
+   nfsctl_transaction_write+0xac/0x110 [nfsd]
+   vfs_write+0x1c3/0xae0
+   ksys_write+0xed/0x1c0
+   do_syscall_64+0x38/0x90
+   entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+Fix the UAF by simply doing nothing in svc_tcp_listen_data_ready()
+if state != TCP_LISTEN, that will avoid dereferencing svsk for all
+child socket.
+
+Link: https://lore.kernel.org/lkml/20230507091131.23540-1-dinghui@sangfor.com.cn/
+Fixes: fa9251afc33c ("SUNRPC: Call the default socket callbacks instead of open coding")
+Signed-off-by: Ding Hui <dinghui@sangfor.com.cn>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sunrpc/svcsock.c |   27 +++++++++++++--------------
+ 1 file changed, 13 insertions(+), 14 deletions(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1074,7 +1074,7 @@ static int fastrpc_init_create_process(s
+--- a/net/sunrpc/svcsock.c
++++ b/net/sunrpc/svcsock.c
+@@ -728,12 +728,6 @@ static void svc_tcp_listen_data_ready(st
+ 	dprintk("svc: socket %p TCP (listen) state change %d\n",
+ 		sk, sk->sk_state);
  
- 	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE, 4, 0);
- 	if (init.attrs)
--		sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE_ATTR, 6, 0);
-+		sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_CREATE_ATTR, 4, 0);
+-	if (svsk) {
+-		/* Refer to svc_setup_socket() for details. */
+-		rmb();
+-		svsk->sk_odata(sk);
+-	}
+-
+ 	/*
+ 	 * This callback may called twice when a new connection
+ 	 * is established as a child socket inherits everything
+@@ -742,15 +736,20 @@ static void svc_tcp_listen_data_ready(st
+ 	 *    when one of child sockets become ESTABLISHED.
+ 	 * 2) data_ready method of the child socket may be called
+ 	 *    when it receives data before the socket is accepted.
+-	 * In case of 2, we should ignore it silently.
++	 * In case of 2, we should ignore it silently and DO NOT
++	 * dereference svsk.
+ 	 */
+-	if (sk->sk_state == TCP_LISTEN) {
+-		if (svsk) {
+-			set_bit(XPT_CONN, &svsk->sk_xprt.xpt_flags);
+-			svc_xprt_enqueue(&svsk->sk_xprt);
+-		} else
+-			printk("svc: socket %p: no user data\n", sk);
+-	}
++	if (sk->sk_state != TCP_LISTEN)
++		return;
++
++	if (svsk) {
++		/* Refer to svc_setup_socket() for details. */
++		rmb();
++		svsk->sk_odata(sk);
++		set_bit(XPT_CONN, &svsk->sk_xprt.xpt_flags);
++		svc_xprt_enqueue(&svsk->sk_xprt);
++	} else
++		printk("svc: socket %p: no user data\n", sk);
+ }
  
- 	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
- 				      sc, args);
+ /*
 
 
