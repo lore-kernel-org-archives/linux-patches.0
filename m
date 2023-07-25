@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63AD21ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:19:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAB6DC433C8;
-	Tue, 25 Jul 2023 11:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264911ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:19:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE5BC433C7;
+	Tue, 25 Jul 2023 11:19:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283966;
-	bh=lN9g2G5bodS6MO0bOZbti2pSDmN3NcUOuEmHz9XVy4w=;
+	s=korg; t=1690283969;
+	bh=x1732prQf09GWpX3WCpPYnkgOIyinASTpbJ+kgUfnHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lkbraYj/7mahkF97CD/0V9+QfwhltvQoeezPOAfXLqE/7RLpiXW5GW4sliae016tC
-	 t3nBrDvtshKmR37/P1n/VZrs93BLY7/F2pxF05mHRuv/ETRkqekqbF9R4ajeTRW/su
-	 6MD+ISyLI7rXnUiQU0wytaI79vqpEvpAFyf9yEic=
+	b=h5agjFW3RCzbkCShZuxucFDEe1FqDUWjqFqtiguFjqUIxmIvBTRnNIJ4Y1VUJurgR
+	 4UjJ5QJgCziUV/PS3Gl2+T1HLKnM3e53fFcyGKEaQuMghlCtUVeMV9Nr0r0w7WMQIy
+	 ewVgNdtD8jaL5xA+eggVe3DYMZ5DK2Xei5k9/R2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Luo <m202171776@hust.edu.cn>,
+	Yuxing Liu <lyx2022@hust.edu.cn>,
 	Dongliang Mu <dzm91@hust.edu.cn>,
-	Peng Fan <peng.fan@nxp.com>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 157/509] clk: imx: clk-imx8mn: fix memory leak in imx8mn_clocks_probe
-Date: Tue, 25 Jul 2023 12:41:36 +0200
-Message-ID: <20230725104600.896398573@linuxfoundation.org>
+Subject: [PATCH 5.10 158/509] clk: imx: clk-imx8mp: improve error handling in imx8mp_clocks_probe()
+Date: Tue, 25 Jul 2023 12:41:37 +0200
+Message-ID: <20230725104600.945328546@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,55 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hao Luo <m202171776@hust.edu.cn>
+From: Yuxing Liu <lyx2022@hust.edu.cn>
 
-[ Upstream commit 188d070de9132667956f5aadd98d2bd87d3eac89 ]
+[ Upstream commit 878b02d5f3b56cb090dbe2c70c89273be144087f ]
 
-Use devm_of_iomap() instead of of_iomap() to automatically handle
-the unused ioremap region.
+Replace of_iomap() and kzalloc() with devm_of_iomap() and devm_kzalloc()
+which can automatically release the related memory when the device
+or driver is removed or unloaded to avoid potential memory leak.
 
-If any error occurs, regions allocated by kzalloc() will leak,
-but using devm_kzalloc() instead will automatically free the memory
-using devm_kfree().
+In this case, iounmap(anatop_base) in line 427,433 are removed
+as manual release is not required.
 
-Fixes: daeb14545514 ("clk: imx: imx8mn: Switch to clk_hw based API")
-Fixes: 96d6392b54db ("clk: imx: Add support for i.MX8MN clock driver")
-Signed-off-by: Hao Luo <m202171776@hust.edu.cn>
+Besides, referring to clk-imx8mq.c, check the return code of
+of_clk_add_hw_provider, if it returns negtive, print error info
+and unregister hws, which makes the program more robust.
+
+Fixes: 9c140d992676 ("clk: imx: Add support for i.MX8MP clock driver")
+Signed-off-by: Yuxing Liu <lyx2022@hust.edu.cn>
 Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20230411015107.2645-1-m202171776@hust.edu.cn
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20230503070607.2462-1-lyx2022@hust.edu.cn
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mn.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/clk/imx/clk-imx8mp.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx8mn.c b/drivers/clk/imx/clk-imx8mn.c
-index 8a49e072d6e86..23f37a2cdf3a8 100644
---- a/drivers/clk/imx/clk-imx8mn.c
-+++ b/drivers/clk/imx/clk-imx8mn.c
-@@ -291,7 +291,7 @@ static int imx8mn_clocks_probe(struct platform_device *pdev)
- 	void __iomem *base;
- 	int ret;
+diff --git a/drivers/clk/imx/clk-imx8mp.c b/drivers/clk/imx/clk-imx8mp.c
+index 72592e35836b3..98a4711ef38d0 100644
+--- a/drivers/clk/imx/clk-imx8mp.c
++++ b/drivers/clk/imx/clk-imx8mp.c
+@@ -425,25 +425,22 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *np = dev->of_node;
+ 	void __iomem *anatop_base, *ccm_base;
++	int err;
  
--	clk_hw_data = kzalloc(struct_size(clk_hw_data, hws,
-+	clk_hw_data = devm_kzalloc(dev, struct_size(clk_hw_data, hws,
- 					  IMX8MN_CLK_END), GFP_KERNEL);
- 	if (WARN_ON(!clk_hw_data))
- 		return -ENOMEM;
-@@ -308,10 +308,10 @@ static int imx8mn_clocks_probe(struct platform_device *pdev)
- 	hws[IMX8MN_CLK_EXT4] = imx_obtain_fixed_clk_hw(np, "clk_ext4");
- 
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mn-anatop");
--	base = of_iomap(np, 0);
-+	base = devm_of_iomap(dev, np, 0, NULL);
+ 	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mp-anatop");
+-	anatop_base = of_iomap(np, 0);
++	anatop_base = devm_of_iomap(dev, np, 0, NULL);
  	of_node_put(np);
--	if (WARN_ON(!base)) {
--		ret = -ENOMEM;
-+	if (WARN_ON(IS_ERR(base))) {
-+		ret = PTR_ERR(base);
- 		goto unregister_hws;
- 	}
+-	if (WARN_ON(!anatop_base))
+-		return -ENOMEM;
++	if (WARN_ON(IS_ERR(anatop_base)))
++		return PTR_ERR(anatop_base);
+ 
+ 	np = dev->of_node;
+ 	ccm_base = devm_platform_ioremap_resource(pdev, 0);
+-	if (WARN_ON(IS_ERR(ccm_base))) {
+-		iounmap(anatop_base);
++	if (WARN_ON(IS_ERR(ccm_base)))
+ 		return PTR_ERR(ccm_base);
+-	}
+ 
+-	clk_hw_data = kzalloc(struct_size(clk_hw_data, hws, IMX8MP_CLK_END), GFP_KERNEL);
+-	if (WARN_ON(!clk_hw_data)) {
+-		iounmap(anatop_base);
++	clk_hw_data = devm_kzalloc(dev, struct_size(clk_hw_data, hws, IMX8MP_CLK_END), GFP_KERNEL);
++	if (WARN_ON(!clk_hw_data))
+ 		return -ENOMEM;
+-	}
+ 
+ 	clk_hw_data->num = IMX8MP_CLK_END;
+ 	hws = clk_hw_data->hws;
+@@ -743,7 +740,12 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
+ 
+ 	imx_check_clk_hws(hws, IMX8MP_CLK_END);
+ 
+-	of_clk_add_hw_provider(np, of_clk_hw_onecell_get, clk_hw_data);
++	err = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, clk_hw_data);
++	if (err < 0) {
++		dev_err(dev, "failed to register hws for i.MX8MP\n");
++		imx_unregister_hw_clocks(hws, IMX8MP_CLK_END);
++		return err;
++	}
+ 
+ 	imx_register_uart_clocks(4);
  
 -- 
 2.39.2
