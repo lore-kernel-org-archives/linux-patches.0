@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7C11ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:32:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5826C433C8;
-	Tue, 25 Jul 2023 11:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204751ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:32:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9440CC433C7;
+	Tue, 25 Jul 2023 11:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284766;
-	bh=MHuwr0d/5zFSgt+xB0uSYJdiddrMMjiGXWScvaGbgSc=;
+	s=korg; t=1690284769;
+	bh=sPSF83Pa+6iysooxDfu1G5Cy7aII/KTDm7x39lE4rhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B8c190/nza7gYfw4+DT4/Wt0lDDxblNPCfUZqZfew+NF3pYzWOdLi2FhKthQQoy5L
-	 C3Ls6at1otlRwuIsHTKKXOyfoc0LgMmDtlJc0+kIlaOHx4NRLIXDZUNV9owJcdhvy/
-	 jCIV2B7uOdDM+2M5D+4IEDu8qcr98uUzn+mOGLjI=
+	b=ltPozxxPnwEhxLUvb7nEhJjPef4XNDXgyrlXlY2NZnqY2LgkxtLsYMCCosZDiLuUV
+	 QvuJiNcRhItPpn/fyS3KOU9OhEMJWdzPZg3dmwEDQ4vvnnoO/0FOgX6mFtWo5fNjuD
+	 xHn6sGdQfAGuLXx2S0SKHjtnMtVwCQnzZsIBCXC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shreyas Deodhar <sdeodhar@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 435/509] scsi: qla2xxx: Pointer may be dereferenced
-Date: Tue, 25 Jul 2023 12:46:14 +0200
-Message-ID: <20230725104613.649910765@linuxfoundation.org>
+	Maxime Bizon <mbizon@freebox.fr>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 467/509] wifi: ath11k: fix registration of 6Ghz-only phy without the full channel range
+Date: Tue, 25 Jul 2023 12:46:46 +0200
+Message-ID: <20230725104615.138307555@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,36 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shreyas Deodhar <sdeodhar@marvell.com>
+From: Maxime Bizon <mbizon@freebox.fr>
 
-commit 00eca15319d9ce8c31cdf22f32a3467775423df4 upstream.
+[ Upstream commit e2ceb1de2f83aafd8003f0b72dfd4b7441e97d14 ]
 
-Klocwork tool reported pointer 'rport' returned from call to function
-fc_bsg_to_rport() may be NULL and will be dereferenced.
+Because of what seems to be a typo, a 6Ghz-only phy for which the BDF
+does not allow the 7115Mhz channel will fail to register:
 
-Add a fix to validate rport before dereferencing.
+  WARNING: CPU: 2 PID: 106 at net/wireless/core.c:907 wiphy_register+0x914/0x954
+  Modules linked in: ath11k_pci sbsa_gwdt
+  CPU: 2 PID: 106 Comm: kworker/u8:5 Not tainted 6.3.0-rc7-next-20230418-00549-g1e096a17625a-dirty #9
+  Hardware name: Freebox V7R Board (DT)
+  Workqueue: ath11k_qmi_driver_event ath11k_qmi_driver_event_work
+  pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  pc : wiphy_register+0x914/0x954
+  lr : ieee80211_register_hw+0x67c/0xc10
+  sp : ffffff800b123aa0
+  x29: ffffff800b123aa0 x28: 0000000000000000 x27: 0000000000000000
+  x26: 0000000000000000 x25: 0000000000000006 x24: ffffffc008d51418
+  x23: ffffffc008cb0838 x22: ffffff80176c2460 x21: 0000000000000168
+  x20: ffffff80176c0000 x19: ffffff80176c03e0 x18: 0000000000000014
+  x17: 00000000cbef338c x16: 00000000d2a26f21 x15: 00000000ad6bb85f
+  x14: 0000000000000020 x13: 0000000000000020 x12: 00000000ffffffbd
+  x11: 0000000000000208 x10: 00000000fffffdf7 x9 : ffffffc009394718
+  x8 : ffffff80176c0528 x7 : 000000007fffffff x6 : 0000000000000006
+  x5 : 0000000000000005 x4 : ffffff800b304284 x3 : ffffff800b304284
+  x2 : ffffff800b304d98 x1 : 0000000000000000 x0 : 0000000000000000
+  Call trace:
+   wiphy_register+0x914/0x954
+   ieee80211_register_hw+0x67c/0xc10
+   ath11k_mac_register+0x7c4/0xe10
+   ath11k_core_qmi_firmware_ready+0x1f4/0x570
+   ath11k_qmi_driver_event_work+0x198/0x590
+   process_one_work+0x1b8/0x328
+   worker_thread+0x6c/0x414
+   kthread+0x100/0x104
+   ret_from_fork+0x10/0x20
+  ---[ end trace 0000000000000000 ]---
+  ath11k_pci 0002:01:00.0: ieee80211 registration failed: -22
+  ath11k_pci 0002:01:00.0: failed register the radio with mac80211: -22
+  ath11k_pci 0002:01:00.0: failed to create pdev core: -22
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Shreyas Deodhar <sdeodhar@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230607113843.37185-7-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Maxime Bizon <mbizon@freebox.fr>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230421145445.2612280-1-mbizon@freebox.fr
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/ath/ath11k/mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_bsg.c
-+++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -2545,6 +2545,8 @@ qla24xx_bsg_request(struct bsg_job *bsg_
+diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
+index 67faf62999ded..3170c54c97b74 100644
+--- a/drivers/net/wireless/ath/ath11k/mac.c
++++ b/drivers/net/wireless/ath/ath11k/mac.c
+@@ -6044,7 +6044,7 @@ static int ath11k_mac_setup_channels_rates(struct ath11k *ar,
+ 	}
  
- 	if (bsg_request->msgcode == FC_BSG_RPT_ELS) {
- 		rport = fc_bsg_to_rport(bsg_job);
-+		if (!rport)
-+			return ret;
- 		host = rport_to_shost(rport);
- 		vha = shost_priv(host);
- 	} else {
+ 	if (supported_bands & WMI_HOST_WLAN_5G_CAP) {
+-		if (reg_cap->high_5ghz_chan >= ATH11K_MAX_6G_FREQ) {
++		if (reg_cap->high_5ghz_chan >= ATH11K_MIN_6G_FREQ) {
+ 			channels = kmemdup(ath11k_6ghz_channels,
+ 					   sizeof(ath11k_6ghz_channels), GFP_KERNEL);
+ 			if (!channels) {
+-- 
+2.39.2
+
 
 
