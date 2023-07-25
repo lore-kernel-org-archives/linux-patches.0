@@ -1,33 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E451ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACAE0C433C7;
-	Tue, 25 Jul 2023 11:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BF81ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C6BFC433CA;
+	Tue, 25 Jul 2023 11:11:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283467;
-	bh=aZ/LmbksIkM5TA542SjHeC69sNOmqz7IT4hnIe14KaA=;
+	s=korg; t=1690283469;
+	bh=WFh5B1GLpMXvek8MLQow5XE6m+VK4+Y6j0kcvOs6bSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tGTLoa8SmdqsMmw9JBgNUXdmw5PsiSuS2uc7MVe21+xW3SD69SArOKFpQIIVKxEB3
-	 G17Jt1gS2EO3P54zR6GXJpO4sIXV5LhxtezX7u78kmVl0YbaKLSi+0cNVykAi4NyQO
-	 rf81zwJUeITvulcilF3ZxZfSV2suIAfLJk5+9igE=
+	b=bDWIdqf/SXBGuvTyir3HtF2ljEo4XVmAjk3+ZwkDNq3ujYq0J8u1CniGOFM/R//NG
+	 OjrnwUf3aQIRF+vnDhHu+znyFGqFRIKCXctnOtIxfKEyfLabraTWFGLsR0kGjLeLba
+	 OYn5Frlc1UEIMdBbvlXSC5vKAm3rKtKQVG2ufJw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	syzbot <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 55/78] tcp: annotate data-races around tcp_rsk(req)->ts_recent
-Date: Tue, 25 Jul 2023 12:46:46 +0200
-Message-ID: <20230725104453.403200768@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Tsuchiya Yuto <kitakar@gmail.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Anastasia Belova <abelova@astralinux.ru>
+Subject: [PATCH 5.10 001/509] media: atomisp: fix "variable dereferenced before check asd"
+Date: Tue, 25 Jul 2023 12:39:00 +0200
+Message-ID: <20230725104553.672575710@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230725104451.275227789@linuxfoundation.org>
-References: <20230725104451.275227789@linuxfoundation.org>
+In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
+References: <20230725104553.588743331@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,184 +38,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tsuchiya Yuto <kitakar@gmail.com>
 
-[ Upstream commit eba20811f32652bc1a52d5e7cc403859b86390d9 ]
+commit ac56760a8bbb4e654b2fd54e5de79dd5d72f937d upstream.
 
-TCP request sockets are lockless, tcp_rsk(req)->ts_recent
-can change while being read by another cpu as syzbot noticed.
+There are two occurrences where the variable 'asd' is dereferenced
+before check. Fix this issue by using the variable after the check.
 
-This is harmless, but we should annotate the known races.
+Link: https://lore.kernel.org/linux-media/20211122074122.GA6581@kili/
 
-Note that tcp_check_req() changes req->ts_recent a bit early,
-we might change this in the future.
-
-BUG: KCSAN: data-race in tcp_check_req / tcp_check_req
-
-write to 0xffff88813c8afb84 of 4 bytes by interrupt on cpu 1:
-tcp_check_req+0x694/0xc70 net/ipv4/tcp_minisocks.c:762
-tcp_v4_rcv+0x12db/0x1b70 net/ipv4/tcp_ipv4.c:2071
-ip_protocol_deliver_rcu+0x356/0x6d0 net/ipv4/ip_input.c:205
-ip_local_deliver_finish+0x13c/0x1a0 net/ipv4/ip_input.c:233
-NF_HOOK include/linux/netfilter.h:303 [inline]
-ip_local_deliver+0xec/0x1c0 net/ipv4/ip_input.c:254
-dst_input include/net/dst.h:468 [inline]
-ip_rcv_finish net/ipv4/ip_input.c:449 [inline]
-NF_HOOK include/linux/netfilter.h:303 [inline]
-ip_rcv+0x197/0x270 net/ipv4/ip_input.c:569
-__netif_receive_skb_one_core net/core/dev.c:5493 [inline]
-__netif_receive_skb+0x90/0x1b0 net/core/dev.c:5607
-process_backlog+0x21f/0x380 net/core/dev.c:5935
-__napi_poll+0x60/0x3b0 net/core/dev.c:6498
-napi_poll net/core/dev.c:6565 [inline]
-net_rx_action+0x32b/0x750 net/core/dev.c:6698
-__do_softirq+0xc1/0x265 kernel/softirq.c:571
-do_softirq+0x7e/0xb0 kernel/softirq.c:472
-__local_bh_enable_ip+0x64/0x70 kernel/softirq.c:396
-local_bh_enable+0x1f/0x20 include/linux/bottom_half.h:33
-rcu_read_unlock_bh include/linux/rcupdate.h:843 [inline]
-__dev_queue_xmit+0xabb/0x1d10 net/core/dev.c:4271
-dev_queue_xmit include/linux/netdevice.h:3088 [inline]
-neigh_hh_output include/net/neighbour.h:528 [inline]
-neigh_output include/net/neighbour.h:542 [inline]
-ip_finish_output2+0x700/0x840 net/ipv4/ip_output.c:229
-ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:317
-NF_HOOK_COND include/linux/netfilter.h:292 [inline]
-ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:431
-dst_output include/net/dst.h:458 [inline]
-ip_local_out net/ipv4/ip_output.c:126 [inline]
-__ip_queue_xmit+0xa4d/0xa70 net/ipv4/ip_output.c:533
-ip_queue_xmit+0x38/0x40 net/ipv4/ip_output.c:547
-__tcp_transmit_skb+0x1194/0x16e0 net/ipv4/tcp_output.c:1399
-tcp_transmit_skb net/ipv4/tcp_output.c:1417 [inline]
-tcp_write_xmit+0x13ff/0x2fd0 net/ipv4/tcp_output.c:2693
-__tcp_push_pending_frames+0x6a/0x1a0 net/ipv4/tcp_output.c:2877
-tcp_push_pending_frames include/net/tcp.h:1952 [inline]
-__tcp_sock_set_cork net/ipv4/tcp.c:3336 [inline]
-tcp_sock_set_cork+0xe8/0x100 net/ipv4/tcp.c:3343
-rds_tcp_xmit_path_complete+0x3b/0x40 net/rds/tcp_send.c:52
-rds_send_xmit+0xf8d/0x1420 net/rds/send.c:422
-rds_send_worker+0x42/0x1d0 net/rds/threads.c:200
-process_one_work+0x3e6/0x750 kernel/workqueue.c:2408
-worker_thread+0x5f2/0xa10 kernel/workqueue.c:2555
-kthread+0x1d7/0x210 kernel/kthread.c:379
-ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
-
-read to 0xffff88813c8afb84 of 4 bytes by interrupt on cpu 0:
-tcp_check_req+0x32a/0xc70 net/ipv4/tcp_minisocks.c:622
-tcp_v4_rcv+0x12db/0x1b70 net/ipv4/tcp_ipv4.c:2071
-ip_protocol_deliver_rcu+0x356/0x6d0 net/ipv4/ip_input.c:205
-ip_local_deliver_finish+0x13c/0x1a0 net/ipv4/ip_input.c:233
-NF_HOOK include/linux/netfilter.h:303 [inline]
-ip_local_deliver+0xec/0x1c0 net/ipv4/ip_input.c:254
-dst_input include/net/dst.h:468 [inline]
-ip_rcv_finish net/ipv4/ip_input.c:449 [inline]
-NF_HOOK include/linux/netfilter.h:303 [inline]
-ip_rcv+0x197/0x270 net/ipv4/ip_input.c:569
-__netif_receive_skb_one_core net/core/dev.c:5493 [inline]
-__netif_receive_skb+0x90/0x1b0 net/core/dev.c:5607
-process_backlog+0x21f/0x380 net/core/dev.c:5935
-__napi_poll+0x60/0x3b0 net/core/dev.c:6498
-napi_poll net/core/dev.c:6565 [inline]
-net_rx_action+0x32b/0x750 net/core/dev.c:6698
-__do_softirq+0xc1/0x265 kernel/softirq.c:571
-run_ksoftirqd+0x17/0x20 kernel/softirq.c:939
-smpboot_thread_fn+0x30a/0x4a0 kernel/smpboot.c:164
-kthread+0x1d7/0x210 kernel/kthread.c:379
-ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
-
-value changed: 0x1cd237f1 -> 0x1cd237f2
-
-Fixes: 079096f103fa ("tcp/dccp: install syn_recv requests into ehash table")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230717144445.653164-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/linux-media/20211201141904.47231-1-kitakar@gmail.com
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Tsuchiya Yuto <kitakar@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Igned-off-by: Anastasia Belova <abelova@astralinux.ru>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_ipv4.c      | 2 +-
- net/ipv4/tcp_minisocks.c | 9 ++++++---
- net/ipv4/tcp_output.c    | 2 +-
- net/ipv6/tcp_ipv6.c      | 2 +-
- 4 files changed, 9 insertions(+), 6 deletions(-)
+ drivers/staging/media/atomisp/pci/atomisp_cmd.c   |    3 ++-
+ drivers/staging/media/atomisp/pci/atomisp_ioctl.c |    3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 9ac6bca83fadb..87bdbb527930f 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -975,7 +975,7 @@ static void tcp_v4_reqsk_send_ack(const struct sock *sk, struct sk_buff *skb,
- 			tcp_rsk(req)->rcv_nxt,
- 			req->rsk_rcv_wnd >> inet_rsk(req)->rcv_wscale,
- 			tcp_time_stamp_raw() + tcp_rsk(req)->ts_off,
--			req->ts_recent,
-+			READ_ONCE(req->ts_recent),
- 			0,
- 			tcp_md5_do_lookup(sk, l3index, addr, AF_INET),
- 			inet_rsk(req)->no_srccheck ? IP_REPLY_ARG_NOSRCCHECK : 0,
-diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
-index aa67d5adcbca9..2606a5571116a 100644
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -523,7 +523,7 @@ struct sock *tcp_create_openreq_child(const struct sock *sk,
- 	newtp->max_window = newtp->snd_wnd;
+--- a/drivers/staging/media/atomisp/pci/atomisp_cmd.c
++++ b/drivers/staging/media/atomisp/pci/atomisp_cmd.c
+@@ -5243,7 +5243,7 @@ static int atomisp_set_fmt_to_isp(struct
+ 	int (*configure_pp_input)(struct atomisp_sub_device *asd,
+ 				  unsigned int width, unsigned int height) =
+ 				      configure_pp_input_nop;
+-	u16 stream_index = atomisp_source_pad_to_stream_id(asd, source_pad);
++	u16 stream_index;
+ 	const struct atomisp_in_fmt_conv *fc;
+ 	int ret, i;
  
- 	if (newtp->rx_opt.tstamp_ok) {
--		newtp->rx_opt.ts_recent = req->ts_recent;
-+		newtp->rx_opt.ts_recent = READ_ONCE(req->ts_recent);
- 		newtp->rx_opt.ts_recent_stamp = ktime_get_seconds();
- 		newtp->tcp_header_len = sizeof(struct tcphdr) + TCPOLEN_TSTAMP_ALIGNED;
- 	} else {
-@@ -586,7 +586,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 		tcp_parse_options(sock_net(sk), skb, &tmp_opt, 0, NULL);
- 
- 		if (tmp_opt.saw_tstamp) {
--			tmp_opt.ts_recent = req->ts_recent;
-+			tmp_opt.ts_recent = READ_ONCE(req->ts_recent);
- 			if (tmp_opt.rcv_tsecr)
- 				tmp_opt.rcv_tsecr -= tcp_rsk(req)->ts_off;
- 			/* We do not store true stamp, but it is not required,
-@@ -726,8 +726,11 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 
- 	/* In sequence, PAWS is OK. */
- 
-+	/* TODO: We probably should defer ts_recent change once
-+	 * we take ownership of @req.
-+	 */
- 	if (tmp_opt.saw_tstamp && !after(TCP_SKB_CB(skb)->seq, tcp_rsk(req)->rcv_nxt))
--		req->ts_recent = tmp_opt.rcv_tsval;
-+		WRITE_ONCE(req->ts_recent, tmp_opt.rcv_tsval);
- 
- 	if (TCP_SKB_CB(skb)->seq == tcp_rsk(req)->rcv_isn) {
- 		/* Truncate SYN, it is out of window starting
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 1f39b56bbab32..d46fb6d7057bd 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -875,7 +875,7 @@ static unsigned int tcp_synack_options(const struct sock *sk,
- 	if (likely(ireq->tstamp_ok)) {
- 		opts->options |= OPTION_TS;
- 		opts->tsval = tcp_skb_timestamp(skb) + tcp_rsk(req)->ts_off;
--		opts->tsecr = req->ts_recent;
-+		opts->tsecr = READ_ONCE(req->ts_recent);
- 		remaining -= TCPOLEN_TSTAMP_ALIGNED;
+@@ -5252,6 +5252,7 @@ static int atomisp_set_fmt_to_isp(struct
+ 			__func__, vdev->name);
+ 		return -EINVAL;
  	}
- 	if (likely(ireq->sack_ok)) {
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index b6f5a4474d8bc..c18fdddbfa09d 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1171,7 +1171,7 @@ static void tcp_v6_reqsk_send_ack(const struct sock *sk, struct sk_buff *skb,
- 			tcp_rsk(req)->rcv_nxt,
- 			req->rsk_rcv_wnd >> inet_rsk(req)->rcv_wscale,
- 			tcp_time_stamp_raw() + tcp_rsk(req)->ts_off,
--			req->ts_recent, sk->sk_bound_dev_if,
-+			READ_ONCE(req->ts_recent), sk->sk_bound_dev_if,
- 			tcp_v6_md5_do_lookup(sk, &ipv6_hdr(skb)->saddr, l3index),
- 			ipv6_get_dsfield(ipv6_hdr(skb)), 0, sk->sk_priority);
- }
--- 
-2.39.2
-
++	stream_index = atomisp_source_pad_to_stream_id(asd, source_pad);
+ 
+ 	v4l2_fh_init(&fh.vfh, vdev);
+ 
+--- a/drivers/staging/media/atomisp/pci/atomisp_ioctl.c
++++ b/drivers/staging/media/atomisp/pci/atomisp_ioctl.c
+@@ -1123,7 +1123,7 @@ int __atomisp_reqbufs(struct file *file,
+ 	struct ia_css_frame *frame;
+ 	struct videobuf_vmalloc_memory *vm_mem;
+ 	u16 source_pad = atomisp_subdev_source_pad(vdev);
+-	u16 stream_id = atomisp_source_pad_to_stream_id(asd, source_pad);
++	u16 stream_id;
+ 	int ret = 0, i = 0;
+ 
+ 	if (!asd) {
+@@ -1131,6 +1131,7 @@ int __atomisp_reqbufs(struct file *file,
+ 			__func__, vdev->name);
+ 		return -EINVAL;
+ 	}
++	stream_id = atomisp_source_pad_to_stream_id(asd, source_pad);
+ 
+ 	if (req->count == 0) {
+ 		mutex_lock(&pipe->capq.vb_lock);
 
 
