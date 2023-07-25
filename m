@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9F11ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:16:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB4EC433C8;
-	Tue, 25 Jul 2023 11:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C931ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:16:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58517C433C7;
+	Tue, 25 Jul 2023 11:16:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283790;
-	bh=RybqTSJzi4FIo+abIa7eRqW+uSupp2XZWUGQYRsODS8=;
+	s=korg; t=1690283793;
+	bh=uPnaw2kvfvJOtZKnArrebWv3wvqEKoBcsqbXmNlo+bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CSubnXwQaKmuC2w90eX+kV/324HjDBLZJ93TcHmFxs1nQlGVrvuVizSVLg9x0xmdx
-	 GVhiE+vndshwRHnuJgcQ3drKJqnCX2rPOYotQX36n32yMMWBkPocrYbq2heZDuSWXB
-	 5CLs6M7UZclKDxlfSIt638SSsdix3MWNNi8hRd5g=
+	b=l5GEdg355eSo6Q40EMF4DWtFTFoQyPREzauDidvlcIc0AbQ/o6tsgC0pTXXHIy737
+	 6aWORklCCw8C2zwgiRITwCzvk0TxaItLNbTyPJMJ4TK2Oj9lj8qIQHgrOlY2m1kgS/
+	 DNH62zmZXnHsu2hBN5usfh3LKQJ0Vw2np3NwGbdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca@z3ntu.xyz>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 095/509] Input: drv260x - sleep between polling GO bit
-Date: Tue, 25 Jul 2023 12:40:34 +0200
-Message-ID: <20230725104558.051567928@linuxfoundation.org>
+Subject: [PATCH 5.10 096/509] drm/bridge: tc358768: always enable HS video mode
+Date: Tue, 25 Jul 2023 12:40:35 +0200
+Message-ID: <20230725104558.085639932@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,37 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luca Weiss <luca@z3ntu.xyz>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit efef661dfa6bf8cbafe4cd6a97433fcef0118967 ]
+[ Upstream commit 75a8aeac2573ab258c53676eba9b3796ea691988 ]
 
-When doing the initial startup there's no need to poll without any
-delay and spam the I2C bus.
+Always enable HS video mode setting the TXMD bit, without this change no
+video output is present with DSI sinks that are setting
+MIPI_DSI_MODE_LPM flag (tested with LT8912B DSI-HDMI bridge).
 
-Let's sleep 15ms between each attempt, which is the same time as used
-in the vendor driver.
+Previously the driver was enabling HS mode only when the DSI sink was
+not explicitly setting the MIPI_DSI_MODE_LPM, however this is not
+correct.
 
-Fixes: 7132fe4f5687 ("Input: drv260x - add TI drv260x haptics driver")
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-Link: https://lore.kernel.org/r/20230430-drv260x-improvements-v1-2-1fb28b4cc698@z3ntu.xyz
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+The MIPI_DSI_MODE_LPM is supposed to indicate that the sink is willing
+to receive data in low power mode, however clearing the
+TC358768_DSI_CONTROL_TXMD bit will make the TC358768 send video in
+LP mode that is not the intended behavior.
+
+Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-2-francesco@dolcini.it
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/drv260x.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/bridge/tc358768.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/input/misc/drv260x.c b/drivers/input/misc/drv260x.c
-index 79d7fa710a714..54002d1a446b7 100644
---- a/drivers/input/misc/drv260x.c
-+++ b/drivers/input/misc/drv260x.c
-@@ -435,6 +435,7 @@ static int drv260x_init(struct drv260x_data *haptics)
- 	}
+diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
+index 8ed8302d6bbb4..e65af025a771f 100644
+--- a/drivers/gpu/drm/bridge/tc358768.c
++++ b/drivers/gpu/drm/bridge/tc358768.c
+@@ -819,8 +819,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 	val = TC358768_DSI_CONFW_MODE_SET | TC358768_DSI_CONFW_ADDR_DSI_CONTROL;
+ 	val |= (dsi_dev->lanes - 1) << 1;
  
- 	do {
-+		usleep_range(15000, 15500);
- 		error = regmap_read(haptics->regmap, DRV260X_GO, &cal_buf);
- 		if (error) {
- 			dev_err(&haptics->client->dev,
+-	if (!(dsi_dev->mode_flags & MIPI_DSI_MODE_LPM))
+-		val |= TC358768_DSI_CONTROL_TXMD;
++	val |= TC358768_DSI_CONTROL_TXMD;
+ 
+ 	if (!(dsi_dev->mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
+ 		val |= TC358768_DSI_CONTROL_HSCKMD;
 -- 
 2.39.2
 
