@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60171F165
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:36:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA31C433C8;
-	Tue, 25 Jul 2023 11:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470B01F165
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:36:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD03C433C7;
+	Tue, 25 Jul 2023 11:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284991;
-	bh=s1Fg4hHGqPwY0O5HYNBQXs5Rk759y9kO61ZEbkcD/5w=;
+	s=korg; t=1690284994;
+	bh=T/J1WAEOqzayksZ9saLnJHZw+g65Ve8XALJc3hruitg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UfBX2aKyOG2PqGXNcB9/xhCqWgaDxSecpj2H3PBHrumIpvLClXtw23zGPw24H0Rls
-	 ZvQNVDcobt+uHISW+g3axd9WqG/MRG3R2KfNsd+jpemOCi7h/3vr8ko44xLurm2KXM
-	 ibTzfqy8YHR1UdAKeifCEHJTVAhsM6H4i4aKfK5o=
+	b=b3KcRa4QPkbEuRwgoq0IxiJHaCCtWb8W/6vI7TMl3AIquIm34oXU3u6Q/7tDxwOnA
+	 cIpKzSwZcOl1qGdoLAqyQ4qOOV4WCoWQ76+/+84ED1TSoE8mDAFgWM8F+9dbOzx4+4
+	 VLg/ILlVyGWv75Ly7YbdVZT7zRMFCJyBVdbSoNlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Gregg Wonderly <greggwonderly@seqtechllc.com>,
+	Peter Seiderer <ps.report@gmx.net>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
 	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 045/313] wifi: wl3501_cs: Fix an error handling path in wl3501_probe()
-Date: Tue, 25 Jul 2023 12:43:18 +0200
-Message-ID: <20230725104523.017679778@linuxfoundation.org>
+Subject: [PATCH 5.4 028/313] wifi: ath9k: fix AR9003 mac hardware hang check register offset calculation
+Date: Tue, 25 Jul 2023 12:43:01 +0200
+Message-ID: <20230725104522.340510491@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -36,64 +38,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Peter Seiderer <ps.report@gmx.net>
 
-[ Upstream commit 391af06a02e7642039ac5f6c4b2c034ab0992b5d ]
+[ Upstream commit 3e56c80931c7615250fe4bf83f93b57881969266 ]
 
-Should wl3501_config() fail, some resources need to be released as already
-done in the remove function.
+Fix ath9k_hw_verify_hang()/ar9003_hw_detect_mac_hang() register offset
+calculation (do not overflow the shift for the second register/queues
+above five, use the register layout described in the comments above
+ath9k_hw_verify_hang() instead).
 
-Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Fixes: 222e04830ff0 ("ath9k: Fix MAC HW hang check for AR9003")
+
+Reported-by: Gregg Wonderly <greggwonderly@seqtechllc.com>
+Link: https://lore.kernel.org/linux-wireless/E3A9C354-0CB7-420C-ADEF-F0177FB722F4@seqtechllc.com/
+Signed-off-by: Peter Seiderer <ps.report@gmx.net>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/7cc9c9316489b7d69b36aeb0edd3123538500b41.1684569865.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230422212423.26065-1-ps.report@gmx.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/wl3501_cs.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/net/wireless/ath/ath9k/ar9003_hw.c | 27 ++++++++++++++--------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/wl3501_cs.c b/drivers/net/wireless/wl3501_cs.c
-index ae660f25a0e5a..e6505624f0c28 100644
---- a/drivers/net/wireless/wl3501_cs.c
-+++ b/drivers/net/wireless/wl3501_cs.c
-@@ -1862,6 +1862,7 @@ static int wl3501_probe(struct pcmcia_device *p_dev)
+diff --git a/drivers/net/wireless/ath/ath9k/ar9003_hw.c b/drivers/net/wireless/ath/ath9k/ar9003_hw.c
+index 2fe12b0de5b4f..dea8a998fb622 100644
+--- a/drivers/net/wireless/ath/ath9k/ar9003_hw.c
++++ b/drivers/net/wireless/ath/ath9k/ar9003_hw.c
+@@ -1099,17 +1099,22 @@ static bool ath9k_hw_verify_hang(struct ath_hw *ah, unsigned int queue)
  {
- 	struct net_device *dev;
- 	struct wl3501_card *this;
-+	int ret;
+ 	u32 dma_dbg_chain, dma_dbg_complete;
+ 	u8 dcu_chain_state, dcu_complete_state;
++	unsigned int dbg_reg, reg_offset;
+ 	int i;
  
- 	/* The io structure describes IO port mapping */
- 	p_dev->resource[0]->end	= 16;
-@@ -1873,8 +1874,7 @@ static int wl3501_probe(struct pcmcia_device *p_dev)
+-	for (i = 0; i < NUM_STATUS_READS; i++) {
+-		if (queue < 6)
+-			dma_dbg_chain = REG_READ(ah, AR_DMADBG_4);
+-		else
+-			dma_dbg_chain = REG_READ(ah, AR_DMADBG_5);
++	if (queue < 6) {
++		dbg_reg = AR_DMADBG_4;
++		reg_offset = queue * 5;
++	} else {
++		dbg_reg = AR_DMADBG_5;
++		reg_offset = (queue - 6) * 5;
++	}
  
- 	dev = alloc_etherdev(sizeof(struct wl3501_card));
- 	if (!dev)
--		goto out_link;
--
-+		return -ENOMEM;
++	for (i = 0; i < NUM_STATUS_READS; i++) {
++		dma_dbg_chain = REG_READ(ah, dbg_reg);
+ 		dma_dbg_complete = REG_READ(ah, AR_DMADBG_6);
  
- 	dev->netdev_ops		= &wl3501_netdev_ops;
- 	dev->watchdog_timeo	= 5 * HZ;
-@@ -1887,9 +1887,15 @@ static int wl3501_probe(struct pcmcia_device *p_dev)
- 	netif_stop_queue(dev);
- 	p_dev->priv = dev;
+-		dcu_chain_state = (dma_dbg_chain >> (5 * queue)) & 0x1f;
++		dcu_chain_state = (dma_dbg_chain >> reg_offset) & 0x1f;
+ 		dcu_complete_state = dma_dbg_complete & 0x3;
  
--	return wl3501_config(p_dev);
--out_link:
--	return -ENOMEM;
-+	ret = wl3501_config(p_dev);
-+	if (ret)
-+		goto out_free_etherdev;
-+
-+	return 0;
-+
-+out_free_etherdev:
-+	free_netdev(dev);
-+	return ret;
- }
+ 		if ((dcu_chain_state != 0x6) || (dcu_complete_state != 0x1))
+@@ -1128,6 +1133,7 @@ static bool ar9003_hw_detect_mac_hang(struct ath_hw *ah)
+ 	u8 dcu_chain_state, dcu_complete_state;
+ 	bool dcu_wait_frdone = false;
+ 	unsigned long chk_dcu = 0;
++	unsigned int reg_offset;
+ 	unsigned int i = 0;
  
- static int wl3501_config(struct pcmcia_device *link)
+ 	dma_dbg_4 = REG_READ(ah, AR_DMADBG_4);
+@@ -1139,12 +1145,15 @@ static bool ar9003_hw_detect_mac_hang(struct ath_hw *ah)
+ 		goto exit;
+ 
+ 	for (i = 0; i < ATH9K_NUM_TX_QUEUES; i++) {
+-		if (i < 6)
++		if (i < 6) {
+ 			chk_dbg = dma_dbg_4;
+-		else
++			reg_offset = i * 5;
++		} else {
+ 			chk_dbg = dma_dbg_5;
++			reg_offset = (i - 6) * 5;
++		}
+ 
+-		dcu_chain_state = (chk_dbg >> (5 * i)) & 0x1f;
++		dcu_chain_state = (chk_dbg >> reg_offset) & 0x1f;
+ 		if (dcu_chain_state == 0x6) {
+ 			dcu_wait_frdone = true;
+ 			chk_dcu |= BIT(i);
 -- 
 2.39.2
 
