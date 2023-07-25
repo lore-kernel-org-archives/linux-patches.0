@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1671D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:07:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB414C433C8;
-	Tue, 25 Jul 2023 11:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63AE91D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:07:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4050C433C8;
+	Tue, 25 Jul 2023 11:07:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283250;
-	bh=/6LNG1D1+ecXz36nMmKvtcpOR2TM2aIryufo85/JiE8=;
+	s=korg; t=1690283253;
+	bh=AsPTQrPzTDhdK/72JF3qBlfWN0iPBbmFkZvJ++WrSw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V/uEhpfzwEeHPUE33AjbAzBkMBsQacL21PZhwYAAbTiHsdXpT2mI95P0Fb9dfwwP+
-	 HzPLIz3796l7aszFhVefY8tvMTtaTwiAXumVgESUaiTLiETkGmqUpI6bTbvLunsxLS
-	 1vf/MT9klCUrAQSBKluNmSpsH6xV0b/qCpnYy3+0=
+	b=jES5m2eOfHLYUN03GN10TS3CM4eD1wp7dYyujnddW6tTDCo2Mj4io2uSibYYpjFtd
+	 jGVInVB8cAS3Pp1KAnymcI73Dhhf+vtW6Xj7KK+tjObuoHePUR3CWl9pXLUErGTSTx
+	 sZXkfZjK8wzLTQLzw1CB53UtTEnA6SotLuyXX0Xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	"Joseph C. Sible" <josephcsible@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 01/78] ALSA: hda/realtek - remove 3k pull low procedure
-Date: Tue, 25 Jul 2023 12:45:52 +0200
-Message-ID: <20230725104451.337387537@linuxfoundation.org>
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 10/78] selftests: tc: set timeout to 15 minutes
+Date: Tue, 25 Jul 2023 12:46:01 +0200
+Message-ID: <20230725104451.715707033@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104451.275227789@linuxfoundation.org>
 References: <20230725104451.275227789@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,66 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kailang Yang <kailang@realtek.com>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 69ea4c9d02b7947cdd612335a61cc1a02e544ccd upstream.
+commit fda05798c22a354efde09a76bdfc276b2d591829 upstream.
 
-This was the ALC283 depop procedure.
-Maybe this procedure wasn't suitable with new codec.
-So, let us remove it. But HP 15z-fc000 must do 3k pull low. If it
-reboot with plugged headset,
-it will have errors show don't find codec error messages. Run 3k pull
-low will solve issues.
-So, let AMD chipset will run this for workarround.
+When looking for something else in LKFT reports [1], I noticed that the
+TC selftest ended with a timeout error:
 
-Fixes: 5aec98913095 ("ALSA: hda/realtek - ALC236 headset MIC recording issue")
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Cc: <stable@vger.kernel.org>
-Reported-by: Joseph C. Sible <josephcsible@gmail.com>
-Closes: https://lore.kernel.org/r/CABpewhE4REgn9RJZduuEU6Z_ijXNeQWnrxO1tg70Gkw=F8qNYg@mail.gmail.com/
-Link: https://lore.kernel.org/r/4678992299664babac4403d9978e7ba7@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  not ok 1 selftests: tc-testing: tdc.sh # TIMEOUT 45 seconds
+
+The timeout had been introduced 3 years ago, see the Fixes commit below.
+
+This timeout is only in place when executing the selftests via the
+kselftests runner scripts. I guess this is not what most TC devs are
+using and nobody noticed the issue before.
+
+The new timeout is set to 15 minutes as suggested by Pedro [2]. It looks
+like it is plenty more time than what it takes in "normal" conditions.
+
+Fixes: 852c8cbf34d3 ("selftests/kselftest/runner.sh: Add 45 second timeout per test")
+Cc: stable@vger.kernel.org
+Link: https://qa-reports.linaro.org/lkft/linux-next-master/build/next-20230711/testrun/18267241/suite/kselftest-tc-testing/test/tc-testing_tdc_sh/log [1]
+Link: https://lore.kernel.org/netdev/0e061d4a-9a23-9f58-3b35-d8919de332d7@tessares.net/T/ [2]
+Suggested-by: Pedro Tammela <pctammela@mojatatu.com>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Reviewed-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Link: https://lore.kernel.org/r/20230713-tc-selftests-lkft-v1-1-1eb4fd3a96e7@tessares.net
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ tools/testing/selftests/tc-testing/settings |    1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 tools/testing/selftests/tc-testing/settings
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -120,6 +120,7 @@ struct alc_spec {
- 	unsigned int ultra_low_power:1;
- 	unsigned int has_hs_key:1;
- 	unsigned int no_internal_mic_pin:1;
-+	unsigned int en_3kpull_low:1;
- 
- 	/* for PLL fix */
- 	hda_nid_t pll_nid;
-@@ -3616,6 +3617,7 @@ static void alc256_shutup(struct hda_cod
- 	if (!hp_pin)
- 		hp_pin = 0x21;
- 
-+	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
- 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
- 
- 	if (hp_pin_sense)
-@@ -3632,8 +3634,7 @@ static void alc256_shutup(struct hda_cod
- 	/* If disable 3k pulldown control for alc257, the Mic detection will not work correctly
- 	 * when booting with headset plugged. So skip setting it for the codec alc257
- 	 */
--	if (codec->core.vendor_id != 0x10ec0236 &&
--	    codec->core.vendor_id != 0x10ec0257)
-+	if (spec->en_3kpull_low)
- 		alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
- 
- 	if (!spec->no_shutup_pins)
-@@ -10146,6 +10147,8 @@ static int patch_alc269(struct hda_codec
- 		spec->shutup = alc256_shutup;
- 		spec->init_hook = alc256_init;
- 		spec->gen.mixer_nid = 0; /* ALC256 does not have any loopback mixer path */
-+		if (codec->bus->pci->vendor == PCI_VENDOR_ID_AMD)
-+			spec->en_3kpull_low = true;
- 		break;
- 	case 0x10ec0257:
- 		spec->codec_variant = ALC269_TYPE_ALC257;
+--- /dev/null
++++ b/tools/testing/selftests/tc-testing/settings
+@@ -0,0 +1 @@
++timeout=900
 
 
