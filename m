@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546651D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:06:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C4DC433C8;
-	Tue, 25 Jul 2023 11:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E4F1D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:06:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C19C433C8;
+	Tue, 25 Jul 2023 11:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283172;
-	bh=scu7yFdPhcXSWWCgO4/hFT+dhAM6+mfzt6xp/oHI6zo=;
+	s=korg; t=1690283174;
+	bh=sCPzJ58rJYzroxH1xC+4Hb+DiSvqOQcB2ylZam0dqTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tfDtiPpMTeCCtL8L+newN23BCmyT1jtb3Yh+eUhELw/19mPLr7bSOOBTyKykiPkdW
-	 2FfFFL1XzBkuwhOBw561BCUWDW7zlIzSHpqvmdOsq2OnlQuqenTr+Qo20sFEG3tGVz
-	 S22k0y78SYZO0GNDGIdBb/CwTP82Jgw1KwO9UzKg=
+	b=Rnx38f2SaFzqy7THa8PnhHt46ou6paOriXOSdymJ6STMQbxeLSgqG8rXWoURKn78n
+	 u47aHlbOTG952LS1gxZKoKAdY/JCLHdMtnqdW5FSPJpdDkwJox82yYEjthviM4LGjr
+	 sUOnXvRFAXglFfyXL6b2vNG+HEdWQZa6nMVhe1IA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 157/183] tcp: annotate data-races around icsk->icsk_syn_retries
-Date: Tue, 25 Jul 2023 12:46:25 +0200
-Message-ID: <20230725104513.481065981@linuxfoundation.org>
+	Yunxiang Li <Yunxiang.Li@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
+Subject: [PATCH 6.1 166/183] drm/ttm: fix bulk_move corruption when adding a entry
+Date: Tue, 25 Jul 2023 12:46:34 +0200
+Message-ID: <20230725104513.760072287@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -35,69 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Yunxiang Li <Yunxiang.Li@amd.com>
 
-[ Upstream commit 3a037f0f3c4bfe44518f2fbb478aa2f99a9cd8bb ]
+commit 4481913607e58196c48a4fef5e6f45350684ec3c upstream.
 
-do_tcp_getsockopt() and reqsk_timer_handler() read
-icsk->icsk_syn_retries while another cpu might change its value.
+When the resource is the first in the bulk_move range, adding it again
+(thus moving it to the tail) will corrupt the list since the first
+pointer is not moved. This eventually lead to null pointer deref in
+ttm_lru_bulk_move_del()
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230719212857.3943972-7-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: fee2ede15542 ("drm/ttm: rework bulk move handling v5")
+Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+CC: stable@vger.kernel.org
+Link: https://patchwork.freedesktop.org/patch/msgid/20230622141902.28718-3-Yunxiang.Li@amd.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_connection_sock.c | 2 +-
- net/ipv4/tcp.c                  | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/ttm/ttm_resource.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 8e35ea66d930a..62a3b103f258a 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1016,7 +1016,7 @@ static void reqsk_timer_handler(struct timer_list *t)
+--- a/drivers/gpu/drm/ttm/ttm_resource.c
++++ b/drivers/gpu/drm/ttm/ttm_resource.c
+@@ -85,6 +85,8 @@ static void ttm_lru_bulk_move_pos_tail(s
+ 				       struct ttm_resource *res)
+ {
+ 	if (pos->last != res) {
++		if (pos->first == res)
++			pos->first = list_next_entry(res, lru);
+ 		list_move(&res->lru, &pos->last->lru);
+ 		pos->last = res;
+ 	}
+@@ -110,7 +112,8 @@ static void ttm_lru_bulk_move_del(struct
+ {
+ 	struct ttm_lru_bulk_move_pos *pos = ttm_lru_bulk_move_pos(bulk, res);
  
- 	icsk = inet_csk(sk_listener);
- 	net = sock_net(sk_listener);
--	max_syn_ack_retries = icsk->icsk_syn_retries ? :
-+	max_syn_ack_retries = READ_ONCE(icsk->icsk_syn_retries) ? :
- 		READ_ONCE(net->ipv4.sysctl_tcp_synack_retries);
- 	/* Normally all the openreqs are young and become mature
- 	 * (i.e. converted to established socket) for first timeout.
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 7d75928ea0f9c..ffa9717293358 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -3397,7 +3397,7 @@ int tcp_sock_set_syncnt(struct sock *sk, int val)
- 		return -EINVAL;
- 
- 	lock_sock(sk);
--	inet_csk(sk)->icsk_syn_retries = val;
-+	WRITE_ONCE(inet_csk(sk)->icsk_syn_retries, val);
- 	release_sock(sk);
- 	return 0;
- }
-@@ -3678,7 +3678,7 @@ int do_tcp_setsockopt(struct sock *sk, int level, int optname,
- 		if (val < 1 || val > MAX_TCP_SYNCNT)
- 			err = -EINVAL;
- 		else
--			icsk->icsk_syn_retries = val;
-+			WRITE_ONCE(icsk->icsk_syn_retries, val);
- 		break;
- 
- 	case TCP_SAVE_SYN:
-@@ -4095,7 +4095,7 @@ int do_tcp_getsockopt(struct sock *sk, int level,
- 		val = keepalive_probes(tp);
- 		break;
- 	case TCP_SYNCNT:
--		val = icsk->icsk_syn_retries ? :
-+		val = READ_ONCE(icsk->icsk_syn_retries) ? :
- 			READ_ONCE(net->ipv4.sysctl_tcp_syn_retries);
- 		break;
- 	case TCP_LINGER2:
--- 
-2.39.2
-
+-	if (unlikely(pos->first == res && pos->last == res)) {
++	if (unlikely(WARN_ON(!pos->first || !pos->last) ||
++		     (pos->first == res && pos->last == res))) {
+ 		pos->first = NULL;
+ 		pos->last = NULL;
+ 	} else if (pos->first == res) {
 
 
