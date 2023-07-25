@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93A314263
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:53:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 539D3C433C9;
-	Tue, 25 Jul 2023 10:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FC414263
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:53:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12663C433C8;
+	Tue, 25 Jul 2023 10:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282426;
-	bh=sB+XtJAYpsxpgs8eSEbivLDZHx106L5FQ9mAbaQJbvE=;
+	s=korg; t=1690282429;
+	bh=xbH6wIwOZG5M2DaP0ZJgalD+ZaD9fshGC5PX0Sdww5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCXMiImXK9V72Gew3wK3QlmP561q+NJfJAUlIlCxiXD9QYJUymM76Sj5Ov88lJ497
-	 +aCxw9GFayq4XchzcTKGOLRrAU9v0bpy2EDxfGqcQJQMn2GA6/NdetQylTey+/QM9h
-	 pbYMmX6ukfvZxkVHkIpK+Wjygdve6vSTd1MKT4s4=
+	b=J8P2CAarzySyG7mUKvOY0Uw1gFdYIpe3igeA+4EdAFcZHTJi6hdyYIQ6p1p6Kkv79
+	 01wVIbVThJ9oZS1PECYMKv2+ErqLXQdXjWaJn2TjUYFwNSlWbH/QS2NS6O/eEnM0sd
+	 Ew0XklxTJWBCUT99ZScnzmG1ryFZHjPnAZx9uwjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Simon Horman <simon.horman@corigine.com>,
+	Gabriel Somlo <gsomlo@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 124/227] wifi: iwlwifi: mvm: fix potential array out of bounds access
-Date: Tue, 25 Jul 2023 12:44:51 +0200
-Message-ID: <20230725104519.946711193@linuxfoundation.org>
+Subject: [PATCH 6.4 125/227] net: ethernet: litex: add support for 64 bit stats
+Date: Tue, 25 Jul 2023 12:44:52 +0200
+Message-ID: <20230725104519.984933604@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,49 +37,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gregory Greenman <gregory.greenman@intel.com>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit 637452360ecde9ac972d19416e9606529576b302 ]
+[ Upstream commit 18da174d865a87d47d2f33f5b0a322efcf067728 ]
 
-Account for IWL_SEC_WEP_KEY_OFFSET when needed while verifying
-key_len size in iwl_mvm_sec_key_add().
+Implement 64 bit per cpu stats to fix the overflow of netdev->stats
+on 32 bit platforms. To simplify the code, we use net core
+pcpu_sw_netstats infrastructure. One small drawback is some memory
+overhead because litex uses just one queue, but we allocate the
+counters per cpu.
 
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230613155501.f193b7493a93.I6948ba625b9318924b96a5e22602ac75d2bd0125@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Acked-by: Gabriel Somlo <gsomlo@gmail.com>
+Link: https://lore.kernel.org/r/20230614162035.300-1-jszhang@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/litex/litex_liteeth.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c
-index 8853821b37168..1e659bd07392a 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
- /*
-- * Copyright (C) 2022 Intel Corporation
-+ * Copyright (C) 2022 - 2023 Intel Corporation
-  */
- #include <linux/kernel.h>
- #include <net/mac80211.h>
-@@ -179,9 +179,14 @@ int iwl_mvm_sec_key_add(struct iwl_mvm *mvm,
- 		.u.add.key_flags = cpu_to_le32(key_flags),
- 		.u.add.tx_seq = cpu_to_le64(atomic64_read(&keyconf->tx_pn)),
- 	};
-+	int max_key_len = sizeof(cmd.u.add.key);
- 	int ret;
+diff --git a/drivers/net/ethernet/litex/litex_liteeth.c b/drivers/net/ethernet/litex/litex_liteeth.c
+index 35f24e0f09349..ffa96059079c6 100644
+--- a/drivers/net/ethernet/litex/litex_liteeth.c
++++ b/drivers/net/ethernet/litex/litex_liteeth.c
+@@ -78,8 +78,7 @@ static int liteeth_rx(struct net_device *netdev)
+ 	memcpy_fromio(data, priv->rx_base + rx_slot * priv->slot_size, len);
+ 	skb->protocol = eth_type_trans(skb, netdev);
  
--	if (WARN_ON(keyconf->keylen > sizeof(cmd.u.add.key)))
-+	if (keyconf->cipher == WLAN_CIPHER_SUITE_WEP40 ||
-+	    keyconf->cipher == WLAN_CIPHER_SUITE_WEP104)
-+		max_key_len -= IWL_SEC_WEP_KEY_OFFSET;
+-	netdev->stats.rx_packets++;
+-	netdev->stats.rx_bytes += len;
++	dev_sw_netstats_rx_add(netdev, len);
+ 
+ 	return netif_rx(skb);
+ 
+@@ -185,8 +184,7 @@ static netdev_tx_t liteeth_start_xmit(struct sk_buff *skb,
+ 	litex_write16(priv->base + LITEETH_READER_LENGTH, skb->len);
+ 	litex_write8(priv->base + LITEETH_READER_START, 1);
+ 
+-	netdev->stats.tx_bytes += skb->len;
+-	netdev->stats.tx_packets++;
++	dev_sw_netstats_tx_add(netdev, 1, skb->len);
+ 
+ 	priv->tx_slot = (priv->tx_slot + 1) % priv->num_tx_slots;
+ 	dev_kfree_skb_any(skb);
+@@ -194,9 +192,17 @@ static netdev_tx_t liteeth_start_xmit(struct sk_buff *skb,
+ 	return NETDEV_TX_OK;
+ }
+ 
++static void
++liteeth_get_stats64(struct net_device *netdev, struct rtnl_link_stats64 *stats)
++{
++	netdev_stats_to_stats64(stats, &netdev->stats);
++	dev_fetch_sw_netstats(stats, netdev->tstats);
++}
 +
-+	if (WARN_ON(keyconf->keylen > max_key_len))
- 		return -EINVAL;
+ static const struct net_device_ops liteeth_netdev_ops = {
+ 	.ndo_open		= liteeth_open,
+ 	.ndo_stop		= liteeth_stop,
++	.ndo_get_stats64	= liteeth_get_stats64,
+ 	.ndo_start_xmit         = liteeth_start_xmit,
+ };
  
- 	if (WARN_ON(!sta_mask))
+@@ -242,6 +248,11 @@ static int liteeth_probe(struct platform_device *pdev)
+ 	priv->netdev = netdev;
+ 	priv->dev = &pdev->dev;
+ 
++	netdev->tstats = devm_netdev_alloc_pcpu_stats(&pdev->dev,
++						      struct pcpu_sw_netstats);
++	if (!netdev->tstats)
++		return -ENOMEM;
++
+ 	irq = platform_get_irq(pdev, 0);
+ 	if (irq < 0)
+ 		return irq;
 -- 
 2.39.2
 
