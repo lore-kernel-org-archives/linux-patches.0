@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F71715AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:58:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B18C433C8;
-	Tue, 25 Jul 2023 10:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C5715AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:58:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B98BC433C7;
+	Tue, 25 Jul 2023 10:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282701;
-	bh=hGRg23nfd2ZLXe+iHdbLwWgDRuJqqIIPbHljbsHtw2I=;
+	s=korg; t=1690282703;
+	bh=Tmuq9A3rps73VjOMuot8WXSUTDBOPVUyBTIemHKrvO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SeYgzbYwC2A9doIUOIL5nrzkszWJAqZgsJMsjrkbYBYslrD0y0A43yaojoJ3/857i
-	 IV6yP7XwWOIL3HNCqCVXhbEw2Tv10pKtVpABnY9i6YA/hfAKRt3u3Xve+7+N/dq8cZ
-	 b+PZY6UFKJrB/AueIl+4ckKkPZQGI1mZNF6hTfV8=
+	b=nXlh/xyJka0iulWAY7cjNv/9DkQfw+gen82wKyELTWkYME+m8ydnoCbPIu7J53iUw
+	 mDz+uF9zdkiIoWirOVdJ9qsAxYaAslsWI7b4WSllPvKVeqpN6n7GAqjJ7rGUo9iDuQ
+	 LRB+uxJbYyRyzFaS09xhpRQZb4DssHv8jYdIsUh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Rodionov <vitalyr@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 194/227] ALSA: hda/realtek: Fix generic fixup definition for cs35l41 amp
-Date: Tue, 25 Jul 2023 12:46:01 +0200
-Message-ID: <20230725104522.843748124@linuxfoundation.org>
+Subject: [PATCH 6.4 195/227] netfilter: nf_tables: fix spurious set element insertion failure
+Date: Tue, 25 Jul 2023 12:46:02 +0200
+Message-ID: <20230725104522.883723772@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,77 +34,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit f7b069cf08816252f494d193b9ecdff172bf9aa1 ]
+[ Upstream commit ddbd8be68941985f166f5107109a90ce13147c44 ]
 
-Generic fixup for CS35L41 amplifies should not have vendor specific
-chained fixup. For ThinkPad laptops with led issue, we can just add
-specific fixup.
+On some platforms there is a padding hole in the nft_verdict
+structure, between the verdict code and the chain pointer.
 
-Fixes: a6ac60b36dade (ALSA: hda/realtek: Fix mute led issue on thinkpad with cs35l41 s-codec)
-Signed-off-by: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20230720082022.13033-1-vitalyr@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+On element insertion, if the new element clashes with an existing one and
+NLM_F_EXCL flag isn't set, we want to ignore the -EEXIST error as long as
+the data associated with duplicated element is the same as the existing
+one.  The data equality check uses memcmp.
+
+For normal data (NFT_DATA_VALUE) this works fine, but for NFT_DATA_VERDICT
+padding area leads to spurious failure even if the verdict data is the
+same.
+
+This then makes the insertion fail with 'already exists' error, even
+though the new "key : data" matches an existing entry and userspace
+told the kernel that it doesn't want to receive an error indication.
+
+Fixes: c016c7e45ddf ("netfilter: nf_tables: honor NLM_F_EXCL flag in set element insertion")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c |   25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ net/netfilter/nf_tables_api.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7224,6 +7224,7 @@ enum {
- 	ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN,
- 	ALC295_FIXUP_DELL_INSPIRON_TOP_SPEAKERS,
- 	ALC236_FIXUP_DELL_DUAL_CODECS,
-+	ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI,
- };
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 18546f9b2a63a..51909bcc181fa 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -10482,6 +10482,9 @@ static int nft_verdict_init(const struct nft_ctx *ctx, struct nft_data *data,
  
- /* A special fixup for Lenovo C940 and Yoga Duet 7;
-@@ -9135,8 +9136,6 @@ static const struct hda_fixup alc269_fix
- 	[ALC287_FIXUP_CS35L41_I2C_2] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = cs35l41_fixup_i2c_two,
--		.chained = true,
--		.chain_id = ALC269_FIXUP_THINKPAD_ACPI,
- 	},
- 	[ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED] = {
- 		.type = HDA_FIXUP_FUNC,
-@@ -9273,6 +9272,12 @@ static const struct hda_fixup alc269_fix
- 		.chained = true,
- 		.chain_id = ALC255_FIXUP_DELL1_MIC_NO_PRESENCE,
- 	},
-+	[ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = cs35l41_fixup_i2c_two,
-+		.chained = true,
-+		.chain_id = ALC269_FIXUP_THINKPAD_ACPI,
-+	},
- };
+ 	if (!tb[NFTA_VERDICT_CODE])
+ 		return -EINVAL;
++
++	/* zero padding hole for memcmp */
++	memset(data, 0, sizeof(*data));
+ 	data->verdict.code = ntohl(nla_get_be32(tb[NFTA_VERDICT_CODE]));
  
- static const struct snd_pci_quirk alc269_fixup_tbl[] = {
-@@ -9798,14 +9803,14 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x17aa, 0x22be, "Thinkpad X1 Carbon 8th", ALC285_FIXUP_THINKPAD_HEADSET_JACK),
- 	SND_PCI_QUIRK(0x17aa, 0x22c1, "Thinkpad P1 Gen 3", ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK),
- 	SND_PCI_QUIRK(0x17aa, 0x22c2, "Thinkpad X1 Extreme Gen 3", ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK),
--	SND_PCI_QUIRK(0x17aa, 0x22f1, "Thinkpad", ALC287_FIXUP_CS35L41_I2C_2),
--	SND_PCI_QUIRK(0x17aa, 0x22f2, "Thinkpad", ALC287_FIXUP_CS35L41_I2C_2),
--	SND_PCI_QUIRK(0x17aa, 0x22f3, "Thinkpad", ALC287_FIXUP_CS35L41_I2C_2),
--	SND_PCI_QUIRK(0x17aa, 0x2316, "Thinkpad P1 Gen 6", ALC287_FIXUP_CS35L41_I2C_2),
--	SND_PCI_QUIRK(0x17aa, 0x2317, "Thinkpad P1 Gen 6", ALC287_FIXUP_CS35L41_I2C_2),
--	SND_PCI_QUIRK(0x17aa, 0x2318, "Thinkpad Z13 Gen2", ALC287_FIXUP_CS35L41_I2C_2),
--	SND_PCI_QUIRK(0x17aa, 0x2319, "Thinkpad Z16 Gen2", ALC287_FIXUP_CS35L41_I2C_2),
--	SND_PCI_QUIRK(0x17aa, 0x231a, "Thinkpad Z16 Gen2", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x17aa, 0x22f1, "Thinkpad", ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI),
-+	SND_PCI_QUIRK(0x17aa, 0x22f2, "Thinkpad", ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI),
-+	SND_PCI_QUIRK(0x17aa, 0x22f3, "Thinkpad", ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI),
-+	SND_PCI_QUIRK(0x17aa, 0x2316, "Thinkpad P1 Gen 6", ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI),
-+	SND_PCI_QUIRK(0x17aa, 0x2317, "Thinkpad P1 Gen 6", ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI),
-+	SND_PCI_QUIRK(0x17aa, 0x2318, "Thinkpad Z13 Gen2", ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI),
-+	SND_PCI_QUIRK(0x17aa, 0x2319, "Thinkpad Z16 Gen2", ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI),
-+	SND_PCI_QUIRK(0x17aa, 0x231a, "Thinkpad Z16 Gen2", ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI),
- 	SND_PCI_QUIRK(0x17aa, 0x30bb, "ThinkCentre AIO", ALC233_FIXUP_LENOVO_LINE2_MIC_HOTKEY),
- 	SND_PCI_QUIRK(0x17aa, 0x30e2, "ThinkCentre AIO", ALC233_FIXUP_LENOVO_LINE2_MIC_HOTKEY),
- 	SND_PCI_QUIRK(0x17aa, 0x310c, "ThinkCentre Station", ALC294_FIXUP_LENOVO_MIC_LOCATION),
+ 	switch (data->verdict.code) {
+-- 
+2.39.2
+
 
 
