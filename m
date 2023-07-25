@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB99A15AE0
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 039E1C433C8;
-	Tue, 25 Jul 2023 11:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C48315AE0
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2195C433C8;
+	Tue, 25 Jul 2023 11:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283514;
-	bh=JHT+iMQO8LqS+kJkeHNuaxe3v0vmIk4Xw3W1hDP7sx0=;
+	s=korg; t=1690283517;
+	bh=Hfu3E/HExCBaVoV9H4zCCTGuD5VfAquPL/geKOhyjV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OcwHjys0ngPLD+vRIQdd/FJXMN0BTIYHnnrJO1MktKrCEKkwrXDINXM4xVZF888ld
-	 QltHwYtaVSLkv/g79AtTPc5R2sSDtTqFf+5mOdU2hvxB8v3yH5jrSlwjL4ET1eBo1o
-	 G2U3rSN6u0mLH2vWer/8xlMqGA6UaImxIo6uvhnU=
+	b=anhxwf7uFWu54/EmR3sxdPJin32CA8Ajo16idSoqxbEesTzEQ5KdbevN17nh5GsBD
+	 2w4vnD72Ru7b6o6khQ4pxQnDa8BkeY7pMurlDejSnboXsC0BzhPtjPPscNUrS8VqaA
+	 jnHLOHmlmtuLLVI9TKl3hnnv6a4usuHftqGNrf8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Mingxi <m202271825@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Michal Simek <michal.simek@amd.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 024/509] clocksource/drivers/cadence-ttc: Fix memory leak in ttc_timer_probe
-Date: Tue, 25 Jul 2023 12:39:23 +0200
-Message-ID: <20230725104554.752668040@linuxfoundation.org>
+	Carsten Schmidt <carsten.schmidt-achim@t-online.de>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.10 003/509] can: isotp: isotp_sendmsg(): fix return error fix on TX path
+Date: Tue, 25 Jul 2023 12:39:02 +0200
+Message-ID: <20230725104553.765297422@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,81 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Feng Mingxi <m202271825@hust.edu.cn>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 8b5bf64c89c7100c921bd807ba39b2eb003061ab ]
+commit e38910c0072b541a91954682c8b074a93e57c09b upstream.
 
-Smatch reports:
-drivers/clocksource/timer-cadence-ttc.c:529 ttc_timer_probe()
-warn: 'timer_baseaddr' from of_iomap() not released on lines: 498,508,516.
+With commit d674a8f123b4 ("can: isotp: isotp_sendmsg(): fix return
+error on FC timeout on TX path") the missing correct return value in
+the case of a protocol error was introduced.
 
-timer_baseaddr may have the problem of not being released after use,
-I replaced it with the devm_of_iomap() function and added the clk_put()
-function to cleanup the "clk_ce" and "clk_cs".
+But the way the error value has been read and sent to the user space
+does not follow the common scheme to clear the error after reading
+which is provided by the sock_error() function. This leads to an error
+report at the following write() attempt although everything should be
+working.
 
-Fixes: e932900a3279 ("arm: zynq: Use standard timer binding")
-Fixes: 70504f311d4b ("clocksource/drivers/cadence_ttc: Convert init function to return error")
-Signed-off-by: Feng Mingxi <m202271825@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20230425065611.702917-1-m202271825@hust.edu.cn
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d674a8f123b4 ("can: isotp: isotp_sendmsg(): fix return error on FC timeout on TX path")
+Reported-by: Carsten Schmidt <carsten.schmidt-achim@t-online.de>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://lore.kernel.org/all/20230607072708.38809-1-socketcan@hartkopp.net
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clocksource/timer-cadence-ttc.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ net/can/isotp.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clocksource/timer-cadence-ttc.c b/drivers/clocksource/timer-cadence-ttc.c
-index 4efd0cf3b602d..0d52e28fea4de 100644
---- a/drivers/clocksource/timer-cadence-ttc.c
-+++ b/drivers/clocksource/timer-cadence-ttc.c
-@@ -486,10 +486,10 @@ static int __init ttc_timer_probe(struct platform_device *pdev)
- 	 * and use it. Note that the event timer uses the interrupt and it's the
- 	 * 2nd TTC hence the irq_of_parse_and_map(,1)
- 	 */
--	timer_baseaddr = of_iomap(timer, 0);
--	if (!timer_baseaddr) {
-+	timer_baseaddr = devm_of_iomap(&pdev->dev, timer, 0, NULL);
-+	if (IS_ERR(timer_baseaddr)) {
- 		pr_err("ERROR: invalid timer base address\n");
--		return -ENXIO;
-+		return PTR_ERR(timer_baseaddr);
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -990,8 +990,9 @@ static int isotp_sendmsg(struct socket *
+ 		/* wait for complete transmission of current pdu */
+ 		wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
+ 
+-		if (sk->sk_err)
+-			return -sk->sk_err;
++		err = sock_error(sk);
++		if (err)
++			return err;
  	}
  
- 	irq = irq_of_parse_and_map(timer, 1);
-@@ -513,20 +513,27 @@ static int __init ttc_timer_probe(struct platform_device *pdev)
- 	clk_ce = of_clk_get(timer, clksel);
- 	if (IS_ERR(clk_ce)) {
- 		pr_err("ERROR: timer input clock not found\n");
--		return PTR_ERR(clk_ce);
-+		ret = PTR_ERR(clk_ce);
-+		goto put_clk_cs;
- 	}
- 
- 	ret = ttc_setup_clocksource(clk_cs, timer_baseaddr, timer_width);
- 	if (ret)
--		return ret;
-+		goto put_clk_ce;
- 
- 	ret = ttc_setup_clockevent(clk_ce, timer_baseaddr + 4, irq);
- 	if (ret)
--		return ret;
-+		goto put_clk_ce;
- 
- 	pr_info("%pOFn #0 at %p, irq=%d\n", timer, timer_baseaddr, irq);
- 
- 	return 0;
-+
-+put_clk_ce:
-+	clk_put(clk_ce);
-+put_clk_cs:
-+	clk_put(clk_cs);
-+	return ret;
- }
- 
- static const struct of_device_id ttc_timer_of_match[] = {
--- 
-2.39.2
-
+ 	return size;
 
 
