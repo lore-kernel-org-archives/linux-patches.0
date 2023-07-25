@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B291ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE08C433CA;
-	Tue, 25 Jul 2023 11:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D411ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6714BC433C8;
+	Tue, 25 Jul 2023 11:11:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283492;
-	bh=Qm0EmyX/CO4b8cPQA5J42T4h4dKyzq9H4SuW/0Paz70=;
+	s=korg; t=1690283494;
+	bh=KeRhk83MhruqRoA9820t8Qu5f0ERdwl5+FHCOt7QBJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KFXUtfCocGQobhprwYCSqE+vbRm1kfKXx2aQ+yFL3FpTJdyOFIWU6eFVlrC/PTyRo
-	 u2oaT0iDxGQ2J8bIiJIpJ6S6zl4hM/icDHi8UiE759iMS46cXEJgQqrxA/tW3T5GNg
-	 i219WkhcUAtM4FPcm7Njj5p+du6mmIJ09fk3rCsQ=
+	b=ykCoVuDX/QKMTFSmhjvwkmbE+fGh3MDPQwEga5wxCKjevFfEP5b9BWBKiLuXdYggF
+	 aONxsPHyDVPm0j+1UAKEnrBUOEZan8MvJYWsIMypNrn0CMbnZNA/AzbtTmMcXy9yZk
+	 8dAy9d7qpXkxD27lkQF2YUuuS4+kosxjhEBiSzgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yu Kuai <yukuai3@huawei.com>,
 	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 017/509] md/raid10: fix wrong setting of max_corr_read_errors
-Date: Tue, 25 Jul 2023 12:39:16 +0200
-Message-ID: <20230725104554.436469543@linuxfoundation.org>
+Subject: [PATCH 5.10 018/509] md/raid10: fix null-ptr-deref of mreplace in raid10_sync_request
+Date: Tue, 25 Jul 2023 12:39:17 +0200
+Message-ID: <20230725104554.485706292@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -38,34 +38,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit f8b20a405428803bd9881881d8242c9d72c6b2b2 ]
+[ Upstream commit 34817a2441747b48e444cb0e05d84e14bc9443da ]
 
-There is no input check when echo md/max_read_errors and overflow might
-occur. Add check of input number.
+There are two check of 'mreplace' in raid10_sync_request(). In the first
+check, 'need_replace' will be set and 'mreplace' will be used later if
+no-Faulty 'mreplace' exists, In the second check, 'mreplace' will be
+set to NULL if it is Faulty, but 'need_replace' will not be changed
+accordingly. null-ptr-deref occurs if Faulty is set between two check.
 
-Fixes: 1e50915fe0bb ("raid: improve MD/raid10 handling of correctable read errors.")
+Fix it by merging two checks into one. And replace 'need_replace' with
+'mreplace' because their values are always the same.
+
+Fixes: ee37d7314a32 ("md/raid10: Fix raid10 replace hang when new added disk faulty")
 Signed-off-by: Li Nan <linan122@huawei.com>
 Reviewed-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230522072535.1523740-3-linan666@huaweicloud.com
+Link: https://lore.kernel.org/r/20230527072218.2365857-2-linan666@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/raid10.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 204838a6d443e..bbf39abc32b79 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -4574,6 +4574,8 @@ max_corrected_read_errors_store(struct mddev *mddev, const char *buf, size_t len
- 	rv = kstrtouint(buf, 10, &n);
- 	if (rv < 0)
- 		return rv;
-+	if (n > INT_MAX)
-+		return -EINVAL;
- 	atomic_set(&mddev->max_corr_read_errors, n);
- 	return len;
- }
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index 6a0459f9fafbc..01680029f0de5 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -3037,7 +3037,6 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
+ 			int must_sync;
+ 			int any_working;
+ 			int need_recover = 0;
+-			int need_replace = 0;
+ 			struct raid10_info *mirror = &conf->mirrors[i];
+ 			struct md_rdev *mrdev, *mreplace;
+ 
+@@ -3049,11 +3048,10 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
+ 			    !test_bit(Faulty, &mrdev->flags) &&
+ 			    !test_bit(In_sync, &mrdev->flags))
+ 				need_recover = 1;
+-			if (mreplace != NULL &&
+-			    !test_bit(Faulty, &mreplace->flags))
+-				need_replace = 1;
++			if (mreplace && test_bit(Faulty, &mreplace->flags))
++				mreplace = NULL;
+ 
+-			if (!need_recover && !need_replace) {
++			if (!need_recover && !mreplace) {
+ 				rcu_read_unlock();
+ 				continue;
+ 			}
+@@ -3069,8 +3067,6 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
+ 				rcu_read_unlock();
+ 				continue;
+ 			}
+-			if (mreplace && test_bit(Faulty, &mreplace->flags))
+-				mreplace = NULL;
+ 			/* Unless we are doing a full sync, or a replacement
+ 			 * we only need to recover the block if it is set in
+ 			 * the bitmap
+@@ -3193,11 +3189,11 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
+ 				bio = r10_bio->devs[1].repl_bio;
+ 				if (bio)
+ 					bio->bi_end_io = NULL;
+-				/* Note: if need_replace, then bio
++				/* Note: if replace is not NULL, then bio
+ 				 * cannot be NULL as r10buf_pool_alloc will
+ 				 * have allocated it.
+ 				 */
+-				if (!need_replace)
++				if (!mreplace)
+ 					break;
+ 				bio->bi_next = biolist;
+ 				biolist = bio;
 -- 
 2.39.2
 
