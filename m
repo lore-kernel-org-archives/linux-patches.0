@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BA71ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:47:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80990C433C8;
-	Tue, 25 Jul 2023 11:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79A91ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:47:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B7F5C433C8;
+	Tue, 25 Jul 2023 11:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285631;
-	bh=tmJw3cLcouXM2+H+MvX6qdpvxlpeNrOSijpNHCjKdyM=;
+	s=korg; t=1690285634;
+	bh=gbFXmIFnU9PLyfTvzHYYcuKQjES7dc/aVfKMxdAGFUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DvOnRF3UNnnYc31Vfh2u4CRQSyFtn9VubAtDXhH2Npo8M/5dgeiWS6mjjumXqHcqB
-	 TjqrhJGN1I4POkV95IJxp+hcDB7IqIQEsHurUGsbjKt4YbI+0qhJxouL7WBoI36bRF
-	 BwIkbcaQ+/akb89+1rZ7clWKA20KB8dHJdw1f9EE=
+	b=QpW0DwuleymvyMEGSKfkyZ5NSkxg8xttyXSIoX94yR+t1JJP71wugT3asSQuwjEiX
+	 PcXYRYD+VcXqXIAak1/bjW/QwzzvY6eRp7NP0nhabXwbVMcUYcqnSg12swvm6xx2S5
+	 YpeemKtO9QVSjHsYAA3DYHfnPdZugbOth1KuhmEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manish Rangankar <mrangankar@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.4 274/313] scsi: qla2xxx: Remove unused nvme_ls_waitq wait queue
-Date: Tue, 25 Jul 2023 12:47:07 +0200
-Message-ID: <20230725104532.919789161@linuxfoundation.org>
+	shanzhulig <shanzhulig@gmail.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	stable@kernel.org,
+	Daniel Vetter <daniel.vetter@intel.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.4 275/313] drm/atomic: Fix potential use-after-free in nonblocking commits
+Date: Tue, 25 Jul 2023 12:47:08 +0200
+Message-ID: <20230725104532.969627955@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,91 +41,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manish Rangankar <mrangankar@marvell.com>
+From: Daniel Vetter <daniel.vetter@ffwll.ch>
 
-commit 20fce500b232b970e40312a9c97e7f3b6d7a709c upstream.
+commit 4e076c73e4f6e90816b30fcd4a0d7ab365087255 upstream.
 
-System crash when qla2x00_start_sp(sp) returns error code EGAIN and wake_up
-gets called for uninitialized wait queue sp->nvme_ls_waitq.
+This requires a bit of background.  Properly done a modeset driver's
+unload/remove sequence should be
 
-    qla2xxx [0000:37:00.1]-2121:5: Returning existing qpair of ffff8ae2c0513400 for idx=0
-    qla2xxx [0000:37:00.1]-700e:5: qla2x00_start_sp failed = 11
-    BUG: unable to handle kernel NULL pointer dereference at 0000000000000000
-    PGD 0 P4D 0
-    Oops: 0000 [#1] SMP NOPTI
-    Hardware name: HPE ProLiant DL360 Gen10/ProLiant DL360 Gen10, BIOS U32 09/03/2021
-    Workqueue: nvme-wq nvme_fc_connect_ctrl_work [nvme_fc]
-    RIP: 0010:__wake_up_common+0x4c/0x190
-    RSP: 0018:ffff95f3e0cb7cd0 EFLAGS: 00010086
-    RAX: 0000000000000000 RBX: ffff8b08d3b26328 RCX: 0000000000000000
-    RDX: 0000000000000001 RSI: 0000000000000003 RDI: ffff8b08d3b26320
-    RBP: 0000000000000001 R08: 0000000000000000 R09: ffffffffffffffe8
-    R10: 0000000000000000 R11: ffff95f3e0cb7a60 R12: ffff95f3e0cb7d20
-    R13: 0000000000000003 R14: 0000000000000000 R15: 0000000000000000
-    FS:  0000000000000000(0000) GS:ffff8b2fdf6c0000(0000) knlGS:0000000000000000
-    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    CR2: 0000000000000000 CR3: 0000002f1e410002 CR4: 00000000007706e0
-    DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-    DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-    PKRU: 55555554
-    Call Trace:
-     __wake_up_common_lock+0x7c/0xc0
-     qla_nvme_ls_req+0x355/0x4c0 [qla2xxx]
-     ? __nvme_fc_send_ls_req+0x260/0x380 [nvme_fc]
-     ? nvme_fc_send_ls_req.constprop.42+0x1a/0x45 [nvme_fc]
-     ? nvme_fc_connect_ctrl_work.cold.63+0x1e3/0xa7d [nvme_fc]
+	drm_dev_unplug();
+	drm_atomic_helper_shutdown();
+	drm_dev_put();
 
-Remove unused nvme_ls_waitq wait queue. nvme_ls_waitq logic was removed
-previously in the commits tagged Fixed: below.
+The trouble is that the drm_dev_unplugged() checks are by design racy,
+they do not synchronize against all outstanding ioctl.  This is because
+those ioctl could block forever (both for modeset and for driver
+specific ioctls), leading to deadlocks in hotunplug.  Instead the code
+sections that touch the hardware need to be annotated with
+drm_dev_enter/exit, to avoid accessing hardware resources after the
+unload/remove has finished.
 
-Fixes: 219d27d7147e ("scsi: qla2xxx: Fix race conditions in the code for aborting SCSI commands")
-Fixes: 5621b0dd7453 ("scsi: qla2xxx: Simpify unregistration of FC-NVMe local/remote ports")
-Cc: stable@vger.kernel.org
-Signed-off-by: Manish Rangankar <mrangankar@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230615074633.12721-1-njavali@marvell.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+To avoid use-after-free issues all the involved userspace visible
+objects are supposed to hold a reference on the underlying drm_device,
+like drm_file does.
+
+The issue now is that we missed one, the atomic modeset ioctl can be run
+in a nonblocking fashion, and in that case it cannot rely on the implied
+drm_device reference provided by the ioctl calling context.  This can
+result in a use-after-free if an nonblocking atomic commit is carefully
+raced against a driver unload.
+
+Fix this by unconditionally grabbing a drm_device reference for any
+drm_atomic_state structures.  Strictly speaking this isn't required for
+blocking commits and TEST_ONLY calls, but it's the simpler approach.
+
+Thanks to shanzhulig for the initial idea of grabbing an unconditional
+reference, I just added comments, a condensed commit message and fixed a
+minor potential issue in where exactly we drop the final reference.
+
+Reported-by: shanzhulig <shanzhulig@gmail.com>
+Suggested-by: shanzhulig <shanzhulig@gmail.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: David Airlie <airlied@gmail.com>
+Cc: stable@kernel.org
+Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_def.h  |    1 -
- drivers/scsi/qla2xxx/qla_nvme.c |    3 ---
- 2 files changed, 4 deletions(-)
+ drivers/gpu/drm/drm_atomic.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_def.h
-+++ b/drivers/scsi/qla2xxx/qla_def.h
-@@ -593,7 +593,6 @@ typedef struct srb {
- 	uint8_t pad[3];
- 	struct kref cmd_kref;	/* need to migrate ref_count over to this */
- 	void *priv;
--	wait_queue_head_t nvme_ls_waitq;
- 	struct fc_port *fcport;
- 	struct scsi_qla_host *vha;
- 	unsigned int start_timer:1;
---- a/drivers/scsi/qla2xxx/qla_nvme.c
-+++ b/drivers/scsi/qla2xxx/qla_nvme.c
-@@ -318,7 +318,6 @@ static int qla_nvme_ls_req(struct nvme_f
- 	if (rval != QLA_SUCCESS) {
- 		ql_log(ql_log_warn, vha, 0x700e,
- 		    "qla2x00_start_sp failed = %d\n", rval);
--		wake_up(&sp->nvme_ls_waitq);
- 		sp->priv = NULL;
- 		priv->sp = NULL;
- 		qla2x00_rel_sp(sp);
-@@ -563,7 +562,6 @@ static int qla_nvme_post_cmd(struct nvme
- 	if (!sp)
- 		return -EBUSY;
+--- a/drivers/gpu/drm/drm_atomic.c
++++ b/drivers/gpu/drm/drm_atomic.c
+@@ -97,6 +97,12 @@ drm_atomic_state_init(struct drm_device
+ 	if (!state->planes)
+ 		goto fail;
  
--	init_waitqueue_head(&sp->nvme_ls_waitq);
- 	kref_init(&sp->cmd_kref);
- 	spin_lock_init(&priv->cmd_lock);
- 	sp->priv = (void *)priv;
-@@ -581,7 +579,6 @@ static int qla_nvme_post_cmd(struct nvme
- 	if (rval != QLA_SUCCESS) {
- 		ql_log(ql_log_warn, vha, 0x212d,
- 		    "qla2x00_start_nvme_mq failed = %d\n", rval);
--		wake_up(&sp->nvme_ls_waitq);
- 		sp->priv = NULL;
- 		priv->sp = NULL;
- 		qla2xxx_rel_qpair_sp(sp->qpair, sp);
++	/*
++	 * Because drm_atomic_state can be committed asynchronously we need our
++	 * own reference and cannot rely on the on implied by drm_file in the
++	 * ioctl call.
++	 */
++	drm_dev_get(dev);
+ 	state->dev = dev;
+ 
+ 	DRM_DEBUG_ATOMIC("Allocated atomic state %p\n", state);
+@@ -256,7 +262,8 @@ EXPORT_SYMBOL(drm_atomic_state_clear);
+ void __drm_atomic_state_free(struct kref *ref)
+ {
+ 	struct drm_atomic_state *state = container_of(ref, typeof(*state), ref);
+-	struct drm_mode_config *config = &state->dev->mode_config;
++	struct drm_device *dev = state->dev;
++	struct drm_mode_config *config = &dev->mode_config;
+ 
+ 	drm_atomic_state_clear(state);
+ 
+@@ -268,6 +275,8 @@ void __drm_atomic_state_free(struct kref
+ 		drm_atomic_state_default_release(state);
+ 		kfree(state);
+ 	}
++
++	drm_dev_put(dev);
+ }
+ EXPORT_SYMBOL(__drm_atomic_state_free);
+ 
 
 
