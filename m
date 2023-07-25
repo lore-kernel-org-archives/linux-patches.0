@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E478F59
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:49:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784C8C433C7;
-	Tue, 25 Jul 2023 10:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71918F59
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:49:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A9DC433C8;
+	Tue, 25 Jul 2023 10:49:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282165;
-	bh=7T2DPTOoLmiRd6u5GJm4UbTReHasuM5ATY3HK3MeBNo=;
+	s=korg; t=1690282168;
+	bh=CW1YHLspWvSzcAVlQ1V3mBdlnP7+z0xe/Uqm0aDuToo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qa7UyKUSzlf4C46Nf6UrQZrbWk4LXleL3A/LuHhgpdtljnFIVU0hWoCpmTkmcMrIb
-	 QJoIQDzJtEp+9D7HzJPYkNiOc7ovIbnkmJFieT3UR7ZbN2m1c0DdYE+CsF4UqOtrak
-	 ZRGlhgiHmIfGjNy2KxHOxfWY9YiwaxIhb04z1OIY=
+	b=o2jVAQ7rirbuhMOPgMmA5EgD2A/cDgY2v7X5Ky2nenk+DjtX8u6qqqTmb3HwjDmU3
+	 r5z6yTnbQQERvLYb0EVtg87xcalaJR3Y90HtozuB2TjaR3MxF2Gy/1JXzpUjXRy4oN
+	 BIEqO3QH6x2C59n8ZI+8rg5qb8z7BS/yZ/ZndVWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cyril Brulebois <cyril@debamax.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Helge Deller <deller@gmx.de>,
-	=?UTF-8?q?Michal=20Such=C3=A1nek?= <msuchanek@suse.de>,
-	Rob Herring <robh@kernel.org>
-Subject: [PATCH 6.4 030/227] of: Preserve "of-display" device name for compatibility
-Date: Tue, 25 Jul 2023 12:43:17 +0200
-Message-ID: <20230725104516.080741125@linuxfoundation.org>
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Christoffer Sandberg <cs@tuxedo.de>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.4 004/227] ALSA: hda/realtek: Add quirk for Clevo NS70AU
+Date: Tue, 25 Jul 2023 12:42:51 +0200
+Message-ID: <20230725104514.976801634@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -37,48 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Herring <robh@kernel.org>
+From: Christoffer Sandberg <cs@tuxedo.de>
 
-commit 0bb8f49cd2cc8cb32ac51189ff9fcbe7ec3d9d65 upstream.
+commit c250ef8954eda2024c8861c36e9fc1b589481fe7 upstream.
 
-Since commit 241d2fb56a18 ("of: Make OF framebuffer device names unique"),
-as spotted by Frédéric Bonnard, the historical "of-display" device is
-gone: the updated logic creates "of-display.0" instead, then as many
-"of-display.N" as required.
+Fixes headset detection on Clevo NS70AU.
 
-This means that offb no longer finds the expected device, which prevents
-the Debian Installer from setting up its interface, at least on ppc64el.
-
-Fix this by keeping "of-display" for the first device and "of-display.N"
-for subsequent devices.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217328
-Link: https://bugs.debian.org/1033058
-Fixes: 241d2fb56a18 ("of: Make OF framebuffer device names unique")
-Cc: stable@vger.kernel.org
-Cc: Cyril Brulebois <cyril@debamax.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Helge Deller <deller@gmx.de>
-Acked-by: Helge Deller <deller@gmx.de>
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Michal Suchánek <msuchanek@suse.de>
-Link: https://lore.kernel.org/r/20230710174007.2291013-1-robh@kernel.org
-Signed-off-by: Rob Herring <robh@kernel.org>
+Co-developed-by: Werner Sembach <wse@tuxedocomputers.com>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230718145722.10592-1-wse@tuxedocomputers.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/platform.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/of/platform.c
-+++ b/drivers/of/platform.c
-@@ -553,7 +553,7 @@ static int __init of_platform_default_po
- 			if (!of_get_property(node, "linux,opened", NULL) ||
- 			    !of_get_property(node, "linux,boot-display", NULL))
- 				continue;
--			dev = of_platform_device_create(node, "of-display.0", NULL);
-+			dev = of_platform_device_create(node, "of-display", NULL);
- 			of_node_put(node);
- 			if (WARN_ON(!dev))
- 				return -ENOMEM;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9647,6 +9647,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1558, 0x5157, "Clevo W517GU1", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x51a1, "Clevo NS50MU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x51b1, "Clevo NS50AU", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1558, 0x51b3, "Clevo NS70AU", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x5630, "Clevo NP50RNJS", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x70a1, "Clevo NB70T[HJK]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x70b3, "Clevo NK70SB", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
 
 
