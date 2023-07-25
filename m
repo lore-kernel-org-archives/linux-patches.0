@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766C31ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:15:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB2BC433C7;
-	Tue, 25 Jul 2023 11:15:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FDC1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:15:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E4DC433C8;
+	Tue, 25 Jul 2023 11:15:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283710;
-	bh=JjH1o7vXcnPx4jxPljo2uQ3pa+zew3WkmOp1B7oNTYA=;
+	s=korg; t=1690283713;
+	bh=jlCYr7ahEk2pT0jHIZlgB0En+ajZ4AmaPnaZAjp2u4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rrs6/1Q/SdGk4rjcicDV8mBzjExOOY6CMK/6Eaer7BR7Mov/Wc6vxzeDSnUF9gSNK
-	 mpwjOpKnGXGTf4KF0lrK08p/edKTVcnJvUFbjMR96iIUYB7O/cKQIGmdyXfHoE2s0Y
-	 /uEuBpLquvMOet/TqqMbXshFdYIpZAJHyYq16d6o=
+	b=mQEPRuInd/gHzjfoWTSFiyGFFFQ0DpEm9uEuOYKHCEXBeoTFnayxiUWOEbBxg2nep
+	 zaQLCABT4EP3OF0oGumX1xjh+BrcjH7a21c6oNxGPEyxWDzsVtEV39Z/5007fdYwNt
+	 AaxUC/XQqM0qeTr50OnQsJG8xemwrt2HBZv+4E7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Jeremy Sowden <jeremy@azazel.net>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 056/509] wifi: orinoco: Fix an error handling path in spectrum_cs_probe()
-Date: Tue, 25 Jul 2023 12:39:55 +0200
-Message-ID: <20230725104556.243837496@linuxfoundation.org>
+Subject: [PATCH 5.10 088/509] lib/ts_bm: reset initial match offset for every block of text
+Date: Tue, 25 Jul 2023 12:40:27 +0200
+Message-ID: <20230725104557.742983192@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,57 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Jeremy Sowden <jeremy@azazel.net>
 
-[ Upstream commit 925244325159824385209e3e0e3f91fa6bf0646c ]
+[ Upstream commit 6f67fbf8192da80c4db01a1800c7fceaca9cf1f9 ]
 
-Should spectrum_cs_config() fail, some resources need to be released as
-already done in the remove function.
+The `shift` variable which indicates the offset in the string at which
+to start matching the pattern is initialized to `bm->patlen - 1`, but it
+is not reset when a new block is retrieved.  This means the implemen-
+tation may start looking at later and later positions in each successive
+block and miss occurrences of the pattern at the beginning.  E.g.,
+consider a HTTP packet held in a non-linear skb, where the HTTP request
+line occurs in the second block:
 
-While at it, remove a useless and erroneous comment. The probe is
-spectrum_cs_probe(), not spectrum_cs_attach().
+  [... 52 bytes of packet headers ...]
+  GET /bmtest HTTP/1.1\r\nHost: www.example.com\r\n\r\n
 
-Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/c0bc0c21c58ca477fc5521607615bafbf2aef8eb.1684567733.git.christophe.jaillet@wanadoo.fr
+and the pattern is "GET /bmtest".
+
+Once the first block comprising the packet headers has been examined,
+`shift` will be pointing to somewhere near the end of the block, and so
+when the second block is examined the request line at the beginning will
+be missed.
+
+Reinitialize the variable for each new block.
+
+Fixes: 8082e4ed0a61 ("[LIB]: Boyer-Moore extension for textsearch infrastructure strike #2")
+Link: https://bugzilla.netfilter.org/show_bug.cgi?id=1390
+Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intersil/orinoco/spectrum_cs.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ lib/ts_bm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intersil/orinoco/spectrum_cs.c b/drivers/net/wireless/intersil/orinoco/spectrum_cs.c
-index 291ef97ed45ec..841d623c621ac 100644
---- a/drivers/net/wireless/intersil/orinoco/spectrum_cs.c
-+++ b/drivers/net/wireless/intersil/orinoco/spectrum_cs.c
-@@ -157,6 +157,7 @@ spectrum_cs_probe(struct pcmcia_device *link)
- {
- 	struct orinoco_private *priv;
- 	struct orinoco_pccard *card;
-+	int ret;
+diff --git a/lib/ts_bm.c b/lib/ts_bm.c
+index 4cf250031f0f0..352ae837e0317 100644
+--- a/lib/ts_bm.c
++++ b/lib/ts_bm.c
+@@ -60,10 +60,12 @@ static unsigned int bm_find(struct ts_config *conf, struct ts_state *state)
+ 	struct ts_bm *bm = ts_config_priv(conf);
+ 	unsigned int i, text_len, consumed = state->offset;
+ 	const u8 *text;
+-	int shift = bm->patlen - 1, bs;
++	int bs;
+ 	const u8 icase = conf->flags & TS_IGNORECASE;
  
- 	priv = alloc_orinocodev(sizeof(*card), &link->dev,
- 				spectrum_cs_hard_reset,
-@@ -169,8 +170,16 @@ spectrum_cs_probe(struct pcmcia_device *link)
- 	card->p_dev = link;
- 	link->priv = priv;
- 
--	return spectrum_cs_config(link);
--}				/* spectrum_cs_attach */
-+	ret = spectrum_cs_config(link);
-+	if (ret)
-+		goto err_free_orinocodev;
+ 	for (;;) {
++		int shift = bm->patlen - 1;
 +
-+	return 0;
-+
-+err_free_orinocodev:
-+	free_orinocodev(priv);
-+	return ret;
-+}
+ 		text_len = conf->get_next_block(consumed, &text, conf, state);
  
- static void spectrum_cs_detach(struct pcmcia_device *link)
- {
+ 		if (unlikely(text_len == 0))
 -- 
 2.39.2
 
