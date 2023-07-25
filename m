@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0907A1D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:00:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E405C433C8;
-	Tue, 25 Jul 2023 11:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CECBB1D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:00:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A68C433C7;
+	Tue, 25 Jul 2023 11:00:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282823;
-	bh=hrbR0z6RpuTtUzLfY9Yd1aZv4X748/wb0cQ1zREqE0Q=;
+	s=korg; t=1690282826;
+	bh=WdatwkBH+sr+wCUTUUWc0mRmh5vHUpNkuCLz73eqFPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hqvSV/PwGQzRUenz+cvyuqHujoTd0oETerkSoLGjht0hel7PxUsh1zYs7XP4Bt/Ty
-	 S4OZ/l1JBgtiA8MhQNuhGDzwbJRsYAPHPT3cuKOHIYXWSkPHjb1h3V22BVIC2Mfdek
-	 3S4dQtNX7ML7XjnjSgR41mWreJusjT6CXCg0bpww=
+	b=yufTGLFSw2x/6P11qM/lVQbZoEVCqRdn2fjG8J55ujTGZUjjiwNFnoh0u9OsKg3Dl
+	 KsN6kf0996sg/A4bbqzIdvEQsaMZGjmQmQyxuc9P48kbGKeSSQYrIJHungqu8dsCvS
+	 rULcZGR8tLTP/dsO/DapD2vd9Zu8D2XsAMOfw6Hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 040/183] ASoC: cs42l51: fix driver to properly autoload with automatic module loading
-Date: Tue, 25 Jul 2023 12:44:28 +0200
-Message-ID: <20230725104509.379751690@linuxfoundation.org>
+Subject: [PATCH 6.1 041/183] ASoC: codecs: wcd938x: fix missing clsh ctrl error handling
+Date: Tue, 25 Jul 2023 12:44:29 +0200
+Message-ID: <20230725104509.412419693@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -34,86 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit e51df4f81b02bcdd828a04de7c1eb6a92988b61e upstream.
+commit ed0dd9205bf69593edb495cb4b086dbae96a3f05 upstream.
 
-In commit 2cb1e0259f50 ("ASoC: cs42l51: re-hook of_match_table
-pointer"), 9 years ago, some random guy fixed the cs42l51 after it was
-split into a core part and an I2C part to properly match based on a
-Device Tree compatible string.
+Allocation of the clash control structure may fail so add the missing
+error handling to avoid dereferencing an error pointer.
 
-However, the fix in this commit is wrong: the MODULE_DEVICE_TABLE(of,
-....) is in the core part of the driver, not the I2C part. Therefore,
-automatic module loading based on module.alias, based on matching with
-the DT compatible string, loads the core part of the driver, but not
-the I2C part. And threfore, the i2c_driver is not registered, and the
-codec is not known to the system, nor matched with a DT node with the
-corresponding compatible string.
-
-In order to fix that, we move the MODULE_DEVICE_TABLE(of, ...) into
-the I2C part of the driver. The cs42l51_of_match[] array is also moved
-as well, as it is not possible to have this definition in one file,
-and the MODULE_DEVICE_TABLE(of, ...) invocation in another file, due
-to how MODULE_DEVICE_TABLE works.
-
-Thanks to this commit, the I2C part of the driver now properly
-autoloads, and thanks to its dependency on the core part, the core
-part gets autoloaded as well, resulting in a functional sound card
-without having to manually load kernel modules.
-
-Fixes: 2cb1e0259f50 ("ASoC: cs42l51: re-hook of_match_table pointer")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
-Link: https://lore.kernel.org/r/20230713112112.778576-1-thomas.petazzoni@bootlin.com
+Fixes: 8d78602aa87a ("ASoC: codecs: wcd938x: add basic driver")
+Cc: stable@vger.kernel.org	# 5.14
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230705123018.30903-4-johan+linaro@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/cs42l51-i2c.c |    6 ++++++
- sound/soc/codecs/cs42l51.c     |    7 -------
- sound/soc/codecs/cs42l51.h     |    1 -
- 3 files changed, 6 insertions(+), 8 deletions(-)
+ sound/soc/codecs/wcd938x.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/sound/soc/codecs/cs42l51-i2c.c
-+++ b/sound/soc/codecs/cs42l51-i2c.c
-@@ -19,6 +19,12 @@ static struct i2c_device_id cs42l51_i2c_
- };
- MODULE_DEVICE_TABLE(i2c, cs42l51_i2c_id);
+--- a/sound/soc/codecs/wcd938x.c
++++ b/sound/soc/codecs/wcd938x.c
+@@ -3090,6 +3090,10 @@ static int wcd938x_soc_codec_probe(struc
+ 						 WCD938X_ID_MASK);
  
-+const struct of_device_id cs42l51_of_match[] = {
-+	{ .compatible = "cirrus,cs42l51", },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, cs42l51_of_match);
-+
- static int cs42l51_i2c_probe(struct i2c_client *i2c)
- {
- 	struct regmap_config config;
---- a/sound/soc/codecs/cs42l51.c
-+++ b/sound/soc/codecs/cs42l51.c
-@@ -826,13 +826,6 @@ int __maybe_unused cs42l51_resume(struct
- }
- EXPORT_SYMBOL_GPL(cs42l51_resume);
+ 	wcd938x->clsh_info = wcd_clsh_ctrl_alloc(component, WCD938X);
++	if (IS_ERR(wcd938x->clsh_info)) {
++		pm_runtime_put(dev);
++		return PTR_ERR(wcd938x->clsh_info);
++	}
  
--const struct of_device_id cs42l51_of_match[] = {
--	{ .compatible = "cirrus,cs42l51", },
--	{ }
--};
--MODULE_DEVICE_TABLE(of, cs42l51_of_match);
--EXPORT_SYMBOL_GPL(cs42l51_of_match);
--
- MODULE_AUTHOR("Arnaud Patard <arnaud.patard@rtp-net.org>");
- MODULE_DESCRIPTION("Cirrus Logic CS42L51 ALSA SoC Codec Driver");
- MODULE_LICENSE("GPL");
---- a/sound/soc/codecs/cs42l51.h
-+++ b/sound/soc/codecs/cs42l51.h
-@@ -16,7 +16,6 @@ int cs42l51_probe(struct device *dev, st
- void cs42l51_remove(struct device *dev);
- int __maybe_unused cs42l51_suspend(struct device *dev);
- int __maybe_unused cs42l51_resume(struct device *dev);
--extern const struct of_device_id cs42l51_of_match[];
- 
- #define CS42L51_CHIP_ID			0x1B
- #define CS42L51_CHIP_REV_A		0x00
+ 	wcd938x_io_init(wcd938x);
+ 	/* Set all interrupts as edge triggered */
 
 
