@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521391ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:20:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65F0C433C8;
-	Tue, 25 Jul 2023 11:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5F41ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:20:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81DA5C433C7;
+	Tue, 25 Jul 2023 11:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284030;
-	bh=RkZmscdpgs1Zdta3OAwvwCyfwyLME2+djmCA/5Qf2jc=;
+	s=korg; t=1690284032;
+	bh=lrSTKECLh5UyieDOYBCmMbD/hbAb3/C1glw8GSIIOGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d0we41j+PUHs0o/LhLVLL//1xx9q/L0zzQcVR3DxE5jArpo+Z79po4nmc1CbMrKI+
-	 vs4n3kmJ4DqGAorXBfTv6D2Szr5sUcigJNY8XLRD+omVHBcfZjEqw9Eu4rEXJWmszb
-	 qHDr+XkBiXfjP1RoDJd03UUpXDYCiwEt/d4ET020=
+	b=VQupTpAcUdTqWzSq7ZzYt807Nf21ofYU730VM+p3abU3giTYhXdQZatYqdNz/WWdb
+	 jSHChxybqYd7ov7B89BXFoTW071Gqq/0RAIYUoRpPu1TcQWj0MVx3hYpJ2n6xm4RBx
+	 MuEYdmn4lKVfXuQ4S1o3KEaqKXiJuoz8lLhIB0XU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongqiang Liu <liuyongqiang13@huawei.com>,
-	Paul Cassella <cassella@hpe.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Vishal Verma <vishal.l.verma@intel.com>,
+	Martin Kaiser <martin@kaiser.cx>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 209/509] dax: Introduce alloc_dev_dax_id()
-Date: Tue, 25 Jul 2023 12:42:28 +0200
-Message-ID: <20230725104603.306692038@linuxfoundation.org>
+Subject: [PATCH 5.10 210/509] hwrng: st - keep clock enabled while hwrng is registered
+Date: Tue, 25 Jul 2023 12:42:29 +0200
+Message-ID: <20230725104603.348072845@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -38,193 +35,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Martin Kaiser <martin@kaiser.cx>
 
-[ Upstream commit 70aab281e18c68a1284bc387de127c2fc0bed3f8 ]
+[ Upstream commit 501e197a02d4aef157f53ba3a0b9049c3e52fedc ]
 
-The reference counting of dax_region objects is needlessly complicated,
-has lead to confusion [1], and has hidden a bug [2]. Towards cleaning up
-that mess introduce alloc_dev_dax_id() to minimize the holding of a
-dax_region reference to only what dev_dax_release() needs, the
-dax_region->ida.
+The st-rng driver uses devres to register itself with the hwrng core,
+the driver will be unregistered from hwrng when its device goes out of
+scope. This happens after the driver's remove function is called.
 
-Part of the reason for the mess was the design to dereference a
-dax_region in all cases in free_dev_dax_id() even if the id was
-statically assigned by the upper level dax_region driver. Remove the
-need to call "is_static(dax_region)" by tracking whether the id is
-dynamic directly in the dev_dax instance itself.
+However, st-rng's clock is disabled in the remove function. There's a
+short timeframe where st-rng is still registered with the hwrng core
+although its clock is disabled. I suppose the clock must be active to
+access the hardware and serve requests from the hwrng core.
 
-With that flag the dax_region pinning and release per dev_dax instance
-can move to alloc_dev_dax_id() and free_dev_dax_id() respectively.
+Switch to devm_clk_get_enabled and let devres disable the clock and
+unregister the hwrng. This avoids the race condition.
 
-A follow-on cleanup address the unnecessary references in the dax_region
-setup and drivers.
-
-Fixes: 0f3da14a4f05 ("device-dax: introduce 'seed' devices")
-Link: http://lore.kernel.org/r/20221203095858.612027-1-liuyongqiang13@huawei.com [1]
-Link: http://lore.kernel.org/r/3cf0890b-4eb0-e70e-cd9c-2ecc3d496263@hpe.com [2]
-Reported-by: Yongqiang Liu <liuyongqiang13@huawei.com>
-Reported-by: Paul Cassella <cassella@hpe.com>
-Reported-by: Ira Weiny <ira.weiny@intel.com>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://lore.kernel.org/r/168577284563.1672036.13493034988900989554.stgit@dwillia2-xfh.jf.intel.com
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
+Fixes: 3e75241be808 ("hwrng: drivers - Use device-managed registration API")
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dax/bus.c         | 56 ++++++++++++++++++++++++---------------
- drivers/dax/dax-private.h |  4 ++-
- 2 files changed, 37 insertions(+), 23 deletions(-)
+ drivers/char/hw_random/st-rng.c | 21 +--------------------
+ 1 file changed, 1 insertion(+), 20 deletions(-)
 
-diff --git a/drivers/dax/bus.c b/drivers/dax/bus.c
-index 48b7f0a64eb81..0541b7e4d5c66 100644
---- a/drivers/dax/bus.c
-+++ b/drivers/dax/bus.c
-@@ -403,18 +403,34 @@ static void unregister_dev_dax(void *dev)
- 	put_device(dev);
- }
+diff --git a/drivers/char/hw_random/st-rng.c b/drivers/char/hw_random/st-rng.c
+index 15ba1e6fae4d2..6e9dfac9fc9f4 100644
+--- a/drivers/char/hw_random/st-rng.c
++++ b/drivers/char/hw_random/st-rng.c
+@@ -42,7 +42,6 @@
  
-+static void dax_region_free(struct kref *kref)
-+{
-+	struct dax_region *dax_region;
-+
-+	dax_region = container_of(kref, struct dax_region, kref);
-+	kfree(dax_region);
-+}
-+
-+void dax_region_put(struct dax_region *dax_region)
-+{
-+	kref_put(&dax_region->kref, dax_region_free);
-+}
-+EXPORT_SYMBOL_GPL(dax_region_put);
-+
- /* a return value >= 0 indicates this invocation invalidated the id */
- static int __free_dev_dax_id(struct dev_dax *dev_dax)
- {
--	struct dax_region *dax_region = dev_dax->region;
- 	struct device *dev = &dev_dax->dev;
-+	struct dax_region *dax_region;
- 	int rc = dev_dax->id;
- 
- 	device_lock_assert(dev);
- 
--	if (is_static(dax_region) || dev_dax->id < 0)
-+	if (!dev_dax->dyn_id || dev_dax->id < 0)
- 		return -1;
-+	dax_region = dev_dax->region;
- 	ida_free(&dax_region->ida, dev_dax->id);
-+	dax_region_put(dax_region);
- 	dev_dax->id = -1;
- 	return rc;
- }
-@@ -430,6 +446,20 @@ static int free_dev_dax_id(struct dev_dax *dev_dax)
- 	return rc;
- }
- 
-+static int alloc_dev_dax_id(struct dev_dax *dev_dax)
-+{
-+	struct dax_region *dax_region = dev_dax->region;
-+	int id;
-+
-+	id = ida_alloc(&dax_region->ida, GFP_KERNEL);
-+	if (id < 0)
-+		return id;
-+	kref_get(&dax_region->kref);
-+	dev_dax->dyn_id = true;
-+	dev_dax->id = id;
-+	return id;
-+}
-+
- static ssize_t delete_store(struct device *dev, struct device_attribute *attr,
- 		const char *buf, size_t len)
- {
-@@ -517,20 +547,6 @@ static const struct attribute_group *dax_region_attribute_groups[] = {
- 	NULL,
+ struct st_rng_data {
+ 	void __iomem	*base;
+-	struct clk	*clk;
+ 	struct hwrng	ops;
  };
  
--static void dax_region_free(struct kref *kref)
--{
--	struct dax_region *dax_region;
--
--	dax_region = container_of(kref, struct dax_region, kref);
--	kfree(dax_region);
--}
--
--void dax_region_put(struct dax_region *dax_region)
--{
--	kref_put(&dax_region->kref, dax_region_free);
--}
--EXPORT_SYMBOL_GPL(dax_region_put);
--
- static void dax_region_unregister(void *region)
- {
- 	struct dax_region *dax_region = region;
-@@ -1270,12 +1286,10 @@ static const struct attribute_group *dax_attribute_groups[] = {
- static void dev_dax_release(struct device *dev)
- {
- 	struct dev_dax *dev_dax = to_dev_dax(dev);
--	struct dax_region *dax_region = dev_dax->region;
- 	struct dax_device *dax_dev = dev_dax->dax_dev;
+@@ -85,26 +84,18 @@ static int st_rng_probe(struct platform_device *pdev)
+ 	if (IS_ERR(base))
+ 		return PTR_ERR(base);
  
- 	put_dax(dax_dev);
- 	free_dev_dax_id(dev_dax);
--	dax_region_put(dax_region);
- 	kfree(dev_dax->pgmap);
- 	kfree(dev_dax);
- }
-@@ -1299,6 +1313,7 @@ struct dev_dax *devm_create_dev_dax(struct dev_dax_data *data)
- 	if (!dev_dax)
- 		return ERR_PTR(-ENOMEM);
+-	clk = devm_clk_get(&pdev->dev, NULL);
++	clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(clk))
+ 		return PTR_ERR(clk);
  
-+	dev_dax->region = dax_region;
- 	if (is_static(dax_region)) {
- 		if (dev_WARN_ONCE(parent, data->id < 0,
- 				"dynamic id specified to static region\n")) {
-@@ -1314,13 +1329,11 @@ struct dev_dax *devm_create_dev_dax(struct dev_dax_data *data)
- 			goto err_id;
- 		}
+-	ret = clk_prepare_enable(clk);
+-	if (ret)
+-		return ret;
+-
+ 	ddata->ops.priv	= (unsigned long)ddata;
+ 	ddata->ops.read	= st_rng_read;
+ 	ddata->ops.name	= pdev->name;
+ 	ddata->base	= base;
+-	ddata->clk	= clk;
+-
+-	dev_set_drvdata(&pdev->dev, ddata);
  
--		rc = ida_alloc(&dax_region->ida, GFP_KERNEL);
-+		rc = alloc_dev_dax_id(dev_dax);
- 		if (rc < 0)
- 			goto err_id;
--		dev_dax->id = rc;
+ 	ret = devm_hwrng_register(&pdev->dev, &ddata->ops);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Failed to register HW RNG\n");
+-		clk_disable_unprepare(clk);
+ 		return ret;
  	}
  
--	dev_dax->region = dax_region;
- 	dev = &dev_dax->dev;
- 	device_initialize(dev);
- 	dev_set_name(dev, "dax%d.%d", dax_region->id, dev_dax->id);
-@@ -1358,7 +1371,6 @@ struct dev_dax *devm_create_dev_dax(struct dev_dax_data *data)
- 	dev_dax->target_node = dax_region->target_node;
- 	dev_dax->align = dax_region->align;
- 	ida_init(&dev_dax->ida);
--	kref_get(&dax_region->kref);
+@@ -113,15 +104,6 @@ static int st_rng_probe(struct platform_device *pdev)
+ 	return 0;
+ }
  
- 	inode = dax_inode(dax_dev);
- 	dev->devt = inode->i_rdev;
-diff --git a/drivers/dax/dax-private.h b/drivers/dax/dax-private.h
-index 1c974b7caae6e..afcada6fd2eda 100644
---- a/drivers/dax/dax-private.h
-+++ b/drivers/dax/dax-private.h
-@@ -52,7 +52,8 @@ struct dax_mapping {
-  * @region - parent region
-  * @dax_dev - core dax functionality
-  * @target_node: effective numa node if dev_dax memory range is onlined
-- * @id: ida allocated id
-+ * @dyn_id: is this a dynamic or statically created instance
-+ * @id: ida allocated id when the dax_region is not static
-  * @ida: mapping id allocator
-  * @dev - device core
-  * @pgmap - pgmap for memmap setup / lifetime (driver owned)
-@@ -64,6 +65,7 @@ struct dev_dax {
- 	struct dax_device *dax_dev;
- 	unsigned int align;
- 	int target_node;
-+	bool dyn_id;
- 	int id;
- 	struct ida ida;
- 	struct device dev;
+-static int st_rng_remove(struct platform_device *pdev)
+-{
+-	struct st_rng_data *ddata = dev_get_drvdata(&pdev->dev);
+-
+-	clk_disable_unprepare(ddata->clk);
+-
+-	return 0;
+-}
+-
+ static const struct of_device_id st_rng_match[] __maybe_unused = {
+ 	{ .compatible = "st,rng" },
+ 	{},
+@@ -134,7 +116,6 @@ static struct platform_driver st_rng_driver = {
+ 		.of_match_table = of_match_ptr(st_rng_match),
+ 	},
+ 	.probe = st_rng_probe,
+-	.remove = st_rng_remove
+ };
+ 
+ module_platform_driver(st_rng_driver);
 -- 
 2.39.2
 
