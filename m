@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7681ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:34:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 607C4C433C7;
-	Tue, 25 Jul 2023 11:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48701ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:34:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24BAAC433C8;
+	Tue, 25 Jul 2023 11:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284896;
-	bh=XLzMb0wM1Y2u1E7kcyTO4T+7L8efK7+kIQXf6jdqsMQ=;
+	s=korg; t=1690284899;
+	bh=IcHyIVsIG9SnJRp4MalCtaRPuWE9SJi2yK0TKu0hAVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q8mZqNua1fFblg5KxvyvpUZSdOWquWMdIDg+moJC3uw8GmXUg+MgwtyO1lmSMW5RE
-	 Ffos+if7YH7ZCX8zHnG9wc5HmhoaWhsGf7DzHJWvdnwOwmHKpEGt95VHHAZWgFUMmq
-	 T0l8mhK4T8EeXdsb4xQk9lmOm45bOTHChbmg4CH0=
+	b=mro7CHSbWceFAZ+xWAYLJNtrIgAJ5NLvH7wur1qlpvCmJPzPSQ5/F8ZXVK0U7KT4A
+	 hq8I2GYE8HOn910lPkS2Np43jqDUUJdRdjyHO3cVW77H0LwURbphuLlbYEu45JTetr
+	 /e+oBJE+lN9UYPJPK0qmpnmEaqVEe9TV15RsCRN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Wang <shawnwang@linux.alibaba.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Fenghua Yu <fenghua.yu@intel.com>,
+	Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 011/313] x86/resctrl: Only show tasks pid in current pid namespace
-Date: Tue, 25 Jul 2023 12:42:44 +0200
-Message-ID: <20230725104521.665175970@linuxfoundation.org>
+Subject: [PATCH 5.4 012/313] md/raid10: check slab-out-of-bounds in md_bitmap_get_counter
+Date: Tue, 25 Jul 2023 12:42:45 +0200
+Message-ID: <20230725104521.700725001@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -37,53 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shawn Wang <shawnwang@linux.alibaba.com>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 2997d94b5dd0e8b10076f5e0b6f18410c73e28bd ]
+[ Upstream commit 301867b1c16805aebbc306aafa6ecdc68b73c7e5 ]
 
-When writing a task id to the "tasks" file in an rdtgroup,
-rdtgroup_tasks_write() treats the pid as a number in the current pid
-namespace. But when reading the "tasks" file, rdtgroup_tasks_show() shows
-the list of global pids from the init namespace, which is confusing and
-incorrect.
+If we write a large number to md/bitmap_set_bits, md_bitmap_checkpage()
+will return -EINVAL because 'page >= bitmap->pages', but the return value
+was not checked immediately in md_bitmap_get_counter() in order to set
+*blocks value and slab-out-of-bounds occurs.
 
-To be more robust, let the "tasks" file only show pids in the current pid
-namespace.
+Move check of 'page >= bitmap->pages' to md_bitmap_get_counter() and
+return directly if true.
 
-Fixes: e02737d5b826 ("x86/intel_rdt: Add tasks files")
-Signed-off-by: Shawn Wang <shawnwang@linux.alibaba.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Reinette Chatre <reinette.chatre@intel.com>
-Acked-by: Fenghua Yu <fenghua.yu@intel.com>
-Tested-by: Reinette Chatre <reinette.chatre@intel.com>
-Link: https://lore.kernel.org/all/20230116071246.97717-1-shawnwang@linux.alibaba.com/
+Fixes: ef4256733506 ("md/bitmap: optimise scanning of empty bitmaps.")
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230515134808.3936750-2-linan666@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/resctrl/rdtgroup.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/md/md-bitmap.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index 9de55fd77937c..91016bb18d4f9 100644
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -715,11 +715,15 @@ static ssize_t rdtgroup_tasks_write(struct kernfs_open_file *of,
- static void show_rdt_tasks(struct rdtgroup *r, struct seq_file *s)
+diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
+index 0545cdccf6369..bea8265ce9b8e 100644
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -54,14 +54,7 @@ __acquires(bitmap->lock)
  {
- 	struct task_struct *p, *t;
-+	pid_t pid;
+ 	unsigned char *mappage;
  
- 	rcu_read_lock();
- 	for_each_process_thread(p, t) {
--		if (is_closid_match(t, r) || is_rmid_match(t, r))
--			seq_printf(s, "%d\n", t->pid);
-+		if (is_closid_match(t, r) || is_rmid_match(t, r)) {
-+			pid = task_pid_vnr(t);
-+			if (pid)
-+				seq_printf(s, "%d\n", pid);
-+		}
- 	}
- 	rcu_read_unlock();
- }
+-	if (page >= bitmap->pages) {
+-		/* This can happen if bitmap_start_sync goes beyond
+-		 * End-of-device while looking for a whole page.
+-		 * It is harmless.
+-		 */
+-		return -EINVAL;
+-	}
+-
++	WARN_ON_ONCE(page >= bitmap->pages);
+ 	if (bitmap->bp[page].hijacked) /* it's hijacked, don't try to alloc */
+ 		return 0;
+ 
+@@ -1369,6 +1362,14 @@ __acquires(bitmap->lock)
+ 	sector_t csize;
+ 	int err;
+ 
++	if (page >= bitmap->pages) {
++		/*
++		 * This can happen if bitmap_start_sync goes beyond
++		 * End-of-device while looking for a whole page or
++		 * user set a huge number to sysfs bitmap_set_bits.
++		 */
++		return NULL;
++	}
+ 	err = md_bitmap_checkpage(bitmap, page, create, 0);
+ 
+ 	if (bitmap->bp[page].hijacked ||
 -- 
 2.39.2
 
