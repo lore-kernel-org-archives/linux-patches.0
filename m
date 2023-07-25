@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC9F14A82
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:57:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F413FC433C9;
-	Tue, 25 Jul 2023 10:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4175D14A82
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:57:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A7FC433C8;
+	Tue, 25 Jul 2023 10:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282650;
-	bh=1zwcQE97x2gLZQL1/8vkF6CzptRzoEIUt6w0zFv9bUQ=;
+	s=korg; t=1690282653;
+	bh=gpzIfCH0s7WTLgAVB9JQDjEWS38URzkX6wg4LeYGzAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UBqKSr7LoUVFF77Al87QJkMw636GMifT07vOufs2ZG5WB8WIOmhNZFga0PkuPHZ/V
-	 duTruSGtqb5gHva3vrgPNq1BS51PS46BY1mTByzhSXvVVcI554yTD6/B56mWrVn8pR
-	 wqgSIB2ltIruDqzZ9QiyaDJ2b0uhJ8R8NZ28JDxk=
+	b=XeSMeyq7VBoHKOfvR1oFdcuYfJYCjs1GdX4KOAnE32SetyFcEPccZFLv+JFLtW5QR
+	 gOXt0JjreC2guyUl00niwcIegbToaoFWTIBQG1FEspisM246goVaeKxHq+9qrA+mFi
+	 86NKxoxDnJ6brmGbDVIxqaX43xtUpoeLNWv0zbqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Holland <johnbholland@icloud.com>,
-	=?UTF-8?q?Tomasz=20Mo=C5=84?= <tomasz.mon@nordicsemi.no>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 206/227] Bluetooth: btusb: Fix bluetooth on Intel Macbook 2014
-Date: Tue, 25 Jul 2023 12:46:13 +0200
-Message-ID: <20230725104523.287662466@linuxfoundation.org>
+Subject: [PATCH 6.4 207/227] tcp: annotate data-races around tp->tcp_tx_delay
+Date: Tue, 25 Jul 2023 12:46:14 +0200
+Message-ID: <20230725104523.334628031@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -36,42 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomasz Moń <tomasz.mon@nordicsemi.no>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 95b7015433053cd5f648ad2a7b8f43b2c99c949a ]
+[ Upstream commit 348b81b68b13ebd489a3e6a46aa1c384c731c919 ]
 
-Commit c13380a55522 ("Bluetooth: btusb: Do not require hardcoded
-interface numbers") inadvertedly broke bluetooth on Intel Macbook 2014.
-The intention was to keep behavior intact when BTUSB_IFNUM_2 is set and
-otherwise allow any interface numbers. The problem is that the new logic
-condition omits the case where bInterfaceNumber is 0.
+do_tcp_getsockopt() reads tp->tcp_tx_delay while another cpu
+might change its value.
 
-Fix BTUSB_IFNUM_2 handling by allowing both interface number 0 and 2
-when the flag is set.
-
-Fixes: c13380a55522 ("Bluetooth: btusb: Do not require hardcoded interface numbers")
-Reported-by: John Holland <johnbholland@icloud.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217651
-Signed-off-by: Tomasz Moń <tomasz.mon@nordicsemi.no>
-Tested-by: John Holland<johnbholland@icloud.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: a842fe1425cb ("tcp: add optional per socket transmit delay")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230719212857.3943972-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv4/tcp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 2a8e2bb038f58..50e23762ec5e9 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -4099,6 +4099,7 @@ static int btusb_probe(struct usb_interface *intf,
- 	BT_DBG("intf %p id %p", intf, id);
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 8d20d9221238c..c0e0add372f75 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -3783,7 +3783,7 @@ int do_tcp_setsockopt(struct sock *sk, int level, int optname,
+ 	case TCP_TX_DELAY:
+ 		if (val)
+ 			tcp_enable_tx_delay();
+-		tp->tcp_tx_delay = val;
++		WRITE_ONCE(tp->tcp_tx_delay, val);
+ 		break;
+ 	default:
+ 		err = -ENOPROTOOPT;
+@@ -4263,7 +4263,7 @@ int do_tcp_getsockopt(struct sock *sk, int level,
+ 		break;
  
- 	if ((id->driver_info & BTUSB_IFNUM_2) &&
-+	    (intf->cur_altsetting->desc.bInterfaceNumber != 0) &&
- 	    (intf->cur_altsetting->desc.bInterfaceNumber != 2))
- 		return -ENODEV;
+ 	case TCP_TX_DELAY:
+-		val = tp->tcp_tx_delay;
++		val = READ_ONCE(tp->tcp_tx_delay);
+ 		break;
  
+ 	case TCP_TIMESTAMP:
 -- 
 2.39.2
 
