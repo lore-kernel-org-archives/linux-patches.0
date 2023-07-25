@@ -1,25 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1E114270
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:53:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8624AC433C8;
-	Tue, 25 Jul 2023 10:53:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C247215ACF
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:53:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46AFAC433C9;
+	Tue, 25 Jul 2023 10:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282390;
-	bh=BexxG2lZ5WAp9/2OZ/6koNrHIJR87KMDErz2xXYCLm8=;
+	s=korg; t=1690282393;
+	bh=tGp4zoRTHZFydLQpY97lO2J5nwJIaXPmwemte6zGCdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kwd9Ndx0Bpn6iwHyK9FCpjDCoESut1x7FYDuBKA+JzavkZaDqTxeXndQPGVHLlvvC
-	 6ioj3iknHR+pdZJ66mmVM1T9IVz1AJp7e8s4K67PRP8Lh3MOXTvrqGoIQDAnO75dry
-	 blq49ok+9q5E0QJP0ASDR/F3y5ZgdLfZaqTtexoY=
+	b=BYKhLhQTpKB4zd+en58AwxePVk2tT9l7Dp+xL/jvEwTPcpnTV+w9zwa7q2ay66V2t
+	 MBwaQR18/itVOn4L4qUc3bH0/VkhGgcI6BoteaNqNMRSdRnyaQPMP9tq7yrhZDmAMq
+	 sw+VDRW/9Cx4VYhywOtpDTQ3R++7B7umv8KT/4z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Will Shiu <Will.Shiu@mediatek.com>,
+	Gao Xiang <xiang@kernel.org>,
+	Sandeep Dhavale <dhavale@google.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 113/227] spi: cadence-quadspi: Add compatible for AMD Pensando Elba SoC
-Date: Tue, 25 Jul 2023 12:44:40 +0200
-Message-ID: <20230725104519.457191028@linuxfoundation.org>
+Subject: [PATCH 6.4 096/227] erofs: Fix detection of atomic context
+Date: Tue, 25 Jul 2023 12:44:23 +0200
+Message-ID: <20230725104518.701629025@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -33,88 +38,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brad Larson <blarson@amd.com>
+From: Sandeep Dhavale <dhavale@google.com>
 
-[ Upstream commit f5c2f9f9584353bc816d76a65c97dd03dc61678c ]
+[ Upstream commit 12d0a24afd9ea58e581ea64d64e066f2027b28d9 ]
 
-The AMD Pensando Elba SoC has the Cadence QSPI controller integrated.
+Current check for atomic context is not sufficient as
+z_erofs_decompressqueue_endio can be called under rcu lock
+from blk_mq_flush_plug_list(). See the stacktrace [1]
 
-The quirk CQSPI_NEEDS_APB_AHB_HAZARD_WAR is added and if enabled
-a dummy readback from the controller is performed to ensure
-synchronization.
+In such case we should hand off the decompression work for async
+processing rather than trying to do sync decompression in current
+context. Patch fixes the detection by checking for
+rcu_read_lock_any_held() and while at it use more appropriate
+!in_task() check than in_atomic().
 
-Signed-off-by: Brad Larson <blarson@amd.com
-Link: https://lore.kernel.org/r/20230515181606.65953-8-blarson@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org
+Background: Historically erofs would always schedule a kworker for
+decompression which would incur the scheduling cost regardless of
+the context. But z_erofs_decompressqueue_endio() may not always
+be in atomic context and we could actually benefit from doing the
+decompression in z_erofs_decompressqueue_endio() if we are in
+thread context, for example when running with dm-verity.
+This optimization was later added in patch [2] which has shown
+improvement in performance benchmarks.
+
+==============================================
+[1] Problem stacktrace
+[name:core&]BUG: sleeping function called from invalid context at kernel/locking/mutex.c:291
+[name:core&]in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 1615, name: CpuMonitorServi
+[name:core&]preempt_count: 0, expected: 0
+[name:core&]RCU nest depth: 1, expected: 0
+CPU: 7 PID: 1615 Comm: CpuMonitorServi Tainted: G S      W  OE      6.1.25-android14-5-maybe-dirty-mainline #1
+Hardware name: MT6897 (DT)
+Call trace:
+ dump_backtrace+0x108/0x15c
+ show_stack+0x20/0x30
+ dump_stack_lvl+0x6c/0x8c
+ dump_stack+0x20/0x48
+ __might_resched+0x1fc/0x308
+ __might_sleep+0x50/0x88
+ mutex_lock+0x2c/0x110
+ z_erofs_decompress_queue+0x11c/0xc10
+ z_erofs_decompress_kickoff+0x110/0x1a4
+ z_erofs_decompressqueue_endio+0x154/0x180
+ bio_endio+0x1b0/0x1d8
+ __dm_io_complete+0x22c/0x280
+ clone_endio+0xe4/0x280
+ bio_endio+0x1b0/0x1d8
+ blk_update_request+0x138/0x3a4
+ blk_mq_plug_issue_direct+0xd4/0x19c
+ blk_mq_flush_plug_list+0x2b0/0x354
+ __blk_flush_plug+0x110/0x160
+ blk_finish_plug+0x30/0x4c
+ read_pages+0x2fc/0x370
+ page_cache_ra_unbounded+0xa4/0x23c
+ page_cache_ra_order+0x290/0x320
+ do_sync_mmap_readahead+0x108/0x2c0
+ filemap_fault+0x19c/0x52c
+ __do_fault+0xc4/0x114
+ handle_mm_fault+0x5b4/0x1168
+ do_page_fault+0x338/0x4b4
+ do_translation_fault+0x40/0x60
+ do_mem_abort+0x60/0xc8
+ el0_da+0x4c/0xe0
+ el0t_64_sync_handler+0xd4/0xfc
+ el0t_64_sync+0x1a0/0x1a4
+
+[2] Link: https://lore.kernel.org/all/20210317035448.13921-1-huangjianan@oppo.com/
+
+Reported-by: Will Shiu <Will.Shiu@mediatek.com>
+Suggested-by: Gao Xiang <xiang@kernel.org>
+Signed-off-by: Sandeep Dhavale <dhavale@google.com>
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Link: https://lore.kernel.org/r/20230621220848.3379029-1-dhavale@google.com
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence-quadspi.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ fs/erofs/zdata.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
-index 32449bef4415a..abf10f92415dc 100644
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -40,6 +40,7 @@
- #define CQSPI_SUPPORT_EXTERNAL_DMA	BIT(2)
- #define CQSPI_NO_SUPPORT_WR_COMPLETION	BIT(3)
- #define CQSPI_SLOW_SRAM		BIT(4)
-+#define CQSPI_NEEDS_APB_AHB_HAZARD_WAR	BIT(5)
- 
- /* Capabilities */
- #define CQSPI_SUPPORTS_OCTAL		BIT(0)
-@@ -90,6 +91,7 @@ struct cqspi_st {
- 	u32			pd_dev_id;
- 	bool			wr_completion;
- 	bool			slow_sram;
-+	bool			apb_ahb_hazard;
- };
- 
- struct cqspi_driver_platdata {
-@@ -1027,6 +1029,13 @@ static int cqspi_indirect_write_execute(struct cqspi_flash_pdata *f_pdata,
- 	if (cqspi->wr_delay)
- 		ndelay(cqspi->wr_delay);
- 
-+	/*
-+	 * If a hazard exists between the APB and AHB interfaces, perform a
-+	 * dummy readback from the controller to ensure synchronization.
-+	 */
-+	if (cqspi->apb_ahb_hazard)
-+		readl(reg_base + CQSPI_REG_INDIRECTWR);
-+
- 	while (remaining > 0) {
- 		size_t write_words, mod_bytes;
- 
-@@ -1754,6 +1763,8 @@ static int cqspi_probe(struct platform_device *pdev)
- 			cqspi->wr_completion = false;
- 		if (ddata->quirks & CQSPI_SLOW_SRAM)
- 			cqspi->slow_sram = true;
-+		if (ddata->quirks & CQSPI_NEEDS_APB_AHB_HAZARD_WAR)
-+			cqspi->apb_ahb_hazard = true;
- 
- 		if (of_device_is_compatible(pdev->dev.of_node,
- 					    "xlnx,versal-ospi-1.0")) {
-@@ -1888,6 +1899,10 @@ static const struct cqspi_driver_platdata jh7110_qspi = {
- 	.quirks = CQSPI_DISABLE_DAC_MODE,
- };
- 
-+static const struct cqspi_driver_platdata pensando_cdns_qspi = {
-+	.quirks = CQSPI_NEEDS_APB_AHB_HAZARD_WAR | CQSPI_DISABLE_DAC_MODE,
-+};
-+
- static const struct of_device_id cqspi_dt_ids[] = {
- 	{
- 		.compatible = "cdns,qspi-nor",
-@@ -1917,6 +1932,10 @@ static const struct of_device_id cqspi_dt_ids[] = {
- 		.compatible = "starfive,jh7110-qspi",
- 		.data = &jh7110_qspi,
- 	},
-+	{
-+		.compatible = "amd,pensando-elba-qspi",
-+		.data = &pensando_cdns_qspi,
-+	},
- 	{ /* end of table */ }
- };
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index 997ca4b32e87f..4a1c238600c52 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -1411,7 +1411,7 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
+ 	if (atomic_add_return(bios, &io->pending_bios))
+ 		return;
+ 	/* Use (kthread_)work and sync decompression for atomic contexts only */
+-	if (in_atomic() || irqs_disabled()) {
++	if (!in_task() || irqs_disabled() || rcu_read_lock_any_held()) {
+ #ifdef CONFIG_EROFS_FS_PCPU_KTHREAD
+ 		struct kthread_worker *worker;
  
 -- 
 2.39.2
