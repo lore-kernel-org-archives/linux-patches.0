@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CDFF1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:17:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D2CAC433C8;
-	Tue, 25 Jul 2023 11:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9C81ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:18:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C407BC433C8;
+	Tue, 25 Jul 2023 11:17:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283877;
-	bh=DKwoDzISkE9wh3vvu2XI482adqoYiLokyx+1GWjJ6Ik=;
+	s=korg; t=1690283880;
+	bh=MjXEplh2LFxNdvNusWXTVeXmi8yf7fmkiBIvsSos5zM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zJktPnMeoz3p1+pKP8cH2JD9zqY7dUf3POU07ZLkwpKB2oaG6Ao4zDpocpZ47PC/P
-	 aM0LiCjwVi7KwwMPR1M6lyEne4wQvYWJGOFT3EOZEFJyM427Gffq73vud/1IPG5vzk
-	 mVUOO0nvdeO5ciVPcoVipQySSoBK6Myx8rH0pXPI=
+	b=cWsm7yBFiiUD/l54aq+m7s0ryIiio2oUf1bp/cj5WfslJrxCD6rKvqw7K8Ge1AY3z
+	 /R9VpwbAaD9vjpTR/kxom7KrfW2ofL6gQ+OcNDN/LTTFvG0A75bZ9xtRirKRzIpuJk
+	 gn4fw9lbM39mmi/ObWQfM2UsWxghjLhICRWWVJN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaro Koskinen <aaro.koskinen@iki.fi>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 125/509] ARM: omap2: fix missing tick_broadcast() prototype
-Date: Tue, 25 Jul 2023 12:41:04 +0200
-Message-ID: <20230725104559.418987829@linuxfoundation.org>
+Subject: [PATCH 5.10 126/509] arm64: dts: qcom: apq8096: fix fixed regulator name property
+Date: Tue, 25 Jul 2023 12:41:05 +0200
+Message-ID: <20230725104559.463370855@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,39 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 861bc1d2886d47bd57a2cbf2cda87fdbe3eb9d08 ]
+[ Upstream commit c77612a07d18d4425fd8ddd532a8a9b8e1970c53 ]
 
-omap2 contains a hack to define tick_broadcast() on non-SMP
-configurations in place of the normal SMP definition. This one
-causes a warning because of a missing prototype:
+Correct the typo in 'regulator-name' property.
 
-arch/arm/mach-omap2/board-generic.c:44:6: error: no previous prototype for 'tick_broadcast'
+  apq8096-ifc6640.dtb: v1p05-regulator: 'regulator-name' is a required property
+  apq8096-ifc6640.dtb: v1p05-regulator: Unevaluated properties are not allowed ('reglator-name' was unexpected)
 
-Make sure to always include the header with the declaration.
-
-Fixes: d86ad463d670 ("ARM: OMAP2+: Fix regression for using local timer on non-SMP SoCs")
-Acked-by: Aaro Koskinen <aaro.koskinen@iki.fi>
-Link: https://lore.kernel.org/r/20230516153109.514251-9-arnd@kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 6cbdec2d3ca6 ("arm64: dts: qcom: msm8996: Introduce IFC6640")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230507174516.264936-3-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap2/board-generic.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-omap2/board-generic.c b/arch/arm/mach-omap2/board-generic.c
-index 1610c567a6a3a..10d2f078e4a8e 100644
---- a/arch/arm/mach-omap2/board-generic.c
-+++ b/arch/arm/mach-omap2/board-generic.c
-@@ -13,6 +13,7 @@
- #include <linux/of_platform.h>
- #include <linux/irqdomain.h>
- #include <linux/clocksource.h>
-+#include <linux/clockchips.h>
+diff --git a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
+index f6ddf17ada81b..861b356a982b7 100644
+--- a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
++++ b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
+@@ -26,7 +26,7 @@ chosen {
  
- #include <asm/setup.h>
- #include <asm/mach/arch.h>
+ 	v1p05: v1p05-regulator {
+ 		compatible = "regulator-fixed";
+-		reglator-name = "v1p05";
++		regulator-name = "v1p05";
+ 		regulator-always-on;
+ 		regulator-boot-on;
+ 
+@@ -38,7 +38,7 @@ v1p05: v1p05-regulator {
+ 
+ 	v12_poe: v12-poe-regulator {
+ 		compatible = "regulator-fixed";
+-		reglator-name = "v12_poe";
++		regulator-name = "v12_poe";
+ 		regulator-always-on;
+ 		regulator-boot-on;
+ 
 -- 
 2.39.2
 
