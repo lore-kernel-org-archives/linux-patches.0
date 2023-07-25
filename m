@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED3C1D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:05:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F3DC433C8;
-	Tue, 25 Jul 2023 11:05:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC10F1D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:05:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DEA7C433C8;
+	Tue, 25 Jul 2023 11:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283138;
-	bh=81Gc8ov6sVqxL4BiVRxKgsTXrp+J6uJmubzX/qgKnCU=;
+	s=korg; t=1690283141;
+	bh=f0bD1/WfdlfuDuC/NKyGnpwdduzMP/rOtgKbRLsRUUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aYQyPmEp/Vj8eUYDV8sQ3ggYL4dB2hYLlKKxGYsngBW+i54epysVdcq1aU+qtJKHp
-	 JjKZgpI0vlunRR2dk/Z33jI8Np0GVyLecY6S38k3le1X580phlCWcK9n0jdsmu320c
-	 nYKiMTddvUSlCKnRYzml399L0hsyyOCdlJIUjYow=
+	b=TSbjTG7b551WBWafAb4qgpExm+OuGdcpw3ZR30eopltZAGJl7ZVyqtaqc6cSP1uB2
+	 xFWuF/xQhr8XS1V15NIAPx2PjbL9bTuTD5ycOCl+39nWpJZ8J+mM3agVYqmWqmTxQb
+	 TGbVu1p8HFE1ijNaIhV6XUr/SqG5i0B8a3CdgPEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 152/183] tcp: annotate data-races around tp->tcp_tx_delay
-Date: Tue, 25 Jul 2023 12:46:20 +0200
-Message-ID: <20230725104513.331503514@linuxfoundation.org>
+Subject: [PATCH 6.1 153/183] tcp: annotate data-races around tp->tsoffset
+Date: Tue, 25 Jul 2023 12:46:21 +0200
+Message-ID: <20230725104513.361489137@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -37,42 +37,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 348b81b68b13ebd489a3e6a46aa1c384c731c919 ]
+[ Upstream commit dd23c9f1e8d5c1d2e3d29393412385ccb9c7a948 ]
 
-do_tcp_getsockopt() reads tp->tcp_tx_delay while another cpu
+do_tcp_getsockopt() reads tp->tsoffset while another cpu
 might change its value.
 
-Fixes: a842fe1425cb ("tcp: add optional per socket transmit delay")
+Fixes: 93be6ce0e91b ("tcp: set and get per-socket timestamp")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230719212857.3943972-2-edumazet@google.com
+Link: https://lore.kernel.org/r/20230719212857.3943972-3-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/tcp.c      | 4 ++--
+ net/ipv4/tcp_ipv4.c | 5 +++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 0bd0be3c63d22..5e4bc80dc0ae5 100644
+index 5e4bc80dc0ae5..3edf7a1c5cbd2 100644
 --- a/net/ipv4/tcp.c
 +++ b/net/ipv4/tcp.c
-@@ -3780,7 +3780,7 @@ int do_tcp_setsockopt(struct sock *sk, int level, int optname,
- 	case TCP_TX_DELAY:
- 		if (val)
- 			tcp_enable_tx_delay();
--		tp->tcp_tx_delay = val;
-+		WRITE_ONCE(tp->tcp_tx_delay, val);
+@@ -3762,7 +3762,7 @@ int do_tcp_setsockopt(struct sock *sk, int level, int optname,
+ 		if (!tp->repair)
+ 			err = -EPERM;
+ 		else
+-			tp->tsoffset = val - tcp_time_stamp_raw();
++			WRITE_ONCE(tp->tsoffset, val - tcp_time_stamp_raw());
  		break;
- 	default:
- 		err = -ENOPROTOOPT;
-@@ -4256,7 +4256,7 @@ int do_tcp_getsockopt(struct sock *sk, int level,
- 		break;
- 
- 	case TCP_TX_DELAY:
--		val = tp->tcp_tx_delay;
-+		val = READ_ONCE(tp->tcp_tx_delay);
+ 	case TCP_REPAIR_WINDOW:
+ 		err = tcp_repair_set_window(tp, optval, optlen);
+@@ -4260,7 +4260,7 @@ int do_tcp_getsockopt(struct sock *sk, int level,
  		break;
  
  	case TCP_TIMESTAMP:
+-		val = tcp_time_stamp_raw() + tp->tsoffset;
++		val = tcp_time_stamp_raw() + READ_ONCE(tp->tsoffset);
+ 		break;
+ 	case TCP_NOTSENT_LOWAT:
+ 		val = tp->notsent_lowat;
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index d49a66b271d52..9a8d59e9303a0 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -307,8 +307,9 @@ int tcp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
+ 						  inet->inet_daddr,
+ 						  inet->inet_sport,
+ 						  usin->sin_port));
+-		tp->tsoffset = secure_tcp_ts_off(net, inet->inet_saddr,
+-						 inet->inet_daddr);
++		WRITE_ONCE(tp->tsoffset,
++			   secure_tcp_ts_off(net, inet->inet_saddr,
++					     inet->inet_daddr));
+ 	}
+ 
+ 	inet->inet_id = get_random_u16();
 -- 
 2.39.2
 
