@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546FA14263
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:26:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D0BC433C8;
-	Tue, 25 Jul 2023 11:26:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C949914263
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:26:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1ADC433C8;
+	Tue, 25 Jul 2023 11:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284397;
-	bh=Dawbfi9cUKcgHz0FMKbti22L1G5HksK8tkVVdpDwyy0=;
+	s=korg; t=1690284400;
+	bh=0nTn+APEI1It+1x0qO7kmSRYY9Il4Enobp52ARqWkwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xjUUKTJujHPjZvW73bX0+aPkTdvDaYhoS3m3pNFReKPnFdewL1VdDhj+vZtN0li5N
-	 X1dnRAfqB7Pf/kR8As5SQ63FaRxDaf7UcwRiZgbNF6DuXDVQg+6Q34kmZ1UMiXy61Z
-	 KQG4clN5reQ4tg6dSJL6uxsJv5qZXg1pcB1+VDrA=
+	b=BDbOgtCaWYu3YZcq7HbScyTjuKzMuQ9jmALx7d4OdO+1qXs/6aqoLd6SMIMQ3bSbW
+	 ySrdGFF+Z2Lhu48j6VSIX5/KGAV3IPTEB4mvWH/sfrW1hsnYdUheslqB/VqFvnEUe7
+	 nmQ6ezGyOPUZiO7ZefnRXxMLKxEJe5zebZxN58PQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	netfilter-devel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 340/509] net/mlx5e: fix double free in mlx5e_destroy_flow_table
-Date: Tue, 25 Jul 2023 12:44:39 +0200
-Message-ID: <20230725104609.287768790@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.10 313/509] netfilter: nf_tables: add rescheduling points during loop detection walks
+Date: Tue, 25 Jul 2023 12:44:12 +0200
+Message-ID: <20230725104608.073564624@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,38 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 884abe45a9014d0de2e6edb0630dfd64f23f1d1b ]
+[ Upstream commit 81ea010667417ef3f218dfd99b69769fe66c2b67 ]
 
-In function accel_fs_tcp_create_groups(), when the ft->g memory is
-successfully allocated but the 'in' memory fails to be allocated, the
-memory pointed to by ft->g is released once. And in function
-accel_fs_tcp_create_table, mlx5e_destroy_flow_table is called to release
-the memory pointed to by ft->g again. This will cause double free problem.
+Add explicit rescheduling points during ruleset walk.
 
-Fixes: c062d52ac24c ("net/mlx5e: Receive flow steering framework for accelerated TCP flows")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Switching to a faster algorithm is possible but this is a much
+smaller change, suitable for nf tree.
+
+Link: https://bugzilla.netfilter.org/show_bug.cgi?id=1460
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Acked-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/nf_tables_api.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c
-index e51f60b55daa4..2da90f6649d17 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c
-@@ -194,6 +194,7 @@ static int accel_fs_tcp_create_groups(struct mlx5e_flow_table *ft,
- 	in = kvzalloc(inlen, GFP_KERNEL);
- 	if  (!in || !ft->g) {
- 		kfree(ft->g);
-+		ft->g = NULL;
- 		kvfree(in);
- 		return -ENOMEM;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -3164,6 +3164,8 @@ int nft_chain_validate(const struct nft_
+ 			if (err < 0)
+ 				return err;
+ 		}
++
++		cond_resched();
  	}
--- 
-2.39.2
-
+ 
+ 	return 0;
+@@ -8506,9 +8508,13 @@ static int nf_tables_check_loops(const s
+ 				break;
+ 			}
+ 		}
++
++		cond_resched();
+ 	}
+ 
+ 	list_for_each_entry(set, &ctx->table->sets, list) {
++		cond_resched();
++
+ 		if (!nft_is_active_next(ctx->net, set))
+ 			continue;
+ 		if (!(set->flags & NFT_SET_MAP) ||
 
 
