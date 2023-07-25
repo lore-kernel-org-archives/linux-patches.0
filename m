@@ -1,62 +1,136 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on2049.outbound.protection.outlook.com [40.107.101.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC49021D5D
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 16:14:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63136C433C8;
-	Tue, 25 Jul 2023 16:14:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1690301647;
-	bh=eEmH4253Zrw0uIVPXVVtcN9ynNTF5NNQUGdCv7XBues=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hNo11HisnojVzIpPxfh5fLfqusZs9yaMqg417qVXC1KRfFkp5loIzbXwEhkOV+X/Q
-	 53eI1NIaJoJMCCTcVnq9Q2hHwXDWle73I3bU/ZFfUEVgF7Dw3HI5YGqh6DHJJdfbmo
-	 Tm9AIHZtt56LVsBvEY6kiDV+U1wF3H/G9uQC696ka7SLeA6DRfdsbDqUNGXdKcAZqI
-	 +QPs23zHCPIidi8fVf4iRdK7Bupf0k+0EyCeZMFtaz9gX8T3EKX4VzmOk6dmNBH9/M
-	 R+xgRLA3pfcpoHfU2rAfSUlJ9fFY4+frt/lh4GDjZs0LueY56vQdbwYg/AZLnKKQe9
-	 9VkaDn5CpQtiQ==
-Date: Tue, 25 Jul 2023 09:14:05 -0700
-From: Eric Biggers <ebiggers@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72FE41F173
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 16:27:42 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=HFsov5C4eUYt8khrh4GD0cg6FoNec5JBSvGUaSylyv7m3xrx796Y+BENYXMF1FXMRR+kPwywHJCeMre5dnrTTHTmq0IIhyixY0l2pcQTJLjO4RuLsbJAM/04f0lnV3udvmlFCknL/V3kyFQxllrfYr0PzLJH2kH8sSy2xjGkxrHCErOs2wh969m8RahfrgILgtGb2c1OPH4NR0ZQ/EvReI6b3HEgs2NX0xcxrb5hCtyfl/7Zij+s2Dq5B1VXK3ACWCYsnibIeXTGfS0ZJuSi7SqZcw2xONvJtuSjTuEXR2F8++Klbs6TH5JfL1xClNHsqsDZ63p3UyDwdJWik+Bwxw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=O+DtaNZ/3XG7+DHiplzwoSIfXnvpDKmjI4ixjwaUzqk=;
+ b=c/MMp8atSr0yMzre6gF5SVbrZ5Wm0OPgBGZEnzUMM1/0dm182ZKRDNzslm5jccc01aXU7KRai/rtSqUzgcfEDwrkBH1FsjMARCb3NWj5nqdPs/etIOtHqmzK5g4/VrNRK78dGj6aERNZG5EcEoxPJQgc2XP36KXo1K0LuHrELsNZCPCSxweu9ehxTtiHe8Gqhjl9zFIv/MP00Tjo45BzZAaWN+bcJ1H8Q5bIAlGfObO0S2+L0zUMoIE/t99o4L0NpGaNl0/NxI/LOqA1/U0RYm5bO7l9dldNVaHsq+K8WCwxbmczJiaDQqto2LzKWWS6ez8KqchfDB9eXMvojcFwOQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=O+DtaNZ/3XG7+DHiplzwoSIfXnvpDKmjI4ixjwaUzqk=;
+ b=pgZImOeEKLa56bnaZLgfocAm8ZFs86oG4vlQHP+14M5qNKd1mmLCPSgaesSmTKowaSiRJnIAJZemJjawEJSY2ceG60LjXcVxDLggUzNJfXqSp70mugBtcrIGzMqD1w8RTBljsuVz4eJX7vid1bx0LtmFn/ziLscEoGkHDH2OJq6Tv7T3IrClpXAGhxrYyo2jTI/xg7qY5WvFDdVtKxu5bDqHRd/zKVEcqQVDaGNpsLtZcp15IUqMMcS8KMqzxSEnu+ZVkZqj9LkPI64Ym1ibwCnklG1JCT38FQGETdkdQLMhlB+z4eiM2o/DJ1WJfrE5tLHPoxeDm2BG5HCDSyAzqw==
+Received: from SJ0PR03CA0377.namprd03.prod.outlook.com (2603:10b6:a03:3a1::22)
+ by BY5PR12MB4917.namprd12.prod.outlook.com (2603:10b6:a03:1d1::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6609.33; Tue, 25 Jul
+ 2023 16:27:40 +0000
+Received: from CO1NAM11FT051.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:a03:3a1:cafe::15) by SJ0PR03CA0377.outlook.office365.com
+ (2603:10b6:a03:3a1::22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6609.33 via Frontend
+ Transport; Tue, 25 Jul 2023 16:27:39 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ CO1NAM11FT051.mail.protection.outlook.com (10.13.174.114) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6631.25 via Frontend Transport; Tue, 25 Jul 2023 16:27:39 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Tue, 25 Jul 2023
+ 09:27:30 -0700
+Received: from drhqmail202.nvidia.com (10.126.190.181) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.37; Tue, 25 Jul 2023 09:27:30 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37 via Frontend
+ Transport; Tue, 25 Jul 2023 09:27:30 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.4 114/313] crypto: skcipher - remove
- crypto_has_ablkcipher()
-Message-ID: <20230725161405.GB2295@sol.localdomain>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <linux-tegra@vger.kernel.org>,
+	<stable@vger.kernel.org>
+Subject: Re: [PATCH 5.4 000/313] 5.4.251-rc1 review
+In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
- <20230725104525.956502242@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230725104525.956502242@linuxfoundation.org>
+Message-ID: <9131881b-ea1e-461d-822a-088a5df4ad6c@drhqmail202.nvidia.com>
+Date: Tue, 25 Jul 2023 09:27:30 -0700
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1NAM11FT051:EE_|BY5PR12MB4917:EE_
+X-MS-Office365-Filtering-Correlation-Id: 642b38d8-e93e-41ff-f4b3-08db8d2c107e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	/qymqQCe4NGPtX8OecO9mv0xsql3Fc2hWPx9HzEFbXzmAQtqcME0k/CjAKzz2mf4orqKth71kSS3rffPePBariPCQ6MOLuLtVTy9H4iMY2xFEqYnQR2AlvYq6rf9PEDJWGbgJECpc4gojp+sZv2eKffFLl2GtUVAR+ulwCAPLqAa0CuvICdlprZdgjN+H5XQsVwNHxM1m74rwJD34xeNqZBhPHSOKWel/nq+wJ0ETk0MFsf3PreLaBF3es1S8LPTtpwFHHBj52El1hOzy3mRyASPfGlvQbhkJZpIJRptTDhFKJ/SomuLUHfY+4lWkwCvIiHfozwAp0mhhUZAjIp5LTGmmlYDyZ9EpOQ6b818zrE01huzS+/u2Gxpf9szrs2ImQd9TLlb9OG+lNj4JWwn94lM5qUzZZj3lDDyc2XIxVCkydlBssqGgNQuiPD14b5Nte3giN8SA8Mf99Tg+01hxskM0Ybr7A6CnyoH7GC8yuJfw7W00hDriVYM+de+ZphmDzAnj7WfqzYID4Kb5Rhynhuk/oTfF55qPFPIleH0FtoNTDgN+87CqG0XcamyjCY7RshLioPkMV4qtJ7EQw6Bmy3/qmWfuk/52+gREfPUKJ8Efzjb3ut8PEAicfjXbYJS6OCT1VtK6oaZwVKYzL4e/jjJAQT+5KXfgwViJhURoz3XOJGu2XCQ4Sg3BVq7EdI0NDMzXwwuLCCgxSVq35bxRtclXf4R3bFBynsBkLB8YGK2TUYpgihcQGR3Rf8l5NMKEkax3ilApVmFb/B/R0/dxSiDEDQeRT6yiptfRjF96o4=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.233;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge2.nvidia.com;CAT:NONE;SFS:(13230028)(4636009)(376002)(136003)(396003)(39860400002)(346002)(451199021)(82310400008)(36840700001)(46966006)(40470700004)(186003)(336012)(26005)(40480700001)(40460700003)(36860700001)(426003)(54906003)(7636003)(47076005)(356005)(82740400003)(31696002)(86362001)(478600001)(70206006)(41300700001)(4326008)(316002)(70586007)(6916009)(2906002)(8936002)(8676002)(5660300002)(7416002)(966005)(31686004);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jul 2023 16:27:39.6952
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 642b38d8-e93e-41ff-f4b3-08db8d2c107e
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.233];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CO1NAM11FT051.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4917
 
-On Tue, Jul 25, 2023 at 12:44:27PM +0200, Greg Kroah-Hartman wrote:
-> From: Eric Biggers <ebiggers@google.com>
+On Tue, 25 Jul 2023 12:42:33 +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.251 release.
+> There are 313 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> [ Upstream commit cec0cb8a28f9060367099beeafd0dbdb76fdfae2 ]
+> Responses should be made by Thu, 27 Jul 2023 10:44:26 +0000.
+> Anything received after that time might be too late.
 > 
-> crypto_has_ablkcipher() has no users, and it does the same thing as
-> crypto_has_skcipher() anyway.  So remove it.  This also removes the last
-> user of crypto_skcipher_type() and crypto_skcipher_mask(), so remove
-> those too.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.251-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
 > 
-> Signed-off-by: Eric Biggers <ebiggers@google.com>
-> Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-> Stable-dep-of: efbc7764c444 ("crypto: marvell/cesa - Fix type mismatch warning")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  Documentation/crypto/api-skcipher.rst |  2 +-
->  include/linux/crypto.h                | 31 ---------------------------
->  2 files changed, 1 insertion(+), 32 deletions(-)
+> thanks,
+> 
+> greg k-h
 
-How is this a Stable-dep-of "crypto: marvell/cesa - Fix type mismatch warning"?
+All tests passing for Tegra ...
 
-I don't understand why this is being backported.
+Test results for stable-v5.4:
+    11 builds:	11 pass, 0 fail
+    26 boots:	26 pass, 0 fail
+    59 tests:	59 pass, 0 fail
 
-- Eric
+Linux version:	5.4.251-rc1-g1362bbd1b27c
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra20-ventana,
+                tegra210-p2371-2180, tegra210-p3450-0000,
+                tegra30-cardhu-a04
+
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+
+Jon
