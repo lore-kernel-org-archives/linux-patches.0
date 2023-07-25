@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166F31ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:13:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B39FC433C8;
-	Tue, 25 Jul 2023 11:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F901ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:13:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59AF3C433C7;
+	Tue, 25 Jul 2023 11:13:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283623;
-	bh=6GDjPTwKjHcJWZo4NAWdIRnomrejMFpLldgQtXSspFM=;
+	s=korg; t=1690283626;
+	bh=795XjNeKTIUuV2hjpNON2NWXeeZ7ellz9oGaPgUy2ug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=prUAuCUaLBPJMG1ullimw3EeQzsqJYirdEccheEmw6NuufxslaxlvCnZq4yg7E+Du
-	 vkWbPr86cQV+WzdfodxPeECCxq4s9xg10HpE9jB+KovVvm1vaQbjTBaQwNYS/SEKmz
-	 vrHds/j0TUbKhZt5Wi0hGlbUxzSYyff4ROpjGb6w=
+	b=NAKzSAyIUKsV1lMPTnFv4xIauiaHJKr1wxrSOCMnCfzuqSIISPWAcx/c1i//4JrTP
+	 xjdhqmjn7gZcBR8+AYIxTUif51iEpEnM8xz4bwCl1gTMWGo/sEYBBcPxaWFMgJj4Q6
+	 P8R7LPD+9sFZXieCgMMF9mQAe3XJrXZ6kwKCwmDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 025/509] PM: domains: fix integer overflow issues in genpd_parse_state()
-Date: Tue, 25 Jul 2023 12:39:24 +0200
-Message-ID: <20230725104554.801881079@linuxfoundation.org>
+Subject: [PATCH 5.10 057/509] wifi: orinoco: Fix an error handling path in orinoco_cs_probe()
+Date: Tue, 25 Jul 2023 12:39:56 +0200
+Message-ID: <20230725104556.293082705@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,46 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit e5d1c8722083f0332dcd3c85fa1273d85fb6bed8 ]
+[ Upstream commit 67a81d911c01225f426cc6bee2373df044c1a9b7 ]
 
-Currently, while calculating residency and latency values, right
-operands may overflow if resulting values are big enough.
+Should orinoco_cs_config() fail, some resources need to be released as
+already done in the remove function.
 
-To prevent this, albeit unlikely case, play it safe and convert
-right operands to left ones' type s64.
+While at it, remove a useless and erroneous comment. The probe is
+orinoco_cs_probe(), not orinoco_cs_attach().
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: 30f604283e05 ("PM / Domains: Allow domain power states to be read from DT")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/e24735ce4d82901d5f7ea08419eea53bfdde3d65.1684568286.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/domain.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/intersil/orinoco/orinoco_cs.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-index d0ba5459ce0b9..8a90f08c9682b 100644
---- a/drivers/base/power/domain.c
-+++ b/drivers/base/power/domain.c
-@@ -2763,10 +2763,10 @@ static int genpd_parse_state(struct genpd_power_state *genpd_state,
+diff --git a/drivers/net/wireless/intersil/orinoco/orinoco_cs.c b/drivers/net/wireless/intersil/orinoco/orinoco_cs.c
+index a956f965a1e5e..03bfd2482656c 100644
+--- a/drivers/net/wireless/intersil/orinoco/orinoco_cs.c
++++ b/drivers/net/wireless/intersil/orinoco/orinoco_cs.c
+@@ -96,6 +96,7 @@ orinoco_cs_probe(struct pcmcia_device *link)
+ {
+ 	struct orinoco_private *priv;
+ 	struct orinoco_pccard *card;
++	int ret;
  
- 	err = of_property_read_u32(state_node, "min-residency-us", &residency);
- 	if (!err)
--		genpd_state->residency_ns = 1000 * residency;
-+		genpd_state->residency_ns = 1000LL * residency;
+ 	priv = alloc_orinocodev(sizeof(*card), &link->dev,
+ 				orinoco_cs_hard_reset, NULL);
+@@ -107,8 +108,16 @@ orinoco_cs_probe(struct pcmcia_device *link)
+ 	card->p_dev = link;
+ 	link->priv = priv;
  
--	genpd_state->power_on_latency_ns = 1000 * exit_latency;
--	genpd_state->power_off_latency_ns = 1000 * entry_latency;
-+	genpd_state->power_on_latency_ns = 1000LL * exit_latency;
-+	genpd_state->power_off_latency_ns = 1000LL * entry_latency;
- 	genpd_state->fwnode = &state_node->fwnode;
+-	return orinoco_cs_config(link);
+-}				/* orinoco_cs_attach */
++	ret = orinoco_cs_config(link);
++	if (ret)
++		goto err_free_orinocodev;
++
++	return 0;
++
++err_free_orinocodev:
++	free_orinocodev(priv);
++	return ret;
++}
  
- 	return 0;
+ static void orinoco_cs_detach(struct pcmcia_device *link)
+ {
 -- 
 2.39.2
 
