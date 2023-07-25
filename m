@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF021ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:22:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72ABFC433C8;
-	Tue, 25 Jul 2023 11:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93CE1ED3E
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:22:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A254C433C8;
+	Tue, 25 Jul 2023 11:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284162;
-	bh=8Nnn97DCnqLRIxpHK2YTlcG/3PR0HKmq/IZWCQNH5wM=;
+	s=korg; t=1690284165;
+	bh=pPqpxxxsNpwJRfOJB1PFI12LmyEANEKEm/1TgvXf3qE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z/2uT2m/awflfQ4BpQNHiWKIYIc2mOHDaHStXNpW4+QDQB6zQpBKz9A3ct2iaXHKR
-	 7I1LNXu6GIML3X//HezlLZlWGj0AZzg7iWXT2LD0uelcRnawiRRcaIncsC0dHddNeb
-	 AV9BZLFTy8TbNq7Fd4P4IxS1FhDUqLG8M9ONj5/E=
+	b=qSblihv38JvBjaIWZHF7ucC5H2MK4Du6cihlOvHWnTSK01bQc/UpBx4vgSD+Ma5/n
+	 SHq2y93dhvA6eI03qzqcZszNuUeUsZd8lDjBCTuRx67jd6O6hpEu8Ou9cmucVx4j6c
+	 e2PxNqES2bmFshDkNDggEta4WdLcRRoxlv7JoAsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jeff Chase <jnchase@google.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Joe Tessler <jrt@google.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Mark Brown <broonie@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 258/509] rtc: st-lpc: Release some resources in st_rtc_probe() in case of error
-Date: Tue, 25 Jul 2023 12:43:17 +0200
-Message-ID: <20230725104605.568805922@linuxfoundation.org>
+Subject: [PATCH 5.10 259/509] media: cec: i2c: ch7322: also select REGMAP
+Date: Tue, 25 Jul 2023 12:43:18 +0200
+Message-ID: <20230725104605.608423583@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,37 +41,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 06c6e1b01d9261f03629cefd1f3553503291e6cf ]
+[ Upstream commit 29f96ac23648b2259f42d40703c47dd18fd172ca ]
 
-If an error occurs after clk_get(), the corresponding resources should be
-released.
+Selecting only REGMAP_I2C can leave REGMAP unset, causing build errors,
+so also select REGMAP to prevent the build errors.
 
-Use devm_clk_get() to fix it.
+../drivers/media/cec/i2c/ch7322.c:158:21: error: variable 'ch7322_regmap' has initializer but incomplete type
+  158 | static const struct regmap_config ch7322_regmap = {
+../drivers/media/cec/i2c/ch7322.c:159:10: error: 'const struct regmap_config' has no member named 'reg_bits'
+  159 |         .reg_bits = 8,
+../drivers/media/cec/i2c/ch7322.c:159:21: warning: excess elements in struct initializer
+  159 |         .reg_bits = 8,
+../drivers/media/cec/i2c/ch7322.c:160:10: error: 'const struct regmap_config' has no member named 'val_bits'
+  160 |         .val_bits = 8,
+../drivers/media/cec/i2c/ch7322.c:160:21: warning: excess elements in struct initializer
+  160 |         .val_bits = 8,
+../drivers/media/cec/i2c/ch7322.c:161:10: error: 'const struct regmap_config' has no member named 'max_register'
+  161 |         .max_register = 0x7f,
+../drivers/media/cec/i2c/ch7322.c:161:25: warning: excess elements in struct initializer
+  161 |         .max_register = 0x7f,
+../drivers/media/cec/i2c/ch7322.c:162:10: error: 'const struct regmap_config' has no member named 'disable_locking'
+  162 |         .disable_locking = true,
+../drivers/media/cec/i2c/ch7322.c:162:28: warning: excess elements in struct initializer
+  162 |         .disable_locking = true,
+../drivers/media/cec/i2c/ch7322.c: In function 'ch7322_probe':
+../drivers/media/cec/i2c/ch7322.c:468:26: error: implicit declaration of function 'devm_regmap_init_i2c' [-Werror=implicit-function-declaration]
+  468 |         ch7322->regmap = devm_regmap_init_i2c(client, &ch7322_regmap);
+../drivers/media/cec/i2c/ch7322.c:468:24: warning: assignment to 'struct regmap *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
+  468 |         ch7322->regmap = devm_regmap_init_i2c(client, &ch7322_regmap);
+../drivers/media/cec/i2c/ch7322.c: At top level:
+../drivers/media/cec/i2c/ch7322.c:158:35: error: storage size of 'ch7322_regmap' isn't known
+  158 | static const struct regmap_config ch7322_regmap = {
 
-Fixes: b5b2bdfc2893 ("rtc: st: Add new driver for ST's LPC RTC")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/866af6adbc7454a7b4505eb6c28fbdc86ccff39e.1686251455.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lore.kernel.org/linux-media/20230608025435.29249-1-rdunlap@infradead.org
+Fixes: 21b9a47e0ec7 ("media: cec: i2c: ch7322: Add ch7322 CEC controller driver")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Jeff Chase <jnchase@google.com>
+Cc: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Cc: Joe Tessler <jrt@google.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-st-lpc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/cec/i2c/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/rtc/rtc-st-lpc.c b/drivers/rtc/rtc-st-lpc.c
-index 7d53f7e2febcc..c4ea3f3f08844 100644
---- a/drivers/rtc/rtc-st-lpc.c
-+++ b/drivers/rtc/rtc-st-lpc.c
-@@ -228,7 +228,7 @@ static int st_rtc_probe(struct platform_device *pdev)
- 	enable_irq_wake(rtc->irq);
- 	disable_irq(rtc->irq);
- 
--	rtc->clk = clk_get(&pdev->dev, NULL);
-+	rtc->clk = devm_clk_get(&pdev->dev, NULL);
- 	if (IS_ERR(rtc->clk)) {
- 		dev_err(&pdev->dev, "Unable to request clock\n");
- 		return PTR_ERR(rtc->clk);
+diff --git a/drivers/media/cec/i2c/Kconfig b/drivers/media/cec/i2c/Kconfig
+index 70432a1d69186..d912d143fb312 100644
+--- a/drivers/media/cec/i2c/Kconfig
++++ b/drivers/media/cec/i2c/Kconfig
+@@ -5,6 +5,7 @@
+ config CEC_CH7322
+ 	tristate "Chrontel CH7322 CEC controller"
+ 	depends on I2C
++	select REGMAP
+ 	select REGMAP_I2C
+ 	select CEC_CORE
+ 	help
 -- 
 2.39.2
 
