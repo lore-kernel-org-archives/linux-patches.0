@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7877A1D301;
-	Tue, 25 Jul 2023 10:48:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69798C433C9;
-	Tue, 25 Jul 2023 10:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9F01EA72;
+	Tue, 25 Jul 2023 10:48:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32BB1C433C8;
+	Tue, 25 Jul 2023 10:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282110;
-	bh=SP7FcrL/n/JbIPYcqAj06Y4gPl8RVIcWqAmrAHKcOK0=;
+	s=korg; t=1690282112;
+	bh=1MRRFUNIGZi+W/2lb85NsHIk63UCDtRhcoWOEwMR2m4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t9ddt2GhO7uiW17oFDdwrv/vUtAhESGYtmNPNV4G1mmaM8/DmHVH+a60/A98IuG0n
-	 T3D2n2BFAG3bvxnokNh4AUaaqHOy7DTHbexcBZadc8UUCraPJmMxymUQpxH69QcC2L
-	 UCQ5LqvW1cIzFRx0SjvODBmEAlHysEhUz56PjPt4=
+	b=N3qgJeWYUdsrFPGQ6vfSHEE5/YC9EWAPbKoZxbqAfj9M7ge5HWkO1WcmWZRqDlpZC
+	 4RqWPiKhnhyKyg8bwNT6UnWJjzhwV0sfQm9FWOy0Klxu/1goHqNYxi8FNXOpj5HBHM
+	 kG5+PyLnE+GKis9OcswaAL4xPPxHjg/5HI5ZCDz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -28,9 +28,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peter Zijlstra <peterz@infradead.org>,
 	regressions@lists.linux.dev,
 	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 6.4 012/227] perf probe: Add test for regression introduced by switch to die_get_decl_file()
-Date: Tue, 25 Jul 2023 12:42:59 +0200
-Message-ID: <20230725104515.288406864@linuxfoundation.org>
+Subject: [PATCH 6.4 013/227] perf probe: Read DWARF files from the correct CU
+Date: Tue, 25 Jul 2023 12:43:00 +0200
+Message-ID: <20230725104515.329193975@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -46,11 +46,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Georg Müller <georgmueller@gmx.net>
 
-commit 56cbeacf143530576905623ac72ae0964f3293a6 upstream.
+commit c66e1c68c13b872505f25ab641c44b77313ee7fe upstream.
 
-This patch adds a test to validate that 'perf probe' works for binaries
-where DWARF info is split into multiple CUs
+After switching from dwarf_decl_file() to die_get_decl_file(), it is not
+possible to add probes for certain functions:
 
+  $ perf probe -x /usr/lib/systemd/systemd-logind match_unit_removed
+  A function DIE doesn't have decl_line. Maybe broken DWARF?
+  A function DIE doesn't have decl_line. Maybe broken DWARF?
+  Probe point 'match_unit_removed' not found.
+     Error: Failed to add events.
+
+The problem is that die_get_decl_file() uses the wrong CU to search for
+the file. elfutils commit e1db5cdc9f has some good explanation for this:
+
+    dwarf_decl_file uses dwarf_attr_integrate to get the DW_AT_decl_file
+    attribute. This means the attribute might come from a different DIE
+    in a different CU. If so, we need to use the CU associated with the
+    attribute, not the original DIE, to resolve the file name.
+
+This patch uses the same source of information as elfutils: use attribute
+DW_AT_decl_file and use this CU to search for the file.
+
+Fixes: dc9a5d2ccd5c823c ("perf probe: Fix to get declared file name from clang DWARF5")
 Signed-off-by: Georg Müller <georgmueller@gmx.net>
 Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
@@ -63,93 +81,26 @@ Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
 Cc: regressions@lists.linux.dev
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230628084551.1860532-5-georgmueller@gmx.net
+Link: https://lore.kernel.org/r/20230628084551.1860532-6-georgmueller@gmx.net
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/tests/shell/test_uprobe_from_different_cu.sh |   77 ++++++++++++++++
- 1 file changed, 77 insertions(+)
- create mode 100755 tools/perf/tests/shell/test_uprobe_from_different_cu.sh
+ tools/perf/util/dwarf-aux.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- /dev/null
-+++ b/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
-@@ -0,0 +1,77 @@
-+#!/bin/bash
-+# test perf probe of function from different CU
-+# SPDX-License-Identifier: GPL-2.0
-+
-+set -e
-+
-+temp_dir=$(mktemp -d /tmp/perf-uprobe-different-cu-sh.XXXXXXXXXX)
-+
-+cleanup()
-+{
-+	trap - EXIT TERM INT
-+	if [[ "${temp_dir}" =~ ^/tmp/perf-uprobe-different-cu-sh.*$ ]]; then
-+		echo "--- Cleaning up ---"
-+		perf probe -x ${temp_dir}/testfile -d foo
-+		rm -f "${temp_dir}/"*
-+		rmdir "${temp_dir}"
-+	fi
-+}
-+
-+trap_cleanup()
-+{
-+        cleanup
-+        exit 1
-+}
-+
-+trap trap_cleanup EXIT TERM INT
-+
-+cat > ${temp_dir}/testfile-foo.h << EOF
-+struct t
-+{
-+  int *p;
-+  int c;
-+};
-+
-+extern int foo (int i, struct t *t);
-+EOF
-+
-+cat > ${temp_dir}/testfile-foo.c << EOF
-+#include "testfile-foo.h"
-+
-+int
-+foo (int i, struct t *t)
-+{
-+  int j, res = 0;
-+  for (j = 0; j < i && j < t->c; j++)
-+    res += t->p[j];
-+
-+  return res;
-+}
-+EOF
-+
-+cat > ${temp_dir}/testfile-main.c << EOF
-+#include "testfile-foo.h"
-+
-+static struct t g;
-+
-+int
-+main (int argc, char **argv)
-+{
-+  int i;
-+  int j[argc];
-+  g.c = argc;
-+  g.p = j;
-+  for (i = 0; i < argc; i++)
-+    j[i] = (int) argv[i][0];
-+  return foo (3, &g);
-+}
-+EOF
-+
-+gcc -g -Og -flto -c ${temp_dir}/testfile-foo.c -o ${temp_dir}/testfile-foo.o
-+gcc -g -Og -c ${temp_dir}/testfile-main.c -o ${temp_dir}/testfile-main.o
-+gcc -g -Og -o ${temp_dir}/testfile ${temp_dir}/testfile-foo.o ${temp_dir}/testfile-main.o
-+
-+perf probe -x ${temp_dir}/testfile --funcs foo
-+perf probe -x ${temp_dir}/testfile foo
-+
-+cleanup
+--- a/tools/perf/util/dwarf-aux.c
++++ b/tools/perf/util/dwarf-aux.c
+@@ -478,8 +478,10 @@ static const char *die_get_file_name(Dwa
+ {
+ 	Dwarf_Die cu_die;
+ 	Dwarf_Files *files;
++	Dwarf_Attribute attr_mem;
+ 
+-	if (idx < 0 || !dwarf_diecu(dw_die, &cu_die, NULL, NULL) ||
++	if (idx < 0 || !dwarf_attr_integrate(dw_die, DW_AT_decl_file, &attr_mem) ||
++	    !dwarf_cu_die(attr_mem.cu, &cu_die, NULL, NULL, NULL, NULL, NULL, NULL) ||
+ 	    dwarf_getsrcfiles(&cu_die, &files, NULL) != 0)
+ 		return NULL;
+ 
 
 
