@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC751EA72
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:49:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9711C433C7;
-	Tue, 25 Jul 2023 10:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3281EA72
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:49:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15FBC433C7;
+	Tue, 25 Jul 2023 10:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282146;
-	bh=5ASkLiLKJcNtSGllI/99fpPPkZrP9Kv1expKoO6neKg=;
+	s=korg; t=1690282149;
+	bh=AsPTQrPzTDhdK/72JF3qBlfWN0iPBbmFkZvJ++WrSw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H/fB6HqhZ2pLUR4P2RXCOK90yoh8pTant+hi9JSdbLSqip0SxkG/qpos2abOTySEw
-	 kFshJmvmdGyyOo+2vH+drO7uC94MopWh0dCEewW3uhNy4Ps804ZN1/gBHpN8hVEoDV
-	 GctXtgFyf4aO+RfNK/9FpYIWQ/lkcpuT+Xf0OkQM=
+	b=NZn39+4llKCkHcsM9PMBz9O6lpfVrx+bTeMevgZo6BF8Zedev3AxXe++OzsWvy2JI
+	 QtcAAGXyLKDX/5tbAwI0KuCKEMzFT0nvKkq5fT/zsGO/C7xfM2Ix1axvdXBZ2y0vfX
+	 hwIIyCiuQaP3+mPwpFzU/Rw40aHXOFp9dA98e1gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c0f3acf145cb465426d5@syzkaller.appspotmail.com,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 024/227] btrfs: fix race between balance and cancel/pause
-Date: Tue, 25 Jul 2023 12:43:11 +0200
-Message-ID: <20230725104515.807299925@linuxfoundation.org>
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.4 025/227] selftests: tc: set timeout to 15 minutes
+Date: Tue, 25 Jul 2023 12:43:12 +0200
+Message-ID: <20230725104515.848152416@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,96 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit b19c98f237cd76981aaded52c258ce93f7daa8cb upstream.
+commit fda05798c22a354efde09a76bdfc276b2d591829 upstream.
 
-Syzbot reported a panic that looks like this:
+When looking for something else in LKFT reports [1], I noticed that the
+TC selftest ended with a timeout error:
 
-  assertion failed: fs_info->exclusive_operation == BTRFS_EXCLOP_BALANCE_PAUSED, in fs/btrfs/ioctl.c:465
-  ------------[ cut here ]------------
-  kernel BUG at fs/btrfs/messages.c:259!
-  RIP: 0010:btrfs_assertfail+0x2c/0x30 fs/btrfs/messages.c:259
-  Call Trace:
-   <TASK>
-   btrfs_exclop_balance fs/btrfs/ioctl.c:465 [inline]
-   btrfs_ioctl_balance fs/btrfs/ioctl.c:3564 [inline]
-   btrfs_ioctl+0x531e/0x5b30 fs/btrfs/ioctl.c:4632
-   vfs_ioctl fs/ioctl.c:51 [inline]
-   __do_sys_ioctl fs/ioctl.c:870 [inline]
-   __se_sys_ioctl fs/ioctl.c:856 [inline]
-   __x64_sys_ioctl+0x197/0x210 fs/ioctl.c:856
-   do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-   do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
-   entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  not ok 1 selftests: tc-testing: tdc.sh # TIMEOUT 45 seconds
 
-The reproducer is running a balance and a cancel or pause in parallel.
-The way balance finishes is a bit wonky, if we were paused we need to
-save the balance_ctl in the fs_info, but clear it otherwise and cleanup.
-However we rely on the return values being specific errors, or having a
-cancel request or no pause request.  If balance completes and returns 0,
-but we have a pause or cancel request we won't do the appropriate
-cleanup, and then the next time we try to start a balance we'll trip
-this ASSERT.
+The timeout had been introduced 3 years ago, see the Fixes commit below.
 
-The error handling is just wrong here, we always want to clean up,
-unless we got -ECANCELLED and we set the appropriate pause flag in the
-exclusive op.  With this patch the reproducer ran for an hour without
-tripping, previously it would trip in less than a few minutes.
+This timeout is only in place when executing the selftests via the
+kselftests runner scripts. I guess this is not what most TC devs are
+using and nobody noticed the issue before.
 
-Reported-by: syzbot+c0f3acf145cb465426d5@syzkaller.appspotmail.com
-CC: stable@vger.kernel.org # 6.1+
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+The new timeout is set to 15 minutes as suggested by Pedro [2]. It looks
+like it is plenty more time than what it takes in "normal" conditions.
+
+Fixes: 852c8cbf34d3 ("selftests/kselftest/runner.sh: Add 45 second timeout per test")
+Cc: stable@vger.kernel.org
+Link: https://qa-reports.linaro.org/lkft/linux-next-master/build/next-20230711/testrun/18267241/suite/kselftest-tc-testing/test/tc-testing_tdc_sh/log [1]
+Link: https://lore.kernel.org/netdev/0e061d4a-9a23-9f58-3b35-d8919de332d7@tessares.net/T/ [2]
+Suggested-by: Pedro Tammela <pctammela@mojatatu.com>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Reviewed-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Link: https://lore.kernel.org/r/20230713-tc-selftests-lkft-v1-1-1eb4fd3a96e7@tessares.net
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c |   14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ tools/testing/selftests/tc-testing/settings |    1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 tools/testing/selftests/tc-testing/settings
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -4071,14 +4071,6 @@ static int alloc_profile_is_valid(u64 fl
- 	return has_single_bit_set(flags);
- }
- 
--static inline int balance_need_close(struct btrfs_fs_info *fs_info)
--{
--	/* cancel requested || normal exit path */
--	return atomic_read(&fs_info->balance_cancel_req) ||
--		(atomic_read(&fs_info->balance_pause_req) == 0 &&
--		 atomic_read(&fs_info->balance_cancel_req) == 0);
--}
--
- /*
-  * Validate target profile against allowed profiles and return true if it's OK.
-  * Otherwise print the error message and return false.
-@@ -4268,6 +4260,7 @@ int btrfs_balance(struct btrfs_fs_info *
- 	u64 num_devices;
- 	unsigned seq;
- 	bool reducing_redundancy;
-+	bool paused = false;
- 	int i;
- 
- 	if (btrfs_fs_closing(fs_info) ||
-@@ -4398,6 +4391,7 @@ int btrfs_balance(struct btrfs_fs_info *
- 	if (ret == -ECANCELED && atomic_read(&fs_info->balance_pause_req)) {
- 		btrfs_info(fs_info, "balance: paused");
- 		btrfs_exclop_balance(fs_info, BTRFS_EXCLOP_BALANCE_PAUSED);
-+		paused = true;
- 	}
- 	/*
- 	 * Balance can be canceled by:
-@@ -4426,8 +4420,8 @@ int btrfs_balance(struct btrfs_fs_info *
- 		btrfs_update_ioctl_balance_args(fs_info, bargs);
- 	}
- 
--	if ((ret && ret != -ECANCELED && ret != -ENOSPC) ||
--	    balance_need_close(fs_info)) {
-+	/* We didn't pause, we can clean everything up. */
-+	if (!paused) {
- 		reset_balance_state(fs_info);
- 		btrfs_exclop_finish(fs_info);
- 	}
+--- /dev/null
++++ b/tools/testing/selftests/tc-testing/settings
+@@ -0,0 +1 @@
++timeout=900
 
 
