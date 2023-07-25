@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 854491ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:24:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05E17C433C7;
-	Tue, 25 Jul 2023 11:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5F61ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:24:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4953C433C7;
+	Tue, 25 Jul 2023 11:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284274;
-	bh=o3GiozvMaLRwUcURm6vN3RZNKEP/QS8IXHFwUDfGDTg=;
+	s=korg; t=1690284277;
+	bh=GmIEBLuiiQz4YxpYlW8vNfs3ADGFP8cjc35q2vEtW5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TJTVCNlCvjX8PqPJjKerbWow7L2YC14f2VRdgXZG1CCCihsNH3Vc42mWaPpi/jfzm
-	 rM7ThtGcQ2JhTqN5b5HAwh6+unttwmPKw2xyeULt39FNNu38REYvvmTgMQwY5BzxA6
-	 H0uDUvhMs/3LKF9J3uiYlM5FTyPrBekQVzay2/0U=
+	b=AWGj1vN65DCGRvfp9bUg1MauhALQqZzfMShG7Hlc75pbP+YNInOF0rJJ6QmObQG1b
+	 uQ3XKZ0rNC8gZHn5iBqi0X8EeeJ81+XeoSPSxth/QjFs4T5AQFu7wicRzx49x7TmYX
+	 WTlj3Mkx3C4T/51UwyKt3xvhS6TLt5+C6c/q0f/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Jiang <d202180596@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.10 280/509] i2c: qup: Add missing unwind goto in qup_i2c_probe()
-Date: Tue, 25 Jul 2023 12:43:39 +0200
-Message-ID: <20230725104606.562038397@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.10 298/509] fs: Establish locking order for unrelated directories
+Date: Tue, 25 Jul 2023 12:43:57 +0200
+Message-ID: <20230725104607.380424669@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,75 +34,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shuai Jiang <d202180596@hust.edu.cn>
+From: Jan Kara <jack@suse.cz>
 
-commit cd9489623c29aa2f8cc07088168afb6e0d5ef06d upstream.
+commit f23ce757185319886ca80c4864ce5f81ac6cc9e9 upstream.
 
-Smatch Warns:
-	drivers/i2c/busses/i2c-qup.c:1784 qup_i2c_probe()
-	warn: missing unwind goto?
+Currently the locking order of inode locks for directories that are not
+in ancestor relationship is not defined because all operations that
+needed to lock two directories like this were serialized by
+sb->s_vfs_rename_mutex. However some filesystems need to lock two
+subdirectories for RENAME_EXCHANGE operations and for this we need the
+locking order established even for two tree-unrelated directories.
+Provide a helper function lock_two_inodes() that establishes lock
+ordering for any two inodes and use it in lock_two_directories().
 
-The goto label "fail_runtime" and "fail" will disable qup->pclk,
-but here qup->pclk failed to obtain, in order to be consistent,
-change the direct return to goto label "fail_dma".
-
-Fixes: 9cedf3b2f099 ("i2c: qup: Add bam dma capabilities")
-Signed-off-by: Shuai Jiang <d202180596@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Cc: <stable@vger.kernel.org> # v4.6+
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
+Message-Id: <20230601105830.13168-4-jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-qup.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ fs/inode.c    |   42 ++++++++++++++++++++++++++++++++++++++++++
+ fs/internal.h |    2 ++
+ fs/namei.c    |    4 ++--
+ 3 files changed, 46 insertions(+), 2 deletions(-)
 
---- a/drivers/i2c/busses/i2c-qup.c
-+++ b/drivers/i2c/busses/i2c-qup.c
-@@ -1752,16 +1752,21 @@ nodma:
- 	if (!clk_freq || clk_freq > I2C_MAX_FAST_MODE_PLUS_FREQ) {
- 		dev_err(qup->dev, "clock frequency not supported %d\n",
- 			clk_freq);
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto fail_dma;
+--- a/fs/inode.c
++++ b/fs/inode.c
+@@ -1016,6 +1016,48 @@ void discard_new_inode(struct inode *ino
+ EXPORT_SYMBOL(discard_new_inode);
+ 
+ /**
++ * lock_two_inodes - lock two inodes (may be regular files but also dirs)
++ *
++ * Lock any non-NULL argument. The caller must make sure that if he is passing
++ * in two directories, one is not ancestor of the other.  Zero, one or two
++ * objects may be locked by this function.
++ *
++ * @inode1: first inode to lock
++ * @inode2: second inode to lock
++ * @subclass1: inode lock subclass for the first lock obtained
++ * @subclass2: inode lock subclass for the second lock obtained
++ */
++void lock_two_inodes(struct inode *inode1, struct inode *inode2,
++		     unsigned subclass1, unsigned subclass2)
++{
++	if (!inode1 || !inode2) {
++		/*
++		 * Make sure @subclass1 will be used for the acquired lock.
++		 * This is not strictly necessary (no current caller cares) but
++		 * let's keep things consistent.
++		 */
++		if (!inode1)
++			swap(inode1, inode2);
++		goto lock;
++	}
++
++	/*
++	 * If one object is directory and the other is not, we must make sure
++	 * to lock directory first as the other object may be its child.
++	 */
++	if (S_ISDIR(inode2->i_mode) == S_ISDIR(inode1->i_mode)) {
++		if (inode1 > inode2)
++			swap(inode1, inode2);
++	} else if (!S_ISDIR(inode1->i_mode))
++		swap(inode1, inode2);
++lock:
++	if (inode1)
++		inode_lock_nested(inode1, subclass1);
++	if (inode2 && inode2 != inode1)
++		inode_lock_nested(inode2, subclass2);
++}
++
++/**
+  * lock_two_nondirectories - take two i_mutexes on non-directory objects
+  *
+  * Lock any non-NULL argument that is not a directory.
+--- a/fs/internal.h
++++ b/fs/internal.h
+@@ -150,6 +150,8 @@ extern long prune_icache_sb(struct super
+ extern void inode_add_lru(struct inode *inode);
+ extern int dentry_needs_remove_privs(struct dentry *dentry);
+ bool in_group_or_capable(const struct inode *inode, kgid_t gid);
++void lock_two_inodes(struct inode *inode1, struct inode *inode2,
++		     unsigned subclass1, unsigned subclass2);
+ 
+ /*
+  * fs-writeback.c
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -2782,8 +2782,8 @@ struct dentry *lock_rename(struct dentry
+ 		return p;
  	}
  
- 	qup->base = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(qup->base))
--		return PTR_ERR(qup->base);
-+	if (IS_ERR(qup->base)) {
-+		ret = PTR_ERR(qup->base);
-+		goto fail_dma;
-+	}
- 
- 	qup->irq = platform_get_irq(pdev, 0);
--	if (qup->irq < 0)
--		return qup->irq;
-+	if (qup->irq < 0) {
-+		ret = qup->irq;
-+		goto fail_dma;
-+	}
- 
- 	if (has_acpi_companion(qup->dev)) {
- 		ret = device_property_read_u32(qup->dev,
-@@ -1775,13 +1780,15 @@ nodma:
- 		qup->clk = devm_clk_get(qup->dev, "core");
- 		if (IS_ERR(qup->clk)) {
- 			dev_err(qup->dev, "Could not get core clock\n");
--			return PTR_ERR(qup->clk);
-+			ret = PTR_ERR(qup->clk);
-+			goto fail_dma;
- 		}
- 
- 		qup->pclk = devm_clk_get(qup->dev, "iface");
- 		if (IS_ERR(qup->pclk)) {
- 			dev_err(qup->dev, "Could not get iface clock\n");
--			return PTR_ERR(qup->pclk);
-+			ret = PTR_ERR(qup->pclk);
-+			goto fail_dma;
- 		}
- 		qup_i2c_enable_clocks(qup);
- 		src_clk_freq = clk_get_rate(qup->clk);
+-	inode_lock_nested(p1->d_inode, I_MUTEX_PARENT);
+-	inode_lock_nested(p2->d_inode, I_MUTEX_PARENT2);
++	lock_two_inodes(p1->d_inode, p2->d_inode,
++			I_MUTEX_PARENT, I_MUTEX_PARENT2);
+ 	return NULL;
+ }
+ EXPORT_SYMBOL(lock_rename);
 
 
