@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89AD1ED45
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:39:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57ADFC433C7;
-	Tue, 25 Jul 2023 11:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6EA01ED45
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:39:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2740AC433C8;
+	Tue, 25 Jul 2023 11:39:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285188;
-	bh=Q6KUPsxOyJWZNRd8K09Q/ruJ1/nTQf9Vn8+I0Fwkky8=;
+	s=korg; t=1690285191;
+	bh=KM1YNiKyl04OfZmKNSXA9jRRZ7aLu1O7Riev+GrjZSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FJTnfJ9fYvfYg29oJGkSoN7yFBo3I2/J2L/jJDtNpvfbB13Cm+3ga/ksGgrHFSoD8
-	 F51Wlt9Hl+l5dNwwlQkCBtBjqzFn6pXRayXSPMGSSfg6Ue7YoI4NGs1gCp91q0Yp/h
-	 R+/LT9n5w82SUCuvrnpkJKuT90H0abbkKbG1Ecnk=
+	b=lFwnjZSrZL9jkgY3wbv8O3nduoiTnsr9SwQoQld+14eR42ssZ6XboEETOcjTCFIb8
+	 6rmRAXV3C3RsbMmbM9P3qcdh0pLeLvq7ok9xP2VXdJvBjwMk2NinCIgudH6WHuXYY/
+	 JFVcKvih/qkJfivxfGtwgO9mWAK0GrTfzXKLwk8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 115/313] crypto: marvell/cesa - Fix type mismatch warning
-Date: Tue, 25 Jul 2023 12:44:28 +0200
-Message-ID: <20230725104525.988038584@linuxfoundation.org>
+Subject: [PATCH 5.4 116/313] modpost: fix off by one in is_executable_section()
+Date: Tue, 25 Jul 2023 12:44:29 +0200
+Message-ID: <20230725104526.030890539@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -37,47 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit efbc7764c4446566edb76ca05e903b5905673d2e ]
+[ Upstream commit 3a3f1e573a105328a2cca45a7cfbebabbf5e3192 ]
 
-Commit df8fc4e934c1 ("kbuild: Enable -fstrict-flex-arrays=3") uncovered
-a type mismatch in cesa 3des support that leads to a memcpy beyond the
-end of a structure:
+The > comparison should be >= to prevent an out of bounds array
+access.
 
-In function 'fortify_memcpy_chk',
-    inlined from 'mv_cesa_des3_ede_setkey' at drivers/crypto/marvell/cesa/cipher.c:307:2:
-include/linux/fortify-string.h:583:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
-  583 |                         __write_overflow_field(p_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This is probably harmless as the actual data that is copied has the correct
-type, but clearly worth fixing nonetheless.
-
-Fixes: 4ada48397823 ("crypto: marvell/cesa - add Triple-DES support")
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Gustavo A. R. Silva <gustavoars@kernel.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 52dc0595d540 ("modpost: handle relocations mismatch in __ex_table.")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/marvell/cipher.c | 2 +-
+ scripts/mod/modpost.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/marvell/cipher.c b/drivers/crypto/marvell/cipher.c
-index 708dc63b2f099..c7d433d1cd99d 100644
---- a/drivers/crypto/marvell/cipher.c
-+++ b/drivers/crypto/marvell/cipher.c
-@@ -287,7 +287,7 @@ static int mv_cesa_des_setkey(struct crypto_skcipher *cipher, const u8 *key,
- static int mv_cesa_des3_ede_setkey(struct crypto_skcipher *cipher,
- 				   const u8 *key, unsigned int len)
- {
--	struct mv_cesa_des_ctx *ctx = crypto_skcipher_ctx(cipher);
-+	struct mv_cesa_des3_ctx *ctx = crypto_skcipher_ctx(cipher);
- 	int err;
+diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
+index 75d76b8f50302..53e276bb24acd 100644
+--- a/scripts/mod/modpost.c
++++ b/scripts/mod/modpost.c
+@@ -1633,7 +1633,7 @@ static void default_mismatch_handler(const char *modname, struct elf_info *elf,
  
- 	err = verify_skcipher_des3_key(cipher, key);
+ static int is_executable_section(struct elf_info* elf, unsigned int section_index)
+ {
+-	if (section_index > elf->num_sections)
++	if (section_index >= elf->num_sections)
+ 		fatal("section_index is outside elf->num_sections!\n");
+ 
+ 	return ((elf->sechdrs[section_index].sh_flags & SHF_EXECINSTR) == SHF_EXECINSTR);
 -- 
 2.39.2
 
