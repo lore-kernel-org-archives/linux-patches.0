@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB651ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:23:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 964E5C433C7;
-	Tue, 25 Jul 2023 11:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D211ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:23:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57426C433C8;
+	Tue, 25 Jul 2023 11:23:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284208;
-	bh=2DQkxeUcvPViWW4OXYccAVwbYFbV3k0nVACGIjpMtdM=;
+	s=korg; t=1690284210;
+	bh=J19Qaday07Uv44WYgE9dAlg5dZV0n7ZkTIbcQ0Wbe34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=InfQ2dAoE651en5e7B68kqOUG4UCpvpuCre2f2Tq/UCnCX8ojEOt6Eq9t1po39NyT
-	 Vc6+MnM2vQudvjIrM10DHUX1TAVYI+rq+u14dt/dktyYHLyii5oAONFOh6UtqHVHy5
-	 oRt4I7m38q65/MedLkIsxC3/qR9XmaqDxbIfQGhw=
+	b=lT2hIRekWRfTK9B50mbha1Tg+gGdW5Hj/M3WJZUy8atBOGm+IZvQW61Xc8KaIPBeX
+	 CkX8F96tt5rCw7XC1X1XKJ9sJrNPbW/fE+2oE7438xXz8YX/6Xqsw703y2RhS77kF2
+	 Fn+Mpy4wIwq5xB7e+9f5Q5bzWejGmm7u7JKBF5YM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Thorsten Winkler <twinkler@linux.ibm.com>,
 	Simon Horman <simon.horman@corigine.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 273/509] net: dsa: tag_sja1105: fix MAC DA patching from meta frames
-Date: Tue, 25 Jul 2023 12:43:32 +0200
-Message-ID: <20230725104606.245913156@linuxfoundation.org>
+Subject: [PATCH 5.10 274/509] s390/qeth: Fix vipa deletion
+Date: Tue, 25 Jul 2023 12:43:33 +0200
+Message-ID: <20230725104606.294431311@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,44 +38,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Thorsten Winkler <twinkler@linux.ibm.com>
 
-[ Upstream commit 1dcf6efd5f0c1f4496b3ef7ec5a7db104a53b38c ]
+[ Upstream commit 80de809bd35e2a8999edf9f5aaa2d8de18921f11 ]
 
-The SJA1105 manual says that at offset 4 into the meta frame payload we
-have "MAC destination byte 2" and at offset 5 we have "MAC destination
-byte 1". These are counted from the LSB, so byte 1 is h_dest[ETH_HLEN-2]
-aka h_dest[4] and byte 2 is h_dest[ETH_HLEN-3] aka h_dest[3].
+Change boolean parameter of function "qeth_l3_vipa_store" inside the
+"qeth_l3_dev_vipa_del4_store" function from "true" to "false" because
+"true" is used for adding a virtual ip address and "false" for deleting.
 
-The sja1105_meta_unpack() function decodes these the other way around,
-so a frame with MAC DA 01:80:c2:11:22:33 is received by the network
-stack as having 01:80:c2:22:11:33.
+Fixes: 2390166a6b45 ("s390/qeth: clean up L3 sysfs code")
 
-Fixes: e53e18a6fe4d ("net: dsa: sja1105: Receive and decode meta frames")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
+Signed-off-by: Thorsten Winkler <twinkler@linux.ibm.com>
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dsa/tag_sja1105.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/s390/net/qeth_l3_sys.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/dsa/tag_sja1105.c b/net/dsa/tag_sja1105.c
-index 50496013cdb7f..07876160edd2b 100644
---- a/net/dsa/tag_sja1105.c
-+++ b/net/dsa/tag_sja1105.c
-@@ -48,8 +48,8 @@ static void sja1105_meta_unpack(const struct sk_buff *skb,
- 	 * a unified unpacking command for both device series.
- 	 */
- 	packing(buf,     &meta->tstamp,     31, 0, 4, UNPACK, 0);
--	packing(buf + 4, &meta->dmac_byte_4, 7, 0, 1, UNPACK, 0);
--	packing(buf + 5, &meta->dmac_byte_3, 7, 0, 1, UNPACK, 0);
-+	packing(buf + 4, &meta->dmac_byte_3, 7, 0, 1, UNPACK, 0);
-+	packing(buf + 5, &meta->dmac_byte_4, 7, 0, 1, UNPACK, 0);
- 	packing(buf + 6, &meta->source_port, 7, 0, 1, UNPACK, 0);
- 	packing(buf + 7, &meta->switch_id,   7, 0, 1, UNPACK, 0);
+diff --git a/drivers/s390/net/qeth_l3_sys.c b/drivers/s390/net/qeth_l3_sys.c
+index 997fbb7006a7c..316f8622f3ccb 100644
+--- a/drivers/s390/net/qeth_l3_sys.c
++++ b/drivers/s390/net/qeth_l3_sys.c
+@@ -652,7 +652,7 @@ static QETH_DEVICE_ATTR(vipa_add4, add4, 0644,
+ static ssize_t qeth_l3_dev_vipa_del4_store(struct device *dev,
+ 		struct device_attribute *attr, const char *buf, size_t count)
+ {
+-	return qeth_l3_vipa_store(dev, buf, true, count, QETH_PROT_IPV4);
++	return qeth_l3_vipa_store(dev, buf, false, count, QETH_PROT_IPV4);
  }
+ 
+ static QETH_DEVICE_ATTR(vipa_del4, del4, 0200, NULL,
 -- 
 2.39.2
 
