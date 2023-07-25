@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EEC91ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:18:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E531CC433C7;
-	Tue, 25 Jul 2023 11:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36CB11ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:18:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB2F0C433C8;
+	Tue, 25 Jul 2023 11:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283916;
-	bh=ZqttU1RqoU7jwj7QWeWlUJo7bwwPS292qRgdsWZja1I=;
+	s=korg; t=1690283919;
+	bh=QSuO8gWqIMoCCihpWLzBXRl+xKT/B3arpaj+Sk4wkSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uCBZzn7nTuoWQrSMzTwi+A1MOxepR071zEO28bO1D5uH0JckwPHuYO1rUtK+tABHt
-	 U/xwmf4/1I0obxuTqMSN8ZhSLss9U008MJhqO0Wsuh4YfkXy7p76IjfqXd1uBaVOvc
-	 7xk5iIws1t6l2/4J5RoczIDxhsBOgsNWWzfVQI7M=
+	b=tV5k67Ifcdi/xM8fd7HSrd/Oj4F+0KGxkCglErQx4s0REzyH56OzLmt0jgVe+Weo+
+	 7bQXNQFXfmyjLBDhHA39ULO0cg+xkjkIZf9vpsPNl46hGAqQXmfMve2aPOH6hT+k9E
+	 Pmpi56ZlPgfOXkyL+sGM2oIiwna7+8xFJpnydSwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 169/509] clk: si5341: free unused memory on probe failure
-Date: Tue, 25 Jul 2023 12:41:48 +0200
-Message-ID: <20230725104601.462133414@linuxfoundation.org>
+Subject: [PATCH 5.10 152/509] drm/amdkfd: Fix potential deallocation of previously deallocated memory.
+Date: Tue, 25 Jul 2023 12:41:31 +0200
+Message-ID: <20230725104600.681494652@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,84 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit 267ad94b13c53d8c99a336f0841b1fa1595b1d0f ]
+[ Upstream commit cabbdea1f1861098991768d7bbf5a49ed1608213 ]
 
-Pointers from synth_clock_names[] should be freed at the end of probe
-either on probe success or failure path.
+Pointer mqd_mem_obj can be deallocated in kfd_gtt_sa_allocate().
+The function then returns non-zero value, which causes the second deallocation.
 
-Fixes: b7bbf6ec4940 ("clk: si5341: Allow different output VDD_SEL values")
-Fixes: 9b13ff4340df ("clk: si5341: Add sysfs properties to allow checking/resetting device faults")
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230530093913.1656095-6-claudiu.beznea@microchip.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: d1f8f0d17d40 ("drm/amdkfd: Move non-sdma mqd allocation out of init_mqd")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-si5341.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/clk/clk-si5341.c b/drivers/clk/clk-si5341.c
-index af66097f9ac5a..4dea29fa901d4 100644
---- a/drivers/clk/clk-si5341.c
-+++ b/drivers/clk/clk-si5341.c
-@@ -1732,7 +1732,7 @@ static int si5341_probe(struct i2c_client *client,
- 		if (err) {
- 			dev_err(&client->dev,
- 				"output %u registration failed\n", i);
--			goto cleanup;
-+			goto free_clk_names;
- 		}
- 		if (config[i].always_on)
- 			clk_prepare(data->clk[i].hw.clk);
-@@ -1742,7 +1742,7 @@ static int si5341_probe(struct i2c_client *client,
- 			data);
- 	if (err) {
- 		dev_err(&client->dev, "unable to add clk provider\n");
--		goto cleanup;
-+		goto free_clk_names;
- 	}
- 
- 	if (initialization_required) {
-@@ -1750,11 +1750,11 @@ static int si5341_probe(struct i2c_client *client,
- 		regcache_cache_only(data->regmap, false);
- 		err = regcache_sync(data->regmap);
- 		if (err < 0)
--			goto cleanup;
-+			goto free_clk_names;
- 
- 		err = si5341_finalize_defaults(data);
- 		if (err < 0)
--			goto cleanup;
-+			goto free_clk_names;
- 	}
- 
- 	/* wait for device to report input clock present and PLL lock */
-@@ -1763,21 +1763,19 @@ static int si5341_probe(struct i2c_client *client,
- 	       10000, 250000);
- 	if (err) {
- 		dev_err(&client->dev, "Error waiting for input clock or PLL lock\n");
--		goto cleanup;
-+		goto free_clk_names;
- 	}
- 
- 	/* clear sticky alarm bits from initialization */
- 	err = regmap_write(data->regmap, SI5341_STATUS_STICKY, 0);
- 	if (err) {
- 		dev_err(&client->dev, "unable to clear sticky status\n");
--		goto cleanup;
-+		goto free_clk_names;
- 	}
- 
- 	err = sysfs_create_files(&client->dev.kobj, si5341_attributes);
--	if (err) {
-+	if (err)
- 		dev_err(&client->dev, "unable to create sysfs files\n");
--		goto cleanup;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
+index 3b6f5963180d5..dadeb2013fd9a 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
+@@ -113,18 +113,19 @@ static struct kfd_mem_obj *allocate_mqd(struct kfd_dev *kfd,
+ 			&(mqd_mem_obj->gtt_mem),
+ 			&(mqd_mem_obj->gpu_addr),
+ 			(void *)&(mqd_mem_obj->cpu_ptr), true);
++
++		if (retval) {
++			kfree(mqd_mem_obj);
++			return NULL;
++		}
+ 	} else {
+ 		retval = kfd_gtt_sa_allocate(kfd, sizeof(struct v9_mqd),
+ 				&mqd_mem_obj);
 -	}
+-
+-	if (retval) {
+-		kfree(mqd_mem_obj);
+-		return NULL;
++		if (retval)
++			return NULL;
+ 	}
  
- free_clk_names:
- 	/* Free the names, clk framework makes copies */
+ 	return mqd_mem_obj;
+-
+ }
+ 
+ static void init_mqd(struct mqd_manager *mm, void **mqd,
 -- 
 2.39.2
 
