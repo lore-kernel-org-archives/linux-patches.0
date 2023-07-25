@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23681ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:23:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3466FC433C9;
-	Tue, 25 Jul 2023 11:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7934B1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:23:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFBC4C433C9;
+	Tue, 25 Jul 2023 11:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284213;
-	bh=2s7RTo3VNv6TmVXLN6GEj8GSY4RWSlqZJQSydBtaFVk=;
+	s=korg; t=1690284216;
+	bh=mYXwphH08uk94R8pvkGz3BjiMMvpUNCJu99oWlnwoIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NKREstgOxifaXii978gBzpKtopwVYVbiLewvnCDbbR8Ee5wCK1955Eujlc7dmxMwV
-	 BZEZSUudcwnA5bb9HjBU2qPUNGGtca5dvap7bOCo5eteeS5mLmtVUks1FlCu0pC7bc
-	 LMl8h0PTla8jH6sbh/RZr4yLaXQCYQidArsGnixs=
+	b=wJZnwQNnyR+t6+q8tXHX6Ud+r16Mci8B+AaeIxIAJq3JBVe0R1uutfIupyrfKlSLv
+	 o+crgiBxryt7WFVYo4KaXIsb3BRqZ1xUeezCtAO+kUNL1y7oKlQG/F0Qc+grHMA/zB
+	 C9FapkERV0E3nk6/90B7lX3wy/Hjj7hQB8V7zkMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artur Rojek <contact@artur-rojek.eu>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Tony Lindgren <tony@atomide.com>,
+	Dhruva Gole <d-gole@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 275/509] sh: dma: Fix DMA channel offset calculation
-Date: Tue, 25 Jul 2023 12:43:34 +0200
-Message-ID: <20230725104606.340970041@linuxfoundation.org>
+Subject: [PATCH 5.10 249/509] serial: 8250_omap: Use force_suspend and resume for system suspend
+Date: Tue, 25 Jul 2023 12:43:08 +0200
+Message-ID: <20230725104605.142999096@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,101 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Artur Rojek <contact@artur-rojek.eu>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit e82e47584847129a20b8c9f4a1dcde09374fb0e0 ]
+[ Upstream commit 20a41a62618df85f3a2981008edec5cadd785e0a ]
 
-Various SoCs of the SH3, SH4 and SH4A family, which use this driver,
-feature a differing number of DMA channels, which can be distributed
-between up to two DMAC modules. The existing implementation fails to
-correctly accommodate for all those variations, resulting in wrong
-channel offset calculations and leading to kernel panics.
+We should not rely on autosuspend timeout for system suspend. Instead,
+let's use force_suspend and force_resume functions. Otherwise the serial
+port controller device may not be idled on suspend.
 
-Rewrite dma_base_addr() in order to properly calculate channel offsets
-in a DMAC module. Fix dmaor_read_reg() and dmaor_write_reg(), so that
-the correct DMAC module base is selected for the DMAOR register.
+As we are doing a register write on suspend to configure the serial port,
+we still need to runtime PM resume the port on suspend.
 
-Fixes: 7f47c7189b3e8f19 ("sh: dma: More legacy cpu dma chainsawing.")
-Signed-off-by: Artur Rojek <contact@artur-rojek.eu>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/20230527164452.64797-2-contact@artur-rojek.eu
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+While at it, let's switch to pm_runtime_resume_and_get() and check for
+errors returned. And let's add the missing line break before return to the
+suspend function while at it.
+
+Fixes: 09d8b2bdbc5c ("serial: 8250: omap: Provide ability to enable/disable UART as wakeup source")
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Tested-by: Dhruva Gole <d-gole@ti.com>
+Message-ID: <20230614045922.4798-1-tony@atomide.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/drivers/dma/dma-sh.c | 37 +++++++++++++++++++++++-------------
- 1 file changed, 24 insertions(+), 13 deletions(-)
+ drivers/tty/serial/8250/8250_omap.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/arch/sh/drivers/dma/dma-sh.c b/arch/sh/drivers/dma/dma-sh.c
-index 96c626c2cd0a4..306fba1564e5e 100644
---- a/arch/sh/drivers/dma/dma-sh.c
-+++ b/arch/sh/drivers/dma/dma-sh.c
-@@ -18,6 +18,18 @@
- #include <cpu/dma-register.h>
- #include <cpu/dma.h>
- 
-+/*
-+ * Some of the SoCs feature two DMAC modules. In such a case, the channels are
-+ * distributed equally among them.
-+ */
-+#ifdef	SH_DMAC_BASE1
-+#define	SH_DMAC_NR_MD_CH	(CONFIG_NR_ONCHIP_DMA_CHANNELS / 2)
-+#else
-+#define	SH_DMAC_NR_MD_CH	CONFIG_NR_ONCHIP_DMA_CHANNELS
-+#endif
-+
-+#define	SH_DMAC_CH_SZ		0x10
-+
- /*
-  * Define the default configuration for dual address memory-memory transfer.
-  * The 0x400 value represents auto-request, external->external.
-@@ -29,7 +41,7 @@ static unsigned long dma_find_base(unsigned int chan)
- 	unsigned long base = SH_DMAC_BASE0;
- 
- #ifdef SH_DMAC_BASE1
--	if (chan >= 6)
-+	if (chan >= SH_DMAC_NR_MD_CH)
- 		base = SH_DMAC_BASE1;
- #endif
- 
-@@ -40,13 +52,13 @@ static unsigned long dma_base_addr(unsigned int chan)
+diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
+index af39a2c4c2eee..e26ac3f42e05c 100644
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -1521,25 +1521,35 @@ static int omap8250_suspend(struct device *dev)
  {
- 	unsigned long base = dma_find_base(chan);
+ 	struct omap8250_priv *priv = dev_get_drvdata(dev);
+ 	struct uart_8250_port *up = serial8250_get_port(priv->line);
++	int err;
  
--	/* Normalize offset calculation */
--	if (chan >= 9)
--		chan -= 6;
--	if (chan >= 4)
--		base += 0x10;
-+	chan = (chan % SH_DMAC_NR_MD_CH) * SH_DMAC_CH_SZ;
+ 	serial8250_suspend_port(priv->line);
+ 
+-	pm_runtime_get_sync(dev);
++	err = pm_runtime_resume_and_get(dev);
++	if (err)
++		return err;
+ 	if (!device_may_wakeup(dev))
+ 		priv->wer = 0;
+ 	serial_out(up, UART_OMAP_WER, priv->wer);
+-	pm_runtime_mark_last_busy(dev);
+-	pm_runtime_put_autosuspend(dev);
+-
++	err = pm_runtime_force_suspend(dev);
+ 	flush_work(&priv->qos_work);
+-	return 0;
 +
-+	/* DMAOR is placed inside the channel register space. Step over it. */
-+	if (chan >= DMAOR)
-+		base += SH_DMAC_CH_SZ;
- 
--	return base + (chan * 0x10);
-+	return base + chan;
++	return err;
  }
  
- #ifdef CONFIG_SH_DMA_IRQ_MULTI
-@@ -250,12 +262,11 @@ static int sh_dmac_get_dma_residue(struct dma_channel *chan)
- #define NR_DMAOR	1
- #endif
- 
--/*
-- * DMAOR bases are broken out amongst channel groups. DMAOR0 manages
-- * channels 0 - 5, DMAOR1 6 - 11 (optional).
-- */
--#define dmaor_read_reg(n)		__raw_readw(dma_find_base((n)*6))
--#define dmaor_write_reg(n, data)	__raw_writew(data, dma_find_base(n)*6)
-+#define dmaor_read_reg(n)		__raw_readw(dma_find_base((n) * \
-+						    SH_DMAC_NR_MD_CH) + DMAOR)
-+#define dmaor_write_reg(n, data)	__raw_writew(data, \
-+						     dma_find_base((n) * \
-+						     SH_DMAC_NR_MD_CH) + DMAOR)
- 
- static inline int dmaor_reset(int no)
+ static int omap8250_resume(struct device *dev)
  {
+ 	struct omap8250_priv *priv = dev_get_drvdata(dev);
++	int err;
+ 
++	err = pm_runtime_force_resume(dev);
++	if (err)
++		return err;
+ 	serial8250_resume_port(priv->line);
++	/* Paired with pm_runtime_resume_and_get() in omap8250_suspend() */
++	pm_runtime_mark_last_busy(dev);
++	pm_runtime_put_autosuspend(dev);
++
+ 	return 0;
+ }
+ #else
 -- 
 2.39.2
 
