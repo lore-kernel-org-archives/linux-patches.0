@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D2D15AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:52:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9AF1C433C7;
-	Tue, 25 Jul 2023 10:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA7815ACF
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:52:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E161C433C9;
+	Tue, 25 Jul 2023 10:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282327;
-	bh=UGZNxAi0mkTEbho6xJzTAYFYpXuw3NADS3Ic0xURk0Y=;
+	s=korg; t=1690282329;
+	bh=RhaCunHARopufR5I3XXRldbzyzzXk7ELThH/jc++d8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qBkvs4itvpJLkO39dT82PVSq6u/+dXmoqQBfBmX93yALD7yeo0bYplPyhv/zn1vKb
-	 pT11pntjKsAp1QMP/89jgT9rFYKWVvBOVZrpUIC2pz5KLVv10HLtDTvimZWLPW0UaH
-	 kfUDOGnOleVWrfwKrsm5P6eHe5Xjjg8s7VRoSo00=
+	b=qxHfleki+g+WDNxB2n7GESmI6X+alKrdCUChe7703peVnzUQQITpncNWG8oMn7w0l
+	 7SoQrAtnQ2oDa4wId2PNYJOThoboTXnss5KmutXiPwM48vxcWp5Jot0dQ4w+VpKxnZ
+	 RUryNxK/30bK5OjcfKdU2KM4tyOHGsdgpuArGGXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 089/227] md/raid10: prevent soft lockup while flush writes
-Date: Tue, 25 Jul 2023 12:44:16 +0200
-Message-ID: <20230725104518.418646628@linuxfoundation.org>
+Subject: [PATCH 6.4 090/227] scsi: sg: fix blktrace debugfs entries leakage
+Date: Tue, 25 Jul 2023 12:44:17 +0200
+Message-ID: <20230725104518.459291050@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -37,75 +39,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 010444623e7f4da6b4a4dd603a7da7469981e293 ]
+[ Upstream commit db59133e927916d8a25ee1fd8264f2808040909d ]
 
-Currently, there is no limit for raid1/raid10 plugged bio. While flushing
-writes, raid1 has cond_resched() while raid10 doesn't, and too many
-writes can cause soft lockup.
+sg_ioctl() support to enable blktrace, which will create debugfs entries
+"/sys/kernel/debug/block/sgx/", however, there is no guarantee that user
+will remove these entries through ioctl, and deleting sg device doesn't
+cleanup these blktrace entries.
 
-Follow up soft lockup can be triggered easily with writeback test for
-raid10 with ramdisks:
+This problem can be fixed by cleanup blktrace while releasing
+request_queue, however, it's not a good idea to do this special handling
+in common layer just for sg device.
 
-watchdog: BUG: soft lockup - CPU#10 stuck for 27s! [md0_raid10:1293]
-Call Trace:
- <TASK>
- call_rcu+0x16/0x20
- put_object+0x41/0x80
- __delete_object+0x50/0x90
- delete_object_full+0x2b/0x40
- kmemleak_free+0x46/0xa0
- slab_free_freelist_hook.constprop.0+0xed/0x1a0
- kmem_cache_free+0xfd/0x300
- mempool_free_slab+0x1f/0x30
- mempool_free+0x3a/0x100
- bio_free+0x59/0x80
- bio_put+0xcf/0x2c0
- free_r10bio+0xbf/0xf0
- raid_end_bio_io+0x78/0xb0
- one_write_done+0x8a/0xa0
- raid10_end_write_request+0x1b4/0x430
- bio_endio+0x175/0x320
- brd_submit_bio+0x3b9/0x9b7 [brd]
- __submit_bio+0x69/0xe0
- submit_bio_noacct_nocheck+0x1e6/0x5a0
- submit_bio_noacct+0x38c/0x7e0
- flush_pending_writes+0xf0/0x240
- raid10d+0xac/0x1ed0
-
-Fix the problem by adding cond_resched() to raid10 like what raid1 did.
-
-Note that unlimited plugged bio still need to be optimized, for example,
-in the case of lots of dirty pages writeback, this will take lots of
-memory and io will spend a long time in plug, hence io latency is bad.
+Fix this problem by shutdown bltkrace in sg_device_destroy(), where the
+device is deleted and all the users close the device, also grab a
+scsi_device reference from sg_add_device() to prevent scsi_device to be
+freed before sg_device_destroy();
 
 Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230529131106.2123367-2-yukuai1@huaweicloud.com
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/r/20230610022003.2557284-3-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/sg.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 9d23963496194..ee75b058438f3 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -920,6 +920,7 @@ static void flush_pending_writes(struct r10conf *conf)
+diff --git a/drivers/scsi/sg.c b/drivers/scsi/sg.c
+index 037f8c98a6d36..0adfbd77437f3 100644
+--- a/drivers/scsi/sg.c
++++ b/drivers/scsi/sg.c
+@@ -1496,6 +1496,10 @@ sg_add_device(struct device *cl_dev)
+ 	int error;
+ 	unsigned long iflags;
  
- 			raid1_submit_write(bio);
- 			bio = next;
-+			cond_resched();
- 		}
- 		blk_finish_plug(&plug);
- 	} else
-@@ -1132,6 +1133,7 @@ static void raid10_unplug(struct blk_plug_cb *cb, bool from_schedule)
- 
- 		raid1_submit_write(bio);
- 		bio = next;
-+		cond_resched();
- 	}
- 	kfree(plug);
++	error = scsi_device_get(scsidp);
++	if (error)
++		return error;
++
+ 	error = -ENOMEM;
+ 	cdev = cdev_alloc();
+ 	if (!cdev) {
+@@ -1553,6 +1557,7 @@ sg_add_device(struct device *cl_dev)
+ out:
+ 	if (cdev)
+ 		cdev_del(cdev);
++	scsi_device_put(scsidp);
+ 	return error;
  }
+ 
+@@ -1560,6 +1565,7 @@ static void
+ sg_device_destroy(struct kref *kref)
+ {
+ 	struct sg_device *sdp = container_of(kref, struct sg_device, d_ref);
++	struct request_queue *q = sdp->device->request_queue;
+ 	unsigned long flags;
+ 
+ 	/* CAUTION!  Note that the device can still be found via idr_find()
+@@ -1567,6 +1573,9 @@ sg_device_destroy(struct kref *kref)
+ 	 * any other cleanup.
+ 	 */
+ 
++	blk_trace_remove(q);
++	scsi_device_put(sdp->device);
++
+ 	write_lock_irqsave(&sg_index_lock, flags);
+ 	idr_remove(&sg_index_idr, sdp->index);
+ 	write_unlock_irqrestore(&sg_index_lock, flags);
 -- 
 2.39.2
 
