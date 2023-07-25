@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0791ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:20:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3ABC433C9;
-	Tue, 25 Jul 2023 11:20:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3DB1D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:20:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D36C433C8;
+	Tue, 25 Jul 2023 11:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284041;
-	bh=ZVAjFBOIiZqTllOdsL2izGmL4Zv10JOIcoF7WTvg5tQ=;
+	s=korg; t=1690284043;
+	bh=n03bLKBEdMiJeVd7NezpiMWCsEREtBjupgDKFk/WdtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hBNZCnQuChYleXiTyFEvTUcMSRxFhEZcuP65UVvlskkcA7TOXk0HaEML0Mzzw9QxF
-	 PAO7t2b5I9hOv9oAKIfCEI66L+aHz7qcfAgGYygIFGlNP6ivFlRFodCOcSPSwaIjea
-	 nMdxx03f6uA8QNQfHpoylzZdBM78QPRucFcGmeQk=
+	b=p4h83NFJYlR+I9ootMS5W5NxMoN7y1MVA5Mq5yiMpNfNPNReQDBjFAPBNcSNrZiPW
+	 OylVVZwb2mH6Gxlpd/ADvmK+hVHvJeN8BlT1dCDFsQELvBKPf/pL84wco9qYbMCft5
+	 Y7rD4lfAxfO0oxatGNllIynf6ROlhYqj2R002N4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davide Tronchin <davide.tronchin.94@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 212/509] USB: serial: option: add LARA-R6 01B PIDs
-Date: Tue, 25 Jul 2023 12:42:31 +0200
-Message-ID: <20230725104603.436808818@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.10 213/509] usb: dwc3: gadget: Propagate core init errors to UDC during pullup
+Date: Tue, 25 Jul 2023 12:42:32 +0200
+Message-ID: <20230725104603.478257626@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -34,65 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Davide Tronchin <davide.tronchin.94@gmail.com>
+From: Krishna Kurapati <quic_kriskura@quicinc.com>
 
-commit ffa5f7a3bf28c1306eef85d4056539c2d4b8eb09 upstream.
+commit c0aabed9cabe057309779a9e26fe86a113d24dad upstream.
 
-The new LARA-R6 product variant identified by the "01B" string can be
-configured (by AT interface) in three different USB modes:
+In scenarios where pullup relies on resume (get sync) to initialize
+the controller and set the run stop bit, then core_init is followed by
+gadget_resume which will eventually set run stop bit.
 
-* Default mode (Vendor ID: 0x1546 Product ID: 0x1311) with 4 serial
-interfaces
+But in cases where the core_init fails, the return value is not sent
+back to udc appropriately. So according to UDC the controller has
+started but in reality we never set the run stop bit.
 
-* RmNet mode (Vendor ID: 0x1546 Product ID: 0x1312) with 4 serial
-interfaces and 1 RmNet virtual network interface
+On systems like Android, there are uevents sent to HAL depending on
+whether the configfs_bind / configfs_disconnect were invoked. In the
+above mentioned scnenario, if the core init fails, the run stop won't
+be set and the cable plug-out won't result in generation of any
+disconnect event and userspace would never get any uevent regarding
+cable plug out and we never call pullup(0) again. Furthermore none of
+the next Plug-In/Plug-Out's would be known to configfs.
 
-* CDC-ECM mode (Vendor ID: 0x1546 Product ID: 0x1313) with 4 serial
-interface and 1 CDC-ECM virtual network interface
-The first 4 interfaces of all the 3 USB configurations (default, RmNet,
-CDC-ECM) are the same.
+Return back the appropriate result to UDC to let the userspace/
+configfs know that the pullup failed so they can take appropriate
+action.
 
-In default mode LARA-R6 01B exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parser/alternative functions
-
-In RmNet mode LARA-R6 01B exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parser/alternative functions
-If 4: RMNET interface
-
-In CDC-ECM mode LARA-R6 01B exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parser/alternative functions
-If 4: CDC-ECM interface
-
-Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
-Link: https://lore.kernel.org/r/20230622092921.12651-1-davide.tronchin.94@gmail.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: 77adb8bdf422 ("usb: dwc3: gadget: Allow runtime suspend if UDC unbinded")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Message-ID: <20230618120949.14868-1-quic_kriskura@quicinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/dwc3/gadget.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1151,6 +1151,10 @@ static const struct usb_device_id option
- 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90fa),
- 	  .driver_info = RSVD(3) },
- 	/* u-blox products */
-+	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1311) },	/* u-blox LARA-R6 01B */
-+	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1312),		/* u-blox LARA-R6 01B (RMNET) */
-+	  .driver_info = RSVD(4) },
-+	{ USB_DEVICE_INTERFACE_CLASS(UBLOX_VENDOR_ID, 0x1313, 0xff) },	/* u-blox LARA-R6 01B (ECM) */
- 	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1341) },	/* u-blox LARA-L6 */
- 	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1342),		/* u-blox LARA-L6 (RMNET) */
- 	  .driver_info = RSVD(4) },
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -2215,7 +2215,9 @@ static int dwc3_gadget_pullup(struct usb
+ 	ret = pm_runtime_get_sync(dwc->dev);
+ 	if (!ret || ret < 0) {
+ 		pm_runtime_put(dwc->dev);
+-		return 0;
++		if (ret < 0)
++			pm_runtime_set_suspended(dwc->dev);
++		return ret;
+ 	}
+ 
+ 	if (dwc->pullups_connected == is_on) {
 
 
