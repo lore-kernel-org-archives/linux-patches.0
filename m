@@ -1,28 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B371ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:23:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83284C433C8;
-	Tue, 25 Jul 2023 11:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05451ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:23:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17116C433C8;
+	Tue, 25 Jul 2023 11:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284221;
-	bh=tHxni9n0cLMcOoix3ouaYoQBRCFMk1OnFWHpnWxe+Rk=;
+	s=korg; t=1690284224;
+	bh=G9qlrBcJbNn2G7LkTxQCo96rTqU9FkPoHv0glkbqNhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RTcZ9U2WaBKT82xhYpHjtS+IxcMS9Db/JTMcicwi75z5srwLf9xS9W691ddCpWlB2
-	 gUO+YOs1U9Tjzh6oi/+aizr8Qyyb5ZJl/BihWT4942MGIrIq2+e4VcW0gv8KFVnMDZ
-	 iR78dgOocg9RxtKVBPIU46e1dYxzahOiaQR6vqXk=
+	b=r93zsgasO5q+BNTYE6WCoh2fZ+XSQZez0wK1SZuLXIe5gFraKjbEjJjxAIHdwddZW
+	 8vJI8O+LCGkN77xzFO6pT6sQTo6uzSG/BQHtFVQsrGMtHw13Rc5a0VQ2CryV//48qG
+	 7JNBQj0To4fe6OEX1LP8enJqP+GA3Q1z/XC/8E5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Michal Simek <michal.simek@xilinx.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Kees Cook <keescook@chromium.org>,
+	"Luis R. Rodriguez" <mcgrof@ruslug.rutgers.edu>,
+	Scott Branden <sbranden@broadcom.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Brian Norris <briannorris@chromium.org>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 277/509] i2c: xiic: Defer xiic_wakeup() and __xiic_start_xfer() in xiic_process()
-Date: Tue, 25 Jul 2023 12:43:36 +0200
-Message-ID: <20230725104606.428066905@linuxfoundation.org>
+Subject: [PATCH 5.10 250/509] test_firmware: return ENOMEM instead of ENOSPC on failed memory allocation
+Date: Tue, 25 Jul 2023 12:43:09 +0200
+Message-ID: <20230725104605.183881078@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,109 +42,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 
-[ Upstream commit 743e227a895923c37a333eb2ebf3e391f00c406d ]
+[ Upstream commit 7dae593cd226a0bca61201cf85ceb9335cf63682 ]
 
-The __xiic_start_xfer() manipulates the interrupt flags, xiic_wakeup()
-may result in return from xiic_xfer() early. Defer both to the end of
-the xiic_process() interrupt thread, so that they are executed after
-all the other interrupt bits handling completed and once it completely
-safe to perform changes to the interrupt bits in the hardware.
+In a couple of situations like
 
-Signed-off-by: Marek Vasut <marex@denx.de>
-Acked-by: Michal Simek <michal.simek@xilinx.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Stable-dep-of: cb6e45c9a0ad ("i2c: xiic: Don't try to handle more interrupt events after error")
+	name = kstrndup(buf, count, GFP_KERNEL);
+	if (!name)
+		return -ENOSPC;
+
+the error is not actually "No space left on device", but "Out of memory".
+
+It is semantically correct to return -ENOMEM in all failed kstrndup()
+and kzalloc() cases in this driver, as it is not a problem with disk
+space, but with kernel memory allocator failing allocation.
+
+The semantically correct should be:
+
+        name = kstrndup(buf, count, GFP_KERNEL);
+        if (!name)
+                return -ENOMEM;
+
+Cc: Dan Carpenter <error27@gmail.com>
+Cc: Takashi Iwai <tiwai@suse.de>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: "Luis R. Rodriguez" <mcgrof@ruslug.rutgers.edu>
+Cc: Scott Branden <sbranden@broadcom.com>
+Cc: Hans de Goede <hdegoede@redhat.com>
+Cc: Brian Norris <briannorris@chromium.org>
+Fixes: c92316bf8e948 ("test_firmware: add batched firmware tests")
+Fixes: 0a8adf584759c ("test: add firmware_class loader test")
+Fixes: 548193cba2a7d ("test_firmware: add support for firmware_request_platform")
+Fixes: eb910947c82f9 ("test: firmware_class: add asynchronous request trigger")
+Fixes: 061132d2b9c95 ("test_firmware: add test custom fallback trigger")
+Fixes: 7feebfa487b92 ("test_firmware: add support for request_firmware_into_buf")
+Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Message-ID: <20230606070808.9300-1-mirsad.todorovac@alu.unizg.hr>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-xiic.c | 37 ++++++++++++++++++++++++-----------
- 1 file changed, 26 insertions(+), 11 deletions(-)
+ lib/test_firmware.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
-index 3b564e68130b5..8b93c22f3c400 100644
---- a/drivers/i2c/busses/i2c-xiic.c
-+++ b/drivers/i2c/busses/i2c-xiic.c
-@@ -375,6 +375,9 @@ static irqreturn_t xiic_process(int irq, void *dev_id)
- 	struct xiic_i2c *i2c = dev_id;
- 	u32 pend, isr, ier;
- 	u32 clr = 0;
-+	int xfer_more = 0;
-+	int wakeup_req = 0;
-+	int wakeup_code = 0;
- 
- 	/* Get the interrupt Status from the IPIF. There is no clearing of
- 	 * interrupts in the IPIF. Interrupts must be cleared at the source.
-@@ -411,10 +414,14 @@ static irqreturn_t xiic_process(int irq, void *dev_id)
- 		 */
- 		xiic_reinit(i2c);
- 
--		if (i2c->rx_msg)
--			xiic_wakeup(i2c, STATE_ERROR);
--		if (i2c->tx_msg)
--			xiic_wakeup(i2c, STATE_ERROR);
-+		if (i2c->rx_msg) {
-+			wakeup_req = 1;
-+			wakeup_code = STATE_ERROR;
-+		}
-+		if (i2c->tx_msg) {
-+			wakeup_req = 1;
-+			wakeup_code = STATE_ERROR;
-+		}
- 	}
- 	if (pend & XIIC_INTR_RX_FULL_MASK) {
- 		/* Receive register/FIFO is full */
-@@ -448,8 +455,7 @@ static irqreturn_t xiic_process(int irq, void *dev_id)
- 				i2c->tx_msg++;
- 				dev_dbg(i2c->adap.dev.parent,
- 					"%s will start next...\n", __func__);
--
--				__xiic_start_xfer(i2c);
-+				xfer_more = 1;
- 			}
- 		}
- 	}
-@@ -463,11 +469,13 @@ static irqreturn_t xiic_process(int irq, void *dev_id)
- 		if (!i2c->tx_msg)
- 			goto out;
- 
--		if ((i2c->nmsgs == 1) && !i2c->rx_msg &&
--			xiic_tx_space(i2c) == 0)
--			xiic_wakeup(i2c, STATE_DONE);
-+		wakeup_req = 1;
-+
-+		if (i2c->nmsgs == 1 && !i2c->rx_msg &&
-+		    xiic_tx_space(i2c) == 0)
-+			wakeup_code = STATE_DONE;
- 		else
--			xiic_wakeup(i2c, STATE_ERROR);
-+			wakeup_code = STATE_ERROR;
- 	}
- 	if (pend & (XIIC_INTR_TX_EMPTY_MASK | XIIC_INTR_TX_HALF_MASK)) {
- 		/* Transmit register/FIFO is empty or ½ empty */
-@@ -491,7 +499,7 @@ static irqreturn_t xiic_process(int irq, void *dev_id)
- 			if (i2c->nmsgs > 1) {
- 				i2c->nmsgs--;
- 				i2c->tx_msg++;
--				__xiic_start_xfer(i2c);
-+				xfer_more = 1;
- 			} else {
- 				xiic_irq_dis(i2c, XIIC_INTR_TX_HALF_MASK);
- 
-@@ -509,6 +517,13 @@ static irqreturn_t xiic_process(int irq, void *dev_id)
- 	dev_dbg(i2c->adap.dev.parent, "%s clr: 0x%x\n", __func__, clr);
- 
- 	xiic_setreg32(i2c, XIIC_IISR_OFFSET, clr);
-+	if (xfer_more)
-+		__xiic_start_xfer(i2c);
-+	if (wakeup_req)
-+		xiic_wakeup(i2c, wakeup_code);
-+
-+	WARN_ON(xfer_more && wakeup_req);
-+
- 	mutex_unlock(&i2c->lock);
- 	return IRQ_HANDLED;
+diff --git a/lib/test_firmware.c b/lib/test_firmware.c
+index ed0455a9ded87..25dc9eb6c902b 100644
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -183,7 +183,7 @@ static int __kstrncpy(char **dst, const char *name, size_t count, gfp_t gfp)
+ {
+ 	*dst = kstrndup(name, count, gfp);
+ 	if (!*dst)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 	return count;
  }
+ 
+@@ -606,7 +606,7 @@ static ssize_t trigger_request_store(struct device *dev,
+ 
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 
+ 	pr_info("loading '%s'\n", name);
+ 
+@@ -654,7 +654,7 @@ static ssize_t trigger_request_platform_store(struct device *dev,
+ 
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 
+ 	pr_info("inserting test platform fw '%s'\n", name);
+ 	efi_embedded_fw.name = name;
+@@ -707,7 +707,7 @@ static ssize_t trigger_async_request_store(struct device *dev,
+ 
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 
+ 	pr_info("loading '%s'\n", name);
+ 
+@@ -752,7 +752,7 @@ static ssize_t trigger_custom_fallback_store(struct device *dev,
+ 
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 
+ 	pr_info("loading '%s' using custom fallback mechanism\n", name);
+ 
+@@ -803,7 +803,7 @@ static int test_fw_run_batch_request(void *data)
+ 
+ 		test_buf = kzalloc(TEST_FIRMWARE_BUF_SIZE, GFP_KERNEL);
+ 		if (!test_buf)
+-			return -ENOSPC;
++			return -ENOMEM;
+ 
+ 		if (test_fw_config->partial)
+ 			req->rc = request_partial_firmware_into_buf
 -- 
 2.39.2
 
