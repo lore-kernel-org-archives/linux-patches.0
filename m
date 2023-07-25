@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F6D1D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:04:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6827AC433C7;
-	Tue, 25 Jul 2023 11:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F6C1D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:04:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29450C433C7;
+	Tue, 25 Jul 2023 11:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283088;
-	bh=L0wQ3DSFqrOYj94fjWj6PKzHw8pA5Xg63x+YvbaHYU0=;
+	s=korg; t=1690283091;
+	bh=yKDZSjGttAMGNcMkQMseXjFpn+bgnbDsLyx3kfhe30A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nueRnw26YmfKaI2d/+pSMWdTdH8OIiW04XoBqfs6i1uNyZZQZ3CVfPBGtZyfmIJu3
-	 1OWpqXDbI3iHWgJe51HUjKXJm721K2IKOh13pToaMtLDZ6SJbKVNiKUH258oe+t9rB
-	 JLwM2P7Rs2zEv5E/lOzutuJfJM++Z2mFNYkLWFiU=
+	b=vMsp1066pDJlKIdo/uO8ExDyB/+3fR1Q9Q4FvBCh2kATj8lpaf+h6nDvMJHRN0GyR
+	 btjzYO+/o3kMDMYF/3c8aRw4LRhnB8e8X8dzq8Kc/aXc1NWAInLcuf0s8nv4UOAsdD
+	 14m3ZRwsGDiZj+ClW3S6zQ01vAtT/jiR7KgW0gJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 135/183] tcp: annotate data-races around tcp_rsk(req)->txhash
-Date: Tue, 25 Jul 2023 12:46:03 +0200
-Message-ID: <20230725104512.791155706@linuxfoundation.org>
+Subject: [PATCH 6.1 136/183] tcp: annotate data-races around tcp_rsk(req)->ts_recent
+Date: Tue, 25 Jul 2023 12:46:04 +0200
+Message-ID: <20230725104512.821115628@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -39,166 +39,180 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 5e5265522a9a7f91d1b0bd411d634bdaf16c80cd ]
+[ Upstream commit eba20811f32652bc1a52d5e7cc403859b86390d9 ]
 
-TCP request sockets are lockless, some of their fields
+TCP request sockets are lockless, tcp_rsk(req)->ts_recent
 can change while being read by another cpu as syzbot noticed.
 
-This is usually harmless, but we should annotate the known
-races.
+This is harmless, but we should annotate the known races.
 
-This patch takes care of tcp_rsk(req)->txhash,
-a separate one is needed for tcp_rsk(req)->ts_recent.
+Note that tcp_check_req() changes req->ts_recent a bit early,
+we might change this in the future.
 
-BUG: KCSAN: data-race in tcp_make_synack / tcp_rtx_synack
+BUG: KCSAN: data-race in tcp_check_req / tcp_check_req
 
-write to 0xffff8881362304bc of 4 bytes by task 32083 on cpu 1:
-tcp_rtx_synack+0x9d/0x2a0 net/ipv4/tcp_output.c:4213
-inet_rtx_syn_ack+0x38/0x80 net/ipv4/inet_connection_sock.c:880
-tcp_check_req+0x379/0xc70 net/ipv4/tcp_minisocks.c:665
-tcp_v6_rcv+0x125b/0x1b20 net/ipv6/tcp_ipv6.c:1673
-ip6_protocol_deliver_rcu+0x92f/0xf30 net/ipv6/ip6_input.c:437
-ip6_input_finish net/ipv6/ip6_input.c:482 [inline]
+write to 0xffff88813c8afb84 of 4 bytes by interrupt on cpu 1:
+tcp_check_req+0x694/0xc70 net/ipv4/tcp_minisocks.c:762
+tcp_v4_rcv+0x12db/0x1b70 net/ipv4/tcp_ipv4.c:2071
+ip_protocol_deliver_rcu+0x356/0x6d0 net/ipv4/ip_input.c:205
+ip_local_deliver_finish+0x13c/0x1a0 net/ipv4/ip_input.c:233
 NF_HOOK include/linux/netfilter.h:303 [inline]
-ip6_input+0xbd/0x1b0 net/ipv6/ip6_input.c:491
+ip_local_deliver+0xec/0x1c0 net/ipv4/ip_input.c:254
 dst_input include/net/dst.h:468 [inline]
-ip6_rcv_finish+0x1e2/0x2e0 net/ipv6/ip6_input.c:79
+ip_rcv_finish net/ipv4/ip_input.c:449 [inline]
 NF_HOOK include/linux/netfilter.h:303 [inline]
-ipv6_rcv+0x74/0x150 net/ipv6/ip6_input.c:309
-__netif_receive_skb_one_core net/core/dev.c:5452 [inline]
-__netif_receive_skb+0x90/0x1b0 net/core/dev.c:5566
-netif_receive_skb_internal net/core/dev.c:5652 [inline]
-netif_receive_skb+0x4a/0x310 net/core/dev.c:5711
-tun_rx_batched+0x3bf/0x400
-tun_get_user+0x1d24/0x22b0 drivers/net/tun.c:1997
-tun_chr_write_iter+0x18e/0x240 drivers/net/tun.c:2043
-call_write_iter include/linux/fs.h:1871 [inline]
-new_sync_write fs/read_write.c:491 [inline]
-vfs_write+0x4ab/0x7d0 fs/read_write.c:584
-ksys_write+0xeb/0x1a0 fs/read_write.c:637
-__do_sys_write fs/read_write.c:649 [inline]
-__se_sys_write fs/read_write.c:646 [inline]
-__x64_sys_write+0x42/0x50 fs/read_write.c:646
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ip_rcv+0x197/0x270 net/ipv4/ip_input.c:569
+__netif_receive_skb_one_core net/core/dev.c:5493 [inline]
+__netif_receive_skb+0x90/0x1b0 net/core/dev.c:5607
+process_backlog+0x21f/0x380 net/core/dev.c:5935
+__napi_poll+0x60/0x3b0 net/core/dev.c:6498
+napi_poll net/core/dev.c:6565 [inline]
+net_rx_action+0x32b/0x750 net/core/dev.c:6698
+__do_softirq+0xc1/0x265 kernel/softirq.c:571
+do_softirq+0x7e/0xb0 kernel/softirq.c:472
+__local_bh_enable_ip+0x64/0x70 kernel/softirq.c:396
+local_bh_enable+0x1f/0x20 include/linux/bottom_half.h:33
+rcu_read_unlock_bh include/linux/rcupdate.h:843 [inline]
+__dev_queue_xmit+0xabb/0x1d10 net/core/dev.c:4271
+dev_queue_xmit include/linux/netdevice.h:3088 [inline]
+neigh_hh_output include/net/neighbour.h:528 [inline]
+neigh_output include/net/neighbour.h:542 [inline]
+ip_finish_output2+0x700/0x840 net/ipv4/ip_output.c:229
+ip_finish_output+0xf4/0x240 net/ipv4/ip_output.c:317
+NF_HOOK_COND include/linux/netfilter.h:292 [inline]
+ip_output+0xe5/0x1b0 net/ipv4/ip_output.c:431
+dst_output include/net/dst.h:458 [inline]
+ip_local_out net/ipv4/ip_output.c:126 [inline]
+__ip_queue_xmit+0xa4d/0xa70 net/ipv4/ip_output.c:533
+ip_queue_xmit+0x38/0x40 net/ipv4/ip_output.c:547
+__tcp_transmit_skb+0x1194/0x16e0 net/ipv4/tcp_output.c:1399
+tcp_transmit_skb net/ipv4/tcp_output.c:1417 [inline]
+tcp_write_xmit+0x13ff/0x2fd0 net/ipv4/tcp_output.c:2693
+__tcp_push_pending_frames+0x6a/0x1a0 net/ipv4/tcp_output.c:2877
+tcp_push_pending_frames include/net/tcp.h:1952 [inline]
+__tcp_sock_set_cork net/ipv4/tcp.c:3336 [inline]
+tcp_sock_set_cork+0xe8/0x100 net/ipv4/tcp.c:3343
+rds_tcp_xmit_path_complete+0x3b/0x40 net/rds/tcp_send.c:52
+rds_send_xmit+0xf8d/0x1420 net/rds/send.c:422
+rds_send_worker+0x42/0x1d0 net/rds/threads.c:200
+process_one_work+0x3e6/0x750 kernel/workqueue.c:2408
+worker_thread+0x5f2/0xa10 kernel/workqueue.c:2555
+kthread+0x1d7/0x210 kernel/kthread.c:379
+ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
 
-read to 0xffff8881362304bc of 4 bytes by task 32078 on cpu 0:
-tcp_make_synack+0x367/0xb40 net/ipv4/tcp_output.c:3663
-tcp_v6_send_synack+0x72/0x420 net/ipv6/tcp_ipv6.c:544
-tcp_conn_request+0x11a8/0x1560 net/ipv4/tcp_input.c:7059
-tcp_v6_conn_request+0x13f/0x180 net/ipv6/tcp_ipv6.c:1175
-tcp_rcv_state_process+0x156/0x1de0 net/ipv4/tcp_input.c:6494
-tcp_v6_do_rcv+0x98a/0xb70 net/ipv6/tcp_ipv6.c:1509
-tcp_v6_rcv+0x17b8/0x1b20 net/ipv6/tcp_ipv6.c:1735
-ip6_protocol_deliver_rcu+0x92f/0xf30 net/ipv6/ip6_input.c:437
-ip6_input_finish net/ipv6/ip6_input.c:482 [inline]
+read to 0xffff88813c8afb84 of 4 bytes by interrupt on cpu 0:
+tcp_check_req+0x32a/0xc70 net/ipv4/tcp_minisocks.c:622
+tcp_v4_rcv+0x12db/0x1b70 net/ipv4/tcp_ipv4.c:2071
+ip_protocol_deliver_rcu+0x356/0x6d0 net/ipv4/ip_input.c:205
+ip_local_deliver_finish+0x13c/0x1a0 net/ipv4/ip_input.c:233
 NF_HOOK include/linux/netfilter.h:303 [inline]
-ip6_input+0xbd/0x1b0 net/ipv6/ip6_input.c:491
+ip_local_deliver+0xec/0x1c0 net/ipv4/ip_input.c:254
 dst_input include/net/dst.h:468 [inline]
-ip6_rcv_finish+0x1e2/0x2e0 net/ipv6/ip6_input.c:79
+ip_rcv_finish net/ipv4/ip_input.c:449 [inline]
 NF_HOOK include/linux/netfilter.h:303 [inline]
-ipv6_rcv+0x74/0x150 net/ipv6/ip6_input.c:309
-__netif_receive_skb_one_core net/core/dev.c:5452 [inline]
-__netif_receive_skb+0x90/0x1b0 net/core/dev.c:5566
-netif_receive_skb_internal net/core/dev.c:5652 [inline]
-netif_receive_skb+0x4a/0x310 net/core/dev.c:5711
-tun_rx_batched+0x3bf/0x400
-tun_get_user+0x1d24/0x22b0 drivers/net/tun.c:1997
-tun_chr_write_iter+0x18e/0x240 drivers/net/tun.c:2043
-call_write_iter include/linux/fs.h:1871 [inline]
-new_sync_write fs/read_write.c:491 [inline]
-vfs_write+0x4ab/0x7d0 fs/read_write.c:584
-ksys_write+0xeb/0x1a0 fs/read_write.c:637
-__do_sys_write fs/read_write.c:649 [inline]
-__se_sys_write fs/read_write.c:646 [inline]
-__x64_sys_write+0x42/0x50 fs/read_write.c:646
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ip_rcv+0x197/0x270 net/ipv4/ip_input.c:569
+__netif_receive_skb_one_core net/core/dev.c:5493 [inline]
+__netif_receive_skb+0x90/0x1b0 net/core/dev.c:5607
+process_backlog+0x21f/0x380 net/core/dev.c:5935
+__napi_poll+0x60/0x3b0 net/core/dev.c:6498
+napi_poll net/core/dev.c:6565 [inline]
+net_rx_action+0x32b/0x750 net/core/dev.c:6698
+__do_softirq+0xc1/0x265 kernel/softirq.c:571
+run_ksoftirqd+0x17/0x20 kernel/softirq.c:939
+smpboot_thread_fn+0x30a/0x4a0 kernel/smpboot.c:164
+kthread+0x1d7/0x210 kernel/kthread.c:379
+ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
 
-value changed: 0x91d25731 -> 0xe79325cd
+value changed: 0x1cd237f1 -> 0x1cd237f2
 
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 32078 Comm: syz-executor.4 Not tainted 6.5.0-rc1-syzkaller-00033-geb26cbb1a754 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/03/2023
-
-Fixes: 58d607d3e52f ("tcp: provide skb->hash to synack packets")
+Fixes: 079096f103fa ("tcp/dccp: install syn_recv requests into ehash table")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reported-by: syzbot <syzkaller@googlegroups.com>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230717144445.653164-2-edumazet@google.com
+Link: https://lore.kernel.org/r/20230717144445.653164-3-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c      | 3 ++-
- net/ipv4/tcp_minisocks.c | 2 +-
- net/ipv4/tcp_output.c    | 4 ++--
+ net/ipv4/tcp_ipv4.c      | 2 +-
+ net/ipv4/tcp_minisocks.c | 9 ++++++---
+ net/ipv4/tcp_output.c    | 2 +-
  net/ipv6/tcp_ipv6.c      | 2 +-
- 4 files changed, 6 insertions(+), 5 deletions(-)
+ 4 files changed, 9 insertions(+), 6 deletions(-)
 
 diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index ef740983a1222..e5df50b3e23a0 100644
+index e5df50b3e23a0..d49a66b271d52 100644
 --- a/net/ipv4/tcp_ipv4.c
 +++ b/net/ipv4/tcp_ipv4.c
-@@ -992,7 +992,8 @@ static void tcp_v4_reqsk_send_ack(const struct sock *sk, struct sk_buff *skb,
+@@ -988,7 +988,7 @@ static void tcp_v4_reqsk_send_ack(const struct sock *sk, struct sk_buff *skb,
+ 			tcp_rsk(req)->rcv_nxt,
+ 			req->rsk_rcv_wnd >> inet_rsk(req)->rcv_wscale,
+ 			tcp_time_stamp_raw() + tcp_rsk(req)->ts_off,
+-			req->ts_recent,
++			READ_ONCE(req->ts_recent),
  			0,
  			tcp_md5_do_lookup(sk, l3index, addr, AF_INET),
  			inet_rsk(req)->no_srccheck ? IP_REPLY_ARG_NOSRCCHECK : 0,
--			ip_hdr(skb)->tos, tcp_rsk(req)->txhash);
-+			ip_hdr(skb)->tos,
-+			READ_ONCE(tcp_rsk(req)->txhash));
- }
- 
- /*
 diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
-index 7f37e7da64671..f281eab7fd125 100644
+index f281eab7fd125..42844d20da020 100644
 --- a/net/ipv4/tcp_minisocks.c
 +++ b/net/ipv4/tcp_minisocks.c
-@@ -510,7 +510,7 @@ struct sock *tcp_create_openreq_child(const struct sock *sk,
- 	newicsk->icsk_ack.lrcvtime = tcp_jiffies32;
+@@ -537,7 +537,7 @@ struct sock *tcp_create_openreq_child(const struct sock *sk,
+ 	newtp->max_window = newtp->snd_wnd;
  
- 	newtp->lsndtime = tcp_jiffies32;
--	newsk->sk_txhash = treq->txhash;
-+	newsk->sk_txhash = READ_ONCE(treq->txhash);
- 	newtp->total_retrans = req->num_retrans;
+ 	if (newtp->rx_opt.tstamp_ok) {
+-		newtp->rx_opt.ts_recent = req->ts_recent;
++		newtp->rx_opt.ts_recent = READ_ONCE(req->ts_recent);
+ 		newtp->rx_opt.ts_recent_stamp = ktime_get_seconds();
+ 		newtp->tcp_header_len = sizeof(struct tcphdr) + TCPOLEN_TSTAMP_ALIGNED;
+ 	} else {
+@@ -601,7 +601,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+ 		tcp_parse_options(sock_net(sk), skb, &tmp_opt, 0, NULL);
  
- 	tcp_init_xmit_timers(newsk);
+ 		if (tmp_opt.saw_tstamp) {
+-			tmp_opt.ts_recent = req->ts_recent;
++			tmp_opt.ts_recent = READ_ONCE(req->ts_recent);
+ 			if (tmp_opt.rcv_tsecr)
+ 				tmp_opt.rcv_tsecr -= tcp_rsk(req)->ts_off;
+ 			/* We do not store true stamp, but it is not required,
+@@ -740,8 +740,11 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+ 
+ 	/* In sequence, PAWS is OK. */
+ 
++	/* TODO: We probably should defer ts_recent change once
++	 * we take ownership of @req.
++	 */
+ 	if (tmp_opt.saw_tstamp && !after(TCP_SKB_CB(skb)->seq, tcp_rsk(req)->rcv_nxt))
+-		req->ts_recent = tmp_opt.rcv_tsval;
++		WRITE_ONCE(req->ts_recent, tmp_opt.rcv_tsval);
+ 
+ 	if (TCP_SKB_CB(skb)->seq == tcp_rsk(req)->rcv_isn) {
+ 		/* Truncate SYN, it is out of window starting
 diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 925594dbeb929..693a29d3f43bd 100644
+index 693a29d3f43bd..26bd039f9296f 100644
 --- a/net/ipv4/tcp_output.c
 +++ b/net/ipv4/tcp_output.c
-@@ -3581,7 +3581,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
- 	rcu_read_lock();
- 	md5 = tcp_rsk(req)->af_specific->req_md5_lookup(sk, req_to_sk(req));
- #endif
--	skb_set_hash(skb, tcp_rsk(req)->txhash, PKT_HASH_TYPE_L4);
-+	skb_set_hash(skb, READ_ONCE(tcp_rsk(req)->txhash), PKT_HASH_TYPE_L4);
- 	/* bpf program will be interested in the tcp_flags */
- 	TCP_SKB_CB(skb)->tcp_flags = TCPHDR_SYN | TCPHDR_ACK;
- 	tcp_header_size = tcp_synack_options(sk, req, mss, skb, &opts, md5,
-@@ -4124,7 +4124,7 @@ int tcp_rtx_synack(const struct sock *sk, struct request_sock *req)
- 
- 	/* Paired with WRITE_ONCE() in sock_setsockopt() */
- 	if (READ_ONCE(sk->sk_txrehash) == SOCK_TXREHASH_ENABLED)
--		tcp_rsk(req)->txhash = net_tx_rndhash();
-+		WRITE_ONCE(tcp_rsk(req)->txhash, net_tx_rndhash());
- 	res = af_ops->send_synack(sk, NULL, &fl, req, NULL, TCP_SYNACK_NORMAL,
- 				  NULL);
- 	if (!res) {
+@@ -876,7 +876,7 @@ static unsigned int tcp_synack_options(const struct sock *sk,
+ 	if (likely(ireq->tstamp_ok)) {
+ 		opts->options |= OPTION_TS;
+ 		opts->tsval = tcp_skb_timestamp(skb) + tcp_rsk(req)->ts_off;
+-		opts->tsecr = req->ts_recent;
++		opts->tsecr = READ_ONCE(req->ts_recent);
+ 		remaining -= TCPOLEN_TSTAMP_ALIGNED;
+ 	}
+ 	if (likely(ireq->sack_ok)) {
 diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index 8d61efeab9c99..0dcb06a1fe044 100644
+index 0dcb06a1fe044..d9253aa764fae 100644
 --- a/net/ipv6/tcp_ipv6.c
 +++ b/net/ipv6/tcp_ipv6.c
-@@ -1133,7 +1133,7 @@ static void tcp_v6_reqsk_send_ack(const struct sock *sk, struct sk_buff *skb,
- 			req->ts_recent, sk->sk_bound_dev_if,
+@@ -1130,7 +1130,7 @@ static void tcp_v6_reqsk_send_ack(const struct sock *sk, struct sk_buff *skb,
+ 			tcp_rsk(req)->rcv_nxt,
+ 			req->rsk_rcv_wnd >> inet_rsk(req)->rcv_wscale,
+ 			tcp_time_stamp_raw() + tcp_rsk(req)->ts_off,
+-			req->ts_recent, sk->sk_bound_dev_if,
++			READ_ONCE(req->ts_recent), sk->sk_bound_dev_if,
  			tcp_v6_md5_do_lookup(sk, &ipv6_hdr(skb)->saddr, l3index),
  			ipv6_get_dsfield(ipv6_hdr(skb)), 0, sk->sk_priority,
--			tcp_rsk(req)->txhash);
-+			READ_ONCE(tcp_rsk(req)->txhash));
- }
- 
- 
+ 			READ_ONCE(tcp_rsk(req)->txhash));
 -- 
 2.39.2
 
