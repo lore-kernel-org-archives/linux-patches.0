@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D65D1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:22:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135ABC433C8;
-	Tue, 25 Jul 2023 11:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6050C1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:22:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73CEC433C7;
+	Tue, 25 Jul 2023 11:22:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284154;
-	bh=+yRqOGx+1ShMjJWNWhZw24bxhZTcXzKn+wHD2XmyRW8=;
+	s=korg; t=1690284157;
+	bh=ZYrG+cBJKda1IWaTWfYhAUhzyGMyNfFgMEdE5bGI8i0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eqGP1TTPG5DmmMq8ZKFwZGeGRv+GJd1BKC/1Sww/utZpGe5x+bTdADJqeEYdypmqO
-	 3CAOylA5HhHQNPp8irlpVZ15mvcuFPNq/PaoHTBIyBwRj1Kgp6LN4DJAwmqbMwWpN1
-	 r5joJh6EIqJsoxvKtiR2Uaq2VwF7y9mRLqBWtZTs=
+	b=Oo2ihcUxjZ1OlmIptiMn2/LapE6+b3ixyEq/PjgaAh3RgDNDd9HRkBppzccQT7HCN
+	 1t+cekNAlfwzrjjD+T2hSzSWptGxOp5WyMKzykYU2ZnQ+2DPKwRWMEFnWHybqOYVti
+	 +wDID6raXYjWtjNaeZzCPHYmPTRssvcXQdAstd8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Lee Jones <lee@kernel.org>,
+	Fancy Fang <chen.fang@nxp.com>,
+	Clark Wang <xiaoning.wang@nxp.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 247/509] mfd: intel-lpss: Add missing check for platform_get_resource
-Date: Tue, 25 Jul 2023 12:43:06 +0200
-Message-ID: <20230725104605.058582140@linuxfoundation.org>
+Subject: [PATCH 5.10 256/509] pwm: imx-tpm: force real_period to be zero in suspend
+Date: Tue, 25 Jul 2023 12:43:15 +0200
+Message-ID: <20230725104605.466775429@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,36 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Fancy Fang <chen.fang@nxp.com>
 
-[ Upstream commit d918e0d5824495a75d00b879118b098fcab36fdb ]
+[ Upstream commit 661dfb7f46298e53f6c3deaa772fa527aae86193 ]
 
-Add the missing check for platform_get_resource and return error
-if it fails.
+During suspend, all the tpm registers will lose values.
+So the 'real_period' value of struct 'imx_tpm_pwm_chip'
+should be forced to be zero to force the period update
+code can be executed after system resume back.
 
-Fixes: 4b45efe85263 ("mfd: Add support for Intel Sunrisepoint LPSS devices")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20230609014818.28475-1-jiasheng@iscas.ac.cn
+Signed-off-by: Fancy Fang <chen.fang@nxp.com>
+Signed-off-by: Clark Wang <xiaoning.wang@nxp.com>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Fixes: 738a1cfec2ed ("pwm: Add i.MX TPM PWM driver support")
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/intel-lpss-acpi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pwm/pwm-imx-tpm.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/mfd/intel-lpss-acpi.c b/drivers/mfd/intel-lpss-acpi.c
-index 045cbf0cbe53a..993e305a232c5 100644
---- a/drivers/mfd/intel-lpss-acpi.c
-+++ b/drivers/mfd/intel-lpss-acpi.c
-@@ -114,6 +114,9 @@ static int intel_lpss_acpi_probe(struct platform_device *pdev)
- 		return -ENOMEM;
+diff --git a/drivers/pwm/pwm-imx-tpm.c b/drivers/pwm/pwm-imx-tpm.c
+index fcdf6befb8389..871527b78aa46 100644
+--- a/drivers/pwm/pwm-imx-tpm.c
++++ b/drivers/pwm/pwm-imx-tpm.c
+@@ -403,6 +403,13 @@ static int __maybe_unused pwm_imx_tpm_suspend(struct device *dev)
+ 	if (tpm->enable_count > 0)
+ 		return -EBUSY;
  
- 	info->mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+	if (!info->mem)
-+		return -ENODEV;
++	/*
++	 * Force 'real_period' to be zero to force period update code
++	 * can be executed after system resume back, since suspend causes
++	 * the period related registers to become their reset values.
++	 */
++	tpm->real_period = 0;
 +
- 	info->irq = platform_get_irq(pdev, 0);
+ 	clk_disable_unprepare(tpm->clk);
  
- 	ret = intel_lpss_probe(&pdev->dev, info);
+ 	return 0;
 -- 
 2.39.2
 
