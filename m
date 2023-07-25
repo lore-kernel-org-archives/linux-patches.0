@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92A015AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:59:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21EC0C433C7;
-	Tue, 25 Jul 2023 10:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944FE15AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:59:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174C9C433C8;
+	Tue, 25 Jul 2023 10:59:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282784;
-	bh=mcphBhLLIf1cioV4bNCf0dtTj6ptqrqod4gTHb69Px8=;
+	s=korg; t=1690282787;
+	bh=fBwH6do8fLXuBrWtFFFz+C2h8zLxgC0R4Fmj5/GQkjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UUou0x0avCzX2qKLlnQfe+GnQT3rXpZo3tLFlFjSF68zcmTP4zAHT/9btO8hVgcNT
-	 MGANOcOICj3oj2ijH1ChDndGVsmy6VNdLJ5fctiPtG2zLkbXlOW91xIPBFLC23+0Um
-	 +v89fdIvoZJs1txgVwbWLsUr2b806L7I80P3jxug=
+	b=o45GTKZkCUbdoRoK8PCkQurIly8z9wvNrMScsadJH/B+SqHlyitUp4gafwE+wra2H
+	 YHzuy0fPh7SllD572de7IVsFpRo4CbcyctxVW55cqncjsFc6sdWGF3uq8w/YmF/Krp
+	 ndFOpyzHrGOSrEFlakJTG0RoGd0GowMV3yjhN+zY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 025/183] selftests: tc: add ConnTrack procfs kconfig
-Date: Tue, 25 Jul 2023 12:44:13 +0200
-Message-ID: <20230725104508.797153445@linuxfoundation.org>
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	linux-media@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	linaro-mm-sig@lists.linaro.org,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>
+Subject: [PATCH 6.1 026/183] dma-buf/dma-resv: Stop leaking on krealloc() failure
+Date: Tue, 25 Jul 2023 12:44:14 +0200
+Message-ID: <20230725104508.847407285@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -36,42 +38,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 031c99e71fedcce93b6785d38b7d287bf59e3952 upstream.
+commit 05abb3be91d8788328231ee02973ab3d47f5e3d2 upstream.
 
-When looking at the TC selftest reports, I noticed one test was failing
-because /proc/net/nf_conntrack was not available.
+Currently dma_resv_get_fences() will leak the previously
+allocated array if the fence iteration got restarted and
+the krealloc_array() fails.
 
-  not ok 373 3992 - Add ct action triggering DNAT tuple conflict
-  	Could not match regex pattern. Verify command output:
-  cat: /proc/net/nf_conntrack: No such file or directory
+Free the old array by hand, and make sure we still clear
+the returned *fences so the caller won't end up accessing
+freed memory. Some (but not all) of the callers of
+dma_resv_get_fences() seem to still trawl through the
+array even when dma_resv_get_fences() failed. And let's
+zero out *num_fences as well for good measure.
 
-It is only available if NF_CONNTRACK_PROCFS kconfig is set. So the issue
-can be fixed simply by adding it to the list of required kconfig.
-
-Fixes: e46905641316 ("tc-testing: add test for ct DNAT tuple collision")
+Cc: Sumit Semwal <sumit.semwal@linaro.org>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: linux-media@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: linaro-mm-sig@lists.linaro.org
+Fixes: d3c80698c9f5 ("dma-buf: use new iterator in dma_resv_get_fences v3")
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/netdev/0e061d4a-9a23-9f58-3b35-d8919de332d7@tessares.net/T/ [1]
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Tested-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://lore.kernel.org/r/20230713-tc-selftests-lkft-v1-3-1eb4fd3a96e7@tessares.net
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230713194745.1751-1-ville.syrjala@linux.intel.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/tc-testing/config |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma-buf/dma-resv.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/tools/testing/selftests/tc-testing/config
-+++ b/tools/testing/selftests/tc-testing/config
-@@ -5,6 +5,7 @@ CONFIG_NF_CONNTRACK=m
- CONFIG_NF_CONNTRACK_MARK=y
- CONFIG_NF_CONNTRACK_ZONES=y
- CONFIG_NF_CONNTRACK_LABELS=y
-+CONFIG_NF_CONNTRACK_PROCFS=y
- CONFIG_NF_FLOW_TABLE=m
- CONFIG_NF_NAT=m
- CONFIG_NETFILTER_XT_TARGET_LOG=m
+--- a/drivers/dma-buf/dma-resv.c
++++ b/drivers/dma-buf/dma-resv.c
+@@ -566,6 +566,7 @@ int dma_resv_get_fences(struct dma_resv
+ 	dma_resv_for_each_fence_unlocked(&cursor, fence) {
+ 
+ 		if (dma_resv_iter_is_restarted(&cursor)) {
++			struct dma_fence **new_fences;
+ 			unsigned int count;
+ 
+ 			while (*num_fences)
+@@ -574,13 +575,17 @@ int dma_resv_get_fences(struct dma_resv
+ 			count = cursor.num_fences + 1;
+ 
+ 			/* Eventually re-allocate the array */
+-			*fences = krealloc_array(*fences, count,
+-						 sizeof(void *),
+-						 GFP_KERNEL);
+-			if (count && !*fences) {
++			new_fences = krealloc_array(*fences, count,
++						    sizeof(void *),
++						    GFP_KERNEL);
++			if (count && !new_fences) {
++				kfree(*fences);
++				*fences = NULL;
++				*num_fences = 0;
+ 				dma_resv_iter_end(&cursor);
+ 				return -ENOMEM;
+ 			}
++			*fences = new_fences;
+ 		}
+ 
+ 		(*fences)[(*num_fences)++] = dma_fence_get(fence);
 
 
