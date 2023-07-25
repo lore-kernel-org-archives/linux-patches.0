@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B68115AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:51:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81708C433C8;
-	Tue, 25 Jul 2023 10:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC8A715AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:51:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FDC6C433C8;
+	Tue, 25 Jul 2023 10:51:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282279;
-	bh=Puo2ywKsycAM5/PzEZl0qDeS+SlrJvR0ktGgJk+DU6A=;
+	s=korg; t=1690282282;
+	bh=+n7jWtt/AVrnnEbxRs+BVIcSLiwrPBysIFOlnGrvpWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P2zWVPtetu4XpfMQZqoRis1gI25SjtLjSaCAJTqa8t00inBt4okFOXsTXnJQfaEtl
-	 eHi06bqXuFOHykxXnVLJ4ljv00xyfkxbJm0x1BvUiY2cXp9RdWwfR6+NxJkJHTOY0u
-	 M3t2UYzkb0fhSOq5XMFANhw9dOhj0fWrR26McFnE=
+	b=u1DXcMZEq7RjpLlaSSlYqQXXqRp6UD95ve0UK3dMc3ypDL4o3HEPnCYHRZ/mpmXhz
+	 nhUmsH+7JgFwcod3pK9pw15FCCe9Q6FNCUVSg9053GkC2Eg41RXv+XJe44/TRsNEow
+	 PSQxpeG0HZn8w4iaE9wERjz2POm9+F8B+3SC+CAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kristina Martsenko <kristina.martsenko@arm.com>,
+	Xiang Chen <chenxiang66@hisilicon.com>,
+	Zenghui Yu <yuzenghui@huawei.com>,
 	Marc Zyngier <maz@kernel.org>,
 	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.4 073/227] KVM: arm64: Disable preemption in kvm_arch_hardware_enable()
-Date: Tue, 25 Jul 2023 12:44:00 +0200
-Message-ID: <20230725104517.784687016@linuxfoundation.org>
+Subject: [PATCH 6.4 074/227] KVM: arm64: vgic-v4: Make the doorbell request robust w.r.t preemption
+Date: Tue, 25 Jul 2023 12:44:01 +0200
+Message-ID: <20230725104517.826790437@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -37,64 +38,132 @@ Content-Transfer-Encoding: 8bit
 
 From: Marc Zyngier <maz@kernel.org>
 
-commit 970dee09b230895fe2230d2b32ad05a2826818c6 upstream.
+commit b321c31c9b7b309dcde5e8854b741c8e6a9a05f0 upstream.
 
-Since 0bf50497f03b ("KVM: Drop kvm_count_lock and instead protect
-kvm_usage_count with kvm_lock"), hotplugging back a CPU whilst
-a guest is running results in a number of ugly splats as most
-of this code expects to run with preemption disabled, which isn't
-the case anymore.
+Xiang reports that VMs occasionally fail to boot on GICv4.1 systems when
+running a preemptible kernel, as it is possible that a vCPU is blocked
+without requesting a doorbell interrupt.
 
-While the context is preemptable, it isn't migratable, which should
-be enough. But we have plenty of preemptible() checks all over
-the place, and our per-CPU accessors also disable preemption.
+The issue is that any preemption that occurs between vgic_v4_put() and
+schedule() on the block path will mark the vPE as nonresident and *not*
+request a doorbell irq. This occurs because when the vcpu thread is
+resumed on its way to block, vcpu_load() will make the vPE resident
+again. Once the vcpu actually blocks, we don't request a doorbell
+anymore, and the vcpu won't be woken up on interrupt delivery.
 
-Since this affects released versions, let's do the easy fix first,
-disabling preemption in kvm_arch_hardware_enable(). We can always
-revisit this with a more invasive fix in the future.
+Fix it by tracking that we're entering WFI, and key the doorbell
+request on that flag. This allows us not to make the vPE resident
+when going through a preempt/schedule cycle, meaning we don't lose
+any state.
 
-Fixes: 0bf50497f03b ("KVM: Drop kvm_count_lock and instead protect kvm_usage_count with kvm_lock")
-Reported-by: Kristina Martsenko <kristina.martsenko@arm.com>
-Tested-by: Kristina Martsenko <kristina.martsenko@arm.com>
+Cc: stable@vger.kernel.org
+Fixes: 8e01d9a396e6 ("KVM: arm64: vgic-v4: Move the GICv4 residency flow to be driven by vcpu_load/put")
+Reported-by: Xiang Chen <chenxiang66@hisilicon.com>
+Suggested-by: Zenghui Yu <yuzenghui@huawei.com>
+Tested-by: Xiang Chen <chenxiang66@hisilicon.com>
+Co-developed-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/aeab7562-2d39-e78e-93b1-4711f8cc3fa5@arm.com
-Cc: stable@vger.kernel.org # v6.3, v6.4
-Link: https://lore.kernel.org/r/20230703163548.1498943-1-maz@kernel.org
+Acked-by: Zenghui Yu <yuzenghui@huawei.com>
+Link: https://lore.kernel.org/r/20230713070657.3873244-1-maz@kernel.org
 Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/arm.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/kvm_host.h |    2 ++
+ arch/arm64/kvm/arm.c              |    6 ++++--
+ arch/arm64/kvm/vgic/vgic-v3.c     |    2 +-
+ arch/arm64/kvm/vgic/vgic-v4.c     |    7 +++++--
+ include/kvm/arm_vgic.h            |    2 +-
+ 5 files changed, 13 insertions(+), 6 deletions(-)
 
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -701,6 +701,8 @@ struct kvm_vcpu_arch {
+ #define DBG_SS_ACTIVE_PENDING	__vcpu_single_flag(sflags, BIT(5))
+ /* PMUSERENR for the guest EL0 is on physical CPU */
+ #define PMUSERENR_ON_CPU	__vcpu_single_flag(sflags, BIT(6))
++/* WFI instruction trapped */
++#define IN_WFI			__vcpu_single_flag(sflags, BIT(7))
+ 
+ 
+ /* Pointer to the vcpu's SVE FFR for sve_{save,load}_state() */
 --- a/arch/arm64/kvm/arm.c
 +++ b/arch/arm64/kvm/arm.c
-@@ -1793,8 +1793,17 @@ static void _kvm_arch_hardware_enable(vo
+@@ -704,13 +704,15 @@ void kvm_vcpu_wfi(struct kvm_vcpu *vcpu)
+ 	 */
+ 	preempt_disable();
+ 	kvm_vgic_vmcr_sync(vcpu);
+-	vgic_v4_put(vcpu, true);
++	vcpu_set_flag(vcpu, IN_WFI);
++	vgic_v4_put(vcpu);
+ 	preempt_enable();
  
- int kvm_arch_hardware_enable(void)
+ 	kvm_vcpu_halt(vcpu);
+ 	vcpu_clear_flag(vcpu, IN_WFIT);
+ 
+ 	preempt_disable();
++	vcpu_clear_flag(vcpu, IN_WFI);
+ 	vgic_v4_load(vcpu);
+ 	preempt_enable();
+ }
+@@ -778,7 +780,7 @@ static int check_vcpu_requests(struct kv
+ 		if (kvm_check_request(KVM_REQ_RELOAD_GICv4, vcpu)) {
+ 			/* The distributor enable bits were changed */
+ 			preempt_disable();
+-			vgic_v4_put(vcpu, false);
++			vgic_v4_put(vcpu);
+ 			vgic_v4_load(vcpu);
+ 			preempt_enable();
+ 		}
+--- a/arch/arm64/kvm/vgic/vgic-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-v3.c
+@@ -749,7 +749,7 @@ void vgic_v3_put(struct kvm_vcpu *vcpu)
  {
--	int was_enabled = __this_cpu_read(kvm_arm_hardware_enabled);
-+	int was_enabled;
+ 	struct vgic_v3_cpu_if *cpu_if = &vcpu->arch.vgic_cpu.vgic_v3;
  
-+	/*
-+	 * Most calls to this function are made with migration
-+	 * disabled, but not with preemption disabled. The former is
-+	 * enough to ensure correctness, but most of the helpers
-+	 * expect the later and will throw a tantrum otherwise.
-+	 */
-+	preempt_disable();
-+
-+	was_enabled = __this_cpu_read(kvm_arm_hardware_enabled);
- 	_kvm_arch_hardware_enable(NULL);
+-	WARN_ON(vgic_v4_put(vcpu, false));
++	WARN_ON(vgic_v4_put(vcpu));
  
- 	if (!was_enabled) {
-@@ -1802,6 +1811,8 @@ int kvm_arch_hardware_enable(void)
- 		kvm_timer_cpu_up();
- 	}
+ 	vgic_v3_vmcr_sync(vcpu);
  
-+	preempt_enable();
-+
- 	return 0;
+--- a/arch/arm64/kvm/vgic/vgic-v4.c
++++ b/arch/arm64/kvm/vgic/vgic-v4.c
+@@ -336,14 +336,14 @@ void vgic_v4_teardown(struct kvm *kvm)
+ 	its_vm->vpes = NULL;
  }
  
+-int vgic_v4_put(struct kvm_vcpu *vcpu, bool need_db)
++int vgic_v4_put(struct kvm_vcpu *vcpu)
+ {
+ 	struct its_vpe *vpe = &vcpu->arch.vgic_cpu.vgic_v3.its_vpe;
+ 
+ 	if (!vgic_supports_direct_msis(vcpu->kvm) || !vpe->resident)
+ 		return 0;
+ 
+-	return its_make_vpe_non_resident(vpe, need_db);
++	return its_make_vpe_non_resident(vpe, !!vcpu_get_flag(vcpu, IN_WFI));
+ }
+ 
+ int vgic_v4_load(struct kvm_vcpu *vcpu)
+@@ -354,6 +354,9 @@ int vgic_v4_load(struct kvm_vcpu *vcpu)
+ 	if (!vgic_supports_direct_msis(vcpu->kvm) || vpe->resident)
+ 		return 0;
+ 
++	if (vcpu_get_flag(vcpu, IN_WFI))
++		return 0;
++
+ 	/*
+ 	 * Before making the VPE resident, make sure the redistributor
+ 	 * corresponding to our current CPU expects us here. See the
+--- a/include/kvm/arm_vgic.h
++++ b/include/kvm/arm_vgic.h
+@@ -431,7 +431,7 @@ int kvm_vgic_v4_unset_forwarding(struct
+ 
+ int vgic_v4_load(struct kvm_vcpu *vcpu);
+ void vgic_v4_commit(struct kvm_vcpu *vcpu);
+-int vgic_v4_put(struct kvm_vcpu *vcpu, bool need_db);
++int vgic_v4_put(struct kvm_vcpu *vcpu);
+ 
+ /* CPU HP callbacks */
+ void kvm_vgic_cpu_up(void);
 
 
