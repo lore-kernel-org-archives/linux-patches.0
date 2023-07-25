@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18BC1ED4D
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:41:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CF0C433C7;
-	Tue, 25 Jul 2023 11:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C541ED4D
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:41:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29DA3C433C7;
+	Tue, 25 Jul 2023 11:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285288;
-	bh=W9lKpO2hpnjOaCep9TJPM21+VDoQMnHx66l/UlLwexw=;
+	s=korg; t=1690285291;
+	bh=sefUEURaDsTgR3VbfwGGwIMar0H7cY3molzGLXN9Rko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZLZdel0I0xdxta9//Tbjk8gb0WU/mj4fxgUcHDYa3IVRHLWUNiFR89u8kGUwmXrcW
-	 dDDDLVmVr/wMK/7jY1eNnj84dxbuc87jxB0LvzFTwqF7lY3A7WSRgl5gJgIl0kKheO
-	 6mhHgG+VA+bPxDYUQd8V25oj4GqOzwhdIbhLlrTY=
+	b=eQlbAzDQg7r32CeLnigUvBU5MGu6FPfRUxz9YWjJb9/Zu8he7cj9St7O2VZZoiOQX
+	 8/GP6maQ7CdK1xx9jkreipUSHhzxR0eMpqG7IGMgA3UdVAoG48HqDFs1YCk5G+hC68
+	 mocAlZl4Yf0zWFuk0sdm0jQiYI02YyswpsJhMDfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Steigerwald <Martin@lichtvoll.de>,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.4 124/313] block: change all __u32 annotations to __be32 in affs_hardblocks.h
-Date: Tue, 25 Jul 2023 12:44:37 +0200
-Message-ID: <20230725104526.390095414@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 151/313] powerpc: allow PPC_EARLY_DEBUG_CPM only when SERIAL_CPM=y
+Date: Tue, 25 Jul 2023 12:45:04 +0200
+Message-ID: <20230725104527.544194357@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -37,142 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Schmitz <schmitzmic@gmail.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit 95a55437dc49fb3342c82e61f5472a71c63d9ed0 upstream.
+[ Upstream commit 39f49684036d24af800ff194c33c7b2653c591d7 ]
 
-The Amiga partition parser module uses signed int for partition sector
-address and count, which will overflow for disks larger than 1 TB.
+In a randconfig with CONFIG_SERIAL_CPM=m and
+CONFIG_PPC_EARLY_DEBUG_CPM=y, there is a build error:
+ERROR: modpost: "udbg_putc" [drivers/tty/serial/cpm_uart/cpm_uart.ko] undefined!
 
-Use u64 as type for sector address and size to allow using disks up to
-2 TB without LBD support, and disks larger than 2 TB with LBD. The RBD
-format allows to specify disk sizes up to 2^128 bytes (though native
-OS limitations reduce this somewhat, to max 2^68 bytes), so check for
-u64 overflow carefully to protect against overflowing sector_t.
+Prevent the build error by allowing PPC_EARLY_DEBUG_CPM only when
+SERIAL_CPM=y.
 
-This bug was reported originally in 2012, and the fix was created by
-the RDB author, Joanne Dow <jdow@earthlink.net>. A patch had been
-discussed and reviewed on linux-m68k at that time but never officially
-submitted (now resubmitted as patch 1 of this series).
-
-Patch 3 (this series) adds additional error checking and warning
-messages. One of the error checks now makes use of the previously
-unused rdb_CylBlocks field, which causes a 'sparse' warning
-(cast to restricted __be32).
-
-Annotate all 32 bit fields in affs_hardblocks.h as __be32, as the
-on-disk format of RDB and partition blocks is always big endian.
-
-Reported-by: Martin Steigerwald <Martin@lichtvoll.de>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=43511
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Message-ID: <201206192146.09327.Martin@lichtvoll.de>
-Cc: <stable@vger.kernel.org> # 5.2
-Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/20230620201725.7020-3-schmitzmic@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c374e00e17f1 ("[POWERPC] Add early debug console for CPM serial ports.")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Pali Rohár <pali@kernel.org>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230701054714.30512-1-rdunlap@infradead.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/affs_hardblocks.h |   68 +++++++++++++++++------------------
- 1 file changed, 34 insertions(+), 34 deletions(-)
+ arch/powerpc/Kconfig.debug | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/uapi/linux/affs_hardblocks.h
-+++ b/include/uapi/linux/affs_hardblocks.h
-@@ -7,42 +7,42 @@
- /* Just the needed definitions for the RDB of an Amiga HD. */
+diff --git a/arch/powerpc/Kconfig.debug b/arch/powerpc/Kconfig.debug
+index 2ca9114fcf002..0c8436b06c494 100644
+--- a/arch/powerpc/Kconfig.debug
++++ b/arch/powerpc/Kconfig.debug
+@@ -234,7 +234,7 @@ config PPC_EARLY_DEBUG_40x
  
- struct RigidDiskBlock {
--	__u32	rdb_ID;
-+	__be32	rdb_ID;
- 	__be32	rdb_SummedLongs;
--	__s32	rdb_ChkSum;
--	__u32	rdb_HostID;
-+	__be32	rdb_ChkSum;
-+	__be32	rdb_HostID;
- 	__be32	rdb_BlockBytes;
--	__u32	rdb_Flags;
--	__u32	rdb_BadBlockList;
-+	__be32	rdb_Flags;
-+	__be32	rdb_BadBlockList;
- 	__be32	rdb_PartitionList;
--	__u32	rdb_FileSysHeaderList;
--	__u32	rdb_DriveInit;
--	__u32	rdb_Reserved1[6];
--	__u32	rdb_Cylinders;
--	__u32	rdb_Sectors;
--	__u32	rdb_Heads;
--	__u32	rdb_Interleave;
--	__u32	rdb_Park;
--	__u32	rdb_Reserved2[3];
--	__u32	rdb_WritePreComp;
--	__u32	rdb_ReducedWrite;
--	__u32	rdb_StepRate;
--	__u32	rdb_Reserved3[5];
--	__u32	rdb_RDBBlocksLo;
--	__u32	rdb_RDBBlocksHi;
--	__u32	rdb_LoCylinder;
--	__u32	rdb_HiCylinder;
--	__u32	rdb_CylBlocks;
--	__u32	rdb_AutoParkSeconds;
--	__u32	rdb_HighRDSKBlock;
--	__u32	rdb_Reserved4;
-+	__be32	rdb_FileSysHeaderList;
-+	__be32	rdb_DriveInit;
-+	__be32	rdb_Reserved1[6];
-+	__be32	rdb_Cylinders;
-+	__be32	rdb_Sectors;
-+	__be32	rdb_Heads;
-+	__be32	rdb_Interleave;
-+	__be32	rdb_Park;
-+	__be32	rdb_Reserved2[3];
-+	__be32	rdb_WritePreComp;
-+	__be32	rdb_ReducedWrite;
-+	__be32	rdb_StepRate;
-+	__be32	rdb_Reserved3[5];
-+	__be32	rdb_RDBBlocksLo;
-+	__be32	rdb_RDBBlocksHi;
-+	__be32	rdb_LoCylinder;
-+	__be32	rdb_HiCylinder;
-+	__be32	rdb_CylBlocks;
-+	__be32	rdb_AutoParkSeconds;
-+	__be32	rdb_HighRDSKBlock;
-+	__be32	rdb_Reserved4;
- 	char	rdb_DiskVendor[8];
- 	char	rdb_DiskProduct[16];
- 	char	rdb_DiskRevision[4];
- 	char	rdb_ControllerVendor[8];
- 	char	rdb_ControllerProduct[16];
- 	char	rdb_ControllerRevision[4];
--	__u32	rdb_Reserved5[10];
-+	__be32	rdb_Reserved5[10];
- };
- 
- #define	IDNAME_RIGIDDISK	0x5244534B	/* "RDSK" */
-@@ -50,16 +50,16 @@ struct RigidDiskBlock {
- struct PartitionBlock {
- 	__be32	pb_ID;
- 	__be32	pb_SummedLongs;
--	__s32	pb_ChkSum;
--	__u32	pb_HostID;
-+	__be32	pb_ChkSum;
-+	__be32	pb_HostID;
- 	__be32	pb_Next;
--	__u32	pb_Flags;
--	__u32	pb_Reserved1[2];
--	__u32	pb_DevFlags;
-+	__be32	pb_Flags;
-+	__be32	pb_Reserved1[2];
-+	__be32	pb_DevFlags;
- 	__u8	pb_DriveName[32];
--	__u32	pb_Reserved2[15];
-+	__be32	pb_Reserved2[15];
- 	__be32	pb_Environment[17];
--	__u32	pb_EReserved[15];
-+	__be32	pb_EReserved[15];
- };
- 
- #define	IDNAME_PARTITION	0x50415254	/* "PART" */
+ config PPC_EARLY_DEBUG_CPM
+ 	bool "Early serial debugging for Freescale CPM-based serial ports"
+-	depends on SERIAL_CPM
++	depends on SERIAL_CPM=y
+ 	help
+ 	  Select this to enable early debugging for Freescale chips
+ 	  using a CPM-based serial port.  This assumes that the bootwrapper
+-- 
+2.39.2
+
 
 
