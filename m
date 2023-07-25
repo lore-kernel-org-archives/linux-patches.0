@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A7E14270
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:53:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90BB5C433C7;
-	Tue, 25 Jul 2023 10:53:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41D114270
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:53:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56054C433C7;
+	Tue, 25 Jul 2023 10:53:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282412;
-	bh=wKXr/dlvuwhoqG7NTqfII2N83LeUQF7/ue+SLfqzCUc=;
+	s=korg; t=1690282415;
+	bh=y6bziz/MvdQ+aDDDtJgCjPL8YGD7r7BVYP/dHYkzrrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2B8a3ZErK4DlgXbnNLMH6aECF/tDOeDrkN0lv1hfhGBdTGJ28mhUxUm6s/CFzC6XZ
-	 +E8ioq9VrtuTtrSecIsIGAjsI/lwD0Jz0qAhHFu09IWavmnwLi5QbeMRskxrzaR4Ix
-	 N0M1qkDhGDAUqext987WKJgVCfd8S9pCj46kSLM0=
+	b=t2J7a2Atkv2aaT8AKIiRNZzcwY85lAJro6cGRi2Yf4WD71hLyldz6IEEeiZqq/5di
+	 JpjXvhOneoLgvn2EgAJT2CYzfMbO+sQZLQPNxc+wlhQCRzcii8q58pDBRamNPkl9BZ
+	 okWDHZG+gA0IwwqbrCIDE4l1xJcuOZroCLgcyFlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Abe Kohandel <abe.kohandel@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 120/227] wifi: mac80211_hwsim: Fix possible NULL dereference
-Date: Tue, 25 Jul 2023 12:44:47 +0200
-Message-ID: <20230725104519.772935768@linuxfoundation.org>
+Subject: [PATCH 6.4 121/227] spi: dw: Add compatible for Intel Mount Evans SoC
+Date: Tue, 25 Jul 2023 12:44:48 +0200
+Message-ID: <20230725104519.824656366@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -36,44 +36,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Abe Kohandel <abe.kohandel@intel.com>
 
-[ Upstream commit 0cc80943ef518a1c51a1111e9346d1daf11dd545 ]
+[ Upstream commit 0760d5d0e9f0c0e2200a0323a61d1995bb745dee ]
 
-In a call to mac80211_hwsim_select_tx_link() the sta pointer might
-be NULL, thus need to check that it is not NULL before accessing it.
+The Intel Mount Evans SoC's Integrated Management Complex uses the SPI
+controller for access to a NOR SPI FLASH. However, the SoC doesn't
+provide a mechanism to override the native chip select signal.
 
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230604120651.f4d889fc98c4.Iae85f527ed245a37637a874bb8b8c83d79812512@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This driver doesn't use DMA for memory operations when a chip select
+override is not provided due to the native chip select timing behavior.
+As a result no DMA configuration is done for the controller and this
+configuration is not tested.
+
+The controller also has an errata where a full TX FIFO can result in
+data corruption. The suggested workaround is to never completely fill
+the FIFO. The TX FIFO has a size of 32 so the fifo_len is set to 31.
+
+Signed-off-by: Abe Kohandel <abe.kohandel@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230606145402.474866-2-abe.kohandel@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/virtual/mac80211_hwsim.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-dw-mmio.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
-index 89c7a1420381d..ed5af63025979 100644
---- a/drivers/net/wireless/virtual/mac80211_hwsim.c
-+++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
-@@ -4,7 +4,7 @@
-  * Copyright (c) 2008, Jouni Malinen <j@w1.fi>
-  * Copyright (c) 2011, Javier Lopez <jlopex@gmail.com>
-  * Copyright (c) 2016 - 2017 Intel Deutschland GmbH
-- * Copyright (C) 2018 - 2022 Intel Corporation
-+ * Copyright (C) 2018 - 2023 Intel Corporation
-  */
+diff --git a/drivers/spi/spi-dw-mmio.c b/drivers/spi/spi-dw-mmio.c
+index 15f5e9cb54ad4..5a38cb09a650d 100644
+--- a/drivers/spi/spi-dw-mmio.c
++++ b/drivers/spi/spi-dw-mmio.c
+@@ -236,6 +236,31 @@ static int dw_spi_intel_init(struct platform_device *pdev,
+ 	return 0;
+ }
  
- /*
-@@ -1864,7 +1864,7 @@ mac80211_hwsim_select_tx_link(struct mac80211_hwsim_data *data,
- 
- 	WARN_ON(is_multicast_ether_addr(hdr->addr1));
- 
--	if (WARN_ON_ONCE(!sta->valid_links))
-+	if (WARN_ON_ONCE(!sta || !sta->valid_links))
- 		return &vif->bss_conf;
- 
- 	for (i = 0; i < ARRAY_SIZE(vif->link_conf); i++) {
++/*
++ * The Intel Mount Evans SoC's Integrated Management Complex uses the
++ * SPI controller for access to a NOR SPI FLASH. However, the SoC doesn't
++ * provide a mechanism to override the native chip select signal.
++ *
++ * This driver doesn't use DMA for memory operations when a chip select
++ * override is not provided due to the native chip select timing behavior.
++ * As a result no DMA configuration is done for the controller and this
++ * configuration is not tested.
++ */
++static int dw_spi_mountevans_imc_init(struct platform_device *pdev,
++				      struct dw_spi_mmio *dwsmmio)
++{
++	/*
++	 * The Intel Mount Evans SoC's Integrated Management Complex DW
++	 * apb_ssi_v4.02a controller has an errata where a full TX FIFO can
++	 * result in data corruption. The suggested workaround is to never
++	 * completely fill the FIFO. The TX FIFO has a size of 32 so the
++	 * fifo_len is set to 31.
++	 */
++	dwsmmio->dws.fifo_len = 31;
++
++	return 0;
++}
++
+ static int dw_spi_canaan_k210_init(struct platform_device *pdev,
+ 				   struct dw_spi_mmio *dwsmmio)
+ {
+@@ -405,6 +430,10 @@ static const struct of_device_id dw_spi_mmio_of_match[] = {
+ 	{ .compatible = "snps,dwc-ssi-1.01a", .data = dw_spi_hssi_init},
+ 	{ .compatible = "intel,keembay-ssi", .data = dw_spi_intel_init},
+ 	{ .compatible = "intel,thunderbay-ssi", .data = dw_spi_intel_init},
++	{
++		.compatible = "intel,mountevans-imc-ssi",
++		.data = dw_spi_mountevans_imc_init,
++	},
+ 	{ .compatible = "microchip,sparx5-spi", dw_spi_mscc_sparx5_init},
+ 	{ .compatible = "canaan,k210-spi", dw_spi_canaan_k210_init},
+ 	{ .compatible = "amd,pensando-elba-spi", .data = dw_spi_elba_init},
 -- 
 2.39.2
 
