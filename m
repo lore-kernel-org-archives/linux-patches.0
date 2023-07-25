@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703251ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:46:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9311C433C7;
-	Tue, 25 Jul 2023 11:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29DA41ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:46:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16FDC433C8;
+	Tue, 25 Jul 2023 11:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285601;
-	bh=vwpxSDi8+NxJqVoo6XmhwWb16Za+3UGUs931MkksEEo=;
+	s=korg; t=1690285604;
+	bh=N9V30GiNm1zntxxuAa0vXcel8bNrKz98Vjots/uUt6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c/R6udpN0lCDeIEUJD2xpb6Of4ui+m4Di8zpU2oM118zCJ8k4gp0QJkGBqCzqZs/C
-	 H0mjOAi5YpWKyNHk2Dah7gvhmV19knxt2gQeFPfO3kspG/jMFV/i5o4xfG66rAreUl
-	 dKaqJIeQXpeN/srurQ64bLAqODCb59qqa4yj5b1w=
+	b=P6BFxVwkNUHf7TPsOGRWoW0FuF6IVhJxmLYl7GR1DgOgtfUQl5kloSmsFZAl5EYYb
+	 Xlkr/yDWtslXUEK0Bu3GuupSXfRaxEWs7f4zAINQmwDpOyCTL0oCd211euW0NLkzdK
+	 p+PZ4Q6+eMcQ24+gygq/icT142389VYAy0k6pqxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Khalfella <mkhalfella@purestorage.com>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.4 264/313] tracing/histograms: Add histograms to hist_vars if they have referenced variables
-Date: Tue, 25 Jul 2023 12:46:57 +0200
-Message-ID: <20230725104532.475379929@linuxfoundation.org>
+Subject: [PATCH 5.4 265/313] ring-buffer: Fix deadloop issue on reading trace_pipe
+Date: Tue, 25 Jul 2023 12:46:58 +0200
+Message-ID: <20230725104532.516010332@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -34,127 +34,128 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mohamed Khalfella <mkhalfella@purestorage.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-commit 6018b585e8c6fa7d85d4b38d9ce49a5b67be7078 upstream.
+commit 7e42907f3a7b4ce3a2d1757f6d78336984daf8f5 upstream.
 
-Hist triggers can have referenced variables without having direct
-variables fields. This can be the case if referenced variables are added
-for trigger actions. In this case the newly added references will not
-have field variables. Not taking such referenced variables into
-consideration can result in a bug where it would be possible to remove
-hist trigger with variables being refenced. This will result in a bug
-that is easily reproducable like so
+Soft lockup occurs when reading file 'trace_pipe':
 
-$ cd /sys/kernel/tracing
-$ echo 'synthetic_sys_enter char[] comm; long id' >> synthetic_events
-$ echo 'hist:keys=common_pid.execname,id.syscall:vals=hitcount:comm=common_pid.execname' >> events/raw_syscalls/sys_enter/trigger
-$ echo 'hist:keys=common_pid.execname,id.syscall:onmatch(raw_syscalls.sys_enter).synthetic_sys_enter($comm, id)' >> events/raw_syscalls/sys_enter/trigger
-$ echo '!hist:keys=common_pid.execname,id.syscall:vals=hitcount:comm=common_pid.execname' >> events/raw_syscalls/sys_enter/trigger
+  watchdog: BUG: soft lockup - CPU#6 stuck for 22s! [cat:4488]
+  [...]
+  RIP: 0010:ring_buffer_empty_cpu+0xed/0x170
+  RSP: 0018:ffff88810dd6fc48 EFLAGS: 00000246
+  RAX: 0000000000000000 RBX: 0000000000000246 RCX: ffffffff93d1aaeb
+  RDX: ffff88810a280040 RSI: 0000000000000008 RDI: ffff88811164b218
+  RBP: ffff88811164b218 R08: 0000000000000000 R09: ffff88815156600f
+  R10: ffffed102a2acc01 R11: 0000000000000001 R12: 0000000051651901
+  R13: 0000000000000000 R14: ffff888115e49500 R15: 0000000000000000
+  [...]
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007f8d853c2000 CR3: 000000010dcd8000 CR4: 00000000000006e0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  Call Trace:
+   __find_next_entry+0x1a8/0x4b0
+   ? peek_next_entry+0x250/0x250
+   ? down_write+0xa5/0x120
+   ? down_write_killable+0x130/0x130
+   trace_find_next_entry_inc+0x3b/0x1d0
+   tracing_read_pipe+0x423/0xae0
+   ? tracing_splice_read_pipe+0xcb0/0xcb0
+   vfs_read+0x16b/0x490
+   ksys_read+0x105/0x210
+   ? __ia32_sys_pwrite64+0x200/0x200
+   ? switch_fpu_return+0x108/0x220
+   do_syscall_64+0x33/0x40
+   entry_SYSCALL_64_after_hwframe+0x61/0xc6
 
-[  100.263533] ==================================================================
-[  100.264634] BUG: KASAN: slab-use-after-free in resolve_var_refs+0xc7/0x180
-[  100.265520] Read of size 8 at addr ffff88810375d0f0 by task bash/439
-[  100.266320]
-[  100.266533] CPU: 2 PID: 439 Comm: bash Not tainted 6.5.0-rc1 #4
-[  100.267277] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.0-20220807_005459-localhost 04/01/2014
-[  100.268561] Call Trace:
-[  100.268902]  <TASK>
-[  100.269189]  dump_stack_lvl+0x4c/0x70
-[  100.269680]  print_report+0xc5/0x600
-[  100.270165]  ? resolve_var_refs+0xc7/0x180
-[  100.270697]  ? kasan_complete_mode_report_info+0x80/0x1f0
-[  100.271389]  ? resolve_var_refs+0xc7/0x180
-[  100.271913]  kasan_report+0xbd/0x100
-[  100.272380]  ? resolve_var_refs+0xc7/0x180
-[  100.272920]  __asan_load8+0x71/0xa0
-[  100.273377]  resolve_var_refs+0xc7/0x180
-[  100.273888]  event_hist_trigger+0x749/0x860
-[  100.274505]  ? kasan_save_stack+0x2a/0x50
-[  100.275024]  ? kasan_set_track+0x29/0x40
-[  100.275536]  ? __pfx_event_hist_trigger+0x10/0x10
-[  100.276138]  ? ksys_write+0xd1/0x170
-[  100.276607]  ? do_syscall_64+0x3c/0x90
-[  100.277099]  ? entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-[  100.277771]  ? destroy_hist_data+0x446/0x470
-[  100.278324]  ? event_hist_trigger_parse+0xa6c/0x3860
-[  100.278962]  ? __pfx_event_hist_trigger_parse+0x10/0x10
-[  100.279627]  ? __kasan_check_write+0x18/0x20
-[  100.280177]  ? mutex_unlock+0x85/0xd0
-[  100.280660]  ? __pfx_mutex_unlock+0x10/0x10
-[  100.281200]  ? kfree+0x7b/0x120
-[  100.281619]  ? ____kasan_slab_free+0x15d/0x1d0
-[  100.282197]  ? event_trigger_write+0xac/0x100
-[  100.282764]  ? __kasan_slab_free+0x16/0x20
-[  100.283293]  ? __kmem_cache_free+0x153/0x2f0
-[  100.283844]  ? sched_mm_cid_remote_clear+0xb1/0x250
-[  100.284550]  ? __pfx_sched_mm_cid_remote_clear+0x10/0x10
-[  100.285221]  ? event_trigger_write+0xbc/0x100
-[  100.285781]  ? __kasan_check_read+0x15/0x20
-[  100.286321]  ? __bitmap_weight+0x66/0xa0
-[  100.286833]  ? _find_next_bit+0x46/0xe0
-[  100.287334]  ? task_mm_cid_work+0x37f/0x450
-[  100.287872]  event_triggers_call+0x84/0x150
-[  100.288408]  trace_event_buffer_commit+0x339/0x430
-[  100.289073]  ? ring_buffer_event_data+0x3f/0x60
-[  100.292189]  trace_event_raw_event_sys_enter+0x8b/0xe0
-[  100.295434]  syscall_trace_enter.constprop.0+0x18f/0x1b0
-[  100.298653]  syscall_enter_from_user_mode+0x32/0x40
-[  100.301808]  do_syscall_64+0x1a/0x90
-[  100.304748]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-[  100.307775] RIP: 0033:0x7f686c75c1cb
-[  100.310617] Code: 73 01 c3 48 8b 0d 65 3c 10 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa b8 21 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 35 3c 10 00 f7 d8 64 89 01 48
-[  100.317847] RSP: 002b:00007ffc60137a38 EFLAGS: 00000246 ORIG_RAX: 0000000000000021
-[  100.321200] RAX: ffffffffffffffda RBX: 000055f566469ea0 RCX: 00007f686c75c1cb
-[  100.324631] RDX: 0000000000000001 RSI: 0000000000000001 RDI: 000000000000000a
-[  100.328104] RBP: 00007ffc60137ac0 R08: 00007f686c818460 R09: 000000000000000a
-[  100.331509] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000009
-[  100.334992] R13: 0000000000000007 R14: 000000000000000a R15: 0000000000000007
-[  100.338381]  </TASK>
+Through the vmcore, I found it's because in tracing_read_pipe(),
+ring_buffer_empty_cpu() found some buffer is not empty but then it
+cannot read anything due to "rb_num_of_entries() == 0" always true,
+Then it infinitely loop the procedure due to user buffer not been
+filled, see following code path:
 
-We hit the bug because when second hist trigger has was created
-has_hist_vars() returned false because hist trigger did not have
-variables. As a result of that save_hist_vars() was not called to add
-the trigger to trace_array->hist_vars. Later on when we attempted to
-remove the first histogram find_any_var_ref() failed to detect it is
-being used because it did not find the second trigger in hist_vars list.
+  tracing_read_pipe() {
+    ... ...
+    waitagain:
+      tracing_wait_pipe() // 1. find non-empty buffer here
+      trace_find_next_entry_inc()  // 2. loop here try to find an entry
+        __find_next_entry()
+          ring_buffer_empty_cpu();  // 3. find non-empty buffer
+          peek_next_entry()  // 4. but peek always return NULL
+            ring_buffer_peek()
+              rb_buffer_peek()
+                rb_get_reader_page()
+                  // 5. because rb_num_of_entries() == 0 always true here
+                  //    then return NULL
+      // 6. user buffer not been filled so goto 'waitgain'
+      //    and eventually leads to an deadloop in kernel!!!
+  }
 
-With this change we wait until trigger actions are created so we can take
-into consideration if hist trigger has variable references. Also, now we
-check the return value of save_hist_vars() and fail trigger creation if
-save_hist_vars() fails.
+By some analyzing, I found that when resetting ringbuffer, the 'entries'
+of its pages are not all cleared (see rb_reset_cpu()). Then when reducing
+the ringbuffer, and if some reduced pages exist dirty 'entries' data, they
+will be added into 'cpu_buffer->overrun' (see rb_remove_pages()), which
+cause wrong 'overrun' count and eventually cause the deadloop issue.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230712223021.636335-1-mkhalfella@purestorage.com
+To fix it, we need to clear every pages in rb_reset_cpu().
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230708225144.3785600-1-zhengyejian1@huawei.com
 
 Cc: stable@vger.kernel.org
-Fixes: 067fe038e70f6 ("tracing: Add variable reference handling to hist triggers")
-Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
+Fixes: a5fb833172eca ("ring-buffer: Fix uninitialized read_stamp")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ kernel/trace/ring_buffer.c |   24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -6423,13 +6423,15 @@ static int event_hist_trigger_func(struc
- 	if (get_named_trigger_data(trigger_data))
- 		goto enable;
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -4487,28 +4487,34 @@ unsigned long ring_buffer_size(struct ri
+ }
+ EXPORT_SYMBOL_GPL(ring_buffer_size);
  
--	if (has_hist_vars(hist_data))
--		save_hist_vars(hist_data);
--
- 	ret = create_actions(hist_data);
- 	if (ret)
- 		goto out_unreg;
- 
-+	if (has_hist_vars(hist_data) || hist_data->n_var_refs) {
-+		if (save_hist_vars(hist_data))
-+			goto out_unreg;
-+	}
++static void rb_clear_buffer_page(struct buffer_page *page)
++{
++	local_set(&page->write, 0);
++	local_set(&page->entries, 0);
++	rb_init_page(page->page);
++	page->read = 0;
++}
 +
- 	ret = tracing_map_init(hist_data->map);
- 	if (ret)
- 		goto out_unreg;
+ static void
+ rb_reset_cpu(struct ring_buffer_per_cpu *cpu_buffer)
+ {
++	struct buffer_page *page;
++
+ 	rb_head_page_deactivate(cpu_buffer);
+ 
+ 	cpu_buffer->head_page
+ 		= list_entry(cpu_buffer->pages, struct buffer_page, list);
+-	local_set(&cpu_buffer->head_page->write, 0);
+-	local_set(&cpu_buffer->head_page->entries, 0);
+-	local_set(&cpu_buffer->head_page->page->commit, 0);
+-
+-	cpu_buffer->head_page->read = 0;
++	rb_clear_buffer_page(cpu_buffer->head_page);
++	list_for_each_entry(page, cpu_buffer->pages, list) {
++		rb_clear_buffer_page(page);
++	}
+ 
+ 	cpu_buffer->tail_page = cpu_buffer->head_page;
+ 	cpu_buffer->commit_page = cpu_buffer->head_page;
+ 
+ 	INIT_LIST_HEAD(&cpu_buffer->reader_page->list);
+ 	INIT_LIST_HEAD(&cpu_buffer->new_pages);
+-	local_set(&cpu_buffer->reader_page->write, 0);
+-	local_set(&cpu_buffer->reader_page->entries, 0);
+-	local_set(&cpu_buffer->reader_page->page->commit, 0);
+-	cpu_buffer->reader_page->read = 0;
++	rb_clear_buffer_page(cpu_buffer->reader_page);
+ 
+ 	local_set(&cpu_buffer->entries_bytes, 0);
+ 	local_set(&cpu_buffer->overrun, 0);
 
 
