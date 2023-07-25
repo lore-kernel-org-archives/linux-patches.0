@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031D41ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:31:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753B0C433C8;
-	Tue, 25 Jul 2023 11:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F541ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:31:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47EE7C433C7;
+	Tue, 25 Jul 2023 11:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284662;
-	bh=dSx4dT3gBy1aEJP67MAfqh2C/mDEXfg3fgMNTmNTWtI=;
+	s=korg; t=1690284665;
+	bh=PJa6LnwHH+imW43OkH9In8SQd82SQqbP1Gy2+ZATfpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Too1zwNumXhoGP26rCC4MFbNUGqvbInJJkPv5MDB0eD5yVJvCJYIxxT79r7OhUfwc
-	 OZLdQNU6btmbHDwTuGEWo1tihaPuSqEswE+9BOuRKEjTsX02f+vza1Ekwz4lBlmAiN
-	 0YjpqprpOEZ8x0ykBxgsAbFC58njNfmRcA2Wj2+Y=
+	b=BKsLdVmJkJoY44HdWsty6zqjeDLakeFyJJuRMZS0/6dvzzFOyeqvdnz2UMeDur2dI
+	 X4rmn2JeqmMVPxYUL+CZajuB/6OJytPM3cGUZdgS5rs5aZMzrWEmUOwwU4D4V7EbuV
+	 qN4EwpEusbe1Bm++Q1Nv7Sh5M7zl1eSLcl0JO1yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"kernelci.org bot" <bot@kernelci.org>,
 	Brian Norris <briannorris@chromium.org>,
 	Sean Paul <seanpaul@chromium.org>
-Subject: [PATCH 5.10 408/509] drm/atomic: Allow vblank-enabled + self-refresh "disable"
-Date: Tue, 25 Jul 2023 12:45:47 +0200
-Message-ID: <20230725104612.401579011@linuxfoundation.org>
+Subject: [PATCH 5.10 409/509] drm/rockchip: vop: Leave vblank enabled in self-refresh
+Date: Tue, 25 Jul 2023 12:45:48 +0200
+Message-ID: <20230725104612.441363261@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,81 +37,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Brian Norris <briannorris@chromium.org>
 
-commit 9d0e3cac3517942a6e00eeecfe583a98715edb16 upstream.
+commit 2bdba9d4a3baa758c2ca7f5b37b35c7b3391dc42 upstream.
 
-The self-refresh helper framework overloads "disable" to sometimes mean
-"go into self-refresh mode," and this mode activates automatically
-(e.g., after some period of unchanging display output). In such cases,
-the display pipe is still considered "on", and user-space is not aware
-that we went into self-refresh mode. Thus, users may expect that
-vblank-related features (such as DRM_IOCTL_WAIT_VBLANK) still work
-properly.
+If we disable vblank when entering self-refresh, vblank APIs (like
+DRM_IOCTL_WAIT_VBLANK) no longer work. But user space is not aware when
+we enter self-refresh, so this appears to be an API violation -- that
+DRM_IOCTL_WAIT_VBLANK fails with EINVAL whenever the display is idle and
+enters self-refresh.
 
-However, we trigger the WARN_ONCE() here if a CRTC driver tries to leave
-vblank enabled.
+The downstream driver used by many of these systems never used to
+disable vblank for PSR, and in fact, even upstream, we didn't do that
+until radically redesigning the state machine in commit 6c836d965bad
+("drm/rockchip: Use the helpers for PSR").
 
-Add a different expectation: that CRTCs *should* leave vblank enabled
-when going into self-refresh.
+Thus, it seems like a reasonable API fix to simply restore that
+behavior, and leave vblank enabled.
 
-This patch is preparation for another patch -- "drm/rockchip: vop: Leave
-vblank enabled in self-refresh" -- which resolves conflicts between the
-above self-refresh behavior and the API tests in IGT's kms_vblank test
-module.
+Note that this appears to potentially unbalance the
+drm_crtc_vblank_{off,on}() calls in some cases, but:
+(a) drm_crtc_vblank_on() documents this as OK and
+(b) if I do the naive balancing, I find state machine issues such that
+    we're not in sync properly; so it's easier to take advantage of (a).
 
-== Some alternatives discussed: ==
+This issue was exposed by IGT's kms_vblank tests, and reported by
+KernelCI. The bug has been around a while (longer than KernelCI
+noticed), but was only exposed once self-refresh was bugfixed more
+recently, and so KernelCI could properly test it. Some other notes in:
 
-It's likely that on many display controllers, vblank interrupts will
-turn off when the CRTC is disabled, and so in some cases, self-refresh
-may not support vblank. To support such cases, we might consider
-additions to the generic helpers such that we fire vblank events based
-on a timer.
+  https://lore.kernel.org/dri-devel/Y6OCg9BPnJvimQLT@google.com/
+  Re: renesas/master bisection: igt-kms-rockchip.kms_vblank.pipe-A-wait-forked on rk3399-gru-kevin
 
-However, there is currently only one driver using the common
-self-refresh helpers (i.e., rockchip), and at least as of commit
-bed030a49f3e ("drm/rockchip: Don't fully disable vop on self refresh"),
-the CRTC hardware is powered enough to continue to generate vblank
-interrupts.
+== Backporting notes: ==
 
-So we chose the simpler option of leaving vblank interrupts enabled. We
-can reevaluate this decision and perhaps augment the helpers if/when we
-gain a second driver that has different requirements.
+Marking as 'Fixes' commit 6c836d965bad ("drm/rockchip: Use the helpers
+for PSR"), but it probably depends on commit bed030a49f3e
+("drm/rockchip: Don't fully disable vop on self refresh") as well.
+
+We also need the previous patch ("drm/atomic: Allow vblank-enabled +
+self-refresh "disable""), of course.
 
 v3:
- * include discussion summary
+ * no update
 
 v2:
- * add 'ret != 0' warning case for self-refresh
- * describe failing test case and relation to drm/rockchip patch better
+ * skip unnecessary lock/unlock
 
-Cc: <stable@vger.kernel.org> # dependency for "drm/rockchip: vop: Leave
-                             # vblank enabled in self-refresh"
+Fixes: 6c836d965bad ("drm/rockchip: Use the helpers for PSR")
+Cc: <stable@vger.kernel.org>
+Reported-by: "kernelci.org bot" <bot@kernelci.org>
+Link: https://lore.kernel.org/dri-devel/Y5itf0+yNIQa6fU4@sirena.org.uk/
 Signed-off-by: Brian Norris <briannorris@chromium.org>
 Signed-off-by: Sean Paul <seanpaul@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230109171809.v3.1.I3904f697863649eb1be540ecca147a66e42bfad7@changeid
+Link: https://patchwork.freedesktop.org/patch/msgid/20230109171809.v3.2.Ic07cba4ab9a7bd3618a9e4258b8f92ea7d10ae5a@changeid
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_atomic_helper.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/drm_atomic_helper.c
-+++ b/drivers/gpu/drm/drm_atomic_helper.c
-@@ -1113,7 +1113,16 @@ disable_outputs(struct drm_device *dev,
- 			continue;
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+@@ -702,13 +702,13 @@ static void vop_crtc_atomic_disable(stru
+ 	if (crtc->state->self_refresh_active)
+ 		rockchip_drm_set_win_enabled(crtc, false);
  
- 		ret = drm_crtc_vblank_get(crtc);
--		WARN_ONCE(ret != -EINVAL, "driver forgot to call drm_crtc_vblank_off()\n");
-+		/*
-+		 * Self-refresh is not a true "disable"; ensure vblank remains
-+		 * enabled.
-+		 */
-+		if (new_crtc_state->self_refresh_active)
-+			WARN_ONCE(ret != 0,
-+				  "driver disabled vblank in self-refresh\n");
-+		else
-+			WARN_ONCE(ret != -EINVAL,
-+				  "driver forgot to call drm_crtc_vblank_off()\n");
- 		if (ret == 0)
- 			drm_crtc_vblank_put(crtc);
- 	}
++	if (crtc->state->self_refresh_active)
++		goto out;
++
+ 	mutex_lock(&vop->vop_lock);
+ 
+ 	drm_crtc_vblank_off(crtc);
+ 
+-	if (crtc->state->self_refresh_active)
+-		goto out;
+-
+ 	/*
+ 	 * Vop standby will take effect at end of current frame,
+ 	 * if dsp hold valid irq happen, it means standby complete.
+@@ -740,9 +740,9 @@ static void vop_crtc_atomic_disable(stru
+ 	vop_core_clks_disable(vop);
+ 	pm_runtime_put(vop->dev);
+ 
+-out:
+ 	mutex_unlock(&vop->vop_lock);
+ 
++out:
+ 	if (crtc->state->event && !crtc->state->active) {
+ 		spin_lock_irq(&crtc->dev->event_lock);
+ 		drm_crtc_send_vblank_event(crtc, crtc->state->event);
 
 
