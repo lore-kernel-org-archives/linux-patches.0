@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1DF1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:32:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59047C433C7;
-	Tue, 25 Jul 2023 11:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FE71ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:32:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27551C433C8;
+	Tue, 25 Jul 2023 11:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284743;
-	bh=yKRnhNeQfcAbGqbBeyfaRQEBwi1+MdHcdU3GgewTx9g=;
+	s=korg; t=1690284746;
+	bh=r0zYZxj9/IaNbgddhz1ACL6b2rqL7CSMxin//8+/PBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fJ+qyVc2rUp4wlFGlh822RhDuvBJ25zRm2hx2+jmTjmdyTGv8xhdoSwZGKP9ryXvV
-	 DBnV4wu0krlPNRG/NRVcFTZVw2NvdxgXGp9sxzhuxqpght3DP4Rak5AhXPJYqfqqnL
-	 UoMoTN/lRozNy2MO6UDwvUwg0IaLOtJMHPAV0Krs=
+	b=YiBdBboI4S6E+AkXINhUq/J2oIFtKMSErDoyM+3EZ+3c4fRj8qgHDFitVmCGjQsNk
+	 2hu3fqJkIfTG+iwt2KkN2b1qXTF438JkeO49bBgUUMRQ2Fn3MgzQjez3LgsY2s1kHk
+	 d2WZ56Z0DS3iYgprsXxGLUNRtx83BL2Ky35mTLKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+dc3dfba010d7671e05f5@syzkaller.appspotmail.com,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Anton Gusev <aagusev@ispras.ru>
-Subject: [PATCH 5.10 438/509] RDMA/cma: Ensure rdma_addr_cancel() happens before issuing more requests
-Date: Tue, 25 Jul 2023 12:46:17 +0200
-Message-ID: <20230725104613.790134390@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Steve Capper <steve.capper@arm.com>,
+	Will Deacon <will@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 465/509] arm64: mm: fix VA-range sanity check
+Date: Tue, 25 Jul 2023 12:46:44 +0200
+Message-ID: <20230725104615.038698963@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,126 +39,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit 305d568b72f17f674155a2a8275f865f207b3808 upstream.
+[ Upstream commit ab9b4008092c86dc12497af155a0901cc1156999 ]
 
-The FSM can run in a circle allowing rdma_resolve_ip() to be called twice
-on the same id_priv. While this cannot happen without going through the
-work, it violates the invariant that the same address resolution
-background request cannot be active twice.
+Both create_mapping_noalloc() and update_mapping_prot() sanity-check
+their 'virt' parameter, but the check itself doesn't make much sense.
+The condition used today appears to be a historical accident.
 
-       CPU 1                                  CPU 2
+The sanity-check condition:
 
-rdma_resolve_addr():
-  RDMA_CM_IDLE -> RDMA_CM_ADDR_QUERY
-  rdma_resolve_ip(addr_handler)  #1
+	if ((virt >= PAGE_END) && (virt < VMALLOC_START)) {
+		[ ... warning here ... ]
+		return;
+	}
 
-			 process_one_req(): for #1
-                          addr_handler():
-                            RDMA_CM_ADDR_QUERY -> RDMA_CM_ADDR_BOUND
-                            mutex_unlock(&id_priv->handler_mutex);
-                            [.. handler still running ..]
+... can only be true for the KASAN shadow region or the module region,
+and there's no reason to exclude these specifically for creating and
+updateing mappings.
 
-rdma_resolve_addr():
-  RDMA_CM_ADDR_BOUND -> RDMA_CM_ADDR_QUERY
-  rdma_resolve_ip(addr_handler)
-    !! two requests are now on the req_list
+When arm64 support was first upstreamed in commit:
 
-rdma_destroy_id():
- destroy_id_handler_unlock():
-  _destroy_id():
-   cma_cancel_operation():
-    rdma_addr_cancel()
+  c1cc1552616d0f35 ("arm64: MMU initialisation")
 
-                          // process_one_req() self removes it
-		          spin_lock_bh(&lock);
-                           cancel_delayed_work(&req->work);
-	                   if (!list_empty(&req->list)) == true
+... the condition was:
 
-      ! rdma_addr_cancel() returns after process_on_req #1 is done
+	if (virt < VMALLOC_START) {
+		[ ... warning here ... ]
+		return;
+	}
 
-   kfree(id_priv)
+At the time, VMALLOC_START was the lowest kernel address, and this was
+checking whether 'virt' would be translated via TTBR1.
 
-			 process_one_req(): for #2
-                          addr_handler():
-	                    mutex_lock(&id_priv->handler_mutex);
-                            !! Use after free on id_priv
+Subsequently in commit:
 
-rdma_addr_cancel() expects there to be one req on the list and only
-cancels the first one. The self-removal behavior of the work only happens
-after the handler has returned. This yields a situations where the
-req_list can have two reqs for the same "handle" but rdma_addr_cancel()
-only cancels the first one.
+  14c127c957c1c607 ("arm64: mm: Flip kernel VA space")
 
-The second req remains active beyond rdma_destroy_id() and will
-use-after-free id_priv once it inevitably triggers.
+... the condition was changed to:
 
-Fix this by remembering if the id_priv has called rdma_resolve_ip() and
-always cancel before calling it again. This ensures the req_list never
-gets more than one item in it and doesn't cost anything in the normal flow
-that never uses this strange error path.
+	if ((virt >= VA_START) && (virt < VMALLOC_START)) {
+		[ ... warning here ... ]
+		return;
+	}
 
-Link: https://lore.kernel.org/r/0-v1-3bc675b8006d+22-syz_cancel_uaf_jgg@nvidia.com
-Cc: stable@vger.kernel.org
-Fixes: e51060f08a61 ("IB: IP address based RDMA connection manager")
-Reported-by: syzbot+dc3dfba010d7671e05f5@syzkaller.appspotmail.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Anton Gusev <aagusev@ispras.ru>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This appear to have been a thinko. The commit moved the linear map to
+the bottom of the kernel address space, with VMALLOC_START being at the
+halfway point. The old condition would warn for changes to the linear
+map below this, and at the time VA_START was the end of the linear map.
+
+Subsequently we cleaned up the naming of VA_START in commit:
+
+  77ad4ce69321abbe ("arm64: memory: rename VA_START to PAGE_END")
+
+... keeping the erroneous condition as:
+
+	if ((virt >= PAGE_END) && (virt < VMALLOC_START)) {
+		[ ... warning here ... ]
+		return;
+	}
+
+Correct the condition to check against the start of the TTBR1 address
+space, which is currently PAGE_OFFSET. This simplifies the logic, and
+more clearly matches the "outside kernel range" message in the warning.
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: Steve Capper <steve.capper@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://lore.kernel.org/r/20230615102628.1052103-1-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cma.c      |   23 +++++++++++++++++++++++
- drivers/infiniband/core/cma_priv.h |    1 +
- 2 files changed, 24 insertions(+)
+ arch/arm64/mm/mmu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/infiniband/core/cma.c
-+++ b/drivers/infiniband/core/cma.c
-@@ -1792,6 +1792,14 @@ static void cma_cancel_operation(struct
+diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
+index 3284709ef5676..78f9fb638c9cd 100644
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -421,7 +421,7 @@ static phys_addr_t pgd_pgtable_alloc(int shift)
+ static void __init create_mapping_noalloc(phys_addr_t phys, unsigned long virt,
+ 				  phys_addr_t size, pgprot_t prot)
  {
- 	switch (state) {
- 	case RDMA_CM_ADDR_QUERY:
-+		/*
-+		 * We can avoid doing the rdma_addr_cancel() based on state,
-+		 * only RDMA_CM_ADDR_QUERY has a work that could still execute.
-+		 * Notice that the addr_handler work could still be exiting
-+		 * outside this state, however due to the interaction with the
-+		 * handler_mutex the work is guaranteed not to touch id_priv
-+		 * during exit.
-+		 */
- 		rdma_addr_cancel(&id_priv->id.route.addr.dev_addr);
- 		break;
- 	case RDMA_CM_ROUTE_QUERY:
-@@ -3401,6 +3409,21 @@ int rdma_resolve_addr(struct rdma_cm_id
- 		if (dst_addr->sa_family == AF_IB) {
- 			ret = cma_resolve_ib_addr(id_priv);
- 		} else {
-+			/*
-+			 * The FSM can return back to RDMA_CM_ADDR_BOUND after
-+			 * rdma_resolve_ip() is called, eg through the error
-+			 * path in addr_handler(). If this happens the existing
-+			 * request must be canceled before issuing a new one.
-+			 * Since canceling a request is a bit slow and this
-+			 * oddball path is rare, keep track once a request has
-+			 * been issued. The track turns out to be a permanent
-+			 * state since this is the only cancel as it is
-+			 * immediately before rdma_resolve_ip().
-+			 */
-+			if (id_priv->used_resolve_ip)
-+				rdma_addr_cancel(&id->route.addr.dev_addr);
-+			else
-+				id_priv->used_resolve_ip = 1;
- 			ret = rdma_resolve_ip(cma_src_addr(id_priv), dst_addr,
- 					      &id->route.addr.dev_addr,
- 					      timeout_ms, addr_handler,
---- a/drivers/infiniband/core/cma_priv.h
-+++ b/drivers/infiniband/core/cma_priv.h
-@@ -89,6 +89,7 @@ struct rdma_id_private {
- 	u8			reuseaddr;
- 	u8			afonly;
- 	u8			timeout;
-+	u8 used_resolve_ip;
- 	enum ib_gid_type	gid_type;
- 
- 	/*
+-	if ((virt >= PAGE_END) && (virt < VMALLOC_START)) {
++	if (virt < PAGE_OFFSET) {
+ 		pr_warn("BUG: not creating mapping for %pa at 0x%016lx - outside kernel range\n",
+ 			&phys, virt);
+ 		return;
+@@ -448,7 +448,7 @@ void __init create_pgd_mapping(struct mm_struct *mm, phys_addr_t phys,
+ static void update_mapping_prot(phys_addr_t phys, unsigned long virt,
+ 				phys_addr_t size, pgprot_t prot)
+ {
+-	if ((virt >= PAGE_END) && (virt < VMALLOC_START)) {
++	if (virt < PAGE_OFFSET) {
+ 		pr_warn("BUG: not updating mapping for %pa at 0x%016lx - outside kernel range\n",
+ 			&phys, virt);
+ 		return;
+-- 
+2.39.2
+
 
 
