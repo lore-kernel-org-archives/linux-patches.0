@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A2B1ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:45:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B23C433C8;
-	Tue, 25 Jul 2023 11:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22F91ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:45:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F38C433C7;
+	Tue, 25 Jul 2023 11:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285554;
-	bh=9eA43b5hxcwOqZ8FmnCj8mcCmk3oLMDuCQpe1Y0BvpY=;
+	s=korg; t=1690285556;
+	bh=Gitt7Ig/LogD1/MlOHh3EK9qkgT5cECP34HjSASH2EY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yQDgi+NaD6wCW1OTLj/Idthp3RwpDbjjL/WqRKUtcW7YJE7YHB0C4ZqkHWQtX57hN
-	 AR0miILqr+Sm9/nf1j+D3NNFzgJ/hCMqKqt/BN2UA2y0WN6pUy/PL6QNKXA1nKi3mQ
-	 qNHEclXOa12WeA6g6qmEMNCgXD02FoU1UeqiBv60=
+	b=y98TTGdd/0/009h24/UO8gyqHt2lcVBN6MpmgjN7U3g2R4BFxkXgZd/PGBpDp4rXV
+	 myhTCCSkfcntFB4BMzE5ceWrwselVLz4VmGfy0gg3+5czTOtDx6gDogDbITZzReuA2
+	 7Pl56QqApFCxgGGGqDqe74sQfL1Dq88nELo+1kus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>
-Subject: [PATCH 5.4 246/313] PCI: rockchip: Add poll and timeout to wait for PHY PLLs to be locked
-Date: Tue, 25 Jul 2023 12:46:39 +0200
-Message-ID: <20230725104531.714786265@linuxfoundation.org>
+	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 220/313] platform/x86: wmi: move variables
+Date: Tue, 25 Jul 2023 12:46:13 +0200
+Message-ID: <20230725104530.571709994@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,81 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+From: Barnabás Pőcze <pobrn@protonmail.com>
 
-commit 9dd3c7c4c8c3f7f010d9cdb7c3f42506d93c9527 upstream.
+[ Upstream commit f5431bf1e6781e876bdc8ae10fb1e7da6f1aa9b5 ]
 
-The RK3399 PCIe controller should wait until the PHY PLLs are locked.
-Add poll and timeout to wait for PHY PLLs to be locked. If they cannot
-be locked generate error message and jump to error handler. Accessing
-registers in the PHY clock domain when PLLs are not locked causes hang
-The PHY PLLs status is checked through a side channel register.
-This is documented in the TRM section 17.5.8.1 "PCIe Initialization
-Sequence".
+Move some variables in order to keep them
+in the narrowest possible scope.
 
-Link: https://lore.kernel.org/r/20230418074700.1083505-5-rick.wertenbroek@gmail.com
-Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
-Tested-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Barnabás Pőcze <pobrn@protonmail.com>
+Link: https://lore.kernel.org/r/20210904175450.156801-22-pobrn@protonmail.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Stable-dep-of: 028e6e204ace ("platform/x86: wmi: Break possible infinite loop when parsing GUID")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rockchip.c |   17 +++++++++++++++++
- drivers/pci/controller/pcie-rockchip.h |    2 ++
- 2 files changed, 19 insertions(+)
+ drivers/platform/x86/wmi.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/pci/controller/pcie-rockchip.c
-+++ b/drivers/pci/controller/pcie-rockchip.c
-@@ -14,6 +14,7 @@
- #include <linux/clk.h>
- #include <linux/delay.h>
- #include <linux/gpio/consumer.h>
-+#include <linux/iopoll.h>
- #include <linux/of_pci.h>
- #include <linux/phy/phy.h>
- #include <linux/platform_device.h>
-@@ -154,6 +155,12 @@ int rockchip_pcie_parse_dt(struct rockch
- }
- EXPORT_SYMBOL_GPL(rockchip_pcie_parse_dt);
- 
-+#define rockchip_pcie_read_addr(addr) rockchip_pcie_read(rockchip, addr)
-+/* 100 ms max wait time for PHY PLLs to lock */
-+#define RK_PHY_PLL_LOCK_TIMEOUT_US 100000
-+/* Sleep should be less than 20ms */
-+#define RK_PHY_PLL_LOCK_SLEEP_US 1000
-+
- int rockchip_pcie_init_port(struct rockchip_pcie *rockchip)
+diff --git a/drivers/platform/x86/wmi.c b/drivers/platform/x86/wmi.c
+index 41a680b39f9d1..8d1a7923c03b6 100644
+--- a/drivers/platform/x86/wmi.c
++++ b/drivers/platform/x86/wmi.c
+@@ -133,7 +133,6 @@ static const void *find_guid_context(struct wmi_block *wblock,
+ 				      struct wmi_driver *wdriver)
  {
- 	struct device *dev = rockchip->dev;
-@@ -255,6 +262,16 @@ int rockchip_pcie_init_port(struct rockc
- 		}
- 	}
+ 	const struct wmi_device_id *id;
+-	guid_t guid_input;
  
-+	err = readx_poll_timeout(rockchip_pcie_read_addr,
-+				 PCIE_CLIENT_SIDE_BAND_STATUS,
-+				 regs, !(regs & PCIE_CLIENT_PHY_ST),
-+				 RK_PHY_PLL_LOCK_SLEEP_US,
-+				 RK_PHY_PLL_LOCK_TIMEOUT_US);
-+	if (err) {
-+		dev_err(dev, "PHY PLLs could not lock, %d\n", err);
-+		goto err_power_off_phy;
-+	}
+ 	if (wblock == NULL || wdriver == NULL)
+ 		return NULL;
+@@ -142,6 +141,8 @@ static const void *find_guid_context(struct wmi_block *wblock,
+ 
+ 	id = wdriver->id_table;
+ 	while (*id->guid_string) {
++		guid_t guid_input;
 +
- 	/*
- 	 * Please don't reorder the deassert sequence of the following
- 	 * four reset pins.
---- a/drivers/pci/controller/pcie-rockchip.h
-+++ b/drivers/pci/controller/pcie-rockchip.h
-@@ -37,6 +37,8 @@
- #define   PCIE_CLIENT_MODE_EP            HIWORD_UPDATE(0x0040, 0)
- #define   PCIE_CLIENT_GEN_SEL_1		  HIWORD_UPDATE(0x0080, 0)
- #define   PCIE_CLIENT_GEN_SEL_2		  HIWORD_UPDATE_BIT(0x0080)
-+#define PCIE_CLIENT_SIDE_BAND_STATUS	(PCIE_CLIENT_BASE + 0x20)
-+#define   PCIE_CLIENT_PHY_ST			BIT(12)
- #define PCIE_CLIENT_DEBUG_OUT_0		(PCIE_CLIENT_BASE + 0x3c)
- #define   PCIE_CLIENT_DEBUG_LTSSM_MASK		GENMASK(5, 0)
- #define   PCIE_CLIENT_DEBUG_LTSSM_L1		0x18
+ 		if (guid_parse(id->guid_string, &guid_input))
+ 			continue;
+ 		if (guid_equal(&wblock->gblock.guid, &guid_input))
+@@ -612,7 +613,6 @@ acpi_status wmi_get_event_data(u32 event, struct acpi_buffer *out)
+ {
+ 	struct acpi_object_list input;
+ 	union acpi_object params[1];
+-	struct guid_block *gblock;
+ 	struct wmi_block *wblock;
+ 
+ 	input.count = 1;
+@@ -621,7 +621,7 @@ acpi_status wmi_get_event_data(u32 event, struct acpi_buffer *out)
+ 	params[0].integer.value = event;
+ 
+ 	list_for_each_entry(wblock, &wmi_block_list, list) {
+-		gblock = &wblock->gblock;
++		struct guid_block *gblock = &wblock->gblock;
+ 
+ 		if ((gblock->flags & ACPI_WMI_EVENT) &&
+ 			(gblock->notify_id == event))
+@@ -1278,12 +1278,11 @@ acpi_wmi_ec_space_handler(u32 function, acpi_physical_address address,
+ static void acpi_wmi_notify_handler(acpi_handle handle, u32 event,
+ 				    void *context)
+ {
+-	struct guid_block *block;
+ 	struct wmi_block *wblock;
+ 	bool found_it = false;
+ 
+ 	list_for_each_entry(wblock, &wmi_block_list, list) {
+-		block = &wblock->gblock;
++		struct guid_block *block = &wblock->gblock;
+ 
+ 		if (wblock->acpi_device->handle == handle &&
+ 		    (block->flags & ACPI_WMI_EVENT) &&
+-- 
+2.39.2
+
 
 
