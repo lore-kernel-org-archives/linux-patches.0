@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55951ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:22:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683EFC433C9;
-	Tue, 25 Jul 2023 11:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E8D1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:22:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE3AC433C7;
+	Tue, 25 Jul 2023 11:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284137;
-	bh=mf/xt/cNE7gpiOuscCxORewUPKa6bd+vlyKI/hcXJSo=;
+	s=korg; t=1690284140;
+	bh=gbepNwzUiPT8KkoIjbwymTet91H+gx3Nw+PekQtK9vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q3hyyBu8bZW7qkIYr5ondgGLTCiNvLYYTbUMIvumC3+wDpJc6ii6j79+3Rp7l0Hrp
-	 guz/3MZqLs/J3Me2AClGNf6er5q6nQHEpmwxYV3aVB5J9feChP/miIjXlTzASLb+Lw
-	 CNsGrsZ67Lj3GZ8X2Br20yOviRNdw59Yt4aqMEDY=
+	b=dmB4kvWGeP9M+ifUwCSOl9YVID6BVluhAJHE/o0UUiVqn5lLBTYHvbOPauzFCgOip
+	 hnLJxSHThDxVdq94hOVNraBAIQ3TxKnd4dHa4/Qw4onqFocRs6i4zz2bR3b1fydNJH
+	 KB23OXGyL+0PO7WGr7/R1cg/xuc11CdRSGT9os2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Rob Landley <rob@landley.net>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 219/509] w1: fix loop in w1_fini()
-Date: Tue, 25 Jul 2023 12:42:38 +0200
-Message-ID: <20230725104603.778367197@linuxfoundation.org>
+Subject: [PATCH 5.10 220/509] sh: j2: Use ioremap() to translate device tree address into kernel memory
+Date: Tue, 25 Jul 2023 12:42:39 +0200
+Message-ID: <20230725104603.827289228@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,41 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@oracle.com>
+From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 
-[ Upstream commit 83f3fcf96fcc7e5405b37d9424c7ef26bfa203f8 ]
+[ Upstream commit bc9d1f0cecd2407cfb2364a7d4be2f52d1d46a9d ]
 
-The __w1_remove_master_device() function calls:
+Addresses the following warning when building j2_defconfig:
 
-	list_del(&dev->w1_master_entry);
+arch/sh/kernel/cpu/sh2/probe.c: In function 'scan_cache':
+arch/sh/kernel/cpu/sh2/probe.c:24:16: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+   24 |  j2_ccr_base = (u32 __iomem *)of_flat_dt_translate_address(node);
+      |
 
-So presumably this can cause an endless loop.
-
-Fixes: 7785925dd8e0 ("[PATCH] w1: cleanups.")
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: 5a846abad07f ("sh: add support for J-Core J2 processor")
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Rob Landley <rob@landley.net>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/r/20230503125746.331835-1-glaubitz@physik.fu-berlin.de
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/w1/w1.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/sh/kernel/cpu/sh2/probe.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/w1/w1.c b/drivers/w1/w1.c
-index 15842377c8d2c..1c1a9438f4b6b 100644
---- a/drivers/w1/w1.c
-+++ b/drivers/w1/w1.c
-@@ -1228,10 +1228,10 @@ static int __init w1_init(void)
+diff --git a/arch/sh/kernel/cpu/sh2/probe.c b/arch/sh/kernel/cpu/sh2/probe.c
+index d342ea08843f6..70a07f4f2142f 100644
+--- a/arch/sh/kernel/cpu/sh2/probe.c
++++ b/arch/sh/kernel/cpu/sh2/probe.c
+@@ -21,7 +21,7 @@ static int __init scan_cache(unsigned long node, const char *uname,
+ 	if (!of_flat_dt_is_compatible(node, "jcore,cache"))
+ 		return 0;
  
- static void __exit w1_fini(void)
- {
--	struct w1_master *dev;
-+	struct w1_master *dev, *n;
+-	j2_ccr_base = (u32 __iomem *)of_flat_dt_translate_address(node);
++	j2_ccr_base = ioremap(of_flat_dt_translate_address(node), 4);
  
- 	/* Set netlink removal messages and some cleanup */
--	list_for_each_entry(dev, &w1_masters, w1_master_entry)
-+	list_for_each_entry_safe(dev, n, &w1_masters, w1_master_entry)
- 		__w1_remove_master_device(dev);
- 
- 	w1_fini_netlink();
+ 	return 1;
+ }
 -- 
 2.39.2
 
