@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6EAC14263
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:54:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67688C433C8;
-	Tue, 25 Jul 2023 10:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A777214A82
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:54:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2768BC433C7;
+	Tue, 25 Jul 2023 10:54:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282448;
-	bh=Tuzo1u6VAAg/sI8IFZHMD495M3UInn5k7zFaeALxlUo=;
+	s=korg; t=1690282451;
+	bh=LH2hwoUFKM2bcWoEr3Ue+OY/SGHBF6JkUd2BHQ0tcIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u6XvgF9o74souYBcw/kMIDQLMkUkWSpbOcsOe7WVwgrdQkXWrF+6ilTGL8rDB3yhS
-	 Sck3W3Jux9k2pgoar9/CfjPDmZ5DY9anQhHoSzaVuC90VEELqlOpg5wb//cOz30OxQ
-	 4aVpnNMiooIgMHNoRv22Xxi4m4iYbBBCAWsTp3Bg=
+	b=CojgOYqeg2gXiResH72mfOywpDy+OfiKZXx7nFc4rJzG9B8AjB5erxtrv2v45Vr4y
+	 z1cjiQmMuTGMs5IKWQDqbXCB8JFE6Y63ujsmDG+GoUwiFE+lTrtKDq61p1BeMGC/ws
+	 QfLq8YRCbm5+K0frk0mCRN2EgZqApur8zmvuCktE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Christoph Hellwig <hch@lst.de>,
-	David Sterba <dsterba@suse.com>,
+	Mukesh Sisodiya <mukesh.sisodiya@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 094/227] btrfs: dont check PageError in __extent_writepage
-Date: Tue, 25 Jul 2023 12:44:21 +0200
-Message-ID: <20230725104518.617120275@linuxfoundation.org>
+Subject: [PATCH 6.4 127/227] wifi: iwlwifi: mvm: Add NULL check before dereferencing the pointer
+Date: Tue, 25 Jul 2023 12:44:54 +0200
+Message-ID: <20230725104520.075809336@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -36,77 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Mukesh Sisodiya <mukesh.sisodiya@intel.com>
 
-[ Upstream commit 3e92499e3b004baffb479d61e191b41b604ece9a ]
+[ Upstream commit 7dd50fd5478056929a012c6bf8b3c6f87c7e9e87 ]
 
-__extent_writepage currenly sets PageError whenever any error happens,
-and the also checks for PageError to decide if to call error handling.
-This leads to very unclear responsibility for cleaning up on errors.
-In the VM and generic writeback helpers the basic idea is that once
-I/O is fired off all error handling responsibility is delegated to the
-end I/O handler.  But if that end I/O handler sets the PageError bit,
-and the submitter checks it, the bit could in some cases leak into the
-submission context for fast enough I/O.
+While vif pointers are protected by the corresponding "*active"
+fields, static checkers can get confused sometimes. Add an explicit
+check.
 
-Fix this by simply not checking PageError and just using the local
-ret variable to check for submission errors.  This also fundamentally
-solves the long problem documented in a comment in __extent_writepage
-by never leaking the error bit into the submission context.
-
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Mukesh Sisodiya <mukesh.sisodiya@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230614154951.78749ae91fb5.Id3c05d13eeee6638f0930f750e93fb928d5c9dee@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.c | 33 +--------------------------------
- 1 file changed, 1 insertion(+), 32 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/power.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index e3ae55d8bae14..a37a6587efaf0 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -1592,38 +1592,7 @@ static int __extent_writepage(struct page *page, struct btrfs_bio_ctrl *bio_ctrl
- 		set_page_writeback(page);
- 		end_page_writeback(page);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/power.c b/drivers/net/wireless/intel/iwlwifi/mvm/power.c
+index ac1dae52556f8..19839cc44eb3d 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/power.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/power.c
+@@ -647,30 +647,32 @@ static void iwl_mvm_power_set_pm(struct iwl_mvm *mvm,
+ 		return;
+ 
+ 	/* enable PM on bss if bss stand alone */
+-	if (vifs->bss_active && !vifs->p2p_active && !vifs->ap_active) {
++	if (bss_mvmvif && vifs->bss_active && !vifs->p2p_active &&
++	    !vifs->ap_active) {
+ 		bss_mvmvif->pm_enabled = true;
+ 		return;
  	}
--	/*
--	 * Here we used to have a check for PageError() and then set @ret and
--	 * call end_extent_writepage().
--	 *
--	 * But in fact setting @ret here will cause different error paths
--	 * between subpage and regular sectorsize.
--	 *
--	 * For regular page size, we never submit current page, but only add
--	 * current page to current bio.
--	 * The bio submission can only happen in next page.
--	 * Thus if we hit the PageError() branch, @ret is already set to
--	 * non-zero value and will not get updated for regular sectorsize.
--	 *
--	 * But for subpage case, it's possible we submit part of current page,
--	 * thus can get PageError() set by submitted bio of the same page,
--	 * while our @ret is still 0.
--	 *
--	 * So here we unify the behavior and don't set @ret.
--	 * Error can still be properly passed to higher layer as page will
--	 * be set error, here we just don't handle the IO failure.
--	 *
--	 * NOTE: This is just a hotfix for subpage.
--	 * The root fix will be properly ending ordered extent when we hit
--	 * an error during writeback.
--	 *
--	 * But that needs a bigger refactoring, as we not only need to grab the
--	 * submitted OE, but also need to know exactly at which bytenr we hit
--	 * the error.
--	 * Currently the full page based __extent_writepage_io() is not
--	 * capable of that.
--	 */
--	if (PageError(page))
-+	if (ret)
- 		end_extent_writepage(page, ret, page_start, page_end);
- 	unlock_page(page);
- 	ASSERT(ret <= 0);
+ 
+ 	/* enable PM on p2p if p2p stand alone */
+-	if (vifs->p2p_active && !vifs->bss_active && !vifs->ap_active) {
++	if (p2p_mvmvif && vifs->p2p_active && !vifs->bss_active &&
++	    !vifs->ap_active) {
+ 		p2p_mvmvif->pm_enabled = true;
+ 		return;
+ 	}
+ 
+-	if (vifs->bss_active && vifs->p2p_active)
++	if (p2p_mvmvif && bss_mvmvif && vifs->bss_active && vifs->p2p_active)
+ 		client_same_channel =
+ 			iwl_mvm_have_links_same_channel(bss_mvmvif, p2p_mvmvif);
+ 
+-	if (vifs->bss_active && vifs->ap_active)
++	if (bss_mvmvif && ap_mvmvif && vifs->bss_active && vifs->ap_active)
+ 		ap_same_channel =
+ 			iwl_mvm_have_links_same_channel(bss_mvmvif, ap_mvmvif);
+ 
+ 	/* clients are not stand alone: enable PM if DCM */
+ 	if (!(client_same_channel || ap_same_channel)) {
+-		if (vifs->bss_active)
++		if (bss_mvmvif && vifs->bss_active)
+ 			bss_mvmvif->pm_enabled = true;
+-		if (vifs->p2p_active)
++		if (p2p_mvmvif && vifs->p2p_active)
+ 			p2p_mvmvif->pm_enabled = true;
+ 		return;
+ 	}
 -- 
 2.39.2
 
