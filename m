@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96ED1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:31:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB49C433C7;
-	Tue, 25 Jul 2023 11:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1F91ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:31:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83B7C433C7;
+	Tue, 25 Jul 2023 11:31:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284715;
-	bh=qYbDD+a9cXTp5yjAjoNjoJZIPLLE/xIlfna+VD73tWc=;
+	s=korg; t=1690284718;
+	bh=mHqtrWmHQvosHAEQF48HnB7AOxcHyS2luVsj9VQzs10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LWhDjYkoECwB4ctA8u8VYQv1KoqM886uW2XG6fj5zNkSGV+6MIZsIGTn1N9R24JRp
-	 4pG63hO0i8kTmSp3Rs+6uwWy6jM/wvbmeLQpEsJnvO/ZTE/ZuZVnaQPSJfHQI5i1XV
-	 fRbMR4guLh4otjj7vW2RQoGFroy5mCmP4w46AYWU=
+	b=cc1SMRiiOLpZ6DZKP6yZgyD32C9E1+frcaT5+wpGz8v12kEQILYH4R/G3xk6K/coW
+	 LSky1mIiPODpzwbpJMZrY2qI5yvHkYQe4S2dhsaUlpMRNM7GhlsWyMWquKyv/92aJF
+	 uRqPjptNb0wJTv1DNkZafh+YuIiN/cixmtTl7hy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+7937ba6a50bdd00fffdf@syzkaller.appspotmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Zhong Jinghua <zhongjinghua@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 455/509] debugobjects: Recheck debug_objects_enabled before reporting
-Date: Tue, 25 Jul 2023 12:46:34 +0200
-Message-ID: <20230725104614.564398429@linuxfoundation.org>
+Subject: [PATCH 5.10 456/509] nbd: Add the maximum limit of allocated index in nbd_dev_add
+Date: Tue, 25 Jul 2023 12:46:35 +0200
+Message-ID: <20230725104614.613420470@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,72 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Zhong Jinghua <zhongjinghua@huawei.com>
 
-[ Upstream commit 8b64d420fe2450f82848178506d3e3a0bd195539 ]
+[ Upstream commit f12bc113ce904777fd6ca003b473b427782b3dde ]
 
-syzbot is reporting false a positive ODEBUG message immediately after
-ODEBUG was disabled due to OOM.
+If the index allocated by idr_alloc greater than MINORMASK >> part_shift,
+the device number will overflow, resulting in failure to create a block
+device.
 
-  [ 1062.309646][T22911] ODEBUG: Out of memory. ODEBUG disabled
-  [ 1062.886755][ T5171] ------------[ cut here ]------------
-  [ 1062.892770][ T5171] ODEBUG: assert_init not available (active state 0) object: ffffc900056afb20 object type: timer_list hint: process_timeout+0x0/0x40
+Fix it by imiting the size of the max allocation.
 
-  CPU 0 [ T5171]                CPU 1 [T22911]
-  --------------                --------------
-  debug_object_assert_init() {
-    if (!debug_objects_enabled)
-      return;
-    db = get_bucket(addr);
-                                lookup_object_or_alloc() {
-                                  debug_objects_enabled = 0;
-                                  return NULL;
-                                }
-                                debug_objects_oom() {
-                                  pr_warn("Out of memory. ODEBUG disabled\n");
-                                  // all buckets get emptied here, and
-                                }
-    lookup_object_or_alloc(addr, db, descr, false, true) {
-      // this bucket is already empty.
-      return ERR_PTR(-ENOENT);
-    }
-    // Emits false positive warning.
-    debug_print_object(&o, "assert_init");
-  }
-
-Recheck debug_object_enabled in debug_print_object() to avoid that.
-
-Reported-by: syzbot <syzbot+7937ba6a50bdd00fffdf@syzkaller.appspotmail.com>
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/492fe2ae-5141-d548-ebd5-62f5fe2e57f7@I-love.SAKURA.ne.jp
-Closes: https://syzkaller.appspot.com/bug?extid=7937ba6a50bdd00fffdf
+Signed-off-by: Zhong Jinghua <zhongjinghua@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20230605122159.2134384-1-zhongjinghua@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/debugobjects.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/block/nbd.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/lib/debugobjects.c b/lib/debugobjects.c
-index 4c39678c03ee5..4dd9283f6fea0 100644
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -501,6 +501,15 @@ static void debug_print_object(struct debug_obj *obj, char *msg)
- 	const struct debug_obj_descr *descr = obj->descr;
- 	static int limit;
- 
-+	/*
-+	 * Don't report if lookup_object_or_alloc() by the current thread
-+	 * failed because lookup_object_or_alloc()/debug_objects_oom() by a
-+	 * concurrent thread turned off debug_objects_enabled and cleared
-+	 * the hash buckets.
-+	 */
-+	if (!debug_objects_enabled)
-+		return;
-+
- 	if (limit < 5 && descr != descr_test) {
- 		void *hint = descr->debug_hint ?
- 			descr->debug_hint(obj->object) : NULL;
+diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
+index b6940f0a9c905..e0f805ca0e727 100644
+--- a/drivers/block/nbd.c
++++ b/drivers/block/nbd.c
+@@ -1723,7 +1723,8 @@ static int nbd_dev_add(int index)
+ 		if (err == -ENOSPC)
+ 			err = -EEXIST;
+ 	} else {
+-		err = idr_alloc(&nbd_index_idr, nbd, 0, 0, GFP_KERNEL);
++		err = idr_alloc(&nbd_index_idr, nbd, 0,
++				(MINORMASK >> part_shift) + 1, GFP_KERNEL);
+ 		if (err >= 0)
+ 			index = err;
+ 	}
 -- 
 2.39.2
 
