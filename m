@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3D51D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:07:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE9DC433C8;
-	Tue, 25 Jul 2023 11:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B742E1D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:07:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39785C433C8;
+	Tue, 25 Jul 2023 11:07:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283244;
-	bh=hMSmt+hKimVaFa890FWl4JHL/3sItptPduskqAlanqs=;
+	s=korg; t=1690283247;
+	bh=CFOA766HsT/aL7tCzLKgx7YVm1zzdnfNA+sVuARSn9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IYzIptfASg5K4DdFilNLjA0W4XcxBwAh2T9D61I8fnmypw7f9gLhnpw78P3+SsP/h
-	 4SVGfKeh6Aw8GlkQc45+wilAL5Z+lhPQb0TdkQrPPpUX2Hcf+4Iy3oMFVkWDI+VRQw
-	 +oCHSGnxZN+sJu0F+6UAPWjCLNv0R3VezaK/vJ2U=
+	b=Ez7HZJ3yOMy/kwzwq3p7vIRUmxMdzLa3Uv8ljn5kmxgbaOLAF7jc4WMQ4xtvLklpM
+	 cpiZEhT/Cj5wEzDu8f2rMDSFKp99RjocctJbfZOoeDz1dehGXYKiT1X+6RCvSXvr11
+	 CmqXKTd52b3x0SHKjNmzFV/jFSYXklIv7K/St8kM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Khalfella <mkhalfella@purestorage.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 165/183] tracing/histograms: Return an error if we fail to add histogram to hist_vars list
-Date: Tue, 25 Jul 2023 12:46:33 +0200
-Message-ID: <20230725104513.730424482@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 156/183] tcp: annotate data-races around tp->keepalive_probes
+Date: Tue, 25 Jul 2023 12:46:24 +0200
+Message-ID: <20230725104513.451284456@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -34,38 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mohamed Khalfella <mkhalfella@purestorage.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 4b8b3905165ef98386a3c06f196c85d21292d029 upstream.
+[ Upstream commit 6e5e1de616bf5f3df1769abc9292191dfad9110a ]
 
-Commit 6018b585e8c6 ("tracing/histograms: Add histograms to hist_vars if
-they have referenced variables") added a check to fail histogram creation
-if save_hist_vars() failed to add histogram to hist_vars list. But the
-commit failed to set ret to failed return code before jumping to
-unregister histogram, fix it.
+do_tcp_getsockopt() reads tp->keepalive_probes while another cpu
+might change its value.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230714203341.51396-1-mkhalfella@purestorage.com
-
-Cc: stable@vger.kernel.org
-Fixes: 6018b585e8c6 ("tracing/histograms: Add histograms to hist_vars if they have referenced variables")
-Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230719212857.3943972-6-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/tcp.h | 9 +++++++--
+ net/ipv4/tcp.c    | 5 +++--
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -6560,7 +6560,8 @@ static int event_hist_trigger_parse(stru
- 		goto out_unreg;
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index f39c44cbdfe62..9733d8e4f10af 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -1535,9 +1535,14 @@ static inline int keepalive_time_when(const struct tcp_sock *tp)
+ static inline int keepalive_probes(const struct tcp_sock *tp)
+ {
+ 	struct net *net = sock_net((struct sock *)tp);
++	int val;
++
++	/* Paired with WRITE_ONCE() in tcp_sock_set_keepcnt()
++	 * and do_tcp_setsockopt().
++	 */
++	val = READ_ONCE(tp->keepalive_probes);
  
- 	if (has_hist_vars(hist_data) || hist_data->n_var_refs) {
--		if (save_hist_vars(hist_data))
-+		ret = save_hist_vars(hist_data);
-+		if (ret)
- 			goto out_unreg;
- 	}
+-	return tp->keepalive_probes ? :
+-		READ_ONCE(net->ipv4.sysctl_tcp_keepalive_probes);
++	return val ? : READ_ONCE(net->ipv4.sysctl_tcp_keepalive_probes);
+ }
  
+ static inline u32 keepalive_time_elapsed(const struct tcp_sock *tp)
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index d19cfeb78392d..7d75928ea0f9c 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -3463,7 +3463,8 @@ int tcp_sock_set_keepcnt(struct sock *sk, int val)
+ 		return -EINVAL;
+ 
+ 	lock_sock(sk);
+-	tcp_sk(sk)->keepalive_probes = val;
++	/* Paired with READ_ONCE() in keepalive_probes() */
++	WRITE_ONCE(tcp_sk(sk)->keepalive_probes, val);
+ 	release_sock(sk);
+ 	return 0;
+ }
+@@ -3671,7 +3672,7 @@ int do_tcp_setsockopt(struct sock *sk, int level, int optname,
+ 		if (val < 1 || val > MAX_TCP_KEEPCNT)
+ 			err = -EINVAL;
+ 		else
+-			tp->keepalive_probes = val;
++			WRITE_ONCE(tp->keepalive_probes, val);
+ 		break;
+ 	case TCP_SYNCNT:
+ 		if (val < 1 || val > MAX_TCP_SYNCNT)
+-- 
+2.39.2
+
 
 
