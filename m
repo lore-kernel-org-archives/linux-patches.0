@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B742E1D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:07:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39785C433C8;
-	Tue, 25 Jul 2023 11:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1671D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:07:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB414C433C8;
+	Tue, 25 Jul 2023 11:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283247;
-	bh=CFOA766HsT/aL7tCzLKgx7YVm1zzdnfNA+sVuARSn9o=;
+	s=korg; t=1690283250;
+	bh=/6LNG1D1+ecXz36nMmKvtcpOR2TM2aIryufo85/JiE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ez7HZJ3yOMy/kwzwq3p7vIRUmxMdzLa3Uv8ljn5kmxgbaOLAF7jc4WMQ4xtvLklpM
-	 cpiZEhT/Cj5wEzDu8f2rMDSFKp99RjocctJbfZOoeDz1dehGXYKiT1X+6RCvSXvr11
-	 CmqXKTd52b3x0SHKjNmzFV/jFSYXklIv7K/St8kM=
+	b=V/uEhpfzwEeHPUE33AjbAzBkMBsQacL21PZhwYAAbTiHsdXpT2mI95P0Fb9dfwwP+
+	 HzPLIz3796l7aszFhVefY8tvMTtaTwiAXumVgESUaiTLiETkGmqUpI6bTbvLunsxLS
+	 1vf/MT9klCUrAQSBKluNmSpsH6xV0b/qCpnYy3+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 156/183] tcp: annotate data-races around tp->keepalive_probes
-Date: Tue, 25 Jul 2023 12:46:24 +0200
-Message-ID: <20230725104513.451284456@linuxfoundation.org>
+	Kailang Yang <kailang@realtek.com>,
+	"Joseph C. Sible" <josephcsible@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 01/78] ALSA: hda/realtek - remove 3k pull low procedure
+Date: Tue, 25 Jul 2023 12:45:52 +0200
+Message-ID: <20230725104451.337387537@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
-References: <20230725104507.756981058@linuxfoundation.org>
+In-Reply-To: <20230725104451.275227789@linuxfoundation.org>
+References: <20230725104451.275227789@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,69 +37,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit 6e5e1de616bf5f3df1769abc9292191dfad9110a ]
+commit 69ea4c9d02b7947cdd612335a61cc1a02e544ccd upstream.
 
-do_tcp_getsockopt() reads tp->keepalive_probes while another cpu
-might change its value.
+This was the ALC283 depop procedure.
+Maybe this procedure wasn't suitable with new codec.
+So, let us remove it. But HP 15z-fc000 must do 3k pull low. If it
+reboot with plugged headset,
+it will have errors show don't find codec error messages. Run 3k pull
+low will solve issues.
+So, let AMD chipset will run this for workarround.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230719212857.3943972-6-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 5aec98913095 ("ALSA: hda/realtek - ALC236 headset MIC recording issue")
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Cc: <stable@vger.kernel.org>
+Reported-by: Joseph C. Sible <josephcsible@gmail.com>
+Closes: https://lore.kernel.org/r/CABpewhE4REgn9RJZduuEU6Z_ijXNeQWnrxO1tg70Gkw=F8qNYg@mail.gmail.com/
+Link: https://lore.kernel.org/r/4678992299664babac4403d9978e7ba7@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/tcp.h | 9 +++++++--
- net/ipv4/tcp.c    | 5 +++--
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ sound/pci/hda/patch_realtek.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index f39c44cbdfe62..9733d8e4f10af 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -1535,9 +1535,14 @@ static inline int keepalive_time_when(const struct tcp_sock *tp)
- static inline int keepalive_probes(const struct tcp_sock *tp)
- {
- 	struct net *net = sock_net((struct sock *)tp);
-+	int val;
-+
-+	/* Paired with WRITE_ONCE() in tcp_sock_set_keepcnt()
-+	 * and do_tcp_setsockopt().
-+	 */
-+	val = READ_ONCE(tp->keepalive_probes);
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -120,6 +120,7 @@ struct alc_spec {
+ 	unsigned int ultra_low_power:1;
+ 	unsigned int has_hs_key:1;
+ 	unsigned int no_internal_mic_pin:1;
++	unsigned int en_3kpull_low:1;
  
--	return tp->keepalive_probes ? :
--		READ_ONCE(net->ipv4.sysctl_tcp_keepalive_probes);
-+	return val ? : READ_ONCE(net->ipv4.sysctl_tcp_keepalive_probes);
- }
+ 	/* for PLL fix */
+ 	hda_nid_t pll_nid;
+@@ -3616,6 +3617,7 @@ static void alc256_shutup(struct hda_cod
+ 	if (!hp_pin)
+ 		hp_pin = 0x21;
  
- static inline u32 keepalive_time_elapsed(const struct tcp_sock *tp)
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index d19cfeb78392d..7d75928ea0f9c 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -3463,7 +3463,8 @@ int tcp_sock_set_keepcnt(struct sock *sk, int val)
- 		return -EINVAL;
++	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
+ 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
  
- 	lock_sock(sk);
--	tcp_sk(sk)->keepalive_probes = val;
-+	/* Paired with READ_ONCE() in keepalive_probes() */
-+	WRITE_ONCE(tcp_sk(sk)->keepalive_probes, val);
- 	release_sock(sk);
- 	return 0;
- }
-@@ -3671,7 +3672,7 @@ int do_tcp_setsockopt(struct sock *sk, int level, int optname,
- 		if (val < 1 || val > MAX_TCP_KEEPCNT)
- 			err = -EINVAL;
- 		else
--			tp->keepalive_probes = val;
-+			WRITE_ONCE(tp->keepalive_probes, val);
+ 	if (hp_pin_sense)
+@@ -3632,8 +3634,7 @@ static void alc256_shutup(struct hda_cod
+ 	/* If disable 3k pulldown control for alc257, the Mic detection will not work correctly
+ 	 * when booting with headset plugged. So skip setting it for the codec alc257
+ 	 */
+-	if (codec->core.vendor_id != 0x10ec0236 &&
+-	    codec->core.vendor_id != 0x10ec0257)
++	if (spec->en_3kpull_low)
+ 		alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
+ 
+ 	if (!spec->no_shutup_pins)
+@@ -10146,6 +10147,8 @@ static int patch_alc269(struct hda_codec
+ 		spec->shutup = alc256_shutup;
+ 		spec->init_hook = alc256_init;
+ 		spec->gen.mixer_nid = 0; /* ALC256 does not have any loopback mixer path */
++		if (codec->bus->pci->vendor == PCI_VENDOR_ID_AMD)
++			spec->en_3kpull_low = true;
  		break;
- 	case TCP_SYNCNT:
- 		if (val < 1 || val > MAX_TCP_SYNCNT)
--- 
-2.39.2
-
+ 	case 0x10ec0257:
+ 		spec->codec_variant = ALC269_TYPE_ALC257;
 
 
