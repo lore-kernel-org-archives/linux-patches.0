@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F071EA72
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:49:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852A0C433C7;
-	Tue, 25 Jul 2023 10:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C904A1EA72
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:49:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC85C433C8;
+	Tue, 25 Jul 2023 10:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282179;
-	bh=GZQE/dUV8fdTiQPsmFVhYmZtTkdqJkiPLIUXQKPkJ84=;
+	s=korg; t=1690282182;
+	bh=mT/9TBZTj5ExxycItBcyg1vhw2lyBctivTPlTSmjo0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VniHKW/bk3J0OH6jyP11Ac2QBtFPNeU1Nt3sIlnXSSmY3X07kLpQYVV47iEnT21R7
-	 V9jQrXUKQ9NrddHoEt4TVmsHp2OlWVfKWcAbFH0lQmMBnZ5jfdN1uAFEuLe2GL8ln7
-	 W5sAwFXilPMchCc0rrMx7hxxu9s+bdpLkpfnhJ1k=
+	b=1SNPlQcK9XgylY69WF5MXCfP3rGseAIDYh44/cQ/+/d8x+wOHDahEjeBYdmuymif5
+	 ffhGsyLoCW3FVPY6Z9fs91zRYhF8Uw+ShEBxXr3roJ5ONprMI+IKB6C4zt5dve4zQB
+	 Qe8nKIJzmGa88ga3epnJ5gD6u6a5P273z81AL0Xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	David Hildenbrand <david@redhat.com>,
+	Shuah Khan <shuah@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.4 008/227] maple_tree: fix node allocation testing on 32 bit
-Date: Tue, 25 Jul 2023 12:42:55 +0200
-Message-ID: <20230725104515.136899892@linuxfoundation.org>
+Subject: [PATCH 6.4 009/227] selftests/mm: mkdirty: fix incorrect position of #endif
+Date: Tue, 25 Jul 2023 12:42:56 +0200
+Message-ID: <20230725104515.168067875@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -34,40 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liam R. Howlett <Liam.Howlett@oracle.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-commit ef5c3de5211b5a3a8102b25aa83eb4cde65ac2fd upstream.
+commit 25b5949c30938c7f26dbadc948b491e0e0811c78 upstream.
 
-Internal node counting was altered and the 64 bit test was updated,
-however the 32bit test was missed.
+The #endif is the wrong side of a } causing a build failure when
+__NR_userfaultfd is not defined.  Fix this by moving the #end to enclose
+the }
 
-Restore the 32bit test to a functional state.
-
-Link: https://lore.kernel.org/linux-mm/CAMuHMdV4T53fOw7VPoBgPR7fP6RYqf=CBhD_y_vOg53zZX_DnA@mail.gmail.com/
-Link: https://lkml.kernel.org/r/20230712173916.168805-2-Liam.Howlett@oracle.com
-Fixes: 541e06b772c1 ("maple_tree: remove GFP_ZERO from kmem_cache_alloc() and kmem_cache_alloc_bulk()")
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Link: https://lkml.kernel.org/r/20230712134648.456349-1-colin.i.king@gmail.com
+Fixes: 9eac40fc0cc7 ("selftests/mm: mkdirty: test behavior of (pte|pmd)_mkdirty on VMAs without write permissions")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Cc: Shuah Khan <shuah@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/radix-tree/maple.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/mm/mkdirty.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/radix-tree/maple.c
-+++ b/tools/testing/radix-tree/maple.c
-@@ -206,9 +206,9 @@ static noinline void check_new_node(stru
- 				e = i - 1;
- 		} else {
- 			if (i >= 4)
--				e = i - 4;
--			else if (i == 3)
--				e = i - 2;
-+				e = i - 3;
-+			else if (i >= 1)
-+				e = i - 1;
- 			else
- 				e = 0;
- 		}
+--- a/tools/testing/selftests/mm/mkdirty.c
++++ b/tools/testing/selftests/mm/mkdirty.c
+@@ -321,8 +321,8 @@ close_uffd:
+ munmap:
+ 	munmap(dst, pagesize);
+ 	free(src);
+-#endif /* __NR_userfaultfd */
+ }
++#endif /* __NR_userfaultfd */
+ 
+ int main(void)
+ {
 
 
