@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8043915AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:51:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00627C433C7;
-	Tue, 25 Jul 2023 10:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AF615AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:51:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEBE3C433C7;
+	Tue, 25 Jul 2023 10:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282310;
-	bh=oJGWT27rp3FxOi80Utut0owPSONAljeUEAlP0O5vah8=;
+	s=korg; t=1690282313;
+	bh=ukGA1Vff2vSyrYcpTgOyWEON3Kp/HGerFiKFo+6iV8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KHW8CI0NRxqnN+RnrK3WD3w4xUrVoGK0X3cCb+eq1kve4rSEVL9dQ+6jZUhW93rep
-	 kRxA0uosTMoL7XZIbS+TvW/yG83YB+7LvxbSv4nTsgmTQmkZsntR2tJRyFyQNuLBFb
-	 ReJKwTFDqypuFY1B+HcgLKjVQbd43rfuTLIxRSLo=
+	b=tCIimUr1WQVvboClzuNss1IQ8JEOtl8Q+l5NPfXpWY4n+GlpYoUTHSVyMUS81u+M9
+	 6+cJ+qMGcoVnQh71uJfqIYXu8ZmxI7M4VYs1ShwR6Pcl47W3VTSpwzQVX4uMc1Maf4
+	 xtKOhJDLWoYlkUuRjSSvrDbTnLZx0+er4AGr7FQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Anderson <ruinairas1992@gmail.com>,
-	Philip Mueller <philm@manjaro.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+853a6f4dfa3cf37d3aea@syzkaller.appspotmail.com,
+	Yogesh <yogi.kernel@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 083/227] [PATCH AUTOSEL 5.4 08/12] ALSA: hda/realtek: Add quirks for ROG ALLY CS35l41 audio
-Date: Tue, 25 Jul 2023 12:44:10 +0200
-Message-ID: <20230725104518.185233473@linuxfoundation.org>
+Subject: [PATCH 6.4 084/227] [PATCH AUTOSEL 5.4 09/12] fs: jfs: Fix UBSAN: array-index-out-of-bounds in dbAllocDmapLev
+Date: Tue, 25 Jul 2023 12:44:11 +0200
+Message-ID: <20230725104518.234792129@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -36,89 +36,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-[ Upstream commit 724418b84e6248cd27599607b7e5fac365b8e3f5 ]
+[ Upstream commit 4e302336d5ca1767a06beee7596a72d3bdc8d983 ]
 
-This requires a patched ACPI table or a firmware from ASUS to work because
-the system does not come with the _DSD field for the CSC3551.
+Syzkaller reported the following issue:
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217550
-Signed-off-by: Matthew Anderson <ruinairas1992@gmail.com>
-Tested-by: Philip Mueller <philm@manjaro.org>
-Link: https://lore.kernel.org/r/20230621161714.9442-1-ruinairas1992@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+UBSAN: array-index-out-of-bounds in fs/jfs/jfs_dmap.c:1965:6
+index -84 is out of range for type 's8[341]' (aka 'signed char[341]')
+CPU: 1 PID: 4995 Comm: syz-executor146 Not tainted 6.4.0-rc6-syzkaller-00037-gb6dad5178cea #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/27/2023
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x1e7/0x2d0 lib/dump_stack.c:106
+ ubsan_epilogue lib/ubsan.c:217 [inline]
+ __ubsan_handle_out_of_bounds+0x11c/0x150 lib/ubsan.c:348
+ dbAllocDmapLev+0x3e5/0x430 fs/jfs/jfs_dmap.c:1965
+ dbAllocCtl+0x113/0x920 fs/jfs/jfs_dmap.c:1809
+ dbAllocAG+0x28f/0x10b0 fs/jfs/jfs_dmap.c:1350
+ dbAlloc+0x658/0xca0 fs/jfs/jfs_dmap.c:874
+ dtSplitUp fs/jfs/jfs_dtree.c:974 [inline]
+ dtInsert+0xda7/0x6b00 fs/jfs/jfs_dtree.c:863
+ jfs_create+0x7b6/0xbb0 fs/jfs/namei.c:137
+ lookup_open fs/namei.c:3492 [inline]
+ open_last_lookups fs/namei.c:3560 [inline]
+ path_openat+0x13df/0x3170 fs/namei.c:3788
+ do_filp_open+0x234/0x490 fs/namei.c:3818
+ do_sys_openat2+0x13f/0x500 fs/open.c:1356
+ do_sys_open fs/open.c:1372 [inline]
+ __do_sys_openat fs/open.c:1388 [inline]
+ __se_sys_openat fs/open.c:1383 [inline]
+ __x64_sys_openat+0x247/0x290 fs/open.c:1383
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7f1f4e33f7e9
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 51 14 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 c0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007ffc21129578 EFLAGS: 00000246 ORIG_RAX: 0000000000000101
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f1f4e33f7e9
+RDX: 000000000000275a RSI: 0000000020000040 RDI: 00000000ffffff9c
+RBP: 00007f1f4e2ff080 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007f1f4e2ff110
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+ </TASK>
+
+The bug occurs when the dbAllocDmapLev()function attempts to access
+dp->tree.stree[leafidx + LEAFIND] while the leafidx value is negative.
+
+To rectify this, the patch introduces a safeguard within the
+dbAllocDmapLev() function. A check has been added to verify if leafidx is
+negative. If it is, the function immediately returns an I/O error, preventing
+any further execution that could potentially cause harm.
+
+Tested via syzbot.
+
+Reported-by: syzbot+853a6f4dfa3cf37d3aea@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=ae2f5a27a07ae44b0f17
+Signed-off-by: Yogesh <yogi.kernel@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c |   46 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+ fs/jfs/jfs_dmap.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7136,6 +7136,10 @@ enum {
- 	ALC294_FIXUP_ASUS_DUAL_SPK,
- 	ALC285_FIXUP_THINKPAD_X1_GEN7,
- 	ALC285_FIXUP_THINKPAD_HEADSET_JACK,
-+	ALC294_FIXUP_ASUS_ALLY,
-+	ALC294_FIXUP_ASUS_ALLY_PINS,
-+	ALC294_FIXUP_ASUS_ALLY_VERBS,
-+	ALC294_FIXUP_ASUS_ALLY_SPEAKER,
- 	ALC294_FIXUP_ASUS_HPE,
- 	ALC294_FIXUP_ASUS_COEF_1B,
- 	ALC294_FIXUP_ASUS_GX502_HP,
-@@ -8449,6 +8453,47 @@ static const struct hda_fixup alc269_fix
- 		.chained = true,
- 		.chain_id = ALC294_FIXUP_SPK2_TO_DAC1
- 	},
-+	[ALC294_FIXUP_ASUS_ALLY] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = cs35l41_fixup_i2c_two,
-+		.chained = true,
-+		.chain_id = ALC294_FIXUP_ASUS_ALLY_PINS
-+	},
-+	[ALC294_FIXUP_ASUS_ALLY_PINS] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x19, 0x03a11050 },
-+			{ 0x1a, 0x03a11c30 },
-+			{ 0x21, 0x03211420 },
-+			{ }
-+		},
-+		.chained = true,
-+		.chain_id = ALC294_FIXUP_ASUS_ALLY_VERBS
-+	},
-+	[ALC294_FIXUP_ASUS_ALLY_VERBS] = {
-+		.type = HDA_FIXUP_VERBS,
-+		.v.verbs = (const struct hda_verb[]) {
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x45 },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0x5089 },
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x46 },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0x0004 },
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x47 },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0xa47a },
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x49 },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0x0049},
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x4a },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0x201b },
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x6b },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0x4278},
-+			{ }
-+		},
-+		.chained = true,
-+		.chain_id = ALC294_FIXUP_ASUS_ALLY_SPEAKER
-+	},
-+	[ALC294_FIXUP_ASUS_ALLY_SPEAKER] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc285_fixup_speaker2_to_dac1,
-+	},
- 	[ALC285_FIXUP_THINKPAD_X1_GEN7] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc285_fixup_thinkpad_x1_gen7,
-@@ -9557,6 +9602,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x1043, 0x16e3, "ASUS UX50", ALC269_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK(0x1043, 0x1740, "ASUS UX430UA", ALC295_FIXUP_ASUS_DACS),
- 	SND_PCI_QUIRK(0x1043, 0x17d1, "ASUS UX431FL", ALC294_FIXUP_ASUS_DUAL_SPK),
-+	SND_PCI_QUIRK(0x1043, 0x17f3, "ROG Ally RC71L_RC71L", ALC294_FIXUP_ASUS_ALLY),
- 	SND_PCI_QUIRK(0x1043, 0x1881, "ASUS Zephyrus S/M", ALC294_FIXUP_ASUS_GX502_PINS),
- 	SND_PCI_QUIRK(0x1043, 0x18b1, "Asus MJ401TA", ALC256_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x18f1, "Asus FX505DT", ALC256_FIXUP_ASUS_HEADSET_MIC),
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -1959,6 +1959,9 @@ dbAllocDmapLev(struct bmap * bmp,
+ 	if (dbFindLeaf((dmtree_t *) & dp->tree, l2nb, &leafidx))
+ 		return -ENOSPC;
+ 
++	if (leafidx < 0)
++		return -EIO;
++
+ 	/* determine the block number within the file system corresponding
+ 	 * to the leaf at which free space was found.
+ 	 */
 
 
