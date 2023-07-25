@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0F215AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:52:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39832C433C7;
-	Tue, 25 Jul 2023 10:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734EE15AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:52:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC106C433C8;
+	Tue, 25 Jul 2023 10:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282343;
-	bh=05I2kwzK1/93wu/K1lWGDmcZTLQczAulW51VBr1QS8Q=;
+	s=korg; t=1690282346;
+	bh=PYZ24E6ZDFJRfuCgUGbQDtHOmvWNEBI5BdcBoLSRUWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RJk0OoIq/WVBXd5QsNTV6n2Iy2qAcmOEd1uk2bMvU2RzNRrcmvAhsN5yBB3O3RLE2
-	 3faHoMImJJ5hAjcnI9OGn2cLGAqOrkqn0h5xfHjrQM/mKatXzSTE4pzOzGtDD6f9IL
-	 j1qj7BDOma//06vQMTa8/4CWPlFnntG3ghweilmg=
+	b=DOyLBOjyiPL2FYLfD2Vj1YOwbo3geW8/QKlR6iftHGY0XmAHTbmfuwI2M+OrnWYCj
+	 ibKqjLy4bUD3JEaFI7uT/D/X2lfbWiwP2GG936eO5vp89qPaFjM/jo/PXE/Ujbcz5t
+	 2gCCpt0BAMTQkYvbMZetaO4zt0VItWQPfUhB35oM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.4 067/227] ASoC: codecs: wcd938x: fix missing mbhc init error handling
-Date: Tue, 25 Jul 2023 12:43:54 +0200
-Message-ID: <20230725104517.529421088@linuxfoundation.org>
+Subject: [PATCH 6.4 068/227] ASoC: codecs: wcd934x: fix resource leaks on component remove
+Date: Tue, 25 Jul 2023 12:43:55 +0200
+Message-ID: <20230725104517.580528681@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -37,49 +37,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 7dfae2631bfbdebecd35fe7b472ab3cc95c9ed66 upstream.
+commit 798590cc7d3c2b5f3a7548d96dd4d8a081c1bc39 upstream.
 
-MBHC initialisation can fail so add the missing error handling to avoid
-dereferencing an error pointer when later configuring the jack:
+Make sure to release allocated MBHC resources also on component remove.
 
-    Unable to handle kernel paging request at virtual address fffffffffffffff8
+This is specifically needed to allow probe deferrals of the sound card
+which otherwise fails when reprobing the codec component.
 
-    pc : wcd_mbhc_start+0x28/0x380 [snd_soc_wcd_mbhc]
-    lr : wcd938x_codec_set_jack+0x28/0x48 [snd_soc_wcd938x]
-
-    Call trace:
-     wcd_mbhc_start+0x28/0x380 [snd_soc_wcd_mbhc]
-     wcd938x_codec_set_jack+0x28/0x48 [snd_soc_wcd938x]
-     snd_soc_component_set_jack+0x28/0x8c [snd_soc_core]
-     qcom_snd_wcd_jack_setup+0x7c/0x19c [snd_soc_qcom_common]
-     sc8280xp_snd_init+0x20/0x2c [snd_soc_sc8280xp]
-     snd_soc_link_init+0x28/0x90 [snd_soc_core]
-     snd_soc_bind_card+0x628/0xbfc [snd_soc_core]
-     snd_soc_register_card+0xec/0x104 [snd_soc_core]
-     devm_snd_soc_register_card+0x4c/0xa4 [snd_soc_core]
-     sc8280xp_platform_probe+0xf0/0x108 [snd_soc_sc8280xp]
-
-Fixes: bcee7ed09b8e ("ASoC: codecs: wcd938x: add Multi Button Headset Control support")
-Cc: stable@vger.kernel.org      # 5.15
+Fixes: 9fb9b1690f0b ("ASoC: codecs: wcd934x: add mbhc support")
+Cc: stable@vger.kernel.org      # 5.14
 Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230703124701.11734-1-johan+linaro@kernel.org
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230705123018.30903-6-johan+linaro@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wcd938x.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/codecs/wcd934x.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/sound/soc/codecs/wcd938x.c
-+++ b/sound/soc/codecs/wcd938x.c
-@@ -2625,6 +2625,8 @@ static int wcd938x_mbhc_init(struct snd_
- 						     WCD938X_IRQ_HPHR_OCP_INT);
+--- a/sound/soc/codecs/wcd934x.c
++++ b/sound/soc/codecs/wcd934x.c
+@@ -3044,6 +3044,17 @@ static int wcd934x_mbhc_init(struct snd_
  
- 	wcd938x->wcd_mbhc = wcd_mbhc_init(component, &mbhc_cb, intr_ids, wcd_mbhc_fields, true);
-+	if (IS_ERR(wcd938x->wcd_mbhc))
-+		return PTR_ERR(wcd938x->wcd_mbhc);
+ 	return 0;
+ }
++
++static void wcd934x_mbhc_deinit(struct snd_soc_component *component)
++{
++	struct wcd934x_codec *wcd = snd_soc_component_get_drvdata(component);
++
++	if (!wcd->mbhc)
++		return;
++
++	wcd_mbhc_deinit(wcd->mbhc);
++}
++
+ static int wcd934x_comp_probe(struct snd_soc_component *component)
+ {
+ 	struct wcd934x_codec *wcd = dev_get_drvdata(component->dev);
+@@ -3077,6 +3088,7 @@ static void wcd934x_comp_remove(struct s
+ {
+ 	struct wcd934x_codec *wcd = dev_get_drvdata(comp->dev);
  
- 	snd_soc_add_component_controls(component, impedance_detect_controls,
- 				       ARRAY_SIZE(impedance_detect_controls));
++	wcd934x_mbhc_deinit(comp);
+ 	wcd_clsh_ctrl_free(wcd->clsh_ctrl);
+ }
+ 
 
 
