@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05A01ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:21:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76652C433C7;
-	Tue, 25 Jul 2023 11:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1A31ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:21:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7D1C433C8;
+	Tue, 25 Jul 2023 11:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284065;
-	bh=OC1oySKQu/XnljSSnIdeB7dtzts0notfAQoc0gCYHDE=;
+	s=korg; t=1690284068;
+	bh=fUGwYfIhG6fEMCsmMac9jX9WhK4PSre+CWyZ72hZvB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lY6R6+j99cBqqYFPVTmlKwF2k4PjfE8OlDej26slRo22kDNFY891nj/We/or1zqlh
-	 IgsmNZegO7f8SLUtYU/ORbu8CJ0Nwubz4EFAVlMM7k3HAd0R55XjIgaQnnRQkodDa7
-	 uFgDeAMeaWXrfF7Y4lMHfjdhs5kizcPnfeh2zeIg=
+	b=zg0Ls189tMWgz5c+FOleJgvLDGKB2H3+EsChWJCx6oGhVwo270z+HBiVen/zErbQN
+	 6BMZxY/oLWogeibgZwEzpLqn8Tn4E8Q4ZfTx3iJqMGC2jnfdvYUIDpsJMm0yWiI9fx
+	 8iPiwwdWFg3g68eQ94eYPzssLEaSiVYUEmmOpYZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Steigerwald <Martin@lichtvoll.de>,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 215/509] block: fix signed int overflow in Amiga partition support
-Date: Tue, 25 Jul 2023 12:42:34 +0200
-Message-ID: <20230725104603.576306898@linuxfoundation.org>
+	Marek Vasut <marex@denx.de>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 224/509] media: videodev2.h: Fix struct v4l2_input tuner index comment
+Date: Tue, 25 Jul 2023 12:42:43 +0200
+Message-ID: <20230725104604.019973788@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,68 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Schmitz <schmitzmic@gmail.com>
+From: Marek Vasut <marex@denx.de>
 
-commit fc3d092c6bb48d5865fec15ed5b333c12f36288c upstream.
+[ Upstream commit 26ae58f65e64fa7ba61d64bae752e59e08380c6a ]
 
-The Amiga partition parser module uses signed int for partition sector
-address and count, which will overflow for disks larger than 1 TB.
+VIDIOC_ENUMINPUT documentation describes the tuner field of
+struct v4l2_input as index:
 
-Use sector_t as type for sector address and size to allow using disks
-up to 2 TB without LBD support, and disks larger than 2 TB with LBD.
+Documentation/userspace-api/media/v4l/vidioc-enuminput.rst
+"
+* - __u32
+  - ``tuner``
+  - Capture devices can have zero or more tuners (RF demodulators).
+    When the ``type`` is set to ``V4L2_INPUT_TYPE_TUNER`` this is an
+    RF connector and this field identifies the tuner. It corresponds
+    to struct :c:type:`v4l2_tuner` field ``index``. For
+    details on tuners see :ref:`tuner`.
+"
 
-This bug was reported originally in 2012, and the fix was created by
-the RDB author, Joanne Dow <jdow@earthlink.net>. A patch had been
-discussed and reviewed on linux-m68k at that time but never officially
-submitted. This patch differs from Joanne's patch only in its use of
-sector_t instead of unsigned int. No checking for overflows is done
-(see patch 3 of this series for that).
+Drivers I could find also use the 'tuner' field as an index, e.g.:
+drivers/media/pci/bt8xx/bttv-driver.c bttv_enum_input()
+drivers/media/usb/go7007/go7007-v4l2.c vidioc_enum_input()
 
-Reported-by: Martin Steigerwald <Martin@lichtvoll.de>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=43511
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Message-ID: <201206192146.09327.Martin@lichtvoll.de>
-Cc: <stable@vger.kernel.org> # 5.2
-Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
-Tested-by: Martin Steigerwald <Martin@lichtvoll.de>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230620201725.7020-2-schmitzmic@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+However, the UAPI comment claims this field is 'enum v4l2_tuner_type':
+include/uapi/linux/videodev2.h
+
+This field being 'enum v4l2_tuner_type' is unlikely as it seems to be
+never used that way in drivers, and documentation confirms it. It seem
+this comment got in accidentally in the commit which this patch fixes.
+Fix the UAPI comment to stop confusion.
+
+This was pointed out by Dmitry while reviewing VIDIOC_ENUMINPUT
+support for strace.
+
+Fixes: 6016af82eafc ("[media] v4l2: use __u32 rather than enums in ioctl() structs")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/partitions/amiga.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ include/uapi/linux/videodev2.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/block/partitions/amiga.c
-+++ b/block/partitions/amiga.c
-@@ -31,7 +31,8 @@ int amiga_partition(struct parsed_partit
- 	unsigned char *data;
- 	struct RigidDiskBlock *rdb;
- 	struct PartitionBlock *pb;
--	int start_sect, nr_sects, blk, part, res = 0;
-+	sector_t start_sect, nr_sects;
-+	int blk, part, res = 0;
- 	int blksize = 1;	/* Multiplier for disk block size */
- 	int slot = 1;
- 	char b[BDEVNAME_SIZE];
-@@ -97,14 +98,14 @@ int amiga_partition(struct parsed_partit
- 
- 		/* Tell Kernel about it */
- 
--		nr_sects = (be32_to_cpu(pb->pb_Environment[10]) + 1 -
--			    be32_to_cpu(pb->pb_Environment[9])) *
-+		nr_sects = ((sector_t)be32_to_cpu(pb->pb_Environment[10]) + 1 -
-+			   be32_to_cpu(pb->pb_Environment[9])) *
- 			   be32_to_cpu(pb->pb_Environment[3]) *
- 			   be32_to_cpu(pb->pb_Environment[5]) *
- 			   blksize;
- 		if (!nr_sects)
- 			continue;
--		start_sect = be32_to_cpu(pb->pb_Environment[9]) *
-+		start_sect = (sector_t)be32_to_cpu(pb->pb_Environment[9]) *
- 			     be32_to_cpu(pb->pb_Environment[3]) *
- 			     be32_to_cpu(pb->pb_Environment[5]) *
- 			     blksize;
+diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+index b28817c59fdf2..55b8c4b824797 100644
+--- a/include/uapi/linux/videodev2.h
++++ b/include/uapi/linux/videodev2.h
+@@ -1644,7 +1644,7 @@ struct v4l2_input {
+ 	__u8	     name[32];		/*  Label */
+ 	__u32	     type;		/*  Type of input */
+ 	__u32	     audioset;		/*  Associated audios (bitfield) */
+-	__u32        tuner;             /*  enum v4l2_tuner_type */
++	__u32        tuner;             /*  Tuner index */
+ 	v4l2_std_id  std;
+ 	__u32	     status;
+ 	__u32	     capabilities;
+-- 
+2.39.2
+
 
 
