@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EEC915AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:51:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839B4C433CB;
-	Tue, 25 Jul 2023 10:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22F715AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:52:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D10C433C7;
+	Tue, 25 Jul 2023 10:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282318;
-	bh=ZOoUxsDyKwEulenjDn/1naBRUgbYK9tIpKiPvo2Coh8=;
+	s=korg; t=1690282321;
+	bh=MnKKb8StfWMmOZ5+R5GfGAQpND9o4Xu1jxEIPsTVKLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q6POmwAz2Mo3cWdy3vezZooG8Gn9lVLqsbotnY5Ys928EucylNtUSOB0PW5PiMJ24
-	 doXrjM62uMeAUznZZHiNDJchuoTqPS9gJpzag9QpS/fbsMLjqxmgJlVEfCCiRnPlml
-	 T+bDDeHS4ovEmIr97rvvdy6XRKaDmKRLLxw9H1yU=
+	b=L5i8kTlqwVSgSRKMvwiw01PjA3EYzg0gtM7IMGzBRMyPDd5PJHMlvHr1lO/mp/rQb
+	 rSHFHW3S71hwEAw6zRj2/eMXz4wE6Wx1WRGW49r+9mrF/iSf8vWyFmnuDsKWzxLMtQ
+	 J6dBWlZpnKJe9OtCDHEibB53Zz8ZSGjpuSkfoQcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f1faa20eec55e0c8644c@syzkaller.appspotmail.com,
 	Immad Mir <mirimmad17@gmail.com>,
 	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 086/227] [PATCH AUTOSEL 5.4 11/12] FS: JFS: Fix null-ptr-deref Read in txBegin
-Date: Tue, 25 Jul 2023 12:44:13 +0200
-Message-ID: <20230725104518.302403587@linuxfoundation.org>
+Subject: [PATCH 6.4 087/227] [PATCH AUTOSEL 5.4 12/12] FS: JFS: Check for read-only mounted filesystem in txBegin
+Date: Tue, 25 Jul 2023 12:44:14 +0200
+Message-ID: <20230725104518.343142769@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -36,37 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-[ Upstream commit 47cfdc338d674d38f4b2f22b7612cc6a2763ba27 ]
+[ Upstream commit 95e2b352c03b0a86c5717ba1d24ea20969abcacc ]
 
- Syzkaller reported an issue where txBegin may be called
- on a superblock in a read-only mounted filesystem which leads
- to NULL pointer deref. This could be solved by checking if
- the filesystem is read-only before calling txBegin, and returning
- with appropiate error code.
-
-Reported-By: syzbot+f1faa20eec55e0c8644c@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=be7e52c50c5182cc09a09ea6fc456446b2039de3
+ This patch adds a check for read-only mounted filesystem
+ in txBegin before starting a transaction potentially saving
+ from NULL pointer deref.
 
 Signed-off-by: Immad Mir <mirimmad17@gmail.com>
 Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/namei.c |    5 +++++
+ fs/jfs/jfs_txnmgr.c | 5 +++++
  1 file changed, 5 insertions(+)
 
---- a/fs/jfs/namei.c
-+++ b/fs/jfs/namei.c
-@@ -799,6 +799,11 @@ static int jfs_link(struct dentry *old_d
- 	if (rc)
- 		goto out;
+diff --git a/fs/jfs/jfs_txnmgr.c b/fs/jfs/jfs_txnmgr.c
+index c8ce7f1bc5942..6f6a5b9203d3f 100644
+--- a/fs/jfs/jfs_txnmgr.c
++++ b/fs/jfs/jfs_txnmgr.c
+@@ -354,6 +354,11 @@ tid_t txBegin(struct super_block *sb, int flag)
+ 	jfs_info("txBegin: flag = 0x%x", flag);
+ 	log = JFS_SBI(sb)->log;
  
-+	if (isReadOnly(ip)) {
-+		jfs_error(ip->i_sb, "read-only filesystem\n");
-+		return -EROFS;
++	if (!log) {
++		jfs_error(sb, "read-only filesystem\n");
++		return 0;
 +	}
 +
- 	tid = txBegin(ip->i_sb, 0);
+ 	TXN_LOCK();
  
- 	mutex_lock_nested(&JFS_IP(dir)->commit_mutex, COMMIT_MUTEX_PARENT);
+ 	INCREMENT(TxStat.txBegin);
+-- 
+2.39.2
+
 
 
