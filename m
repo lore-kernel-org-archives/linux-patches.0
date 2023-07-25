@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C5D1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:35:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8CBC433CC;
-	Tue, 25 Jul 2023 11:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1843B1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:35:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA3BC433C8;
+	Tue, 25 Jul 2023 11:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284930;
-	bh=CChSYG2HWlH9cnErpv6jvCtBeYsLf6GPTBAwsh42+4o=;
+	s=korg; t=1690284932;
+	bh=ODi63Xwm3mmXxtPPz5x2wbMoKn+Y4E+kDa1K5VRjd6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tl6cRbORX61QsSCglfVbd8SOXxBxGBMAARr9yUTMhyQgB2fyYSxDkmQpEvQdmgJgV
-	 1oV4ddVcS9K9BBP0Sa2t9xHISFDDv+fqTrnTAsW8f8OnRLsIcx1dlpLjMtYxVfjOI6
-	 jgJVChDCJ7P00qMJAIQRpbZ6uwxVI3DOIeJxWu+g=
+	b=MDaaukb28X69AmhQtn/njQccbZ22HxK7JVIZ5LgIn9pkkZn58K6euoB9U3+YsvgyA
+	 Ky+Lx5Jho9J0HtLxPM7PzR8vJR/vVZs7S6MKNorrLk8hPgv/76K/bTpLGzfgM7OIqC
+	 GzcgxTN48DyzhtZkJFyjUD+2/7X9dvqiVmvXMI+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Zhang Rui <rui.zhang@intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 022/313] PM: domains: fix integer overflow issues in genpd_parse_state()
-Date: Tue, 25 Jul 2023 12:42:55 +0200
-Message-ID: <20230725104522.092732645@linuxfoundation.org>
+Subject: [PATCH 5.4 023/313] powercap: RAPL: Fix CONFIG_IOSF_MBI dependency
+Date: Tue, 25 Jul 2023 12:42:56 +0200
+Message-ID: <20230725104522.123976049@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -36,46 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit e5d1c8722083f0332dcd3c85fa1273d85fb6bed8 ]
+[ Upstream commit 4658fe81b3f8afe8adf37734ec5fe595d90415c6 ]
 
-Currently, while calculating residency and latency values, right
-operands may overflow if resulting values are big enough.
+After commit 3382388d7148 ("intel_rapl: abstract RAPL common code"),
+accessing to IOSF_MBI interface is done in the RAPL common code.
 
-To prevent this, albeit unlikely case, play it safe and convert
-right operands to left ones' type s64.
+Thus it is the CONFIG_INTEL_RAPL_CORE that has dependency of
+CONFIG_IOSF_MBI, while CONFIG_INTEL_RAPL_MSR does not.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+This problem was not exposed previously because all the previous RAPL
+common code users, aka, the RAPL MSR and MMIO I/F drivers, have
+CONFIG_IOSF_MBI selected.
 
-Fixes: 30f604283e05 ("PM / Domains: Allow domain power states to be read from DT")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fix the CONFIG_IOSF_MBI dependency in RAPL code. This also fixes a build
+time failure when the RAPL TPMI I/F driver is introduced without
+selecting CONFIG_IOSF_MBI.
+
+x86_64-linux-ld: vmlinux.o: in function `set_floor_freq_atom':
+intel_rapl_common.c:(.text+0x2dac9b8): undefined reference to `iosf_mbi_write'
+x86_64-linux-ld: intel_rapl_common.c:(.text+0x2daca66): undefined reference to `iosf_mbi_read'
+
+Reference to iosf_mbi.h is also removed from the RAPL MSR I/F driver.
+
+Fixes: 3382388d7148 ("intel_rapl: abstract RAPL common code")
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/all/20230601213246.3271412-1-arnd@kernel.org
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/domain.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/powercap/Kconfig          | 4 +++-
+ drivers/powercap/intel_rapl_msr.c | 1 -
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-index edb791354421b..5be76197bc361 100644
---- a/drivers/base/power/domain.c
-+++ b/drivers/base/power/domain.c
-@@ -2596,10 +2596,10 @@ static int genpd_parse_state(struct genpd_power_state *genpd_state,
+diff --git a/drivers/powercap/Kconfig b/drivers/powercap/Kconfig
+index dc1c1381d7fa9..61fd5dfaf7a0f 100644
+--- a/drivers/powercap/Kconfig
++++ b/drivers/powercap/Kconfig
+@@ -18,10 +18,12 @@ if POWERCAP
+ # Client driver configurations go here.
+ config INTEL_RAPL_CORE
+ 	tristate
++	depends on PCI
++	select IOSF_MBI
  
- 	err = of_property_read_u32(state_node, "min-residency-us", &residency);
- 	if (!err)
--		genpd_state->residency_ns = 1000 * residency;
-+		genpd_state->residency_ns = 1000LL * residency;
+ config INTEL_RAPL
+ 	tristate "Intel RAPL Support via MSR Interface"
+-	depends on X86 && IOSF_MBI
++	depends on X86 && PCI
+ 	select INTEL_RAPL_CORE
+ 	---help---
+ 	  This enables support for the Intel Running Average Power Limit (RAPL)
+diff --git a/drivers/powercap/intel_rapl_msr.c b/drivers/powercap/intel_rapl_msr.c
+index d5487965bdfe9..6091e462626a4 100644
+--- a/drivers/powercap/intel_rapl_msr.c
++++ b/drivers/powercap/intel_rapl_msr.c
+@@ -22,7 +22,6 @@
+ #include <linux/processor.h>
+ #include <linux/platform_device.h>
  
--	genpd_state->power_on_latency_ns = 1000 * exit_latency;
--	genpd_state->power_off_latency_ns = 1000 * entry_latency;
-+	genpd_state->power_on_latency_ns = 1000LL * exit_latency;
-+	genpd_state->power_off_latency_ns = 1000LL * entry_latency;
- 	genpd_state->fwnode = &state_node->fwnode;
+-#include <asm/iosf_mbi.h>
+ #include <asm/cpu_device_id.h>
+ #include <asm/intel-family.h>
  
- 	return 0;
 -- 
 2.39.2
 
