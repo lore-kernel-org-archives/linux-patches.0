@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BCBD1D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:03:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A82C433C8;
-	Tue, 25 Jul 2023 11:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4721D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:03:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835E4C433C7;
+	Tue, 25 Jul 2023 11:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283005;
-	bh=7Aqdfft26SAgUbG2cQaETBdwcUJXP6+QPqFdd7U2Rkg=;
+	s=korg; t=1690283007;
+	bh=WEOaO7BEOGhQyAmyLB1gu0n2EK/YGGXqFbag93UijTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=okPtYFEvPbXuYMMm8QcEE3efRX3ItxkROr1Nqkq0dbG65R6D6zAodnG9mJ9uQk0K7
-	 ws5zSvoxjkghw9rzDib9XrdijAnRKXVZTSRW7T1oeyJqtFAW/rj41kte9sMxbNa9Ac
-	 G0WfBtpq0iGPofJVRHAkqQQGsCr89tyxA9VqNdGg=
+	b=xpSVoQlAHn62WV0lcRGNjbpSOf6cxJHjuytLc8fTRFC0YSSNYxh8J7ZpoztBrWlsp
+	 kGark3hhFnEOJg3jlIO1uE2wLkSC2MDmYHYUQB6xEjTwSperOjIfw5qTpZoVyHUKgQ
+	 aqM1rTYlneImS8fYFXWP6VaVPkPDr/F73CyajysE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tanmay Patil <t-patil@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Harry Coin <hcoin@quietfountain.com>,
+	Ido Schimmel <idosch@idosch.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 105/183] net: ethernet: ti: cpsw_ale: Fix cpsw_ale_get_field()/cpsw_ale_set_field()
-Date: Tue, 25 Jul 2023 12:45:33 +0200
-Message-ID: <20230725104511.721694197@linuxfoundation.org>
+Subject: [PATCH 6.1 106/183] bridge: Add extack warning when enabling STP in netns.
+Date: Tue, 25 Jul 2023 12:45:34 +0200
+Message-ID: <20230725104511.753165688@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -36,75 +39,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tanmay Patil <t-patil@ti.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit b685f1a58956fa36cc01123f253351b25bfacfda ]
+[ Upstream commit 56a16035bb6effb37177867cea94c13a8382f745 ]
 
-CPSW ALE has 75 bit ALE entries which are stored within three 32 bit words.
-The cpsw_ale_get_field() and cpsw_ale_set_field() functions assume that the
-field will be strictly contained within one word. However, this is not
-guaranteed to be the case and it is possible for ALE field entries to span
-across up to two words at the most.
+When we create an L2 loop on a bridge in netns, we will see packets storm
+even if STP is enabled.
 
-Fix the methods to handle getting/setting fields spanning up to two words.
+  # unshare -n
+  # ip link add br0 type bridge
+  # ip link add veth0 type veth peer name veth1
+  # ip link set veth0 master br0 up
+  # ip link set veth1 master br0 up
+  # ip link set br0 type bridge stp_state 1
+  # ip link set br0 up
+  # sleep 30
+  # ip -s link show br0
+  2: br0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+      link/ether b6:61:98:1c:1c:b5 brd ff:ff:ff:ff:ff:ff
+      RX: bytes  packets  errors  dropped missed  mcast
+      956553768  12861249 0       0       0       12861249  <-. Keep
+      TX: bytes  packets  errors  dropped carrier collsns     |  increasing
+      1027834    11951    0       0       0       0         <-'   rapidly
 
-Fixes: db82173f23c5 ("netdev: driver: ethernet: add cpsw address lookup engine support")
-Signed-off-by: Tanmay Patil <t-patil@ti.com>
-[s-vadapalli@ti.com: rephrased commit message and added Fixes tag]
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+This is because llc_rcv() drops all packets in non-root netns and BPDU
+is dropped.
+
+Let's add extack warning when enabling STP in netns.
+
+  # unshare -n
+  # ip link add br0 type bridge
+  # ip link set br0 type bridge stp_state 1
+  Warning: bridge: STP does not work in non-root netns.
+
+Note this commit will be reverted later when we namespacify the whole LLC
+infra.
+
+Fixes: e730c15519d0 ("[NET]: Make packet reception network namespace safe")
+Suggested-by: Harry Coin <hcoin@quietfountain.com>
+Link: https://lore.kernel.org/netdev/0f531295-e289-022d-5add-5ceffa0df9bc@quietfountain.com/
+Suggested-by: Ido Schimmel <idosch@idosch.org>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/cpsw_ale.c | 24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ net/bridge/br_stp_if.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/ti/cpsw_ale.c b/drivers/net/ethernet/ti/cpsw_ale.c
-index 231370e9a8017..2647c18d40d95 100644
---- a/drivers/net/ethernet/ti/cpsw_ale.c
-+++ b/drivers/net/ethernet/ti/cpsw_ale.c
-@@ -106,23 +106,37 @@ struct cpsw_ale_dev_id {
- 
- static inline int cpsw_ale_get_field(u32 *ale_entry, u32 start, u32 bits)
+diff --git a/net/bridge/br_stp_if.c b/net/bridge/br_stp_if.c
+index 75204d36d7f90..b65962682771f 100644
+--- a/net/bridge/br_stp_if.c
++++ b/net/bridge/br_stp_if.c
+@@ -201,6 +201,9 @@ int br_stp_set_enabled(struct net_bridge *br, unsigned long val,
  {
--	int idx;
-+	int idx, idx2;
-+	u32 hi_val = 0;
+ 	ASSERT_RTNL();
  
- 	idx    = start / 32;
-+	idx2 = (start + bits - 1) / 32;
-+	/* Check if bits to be fetched exceed a word */
-+	if (idx != idx2) {
-+		idx2 = 2 - idx2; /* flip */
-+		hi_val = ale_entry[idx2] << ((idx2 * 32) - start);
-+	}
- 	start -= idx * 32;
- 	idx    = 2 - idx; /* flip */
--	return (ale_entry[idx] >> start) & BITMASK(bits);
-+	return (hi_val + (ale_entry[idx] >> start)) & BITMASK(bits);
- }
- 
- static inline void cpsw_ale_set_field(u32 *ale_entry, u32 start, u32 bits,
- 				      u32 value)
- {
--	int idx;
-+	int idx, idx2;
- 
- 	value &= BITMASK(bits);
--	idx    = start / 32;
-+	idx = start / 32;
-+	idx2 = (start + bits - 1) / 32;
-+	/* Check if bits to be set exceed a word */
-+	if (idx != idx2) {
-+		idx2 = 2 - idx2; /* flip */
-+		ale_entry[idx2] &= ~(BITMASK(bits + start - (idx2 * 32)));
-+		ale_entry[idx2] |= (value >> ((idx2 * 32) - start));
-+	}
- 	start -= idx * 32;
--	idx    = 2 - idx; /* flip */
-+	idx = 2 - idx; /* flip */
- 	ale_entry[idx] &= ~(BITMASK(bits) << start);
- 	ale_entry[idx] |=  (value << start);
- }
++	if (!net_eq(dev_net(br->dev), &init_net))
++		NL_SET_ERR_MSG_MOD(extack, "STP does not work in non-root netns");
++
+ 	if (br_mrp_enabled(br)) {
+ 		NL_SET_ERR_MSG_MOD(extack,
+ 				   "STP can't be enabled if MRP is already enabled");
 -- 
 2.39.2
 
