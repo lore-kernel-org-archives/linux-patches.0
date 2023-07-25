@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9A01ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:45:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1951C433C8;
-	Tue, 25 Jul 2023 11:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20AAB1ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:45:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95757C433C7;
+	Tue, 25 Jul 2023 11:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285540;
-	bh=vWHef46qcdlYOvGvS13EIIo48y9FXxw+UjZebpaZVbc=;
+	s=korg; t=1690285543;
+	bh=l1MJB9eNxFcI3NxeE5kLbluKh1EYgcLUmuKMGSTnHxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ymgi0x6wjOOEn+Ys4E+z7F+mE90CfQ+G+DDV5Q5xksrhGA2JsGhrayhclFGSY2mAH
-	 gs1L5hMxbon7KYiqaFLM9t8tCeBciiukRNvBsKzWvwkbbiOuDf3hM9liDJNvHPp66u
-	 8OyOBodoL6srSITcVuS/+zOr1QOAafqmIcyD1Tzg=
+	b=vA81G4DkeGmu18n7EKvPEZYD3Yud5W6ZqiLtQs1o6xQVrmZtpsLKZGcP1lsi6v+0R
+	 vs9nngiYXkc3+MSSfFbLGmT2EgXBf7Q3ZXUA8/osb+xb3I15AvXjKU7Kq4LL7BZhLz
+	 hnnw1CIte5p8i3SzkNNc02o448Sc8L63fpSx9+50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Zary <linux@zary.sk>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 5.4 241/313] PCI/PM: Avoid putting EloPOS E2/S2/H2 PCIe Ports in D3cold
-Date: Tue, 25 Jul 2023 12:46:34 +0200
-Message-ID: <20230725104531.497788256@linuxfoundation.org>
+	Jason Adriaanse <jason_a69@yahoo.co.uk>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Christoph Hellwig <hch@lst.de>
+Subject: [PATCH 5.4 242/313] PCI: Add function 1 DMA alias quirk for Marvell 88SE9235
+Date: Tue, 25 Jul 2023 12:46:35 +0200
+Message-ID: <20230725104531.534646836@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -34,46 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ondrej Zary <linux@zary.sk>
+From: Robin Murphy <robin.murphy@arm.com>
 
-commit 9e30fd26f43b89cb6b4e850a86caa2e50dedb454 upstream.
+commit 88d341716b83abd355558523186ca488918627ee upstream.
 
-The quirk for Elo i2 introduced in commit 92597f97a40b ("PCI/PM: Avoid
-putting Elo i2 PCIe Ports in D3cold") is also needed by EloPOS E2/S2/H2
-which uses the same Continental Z2 board.
+Marvell's own product brief implies the 92xx series are a closely related
+family, and sure enough it turns out that 9235 seems to need the same quirk
+as the other three, although possibly only when certain ports are used.
 
-Change the quirk to match the board instead of system.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=215715
-Link: https://lore.kernel.org/r/20230614074253.22318-1-linux@zary.sk
-Signed-off-by: Ondrej Zary <linux@zary.sk>
+Link: https://lore.kernel.org/linux-iommu/2a699a99-545c-1324-e052-7d2f41fed1ae@yahoo.co.uk/
+Link: https://lore.kernel.org/r/731507e05d70239aec96fcbfab6e65d8ce00edd2.1686157165.git.robin.murphy@arm.com
+Reported-by: Jason Adriaanse <jason_a69@yahoo.co.uk>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/pci/quirks.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -2617,13 +2617,13 @@ static const struct dmi_system_id bridge
- 	{
- 		/*
- 		 * Downstream device is not accessible after putting a root port
--		 * into D3cold and back into D0 on Elo i2.
-+		 * into D3cold and back into D0 on Elo Continental Z2 board
- 		 */
--		.ident = "Elo i2",
-+		.ident = "Elo Continental Z2",
- 		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "Elo Touch Solutions"),
--			DMI_MATCH(DMI_PRODUCT_NAME, "Elo i2"),
--			DMI_MATCH(DMI_PRODUCT_VERSION, "RevB"),
-+			DMI_MATCH(DMI_BOARD_VENDOR, "Elo Touch Solutions"),
-+			DMI_MATCH(DMI_BOARD_NAME, "Geminilake"),
-+			DMI_MATCH(DMI_BOARD_VERSION, "Continental Z2"),
- 		},
- 	},
- #endif
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -4168,6 +4168,8 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_M
+ /* https://bugzilla.kernel.org/show_bug.cgi?id=42679#c49 */
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_MARVELL_EXT, 0x9230,
+ 			 quirk_dma_func1_alias);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_MARVELL_EXT, 0x9235,
++			 quirk_dma_func1_alias);
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_TTI, 0x0642,
+ 			 quirk_dma_func1_alias);
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_TTI, 0x0645,
 
 
