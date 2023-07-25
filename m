@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BAA91EA96
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:12:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203FBC433C8;
-	Tue, 25 Jul 2023 11:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768A81EA96
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:12:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8BF9C433C8;
+	Tue, 25 Jul 2023 11:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283567;
-	bh=ra0ecAm9GDyk6lKFoXIankzZKDENIX6CFYXplPwUS7U=;
+	s=korg; t=1690283570;
+	bh=nVhcRV8Cja5JBiJMaog2drF4RTJx9PWh71j7zetf8fM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s4yuVLop7XZtrbdLrm2jEcjx/0SSyvJSNg+A0jnAaH8sQodx+81BMZ6EWoxXWP9R9
-	 FiIVwLfGd6Uji/z5FnE+x884/euwj9aepr9HOd8dnozBFXlSF5W+a4/tjQKu8nDZo6
-	 A5zRTCBhaHOA1hALtvygZEJ6HWCu2uYjCfjm4FPU=
+	b=Yww6FIWYi1tujf4qjdASd5LyqPV6j2rLY3A0xgOmdX4MJN6D2J3W2HMnqDtorUvpM
+	 jaO56iNDw03E5RF+6cAFhVhuYRdProD3zN09GoxxKzaJCgipH28Sn5vnoOhzwFQtbB
+	 Qzb4Pd6z503TijWPf60oKju7T+mU2/0qWuVVeGWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengcheng Yang <yangpc@wangsu.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Zhang Rui <rui.zhang@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 044/509] samples/bpf: Fix buffer overflow in tcp_basertt
-Date: Tue, 25 Jul 2023 12:39:43 +0200
-Message-ID: <20230725104555.698039138@linuxfoundation.org>
+Subject: [PATCH 5.10 027/509] powercap: RAPL: Fix CONFIG_IOSF_MBI dependency
+Date: Tue, 25 Jul 2023 12:39:26 +0200
+Message-ID: <20230725104554.893719218@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,34 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengcheng Yang <yangpc@wangsu.com>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit f4dea9689c5fea3d07170c2cb0703e216f1a0922 ]
+[ Upstream commit 4658fe81b3f8afe8adf37734ec5fe595d90415c6 ]
 
-Using sizeof(nv) or strlen(nv)+1 is correct.
+After commit 3382388d7148 ("intel_rapl: abstract RAPL common code"),
+accessing to IOSF_MBI interface is done in the RAPL common code.
 
-Fixes: c890063e4404 ("bpf: sample BPF_SOCKET_OPS_BASE_RTT program")
-Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
-Link: https://lore.kernel.org/r/1683276658-2860-1-git-send-email-yangpc@wangsu.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Thus it is the CONFIG_INTEL_RAPL_CORE that has dependency of
+CONFIG_IOSF_MBI, while CONFIG_INTEL_RAPL_MSR does not.
+
+This problem was not exposed previously because all the previous RAPL
+common code users, aka, the RAPL MSR and MMIO I/F drivers, have
+CONFIG_IOSF_MBI selected.
+
+Fix the CONFIG_IOSF_MBI dependency in RAPL code. This also fixes a build
+time failure when the RAPL TPMI I/F driver is introduced without
+selecting CONFIG_IOSF_MBI.
+
+x86_64-linux-ld: vmlinux.o: in function `set_floor_freq_atom':
+intel_rapl_common.c:(.text+0x2dac9b8): undefined reference to `iosf_mbi_write'
+x86_64-linux-ld: intel_rapl_common.c:(.text+0x2daca66): undefined reference to `iosf_mbi_read'
+
+Reference to iosf_mbi.h is also removed from the RAPL MSR I/F driver.
+
+Fixes: 3382388d7148 ("intel_rapl: abstract RAPL common code")
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/all/20230601213246.3271412-1-arnd@kernel.org
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/bpf/tcp_basertt_kern.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/powercap/Kconfig          | 4 +++-
+ drivers/powercap/intel_rapl_msr.c | 1 -
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/samples/bpf/tcp_basertt_kern.c b/samples/bpf/tcp_basertt_kern.c
-index 8dfe09a92feca..822b0742b8154 100644
---- a/samples/bpf/tcp_basertt_kern.c
-+++ b/samples/bpf/tcp_basertt_kern.c
-@@ -47,7 +47,7 @@ int bpf_basertt(struct bpf_sock_ops *skops)
- 		case BPF_SOCK_OPS_BASE_RTT:
- 			n = bpf_getsockopt(skops, SOL_TCP, TCP_CONGESTION,
- 					   cong, sizeof(cong));
--			if (!n && !__builtin_memcmp(cong, nv, sizeof(nv)+1)) {
-+			if (!n && !__builtin_memcmp(cong, nv, sizeof(nv))) {
- 				/* Set base_rtt to 80us */
- 				rv = 80;
- 			} else if (n) {
+diff --git a/drivers/powercap/Kconfig b/drivers/powercap/Kconfig
+index bc228725346b4..0e4b2c214a70a 100644
+--- a/drivers/powercap/Kconfig
++++ b/drivers/powercap/Kconfig
+@@ -18,10 +18,12 @@ if POWERCAP
+ # Client driver configurations go here.
+ config INTEL_RAPL_CORE
+ 	tristate
++	depends on PCI
++	select IOSF_MBI
+ 
+ config INTEL_RAPL
+ 	tristate "Intel RAPL Support via MSR Interface"
+-	depends on X86 && IOSF_MBI
++	depends on X86 && PCI
+ 	select INTEL_RAPL_CORE
+ 	help
+ 	  This enables support for the Intel Running Average Power Limit (RAPL)
+diff --git a/drivers/powercap/intel_rapl_msr.c b/drivers/powercap/intel_rapl_msr.c
+index 1646808d354ce..6b68e5ed20812 100644
+--- a/drivers/powercap/intel_rapl_msr.c
++++ b/drivers/powercap/intel_rapl_msr.c
+@@ -22,7 +22,6 @@
+ #include <linux/processor.h>
+ #include <linux/platform_device.h>
+ 
+-#include <asm/iosf_mbi.h>
+ #include <asm/cpu_device_id.h>
+ #include <asm/intel-family.h>
+ 
 -- 
 2.39.2
 
