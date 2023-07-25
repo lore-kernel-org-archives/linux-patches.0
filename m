@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457E01ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:27:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCEA6C433CA;
-	Tue, 25 Jul 2023 11:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1458A1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:27:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863E3C433C8;
+	Tue, 25 Jul 2023 11:27:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284420;
-	bh=4lwwYtcQMfWtNHM3K3B2qY62P8UFm4VJVFGXOwwNThE=;
+	s=korg; t=1690284422;
+	bh=tqEVskwNQDad8FStnfOLC9cLN4N4pJrCHgqrZpCo8nQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SJivTA+vxCwHhNcnoIVVSdvqA2zFEui+HBqrUEMaY397KUOPsn3sJsPxhycXDrz51
-	 nWGQBWJOsw4acSw6x2Mm6LZ8FtoZS5+pzcc6EBElMyVKRLey78jeHfDcUTK8wfFONl
-	 6Px+BatSNyk/NcuIG34acz8ZUMzi/0N97ZBMx+a4=
+	b=dSZo5fkBCWcNkGE3dTMVuojPkkExTFzzJR0jvywTtcOauoaVpw0+S2Pg+5i4dA9Nd
+	 zGYf/MZKkR4V3BPflU8ezgQiCX6Mu9DBPacC6msDWIpvq5lI5M8Kid3UJJsyExDXXf
+	 bsL5rKCn5qy6OpgM0wLn6/7OHShLFk7sgNT25Y3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prasad Koya <prasad@arista.com>,
-	Sasha Neftin <sasha.neftin@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Amit Klein <aksecurity@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willy Tarreau <w@1wt.eu>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	Hannes Frederic Sowa <hannes@stressinduktion.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 342/509] igc: set TP bit in supported and advertising fields of ethtool_link_ksettings
-Date: Tue, 25 Jul 2023 12:44:41 +0200
-Message-ID: <20230725104609.386386918@linuxfoundation.org>
+Subject: [PATCH 5.10 351/509] udp6: fix udp6_ehashfn() typo
+Date: Tue, 25 Jul 2023 12:44:50 +0200
+Message-ID: <20230725104609.805288337@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,36 +40,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Prasad Koya <prasad@arista.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9ac3fc2f42e5ffa1e927dcbffb71b15fa81459e2 ]
+[ Upstream commit 51d03e2f2203e76ed02d33fb5ffbb5fc85ffaf54 ]
 
-set TP bit in the 'supported' and 'advertising' fields. i225/226 parts
-only support twisted pair copper.
+Amit Klein reported that udp6_ehash_secret was initialized but never used.
 
-Fixes: 8c5ad0dae93c ("igc: Add ethtool support")
-Signed-off-by: Prasad Koya <prasad@arista.com>
-Acked-by: Sasha Neftin <sasha.neftin@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 1bbdceef1e53 ("inet: convert inet_ehash_secret and ipv6_hash_secret to net_get_random_once")
+Reported-by: Amit Klein <aksecurity@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Willy Tarreau <w@1wt.eu>
+Cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Cc: David Ahern <dsahern@kernel.org>
+Cc: Hannes Frederic Sowa <hannes@stressinduktion.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_ethtool.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv6/udp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_ethtool.c b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-index da259cd59adda..d28ac3a025ab1 100644
---- a/drivers/net/ethernet/intel/igc/igc_ethtool.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-@@ -1673,6 +1673,8 @@ static int igc_ethtool_get_link_ksettings(struct net_device *netdev,
- 	/* twisted pair */
- 	cmd->base.port = PORT_TP;
- 	cmd->base.phy_address = hw->phy.addr;
-+	ethtool_link_ksettings_add_link_mode(cmd, supported, TP);
-+	ethtool_link_ksettings_add_link_mode(cmd, advertising, TP);
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 19c0721399d9e..788bb19f32e99 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -87,7 +87,7 @@ static u32 udp6_ehashfn(const struct net *net,
+ 	fhash = __ipv6_addr_jhash(faddr, udp_ipv6_hash_secret);
  
- 	/* advertising link modes */
- 	if (hw->phy.autoneg_advertised & ADVERTISE_10_HALF)
+ 	return __inet6_ehashfn(lhash, lport, fhash, fport,
+-			       udp_ipv6_hash_secret + net_hash_mix(net));
++			       udp6_ehash_secret + net_hash_mix(net));
+ }
+ 
+ int udp_v6_get_port(struct sock *sk, unsigned short snum)
 -- 
 2.39.2
 
