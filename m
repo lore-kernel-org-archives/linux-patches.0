@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFAD91D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:03:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29FA7C433C8;
-	Tue, 25 Jul 2023 11:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6D71D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:03:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA88CC433C8;
+	Tue, 25 Jul 2023 11:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283024;
-	bh=SVXIepzprOj4GTNIUVzAlMcKoqBpMHHjN6BooLpEXDw=;
+	s=korg; t=1690283027;
+	bh=WPKxH0RwzkDkinxA4WNapnX8of9SXacRmD1CkK/etOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eYtcBCA0ZONgVY6sF2Nl5RVvpW7LUAOnCWdzPMmm2y7AFD0fvZyN8dHoRFNu0f2KA
-	 TTod+Cjwzb2ssnIbIFGkkYc86Ol1WqddWumijN0YNN6aqWhPpA5+w4I0Xqphl3DI3e
-	 pCljni7/yFEdL9YHXzaxFpmKUqgSh/JhELZn+wGo=
+	b=blNao8g4WuhBPixps6S2HiCFwzRW7XcDD6+5PtB408hTtAPRHVDX88Hh3WzlwXNKA
+	 ThK7ySSXdXFwOxNh1HasjkxO9kOEwdyOFBVb8dFXSTi2mIxArNIvzhG9u0upftAJoZ
+	 F0LuMyZb3nKvuc96e+veUCSahevoVbHGBJpKC5yI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 094/183] pinctrl: renesas: rzg2l: Handle non-unique subnode names
-Date: Tue, 25 Jul 2023 12:45:22 +0200
-Message-ID: <20230725104511.348325346@linuxfoundation.org>
+Subject: [PATCH 6.1 112/183] net: sched: cls_u32: Undo refcount decrement in case update failed
+Date: Tue, 25 Jul 2023 12:45:40 +0200
+Message-ID: <20230725104511.997330088@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -35,116 +38,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit bfc374a145ae133613e05b9b89be561f169cb58d ]
+[ Upstream commit e8d3d78c19be0264a5692bed477c303523aead31 ]
 
-Currently, sd1 and sd0 have unique subnode names 'sd1_mux' and 'sd0_mux'.
-If we change these to non-unique subnode names such as 'mux' this can
-lead to the below conflict as the RZ/G2L pin control driver considers
-only the names of the subnodes.
+In the case of an update, when TCA_U32_LINK is set, u32_set_parms will
+decrement the refcount of the ht_down (struct tc_u_hnode) pointer
+present in the older u32 filter which we are replacing. However, if
+u32_replace_hw_knode errors out, the update command fails and that
+ht_down pointer continues decremented. To fix that, when
+u32_replace_hw_knode fails, check if ht_down's refcount was decremented
+and undo the decrement.
 
-   pinctrl-rzg2l 11030000.pinctrl: pin P47_0 already requested by 11c00000.mmc; cannot claim for 11c10000.mmc
-   pinctrl-rzg2l 11030000.pinctrl: pin-376 (11c10000.mmc) status -22
-   pinctrl-rzg2l 11030000.pinctrl: could not request pin 376 (P47_0) from group mux  on device pinctrl-rzg2l
-   renesas_sdhi_internal_dmac 11c10000.mmc: Error applying setting, reverse things back
-
-Fix this by constructing unique names from the node names of both the
-pin control configuration node and its child node, where appropriate.
-
-Based on the work done by Geert for the RZ/V2M pinctrl driver.
-
-Fixes: c4c4637eb57f ("pinctrl: renesas: Add RZ/G2L pin and gpio controller driver")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230704111858.215278-1-biju.das.jz@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: d34e3e181395 ("net: cls_u32: Add support for skip-sw flag to tc u32 classifier.")
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzg2l.c | 28 ++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+ net/sched/cls_u32.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-index ca6303fc41f98..fd11d28e5a1e4 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-@@ -246,6 +246,7 @@ static int rzg2l_map_add_config(struct pinctrl_map *map,
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index 7cfbcd5180841..1280736a7b92e 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -926,6 +926,13 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 		if (err) {
+ 			u32_unbind_filter(tp, new, tb);
  
- static int rzg2l_dt_subnode_to_map(struct pinctrl_dev *pctldev,
- 				   struct device_node *np,
-+				   struct device_node *parent,
- 				   struct pinctrl_map **map,
- 				   unsigned int *num_maps,
- 				   unsigned int *index)
-@@ -263,6 +264,7 @@ static int rzg2l_dt_subnode_to_map(struct pinctrl_dev *pctldev,
- 	struct property *prop;
- 	int ret, gsel, fsel;
- 	const char **pin_fn;
-+	const char *name;
- 	const char *pin;
- 
- 	pinmux = of_find_property(np, "pinmux", NULL);
-@@ -346,8 +348,19 @@ static int rzg2l_dt_subnode_to_map(struct pinctrl_dev *pctldev,
- 		psel_val[i] = MUX_FUNC(value);
- 	}
- 
-+	if (parent) {
-+		name = devm_kasprintf(pctrl->dev, GFP_KERNEL, "%pOFn.%pOFn",
-+				      parent, np);
-+		if (!name) {
-+			ret = -ENOMEM;
-+			goto done;
-+		}
-+	} else {
-+		name = np->name;
-+	}
++			if (tb[TCA_U32_LINK]) {
++				struct tc_u_hnode *ht_old;
 +
- 	/* Register a single pin group listing all the pins we read from DT */
--	gsel = pinctrl_generic_add_group(pctldev, np->name, pins, num_pinmux, NULL);
-+	gsel = pinctrl_generic_add_group(pctldev, name, pins, num_pinmux, NULL);
- 	if (gsel < 0) {
- 		ret = gsel;
- 		goto done;
-@@ -357,17 +370,16 @@ static int rzg2l_dt_subnode_to_map(struct pinctrl_dev *pctldev,
- 	 * Register a single group function where the 'data' is an array PSEL
- 	 * register values read from DT.
- 	 */
--	pin_fn[0] = np->name;
--	fsel = pinmux_generic_add_function(pctldev, np->name, pin_fn, 1,
--					   psel_val);
-+	pin_fn[0] = name;
-+	fsel = pinmux_generic_add_function(pctldev, name, pin_fn, 1, psel_val);
- 	if (fsel < 0) {
- 		ret = fsel;
- 		goto remove_group;
- 	}
- 
- 	maps[idx].type = PIN_MAP_TYPE_MUX_GROUP;
--	maps[idx].data.mux.group = np->name;
--	maps[idx].data.mux.function = np->name;
-+	maps[idx].data.mux.group = name;
-+	maps[idx].data.mux.function = name;
- 	idx++;
- 
- 	dev_dbg(pctrl->dev, "Parsed %pOF with %d pins\n", np, num_pinmux);
-@@ -414,7 +426,7 @@ static int rzg2l_dt_node_to_map(struct pinctrl_dev *pctldev,
- 	index = 0;
- 
- 	for_each_child_of_node(np, child) {
--		ret = rzg2l_dt_subnode_to_map(pctldev, child, map,
-+		ret = rzg2l_dt_subnode_to_map(pctldev, child, np, map,
- 					      num_maps, &index);
- 		if (ret < 0) {
- 			of_node_put(child);
-@@ -423,7 +435,7 @@ static int rzg2l_dt_node_to_map(struct pinctrl_dev *pctldev,
- 	}
- 
- 	if (*num_maps == 0) {
--		ret = rzg2l_dt_subnode_to_map(pctldev, np, map,
-+		ret = rzg2l_dt_subnode_to_map(pctldev, np, NULL, map,
- 					      num_maps, &index);
- 		if (ret < 0)
- 			goto done;
++				ht_old = rtnl_dereference(n->ht_down);
++				if (ht_old)
++					ht_old->refcnt++;
++			}
+ 			__u32_destroy_key(new);
+ 			return err;
+ 		}
 -- 
 2.39.2
 
