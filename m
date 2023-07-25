@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DEB71ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:37:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C05C433C7;
-	Tue, 25 Jul 2023 11:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3A41ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:37:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50CFBC433C9;
+	Tue, 25 Jul 2023 11:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285064;
-	bh=5gbltbpWRq1lYRUIwVYJ3xNGukwMHd1ovBklrT7UUvY=;
+	s=korg; t=1690285066;
+	bh=RybqTSJzi4FIo+abIa7eRqW+uSupp2XZWUGQYRsODS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aZ26QjUffWASjmc/PwWhjVLQQ80VGWqr8vr05ZEWj+o2qsgj3/RonKBsi1N8rXuC7
-	 J+a7rieKmX5pZc/BAAufAzXRgiVdcFuhJy68+PQrGaVJoFcwk+C+DiCsASgT2O4Jvd
-	 hfGbfPVJ7lPP3qecBK7/KMZZAaSUUbvjgrPtJXFc=
+	b=iFeWlHFhSuiW3TVHiV1iUFxhIcJhxeBs5YJ309129M5GBRtbcrklSGYMdekCJjm8N
+	 3iW02voYkh9rJ2inVPoAWhO4cSB20BJc1Z47LesnacnE7nynbVyavgJalMkJ/obUw7
+	 RK0HSno6MU1OZpA44lsq5yFywBnsLEZmdiwrquNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Natalia Petrova <n.petrova@fintech.ru>
-Subject: [PATCH 5.4 071/313] radeon: avoid double free in ci_dpm_init()
-Date: Tue, 25 Jul 2023 12:43:44 +0200
-Message-ID: <20230725104524.045897692@linuxfoundation.org>
+	Luca Weiss <luca@z3ntu.xyz>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 072/313] Input: drv260x - sleep between polling GO bit
+Date: Tue, 25 Jul 2023 12:43:45 +0200
+Message-ID: <20230725104524.087528226@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -36,108 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Luca Weiss <luca@z3ntu.xyz>
 
-[ Upstream commit 20c3dffdccbd494e0dd631d1660aeecbff6775f2 ]
+[ Upstream commit efef661dfa6bf8cbafe4cd6a97433fcef0118967 ]
 
-Several calls to ci_dpm_fini() will attempt to free resources that
-either have been freed before or haven't been allocated yet. This
-may lead to undefined or dangerous behaviour.
+When doing the initial startup there's no need to poll without any
+delay and spam the I2C bus.
 
-For instance, if r600_parse_extended_power_table() fails, it might
-call r600_free_extended_power_table() as will ci_dpm_fini() later
-during error handling.
+Let's sleep 15ms between each attempt, which is the same time as used
+in the vendor driver.
 
-Fix this by only freeing pointers to objects previously allocated.
-
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: cc8dbbb4f62a ("drm/radeon: add dpm support for CI dGPUs (v2)")
-Co-developed-by: Natalia Petrova <n.petrova@fintech.ru>
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 7132fe4f5687 ("Input: drv260x - add TI drv260x haptics driver")
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+Link: https://lore.kernel.org/r/20230430-drv260x-improvements-v1-2-1fb28b4cc698@z3ntu.xyz
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/ci_dpm.c | 28 ++++++++++++++++++++--------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+ drivers/input/misc/drv260x.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/radeon/ci_dpm.c b/drivers/gpu/drm/radeon/ci_dpm.c
-index 1e62e7bbf1b1d..5403f4c902b64 100644
---- a/drivers/gpu/drm/radeon/ci_dpm.c
-+++ b/drivers/gpu/drm/radeon/ci_dpm.c
-@@ -5556,6 +5556,7 @@ static int ci_parse_power_table(struct radeon_device *rdev)
- 	u8 frev, crev;
- 	u8 *power_state_offset;
- 	struct ci_ps *ps;
-+	int ret;
- 
- 	if (!atom_parse_data_header(mode_info->atom_context, index, NULL,
- 				   &frev, &crev, &data_offset))
-@@ -5585,11 +5586,15 @@ static int ci_parse_power_table(struct radeon_device *rdev)
- 		non_clock_array_index = power_state->v2.nonClockInfoIndex;
- 		non_clock_info = (struct _ATOM_PPLIB_NONCLOCK_INFO *)
- 			&non_clock_info_array->nonClockInfo[non_clock_array_index];
--		if (!rdev->pm.power_state[i].clock_info)
--			return -EINVAL;
-+		if (!rdev->pm.power_state[i].clock_info) {
-+			ret = -EINVAL;
-+			goto err_free_ps;
-+		}
- 		ps = kzalloc(sizeof(struct ci_ps), GFP_KERNEL);
--		if (ps == NULL)
--			return -ENOMEM;
-+		if (ps == NULL) {
-+			ret = -ENOMEM;
-+			goto err_free_ps;
-+		}
- 		rdev->pm.dpm.ps[i].ps_priv = ps;
- 		ci_parse_pplib_non_clock_info(rdev, &rdev->pm.dpm.ps[i],
- 					      non_clock_info,
-@@ -5629,6 +5634,12 @@ static int ci_parse_power_table(struct radeon_device *rdev)
+diff --git a/drivers/input/misc/drv260x.c b/drivers/input/misc/drv260x.c
+index 79d7fa710a714..54002d1a446b7 100644
+--- a/drivers/input/misc/drv260x.c
++++ b/drivers/input/misc/drv260x.c
+@@ -435,6 +435,7 @@ static int drv260x_init(struct drv260x_data *haptics)
  	}
  
- 	return 0;
-+
-+err_free_ps:
-+	for (i = 0; i < rdev->pm.dpm.num_ps; i++)
-+		kfree(rdev->pm.dpm.ps[i].ps_priv);
-+	kfree(rdev->pm.dpm.ps);
-+	return ret;
- }
- 
- static int ci_get_vbios_boot_values(struct radeon_device *rdev,
-@@ -5717,25 +5728,26 @@ int ci_dpm_init(struct radeon_device *rdev)
- 
- 	ret = ci_get_vbios_boot_values(rdev, &pi->vbios_boot_state);
- 	if (ret) {
--		ci_dpm_fini(rdev);
-+		kfree(rdev->pm.dpm.priv);
- 		return ret;
- 	}
- 
- 	ret = r600_get_platform_caps(rdev);
- 	if (ret) {
--		ci_dpm_fini(rdev);
-+		kfree(rdev->pm.dpm.priv);
- 		return ret;
- 	}
- 
- 	ret = r600_parse_extended_power_table(rdev);
- 	if (ret) {
--		ci_dpm_fini(rdev);
-+		kfree(rdev->pm.dpm.priv);
- 		return ret;
- 	}
- 
- 	ret = ci_parse_power_table(rdev);
- 	if (ret) {
--		ci_dpm_fini(rdev);
-+		kfree(rdev->pm.dpm.priv);
-+		r600_free_extended_power_table(rdev);
- 		return ret;
- 	}
- 
+ 	do {
++		usleep_range(15000, 15500);
+ 		error = regmap_read(haptics->regmap, DRV260X_GO, &cal_buf);
+ 		if (error) {
+ 			dev_err(&haptics->client->dev,
 -- 
 2.39.2
 
