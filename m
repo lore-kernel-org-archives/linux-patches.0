@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D0E1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:35:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79667C433C8;
-	Tue, 25 Jul 2023 11:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B299F1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:35:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3865CC433C7;
+	Tue, 25 Jul 2023 11:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284921;
-	bh=c311XmPGhCYuz+8HttyI/2b8MMr+xmuG+Bw6PqcsPbw=;
+	s=korg; t=1690284924;
+	bh=v8/rsFd5zB3gJ2nrCmgAjhS5B7iZJ3mKeIUMzm+U3iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LLLy5x/TA/wcGTjWgF62YplMRocHTCuZTJMeHdBJL0CKRVGgGe9Ut/2rs1VsgNK6y
-	 dTbB/dSjnmox0nt2upFZqnalOtU5t6H/7ooKxXGsRPzCR700sNVcgv2aFHeNZWsKfb
-	 FROSF7KBwCHDe6EreQjgeHmtY2n/TK0qGdowSvHM=
+	b=hKcTfxAsgYbJ58sGdDJjD5j9Q/ItiIhsBfuccs/HE7X2sBQRpeiWxmvznfvLV9Y6V
+	 vxkp6j0Wn/AoGJs1rUD9OHHLTf47QZf7zm8PKIXUm1gYei1pxOs8VSf77luOT+Cj4Q
+	 CqQ+KGpnvLqwWTA2nzEQ9hEnYIUBOrclAP0/WnZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ashok Raj <ashok.raj@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 5.4 002/313] x86/smp: Use dedicated cache-line for mwait_play_dead()
-Date: Tue, 25 Jul 2023 12:42:35 +0200
-Message-ID: <20230725104521.284530400@linuxfoundation.org>
+	Rajan Vaja <rajan.vaja@xilinx.com>,
+	Michal Simek <michal.simek@xilinx.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 020/313] clocksource/drivers/cadence-ttc: Use ttc driver as platform driver
+Date: Tue, 25 Jul 2023 12:42:53 +0200
+Message-ID: <20230725104522.015366831@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,91 +36,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Rajan Vaja <rajan.vaja@xilinx.com>
 
-commit f9c9987bf52f4e42e940ae217333ebb5a4c3b506 upstream.
+[ Upstream commit f5ac896b6a23eb46681cdbef440c1d991b04e519 ]
 
-Monitoring idletask::thread_info::flags in mwait_play_dead() has been an
-obvious choice as all what is needed is a cache line which is not written
-by other CPUs.
+Currently TTC driver is TIMER_OF_DECLARE type driver. Because of
+that, TTC driver may be initialized before other clock drivers. If
+TTC driver is dependent on that clock driver then initialization of
+TTC driver will failed.
 
-But there is a use case where a "dead" CPU needs to be brought out of
-MWAIT: kexec().
+So use TTC driver as platform driver instead of using
+TIMER_OF_DECLARE.
 
-This is required as kexec() can overwrite text, pagetables, stacks and the
-monitored cacheline of the original kernel. The latter causes MWAIT to
-resume execution which obviously causes havoc on the kexec kernel which
-results usually in triple faults.
-
-Use a dedicated per CPU storage to prepare for that.
-
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Ashok Raj <ashok.raj@intel.com>
-Reviewed-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230615193330.434553750@linutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Rajan Vaja <rajan.vaja@xilinx.com>
+Tested-by: Michal Simek <michal.simek@xilinx.com>
+Acked-by: Michal Simek <michal.simek@xilinx.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://lore.kernel.org/r/1573122988-18399-1-git-send-email-rajan.vaja@xilinx.com
+Stable-dep-of: 8b5bf64c89c7 ("clocksource/drivers/cadence-ttc: Fix memory leak in ttc_timer_probe")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/smpboot.c |   24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ drivers/clocksource/timer-cadence-ttc.c | 26 +++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
---- a/arch/x86/kernel/smpboot.c
-+++ b/arch/x86/kernel/smpboot.c
-@@ -99,6 +99,17 @@ DEFINE_PER_CPU_READ_MOSTLY(cpumask_var_t
- DEFINE_PER_CPU_READ_MOSTLY(struct cpuinfo_x86, cpu_info);
- EXPORT_PER_CPU_SYMBOL(cpu_info);
+diff --git a/drivers/clocksource/timer-cadence-ttc.c b/drivers/clocksource/timer-cadence-ttc.c
+index 160bc6597de5b..df5895e934636 100644
+--- a/drivers/clocksource/timer-cadence-ttc.c
++++ b/drivers/clocksource/timer-cadence-ttc.c
+@@ -15,6 +15,8 @@
+ #include <linux/of_irq.h>
+ #include <linux/slab.h>
+ #include <linux/sched_clock.h>
++#include <linux/module.h>
++#include <linux/of_platform.h>
  
-+struct mwait_cpu_dead {
-+	unsigned int	control;
-+	unsigned int	status;
+ /*
+  * This driver configures the 2 16/32-bit count-up timers as follows:
+@@ -464,13 +466,7 @@ static int __init ttc_setup_clockevent(struct clk *clk,
+ 	return err;
+ }
+ 
+-/**
+- * ttc_timer_init - Initialize the timer
+- *
+- * Initializes the timer hardware and register the clock source and clock event
+- * timers with Linux kernal timer framework
+- */
+-static int __init ttc_timer_init(struct device_node *timer)
++static int __init ttc_timer_probe(struct platform_device *pdev)
+ {
+ 	unsigned int irq;
+ 	void __iomem *timer_baseaddr;
+@@ -478,6 +474,7 @@ static int __init ttc_timer_init(struct device_node *timer)
+ 	static int initialized;
+ 	int clksel, ret;
+ 	u32 timer_width = 16;
++	struct device_node *timer = pdev->dev.of_node;
+ 
+ 	if (initialized)
+ 		return 0;
+@@ -532,4 +529,17 @@ static int __init ttc_timer_init(struct device_node *timer)
+ 	return 0;
+ }
+ 
+-TIMER_OF_DECLARE(ttc, "cdns,ttc", ttc_timer_init);
++static const struct of_device_id ttc_timer_of_match[] = {
++	{.compatible = "cdns,ttc"},
++	{},
 +};
 +
-+/*
-+ * Cache line aligned data for mwait_play_dead(). Separate on purpose so
-+ * that it's unlikely to be touched by other CPUs.
-+ */
-+static DEFINE_PER_CPU_ALIGNED(struct mwait_cpu_dead, mwait_cpu_dead);
++MODULE_DEVICE_TABLE(of, ttc_timer_of_match);
 +
- /* Logical package management. We might want to allocate that dynamically */
- unsigned int __max_logical_packages __read_mostly;
- EXPORT_SYMBOL(__max_logical_packages);
-@@ -1675,10 +1686,10 @@ static bool wakeup_cpu0(void)
-  */
- static inline void mwait_play_dead(void)
- {
-+	struct mwait_cpu_dead *md = this_cpu_ptr(&mwait_cpu_dead);
- 	unsigned int eax, ebx, ecx, edx;
- 	unsigned int highest_cstate = 0;
- 	unsigned int highest_subcstate = 0;
--	void *mwait_ptr;
- 	int i;
- 
- 	if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
-@@ -1713,13 +1724,6 @@ static inline void mwait_play_dead(void)
- 			(highest_subcstate - 1);
- 	}
- 
--	/*
--	 * This should be a memory location in a cache line which is
--	 * unlikely to be touched by other processors.  The actual
--	 * content is immaterial as it is not actually modified in any way.
--	 */
--	mwait_ptr = &current_thread_info()->flags;
--
- 	wbinvd();
- 
- 	while (1) {
-@@ -1731,9 +1735,9 @@ static inline void mwait_play_dead(void)
- 		 * case where we return around the loop.
- 		 */
- 		mb();
--		clflush(mwait_ptr);
-+		clflush(md);
- 		mb();
--		__monitor(mwait_ptr, 0, 0);
-+		__monitor(md, 0, 0);
- 		mb();
- 		__mwait(eax, 0);
- 		/*
++static struct platform_driver ttc_timer_driver = {
++	.driver = {
++		.name	= "cdns_ttc_timer",
++		.of_match_table = ttc_timer_of_match,
++	},
++};
++builtin_platform_driver_probe(ttc_timer_driver, ttc_timer_probe);
+-- 
+2.39.2
+
 
 
