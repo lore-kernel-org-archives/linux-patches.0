@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36C01ED52
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:45:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523EDC433C8;
-	Tue, 25 Jul 2023 11:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D8B1ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:45:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 195D8C433C8;
+	Tue, 25 Jul 2023 11:45:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285545;
-	bh=wAQTzoZ+ovgSO0+VsIDgM9apYuyYS96ZK7wXynhTEjQ=;
+	s=korg; t=1690285548;
+	bh=r2TD8JOdVqJr4OzQJzhAj+frFEqqJ+pxYtaBytDGWFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rjg6zbj1NxgrIs27XdVXGC+QasFIuVhg1Nr2ng3x23tTG4IdVJ5/uWJ7246aZiwdy
-	 /56y+kaDOtTOF5XwWUe6BFHvkoej7jJjB94z15VgP/CypGRnkAQpcK6nS+vZHsB97W
-	 N7JNoX2MBgF3ap5X8p1TYoII/fpG49qwgT6sVr9I=
+	b=X6RskriAecH/A9Rjg80CuMW72uKPJXX2UYi1UIDhv+h8o9o+aT1OTpINMQlORZO0w
+	 LibFZSEhcDHnUjhwEOrN63CYn8QwEXJgFMhKn6SxsXbARrtTNtlTmUC3njDmS2dPyQ
+	 0ztbaEtAb9m+hS0wvI8H3bfAHzk/7OklvUUhbpNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
 	Lorenzo Pieralisi <lpieralisi@kernel.org>
-Subject: [PATCH 5.4 243/313] PCI: qcom: Disable write access to read only registers for IP v2.3.3
-Date: Tue, 25 Jul 2023 12:46:36 +0200
-Message-ID: <20230725104531.573381204@linuxfoundation.org>
+Subject: [PATCH 5.4 244/313] PCI: rockchip: Assert PCI Configuration Enable bit after probe
+Date: Tue, 25 Jul 2023 12:46:37 +0200
+Message-ID: <20230725104531.623656624@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -34,34 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
 
-commit a33d700e8eea76c62120cb3dbf5e01328f18319a upstream.
+commit f397fd4ac1fa3afcabd8cee030f953ccaed2a364 upstream.
 
-In the post init sequence of v2.9.0, write access to read only registers
-are not disabled after updating the registers. Fix it by disabling the
-access after register update.
+Assert PCI Configuration Enable bit after probe. When this bit is left to
+0 in the endpoint mode, the RK3399 PCIe endpoint core will generate
+configuration request retry status (CRS) messages back to the root complex.
+Assert this bit after probe to allow the RK3399 PCIe endpoint core to reply
+to configuration requests from the root complex.
+This is documented in section 17.5.8.1.2 of the RK3399 TRM.
 
-Link: https://lore.kernel.org/r/20230619150408.8468-2-manivannan.sadhasivam@linaro.org
-Fixes: 5d76117f070d ("PCI: qcom: Add support for IPQ8074 PCIe controller")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20230418074700.1083505-4-rick.wertenbroek@gmail.com
+Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
+Tested-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
 Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Cc: <stable@vger.kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/controller/pcie-rockchip-ep.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -807,6 +807,8 @@ static int qcom_pcie_get_resources_2_4_0
- 			return PTR_ERR(res->phy_ahb_reset);
- 	}
+--- a/drivers/pci/controller/pcie-rockchip-ep.c
++++ b/drivers/pci/controller/pcie-rockchip-ep.c
+@@ -630,6 +630,9 @@ static int rockchip_pcie_ep_probe(struct
  
-+	dw_pcie_dbi_ro_wr_dis(pci);
+ 	ep->irq_pci_addr = ROCKCHIP_PCIE_EP_DUMMY_IRQ_ADDR;
+ 
++	rockchip_pcie_write(rockchip, PCIE_CLIENT_CONF_ENABLE,
++			    PCIE_CLIENT_CONFIG);
 +
  	return 0;
- }
- 
+ err_epc_mem_exit:
+ 	pci_epc_mem_exit(epc);
 
 
