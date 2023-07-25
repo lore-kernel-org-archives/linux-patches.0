@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1961ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:24:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D273C433C8;
-	Tue, 25 Jul 2023 11:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1BF71ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:24:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2671DC433C7;
+	Tue, 25 Jul 2023 11:24:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284257;
-	bh=NUOwHOtiZLKlkVZLFaYQ97k5Qe7FbI07YlCrhd9ol4Y=;
+	s=korg; t=1690284260;
+	bh=fw7gtaO7VWMP2U69iW7gj0jAUyFQ9sQlJzmIwwTNChE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y8RdXI5WFcDOtQzeh318bupSc6S4xjxYeWf+81mMM0SR3RyHKQ6Nmw684GI9HUBc6
-	 Qim5uyoVvvH8Rwolp3JIAeEu8dPaQIFJLUeo9mGjjA4CoYknOo9wwFAnkJ3uMtT7LO
-	 7SmG/vkPF5dTuS50IUSDMnY8KUWXvY6h7NkYvSw4=
+	b=cqkkaTKDTvpmwiYyz1ZrnX2CPpt+lFA2Pvl8+x2cQUBFvCQdizjE4TPlPhblAvz+e
+	 JmM3GDf+pPEwgltzMebL1xzi0NVwz/hK14bqgfdG2tLWzRXHVTQNJcrTe/aJiiWhDw
+	 Gbar6j7oZLr5yLExs4LF74n3hskxl6HCk0DX0Ep8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 5.10 292/509] autofs: use flexible array in ioctl structure
-Date: Tue, 25 Jul 2023 12:43:51 +0200
-Message-ID: <20230725104607.109897284@linuxfoundation.org>
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Hugh Dickins <hughd@google.com>,
+	David Howells <dhowells@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 293/509] shmem: use ramfs_kill_sb() for kill_sb method of ramfs-based tmpfs
+Date: Tue, 25 Jul 2023 12:43:52 +0200
+Message-ID: <20230725104607.155838199@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,80 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-commit e910c8e3aa02dc456e2f4c32cb479523c326b534 upstream.
+commit 36ce9d76b0a93bae799e27e4f5ac35478c676592 upstream.
 
-Commit df8fc4e934c1 ("kbuild: Enable -fstrict-flex-arrays=3") introduced a warning
-for the autofs_dev_ioctl structure:
+As the ramfs-based tmpfs uses ramfs_init_fs_context() for the
+init_fs_context method, which allocates fc->s_fs_info, use ramfs_kill_sb()
+to free it and avoid a memory leak.
 
-In function 'check_name',
-    inlined from 'validate_dev_ioctl' at fs/autofs/dev-ioctl.c:131:9,
-    inlined from '_autofs_dev_ioctl' at fs/autofs/dev-ioctl.c:624:8:
-fs/autofs/dev-ioctl.c:33:14: error: 'strchr' reading 1 or more bytes from a region of size 0 [-Werror=stringop-overread]
-   33 |         if (!strchr(name, '/'))
-      |              ^~~~~~~~~~~~~~~~~
-In file included from include/linux/auto_dev-ioctl.h:10,
-                 from fs/autofs/autofs_i.h:10,
-                 from fs/autofs/dev-ioctl.c:14:
-include/uapi/linux/auto_dev-ioctl.h: In function '_autofs_dev_ioctl':
-include/uapi/linux/auto_dev-ioctl.h:112:14: note: source object 'path' of size 0
-  112 |         char path[0];
-      |              ^~~~
-
-This is easily fixed by changing the gnu 0-length array into a c99
-flexible array. Since this is a uapi structure, we have to be careful
-about possible regressions but this one should be fine as they are
-equivalent here. While it would break building with ancient gcc versions
-that predate c99, it helps building with --std=c99 and -Wpedantic builds
-in user space, as well as non-gnu compilers. This means we probably
-also want it fixed in stable kernels.
-
-Cc: stable@vger.kernel.org
-Cc: Kees Cook <keescook@chromium.org>
-Cc: "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230523081944.581710-1-arnd@kernel.org
+Link: https://lkml.kernel.org/r/20230607161523.2876433-1-roberto.sassu@huaweicloud.com
+Fixes: c3b1b1cbf002 ("ramfs: add support for "mode=" mount option")
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: David Howells <dhowells@redhat.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/filesystems/autofs-mount-control.rst |    2 +-
- Documentation/filesystems/autofs.rst               |    2 +-
- include/uapi/linux/auto_dev-ioctl.h                |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ fs/ramfs/inode.c      |    2 +-
+ include/linux/ramfs.h |    1 +
+ mm/shmem.c            |    2 +-
+ 3 files changed, 3 insertions(+), 2 deletions(-)
 
---- a/Documentation/filesystems/autofs-mount-control.rst
-+++ b/Documentation/filesystems/autofs-mount-control.rst
-@@ -196,7 +196,7 @@ information and return operation results
- 		    struct args_ismountpoint	ismountpoint;
- 	    };
+--- a/fs/ramfs/inode.c
++++ b/fs/ramfs/inode.c
+@@ -264,7 +264,7 @@ int ramfs_init_fs_context(struct fs_cont
+ 	return 0;
+ }
  
--	    char path[0];
-+	    char path[];
-     };
+-static void ramfs_kill_sb(struct super_block *sb)
++void ramfs_kill_sb(struct super_block *sb)
+ {
+ 	kfree(sb->s_fs_info);
+ 	kill_litter_super(sb);
+--- a/include/linux/ramfs.h
++++ b/include/linux/ramfs.h
+@@ -7,6 +7,7 @@
+ struct inode *ramfs_get_inode(struct super_block *sb, const struct inode *dir,
+ 	 umode_t mode, dev_t dev);
+ extern int ramfs_init_fs_context(struct fs_context *fc);
++extern void ramfs_kill_sb(struct super_block *sb);
  
- The ioctlfd field is a mount point file descriptor of an autofs mount
---- a/Documentation/filesystems/autofs.rst
-+++ b/Documentation/filesystems/autofs.rst
-@@ -467,7 +467,7 @@ Each ioctl is passed a pointer to an `au
- 			struct args_ismountpoint	ismountpoint;
- 		};
- 
--                char path[0];
-+                char path[];
-         };
- 
- For the **OPEN_MOUNT** and **IS_MOUNTPOINT** commands, the target
---- a/include/uapi/linux/auto_dev-ioctl.h
-+++ b/include/uapi/linux/auto_dev-ioctl.h
-@@ -109,7 +109,7 @@ struct autofs_dev_ioctl {
- 		struct args_ismountpoint	ismountpoint;
- 	};
- 
--	char path[0];
-+	char path[];
+ #ifdef CONFIG_MMU
+ static inline int
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -4128,7 +4128,7 @@ static struct file_system_type shmem_fs_
+ 	.name		= "tmpfs",
+ 	.init_fs_context = ramfs_init_fs_context,
+ 	.parameters	= ramfs_fs_parameters,
+-	.kill_sb	= kill_litter_super,
++	.kill_sb	= ramfs_kill_sb,
+ 	.fs_flags	= FS_USERNS_MOUNT,
  };
  
- static inline void init_autofs_dev_ioctl(struct autofs_dev_ioctl *in)
 
 
