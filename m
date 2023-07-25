@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB4D1F160
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:37:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64729C433C9;
-	Tue, 25 Jul 2023 11:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59641ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:37:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26059C433C7;
+	Tue, 25 Jul 2023 11:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285024;
-	bh=uTT4N/pYNGnqyzL5vw0jL9SQdJx0AeZxhK/XW9u33rU=;
+	s=korg; t=1690285027;
+	bh=2g7xh56sjjLMMXd7dgTfDDeUop4OtxiTXdNiXoC3MZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cogfnP4fnzJxfq6V14/CWUPuwZJkzngPF7bYySAP95ToM4jVGeYm6ZCndPYJ5+S0d
-	 69dFFKyVHhnqdc/WgKKAkmtp3lNQ+32YIZEPZePpsJekBFAQhksKpuGPFa5B9aaaHi
-	 TpIcjJlg2lx8N81XS3NOjpnahdVcayNGOeqeZXjs=
+	b=r+s5BkCkSnhzE5doLPlAX1Mr8slqXbBmaJiP6BJWU5fSBrDo42ah+vLisuHeKbf0h
+	 jnJpLkLdn4FLKP/erb+ifbIIJFw2vq/mtqbp7E8YGk5tgc/T7REwz1cD4LFDCSgsw5
+	 ZcezkeM9cXNz5FYkymWg9//i0FUcN33TXvz5VgKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+f2cb6e0ffdb961921e4d@syzkaller.appspotmail.com
-Subject: [PATCH 5.4 029/313] wifi: ath9k: avoid referencing uninit memory in ath9k_wmi_ctrl_rx
-Date: Tue, 25 Jul 2023 12:43:02 +0200
-Message-ID: <20230725104522.380155772@linuxfoundation.org>
+	Edwin Peer <edwin.peer@broadcom.com>,
+	Edwin Peer <espeer@gmail.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 056/313] rtnetlink: extend RTEXT_FILTER_SKIP_STATS to IFLA_VF_INFO
+Date: Tue, 25 Jul 2023 12:43:29 +0200
+Message-ID: <20230725104523.487489825@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -37,52 +37,164 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Edwin Peer <edwin.peer@broadcom.com>
 
-[ Upstream commit f24292e827088bba8de7158501ac25a59b064953 ]
+[ Upstream commit fa0e21fa44438a0e856d42224bfa24641d37b979 ]
 
-For the reasons also described in commit b383e8abed41 ("wifi: ath9k: avoid
-uninit memory read in ath9k_htc_rx_msg()"), ath9k_htc_rx_msg() should
-validate pkt_len before accessing the SKB.
+This filter already exists for excluding IPv6 SNMP stats. Extend its
+definition to also exclude IFLA_VF_INFO stats in RTM_GETLINK.
 
-For example, the obtained SKB may have been badly constructed with
-pkt_len = 8. In this case, the SKB can only contain a valid htc_frame_hdr
-but after being processed in ath9k_htc_rx_msg() and passed to
-ath9k_wmi_ctrl_rx() endpoint RX handler, it is expected to have a WMI
-command header which should be located inside its data payload.
+This patch constitutes a partial fix for a netlink attribute nesting
+overflow bug in IFLA_VFINFO_LIST. By excluding the stats when the
+requester doesn't need them, the truncation of the VF list is avoided.
 
-Implement sanity checking inside ath9k_wmi_ctrl_rx(). Otherwise, uninit
-memory can be referenced.
+While it was technically only the stats added in commit c5a9f6f0ab40
+("net/core: Add drop counters to VF statistics") breaking the camel's
+back, the appreciable size of the stats data should never have been
+included without due consideration for the maximum number of VFs
+supported by PCI.
 
-Tested on Qualcomm Atheros Communications AR9271 802.11n .
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
-Reported-and-tested-by: syzbot+f2cb6e0ffdb961921e4d@syzkaller.appspotmail.com
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230424183348.111355-1-pchelkin@ispras.ru
+Fixes: 3b766cd83232 ("net/core: Add reading VF statistics through the PF netdevice")
+Fixes: c5a9f6f0ab40 ("net/core: Add drop counters to VF statistics")
+Signed-off-by: Edwin Peer <edwin.peer@broadcom.com>
+Cc: Edwin Peer <espeer@gmail.com>
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Link: https://lore.kernel.org/r/20230611105108.122586-1-gal@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/wmi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/core/rtnetlink.c | 96 +++++++++++++++++++++++---------------------
+ 1 file changed, 51 insertions(+), 45 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
-index deb22b8c2065f..ef861b19fd477 100644
---- a/drivers/net/wireless/ath/ath9k/wmi.c
-+++ b/drivers/net/wireless/ath/ath9k/wmi.c
-@@ -218,6 +218,10 @@ static void ath9k_wmi_ctrl_rx(void *priv, struct sk_buff *skb,
- 	if (unlikely(wmi->stopped))
- 		goto free_skb;
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index da1ef00fc9cc2..0b0107797e490 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -922,24 +922,27 @@ static inline int rtnl_vfinfo_size(const struct net_device *dev,
+ 			 nla_total_size(sizeof(struct ifla_vf_rate)) +
+ 			 nla_total_size(sizeof(struct ifla_vf_link_state)) +
+ 			 nla_total_size(sizeof(struct ifla_vf_rss_query_en)) +
+-			 nla_total_size(0) + /* nest IFLA_VF_STATS */
+-			 /* IFLA_VF_STATS_RX_PACKETS */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_TX_PACKETS */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_RX_BYTES */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_TX_BYTES */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_BROADCAST */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_MULTICAST */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_RX_DROPPED */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_TX_DROPPED */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+ 			 nla_total_size(sizeof(struct ifla_vf_trust)));
++		if (~ext_filter_mask & RTEXT_FILTER_SKIP_STATS) {
++			size += num_vfs *
++				(nla_total_size(0) + /* nest IFLA_VF_STATS */
++				 /* IFLA_VF_STATS_RX_PACKETS */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_TX_PACKETS */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_RX_BYTES */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_TX_BYTES */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_BROADCAST */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_MULTICAST */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_RX_DROPPED */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_TX_DROPPED */
++				 nla_total_size_64bit(sizeof(__u64)));
++		}
+ 		return size;
+ 	} else
+ 		return 0;
+@@ -1189,7 +1192,8 @@ static noinline_for_stack int rtnl_fill_stats(struct sk_buff *skb,
+ static noinline_for_stack int rtnl_fill_vfinfo(struct sk_buff *skb,
+ 					       struct net_device *dev,
+ 					       int vfs_num,
+-					       struct nlattr *vfinfo)
++					       struct nlattr *vfinfo,
++					       u32 ext_filter_mask)
+ {
+ 	struct ifla_vf_rss_query_en vf_rss_query_en;
+ 	struct nlattr *vf, *vfstats, *vfvlanlist;
+@@ -1279,33 +1283,35 @@ static noinline_for_stack int rtnl_fill_vfinfo(struct sk_buff *skb,
+ 		goto nla_put_vf_failure;
+ 	}
+ 	nla_nest_end(skb, vfvlanlist);
+-	memset(&vf_stats, 0, sizeof(vf_stats));
+-	if (dev->netdev_ops->ndo_get_vf_stats)
+-		dev->netdev_ops->ndo_get_vf_stats(dev, vfs_num,
+-						&vf_stats);
+-	vfstats = nla_nest_start_noflag(skb, IFLA_VF_STATS);
+-	if (!vfstats)
+-		goto nla_put_vf_failure;
+-	if (nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_PACKETS,
+-			      vf_stats.rx_packets, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_PACKETS,
+-			      vf_stats.tx_packets, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_BYTES,
+-			      vf_stats.rx_bytes, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_BYTES,
+-			      vf_stats.tx_bytes, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_BROADCAST,
+-			      vf_stats.broadcast, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_MULTICAST,
+-			      vf_stats.multicast, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_DROPPED,
+-			      vf_stats.rx_dropped, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_DROPPED,
+-			      vf_stats.tx_dropped, IFLA_VF_STATS_PAD)) {
+-		nla_nest_cancel(skb, vfstats);
+-		goto nla_put_vf_failure;
++	if (~ext_filter_mask & RTEXT_FILTER_SKIP_STATS) {
++		memset(&vf_stats, 0, sizeof(vf_stats));
++		if (dev->netdev_ops->ndo_get_vf_stats)
++			dev->netdev_ops->ndo_get_vf_stats(dev, vfs_num,
++							  &vf_stats);
++		vfstats = nla_nest_start_noflag(skb, IFLA_VF_STATS);
++		if (!vfstats)
++			goto nla_put_vf_failure;
++		if (nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_PACKETS,
++				      vf_stats.rx_packets, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_PACKETS,
++				      vf_stats.tx_packets, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_BYTES,
++				      vf_stats.rx_bytes, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_BYTES,
++				      vf_stats.tx_bytes, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_BROADCAST,
++				      vf_stats.broadcast, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_MULTICAST,
++				      vf_stats.multicast, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_DROPPED,
++				      vf_stats.rx_dropped, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_DROPPED,
++				      vf_stats.tx_dropped, IFLA_VF_STATS_PAD)) {
++			nla_nest_cancel(skb, vfstats);
++			goto nla_put_vf_failure;
++		}
++		nla_nest_end(skb, vfstats);
+ 	}
+-	nla_nest_end(skb, vfstats);
+ 	nla_nest_end(skb, vf);
+ 	return 0;
  
-+	/* Validate the obtained SKB. */
-+	if (unlikely(skb->len < sizeof(struct wmi_cmd_hdr)))
-+		goto free_skb;
-+
- 	hdr = (struct wmi_cmd_hdr *) skb->data;
- 	cmd_id = be16_to_cpu(hdr->command_id);
+@@ -1338,7 +1344,7 @@ static noinline_for_stack int rtnl_fill_vf(struct sk_buff *skb,
+ 		return -EMSGSIZE;
+ 
+ 	for (i = 0; i < num_vfs; i++) {
+-		if (rtnl_fill_vfinfo(skb, dev, i, vfinfo))
++		if (rtnl_fill_vfinfo(skb, dev, i, vfinfo, ext_filter_mask))
+ 			return -EMSGSIZE;
+ 	}
  
 -- 
 2.39.2
