@@ -1,36 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E986A1D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:20:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44070C433C8;
-	Tue, 25 Jul 2023 11:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B123F1D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:20:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31094C433C7;
+	Tue, 25 Jul 2023 11:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284007;
-	bh=5wCYjEP7JQWZOdFJGVBxlpQyoWnx0TL4yNoIl8WWf+A=;
+	s=korg; t=1690284010;
+	bh=zOmO7Q+JcNqinUKUSccosnkRFy87Pt/PoiHWE0/eH5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=agIJykuASA5KQptwBVduv3J9W6jaE1GUHrBOBoiJXzTCk+NSr+VOXGIPyQLLM+wt9
-	 y8lwQmvCjGt5nO4Ay2T/KrCKEIfbciRSS9+b1uvprTUUKJnXahSFMvjTe0yVwyc27s
-	 eW2zS73vM91q/JX2NxWRZbOmJFV4kxvzDL1dqVko=
+	b=FY8el+g8Hcaz3hk8aQM5JWl/TxkSkFAWUmlCjLVm9QFYzxuLYuRXqBAquCLsqEo+c
+	 YJjs7to9k6n7QgF5jN8WT4glEIWIyTP1j/wCLmVuewLOVpYc9Ao58kLaifGwwphONn
+	 pOCY0W4cVjjELJ/xvuaMk7QNu+7ZGyk3cs3KiHng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Andre Fredette <anfredet@redhat.com>,
-	Clark Williams <williams@redhat.com>,
-	Dave Tucker <datucker@redhat.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Derek Barbosa <debarbos@redhat.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 184/509] perf bench: Add missing setlocale() call to allow usage of %d style formatting
-Date: Tue, 25 Jul 2023 12:42:03 +0200
-Message-ID: <20230725104602.135925031@linuxfoundation.org>
+Subject: [PATCH 5.10 202/509] modpost: fix section mismatch message for R_ARM_ABS32
+Date: Tue, 25 Jul 2023 12:42:21 +0200
+Message-ID: <20230725104602.994550557@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -44,76 +34,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 16203e9cd01896b4244100a8e3fb9f6e612ab2b1 ]
+[ Upstream commit b7c63520f6703a25eebb4f8138fed764fcae1c6f ]
 
-Without this we were not getting the thousands separator for big
-numbers.
+addend_arm_rel() processes R_ARM_ABS32 in a wrong way.
 
-Noticed while developing 'perf bench uprobe', but the use of %' predates
-that, for instance 'perf bench syscall' uses it.
+Here, test code.
 
-Before:
+  [test code 1]
 
-  # perf bench uprobe all
-  # Running uprobe/baseline benchmark...
-  # Executed 1000 usleep(1000) calls
-       Total time: 1054082243ns
+    #include <linux/init.h>
 
-   1054082.243000 nsecs/op
+    int __initdata foo;
+    int get_foo(void) { return foo; }
 
-  #
+If you compile it with ARM versatile_defconfig, modpost will show the
+symbol name, (unknown).
 
-After:
+  WARNING: modpost: vmlinux.o: section mismatch in reference: get_foo (section: .text) -> (unknown) (section: .init.data)
 
-  # perf bench uprobe all
-  # Running uprobe/baseline benchmark...
-  # Executed 1,000 usleep(1000) calls
-       Total time: 1,053,715,144ns
+(You need to use GNU linker instead of LLD to reproduce it.)
 
-   1,053,715.144000 nsecs/op
+If you compile it for other architectures, modpost will show the correct
+symbol name.
 
-  #
+  WARNING: modpost: vmlinux.o: section mismatch in reference: get_foo (section: .text) -> foo (section: .init.data)
 
-Fixes: c2a08203052f8975 ("perf bench: Add basic syscall benchmark")
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Andre Fredette <anfredet@redhat.com>
-Cc: Clark Williams <williams@redhat.com>
-Cc: Dave Tucker <datucker@redhat.com>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Derek Barbosa <debarbos@redhat.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
-Link: https://lore.kernel.org/lkml/ZH3lcepZ4tBYr1jv@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+For R_ARM_ABS32, addend_arm_rel() sets r->r_addend to a wrong value.
+
+I just mimicked the code in arch/arm/kernel/module.c.
+
+However, there is more difficulty for ARM.
+
+Here, test code.
+
+  [test code 2]
+
+    #include <linux/init.h>
+
+    int __initdata foo;
+    int get_foo(void) { return foo; }
+
+    int __initdata bar;
+    int get_bar(void) { return bar; }
+
+With this commit applied, modpost will show the following messages
+for ARM versatile_defconfig:
+
+  WARNING: modpost: vmlinux.o: section mismatch in reference: get_foo (section: .text) -> foo (section: .init.data)
+  WARNING: modpost: vmlinux.o: section mismatch in reference: get_bar (section: .text) -> foo (section: .init.data)
+
+The reference from 'get_bar' to 'foo' seems wrong.
+
+I have no solution for this because it is true in assembly level.
+
+In the following output, relocation at 0x1c is no longer associated
+with 'bar'. The two relocation entries point to the same symbol, and
+the offset to 'bar' is encoded in the instruction 'r0, [r3, #4]'.
+
+  Disassembly of section .text:
+
+  00000000 <get_foo>:
+     0: e59f3004          ldr     r3, [pc, #4]   @ c <get_foo+0xc>
+     4: e5930000          ldr     r0, [r3]
+     8: e12fff1e          bx      lr
+     c: 00000000          .word   0x00000000
+
+  00000010 <get_bar>:
+    10: e59f3004          ldr     r3, [pc, #4]   @ 1c <get_bar+0xc>
+    14: e5930004          ldr     r0, [r3, #4]
+    18: e12fff1e          bx      lr
+    1c: 00000000          .word   0x00000000
+
+  Relocation section '.rel.text' at offset 0x244 contains 2 entries:
+   Offset     Info    Type            Sym.Value  Sym. Name
+  0000000c  00000c02 R_ARM_ABS32       00000000   .init.data
+  0000001c  00000c02 R_ARM_ABS32       00000000   .init.data
+
+When find_elf_symbol() gets into a situation where relsym->st_name is
+zero, there is no guarantee to get the symbol name as written in C.
+
+I am keeping the current logic because it is useful in many architectures,
+but the symbol name is not always correct depending on the optimization.
+I left some comments in find_tosym().
+
+Fixes: 56a974fa2d59 ("kbuild: make better section mismatch reports on arm")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-bench.c | 2 ++
- 1 file changed, 2 insertions(+)
+ scripts/mod/modpost.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/builtin-bench.c b/tools/perf/builtin-bench.c
-index 609a941ae2963..fb3029495c23c 100644
---- a/tools/perf/builtin-bench.c
-+++ b/tools/perf/builtin-bench.c
-@@ -21,6 +21,7 @@
- #include "builtin.h"
- #include "bench/bench.h"
+diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
+index e48742760fec8..9216eae798ff2 100644
+--- a/scripts/mod/modpost.c
++++ b/scripts/mod/modpost.c
+@@ -1313,6 +1313,10 @@ static Elf_Sym *find_elf_symbol(struct elf_info *elf, Elf64_Sword addr,
+ 	if (relsym->st_name != 0)
+ 		return relsym;
  
-+#include <locale.h>
- #include <stdio.h>
- #include <stdlib.h>
- #include <string.h>
-@@ -247,6 +248,7 @@ int cmd_bench(int argc, const char **argv)
++	/*
++	 * Strive to find a better symbol name, but the resulting name may not
++	 * match the symbol referenced in the original code.
++	 */
+ 	relsym_secindex = get_secindex(elf, relsym);
+ 	for (sym = elf->symtab_start; sym < elf->symtab_stop; sym++) {
+ 		if (get_secindex(elf, sym) != relsym_secindex)
+@@ -1795,12 +1799,14 @@ static int addend_386_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
+ static int addend_arm_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
+ {
+ 	unsigned int r_typ = ELF_R_TYPE(r->r_info);
++	Elf_Sym *sym = elf->symtab_start + ELF_R_SYM(r->r_info);
++	void *loc = reloc_location(elf, sechdr, r);
++	uint32_t inst;
  
- 	/* Unbuffered output */
- 	setvbuf(stdout, NULL, _IONBF, 0);
-+	setlocale(LC_ALL, "");
- 
- 	if (argc < 2) {
- 		/* No collection specified. */
+ 	switch (r_typ) {
+ 	case R_ARM_ABS32:
+-		/* From ARM ABI: (S + A) | T */
+-		r->r_addend = (int)(long)
+-			      (elf->symtab_start + ELF_R_SYM(r->r_info));
++		inst = TO_NATIVE(*(uint32_t *)loc);
++		r->r_addend = inst + sym->st_value;
+ 		break;
+ 	case R_ARM_PC24:
+ 	case R_ARM_CALL:
 -- 
 2.39.2
 
