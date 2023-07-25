@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4721D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:03:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835E4C433C7;
-	Tue, 25 Jul 2023 11:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9501D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:03:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D283C433C7;
+	Tue, 25 Jul 2023 11:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283007;
-	bh=WEOaO7BEOGhQyAmyLB1gu0n2EK/YGGXqFbag93UijTI=;
+	s=korg; t=1690283010;
+	bh=jECjzHkVJJi3sHo7EPhDTaDYRCcF+NHBbnIbQXY3nSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xpSVoQlAHn62WV0lcRGNjbpSOf6cxJHjuytLc8fTRFC0YSSNYxh8J7ZpoztBrWlsp
-	 kGark3hhFnEOJg3jlIO1uE2wLkSC2MDmYHYUQB6xEjTwSperOjIfw5qTpZoVyHUKgQ
-	 aqM1rTYlneImS8fYFXWP6VaVPkPDr/F73CyajysE=
+	b=cvxC+t7Uw6/O2XBLCIjqUgHqKO2sT/6sKb9NGnIXh7s7ecQe9jLNjUpWPt149z4fq
+	 /NjiNZKsq0F4Ceoxmjt98xtbEfqL8hgEYzZBolxwiLkJzMUtlKQ5Hwor533I2C/RkJ
+	 0JHN80YNLAPLJAPRm0HQOjCCjNplMLggOXflaE9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Coin <hcoin@quietfountain.com>,
-	Ido Schimmel <idosch@idosch.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Daniel Golle <daniel@makrotopia.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/183] bridge: Add extack warning when enabling STP in netns.
-Date: Tue, 25 Jul 2023 12:45:34 +0200
-Message-ID: <20230725104511.753165688@linuxfoundation.org>
+Subject: [PATCH 6.1 107/183] net: ethernet: mtk_eth_soc: handle probe deferral
+Date: Tue, 25 Jul 2023 12:45:35 +0200
+Message-ID: <20230725104511.801926989@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -39,69 +35,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 56a16035bb6effb37177867cea94c13a8382f745 ]
+[ Upstream commit 1d6d537dc55d1f42d16290f00157ac387985b95b ]
 
-When we create an L2 loop on a bridge in netns, we will see packets storm
-even if STP is enabled.
+Move the call to of_get_ethdev_address to mtk_add_mac which is part of
+the probe function and can hence itself return -EPROBE_DEFER should
+of_get_ethdev_address return -EPROBE_DEFER. This allows us to entirely
+get rid of the mtk_init function.
 
-  # unshare -n
-  # ip link add br0 type bridge
-  # ip link add veth0 type veth peer name veth1
-  # ip link set veth0 master br0 up
-  # ip link set veth1 master br0 up
-  # ip link set br0 type bridge stp_state 1
-  # ip link set br0 up
-  # sleep 30
-  # ip -s link show br0
-  2: br0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
-      link/ether b6:61:98:1c:1c:b5 brd ff:ff:ff:ff:ff:ff
-      RX: bytes  packets  errors  dropped missed  mcast
-      956553768  12861249 0       0       0       12861249  <-. Keep
-      TX: bytes  packets  errors  dropped carrier collsns     |  increasing
-      1027834    11951    0       0       0       0         <-'   rapidly
+The problem of of_get_ethdev_address returning -EPROBE_DEFER surfaced
+in situations in which the NVMEM provider holding the MAC address has
+not yet be loaded at the time mtk_eth_soc is initially probed. In this
+case probing of mtk_eth_soc should be deferred instead of falling back
+to use a random MAC address, so once the NVMEM provider becomes
+available probing can be repeated.
 
-This is because llc_rcv() drops all packets in non-root netns and BPDU
-is dropped.
-
-Let's add extack warning when enabling STP in netns.
-
-  # unshare -n
-  # ip link add br0 type bridge
-  # ip link set br0 type bridge stp_state 1
-  Warning: bridge: STP does not work in non-root netns.
-
-Note this commit will be reverted later when we namespacify the whole LLC
-infra.
-
-Fixes: e730c15519d0 ("[NET]: Make packet reception network namespace safe")
-Suggested-by: Harry Coin <hcoin@quietfountain.com>
-Link: https://lore.kernel.org/netdev/0f531295-e289-022d-5add-5ceffa0df9bc@quietfountain.com/
-Suggested-by: Ido Schimmel <idosch@idosch.org>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Fixes: 656e705243fd ("net-next: mediatek: add support for MT7623 ethernet")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_stp_if.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 29 ++++++++-------------
+ 1 file changed, 11 insertions(+), 18 deletions(-)
 
-diff --git a/net/bridge/br_stp_if.c b/net/bridge/br_stp_if.c
-index 75204d36d7f90..b65962682771f 100644
---- a/net/bridge/br_stp_if.c
-+++ b/net/bridge/br_stp_if.c
-@@ -201,6 +201,9 @@ int br_stp_set_enabled(struct net_bridge *br, unsigned long val,
- {
- 	ASSERT_RTNL();
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index 49975924e2426..7e318133423a9 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -3425,23 +3425,6 @@ static int mtk_hw_deinit(struct mtk_eth *eth)
+ 	return 0;
+ }
  
-+	if (!net_eq(dev_net(br->dev), &init_net))
-+		NL_SET_ERR_MSG_MOD(extack, "STP does not work in non-root netns");
+-static int __init mtk_init(struct net_device *dev)
+-{
+-	struct mtk_mac *mac = netdev_priv(dev);
+-	struct mtk_eth *eth = mac->hw;
+-	int ret;
+-
+-	ret = of_get_ethdev_address(mac->of_node, dev);
+-	if (ret) {
+-		/* If the mac address is invalid, use random mac address */
+-		eth_hw_addr_random(dev);
+-		dev_err(eth->dev, "generated random MAC address %pM\n",
+-			dev->dev_addr);
+-	}
+-
+-	return 0;
+-}
+-
+ static void mtk_uninit(struct net_device *dev)
+ {
+ 	struct mtk_mac *mac = netdev_priv(dev);
+@@ -3789,7 +3772,6 @@ static const struct ethtool_ops mtk_ethtool_ops = {
+ };
+ 
+ static const struct net_device_ops mtk_netdev_ops = {
+-	.ndo_init		= mtk_init,
+ 	.ndo_uninit		= mtk_uninit,
+ 	.ndo_open		= mtk_open,
+ 	.ndo_stop		= mtk_stop,
+@@ -3845,6 +3827,17 @@ static int mtk_add_mac(struct mtk_eth *eth, struct device_node *np)
+ 	mac->hw = eth;
+ 	mac->of_node = np;
+ 
++	err = of_get_ethdev_address(mac->of_node, eth->netdev[id]);
++	if (err == -EPROBE_DEFER)
++		return err;
 +
- 	if (br_mrp_enabled(br)) {
- 		NL_SET_ERR_MSG_MOD(extack,
- 				   "STP can't be enabled if MRP is already enabled");
++	if (err) {
++		/* If the mac address is invalid, use random mac address */
++		eth_hw_addr_random(eth->netdev[id]);
++		dev_err(eth->dev, "generated random MAC address %pM\n",
++			eth->netdev[id]->dev_addr);
++	}
++
+ 	memset(mac->hwlro_ip, 0, sizeof(mac->hwlro_ip));
+ 	mac->hwlro_ip_cnt = 0;
+ 
 -- 
 2.39.2
 
