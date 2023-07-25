@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804E91ED3A
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:58:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D18C433C8;
-	Tue, 25 Jul 2023 10:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D38E1ED3A
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:58:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B33CAC433C7;
+	Tue, 25 Jul 2023 10:58:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282723;
-	bh=x3shIIGvGstVJyoHIehJ7TDYf4It8ylxyEPNu7fg2M8=;
+	s=korg; t=1690282726;
+	bh=SUVhGosHRum/jUQDTVrIuxx7+v2wL+1/fesjUUKby+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ELXRjpQKBnZH2VvHTqYNduTt3Xp8OKilXWe5VMo/5Mp04O1AadSiMaGreNGYtuSOX
-	 GBTsXYlovehQ9u3aB9RmIuUv8Vj2nVmakpmFtZJ+aWWplhohAhkZ1+imUFefxCuEpF
-	 bGHdd6lZWGVyZ2yI8iMLg+8pR5Ug56zSGHK487oE=
+	b=BGqsLbLKHnt3C9tMkWBDZ5h5gu3JV9GoD1FV90hNBT3yZxeWa6l1bznvu4j8v7ylj
+	 NIYiGXJSf6m+PfH5/kcYNbf9jwGda/0rX4BzRUS2opbVWt/KdYmxpmlDNQIWqTMpq2
+	 8Hdu4LKGQm23nAzHwwra0DSaF5ZKqrlBd5DRJgN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaitanya Kulkarni <chaitanyak@nvidia.com>,
+	Marc Hartmayer <mhartmay@linux.ibm.com>,
 	Yu Kuai <yukuai3@huawei.com>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
 	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.4 224/227] scsi/sg: dont grab scsi host module reference
-Date: Tue, 25 Jul 2023 12:46:31 +0200
-Message-ID: <20230725104523.983367634@linuxfoundation.org>
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.4 225/227] scsi: sg: Fix checking return value of blk_get_queue()
+Date: Tue, 25 Jul 2023 12:46:32 +0200
+Message-ID: <20230725104524.013873253@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -38,67 +39,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Yu Kuai <yukuai3@huawei.com>
 
-commit fcaa174a9c995cf0af3967e55644a1543ea07e36 upstream.
+commit 80b6051085c5fedcb1dfd7b2562a63a83655c4d8 upstream.
 
-In order to prevent request_queue to be freed before cleaning up
-blktrace debugfs entries, commit db59133e9279 ("scsi: sg: fix blktrace
-debugfs entries leakage") use scsi_device_get(), however,
-scsi_device_get() will also grab scsi module reference and scsi module
-can't be removed.
+Commit fcaa174a9c99 ("scsi/sg: don't grab scsi host module reference") make
+a mess how blk_get_queue() is called, blk_get_queue() returns true on
+success while the caller expects it returns 0 on success.
 
-It's reported that blktests can't unload scsi_debug after block/001:
+Fix this problem and also add a corresponding error message on failure.
 
-blktests (master) # ./check block
-block/001 (stress device hotplugging) [failed]
-     +++ /root/blktests/results/nodev/block/001.out.bad 2023-06-19
-      Running block/001
-      Stressing sd
-     +modprobe: FATAL: Module scsi_debug is in use.
-
-Fix this problem by grabbing request_queue reference directly, so that
-scsi host module can still be unloaded while request_queue will be
-pinged by sg device.
-
-Reported-by: Chaitanya Kulkarni <chaitanyak@nvidia.com>
-Link: https://lore.kernel.org/all/1760da91-876d-fc9c-ab51-999a6f66ad50@nvidia.com/
-Fixes: db59133e9279 ("scsi: sg: fix blktrace debugfs entries leakage")
+Fixes: fcaa174a9c99 ("scsi/sg: don't grab scsi host module reference")
+Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
+Closes: https://lore.kernel.org/all/87lefv622n.fsf@linux.ibm.com/
 Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20230705024001.177585-1-yukuai1@huaweicloud.com
+Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Tested-by: Marc Hartmayer <mhartmay@linux.ibm.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230621160111.1433521-1-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Marc Hartmayer <mhartmay@linux.ibm.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sg.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/scsi/sg.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 --- a/drivers/scsi/sg.c
 +++ b/drivers/scsi/sg.c
-@@ -1496,7 +1496,7 @@ sg_add_device(struct device *cl_dev)
+@@ -1496,9 +1496,10 @@ sg_add_device(struct device *cl_dev)
  	int error;
  	unsigned long iflags;
  
--	error = scsi_device_get(scsidp);
-+	error = blk_get_queue(scsidp->request_queue);
- 	if (error)
- 		return error;
+-	error = blk_get_queue(scsidp->request_queue);
+-	if (error)
+-		return error;
++	if (!blk_get_queue(scsidp->request_queue)) {
++		pr_warn("%s: get scsi_device queue failed\n", __func__);
++		return -ENODEV;
++	}
  
-@@ -1557,7 +1557,7 @@ cdev_add_err:
- out:
- 	if (cdev)
- 		cdev_del(cdev);
--	scsi_device_put(scsidp);
-+	blk_put_queue(scsidp->request_queue);
- 	return error;
- }
- 
-@@ -1574,7 +1574,7 @@ sg_device_destroy(struct kref *kref)
- 	 */
- 
- 	blk_trace_remove(q);
--	scsi_device_put(sdp->device);
-+	blk_put_queue(q);
- 
- 	write_lock_irqsave(&sg_index_lock, flags);
- 	idr_remove(&sg_index_idr, sdp->index);
+ 	error = -ENOMEM;
+ 	cdev = cdev_alloc();
 
 
