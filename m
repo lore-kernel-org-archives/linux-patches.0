@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FDC1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:15:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E4DC433C8;
-	Tue, 25 Jul 2023 11:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071A61ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:15:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3FBC433C9;
+	Tue, 25 Jul 2023 11:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283713;
-	bh=jlCYr7ahEk2pT0jHIZlgB0En+ajZ4AmaPnaZAjp2u4w=;
+	s=korg; t=1690283715;
+	bh=RueUL1na/QO80pIHhcg2h9OoI/r5YmVcOi0bUj2gra8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mQEPRuInd/gHzjfoWTSFiyGFFFQ0DpEm9uEuOYKHCEXBeoTFnayxiUWOEbBxg2nep
-	 zaQLCABT4EP3OF0oGumX1xjh+BrcjH7a21c6oNxGPEyxWDzsVtEV39Z/5007fdYwNt
-	 AaxUC/XQqM0qeTr50OnQsJG8xemwrt2HBZv+4E7Y=
+	b=C3PPCNCibaKfm05Goaz0PLlQPlIU7TxdjavDeL9kwTCM4v51PSDwEcS8o0L1sbhqf
+	 kLdE/jLol4Pyv8CzhAcLlk5ZPND6Gc3YOaU7paXEaNh6BcfjQMWuD2uefyCXLHirB0
+	 SC/zjLXqL2ViOGdvFYg4N5IrcCUuFmrHVcID/1IY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Sowden <jeremy@azazel.net>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 088/509] lib/ts_bm: reset initial match offset for every block of text
-Date: Tue, 25 Jul 2023 12:40:27 +0200
-Message-ID: <20230725104557.742983192@linuxfoundation.org>
+Subject: [PATCH 5.10 097/509] drm/bridge: tc358768: fix PLL parameters computation
+Date: Tue, 25 Jul 2023 12:40:36 +0200
+Message-ID: <20230725104558.136481709@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,57 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Sowden <jeremy@azazel.net>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit 6f67fbf8192da80c4db01a1800c7fceaca9cf1f9 ]
+[ Upstream commit 6a4020b4c63911977aaf8047f904a300d15de739 ]
 
-The `shift` variable which indicates the offset in the string at which
-to start matching the pattern is initialized to `bm->patlen - 1`, but it
-is not reset when a new block is retrieved.  This means the implemen-
-tation may start looking at later and later positions in each successive
-block and miss occurrences of the pattern at the beginning.  E.g.,
-consider a HTTP packet held in a non-linear skb, where the HTTP request
-line occurs in the second block:
+According to Toshiba documentation the PLL input clock after the divider
+should be not less than 4MHz, fix the PLL parameters computation
+accordingly.
 
-  [... 52 bytes of packet headers ...]
-  GET /bmtest HTTP/1.1\r\nHost: www.example.com\r\n\r\n
-
-and the pattern is "GET /bmtest".
-
-Once the first block comprising the packet headers has been examined,
-`shift` will be pointing to somewhere near the end of the block, and so
-when the second block is examined the request line at the beginning will
-be missed.
-
-Reinitialize the variable for each new block.
-
-Fixes: 8082e4ed0a61 ("[LIB]: Boyer-Moore extension for textsearch infrastructure strike #2")
-Link: https://bugzilla.netfilter.org/show_bug.cgi?id=1390
-Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-3-francesco@dolcini.it
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/ts_bm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/tc358768.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/lib/ts_bm.c b/lib/ts_bm.c
-index 4cf250031f0f0..352ae837e0317 100644
---- a/lib/ts_bm.c
-+++ b/lib/ts_bm.c
-@@ -60,10 +60,12 @@ static unsigned int bm_find(struct ts_config *conf, struct ts_state *state)
- 	struct ts_bm *bm = ts_config_priv(conf);
- 	unsigned int i, text_len, consumed = state->offset;
- 	const u8 *text;
--	int shift = bm->patlen - 1, bs;
-+	int bs;
- 	const u8 icase = conf->flags & TS_IGNORECASE;
+diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
+index e65af025a771f..d9021e750940f 100644
+--- a/drivers/gpu/drm/bridge/tc358768.c
++++ b/drivers/gpu/drm/bridge/tc358768.c
+@@ -329,13 +329,17 @@ static int tc358768_calc_pll(struct tc358768_priv *priv,
+ 		u32 fbd;
  
- 	for (;;) {
-+		int shift = bm->patlen - 1;
+ 		for (fbd = 0; fbd < 512; ++fbd) {
+-			u32 pll, diff;
++			u32 pll, diff, pll_in;
+ 
+ 			pll = (u32)div_u64((u64)refclk * (fbd + 1), divisor);
+ 
+ 			if (pll >= max_pll || pll < min_pll)
+ 				continue;
+ 
++			pll_in = (u32)div_u64((u64)refclk, prd + 1);
++			if (pll_in < 4000000)
++				continue;
 +
- 		text_len = conf->get_next_block(consumed, &text, conf, state);
+ 			diff = max(pll, target_pll) - min(pll, target_pll);
  
- 		if (unlikely(text_len == 0))
+ 			if (diff < best_diff) {
 -- 
 2.39.2
 
