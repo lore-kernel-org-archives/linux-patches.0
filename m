@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A4C1EA72
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:48:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CCDC433C8;
-	Tue, 25 Jul 2023 10:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF7C1EA72
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:48:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3600C433C8;
+	Tue, 25 Jul 2023 10:48:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282129;
-	bh=AIfa/MlBSHM95jlgeLQiIFZfkQqu6AcjqRgUBlxyrlE=;
+	s=korg; t=1690282132;
+	bh=XyuekDBcu2bwrlnA/r26Ljyo0oc/KAgs1g4MiCcVx+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CmaUw8UInIt9OGrzzX2omzeRlb9MegTVDZyZv2Y5nSy+cqaTj4jsUkyUzYUHH2qjs
-	 QRLCnSqznkepLt2FXqIZyVBIybLGdsstSbDr5Iqr4FLhMFwNSKcGg1ChCkjpU0PO8w
-	 seodU1b3Axh14b8PDyuhbigowg3HL2i2yprT7dSk=
+	b=2eyKhtLXCilRmXK8rUn+mJnEU0xRpi1Udy/LwsN6Rr38zCIf5k9Y0K6XVvGmTC/pq
+	 fJDwmlB+vL3AbnAtqNnefgPJ96FfWd3nrhjmsAU7k4UaAbfZpejCvV2kwVHWhJnaP3
+	 yHZQijfoIezKCUyVwO6n6SMkEffED0PIrFiIz6uE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 019/227] btrfs: raid56: always verify the P/Q contents for scrub
-Date: Tue, 25 Jul 2023 12:43:06 +0200
-Message-ID: <20230725104515.595590138@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>,
+	matoro <matoro_mailinglist_kernel@matoro.tk>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.4 002/227] io_uring: Fix io_uring mmap() by using architecture-provided get_unmapped_area()
+Date: Tue, 25 Jul 2023 12:42:49 +0200
+Message-ID: <20230725104514.910275867@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -34,117 +35,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qu Wenruo <wqu@suse.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 486c737f7fdc0c3f6464cf27ede811daec2769a1 upstream.
+commit 32832a407a7178eec3215fad9b1a3298c14b0d69 upstream.
 
-[REGRESSION]
-Commit 75b470332965 ("btrfs: raid56: migrate recovery and scrub recovery
-path to use error_bitmap") changed the behavior of scrub_rbio().
+The io_uring testcase is broken on IA-64 since commit d808459b2e31
+("io_uring: Adjust mapping wrt architecture aliasing requirements").
 
-Initially if we have no error reading the raid bio, we will assign
-@need_check to true, then finish_parity_scrub() would later verify the
-content of P/Q stripes before writeback.
+The reason is, that this commit introduced an own architecture
+independend get_unmapped_area() search algorithm which finds on IA-64 a
+memory region which is outside of the regular memory region used for
+shared userspace mappings and which can't be used on that platform
+due to aliasing.
 
-But after that commit we never verify the content of P/Q stripes and
-just writeback them.
+To avoid similar problems on IA-64 and other platforms in the future,
+it's better to switch back to the architecture-provided
+get_unmapped_area() function and adjust the needed input parameters
+before the call. Beside fixing the issue, the function now becomes
+easier to understand and maintain.
 
-This can lead to unrepaired P/Q stripes during scrub, or already
-corrupted P/Q copied to the dev-replace target.
+This patch has been successfully tested with the io_uring testcase on
+physical x86-64, ppc64le, IA-64 and PA-RISC machines. On PA-RISC the LTP
+mmmap testcases did not report any regressions.
 
-[FIX]
-The situation is more complex than the regression, in fact the initial
-behavior is not 100% correct either.
-
-If we have the following rare case, it can still lead to the same
-problem using the old behavior:
-
-		0	16K	32K	48K	64K
-	Data 1:	|IIIIIII|                       |
-	Data 2:	|				|
-	Parity:	|	|CCCCCCC|		|
-
-Where "I" means IO error, "C" means corruption.
-
-In the above case, we're scrubbing the parity stripe, then read out all
-the contents of Data 1, Data 2, Parity stripes.
-
-But found IO error in Data 1, which leads to rebuild using Data 2 and
-Parity and got the correct data.
-
-In that case, we would not verify if the Parity is correct for range
-[16K, 32K).
-
-So here we have to always verify the content of Parity no matter if we
-did recovery or not.
-
-This patch would remove the @need_check parameter of
-finish_parity_scrub() completely, and would always do the P/Q
-verification before writeback.
-
-Fixes: 75b470332965 ("btrfs: raid56: migrate recovery and scrub recovery path to use error_bitmap")
-CC: stable@vger.kernel.org # 6.2+
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org # 6.4
+Signed-off-by: Helge Deller <deller@gmx.de>
+Reported-by: matoro <matoro_mailinglist_kernel@matoro.tk>
+Fixes: d808459b2e31 ("io_uring: Adjust mapping wrt architecture aliasing requirements")
+Link: https://lore.kernel.org/r/20230721152432.196382-2-deller@gmx.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/raid56.c |   11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ arch/parisc/kernel/sys_parisc.c |   15 +++++++++-----
+ io_uring/io_uring.c             |   42 ++++++++++++++++------------------------
+ 2 files changed, 27 insertions(+), 30 deletions(-)
 
---- a/fs/btrfs/raid56.c
-+++ b/fs/btrfs/raid56.c
-@@ -71,7 +71,7 @@ static void rmw_rbio_work_locked(struct
- static void index_rbio_pages(struct btrfs_raid_bio *rbio);
- static int alloc_rbio_pages(struct btrfs_raid_bio *rbio);
+--- a/arch/parisc/kernel/sys_parisc.c
++++ b/arch/parisc/kernel/sys_parisc.c
+@@ -26,12 +26,17 @@
+ #include <linux/compat.h>
  
--static int finish_parity_scrub(struct btrfs_raid_bio *rbio, int need_check);
-+static int finish_parity_scrub(struct btrfs_raid_bio *rbio);
- static void scrub_rbio_work_locked(struct work_struct *work);
+ /*
+- * Construct an artificial page offset for the mapping based on the physical
++ * Construct an artificial page offset for the mapping based on the virtual
+  * address of the kernel file mapping variable.
++ * If filp is zero the calculated pgoff value aliases the memory of the given
++ * address. This is useful for io_uring where the mapping shall alias a kernel
++ * address and a userspace adress where both the kernel and the userspace
++ * access the same memory region.
+  */
+-#define GET_FILP_PGOFF(filp)		\
+-	(filp ? (((unsigned long) filp->f_mapping) >> 8)	\
+-		 & ((SHM_COLOUR-1) >> PAGE_SHIFT) : 0UL)
++#define GET_FILP_PGOFF(filp, addr)		\
++	((filp ? (((unsigned long) filp->f_mapping) >> 8)	\
++		 & ((SHM_COLOUR-1) >> PAGE_SHIFT) : 0UL)	\
++	  + (addr >> PAGE_SHIFT))
  
- static void free_raid_bio_pointers(struct btrfs_raid_bio *rbio)
-@@ -2404,7 +2404,7 @@ static int alloc_rbio_essential_pages(st
- 	return 0;
+ static unsigned long shared_align_offset(unsigned long filp_pgoff,
+ 					 unsigned long pgoff)
+@@ -111,7 +116,7 @@ static unsigned long arch_get_unmapped_a
+ 	do_color_align = 0;
+ 	if (filp || (flags & MAP_SHARED))
+ 		do_color_align = 1;
+-	filp_pgoff = GET_FILP_PGOFF(filp);
++	filp_pgoff = GET_FILP_PGOFF(filp, addr);
+ 
+ 	if (flags & MAP_FIXED) {
+ 		/* Even MAP_FIXED mappings must reside within TASK_SIZE */
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -3433,8 +3433,6 @@ static unsigned long io_uring_mmu_get_un
+ 			unsigned long addr, unsigned long len,
+ 			unsigned long pgoff, unsigned long flags)
+ {
+-	const unsigned long mmap_end = arch_get_mmap_end(addr, len, flags);
+-	struct vm_unmapped_area_info info;
+ 	void *ptr;
+ 
+ 	/*
+@@ -3449,32 +3447,26 @@ static unsigned long io_uring_mmu_get_un
+ 	if (IS_ERR(ptr))
+ 		return -ENOMEM;
+ 
+-	info.flags = VM_UNMAPPED_AREA_TOPDOWN;
+-	info.length = len;
+-	info.low_limit = max(PAGE_SIZE, mmap_min_addr);
+-	info.high_limit = arch_get_mmap_base(addr, current->mm->mmap_base);
++	/*
++	 * Some architectures have strong cache aliasing requirements.
++	 * For such architectures we need a coherent mapping which aliases
++	 * kernel memory *and* userspace memory. To achieve that:
++	 * - use a NULL file pointer to reference physical memory, and
++	 * - use the kernel virtual address of the shared io_uring context
++	 *   (instead of the userspace-provided address, which has to be 0UL
++	 *   anyway).
++	 * For architectures without such aliasing requirements, the
++	 * architecture will return any suitable mapping because addr is 0.
++	 */
++	filp = NULL;
++	flags |= MAP_SHARED;
++	pgoff = 0;	/* has been translated to ptr above */
+ #ifdef SHM_COLOUR
+-	info.align_mask = PAGE_MASK & (SHM_COLOUR - 1UL);
++	addr = (uintptr_t) ptr;
+ #else
+-	info.align_mask = PAGE_MASK & (SHMLBA - 1UL);
++	addr = 0UL;
+ #endif
+-	info.align_offset = (unsigned long) ptr;
+-
+-	/*
+-	 * A failed mmap() very likely causes application failure,
+-	 * so fall back to the bottom-up function here. This scenario
+-	 * can happen with large stack limits and large mmap()
+-	 * allocations.
+-	 */
+-	addr = vm_unmapped_area(&info);
+-	if (offset_in_page(addr)) {
+-		info.flags = 0;
+-		info.low_limit = TASK_UNMAPPED_BASE;
+-		info.high_limit = mmap_end;
+-		addr = vm_unmapped_area(&info);
+-	}
+-
+-	return addr;
++	return current->mm->get_unmapped_area(filp, addr, len, pgoff, flags);
  }
  
--static int finish_parity_scrub(struct btrfs_raid_bio *rbio, int need_check)
-+static int finish_parity_scrub(struct btrfs_raid_bio *rbio)
- {
- 	struct btrfs_io_context *bioc = rbio->bioc;
- 	const u32 sectorsize = bioc->fs_info->sectorsize;
-@@ -2445,9 +2445,6 @@ static int finish_parity_scrub(struct bt
- 	 */
- 	clear_bit(RBIO_CACHE_READY_BIT, &rbio->flags);
- 
--	if (!need_check)
--		goto writeback;
--
- 	p_sector.page = alloc_page(GFP_NOFS);
- 	if (!p_sector.page)
- 		return -ENOMEM;
-@@ -2516,7 +2513,6 @@ static int finish_parity_scrub(struct bt
- 		q_sector.page = NULL;
- 	}
- 
--writeback:
- 	/*
- 	 * time to start writing.  Make bios for everything from the
- 	 * higher layers (the bio_list in our rbio) and our p/q.  Ignore
-@@ -2699,7 +2695,6 @@ static int scrub_assemble_read_bios(stru
- 
- static void scrub_rbio(struct btrfs_raid_bio *rbio)
- {
--	bool need_check = false;
- 	int sector_nr;
- 	int ret;
- 
-@@ -2722,7 +2717,7 @@ static void scrub_rbio(struct btrfs_raid
- 	 * We have every sector properly prepared. Can finish the scrub
- 	 * and writeback the good content.
- 	 */
--	ret = finish_parity_scrub(rbio, need_check);
-+	ret = finish_parity_scrub(rbio);
- 	wait_event(rbio->io_wait, atomic_read(&rbio->stripes_pending) == 0);
- 	for (sector_nr = 0; sector_nr < rbio->stripe_nsectors; sector_nr++) {
- 		int found_errors;
+ #else /* !CONFIG_MMU */
 
 
