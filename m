@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE18E1ED4D
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:41:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4373BC433C8;
-	Tue, 25 Jul 2023 11:41:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7731ED4D
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:41:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F127C433C8;
+	Tue, 25 Jul 2023 11:41:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285297;
-	bh=hGDWIo1HGOdnCE+I2Eqq7rmh5ZeKhvu2MoeJK+2oa9w=;
+	s=korg; t=1690285300;
+	bh=zaCEC6wOE3N+0sktKsE6ChVyr8tzsUio+Cw2td0aNIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BjVsBoogquryHQ60Sf8u4ai06FcI1U8+SREKWhjT90Wq+FDl6qXp5URn7zwzkVRFm
-	 u+yHp0li7XuGEPkm2HcKkH/8k6FSsynBVTU8DXg5oaxAylGup4P8fld2ngP5AmJlWF
-	 qYwkPn34kkALd57kReOhVOhNY7Aocoa0tlEf8zZ0=
+	b=U4Tn1RVXthBaJyE/lQ5JBruDWMHDjvWdAe21dQRNA+a6DZ+U50BraUX7nUsaLCM3p
+	 qRWtDmMQA7nA+auyBo7B+KzjMfJprLKx2PJ2CZilckXUVeZOh8vWAviuEO84GI8wnP
+	 hBjubDGrjRaBRxJ4C1DW9MOUx+kjdK14W2oLvj6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 153/313] tcp: annotate data races in __tcp_oow_rate_limited()
-Date: Tue, 25 Jul 2023 12:45:06 +0200
-Message-ID: <20230725104527.607556608@linuxfoundation.org>
+Subject: [PATCH 5.4 125/313] w1: fix loop in w1_fini()
+Date: Tue, 25 Jul 2023 12:44:38 +0200
+Message-ID: <20230725104526.423117064@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,53 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dan Carpenter <dan.carpenter@oracle.com>
 
-[ Upstream commit 998127cdb4699b9d470a9348ffe9f1154346be5f ]
+[ Upstream commit 83f3fcf96fcc7e5405b37d9424c7ef26bfa203f8 ]
 
-request sockets are lockless, __tcp_oow_rate_limited() could be called
-on the same object from different cpus. This is harmless.
+The __w1_remove_master_device() function calls:
 
-Add READ_ONCE()/WRITE_ONCE() annotations to avoid a KCSAN report.
+	list_del(&dev->w1_master_entry);
 
-Fixes: 4ce7e93cb3fe ("tcp: rate limit ACK sent by SYN_RECV request sockets")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+So presumably this can cause an endless loop.
+
+Fixes: 7785925dd8e0 ("[PATCH] w1: cleanups.")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/w1/w1.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 44398317f033a..8308c3c3a6e46 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -3445,8 +3445,11 @@ static int tcp_ack_update_window(struct sock *sk, const struct sk_buff *skb, u32
- static bool __tcp_oow_rate_limited(struct net *net, int mib_idx,
- 				   u32 *last_oow_ack_time)
+diff --git a/drivers/w1/w1.c b/drivers/w1/w1.c
+index 2a7970a10533e..e08f40c9d54c9 100644
+--- a/drivers/w1/w1.c
++++ b/drivers/w1/w1.c
+@@ -1228,10 +1228,10 @@ static int __init w1_init(void)
+ 
+ static void __exit w1_fini(void)
  {
--	if (*last_oow_ack_time) {
--		s32 elapsed = (s32)(tcp_jiffies32 - *last_oow_ack_time);
-+	/* Paired with the WRITE_ONCE() in this function. */
-+	u32 val = READ_ONCE(*last_oow_ack_time);
-+
-+	if (val) {
-+		s32 elapsed = (s32)(tcp_jiffies32 - val);
+-	struct w1_master *dev;
++	struct w1_master *dev, *n;
  
- 		if (0 <= elapsed &&
- 		    elapsed < READ_ONCE(net->ipv4.sysctl_tcp_invalid_ratelimit)) {
-@@ -3455,7 +3458,10 @@ static bool __tcp_oow_rate_limited(struct net *net, int mib_idx,
- 		}
- 	}
+ 	/* Set netlink removal messages and some cleanup */
+-	list_for_each_entry(dev, &w1_masters, w1_master_entry)
++	list_for_each_entry_safe(dev, n, &w1_masters, w1_master_entry)
+ 		__w1_remove_master_device(dev);
  
--	*last_oow_ack_time = tcp_jiffies32;
-+	/* Paired with the prior READ_ONCE() and with itself,
-+	 * as we might be lockless.
-+	 */
-+	WRITE_ONCE(*last_oow_ack_time, tcp_jiffies32);
- 
- 	return false;	/* not rate-limited: go ahead, send dupack now! */
- }
+ 	w1_fini_netlink();
 -- 
 2.39.2
 
