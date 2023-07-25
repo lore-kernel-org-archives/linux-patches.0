@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BC9D15ACF
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:01:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2281C433C7;
-	Tue, 25 Jul 2023 11:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A77E15ACF
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:01:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8EAC433C8;
+	Tue, 25 Jul 2023 11:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282907;
-	bh=sy63P02sZU6SzI5g3cL9VAzERnqpwmcYTtrC3e9CIEQ=;
+	s=korg; t=1690282909;
+	bh=a4wMq27j/EWZNqwO+rq1s4R6BtjIZtULFaHYmTnHUsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ReOr2q95FVDoVEOH4+SLYt3G/SbxrZ18rrQ58PvDeQEfzD4pspbThiBxGwZmtCgeg
-	 KtOgQx9a+v3sCaV4dFtEX7DHICCuhzvCWq6WLZLgyNPrFyzYtsnmsxntlIUnL4OL9V
-	 WwXRBDWjFCntYTaMuS9bfPDrmyJ/cNKn5tefPCxo=
+	b=o/HmmI6zyKOyryWfUl+uAmjqtMgEAkZcNRGOgORkDJA345PVfCpHXFci/RPfdBRXh
+	 Wy5F/xVrF4AIkgezz+ZE2gYs5o4sIGm99J+/CaJpIROWzFdpBdMIpR4QGUiDWiHHg7
+	 TciXvhbmL+T93bxFwjjbLnp/HruT+O1uJII8VTbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	raycekarneal <raycekarneal@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 062/183] ACPI: video: Add backlight=native DMI quirk for Dell Studio 1569
-Date: Tue, 25 Jul 2023 12:44:50 +0200
-Message-ID: <20230725104510.200635770@linuxfoundation.org>
+Subject: [PATCH 6.1 071/183] wifi: mac80211_hwsim: Fix possible NULL dereference
+Date: Tue, 25 Jul 2023 12:44:59 +0200
+Message-ID: <20230725104510.533276820@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -36,41 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit 23d28cc0444be3f694eb986cd653b6888b78431d ]
+[ Upstream commit 0cc80943ef518a1c51a1111e9346d1daf11dd545 ]
 
-The Dell Studio 1569 predates Windows 8, so it defaults to using
-acpi_video# for backlight control, but this is non functional on
-this model.
+In a call to mac80211_hwsim_select_tx_link() the sta pointer might
+be NULL, thus need to check that it is not NULL before accessing it.
 
-Add a DMI quirk to use the native intel_backlight interface which
-does work properly.
-
-Reported-by: raycekarneal <raycekarneal@gmail.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230604120651.f4d889fc98c4.Iae85f527ed245a37637a874bb8b8c83d79812512@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/video_detect.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/wireless/mac80211_hwsim.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -512,6 +512,14 @@ static const struct dmi_system_id video_
- 	},
- 	{
- 	 .callback = video_detect_force_native,
-+	 /* Dell Studio 1569 */
-+	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "Studio 1569"),
-+		},
-+	},
-+	{
-+	 .callback = video_detect_force_native,
- 	 /* Acer Aspire 3830TG */
- 	 .matches = {
- 		DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
+diff --git a/drivers/net/wireless/mac80211_hwsim.c b/drivers/net/wireless/mac80211_hwsim.c
+index 0d81098c7b45c..da5c355405f68 100644
+--- a/drivers/net/wireless/mac80211_hwsim.c
++++ b/drivers/net/wireless/mac80211_hwsim.c
+@@ -4,7 +4,7 @@
+  * Copyright (c) 2008, Jouni Malinen <j@w1.fi>
+  * Copyright (c) 2011, Javier Lopez <jlopex@gmail.com>
+  * Copyright (c) 2016 - 2017 Intel Deutschland GmbH
+- * Copyright (C) 2018 - 2022 Intel Corporation
++ * Copyright (C) 2018 - 2023 Intel Corporation
+  */
+ 
+ /*
+@@ -1753,7 +1753,7 @@ mac80211_hwsim_select_tx_link(struct mac80211_hwsim_data *data,
+ 
+ 	WARN_ON(is_multicast_ether_addr(hdr->addr1));
+ 
+-	if (WARN_ON_ONCE(!sta->valid_links))
++	if (WARN_ON_ONCE(!sta || !sta->valid_links))
+ 		return &vif->bss_conf;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(vif->link_conf); i++) {
+-- 
+2.39.2
+
 
 
