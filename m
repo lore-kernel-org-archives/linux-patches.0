@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16871ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:45:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34737C433C7;
-	Tue, 25 Jul 2023 11:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8441ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:45:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB896C433C7;
+	Tue, 25 Jul 2023 11:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285520;
-	bh=n2NDlU/1mwXOiBseKVksErruWK7lg0rO2o201BIBVDk=;
+	s=korg; t=1690285523;
+	bh=NiDAlHeo9Q/SttiZTxgZbA7nYDfN764dL0b5aiAQTeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CI1PWoZaBSdTsRYRFVYfuD9V1Gy32KNNV67Vgv54I317DG3hRr95asc5F2fRUCxh8
-	 +5LXqrJeN3RWKS4Yr4KRBP4VhcleuqNHuNq0lMdviXo+tMjvsE6AXOvq+1oy7Nz6sP
-	 he7mKfzxWGp1NXinCCHuf4GxSgOy7pwlGd/dLQ4s=
+	b=PM6zlXvzqmctIYSYEXwhS6gcfpZEOwb6FsTIsm+ewzg2mPwSxemPpg9iYjajhqTP/
+	 E05FRHZ3TuoUspLxeDkE68fYxzA0WPqgJlN0rScVwIdwBlZWrTiyrbS5yOTQm3fhJK
+	 Dli7FArnqANyMoU1zD1xAIHTqBpTI43EvR58+D24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ding Hui <dinghui@sangfor.com.cn>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.4 235/313] SUNRPC: Fix UAF in svc_tcp_listen_data_ready()
-Date: Tue, 25 Jul 2023 12:46:28 +0200
-Message-ID: <20230725104531.222219998@linuxfoundation.org>
+	Gao Xiang <hsiangkao@linux.alibaba.com>
+Subject: [PATCH 5.4 236/313] erofs: fix compact 4B support for 16k block size
+Date: Tue, 25 Jul 2023 12:46:29 +0200
+Message-ID: <20230725104531.260634457@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -34,142 +33,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ding Hui <dinghui@sangfor.com.cn>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-commit fc80fc2d4e39137869da3150ee169b40bf879287 upstream.
+commit 001b8ccd0650727e54ec16ef72bf1b8eeab7168e upstream.
 
-After the listener svc_sock is freed, and before invoking svc_tcp_accept()
-for the established child sock, there is a window that the newsock
-retaining a freed listener svc_sock in sk_user_data which cloning from
-parent. In the race window, if data is received on the newsock, we will
-observe use-after-free report in svc_tcp_listen_data_ready().
+In compact 4B, two adjacent lclusters are packed together as a unit to
+form on-disk indexes for effective random access, as below:
 
-Reproduce by two tasks:
+(amortized = 4, vcnt = 2)
+       _____________________________________________
+      |___@_____ encoded bits __________|_ blkaddr _|
+      0        .                                    amortized * vcnt = 8
+      .             .
+      .                  .              amortized * vcnt - 4 = 4
+      .                        .
+      .____________________________.
+      |_type (2 bits)_|_clusterofs_|
 
-1. while :; do rpc.nfsd 0 ; rpc.nfsd; done
-2. while :; do echo "" | ncat -4 127.0.0.1 2049 ; done
+Therefore, encoded bits for each pack are 32 bits (4 bytes). IOWs,
+since each lcluster can get 16 bits for its type and clusterofs, the
+maximum supported lclustersize for compact 4B format is 16k (14 bits).
 
-KASAN report:
+Fix this to enable compact 4B format for 16k lclusters (blocks), which
+is tested on an arm64 server with 16k page size.
 
-  ==================================================================
-  BUG: KASAN: slab-use-after-free in svc_tcp_listen_data_ready+0x1cf/0x1f0 [sunrpc]
-  Read of size 8 at addr ffff888139d96228 by task nc/102553
-  CPU: 7 PID: 102553 Comm: nc Not tainted 6.3.0+ #18
-  Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
-  Call Trace:
-   <IRQ>
-   dump_stack_lvl+0x33/0x50
-   print_address_description.constprop.0+0x27/0x310
-   print_report+0x3e/0x70
-   kasan_report+0xae/0xe0
-   svc_tcp_listen_data_ready+0x1cf/0x1f0 [sunrpc]
-   tcp_data_queue+0x9f4/0x20e0
-   tcp_rcv_established+0x666/0x1f60
-   tcp_v4_do_rcv+0x51c/0x850
-   tcp_v4_rcv+0x23fc/0x2e80
-   ip_protocol_deliver_rcu+0x62/0x300
-   ip_local_deliver_finish+0x267/0x350
-   ip_local_deliver+0x18b/0x2d0
-   ip_rcv+0x2fb/0x370
-   __netif_receive_skb_one_core+0x166/0x1b0
-   process_backlog+0x24c/0x5e0
-   __napi_poll+0xa2/0x500
-   net_rx_action+0x854/0xc90
-   __do_softirq+0x1bb/0x5de
-   do_softirq+0xcb/0x100
-   </IRQ>
-   <TASK>
-   ...
-   </TASK>
-
-  Allocated by task 102371:
-   kasan_save_stack+0x1e/0x40
-   kasan_set_track+0x21/0x30
-   __kasan_kmalloc+0x7b/0x90
-   svc_setup_socket+0x52/0x4f0 [sunrpc]
-   svc_addsock+0x20d/0x400 [sunrpc]
-   __write_ports_addfd+0x209/0x390 [nfsd]
-   write_ports+0x239/0x2c0 [nfsd]
-   nfsctl_transaction_write+0xac/0x110 [nfsd]
-   vfs_write+0x1c3/0xae0
-   ksys_write+0xed/0x1c0
-   do_syscall_64+0x38/0x90
-   entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-  Freed by task 102551:
-   kasan_save_stack+0x1e/0x40
-   kasan_set_track+0x21/0x30
-   kasan_save_free_info+0x2a/0x50
-   __kasan_slab_free+0x106/0x190
-   __kmem_cache_free+0x133/0x270
-   svc_xprt_free+0x1e2/0x350 [sunrpc]
-   svc_xprt_destroy_all+0x25a/0x440 [sunrpc]
-   nfsd_put+0x125/0x240 [nfsd]
-   nfsd_svc+0x2cb/0x3c0 [nfsd]
-   write_threads+0x1ac/0x2a0 [nfsd]
-   nfsctl_transaction_write+0xac/0x110 [nfsd]
-   vfs_write+0x1c3/0xae0
-   ksys_write+0xed/0x1c0
-   do_syscall_64+0x38/0x90
-   entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-Fix the UAF by simply doing nothing in svc_tcp_listen_data_ready()
-if state != TCP_LISTEN, that will avoid dereferencing svsk for all
-child socket.
-
-Link: https://lore.kernel.org/lkml/20230507091131.23540-1-dinghui@sangfor.com.cn/
-Fixes: fa9251afc33c ("SUNRPC: Call the default socket callbacks instead of open coding")
-Signed-off-by: Ding Hui <dinghui@sangfor.com.cn>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 152a333a5895 ("staging: erofs: add compacted compression indexes support")
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20230601112341.56960-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svcsock.c |   27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+ fs/erofs/zmap.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/net/sunrpc/svcsock.c
-+++ b/net/sunrpc/svcsock.c
-@@ -728,12 +728,6 @@ static void svc_tcp_listen_data_ready(st
- 	dprintk("svc: socket %p TCP (listen) state change %d\n",
- 		sk, sk->sk_state);
+--- a/fs/erofs/zmap.c
++++ b/fs/erofs/zmap.c
+@@ -215,7 +215,7 @@ static int unpack_compacted_index(struct
+ 	int i;
+ 	u8 *in, type;
  
--	if (svsk) {
--		/* Refer to svc_setup_socket() for details. */
--		rmb();
--		svsk->sk_odata(sk);
--	}
+-	if (1 << amortizedshift == 4)
++	if (1 << amortizedshift == 4 && lclusterbits <= 14)
+ 		vcnt = 2;
+ 	else if (1 << amortizedshift == 2 && lclusterbits == 12)
+ 		vcnt = 16;
+@@ -273,7 +273,6 @@ static int compacted_load_cluster_from_d
+ {
+ 	struct inode *const inode = m->inode;
+ 	struct erofs_inode *const vi = EROFS_I(inode);
+-	const unsigned int lclusterbits = vi->z_logical_clusterbits;
+ 	const erofs_off_t ebase = ALIGN(iloc(EROFS_I_SB(inode), vi->nid) +
+ 					vi->inode_isize + vi->xattr_isize, 8) +
+ 		sizeof(struct z_erofs_map_header);
+@@ -283,9 +282,6 @@ static int compacted_load_cluster_from_d
+ 	erofs_off_t pos;
+ 	int err;
+ 
+-	if (lclusterbits != 12)
+-		return -EOPNOTSUPP;
 -
- 	/*
- 	 * This callback may called twice when a new connection
- 	 * is established as a child socket inherits everything
-@@ -742,15 +736,20 @@ static void svc_tcp_listen_data_ready(st
- 	 *    when one of child sockets become ESTABLISHED.
- 	 * 2) data_ready method of the child socket may be called
- 	 *    when it receives data before the socket is accepted.
--	 * In case of 2, we should ignore it silently.
-+	 * In case of 2, we should ignore it silently and DO NOT
-+	 * dereference svsk.
- 	 */
--	if (sk->sk_state == TCP_LISTEN) {
--		if (svsk) {
--			set_bit(XPT_CONN, &svsk->sk_xprt.xpt_flags);
--			svc_xprt_enqueue(&svsk->sk_xprt);
--		} else
--			printk("svc: socket %p: no user data\n", sk);
--	}
-+	if (sk->sk_state != TCP_LISTEN)
-+		return;
-+
-+	if (svsk) {
-+		/* Refer to svc_setup_socket() for details. */
-+		rmb();
-+		svsk->sk_odata(sk);
-+		set_bit(XPT_CONN, &svsk->sk_xprt.xpt_flags);
-+		svc_xprt_enqueue(&svsk->sk_xprt);
-+	} else
-+		printk("svc: socket %p: no user data\n", sk);
- }
+ 	if (lcn >= totalidx)
+ 		return -EINVAL;
  
- /*
 
 
