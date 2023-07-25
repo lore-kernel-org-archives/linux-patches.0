@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595B91ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:16:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D003FC433C8;
-	Tue, 25 Jul 2023 11:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200FC1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:16:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95AF3C433C7;
+	Tue, 25 Jul 2023 11:16:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283774;
-	bh=JWFMFDUM3Ckr6zmYOqwt1PqWm0hPrktiv9T+27tD0z4=;
+	s=korg; t=1690283777;
+	bh=vawGBW2ZLN/Te4jaYTkvt4jFy+EUfArOmuvQpxJbAB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FGsbQw8rsdLZ7926gCaZnC9oLANo1m1QHnPwGG7KQTg95o9W9S+pM+/U/xRrX+Z8U
-	 hVStVtrZo1GXMt3Y9/LtfcKOi7Klh+tl2UCYDS19kcGQWbEiITUgIBomrSJat+MuJ9
-	 Sg0emQmhaR1vfa3QOe4wS0IULO9v3qZMGGcHmUX8=
+	b=rN2yWJGC+4EQks9IiyTBQeNAvAGGqrtDl/rsURa3B/7qd1wv+kTfmmy17UValkbu0
+	 NEgmySWNVBtNRG66v9vCZdqXCbsGIYwp0bg25BHOeLZxtfOhvngFJT9Ptq+Hl0+fME
+	 CsoSjFY06PB65RlFzmzd+qj2GxQedUO8juYJywJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ilia.Gavrilov" <Ilia.Gavrilov@infotecs.ru>,
-	Simon Horman <simon.horman@corigine.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
+	Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>,
+	Ajit Khaparde <ajit.khaparde@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 090/509] netfilter: nf_conntrack_sip: fix the ct_sip_parse_numerical_param() return value.
-Date: Tue, 25 Jul 2023 12:40:29 +0200
-Message-ID: <20230725104557.835527315@linuxfoundation.org>
+Subject: [PATCH 5.10 117/509] RDMA/bnxt_re: Remove a redundant check inside bnxt_re_update_gid
+Date: Tue, 25 Jul 2023 12:40:56 +0200
+Message-ID: <20230725104559.047356608@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,50 +39,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilia.Gavrilov <Ilia.Gavrilov@infotecs.ru>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit f188d30087480eab421cd8ca552fb15f55d57f4d ]
+[ Upstream commit b989f90cef0af48aa5679b6a75476371705ec53c ]
 
-ct_sip_parse_numerical_param() returns only 0 or 1 now.
-But process_register_request() and process_register_response() imply
-checking for a negative value if parsing of a numerical header parameter
-failed.
-The invocation in nf_nat_sip() looks correct:
- 	if (ct_sip_parse_numerical_param(...) > 0 &&
- 	    ...) { ... }
+The NULL check inside bnxt_re_update_gid() always return false.  If
+sgid_tbl->tbl is not allocated, then dev_init would have failed.
 
-Make the return value of the function ct_sip_parse_numerical_param()
-a tristate to fix all the cases
-a) return 1 if value is found; *val is set
-b) return 0 if value is not found; *val is unchanged
-c) return -1 on error; *val is undefined
-
-Found by InfoTeCS on behalf of Linux Verification Center
-(linuxtesting.org) with SVACE.
-
-Fixes: 0f32a40fc91a ("[NETFILTER]: nf_conntrack_sip: create signalling expectations")
-Signed-off-by: Ilia.Gavrilov <Ilia.Gavrilov@infotecs.ru>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 5fac5b1b297f ("RDMA/bnxt_re: Add vlan tag for untagged RoCE traffic when PFC is configured")
+Link: https://lore.kernel.org/r/1684478897-12247-5-git-send-email-selvin.xavier@broadcom.com
+Reviewed-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+Reviewed-by: Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>
+Reviewed-by: Ajit Khaparde <ajit.khaparde@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_sip.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/bnxt_re/main.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
-index 78fd9122b70c7..751df19fe0f8a 100644
---- a/net/netfilter/nf_conntrack_sip.c
-+++ b/net/netfilter/nf_conntrack_sip.c
-@@ -611,7 +611,7 @@ int ct_sip_parse_numerical_param(const struct nf_conn *ct, const char *dptr,
- 	start += strlen(name);
- 	*val = simple_strtoul(start, &end, 0);
- 	if (start == end)
--		return 0;
-+		return -1;
- 	if (matchoff && matchlen) {
- 		*matchoff = start - dptr;
- 		*matchlen = end - start;
+diff --git a/drivers/infiniband/hw/bnxt_re/main.c b/drivers/infiniband/hw/bnxt_re/main.c
+index bdde44286d562..8a618769915d5 100644
+--- a/drivers/infiniband/hw/bnxt_re/main.c
++++ b/drivers/infiniband/hw/bnxt_re/main.c
+@@ -1191,12 +1191,6 @@ static int bnxt_re_update_gid(struct bnxt_re_dev *rdev)
+ 	if (!ib_device_try_get(&rdev->ibdev))
+ 		return 0;
+ 
+-	if (!sgid_tbl) {
+-		ibdev_err(&rdev->ibdev, "QPLIB: SGID table not allocated");
+-		rc = -EINVAL;
+-		goto out;
+-	}
+-
+ 	for (index = 0; index < sgid_tbl->active; index++) {
+ 		gid_idx = sgid_tbl->hw_id[index];
+ 
+@@ -1214,7 +1208,7 @@ static int bnxt_re_update_gid(struct bnxt_re_dev *rdev)
+ 		rc = bnxt_qplib_update_sgid(sgid_tbl, &gid, gid_idx,
+ 					    rdev->qplib_res.netdev->dev_addr);
+ 	}
+-out:
++
+ 	ib_device_put(&rdev->ibdev);
+ 	return rc;
+ }
 -- 
 2.39.2
 
