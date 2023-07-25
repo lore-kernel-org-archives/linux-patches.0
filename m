@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E893A1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:33:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66525C433C7;
-	Tue, 25 Jul 2023 11:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFFBC1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:33:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3400FC433C8;
+	Tue, 25 Jul 2023 11:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284813;
-	bh=PT7ZopH54/8VK81n5EXj8oJgKflAMJ/aS1CRBoWdIvs=;
+	s=korg; t=1690284816;
+	bh=ZwQFuQ8LsVDglOkQLF9O0K9Sdro5+MVlBN9FZhj9+OQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r0GoCiHz70HiRnadI4QOtMqjXu+iWhYqiK1Ja9aY71upDWq6w+hqYWjQ0Tv8xWFk8
-	 EY3AVpon9aguJpxGL45k/zMFBrImSmF4FrieKUuA5Wz9+9TF793X4P6h938Dh5qAmr
-	 fLjAAsgJLoH0wwhpdeyJD92uf5KKB6mc4kuxUb18=
+	b=c6gMEli9Z/LNdOOYOcYtzB7E4TpT3pD3S8FqfPhnOFdsuXWqAllYObhTQ4a4cjakk
+	 XyPaLSRol/oAvJ5wkhTPwwuzdYrjNkblwe7t3f0wnGMILg8ay7VAKh5cfBmwj3pK/F
+	 HCQ+MoZkB3vbAxFTXWJIc0ufCSwYDbXIA6XOk/nM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lonial con <kongln9170@gmail.com>,
-	Stefano Brivio <sbrivio@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 490/509] netfilter: nft_set_pipapo: fix improper element removal
-Date: Tue, 25 Jul 2023 12:47:09 +0200
-Message-ID: <20230725104616.184036924@linuxfoundation.org>
+Subject: [PATCH 5.10 491/509] netfilter: nf_tables: skip bound chain in netns release path
+Date: Tue, 25 Jul 2023 12:47:10 +0200
+Message-ID: <20230725104616.227969874@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,61 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 87b5a5c209405cb6b57424cdfa226a6dbd349232 ]
+[ Upstream commit 751d460ccff3137212f47d876221534bf0490996 ]
 
-end key should be equal to start unless NFT_SET_EXT_KEY_END is present.
+Skip bound chain from netns release path, the rule that owns this chain
+releases these objects.
 
-Its possible to add elements that only have a start key
-("{ 1.0.0.0 . 2.0.0.0 }") without an internval end.
-
-Insertion treats this via:
-
-if (nft_set_ext_exists(ext, NFT_SET_EXT_KEY_END))
-   end = (const u8 *)nft_set_ext_key_end(ext)->data;
-else
-   end = start;
-
-but removal side always uses nft_set_ext_key_end().
-This is wrong and leads to garbage remaining in the set after removal
-next lookup/insert attempt will give:
-
-BUG: KASAN: slab-use-after-free in pipapo_get+0x8eb/0xb90
-Read of size 1 at addr ffff888100d50586 by task nft-pipapo_uaf_/1399
-Call Trace:
- kasan_report+0x105/0x140
- pipapo_get+0x8eb/0xb90
- nft_pipapo_insert+0x1dc/0x1710
- nf_tables_newsetelem+0x31f5/0x4e00
- ..
-
-Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
-Reported-by: lonial con <kongln9170@gmail.com>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Fixes: d0e2c7de92c7 ("netfilter: nf_tables: add NFT_CHAIN_BINDING")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_pipapo.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
-index 7c759e9b4d848..3be93175b3ffd 100644
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -1904,7 +1904,11 @@ static void nft_pipapo_remove(const struct net *net, const struct nft_set *set,
- 		int i, start, rules_fx;
- 
- 		match_start = data;
--		match_end = (const u8 *)nft_set_ext_key_end(&e->ext)->data;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index a8d316a58e44c..40ed4dd530c5a 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -9185,6 +9185,9 @@ static void __nft_release_table(struct net *net, struct nft_table *table)
+ 	ctx.family = table->family;
+ 	ctx.table = table;
+ 	list_for_each_entry(chain, &table->chains, list) {
++		if (nft_chain_is_bound(chain))
++			continue;
 +
-+		if (nft_set_ext_exists(&e->ext, NFT_SET_EXT_KEY_END))
-+			match_end = (const u8 *)nft_set_ext_key_end(&e->ext)->data;
-+		else
-+			match_end = data;
- 
- 		start = first_rule;
- 		rules_fx = rules_f0;
+ 		ctx.chain = chain;
+ 		list_for_each_entry_safe(rule, nr, &chain->rules, list) {
+ 			list_del(&rule->list);
 -- 
 2.39.2
 
