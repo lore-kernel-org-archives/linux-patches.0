@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFFC1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E5F9C433C8;
-	Tue, 25 Jul 2023 11:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D0C1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1526DC433C7;
+	Tue, 25 Jul 2023 11:11:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283472;
-	bh=oz7/QPtMuVOwe2yBxSsqCPaxyc3ao3wWGv+i6Kv+yH4=;
+	s=korg; t=1690283475;
+	bh=X0fMlrW1Fd+dlhM5s2/amdJDQb4EfmOvXprWjiGvlkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dbPCv6knt8bkufHUTbWQpCb73M9wD4RsATdNMPSfvc5Vi+/VwF9Zuf1cw4PQzz24e
-	 SGchMAJt/wGeG6G3UH9oKT8XqBr8t7wzR2XZ3TKkS31thsGFtCs9ZIuZC8N1d8HC92
-	 KwUnZRdzlIKX0TXvNh/aPTAkv8pK5/aq7AHzgiFE=
+	b=Cr6Q+Fx0glhtXtZ82RDtiG9dd9XZMBuoB4P6xlZmC+CKlDvClL+EH2jGvUqsese/m
+	 LnZZ/JfqyAi+6VaAL1Em2lIJQV3yUgxuMKm1xgKWs+RflWS84GJeQm5MZJ/KKwG38i
+	 Ipq6xu4pqNaW/bkAVlDtCbnVo4HHsosWxU7EAV5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.10 010/509] drm/amdgpu: Validate VM ioctl flags.
-Date: Tue, 25 Jul 2023 12:39:09 +0200
-Message-ID: <20230725104554.111141285@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>
+Subject: [PATCH 5.10 011/509] nubus: Partially revert proc_create_single_data() conversion
+Date: Tue, 25 Jul 2023 12:39:10 +0200
+Message-ID: <20230725104554.156751822@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -34,33 +35,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
+From: Finn Thain <fthain@linux-m68k.org>
 
-commit a2b308044dcaca8d3e580959a4f867a1d5c37fac upstream.
+commit 0e96647cff9224db564a1cee6efccb13dbe11ee2 upstream.
 
-None have been defined yet, so reject anybody setting any. Mesa sets
-it to 0 anyway.
+The conversion to proc_create_single_data() introduced a regression
+whereby reading a file in /proc/bus/nubus results in a seg fault:
 
-Signed-off-by: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+    # grep -r . /proc/bus/nubus/e/
+    Data read fault at 0x00000020 in Super Data (pc=0x1074c2)
+    BAD KERNEL BUSERR
+    Oops: 00000000
+    Modules linked in:
+    PC: [<001074c2>] PDE_DATA+0xc/0x16
+    SR: 2010  SP: 38284958  a2: 01152370
+    d0: 00000001    d1: 01013000    d2: 01002790    d3: 00000000
+    d4: 00000001    d5: 0008ce2e    a0: 00000000    a1: 00222a40
+    Process grep (pid: 45, task=142f8727)
+    Frame format=B ssw=074d isc=2008 isb=4e5e daddr=00000020 dobuf=01199e70
+    baddr=001074c8 dibuf=ffffffff ver=f
+    Stack from 01199e48:
+	    01199e70 00222a58 01002790 00000000 011a3000 01199eb0 015000c0 00000000
+	    00000000 01199ec0 01199ec0 000d551a 011a3000 00000001 00000000 00018000
+	    d003f000 00000003 00000001 0002800d 01052840 01199fa8 c01f8000 00000000
+	    00000029 0b532b80 00000000 00000000 00000029 0b532b80 01199ee4 00103640
+	    011198c0 d003f000 00018000 01199fa8 00000000 011198c0 00000000 01199f4c
+	    000b3344 011198c0 d003f000 00018000 01199fa8 00000000 00018000 011198c0
+    Call Trace: [<00222a58>] nubus_proc_rsrc_show+0x18/0xa0
+     [<000d551a>] seq_read+0xc4/0x510
+     [<00018000>] fp_fcos+0x2/0x82
+     [<0002800d>] __sys_setreuid+0x115/0x1c6
+     [<00103640>] proc_reg_read+0x5c/0xb0
+     [<00018000>] fp_fcos+0x2/0x82
+     [<000b3344>] __vfs_read+0x2c/0x13c
+     [<00018000>] fp_fcos+0x2/0x82
+     [<00018000>] fp_fcos+0x2/0x82
+     [<000b8aa2>] sys_statx+0x60/0x7e
+     [<000b34b6>] vfs_read+0x62/0x12a
+     [<00018000>] fp_fcos+0x2/0x82
+     [<00018000>] fp_fcos+0x2/0x82
+     [<000b39c2>] ksys_read+0x48/0xbe
+     [<00018000>] fp_fcos+0x2/0x82
+     [<000b3a4e>] sys_read+0x16/0x1a
+     [<00018000>] fp_fcos+0x2/0x82
+     [<00002b84>] syscall+0x8/0xc
+     [<00018000>] fp_fcos+0x2/0x82
+     [<0000c016>] not_ext+0xa/0x18
+    Code: 4e5e 4e75 4e56 0000 206e 0008 2068 ffe8 <2068> 0020 2008 4e5e 4e75 4e56 0000 2f0b 206e 0008 2068 0004 2668 0020 206b ffe8
+    Disabling lock debugging due to kernel taint
+
+    Segmentation fault
+
+The proc_create_single_data() conversion does not work because
+single_open(file, nubus_proc_rsrc_show, PDE_DATA(inode)) is not
+equivalent to the original code.
+
+Fixes: 3f3942aca6da ("proc: introduce proc_create_single{,_data}")
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: stable@vger.kernel.org # 5.6+
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/d4e2a586e793cc8d9442595684ab8a077c0fe726.1678783919.git.fthain@linux-m68k.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/nubus/proc.c |   22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -3252,6 +3252,10 @@ int amdgpu_vm_ioctl(struct drm_device *d
- 	long timeout = msecs_to_jiffies(2000);
- 	int r;
+--- a/drivers/nubus/proc.c
++++ b/drivers/nubus/proc.c
+@@ -137,6 +137,18 @@ static int nubus_proc_rsrc_show(struct s
+ 	return 0;
+ }
  
-+	/* No valid flags defined yet */
-+	if (args->in.flags)
-+		return -EINVAL;
++static int nubus_rsrc_proc_open(struct inode *inode, struct file *file)
++{
++	return single_open(file, nubus_proc_rsrc_show, inode);
++}
 +
- 	switch (args->in.op) {
- 	case AMDGPU_VM_OP_RESERVE_VMID:
- 		/* We only have requirement to reserve vmid from gfxhub */
++static const struct proc_ops nubus_rsrc_proc_ops = {
++	.proc_open	= nubus_rsrc_proc_open,
++	.proc_read	= seq_read,
++	.proc_lseek	= seq_lseek,
++	.proc_release	= single_release,
++};
++
+ void nubus_proc_add_rsrc_mem(struct proc_dir_entry *procdir,
+ 			     const struct nubus_dirent *ent,
+ 			     unsigned int size)
+@@ -152,8 +164,8 @@ void nubus_proc_add_rsrc_mem(struct proc
+ 		pde_data = nubus_proc_alloc_pde_data(nubus_dirptr(ent), size);
+ 	else
+ 		pde_data = NULL;
+-	proc_create_single_data(name, S_IFREG | 0444, procdir,
+-			nubus_proc_rsrc_show, pde_data);
++	proc_create_data(name, S_IFREG | 0444, procdir,
++			 &nubus_rsrc_proc_ops, pde_data);
+ }
+ 
+ void nubus_proc_add_rsrc(struct proc_dir_entry *procdir,
+@@ -166,9 +178,9 @@ void nubus_proc_add_rsrc(struct proc_dir
+ 		return;
+ 
+ 	snprintf(name, sizeof(name), "%x", ent->type);
+-	proc_create_single_data(name, S_IFREG | 0444, procdir,
+-			nubus_proc_rsrc_show,
+-			nubus_proc_alloc_pde_data(data, 0));
++	proc_create_data(name, S_IFREG | 0444, procdir,
++			 &nubus_rsrc_proc_ops,
++			 nubus_proc_alloc_pde_data(data, 0));
+ }
+ 
+ /*
 
 
