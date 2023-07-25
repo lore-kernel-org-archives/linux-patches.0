@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0221ED45
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:39:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF50CC433C8;
-	Tue, 25 Jul 2023 11:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC5C1ED45
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:39:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7A15C433C7;
+	Tue, 25 Jul 2023 11:39:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285194;
-	bh=cXxs9X5aAf/rmF+ly0QpUKlbokW/7PVGhV9U9w9jKeY=;
+	s=korg; t=1690285197;
+	bh=CXbfIPRTFnTnwQ/IOZg/BFnIwDy6122osFJjLozNEzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BRQMLMraOeYHJloNaGRTARsyZb84cUPfij/LrCyFXzMUyWnodVdyGTRCEf55ykr5u
-	 yADRP8NUsgzkSnPJnXb4Oze1KRPs1n7mezJsNN8qIZ90EYDcHwkxKLANmzLEDheg5Y
-	 FRreXChfzkUHs8tZPg1MraFKoHQtgIXOjdezpzes=
+	b=KWIpbaEF1mJVNFCvCwQuW5DIvTe2Xln3YIGXqUb7AA8SzudSsH1EUdSJxDS609llz
+	 fQ0nDZGfZXI9SkuHNf5e+JIpZB06B7JCugta4RwbOL1R1hofadmgDHTVmazOSSxhnM
+	 xLtwqUvu148y1vmLr/Uw72jj0fn1o1KHDdk+Pr38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Olga Kornievskaia <kolga@netapp.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 117/313] ARC: define ASM_NL and __ALIGN(_STR) outside #ifdef __ASSEMBLY__ guard
-Date: Tue, 25 Jul 2023 12:44:30 +0200
-Message-ID: <20230725104526.071530303@linuxfoundation.org>
+Subject: [PATCH 5.4 118/313] NFSv4.1: freeze the session table upon receiving NFS4ERR_BADSESSION
+Date: Tue, 25 Jul 2023 12:44:31 +0200
+Message-ID: <20230725104526.106037202@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -34,59 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Olga Kornievskaia <kolga@netapp.com>
 
-[ Upstream commit 92e2921eeafdfca9acd9b83f07d2b7ca099bac24 ]
+[ Upstream commit c907e72f58ed979a24a9fdcadfbc447c51d5e509 ]
 
-ASM_NL is useful not only in *.S files but also in .c files for using
-inline assembler in C code.
+When the client received NFS4ERR_BADSESSION, it schedules recovery
+and start the state manager thread which in turn freezes the
+session table and does not allow for any new requests to use the
+no-longer valid session. However, it is possible that before
+the state manager thread runs, a new operation would use the
+released slot that received BADSESSION and was therefore not
+updated its sequence number. Such re-use of the slot can lead
+the application errors.
 
-On ARC, however, ASM_NL is evaluated inconsistently. It is expanded to
-a backquote (`) in *.S files, but a semicolon (;) in *.c files because
-arch/arc/include/asm/linkage.h defines it inside #ifdef __ASSEMBLY__,
-so the definition for C code falls back to the default value defined in
-include/linux/linkage.h.
-
-If ASM_NL is used in inline assembler in .c files, it will result in
-wrong assembly code because a semicolon is not an instruction separator,
-but the start of a comment for ARC.
-
-Move ASM_NL (also __ALIGN and __ALIGN_STR) out of the #ifdef.
-
-Fixes: 9df62f054406 ("arch: use ASM_NL instead of ';' for assembler new line character in the macro")
-Fixes: 8d92e992a785 ("ARC: define __ALIGN_STR and __ALIGN symbols for ARC")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: 5c441544f045 ("NFSv4.x: Handle bad/dead sessions correctly in nfs41_sequence_process()")
+Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arc/include/asm/linkage.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/nfs/nfs4proc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arc/include/asm/linkage.h b/arch/arc/include/asm/linkage.h
-index fe19f1d412e71..284fd513d7c67 100644
---- a/arch/arc/include/asm/linkage.h
-+++ b/arch/arc/include/asm/linkage.h
-@@ -8,6 +8,10 @@
- 
- #include <asm/dwarf.h>
- 
-+#define ASM_NL		 `	/* use '`' to mark new line in macro */
-+#define __ALIGN		.align 4
-+#define __ALIGN_STR	__stringify(__ALIGN)
-+
- #ifdef __ASSEMBLY__
- 
- .macro ST2 e, o, off
-@@ -28,10 +32,6 @@
- #endif
- .endm
- 
--#define ASM_NL		 `	/* use '`' to mark new line in macro */
--#define __ALIGN		.align 4
--#define __ALIGN_STR	__stringify(__ALIGN)
--
- /* annotation for data we want in DCCM - if enabled in .config */
- .macro ARCFP_DATA nm
- #ifdef CONFIG_ARC_HAS_DCCM
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index c54dd49c993c5..231da9fadf098 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -915,6 +915,7 @@ static int nfs41_sequence_process(struct rpc_task *task,
+ out_noaction:
+ 	return ret;
+ session_recover:
++	set_bit(NFS4_SLOT_TBL_DRAINING, &session->fc_slot_table.slot_tbl_state);
+ 	nfs4_schedule_session_recovery(session, status);
+ 	dprintk("%s ERROR: %d Reset session\n", __func__, status);
+ 	nfs41_sequence_free_slot(res);
 -- 
 2.39.2
 
