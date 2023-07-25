@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD691ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:22:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1042C433C9;
-	Tue, 25 Jul 2023 11:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445591ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:22:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94D2C433C7;
+	Tue, 25 Jul 2023 11:22:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284168;
-	bh=V5W0Bn0qay+Bh1r5BUFiMvXV5Mz85bTKyqUZQmYwe7A=;
+	s=korg; t=1690284171;
+	bh=qVtioagxyY0urvjMY2N/vGlYrQYXUr5QnAYLqFhJSrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HjQf4/MwCe3kLsQpQpPNWRaJs/4J4lz6hCZz8HJni+xB9Azev2HfP7X4ibJGfs2gu
-	 rFVe2rm2Xn9gMm6OKkqjb3dO9DGkl9jLPCFxfWBambVhRkNdX5c+tDc/cK2/4WMw4D
-	 IwHKsdQ/Wduek6kcYzZmmlytCfcVHBJpqMcOZZ7s=
+	b=lWIV8TiancVkJJW+W7I8HYonedSRJLax5HYED/Hzu02TZEBaYAbk6IWoJYk/KByAU
+	 YKSVZ58zVLqbeomX6RJ0LZ16dDbto4XPXcKb59b9OujZ6gjIohlkp/wj/4Bg4kHk+0
+	 OR3TvrCXsRKw9jvBWVlFq6UeZv9tCmJrXU9pGUrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tobias Heider <me@tobhe.de>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 260/509] sctp: fix potential deadlock on &net->sctp.addr_wq_lock
-Date: Tue, 25 Jul 2023 12:43:19 +0200
-Message-ID: <20230725104605.655411899@linuxfoundation.org>
+Subject: [PATCH 5.10 261/509] Add MODULE_FIRMWARE() for FIRMWARE_TG357766.
+Date: Tue, 25 Jul 2023 12:43:20 +0200
+Message-ID: <20230725104605.695988335@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,55 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Tobias Heider <me@tobhe.de>
 
-[ Upstream commit 6feb37b3b06e9049e20dcf7e23998f92c9c5be9a ]
+[ Upstream commit 046f753da6143ee16452966915087ec8b0de3c70 ]
 
-As &net->sctp.addr_wq_lock is also acquired by the timer
-sctp_addr_wq_timeout_handler() in protocal.c, the same lock acquisition
-at sctp_auto_asconf_init() seems should disable irq since it is called
-from sctp_accept() under process context.
+Fixes a bug where on the M1 mac mini initramfs-tools fails to
+include the necessary firmware into the initrd.
 
-Possible deadlock scenario:
-sctp_accept()
-    -> sctp_sock_migrate()
-    -> sctp_auto_asconf_init()
-    -> spin_lock(&net->sctp.addr_wq_lock)
-        <timer interrupt>
-        -> sctp_addr_wq_timeout_handler()
-        -> spin_lock_bh(&net->sctp.addr_wq_lock); (deadlock here)
-
-This flaw was found using an experimental static analysis tool we are
-developing for irq-related deadlock.
-
-The tentative patch fix the potential deadlock by spin_lock_bh().
-
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Fixes: 34e5b0118685 ("sctp: delay auto_asconf init until binding the first addr")
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/20230627120340.19432-1-dg573847474@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: c4dab50697ff ("tg3: Download 57766 EEE service patch firmware")
+Signed-off-by: Tobias Heider <me@tobhe.de>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://lore.kernel.org/r/ZJt7LKzjdz8+dClx@tobhe.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 4a7f811abae4e..534364bb871a3 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -362,9 +362,9 @@ static void sctp_auto_asconf_init(struct sctp_sock *sp)
- 	struct net *net = sock_net(&sp->inet.sk);
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index 613ca6124e3ce..d14f37be1eb3e 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -224,6 +224,7 @@ MODULE_AUTHOR("David S. Miller (davem@redhat.com) and Jeff Garzik (jgarzik@pobox
+ MODULE_DESCRIPTION("Broadcom Tigon3 ethernet driver");
+ MODULE_LICENSE("GPL");
+ MODULE_FIRMWARE(FIRMWARE_TG3);
++MODULE_FIRMWARE(FIRMWARE_TG357766);
+ MODULE_FIRMWARE(FIRMWARE_TG3TSO);
+ MODULE_FIRMWARE(FIRMWARE_TG3TSO5);
  
- 	if (net->sctp.default_auto_asconf) {
--		spin_lock(&net->sctp.addr_wq_lock);
-+		spin_lock_bh(&net->sctp.addr_wq_lock);
- 		list_add_tail(&sp->auto_asconf_list, &net->sctp.auto_asconf_splist);
--		spin_unlock(&net->sctp.addr_wq_lock);
-+		spin_unlock_bh(&net->sctp.addr_wq_lock);
- 		sp->do_auto_asconf = 1;
- 	}
- }
 -- 
 2.39.2
 
