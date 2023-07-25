@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F001ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:34:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5697BC433C8;
-	Tue, 25 Jul 2023 11:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7B51ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:34:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D912C433C7;
+	Tue, 25 Jul 2023 11:34:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284885;
-	bh=/XQaFhL4r8dNnPLMSDwybwdCqAgX4tU5/TVn/31asX4=;
+	s=korg; t=1690284888;
+	bh=DON+5ehH52udqMugYgLDqjV5lnXU0mqdmyHNzUV7NGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AOlKRAfIUFSOVDGzL48du/o6MGLTwD5a2TVXa9JWB8OQj7H+ZNHVHAAEHTcL5jpw4
-	 yOiMCKdumLbspQnL26ZcmxWFXqotlCalQ+v1bxDF+Ef4FU5D21klwxZhPpGwuOj6Rn
-	 tkFhbCCYbvbxmJCxBsVV7gnKTjFKFMMLLvcEfqUs=
+	b=faiaf/amydn8XzFesarz01rrZMx8HmiSGRLJa9KQqBfbuhvMb/7UYIlS9YDawUY6N
+	 kJXX1JqSLUSSUrqIO7Rdk4miiNJus6kB9KQ2jyatjSR0fJjdC1HGJPK4js8gkfqD0C
+	 ucdjcBfgBKlFwcBiiyUJOFAzbeIdC4r19IZw9F54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 507/509] tracing: Fix memory leak of iter->temp when reading trace_pipe
-Date: Tue, 25 Jul 2023 12:47:26 +0200
-Message-ID: <20230725104616.925151974@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 498/509] tcp: Fix data-races around sysctl_tcp_syn(ack)?_retries.
+Date: Tue, 25 Jul 2023 12:47:17 +0200
+Message-ID: <20230725104616.547004126@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -34,54 +35,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit d5a821896360cc8b93a15bd888fabc858c038dc0 upstream.
+[ Upstream commit 20a3b1c0f603e8c55c3396abd12dfcfb523e4d3c ]
 
-kmemleak reports:
-  unreferenced object 0xffff88814d14e200 (size 256):
-    comm "cat", pid 336, jiffies 4294871818 (age 779.490s)
-    hex dump (first 32 bytes):
-      04 00 01 03 00 00 00 00 08 00 00 00 00 00 00 00  ................
-      0c d8 c8 9b ff ff ff ff 04 5a ca 9b ff ff ff ff  .........Z......
-    backtrace:
-      [<ffffffff9bdff18f>] __kmalloc+0x4f/0x140
-      [<ffffffff9bc9238b>] trace_find_next_entry+0xbb/0x1d0
-      [<ffffffff9bc9caef>] trace_print_lat_context+0xaf/0x4e0
-      [<ffffffff9bc94490>] print_trace_line+0x3e0/0x950
-      [<ffffffff9bc95499>] tracing_read_pipe+0x2d9/0x5a0
-      [<ffffffff9bf03a43>] vfs_read+0x143/0x520
-      [<ffffffff9bf04c2d>] ksys_read+0xbd/0x160
-      [<ffffffff9d0f0edf>] do_syscall_64+0x3f/0x90
-      [<ffffffff9d2000aa>] entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+While reading sysctl_tcp_syn(ack)?_retries, they can be changed
+concurrently.  Thus, we need to add READ_ONCE() to their readers.
 
-when reading file 'trace_pipe', 'iter->temp' is allocated or relocated
-in trace_find_next_entry() but not freed before 'trace_pipe' is closed.
-
-To fix it, free 'iter->temp' in tracing_release_pipe().
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230713141435.1133021-1-zhengyejian1@huawei.com
-
-Cc: stable@vger.kernel.org
-Fixes: ff895103a84ab ("tracing: Save off entry when peeking at next entry")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-[Fix conflict due to lack of 649e72070cbbb8600eb823833e4748f5a0815116]
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 3a037f0f3c4b ("tcp: annotate data-races around icsk->icsk_syn_retries")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/ipv4/inet_connection_sock.c |  3 ++-
+ net/ipv4/tcp.c                  |  3 ++-
+ net/ipv4/tcp_timer.c            | 10 +++++++---
+ 3 files changed, 11 insertions(+), 5 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -6250,6 +6250,7 @@ static int tracing_release_pipe(struct i
- 	mutex_unlock(&trace_types_lock);
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index 406305aaec904..dfea3088bc7e9 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -740,7 +740,8 @@ static void reqsk_timer_handler(struct timer_list *t)
+ 	if (inet_sk_state_load(sk_listener) != TCP_LISTEN)
+ 		goto drop;
  
- 	free_cpumask_var(iter->started);
-+	kfree(iter->temp);
- 	mutex_destroy(&iter->mutex);
- 	kfree(iter);
+-	max_syn_ack_retries = icsk->icsk_syn_retries ? : net->ipv4.sysctl_tcp_synack_retries;
++	max_syn_ack_retries = icsk->icsk_syn_retries ? :
++		READ_ONCE(net->ipv4.sysctl_tcp_synack_retries);
+ 	/* Normally all the openreqs are young and become mature
+ 	 * (i.e. converted to established socket) for first timeout.
+ 	 * If synack was not acknowledged for 1 second, it means
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 80212bb0400c2..fc4d560909b50 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -3743,7 +3743,8 @@ static int do_tcp_getsockopt(struct sock *sk, int level,
+ 		val = keepalive_probes(tp);
+ 		break;
+ 	case TCP_SYNCNT:
+-		val = icsk->icsk_syn_retries ? : net->ipv4.sysctl_tcp_syn_retries;
++		val = icsk->icsk_syn_retries ? :
++			READ_ONCE(net->ipv4.sysctl_tcp_syn_retries);
+ 		break;
+ 	case TCP_LINGER2:
+ 		val = tp->linger2;
+diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
+index 888683f2ff3ee..715fdfa3e2ae9 100644
+--- a/net/ipv4/tcp_timer.c
++++ b/net/ipv4/tcp_timer.c
+@@ -239,7 +239,8 @@ static int tcp_write_timeout(struct sock *sk)
+ 	if ((1 << sk->sk_state) & (TCPF_SYN_SENT | TCPF_SYN_RECV)) {
+ 		if (icsk->icsk_retransmits)
+ 			__dst_negative_advice(sk);
+-		retry_until = icsk->icsk_syn_retries ? : net->ipv4.sysctl_tcp_syn_retries;
++		retry_until = icsk->icsk_syn_retries ? :
++			READ_ONCE(net->ipv4.sysctl_tcp_syn_retries);
+ 		expired = icsk->icsk_retransmits >= retry_until;
+ 	} else {
+ 		if (retransmits_timed_out(sk, READ_ONCE(net->ipv4.sysctl_tcp_retries1), 0)) {
+@@ -406,12 +407,15 @@ abort:		tcp_write_err(sk);
+ static void tcp_fastopen_synack_timer(struct sock *sk, struct request_sock *req)
+ {
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
+-	int max_retries = icsk->icsk_syn_retries ? :
+-	    sock_net(sk)->ipv4.sysctl_tcp_synack_retries + 1; /* add one more retry for fastopen */
+ 	struct tcp_sock *tp = tcp_sk(sk);
++	int max_retries;
  
+ 	req->rsk_ops->syn_ack_timeout(req);
+ 
++	/* add one more retry for fastopen */
++	max_retries = icsk->icsk_syn_retries ? :
++		READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_synack_retries) + 1;
++
+ 	if (req->num_timeout >= max_retries) {
+ 		tcp_write_err(sk);
+ 		return;
+-- 
+2.39.2
+
 
 
