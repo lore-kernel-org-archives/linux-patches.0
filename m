@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4AE15AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:50:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C56AC433C8;
-	Tue, 25 Jul 2023 10:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71F315AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:50:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3881DC433C8;
+	Tue, 25 Jul 2023 10:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282221;
-	bh=A2NsDGJhvYncPlkfy1iqCzm3eIJM9V36LjMQHQEGnaM=;
+	s=korg; t=1690282224;
+	bh=CC+uP/i9hvkblukM6LwUEyHc7baONL2aYwaN34Mrm0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V0H6p3YU857wl/beZuWJ/UBuyNSWMqhRa01BfGTXLqSvjUCdUCF7gghWTkhqA2rNN
-	 0vSGX5DvLul3kKBih3H1X+GmhL2jdnIY58DNOFvkHsddzsbZxmRDGDFrKzwIqedORG
-	 S1oYmQZ83CFSNvBsrPLr2yGbGI50APxQlA7xSA9w=
+	b=r2T1NcTXZwH6f0T8bH4GfQlm2fTAn4ZjCx1uTzCViVTyyll6Xxesuyl/lSAlMISGS
+	 9O6h0k7ykuTxahR6hUlNVqLyrPTsUcwC8wSAbnT6kvbqJJ4F/QF9sUGz6ayDBryUv8
+	 a/yFeL758MZAYzzXc+4SB1iUPOES9fhiR7oA3C2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yizhan@redhat.com>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 6.4 051/227] drm/client: Fix memory leak in drm_client_modeset_probe
-Date: Tue, 25 Jul 2023 12:43:38 +0200
-Message-ID: <20230725104516.903675915@linuxfoundation.org>
+	Simon Ser <contact@emersion.fr>,
+	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>
+Subject: [PATCH 6.4 052/227] drm/amd/display: only accept async flips for fast updates
+Date: Tue, 25 Jul 2023 12:43:39 +0200
+Message-ID: <20230725104516.934589291@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -36,46 +37,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jocelyn Falempe <jfalempe@redhat.com>
+From: Simon Ser <contact@emersion.fr>
 
-commit 2329cc7a101af1a844fbf706c0724c0baea38365 upstream.
+commit 1ca67aba8d11c2849d395013e1fdce02918d5657 upstream.
 
-When a new mode is set to modeset->mode, the previous mode should be freed.
-This fixes the following kmemleak report:
+Up until now, amdgpu was silently degrading to vsync when
+user-space requested an async flip but the hardware didn't support
+it.
 
-drm_mode_duplicate+0x45/0x220 [drm]
-drm_client_modeset_probe+0x944/0xf50 [drm]
-__drm_fb_helper_initial_config_and_unlock+0xb4/0x2c0 [drm_kms_helper]
-drm_fbdev_client_hotplug+0x2bc/0x4d0 [drm_kms_helper]
-drm_client_register+0x169/0x240 [drm]
-ast_pci_probe+0x142/0x190 [ast]
-local_pci_probe+0xdc/0x180
-work_for_cpu_fn+0x4e/0xa0
-process_one_work+0x8b7/0x1540
-worker_thread+0x70a/0xed0
-kthread+0x29f/0x340
-ret_from_fork+0x1f/0x30
+The hardware doesn't support immediate flips when the update changes
+the FB pitch, the DCC state, the rotation, enables or disables CRTCs
+or planes, etc. This is reflected in the dm_crtc_state.update_type
+field: UPDATE_TYPE_FAST means that immediate flip is supported.
 
-cc: <stable@vger.kernel.org>
-Reported-by: Zhang Yi <yizhan@redhat.com>
-Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230711092203.68157-3-jfalempe@redhat.com
+Silently degrading async flips to vsync is not the expected behavior
+from a uAPI point-of-view. Xorg expects async flips to fail if
+unsupported, to be able to fall back to a blit. i915 already behaves
+this way.
+
+This patch aligns amdgpu with uAPI expectations and returns a failure
+when an async flip is not possible.
+
+Signed-off-by: Simon Ser <contact@emersion.fr>
+Reviewed-by: André Almeida <andrealmeid@igalia.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: André Almeida <andrealmeid@igalia.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_client_modeset.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c      |    8 ++++++++
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c |   12 ++++++++++++
+ 2 files changed, 20 insertions(+)
 
---- a/drivers/gpu/drm/drm_client_modeset.c
-+++ b/drivers/gpu/drm/drm_client_modeset.c
-@@ -867,6 +867,7 @@ int drm_client_modeset_probe(struct drm_
- 				break;
- 			}
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -8055,7 +8055,15 @@ static void amdgpu_dm_commit_planes(stru
+ 		 * Only allow immediate flips for fast updates that don't
+ 		 * change memory domain, FB pitch, DCC state, rotation or
+ 		 * mirroring.
++		 *
++		 * dm_crtc_helper_atomic_check() only accepts async flips with
++		 * fast updates.
+ 		 */
++		if (crtc->state->async_flip &&
++		    acrtc_state->update_type != UPDATE_TYPE_FAST)
++			drm_warn_once(state->dev,
++				      "[PLANE:%d:%s] async flip with non-fast update\n",
++				      plane->base.id, plane->name);
+ 		bundle->flip_addrs[planes_count].flip_immediate =
+ 			crtc->state->async_flip &&
+ 			acrtc_state->update_type == UPDATE_TYPE_FAST &&
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
+@@ -398,6 +398,18 @@ static int dm_crtc_helper_atomic_check(s
+ 		return -EINVAL;
+ 	}
  
-+			kfree(modeset->mode);
- 			modeset->mode = drm_mode_duplicate(dev, mode);
- 			drm_connector_get(connector);
- 			modeset->connectors[modeset->num_connectors++] = connector;
++	/*
++	 * Only allow async flips for fast updates that don't change the FB
++	 * pitch, the DCC state, rotation, etc.
++	 */
++	if (crtc_state->async_flip &&
++	    dm_crtc_state->update_type != UPDATE_TYPE_FAST) {
++		drm_dbg_atomic(crtc->dev,
++			       "[CRTC:%d:%s] async flips are only supported for fast updates\n",
++			       crtc->base.id, crtc->name);
++		return -EINVAL;
++	}
++
+ 	/* In some use cases, like reset, no stream is attached */
+ 	if (!dm_crtc_state->stream)
+ 		return 0;
 
 
