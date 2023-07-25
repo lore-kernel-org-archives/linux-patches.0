@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160531ED45
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:17:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AE59C433C8;
-	Tue, 25 Jul 2023 11:17:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733061D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:17:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7AE0C433CB;
+	Tue, 25 Jul 2023 11:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283852;
-	bh=CVe3Y1S1oFjAa/8Nq1QiMNHQmSfY/oMUMKPeTmAaWEo=;
+	s=korg; t=1690283855;
+	bh=upDRi5XA/xGN59LYW5xg4m///czAqNETzmL3DKZ1Jts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ud6Pku/htHSUEpWDcx6Ps/bw+B1LxgHVUW3RxYh9hD1zAQzMyjceFXcBNZAOfY6i1
-	 REbe93lYH/WA8k/V9RPA6iRqIA5UJH31YHh7T1AHQhyasJ06E08JfnhxG3ogT9LK9P
-	 wB88C+aSO2yxX+foyZNlvcGdw+WqxYDJmOo+kCv0=
+	b=bBvY7+TaSdSf+wpgxL8FBL92v9HVPwOMUJzDDj98npAehsFwLARJ0Vkmnjc33nor9
+	 QtcpQsqLF3z8S34fyDmF3aDi3PZ4HuaW2C+7QJv/OMtdJvj3it5ZkuktzHVAgtKHHh
+	 noGdDHeu7cQ7EXLDRApQHPMzbjzGkWBaMshertcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
+	Olivier Moysan <olivier.moysan@foss.st.com>,
 	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 145/509] ARM: dts: stm32: Fix audio routing on STM32MP15xx DHCOM PDK2
-Date: Tue, 25 Jul 2023 12:41:24 +0200
-Message-ID: <20230725104600.369128834@linuxfoundation.org>
+Subject: [PATCH 5.10 146/509] ARM: dts: stm32: fix i2s endpoint format property for stm32mp15xx-dkx
+Date: Tue, 25 Jul 2023 12:41:25 +0200
+Message-ID: <20230725104600.414863219@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,49 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Olivier Moysan <olivier.moysan@foss.st.com>
 
-[ Upstream commit e3f2778b1b6ced649bffdc7cbb05b80bb92f2108 ]
+[ Upstream commit 076c74c592cabe4a47537fe5205b5b678bed010d ]
 
-The audio routing flow is not correct, the flow should be from source
-(second element in the pair) to sink (first element in the pair). The
-flow now is from "HP_OUT" to "Playback", where "Playback" is source
-and "HP_OUT" is sink, i.e. the direction is swapped and there is no
-direct link between the two either.
+Use "dai-format" to configure DAI audio format as specified in
+audio-graph-port.yaml bindings.
 
-Fill in the correct routing, where "HP_OUT" supplies the "Headphone Jack",
-"Line In Jack" supplies "LINE_IN" input, "Microphone Jack" supplies "MIC_IN"
-input and "Mic Bias" supplies "Microphone Jack".
-
-Fixes: 34e0c7847dcf ("ARM: dts: stm32: Add DH Electronics DHCOM STM32MP1 SoM and PDK2 board")
-Signed-off-by: Marek Vasut <marex@denx.de>
+Fixes: 144d1ba70548 ("ARM: dts: stm32: Adapt STM32MP157 DK boards to stm32 DT diversity")
+Signed-off-by: Olivier Moysan <olivier.moysan@foss.st.com>
 Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/stm32mp15xx-dhcom-pdk2.dtsi | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/stm32mp15xx-dkx.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/stm32mp15xx-dhcom-pdk2.dtsi b/arch/arm/boot/dts/stm32mp15xx-dhcom-pdk2.dtsi
-index fd0cd10cb0931..2c391065135e3 100644
---- a/arch/arm/boot/dts/stm32mp15xx-dhcom-pdk2.dtsi
-+++ b/arch/arm/boot/dts/stm32mp15xx-dhcom-pdk2.dtsi
-@@ -120,10 +120,13 @@ lcd_panel_in: endpoint {
- 
- 	sound {
- 		compatible = "audio-graph-card";
--		routing =
--			"MIC_IN", "Capture",
--			"Capture", "Mic Bias",
--			"Playback", "HP_OUT";
-+		widgets = "Headphone", "Headphone Jack",
-+			  "Line", "Line In Jack",
-+			  "Microphone", "Microphone Jack";
-+		routing = "Headphone Jack", "HP_OUT",
-+			  "LINE_IN", "Line In Jack",
-+			  "MIC_IN", "Microphone Jack",
-+			  "Microphone Jack", "Mic Bias";
- 		dais = <&sai2a_port &sai2b_port>;
- 		status = "okay";
+diff --git a/arch/arm/boot/dts/stm32mp15xx-dkx.dtsi b/arch/arm/boot/dts/stm32mp15xx-dkx.dtsi
+index 47df8ac67cf1a..75869d6a1ab24 100644
+--- a/arch/arm/boot/dts/stm32mp15xx-dkx.dtsi
++++ b/arch/arm/boot/dts/stm32mp15xx-dkx.dtsi
+@@ -406,7 +406,7 @@ &i2s2 {
+ 	i2s2_port: port {
+ 		i2s2_endpoint: endpoint {
+ 			remote-endpoint = <&sii9022_tx_endpoint>;
+-			format = "i2s";
++			dai-format = "i2s";
+ 			mclk-fs = <256>;
+ 		};
  	};
 -- 
 2.39.2
