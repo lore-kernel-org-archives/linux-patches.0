@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9E41ED4D
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:42:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A7AC433C7;
-	Tue, 25 Jul 2023 11:42:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553451ED4D
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:42:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA15EC433C7;
+	Tue, 25 Jul 2023 11:42:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285361;
-	bh=luYG2R7AbGo+NpZkYDvTSInSuZIFZMoa+0s4GyL1sj8=;
+	s=korg; t=1690285364;
+	bh=oNuO6TdTZ41kx83o/GjpI1i99THSyHnaxA6cAnaBQAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XOoRSJla/L/7EQVnjvzo5Bcad7tm2Vbqxe4ktawQc3jW9SGO/l+S6c9s3H3B4OAtP
-	 CpY54S/ftjCQUl2EBRSNe1wrkKShkJNbYkPbqdiqCSedD/wCXXrgVALvaRgnckCJdQ
-	 SM0tAbbN/XUgJzUJz66Wz7zpnRQMEnHefg2d5SFA=
+	b=qsCgymP1pSexMvKDhdKR90rnNe6iQkjEp1zyOBpk5uAnZUFCR1SKJERZ/ST/6zqpo
+	 JZyH1+AeXqFaI3WSbobCk7GdtFDTJCqC9G1D8Wojz09RVKdQeoqJQiMBjtT2aeIIy4
+	 hkSc7VQdFWyPuGRu1WYc0KhNnxCTbjeo5I2njhkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.4 177/313] fanotify: disallow mount/sb marks on kernel internal pseudo fs
-Date: Tue, 25 Jul 2023 12:45:30 +0200
-Message-ID: <20230725104528.590607017@linuxfoundation.org>
+	Martin Steigerwald <Martin@lichtvoll.de>,
+	Michael Schmitz <schmitzmic@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Christoph Hellwig <hch@infradead.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.4 178/313] block: add overflow checks for Amiga partition support
+Date: Tue, 25 Jul 2023 12:45:31 +0200
+Message-ID: <20230725104528.640127273@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,74 +37,204 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Michael Schmitz <schmitzmic@gmail.com>
 
-commit 69562eb0bd3e6bb8e522a7b254334e0fb30dff0c upstream.
+commit b6f3f28f604ba3de4724ad82bea6adb1300c0b5f upstream.
 
-Hopefully, nobody is trying to abuse mount/sb marks for watching all
-anonymous pipes/inodes.
+The Amiga partition parser module uses signed int for partition sector
+address and count, which will overflow for disks larger than 1 TB.
 
-I cannot think of a good reason to allow this - it looks like an
-oversight that dated back to the original fanotify API.
+Use u64 as type for sector address and size to allow using disks up to
+2 TB without LBD support, and disks larger than 2 TB with LBD. The RBD
+format allows to specify disk sizes up to 2^128 bytes (though native
+OS limitations reduce this somewhat, to max 2^68 bytes), so check for
+u64 overflow carefully to protect against overflowing sector_t.
 
-Link: https://lore.kernel.org/linux-fsdevel/20230628101132.kvchg544mczxv2pm@quack3/
-Fixes: 0ff21db9fcc3 ("fanotify: hooks the fanotify_mark syscall to the vfsmount code")
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20230629042044.25723-1-amir73il@gmail.com>
-[backport to 5.x.y]
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Bail out if sector addresses overflow 32 bits on kernels without LBD
+support.
+
+This bug was reported originally in 2012, and the fix was created by
+the RDB author, Joanne Dow <jdow@earthlink.net>. A patch had been
+discussed and reviewed on linux-m68k at that time but never officially
+submitted (now resubmitted as patch 1 in this series).
+This patch adds additional error checking and warning messages.
+
+Reported-by: Martin Steigerwald <Martin@lichtvoll.de>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=43511
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Message-ID: <201206192146.09327.Martin@lichtvoll.de>
+Cc: <stable@vger.kernel.org> # 5.2
+Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Reviewed-by: Christoph Hellwig <hch@infradead.org>
+Link: https://lore.kernel.org/r/20230620201725.7020-4-schmitzmic@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fanotify/fanotify_user.c |   22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ block/partitions/amiga.c |  103 ++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 85 insertions(+), 18 deletions(-)
 
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -928,8 +928,11 @@ static int fanotify_test_fid(struct path
- 	return 0;
- }
+--- a/block/partitions/amiga.c
++++ b/block/partitions/amiga.c
+@@ -11,11 +11,19 @@
+ #define pr_fmt(fmt) fmt
  
--static int fanotify_events_supported(struct path *path, __u64 mask)
-+static int fanotify_events_supported(struct path *path, __u64 mask,
-+				     unsigned int flags)
+ #include <linux/types.h>
++#include <linux/mm_types.h>
++#include <linux/overflow.h>
+ #include <linux/affs_hardblocks.h>
+ 
+ #include "check.h"
+ #include "amiga.h"
+ 
++/* magic offsets in partition DosEnvVec */
++#define NR_HD	3
++#define NR_SECT	5
++#define LO_CYL	9
++#define HI_CYL	10
++
+ static __inline__ u32
+ checksum_block(__be32 *m, int size)
  {
-+	unsigned int mark_type = flags & FANOTIFY_MARK_TYPE_BITS;
-+
- 	/*
- 	 * Some filesystems such as 'proc' acquire unusual locks when opening
- 	 * files. For them fanotify permission events have high chances of
-@@ -941,6 +944,21 @@ static int fanotify_events_supported(str
- 	if (mask & FANOTIFY_PERM_EVENTS &&
- 	    path->mnt->mnt_sb->s_type->fs_flags & FS_DISALLOW_NOTIFY_PERM)
- 		return -EINVAL;
-+
-+	/*
-+	 * mount and sb marks are not allowed on kernel internal pseudo fs,
-+	 * like pipe_mnt, because that would subscribe to events on all the
-+	 * anonynous pipes in the system.
-+	 *
-+	 * SB_NOUSER covers all of the internal pseudo fs whose objects are not
-+	 * exposed to user's mount namespace, but there are other SB_KERNMOUNT
-+	 * fs, like nsfs, debugfs, for which the value of allowing sb and mount
-+	 * mark is questionable. For now we leave them alone.
-+	 */
-+	if (mark_type != FAN_MARK_INODE &&
-+	    path->mnt->mnt_sb->s_flags & SB_NOUSER)
-+		return -EINVAL;
-+
- 	return 0;
- }
+@@ -32,9 +40,12 @@ int amiga_partition(struct parsed_partit
+ 	unsigned char *data;
+ 	struct RigidDiskBlock *rdb;
+ 	struct PartitionBlock *pb;
+-	sector_t start_sect, nr_sects;
+-	int blk, part, res = 0;
+-	int blksize = 1;	/* Multiplier for disk block size */
++	u64 start_sect, nr_sects;
++	sector_t blk, end_sect;
++	u32 cylblk;		/* rdb_CylBlocks = nr_heads*sect_per_track */
++	u32 nr_hd, nr_sect, lo_cyl, hi_cyl;
++	int part, res = 0;
++	unsigned int blksize = 1;	/* Multiplier for disk block size */
+ 	int slot = 1;
+ 	char b[BDEVNAME_SIZE];
  
-@@ -1050,7 +1068,7 @@ static int do_fanotify_mark(int fanotify
- 		goto fput_and_out;
+@@ -44,7 +55,7 @@ int amiga_partition(struct parsed_partit
+ 		data = read_part_sector(state, blk, &sect);
+ 		if (!data) {
+ 			if (warn_no_part)
+-				pr_err("Dev %s: unable to read RDB block %d\n",
++				pr_err("Dev %s: unable to read RDB block %llu\n",
+ 				       bdevname(state->bdev, b), blk);
+ 			res = -1;
+ 			goto rdb_done;
+@@ -61,12 +72,12 @@ int amiga_partition(struct parsed_partit
+ 		*(__be32 *)(data+0xdc) = 0;
+ 		if (checksum_block((__be32 *)data,
+ 				be32_to_cpu(rdb->rdb_SummedLongs) & 0x7F)==0) {
+-			pr_err("Trashed word at 0xd0 in block %d ignored in checksum calculation\n",
++			pr_err("Trashed word at 0xd0 in block %llu ignored in checksum calculation\n",
+ 			       blk);
+ 			break;
+ 		}
  
- 	if (flags & FAN_MARK_ADD) {
--		ret = fanotify_events_supported(&path, mask);
-+		ret = fanotify_events_supported(&path, mask, flags);
- 		if (ret)
- 			goto path_put_and_out;
+-		pr_err("Dev %s: RDB in block %d has bad checksum\n",
++		pr_err("Dev %s: RDB in block %llu has bad checksum\n",
+ 		       bdevname(state->bdev, b), blk);
  	}
+ 
+@@ -83,11 +94,16 @@ int amiga_partition(struct parsed_partit
+ 	blk = be32_to_cpu(rdb->rdb_PartitionList);
+ 	put_dev_sector(sect);
+ 	for (part = 1; blk>0 && part<=16; part++, put_dev_sector(sect)) {
+-		blk *= blksize;	/* Read in terms partition table understands */
++		/* Read in terms partition table understands */
++		if (check_mul_overflow(blk, (sector_t) blksize, &blk)) {
++			pr_err("Dev %s: overflow calculating partition block %llu! Skipping partitions %u and beyond\n",
++				bdevname(state->bdev, b), blk, part);
++			break;
++		}
+ 		data = read_part_sector(state, blk, &sect);
+ 		if (!data) {
+ 			if (warn_no_part)
+-				pr_err("Dev %s: unable to read partition block %d\n",
++				pr_err("Dev %s: unable to read partition block %llu\n",
+ 				       bdevname(state->bdev, b), blk);
+ 			res = -1;
+ 			goto rdb_done;
+@@ -99,19 +115,70 @@ int amiga_partition(struct parsed_partit
+ 		if (checksum_block((__be32 *)pb, be32_to_cpu(pb->pb_SummedLongs) & 0x7F) != 0 )
+ 			continue;
+ 
+-		/* Tell Kernel about it */
++		/* RDB gives us more than enough rope to hang ourselves with,
++		 * many times over (2^128 bytes if all fields max out).
++		 * Some careful checks are in order, so check for potential
++		 * overflows.
++		 * We are multiplying four 32 bit numbers to one sector_t!
++		 */
++
++		nr_hd   = be32_to_cpu(pb->pb_Environment[NR_HD]);
++		nr_sect = be32_to_cpu(pb->pb_Environment[NR_SECT]);
++
++		/* CylBlocks is total number of blocks per cylinder */
++		if (check_mul_overflow(nr_hd, nr_sect, &cylblk)) {
++			pr_err("Dev %s: heads*sects %u overflows u32, skipping partition!\n",
++				bdevname(state->bdev, b), cylblk);
++			continue;
++		}
++
++		/* check for consistency with RDB defined CylBlocks */
++		if (cylblk > be32_to_cpu(rdb->rdb_CylBlocks)) {
++			pr_warn("Dev %s: cylblk %u > rdb_CylBlocks %u!\n",
++				bdevname(state->bdev, b), cylblk,
++				be32_to_cpu(rdb->rdb_CylBlocks));
++		}
++
++		/* RDB allows for variable logical block size -
++		 * normalize to 512 byte blocks and check result.
++		 */
++
++		if (check_mul_overflow(cylblk, blksize, &cylblk)) {
++			pr_err("Dev %s: partition %u bytes per cyl. overflows u32, skipping partition!\n",
++				bdevname(state->bdev, b), part);
++			continue;
++		}
++
++		/* Calculate partition start and end. Limit of 32 bit on cylblk
++		 * guarantees no overflow occurs if LBD support is enabled.
++		 */
++
++		lo_cyl = be32_to_cpu(pb->pb_Environment[LO_CYL]);
++		start_sect = ((u64) lo_cyl * cylblk);
++
++		hi_cyl = be32_to_cpu(pb->pb_Environment[HI_CYL]);
++		nr_sects = (((u64) hi_cyl - lo_cyl + 1) * cylblk);
+ 
+-		nr_sects = ((sector_t)be32_to_cpu(pb->pb_Environment[10]) + 1 -
+-			   be32_to_cpu(pb->pb_Environment[9])) *
+-			   be32_to_cpu(pb->pb_Environment[3]) *
+-			   be32_to_cpu(pb->pb_Environment[5]) *
+-			   blksize;
+ 		if (!nr_sects)
+ 			continue;
+-		start_sect = (sector_t)be32_to_cpu(pb->pb_Environment[9]) *
+-			     be32_to_cpu(pb->pb_Environment[3]) *
+-			     be32_to_cpu(pb->pb_Environment[5]) *
+-			     blksize;
++
++		/* Warn user if partition end overflows u32 (AmigaDOS limit) */
++
++		if ((start_sect + nr_sects) > UINT_MAX) {
++			pr_warn("Dev %s: partition %u (%llu-%llu) needs 64 bit device support!\n",
++				bdevname(state->bdev, b), part,
++				start_sect, start_sect + nr_sects);
++		}
++
++		if (check_add_overflow(start_sect, nr_sects, &end_sect)) {
++			pr_err("Dev %s: partition %u (%llu-%llu) needs LBD device support, skipping partition!\n",
++				bdevname(state->bdev, b), part,
++				start_sect, end_sect);
++			continue;
++		}
++
++		/* Tell Kernel about it */
++
+ 		put_partition(state,slot++,start_sect,nr_sects);
+ 		{
+ 			/* Be even more informative to aid mounting */
 
 
