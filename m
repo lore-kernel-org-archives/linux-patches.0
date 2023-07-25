@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FC21ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:13:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B4A7C433C7;
-	Tue, 25 Jul 2023 11:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2851ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:13:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB76C433C8;
+	Tue, 25 Jul 2023 11:13:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283615;
-	bh=OtWOUdu18ilo6la3nBd+jD3sK9RBHL4kjdR2RWlzrAM=;
+	s=korg; t=1690283618;
+	bh=c4kDeIB/H6iO962LTOP/xcZX7hLazHLDoZ99XS8ddCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hxWpjHttHqySUnILlK+b+vuazo1WkQEL2ADbBpWlGp33KHUea64iYgRv1hLwnI7GU
-	 F5D4YH2c7MV9aqTQKZAxdk6Q50XMtYMCgcob/i+71cDc4Tt9WnKsCQzIjwxRz9FVlm
-	 NeR3bSiumDfx3HMr/ebGtf8RE/ZBbRV2f9Av6xAQ=
+	b=GGA0aamSAQPAb82vDqs2BzzNrb60mjINZSBYaOgtzU73FNLguMQyPlah+R7DVQD7j
+	 Coxcoe9ZP8ufKd3qtHL2OS3RZsTOb9mKuYfbvnytea1SJ6ig9WyMyk7M+PND78XgNl
+	 pGOskYqwPsoXsqET2kTBwQIqxqTl5lpPb5TL/oCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dbueso@suse.de>,
-	Li Zhijian <zhijianx.li@intel.com>,
+	kernel test robot <yujie.liu@intel.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
 	"Paul E. McKenney" <paulmck@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 032/509] rcuscale: Always log error message
-Date: Tue, 25 Jul 2023 12:39:31 +0200
-Message-ID: <20230725104555.126487424@linuxfoundation.org>
+Subject: [PATCH 5.10 033/509] rcuscale: Move shutdown from wait_event() to wait_event_idle()
+Date: Tue, 25 Jul 2023 12:39:32 +0200
+Message-ID: <20230725104555.169375931@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,69 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Zhijian <zhijianx.li@intel.com>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit 86e7ed1bd57d020e35d430542bf5d689c3200568 ]
+[ Upstream commit ef1ef3d47677dc191b88650a9f7f91413452cc1b ]
 
-Unconditionally log messages corresponding to errors.
+The rcu_scale_shutdown() and kfree_scale_shutdown() kthreads/functions
+use wait_event() to wait for the rcuscale test to complete.  However,
+each updater thread in such a test waits for at least 100 grace periods.
+If each grace period takes more than 1.2 seconds, which is long, but
+not insanely so, this can trigger the hung-task timeout.
 
-Acked-by: Davidlohr Bueso <dbueso@suse.de>
-Signed-off-by: Li Zhijian <zhijianx.li@intel.com>
+This commit therefore replaces those wait_event() calls with calls to
+wait_event_idle(), which do not trigger the hung-task timeout.
+
+Reported-by: kernel test robot <yujie.liu@intel.com>
+Reported-by: Liam Howlett <liam.howlett@oracle.com>
 Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Tested-by: Yujie Liu <yujie.liu@intel.com>
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
 Stable-dep-of: 23fc8df26dea ("rcu/rcuscale: Stop kfree_scale_thread thread(s) after unloading rcuscale")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/rcuscale.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ kernel/rcu/rcuscale.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/kernel/rcu/rcuscale.c b/kernel/rcu/rcuscale.c
-index 28bc688e2705c..4452c3c4060ce 100644
+index 4452c3c4060ce..74be0b6438fb3 100644
 --- a/kernel/rcu/rcuscale.c
 +++ b/kernel/rcu/rcuscale.c
-@@ -49,8 +49,8 @@ MODULE_AUTHOR("Paul E. McKenney <paulmck@linux.ibm.com>");
- 	pr_alert("%s" SCALE_FLAG " %s\n", scale_type, s)
- #define VERBOSE_SCALEOUT_STRING(s) \
- 	do { if (verbose) pr_alert("%s" SCALE_FLAG " %s\n", scale_type, s); } while (0)
--#define VERBOSE_SCALEOUT_ERRSTRING(s) \
--	do { if (verbose) pr_alert("%s" SCALE_FLAG "!!! %s\n", scale_type, s); } while (0)
-+#define SCALEOUT_ERRSTRING(s) \
-+	pr_alert("%s" SCALE_FLAG "!!! %s\n", scale_type, s)
+@@ -579,8 +579,7 @@ static int compute_real(int n)
+ static int
+ rcu_scale_shutdown(void *arg)
+ {
+-	wait_event(shutdown_wq,
+-		   atomic_read(&n_rcu_scale_writer_finished) >= nrealwriters);
++	wait_event_idle(shutdown_wq, atomic_read(&n_rcu_scale_writer_finished) >= nrealwriters);
+ 	smp_mb(); /* Wake before output. */
+ 	rcu_scale_cleanup();
+ 	kernel_power_off();
+@@ -693,8 +692,8 @@ kfree_scale_cleanup(void)
+ static int
+ kfree_scale_shutdown(void *arg)
+ {
+-	wait_event(shutdown_wq,
+-		   atomic_read(&n_kfree_scale_thread_ended) >= kfree_nrealthreads);
++	wait_event_idle(shutdown_wq,
++			atomic_read(&n_kfree_scale_thread_ended) >= kfree_nrealthreads);
  
- /*
-  * The intended use cases for the nreaders and nwriters module parameters
-@@ -484,11 +484,11 @@ rcu_scale_cleanup(void)
- 	 * during the mid-boot phase, so have to wait till the end.
- 	 */
- 	if (rcu_gp_is_expedited() && !rcu_gp_is_normal() && !gp_exp)
--		VERBOSE_SCALEOUT_ERRSTRING("All grace periods expedited, no normal ones to measure!");
-+		SCALEOUT_ERRSTRING("All grace periods expedited, no normal ones to measure!");
- 	if (rcu_gp_is_normal() && gp_exp)
--		VERBOSE_SCALEOUT_ERRSTRING("All grace periods normal, no expedited ones to measure!");
-+		SCALEOUT_ERRSTRING("All grace periods normal, no expedited ones to measure!");
- 	if (gp_exp && gp_async)
--		VERBOSE_SCALEOUT_ERRSTRING("No expedited async GPs, so went with async!");
-+		SCALEOUT_ERRSTRING("No expedited async GPs, so went with async!");
+ 	smp_mb(); /* Wake before output. */
  
- 	if (torture_cleanup_begin())
- 		return;
-@@ -803,7 +803,7 @@ rcu_scale_init(void)
- 	reader_tasks = kcalloc(nrealreaders, sizeof(reader_tasks[0]),
- 			       GFP_KERNEL);
- 	if (reader_tasks == NULL) {
--		VERBOSE_SCALEOUT_ERRSTRING("out of memory");
-+		SCALEOUT_ERRSTRING("out of memory");
- 		firsterr = -ENOMEM;
- 		goto unwind;
- 	}
-@@ -823,7 +823,7 @@ rcu_scale_init(void)
- 		kcalloc(nrealwriters, sizeof(*writer_n_durations),
- 			GFP_KERNEL);
- 	if (!writer_tasks || !writer_durations || !writer_n_durations) {
--		VERBOSE_SCALEOUT_ERRSTRING("out of memory");
-+		SCALEOUT_ERRSTRING("out of memory");
- 		firsterr = -ENOMEM;
- 		goto unwind;
- 	}
 -- 
 2.39.2
 
