@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DD91ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:35:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE24FC433C8;
-	Tue, 25 Jul 2023 11:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFF31ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:35:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B62C433C8;
+	Tue, 25 Jul 2023 11:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284916;
-	bh=+SoqVG6RoguNPN15+w6YkeW507traoDvh9eGkjN/N3Y=;
+	s=korg; t=1690284919;
+	bh=oaLozk9NbJEk3IUbC1+IlVGrGLMgZUywCXTwhbZgeMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KACqRBhCqs3Xh5ZhqGVNUfhYqQwo/eYWCTgv6n0Ym0Y06EnnmNfhCjBFVjquWAYo+
-	 p43ASf5vSf8BybWm5gshMM7aaFG2eQpGvFYXq+xZ1h7/G/dQ3ymE3GKI0Qdtaoag2V
-	 LJ6vrm7dEX2neOjiafEakDRVnXi/Q8lOJhpOu3R8=
+	b=I+Rz52mF5Elt8PULYkZq5JiXcXX0xcrdSD2YsNanJ7I0PlfRc/g4mEDPWHEtXw+vW
+	 2GbPKs47Ffv/sKX4uq4KEPiP/I918/OWeenwol7kGs9e7Lzu5AoykL0gU/JS8dpBH9
+	 TrgM8e7tl3qeLL1FMJfzlCh/qkrCmWitDkuajFcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Rob Landley <rob@landley.net>,
-	Marc Zyngier <maz@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 018/313] irqchip/jcore-aic: Fix missing allocation of IRQ descriptors
-Date: Tue, 25 Jul 2023 12:42:51 +0200
-Message-ID: <20230725104521.927672254@linuxfoundation.org>
+Subject: [PATCH 5.4 019/313] tracing/timer: Add missing hrtimer modes to decode_hrtimer_mode().
+Date: Tue, 25 Jul 2023 12:42:52 +0200
+Message-ID: <20230725104521.968686704@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -36,51 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 4848229494a323eeaab62eee5574ef9f7de80374 ]
+[ Upstream commit 2951580ba6adb082bb6b7154a5ecb24e7c1f7569 ]
 
-The initialization function for the J-Core AIC aic_irq_of_init() is
-currently missing the call to irq_alloc_descs() which allocates and
-initializes all the IRQ descriptors. Add missing function call and
-return the error code from irq_alloc_descs() in case the allocation
-fails.
+The trace output for the HRTIMER_MODE_.*_HARD modes is seen as a number
+since these modes are not decoded. The author was not aware of the fancy
+decoding function which makes the life easier.
 
-Fixes: 981b58f66cfc ("irqchip/jcore-aic: Add J-Core AIC driver")
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Tested-by: Rob Landley <rob@landley.net>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230510163343.43090-1-glaubitz@physik.fu-berlin.de
+Extend decode_hrtimer_mode() with the additional HRTIMER_MODE_.*_HARD
+modes.
+
+Fixes: ae6683d815895 ("hrtimer: Introduce HARD expiry mode")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lore.kernel.org/r/20230418143854.8vHWQKLM@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-jcore-aic.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ include/trace/events/timer.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-jcore-aic.c b/drivers/irqchip/irq-jcore-aic.c
-index 5f47d8ee4ae39..b9dcc8e78c750 100644
---- a/drivers/irqchip/irq-jcore-aic.c
-+++ b/drivers/irqchip/irq-jcore-aic.c
-@@ -68,6 +68,7 @@ static int __init aic_irq_of_init(struct device_node *node,
- 	unsigned min_irq = JCORE_AIC2_MIN_HWIRQ;
- 	unsigned dom_sz = JCORE_AIC_MAX_HWIRQ+1;
- 	struct irq_domain *domain;
-+	int ret;
+diff --git a/include/trace/events/timer.h b/include/trace/events/timer.h
+index 295517f109d71..1b5371f0317af 100644
+--- a/include/trace/events/timer.h
++++ b/include/trace/events/timer.h
+@@ -156,7 +156,11 @@ DEFINE_EVENT(timer_class, timer_cancel,
+ 		{ HRTIMER_MODE_ABS_SOFT,	"ABS|SOFT"	},	\
+ 		{ HRTIMER_MODE_REL_SOFT,	"REL|SOFT"	},	\
+ 		{ HRTIMER_MODE_ABS_PINNED_SOFT,	"ABS|PINNED|SOFT" },	\
+-		{ HRTIMER_MODE_REL_PINNED_SOFT,	"REL|PINNED|SOFT" })
++		{ HRTIMER_MODE_REL_PINNED_SOFT,	"REL|PINNED|SOFT" },	\
++		{ HRTIMER_MODE_ABS_HARD,	"ABS|HARD" },		\
++		{ HRTIMER_MODE_REL_HARD,	"REL|HARD" },		\
++		{ HRTIMER_MODE_ABS_PINNED_HARD, "ABS|PINNED|HARD" },	\
++		{ HRTIMER_MODE_REL_PINNED_HARD,	"REL|PINNED|HARD" })
  
- 	pr_info("Initializing J-Core AIC\n");
- 
-@@ -100,6 +101,12 @@ static int __init aic_irq_of_init(struct device_node *node,
- 	jcore_aic.irq_unmask = noop;
- 	jcore_aic.name = "AIC";
- 
-+	ret = irq_alloc_descs(-1, min_irq, dom_sz - min_irq,
-+			      of_node_to_nid(node));
-+
-+	if (ret < 0)
-+		return ret;
-+
- 	domain = irq_domain_add_legacy(node, dom_sz - min_irq, min_irq, min_irq,
- 				       &jcore_aic_irqdomain_ops,
- 				       &jcore_aic);
+ /**
+  * hrtimer_init - called when the hrtimer is initialized
 -- 
 2.39.2
 
