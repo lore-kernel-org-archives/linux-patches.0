@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8DD1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:33:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F16B9C433C8;
-	Tue, 25 Jul 2023 11:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426421ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:33:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB739C433C7;
+	Tue, 25 Jul 2023 11:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284819;
-	bh=pFdr8y0W5BbIKwuj68ECZ0nMa6piaOSLfm2ci2Aec6o=;
+	s=korg; t=1690284822;
+	bh=VDce9/O6/Nb2vslHENbVXD/CwRk4e7GR8lqEDzkm6q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SDnSR8usPiKhTdbq5MNd9gw1pu9WvgJJsIiIhrzV5kGMoHj1OzzcmIsEMMLMpnB9D
-	 zd35BqAjpg1VCIhgR3kXFkcI7Kb+wGYjizaroQSnoGMbaN6NLG6kaPRWuHhHtMsQ3U
-	 w40/Taq1GQkq1Ivx2/TDIregMb8sJiL4vYb4s/XQ=
+	b=xlHqrGjvhmIzpNZ3zXuGq3pY2Fm/e2pP8zIg6Gz4KIafIY7ppsZJVJIRRsRQyL9v5
+	 FVou8XTSOky6turtZY+Zglg7Q8BHwrwQ3yt16RMcyixeDrwhemfwEPU6EAo5Bc5Aq5
+	 3Dtw7XCTBfrnesQ3Lvqv/py4aC9q8WABdYp9q2FQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Rich <kevinrich1337@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 492/509] netfilter: nf_tables: skip bound chain on rule flush
-Date: Tue, 25 Jul 2023 12:47:11 +0200
-Message-ID: <20230725104616.278723261@linuxfoundation.org>
+Subject: [PATCH 5.10 493/509] tcp: annotate data-races around tp->tcp_tx_delay
+Date: Tue, 25 Jul 2023 12:47:12 +0200
+Message-ID: <20230725104616.326348404@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,41 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6eaf41e87a223ae6f8e7a28d6e78384ad7e407f8 ]
+[ Upstream commit 348b81b68b13ebd489a3e6a46aa1c384c731c919 ]
 
-Skip bound chain when flushing table rules, the rule that owns this
-chain releases these objects.
+do_tcp_getsockopt() reads tp->tcp_tx_delay while another cpu
+might change its value.
 
-Otherwise, the following warning is triggered:
-
-  WARNING: CPU: 2 PID: 1217 at net/netfilter/nf_tables_api.c:2013 nf_tables_chain_destroy+0x1f7/0x210 [nf_tables]
-  CPU: 2 PID: 1217 Comm: chain-flush Not tainted 6.1.39 #1
-  RIP: 0010:nf_tables_chain_destroy+0x1f7/0x210 [nf_tables]
-
-Fixes: d0e2c7de92c7 ("netfilter: nf_tables: add NFT_CHAIN_BINDING")
-Reported-by: Kevin Rich <kevinrich1337@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: a842fe1425cb ("tcp: add optional per socket transmit delay")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230719212857.3943972-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv4/tcp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 40ed4dd530c5a..356416564d9f4 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -3611,6 +3611,8 @@ static int nf_tables_delrule(struct net *net, struct sock *nlsk,
- 		list_for_each_entry(chain, &table->chains, list) {
- 			if (!nft_is_active_next(net, chain))
- 				continue;
-+			if (nft_chain_is_bound(chain))
-+				continue;
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index cc42ceadc1127..39919d1436cea 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -3447,7 +3447,7 @@ static int do_tcp_setsockopt(struct sock *sk, int level, int optname,
+ 	case TCP_TX_DELAY:
+ 		if (val)
+ 			tcp_enable_tx_delay();
+-		tp->tcp_tx_delay = val;
++		WRITE_ONCE(tp->tcp_tx_delay, val);
+ 		break;
+ 	default:
+ 		err = -ENOPROTOOPT;
+@@ -3902,7 +3902,7 @@ static int do_tcp_getsockopt(struct sock *sk, int level,
+ 		break;
  
- 			ctx.chain = chain;
- 			err = nft_delrule_by_chain(&ctx);
+ 	case TCP_TX_DELAY:
+-		val = tp->tcp_tx_delay;
++		val = READ_ONCE(tp->tcp_tx_delay);
+ 		break;
+ 
+ 	case TCP_TIMESTAMP:
 -- 
 2.39.2
 
