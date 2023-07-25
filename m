@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC361D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:03:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FB5BC433C9;
-	Tue, 25 Jul 2023 11:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED2F1D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:03:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07386C433BC;
+	Tue, 25 Jul 2023 11:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282999;
-	bh=5rFX++yQ3ops7B5OLtfgW79n4CG48egKMCYjC6yV/lE=;
+	s=korg; t=1690283002;
+	bh=3+l8gCB1fZL2NOurtB5a3UyITugweaUZtL95SnWkToY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oaw3zfcLgBqLycby3hwXVW88mA0rB5d/4rGoIz0CuIRKPPd3qDL7M/NmddXZ4vObW
-	 /RrUZg3k4vb8ffFpRD4s5XFyHKbm/YGSxCjLE3pmocja89Y5WwFga0FD8ZKPKmYz4E
-	 NKVndQf7FYYRwbp30ZHXW66ojQZZ9xRuNSvsRrNs=
+	b=pkP4j3n+HrVJZCVeQowPgCt22Q290CXk0W6JoPyRmFwYyVtyTvBEnqSAjs5mT/ADn
+	 eCoqvw9oQ/0QbEJyZCB8CUftx7/8TMxjCi23XhcinQVzgsiO7OjOuYNEPr2ONAQbhC
+	 UHATldawCP84agRgKhCbTV7godDEFNU7rS1dpA/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Yonghong Song <yhs@fb.com>,
-	Zhen Lei <thunder.leizhen@huawei.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Kees Cook <keescook@chromium.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Tobias Waldekranz <tobias@waldekranz.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 103/183] kallsyms: strip LTO-only suffixes from promoted global functions
-Date: Tue, 25 Jul 2023 12:45:31 +0200
-Message-ID: <20230725104511.646178298@linuxfoundation.org>
+Subject: [PATCH 6.1 104/183] dsa: mv88e6xxx: Do a final check before timing out
+Date: Tue, 25 Jul 2023 12:45:32 +0200
+Message-ID: <20230725104511.676000013@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -38,101 +37,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yonghong Song <yhs@fb.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 8cc32a9bbf2934d90762d9de0187adcb5ad46a11 ]
+[ Upstream commit 95ce158b6c93b28842b54b42ad1cb221b9844062 ]
 
-Commit 6eb4bd92c1ce ("kallsyms: strip LTO suffixes from static functions")
-stripped all function/variable suffixes started with '.' regardless
-of whether those suffixes are generated at LTO mode or not. In fact,
-as far as I know, in LTO mode, when a static function/variable is
-promoted to the global scope, '.llvm.<...>' suffix is added.
+I get sporadic timeouts from the driver when using the
+MV88E6352. Reading the status again after the loop fixes the
+problem: the operation is successful but goes undetected.
 
-The existing mechanism breaks live patch for a LTO kernel even if
-no <symbol>.llvm.<...> symbols are involved. For example, for the following
-kernel symbols:
-  $ grep bpf_verifier_vlog /proc/kallsyms
-  ffffffff81549f60 t bpf_verifier_vlog
-  ffffffff8268b430 d bpf_verifier_vlog._entry
-  ffffffff8282a958 d bpf_verifier_vlog._entry_ptr
-  ffffffff82e12a1f d bpf_verifier_vlog.__already_done
-'bpf_verifier_vlog' is a static function. '_entry', '_entry_ptr' and
-'__already_done' are static variables used inside 'bpf_verifier_vlog',
-so llvm promotes them to file-level static with prefix 'bpf_verifier_vlog.'.
-Note that the func-level to file-level static function promotion also
-happens without LTO.
+Some added prints show things like this:
 
-Given a symbol name 'bpf_verifier_vlog', with LTO kernel, current mechanism will
-return 4 symbols to live patch subsystem which current live patching
-subsystem cannot handle it. With non-LTO kernel, only one symbol
-is returned.
+[   58.356209] mv88e6085 mdio_mux-0.1:00: Timeout while waiting
+    for switch, addr 1b reg 0b, mask 8000, val 0000, data c000
+[   58.367487] mv88e6085 mdio_mux-0.1:00: Timeout waiting for
+    ATU op 4000, fid 0001
+(...)
+[   61.826293] mv88e6085 mdio_mux-0.1:00: Timeout while waiting
+    for switch, addr 1c reg 18, mask 8000, val 0000, data 9860
+[   61.837560] mv88e6085 mdio_mux-0.1:00: Timeout waiting
+    for PHY command 1860 to complete
 
-In [1], we have a lengthy discussion, the suggestion is to separate two
-cases:
-  (1). new symbols with suffix which are generated regardless of whether
-       LTO is enabled or not, and
-  (2). new symbols with suffix generated only when LTO is enabled.
+The reason is probably not the commands: I think those are
+mostly fine with the 50+50ms timeout, but the problem
+appears when OpenWrt brings up several interfaces in
+parallel on a system with 7 populated ports: if one of
+them take more than 50 ms and waits one or more of the
+others can get stuck on the mutex for the switch and then
+this can easily multiply.
 
-The cleanup_symbol_name() should only remove suffixes for case (2).
-Case (1) should not be changed so it can work uniformly with or without LTO.
+As we sleep and wait, the function loop needs a final
+check after exiting the loop if we were successful.
 
-This patch removed LTO-only suffix '.llvm.<...>' so live patching and
-tracing should work the same way for non-LTO kernel.
-The cleanup_symbol_name() in scripts/kallsyms.c is also changed to have the same
-filtering pattern so both kernel and kallsyms tool have the same
-expectation on the order of symbols.
-
- [1] https://lore.kernel.org/live-patching/20230615170048.2382735-1-song@kernel.org/T/#u
-
-Fixes: 6eb4bd92c1ce ("kallsyms: strip LTO suffixes from static functions")
-Reported-by: Song Liu <song@kernel.org>
-Signed-off-by: Yonghong Song <yhs@fb.com>
-Reviewed-by: Zhen Lei <thunder.leizhen@huawei.com>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Acked-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230628181926.4102448-1-yhs@fb.com
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Suggested-by: Andrew Lunn <andrew@lunn.ch>
+Cc: Tobias Waldekranz <tobias@waldekranz.com>
+Fixes: 35da1dfd9484 ("net: dsa: mv88e6xxx: Improve performance of busy bit polling")
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20230712223405.861899-1-linus.walleij@linaro.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kallsyms.c  | 5 ++---
- scripts/kallsyms.c | 6 +++---
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/kernel/kallsyms.c b/kernel/kallsyms.c
-index ba351dfa109b6..676328a7c8c75 100644
---- a/kernel/kallsyms.c
-+++ b/kernel/kallsyms.c
-@@ -174,11 +174,10 @@ static bool cleanup_symbol_name(char *s)
- 	 * LLVM appends various suffixes for local functions and variables that
- 	 * must be promoted to global scope as part of LTO.  This can break
- 	 * hooking of static functions with kprobes. '.' is not a valid
--	 * character in an identifier in C. Suffixes observed:
-+	 * character in an identifier in C. Suffixes only in LLVM LTO observed:
- 	 * - foo.llvm.[0-9a-f]+
--	 * - foo.[0-9a-f]+
- 	 */
--	res = strchr(s, '.');
-+	res = strstr(s, ".llvm.");
- 	if (res) {
- 		*res = '\0';
- 		return true;
-diff --git a/scripts/kallsyms.c b/scripts/kallsyms.c
-index 67ef9aa14a770..51edc73e2ebf8 100644
---- a/scripts/kallsyms.c
-+++ b/scripts/kallsyms.c
-@@ -432,10 +432,10 @@ static void cleanup_symbol_name(char *s)
- 	 * ASCII[_]   = 5f
- 	 * ASCII[a-z] = 61,7a
- 	 *
--	 * As above, replacing '.' with '\0' does not affect the main sorting,
--	 * but it helps us with subsorting.
-+	 * As above, replacing the first '.' in ".llvm." with '\0' does not
-+	 * affect the main sorting, but it helps us with subsorting.
- 	 */
--	p = strchr(s, '.');
-+	p = strstr(s, ".llvm.");
- 	if (p)
- 		*p = '\0';
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index 4db1652015d1d..b69bd44ada1f2 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -109,6 +109,13 @@ int mv88e6xxx_wait_mask(struct mv88e6xxx_chip *chip, int addr, int reg,
+ 			usleep_range(1000, 2000);
+ 	}
+ 
++	err = mv88e6xxx_read(chip, addr, reg, &data);
++	if (err)
++		return err;
++
++	if ((data & mask) == val)
++		return 0;
++
+ 	dev_err(chip->dev, "Timeout while waiting for switch\n");
+ 	return -ETIMEDOUT;
  }
 -- 
 2.39.2
