@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7658F59
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:02:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6102AC433C9;
-	Tue, 25 Jul 2023 11:02:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B015C15ACF
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:02:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D541C433C8;
+	Tue, 25 Jul 2023 11:02:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282954;
-	bh=SiDpIQ8awCGIUUwjWMAHcRQDhOhWUP0e0a7/Aiy0EdE=;
+	s=korg; t=1690282957;
+	bh=IppoW13h+PODzWeML1ta+MgYDFItWuRzkgauNSOOwbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=09li8hhBlu4JZY1DJmjHrdNNpIyLDlDJptfRYWRnpyVA8JCgOIhuQ8uTyBh86HLtt
-	 AqC2MHkbi+f7DiNon5ZJOhbM3EduPcaUqhHoWvVPltTCExPdw92+51G79IvnlUymPi
-	 cNSby5H55iHEJ3RKb/tb0aKctmG3mceACnk1OZSU=
+	b=xj0uvzWnbB2WhbkJ13nqZXw6odgt7ZFvD9QalBzjbYcWFUPJNuTfB7EgjUS+1iUbR
+	 3xQm6Eo5c1JbgU0iOn84mhqG2UJCK6UV7cTcE0yzVndkqQVIekLRNcRQ/uXFpY8pD4
+	 A0ddzfHMCKfFxm0Vhi/0urzPaGUee7hFzS2eXpK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaohe Lin <linmiaohe@huawei.com>,
+	Pavan Kondeti <quic_pkondeti@quicinc.com>,
+	Chengming Zhou <zhouchengming@bytedance.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Phil Auld <pauld@redhat.com>,
-	Mel Gorman <mgorman@suse.de>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Suren Baghdasaryan <surenb@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 086/183] sched/fair: Use recent_used_cpu to test p->cpus_ptr
-Date: Tue, 25 Jul 2023 12:45:14 +0200
-Message-ID: <20230725104511.063826461@linuxfoundation.org>
+Subject: [PATCH 6.1 087/183] sched/psi: Fix avgs_work re-arm in psi_avgs_work()
+Date: Tue, 25 Jul 2023 12:45:15 +0200
+Message-ID: <20230725104511.103175853@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -37,38 +38,138 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaohe Lin <linmiaohe@huawei.com>
+From: Chengming Zhou <zhouchengming@bytedance.com>
 
-[ Upstream commit ae2ad293d6be143ad223f5f947cca07bcbe42595 ]
+[ Upstream commit 2fcd7bbae90a6d844da8660a9d27079281dfbba2 ]
 
-When checking whether a recently used CPU can be a potential idle
-candidate, recent_used_cpu should be used to test p->cpus_ptr as
-p->recent_used_cpu is not equal to recent_used_cpu and candidate
-decision is made based on recent_used_cpu here.
+Pavan reported a problem that PSI avgs_work idle shutoff is not
+working at all. Because PSI_NONIDLE condition would be observed in
+psi_avgs_work()->collect_percpu_times()->get_recent_times() even if
+only the kworker running avgs_work on the CPU.
 
-Fixes: 89aafd67f28c ("sched/fair: Use prev instead of new target as recent_used_cpu")
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
+Although commit 1b69ac6b40eb ("psi: fix aggregation idle shut-off")
+avoided the ping-pong wake problem when the worker sleep, psi_avgs_work()
+still will always re-arm the avgs_work, so shutoff is not working.
+
+This patch changes to use PSI_STATE_RESCHEDULE to flag whether to
+re-arm avgs_work in get_recent_times(). For the current CPU, we re-arm
+avgs_work only when (NR_RUNNING > 1 || NR_IOWAIT > 0 || NR_MEMSTALL > 0),
+for other CPUs we can just check PSI_NONIDLE delta. The new flag
+is only used in psi_avgs_work(), so we check in get_recent_times()
+that current_work() is avgs_work.
+
+One potential problem is that the brief period of non-idle time
+incurred between the aggregation run and the kworker's dequeue will
+be stranded in the per-cpu buckets until avgs_work run next time.
+The buckets can hold 4s worth of time, and future activity will wake
+the avgs_work with a 2s delay, giving us 2s worth of data we can leave
+behind when shut off the avgs_work. If the kworker run other works after
+avgs_work shut off and doesn't have any scheduler activities for 2s,
+this maybe a problem.
+
+Reported-by: Pavan Kondeti <quic_pkondeti@quicinc.com>
+Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Phil Auld <pauld@redhat.com>
-Acked-by: Mel Gorman <mgorman@suse.de>
-Link: https://lore.kernel.org/r/20230620080747.359122-1-linmiaohe@huawei.com
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Suren Baghdasaryan <surenb@google.com>
+Tested-by: Chengming Zhou <zhouchengming@bytedance.com>
+Link: https://lore.kernel.org/r/20221014110551.22695-1-zhouchengming@bytedance.com
+Stable-dep-of: aff037078eca ("sched/psi: use kernfs polling functions for PSI trigger polling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/psi_types.h |  3 +++
+ kernel/sched/psi.c        | 30 +++++++++++++++++++++++++++---
+ 2 files changed, 30 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 57d39de0962d7..5e5aea2360a87 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -6935,7 +6935,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
- 	    recent_used_cpu != target &&
- 	    cpus_share_cache(recent_used_cpu, target) &&
- 	    (available_idle_cpu(recent_used_cpu) || sched_idle_cpu(recent_used_cpu)) &&
--	    cpumask_test_cpu(p->recent_used_cpu, p->cpus_ptr) &&
-+	    cpumask_test_cpu(recent_used_cpu, p->cpus_ptr) &&
- 	    asym_fits_cpu(task_util, util_min, util_max, recent_used_cpu)) {
- 		return recent_used_cpu;
+diff --git a/include/linux/psi_types.h b/include/linux/psi_types.h
+index 14a1ebb74e11f..1e0a0d7ace3af 100644
+--- a/include/linux/psi_types.h
++++ b/include/linux/psi_types.h
+@@ -72,6 +72,9 @@ enum psi_states {
+ /* Use one bit in the state mask to track TSK_ONCPU */
+ #define PSI_ONCPU	(1 << NR_PSI_STATES)
+ 
++/* Flag whether to re-arm avgs_work, see details in get_recent_times() */
++#define PSI_STATE_RESCHEDULE	(1 << (NR_PSI_STATES + 1))
++
+ enum psi_aggregators {
+ 	PSI_AVGS = 0,
+ 	PSI_POLL,
+diff --git a/kernel/sched/psi.c b/kernel/sched/psi.c
+index e83c321461cf4..02e011cabe917 100644
+--- a/kernel/sched/psi.c
++++ b/kernel/sched/psi.c
+@@ -243,6 +243,8 @@ static void get_recent_times(struct psi_group *group, int cpu,
+ 			     u32 *pchanged_states)
+ {
+ 	struct psi_group_cpu *groupc = per_cpu_ptr(group->pcpu, cpu);
++	int current_cpu = raw_smp_processor_id();
++	unsigned int tasks[NR_PSI_TASK_COUNTS];
+ 	u64 now, state_start;
+ 	enum psi_states s;
+ 	unsigned int seq;
+@@ -257,6 +259,8 @@ static void get_recent_times(struct psi_group *group, int cpu,
+ 		memcpy(times, groupc->times, sizeof(groupc->times));
+ 		state_mask = groupc->state_mask;
+ 		state_start = groupc->state_start;
++		if (cpu == current_cpu)
++			memcpy(tasks, groupc->tasks, sizeof(groupc->tasks));
+ 	} while (read_seqcount_retry(&groupc->seq, seq));
+ 
+ 	/* Calculate state time deltas against the previous snapshot */
+@@ -281,6 +285,28 @@ static void get_recent_times(struct psi_group *group, int cpu,
+ 		if (delta)
+ 			*pchanged_states |= (1 << s);
+ 	}
++
++	/*
++	 * When collect_percpu_times() from the avgs_work, we don't want to
++	 * re-arm avgs_work when all CPUs are IDLE. But the current CPU running
++	 * this avgs_work is never IDLE, cause avgs_work can't be shut off.
++	 * So for the current CPU, we need to re-arm avgs_work only when
++	 * (NR_RUNNING > 1 || NR_IOWAIT > 0 || NR_MEMSTALL > 0), for other CPUs
++	 * we can just check PSI_NONIDLE delta.
++	 */
++	if (current_work() == &group->avgs_work.work) {
++		bool reschedule;
++
++		if (cpu == current_cpu)
++			reschedule = tasks[NR_RUNNING] +
++				     tasks[NR_IOWAIT] +
++				     tasks[NR_MEMSTALL] > 1;
++		else
++			reschedule = *pchanged_states & (1 << PSI_NONIDLE);
++
++		if (reschedule)
++			*pchanged_states |= PSI_STATE_RESCHEDULE;
++	}
+ }
+ 
+ static void calc_avgs(unsigned long avg[3], int missed_periods,
+@@ -416,7 +442,6 @@ static void psi_avgs_work(struct work_struct *work)
+ 	struct delayed_work *dwork;
+ 	struct psi_group *group;
+ 	u32 changed_states;
+-	bool nonidle;
+ 	u64 now;
+ 
+ 	dwork = to_delayed_work(work);
+@@ -427,7 +452,6 @@ static void psi_avgs_work(struct work_struct *work)
+ 	now = sched_clock();
+ 
+ 	collect_percpu_times(group, PSI_AVGS, &changed_states);
+-	nonidle = changed_states & (1 << PSI_NONIDLE);
+ 	/*
+ 	 * If there is task activity, periodically fold the per-cpu
+ 	 * times and feed samples into the running averages. If things
+@@ -438,7 +462,7 @@ static void psi_avgs_work(struct work_struct *work)
+ 	if (now >= group->avg_next_update)
+ 		group->avg_next_update = update_averages(group, now);
+ 
+-	if (nonidle) {
++	if (changed_states & PSI_STATE_RESCHEDULE) {
+ 		schedule_delayed_work(dwork, nsecs_to_jiffies(
+ 				group->avg_next_update - now) + 1);
  	}
 -- 
 2.39.2
