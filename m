@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E51D9440
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:54:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852C4C433C9;
-	Tue, 25 Jul 2023 10:54:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CFD14263
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:54:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E88C433C9;
+	Tue, 25 Jul 2023 10:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282490;
-	bh=HboF+4v05ushogV5yKXmiced3Q7m/2nac8pU+/lWLCQ=;
+	s=korg; t=1690282493;
+	bh=jGMuyocLU3PgFyrhfG/sjb51MtRGWMW7l2UcH4rCVrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tjr39rSpxkTgVRtwAgkOHFMCzoTRufRH2dQaBLa5FpWeNs099xmAFB0YdqXQN2yZf
-	 ooRzIoQnioskVafaeYwhDUl5uxt7vvCf5XgzhziEEAonlyAAvbBLMYUBCE9i4A2Fwi
-	 2vbayJZQWjxbbWEFZC4YROHB4Y+YR4Uoy4AD6oMo=
+	b=L1VM1aqXTxuVokh2WgeOMlh9nWWVNeIEA2h1G01LtDeOBq/7oEnOewP0ZnMdaJAlf
+	 MjbC5m7Nby/k5et8FVRuSQ3spT7iEQeTNq0rVckEyCv2fHesF6i3gIhIuOE6ZqFCst
+	 vh1mhk/67+SQUe5CrYuAZZ2/MIjFt05rsPbGUP4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaewon Kim <jaewon02.kim@samsung.com>,
-	Chanho Park <chanho61.park@samsung.com>,
-	Mark Brown <broonie@kernel.org>,
+	Song Liu <song@kernel.org>,
+	Yonghong Song <yhs@fb.com>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 148/227] spi: s3c64xx: clear loopback bit after loopback test
-Date: Tue, 25 Jul 2023 12:45:15 +0200
-Message-ID: <20230725104521.020123270@linuxfoundation.org>
+Subject: [PATCH 6.4 149/227] kallsyms: strip LTO-only suffixes from promoted global functions
+Date: Tue, 25 Jul 2023 12:45:16 +0200
+Message-ID: <20230725104521.062777318@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -36,38 +38,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaewon Kim <jaewon02.kim@samsung.com>
+From: Yonghong Song <yhs@fb.com>
 
-[ Upstream commit 9ec3c5517e22a12d2ff1b71e844f7913641460c6 ]
+[ Upstream commit 8cc32a9bbf2934d90762d9de0187adcb5ad46a11 ]
 
-When SPI loopback transfer is performed, S3C64XX_SPI_MODE_SELF_LOOPBACK
-bit still remained. It works as loopback even if the next transfer is
-not spi loopback mode.
-If not SPI_LOOP, needs to clear S3C64XX_SPI_MODE_SELF_LOOPBACK bit.
+Commit 6eb4bd92c1ce ("kallsyms: strip LTO suffixes from static functions")
+stripped all function/variable suffixes started with '.' regardless
+of whether those suffixes are generated at LTO mode or not. In fact,
+as far as I know, in LTO mode, when a static function/variable is
+promoted to the global scope, '.llvm.<...>' suffix is added.
 
-Signed-off-by: Jaewon Kim <jaewon02.kim@samsung.com>
-Fixes: ffb7bcd3b27e ("spi: s3c64xx: support loopback mode")
-Reviewed-by: Chanho Park <chanho61.park@samsung.com>
-Link: https://lore.kernel.org/r/20230711082020.138165-1-jaewon02.kim@samsung.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The existing mechanism breaks live patch for a LTO kernel even if
+no <symbol>.llvm.<...> symbols are involved. For example, for the following
+kernel symbols:
+  $ grep bpf_verifier_vlog /proc/kallsyms
+  ffffffff81549f60 t bpf_verifier_vlog
+  ffffffff8268b430 d bpf_verifier_vlog._entry
+  ffffffff8282a958 d bpf_verifier_vlog._entry_ptr
+  ffffffff82e12a1f d bpf_verifier_vlog.__already_done
+'bpf_verifier_vlog' is a static function. '_entry', '_entry_ptr' and
+'__already_done' are static variables used inside 'bpf_verifier_vlog',
+so llvm promotes them to file-level static with prefix 'bpf_verifier_vlog.'.
+Note that the func-level to file-level static function promotion also
+happens without LTO.
+
+Given a symbol name 'bpf_verifier_vlog', with LTO kernel, current mechanism will
+return 4 symbols to live patch subsystem which current live patching
+subsystem cannot handle it. With non-LTO kernel, only one symbol
+is returned.
+
+In [1], we have a lengthy discussion, the suggestion is to separate two
+cases:
+  (1). new symbols with suffix which are generated regardless of whether
+       LTO is enabled or not, and
+  (2). new symbols with suffix generated only when LTO is enabled.
+
+The cleanup_symbol_name() should only remove suffixes for case (2).
+Case (1) should not be changed so it can work uniformly with or without LTO.
+
+This patch removed LTO-only suffix '.llvm.<...>' so live patching and
+tracing should work the same way for non-LTO kernel.
+The cleanup_symbol_name() in scripts/kallsyms.c is also changed to have the same
+filtering pattern so both kernel and kallsyms tool have the same
+expectation on the order of symbols.
+
+ [1] https://lore.kernel.org/live-patching/20230615170048.2382735-1-song@kernel.org/T/#u
+
+Fixes: 6eb4bd92c1ce ("kallsyms: strip LTO suffixes from static functions")
+Reported-by: Song Liu <song@kernel.org>
+Signed-off-by: Yonghong Song <yhs@fb.com>
+Reviewed-by: Zhen Lei <thunder.leizhen@huawei.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Acked-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230628181926.4102448-1-yhs@fb.com
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-s3c64xx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/kallsyms.c  | 5 ++---
+ scripts/kallsyms.c | 6 +++---
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/spi/spi-s3c64xx.c b/drivers/spi/spi-s3c64xx.c
-index 7ac17f0d18a95..1a8b31e20baf2 100644
---- a/drivers/spi/spi-s3c64xx.c
-+++ b/drivers/spi/spi-s3c64xx.c
-@@ -668,6 +668,8 @@ static int s3c64xx_spi_config(struct s3c64xx_spi_driver_data *sdd)
- 
- 	if ((sdd->cur_mode & SPI_LOOP) && sdd->port_conf->has_loopback)
- 		val |= S3C64XX_SPI_MODE_SELF_LOOPBACK;
-+	else
-+		val &= ~S3C64XX_SPI_MODE_SELF_LOOPBACK;
- 
- 	writel(val, regs + S3C64XX_SPI_MODE_CFG);
- 
+diff --git a/kernel/kallsyms.c b/kernel/kallsyms.c
+index 77747391f49b6..4874508bb950e 100644
+--- a/kernel/kallsyms.c
++++ b/kernel/kallsyms.c
+@@ -174,11 +174,10 @@ static bool cleanup_symbol_name(char *s)
+ 	 * LLVM appends various suffixes for local functions and variables that
+ 	 * must be promoted to global scope as part of LTO.  This can break
+ 	 * hooking of static functions with kprobes. '.' is not a valid
+-	 * character in an identifier in C. Suffixes observed:
++	 * character in an identifier in C. Suffixes only in LLVM LTO observed:
+ 	 * - foo.llvm.[0-9a-f]+
+-	 * - foo.[0-9a-f]+
+ 	 */
+-	res = strchr(s, '.');
++	res = strstr(s, ".llvm.");
+ 	if (res) {
+ 		*res = '\0';
+ 		return true;
+diff --git a/scripts/kallsyms.c b/scripts/kallsyms.c
+index 0d2db41177b23..13af6d0ff845d 100644
+--- a/scripts/kallsyms.c
++++ b/scripts/kallsyms.c
+@@ -346,10 +346,10 @@ static void cleanup_symbol_name(char *s)
+ 	 * ASCII[_]   = 5f
+ 	 * ASCII[a-z] = 61,7a
+ 	 *
+-	 * As above, replacing '.' with '\0' does not affect the main sorting,
+-	 * but it helps us with subsorting.
++	 * As above, replacing the first '.' in ".llvm." with '\0' does not
++	 * affect the main sorting, but it helps us with subsorting.
+ 	 */
+-	p = strchr(s, '.');
++	p = strstr(s, ".llvm.");
+ 	if (p)
+ 		*p = '\0';
+ }
 -- 
 2.39.2
 
