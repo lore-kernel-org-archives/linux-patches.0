@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135DC1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:33:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38227C433C9;
-	Tue, 25 Jul 2023 11:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783B41ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:33:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2EFC433C8;
+	Tue, 25 Jul 2023 11:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284827;
-	bh=W1T4xNzQjq+//7YpZzt1ubp5OTfzs7CTPWouUfPz5us=;
+	s=korg; t=1690284830;
+	bh=9q0VftGjlhhgwKZQBzEjweR5vkmbEiXhcGML+zUgMxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nRhU1jPibKPyhL0uZFocB69EfVvGQzJsIvwYnR9Ha2DRLFr1kK11DRSPWqcfZGuAO
-	 6DNmTSuQdcyv/BCn0MDWhkH/b2UQSGfLdVILbVLLvZYsaQdeGT0MNrSxixfRXVVI3+
-	 z2Dke5wNmDeXfBJwC8W0Yhm2PN8XLvDew+2N2iC0=
+	b=abW8h+RrCDAaPkW+cvdyRNrKGXWxUigsvpa8fuWUQh7VS+q0MDPUos2y1ELb9XvB6
+	 L5a0XRhyolQSHb4yIWZDZtDtXi04SRnxpvy3eoNagXZZR7JSnlwi01sdtyKoOKF78h
+	 DsKAc7St0I8sh6p+fKxWYjeMxO15Z1MNUSkNfke8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	Petr Oros <poros@redhat.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 495/509] tcp: annotate data-races around tp->keepalive_intvl
-Date: Tue, 25 Jul 2023 12:47:14 +0200
-Message-ID: <20230725104616.421846207@linuxfoundation.org>
+Subject: [PATCH 5.10 469/509] devlink: report devlink_port_type_warn source device
+Date: Tue, 25 Jul 2023 12:46:48 +0200
+Message-ID: <20230725104615.227109527@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,66 +36,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Petr Oros <poros@redhat.com>
 
-[ Upstream commit 5ecf9d4f52ff2f1d4d44c9b68bc75688e82f13b4 ]
+[ Upstream commit a52305a81d6bb74b90b400dfa56455d37872fe4b ]
 
-do_tcp_getsockopt() reads tp->keepalive_intvl while another cpu
-might change its value.
+devlink_port_type_warn is scheduled for port devlink and warning
+when the port type is not set. But from this warning it is not easy
+found out which device (driver) has no devlink port set.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230719212857.3943972-5-edumazet@google.com
+[ 3709.975552] Type was not set for devlink port.
+[ 3709.975579] WARNING: CPU: 1 PID: 13092 at net/devlink/leftover.c:6775 devlink_port_type_warn+0x11/0x20
+[ 3709.993967] Modules linked in: openvswitch nf_conncount nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 nfnetlink bluetooth rpcsec_gss_krb5 auth_rpcgss nfsv4 dns_resolver nfs lockd grace fscache netfs vhost_net vhost vhost_iotlb tap tun bridge stp llc qrtr intel_rapl_msr intel_rapl_common i10nm_edac nfit libnvdimm x86_pkg_temp_thermal mlx5_ib intel_powerclamp coretemp dell_wmi ledtrig_audio sparse_keymap ipmi_ssif kvm_intel ib_uverbs rfkill ib_core video kvm iTCO_wdt acpi_ipmi intel_vsec irqbypass ipmi_si iTCO_vendor_support dcdbas ipmi_devintf mei_me ipmi_msghandler rapl mei intel_cstate isst_if_mmio isst_if_mbox_pci dell_smbios intel_uncore isst_if_common i2c_i801 dell_wmi_descriptor wmi_bmof i2c_smbus intel_pch_thermal pcspkr acpi_power_meter xfs libcrc32c sd_mod sg nvme_tcp mgag200 i2c_algo_bit nvme_fabrics drm_shmem_helper drm_kms_helper nvme syscopyarea ahci sysfillrect sysimgblt nvme_core fb_sys_fops crct10dif_pclmul libahci mlx5_core sfc crc32_pclmul nvme_common drm
+[ 3709.994030]  crc32c_intel mtd t10_pi mlxfw libata tg3 mdio megaraid_sas psample ghash_clmulni_intel pci_hyperv_intf wmi dm_multipath sunrpc dm_mirror dm_region_hash dm_log dm_mod be2iscsi bnx2i cnic uio cxgb4i cxgb4 tls libcxgbi libcxgb qla4xxx iscsi_boot_sysfs iscsi_tcp libiscsi_tcp libiscsi scsi_transport_iscsi fuse
+[ 3710.108431] CPU: 1 PID: 13092 Comm: kworker/1:1 Kdump: loaded Not tainted 5.14.0-319.el9.x86_64 #1
+[ 3710.108435] Hardware name: Dell Inc. PowerEdge R750/0PJ80M, BIOS 1.8.2 09/14/2022
+[ 3710.108437] Workqueue: events devlink_port_type_warn
+[ 3710.108440] RIP: 0010:devlink_port_type_warn+0x11/0x20
+[ 3710.108443] Code: 84 76 fe ff ff 48 c7 03 20 0e 1a ad 31 c0 e9 96 fd ff ff 66 0f 1f 44 00 00 0f 1f 44 00 00 48 c7 c7 18 24 4e ad e8 ef 71 62 ff <0f> 0b c3 cc cc cc cc 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 f6 87
+[ 3710.108445] RSP: 0018:ff3b6d2e8b3c7e90 EFLAGS: 00010282
+[ 3710.108447] RAX: 0000000000000000 RBX: ff366d6580127080 RCX: 0000000000000027
+[ 3710.108448] RDX: 0000000000000027 RSI: 00000000ffff86de RDI: ff366d753f41f8c8
+[ 3710.108449] RBP: ff366d658ff5a0c0 R08: ff366d753f41f8c0 R09: ff3b6d2e8b3c7e18
+[ 3710.108450] R10: 0000000000000001 R11: 0000000000000023 R12: ff366d753f430600
+[ 3710.108451] R13: ff366d753f436900 R14: 0000000000000000 R15: ff366d753f436905
+[ 3710.108452] FS:  0000000000000000(0000) GS:ff366d753f400000(0000) knlGS:0000000000000000
+[ 3710.108453] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 3710.108454] CR2: 00007f1c57bc74e0 CR3: 000000111d26a001 CR4: 0000000000773ee0
+[ 3710.108456] PKRU: 55555554
+[ 3710.108457] Call Trace:
+[ 3710.108458]  <TASK>
+[ 3710.108459]  process_one_work+0x1e2/0x3b0
+[ 3710.108466]  ? rescuer_thread+0x390/0x390
+[ 3710.108468]  worker_thread+0x50/0x3a0
+[ 3710.108471]  ? rescuer_thread+0x390/0x390
+[ 3710.108473]  kthread+0xdd/0x100
+[ 3710.108477]  ? kthread_complete_and_exit+0x20/0x20
+[ 3710.108479]  ret_from_fork+0x1f/0x30
+[ 3710.108485]  </TASK>
+[ 3710.108486] ---[ end trace 1b4b23cd0c65d6a0 ]---
+
+After patch:
+[  402.473064] ice 0000:41:00.0: Type was not set for devlink port.
+[  402.473064] ice 0000:41:00.1: Type was not set for devlink port.
+
+Signed-off-by: Petr Oros <poros@redhat.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20230615095447.8259-1-poros@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h | 9 +++++++--
- net/ipv4/tcp.c    | 4 ++--
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ net/core/devlink.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 92de7c049f19e..428f84f6e0d0c 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -1451,9 +1451,14 @@ void tcp_leave_memory_pressure(struct sock *sk);
- static inline int keepalive_intvl_when(const struct tcp_sock *tp)
+diff --git a/net/core/devlink.c b/net/core/devlink.c
+index 72047750dcd96..00c6944ed6342 100644
+--- a/net/core/devlink.c
++++ b/net/core/devlink.c
+@@ -8092,7 +8092,10 @@ EXPORT_SYMBOL_GPL(devlink_free);
+ 
+ static void devlink_port_type_warn(struct work_struct *work)
  {
- 	struct net *net = sock_net((struct sock *)tp);
-+	int val;
-+
-+	/* Paired with WRITE_ONCE() in tcp_sock_set_keepintvl()
-+	 * and do_tcp_setsockopt().
-+	 */
-+	val = READ_ONCE(tp->keepalive_intvl);
- 
--	return tp->keepalive_intvl ? :
--		READ_ONCE(net->ipv4.sysctl_tcp_keepalive_intvl);
-+	return val ? : READ_ONCE(net->ipv4.sysctl_tcp_keepalive_intvl);
+-	WARN(true, "Type was not set for devlink port.");
++	struct devlink_port *port = container_of(to_delayed_work(work),
++						 struct devlink_port,
++						 type_warn_dw);
++	dev_warn(port->devlink->dev, "Type was not set for devlink port.");
  }
  
- static inline int keepalive_time_when(const struct tcp_sock *tp)
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 053e4880d8f0f..b5a05b0984146 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -3126,7 +3126,7 @@ int tcp_sock_set_keepintvl(struct sock *sk, int val)
- 		return -EINVAL;
- 
- 	lock_sock(sk);
--	tcp_sk(sk)->keepalive_intvl = val * HZ;
-+	WRITE_ONCE(tcp_sk(sk)->keepalive_intvl, val * HZ);
- 	release_sock(sk);
- 	return 0;
- }
-@@ -3324,7 +3324,7 @@ static int do_tcp_setsockopt(struct sock *sk, int level, int optname,
- 		if (val < 1 || val > MAX_TCP_KEEPINTVL)
- 			err = -EINVAL;
- 		else
--			tp->keepalive_intvl = val * HZ;
-+			WRITE_ONCE(tp->keepalive_intvl, val * HZ);
- 		break;
- 	case TCP_KEEPCNT:
- 		if (val < 1 || val > MAX_TCP_KEEPCNT)
+ static bool devlink_port_type_should_warn(struct devlink_port *devlink_port)
 -- 
 2.39.2
 
