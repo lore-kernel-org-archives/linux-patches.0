@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4AB1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:23:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA67C433B6;
-	Tue, 25 Jul 2023 11:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3321ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:23:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D24D4C433C8;
+	Tue, 25 Jul 2023 11:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284199;
-	bh=mcV8RQXqsoigTcj3IIVMalE9Wu/jYg/LIuRb9o/DoEs=;
+	s=korg; t=1690284202;
+	bh=DDL4vmAtA78ty2CRmWwY8Kvfyv596MBSmvT+MP8JRjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sd+b0Wx0d0Ko2KbcBRHRbIRJpJIucYTJqhrYI93YcJC5UxLGRgPUJ87Ds3JX4KHXE
-	 khbwxT1XpSaPTzrRCTjhQ+eA6TAWHpFFETyczRiMVRaPuQ7mHc3gaUpGR8hpDsERxd
-	 BVKGc8ehN97ERGEE8dQ1GbHRBI7Tq000t8xQ9Apg=
+	b=mdjcJ5wgwQPG/tqm5kw9OM/6ZaNwkDeruqpl6HZeTuZr3B3iOFduda2DaVqvr9bP5
+	 2UJQ/5Xi0zIQdTMhPcb6cZqdYNvf7llU0pY/UwyZKNUEmAK3mbukBntv63MNznriRu
+	 u7M8nrGX3nR2I05mjMoL8avvqa3filCj/za7B+Q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Jason Wang <jasowang@redhat.com>,
+	Lin Ma <linma@zju.edu.cn>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 270/509] xsk: Honor SO_BINDTODEVICE on bind
-Date: Tue, 25 Jul 2023 12:43:29 +0200
-Message-ID: <20230725104606.123462637@linuxfoundation.org>
+Subject: [PATCH 5.10 271/509] net/sched: act_pedit: Add size check for TCA_PEDIT_PARMS_EX
+Date: Tue, 25 Jul 2023 12:43:30 +0200
+Message-ID: <20230725104606.159828433@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -38,99 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit f7306acec9aae9893d15e745c8791124d42ab10a ]
+[ Upstream commit 30c45b5361d39b4b793780ffac5538090b9e2eb1 ]
 
-Initial creation of an AF_XDP socket requires CAP_NET_RAW capability. A
-privileged process might create the socket and pass it to a non-privileged
-process for later use. However, that process will be able to bind the socket
-to any network interface. Even though it will not be able to receive any
-traffic without modification of the BPF map, the situation is not ideal.
+The attribute TCA_PEDIT_PARMS_EX is not be included in pedit_policy and
+one malicious user could fake a TCA_PEDIT_PARMS_EX whose length is
+smaller than the intended sizeof(struct tc_pedit). Hence, the
+dereference in tcf_pedit_init() could access dirty heap data.
 
-Sockets already have a mechanism that can be used to restrict what interface
-they can be attached to. That is SO_BINDTODEVICE.
+static int tcf_pedit_init(...)
+{
+  // ...
+  pattr = tb[TCA_PEDIT_PARMS]; // TCA_PEDIT_PARMS is included
+  if (!pattr)
+    pattr = tb[TCA_PEDIT_PARMS_EX]; // but this is not
 
-To change the SO_BINDTODEVICE binding the process will need CAP_NET_RAW.
+  // ...
+  parm = nla_data(pattr);
 
-Make xsk_bind() honor the SO_BINDTODEVICE in order to allow safer workflow
-when non-privileged process is using AF_XDP.
+  index = parm->index; // parm is able to be smaller than 4 bytes
+                       // and this dereference gets dirty skb_buff
+                       // data created in netlink_sendmsg
+}
 
-The intended workflow is following:
+This commit adds TCA_PEDIT_PARMS_EX length in pedit_policy which avoid
+the above case, just like the TCA_PEDIT_PARMS.
 
-  1. First process creates a bare socket with socket(AF_XDP, ...).
-  2. First process loads the XSK program to the interface.
-  3. First process adds the socket fd to a BPF map.
-  4. First process ties socket fd to a particular interface using
-     SO_BINDTODEVICE.
-  5. First process sends socket fd to a second process.
-  6. Second process allocates UMEM.
-  7. Second process binds socket to the interface with bind(...).
-  8. Second process sends/receives the traffic.
-
-All the steps above are possible today if the first process is privileged
-and the second one has sufficient RLIMIT_MEMLOCK and no capabilities.
-However, the second process will be able to bind the socket to any interface
-it wants on step 7 and send traffic from it. With the proposed change, the
-second process will be able to bind the socket only to a specific interface
-chosen by the first process at step 4.
-
-Fixes: 965a99098443 ("xsk: add support for bind for Rx")
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Link: https://lore.kernel.org/bpf/20230703175329.3259672-1-i.maximets@ovn.org
+Fixes: 71d0ed7079df ("net/act_pedit: Support using offset relative to the conventional network headers")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
+Link: https://lore.kernel.org/r/20230703110842.590282-1-linma@zju.edu.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/af_xdp.rst | 9 +++++++++
- net/xdp/xsk.c                       | 5 +++++
- 2 files changed, 14 insertions(+)
+ net/sched/act_pedit.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/networking/af_xdp.rst b/Documentation/networking/af_xdp.rst
-index 2ccc5644cc98a..70623cb135d3c 100644
---- a/Documentation/networking/af_xdp.rst
-+++ b/Documentation/networking/af_xdp.rst
-@@ -433,6 +433,15 @@ start N bytes into the buffer leaving the first N bytes for the
- application to use. The final option is the flags field, but it will
- be dealt with in separate sections for each UMEM flag.
+diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
+index db0d3bff19eba..a44101b2f4419 100644
+--- a/net/sched/act_pedit.c
++++ b/net/sched/act_pedit.c
+@@ -26,6 +26,7 @@ static struct tc_action_ops act_pedit_ops;
  
-+SO_BINDTODEVICE setsockopt
-+--------------------------
-+
-+This is a generic SOL_SOCKET option that can be used to tie AF_XDP
-+socket to a particular network interface.  It is useful when a socket
-+is created by a privileged process and passed to a non-privileged one.
-+Once the option is set, kernel will refuse attempts to bind that socket
-+to a different interface.  Updating the value requires CAP_NET_RAW.
-+
- XDP_STATISTICS getsockopt
- -------------------------
+ static const struct nla_policy pedit_policy[TCA_PEDIT_MAX + 1] = {
+ 	[TCA_PEDIT_PARMS]	= { .len = sizeof(struct tc_pedit) },
++	[TCA_PEDIT_PARMS_EX]	= { .len = sizeof(struct tc_pedit) },
+ 	[TCA_PEDIT_KEYS_EX]   = { .type = NLA_NESTED },
+ };
  
-diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index 691841dc6d334..d04f91f4d09df 100644
---- a/net/xdp/xsk.c
-+++ b/net/xdp/xsk.c
-@@ -667,6 +667,7 @@ static int xsk_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
- 	struct sock *sk = sock->sk;
- 	struct xdp_sock *xs = xdp_sk(sk);
- 	struct net_device *dev;
-+	int bound_dev_if;
- 	u32 flags, qid;
- 	int err = 0;
- 
-@@ -680,6 +681,10 @@ static int xsk_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
- 		      XDP_USE_NEED_WAKEUP))
- 		return -EINVAL;
- 
-+	bound_dev_if = READ_ONCE(sk->sk_bound_dev_if);
-+	if (bound_dev_if && bound_dev_if != sxdp->sxdp_ifindex)
-+		return -EINVAL;
-+
- 	rtnl_lock();
- 	mutex_lock(&xs->mutex);
- 	if (xs->state != XSK_READY) {
 -- 
 2.39.2
 
