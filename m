@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56AEF14270
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:55:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDD6C433C8;
-	Tue, 25 Jul 2023 10:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6FF14263
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:55:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D75C433C8;
+	Tue, 25 Jul 2023 10:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282516;
-	bh=f1vbqa+D9mzOGpLHlkbKJ2Wy1jqMng1a7gIbOnRIygQ=;
+	s=korg; t=1690282519;
+	bh=k7Wqv08wIY9J+KMnnbIZOA7PgxFX+yR2MHj0IWjfkCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RtSh2J9yXueqU82zxY8MiyKc3R8cLsHisK01UQULlzKyUVYHww64gWS+B3lE3OzRg
-	 F2hfXLQapoajXFpkmIYcgcJ0wJaYMyARIy5+lX42H4h6OFlOBxyysj/2m+nKJJ566Q
-	 q+5jaS7zjl4Hl1GGoG5JS0XihXAczhrnYWWnN8jk=
+	b=vqWxpg/dqiH1e0bSpbVeT675m2E5f3wRpkO3M1MRcBDvHTwvpqpEg9hglQq1aNJoU
+	 QM2htLrAiv75hJU65hnP39p8aOWYgxeTYkUKGuBh+Iiu3u9XvBJ6JReXtw2OW2PTee
+	 Mrk7wMp+YrYYSle4XhTp2N/v0QCNCDmSLoebgHW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	Yan Zhai <yan@cloudflare.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Roee Goldfiner <roee.h.goldfiner@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 156/227] gso: fix dodgy bit handling for GSO_UDP_L4
-Date: Tue, 25 Jul 2023 12:45:23 +0200
-Message-ID: <20230725104521.387791248@linuxfoundation.org>
+Subject: [PATCH 6.4 130/227] wifi: iwlwifi: mvm: avoid baid size integer overflow
+Date: Tue, 25 Jul 2023 12:44:57 +0200
+Message-ID: <20230725104520.216663420@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -38,83 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yan Zhai <yan@cloudflare.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 9840036786d90cea11a90d1f30b6dc003b34ee67 ]
+[ Upstream commit 1a528ab1da324d078ec60283c34c17848580df24 ]
 
-Commit 1fd54773c267 ("udp: allow header check for dodgy GSO_UDP_L4
-packets.") checks DODGY bit for UDP, but for packets that can be fed
-directly to the device after gso_segs reset, it actually falls through
-to fragmentation:
+Roee reported various hard-to-debug crashes with pings in
+EHT aggregation scenarios. Enabling KASAN showed that we
+access the BAID allocation out of bounds, and looking at
+the code a bit shows that since the reorder buffer entry
+(struct iwl_mvm_reorder_buf_entry) is 128 bytes if debug
+such as lockdep is enabled, then staring from an agg size
+512 we overflow the size calculation, and allocate a much
+smaller structure than we should, causing slab corruption
+once we initialize this.
 
-https://lore.kernel.org/all/CAJPywTKDdjtwkLVUW6LRA2FU912qcDmQOQGt2WaDo28KzYDg+A@mail.gmail.com/
+Fix this by simply using u32 instead of u16.
 
-This change restores the expected behavior of GSO_UDP_L4 packets.
-
-Fixes: 1fd54773c267 ("udp: allow header check for dodgy GSO_UDP_L4 packets.")
-Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-Signed-off-by: Yan Zhai <yan@cloudflare.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: Roee Goldfiner <roee.h.goldfiner@intel.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230620125813.f428c856030d.I2c2bb808e945adb71bc15f5b2bac2d8957ea90eb@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp_offload.c | 16 +++++++++++-----
- net/ipv6/udp_offload.c |  3 +--
- 2 files changed, 12 insertions(+), 7 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/sta.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
-index 1f01e15ca24fd..4a61832e7f69b 100644
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -273,13 +273,20 @@ struct sk_buff *__udp_gso_segment(struct sk_buff *gso_skb,
- 	__sum16 check;
- 	__be16 newlen;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
+index b85e363544f8b..7f9a809dd081c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
+@@ -2884,7 +2884,7 @@ int iwl_mvm_sta_rx_agg(struct iwl_mvm *mvm, struct ieee80211_sta *sta,
+ 	}
  
--	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST)
--		return __udp_gso_segment_list(gso_skb, features, is_ipv6);
--
- 	mss = skb_shinfo(gso_skb)->gso_size;
- 	if (gso_skb->len <= sizeof(*uh) + mss)
- 		return ERR_PTR(-EINVAL);
+ 	if (iwl_mvm_has_new_rx_api(mvm) && start) {
+-		u16 reorder_buf_size = buf_size * sizeof(baid_data->entries[0]);
++		u32 reorder_buf_size = buf_size * sizeof(baid_data->entries[0]);
  
-+	if (skb_gso_ok(gso_skb, features | NETIF_F_GSO_ROBUST)) {
-+		/* Packet is from an untrusted source, reset gso_segs. */
-+		skb_shinfo(gso_skb)->gso_segs = DIV_ROUND_UP(gso_skb->len - sizeof(*uh),
-+							     mss);
-+		return NULL;
-+	}
-+
-+	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST)
-+		return __udp_gso_segment_list(gso_skb, features, is_ipv6);
-+
- 	skb_pull(gso_skb, sizeof(*uh));
- 
- 	/* clear destructor to avoid skb_segment assigning it to tail */
-@@ -387,8 +394,7 @@ static struct sk_buff *udp4_ufo_fragment(struct sk_buff *skb,
- 	if (!pskb_may_pull(skb, sizeof(struct udphdr)))
- 		goto out;
- 
--	if (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
--	    !skb_gso_ok(skb, features | NETIF_F_GSO_ROBUST))
-+	if (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4)
- 		return __udp_gso_segment(skb, features, false);
- 
- 	mss = skb_shinfo(skb)->gso_size;
-diff --git a/net/ipv6/udp_offload.c b/net/ipv6/udp_offload.c
-index c39c1e32f9804..e0e10f6bcdc18 100644
---- a/net/ipv6/udp_offload.c
-+++ b/net/ipv6/udp_offload.c
-@@ -42,8 +42,7 @@ static struct sk_buff *udp6_ufo_fragment(struct sk_buff *skb,
- 		if (!pskb_may_pull(skb, sizeof(struct udphdr)))
- 			goto out;
- 
--		if (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
--		    !skb_gso_ok(skb, features | NETIF_F_GSO_ROBUST))
-+		if (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4)
- 			return __udp_gso_segment(skb, features, true);
- 
- 		mss = skb_shinfo(skb)->gso_size;
+ 		/* sparse doesn't like the __align() so don't check */
+ #ifndef __CHECKER__
 -- 
 2.39.2
 
