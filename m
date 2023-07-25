@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197171ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:24:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92CD6C433C9;
-	Tue, 25 Jul 2023 11:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11A01ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:24:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62039C433C8;
+	Tue, 25 Jul 2023 11:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284293;
-	bh=AHAfLPUTCUUHRsnA2xM2PyG6fmI/bjg4m342f+s8WGk=;
+	s=korg; t=1690284296;
+	bh=01jCrS5B+z6Nw4qJZ5yxfHzFJ9JmhhnKwbAGUAnjkPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OJyOMEdMhEnEhmgnnoOA8m8zxI9xr4nv0Ote359vI/LIHat1GpLeLulp1xrkXkNyl
-	 Nx0zdDzApR/EtEztV6Z33367q1UkO2rCu2L3QgIWw5epqYggRYjPxE/lib9lNjzJCP
-	 JyENQoA6RY4IjpVI8tRu4M4BSYV0PGfWYVb+Voas=
+	b=exVN0x/uY3oj40/wijBUTzGwVn04uNU5BzsZCUjt3I9PxYKiLg2SXcLPT+QvumFfM
+	 QrMsIp5MpdO9VICxH0WYZnVW97jJgELOmGyiL36Bo5zMch8CvhmxwZ4/JWs6Mq4KlE
+	 PffMqQ4caBzWV3rDeKSqfTXwgL2wmnFPijZ7rhgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Christian Marangi <ansuelsmth@gmail.com>,
 	Andrew Lunn <andrew@lunn.ch>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 5.10 304/509] ARM: orion5x: fix d2net gpio initialization
-Date: Tue, 25 Jul 2023 12:44:03 +0200
-Message-ID: <20230725104607.662611986@linuxfoundation.org>
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 5.10 305/509] leds: trigger: netdev: Recheck NETDEV_LED_MODE_LINKUP on dev rename
+Date: Tue, 25 Jul 2023 12:44:04 +0200
+Message-ID: <20230725104607.707753777@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -34,55 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-commit f8ef1233939495c405a9faa4bd1ae7d3f581bae4 upstream.
+commit cee4bd16c3195a701be683f7da9e88c6e11acb73 upstream.
 
-The DT version of this board has a custom file with the gpio
-device. However, it does nothing because the d2net_init()
-has no caller or prototype:
+Dev can be renamed also while up for supported device. We currently
+wrongly clear the NETDEV_LED_MODE_LINKUP flag on NETDEV_CHANGENAME
+event.
 
-arch/arm/mach-orion5x/board-d2net.c:101:13: error: no previous prototype for 'd2net_init'
+Fix this by rechecking if the carrier is ok on NETDEV_CHANGENAME and
+correctly set the NETDEV_LED_MODE_LINKUP bit.
 
-Call it from the board-dt file as intended.
-
-Fixes: 94b0bd366e36 ("ARM: orion5x: convert d2net to Device Tree")
+Fixes: 5f820ed52371 ("leds: trigger: netdev: fix handling on interface rename")
+Cc: stable@vger.kernel.org # v5.5+
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230516153109.514251-10-arnd@kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20230419210743.3594-2-ansuelsmth@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mach-orion5x/board-dt.c |    3 +++
- arch/arm/mach-orion5x/common.h   |    6 ++++++
- 2 files changed, 9 insertions(+)
+ drivers/leds/trigger/ledtrig-netdev.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/arm/mach-orion5x/board-dt.c
-+++ b/arch/arm/mach-orion5x/board-dt.c
-@@ -63,6 +63,9 @@ static void __init orion5x_dt_init(void)
- 	if (of_machine_is_compatible("maxtor,shared-storage-2"))
- 		mss2_init();
- 
-+	if (of_machine_is_compatible("lacie,d2-network"))
-+		d2net_init();
-+
- 	of_platform_default_populate(NULL, orion5x_auxdata_lookup, NULL);
- }
- 
---- a/arch/arm/mach-orion5x/common.h
-+++ b/arch/arm/mach-orion5x/common.h
-@@ -75,6 +75,12 @@ extern void mss2_init(void);
- static inline void mss2_init(void) {}
- #endif
- 
-+#ifdef CONFIG_MACH_D2NET_DT
-+void d2net_init(void);
-+#else
-+static inline void d2net_init(void) {}
-+#endif
-+
- /*****************************************************************************
-  * Helpers to access Orion registers
-  ****************************************************************************/
+--- a/drivers/leds/trigger/ledtrig-netdev.c
++++ b/drivers/leds/trigger/ledtrig-netdev.c
+@@ -318,6 +318,9 @@ static int netdev_trig_notify(struct not
+ 	clear_bit(NETDEV_LED_MODE_LINKUP, &trigger_data->mode);
+ 	switch (evt) {
+ 	case NETDEV_CHANGENAME:
++		if (netif_carrier_ok(dev))
++			set_bit(NETDEV_LED_MODE_LINKUP, &trigger_data->mode);
++		fallthrough;
+ 	case NETDEV_REGISTER:
+ 		if (trigger_data->net_dev)
+ 			dev_put(trigger_data->net_dev);
 
 
