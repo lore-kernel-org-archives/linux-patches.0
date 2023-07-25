@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55C71D302
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:09:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39BAEC433C9;
-	Tue, 25 Jul 2023 11:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6051DDFD
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:10:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E76C6C433C9;
+	Tue, 25 Jul 2023 11:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283397;
-	bh=ReKqaDLmlQacJeaTrzjz3zIHtmJTeEGv2kx9RNraFPE=;
+	s=korg; t=1690283400;
+	bh=GjXSOKI1NJLfO92g+SgtsHQ0onxaf7WAzRDMu1HrcWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nm+ayzq9zQVoyts+zDcIfEAgdTMvS3ZjIboHX7iuZnroMlaJXi1AWBAR+Xqwk7LDD
-	 sMkvwXLEIArI22lj3PDn10FAQmYmAvdaym0TgZjqvYIjnudBwmL9t0pdze/L9jkk6r
-	 rmOmR8kuDp/J4XWeaX0h7sl1OgookliNDaCUzFOE=
+	b=vqYhI4JV3wQ+07kdhILuv8IYKJqHSc9XjV/Q8EET0hK7pZIGITtL6yTqhqto4SXHh
+	 qOCJmt5Pi/92ZuL+3beoM6EWuYWhoGE60XQYxBG+YYBWawRoJujFkETrpY5pzloz1w
+	 zHgWKkgQ2khH2pQMRwwiFdf2W78H6A2WGsf1hBd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cd311b1e43cc25f90d18@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 33/78] [PATCH AUTOSEL 4.14 5/9] udf: Fix uninitialized array access for some pathnames
-Date: Tue, 25 Jul 2023 12:46:24 +0200
-Message-ID: <20230725104452.583889120@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 24/78] ASoC: codecs: wcd938x: fix missing mbhc init error handling
+Date: Tue, 25 Jul 2023 12:46:15 +0200
+Message-ID: <20230725104452.256157759@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104451.275227789@linuxfoundation.org>
 References: <20230725104451.275227789@linuxfoundation.org>
@@ -35,32 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-[ Upstream commit 028f6055c912588e6f72722d89c30b401bbcf013 ]
+From: Johan Hovold <johan+linaro@kernel.org>
 
-For filenames that begin with . and are between 2 and 5 characters long,
-UDF charset conversion code would read uninitialized memory in the
-output buffer. The only practical impact is that the name may be prepended a
-"unification hash" when it is not actually needed but still it is good
-to fix this.
+commit 7dfae2631bfbdebecd35fe7b472ab3cc95c9ed66 upstream.
 
-Reported-by: syzbot+cd311b1e43cc25f90d18@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/all/000000000000e2638a05fe9dc8f9@google.com
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+MBHC initialisation can fail so add the missing error handling to avoid
+dereferencing an error pointer when later configuring the jack:
+
+    Unable to handle kernel paging request at virtual address fffffffffffffff8
+
+    pc : wcd_mbhc_start+0x28/0x380 [snd_soc_wcd_mbhc]
+    lr : wcd938x_codec_set_jack+0x28/0x48 [snd_soc_wcd938x]
+
+    Call trace:
+     wcd_mbhc_start+0x28/0x380 [snd_soc_wcd_mbhc]
+     wcd938x_codec_set_jack+0x28/0x48 [snd_soc_wcd938x]
+     snd_soc_component_set_jack+0x28/0x8c [snd_soc_core]
+     qcom_snd_wcd_jack_setup+0x7c/0x19c [snd_soc_qcom_common]
+     sc8280xp_snd_init+0x20/0x2c [snd_soc_sc8280xp]
+     snd_soc_link_init+0x28/0x90 [snd_soc_core]
+     snd_soc_bind_card+0x628/0xbfc [snd_soc_core]
+     snd_soc_register_card+0xec/0x104 [snd_soc_core]
+     devm_snd_soc_register_card+0x4c/0xa4 [snd_soc_core]
+     sc8280xp_platform_probe+0xf0/0x108 [snd_soc_sc8280xp]
+
+Fixes: bcee7ed09b8e ("ASoC: codecs: wcd938x: add Multi Button Headset Control support")
+Cc: stable@vger.kernel.org      # 5.15
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230703124701.11734-1-johan+linaro@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/unicode.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/wcd938x.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/udf/unicode.c
-+++ b/fs/udf/unicode.c
-@@ -247,7 +247,7 @@ static int udf_name_from_CS0(struct supe
- 	}
+--- a/sound/soc/codecs/wcd938x.c
++++ b/sound/soc/codecs/wcd938x.c
+@@ -3621,6 +3621,8 @@ static int wcd938x_mbhc_init(struct snd_
+ 						     WCD938X_IRQ_HPHR_OCP_INT);
  
- 	if (translate) {
--		if (str_o_len <= 2 && str_o[0] == '.' &&
-+		if (str_o_len > 0 && str_o_len <= 2 && str_o[0] == '.' &&
- 		    (str_o_len == 1 || str_o[1] == '.'))
- 			needsCRC = 1;
- 		if (needsCRC) {
+ 	wcd938x->wcd_mbhc = wcd_mbhc_init(component, &mbhc_cb, intr_ids, wcd_mbhc_fields, true);
++	if (IS_ERR(wcd938x->wcd_mbhc))
++		return PTR_ERR(wcd938x->wcd_mbhc);
+ 
+ 	snd_soc_add_component_controls(component, impedance_detect_controls,
+ 				       ARRAY_SIZE(impedance_detect_controls));
 
 
