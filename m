@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176081D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:08:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE18C433C7;
-	Tue, 25 Jul 2023 11:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E560F1D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:08:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D833C433C8;
+	Tue, 25 Jul 2023 11:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283291;
-	bh=Hu12iaAicKd7TV8MzyaeZORoCOrhi459rrEy/ahJKyE=;
+	s=korg; t=1690283294;
+	bh=ql5zQ7Z2K2j8+9dA8CcSDXuNI8+SSwFXVrXI5AKzJuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nqnia8utSNgAsHamWqYVyMs+mNaJiioF57ckrQkZAreLJgmmOh1lVrfYywt2P+Ct6
-	 rM2Gr3+N0C74UPzly2qBy/CCoa+EWGlOUvdpYrnOacpc/31qMnwaxIUq4WXdlq9FGv
-	 thU/tAuzGo0Ok4FhfsMONUVAEoa8TLrtSUxrKYMA=
+	b=Gh65UOcpqtaI9Blg388ov9BVPcpk3RlBWW1vJ8T67HotmbfS0HXwiV8DZP3vS70L7
+	 kXjrU2agifykszaVuyhGk6Pyqj8BIcpSzXlgqx0RspouKQYrIIZ4c5KQiaeUnPycji
+	 YfWQ1X/y8D1E+/zsIPMkiOSJI35Se+NhHcxOpYrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 23/78] ASoC: codecs: wcd938x: fix resource leaks on component remove
-Date: Tue, 25 Jul 2023 12:46:14 +0200
-Message-ID: <20230725104452.216579249@linuxfoundation.org>
+	Luka Guzenko <l.guzenko@web.de>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 03/78] ALSA: hda/realtek: Enable Mute LED on HP Laptop 15s-eq2xxx
+Date: Tue, 25 Jul 2023 12:45:54 +0200
+Message-ID: <20230725104451.430831337@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104451.275227789@linuxfoundation.org>
 References: <20230725104451.275227789@linuxfoundation.org>
@@ -35,151 +34,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Luka Guzenko <l.guzenko@web.de>
 
-commit a3406f87775fee986876e03f93a84385f54d5999 upstream.
+commit 0659400f18c0e6c0c69d74fe5d09e7f6fbbd52a2 upstream.
 
-Make sure to release allocated resources on component probe failure and
-on remove.
+The HP Laptop 15s-eq2xxx uses ALC236 codec and controls the mute LED using
+COEF 0x07 index 1. No existing quirk covers this configuration.
+Adds a new quirk and enables it for the device.
 
-This is specifically needed to allow probe deferrals of the sound card
-which otherwise fails when reprobing the codec component:
-
-    snd-sc8280xp sound: ASoC: failed to instantiate card -517
-    genirq: Flags mismatch irq 289. 00002001 (HPHR PDM WD INT) vs. 00002001 (HPHR PDM WD INT)
-    wcd938x_codec audio-codec: Failed to request HPHR WD interrupt (-16)
-    genirq: Flags mismatch irq 290. 00002001 (HPHL PDM WD INT) vs. 00002001 (HPHL PDM WD INT)
-    wcd938x_codec audio-codec: Failed to request HPHL WD interrupt (-16)
-    genirq: Flags mismatch irq 291. 00002001 (AUX PDM WD INT) vs. 00002001 (AUX PDM WD INT)
-    wcd938x_codec audio-codec: Failed to request Aux WD interrupt (-16)
-    genirq: Flags mismatch irq 292. 00002001 (mbhc sw intr) vs. 00002001 (mbhc sw intr)
-    wcd938x_codec audio-codec: Failed to request mbhc interrupts -16
-
-Fixes: 8d78602aa87a ("ASoC: codecs: wcd938x: add basic driver")
-Cc: stable@vger.kernel.org	# 5.14
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230705123018.30903-5-johan+linaro@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Luka Guzenko <l.guzenko@web.de>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230718161241.393181-1-l.guzenko@web.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wcd938x.c |   55 +++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 48 insertions(+), 7 deletions(-)
+ sound/pci/hda/patch_realtek.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
---- a/sound/soc/codecs/wcd938x.c
-+++ b/sound/soc/codecs/wcd938x.c
-@@ -3629,6 +3629,14 @@ static int wcd938x_mbhc_init(struct snd_
- 
- 	return 0;
- }
-+
-+static void wcd938x_mbhc_deinit(struct snd_soc_component *component)
-+{
-+	struct wcd938x_priv *wcd938x = snd_soc_component_get_drvdata(component);
-+
-+	wcd_mbhc_deinit(wcd938x->wcd_mbhc);
-+}
-+
- /* END MBHC */
- 
- static const struct snd_kcontrol_new wcd938x_snd_controls[] = {
-@@ -4109,20 +4117,26 @@ static int wcd938x_soc_codec_probe(struc
- 	ret = request_threaded_irq(wcd938x->hphr_pdm_wd_int, NULL, wcd938x_wd_handle_irq,
- 				   IRQF_ONESHOT | IRQF_TRIGGER_RISING,
- 				   "HPHR PDM WD INT", wcd938x);
--	if (ret)
-+	if (ret) {
- 		dev_err(dev, "Failed to request HPHR WD interrupt (%d)\n", ret);
-+		goto err_free_clsh_ctrl;
-+	}
- 
- 	ret = request_threaded_irq(wcd938x->hphl_pdm_wd_int, NULL, wcd938x_wd_handle_irq,
- 				   IRQF_ONESHOT | IRQF_TRIGGER_RISING,
- 				   "HPHL PDM WD INT", wcd938x);
--	if (ret)
-+	if (ret) {
- 		dev_err(dev, "Failed to request HPHL WD interrupt (%d)\n", ret);
-+		goto err_free_hphr_pdm_wd_int;
-+	}
- 
- 	ret = request_threaded_irq(wcd938x->aux_pdm_wd_int, NULL, wcd938x_wd_handle_irq,
- 				   IRQF_ONESHOT | IRQF_TRIGGER_RISING,
- 				   "AUX PDM WD INT", wcd938x);
--	if (ret)
-+	if (ret) {
- 		dev_err(dev, "Failed to request Aux WD interrupt (%d)\n", ret);
-+		goto err_free_hphl_pdm_wd_int;
-+	}
- 
- 	/* Disable watchdog interrupt for HPH and AUX */
- 	disable_irq_nosync(wcd938x->hphr_pdm_wd_int);
-@@ -4137,7 +4151,7 @@ static int wcd938x_soc_codec_probe(struc
- 			dev_err(component->dev,
- 				"%s: Failed to add snd ctrls for variant: %d\n",
- 				__func__, wcd938x->variant);
--			goto err;
-+			goto err_free_aux_pdm_wd_int;
- 		}
- 		break;
- 	case WCD9385:
-@@ -4147,7 +4161,7 @@ static int wcd938x_soc_codec_probe(struc
- 			dev_err(component->dev,
- 				"%s: Failed to add snd ctrls for variant: %d\n",
- 				__func__, wcd938x->variant);
--			goto err;
-+			goto err_free_aux_pdm_wd_int;
- 		}
- 		break;
- 	default:
-@@ -4155,12 +4169,38 @@ static int wcd938x_soc_codec_probe(struc
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -4617,6 +4617,21 @@ static void alc236_fixup_hp_mute_led_coe
  	}
- 
- 	ret = wcd938x_mbhc_init(component);
--	if (ret)
-+	if (ret) {
- 		dev_err(component->dev,  "mbhc initialization failed\n");
--err:
-+		goto err_free_aux_pdm_wd_int;
-+	}
-+
-+	return 0;
-+
-+err_free_aux_pdm_wd_int:
-+	free_irq(wcd938x->aux_pdm_wd_int, wcd938x);
-+err_free_hphl_pdm_wd_int:
-+	free_irq(wcd938x->hphl_pdm_wd_int, wcd938x);
-+err_free_hphr_pdm_wd_int:
-+	free_irq(wcd938x->hphr_pdm_wd_int, wcd938x);
-+err_free_clsh_ctrl:
-+	wcd_clsh_ctrl_free(wcd938x->clsh_info);
-+
- 	return ret;
  }
  
-+static void wcd938x_soc_codec_remove(struct snd_soc_component *component)
++static void alc236_fixup_hp_mute_led_coefbit2(struct hda_codec *codec,
++					  const struct hda_fixup *fix, int action)
 +{
-+	struct wcd938x_priv *wcd938x = snd_soc_component_get_drvdata(component);
++	struct alc_spec *spec = codec->spec;
 +
-+	wcd938x_mbhc_deinit(component);
-+
-+	free_irq(wcd938x->aux_pdm_wd_int, wcd938x);
-+	free_irq(wcd938x->hphl_pdm_wd_int, wcd938x);
-+	free_irq(wcd938x->hphr_pdm_wd_int, wcd938x);
-+
-+	wcd_clsh_ctrl_free(wcd938x->clsh_info);
++	if (action == HDA_FIXUP_ACT_PRE_PROBE) {
++		spec->mute_led_polarity = 0;
++		spec->mute_led_coef.idx = 0x07;
++		spec->mute_led_coef.mask = 1;
++		spec->mute_led_coef.on = 1;
++		spec->mute_led_coef.off = 0;
++		snd_hda_gen_add_mute_led_cdev(codec, coef_mute_led_set);
++	}
 +}
 +
- static int wcd938x_codec_set_jack(struct snd_soc_component *comp,
- 				  struct snd_soc_jack *jack, void *data)
- {
-@@ -4177,6 +4217,7 @@ static int wcd938x_codec_set_jack(struct
- static const struct snd_soc_component_driver soc_codec_dev_wcd938x = {
- 	.name = "wcd938x_codec",
- 	.probe = wcd938x_soc_codec_probe,
-+	.remove = wcd938x_soc_codec_remove,
- 	.controls = wcd938x_snd_controls,
- 	.num_controls = ARRAY_SIZE(wcd938x_snd_controls),
- 	.dapm_widgets = wcd938x_dapm_widgets,
+ /* turn on/off mic-mute LED per capture hook by coef bit */
+ static int coef_micmute_led_set(struct led_classdev *led_cdev,
+ 				enum led_brightness brightness)
+@@ -6935,6 +6950,7 @@ enum {
+ 	ALC285_FIXUP_HP_GPIO_LED,
+ 	ALC285_FIXUP_HP_MUTE_LED,
+ 	ALC285_FIXUP_HP_SPECTRE_X360_MUTE_LED,
++	ALC236_FIXUP_HP_MUTE_LED_COEFBIT2,
+ 	ALC236_FIXUP_HP_GPIO_LED,
+ 	ALC236_FIXUP_HP_MUTE_LED,
+ 	ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF,
+@@ -8308,6 +8324,10 @@ static const struct hda_fixup alc269_fix
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc285_fixup_hp_spectre_x360_mute_led,
+ 	},
++	[ALC236_FIXUP_HP_MUTE_LED_COEFBIT2] = {
++	    .type = HDA_FIXUP_FUNC,
++	    .v.func = alc236_fixup_hp_mute_led_coefbit2,
++	},
+ 	[ALC236_FIXUP_HP_GPIO_LED] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc236_fixup_hp_gpio_led,
+@@ -9068,6 +9088,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x886d, "HP ZBook Fury 17.3 Inch G8 Mobile Workstation PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8870, "HP ZBook Fury 15.6 Inch G8 Mobile Workstation PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8873, "HP ZBook Studio 15.6 Inch G8 Mobile Workstation PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
++	SND_PCI_QUIRK(0x103c, 0x887a, "HP Laptop 15s-eq2xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x888d, "HP ZBook Power 15.6 inch G8 Mobile Workstation PC", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8895, "HP EliteBook 855 G8 Notebook PC", ALC285_FIXUP_HP_SPEAKERS_MICMUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8896, "HP EliteBook 855 G8 Notebook PC", ALC285_FIXUP_HP_MUTE_LED),
 
 
