@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3497B1D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:17:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACBF5C433C8;
-	Tue, 25 Jul 2023 11:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E8C1D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:17:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 782CEC433C9;
+	Tue, 25 Jul 2023 11:17:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283858;
-	bh=3bWOXFNycvTg51YlQThkRNr4GZ4tVRJM3V2cIC31SGE=;
+	s=korg; t=1690283860;
+	bh=V+/5q8Dck38EU8gZteKH3IgFoOMfy70Kbdu4MfCgY/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BEYinG3tbcGd+jb73Sa6wO7dN7ZdcfGn8I76XD/QQVELZbRGbZmAKTpCx4l6fHDzK
-	 Q/IZcBfWSyPTvzwCLdKdEJpi43/bjdcqkdEoG4u6k0Y9wqwR+GKeSA/veG2FqJB4Ij
-	 d2vJxqLvbFiObfgAqOonoMFh3PxOVB4J21hGeHG8=
+	b=DDOPobBvQJ9zFNJdag7faww2UaQ/VTgXvnDKq8715THIO7Z6flevaWxoVMRsAl742
+	 B9d3jT262dPFndNo6/O4IezyUSWD8JLK/i2NkrW1NdVZbyCFCqAMw3Cc0D6mYtJ75k
+	 sCFEb9dDF6OTUSgiTKjEmuy7UifJhNZTC4YLogPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Harvey <tharvey@gateworks.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 147/509] hwmon: (gsc-hwmon) fix fan pwm temperature scaling
-Date: Tue, 25 Jul 2023 12:41:26 +0200
-Message-ID: <20230725104600.462426301@linuxfoundation.org>
+Subject: [PATCH 5.10 121/509] arm64: dts: qcom: msm8994: correct SPMI unit address
+Date: Tue, 25 Jul 2023 12:41:00 +0200
+Message-ID: <20230725104559.217691765@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,46 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tim Harvey <tharvey@gateworks.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit a6d80df47ee2c69db99e4f2f8871aa4db154620b ]
+[ Upstream commit 24f0f6a8059c7108d4ee3476c95db1e7ff4feb79 ]
 
-The GSC fan pwm temperature register is in centidegrees celcius but the
-Linux hwmon convention is to use milidegrees celcius. Fix the scaling.
+Match unit-address to reg entry to fix dtbs W=1 warnings:
 
-Fixes: 3bce5377ef66 ("hwmon: Add Gateworks System Controller support")
-Signed-off-by: Tim Harvey <tharvey@gateworks.com>
-Link: https://lore.kernel.org/r/20230606153004.1448086-1-tharvey@gateworks.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+  Warning (simple_bus_reg): /soc/spmi@fc4c0000: simple-bus unit address format error, expected "fc4cf000"
+
+Fixes: b0ad598f8ec0 ("arm64: dts: qcom: msm8994: Add SPMI PMIC arbiter device")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230419211856.79332-8-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/gsc-hwmon.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8994.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/gsc-hwmon.c b/drivers/hwmon/gsc-hwmon.c
-index f29ce49294daf..89d036bf88df7 100644
---- a/drivers/hwmon/gsc-hwmon.c
-+++ b/drivers/hwmon/gsc-hwmon.c
-@@ -82,8 +82,8 @@ static ssize_t pwm_auto_point_temp_store(struct device *dev,
- 	if (kstrtol(buf, 10, &temp))
- 		return -EINVAL;
+diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+index aeb5762566e91..caaf7102f5798 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+@@ -489,7 +489,7 @@ restart@fc4ab000 {
+ 			reg = <0xfc4ab000 0x4>;
+ 		};
  
--	temp = clamp_val(temp, 0, 10000);
--	temp = DIV_ROUND_CLOSEST(temp, 10);
-+	temp = clamp_val(temp, 0, 100000);
-+	temp = DIV_ROUND_CLOSEST(temp, 100);
- 
- 	regs[0] = temp & 0xff;
- 	regs[1] = (temp >> 8) & 0xff;
-@@ -100,7 +100,7 @@ static ssize_t pwm_auto_point_pwm_show(struct device *dev,
- {
- 	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
- 
--	return sprintf(buf, "%d\n", 255 * (50 + (attr->index * 10)) / 100);
-+	return sprintf(buf, "%d\n", 255 * (50 + (attr->index * 10)));
- }
- 
- static SENSOR_DEVICE_ATTR_RO(pwm1_auto_point1_pwm, pwm_auto_point_pwm, 0);
+-		spmi_bus: spmi@fc4c0000 {
++		spmi_bus: spmi@fc4cf000 {
+ 			compatible = "qcom,spmi-pmic-arb";
+ 			reg = <0xfc4cf000 0x1000>,
+ 			      <0xfc4cb000 0x1000>,
 -- 
 2.39.2
 
