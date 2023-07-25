@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99E515AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:59:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C240C433C7;
-	Tue, 25 Jul 2023 10:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DCC15AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:59:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5A98C433C8;
+	Tue, 25 Jul 2023 10:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282770;
-	bh=Y1thFwVoES51AB1wPzTd0ivxRPqBzGtpvZ+MM/mJa3Y=;
+	s=korg; t=1690282773;
+	bh=gP5XlZJmOXZ0zL7RTYa3HAv27n191LhxKICx9FMrO7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b9vTSXfy2h3fNFYYDpL3ovARqmYqSEzJ9c48Un0ZBrnBuFJOYwsMplbqaD19SahqV
-	 uCAszmVN8Psy/TM0uzFqSJ7ZV6TZfMyuFOXDvrTMxPzcJdHowISJtByUTwW5mI5Q4/
-	 GzaPZt34NIGJeq6lMQWUqrAPjE8ruFKuo/+lE2pE=
+	b=y/SKNURhsAJUWZ9Dth/vA2/ykA/IgdCY9MfEwkIDCG3Lb/zu2qRs1GIDwbkPLI5Rk
+	 uk3xb+0n6GRMZGdRqtxnpF5V5zFjTES6bWiliK1mmi8vEo8RMewfvLpSnwU8bxp4LI
+	 x+7WD17uhVvPpxNGrr1Rh3EQ/hAVGa53N3TzM0JI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
+	David Spickett <David.Spickett@arm.com>,
 	Mark Brown <broonie@kernel.org>,
-	Xu Yilun <yilun.xu@intel.com>
-Subject: [PATCH 6.1 020/183] regmap: Account for register length in SMBus I/O limits
-Date: Tue, 25 Jul 2023 12:44:08 +0200
-Message-ID: <20230725104508.608069747@linuxfoundation.org>
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.1 021/183] arm64/fpsimd: Ensure SME storage is allocated after SVE VL changes
+Date: Tue, 25 Jul 2023 12:44:09 +0200
+Message-ID: <20230725104508.656615950@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -37,52 +37,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Mark Brown <broonie@kernel.org>
 
-commit 0c9d2eb5e94792fe64019008a04d4df5e57625af upstream.
+commit d4d5be94a87872421ea2569044092535aff0b886 upstream.
 
-The SMBus I2C buses have limits on the size of transfers they can do but
-do not factor in the register length meaning we may try to do a transfer
-longer than our length limit, the core will not take care of this.
-Future changes will factor this out into the core but there are a number
-of users that assume current behaviour so let's just do something
-conservative here.
+When we reconfigure the SVE vector length we discard the backing storage
+for the SVE vectors and then reallocate on next SVE use, leaving the SME
+specific state alone. This means that we do not enable SME traps if they
+were already disabled. That means that userspace code can enter streaming
+mode without trapping, putting the task in a state where if we try to save
+the state of the task we will fault.
 
-This does not take account padding bits but practically speaking these
-are very rarely if ever used on I2C buses given that they generally run
-slowly enough to mean there's no issue.
+Since the ABI does not specify that changing the SVE vector length disturbs
+SME state, and since SVE code may not be aware of SME code in the process,
+we shouldn't simply discard any ZA state. Instead immediately reallocate
+the storage for SVE, and disable SME if we change the SVE vector length
+while there is no SME state active.
 
-Cc: stable@kernel.org
+Disabling SME traps on SVE vector length changes would make the overall
+code more complex since we would have a state where we have valid SME state
+stored but might get a SME trap.
+
+Fixes: 9e4ab6c89109 ("arm64/sme: Implement vector length configuration prctl()s")
+Reported-by: David Spickett <David.Spickett@arm.com>
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Reviewed-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20230712-regmap-max-transfer-v1-2-80e2aed22e83@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230720-arm64-fix-sve-sme-vl-change-v2-1-8eea06b82d57@kernel.org
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/regmap/regmap-i2c.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/kernel/fpsimd.c |   33 +++++++++++++++++++++++++--------
+ 1 file changed, 25 insertions(+), 8 deletions(-)
 
---- a/drivers/base/regmap/regmap-i2c.c
-+++ b/drivers/base/regmap/regmap-i2c.c
-@@ -242,8 +242,8 @@ static int regmap_i2c_smbus_i2c_read(voi
- static const struct regmap_bus regmap_i2c_smbus_i2c_block = {
- 	.write = regmap_i2c_smbus_i2c_write,
- 	.read = regmap_i2c_smbus_i2c_read,
--	.max_raw_read = I2C_SMBUS_BLOCK_MAX,
--	.max_raw_write = I2C_SMBUS_BLOCK_MAX,
-+	.max_raw_read = I2C_SMBUS_BLOCK_MAX - 1,
-+	.max_raw_write = I2C_SMBUS_BLOCK_MAX - 1,
- };
+--- a/arch/arm64/kernel/fpsimd.c
++++ b/arch/arm64/kernel/fpsimd.c
+@@ -803,6 +803,8 @@ void sve_sync_from_fpsimd_zeropad(struct
+ int vec_set_vector_length(struct task_struct *task, enum vec_type type,
+ 			  unsigned long vl, unsigned long flags)
+ {
++	bool free_sme = false;
++
+ 	if (flags & ~(unsigned long)(PR_SVE_VL_INHERIT |
+ 				     PR_SVE_SET_VL_ONEXEC))
+ 		return -EINVAL;
+@@ -851,21 +853,36 @@ int vec_set_vector_length(struct task_st
+ 	    thread_sm_enabled(&task->thread))
+ 		sve_to_fpsimd(task);
  
- static int regmap_i2c_smbus_i2c_write_reg16(void *context, const void *data,
-@@ -299,8 +299,8 @@ static int regmap_i2c_smbus_i2c_read_reg
- static const struct regmap_bus regmap_i2c_smbus_i2c_block_reg16 = {
- 	.write = regmap_i2c_smbus_i2c_write_reg16,
- 	.read = regmap_i2c_smbus_i2c_read_reg16,
--	.max_raw_read = I2C_SMBUS_BLOCK_MAX,
--	.max_raw_write = I2C_SMBUS_BLOCK_MAX,
-+	.max_raw_read = I2C_SMBUS_BLOCK_MAX - 2,
-+	.max_raw_write = I2C_SMBUS_BLOCK_MAX - 2,
- };
+-	if (system_supports_sme() && type == ARM64_VEC_SME) {
+-		task->thread.svcr &= ~(SVCR_SM_MASK |
+-				       SVCR_ZA_MASK);
+-		clear_thread_flag(TIF_SME);
++	if (system_supports_sme()) {
++		if (type == ARM64_VEC_SME ||
++		    !(task->thread.svcr & (SVCR_SM_MASK | SVCR_ZA_MASK))) {
++			/*
++			 * We are changing the SME VL or weren't using
++			 * SME anyway, discard the state and force a
++			 * reallocation.
++			 */
++			task->thread.svcr &= ~(SVCR_SM_MASK |
++					       SVCR_ZA_MASK);
++			clear_thread_flag(TIF_SME);
++			free_sme = true;
++		}
+ 	}
  
- static const struct regmap_bus *regmap_get_i2c_bus(struct i2c_client *i2c,
+ 	if (task == current)
+ 		put_cpu_fpsimd_context();
+ 
+ 	/*
+-	 * Force reallocation of task SVE and SME state to the correct
+-	 * size on next use:
++	 * Free the changed states if they are not in use, SME will be
++	 * reallocated to the correct size on next use and we just
++	 * allocate SVE now in case it is needed for use in streaming
++	 * mode.
+ 	 */
+-	sve_free(task);
+-	if (system_supports_sme() && type == ARM64_VEC_SME)
++	if (system_supports_sve()) {
++		sve_free(task);
++		sve_alloc(task, true);
++	}
++
++	if (free_sme)
+ 		sme_free(task);
+ 
+ 	task_set_vl(task, type, vl);
 
 
