@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4841ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:24:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F66C433C7;
-	Tue, 25 Jul 2023 11:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197171ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:24:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92CD6C433C9;
+	Tue, 25 Jul 2023 11:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284291;
-	bh=VaIac/b24lORGIQ2sabFa4fVKrZIpwF2j10p8UjxkMw=;
+	s=korg; t=1690284293;
+	bh=AHAfLPUTCUUHRsnA2xM2PyG6fmI/bjg4m342f+s8WGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rGmTePWq+tZfjFZjNUfgL93uJ0ipVntqjkrSAdDy4A926biMZHMBYZFB1za1clElo
-	 TF85Ea7pPu0jsZr1icyWdxiiMEpSVbZ7ZRYWzOp1+AY0BbpazhoRqAiVKbiy7N2pYb
-	 tdu7ut+T8ga1q3WP5sbvRE5UuWiLxRbx196uGFLU=
+	b=OJyOMEdMhEnEhmgnnoOA8m8zxI9xr4nv0Ote359vI/LIHat1GpLeLulp1xrkXkNyl
+	 Nx0zdDzApR/EtEztV6Z33367q1UkO2rCu2L3QgIWw5epqYggRYjPxE/lib9lNjzJCP
+	 JyENQoA6RY4IjpVI8tRu4M4BSYV0PGfWYVb+Voas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	stable@kernel.org,
-	Ricardo Ribalda Delgado <ribalda@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 303/509] ASoC: mediatek: mt8173: Fix snd_soc_component_initialize error path
-Date: Tue, 25 Jul 2023 12:44:02 +0200
-Message-ID: <20230725104607.618664577@linuxfoundation.org>
+	Andrew Lunn <andrew@lunn.ch>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 5.10 304/509] ARM: orion5x: fix d2net gpio initialization
+Date: Tue, 25 Jul 2023 12:44:03 +0200
+Message-ID: <20230725104607.662611986@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,42 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda Delgado <ribalda@chromium.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit a46d37012a5be1737393b8f82fd35665e4556eee upstream.
+commit f8ef1233939495c405a9faa4bd1ae7d3f581bae4 upstream.
 
-If the second component fails to initialize, cleanup the first on.
+The DT version of this board has a custom file with the gpio
+device. However, it does nothing because the d2net_init()
+has no caller or prototype:
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: stable@kernel.org
-Fixes: f1b5bf07365d ("ASoC: mt2701/mt8173: replace platform to component")
-Signed-off-by: Ricardo Ribalda Delgado <ribalda@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230612-mt8173-fixup-v2-1-432aa99ce24d@chromium.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+arch/arm/mach-orion5x/board-d2net.c:101:13: error: no previous prototype for 'd2net_init'
+
+Call it from the board-dt file as intended.
+
+Fixes: 94b0bd366e36 ("ARM: orion5x: convert d2net to Device Tree")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230516153109.514251-10-arnd@kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/mediatek/mt8173/mt8173-afe-pcm.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/mach-orion5x/board-dt.c |    3 +++
+ arch/arm/mach-orion5x/common.h   |    6 ++++++
+ 2 files changed, 9 insertions(+)
 
---- a/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
-@@ -1162,14 +1162,14 @@ static int mt8173_afe_pcm_dev_probe(stru
- 	comp_hdmi = devm_kzalloc(&pdev->dev, sizeof(*comp_hdmi), GFP_KERNEL);
- 	if (!comp_hdmi) {
- 		ret = -ENOMEM;
--		goto err_pm_disable;
-+		goto err_cleanup_components;
- 	}
+--- a/arch/arm/mach-orion5x/board-dt.c
++++ b/arch/arm/mach-orion5x/board-dt.c
+@@ -63,6 +63,9 @@ static void __init orion5x_dt_init(void)
+ 	if (of_machine_is_compatible("maxtor,shared-storage-2"))
+ 		mss2_init();
  
- 	ret = snd_soc_component_initialize(comp_hdmi,
- 					   &mt8173_afe_hdmi_dai_component,
- 					   &pdev->dev);
- 	if (ret)
--		goto err_pm_disable;
-+		goto err_cleanup_components;
++	if (of_machine_is_compatible("lacie,d2-network"))
++		d2net_init();
++
+ 	of_platform_default_populate(NULL, orion5x_auxdata_lookup, NULL);
+ }
  
- #ifdef CONFIG_DEBUG_FS
- 	comp_hdmi->debugfs_prefix = "hdmi";
+--- a/arch/arm/mach-orion5x/common.h
++++ b/arch/arm/mach-orion5x/common.h
+@@ -75,6 +75,12 @@ extern void mss2_init(void);
+ static inline void mss2_init(void) {}
+ #endif
+ 
++#ifdef CONFIG_MACH_D2NET_DT
++void d2net_init(void);
++#else
++static inline void d2net_init(void) {}
++#endif
++
+ /*****************************************************************************
+  * Helpers to access Orion registers
+  ****************************************************************************/
 
 
