@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971EB1D302
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:24:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15934C433C7;
-	Tue, 25 Jul 2023 11:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0481D302
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:24:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEC50C433C8;
+	Tue, 25 Jul 2023 11:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284249;
-	bh=SMiw5nhmcl+ziqRVZigpBPT5OLgtqnIDHvVcYFSuVOg=;
+	s=korg; t=1690284252;
+	bh=kEs6/fj62ay6yBJWGV/C9EpEg+q41BOAvEpDhZ/zSDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qctgnC2/rpx6xKGVUk0Dn6TyKJ83uz7Zltjdsj2iTMo68MPVjH6lRL6PyagEC5eB2
-	 PdZ0RtWGMldryMhkd+flPxIlC8dKa/yDkbvHlcKF5fXAwFeqy7H+isKVxMW1tFr7Ac
-	 i4DMHiYYPpPQYGe6PHgMml/Q+aWFP0LlcCBJGuT8=
+	b=tYFLfhM0Vi2jZij4LOD7KPKiywKjr/BWqB340sfFru0Orn56YsJmsRifbjd7IbQVR
+	 5LuaB5igAocMyURhsUqrlCcQiQf79m3tYsO2W4r2wtDxBwGt6XiVH2iOK2NC92yewZ
+	 9TR7dRzSzBMJz79APL6/EdWOyzGURKFyflyv+EOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Coly Li <colyli@suse.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 289/509] bcache: Fix __bch_btree_node_alloc to make the failure behavior consistent
-Date: Tue, 25 Jul 2023 12:43:48 +0200
-Message-ID: <20230725104606.970329375@linuxfoundation.org>
+	Richard Weinberger <richard@nod.at>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Azeem Shaikh <azeemshaikh38@gmail.com>,
+	linux-um@lists.infradead.org,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 5.10 290/509] um: Use HOST_DIR for mrproper
+Date: Tue, 25 Jul 2023 12:43:49 +0200
+Message-ID: <20230725104607.015768103@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,43 +38,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Kees Cook <keescook@chromium.org>
 
-commit 80fca8a10b604afad6c14213fdfd816c4eda3ee4 upstream.
+commit a5a319ec2c2236bb96d147c16196d2f1f3799301 upstream.
 
-In some specific situations, the return value of __bch_btree_node_alloc
-may be NULL. This may lead to a potential NULL pointer dereference in
-caller function like a calling chain :
-btree_split->bch_btree_node_alloc->__bch_btree_node_alloc.
+When HEADER_ARCH was introduced, the MRPROPER_FILES (then MRPROPER_DIRS)
+list wasn't adjusted, leaving SUBARCH as part of the path argument.
+This resulted in the "mrproper" target not cleaning up arch/x86/... when
+SUBARCH was specified. Since HOST_DIR is arch/$(HEADER_ARCH), use it
+instead to get the correct path.
 
-Fix it by initializing the return value in __bch_btree_node_alloc.
-
-Fixes: cafe56359144 ("bcache: A block layer cache")
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>
+Cc: Azeem Shaikh <azeemshaikh38@gmail.com>
+Cc: linux-um@lists.infradead.org
+Fixes: 7bbe7204e937 ("um: merge Makefile-{i386,x86_64}")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: Coly Li <colyli@suse.de>
-Link: https://lore.kernel.org/r/20230615121223.22502-6-colyli@suse.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230606222442.never.807-kees@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/bcache/btree.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/um/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/bcache/btree.c
-+++ b/drivers/md/bcache/btree.c
-@@ -1090,10 +1090,12 @@ struct btree *__bch_btree_node_alloc(str
- 				     struct btree *parent)
- {
- 	BKEY_PADDED(key) k;
--	struct btree *b = ERR_PTR(-EAGAIN);
-+	struct btree *b;
+--- a/arch/um/Makefile
++++ b/arch/um/Makefile
+@@ -147,7 +147,7 @@ export LDFLAGS_vmlinux := $(LDFLAGS_EXEC
+ # When cleaning we don't include .config, so we don't include
+ # TT or skas makefiles and don't clean skas_ptregs.h.
+ CLEAN_FILES += linux x.i gmon.out
+-MRPROPER_FILES += arch/$(SUBARCH)/include/generated
++MRPROPER_FILES += $(HOST_DIR)/include/generated
  
- 	mutex_lock(&c->bucket_lock);
- retry:
-+	/* return ERR_PTR(-EAGAIN) when it fails */
-+	b = ERR_PTR(-EAGAIN);
- 	if (__bch_bucket_alloc_set(c, RESERVE_BTREE, &k.key, wait))
- 		goto err;
- 
+ archclean:
+ 	@find . \( -name '*.bb' -o -name '*.bbg' -o -name '*.da' \
 
 
