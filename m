@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318EA1D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:05:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A159AC433C7;
-	Tue, 25 Jul 2023 11:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED3C1D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:05:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F3DC433C8;
+	Tue, 25 Jul 2023 11:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283136;
-	bh=5cGbQRvb7Mw5mDYU91YWp5jP7WU39ce3xm02D3ruB4Q=;
+	s=korg; t=1690283138;
+	bh=81Gc8ov6sVqxL4BiVRxKgsTXrp+J6uJmubzX/qgKnCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GW3665fEquA+Rmm3h5I4WToVWzjrIw5gN3pD4uNKlNLCGfiAu2c/L8Qk4D6NCRR5E
-	 cxVsx+WZ+/4o3TOKRIk6Z1LQYZPvuzByxLN2mXwQW49oo/Wn2NCfs9venfjTWCMHWd
-	 1XxYHe80AK5W9U0r0x1fQlrc8hTtq/w3MBx7hORY=
+	b=aYQyPmEp/Vj8eUYDV8sQ3ggYL4dB2hYLlKKxGYsngBW+i54epysVdcq1aU+qtJKHp
+	 JjKZgpI0vlunRR2dk/Z33jI8Np0GVyLecY6S38k3le1X580phlCWcK9n0jdsmu320c
+	 nYKiMTddvUSlCKnRYzml399L0hsyyOCdlJIUjYow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 151/183] Bluetooth: hci_sync: Avoid use-after-free in dbg for hci_remove_adv_monitor()
-Date: Tue, 25 Jul 2023 12:46:19 +0200
-Message-ID: <20230725104513.301595079@linuxfoundation.org>
+Subject: [PATCH 6.1 152/183] tcp: annotate data-races around tp->tcp_tx_delay
+Date: Tue, 25 Jul 2023 12:46:20 +0200
+Message-ID: <20230725104513.331503514@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -35,57 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit de6dfcefd107667ce2dbedf4d9337f5ed557a4a1 ]
+[ Upstream commit 348b81b68b13ebd489a3e6a46aa1c384c731c919 ]
 
-KASAN reports that there's a use-after-free in
-hci_remove_adv_monitor(). Trawling through the disassembly, you can
-see that the complaint is from the access in bt_dev_dbg() under the
-HCI_ADV_MONITOR_EXT_MSFT case. The problem case happens because
-msft_remove_monitor() can end up freeing the monitor
-structure. Specifically:
-  hci_remove_adv_monitor() ->
-  msft_remove_monitor() ->
-  msft_remove_monitor_sync() ->
-  msft_le_cancel_monitor_advertisement_cb() ->
-  hci_free_adv_monitor()
+do_tcp_getsockopt() reads tp->tcp_tx_delay while another cpu
+might change its value.
 
-Let's fix the problem by just stashing the relevant data when it's
-still valid.
-
-Fixes: 7cf5c2978f23 ("Bluetooth: hci_sync: Refactor remove Adv Monitor")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: a842fe1425cb ("tcp: add optional per socket transmit delay")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230719212857.3943972-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ipv4/tcp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index be0e6865b340f..d034bf2a999e1 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -1972,6 +1972,7 @@ static int hci_remove_adv_monitor(struct hci_dev *hdev,
- 				  struct adv_monitor *monitor)
- {
- 	int status = 0;
-+	int handle;
- 
- 	switch (hci_get_adv_monitor_offload_ext(hdev)) {
- 	case HCI_ADV_MONITOR_EXT_NONE: /* also goes here when powered off */
-@@ -1980,9 +1981,10 @@ static int hci_remove_adv_monitor(struct hci_dev *hdev,
- 		goto free_monitor;
- 
- 	case HCI_ADV_MONITOR_EXT_MSFT:
-+		handle = monitor->handle;
- 		status = msft_remove_monitor(hdev, monitor);
- 		bt_dev_dbg(hdev, "%s remove monitor %d msft status %d",
--			   hdev->name, monitor->handle, status);
-+			   hdev->name, handle, status);
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 0bd0be3c63d22..5e4bc80dc0ae5 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -3780,7 +3780,7 @@ int do_tcp_setsockopt(struct sock *sk, int level, int optname,
+ 	case TCP_TX_DELAY:
+ 		if (val)
+ 			tcp_enable_tx_delay();
+-		tp->tcp_tx_delay = val;
++		WRITE_ONCE(tp->tcp_tx_delay, val);
  		break;
- 	}
+ 	default:
+ 		err = -ENOPROTOOPT;
+@@ -4256,7 +4256,7 @@ int do_tcp_getsockopt(struct sock *sk, int level,
+ 		break;
  
+ 	case TCP_TX_DELAY:
+-		val = tp->tcp_tx_delay;
++		val = READ_ONCE(tp->tcp_tx_delay);
+ 		break;
+ 
+ 	case TCP_TIMESTAMP:
 -- 
 2.39.2
 
