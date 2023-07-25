@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2846C1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36C8C433C8;
-	Tue, 25 Jul 2023 11:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000961ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762BBC433C7;
+	Tue, 25 Jul 2023 11:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283506;
-	bh=+SoqVG6RoguNPN15+w6YkeW507traoDvh9eGkjN/N3Y=;
+	s=korg; t=1690283508;
+	bh=ujNJwtKgp6WEqNJma+MjV/pPjwzs9uhEoRnPwlEnJTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EuZ7pmLnQNLlTMhIFYrdf5dXIcpxpcIz3KexcUU7pQLLPS6Ll4P4qwqSps6wWxqCV
-	 8KII8qxmIlms9zHbWscdE+a8G/GgdRhxnLEcRh44+7mtUjCIl4dQQQmkkTCQjlhF3j
-	 KpEJYPjiXY2TRKSV3qivU5DBFkvz/4CtcdeaGTk4=
+	b=Nh8PUKVndS1sjaLc/REXpBYP9dxfWCWxuJf71tEE8+Evx6FWAEfZ30yu8HToZxWZc
+	 SwW4c9RMwL/kyi7SGn64rJOAE1w5ev9RZRKKbfTPrhNhBHEBalf8NaXTJOcUcCvRGm
+	 XRpx7RXvNWAkEp3vy6QLZ5paWZeqOIYGwMunkTnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Rob Landley <rob@landley.net>,
-	Marc Zyngier <maz@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 021/509] irqchip/jcore-aic: Fix missing allocation of IRQ descriptors
-Date: Tue, 25 Jul 2023 12:39:20 +0200
-Message-ID: <20230725104554.614437273@linuxfoundation.org>
+Subject: [PATCH 5.10 022/509] posix-timers: Prevent RT livelock in itimer_delete()
+Date: Tue, 25 Jul 2023 12:39:21 +0200
+Message-ID: <20230725104554.664415546@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,51 +35,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 4848229494a323eeaab62eee5574ef9f7de80374 ]
+[ Upstream commit 9d9e522010eb5685d8b53e8a24320653d9d4cbbf ]
 
-The initialization function for the J-Core AIC aic_irq_of_init() is
-currently missing the call to irq_alloc_descs() which allocates and
-initializes all the IRQ descriptors. Add missing function call and
-return the error code from irq_alloc_descs() in case the allocation
-fails.
+itimer_delete() has a retry loop when the timer is concurrently expired. On
+non-RT kernels this just spin-waits until the timer callback has completed,
+except for posix CPU timers which have HAVE_POSIX_CPU_TIMERS_TASK_WORK
+enabled.
 
-Fixes: 981b58f66cfc ("irqchip/jcore-aic: Add J-Core AIC driver")
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Tested-by: Rob Landley <rob@landley.net>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230510163343.43090-1-glaubitz@physik.fu-berlin.de
+In that case and on RT kernels the existing task could live lock when
+preempting the task which does the timer delivery.
+
+Replace spin_unlock() with an invocation of timer_wait_running() to handle
+it the same way as the other retry loops in the posix timer code.
+
+Fixes: ec8f954a40da ("posix-timers: Use a callback for cancel synchronization on PREEMPT_RT")
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://lore.kernel.org/r/87v8g7c50d.ffs@tglx
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-jcore-aic.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ kernel/time/posix-timers.c | 43 +++++++++++++++++++++++++++++++-------
+ 1 file changed, 35 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/irqchip/irq-jcore-aic.c b/drivers/irqchip/irq-jcore-aic.c
-index 5f47d8ee4ae39..b9dcc8e78c750 100644
---- a/drivers/irqchip/irq-jcore-aic.c
-+++ b/drivers/irqchip/irq-jcore-aic.c
-@@ -68,6 +68,7 @@ static int __init aic_irq_of_init(struct device_node *node,
- 	unsigned min_irq = JCORE_AIC2_MIN_HWIRQ;
- 	unsigned dom_sz = JCORE_AIC_MAX_HWIRQ+1;
- 	struct irq_domain *domain;
-+	int ret;
+diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
+index d089627f2f2b4..6d12a724d2b6b 100644
+--- a/kernel/time/posix-timers.c
++++ b/kernel/time/posix-timers.c
+@@ -1037,27 +1037,52 @@ SYSCALL_DEFINE1(timer_delete, timer_t, timer_id)
+ }
  
- 	pr_info("Initializing J-Core AIC\n");
- 
-@@ -100,6 +101,12 @@ static int __init aic_irq_of_init(struct device_node *node,
- 	jcore_aic.irq_unmask = noop;
- 	jcore_aic.name = "AIC";
- 
-+	ret = irq_alloc_descs(-1, min_irq, dom_sz - min_irq,
-+			      of_node_to_nid(node));
+ /*
+- * return timer owned by the process, used by exit_itimers
++ * Delete a timer if it is armed, remove it from the hash and schedule it
++ * for RCU freeing.
+  */
+ static void itimer_delete(struct k_itimer *timer)
+ {
+-retry_delete:
+-	spin_lock_irq(&timer->it_lock);
++	unsigned long flags;
 +
-+	if (ret < 0)
-+		return ret;
++	/*
++	 * irqsave is required to make timer_wait_running() work.
++	 */
++	spin_lock_irqsave(&timer->it_lock, flags);
+ 
++retry_delete:
++	/*
++	 * Even if the timer is not longer accessible from other tasks
++	 * it still might be armed and queued in the underlying timer
++	 * mechanism. Worse, that timer mechanism might run the expiry
++	 * function concurrently.
++	 */
+ 	if (timer_delete_hook(timer) == TIMER_RETRY) {
+-		spin_unlock_irq(&timer->it_lock);
++		/*
++		 * Timer is expired concurrently, prevent livelocks
++		 * and pointless spinning on RT.
++		 *
++		 * timer_wait_running() drops timer::it_lock, which opens
++		 * the possibility for another task to delete the timer.
++		 *
++		 * That's not possible here because this is invoked from
++		 * do_exit() only for the last thread of the thread group.
++		 * So no other task can access and delete that timer.
++		 */
++		if (WARN_ON_ONCE(timer_wait_running(timer, &flags) != timer))
++			return;
 +
- 	domain = irq_domain_add_legacy(node, dom_sz - min_irq, min_irq, min_irq,
- 				       &jcore_aic_irqdomain_ops,
- 				       &jcore_aic);
+ 		goto retry_delete;
+ 	}
+ 	list_del(&timer->list);
+ 
+-	spin_unlock_irq(&timer->it_lock);
++	spin_unlock_irqrestore(&timer->it_lock, flags);
+ 	release_posix_timer(timer, IT_ID_SET);
+ }
+ 
+ /*
+- * This is called by do_exit or de_thread, only when nobody else can
+- * modify the signal->posix_timers list. Yet we need sighand->siglock
+- * to prevent the race with /proc/pid/timers.
++ * Invoked from do_exit() when the last thread of a thread group exits.
++ * At that point no other task can access the timers of the dying
++ * task anymore.
+  */
+ void exit_itimers(struct task_struct *tsk)
+ {
+@@ -1067,10 +1092,12 @@ void exit_itimers(struct task_struct *tsk)
+ 	if (list_empty(&tsk->signal->posix_timers))
+ 		return;
+ 
++	/* Protect against concurrent read via /proc/$PID/timers */
+ 	spin_lock_irq(&tsk->sighand->siglock);
+ 	list_replace_init(&tsk->signal->posix_timers, &timers);
+ 	spin_unlock_irq(&tsk->sighand->siglock);
+ 
++	/* The timers are not longer accessible via tsk::signal */
+ 	while (!list_empty(&timers)) {
+ 		tmr = list_first_entry(&timers, struct k_itimer, list);
+ 		itimer_delete(tmr);
 -- 
 2.39.2
 
