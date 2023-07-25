@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48C81ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:28:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49741C433C8;
-	Tue, 25 Jul 2023 11:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F75C1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:28:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 123F8C433C8;
+	Tue, 25 Jul 2023 11:28:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284517;
-	bh=NiDAlHeo9Q/SttiZTxgZbA7nYDfN764dL0b5aiAQTeE=;
+	s=korg; t=1690284520;
+	bh=JqBU8t6FRCEE0mutgpPenOurlJXZu0j4miKHJ2HHlgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SnTql/X02RXz6bzBhMH8hlq27369l1oyOYBUqqs7Bjwlwv0Hhqckrtwh02qHDljP3
-	 acS/S0Hy/wVrKUFKKOgsgcNPRPLaQ4FyIyRgOgO96AthTsF9Bj4fImnDtI1XKs10Ts
-	 2AypW8quMArBWUyqtVhTbSGPEclSB6ZTj3hYFmDM=
+	b=rus758c3Kp4IU7ztZ51gRIpLzoXjOC+pkoFrUVmFp+ppL9pV9X93SCctqlIt4CPy9
+	 hIYV5qHjeEhjAJ2/EWFeu/b6eWe+Oilp6NQ2Eb+8qFE0TaxZVJrKILfubvRWhvUB8L
+	 VYUQkdbeftCZJpTUywj56L+aupsxCU9PKIYceb8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 5.10 385/509] erofs: fix compact 4B support for 16k block size
-Date: Tue, 25 Jul 2023 12:45:24 +0200
-Message-ID: <20230725104611.369924609@linuxfoundation.org>
+	Huang Pei <huangpei@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 5.10 386/509] MIPS: Loongson: Fix cpu_probe_loongson() again
+Date: Tue, 25 Jul 2023 12:45:25 +0200
+Message-ID: <20230725104611.418725702@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -33,66 +35,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 001b8ccd0650727e54ec16ef72bf1b8eeab7168e upstream.
+commit 65fee014dc41a774bcd94896f3fb380bc39d8dda upstream.
 
-In compact 4B, two adjacent lclusters are packed together as a unit to
-form on-disk indexes for effective random access, as below:
+Commit 7db5e9e9e5e6c10d7d ("MIPS: loongson64: fix FTLB configuration")
+move decode_configs() from the beginning of cpu_probe_loongson() to the
+end in order to fix FTLB configuration. However, it breaks the CPUCFG
+decoding because decode_configs() use "c->options = xxxx" rather than
+"c->options |= xxxx", all information get from CPUCFG by decode_cpucfg()
+is lost.
 
-(amortized = 4, vcnt = 2)
-       _____________________________________________
-      |___@_____ encoded bits __________|_ blkaddr _|
-      0        .                                    amortized * vcnt = 8
-      .             .
-      .                  .              amortized * vcnt - 4 = 4
-      .                        .
-      .____________________________.
-      |_type (2 bits)_|_clusterofs_|
+This causes error when creating a KVM guest on Loongson-3A4000:
+Exception Code: 4 not handled @ PC: 0000000087ad5981, inst: 0xcb7a1898 BadVaddr: 0x0 Status: 0x0
 
-Therefore, encoded bits for each pack are 32 bits (4 bytes). IOWs,
-since each lcluster can get 16 bits for its type and clusterofs, the
-maximum supported lclustersize for compact 4B format is 16k (14 bits).
+Fix this by moving the c->cputype setting to the beginning and moving
+decode_configs() after that.
 
-Fix this to enable compact 4B format for 16k lclusters (blocks), which
-is tested on an arm64 server with 16k page size.
-
-Fixes: 152a333a5895 ("staging: erofs: add compacted compression indexes support")
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20230601112341.56960-1-hsiangkao@linux.alibaba.com
+Fixes: 7db5e9e9e5e6c10d7d ("MIPS: loongson64: fix FTLB configuration")
+Cc: stable@vger.kernel.org
+Cc: Huang Pei <huangpei@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/zmap.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ arch/mips/kernel/cpu-probe.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/fs/erofs/zmap.c
-+++ b/fs/erofs/zmap.c
-@@ -215,7 +215,7 @@ static int unpack_compacted_index(struct
- 	int i;
- 	u8 *in, type;
+--- a/arch/mips/kernel/cpu-probe.c
++++ b/arch/mips/kernel/cpu-probe.c
+@@ -1721,7 +1721,10 @@ static inline void decode_cpucfg(struct
  
--	if (1 << amortizedshift == 4)
-+	if (1 << amortizedshift == 4 && lclusterbits <= 14)
- 		vcnt = 2;
- 	else if (1 << amortizedshift == 2 && lclusterbits == 12)
- 		vcnt = 16;
-@@ -273,7 +273,6 @@ static int compacted_load_cluster_from_d
+ static inline void cpu_probe_loongson(struct cpuinfo_mips *c, unsigned int cpu)
  {
- 	struct inode *const inode = m->inode;
- 	struct erofs_inode *const vi = EROFS_I(inode);
--	const unsigned int lclusterbits = vi->z_logical_clusterbits;
- 	const erofs_off_t ebase = ALIGN(iloc(EROFS_I_SB(inode), vi->nid) +
- 					vi->inode_isize + vi->xattr_isize, 8) +
- 		sizeof(struct z_erofs_map_header);
-@@ -283,9 +282,6 @@ static int compacted_load_cluster_from_d
- 	erofs_off_t pos;
- 	int err;
++	c->cputype = CPU_LOONGSON64;
++
+ 	/* All Loongson processors covered here define ExcCode 16 as GSExc. */
++	decode_configs(c);
+ 	c->options |= MIPS_CPU_GSEXCEX;
  
--	if (lclusterbits != 12)
--		return -EOPNOTSUPP;
+ 	switch (c->processor_id & PRID_IMP_MASK) {
+@@ -1731,7 +1734,6 @@ static inline void cpu_probe_loongson(st
+ 		case PRID_REV_LOONGSON2K_R1_1:
+ 		case PRID_REV_LOONGSON2K_R1_2:
+ 		case PRID_REV_LOONGSON2K_R1_3:
+-			c->cputype = CPU_LOONGSON64;
+ 			__cpu_name[cpu] = "Loongson-2K";
+ 			set_elf_platform(cpu, "gs264e");
+ 			set_isa(c, MIPS_CPU_ISA_M64R2);
+@@ -1744,14 +1746,12 @@ static inline void cpu_probe_loongson(st
+ 		switch (c->processor_id & PRID_REV_MASK) {
+ 		case PRID_REV_LOONGSON3A_R2_0:
+ 		case PRID_REV_LOONGSON3A_R2_1:
+-			c->cputype = CPU_LOONGSON64;
+ 			__cpu_name[cpu] = "ICT Loongson-3";
+ 			set_elf_platform(cpu, "loongson3a");
+ 			set_isa(c, MIPS_CPU_ISA_M64R2);
+ 			break;
+ 		case PRID_REV_LOONGSON3A_R3_0:
+ 		case PRID_REV_LOONGSON3A_R3_1:
+-			c->cputype = CPU_LOONGSON64;
+ 			__cpu_name[cpu] = "ICT Loongson-3";
+ 			set_elf_platform(cpu, "loongson3a");
+ 			set_isa(c, MIPS_CPU_ISA_M64R2);
+@@ -1771,7 +1771,6 @@ static inline void cpu_probe_loongson(st
+ 		c->ases &= ~MIPS_ASE_VZ; /* VZ of Loongson-3A2000/3000 is incomplete */
+ 		break;
+ 	case PRID_IMP_LOONGSON_64G:
+-		c->cputype = CPU_LOONGSON64;
+ 		__cpu_name[cpu] = "ICT Loongson-3";
+ 		set_elf_platform(cpu, "loongson3a");
+ 		set_isa(c, MIPS_CPU_ISA_M64R2);
+@@ -1781,8 +1780,6 @@ static inline void cpu_probe_loongson(st
+ 		panic("Unknown Loongson Processor ID!");
+ 		break;
+ 	}
 -
- 	if (lcn >= totalidx)
- 		return -EINVAL;
- 
+-	decode_configs(c);
+ }
+ #else
+ static inline void cpu_probe_loongson(struct cpuinfo_mips *c, unsigned int cpu) { }
 
 
