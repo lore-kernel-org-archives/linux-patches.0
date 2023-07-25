@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4131ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:30:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0311FC433C7;
-	Tue, 25 Jul 2023 11:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6140E1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:30:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D08EAC433C7;
+	Tue, 25 Jul 2023 11:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284615;
-	bh=AiHQvf9AX43ZmG5wHf2rOHUaAGqJRg4EKec6N6YVfX4=;
+	s=korg; t=1690284618;
+	bh=4wTjTmdO5Xx1pVjMDzCbxMIE5fMT5jewO5B38Vy3So4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HLpfZkhyzxg01MXgN7Ces6trM/dM1XGuFE+RUlMEwUqdVUszLRxy6FwBUpj6hiY0R
-	 RPdK32u9Z2MZAf2RGVIkxFNNpg0MF0J5C6ovMWx2h48B0gTvbp2lyAgKfYlMu0NT9F
-	 P2WLLMtf11RkTXe941IVkBhDvj/m0t9CSLDq8nQ4=
+	b=qlyHZmgHkLZ8FeMahM6Lbhl0L/mJzL7g8j+fbkozUNYyM35JL6pFknpj9M2mqwIH8
+	 lSaMP/edRd11K1cJIsU49aZjyUc8Kxg8WeSq1OHhAomhCNZj1pSfvwjG2KS+nv7Ikb
+	 g99sAU6L87rHHX39k2tzKs4M+S6SLEJ+qdROKXmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jiaqing Zhao <jiaqing.zhao@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 5.10 420/509] Revert "8250: add support for ASIX devices with a FIFO bug"
-Date: Tue, 25 Jul 2023 12:45:59 +0200
-Message-ID: <20230725104612.902134356@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	CKI <cki-project@redhat.com>,
+	Ulrich Weigand <Ulrich.Weigand@de.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 5.10 421/509] s390/decompressor: fix misaligned symbol build error
+Date: Tue, 25 Jul 2023 12:46:00 +0200
+Message-ID: <20230725104612.952742506@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,139 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit a82d62f708545d22859584e0e0620da8e3759bbc upstream.
+commit 938f0c35d7d93a822ab9c9728e3205e8e57409d0 upstream.
 
-This reverts commit eb26dfe8aa7eeb5a5aa0b7574550125f8aa4c3b3.
+Nathan Chancellor reported a kernel build error on Fedora 39:
 
-Commit eb26dfe8aa7e ("8250: add support for ASIX devices with a FIFO
-bug") merged on Jul 13, 2012 adds a quirk for PCI_VENDOR_ID_ASIX
-(0x9710). But that ID is the same as PCI_VENDOR_ID_NETMOS defined in
-1f8b061050c7 ("[PATCH] Netmos parallel/serial/combo support") merged
-on Mar 28, 2005. In pci_serial_quirks array, the NetMos entry always
-takes precedence over the ASIX entry even since it was initially
-merged, code in that commit is always unreachable.
+$ clang --version | head -1
+clang version 16.0.5 (Fedora 16.0.5-1.fc39)
 
-In my tests, adding the FIFO workaround to pci_netmos_init() makes no
-difference, and the vendor driver also does not have such workaround.
-Given that the code was never used for over a decade, it's safe to
-revert it.
+$ s390x-linux-gnu-ld --version | head -1
+GNU ld version 2.40-1.fc39
 
-Also, the real PCI_VENDOR_ID_ASIX should be 0x125b, which is used on
-their newer AX99100 PCIe serial controllers released on 2016. The FIFO
-workaround should not be intended for these newer controllers, and it
-was never implemented in vendor driver.
+$ make -skj"$(nproc)" ARCH=s390 CC=clang CROSS_COMPILE=s390x-linux-gnu- olddefconfig all
+s390x-linux-gnu-ld: arch/s390/boot/startup.o(.text+0x5b4): misaligned symbol `_decompressor_end' (0x35b0f) for relocation R_390_PC32DBL
+make[3]: *** [.../arch/s390/boot/Makefile:78: arch/s390/boot/vmlinux] Error 1
 
-Fixes: eb26dfe8aa7e ("8250: add support for ASIX devices with a FIFO bug")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230619155743.827859-1-jiaqing.zhao@linux.intel.com
+It turned out that the problem with misaligned symbols on s390 was fixed
+with commit 80ddf5ce1c92 ("s390: always build relocatable kernel") for the
+kernel image, but did not take into account that the decompressor uses its
+own set of CFLAGS, which come without -fPIE.
+
+Add the -fPIE flag also to the decompresser CFLAGS to fix this.
+
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Reported-by: CKI <cki-project@redhat.com>
+Suggested-by: Ulrich Weigand <Ulrich.Weigand@de.ibm.com>
+Link: https://github.com/ClangBuiltLinux/linux/issues/1747
+Link: https://lore.kernel.org/32935.123062114500601371@us-mta-9.us.mimecast.lan/
+Link: https://lore.kernel.org/r/20230622125508.1068457-1-hca@linux.ibm.com
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250.h      |    1 -
- drivers/tty/serial/8250/8250_pci.c  |   19 -------------------
- drivers/tty/serial/8250/8250_port.c |   11 +++--------
- include/linux/serial_8250.h         |    1 -
- 4 files changed, 3 insertions(+), 29 deletions(-)
+ arch/s390/Makefile |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/tty/serial/8250/8250.h
-+++ b/drivers/tty/serial/8250/8250.h
-@@ -87,7 +87,6 @@ struct serial8250_config {
- #define UART_BUG_TXEN	(1 << 1)	/* UART has buggy TX IIR status */
- #define UART_BUG_NOMSR	(1 << 2)	/* UART has buggy MSR status bits (Au1x00) */
- #define UART_BUG_THRE	(1 << 3)	/* UART has buggy THRE reassertion */
--#define UART_BUG_PARITY	(1 << 4)	/* UART mishandles parity if FIFO enabled */
- #define UART_BUG_TXRACE	(1 << 5)	/* UART Tx fails to set remote DR */
- 
- 
---- a/drivers/tty/serial/8250/8250_pci.c
-+++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -1044,14 +1044,6 @@ static int pci_oxsemi_tornado_init(struc
- 	return number_uarts;
- }
- 
--static int pci_asix_setup(struct serial_private *priv,
--		  const struct pciserial_board *board,
--		  struct uart_8250_port *port, int idx)
--{
--	port->bugs |= UART_BUG_PARITY;
--	return pci_default_setup(priv, board, port, idx);
--}
--
- /* Quatech devices have their own extra interface features */
- 
- struct quatech_feature {
-@@ -1874,7 +1866,6 @@ pci_moxa_setup(struct serial_private *pr
- #define PCI_DEVICE_ID_WCH_CH355_4S	0x7173
- #define PCI_VENDOR_ID_AGESTAR		0x5372
- #define PCI_DEVICE_ID_AGESTAR_9375	0x6872
--#define PCI_VENDOR_ID_ASIX		0x9710
- #define PCI_DEVICE_ID_BROADCOM_TRUMANAGE 0x160a
- #define PCI_DEVICE_ID_AMCC_ADDIDATA_APCI7800 0x818e
- 
-@@ -2685,16 +2676,6 @@ static struct pci_serial_quirk pci_seria
- 		.setup          = pci_wch_ch38x_setup,
- 	},
- 	/*
--	 * ASIX devices with FIFO bug
--	 */
--	{
--		.vendor		= PCI_VENDOR_ID_ASIX,
--		.device		= PCI_ANY_ID,
--		.subvendor	= PCI_ANY_ID,
--		.subdevice	= PCI_ANY_ID,
--		.setup		= pci_asix_setup,
--	},
--	/*
- 	 * Broadcom TruManage (NetXtreme)
- 	 */
- 	{
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -2577,11 +2577,8 @@ static unsigned char serial8250_compute_
- 
- 	if (c_cflag & CSTOPB)
- 		cval |= UART_LCR_STOP;
--	if (c_cflag & PARENB) {
-+	if (c_cflag & PARENB)
- 		cval |= UART_LCR_PARITY;
--		if (up->bugs & UART_BUG_PARITY)
--			up->fifo_bug = true;
--	}
- 	if (!(c_cflag & PARODD))
- 		cval |= UART_LCR_EPAR;
- #ifdef CMSPAR
-@@ -2744,8 +2741,7 @@ serial8250_do_set_termios(struct uart_po
- 	up->lcr = cval;					/* Save computed LCR */
- 
- 	if (up->capabilities & UART_CAP_FIFO && port->fifosize > 1) {
--		/* NOTE: If fifo_bug is not set, a user can set RX_trigger. */
--		if ((baud < 2400 && !up->dma) || up->fifo_bug) {
-+		if (baud < 2400 && !up->dma) {
- 			up->fcr &= ~UART_FCR_TRIGGER_MASK;
- 			up->fcr |= UART_FCR_TRIGGER_1;
- 		}
-@@ -3081,8 +3077,7 @@ static int do_set_rxtrig(struct tty_port
- 	struct uart_8250_port *up = up_to_u8250p(uport);
- 	int rxtrig;
- 
--	if (!(up->capabilities & UART_CAP_FIFO) || uport->fifosize <= 1 ||
--	    up->fifo_bug)
-+	if (!(up->capabilities & UART_CAP_FIFO) || uport->fifosize <= 1)
- 		return -EINVAL;
- 
- 	rxtrig = bytes_to_fcr_rxtrig(up, bytes);
---- a/include/linux/serial_8250.h
-+++ b/include/linux/serial_8250.h
-@@ -98,7 +98,6 @@ struct uart_8250_port {
- 	struct list_head	list;		/* ports on this IRQ */
- 	u32			capabilities;	/* port capabilities */
- 	unsigned short		bugs;		/* port bugs */
--	bool			fifo_bug;	/* min RX trigger if enabled */
- 	unsigned int		tx_loadsz;	/* transmit fifo load size */
- 	unsigned char		acr;
- 	unsigned char		fcr;
+--- a/arch/s390/Makefile
++++ b/arch/s390/Makefile
+@@ -29,6 +29,7 @@ KBUILD_CFLAGS_DECOMPRESSOR += -fno-delet
+ KBUILD_CFLAGS_DECOMPRESSOR += -fno-asynchronous-unwind-tables
+ KBUILD_CFLAGS_DECOMPRESSOR += -ffreestanding
+ KBUILD_CFLAGS_DECOMPRESSOR += -fno-stack-protector
++KBUILD_CFLAGS_DECOMPRESSOR += -fPIE
+ KBUILD_CFLAGS_DECOMPRESSOR += $(call cc-disable-warning, address-of-packed-member)
+ KBUILD_CFLAGS_DECOMPRESSOR += $(if $(CONFIG_DEBUG_INFO),-g)
+ KBUILD_CFLAGS_DECOMPRESSOR += $(if $(CONFIG_DEBUG_INFO_DWARF4), $(call cc-option, -gdwarf-4,))
 
 
