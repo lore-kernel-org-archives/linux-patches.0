@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E5915AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:58:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06734C433C7;
-	Tue, 25 Jul 2023 10:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5312815AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:58:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D0DC433C8;
+	Tue, 25 Jul 2023 10:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282687;
-	bh=mE2gqmtV5YAJrFAlQ0tK3EXkKc4b7YosXIgkNi8k+mE=;
+	s=korg; t=1690282690;
+	bh=/4pcWYRPPV61hjvHKgmW0csiHAsUpHHE5ABVPWvVPis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZCD0mcFXcQaNRPslpF4xIUGA7sWKdCqcX5rI2kbIdbiW/T52g5cKIRpYBsS84d5j6
-	 Q2jgmMybw+PVE5oiPMshaXIMDum8OB6du5aPKoheP5dOIFz+PppvpTxCLp+LFUGrkl
-	 8mm5YNP0b+n6X6Re2cWtUqSZziDNXvTQc/MNxNj0=
+	b=mbD9r7WusBO5xWcExehdEWqG3EQwNSHce/tSmu5T63fN5DlIms3CKLzxfvsEoNDLQ
+	 kNDJTwW/VJMBH76u2TLvsfGZvRYfp/gzO9IVIl0NXM3asnuIA16JZ5uwJfKqumiHMY
+	 j9AuFVT41dhs3y5+H7iJa+cRgn6GtHXtCHN4yRSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <linux@armlinux.org.uk>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 218/227] net: phy: prevent stale pointer dereference in phy_init()
-Date: Tue, 25 Jul 2023 12:46:25 +0200
-Message-ID: <20230725104523.741945100@linuxfoundation.org>
+Subject: [PATCH 6.4 192/227] fbdev: au1200fb: Fix missing IRQ check in au1200fb_drv_probe
+Date: Tue, 25 Jul 2023 12:45:59 +0200
+Message-ID: <20230725104522.759996477@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -36,72 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit 1c613beaf877c0c0d755853dc62687e2013e55c4 ]
+[ Upstream commit 4e88761f5f8c7869f15a2046b1a1116f4fab4ac8 ]
 
-mdio_bus_init() and phy_driver_register() both have error paths, and if
-those are ever hit, ethtool will have a stale pointer to the
-phy_ethtool_phy_ops stub structure, which references memory from a
-module that failed to load (phylib).
+This func misses checking for platform_get_irq()'s call and may passes the
+negative error codes to request_irq(), which takes unsigned IRQ #,
+causing it to fail with -EINVAL, overriding an original error code.
 
-It is probably hard to force an error in this code path even manually,
-but the error teardown path of phy_init() should be the same as
-phy_exit(), which is now simply not the case.
+Fix this by stop calling request_irq() with invalid IRQ #s.
 
-Fixes: 55d8f053ce1b ("net: phy: Register ethtool PHY operations")
-Link: https://lore.kernel.org/netdev/ZLaiJ4G6TaJYGJyU@shell.armlinux.org.uk/
-Suggested-by: Russell King (Oracle) <linux@armlinux.org.uk>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://lore.kernel.org/r/20230720000231.1939689-1-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1630d85a8312 ("au1200fb: fix hardcoded IRQ")
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy_device.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/video/fbdev/au1200fb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index 53598210be6cb..2c4e6de8f4d9f 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -3452,23 +3452,30 @@ static int __init phy_init(void)
- {
- 	int rc;
+diff --git a/drivers/video/fbdev/au1200fb.c b/drivers/video/fbdev/au1200fb.c
+index aed88ce45bf09..d8f085d4ede30 100644
+--- a/drivers/video/fbdev/au1200fb.c
++++ b/drivers/video/fbdev/au1200fb.c
+@@ -1732,6 +1732,9 @@ static int au1200fb_drv_probe(struct platform_device *dev)
  
-+	ethtool_set_ethtool_phy_ops(&phy_ethtool_phy_ops);
+ 	/* Now hook interrupt too */
+ 	irq = platform_get_irq(dev, 0);
++	if (irq < 0)
++		return irq;
 +
- 	rc = mdio_bus_init();
- 	if (rc)
--		return rc;
-+		goto err_ethtool_phy_ops;
- 
--	ethtool_set_ethtool_phy_ops(&phy_ethtool_phy_ops);
- 	features_init();
- 
- 	rc = phy_driver_register(&genphy_c45_driver, THIS_MODULE);
- 	if (rc)
--		goto err_c45;
-+		goto err_mdio_bus;
- 
- 	rc = phy_driver_register(&genphy_driver, THIS_MODULE);
--	if (rc) {
--		phy_driver_unregister(&genphy_c45_driver);
-+	if (rc)
-+		goto err_c45;
-+
-+	return 0;
-+
- err_c45:
--		mdio_bus_exit();
--	}
-+	phy_driver_unregister(&genphy_c45_driver);
-+err_mdio_bus:
-+	mdio_bus_exit();
-+err_ethtool_phy_ops:
-+	ethtool_set_ethtool_phy_ops(NULL);
- 
- 	return rc;
- }
+ 	ret = request_irq(irq, au1200fb_handle_irq,
+ 			  IRQF_SHARED, "lcd", (void *)dev);
+ 	if (ret) {
 -- 
 2.39.2
 
