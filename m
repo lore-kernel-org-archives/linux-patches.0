@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BB21ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:46:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86CAC433CC;
-	Tue, 25 Jul 2023 11:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25E71ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:47:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E5DC433C8;
+	Tue, 25 Jul 2023 11:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285618;
-	bh=iZWpO9ttdKTVp3B1Y07nmrU1UE1gxsMrDhe2zrnf/fA=;
+	s=korg; t=1690285620;
+	bh=zw+ZC4SyZPJKxiH/avp7z15jQlippD22PMelXL2PKbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=131RrJ5xx6Fsxb3Zy7xRhQm3/+h3lRJIm32Uy44AfoYEWkSW/lztnl9iGxXlFwpFW
-	 QVW7N/uMmZ3B8QwdYLTtGuzYakbf/ulhETLdjzNKEaQXAemyXVCF3vD2iPP1i8WYf9
-	 5OTxhFBHKYh4nN9I2fpH0s76hhPUK//3kHYAPyLw=
+	b=odoG9P3qZamEkdX3ZDFO9gd90h3ZDnIcrZS5ejV4mQC/gP8zAmABaFtrEHf/Yt9TJ
+	 Nu+9FI4JQjLjlZjaMjzjJpC2yyag3TsGFRx18RRvyAmi8h9+eVuEfnUy2fVwNzigi2
+	 KjZeI4Ain/3XaKr9bLADxFj9zMfPwCzlJ6Lfni60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quinn Tran <qutran@marvell.com>,
+	Bikash Hazarika <bhazarika@marvell.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.4 269/313] scsi: qla2xxx: Wait for io return on terminate rport
-Date: Tue, 25 Jul 2023 12:47:02 +0200
-Message-ID: <20230725104532.694057886@linuxfoundation.org>
+Subject: [PATCH 5.4 270/313] scsi: qla2xxx: Fix potential NULL pointer dereference
+Date: Tue, 25 Jul 2023 12:47:03 +0200
+Message-ID: <20230725104532.744182148@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -36,71 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Quinn Tran <qutran@marvell.com>
+From: Bikash Hazarika <bhazarika@marvell.com>
 
-commit fc0cba0c7be8261a1625098bd1d695077ec621c9 upstream.
+commit 464ea494a40c6e3e0e8f91dd325408aaf21515ba upstream.
 
-System crash due to use after free.
-Current code allows terminate_rport_io to exit before making
-sure all IOs has returned. For FCP-2 device, IO's can hang
-on in HW because driver has not tear down the session in FW at
-first sign of cable pull. When dev_loss_tmo timer pops,
-terminate_rport_io is called and upper layer is about to
-free various resources. Terminate_rport_io trigger qla to do
-the final cleanup, but the cleanup might not be fast enough where it
-leave qla still holding on to the same resource.
-
-Wait for IO's to return to upper layer before resources are freed.
+Klocwork tool reported 'cur_dsd' may be dereferenced.  Add fix to validate
+pointer before dereferencing the pointer.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Bikash Hazarika <bhazarika@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230428075339.32551-7-njavali@marvell.com
+Link: https://lore.kernel.org/r/20230607113843.37185-3-njavali@marvell.com
 Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_attr.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/scsi/qla2xxx/qla_iocb.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_attr.c
-+++ b/drivers/scsi/qla2xxx/qla_attr.c
-@@ -2574,6 +2574,7 @@ static void
- qla2x00_terminate_rport_io(struct fc_rport *rport)
- {
- 	fc_port_t *fcport = *(fc_port_t **)rport->dd_data;
-+	scsi_qla_host_t *vha;
+--- a/drivers/scsi/qla2xxx/qla_iocb.c
++++ b/drivers/scsi/qla2xxx/qla_iocb.c
+@@ -601,7 +601,8 @@ qla24xx_build_scsi_type_6_iocbs(srb_t *s
+ 	put_unaligned_le32(COMMAND_TYPE_6, &cmd_pkt->entry_type);
  
- 	if (!fcport)
- 		return;
-@@ -2583,9 +2584,12 @@ qla2x00_terminate_rport_io(struct fc_rpo
- 
- 	if (test_bit(ABORT_ISP_ACTIVE, &fcport->vha->dpc_flags))
- 		return;
-+	vha = fcport->vha;
- 
- 	if (unlikely(pci_channel_offline(fcport->vha->hw->pdev))) {
- 		qla2x00_abort_all_cmds(fcport->vha, DID_NO_CONNECT << 16);
-+		qla2x00_eh_wait_for_pending_commands(fcport->vha, fcport->d_id.b24,
-+			0, WAIT_TARGET);
- 		return;
+ 	/* No data transfer */
+-	if (!scsi_bufflen(cmd) || cmd->sc_data_direction == DMA_NONE) {
++	if (!scsi_bufflen(cmd) || cmd->sc_data_direction == DMA_NONE ||
++	    tot_dsds == 0) {
+ 		cmd_pkt->byte_count = cpu_to_le32(0);
+ 		return 0;
  	}
- 	/*
-@@ -2600,6 +2604,15 @@ qla2x00_terminate_rport_io(struct fc_rpo
- 		else
- 			qla2x00_port_logout(fcport->vha, fcport);
- 	}
-+
-+	/* check for any straggling io left behind */
-+	if (qla2x00_eh_wait_for_pending_commands(fcport->vha, fcport->d_id.b24, 0, WAIT_TARGET)) {
-+		ql_log(ql_log_warn, vha, 0x300b,
-+		       "IO not return.  Resetting. \n");
-+		set_bit(ISP_ABORT_NEEDED, &vha->dpc_flags);
-+		qla2xxx_wake_dpc(vha);
-+		qla2x00_wait_for_chip_reset(vha);
-+	}
- }
- 
- static int
 
 
