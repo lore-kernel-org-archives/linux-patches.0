@@ -1,93 +1,87 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022F55385
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 05:01:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780BDC433CA
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 05:01:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1690261286;
-	bh=+FyEzIHHHu86QHrIoXwjeeWi+fV/oC+M1YZ91MsjQXQ=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=BnI66cA59lweu/0a+Q3u7Ol/c21g7OcL6K6YkWORXYvQrvrj4qh94ARo/HvjORaMe
-	 qTvOs1yXe/Pdpia5RAMtcbWVHN+tOdW39vwGAp775rngcIf+JpNfIN0/VpOUHyon2O
-	 CMzMrsFzfNc7Tpmsab8Sy2MM5ufE3IOjmHSUBUcCO/Bq97fwVFpkqFpYx+DDEuVZ1P
-	 2ac4U8pBgan/zJ/OGRzjsI3dlcgGMSPPhR++d4+CAb/GAqMxFcwZG3numGUbjCaQUq
-	 +sUwSJqOpwNCnmIrYRgRoaRfAdc+cEAKSnm0EMb6kknpf08EpNdbEsGW/QKOZzSX7h
-	 kkuLgyreoWyuw==
-Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-56368c40e8eso3164834eaf.0
-        for <patches@lists.linux.dev>; Mon, 24 Jul 2023 22:01:26 -0700 (PDT)
-X-Gm-Message-State: ABy/qLYnKZnpFQo/4wXIPM+uzxQpwdyzU9tuABMK0ctYHIf1DEdEb5c6
-	gp63Td9HXsOhb1AL0jSdscxV0w38WjZh9qWkuCw=
-X-Google-Smtp-Source: APBJJlHNMewixjluZirFDxPtZ/xyBhT/i9rV3VOmKVpLXySF76A/9PjhZyiOUBiUZa72yxWxXdde6eDqTDRyg9svjDM=
-X-Received: by 2002:a4a:91d0:0:b0:566:fa3f:82af with SMTP id
- e16-20020a4a91d0000000b00566fa3f82afmr9199256ooh.5.1690261285620; Mon, 24 Jul
- 2023 22:01:25 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6008F63
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 07:14:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1385FC433C7;
+	Tue, 25 Jul 2023 07:14:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1690269242;
+	bh=+SlG0bjtnJ++zGZ04f+V5JuW4z0BCQ5TYV+oBvqb4eM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=K5875Ne7Dm1aZ03mzNapf8TTWNh9FbG5SFBPB8H+y1gDb949yiNdYePGdxN/iHj4L
+	 UuQy23nnSgod1iFSOxlim3aqMuAvGCUvECg0ITp5XqqpZazOShU5zEWZaU8gLtL6hY
+	 ehaE1lFSKDD/OVFGG35wg6Z7eOMhTLz5gRtr5qnY=
+Date: Tue, 25 Jul 2023 09:13:59 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: "Deucher, Alexander" <Alexander.Deucher@amd.com>
+Cc: "Alex G." <mr.nuke.me@gmail.com>,
+	"stable@vger.kernel.org" <stable@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"Limonciello, Mario" <Mario.Limonciello@amd.com>,
+	"Wang, Chao-kai (Stylon)" <Stylon.Wang@amd.com>,
+	"Wu, Hersen" <hersenxs.wu@amd.com>, "Li, Roman" <Roman.Li@amd.com>,
+	"Wheeler, Daniel" <Daniel.Wheeler@amd.com>,
+	"eniac-xw.zhang@hp.com" <eniac-xw.zhang@hp.com>
+Subject: Re: [PATCH 6.1 146/223] drm/amd/display: edp do not add non-edid
+ timings
+Message-ID: <2023072503-subduing-entertain-878c@gregkh>
+References: <20230721160520.865493356@linuxfoundation.org>
+ <20230721160527.097927704@linuxfoundation.org>
+ <18e9e042-12ec-8e09-1225-ca44810e2b82@gmail.com>
+ <BL1PR12MB5144A568ECEB3E9E18BA74C4F702A@BL1PR12MB5144.namprd12.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230723142128.194339-1-ojeda@kernel.org>
-In-Reply-To: <20230723142128.194339-1-ojeda@kernel.org>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Tue, 25 Jul 2023 14:00:49 +0900
-X-Gmail-Original-Message-ID: <CAK7LNAR_CaZ8fJ+fOm9-X83MOtwDa9aavZ5JM6DFOAA00GgULw@mail.gmail.com>
-Message-ID: <CAK7LNAR_CaZ8fJ+fOm9-X83MOtwDa9aavZ5JM6DFOAA00GgULw@mail.gmail.com>
-Subject: Re: [PATCH v2] kbuild: rust: avoid creating temporary files
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
-	Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
-	Andreas Hindborg <a.hindborg@samsung.com>, linux-kbuild@vger.kernel.org, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Raphael Nestler <raphael.nestler@gmail.com>, 
-	Andrea Righi <andrea.righi@canonical.com>, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <BL1PR12MB5144A568ECEB3E9E18BA74C4F702A@BL1PR12MB5144.namprd12.prod.outlook.com>
 
-On Sun, Jul 23, 2023 at 11:21=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wr=
-ote:
->
-> `rustc` outputs by default the temporary files (i.e. the ones saved
-> by `-Csave-temps`, such as `*.rcgu*` files) in the current working
-> directory when `-o` and `--out-dir` are not given (even if
-> `--emit=3Dx=3Dpath` is given, i.e. it does not use those for temporaries)=
-.
->
-> Since out-of-tree modules are compiled from the `linux` tree,
-> `rustc` then tries to create them there, which may not be accessible.
->
-> Thus pass `--out-dir` explicitly, even if it is just for the temporary
-> files.
->
-> Similarly, do so for Rust host programs too.
->
-> Reported-by: Raphael Nestler <raphael.nestler@gmail.com>
-> Closes: https://github.com/Rust-for-Linux/linux/issues/1015
-> Reported-by: Andrea Righi <andrea.righi@canonical.com>
-> Tested-by: Raphael Nestler <raphael.nestler@gmail.com> # non-hostprogs
-> Tested-by: Andrea Righi <andrea.righi@canonical.com> # non-hostprogs
-> Fixes: 295d8398c67e ("kbuild: specify output names separately for each em=
-ission type from rustc")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
-> v2:
->   - Add fix for host programs too (Masahiro).
+On Mon, Jul 24, 2023 at 07:38:24PM +0000, Deucher, Alexander wrote:
+> [AMD Official Use Only - General]
+> 
+> > -----Original Message-----
+> > From: Alex G. <mr.nuke.me@gmail.com>
+> > Sent: Monday, July 24, 2023 3:23 PM
+> > To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>;
+> > stable@vger.kernel.org
+> > Cc: patches@lists.linux.dev; Limonciello, Mario
+> > <Mario.Limonciello@amd.com>; Deucher, Alexander
+> > <Alexander.Deucher@amd.com>; Wang, Chao-kai (Stylon)
+> > <Stylon.Wang@amd.com>; Wu, Hersen <hersenxs.wu@amd.com>; Li, Roman
+> > <Roman.Li@amd.com>; Wheeler, Daniel <Daniel.Wheeler@amd.com>; eniac-
+> > xw.zhang@hp.com
+> > Subject: Re: [PATCH 6.1 146/223] drm/amd/display: edp do not add non-edid
+> > timings
+> >
+> > Hi Greg,
+> >
+> > This patch was
+> >      * originally added to v6.1.35
+> >      * reverted in v6.1.39
+> >      * added back in v6.1.40
+> >
+> > This patch is still reverted in mainline. Was this patch re-added by mistake in
+> > v6.1.y stable?
+> 
+> Yes, this patch should stay reverted.
 
+Where was it reverted in the 6.1.y tree?  And where was it reverted in
+Linus's tree?
 
-This is now available in the mainline.
+I think the confusion here is you have the same commit in the tree with
+two different commit ids.  So when I see the patches flow by, I applied
+just this one to the tree, and I only see it in 6.1.40 with that id,
+missing any possible revert of a previous version as the ids don't match
+up.
 
-df01b7cfcef08bf3fdcac2909d0e1910781d6bfd
+In other words, what am I supposed to do here when you duplicate
+commits?  What's the revert of this commit, is it also in the tree
+twice?
 
+thanks,
 
-
-
-
---=20
-Best Regards
-Masahiro Yamada
+greg k-h
