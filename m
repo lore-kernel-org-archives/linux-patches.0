@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2FB1F160
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:37:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F335C433C7;
-	Tue, 25 Jul 2023 11:37:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB4D1F160
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:37:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64729C433C9;
+	Tue, 25 Jul 2023 11:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285022;
-	bh=qmlR8L2IH4RcnaGtnZPlTVFE9NnIV91ssNg7HdyFgHo=;
+	s=korg; t=1690285024;
+	bh=uTT4N/pYNGnqyzL5vw0jL9SQdJx0AeZxhK/XW9u33rU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k4w/2YrJGg/Fd1piLeccFoHTNwHMLn+wwz5nkK+LMePNvH4XFIU/GfNN7wnTFa2ll
-	 ypXoFew3W8M6+WmA95cElFEfUpGCUsaM/8JYeWuhCmhBx31Yw0zWoXf/67mrTweOxR
-	 KtobCh5qwHRvGqPJC/Z36WDm0z/GJHJQkARovUjk=
+	b=cogfnP4fnzJxfq6V14/CWUPuwZJkzngPF7bYySAP95ToM4jVGeYm6ZCndPYJ5+S0d
+	 69dFFKyVHhnqdc/WgKKAkmtp3lNQ+32YIZEPZePpsJekBFAQhksKpuGPFa5B9aaaHi
+	 TpIcjJlg2lx8N81XS3NOjpnahdVcayNGOeqeZXjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
-	Nicolas Escande <nico.escande@gmail.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
 	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 055/313] wifi: ath9k: Fix possible stall on ath9k_txq_list_has_key()
-Date: Tue, 25 Jul 2023 12:43:28 +0200
-Message-ID: <20230725104523.452310440@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+f2cb6e0ffdb961921e4d@syzkaller.appspotmail.com
+Subject: [PATCH 5.4 029/313] wifi: ath9k: avoid referencing uninit memory in ath9k_wmi_ctrl_rx
+Date: Tue, 25 Jul 2023 12:43:02 +0200
+Message-ID: <20230725104522.380155772@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -37,106 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 75086cc6dee046e3fbb3dba148b376d8802f83bc ]
+[ Upstream commit f24292e827088bba8de7158501ac25a59b064953 ]
 
-On EDMA capable hardware, ath9k_txq_list_has_key() can enter infinite
-loop if it is called while all txq_fifos have packets that use different
-key that the one we are looking for. Fix it by exiting the loop if all
-txq_fifos have been checked already.
+For the reasons also described in commit b383e8abed41 ("wifi: ath9k: avoid
+uninit memory read in ath9k_htc_rx_msg()"), ath9k_htc_rx_msg() should
+validate pkt_len before accessing the SKB.
 
-Because this loop is called under spin_lock_bh() (see ath_txq_lock) it
-causes the following rcu stall:
+For example, the obtained SKB may have been badly constructed with
+pkt_len = 8. In this case, the SKB can only contain a valid htc_frame_hdr
+but after being processed in ath9k_htc_rx_msg() and passed to
+ath9k_wmi_ctrl_rx() endpoint RX handler, it is expected to have a WMI
+command header which should be located inside its data payload.
 
-rcu: INFO: rcu_sched self-detected stall on CPU
-ath10k_pci 0000:01:00.0: failed to read temperature -11
-rcu:    1-....: (5254 ticks this GP) idle=189/1/0x4000000000000002 softirq=8442983/8442984 fqs=2579
-        (t=5257 jiffies g=17983297 q=334)
-Task dump for CPU 1:
-task:hostapd         state:R  running task     stack:    0 pid:  297 ppid:   289 flags:0x0000000a
-Call trace:
- dump_backtrace+0x0/0x170
- show_stack+0x1c/0x24
- sched_show_task+0x140/0x170
- dump_cpu_task+0x48/0x54
- rcu_dump_cpu_stacks+0xf0/0x134
- rcu_sched_clock_irq+0x8d8/0x9fc
- update_process_times+0xa0/0xec
- tick_sched_timer+0x5c/0xd0
- __hrtimer_run_queues+0x154/0x320
- hrtimer_interrupt+0x120/0x2f0
- arch_timer_handler_virt+0x38/0x44
- handle_percpu_devid_irq+0x9c/0x1e0
- handle_domain_irq+0x64/0x90
- gic_handle_irq+0x78/0xb0
- call_on_irq_stack+0x28/0x38
- do_interrupt_handler+0x54/0x5c
- el1_interrupt+0x2c/0x4c
- el1h_64_irq_handler+0x14/0x1c
- el1h_64_irq+0x74/0x78
- ath9k_txq_has_key+0x1bc/0x250 [ath9k]
- ath9k_set_key+0x1cc/0x3dc [ath9k]
- drv_set_key+0x78/0x170
- ieee80211_key_replace+0x564/0x6cc
- ieee80211_key_link+0x174/0x220
- ieee80211_add_key+0x11c/0x300
- nl80211_new_key+0x12c/0x330
- genl_family_rcv_msg_doit+0xbc/0x11c
- genl_rcv_msg+0xd8/0x1c4
- netlink_rcv_skb+0x40/0x100
- genl_rcv+0x3c/0x50
- netlink_unicast+0x1ec/0x2c0
- netlink_sendmsg+0x198/0x3c0
- ____sys_sendmsg+0x210/0x250
- ___sys_sendmsg+0x78/0xc4
- __sys_sendmsg+0x4c/0x90
- __arm64_sys_sendmsg+0x28/0x30
- invoke_syscall.constprop.0+0x60/0x100
- do_el0_svc+0x48/0xd0
- el0_svc+0x14/0x50
- el0t_64_sync_handler+0xa8/0xb0
- el0t_64_sync+0x158/0x15c
+Implement sanity checking inside ath9k_wmi_ctrl_rx(). Otherwise, uninit
+memory can be referenced.
 
-This rcu stall is hard to reproduce as is, but changing ATH_TXFIFO_DEPTH
-from 8 to 2 makes it reasonably easy to reproduce.
+Tested on Qualcomm Atheros Communications AR9271 802.11n .
 
-Fixes: ca2848022c12 ("ath9k: Postpone key cache entry deletion for TXQ frames reference it")
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Tested-by: Nicolas Escande <nico.escande@gmail.com>
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Reported-and-tested-by: syzbot+f2cb6e0ffdb961921e4d@syzkaller.appspotmail.com
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230609093744.1985-1-repk@triplefau.lt
+Link: https://lore.kernel.org/r/20230424183348.111355-1-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/main.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath9k/wmi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath9k/main.c b/drivers/net/wireless/ath/ath9k/main.c
-index eb5751a45f266..4e606a4b19f2d 100644
---- a/drivers/net/wireless/ath/ath9k/main.c
-+++ b/drivers/net/wireless/ath/ath9k/main.c
-@@ -847,7 +847,7 @@ static bool ath9k_txq_list_has_key(struct list_head *txq_list, u32 keyix)
- static bool ath9k_txq_has_key(struct ath_softc *sc, u32 keyix)
- {
- 	struct ath_hw *ah = sc->sc_ah;
--	int i;
-+	int i, j;
- 	struct ath_txq *txq;
- 	bool key_in_use = false;
+diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
+index deb22b8c2065f..ef861b19fd477 100644
+--- a/drivers/net/wireless/ath/ath9k/wmi.c
++++ b/drivers/net/wireless/ath/ath9k/wmi.c
+@@ -218,6 +218,10 @@ static void ath9k_wmi_ctrl_rx(void *priv, struct sk_buff *skb,
+ 	if (unlikely(wmi->stopped))
+ 		goto free_skb;
  
-@@ -865,8 +865,9 @@ static bool ath9k_txq_has_key(struct ath_softc *sc, u32 keyix)
- 		if (sc->sc_ah->caps.hw_caps & ATH9K_HW_CAP_EDMA) {
- 			int idx = txq->txq_tailidx;
++	/* Validate the obtained SKB. */
++	if (unlikely(skb->len < sizeof(struct wmi_cmd_hdr)))
++		goto free_skb;
++
+ 	hdr = (struct wmi_cmd_hdr *) skb->data;
+ 	cmd_id = be16_to_cpu(hdr->command_id);
  
--			while (!key_in_use &&
--			       !list_empty(&txq->txq_fifo[idx])) {
-+			for (j = 0; !key_in_use &&
-+			     !list_empty(&txq->txq_fifo[idx]) &&
-+			     j < ATH_TXFIFO_DEPTH; j++) {
- 				key_in_use = ath9k_txq_list_has_key(
- 					&txq->txq_fifo[idx], keyix);
- 				INCR(idx, ATH_TXFIFO_DEPTH);
 -- 
 2.39.2
 
