@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467B01ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:21:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB282C433C8;
-	Tue, 25 Jul 2023 11:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05A01ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:21:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76652C433C7;
+	Tue, 25 Jul 2023 11:21:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284063;
-	bh=suNOOXsmGHUwJAAD4tj6Qu2EcMID2zI+NyqW+2MO8aM=;
+	s=korg; t=1690284065;
+	bh=OC1oySKQu/XnljSSnIdeB7dtzts0notfAQoc0gCYHDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OerX9POrutfbySQchggEtfJgRnjWsJB58vmrjRUEnxvPtfattvdFBB/wsw46smh2e
-	 AdPkF2LjRZ8PHZ7HBHV9RFHEuD7rPEEUJ73qVAj8tSlokqlaguDehW6kap9V7Eg9w4
-	 HU/1f+3zgEgcbbPYc8K4H2UrWrvsNNh6an63yI9Q=
+	b=lY6R6+j99cBqqYFPVTmlKwF2k4PjfE8OlDej26slRo22kDNFY891nj/We/or1zqlh
+	 IgsmNZegO7f8SLUtYU/ORbu8CJ0Nwubz4EFAVlMM7k3HAd0R55XjIgaQnnRQkodDa7
+	 uFgDeAMeaWXrfF7Y4lMHfjdhs5kizcPnfeh2zeIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sui Jingfeng <suijingfeng@loongson.cn>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Martin Steigerwald <Martin@lichtvoll.de>,
+	Michael Schmitz <schmitzmic@gmail.com>,
 	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 182/509] PCI: Add pci_clear_master() stub for non-CONFIG_PCI
-Date: Tue, 25 Jul 2023 12:42:01 +0200
-Message-ID: <20230725104602.032157872@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 215/509] block: fix signed int overflow in Amiga partition support
+Date: Tue, 25 Jul 2023 12:42:34 +0200
+Message-ID: <20230725104603.576306898@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,39 +37,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sui Jingfeng <suijingfeng@loongson.cn>
+From: Michael Schmitz <schmitzmic@gmail.com>
 
-[ Upstream commit 2aa5ac633259843f656eb6ecff4cf01e8e810c5e ]
+commit fc3d092c6bb48d5865fec15ed5b333c12f36288c upstream.
 
-Add a pci_clear_master() stub when CONFIG_PCI is not set so drivers that
-support both PCI and platform devices don't need #ifdefs or extra Kconfig
-symbols for the PCI parts.
+The Amiga partition parser module uses signed int for partition sector
+address and count, which will overflow for disks larger than 1 TB.
 
-[bhelgaas: commit log]
-Fixes: 6a479079c072 ("PCI: Add pci_clear_master() as opposite of pci_set_master()")
-Link: https://lore.kernel.org/r/20230531102744.2354313-1-suijingfeng@loongson.cn
-Signed-off-by: Sui Jingfeng <suijingfeng@loongson.cn>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Use sector_t as type for sector address and size to allow using disks
+up to 2 TB without LBD support, and disks larger than 2 TB with LBD.
+
+This bug was reported originally in 2012, and the fix was created by
+the RDB author, Joanne Dow <jdow@earthlink.net>. A patch had been
+discussed and reviewed on linux-m68k at that time but never officially
+submitted. This patch differs from Joanne's patch only in its use of
+sector_t instead of unsigned int. No checking for overflows is done
+(see patch 3 of this series for that).
+
+Reported-by: Martin Steigerwald <Martin@lichtvoll.de>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=43511
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Message-ID: <201206192146.09327.Martin@lichtvoll.de>
+Cc: <stable@vger.kernel.org> # 5.2
+Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
+Tested-by: Martin Steigerwald <Martin@lichtvoll.de>
 Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20230620201725.7020-2-schmitzmic@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/pci.h | 1 +
- 1 file changed, 1 insertion(+)
+ block/partitions/amiga.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 4cc42ad2f6c52..550e1cdb473fa 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -1719,6 +1719,7 @@ static inline struct pci_dev *pci_get_class(unsigned int class,
- #define pci_dev_put(dev)	do { } while (0)
+--- a/block/partitions/amiga.c
++++ b/block/partitions/amiga.c
+@@ -31,7 +31,8 @@ int amiga_partition(struct parsed_partit
+ 	unsigned char *data;
+ 	struct RigidDiskBlock *rdb;
+ 	struct PartitionBlock *pb;
+-	int start_sect, nr_sects, blk, part, res = 0;
++	sector_t start_sect, nr_sects;
++	int blk, part, res = 0;
+ 	int blksize = 1;	/* Multiplier for disk block size */
+ 	int slot = 1;
+ 	char b[BDEVNAME_SIZE];
+@@ -97,14 +98,14 @@ int amiga_partition(struct parsed_partit
  
- static inline void pci_set_master(struct pci_dev *dev) { }
-+static inline void pci_clear_master(struct pci_dev *dev) { }
- static inline int pci_enable_device(struct pci_dev *dev) { return -EIO; }
- static inline void pci_disable_device(struct pci_dev *dev) { }
- static inline int pcim_enable_device(struct pci_dev *pdev) { return -EIO; }
--- 
-2.39.2
-
+ 		/* Tell Kernel about it */
+ 
+-		nr_sects = (be32_to_cpu(pb->pb_Environment[10]) + 1 -
+-			    be32_to_cpu(pb->pb_Environment[9])) *
++		nr_sects = ((sector_t)be32_to_cpu(pb->pb_Environment[10]) + 1 -
++			   be32_to_cpu(pb->pb_Environment[9])) *
+ 			   be32_to_cpu(pb->pb_Environment[3]) *
+ 			   be32_to_cpu(pb->pb_Environment[5]) *
+ 			   blksize;
+ 		if (!nr_sects)
+ 			continue;
+-		start_sect = be32_to_cpu(pb->pb_Environment[9]) *
++		start_sect = (sector_t)be32_to_cpu(pb->pb_Environment[9]) *
+ 			     be32_to_cpu(pb->pb_Environment[3]) *
+ 			     be32_to_cpu(pb->pb_Environment[5]) *
+ 			     blksize;
 
 
