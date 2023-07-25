@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F391ED4D
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:42:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851DBC433C7;
-	Tue, 25 Jul 2023 11:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65201ED4D
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:42:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4803EC433C8;
+	Tue, 25 Jul 2023 11:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285319;
-	bh=wHcwFXoZIfsjldlBg353FN+1Xjd22G9gWveTdorJWIo=;
+	s=korg; t=1690285322;
+	bh=XmxzaaER255j+qym9M427F0CRp3DIvbsG7KfgQvarxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0JYkqFOPl7rEKBkPn5zera2eVO6aCglAyCtHQlIcrW+lrlWmk4gJ504ta96E1o6NS
-	 5zutU5qg8TiIa8cnYY1hc4Rd3W3dQshVY2qySO7jGarasJ1QLWvJJ41oCeR5D4gH1U
-	 MViw6or5YJS3n+rcgyoyPEpijjEbEJoEEhLFWbCM=
+	b=EseuPCC6syWpG9OsxoA0FrolbJeH38IkWhtkccwE+5GsPr28MWGR++fsuz3BWb1PA
+	 rFao27MYNOe5XBuQ3NbS1L6WvSH1ZMVG1KyXzlyddIdMcOccuX3hKKZ/a9TuM883OF
+	 eDPVAzei1MwRQ3zrPMC6iJtwTLnra4S1r+ynnj7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 155/313] xsk: Honor SO_BINDTODEVICE on bind
-Date: Tue, 25 Jul 2023 12:45:08 +0200
-Message-ID: <20230725104527.684051510@linuxfoundation.org>
+	Robert Marko <robimarko@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.4 164/313] mmc: core: disable TRIM on Micron MTFC4GACAJCN-1M
+Date: Tue, 25 Jul 2023 12:45:17 +0200
+Message-ID: <20230725104528.035129127@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -38,101 +34,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Robert Marko <robimarko@gmail.com>
 
-[ Upstream commit f7306acec9aae9893d15e745c8791124d42ab10a ]
+commit dbfbddcddcebc9ce8a08757708d4e4a99d238e44 upstream.
 
-Initial creation of an AF_XDP socket requires CAP_NET_RAW capability. A
-privileged process might create the socket and pass it to a non-privileged
-process for later use. However, that process will be able to bind the socket
-to any network interface. Even though it will not be able to receive any
-traffic without modification of the BPF map, the situation is not ideal.
+It seems that Micron MTFC4GACAJCN-1M despite advertising TRIM support does
+not work when the core is trying to use REQ_OP_WRITE_ZEROES.
 
-Sockets already have a mechanism that can be used to restrict what interface
-they can be attached to. That is SO_BINDTODEVICE.
+We are seeing the following errors in OpenWrt under 6.1 on Qnap Qhora 301W
+that we did not previously have and tracked it down to REQ_OP_WRITE_ZEROES:
+[   18.085950] I/O error, dev loop0, sector 596 op 0x9:(WRITE_ZEROES) flags 0x800 phys_seg 0 prio class 2
 
-To change the SO_BINDTODEVICE binding the process will need CAP_NET_RAW.
+Disabling TRIM makes the error go away, so lets add a quirk for this eMMC
+to disable TRIM.
 
-Make xsk_bind() honor the SO_BINDTODEVICE in order to allow safer workflow
-when non-privileged process is using AF_XDP.
-
-The intended workflow is following:
-
-  1. First process creates a bare socket with socket(AF_XDP, ...).
-  2. First process loads the XSK program to the interface.
-  3. First process adds the socket fd to a BPF map.
-  4. First process ties socket fd to a particular interface using
-     SO_BINDTODEVICE.
-  5. First process sends socket fd to a second process.
-  6. Second process allocates UMEM.
-  7. Second process binds socket to the interface with bind(...).
-  8. Second process sends/receives the traffic.
-
-All the steps above are possible today if the first process is privileged
-and the second one has sufficient RLIMIT_MEMLOCK and no capabilities.
-However, the second process will be able to bind the socket to any interface
-it wants on step 7 and send traffic from it. With the proposed change, the
-second process will be able to bind the socket only to a specific interface
-chosen by the first process at step 4.
-
-Fixes: 965a99098443 ("xsk: add support for bind for Rx")
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Link: https://lore.kernel.org/bpf/20230703175329.3259672-1-i.maximets@ovn.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230530213259.1776512-1-robimarko@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/networking/af_xdp.rst | 9 +++++++++
- net/xdp/xsk.c                       | 5 +++++
- 2 files changed, 14 insertions(+)
+ drivers/mmc/core/quirks.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/Documentation/networking/af_xdp.rst b/Documentation/networking/af_xdp.rst
-index 7a4caaaf3a179..09b3943b3b719 100644
---- a/Documentation/networking/af_xdp.rst
-+++ b/Documentation/networking/af_xdp.rst
-@@ -378,6 +378,15 @@ start N bytes into the buffer leaving the first N bytes for the
- application to use. The final option is the flags field, but it will
- be dealt with in separate sections for each UMEM flag.
+--- a/drivers/mmc/core/quirks.h
++++ b/drivers/mmc/core/quirks.h
+@@ -98,6 +98,13 @@ static const struct mmc_fixup mmc_blk_fi
+ 		  MMC_QUIRK_TRIM_BROKEN),
  
-+SO_BINDTODEVICE setsockopt
-+--------------------------
+ 	/*
++	 * Micron MTFC4GACAJCN-1M advertises TRIM but it does not seems to
++	 * support being used to offload WRITE_ZEROES.
++	 */
++	MMC_FIXUP("Q2J54A", CID_MANFID_MICRON, 0x014e, add_quirk_mmc,
++		  MMC_QUIRK_TRIM_BROKEN),
 +
-+This is a generic SOL_SOCKET option that can be used to tie AF_XDP
-+socket to a particular network interface.  It is useful when a socket
-+is created by a privileged process and passed to a non-privileged one.
-+Once the option is set, kernel will refuse attempts to bind that socket
-+to a different interface.  Updating the value requires CAP_NET_RAW.
-+
- XDP_STATISTICS getsockopt
- -------------------------
- 
-diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index 2bc0d6e3e124c..d04a2345bc3f5 100644
---- a/net/xdp/xsk.c
-+++ b/net/xdp/xsk.c
-@@ -613,6 +613,7 @@ static int xsk_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
- 	struct sock *sk = sock->sk;
- 	struct xdp_sock *xs = xdp_sk(sk);
- 	struct net_device *dev;
-+	int bound_dev_if;
- 	u32 flags, qid;
- 	int err = 0;
- 
-@@ -626,6 +627,10 @@ static int xsk_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
- 		      XDP_USE_NEED_WAKEUP))
- 		return -EINVAL;
- 
-+	bound_dev_if = READ_ONCE(sk->sk_bound_dev_if);
-+	if (bound_dev_if && bound_dev_if != sxdp->sxdp_ifindex)
-+		return -EINVAL;
-+
- 	rtnl_lock();
- 	mutex_lock(&xs->mutex);
- 	if (xs->state != XSK_READY) {
--- 
-2.39.2
-
++	/*
+ 	 *  On Some Kingston eMMCs, performing trim can result in
+ 	 *  unrecoverable data conrruption occasionally due to a firmware bug.
+ 	 */
 
 
