@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C1715ACF
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:43:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40606C433C8;
-	Tue, 25 Jul 2023 11:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C527F15ACF
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:43:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F64C433CA;
+	Tue, 25 Jul 2023 11:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285423;
-	bh=jCyfVEhU6vEmeCWsgLq+jwpt/9NF9ZDiTroh/Zk4hLc=;
+	s=korg; t=1690285426;
+	bh=UhyQDB98Zn9QYjr4U0UgihMWd1dLinu7subL29Nt/Dg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fKgbm9QGaqN4BRfqiz8Zg49wjDRwwmet8FvV4qkRJAMG6DObfB89FIHuiKM0DHFSb
-	 aPLkD0VuyMO4cAL9pk4XZXV/W8pfNhcLTzFEwGwrbGiBpdnGuFAkUfjk6bBNxLYH7h
-	 HXF3qzgiQk239IWKQVjG0GM3w+VCOcXjgMpksc5o=
+	b=GYr4QUoj1z+6ozKzH18cwbT0VTczMrOZTROJpxlfUt4NYFDruJTU+I3tubBe+OQ40
+	 MHkqgVV8o5dFQUAIXd70Bn9m2YjVigTzA87B91vBKlK/iokbY7A5PEAgV08gcOHBy9
+	 LBVbLhw4Uir39XFBQfY7a9Hhk4E6bq1texM4vC2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Klaus Kudielka <klaus.kudielka@gmail.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 200/313] scsi: qla2xxx: Fix error code in qla2x00_start_sp()
-Date: Tue, 25 Jul 2023 12:45:53 +0200
-Message-ID: <20230725104529.664477600@linuxfoundation.org>
+Subject: [PATCH 5.4 201/313] net: mvneta: fix txq_map in case of txq_number==1
+Date: Tue, 25 Jul 2023 12:45:54 +0200
+Message-ID: <20230725104529.706359394@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,36 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Klaus Kudielka <klaus.kudielka@gmail.com>
 
-[ Upstream commit e579b007eff3ff8d29d59d16214cd85fb9e573f7 ]
+[ Upstream commit 21327f81db6337c8843ce755b01523c7d3df715b ]
 
-This should be negative -EAGAIN instead of positive.  The callers treat
-non-zero error codes the same so it doesn't really impact runtime beyond
-some trivial differences to debug output.
+If we boot with mvneta.txq_number=1, the txq_map is set incorrectly:
+MVNETA_CPU_TXQ_ACCESS(1) refers to TX queue 1, but only TX queue 0 is
+initialized. Fix this.
 
-Fixes: 80676d054e5a ("scsi: qla2xxx: Fix session cleanup hang")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/49866d28-4cfe-47b0-842b-78f110e61aab@moroto.mountain
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 50bf8cb6fc9c ("net: mvneta: Configure XPS support")
+Signed-off-by: Klaus Kudielka <klaus.kudielka@gmail.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Link: https://lore.kernel.org/r/20230705053712.3914-1-klaus.kudielka@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_iocb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/mvneta.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_iocb.c b/drivers/scsi/qla2xxx/qla_iocb.c
-index 103288b0377e0..cbdc84fdc52c1 100644
---- a/drivers/scsi/qla2xxx/qla_iocb.c
-+++ b/drivers/scsi/qla2xxx/qla_iocb.c
-@@ -3665,7 +3665,7 @@ qla2x00_start_sp(srb_t *sp)
- 	spin_lock_irqsave(qp->qp_lock_ptr, flags);
- 	pkt = __qla2x00_alloc_iocbs(sp->qpair, sp);
- 	if (!pkt) {
--		rval = EAGAIN;
-+		rval = -EAGAIN;
- 		ql_log(ql_log_warn, vha, 0x700c,
- 		    "qla2x00_alloc_iocbs failed.\n");
- 		goto done;
+diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
+index 977c2961aa2c2..110221a16bf6d 100644
+--- a/drivers/net/ethernet/marvell/mvneta.c
++++ b/drivers/net/ethernet/marvell/mvneta.c
+@@ -1422,7 +1422,7 @@ static void mvneta_defaults_set(struct mvneta_port *pp)
+ 			 */
+ 			if (txq_number == 1)
+ 				txq_map = (cpu == pp->rxq_def) ?
+-					MVNETA_CPU_TXQ_ACCESS(1) : 0;
++					MVNETA_CPU_TXQ_ACCESS(0) : 0;
+ 
+ 		} else {
+ 			txq_map = MVNETA_CPU_TXQ_ACCESS_ALL_MASK;
+@@ -3762,7 +3762,7 @@ static void mvneta_percpu_elect(struct mvneta_port *pp)
+ 		 */
+ 		if (txq_number == 1)
+ 			txq_map = (cpu == elected_cpu) ?
+-				MVNETA_CPU_TXQ_ACCESS(1) : 0;
++				MVNETA_CPU_TXQ_ACCESS(0) : 0;
+ 		else
+ 			txq_map = mvreg_read(pp, MVNETA_CPU_MAP(cpu)) &
+ 				MVNETA_CPU_TXQ_ACCESS_ALL_MASK;
 -- 
 2.39.2
 
