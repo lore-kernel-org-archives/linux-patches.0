@@ -1,33 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 740FC1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:32:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98F4C433C7;
-	Tue, 25 Jul 2023 11:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5AD1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:32:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2128C433C8;
+	Tue, 25 Jul 2023 11:32:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284749;
-	bh=IiINVVFp3FcZlpj5GWmJ9MH+vbqklIbUM8ZJn3S5EWQ=;
+	s=korg; t=1690284752;
+	bh=Udq6luzFCYdwtoHw5SqQw/3Ia3PXXOY2Yie7rp2sUh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WIV1hhh4lbERP1ifVAoNUma8f4tdWOarzYZf2czWNMT/ncIA8X7lTMfiO7W71FBI9
-	 ZtJfOCfHQkiCMNrxiDgMwYQTayWYAkeEu4RiPh5eP2w+WOpkLssVfB66G3mSrG6Rn/
-	 NY4JsKCz/p9ST8mPxOElLS4euWLKQSh0bYMbdWe0=
+	b=atgupHwiP0x+cNjjXn8ZRglkJ/k364XQUaodkdom+1NdHCcElLwNQh9Emojr+2EUD
+	 lHi2EHSAt2FUB5SniiXdvqtfi3i5SUG6WZJq1YyNAx1ac+0+Oz9Utpu+sVdhg3hMyM
+	 WE+spVP5PN4/oq5HxeQ5BuT6iO5oQfRAR2aqWxlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	shanzhulig <shanzhulig@gmail.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	stable@kernel.org,
-	Daniel Vetter <daniel.vetter@intel.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.10 439/509] drm/atomic: Fix potential use-after-free in nonblocking commits
-Date: Tue, 25 Jul 2023 12:46:18 +0200
-Message-ID: <20230725104613.833889001@linuxfoundation.org>
+	Kailang Yang <kailang@realtek.com>,
+	"Joseph C. Sible" <josephcsible@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 440/509] ALSA: hda/realtek - remove 3k pull low procedure
+Date: Tue, 25 Jul 2023 12:46:19 +0200
+Message-ID: <20230725104613.884840028@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -41,91 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Vetter <daniel.vetter@ffwll.ch>
+From: Kailang Yang <kailang@realtek.com>
 
-commit 4e076c73e4f6e90816b30fcd4a0d7ab365087255 upstream.
+commit 69ea4c9d02b7947cdd612335a61cc1a02e544ccd upstream.
 
-This requires a bit of background.  Properly done a modeset driver's
-unload/remove sequence should be
+This was the ALC283 depop procedure.
+Maybe this procedure wasn't suitable with new codec.
+So, let us remove it. But HP 15z-fc000 must do 3k pull low. If it
+reboot with plugged headset,
+it will have errors show don't find codec error messages. Run 3k pull
+low will solve issues.
+So, let AMD chipset will run this for workarround.
 
-	drm_dev_unplug();
-	drm_atomic_helper_shutdown();
-	drm_dev_put();
-
-The trouble is that the drm_dev_unplugged() checks are by design racy,
-they do not synchronize against all outstanding ioctl.  This is because
-those ioctl could block forever (both for modeset and for driver
-specific ioctls), leading to deadlocks in hotunplug.  Instead the code
-sections that touch the hardware need to be annotated with
-drm_dev_enter/exit, to avoid accessing hardware resources after the
-unload/remove has finished.
-
-To avoid use-after-free issues all the involved userspace visible
-objects are supposed to hold a reference on the underlying drm_device,
-like drm_file does.
-
-The issue now is that we missed one, the atomic modeset ioctl can be run
-in a nonblocking fashion, and in that case it cannot rely on the implied
-drm_device reference provided by the ioctl calling context.  This can
-result in a use-after-free if an nonblocking atomic commit is carefully
-raced against a driver unload.
-
-Fix this by unconditionally grabbing a drm_device reference for any
-drm_atomic_state structures.  Strictly speaking this isn't required for
-blocking commits and TEST_ONLY calls, but it's the simpler approach.
-
-Thanks to shanzhulig for the initial idea of grabbing an unconditional
-reference, I just added comments, a condensed commit message and fixed a
-minor potential issue in where exactly we drop the final reference.
-
-Reported-by: shanzhulig <shanzhulig@gmail.com>
-Suggested-by: shanzhulig <shanzhulig@gmail.com>
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: David Airlie <airlied@gmail.com>
-Cc: stable@kernel.org
-Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 5aec98913095 ("ALSA: hda/realtek - ALC236 headset MIC recording issue")
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Cc: <stable@vger.kernel.org>
+Reported-by: Joseph C. Sible <josephcsible@gmail.com>
+Closes: https://lore.kernel.org/r/CABpewhE4REgn9RJZduuEU6Z_ijXNeQWnrxO1tg70Gkw=F8qNYg@mail.gmail.com/
+Link: https://lore.kernel.org/r/4678992299664babac4403d9978e7ba7@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_atomic.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/drm_atomic.c
-+++ b/drivers/gpu/drm/drm_atomic.c
-@@ -98,6 +98,12 @@ drm_atomic_state_init(struct drm_device
- 	if (!state->planes)
- 		goto fail;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -121,6 +121,7 @@ struct alc_spec {
+ 	unsigned int ultra_low_power:1;
+ 	unsigned int has_hs_key:1;
+ 	unsigned int no_internal_mic_pin:1;
++	unsigned int en_3kpull_low:1;
  
-+	/*
-+	 * Because drm_atomic_state can be committed asynchronously we need our
-+	 * own reference and cannot rely on the on implied by drm_file in the
-+	 * ioctl call.
-+	 */
-+	drm_dev_get(dev);
- 	state->dev = dev;
+ 	/* for PLL fix */
+ 	hda_nid_t pll_nid;
+@@ -3617,6 +3618,7 @@ static void alc256_shutup(struct hda_cod
+ 	if (!hp_pin)
+ 		hp_pin = 0x21;
  
- 	DRM_DEBUG_ATOMIC("Allocated atomic state %p\n", state);
-@@ -257,7 +263,8 @@ EXPORT_SYMBOL(drm_atomic_state_clear);
- void __drm_atomic_state_free(struct kref *ref)
- {
- 	struct drm_atomic_state *state = container_of(ref, typeof(*state), ref);
--	struct drm_mode_config *config = &state->dev->mode_config;
-+	struct drm_device *dev = state->dev;
-+	struct drm_mode_config *config = &dev->mode_config;
++	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
+ 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
  
- 	drm_atomic_state_clear(state);
+ 	if (hp_pin_sense)
+@@ -3633,8 +3635,7 @@ static void alc256_shutup(struct hda_cod
+ 	/* If disable 3k pulldown control for alc257, the Mic detection will not work correctly
+ 	 * when booting with headset plugged. So skip setting it for the codec alc257
+ 	 */
+-	if (codec->core.vendor_id != 0x10ec0236 &&
+-	    codec->core.vendor_id != 0x10ec0257)
++	if (spec->en_3kpull_low)
+ 		alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
  
-@@ -269,6 +276,8 @@ void __drm_atomic_state_free(struct kref
- 		drm_atomic_state_default_release(state);
- 		kfree(state);
- 	}
-+
-+	drm_dev_put(dev);
- }
- EXPORT_SYMBOL(__drm_atomic_state_free);
- 
+ 	if (!spec->no_shutup_pins)
+@@ -10065,6 +10066,8 @@ static int patch_alc269(struct hda_codec
+ 		spec->shutup = alc256_shutup;
+ 		spec->init_hook = alc256_init;
+ 		spec->gen.mixer_nid = 0; /* ALC256 does not have any loopback mixer path */
++		if (codec->bus->pci->vendor == PCI_VENDOR_ID_AMD)
++			spec->en_3kpull_low = true;
+ 		break;
+ 	case 0x10ec0257:
+ 		spec->codec_variant = ALC269_TYPE_ALC257;
 
 
