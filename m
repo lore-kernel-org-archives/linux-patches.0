@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E5E1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:22:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA722C433C7;
-	Tue, 25 Jul 2023 11:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5244E1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:22:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 771D8C433C7;
+	Tue, 25 Jul 2023 11:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284146;
-	bh=+1hMspF/G9VnTE1U8jAUe9oapUDtIFZeqHZj3czvEns=;
+	s=korg; t=1690284148;
+	bh=tOFIa/fxNLcAu6h6GuVST2YWjk38g77k1sRQ6RyZxeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F6u2sFPOisfElFlhjdD+69PmgJAmn0/PzuzakV0k3tn9lKAPO9Xoeby2PbCqWvppw
-	 4iufov2zSHleKUXBG+9PBcgIL4D/bVN2pN/y5JY+ax2SyF7Pml4YjuY76LwINlKvul
-	 smwMxLJt0AS3HDUR1XhG6zSxiZl8Rv63Bzr49xJM=
+	b=ywuTV626+8Qwdn7JaIC8HFEyRh7ntmpRk7OBS7rdD1sZU9mVwn8cLl9tQLIEEg4xV
+	 8v52Ur3wf1slRj5ne91nUEF66K97W/o3j23oWiF2i9EPjTRt37731VcirQaHu1Gqq0
+	 KakS4DUVwmsvPOcysm4LNBTVOpTqO5iEQc/Rhq1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mantas Pucka <mantas@8devices.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 222/509] clk: qcom: gcc-ipq6018: Use floor ops for sdcc clocks
-Date: Tue, 25 Jul 2023 12:42:41 +0200
-Message-ID: <20230725104603.919057077@linuxfoundation.org>
+Subject: [PATCH 5.10 223/509] media: usb: Check az6007_read() return value
+Date: Tue, 25 Jul 2023 12:42:42 +0200
+Message-ID: <20230725104603.968522835@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,35 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mantas Pucka <mantas@8devices.com>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit 56e5ae0116aef87273cf1812d608645b076e4f02 ]
+[ Upstream commit fdaca63186f59fc664b346c45b76576624b48e57 ]
 
-SDCC clocks must be rounded down to avoid overclocking the controller.
+If az6007_read() returns error, there is no sence to continue.
 
-Fixes: d9db07f088af ("clk: qcom: Add ipq6018 Global Clock Controller support")
-Signed-off-by: Mantas Pucka <mantas@8devices.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/1682413909-24927-1-git-send-email-mantas@8devices.com
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 3af2f4f15a61 ("[media] az6007: Change the az6007 read/write routine parameter")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-ipq6018.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/dvb-usb-v2/az6007.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-ipq6018.c b/drivers/clk/qcom/gcc-ipq6018.c
-index 3f9c2f61a5d93..5c5d1b04ea7af 100644
---- a/drivers/clk/qcom/gcc-ipq6018.c
-+++ b/drivers/clk/qcom/gcc-ipq6018.c
-@@ -1654,7 +1654,7 @@ static struct clk_rcg2 sdcc1_apps_clk_src = {
- 		.name = "sdcc1_apps_clk_src",
- 		.parent_data = gcc_xo_gpll0_gpll2_gpll0_out_main_div2,
- 		.num_parents = 4,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_floor_ops,
- 	},
- };
+diff --git a/drivers/media/usb/dvb-usb-v2/az6007.c b/drivers/media/usb/dvb-usb-v2/az6007.c
+index 62ee09f28a0bc..7524c90f5da61 100644
+--- a/drivers/media/usb/dvb-usb-v2/az6007.c
++++ b/drivers/media/usb/dvb-usb-v2/az6007.c
+@@ -202,7 +202,8 @@ static int az6007_rc_query(struct dvb_usb_device *d)
+ 	unsigned code;
+ 	enum rc_proto proto;
  
+-	az6007_read(d, AZ6007_READ_IR, 0, 0, st->data, 10);
++	if (az6007_read(d, AZ6007_READ_IR, 0, 0, st->data, 10) < 0)
++		return -EIO;
+ 
+ 	if (st->data[1] == 0x44)
+ 		return 0;
 -- 
 2.39.2
 
