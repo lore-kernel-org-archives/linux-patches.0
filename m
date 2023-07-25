@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F191ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:30:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90BEC433C7;
-	Tue, 25 Jul 2023 11:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E7C1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:31:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F3ECC433C9;
+	Tue, 25 Jul 2023 11:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284657;
-	bh=edg6UkgKYLS5pK85NQ0bKz3X7ep0m+uVIjaSywVztWg=;
+	s=korg; t=1690284660;
+	bh=oN5+X/9Q60ifzLMZjrIgB/HOVDXrf08kbB6elr+7td0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vaxVRXvpiertVu4vW48GwXxYW7fs+A+iyy1XjJdFi6p1DE1i3WOyarm6Lz85EeS1I
-	 icmBnp9A+18ecIpqHhyM0wSWzb2c6QN3yPOblwoAbIhGptur0U/GvwUlzBYGje9j4U
-	 AjMLS2o54RxbtCNgV9YF/XQiP8vVDqaskt/4T66Y=
+	b=GzA8em9XJQrdJ0QhyfJaghbBB4DFN0Nj39Ys1+BlicDil38v0HM2DsrdgWRiN4204
+	 JPnyUza4j722ZszlW+4PwTt+DvFFYY/E9GP0E03I1jC0QaTW6SL885UB5z2a6F1/CG
+	 d+GKFfDFjRDatQ3Rqk2GS96Latx5PGiIKjM66yAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>
-Subject: [PATCH 5.10 407/509] fs: dlm: return positive pid value for F_GETLK
-Date: Tue, 25 Jul 2023 12:45:46 +0200
-Message-ID: <20230725104612.356134683@linuxfoundation.org>
+	Bikash Hazarika <bhazarika@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.10 434/509] scsi: qla2xxx: Correct the index of array
+Date: Tue, 25 Jul 2023 12:46:13 +0200
+Message-ID: <20230725104613.599807131@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -34,36 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Bikash Hazarika <bhazarika@marvell.com>
 
-commit 92655fbda5c05950a411eaabc19e025e86e2a291 upstream.
+commit b1b9d3825df4c757d653d0b1df66f084835db9c3 upstream.
 
-The GETLK pid values have all been negated since commit 9d5b86ac13c5
-("fs/locks: Remove fl_nspid and use fs-specific l_pid for remote locks").
-Revert this for local pids, and leave in place negative pids for remote
-owners.
+Klocwork reported array 'port_dstate_str' of size 10 may use index value(s)
+10..15.
+
+Add a fix to correct the index of array.
 
 Cc: stable@vger.kernel.org
-Fixes: 9d5b86ac13c5 ("fs/locks: Remove fl_nspid and use fs-specific l_pid for remote locks")
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+Signed-off-by: Bikash Hazarika <bhazarika@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20230607113843.37185-8-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dlm/plock.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_inline.h |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/dlm/plock.c
-+++ b/fs/dlm/plock.c
-@@ -363,7 +363,9 @@ int dlm_posix_get(dlm_lockspace_t *locks
- 		locks_init_lock(fl);
- 		fl->fl_type = (op->info.ex) ? F_WRLCK : F_RDLCK;
- 		fl->fl_flags = FL_POSIX;
--		fl->fl_pid = -op->info.pid;
-+		fl->fl_pid = op->info.pid;
-+		if (op->info.nodeid != dlm_our_nodeid())
-+			fl->fl_pid = -fl->fl_pid;
- 		fl->fl_start = op->info.start;
- 		fl->fl_end = op->info.end;
- 		rv = 0;
+--- a/drivers/scsi/qla2xxx/qla_inline.h
++++ b/drivers/scsi/qla2xxx/qla_inline.h
+@@ -109,11 +109,13 @@ qla2x00_set_fcport_disc_state(fc_port_t
+ {
+ 	int old_val;
+ 	uint8_t shiftbits, mask;
++	uint8_t port_dstate_str_sz;
+ 
+ 	/* This will have to change when the max no. of states > 16 */
+ 	shiftbits = 4;
+ 	mask = (1 << shiftbits) - 1;
+ 
++	port_dstate_str_sz = sizeof(port_dstate_str) / sizeof(char *);
+ 	fcport->disc_state = state;
+ 	while (1) {
+ 		old_val = atomic_read(&fcport->shadow_disc_state);
+@@ -121,7 +123,8 @@ qla2x00_set_fcport_disc_state(fc_port_t
+ 		    old_val, (old_val << shiftbits) | state)) {
+ 			ql_dbg(ql_dbg_disc, fcport->vha, 0x2134,
+ 			    "FCPort %8phC disc_state transition: %s to %s - portid=%06x.\n",
+-			    fcport->port_name, port_dstate_str[old_val & mask],
++			    fcport->port_name, (old_val & mask) < port_dstate_str_sz ?
++				    port_dstate_str[old_val & mask] : "Unknown",
+ 			    port_dstate_str[state], fcport->d_id.b24);
+ 			return;
+ 		}
 
 
