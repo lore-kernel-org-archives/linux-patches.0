@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7351ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:20:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FB23C433CA;
-	Tue, 25 Jul 2023 11:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ABE41ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:20:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC59C433C8;
+	Tue, 25 Jul 2023 11:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284024;
-	bh=OLwG120cyHP2oRif1Qv8lt+m+7BpZAkJ83k5jGYUYfI=;
+	s=korg; t=1690284027;
+	bh=XybTZgvXNmP3FNR6Bi2LoI/BTu04xweEx+woRbdWRXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n1vJY1q5Mnv5hho4walMPbrVxaipKVBKdjetDt0cZ9IjYjDXKMgA0kQl5C+MyL30R
-	 m+b7dQJJCDSyUvYms+AsoFjbPXB5Co4lCt3+XLsd7X7TSie1wZ3uT0+cFYZgQ8axqd
-	 Ky+6A5HgSuLsVqRm9aFBmk9MYVRQcOmwXccuCSvM=
+	b=FJOsNEh4kqGD3+XPTUjjhu0HjNCRwDtcvyNJbhX3cRAuYVZ9Y1y+wVGlgS8IokfXR
+	 jHxgj5UeeW2AHExq3sWVOpLQaBu5arGPQL2atOOnmd9HQF28aN9l6P8T3hAjOjKWV2
+	 f+UldmjZUTsvM/6q4a3qkStrsmIs7aDR8T1Ni5eA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Fan Ni <fan.ni@samsung.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 207/509] NFSv4.1: freeze the session table upon receiving NFS4ERR_BADSESSION
-Date: Tue, 25 Jul 2023 12:42:26 +0200
-Message-ID: <20230725104603.219192156@linuxfoundation.org>
+Subject: [PATCH 5.10 208/509] dax: Fix dax_mapping_release() use after free
+Date: Tue, 25 Jul 2023 12:42:27 +0200
+Message-ID: <20230725104603.257993864@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,39 +38,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Olga Kornievskaia <kolga@netapp.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit c907e72f58ed979a24a9fdcadfbc447c51d5e509 ]
+[ Upstream commit 6d24b170a9db0456f577b1ab01226a2254c016a8 ]
 
-When the client received NFS4ERR_BADSESSION, it schedules recovery
-and start the state manager thread which in turn freezes the
-session table and does not allow for any new requests to use the
-no-longer valid session. However, it is possible that before
-the state manager thread runs, a new operation would use the
-released slot that received BADSESSION and was therefore not
-updated its sequence number. Such re-use of the slot can lead
-the application errors.
+A CONFIG_DEBUG_KOBJECT_RELEASE test of removing a device-dax region
+provider (like modprobe -r dax_hmem) yields:
 
-Fixes: 5c441544f045 ("NFSv4.x: Handle bad/dead sessions correctly in nfs41_sequence_process()")
-Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+ kobject: 'mapping0' (ffff93eb460e8800): kobject_release, parent 0000000000000000 (delayed 2000)
+ [..]
+ DEBUG_LOCKS_WARN_ON(1)
+ WARNING: CPU: 23 PID: 282 at kernel/locking/lockdep.c:232 __lock_acquire+0x9fc/0x2260
+ [..]
+ RIP: 0010:__lock_acquire+0x9fc/0x2260
+ [..]
+ Call Trace:
+  <TASK>
+ [..]
+  lock_acquire+0xd4/0x2c0
+  ? ida_free+0x62/0x130
+  _raw_spin_lock_irqsave+0x47/0x70
+  ? ida_free+0x62/0x130
+  ida_free+0x62/0x130
+  dax_mapping_release+0x1f/0x30
+  device_release+0x36/0x90
+  kobject_delayed_cleanup+0x46/0x150
+
+Due to attempting ida_free() on an ida object that has already been
+freed. Devices typically only hold a reference on their parent while
+registered. If a child needs a parent object to complete its release it
+needs to hold a reference that it drops from its release callback.
+Arrange for a dax_mapping to pin its parent dev_dax instance until
+dax_mapping_release().
+
+Fixes: 0b07ce872a9e ("device-dax: introduce 'mapping' devices")
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Link: https://lore.kernel.org/r/168577283412.1672036.16111545266174261446.stgit@dwillia2-xfh.jf.intel.com
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Fan Ni <fan.ni@samsung.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/dax/bus.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index bca5d1bdd79bd..b9567cc8698ed 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -926,6 +926,7 @@ static int nfs41_sequence_process(struct rpc_task *task,
- out_noaction:
- 	return ret;
- session_recover:
-+	set_bit(NFS4_SLOT_TBL_DRAINING, &session->fc_slot_table.slot_tbl_state);
- 	nfs4_schedule_session_recovery(session, status);
- 	dprintk("%s ERROR: %d Reset session\n", __func__, status);
- 	nfs41_sequence_free_slot(res);
+diff --git a/drivers/dax/bus.c b/drivers/dax/bus.c
+index a02777c93c07b..48b7f0a64eb81 100644
+--- a/drivers/dax/bus.c
++++ b/drivers/dax/bus.c
+@@ -592,10 +592,12 @@ EXPORT_SYMBOL_GPL(alloc_dax_region);
+ static void dax_mapping_release(struct device *dev)
+ {
+ 	struct dax_mapping *mapping = to_dax_mapping(dev);
+-	struct dev_dax *dev_dax = to_dev_dax(dev->parent);
++	struct device *parent = dev->parent;
++	struct dev_dax *dev_dax = to_dev_dax(parent);
+ 
+ 	ida_free(&dev_dax->ida, mapping->id);
+ 	kfree(mapping);
++	put_device(parent);
+ }
+ 
+ static void unregister_dax_mapping(void *data)
+@@ -735,6 +737,7 @@ static int devm_register_dax_mapping(struct dev_dax *dev_dax, int range_id)
+ 	dev = &mapping->dev;
+ 	device_initialize(dev);
+ 	dev->parent = &dev_dax->dev;
++	get_device(dev->parent);
+ 	dev->type = &dax_mapping_type;
+ 	dev_set_name(dev, "mapping%d", mapping->id);
+ 	rc = device_add(dev);
 -- 
 2.39.2
 
