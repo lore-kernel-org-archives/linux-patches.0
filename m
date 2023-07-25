@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073A61ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:47:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 793EEC433C8;
-	Tue, 25 Jul 2023 11:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A891ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:48:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A790C433C8;
+	Tue, 25 Jul 2023 11:48:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285678;
-	bh=K1DyJQOPPeTh7wM6FIAJlXE6wE2Bzwe4hbWmf2D/YQw=;
+	s=korg; t=1690285681;
+	bh=m5V4VViDpcT/XNsvqKaxlZt8RzBckQhvVeebGBjQ6bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bMPTot3IRG8J9Q6vhWctaWM0RW6WHS5ViuNaBUMTEwfU211498UJG0zRdWN0dDCu/
-	 ezPqO+0oXziXJfhZB93E4vyyJvW0axjsQ3RzOAb2QqYIKh9GFMcpniEgdFa5DBU8ZQ
-	 +x+IJmjGq7bEEKJ6FPRAwywRZBzNIhvT+naHsD9Y=
+	b=EiAwFBG36oJ5xZZaluCwDECqlVAkWka1rRPavESlbk3Dmi2Mmz/RfO9s1VeFN9hBr
+	 6I9eQKW4itgvf833j/inEnAwZP/3HQXzmZwr3S74WkftJSW/jxQMqPrTEEqpVmEHeh
+	 e3B0I83VfFbptcoEX1CqX/ZF2mDf+mwYGi5JPo78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Oros <poros@redhat.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Simon Horman <simon.horman@corigine.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 292/313] devlink: report devlink_port_type_warn source device
-Date: Tue, 25 Jul 2023 12:47:25 +0200
-Message-ID: <20230725104533.753464113@linuxfoundation.org>
+Subject: [PATCH 5.4 293/313] wifi: wext-core: Fix -Wstringop-overflow warning in ioctl_standard_iw_point()
+Date: Tue, 25 Jul 2023 12:47:26 +0200
+Message-ID: <20230725104533.803975271@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -36,75 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Petr Oros <poros@redhat.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-[ Upstream commit a52305a81d6bb74b90b400dfa56455d37872fe4b ]
+[ Upstream commit 71e7552c90db2a2767f5c17c7ec72296b0d92061 ]
 
-devlink_port_type_warn is scheduled for port devlink and warning
-when the port type is not set. But from this warning it is not easy
-found out which device (driver) has no devlink port set.
+-Wstringop-overflow is legitimately warning us about extra_size
+pontentially being zero at some point, hence potenially ending
+up _allocating_ zero bytes of memory for extra pointer and then
+trying to access such object in a call to copy_from_user().
 
-[ 3709.975552] Type was not set for devlink port.
-[ 3709.975579] WARNING: CPU: 1 PID: 13092 at net/devlink/leftover.c:6775 devlink_port_type_warn+0x11/0x20
-[ 3709.993967] Modules linked in: openvswitch nf_conncount nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 nfnetlink bluetooth rpcsec_gss_krb5 auth_rpcgss nfsv4 dns_resolver nfs lockd grace fscache netfs vhost_net vhost vhost_iotlb tap tun bridge stp llc qrtr intel_rapl_msr intel_rapl_common i10nm_edac nfit libnvdimm x86_pkg_temp_thermal mlx5_ib intel_powerclamp coretemp dell_wmi ledtrig_audio sparse_keymap ipmi_ssif kvm_intel ib_uverbs rfkill ib_core video kvm iTCO_wdt acpi_ipmi intel_vsec irqbypass ipmi_si iTCO_vendor_support dcdbas ipmi_devintf mei_me ipmi_msghandler rapl mei intel_cstate isst_if_mmio isst_if_mbox_pci dell_smbios intel_uncore isst_if_common i2c_i801 dell_wmi_descriptor wmi_bmof i2c_smbus intel_pch_thermal pcspkr acpi_power_meter xfs libcrc32c sd_mod sg nvme_tcp mgag200 i2c_algo_bit nvme_fabrics drm_shmem_helper drm_kms_helper nvme syscopyarea ahci sysfillrect sysimgblt nvme_core fb_sys_fops crct10dif_pclmul libahci mlx5_core sfc crc32_pclmul nvme_common drm
-[ 3709.994030]  crc32c_intel mtd t10_pi mlxfw libata tg3 mdio megaraid_sas psample ghash_clmulni_intel pci_hyperv_intf wmi dm_multipath sunrpc dm_mirror dm_region_hash dm_log dm_mod be2iscsi bnx2i cnic uio cxgb4i cxgb4 tls libcxgbi libcxgb qla4xxx iscsi_boot_sysfs iscsi_tcp libiscsi_tcp libiscsi scsi_transport_iscsi fuse
-[ 3710.108431] CPU: 1 PID: 13092 Comm: kworker/1:1 Kdump: loaded Not tainted 5.14.0-319.el9.x86_64 #1
-[ 3710.108435] Hardware name: Dell Inc. PowerEdge R750/0PJ80M, BIOS 1.8.2 09/14/2022
-[ 3710.108437] Workqueue: events devlink_port_type_warn
-[ 3710.108440] RIP: 0010:devlink_port_type_warn+0x11/0x20
-[ 3710.108443] Code: 84 76 fe ff ff 48 c7 03 20 0e 1a ad 31 c0 e9 96 fd ff ff 66 0f 1f 44 00 00 0f 1f 44 00 00 48 c7 c7 18 24 4e ad e8 ef 71 62 ff <0f> 0b c3 cc cc cc cc 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 f6 87
-[ 3710.108445] RSP: 0018:ff3b6d2e8b3c7e90 EFLAGS: 00010282
-[ 3710.108447] RAX: 0000000000000000 RBX: ff366d6580127080 RCX: 0000000000000027
-[ 3710.108448] RDX: 0000000000000027 RSI: 00000000ffff86de RDI: ff366d753f41f8c8
-[ 3710.108449] RBP: ff366d658ff5a0c0 R08: ff366d753f41f8c0 R09: ff3b6d2e8b3c7e18
-[ 3710.108450] R10: 0000000000000001 R11: 0000000000000023 R12: ff366d753f430600
-[ 3710.108451] R13: ff366d753f436900 R14: 0000000000000000 R15: ff366d753f436905
-[ 3710.108452] FS:  0000000000000000(0000) GS:ff366d753f400000(0000) knlGS:0000000000000000
-[ 3710.108453] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 3710.108454] CR2: 00007f1c57bc74e0 CR3: 000000111d26a001 CR4: 0000000000773ee0
-[ 3710.108456] PKRU: 55555554
-[ 3710.108457] Call Trace:
-[ 3710.108458]  <TASK>
-[ 3710.108459]  process_one_work+0x1e2/0x3b0
-[ 3710.108466]  ? rescuer_thread+0x390/0x390
-[ 3710.108468]  worker_thread+0x50/0x3a0
-[ 3710.108471]  ? rescuer_thread+0x390/0x390
-[ 3710.108473]  kthread+0xdd/0x100
-[ 3710.108477]  ? kthread_complete_and_exit+0x20/0x20
-[ 3710.108479]  ret_from_fork+0x1f/0x30
-[ 3710.108485]  </TASK>
-[ 3710.108486] ---[ end trace 1b4b23cd0c65d6a0 ]---
+Fix this by adding a sanity check to ensure we never end up
+trying to allocate zero bytes of data for extra pointer, before
+continue executing the rest of the code in the function.
 
-After patch:
-[  402.473064] ice 0000:41:00.0: Type was not set for devlink port.
-[  402.473064] ice 0000:41:00.1: Type was not set for devlink port.
+Address the following -Wstringop-overflow warning seen when built
+m68k architecture with allyesconfig configuration:
+                 from net/wireless/wext-core.c:11:
+In function '_copy_from_user',
+    inlined from 'copy_from_user' at include/linux/uaccess.h:183:7,
+    inlined from 'ioctl_standard_iw_point' at net/wireless/wext-core.c:825:7:
+arch/m68k/include/asm/string.h:48:25: warning: '__builtin_memset' writing 1 or more bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+   48 | #define memset(d, c, n) __builtin_memset(d, c, n)
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~
+include/linux/uaccess.h:153:17: note: in expansion of macro 'memset'
+  153 |                 memset(to + (n - res), 0, res);
+      |                 ^~~~~~
+In function 'kmalloc',
+    inlined from 'kzalloc' at include/linux/slab.h:694:9,
+    inlined from 'ioctl_standard_iw_point' at net/wireless/wext-core.c:819:10:
+include/linux/slab.h:577:16: note: at offset 1 into destination object of size 0 allocated by '__kmalloc'
+  577 |         return __kmalloc(size, flags);
+      |                ^~~~~~~~~~~~~~~~~~~~~~
 
-Signed-off-by: Petr Oros <poros@redhat.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/r/20230615095447.8259-1-poros@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This help with the ongoing efforts to globally enable
+-Wstringop-overflow.
+
+Link: https://github.com/KSPP/linux/issues/315
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/ZItSlzvIpjdjNfd8@work
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/devlink.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/wireless/wext-core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/core/devlink.c b/net/core/devlink.c
-index 2dd354d869cd7..b4dabe5d89f72 100644
---- a/net/core/devlink.c
-+++ b/net/core/devlink.c
-@@ -6299,7 +6299,10 @@ EXPORT_SYMBOL_GPL(devlink_free);
+diff --git a/net/wireless/wext-core.c b/net/wireless/wext-core.c
+index 76a80a41615be..a57f54bc0e1a7 100644
+--- a/net/wireless/wext-core.c
++++ b/net/wireless/wext-core.c
+@@ -796,6 +796,12 @@ static int ioctl_standard_iw_point(struct iw_point *iwp, unsigned int cmd,
+ 		}
+ 	}
  
- static void devlink_port_type_warn(struct work_struct *work)
- {
--	WARN(true, "Type was not set for devlink port.");
-+	struct devlink_port *port = container_of(to_delayed_work(work),
-+						 struct devlink_port,
-+						 type_warn_dw);
-+	dev_warn(port->devlink->dev, "Type was not set for devlink port.");
- }
- 
- static bool devlink_port_type_should_warn(struct devlink_port *devlink_port)
++	/* Sanity-check to ensure we never end up _allocating_ zero
++	 * bytes of data for extra.
++	 */
++	if (extra_size <= 0)
++		return -EFAULT;
++
+ 	/* kzalloc() ensures NULL-termination for essid_compat. */
+ 	extra = kzalloc(extra_size, GFP_KERNEL);
+ 	if (!extra)
 -- 
 2.39.2
 
