@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C09C1ED45
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:40:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92500C433CA;
-	Tue, 25 Jul 2023 11:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D401ED45
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:40:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46814C433C8;
+	Tue, 25 Jul 2023 11:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285222;
-	bh=nocWU53HaoEAh4dU6Y8xCq/UEEhrsq607qnRJGQI8wc=;
+	s=korg; t=1690285224;
+	bh=D429T2mjmVZIwc3ndvZEXn6r5WOeOQQaHYfXCS3drNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BPiFj/Vk4tZI2ehJV+cLZAsZoqbDB4c097vgxNfwfMcwhp25fWnovSgV8K3L29gTj
-	 N2rbsN2dZFhkY7vrb7Ub03WP7DUrDX7yiqCJZemGxhH9JmgQIU2Kdk1XO3h924bZPF
-	 B07iVWg2o0Zt7eymKm3KhiADaqPe0WwEqF0WQMnY=
+	b=AXs5tD24dylc8GROu5PlJZrMDE+f9ruiEPb2J6fviU9dkUUiqF+AlZyH5FqzPYhdr
+	 7kwP6V6plEVxy+7t+z5fhePyAYjulFZtTmDjfko3jw1ATOEPc+N0rVznin1RxEUBMi
+	 qxQE36lcn3gStGa8zvL7t/UjDefqkCglYfSauEn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Rongguang Wei <weirongguang@kylinos.cn>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 098/313] PCI: pciehp: Cancel bringup sequence if card is not present
-Date: Tue, 25 Jul 2023 12:44:11 +0200
-Message-ID: <20230725104525.207786424@linuxfoundation.org>
+Subject: [PATCH 5.4 089/313] drm/radeon: fix possible division-by-zero errors
+Date: Tue, 25 Jul 2023 12:44:02 +0200
+Message-ID: <20230725104524.803728479@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -36,72 +35,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rongguang Wei <weirongguang@kylinos.cn>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit e8afd0d9fccc27c8ad263db5cf5952cfcf72d6fe ]
+[ Upstream commit 1becc57cd1a905e2aa0e1eca60d2a37744525c4a ]
 
-If a PCIe hotplug slot has an Attention Button, the normal hot-add flow is:
+Function rv740_get_decoded_reference_divider() may return 0 due to
+unpredictable reference divider value calculated in
+radeon_atom_get_clock_dividers(). This will lead to
+division-by-zero error once that value is used as a divider
+in calculating 'clk_s'.
+While unlikely, this issue should nonetheless be prevented so add a
+sanity check for such cases by testing 'decoded_ref' value against 0.
 
-  - Slot is empty and slot power is off
-  - User inserts card in slot and presses Attention Button
-  - OS blinks Power Indicator for 5 seconds
-  - After 5 seconds, OS turns on Power Indicator, turns on slot power, and
-    enumerates the device
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-Previously, if a user pressed the Attention Button on an *empty* slot,
-pciehp logged the following messages and blinked the Power Indicator
-until a second button press:
+v2: minor coding style fixes (Alex)
+In practice this should actually happen as the vbios should be
+properly populated.
 
-  [0.000] pciehp: Button press: will power on in 5 sec
-  [0.001] # Power Indicator starts blinking
-  [5.001] # 5 second timeout; slot is empty, so we should cancel the
-            request to power on and turn off Power Indicator
-
-  [7.000] # Power Indicator still blinking
-  [8.000] # possible card insertion
-  [9.000] pciehp: Button press: canceling request to power on
-
-The first button press incorrectly left the slot in BLINKINGON_STATE, so
-the second was interpreted as a "cancel power on" event regardless of
-whether a card was present.
-
-If the slot is empty, turn off the Power Indicator and return from
-BLINKINGON_STATE to OFF_STATE after 5 seconds, effectively canceling the
-request to power on.  Putting the slot in OFF_STATE also means the second
-button press will correctly request a slot power on if the slot is
-occupied.
-
-[bhelgaas: commit log]
-Link: https://lore.kernel.org/r/20230512021518.336460-1-clementwei90@163.com
-Fixes: d331710ea78f ("PCI: pciehp: Become resilient to missed events")
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Rongguang Wei <weirongguang@kylinos.cn>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Fixes: 66229b200598 ("drm/radeon/kms: add dpm support for rv7xx (v4)")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/hotplug/pciehp_ctrl.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/radeon/cypress_dpm.c | 8 ++++++--
+ drivers/gpu/drm/radeon/ni_dpm.c      | 8 ++++++--
+ drivers/gpu/drm/radeon/rv740_dpm.c   | 8 ++++++--
+ 3 files changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pci/hotplug/pciehp_ctrl.c b/drivers/pci/hotplug/pciehp_ctrl.c
-index 6503d15effbbd..45d0f63707158 100644
---- a/drivers/pci/hotplug/pciehp_ctrl.c
-+++ b/drivers/pci/hotplug/pciehp_ctrl.c
-@@ -258,6 +258,14 @@ void pciehp_handle_presence_or_link_change(struct controller *ctrl, u32 events)
- 	present = pciehp_card_present(ctrl);
- 	link_active = pciehp_check_link_active(ctrl);
- 	if (present <= 0 && link_active <= 0) {
-+		if (ctrl->state == BLINKINGON_STATE) {
-+			ctrl->state = OFF_STATE;
-+			cancel_delayed_work(&ctrl->button_work);
-+			pciehp_set_indicators(ctrl, PCI_EXP_SLTCTL_PWR_IND_OFF,
-+					      INDICATOR_NOOP);
-+			ctrl_info(ctrl, "Slot(%s): Card not present\n",
-+				  slot_name(ctrl));
-+		}
- 		mutex_unlock(&ctrl->state_lock);
- 		return;
- 	}
+diff --git a/drivers/gpu/drm/radeon/cypress_dpm.c b/drivers/gpu/drm/radeon/cypress_dpm.c
+index 32ed60f1048bd..b31d65a6752f1 100644
+--- a/drivers/gpu/drm/radeon/cypress_dpm.c
++++ b/drivers/gpu/drm/radeon/cypress_dpm.c
+@@ -559,8 +559,12 @@ static int cypress_populate_mclk_value(struct radeon_device *rdev,
+ 						     ASIC_INTERNAL_MEMORY_SS, vco_freq)) {
+ 			u32 reference_clock = rdev->clock.mpll.reference_freq;
+ 			u32 decoded_ref = rv740_get_decoded_reference_divider(dividers.ref_div);
+-			u32 clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
+-			u32 clk_v = ss.percentage *
++			u32 clk_s, clk_v;
++
++			if (!decoded_ref)
++				return -EINVAL;
++			clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
++			clk_v = ss.percentage *
+ 				(0x4000 * dividers.whole_fb_div + 0x800 * dividers.frac_fb_div) / (clk_s * 625);
+ 
+ 			mpll_ss1 &= ~CLKV_MASK;
+diff --git a/drivers/gpu/drm/radeon/ni_dpm.c b/drivers/gpu/drm/radeon/ni_dpm.c
+index 288ec3039bc2c..cad7a73a551f7 100644
+--- a/drivers/gpu/drm/radeon/ni_dpm.c
++++ b/drivers/gpu/drm/radeon/ni_dpm.c
+@@ -2241,8 +2241,12 @@ static int ni_populate_mclk_value(struct radeon_device *rdev,
+ 						     ASIC_INTERNAL_MEMORY_SS, vco_freq)) {
+ 			u32 reference_clock = rdev->clock.mpll.reference_freq;
+ 			u32 decoded_ref = rv740_get_decoded_reference_divider(dividers.ref_div);
+-			u32 clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
+-			u32 clk_v = ss.percentage *
++			u32 clk_s, clk_v;
++
++			if (!decoded_ref)
++				return -EINVAL;
++			clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
++			clk_v = ss.percentage *
+ 				(0x4000 * dividers.whole_fb_div + 0x800 * dividers.frac_fb_div) / (clk_s * 625);
+ 
+ 			mpll_ss1 &= ~CLKV_MASK;
+diff --git a/drivers/gpu/drm/radeon/rv740_dpm.c b/drivers/gpu/drm/radeon/rv740_dpm.c
+index 327d65a76e1f4..79b2de65e905e 100644
+--- a/drivers/gpu/drm/radeon/rv740_dpm.c
++++ b/drivers/gpu/drm/radeon/rv740_dpm.c
+@@ -250,8 +250,12 @@ int rv740_populate_mclk_value(struct radeon_device *rdev,
+ 						     ASIC_INTERNAL_MEMORY_SS, vco_freq)) {
+ 			u32 reference_clock = rdev->clock.mpll.reference_freq;
+ 			u32 decoded_ref = rv740_get_decoded_reference_divider(dividers.ref_div);
+-			u32 clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
+-			u32 clk_v = 0x40000 * ss.percentage *
++			u32 clk_s, clk_v;
++
++			if (!decoded_ref)
++				return -EINVAL;
++			clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
++			clk_v = 0x40000 * ss.percentage *
+ 				(dividers.whole_fb_div + (dividers.frac_fb_div / 8)) / (clk_s * 10000);
+ 
+ 			mpll_ss1 &= ~CLKV_MASK;
 -- 
 2.39.2
 
