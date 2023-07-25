@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918391D302
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:00:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B186DC433C8;
-	Tue, 25 Jul 2023 11:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0907A1D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:00:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E405C433C8;
+	Tue, 25 Jul 2023 11:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282821;
-	bh=3dX/oY1eQxc7iZq+v3jXonYW6KezRH+BgHcSa3G7Yjo=;
+	s=korg; t=1690282823;
+	bh=hrbR0z6RpuTtUzLfY9Yd1aZv4X748/wb0cQ1zREqE0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M9fvi8Hwh32ACG5XtmWA/qgmIKa0AuAAh3J/djDc6AFzBdtogM/RHyTQWE4F0XXeV
-	 prrVO2w4ZoRQh8ZMyxqt87b5qbalJ4yPI/7bkSiL2rSLATY4ReysUyOYnGUFEkTVEw
-	 80HtRpEPev4hY+6r7/a+PR6w2H5esbkXfPHGCz9Q=
+	b=hqvSV/PwGQzRUenz+cvyuqHujoTd0oETerkSoLGjht0hel7PxUsh1zYs7XP4Bt/Ty
+	 S4OZ/l1JBgtiA8MhQNuhGDzwbJRsYAPHPT3cuKOHIYXWSkPHjb1h3V22BVIC2Mfdek
+	 3S4dQtNX7ML7XjnjSgR41mWreJusjT6CXCg0bpww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yizhan@redhat.com>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 6.1 031/183] drm/client: Fix memory leak in drm_client_modeset_probe
-Date: Tue, 25 Jul 2023 12:44:19 +0200
-Message-ID: <20230725104509.045835601@linuxfoundation.org>
+	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 040/183] ASoC: cs42l51: fix driver to properly autoload with automatic module loading
+Date: Tue, 25 Jul 2023 12:44:28 +0200
+Message-ID: <20230725104509.379751690@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -36,46 +34,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jocelyn Falempe <jfalempe@redhat.com>
+From: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
 
-commit 2329cc7a101af1a844fbf706c0724c0baea38365 upstream.
+commit e51df4f81b02bcdd828a04de7c1eb6a92988b61e upstream.
 
-When a new mode is set to modeset->mode, the previous mode should be freed.
-This fixes the following kmemleak report:
+In commit 2cb1e0259f50 ("ASoC: cs42l51: re-hook of_match_table
+pointer"), 9 years ago, some random guy fixed the cs42l51 after it was
+split into a core part and an I2C part to properly match based on a
+Device Tree compatible string.
 
-drm_mode_duplicate+0x45/0x220 [drm]
-drm_client_modeset_probe+0x944/0xf50 [drm]
-__drm_fb_helper_initial_config_and_unlock+0xb4/0x2c0 [drm_kms_helper]
-drm_fbdev_client_hotplug+0x2bc/0x4d0 [drm_kms_helper]
-drm_client_register+0x169/0x240 [drm]
-ast_pci_probe+0x142/0x190 [ast]
-local_pci_probe+0xdc/0x180
-work_for_cpu_fn+0x4e/0xa0
-process_one_work+0x8b7/0x1540
-worker_thread+0x70a/0xed0
-kthread+0x29f/0x340
-ret_from_fork+0x1f/0x30
+However, the fix in this commit is wrong: the MODULE_DEVICE_TABLE(of,
+....) is in the core part of the driver, not the I2C part. Therefore,
+automatic module loading based on module.alias, based on matching with
+the DT compatible string, loads the core part of the driver, but not
+the I2C part. And threfore, the i2c_driver is not registered, and the
+codec is not known to the system, nor matched with a DT node with the
+corresponding compatible string.
 
-cc: <stable@vger.kernel.org>
-Reported-by: Zhang Yi <yizhan@redhat.com>
-Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230711092203.68157-3-jfalempe@redhat.com
+In order to fix that, we move the MODULE_DEVICE_TABLE(of, ...) into
+the I2C part of the driver. The cs42l51_of_match[] array is also moved
+as well, as it is not possible to have this definition in one file,
+and the MODULE_DEVICE_TABLE(of, ...) invocation in another file, due
+to how MODULE_DEVICE_TABLE works.
+
+Thanks to this commit, the I2C part of the driver now properly
+autoloads, and thanks to its dependency on the core part, the core
+part gets autoloaded as well, resulting in a functional sound card
+without having to manually load kernel modules.
+
+Fixes: 2cb1e0259f50 ("ASoC: cs42l51: re-hook of_match_table pointer")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+Link: https://lore.kernel.org/r/20230713112112.778576-1-thomas.petazzoni@bootlin.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_client_modeset.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/cs42l51-i2c.c |    6 ++++++
+ sound/soc/codecs/cs42l51.c     |    7 -------
+ sound/soc/codecs/cs42l51.h     |    1 -
+ 3 files changed, 6 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/drm_client_modeset.c
-+++ b/drivers/gpu/drm/drm_client_modeset.c
-@@ -871,6 +871,7 @@ int drm_client_modeset_probe(struct drm_
- 				break;
- 			}
+--- a/sound/soc/codecs/cs42l51-i2c.c
++++ b/sound/soc/codecs/cs42l51-i2c.c
+@@ -19,6 +19,12 @@ static struct i2c_device_id cs42l51_i2c_
+ };
+ MODULE_DEVICE_TABLE(i2c, cs42l51_i2c_id);
  
-+			kfree(modeset->mode);
- 			modeset->mode = drm_mode_duplicate(dev, mode);
- 			drm_connector_get(connector);
- 			modeset->connectors[modeset->num_connectors++] = connector;
++const struct of_device_id cs42l51_of_match[] = {
++	{ .compatible = "cirrus,cs42l51", },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, cs42l51_of_match);
++
+ static int cs42l51_i2c_probe(struct i2c_client *i2c)
+ {
+ 	struct regmap_config config;
+--- a/sound/soc/codecs/cs42l51.c
++++ b/sound/soc/codecs/cs42l51.c
+@@ -826,13 +826,6 @@ int __maybe_unused cs42l51_resume(struct
+ }
+ EXPORT_SYMBOL_GPL(cs42l51_resume);
+ 
+-const struct of_device_id cs42l51_of_match[] = {
+-	{ .compatible = "cirrus,cs42l51", },
+-	{ }
+-};
+-MODULE_DEVICE_TABLE(of, cs42l51_of_match);
+-EXPORT_SYMBOL_GPL(cs42l51_of_match);
+-
+ MODULE_AUTHOR("Arnaud Patard <arnaud.patard@rtp-net.org>");
+ MODULE_DESCRIPTION("Cirrus Logic CS42L51 ALSA SoC Codec Driver");
+ MODULE_LICENSE("GPL");
+--- a/sound/soc/codecs/cs42l51.h
++++ b/sound/soc/codecs/cs42l51.h
+@@ -16,7 +16,6 @@ int cs42l51_probe(struct device *dev, st
+ void cs42l51_remove(struct device *dev);
+ int __maybe_unused cs42l51_suspend(struct device *dev);
+ int __maybe_unused cs42l51_resume(struct device *dev);
+-extern const struct of_device_id cs42l51_of_match[];
+ 
+ #define CS42L51_CHIP_ID			0x1B
+ #define CS42L51_CHIP_REV_A		0x00
 
 
