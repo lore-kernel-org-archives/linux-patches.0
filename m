@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E361ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:46:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 014E3C433C8;
-	Tue, 25 Jul 2023 11:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2591ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:46:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B989BC433C8;
+	Tue, 25 Jul 2023 11:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285587;
-	bh=yY4ogMkaVpUfkmYWMW5ndCI78q17+dX8brbEkAQgaT4=;
+	s=korg; t=1690285590;
+	bh=UEXJ3fbx8etc1Ydp4Z9DA0Iej5T633509STnRX/d/8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XBDe5X+D4KZ+ak7UZXcpMk1WlIYGu48lWyaNUcueRxzzWQpW/whbGo7SJUw8hpZiI
-	 KIIsfcRgQebdCPNE7Ih3LmkVYTiwJ1echSP5jlerJ8nmLW8Zhp36DV5gWfiGhrUn6A
-	 H4EeiKOClb7xDe//3iF0MagE9eTI/bzXpibeKC7Y=
+	b=JvbsF04dmnJbnbnG6XAxybGELYyUv9h3mFDfmCuAluyIM/p3KD2xFe8vsjW6Bb5uV
+	 xQwb92Qp5PsO0u1P5msMbQIr2QFt9e9Vim+0VcvKSLE0/DG4pb9hiZCQukk7VeP67o
+	 1aSu//eMNgwSrnxnxDeQxDNKkjkHKOcxLpP6luF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubli@redhat.com>,
-	Milind Changire <mchangir@redhat.com>,
-	Patrick Donnelly <pdonnell@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.4 259/313] ceph: dont let check_caps skip sending responses for revoke msgs
-Date: Tue, 25 Jul 2023 12:46:52 +0200
-Message-ID: <20230725104532.255870627@linuxfoundation.org>
+	George Stark <GNStark@sberdevices.ru>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.4 260/313] meson saradc: fix clock divider mask length
+Date: Tue, 25 Jul 2023 12:46:53 +0200
+Message-ID: <20230725104532.300186463@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -36,47 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiubo Li <xiubli@redhat.com>
+From: George Stark <gnstark@sberdevices.ru>
 
-commit 257e6172ab36ebbe295a6c9ee9a9dd0fe54c1dc2 upstream.
+commit c57fa0037024c92c2ca34243e79e857da5d2c0a9 upstream.
 
-If a client sends out a cap update dropping caps with the prior 'seq'
-just before an incoming cap revoke request, then the client may drop
-the revoke because it believes it's already released the requested
-capabilities.
+According to the datasheets of supported meson SoCs length of ADC_CLK_DIV
+field is 6-bit. Although all supported SoCs have the register
+with that field documented later SoCs use external clock rather than
+ADC internal clock so this patch affects only meson8 family (S8* SoCs).
 
-This causes the MDS to wait indefinitely for the client to respond
-to the revoke. It's therefore always a good idea to ack the cap
-revoke request with the bumped up 'seq'.
-
-Cc: stable@vger.kernel.org
-Link: https://tracker.ceph.com/issues/61782
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Milind Changire <mchangir@redhat.com>
-Reviewed-by: Patrick Donnelly <pdonnell@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: 3adbf3427330 ("iio: adc: add a driver for the SAR ADC found in Amlogic Meson SoCs")
+Signed-off-by: George Stark <GNStark@sberdevices.ru>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20230606165357.42417-1-gnstark@sberdevices.ru
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/caps.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/iio/adc/meson_saradc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -3340,6 +3340,15 @@ static void handle_cap_grant(struct inod
- 	}
- 	BUG_ON(cap->issued & ~cap->implemented);
+--- a/drivers/iio/adc/meson_saradc.c
++++ b/drivers/iio/adc/meson_saradc.c
+@@ -71,7 +71,7 @@
+ 	#define MESON_SAR_ADC_REG3_PANEL_DETECT_COUNT_MASK	GENMASK(20, 18)
+ 	#define MESON_SAR_ADC_REG3_PANEL_DETECT_FILTER_TB_MASK	GENMASK(17, 16)
+ 	#define MESON_SAR_ADC_REG3_ADC_CLK_DIV_SHIFT		10
+-	#define MESON_SAR_ADC_REG3_ADC_CLK_DIV_WIDTH		5
++	#define MESON_SAR_ADC_REG3_ADC_CLK_DIV_WIDTH		6
+ 	#define MESON_SAR_ADC_REG3_BLOCK_DLY_SEL_MASK		GENMASK(9, 8)
+ 	#define MESON_SAR_ADC_REG3_BLOCK_DLY_MASK		GENMASK(7, 0)
  
-+	/* don't let check_caps skip sending a response to MDS for revoke msgs */
-+	if (le32_to_cpu(grant->op) == CEPH_CAP_OP_REVOKE) {
-+		cap->mds_wanted = 0;
-+		if (cap == ci->i_auth_cap)
-+			check_caps = 1; /* check auth cap only */
-+		else
-+			check_caps = 2; /* check all caps */
-+	}
-+
- 	if (extra_info->inline_version > 0 &&
- 	    extra_info->inline_version >= ci->i_inline_version) {
- 		ci->i_inline_version = extra_info->inline_version;
 
 
