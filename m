@@ -1,26 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FC71ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:19:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3475BC433C7;
-	Tue, 25 Jul 2023 11:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9041ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:19:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA076C433C7;
+	Tue, 25 Jul 2023 11:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283974;
-	bh=TBlC9cMsUvOTM8R2J6wte7dEkrk3IIcKGy0Oar6tUrU=;
+	s=korg; t=1690283977;
+	bh=BqH4ejyVMYR4brVEqnan6kOVNeR2uqfMv42XM4NPiQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EfBAwezQD0Mgk6k3FeYBw5w0mI7LSOunN+/qC9Ghepk38z2x00g5dnR5Vk6+atokk
-	 Lu/2xmnXn51G1DI/GY5KXXybq2Rrdv+TxwHobfGeog9mee15lQhxPt6f/itL/o7qnk
-	 QXYJY9ste4AJKuACNKkOHvhyD4JWr1YK6dhapoRY=
+	b=OpAPXrUc0soP/H5eDhIVIEyV6TgLauaYUd1RPpKx/pxEGgmZxEisyMnm4+DPtdcHo
+	 0AiEFNJCs9//MT/wEr55Iqv/TLPcaUTAkdkYOKF0bFt6kzgwQ4ZV3dQGffbUUsuqWx
+	 saLesfEHyZNDikLNPUB9lgPEIszO3sJESnTSPqWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
+	Riccardo Mancini <rickyman7@gmail.com>,
+	Sohaib Mohamed <sohaib.amhmd@gmail.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Jiri Olsa <jolsa@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Fabian Hemmer <copy@copy.sh>,
+	Ian Rogers <irogers@google.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 150/509] hwmon: (pmbus/adm1275) Fix problems with temperature monitoring on ADM1272
-Date: Tue, 25 Jul 2023 12:41:29 +0200
-Message-ID: <20230725104600.599954266@linuxfoundation.org>
+Subject: [PATCH 5.10 183/509] perf bench: Use unbuffered output when pipe/teeing to a file
+Date: Tue, 25 Jul 2023 12:42:02 +0200
+Message-ID: <20230725104602.084174761@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -34,125 +44,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Sohaib Mohamed <sohaib.amhmd@gmail.com>
 
-[ Upstream commit b153a0bb4199566abd337119207f82b59a8cd1ca ]
+[ Upstream commit f0a29c9647ff8bbb424641f79bc1894e83dec218 ]
 
-The PMON_CONFIG register on ADM1272 is a 16 bit register. Writing a 8 bit
-value into it clears the upper 8 bits of the register, resulting in
-unexpected side effects. Fix by writing the 16 bit register value.
+The output of 'perf bench' gets buffered when I pipe it to a file or to
+tee, in such a way that I can see it only at the end.
 
-Also, it has been reported that temperature readings are sometimes widely
-inaccurate, to the point where readings may result in device shutdown due
-to errant overtemperature faults. Improve by enabling temperature sampling.
+E.g.
 
-While at it, move the common code for ADM1272 and ADM1278 into a separate
-function, and clarify in the error message that an attempt was made to
-enable both VOUT and temperature monitoring.
+  $ perf bench internals synthesize -t
+  < output comes out fine after each test run >
 
-Last but not least, return the error code reported by the underlying I2C
-controller and not -ENODEV if updating the PMON_CONFIG register fails.
-After all, this does not indicate that the chip is not present, but an
-error in the communication with the chip.
+  $ perf bench internals synthesize -t | tee file.txt
+  < output comes out only at the end of all tests >
 
-Fixes: 4ff0ce227a1e ("hwmon: (pmbus/adm1275) Add support for ADM1272")
-Fixes: 9da9c2dc57b2 ("hwmon: (adm1275) enable adm1272 temperature reporting")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230602213447.3557346-1-linux@roeck-us.net
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+This patch resolves this issue for 'bench' and 'test' subcommands.
+
+See, also:
+
+  $ perf bench mem all | tee file.txt
+  $ perf bench sched all | tee file.txt
+  $ perf bench internals all -t | tee file.txt
+  $ perf bench internals all | tee file.txt
+
+Committer testing:
+
+It really gets staggered, i.e. outputs in bursts, when the buffer fills
+up and has to be drained to make up space for more output.
+
+Suggested-by: Riccardo Mancini <rickyman7@gmail.com>
+Signed-off-by: Sohaib Mohamed <sohaib.amhmd@gmail.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Acked-by: Jiri Olsa <jolsa@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Fabian Hemmer <copy@copy.sh>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: http://lore.kernel.org/lkml/20211119061409.78004-1-sohaib.amhmd@gmail.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 16203e9cd018 ("perf bench: Add missing setlocale() call to allow usage of %'d style formatting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/adm1275.c | 52 +++++++++++++++++------------------
- 1 file changed, 26 insertions(+), 26 deletions(-)
+ tools/perf/builtin-bench.c      | 5 +++--
+ tools/perf/tests/builtin-test.c | 3 +++
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
-index 92eb047ff246f..c0618205758e9 100644
---- a/drivers/hwmon/pmbus/adm1275.c
-+++ b/drivers/hwmon/pmbus/adm1275.c
-@@ -37,10 +37,13 @@ enum chips { adm1075, adm1272, adm1275, adm1276, adm1278, adm1293, adm1294 };
+diff --git a/tools/perf/builtin-bench.c b/tools/perf/builtin-bench.c
+index 62a7b7420a448..609a941ae2963 100644
+--- a/tools/perf/builtin-bench.c
++++ b/tools/perf/builtin-bench.c
+@@ -225,7 +225,6 @@ static void run_collection(struct collection *coll)
+ 		if (!bench->fn)
+ 			break;
+ 		printf("# Running %s/%s benchmark...\n", coll->name, bench->name);
+-		fflush(stdout);
  
- #define ADM1272_IRANGE			BIT(0)
+ 		argv[1] = bench->name;
+ 		run_bench(coll->name, bench->name, bench->fn, 1, argv);
+@@ -246,6 +245,9 @@ int cmd_bench(int argc, const char **argv)
+ 	struct collection *coll;
+ 	int ret = 0;
  
-+#define ADM1278_TSFILT			BIT(15)
- #define ADM1278_TEMP1_EN		BIT(3)
- #define ADM1278_VIN_EN			BIT(2)
- #define ADM1278_VOUT_EN			BIT(1)
- 
-+#define ADM1278_PMON_DEFCONFIG		(ADM1278_VOUT_EN | ADM1278_TEMP1_EN | ADM1278_TSFILT)
++	/* Unbuffered output */
++	setvbuf(stdout, NULL, _IONBF, 0);
 +
- #define ADM1293_IRANGE_25		0
- #define ADM1293_IRANGE_50		BIT(6)
- #define ADM1293_IRANGE_100		BIT(7)
-@@ -462,6 +465,22 @@ static const struct i2c_device_id adm1275_id[] = {
- };
- MODULE_DEVICE_TABLE(i2c, adm1275_id);
+ 	if (argc < 2) {
+ 		/* No collection specified. */
+ 		print_usage();
+@@ -299,7 +301,6 @@ int cmd_bench(int argc, const char **argv)
  
-+/* Enable VOUT & TEMP1 if not enabled (disabled by default) */
-+static int adm1275_enable_vout_temp(struct i2c_client *client, int config)
-+{
-+	int ret;
+ 			if (bench_format == BENCH_FORMAT_DEFAULT)
+ 				printf("# Running '%s/%s' benchmark:\n", coll->name, bench->name);
+-			fflush(stdout);
+ 			ret = run_bench(coll->name, bench->name, bench->fn, argc-1, argv+1);
+ 			goto end;
+ 		}
+diff --git a/tools/perf/tests/builtin-test.c b/tools/perf/tests/builtin-test.c
+index 132bdb3e6c31a..73c911dd0c2ca 100644
+--- a/tools/perf/tests/builtin-test.c
++++ b/tools/perf/tests/builtin-test.c
+@@ -793,6 +793,9 @@ int cmd_test(int argc, const char **argv)
+         if (ret < 0)
+                 return ret;
+ 
++	/* Unbuffered output */
++	setvbuf(stdout, NULL, _IONBF, 0);
 +
-+	if ((config & ADM1278_PMON_DEFCONFIG) != ADM1278_PMON_DEFCONFIG) {
-+		config |= ADM1278_PMON_DEFCONFIG;
-+		ret = i2c_smbus_write_word_data(client, ADM1275_PMON_CONFIG, config);
-+		if (ret < 0) {
-+			dev_err(&client->dev, "Failed to enable VOUT/TEMP1 monitoring\n");
-+			return ret;
-+		}
-+	}
-+	return 0;
-+}
-+
- static int adm1275_probe(struct i2c_client *client)
- {
- 	s32 (*config_read_fn)(const struct i2c_client *client, u8 reg);
-@@ -615,19 +634,10 @@ static int adm1275_probe(struct i2c_client *client)
- 			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT |
- 			PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
- 
--		/* Enable VOUT & TEMP1 if not enabled (disabled by default) */
--		if ((config & (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) !=
--		    (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) {
--			config |= ADM1278_VOUT_EN | ADM1278_TEMP1_EN;
--			ret = i2c_smbus_write_byte_data(client,
--							ADM1275_PMON_CONFIG,
--							config);
--			if (ret < 0) {
--				dev_err(&client->dev,
--					"Failed to enable VOUT monitoring\n");
--				return -ENODEV;
--			}
--		}
-+		ret = adm1275_enable_vout_temp(client, config);
-+		if (ret)
-+			return ret;
-+
- 		if (config & ADM1278_VIN_EN)
- 			info->func[0] |= PMBUS_HAVE_VIN;
- 		break;
-@@ -684,19 +694,9 @@ static int adm1275_probe(struct i2c_client *client)
- 			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT |
- 			PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
- 
--		/* Enable VOUT & TEMP1 if not enabled (disabled by default) */
--		if ((config & (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) !=
--		    (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) {
--			config |= ADM1278_VOUT_EN | ADM1278_TEMP1_EN;
--			ret = i2c_smbus_write_word_data(client,
--							ADM1275_PMON_CONFIG,
--							config);
--			if (ret < 0) {
--				dev_err(&client->dev,
--					"Failed to enable VOUT monitoring\n");
--				return -ENODEV;
--			}
--		}
-+		ret = adm1275_enable_vout_temp(client, config);
-+		if (ret)
-+			return ret;
- 
- 		if (config & ADM1278_VIN_EN)
- 			info->func[0] |= PMBUS_HAVE_VIN;
+ 	argc = parse_options_subcommand(argc, argv, test_options, test_subcommands, test_usage, 0);
+ 	if (argc >= 1 && !strcmp(argv[0], "list"))
+ 		return perf_test__list(argc - 1, argv + 1);
 -- 
 2.39.2
 
