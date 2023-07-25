@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C3E1ED45
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:39:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F094C433C7;
-	Tue, 25 Jul 2023 11:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89AD1ED45
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:39:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57ADFC433C7;
+	Tue, 25 Jul 2023 11:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285185;
-	bh=5BrznzGhnrBVpE7x8nBDWPFGkMXS6gt2jkqV5yEw3Tc=;
+	s=korg; t=1690285188;
+	bh=Q6KUPsxOyJWZNRd8K09Q/ruJ1/nTQf9Vn8+I0Fwkky8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TzAOu39LX7QF2hrKXilEeVS1ZkhqJu6GpjAurGA6jMDK/VWqQN5Xb5xSwuNkCEo1W
-	 PEvE53Pji38l/2+O1SolptimMr2RjcOxcJz3JtvGrcVdZJzSz4A/vMqJqyLKrRuGLl
-	 QdVP2dSeZR1if92scp/AMCZ7i+dH1zTcnROM83Wc=
+	b=FJTnfJ9fYvfYg29oJGkSoN7yFBo3I2/J2L/jJDtNpvfbB13Cm+3ga/ksGgrHFSoD8
+	 F51Wlt9Hl+l5dNwwlQkCBtBjqzFn6pXRayXSPMGSSfg6Ue7YoI4NGs1gCp91q0Yp/h
+	 R+/LT9n5w82SUCuvrnpkJKuT90H0abbkKbG1Ecnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 114/313] crypto: skcipher - remove crypto_has_ablkcipher()
-Date: Tue, 25 Jul 2023 12:44:27 +0200
-Message-ID: <20230725104525.956502242@linuxfoundation.org>
+Subject: [PATCH 5.4 115/313] crypto: marvell/cesa - Fix type mismatch warning
+Date: Tue, 25 Jul 2023 12:44:28 +0200
+Message-ID: <20230725104525.988038584@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,86 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit cec0cb8a28f9060367099beeafd0dbdb76fdfae2 ]
+[ Upstream commit efbc7764c4446566edb76ca05e903b5905673d2e ]
 
-crypto_has_ablkcipher() has no users, and it does the same thing as
-crypto_has_skcipher() anyway.  So remove it.  This also removes the last
-user of crypto_skcipher_type() and crypto_skcipher_mask(), so remove
-those too.
+Commit df8fc4e934c1 ("kbuild: Enable -fstrict-flex-arrays=3") uncovered
+a type mismatch in cesa 3des support that leads to a memcpy beyond the
+end of a structure:
 
-Signed-off-by: Eric Biggers <ebiggers@google.com>
+In function 'fortify_memcpy_chk',
+    inlined from 'mv_cesa_des3_ede_setkey' at drivers/crypto/marvell/cesa/cipher.c:307:2:
+include/linux/fortify-string.h:583:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  583 |                         __write_overflow_field(p_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This is probably harmless as the actual data that is copied has the correct
+type, but clearly worth fixing nonetheless.
+
+Fixes: 4ada48397823 ("crypto: marvell/cesa - add Triple-DES support")
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: efbc7764c444 ("crypto: marvell/cesa - Fix type mismatch warning")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/crypto/api-skcipher.rst |  2 +-
- include/linux/crypto.h                | 31 ---------------------------
- 2 files changed, 1 insertion(+), 32 deletions(-)
+ drivers/crypto/marvell/cipher.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/crypto/api-skcipher.rst b/Documentation/crypto/api-skcipher.rst
-index 20ba08dddf2ec..55e0851f6fed9 100644
---- a/Documentation/crypto/api-skcipher.rst
-+++ b/Documentation/crypto/api-skcipher.rst
-@@ -41,7 +41,7 @@ Asynchronous Block Cipher API - Deprecated
-    :doc: Asynchronous Block Cipher API
- 
- .. kernel-doc:: include/linux/crypto.h
--   :functions: crypto_free_ablkcipher crypto_has_ablkcipher crypto_ablkcipher_ivsize crypto_ablkcipher_blocksize crypto_ablkcipher_setkey crypto_ablkcipher_reqtfm crypto_ablkcipher_encrypt crypto_ablkcipher_decrypt
-+   :functions: crypto_free_ablkcipher crypto_ablkcipher_ivsize crypto_ablkcipher_blocksize crypto_ablkcipher_setkey crypto_ablkcipher_reqtfm crypto_ablkcipher_encrypt crypto_ablkcipher_decrypt
- 
- Asynchronous Cipher Request Handle - Deprecated
- -----------------------------------------------
-diff --git a/include/linux/crypto.h b/include/linux/crypto.h
-index 0c720a2982ae4..019ddf7596534 100644
---- a/include/linux/crypto.h
-+++ b/include/linux/crypto.h
-@@ -903,20 +903,6 @@ static inline struct crypto_ablkcipher *__crypto_ablkcipher_cast(
- 	return (struct crypto_ablkcipher *)tfm;
- }
- 
--static inline u32 crypto_skcipher_type(u32 type)
--{
--	type &= ~CRYPTO_ALG_TYPE_MASK;
--	type |= CRYPTO_ALG_TYPE_BLKCIPHER;
--	return type;
--}
--
--static inline u32 crypto_skcipher_mask(u32 mask)
--{
--	mask &= ~CRYPTO_ALG_TYPE_MASK;
--	mask |= CRYPTO_ALG_TYPE_BLKCIPHER_MASK;
--	return mask;
--}
--
- /**
-  * DOC: Asynchronous Block Cipher API
-  *
-@@ -962,23 +948,6 @@ static inline void crypto_free_ablkcipher(struct crypto_ablkcipher *tfm)
- 	crypto_free_tfm(crypto_ablkcipher_tfm(tfm));
- }
- 
--/**
-- * crypto_has_ablkcipher() - Search for the availability of an ablkcipher.
-- * @alg_name: is the cra_name / name or cra_driver_name / driver name of the
-- *	      ablkcipher
-- * @type: specifies the type of the cipher
-- * @mask: specifies the mask for the cipher
-- *
-- * Return: true when the ablkcipher is known to the kernel crypto API; false
-- *	   otherwise
-- */
--static inline int crypto_has_ablkcipher(const char *alg_name, u32 type,
--					u32 mask)
--{
--	return crypto_has_alg(alg_name, crypto_skcipher_type(type),
--			      crypto_skcipher_mask(mask));
--}
--
- static inline struct ablkcipher_tfm *crypto_ablkcipher_crt(
- 	struct crypto_ablkcipher *tfm)
+diff --git a/drivers/crypto/marvell/cipher.c b/drivers/crypto/marvell/cipher.c
+index 708dc63b2f099..c7d433d1cd99d 100644
+--- a/drivers/crypto/marvell/cipher.c
++++ b/drivers/crypto/marvell/cipher.c
+@@ -287,7 +287,7 @@ static int mv_cesa_des_setkey(struct crypto_skcipher *cipher, const u8 *key,
+ static int mv_cesa_des3_ede_setkey(struct crypto_skcipher *cipher,
+ 				   const u8 *key, unsigned int len)
  {
+-	struct mv_cesa_des_ctx *ctx = crypto_skcipher_ctx(cipher);
++	struct mv_cesa_des3_ctx *ctx = crypto_skcipher_ctx(cipher);
+ 	int err;
+ 
+ 	err = verify_skcipher_des3_key(cipher, key);
 -- 
 2.39.2
 
