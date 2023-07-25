@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F263C1D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:03:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77352C433C8;
-	Tue, 25 Jul 2023 11:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC361D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:03:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FB5BC433C9;
+	Tue, 25 Jul 2023 11:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282996;
-	bh=kXxw1DAJtq0QErLe+OIvVSnDPdsqzKuJbrqyl7OqZ7M=;
+	s=korg; t=1690282999;
+	bh=5rFX++yQ3ops7B5OLtfgW79n4CG48egKMCYjC6yV/lE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HJtfpyYIM79mA3Wb5v6SOeU3Qj70nulDorh9DS/o6kntvxiANPDcUlUQMVKhe2Res
-	 Pv7pe8TM7H8kuLMvJz4KTSMdhHYBeVs4P5yvDcCQ9hUwNEc4b6iNJcsaK+KDvXNopZ
-	 WNMJnf0UmBdED3C2TCspw/sADja93/mc+kfld+Os=
+	b=oaw3zfcLgBqLycby3hwXVW88mA0rB5d/4rGoIz0CuIRKPPd3qDL7M/NmddXZ4vObW
+	 /RrUZg3k4vb8ffFpRD4s5XFyHKbm/YGSxCjLE3pmocja89Y5WwFga0FD8ZKPKmYz4E
+	 NKVndQf7FYYRwbp30ZHXW66ojQZZ9xRuNSvsRrNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Song Liu <song@kernel.org>,
+	Yonghong Song <yhs@fb.com>,
 	Zhen Lei <thunder.leizhen@huawei.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 102/183] kallsyms: Correctly sequence symbols when CONFIG_LTO_CLANG=y
-Date: Tue, 25 Jul 2023 12:45:30 +0200
-Message-ID: <20230725104511.616653083@linuxfoundation.org>
+Subject: [PATCH 6.1 103/183] kallsyms: strip LTO-only suffixes from promoted global functions
+Date: Tue, 25 Jul 2023 12:45:31 +0200
+Message-ID: <20230725104511.646178298@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -35,148 +38,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhen Lei <thunder.leizhen@huawei.com>
+From: Yonghong Song <yhs@fb.com>
 
-[ Upstream commit 010a0aad39fccceba4a07d30d163158a39c704f3 ]
+[ Upstream commit 8cc32a9bbf2934d90762d9de0187adcb5ad46a11 ]
 
-LLVM appends various suffixes for local functions and variables, suffixes
-observed:
- - foo.llvm.[0-9a-f]+
- - foo.[0-9a-f]+
+Commit 6eb4bd92c1ce ("kallsyms: strip LTO suffixes from static functions")
+stripped all function/variable suffixes started with '.' regardless
+of whether those suffixes are generated at LTO mode or not. In fact,
+as far as I know, in LTO mode, when a static function/variable is
+promoted to the global scope, '.llvm.<...>' suffix is added.
 
-Therefore, when CONFIG_LTO_CLANG=y, kallsyms_lookup_name() needs to
-truncate the suffix of the symbol name before comparing the local function
-or variable name.
+The existing mechanism breaks live patch for a LTO kernel even if
+no <symbol>.llvm.<...> symbols are involved. For example, for the following
+kernel symbols:
+  $ grep bpf_verifier_vlog /proc/kallsyms
+  ffffffff81549f60 t bpf_verifier_vlog
+  ffffffff8268b430 d bpf_verifier_vlog._entry
+  ffffffff8282a958 d bpf_verifier_vlog._entry_ptr
+  ffffffff82e12a1f d bpf_verifier_vlog.__already_done
+'bpf_verifier_vlog' is a static function. '_entry', '_entry_ptr' and
+'__already_done' are static variables used inside 'bpf_verifier_vlog',
+so llvm promotes them to file-level static with prefix 'bpf_verifier_vlog.'.
+Note that the func-level to file-level static function promotion also
+happens without LTO.
 
-Old implementation code:
--	if (strcmp(namebuf, name) == 0)
--		return kallsyms_sym_address(i);
--	if (cleanup_symbol_name(namebuf) && strcmp(namebuf, name) == 0)
--		return kallsyms_sym_address(i);
+Given a symbol name 'bpf_verifier_vlog', with LTO kernel, current mechanism will
+return 4 symbols to live patch subsystem which current live patching
+subsystem cannot handle it. With non-LTO kernel, only one symbol
+is returned.
 
-The preceding process is traversed by address from low to high. That is,
-for those with the same name after the suffix is removed, the one with
-the smallest address is returned first. Therefore, when sorting in the
-tool, if the raw names are the same, they should be sorted by address in
-ascending order.
+In [1], we have a lengthy discussion, the suggestion is to separate two
+cases:
+  (1). new symbols with suffix which are generated regardless of whether
+       LTO is enabled or not, and
+  (2). new symbols with suffix generated only when LTO is enabled.
 
-ASCII[.]   = 2e
-ASCII[0-9] = 30,39
-ASCII[A-Z] = 41,5a
-ASCII[_]   = 5f
-ASCII[a-z] = 61,7a
+The cleanup_symbol_name() should only remove suffixes for case (2).
+Case (1) should not be changed so it can work uniformly with or without LTO.
 
-According to the preceding ASCII code values, the following sorting result
-is strictly followed.
- ---------------------------------
-|    main-key     |    sub-key    |
-|---------------------------------|
-|                 |  addr_lowest  |
-| <name>          |      ...      |
-| <name>.<suffix> |      ...      |
-|                 |  addr_highest |
-|---------------------------------|
-| <name>?<others> |               |   //? is [_A-Za-z0-9]
- ---------------------------------
+This patch removed LTO-only suffix '.llvm.<...>' so live patching and
+tracing should work the same way for non-LTO kernel.
+The cleanup_symbol_name() in scripts/kallsyms.c is also changed to have the same
+filtering pattern so both kernel and kallsyms tool have the same
+expectation on the order of symbols.
 
-Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-Stable-dep-of: 8cc32a9bbf29 ("kallsyms: strip LTO-only suffixes from promoted global functions")
+ [1] https://lore.kernel.org/live-patching/20230615170048.2382735-1-song@kernel.org/T/#u
+
+Fixes: 6eb4bd92c1ce ("kallsyms: strip LTO suffixes from static functions")
+Reported-by: Song Liu <song@kernel.org>
+Signed-off-by: Yonghong Song <yhs@fb.com>
+Reviewed-by: Zhen Lei <thunder.leizhen@huawei.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Acked-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230628181926.4102448-1-yhs@fb.com
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kallsyms.c      | 36 ++++++++++++++++++++++++++++++++++--
- scripts/link-vmlinux.sh |  4 ++++
- 2 files changed, 38 insertions(+), 2 deletions(-)
+ kernel/kallsyms.c  | 5 ++---
+ scripts/kallsyms.c | 6 +++---
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
+diff --git a/kernel/kallsyms.c b/kernel/kallsyms.c
+index ba351dfa109b6..676328a7c8c75 100644
+--- a/kernel/kallsyms.c
++++ b/kernel/kallsyms.c
+@@ -174,11 +174,10 @@ static bool cleanup_symbol_name(char *s)
+ 	 * LLVM appends various suffixes for local functions and variables that
+ 	 * must be promoted to global scope as part of LTO.  This can break
+ 	 * hooking of static functions with kprobes. '.' is not a valid
+-	 * character in an identifier in C. Suffixes observed:
++	 * character in an identifier in C. Suffixes only in LLVM LTO observed:
+ 	 * - foo.llvm.[0-9a-f]+
+-	 * - foo.[0-9a-f]+
+ 	 */
+-	res = strchr(s, '.');
++	res = strstr(s, ".llvm.");
+ 	if (res) {
+ 		*res = '\0';
+ 		return true;
 diff --git a/scripts/kallsyms.c b/scripts/kallsyms.c
-index dcb744a067e5e..67ef9aa14a770 100644
+index 67ef9aa14a770..51edc73e2ebf8 100644
 --- a/scripts/kallsyms.c
 +++ b/scripts/kallsyms.c
-@@ -78,6 +78,7 @@ static unsigned int table_size, table_cnt;
- static int all_symbols;
- static int absolute_percpu;
- static int base_relative;
-+static int lto_clang;
- 
- static int token_profit[0x10000];
- 
-@@ -89,7 +90,7 @@ static unsigned char best_table_len[256];
- static void usage(void)
- {
- 	fprintf(stderr, "Usage: kallsyms [--all-symbols] [--absolute-percpu] "
--			"[--base-relative] in.map > out.S\n");
-+			"[--base-relative] [--lto-clang] in.map > out.S\n");
- 	exit(1);
- }
- 
-@@ -411,6 +412,34 @@ static int symbol_absolute(const struct sym_entry *s)
- 	return s->percpu_absolute;
- }
- 
-+static char * s_name(char *buf)
-+{
-+	/* Skip the symbol type */
-+	return buf + 1;
-+}
-+
-+static void cleanup_symbol_name(char *s)
-+{
-+	char *p;
-+
-+	if (!lto_clang)
-+		return;
-+
-+	/*
-+	 * ASCII[.]   = 2e
-+	 * ASCII[0-9] = 30,39
-+	 * ASCII[A-Z] = 41,5a
-+	 * ASCII[_]   = 5f
-+	 * ASCII[a-z] = 61,7a
-+	 *
-+	 * As above, replacing '.' with '\0' does not affect the main sorting,
-+	 * but it helps us with subsorting.
-+	 */
-+	p = strchr(s, '.');
-+	if (p)
-+		*p = '\0';
-+}
-+
- static int compare_names(const void *a, const void *b)
- {
- 	int ret;
-@@ -421,7 +450,9 @@ static int compare_names(const void *a, const void *b)
- 
- 	expand_symbol(sa->sym, sa->len, sa_namebuf);
- 	expand_symbol(sb->sym, sb->len, sb_namebuf);
--	ret = strcmp(&sa_namebuf[1], &sb_namebuf[1]);
-+	cleanup_symbol_name(s_name(sa_namebuf));
-+	cleanup_symbol_name(s_name(sb_namebuf));
-+	ret = strcmp(s_name(sa_namebuf), s_name(sb_namebuf));
- 	if (!ret) {
- 		if (sa->addr > sb->addr)
- 			return 1;
-@@ -855,6 +886,7 @@ int main(int argc, char **argv)
- 			{"all-symbols",     no_argument, &all_symbols,     1},
- 			{"absolute-percpu", no_argument, &absolute_percpu, 1},
- 			{"base-relative",   no_argument, &base_relative,   1},
-+			{"lto-clang",       no_argument, &lto_clang,       1},
- 			{},
- 		};
- 
-diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
-index 918470d768e9c..32e573943cf03 100755
---- a/scripts/link-vmlinux.sh
-+++ b/scripts/link-vmlinux.sh
-@@ -156,6 +156,10 @@ kallsyms()
- 		kallsymopt="${kallsymopt} --base-relative"
- 	fi
- 
-+	if is_enabled CONFIG_LTO_CLANG; then
-+		kallsymopt="${kallsymopt} --lto-clang"
-+	fi
-+
- 	info KSYMS ${2}
- 	scripts/kallsyms ${kallsymopt} ${1} > ${2}
+@@ -432,10 +432,10 @@ static void cleanup_symbol_name(char *s)
+ 	 * ASCII[_]   = 5f
+ 	 * ASCII[a-z] = 61,7a
+ 	 *
+-	 * As above, replacing '.' with '\0' does not affect the main sorting,
+-	 * but it helps us with subsorting.
++	 * As above, replacing the first '.' in ".llvm." with '\0' does not
++	 * affect the main sorting, but it helps us with subsorting.
+ 	 */
+-	p = strchr(s, '.');
++	p = strstr(s, ".llvm.");
+ 	if (p)
+ 		*p = '\0';
  }
 -- 
 2.39.2
