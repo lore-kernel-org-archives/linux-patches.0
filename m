@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536ED15AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:50:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98DDC433C9;
-	Tue, 25 Jul 2023 10:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1494F15AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:50:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CF01C433C7;
+	Tue, 25 Jul 2023 10:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282244;
-	bh=ej7toLlbG+n4n24AN0TO8PJP/e7IERNfVL3iDT9ue7E=;
+	s=korg; t=1690282246;
+	bh=hrbR0z6RpuTtUzLfY9Yd1aZv4X748/wb0cQ1zREqE0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T/BA2zk5YMsYFfk/OjIhXjpAHlL3gbceUp+4llDj0uIDi/ba3VgDUDuzWnXhCzaBr
-	 zqXWaIXw1ocXahrZ8RDxKrKAfs2NUBH0bxiWaSR1CtrjSMM+TPNA0CxcYZ+pfnGAQk
-	 15b6eBLcGgxDIvCHidXYMjyh1lG3ithTXozDXDRQ=
+	b=vACVs4aeci9HjtWGRLh8Ju+ENSjqCcCxt1LFE8odjMQ6iNb1Y5IWIJdsxOK0DRj0T
+	 miQQZZS0svKVPUOxpdPxn0glYVEkIK9EU4rETrIgFm4UtWyBDccNSsy4T9LOIzFOVK
+	 ev6Dh2tCbK7Q+eo6HWElGIP//QkIlr0lz29WSl08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oder Chiou <oder_chiou@realtek.com>,
-	Sameer Pujar <spujar@nvidia.com>,
+	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.4 059/227] ASoC: rt5640: Fix sleep in atomic context
-Date: Tue, 25 Jul 2023 12:43:46 +0200
-Message-ID: <20230725104517.204093481@linuxfoundation.org>
+Subject: [PATCH 6.4 060/227] ASoC: cs42l51: fix driver to properly autoload with automatic module loading
+Date: Tue, 25 Jul 2023 12:43:47 +0200
+Message-ID: <20230725104517.243304884@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,65 +34,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sameer Pujar <spujar@nvidia.com>
+From: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
 
-commit 70a6404ff610aa4889d98977da131c37f9ff9d1f upstream.
+commit e51df4f81b02bcdd828a04de7c1eb6a92988b61e upstream.
 
-Following prints are observed while testing audio on Jetson AGX Orin which
-has onboard RT5640 audio codec:
+In commit 2cb1e0259f50 ("ASoC: cs42l51: re-hook of_match_table
+pointer"), 9 years ago, some random guy fixed the cs42l51 after it was
+split into a core part and an I2C part to properly match based on a
+Device Tree compatible string.
 
-  BUG: sleeping function called from invalid context at kernel/workqueue.c:3027
-  in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 0, name: swapper/0
-  preempt_count: 10001, expected: 0
-  RCU nest depth: 0, expected: 0
-  ------------[ cut here ]------------
-  WARNING: CPU: 0 PID: 0 at kernel/irq/handle.c:159 __handle_irq_event_percpu+0x1e0/0x270
-  ---[ end trace ad1c64905aac14a6 ]-
+However, the fix in this commit is wrong: the MODULE_DEVICE_TABLE(of,
+....) is in the core part of the driver, not the I2C part. Therefore,
+automatic module loading based on module.alias, based on matching with
+the DT compatible string, loads the core part of the driver, but not
+the I2C part. And threfore, the i2c_driver is not registered, and the
+codec is not known to the system, nor matched with a DT node with the
+corresponding compatible string.
 
-The IRQ handler rt5640_irq() runs in interrupt context and can sleep
-during cancel_delayed_work_sync().
+In order to fix that, we move the MODULE_DEVICE_TABLE(of, ...) into
+the I2C part of the driver. The cs42l51_of_match[] array is also moved
+as well, as it is not possible to have this definition in one file,
+and the MODULE_DEVICE_TABLE(of, ...) invocation in another file, due
+to how MODULE_DEVICE_TABLE works.
 
-Fix this by running IRQ handler, rt5640_irq(), in thread context.
-Hence replace request_irq() calls with devm_request_threaded_irq().
+Thanks to this commit, the I2C part of the driver now properly
+autoloads, and thanks to its dependency on the core part, the core
+part gets autoloaded as well, resulting in a functional sound card
+without having to manually load kernel modules.
 
-Fixes: 051dade34695 ("ASoC: rt5640: Fix the wrong state of JD1 and JD2")
+Fixes: 2cb1e0259f50 ("ASoC: cs42l51: re-hook of_match_table pointer")
 Cc: stable@vger.kernel.org
-Cc: Oder Chiou <oder_chiou@realtek.com>
-Signed-off-by: Sameer Pujar <spujar@nvidia.com>
-Link: https://lore.kernel.org/r/1688015537-31682-4-git-send-email-spujar@nvidia.com
+Signed-off-by: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+Link: https://lore.kernel.org/r/20230713112112.778576-1-thomas.petazzoni@bootlin.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/rt5640.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ sound/soc/codecs/cs42l51-i2c.c |    6 ++++++
+ sound/soc/codecs/cs42l51.c     |    7 -------
+ sound/soc/codecs/cs42l51.h     |    1 -
+ 3 files changed, 6 insertions(+), 8 deletions(-)
 
---- a/sound/soc/codecs/rt5640.c
-+++ b/sound/soc/codecs/rt5640.c
-@@ -2567,9 +2567,10 @@ static void rt5640_enable_jack_detect(st
- 	if (jack_data && jack_data->use_platform_clock)
- 		rt5640->use_platform_clock = jack_data->use_platform_clock;
+--- a/sound/soc/codecs/cs42l51-i2c.c
++++ b/sound/soc/codecs/cs42l51-i2c.c
+@@ -19,6 +19,12 @@ static struct i2c_device_id cs42l51_i2c_
+ };
+ MODULE_DEVICE_TABLE(i2c, cs42l51_i2c_id);
  
--	ret = request_irq(rt5640->irq, rt5640_irq,
--			  IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
--			  "rt5640", rt5640);
-+	ret = devm_request_threaded_irq(component->dev, rt5640->irq,
-+					NULL, rt5640_irq,
-+					IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
-+					"rt5640", rt5640);
- 	if (ret) {
- 		dev_warn(component->dev, "Failed to reguest IRQ %d: %d\n", rt5640->irq, ret);
- 		rt5640_disable_jack_detect(component);
-@@ -2622,8 +2623,9 @@ static void rt5640_enable_hda_jack_detec
++const struct of_device_id cs42l51_of_match[] = {
++	{ .compatible = "cirrus,cs42l51", },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, cs42l51_of_match);
++
+ static int cs42l51_i2c_probe(struct i2c_client *i2c)
+ {
+ 	struct regmap_config config;
+--- a/sound/soc/codecs/cs42l51.c
++++ b/sound/soc/codecs/cs42l51.c
+@@ -826,13 +826,6 @@ int __maybe_unused cs42l51_resume(struct
+ }
+ EXPORT_SYMBOL_GPL(cs42l51_resume);
  
- 	rt5640->jack = jack;
+-const struct of_device_id cs42l51_of_match[] = {
+-	{ .compatible = "cirrus,cs42l51", },
+-	{ }
+-};
+-MODULE_DEVICE_TABLE(of, cs42l51_of_match);
+-EXPORT_SYMBOL_GPL(cs42l51_of_match);
+-
+ MODULE_AUTHOR("Arnaud Patard <arnaud.patard@rtp-net.org>");
+ MODULE_DESCRIPTION("Cirrus Logic CS42L51 ALSA SoC Codec Driver");
+ MODULE_LICENSE("GPL");
+--- a/sound/soc/codecs/cs42l51.h
++++ b/sound/soc/codecs/cs42l51.h
+@@ -16,7 +16,6 @@ int cs42l51_probe(struct device *dev, st
+ void cs42l51_remove(struct device *dev);
+ int __maybe_unused cs42l51_suspend(struct device *dev);
+ int __maybe_unused cs42l51_resume(struct device *dev);
+-extern const struct of_device_id cs42l51_of_match[];
  
--	ret = request_irq(rt5640->irq, rt5640_irq,
--			  IRQF_TRIGGER_RISING | IRQF_ONESHOT, "rt5640", rt5640);
-+	ret = devm_request_threaded_irq(component->dev, rt5640->irq,
-+					NULL, rt5640_irq, IRQF_TRIGGER_RISING | IRQF_ONESHOT,
-+					"rt5640", rt5640);
- 	if (ret) {
- 		dev_warn(component->dev, "Failed to reguest IRQ %d: %d\n", rt5640->irq, ret);
- 		rt5640->irq = -ENXIO;
+ #define CS42L51_CHIP_ID			0x1B
+ #define CS42L51_CHIP_REV_A		0x00
 
 
