@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F661D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:00:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B21C433CA;
-	Tue, 25 Jul 2023 11:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF961D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:00:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF3FC433C7;
+	Tue, 25 Jul 2023 11:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282837;
-	bh=DksLlr8wsk5KRKmTxgOGiE1oEHdd21RS7vPLPV5Uvt0=;
+	s=korg; t=1690282840;
+	bh=05I2kwzK1/93wu/K1lWGDmcZTLQczAulW51VBr1QS8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uiCfavv7sTyEM3D8Aop3+CNI8tTvf2v0TcT78SwrfcuVpL5P7swfgrgi6APlhvZmw
-	 qhScqCE+nOHAYuDhPE8D4gX4v04FpshLLAcCo1S/fTVkRtEfLFbCReXf9hB7U+7pId
-	 X2qYQC5HwOkJXWSdHV7xmVGiiKqzuMdSu5RKeHwE=
+	b=Ezk6PQKhI44YmAbGtlWBSv5mW/66x6mnw7KXpbyfjT1EwvbQxMnqiORJfmTL81tkL
+	 6MwcESjz1H5MXvDKM2rDXrETX0hCWVc+AGafNN6ZnUWtxljQVY9L2lNNlMOU3WZI9s
+	 u7P2C1ILrI7Opi0QXRP/tQUkh1XiqRIeDh+ME8Lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 045/183] ASoC: codecs: wcd938x: fix resource leaks on component remove
-Date: Tue, 25 Jul 2023 12:44:33 +0200
-Message-ID: <20230725104509.581089984@linuxfoundation.org>
+Subject: [PATCH 6.1 046/183] ASoC: codecs: wcd938x: fix missing mbhc init error handling
+Date: Tue, 25 Jul 2023 12:44:34 +0200
+Message-ID: <20230725104509.622745800@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -37,149 +37,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit a3406f87775fee986876e03f93a84385f54d5999 upstream.
+commit 7dfae2631bfbdebecd35fe7b472ab3cc95c9ed66 upstream.
 
-Make sure to release allocated resources on component probe failure and
-on remove.
+MBHC initialisation can fail so add the missing error handling to avoid
+dereferencing an error pointer when later configuring the jack:
 
-This is specifically needed to allow probe deferrals of the sound card
-which otherwise fails when reprobing the codec component:
+    Unable to handle kernel paging request at virtual address fffffffffffffff8
 
-    snd-sc8280xp sound: ASoC: failed to instantiate card -517
-    genirq: Flags mismatch irq 289. 00002001 (HPHR PDM WD INT) vs. 00002001 (HPHR PDM WD INT)
-    wcd938x_codec audio-codec: Failed to request HPHR WD interrupt (-16)
-    genirq: Flags mismatch irq 290. 00002001 (HPHL PDM WD INT) vs. 00002001 (HPHL PDM WD INT)
-    wcd938x_codec audio-codec: Failed to request HPHL WD interrupt (-16)
-    genirq: Flags mismatch irq 291. 00002001 (AUX PDM WD INT) vs. 00002001 (AUX PDM WD INT)
-    wcd938x_codec audio-codec: Failed to request Aux WD interrupt (-16)
-    genirq: Flags mismatch irq 292. 00002001 (mbhc sw intr) vs. 00002001 (mbhc sw intr)
-    wcd938x_codec audio-codec: Failed to request mbhc interrupts -16
+    pc : wcd_mbhc_start+0x28/0x380 [snd_soc_wcd_mbhc]
+    lr : wcd938x_codec_set_jack+0x28/0x48 [snd_soc_wcd938x]
 
-Fixes: 8d78602aa87a ("ASoC: codecs: wcd938x: add basic driver")
-Cc: stable@vger.kernel.org	# 5.14
+    Call trace:
+     wcd_mbhc_start+0x28/0x380 [snd_soc_wcd_mbhc]
+     wcd938x_codec_set_jack+0x28/0x48 [snd_soc_wcd938x]
+     snd_soc_component_set_jack+0x28/0x8c [snd_soc_core]
+     qcom_snd_wcd_jack_setup+0x7c/0x19c [snd_soc_qcom_common]
+     sc8280xp_snd_init+0x20/0x2c [snd_soc_sc8280xp]
+     snd_soc_link_init+0x28/0x90 [snd_soc_core]
+     snd_soc_bind_card+0x628/0xbfc [snd_soc_core]
+     snd_soc_register_card+0xec/0x104 [snd_soc_core]
+     devm_snd_soc_register_card+0x4c/0xa4 [snd_soc_core]
+     sc8280xp_platform_probe+0xf0/0x108 [snd_soc_sc8280xp]
+
+Fixes: bcee7ed09b8e ("ASoC: codecs: wcd938x: add Multi Button Headset Control support")
+Cc: stable@vger.kernel.org      # 5.15
 Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230705123018.30903-5-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20230703124701.11734-1-johan+linaro@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wcd938x.c |   55 +++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 48 insertions(+), 7 deletions(-)
+ sound/soc/codecs/wcd938x.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/sound/soc/codecs/wcd938x.c
 +++ b/sound/soc/codecs/wcd938x.c
-@@ -2633,6 +2633,14 @@ static int wcd938x_mbhc_init(struct snd_
+@@ -2625,6 +2625,8 @@ static int wcd938x_mbhc_init(struct snd_
+ 						     WCD938X_IRQ_HPHR_OCP_INT);
  
- 	return 0;
- }
-+
-+static void wcd938x_mbhc_deinit(struct snd_soc_component *component)
-+{
-+	struct wcd938x_priv *wcd938x = snd_soc_component_get_drvdata(component);
-+
-+	wcd_mbhc_deinit(wcd938x->wcd_mbhc);
-+}
-+
- /* END MBHC */
+ 	wcd938x->wcd_mbhc = wcd_mbhc_init(component, &mbhc_cb, intr_ids, wcd_mbhc_fields, true);
++	if (IS_ERR(wcd938x->wcd_mbhc))
++		return PTR_ERR(wcd938x->wcd_mbhc);
  
- static const struct snd_kcontrol_new wcd938x_snd_controls[] = {
-@@ -3113,20 +3121,26 @@ static int wcd938x_soc_codec_probe(struc
- 	ret = request_threaded_irq(wcd938x->hphr_pdm_wd_int, NULL, wcd938x_wd_handle_irq,
- 				   IRQF_ONESHOT | IRQF_TRIGGER_RISING,
- 				   "HPHR PDM WD INT", wcd938x);
--	if (ret)
-+	if (ret) {
- 		dev_err(dev, "Failed to request HPHR WD interrupt (%d)\n", ret);
-+		goto err_free_clsh_ctrl;
-+	}
- 
- 	ret = request_threaded_irq(wcd938x->hphl_pdm_wd_int, NULL, wcd938x_wd_handle_irq,
- 				   IRQF_ONESHOT | IRQF_TRIGGER_RISING,
- 				   "HPHL PDM WD INT", wcd938x);
--	if (ret)
-+	if (ret) {
- 		dev_err(dev, "Failed to request HPHL WD interrupt (%d)\n", ret);
-+		goto err_free_hphr_pdm_wd_int;
-+	}
- 
- 	ret = request_threaded_irq(wcd938x->aux_pdm_wd_int, NULL, wcd938x_wd_handle_irq,
- 				   IRQF_ONESHOT | IRQF_TRIGGER_RISING,
- 				   "AUX PDM WD INT", wcd938x);
--	if (ret)
-+	if (ret) {
- 		dev_err(dev, "Failed to request Aux WD interrupt (%d)\n", ret);
-+		goto err_free_hphl_pdm_wd_int;
-+	}
- 
- 	/* Disable watchdog interrupt for HPH and AUX */
- 	disable_irq_nosync(wcd938x->hphr_pdm_wd_int);
-@@ -3141,7 +3155,7 @@ static int wcd938x_soc_codec_probe(struc
- 			dev_err(component->dev,
- 				"%s: Failed to add snd ctrls for variant: %d\n",
- 				__func__, wcd938x->variant);
--			goto err;
-+			goto err_free_aux_pdm_wd_int;
- 		}
- 		break;
- 	case WCD9385:
-@@ -3151,7 +3165,7 @@ static int wcd938x_soc_codec_probe(struc
- 			dev_err(component->dev,
- 				"%s: Failed to add snd ctrls for variant: %d\n",
- 				__func__, wcd938x->variant);
--			goto err;
-+			goto err_free_aux_pdm_wd_int;
- 		}
- 		break;
- 	default:
-@@ -3159,12 +3173,38 @@ static int wcd938x_soc_codec_probe(struc
- 	}
- 
- 	ret = wcd938x_mbhc_init(component);
--	if (ret)
-+	if (ret) {
- 		dev_err(component->dev,  "mbhc initialization failed\n");
--err:
-+		goto err_free_aux_pdm_wd_int;
-+	}
-+
-+	return 0;
-+
-+err_free_aux_pdm_wd_int:
-+	free_irq(wcd938x->aux_pdm_wd_int, wcd938x);
-+err_free_hphl_pdm_wd_int:
-+	free_irq(wcd938x->hphl_pdm_wd_int, wcd938x);
-+err_free_hphr_pdm_wd_int:
-+	free_irq(wcd938x->hphr_pdm_wd_int, wcd938x);
-+err_free_clsh_ctrl:
-+	wcd_clsh_ctrl_free(wcd938x->clsh_info);
-+
- 	return ret;
- }
- 
-+static void wcd938x_soc_codec_remove(struct snd_soc_component *component)
-+{
-+	struct wcd938x_priv *wcd938x = snd_soc_component_get_drvdata(component);
-+
-+	wcd938x_mbhc_deinit(component);
-+
-+	free_irq(wcd938x->aux_pdm_wd_int, wcd938x);
-+	free_irq(wcd938x->hphl_pdm_wd_int, wcd938x);
-+	free_irq(wcd938x->hphr_pdm_wd_int, wcd938x);
-+
-+	wcd_clsh_ctrl_free(wcd938x->clsh_info);
-+}
-+
- static int wcd938x_codec_set_jack(struct snd_soc_component *comp,
- 				  struct snd_soc_jack *jack, void *data)
- {
-@@ -3181,6 +3221,7 @@ static int wcd938x_codec_set_jack(struct
- static const struct snd_soc_component_driver soc_codec_dev_wcd938x = {
- 	.name = "wcd938x_codec",
- 	.probe = wcd938x_soc_codec_probe,
-+	.remove = wcd938x_soc_codec_remove,
- 	.controls = wcd938x_snd_controls,
- 	.num_controls = ARRAY_SIZE(wcd938x_snd_controls),
- 	.dapm_widgets = wcd938x_dapm_widgets,
+ 	snd_soc_add_component_controls(component, impedance_detect_controls,
+ 				       ARRAY_SIZE(impedance_detect_controls));
 
 
