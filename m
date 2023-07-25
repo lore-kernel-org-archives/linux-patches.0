@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907211ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:31:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F01C433C7;
-	Tue, 25 Jul 2023 11:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559B81ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:31:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD848C433C8;
+	Tue, 25 Jul 2023 11:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284679;
-	bh=69Fw7zNIveZQ2DaMyzx3qIf5EekSumCJVGkXBR1tQiU=;
+	s=korg; t=1690284682;
+	bh=5x/jQQ8fddfSMj10YW0u2xXjEJUII520lxjn/ki+Thc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XyCVJC6CH2IQ228Pt3at8VL9OOkmUwz4CttOtbOk7DaaeDSzJSsQeFfc5bpCpGCWz
-	 VE7EEQG4x5o0DCcVLjZ4WqC4+6FlG1h3YrzJ9w6ndCruS6LifPtz0V7WBvfw+JUOIv
-	 oRYvAxxaipOS4Vkz67aaEeHiiY9eB+eZJS21P49c=
+	b=bVJrrzSLPKYkKvU13NABCOve4cTjmsbTxZdhZY9jBHz8ZhxLmXowMFjiSzMahLpwC
+	 tqvoyxDYlaFGeBKtFOqjRGohCzJ5SpAXW7QOjnF5zez0tLrhwnC7PbuwrV5W1uMdUP
+	 5CNPknaq1NWBWMLrjmMrpmuh1Z0k20o5dfHeOcDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH 5.10 404/509] misc: pci_endpoint_test: Free IRQs before removing the device
-Date: Tue, 25 Jul 2023 12:45:43 +0200
-Message-ID: <20230725104612.225733893@linuxfoundation.org>
+	Manish Rangankar <mrangankar@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.10 436/509] scsi: qla2xxx: Remove unused nvme_ls_waitq wait queue
+Date: Tue, 25 Jul 2023 12:46:15 +0200
+Message-ID: <20230725104613.701137959@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,50 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Manish Rangankar <mrangankar@marvell.com>
 
-commit f61b7634a3249d12b9daa36ffbdb9965b6f24c6c upstream.
+commit 20fce500b232b970e40312a9c97e7f3b6d7a709c upstream.
 
-In pci_endpoint_test_remove(), freeing the IRQs after removing the device
-creates a small race window for IRQs to be received with the test device
-memory already released, causing the IRQ handler to access invalid memory,
-resulting in an oops.
+System crash when qla2x00_start_sp(sp) returns error code EGAIN and wake_up
+gets called for uninitialized wait queue sp->nvme_ls_waitq.
 
-Free the device IRQs before removing the device to avoid this issue.
+    qla2xxx [0000:37:00.1]-2121:5: Returning existing qpair of ffff8ae2c0513400 for idx=0
+    qla2xxx [0000:37:00.1]-700e:5: qla2x00_start_sp failed = 11
+    BUG: unable to handle kernel NULL pointer dereference at 0000000000000000
+    PGD 0 P4D 0
+    Oops: 0000 [#1] SMP NOPTI
+    Hardware name: HPE ProLiant DL360 Gen10/ProLiant DL360 Gen10, BIOS U32 09/03/2021
+    Workqueue: nvme-wq nvme_fc_connect_ctrl_work [nvme_fc]
+    RIP: 0010:__wake_up_common+0x4c/0x190
+    RSP: 0018:ffff95f3e0cb7cd0 EFLAGS: 00010086
+    RAX: 0000000000000000 RBX: ffff8b08d3b26328 RCX: 0000000000000000
+    RDX: 0000000000000001 RSI: 0000000000000003 RDI: ffff8b08d3b26320
+    RBP: 0000000000000001 R08: 0000000000000000 R09: ffffffffffffffe8
+    R10: 0000000000000000 R11: ffff95f3e0cb7a60 R12: ffff95f3e0cb7d20
+    R13: 0000000000000003 R14: 0000000000000000 R15: 0000000000000000
+    FS:  0000000000000000(0000) GS:ffff8b2fdf6c0000(0000) knlGS:0000000000000000
+    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    CR2: 0000000000000000 CR3: 0000002f1e410002 CR4: 00000000007706e0
+    DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+    DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+    PKRU: 55555554
+    Call Trace:
+     __wake_up_common_lock+0x7c/0xc0
+     qla_nvme_ls_req+0x355/0x4c0 [qla2xxx]
+     ? __nvme_fc_send_ls_req+0x260/0x380 [nvme_fc]
+     ? nvme_fc_send_ls_req.constprop.42+0x1a/0x45 [nvme_fc]
+     ? nvme_fc_connect_ctrl_work.cold.63+0x1e3/0xa7d [nvme_fc]
 
-Link: https://lore.kernel.org/r/20230415023542.77601-15-dlemoal@kernel.org
-Fixes: e03327122e2c ("pci_endpoint_test: Add 2 ioctl commands")
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Remove unused nvme_ls_waitq wait queue. nvme_ls_waitq logic was removed
+previously in the commits tagged Fixed: below.
+
+Fixes: 219d27d7147e ("scsi: qla2xxx: Fix race conditions in the code for aborting SCSI commands")
+Fixes: 5621b0dd7453 ("scsi: qla2xxx: Simpify unregistration of FC-NVMe local/remote ports")
 Cc: stable@vger.kernel.org
+Signed-off-by: Manish Rangankar <mrangankar@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20230615074633.12721-1-njavali@marvell.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/pci_endpoint_test.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/scsi/qla2xxx/qla_def.h  |    1 -
+ drivers/scsi/qla2xxx/qla_nvme.c |    3 ---
+ 2 files changed, 4 deletions(-)
 
---- a/drivers/misc/pci_endpoint_test.c
-+++ b/drivers/misc/pci_endpoint_test.c
-@@ -935,6 +935,9 @@ static void pci_endpoint_test_remove(str
- 	if (id < 0)
- 		return;
+--- a/drivers/scsi/qla2xxx/qla_def.h
++++ b/drivers/scsi/qla2xxx/qla_def.h
+@@ -639,7 +639,6 @@ typedef struct srb {
+ 	struct iocb_resource iores;
+ 	struct kref cmd_kref;	/* need to migrate ref_count over to this */
+ 	void *priv;
+-	wait_queue_head_t nvme_ls_waitq;
+ 	struct fc_port *fcport;
+ 	struct scsi_qla_host *vha;
+ 	unsigned int start_timer:1;
+--- a/drivers/scsi/qla2xxx/qla_nvme.c
++++ b/drivers/scsi/qla2xxx/qla_nvme.c
+@@ -331,7 +331,6 @@ static int qla_nvme_ls_req(struct nvme_f
+ 	if (rval != QLA_SUCCESS) {
+ 		ql_log(ql_log_warn, vha, 0x700e,
+ 		    "qla2x00_start_sp failed = %d\n", rval);
+-		wake_up(&sp->nvme_ls_waitq);
+ 		sp->priv = NULL;
+ 		priv->sp = NULL;
+ 		qla2x00_rel_sp(sp);
+@@ -590,7 +589,6 @@ static int qla_nvme_post_cmd(struct nvme
+ 	if (!sp)
+ 		return -EBUSY;
  
-+	pci_endpoint_test_release_irq(test);
-+	pci_endpoint_test_free_irq_vectors(test);
-+
- 	misc_deregister(&test->miscdev);
- 	kfree(misc_device->name);
- 	kfree(test->name);
-@@ -944,9 +947,6 @@ static void pci_endpoint_test_remove(str
- 			pci_iounmap(pdev, test->bar[bar]);
- 	}
- 
--	pci_endpoint_test_release_irq(test);
--	pci_endpoint_test_free_irq_vectors(test);
--
- 	pci_release_regions(pdev);
- 	pci_disable_device(pdev);
- }
+-	init_waitqueue_head(&sp->nvme_ls_waitq);
+ 	kref_init(&sp->cmd_kref);
+ 	spin_lock_init(&priv->cmd_lock);
+ 	sp->priv = priv;
+@@ -608,7 +606,6 @@ static int qla_nvme_post_cmd(struct nvme
+ 	if (rval != QLA_SUCCESS) {
+ 		ql_log(ql_log_warn, vha, 0x212d,
+ 		    "qla2x00_start_nvme_mq failed = %d\n", rval);
+-		wake_up(&sp->nvme_ls_waitq);
+ 		sp->priv = NULL;
+ 		priv->sp = NULL;
+ 		qla2xxx_rel_qpair_sp(sp->qpair, sp);
 
 
