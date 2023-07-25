@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388B61D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:03:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A47C433C8;
-	Tue, 25 Jul 2023 11:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F263C1D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:03:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77352C433C8;
+	Tue, 25 Jul 2023 11:03:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282994;
-	bh=M7RP5fHiDnz/6Q1wtOFuEbRhZFYz3HCyMDIRP345iCE=;
+	s=korg; t=1690282996;
+	bh=kXxw1DAJtq0QErLe+OIvVSnDPdsqzKuJbrqyl7OqZ7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qbge7ugRTucZMflxop+uxVgw158TkgEGTALkyJJgRAGxfGf5YM6JBinTbrMkTluzQ
-	 qYnY6K3EKkCWOzdWLLQZVDByqFfx+xTyU7GqQM6xE2ZxUp4FmPPhbIh7ZUByZ2TCV5
-	 eCWJlLIn1Q9mifv2qG1vFhRHt2orT63Bryah+UqE=
+	b=HJtfpyYIM79mA3Wb5v6SOeU3Qj70nulDorh9DS/o6kntvxiANPDcUlUQMVKhe2Res
+	 Pv7pe8TM7H8kuLMvJz4KTSMdhHYBeVs4P5yvDcCQ9hUwNEc4b6iNJcsaK+KDvXNopZ
+	 WNMJnf0UmBdED3C2TCspw/sADja93/mc+kfld+Os=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 093/183] pinctrl: renesas: rzv2m: Handle non-unique subnode names
-Date: Tue, 25 Jul 2023 12:45:21 +0200
-Message-ID: <20230725104511.319913230@linuxfoundation.org>
+Subject: [PATCH 6.1 102/183] kallsyms: Correctly sequence symbols when CONFIG_LTO_CLANG=y
+Date: Tue, 25 Jul 2023 12:45:30 +0200
+Message-ID: <20230725104511.616653083@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -35,114 +35,149 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-[ Upstream commit f46a0b47cc0829acd050213194c5a77351e619b2 ]
+[ Upstream commit 010a0aad39fccceba4a07d30d163158a39c704f3 ]
 
-The eMMC and SDHI pin control configuration nodes in DT have subnodes
-with the same names ("data" and "ctrl").  As the RZ/V2M pin control
-driver considers only the names of the subnodes, this leads to
-conflicts:
+LLVM appends various suffixes for local functions and variables, suffixes
+observed:
+ - foo.llvm.[0-9a-f]+
+ - foo.[0-9a-f]+
 
-    pinctrl-rzv2m b6250000.pinctrl: pin P8_2 already requested by 85000000.mmc; cannot claim for 85020000.mmc
-    pinctrl-rzv2m b6250000.pinctrl: pin-130 (85020000.mmc) status -22
-    renesas_sdhi_internal_dmac 85020000.mmc: Error applying setting, reverse things back
+Therefore, when CONFIG_LTO_CLANG=y, kallsyms_lookup_name() needs to
+truncate the suffix of the symbol name before comparing the local function
+or variable name.
 
-Fix this by constructing unique names from the node names of both the
-pin control configuration node and its child node, where appropriate.
+Old implementation code:
+-	if (strcmp(namebuf, name) == 0)
+-		return kallsyms_sym_address(i);
+-	if (cleanup_symbol_name(namebuf) && strcmp(namebuf, name) == 0)
+-		return kallsyms_sym_address(i);
 
-Reported by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+The preceding process is traversed by address from low to high. That is,
+for those with the same name after the suffix is removed, the one with
+the smallest address is returned first. Therefore, when sorting in the
+tool, if the raw names are the same, they should be sorted by address in
+ascending order.
 
-Fixes: 92a9b825257614af ("pinctrl: renesas: Add RZ/V2M pin and gpio controller driver")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Link: https://lore.kernel.org/r/607bd6ab4905b0b1b119a06ef953fa1184505777.1688396717.git.geert+renesas@glider.be
+ASCII[.]   = 2e
+ASCII[0-9] = 30,39
+ASCII[A-Z] = 41,5a
+ASCII[_]   = 5f
+ASCII[a-z] = 61,7a
+
+According to the preceding ASCII code values, the following sorting result
+is strictly followed.
+ ---------------------------------
+|    main-key     |    sub-key    |
+|---------------------------------|
+|                 |  addr_lowest  |
+| <name>          |      ...      |
+| <name>.<suffix> |      ...      |
+|                 |  addr_highest |
+|---------------------------------|
+| <name>?<others> |               |   //? is [_A-Za-z0-9]
+ ---------------------------------
+
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Stable-dep-of: 8cc32a9bbf29 ("kallsyms: strip LTO-only suffixes from promoted global functions")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzv2m.c | 28 ++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+ scripts/kallsyms.c      | 36 ++++++++++++++++++++++++++++++++++--
+ scripts/link-vmlinux.sh |  4 ++++
+ 2 files changed, 38 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzv2m.c b/drivers/pinctrl/renesas/pinctrl-rzv2m.c
-index e8c18198bebd2..35f382b055e83 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzv2m.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzv2m.c
-@@ -207,6 +207,7 @@ static int rzv2m_map_add_config(struct pinctrl_map *map,
+diff --git a/scripts/kallsyms.c b/scripts/kallsyms.c
+index dcb744a067e5e..67ef9aa14a770 100644
+--- a/scripts/kallsyms.c
++++ b/scripts/kallsyms.c
+@@ -78,6 +78,7 @@ static unsigned int table_size, table_cnt;
+ static int all_symbols;
+ static int absolute_percpu;
+ static int base_relative;
++static int lto_clang;
  
- static int rzv2m_dt_subnode_to_map(struct pinctrl_dev *pctldev,
- 				   struct device_node *np,
-+				   struct device_node *parent,
- 				   struct pinctrl_map **map,
- 				   unsigned int *num_maps,
- 				   unsigned int *index)
-@@ -224,6 +225,7 @@ static int rzv2m_dt_subnode_to_map(struct pinctrl_dev *pctldev,
- 	struct property *prop;
- 	int ret, gsel, fsel;
- 	const char **pin_fn;
-+	const char *name;
- 	const char *pin;
+ static int token_profit[0x10000];
  
- 	pinmux = of_find_property(np, "pinmux", NULL);
-@@ -307,8 +309,19 @@ static int rzv2m_dt_subnode_to_map(struct pinctrl_dev *pctldev,
- 		psel_val[i] = MUX_FUNC(value);
- 	}
+@@ -89,7 +90,7 @@ static unsigned char best_table_len[256];
+ static void usage(void)
+ {
+ 	fprintf(stderr, "Usage: kallsyms [--all-symbols] [--absolute-percpu] "
+-			"[--base-relative] in.map > out.S\n");
++			"[--base-relative] [--lto-clang] in.map > out.S\n");
+ 	exit(1);
+ }
  
-+	if (parent) {
-+		name = devm_kasprintf(pctrl->dev, GFP_KERNEL, "%pOFn.%pOFn",
-+				      parent, np);
-+		if (!name) {
-+			ret = -ENOMEM;
-+			goto done;
-+		}
-+	} else {
-+		name = np->name;
-+	}
+@@ -411,6 +412,34 @@ static int symbol_absolute(const struct sym_entry *s)
+ 	return s->percpu_absolute;
+ }
+ 
++static char * s_name(char *buf)
++{
++	/* Skip the symbol type */
++	return buf + 1;
++}
 +
- 	/* Register a single pin group listing all the pins we read from DT */
--	gsel = pinctrl_generic_add_group(pctldev, np->name, pins, num_pinmux, NULL);
-+	gsel = pinctrl_generic_add_group(pctldev, name, pins, num_pinmux, NULL);
- 	if (gsel < 0) {
- 		ret = gsel;
- 		goto done;
-@@ -318,17 +331,16 @@ static int rzv2m_dt_subnode_to_map(struct pinctrl_dev *pctldev,
- 	 * Register a single group function where the 'data' is an array PSEL
- 	 * register values read from DT.
- 	 */
--	pin_fn[0] = np->name;
--	fsel = pinmux_generic_add_function(pctldev, np->name, pin_fn, 1,
--					   psel_val);
-+	pin_fn[0] = name;
-+	fsel = pinmux_generic_add_function(pctldev, name, pin_fn, 1, psel_val);
- 	if (fsel < 0) {
- 		ret = fsel;
- 		goto remove_group;
- 	}
++static void cleanup_symbol_name(char *s)
++{
++	char *p;
++
++	if (!lto_clang)
++		return;
++
++	/*
++	 * ASCII[.]   = 2e
++	 * ASCII[0-9] = 30,39
++	 * ASCII[A-Z] = 41,5a
++	 * ASCII[_]   = 5f
++	 * ASCII[a-z] = 61,7a
++	 *
++	 * As above, replacing '.' with '\0' does not affect the main sorting,
++	 * but it helps us with subsorting.
++	 */
++	p = strchr(s, '.');
++	if (p)
++		*p = '\0';
++}
++
+ static int compare_names(const void *a, const void *b)
+ {
+ 	int ret;
+@@ -421,7 +450,9 @@ static int compare_names(const void *a, const void *b)
  
- 	maps[idx].type = PIN_MAP_TYPE_MUX_GROUP;
--	maps[idx].data.mux.group = np->name;
--	maps[idx].data.mux.function = np->name;
-+	maps[idx].data.mux.group = name;
-+	maps[idx].data.mux.function = name;
- 	idx++;
+ 	expand_symbol(sa->sym, sa->len, sa_namebuf);
+ 	expand_symbol(sb->sym, sb->len, sb_namebuf);
+-	ret = strcmp(&sa_namebuf[1], &sb_namebuf[1]);
++	cleanup_symbol_name(s_name(sa_namebuf));
++	cleanup_symbol_name(s_name(sb_namebuf));
++	ret = strcmp(s_name(sa_namebuf), s_name(sb_namebuf));
+ 	if (!ret) {
+ 		if (sa->addr > sb->addr)
+ 			return 1;
+@@ -855,6 +886,7 @@ int main(int argc, char **argv)
+ 			{"all-symbols",     no_argument, &all_symbols,     1},
+ 			{"absolute-percpu", no_argument, &absolute_percpu, 1},
+ 			{"base-relative",   no_argument, &base_relative,   1},
++			{"lto-clang",       no_argument, &lto_clang,       1},
+ 			{},
+ 		};
  
- 	dev_dbg(pctrl->dev, "Parsed %pOF with %d pins\n", np, num_pinmux);
-@@ -375,7 +387,7 @@ static int rzv2m_dt_node_to_map(struct pinctrl_dev *pctldev,
- 	index = 0;
+diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
+index 918470d768e9c..32e573943cf03 100755
+--- a/scripts/link-vmlinux.sh
++++ b/scripts/link-vmlinux.sh
+@@ -156,6 +156,10 @@ kallsyms()
+ 		kallsymopt="${kallsymopt} --base-relative"
+ 	fi
  
- 	for_each_child_of_node(np, child) {
--		ret = rzv2m_dt_subnode_to_map(pctldev, child, map,
-+		ret = rzv2m_dt_subnode_to_map(pctldev, child, np, map,
- 					      num_maps, &index);
- 		if (ret < 0) {
- 			of_node_put(child);
-@@ -384,7 +396,7 @@ static int rzv2m_dt_node_to_map(struct pinctrl_dev *pctldev,
- 	}
- 
- 	if (*num_maps == 0) {
--		ret = rzv2m_dt_subnode_to_map(pctldev, np, map,
-+		ret = rzv2m_dt_subnode_to_map(pctldev, np, NULL, map,
- 					      num_maps, &index);
- 		if (ret < 0)
- 			goto done;
++	if is_enabled CONFIG_LTO_CLANG; then
++		kallsymopt="${kallsymopt} --lto-clang"
++	fi
++
+ 	info KSYMS ${2}
+ 	scripts/kallsyms ${kallsymopt} ${1} > ${2}
+ }
 -- 
 2.39.2
 
