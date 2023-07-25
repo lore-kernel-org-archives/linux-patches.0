@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65201ED4D
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:42:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4803EC433C8;
-	Tue, 25 Jul 2023 11:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990861ED4D
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:42:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1975BC433C8;
+	Tue, 25 Jul 2023 11:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285322;
-	bh=XmxzaaER255j+qym9M427F0CRp3DIvbsG7KfgQvarxs=;
+	s=korg; t=1690285325;
+	bh=BpMBYDOIRtc8STvP7VECe7K542lKR2wMGnrIvFQcteI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EseuPCC6syWpG9OsxoA0FrolbJeH38IkWhtkccwE+5GsPr28MWGR++fsuz3BWb1PA
-	 rFao27MYNOe5XBuQ3NbS1L6WvSH1ZMVG1KyXzlyddIdMcOccuX3hKKZ/a9TuM883OF
-	 eDPVAzei1MwRQ3zrPMC6iJtwTLnra4S1r+ynnj7o=
+	b=h2XC+O1EarAPBJSbaKAWWNvA2IcDJrTS4sxHiWR4aTG+PFg+wYVAc9L1GMn8JpSJA
+	 fzRzZoLHjoIpoeZd7SiLdEHNrRVKzBkCzR+egCk0hq5bRBex7WEuU1nzGZwCTLG7UZ
+	 Rh6NHTVyjANkLC9qE3kiACWhp3q7/4KST9yHi7CA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Marko <robimarko@gmail.com>,
+	Chevron Li <chevron.li@bayhubtech.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.4 164/313] mmc: core: disable TRIM on Micron MTFC4GACAJCN-1M
-Date: Tue, 25 Jul 2023 12:45:17 +0200
-Message-ID: <20230725104528.035129127@linuxfoundation.org>
+Subject: [PATCH 5.4 165/313] mmc: sdhci: fix DMA configure compatibility issue when 64bit DMA mode is used.
+Date: Tue, 25 Jul 2023 12:45:18 +0200
+Message-ID: <20230725104528.075713129@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -34,44 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Marko <robimarko@gmail.com>
+From: Chevron Li <chevron.li@bayhubtech.com>
 
-commit dbfbddcddcebc9ce8a08757708d4e4a99d238e44 upstream.
+commit 20dbd07ef0a8bc29eb03d6a95258ac8934cbe52d upstream.
 
-It seems that Micron MTFC4GACAJCN-1M despite advertising TRIM support does
-not work when the core is trying to use REQ_OP_WRITE_ZEROES.
+Bayhub SD host has hardware limitation:
+1.The upper 32bit address is inhibited to be written at SD Host Register
+  [03E][13]=0 (32bits addressing) mode, is admitted to be written only at
+  SD Host Register [03E][13]=1 (64bits addressing) mode.
+2.Because of above item#1, need to configure SD Host Register [03E][13] to
+  1(64bits addressing mode) before set 64bit ADMA system address's higher
+  32bits SD Host Register [05F~05C] if 64 bits addressing mode is used.
 
-We are seeing the following errors in OpenWrt under 6.1 on Qnap Qhora 301W
-that we did not previously have and tracked it down to REQ_OP_WRITE_ZEROES:
-[   18.085950] I/O error, dev loop0, sector 596 op 0x9:(WRITE_ZEROES) flags 0x800 phys_seg 0 prio class 2
+The hardware limitation is reasonable for below reasons:
+1.Normal flow should set DMA working mode first, then do
+  DMA-transfer-related configuration, such as system address.
+2.The hardware limitation may avoid the software to configure wrong higher
+  32bit address at 32bits addressing mode although it is redundant.
 
-Disabling TRIM makes the error go away, so lets add a quirk for this eMMC
-to disable TRIM.
+The change that set 32bits/64bits addressing mode before set ADMA address,
+  has no side-effect to other host IPs for below reason:
+The setting order is reasonable and standard: DMA Mode setting first and
+  then DMA address setting. It meets all DMA setting sequence.
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
+Signed-off-by: Chevron Li <chevron.li@bayhubtech.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230530213259.1776512-1-robimarko@gmail.com
+Link: https://lore.kernel.org/r/20230523111114.18124-1-chevron_li@126.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/quirks.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/mmc/host/sdhci.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/core/quirks.h
-+++ b/drivers/mmc/core/quirks.h
-@@ -98,6 +98,13 @@ static const struct mmc_fixup mmc_blk_fi
- 		  MMC_QUIRK_TRIM_BROKEN),
+--- a/drivers/mmc/host/sdhci.c
++++ b/drivers/mmc/host/sdhci.c
+@@ -1104,6 +1104,8 @@ static void sdhci_prepare_data(struct sd
+ 		}
+ 	}
  
- 	/*
-+	 * Micron MTFC4GACAJCN-1M advertises TRIM but it does not seems to
-+	 * support being used to offload WRITE_ZEROES.
-+	 */
-+	MMC_FIXUP("Q2J54A", CID_MANFID_MICRON, 0x014e, add_quirk_mmc,
-+		  MMC_QUIRK_TRIM_BROKEN),
++	sdhci_config_dma(host);
 +
-+	/*
- 	 *  On Some Kingston eMMCs, performing trim can result in
- 	 *  unrecoverable data conrruption occasionally due to a firmware bug.
- 	 */
+ 	if (host->flags & SDHCI_REQ_USE_DMA) {
+ 		int sg_cnt = sdhci_pre_dma_transfer(host, data, COOKIE_MAPPED);
+ 
+@@ -1123,8 +1125,6 @@ static void sdhci_prepare_data(struct sd
+ 		}
+ 	}
+ 
+-	sdhci_config_dma(host);
+-
+ 	if (!(host->flags & SDHCI_REQ_USE_DMA)) {
+ 		int flags;
+ 
 
 
