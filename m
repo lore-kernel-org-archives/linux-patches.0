@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E4B1EA72
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:49:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95373C433C7;
-	Tue, 25 Jul 2023 10:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F83134C1
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:49:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6658DC433C8;
+	Tue, 25 Jul 2023 10:49:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282194;
-	bh=scIPt4ADhKDFOgyuQDlf1im9g/OQjr3UD6+SoWIb1bQ=;
+	s=korg; t=1690282196;
+	bh=mqeWrjRkKEshdY5zvAqc2lyl7BsSe/D42AtpoyJoeE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L7OBB4Qjv1NK/WvMM6cMmOtroQS0jLaCcSmHZmxKCVvAOHKsYuqU+1ousHPBQjkIT
-	 +QQTqJzmV0ifsJjDGtiO4EWk13oDjH5DaK8ImtugOUiscuVdLVt5OCXI61hRWZ5N2Q
-	 plXcw9n/tGlhdnwwN+SEPib+mjQMe0pQvDIeGLrI=
+	b=XQVwhIoIUY49cragFx1gM6ymIKwa5ilV5ALGKUGGIQiNHgJz93cydVDBMnmxtaSIW
+	 7JM3+OhgI1DIekW74AbUm1y+aexaRbKgIgQdZw+gZhKrTXr7YmmJWrfUYYoW8tBIje
+	 tx/9sed7cFZt5KxMMlPZXCEhzqO6Bu6vpmd8ozsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: [PATCH 6.4 042/227] accel/qaic: Add consistent integer overflow checks
-Date: Tue, 25 Jul 2023 12:43:29 +0200
-Message-ID: <20230725104516.561228017@linuxfoundation.org>
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	linux-media@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	linaro-mm-sig@lists.linaro.org,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>
+Subject: [PATCH 6.4 043/227] dma-buf/dma-resv: Stop leaking on krealloc() failure
+Date: Tue, 25 Jul 2023 12:43:30 +0200
+Message-ID: <20230725104516.591974295@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,70 +38,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 47d87f71d00b7091b43a56f608f7151b33e5772e upstream.
+commit 05abb3be91d8788328231ee02973ab3d47f5e3d2 upstream.
 
-The encode_dma() function has integer overflow checks.  The
-encode_passthrough(), encode_activate() and encode_status() functions
-did not.  I added integer overflow checking everywhere.  I also
-updated the integer overflow checking in encode_dma() to use size_add()
-so everything is consistent.
+Currently dma_resv_get_fences() will leak the previously
+allocated array if the fence iteration got restarted and
+the krealloc_array() fails.
 
-Fixes: 129776ac2e38 ("accel/qaic: Add control path")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: stable@vger.kernel.org # 6.4.x
-[jhugo: tweak if in encode_dma() to match existing style]
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/ZK0Q7IsPkj6WSCcL@moroto
+Free the old array by hand, and make sure we still clear
+the returned *fences so the caller won't end up accessing
+freed memory. Some (but not all) of the callers of
+dma_resv_get_fences() seem to still trawl through the
+array even when dma_resv_get_fences() failed. And let's
+zero out *num_fences as well for good measure.
+
+Cc: Sumit Semwal <sumit.semwal@linaro.org>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: linux-media@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: linaro-mm-sig@lists.linaro.org
+Fixes: d3c80698c9f5 ("dma-buf: use new iterator in dma_resv_get_fences v3")
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Cc: stable@vger.kernel.org
+Link: https://patchwork.freedesktop.org/patch/msgid/20230713194745.1751-1-ville.syrjala@linux.intel.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/qaic/qaic_control.c |   11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/dma-buf/dma-resv.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/accel/qaic/qaic_control.c
-+++ b/drivers/accel/qaic/qaic_control.c
-@@ -367,7 +367,7 @@ static int encode_passthrough(struct qai
- 	if (in_trans->hdr.len % 8 != 0)
- 		return -EINVAL;
+--- a/drivers/dma-buf/dma-resv.c
++++ b/drivers/dma-buf/dma-resv.c
+@@ -571,6 +571,7 @@ int dma_resv_get_fences(struct dma_resv
+ 	dma_resv_for_each_fence_unlocked(&cursor, fence) {
  
--	if (msg_hdr_len + in_trans->hdr.len > QAIC_MANAGE_EXT_MSG_LENGTH)
-+	if (size_add(msg_hdr_len, in_trans->hdr.len) > QAIC_MANAGE_EXT_MSG_LENGTH)
- 		return -ENOSPC;
+ 		if (dma_resv_iter_is_restarted(&cursor)) {
++			struct dma_fence **new_fences;
+ 			unsigned int count;
  
- 	trans_wrapper = add_wrapper(wrappers,
-@@ -561,11 +561,8 @@ static int encode_dma(struct qaic_device
- 	msg = &wrapper->msg;
- 	msg_hdr_len = le32_to_cpu(msg->hdr.len);
+ 			while (*num_fences)
+@@ -579,13 +580,17 @@ int dma_resv_get_fences(struct dma_resv
+ 			count = cursor.num_fences + 1;
  
--	if (msg_hdr_len > (UINT_MAX - QAIC_MANAGE_EXT_MSG_LENGTH))
--		return -EINVAL;
--
- 	/* There should be enough space to hold at least one ASP entry. */
--	if (msg_hdr_len + sizeof(*out_trans) + sizeof(struct wire_addr_size_pair) >
-+	if (size_add(msg_hdr_len, sizeof(*out_trans) + sizeof(struct wire_addr_size_pair)) >
- 	    QAIC_MANAGE_EXT_MSG_LENGTH)
- 		return -ENOMEM;
+ 			/* Eventually re-allocate the array */
+-			*fences = krealloc_array(*fences, count,
+-						 sizeof(void *),
+-						 GFP_KERNEL);
+-			if (count && !*fences) {
++			new_fences = krealloc_array(*fences, count,
++						    sizeof(void *),
++						    GFP_KERNEL);
++			if (count && !new_fences) {
++				kfree(*fences);
++				*fences = NULL;
++				*num_fences = 0;
+ 				dma_resv_iter_end(&cursor);
+ 				return -ENOMEM;
+ 			}
++			*fences = new_fences;
+ 		}
  
-@@ -638,7 +635,7 @@ static int encode_activate(struct qaic_d
- 	msg = &wrapper->msg;
- 	msg_hdr_len = le32_to_cpu(msg->hdr.len);
- 
--	if (msg_hdr_len + sizeof(*out_trans) > QAIC_MANAGE_MAX_MSG_LENGTH)
-+	if (size_add(msg_hdr_len, sizeof(*out_trans)) > QAIC_MANAGE_MAX_MSG_LENGTH)
- 		return -ENOSPC;
- 
- 	if (!in_trans->queue_size)
-@@ -722,7 +719,7 @@ static int encode_status(struct qaic_dev
- 	msg = &wrapper->msg;
- 	msg_hdr_len = le32_to_cpu(msg->hdr.len);
- 
--	if (msg_hdr_len + in_trans->hdr.len > QAIC_MANAGE_MAX_MSG_LENGTH)
-+	if (size_add(msg_hdr_len, in_trans->hdr.len) > QAIC_MANAGE_MAX_MSG_LENGTH)
- 		return -ENOSPC;
- 
- 	trans_wrapper = add_wrapper(wrappers, sizeof(*trans_wrapper));
+ 		(*fences)[(*num_fences)++] = dma_fence_get(fence);
 
 
