@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BB41ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:33:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2F9C433C8;
-	Tue, 25 Jul 2023 11:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA701ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:33:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 583E2C433C7;
+	Tue, 25 Jul 2023 11:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284835;
-	bh=S5PJq/3opapiyInYdpZsDqrkTu+g+hiGYs6Myultx0s=;
+	s=korg; t=1690284838;
+	bh=m5V4VViDpcT/XNsvqKaxlZt8RzBckQhvVeebGBjQ6bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YAvFEV65qs4kPLt9CWxh6y5/uwLu1ur3/c3X6QQKBjBTjJzsEnRntD/9xPMi7z21t
-	 QZq4eCi+cFofs5JYgle0Yw1WaGFfPwfW68BevDjSNRx4sOyuXtI0KBBo8szU/UbZbC
-	 HSj0e9MA02G6gg5bBnURUgBPE8EdFsyPnded0Gks=
+	b=s0sLbTyjKJzeh6deTjSDwb/vrtPubRCXMiEAi20QofcYdciKVJp4q/MDvzYMbIsnR
+	 swc1NS1Q1YzSHxnP5oUwZlb0dk1WU96wJG6LneOMttdzrimWT8F3xxbXTzRbMnYm1o
+	 Yj/sIiFPTv25wufYdHQi7lGL6IDXf/Aa8f5YgIlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.co.jp>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Benjamin Herrenschmidt <benh@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Martin KaFai Lau <kafai@fb.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Simon Horman <simon.horman@corigine.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 497/509] net: Introduce net.ipv4.tcp_migrate_req.
-Date: Tue, 25 Jul 2023 12:47:16 +0200
-Message-ID: <20230725104616.511492572@linuxfoundation.org>
+Subject: [PATCH 5.10 470/509] wifi: wext-core: Fix -Wstringop-overflow warning in ioctl_standard_iw_point()
+Date: Tue, 25 Jul 2023 12:46:49 +0200
+Message-ID: <20230725104615.274689769@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -38,97 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.co.jp>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-[ Upstream commit f9ac779f881c2ec3d1cdcd7fa9d4f9442bf60e80 ]
+[ Upstream commit 71e7552c90db2a2767f5c17c7ec72296b0d92061 ]
 
-This commit adds a new sysctl option: net.ipv4.tcp_migrate_req. If this
-option is enabled or eBPF program is attached, we will be able to migrate
-child sockets from a listener to another in the same reuseport group after
-close() or shutdown() syscalls.
+-Wstringop-overflow is legitimately warning us about extra_size
+pontentially being zero at some point, hence potenially ending
+up _allocating_ zero bytes of memory for extra pointer and then
+trying to access such object in a call to copy_from_user().
 
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.co.jp>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Benjamin Herrenschmidt <benh@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Martin KaFai Lau <kafai@fb.com>
-Link: https://lore.kernel.org/bpf/20210612123224.12525-2-kuniyu@amazon.co.jp
-Stable-dep-of: 3a037f0f3c4b ("tcp: annotate data-races around icsk->icsk_syn_retries")
+Fix this by adding a sanity check to ensure we never end up
+trying to allocate zero bytes of data for extra pointer, before
+continue executing the rest of the code in the function.
+
+Address the following -Wstringop-overflow warning seen when built
+m68k architecture with allyesconfig configuration:
+                 from net/wireless/wext-core.c:11:
+In function '_copy_from_user',
+    inlined from 'copy_from_user' at include/linux/uaccess.h:183:7,
+    inlined from 'ioctl_standard_iw_point' at net/wireless/wext-core.c:825:7:
+arch/m68k/include/asm/string.h:48:25: warning: '__builtin_memset' writing 1 or more bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
+   48 | #define memset(d, c, n) __builtin_memset(d, c, n)
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~
+include/linux/uaccess.h:153:17: note: in expansion of macro 'memset'
+  153 |                 memset(to + (n - res), 0, res);
+      |                 ^~~~~~
+In function 'kmalloc',
+    inlined from 'kzalloc' at include/linux/slab.h:694:9,
+    inlined from 'ioctl_standard_iw_point' at net/wireless/wext-core.c:819:10:
+include/linux/slab.h:577:16: note: at offset 1 into destination object of size 0 allocated by '__kmalloc'
+  577 |         return __kmalloc(size, flags);
+      |                ^~~~~~~~~~~~~~~~~~~~~~
+
+This help with the ongoing efforts to globally enable
+-Wstringop-overflow.
+
+Link: https://github.com/KSPP/linux/issues/315
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/ZItSlzvIpjdjNfd8@work
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/ip-sysctl.rst | 25 +++++++++++++++++++++++++
- include/net/netns/ipv4.h               |  1 +
- net/ipv4/sysctl_net_ipv4.c             |  9 +++++++++
- 3 files changed, 35 insertions(+)
+ net/wireless/wext-core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/Documentation/networking/ip-sysctl.rst b/Documentation/networking/ip-sysctl.rst
-index df26cf4110ef5..252212998378e 100644
---- a/Documentation/networking/ip-sysctl.rst
-+++ b/Documentation/networking/ip-sysctl.rst
-@@ -713,6 +713,31 @@ tcp_syncookies - INTEGER
- 	network connections you can set this knob to 2 to enable
- 	unconditionally generation of syncookies.
+diff --git a/net/wireless/wext-core.c b/net/wireless/wext-core.c
+index 76a80a41615be..a57f54bc0e1a7 100644
+--- a/net/wireless/wext-core.c
++++ b/net/wireless/wext-core.c
+@@ -796,6 +796,12 @@ static int ioctl_standard_iw_point(struct iw_point *iwp, unsigned int cmd,
+ 		}
+ 	}
  
-+tcp_migrate_req - BOOLEAN
-+	The incoming connection is tied to a specific listening socket when
-+	the initial SYN packet is received during the three-way handshake.
-+	When a listener is closed, in-flight request sockets during the
-+	handshake and established sockets in the accept queue are aborted.
++	/* Sanity-check to ensure we never end up _allocating_ zero
++	 * bytes of data for extra.
++	 */
++	if (extra_size <= 0)
++		return -EFAULT;
 +
-+	If the listener has SO_REUSEPORT enabled, other listeners on the
-+	same port should have been able to accept such connections. This
-+	option makes it possible to migrate such child sockets to another
-+	listener after close() or shutdown().
-+
-+	The BPF_SK_REUSEPORT_SELECT_OR_MIGRATE type of eBPF program should
-+	usually be used to define the policy to pick an alive listener.
-+	Otherwise, the kernel will randomly pick an alive listener only if
-+	this option is enabled.
-+
-+	Note that migration between listeners with different settings may
-+	crash applications. Let's say migration happens from listener A to
-+	B, and only B has TCP_SAVE_SYN enabled. B cannot read SYN data from
-+	the requests migrated from A. To avoid such a situation, cancel
-+	migration by returning SK_DROP in the type of eBPF program, or
-+	disable this option.
-+
-+	Default: 0
-+
- tcp_fastopen - INTEGER
- 	Enable TCP Fast Open (RFC7413) to send and accept data in the opening
- 	SYN packet.
-diff --git a/include/net/netns/ipv4.h b/include/net/netns/ipv4.h
-index 4a4a5270ff6f2..9b0d8649ae5b8 100644
---- a/include/net/netns/ipv4.h
-+++ b/include/net/netns/ipv4.h
-@@ -131,6 +131,7 @@ struct netns_ipv4 {
- 	u8 sysctl_tcp_syn_retries;
- 	u8 sysctl_tcp_synack_retries;
- 	u8 sysctl_tcp_syncookies;
-+	u8 sysctl_tcp_migrate_req;
- 	int sysctl_tcp_reordering;
- 	u8 sysctl_tcp_retries1;
- 	u8 sysctl_tcp_retries2;
-diff --git a/net/ipv4/sysctl_net_ipv4.c b/net/ipv4/sysctl_net_ipv4.c
-index 5aa8bde3e9c8e..59ba518a85b9c 100644
---- a/net/ipv4/sysctl_net_ipv4.c
-+++ b/net/ipv4/sysctl_net_ipv4.c
-@@ -878,6 +878,15 @@ static struct ctl_table ipv4_net_table[] = {
- 		.proc_handler	= proc_dou8vec_minmax,
- 	},
- #endif
-+	{
-+		.procname	= "tcp_migrate_req",
-+		.data		= &init_net.ipv4.sysctl_tcp_migrate_req,
-+		.maxlen		= sizeof(u8),
-+		.mode		= 0644,
-+		.proc_handler	= proc_dou8vec_minmax,
-+		.extra1		= SYSCTL_ZERO,
-+		.extra2		= SYSCTL_ONE
-+	},
- 	{
- 		.procname	= "tcp_reordering",
- 		.data		= &init_net.ipv4.sysctl_tcp_reordering,
+ 	/* kzalloc() ensures NULL-termination for essid_compat. */
+ 	extra = kzalloc(extra_size, GFP_KERNEL);
+ 	if (!extra)
 -- 
 2.39.2
 
