@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847B614263
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:47:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08DF0C433C8;
-	Tue, 25 Jul 2023 11:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E94314263
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:47:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03EEC433C7;
+	Tue, 25 Jul 2023 11:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285648;
-	bh=CivuM81LuSSuax7eVM6Io0zzAIXz5OxlVy1/77tzCv0=;
+	s=korg; t=1690285651;
+	bh=DnrOXR0TKMzAOf7o+KQ20lEK2e6hnduqo3p/IhGjV1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SFssWTur7NmgNAt2W0bnhGz7oqPdqnkf477tAwY6qcEtmYXMboMGqrk+zVyjtDcTG
-	 QTB8XOMVmgl8vQ2vi+CK2xA6U/uy1/EsfAAN9ewvBbHZgiHwxEeVUpul6AqidVNvgn
-	 eVTTpSQQF9c2BtTHVc8ugTONMf2d+yj3sd/N4oSc=
+	b=la/Py/45oENUtsazCQzoMoui4OqR0XSlX20+CSz/SEU0v0JWXtax/yzKjTlwzyGJv
+	 ZRa2bzBPvyS7zUkaRos8P/jvIwTMklY6RIf1v5yW4bwCLbTipzB1/UvdxJy+vymRNo
+	 pvy9a0mTiSuP6UzzyPe9WMAWuIEA4nFC6C6+2L7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 279/313] selftests: tc: set timeout to 15 minutes
-Date: Tue, 25 Jul 2023 12:47:12 +0200
-Message-ID: <20230725104533.147578290@linuxfoundation.org>
+	YueHaibing <yuehaibing@huawei.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.4 280/313] can: bcm: Fix UAF in bcm_proc_show()
+Date: Tue, 25 Jul 2023 12:47:13 +0200
+Message-ID: <20230725104533.179065403@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -37,49 +35,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: YueHaibing <yuehaibing@huawei.com>
 
-commit fda05798c22a354efde09a76bdfc276b2d591829 upstream.
+commit 55c3b96074f3f9b0aee19bf93cd71af7516582bb upstream.
 
-When looking for something else in LKFT reports [1], I noticed that the
-TC selftest ended with a timeout error:
+BUG: KASAN: slab-use-after-free in bcm_proc_show+0x969/0xa80
+Read of size 8 at addr ffff888155846230 by task cat/7862
 
-  not ok 1 selftests: tc-testing: tdc.sh # TIMEOUT 45 seconds
+CPU: 1 PID: 7862 Comm: cat Not tainted 6.5.0-rc1-00153-gc8746099c197 #230
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xd5/0x150
+ print_report+0xc1/0x5e0
+ kasan_report+0xba/0xf0
+ bcm_proc_show+0x969/0xa80
+ seq_read_iter+0x4f6/0x1260
+ seq_read+0x165/0x210
+ proc_reg_read+0x227/0x300
+ vfs_read+0x1d5/0x8d0
+ ksys_read+0x11e/0x240
+ do_syscall_64+0x35/0xb0
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-The timeout had been introduced 3 years ago, see the Fixes commit below.
+Allocated by task 7846:
+ kasan_save_stack+0x1e/0x40
+ kasan_set_track+0x21/0x30
+ __kasan_kmalloc+0x9e/0xa0
+ bcm_sendmsg+0x264b/0x44e0
+ sock_sendmsg+0xda/0x180
+ ____sys_sendmsg+0x735/0x920
+ ___sys_sendmsg+0x11d/0x1b0
+ __sys_sendmsg+0xfa/0x1d0
+ do_syscall_64+0x35/0xb0
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-This timeout is only in place when executing the selftests via the
-kselftests runner scripts. I guess this is not what most TC devs are
-using and nobody noticed the issue before.
+Freed by task 7846:
+ kasan_save_stack+0x1e/0x40
+ kasan_set_track+0x21/0x30
+ kasan_save_free_info+0x27/0x40
+ ____kasan_slab_free+0x161/0x1c0
+ slab_free_freelist_hook+0x119/0x220
+ __kmem_cache_free+0xb4/0x2e0
+ rcu_core+0x809/0x1bd0
 
-The new timeout is set to 15 minutes as suggested by Pedro [2]. It looks
-like it is plenty more time than what it takes in "normal" conditions.
+bcm_op is freed before procfs entry be removed in bcm_release(),
+this lead to bcm_proc_show() may read the freed bcm_op.
 
-Fixes: 852c8cbf34d3 ("selftests/kselftest/runner.sh: Add 45 second timeout per test")
+Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://lore.kernel.org/all/20230715092543.15548-1-yuehaibing@huawei.com
 Cc: stable@vger.kernel.org
-Link: https://qa-reports.linaro.org/lkft/linux-next-master/build/next-20230711/testrun/18267241/suite/kselftest-tc-testing/test/tc-testing_tdc_sh/log [1]
-Link: https://lore.kernel.org/netdev/0e061d4a-9a23-9f58-3b35-d8919de332d7@tessares.net/T/ [2]
-Suggested-by: Pedro Tammela <pctammela@mojatatu.com>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Reviewed-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://lore.kernel.org/r/20230713-tc-selftests-lkft-v1-1-1eb4fd3a96e7@tessares.net
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/tc-testing/settings | 1 +
- 1 file changed, 1 insertion(+)
- create mode 100644 tools/testing/selftests/tc-testing/settings
+ net/can/bcm.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/tc-testing/settings b/tools/testing/selftests/tc-testing/settings
-new file mode 100644
-index 000000000000..e2206265f67c
---- /dev/null
-+++ b/tools/testing/selftests/tc-testing/settings
-@@ -0,0 +1 @@
-+timeout=900
--- 
-2.41.0
-
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -1523,6 +1523,12 @@ static int bcm_release(struct socket *so
+ 
+ 	lock_sock(sk);
+ 
++#if IS_ENABLED(CONFIG_PROC_FS)
++	/* remove procfs entry */
++	if (net->can.bcmproc_dir && bo->bcm_proc_read)
++		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
++#endif /* CONFIG_PROC_FS */
++
+ 	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
+ 		bcm_remove_op(op);
+ 
+@@ -1558,12 +1564,6 @@ static int bcm_release(struct socket *so
+ 	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
+ 		bcm_remove_op(op);
+ 
+-#if IS_ENABLED(CONFIG_PROC_FS)
+-	/* remove procfs entry */
+-	if (net->can.bcmproc_dir && bo->bcm_proc_read)
+-		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
+-#endif /* CONFIG_PROC_FS */
+-
+ 	/* remove device reference */
+ 	if (bo->bound) {
+ 		bo->bound   = 0;
 
 
