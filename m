@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08EAE1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:26:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F9FFC433C8;
-	Tue, 25 Jul 2023 11:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ABD41ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:26:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F6FFC433C7;
+	Tue, 25 Jul 2023 11:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284360;
-	bh=pDQ+42DLVyZ1/fBjlDtEeF83k49JIUS5J8F2fQIqZ2c=;
+	s=korg; t=1690284363;
+	bh=To+As4hegon161/ypJ+gwuV+tijZnXofBCZiSPcj788=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ziL8Ufy4klV9mLsBbRC1htpCFfD13jh37NMj0jYqryELZKVQ4K/dIqye18EFNIbyp
-	 Mv7P9mNTTsY/uCrFW6nW89m8az5p/Wf4GjnyeEHXYRuaAswc19Iea8s+hrrBnWFhFH
-	 ARo7Q7kk4n6JXavJnG6fLYaJCy1gzyXfdh37uehk=
+	b=Bfik9yxmOUq0XdlhsLyngXYWCWoUeqn/YGE5GgAv63RX7U199U21SI2iYuAZ1Np/t
+	 4xdNQbm9pkn6upiNpI5Q/cCDNTFSPH13lY5I4B5U+HqiCRFMUbsfJ7+UD/V+ZU1chk
+	 Cyc4GLTsAmfI90NpB9r+VeezEbgsbfq/NiDvR2Ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Daniel Palmer <daniel@thingy.jp>,
-	Rob Landley <rob@landley.net>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Rich Felker <dalias@libc.org>
-Subject: [PATCH 5.10 311/509] sh: pgtable-3level: Fix cast to pointer from integer of different size
-Date: Tue, 25 Jul 2023 12:44:10 +0200
-Message-ID: <20230725104607.979386993@linuxfoundation.org>
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>
+Subject: [PATCH 5.10 329/509] rcu-tasks: Mark ->trc_reader_nesting data races
+Date: Tue, 25 Jul 2023 12:44:28 +0200
+Message-ID: <20230725104608.760429177@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,46 +34,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: "Paul E. McKenney" <paulmck@kernel.org>
 
-commit 8518e694203d0bfd202ea4a80356785b6992322e upstream.
+[ Upstream commit bdb0cca0d11060fce8a8a44588ac1470c25d62bc ]
 
-If X2TLB=y (CPU_SHX2=y or CPU_SHX3=y, e.g. migor_defconfig), pgd_t.pgd
-is "unsigned long long", causing:
+There are several ->trc_reader_nesting data races that are too
+low-probability for KCSAN to notice, but which will happen sooner or
+later.  This commit therefore marks these accesses, and comments one
+that cannot race.
 
-    In file included from arch/sh/include/asm/pgtable.h:13,
-		     from include/linux/pgtable.h:6,
-		     from include/linux/mm.h:33,
-		     from arch/sh/kernel/asm-offsets.c:14:
-    arch/sh/include/asm/pgtable-3level.h: In function ‘pud_pgtable’:
-    arch/sh/include/asm/pgtable-3level.h:37:9: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-       37 |  return (pmd_t *)pud_val(pud);
-	  |         ^
-
-Fix this by adding an intermediate cast to "unsigned long", which is
-basically what the old code did before.
-
-Fixes: 9cf6fa2458443118 ("mm: rename pud_page_vaddr to pud_pgtable and make it return pmd_t *")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Daniel Palmer <daniel@thingy.jp>
-Acked-by: Rob Landley <rob@landley.net>
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: Rich Felker <dalias@libc.org>
+Cc: <stable@vger.kernel.org> # 5.10.x
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sh/include/asm/pgtable-3level.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/rcu/tasks.h |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/arch/sh/include/asm/pgtable-3level.h
-+++ b/arch/sh/include/asm/pgtable-3level.h
-@@ -34,7 +34,7 @@ typedef struct { unsigned long long pmd;
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -848,7 +848,7 @@ static void trc_read_check_handler(void
  
- static inline pmd_t *pud_pgtable(pud_t pud)
+ 	// If the task is not in a read-side critical section, and
+ 	// if this is the last reader, awaken the grace-period kthread.
+-	if (likely(!t->trc_reader_nesting)) {
++	if (likely(!READ_ONCE(t->trc_reader_nesting))) {
+ 		if (WARN_ON_ONCE(atomic_dec_and_test(&trc_n_readers_need_end)))
+ 			wake_up(&trc_wait);
+ 		// Mark as checked after decrement to avoid false
+@@ -857,7 +857,7 @@ static void trc_read_check_handler(void
+ 		goto reset_ipi;
+ 	}
+ 	// If we are racing with an rcu_read_unlock_trace(), try again later.
+-	if (unlikely(t->trc_reader_nesting < 0)) {
++	if (unlikely(READ_ONCE(t->trc_reader_nesting) < 0)) {
+ 		if (WARN_ON_ONCE(atomic_dec_and_test(&trc_n_readers_need_end)))
+ 			wake_up(&trc_wait);
+ 		goto reset_ipi;
+@@ -904,6 +904,7 @@ static bool trc_inspect_reader(struct ta
+ 			n_heavy_reader_ofl_updates++;
+ 		in_qs = true;
+ 	} else {
++		// The task is not running, so C-language access is safe.
+ 		in_qs = likely(!t->trc_reader_nesting);
+ 	}
+ 
+@@ -936,7 +937,7 @@ static void trc_wait_for_one_reader(stru
+ 	// The current task had better be in a quiescent state.
+ 	if (t == current) {
+ 		t->trc_reader_checked = true;
+-		WARN_ON_ONCE(t->trc_reader_nesting);
++		WARN_ON_ONCE(READ_ONCE(t->trc_reader_nesting));
+ 		return;
+ 	}
+ 
+@@ -1046,7 +1047,7 @@ static void show_stalled_task_trace(stru
+ 		 ".I"[READ_ONCE(t->trc_ipi_to_cpu) > 0],
+ 		 ".i"[is_idle_task(t)],
+ 		 ".N"[cpu > 0 && tick_nohz_full_cpu(cpu)],
+-		 t->trc_reader_nesting,
++		 READ_ONCE(t->trc_reader_nesting),
+ 		 " N"[!!t->trc_reader_special.b.need_qs],
+ 		 cpu);
+ 	sched_show_task(t);
+@@ -1141,7 +1142,7 @@ static void rcu_tasks_trace_postgp(struc
+ static void exit_tasks_rcu_finish_trace(struct task_struct *t)
  {
--	return (pmd_t *)pud_val(pud);
-+	return (pmd_t *)(unsigned long)pud_val(pud);
- }
- 
- /* only used by the stubbed out hugetlb gup code, should never be called */
+ 	WRITE_ONCE(t->trc_reader_checked, true);
+-	WARN_ON_ONCE(t->trc_reader_nesting);
++	WARN_ON_ONCE(READ_ONCE(t->trc_reader_nesting));
+ 	WRITE_ONCE(t->trc_reader_nesting, 0);
+ 	if (WARN_ON_ONCE(READ_ONCE(t->trc_reader_special.b.need_qs)))
+ 		rcu_read_unlock_trace_special(t, 0);
 
 
