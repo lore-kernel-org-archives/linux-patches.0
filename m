@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C371ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:19:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595DBC433C8;
-	Tue, 25 Jul 2023 11:19:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A265F1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:19:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2516CC433C8;
+	Tue, 25 Jul 2023 11:19:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283960;
-	bh=UuTk6rggBf2tAw2MrN7Wuct+GlmeZN9ULMV4nf81EyU=;
+	s=korg; t=1690283963;
+	bh=yQM872vKs3Ha/OmGU/czMqCvw1flo2iH4BoWZtWZl+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MzO6GoGA949myQRsBUs8yikB8GVqZflXB1JOyI5bkX5r20pphCEa9uVsjBlQfpP7W
-	 X0SYBe2MPVtScf+96mmATEFVNJaldVAzDwBoadvwUp25O7mPb/DrLz9r407j3O+mAa
-	 m842qdlqcVf6k/Ig0CSc1vTS93R2iSAqriZVIUXU=
+	b=hhWQQyWwM6jk4up/tDhonKLHNbFQvUv0PDSFmGHsK9J7LK3zflRN1t37Bek9C7HGR
+	 W4xFmFuKNr1YRBbFkAHIvXAadB9K+GoHMHRrwcChnSCu6CYIEADRZoGAppgIiFAR2w
+	 /RhmuwYE28i7az0sBXtEHwbdPbIlSQrDKxT15ngA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 155/509] RDMA/bnxt_re: wraparound mbox producer index
-Date: Tue, 25 Jul 2023 12:41:34 +0200
-Message-ID: <20230725104600.813498788@linuxfoundation.org>
+Subject: [PATCH 5.10 156/509] RDMA/bnxt_re: Avoid calling wake_up threads from spin_lock context
+Date: Tue, 25 Jul 2023 12:41:35 +0200
+Message-ID: <20230725104600.854645898@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -38,51 +38,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Kashyap Desai <kashyap.desai@broadcom.com>
 
-[ Upstream commit 0af91306e17ef3d18e5f100aa58aa787869118af ]
+[ Upstream commit 3099bcdc19b701f732f638ee45679858c08559bb ]
 
-Driver is not handling the wraparound of the mbox producer index correctly.
-Currently the wraparound happens once u32 max is reached.
+bnxt_qplib_service_creq can be called from interrupt or tasklet or
+process context. So the function take irq variant  of spin_lock.
+But when wake_up is invoked with the lock held, it is putting the
+calling context to sleep.
 
-Bit 31 of the producer index register is special and should be set
-only once for the first command. Because the producer index overflow
-setting bit31 after a long time, FW goes to initialization sequence
-and this causes FW hang.
+[exception RIP: __wake_up_common+190]
+RIP: ffffffffb7539d7e  RSP: ffffa73300207ad8  RFLAGS: 00000083
+RAX: 0000000000000001  RBX: ffff91fa295f69b8  RCX: dead000000000200
+RDX: ffffa733344af940  RSI: ffffa73336527940  RDI: ffffa73336527940
+RBP: 000000000000001c   R8: 0000000000000002   R9: 00000000000299c0
+R10: 0000017230de82c5  R11: 0000000000000002  R12: ffffa73300207b28
+R13: 0000000000000000  R14: ffffa733341bf928  R15: 0000000000000000
+ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
 
-Fix is to wraparound the mbox producer index once it reaches u16 max.
+Call the wakeup after releasing the lock.
 
-Fixes: cee0c7bba486 ("RDMA/bnxt_re: Refactor command queue management code")
 Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
 Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
 Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://lore.kernel.org/r/1686308514-11996-2-git-send-email-selvin.xavier@broadcom.com
+Link: https://lore.kernel.org/r/1686308514-11996-3-git-send-email-selvin.xavier@broadcom.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_rcfw.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-index 4836bc433f53c..212e5cd82d0db 100644
+index 212e5cd82d0db..2b0c3a86293cf 100644
 --- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
 +++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-@@ -181,7 +181,7 @@ static int __send_message(struct bnxt_qplib_rcfw *rcfw, struct cmdq_base *req,
- 	} while (size > 0);
- 	cmdq->seq_num++;
+@@ -295,7 +295,8 @@ static int bnxt_qplib_process_func_event(struct bnxt_qplib_rcfw *rcfw,
+ }
  
--	cmdq_prod = hwq->prod;
-+	cmdq_prod = hwq->prod & 0xFFFF;
- 	if (test_bit(FIRMWARE_FIRST_FLAG, &cmdq->flags)) {
- 		/* The very first doorbell write
- 		 * is required to set this flag
-@@ -595,7 +595,7 @@ int bnxt_qplib_alloc_rcfw_channel(struct bnxt_qplib_res *res,
- 		rcfw->cmdq_depth = BNXT_QPLIB_CMDQE_MAX_CNT_8192;
+ static int bnxt_qplib_process_qp_event(struct bnxt_qplib_rcfw *rcfw,
+-				       struct creq_qp_event *qp_event)
++				       struct creq_qp_event *qp_event,
++				       u32 *num_wait)
+ {
+ 	struct creq_qp_error_notification *err_event;
+ 	struct bnxt_qplib_hwq *hwq = &rcfw->cmdq.hwq;
+@@ -304,6 +305,7 @@ static int bnxt_qplib_process_qp_event(struct bnxt_qplib_rcfw *rcfw,
+ 	u16 cbit, blocked = 0;
+ 	struct pci_dev *pdev;
+ 	unsigned long flags;
++	u32 wait_cmds = 0;
+ 	__le16  mcookie;
+ 	u16 cookie;
+ 	int rc = 0;
+@@ -363,9 +365,10 @@ static int bnxt_qplib_process_qp_event(struct bnxt_qplib_rcfw *rcfw,
+ 		crsqe->req_size = 0;
  
- 	sginfo.pgsize = bnxt_qplib_cmdqe_page_size(rcfw->cmdq_depth);
--	hwq_attr.depth = rcfw->cmdq_depth;
-+	hwq_attr.depth = rcfw->cmdq_depth & 0x7FFFFFFF;
- 	hwq_attr.stride = BNXT_QPLIB_CMDQE_UNITS;
- 	hwq_attr.type = HWQ_TYPE_CTX;
- 	if (bnxt_qplib_alloc_init_hwq(&cmdq->hwq, &hwq_attr)) {
+ 		if (!blocked)
+-			wake_up(&rcfw->cmdq.waitq);
++			wait_cmds++;
+ 		spin_unlock_irqrestore(&hwq->lock, flags);
+ 	}
++	*num_wait += wait_cmds;
+ 	return rc;
+ }
+ 
+@@ -379,6 +382,7 @@ static void bnxt_qplib_service_creq(struct tasklet_struct *t)
+ 	struct creq_base *creqe;
+ 	u32 sw_cons, raw_cons;
+ 	unsigned long flags;
++	u32 num_wakeup = 0;
+ 
+ 	/* Service the CREQ until budget is over */
+ 	spin_lock_irqsave(&hwq->lock, flags);
+@@ -397,7 +401,8 @@ static void bnxt_qplib_service_creq(struct tasklet_struct *t)
+ 		switch (type) {
+ 		case CREQ_BASE_TYPE_QP_EVENT:
+ 			bnxt_qplib_process_qp_event
+-				(rcfw, (struct creq_qp_event *)creqe);
++				(rcfw, (struct creq_qp_event *)creqe,
++				 &num_wakeup);
+ 			creq->stats.creq_qp_event_processed++;
+ 			break;
+ 		case CREQ_BASE_TYPE_FUNC_EVENT:
+@@ -425,6 +430,8 @@ static void bnxt_qplib_service_creq(struct tasklet_struct *t)
+ 				      rcfw->res->cctx, true);
+ 	}
+ 	spin_unlock_irqrestore(&hwq->lock, flags);
++	if (num_wakeup)
++		wake_up_nr(&rcfw->cmdq.waitq, num_wakeup);
+ }
+ 
+ static irqreturn_t bnxt_qplib_creq_irq(int irq, void *dev_instance)
 -- 
 2.39.2
 
