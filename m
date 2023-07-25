@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE2015AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:58:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 817E6C433C8;
-	Tue, 25 Jul 2023 10:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2E215AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:58:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5055AC433C7;
+	Tue, 25 Jul 2023 10:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282692;
-	bh=XVFKjGUw27pqHaTGOxos+pOAVpK/ZolEXYxWbWIuVbI=;
+	s=korg; t=1690282695;
+	bh=RTZJyYl0kZtVhirUa6qyZyNNRl63+lbtRe8XQTQXLNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u3FRidTQ719hd+0+m8f0lbaqfeaTBVdtgi3tBq05ZQLBIERgE5txI00nSfSipWphe
-	 jjgloCH/dr/oV9k/lzLh9FxFMpXEtbfS17DC33Emr8ssIKe/LuQGDvkCvpUwZGhEx1
-	 c7irtXAhE+q4YAFmydJ+mCnF0wzsTWPag/ki9bb4=
+	b=SkF+dIf5KudiH6fyygLLEbwsMLrLjVoaF0cXnO7E7Iy6iaJpDtVgb1EaaRHd2ZW7i
+	 5s5LeOBdxHg1xIuV+sj5KxC0TVhjLzRFLdvTupNI8A8Cht7XZ3aYAW3psSpKllxi+J
+	 AW6LrkjqBp83py0I32Lv+01X0UtzbMuqX8gQ72Hw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.4 219/227] jbd2: recheck chechpointing non-dirty buffer
-Date: Tue, 25 Jul 2023 12:46:26 +0200
-Message-ID: <20230725104523.781296882@linuxfoundation.org>
+	Raphael Nestler <raphael.nestler@gmail.com>,
+	Andrea Righi <andrea.righi@canonical.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 6.4 220/227] kbuild: rust: avoid creating temporary files
+Date: Tue, 25 Jul 2023 12:46:27 +0200
+Message-ID: <20230725104523.822012845@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -36,191 +37,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit c2d6fd9d6f35079f1669f0100f05b46708c74b7f upstream.
+commit df01b7cfcef08bf3fdcac2909d0e1910781d6bfd upstream.
 
-There is a long-standing metadata corruption issue that happens from
-time to time, but it's very difficult to reproduce and analyse, benefit
-from the JBD2_CYCLE_RECORD option, we found out that the problem is the
-checkpointing process miss to write out some buffers which are raced by
-another do_get_write_access(). Looks below for detail.
+`rustc` outputs by default the temporary files (i.e. the ones saved
+by `-Csave-temps`, such as `*.rcgu*` files) in the current working
+directory when `-o` and `--out-dir` are not given (even if
+`--emit=x=path` is given, i.e. it does not use those for temporaries).
 
-jbd2_log_do_checkpoint() //transaction X
- //buffer A is dirty and not belones to any transaction
- __buffer_relink_io() //move it to the IO list
- __flush_batch()
-  write_dirty_buffer()
-                             do_get_write_access()
-                             clear_buffer_dirty
-                             __jbd2_journal_file_buffer()
-                             //add buffer A to a new transaction Y
-   lock_buffer(bh)
-   //doesn't write out
- __jbd2_journal_remove_checkpoint()
- //finish checkpoint except buffer A
- //filesystem corrupt if the new transaction Y isn't fully write out.
+Since out-of-tree modules are compiled from the `linux` tree,
+`rustc` then tries to create them there, which may not be accessible.
 
-Due to the t_checkpoint_list walking loop in jbd2_log_do_checkpoint()
-have already handles waiting for buffers under IO and re-added new
-transaction to complete commit, and it also removing cleaned buffers,
-this makes sure the list will eventually get empty. So it's fine to
-leave buffers on the t_checkpoint_list while flushing out and completely
-stop using the t_checkpoint_io_list.
+Thus pass `--out-dir` explicitly, even if it is just for the temporary
+files.
 
+Similarly, do so for Rust host programs too.
+
+Reported-by: Raphael Nestler <raphael.nestler@gmail.com>
+Closes: https://github.com/Rust-for-Linux/linux/issues/1015
+Reported-by: Andrea Righi <andrea.righi@canonical.com>
+Tested-by: Raphael Nestler <raphael.nestler@gmail.com> # non-hostprogs
+Tested-by: Andrea Righi <andrea.righi@canonical.com> # non-hostprogs
+Fixes: 295d8398c67e ("kbuild: specify output names separately for each emission type from rustc")
 Cc: stable@vger.kernel.org
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Tested-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230606135928.434610-2-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Tested-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/checkpoint.c |  102 ++++++++++++++-------------------------------------
- 1 file changed, 29 insertions(+), 73 deletions(-)
+ scripts/Makefile.build |    5 ++++-
+ scripts/Makefile.host  |    6 +++++-
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
---- a/fs/jbd2/checkpoint.c
-+++ b/fs/jbd2/checkpoint.c
-@@ -58,28 +58,6 @@ static inline void __buffer_unlink(struc
- }
+--- a/scripts/Makefile.build
++++ b/scripts/Makefile.build
+@@ -279,6 +279,9 @@ $(obj)/%.lst: $(src)/%.c FORCE
  
- /*
-- * Move a buffer from the checkpoint list to the checkpoint io list
-- *
-- * Called with j_list_lock held
-- */
--static inline void __buffer_relink_io(struct journal_head *jh)
--{
--	transaction_t *transaction = jh->b_cp_transaction;
--
--	__buffer_unlink_first(jh);
--
--	if (!transaction->t_checkpoint_io_list) {
--		jh->b_cpnext = jh->b_cpprev = jh;
--	} else {
--		jh->b_cpnext = transaction->t_checkpoint_io_list;
--		jh->b_cpprev = transaction->t_checkpoint_io_list->b_cpprev;
--		jh->b_cpprev->b_cpnext = jh;
--		jh->b_cpnext->b_cpprev = jh;
--	}
--	transaction->t_checkpoint_io_list = jh;
--}
--
--/*
-  * Check a checkpoint buffer could be release or not.
-  *
-  * Requires j_list_lock
-@@ -183,6 +161,7 @@ __flush_batch(journal_t *journal, int *b
- 		struct buffer_head *bh = journal->j_chkpt_bhs[i];
- 		BUFFER_TRACE(bh, "brelse");
- 		__brelse(bh);
-+		journal->j_chkpt_bhs[i] = NULL;
- 	}
- 	*batch_count = 0;
- }
-@@ -242,6 +221,11 @@ restart:
- 		jh = transaction->t_checkpoint_list;
- 		bh = jh2bh(jh);
+ rust_allowed_features := core_ffi_c,explicit_generic_args_with_impl_trait,new_uninit,pin_macro
  
-+		/*
-+		 * The buffer may be writing back, or flushing out in the
-+		 * last couple of cycles, or re-adding into a new transaction,
-+		 * need to check it again until it's unlocked.
-+		 */
- 		if (buffer_locked(bh)) {
- 			get_bh(bh);
- 			spin_unlock(&journal->j_list_lock);
-@@ -287,28 +271,32 @@ restart:
- 		}
- 		if (!buffer_dirty(bh)) {
- 			BUFFER_TRACE(bh, "remove from checkpoint");
--			if (__jbd2_journal_remove_checkpoint(jh))
--				/* The transaction was released; we're done */
-+			/*
-+			 * If the transaction was released or the checkpoint
-+			 * list was empty, we're done.
-+			 */
-+			if (__jbd2_journal_remove_checkpoint(jh) ||
-+			    !transaction->t_checkpoint_list)
- 				goto out;
--			continue;
-+		} else {
-+			/*
-+			 * We are about to write the buffer, it could be
-+			 * raced by some other transaction shrink or buffer
-+			 * re-log logic once we release the j_list_lock,
-+			 * leave it on the checkpoint list and check status
-+			 * again to make sure it's clean.
-+			 */
-+			BUFFER_TRACE(bh, "queue");
-+			get_bh(bh);
-+			J_ASSERT_BH(bh, !buffer_jwrite(bh));
-+			journal->j_chkpt_bhs[batch_count++] = bh;
-+			transaction->t_chp_stats.cs_written++;
-+			transaction->t_checkpoint_list = jh->b_cpnext;
- 		}
--		/*
--		 * Important: we are about to write the buffer, and
--		 * possibly block, while still holding the journal
--		 * lock.  We cannot afford to let the transaction
--		 * logic start messing around with this buffer before
--		 * we write it to disk, as that would break
--		 * recoverability.
--		 */
--		BUFFER_TRACE(bh, "queue");
--		get_bh(bh);
--		J_ASSERT_BH(bh, !buffer_jwrite(bh));
--		journal->j_chkpt_bhs[batch_count++] = bh;
--		__buffer_relink_io(jh);
--		transaction->t_chp_stats.cs_written++;
++# `--out-dir` is required to avoid temporaries being created by `rustc` in the
++# current working directory, which may be not accessible in the out-of-tree
++# modules case.
+ rust_common_cmd = \
+ 	RUST_MODFILE=$(modfile) $(RUSTC_OR_CLIPPY) $(rust_flags) \
+ 	-Zallow-features=$(rust_allowed_features) \
+@@ -287,7 +290,7 @@ rust_common_cmd = \
+ 	--extern alloc --extern kernel \
+ 	--crate-type rlib -L $(objtree)/rust/ \
+ 	--crate-name $(basename $(notdir $@)) \
+-	--emit=dep-info=$(depfile)
++	--out-dir $(dir $@) --emit=dep-info=$(depfile)
+ 
+ # `--emit=obj`, `--emit=asm` and `--emit=llvm-ir` imply a single codegen unit
+ # will be used. We explicitly request `-Ccodegen-units=1` in any case, and
+--- a/scripts/Makefile.host
++++ b/scripts/Makefile.host
+@@ -86,7 +86,11 @@ hostc_flags    = -Wp,-MMD,$(depfile) \
+ hostcxx_flags  = -Wp,-MMD,$(depfile) \
+                  $(KBUILD_HOSTCXXFLAGS) $(HOST_EXTRACXXFLAGS) \
+                  $(HOSTCXXFLAGS_$(target-stem).o)
+-hostrust_flags = --emit=dep-info=$(depfile) \
 +
- 		if ((batch_count == JBD2_NR_BATCH) ||
--		    need_resched() ||
--		    spin_needbreak(&journal->j_list_lock))
-+		    need_resched() || spin_needbreak(&journal->j_list_lock) ||
-+		    jh2bh(transaction->t_checkpoint_list) == journal->j_chkpt_bhs[0])
- 			goto unlock_and_flush;
- 	}
++# `--out-dir` is required to avoid temporaries being created by `rustc` in the
++# current working directory, which may be not accessible in the out-of-tree
++# modules case.
++hostrust_flags = --out-dir $(dir $@) --emit=dep-info=$(depfile) \
+                  $(KBUILD_HOSTRUSTFLAGS) $(HOST_EXTRARUSTFLAGS) \
+                  $(HOSTRUSTFLAGS_$(target-stem))
  
-@@ -322,38 +310,6 @@ restart:
- 			goto restart;
- 	}
- 
--	/*
--	 * Now we issued all of the transaction's buffers, let's deal
--	 * with the buffers that are out for I/O.
--	 */
--restart2:
--	/* Did somebody clean up the transaction in the meanwhile? */
--	if (journal->j_checkpoint_transactions != transaction ||
--	    transaction->t_tid != this_tid)
--		goto out;
--
--	while (transaction->t_checkpoint_io_list) {
--		jh = transaction->t_checkpoint_io_list;
--		bh = jh2bh(jh);
--		if (buffer_locked(bh)) {
--			get_bh(bh);
--			spin_unlock(&journal->j_list_lock);
--			wait_on_buffer(bh);
--			/* the journal_head may have gone by now */
--			BUFFER_TRACE(bh, "brelse");
--			__brelse(bh);
--			spin_lock(&journal->j_list_lock);
--			goto restart2;
--		}
--
--		/*
--		 * Now in whatever state the buffer currently is, we
--		 * know that it has been written out and so we can
--		 * drop it from the list
--		 */
--		if (__jbd2_journal_remove_checkpoint(jh))
--			break;
--	}
- out:
- 	spin_unlock(&journal->j_list_lock);
- 	result = jbd2_cleanup_journal_tail(journal);
 
 
