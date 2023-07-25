@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70401ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:16:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4CFC433CA;
-	Tue, 25 Jul 2023 11:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7179B1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:16:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1CBEC433C7;
+	Tue, 25 Jul 2023 11:16:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283799;
-	bh=56f1In5tbzygGHl5qDvchEX5W2hG6dnIKV1N39LOWoI=;
+	s=korg; t=1690283802;
+	bh=ycfWqGIDkqmQERhZGc4d7/AYQlc58oue8ZpL19/+eTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+rYXzpcPea1l3uA8Ybxj3PfeTbzKAepiBDs8MpXxoqMuLd0gAuJGgGMZAAF5D3Em
-	 C43mo/31TGOmxPSErjPP+0IyynXms6bunmJQ2gYupK7jLwdWhelUUI+cli1ExFvni0
-	 GAVxmKIAP9Z8EGksSeXVXyUs3aTnchmlKe2VLGyw=
+	b=wTkvXFVG5y/8P9KkKGlM6x3wwwyfCQZDyG3gXszAdFfjH0+e+EFsWPP/gQvUc/Kt9
+	 r5qAAN+zJBijwOOyVEV6yMrefOiYRy2CFmKs1G/E9KLFlDkqki+3WXjLLnHOsuRbAr
+	 p2Va0ZU4c4jBwTLMy6I+CD9QSmj6dJmNhSjluFgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <andreas@kemnade.info>,
-	"H. Nikolaus Schaller" <hns@goldelico.com>,
-	Tony Lindgren <tony@atomide.com>,
+	Markus Mayer <mmayer@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 119/509] ARM: dts: gta04: Move model property out of pinctrl node
-Date: Tue, 25 Jul 2023 12:40:58 +0200
-Message-ID: <20230725104559.132507276@linuxfoundation.org>
+Subject: [PATCH 5.10 128/509] memory: brcmstb_dpfe: fix testing array offset after use
+Date: Tue, 25 Jul 2023 12:41:07 +0200
+Message-ID: <20230725104559.554782316@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,39 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Lindgren <tony@atomide.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 4ffec92e70ac5097b9f67ec154065305b16a3b46 ]
+[ Upstream commit 1d9e93fad549bc38f593147479ee063f2872c170 ]
 
-The model property should be at the top level, let's move it out
-of the pinctrl node.
+Code should first check for valid value of array offset, then use it as
+the index.  Fixes smatch warning:
 
-Fixes: d2eaf949d2c3 ("ARM: dts: omap3-gta04a5one: define GTA04A5 variant with OneNAND")
-Cc: Andreas Kemnade <andreas@kemnade.info>
-Cc: H. Nikolaus Schaller <hns@goldelico.com>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
+  drivers/memory/brcmstb_dpfe.c:443 __send_command() error: testing array offset 'cmd' after use.
+
+Fixes: 2f330caff577 ("memory: brcmstb: Add driver for DPFE")
+Acked-by: Markus Mayer <mmayer@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20230513112931.176066-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/omap3-gta04a5one.dts | 4 +++-
+ drivers/memory/brcmstb_dpfe.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/omap3-gta04a5one.dts b/arch/arm/boot/dts/omap3-gta04a5one.dts
-index 9db9fe67cd63b..95df45cc70c09 100644
---- a/arch/arm/boot/dts/omap3-gta04a5one.dts
-+++ b/arch/arm/boot/dts/omap3-gta04a5one.dts
-@@ -5,9 +5,11 @@
+diff --git a/drivers/memory/brcmstb_dpfe.c b/drivers/memory/brcmstb_dpfe.c
+index f43ba69fbb3e3..2daae2e0cb19e 100644
+--- a/drivers/memory/brcmstb_dpfe.c
++++ b/drivers/memory/brcmstb_dpfe.c
+@@ -434,15 +434,17 @@ static void __finalize_command(struct brcmstb_dpfe_priv *priv)
+ static int __send_command(struct brcmstb_dpfe_priv *priv, unsigned int cmd,
+ 			  u32 result[])
+ {
+-	const u32 *msg = priv->dpfe_api->command[cmd];
+ 	void __iomem *regs = priv->regs;
+ 	unsigned int i, chksum, chksum_idx;
++	const u32 *msg;
+ 	int ret = 0;
+ 	u32 resp;
  
- #include "omap3-gta04a5.dts"
+ 	if (cmd >= DPFE_CMD_MAX)
+ 		return -1;
  
--&omap3_pmx_core {
-+/ {
- 	model = "Goldelico GTA04A5/Letux 2804 with OneNAND";
-+};
++	msg = priv->dpfe_api->command[cmd];
++
+ 	mutex_lock(&priv->lock);
  
-+&omap3_pmx_core {
- 	gpmc_pins: pinmux_gpmc_pins {
- 		pinctrl-single,pins = <
- 
+ 	/* Wait for DCPU to become ready */
 -- 
 2.39.2
 
