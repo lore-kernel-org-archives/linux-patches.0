@@ -1,27 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D3A1D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:48:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F01C433C8;
-	Tue, 25 Jul 2023 10:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7877A1D301;
+	Tue, 25 Jul 2023 10:48:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69798C433C9;
+	Tue, 25 Jul 2023 10:48:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282107;
-	bh=1Ko5y/TipNGHIDLvDQZkKivh74YHifplpXB5Pvt7wX0=;
+	s=korg; t=1690282110;
+	bh=SP7FcrL/n/JbIPYcqAj06Y4gPl8RVIcWqAmrAHKcOK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oL6BOFVOMrdvPJUgEw2348KvI3ApXoR2TZt43dyO796La7O8WxykU1keTt0ZZUziY
-	 oxdCUY94x3RWGiMVvAVL/FxkakxhdBSNYGHhMGIjEgKBeteGIGB7So00nHFTXgQGxO
-	 2i3YN7KZkyQQ557ycKjWDO30Xp69/qOPBm1Ecej0=
+	b=t9ddt2GhO7uiW17oFDdwrv/vUtAhESGYtmNPNV4G1mmaM8/DmHVH+a60/A98IuG0n
+	 T3D2n2BFAG3bvxnokNh4AUaaqHOy7DTHbexcBZadc8UUCraPJmMxymUQpxH69QcC2L
+	 UCQ5LqvW1cIzFRx0SjvODBmEAlHysEhUz56PjPt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.4 011/227] prctl: move PR_GET_AUXV out of PR_MCE_KILL
-Date: Tue, 25 Jul 2023 12:42:58 +0200
-Message-ID: <20230725104515.257569507@linuxfoundation.org>
+	=?UTF-8?q?Georg=20M=C3=BCller?= <georgmueller@gmx.net>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	regressions@lists.linux.dev,
+	Arnaldo Carvalho de Melo <acme@redhat.com>
+Subject: [PATCH 6.4 012/227] perf probe: Add test for regression introduced by switch to die_get_decl_file()
+Date: Tue, 25 Jul 2023 12:42:59 +0200
+Message-ID: <20230725104515.288406864@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,67 +44,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Georg Müller <georgmueller@gmx.net>
 
-commit 636e348353a7cc52609fdba5ff3270065da140d5 upstream.
+commit 56cbeacf143530576905623ac72ae0964f3293a6 upstream.
 
-Somehow PR_GET_AUXV got added into PR_MCE_KILL's switch when the patch was
-applied [1].
+This patch adds a test to validate that 'perf probe' works for binaries
+where DWARF info is split into multiple CUs
 
-Thus move it out of the switch, to the place the patch added it.
-
-In the recently released v6.4 kernel some user could, in principle, be
-already using this feature by mapping the right page and passing the
-PR_GET_AUXV constant as a pointer:
-
-    prctl(PR_MCE_KILL, PR_GET_AUXV, ...)
-
-So this does change the behavior for users.  We could keep the bug since
-the other subcases in PR_MCE_KILL (PR_MCE_KILL_CLEAR and PR_MCE_KILL_SET)
-do not overlap.
-
-However, v6.4 may be recent enough (2 weeks old) that moving the lines
-(rather than just adding a new case) does not break anybody?  Moreover,
-the documentation in man-pages was just committed today [2].
-
-Link: https://lkml.kernel.org/r/20230708233344.361854-1-ojeda@kernel.org
-Fixes: ddc65971bb67 ("prctl: add PR_GET_AUXV to copy auxv to userspace")
-Link: https://lore.kernel.org/all/d81864a7f7f43bca6afa2a09fc2e850e4050ab42.1680611394.git.josh@joshtriplett.org/ [1]
-Link: https://git.kernel.org/pub/scm/docs/man-pages/man-pages.git/commit/?id=8cf0c06bfd3c2b219b044d4151c96f0da50af9ad [2]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Cc: Josh Triplett <josh@joshtriplett.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Georg Müller <georgmueller@gmx.net>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: regressions@lists.linux.dev
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230628084551.1860532-5-georgmueller@gmx.net
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sys.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ tools/perf/tests/shell/test_uprobe_from_different_cu.sh |   77 ++++++++++++++++
+ 1 file changed, 77 insertions(+)
+ create mode 100755 tools/perf/tests/shell/test_uprobe_from_different_cu.sh
 
---- a/kernel/sys.c
-+++ b/kernel/sys.c
-@@ -2529,11 +2529,6 @@ SYSCALL_DEFINE5(prctl, int, option, unsi
- 			else
- 				return -EINVAL;
- 			break;
--	case PR_GET_AUXV:
--		if (arg4 || arg5)
--			return -EINVAL;
--		error = prctl_get_auxv((void __user *)arg2, arg3);
--		break;
- 		default:
- 			return -EINVAL;
- 		}
-@@ -2688,6 +2683,11 @@ SYSCALL_DEFINE5(prctl, int, option, unsi
- 	case PR_SET_VMA:
- 		error = prctl_set_vma(arg2, arg3, arg4, arg5);
- 		break;
-+	case PR_GET_AUXV:
-+		if (arg4 || arg5)
-+			return -EINVAL;
-+		error = prctl_get_auxv((void __user *)arg2, arg3);
-+		break;
- #ifdef CONFIG_KSM
- 	case PR_SET_MEMORY_MERGE:
- 		if (arg3 || arg4 || arg5)
+--- /dev/null
++++ b/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
+@@ -0,0 +1,77 @@
++#!/bin/bash
++# test perf probe of function from different CU
++# SPDX-License-Identifier: GPL-2.0
++
++set -e
++
++temp_dir=$(mktemp -d /tmp/perf-uprobe-different-cu-sh.XXXXXXXXXX)
++
++cleanup()
++{
++	trap - EXIT TERM INT
++	if [[ "${temp_dir}" =~ ^/tmp/perf-uprobe-different-cu-sh.*$ ]]; then
++		echo "--- Cleaning up ---"
++		perf probe -x ${temp_dir}/testfile -d foo
++		rm -f "${temp_dir}/"*
++		rmdir "${temp_dir}"
++	fi
++}
++
++trap_cleanup()
++{
++        cleanup
++        exit 1
++}
++
++trap trap_cleanup EXIT TERM INT
++
++cat > ${temp_dir}/testfile-foo.h << EOF
++struct t
++{
++  int *p;
++  int c;
++};
++
++extern int foo (int i, struct t *t);
++EOF
++
++cat > ${temp_dir}/testfile-foo.c << EOF
++#include "testfile-foo.h"
++
++int
++foo (int i, struct t *t)
++{
++  int j, res = 0;
++  for (j = 0; j < i && j < t->c; j++)
++    res += t->p[j];
++
++  return res;
++}
++EOF
++
++cat > ${temp_dir}/testfile-main.c << EOF
++#include "testfile-foo.h"
++
++static struct t g;
++
++int
++main (int argc, char **argv)
++{
++  int i;
++  int j[argc];
++  g.c = argc;
++  g.p = j;
++  for (i = 0; i < argc; i++)
++    j[i] = (int) argv[i][0];
++  return foo (3, &g);
++}
++EOF
++
++gcc -g -Og -flto -c ${temp_dir}/testfile-foo.c -o ${temp_dir}/testfile-foo.o
++gcc -g -Og -c ${temp_dir}/testfile-main.c -o ${temp_dir}/testfile-main.o
++gcc -g -Og -o ${temp_dir}/testfile ${temp_dir}/testfile-foo.o ${temp_dir}/testfile-main.o
++
++perf probe -x ${temp_dir}/testfile --funcs foo
++perf probe -x ${temp_dir}/testfile foo
++
++cleanup
 
 
