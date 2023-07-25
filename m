@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7566E1ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:44:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9840C433CD;
-	Tue, 25 Jul 2023 11:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06FF1ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:44:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B798CC433C7;
+	Tue, 25 Jul 2023 11:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285465;
-	bh=l0Ua5GK+ughoS+OZYlkfIYWZsEhrTxFr92Gg/l9diaM=;
+	s=korg; t=1690285468;
+	bh=7sKRCpSiq9DF4eaMajC9fn6H0qZBDje36+lgPRGi/W4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PF/IJ8ss2UdlpH8Cp8c5riBILW7F5QMHD99QrckW13yw9KEe8TdC5wqQzfEQOr0eu
-	 VNnrtSUDQjB/JXy9NB72CpLpiOvUHiqfj1Z/hJeJfIh1prVDPcHRcEOfHTtCERzkQ8
-	 DzXO3vnmmvKUDZ7HGayBeArn6WbIv8BRJi8AHpMI=
+	b=L9tnVhlFkD3WOLnos4Uytk7HEpAVFUZPmAn3LWIAPIT1viexnRubq2ShLIOf0Eg0g
+	 c7FqO57D+mCXnbxtQmzSo4L7JSfg83+e0eaMYWqzjizk1Auu3pQyGL92NhYA9lju9i
+	 TKjQ7U7xfPH26djtnwMdmu4LtetlqHLrVDU9X5EQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	netfilter-devel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jon Mason <jdmason@kudzu.us>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 214/313] NTB: ntb_tool: Add check for devm_kcalloc
-Date: Tue, 25 Jul 2023 12:46:07 +0200
-Message-ID: <20230725104530.294318520@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.4 188/313] netfilter: nf_tables: fix scheduling-while-atomic splat
+Date: Tue, 25 Jul 2023 12:45:41 +0200
+Message-ID: <20230725104529.099642450@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -37,39 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 2790143f09938776a3b4f69685b380bae8fd06c7 ]
+[ 2024439bd5ceb145eeeb428b2a59e9b905153ac3 ]
 
-As the devm_kcalloc may return NULL pointer,
-it should be better to add check for the return
-value, as same as the others.
+nf_tables_check_loops() can be called from rhashtable list
+walk so cond_resched() cannot be used here.
 
-Fixes: 7f46c8b3a552 ("NTB: ntb_tool: Add full multi-port NTB API support")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Jon Mason <jdmason@kudzu.us>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 81ea01066741 ("netfilter: nf_tables: add rescheduling points during loop detection walks")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ntb/test/ntb_tool.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nf_tables_api.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/ntb/test/ntb_tool.c b/drivers/ntb/test/ntb_tool.c
-index 6301aa413c3b8..1f64146546221 100644
---- a/drivers/ntb/test/ntb_tool.c
-+++ b/drivers/ntb/test/ntb_tool.c
-@@ -998,6 +998,8 @@ static int tool_init_mws(struct tool_ctx *tc)
- 		tc->peers[pidx].outmws =
- 			devm_kcalloc(&tc->ntb->dev, tc->peers[pidx].outmw_cnt,
- 				   sizeof(*tc->peers[pidx].outmws), GFP_KERNEL);
-+		if (tc->peers[pidx].outmws == NULL)
-+			return -ENOMEM;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -7428,13 +7428,9 @@ static int nf_tables_check_loops(const s
+ 				break;
+ 			}
+ 		}
+-
+-		cond_resched();
+ 	}
  
- 		for (widx = 0; widx < tc->peers[pidx].outmw_cnt; widx++) {
- 			tc->peers[pidx].outmws[widx].pidx = pidx;
--- 
-2.39.2
-
+ 	list_for_each_entry(set, &ctx->table->sets, list) {
+-		cond_resched();
+-
+ 		if (!nft_is_active_next(ctx->net, set))
+ 			continue;
+ 		if (!(set->flags & NFT_SET_MAP) ||
 
 
