@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6D71D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:03:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA88CC433C8;
-	Tue, 25 Jul 2023 11:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403511D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:03:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFA1DC433C8;
+	Tue, 25 Jul 2023 11:03:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283027;
-	bh=WPKxH0RwzkDkinxA4WNapnX8of9SXacRmD1CkK/etOA=;
+	s=korg; t=1690283030;
+	bh=icZPnYUr/1FnduBtdmPjzCOl0Ifvq2xiEyuko0Byuaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=blNao8g4WuhBPixps6S2HiCFwzRW7XcDD6+5PtB408hTtAPRHVDX88Hh3WzlwXNKA
-	 ThK7ySSXdXFwOxNh1HasjkxO9kOEwdyOFBVb8dFXSTi2mIxArNIvzhG9u0upftAJoZ
-	 F0LuMyZb3nKvuc96e+veUCSahevoVbHGBJpKC5yI=
+	b=1RNAMfx51XjP+cAK+W4Bm7jdqB7QrosPbviR1VcBmy1U+1GbXXHvsPFEghRNcM7yo
+	 yQCFORShFjdEzKuSkg1GqDdZiPzWpSfFgW6csAcBigZqwKrZLf+B5TcdOcJVC+B5gc
+	 PZ4cl6I0XkFzbgpgDYVvvxdc86b2KLIz8ir6hke0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <simon.horman@corigine.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 112/183] net: sched: cls_u32: Undo refcount decrement in case update failed
-Date: Tue, 25 Jul 2023 12:45:40 +0200
-Message-ID: <20230725104511.997330088@linuxfoundation.org>
+Subject: [PATCH 6.1 113/183] net: sched: cls_bpf: Undo tcf_bind_filter in case of an error
+Date: Tue, 25 Jul 2023 12:45:41 +0200
+Message-ID: <20230725104512.027618970@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -40,17 +40,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit e8d3d78c19be0264a5692bed477c303523aead31 ]
+[ Upstream commit 26a22194927e8521e304ed75c2f38d8068d55fc7 ]
 
-In the case of an update, when TCA_U32_LINK is set, u32_set_parms will
-decrement the refcount of the ht_down (struct tc_u_hnode) pointer
-present in the older u32 filter which we are replacing. However, if
-u32_replace_hw_knode errors out, the update command fails and that
-ht_down pointer continues decremented. To fix that, when
-u32_replace_hw_knode fails, check if ht_down's refcount was decremented
-and undo the decrement.
+If cls_bpf_offload errors out, we must also undo tcf_bind_filter that
+was done before the error.
 
-Fixes: d34e3e181395 ("net: cls_u32: Add support for skip-sw flag to tc u32 classifier.")
+Fix that by calling tcf_unbind_filter in errout_parms.
+
+Fixes: eadb41489fd2 ("net: cls_bpf: add support for marking filters as hardware-only")
 Signed-off-by: Victor Nogueira <victor@mojatatu.com>
 Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
@@ -58,27 +55,146 @@ Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_u32.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/sched/cls_bpf.c | 99 +++++++++++++++++++++------------------------
+ 1 file changed, 47 insertions(+), 52 deletions(-)
 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index 7cfbcd5180841..1280736a7b92e 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -926,6 +926,13 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
- 		if (err) {
- 			u32_unbind_filter(tp, new, tb);
+diff --git a/net/sched/cls_bpf.c b/net/sched/cls_bpf.c
+index bc317b3eac124..0320e11eb248b 100644
+--- a/net/sched/cls_bpf.c
++++ b/net/sched/cls_bpf.c
+@@ -404,56 +404,6 @@ static int cls_bpf_prog_from_efd(struct nlattr **tb, struct cls_bpf_prog *prog,
+ 	return 0;
+ }
  
-+			if (tb[TCA_U32_LINK]) {
-+				struct tc_u_hnode *ht_old;
+-static int cls_bpf_set_parms(struct net *net, struct tcf_proto *tp,
+-			     struct cls_bpf_prog *prog, unsigned long base,
+-			     struct nlattr **tb, struct nlattr *est, u32 flags,
+-			     struct netlink_ext_ack *extack)
+-{
+-	bool is_bpf, is_ebpf, have_exts = false;
+-	u32 gen_flags = 0;
+-	int ret;
+-
+-	is_bpf = tb[TCA_BPF_OPS_LEN] && tb[TCA_BPF_OPS];
+-	is_ebpf = tb[TCA_BPF_FD];
+-	if ((!is_bpf && !is_ebpf) || (is_bpf && is_ebpf))
+-		return -EINVAL;
+-
+-	ret = tcf_exts_validate(net, tp, tb, est, &prog->exts, flags,
+-				extack);
+-	if (ret < 0)
+-		return ret;
+-
+-	if (tb[TCA_BPF_FLAGS]) {
+-		u32 bpf_flags = nla_get_u32(tb[TCA_BPF_FLAGS]);
+-
+-		if (bpf_flags & ~TCA_BPF_FLAG_ACT_DIRECT)
+-			return -EINVAL;
+-
+-		have_exts = bpf_flags & TCA_BPF_FLAG_ACT_DIRECT;
+-	}
+-	if (tb[TCA_BPF_FLAGS_GEN]) {
+-		gen_flags = nla_get_u32(tb[TCA_BPF_FLAGS_GEN]);
+-		if (gen_flags & ~CLS_BPF_SUPPORTED_GEN_FLAGS ||
+-		    !tc_flags_valid(gen_flags))
+-			return -EINVAL;
+-	}
+-
+-	prog->exts_integrated = have_exts;
+-	prog->gen_flags = gen_flags;
+-
+-	ret = is_bpf ? cls_bpf_prog_from_ops(tb, prog) :
+-		       cls_bpf_prog_from_efd(tb, prog, gen_flags, tp);
+-	if (ret < 0)
+-		return ret;
+-
+-	if (tb[TCA_BPF_CLASSID]) {
+-		prog->res.classid = nla_get_u32(tb[TCA_BPF_CLASSID]);
+-		tcf_bind_filter(tp, &prog->res, base);
+-	}
+-
+-	return 0;
+-}
+-
+ static int cls_bpf_change(struct net *net, struct sk_buff *in_skb,
+ 			  struct tcf_proto *tp, unsigned long base,
+ 			  u32 handle, struct nlattr **tca,
+@@ -461,9 +411,12 @@ static int cls_bpf_change(struct net *net, struct sk_buff *in_skb,
+ 			  struct netlink_ext_ack *extack)
+ {
+ 	struct cls_bpf_head *head = rtnl_dereference(tp->root);
++	bool is_bpf, is_ebpf, have_exts = false;
+ 	struct cls_bpf_prog *oldprog = *arg;
+ 	struct nlattr *tb[TCA_BPF_MAX + 1];
++	bool bound_to_filter = false;
+ 	struct cls_bpf_prog *prog;
++	u32 gen_flags = 0;
+ 	int ret;
+ 
+ 	if (tca[TCA_OPTIONS] == NULL)
+@@ -502,11 +455,51 @@ static int cls_bpf_change(struct net *net, struct sk_buff *in_skb,
+ 		goto errout;
+ 	prog->handle = handle;
+ 
+-	ret = cls_bpf_set_parms(net, tp, prog, base, tb, tca[TCA_RATE], flags,
+-				extack);
++	is_bpf = tb[TCA_BPF_OPS_LEN] && tb[TCA_BPF_OPS];
++	is_ebpf = tb[TCA_BPF_FD];
++	if ((!is_bpf && !is_ebpf) || (is_bpf && is_ebpf)) {
++		ret = -EINVAL;
++		goto errout_idr;
++	}
 +
-+				ht_old = rtnl_dereference(n->ht_down);
-+				if (ht_old)
-+					ht_old->refcnt++;
-+			}
- 			__u32_destroy_key(new);
- 			return err;
- 		}
++	ret = tcf_exts_validate(net, tp, tb, tca[TCA_RATE], &prog->exts,
++				flags, extack);
++	if (ret < 0)
++		goto errout_idr;
++
++	if (tb[TCA_BPF_FLAGS]) {
++		u32 bpf_flags = nla_get_u32(tb[TCA_BPF_FLAGS]);
++
++		if (bpf_flags & ~TCA_BPF_FLAG_ACT_DIRECT) {
++			ret = -EINVAL;
++			goto errout_idr;
++		}
++
++		have_exts = bpf_flags & TCA_BPF_FLAG_ACT_DIRECT;
++	}
++	if (tb[TCA_BPF_FLAGS_GEN]) {
++		gen_flags = nla_get_u32(tb[TCA_BPF_FLAGS_GEN]);
++		if (gen_flags & ~CLS_BPF_SUPPORTED_GEN_FLAGS ||
++		    !tc_flags_valid(gen_flags)) {
++			ret = -EINVAL;
++			goto errout_idr;
++		}
++	}
++
++	prog->exts_integrated = have_exts;
++	prog->gen_flags = gen_flags;
++
++	ret = is_bpf ? cls_bpf_prog_from_ops(tb, prog) :
++		cls_bpf_prog_from_efd(tb, prog, gen_flags, tp);
+ 	if (ret < 0)
+ 		goto errout_idr;
+ 
++	if (tb[TCA_BPF_CLASSID]) {
++		prog->res.classid = nla_get_u32(tb[TCA_BPF_CLASSID]);
++		tcf_bind_filter(tp, &prog->res, base);
++		bound_to_filter = true;
++	}
++
+ 	ret = cls_bpf_offload(tp, prog, oldprog, extack);
+ 	if (ret)
+ 		goto errout_parms;
+@@ -528,6 +521,8 @@ static int cls_bpf_change(struct net *net, struct sk_buff *in_skb,
+ 	return 0;
+ 
+ errout_parms:
++	if (bound_to_filter)
++		tcf_unbind_filter(tp, &prog->res);
+ 	cls_bpf_free_parms(prog);
+ errout_idr:
+ 	if (!oldprog)
 -- 
 2.39.2
 
