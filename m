@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9E71ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD7FC433C8;
-	Tue, 25 Jul 2023 11:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7722A1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8492C433C7;
+	Tue, 25 Jul 2023 11:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283500;
-	bh=vOkQmZTfYdhHx8rEjYFctftJiwpQaAcwUwc2gxBxWI8=;
+	s=korg; t=1690283503;
+	bh=vyQf+3mZIAmgjmDHAkm5GOb2K8UQZzMp9IVJpSJqyGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xaGf3G3FBG0fn8abPrA6GvYm2U+Ug/vloGR5/2KZgHNYPw8/XxF9h9I3XN7/8+N1q
-	 nRCaStD5DulqfuJAxjtw4y6VwFEatagj7eq56UlzYlAOznrm8ehE6RGWmtqd5nMU0s
-	 FMM4R2i5MK7xmL6OGKHKNGEIohhf87Bb7bVTBUIg=
+	b=qB+YCa5XIaPrC/2hdmolZ1YnDyvY9sOvMxmEcy6eZC18Y0PZFOiOb8p73kxq8fc0e
+	 8isy3CzhC8KzmSUC5Gc/0pNHmPJQdMfh4GeCrDuRcSuoAP1444ZWHoD/4L3agtcC2/
+	 qbYqSajL/vthQ9P+FFVd0oyH92iLMmW7UAaU8Jhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ashok Raj <ashok.raj@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 5.10 002/509] x86/smp: Use dedicated cache-line for mwait_play_dead()
-Date: Tue, 25 Jul 2023 12:39:01 +0200
-Message-ID: <20230725104553.721010695@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 020/509] irqchip/jcore-aic: Kill use of irq_create_strict_mappings()
+Date: Tue, 25 Jul 2023 12:39:19 +0200
+Message-ID: <20230725104554.575847023@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,91 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Marc Zyngier <maz@kernel.org>
 
-commit f9c9987bf52f4e42e940ae217333ebb5a4c3b506 upstream.
+[ Upstream commit 5f8b938bd790cff6542c7fe3c1495c71f89fef1b ]
 
-Monitoring idletask::thread_info::flags in mwait_play_dead() has been an
-obvious choice as all what is needed is a cache line which is not written
-by other CPUs.
+irq_create_strict_mappings() is a poor way to allow the use of
+a linear IRQ domain as a legacy one. Let's be upfront about it.
 
-But there is a use case where a "dead" CPU needs to be brought out of
-MWAIT: kexec().
-
-This is required as kexec() can overwrite text, pagetables, stacks and the
-monitored cacheline of the original kernel. The latter causes MWAIT to
-resume execution which obviously causes havoc on the kexec kernel which
-results usually in triple faults.
-
-Use a dedicated per CPU storage to prepare for that.
-
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Ashok Raj <ashok.raj@intel.com>
-Reviewed-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230615193330.434553750@linutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20210406093557.1073423-4-maz@kernel.org
+Stable-dep-of: 4848229494a3 ("irqchip/jcore-aic: Fix missing allocation of IRQ descriptors")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/smpboot.c |   24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ drivers/irqchip/irq-jcore-aic.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/smpboot.c
-+++ b/arch/x86/kernel/smpboot.c
-@@ -100,6 +100,17 @@ DEFINE_PER_CPU_READ_MOSTLY(cpumask_var_t
- DEFINE_PER_CPU_READ_MOSTLY(struct cpuinfo_x86, cpu_info);
- EXPORT_PER_CPU_SYMBOL(cpu_info);
+diff --git a/drivers/irqchip/irq-jcore-aic.c b/drivers/irqchip/irq-jcore-aic.c
+index 033bccb41455c..5f47d8ee4ae39 100644
+--- a/drivers/irqchip/irq-jcore-aic.c
++++ b/drivers/irqchip/irq-jcore-aic.c
+@@ -100,11 +100,11 @@ static int __init aic_irq_of_init(struct device_node *node,
+ 	jcore_aic.irq_unmask = noop;
+ 	jcore_aic.name = "AIC";
  
-+struct mwait_cpu_dead {
-+	unsigned int	control;
-+	unsigned int	status;
-+};
-+
-+/*
-+ * Cache line aligned data for mwait_play_dead(). Separate on purpose so
-+ * that it's unlikely to be touched by other CPUs.
-+ */
-+static DEFINE_PER_CPU_ALIGNED(struct mwait_cpu_dead, mwait_cpu_dead);
-+
- /* Logical package management. We might want to allocate that dynamically */
- unsigned int __max_logical_packages __read_mostly;
- EXPORT_SYMBOL(__max_logical_packages);
-@@ -1674,10 +1685,10 @@ EXPORT_SYMBOL_GPL(cond_wakeup_cpu0);
-  */
- static inline void mwait_play_dead(void)
- {
-+	struct mwait_cpu_dead *md = this_cpu_ptr(&mwait_cpu_dead);
- 	unsigned int eax, ebx, ecx, edx;
- 	unsigned int highest_cstate = 0;
- 	unsigned int highest_subcstate = 0;
--	void *mwait_ptr;
- 	int i;
+-	domain = irq_domain_add_linear(node, dom_sz, &jcore_aic_irqdomain_ops,
++	domain = irq_domain_add_legacy(node, dom_sz - min_irq, min_irq, min_irq,
++				       &jcore_aic_irqdomain_ops,
+ 				       &jcore_aic);
+ 	if (!domain)
+ 		return -ENOMEM;
+-	irq_create_strict_mappings(domain, min_irq, min_irq, dom_sz - min_irq);
  
- 	if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
-@@ -1712,13 +1723,6 @@ static inline void mwait_play_dead(void)
- 			(highest_subcstate - 1);
- 	}
- 
--	/*
--	 * This should be a memory location in a cache line which is
--	 * unlikely to be touched by other processors.  The actual
--	 * content is immaterial as it is not actually modified in any way.
--	 */
--	mwait_ptr = &current_thread_info()->flags;
--
- 	wbinvd();
- 
- 	while (1) {
-@@ -1730,9 +1734,9 @@ static inline void mwait_play_dead(void)
- 		 * case where we return around the loop.
- 		 */
- 		mb();
--		clflush(mwait_ptr);
-+		clflush(md);
- 		mb();
--		__monitor(mwait_ptr, 0, 0);
-+		__monitor(md, 0, 0);
- 		mb();
- 		__mwait(eax, 0);
- 
+ 	return 0;
+ }
+-- 
+2.39.2
+
 
 
