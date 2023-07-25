@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD811ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:49:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E159C433C7;
-	Tue, 25 Jul 2023 11:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C500C1ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:49:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 010F4C433C7;
+	Tue, 25 Jul 2023 11:49:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285759;
-	bh=Y3WlsUL5hJZxHfiNm1Ea0J6d6fiUTZBJFxGFSfyHDaQ=;
+	s=korg; t=1690285762;
+	bh=muaiRA8EAOUTZfNMbKhI9NoscaLHjh51MDIEvfz0emA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DJt9vXRfWjJu7YAYPBUiitOvIAxvuTd3/q/zICjq/YvSLGPT8SrnHXJ1FDUzW+/43
-	 J1LuMex3xvpRn1o1Qi6SY8RXERLuU2KNKDxjfT9m28DYWwul6P9wbpMIVlcag5VsAo
-	 wY88y+0MDEj8U1dvi2wFQrlYHxIgbI1+/nYGaTp4=
+	b=ffbjShFI64l3B1DvGzgR4fIBLZeaE0W1hGQNUVxs/xJLl1w+2P4ogPOErjY9v0xXx
+	 nFsPIgrkrHS4TNC2nCD5c3EJ3n31FZ5cvzFOiFcZcX+T9LS8JN7X4Br8AievhySYwz
+	 SAeOKnLB8UWUxCQ+ZOFz6gX/UTf2NkhH4XE0jrIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yizhan@redhat.com>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 5.4 281/313] drm/client: Fix memory leak in drm_client_target_cloned
-Date: Tue, 25 Jul 2023 12:47:14 +0200
-Message-ID: <20230725104533.229234323@linuxfoundation.org>
+	Mohamed Khalfella <mkhalfella@purestorage.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.4 313/313] tracing/histograms: Return an error if we fail to add histogram to hist_vars list
+Date: Tue, 25 Jul 2023 12:47:46 +0200
+Message-ID: <20230725104534.676992797@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -36,68 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jocelyn Falempe <jfalempe@redhat.com>
+From: Mohamed Khalfella <mkhalfella@purestorage.com>
 
-commit c2a88e8bdf5f6239948d75283d0ae7e0c7945b03 upstream.
+commit 4b8b3905165ef98386a3c06f196c85d21292d029 upstream.
 
-dmt_mode is allocated and never freed in this function.
-It was found with the ast driver, but most drivers using generic fbdev
-setup are probably affected.
+Commit 6018b585e8c6 ("tracing/histograms: Add histograms to hist_vars if
+they have referenced variables") added a check to fail histogram creation
+if save_hist_vars() failed to add histogram to hist_vars list. But the
+commit failed to set ret to failed return code before jumping to
+unregister histogram, fix it.
 
-This fixes the following kmemleak report:
-  backtrace:
-    [<00000000b391296d>] drm_mode_duplicate+0x45/0x220 [drm]
-    [<00000000e45bb5b3>] drm_client_target_cloned.constprop.0+0x27b/0x480 [drm]
-    [<00000000ed2d3a37>] drm_client_modeset_probe+0x6bd/0xf50 [drm]
-    [<0000000010e5cc9d>] __drm_fb_helper_initial_config_and_unlock+0xb4/0x2c0 [drm_kms_helper]
-    [<00000000909f82ca>] drm_fbdev_client_hotplug+0x2bc/0x4d0 [drm_kms_helper]
-    [<00000000063a69aa>] drm_client_register+0x169/0x240 [drm]
-    [<00000000a8c61525>] ast_pci_probe+0x142/0x190 [ast]
-    [<00000000987f19bb>] local_pci_probe+0xdc/0x180
-    [<000000004fca231b>] work_for_cpu_fn+0x4e/0xa0
-    [<0000000000b85301>] process_one_work+0x8b7/0x1540
-    [<000000003375b17c>] worker_thread+0x70a/0xed0
-    [<00000000b0d43cd9>] kthread+0x29f/0x340
-    [<000000008d770833>] ret_from_fork+0x1f/0x30
-unreferenced object 0xff11000333089a00 (size 128):
+Link: https://lore.kernel.org/linux-trace-kernel/20230714203341.51396-1-mkhalfella@purestorage.com
 
-cc: <stable@vger.kernel.org>
-Fixes: 1d42bbc8f7f9 ("drm/fbdev: fix cloning on fbcon")
-Reported-by: Zhang Yi <yizhan@redhat.com>
-Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230711092203.68157-2-jfalempe@redhat.com
+Cc: stable@vger.kernel.org
+Fixes: 6018b585e8c6 ("tracing/histograms: Add histograms to hist_vars if they have referenced variables")
+Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_client_modeset.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/trace/trace_events_hist.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/drm_client_modeset.c
-+++ b/drivers/gpu/drm/drm_client_modeset.c
-@@ -281,6 +281,9 @@ static bool drm_client_target_cloned(str
- 	can_clone = true;
- 	dmt_mode = drm_mode_find_dmt(dev, 1024, 768, 60, false);
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -6428,7 +6428,8 @@ static int event_hist_trigger_func(struc
+ 		goto out_unreg;
  
-+	if (!dmt_mode)
-+		goto fail;
-+
- 	for (i = 0; i < connector_count; i++) {
- 		if (!enabled[i])
- 			continue;
-@@ -296,11 +299,13 @@ static bool drm_client_target_cloned(str
- 		if (!modes[i])
- 			can_clone = false;
+ 	if (has_hist_vars(hist_data) || hist_data->n_var_refs) {
+-		if (save_hist_vars(hist_data))
++		ret = save_hist_vars(hist_data);
++		if (ret)
+ 			goto out_unreg;
  	}
-+	kfree(dmt_mode);
  
- 	if (can_clone) {
- 		DRM_DEBUG_KMS("can clone using 1024x768\n");
- 		return true;
- 	}
-+fail:
- 	DRM_INFO("kms: can't enable cloning when we probably wanted to.\n");
- 	return false;
- }
 
 
