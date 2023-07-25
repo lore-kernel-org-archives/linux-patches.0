@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC8A715AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:51:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FDC6C433C8;
-	Tue, 25 Jul 2023 10:51:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBEC15AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:51:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21105C433C8;
+	Tue, 25 Jul 2023 10:51:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282282;
-	bh=+n7jWtt/AVrnnEbxRs+BVIcSLiwrPBysIFOlnGrvpWg=;
+	s=korg; t=1690282285;
+	bh=ylEI8XHrrxet1q9RqEr1GBUUUpJ6bWTne60S3R3C1E0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u1DXcMZEq7RjpLlaSSlYqQXXqRp6UD95ve0UK3dMc3ypDL4o3HEPnCYHRZ/mpmXhz
-	 nhUmsH+7JgFwcod3pK9pw15FCCe9Q6FNCUVSg9053GkC2Eg41RXv+XJe44/TRsNEow
-	 PSQxpeG0HZn8w4iaE9wERjz2POm9+F8B+3SC+CAk=
+	b=HX5d9LzYEDY3mZjW18DaQJmUHRiP9+ZoZo2/H4d+J31QRXVFHCiQtlUi7/xBDPe0t
+	 WebPUVJcWdq12NEUV0/+oBETi5XbhmJi2iuANXUAK58NvPq9gvPMtjrU9tuMe2KNdB
+	 Q5mZ5w2jk9yP0y1vhhHbylG71q+JpCNw3x+gAOrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Chen <chenxiang66@hisilicon.com>,
-	Zenghui Yu <yuzenghui@huawei.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.4 074/227] KVM: arm64: vgic-v4: Make the doorbell request robust w.r.t preemption
-Date: Tue, 25 Jul 2023 12:44:01 +0200
-Message-ID: <20230725104517.826790437@linuxfoundation.org>
+	stable@kernel.org,
+	Eric Whitney <enwlinux@gmail.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.4 075/227] ext4: correct inline offset when handling xattrs in inode body
+Date: Tue, 25 Jul 2023 12:44:02 +0200
+Message-ID: <20230725104517.871894005@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -36,134 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Eric Whitney <enwlinux@gmail.com>
 
-commit b321c31c9b7b309dcde5e8854b741c8e6a9a05f0 upstream.
+commit 6909cf5c4101214f4305a62d582a5b93c7e1eb9a upstream.
 
-Xiang reports that VMs occasionally fail to boot on GICv4.1 systems when
-running a preemptible kernel, as it is possible that a vCPU is blocked
-without requesting a doorbell interrupt.
+When run on a file system where the inline_data feature has been
+enabled, xfstests generic/269, generic/270, and generic/476 cause ext4
+to emit error messages indicating that inline directory entries are
+corrupted.  This occurs because the inline offset used to locate
+inline directory entries in the inode body is not updated when an
+xattr in that shared region is deleted and the region is shifted in
+memory to recover the space it occupied.  If the deleted xattr precedes
+the system.data attribute, which points to the inline directory entries,
+that attribute will be moved further up in the region.  The inline
+offset continues to point to whatever is located in system.data's former
+location, with unfortunate effects when used to access directory entries
+or (presumably) inline data in the inode body.
 
-The issue is that any preemption that occurs between vgic_v4_put() and
-schedule() on the block path will mark the vPE as nonresident and *not*
-request a doorbell irq. This occurs because when the vcpu thread is
-resumed on its way to block, vcpu_load() will make the vPE resident
-again. Once the vcpu actually blocks, we don't request a doorbell
-anymore, and the vcpu won't be woken up on interrupt delivery.
-
-Fix it by tracking that we're entering WFI, and key the doorbell
-request on that flag. This allows us not to make the vPE resident
-when going through a preempt/schedule cycle, meaning we don't lose
-any state.
-
-Cc: stable@vger.kernel.org
-Fixes: 8e01d9a396e6 ("KVM: arm64: vgic-v4: Move the GICv4 residency flow to be driven by vcpu_load/put")
-Reported-by: Xiang Chen <chenxiang66@hisilicon.com>
-Suggested-by: Zenghui Yu <yuzenghui@huawei.com>
-Tested-by: Xiang Chen <chenxiang66@hisilicon.com>
-Co-developed-by: Oliver Upton <oliver.upton@linux.dev>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Acked-by: Zenghui Yu <yuzenghui@huawei.com>
-Link: https://lore.kernel.org/r/20230713070657.3873244-1-maz@kernel.org
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Cc: stable@kernel.org
+Signed-off-by: Eric Whitney <enwlinux@gmail.com>
+Link: https://lore.kernel.org/r/20230522181520.1570360-1-enwlinux@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/kvm_host.h |    2 ++
- arch/arm64/kvm/arm.c              |    6 ++++--
- arch/arm64/kvm/vgic/vgic-v3.c     |    2 +-
- arch/arm64/kvm/vgic/vgic-v4.c     |    7 +++++--
- include/kvm/arm_vgic.h            |    2 +-
- 5 files changed, 13 insertions(+), 6 deletions(-)
+ fs/ext4/xattr.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -701,6 +701,8 @@ struct kvm_vcpu_arch {
- #define DBG_SS_ACTIVE_PENDING	__vcpu_single_flag(sflags, BIT(5))
- /* PMUSERENR for the guest EL0 is on physical CPU */
- #define PMUSERENR_ON_CPU	__vcpu_single_flag(sflags, BIT(6))
-+/* WFI instruction trapped */
-+#define IN_WFI			__vcpu_single_flag(sflags, BIT(7))
- 
- 
- /* Pointer to the vcpu's SVE FFR for sve_{save,load}_state() */
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -704,13 +704,15 @@ void kvm_vcpu_wfi(struct kvm_vcpu *vcpu)
- 	 */
- 	preempt_disable();
- 	kvm_vgic_vmcr_sync(vcpu);
--	vgic_v4_put(vcpu, true);
-+	vcpu_set_flag(vcpu, IN_WFI);
-+	vgic_v4_put(vcpu);
- 	preempt_enable();
- 
- 	kvm_vcpu_halt(vcpu);
- 	vcpu_clear_flag(vcpu, IN_WFIT);
- 
- 	preempt_disable();
-+	vcpu_clear_flag(vcpu, IN_WFI);
- 	vgic_v4_load(vcpu);
- 	preempt_enable();
- }
-@@ -778,7 +780,7 @@ static int check_vcpu_requests(struct kv
- 		if (kvm_check_request(KVM_REQ_RELOAD_GICv4, vcpu)) {
- 			/* The distributor enable bits were changed */
- 			preempt_disable();
--			vgic_v4_put(vcpu, false);
-+			vgic_v4_put(vcpu);
- 			vgic_v4_load(vcpu);
- 			preempt_enable();
- 		}
---- a/arch/arm64/kvm/vgic/vgic-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-v3.c
-@@ -749,7 +749,7 @@ void vgic_v3_put(struct kvm_vcpu *vcpu)
- {
- 	struct vgic_v3_cpu_if *cpu_if = &vcpu->arch.vgic_cpu.vgic_v3;
- 
--	WARN_ON(vgic_v4_put(vcpu, false));
-+	WARN_ON(vgic_v4_put(vcpu));
- 
- 	vgic_v3_vmcr_sync(vcpu);
- 
---- a/arch/arm64/kvm/vgic/vgic-v4.c
-+++ b/arch/arm64/kvm/vgic/vgic-v4.c
-@@ -336,14 +336,14 @@ void vgic_v4_teardown(struct kvm *kvm)
- 	its_vm->vpes = NULL;
- }
- 
--int vgic_v4_put(struct kvm_vcpu *vcpu, bool need_db)
-+int vgic_v4_put(struct kvm_vcpu *vcpu)
- {
- 	struct its_vpe *vpe = &vcpu->arch.vgic_cpu.vgic_v3.its_vpe;
- 
- 	if (!vgic_supports_direct_msis(vcpu->kvm) || !vpe->resident)
- 		return 0;
- 
--	return its_make_vpe_non_resident(vpe, need_db);
-+	return its_make_vpe_non_resident(vpe, !!vcpu_get_flag(vcpu, IN_WFI));
- }
- 
- int vgic_v4_load(struct kvm_vcpu *vcpu)
-@@ -354,6 +354,9 @@ int vgic_v4_load(struct kvm_vcpu *vcpu)
- 	if (!vgic_supports_direct_msis(vcpu->kvm) || vpe->resident)
- 		return 0;
- 
-+	if (vcpu_get_flag(vcpu, IN_WFI))
-+		return 0;
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -1782,6 +1782,20 @@ static int ext4_xattr_set_entry(struct e
+ 		memmove(here, (void *)here + size,
+ 			(void *)last - (void *)here + sizeof(__u32));
+ 		memset(last, 0, size);
 +
- 	/*
- 	 * Before making the VPE resident, make sure the redistributor
- 	 * corresponding to our current CPU expects us here. See the
---- a/include/kvm/arm_vgic.h
-+++ b/include/kvm/arm_vgic.h
-@@ -431,7 +431,7 @@ int kvm_vgic_v4_unset_forwarding(struct
- 
- int vgic_v4_load(struct kvm_vcpu *vcpu);
- void vgic_v4_commit(struct kvm_vcpu *vcpu);
--int vgic_v4_put(struct kvm_vcpu *vcpu, bool need_db);
-+int vgic_v4_put(struct kvm_vcpu *vcpu);
- 
- /* CPU HP callbacks */
- void kvm_vgic_cpu_up(void);
++		/*
++		 * Update i_inline_off - moved ibody region might contain
++		 * system.data attribute.  Handling a failure here won't
++		 * cause other complications for setting an xattr.
++		 */
++		if (!is_block && ext4_has_inline_data(inode)) {
++			ret = ext4_find_inline_data_nolock(inode);
++			if (ret) {
++				ext4_warning_inode(inode,
++					"unable to update i_inline_off");
++				goto out;
++			}
++		}
+ 	} else if (s->not_found) {
+ 		/* Insert new name. */
+ 		size_t size = EXT4_XATTR_LEN(name_len);
 
 
