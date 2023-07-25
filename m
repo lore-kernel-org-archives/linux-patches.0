@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C247215ACF
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:53:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46AFAC433C9;
-	Tue, 25 Jul 2023 10:53:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0D115ACF
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:53:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2704C433C8;
+	Tue, 25 Jul 2023 10:53:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282393;
-	bh=tGp4zoRTHZFydLQpY97lO2J5nwJIaXPmwemte6zGCdA=;
+	s=korg; t=1690282396;
+	bh=KK4AJoIaLPPm3zQMlhPjAJ75YEDERv0cDA6Wgc4knj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BYKhLhQTpKB4zd+en58AwxePVk2tT9l7Dp+xL/jvEwTPcpnTV+w9zwa7q2ay66V2t
-	 MBwaQR18/itVOn4L4qUc3bH0/VkhGgcI6BoteaNqNMRSdRnyaQPMP9tq7yrhZDmAMq
-	 sw+VDRW/9Cx4VYhywOtpDTQ3R++7B7umv8KT/4z0=
+	b=neJH+HnjAQZXfxg7+G0a3YImwbSg39hyxhle6gjmcrOjQHQMj7pJsMwRvlwndyy6x
+	 lsF5EOnKJA0biIF5sJnJwDYYGJsoxaPTzucuTUP9/wmigNaMN7pfBkgeN1Pmv5yOU9
+	 OfvX7a82MsnLVKKO4JyjsdSsScOKeqG31jh0aF+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Shiu <Will.Shiu@mediatek.com>,
-	Gao Xiang <xiang@kernel.org>,
-	Sandeep Dhavale <dhavale@google.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
+	syzbot+8b2a08dfbd25fd933d75@syzkaller.appspotmail.com,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 096/227] erofs: Fix detection of atomic context
-Date: Tue, 25 Jul 2023 12:44:23 +0200
-Message-ID: <20230725104518.701629025@linuxfoundation.org>
+Subject: [PATCH 6.4 114/227] bpf: drop unnecessary user-triggerable WARN_ONCE in verifierl log
+Date: Tue, 25 Jul 2023 12:44:41 +0200
+Message-ID: <20230725104519.493722641@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -38,97 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sandeep Dhavale <dhavale@google.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 12d0a24afd9ea58e581ea64d64e066f2027b28d9 ]
+[ Upstream commit cff36398bd4c7d322d424433db437f3c3391c491 ]
 
-Current check for atomic context is not sufficient as
-z_erofs_decompressqueue_endio can be called under rcu lock
-from blk_mq_flush_plug_list(). See the stacktrace [1]
+It's trivial for user to trigger "verifier log line truncated" warning,
+as verifier has a fixed-sized buffer of 1024 bytes (as of now), and there are at
+least two pieces of user-provided information that can be output through
+this buffer, and both can be arbitrarily sized by user:
+  - BTF names;
+  - BTF.ext source code lines strings.
 
-In such case we should hand off the decompression work for async
-processing rather than trying to do sync decompression in current
-context. Patch fixes the detection by checking for
-rcu_read_lock_any_held() and while at it use more appropriate
-!in_task() check than in_atomic().
+Verifier log buffer should be properly sized for typical verifier state
+output. But it's sort-of expected that this buffer won't be long enough
+in some circumstances. So let's drop the check. In any case code will
+work correctly, at worst truncating a part of a single line output.
 
-Background: Historically erofs would always schedule a kworker for
-decompression which would incur the scheduling cost regardless of
-the context. But z_erofs_decompressqueue_endio() may not always
-be in atomic context and we could actually benefit from doing the
-decompression in z_erofs_decompressqueue_endio() if we are in
-thread context, for example when running with dm-verity.
-This optimization was later added in patch [2] which has shown
-improvement in performance benchmarks.
-
-==============================================
-[1] Problem stacktrace
-[name:core&]BUG: sleeping function called from invalid context at kernel/locking/mutex.c:291
-[name:core&]in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 1615, name: CpuMonitorServi
-[name:core&]preempt_count: 0, expected: 0
-[name:core&]RCU nest depth: 1, expected: 0
-CPU: 7 PID: 1615 Comm: CpuMonitorServi Tainted: G S      W  OE      6.1.25-android14-5-maybe-dirty-mainline #1
-Hardware name: MT6897 (DT)
-Call trace:
- dump_backtrace+0x108/0x15c
- show_stack+0x20/0x30
- dump_stack_lvl+0x6c/0x8c
- dump_stack+0x20/0x48
- __might_resched+0x1fc/0x308
- __might_sleep+0x50/0x88
- mutex_lock+0x2c/0x110
- z_erofs_decompress_queue+0x11c/0xc10
- z_erofs_decompress_kickoff+0x110/0x1a4
- z_erofs_decompressqueue_endio+0x154/0x180
- bio_endio+0x1b0/0x1d8
- __dm_io_complete+0x22c/0x280
- clone_endio+0xe4/0x280
- bio_endio+0x1b0/0x1d8
- blk_update_request+0x138/0x3a4
- blk_mq_plug_issue_direct+0xd4/0x19c
- blk_mq_flush_plug_list+0x2b0/0x354
- __blk_flush_plug+0x110/0x160
- blk_finish_plug+0x30/0x4c
- read_pages+0x2fc/0x370
- page_cache_ra_unbounded+0xa4/0x23c
- page_cache_ra_order+0x290/0x320
- do_sync_mmap_readahead+0x108/0x2c0
- filemap_fault+0x19c/0x52c
- __do_fault+0xc4/0x114
- handle_mm_fault+0x5b4/0x1168
- do_page_fault+0x338/0x4b4
- do_translation_fault+0x40/0x60
- do_mem_abort+0x60/0xc8
- el0_da+0x4c/0xe0
- el0t_64_sync_handler+0xd4/0xfc
- el0t_64_sync+0x1a0/0x1a4
-
-[2] Link: https://lore.kernel.org/all/20210317035448.13921-1-huangjianan@oppo.com/
-
-Reported-by: Will Shiu <Will.Shiu@mediatek.com>
-Suggested-by: Gao Xiang <xiang@kernel.org>
-Signed-off-by: Sandeep Dhavale <dhavale@google.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Link: https://lore.kernel.org/r/20230621220848.3379029-1-dhavale@google.com
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reported-by: syzbot+8b2a08dfbd25fd933d75@syzkaller.appspotmail.com
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20230516180409.3549088-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/log.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index 997ca4b32e87f..4a1c238600c52 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1411,7 +1411,7 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
- 	if (atomic_add_return(bios, &io->pending_bios))
- 		return;
- 	/* Use (kthread_)work and sync decompression for atomic contexts only */
--	if (in_atomic() || irqs_disabled()) {
-+	if (!in_task() || irqs_disabled() || rcu_read_lock_any_held()) {
- #ifdef CONFIG_EROFS_FS_PCPU_KTHREAD
- 		struct kthread_worker *worker;
+diff --git a/kernel/bpf/log.c b/kernel/bpf/log.c
+index 046ddff37a76d..850494423530e 100644
+--- a/kernel/bpf/log.c
++++ b/kernel/bpf/log.c
+@@ -62,9 +62,6 @@ void bpf_verifier_vlog(struct bpf_verifier_log *log, const char *fmt,
+ 
+ 	n = vscnprintf(log->kbuf, BPF_VERIFIER_TMP_LOG_SIZE, fmt, args);
+ 
+-	WARN_ONCE(n >= BPF_VERIFIER_TMP_LOG_SIZE - 1,
+-		  "verifier log line truncated - local buffer too short\n");
+-
+ 	if (log->level == BPF_LOG_KERNEL) {
+ 		bool newline = n > 0 && log->kbuf[n - 1] == '\n';
  
 -- 
 2.39.2
