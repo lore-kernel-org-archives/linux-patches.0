@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5487B1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:25:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD263C433C7;
-	Tue, 25 Jul 2023 11:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC981ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:25:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E81C433C8;
+	Tue, 25 Jul 2023 11:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284327;
-	bh=AFuRqf1zSedcw9lxN25E/Ctio7fLi4I48lxwiuI1Eas=;
+	s=korg; t=1690284330;
+	bh=T3i1HTZBPyzEbzqZTXzzY5G70qq1TRHwkWnt5ZgAjLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H3as2fDTAEO0JJtoB7hzPiv+bbazql/X/k8csNu4JpvtdGWhrB0PZZlK9BaamAbY6
-	 WOeGAds1WmYOFFjW0hIF0F6CXon/n/q7PNwjz53qALOP8cL0JeKkTO4nXWIj50CcP0
-	 2x5lfz4hraM8cRVG5kNxCYPtzFPtd+NovJxuB2zc=
+	b=rTxaXPo0Le+09a60Akm1jXs/SlpWDueuFGE66HE9zoob0v3re5WCTeJwloGV3OVvz
+	 ApwQEt4wqShemDu2x/kA2vizWaFhlmv1+ILLKTe1WkrM6g6G0KjQlz7sCzbLFWTE67
+	 MF4sylukz8ejCKgy2PsBq5f10Bt/d03s8an8aCjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Hancock <robert.hancock@calian.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 278/509] i2c: xiic: Dont try to handle more interrupt events after error
-Date: Tue, 25 Jul 2023 12:43:37 +0200
-Message-ID: <20230725104606.477779701@linuxfoundation.org>
+	Martin Steigerwald <Martin@lichtvoll.de>,
+	Michael Schmitz <schmitzmic@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Christoph Hellwig <hch@infradead.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 310/509] block: add overflow checks for Amiga partition support
+Date: Tue, 25 Jul 2023 12:44:09 +0200
+Message-ID: <20230725104607.934620100@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,60 +37,202 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Hancock <robert.hancock@calian.com>
+From: Michael Schmitz <schmitzmic@gmail.com>
 
-[ Upstream commit cb6e45c9a0ad9e0f8664fd06db0227d185dc76ab ]
+commit b6f3f28f604ba3de4724ad82bea6adb1300c0b5f upstream.
 
-In xiic_process, it is possible that error events such as arbitration
-lost or TX error can be raised in conjunction with other interrupt flags
-such as TX FIFO empty or bus not busy. Error events result in the
-controller being reset and the error returned to the calling request,
-but the function could potentially try to keep handling the other
-events, such as by writing more messages into the TX FIFO. Since the
-transaction has already failed, this is not helpful and will just cause
-issues.
+The Amiga partition parser module uses signed int for partition sector
+address and count, which will overflow for disks larger than 1 TB.
 
-This problem has been present ever since:
+Use u64 as type for sector address and size to allow using disks up to
+2 TB without LBD support, and disks larger than 2 TB with LBD. The RBD
+format allows to specify disk sizes up to 2^128 bytes (though native
+OS limitations reduce this somewhat, to max 2^68 bytes), so check for
+u64 overflow carefully to protect against overflowing sector_t.
 
-commit 7f9906bd7f72 ("i2c: xiic: Service all interrupts in isr")
+Bail out if sector addresses overflow 32 bits on kernels without LBD
+support.
 
-which allowed non-error events to be handled after errors, but became
-more obvious after:
+This bug was reported originally in 2012, and the fix was created by
+the RDB author, Joanne Dow <jdow@earthlink.net>. A patch had been
+discussed and reviewed on linux-m68k at that time but never officially
+submitted (now resubmitted as patch 1 in this series).
+This patch adds additional error checking and warning messages.
 
-commit 743e227a8959 ("i2c: xiic: Defer xiic_wakeup() and
-__xiic_start_xfer() in xiic_process()")
-
-which reworked the code to add a WARN_ON which triggers if both the
-xfer_more and wakeup_req flags were set, since this combination is
-not supposed to happen, but was occurring in this scenario.
-
-Skip further interrupt handling after error flags are detected to avoid
-this problem.
-
-Fixes: 7f9906bd7f72 ("i2c: xiic: Service all interrupts in isr")
-Signed-off-by: Robert Hancock <robert.hancock@calian.com>
-Acked-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Martin Steigerwald <Martin@lichtvoll.de>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=43511
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Message-ID: <201206192146.09327.Martin@lichtvoll.de>
+Cc: <stable@vger.kernel.org> # 5.2
+Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Reviewed-by: Christoph Hellwig <hch@infradead.org>
+Link: https://lore.kernel.org/r/20230620201725.7020-4-schmitzmic@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-xiic.c | 2 ++
- 1 file changed, 2 insertions(+)
+ block/partitions/amiga.c |  103 ++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 85 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
-index 8b93c22f3c400..568e97c3896d1 100644
---- a/drivers/i2c/busses/i2c-xiic.c
-+++ b/drivers/i2c/busses/i2c-xiic.c
-@@ -422,6 +422,8 @@ static irqreturn_t xiic_process(int irq, void *dev_id)
- 			wakeup_req = 1;
- 			wakeup_code = STATE_ERROR;
+--- a/block/partitions/amiga.c
++++ b/block/partitions/amiga.c
+@@ -11,10 +11,18 @@
+ #define pr_fmt(fmt) fmt
+ 
+ #include <linux/types.h>
++#include <linux/mm_types.h>
++#include <linux/overflow.h>
+ #include <linux/affs_hardblocks.h>
+ 
+ #include "check.h"
+ 
++/* magic offsets in partition DosEnvVec */
++#define NR_HD	3
++#define NR_SECT	5
++#define LO_CYL	9
++#define HI_CYL	10
++
+ static __inline__ u32
+ checksum_block(__be32 *m, int size)
+ {
+@@ -31,9 +39,12 @@ int amiga_partition(struct parsed_partit
+ 	unsigned char *data;
+ 	struct RigidDiskBlock *rdb;
+ 	struct PartitionBlock *pb;
+-	sector_t start_sect, nr_sects;
+-	int blk, part, res = 0;
+-	int blksize = 1;	/* Multiplier for disk block size */
++	u64 start_sect, nr_sects;
++	sector_t blk, end_sect;
++	u32 cylblk;		/* rdb_CylBlocks = nr_heads*sect_per_track */
++	u32 nr_hd, nr_sect, lo_cyl, hi_cyl;
++	int part, res = 0;
++	unsigned int blksize = 1;	/* Multiplier for disk block size */
+ 	int slot = 1;
+ 	char b[BDEVNAME_SIZE];
+ 
+@@ -42,7 +53,7 @@ int amiga_partition(struct parsed_partit
+ 			goto rdb_done;
+ 		data = read_part_sector(state, blk, &sect);
+ 		if (!data) {
+-			pr_err("Dev %s: unable to read RDB block %d\n",
++			pr_err("Dev %s: unable to read RDB block %llu\n",
+ 			       bdevname(state->bdev, b), blk);
+ 			res = -1;
+ 			goto rdb_done;
+@@ -59,12 +70,12 @@ int amiga_partition(struct parsed_partit
+ 		*(__be32 *)(data+0xdc) = 0;
+ 		if (checksum_block((__be32 *)data,
+ 				be32_to_cpu(rdb->rdb_SummedLongs) & 0x7F)==0) {
+-			pr_err("Trashed word at 0xd0 in block %d ignored in checksum calculation\n",
++			pr_err("Trashed word at 0xd0 in block %llu ignored in checksum calculation\n",
+ 			       blk);
+ 			break;
  		}
-+		/* don't try to handle other events */
-+		goto out;
+ 
+-		pr_err("Dev %s: RDB in block %d has bad checksum\n",
++		pr_err("Dev %s: RDB in block %llu has bad checksum\n",
+ 		       bdevname(state->bdev, b), blk);
  	}
- 	if (pend & XIIC_INTR_RX_FULL_MASK) {
- 		/* Receive register/FIFO is full */
--- 
-2.39.2
-
+ 
+@@ -81,10 +92,15 @@ int amiga_partition(struct parsed_partit
+ 	blk = be32_to_cpu(rdb->rdb_PartitionList);
+ 	put_dev_sector(sect);
+ 	for (part = 1; blk>0 && part<=16; part++, put_dev_sector(sect)) {
+-		blk *= blksize;	/* Read in terms partition table understands */
++		/* Read in terms partition table understands */
++		if (check_mul_overflow(blk, (sector_t) blksize, &blk)) {
++			pr_err("Dev %s: overflow calculating partition block %llu! Skipping partitions %u and beyond\n",
++				bdevname(state->bdev, b), blk, part);
++			break;
++		}
+ 		data = read_part_sector(state, blk, &sect);
+ 		if (!data) {
+-			pr_err("Dev %s: unable to read partition block %d\n",
++			pr_err("Dev %s: unable to read partition block %llu\n",
+ 			       bdevname(state->bdev, b), blk);
+ 			res = -1;
+ 			goto rdb_done;
+@@ -96,19 +112,70 @@ int amiga_partition(struct parsed_partit
+ 		if (checksum_block((__be32 *)pb, be32_to_cpu(pb->pb_SummedLongs) & 0x7F) != 0 )
+ 			continue;
+ 
+-		/* Tell Kernel about it */
++		/* RDB gives us more than enough rope to hang ourselves with,
++		 * many times over (2^128 bytes if all fields max out).
++		 * Some careful checks are in order, so check for potential
++		 * overflows.
++		 * We are multiplying four 32 bit numbers to one sector_t!
++		 */
++
++		nr_hd   = be32_to_cpu(pb->pb_Environment[NR_HD]);
++		nr_sect = be32_to_cpu(pb->pb_Environment[NR_SECT]);
++
++		/* CylBlocks is total number of blocks per cylinder */
++		if (check_mul_overflow(nr_hd, nr_sect, &cylblk)) {
++			pr_err("Dev %s: heads*sects %u overflows u32, skipping partition!\n",
++				bdevname(state->bdev, b), cylblk);
++			continue;
++		}
++
++		/* check for consistency with RDB defined CylBlocks */
++		if (cylblk > be32_to_cpu(rdb->rdb_CylBlocks)) {
++			pr_warn("Dev %s: cylblk %u > rdb_CylBlocks %u!\n",
++				bdevname(state->bdev, b), cylblk,
++				be32_to_cpu(rdb->rdb_CylBlocks));
++		}
++
++		/* RDB allows for variable logical block size -
++		 * normalize to 512 byte blocks and check result.
++		 */
++
++		if (check_mul_overflow(cylblk, blksize, &cylblk)) {
++			pr_err("Dev %s: partition %u bytes per cyl. overflows u32, skipping partition!\n",
++				bdevname(state->bdev, b), part);
++			continue;
++		}
++
++		/* Calculate partition start and end. Limit of 32 bit on cylblk
++		 * guarantees no overflow occurs if LBD support is enabled.
++		 */
++
++		lo_cyl = be32_to_cpu(pb->pb_Environment[LO_CYL]);
++		start_sect = ((u64) lo_cyl * cylblk);
++
++		hi_cyl = be32_to_cpu(pb->pb_Environment[HI_CYL]);
++		nr_sects = (((u64) hi_cyl - lo_cyl + 1) * cylblk);
+ 
+-		nr_sects = ((sector_t)be32_to_cpu(pb->pb_Environment[10]) + 1 -
+-			   be32_to_cpu(pb->pb_Environment[9])) *
+-			   be32_to_cpu(pb->pb_Environment[3]) *
+-			   be32_to_cpu(pb->pb_Environment[5]) *
+-			   blksize;
+ 		if (!nr_sects)
+ 			continue;
+-		start_sect = (sector_t)be32_to_cpu(pb->pb_Environment[9]) *
+-			     be32_to_cpu(pb->pb_Environment[3]) *
+-			     be32_to_cpu(pb->pb_Environment[5]) *
+-			     blksize;
++
++		/* Warn user if partition end overflows u32 (AmigaDOS limit) */
++
++		if ((start_sect + nr_sects) > UINT_MAX) {
++			pr_warn("Dev %s: partition %u (%llu-%llu) needs 64 bit device support!\n",
++				bdevname(state->bdev, b), part,
++				start_sect, start_sect + nr_sects);
++		}
++
++		if (check_add_overflow(start_sect, nr_sects, &end_sect)) {
++			pr_err("Dev %s: partition %u (%llu-%llu) needs LBD device support, skipping partition!\n",
++				bdevname(state->bdev, b), part,
++				start_sect, end_sect);
++			continue;
++		}
++
++		/* Tell Kernel about it */
++
+ 		put_partition(state,slot++,start_sect,nr_sects);
+ 		{
+ 			/* Be even more informative to aid mounting */
 
 
