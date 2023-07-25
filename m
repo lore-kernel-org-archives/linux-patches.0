@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967121EA9B
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:12:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3652C433C7;
-	Tue, 25 Jul 2023 11:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655911EA96
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:12:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA06C433C8;
+	Tue, 25 Jul 2023 11:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283542;
-	bh=wkeDdcXbogi2PVwQ3zwJ5ZU08TrckCG3xlMI6K/RKAM=;
+	s=korg; t=1690283545;
+	bh=8aiojGdwdveZq8mR8x/otAisSfP1EihGCPMj20Y1V6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vS1ho8gBvTRFbOCDJ8pmEGu8O4sG+fZhr34fBTHzZP9VXtPaPnUDYP5vpSgvo/DgD
-	 KJwWVvGV8z3Jhd9fdIMfMDrMDknej+V4yvdY+wtFXtkRYbtz7CZrD66mJnFkhx0LqU
-	 Jg2ILXCn9BSwxwFPyKFIT+r8zfg0mXc8KMuu+G3o=
+	b=wNV1sUAzjETt37vhMfyAL8bStL5qW/I0NI6P2Qmeg6FPbTQsFq/9R0pmW2XVDPpuQ
+	 GAkusPPHaFWzW3BCmO+2CcPVgwmGN/AesRWkqOw3+oPDM1f+uFzPmgOMLMY921y8qS
+	 z5ilaCvYHe8AGjCSANOWnYUo6hF9GttDaJ59LqpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Stephane Eranian <eranian@google.com>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 035/509] rcu/rcuscale: Stop kfree_scale_thread thread(s) after unloading rcuscale
-Date: Tue, 25 Jul 2023 12:39:34 +0200
-Message-ID: <20230725104555.255769720@linuxfoundation.org>
+Subject: [PATCH 5.10 036/509] perf/ibs: Fix interface via core pmu events
+Date: Tue, 25 Jul 2023 12:39:35 +0200
+Message-ID: <20230725104555.304105156@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,78 +36,162 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Ravi Bangoria <ravi.bangoria@amd.com>
 
-[ Upstream commit 23fc8df26dead16687ae6eb47b0561a4a832e2f6 ]
+[ Upstream commit 2fad201fe38ff9a692acedb1990ece2c52a29f95 ]
 
-Running the 'kfree_rcu_test' test case [1] results in a splat [2].
-The root cause is the kfree_scale_thread thread(s) continue running
-after unloading the rcuscale module.  This commit fixes that isue by
-invoking kfree_scale_cleanup() from rcu_scale_cleanup() when removing
-the rcuscale module.
+Although, IBS pmus can be invoked via their own interface, indirect
+IBS invocation via core pmu events is also supported with fixed set
+of events: cpu-cycles:p, r076:p (same as cpu-cycles:p) and r0C1:p
+(micro-ops) for user convenience.
 
-[1] modprobe rcuscale kfree_rcu_test=1
-    // After some time
-    rmmod rcuscale
-    rmmod torture
+This indirect IBS invocation is broken since commit 66d258c5b048
+("perf/core: Optimize perf_init_event()"), which added RAW pmu under
+'pmu_idr' list and thus if event_init() fails with RAW pmu, it started
+returning error instead of trying other pmus.
 
-[2] BUG: unable to handle page fault for address: ffffffffc0601a87
-    #PF: supervisor instruction fetch in kernel mode
-    #PF: error_code(0x0010) - not-present page
-    PGD 11de4f067 P4D 11de4f067 PUD 11de51067 PMD 112f4d067 PTE 0
-    Oops: 0010 [#1] PREEMPT SMP NOPTI
-    CPU: 1 PID: 1798 Comm: kfree_scale_thr Not tainted 6.3.0-rc1-rcu+ #1
-    Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 0.0.0 02/06/2015
-    RIP: 0010:0xffffffffc0601a87
-    Code: Unable to access opcode bytes at 0xffffffffc0601a5d.
-    RSP: 0018:ffffb25bc2e57e18 EFLAGS: 00010297
-    RAX: 0000000000000000 RBX: ffffffffc061f0b6 RCX: 0000000000000000
-    RDX: 0000000000000000 RSI: ffffffff962fd0de RDI: ffffffff962fd0de
-    RBP: ffffb25bc2e57ea8 R08: 0000000000000000 R09: 0000000000000000
-    R10: 0000000000000001 R11: 0000000000000001 R12: 0000000000000000
-    R13: 0000000000000000 R14: 000000000000000a R15: 00000000001c1dbe
-    FS:  0000000000000000(0000) GS:ffff921fa2200000(0000) knlGS:0000000000000000
-    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    CR2: ffffffffc0601a5d CR3: 000000011de4c006 CR4: 0000000000370ee0
-    DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-    DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-    Call Trace:
-     <TASK>
-     ? kvfree_call_rcu+0xf0/0x3a0
-     ? kthread+0xf3/0x120
-     ? kthread_complete_and_exit+0x20/0x20
-     ? ret_from_fork+0x1f/0x30
-     </TASK>
-    Modules linked in: rfkill sunrpc ... [last unloaded: torture]
-    CR2: ffffffffc0601a87
-    ---[ end trace 0000000000000000 ]---
+Forward precise events from core pmu to IBS by overwriting 'type' and
+'config' in the kernel copy of perf_event_attr. Overwriting will cause
+perf_init_event() to retry with updated 'type' and 'config', which will
+automatically forward event to IBS pmu.
 
-Fixes: e6e78b004fa7 ("rcuperf: Add kfree_rcu() performance Tests")
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Without patch:
+  $ sudo ./perf record -C 0 -e r076:p -- sleep 1
+  Error:
+  The r076:p event is not supported.
+
+With patch:
+  $ sudo ./perf record -C 0 -e r076:p -- sleep 1
+  [ perf record: Woken up 1 times to write data ]
+  [ perf record: Captured and wrote 0.341 MB perf.data (37 samples) ]
+
+Fixes: 66d258c5b048 ("perf/core: Optimize perf_init_event()")
+Reported-by: Stephane Eranian <eranian@google.com>
+Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20230504110003.2548-3-ravi.bangoria@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/rcuscale.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/x86/events/amd/core.c        |  2 +-
+ arch/x86/events/amd/ibs.c         | 53 +++++++++++++++----------------
+ arch/x86/include/asm/perf_event.h |  2 ++
+ 3 files changed, 29 insertions(+), 28 deletions(-)
 
-diff --git a/kernel/rcu/rcuscale.c b/kernel/rcu/rcuscale.c
-index dfc6172ffe1d2..6c05365ed80fc 100644
---- a/kernel/rcu/rcuscale.c
-+++ b/kernel/rcu/rcuscale.c
-@@ -670,6 +670,11 @@ rcu_scale_cleanup(void)
- 	if (gp_exp && gp_async)
- 		SCALEOUT_ERRSTRING("No expedited async GPs, so went with async!");
+diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
+index 52eba415928a3..afc955340f81c 100644
+--- a/arch/x86/events/amd/core.c
++++ b/arch/x86/events/amd/core.c
+@@ -364,7 +364,7 @@ static int amd_pmu_hw_config(struct perf_event *event)
  
-+	if (kfree_rcu_test) {
-+		kfree_scale_cleanup();
-+		return;
-+	}
+ 	/* pass precise event sampling to ibs: */
+ 	if (event->attr.precise_ip && get_ibs_caps())
+-		return -ENOENT;
++		return forward_event_to_ibs(event);
+ 
+ 	if (has_branch_stack(event))
+ 		return -EOPNOTSUPP;
+diff --git a/arch/x86/events/amd/ibs.c b/arch/x86/events/amd/ibs.c
+index 8a85658a24cc1..354d52e17ef55 100644
+--- a/arch/x86/events/amd/ibs.c
++++ b/arch/x86/events/amd/ibs.c
+@@ -202,7 +202,7 @@ static struct perf_ibs *get_ibs_pmu(int type)
+ }
+ 
+ /*
+- * Use IBS for precise event sampling:
++ * core pmu config -> IBS config
+  *
+  *  perf record -a -e cpu-cycles:p ...    # use ibs op counting cycle count
+  *  perf record -a -e r076:p ...          # same as -e cpu-cycles:p
+@@ -211,25 +211,9 @@ static struct perf_ibs *get_ibs_pmu(int type)
+  * IbsOpCntCtl (bit 19) of IBS Execution Control Register (IbsOpCtl,
+  * MSRC001_1033) is used to select either cycle or micro-ops counting
+  * mode.
+- *
+- * The rip of IBS samples has skid 0. Thus, IBS supports precise
+- * levels 1 and 2 and the PERF_EFLAGS_EXACT is set. In rare cases the
+- * rip is invalid when IBS was not able to record the rip correctly.
+- * We clear PERF_EFLAGS_EXACT and take the rip from pt_regs then.
+- *
+  */
+-static int perf_ibs_precise_event(struct perf_event *event, u64 *config)
++static int core_pmu_ibs_config(struct perf_event *event, u64 *config)
+ {
+-	switch (event->attr.precise_ip) {
+-	case 0:
+-		return -ENOENT;
+-	case 1:
+-	case 2:
+-		break;
+-	default:
+-		return -EOPNOTSUPP;
+-	}
+-
+ 	switch (event->attr.type) {
+ 	case PERF_TYPE_HARDWARE:
+ 		switch (event->attr.config) {
+@@ -255,22 +239,37 @@ static int perf_ibs_precise_event(struct perf_event *event, u64 *config)
+ 	return -EOPNOTSUPP;
+ }
+ 
++/*
++ * The rip of IBS samples has skid 0. Thus, IBS supports precise
++ * levels 1 and 2 and the PERF_EFLAGS_EXACT is set. In rare cases the
++ * rip is invalid when IBS was not able to record the rip correctly.
++ * We clear PERF_EFLAGS_EXACT and take the rip from pt_regs then.
++ */
++int forward_event_to_ibs(struct perf_event *event)
++{
++	u64 config = 0;
 +
- 	if (torture_cleanup_begin())
- 		return;
- 	if (!cur_ops) {
++	if (!event->attr.precise_ip || event->attr.precise_ip > 2)
++		return -EOPNOTSUPP;
++
++	if (!core_pmu_ibs_config(event, &config)) {
++		event->attr.type = perf_ibs_op.pmu.type;
++		event->attr.config = config;
++	}
++	return -ENOENT;
++}
++
+ static int perf_ibs_init(struct perf_event *event)
+ {
+ 	struct hw_perf_event *hwc = &event->hw;
+ 	struct perf_ibs *perf_ibs;
+ 	u64 max_cnt, config;
+-	int ret;
+ 
+ 	perf_ibs = get_ibs_pmu(event->attr.type);
+-	if (perf_ibs) {
+-		config = event->attr.config;
+-	} else {
+-		perf_ibs = &perf_ibs_op;
+-		ret = perf_ibs_precise_event(event, &config);
+-		if (ret)
+-			return ret;
+-	}
++	if (!perf_ibs)
++		return -ENOENT;
++
++	config = event->attr.config;
+ 
+ 	if (event->pmu != &perf_ibs->pmu)
+ 		return -ENOENT;
+diff --git a/arch/x86/include/asm/perf_event.h b/arch/x86/include/asm/perf_event.h
+index b9a7fd0a27e2d..a4e4bbb7795d3 100644
+--- a/arch/x86/include/asm/perf_event.h
++++ b/arch/x86/include/asm/perf_event.h
+@@ -412,8 +412,10 @@ struct pebs_xmm {
+ 
+ #ifdef CONFIG_X86_LOCAL_APIC
+ extern u32 get_ibs_caps(void);
++extern int forward_event_to_ibs(struct perf_event *event);
+ #else
+ static inline u32 get_ibs_caps(void) { return 0; }
++static inline int forward_event_to_ibs(struct perf_event *event) { return -ENOENT; }
+ #endif
+ 
+ #ifdef CONFIG_PERF_EVENTS
 -- 
 2.39.2
 
