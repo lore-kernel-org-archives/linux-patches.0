@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1018C1ED3A
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:13:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD6BC433C7;
-	Tue, 25 Jul 2023 11:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C476A1ED3A
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:13:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1CFC433C8;
+	Tue, 25 Jul 2023 11:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283598;
-	bh=XFLSk5w70TFVfsmRU08KEh/NP1GO091DIxUj4zqAwrI=;
+	s=korg; t=1690283601;
+	bh=Iyb+JBOmmiIfcXz1JePFw9gvAJ7XdQkifilg8I57LIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wq0TZy8M1/USOWQZwWr0tCjGrdXO6YXBzZS/hK7xKTnGj0fNpzHcvQa2MFjOCAnjr
-	 4FrALtTaC/S223WBqLU378YkdN1wjWxQHSyO9tIk+lyw5qIg5xlfOJSSNA59gwgHZQ
-	 YdXFyTSFnBexE35DXSDY3Ki5wmhOtS9IgN1SoPXc=
+	b=cEaGXTAwFi/laQkP/Y6bhlHCmaSNsQO0jthMdISyGMcNuJT9xa4NYdDjDxTHnrMg0
+	 Mpnx2UvQ9Lyc+1nCBdLK21nqRgr2RFL93CCcpNo/IUplYpmF/gss3dQVhL7KJlEP7v
+	 Ht/Ki4ruxPJm2N5MxeFkHNPv08qNc//d0qXaR1bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Mark Brown <broonie@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 054/509] regulator: core: Fix more error checking for debugfs_create_dir()
-Date: Tue, 25 Jul 2023 12:39:53 +0200
-Message-ID: <20230725104556.154088562@linuxfoundation.org>
+Subject: [PATCH 5.10 028/509] ARM: 9303/1: kprobes: avoid missing-declaration warnings
+Date: Tue, 25 Jul 2023 12:39:27 +0200
+Message-ID: <20230725104554.943094146@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,38 +37,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 2715bb11cfff964aa33946847f9527cfbd4874f5 ]
+[ Upstream commit 1b9c3ddcec6a55e15d3e38e7405e2d078db02020 ]
 
-In case of failure, debugfs_create_dir() does not return NULL, but an
-error pointer.  Most incorrect error checks were fixed, but the one in
-create_regulator() was forgotten.
+checker_stack_use_t32strd() and kprobe_handler() can be made static since
+they are not used from other files, while coverage_start_registers()
+and __kprobes_test_case() are used from assembler code, and just need
+a declaration to avoid a warning with the global definition.
 
-Fix the remaining error check.
+arch/arm/probes/kprobes/checkers-common.c:43:18: error: no previous prototype for 'checker_stack_use_t32strd'
+arch/arm/probes/kprobes/core.c:236:16: error: no previous prototype for 'kprobe_handler'
+arch/arm/probes/kprobes/test-core.c:723:10: error: no previous prototype for 'coverage_start_registers'
+arch/arm/probes/kprobes/test-core.c:918:14: error: no previous prototype for '__kprobes_test_case_start'
+arch/arm/probes/kprobes/test-core.c:952:14: error: no previous prototype for '__kprobes_test_case_end_16'
+arch/arm/probes/kprobes/test-core.c:967:14: error: no previous prototype for '__kprobes_test_case_end_32'
 
-Fixes: 2bf1c45be3b8f3a3 ("regulator: Fix error checking for debugfs_create_dir")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/ee980a108b5854dd8ce3630f8f673e784e057d17.1685013051.git.geert+renesas@glider.be
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 6624cf651f1a ("ARM: kprobes: collects stack consumption for store instructions")
+Fixes: 454f3e132d05 ("ARM/kprobes: Remove jprobe arm implementation")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/probes/kprobes/checkers-common.c | 2 +-
+ arch/arm/probes/kprobes/core.c            | 2 +-
+ arch/arm/probes/kprobes/opt-arm.c         | 2 --
+ arch/arm/probes/kprobes/test-core.c       | 2 +-
+ arch/arm/probes/kprobes/test-core.h       | 4 ++++
+ 5 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index f5ab74683b58a..e4ff64d28c778 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -1751,7 +1751,7 @@ static struct regulator *create_regulator(struct regulator_dev *rdev,
+diff --git a/arch/arm/probes/kprobes/checkers-common.c b/arch/arm/probes/kprobes/checkers-common.c
+index 4d720990cf2a3..eba7ac4725c02 100644
+--- a/arch/arm/probes/kprobes/checkers-common.c
++++ b/arch/arm/probes/kprobes/checkers-common.c
+@@ -40,7 +40,7 @@ enum probes_insn checker_stack_use_imm_0xx(probes_opcode_t insn,
+  * Different from other insn uses imm8, the real addressing offset of
+  * STRD in T32 encoding should be imm8 * 4. See ARMARM description.
+  */
+-enum probes_insn checker_stack_use_t32strd(probes_opcode_t insn,
++static enum probes_insn checker_stack_use_t32strd(probes_opcode_t insn,
+ 		struct arch_probes_insn *asi,
+ 		const struct decode_header *h)
+ {
+diff --git a/arch/arm/probes/kprobes/core.c b/arch/arm/probes/kprobes/core.c
+index e513d8a467760..c0ed172893787 100644
+--- a/arch/arm/probes/kprobes/core.c
++++ b/arch/arm/probes/kprobes/core.c
+@@ -231,7 +231,7 @@ singlestep(struct kprobe *p, struct pt_regs *regs, struct kprobe_ctlblk *kcb)
+  * kprobe, and that level is reserved for user kprobe handlers, so we can't
+  * risk encountering a new kprobe in an interrupt handler.
+  */
+-void __kprobes kprobe_handler(struct pt_regs *regs)
++static void __kprobes kprobe_handler(struct pt_regs *regs)
+ {
+ 	struct kprobe *p, *cur;
+ 	struct kprobe_ctlblk *kcb;
+diff --git a/arch/arm/probes/kprobes/opt-arm.c b/arch/arm/probes/kprobes/opt-arm.c
+index c78180172120f..e20304f1d8bc9 100644
+--- a/arch/arm/probes/kprobes/opt-arm.c
++++ b/arch/arm/probes/kprobes/opt-arm.c
+@@ -145,8 +145,6 @@ __arch_remove_optimized_kprobe(struct optimized_kprobe *op, int dirty)
+ 	}
+ }
  
- 	if (err != -EEXIST)
- 		regulator->debugfs = debugfs_create_dir(supply_name, rdev->debugfs);
--	if (!regulator->debugfs) {
-+	if (IS_ERR(regulator->debugfs)) {
- 		rdev_dbg(rdev, "Failed to create debugfs directory\n");
- 	} else {
- 		debugfs_create_u32("uA_load", 0444, regulator->debugfs,
+-extern void kprobe_handler(struct pt_regs *regs);
+-
+ static void
+ optimized_callback(struct optimized_kprobe *op, struct pt_regs *regs)
+ {
+diff --git a/arch/arm/probes/kprobes/test-core.c b/arch/arm/probes/kprobes/test-core.c
+index c562832b86272..171c7076b89f4 100644
+--- a/arch/arm/probes/kprobes/test-core.c
++++ b/arch/arm/probes/kprobes/test-core.c
+@@ -720,7 +720,7 @@ static const char coverage_register_lookup[16] = {
+ 	[REG_TYPE_NOSPPCX]	= COVERAGE_ANY_REG | COVERAGE_SP,
+ };
+ 
+-unsigned coverage_start_registers(const struct decode_header *h)
++static unsigned coverage_start_registers(const struct decode_header *h)
+ {
+ 	unsigned regs = 0;
+ 	int i;
+diff --git a/arch/arm/probes/kprobes/test-core.h b/arch/arm/probes/kprobes/test-core.h
+index 19a5b2add41e1..805116c2ec27c 100644
+--- a/arch/arm/probes/kprobes/test-core.h
++++ b/arch/arm/probes/kprobes/test-core.h
+@@ -453,3 +453,7 @@ void kprobe_thumb32_test_cases(void);
+ #else
+ void kprobe_arm_test_cases(void);
+ #endif
++
++void __kprobes_test_case_start(void);
++void __kprobes_test_case_end_16(void);
++void __kprobes_test_case_end_32(void);
 -- 
 2.39.2
 
