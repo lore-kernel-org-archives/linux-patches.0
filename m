@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7693F1ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:46:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5681C433C7;
-	Tue, 25 Jul 2023 11:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5686B1ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:46:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6511C433C9;
+	Tue, 25 Jul 2023 11:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285562;
-	bh=gYXngkGUL5Hwh870SJF9R5QpN/RWjCtlMX/sAxgaAdY=;
+	s=korg; t=1690285565;
+	bh=fsNdN4z3xFrXTYyZUHuByJMPmWw/2z75B/nXwkaUbLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nuL6u1mwbE+6Hv50OOKJGMS5u7WxoEuSnWEo3CnjBPdrJwy3aqMkWC5OIk0SkG8DH
-	 xtWlXhvkzpehp4jhQQxCY/gK6BBvsp1758FcVHyVUG/PTLBa1wj4FfFn+2GLsLHXEl
-	 jNGtou+bxiSdsvPJ7inlHaFOKigcuErq4UQtueZQ=
+	b=faHR4yB/O/N0/uy62TJIrvr1BtoPuk2gseX8l9D51NpFkbGtGvgSGn4+E6jKHCXqW
+	 EFn7zWNyQQ7ZwsXIkJNYsHXthas7eymsUZCrQEIXcyq2JpvdI5MLKNwGwwJslZ69MC
+	 /V1s2gYbtZrWPKPfZkl9/THYkB57FNjWGKEFFqGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>
-Subject: [PATCH 5.4 248/313] PCI: rockchip: Use u32 variable to access 32-bit registers
-Date: Tue, 25 Jul 2023 12:46:41 +0200
-Message-ID: <20230725104531.798813161@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 221/313] platform/x86: wmi: Break possible infinite loop when parsing GUID
+Date: Tue, 25 Jul 2023 12:46:14 +0200
+Message-ID: <20230725104530.611358074@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,76 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 8962b2cb39119cbda4fc69a1f83957824f102f81 upstream.
+[ Upstream commit 028e6e204ace1f080cfeacd72c50397eb8ae8883 ]
 
-Previously u16 variables were used to access 32-bit registers, this
-resulted in not all of the data being read from the registers. Also
-the left shift of more than 16-bits would result in moving data out
-of the variable. Use u32 variables to access 32-bit registers
+The while-loop may break on one of the two conditions, either ID string
+is empty or GUID matches. The second one, may never be reached if the
+parsed string is not correct GUID. In such a case the loop will never
+advance to check the next ID.
 
-Link: https://lore.kernel.org/r/20230418074700.1083505-10-rick.wertenbroek@gmail.com
-Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
-Tested-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Break possible infinite loop by factoring out guid_parse_and_compare()
+helper which may be moved to the generic header for everyone later on
+and preventing from similar mistake in the future.
+
+Interestingly that firstly it appeared when WMI was turned into a bus
+driver, but later when duplicated GUIDs were checked, the while-loop
+has been replaced by for-loop and hence no mistake made again.
+
+Fixes: a48e23385fcf ("platform/x86: wmi: add context pointer field to struct wmi_device_id")
+Fixes: 844af950da94 ("platform/x86: wmi: Turn WMI into a bus driver")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230621151155.78279-1-andriy.shevchenko@linux.intel.com
+Tested-by: Armin Wolf <W_Armin@gmx.de>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rockchip-ep.c |   10 +++++-----
- drivers/pci/controller/pcie-rockchip.h    |    1 +
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ drivers/platform/x86/wmi.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
---- a/drivers/pci/controller/pcie-rockchip-ep.c
-+++ b/drivers/pci/controller/pcie-rockchip-ep.c
-@@ -313,15 +313,15 @@ static int rockchip_pcie_ep_set_msi(stru
- {
- 	struct rockchip_pcie_ep *ep = epc_get_drvdata(epc);
- 	struct rockchip_pcie *rockchip = &ep->rockchip;
--	u16 flags;
-+	u32 flags;
+diff --git a/drivers/platform/x86/wmi.c b/drivers/platform/x86/wmi.c
+index 8d1a7923c03b6..67c4ec554ada8 100644
+--- a/drivers/platform/x86/wmi.c
++++ b/drivers/platform/x86/wmi.c
+@@ -129,6 +129,16 @@ static bool find_guid(const char *guid_string, struct wmi_block **out)
+ 	return false;
+ }
  
- 	flags = rockchip_pcie_read(rockchip,
- 				   ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
- 				   ROCKCHIP_PCIE_EP_MSI_CTRL_REG);
- 	flags &= ~ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_MASK;
- 	flags |=
--	   ((multi_msg_cap << 1) <<  ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_OFFSET) |
--	   PCI_MSI_FLAGS_64BIT;
-+	   (multi_msg_cap << ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_OFFSET) |
-+	   (PCI_MSI_FLAGS_64BIT << ROCKCHIP_PCIE_EP_MSI_FLAGS_OFFSET);
- 	flags &= ~ROCKCHIP_PCIE_EP_MSI_CTRL_MASK_MSI_CAP;
- 	rockchip_pcie_write(rockchip, flags,
- 			    ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
-@@ -333,7 +333,7 @@ static int rockchip_pcie_ep_get_msi(stru
++static bool guid_parse_and_compare(const char *string, const guid_t *guid)
++{
++	guid_t guid_input;
++
++	if (guid_parse(string, &guid_input))
++		return false;
++
++	return guid_equal(&guid_input, guid);
++}
++
+ static const void *find_guid_context(struct wmi_block *wblock,
+ 				      struct wmi_driver *wdriver)
  {
- 	struct rockchip_pcie_ep *ep = epc_get_drvdata(epc);
- 	struct rockchip_pcie *rockchip = &ep->rockchip;
--	u16 flags;
-+	u32 flags;
+@@ -141,11 +151,7 @@ static const void *find_guid_context(struct wmi_block *wblock,
  
- 	flags = rockchip_pcie_read(rockchip,
- 				   ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
-@@ -394,7 +394,7 @@ static int rockchip_pcie_ep_send_msi_irq
- 					 u8 interrupt_num)
- {
- 	struct rockchip_pcie *rockchip = &ep->rockchip;
--	u16 flags, mme, data, data_mask;
-+	u32 flags, mme, data, data_mask;
- 	u8 msi_count;
- 	u64 pci_addr, pci_addr_mask = 0xff;
+ 	id = wdriver->id_table;
+ 	while (*id->guid_string) {
+-		guid_t guid_input;
+-
+-		if (guid_parse(id->guid_string, &guid_input))
+-			continue;
+-		if (guid_equal(&wblock->gblock.guid, &guid_input))
++		if (guid_parse_and_compare(id->guid_string, &wblock->gblock.guid))
+ 			return id->context;
+ 		id++;
+ 	}
+@@ -801,11 +807,7 @@ static int wmi_dev_match(struct device *dev, struct device_driver *driver)
+ 		return 0;
  
---- a/drivers/pci/controller/pcie-rockchip.h
-+++ b/drivers/pci/controller/pcie-rockchip.h
-@@ -232,6 +232,7 @@
- #define ROCKCHIP_PCIE_EP_CMD_STATUS			0x4
- #define   ROCKCHIP_PCIE_EP_CMD_STATUS_IS		BIT(19)
- #define ROCKCHIP_PCIE_EP_MSI_CTRL_REG			0x90
-+#define   ROCKCHIP_PCIE_EP_MSI_FLAGS_OFFSET		16
- #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_OFFSET		17
- #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_MASK		GENMASK(19, 17)
- #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MME_OFFSET		20
+ 	while (*id->guid_string) {
+-		guid_t driver_guid;
+-
+-		if (WARN_ON(guid_parse(id->guid_string, &driver_guid)))
+-			continue;
+-		if (guid_equal(&driver_guid, &wblock->gblock.guid))
++		if (guid_parse_and_compare(id->guid_string, &wblock->gblock.guid))
+ 			return 1;
+ 
+ 		id++;
+-- 
+2.39.2
+
 
 
