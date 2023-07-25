@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A2014263
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:56:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6854AC433C7;
-	Tue, 25 Jul 2023 10:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8581EA91
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:56:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBD9C433C7;
+	Tue, 25 Jul 2023 10:56:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282608;
-	bh=QtUzT5Tbn8JOfBZ9L6FnCLO6tZ6AeyvF3B+5gddClRc=;
+	s=korg; t=1690282611;
+	bh=GZA6wExYjc3AFatZg/N0vDbT6mOAnsOX0iPXu8574nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NRqk3Z/McK9D18sXZXN0iQm9kmUtTImoJQu1SukH3yLMGBdU9lJ5puIcKInSwcn1J
-	 LToipFFcXAdcyX3vT4yyYGg5pBAsUzzOapCgQqDTCOOpBeA469VfAS47u+z/xLISz/
-	 NpTA3pYmL6USNITBkpj31EmVYcKRMthyr4N1gfjY=
+	b=z4PKCyYnJap5Pv33nrgTaG05tIBBoFzWYYWovFcekAddA7DEtXS5L0DirPaVHBrEJ
+	 nMLaNGTiz9rnKkyIwTrmZVKYxKHPWdwGsatqGTF4kK+rxKaWIF6DIORgx7uZBMaPgg
+	 VsIYaf3UZ5u+dVw8NEOeM8Xzpfcu5UgnGr2pxmxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Martin Fuzzey <martin.fuzzey@flowbird.group>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 161/227] ASoC: SOF: ipc3-dtrace: uninitialized data in dfsentry_trace_filter_write()
-Date: Tue, 25 Jul 2023 12:45:28 +0200
-Message-ID: <20230725104521.603208789@linuxfoundation.org>
+Subject: [PATCH 6.4 162/227] regulator: da9063: fix null pointer deref with partial DT config
+Date: Tue, 25 Jul 2023 12:45:29 +0200
+Message-ID: <20230725104521.634184325@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,57 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Martin Fuzzey <martin.fuzzey@flowbird.group>
 
-[ Upstream commit 469e2f28c2cbee2430058c1c9bb6d1675d7195fb ]
+[ Upstream commit 98e2dd5f7a8be5cb2501a897e96910393a49f0ff ]
 
-This doesn't check how many bytes the simple_write_to_buffer() writes to
-the buffer.  The only thing that we know is that the first byte is
-initialized and the last byte of the buffer is set to NUL.  However
-the middle bytes could be uninitialized.
+When some of the da9063 regulators do not have corresponding DT nodes
+a null pointer dereference occurs on boot because such regulators have
+no init_data causing the pointers calculated in
+da9063_check_xvp_constraints() to be invalid.
 
-There is no need to use simple_write_to_buffer().  This code does not
-support partial writes but instead passes "pos = 0" as the starting
-offset regardless of what the user passed as "*ppos".  Just use the
-copy_from_user() function and initialize the whole buffer.
+Do not dereference them in this case.
 
-Fixes: 671e0b90051e ("ASoC: SOF: Clone the trace code to ipc3-dtrace as fw_tracing implementation")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/74148292-ce4d-4e01-a1a7-921e6767da14@moroto.mountain
+Fixes: b8717a80e6ee ("regulator: da9063: implement setter for voltage monitoring")
+Signed-off-by: Martin Fuzzey <martin.fuzzey@flowbird.group>
+Link: https://lore.kernel.org/r/20230616143736.2946173-1-martin.fuzzey@flowbird.group
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc3-dtrace.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/regulator/da9063-regulator.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/sof/ipc3-dtrace.c b/sound/soc/sof/ipc3-dtrace.c
-index 1d3bca2d28dd6..35da85a45a9ae 100644
---- a/sound/soc/sof/ipc3-dtrace.c
-+++ b/sound/soc/sof/ipc3-dtrace.c
-@@ -186,7 +186,6 @@ static ssize_t dfsentry_trace_filter_write(struct file *file, const char __user
- 	struct snd_sof_dfsentry *dfse = file->private_data;
- 	struct sof_ipc_trace_filter_elem *elems = NULL;
- 	struct snd_sof_dev *sdev = dfse->sdev;
--	loff_t pos = 0;
- 	int num_elems;
- 	char *string;
- 	int ret;
-@@ -201,11 +200,11 @@ static ssize_t dfsentry_trace_filter_write(struct file *file, const char __user
- 	if (!string)
- 		return -ENOMEM;
+diff --git a/drivers/regulator/da9063-regulator.c b/drivers/regulator/da9063-regulator.c
+index c5dd77be558b6..dfd5ec9f75c90 100644
+--- a/drivers/regulator/da9063-regulator.c
++++ b/drivers/regulator/da9063-regulator.c
+@@ -778,6 +778,9 @@ static int da9063_check_xvp_constraints(struct regulator_config *config)
+ 	const struct notification_limit *uv_l = &constr->under_voltage_limits;
+ 	const struct notification_limit *ov_l = &constr->over_voltage_limits;
  
--	/* assert null termination */
--	string[count] = 0;
--	ret = simple_write_to_buffer(string, count, &pos, from, count);
--	if (ret < 0)
-+	if (copy_from_user(string, from, count)) {
-+		ret = -EFAULT;
- 		goto error;
-+	}
-+	string[count] = '\0';
- 
- 	ret = trace_filter_parse(sdev, string, &num_elems, &elems);
- 	if (ret < 0)
++	if (!config->init_data) /* No config in DT, pointers will be invalid */
++		return 0;
++
+ 	/* make sure that only one severity is used to clarify if unchanged, enabled or disabled */
+ 	if ((!!uv_l->prot + !!uv_l->err + !!uv_l->warn) > 1) {
+ 		dev_err(config->dev, "%s: at most one voltage monitoring severity allowed!\n",
 -- 
 2.39.2
 
