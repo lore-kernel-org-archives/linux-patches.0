@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1D11ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:23:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5361C433C8;
-	Tue, 25 Jul 2023 11:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F46D1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:23:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A600DC433C8;
+	Tue, 25 Jul 2023 11:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284182;
-	bh=Aoa5szMq1qa8uxXWvcq+6C+lXXGuHcSSnSavM4OJwzQ=;
+	s=korg; t=1690284185;
+	bh=TmFCbMQWgCEViApQTymdYPsJYzjQtTcf9RdAopETO+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xcs1YQIQMrbVKY9zw7667/Q8bH4W+Nn+mkplGZLBmlQI3SD3hXF+dm3B+UGTlWKkp
-	 7KVNqkJ7PBHNYsOYUXv9weJFUhgVWAA5gUQW1TkBedTAn2QKE0u6S6QAhgcVV6t74u
-	 +HdLPK19gNvSz0dp4v0JcRRaXgsAsZ6jl0sTU598=
+	b=M1DbMXWeh9RctxK1mDKYsbkXualvCkOhp/Mrnj9EsGAp2q+WXPNcf8ygwyZWUJN/6
+	 fdTRtT6Z0BsJie2j55Pv7LF76YYJykCb7hTllBz6QEF9tDMm2XICeXlAl3FLZZSV7V
+	 8psLM8a+bVE3DR40bPcQbiNujQzn3a8+QgnP7xog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Prashanth K <quic_prashk@quicinc.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 265/509] f2fs: fix error path handling in truncate_dnode()
-Date: Tue, 25 Jul 2023 12:43:24 +0200
-Message-ID: <20230725104605.890966857@linuxfoundation.org>
+Subject: [PATCH 5.10 248/509] Revert "usb: common: usb-conn-gpio: Set last role to unknown before initial detection"
+Date: Tue, 25 Jul 2023 12:43:07 +0200
+Message-ID: <20230725104605.101523538@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,37 +36,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 0135c482fa97e2fd8245cb462784112a00ed1211 ]
+[ Upstream commit df49f2a0ac4a34c0cb4b5c233fcfa0add644c43c ]
 
-If truncate_node() fails in truncate_dnode(), it missed to call
-f2fs_put_page(), fix it.
+This reverts commit edd60d24bd858cef165274e4cd6cab43bdc58d15.
 
-Fixes: 7735730d39d7 ("f2fs: fix to propagate error from __get_meta_page()")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Heikki reports that this should not be a global flag just to work around
+one broken driver and should be fixed differently, so revert it.
+
+Reported-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Fixes: edd60d24bd85 ("usb: common: usb-conn-gpio: Set last role to unknown before initial detection")
+Link: https://lore.kernel.org/r/ZImE4L3YgABnCIsP@kuha.fi.intel.com
+Cc: Prashanth K <quic_prashk@quicinc.com>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/node.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/cdns3/core.c                       | 2 --
+ drivers/usb/common/usb-conn-gpio.c             | 3 ---
+ drivers/usb/musb/jz4740.c                      | 2 --
+ drivers/usb/roles/intel-xhci-usb-role-switch.c | 2 --
+ include/linux/usb/role.h                       | 1 -
+ 5 files changed, 10 deletions(-)
 
-diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
-index c63274d4b74b0..02cb1c806c3ed 100644
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -884,8 +884,10 @@ static int truncate_dnode(struct dnode_of_data *dn)
- 	dn->ofs_in_node = 0;
- 	f2fs_truncate_data_blocks(dn);
- 	err = truncate_node(dn);
--	if (err)
-+	if (err) {
-+		f2fs_put_page(page, 1);
- 		return err;
-+	}
+diff --git a/drivers/usb/cdns3/core.c b/drivers/usb/cdns3/core.c
+index e5fe640b2bb01..8fe7420de033d 100644
+--- a/drivers/usb/cdns3/core.c
++++ b/drivers/usb/cdns3/core.c
+@@ -243,8 +243,6 @@ static enum usb_role cdns3_hw_role_state_machine(struct cdns3 *cdns)
+ 		if (!vbus)
+ 			role = USB_ROLE_NONE;
+ 		break;
+-	default:
+-		break;
+ 	}
  
- 	return 1;
- }
+ 	dev_dbg(cdns->dev, "role %d -> %d\n", cdns->role, role);
+diff --git a/drivers/usb/common/usb-conn-gpio.c b/drivers/usb/common/usb-conn-gpio.c
+index 5754e467c16a8..c9545a4eff664 100644
+--- a/drivers/usb/common/usb-conn-gpio.c
++++ b/drivers/usb/common/usb-conn-gpio.c
+@@ -276,9 +276,6 @@ static int usb_conn_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, info);
+ 
+-	/* Set last role to unknown before performing the initial detection */
+-	info->last_role = USB_ROLE_UNKNOWN;
+-
+ 	/* Perform initial detection */
+ 	usb_conn_queue_dwork(info, 0);
+ 
+diff --git a/drivers/usb/musb/jz4740.c b/drivers/usb/musb/jz4740.c
+index f283629091ec4..c4fe1f4cd17a3 100644
+--- a/drivers/usb/musb/jz4740.c
++++ b/drivers/usb/musb/jz4740.c
+@@ -91,8 +91,6 @@ static int jz4740_musb_role_switch_set(struct usb_role_switch *sw,
+ 	case USB_ROLE_HOST:
+ 		atomic_notifier_call_chain(&phy->notifier, USB_EVENT_ID, phy);
+ 		break;
+-	default:
+-		break;
+ 	}
+ 
+ 	return 0;
+diff --git a/drivers/usb/roles/intel-xhci-usb-role-switch.c b/drivers/usb/roles/intel-xhci-usb-role-switch.c
+index 4d6a3dd06e011..5c96e929acea0 100644
+--- a/drivers/usb/roles/intel-xhci-usb-role-switch.c
++++ b/drivers/usb/roles/intel-xhci-usb-role-switch.c
+@@ -97,8 +97,6 @@ static int intel_xhci_usb_set_role(struct usb_role_switch *sw,
+ 		val |= SW_VBUS_VALID;
+ 		drd_config = DRD_CONFIG_STATIC_DEVICE;
+ 		break;
+-	default:
+-		break;
+ 	}
+ 	val |= SW_IDPIN_EN;
+ 	if (data->enable_sw_switch) {
+diff --git a/include/linux/usb/role.h b/include/linux/usb/role.h
+index aecfce46d3544..b9ccaeb8a4aef 100644
+--- a/include/linux/usb/role.h
++++ b/include/linux/usb/role.h
+@@ -11,7 +11,6 @@ enum usb_role {
+ 	USB_ROLE_NONE,
+ 	USB_ROLE_HOST,
+ 	USB_ROLE_DEVICE,
+-	USB_ROLE_UNKNOWN,
+ };
+ 
+ typedef int (*usb_role_switch_set_t)(struct usb_role_switch *sw,
 -- 
 2.39.2
 
