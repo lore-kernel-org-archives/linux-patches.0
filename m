@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F53B1ED45
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:40:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4893C433C8;
-	Tue, 25 Jul 2023 11:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F06D1ED45
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:40:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2EA9C433C7;
+	Tue, 25 Jul 2023 11:40:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285205;
-	bh=ZTv6UPVHcV6X3m941K8iqq0QQyzfmN8WBXn2KCgMObw=;
+	s=korg; t=1690285208;
+	bh=2LWhS7cHvIqw5fnattKqV49KWJoOaRmT3GaMi8NyFJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sJGKNAMPahk5iRbmtACQ6oFsBbtF9ljyP2kz1WFVg8UBB7vC1twNSl6yju9m+vPUY
-	 QfIWjqCJpP+Y9Ru+1QGRWJEyvGELR/8G43RbjcT4p/GtY30uthJeH6KXL39jwn6Fh5
-	 q1eni9fuVrp2eJQhMWXvNucJHBAeAq1eGiCucIew=
+	b=dUJRFRHqYRSiVoGyzE8JvfWnwW+G+2zLrThPvQr2HxKJA0h1J2czpmYFdDXthXQc6
+	 OHCzVD++aJ53kbgNQUiyEqJafqg/NaOVQNlv08/E1Us+7Gk8bhlLprfM+iMlDzWwkk
+	 qqfDMJOfj7MIOonQDmtgrLS4V793oyCAgxos2+5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Tony Lindgren <tony@atomide.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 120/313] hwrng: st - keep clock enabled while hwrng is registered
-Date: Tue, 25 Jul 2023 12:44:33 +0200
-Message-ID: <20230725104526.199035659@linuxfoundation.org>
+Subject: [PATCH 5.4 093/313] clk: keystone: sci-clk: check return value of kasprintf()
+Date: Tue, 25 Jul 2023 12:44:06 +0200
+Message-ID: <20230725104524.984578222@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,94 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit 501e197a02d4aef157f53ba3a0b9049c3e52fedc ]
+[ Upstream commit b73ed981da6d25c921aaefa7ca3df85bbd85b7fc ]
 
-The st-rng driver uses devres to register itself with the hwrng core,
-the driver will be unregistered from hwrng when its device goes out of
-scope. This happens after the driver's remove function is called.
+kasprintf() returns a pointer to dynamically allocated memory.
+Pointer could be NULL in case allocation fails. Check pointer validity.
+Identified with coccinelle (kmerr.cocci script).
 
-However, st-rng's clock is disabled in the remove function. There's a
-short timeframe where st-rng is still registered with the hwrng core
-although its clock is disabled. I suppose the clock must be active to
-access the hardware and serve requests from the hwrng core.
-
-Switch to devm_clk_get_enabled and let devres disable the clock and
-unregister the hwrng. This avoids the race condition.
-
-Fixes: 3e75241be808 ("hwrng: drivers - Use device-managed registration API")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: b745c0794e2f ("clk: keystone: Add sci-clk driver support")
+Depends-on: 96488c09b0f4 ("clk: keystone: sci-clk: cut down the clock name length")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230530093913.1656095-7-claudiu.beznea@microchip.com
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/st-rng.c | 21 +--------------------
- 1 file changed, 1 insertion(+), 20 deletions(-)
+ drivers/clk/keystone/sci-clk.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/char/hw_random/st-rng.c b/drivers/char/hw_random/st-rng.c
-index 50975e761ca58..f708a99619ecb 100644
---- a/drivers/char/hw_random/st-rng.c
-+++ b/drivers/char/hw_random/st-rng.c
-@@ -42,7 +42,6 @@
+diff --git a/drivers/clk/keystone/sci-clk.c b/drivers/clk/keystone/sci-clk.c
+index 64ea895f1a7df..8e28e3489ded3 100644
+--- a/drivers/clk/keystone/sci-clk.c
++++ b/drivers/clk/keystone/sci-clk.c
+@@ -287,6 +287,8 @@ static int _sci_clk_build(struct sci_clk_provider *provider,
  
- struct st_rng_data {
- 	void __iomem	*base;
--	struct clk	*clk;
- 	struct hwrng	ops;
- };
+ 	name = kasprintf(GFP_KERNEL, "clk:%d:%d", sci_clk->dev_id,
+ 			 sci_clk->clk_id);
++	if (!name)
++		return -ENOMEM;
  
-@@ -87,26 +86,18 @@ static int st_rng_probe(struct platform_device *pdev)
- 	if (IS_ERR(base))
- 		return PTR_ERR(base);
+ 	init.name = name;
  
--	clk = devm_clk_get(&pdev->dev, NULL);
-+	clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(clk))
- 		return PTR_ERR(clk);
- 
--	ret = clk_prepare_enable(clk);
--	if (ret)
--		return ret;
--
- 	ddata->ops.priv	= (unsigned long)ddata;
- 	ddata->ops.read	= st_rng_read;
- 	ddata->ops.name	= pdev->name;
- 	ddata->base	= base;
--	ddata->clk	= clk;
--
--	dev_set_drvdata(&pdev->dev, ddata);
- 
- 	ret = devm_hwrng_register(&pdev->dev, &ddata->ops);
- 	if (ret) {
- 		dev_err(&pdev->dev, "Failed to register HW RNG\n");
--		clk_disable_unprepare(clk);
- 		return ret;
- 	}
- 
-@@ -115,15 +106,6 @@ static int st_rng_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int st_rng_remove(struct platform_device *pdev)
--{
--	struct st_rng_data *ddata = dev_get_drvdata(&pdev->dev);
--
--	clk_disable_unprepare(ddata->clk);
--
--	return 0;
--}
--
- static const struct of_device_id st_rng_match[] __maybe_unused = {
- 	{ .compatible = "st,rng" },
- 	{},
-@@ -136,7 +118,6 @@ static struct platform_driver st_rng_driver = {
- 		.of_match_table = of_match_ptr(st_rng_match),
- 	},
- 	.probe = st_rng_probe,
--	.remove = st_rng_remove
- };
- 
- module_platform_driver(st_rng_driver);
 -- 
 2.39.2
 
