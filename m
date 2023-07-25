@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56A11EA7E
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:09:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 451C8C433C7;
-	Tue, 25 Jul 2023 11:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1DE8F59
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:09:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10984C433C7;
+	Tue, 25 Jul 2023 11:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283380;
-	bh=vn1+6KUuDs5vuPg9PDSVYe/0BrWiVIUPjwT4JYb2ixo=;
+	s=korg; t=1690283383;
+	bh=jt3JUmxKY7cqcOIXAy28/nzyNMTyACXQXZC5AwDhzKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dvz5cM8DolbMi6tBOUjPzklmCtZAOosQ9cC7dzRKQ7TE6A/Wc7MlKLzbk5ZJhoUIK
-	 X41dnIADUE2BtKhAE5+RsaDmq+Lgw/xKedcLzPYTdwH3A6k7EBPJZfFGbx4VUQA/zS
-	 0LZWhAUdVi4w4YIYXyU0Tl3cGFdDdPrYuDL90lBE=
+	b=LXEQ0tM6HFyzqEMq2OF+TKRtg4BwYOdfDiVitUZpxqIkcwZGVVsfiK1x1IVDAD0nK
+	 ASQM0oIJXHnpUAjGSlWbOyYVuA36R/jov7L2qFxSdysBM1VQQWHa8/xdcA81+UNeEL
+	 TfKcENl6u6LzZUEdfaYtLR+RGvuke/85M4VkUa/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Kauer <florian.kauer@linutronix.de>,
-	Kurt Kanzenbach <kurt@linutronix.de>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 54/78] igc: Prevent garbled TX queue with XDP ZEROCOPY
-Date: Tue, 25 Jul 2023 12:46:45 +0200
-Message-ID: <20230725104453.364066666@linuxfoundation.org>
+	stable@kernel.org,
+	Eric Whitney <enwlinux@gmail.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.15 28/78] ext4: correct inline offset when handling xattrs in inode body
+Date: Tue, 25 Jul 2023 12:46:19 +0200
+Message-ID: <20230725104452.405480665@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104451.275227789@linuxfoundation.org>
 References: <20230725104451.275227789@linuxfoundation.org>
@@ -40,73 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Kauer <florian.kauer@linutronix.de>
+From: Eric Whitney <enwlinux@gmail.com>
 
-[ Upstream commit 78adb4bcf99effbb960c5f9091e2e062509d1030 ]
+commit 6909cf5c4101214f4305a62d582a5b93c7e1eb9a upstream.
 
-In normal operation, each populated queue item has
-next_to_watch pointing to the last TX desc of the packet,
-while each cleaned item has it set to 0. In particular,
-next_to_use that points to the next (necessarily clean)
-item to use has next_to_watch set to 0.
+When run on a file system where the inline_data feature has been
+enabled, xfstests generic/269, generic/270, and generic/476 cause ext4
+to emit error messages indicating that inline directory entries are
+corrupted.  This occurs because the inline offset used to locate
+inline directory entries in the inode body is not updated when an
+xattr in that shared region is deleted and the region is shifted in
+memory to recover the space it occupied.  If the deleted xattr precedes
+the system.data attribute, which points to the inline directory entries,
+that attribute will be moved further up in the region.  The inline
+offset continues to point to whatever is located in system.data's former
+location, with unfortunate effects when used to access directory entries
+or (presumably) inline data in the inode body.
 
-When the TX queue is used both by an application using
-AF_XDP with ZEROCOPY as well as a second non-XDP application
-generating high traffic, the queue pointers can get in
-an invalid state where next_to_use points to an item
-where next_to_watch is NOT set to 0.
-
-However, the implementation assumes at several places
-that this is never the case, so if it does hold,
-bad things happen. In particular, within the loop inside
-of igc_clean_tx_irq(), next_to_clean can overtake next_to_use.
-Finally, this prevents any further transmission via
-this queue and it never gets unblocked or signaled.
-Secondly, if the queue is in this garbled state,
-the inner loop of igc_clean_tx_ring() will never terminate,
-completely hogging a CPU core.
-
-The reason is that igc_xdp_xmit_zc() reads next_to_use
-before acquiring the lock, and writing it back
-(potentially unmodified) later. If it got modified
-before locking, the outdated next_to_use is written
-pointing to an item that was already used elsewhere
-(and thus next_to_watch got written).
-
-Fixes: 9acf59a752d4 ("igc: Enable TX via AF_XDP zero-copy")
-Signed-off-by: Florian Kauer <florian.kauer@linutronix.de>
-Reviewed-by: Kurt Kanzenbach <kurt@linutronix.de>
-Tested-by: Kurt Kanzenbach <kurt@linutronix.de>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20230717175444.3217831-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@kernel.org
+Signed-off-by: Eric Whitney <enwlinux@gmail.com>
+Link: https://lore.kernel.org/r/20230522181520.1570360-1-enwlinux@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ext4/xattr.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -2748,15 +2748,15 @@ static void igc_xdp_xmit_zc(struct igc_r
- 	struct netdev_queue *nq = txring_txq(ring);
- 	union igc_adv_tx_desc *tx_desc = NULL;
- 	int cpu = smp_processor_id();
--	u16 ntu = ring->next_to_use;
- 	struct xdp_desc xdp_desc;
--	u16 budget;
-+	u16 budget, ntu;
- 
- 	if (!netif_carrier_ok(ring->netdev))
- 		return;
- 
- 	__netif_tx_lock(nq, cpu);
- 
-+	ntu = ring->next_to_use;
- 	budget = igc_desc_unused(ring);
- 
- 	while (xsk_tx_peek_desc(pool, &xdp_desc) && budget--) {
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -1732,6 +1732,20 @@ static int ext4_xattr_set_entry(struct e
+ 		memmove(here, (void *)here + size,
+ 			(void *)last - (void *)here + sizeof(__u32));
+ 		memset(last, 0, size);
++
++		/*
++		 * Update i_inline_off - moved ibody region might contain
++		 * system.data attribute.  Handling a failure here won't
++		 * cause other complications for setting an xattr.
++		 */
++		if (!is_block && ext4_has_inline_data(inode)) {
++			ret = ext4_find_inline_data_nolock(inode);
++			if (ret) {
++				ext4_warning_inode(inode,
++					"unable to update i_inline_off");
++				goto out;
++			}
++		}
+ 	} else if (s->not_found) {
+ 		/* Insert new name. */
+ 		size_t size = EXT4_XATTR_LEN(name_len);
 
 
