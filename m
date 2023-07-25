@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118EF1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:29:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E4AC433C7;
-	Tue, 25 Jul 2023 11:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00031ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:29:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51C0DC433C8;
+	Tue, 25 Jul 2023 11:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284539;
-	bh=xIYpv/5AJ5YqVdGxf9iOMsIix6UeNRJiJdlHEwEm6+g=;
+	s=korg; t=1690284542;
+	bh=PX000U1omiXGjurskrbDWLCkoEUtNBAG2bzqTT0cDuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jP8qC75InMiOFSf48Ao+noBD2RYzvOCvgdYJMqOk/xvqZKHbq6/wrmpfcC5b2u+iA
-	 PoKSsbOHAb5+6jFVymvpCfMIn633bFx44O1xL5EiReW7FglS381CMvgs6mDj4xX6Hh
-	 gxqFMDC87JRTRp448+LTfv3ECu3wo67pYF/95a+Y=
+	b=XWcOmuV11uKumk+VSYhdsjzlUiLWaB85tCIYaro0MczH403BEJiJ03yC+FcLm0KYe
+	 4MYIiuQqGPZDbvfFJ+lPiTiPKv7BUXQMpgxK6NibnprRL4vTlIIt/wopZAxiXMrLfk
+	 wzVoKG6yTKaDPCvVznUxxGx5FbjMXeznxkzjAOwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangwu Zhang <guazhang@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 375/509] nvme-pci: fix DMA direction of unmapping integrity data
-Date: Tue, 25 Jul 2023 12:45:14 +0200
-Message-ID: <20230725104610.896927027@linuxfoundation.org>
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Siddh Raman Pant <code@siddh.me>,
+	syzbot+d2cd27dcf8e04b232eb2@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 393/509] jfs: jfs_dmap: Validate db_l2nbperpage while mounting
+Date: Tue, 25 Jul 2023 12:45:32 +0200
+Message-ID: <20230725104611.739426460@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,41 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Siddh Raman Pant <code@siddh.me>
 
-[ Upstream commit b8f6446b6853768cb99e7c201bddce69ca60c15e ]
+commit 11509910c599cbd04585ec35a6d5e1a0053d84c1 upstream.
 
-DMA direction should be taken in dma_unmap_page() for unmapping integrity
-data.
+In jfs_dmap.c at line 381, BLKTODMAP is used to get a logical block
+number inside dbFree(). db_l2nbperpage, which is the log2 number of
+blocks per page, is passed as an argument to BLKTODMAP which uses it
+for shifting.
 
-Fix this DMA direction, and reported in Guangwu's test.
+Syzbot reported a shift out-of-bounds crash because db_l2nbperpage is
+too big. This happens because the large value is set without any
+validation in dbMount() at line 181.
 
-Reported-by: Guangwu Zhang <guazhang@redhat.com>
-Fixes: 4aedb705437f ("nvme-pci: split metadata handling from nvme_map_data / nvme_unmap_data")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Thus, make sure that db_l2nbperpage is correct while mounting.
+
+Max number of blocks per page = Page size / Min block size
+=> log2(Max num_block per page) = log2(Page size / Min block size)
+				= log2(Page size) - log2(Min block size)
+
+=> Max db_l2nbperpage = L2PSIZE - L2MINBLOCKSIZE
+
+Reported-and-tested-by: syzbot+d2cd27dcf8e04b232eb2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?id=2a70a453331db32ed491f5cbb07e81bf2d225715
+Cc: stable@vger.kernel.org
+Suggested-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Siddh Raman Pant <code@siddh.me>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/pci.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/jfs/jfs_dmap.c   |    6 ++++++
+ fs/jfs/jfs_filsys.h |    2 ++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index c47512da9872a..3aaead9b3a570 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -968,7 +968,8 @@ static void nvme_pci_complete_rq(struct request *req)
- 
- 	if (blk_integrity_rq(req))
- 		dma_unmap_page(dev->dev, iod->meta_dma,
--			       rq_integrity_vec(req)->bv_len, rq_data_dir(req));
-+			       rq_integrity_vec(req)->bv_len, rq_dma_dir(req));
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -178,7 +178,13 @@ int dbMount(struct inode *ipbmap)
+ 	dbmp_le = (struct dbmap_disk *) mp->data;
+ 	bmp->db_mapsize = le64_to_cpu(dbmp_le->dn_mapsize);
+ 	bmp->db_nfree = le64_to_cpu(dbmp_le->dn_nfree);
 +
- 	if (blk_rq_nr_phys_segments(req))
- 		nvme_unmap_data(dev, req);
- 	nvme_complete_rq(req);
--- 
-2.39.2
-
+ 	bmp->db_l2nbperpage = le32_to_cpu(dbmp_le->dn_l2nbperpage);
++	if (bmp->db_l2nbperpage > L2PSIZE - L2MINBLOCKSIZE) {
++		err = -EINVAL;
++		goto err_release_metapage;
++	}
++
+ 	bmp->db_numag = le32_to_cpu(dbmp_le->dn_numag);
+ 	if (!bmp->db_numag) {
+ 		err = -EINVAL;
+--- a/fs/jfs/jfs_filsys.h
++++ b/fs/jfs/jfs_filsys.h
+@@ -122,7 +122,9 @@
+ #define NUM_INODE_PER_IAG	INOSPERIAG
+ 
+ #define MINBLOCKSIZE		512
++#define L2MINBLOCKSIZE		9
+ #define MAXBLOCKSIZE		4096
++#define L2MAXBLOCKSIZE		12
+ #define	MAXFILESIZE		((s64)1 << 52)
+ 
+ #define JFS_LINK_MAX		0xffffffff
 
 
