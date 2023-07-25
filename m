@@ -1,38 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC4C9440
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:54:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF429C433C8;
-	Tue, 25 Jul 2023 10:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5787E9440
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:54:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16FCC433CB;
+	Tue, 25 Jul 2023 10:54:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282485;
-	bh=iXwbbWYHtCbyGhHnwsiItwAgGDSVUNs61f2DFbQTuu4=;
+	s=korg; t=1690282488;
+	bh=91kO4EreMg/x+kX2tpwgLs/gDIdK1ewyrRd48WO7r5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SqMbBEhQuXnplj6TSYQaBnxCiSmjZGcIEaXYHkifqBZHbnWhcqeEYqX5u4wdjZiNl
-	 TZBk2nLmWOCK+1iT6UM8TCenz7KNQeP8c+/E9r2bPyT/Z3MeBPmnZUJwaSRuua30zE
-	 6qjj811TRZ4vi3zmnGfXMrqU/VFcVGDGT/aroupA=
+	b=VY3tKghZrjfQdMyfxnNSS1jAlV/r4k3f9zM4H9yk+fCZLIYu0oQkhrsX25qQ6CFtO
+	 tJ21WlI5mubv49yZwg/Sz5xzqpnlol64ol/7Jv7J4xb+Nqcx15XGAMI1aX59mVap1U
+	 Ir2He1YfbT815U8NYa7KuNOYdv5+i/fzxDq8LDq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	James Clark <james.clark@arm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <uwe@kleine-koenig.org>,
-	coresight@lists.linaro.org,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 146/227] perf build: Fix library not found error when using CSLIBS
-Date: Tue, 25 Jul 2023 12:45:13 +0200
-Message-ID: <20230725104520.926343410@linuxfoundation.org>
+Subject: [PATCH 6.4 147/227] btrfs: be a bit more careful when setting mirror_num_ret in btrfs_map_block
+Date: Tue, 25 Jul 2023 12:45:14 +0200
+Message-ID: <20230725104520.967153011@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -46,89 +38,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Clark <james.clark@arm.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 1feece2780ac2f8de45177fe53979726cee4b3d1 ]
+[ Upstream commit 4e7de35eb7d1a1d4f2dda15f39fbedd4798a0b8d ]
 
--L only specifies the search path for libraries directly provided in the
-link line with -l. Because -lopencsd isn't specified, it's only linked
-because it's a dependency of -lopencsd_c_api. Dependencies like this are
-resolved using the default system search paths or -rpath-link=... rather
-than -L. This means that compilation only works if OpenCSD is installed
-to the system rather than provided with the CSLIBS (-L) option.
+The mirror_num_ret is allowed to be NULL, although it has to be set when
+smap is set.  Unfortunately that is not a well enough specifiable
+invariant for static type checkers, so add a NULL check to make sure they
+are fine.
 
-This could be fixed by adding -Wl,-rpath-link=$(CSLIBS) but that is less
-conventional than just adding -lopencsd to the link line so that it uses
--L. -lopencsd seems to have been removed in commit ed17b1914978eddb
-("perf tools: Drop requirement for libstdc++.so for libopencsd check")
-because it was thought that there was a chance compilation would work
-even if it didn't exist, but I think that only applies to libstdc++ so
-there is no harm to add it back. libopencsd.so and libopencsd_c_api.so
-would always exist together.
-
-Testing
-=======
-
-The following scenarios now all work:
-
- * Cross build with OpenCSD installed
- * Cross build using CSLIBS=...
- * Native build with OpenCSD installed
- * Native build using CSLIBS=...
- * Static cross build with OpenCSD installed
- * Static cross build with CSLIBS=...
-
-Committer testing:
-
-  ⬢[acme@toolbox perf-tools]$ alias m
-  alias m='make -k BUILD_BPF_SKEL=1 CORESIGHT=1 O=/tmp/build/perf-tools -C tools/perf install-bin && git status && perf test python ;  perf record -o /dev/null sleep 0.01 ; perf stat --null sleep 0.01'
-  ⬢[acme@toolbox perf-tools]$ ldd ~/bin/perf | grep csd
-  	libopencsd_c_api.so.1 => /lib64/libopencsd_c_api.so.1 (0x00007fd49c44e000)
-  	libopencsd.so.1 => /lib64/libopencsd.so.1 (0x00007fd49bd56000)
-  ⬢[acme@toolbox perf-tools]$ cat /etc/redhat-release
-  Fedora release 36 (Thirty Six)
-  ⬢[acme@toolbox perf-tools]$
-
-Fixes: ed17b1914978eddb ("perf tools: Drop requirement for libstdc++.so for libopencsd check")
-Reported-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Signed-off-by: James Clark <james.clark@arm.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Tested-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Uwe Kleine-König <uwe@kleine-koenig.org>
-Cc: coresight@lists.linaro.org
-Closes: https://lore.kernel.org/linux-arm-kernel/56905d7a-a91e-883a-b707-9d5f686ba5f1@arm.com/
-Link: https://lore.kernel.org/all/36cc4dc6-bf4b-1093-1c0a-876e368af183@kleine-koenig.org/
-Link: https://lore.kernel.org/r/20230707154546.456720-1-james.clark@arm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 03793cbbc80f ("btrfs: add fast path for single device io in __btrfs_map_block")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Makefile.config | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/volumes.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
-index a794d9eca93d8..72f068682c9a2 100644
---- a/tools/perf/Makefile.config
-+++ b/tools/perf/Makefile.config
-@@ -155,9 +155,9 @@ FEATURE_CHECK_LDFLAGS-libcrypto = -lcrypto
- ifdef CSINCLUDES
-   LIBOPENCSD_CFLAGS := -I$(CSINCLUDES)
- endif
--OPENCSDLIBS := -lopencsd_c_api
-+OPENCSDLIBS := -lopencsd_c_api -lopencsd
- ifeq ($(findstring -static,${LDFLAGS}),-static)
--  OPENCSDLIBS += -lopencsd -lstdc++
-+  OPENCSDLIBS += -lstdc++
- endif
- ifdef CSLIBS
-   LIBOPENCSD_LDFLAGS := -L$(CSLIBS)
+diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
+index 5ec000813f047..436e15e3759da 100644
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -6399,7 +6399,8 @@ int __btrfs_map_block(struct btrfs_fs_info *fs_info, enum btrfs_map_op op,
+ 	    (!need_full_stripe(op) || !dev_replace_is_ongoing ||
+ 	     !dev_replace->tgtdev)) {
+ 		set_io_stripe(smap, map, stripe_index, stripe_offset, stripe_nr);
+-		*mirror_num_ret = mirror_num;
++		if (mirror_num_ret)
++			*mirror_num_ret = mirror_num;
+ 		*bioc_ret = NULL;
+ 		ret = 0;
+ 		goto out;
 -- 
 2.39.2
 
