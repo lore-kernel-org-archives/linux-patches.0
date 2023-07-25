@@ -1,38 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFE71ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:08:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73956C433C9;
-	Tue, 25 Jul 2023 11:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E811ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:08:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF13C433C8;
+	Tue, 25 Jul 2023 11:08:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283336;
-	bh=s5+ze8UKUyFGiQ0Mtq3K4axWXtr38umOmZu0BzCSC0I=;
+	s=korg; t=1690283338;
+	bh=j8cIg2zuCMp5vEDPceWHifQgVfsvXLI+m8rZq9GawUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u8YtjN/PAZlcr9MRpIPqdwjUVd8Lcya9+Q3bsOTzCtlwgxNNCdI/kOcn47BSU0eEo
-	 5C/mliej/OIRM8K83BLJahwkkKlWX+Pn+ov6CqY3cDbApYP2fYRFC/TYE0hWN54IgD
-	 x2Y2y4pcsJjjHjBH9Wt5GMhkFYkm3Gq7tjW8KuMo=
+	b=KmuokPg81xhiCxdEYXB7BxGgebivbMSg9oMGem1+l7kVFjNCG3MkJE5j0TEkJiLgV
+	 tPfoPGLwAtMZKFyHmvrxTVDhRuOrppQu3T3s8rJDPsYrvq/25y7iTlLguH7m+tTDKO
+	 TQaRtci6PpJV3SlL6aDjqx0YzLTtFUjrUk2QzEZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	James Clark <james.clark@arm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <uwe@kleine-koenig.org>,
-	coresight@lists.linaro.org,
+	Nik P <npliashechnikov@gmail.com>,
+	Nathan Schulte <nmschulte@gmail.com>,
+	Friedrich Vock <friedrich.vock@gmx.de>,
+	dridri85@gmail.com,
+	Jan Visser <starquake@linuxeverywhere.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 40/78] perf build: Fix library not found error when using CSLIBS
-Date: Tue, 25 Jul 2023 12:46:31 +0200
-Message-ID: <20230725104452.851867826@linuxfoundation.org>
+Subject: [PATCH 5.15 41/78] pinctrl: amd: Use amd_pinconf_set() for all config options
+Date: Tue, 25 Jul 2023 12:46:32 +0200
+Message-ID: <20230725104452.893694917@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104451.275227789@linuxfoundation.org>
 References: <20230725104451.275227789@linuxfoundation.org>
@@ -46,89 +41,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Clark <james.clark@arm.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 1feece2780ac2f8de45177fe53979726cee4b3d1 ]
+[ Upstream commit 635a750d958e158e17af0f524bedc484b27fbb93 ]
 
--L only specifies the search path for libraries directly provided in the
-link line with -l. Because -lopencsd isn't specified, it's only linked
-because it's a dependency of -lopencsd_c_api. Dependencies like this are
-resolved using the default system search paths or -rpath-link=... rather
-than -L. This means that compilation only works if OpenCSD is installed
-to the system rather than provided with the CSLIBS (-L) option.
+On ASUS TUF A16 it is reported that the ITE5570 ACPI device connected to
+GPIO 7 is causing an interrupt storm.  This issue doesn't happen on
+Windows.
 
-This could be fixed by adding -Wl,-rpath-link=$(CSLIBS) but that is less
-conventional than just adding -lopencsd to the link line so that it uses
--L. -lopencsd seems to have been removed in commit ed17b1914978eddb
-("perf tools: Drop requirement for libstdc++.so for libopencsd check")
-because it was thought that there was a chance compilation would work
-even if it didn't exist, but I think that only applies to libstdc++ so
-there is no harm to add it back. libopencsd.so and libopencsd_c_api.so
-would always exist together.
+Comparing the GPIO register configuration between Windows and Linux
+bit 20 has been configured as a pull up on Windows, but not on Linux.
+Checking GPIO declaration from the firmware it is clear it *should* have
+been a pull up on Linux as well.
 
-Testing
-=======
+```
+GpioInt (Level, ActiveLow, Exclusive, PullUp, 0x0000,
+	 "\\_SB.GPIO", 0x00, ResourceConsumer, ,)
+{   // Pin list
+0x0007
+}
+```
 
-The following scenarios now all work:
+On Linux amd_gpio_set_config() is currently only used for programming
+the debounce. Actually the GPIO core calls it with all the arguments
+that are supported by a GPIO, pinctrl-amd just responds `-ENOTSUPP`.
 
- * Cross build with OpenCSD installed
- * Cross build using CSLIBS=...
- * Native build with OpenCSD installed
- * Native build using CSLIBS=...
- * Static cross build with OpenCSD installed
- * Static cross build with CSLIBS=...
+To solve this issue expand amd_gpio_set_config() to support the other
+arguments amd_pinconf_set() supports, namely `PIN_CONFIG_BIAS_PULL_DOWN`,
+`PIN_CONFIG_BIAS_PULL_UP`, and `PIN_CONFIG_DRIVE_STRENGTH`.
 
-Committer testing:
-
-  ⬢[acme@toolbox perf-tools]$ alias m
-  alias m='make -k BUILD_BPF_SKEL=1 CORESIGHT=1 O=/tmp/build/perf-tools -C tools/perf install-bin && git status && perf test python ;  perf record -o /dev/null sleep 0.01 ; perf stat --null sleep 0.01'
-  ⬢[acme@toolbox perf-tools]$ ldd ~/bin/perf | grep csd
-  	libopencsd_c_api.so.1 => /lib64/libopencsd_c_api.so.1 (0x00007fd49c44e000)
-  	libopencsd.so.1 => /lib64/libopencsd.so.1 (0x00007fd49bd56000)
-  ⬢[acme@toolbox perf-tools]$ cat /etc/redhat-release
-  Fedora release 36 (Thirty Six)
-  ⬢[acme@toolbox perf-tools]$
-
-Fixes: ed17b1914978eddb ("perf tools: Drop requirement for libstdc++.so for libopencsd check")
-Reported-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Signed-off-by: James Clark <james.clark@arm.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Tested-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Uwe Kleine-König <uwe@kleine-koenig.org>
-Cc: coresight@lists.linaro.org
-Closes: https://lore.kernel.org/linux-arm-kernel/56905d7a-a91e-883a-b707-9d5f686ba5f1@arm.com/
-Link: https://lore.kernel.org/all/36cc4dc6-bf4b-1093-1c0a-876e368af183@kleine-koenig.org/
-Link: https://lore.kernel.org/r/20230707154546.456720-1-james.clark@arm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reported-by: Nik P <npliashechnikov@gmail.com>
+Reported-by: Nathan Schulte <nmschulte@gmail.com>
+Reported-by: Friedrich Vock <friedrich.vock@gmx.de>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217336
+Reported-by: dridri85@gmail.com
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217493
+Link: https://lore.kernel.org/linux-input/20230530154058.17594-1-friedrich.vock@gmx.de/
+Tested-by: Jan Visser <starquake@linuxeverywhere.org>
+Fixes: 2956b5d94a76 ("pinctrl / gpio: Introduce .set_config() callback for GPIO chips")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230705133005.577-3-mario.limonciello@amd.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Makefile.config | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pinctrl/pinctrl-amd.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
-index 2c30a2b577d3e..973c0d5ed8d8b 100644
---- a/tools/perf/Makefile.config
-+++ b/tools/perf/Makefile.config
-@@ -143,9 +143,9 @@ FEATURE_CHECK_LDFLAGS-libcrypto = -lcrypto
- ifdef CSINCLUDES
-   LIBOPENCSD_CFLAGS := -I$(CSINCLUDES)
- endif
--OPENCSDLIBS := -lopencsd_c_api
-+OPENCSDLIBS := -lopencsd_c_api -lopencsd
- ifeq ($(findstring -static,${LDFLAGS}),-static)
--  OPENCSDLIBS += -lopencsd -lstdc++
-+  OPENCSDLIBS += -lstdc++
- endif
- ifdef CSLIBS
-   LIBOPENCSD_LDFLAGS := -L$(CSLIBS)
+diff --git a/drivers/pinctrl/pinctrl-amd.c b/drivers/pinctrl/pinctrl-amd.c
+index 9dff866614d40..384d93146e1f5 100644
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -189,18 +189,6 @@ static int amd_gpio_set_debounce(struct gpio_chip *gc, unsigned offset,
+ 	return ret;
+ }
+ 
+-static int amd_gpio_set_config(struct gpio_chip *gc, unsigned offset,
+-			       unsigned long config)
+-{
+-	u32 debounce;
+-
+-	if (pinconf_to_config_param(config) != PIN_CONFIG_INPUT_DEBOUNCE)
+-		return -ENOTSUPP;
+-
+-	debounce = pinconf_to_config_argument(config);
+-	return amd_gpio_set_debounce(gc, offset, debounce);
+-}
+-
+ #ifdef CONFIG_DEBUG_FS
+ static void amd_gpio_dbg_show(struct seq_file *s, struct gpio_chip *gc)
+ {
+@@ -775,7 +763,7 @@ static int amd_pinconf_get(struct pinctrl_dev *pctldev,
+ }
+ 
+ static int amd_pinconf_set(struct pinctrl_dev *pctldev, unsigned int pin,
+-				unsigned long *configs, unsigned num_configs)
++			   unsigned long *configs, unsigned int num_configs)
+ {
+ 	int i;
+ 	u32 arg;
+@@ -865,6 +853,20 @@ static int amd_pinconf_group_set(struct pinctrl_dev *pctldev,
+ 	return 0;
+ }
+ 
++static int amd_gpio_set_config(struct gpio_chip *gc, unsigned int pin,
++			       unsigned long config)
++{
++	struct amd_gpio *gpio_dev = gpiochip_get_data(gc);
++
++	if (pinconf_to_config_param(config) == PIN_CONFIG_INPUT_DEBOUNCE) {
++		u32 debounce = pinconf_to_config_argument(config);
++
++		return amd_gpio_set_debounce(gc, pin, debounce);
++	}
++
++	return amd_pinconf_set(gpio_dev->pctrl, pin, &config, 1);
++}
++
+ static const struct pinconf_ops amd_pinconf_ops = {
+ 	.pin_config_get		= amd_pinconf_get,
+ 	.pin_config_set		= amd_pinconf_set,
 -- 
 2.39.2
 
