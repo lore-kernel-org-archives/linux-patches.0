@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA4614A82
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:52:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B2F6C433C8;
-	Tue, 25 Jul 2023 10:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0F215AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:52:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39832C433C7;
+	Tue, 25 Jul 2023 10:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282340;
-	bh=CqcqxcUmzHdYOyCN68VWGEjTyLswR1xhNuKU3Y7Y4b4=;
+	s=korg; t=1690282343;
+	bh=05I2kwzK1/93wu/K1lWGDmcZTLQczAulW51VBr1QS8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1hrfx4bknxVVzcSqjhjYbyehC6d3Wi52YENYeAZwQ+NnQsogoYXCqWnY5nwwiNaiN
-	 vOOIdo3uq73+52eDJ7PLhkzFis7rVAxri/8yKvWN0IfvEaY+0lxubutMwjgcxfNjOJ
-	 dJW6hMAZ6uJJtRlbUyiQ9zKnC98xxZ+1QTiP+Kdc=
+	b=RJk0OoIq/WVBXd5QsNTV6n2Iy2qAcmOEd1uk2bMvU2RzNRrcmvAhsN5yBB3O3RLE2
+	 3faHoMImJJ5hAjcnI9OGn2cLGAqOrkqn0h5xfHjrQM/mKatXzSTE4pzOzGtDD6f9IL
+	 j1qj7BDOma//06vQMTa8/4CWPlFnntG3ghweilmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 093/227] btrfs: add xxhash to fast checksum implementations
-Date: Tue, 25 Jul 2023 12:44:20 +0200
-Message-ID: <20230725104518.576517883@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.4 067/227] ASoC: codecs: wcd938x: fix missing mbhc init error handling
+Date: Tue, 25 Jul 2023 12:43:54 +0200
+Message-ID: <20230725104517.529421088@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,59 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Sterba <dsterba@suse.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit efcfcbc6a36195c42d98e0ee697baba36da94dc8 ]
+commit 7dfae2631bfbdebecd35fe7b472ab3cc95c9ed66 upstream.
 
-The implementation of XXHASH is now CPU only but still fast enough to be
-considered for the synchronous checksumming, like non-generic crc32c.
+MBHC initialisation can fail so add the missing error handling to avoid
+dereferencing an error pointer when later configuring the jack:
 
-A userspace benchmark comparing it to various implementations (patched
-hash-speedtest from btrfs-progs):
+    Unable to handle kernel paging request at virtual address fffffffffffffff8
 
-  Block size:     4096
-  Iterations:     1000000
-  Implementation: builtin
-  Units:          CPU cycles
+    pc : wcd_mbhc_start+0x28/0x380 [snd_soc_wcd_mbhc]
+    lr : wcd938x_codec_set_jack+0x28/0x48 [snd_soc_wcd938x]
 
-	NULL-NOP: cycles:     73384294, cycles/i       73
-     NULL-MEMCPY: cycles:    228033868, cycles/i      228,    61664.320 MiB/s
-      CRC32C-ref: cycles:  24758559416, cycles/i    24758,      567.950 MiB/s
-       CRC32C-NI: cycles:   1194350470, cycles/i     1194,    11773.433 MiB/s
-  CRC32C-ADLERSW: cycles:   6150186216, cycles/i     6150,     2286.372 MiB/s
-  CRC32C-ADLERHW: cycles:    626979180, cycles/i      626,    22427.453 MiB/s
-      CRC32C-PCL: cycles:    466746732, cycles/i      466,    30126.699 MiB/s
-	  XXHASH: cycles:    860656400, cycles/i      860,    16338.188 MiB/s
+    Call trace:
+     wcd_mbhc_start+0x28/0x380 [snd_soc_wcd_mbhc]
+     wcd938x_codec_set_jack+0x28/0x48 [snd_soc_wcd938x]
+     snd_soc_component_set_jack+0x28/0x8c [snd_soc_core]
+     qcom_snd_wcd_jack_setup+0x7c/0x19c [snd_soc_qcom_common]
+     sc8280xp_snd_init+0x20/0x2c [snd_soc_sc8280xp]
+     snd_soc_link_init+0x28/0x90 [snd_soc_core]
+     snd_soc_bind_card+0x628/0xbfc [snd_soc_core]
+     snd_soc_register_card+0xec/0x104 [snd_soc_core]
+     devm_snd_soc_register_card+0x4c/0xa4 [snd_soc_core]
+     sc8280xp_platform_probe+0xf0/0x108 [snd_soc_sc8280xp]
 
-Comparing purely software implementation (ref), current outdated
-accelerated using crc32q instruction (NI), optimized implementations by
-M. Adler (https://stackoverflow.com/questions/17645167/implementing-sse-4-2s-crc32c-in-software/17646775#17646775)
-and the best one that was taken from kernel using the PCLMULQDQ
-instruction (PCL).
-
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: bcee7ed09b8e ("ASoC: codecs: wcd938x: add Multi Button Headset Control support")
+Cc: stable@vger.kernel.org      # 5.15
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230703124701.11734-1-johan+linaro@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/codecs/wcd938x.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index fc59eb4024438..795b30913c542 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -2265,6 +2265,9 @@ static int btrfs_init_csum_hash(struct btrfs_fs_info *fs_info, u16 csum_type)
- 		if (!strstr(crypto_shash_driver_name(csum_shash), "generic"))
- 			set_bit(BTRFS_FS_CSUM_IMPL_FAST, &fs_info->flags);
- 		break;
-+	case BTRFS_CSUM_TYPE_XXHASH:
-+		set_bit(BTRFS_FS_CSUM_IMPL_FAST, &fs_info->flags);
-+		break;
- 	default:
- 		break;
- 	}
--- 
-2.39.2
-
+--- a/sound/soc/codecs/wcd938x.c
++++ b/sound/soc/codecs/wcd938x.c
+@@ -2625,6 +2625,8 @@ static int wcd938x_mbhc_init(struct snd_
+ 						     WCD938X_IRQ_HPHR_OCP_INT);
+ 
+ 	wcd938x->wcd_mbhc = wcd_mbhc_init(component, &mbhc_cb, intr_ids, wcd_mbhc_fields, true);
++	if (IS_ERR(wcd938x->wcd_mbhc))
++		return PTR_ERR(wcd938x->wcd_mbhc);
+ 
+ 	snd_soc_add_component_controls(component, impedance_detect_controls,
+ 				       ARRAY_SIZE(impedance_detect_controls));
 
 
