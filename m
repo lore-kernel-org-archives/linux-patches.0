@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2BD1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:34:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E3CC433C8;
-	Tue, 25 Jul 2023 11:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64B11ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:34:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289FBC433C7;
+	Tue, 25 Jul 2023 11:34:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284849;
-	bh=OdSEV4if8gIzDp5M9UQ2cnXR536nY3oDG6WYKWETDS8=;
+	s=korg; t=1690284852;
+	bh=TMjuG92YZ7Q9xdZCo1fVODWXqbPkENVorPTMtKyX6Nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R51RcQWuLQn/tI6Lk9T/pghxou0OfosaQ07GOmKewCxjmgv3Z8Tga6SafYe0FQB5f
-	 IDdkhFpaua1wsMBoN1HkZc2Sgel9Z3awou32jzN4LvJuSV8wf3YoCISKD/Azq3IC0h
-	 Fy4kFCBpMSAp4ZxxNevzipvaj8noMCBqr5fgfs3I=
+	b=ex48hWM6nbsL9f4ZuSCEGu/aoneocuPT7tgNZp1L8YSfRa8ytUjvHQQyqoYq63o+N
+	 RHcp4frHHr1HkEccNtalICFzDzxKw1XbO8Z4N+n3UbbCAyasuEgLcMn4Qg3T7NO+v4
+	 SwwOHwYExgwqkYa0Rd6mPxXbdQiNCW1iIgjFxVLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	Helge Deller <deller@gmx.de>,
+	Nik P <npliashechnikov@gmail.com>,
+	Nathan Schulte <nmschulte@gmail.com>,
+	Friedrich Vock <friedrich.vock@gmx.de>,
+	dridri85@gmail.com,
+	Jan Visser <starquake@linuxeverywhere.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 474/509] fbdev: imxfb: warn about invalid left/right margin
-Date: Tue, 25 Jul 2023 12:46:53 +0200
-Message-ID: <20230725104615.451970867@linuxfoundation.org>
+Subject: [PATCH 5.10 475/509] pinctrl: amd: Use amd_pinconf_set() for all config options
+Date: Tue, 25 Jul 2023 12:46:54 +0200
+Message-ID: <20230725104615.492570941@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,41 +41,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 4e47382fbca916d7db95cbf9e2d7ca2e9d1ca3fe ]
+[ Upstream commit 635a750d958e158e17af0f524bedc484b27fbb93 ]
 
-Warn about invalid var->left_margin or var->right_margin. Their values
-are read from the device tree.
+On ASUS TUF A16 it is reported that the ITE5570 ACPI device connected to
+GPIO 7 is causing an interrupt storm.  This issue doesn't happen on
+Windows.
 
-We store var->left_margin-3 and var->right_margin-1 in register
-fields. These fields should be >= 0.
+Comparing the GPIO register configuration between Windows and Linux
+bit 20 has been configured as a pull up on Windows, but not on Linux.
+Checking GPIO declaration from the firmware it is clear it *should* have
+been a pull up on Linux as well.
 
-Fixes: 7e8549bcee00 ("imxfb: Fix margin settings")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Helge Deller <deller@gmx.de>
+```
+GpioInt (Level, ActiveLow, Exclusive, PullUp, 0x0000,
+	 "\\_SB.GPIO", 0x00, ResourceConsumer, ,)
+{   // Pin list
+0x0007
+}
+```
+
+On Linux amd_gpio_set_config() is currently only used for programming
+the debounce. Actually the GPIO core calls it with all the arguments
+that are supported by a GPIO, pinctrl-amd just responds `-ENOTSUPP`.
+
+To solve this issue expand amd_gpio_set_config() to support the other
+arguments amd_pinconf_set() supports, namely `PIN_CONFIG_BIAS_PULL_DOWN`,
+`PIN_CONFIG_BIAS_PULL_UP`, and `PIN_CONFIG_DRIVE_STRENGTH`.
+
+Reported-by: Nik P <npliashechnikov@gmail.com>
+Reported-by: Nathan Schulte <nmschulte@gmail.com>
+Reported-by: Friedrich Vock <friedrich.vock@gmx.de>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217336
+Reported-by: dridri85@gmail.com
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217493
+Link: https://lore.kernel.org/linux-input/20230530154058.17594-1-friedrich.vock@gmx.de/
+Tested-by: Jan Visser <starquake@linuxeverywhere.org>
+Fixes: 2956b5d94a76 ("pinctrl / gpio: Introduce .set_config() callback for GPIO chips")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230705133005.577-3-mario.limonciello@amd.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/imxfb.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pinctrl/pinctrl-amd.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/video/fbdev/imxfb.c b/drivers/video/fbdev/imxfb.c
-index 564bd0407ed81..d663e080b1571 100644
---- a/drivers/video/fbdev/imxfb.c
-+++ b/drivers/video/fbdev/imxfb.c
-@@ -602,10 +602,10 @@ static int imxfb_activate_var(struct fb_var_screeninfo *var, struct fb_info *inf
- 	if (var->hsync_len < 1    || var->hsync_len > 64)
- 		printk(KERN_ERR "%s: invalid hsync_len %d\n",
- 			info->fix.id, var->hsync_len);
--	if (var->left_margin > 255)
-+	if (var->left_margin < 3  || var->left_margin > 255)
- 		printk(KERN_ERR "%s: invalid left_margin %d\n",
- 			info->fix.id, var->left_margin);
--	if (var->right_margin > 255)
-+	if (var->right_margin < 1 || var->right_margin > 255)
- 		printk(KERN_ERR "%s: invalid right_margin %d\n",
- 			info->fix.id, var->right_margin);
- 	if (var->yres < 1 || var->yres > ymax_mask)
+diff --git a/drivers/pinctrl/pinctrl-amd.c b/drivers/pinctrl/pinctrl-amd.c
+index 0d71151575eef..3a05ebb9aa253 100644
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -189,18 +189,6 @@ static int amd_gpio_set_debounce(struct gpio_chip *gc, unsigned offset,
+ 	return ret;
+ }
+ 
+-static int amd_gpio_set_config(struct gpio_chip *gc, unsigned offset,
+-			       unsigned long config)
+-{
+-	u32 debounce;
+-
+-	if (pinconf_to_config_param(config) != PIN_CONFIG_INPUT_DEBOUNCE)
+-		return -ENOTSUPP;
+-
+-	debounce = pinconf_to_config_argument(config);
+-	return amd_gpio_set_debounce(gc, offset, debounce);
+-}
+-
+ #ifdef CONFIG_DEBUG_FS
+ static void amd_gpio_dbg_show(struct seq_file *s, struct gpio_chip *gc)
+ {
+@@ -676,7 +664,7 @@ static int amd_pinconf_get(struct pinctrl_dev *pctldev,
+ }
+ 
+ static int amd_pinconf_set(struct pinctrl_dev *pctldev, unsigned int pin,
+-				unsigned long *configs, unsigned num_configs)
++			   unsigned long *configs, unsigned int num_configs)
+ {
+ 	int i;
+ 	u32 arg;
+@@ -766,6 +754,20 @@ static int amd_pinconf_group_set(struct pinctrl_dev *pctldev,
+ 	return 0;
+ }
+ 
++static int amd_gpio_set_config(struct gpio_chip *gc, unsigned int pin,
++			       unsigned long config)
++{
++	struct amd_gpio *gpio_dev = gpiochip_get_data(gc);
++
++	if (pinconf_to_config_param(config) == PIN_CONFIG_INPUT_DEBOUNCE) {
++		u32 debounce = pinconf_to_config_argument(config);
++
++		return amd_gpio_set_debounce(gc, pin, debounce);
++	}
++
++	return amd_pinconf_set(gpio_dev->pctrl, pin, &config, 1);
++}
++
+ static const struct pinconf_ops amd_pinconf_ops = {
+ 	.pin_config_get		= amd_pinconf_get,
+ 	.pin_config_set		= amd_pinconf_set,
 -- 
 2.39.2
 
