@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBE41ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:40:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D346C433C8;
-	Tue, 25 Jul 2023 11:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F67D1ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:40:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5667C433C7;
+	Tue, 25 Jul 2023 11:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285252;
-	bh=5rvemBe/PPvB11ZhZP/FGRUXjGh5Kn76maallkmqXCA=;
+	s=korg; t=1690285255;
+	bh=jJENnagmG4Tojdxk5zaYe9j3NipEVV+opXoZGc6K04g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aLRbntULSzXGPy3M/6BcTM8NP2lJNTW7iRSZMAen/LIpdSTpgus6OGcVlKgBNTuJ2
-	 19VPS5spYHpLNpAV5rZCsqGSaS1gGznY1IoJYLdqcdiFrXhL43F+mJg6662YiJ00O/
-	 PoxPOTrZTzCNac0ydlGda5+gNm3FxIsi0hS5P0m8=
+	b=OJMhHWAxwWTQa8jpjKzJsUY2vOKEfaaAd873eOoI7FYp8Tu++Wi7ejKZ0h1qt+Fi3
+	 hhwoXs53DfpotYvOGrrvjoY4bDl3C2Lqs/qtOvEGj2/PQVUWPFyHWBUr8KkZddBY2Z
+	 OnlGwB2IxHePWVh5eA0pEdWjmhVK2WAE6eW6knHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Lindgren <tony@atomide.com>,
-	Dhruva Gole <d-gole@ti.com>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 139/313] serial: 8250_omap: Use force_suspend and resume for system suspend
-Date: Tue, 25 Jul 2023 12:44:52 +0200
-Message-ID: <20230725104527.018627881@linuxfoundation.org>
+Subject: [PATCH 5.4 140/313] mfd: stmfx: Fix error path in stmfx_chip_init
+Date: Tue, 25 Jul 2023 12:44:53 +0200
+Message-ID: <20230725104527.059763991@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,76 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Lindgren <tony@atomide.com>
+From: Amelie Delaunay <amelie.delaunay@foss.st.com>
 
-[ Upstream commit 20a41a62618df85f3a2981008edec5cadd785e0a ]
+[ Upstream commit f592cf624531286f8b52e40dcfc157a5a7fb115c ]
 
-We should not rely on autosuspend timeout for system suspend. Instead,
-let's use force_suspend and force_resume functions. Otherwise the serial
-port controller device may not be idled on suspend.
+In error path, disable vdd regulator if it exists, but don't overload ret.
+Because if regulator_disable() is successful, stmfx_chip_init will exit
+successfully while chip init failed.
 
-As we are doing a register write on suspend to configure the serial port,
-we still need to runtime PM resume the port on suspend.
-
-While at it, let's switch to pm_runtime_resume_and_get() and check for
-errors returned. And let's add the missing line break before return to the
-suspend function while at it.
-
-Fixes: 09d8b2bdbc5c ("serial: 8250: omap: Provide ability to enable/disable UART as wakeup source")
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Tested-by: Dhruva Gole <d-gole@ti.com>
-Message-ID: <20230614045922.4798-1-tony@atomide.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 06252ade9156 ("mfd: Add ST Multi-Function eXpander (STMFX) core driver")
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Link: https://lore.kernel.org/r/20230609092804.793100-1-amelie.delaunay@foss.st.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_omap.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/mfd/stmfx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
-index 928b35b87dcf3..a2db055278a17 100644
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -1314,25 +1314,35 @@ static int omap8250_suspend(struct device *dev)
- {
- 	struct omap8250_priv *priv = dev_get_drvdata(dev);
- 	struct uart_8250_port *up = serial8250_get_port(priv->line);
-+	int err;
+diff --git a/drivers/mfd/stmfx.c b/drivers/mfd/stmfx.c
+index 711979afd90a0..887c92342b7f1 100644
+--- a/drivers/mfd/stmfx.c
++++ b/drivers/mfd/stmfx.c
+@@ -389,7 +389,7 @@ static int stmfx_chip_init(struct i2c_client *client)
  
- 	serial8250_suspend_port(priv->line);
+ err:
+ 	if (stmfx->vdd)
+-		return regulator_disable(stmfx->vdd);
++		regulator_disable(stmfx->vdd);
  
--	pm_runtime_get_sync(dev);
-+	err = pm_runtime_resume_and_get(dev);
-+	if (err)
-+		return err;
- 	if (!device_may_wakeup(dev))
- 		priv->wer = 0;
- 	serial_out(up, UART_OMAP_WER, priv->wer);
--	pm_runtime_mark_last_busy(dev);
--	pm_runtime_put_autosuspend(dev);
--
-+	err = pm_runtime_force_suspend(dev);
- 	flush_work(&priv->qos_work);
--	return 0;
-+
-+	return err;
+ 	return ret;
  }
- 
- static int omap8250_resume(struct device *dev)
- {
- 	struct omap8250_priv *priv = dev_get_drvdata(dev);
-+	int err;
- 
-+	err = pm_runtime_force_resume(dev);
-+	if (err)
-+		return err;
- 	serial8250_resume_port(priv->line);
-+	/* Paired with pm_runtime_resume_and_get() in omap8250_suspend() */
-+	pm_runtime_mark_last_busy(dev);
-+	pm_runtime_put_autosuspend(dev);
-+
- 	return 0;
- }
- #else
 -- 
 2.39.2
 
