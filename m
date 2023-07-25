@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBEB61ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:38:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D884C433C7;
-	Tue, 25 Jul 2023 11:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9F01ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:38:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E269DC433C8;
+	Tue, 25 Jul 2023 11:38:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285097;
-	bh=eVvQozQRg5Alttg7xoZkXkMo0IV0FZcs5q1kTvjtVaU=;
+	s=korg; t=1690285100;
+	bh=sKN2YdZrnp92FbPJrHWZaSLtk3FKt0PSQyyWdlyVc70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mKtnQv/JUwa66CETfDbCeEUWCEHSOj0cGRxF+h8dYGcPvEk8e3DHlLaLJI2BiRx5k
-	 /3pJppeoDz3b1V3/Mf0EEG8m6XDpqEMO/3HoNiquAURXW5tqLDy4Iqm+Uz7XGDeTaQ
-	 HR3Tq2mLyJEsllPbd/0sHoXBh0MwFhh8l3FNfynA=
+	b=cQRiMkWqWfh8JQ78AiOS1xKu4zQ0v5o9tFqX8sIGNDlWRQeWH52HOnaBamwb/9rT2
+	 6wreJEEnlivtrnW3GJjHgnHvmP4bpbZ0UP99xPYpG6KlRj3+01G9IfTwhBv3yfvCmf
+	 7C/l4G85bwzJB3lF0aioRbLbUgiY9ju3p3ssr3jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 082/313] ASoC: es8316: Increment max value for ALC Capture Target Volume control
-Date: Tue, 25 Jul 2023 12:43:55 +0200
-Message-ID: <20230725104524.493040989@linuxfoundation.org>
+Subject: [PATCH 5.4 083/313] ASoC: es8316: Do not set rate constraints for unsupported MCLKs
+Date: Tue, 25 Jul 2023 12:43:56 +0200
+Message-ID: <20230725104524.544361361@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -37,86 +37,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 6f073429037cd79d7311cd8236311c53f5ea8f01 ]
+[ Upstream commit 60413129ee2b38a80347489270af7f6e1c1de4d0 ]
 
-The following error occurs when trying to restore a previously saved
-ALSA mixer state (tested on a Rock 5B board):
+When using the codec through the generic audio graph card, there are at
+least two calls of es8316_set_dai_sysclk(), with the effect of limiting
+the allowed sample rates according to the MCLK/LRCK ratios supported by
+the codec:
 
-  $ alsactl --no-ucm -f /tmp/asound.state store hw:Analog
-  $ alsactl --no-ucm -I -f /tmp/asound.state restore hw:Analog
-  alsactl: set_control:1475: Cannot write control '2:0:0:ALC Capture Target Volume:0' : Invalid argument
+1. During audio card setup, to set the initial MCLK - see
+   asoc_simple_init_dai().
 
-According to ES8316 datasheet, the register at address 0x2B, which is
-related to the above mixer control, contains by default the value 0xB0.
-Considering the corresponding ALC target bits (ALCLVL) are 7:4, the
-control is initialized with 11, which is one step above the maximum
-value allowed by the driver:
+2. Before opening a stream, to update MCLK, according to the stream
+   sample rate and the multiplication factor - see
+   asoc_simple_hw_params().
 
- ALCLVL | dB gain
- -------+--------
-  0000  |  -16.5
-  0001  |  -15.0
-  0010  |  -13.5
-  ....  |  .....
-  0111  |   -6.0
-  1000  |   -4.5
-  1001  |   -3.0
-  1010  |   -1.5
-  ....  |  .....
-  1111  |   -1.5
+In some cases the initial MCLK might be set to a frequency that doesn't
+match any of the supported ratios, e.g. 12287999 instead of 12288000,
+which is only 1 Hz below the supported clock, as that is what the
+hardware reports. This creates an empty list of rate constraints, which
+is further passed to snd_pcm_hw_constraint_list() via
+es8316_pcm_startup(), and causes the following error on the very first
+access of the sound card:
 
-The tests performed using the VU meter feature (--vumeter=TYPE) of
-arecord/aplay confirm the specs are correct and there is no measured
-gain if the 1011-1111 range would have been mapped to 0 dB:
+  $ speaker-test -D hw:Analog,0 -F S16_LE -c 2 -t wav
+  Broken configuration for playback: no configurations available: Invalid argument
+  Setting of hwparams failed: Invalid argument
 
- dB gain | VU meter %
- --------+-----------
-   -6.0  |  30-31
-   -4.5  |  35-36
-   -3.0  |  42-43
-   -1.5  |  50-51
-    0.0  |  50-51
+Note that all subsequent retries succeed thanks to the updated MCLK set
+at point 2 above, which uses a computed frequency value instead of a
+reading from the hardware registers. Normally this would have mitigated
+the issue, but es8316_pcm_startup() executes before the 2nd call to
+es8316_set_dai_sysclk(), hence it cannot make use of the updated
+constraints.
 
-Increment the max value allowed for ALC Capture Target Volume control,
-so that it matches the hardware default.  Additionally, update the
-related TLV to prevent an artificial extension of the dB gain range.
+Since es8316_pcm_hw_params() performs anyway a final validation of MCLK
+against the stream sample rate and the supported MCLK/LRCK ratios, fix
+the issue by ensuring that sysclk_constraints list is only set when at
+least one supported sample rate is autodetected by the codec.
 
 Fixes: b8b88b70875a ("ASoC: add es8316 codec driver")
 Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://lore.kernel.org/r/20230530181140.483936-2-cristian.ciocaltea@collabora.com
+Link: https://lore.kernel.org/r/20230530181140.483936-3-cristian.ciocaltea@collabora.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/es8316.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ sound/soc/codecs/es8316.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/sound/soc/codecs/es8316.c b/sound/soc/codecs/es8316.c
-index efeffa0bf2d78..9be667e76e552 100644
+index 9be667e76e552..131f41cccbe65 100644
 --- a/sound/soc/codecs/es8316.c
 +++ b/sound/soc/codecs/es8316.c
-@@ -52,7 +52,12 @@ static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(dac_vol_tlv, -9600, 50, 1);
- static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(adc_vol_tlv, -9600, 50, 1);
- static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(alc_max_gain_tlv, -650, 150, 0);
- static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(alc_min_gain_tlv, -1200, 150, 0);
--static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(alc_target_tlv, -1650, 150, 0);
-+
-+static const SNDRV_CTL_TLVD_DECLARE_DB_RANGE(alc_target_tlv,
-+	0, 10, TLV_DB_SCALE_ITEM(-1650, 150, 0),
-+	11, 11, TLV_DB_SCALE_ITEM(-150, 0, 0),
-+);
-+
- static const SNDRV_CTL_TLVD_DECLARE_DB_RANGE(hpmixer_gain_tlv,
- 	0, 4, TLV_DB_SCALE_ITEM(-1200, 150, 0),
- 	8, 11, TLV_DB_SCALE_ITEM(-450, 150, 0),
-@@ -115,7 +120,7 @@ static const struct snd_kcontrol_new es8316_snd_controls[] = {
- 		       alc_max_gain_tlv),
- 	SOC_SINGLE_TLV("ALC Capture Min Volume", ES8316_ADC_ALC2, 0, 28, 0,
- 		       alc_min_gain_tlv),
--	SOC_SINGLE_TLV("ALC Capture Target Volume", ES8316_ADC_ALC3, 4, 10, 0,
-+	SOC_SINGLE_TLV("ALC Capture Target Volume", ES8316_ADC_ALC3, 4, 11, 0,
- 		       alc_target_tlv),
- 	SOC_SINGLE("ALC Capture Hold Time", ES8316_ADC_ALC3, 0, 10, 0),
- 	SOC_SINGLE("ALC Capture Decay Time", ES8316_ADC_ALC4, 4, 10, 0),
+@@ -369,13 +369,11 @@ static int es8316_set_dai_sysclk(struct snd_soc_dai *codec_dai,
+ 	int count = 0;
+ 
+ 	es8316->sysclk = freq;
++	es8316->sysclk_constraints.list = NULL;
++	es8316->sysclk_constraints.count = 0;
+ 
+-	if (freq == 0) {
+-		es8316->sysclk_constraints.list = NULL;
+-		es8316->sysclk_constraints.count = 0;
+-
++	if (freq == 0)
+ 		return 0;
+-	}
+ 
+ 	ret = clk_set_rate(es8316->mclk, freq);
+ 	if (ret)
+@@ -391,8 +389,10 @@ static int es8316_set_dai_sysclk(struct snd_soc_dai *codec_dai,
+ 			es8316->allowed_rates[count++] = freq / ratio;
+ 	}
+ 
+-	es8316->sysclk_constraints.list = es8316->allowed_rates;
+-	es8316->sysclk_constraints.count = count;
++	if (count) {
++		es8316->sysclk_constraints.list = es8316->allowed_rates;
++		es8316->sysclk_constraints.count = count;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.39.2
 
