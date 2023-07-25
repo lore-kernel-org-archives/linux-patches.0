@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141DE1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:32:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA5DC433C7;
-	Tue, 25 Jul 2023 11:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1DF1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:32:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59047C433C7;
+	Tue, 25 Jul 2023 11:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284740;
-	bh=hKA3OasGi5qSM6+604JNLo/FIehKkyuXmgjWF7XUvj0=;
+	s=korg; t=1690284743;
+	bh=yKRnhNeQfcAbGqbBeyfaRQEBwi1+MdHcdU3GgewTx9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TjCKupCQgmm2B9CrHzIprluzFZPLt6lJLr7OejHSoegRg3eLNqDeUCjKMRZAJQvZ0
-	 7imTRtuWyf5gJ7pY1HVHp2aMp4UI2cbuxIGc38dizycRtlVlAZgTMorZcINznc6pT/
-	 3D8b7KxpFSHzzBsHjgVdsrv7jiIx2aQ7GCsY4xZ8=
+	b=fJ+qyVc2rUp4wlFGlh822RhDuvBJ25zRm2hx2+jmTjmdyTGv8xhdoSwZGKP9ryXvV
+	 DBnV4wu0krlPNRG/NRVcFTZVw2NvdxgXGp9sxzhuxqpght3DP4Rak5AhXPJYqfqqnL
+	 UoMoTN/lRozNy2MO6UDwvUwg0IaLOtJMHPAV0Krs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youngmin Nam <youngmin.nam@samsung.com>,
-	SEO HOYOUNG <hy50.seo@samsung.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 464/509] arm64: set __exception_irq_entry with __irq_entry as a default
-Date: Tue, 25 Jul 2023 12:46:43 +0200
-Message-ID: <20230725104614.995646816@linuxfoundation.org>
+	syzbot+dc3dfba010d7671e05f5@syzkaller.appspotmail.com,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Anton Gusev <aagusev@ispras.ru>
+Subject: [PATCH 5.10 438/509] RDMA/cma: Ensure rdma_addr_cancel() happens before issuing more requests
+Date: Tue, 25 Jul 2023 12:46:17 +0200
+Message-ID: <20230725104613.790134390@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,166 +35,126 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Youngmin Nam <youngmin.nam@samsung.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit f6794950f0e5ba37e3bbedda4d6ab0aad7395dd3 ]
+commit 305d568b72f17f674155a2a8275f865f207b3808 upstream.
 
-filter_irq_stacks() is supposed to cut entries which are related irq entries
-from its call stack.
-And in_irqentry_text() which is called by filter_irq_stacks()
-uses __irqentry_text_start/end symbol to find irq entries in callstack.
+The FSM can run in a circle allowing rdma_resolve_ip() to be called twice
+on the same id_priv. While this cannot happen without going through the
+work, it violates the invariant that the same address resolution
+background request cannot be active twice.
 
-But it doesn't work correctly as without "CONFIG_FUNCTION_GRAPH_TRACER",
-arm64 kernel doesn't include gic_handle_irq which is entry point of arm64 irq
-between __irqentry_text_start and __irqentry_text_end as we discussed in below link.
-https://lore.kernel.org/all/CACT4Y+aReMGLYua2rCLHgFpS9io5cZC04Q8GLs-uNmrn1ezxYQ@mail.gmail.com/#t
+       CPU 1                                  CPU 2
 
-This problem can makes unintentional deep call stack entries especially
-in KASAN enabled situation as below.
+rdma_resolve_addr():
+  RDMA_CM_IDLE -> RDMA_CM_ADDR_QUERY
+  rdma_resolve_ip(addr_handler)  #1
 
-[ 2479.383395]I[0:launcher-loader: 1719] Stack depot reached limit capacity
-[ 2479.383538]I[0:launcher-loader: 1719] WARNING: CPU: 0 PID: 1719 at lib/stackdepot.c:129 __stack_depot_save+0x464/0x46c
-[ 2479.385693]I[0:launcher-loader: 1719] pstate: 624000c5 (nZCv daIF +PAN -UAO +TCO -DIT -SSBS BTYPE=--)
-[ 2479.385724]I[0:launcher-loader: 1719] pc : __stack_depot_save+0x464/0x46c
-[ 2479.385751]I[0:launcher-loader: 1719] lr : __stack_depot_save+0x460/0x46c
-[ 2479.385774]I[0:launcher-loader: 1719] sp : ffffffc0080073c0
-[ 2479.385793]I[0:launcher-loader: 1719] x29: ffffffc0080073e0 x28: ffffffd00b78a000 x27: 0000000000000000
-[ 2479.385839]I[0:launcher-loader: 1719] x26: 000000000004d1dd x25: ffffff891474f000 x24: 00000000ca64d1dd
-[ 2479.385882]I[0:launcher-loader: 1719] x23: 0000000000000200 x22: 0000000000000220 x21: 0000000000000040
-[ 2479.385925]I[0:launcher-loader: 1719] x20: ffffffc008007440 x19: 0000000000000000 x18: 0000000000000000
-[ 2479.385969]I[0:launcher-loader: 1719] x17: 2065726568207475 x16: 000000000000005e x15: 2d2d2d2d2d2d2d20
-[ 2479.386013]I[0:launcher-loader: 1719] x14: 5d39313731203a72 x13: 00000000002f6b30 x12: 00000000002f6af8
-[ 2479.386057]I[0:launcher-loader: 1719] x11: 00000000ffffffff x10: ffffffb90aacf000 x9 : e8a74a6c16008800
-[ 2479.386101]I[0:launcher-loader: 1719] x8 : e8a74a6c16008800 x7 : 00000000002f6b30 x6 : 00000000002f6af8
-[ 2479.386145]I[0:launcher-loader: 1719] x5 : ffffffc0080070c8 x4 : ffffffd00b192380 x3 : ffffffd0092b313c
-[ 2479.386189]I[0:launcher-loader: 1719] x2 : 0000000000000001 x1 : 0000000000000004 x0 : 0000000000000022
-[ 2479.386231]I[0:launcher-loader: 1719] Call trace:
-[ 2479.386248]I[0:launcher-loader: 1719]  __stack_depot_save+0x464/0x46c
-[ 2479.386273]I[0:launcher-loader: 1719]  kasan_save_stack+0x58/0x70
-[ 2479.386303]I[0:launcher-loader: 1719]  save_stack_info+0x34/0x138
-[ 2479.386331]I[0:launcher-loader: 1719]  kasan_save_free_info+0x18/0x24
-[ 2479.386358]I[0:launcher-loader: 1719]  ____kasan_slab_free+0x16c/0x170
-[ 2479.386385]I[0:launcher-loader: 1719]  __kasan_slab_free+0x10/0x20
-[ 2479.386410]I[0:launcher-loader: 1719]  kmem_cache_free+0x238/0x53c
-[ 2479.386435]I[0:launcher-loader: 1719]  mempool_free_slab+0x1c/0x28
-[ 2479.386460]I[0:launcher-loader: 1719]  mempool_free+0x7c/0x1a0
-[ 2479.386484]I[0:launcher-loader: 1719]  bvec_free+0x34/0x80
-[ 2479.386514]I[0:launcher-loader: 1719]  bio_free+0x60/0x98
-[ 2479.386540]I[0:launcher-loader: 1719]  bio_put+0x50/0x21c
-[ 2479.386567]I[0:launcher-loader: 1719]  f2fs_write_end_io+0x4ac/0x4d0
-[ 2479.386594]I[0:launcher-loader: 1719]  bio_endio+0x2dc/0x300
-[ 2479.386622]I[0:launcher-loader: 1719]  __dm_io_complete+0x324/0x37c
-[ 2479.386650]I[0:launcher-loader: 1719]  dm_io_dec_pending+0x60/0xa4
-[ 2479.386676]I[0:launcher-loader: 1719]  clone_endio+0xf8/0x2f0
-[ 2479.386700]I[0:launcher-loader: 1719]  bio_endio+0x2dc/0x300
-[ 2479.386727]I[0:launcher-loader: 1719]  blk_update_request+0x258/0x63c
-[ 2479.386754]I[0:launcher-loader: 1719]  scsi_end_request+0x50/0x304
-[ 2479.386782]I[0:launcher-loader: 1719]  scsi_io_completion+0x88/0x160
-[ 2479.386808]I[0:launcher-loader: 1719]  scsi_finish_command+0x17c/0x194
-[ 2479.386833]I[0:launcher-loader: 1719]  scsi_complete+0xcc/0x158
-[ 2479.386859]I[0:launcher-loader: 1719]  blk_mq_complete_request+0x4c/0x5c
-[ 2479.386885]I[0:launcher-loader: 1719]  scsi_done_internal+0xf4/0x1e0
-[ 2479.386910]I[0:launcher-loader: 1719]  scsi_done+0x14/0x20
-[ 2479.386935]I[0:launcher-loader: 1719]  ufshcd_compl_one_cqe+0x578/0x71c
-[ 2479.386963]I[0:launcher-loader: 1719]  ufshcd_mcq_poll_cqe_nolock+0xc8/0x150
-[ 2479.386991]I[0:launcher-loader: 1719]  ufshcd_intr+0x868/0xc0c
-[ 2479.387017]I[0:launcher-loader: 1719]  __handle_irq_event_percpu+0xd0/0x348
-[ 2479.387044]I[0:launcher-loader: 1719]  handle_irq_event_percpu+0x24/0x74
-[ 2479.387068]I[0:launcher-loader: 1719]  handle_irq_event+0x74/0xe0
-[ 2479.387091]I[0:launcher-loader: 1719]  handle_fasteoi_irq+0x174/0x240
-[ 2479.387118]I[0:launcher-loader: 1719]  handle_irq_desc+0x7c/0x2c0
-[ 2479.387147]I[0:launcher-loader: 1719]  generic_handle_domain_irq+0x1c/0x28
-[ 2479.387174]I[0:launcher-loader: 1719]  gic_handle_irq+0x64/0x158
-[ 2479.387204]I[0:launcher-loader: 1719]  call_on_irq_stack+0x2c/0x54
-[ 2479.387231]I[0:launcher-loader: 1719]  do_interrupt_handler+0x70/0xa0
-[ 2479.387258]I[0:launcher-loader: 1719]  el1_interrupt+0x34/0x68
-[ 2479.387283]I[0:launcher-loader: 1719]  el1h_64_irq_handler+0x18/0x24
-[ 2479.387308]I[0:launcher-loader: 1719]  el1h_64_irq+0x68/0x6c
-[ 2479.387332]I[0:launcher-loader: 1719]  blk_attempt_bio_merge+0x8/0x170
-[ 2479.387356]I[0:launcher-loader: 1719]  blk_mq_attempt_bio_merge+0x78/0x98
-[ 2479.387383]I[0:launcher-loader: 1719]  blk_mq_submit_bio+0x324/0xa40
-[ 2479.387409]I[0:launcher-loader: 1719]  __submit_bio+0x104/0x138
-[ 2479.387436]I[0:launcher-loader: 1719]  submit_bio_noacct_nocheck+0x1d0/0x4a0
-[ 2479.387462]I[0:launcher-loader: 1719]  submit_bio_noacct+0x618/0x804
-[ 2479.387487]I[0:launcher-loader: 1719]  submit_bio+0x164/0x180
-[ 2479.387511]I[0:launcher-loader: 1719]  f2fs_submit_read_bio+0xe4/0x1c4
-[ 2479.387537]I[0:launcher-loader: 1719]  f2fs_mpage_readpages+0x888/0xa4c
-[ 2479.387563]I[0:launcher-loader: 1719]  f2fs_readahead+0xd4/0x19c
-[ 2479.387587]I[0:launcher-loader: 1719]  read_pages+0xb0/0x4ac
-[ 2479.387614]I[0:launcher-loader: 1719]  page_cache_ra_unbounded+0x238/0x288
-[ 2479.387642]I[0:launcher-loader: 1719]  do_page_cache_ra+0x60/0x6c
-[ 2479.387669]I[0:launcher-loader: 1719]  page_cache_ra_order+0x318/0x364
-[ 2479.387695]I[0:launcher-loader: 1719]  ondemand_readahead+0x30c/0x3d8
-[ 2479.387722]I[0:launcher-loader: 1719]  page_cache_sync_ra+0xb4/0xc8
-[ 2479.387749]I[0:launcher-loader: 1719]  filemap_read+0x268/0xd24
-[ 2479.387777]I[0:launcher-loader: 1719]  f2fs_file_read_iter+0x1a0/0x62c
-[ 2479.387806]I[0:launcher-loader: 1719]  vfs_read+0x258/0x34c
-[ 2479.387831]I[0:launcher-loader: 1719]  ksys_pread64+0x8c/0xd0
-[ 2479.387857]I[0:launcher-loader: 1719]  __arm64_sys_pread64+0x48/0x54
-[ 2479.387881]I[0:launcher-loader: 1719]  invoke_syscall+0x58/0x158
-[ 2479.387909]I[0:launcher-loader: 1719]  el0_svc_common+0xf0/0x134
-[ 2479.387935]I[0:launcher-loader: 1719]  do_el0_svc+0x44/0x114
-[ 2479.387961]I[0:launcher-loader: 1719]  el0_svc+0x2c/0x80
-[ 2479.387985]I[0:launcher-loader: 1719]  el0t_64_sync_handler+0x48/0x114
-[ 2479.388010]I[0:launcher-loader: 1719]  el0t_64_sync+0x190/0x194
-[ 2479.388038]I[0:launcher-loader: 1719] Kernel panic - not syncing: kernel: panic_on_warn set ...
+			 process_one_req(): for #1
+                          addr_handler():
+                            RDMA_CM_ADDR_QUERY -> RDMA_CM_ADDR_BOUND
+                            mutex_unlock(&id_priv->handler_mutex);
+                            [.. handler still running ..]
 
-So let's set __exception_irq_entry with __irq_entry as a default.
-Applying this patch, we can see gic_hande_irq is included in Systemp.map as below.
+rdma_resolve_addr():
+  RDMA_CM_ADDR_BOUND -> RDMA_CM_ADDR_QUERY
+  rdma_resolve_ip(addr_handler)
+    !! two requests are now on the req_list
 
-* Before
-ffffffc008010000 T __do_softirq
-ffffffc008010000 T __irqentry_text_end
-ffffffc008010000 T __irqentry_text_start
-ffffffc008010000 T __softirqentry_text_start
-ffffffc008010000 T _stext
-ffffffc00801066c T __softirqentry_text_end
-ffffffc008010670 T __entry_text_start
+rdma_destroy_id():
+ destroy_id_handler_unlock():
+  _destroy_id():
+   cma_cancel_operation():
+    rdma_addr_cancel()
 
-* After
-ffffffc008010000 T __irqentry_text_start
-ffffffc008010000 T _stext
-ffffffc008010000 t gic_handle_irq
-ffffffc00801013c t gic_handle_irq
-ffffffc008010294 T __irqentry_text_end
-ffffffc008010298 T __do_softirq
-ffffffc008010298 T __softirqentry_text_start
-ffffffc008010904 T __softirqentry_text_end
-ffffffc008010908 T __entry_text_start
+                          // process_one_req() self removes it
+		          spin_lock_bh(&lock);
+                           cancel_delayed_work(&req->work);
+	                   if (!list_empty(&req->list)) == true
 
-Signed-off-by: Youngmin Nam <youngmin.nam@samsung.com>
-Signed-off-by: SEO HOYOUNG <hy50.seo@samsung.com>
-Reviewed-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20230424010436.779733-1-youngmin.nam@samsung.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+      ! rdma_addr_cancel() returns after process_on_req #1 is done
+
+   kfree(id_priv)
+
+			 process_one_req(): for #2
+                          addr_handler():
+	                    mutex_lock(&id_priv->handler_mutex);
+                            !! Use after free on id_priv
+
+rdma_addr_cancel() expects there to be one req on the list and only
+cancels the first one. The self-removal behavior of the work only happens
+after the handler has returned. This yields a situations where the
+req_list can have two reqs for the same "handle" but rdma_addr_cancel()
+only cancels the first one.
+
+The second req remains active beyond rdma_destroy_id() and will
+use-after-free id_priv once it inevitably triggers.
+
+Fix this by remembering if the id_priv has called rdma_resolve_ip() and
+always cancel before calling it again. This ensures the req_list never
+gets more than one item in it and doesn't cost anything in the normal flow
+that never uses this strange error path.
+
+Link: https://lore.kernel.org/r/0-v1-3bc675b8006d+22-syz_cancel_uaf_jgg@nvidia.com
+Cc: stable@vger.kernel.org
+Fixes: e51060f08a61 ("IB: IP address based RDMA connection manager")
+Reported-by: syzbot+dc3dfba010d7671e05f5@syzkaller.appspotmail.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Anton Gusev <aagusev@ispras.ru>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/exception.h | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/infiniband/core/cma.c      |   23 +++++++++++++++++++++++
+ drivers/infiniband/core/cma_priv.h |    1 +
+ 2 files changed, 24 insertions(+)
 
-diff --git a/arch/arm64/include/asm/exception.h b/arch/arm64/include/asm/exception.h
-index 0756191f44f64..59c3facb8a560 100644
---- a/arch/arm64/include/asm/exception.h
-+++ b/arch/arm64/include/asm/exception.h
-@@ -8,16 +8,11 @@
- #define __ASM_EXCEPTION_H
- 
- #include <asm/esr.h>
--#include <asm/kprobes.h>
- #include <asm/ptrace.h>
- 
- #include <linux/interrupt.h>
- 
--#ifdef CONFIG_FUNCTION_GRAPH_TRACER
- #define __exception_irq_entry	__irq_entry
--#else
--#define __exception_irq_entry	__kprobes
--#endif
- 
- static inline u32 disr_to_esr(u64 disr)
+--- a/drivers/infiniband/core/cma.c
++++ b/drivers/infiniband/core/cma.c
+@@ -1792,6 +1792,14 @@ static void cma_cancel_operation(struct
  {
--- 
-2.39.2
-
+ 	switch (state) {
+ 	case RDMA_CM_ADDR_QUERY:
++		/*
++		 * We can avoid doing the rdma_addr_cancel() based on state,
++		 * only RDMA_CM_ADDR_QUERY has a work that could still execute.
++		 * Notice that the addr_handler work could still be exiting
++		 * outside this state, however due to the interaction with the
++		 * handler_mutex the work is guaranteed not to touch id_priv
++		 * during exit.
++		 */
+ 		rdma_addr_cancel(&id_priv->id.route.addr.dev_addr);
+ 		break;
+ 	case RDMA_CM_ROUTE_QUERY:
+@@ -3401,6 +3409,21 @@ int rdma_resolve_addr(struct rdma_cm_id
+ 		if (dst_addr->sa_family == AF_IB) {
+ 			ret = cma_resolve_ib_addr(id_priv);
+ 		} else {
++			/*
++			 * The FSM can return back to RDMA_CM_ADDR_BOUND after
++			 * rdma_resolve_ip() is called, eg through the error
++			 * path in addr_handler(). If this happens the existing
++			 * request must be canceled before issuing a new one.
++			 * Since canceling a request is a bit slow and this
++			 * oddball path is rare, keep track once a request has
++			 * been issued. The track turns out to be a permanent
++			 * state since this is the only cancel as it is
++			 * immediately before rdma_resolve_ip().
++			 */
++			if (id_priv->used_resolve_ip)
++				rdma_addr_cancel(&id->route.addr.dev_addr);
++			else
++				id_priv->used_resolve_ip = 1;
+ 			ret = rdma_resolve_ip(cma_src_addr(id_priv), dst_addr,
+ 					      &id->route.addr.dev_addr,
+ 					      timeout_ms, addr_handler,
+--- a/drivers/infiniband/core/cma_priv.h
++++ b/drivers/infiniband/core/cma_priv.h
+@@ -89,6 +89,7 @@ struct rdma_id_private {
+ 	u8			reuseaddr;
+ 	u8			afonly;
+ 	u8			timeout;
++	u8 used_resolve_ip;
+ 	enum ib_gid_type	gid_type;
+ 
+ 	/*
 
 
