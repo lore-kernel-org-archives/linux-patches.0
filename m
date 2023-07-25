@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BBDA1ED4D
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:41:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3E7C433C8;
-	Tue, 25 Jul 2023 11:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316DA1ED4D
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:41:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A529AC433C8;
+	Tue, 25 Jul 2023 11:41:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285314;
-	bh=ZzxQtI0UhK87F9Vh/hkYFjwVCTmcHV9s1EIj50Yh3hk=;
+	s=korg; t=1690285317;
+	bh=ZVAjFBOIiZqTllOdsL2izGmL4Zv10JOIcoF7WTvg5tQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KD1vE86QAtxEr6EnZLxD1NH2XT07mEUCPx03m61bEcN71XWVXRsfOpOlATsCZpoWo
-	 Hv0XHZiGk94ljARyF69msXpHRJ8SVjlm+GBObcWUneLF2dSHBeb/CqPgHiKdjSDGLM
-	 fpS4ItEnDG/QpsSgl5/JY2YL5eVvENKwZDug31Rw=
+	b=Wjz9Fdm+UlevjRWjAtK4mt6MsjopwuoUwBqpE0N30a6sH8CCA/PhoeRvxSPN36Pbi
+	 D3uuRxTatG51gz16jQ6QcZ9/XKPG6C5lmcf/Q1mRjLrfoMueDjAZtTvhvc5wI4MQ0j
+	 aKbqa8heuRxl5g2RdjdGsWyx4MwGxKD8rgFgnSow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladislav Efanov <VEfanov@ispras.ru>,
-	Shawn Guo <shawn.guo@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 130/313] usb: dwc3: qcom: Fix potential memory leak
-Date: Tue, 25 Jul 2023 12:44:43 +0200
-Message-ID: <20230725104526.641732420@linuxfoundation.org>
+	Davide Tronchin <davide.tronchin.94@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.4 121/313] USB: serial: option: add LARA-R6 01B PIDs
+Date: Tue, 25 Jul 2023 12:44:34 +0200
+Message-ID: <20230725104526.248840272@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,53 +34,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladislav Efanov <VEfanov@ispras.ru>
+From: Davide Tronchin <davide.tronchin.94@gmail.com>
 
-[ Upstream commit 097fb3ee710d4de83b8d4f5589e8ee13e0f0541e ]
+commit ffa5f7a3bf28c1306eef85d4056539c2d4b8eb09 upstream.
 
-Function dwc3_qcom_probe() allocates memory for resource structure
-which is pointed by parent_res pointer. This memory is not
-freed. This leads to memory leak. Use stack memory to prevent
-memory leak.
+The new LARA-R6 product variant identified by the "01B" string can be
+configured (by AT interface) in three different USB modes:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+* Default mode (Vendor ID: 0x1546 Product ID: 0x1311) with 4 serial
+interfaces
 
-Fixes: 2bc02355f8ba ("usb: dwc3: qcom: Add support for booting with ACPI")
-Signed-off-by: Vladislav Efanov <VEfanov@ispras.ru>
-Acked-by: Shawn Guo <shawn.guo@linaro.org>
-Link: https://lore.kernel.org/r/20230517172518.442591-1-VEfanov@ispras.ru
+* RmNet mode (Vendor ID: 0x1546 Product ID: 0x1312) with 4 serial
+interfaces and 1 RmNet virtual network interface
+
+* CDC-ECM mode (Vendor ID: 0x1546 Product ID: 0x1313) with 4 serial
+interface and 1 CDC-ECM virtual network interface
+The first 4 interfaces of all the 3 USB configurations (default, RmNet,
+CDC-ECM) are the same.
+
+In default mode LARA-R6 01B exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parser/alternative functions
+
+In RmNet mode LARA-R6 01B exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parser/alternative functions
+If 4: RMNET interface
+
+In CDC-ECM mode LARA-R6 01B exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parser/alternative functions
+If 4: CDC-ECM interface
+
+Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
+Link: https://lore.kernel.org/r/20230622092921.12651-1-davide.tronchin.94@gmail.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-qcom.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/serial/option.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 2dcdeb52fc293..7d3de23147fd5 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -574,6 +574,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 	struct device		*dev = &pdev->dev;
- 	struct dwc3_qcom	*qcom;
- 	struct resource		*res, *parent_res = NULL;
-+	struct resource		local_res;
- 	int			ret, i;
- 	bool			ignore_pipe_clk;
- 
-@@ -624,9 +625,8 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 	if (np) {
- 		parent_res = res;
- 	} else {
--		parent_res = kmemdup(res, sizeof(struct resource), GFP_KERNEL);
--		if (!parent_res)
--			return -ENOMEM;
-+		memcpy(&local_res, res, sizeof(struct resource));
-+		parent_res = &local_res;
- 
- 		parent_res->start = res->start +
- 			qcom->acpi_pdata->qscratch_base_offset;
--- 
-2.39.2
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1151,6 +1151,10 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90fa),
+ 	  .driver_info = RSVD(3) },
+ 	/* u-blox products */
++	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1311) },	/* u-blox LARA-R6 01B */
++	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1312),		/* u-blox LARA-R6 01B (RMNET) */
++	  .driver_info = RSVD(4) },
++	{ USB_DEVICE_INTERFACE_CLASS(UBLOX_VENDOR_ID, 0x1313, 0xff) },	/* u-blox LARA-R6 01B (ECM) */
+ 	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1341) },	/* u-blox LARA-L6 */
+ 	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1342),		/* u-blox LARA-L6 (RMNET) */
+ 	  .driver_info = RSVD(4) },
 
 
