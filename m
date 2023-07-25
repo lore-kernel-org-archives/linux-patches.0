@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207B29440
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:54:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96FE0C433C7;
-	Tue, 25 Jul 2023 10:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03999440
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:54:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CCFAC433CA;
+	Tue, 25 Jul 2023 10:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282477;
-	bh=2mp8ZBA3se9/xna/gAl7qNRsdXq82zO3CdKoZ6bVnnw=;
+	s=korg; t=1690282479;
+	bh=W1rBc2J+WGXrSNgXXJbKcIJ7GeX5xt0sqhAXLvxEDsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q4/VVL+aoNDeWuq1MIa/G8ABD5llbSaVTMXTjiKw0ZQYfB6wyOYriABvnqx4CAlnR
-	 SeM6+KEXQcdixJZIP5sfj0Dc8t/ZVMe1LSt1CC7hPkgAJJkSFMbhPnpI9fEz4QojVh
-	 8bpekMjAJROozCpKQzmTbZO//N1bTb678KY5F1ro=
+	b=UHTn8+NB5X6l7lXfjSQ/NAI6OkkfjrFyTSDhKTTKTDwLqzLsaUCLWYLLhs5KyTD3U
+	 iRWHNCCPmTz84czWhHPyqHWj5tPzR1xiIe/Z/uLtW1y1bQrkryUabac+C6RukTZwjh
+	 PsAhVHXHA6vKbtshgUYXAUzX6X8NHraX+MaIli1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
+	Yangtao Li <frank.li@vivo.com>,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 144/227] fbdev: imxfb: warn about invalid left/right margin
-Date: Tue, 25 Jul 2023 12:45:11 +0200
-Message-ID: <20230725104520.840273372@linuxfoundation.org>
+Subject: [PATCH 6.4 145/227] fbdev: imxfb: Removed unneeded release_mem_region
+Date: Tue, 25 Jul 2023 12:45:12 +0200
+Message-ID: <20230725104520.884963034@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,41 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Yangtao Li <frank.li@vivo.com>
 
-[ Upstream commit 4e47382fbca916d7db95cbf9e2d7ca2e9d1ca3fe ]
+[ Upstream commit 45fcc058a75bf5d65cf4c32da44a252fbe873cd4 ]
 
-Warn about invalid var->left_margin or var->right_margin. Their values
-are read from the device tree.
+Remove unnecessary release_mem_region from the error path to prevent
+mem region from being released twice, which could avoid resource leak
+or other unexpected issues.
 
-We store var->left_margin-3 and var->right_margin-1 in register
-fields. These fields should be >= 0.
-
-Fixes: 7e8549bcee00 ("imxfb: Fix margin settings")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Fixes: b083c22d5114 ("video: fbdev: imxfb: Convert request_mem_region + ioremap to devm_ioremap_resource")
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/imxfb.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/imxfb.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/drivers/video/fbdev/imxfb.c b/drivers/video/fbdev/imxfb.c
-index adf36690c342b..5fbcb78a9caee 100644
+index 5fbcb78a9caee..c8b1c73412d36 100644
 --- a/drivers/video/fbdev/imxfb.c
 +++ b/drivers/video/fbdev/imxfb.c
-@@ -613,10 +613,10 @@ static int imxfb_activate_var(struct fb_var_screeninfo *var, struct fb_info *inf
- 	if (var->hsync_len < 1    || var->hsync_len > 64)
- 		printk(KERN_ERR "%s: invalid hsync_len %d\n",
- 			info->fix.id, var->hsync_len);
--	if (var->left_margin > 255)
-+	if (var->left_margin < 3  || var->left_margin > 255)
- 		printk(KERN_ERR "%s: invalid left_margin %d\n",
- 			info->fix.id, var->left_margin);
--	if (var->right_margin > 255)
-+	if (var->right_margin < 1 || var->right_margin > 255)
- 		printk(KERN_ERR "%s: invalid right_margin %d\n",
- 			info->fix.id, var->right_margin);
- 	if (var->yres < 1 || var->yres > ymax_mask)
+@@ -1043,7 +1043,6 @@ static int imxfb_probe(struct platform_device *pdev)
+ failed_map:
+ failed_ioremap:
+ failed_getclock:
+-	release_mem_region(res->start, resource_size(res));
+ failed_of_parse:
+ 	kfree(info->pseudo_palette);
+ failed_init:
 -- 
 2.39.2
 
