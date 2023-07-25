@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275AE15ACF
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:01:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F3BAC433C7;
-	Tue, 25 Jul 2023 11:01:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECBB215ACF
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:01:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC37C433C8;
+	Tue, 25 Jul 2023 11:01:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282885;
-	bh=ZOoUxsDyKwEulenjDn/1naBRUgbYK9tIpKiPvo2Coh8=;
+	s=korg; t=1690282887;
+	bh=trQ8PBfVVc0JovpJs3ylS8HEpyo7qiA5T4PSBpkWj6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E9hiZXf3K7JGOf8uHqPtBk9MGGEaZa7Y3lOCqRdBVdwYhp4d4PTelFNo0meWEfOon
-	 dSGKbIK7QBQSTrsnFBOgJ8j1XXOMO1jxBVhkEMaD3aTI2d7rQUJzXtyzHzexIhvb2j
-	 Ya+k+sxP8LIUNNdG974JKvpDVY3GX5qhaEdzOG1o=
+	b=CC7Xt/ndtgtu9AsBYG02uM1iLmuETLyUYJsgv5kW0tofqjPTEqQV4yjgR/C/GgaJe
+	 OpupMpf/w2L4TBHbGLkfbV1obQEHGJCKY+cUdxuMX+C0reXNBmrxzXKjwm6CIVChiA
+	 Tbw5a3D2UPNc7qGt4yhYkvhbbhjAB2DoneSTvClc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f1faa20eec55e0c8644c@syzkaller.appspotmail.com,
-	Immad Mir <mirimmad17@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 060/183] [PATCH AUTOSEL 4.19 10/11] FS: JFS: Fix null-ptr-deref Read in txBegin
-Date: Tue, 25 Jul 2023 12:44:48 +0200
-Message-ID: <20230725104510.119968111@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Alan Liu <haoping.liu@amd.com>,
+	Taimur Hassan <syed.hassan@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.1 034/183] drm/amd/display: check TG is non-null before checking if enabled
+Date: Tue, 25 Jul 2023 12:44:22 +0200
+Message-ID: <20230725104509.158977314@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -36,37 +38,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-[ Upstream commit 47cfdc338d674d38f4b2f22b7612cc6a2763ba27 ]
+From: Taimur Hassan <syed.hassan@amd.com>
 
- Syzkaller reported an issue where txBegin may be called
- on a superblock in a read-only mounted filesystem which leads
- to NULL pointer deref. This could be solved by checking if
- the filesystem is read-only before calling txBegin, and returning
- with appropiate error code.
+commit 5a25cefc0920088bb9afafeb80ad3dcd84fe278b upstream.
 
-Reported-By: syzbot+f1faa20eec55e0c8644c@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=be7e52c50c5182cc09a09ea6fc456446b2039de3
+[Why & How]
+If there is no TG allocation we can dereference a NULL pointer when
+checking if the TG is enabled.
 
-Signed-off-by: Immad Mir <mirimmad17@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Acked-by: Alan Liu <haoping.liu@amd.com>
+Signed-off-by: Taimur Hassan <syed.hassan@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/namei.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/jfs/namei.c
-+++ b/fs/jfs/namei.c
-@@ -799,6 +799,11 @@ static int jfs_link(struct dentry *old_d
- 	if (rc)
- 		goto out;
+--- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
+@@ -3293,7 +3293,8 @@ void dcn10_wait_for_mpcc_disconnect(
+ 		if (pipe_ctx->stream_res.opp->mpcc_disconnect_pending[mpcc_inst]) {
+ 			struct hubp *hubp = get_hubp_by_inst(res_pool, mpcc_inst);
  
-+	if (isReadOnly(ip)) {
-+		jfs_error(ip->i_sb, "read-only filesystem\n");
-+		return -EROFS;
-+	}
-+
- 	tid = txBegin(ip->i_sb, 0);
- 
- 	mutex_lock_nested(&JFS_IP(dir)->commit_mutex, COMMIT_MUTEX_PARENT);
+-			if (pipe_ctx->stream_res.tg->funcs->is_tg_enabled(pipe_ctx->stream_res.tg))
++			if (pipe_ctx->stream_res.tg &&
++				pipe_ctx->stream_res.tg->funcs->is_tg_enabled(pipe_ctx->stream_res.tg))
+ 				res_pool->mpc->funcs->wait_for_idle(res_pool->mpc, mpcc_inst);
+ 			pipe_ctx->stream_res.opp->mpcc_disconnect_pending[mpcc_inst] = false;
+ 			hubp->funcs->set_blank(hubp, true);
 
 
