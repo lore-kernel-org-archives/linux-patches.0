@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97851ED4D
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:42:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D118FC433C8;
-	Tue, 25 Jul 2023 11:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299111ED4D
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:42:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A78C433C7;
+	Tue, 25 Jul 2023 11:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285328;
-	bh=4iBhBua5VTcaQUPnhSJNVAhz8Pu/fhaFC56ICZbraHY=;
+	s=korg; t=1690285330;
+	bh=lgTUt7JDiYkVjOzr8diPbzsXbnxvocxGjGGmQyEAwHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=stmpWBuFE/MIeujmAVOTh/WaMPAY90+5KlfL6Wkq8dINh5/1H+ahVAeYe6m8WrrKe
-	 UhPrVcdBst4afLs4MIa6tIScNFCfJMHIh1VAOqGPiLvxaeYPhx1ZbvJhpmDxh/v1Rc
-	 is990Vhk5QDZx42OLgmtwTSrWXrs4TzZCll1QKxw=
+	b=q8oJqb6pokEiF/aDDnUBaUVd/4O6XM3t5CcuLtMfMQFy5zK+h0j6wGgL0k6u2aBzw
+	 jZ5ui9lqB4uKm+53TEtefQI+ueVht59UvERcXzEzJrT6PxhwtwW9CT8m7Cvh2Iugn7
+	 fb1WRU0PW6p+boFe3KQbI9Gbr0Mwsg0ytXosE0l8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Coly Li <colyli@suse.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.4 166/313] bcache: Remove unnecessary NULL point check in node allocations
-Date: Tue, 25 Jul 2023 12:45:19 +0200
-Message-ID: <20230725104528.114859134@linuxfoundation.org>
+	Tianjia Zhang <tianjia.zhang@linux.alibaba.com>,
+	Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 5.4 167/313] integrity: Fix possible multiple allocation in integrity_inode_get()
+Date: Tue, 25 Jul 2023 12:45:20 +0200
+Message-ID: <20230725104528.164805656@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,92 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
 
-commit 028ddcac477b691dd9205c92f991cc15259d033e upstream.
+commit 9df6a4870dc371136e90330cfbbc51464ee66993 upstream.
 
-Due to the previous fix of __bch_btree_node_alloc, the return value will
-never be a NULL pointer. So IS_ERR is enough to handle the failure
-situation. Fix it by replacing IS_ERR_OR_NULL check by an IS_ERR check.
+When integrity_inode_get() is querying and inserting the cache, there
+is a conditional race in the concurrent environment.
 
-Fixes: cafe56359144 ("bcache: A block layer cache")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: Coly Li <colyli@suse.de>
-Link: https://lore.kernel.org/r/20230615121223.22502-5-colyli@suse.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+The race condition is the result of not properly implementing
+"double-checked locking". In this case, it first checks to see if the
+iint cache record exists before taking the lock, but doesn't check
+again after taking the integrity_iint_lock.
+
+Fixes: bf2276d10ce5 ("ima: allocating iint improvements")
+Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+Cc: Dmitry Kasatkin <dmitry.kasatkin@gmail.com>
+Cc: <stable@vger.kernel.org> # v3.10+
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/bcache/btree.c |   10 +++++-----
- drivers/md/bcache/super.c |    4 ++--
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ security/integrity/iint.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/drivers/md/bcache/btree.c
-+++ b/drivers/md/bcache/btree.c
-@@ -1186,7 +1186,7 @@ static struct btree *btree_node_alloc_re
- {
- 	struct btree *n = bch_btree_node_alloc(b->c, op, b->level, b->parent);
+--- a/security/integrity/iint.c
++++ b/security/integrity/iint.c
+@@ -43,12 +43,10 @@ static struct integrity_iint_cache *__in
+ 		else if (inode > iint->inode)
+ 			n = n->rb_right;
+ 		else
+-			break;
++			return iint;
+ 	}
+-	if (!n)
+-		return NULL;
  
--	if (!IS_ERR_OR_NULL(n)) {
-+	if (!IS_ERR(n)) {
- 		mutex_lock(&n->write_lock);
- 		bch_btree_sort_into(&b->keys, &n->keys, &b->c->sort);
- 		bkey_copy_key(&n->key, &b->key);
-@@ -1389,7 +1389,7 @@ static int btree_gc_coalesce(struct btre
- 	memset(new_nodes, 0, sizeof(new_nodes));
- 	closure_init_stack(&cl);
+-	return iint;
++	return NULL;
+ }
  
--	while (nodes < GC_MERGE_NODES && !IS_ERR_OR_NULL(r[nodes].b))
-+	while (nodes < GC_MERGE_NODES && !IS_ERR(r[nodes].b))
- 		keys += r[nodes++].keys;
- 
- 	blocks = btree_default_blocks(b->c) * 2 / 3;
-@@ -1401,7 +1401,7 @@ static int btree_gc_coalesce(struct btre
- 
- 	for (i = 0; i < nodes; i++) {
- 		new_nodes[i] = btree_node_alloc_replacement(r[i].b, NULL);
--		if (IS_ERR_OR_NULL(new_nodes[i]))
-+		if (IS_ERR(new_nodes[i]))
- 			goto out_nocoalesce;
+ /*
+@@ -121,10 +119,15 @@ struct integrity_iint_cache *integrity_i
+ 		parent = *p;
+ 		test_iint = rb_entry(parent, struct integrity_iint_cache,
+ 				     rb_node);
+-		if (inode < test_iint->inode)
++		if (inode < test_iint->inode) {
+ 			p = &(*p)->rb_left;
+-		else
++		} else if (inode > test_iint->inode) {
+ 			p = &(*p)->rb_right;
++		} else {
++			write_unlock(&integrity_iint_lock);
++			kmem_cache_free(iint_cache, iint);
++			return test_iint;
++		}
  	}
  
-@@ -1536,7 +1536,7 @@ out_nocoalesce:
- 	bch_keylist_free(&keylist);
- 
- 	for (i = 0; i < nodes; i++)
--		if (!IS_ERR_OR_NULL(new_nodes[i])) {
-+		if (!IS_ERR(new_nodes[i])) {
- 			btree_node_free(new_nodes[i]);
- 			rw_unlock(true, new_nodes[i]);
- 		}
-@@ -1718,7 +1718,7 @@ static int bch_btree_gc_root(struct btre
- 	if (should_rewrite) {
- 		n = btree_node_alloc_replacement(b, NULL);
- 
--		if (!IS_ERR_OR_NULL(n)) {
-+		if (!IS_ERR(n)) {
- 			bch_btree_node_write_sync(n);
- 
- 			bch_btree_set_root(n);
---- a/drivers/md/bcache/super.c
-+++ b/drivers/md/bcache/super.c
-@@ -1633,7 +1633,7 @@ static void cache_set_flush(struct closu
- 	if (!IS_ERR_OR_NULL(c->gc_thread))
- 		kthread_stop(c->gc_thread);
- 
--	if (!IS_ERR_OR_NULL(c->root))
-+	if (!IS_ERR(c->root))
- 		list_add(&c->root->list, &c->btree_cache);
- 
- 	/*
-@@ -2000,7 +2000,7 @@ static int run_cache_set(struct cache_se
- 
- 		err = "cannot allocate new btree root";
- 		c->root = __bch_btree_node_alloc(c, NULL, 0, true, NULL);
--		if (IS_ERR_OR_NULL(c->root))
-+		if (IS_ERR(c->root))
- 			goto err;
- 
- 		mutex_lock(&c->root->write_lock);
+ 	iint->inode = inode;
 
 
