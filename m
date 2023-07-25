@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B385C1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:13:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBEFFC433C7;
-	Tue, 25 Jul 2023 11:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD9F1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:13:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F974C433C8;
+	Tue, 25 Jul 2023 11:13:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283632;
-	bh=EM3OOHWpgqGXefUtDHnxTio72huuQV9MBXj/Cjp1BA4=;
+	s=korg; t=1690283635;
+	bh=p6eTEuxRQqs4/oEWPiI34h7jtdKCMAynNdwRStcd1fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pO92iJEZSpmrWvQS1PepPRXZfXGPvNmUuqhDAlk8n6bKcYhjKtk6M90fSwWAUPUGO
-	 +U74YZXCGHrtVjzkM6ESwLeE05yri74MnWEHdjhVRjy8xbUtjQKKulsFiEZKDuoIk3
-	 bsZf8sEhdEugaHXXrG1jw83kE1yJAObCbVHy39M4=
+	b=p+ywWKc6EsGf6syQU9CNndT62P7u3TJgKdEIk3OosqaDOHocDfKD91tTY5waJJFrm
+	 BhOsiUnJTUr4a3U44N+oyDtsSWwftzkMGLFUTOeO+5ggd9y7TMDyI653ZidC1vbYaA
+	 ITRv7qDNSsWBfZdvldXlwjFG4ph+a2VRT0ROTG6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <simon.horman@corigine.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 067/509] wifi: rsi: Do not configure WoWlan in shutdown hook if not enabled
-Date: Tue, 25 Jul 2023 12:40:06 +0200
-Message-ID: <20230725104556.768271185@linuxfoundation.org>
+Subject: [PATCH 5.10 068/509] wifi: rsi: Do not set MMC_PM_KEEP_POWER in shutdown
+Date: Tue, 25 Jul 2023 12:40:07 +0200
+Message-ID: <20230725104556.809823232@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -38,47 +38,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit b241e260820b68c09586e8a0ae0fc23c0e3215bd ]
+[ Upstream commit e74f562328b03fbe9cf438f958464dff3a644dfc ]
 
-In case WoWlan was never configured during the operation of the system,
-the hw->wiphy->wowlan_config will be NULL. rsi_config_wowlan() checks
-whether wowlan_config is non-NULL and if it is not, then WARNs about it.
-The warning is valid, as during normal operation the rsi_config_wowlan()
-should only ever be called with non-NULL wowlan_config. In shutdown this
-rsi_config_wowlan() should only ever be called if WoWlan was configured
-before by the user.
+It makes no sense to set MMC_PM_KEEP_POWER in shutdown. The flag
+indicates to the MMC subsystem to keep the slot powered on during
+suspend, but in shutdown the slot should actually be powered off.
+Drop this call.
 
-Add checks for non-NULL wowlan_config into the shutdown hook. While at it,
-check whether the wiphy is also non-NULL before accessing wowlan_config .
-Drop the single-use wowlan_config variable, just inline it into function
-call.
-
-Fixes: 16bbc3eb8372 ("rsi: fix null pointer dereference during rsi_shutdown()")
+Fixes: 063848c3e155 ("rsi: sdio: Add WOWLAN support for S5 shutdown state")
 Signed-off-by: Marek Vasut <marex@denx.de>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230527222833.273741-1-marex@denx.de
+Link: https://lore.kernel.org/r/20230527222859.273768-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_sdio.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/wireless/rsi/rsi_91x_sdio.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/drivers/net/wireless/rsi/rsi_91x_sdio.c b/drivers/net/wireless/rsi/rsi_91x_sdio.c
-index 8108f941ccd3f..2c26376faeacc 100644
+index 2c26376faeacc..b1d3aea10d7df 100644
 --- a/drivers/net/wireless/rsi/rsi_91x_sdio.c
 +++ b/drivers/net/wireless/rsi/rsi_91x_sdio.c
-@@ -1463,10 +1463,8 @@ static void rsi_shutdown(struct device *dev)
+@@ -1479,9 +1479,6 @@ static void rsi_shutdown(struct device *dev)
+ 	if (sdev->write_fail)
+ 		rsi_dbg(INFO_ZONE, "###### Device is not ready #######\n");
  
- 	rsi_dbg(ERR_ZONE, "SDIO Bus shutdown =====>\n");
- 
--	if (hw) {
--		struct cfg80211_wowlan *wowlan = hw->wiphy->wowlan_config;
+-	if (rsi_set_sdio_pm_caps(adapter))
+-		rsi_dbg(INFO_ZONE, "Setting power management caps failed\n");
 -
--		if (rsi_config_wowlan(adapter, wowlan))
-+	if (hw && hw->wiphy && hw->wiphy->wowlan_config) {
-+		if (rsi_config_wowlan(adapter, hw->wiphy->wowlan_config))
- 			rsi_dbg(ERR_ZONE, "Failed to configure WoWLAN\n");
- 	}
+ 	rsi_dbg(INFO_ZONE, "***** RSI module shut down *****\n");
+ }
  
 -- 
 2.39.2
