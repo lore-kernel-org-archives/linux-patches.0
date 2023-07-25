@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8F515AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:51:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C3DC433C7;
-	Tue, 25 Jul 2023 10:51:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8222E15AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:51:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03638C433C8;
+	Tue, 25 Jul 2023 10:51:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282271;
-	bh=wZ7oXPIjvvoi8Yl7dN2lNathbAd5rsGlQwS+XPLYl98=;
+	s=korg; t=1690282274;
+	bh=Y1thFwVoES51AB1wPzTd0ivxRPqBzGtpvZ+MM/mJa3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PXUOZOshxg9X/BTexlpRm7eOrqgnfwGTZpq69Ew61nPhrlAvwHn1qDdhPlZdmTH2c
-	 9ryDg81BfQcalt03ivSVv2sTzWQr35g0YPl9dI77l/b88Mgpx+H2qPtVfZiR7+Ddpz
-	 Mz9ABNYOrR2z8bW+O1fq7CiQvUo+3b+78qulRgxY=
+	b=kQ/h9oobNoL7bjHt+3SrUkJwE/Y4/4uiP4V0OVZza65F7UF/RZBo5s0FU1nLcccEL
+	 QEBXgjRGMZGe/R9TD7Cgw+1MrSF4F4L01gMQ0JS3QJYPPtXBujyOL5G+akXtSPdbgk
+	 SuWIwerJXKafiWQHFCJgQaNIaUUfggGrDNHr6Z9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: [PATCH 6.4 040/227] accel/qaic: tighten bounds checking in encode_message()
-Date: Tue, 25 Jul 2023 12:43:27 +0200
-Message-ID: <20230725104516.483003910@linuxfoundation.org>
+	stable@kernel.org,
+	Mark Brown <broonie@kernel.org>,
+	Xu Yilun <yilun.xu@intel.com>
+Subject: [PATCH 6.4 031/227] regmap: Account for register length in SMBus I/O limits
+Date: Tue, 25 Jul 2023 12:43:18 +0200
+Message-ID: <20230725104516.130329270@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,88 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Mark Brown <broonie@kernel.org>
 
-commit ea33cb6fc2788f9fe248d49e1c0b2553a58436ef upstream.
+commit 0c9d2eb5e94792fe64019008a04d4df5e57625af upstream.
 
-There are several issues in this code.  The check at the start of the
-loop:
+The SMBus I2C buses have limits on the size of transfers they can do but
+do not factor in the register length meaning we may try to do a transfer
+longer than our length limit, the core will not take care of this.
+Future changes will factor this out into the core but there are a number
+of users that assume current behaviour so let's just do something
+conservative here.
 
-	if (user_len >= user_msg->len) {
+This does not take account padding bits but practically speaking these
+are very rarely if ever used on I2C buses given that they generally run
+slowly enough to mean there's no issue.
 
-This check does not ensure that we have enough space for the trans_hdr
-(8 bytes).  Instead the check needs to be:
-
-	if (user_len > user_msg->len - sizeof(*trans_hdr)) {
-
-That subtraction is done as an unsigned long we want to avoid
-negatives.  Add a lower bound to the start of the function.
-
-	if (user_msg->len < sizeof(*trans_hdr))
-
-There is a second integer underflow which can happen if
-trans_hdr->len is zero inside the encode_passthrough() function.
-
-	memcpy(out_trans->data, in_trans->data, in_trans->hdr.len - sizeof(in_trans->hdr));
-
-Instead of adding a check to encode_passthrough() it's better to check
-in this central place.  Add that check:
-
-	if (trans_hdr->len < sizeof(trans_hdr)
-
-The final concern is that the "user_len + trans_hdr->len" might have an
-integer overflow bug.  Use size_add() to prevent that.
-
--	if (user_len + trans_hdr->len > user_msg->len) {
-+	if (size_add(user_len, trans_hdr->len) > user_msg->len) {
-
-Fixes: 129776ac2e38 ("accel/qaic: Add control path")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: stable@vger.kernel.org # 6.4.x
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/9a0cb0c1-a974-4f10-bc8d-94437983639a@moroto.mountain
+Cc: stable@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20230712-regmap-max-transfer-v1-2-80e2aed22e83@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/qaic/qaic_control.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/base/regmap/regmap-i2c.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/accel/qaic/qaic_control.c
-+++ b/drivers/accel/qaic/qaic_control.c
-@@ -14,6 +14,7 @@
- #include <linux/mm.h>
- #include <linux/moduleparam.h>
- #include <linux/mutex.h>
-+#include <linux/overflow.h>
- #include <linux/pci.h>
- #include <linux/scatterlist.h>
- #include <linux/types.h>
-@@ -751,7 +752,8 @@ static int encode_message(struct qaic_de
- 	int ret;
- 	int i;
+--- a/drivers/base/regmap/regmap-i2c.c
++++ b/drivers/base/regmap/regmap-i2c.c
+@@ -242,8 +242,8 @@ static int regmap_i2c_smbus_i2c_read(voi
+ static const struct regmap_bus regmap_i2c_smbus_i2c_block = {
+ 	.write = regmap_i2c_smbus_i2c_write,
+ 	.read = regmap_i2c_smbus_i2c_read,
+-	.max_raw_read = I2C_SMBUS_BLOCK_MAX,
+-	.max_raw_write = I2C_SMBUS_BLOCK_MAX,
++	.max_raw_read = I2C_SMBUS_BLOCK_MAX - 1,
++	.max_raw_write = I2C_SMBUS_BLOCK_MAX - 1,
+ };
  
--	if (!user_msg->count) {
-+	if (!user_msg->count ||
-+	    user_msg->len < sizeof(*trans_hdr)) {
- 		ret = -EINVAL;
- 		goto out;
- 	}
-@@ -768,12 +770,13 @@ static int encode_message(struct qaic_de
- 	}
+ static int regmap_i2c_smbus_i2c_write_reg16(void *context, const void *data,
+@@ -299,8 +299,8 @@ static int regmap_i2c_smbus_i2c_read_reg
+ static const struct regmap_bus regmap_i2c_smbus_i2c_block_reg16 = {
+ 	.write = regmap_i2c_smbus_i2c_write_reg16,
+ 	.read = regmap_i2c_smbus_i2c_read_reg16,
+-	.max_raw_read = I2C_SMBUS_BLOCK_MAX,
+-	.max_raw_write = I2C_SMBUS_BLOCK_MAX,
++	.max_raw_read = I2C_SMBUS_BLOCK_MAX - 2,
++	.max_raw_write = I2C_SMBUS_BLOCK_MAX - 2,
+ };
  
- 	for (i = 0; i < user_msg->count; ++i) {
--		if (user_len >= user_msg->len) {
-+		if (user_len > user_msg->len - sizeof(*trans_hdr)) {
- 			ret = -EINVAL;
- 			break;
- 		}
- 		trans_hdr = (struct qaic_manage_trans_hdr *)(user_msg->data + user_len);
--		if (user_len + trans_hdr->len > user_msg->len) {
-+		if (trans_hdr->len < sizeof(trans_hdr) ||
-+		    size_add(user_len, trans_hdr->len) > user_msg->len) {
- 			ret = -EINVAL;
- 			break;
- 		}
+ static const struct regmap_bus *regmap_get_i2c_bus(struct i2c_client *i2c,
 
 
