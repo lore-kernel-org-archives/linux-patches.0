@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DFF8F59
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:49:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0BF6C433C7;
-	Tue, 25 Jul 2023 10:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5E58F59
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:49:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B76EAC433C7;
+	Tue, 25 Jul 2023 10:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282160;
-	bh=VWiTmx6BDqPGzbJYxmgGfqy+5Zj3hmfmWHi+FwPP+Uw=;
+	s=korg; t=1690282163;
+	bh=qUuoT5ZSG/q1+dGlUA84NiN0CzIUpBuaoMFbSEp8jLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JuedpjKHypMiX4pyaYfmm9rtTVqYKzymjJHcGcFq1WOi1Xvo4Gcp1Rux7JqEInf2B
-	 I37ymlBB8Ch/QJFkVxttQBhWeE2FGuRLvvio5YXWRcers6OIo6W6z+lVyVGnAV01zu
-	 yglrzaS+waWz6/y88yNz/UncVaLGGHoSbiYddBoI=
+	b=dXu0pbQs09kYqt5p1C2TnPG3CJq/XMCeHZ9RMOUrIcmImVMZ4ESYSQ9m9LoyzRVA7
+	 6yhoA4uZsGmDYffxOtZUAqooUk/zTrcTPrGC8sLWI1fiGxLQnbCEskYV1IVXMqyuhH
+	 +XbDHpuqZIYrGrQeRafm6HW8EuhpzUioyA095pVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.4 029/227] s390/zcrypt: fix reply buffer calculations for CCA replies
-Date: Tue, 25 Jul 2023 12:43:16 +0200
-Message-ID: <20230725104516.038444406@linuxfoundation.org>
+	Kailang Yang <kailang@realtek.com>,
+	"Joseph C. Sible" <josephcsible@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.4 003/227] ALSA: hda/realtek - remove 3k pull low procedure
+Date: Tue, 25 Jul 2023 12:42:50 +0200
+Message-ID: <20230725104514.945635129@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,93 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Kailang Yang <kailang@realtek.com>
 
-commit 4cfca532ddc3474b3fc42592d0e4237544344b1a upstream.
+commit 69ea4c9d02b7947cdd612335a61cc1a02e544ccd upstream.
 
-The length information for available buffer space for CCA
-replies is covered with two fields in the T6 header prepended
-on each CCA reply: fromcardlen1 and fromcardlen2. The sum of
-these both values must not exceed the AP bus limit for this
-card (24KB for CEX8, 12KB CEX7 and older) minus the always
-present headers.
+This was the ALC283 depop procedure.
+Maybe this procedure wasn't suitable with new codec.
+So, let us remove it. But HP 15z-fc000 must do 3k pull low. If it
+reboot with plugged headset,
+it will have errors show don't find codec error messages. Run 3k pull
+low will solve issues.
+So, let AMD chipset will run this for workarround.
 
-The current code adjusted the fromcardlen2 value in case
-of exceeding the AP bus limit when there was a non-zero
-value given from userspace. Some tests now showed that this
-was the wrong assumption. Instead the userspace value given for
-this field should always be trusted and if the sum of the
-two fields exceeds the AP bus limit for this card the first
-field fromcardlen1 should be adjusted instead.
-
-So now the calculation is done with this new insight in mind.
-Also some additional checks for overflow have been introduced
-and some comments to provide some documentation for future
-maintainers of this complicated calculation code.
-
-Furthermore the 128 bytes of fix overhead which is used
-in the current code is not correct. Investigations showed
-that for a reply always the same two header structs are
-prepended before a possible payload. So this is also fixed
-with this patch.
-
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 5aec98913095 ("ALSA: hda/realtek - ALC236 headset MIC recording issue")
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Cc: <stable@vger.kernel.org>
+Reported-by: Joseph C. Sible <josephcsible@gmail.com>
+Closes: https://lore.kernel.org/r/CABpewhE4REgn9RJZduuEU6Z_ijXNeQWnrxO1tg70Gkw=F8qNYg@mail.gmail.com/
+Link: https://lore.kernel.org/r/4678992299664babac4403d9978e7ba7@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/zcrypt_msgtype6.c |   33 +++++++++++++++++++++++----------
- 1 file changed, 23 insertions(+), 10 deletions(-)
+ sound/pci/hda/patch_realtek.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/s390/crypto/zcrypt_msgtype6.c
-+++ b/drivers/s390/crypto/zcrypt_msgtype6.c
-@@ -1111,23 +1111,36 @@ static long zcrypt_msgtype6_send_cprb(bo
- 				      struct ica_xcRB *xcrb,
- 				      struct ap_message *ap_msg)
- {
--	int rc;
- 	struct response_type *rtype = ap_msg->private;
- 	struct {
- 		struct type6_hdr hdr;
- 		struct CPRBX cprbx;
- 		/* ... more data blocks ... */
- 	} __packed * msg = ap_msg->msg;
-+	unsigned int max_payload_size;
-+	int rc, delta;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -122,6 +122,7 @@ struct alc_spec {
+ 	unsigned int ultra_low_power:1;
+ 	unsigned int has_hs_key:1;
+ 	unsigned int no_internal_mic_pin:1;
++	unsigned int en_3kpull_low:1;
  
--	/*
--	 * Set the queue's reply buffer length minus 128 byte padding
--	 * as reply limit for the card firmware.
--	 */
--	msg->hdr.fromcardlen1 = min_t(unsigned int, msg->hdr.fromcardlen1,
--				      zq->reply.bufsize - 128);
--	if (msg->hdr.fromcardlen2)
--		msg->hdr.fromcardlen2 =
--			zq->reply.bufsize - msg->hdr.fromcardlen1 - 128;
-+	/* calculate maximum payload for this card and msg type */
-+	max_payload_size = zq->reply.bufsize - sizeof(struct type86_fmt2_msg);
-+
-+	/* limit each of the two from fields to the maximum payload size */
-+	msg->hdr.fromcardlen1 = min(msg->hdr.fromcardlen1, max_payload_size);
-+	msg->hdr.fromcardlen2 = min(msg->hdr.fromcardlen2, max_payload_size);
-+
-+	/* calculate delta if the sum of both exceeds max payload size */
-+	delta = msg->hdr.fromcardlen1 + msg->hdr.fromcardlen2
-+		- max_payload_size;
-+	if (delta > 0) {
-+		/*
-+		 * Sum exceeds maximum payload size, prune fromcardlen1
-+		 * (always trust fromcardlen2)
-+		 */
-+		if (delta > msg->hdr.fromcardlen1) {
-+			rc = -EINVAL;
-+			goto out;
-+		}
-+		msg->hdr.fromcardlen1 -= delta;
-+	}
+ 	/* for PLL fix */
+ 	hda_nid_t pll_nid;
+@@ -3622,6 +3623,7 @@ static void alc256_shutup(struct hda_cod
+ 	if (!hp_pin)
+ 		hp_pin = 0x21;
  
- 	init_completion(&rtype->work);
- 	rc = ap_queue_message(zq->queue, ap_msg);
++	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
+ 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
+ 
+ 	if (hp_pin_sense)
+@@ -3638,8 +3640,7 @@ static void alc256_shutup(struct hda_cod
+ 	/* If disable 3k pulldown control for alc257, the Mic detection will not work correctly
+ 	 * when booting with headset plugged. So skip setting it for the codec alc257
+ 	 */
+-	if (codec->core.vendor_id != 0x10ec0236 &&
+-	    codec->core.vendor_id != 0x10ec0257)
++	if (spec->en_3kpull_low)
+ 		alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
+ 
+ 	if (!spec->no_shutup_pins)
+@@ -10601,6 +10602,8 @@ static int patch_alc269(struct hda_codec
+ 		spec->shutup = alc256_shutup;
+ 		spec->init_hook = alc256_init;
+ 		spec->gen.mixer_nid = 0; /* ALC256 does not have any loopback mixer path */
++		if (codec->bus->pci->vendor == PCI_VENDOR_ID_AMD)
++			spec->en_3kpull_low = true;
+ 		break;
+ 	case 0x10ec0257:
+ 		spec->codec_variant = ALC269_TYPE_ALC257;
 
 
