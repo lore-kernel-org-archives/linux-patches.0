@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D501D302
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:24:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E032AC433C7;
-	Tue, 25 Jul 2023 11:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECCB1D302
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:24:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93439C433C7;
+	Tue, 25 Jul 2023 11:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284241;
-	bh=kiLoQijDGcYsNMgfkpTojEl//t50gDl0djLbLXQBdDI=;
+	s=korg; t=1690284243;
+	bh=4HbAL0SCKnVF/Ynnv2uzEq21+50xP51patfJoE56hB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nbGdTs4cAr3TrVM4lNyJBJSb3lRR4TADR5NnHK4L/jWN+qs0olwlWH/R5j2WPhI7O
-	 DDFP4aR0blYVji6DUKFx/AQEAYy7nwsGBd7HS3zVuNUh0SHfxva9Dw/TV6KRJ5pUZ1
-	 +XNSpYaEhYuedGHrSzj/FijX9O00fcgmlaH0O41M=
+	b=HJ6HTbkxnMef/xLUbCl97YeXv0RE0AmvKyQbGelZ76YZULvz4L4xuTy8UmUifk5Xl
+	 0B9arHJqj3mdVoEdj1mhRfcvzYs2XZmTHbXhfX8ZJDLgdEJIW6ZFBYa/GKTyLhbwQT
+	 6fFxOaiNWnWzTgKAXaPxEBJG4v182/mEY6Ax1X1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 246/509] usb: dwc3-meson-g12a: Fix an error handling path in dwc3_meson_g12a_probe()
-Date: Tue, 25 Jul 2023 12:43:05 +0200
-Message-ID: <20230725104605.010425703@linuxfoundation.org>
+Subject: [PATCH 5.10 279/509] ALSA: jack: Fix mutex call in snd_jack_report()
+Date: Tue, 25 Jul 2023 12:43:38 +0200
+Message-ID: <20230725104606.522340446@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,48 +36,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 01052b91c9808e3c3b068ae2721cb728ec9aa4c0 ]
+[ Upstream commit 89dbb335cb6a627a4067bc42caa09c8bc3326d40 ]
 
-If dwc3_meson_g12a_otg_init() fails, resources allocated by the previous
-of_platform_populate() call should be released, as already done in the
-error handling path.
+snd_jack_report() is supposed to be callable from an IRQ context, too,
+and it's indeed used in that way from virtsnd driver.  The fix for
+input_dev race in commit 1b6a6fc5280e ("ALSA: jack: Access input_dev
+under mutex"), however, introduced a mutex lock in snd_jack_report(),
+and this resulted in a potential sleep-in-atomic.
 
-Fixes: 1e355f21d3fb ("usb: dwc3: Add Amlogic A1 DWC3 glue")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Message-ID: <9d28466de1808ccc756b4cc25fc72c482d133d13.1686403934.git.christophe.jaillet@wanadoo.fr>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+For addressing that problem, this patch changes the relevant code to
+use the object get/put and removes the mutex usage.  That is,
+snd_jack_report(), it takes input_get_device() and leaves with
+input_put_device() for assuring the input_dev being assigned.
+
+Although the whole mutex could be reduced, we keep it because it can
+be still a protection for potential races between creation and
+deletion.
+
+Fixes: 1b6a6fc5280e ("ALSA: jack: Access input_dev under mutex")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/cf95f7fe-a748-4990-8378-000491b40329@moroto.mountain
+Tested-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230706155357.3470-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-meson-g12a.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/core/jack.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/usb/dwc3/dwc3-meson-g12a.c b/drivers/usb/dwc3/dwc3-meson-g12a.c
-index d0f9b7c296b0d..69ec06efd7f25 100644
---- a/drivers/usb/dwc3/dwc3-meson-g12a.c
-+++ b/drivers/usb/dwc3/dwc3-meson-g12a.c
-@@ -805,7 +805,7 @@ static int dwc3_meson_g12a_probe(struct platform_device *pdev)
+diff --git a/sound/core/jack.c b/sound/core/jack.c
+index 45e28db6ea38d..8a9baa084191f 100644
+--- a/sound/core/jack.c
++++ b/sound/core/jack.c
+@@ -364,6 +364,7 @@ void snd_jack_report(struct snd_jack *jack, int status)
+ {
+ 	struct snd_jack_kctl *jack_kctl;
+ #ifdef CONFIG_SND_JACK_INPUT_DEV
++	struct input_dev *idev;
+ 	int i;
+ #endif
  
- 	ret = dwc3_meson_g12a_otg_init(pdev, priv);
- 	if (ret)
--		goto err_phys_power;
-+		goto err_plat_depopulate;
+@@ -375,30 +376,28 @@ void snd_jack_report(struct snd_jack *jack, int status)
+ 					    status & jack_kctl->mask_bits);
  
- 	pm_runtime_set_active(dev);
- 	pm_runtime_enable(dev);
-@@ -813,6 +813,9 @@ static int dwc3_meson_g12a_probe(struct platform_device *pdev)
+ #ifdef CONFIG_SND_JACK_INPUT_DEV
+-	mutex_lock(&jack->input_dev_lock);
+-	if (!jack->input_dev) {
+-		mutex_unlock(&jack->input_dev_lock);
++	idev = input_get_device(jack->input_dev);
++	if (!idev)
+ 		return;
+-	}
  
- 	return 0;
+ 	for (i = 0; i < ARRAY_SIZE(jack->key); i++) {
+ 		int testbit = SND_JACK_BTN_0 >> i;
  
-+err_plat_depopulate:
-+	of_platform_depopulate(dev);
-+
- err_phys_power:
- 	for (i = 0 ; i < PHY_COUNT ; ++i)
- 		phy_power_off(priv->phys[i]);
+ 		if (jack->type & testbit)
+-			input_report_key(jack->input_dev, jack->key[i],
++			input_report_key(idev, jack->key[i],
+ 					 status & testbit);
+ 	}
+ 
+ 	for (i = 0; i < ARRAY_SIZE(jack_switch_types); i++) {
+ 		int testbit = 1 << i;
+ 		if (jack->type & testbit)
+-			input_report_switch(jack->input_dev,
++			input_report_switch(idev,
+ 					    jack_switch_types[i],
+ 					    status & testbit);
+ 	}
+ 
+-	input_sync(jack->input_dev);
+-	mutex_unlock(&jack->input_dev_lock);
++	input_sync(idev);
++	input_put_device(idev);
+ #endif /* CONFIG_SND_JACK_INPUT_DEV */
+ }
+ EXPORT_SYMBOL(snd_jack_report);
 -- 
 2.39.2
 
