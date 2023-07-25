@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7145B1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:31:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C26DDC433C8;
-	Tue, 25 Jul 2023 11:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270151ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:31:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03A3C433C7;
+	Tue, 25 Jul 2023 11:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284707;
-	bh=dZ1WMYtoGzG/ORHegjjw/aXCzTkwgnTo3F8NyxTxSHw=;
+	s=korg; t=1690284710;
+	bh=iFyQ9zPw9eALoLN9Y0D0phQq7AIeEoAGSzwYsaC0vZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eruFPI2aLfw3JXdSYII7dSOrzPyeajmJMFOFIP/9UFuww9jwKdATpqvtgc11UnTsk
-	 zQ5UOPoRcn00S5iMNMj0Nqy764qGTiZv41GEIlTFwdSFx7ntEIp1pRxBy2yGOdfg+1
-	 vAdLCKbU8liw13G5T8riYEY+YWwN3j0zxnShrhgE=
+	b=XBy7cBxWLRiD3Xui/uwCHBSs2nmDM8ntKK9cfsAMrHWrWZSpO8XnnOO9e/WgIOyY3
+	 /MlUFmSB0tii16jq/AObIHHi9X3ilrS5wVkSiieuDQqfXSmHtK9zsXZ94GPOVquxDI
+	 qfpbbYDcKzs08ArBKpJLnuNPp4JffYIi0DjSC+KQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matus Gajdos <matuszpd@gmail.com>,
-	Shengjiu Wang <shengjiu.wang@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 453/509] ASoC: fsl_sai: Disable bit clock with transmitter
-Date: Tue, 25 Jul 2023 12:46:32 +0200
-Message-ID: <20230725104614.475702645@linuxfoundation.org>
+	stable@kernel.org,
+	Eric Whitney <enwlinux@gmail.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 454/509] ext4: correct inline offset when handling xattrs in inode body
+Date: Tue, 25 Jul 2023 12:46:33 +0200
+Message-ID: <20230725104614.516589198@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,43 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matus Gajdos <matuszpd@gmail.com>
+From: Eric Whitney <enwlinux@gmail.com>
 
-commit 269f399dc19f0e5c51711c3ba3bd06e0ef6ef403 upstream.
+commit 6909cf5c4101214f4305a62d582a5b93c7e1eb9a upstream.
 
-Otherwise bit clock remains running writing invalid data to the DAC.
+When run on a file system where the inline_data feature has been
+enabled, xfstests generic/269, generic/270, and generic/476 cause ext4
+to emit error messages indicating that inline directory entries are
+corrupted.  This occurs because the inline offset used to locate
+inline directory entries in the inode body is not updated when an
+xattr in that shared region is deleted and the region is shifted in
+memory to recover the space it occupied.  If the deleted xattr precedes
+the system.data attribute, which points to the inline directory entries,
+that attribute will be moved further up in the region.  The inline
+offset continues to point to whatever is located in system.data's former
+location, with unfortunate effects when used to access directory entries
+or (presumably) inline data in the inode body.
 
-Signed-off-by: Matus Gajdos <matuszpd@gmail.com>
-Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230712124934.32232-1-matuszpd@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: stable@kernel.org
+Signed-off-by: Eric Whitney <enwlinux@gmail.com>
+Link: https://lore.kernel.org/r/20230522181520.1570360-1-enwlinux@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/fsl_sai.c |    2 +-
- sound/soc/fsl/fsl_sai.h |    1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ fs/ext4/xattr.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -552,7 +552,7 @@ static void fsl_sai_config_disable(struc
- 	u32 xcsr, count = 100;
- 
- 	regmap_update_bits(sai->regmap, FSL_SAI_xCSR(tx, ofs),
--			   FSL_SAI_CSR_TERE, 0);
-+			   FSL_SAI_CSR_TERE | FSL_SAI_CSR_BCE, 0);
- 
- 	/* TERE will remain set till the end of current frame */
- 	do {
---- a/sound/soc/fsl/fsl_sai.h
-+++ b/sound/soc/fsl/fsl_sai.h
-@@ -87,6 +87,7 @@
- /* SAI Transmit/Receive Control Register */
- #define FSL_SAI_CSR_TERE	BIT(31)
- #define FSL_SAI_CSR_SE		BIT(30)
-+#define FSL_SAI_CSR_BCE		BIT(28)
- #define FSL_SAI_CSR_FR		BIT(25)
- #define FSL_SAI_CSR_SR		BIT(24)
- #define FSL_SAI_CSR_xF_SHIFT	16
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -1725,6 +1725,20 @@ static int ext4_xattr_set_entry(struct e
+ 		memmove(here, (void *)here + size,
+ 			(void *)last - (void *)here + sizeof(__u32));
+ 		memset(last, 0, size);
++
++		/*
++		 * Update i_inline_off - moved ibody region might contain
++		 * system.data attribute.  Handling a failure here won't
++		 * cause other complications for setting an xattr.
++		 */
++		if (!is_block && ext4_has_inline_data(inode)) {
++			ret = ext4_find_inline_data_nolock(inode);
++			if (ret) {
++				ext4_warning_inode(inode,
++					"unable to update i_inline_off");
++				goto out;
++			}
++		}
+ 	} else if (s->not_found) {
+ 		/* Insert new name. */
+ 		size_t size = EXT4_XATTR_LEN(name_len);
 
 
