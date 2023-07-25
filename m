@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717361ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:46:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E56F4C433C8;
-	Tue, 25 Jul 2023 11:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BB21ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:46:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86CAC433CC;
+	Tue, 25 Jul 2023 11:46:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285615;
-	bh=ISR9S4vZPdq5WFeiApKOfjYXsUikkXLXinTGakbVcbE=;
+	s=korg; t=1690285618;
+	bh=iZWpO9ttdKTVp3B1Y07nmrU1UE1gxsMrDhe2zrnf/fA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ENZaZUlXF8Dq+oPfeCITYDhmpY1f8U0O0WwI6TCZ6bb6Qe6PqWJi98PqNxhp63C9S
-	 leD8izYJwNR1Det7BtGOwTiVRnmVtNKwkJ4J7j6dP7Wg/CX/QRX/X+cgUbJUQRCtEK
-	 OW0/9f+C4BqfGtks7VE95YK/8OhLCabhdYfLwNj0=
+	b=131RrJ5xx6Fsxb3Zy7xRhQm3/+h3lRJIm32Uy44AfoYEWkSW/lztnl9iGxXlFwpFW
+	 QVW7N/uMmZ3B8QwdYLTtGuzYakbf/ulhETLdjzNKEaQXAemyXVCF3vD2iPP1i8WYf9
+	 5OTxhFBHKYh4nN9I2fpH0s76hhPUK//3kHYAPyLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH 5.4 251/313] misc: pci_endpoint_test: Re-init completion for every test
-Date: Tue, 25 Jul 2023 12:46:44 +0200
-Message-ID: <20230725104531.923829986@linuxfoundation.org>
+	Quinn Tran <qutran@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.4 269/313] scsi: qla2xxx: Wait for io return on terminate rport
+Date: Tue, 25 Jul 2023 12:47:02 +0200
+Message-ID: <20230725104532.694057886@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -36,44 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Quinn Tran <qutran@marvell.com>
 
-commit fb620ae73b70c2f57b9d3e911fc24c024ba2324f upstream.
+commit fc0cba0c7be8261a1625098bd1d695077ec621c9 upstream.
 
-The irq_raised completion used to detect the end of a test case is
-initialized when the test device is probed, but never reinitialized again
-before a test case. As a result, the irq_raised completion synchronization
-is effective only for the first ioctl test case executed. Any subsequent
-call to wait_for_completion() by another ioctl() call will immediately
-return, potentially too early, leading to false positive failures.
+System crash due to use after free.
+Current code allows terminate_rport_io to exit before making
+sure all IOs has returned. For FCP-2 device, IO's can hang
+on in HW because driver has not tear down the session in FW at
+first sign of cable pull. When dev_loss_tmo timer pops,
+terminate_rport_io is called and upper layer is about to
+free various resources. Terminate_rport_io trigger qla to do
+the final cleanup, but the cleanup might not be fast enough where it
+leave qla still holding on to the same resource.
 
-Fix this by reinitializing the irq_raised completion before starting a new
-ioctl() test command.
+Wait for IO's to return to upper layer before resources are freed.
 
-Link: https://lore.kernel.org/r/20230415023542.77601-16-dlemoal@kernel.org
-Fixes: 2c156ac71c6b ("misc: Add host side PCI driver for PCI test function device")
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 Cc: stable@vger.kernel.org
+Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20230428075339.32551-7-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/pci_endpoint_test.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/scsi/qla2xxx/qla_attr.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/misc/pci_endpoint_test.c
-+++ b/drivers/misc/pci_endpoint_test.c
-@@ -590,6 +590,10 @@ static long pci_endpoint_test_ioctl(stru
- 	struct pci_dev *pdev = test->pdev;
+--- a/drivers/scsi/qla2xxx/qla_attr.c
++++ b/drivers/scsi/qla2xxx/qla_attr.c
+@@ -2574,6 +2574,7 @@ static void
+ qla2x00_terminate_rport_io(struct fc_rport *rport)
+ {
+ 	fc_port_t *fcport = *(fc_port_t **)rport->dd_data;
++	scsi_qla_host_t *vha;
  
- 	mutex_lock(&test->mutex);
+ 	if (!fcport)
+ 		return;
+@@ -2583,9 +2584,12 @@ qla2x00_terminate_rport_io(struct fc_rpo
+ 
+ 	if (test_bit(ABORT_ISP_ACTIVE, &fcport->vha->dpc_flags))
+ 		return;
++	vha = fcport->vha;
+ 
+ 	if (unlikely(pci_channel_offline(fcport->vha->hw->pdev))) {
+ 		qla2x00_abort_all_cmds(fcport->vha, DID_NO_CONNECT << 16);
++		qla2x00_eh_wait_for_pending_commands(fcport->vha, fcport->d_id.b24,
++			0, WAIT_TARGET);
+ 		return;
+ 	}
+ 	/*
+@@ -2600,6 +2604,15 @@ qla2x00_terminate_rport_io(struct fc_rpo
+ 		else
+ 			qla2x00_port_logout(fcport->vha, fcport);
+ 	}
 +
-+	reinit_completion(&test->irq_raised);
-+	test->last_irq = -ENODATA;
-+
- 	switch (cmd) {
- 	case PCITEST_BAR:
- 		bar = arg;
++	/* check for any straggling io left behind */
++	if (qla2x00_eh_wait_for_pending_commands(fcport->vha, fcport->d_id.b24, 0, WAIT_TARGET)) {
++		ql_log(ql_log_warn, vha, 0x300b,
++		       "IO not return.  Resetting. \n");
++		set_bit(ISP_ABORT_NEEDED, &vha->dpc_flags);
++		qla2xxx_wake_dpc(vha);
++		qla2x00_wait_for_chip_reset(vha);
++	}
+ }
+ 
+ static int
 
 
