@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25711EA72
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:48:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34261C433C8;
-	Tue, 25 Jul 2023 10:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A4C1EA72
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:48:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CCDC433C8;
+	Tue, 25 Jul 2023 10:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282126;
-	bh=H3SHgQ/P+kfFVzdwd56LXGEMsfLypk8k4dFmJLUu9fs=;
+	s=korg; t=1690282129;
+	bh=AIfa/MlBSHM95jlgeLQiIFZfkQqu6AcjqRgUBlxyrlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=koo6dfJ3l05X3Nqfvma9pv3BFa2lbv5SeEFD+UB7m1I+GbSsW7yx5zyVM2zlL/AVj
-	 t+GYosdBp0rM93Ju4oBxGnHT/hmG68WM9CCgBwB5iXCRO/uJKZA7q7TpHTybtlvHlf
-	 Yeyp+KjE5Ivbbvyb+xx4I0GswIEMBi9HbQxWLA5g=
+	b=CmaUw8UInIt9OGrzzX2omzeRlb9MegTVDZyZv2Y5nSy+cqaTj4jsUkyUzYUHH2qjs
+	 QRLCnSqznkepLt2FXqIZyVBIybLGdsstSbDr5Iqr4FLhMFwNSKcGg1ChCkjpU0PO8w
+	 seodU1b3Axh14b8PDyuhbigowg3HL2i2yprT7dSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernd Schubert <bschubert@ddn.com>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.4 018/227] fuse: Apply flags2 only when userspace set the FUSE_INIT_EXT
-Date: Tue, 25 Jul 2023 12:43:05 +0200
-Message-ID: <20230725104515.554038323@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.4 019/227] btrfs: raid56: always verify the P/Q contents for scrub
+Date: Tue, 25 Jul 2023 12:43:06 +0200
+Message-ID: <20230725104515.595590138@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -34,45 +34,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bernd Schubert <bschubert@ddn.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 3066ff93476c35679cb07a97cce37d9bb07632ff upstream.
+commit 486c737f7fdc0c3f6464cf27ede811daec2769a1 upstream.
 
-This is just a safety precaution to avoid checking flags on memory that was
-initialized on the user space side.  libfuse zeroes struct fuse_init_out
-outarg, but this is not guranteed to be done in all implementations.
-Better is to act on flags and to only apply flags2 when FUSE_INIT_EXT is
-set.
+[REGRESSION]
+Commit 75b470332965 ("btrfs: raid56: migrate recovery and scrub recovery
+path to use error_bitmap") changed the behavior of scrub_rbio().
 
-There is a risk with this change, though - it might break existing user
-space libraries, which are already using flags2 without setting
-FUSE_INIT_EXT.
+Initially if we have no error reading the raid bio, we will assign
+@need_check to true, then finish_parity_scrub() would later verify the
+content of P/Q stripes before writeback.
 
-The corresponding libfuse patch is here
-https://github.com/libfuse/libfuse/pull/662
+But after that commit we never verify the content of P/Q stripes and
+just writeback them.
 
-Signed-off-by: Bernd Schubert <bschubert@ddn.com>
-Fixes: 53db28933e95 ("fuse: extend init flags")
-Cc: <stable@vger.kernel.org> # v5.17
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+This can lead to unrepaired P/Q stripes during scrub, or already
+corrupted P/Q copied to the dev-replace target.
+
+[FIX]
+The situation is more complex than the regression, in fact the initial
+behavior is not 100% correct either.
+
+If we have the following rare case, it can still lead to the same
+problem using the old behavior:
+
+		0	16K	32K	48K	64K
+	Data 1:	|IIIIIII|                       |
+	Data 2:	|				|
+	Parity:	|	|CCCCCCC|		|
+
+Where "I" means IO error, "C" means corruption.
+
+In the above case, we're scrubbing the parity stripe, then read out all
+the contents of Data 1, Data 2, Parity stripes.
+
+But found IO error in Data 1, which leads to rebuild using Data 2 and
+Parity and got the correct data.
+
+In that case, we would not verify if the Parity is correct for range
+[16K, 32K).
+
+So here we have to always verify the content of Parity no matter if we
+did recovery or not.
+
+This patch would remove the @need_check parameter of
+finish_parity_scrub() completely, and would always do the P/Q
+verification before writeback.
+
+Fixes: 75b470332965 ("btrfs: raid56: migrate recovery and scrub recovery path to use error_bitmap")
+CC: stable@vger.kernel.org # 6.2+
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/inode.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/btrfs/raid56.c |   11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
---- a/fs/fuse/inode.c
-+++ b/fs/fuse/inode.c
-@@ -1134,7 +1134,10 @@ static void process_init_reply(struct fu
- 		process_init_limits(fc, arg);
+--- a/fs/btrfs/raid56.c
++++ b/fs/btrfs/raid56.c
+@@ -71,7 +71,7 @@ static void rmw_rbio_work_locked(struct
+ static void index_rbio_pages(struct btrfs_raid_bio *rbio);
+ static int alloc_rbio_pages(struct btrfs_raid_bio *rbio);
  
- 		if (arg->minor >= 6) {
--			u64 flags = arg->flags | (u64) arg->flags2 << 32;
-+			u64 flags = arg->flags;
-+
-+			if (flags & FUSE_INIT_EXT)
-+				flags |= (u64) arg->flags2 << 32;
+-static int finish_parity_scrub(struct btrfs_raid_bio *rbio, int need_check);
++static int finish_parity_scrub(struct btrfs_raid_bio *rbio);
+ static void scrub_rbio_work_locked(struct work_struct *work);
  
- 			ra_pages = arg->max_readahead / PAGE_SIZE;
- 			if (flags & FUSE_ASYNC_READ)
+ static void free_raid_bio_pointers(struct btrfs_raid_bio *rbio)
+@@ -2404,7 +2404,7 @@ static int alloc_rbio_essential_pages(st
+ 	return 0;
+ }
+ 
+-static int finish_parity_scrub(struct btrfs_raid_bio *rbio, int need_check)
++static int finish_parity_scrub(struct btrfs_raid_bio *rbio)
+ {
+ 	struct btrfs_io_context *bioc = rbio->bioc;
+ 	const u32 sectorsize = bioc->fs_info->sectorsize;
+@@ -2445,9 +2445,6 @@ static int finish_parity_scrub(struct bt
+ 	 */
+ 	clear_bit(RBIO_CACHE_READY_BIT, &rbio->flags);
+ 
+-	if (!need_check)
+-		goto writeback;
+-
+ 	p_sector.page = alloc_page(GFP_NOFS);
+ 	if (!p_sector.page)
+ 		return -ENOMEM;
+@@ -2516,7 +2513,6 @@ static int finish_parity_scrub(struct bt
+ 		q_sector.page = NULL;
+ 	}
+ 
+-writeback:
+ 	/*
+ 	 * time to start writing.  Make bios for everything from the
+ 	 * higher layers (the bio_list in our rbio) and our p/q.  Ignore
+@@ -2699,7 +2695,6 @@ static int scrub_assemble_read_bios(stru
+ 
+ static void scrub_rbio(struct btrfs_raid_bio *rbio)
+ {
+-	bool need_check = false;
+ 	int sector_nr;
+ 	int ret;
+ 
+@@ -2722,7 +2717,7 @@ static void scrub_rbio(struct btrfs_raid
+ 	 * We have every sector properly prepared. Can finish the scrub
+ 	 * and writeback the good content.
+ 	 */
+-	ret = finish_parity_scrub(rbio, need_check);
++	ret = finish_parity_scrub(rbio);
+ 	wait_event(rbio->io_wait, atomic_read(&rbio->stripes_pending) == 0);
+ 	for (sector_nr = 0; sector_nr < rbio->stripe_nsectors; sector_nr++) {
+ 		int found_errors;
 
 
