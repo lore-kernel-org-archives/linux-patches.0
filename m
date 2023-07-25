@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1371D302
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:25:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FFD4C433C8;
-	Tue, 25 Jul 2023 11:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7111A1D302
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:25:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E53DEC433C8;
+	Tue, 25 Jul 2023 11:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284338;
-	bh=tjE4hoqhfs6txx2BOGwxkS30ruHkyBkNGksVh6hjYIE=;
+	s=korg; t=1690284341;
+	bh=bgz7MPIBschHpXAj1tgAM7YjvcPm+uprOymkQr0Tx1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PAZWMwh7MovN54uWCWKAGiGps5XEmuMxsGNkrkBjSQTiasdmGDUMg1kwf1gBZytJt
-	 2wG9a70WtPW51+l5RMnyPD2Ikkz7gQa+XChDzFtOtCwpl0m2OBePAA0/IUfj76nXGh
-	 dTDjawuHcbGVUiuWTbXv6w91yTzA3eT0MyYHIipY=
+	b=Lftk5sN89V2l2nWagU2vRwqXEDyP2UemOR5r3NyD3kFMIuPSd54pVFbXP+AAPEcp+
+	 d8gbNwdJPCUFNN8HpGdMJIZ7Vu+aMAZk0L7SD8xoxt9gzDNWprhWQLCOC1fTesZXN6
+	 6oQ4Qw0DpuBiOTGtazFTocAyP6NdLsxa05FlUCIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org,
 	netfilter-devel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.10 321/509] netfilter: nf_tables: unbind non-anonymous set if rule construction fails
-Date: Tue, 25 Jul 2023 12:44:20 +0200
-Message-ID: <20230725104608.389194770@linuxfoundation.org>
+Subject: [PATCH 5.10 322/509] netfilter: nf_tables: fix scheduling-while-atomic splat
+Date: Tue, 25 Jul 2023 12:44:21 +0200
+Message-ID: <20230725104608.438348759@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -34,30 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 3e70489721b6c870252c9082c496703677240f53 ]
+[ Upstream commit 2024439bd5ceb145eeeb428b2a59e9b905153ac3 ]
 
-Otherwise a dangling reference to a rule object that is gone remains
-in the set binding list.
+nf_tables_check_loops() can be called from rhashtable list
+walk so cond_resched() cannot be used here.
 
-Fixes: 26b5a5712eb8 ("netfilter: nf_tables: add NFT_TRANS_PREPARE_ERROR to deal with bound set/chain")
+Fixes: 81ea01066741 ("netfilter: nf_tables: add rescheduling points during loop detection walks")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nf_tables_api.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -4689,6 +4689,8 @@ void nf_tables_deactivate_set(const stru
- 		nft_set_trans_unbind(ctx, set);
- 		if (nft_set_is_anonymous(set))
- 			nft_deactivate_next(ctx->net, set);
-+		else
-+			list_del_rcu(&binding->list);
+@@ -8684,13 +8684,9 @@ static int nf_tables_check_loops(const s
+ 				break;
+ 			}
+ 		}
+-
+-		cond_resched();
+ 	}
  
- 		set->use--;
- 		break;
+ 	list_for_each_entry(set, &ctx->table->sets, list) {
+-		cond_resched();
+-
+ 		if (!nft_is_active_next(ctx->net, set))
+ 			continue;
+ 		if (!(set->flags & NFT_SET_MAP) ||
 
 
