@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F901ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:13:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59AF3C433C7;
-	Tue, 25 Jul 2023 11:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7C91ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:13:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF45C433C7;
+	Tue, 25 Jul 2023 11:13:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283626;
-	bh=795XjNeKTIUuV2hjpNON2NWXeeZ7ellz9oGaPgUy2ug=;
+	s=korg; t=1690283629;
+	bh=KLo4viXHZ4dMlleTtve+fXKM/WH3MuMEeYx11aXMzEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NAKzSAyIUKsV1lMPTnFv4xIauiaHJKr1wxrSOCMnCfzuqSIISPWAcx/c1i//4JrTP
-	 xjdhqmjn7gZcBR8+AYIxTUif51iEpEnM8xz4bwCl1gTMWGo/sEYBBcPxaWFMgJj4Q6
-	 P8R7LPD+9sFZXieCgMMF9mQAe3XJrXZ6kwKCwmDI=
+	b=TgNKEL9679Si3O98bvO6Nqo+Lcairxvb/UVJq4Cd7CL9ydDvJHwGlrVZUgzin4LAs
+	 PHocbwlzolxwqiiA+zswFkdSnMye3XXD22K64CJjny6E4tmZhV+GOryrC8+qcXSjdt
+	 3Cx4aAjbt0N3fKJomWrICc+2Oh5h2SVNKHYJdCaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Kalle Valo <kvalo@kernel.org>,
+	syzbot+b68fbebe56d8362907e8@syzkaller.appspotmail.com,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 057/509] wifi: orinoco: Fix an error handling path in orinoco_cs_probe()
-Date: Tue, 25 Jul 2023 12:39:56 +0200
-Message-ID: <20230725104556.293082705@linuxfoundation.org>
+Subject: [PATCH 5.10 066/509] wifi: ath9k: dont allow to overwrite ENDPOINT0 attributes
+Date: Tue, 25 Jul 2023 12:40:05 +0200
+Message-ID: <20230725104556.716501515@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,56 +37,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 67a81d911c01225f426cc6bee2373df044c1a9b7 ]
+[ Upstream commit 061b0cb9327b80d7a0f63a33e7c3e2a91a71f142 ]
 
-Should orinoco_cs_config() fail, some resources need to be released as
-already done in the remove function.
+A bad USB device is able to construct a service connection response
+message with target endpoint being ENDPOINT0 which is reserved for
+HTC_CTRL_RSVD_SVC and should not be modified to be used for any other
+services.
 
-While at it, remove a useless and erroneous comment. The probe is
-orinoco_cs_probe(), not orinoco_cs_attach().
+Reject such service connection responses.
 
-Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/e24735ce4d82901d5f7ea08419eea53bfdde3d65.1684568286.git.christophe.jaillet@wanadoo.fr
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Reported-by: syzbot+b68fbebe56d8362907e8@syzkaller.appspotmail.com
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230516150427.79469-1-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intersil/orinoco/orinoco_cs.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath9k/htc_hst.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intersil/orinoco/orinoco_cs.c b/drivers/net/wireless/intersil/orinoco/orinoco_cs.c
-index a956f965a1e5e..03bfd2482656c 100644
---- a/drivers/net/wireless/intersil/orinoco/orinoco_cs.c
-+++ b/drivers/net/wireless/intersil/orinoco/orinoco_cs.c
-@@ -96,6 +96,7 @@ orinoco_cs_probe(struct pcmcia_device *link)
- {
- 	struct orinoco_private *priv;
- 	struct orinoco_pccard *card;
-+	int ret;
+diff --git a/drivers/net/wireless/ath/ath9k/htc_hst.c b/drivers/net/wireless/ath/ath9k/htc_hst.c
+index fe62ff668f757..99667aba289df 100644
+--- a/drivers/net/wireless/ath/ath9k/htc_hst.c
++++ b/drivers/net/wireless/ath/ath9k/htc_hst.c
+@@ -114,7 +114,13 @@ static void htc_process_conn_rsp(struct htc_target *target,
  
- 	priv = alloc_orinocodev(sizeof(*card), &link->dev,
- 				orinoco_cs_hard_reset, NULL);
-@@ -107,8 +108,16 @@ orinoco_cs_probe(struct pcmcia_device *link)
- 	card->p_dev = link;
- 	link->priv = priv;
- 
--	return orinoco_cs_config(link);
--}				/* orinoco_cs_attach */
-+	ret = orinoco_cs_config(link);
-+	if (ret)
-+		goto err_free_orinocodev;
+ 	if (svc_rspmsg->status == HTC_SERVICE_SUCCESS) {
+ 		epid = svc_rspmsg->endpoint_id;
+-		if (epid < 0 || epid >= ENDPOINT_MAX)
 +
-+	return 0;
-+
-+err_free_orinocodev:
-+	free_orinocodev(priv);
-+	return ret;
-+}
++		/* Check that the received epid for the endpoint to attach
++		 * a new service is valid. ENDPOINT0 can't be used here as it
++		 * is already reserved for HTC_CTRL_RSVD_SVC service and thus
++		 * should not be modified.
++		 */
++		if (epid <= ENDPOINT0 || epid >= ENDPOINT_MAX)
+ 			return;
  
- static void orinoco_cs_detach(struct pcmcia_device *link)
- {
+ 		service_id = be16_to_cpu(svc_rspmsg->service_id);
 -- 
 2.39.2
 
