@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8222E15AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:51:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03638C433C8;
-	Tue, 25 Jul 2023 10:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA8C15AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:51:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A4AC433C9;
+	Tue, 25 Jul 2023 10:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282274;
-	bh=Y1thFwVoES51AB1wPzTd0ivxRPqBzGtpvZ+MM/mJa3Y=;
+	s=korg; t=1690282277;
+	bh=sB8sdujWmd6fVjrwSYp2RHiAsqzQgxgOzbntDtcbRDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kQ/h9oobNoL7bjHt+3SrUkJwE/Y4/4uiP4V0OVZza65F7UF/RZBo5s0FU1nLcccEL
-	 QEBXgjRGMZGe/R9TD7Cgw+1MrSF4F4L01gMQ0JS3QJYPPtXBujyOL5G+akXtSPdbgk
-	 SuWIwerJXKafiWQHFCJgQaNIaUUfggGrDNHr6Z9s=
+	b=aJooWNZMx0AuGRaJIgEe6aKJt211c2K/3Kn08T2sAiK9WADh0Hz+1WeMIONx8IncB
+	 teqHm4Y+pdZB53J50XUg/LUACHwQvIHO+XnGtrztaFZ4xhQ6EvZIDImF9sm6ejX9At
+	 h62yV5PvCLArW52L5ecLeR2ofjvN+Tl89eallp+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Mark Brown <broonie@kernel.org>,
-	Xu Yilun <yilun.xu@intel.com>
-Subject: [PATCH 6.4 031/227] regmap: Account for register length in SMBus I/O limits
-Date: Tue, 25 Jul 2023 12:43:18 +0200
-Message-ID: <20230725104516.130329270@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.4 064/227] ASoC: qdsp6: audioreach: fix topology probe deferral
+Date: Tue, 25 Jul 2023 12:43:51 +0200
+Message-ID: <20230725104517.396627533@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,54 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 0c9d2eb5e94792fe64019008a04d4df5e57625af upstream.
+commit 46ec420573cefa1fc98025e7e6841bdafd6f1e20 upstream.
 
-The SMBus I2C buses have limits on the size of transfers they can do but
-do not factor in the register length meaning we may try to do a transfer
-longer than our length limit, the core will not take care of this.
-Future changes will factor this out into the core but there are a number
-of users that assume current behaviour so let's just do something
-conservative here.
+Propagate errors when failing to load the topology component so that
+probe deferrals can be handled.
 
-This does not take account padding bits but practically speaking these
-are very rarely if ever used on I2C buses given that they generally run
-slowly enough to mean there's no issue.
-
-Cc: stable@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Reviewed-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20230712-regmap-max-transfer-v1-2-80e2aed22e83@kernel.org
+Fixes: 36ad9bf1d93d ("ASoC: qdsp6: audioreach: add topology support")
+Cc: stable@vger.kernel.org      # 5.17
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230705123018.30903-3-johan+linaro@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/regmap/regmap-i2c.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/qcom/qdsp6/topology.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/base/regmap/regmap-i2c.c
-+++ b/drivers/base/regmap/regmap-i2c.c
-@@ -242,8 +242,8 @@ static int regmap_i2c_smbus_i2c_read(voi
- static const struct regmap_bus regmap_i2c_smbus_i2c_block = {
- 	.write = regmap_i2c_smbus_i2c_write,
- 	.read = regmap_i2c_smbus_i2c_read,
--	.max_raw_read = I2C_SMBUS_BLOCK_MAX,
--	.max_raw_write = I2C_SMBUS_BLOCK_MAX,
-+	.max_raw_read = I2C_SMBUS_BLOCK_MAX - 1,
-+	.max_raw_write = I2C_SMBUS_BLOCK_MAX - 1,
- };
+--- a/sound/soc/qcom/qdsp6/topology.c
++++ b/sound/soc/qcom/qdsp6/topology.c
+@@ -1277,8 +1277,8 @@ int audioreach_tplg_init(struct snd_soc_
  
- static int regmap_i2c_smbus_i2c_write_reg16(void *context, const void *data,
-@@ -299,8 +299,8 @@ static int regmap_i2c_smbus_i2c_read_reg
- static const struct regmap_bus regmap_i2c_smbus_i2c_block_reg16 = {
- 	.write = regmap_i2c_smbus_i2c_write_reg16,
- 	.read = regmap_i2c_smbus_i2c_read_reg16,
--	.max_raw_read = I2C_SMBUS_BLOCK_MAX,
--	.max_raw_write = I2C_SMBUS_BLOCK_MAX,
-+	.max_raw_read = I2C_SMBUS_BLOCK_MAX - 2,
-+	.max_raw_write = I2C_SMBUS_BLOCK_MAX - 2,
- };
+ 	ret = snd_soc_tplg_component_load(component, &audioreach_tplg_ops, fw);
+ 	if (ret < 0) {
+-		dev_err(dev, "tplg component load failed%d\n", ret);
+-		ret = -EINVAL;
++		if (ret != -EPROBE_DEFER)
++			dev_err(dev, "tplg component load failed: %d\n", ret);
+ 	}
  
- static const struct regmap_bus *regmap_get_i2c_bus(struct i2c_client *i2c,
+ 	release_firmware(fw);
 
 
