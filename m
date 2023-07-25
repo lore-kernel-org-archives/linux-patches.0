@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489B11ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:37:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A43C433C7;
-	Tue, 25 Jul 2023 11:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F441ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:37:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FAC1C433C8;
+	Tue, 25 Jul 2023 11:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285075;
-	bh=uWNQwMfMOmsAm0hH4kjk0vejoV3+aKzj3Qe1ghi/yYg=;
+	s=korg; t=1690285077;
+	bh=lcmWQCyp7N9qRzGDtQcC5xszbuSV9YXkaoq/x2IqTPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tg8V7T32f4XUywzzUDVfatFC1GDI1Ljf5+pe2/WUE4kh9AqcWWniipx/MV4nfn98S
-	 4q32fUXx6fD2vcy7fLHfNjR55eAlpU0H9E0m5hC/YiAI84u7Tntuy3LhWMzifJSx5o
-	 fp9IuKLnnU2e3/3yLna1T+fTL+BUrlrVP2Sn4PV4=
+	b=JkhbxwV/aMptcJdi/kcCLN0W0y5g8oVVCfWFgcbI5qJR+TTKHLD6ZGVzzs5FnKrCt
+	 8v7jBMHIXD0Vxq9YuAXBgmMjuybc6g3u0U6BpiRAhf0NcIqCNsQdHPoq+3pq47HYno
+	 a05ZEJhNxgk7+R7px8VIMIeAbGl7bDD4mJEIR24w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	XuDong Liu <m202071377@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Maxime Ripard <maxime@cerno.tech>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 075/313] drm: sun4i_tcon: use devm_clk_get_enabled in `sun4i_tcon_init_clocks`
-Date: Tue, 25 Jul 2023 12:43:48 +0200
-Message-ID: <20230725104524.198380108@linuxfoundation.org>
+Subject: [PATCH 5.4 076/313] RDMA/bnxt_re: Fix to remove an unnecessary log
+Date: Tue, 25 Jul 2023 12:43:49 +0200
+Message-ID: <20230725104524.241953859@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -36,114 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: XuDong Liu <m202071377@hust.edu.cn>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit 123ee07ba5b7123e0ce0e0f9d64938026c16a2ce ]
+[ Upstream commit 43774bc156614346fe5dacabc8e8c229167f2536 ]
 
-Smatch reports:
-drivers/gpu/drm/sun4i/sun4i_tcon.c:805 sun4i_tcon_init_clocks() warn:
-'tcon->clk' from clk_prepare_enable() not released on lines: 792,801.
+During destroy_qp, driver sets the qp handle in the existing CQEs
+belonging to the QP being destroyed to NULL. As a result, a poll_cq after
+destroy_qp can report unnecessary messages.  Remove this noise from system
+logs.
 
-In the function sun4i_tcon_init_clocks(), tcon->clk and tcon->sclk0 are
-not disabled in the error handling, which affects the release of
-these variable. Although sun4i_tcon_bind(), which calls
-sun4i_tcon_init_clocks(), use sun4i_tcon_free_clocks to disable the
-variables mentioned, but the error handling branch of
-sun4i_tcon_init_clocks() ignores the required disable process.
-
-To fix this issue, use the devm_clk_get_enabled to automatically
-balance enable and disabled calls. As original implementation use
-sun4i_tcon_free_clocks() to disable clk explicitly, we delete the
-related calls and error handling that are no longer needed.
-
-Fixes: 9026e0d122ac ("drm: Add Allwinner A10 Display Engine support")
-Fixes: b14e945bda8a ("drm/sun4i: tcon: Prepare and enable TCON channel 0 clock at init")
-Fixes: 8e9240472522 ("drm/sun4i: support TCONs without channel 1")
-Fixes: 34d698f6e349 ("drm/sun4i: Add has_channel_0 TCON quirk")
-Signed-off-by: XuDong Liu <m202071377@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230430112347.4689-1-m202071377@hust.edu.cn
+Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
+Link: https://lore.kernel.org/r/1684478897-12247-6-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sun4i/sun4i_tcon.c | 19 ++++---------------
- 1 file changed, 4 insertions(+), 15 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_fp.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/sun4i/sun4i_tcon.c b/drivers/gpu/drm/sun4i/sun4i_tcon.c
-index eb3b2350687fb..193c7f979bcaa 100644
---- a/drivers/gpu/drm/sun4i/sun4i_tcon.c
-+++ b/drivers/gpu/drm/sun4i/sun4i_tcon.c
-@@ -753,21 +753,19 @@ static irqreturn_t sun4i_tcon_handler(int irq, void *private)
- static int sun4i_tcon_init_clocks(struct device *dev,
- 				  struct sun4i_tcon *tcon)
- {
--	tcon->clk = devm_clk_get(dev, "ahb");
-+	tcon->clk = devm_clk_get_enabled(dev, "ahb");
- 	if (IS_ERR(tcon->clk)) {
- 		dev_err(dev, "Couldn't get the TCON bus clock\n");
- 		return PTR_ERR(tcon->clk);
- 	}
--	clk_prepare_enable(tcon->clk);
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+index 5fc5ab7813c0f..18b579c8a8c55 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+@@ -2606,11 +2606,8 @@ static int bnxt_qplib_cq_process_terminal(struct bnxt_qplib_cq *cq,
  
- 	if (tcon->quirks->has_channel_0) {
--		tcon->sclk0 = devm_clk_get(dev, "tcon-ch0");
-+		tcon->sclk0 = devm_clk_get_enabled(dev, "tcon-ch0");
- 		if (IS_ERR(tcon->sclk0)) {
- 			dev_err(dev, "Couldn't get the TCON channel 0 clock\n");
- 			return PTR_ERR(tcon->sclk0);
- 		}
- 	}
--	clk_prepare_enable(tcon->sclk0);
+ 	qp = (struct bnxt_qplib_qp *)((unsigned long)
+ 				      le64_to_cpu(hwcqe->qp_handle));
+-	if (!qp) {
+-		dev_err(&cq->hwq.pdev->dev,
+-			"FP: CQ Process terminal qp is NULL\n");
++	if (!qp)
+ 		return -EINVAL;
+-	}
  
- 	if (tcon->quirks->has_channel_1) {
- 		tcon->sclk1 = devm_clk_get(dev, "tcon-ch1");
-@@ -780,12 +778,6 @@ static int sun4i_tcon_init_clocks(struct device *dev,
- 	return 0;
- }
- 
--static void sun4i_tcon_free_clocks(struct sun4i_tcon *tcon)
--{
--	clk_disable_unprepare(tcon->sclk0);
--	clk_disable_unprepare(tcon->clk);
--}
--
- static int sun4i_tcon_init_irq(struct device *dev,
- 			       struct sun4i_tcon *tcon)
- {
-@@ -1202,14 +1194,14 @@ static int sun4i_tcon_bind(struct device *dev, struct device *master,
- 	ret = sun4i_tcon_init_regmap(dev, tcon);
- 	if (ret) {
- 		dev_err(dev, "Couldn't init our TCON regmap\n");
--		goto err_free_clocks;
-+		goto err_assert_reset;
- 	}
- 
- 	if (tcon->quirks->has_channel_0) {
- 		ret = sun4i_dclk_create(dev, tcon);
- 		if (ret) {
- 			dev_err(dev, "Couldn't create our TCON dot clock\n");
--			goto err_free_clocks;
-+			goto err_assert_reset;
- 		}
- 	}
- 
-@@ -1272,8 +1264,6 @@ static int sun4i_tcon_bind(struct device *dev, struct device *master,
- err_free_dotclock:
- 	if (tcon->quirks->has_channel_0)
- 		sun4i_dclk_free(tcon);
--err_free_clocks:
--	sun4i_tcon_free_clocks(tcon);
- err_assert_reset:
- 	reset_control_assert(tcon->lcd_rst);
- 	return ret;
-@@ -1287,7 +1277,6 @@ static void sun4i_tcon_unbind(struct device *dev, struct device *master,
- 	list_del(&tcon->list);
- 	if (tcon->quirks->has_channel_0)
- 		sun4i_dclk_free(tcon);
--	sun4i_tcon_free_clocks(tcon);
- }
- 
- static const struct component_ops sun4i_tcon_ops = {
+ 	/* Must block new posting of SQ and RQ */
+ 	qp->state = CMDQ_MODIFY_QP_NEW_STATE_ERR;
 -- 
 2.39.2
 
