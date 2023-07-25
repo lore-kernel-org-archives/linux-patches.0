@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71341ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:37:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 291A1C433C7;
-	Tue, 25 Jul 2023 11:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E21B1ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:37:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B5EC433C7;
+	Tue, 25 Jul 2023 11:37:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285041;
-	bh=Y0i3atlbK5EFYwVxusOXKUtvIlwno+3m+NO4fCogX+Y=;
+	s=korg; t=1690285044;
+	bh=GREl4/7S7HK+iMPET4QlYYY1ghvyhp3uZfnFzPdvFOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YXFLdWRSB4Y7GqR3NVd+HVE1jP5wDhWKXweJJXXr5hy+SVMIWxppBm1PyWeg6urLw
-	 Mxn4gM7QQz9WwqGUjX9vRzMUEJpiknmHs9aEAT+dp4auIfOlKgtBJ8XVIbWQ2I++Z0
-	 3tgagodX47sW4pUMP1Iky38nnWT6pLhwZAZ0qaR4=
+	b=lIxPlCGUHvsNWG9WO0k/hZZjjadHtrX2nkgPLPZLj5Xa3FUYpqfrCLDekeljlJ+3X
+	 uPEFpO65xcyLiAorYbDVMJg2MBMhiSF0G/5IGkqbyqd5YWS7OllTZtc8kR35kCOjtE
+	 mbMWc641Zv6jJb+9McxU7l7M2VfGOEwoL/drXrY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 034/313] nfc: llcp: fix possible use of uninitialized variable in nfc_llcp_send_connect()
-Date: Tue, 25 Jul 2023 12:43:07 +0200
-Message-ID: <20230725104522.569126262@linuxfoundation.org>
+Subject: [PATCH 5.4 035/313] regulator: core: Fix more error checking for debugfs_create_dir()
+Date: Tue, 25 Jul 2023 12:43:08 +0200
+Message-ID: <20230725104522.599571651@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,38 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 0d9b41daa5907756a31772d8af8ac5ff25cf17c1 ]
+[ Upstream commit 2715bb11cfff964aa33946847f9527cfbd4874f5 ]
 
-If sock->service_name is NULL, the local variable
-service_name_tlv_length will not be assigned by nfc_llcp_build_tlv(),
-later leading to using value frmo the stack.  Smatch warning:
+In case of failure, debugfs_create_dir() does not return NULL, but an
+error pointer.  Most incorrect error checks were fixed, but the one in
+create_regulator() was forgotten.
 
-  net/nfc/llcp_commands.c:442 nfc_llcp_send_connect() error: uninitialized symbol 'service_name_tlv_length'.
+Fix the remaining error check.
 
-Fixes: de9e5aeb4f40 ("NFC: llcp: Fix usage of llcp_add_tlv()")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 2bf1c45be3b8f3a3 ("regulator: Fix error checking for debugfs_create_dir")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/ee980a108b5854dd8ce3630f8f673e784e057d17.1685013051.git.geert+renesas@glider.be
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/llcp_commands.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/regulator/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/nfc/llcp_commands.c b/net/nfc/llcp_commands.c
-index 3c4172a5aeb5e..bb9f40563ff63 100644
---- a/net/nfc/llcp_commands.c
-+++ b/net/nfc/llcp_commands.c
-@@ -394,7 +394,8 @@ int nfc_llcp_send_connect(struct nfc_llcp_sock *sock)
- 	const u8 *service_name_tlv = NULL;
- 	const u8 *miux_tlv = NULL;
- 	const u8 *rw_tlv = NULL;
--	u8 service_name_tlv_length, miux_tlv_length,  rw_tlv_length, rw;
-+	u8 service_name_tlv_length = 0;
-+	u8 miux_tlv_length,  rw_tlv_length, rw;
- 	int err;
- 	u16 size = 0;
- 	__be16 miux;
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index cc9aa95d69691..0ac9c763942f9 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1710,7 +1710,7 @@ static struct regulator *create_regulator(struct regulator_dev *rdev,
+ 
+ 	if (err != -EEXIST)
+ 		regulator->debugfs = debugfs_create_dir(supply_name, rdev->debugfs);
+-	if (!regulator->debugfs) {
++	if (IS_ERR(regulator->debugfs)) {
+ 		rdev_dbg(rdev, "Failed to create debugfs directory\n");
+ 	} else {
+ 		debugfs_create_u32("uA_load", 0444, regulator->debugfs,
 -- 
 2.39.2
 
