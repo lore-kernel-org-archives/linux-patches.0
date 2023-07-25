@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D411ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6714BC433C8;
-	Tue, 25 Jul 2023 11:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6AE81ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A572C433C7;
+	Tue, 25 Jul 2023 11:11:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283494;
-	bh=KeRhk83MhruqRoA9820t8Qu5f0ERdwl5+FHCOt7QBJ0=;
+	s=korg; t=1690283497;
+	bh=YczOVFZ+6g91yzuremJu1rdzZruFTsKOVjXHaoiujSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ykCoVuDX/QKMTFSmhjvwkmbE+fGh3MDPQwEga5wxCKjevFfEP5b9BWBKiLuXdYggF
-	 aONxsPHyDVPm0j+1UAKEnrBUOEZan8MvJYWsIMypNrn0CMbnZNA/AzbtTmMcXy9yZk
-	 8dAy9d7qpXkxD27lkQF2YUuuS4+kosxjhEBiSzgE=
+	b=bHMAIlnmw4UAUZEmm/5F9uqn6C19lvGlgNub+9W2Ykv20f+LUv05yY4NJmfz3sGNE
+	 8I9uiXNFNbxEm9fRoy2Y6Hhd4UEeremLL308dxHAAdeQlNWlUsg+ruwdq5MPuOj5Ln
+	 T+oyHcr5h6c8PJ1dlWeXa3gU4hGN2OeUX5BSOop4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yu Kuai <yukuai3@huawei.com>,
 	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 018/509] md/raid10: fix null-ptr-deref of mreplace in raid10_sync_request
-Date: Tue, 25 Jul 2023 12:39:17 +0200
-Message-ID: <20230725104554.485706292@linuxfoundation.org>
+Subject: [PATCH 5.10 019/509] md/raid10: fix io loss while replacement replace rdev
+Date: Tue, 25 Jul 2023 12:39:18 +0200
+Message-ID: <20230725104554.526317716@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -38,77 +38,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 34817a2441747b48e444cb0e05d84e14bc9443da ]
+[ Upstream commit 2ae6aaf76912bae53c74b191569d2ab484f24bf3 ]
 
-There are two check of 'mreplace' in raid10_sync_request(). In the first
-check, 'need_replace' will be set and 'mreplace' will be used later if
-no-Faulty 'mreplace' exists, In the second check, 'mreplace' will be
-set to NULL if it is Faulty, but 'need_replace' will not be changed
-accordingly. null-ptr-deref occurs if Faulty is set between two check.
+When removing a disk with replacement, the replacement will be used to
+replace rdev. During this process, there is a brief window in which both
+rdev and replacement are read as NULL in raid10_write_request(). This
+will result in io not being submitted but it should be.
 
-Fix it by merging two checks into one. And replace 'need_replace' with
-'mreplace' because their values are always the same.
+  //remove				//write
+  raid10_remove_disk			raid10_write_request
+   mirror->rdev = NULL
+					 read rdev -> NULL
+   mirror->rdev = mirror->replacement
+   mirror->replacement = NULL
+					 read replacement -> NULL
 
-Fixes: ee37d7314a32 ("md/raid10: Fix raid10 replace hang when new added disk faulty")
+Fix it by reading replacement first and rdev later, meanwhile, use smp_mb()
+to prevent memory reordering.
+
+Fixes: 475b0321a4df ("md/raid10: writes should get directed to replacement as well as original.")
 Signed-off-by: Li Nan <linan122@huawei.com>
 Reviewed-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230527072218.2365857-2-linan666@huaweicloud.com
+Link: https://lore.kernel.org/r/20230602091839.743798-3-linan666@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ drivers/md/raid10.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 6a0459f9fafbc..01680029f0de5 100644
+index 01680029f0de5..32a917e5103a6 100644
 --- a/drivers/md/raid10.c
 +++ b/drivers/md/raid10.c
-@@ -3037,7 +3037,6 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
- 			int must_sync;
- 			int any_working;
- 			int need_recover = 0;
--			int need_replace = 0;
- 			struct raid10_info *mirror = &conf->mirrors[i];
- 			struct md_rdev *mrdev, *mreplace;
+@@ -751,8 +751,16 @@ static struct md_rdev *read_balance(struct r10conf *conf,
+ 		disk = r10_bio->devs[slot].devnum;
+ 		rdev = rcu_dereference(conf->mirrors[disk].replacement);
+ 		if (rdev == NULL || test_bit(Faulty, &rdev->flags) ||
+-		    r10_bio->devs[slot].addr + sectors > rdev->recovery_offset)
++		    r10_bio->devs[slot].addr + sectors >
++		    rdev->recovery_offset) {
++			/*
++			 * Read replacement first to prevent reading both rdev
++			 * and replacement as NULL during replacement replace
++			 * rdev.
++			 */
++			smp_mb();
+ 			rdev = rcu_dereference(conf->mirrors[disk].rdev);
++		}
+ 		if (rdev == NULL ||
+ 		    test_bit(Faulty, &rdev->flags))
+ 			continue;
+@@ -1346,9 +1354,15 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
  
-@@ -3049,11 +3048,10 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
- 			    !test_bit(Faulty, &mrdev->flags) &&
- 			    !test_bit(In_sync, &mrdev->flags))
- 				need_recover = 1;
--			if (mreplace != NULL &&
--			    !test_bit(Faulty, &mreplace->flags))
--				need_replace = 1;
-+			if (mreplace && test_bit(Faulty, &mreplace->flags))
-+				mreplace = NULL;
- 
--			if (!need_recover && !need_replace) {
-+			if (!need_recover && !mreplace) {
- 				rcu_read_unlock();
- 				continue;
- 			}
-@@ -3069,8 +3067,6 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
- 				rcu_read_unlock();
- 				continue;
- 			}
--			if (mreplace && test_bit(Faulty, &mreplace->flags))
--				mreplace = NULL;
- 			/* Unless we are doing a full sync, or a replacement
- 			 * we only need to recover the block if it is set in
- 			 * the bitmap
-@@ -3193,11 +3189,11 @@ static sector_t raid10_sync_request(struct mddev *mddev, sector_t sector_nr,
- 				bio = r10_bio->devs[1].repl_bio;
- 				if (bio)
- 					bio->bi_end_io = NULL;
--				/* Note: if need_replace, then bio
-+				/* Note: if replace is not NULL, then bio
- 				 * cannot be NULL as r10buf_pool_alloc will
- 				 * have allocated it.
- 				 */
--				if (!need_replace)
-+				if (!mreplace)
- 					break;
- 				bio->bi_next = biolist;
- 				biolist = bio;
+ 	for (i = 0;  i < conf->copies; i++) {
+ 		int d = r10_bio->devs[i].devnum;
+-		struct md_rdev *rdev = rcu_dereference(conf->mirrors[d].rdev);
+-		struct md_rdev *rrdev = rcu_dereference(
+-			conf->mirrors[d].replacement);
++		struct md_rdev *rdev, *rrdev;
++
++		rrdev = rcu_dereference(conf->mirrors[d].replacement);
++		/*
++		 * Read replacement first to prevent reading both rdev and
++		 * replacement as NULL during replacement replace rdev.
++		 */
++		smp_mb();
++		rdev = rcu_dereference(conf->mirrors[d].rdev);
+ 		if (rdev == rrdev)
+ 			rrdev = NULL;
+ 		if (rdev && unlikely(test_bit(Blocked, &rdev->flags))) {
 -- 
 2.39.2
 
