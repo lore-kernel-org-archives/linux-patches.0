@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77D414A82
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:52:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397E8C433C8;
-	Tue, 25 Jul 2023 10:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EB914A82
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:52:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7AB8C433C8;
+	Tue, 25 Jul 2023 10:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282332;
-	bh=BKTqJouS8yPK9eFZoLcOwHKr19TEjAMyG0eagwvqU4o=;
+	s=korg; t=1690282335;
+	bh=pXrayAEezZS6p6Du3wIUqtam/djN7+zbnTBibE50m6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UrhrSXny9tRD8And1a8SS7VxbdrJImlClS8IQBQ2Z7TWSCWvfZm1lSBCjm8CuQZjn
-	 Cvah9nCjwxJgyTCmWHXHOS7lp3lE5gT7lFmdo2HDdfGlsWjiWUvWLjTd5aKjY/HHlV
-	 qWJdOjFHiIQhydK2GaDQQ0dWVPHktEu2gc3fpu5E=
+	b=HAJ/2oGFwEM5W0/6P1R77Q4MMNVWE31TeWycvwQBkcAQOWik6nfJFv2v+LZzjWarN
+	 34hTiRdyY1MvZJnVp2CtBQrITlcK8OfuVKjvsxeOn141cXJ+jO+A2jWEYpxUZF9zAe
+	 suRxo0RXHYo3JTdxbr5jfiYX7eb+PIpBHmLmcQm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangwu Zhang <guazhang@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	syzbot+5c54bd3eb218bb595aa9@syzkaller.appspotmail.com,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 091/227] blk-mq: fix NULL dereference on q->elevator in blk_mq_elv_switch_none
-Date: Tue, 25 Jul 2023 12:44:18 +0200
-Message-ID: <20230725104518.490601273@linuxfoundation.org>
+Subject: [PATCH 6.4 092/227] posix-timers: Ensure timer ID search-loop limit is valid
+Date: Tue, 25 Jul 2023 12:44:19 +0200
+Message-ID: <20230725104518.524071570@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -36,59 +37,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 245165658e1c9f95c0fecfe02b9b1ebd30a1198a ]
+[ Upstream commit 8ce8849dd1e78dadcee0ec9acbd259d239b7069f ]
 
-After grabbing q->sysfs_lock, q->elevator may become NULL because of
-elevator switch.
+posix_timer_add() tries to allocate a posix timer ID by starting from the
+cached ID which was stored by the last successful allocation.
 
-Fix the NULL dereference on q->elevator by checking it with lock.
+This is done in a loop searching the ID space for a free slot one by
+one. The loop has to terminate when the search wrapped around to the
+starting point.
 
-Reported-by: Guangwu Zhang <guazhang@redhat.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20230616132354.415109-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+But that's racy vs. establishing the starting point. That is read out
+lockless, which leads to the following problem:
+
+CPU0	  	      	     	   CPU1
+posix_timer_add()
+  start = sig->posix_timer_id;
+  lock(hash_lock);
+  ...				   posix_timer_add()
+  if (++sig->posix_timer_id < 0)
+      			             start = sig->posix_timer_id;
+     sig->posix_timer_id = 0;
+
+So CPU1 can observe a negative start value, i.e. -1, and the loop break
+never happens because the condition can never be true:
+
+  if (sig->posix_timer_id == start)
+     break;
+
+While this is unlikely to ever turn into an endless loop as the ID space is
+huge (INT_MAX), the racy read of the start value caught the attention of
+KCSAN and Dmitry unearthed that incorrectness.
+
+Rewrite it so that all id operations are under the hash lock.
+
+Reported-by: syzbot+5c54bd3eb218bb595aa9@syzkaller.appspotmail.com
+Reported-by: Dmitry Vyukov <dvyukov@google.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://lore.kernel.org/r/87bkhzdn6g.ffs@tglx
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ include/linux/sched/signal.h |  2 +-
+ kernel/time/posix-timers.c   | 31 ++++++++++++++++++-------------
+ 2 files changed, 19 insertions(+), 14 deletions(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index b9f4546139894..73ed8ccb09ce8 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -4617,9 +4617,6 @@ static bool blk_mq_elv_switch_none(struct list_head *head,
+diff --git a/include/linux/sched/signal.h b/include/linux/sched/signal.h
+index 20099268fa257..669e8cff40c74 100644
+--- a/include/linux/sched/signal.h
++++ b/include/linux/sched/signal.h
+@@ -135,7 +135,7 @@ struct signal_struct {
+ #ifdef CONFIG_POSIX_TIMERS
+ 
+ 	/* POSIX.1b Interval Timers */
+-	int			posix_timer_id;
++	unsigned int		next_posix_timer_id;
+ 	struct list_head	posix_timers;
+ 
+ 	/* ITIMER_REAL timer for the process */
+diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
+index ed3c4a9543982..2d6cf93ca370a 100644
+--- a/kernel/time/posix-timers.c
++++ b/kernel/time/posix-timers.c
+@@ -140,25 +140,30 @@ static struct k_itimer *posix_timer_by_id(timer_t id)
+ static int posix_timer_add(struct k_itimer *timer)
  {
- 	struct blk_mq_qe_pair *qe;
+ 	struct signal_struct *sig = current->signal;
+-	int first_free_id = sig->posix_timer_id;
+ 	struct hlist_head *head;
+-	int ret = -ENOENT;
++	unsigned int cnt, id;
  
--	if (!q->elevator)
--		return true;
--
- 	qe = kmalloc(sizeof(*qe), GFP_NOIO | __GFP_NOWARN | __GFP_NORETRY);
- 	if (!qe)
- 		return false;
-@@ -4627,6 +4624,12 @@ static bool blk_mq_elv_switch_none(struct list_head *head,
- 	/* q->elevator needs protection from ->sysfs_lock */
- 	mutex_lock(&q->sysfs_lock);
- 
-+	/* the check has to be done with holding sysfs_lock */
-+	if (!q->elevator) {
-+		kfree(qe);
-+		goto unlock;
-+	}
+-	do {
++	/*
++	 * FIXME: Replace this by a per signal struct xarray once there is
++	 * a plan to handle the resulting CRIU regression gracefully.
++	 */
++	for (cnt = 0; cnt <= INT_MAX; cnt++) {
+ 		spin_lock(&hash_lock);
+-		head = &posix_timers_hashtable[hash(sig, sig->posix_timer_id)];
+-		if (!__posix_timers_find(head, sig, sig->posix_timer_id)) {
++		id = sig->next_posix_timer_id;
 +
- 	INIT_LIST_HEAD(&qe->node);
- 	qe->q = q;
- 	qe->type = q->elevator->type;
-@@ -4634,6 +4637,7 @@ static bool blk_mq_elv_switch_none(struct list_head *head,
- 	__elevator_get(qe->type);
- 	list_add(&qe->node, head);
- 	elevator_disable(q);
-+unlock:
- 	mutex_unlock(&q->sysfs_lock);
++		/* Write the next ID back. Clamp it to the positive space */
++		sig->next_posix_timer_id = (id + 1) & INT_MAX;
++
++		head = &posix_timers_hashtable[hash(sig, id)];
++		if (!__posix_timers_find(head, sig, id)) {
+ 			hlist_add_head_rcu(&timer->t_hash, head);
+-			ret = sig->posix_timer_id;
++			spin_unlock(&hash_lock);
++			return id;
+ 		}
+-		if (++sig->posix_timer_id < 0)
+-			sig->posix_timer_id = 0;
+-		if ((sig->posix_timer_id == first_free_id) && (ret == -ENOENT))
+-			/* Loop over all possible ids completed */
+-			ret = -EAGAIN;
+ 		spin_unlock(&hash_lock);
+-	} while (ret == -ENOENT);
+-	return ret;
++	}
++	/* POSIX return code when no timer ID could be allocated */
++	return -EAGAIN;
+ }
  
- 	return true;
+ static inline void unlock_timer(struct k_itimer *timr, unsigned long flags)
 -- 
 2.39.2
 
