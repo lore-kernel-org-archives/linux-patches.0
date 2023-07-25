@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2813315AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:50:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99403C433C8;
-	Tue, 25 Jul 2023 10:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4AE15AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:50:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C56AC433C8;
+	Tue, 25 Jul 2023 10:50:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282219;
-	bh=dYcUxV4GsbYlJfid9MLn9l1Qs39rVSDi3SBKWe8RnLk=;
+	s=korg; t=1690282221;
+	bh=A2NsDGJhvYncPlkfy1iqCzm3eIJM9V36LjMQHQEGnaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ppaVC9H+r7x7R/WGtfV2IBFcl3DDHO2jlyBGzXhvbR5ZDwKYsJPs0lB0ONMVh/oJ5
-	 ggV0NQ5ZGRSNZAUjoVuzykbotfz/l0vJ4ALZb/H4ZhDrMPNNh0tensClInjf/RRN2E
-	 5r2ZGZ0p8hBI2pdhOsQZPA2cD+f6mElfWlQt7BXE=
+	b=V0H6p3YU857wl/beZuWJ/UBuyNSWMqhRa01BfGTXLqSvjUCdUCF7gghWTkhqA2rNN
+	 0vSGX5DvLul3kKBih3H1X+GmhL2jdnIY58DNOFvkHsddzsbZxmRDGDFrKzwIqedORG
+	 S1oYmQZ83CFSNvBsrPLr2yGbGI50APxQlA7xSA9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Spickett <David.Spickett@arm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.4 033/227] arm64/fpsimd: Ensure SME storage is allocated after SVE VL changes
-Date: Tue, 25 Jul 2023 12:43:20 +0200
-Message-ID: <20230725104516.216945984@linuxfoundation.org>
+	Zhang Yi <yizhan@redhat.com>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 6.4 051/227] drm/client: Fix memory leak in drm_client_modeset_probe
+Date: Tue, 25 Jul 2023 12:43:38 +0200
+Message-ID: <20230725104516.903675915@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,93 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Jocelyn Falempe <jfalempe@redhat.com>
 
-commit d4d5be94a87872421ea2569044092535aff0b886 upstream.
+commit 2329cc7a101af1a844fbf706c0724c0baea38365 upstream.
 
-When we reconfigure the SVE vector length we discard the backing storage
-for the SVE vectors and then reallocate on next SVE use, leaving the SME
-specific state alone. This means that we do not enable SME traps if they
-were already disabled. That means that userspace code can enter streaming
-mode without trapping, putting the task in a state where if we try to save
-the state of the task we will fault.
+When a new mode is set to modeset->mode, the previous mode should be freed.
+This fixes the following kmemleak report:
 
-Since the ABI does not specify that changing the SVE vector length disturbs
-SME state, and since SVE code may not be aware of SME code in the process,
-we shouldn't simply discard any ZA state. Instead immediately reallocate
-the storage for SVE, and disable SME if we change the SVE vector length
-while there is no SME state active.
+drm_mode_duplicate+0x45/0x220 [drm]
+drm_client_modeset_probe+0x944/0xf50 [drm]
+__drm_fb_helper_initial_config_and_unlock+0xb4/0x2c0 [drm_kms_helper]
+drm_fbdev_client_hotplug+0x2bc/0x4d0 [drm_kms_helper]
+drm_client_register+0x169/0x240 [drm]
+ast_pci_probe+0x142/0x190 [ast]
+local_pci_probe+0xdc/0x180
+work_for_cpu_fn+0x4e/0xa0
+process_one_work+0x8b7/0x1540
+worker_thread+0x70a/0xed0
+kthread+0x29f/0x340
+ret_from_fork+0x1f/0x30
 
-Disabling SME traps on SVE vector length changes would make the overall
-code more complex since we would have a state where we have valid SME state
-stored but might get a SME trap.
-
-Fixes: 9e4ab6c89109 ("arm64/sme: Implement vector length configuration prctl()s")
-Reported-by: David Spickett <David.Spickett@arm.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230720-arm64-fix-sve-sme-vl-change-v2-1-8eea06b82d57@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+cc: <stable@vger.kernel.org>
+Reported-by: Zhang Yi <yizhan@redhat.com>
+Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230711092203.68157-3-jfalempe@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/fpsimd.c |   33 +++++++++++++++++++++++++--------
- 1 file changed, 25 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/drm_client_modeset.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/kernel/fpsimd.c
-+++ b/arch/arm64/kernel/fpsimd.c
-@@ -847,6 +847,8 @@ void sve_sync_from_fpsimd_zeropad(struct
- int vec_set_vector_length(struct task_struct *task, enum vec_type type,
- 			  unsigned long vl, unsigned long flags)
- {
-+	bool free_sme = false;
-+
- 	if (flags & ~(unsigned long)(PR_SVE_VL_INHERIT |
- 				     PR_SVE_SET_VL_ONEXEC))
- 		return -EINVAL;
-@@ -897,21 +899,36 @@ int vec_set_vector_length(struct task_st
- 		task->thread.fp_type = FP_STATE_FPSIMD;
- 	}
+--- a/drivers/gpu/drm/drm_client_modeset.c
++++ b/drivers/gpu/drm/drm_client_modeset.c
+@@ -867,6 +867,7 @@ int drm_client_modeset_probe(struct drm_
+ 				break;
+ 			}
  
--	if (system_supports_sme() && type == ARM64_VEC_SME) {
--		task->thread.svcr &= ~(SVCR_SM_MASK |
--				       SVCR_ZA_MASK);
--		clear_thread_flag(TIF_SME);
-+	if (system_supports_sme()) {
-+		if (type == ARM64_VEC_SME ||
-+		    !(task->thread.svcr & (SVCR_SM_MASK | SVCR_ZA_MASK))) {
-+			/*
-+			 * We are changing the SME VL or weren't using
-+			 * SME anyway, discard the state and force a
-+			 * reallocation.
-+			 */
-+			task->thread.svcr &= ~(SVCR_SM_MASK |
-+					       SVCR_ZA_MASK);
-+			clear_thread_flag(TIF_SME);
-+			free_sme = true;
-+		}
- 	}
- 
- 	if (task == current)
- 		put_cpu_fpsimd_context();
- 
- 	/*
--	 * Force reallocation of task SVE and SME state to the correct
--	 * size on next use:
-+	 * Free the changed states if they are not in use, SME will be
-+	 * reallocated to the correct size on next use and we just
-+	 * allocate SVE now in case it is needed for use in streaming
-+	 * mode.
- 	 */
--	sve_free(task);
--	if (system_supports_sme() && type == ARM64_VEC_SME)
-+	if (system_supports_sve()) {
-+		sve_free(task);
-+		sve_alloc(task, true);
-+	}
-+
-+	if (free_sme)
- 		sme_free(task);
- 
- 	task_set_vl(task, type, vl);
++			kfree(modeset->mode);
+ 			modeset->mode = drm_mode_duplicate(dev, mode);
+ 			drm_connector_get(connector);
+ 			modeset->connectors[modeset->num_connectors++] = connector;
 
 
