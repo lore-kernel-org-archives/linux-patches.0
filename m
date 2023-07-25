@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0239C15AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:51:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79DC3C433C8;
-	Tue, 25 Jul 2023 10:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8F515AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:51:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C3DC433C7;
+	Tue, 25 Jul 2023 10:51:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282268;
-	bh=mcphBhLLIf1cioV4bNCf0dtTj6ptqrqod4gTHb69Px8=;
+	s=korg; t=1690282271;
+	bh=wZ7oXPIjvvoi8Yl7dN2lNathbAd5rsGlQwS+XPLYl98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cmkMG+mMJobbqYP0ucp3KlxT2OGZSZy+SNNVlMnm66BH+aalr43yjNIAVGmK9KebW
-	 ecpqTAx0c+W0x+2iJp9DF9Zcb65llsg110+ABZl71UHGxI5+50IrFqXSD54PzUCs3u
-	 F/tb/I8KrqqVdSHI9URQysNYrQPL584WL/bL/QkI=
+	b=PXUOZOshxg9X/BTexlpRm7eOrqgnfwGTZpq69Ew61nPhrlAvwHn1qDdhPlZdmTH2c
+	 9ryDg81BfQcalt03ivSVv2sTzWQr35g0YPl9dI77l/b88Mgpx+H2qPtVfZiR7+Ddpz
+	 Mz9ABNYOrR2z8bW+O1fq7CiQvUo+3b+78qulRgxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.4 039/227] selftests: tc: add ConnTrack procfs kconfig
-Date: Tue, 25 Jul 2023 12:43:26 +0200
-Message-ID: <20230725104516.442213949@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: [PATCH 6.4 040/227] accel/qaic: tighten bounds checking in encode_message()
+Date: Tue, 25 Jul 2023 12:43:27 +0200
+Message-ID: <20230725104516.483003910@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -36,42 +35,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 031c99e71fedcce93b6785d38b7d287bf59e3952 upstream.
+commit ea33cb6fc2788f9fe248d49e1c0b2553a58436ef upstream.
 
-When looking at the TC selftest reports, I noticed one test was failing
-because /proc/net/nf_conntrack was not available.
+There are several issues in this code.  The check at the start of the
+loop:
 
-  not ok 373 3992 - Add ct action triggering DNAT tuple conflict
-  	Could not match regex pattern. Verify command output:
-  cat: /proc/net/nf_conntrack: No such file or directory
+	if (user_len >= user_msg->len) {
 
-It is only available if NF_CONNTRACK_PROCFS kconfig is set. So the issue
-can be fixed simply by adding it to the list of required kconfig.
+This check does not ensure that we have enough space for the trans_hdr
+(8 bytes).  Instead the check needs to be:
 
-Fixes: e46905641316 ("tc-testing: add test for ct DNAT tuple collision")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/netdev/0e061d4a-9a23-9f58-3b35-d8919de332d7@tessares.net/T/ [1]
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Tested-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://lore.kernel.org/r/20230713-tc-selftests-lkft-v1-3-1eb4fd3a96e7@tessares.net
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+	if (user_len > user_msg->len - sizeof(*trans_hdr)) {
+
+That subtraction is done as an unsigned long we want to avoid
+negatives.  Add a lower bound to the start of the function.
+
+	if (user_msg->len < sizeof(*trans_hdr))
+
+There is a second integer underflow which can happen if
+trans_hdr->len is zero inside the encode_passthrough() function.
+
+	memcpy(out_trans->data, in_trans->data, in_trans->hdr.len - sizeof(in_trans->hdr));
+
+Instead of adding a check to encode_passthrough() it's better to check
+in this central place.  Add that check:
+
+	if (trans_hdr->len < sizeof(trans_hdr)
+
+The final concern is that the "user_len + trans_hdr->len" might have an
+integer overflow bug.  Use size_add() to prevent that.
+
+-	if (user_len + trans_hdr->len > user_msg->len) {
++	if (size_add(user_len, trans_hdr->len) > user_msg->len) {
+
+Fixes: 129776ac2e38 ("accel/qaic: Add control path")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc: stable@vger.kernel.org # 6.4.x
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/9a0cb0c1-a974-4f10-bc8d-94437983639a@moroto.mountain
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/tc-testing/config |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/accel/qaic/qaic_control.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/tools/testing/selftests/tc-testing/config
-+++ b/tools/testing/selftests/tc-testing/config
-@@ -5,6 +5,7 @@ CONFIG_NF_CONNTRACK=m
- CONFIG_NF_CONNTRACK_MARK=y
- CONFIG_NF_CONNTRACK_ZONES=y
- CONFIG_NF_CONNTRACK_LABELS=y
-+CONFIG_NF_CONNTRACK_PROCFS=y
- CONFIG_NF_FLOW_TABLE=m
- CONFIG_NF_NAT=m
- CONFIG_NETFILTER_XT_TARGET_LOG=m
+--- a/drivers/accel/qaic/qaic_control.c
++++ b/drivers/accel/qaic/qaic_control.c
+@@ -14,6 +14,7 @@
+ #include <linux/mm.h>
+ #include <linux/moduleparam.h>
+ #include <linux/mutex.h>
++#include <linux/overflow.h>
+ #include <linux/pci.h>
+ #include <linux/scatterlist.h>
+ #include <linux/types.h>
+@@ -751,7 +752,8 @@ static int encode_message(struct qaic_de
+ 	int ret;
+ 	int i;
+ 
+-	if (!user_msg->count) {
++	if (!user_msg->count ||
++	    user_msg->len < sizeof(*trans_hdr)) {
+ 		ret = -EINVAL;
+ 		goto out;
+ 	}
+@@ -768,12 +770,13 @@ static int encode_message(struct qaic_de
+ 	}
+ 
+ 	for (i = 0; i < user_msg->count; ++i) {
+-		if (user_len >= user_msg->len) {
++		if (user_len > user_msg->len - sizeof(*trans_hdr)) {
+ 			ret = -EINVAL;
+ 			break;
+ 		}
+ 		trans_hdr = (struct qaic_manage_trans_hdr *)(user_msg->data + user_len);
+-		if (user_len + trans_hdr->len > user_msg->len) {
++		if (trans_hdr->len < sizeof(trans_hdr) ||
++		    size_add(user_len, trans_hdr->len) > user_msg->len) {
+ 			ret = -EINVAL;
+ 			break;
+ 		}
 
 
