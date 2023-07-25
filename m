@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B271ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:15:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87398C433C7;
-	Tue, 25 Jul 2023 11:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69081ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:15:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64496C433C7;
+	Tue, 25 Jul 2023 11:15:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283743;
-	bh=8UKxzjLfG3k+rtQDCyw4NfeYtkLDvz4tBOFpgbeIVYA=;
+	s=korg; t=1690283746;
+	bh=eN+1HVigX4zGTCRI6HeZeisVkKAwmsdo7PdzI2B00UE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j69NqU9VvjNgVnqocuFK29Bs2CmHhr0vJX8vs8c1zydHjKZ7lqDPiKCsD10OpE8wR
-	 5zjqReX4rE3TDo9mW3e1kpiq3+z4CeYDYCUbO93AFRl7NEC2V5lnc5ZnTFyIhB2PUZ
-	 twkW/be6EdQvKHA6Sciv5pJYKh1CLCrCZfqKT6y0=
+	b=Wla5gGFHf/OwZwgrGiM7CMTSs53cpOdjADJ6DIRy60BaEX3FGWBeLh3D8NS1Q2Fgb
+	 0VYz6ENPxvSokY96mNxjKX/TY5iJPwHxZOKhCJ2Wu27CAJ6OyL5JtfrvLDkzapB9Y6
+	 +tCBJqBDg+PXJ/MBU12SH/DFTj003oxElEOWfxVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Hans-Frieder Vogt <hfdevel@gmx.net>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 089/509] netfilter: conntrack: dccp: copy entire header to stack buffer, not just basic one
-Date: Tue, 25 Jul 2023 12:40:28 +0200
-Message-ID: <20230725104557.786899231@linuxfoundation.org>
+Subject: [PATCH 5.10 107/509] ARM: dts: meson8b: correct uart_B and uart_C clock references
+Date: Tue, 25 Jul 2023 12:40:46 +0200
+Message-ID: <20230725104558.574900256@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,146 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: hfdevel@gmx.net <hfdevel@gmx.net>
 
-[ Upstream commit ff0a3a7d52ff7282dbd183e7fc29a1fe386b0c30 ]
+[ Upstream commit d542ce8d4769cdef6a7bc3437e59cfed9c68f0e4 ]
 
-Eric Dumazet says:
-  nf_conntrack_dccp_packet() has an unique:
+With the current device tree for meson8b, uarts B (e.g. available on pins
+8/10 on Odroid-C1) and C (pins 3/5 on Odroid-C1) do not work, because they
+are relying on incorrect clocks. Change the references of pclk to the
+correct CLKID, to allow use of the two uarts.
 
-  dh = skb_header_pointer(skb, dataoff, sizeof(_dh), &_dh);
-
-  And nothing more is 'pulled' from the packet, depending on the content.
-  dh->dccph_doff, and/or dh->dccph_x ...)
-  So dccp_ack_seq() is happily reading stuff past the _dh buffer.
-
-BUG: KASAN: stack-out-of-bounds in nf_conntrack_dccp_packet+0x1134/0x11c0
-Read of size 4 at addr ffff000128f66e0c by task syz-executor.2/29371
-[..]
-
-Fix this by increasing the stack buffer to also include room for
-the extra sequence numbers and all the known dccp packet type headers,
-then pull again after the initial validation of the basic header.
-
-While at it, mark packets invalid that lack 48bit sequence bit but
-where RFC says the type MUST use them.
-
-Compile tested only.
-
-v2: first skb_header_pointer() now needs to adjust the size to
-    only pull the generic header. (Eric)
-
-Heads-up: I intend to remove dccp conntrack support later this year.
-
-Fixes: 2bc780499aa3 ("[NETFILTER]: nf_conntrack: add DCCP protocol support")
-Reported-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 3375aa77135f ("ARM: dts: meson8b: Fix the UART device-tree schema validation")
+Signed-off-by: Hans-Frieder Vogt <hfdevel@gmx.net>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/trinity-bf20bcb9-790b-4ab9-99e3-0831ef8257f4-1680878185420@3c-app-gmx-bap55
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_proto_dccp.c | 52 +++++++++++++++++++++++--
- 1 file changed, 49 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/meson8b.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_proto_dccp.c b/net/netfilter/nf_conntrack_proto_dccp.c
-index 94001eb51ffe4..a9ae292e932ae 100644
---- a/net/netfilter/nf_conntrack_proto_dccp.c
-+++ b/net/netfilter/nf_conntrack_proto_dccp.c
-@@ -431,9 +431,19 @@ static bool dccp_error(const struct dccp_hdr *dh,
- 		       struct sk_buff *skb, unsigned int dataoff,
- 		       const struct nf_hook_state *state)
- {
-+	static const unsigned long require_seq48 = 1 << DCCP_PKT_REQUEST |
-+						   1 << DCCP_PKT_RESPONSE |
-+						   1 << DCCP_PKT_CLOSEREQ |
-+						   1 << DCCP_PKT_CLOSE |
-+						   1 << DCCP_PKT_RESET |
-+						   1 << DCCP_PKT_SYNC |
-+						   1 << DCCP_PKT_SYNCACK;
- 	unsigned int dccp_len = skb->len - dataoff;
- 	unsigned int cscov;
- 	const char *msg;
-+	u8 type;
-+
-+	BUILD_BUG_ON(DCCP_PKT_INVALID >= BITS_PER_LONG);
+diff --git a/arch/arm/boot/dts/meson8b.dtsi b/arch/arm/boot/dts/meson8b.dtsi
+index f6eb7c803174e..af2454c9f77a4 100644
+--- a/arch/arm/boot/dts/meson8b.dtsi
++++ b/arch/arm/boot/dts/meson8b.dtsi
+@@ -599,13 +599,13 @@ &uart_A {
  
- 	if (dh->dccph_doff * 4 < sizeof(struct dccp_hdr) ||
- 	    dh->dccph_doff * 4 > dccp_len) {
-@@ -458,10 +468,17 @@ static bool dccp_error(const struct dccp_hdr *dh,
- 		goto out_invalid;
- 	}
+ &uart_B {
+ 	compatible = "amlogic,meson8b-uart";
+-	clocks = <&xtal>, <&clkc CLKID_UART0>, <&clkc CLKID_CLK81>;
++	clocks = <&xtal>, <&clkc CLKID_UART1>, <&clkc CLKID_CLK81>;
+ 	clock-names = "xtal", "pclk", "baud";
+ };
  
--	if (dh->dccph_type >= DCCP_PKT_INVALID) {
-+	type = dh->dccph_type;
-+	if (type >= DCCP_PKT_INVALID) {
- 		msg = "nf_ct_dccp: reserved packet type ";
- 		goto out_invalid;
- 	}
-+
-+	if (test_bit(type, &require_seq48) && !dh->dccph_x) {
-+		msg = "nf_ct_dccp: type lacks 48bit sequence numbers";
-+		goto out_invalid;
-+	}
-+
- 	return false;
- out_invalid:
- 	nf_l4proto_log_invalid(skb, state->net, state->pf,
-@@ -469,24 +486,53 @@ static bool dccp_error(const struct dccp_hdr *dh,
- 	return true;
- }
+ &uart_C {
+ 	compatible = "amlogic,meson8b-uart";
+-	clocks = <&xtal>, <&clkc CLKID_UART0>, <&clkc CLKID_CLK81>;
++	clocks = <&xtal>, <&clkc CLKID_UART2>, <&clkc CLKID_CLK81>;
+ 	clock-names = "xtal", "pclk", "baud";
+ };
  
-+struct nf_conntrack_dccp_buf {
-+	struct dccp_hdr dh;	 /* generic header part */
-+	struct dccp_hdr_ext ext; /* optional depending dh->dccph_x */
-+	union {			 /* depends on header type */
-+		struct dccp_hdr_ack_bits ack;
-+		struct dccp_hdr_request req;
-+		struct dccp_hdr_response response;
-+		struct dccp_hdr_reset rst;
-+	} u;
-+};
-+
-+static struct dccp_hdr *
-+dccp_header_pointer(const struct sk_buff *skb, int offset, const struct dccp_hdr *dh,
-+		    struct nf_conntrack_dccp_buf *buf)
-+{
-+	unsigned int hdrlen = __dccp_hdr_len(dh);
-+
-+	if (hdrlen > sizeof(*buf))
-+		return NULL;
-+
-+	return skb_header_pointer(skb, offset, hdrlen, buf);
-+}
-+
- int nf_conntrack_dccp_packet(struct nf_conn *ct, struct sk_buff *skb,
- 			     unsigned int dataoff,
- 			     enum ip_conntrack_info ctinfo,
- 			     const struct nf_hook_state *state)
- {
- 	enum ip_conntrack_dir dir = CTINFO2DIR(ctinfo);
--	struct dccp_hdr _dh, *dh;
-+	struct nf_conntrack_dccp_buf _dh;
- 	u_int8_t type, old_state, new_state;
- 	enum ct_dccp_roles role;
- 	unsigned int *timeouts;
-+	struct dccp_hdr *dh;
- 
--	dh = skb_header_pointer(skb, dataoff, sizeof(_dh), &_dh);
-+	dh = skb_header_pointer(skb, dataoff, sizeof(*dh), &_dh.dh);
- 	if (!dh)
- 		return NF_DROP;
- 
- 	if (dccp_error(dh, skb, dataoff, state))
- 		return -NF_ACCEPT;
- 
-+	/* pull again, including possible 48 bit sequences and subtype header */
-+	dh = dccp_header_pointer(skb, dataoff, dh, &_dh);
-+	if (!dh)
-+		return NF_DROP;
-+
- 	type = dh->dccph_type;
- 	if (!nf_ct_is_confirmed(ct) && !dccp_new(ct, skb, dh))
- 		return -NF_ACCEPT;
 -- 
 2.39.2
 
