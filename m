@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCFA1ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:37:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1EA6C433C7;
-	Tue, 25 Jul 2023 11:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070CB1ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:37:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C35C433C8;
+	Tue, 25 Jul 2023 11:37:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285033;
-	bh=DGLovW8MifUloB2N1+mWo0hqH6aEFPG7pywcdudfSbs=;
+	s=korg; t=1690285035;
+	bh=mdKo+7+TTNJbKFnWI8xBRKP0JQvRtiw0qVAAmi7uQ6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P84qqWA+NlqKUc9Ay+1kcYUGCkYff5f6JIc0E094z+aXZHHkPQW/NbsebJxyXLMb6
-	 rhz5LUd5VTEvecbs8cTkh8E+olCOu+RcuGrssGJ0dTJGdh/vzNdk4fg456FtgdCdvz
-	 tTE+BS59RWjx0SIMRYuoPgCpxS+iZjEfMrM2pRHo=
+	b=mMCMZ1zx6rcWQBaWcoxiZoMZziJUMShCOWNI0xQI52h2/BppsC10Vz8ZYgP96GIHe
+	 hPqAdk585FRZ1LqIqL+mkG5Hrls7VS1H41+7M/yzwNH6B/mFvSE/R+u/WtUQlRxVmJ
+	 OHW9ipudzEZ7gPpxRMiBUGR1k0S8Sn8rNkTYgABY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 031/313] spi: spi-geni-qcom: Correct CS_TOGGLE bit in SPI_TRANS_CFG
-Date: Tue, 25 Jul 2023 12:43:04 +0200
-Message-ID: <20230725104522.459269972@linuxfoundation.org>
+Subject: [PATCH 5.4 032/313] wifi: mwifiex: Fix the size of a memory allocation in mwifiex_ret_802_11_scan()
+Date: Tue, 25 Jul 2023 12:43:05 +0200
+Message-ID: <20230725104522.498945373@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -33,42 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 5fd7c99ecf45c8ee8a9b1268f0ffc91cc6271da2 ]
+[ Upstream commit d9aef04fcfa81ee4fb2804a21a3712b7bbd936af ]
 
-The CS_TOGGLE bit when set is supposed to instruct FW to
-toggle CS line between words. The driver with intent of
-disabling this behaviour has been unsetting BIT(0). This has
-not caused any trouble so far because the original BIT(1)
-is untouched and BIT(0) likely wasn't being used.
+The type of "mwifiex_adapter->nd_info" is "struct cfg80211_wowlan_nd_info",
+not "struct cfg80211_wowlan_nd_match".
 
-Correct this to prevent a potential future bug.
+Use struct_size() to ease the computation of the needed size.
 
-Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org
-Fixes: 561de45f72bd ("spi: spi-geni-qcom: Add SPI driver support for GENI based QUP")
-Reviewed-by: Douglas Anderson <dianders@chromium.org
-Link: https://lore.kernel.org/r/1682412128-1913-1-git-send-email-quic_vnivarth@quicinc.com
-Signed-off-by: Mark Brown <broonie@kernel.org
+The current code over-allocates some memory, so is safe.
+But it wastes 32 bytes.
+
+Fixes: 7d7f07d8c5d3 ("mwifiex: add wowlan net-detect support")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/7a6074fb056d2181e058a3cc6048d8155c20aec7.1683371982.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-geni-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/marvell/mwifiex/scan.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 01b53d816497c..ae1cbc3215366 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -32,7 +32,7 @@
- #define CS_DEMUX_OUTPUT_SEL	GENMASK(3, 0)
+diff --git a/drivers/net/wireless/marvell/mwifiex/scan.c b/drivers/net/wireless/marvell/mwifiex/scan.c
+index 629af26675cf1..1ab04adc53dcd 100644
+--- a/drivers/net/wireless/marvell/mwifiex/scan.c
++++ b/drivers/net/wireless/marvell/mwifiex/scan.c
+@@ -2202,9 +2202,9 @@ int mwifiex_ret_802_11_scan(struct mwifiex_private *priv,
  
- #define SE_SPI_TRANS_CFG	0x25c
--#define CS_TOGGLE		BIT(0)
-+#define CS_TOGGLE		BIT(1)
+ 	if (nd_config) {
+ 		adapter->nd_info =
+-			kzalloc(sizeof(struct cfg80211_wowlan_nd_match) +
+-				sizeof(struct cfg80211_wowlan_nd_match *) *
+-				scan_rsp->number_of_sets, GFP_ATOMIC);
++			kzalloc(struct_size(adapter->nd_info, matches,
++					    scan_rsp->number_of_sets),
++				GFP_ATOMIC);
  
- #define SE_SPI_WORD_LEN		0x268
- #define WORD_LEN_MSK		GENMASK(9, 0)
+ 		if (adapter->nd_info)
+ 			adapter->nd_info->n_matches = scan_rsp->number_of_sets;
 -- 
 2.39.2
 
