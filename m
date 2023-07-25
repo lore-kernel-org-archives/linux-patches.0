@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5AD1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:32:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2128C433C8;
-	Tue, 25 Jul 2023 11:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36FBA1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:32:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABDDEC433C7;
+	Tue, 25 Jul 2023 11:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284752;
-	bh=Udq6luzFCYdwtoHw5SqQw/3Ia3PXXOY2Yie7rp2sUh0=;
+	s=korg; t=1690284755;
+	bh=sCoQrF7gS+7+s61ZCyrSgQOLRLxmGESyrD8tTdjWuPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=atgupHwiP0x+cNjjXn8ZRglkJ/k364XQUaodkdom+1NdHCcElLwNQh9Emojr+2EUD
-	 lHi2EHSAt2FUB5SniiXdvqtfi3i5SUG6WZJq1YyNAx1ac+0+Oz9Utpu+sVdhg3hMyM
-	 WE+spVP5PN4/oq5HxeQ5BuT6iO5oQfRAR2aqWxlY=
+	b=fD/iKUMq1Vj4BkmN5h6OZCu7MAO2Ea5y6z3G2sae3h8vzIgw38VeTjhVekQsBXzTm
+	 AvEFHnvysut9zzbBdgNehl/nNnvD7/Hp6fSNJ0iDuh8Df7JgIn2Cl1N1yLbxrmGP2R
+	 rRAycQYSTwp4aoFgzZ5cZctJdC/mEgVcxTWT6o2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	"Joseph C. Sible" <josephcsible@gmail.com>,
+	Luka Guzenko <l.guzenko@web.de>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 440/509] ALSA: hda/realtek - remove 3k pull low procedure
-Date: Tue, 25 Jul 2023 12:46:19 +0200
-Message-ID: <20230725104613.884840028@linuxfoundation.org>
+Subject: [PATCH 5.10 441/509] ALSA: hda/realtek: Enable Mute LED on HP Laptop 15s-eq2xxx
+Date: Tue, 25 Jul 2023 12:46:20 +0200
+Message-ID: <20230725104613.934180357@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,66 +34,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kailang Yang <kailang@realtek.com>
+From: Luka Guzenko <l.guzenko@web.de>
 
-commit 69ea4c9d02b7947cdd612335a61cc1a02e544ccd upstream.
+commit 0659400f18c0e6c0c69d74fe5d09e7f6fbbd52a2 upstream.
 
-This was the ALC283 depop procedure.
-Maybe this procedure wasn't suitable with new codec.
-So, let us remove it. But HP 15z-fc000 must do 3k pull low. If it
-reboot with plugged headset,
-it will have errors show don't find codec error messages. Run 3k pull
-low will solve issues.
-So, let AMD chipset will run this for workarround.
+The HP Laptop 15s-eq2xxx uses ALC236 codec and controls the mute LED using
+COEF 0x07 index 1. No existing quirk covers this configuration.
+Adds a new quirk and enables it for the device.
 
-Fixes: 5aec98913095 ("ALSA: hda/realtek - ALC236 headset MIC recording issue")
-Signed-off-by: Kailang Yang <kailang@realtek.com>
+Signed-off-by: Luka Guzenko <l.guzenko@web.de>
 Cc: <stable@vger.kernel.org>
-Reported-by: Joseph C. Sible <josephcsible@gmail.com>
-Closes: https://lore.kernel.org/r/CABpewhE4REgn9RJZduuEU6Z_ijXNeQWnrxO1tg70Gkw=F8qNYg@mail.gmail.com/
-Link: https://lore.kernel.org/r/4678992299664babac4403d9978e7ba7@realtek.com
+Link: https://lore.kernel.org/r/20230718161241.393181-1-l.guzenko@web.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -121,6 +121,7 @@ struct alc_spec {
- 	unsigned int ultra_low_power:1;
- 	unsigned int has_hs_key:1;
- 	unsigned int no_internal_mic_pin:1;
-+	unsigned int en_3kpull_low:1;
+@@ -4559,6 +4559,21 @@ static void alc236_fixup_hp_mute_led_coe
+ 	}
+ }
  
- 	/* for PLL fix */
- 	hda_nid_t pll_nid;
-@@ -3617,6 +3618,7 @@ static void alc256_shutup(struct hda_cod
- 	if (!hp_pin)
- 		hp_pin = 0x21;
- 
-+	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
- 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
- 
- 	if (hp_pin_sense)
-@@ -3633,8 +3635,7 @@ static void alc256_shutup(struct hda_cod
- 	/* If disable 3k pulldown control for alc257, the Mic detection will not work correctly
- 	 * when booting with headset plugged. So skip setting it for the codec alc257
- 	 */
--	if (codec->core.vendor_id != 0x10ec0236 &&
--	    codec->core.vendor_id != 0x10ec0257)
-+	if (spec->en_3kpull_low)
- 		alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
- 
- 	if (!spec->no_shutup_pins)
-@@ -10065,6 +10066,8 @@ static int patch_alc269(struct hda_codec
- 		spec->shutup = alc256_shutup;
- 		spec->init_hook = alc256_init;
- 		spec->gen.mixer_nid = 0; /* ALC256 does not have any loopback mixer path */
-+		if (codec->bus->pci->vendor == PCI_VENDOR_ID_AMD)
-+			spec->en_3kpull_low = true;
- 		break;
- 	case 0x10ec0257:
- 		spec->codec_variant = ALC269_TYPE_ALC257;
++static void alc236_fixup_hp_mute_led_coefbit2(struct hda_codec *codec,
++					  const struct hda_fixup *fix, int action)
++{
++	struct alc_spec *spec = codec->spec;
++
++	if (action == HDA_FIXUP_ACT_PRE_PROBE) {
++		spec->mute_led_polarity = 0;
++		spec->mute_led_coef.idx = 0x07;
++		spec->mute_led_coef.mask = 1;
++		spec->mute_led_coef.on = 1;
++		spec->mute_led_coef.off = 0;
++		snd_hda_gen_add_mute_led_cdev(codec, coef_mute_led_set);
++	}
++}
++
+ /* turn on/off mic-mute LED per capture hook by coef bit */
+ static int coef_micmute_led_set(struct led_classdev *led_cdev,
+ 				enum led_brightness brightness)
+@@ -6878,6 +6893,7 @@ enum {
+ 	ALC285_FIXUP_HP_GPIO_LED,
+ 	ALC285_FIXUP_HP_MUTE_LED,
+ 	ALC285_FIXUP_HP_SPECTRE_X360_MUTE_LED,
++	ALC236_FIXUP_HP_MUTE_LED_COEFBIT2,
+ 	ALC236_FIXUP_HP_GPIO_LED,
+ 	ALC236_FIXUP_HP_MUTE_LED,
+ 	ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF,
+@@ -8250,6 +8266,10 @@ static const struct hda_fixup alc269_fix
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc285_fixup_hp_spectre_x360_mute_led,
+ 	},
++	[ALC236_FIXUP_HP_MUTE_LED_COEFBIT2] = {
++	    .type = HDA_FIXUP_FUNC,
++	    .v.func = alc236_fixup_hp_mute_led_coefbit2,
++	},
+ 	[ALC236_FIXUP_HP_GPIO_LED] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc236_fixup_hp_gpio_led,
+@@ -9004,6 +9024,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x886d, "HP ZBook Fury 17.3 Inch G8 Mobile Workstation PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8870, "HP ZBook Fury 15.6 Inch G8 Mobile Workstation PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8873, "HP ZBook Studio 15.6 Inch G8 Mobile Workstation PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
++	SND_PCI_QUIRK(0x103c, 0x887a, "HP Laptop 15s-eq2xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x888d, "HP ZBook Power 15.6 inch G8 Mobile Workstation PC", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8895, "HP EliteBook 855 G8 Notebook PC", ALC285_FIXUP_HP_SPEAKERS_MICMUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8896, "HP EliteBook 855 G8 Notebook PC", ALC285_FIXUP_HP_MUTE_LED),
 
 
