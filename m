@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2459815AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:50:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98505C433C7;
-	Tue, 25 Jul 2023 10:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7EC215AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:50:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F764C433C8;
+	Tue, 25 Jul 2023 10:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282233;
-	bh=lVGnxoJ5choazvgpHRDSUMPaI1CaK9SAkGAG+WCIGNE=;
+	s=korg; t=1690282235;
+	bh=XL9Urdfo/A7cpSPaDhGWGuuan9jOf8n4fE6u+KEAefo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lMWjldAfV+X/HaU1VnLH134jemehHLNBq6cyZj2kE34CFGqY6OKS5Z06aRo8/ugYw
-	 aGaaowaWMIVLAniImvneyFzPSgq27xcnngaTqAzHYQOX0JdzvYN7pKTsm2e/I544Wv
-	 +5Z2D70Z75err0DZRIh1R6DT0guxPxOQv728LI+k=
+	b=AjYX4OI+kNEsAJsRF/I5ZDu4mVYnV0s4ULKajqFBFO/qxaqHbcOjS/EzfHEEu5p4P
+	 Zizwhhd1WAHqyBirp7rsmtYaq3gLgHX8mwah4v7zsP3XYYT5QIXrkaNUDNp0qFVzug
+	 yJrNfgDNGZgjay9oUpptHJ4xUSN/U/9WZocTxhh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Josip Pavic <josip.pavic@amd.com>,
-	Alan Liu <haoping.liu@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.4 055/227] drm/amd/display: Keep PHY active for DP displays on DCN31
-Date: Tue, 25 Jul 2023 12:43:42 +0200
-Message-ID: <20230725104517.048003422@linuxfoundation.org>
+	Matus Gajdos <matuszpd@gmail.com>,
+	Shengjiu Wang <shengjiu.wang@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.4 056/227] ASoC: fsl_sai: Disable bit clock with transmitter
+Date: Tue, 25 Jul 2023 12:43:43 +0200
+Message-ID: <20230725104517.089302040@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -38,42 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+From: Matus Gajdos <matuszpd@gmail.com>
 
-commit 2387ccf43e3c6cb5dbd757c5ef410cca9f14b971 upstream.
+commit 269f399dc19f0e5c51711c3ba3bd06e0ef6ef403 upstream.
 
-[Why & How]
-Port of a change that went into DCN314 to keep the PHY enabled
-when we have a connected and active DP display.
+Otherwise bit clock remains running writing invalid data to the DAC.
 
-The PHY can hang if PHY refclk is disabled inadvertently.
-
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Matus Gajdos <matuszpd@gmail.com>
+Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Josip Pavic <josip.pavic@amd.com>
-Acked-by: Alan Liu <haoping.liu@amd.com>
-Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://lore.kernel.org/r/20230712124934.32232-1-matuszpd@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dcn31/dcn31_clk_mgr.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/fsl/fsl_sai.c |    2 +-
+ sound/soc/fsl/fsl_sai.h |    1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn31/dcn31_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn31/dcn31_clk_mgr.c
-@@ -87,6 +87,11 @@ static int dcn31_get_active_display_cnt_
- 				stream->signal == SIGNAL_TYPE_DVI_SINGLE_LINK ||
- 				stream->signal == SIGNAL_TYPE_DVI_DUAL_LINK)
- 			tmds_present = true;
-+
-+		/* Checking stream / link detection ensuring that PHY is active*/
-+		if (dc_is_dp_signal(stream->signal) && !stream->dpms_off)
-+			display_count++;
-+
- 	}
+--- a/sound/soc/fsl/fsl_sai.c
++++ b/sound/soc/fsl/fsl_sai.c
+@@ -719,7 +719,7 @@ static void fsl_sai_config_disable(struc
+ 	u32 xcsr, count = 100;
  
- 	for (i = 0; i < dc->link_count; i++) {
+ 	regmap_update_bits(sai->regmap, FSL_SAI_xCSR(tx, ofs),
+-			   FSL_SAI_CSR_TERE, 0);
++			   FSL_SAI_CSR_TERE | FSL_SAI_CSR_BCE, 0);
+ 
+ 	/* TERE will remain set till the end of current frame */
+ 	do {
+--- a/sound/soc/fsl/fsl_sai.h
++++ b/sound/soc/fsl/fsl_sai.h
+@@ -91,6 +91,7 @@
+ /* SAI Transmit/Receive Control Register */
+ #define FSL_SAI_CSR_TERE	BIT(31)
+ #define FSL_SAI_CSR_SE		BIT(30)
++#define FSL_SAI_CSR_BCE		BIT(28)
+ #define FSL_SAI_CSR_FR		BIT(25)
+ #define FSL_SAI_CSR_SR		BIT(24)
+ #define FSL_SAI_CSR_xF_SHIFT	16
 
 
