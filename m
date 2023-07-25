@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6232B14263
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:56:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2549C433C7;
-	Tue, 25 Jul 2023 10:56:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B9714263
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:56:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE36C433C8;
+	Tue, 25 Jul 2023 10:56:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282564;
-	bh=0AwH2QhiXgsahEoWITddKnPbGWp7C2V5aHo7q7i3tzI=;
+	s=korg; t=1690282567;
+	bh=2TuJa6Oda2BbjD3RjMFH+PfujzJEBhUlBxnMPfnucaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RZaVxC0xYdTv3Z1RMUB3uX6yHzmIrkIKmMOcGkYAXLzQzqtXUgCUz4mqCjQNWNddu
-	 gT4a0ye/LAlBYR2AOpkaYBpYoviio1AA1TePp9Lsgr5/czp7U4Kf5p24oLKZgUtDIg
-	 IaLeSHNr779bzfD6R8cLQxJlID+ot+hOaZfQFZR4=
+	b=0RHyQAsOIErA5MYAQCEragJTnf3UoWDxZcjHxexOkZrndZnxqA0b6QeAnRpLjWDhs
+	 OaH8oOuvDwyNhqxljAPJWjzB5aYFMcIbiyHg8Zn2Rotned4gFey0nPpphrZ7P2vbz6
+	 3nft7Ao2A2DwJYWp4WGtWfneoijkpfzHR6v/ArhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 175/227] iavf: fix a deadlock caused by rtnl and drivers lock circular dependencies
-Date: Tue, 25 Jul 2023 12:45:42 +0200
-Message-ID: <20230725104522.112354428@linuxfoundation.org>
+Subject: [PATCH 6.4 176/227] iavf: fix reset task race with iavf_remove()
+Date: Tue, 25 Jul 2023 12:45:43 +0200
+Message-ID: <20230725104522.143254273@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -39,337 +39,186 @@ Content-Transfer-Encoding: 8bit
 
 From: Ahmed Zaki <ahmed.zaki@intel.com>
 
-[ Upstream commit d1639a17319ba78a018280cd2df6577a7e5d9fab ]
+[ Upstream commit c34743daca0eb1dc855831a5210f0800a850088e ]
 
-A driver's lock (crit_lock) is used to serialize all the driver's tasks.
-Lockdep, however, shows a circular dependency between rtnl and
-crit_lock. This happens when an ndo that already holds the rtnl requests
-the driver to reset, since the reset task (in some paths) tries to grab
-rtnl to either change real number of queues of update netdev features.
+The reset task is currently scheduled from the watchdog or adminq tasks.
+First, all direct calls to schedule the reset task are replaced with the
+iavf_schedule_reset(), which is modified to accept the flag showing the
+type of reset.
 
-  [566.241851] ======================================================
-  [566.241893] WARNING: possible circular locking dependency detected
-  [566.241936] 6.2.14-100.fc36.x86_64+debug #1 Tainted: G           OE
-  [566.241984] ------------------------------------------------------
-  [566.242025] repro.sh/2604 is trying to acquire lock:
-  [566.242061] ffff9280fc5ceee8 (&adapter->crit_lock){+.+.}-{3:3}, at: iavf_close+0x3c/0x240 [iavf]
-  [566.242167]
-               but task is already holding lock:
-  [566.242209] ffffffff9976d350 (rtnl_mutex){+.+.}-{3:3}, at: iavf_remove+0x6b5/0x730 [iavf]
-  [566.242300]
-               which lock already depends on the new lock.
+To prevent the reset task from starting once iavf_remove() starts, we need
+to check the __IAVF_IN_REMOVE_TASK bit before we schedule it. This is now
+easily added to iavf_schedule_reset().
 
-  [566.242353]
-               the existing dependency chain (in reverse order) is:
-  [566.242401]
-               -> #1 (rtnl_mutex){+.+.}-{3:3}:
-  [566.242451]        __mutex_lock+0xc1/0xbb0
-  [566.242489]        iavf_init_interrupt_scheme+0x179/0x440 [iavf]
-  [566.242560]        iavf_watchdog_task+0x80b/0x1400 [iavf]
-  [566.242627]        process_one_work+0x2b3/0x560
-  [566.242663]        worker_thread+0x4f/0x3a0
-  [566.242696]        kthread+0xf2/0x120
-  [566.242730]        ret_from_fork+0x29/0x50
-  [566.242763]
-               -> #0 (&adapter->crit_lock){+.+.}-{3:3}:
-  [566.242815]        __lock_acquire+0x15ff/0x22b0
-  [566.242869]        lock_acquire+0xd2/0x2c0
-  [566.242901]        __mutex_lock+0xc1/0xbb0
-  [566.242934]        iavf_close+0x3c/0x240 [iavf]
-  [566.242997]        __dev_close_many+0xac/0x120
-  [566.243036]        dev_close_many+0x8b/0x140
-  [566.243071]        unregister_netdevice_many_notify+0x165/0x7c0
-  [566.243116]        unregister_netdevice_queue+0xd3/0x110
-  [566.243157]        iavf_remove+0x6c1/0x730 [iavf]
-  [566.243217]        pci_device_remove+0x33/0xa0
-  [566.243257]        device_release_driver_internal+0x1bc/0x240
-  [566.243299]        pci_stop_bus_device+0x6c/0x90
-  [566.243338]        pci_stop_and_remove_bus_device+0xe/0x20
-  [566.243380]        pci_iov_remove_virtfn+0xd1/0x130
-  [566.243417]        sriov_disable+0x34/0xe0
-  [566.243448]        ice_free_vfs+0x2da/0x330 [ice]
-  [566.244383]        ice_sriov_configure+0x88/0xad0 [ice]
-  [566.245353]        sriov_numvfs_store+0xde/0x1d0
-  [566.246156]        kernfs_fop_write_iter+0x15e/0x210
-  [566.246921]        vfs_write+0x288/0x530
-  [566.247671]        ksys_write+0x74/0xf0
-  [566.248408]        do_syscall_64+0x58/0x80
-  [566.249145]        entry_SYSCALL_64_after_hwframe+0x72/0xdc
-  [566.249886]
-                 other info that might help us debug this:
+Finally, remove the check for IAVF_FLAG_RESET_NEEDED in the watchdog task.
+It is redundant since all callers who set the flag immediately schedules
+the reset task.
 
-  [566.252014]  Possible unsafe locking scenario:
-
-  [566.253432]        CPU0                    CPU1
-  [566.254118]        ----                    ----
-  [566.254800]   lock(rtnl_mutex);
-  [566.255514]                                lock(&adapter->crit_lock);
-  [566.256233]                                lock(rtnl_mutex);
-  [566.256897]   lock(&adapter->crit_lock);
-  [566.257388]
-                  *** DEADLOCK ***
-
-The deadlock can be triggered by a script that is continuously resetting
-the VF adapter while doing other operations requiring RTNL, e.g:
-
-	while :; do
-		ip link set $VF up
-		ethtool --set-channels $VF combined 2
-		ip link set $VF down
-		ip link set $VF up
-		ethtool --set-channels $VF combined 4
-		ip link set $VF down
-	done
-
-Any operation that triggers a reset can substitute "ethtool --set-channles"
-
-As a fix, add a new task "finish_config" that do all the work which
-needs rtnl lock. With the exception of iavf_remove(), all work that
-require rtnl should be called from this task.
-
-As for iavf_remove(), at the point where we need to call
-unregister_netdevice() (and grab rtnl_lock), we make sure the finish_config
-task is not running (cancel_work_sync()) to safely grab rtnl. Subsequent
-finish_config work cannot restart after that since the task is guarded
-by the __IAVF_IN_REMOVE_TASK bit in iavf_schedule_finish_config().
-
-Fixes: 5ac49f3c2702 ("iavf: use mutexes for locking of critical sections")
+Fixes: 3ccd54ef44eb ("iavf: Fix init state closure on remove")
+Fixes: 14756b2ae265 ("iavf: Fix __IAVF_RESETTING state usage")
 Signed-off-by: Ahmed Zaki <ahmed.zaki@intel.com>
 Signed-off-by: Mateusz Palczewski <mateusz.palczewski@intel.com>
 Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf.h        |   2 +
- drivers/net/ethernet/intel/iavf/iavf_main.c   | 114 +++++++++++++-----
- .../net/ethernet/intel/iavf/iavf_virtchnl.c   |   1 +
- 3 files changed, 85 insertions(+), 32 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf.h        |  2 +-
+ .../net/ethernet/intel/iavf/iavf_ethtool.c    |  8 ++---
+ drivers/net/ethernet/intel/iavf/iavf_main.c   | 32 +++++++------------
+ .../net/ethernet/intel/iavf/iavf_virtchnl.c   |  3 +-
+ 4 files changed, 16 insertions(+), 29 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/iavf/iavf.h b/drivers/net/ethernet/intel/iavf/iavf.h
-index a5cab19eb6a8b..bf5e3c8e97e04 100644
+index bf5e3c8e97e04..8cbdebc5b6989 100644
 --- a/drivers/net/ethernet/intel/iavf/iavf.h
 +++ b/drivers/net/ethernet/intel/iavf/iavf.h
-@@ -255,6 +255,7 @@ struct iavf_adapter {
- 	struct workqueue_struct *wq;
- 	struct work_struct reset_task;
- 	struct work_struct adminq_task;
-+	struct work_struct finish_config;
- 	struct delayed_work client_task;
- 	wait_queue_head_t down_waitqueue;
- 	wait_queue_head_t reset_waitqueue;
-@@ -521,6 +522,7 @@ int iavf_process_config(struct iavf_adapter *adapter);
+@@ -520,7 +520,7 @@ int iavf_up(struct iavf_adapter *adapter);
+ void iavf_down(struct iavf_adapter *adapter);
+ int iavf_process_config(struct iavf_adapter *adapter);
  int iavf_parse_vf_resource_msg(struct iavf_adapter *adapter);
- void iavf_schedule_reset(struct iavf_adapter *adapter);
+-void iavf_schedule_reset(struct iavf_adapter *adapter);
++void iavf_schedule_reset(struct iavf_adapter *adapter, u64 flags);
  void iavf_schedule_request_stats(struct iavf_adapter *adapter);
-+void iavf_schedule_finish_config(struct iavf_adapter *adapter);
+ void iavf_schedule_finish_config(struct iavf_adapter *adapter);
  void iavf_reset(struct iavf_adapter *adapter);
- void iavf_set_ethtool_ops(struct net_device *netdev);
- void iavf_update_stats(struct iavf_adapter *adapter);
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
+index b7141c2a941d1..2f47cfa7f06e2 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
+@@ -532,8 +532,7 @@ static int iavf_set_priv_flags(struct net_device *netdev, u32 flags)
+ 	/* issue a reset to force legacy-rx change to take effect */
+ 	if (changed_flags & IAVF_FLAG_LEGACY_RX) {
+ 		if (netif_running(netdev)) {
+-			adapter->flags |= IAVF_FLAG_RESET_NEEDED;
+-			queue_work(adapter->wq, &adapter->reset_task);
++			iavf_schedule_reset(adapter, IAVF_FLAG_RESET_NEEDED);
+ 			ret = iavf_wait_for_reset(adapter);
+ 			if (ret)
+ 				netdev_warn(netdev, "Changing private flags timeout or interrupted waiting for reset");
+@@ -676,8 +675,7 @@ static int iavf_set_ringparam(struct net_device *netdev,
+ 	}
+ 
+ 	if (netif_running(netdev)) {
+-		adapter->flags |= IAVF_FLAG_RESET_NEEDED;
+-		queue_work(adapter->wq, &adapter->reset_task);
++		iavf_schedule_reset(adapter, IAVF_FLAG_RESET_NEEDED);
+ 		ret = iavf_wait_for_reset(adapter);
+ 		if (ret)
+ 			netdev_warn(netdev, "Changing ring parameters timeout or interrupted waiting for reset");
+@@ -1860,7 +1858,7 @@ static int iavf_set_channels(struct net_device *netdev,
+ 
+ 	adapter->num_req_queues = num_req;
+ 	adapter->flags |= IAVF_FLAG_REINIT_ITR_NEEDED;
+-	iavf_schedule_reset(adapter);
++	iavf_schedule_reset(adapter, IAVF_FLAG_RESET_NEEDED);
+ 
+ 	ret = iavf_wait_for_reset(adapter);
+ 	if (ret)
 diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index 8cb9b74b3ebea..161750c1598f8 100644
+index 161750c1598f8..ba96312feb505 100644
 --- a/drivers/net/ethernet/intel/iavf/iavf_main.c
 +++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -1702,10 +1702,10 @@ static int iavf_set_interrupt_capability(struct iavf_adapter *adapter)
- 		adapter->msix_entries[vector].entry = vector;
- 
- 	err = iavf_acquire_msix_vectors(adapter, v_budget);
-+	if (!err)
-+		iavf_schedule_finish_config(adapter);
- 
- out:
--	netif_set_real_num_rx_queues(adapter->netdev, pairs);
--	netif_set_real_num_tx_queues(adapter->netdev, pairs);
- 	return err;
- }
- 
-@@ -1925,9 +1925,7 @@ static int iavf_init_interrupt_scheme(struct iavf_adapter *adapter)
- 		goto err_alloc_queues;
- 	}
- 
--	rtnl_lock();
- 	err = iavf_set_interrupt_capability(adapter);
--	rtnl_unlock();
- 	if (err) {
- 		dev_err(&adapter->pdev->dev,
- 			"Unable to setup interrupt capabilities\n");
-@@ -2013,6 +2011,78 @@ static int iavf_reinit_interrupt_scheme(struct iavf_adapter *adapter, bool runni
- 	return err;
- }
- 
-+/**
-+ * iavf_finish_config - do all netdev work that needs RTNL
-+ * @work: our work_struct
-+ *
-+ * Do work that needs both RTNL and crit_lock.
-+ **/
-+static void iavf_finish_config(struct work_struct *work)
-+{
-+	struct iavf_adapter *adapter;
-+	int pairs, err;
-+
-+	adapter = container_of(work, struct iavf_adapter, finish_config);
-+
-+	/* Always take RTNL first to prevent circular lock dependency */
-+	rtnl_lock();
-+	mutex_lock(&adapter->crit_lock);
-+
-+	if ((adapter->flags & IAVF_FLAG_SETUP_NETDEV_FEATURES) &&
-+	    adapter->netdev_registered &&
-+	    !test_bit(__IAVF_IN_REMOVE_TASK, &adapter->crit_section)) {
-+		netdev_update_features(adapter->netdev);
-+		adapter->flags &= ~IAVF_FLAG_SETUP_NETDEV_FEATURES;
-+	}
-+
-+	switch (adapter->state) {
-+	case __IAVF_DOWN:
-+		if (!adapter->netdev_registered) {
-+			err = register_netdevice(adapter->netdev);
-+			if (err) {
-+				dev_err(&adapter->pdev->dev, "Unable to register netdev (%d)\n",
-+					err);
-+
-+				/* go back and try again.*/
-+				iavf_free_rss(adapter);
-+				iavf_free_misc_irq(adapter);
-+				iavf_reset_interrupt_capability(adapter);
-+				iavf_change_state(adapter,
-+						  __IAVF_INIT_CONFIG_ADAPTER);
-+				goto out;
-+			}
-+			adapter->netdev_registered = true;
-+		}
-+
-+		/* Set the real number of queues when reset occurs while
-+		 * state == __IAVF_DOWN
-+		 */
-+		fallthrough;
-+	case __IAVF_RUNNING:
-+		pairs = adapter->num_active_queues;
-+		netif_set_real_num_rx_queues(adapter->netdev, pairs);
-+		netif_set_real_num_tx_queues(adapter->netdev, pairs);
-+		break;
-+
-+	default:
-+		break;
-+	}
-+
-+out:
-+	mutex_unlock(&adapter->crit_lock);
-+	rtnl_unlock();
-+}
-+
-+/**
-+ * iavf_schedule_finish_config - Set the flags and schedule a reset event
-+ * @adapter: board private structure
-+ **/
-+void iavf_schedule_finish_config(struct iavf_adapter *adapter)
-+{
-+	if (!test_bit(__IAVF_IN_REMOVE_TASK, &adapter->crit_section))
-+		queue_work(adapter->wq, &adapter->finish_config);
-+}
-+
+@@ -309,12 +309,14 @@ static int iavf_lock_timeout(struct mutex *lock, unsigned int msecs)
  /**
-  * iavf_process_aq_command - process aq_required flags
-  * and sends aq command
-@@ -2650,22 +2720,8 @@ static void iavf_init_config_adapter(struct iavf_adapter *adapter)
- 
- 	netif_carrier_off(netdev);
- 	adapter->link_up = false;
--
--	/* set the semaphore to prevent any callbacks after device registration
--	 * up to time when state of driver will be set to __IAVF_DOWN
--	 */
--	rtnl_lock();
--	if (!adapter->netdev_registered) {
--		err = register_netdevice(netdev);
--		if (err) {
--			rtnl_unlock();
--			goto err_register;
--		}
--	}
--
--	adapter->netdev_registered = true;
--
- 	netif_tx_stop_all_queues(netdev);
-+
- 	if (CLIENT_ALLOWED(adapter)) {
- 		err = iavf_lan_add_device(adapter);
- 		if (err)
-@@ -2678,7 +2734,6 @@ static void iavf_init_config_adapter(struct iavf_adapter *adapter)
- 
- 	iavf_change_state(adapter, __IAVF_DOWN);
- 	set_bit(__IAVF_VSI_DOWN, adapter->vsi.state);
--	rtnl_unlock();
- 
- 	iavf_misc_irq_enable(adapter);
- 	wake_up(&adapter->down_waitqueue);
-@@ -2698,10 +2753,11 @@ static void iavf_init_config_adapter(struct iavf_adapter *adapter)
- 		/* request initial VLAN offload settings */
- 		iavf_set_vlan_offload_features(adapter, 0, netdev->features);
- 
-+	iavf_schedule_finish_config(adapter);
- 	return;
-+
- err_mem:
- 	iavf_free_rss(adapter);
--err_register:
- 	iavf_free_misc_irq(adapter);
- err_sw_init:
- 	iavf_reset_interrupt_capability(adapter);
-@@ -2728,15 +2784,6 @@ static void iavf_watchdog_task(struct work_struct *work)
- 		goto restart_watchdog;
+  * iavf_schedule_reset - Set the flags and schedule a reset event
+  * @adapter: board private structure
++ * @flags: IAVF_FLAG_RESET_PENDING or IAVF_FLAG_RESET_NEEDED
+  **/
+-void iavf_schedule_reset(struct iavf_adapter *adapter)
++void iavf_schedule_reset(struct iavf_adapter *adapter, u64 flags)
+ {
+-	if (!(adapter->flags &
+-	      (IAVF_FLAG_RESET_PENDING | IAVF_FLAG_RESET_NEEDED))) {
+-		adapter->flags |= IAVF_FLAG_RESET_NEEDED;
++	if (!test_bit(__IAVF_IN_REMOVE_TASK, &adapter->crit_section) &&
++	    !(adapter->flags &
++	    (IAVF_FLAG_RESET_PENDING | IAVF_FLAG_RESET_NEEDED))) {
++		adapter->flags |= flags;
+ 		queue_work(adapter->wq, &adapter->reset_task);
  	}
+ }
+@@ -342,7 +344,7 @@ static void iavf_tx_timeout(struct net_device *netdev, unsigned int txqueue)
+ 	struct iavf_adapter *adapter = netdev_priv(netdev);
  
--	if ((adapter->flags & IAVF_FLAG_SETUP_NETDEV_FEATURES) &&
--	    adapter->netdev_registered &&
--	    !test_bit(__IAVF_IN_REMOVE_TASK, &adapter->crit_section) &&
--	    rtnl_trylock()) {
--		netdev_update_features(adapter->netdev);
--		rtnl_unlock();
--		adapter->flags &= ~IAVF_FLAG_SETUP_NETDEV_FEATURES;
--	}
--
+ 	adapter->tx_timeout_count++;
+-	iavf_schedule_reset(adapter);
++	iavf_schedule_reset(adapter, IAVF_FLAG_RESET_NEEDED);
+ }
+ 
+ /**
+@@ -2490,7 +2492,7 @@ int iavf_parse_vf_resource_msg(struct iavf_adapter *adapter)
+ 			adapter->vsi_res->num_queue_pairs);
+ 		adapter->flags |= IAVF_FLAG_REINIT_MSIX_NEEDED;
+ 		adapter->num_req_queues = adapter->vsi_res->num_queue_pairs;
+-		iavf_schedule_reset(adapter);
++		iavf_schedule_reset(adapter, IAVF_FLAG_RESET_NEEDED);
+ 
+ 		return -EAGAIN;
+ 	}
+@@ -2787,14 +2789,6 @@ static void iavf_watchdog_task(struct work_struct *work)
  	if (adapter->flags & IAVF_FLAG_PF_COMMS_FAILED)
  		iavf_change_state(adapter, __IAVF_COMM_FAILED);
  
-@@ -4978,6 +5025,7 @@ static int iavf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+-	if (adapter->flags & IAVF_FLAG_RESET_NEEDED) {
+-		adapter->aq_required = 0;
+-		adapter->current_op = VIRTCHNL_OP_UNKNOWN;
+-		mutex_unlock(&adapter->crit_lock);
+-		queue_work(adapter->wq, &adapter->reset_task);
+-		return;
+-	}
+-
+ 	switch (adapter->state) {
+ 	case __IAVF_STARTUP:
+ 		iavf_startup(adapter);
+@@ -2922,11 +2916,10 @@ static void iavf_watchdog_task(struct work_struct *work)
+ 	/* check for hw reset */
+ 	reg_val = rd32(hw, IAVF_VF_ARQLEN1) & IAVF_VF_ARQLEN1_ARQENABLE_MASK;
+ 	if (!reg_val) {
+-		adapter->flags |= IAVF_FLAG_RESET_PENDING;
+ 		adapter->aq_required = 0;
+ 		adapter->current_op = VIRTCHNL_OP_UNKNOWN;
+ 		dev_err(&adapter->pdev->dev, "Hardware reset detected\n");
+-		queue_work(adapter->wq, &adapter->reset_task);
++		iavf_schedule_reset(adapter, IAVF_FLAG_RESET_PENDING);
+ 		mutex_unlock(&adapter->crit_lock);
+ 		queue_delayed_work(adapter->wq,
+ 				   &adapter->watchdog_task, HZ * 2);
+@@ -3324,9 +3317,7 @@ static void iavf_adminq_task(struct work_struct *work)
+ 	} while (pending);
+ 	mutex_unlock(&adapter->crit_lock);
  
- 	INIT_WORK(&adapter->reset_task, iavf_reset_task);
- 	INIT_WORK(&adapter->adminq_task, iavf_adminq_task);
-+	INIT_WORK(&adapter->finish_config, iavf_finish_config);
- 	INIT_DELAYED_WORK(&adapter->watchdog_task, iavf_watchdog_task);
- 	INIT_DELAYED_WORK(&adapter->client_task, iavf_client_task);
- 	queue_delayed_work(adapter->wq, &adapter->watchdog_task,
-@@ -5120,13 +5168,15 @@ static void iavf_remove(struct pci_dev *pdev)
- 		usleep_range(500, 1000);
- 	}
- 	cancel_delayed_work_sync(&adapter->watchdog_task);
-+	cancel_work_sync(&adapter->finish_config);
+-	if ((adapter->flags &
+-	     (IAVF_FLAG_RESET_PENDING | IAVF_FLAG_RESET_NEEDED)) ||
+-	    adapter->state == __IAVF_RESETTING)
++	if (iavf_is_reset_in_progress(adapter))
+ 		goto freedom;
  
-+	rtnl_lock();
- 	if (adapter->netdev_registered) {
--		rtnl_lock();
- 		unregister_netdevice(netdev);
- 		adapter->netdev_registered = false;
--		rtnl_unlock();
+ 	/* check for error indications */
+@@ -4423,8 +4414,7 @@ static int iavf_change_mtu(struct net_device *netdev, int new_mtu)
  	}
-+	rtnl_unlock();
-+
- 	if (CLIENT_ALLOWED(adapter)) {
- 		err = iavf_lan_del_device(adapter);
- 		if (err)
+ 
+ 	if (netif_running(netdev)) {
+-		adapter->flags |= IAVF_FLAG_RESET_NEEDED;
+-		queue_work(adapter->wq, &adapter->reset_task);
++		iavf_schedule_reset(adapter, IAVF_FLAG_RESET_NEEDED);
+ 		ret = iavf_wait_for_reset(adapter);
+ 		if (ret < 0)
+ 			netdev_warn(netdev, "MTU change interrupted waiting for reset");
 diff --git a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-index 1bab896aaf40c..073ac29ed84c7 100644
+index 073ac29ed84c7..be3c007ce90a9 100644
 --- a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
 +++ b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-@@ -2237,6 +2237,7 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
- 
- 		iavf_process_config(adapter);
- 		adapter->flags |= IAVF_FLAG_SETUP_NETDEV_FEATURES;
-+		iavf_schedule_finish_config(adapter);
- 
- 		iavf_set_queue_vlan_tag_loc(adapter);
- 
+@@ -1961,9 +1961,8 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
+ 		case VIRTCHNL_EVENT_RESET_IMPENDING:
+ 			dev_info(&adapter->pdev->dev, "Reset indication received from the PF\n");
+ 			if (!(adapter->flags & IAVF_FLAG_RESET_PENDING)) {
+-				adapter->flags |= IAVF_FLAG_RESET_PENDING;
+ 				dev_info(&adapter->pdev->dev, "Scheduling reset task\n");
+-				queue_work(adapter->wq, &adapter->reset_task);
++				iavf_schedule_reset(adapter, IAVF_FLAG_RESET_PENDING);
+ 			}
+ 			break;
+ 		default:
 -- 
 2.39.2
 
