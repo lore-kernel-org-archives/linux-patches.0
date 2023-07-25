@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938F515AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:54:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A1AC433C8;
-	Tue, 25 Jul 2023 10:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FD89440
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:54:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D37C8C433C7;
+	Tue, 25 Jul 2023 10:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282471;
-	bh=1Q67qdk12FBuGwaaE5LJWkl7u8MfdyCJqcQiR0n6UsA=;
+	s=korg; t=1690282474;
+	bh=D8OvjMNbXf5I8VZ2grsUsdo7cqXlD7tyBnT5irW8Ngs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TJJk+V4KPVTPcC9se5Fc1E4po/+Z+5ZHzVTvcpQiB415wvClsXJkdVBOI+O3Jsgi6
-	 Nk+X0ZfFgZkCFMXdXhpNSPkyHDTeRYK5qMG/sOD/fSwuTMOJwyRbyV6m+uNqhEOobQ
-	 FsP9ld5U14pvyS5FND89EglgrzjY17wCCsF6WFzE=
+	b=IN83s3dbBvEGke+JhPCOuOLxwVy2UnX5yambIjb1UxeFqjJhHn06ueTStRwLI49fZ
+	 gl66Q1LnVfrx7z+TzgtXEPlj6Oo6N8Y6wr7fDDar8E+SGrX1pDZ2qlDAYcO+BVttWA
+	 3dagf8AxJkdcDq5UTPYeS5d+TYrZl+ezdFcaZi7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 142/227] pinctrl: renesas: rzg2l: Handle non-unique subnode names
-Date: Tue, 25 Jul 2023 12:45:09 +0200
-Message-ID: <20230725104520.757354299@linuxfoundation.org>
+Subject: [PATCH 6.4 143/227] spi: bcm63xx: fix max prepend length
+Date: Tue, 25 Jul 2023 12:45:10 +0200
+Message-ID: <20230725104520.803963296@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,116 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit bfc374a145ae133613e05b9b89be561f169cb58d ]
+[ Upstream commit 5158814cbb37bbb38344b3ecddc24ba2ed0365f2 ]
 
-Currently, sd1 and sd0 have unique subnode names 'sd1_mux' and 'sd0_mux'.
-If we change these to non-unique subnode names such as 'mux' this can
-lead to the below conflict as the RZ/G2L pin control driver considers
-only the names of the subnodes.
+The command word is defined as following:
 
-   pinctrl-rzg2l 11030000.pinctrl: pin P47_0 already requested by 11c00000.mmc; cannot claim for 11c10000.mmc
-   pinctrl-rzg2l 11030000.pinctrl: pin-376 (11c10000.mmc) status -22
-   pinctrl-rzg2l 11030000.pinctrl: could not request pin 376 (P47_0) from group mux  on device pinctrl-rzg2l
-   renesas_sdhi_internal_dmac 11c10000.mmc: Error applying setting, reverse things back
+    /* Command */
+    #define SPI_CMD_COMMAND_SHIFT           0
+    #define SPI_CMD_DEVICE_ID_SHIFT         4
+    #define SPI_CMD_PREPEND_BYTE_CNT_SHIFT  8
+    #define SPI_CMD_ONE_BYTE_SHIFT          11
+    #define SPI_CMD_ONE_WIRE_SHIFT          12
 
-Fix this by constructing unique names from the node names of both the
-pin control configuration node and its child node, where appropriate.
+If the prepend byte count field starts at bit 8, and the next defined
+bit is SPI_CMD_ONE_BYTE at bit 11, it can be at most 3 bits wide, and
+thus the max value is 7, not 15.
 
-Based on the work done by Geert for the RZ/V2M pinctrl driver.
-
-Fixes: c4c4637eb57f ("pinctrl: renesas: Add RZ/G2L pin and gpio controller driver")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230704111858.215278-1-biju.das.jz@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: b17de076062a ("spi/bcm63xx: work around inability to keep CS up")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Link: https://lore.kernel.org/r/20230629071453.62024-1-jonas.gorski@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzg2l.c | 28 ++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+ drivers/spi/spi-bcm63xx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-index 9511d920565e9..b53d26167da52 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-@@ -249,6 +249,7 @@ static int rzg2l_map_add_config(struct pinctrl_map *map,
+diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
+index 9aecb77c3d892..07b5b71b23520 100644
+--- a/drivers/spi/spi-bcm63xx.c
++++ b/drivers/spi/spi-bcm63xx.c
+@@ -126,7 +126,7 @@ enum bcm63xx_regs_spi {
+ 	SPI_MSG_DATA_SIZE,
+ };
  
- static int rzg2l_dt_subnode_to_map(struct pinctrl_dev *pctldev,
- 				   struct device_node *np,
-+				   struct device_node *parent,
- 				   struct pinctrl_map **map,
- 				   unsigned int *num_maps,
- 				   unsigned int *index)
-@@ -266,6 +267,7 @@ static int rzg2l_dt_subnode_to_map(struct pinctrl_dev *pctldev,
- 	struct property *prop;
- 	int ret, gsel, fsel;
- 	const char **pin_fn;
-+	const char *name;
- 	const char *pin;
+-#define BCM63XX_SPI_MAX_PREPEND		15
++#define BCM63XX_SPI_MAX_PREPEND		7
  
- 	pinmux = of_find_property(np, "pinmux", NULL);
-@@ -349,8 +351,19 @@ static int rzg2l_dt_subnode_to_map(struct pinctrl_dev *pctldev,
- 		psel_val[i] = MUX_FUNC(value);
- 	}
- 
-+	if (parent) {
-+		name = devm_kasprintf(pctrl->dev, GFP_KERNEL, "%pOFn.%pOFn",
-+				      parent, np);
-+		if (!name) {
-+			ret = -ENOMEM;
-+			goto done;
-+		}
-+	} else {
-+		name = np->name;
-+	}
-+
- 	/* Register a single pin group listing all the pins we read from DT */
--	gsel = pinctrl_generic_add_group(pctldev, np->name, pins, num_pinmux, NULL);
-+	gsel = pinctrl_generic_add_group(pctldev, name, pins, num_pinmux, NULL);
- 	if (gsel < 0) {
- 		ret = gsel;
- 		goto done;
-@@ -360,17 +373,16 @@ static int rzg2l_dt_subnode_to_map(struct pinctrl_dev *pctldev,
- 	 * Register a single group function where the 'data' is an array PSEL
- 	 * register values read from DT.
- 	 */
--	pin_fn[0] = np->name;
--	fsel = pinmux_generic_add_function(pctldev, np->name, pin_fn, 1,
--					   psel_val);
-+	pin_fn[0] = name;
-+	fsel = pinmux_generic_add_function(pctldev, name, pin_fn, 1, psel_val);
- 	if (fsel < 0) {
- 		ret = fsel;
- 		goto remove_group;
- 	}
- 
- 	maps[idx].type = PIN_MAP_TYPE_MUX_GROUP;
--	maps[idx].data.mux.group = np->name;
--	maps[idx].data.mux.function = np->name;
-+	maps[idx].data.mux.group = name;
-+	maps[idx].data.mux.function = name;
- 	idx++;
- 
- 	dev_dbg(pctrl->dev, "Parsed %pOF with %d pins\n", np, num_pinmux);
-@@ -417,7 +429,7 @@ static int rzg2l_dt_node_to_map(struct pinctrl_dev *pctldev,
- 	index = 0;
- 
- 	for_each_child_of_node(np, child) {
--		ret = rzg2l_dt_subnode_to_map(pctldev, child, map,
-+		ret = rzg2l_dt_subnode_to_map(pctldev, child, np, map,
- 					      num_maps, &index);
- 		if (ret < 0) {
- 			of_node_put(child);
-@@ -426,7 +438,7 @@ static int rzg2l_dt_node_to_map(struct pinctrl_dev *pctldev,
- 	}
- 
- 	if (*num_maps == 0) {
--		ret = rzg2l_dt_subnode_to_map(pctldev, np, map,
-+		ret = rzg2l_dt_subnode_to_map(pctldev, np, NULL, map,
- 					      num_maps, &index);
- 		if (ret < 0)
- 			goto done;
+ #define BCM63XX_SPI_MAX_CS		8
+ #define BCM63XX_SPI_BUS_NUM		0
 -- 
 2.39.2
 
