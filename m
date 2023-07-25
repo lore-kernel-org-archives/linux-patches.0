@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36FBA1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:32:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABDDEC433C7;
-	Tue, 25 Jul 2023 11:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24D01ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:32:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73360C433C8;
+	Tue, 25 Jul 2023 11:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284755;
-	bh=sCoQrF7gS+7+s61ZCyrSgQOLRLxmGESyrD8tTdjWuPc=;
+	s=korg; t=1690284757;
+	bh=xtXUxUkZkGrGp77VRSq2OgPg+BCRWemaTfBlnj4SzT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fD/iKUMq1Vj4BkmN5h6OZCu7MAO2Ea5y6z3G2sae3h8vzIgw38VeTjhVekQsBXzTm
-	 AvEFHnvysut9zzbBdgNehl/nNnvD7/Hp6fSNJ0iDuh8Df7JgIn2Cl1N1yLbxrmGP2R
-	 rRAycQYSTwp4aoFgzZ5cZctJdC/mEgVcxTWT6o2U=
+	b=HcrVZLwYPQL5ivV4280SVBV3iMswdwDQnO0FAyoWHeK8zvAnUWXiZbQREXTUXo6cC
+	 XrXpBEAN7Q10gAukskeug9XN7sBN7as4DxkVLqVFrm/Ef25T+dkXoD69AR1YikaYbb
+	 Hd6ZGKGwwpTPjAGMMhg6qDDm2lFh7ZlkQc5iq7j4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luka Guzenko <l.guzenko@web.de>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 441/509] ALSA: hda/realtek: Enable Mute LED on HP Laptop 15s-eq2xxx
-Date: Tue, 25 Jul 2023 12:46:20 +0200
-Message-ID: <20230725104613.934180357@linuxfoundation.org>
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Joey Lee <jlee@suse.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 5.10 442/509] keys: Fix linking a duplicate key to a keyrings assoc_array
+Date: Tue, 25 Jul 2023 12:46:21 +0200
+Message-ID: <20230725104613.982086577@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -34,73 +35,177 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luka Guzenko <l.guzenko@web.de>
+From: Petr Pavlu <petr.pavlu@suse.com>
 
-commit 0659400f18c0e6c0c69d74fe5d09e7f6fbbd52a2 upstream.
+commit d55901522f96082a43b9842d34867363c0cdbac5 upstream.
 
-The HP Laptop 15s-eq2xxx uses ALC236 codec and controls the mute LED using
-COEF 0x07 index 1. No existing quirk covers this configuration.
-Adds a new quirk and enables it for the device.
+When making a DNS query inside the kernel using dns_query(), the request
+code can in rare cases end up creating a duplicate index key in the
+assoc_array of the destination keyring. It is eventually found by
+a BUG_ON() check in the assoc_array implementation and results in
+a crash.
 
-Signed-off-by: Luka Guzenko <l.guzenko@web.de>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230718161241.393181-1-l.guzenko@web.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Example report:
+[2158499.700025] kernel BUG at ../lib/assoc_array.c:652!
+[2158499.700039] invalid opcode: 0000 [#1] SMP PTI
+[2158499.700065] CPU: 3 PID: 31985 Comm: kworker/3:1 Kdump: loaded Not tainted 5.3.18-150300.59.90-default #1 SLE15-SP3
+[2158499.700096] Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
+[2158499.700351] Workqueue: cifsiod cifs_resolve_server [cifs]
+[2158499.700380] RIP: 0010:assoc_array_insert+0x85f/0xa40
+[2158499.700401] Code: ff 74 2b 48 8b 3b 49 8b 45 18 4c 89 e6 48 83 e7 fe e8 95 ec 74 00 3b 45 88 7d db 85 c0 79 d4 0f 0b 0f 0b 0f 0b e8 41 f2 be ff <0f> 0b 0f 0b 81 7d 88 ff ff ff 7f 4c 89 eb 4c 8b ad 58 ff ff ff 0f
+[2158499.700448] RSP: 0018:ffffc0bd6187faf0 EFLAGS: 00010282
+[2158499.700470] RAX: ffff9f1ea7da2fe8 RBX: ffff9f1ea7da2fc1 RCX: 0000000000000005
+[2158499.700492] RDX: 0000000000000000 RSI: 0000000000000005 RDI: 0000000000000000
+[2158499.700515] RBP: ffffc0bd6187fbb0 R08: ffff9f185faf1100 R09: 0000000000000000
+[2158499.700538] R10: ffff9f1ea7da2cc0 R11: 000000005ed8cec8 R12: ffffc0bd6187fc28
+[2158499.700561] R13: ffff9f15feb8d000 R14: ffff9f1ea7da2fc0 R15: ffff9f168dc0d740
+[2158499.700585] FS:  0000000000000000(0000) GS:ffff9f185fac0000(0000) knlGS:0000000000000000
+[2158499.700610] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[2158499.700630] CR2: 00007fdd94fca238 CR3: 0000000809d8c006 CR4: 00000000003706e0
+[2158499.700702] Call Trace:
+[2158499.700741]  ? key_alloc+0x447/0x4b0
+[2158499.700768]  ? __key_link_begin+0x43/0xa0
+[2158499.700790]  __key_link_begin+0x43/0xa0
+[2158499.700814]  request_key_and_link+0x2c7/0x730
+[2158499.700847]  ? dns_resolver_read+0x20/0x20 [dns_resolver]
+[2158499.700873]  ? key_default_cmp+0x20/0x20
+[2158499.700898]  request_key_tag+0x43/0xa0
+[2158499.700926]  dns_query+0x114/0x2ca [dns_resolver]
+[2158499.701127]  dns_resolve_server_name_to_ip+0x194/0x310 [cifs]
+[2158499.701164]  ? scnprintf+0x49/0x90
+[2158499.701190]  ? __switch_to_asm+0x40/0x70
+[2158499.701211]  ? __switch_to_asm+0x34/0x70
+[2158499.701405]  reconn_set_ipaddr_from_hostname+0x81/0x2a0 [cifs]
+[2158499.701603]  cifs_resolve_server+0x4b/0xd0 [cifs]
+[2158499.701632]  process_one_work+0x1f8/0x3e0
+[2158499.701658]  worker_thread+0x2d/0x3f0
+[2158499.701682]  ? process_one_work+0x3e0/0x3e0
+[2158499.701703]  kthread+0x10d/0x130
+[2158499.701723]  ? kthread_park+0xb0/0xb0
+[2158499.701746]  ret_from_fork+0x1f/0x40
+
+The situation occurs as follows:
+* Some kernel facility invokes dns_query() to resolve a hostname, for
+  example, "abcdef". The function registers its global DNS resolver
+  cache as current->cred.thread_keyring and passes the query to
+  request_key_net() -> request_key_tag() -> request_key_and_link().
+* Function request_key_and_link() creates a keyring_search_context
+  object. Its match_data.cmp method gets set via a call to
+  type->match_preparse() (resolves to dns_resolver_match_preparse()) to
+  dns_resolver_cmp().
+* Function request_key_and_link() continues and invokes
+  search_process_keyrings_rcu() which returns that a given key was not
+  found. The control is then passed to request_key_and_link() ->
+  construct_alloc_key().
+* Concurrently to that, a second task similarly makes a DNS query for
+  "abcdef." and its result gets inserted into the DNS resolver cache.
+* Back on the first task, function construct_alloc_key() first runs
+  __key_link_begin() to determine an assoc_array_edit operation to
+  insert a new key. Index keys in the array are compared exactly as-is,
+  using keyring_compare_object(). The operation finds that "abcdef" is
+  not yet present in the destination keyring.
+* Function construct_alloc_key() continues and checks if a given key is
+  already present on some keyring by again calling
+  search_process_keyrings_rcu(). This search is done using
+  dns_resolver_cmp() and "abcdef" gets matched with now present key
+  "abcdef.".
+* The found key is linked on the destination keyring by calling
+  __key_link() and using the previously calculated assoc_array_edit
+  operation. This inserts the "abcdef." key in the array but creates
+  a duplicity because the same index key is already present.
+
+Fix the problem by postponing __key_link_begin() in
+construct_alloc_key() until an actual key which should be linked into
+the destination keyring is determined.
+
+[jarkko@kernel.org: added a fixes tag and cc to stable]
+Cc: stable@vger.kernel.org # v5.3+
+Fixes: df593ee23e05 ("keys: Hoist locking out of __key_link_begin()")
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Reviewed-by: Joey Lee <jlee@suse.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |   21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ security/keys/request_key.c |   35 ++++++++++++++++++++++++-----------
+ 1 file changed, 24 insertions(+), 11 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -4559,6 +4559,21 @@ static void alc236_fixup_hp_mute_led_coe
- 	}
- }
+--- a/security/keys/request_key.c
++++ b/security/keys/request_key.c
+@@ -401,17 +401,21 @@ static int construct_alloc_key(struct ke
+ 	set_bit(KEY_FLAG_USER_CONSTRUCT, &key->flags);
  
-+static void alc236_fixup_hp_mute_led_coefbit2(struct hda_codec *codec,
-+					  const struct hda_fixup *fix, int action)
-+{
-+	struct alc_spec *spec = codec->spec;
-+
-+	if (action == HDA_FIXUP_ACT_PRE_PROBE) {
-+		spec->mute_led_polarity = 0;
-+		spec->mute_led_coef.idx = 0x07;
-+		spec->mute_led_coef.mask = 1;
-+		spec->mute_led_coef.on = 1;
-+		spec->mute_led_coef.off = 0;
-+		snd_hda_gen_add_mute_led_cdev(codec, coef_mute_led_set);
+ 	if (dest_keyring) {
+-		ret = __key_link_lock(dest_keyring, &ctx->index_key);
++		ret = __key_link_lock(dest_keyring, &key->index_key);
+ 		if (ret < 0)
+ 			goto link_lock_failed;
+-		ret = __key_link_begin(dest_keyring, &ctx->index_key, &edit);
+-		if (ret < 0)
+-			goto link_prealloc_failed;
+ 	}
+ 
+-	/* attach the key to the destination keyring under lock, but we do need
++	/*
++	 * Attach the key to the destination keyring under lock, but we do need
+ 	 * to do another check just in case someone beat us to it whilst we
+-	 * waited for locks */
++	 * waited for locks.
++	 *
++	 * The caller might specify a comparison function which looks for keys
++	 * that do not exactly match but are still equivalent from the caller's
++	 * perspective. The __key_link_begin() operation must be done only after
++	 * an actual key is determined.
++	 */
+ 	mutex_lock(&key_construction_mutex);
+ 
+ 	rcu_read_lock();
+@@ -420,12 +424,16 @@ static int construct_alloc_key(struct ke
+ 	if (!IS_ERR(key_ref))
+ 		goto key_already_present;
+ 
+-	if (dest_keyring)
++	if (dest_keyring) {
++		ret = __key_link_begin(dest_keyring, &key->index_key, &edit);
++		if (ret < 0)
++			goto link_alloc_failed;
+ 		__key_link(dest_keyring, key, &edit);
 +	}
-+}
-+
- /* turn on/off mic-mute LED per capture hook by coef bit */
- static int coef_micmute_led_set(struct led_classdev *led_cdev,
- 				enum led_brightness brightness)
-@@ -6878,6 +6893,7 @@ enum {
- 	ALC285_FIXUP_HP_GPIO_LED,
- 	ALC285_FIXUP_HP_MUTE_LED,
- 	ALC285_FIXUP_HP_SPECTRE_X360_MUTE_LED,
-+	ALC236_FIXUP_HP_MUTE_LED_COEFBIT2,
- 	ALC236_FIXUP_HP_GPIO_LED,
- 	ALC236_FIXUP_HP_MUTE_LED,
- 	ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF,
-@@ -8250,6 +8266,10 @@ static const struct hda_fixup alc269_fix
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc285_fixup_hp_spectre_x360_mute_led,
- 	},
-+	[ALC236_FIXUP_HP_MUTE_LED_COEFBIT2] = {
-+	    .type = HDA_FIXUP_FUNC,
-+	    .v.func = alc236_fixup_hp_mute_led_coefbit2,
-+	},
- 	[ALC236_FIXUP_HP_GPIO_LED] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc236_fixup_hp_gpio_led,
-@@ -9004,6 +9024,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x886d, "HP ZBook Fury 17.3 Inch G8 Mobile Workstation PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
- 	SND_PCI_QUIRK(0x103c, 0x8870, "HP ZBook Fury 15.6 Inch G8 Mobile Workstation PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
- 	SND_PCI_QUIRK(0x103c, 0x8873, "HP ZBook Studio 15.6 Inch G8 Mobile Workstation PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
-+	SND_PCI_QUIRK(0x103c, 0x887a, "HP Laptop 15s-eq2xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x888d, "HP ZBook Power 15.6 inch G8 Mobile Workstation PC", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8895, "HP EliteBook 855 G8 Notebook PC", ALC285_FIXUP_HP_SPEAKERS_MICMUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8896, "HP EliteBook 855 G8 Notebook PC", ALC285_FIXUP_HP_MUTE_LED),
+ 
+ 	mutex_unlock(&key_construction_mutex);
+ 	if (dest_keyring)
+-		__key_link_end(dest_keyring, &ctx->index_key, edit);
++		__key_link_end(dest_keyring, &key->index_key, edit);
+ 	mutex_unlock(&user->cons_lock);
+ 	*_key = key;
+ 	kleave(" = 0 [%d]", key_serial(key));
+@@ -438,10 +446,13 @@ key_already_present:
+ 	mutex_unlock(&key_construction_mutex);
+ 	key = key_ref_to_ptr(key_ref);
+ 	if (dest_keyring) {
++		ret = __key_link_begin(dest_keyring, &key->index_key, &edit);
++		if (ret < 0)
++			goto link_alloc_failed_unlocked;
+ 		ret = __key_link_check_live_key(dest_keyring, key);
+ 		if (ret == 0)
+ 			__key_link(dest_keyring, key, &edit);
+-		__key_link_end(dest_keyring, &ctx->index_key, edit);
++		__key_link_end(dest_keyring, &key->index_key, edit);
+ 		if (ret < 0)
+ 			goto link_check_failed;
+ 	}
+@@ -456,8 +467,10 @@ link_check_failed:
+ 	kleave(" = %d [linkcheck]", ret);
+ 	return ret;
+ 
+-link_prealloc_failed:
+-	__key_link_end(dest_keyring, &ctx->index_key, edit);
++link_alloc_failed:
++	mutex_unlock(&key_construction_mutex);
++link_alloc_failed_unlocked:
++	__key_link_end(dest_keyring, &key->index_key, edit);
+ link_lock_failed:
+ 	mutex_unlock(&user->cons_lock);
+ 	key_put(key);
 
 
