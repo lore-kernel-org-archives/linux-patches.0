@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79451ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:24:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 277FEC433C7;
-	Tue, 25 Jul 2023 11:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 854491ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:24:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05E17C433C7;
+	Tue, 25 Jul 2023 11:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284271;
-	bh=g8Mns1TL4dljE96MtzbNsDL1b1GzrxsGvHQMcvTkD5g=;
+	s=korg; t=1690284274;
+	bh=o3GiozvMaLRwUcURm6vN3RZNKEP/QS8IXHFwUDfGDTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2quLkgevbDEyrgYaX7PcHHf9MC0ljorUNeHFwxIDidfBHt2SJvGhV8F5EWdgA9XMG
-	 lmwusNOw8bcjBIFRTpfZ0cYeRJP3vH9WGDVQ/k1WLqrhexLxoGininxSDWhS2m2gwb
-	 yomT6Fol6BqXlztphbqNQqRIzX0SUmxH3mU+maLI=
+	b=TJTVCNlCvjX8PqPJjKerbWow7L2YC14f2VRdgXZG1CCCihsNH3Vc42mWaPpi/jfzm
+	 rM7ThtGcQ2JhTqN5b5HAwh6+unttwmPKw2xyeULt39FNNu38REYvvmTgMQwY5BzxA6
+	 H0uDUvhMs/3LKF9J3uiYlM5FTyPrBekQVzay2/0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.10 297/509] Revert "f2fs: fix potential corruption when moving a directory"
-Date: Tue, 25 Jul 2023 12:43:56 +0200
-Message-ID: <20230725104607.331353798@linuxfoundation.org>
+	Shuai Jiang <d202180596@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 5.10 280/509] i2c: qup: Add missing unwind goto in qup_i2c_probe()
+Date: Tue, 25 Jul 2023 12:43:39 +0200
+Message-ID: <20230725104606.562038397@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,66 +36,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Shuai Jiang <d202180596@hust.edu.cn>
 
-commit cde3c9d7e2a359e337216855dcb333a19daaa436 upstream.
+commit cd9489623c29aa2f8cc07088168afb6e0d5ef06d upstream.
 
-This reverts commit d94772154e524b329a168678836745d2773a6e02. The
-locking is going to be provided by VFS.
+Smatch Warns:
+	drivers/i2c/busses/i2c-qup.c:1784 qup_i2c_probe()
+	warn: missing unwind goto?
 
-CC: Jaegeuk Kim <jaegeuk@kernel.org>
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20230601105830.13168-3-jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+The goto label "fail_runtime" and "fail" will disable qup->pclk,
+but here qup->pclk failed to obtain, in order to be consistent,
+change the direct return to goto label "fail_dma".
+
+Fixes: 9cedf3b2f099 ("i2c: qup: Add bam dma capabilities")
+Signed-off-by: Shuai Jiang <d202180596@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Cc: <stable@vger.kernel.org> # v4.6+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/namei.c |   16 +---------------
- 1 file changed, 1 insertion(+), 15 deletions(-)
+ drivers/i2c/busses/i2c-qup.c |   21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -969,20 +969,12 @@ static int f2fs_rename(struct inode *old
- 			goto out;
+--- a/drivers/i2c/busses/i2c-qup.c
++++ b/drivers/i2c/busses/i2c-qup.c
+@@ -1752,16 +1752,21 @@ nodma:
+ 	if (!clk_freq || clk_freq > I2C_MAX_FAST_MODE_PLUS_FREQ) {
+ 		dev_err(qup->dev, "clock frequency not supported %d\n",
+ 			clk_freq);
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto fail_dma;
  	}
  
--	/*
--	 * Copied from ext4_rename: we need to protect against old.inode
--	 * directory getting converted from inline directory format into
--	 * a normal one.
--	 */
--	if (S_ISDIR(old_inode->i_mode))
--		inode_lock_nested(old_inode, I_MUTEX_NONDIR2);
--
- 	err = -ENOENT;
- 	old_entry = f2fs_find_entry(old_dir, &old_dentry->d_name, &old_page);
- 	if (!old_entry) {
- 		if (IS_ERR(old_page))
- 			err = PTR_ERR(old_page);
--		goto out_unlock_old;
-+		goto out;
- 	}
+ 	qup->base = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(qup->base))
+-		return PTR_ERR(qup->base);
++	if (IS_ERR(qup->base)) {
++		ret = PTR_ERR(qup->base);
++		goto fail_dma;
++	}
  
- 	if (S_ISDIR(old_inode->i_mode)) {
-@@ -1090,9 +1082,6 @@ static int f2fs_rename(struct inode *old
+ 	qup->irq = platform_get_irq(pdev, 0);
+-	if (qup->irq < 0)
+-		return qup->irq;
++	if (qup->irq < 0) {
++		ret = qup->irq;
++		goto fail_dma;
++	}
  
- 	f2fs_unlock_op(sbi);
+ 	if (has_acpi_companion(qup->dev)) {
+ 		ret = device_property_read_u32(qup->dev,
+@@ -1775,13 +1780,15 @@ nodma:
+ 		qup->clk = devm_clk_get(qup->dev, "core");
+ 		if (IS_ERR(qup->clk)) {
+ 			dev_err(qup->dev, "Could not get core clock\n");
+-			return PTR_ERR(qup->clk);
++			ret = PTR_ERR(qup->clk);
++			goto fail_dma;
+ 		}
  
--	if (S_ISDIR(old_inode->i_mode))
--		inode_unlock(old_inode);
--
- 	if (IS_DIRSYNC(old_dir) || IS_DIRSYNC(new_dir))
- 		f2fs_sync_fs(sbi->sb, 1);
- 
-@@ -1107,9 +1096,6 @@ out_dir:
- 		f2fs_put_page(old_dir_page, 0);
- out_old:
- 	f2fs_put_page(old_page, 0);
--out_unlock_old:
--	if (S_ISDIR(old_inode->i_mode))
--		inode_unlock(old_inode);
- out:
- 	if (whiteout)
- 		iput(whiteout);
+ 		qup->pclk = devm_clk_get(qup->dev, "iface");
+ 		if (IS_ERR(qup->pclk)) {
+ 			dev_err(qup->dev, "Could not get iface clock\n");
+-			return PTR_ERR(qup->pclk);
++			ret = PTR_ERR(qup->pclk);
++			goto fail_dma;
+ 		}
+ 		qup_i2c_enable_clocks(qup);
+ 		src_clk_freq = clk_get_rate(qup->clk);
 
 
