@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB051ED4D
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:41:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01D3C433C7;
-	Tue, 25 Jul 2023 11:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F381ED4D
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:41:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99822C433C8;
+	Tue, 25 Jul 2023 11:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285303;
-	bh=gbepNwzUiPT8KkoIjbwymTet91H+gx3Nw+PekQtK9vk=;
+	s=korg; t=1690285306;
+	bh=tOFIa/fxNLcAu6h6GuVST2YWjk38g77k1sRQ6RyZxeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cswMGsnft0ivg/szTxMWWqKygp8S46/WlNz2bjJdiAHU4eTSkSJTjVctfOp83bgKq
-	 oMFwgvhunMN8WBdM48iSmYjFeWgJNqreNt9nnxWLfHPPlUW/5gdXFuCigfSjeiHO9S
-	 NlJWCaJ6Z6S88TCvzUeOPsyeN12laEXAwGwLavNg=
+	b=dQhGXspvv6aXnA453Qwmv1RAjuk2LU4+bS/ve7LiLltdUtubZm8NNUcXr1480buQ7
+	 ihAZbCqdcLfY4a52BV1nxwyG4o632ENgPb2ZFOl9izafJChxEvt7TTSjkNXd8Wp4sv
+	 Iq9MJf2QOJzzMHe1LMb70ZslqLp47NXuhfcccXEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Rob Landley <rob@landley.net>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 126/313] sh: j2: Use ioremap() to translate device tree address into kernel memory
-Date: Tue, 25 Jul 2023 12:44:39 +0200
-Message-ID: <20230725104526.471203501@linuxfoundation.org>
+Subject: [PATCH 5.4 127/313] media: usb: Check az6007_read() return value
+Date: Tue, 25 Jul 2023 12:44:40 +0200
+Message-ID: <20230725104526.510528093@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -36,41 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit bc9d1f0cecd2407cfb2364a7d4be2f52d1d46a9d ]
+[ Upstream commit fdaca63186f59fc664b346c45b76576624b48e57 ]
 
-Addresses the following warning when building j2_defconfig:
+If az6007_read() returns error, there is no sence to continue.
 
-arch/sh/kernel/cpu/sh2/probe.c: In function 'scan_cache':
-arch/sh/kernel/cpu/sh2/probe.c:24:16: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-   24 |  j2_ccr_base = (u32 __iomem *)of_flat_dt_translate_address(node);
-      |
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 5a846abad07f ("sh: add support for J-Core J2 processor")
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Rob Landley <rob@landley.net>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/20230503125746.331835-1-glaubitz@physik.fu-berlin.de
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Fixes: 3af2f4f15a61 ("[media] az6007: Change the az6007 read/write routine parameter")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/kernel/cpu/sh2/probe.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/dvb-usb-v2/az6007.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/sh/kernel/cpu/sh2/probe.c b/arch/sh/kernel/cpu/sh2/probe.c
-index d342ea08843f6..70a07f4f2142f 100644
---- a/arch/sh/kernel/cpu/sh2/probe.c
-+++ b/arch/sh/kernel/cpu/sh2/probe.c
-@@ -21,7 +21,7 @@ static int __init scan_cache(unsigned long node, const char *uname,
- 	if (!of_flat_dt_is_compatible(node, "jcore,cache"))
+diff --git a/drivers/media/usb/dvb-usb-v2/az6007.c b/drivers/media/usb/dvb-usb-v2/az6007.c
+index 62ee09f28a0bc..7524c90f5da61 100644
+--- a/drivers/media/usb/dvb-usb-v2/az6007.c
++++ b/drivers/media/usb/dvb-usb-v2/az6007.c
+@@ -202,7 +202,8 @@ static int az6007_rc_query(struct dvb_usb_device *d)
+ 	unsigned code;
+ 	enum rc_proto proto;
+ 
+-	az6007_read(d, AZ6007_READ_IR, 0, 0, st->data, 10);
++	if (az6007_read(d, AZ6007_READ_IR, 0, 0, st->data, 10) < 0)
++		return -EIO;
+ 
+ 	if (st->data[1] == 0x44)
  		return 0;
- 
--	j2_ccr_base = (u32 __iomem *)of_flat_dt_translate_address(node);
-+	j2_ccr_base = ioremap(of_flat_dt_translate_address(node), 4);
- 
- 	return 1;
- }
 -- 
 2.39.2
 
