@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FE81ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:31:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F53C433C8;
-	Tue, 25 Jul 2023 11:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4481ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:31:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B6CC433C8;
+	Tue, 25 Jul 2023 11:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284698;
-	bh=dq1+HV3swrdUEjVKh3IySCv1nLwlhLdp7/OR5kgkhLw=;
+	s=korg; t=1690284701;
+	bh=HA+TQA2cEr1s+l1vq12SXAI1JBKaUUibcFMqZA6W9h0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ty6V7uhZVi6SyrFtXCMe8dSaHLoF8Vh9s8X8zjnKz/gdpFd2Ci2x27Kz0GTApVu/5
-	 7f9ByqDaORzmhhGQnB1QmB3bOjF0S5xtRJGcrKXqBBRNutoYOGaZOJMyJiDneb5ZwX
-	 5NAI6n4hRlehoAmrQo0X3snzfA4BVx4ZWorpF4/c=
+	b=ZYOdrzn1cXAox+kUF6dCTUfUl+iczt3scYd46xYxWiXJI9M5QBFX3zK2fnWgwP2UN
+	 Jg8nhWFJY6hOoEn0DQZeOTuWcSenPyYjszLRFZRJyx4UwWX10TM4tz7qylCaQ9zLJw
+	 Run+U+PRd9yUcaB8wpzUqcvIjI0/f2pHW0byIqOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 450/509] can: bcm: Fix UAF in bcm_proc_show()
-Date: Tue, 25 Jul 2023 12:46:29 +0200
-Message-ID: <20230725104614.340656011@linuxfoundation.org>
+	Zhang Yi <yizhan@redhat.com>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 5.10 451/509] drm/client: Fix memory leak in drm_client_target_cloned
+Date: Tue, 25 Jul 2023 12:46:30 +0200
+Message-ID: <20230725104614.388889529@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,92 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Jocelyn Falempe <jfalempe@redhat.com>
 
-commit 55c3b96074f3f9b0aee19bf93cd71af7516582bb upstream.
+commit c2a88e8bdf5f6239948d75283d0ae7e0c7945b03 upstream.
 
-BUG: KASAN: slab-use-after-free in bcm_proc_show+0x969/0xa80
-Read of size 8 at addr ffff888155846230 by task cat/7862
+dmt_mode is allocated and never freed in this function.
+It was found with the ast driver, but most drivers using generic fbdev
+setup are probably affected.
 
-CPU: 1 PID: 7862 Comm: cat Not tainted 6.5.0-rc1-00153-gc8746099c197 #230
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0xd5/0x150
- print_report+0xc1/0x5e0
- kasan_report+0xba/0xf0
- bcm_proc_show+0x969/0xa80
- seq_read_iter+0x4f6/0x1260
- seq_read+0x165/0x210
- proc_reg_read+0x227/0x300
- vfs_read+0x1d5/0x8d0
- ksys_read+0x11e/0x240
- do_syscall_64+0x35/0xb0
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+This fixes the following kmemleak report:
+  backtrace:
+    [<00000000b391296d>] drm_mode_duplicate+0x45/0x220 [drm]
+    [<00000000e45bb5b3>] drm_client_target_cloned.constprop.0+0x27b/0x480 [drm]
+    [<00000000ed2d3a37>] drm_client_modeset_probe+0x6bd/0xf50 [drm]
+    [<0000000010e5cc9d>] __drm_fb_helper_initial_config_and_unlock+0xb4/0x2c0 [drm_kms_helper]
+    [<00000000909f82ca>] drm_fbdev_client_hotplug+0x2bc/0x4d0 [drm_kms_helper]
+    [<00000000063a69aa>] drm_client_register+0x169/0x240 [drm]
+    [<00000000a8c61525>] ast_pci_probe+0x142/0x190 [ast]
+    [<00000000987f19bb>] local_pci_probe+0xdc/0x180
+    [<000000004fca231b>] work_for_cpu_fn+0x4e/0xa0
+    [<0000000000b85301>] process_one_work+0x8b7/0x1540
+    [<000000003375b17c>] worker_thread+0x70a/0xed0
+    [<00000000b0d43cd9>] kthread+0x29f/0x340
+    [<000000008d770833>] ret_from_fork+0x1f/0x30
+unreferenced object 0xff11000333089a00 (size 128):
 
-Allocated by task 7846:
- kasan_save_stack+0x1e/0x40
- kasan_set_track+0x21/0x30
- __kasan_kmalloc+0x9e/0xa0
- bcm_sendmsg+0x264b/0x44e0
- sock_sendmsg+0xda/0x180
- ____sys_sendmsg+0x735/0x920
- ___sys_sendmsg+0x11d/0x1b0
- __sys_sendmsg+0xfa/0x1d0
- do_syscall_64+0x35/0xb0
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Freed by task 7846:
- kasan_save_stack+0x1e/0x40
- kasan_set_track+0x21/0x30
- kasan_save_free_info+0x27/0x40
- ____kasan_slab_free+0x161/0x1c0
- slab_free_freelist_hook+0x119/0x220
- __kmem_cache_free+0xb4/0x2e0
- rcu_core+0x809/0x1bd0
-
-bcm_op is freed before procfs entry be removed in bcm_release(),
-this lead to bcm_proc_show() may read the freed bcm_op.
-
-Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://lore.kernel.org/all/20230715092543.15548-1-yuehaibing@huawei.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+cc: <stable@vger.kernel.org>
+Fixes: 1d42bbc8f7f9 ("drm/fbdev: fix cloning on fbcon")
+Reported-by: Zhang Yi <yizhan@redhat.com>
+Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230711092203.68157-2-jfalempe@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/bcm.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/drm_client_modeset.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -1521,6 +1521,12 @@ static int bcm_release(struct socket *so
+--- a/drivers/gpu/drm/drm_client_modeset.c
++++ b/drivers/gpu/drm/drm_client_modeset.c
+@@ -308,6 +308,9 @@ static bool drm_client_target_cloned(str
+ 	can_clone = true;
+ 	dmt_mode = drm_mode_find_dmt(dev, 1024, 768, 60, false);
  
- 	lock_sock(sk);
- 
-+#if IS_ENABLED(CONFIG_PROC_FS)
-+	/* remove procfs entry */
-+	if (net->can.bcmproc_dir && bo->bcm_proc_read)
-+		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
-+#endif /* CONFIG_PROC_FS */
++	if (!dmt_mode)
++		goto fail;
 +
- 	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
- 		bcm_remove_op(op);
+ 	for (i = 0; i < connector_count; i++) {
+ 		if (!enabled[i])
+ 			continue;
+@@ -323,11 +326,13 @@ static bool drm_client_target_cloned(str
+ 		if (!modes[i])
+ 			can_clone = false;
+ 	}
++	kfree(dmt_mode);
  
-@@ -1556,12 +1562,6 @@ static int bcm_release(struct socket *so
- 	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
- 		bcm_remove_op(op);
- 
--#if IS_ENABLED(CONFIG_PROC_FS)
--	/* remove procfs entry */
--	if (net->can.bcmproc_dir && bo->bcm_proc_read)
--		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
--#endif /* CONFIG_PROC_FS */
--
- 	/* remove device reference */
- 	if (bo->bound) {
- 		bo->bound   = 0;
+ 	if (can_clone) {
+ 		DRM_DEBUG_KMS("can clone using 1024x768\n");
+ 		return true;
+ 	}
++fail:
+ 	DRM_INFO("kms: can't enable cloning when we probably wanted to.\n");
+ 	return false;
+ }
 
 
