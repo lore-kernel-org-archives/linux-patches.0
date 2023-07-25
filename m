@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8CA014270
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:53:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F1FC433C9;
-	Tue, 25 Jul 2023 10:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8126114270
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:53:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05553C433C9;
+	Tue, 25 Jul 2023 10:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282382;
-	bh=KptPEawdgWI9fzLCjG0bVYq+NRHIj8zv7gFX1hKEFxo=;
+	s=korg; t=1690282385;
+	bh=oyJMKpX+tRVslhuKNrHjM4kIgy+eIZlE7fR7+clRX28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zEarrgwOBlgkRpIsElydxYYeCT/OVTLDxsfeBGWaEPmo1xJCnAPvBpXSIOc5ehM6Y
-	 su9jRNqs5xCKAgIBa6QOQhE5jjN3+LwDhWcCCNTikiMKev7oI6K5pRXBlo0bI4Dh9x
-	 Qd5O7zgy7M5yZVJY9Twt10+9tppYUU8bwevlA6BA=
+	b=hDQUueKyjyW4PAuCmEI7vOh9i5KqoLuOLx2B+CDzKeYiHd1X+6DK1o4rQeN554MOY
+	 2cHCSHKy2odBJBzw8teumGtpok1/KcpYU9+CByLJ/O70qwH/+PPXzVcxNg1sOTpH8g
+	 tn+oNRSwi6DVUyZOBApOmPSeW7aR/JH2ld5rb900=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Bizon <mbizon@freebox.fr>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Kui-Feng Lee <kuifeng@meta.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Yonghong Song <yhs@fb.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 110/227] wifi: ath11k: fix registration of 6Ghz-only phy without the full channel range
-Date: Tue, 25 Jul 2023 12:44:37 +0200
-Message-ID: <20230725104519.330426897@linuxfoundation.org>
+Subject: [PATCH 6.4 111/227] bpf: Print a warning only if writing to unprivileged_bpf_disabled.
+Date: Tue, 25 Jul 2023 12:44:38 +0200
+Message-ID: <20230725104519.380038361@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,68 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxime Bizon <mbizon@freebox.fr>
+From: Kui-Feng Lee <thinker.li@gmail.com>
 
-[ Upstream commit e2ceb1de2f83aafd8003f0b72dfd4b7441e97d14 ]
+[ Upstream commit fedf99200ab086c42a572fca1d7266b06cdc3e3f ]
 
-Because of what seems to be a typo, a 6Ghz-only phy for which the BDF
-does not allow the 7115Mhz channel will fail to register:
+Only print the warning message if you are writing to
+"/proc/sys/kernel/unprivileged_bpf_disabled".
 
-  WARNING: CPU: 2 PID: 106 at net/wireless/core.c:907 wiphy_register+0x914/0x954
-  Modules linked in: ath11k_pci sbsa_gwdt
-  CPU: 2 PID: 106 Comm: kworker/u8:5 Not tainted 6.3.0-rc7-next-20230418-00549-g1e096a17625a-dirty #9
-  Hardware name: Freebox V7R Board (DT)
-  Workqueue: ath11k_qmi_driver_event ath11k_qmi_driver_event_work
-  pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-  pc : wiphy_register+0x914/0x954
-  lr : ieee80211_register_hw+0x67c/0xc10
-  sp : ffffff800b123aa0
-  x29: ffffff800b123aa0 x28: 0000000000000000 x27: 0000000000000000
-  x26: 0000000000000000 x25: 0000000000000006 x24: ffffffc008d51418
-  x23: ffffffc008cb0838 x22: ffffff80176c2460 x21: 0000000000000168
-  x20: ffffff80176c0000 x19: ffffff80176c03e0 x18: 0000000000000014
-  x17: 00000000cbef338c x16: 00000000d2a26f21 x15: 00000000ad6bb85f
-  x14: 0000000000000020 x13: 0000000000000020 x12: 00000000ffffffbd
-  x11: 0000000000000208 x10: 00000000fffffdf7 x9 : ffffffc009394718
-  x8 : ffffff80176c0528 x7 : 000000007fffffff x6 : 0000000000000006
-  x5 : 0000000000000005 x4 : ffffff800b304284 x3 : ffffff800b304284
-  x2 : ffffff800b304d98 x1 : 0000000000000000 x0 : 0000000000000000
-  Call trace:
-   wiphy_register+0x914/0x954
-   ieee80211_register_hw+0x67c/0xc10
-   ath11k_mac_register+0x7c4/0xe10
-   ath11k_core_qmi_firmware_ready+0x1f4/0x570
-   ath11k_qmi_driver_event_work+0x198/0x590
-   process_one_work+0x1b8/0x328
-   worker_thread+0x6c/0x414
-   kthread+0x100/0x104
-   ret_from_fork+0x10/0x20
-  ---[ end trace 0000000000000000 ]---
-  ath11k_pci 0002:01:00.0: ieee80211 registration failed: -22
-  ath11k_pci 0002:01:00.0: failed register the radio with mac80211: -22
-  ath11k_pci 0002:01:00.0: failed to create pdev core: -22
+The kernel may print an annoying warning when you read
+"/proc/sys/kernel/unprivileged_bpf_disabled" saying
 
-Signed-off-by: Maxime Bizon <mbizon@freebox.fr>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230421145445.2612280-1-mbizon@freebox.fr
+  WARNING: Unprivileged eBPF is enabled with eIBRS on, data leaks possible
+  via Spectre v2 BHB attacks!
+
+However, this message is only meaningful when the feature is
+disabled or enabled.
+
+Signed-off-by: Kui-Feng Lee <kuifeng@meta.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Yonghong Song <yhs@fb.com>
+Link: https://lore.kernel.org/bpf/20230502181418.308479-1-kuifeng@meta.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/mac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/syscall.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index 1c93f1afccc57..05920ad413c55 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -8892,7 +8892,7 @@ static int ath11k_mac_setup_channels_rates(struct ath11k *ar,
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index f1c8733f76b83..5524fcf6fb2a4 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -5394,7 +5394,8 @@ static int bpf_unpriv_handler(struct ctl_table *table, int write,
+ 		*(int *)table->data = unpriv_enable;
  	}
  
- 	if (supported_bands & WMI_HOST_WLAN_5G_CAP) {
--		if (reg_cap->high_5ghz_chan >= ATH11K_MAX_6G_FREQ) {
-+		if (reg_cap->high_5ghz_chan >= ATH11K_MIN_6G_FREQ) {
- 			channels = kmemdup(ath11k_6ghz_channels,
- 					   sizeof(ath11k_6ghz_channels), GFP_KERNEL);
- 			if (!channels) {
+-	unpriv_ebpf_notify(unpriv_enable);
++	if (write)
++		unpriv_ebpf_notify(unpriv_enable);
+ 
+ 	return ret;
+ }
 -- 
 2.39.2
 
