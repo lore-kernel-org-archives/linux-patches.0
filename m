@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B22E14270
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:53:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0556C433C8;
-	Tue, 25 Jul 2023 10:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA8214270
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:53:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ACB1C433C7;
+	Tue, 25 Jul 2023 10:53:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282399;
-	bh=78qvTLDUDG6OaQx7QIgD9YGNmLb/OoQSvzOmqN15t8c=;
+	s=korg; t=1690282402;
+	bh=jAp8mWG+a5X5KuvI4qyYtYYgwdNfhGImxiJ+pfJksXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F41YX6WUqX8pFBS5eyjqyZmQ2LUT0+26DrMpGzKNaQrzV4PAMYpQg5hfz2n8hsApw
-	 DNyj+PWwqyGweW83NKtZsxIDcbHQhIms0pstNmW4hWEeWk7MjIGgYOlthQ8CjMRszF
-	 9dRtjgEvZZcyFVsRAUQ43uv5699lXBzFEYddStTk=
+	b=mBfT9V265UOHeTkwW5IcDmiq01RU/79+GdpmK1C2Lq1kMjAKoH71rILEYicsT3FNX
+	 i5NPhDRtRtSOn9+j0LdF+X4Rf+DDlC6WPhkgNqwbyjcXjMvTQ4ij5fcVy5n5gI0Fap
+	 dl3crKvQwFb1xTNW1C8+kGuYkI8mh1vwV/1dWO5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yhs@meta.com>,
-	Stanislav Fomichev <sdf@google.com>,
-	Aditi Ghag <aditi.ghag@isovalent.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 115/227] bpf: tcp: Avoid taking fast sock lock in iterator
-Date: Tue, 25 Jul 2023 12:44:42 +0200
-Message-ID: <20230725104519.548163609@linuxfoundation.org>
+Subject: [PATCH 6.4 116/227] wifi: rtw88: sdio: Check the HISR RX_REQUEST bit in rtw_sdio_rx_isr()
+Date: Tue, 25 Jul 2023 12:44:43 +0200
+Message-ID: <20230725104519.599914857@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -37,150 +36,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aditi Ghag <aditi.ghag@isovalent.com>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-[ Upstream commit 9378096e8a656fb5c4099b26b1370c56f056eab9 ]
+[ Upstream commit e967229ead0e6c5047a1cfd5a0db58ceb930800b ]
 
-This is a preparatory commit to replace `lock_sock_fast` with
-`lock_sock`,and facilitate BPF programs executed from the TCP sockets
-iterator to be able to destroy TCP sockets using the bpf_sock_destroy
-kfunc (implemented in follow-up commits).
+rtw_sdio_rx_isr() is responsible for receiving data from the wifi chip
+and is called from the SDIO interrupt handler when the interrupt status
+register (HISR) has the RX_REQUEST bit set. After the first batch of
+data has been processed by the driver the wifi chip may have more data
+ready to be read, which is managed by a loop in rtw_sdio_rx_isr().
 
-Previously, BPF TCP iterator was acquiring the sock lock with BH
-disabled. This led to scenarios where the sockets hash table bucket lock
-can be acquired with BH enabled in some path versus disabled in other.
-In such situation, kernel issued a warning since it thinks that in the
-BH enabled path the same bucket lock *might* be acquired again in the
-softirq context (BH disabled), which will lead to a potential dead lock.
-Since bpf_sock_destroy also happens in a process context, the potential
-deadlock warning is likely a false alarm.
+It turns out that there are cases where the RX buffer length (from the
+REG_SDIO_RX0_REQ_LEN register) does not match the data we receive. The
+following two cases were observed with a RTL8723DS card:
+- RX length is smaller than the total packet length including overhead
+  and actual data bytes (whose length is part of the buffer we read from
+  the wifi chip and is stored in rtw_rx_pkt_stat.pkt_len). This can
+  result in errors like:
+    skbuff: skb_over_panic: text:ffff8000011924ac len:3341 put:3341
+  (one case observed was: RX buffer length = 1536 bytes but
+   rtw_rx_pkt_stat.pkt_len = 1546 bytes, this is not valid as it means
+   we need to read beyond the end of the buffer)
+- RX length looks valid but rtw_rx_pkt_stat.pkt_len is zero
 
-Here is a snippet of annotated stack trace that motivated this change:
+Check if the RX_REQUEST is set in the HISR register for each iteration
+inside rtw_sdio_rx_isr(). This mimics what the RTL8723DS vendor driver
+does and makes the driver only read more data if the RX_REQUEST bit is
+set (which seems to be a way for the card's hardware or firmware to
+tell the host that data is ready to be processed).
 
-```
+For RTW_WCPU_11AC chips this check is not needed. The RTL8822BS vendor
+driver for example states that this check is unnecessary (but still uses
+it) and the RTL8822CS drops this check entirely.
 
-Possible interrupt unsafe locking scenario:
-
-      CPU0                    CPU1
-      ----                    ----
- lock(&h->lhash2[i].lock);
-                              local_bh_disable();
-                              lock(&h->lhash2[i].lock);
-kernel imagined possible scenario:
-  local_bh_disable();  /* Possible softirq */
-  lock(&h->lhash2[i].lock);
-*** Potential Deadlock ***
-
-process context:
-
-lock_acquire+0xcd/0x330
-_raw_spin_lock+0x33/0x40
-------> Acquire (bucket) lhash2.lock with BH enabled
-__inet_hash+0x4b/0x210
-inet_csk_listen_start+0xe6/0x100
-inet_listen+0x95/0x1d0
-__sys_listen+0x69/0xb0
-__x64_sys_listen+0x14/0x20
-do_syscall_64+0x3c/0x90
-entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-bpf_sock_destroy run from iterator:
-
-lock_acquire+0xcd/0x330
-_raw_spin_lock+0x33/0x40
-------> Acquire (bucket) lhash2.lock with BH disabled
-inet_unhash+0x9a/0x110
-tcp_set_state+0x6a/0x210
-tcp_abort+0x10d/0x200
-bpf_prog_6793c5ca50c43c0d_iter_tcp6_server+0xa4/0xa9
-bpf_iter_run_prog+0x1ff/0x340
-------> lock_sock_fast that acquires sock lock with BH disabled
-bpf_iter_tcp_seq_show+0xca/0x190
-bpf_seq_read+0x177/0x450
-
-```
-
-Also, Yonghong reported a deadlock for non-listening TCP sockets that
-this change resolves. Previously, `lock_sock_fast` held the sock spin
-lock with BH which was again being acquired in `tcp_abort`:
-
-```
-watchdog: BUG: soft lockup - CPU#0 stuck for 86s! [test_progs:2331]
-RIP: 0010:queued_spin_lock_slowpath+0xd8/0x500
-Call Trace:
- <TASK>
- _raw_spin_lock+0x84/0x90
- tcp_abort+0x13c/0x1f0
- bpf_prog_88539c5453a9dd47_iter_tcp6_client+0x82/0x89
- bpf_iter_run_prog+0x1aa/0x2c0
- ? preempt_count_sub+0x1c/0xd0
- ? from_kuid_munged+0x1c8/0x210
- bpf_iter_tcp_seq_show+0x14e/0x1b0
- bpf_seq_read+0x36c/0x6a0
-
-bpf_iter_tcp_seq_show
-   lock_sock_fast
-     __lock_sock_fast
-       spin_lock_bh(&sk->sk_lock.slock);
-	/* * Fast path return with bottom halves disabled and * sock::sk_lock.slock held.* */
-
- ...
- tcp_abort
-   local_bh_disable();
-   spin_lock(&((sk)->sk_lock.slock)); // from bh_lock_sock(sk)
-
-```
-
-With the switch to `lock_sock`, it calls `spin_unlock_bh` before returning:
-
-```
-lock_sock
-    lock_sock_nested
-       spin_lock_bh(&sk->sk_lock.slock);
-       :
-       spin_unlock_bh(&sk->sk_lock.slock);
-```
-
-Acked-by: Yonghong Song <yhs@meta.com>
-Acked-by: Stanislav Fomichev <sdf@google.com>
-Signed-off-by: Aditi Ghag <aditi.ghag@isovalent.com>
-Link: https://lore.kernel.org/r/20230519225157.760788-2-aditi.ghag@isovalent.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230522202425.1827005-2-martin.blumenstingl@googlemail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/wireless/realtek/rtw88/sdio.c | 24 ++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 06d2573685ca9..434e5f0c8b99d 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -2963,7 +2963,6 @@ static int bpf_iter_tcp_seq_show(struct seq_file *seq, void *v)
- 	struct bpf_iter_meta meta;
- 	struct bpf_prog *prog;
- 	struct sock *sk = v;
--	bool slow;
- 	uid_t uid;
- 	int ret;
+diff --git a/drivers/net/wireless/realtek/rtw88/sdio.c b/drivers/net/wireless/realtek/rtw88/sdio.c
+index 06fce7c3addaa..2c1fb2dabd40a 100644
+--- a/drivers/net/wireless/realtek/rtw88/sdio.c
++++ b/drivers/net/wireless/realtek/rtw88/sdio.c
+@@ -998,9 +998,9 @@ static void rtw_sdio_rxfifo_recv(struct rtw_dev *rtwdev, u32 rx_len)
  
-@@ -2971,7 +2970,7 @@ static int bpf_iter_tcp_seq_show(struct seq_file *seq, void *v)
- 		return 0;
+ static void rtw_sdio_rx_isr(struct rtw_dev *rtwdev)
+ {
+-	u32 rx_len, total_rx_bytes = 0;
++	u32 rx_len, hisr, total_rx_bytes = 0;
  
- 	if (sk_fullsock(sk))
--		slow = lock_sock_fast(sk);
-+		lock_sock(sk);
+-	while (total_rx_bytes < SZ_64K) {
++	do {
+ 		if (rtw_chip_wcpu_11n(rtwdev))
+ 			rx_len = rtw_read16(rtwdev, REG_SDIO_RX0_REQ_LEN);
+ 		else
+@@ -1012,7 +1012,25 @@ static void rtw_sdio_rx_isr(struct rtw_dev *rtwdev)
+ 		rtw_sdio_rxfifo_recv(rtwdev, rx_len);
  
- 	if (unlikely(sk_unhashed(sk))) {
- 		ret = SEQ_SKIP;
-@@ -2995,7 +2994,7 @@ static int bpf_iter_tcp_seq_show(struct seq_file *seq, void *v)
- 
- unlock:
- 	if (sk_fullsock(sk))
--		unlock_sock_fast(sk, slow);
-+		release_sock(sk);
- 	return ret;
- 
+ 		total_rx_bytes += rx_len;
+-	}
++
++		if (rtw_chip_wcpu_11n(rtwdev)) {
++			/* Stop if no more RX requests are pending, even if
++			 * rx_len could be greater than zero in the next
++			 * iteration. This is needed because the RX buffer may
++			 * already contain data while either HW or FW are not
++			 * done filling that buffer yet. Still reading the
++			 * buffer can result in packets where
++			 * rtw_rx_pkt_stat.pkt_len is zero or points beyond the
++			 * end of the buffer.
++			 */
++			hisr = rtw_read32(rtwdev, REG_SDIO_HISR);
++		} else {
++			/* RTW_WCPU_11AC chips have improved hardware or
++			 * firmware and can use rx_len unconditionally.
++			 */
++			hisr = REG_SDIO_HISR_RX_REQUEST;
++		}
++	} while (total_rx_bytes < SZ_64K && hisr & REG_SDIO_HISR_RX_REQUEST);
  }
+ 
+ static void rtw_sdio_handle_interrupt(struct sdio_func *sdio_func)
 -- 
 2.39.2
 
