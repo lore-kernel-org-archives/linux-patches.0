@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140B01D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:06:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA7BC433C9;
-	Tue, 25 Jul 2023 11:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BAA1D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:06:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4853EC433C8;
+	Tue, 25 Jul 2023 11:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283213;
-	bh=Cq1VAFo3rrS0vKUZec0/gmCrg01lyUW0eDeABbfsJ9Q=;
+	s=korg; t=1690283216;
+	bh=bPq0HG5x6Bsrc/jsnofwFn6cmwOQrRu0SCu+20rJHSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XcKaJXcfnDkwQfEaTXqt+UNzHY93bAInqupDRBS0kmEh4A0G8blRWDZLUBbn2MCLk
-	 GI2xfJFccLGZCx0rrEEg2nsmoTjBZlKbfXozY2Uw5t41EY0ryhIIMQjf4eEuJmn7RW
-	 qeWP734vRsj0W787NsPgZsTJoYhkmvLzDLvUmzNU=
+	b=GydNR+WohEHl6tDX6iwNFUporz2MLyOvMpvm0k19Nl4YwTGwg8TasmgN3bQOpZOXb
+	 9nZwYgxFIFzpFx/JYl17bBCGx66lG/0Ya5O+I6PXoeniVOc0Tz5Sy5s0TPSGAJ9iub
+	 JOH48NJPNNAdkwJuggTMd5YAVGgvGQ9rWji5MndQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mario Limonciello <mario.limonciello@amd.com>,
-	Wayne Lin <Wayne.Lin@amd.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Jerry Zuo <Jerry.Zuo@amd.com>,
+	Alan Liu <HaoPing.Liu@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	hersen wu <hersenxs.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 179/183] drm/dp_mst: Clear MSG_RDY flag before sending new message
-Date: Tue, 25 Jul 2023 12:46:47 +0200
-Message-ID: <20230725104514.167706120@linuxfoundation.org>
+Subject: [PATCH 6.1 180/183] drm/amd/display: force connector state when bpc changes during compliance
+Date: Tue, 25 Jul 2023 12:46:48 +0200
+Message-ID: <20230725104514.204598641@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -37,283 +39,481 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Qingqing Zhuo <qingqing.zhuo@amd.com>
 
-commit 72f1de49ffb90b29748284f27f1d6b829ab1de95 upstream.
+commit 028c4ccfb8127255d60f8d9edde96cacf2958082 upstream.
 
 [Why]
-The sequence for collecting down_reply from source perspective should
-be:
-
-Request_n->repeat (get partial reply of Request_n->clear message ready
-flag to ack DPRX that the message is received) till all partial
-replies for Request_n are received->new Request_n+1.
-
-Now there is chance that drm_dp_mst_hpd_irq() will fire new down
-request in the tx queue when the down reply is incomplete. Source is
-restricted to generate interveleaved message transactions so we should
-avoid it.
-
-Also, while assembling partial reply packets, reading out DPCD DOWN_REP
-Sideband MSG buffer + clearing DOWN_REP_MSG_RDY flag should be
-wrapped up as a complete operation for reading out a reply packet.
-Kicking off a new request before clearing DOWN_REP_MSG_RDY flag might
-be risky. e.g. If the reply of the new request has overwritten the
-DPRX DOWN_REP Sideband MSG buffer before source writing one to clear
-DOWN_REP_MSG_RDY flag, source then unintentionally flushes the reply
-for the new request. Should handle the up request in the same way.
+During DP DSC compliance tests, bpc requested would
+change between sub-tests, which requires stream
+to be recommited.
 
 [How]
-Separete drm_dp_mst_hpd_irq() into 2 steps. After acking the MST IRQ
-event, driver calls drm_dp_mst_hpd_irq_send_new_request() and might
-trigger drm_dp_mst_kick_tx() only when there is no on going message
-transaction.
+Force connector to disconnect and reconnect whenever
+there is a bpc change in automated test.
 
-Changes since v1:
-* Reworked on review comments received
--> Adjust the fix to let driver explicitly kick off new down request
-when mst irq event is handled and acked
--> Adjust the commit message
-
-Changes since v2:
-* Adjust the commit message
-* Adjust the naming of the divided 2 functions and add a new input
-  parameter "ack".
-* Adjust code flow as per review comments.
-
-Changes since v3:
-* Update the function description of drm_dp_mst_hpd_irq_handle_event
-
-Changes since v4:
-* Change ack of drm_dp_mst_hpd_irq_handle_event() to be an array align
-  the size of esi[]
-
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Acked-by: Jani Nikula <jani.nikula@intel.com>
-Cc: stable@vger.kernel.org
+Reviewed-by: Jerry Zuo <Jerry.Zuo@amd.com>
+Acked-by: Alan Liu <HaoPing.Liu@amd.com>
+Signed-off-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: hersen wu <hersenxs.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[ Adjustments for headers that were moved around in later commits. ]
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   30 ++++++------
- drivers/gpu/drm/display/drm_dp_mst_topology.c     |   54 +++++++++++++++++++---
- drivers/gpu/drm/i915/display/intel_dp.c           |    7 +-
- drivers/gpu/drm/nouveau/dispnv50/disp.c           |   12 +++-
- include/drm/display/drm_dp_mst_helper.h           |    7 ++
- 5 files changed, 80 insertions(+), 30 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c         |   55 +++++
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h         |    5 
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c |  125 ++++++++++++
+ drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c          |  139 +-------------
+ drivers/gpu/drm/amd/display/dc/dm_helpers.h               |    6 
+ 5 files changed, 209 insertions(+), 121 deletions(-)
 
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -3201,6 +3201,7 @@ static void dm_handle_mst_sideband_msg(s
+@@ -40,6 +40,9 @@
+ #include "dc/dc_stat.h"
+ #include "amdgpu_dm_trace.h"
+ #include "dc/inc/dc_link_ddc.h"
++#include "dpcd_defs.h"
++#include "dc/inc/link_dpcd.h"
++#include "link_service_types.h"
  
- 	while (dret == dpcd_bytes_to_read &&
- 		process_count < max_process_count) {
-+		u8 ack[DP_PSR_ERROR_STATUS - DP_SINK_COUNT_ESI] = {};
- 		u8 retry;
- 		dret = 0;
+ #include "vid.h"
+ #include "amdgpu.h"
+@@ -1273,6 +1276,21 @@ static void mmhub_read_system_context(st
  
-@@ -3209,28 +3210,29 @@ static void dm_handle_mst_sideband_msg(s
- 		DRM_DEBUG_DRIVER("ESI %02x %02x %02x\n", esi[0], esi[1], esi[2]);
- 		/* handle HPD short pulse irq */
- 		if (aconnector->mst_mgr.mst_state)
--			drm_dp_mst_hpd_irq(
--				&aconnector->mst_mgr,
--				esi,
--				&new_irq_handled);
-+			drm_dp_mst_hpd_irq_handle_event(&aconnector->mst_mgr,
-+							esi,
-+							ack,
-+							&new_irq_handled);
- 
- 		if (new_irq_handled) {
- 			/* ACK at DPCD to notify down stream */
--			const int ack_dpcd_bytes_to_write =
--				dpcd_bytes_to_read - 1;
--
- 			for (retry = 0; retry < 3; retry++) {
--				u8 wret;
-+				ssize_t wret;
- 
--				wret = drm_dp_dpcd_write(
--					&aconnector->dm_dp_aux.aux,
--					dpcd_addr + 1,
--					&esi[1],
--					ack_dpcd_bytes_to_write);
--				if (wret == ack_dpcd_bytes_to_write)
-+				wret = drm_dp_dpcd_writeb(&aconnector->dm_dp_aux.aux,
-+							  dpcd_addr + 1,
-+							  ack[1]);
-+				if (wret == 1)
- 					break;
- 			}
- 
-+			if (retry == 3) {
-+				DRM_ERROR("Failed to ack MST event.\n");
-+				return;
-+			}
-+
-+			drm_dp_mst_hpd_irq_send_new_request(&aconnector->mst_mgr);
- 			/* check if there is new irq to be handled */
- 			dret = drm_dp_dpcd_read(
- 				&aconnector->dm_dp_aux.aux,
---- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
-+++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-@@ -4053,17 +4053,28 @@ out:
  }
  
- /**
-- * drm_dp_mst_hpd_irq() - MST hotplug IRQ notify
-+ * drm_dp_mst_hpd_irq_handle_event() - MST hotplug IRQ handle MST event
-  * @mgr: manager to notify irq for.
-  * @esi: 4 bytes from SINK_COUNT_ESI
-+ * @ack: 4 bytes used to ack events starting from SINK_COUNT_ESI
-  * @handled: whether the hpd interrupt was consumed or not
-  *
-- * This should be called from the driver when it detects a short IRQ,
-+ * This should be called from the driver when it detects a HPD IRQ,
-  * along with the value of the DEVICE_SERVICE_IRQ_VECTOR_ESI0. The
-- * topology manager will process the sideband messages received as a result
-- * of this.
-+ * topology manager will process the sideband messages received
-+ * as indicated in the DEVICE_SERVICE_IRQ_VECTOR_ESI0 and set the
-+ * corresponding flags that Driver has to ack the DP receiver later.
-+ *
-+ * Note that driver shall also call
-+ * drm_dp_mst_hpd_irq_send_new_request() if the 'handled' is set
-+ * after calling this function, to try to kick off a new request in
-+ * the queue if the previous message transaction is completed.
-+ *
-+ * See also:
-+ * drm_dp_mst_hpd_irq_send_new_request()
-  */
--int drm_dp_mst_hpd_irq(struct drm_dp_mst_topology_mgr *mgr, u8 *esi, bool *handled)
-+int drm_dp_mst_hpd_irq_handle_event(struct drm_dp_mst_topology_mgr *mgr, const u8 *esi,
-+				    u8 *ack, bool *handled)
- {
- 	int ret = 0;
- 	int sc;
-@@ -4078,18 +4089,47 @@ int drm_dp_mst_hpd_irq(struct drm_dp_mst
- 	if (esi[1] & DP_DOWN_REP_MSG_RDY) {
- 		ret = drm_dp_mst_handle_down_rep(mgr);
- 		*handled = true;
-+		ack[1] |= DP_DOWN_REP_MSG_RDY;
- 	}
- 
- 	if (esi[1] & DP_UP_REQ_MSG_RDY) {
- 		ret |= drm_dp_mst_handle_up_req(mgr);
- 		*handled = true;
-+		ack[1] |= DP_UP_REQ_MSG_RDY;
- 	}
- 
--	drm_dp_mst_kick_tx(mgr);
- 	return ret;
- }
--EXPORT_SYMBOL(drm_dp_mst_hpd_irq);
-+EXPORT_SYMBOL(drm_dp_mst_hpd_irq_handle_event);
-+
-+/**
-+ * drm_dp_mst_hpd_irq_send_new_request() - MST hotplug IRQ kick off new request
-+ * @mgr: manager to notify irq for.
-+ *
-+ * This should be called from the driver when mst irq event is handled
-+ * and acked. Note that new down request should only be sent when
-+ * previous message transaction is completed. Source is not supposed to generate
-+ * interleaved message transactions.
-+ */
-+void drm_dp_mst_hpd_irq_send_new_request(struct drm_dp_mst_topology_mgr *mgr)
++static void force_connector_state(
++	struct amdgpu_dm_connector *aconnector,
++	enum drm_connector_force force_state)
 +{
-+	struct drm_dp_sideband_msg_tx *txmsg;
-+	bool kick = true;
- 
-+	mutex_lock(&mgr->qlock);
-+	txmsg = list_first_entry_or_null(&mgr->tx_msg_downq,
-+					 struct drm_dp_sideband_msg_tx, next);
-+	/* If last transaction is not completed yet*/
-+	if (!txmsg ||
-+	    txmsg->state == DRM_DP_SIDEBAND_TX_START_SEND ||
-+	    txmsg->state == DRM_DP_SIDEBAND_TX_SENT)
-+		kick = false;
-+	mutex_unlock(&mgr->qlock);
++	struct drm_connector *connector = &aconnector->base;
 +
-+	if (kick)
-+		drm_dp_mst_kick_tx(mgr);
++	mutex_lock(&connector->dev->mode_config.mutex);
++	aconnector->base.force = force_state;
++	mutex_unlock(&connector->dev->mode_config.mutex);
++
++	mutex_lock(&aconnector->hpd_lock);
++	drm_kms_helper_connector_hotplug_event(connector);
++	mutex_unlock(&aconnector->hpd_lock);
 +}
-+EXPORT_SYMBOL(drm_dp_mst_hpd_irq_send_new_request);
- /**
-  * drm_dp_mst_detect_port() - get connection status for an MST port
-  * @connector: DRM connector for this port
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -3804,9 +3804,7 @@ intel_dp_mst_hpd_irq(struct intel_dp *in
++
+ static void dm_handle_hpd_rx_offload_work(struct work_struct *work)
  {
- 	bool handled = false;
- 
--	drm_dp_mst_hpd_irq(&intel_dp->mst_mgr, esi, &handled);
--	if (handled)
--		ack[1] |= esi[1] & (DP_DOWN_REP_MSG_RDY | DP_UP_REQ_MSG_RDY);
-+	drm_dp_mst_hpd_irq_handle_event(&intel_dp->mst_mgr, esi, ack, &handled);
- 
- 	if (esi[1] & DP_CP_IRQ) {
- 		intel_hdcp_handle_cp_irq(intel_dp->attached_connector);
-@@ -3881,6 +3879,9 @@ intel_dp_check_mst_status(struct intel_d
- 
- 		if (!intel_dp_ack_sink_irq_esi(intel_dp, ack))
- 			drm_dbg_kms(&i915->drm, "Failed to ack ESI\n");
+ 	struct hpd_rx_irq_offload_work *offload_work;
+@@ -1281,6 +1299,9 @@ static void dm_handle_hpd_rx_offload_wor
+ 	struct amdgpu_device *adev;
+ 	enum dc_connection_type new_connection_type = dc_connection_none;
+ 	unsigned long flags;
++	union test_response test_response;
 +
-+		if (ack[1] & (DP_DOWN_REP_MSG_RDY | DP_UP_REQ_MSG_RDY))
-+			drm_dp_mst_hpd_irq_send_new_request(&intel_dp->mst_mgr);
- 	}
++	memset(&test_response, 0, sizeof(test_response));
  
- 	return link_ok;
---- a/drivers/gpu/drm/nouveau/dispnv50/disp.c
-+++ b/drivers/gpu/drm/nouveau/dispnv50/disp.c
-@@ -1473,22 +1473,26 @@ nv50_mstm_service(struct nouveau_drm *dr
- 	u8 esi[8] = {};
+ 	offload_work = container_of(work, struct hpd_rx_irq_offload_work, work);
+ 	aconnector = offload_work->offload_wq->aconnector;
+@@ -1305,8 +1326,24 @@ static void dm_handle_hpd_rx_offload_wor
+ 		goto skip;
  
- 	while (handled) {
-+		u8 ack[8] = {};
+ 	mutex_lock(&adev->dm.dc_lock);
+-	if (offload_work->data.bytes.device_service_irq.bits.AUTOMATED_TEST)
++	if (offload_work->data.bytes.device_service_irq.bits.AUTOMATED_TEST) {
+ 		dc_link_dp_handle_automated_test(dc_link);
 +
- 		rc = drm_dp_dpcd_read(aux, DP_SINK_COUNT_ESI, esi, 8);
- 		if (rc != 8) {
- 			ret = false;
- 			break;
++		if (aconnector->timing_changed) {
++			/* force connector disconnect and reconnect */
++			force_connector_state(aconnector, DRM_FORCE_OFF);
++			msleep(100);
++			force_connector_state(aconnector, DRM_FORCE_UNSPECIFIED);
++		}
++
++		test_response.bits.ACK = 1;
++
++		core_link_write_dpcd(
++		dc_link,
++		DP_TEST_RESPONSE,
++		&test_response.raw,
++		sizeof(test_response));
++	}
+ 	else if ((dc_link->connector_signal != SIGNAL_TYPE_EDP) &&
+ 			hpd_rx_irq_check_link_loss_status(dc_link, &offload_work->data) &&
+ 			dc_link_dp_allow_hpd_rx_irq(dc_link)) {
+@@ -3076,6 +3113,10 @@ void amdgpu_dm_update_connector_after_de
+ 						    aconnector->edid);
  		}
  
--		drm_dp_mst_hpd_irq(&mstm->mgr, esi, &handled);
-+		drm_dp_mst_hpd_irq_handle_event(&mstm->mgr, esi, ack, &handled);
- 		if (!handled)
- 			break;
- 
--		rc = drm_dp_dpcd_write(aux, DP_SINK_COUNT_ESI + 1, &esi[1],
--				       3);
--		if (rc != 3) {
-+		rc = drm_dp_dpcd_writeb(aux, DP_SINK_COUNT_ESI + 1, ack[1]);
++		aconnector->timing_requested = kzalloc(sizeof(struct dc_crtc_timing), GFP_KERNEL);
++		if (!aconnector->timing_requested)
++			dm_error("%s: failed to create aconnector->requested_timing\n", __func__);
 +
-+		if (rc != 1) {
- 			ret = false;
- 			break;
- 		}
+ 		drm_connector_update_edid_property(connector, aconnector->edid);
+ 		amdgpu_dm_update_freesync_caps(connector, aconnector->edid);
+ 		update_connector_ext_caps(aconnector);
+@@ -3087,6 +3128,8 @@ void amdgpu_dm_update_connector_after_de
+ 		dc_sink_release(aconnector->dc_sink);
+ 		aconnector->dc_sink = NULL;
+ 		aconnector->edid = NULL;
++		kfree(aconnector->timing_requested);
++		aconnector->timing_requested = NULL;
+ #ifdef CONFIG_DRM_AMD_DC_HDCP
+ 		/* Set CP to DESIRED if it was ENABLED, so we can re-enable it again on hotplug */
+ 		if (connector->state->content_protection == DRM_MODE_CONTENT_PROTECTION_ENABLED)
+@@ -3131,6 +3174,8 @@ static void handle_hpd_irq_helper(struct
+ 	if (aconnector->fake_enable)
+ 		aconnector->fake_enable = false;
+ 
++	aconnector->timing_changed = false;
 +
-+		drm_dp_mst_hpd_irq_send_new_request(&mstm->mgr);
- 	}
+ 	if (!dc_link_detect_sink(aconnector->dc_link, &new_connection_type))
+ 		DRM_ERROR("KMS: Failed to detect connector\n");
  
- 	if (!ret)
---- a/include/drm/display/drm_dp_mst_helper.h
-+++ b/include/drm/display/drm_dp_mst_helper.h
-@@ -815,8 +815,11 @@ void drm_dp_mst_topology_mgr_destroy(str
- bool drm_dp_read_mst_cap(struct drm_dp_aux *aux, const u8 dpcd[DP_RECEIVER_CAP_SIZE]);
- int drm_dp_mst_topology_mgr_set_mst(struct drm_dp_mst_topology_mgr *mgr, bool mst_state);
+@@ -5896,6 +5941,14 @@ create_stream_for_sink(struct amdgpu_dm_
+ 			stream, &mode, &aconnector->base, con_state, old_stream,
+ 			requested_bpc);
  
--int drm_dp_mst_hpd_irq(struct drm_dp_mst_topology_mgr *mgr, u8 *esi, bool *handled);
++	if (aconnector->timing_changed) {
++		DC_LOG_DEBUG("%s: overriding timing for automated test, bpc %d, changing to %d\n",
++				__func__,
++				stream->timing.display_color_depth,
++				aconnector->timing_requested->display_color_depth);
++		stream->timing = *aconnector->timing_requested;
++	}
++
+ #if defined(CONFIG_DRM_AMD_DC_DCN)
+ 	/* SST DSC determination policy */
+ 	update_dsc_caps(aconnector, sink, stream, &dsc_caps);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+@@ -31,6 +31,7 @@
+ #include <drm/drm_connector.h>
+ #include <drm/drm_crtc.h>
+ #include <drm/drm_plane.h>
++#include "link_service_types.h"
+ 
+ /*
+  * This file contains the definition for amdgpu_display_manager
+@@ -650,6 +651,10 @@ struct amdgpu_dm_connector {
+ 
+ 	/* Record progress status of mst*/
+ 	uint8_t mst_status;
++
++	/* Automated testing */
++	bool timing_changed;
++	struct dc_crtc_timing *timing_requested;
+ };
+ 
+ static inline void amdgpu_dm_set_mst_status(uint8_t *status,
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+@@ -38,6 +38,9 @@
+ #include "amdgpu_dm.h"
+ #include "amdgpu_dm_irq.h"
+ #include "amdgpu_dm_mst_types.h"
++#include "dpcd_defs.h"
++#include "dc/inc/core_types.h"
++#include "dc_link_dp.h"
+ 
+ #include "dm_helpers.h"
+ #include "ddc_service_types.h"
+@@ -1056,6 +1059,128 @@ void dm_helpers_mst_enable_stream_featur
+ 					 sizeof(new_downspread));
+ }
+ 
++bool dm_helpers_dp_handle_test_pattern_request(
++		struct dc_context *ctx,
++		const struct dc_link *link,
++		union link_test_pattern dpcd_test_pattern,
++		union test_misc dpcd_test_params)
++{
++	enum dp_test_pattern test_pattern;
++	enum dp_test_pattern_color_space test_pattern_color_space =
++			DP_TEST_PATTERN_COLOR_SPACE_UNDEFINED;
++	enum dc_color_depth requestColorDepth = COLOR_DEPTH_UNDEFINED;
++	enum dc_pixel_encoding requestPixelEncoding = PIXEL_ENCODING_UNDEFINED;
++	struct pipe_ctx *pipes = link->dc->current_state->res_ctx.pipe_ctx;
++	struct pipe_ctx *pipe_ctx = NULL;
++	struct amdgpu_dm_connector *aconnector = link->priv;
++	int i;
++
++	for (i = 0; i < MAX_PIPES; i++) {
++		if (pipes[i].stream == NULL)
++			continue;
++
++		if (pipes[i].stream->link == link && !pipes[i].top_pipe &&
++			!pipes[i].prev_odm_pipe) {
++			pipe_ctx = &pipes[i];
++			break;
++		}
++	}
++
++	if (pipe_ctx == NULL)
++		return false;
++
++	switch (dpcd_test_pattern.bits.PATTERN) {
++	case LINK_TEST_PATTERN_COLOR_RAMP:
++		test_pattern = DP_TEST_PATTERN_COLOR_RAMP;
++	break;
++	case LINK_TEST_PATTERN_VERTICAL_BARS:
++		test_pattern = DP_TEST_PATTERN_VERTICAL_BARS;
++	break; /* black and white */
++	case LINK_TEST_PATTERN_COLOR_SQUARES:
++		test_pattern = (dpcd_test_params.bits.DYN_RANGE ==
++				TEST_DYN_RANGE_VESA ?
++				DP_TEST_PATTERN_COLOR_SQUARES :
++				DP_TEST_PATTERN_COLOR_SQUARES_CEA);
++	break;
++	default:
++		test_pattern = DP_TEST_PATTERN_VIDEO_MODE;
++	break;
++	}
++
++	if (dpcd_test_params.bits.CLR_FORMAT == 0)
++		test_pattern_color_space = DP_TEST_PATTERN_COLOR_SPACE_RGB;
++	else
++		test_pattern_color_space = dpcd_test_params.bits.YCBCR_COEFS ?
++				DP_TEST_PATTERN_COLOR_SPACE_YCBCR709 :
++				DP_TEST_PATTERN_COLOR_SPACE_YCBCR601;
++
++	switch (dpcd_test_params.bits.BPC) {
++	case 0: // 6 bits
++		requestColorDepth = COLOR_DEPTH_666;
++		break;
++	case 1: // 8 bits
++		requestColorDepth = COLOR_DEPTH_888;
++		break;
++	case 2: // 10 bits
++		requestColorDepth = COLOR_DEPTH_101010;
++		break;
++	case 3: // 12 bits
++		requestColorDepth = COLOR_DEPTH_121212;
++		break;
++	default:
++		break;
++	}
++
++	switch (dpcd_test_params.bits.CLR_FORMAT) {
++	case 0:
++		requestPixelEncoding = PIXEL_ENCODING_RGB;
++		break;
++	case 1:
++		requestPixelEncoding = PIXEL_ENCODING_YCBCR422;
++		break;
++	case 2:
++		requestPixelEncoding = PIXEL_ENCODING_YCBCR444;
++		break;
++	default:
++		requestPixelEncoding = PIXEL_ENCODING_RGB;
++		break;
++	}
++
++	if ((requestColorDepth != COLOR_DEPTH_UNDEFINED
++		&& pipe_ctx->stream->timing.display_color_depth != requestColorDepth)
++		|| (requestPixelEncoding != PIXEL_ENCODING_UNDEFINED
++		&& pipe_ctx->stream->timing.pixel_encoding != requestPixelEncoding)) {
++		DC_LOG_DEBUG("%s: original bpc %d pix encoding %d, changing to %d  %d\n",
++				__func__,
++				pipe_ctx->stream->timing.display_color_depth,
++				pipe_ctx->stream->timing.pixel_encoding,
++				requestColorDepth,
++				requestPixelEncoding);
++		pipe_ctx->stream->timing.display_color_depth = requestColorDepth;
++		pipe_ctx->stream->timing.pixel_encoding = requestPixelEncoding;
++
++		dp_update_dsc_config(pipe_ctx);
++
++		aconnector->timing_changed = true;
++		/* store current timing */
++		if (aconnector->timing_requested)
++			*aconnector->timing_requested = pipe_ctx->stream->timing;
++		else
++			DC_LOG_ERROR("%s: timing storage failed\n", __func__);
++
++	}
++
++	dc_link_dp_set_test_pattern(
++		(struct dc_link *) link,
++		test_pattern,
++		test_pattern_color_space,
++		NULL,
++		NULL,
++		0);
++
++	return false;
++}
++
+ void dm_set_phyd32clk(struct dc_context *ctx, int freq_khz)
+ {
+        // TODO
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
+@@ -4264,124 +4264,6 @@ static void dp_test_send_phy_test_patter
+ 		test_pattern_size);
+ }
+ 
+-static void dp_test_send_link_test_pattern(struct dc_link *link)
+-{
+-	union link_test_pattern dpcd_test_pattern;
+-	union test_misc dpcd_test_params;
+-	enum dp_test_pattern test_pattern;
+-	enum dp_test_pattern_color_space test_pattern_color_space =
+-			DP_TEST_PATTERN_COLOR_SPACE_UNDEFINED;
+-	enum dc_color_depth requestColorDepth = COLOR_DEPTH_UNDEFINED;
+-	struct pipe_ctx *pipes = link->dc->current_state->res_ctx.pipe_ctx;
+-	struct pipe_ctx *pipe_ctx = NULL;
+-	int i;
 -
-+int drm_dp_mst_hpd_irq_handle_event(struct drm_dp_mst_topology_mgr *mgr,
-+				    const u8 *esi,
-+				    u8 *ack,
-+				    bool *handled);
-+void drm_dp_mst_hpd_irq_send_new_request(struct drm_dp_mst_topology_mgr *mgr);
+-	memset(&dpcd_test_pattern, 0, sizeof(dpcd_test_pattern));
+-	memset(&dpcd_test_params, 0, sizeof(dpcd_test_params));
+-
+-	for (i = 0; i < MAX_PIPES; i++) {
+-		if (pipes[i].stream == NULL)
+-			continue;
+-
+-		if (pipes[i].stream->link == link && !pipes[i].top_pipe && !pipes[i].prev_odm_pipe) {
+-			pipe_ctx = &pipes[i];
+-			break;
+-		}
+-	}
+-
+-	if (pipe_ctx == NULL)
+-		return;
+-
+-	/* get link test pattern and pattern parameters */
+-	core_link_read_dpcd(
+-			link,
+-			DP_TEST_PATTERN,
+-			&dpcd_test_pattern.raw,
+-			sizeof(dpcd_test_pattern));
+-	core_link_read_dpcd(
+-			link,
+-			DP_TEST_MISC0,
+-			&dpcd_test_params.raw,
+-			sizeof(dpcd_test_params));
+-
+-	switch (dpcd_test_pattern.bits.PATTERN) {
+-	case LINK_TEST_PATTERN_COLOR_RAMP:
+-		test_pattern = DP_TEST_PATTERN_COLOR_RAMP;
+-	break;
+-	case LINK_TEST_PATTERN_VERTICAL_BARS:
+-		test_pattern = DP_TEST_PATTERN_VERTICAL_BARS;
+-	break; /* black and white */
+-	case LINK_TEST_PATTERN_COLOR_SQUARES:
+-		test_pattern = (dpcd_test_params.bits.DYN_RANGE ==
+-				TEST_DYN_RANGE_VESA ?
+-				DP_TEST_PATTERN_COLOR_SQUARES :
+-				DP_TEST_PATTERN_COLOR_SQUARES_CEA);
+-	break;
+-	default:
+-		test_pattern = DP_TEST_PATTERN_VIDEO_MODE;
+-	break;
+-	}
+-
+-	if (dpcd_test_params.bits.CLR_FORMAT == 0)
+-		test_pattern_color_space = DP_TEST_PATTERN_COLOR_SPACE_RGB;
+-	else
+-		test_pattern_color_space = dpcd_test_params.bits.YCBCR_COEFS ?
+-				DP_TEST_PATTERN_COLOR_SPACE_YCBCR709 :
+-				DP_TEST_PATTERN_COLOR_SPACE_YCBCR601;
+-
+-	switch (dpcd_test_params.bits.BPC) {
+-	case 0: // 6 bits
+-		requestColorDepth = COLOR_DEPTH_666;
+-		break;
+-	case 1: // 8 bits
+-		requestColorDepth = COLOR_DEPTH_888;
+-		break;
+-	case 2: // 10 bits
+-		requestColorDepth = COLOR_DEPTH_101010;
+-		break;
+-	case 3: // 12 bits
+-		requestColorDepth = COLOR_DEPTH_121212;
+-		break;
+-	default:
+-		break;
+-	}
+-
+-	switch (dpcd_test_params.bits.CLR_FORMAT) {
+-	case 0:
+-		pipe_ctx->stream->timing.pixel_encoding = PIXEL_ENCODING_RGB;
+-		break;
+-	case 1:
+-		pipe_ctx->stream->timing.pixel_encoding = PIXEL_ENCODING_YCBCR422;
+-		break;
+-	case 2:
+-		pipe_ctx->stream->timing.pixel_encoding = PIXEL_ENCODING_YCBCR444;
+-		break;
+-	default:
+-		pipe_ctx->stream->timing.pixel_encoding = PIXEL_ENCODING_RGB;
+-		break;
+-	}
+-
+-
+-	if (requestColorDepth != COLOR_DEPTH_UNDEFINED
+-			&& pipe_ctx->stream->timing.display_color_depth != requestColorDepth) {
+-		DC_LOG_DEBUG("%s: original bpc %d, changing to %d\n",
+-				__func__,
+-				pipe_ctx->stream->timing.display_color_depth,
+-				requestColorDepth);
+-		pipe_ctx->stream->timing.display_color_depth = requestColorDepth;
+-	}
+-
+-	dp_update_dsc_config(pipe_ctx);
+-
+-	dc_link_dp_set_test_pattern(
+-			link,
+-			test_pattern,
+-			test_pattern_color_space,
+-			NULL,
+-			NULL,
+-			0);
+-}
+-
+ static void dp_test_get_audio_test_data(struct dc_link *link, bool disable_video)
+ {
+ 	union audio_test_mode            dpcd_test_mode = {0};
+@@ -4494,8 +4376,25 @@ void dc_link_dp_handle_automated_test(st
+ 		test_response.bits.ACK = 0;
+ 	}
+ 	if (test_request.bits.LINK_TEST_PATTRN) {
+-		dp_test_send_link_test_pattern(link);
+-		test_response.bits.ACK = 1;
++		union test_misc dpcd_test_params;
++		union link_test_pattern dpcd_test_pattern;
++
++		memset(&dpcd_test_pattern, 0, sizeof(dpcd_test_pattern));
++		memset(&dpcd_test_params, 0, sizeof(dpcd_test_params));
++
++		/* get link test pattern and pattern parameters */
++		core_link_read_dpcd(
++				link,
++				DP_TEST_PATTERN,
++				&dpcd_test_pattern.raw,
++				sizeof(dpcd_test_pattern));
++		core_link_read_dpcd(
++				link,
++				DP_TEST_MISC0,
++				&dpcd_test_params.raw,
++				sizeof(dpcd_test_params));
++		test_response.bits.ACK = dm_helpers_dp_handle_test_pattern_request(link->ctx, link,
++				dpcd_test_pattern, dpcd_test_params) ? 1 : 0;
+ 	}
  
- int
- drm_dp_mst_detect_port(struct drm_connector *connector,
+ 	if (test_request.bits.AUDIO_TEST_PATTERN) {
+--- a/drivers/gpu/drm/amd/display/dc/dm_helpers.h
++++ b/drivers/gpu/drm/amd/display/dc/dm_helpers.h
+@@ -156,6 +156,12 @@ enum dc_edid_status dm_helpers_read_loca
+ 		struct dc_link *link,
+ 		struct dc_sink *sink);
+ 
++bool dm_helpers_dp_handle_test_pattern_request(
++		struct dc_context *ctx,
++		const struct dc_link *link,
++		union link_test_pattern dpcd_test_pattern,
++		union test_misc dpcd_test_params);
++
+ void dm_set_dcn_clocks(
+ 		struct dc_context *ctx,
+ 		struct dc_clocks *clks);
 
 
