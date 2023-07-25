@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4351ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:31:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E595CC433C8;
-	Tue, 25 Jul 2023 11:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9151ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:31:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3858C433C7;
+	Tue, 25 Jul 2023 11:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284693;
-	bh=E9+dGMy3fJodDACSOm+ZWJKZ5Nc0pVVZC4430Oytqqg=;
+	s=korg; t=1690284696;
+	bh=Y1thFwVoES51AB1wPzTd0ivxRPqBzGtpvZ+MM/mJa3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uLQy6ZU16X7d9BSH8EnFZC0h0T/rXgrn8gt7Bu8TsulI33r3/dMh1wLJpv57TQ0ro
-	 xHdjX5V9Qr9EexE/LrPX4iApRPQqjDzeMzawHC6vrY8otOaGpmedKb5uSJpoliZPaM
-	 xDuiUX0X4V+6A1qv1f1iKLAgjbb0l8D28VAiicEc=
+	b=o2Iqo9YEJeP0RFEOTFo034CqMBwSW0OqCvfWSEpBAYyjcwwlu6g7cRCwvYwUFNLXG
+	 PvKoflPJJU4y6DF1NRpe/TwfXGV34CjbwLgpUdSWfW4zOboFkQ/bowoY++vtV+q3JF
+	 iULFMXbcMK1IbsfEwMXsdTnp/10VQtHeN4JLlcEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable@kernel.org,
 	Mark Brown <broonie@kernel.org>,
-	Xu Yilun <yilun.xu@intel.com>,
-	stable@kernel.org
-Subject: [PATCH 5.10 448/509] regmap: Drop initial version of maximum transfer length fixes
-Date: Tue, 25 Jul 2023 12:46:27 +0200
-Message-ID: <20230725104614.258303721@linuxfoundation.org>
+	Xu Yilun <yilun.xu@intel.com>
+Subject: [PATCH 5.10 449/509] regmap: Account for register length in SMBus I/O limits
+Date: Tue, 25 Jul 2023 12:46:28 +0200
+Message-ID: <20230725104614.308054086@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,62 +37,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Mark Brown <broonie@kernel.org>
 
-commit bc64734825c59e18a27ac266b07e14944c111fd8 upstream.
+commit 0c9d2eb5e94792fe64019008a04d4df5e57625af upstream.
 
-When problems were noticed with the register address not being taken
-into account when limiting raw transfers with I2C devices we fixed this
-in the core.  Unfortunately it has subsequently been realised that a lot
-of buses were relying on the prior behaviour, partly due to unclear
-documentation not making it obvious what was intended in the core.  This
-is all more involved to fix than is sensible for a fix commit so let's
-just drop the original fixes, a separate commit will fix the originally
-observed problem in an I2C specific way
+The SMBus I2C buses have limits on the size of transfers they can do but
+do not factor in the register length meaning we may try to do a transfer
+longer than our length limit, the core will not take care of this.
+Future changes will factor this out into the core but there are a number
+of users that assume current behaviour so let's just do something
+conservative here.
 
-Fixes: 3981514180c9 ("regmap: Account for register length when chunking")
-Fixes: c8e796895e23 ("regmap: spi-avmm: Fix regmap_bus max_raw_write")
+This does not take account padding bits but practically speaking these
+are very rarely if ever used on I2C buses given that they generally run
+slowly enough to mean there's no issue.
+
+Cc: stable@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Reviewed-by: Xu Yilun <yilun.xu@intel.com>
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20230712-regmap-max-transfer-v1-1-80e2aed22e83@kernel.org
+Link: https://lore.kernel.org/r/20230712-regmap-max-transfer-v1-2-80e2aed22e83@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/regmap/regmap-spi-avmm.c |    2 +-
- drivers/base/regmap/regmap.c          |    6 ++----
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ drivers/base/regmap/regmap-i2c.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/base/regmap/regmap-spi-avmm.c
-+++ b/drivers/base/regmap/regmap-spi-avmm.c
-@@ -666,7 +666,7 @@ static const struct regmap_bus regmap_sp
- 	.reg_format_endian_default = REGMAP_ENDIAN_NATIVE,
- 	.val_format_endian_default = REGMAP_ENDIAN_NATIVE,
- 	.max_raw_read = SPI_AVMM_VAL_SIZE * MAX_READ_CNT,
--	.max_raw_write = SPI_AVMM_REG_SIZE + SPI_AVMM_VAL_SIZE * MAX_WRITE_CNT,
-+	.max_raw_write = SPI_AVMM_VAL_SIZE * MAX_WRITE_CNT,
- 	.free_context = spi_avmm_bridge_ctx_free,
+--- a/drivers/base/regmap/regmap-i2c.c
++++ b/drivers/base/regmap/regmap-i2c.c
+@@ -242,8 +242,8 @@ static int regmap_i2c_smbus_i2c_read(voi
+ static const struct regmap_bus regmap_i2c_smbus_i2c_block = {
+ 	.write = regmap_i2c_smbus_i2c_write,
+ 	.read = regmap_i2c_smbus_i2c_read,
+-	.max_raw_read = I2C_SMBUS_BLOCK_MAX,
+-	.max_raw_write = I2C_SMBUS_BLOCK_MAX,
++	.max_raw_read = I2C_SMBUS_BLOCK_MAX - 1,
++	.max_raw_write = I2C_SMBUS_BLOCK_MAX - 1,
  };
  
---- a/drivers/base/regmap/regmap.c
-+++ b/drivers/base/regmap/regmap.c
-@@ -1998,8 +1998,6 @@ int _regmap_raw_write(struct regmap *map
- 	size_t val_count = val_len / val_bytes;
- 	size_t chunk_count, chunk_bytes;
- 	size_t chunk_regs = val_count;
--	size_t max_data = map->max_raw_write - map->format.reg_bytes -
--			map->format.pad_bytes;
- 	int ret, i;
+ static int regmap_i2c_smbus_i2c_write_reg16(void *context, const void *data,
+@@ -299,8 +299,8 @@ static int regmap_i2c_smbus_i2c_read_reg
+ static const struct regmap_bus regmap_i2c_smbus_i2c_block_reg16 = {
+ 	.write = regmap_i2c_smbus_i2c_write_reg16,
+ 	.read = regmap_i2c_smbus_i2c_read_reg16,
+-	.max_raw_read = I2C_SMBUS_BLOCK_MAX,
+-	.max_raw_write = I2C_SMBUS_BLOCK_MAX,
++	.max_raw_read = I2C_SMBUS_BLOCK_MAX - 2,
++	.max_raw_write = I2C_SMBUS_BLOCK_MAX - 2,
+ };
  
- 	if (!val_count)
-@@ -2007,8 +2005,8 @@ int _regmap_raw_write(struct regmap *map
- 
- 	if (map->use_single_write)
- 		chunk_regs = 1;
--	else if (map->max_raw_write && val_len > max_data)
--		chunk_regs = max_data / val_bytes;
-+	else if (map->max_raw_write && val_len > map->max_raw_write)
-+		chunk_regs = map->max_raw_write / val_bytes;
- 
- 	chunk_count = val_count / chunk_regs;
- 	chunk_bytes = chunk_regs * val_bytes;
+ static const struct regmap_bus *regmap_get_i2c_bus(struct i2c_client *i2c,
 
 
