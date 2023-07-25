@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D4F12B98
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:04:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F54C433C7;
-	Tue, 25 Jul 2023 11:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0716615AFC
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:04:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC45C433CA;
+	Tue, 25 Jul 2023 11:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283072;
-	bh=FQYJiP4xc7/v7gSSGSYZZ3EHFQlZc5QvnamO3NppU0k=;
+	s=korg; t=1690283074;
+	bh=8CNmmWFc9LAc7GEzGBxZ9Z/vYxAP72k3i3uL3QYfgnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=csewitu8ap8Pps0tik/Cf3586Zkp3Dlz9aCQ4KrqErYcgXA3mZahAbgt5WNlJE/t4
-	 9mHmr9KW9gwBvFjiRt6HfExfdUne1lWcTlasLHINIFI2oGXoi5/xkDV0Sf0Et8JkvJ
-	 zr79diWN+eSg74ozBqvpTnIrgPa19ycFqV5kXaOo=
+	b=2GNSaLOYdAafsTGdM4lUuqsMv0RKJXsgrJvneYbvuZ66nTqD2LCf8/lrV5ZqQbenw
+	 HrqiJ4OSAPc3QATKNP7YpGpZ/Wnm8l07sICobsrBgjxSQnsLrNCcbXV+HWWesxdHfK
+	 scYRmI5v6ncHJVzL77qP37qHqfOfVxI59mbXG7Lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Qu Wenruo <wqu@suse.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	David Sterba <dsterba@suse.com>,
+	Jaewon Kim <jaewon02.kim@samsung.com>,
+	Chanho Park <chanho61.park@samsung.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 099/183] btrfs: be a bit more careful when setting mirror_num_ret in btrfs_map_block
-Date: Tue, 25 Jul 2023 12:45:27 +0200
-Message-ID: <20230725104511.516754140@linuxfoundation.org>
+Subject: [PATCH 6.1 100/183] spi: s3c64xx: clear loopback bit after loopback test
+Date: Tue, 25 Jul 2023 12:45:28 +0200
+Message-ID: <20230725104511.556694987@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -38,47 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Jaewon Kim <jaewon02.kim@samsung.com>
 
-[ Upstream commit 4e7de35eb7d1a1d4f2dda15f39fbedd4798a0b8d ]
+[ Upstream commit 9ec3c5517e22a12d2ff1b71e844f7913641460c6 ]
 
-The mirror_num_ret is allowed to be NULL, although it has to be set when
-smap is set.  Unfortunately that is not a well enough specifiable
-invariant for static type checkers, so add a NULL check to make sure they
-are fine.
+When SPI loopback transfer is performed, S3C64XX_SPI_MODE_SELF_LOOPBACK
+bit still remained. It works as loopback even if the next transfer is
+not spi loopback mode.
+If not SPI_LOOP, needs to clear S3C64XX_SPI_MODE_SELF_LOOPBACK bit.
 
-Fixes: 03793cbbc80f ("btrfs: add fast path for single device io in __btrfs_map_block")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Jaewon Kim <jaewon02.kim@samsung.com>
+Fixes: ffb7bcd3b27e ("spi: s3c64xx: support loopback mode")
+Reviewed-by: Chanho Park <chanho61.park@samsung.com>
+Link: https://lore.kernel.org/r/20230711082020.138165-1-jaewon02.kim@samsung.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/spi/spi-s3c64xx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 7433ae929fdcb..2e0832d70406c 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -6595,11 +6595,13 @@ static int __btrfs_map_block(struct btrfs_fs_info *fs_info,
- 		if (patch_the_first_stripe_for_dev_replace) {
- 			smap->dev = dev_replace->tgtdev;
- 			smap->physical = physical_to_patch_in_first_stripe;
--			*mirror_num_ret = map->num_stripes + 1;
-+			if (mirror_num_ret)
-+				*mirror_num_ret = map->num_stripes + 1;
- 		} else {
- 			set_io_stripe(smap, map, stripe_index, stripe_offset,
- 				      stripe_nr);
--			*mirror_num_ret = mirror_num;
-+			if (mirror_num_ret)
-+				*mirror_num_ret = mirror_num;
- 		}
- 		*bioc_ret = NULL;
- 		ret = 0;
+diff --git a/drivers/spi/spi-s3c64xx.c b/drivers/spi/spi-s3c64xx.c
+index 71d324ec9a70a..1480df7b43b3f 100644
+--- a/drivers/spi/spi-s3c64xx.c
++++ b/drivers/spi/spi-s3c64xx.c
+@@ -668,6 +668,8 @@ static int s3c64xx_spi_config(struct s3c64xx_spi_driver_data *sdd)
+ 
+ 	if ((sdd->cur_mode & SPI_LOOP) && sdd->port_conf->has_loopback)
+ 		val |= S3C64XX_SPI_MODE_SELF_LOOPBACK;
++	else
++		val &= ~S3C64XX_SPI_MODE_SELF_LOOPBACK;
+ 
+ 	writel(val, regs + S3C64XX_SPI_MODE_CFG);
+ 
 -- 
 2.39.2
 
