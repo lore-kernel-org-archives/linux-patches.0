@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A777214A82
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:54:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2768BC433C7;
-	Tue, 25 Jul 2023 10:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64AFE15AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:54:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7C8C433C7;
+	Tue, 25 Jul 2023 10:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282451;
-	bh=LH2hwoUFKM2bcWoEr3Ue+OY/SGHBF6JkUd2BHQ0tcIo=;
+	s=korg; t=1690282454;
+	bh=hOd7AXocUVJghEqJQCP6+ACdxpASkwQEtsmHIA7kHKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CojgOYqeg2gXiResH72mfOywpDy+OfiKZXx7nFc4rJzG9B8AjB5erxtrv2v45Vr4y
-	 z1cjiQmMuTGMs5IKWQDqbXCB8JFE6Y63ujsmDG+GoUwiFE+lTrtKDq61p1BeMGC/ws
-	 QfLq8YRCbm5+K0frk0mCRN2EgZqApur8zmvuCktE=
+	b=ILxfg9HNvzKSCRV5aMDGpZP4wjCEzmx8Lv71sp0yAw2jmCFy1rGtR+GX/yQ77j7cl
+	 KYlsEUxNp0VQiO6xk2+n28xLxtc70kXWyiLJpVZ6sLOogEpOL2KE4zrxAzMJyYDQyC
+	 UZoKgNDZE+7ms5XPvr3m/zRh9IZaLT4fIlR3+l3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Sisodiya <mukesh.sisodiya@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 127/227] wifi: iwlwifi: mvm: Add NULL check before dereferencing the pointer
-Date: Tue, 25 Jul 2023 12:44:54 +0200
-Message-ID: <20230725104520.075809336@linuxfoundation.org>
+Subject: [PATCH 6.4 136/227] ASoC: codecs: wcd938x: fix dB range for HPHL and HPHR
+Date: Tue, 25 Jul 2023 12:45:03 +0200
+Message-ID: <20230725104520.484665592@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -36,66 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mukesh Sisodiya <mukesh.sisodiya@intel.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-[ Upstream commit 7dd50fd5478056929a012c6bf8b3c6f87c7e9e87 ]
+[ Upstream commit c03226ba15fe3c42d13907ec7d8536396602557b ]
 
-While vif pointers are protected by the corresponding "*active"
-fields, static checkers can get confused sometimes. Add an explicit
-check.
+dB range for HPHL and HPHR gains are from +6dB to -30dB in steps of
+1.5dB with register values range from 0 to 24.
 
-Signed-off-by: Mukesh Sisodiya <mukesh.sisodiya@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230614154951.78749ae91fb5.Id3c05d13eeee6638f0930f750e93fb928d5c9dee@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Current code maps these dB ranges incorrectly, fix them to allow proper
+volume setting.
+
+Fixes: e8ba1e05bdc0 ("ASoC: codecs: wcd938x: add basic controls")
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230705125723.40464-1-srinivas.kandagatla@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/power.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ sound/soc/codecs/wcd938x.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/power.c b/drivers/net/wireless/intel/iwlwifi/mvm/power.c
-index ac1dae52556f8..19839cc44eb3d 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/power.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/power.c
-@@ -647,30 +647,32 @@ static void iwl_mvm_power_set_pm(struct iwl_mvm *mvm,
- 		return;
+diff --git a/sound/soc/codecs/wcd938x.c b/sound/soc/codecs/wcd938x.c
+index 8bb6a5ff7b0f6..4a0b990f56e12 100644
+--- a/sound/soc/codecs/wcd938x.c
++++ b/sound/soc/codecs/wcd938x.c
+@@ -210,7 +210,7 @@ struct wcd938x_priv {
+ };
  
- 	/* enable PM on bss if bss stand alone */
--	if (vifs->bss_active && !vifs->p2p_active && !vifs->ap_active) {
-+	if (bss_mvmvif && vifs->bss_active && !vifs->p2p_active &&
-+	    !vifs->ap_active) {
- 		bss_mvmvif->pm_enabled = true;
- 		return;
- 	}
+ static const SNDRV_CTL_TLVD_DECLARE_DB_MINMAX(ear_pa_gain, 600, -1800);
+-static const SNDRV_CTL_TLVD_DECLARE_DB_MINMAX(line_gain, 600, -3000);
++static const DECLARE_TLV_DB_SCALE(line_gain, -3000, 150, -3000);
+ static const SNDRV_CTL_TLVD_DECLARE_DB_MINMAX(analog_gain, 0, 3000);
  
- 	/* enable PM on p2p if p2p stand alone */
--	if (vifs->p2p_active && !vifs->bss_active && !vifs->ap_active) {
-+	if (p2p_mvmvif && vifs->p2p_active && !vifs->bss_active &&
-+	    !vifs->ap_active) {
- 		p2p_mvmvif->pm_enabled = true;
- 		return;
- 	}
- 
--	if (vifs->bss_active && vifs->p2p_active)
-+	if (p2p_mvmvif && bss_mvmvif && vifs->bss_active && vifs->p2p_active)
- 		client_same_channel =
- 			iwl_mvm_have_links_same_channel(bss_mvmvif, p2p_mvmvif);
- 
--	if (vifs->bss_active && vifs->ap_active)
-+	if (bss_mvmvif && ap_mvmvif && vifs->bss_active && vifs->ap_active)
- 		ap_same_channel =
- 			iwl_mvm_have_links_same_channel(bss_mvmvif, ap_mvmvif);
- 
- 	/* clients are not stand alone: enable PM if DCM */
- 	if (!(client_same_channel || ap_same_channel)) {
--		if (vifs->bss_active)
-+		if (bss_mvmvif && vifs->bss_active)
- 			bss_mvmvif->pm_enabled = true;
--		if (vifs->p2p_active)
-+		if (p2p_mvmvif && vifs->p2p_active)
- 			p2p_mvmvif->pm_enabled = true;
- 		return;
- 	}
+ struct wcd938x_mbhc_zdet_param {
+@@ -2662,8 +2662,8 @@ static const struct snd_kcontrol_new wcd938x_snd_controls[] = {
+ 		       wcd938x_get_swr_port, wcd938x_set_swr_port),
+ 	SOC_SINGLE_EXT("DSD_R Switch", WCD938X_DSD_R, 0, 1, 0,
+ 		       wcd938x_get_swr_port, wcd938x_set_swr_port),
+-	SOC_SINGLE_TLV("HPHL Volume", WCD938X_HPH_L_EN, 0, 0x18, 0, line_gain),
+-	SOC_SINGLE_TLV("HPHR Volume", WCD938X_HPH_R_EN, 0, 0x18, 0, line_gain),
++	SOC_SINGLE_TLV("HPHL Volume", WCD938X_HPH_L_EN, 0, 0x18, 1, line_gain),
++	SOC_SINGLE_TLV("HPHR Volume", WCD938X_HPH_R_EN, 0, 0x18, 1, line_gain),
+ 	WCD938X_EAR_PA_GAIN_TLV("EAR_PA Volume", WCD938X_ANA_EAR_COMPANDER_CTL,
+ 				2, 0x10, 0, ear_pa_gain),
+ 	SOC_SINGLE_EXT("ADC1 Switch", WCD938X_ADC1, 1, 1, 0,
 -- 
 2.39.2
 
