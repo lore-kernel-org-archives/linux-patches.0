@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6AE81ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A572C433C7;
-	Tue, 25 Jul 2023 11:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9E71ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD7FC433C8;
+	Tue, 25 Jul 2023 11:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283497;
-	bh=YczOVFZ+6g91yzuremJu1rdzZruFTsKOVjXHaoiujSg=;
+	s=korg; t=1690283500;
+	bh=vOkQmZTfYdhHx8rEjYFctftJiwpQaAcwUwc2gxBxWI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bHMAIlnmw4UAUZEmm/5F9uqn6C19lvGlgNub+9W2Ykv20f+LUv05yY4NJmfz3sGNE
-	 8I9uiXNFNbxEm9fRoy2Y6Hhd4UEeremLL308dxHAAdeQlNWlUsg+ruwdq5MPuOj5Ln
-	 T+oyHcr5h6c8PJ1dlWeXa3gU4hGN2OeUX5BSOop4=
+	b=xaGf3G3FBG0fn8abPrA6GvYm2U+Ug/vloGR5/2KZgHNYPw8/XxF9h9I3XN7/8+N1q
+	 nRCaStD5DulqfuJAxjtw4y6VwFEatagj7eq56UlzYlAOznrm8ehE6RGWmtqd5nMU0s
+	 FMM4R2i5MK7xmL6OGKHKNGEIohhf87Bb7bVTBUIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 019/509] md/raid10: fix io loss while replacement replace rdev
-Date: Tue, 25 Jul 2023 12:39:18 +0200
-Message-ID: <20230725104554.526317716@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ashok Raj <ashok.raj@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 5.10 002/509] x86/smp: Use dedicated cache-line for mwait_play_dead()
+Date: Tue, 25 Jul 2023 12:39:01 +0200
+Message-ID: <20230725104553.721010695@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,79 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Nan <linan122@huawei.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 2ae6aaf76912bae53c74b191569d2ab484f24bf3 ]
+commit f9c9987bf52f4e42e940ae217333ebb5a4c3b506 upstream.
 
-When removing a disk with replacement, the replacement will be used to
-replace rdev. During this process, there is a brief window in which both
-rdev and replacement are read as NULL in raid10_write_request(). This
-will result in io not being submitted but it should be.
+Monitoring idletask::thread_info::flags in mwait_play_dead() has been an
+obvious choice as all what is needed is a cache line which is not written
+by other CPUs.
 
-  //remove				//write
-  raid10_remove_disk			raid10_write_request
-   mirror->rdev = NULL
-					 read rdev -> NULL
-   mirror->rdev = mirror->replacement
-   mirror->replacement = NULL
-					 read replacement -> NULL
+But there is a use case where a "dead" CPU needs to be brought out of
+MWAIT: kexec().
 
-Fix it by reading replacement first and rdev later, meanwhile, use smp_mb()
-to prevent memory reordering.
+This is required as kexec() can overwrite text, pagetables, stacks and the
+monitored cacheline of the original kernel. The latter causes MWAIT to
+resume execution which obviously causes havoc on the kexec kernel which
+results usually in triple faults.
 
-Fixes: 475b0321a4df ("md/raid10: writes should get directed to replacement as well as original.")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230602091839.743798-3-linan666@huaweicloud.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Use a dedicated per CPU storage to prepare for that.
+
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Ashok Raj <ashok.raj@intel.com>
+Reviewed-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230615193330.434553750@linutronix.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid10.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ arch/x86/kernel/smpboot.c |   24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 01680029f0de5..32a917e5103a6 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -751,8 +751,16 @@ static struct md_rdev *read_balance(struct r10conf *conf,
- 		disk = r10_bio->devs[slot].devnum;
- 		rdev = rcu_dereference(conf->mirrors[disk].replacement);
- 		if (rdev == NULL || test_bit(Faulty, &rdev->flags) ||
--		    r10_bio->devs[slot].addr + sectors > rdev->recovery_offset)
-+		    r10_bio->devs[slot].addr + sectors >
-+		    rdev->recovery_offset) {
-+			/*
-+			 * Read replacement first to prevent reading both rdev
-+			 * and replacement as NULL during replacement replace
-+			 * rdev.
-+			 */
-+			smp_mb();
- 			rdev = rcu_dereference(conf->mirrors[disk].rdev);
-+		}
- 		if (rdev == NULL ||
- 		    test_bit(Faulty, &rdev->flags))
- 			continue;
-@@ -1346,9 +1354,15 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
+--- a/arch/x86/kernel/smpboot.c
++++ b/arch/x86/kernel/smpboot.c
+@@ -100,6 +100,17 @@ DEFINE_PER_CPU_READ_MOSTLY(cpumask_var_t
+ DEFINE_PER_CPU_READ_MOSTLY(struct cpuinfo_x86, cpu_info);
+ EXPORT_PER_CPU_SYMBOL(cpu_info);
  
- 	for (i = 0;  i < conf->copies; i++) {
- 		int d = r10_bio->devs[i].devnum;
--		struct md_rdev *rdev = rcu_dereference(conf->mirrors[d].rdev);
--		struct md_rdev *rrdev = rcu_dereference(
--			conf->mirrors[d].replacement);
-+		struct md_rdev *rdev, *rrdev;
++struct mwait_cpu_dead {
++	unsigned int	control;
++	unsigned int	status;
++};
 +
-+		rrdev = rcu_dereference(conf->mirrors[d].replacement);
-+		/*
-+		 * Read replacement first to prevent reading both rdev and
-+		 * replacement as NULL during replacement replace rdev.
-+		 */
-+		smp_mb();
-+		rdev = rcu_dereference(conf->mirrors[d].rdev);
- 		if (rdev == rrdev)
- 			rrdev = NULL;
- 		if (rdev && unlikely(test_bit(Blocked, &rdev->flags))) {
--- 
-2.39.2
-
++/*
++ * Cache line aligned data for mwait_play_dead(). Separate on purpose so
++ * that it's unlikely to be touched by other CPUs.
++ */
++static DEFINE_PER_CPU_ALIGNED(struct mwait_cpu_dead, mwait_cpu_dead);
++
+ /* Logical package management. We might want to allocate that dynamically */
+ unsigned int __max_logical_packages __read_mostly;
+ EXPORT_SYMBOL(__max_logical_packages);
+@@ -1674,10 +1685,10 @@ EXPORT_SYMBOL_GPL(cond_wakeup_cpu0);
+  */
+ static inline void mwait_play_dead(void)
+ {
++	struct mwait_cpu_dead *md = this_cpu_ptr(&mwait_cpu_dead);
+ 	unsigned int eax, ebx, ecx, edx;
+ 	unsigned int highest_cstate = 0;
+ 	unsigned int highest_subcstate = 0;
+-	void *mwait_ptr;
+ 	int i;
+ 
+ 	if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
+@@ -1712,13 +1723,6 @@ static inline void mwait_play_dead(void)
+ 			(highest_subcstate - 1);
+ 	}
+ 
+-	/*
+-	 * This should be a memory location in a cache line which is
+-	 * unlikely to be touched by other processors.  The actual
+-	 * content is immaterial as it is not actually modified in any way.
+-	 */
+-	mwait_ptr = &current_thread_info()->flags;
+-
+ 	wbinvd();
+ 
+ 	while (1) {
+@@ -1730,9 +1734,9 @@ static inline void mwait_play_dead(void)
+ 		 * case where we return around the loop.
+ 		 */
+ 		mb();
+-		clflush(mwait_ptr);
++		clflush(md);
+ 		mb();
+-		__monitor(mwait_ptr, 0, 0);
++		__monitor(md, 0, 0);
+ 		mb();
+ 		__mwait(eax, 0);
+ 
 
 
