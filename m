@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5686B1ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:46:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6511C433C9;
-	Tue, 25 Jul 2023 11:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198D21ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:46:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91311C433C8;
+	Tue, 25 Jul 2023 11:46:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285565;
-	bh=fsNdN4z3xFrXTYyZUHuByJMPmWw/2z75B/nXwkaUbLk=;
+	s=korg; t=1690285567;
+	bh=GDMMCxRGXSB0PpRokBH2H4CHlvnRCJS+FrsnUjsaQSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=faHR4yB/O/N0/uy62TJIrvr1BtoPuk2gseX8l9D51NpFkbGtGvgSGn4+E6jKHCXqW
-	 EFn7zWNyQQ7ZwsXIkJNYsHXthas7eymsUZCrQEIXcyq2JpvdI5MLKNwGwwJslZ69MC
-	 /V1s2gYbtZrWPKPfZkl9/THYkB57FNjWGKEFFqGk=
+	b=O+dWFmE6m1rZvXv8/FW2dfGAzZM4cByukxa0ac4DOLICwKBDNHZ/u2kPzOaxMXYA2
+	 mTz9ltCvIHSyq7umY9MDz+gFlkvNWwUdzishzgvrWBTZhHZIpr//ensXAEtw0One17
+	 EProwD+c/8Xpg3+GlzWgwR94liJJ6xmBH4XQk+fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Armin Wolf <W_Armin@gmx.de>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Chunhai Guo <guochunhai@vivo.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Chao Yu <chao@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 221/313] platform/x86: wmi: Break possible infinite loop when parsing GUID
-Date: Tue, 25 Jul 2023 12:46:14 +0200
-Message-ID: <20230725104530.611358074@linuxfoundation.org>
+Subject: [PATCH 5.4 222/313] erofs: avoid infinite loop in z_erofs_do_read_page() when reading beyond EOF
+Date: Tue, 25 Jul 2023 12:46:15 +0200
+Message-ID: <20230725104530.646021512@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -36,82 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Chunhai Guo <guochunhai@vivo.com>
 
-[ Upstream commit 028e6e204ace1f080cfeacd72c50397eb8ae8883 ]
+[ Upstream commit 8191213a5835b0317c5e4d0d337ae1ae00c75253 ]
 
-The while-loop may break on one of the two conditions, either ID string
-is empty or GUID matches. The second one, may never be reached if the
-parsed string is not correct GUID. In such a case the loop will never
-advance to check the next ID.
+z_erofs_do_read_page() may loop infinitely due to the inappropriate
+truncation in the below statement. Since the offset is 64 bits and min_t()
+truncates the result to 32 bits. The solution is to replace unsigned int
+with a 64-bit type, such as erofs_off_t.
+    cur = end - min_t(unsigned int, offset + end - map->m_la, end);
 
-Break possible infinite loop by factoring out guid_parse_and_compare()
-helper which may be moved to the generic header for everyone later on
-and preventing from similar mistake in the future.
+    - For example:
+        - offset = 0x400160000
+        - end = 0x370
+        - map->m_la = 0x160370
+        - offset + end - map->m_la = 0x400000000
+        - offset + end - map->m_la = 0x00000000 (truncated as unsigned int)
+    - Expected result:
+        - cur = 0
+    - Actual result:
+        - cur = 0x370
 
-Interestingly that firstly it appeared when WMI was turned into a bus
-driver, but later when duplicated GUIDs were checked, the while-loop
-has been replaced by for-loop and hence no mistake made again.
-
-Fixes: a48e23385fcf ("platform/x86: wmi: add context pointer field to struct wmi_device_id")
-Fixes: 844af950da94 ("platform/x86: wmi: Turn WMI into a bus driver")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230621151155.78279-1-andriy.shevchenko@linux.intel.com
-Tested-by: Armin Wolf <W_Armin@gmx.de>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Chunhai Guo <guochunhai@vivo.com>
+Fixes: 3883a79abd02 ("staging: erofs: introduce VLE decompression support")
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Link: https://lore.kernel.org/r/20230710093410.44071-1-guochunhai@vivo.com
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/wmi.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ fs/erofs/zdata.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/wmi.c b/drivers/platform/x86/wmi.c
-index 8d1a7923c03b6..67c4ec554ada8 100644
---- a/drivers/platform/x86/wmi.c
-+++ b/drivers/platform/x86/wmi.c
-@@ -129,6 +129,16 @@ static bool find_guid(const char *guid_string, struct wmi_block **out)
- 	return false;
- }
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index fdd18c2508115..dcc377094f90b 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -636,7 +636,7 @@ static int z_erofs_do_read_page(struct z_erofs_decompress_frontend *fe,
+ 	tight &= (clt->mode >= COLLECT_PRIMARY_HOOKED &&
+ 		  clt->mode != COLLECT_PRIMARY_FOLLOWED_NOINPLACE);
  
-+static bool guid_parse_and_compare(const char *string, const guid_t *guid)
-+{
-+	guid_t guid_input;
-+
-+	if (guid_parse(string, &guid_input))
-+		return false;
-+
-+	return guid_equal(&guid_input, guid);
-+}
-+
- static const void *find_guid_context(struct wmi_block *wblock,
- 				      struct wmi_driver *wdriver)
- {
-@@ -141,11 +151,7 @@ static const void *find_guid_context(struct wmi_block *wblock,
- 
- 	id = wdriver->id_table;
- 	while (*id->guid_string) {
--		guid_t guid_input;
--
--		if (guid_parse(id->guid_string, &guid_input))
--			continue;
--		if (guid_equal(&wblock->gblock.guid, &guid_input))
-+		if (guid_parse_and_compare(id->guid_string, &wblock->gblock.guid))
- 			return id->context;
- 		id++;
- 	}
-@@ -801,11 +807,7 @@ static int wmi_dev_match(struct device *dev, struct device_driver *driver)
- 		return 0;
- 
- 	while (*id->guid_string) {
--		guid_t driver_guid;
--
--		if (WARN_ON(guid_parse(id->guid_string, &driver_guid)))
--			continue;
--		if (guid_equal(&driver_guid, &wblock->gblock.guid))
-+		if (guid_parse_and_compare(id->guid_string, &wblock->gblock.guid))
- 			return 1;
- 
- 		id++;
+-	cur = end - min_t(unsigned int, offset + end - map->m_la, end);
++	cur = end - min_t(erofs_off_t, offset + end - map->m_la, end);
+ 	if (!(map->m_flags & EROFS_MAP_MAPPED)) {
+ 		zero_user_segment(page, cur, end);
+ 		goto next_part;
 -- 
 2.39.2
 
