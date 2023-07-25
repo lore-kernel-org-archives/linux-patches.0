@@ -1,36 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A320815AC5;
-	Tue, 25 Jul 2023 11:00:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE65FC433C7;
-	Tue, 25 Jul 2023 11:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6E317AB4
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:00:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D907BC433C7;
+	Tue, 25 Jul 2023 11:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282812;
-	bh=SP7FcrL/n/JbIPYcqAj06Y4gPl8RVIcWqAmrAHKcOK0=;
+	s=korg; t=1690282815;
+	bh=tZtf5cAeJABiPCxbmtjTcmBvyY3x5u3787ZlPqudGJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w3qoMft5IT7BrDDWbHS8aQTvWZOpjSuWW5atzYgr5cgfUnQkcOh8duFCGMBwbZ7Ok
-	 v7psvp0Ae62snwYKITIgSbDvHxXnEpRf94X/W5IV0gVg/ydIa0WLpCD/3OLYlTq9zQ
-	 /kpZZSueyZ4EI2lOth9cuU4V6FOqwPNm/74Iaa2Y=
+	b=ejWMaIiYl8iq9L+w+j3PL12HU+iZJ55TkKaEHbYjuQiksQyF+eUc46syYt7FyPnT+
+	 rNRUnl4aAtuM4p3X0Kfy2OvMyjzcgXCj6i9HhElY1nxgPCDL5o/GwifUxVeu/MTFna
+	 bXcTDlBZC71QQly9s96oJsxAo9KK/FuxHLt93Kys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Georg=20M=C3=BCller?= <georgmueller@gmx.net>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	regressions@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 6.1 008/183] perf probe: Add test for regression introduced by switch to die_get_decl_file()
-Date: Tue, 25 Jul 2023 12:43:56 +0200
-Message-ID: <20230725104508.113776913@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 009/183] btrfs: fix warning when putting transaction with qgroups enabled after abort
+Date: Tue, 25 Jul 2023 12:43:57 +0200
+Message-ID: <20230725104508.160200253@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -44,112 +36,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Georg Müller <georgmueller@gmx.net>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 56cbeacf143530576905623ac72ae0964f3293a6 upstream.
+commit aa84ce8a78a1a5c10cdf9c7a5fb0c999fbc2c8d6 upstream.
 
-This patch adds a test to validate that 'perf probe' works for binaries
-where DWARF info is split into multiple CUs
+If we have a transaction abort with qgroups enabled we get a warning
+triggered when doing the final put on the transaction, like this:
 
-Signed-off-by: Georg Müller <georgmueller@gmx.net>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: regressions@lists.linux.dev
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230628084551.1860532-5-georgmueller@gmx.net
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+  [552.6789] ------------[ cut here ]------------
+  [552.6815] WARNING: CPU: 4 PID: 81745 at fs/btrfs/transaction.c:144 btrfs_put_transaction+0x123/0x130 [btrfs]
+  [552.6817] Modules linked in: btrfs blake2b_generic xor (...)
+  [552.6819] CPU: 4 PID: 81745 Comm: btrfs-transacti Tainted: G        W          6.4.0-rc6-btrfs-next-134+ #1
+  [552.6819] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
+  [552.6819] RIP: 0010:btrfs_put_transaction+0x123/0x130 [btrfs]
+  [552.6821] Code: bd a0 01 00 (...)
+  [552.6821] RSP: 0018:ffffa168c0527e28 EFLAGS: 00010286
+  [552.6821] RAX: ffff936042caed00 RBX: ffff93604a3eb448 RCX: 0000000000000000
+  [552.6821] RDX: ffff93606421b028 RSI: ffffffff92ff0878 RDI: ffff93606421b010
+  [552.6821] RBP: ffff93606421b000 R08: 0000000000000000 R09: ffffa168c0d07c20
+  [552.6821] R10: 0000000000000000 R11: ffff93608dc52950 R12: ffffa168c0527e70
+  [552.6821] R13: ffff93606421b000 R14: ffff93604a3eb420 R15: ffff93606421b028
+  [552.6821] FS:  0000000000000000(0000) GS:ffff93675fb00000(0000) knlGS:0000000000000000
+  [552.6821] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [552.6821] CR2: 0000558ad262b000 CR3: 000000014feda005 CR4: 0000000000370ee0
+  [552.6822] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  [552.6822] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  [552.6822] Call Trace:
+  [552.6822]  <TASK>
+  [552.6822]  ? __warn+0x80/0x130
+  [552.6822]  ? btrfs_put_transaction+0x123/0x130 [btrfs]
+  [552.6824]  ? report_bug+0x1f4/0x200
+  [552.6824]  ? handle_bug+0x42/0x70
+  [552.6824]  ? exc_invalid_op+0x14/0x70
+  [552.6824]  ? asm_exc_invalid_op+0x16/0x20
+  [552.6824]  ? btrfs_put_transaction+0x123/0x130 [btrfs]
+  [552.6826]  btrfs_cleanup_transaction+0xe7/0x5e0 [btrfs]
+  [552.6828]  ? _raw_spin_unlock_irqrestore+0x23/0x40
+  [552.6828]  ? try_to_wake_up+0x94/0x5e0
+  [552.6828]  ? __pfx_process_timeout+0x10/0x10
+  [552.6828]  transaction_kthread+0x103/0x1d0 [btrfs]
+  [552.6830]  ? __pfx_transaction_kthread+0x10/0x10 [btrfs]
+  [552.6832]  kthread+0xee/0x120
+  [552.6832]  ? __pfx_kthread+0x10/0x10
+  [552.6832]  ret_from_fork+0x29/0x50
+  [552.6832]  </TASK>
+  [552.6832] ---[ end trace 0000000000000000 ]---
+
+This corresponds to this line of code:
+
+  void btrfs_put_transaction(struct btrfs_transaction *transaction)
+  {
+      (...)
+          WARN_ON(!RB_EMPTY_ROOT(
+                          &transaction->delayed_refs.dirty_extent_root));
+      (...)
+  }
+
+The warning happens because btrfs_qgroup_destroy_extent_records(), called
+in the transaction abort path, we free all entries from the rbtree
+"dirty_extent_root" with rbtree_postorder_for_each_entry_safe(), but we
+don't actually empty the rbtree - it's still pointing to nodes that were
+freed.
+
+So set the rbtree's root node to NULL to avoid this warning (assign
+RB_ROOT).
+
+Fixes: 81f7eb00ff5b ("btrfs: destroy qgroup extent records on transaction abort")
+CC: stable@vger.kernel.org # 5.10+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/tests/shell/test_uprobe_from_different_cu.sh |   77 ++++++++++++++++
- 1 file changed, 77 insertions(+)
- create mode 100755 tools/perf/tests/shell/test_uprobe_from_different_cu.sh
+ fs/btrfs/qgroup.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- /dev/null
-+++ b/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
-@@ -0,0 +1,77 @@
-+#!/bin/bash
-+# test perf probe of function from different CU
-+# SPDX-License-Identifier: GPL-2.0
-+
-+set -e
-+
-+temp_dir=$(mktemp -d /tmp/perf-uprobe-different-cu-sh.XXXXXXXXXX)
-+
-+cleanup()
-+{
-+	trap - EXIT TERM INT
-+	if [[ "${temp_dir}" =~ ^/tmp/perf-uprobe-different-cu-sh.*$ ]]; then
-+		echo "--- Cleaning up ---"
-+		perf probe -x ${temp_dir}/testfile -d foo
-+		rm -f "${temp_dir}/"*
-+		rmdir "${temp_dir}"
-+	fi
-+}
-+
-+trap_cleanup()
-+{
-+        cleanup
-+        exit 1
-+}
-+
-+trap trap_cleanup EXIT TERM INT
-+
-+cat > ${temp_dir}/testfile-foo.h << EOF
-+struct t
-+{
-+  int *p;
-+  int c;
-+};
-+
-+extern int foo (int i, struct t *t);
-+EOF
-+
-+cat > ${temp_dir}/testfile-foo.c << EOF
-+#include "testfile-foo.h"
-+
-+int
-+foo (int i, struct t *t)
-+{
-+  int j, res = 0;
-+  for (j = 0; j < i && j < t->c; j++)
-+    res += t->p[j];
-+
-+  return res;
-+}
-+EOF
-+
-+cat > ${temp_dir}/testfile-main.c << EOF
-+#include "testfile-foo.h"
-+
-+static struct t g;
-+
-+int
-+main (int argc, char **argv)
-+{
-+  int i;
-+  int j[argc];
-+  g.c = argc;
-+  g.p = j;
-+  for (i = 0; i < argc; i++)
-+    j[i] = (int) argv[i][0];
-+  return foo (3, &g);
-+}
-+EOF
-+
-+gcc -g -Og -flto -c ${temp_dir}/testfile-foo.c -o ${temp_dir}/testfile-foo.o
-+gcc -g -Og -c ${temp_dir}/testfile-main.c -o ${temp_dir}/testfile-main.o
-+gcc -g -Og -o ${temp_dir}/testfile ${temp_dir}/testfile-foo.o ${temp_dir}/testfile-main.o
-+
-+perf probe -x ${temp_dir}/testfile --funcs foo
-+perf probe -x ${temp_dir}/testfile foo
-+
-+cleanup
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -4410,4 +4410,5 @@ void btrfs_qgroup_destroy_extent_records
+ 		ulist_free(entry->old_roots);
+ 		kfree(entry);
+ 	}
++	*root = RB_ROOT;
+ }
 
 
