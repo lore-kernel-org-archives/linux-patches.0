@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7578F1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:21:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB00C433C7;
-	Tue, 25 Jul 2023 11:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFF91ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:21:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A167BC433C7;
+	Tue, 25 Jul 2023 11:21:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284096;
-	bh=W9lKpO2hpnjOaCep9TJPM21+VDoQMnHx66l/UlLwexw=;
+	s=korg; t=1690284099;
+	bh=8l7XzQtqX4yokLfq9O14GJE+di7RNty3J2FSe+cOSuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HwDQ6AHiLBhoGQkIjFzVVl1efYBs4Pb2uJ+OWfOGZFXRde+kH4E86NZL4XtBTmuBD
-	 S4KylGp5FtjXx7A5dDzfNR+3U/wjZt6WuM7XpVW/fq/0KnEClU3dDGOaZRel2B3+H0
-	 jG74tYRuJZCCdWGGJJIRXSLcfubeDlP7PSFMRAGw=
+	b=cCxJj2aPTPTKMUxqR6JhQZloeHREMXY0eWA/wXC1mt5Zl/L8b3PlGLxp3+CbMq71h
+	 20q3zpisrWqmLBujbqbeiHewEhkvALeIC8NxrnV+dW6qGEFBNKyhp4c+sqzF8primn
+	 vaiXJiaPJOHRC5cBYaf+h7KhupGE5QD3BemYkesE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Steigerwald <Martin@lichtvoll.de>,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 216/509] block: change all __u32 annotations to __be32 in affs_hardblocks.h
-Date: Tue, 25 Jul 2023 12:42:35 +0200
-Message-ID: <20230725104603.628495664@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 234/509] usb: hide unused usbfs_notify_suspend/resume functions
+Date: Tue, 25 Jul 2023 12:42:53 +0200
+Message-ID: <20230725104604.474721965@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,142 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Schmitz <schmitzmic@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 95a55437dc49fb3342c82e61f5472a71c63d9ed0 upstream.
+[ Upstream commit 8e6bd945e6dde64fbc60ec3fe252164493a8d3a2 ]
 
-The Amiga partition parser module uses signed int for partition sector
-address and count, which will overflow for disks larger than 1 TB.
+The declaration is in an #ifdef, which causes warnings when building
+with 'make W=1' and without CONFIG_PM:
 
-Use u64 as type for sector address and size to allow using disks up to
-2 TB without LBD support, and disks larger than 2 TB with LBD. The RBD
-format allows to specify disk sizes up to 2^128 bytes (though native
-OS limitations reduce this somewhat, to max 2^68 bytes), so check for
-u64 overflow carefully to protect against overflowing sector_t.
+drivers/usb/core/devio.c:742:6: error: no previous prototype for 'usbfs_notify_suspend'
+drivers/usb/core/devio.c:747:6: error: no previous prototype for 'usbfs_notify_resume'
 
-This bug was reported originally in 2012, and the fix was created by
-the RDB author, Joanne Dow <jdow@earthlink.net>. A patch had been
-discussed and reviewed on linux-m68k at that time but never officially
-submitted (now resubmitted as patch 1 of this series).
+Use the same #ifdef check around the function definitions to avoid
+the warnings and slightly shrink the USB core.
 
-Patch 3 (this series) adds additional error checking and warning
-messages. One of the error checks now makes use of the previously
-unused rdb_CylBlocks field, which causes a 'sparse' warning
-(cast to restricted __be32).
-
-Annotate all 32 bit fields in affs_hardblocks.h as __be32, as the
-on-disk format of RDB and partition blocks is always big endian.
-
-Reported-by: Martin Steigerwald <Martin@lichtvoll.de>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=43511
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Message-ID: <201206192146.09327.Martin@lichtvoll.de>
-Cc: <stable@vger.kernel.org> # 5.2
-Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/20230620201725.7020-3-schmitzmic@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 7794f486ed0b ("usbfs: Add ioctls for runtime power management")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20230516202103.558301-1-arnd@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/affs_hardblocks.h |   68 +++++++++++++++++------------------
- 1 file changed, 34 insertions(+), 34 deletions(-)
+ drivers/usb/core/devio.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/uapi/linux/affs_hardblocks.h
-+++ b/include/uapi/linux/affs_hardblocks.h
-@@ -7,42 +7,42 @@
- /* Just the needed definitions for the RDB of an Amiga HD. */
+diff --git a/drivers/usb/core/devio.c b/drivers/usb/core/devio.c
+index 2fe29319de441..1b95035d179f3 100644
+--- a/drivers/usb/core/devio.c
++++ b/drivers/usb/core/devio.c
+@@ -734,6 +734,7 @@ static int driver_resume(struct usb_interface *intf)
+ 	return 0;
+ }
  
- struct RigidDiskBlock {
--	__u32	rdb_ID;
-+	__be32	rdb_ID;
- 	__be32	rdb_SummedLongs;
--	__s32	rdb_ChkSum;
--	__u32	rdb_HostID;
-+	__be32	rdb_ChkSum;
-+	__be32	rdb_HostID;
- 	__be32	rdb_BlockBytes;
--	__u32	rdb_Flags;
--	__u32	rdb_BadBlockList;
-+	__be32	rdb_Flags;
-+	__be32	rdb_BadBlockList;
- 	__be32	rdb_PartitionList;
--	__u32	rdb_FileSysHeaderList;
--	__u32	rdb_DriveInit;
--	__u32	rdb_Reserved1[6];
--	__u32	rdb_Cylinders;
--	__u32	rdb_Sectors;
--	__u32	rdb_Heads;
--	__u32	rdb_Interleave;
--	__u32	rdb_Park;
--	__u32	rdb_Reserved2[3];
--	__u32	rdb_WritePreComp;
--	__u32	rdb_ReducedWrite;
--	__u32	rdb_StepRate;
--	__u32	rdb_Reserved3[5];
--	__u32	rdb_RDBBlocksLo;
--	__u32	rdb_RDBBlocksHi;
--	__u32	rdb_LoCylinder;
--	__u32	rdb_HiCylinder;
--	__u32	rdb_CylBlocks;
--	__u32	rdb_AutoParkSeconds;
--	__u32	rdb_HighRDSKBlock;
--	__u32	rdb_Reserved4;
-+	__be32	rdb_FileSysHeaderList;
-+	__be32	rdb_DriveInit;
-+	__be32	rdb_Reserved1[6];
-+	__be32	rdb_Cylinders;
-+	__be32	rdb_Sectors;
-+	__be32	rdb_Heads;
-+	__be32	rdb_Interleave;
-+	__be32	rdb_Park;
-+	__be32	rdb_Reserved2[3];
-+	__be32	rdb_WritePreComp;
-+	__be32	rdb_ReducedWrite;
-+	__be32	rdb_StepRate;
-+	__be32	rdb_Reserved3[5];
-+	__be32	rdb_RDBBlocksLo;
-+	__be32	rdb_RDBBlocksHi;
-+	__be32	rdb_LoCylinder;
-+	__be32	rdb_HiCylinder;
-+	__be32	rdb_CylBlocks;
-+	__be32	rdb_AutoParkSeconds;
-+	__be32	rdb_HighRDSKBlock;
-+	__be32	rdb_Reserved4;
- 	char	rdb_DiskVendor[8];
- 	char	rdb_DiskProduct[16];
- 	char	rdb_DiskRevision[4];
- 	char	rdb_ControllerVendor[8];
- 	char	rdb_ControllerProduct[16];
- 	char	rdb_ControllerRevision[4];
--	__u32	rdb_Reserved5[10];
-+	__be32	rdb_Reserved5[10];
- };
++#ifdef CONFIG_PM
+ /* The following routines apply to the entire device, not interfaces */
+ void usbfs_notify_suspend(struct usb_device *udev)
+ {
+@@ -752,6 +753,7 @@ void usbfs_notify_resume(struct usb_device *udev)
+ 	}
+ 	mutex_unlock(&usbfs_mutex);
+ }
++#endif
  
- #define	IDNAME_RIGIDDISK	0x5244534B	/* "RDSK" */
-@@ -50,16 +50,16 @@ struct RigidDiskBlock {
- struct PartitionBlock {
- 	__be32	pb_ID;
- 	__be32	pb_SummedLongs;
--	__s32	pb_ChkSum;
--	__u32	pb_HostID;
-+	__be32	pb_ChkSum;
-+	__be32	pb_HostID;
- 	__be32	pb_Next;
--	__u32	pb_Flags;
--	__u32	pb_Reserved1[2];
--	__u32	pb_DevFlags;
-+	__be32	pb_Flags;
-+	__be32	pb_Reserved1[2];
-+	__be32	pb_DevFlags;
- 	__u8	pb_DriveName[32];
--	__u32	pb_Reserved2[15];
-+	__be32	pb_Reserved2[15];
- 	__be32	pb_Environment[17];
--	__u32	pb_EReserved[15];
-+	__be32	pb_EReserved[15];
- };
- 
- #define	IDNAME_PARTITION	0x50415254	/* "PART" */
+ struct usb_driver usbfs_driver = {
+ 	.name =		"usbfs",
+-- 
+2.39.2
+
 
 
