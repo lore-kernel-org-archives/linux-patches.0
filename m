@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64BCF1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:21:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5B3C433C7;
-	Tue, 25 Jul 2023 11:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F0C1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:22:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FFEC433C8;
+	Tue, 25 Jul 2023 11:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284118;
-	bh=GTB6gvaSrhhdd/SiSJeVbZythu8gZOixr1t/oT1YVzQ=;
+	s=korg; t=1690284121;
+	bh=bVMgwzBJUMyGtbdEfx/DoLkxXR8Qv5xHKfmOrU59HqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AcIaskNr8ucpAQAiwQ9+dWG6QFxWzSp2IC2SlDg8pRXEwVayDO0N5937AxXFRKXbl
-	 TnXQicqeCngxYQQt+I5YQVhr8/8SANa2/c9byOp7stlMLjfCsTT0LlRb6GMf/G2MNL
-	 ydz1NgpOkmbjYKYeJUFPNBWWOAnTMWOVNsliWos4=
+	b=PT+A6hFeMrsskJIXmQGM42/I7FhfPhyQLGKvCjqwoXQXroeU8hXgkzYW/SQfRx8LF
+	 xuPNN18AT6SU46d2DYBkQjWk+/GQ3imC5WbKuVOj0ZW4Lp7x6+TiHduwl52uNNP+Bz
+	 UNQSN60txTwvyR6FRC01V5JFzc3PwgnMnETNPnMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Nico Boehr <nrb@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 241/509] media: atomisp: gmin_platform: fix out_len in gmin_get_config_dsm_var()
-Date: Tue, 25 Jul 2023 12:43:00 +0200
-Message-ID: <20230725104604.791334012@linuxfoundation.org>
+Subject: [PATCH 5.10 242/509] KVM: s390: fix KVM_S390_GET_CMMA_BITS for GFNs in memslot holes
+Date: Tue, 25 Jul 2023 12:43:01 +0200
+Message-ID: <20230725104604.840146415@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,39 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Nico Boehr <nrb@linux.ibm.com>
 
-[ Upstream commit 1657f2934daf89e8d9fa4b2697008909eb22c73e ]
+[ Upstream commit 285cff4c0454340a4dc53f46e67f2cb1c293bd74 ]
 
-Ideally, strlen(cur->string.pointer) and strlen(out) would be the same.
-But this code is using strscpy() to avoid a potential buffer overflow.
-So in the same way we should take the strlen() of the smaller string to
-avoid a buffer overflow in the caller, gmin_get_var_int().
+The KVM_S390_GET_CMMA_BITS ioctl may return incorrect values when userspace
+specifies a start_gfn outside of memslots.
 
-Link: https://lore.kernel.org/r/26124bcd-8132-4483-9d67-225c87d424e8@kili.mountain
+This can occur when a VM has multiple memslots with a hole in between:
 
-Fixes: 387041cda44e ("media: atomisp: improve sensor detection code to use _DSM table")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
++-----+----------+--------+--------+
+| ... | Slot N-1 | <hole> | Slot N |
++-----+----------+--------+--------+
+      ^          ^        ^        ^
+      |          |        |        |
+GFN   A          A+B      |        |
+                          A+B+C    |
+			           A+B+C+D
+
+When userspace specifies a GFN in [A+B, A+B+C), it would expect to get the
+CMMA values of the first dirty page in Slot N. However, userspace may get a
+start_gfn of A+B+C+D with a count of 0, hence completely skipping over any
+dirty pages in slot N.
+
+The error is in kvm_s390_next_dirty_cmma(), which assumes
+gfn_to_memslot_approx() will return the memslot _below_ the specified GFN
+when the specified GFN lies outside a memslot. In reality it may return
+either the memslot below or above the specified GFN.
+
+When a memslot above the specified GFN is returned this happens:
+
+- ofs is calculated, but since the memslot's base_gfn is larger than the
+  specified cur_gfn, ofs will underflow to a huge number.
+- ofs is passed to find_next_bit(). Since ofs will exceed the memslot's
+  number of pages, the number of pages in the memslot is returned,
+  completely skipping over all bits in the memslot userspace would be
+  interested in.
+
+Fix this by resetting ofs to zero when a memslot _above_ cur_gfn is
+returned (cur_gfn < ms->base_gfn).
+
+Signed-off-by: Nico Boehr <nrb@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Fixes: afdad61615cc ("KVM: s390: Fix storage attributes migration with memory slots")
+Message-Id: <20230324145424.293889-2-nrb@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/atomisp/pci/atomisp_gmin_platform.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/kvm/kvm-s390.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/staging/media/atomisp/pci/atomisp_gmin_platform.c b/drivers/staging/media/atomisp/pci/atomisp_gmin_platform.c
-index c9ee85037644f..f0387486eb174 100644
---- a/drivers/staging/media/atomisp/pci/atomisp_gmin_platform.c
-+++ b/drivers/staging/media/atomisp/pci/atomisp_gmin_platform.c
-@@ -1198,7 +1198,7 @@ static int gmin_get_config_dsm_var(struct device *dev,
- 	dev_info(dev, "found _DSM entry for '%s': %s\n", var,
- 		 cur->string.pointer);
- 	strscpy(out, cur->string.pointer, *out_len);
--	*out_len = strlen(cur->string.pointer);
-+	*out_len = strlen(out);
- 
- 	ACPI_FREE(obj);
- 	return 0;
+diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
+index 7ffc73ba220fb..7a326d03087ab 100644
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -2005,6 +2005,10 @@ static unsigned long kvm_s390_next_dirty_cmma(struct kvm_memslots *slots,
+ 		ms = slots->memslots + slotidx;
+ 		ofs = 0;
+ 	}
++
++	if (cur_gfn < ms->base_gfn)
++		ofs = 0;
++
+ 	ofs = find_next_bit(kvm_second_dirty_bitmap(ms), ms->npages, ofs);
+ 	while ((slotidx > 0) && (ofs >= ms->npages)) {
+ 		slotidx--;
 -- 
 2.39.2
 
