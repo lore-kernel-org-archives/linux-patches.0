@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4131ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:21:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01383C433C8;
-	Tue, 25 Jul 2023 11:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467B01ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:21:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB282C433C8;
+	Tue, 25 Jul 2023 11:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284060;
-	bh=X8XpVLALfca4QiqcOu9uGQPSu1zEcxUL9KNugrRUV0E=;
+	s=korg; t=1690284063;
+	bh=suNOOXsmGHUwJAAD4tj6Qu2EcMID2zI+NyqW+2MO8aM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jhiYWceUNF+3AsdTSxouLd3DwmyQzj194Rz4D0IykxquLmIxT43K8AQ4fHb8iAbvD
-	 OXzk6q617+YtDuf6kDCPMEgH0a++RGFdX+CBWroGD3hrzE4IldFPj3k1mlCt8VILOL
-	 /DLq9u7t5/yads1RNzHzozBDywOl/VCeA2vAWLCQ=
+	b=OerX9POrutfbySQchggEtfJgRnjWsJB58vmrjRUEnxvPtfattvdFBB/wsw46smh2e
+	 AdPkF2LjRZ8PHZ7HBHV9RFHEuD7rPEEUJ73qVAj8tSlokqlaguDehW6kap9V7Eg9w4
+	 HU/1f+3zgEgcbbPYc8K4H2UrWrvsNNh6an63yI9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Sui Jingfeng <suijingfeng@loongson.cn>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 191/509] powerpc/powernv/sriov: perform null check on iov before dereferencing iov
-Date: Tue, 25 Jul 2023 12:42:10 +0200
-Message-ID: <20230725104602.472020121@linuxfoundation.org>
+Subject: [PATCH 5.10 182/509] PCI: Add pci_clear_master() stub for non-CONFIG_PCI
+Date: Tue, 25 Jul 2023 12:42:01 +0200
+Message-ID: <20230725104602.032157872@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,50 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Sui Jingfeng <suijingfeng@loongson.cn>
 
-[ Upstream commit f4f913c980bc6abe0ccfe88fe3909c125afe4a2d ]
+[ Upstream commit 2aa5ac633259843f656eb6ecff4cf01e8e810c5e ]
 
-Currently pointer iov is being dereferenced before the null check of iov
-which can lead to null pointer dereference errors. Fix this by moving the
-iov null check before the dereferencing.
+Add a pci_clear_master() stub when CONFIG_PCI is not set so drivers that
+support both PCI and platform devices don't need #ifdefs or extra Kconfig
+symbols for the PCI parts.
 
-Detected using cppcheck static analysis:
-linux/arch/powerpc/platforms/powernv/pci-sriov.c:597:12: warning: Either
-the condition '!iov' is redundant or there is possible null pointer
-dereference: iov. [nullPointerRedundantCheck]
- num_vfs = iov->num_vfs;
-           ^
-
-Fixes: 052da31d45fc ("powerpc/powernv/sriov: De-indent setup and teardown")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230608095849.1147969-1-colin.i.king@gmail.com
+[bhelgaas: commit log]
+Fixes: 6a479079c072 ("PCI: Add pci_clear_master() as opposite of pci_set_master()")
+Link: https://lore.kernel.org/r/20230531102744.2354313-1-suijingfeng@loongson.cn
+Signed-off-by: Sui Jingfeng <suijingfeng@loongson.cn>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/powernv/pci-sriov.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/linux/pci.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/platforms/powernv/pci-sriov.c b/arch/powerpc/platforms/powernv/pci-sriov.c
-index 28aac933a4391..e3e52ff2cbf58 100644
---- a/arch/powerpc/platforms/powernv/pci-sriov.c
-+++ b/arch/powerpc/platforms/powernv/pci-sriov.c
-@@ -600,12 +600,12 @@ static void pnv_pci_sriov_disable(struct pci_dev *pdev)
- 	struct pnv_iov_data   *iov;
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 4cc42ad2f6c52..550e1cdb473fa 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -1719,6 +1719,7 @@ static inline struct pci_dev *pci_get_class(unsigned int class,
+ #define pci_dev_put(dev)	do { } while (0)
  
- 	iov = pnv_iov_get(pdev);
--	num_vfs = iov->num_vfs;
--	base_pe = iov->vf_pe_arr[0].pe_number;
--
- 	if (WARN_ON(!iov))
- 		return;
- 
-+	num_vfs = iov->num_vfs;
-+	base_pe = iov->vf_pe_arr[0].pe_number;
-+
- 	/* Release VF PEs */
- 	pnv_ioda_release_vf_PE(pdev);
- 
+ static inline void pci_set_master(struct pci_dev *dev) { }
++static inline void pci_clear_master(struct pci_dev *dev) { }
+ static inline int pci_enable_device(struct pci_dev *dev) { return -EIO; }
+ static inline void pci_disable_device(struct pci_dev *dev) { }
+ static inline int pcim_enable_device(struct pci_dev *pdev) { return -EIO; }
 -- 
 2.39.2
 
