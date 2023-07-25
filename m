@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9A81EA7E
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:10:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA7BC433C7;
-	Tue, 25 Jul 2023 11:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD1D1EA7E
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:10:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D082C433C8;
+	Tue, 25 Jul 2023 11:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283422;
-	bh=TSxlVPlBMqjF+0Yr7Nc7UCmlETbvs0HxRpDjMvjyT7Y=;
+	s=korg; t=1690283425;
+	bh=cBpYCpLaI+9OgvbFaVO0Daks6ibu6Xk2STIlbexfbko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IiUXUH2pkEPn1P+s+EyqiwzjX7f1W1USzYVomrnKfuAbRCjHxXkS9odz1cYO+YL/z
-	 mMv8vXFJh8b2LooB0DOangyEl2WYL759WQZyJrrijwWuwGyWlBUHPpB4YkcwjRM5G0
-	 HO86PkRTZvO2NoQZzMU6KTEntE2xsR/05l9PrRJY=
+	b=qTX/cpwbNJ1UOp7iY44Pq+osc3mn6F9+9ey1nXNuYF9JEQNntoF3Aufcnj/ta+T/1
+	 OALwLiZ2pRszmU8TxcBfjrl5KRzl4m/Opp1SxFqqn23ZvtjX08caXPogdDPGUwTI2l
+	 yJIcy0+No86gLUJZIW6tWFeo+FUq51bzrrTXG9C0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 71/78] tcp: annotate data-races around rskq_defer_accept
-Date: Tue, 25 Jul 2023 12:47:02 +0200
-Message-ID: <20230725104454.024296943@linuxfoundation.org>
+Subject: [PATCH 5.15 72/78] tcp: annotate data-races around tp->notsent_lowat
+Date: Tue, 25 Jul 2023 12:47:03 +0200
+Message-ID: <20230725104454.065898956@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104451.275227789@linuxfoundation.org>
 References: <20230725104451.275227789@linuxfoundation.org>
@@ -37,49 +37,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ae488c74422fb1dcd807c0201804b3b5e8a322a3 ]
+[ Upstream commit 1aeb87bc1440c5447a7fa2d6e3c2cca52cbd206b ]
 
-do_tcp_getsockopt() reads rskq_defer_accept while another cpu
-might change its value.
+tp->notsent_lowat can be read locklessly from do_tcp_getsockopt()
+and tcp_poll().
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: c9bee3b7fdec ("tcp: TCP_NOTSENT_LOWAT socket option")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230719212857.3943972-9-edumazet@google.com
+Link: https://lore.kernel.org/r/20230719212857.3943972-10-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ include/net/tcp.h | 6 +++++-
+ net/ipv4/tcp.c    | 4 ++--
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index fe58b089f0b16..d8920f84f0a8d 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -2012,7 +2012,11 @@ void __tcp_v4_send_check(struct sk_buff *skb, __be32 saddr, __be32 daddr);
+ static inline u32 tcp_notsent_lowat(const struct tcp_sock *tp)
+ {
+ 	struct net *net = sock_net((struct sock *)tp);
+-	return tp->notsent_lowat ?: READ_ONCE(net->ipv4.sysctl_tcp_notsent_lowat);
++	u32 val;
++
++	val = READ_ONCE(tp->notsent_lowat);
++
++	return val ?: READ_ONCE(net->ipv4.sysctl_tcp_notsent_lowat);
+ }
+ 
+ bool tcp_stream_memory_free(const struct sock *sk, int wake);
 diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 58f202fd6f269..29661f7e372d9 100644
+index 29661f7e372d9..95e3e32d211a7 100644
 --- a/net/ipv4/tcp.c
 +++ b/net/ipv4/tcp.c
-@@ -3599,9 +3599,9 @@ static int do_tcp_setsockopt(struct sock *sk, int level, int optname,
- 
- 	case TCP_DEFER_ACCEPT:
- 		/* Translate value in seconds to number of retransmits */
--		icsk->icsk_accept_queue.rskq_defer_accept =
--			secs_to_retrans(val, TCP_TIMEOUT_INIT / HZ,
--					TCP_RTO_MAX / HZ);
-+		WRITE_ONCE(icsk->icsk_accept_queue.rskq_defer_accept,
-+			   secs_to_retrans(val, TCP_TIMEOUT_INIT / HZ,
-+					   TCP_RTO_MAX / HZ));
+@@ -3669,7 +3669,7 @@ static int do_tcp_setsockopt(struct sock *sk, int level, int optname,
+ 		err = tcp_repair_set_window(tp, optval, optlen);
  		break;
- 
- 	case TCP_WINDOW_CLAMP:
-@@ -4000,8 +4000,9 @@ static int do_tcp_getsockopt(struct sock *sk, int level,
- 			val = (val ? : READ_ONCE(net->ipv4.sysctl_tcp_fin_timeout)) / HZ;
+ 	case TCP_NOTSENT_LOWAT:
+-		tp->notsent_lowat = val;
++		WRITE_ONCE(tp->notsent_lowat, val);
+ 		sk->sk_write_space(sk);
  		break;
- 	case TCP_DEFER_ACCEPT:
--		val = retrans_to_secs(icsk->icsk_accept_queue.rskq_defer_accept,
--				      TCP_TIMEOUT_INIT / HZ, TCP_RTO_MAX / HZ);
-+		val = READ_ONCE(icsk->icsk_accept_queue.rskq_defer_accept);
-+		val = retrans_to_secs(val, TCP_TIMEOUT_INIT / HZ,
-+				      TCP_RTO_MAX / HZ);
+ 	case TCP_INQ:
+@@ -4161,7 +4161,7 @@ static int do_tcp_getsockopt(struct sock *sk, int level,
+ 		val = tcp_time_stamp_raw() + tp->tsoffset;
  		break;
- 	case TCP_WINDOW_CLAMP:
- 		val = tp->window_clamp;
+ 	case TCP_NOTSENT_LOWAT:
+-		val = tp->notsent_lowat;
++		val = READ_ONCE(tp->notsent_lowat);
+ 		break;
+ 	case TCP_INQ:
+ 		val = tp->recvmsg_inq;
 -- 
 2.39.2
 
