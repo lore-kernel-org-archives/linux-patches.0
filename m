@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2E91ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:32:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1962C433C8;
-	Tue, 25 Jul 2023 11:32:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4451ED46
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:32:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55421C433C9;
+	Tue, 25 Jul 2023 11:32:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284727;
-	bh=8iZ/IcFNer4XtIaxLw0psL6H0vEqlWpQJYyxJ6i6qqg=;
+	s=korg; t=1690284732;
+	bh=/UcFnQMLm3Sh7lq0bGC4nPCrD+p8i7+GpFkpp5NCw5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P9aO6P+GT1qhAi8bZxq05xS5nOi7P8xW6d0E0Dl368DdBTiIKmbw3D4lu06JQ1Nb2
-	 rHGGdE53z5eIfTt5+l0Zcf0Wbe1p/j1ul8jw0Xt0eNUuRbbFDRe2+ojqjRDKufEfgo
-	 x+zwytbe2xbplrZA1TWg4GfSQXsFhtkHJaKSob3I=
+	b=MyCvJOVDCpH1dCIyaaA1khWIQUgRfXCp/Pfkhrn6W5iL5GzV32/fvq1PuLlAd6cFZ
+	 v3LZJvxPy2oThTv8IhBEhpsJQungJvQv7KF+VJLITsf23oww1pIGBCiDRv8Jkc+5r6
+	 DBjsCw2Qwy+X+6uFc9EXj1eS75nvluG4w7pY7G6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5c54bd3eb218bb595aa9@syzkaller.appspotmail.com,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 459/509] posix-timers: Ensure timer ID search-loop limit is valid
-Date: Tue, 25 Jul 2023 12:46:38 +0200
-Message-ID: <20230725104614.766560949@linuxfoundation.org>
+Subject: [PATCH 5.10 461/509] ACPI: button: Add lid disable DMI quirk for Nextbook Ares 8A
+Date: Tue, 25 Jul 2023 12:46:40 +0200
+Message-ID: <20230725104614.863158873@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,113 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 8ce8849dd1e78dadcee0ec9acbd259d239b7069f ]
+[ Upstream commit 4fd5556608bfa9c2bf276fc115ef04288331aded ]
 
-posix_timer_add() tries to allocate a posix timer ID by starting from the
-cached ID which was stored by the last successful allocation.
+The LID0 device on the Nextbook Ares 8A tablet always reports lid
+closed causing userspace to suspend the device as soon as booting
+is complete.
 
-This is done in a loop searching the ID space for a free slot one by
-one. The loop has to terminate when the search wrapped around to the
-starting point.
+Add a DMI quirk to disable the broken lid functionality.
 
-But that's racy vs. establishing the starting point. That is read out
-lockless, which leads to the following problem:
-
-CPU0	  	      	     	   CPU1
-posix_timer_add()
-  start = sig->posix_timer_id;
-  lock(hash_lock);
-  ...				   posix_timer_add()
-  if (++sig->posix_timer_id < 0)
-      			             start = sig->posix_timer_id;
-     sig->posix_timer_id = 0;
-
-So CPU1 can observe a negative start value, i.e. -1, and the loop break
-never happens because the condition can never be true:
-
-  if (sig->posix_timer_id == start)
-     break;
-
-While this is unlikely to ever turn into an endless loop as the ID space is
-huge (INT_MAX), the racy read of the start value caught the attention of
-KCSAN and Dmitry unearthed that incorrectness.
-
-Rewrite it so that all id operations are under the hash lock.
-
-Reported-by: syzbot+5c54bd3eb218bb595aa9@syzkaller.appspotmail.com
-Reported-by: Dmitry Vyukov <dvyukov@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Link: https://lore.kernel.org/r/87bkhzdn6g.ffs@tglx
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched/signal.h |  2 +-
- kernel/time/posix-timers.c   | 31 ++++++++++++++++++-------------
- 2 files changed, 19 insertions(+), 14 deletions(-)
+ drivers/acpi/button.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/include/linux/sched/signal.h b/include/linux/sched/signal.h
-index ae60f838ebb92..2c634010cc7bd 100644
---- a/include/linux/sched/signal.h
-+++ b/include/linux/sched/signal.h
-@@ -125,7 +125,7 @@ struct signal_struct {
- #ifdef CONFIG_POSIX_TIMERS
- 
- 	/* POSIX.1b Interval Timers */
--	int			posix_timer_id;
-+	unsigned int		next_posix_timer_id;
- 	struct list_head	posix_timers;
- 
- 	/* ITIMER_REAL timer for the process */
-diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
-index 6d12a724d2b6b..29569b1c3d8c8 100644
---- a/kernel/time/posix-timers.c
-+++ b/kernel/time/posix-timers.c
-@@ -140,25 +140,30 @@ static struct k_itimer *posix_timer_by_id(timer_t id)
- static int posix_timer_add(struct k_itimer *timer)
- {
- 	struct signal_struct *sig = current->signal;
--	int first_free_id = sig->posix_timer_id;
- 	struct hlist_head *head;
--	int ret = -ENOENT;
-+	unsigned int cnt, id;
- 
--	do {
-+	/*
-+	 * FIXME: Replace this by a per signal struct xarray once there is
-+	 * a plan to handle the resulting CRIU regression gracefully.
-+	 */
-+	for (cnt = 0; cnt <= INT_MAX; cnt++) {
- 		spin_lock(&hash_lock);
--		head = &posix_timers_hashtable[hash(sig, sig->posix_timer_id)];
--		if (!__posix_timers_find(head, sig, sig->posix_timer_id)) {
-+		id = sig->next_posix_timer_id;
-+
-+		/* Write the next ID back. Clamp it to the positive space */
-+		sig->next_posix_timer_id = (id + 1) & INT_MAX;
-+
-+		head = &posix_timers_hashtable[hash(sig, id)];
-+		if (!__posix_timers_find(head, sig, id)) {
- 			hlist_add_head_rcu(&timer->t_hash, head);
--			ret = sig->posix_timer_id;
-+			spin_unlock(&hash_lock);
-+			return id;
- 		}
--		if (++sig->posix_timer_id < 0)
--			sig->posix_timer_id = 0;
--		if ((sig->posix_timer_id == first_free_id) && (ret == -ENOENT))
--			/* Loop over all possible ids completed */
--			ret = -EAGAIN;
- 		spin_unlock(&hash_lock);
--	} while (ret == -ENOENT);
--	return ret;
-+	}
-+	/* POSIX return code when no timer ID could be allocated */
-+	return -EAGAIN;
- }
- 
- static inline void unlock_timer(struct k_itimer *timr, unsigned long flags)
+diff --git a/drivers/acpi/button.c b/drivers/acpi/button.c
+index 0d93a5ef4d071..4861aad1a9e93 100644
+--- a/drivers/acpi/button.c
++++ b/drivers/acpi/button.c
+@@ -82,6 +82,15 @@ static const struct dmi_system_id dmi_lid_quirks[] = {
+ 		},
+ 		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_DISABLED,
+ 	},
++	{
++		/* Nextbook Ares 8A tablet, _LID device always reports lid closed */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Insyde"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "CherryTrail"),
++			DMI_MATCH(DMI_BIOS_VERSION, "M882"),
++		},
++		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_DISABLED,
++	},
+ 	{
+ 		/*
+ 		 * Medion Akoya E2215T, notification of the LID device only
 -- 
 2.39.2
 
