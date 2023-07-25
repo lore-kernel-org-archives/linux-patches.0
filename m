@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EB914A82
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:52:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7AB8C433C8;
-	Tue, 25 Jul 2023 10:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0F114A82
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:52:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABCE0C433C8;
+	Tue, 25 Jul 2023 10:52:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282335;
-	bh=pXrayAEezZS6p6Du3wIUqtam/djN7+zbnTBibE50m6U=;
+	s=korg; t=1690282338;
+	bh=DksLlr8wsk5KRKmTxgOGiE1oEHdd21RS7vPLPV5Uvt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HAJ/2oGFwEM5W0/6P1R77Q4MMNVWE31TeWycvwQBkcAQOWik6nfJFv2v+LZzjWarN
-	 34hTiRdyY1MvZJnVp2CtBQrITlcK8OfuVKjvsxeOn141cXJ+jO+A2jWEYpxUZF9zAe
-	 suRxo0RXHYo3JTdxbr5jfiYX7eb+PIpBHmLmcQm4=
+	b=lCTw7gG8+jm4DoeC2xO0xT481GgeafZhTc2qTyL8Ytr/M7Vk09/d/DgQT4SVJuiH9
+	 r4DAe4/8OaM1fSmi4IHJdJOpyBHVcqyvbwAafJk9+6zwJCY7pSoNupq4l5/s/Hx1kW
+	 FcsMURVMm6dcegsL+gJh5W6/GZctcil27Yzd6mtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5c54bd3eb218bb595aa9@syzkaller.appspotmail.com,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 092/227] posix-timers: Ensure timer ID search-loop limit is valid
-Date: Tue, 25 Jul 2023 12:44:19 +0200
-Message-ID: <20230725104518.524071570@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.4 066/227] ASoC: codecs: wcd938x: fix resource leaks on component remove
+Date: Tue, 25 Jul 2023 12:43:53 +0200
+Message-ID: <20230725104517.483413116@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -37,115 +35,151 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 8ce8849dd1e78dadcee0ec9acbd259d239b7069f ]
+commit a3406f87775fee986876e03f93a84385f54d5999 upstream.
 
-posix_timer_add() tries to allocate a posix timer ID by starting from the
-cached ID which was stored by the last successful allocation.
+Make sure to release allocated resources on component probe failure and
+on remove.
 
-This is done in a loop searching the ID space for a free slot one by
-one. The loop has to terminate when the search wrapped around to the
-starting point.
+This is specifically needed to allow probe deferrals of the sound card
+which otherwise fails when reprobing the codec component:
 
-But that's racy vs. establishing the starting point. That is read out
-lockless, which leads to the following problem:
+    snd-sc8280xp sound: ASoC: failed to instantiate card -517
+    genirq: Flags mismatch irq 289. 00002001 (HPHR PDM WD INT) vs. 00002001 (HPHR PDM WD INT)
+    wcd938x_codec audio-codec: Failed to request HPHR WD interrupt (-16)
+    genirq: Flags mismatch irq 290. 00002001 (HPHL PDM WD INT) vs. 00002001 (HPHL PDM WD INT)
+    wcd938x_codec audio-codec: Failed to request HPHL WD interrupt (-16)
+    genirq: Flags mismatch irq 291. 00002001 (AUX PDM WD INT) vs. 00002001 (AUX PDM WD INT)
+    wcd938x_codec audio-codec: Failed to request Aux WD interrupt (-16)
+    genirq: Flags mismatch irq 292. 00002001 (mbhc sw intr) vs. 00002001 (mbhc sw intr)
+    wcd938x_codec audio-codec: Failed to request mbhc interrupts -16
 
-CPU0	  	      	     	   CPU1
-posix_timer_add()
-  start = sig->posix_timer_id;
-  lock(hash_lock);
-  ...				   posix_timer_add()
-  if (++sig->posix_timer_id < 0)
-      			             start = sig->posix_timer_id;
-     sig->posix_timer_id = 0;
-
-So CPU1 can observe a negative start value, i.e. -1, and the loop break
-never happens because the condition can never be true:
-
-  if (sig->posix_timer_id == start)
-     break;
-
-While this is unlikely to ever turn into an endless loop as the ID space is
-huge (INT_MAX), the racy read of the start value caught the attention of
-KCSAN and Dmitry unearthed that incorrectness.
-
-Rewrite it so that all id operations are under the hash lock.
-
-Reported-by: syzbot+5c54bd3eb218bb595aa9@syzkaller.appspotmail.com
-Reported-by: Dmitry Vyukov <dvyukov@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Link: https://lore.kernel.org/r/87bkhzdn6g.ffs@tglx
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8d78602aa87a ("ASoC: codecs: wcd938x: add basic driver")
+Cc: stable@vger.kernel.org	# 5.14
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230705123018.30903-5-johan+linaro@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sched/signal.h |  2 +-
- kernel/time/posix-timers.c   | 31 ++++++++++++++++++-------------
- 2 files changed, 19 insertions(+), 14 deletions(-)
+ sound/soc/codecs/wcd938x.c |   55 +++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 48 insertions(+), 7 deletions(-)
 
-diff --git a/include/linux/sched/signal.h b/include/linux/sched/signal.h
-index 20099268fa257..669e8cff40c74 100644
---- a/include/linux/sched/signal.h
-+++ b/include/linux/sched/signal.h
-@@ -135,7 +135,7 @@ struct signal_struct {
- #ifdef CONFIG_POSIX_TIMERS
+--- a/sound/soc/codecs/wcd938x.c
++++ b/sound/soc/codecs/wcd938x.c
+@@ -2633,6 +2633,14 @@ static int wcd938x_mbhc_init(struct snd_
  
- 	/* POSIX.1b Interval Timers */
--	int			posix_timer_id;
-+	unsigned int		next_posix_timer_id;
- 	struct list_head	posix_timers;
- 
- 	/* ITIMER_REAL timer for the process */
-diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
-index ed3c4a9543982..2d6cf93ca370a 100644
---- a/kernel/time/posix-timers.c
-+++ b/kernel/time/posix-timers.c
-@@ -140,25 +140,30 @@ static struct k_itimer *posix_timer_by_id(timer_t id)
- static int posix_timer_add(struct k_itimer *timer)
- {
- 	struct signal_struct *sig = current->signal;
--	int first_free_id = sig->posix_timer_id;
- 	struct hlist_head *head;
--	int ret = -ENOENT;
-+	unsigned int cnt, id;
- 
--	do {
-+	/*
-+	 * FIXME: Replace this by a per signal struct xarray once there is
-+	 * a plan to handle the resulting CRIU regression gracefully.
-+	 */
-+	for (cnt = 0; cnt <= INT_MAX; cnt++) {
- 		spin_lock(&hash_lock);
--		head = &posix_timers_hashtable[hash(sig, sig->posix_timer_id)];
--		if (!__posix_timers_find(head, sig, sig->posix_timer_id)) {
-+		id = sig->next_posix_timer_id;
+ 	return 0;
+ }
 +
-+		/* Write the next ID back. Clamp it to the positive space */
-+		sig->next_posix_timer_id = (id + 1) & INT_MAX;
++static void wcd938x_mbhc_deinit(struct snd_soc_component *component)
++{
++	struct wcd938x_priv *wcd938x = snd_soc_component_get_drvdata(component);
 +
-+		head = &posix_timers_hashtable[hash(sig, id)];
-+		if (!__posix_timers_find(head, sig, id)) {
- 			hlist_add_head_rcu(&timer->t_hash, head);
--			ret = sig->posix_timer_id;
-+			spin_unlock(&hash_lock);
-+			return id;
- 		}
--		if (++sig->posix_timer_id < 0)
--			sig->posix_timer_id = 0;
--		if ((sig->posix_timer_id == first_free_id) && (ret == -ENOENT))
--			/* Loop over all possible ids completed */
--			ret = -EAGAIN;
- 		spin_unlock(&hash_lock);
--	} while (ret == -ENOENT);
--	return ret;
++	wcd_mbhc_deinit(wcd938x->wcd_mbhc);
++}
++
+ /* END MBHC */
+ 
+ static const struct snd_kcontrol_new wcd938x_snd_controls[] = {
+@@ -3113,20 +3121,26 @@ static int wcd938x_soc_codec_probe(struc
+ 	ret = request_threaded_irq(wcd938x->hphr_pdm_wd_int, NULL, wcd938x_wd_handle_irq,
+ 				   IRQF_ONESHOT | IRQF_TRIGGER_RISING,
+ 				   "HPHR PDM WD INT", wcd938x);
+-	if (ret)
++	if (ret) {
+ 		dev_err(dev, "Failed to request HPHR WD interrupt (%d)\n", ret);
++		goto err_free_clsh_ctrl;
 +	}
-+	/* POSIX return code when no timer ID could be allocated */
-+	return -EAGAIN;
+ 
+ 	ret = request_threaded_irq(wcd938x->hphl_pdm_wd_int, NULL, wcd938x_wd_handle_irq,
+ 				   IRQF_ONESHOT | IRQF_TRIGGER_RISING,
+ 				   "HPHL PDM WD INT", wcd938x);
+-	if (ret)
++	if (ret) {
+ 		dev_err(dev, "Failed to request HPHL WD interrupt (%d)\n", ret);
++		goto err_free_hphr_pdm_wd_int;
++	}
+ 
+ 	ret = request_threaded_irq(wcd938x->aux_pdm_wd_int, NULL, wcd938x_wd_handle_irq,
+ 				   IRQF_ONESHOT | IRQF_TRIGGER_RISING,
+ 				   "AUX PDM WD INT", wcd938x);
+-	if (ret)
++	if (ret) {
+ 		dev_err(dev, "Failed to request Aux WD interrupt (%d)\n", ret);
++		goto err_free_hphl_pdm_wd_int;
++	}
+ 
+ 	/* Disable watchdog interrupt for HPH and AUX */
+ 	disable_irq_nosync(wcd938x->hphr_pdm_wd_int);
+@@ -3141,7 +3155,7 @@ static int wcd938x_soc_codec_probe(struc
+ 			dev_err(component->dev,
+ 				"%s: Failed to add snd ctrls for variant: %d\n",
+ 				__func__, wcd938x->variant);
+-			goto err;
++			goto err_free_aux_pdm_wd_int;
+ 		}
+ 		break;
+ 	case WCD9385:
+@@ -3151,7 +3165,7 @@ static int wcd938x_soc_codec_probe(struc
+ 			dev_err(component->dev,
+ 				"%s: Failed to add snd ctrls for variant: %d\n",
+ 				__func__, wcd938x->variant);
+-			goto err;
++			goto err_free_aux_pdm_wd_int;
+ 		}
+ 		break;
+ 	default:
+@@ -3159,12 +3173,38 @@ static int wcd938x_soc_codec_probe(struc
+ 	}
+ 
+ 	ret = wcd938x_mbhc_init(component);
+-	if (ret)
++	if (ret) {
+ 		dev_err(component->dev,  "mbhc initialization failed\n");
+-err:
++		goto err_free_aux_pdm_wd_int;
++	}
++
++	return 0;
++
++err_free_aux_pdm_wd_int:
++	free_irq(wcd938x->aux_pdm_wd_int, wcd938x);
++err_free_hphl_pdm_wd_int:
++	free_irq(wcd938x->hphl_pdm_wd_int, wcd938x);
++err_free_hphr_pdm_wd_int:
++	free_irq(wcd938x->hphr_pdm_wd_int, wcd938x);
++err_free_clsh_ctrl:
++	wcd_clsh_ctrl_free(wcd938x->clsh_info);
++
+ 	return ret;
  }
  
- static inline void unlock_timer(struct k_itimer *timr, unsigned long flags)
--- 
-2.39.2
-
++static void wcd938x_soc_codec_remove(struct snd_soc_component *component)
++{
++	struct wcd938x_priv *wcd938x = snd_soc_component_get_drvdata(component);
++
++	wcd938x_mbhc_deinit(component);
++
++	free_irq(wcd938x->aux_pdm_wd_int, wcd938x);
++	free_irq(wcd938x->hphl_pdm_wd_int, wcd938x);
++	free_irq(wcd938x->hphr_pdm_wd_int, wcd938x);
++
++	wcd_clsh_ctrl_free(wcd938x->clsh_info);
++}
++
+ static int wcd938x_codec_set_jack(struct snd_soc_component *comp,
+ 				  struct snd_soc_jack *jack, void *data)
+ {
+@@ -3181,6 +3221,7 @@ static int wcd938x_codec_set_jack(struct
+ static const struct snd_soc_component_driver soc_codec_dev_wcd938x = {
+ 	.name = "wcd938x_codec",
+ 	.probe = wcd938x_soc_codec_probe,
++	.remove = wcd938x_soc_codec_remove,
+ 	.controls = wcd938x_snd_controls,
+ 	.num_controls = ARRAY_SIZE(wcd938x_snd_controls),
+ 	.dapm_widgets = wcd938x_dapm_widgets,
 
 
