@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9B31ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:27:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B00FC433C8;
-	Tue, 25 Jul 2023 11:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61554182C8
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:27:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC1B7C433C8;
+	Tue, 25 Jul 2023 11:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284439;
-	bh=p2CWBFnGCo34fM/0P4txOYXPWhUAaxsiEODE3Lc2D34=;
+	s=korg; t=1690284442;
+	bh=ZqsC1+zmRzwFQtVqxyoTFx2fKjSGFSBnKano4MzMBqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e0i6VQuZekd2l3GgjC4AgtGd6QGpeLCGGMpPVlhXC9QKUPwFX5aQI5afjvFEeB7fu
-	 p2CTn6X62oyvBK93mpTtimkw4vRC3z50SlUUy7qorgLk7vJsxiKRrGyDYawU1pyRXt
-	 sF0DY5yHTrAvf2JPyAHro61Wqt2ebV+RXdRmhVks=
+	b=gBUJPwPeVTQUWNKJKAsU4hznVOVezuDO4stTssvhte/OM1+qrTybUWylqAv2JQ6Nv
+	 CR6JnudohxWJTER+9qqSlSf/Is9PdoPpisL2wbWzcIisnpSOnY/MWvSUJrI6R4lQXZ
+	 EllujJvaYi6HeYGIR8o0/77/tINk/i9cgtpQIRMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 357/509] ipv6/addrconf: fix a potential refcount underflow for idev
-Date: Tue, 25 Jul 2023 12:44:56 +0200
-Message-ID: <20230725104610.075228786@linuxfoundation.org>
+Subject: [PATCH 5.10 358/509] platform/x86: wmi: remove unnecessary argument
+Date: Tue, 25 Jul 2023 12:44:57 +0200
+Message-ID: <20230725104610.125119270@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,51 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Barnabás Pőcze <pobrn@protonmail.com>
 
-[ Upstream commit 06a0716949c22e2aefb648526580671197151acc ]
+[ Upstream commit 84eacf7e6413d5e2d2f4f9dddf9216c18a3631cf ]
 
-Now in addrconf_mod_rs_timer(), reference idev depends on whether
-rs_timer is not pending. Then modify rs_timer timeout.
+The GUID block is available for `wmi_create_device()`
+through `wblock->gblock`. Use that consistently in
+the function instead of using a mix of `gblock` and
+`wblock->gblock`.
 
-There is a time gap in [1], during which if the pending rs_timer
-becomes not pending. It will miss to hold idev, but the rs_timer
-is activated. Thus rs_timer callback function addrconf_rs_timer()
-will be executed and put idev later without holding idev. A refcount
-underflow issue for idev can be caused by this.
-
-	if (!timer_pending(&idev->rs_timer))
-		in6_dev_hold(idev);
-		  <--------------[1]
-	mod_timer(&idev->rs_timer, jiffies + when);
-
-To fix the issue, hold idev if mod_timer() return 0.
-
-Fixes: b7b1bfce0bb6 ("ipv6: split duplicate address detection and router solicitation timer")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Barnabás Pőcze <pobrn@protonmail.com>
+Link: https://lore.kernel.org/r/20210904175450.156801-8-pobrn@protonmail.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Stable-dep-of: 028e6e204ace ("platform/x86: wmi: Break possible infinite loop when parsing GUID")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/platform/x86/wmi.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index ed1e5bfc97b31..d5d10496b4aef 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -314,9 +314,8 @@ static void addrconf_del_dad_work(struct inet6_ifaddr *ifp)
- static void addrconf_mod_rs_timer(struct inet6_dev *idev,
- 				  unsigned long when)
- {
--	if (!timer_pending(&idev->rs_timer))
-+	if (!mod_timer(&idev->rs_timer, jiffies + when))
- 		in6_dev_hold(idev);
--	mod_timer(&idev->rs_timer, jiffies + when);
- }
+diff --git a/drivers/platform/x86/wmi.c b/drivers/platform/x86/wmi.c
+index 1f80b26281628..9a6dc2717e1d4 100644
+--- a/drivers/platform/x86/wmi.c
++++ b/drivers/platform/x86/wmi.c
+@@ -1042,7 +1042,6 @@ static const struct device_type wmi_type_data = {
+ };
  
- static void addrconf_mod_dad_work(struct inet6_ifaddr *ifp,
+ static int wmi_create_device(struct device *wmi_bus_dev,
+-			     const struct guid_block *gblock,
+ 			     struct wmi_block *wblock,
+ 			     struct acpi_device *device)
+ {
+@@ -1050,12 +1049,12 @@ static int wmi_create_device(struct device *wmi_bus_dev,
+ 	char method[5];
+ 	int result;
+ 
+-	if (gblock->flags & ACPI_WMI_EVENT) {
++	if (wblock->gblock.flags & ACPI_WMI_EVENT) {
+ 		wblock->dev.dev.type = &wmi_type_event;
+ 		goto out_init;
+ 	}
+ 
+-	if (gblock->flags & ACPI_WMI_METHOD) {
++	if (wblock->gblock.flags & ACPI_WMI_METHOD) {
+ 		wblock->dev.dev.type = &wmi_type_method;
+ 		mutex_init(&wblock->char_mutex);
+ 		goto out_init;
+@@ -1105,7 +1104,7 @@ static int wmi_create_device(struct device *wmi_bus_dev,
+ 	wblock->dev.dev.bus = &wmi_bus_type;
+ 	wblock->dev.dev.parent = wmi_bus_dev;
+ 
+-	dev_set_name(&wblock->dev.dev, "%pUL", gblock->guid);
++	dev_set_name(&wblock->dev.dev, "%pUL", wblock->gblock.guid);
+ 
+ 	device_initialize(&wblock->dev.dev);
+ 
+@@ -1197,7 +1196,7 @@ static int parse_wdg(struct device *wmi_bus_dev, struct acpi_device *device)
+ 		wblock->acpi_device = device;
+ 		wblock->gblock = gblock[i];
+ 
+-		retval = wmi_create_device(wmi_bus_dev, &gblock[i], wblock, device);
++		retval = wmi_create_device(wmi_bus_dev, wblock, device);
+ 		if (retval) {
+ 			kfree(wblock);
+ 			continue;
 -- 
 2.39.2
 
