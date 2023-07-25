@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E8C1D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:17:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 782CEC433C9;
-	Tue, 25 Jul 2023 11:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBA31D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:17:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB54C433C7;
+	Tue, 25 Jul 2023 11:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283860;
-	bh=V+/5q8Dck38EU8gZteKH3IgFoOMfy70Kbdu4MfCgY/k=;
+	s=korg; t=1690283863;
+	bh=PhWBYx1Pun4I3gmS2xxsyjjydJTxAmFGHnmI8wVisSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DDOPobBvQJ9zFNJdag7faww2UaQ/VTgXvnDKq8715THIO7Z6flevaWxoVMRsAl742
-	 B9d3jT262dPFndNo6/O4IezyUSWD8JLK/i2NkrW1NdVZbyCFCqAMw3Cc0D6mYtJ75k
-	 sCFEb9dDF6OTUSgiTKjEmuy7UifJhNZTC4YLogPs=
+	b=cYcj7C9xRU1ISQU5d7MvqhPXGuk7o0rP6IxykXTN5/qQ1eMIkS8TH1rJJrhJcf1/f
+	 Bn6kBe3rKQunvW4Lkd2TNDykJIVzjEliWhIQkX/b/qLQ3pjoTxyrJfE+2DB+Kt5xGH
+	 MqErrLCSrLe6m7SVOYwKRd8DUtMKPxMKq6dKh1gQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Chu Lin <linchuyuan@google.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 121/509] arm64: dts: qcom: msm8994: correct SPMI unit address
-Date: Tue, 25 Jul 2023 12:41:00 +0200
-Message-ID: <20230725104559.217691765@linuxfoundation.org>
+Subject: [PATCH 5.10 148/509] hwmon: (adm1275) enable adm1272 temperature reporting
+Date: Tue, 25 Jul 2023 12:41:27 +0200
+Message-ID: <20230725104600.511657100@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,37 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Chu Lin <linchuyuan@google.com>
 
-[ Upstream commit 24f0f6a8059c7108d4ee3476c95db1e7ff4feb79 ]
+[ Upstream commit 9da9c2dc57b2fa2e65521894cb66df4bf615214d ]
 
-Match unit-address to reg entry to fix dtbs W=1 warnings:
+adm1272 supports temperature reporting but it is disabled by default.
 
-  Warning (simple_bus_reg): /soc/spmi@fc4c0000: simple-bus unit address format error, expected "fc4cf000"
+Tested:
+ls temp1_*
+temp1_crit           temp1_highest        temp1_max
+temp1_crit_alarm     temp1_input          temp1_max_alarm
 
-Fixes: b0ad598f8ec0 ("arm64: dts: qcom: msm8994: Add SPMI PMIC arbiter device")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230419211856.79332-8-krzysztof.kozlowski@linaro.org
+cat temp1_input
+26642
+
+Signed-off-by: Chu Lin <linchuyuan@google.com>
+Link: https://lore.kernel.org/r/20210512171043.2433694-1-linchuyuan@google.com
+[groeck: Updated subject to reflect correct driver]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: b153a0bb4199 ("hwmon: (pmbus/adm1275) Fix problems with temperature monitoring on ADM1272")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8994.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/pmbus/adm1275.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-index aeb5762566e91..caaf7102f5798 100644
---- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-@@ -489,7 +489,7 @@ restart@fc4ab000 {
- 			reg = <0xfc4ab000 0x4>;
- 		};
+diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
+index e7997f37b2666..0be1b5777d2f0 100644
+--- a/drivers/hwmon/pmbus/adm1275.c
++++ b/drivers/hwmon/pmbus/adm1275.c
+@@ -611,11 +611,13 @@ static int adm1275_probe(struct i2c_client *client)
+ 		tindex = 8;
  
--		spmi_bus: spmi@fc4c0000 {
-+		spmi_bus: spmi@fc4cf000 {
- 			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0xfc4cf000 0x1000>,
- 			      <0xfc4cb000 0x1000>,
+ 		info->func[0] |= PMBUS_HAVE_PIN | PMBUS_HAVE_STATUS_INPUT |
+-			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT;
++			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT |
++			PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
+ 
+-		/* Enable VOUT if not enabled (it is disabled by default) */
+-		if (!(config & ADM1278_VOUT_EN)) {
+-			config |= ADM1278_VOUT_EN;
++		/* Enable VOUT & TEMP1 if not enabled (disabled by default) */
++		if ((config & (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) !=
++		    (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) {
++			config |= ADM1278_VOUT_EN | ADM1278_TEMP1_EN;
+ 			ret = i2c_smbus_write_byte_data(client,
+ 							ADM1275_PMON_CONFIG,
+ 							config);
+@@ -625,10 +627,6 @@ static int adm1275_probe(struct i2c_client *client)
+ 				return -ENODEV;
+ 			}
+ 		}
+-
+-		if (config & ADM1278_TEMP1_EN)
+-			info->func[0] |=
+-				PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
+ 		if (config & ADM1278_VIN_EN)
+ 			info->func[0] |= PMBUS_HAVE_VIN;
+ 		break;
 -- 
 2.39.2
 
