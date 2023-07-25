@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7EC215AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:50:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F764C433C8;
-	Tue, 25 Jul 2023 10:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4A215AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:50:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3919FC433C8;
+	Tue, 25 Jul 2023 10:50:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282235;
-	bh=XL9Urdfo/A7cpSPaDhGWGuuan9jOf8n4fE6u+KEAefo=;
+	s=korg; t=1690282238;
+	bh=YVEcK3pOwhjGe0W3cqFId/pAgruqrFA6zREz1RpUdQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AjYX4OI+kNEsAJsRF/I5ZDu4mVYnV0s4ULKajqFBFO/qxaqHbcOjS/EzfHEEu5p4P
-	 Zizwhhd1WAHqyBirp7rsmtYaq3gLgHX8mwah4v7zsP3XYYT5QIXrkaNUDNp0qFVzug
-	 yJrNfgDNGZgjay9oUpptHJ4xUSN/U/9WZocTxhh8=
+	b=YBhxo/pmMwEliIb1Ny64B4lJkYxJdgDPnqRano6h6BQ+hxuX8RvqcC5v/5SIGxf/f
+	 5ScGo65BYAXzpBB7Mngv3qa7/L/a/gNBZzDOGwRGdTFRa5kIcxz1kP/7y01+ngVXTt
+	 qaPwdnyG/3XVy8zblwqKf2T/c8pQNtK6ga9gAhh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matus Gajdos <matuszpd@gmail.com>,
+	Andreas Henriksson <andreas@fatal.se>,
+	Fabio Estevam <festevam@denx.de>,
 	Shengjiu Wang <shengjiu.wang@gmail.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.4 056/227] ASoC: fsl_sai: Disable bit clock with transmitter
-Date: Tue, 25 Jul 2023 12:43:43 +0200
-Message-ID: <20230725104517.089302040@linuxfoundation.org>
+Subject: [PATCH 6.4 057/227] ASoC: fsl_sai: Revert "ASoC: fsl_sai: Enable MCTL_MCLK_EN bit for master mode"
+Date: Tue, 25 Jul 2023 12:43:44 +0200
+Message-ID: <20230725104517.127179963@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,43 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matus Gajdos <matuszpd@gmail.com>
+From: Fabio Estevam <festevam@denx.de>
 
-commit 269f399dc19f0e5c51711c3ba3bd06e0ef6ef403 upstream.
+commit 86867aca7330e4fbcfa2a117e20b48bbb6c758a9 upstream.
 
-Otherwise bit clock remains running writing invalid data to the DAC.
+This reverts commit ff87d619ac180444db297f043962a5c325ded47b.
 
-Signed-off-by: Matus Gajdos <matuszpd@gmail.com>
-Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
+Andreas reports that on an i.MX8MP-based system where MCLK needs to be
+used as an input, the MCLK pin is actually an output, despite not having
+the 'fsl,sai-mclk-direction-output' property present in the devicetree.
+
+This is caused by commit ff87d619ac18 ("ASoC: fsl_sai: Enable
+MCTL_MCLK_EN bit for master mode") that sets FSL_SAI_MCTL_MCLK_EN
+unconditionally for imx8mm/8mn/8mp/93, causing the MCLK to always
+be configured as output.
+
+FSL_SAI_MCTL_MCLK_EN corresponds to the MOE (MCLK Output Enable) bit
+of register MCR and the drivers sets it when the
+'fsl,sai-mclk-direction-output' devicetree property is present.
+
+Revert the commit to allow SAI to use MCLK as input as well.
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230712124934.32232-1-matuszpd@gmail.com
+Fixes: ff87d619ac18 ("ASoC: fsl_sai: Enable MCTL_MCLK_EN bit for master mode")
+Reported-by: Andreas Henriksson <andreas@fatal.se>
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
+Link: https://lore.kernel.org/r/20230706221827.1938990-1-festevam@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/fsl_sai.c |    2 +-
- sound/soc/fsl/fsl_sai.h |    1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/fsl/fsl_sai.c |    6 ------
+ 1 file changed, 6 deletions(-)
 
 --- a/sound/soc/fsl/fsl_sai.c
 +++ b/sound/soc/fsl/fsl_sai.c
-@@ -719,7 +719,7 @@ static void fsl_sai_config_disable(struc
- 	u32 xcsr, count = 100;
+@@ -507,12 +507,6 @@ static int fsl_sai_set_bclk(struct snd_s
+ 				   savediv / 2 - 1);
+ 	}
  
- 	regmap_update_bits(sai->regmap, FSL_SAI_xCSR(tx, ofs),
--			   FSL_SAI_CSR_TERE, 0);
-+			   FSL_SAI_CSR_TERE | FSL_SAI_CSR_BCE, 0);
+-	if (sai->soc_data->max_register >= FSL_SAI_MCTL) {
+-		/* SAI is in master mode at this point, so enable MCLK */
+-		regmap_update_bits(sai->regmap, FSL_SAI_MCTL,
+-				   FSL_SAI_MCTL_MCLK_EN, FSL_SAI_MCTL_MCLK_EN);
+-	}
+-
+ 	return 0;
+ }
  
- 	/* TERE will remain set till the end of current frame */
- 	do {
---- a/sound/soc/fsl/fsl_sai.h
-+++ b/sound/soc/fsl/fsl_sai.h
-@@ -91,6 +91,7 @@
- /* SAI Transmit/Receive Control Register */
- #define FSL_SAI_CSR_TERE	BIT(31)
- #define FSL_SAI_CSR_SE		BIT(30)
-+#define FSL_SAI_CSR_BCE		BIT(28)
- #define FSL_SAI_CSR_FR		BIT(25)
- #define FSL_SAI_CSR_SR		BIT(24)
- #define FSL_SAI_CSR_xF_SHIFT	16
 
 
