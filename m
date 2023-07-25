@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75AC81ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:22:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC119C433C7;
-	Tue, 25 Jul 2023 11:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E5E1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:22:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA722C433C7;
+	Tue, 25 Jul 2023 11:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284143;
-	bh=L4bNO6+1j9qRSLfqs0DmD0VNpLLYyY4UBAHxHFB9RtE=;
+	s=korg; t=1690284146;
+	bh=+1hMspF/G9VnTE1U8jAUe9oapUDtIFZeqHZj3czvEns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iPsFo+MbX7EAvQa4UOOAfybUG8arMVIRXEjCMz6QPxHpMWAx1zuk1WRj71XGe1sqZ
-	 4kUhoqxloI688HOKVa9lGhT4Lm0aXnHCuAtj2L1zw+orwDMh9v71F0cCCL5jo4tv1c
-	 GBpDowQyVsHWV6G8qo7ZV0rvTvtKQ0jSYIWiHRpk=
+	b=F6u2sFPOisfElFlhjdD+69PmgJAmn0/PzuzakV0k3tn9lKAPO9Xoeby2PbCqWvppw
+	 4iufov2zSHleKUXBG+9PBcgIL4D/bVN2pN/y5JY+ax2SyF7Pml4YjuY76LwINlKvul
+	 smwMxLJt0AS3HDUR1XhG6zSxiZl8Rv63Bzr49xJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Lindgren <tony@atomide.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Mantas Pucka <mantas@8devices.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 221/509] serial: 8250: omap: Fix freeing of resources on failed register
-Date: Tue, 25 Jul 2023 12:42:40 +0200
-Message-ID: <20230725104603.869434621@linuxfoundation.org>
+Subject: [PATCH 5.10 222/509] clk: qcom: gcc-ipq6018: Use floor ops for sdcc clocks
+Date: Tue, 25 Jul 2023 12:42:41 +0200
+Message-ID: <20230725104603.919057077@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,36 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Lindgren <tony@atomide.com>
+From: Mantas Pucka <mantas@8devices.com>
 
-[ Upstream commit b9ab22c2bc8652324a803b3e2be69838920b4025 ]
+[ Upstream commit 56e5ae0116aef87273cf1812d608645b076e4f02 ]
 
-If serial8250_register_8250_port() fails, the SoC can hang as the
-deferred PMQoS work will still run as is not flushed and removed.
+SDCC clocks must be rounded down to avoid overclocking the controller.
 
-Fixes: 61929cf0169d ("tty: serial: Add 8250-core based omap driver")
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20230508082014.23083-2-tony@atomide.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d9db07f088af ("clk: qcom: Add ipq6018 Global Clock Controller support")
+Signed-off-by: Mantas Pucka <mantas@8devices.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/1682413909-24927-1-git-send-email-mantas@8devices.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_omap.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/qcom/gcc-ipq6018.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
-index 483fff3a95c9e..6b255e1633fd4 100644
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -1469,7 +1469,9 @@ static int omap8250_probe(struct platform_device *pdev)
- err:
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
- 	pm_runtime_put_sync(&pdev->dev);
-+	flush_work(&priv->qos_work);
- 	pm_runtime_disable(&pdev->dev);
-+	cpu_latency_qos_remove_request(&priv->pm_qos_request);
- 	return ret;
- }
+diff --git a/drivers/clk/qcom/gcc-ipq6018.c b/drivers/clk/qcom/gcc-ipq6018.c
+index 3f9c2f61a5d93..5c5d1b04ea7af 100644
+--- a/drivers/clk/qcom/gcc-ipq6018.c
++++ b/drivers/clk/qcom/gcc-ipq6018.c
+@@ -1654,7 +1654,7 @@ static struct clk_rcg2 sdcc1_apps_clk_src = {
+ 		.name = "sdcc1_apps_clk_src",
+ 		.parent_data = gcc_xo_gpll0_gpll2_gpll0_out_main_div2,
+ 		.num_parents = 4,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_floor_ops,
+ 	},
+ };
  
 -- 
 2.39.2
