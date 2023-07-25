@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4D51ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:25:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1105AC433C7;
-	Tue, 25 Jul 2023 11:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5487B1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:25:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD263C433C7;
+	Tue, 25 Jul 2023 11:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284324;
-	bh=R9t4gjGYhK6JD6uPtvcM9x2eDYwncgb+ShUEtDH2Pnw=;
+	s=korg; t=1690284327;
+	bh=AFuRqf1zSedcw9lxN25E/Ctio7fLi4I48lxwiuI1Eas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lpTY/1dOdvTvR73uANTitbYrq4is1615/2CEjnPL1p3a+mwcqfNNgiJz1PXbIeuxF
-	 vq3T0GfwhCQVFH6w/3dHzpR/PQG+D6ilMCCCuLhNHrKdqyiHGsKDIx1cPvgtRGXXis
-	 HHfdFPdzKGypNOg/rLIfEpGKoV7jjp+9e6bJmgsk=
+	b=H3as2fDTAEO0JJtoB7hzPiv+bbazql/X/k8csNu4JpvtdGWhrB0PZZlK9BaamAbY6
+	 WOeGAds1WmYOFFjW0hIF0F6CXon/n/q7PNwjz53qALOP8cL0JeKkTO4nXWIj50CcP0
+	 2x5lfz4hraM8cRVG5kNxCYPtzFPtd+NovJxuB2zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingzhe Zou <mingzhe.zou@easystack.cn>,
-	Coly Li <colyli@suse.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 287/509] bcache: fixup btree_cache_wait list damage
-Date: Tue, 25 Jul 2023 12:43:46 +0200
-Message-ID: <20230725104606.876200403@linuxfoundation.org>
+	Robert Hancock <robert.hancock@calian.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 278/509] i2c: xiic: Dont try to handle more interrupt events after error
+Date: Tue, 25 Jul 2023 12:43:37 +0200
+Message-ID: <20230725104606.477779701@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,120 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mingzhe Zou <mingzhe.zou@easystack.cn>
+From: Robert Hancock <robert.hancock@calian.com>
 
-commit f0854489fc07d2456f7cc71a63f4faf9c716ffbe upstream.
+[ Upstream commit cb6e45c9a0ad9e0f8664fd06db0227d185dc76ab ]
 
-We get a kernel crash about "list_add corruption. next->prev should be
-prev (ffff9c801bc01210), but was ffff9c77b688237c.
-(next=ffffae586d8afe68)."
+In xiic_process, it is possible that error events such as arbitration
+lost or TX error can be raised in conjunction with other interrupt flags
+such as TX FIFO empty or bus not busy. Error events result in the
+controller being reset and the error returned to the calling request,
+but the function could potentially try to keep handling the other
+events, such as by writing more messages into the TX FIFO. Since the
+transaction has already failed, this is not helpful and will just cause
+issues.
 
-crash> struct list_head 0xffff9c801bc01210
-struct list_head {
-  next = 0xffffae586d8afe68,
-  prev = 0xffffae586d8afe68
-}
-crash> struct list_head 0xffff9c77b688237c
-struct list_head {
-  next = 0x0,
-  prev = 0x0
-}
-crash> struct list_head 0xffffae586d8afe68
-struct list_head struct: invalid kernel virtual address: ffffae586d8afe68  type: "gdb_readmem_callback"
-Cannot access memory at address 0xffffae586d8afe68
+This problem has been present ever since:
 
-[230469.019492] Call Trace:
-[230469.032041]  prepare_to_wait+0x8a/0xb0
-[230469.044363]  ? bch_btree_keys_free+0x6c/0xc0 [escache]
-[230469.056533]  mca_cannibalize_lock+0x72/0x90 [escache]
-[230469.068788]  mca_alloc+0x2ae/0x450 [escache]
-[230469.080790]  bch_btree_node_get+0x136/0x2d0 [escache]
-[230469.092681]  bch_btree_check_thread+0x1e1/0x260 [escache]
-[230469.104382]  ? finish_wait+0x80/0x80
-[230469.115884]  ? bch_btree_check_recurse+0x1a0/0x1a0 [escache]
-[230469.127259]  kthread+0x112/0x130
-[230469.138448]  ? kthread_flush_work_fn+0x10/0x10
-[230469.149477]  ret_from_fork+0x35/0x40
+commit 7f9906bd7f72 ("i2c: xiic: Service all interrupts in isr")
 
-bch_btree_check_thread() and bch_dirty_init_thread() may call
-mca_cannibalize() to cannibalize other cached btree nodes. Only one thread
-can do it at a time, so the op of other threads will be added to the
-btree_cache_wait list.
+which allowed non-error events to be handled after errors, but became
+more obvious after:
 
-We must call finish_wait() to remove op from btree_cache_wait before free
-it's memory address. Otherwise, the list will be damaged. Also should call
-bch_cannibalize_unlock() to release the btree_cache_alloc_lock and wake_up
-other waiters.
+commit 743e227a8959 ("i2c: xiic: Defer xiic_wakeup() and
+__xiic_start_xfer() in xiic_process()")
 
-Fixes: 8e7102273f59 ("bcache: make bch_btree_check() to be multithreaded")
-Fixes: b144e45fc576 ("bcache: make bch_sectors_dirty_init() to be multithreaded")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mingzhe Zou <mingzhe.zou@easystack.cn>
-Signed-off-by: Coly Li <colyli@suse.de>
-Link: https://lore.kernel.org/r/20230615121223.22502-7-colyli@suse.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+which reworked the code to add a WARN_ON which triggers if both the
+xfer_more and wakeup_req flags were set, since this combination is
+not supposed to happen, but was occurring in this scenario.
+
+Skip further interrupt handling after error flags are detected to avoid
+this problem.
+
+Fixes: 7f9906bd7f72 ("i2c: xiic: Service all interrupts in isr")
+Signed-off-by: Robert Hancock <robert.hancock@calian.com>
+Acked-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/bcache/btree.c     |   11 ++++++++++-
- drivers/md/bcache/btree.h     |    1 +
- drivers/md/bcache/writeback.c |   10 ++++++++++
- 3 files changed, 21 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-xiic.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/md/bcache/btree.c
-+++ b/drivers/md/bcache/btree.c
-@@ -885,7 +885,7 @@ static struct btree *mca_cannibalize(str
-  * cannibalize_bucket() will take. This means every time we unlock the root of
-  * the btree, we need to release this lock if we have it held.
-  */
--static void bch_cannibalize_unlock(struct cache_set *c)
-+void bch_cannibalize_unlock(struct cache_set *c)
- {
- 	spin_lock(&c->btree_cannibalize_lock);
- 	if (c->btree_cache_alloc_lock == current) {
-@@ -1968,6 +1968,15 @@ static int bch_btree_check_thread(void *
- 			c->gc_stats.nodes++;
- 			bch_btree_op_init(&op, 0);
- 			ret = bcache_btree(check_recurse, p, c->root, &op);
-+			/*
-+			 * The op may be added to cache_set's btree_cache_wait
-+			 * in mca_cannibalize(), must ensure it is removed from
-+			 * the list and release btree_cache_alloc_lock before
-+			 * free op memory.
-+			 * Otherwise, the btree_cache_wait will be damaged.
-+			 */
-+			bch_cannibalize_unlock(c);
-+			finish_wait(&c->btree_cache_wait, &(&op)->wait);
- 			if (ret)
- 				goto out;
+diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
+index 8b93c22f3c400..568e97c3896d1 100644
+--- a/drivers/i2c/busses/i2c-xiic.c
++++ b/drivers/i2c/busses/i2c-xiic.c
+@@ -422,6 +422,8 @@ static irqreturn_t xiic_process(int irq, void *dev_id)
+ 			wakeup_req = 1;
+ 			wakeup_code = STATE_ERROR;
  		}
---- a/drivers/md/bcache/btree.h
-+++ b/drivers/md/bcache/btree.h
-@@ -282,6 +282,7 @@ void bch_initial_gc_finish(struct cache_
- void bch_moving_gc(struct cache_set *c);
- int bch_btree_check(struct cache_set *c);
- void bch_initial_mark_key(struct cache_set *c, int level, struct bkey *k);
-+void bch_cannibalize_unlock(struct cache_set *c);
- 
- static inline void wake_up_gc(struct cache_set *c)
- {
---- a/drivers/md/bcache/writeback.c
-+++ b/drivers/md/bcache/writeback.c
-@@ -834,6 +834,16 @@ static int bch_root_node_dirty_init(stru
- 	if (ret < 0)
- 		pr_warn("sectors dirty init failed, ret=%d!\n", ret);
- 
-+	/*
-+	 * The op may be added to cache_set's btree_cache_wait
-+	 * in mca_cannibalize(), must ensure it is removed from
-+	 * the list and release btree_cache_alloc_lock before
-+	 * free op memory.
-+	 * Otherwise, the btree_cache_wait will be damaged.
-+	 */
-+	bch_cannibalize_unlock(c);
-+	finish_wait(&c->btree_cache_wait, &(&op.op)->wait);
-+
- 	return ret;
- }
- 
++		/* don't try to handle other events */
++		goto out;
+ 	}
+ 	if (pend & XIIC_INTR_RX_FULL_MASK) {
+ 		/* Receive register/FIFO is full */
+-- 
+2.39.2
+
 
 
