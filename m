@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2AB1ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:45:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AFEAC433C8;
-	Tue, 25 Jul 2023 11:45:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E437A1ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:45:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647B0C433C8;
+	Tue, 25 Jul 2023 11:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285529;
-	bh=QkIqMIBEK7cTRusjKc90W8ziCU5SwXP1/s/tEYTI1I8=;
+	s=korg; t=1690285531;
+	bh=Ts5CTHouB7nMG/VBtow7XPerY1s7TERH2nhdJdwbnBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZANQ5x9d+Gvq93bp9otWGj872LxAVoOko7x+zjRjg6igaIEiTC6hrjGDQNHMlzLjV
-	 UNEp1BGVs9ENA9/AB4hjWTBz6fxJy36oEn4S3Gb2PkctgU6hPKeD33Jkae1IrXX+l9
-	 95p4UlSwd4EtkBhof2WMlVLWEDvuECM+1eETNTE0=
+	b=TQozVrijDNff0nLEVw3TTDITTfoU4gGRvba1mk/tiWBoqRuaN8U7u2xvwwnVRGAvQ
+	 F5ivuxm+ntZyORkMorEBSIi6jZAN5a0Mug8zHZWpnoqZYybw77wZsDuP2tJoAXpMVr
+	 Dwc3Onb2PMplA5On5MLgT1WF2BtpsgyASUc59hZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
 	stable@kernel.org,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Chao Yu <chao@kernel.org>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.4 237/313] ext4: fix wrong unit use in ext4_mb_clear_bb
-Date: Tue, 25 Jul 2023 12:46:30 +0200
-Message-ID: <20230725104531.302061284@linuxfoundation.org>
+Subject: [PATCH 5.4 238/313] ext4: fix to check return value of freeze_bdev() in ext4_shutdown()
+Date: Tue, 25 Jul 2023 12:46:31 +0200
+Message-ID: <20230725104531.352489233@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -36,35 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Chao Yu <chao@kernel.org>
 
-commit 247c3d214c23dfeeeb892e91a82ac1188bdaec9f upstream.
+commit c4d13222afd8a64bf11bc7ec68645496ee8b54b9 upstream.
 
-Function ext4_issue_discard need count in cluster. Pass count_clusters
-instead of count to fix the mismatch.
+freeze_bdev() can fail due to a lot of reasons, it needs to check its
+reason before later process.
 
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Fixes: 783d94854499 ("ext4: add EXT4_IOC_GOINGDOWN ioctl")
 Cc: stable@kernel.org
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230603150327.3596033-11-shikemeng@huaweicloud.com
+Signed-off-by: Chao Yu <chao@kernel.org>
+Link: https://lore.kernel.org/r/20230606073203.1310389-1-chao@kernel.org
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ext4/ioctl.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -4950,8 +4950,8 @@ do_more:
- 		 * them with group lock_held
- 		 */
- 		if (test_opt(sb, DISCARD)) {
--			err = ext4_issue_discard(sb, block_group, bit, count,
--						 NULL);
-+			err = ext4_issue_discard(sb, block_group, bit,
-+						 count_clusters, NULL);
- 			if (err && err != -EOPNOTSUPP)
- 				ext4_msg(sb, KERN_WARNING, "discard request in"
- 					 " group:%d block:%d count:%lu failed"
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -573,6 +573,7 @@ static int ext4_shutdown(struct super_bl
+ {
+ 	struct ext4_sb_info *sbi = EXT4_SB(sb);
+ 	__u32 flags;
++	int ret;
+ 
+ 	if (!capable(CAP_SYS_ADMIN))
+ 		return -EPERM;
+@@ -591,7 +592,9 @@ static int ext4_shutdown(struct super_bl
+ 
+ 	switch (flags) {
+ 	case EXT4_GOING_FLAGS_DEFAULT:
+-		freeze_bdev(sb->s_bdev);
++		ret = freeze_bdev(sb->s_bdev);
++		if (ret)
++			return ret;
+ 		set_bit(EXT4_FLAGS_SHUTDOWN, &sbi->s_ext4_flags);
+ 		thaw_bdev(sb->s_bdev, sb);
+ 		break;
 
 
