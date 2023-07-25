@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F57915AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:50:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5770C433C7;
-	Tue, 25 Jul 2023 10:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E2F15AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:50:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D908C433C9;
+	Tue, 25 Jul 2023 10:50:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282255;
-	bh=GGOQBBdRek3AH3MuzMCabXyqd63cH6fXVbP3+8/WVrc=;
+	s=korg; t=1690282257;
+	bh=IM+y4rs41fzQhgjMRdtXgtwW1Bxoq3yKEq1I0qzxSoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NSO12PejUTqjIYb+gmig6VbiqTQSBPkt8eFDcdHi4DvGodB00d3Z32whCPxF5c5G4
-	 ibOPMXSxZODKQtC6VeghQl6SxjFeIwXHqAkWH2WLkR0s8p4fnkBdPUhNvzfLj1bDm5
-	 oDxKCbvTf0f99JHZSN22Zam6CPJ1EMWeyDdJZcx8=
+	b=DgJSZaYnpUI4iWYVVYWwAPHwdlrciSXinhCtqM5iA88kij4k8C5Z5HnSKwLAWVILp
+	 3D21NBvF01HbkrgSyF0Hh51b/M68xvR/qm+r4tgnduklS4NA0fCZFXey6jJGhVh6GZ
+	 xvGsw9p4AdEw/RVw7XHxaU+5yHNxfwnypdDMVBqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcus Seyfarth <m.seyfarth@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.4 062/227] ASoC: cs35l45: Select REGMAP_IRQ
-Date: Tue, 25 Jul 2023 12:43:49 +0200
-Message-ID: <20230725104517.317766590@linuxfoundation.org>
+	YueHaibing <yuehaibing@huawei.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.4 035/227] can: bcm: Fix UAF in bcm_proc_show()
+Date: Tue, 25 Jul 2023 12:43:22 +0200
+Message-ID: <20230725104516.296727229@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,41 +35,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: YueHaibing <yuehaibing@huawei.com>
 
-commit d9ba2975e98a4bec0a9f8d4be4c1de8883fccb71 upstream.
+commit 55c3b96074f3f9b0aee19bf93cd71af7516582bb upstream.
 
-After commit 6085f9e6dc19 ("ASoC: cs35l45: IRQ support"), without any
-other configuration that selects CONFIG_REGMAP_IRQ, modpost errors out
-with:
+BUG: KASAN: slab-use-after-free in bcm_proc_show+0x969/0xa80
+Read of size 8 at addr ffff888155846230 by task cat/7862
 
-  ERROR: modpost: "regmap_irq_get_virq" [sound/soc/codecs/snd-soc-cs35l45.ko] undefined!
-  ERROR: modpost: "devm_regmap_add_irq_chip" [sound/soc/codecs/snd-soc-cs35l45.ko] undefined!
+CPU: 1 PID: 7862 Comm: cat Not tainted 6.5.0-rc1-00153-gc8746099c197 #230
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xd5/0x150
+ print_report+0xc1/0x5e0
+ kasan_report+0xba/0xf0
+ bcm_proc_show+0x969/0xa80
+ seq_read_iter+0x4f6/0x1260
+ seq_read+0x165/0x210
+ proc_reg_read+0x227/0x300
+ vfs_read+0x1d5/0x8d0
+ ksys_read+0x11e/0x240
+ do_syscall_64+0x35/0xb0
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Add the Kconfig selection to ensure these functions get built and
-included, which resolves the build failure.
+Allocated by task 7846:
+ kasan_save_stack+0x1e/0x40
+ kasan_set_track+0x21/0x30
+ __kasan_kmalloc+0x9e/0xa0
+ bcm_sendmsg+0x264b/0x44e0
+ sock_sendmsg+0xda/0x180
+ ____sys_sendmsg+0x735/0x920
+ ___sys_sendmsg+0x11d/0x1b0
+ __sys_sendmsg+0xfa/0x1d0
+ do_syscall_64+0x35/0xb0
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
+Freed by task 7846:
+ kasan_save_stack+0x1e/0x40
+ kasan_set_track+0x21/0x30
+ kasan_save_free_info+0x27/0x40
+ ____kasan_slab_free+0x161/0x1c0
+ slab_free_freelist_hook+0x119/0x220
+ __kmem_cache_free+0xb4/0x2e0
+ rcu_core+0x809/0x1bd0
+
+bcm_op is freed before procfs entry be removed in bcm_release(),
+this lead to bcm_proc_show() may read the freed bcm_op.
+
+Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://lore.kernel.org/all/20230715092543.15548-1-yuehaibing@huawei.com
 Cc: stable@vger.kernel.org
-Fixes: 6085f9e6dc19 ("ASoC: cs35l45: IRQ support")
-Reported-by: Marcus Seyfarth <m.seyfarth@gmail.com>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1882
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20230703-cs35l45-select-regmap_irq-v1-1-37d7e838b614@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ net/can/bcm.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/sound/soc/codecs/Kconfig
-+++ b/sound/soc/codecs/Kconfig
-@@ -701,6 +701,7 @@ config SND_SOC_CS35L41_I2C
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -1526,6 +1526,12 @@ static int bcm_release(struct socket *so
  
- config SND_SOC_CS35L45
- 	tristate
-+	select REGMAP_IRQ
+ 	lock_sock(sk);
  
- config SND_SOC_CS35L45_SPI
- 	tristate "Cirrus Logic CS35L45 CODEC (SPI)"
++#if IS_ENABLED(CONFIG_PROC_FS)
++	/* remove procfs entry */
++	if (net->can.bcmproc_dir && bo->bcm_proc_read)
++		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
++#endif /* CONFIG_PROC_FS */
++
+ 	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
+ 		bcm_remove_op(op);
+ 
+@@ -1561,12 +1567,6 @@ static int bcm_release(struct socket *so
+ 	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
+ 		bcm_remove_op(op);
+ 
+-#if IS_ENABLED(CONFIG_PROC_FS)
+-	/* remove procfs entry */
+-	if (net->can.bcmproc_dir && bo->bcm_proc_read)
+-		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
+-#endif /* CONFIG_PROC_FS */
+-
+ 	/* remove device reference */
+ 	if (bo->bound) {
+ 		bo->bound   = 0;
 
 
