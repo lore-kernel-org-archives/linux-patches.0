@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F6314263
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:56:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 291C6C433C7;
-	Tue, 25 Jul 2023 10:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6445614263
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:56:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC63C433C8;
+	Tue, 25 Jul 2023 10:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282586;
-	bh=C5cJ9pBcbQdBCSGVC0EIJ1scN/PbNwS3tiT9Y064ZW4=;
+	s=korg; t=1690282589;
+	bh=82eKH/QmvDoL2Z8HW+/MK/ahA2tZvCxLUILutelxuYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s9vBkpWlG3IdaqjVbCOWV2gUDEPV/CDIEDHT6Etsu/S7u1b7LD9JRfSIM4kzcFOFv
-	 JJNEL8k5JNifksu24BqAQJGHUxBrycMrMH9Avo7UQLghGafATk9DovfN+VicdBm0BB
-	 3dgwgaM0fPapHTirYCaBcDAECNnydMOH4pq7wnKE=
+	b=PEKCRD6tBa68qefbO4mvYVQN3SoGqyBFUKWEEiTZTaUT09vQadwAr1cWUzby67c7N
+	 n9wtcihU8fOVujdlcaIocEuIjIb2QoRpIytTK+JDxio25cZ72RWiJlmyJs7pHCNr2O
+	 y4Bn+tLOSGqSMtH5SK08/PwI1ir6VDkQk+YPasGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 182/227] bpf, arm64: Fix BTI type used for freplace attached functions
-Date: Tue, 25 Jul 2023 12:45:49 +0200
-Message-ID: <20230725104522.364844507@linuxfoundation.org>
+Subject: [PATCH 6.4 183/227] igc: Avoid transmit queue timeout for XDP
+Date: Tue, 25 Jul 2023 12:45:50 +0200
+Message-ID: <20230725104522.398282544@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -36,53 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Duyck <alexanderduyck@fb.com>
+From: Kurt Kanzenbach <kurt@linutronix.de>
 
-[ Upstream commit a3f25d614bc73b45e8f02adc6769876dfd16ca84 ]
+[ Upstream commit 95b681485563c64585de78662ee52d06b7fa47d9 ]
 
-When running an freplace attached bpf program on an arm64 system w were
-seeing the following issue:
-  Unhandled 64-bit el1h sync exception on CPU47, ESR 0x0000000036000003 -- BTI
+High XDP load triggers the netdev watchdog:
 
-After a bit of work to track it down I determined that what appeared to be
-happening is that the 'bti c' at the start of the program was somehow being
-reached after a 'br' instruction. Further digging pointed me toward the
-fact that the function was attached via freplace. This in turn led me to
-build_plt which I believe is invoking the long jump which is triggering
-this error.
+|NETDEV WATCHDOG: enp3s0 (igc): transmit queue 2 timed out
 
-To resolve it we can replace the 'bti c' with 'bti jc' and add a comment
-explaining why this has to be modified as such.
+The reason is the Tx queue transmission start (txq->trans_start) is not updated
+in XDP code path. Therefore, add it for all XDP transmission functions.
 
-Fixes: b2ad54e1533e ("bpf, arm64: Implement bpf_arch_text_poke() for arm64")
-Signed-off-by: Alexander Duyck <alexanderduyck@fb.com>
-Acked-by: Xu Kuohai <xukuohai@huawei.com>
-Link: https://lore.kernel.org/r/168926677665.316237.9953845318337455525.stgit@ahduyck-xeon-server.home.arpa
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Kurt Kanzenbach <kurt@linutronix.de>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: 78adb4bcf99e ("igc: Prevent garbled TX queue with XDP ZEROCOPY")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/net/bpf_jit_comp.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igc/igc_main.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
-index b26da8efa616e..0ce5f13eabb1b 100644
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -322,7 +322,13 @@ static int build_prologue(struct jit_ctx *ctx, bool ebpf_from_cbpf)
- 	 *
- 	 */
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index 44aa4342cbbb5..ef4ea46442f21 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -2417,6 +2417,8 @@ static int igc_xdp_xmit_back(struct igc_adapter *adapter, struct xdp_buff *xdp)
+ 	nq = txring_txq(ring);
  
--	emit_bti(A64_BTI_C, ctx);
-+	/* bpf function may be invoked by 3 instruction types:
-+	 * 1. bl, attached via freplace to bpf prog via short jump
-+	 * 2. br, attached via freplace to bpf prog via long jump
-+	 * 3. blr, working as a function pointer, used by emit_call.
-+	 * So BTI_JC should used here to support both br and blr.
-+	 */
-+	emit_bti(A64_BTI_JC, ctx);
+ 	__netif_tx_lock(nq, cpu);
++	/* Avoid transmit queue timeout since we share it with the slow path */
++	txq_trans_cond_update(nq);
+ 	res = igc_xdp_init_tx_descriptor(ring, xdpf);
+ 	__netif_tx_unlock(nq);
+ 	return res;
+@@ -2833,6 +2835,9 @@ static void igc_xdp_xmit_zc(struct igc_ring *ring)
  
- 	emit(A64_MOV(1, A64_R(9), A64_LR), ctx);
- 	emit(A64_NOP, ctx);
+ 	__netif_tx_lock(nq, cpu);
+ 
++	/* Avoid transmit queue timeout since we share it with the slow path */
++	txq_trans_cond_update(nq);
++
+ 	budget = igc_desc_unused(ring);
+ 
+ 	while (xsk_tx_peek_desc(pool, &xdp_desc) && budget--) {
+@@ -6385,6 +6390,9 @@ static int igc_xdp_xmit(struct net_device *dev, int num_frames,
+ 
+ 	__netif_tx_lock(nq, cpu);
+ 
++	/* Avoid transmit queue timeout since we share it with the slow path */
++	txq_trans_cond_update(nq);
++
+ 	drops = 0;
+ 	for (i = 0; i < num_frames; i++) {
+ 		int err;
 -- 
 2.39.2
 
