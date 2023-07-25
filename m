@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268361EA96
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:12:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA68C433C7;
-	Tue, 25 Jul 2023 11:12:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F511EA96
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:12:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EDA6C433C8;
+	Tue, 25 Jul 2023 11:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283548;
-	bh=cJo8eAjUavLJ/VxXJQjqT+d0kGMzfbYyhc4fuWz21f0=;
+	s=korg; t=1690283550;
+	bh=jgNRaozRXCurmj68HUaXNkJ6/fZZKhxuTbiFnL+Wy7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bM62fJRcxg5zHzs9e3XZv96ye2wRIo3wMWgXMYadPTMvWMTl37urkmkMKopef0Eju
-	 t1fcKrO1T5qpgS8R5LwVuspGKu81qH6m6JFzXw4IAV2MZg0G7Lxy2AiyqjQMum+5p4
-	 rTPoLsc1kMjeKpWzXQjKB0qr2kl9RtG90qxiEjng=
+	b=aLfZk/E+IzuC61WwmHw/z99M9wST4ibOsO9k+y7hwQEvf0Bj7Vs+hB7UU+3lBMcqa
+	 gOfcewuRnHQ9hIB2y2/nOOA4mbp8uyrjYlVASmpRgcKObpV+tz72eWqIr8Yx0YEe3J
+	 z0pqHLWxdWlq/A+08qmpe9n+ZYU9JhAwNnnXfUpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 037/509] x86/mm: Fix __swp_entry_to_pte() for Xen PV guests
-Date: Tue, 25 Jul 2023 12:39:36 +0200
-Message-ID: <20230725104555.357556733@linuxfoundation.org>
+Subject: [PATCH 5.10 038/509] evm: Complete description of evm_inode_setattr()
+Date: Tue, 25 Jul 2023 12:39:37 +0200
+Message-ID: <20230725104555.408570068@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,45 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juergen Gross <jgross@suse.com>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-[ Upstream commit 0f88130e8a6fd185b0aeb5d8e286083735f2585a ]
+[ Upstream commit b1de86d4248b273cb12c4cd7d20c08d459519f7d ]
 
-Normally __swp_entry_to_pte() is never called with a value translating
-to a valid PTE. The only known exception is pte_swap_tests(), resulting
-in a WARN splat in Xen PV guests, as __pte_to_swp_entry() did
-translate the PFN of the valid PTE to a guest local PFN, while
-__swp_entry_to_pte() doesn't do the opposite translation.
+Add the description for missing parameters of evm_inode_setattr() to
+avoid the warning arising with W=n compile option.
 
-Fix that by using __pte() in __swp_entry_to_pte() instead of open
-coding the native variant of it.
-
-For correctness do the similar conversion for __swp_entry_to_pmd().
-
-Fixes: 05289402d717 ("mm/debug_vm_pgtable: add tests validating arch helpers for core MM features")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230306123259.12461-1-jgross@suse.com
+Fixes: 817b54aa45db ("evm: add evm_inode_setattr to prevent updating an invalid security.evm") # v3.2+
+Fixes: c1632a0f1120 ("fs: port ->setattr() to pass mnt_idmap") # v6.3+
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/pgtable_64.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ security/integrity/evm/evm_main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/x86/include/asm/pgtable_64.h b/arch/x86/include/asm/pgtable_64.h
-index 56d0399a0cd16..dd520b44e89cc 100644
---- a/arch/x86/include/asm/pgtable_64.h
-+++ b/arch/x86/include/asm/pgtable_64.h
-@@ -235,8 +235,8 @@ static inline void native_pgd_clear(pgd_t *pgd)
+diff --git a/security/integrity/evm/evm_main.c b/security/integrity/evm/evm_main.c
+index 0033364ac404f..8cfc49fa4df5b 100644
+--- a/security/integrity/evm/evm_main.c
++++ b/security/integrity/evm/evm_main.c
+@@ -472,7 +472,9 @@ void evm_inode_post_removexattr(struct dentry *dentry, const char *xattr_name)
  
- #define __pte_to_swp_entry(pte)		((swp_entry_t) { pte_val((pte)) })
- #define __pmd_to_swp_entry(pmd)		((swp_entry_t) { pmd_val((pmd)) })
--#define __swp_entry_to_pte(x)		((pte_t) { .pte = (x).val })
--#define __swp_entry_to_pmd(x)		((pmd_t) { .pmd = (x).val })
-+#define __swp_entry_to_pte(x)		(__pte((x).val))
-+#define __swp_entry_to_pmd(x)		(__pmd((x).val))
- 
- extern int kern_addr_valid(unsigned long addr);
- extern void cleanup_highmap(void);
+ /**
+  * evm_inode_setattr - prevent updating an invalid EVM extended attribute
++ * @idmap: idmap of the mount
+  * @dentry: pointer to the affected dentry
++ * @attr: iattr structure containing the new file attributes
+  *
+  * Permit update of file attributes when files have a valid EVM signature,
+  * except in the case of them having an immutable portable signature.
 -- 
 2.39.2
 
