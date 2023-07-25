@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBCDB1ED45
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:40:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D666C433C7;
-	Tue, 25 Jul 2023 11:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C7A1ED45
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:40:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE91C433C8;
+	Tue, 25 Jul 2023 11:40:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285213;
-	bh=I0zl0RXdqBsOg6TnVwLCWc8XiNdABBhigcYd33eG3bU=;
+	s=korg; t=1690285216;
+	bh=JYynCGBLEe4Ug42bxP50wLcemV4cfwa5sQSTxnbutck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WFqcCerI5moUsbTeRBXs0/O5AKHZWMB+14ISo28IF3eoETVunnc6akJaacBaDA9xz
-	 aK36tFVQf7Nsjnmpi8prbuFi99NXnQlpxKD3aA5JLqv3lkE2CMy6Xrj0SdhkIWI4Gh
-	 fI/KO+q00qC9901sITqEXuY2FVCdED8yTWSBNOaM=
+	b=w1AGcln2q+CF1wIQL+oH3Bp1q564oMzV0CGsyhHe8bL215Kx55uq/8uqiwu7yK+uh
+	 E0W6xXZ4jRk89mHTIMzYaeyjpQUFNS12kYQPWpXoHXFCEMkZS3Cog0UlkS/fuGW+fx
+	 sPCy7ToaE0iqX2O05U2bRci+6zHhbny7aMH4WJ4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinhong Zhu <jinhongzhu@hust.edu.cn>,
-	Dan Carpenter <error27@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 095/313] scsi: qedf: Fix NULL dereference in error handling
-Date: Tue, 25 Jul 2023 12:44:08 +0200
-Message-ID: <20230725104525.075415685@linuxfoundation.org>
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Ding Hui <dinghui@sangfor.com.cn>,
+	Sasha Levin <sashal@kernel.org>,
+	Zongquan Qin <qinzongquan@sangfor.com.cn>
+Subject: [PATCH 5.4 096/313] PCI/ASPM: Disable ASPM on MFD function removal to avoid use-after-free
+Date: Tue, 25 Jul 2023 12:44:09 +0200
+Message-ID: <20230725104525.122015703@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -36,45 +36,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jinhong Zhu <jinhongzhu@hust.edu.cn>
+From: Ding Hui <dinghui@sangfor.com.cn>
 
-[ Upstream commit f025312b089474a54e4859f3453771314d9e3d4f ]
+[ Upstream commit 456d8aa37d0f56fc9e985e812496e861dcd6f2f2 ]
 
-Smatch reported:
+Struct pcie_link_state->downstream is a pointer to the pci_dev of function
+0.  Previously we retained that pointer when removing function 0, and
+subsequent ASPM policy changes dereferenced it, resulting in a
+use-after-free warning from KASAN, e.g.:
 
-drivers/scsi/qedf/qedf_main.c:3056 qedf_alloc_global_queues()
-warn: missing unwind goto?
+  # echo 1 > /sys/bus/pci/devices/0000:03:00.0/remove
+  # echo powersave > /sys/module/pcie_aspm/parameters/policy
 
-At this point in the function, nothing has been allocated so we can return
-directly. In particular the "qedf->global_queues" have not been allocated
-so calling qedf_free_global_queues() will lead to a NULL dereference when
-we check if (!gl[i]) and "gl" is NULL.
+  BUG: KASAN: slab-use-after-free in pcie_config_aspm_link+0x42d/0x500
+  Call Trace:
+   kasan_report+0xae/0xe0
+   pcie_config_aspm_link+0x42d/0x500
+   pcie_aspm_set_policy+0x8e/0x1a0
+   param_attr_store+0x162/0x2c0
+   module_attr_store+0x3e/0x80
 
-Fixes: 61d8658b4a43 ("scsi: qedf: Add QLogic FastLinQ offload FCoE driver framework.")
-Signed-off-by: Jinhong Zhu <jinhongzhu@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230502140022.2852-1-jinhongzhu@hust.edu.cn
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+PCIe spec r6.0, sec 7.5.3.7, recommends that software program the same ASPM
+Control value in all functions of multi-function devices.
+
+Disable ASPM and free the pcie_link_state when any child function is
+removed so we can discard the dangling pcie_link_state->downstream pointer
+and maintain the same ASPM Control configuration for all functions.
+
+[bhelgaas: commit log and comment]
+Debugged-by: Zongquan Qin <qinzongquan@sangfor.com.cn>
+Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: b5a0a9b59c81 ("PCI/ASPM: Read and set up L1 substate capabilities")
+Link: https://lore.kernel.org/r/20230507034057.20970-1-dinghui@sangfor.com.cn
+Signed-off-by: Ding Hui <dinghui@sangfor.com.cn>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qedf/qedf_main.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/pci/pcie/aspm.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/scsi/qedf/qedf_main.c b/drivers/scsi/qedf/qedf_main.c
-index f864ef059d29e..858058f228191 100644
---- a/drivers/scsi/qedf/qedf_main.c
-+++ b/drivers/scsi/qedf/qedf_main.c
-@@ -2914,9 +2914,8 @@ static int qedf_alloc_global_queues(struct qedf_ctx *qedf)
- 	 * addresses of our queues
- 	 */
- 	if (!qedf->p_cpuq) {
--		status = -EINVAL;
- 		QEDF_ERR(&qedf->dbg_ctx, "p_cpuq is NULL.\n");
--		goto mem_alloc_failure;
-+		return -EINVAL;
- 	}
+diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+index 7624c71011c6e..d8d27b11b48c4 100644
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -991,21 +991,24 @@ void pcie_aspm_exit_link_state(struct pci_dev *pdev)
  
- 	qedf->global_queues = kzalloc((sizeof(struct global_queue *)
+ 	down_read(&pci_bus_sem);
+ 	mutex_lock(&aspm_lock);
+-	/*
+-	 * All PCIe functions are in one slot, remove one function will remove
+-	 * the whole slot, so just wait until we are the last function left.
+-	 */
+-	if (!list_empty(&parent->subordinate->devices))
+-		goto out;
+ 
+ 	link = parent->link_state;
+ 	root = link->root;
+ 	parent_link = link->parent;
+ 
+-	/* All functions are removed, so just disable ASPM for the link */
++	/*
++	 * link->downstream is a pointer to the pci_dev of function 0.  If
++	 * we remove that function, the pci_dev is about to be deallocated,
++	 * so we can't use link->downstream again.  Free the link state to
++	 * avoid this.
++	 *
++	 * If we're removing a non-0 function, it's possible we could
++	 * retain the link state, but PCIe r6.0, sec 7.5.3.7, recommends
++	 * programming the same ASPM Control value for all functions of
++	 * multi-function devices, so disable ASPM for all of them.
++	 */
+ 	pcie_config_aspm_link(link, 0);
+ 	list_del(&link->sibling);
+-	/* Clock PM is for endpoint device */
+ 	free_link_state(link);
+ 
+ 	/* Recheck latencies and configure upstream links */
+@@ -1013,7 +1016,7 @@ void pcie_aspm_exit_link_state(struct pci_dev *pdev)
+ 		pcie_update_aspm_capable(root);
+ 		pcie_config_aspm_path(parent_link);
+ 	}
+-out:
++
+ 	mutex_unlock(&aspm_lock);
+ 	up_read(&pci_bus_sem);
+ }
 -- 
 2.39.2
 
