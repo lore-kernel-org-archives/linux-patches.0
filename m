@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316DA1ED4D
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:41:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A529AC433C8;
-	Tue, 25 Jul 2023 11:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F391ED4D
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:42:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851DBC433C7;
+	Tue, 25 Jul 2023 11:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285317;
-	bh=ZVAjFBOIiZqTllOdsL2izGmL4Zv10JOIcoF7WTvg5tQ=;
+	s=korg; t=1690285319;
+	bh=wHcwFXoZIfsjldlBg353FN+1Xjd22G9gWveTdorJWIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wjz9Fdm+UlevjRWjAtK4mt6MsjopwuoUwBqpE0N30a6sH8CCA/PhoeRvxSPN36Pbi
-	 D3uuRxTatG51gz16jQ6QcZ9/XKPG6C5lmcf/Q1mRjLrfoMueDjAZtTvhvc5wI4MQ0j
-	 aKbqa8heuRxl5g2RdjdGsWyx4MwGxKD8rgFgnSow=
+	b=0JYkqFOPl7rEKBkPn5zera2eVO6aCglAyCtHQlIcrW+lrlWmk4gJ504ta96E1o6NS
+	 5zutU5qg8TiIa8cnYY1hc4Rd3W3dQshVY2qySO7jGarasJ1QLWvJJ41oCeR5D4gH1U
+	 MViw6or5YJS3n+rcgyoyPEpijjEbEJoEEhLFWbCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davide Tronchin <davide.tronchin.94@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.4 121/313] USB: serial: option: add LARA-R6 01B PIDs
-Date: Tue, 25 Jul 2023 12:44:34 +0200
-Message-ID: <20230725104526.248840272@linuxfoundation.org>
+	Ilya Maximets <i.maximets@ovn.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Magnus Karlsson <magnus.karlsson@intel.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 155/313] xsk: Honor SO_BINDTODEVICE on bind
+Date: Tue, 25 Jul 2023 12:45:08 +0200
+Message-ID: <20230725104527.684051510@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -34,65 +38,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Davide Tronchin <davide.tronchin.94@gmail.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-commit ffa5f7a3bf28c1306eef85d4056539c2d4b8eb09 upstream.
+[ Upstream commit f7306acec9aae9893d15e745c8791124d42ab10a ]
 
-The new LARA-R6 product variant identified by the "01B" string can be
-configured (by AT interface) in three different USB modes:
+Initial creation of an AF_XDP socket requires CAP_NET_RAW capability. A
+privileged process might create the socket and pass it to a non-privileged
+process for later use. However, that process will be able to bind the socket
+to any network interface. Even though it will not be able to receive any
+traffic without modification of the BPF map, the situation is not ideal.
 
-* Default mode (Vendor ID: 0x1546 Product ID: 0x1311) with 4 serial
-interfaces
+Sockets already have a mechanism that can be used to restrict what interface
+they can be attached to. That is SO_BINDTODEVICE.
 
-* RmNet mode (Vendor ID: 0x1546 Product ID: 0x1312) with 4 serial
-interfaces and 1 RmNet virtual network interface
+To change the SO_BINDTODEVICE binding the process will need CAP_NET_RAW.
 
-* CDC-ECM mode (Vendor ID: 0x1546 Product ID: 0x1313) with 4 serial
-interface and 1 CDC-ECM virtual network interface
-The first 4 interfaces of all the 3 USB configurations (default, RmNet,
-CDC-ECM) are the same.
+Make xsk_bind() honor the SO_BINDTODEVICE in order to allow safer workflow
+when non-privileged process is using AF_XDP.
 
-In default mode LARA-R6 01B exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parser/alternative functions
+The intended workflow is following:
 
-In RmNet mode LARA-R6 01B exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parser/alternative functions
-If 4: RMNET interface
+  1. First process creates a bare socket with socket(AF_XDP, ...).
+  2. First process loads the XSK program to the interface.
+  3. First process adds the socket fd to a BPF map.
+  4. First process ties socket fd to a particular interface using
+     SO_BINDTODEVICE.
+  5. First process sends socket fd to a second process.
+  6. Second process allocates UMEM.
+  7. Second process binds socket to the interface with bind(...).
+  8. Second process sends/receives the traffic.
 
-In CDC-ECM mode LARA-R6 01B exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parser/alternative functions
-If 4: CDC-ECM interface
+All the steps above are possible today if the first process is privileged
+and the second one has sufficient RLIMIT_MEMLOCK and no capabilities.
+However, the second process will be able to bind the socket to any interface
+it wants on step 7 and send traffic from it. With the proposed change, the
+second process will be able to bind the socket only to a specific interface
+chosen by the first process at step 4.
 
-Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
-Link: https://lore.kernel.org/r/20230622092921.12651-1-davide.tronchin.94@gmail.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 965a99098443 ("xsk: add support for bind for Rx")
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Link: https://lore.kernel.org/bpf/20230703175329.3259672-1-i.maximets@ovn.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ Documentation/networking/af_xdp.rst | 9 +++++++++
+ net/xdp/xsk.c                       | 5 +++++
+ 2 files changed, 14 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1151,6 +1151,10 @@ static const struct usb_device_id option
- 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90fa),
- 	  .driver_info = RSVD(3) },
- 	/* u-blox products */
-+	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1311) },	/* u-blox LARA-R6 01B */
-+	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1312),		/* u-blox LARA-R6 01B (RMNET) */
-+	  .driver_info = RSVD(4) },
-+	{ USB_DEVICE_INTERFACE_CLASS(UBLOX_VENDOR_ID, 0x1313, 0xff) },	/* u-blox LARA-R6 01B (ECM) */
- 	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1341) },	/* u-blox LARA-L6 */
- 	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1342),		/* u-blox LARA-L6 (RMNET) */
- 	  .driver_info = RSVD(4) },
+diff --git a/Documentation/networking/af_xdp.rst b/Documentation/networking/af_xdp.rst
+index 7a4caaaf3a179..09b3943b3b719 100644
+--- a/Documentation/networking/af_xdp.rst
++++ b/Documentation/networking/af_xdp.rst
+@@ -378,6 +378,15 @@ start N bytes into the buffer leaving the first N bytes for the
+ application to use. The final option is the flags field, but it will
+ be dealt with in separate sections for each UMEM flag.
+ 
++SO_BINDTODEVICE setsockopt
++--------------------------
++
++This is a generic SOL_SOCKET option that can be used to tie AF_XDP
++socket to a particular network interface.  It is useful when a socket
++is created by a privileged process and passed to a non-privileged one.
++Once the option is set, kernel will refuse attempts to bind that socket
++to a different interface.  Updating the value requires CAP_NET_RAW.
++
+ XDP_STATISTICS getsockopt
+ -------------------------
+ 
+diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+index 2bc0d6e3e124c..d04a2345bc3f5 100644
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -613,6 +613,7 @@ static int xsk_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
+ 	struct sock *sk = sock->sk;
+ 	struct xdp_sock *xs = xdp_sk(sk);
+ 	struct net_device *dev;
++	int bound_dev_if;
+ 	u32 flags, qid;
+ 	int err = 0;
+ 
+@@ -626,6 +627,10 @@ static int xsk_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
+ 		      XDP_USE_NEED_WAKEUP))
+ 		return -EINVAL;
+ 
++	bound_dev_if = READ_ONCE(sk->sk_bound_dev_if);
++	if (bound_dev_if && bound_dev_if != sxdp->sxdp_ifindex)
++		return -EINVAL;
++
+ 	rtnl_lock();
+ 	mutex_lock(&xs->mutex);
+ 	if (xs->state != XSK_READY) {
+-- 
+2.39.2
+
 
 
