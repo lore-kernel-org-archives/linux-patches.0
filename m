@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772401ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:45:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB155C433C7;
-	Tue, 25 Jul 2023 11:45:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373D81ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:45:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF64FC433C7;
+	Tue, 25 Jul 2023 11:45:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285512;
-	bh=vjp5p5UPpp1W96O3W95F5RADuW2UnS885gNcHt7Emao=;
+	s=korg; t=1690285515;
+	bh=nirz7FXKoKjxlS3WIxC3bqKjLVrNJwRBEMB5RIA1Qeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nhpIywf2MyowRwm28eeOWRBieIzHGGFK+kz+c6IHBdjrzVDVcD2yaKBklNiIB+n7Y
-	 rZ+KBG8O51OMz5cW80Tk5B+XPvsIawiA+tR5ODM0awdX8JB9sYKa0MyqRt+2xDpe8D
-	 2j2TknuEaYRpCTJXKhVS7oNwpstCBa8m8XuVhyV4=
+	b=GAvfBJl/xbcaVSuXlHUURvu/KH8lJLFVUERlx28JtO+5niOCdTu2LeA0td90I7fPT
+	 fvrpHqYDNeXueL2lFQc2YAaI7XPlysYQWkNy9E/v+nnOEX+CeiViBOIc/MOgZmQ3JK
+	 1VwuT/DsjYT5XoA31cA9yh5Rz44wWFbD7P4SaiHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 232/313] net: bcmgenet: Ensure MDIO unregistration has clocks enabled
-Date: Tue, 25 Jul 2023 12:46:25 +0200
-Message-ID: <20230725104531.080071102@linuxfoundation.org>
+	Joel Stanley <joel@jms.id.au>,
+	Naveen N Rao <naveen@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 5.4 233/313] powerpc: Fail build if using recordmcount with binutils v2.37
+Date: Tue, 25 Jul 2023 12:46:26 +0200
+Message-ID: <20230725104531.128093279@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,39 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Naveen N Rao <naveen@kernel.org>
 
-commit 1b5ea7ffb7a3bdfffb4b7f40ce0d20a3372ee405 upstream.
+commit 25ea739ea1d4d3de41acc4f4eb2d1a97eee0eb75 upstream.
 
-With support for Ethernet PHY LEDs having been added, while
-unregistering a MDIO bus and its child device liks PHYs there may be
-"late" accesses to the MDIO bus. One typical use case is setting the PHY
-LEDs brightness to OFF for instance.
+binutils v2.37 drops unused section symbols, which prevents recordmcount
+from capturing mcount locations in sections that have no non-weak
+symbols. This results in a build failure with a message such as:
+	Cannot find symbol for section 12: .text.perf_callchain_kernel.
+	kernel/events/callchain.o: failed
 
-We need to ensure that the MDIO bus controller remains entirely
-functional since it runs off the main GENET adapter clock.
+The change to binutils was reverted for v2.38, so this behavior is
+specific to binutils v2.37:
+https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=c09c8b42021180eee9495bd50d8b35e683d3901b
+
+Objtool is able to cope with such sections, so this issue is specific to
+recordmcount.
+
+Fail the build and print a warning if binutils v2.37 is detected and if
+we are using recordmcount.
 
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20230617155500.4005881-1-andrew@lunn.ch/
-Fixes: 9a4e79697009 ("net: bcmgenet: utilize generic Broadcom UniMAC MDIO controller driver")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20230622103107.1760280-1-florian.fainelli@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Suggested-by: Joel Stanley <joel@jms.id.au>
+Signed-off-by: Naveen N Rao <naveen@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230530061436.56925-1-naveen@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmmii.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/powerpc/Makefile |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/net/ethernet/broadcom/genet/bcmmii.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmmii.c
-@@ -618,5 +618,7 @@ void bcmgenet_mii_exit(struct net_device
- 	if (of_phy_is_fixed_link(dn))
- 		of_phy_deregister_fixed_link(dn);
- 	of_node_put(priv->phy_dn);
-+	clk_prepare_enable(priv->clk);
- 	platform_device_unregister(priv->mii_pdev);
-+	clk_disable_unprepare(priv->clk);
- }
+--- a/arch/powerpc/Makefile
++++ b/arch/powerpc/Makefile
+@@ -425,3 +425,11 @@ checkbin:
+ 		echo -n '*** Please use a different binutils version.' ; \
+ 		false ; \
+ 	fi
++	@if test "x${CONFIG_FTRACE_MCOUNT_USE_RECORDMCOUNT}" = "xy" -a \
++		"x${CONFIG_LD_IS_BFD}" = "xy" -a \
++		"${CONFIG_LD_VERSION}" = "23700" ; then \
++		echo -n '*** binutils 2.37 drops unused section symbols, which recordmcount ' ; \
++		echo 'is unable to handle.' ; \
++		echo '*** Please use a different binutils version.' ; \
++		false ; \
++	fi
 
 
