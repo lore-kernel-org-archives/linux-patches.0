@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D888B1ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:48:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58510C433C9;
-	Tue, 25 Jul 2023 11:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3DF1ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:48:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB3FC433C8;
+	Tue, 25 Jul 2023 11:48:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285720;
-	bh=PI5TGnVN60cBs0dBiJjBJZuxN5Vc9ct+EPG8sQ50Q+o=;
+	s=korg; t=1690285723;
+	bh=Zxwhz4DqUbHlvRCb+pKsJG8AeKP5d++LP2AR6G+gdnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gk4R2IWSv4hYB97fIh44qLD9SxIwhkTa1AniyVn7UrVKegbBkFInX0onY5bmAgrTR
-	 lgFrlMXYBzcRp1Dqpr+FtRMhNHDd76MT2bex1HpmqYZqlQ1ofw7zvDjv1ULzfv3esV
-	 NCaYw9jDAWb72YQPU8Sz8f1ggarIdGki6bHVwNcM=
+	b=vZXQM4X3a9T+qqwRNKrNFdgzK7yGtYdbhjKn3Mkj5NIvCnR0cM5ju4sZDoCcVeJaY
+	 btpXMkM26UrTgpI6pMY1aETql+IR2w+YPrf7eu9HAvHIUtQdOmm/lXCgI573+cdktb
+	 lN77Ya/LaWArGIek0XFi/nG3BdSoXLw3SKf8xNwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 306/313] netfilter: nf_tables: cant schedule in nft_chain_validate
-Date: Tue, 25 Jul 2023 12:47:39 +0200
-Message-ID: <20230725104534.379315305@linuxfoundation.org>
+Subject: [PATCH 5.4 307/313] tcp: annotate data-races around tp->tcp_tx_delay
+Date: Tue, 25 Jul 2023 12:47:40 +0200
+Message-ID: <20230725104534.425157490@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -34,62 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 314c82841602a111c04a7210c21dc77e0d560242 ]
+[ Upstream commit 348b81b68b13ebd489a3e6a46aa1c384c731c919 ]
 
-Can be called via nft set element list iteration, which may acquire
-rcu and/or bh read lock (depends on set type).
+do_tcp_getsockopt() reads tp->tcp_tx_delay while another cpu
+might change its value.
 
-BUG: sleeping function called from invalid context at net/netfilter/nf_tables_api.c:3353
-in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 1232, name: nft
-preempt_count: 0, expected: 0
-RCU nest depth: 1, expected: 0
-2 locks held by nft/1232:
- #0: ffff8881180e3ea8 (&nft_net->commit_mutex){+.+.}-{3:3}, at: nf_tables_valid_genid
- #1: ffffffff83f5f540 (rcu_read_lock){....}-{1:2}, at: rcu_lock_acquire
-Call Trace:
- nft_chain_validate
- nft_lookup_validate_setelem
- nft_pipapo_walk
- nft_lookup_validate
- nft_chain_validate
- nft_immediate_validate
- nft_chain_validate
- nf_tables_validate
- nf_tables_abort
-
-No choice but to move it to nf_tables_validate().
-
-Fixes: 81ea01066741 ("netfilter: nf_tables: add rescheduling points during loop detection walks")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: a842fe1425cb ("tcp: add optional per socket transmit delay")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230719212857.3943972-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 4 ++--
+ net/ipv4/tcp.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index a64aa888751cb..7d22bc8aa2787 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -2736,8 +2736,6 @@ int nft_chain_validate(const struct nft_ctx *ctx, const struct nft_chain *chain)
- 			if (err < 0)
- 				return err;
- 		}
--
--		cond_resched();
- 	}
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index fdf2ddc4864df..e33abcff56080 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -3177,7 +3177,7 @@ static int do_tcp_setsockopt(struct sock *sk, int level,
+ 	case TCP_TX_DELAY:
+ 		if (val)
+ 			tcp_enable_tx_delay();
+-		tp->tcp_tx_delay = val;
++		WRITE_ONCE(tp->tcp_tx_delay, val);
+ 		break;
+ 	default:
+ 		err = -ENOPROTOOPT;
+@@ -3634,7 +3634,7 @@ static int do_tcp_getsockopt(struct sock *sk, int level,
+ 		break;
  
- 	return 0;
-@@ -2761,6 +2759,8 @@ static int nft_table_validate(struct net *net, const struct nft_table *table)
- 		err = nft_chain_validate(&ctx, chain);
- 		if (err < 0)
- 			return err;
-+
-+		cond_resched();
- 	}
+ 	case TCP_TX_DELAY:
+-		val = tp->tcp_tx_delay;
++		val = READ_ONCE(tp->tcp_tx_delay);
+ 		break;
  
- 	return 0;
+ 	case TCP_TIMESTAMP:
 -- 
 2.39.2
 
