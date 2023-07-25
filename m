@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F46D1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:23:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A600DC433C8;
-	Tue, 25 Jul 2023 11:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218EF1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:23:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97082C433C7;
+	Tue, 25 Jul 2023 11:23:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284185;
-	bh=TmFCbMQWgCEViApQTymdYPsJYzjQtTcf9RdAopETO+g=;
+	s=korg; t=1690284188;
+	bh=osTU8VaMeeAPJAOvL23dF96TpX1KkjF6/vMDUWUI52U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M1DbMXWeh9RctxK1mDKYsbkXualvCkOhp/Mrnj9EsGAp2q+WXPNcf8ygwyZWUJN/6
-	 fdTRtT6Z0BsJie2j55Pv7LF76YYJykCb7hTllBz6QEF9tDMm2XICeXlAl3FLZZSV7V
-	 8psLM8a+bVE3DR40bPcQbiNujQzn3a8+QgnP7xog=
+	b=aSl+qVIqRwW04OsFc1+WekmV4EndL7F5+SU5mN5pJwvyqUqty+ClwqDbl4bcWPJpx
+	 Zii7PqSERi3kRpQN4Ku2VT3DWHzGfaAxUsLNObr0mHgPCW6T+ABP9I5PmBQ2svH7c0
+	 RGHTOFMmUIqeKv8kATOoR3J309G58/fe6RKYQ/cQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Prashanth K <quic_prashk@quicinc.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Sunil Goutham <sgoutham@marvell.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 248/509] Revert "usb: common: usb-conn-gpio: Set last role to unknown before initial detection"
-Date: Tue, 25 Jul 2023 12:43:07 +0200
-Message-ID: <20230725104605.101523538@linuxfoundation.org>
+Subject: [PATCH 5.10 266/509] octeontx2-af: Fix mapping for NIX block from CGX connection
+Date: Tue, 25 Jul 2023 12:43:25 +0200
+Message-ID: <20230725104605.929616666@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,95 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit df49f2a0ac4a34c0cb4b5c233fcfa0add644c43c ]
+[ Upstream commit 2e7bc57b976bb016c6569a54d95c1b8d88f9450a ]
 
-This reverts commit edd60d24bd858cef165274e4cd6cab43bdc58d15.
+Firmware configures NIX block mapping for all MAC blocks.
+The current implementation reads the configuration and
+creates the mapping between RVU PF  and NIX blocks. But
+this configuration is only valid for silicons that support
+multiple blocks. For all other silicons, all MAC blocks
+map to NIX0.
 
-Heikki reports that this should not be a global flag just to work around
-one broken driver and should be fixed differently, so revert it.
+This patch corrects the mapping by adding a check for the same.
 
-Reported-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Fixes: edd60d24bd85 ("usb: common: usb-conn-gpio: Set last role to unknown before initial detection")
-Link: https://lore.kernel.org/r/ZImE4L3YgABnCIsP@kuha.fi.intel.com
-Cc: Prashanth K <quic_prashk@quicinc.com>
-Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c5a73b632b90 ("octeontx2-af: Map NIX block from CGX connection")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/cdns3/core.c                       | 2 --
- drivers/usb/common/usb-conn-gpio.c             | 3 ---
- drivers/usb/musb/jz4740.c                      | 2 --
- drivers/usb/roles/intel-xhci-usb-role-switch.c | 2 --
- include/linux/usb/role.h                       | 1 -
- 5 files changed, 10 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu.h     | 11 +++++++++++
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c |  2 +-
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/cdns3/core.c b/drivers/usb/cdns3/core.c
-index e5fe640b2bb01..8fe7420de033d 100644
---- a/drivers/usb/cdns3/core.c
-+++ b/drivers/usb/cdns3/core.c
-@@ -243,8 +243,6 @@ static enum usb_role cdns3_hw_role_state_machine(struct cdns3 *cdns)
- 		if (!vbus)
- 			role = USB_ROLE_NONE;
- 		break;
--	default:
--		break;
- 	}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+index fc6d785b98ddd..ec9a291e866c7 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+@@ -20,6 +20,7 @@
+ #define	PCI_DEVID_OCTEONTX2_RVU_AF		0xA065
  
- 	dev_dbg(cdns->dev, "role %d -> %d\n", cdns->role, role);
-diff --git a/drivers/usb/common/usb-conn-gpio.c b/drivers/usb/common/usb-conn-gpio.c
-index 5754e467c16a8..c9545a4eff664 100644
---- a/drivers/usb/common/usb-conn-gpio.c
-+++ b/drivers/usb/common/usb-conn-gpio.c
-@@ -276,9 +276,6 @@ static int usb_conn_probe(struct platform_device *pdev)
+ /* Subsystem Device ID */
++#define PCI_SUBSYS_DEVID_98XX                  0xB100
+ #define PCI_SUBSYS_DEVID_96XX                  0xB200
  
- 	platform_set_drvdata(pdev, info);
+ /* PCI BAR nos */
+@@ -403,6 +404,16 @@ static inline bool is_rvu_96xx_B0(struct rvu *rvu)
+ 		(pdev->subsystem_device == PCI_SUBSYS_DEVID_96XX);
+ }
  
--	/* Set last role to unknown before performing the initial detection */
--	info->last_role = USB_ROLE_UNKNOWN;
--
- 	/* Perform initial detection */
- 	usb_conn_queue_dwork(info, 0);
++static inline bool is_rvu_supports_nix1(struct rvu *rvu)
++{
++	struct pci_dev *pdev = rvu->pdev;
++
++	if (pdev->subsystem_device == PCI_SUBSYS_DEVID_98XX)
++		return true;
++
++	return false;
++}
++
+ /* Function Prototypes
+  * RVU
+  */
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
+index 6c6b411e78fd8..83743e15326d7 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
+@@ -84,7 +84,7 @@ static void rvu_map_cgx_nix_block(struct rvu *rvu, int pf,
+ 	p2x = cgx_lmac_get_p2x(cgx_id, lmac_id);
+ 	/* Firmware sets P2X_SELECT as either NIX0 or NIX1 */
+ 	pfvf->nix_blkaddr = BLKADDR_NIX0;
+-	if (p2x == CMR_P2X_SEL_NIX1)
++	if (is_rvu_supports_nix1(rvu) && p2x == CMR_P2X_SEL_NIX1)
+ 		pfvf->nix_blkaddr = BLKADDR_NIX1;
+ }
  
-diff --git a/drivers/usb/musb/jz4740.c b/drivers/usb/musb/jz4740.c
-index f283629091ec4..c4fe1f4cd17a3 100644
---- a/drivers/usb/musb/jz4740.c
-+++ b/drivers/usb/musb/jz4740.c
-@@ -91,8 +91,6 @@ static int jz4740_musb_role_switch_set(struct usb_role_switch *sw,
- 	case USB_ROLE_HOST:
- 		atomic_notifier_call_chain(&phy->notifier, USB_EVENT_ID, phy);
- 		break;
--	default:
--		break;
- 	}
- 
- 	return 0;
-diff --git a/drivers/usb/roles/intel-xhci-usb-role-switch.c b/drivers/usb/roles/intel-xhci-usb-role-switch.c
-index 4d6a3dd06e011..5c96e929acea0 100644
---- a/drivers/usb/roles/intel-xhci-usb-role-switch.c
-+++ b/drivers/usb/roles/intel-xhci-usb-role-switch.c
-@@ -97,8 +97,6 @@ static int intel_xhci_usb_set_role(struct usb_role_switch *sw,
- 		val |= SW_VBUS_VALID;
- 		drd_config = DRD_CONFIG_STATIC_DEVICE;
- 		break;
--	default:
--		break;
- 	}
- 	val |= SW_IDPIN_EN;
- 	if (data->enable_sw_switch) {
-diff --git a/include/linux/usb/role.h b/include/linux/usb/role.h
-index aecfce46d3544..b9ccaeb8a4aef 100644
---- a/include/linux/usb/role.h
-+++ b/include/linux/usb/role.h
-@@ -11,7 +11,6 @@ enum usb_role {
- 	USB_ROLE_NONE,
- 	USB_ROLE_HOST,
- 	USB_ROLE_DEVICE,
--	USB_ROLE_UNKNOWN,
- };
- 
- typedef int (*usb_role_switch_set_t)(struct usb_role_switch *sw,
 -- 
 2.39.2
 
