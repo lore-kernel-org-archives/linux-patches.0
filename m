@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7711ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:47:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BEF2C433C8;
-	Tue, 25 Jul 2023 11:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7BC1ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:47:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C2DC433C7;
+	Tue, 25 Jul 2023 11:47:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285667;
-	bh=OW8ZtS95zmE7n/YZvDijcnYIe+919f3l26uxfQkzhhA=;
+	s=korg; t=1690285670;
+	bh=6vvyRgdHC2V15qlgNfNBntPyk86AxBSn2DGRNCnUqkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iWmMn0ozQ5fe8Rbzx5WB6HRzyY/gq678S7ic0S9hdUz9KRHKQegUhhWebMnKw7rqX
-	 kEK69fQqT35tgpRyyJE5lAmPHqzmtq+0CEjalZMQana40+N/ixSHR+BB+et6/H9ccx
-	 3YDgIVsNi8AeJlOdME3ENEij7qpTvECvV/VEqbI0=
+	b=wk4GCzKexIscK8Wz63UKeOW2srEK5Oo1uEGRN1HYZwLt0j+qutLaU+6LVrweUEPsy
+	 LQjiSWi5MKPgXHY8d0kNAt5d+GjgSpp2cI8Yfww7++6zRvvIXF4ekwIphDjZs2kC4l
+	 TTm+jwq/NAoGg4twSbup+ncZ+9RAIs4JfgmA6Wfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.4 258/313] hwrng: imx-rngc - fix the timeout for init and self check
-Date: Tue, 25 Jul 2023 12:46:51 +0200
-Message-ID: <20230725104532.220978691@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>
+Subject: [PATCH 5.4 249/313] PCI: rockchip: Set address alignment for endpoint mode
+Date: Tue, 25 Jul 2023 12:46:42 +0200
+Message-ID: <20230725104531.844643975@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -34,45 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit d744ae7477190967a3ddc289e2cd4ae59e8b1237 upstream.
+commit 7e6689b34a815bd379dfdbe9855d36f395ef056c upstream.
 
-Fix the timeout that is used for the initialisation and for the self
-test. wait_for_completion_timeout expects a timeout in jiffies, but
-RNGC_TIMEOUT is in milliseconds. Call msecs_to_jiffies to do the
-conversion.
+The address translation unit of the rockchip EP controller does not use
+the lower 8 bits of a PCIe-space address to map local memory. Thus we
+must set the align feature field to 256 to let the user know about this
+constraint.
 
+Link: https://lore.kernel.org/r/20230418074700.1083505-12-rick.wertenbroek@gmail.com
+Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: 1d5449445bd0 ("hwrng: mx-rngc - add a driver for Freescale RNGC")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/hw_random/imx-rngc.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/pci/controller/pcie-rockchip-ep.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/char/hw_random/imx-rngc.c
-+++ b/drivers/char/hw_random/imx-rngc.c
-@@ -99,7 +99,7 @@ static int imx_rngc_self_test(struct imx
- 	cmd = readl(rngc->base + RNGC_COMMAND);
- 	writel(cmd | RNGC_CMD_SELF_TEST, rngc->base + RNGC_COMMAND);
+--- a/drivers/pci/controller/pcie-rockchip-ep.c
++++ b/drivers/pci/controller/pcie-rockchip-ep.c
+@@ -484,6 +484,7 @@ static const struct pci_epc_features roc
+ 	.linkup_notifier = false,
+ 	.msi_capable = true,
+ 	.msix_capable = false,
++	.align = 256,
+ };
  
--	ret = wait_for_completion_timeout(&rngc->rng_op_done, RNGC_TIMEOUT);
-+	ret = wait_for_completion_timeout(&rngc->rng_op_done, msecs_to_jiffies(RNGC_TIMEOUT));
- 	if (!ret) {
- 		imx_rngc_irq_mask_clear(rngc);
- 		return -ETIMEDOUT;
-@@ -182,9 +182,7 @@ static int imx_rngc_init(struct hwrng *r
- 		cmd = readl(rngc->base + RNGC_COMMAND);
- 		writel(cmd | RNGC_CMD_SEED, rngc->base + RNGC_COMMAND);
- 
--		ret = wait_for_completion_timeout(&rngc->rng_op_done,
--				RNGC_TIMEOUT);
--
-+		ret = wait_for_completion_timeout(&rngc->rng_op_done, msecs_to_jiffies(RNGC_TIMEOUT));
- 		if (!ret) {
- 			imx_rngc_irq_mask_clear(rngc);
- 			return -ETIMEDOUT;
+ static const struct pci_epc_features*
 
 
