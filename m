@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B2E15ACF
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:02:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE27C433C7;
-	Tue, 25 Jul 2023 11:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D734F15ACF
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:02:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58068C433C8;
+	Tue, 25 Jul 2023 11:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282941;
-	bh=QCldKSRCuUDGHPV/X+YuHqMghAyLd4JfvxS3WWOupJw=;
+	s=korg; t=1690282943;
+	bh=tyVYMwMumKtaqlIMvtr5hfSYyjDLh+shq2qE6IxNkEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BCPeKmmPpVktgsqKVgU0rXFBE+kkGhK2YAJ9QCVn8rb0YG4O2AbBrOPcydfAg8Wxv
-	 N6xz8gAqT16yfk9q1AMKBxjJzeDyB3watmpwcGSmppfSIagrgxzGNadh7Of7JhnLEV
-	 AXL3vVBdTm9lxhkliss4bMeJsiAVbqRI3o9Y93Kk=
+	b=jrM6etMA6p9Uix8sCUZqtyRaiFm/2wch8MC9WDrSnaex09OmTF4oJwhsFsFaicMlt
+	 zYU0WmYTxHC8f+HLbDINOxyox8uwmJfCjW1i0BCPIIdWj+ad+hYnoBtjUeH0zHUKKq
+	 7ellZ9am7jeo/0qaH7Af+Qe0c3EvYyvHv7oq2cBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Chen <chenhao418@huawei.com>,
-	kernel test robot <lkp@intel.com>,
-	Hao Lan <lanhao@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 081/183] net: hns3: fix strncpy() not using dest-buf length as length issue
-Date: Tue, 25 Jul 2023 12:45:09 +0200
-Message-ID: <20230725104510.887994193@linuxfoundation.org>
+Subject: [PATCH 6.1 082/183] ASoC: amd: acp: fix for invalid dai id handling in acp_get_byte_count()
+Date: Tue, 25 Jul 2023 12:45:10 +0200
+Message-ID: <20230725104510.917945316@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -37,138 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hao Chen <chenhao418@huawei.com>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit 1cf3d5567f273a8746d1bade00633a93204f80f0 ]
+[ Upstream commit 85aeab362201cf52c34cd429e4f6c75a0b42f9a3 ]
 
-Now, strncpy() in hns3_dbg_fill_content() use src-length as copy-length,
-it may result in dest-buf overflow.
+For invalid dai id, instead of returning -EINVAL
+return bytes count as zero in acp_get_byte_count() function.
 
-This patch is to fix intel compile warning for csky-linux-gcc (GCC) 12.1.0
-compiler.
+Fixes: 623621a9f9e1 ("ASoC: amd: Add common framework to support I2S on ACP SOC")
 
-The warning reports as below:
-
-hclge_debugfs.c:92:25: warning: 'strncpy' specified bound depends on
-the length of the source argument [-Wstringop-truncation]
-
-strncpy(pos, items[i].name, strlen(items[i].name));
-
-hclge_debugfs.c:90:25: warning: 'strncpy' output truncated before
-terminating nul copying as many bytes from a string as its length
-[-Wstringop-truncation]
-
-strncpy(pos, result[i], strlen(result[i]));
-
-strncpy() use src-length as copy-length, it may result in
-dest-buf overflow.
-
-So,this patch add some values check to avoid this issue.
-
-Signed-off-by: Hao Chen <chenhao418@huawei.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/lkml/202207170606.7WtHs9yS-lkp@intel.com/T/
-Signed-off-by: Hao Lan <lanhao@huawei.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://lore.kernel.org/r/20230626105356.2580125-6-Vijendar.Mukunda@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/hisilicon/hns3/hns3_debugfs.c    | 31 ++++++++++++++-----
- .../hisilicon/hns3/hns3pf/hclge_debugfs.c     | 29 ++++++++++++++---
- 2 files changed, 48 insertions(+), 12 deletions(-)
+ sound/soc/amd/acp/amd.h | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
-index bcccd82a2620f..f6ededec5a4fa 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
-@@ -435,19 +435,36 @@ static void hns3_dbg_fill_content(char *content, u16 len,
- 				  const struct hns3_dbg_item *items,
- 				  const char **result, u16 size)
+diff --git a/sound/soc/amd/acp/amd.h b/sound/soc/amd/acp/amd.h
+index 5f2119f422715..12a176a50fd6e 100644
+--- a/sound/soc/amd/acp/amd.h
++++ b/sound/soc/amd/acp/amd.h
+@@ -173,7 +173,7 @@ int snd_amd_acp_find_config(struct pci_dev *pci);
+ 
+ static inline u64 acp_get_byte_count(struct acp_dev_data *adata, int dai_id, int direction)
  {
-+#define HNS3_DBG_LINE_END_LEN	2
- 	char *pos = content;
-+	u16 item_len;
- 	u16 i;
+-	u64 byte_count, low = 0, high = 0;
++	u64 byte_count = 0, low = 0, high = 0;
  
-+	if (!len) {
-+		return;
-+	} else if (len <= HNS3_DBG_LINE_END_LEN) {
-+		*pos++ = '\0';
-+		return;
-+	}
-+
- 	memset(content, ' ', len);
--	for (i = 0; i < size; i++) {
--		if (result)
--			strncpy(pos, result[i], strlen(result[i]));
--		else
--			strncpy(pos, items[i].name, strlen(items[i].name));
-+	len -= HNS3_DBG_LINE_END_LEN;
- 
--		pos += strlen(items[i].name) + items[i].interval;
-+	for (i = 0; i < size; i++) {
-+		item_len = strlen(items[i].name) + items[i].interval;
-+		if (len < item_len)
-+			break;
-+
-+		if (result) {
-+			if (item_len < strlen(result[i]))
-+				break;
-+			strscpy(pos, result[i], strlen(result[i]));
-+		} else {
-+			strscpy(pos, items[i].name, strlen(items[i].name));
-+		}
-+		pos += item_len;
-+		len -= item_len;
+ 	if (direction == SNDRV_PCM_STREAM_PLAYBACK) {
+ 		switch (dai_id) {
+@@ -191,7 +191,7 @@ static inline u64 acp_get_byte_count(struct acp_dev_data *adata, int dai_id, int
+ 			break;
+ 		default:
+ 			dev_err(adata->dev, "Invalid dai id %x\n", dai_id);
+-			return -EINVAL;
++			goto POINTER_RETURN_BYTES;
+ 		}
+ 	} else {
+ 		switch (dai_id) {
+@@ -213,12 +213,13 @@ static inline u64 acp_get_byte_count(struct acp_dev_data *adata, int dai_id, int
+ 			break;
+ 		default:
+ 			dev_err(adata->dev, "Invalid dai id %x\n", dai_id);
+-			return -EINVAL;
++			goto POINTER_RETURN_BYTES;
+ 		}
  	}
--
- 	*pos++ = '\n';
- 	*pos++ = '\0';
+ 	/* Get 64 bit value from two 32 bit registers */
+ 	byte_count = (high << 32) | low;
+ 
++POINTER_RETURN_BYTES:
+ 	return byte_count;
  }
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
-index 142415c84c6b2..0ebc21401b7c2 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_debugfs.c
-@@ -87,16 +87,35 @@ static void hclge_dbg_fill_content(char *content, u16 len,
- 				   const struct hclge_dbg_item *items,
- 				   const char **result, u16 size)
- {
-+#define HCLGE_DBG_LINE_END_LEN	2
- 	char *pos = content;
-+	u16 item_len;
- 	u16 i;
  
-+	if (!len) {
-+		return;
-+	} else if (len <= HCLGE_DBG_LINE_END_LEN) {
-+		*pos++ = '\0';
-+		return;
-+	}
-+
- 	memset(content, ' ', len);
-+	len -= HCLGE_DBG_LINE_END_LEN;
-+
- 	for (i = 0; i < size; i++) {
--		if (result)
--			strncpy(pos, result[i], strlen(result[i]));
--		else
--			strncpy(pos, items[i].name, strlen(items[i].name));
--		pos += strlen(items[i].name) + items[i].interval;
-+		item_len = strlen(items[i].name) + items[i].interval;
-+		if (len < item_len)
-+			break;
-+
-+		if (result) {
-+			if (item_len < strlen(result[i]))
-+				break;
-+			strscpy(pos, result[i], strlen(result[i]));
-+		} else {
-+			strscpy(pos, items[i].name, strlen(items[i].name));
-+		}
-+		pos += item_len;
-+		len -= item_len;
- 	}
- 	*pos++ = '\n';
- 	*pos++ = '\0';
 -- 
 2.39.2
 
