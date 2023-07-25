@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9714B1EA9B
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:12:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B4EC433CA;
-	Tue, 25 Jul 2023 11:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967121EA9B
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:12:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3652C433C7;
+	Tue, 25 Jul 2023 11:12:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283539;
-	bh=JmpoO+4C+3E11uQ5W0EvR0jIWNjIfDet1IxcZCpKBRE=;
+	s=korg; t=1690283542;
+	bh=wkeDdcXbogi2PVwQ3zwJ5ZU08TrckCG3xlMI6K/RKAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PRsnDPiDzFd6X5/gRG77IpDPi9jdnEFKI5YrWF/8bQVgAzpXVo6lMXv4CwK5YzLcm
-	 pzGTt86eJ1MHZieeQpKRZ6vKbGEZeZfSzkwpneUHPaGLEG/isGj0h8+8lX/Bah5EG+
-	 qBtBw1sdVfReqMaMdokihF5V7Wjhgs92LtS1QkYA=
+	b=vS1ho8gBvTRFbOCDJ8pmEGu8O4sG+fZhr34fBTHzZP9VXtPaPnUDYP5vpSgvo/DgD
+	 KJwWVvGV8z3Jhd9fdIMfMDrMDknej+V4yvdY+wtFXtkRYbtz7CZrD66mJnFkhx0LqU
+	 Jg2ILXCn9BSwxwFPyKFIT+r8zfg0mXc8KMuu+G3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geoff Blake <blakgeof@amazon.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 026/509] perf/arm-cmn: Fix DTC reset
-Date: Tue, 25 Jul 2023 12:39:25 +0200
-Message-ID: <20230725104554.841928649@linuxfoundation.org>
+Subject: [PATCH 5.10 035/509] rcu/rcuscale: Stop kfree_scale_thread thread(s) after unloading rcuscale
+Date: Tue, 25 Jul 2023 12:39:34 +0200
+Message-ID: <20230725104555.255769720@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,56 +37,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit 71746c995cac92fcf6a65661b51211cf2009d7f0 ]
+[ Upstream commit 23fc8df26dead16687ae6eb47b0561a4a832e2f6 ]
 
-It turns out that my naive DTC reset logic fails to work as intended,
-since, after checking with the hardware designers, the PMU actually
-needs to be fully enabled in order to correctly clear any pending
-overflows. Therefore, invert the sequence to start with turning on both
-enables so that we can reliably get the DTCs into a known state, then
-moving to our normal counters-stopped state from there. Since all the
-DTM counters have already been unpaired during the initial discovery
-pass, we just need to additionally reset the cycle counters to ensure
-that no other unexpected overflows occur during this period.
+Running the 'kfree_rcu_test' test case [1] results in a splat [2].
+The root cause is the kfree_scale_thread thread(s) continue running
+after unloading the rcuscale module.  This commit fixes that isue by
+invoking kfree_scale_cleanup() from rcu_scale_cleanup() when removing
+the rcuscale module.
 
-Fixes: 0ba64770a2f2 ("perf: Add Arm CMN-600 PMU driver")
-Reported-by: Geoff Blake <blakgeof@amazon.com>
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/0ea4559261ea394f827c9aee5168c77a60aaee03.1684946389.git.robin.murphy@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+[1] modprobe rcuscale kfree_rcu_test=1
+    // After some time
+    rmmod rcuscale
+    rmmod torture
+
+[2] BUG: unable to handle page fault for address: ffffffffc0601a87
+    #PF: supervisor instruction fetch in kernel mode
+    #PF: error_code(0x0010) - not-present page
+    PGD 11de4f067 P4D 11de4f067 PUD 11de51067 PMD 112f4d067 PTE 0
+    Oops: 0010 [#1] PREEMPT SMP NOPTI
+    CPU: 1 PID: 1798 Comm: kfree_scale_thr Not tainted 6.3.0-rc1-rcu+ #1
+    Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 0.0.0 02/06/2015
+    RIP: 0010:0xffffffffc0601a87
+    Code: Unable to access opcode bytes at 0xffffffffc0601a5d.
+    RSP: 0018:ffffb25bc2e57e18 EFLAGS: 00010297
+    RAX: 0000000000000000 RBX: ffffffffc061f0b6 RCX: 0000000000000000
+    RDX: 0000000000000000 RSI: ffffffff962fd0de RDI: ffffffff962fd0de
+    RBP: ffffb25bc2e57ea8 R08: 0000000000000000 R09: 0000000000000000
+    R10: 0000000000000001 R11: 0000000000000001 R12: 0000000000000000
+    R13: 0000000000000000 R14: 000000000000000a R15: 00000000001c1dbe
+    FS:  0000000000000000(0000) GS:ffff921fa2200000(0000) knlGS:0000000000000000
+    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    CR2: ffffffffc0601a5d CR3: 000000011de4c006 CR4: 0000000000370ee0
+    DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+    DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+    Call Trace:
+     <TASK>
+     ? kvfree_call_rcu+0xf0/0x3a0
+     ? kthread+0xf3/0x120
+     ? kthread_complete_and_exit+0x20/0x20
+     ? ret_from_fork+0x1f/0x30
+     </TASK>
+    Modules linked in: rfkill sunrpc ... [last unloaded: torture]
+    CR2: ffffffffc0601a87
+    ---[ end trace 0000000000000000 ]---
+
+Fixes: e6e78b004fa7 ("rcuperf: Add kfree_rcu() performance Tests")
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm-cmn.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ kernel/rcu/rcuscale.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
-index bb019e3839888..36061aaf026c8 100644
---- a/drivers/perf/arm-cmn.c
-+++ b/drivers/perf/arm-cmn.c
-@@ -1254,9 +1254,10 @@ static int arm_cmn_init_dtc(struct arm_cmn *cmn, struct arm_cmn_node *dn, int id
- 	if (dtc->irq < 0)
- 		return dtc->irq;
+diff --git a/kernel/rcu/rcuscale.c b/kernel/rcu/rcuscale.c
+index dfc6172ffe1d2..6c05365ed80fc 100644
+--- a/kernel/rcu/rcuscale.c
++++ b/kernel/rcu/rcuscale.c
+@@ -670,6 +670,11 @@ rcu_scale_cleanup(void)
+ 	if (gp_exp && gp_async)
+ 		SCALEOUT_ERRSTRING("No expedited async GPs, so went with async!");
  
--	writel_relaxed(0, dtc->base + CMN_DT_PMCR);
-+	writel_relaxed(CMN_DT_DTC_CTL_DT_EN, dtc->base + CMN_DT_DTC_CTL);
-+	writel_relaxed(CMN_DT_PMCR_PMU_EN | CMN_DT_PMCR_OVFL_INTR_EN, dtc->base + CMN_DT_PMCR);
-+	writeq_relaxed(0, dtc->base + CMN_DT_PMCCNTR);
- 	writel_relaxed(0x1ff, dtc->base + CMN_DT_PMOVSR_CLR);
--	writel_relaxed(CMN_DT_PMCR_OVFL_INTR_EN, dtc->base + CMN_DT_PMCR);
- 
- 	/* We do at least know that a DTC's XP must be in that DTC's domain */
- 	xp = arm_cmn_node_to_xp(dn);
-@@ -1303,7 +1304,7 @@ static int arm_cmn_init_dtcs(struct arm_cmn *cmn)
- 			dn->type = CMN_TYPE_RNI;
- 	}
- 
--	writel_relaxed(CMN_DT_DTC_CTL_DT_EN, cmn->dtc[0].base + CMN_DT_DTC_CTL);
-+	arm_cmn_set_state(cmn, CMN_STATE_DISABLED);
- 
- 	return 0;
- }
++	if (kfree_rcu_test) {
++		kfree_scale_cleanup();
++		return;
++	}
++
+ 	if (torture_cleanup_begin())
+ 		return;
+ 	if (!cur_ops) {
 -- 
 2.39.2
 
