@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264911ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:19:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE5BC433C7;
-	Tue, 25 Jul 2023 11:19:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8071ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:19:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 693AEC433C7;
+	Tue, 25 Jul 2023 11:19:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283969;
-	bh=x1732prQf09GWpX3WCpPYnkgOIyinASTpbJ+kgUfnHg=;
+	s=korg; t=1690283971;
+	bh=nG7lH3rgr5E4XIa/7m9OZXxtPsKZyvegnkF30s4QaEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h5agjFW3RCzbkCShZuxucFDEe1FqDUWjqFqtiguFjqUIxmIvBTRnNIJ4Y1VUJurgR
-	 4UjJ5QJgCziUV/PS3Gl2+T1HLKnM3e53fFcyGKEaQuMghlCtUVeMV9Nr0r0w7WMQIy
-	 ewVgNdtD8jaL5xA+eggVe3DYMZ5DK2Xei5k9/R2Y=
+	b=J7gBiue1XYvJKRPlfFiWyowkUIIa2qPueEhMcFtu1xA02yH2CHIz10uf5z9Dazs0S
+	 N8kfXMWYA+7ssBzw+rIc93pQPoDL5HnaGau4ldCovQv9FPSJ6LFFY9Rdgsi89rzoeo
+	 2pX40bqFajtQSv/4ha6Ci+4FteltZcuCIWj5VaAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuxing Liu <lyx2022@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Yuan Can <yuancan@huawei.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 158/509] clk: imx: clk-imx8mp: improve error handling in imx8mp_clocks_probe()
-Date: Tue, 25 Jul 2023 12:41:37 +0200
-Message-ID: <20230725104600.945328546@linuxfoundation.org>
+Subject: [PATCH 5.10 159/509] clk: tegra: tegra124-emc: Fix potential memory leak
+Date: Tue, 25 Jul 2023 12:41:38 +0200
+Message-ID: <20230725104600.995302319@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,83 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuxing Liu <lyx2022@hust.edu.cn>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 878b02d5f3b56cb090dbe2c70c89273be144087f ]
+[ Upstream commit 53a06e5924c0d43c11379a08c5a78529c3e61595 ]
 
-Replace of_iomap() and kzalloc() with devm_of_iomap() and devm_kzalloc()
-which can automatically release the related memory when the device
-or driver is removed or unloaded to avoid potential memory leak.
+The tegra and tegra needs to be freed in the error handling path, otherwise
+it will be leaked.
 
-In this case, iounmap(anatop_base) in line 427,433 are removed
-as manual release is not required.
-
-Besides, referring to clk-imx8mq.c, check the return code of
-of_clk_add_hw_provider, if it returns negtive, print error info
-and unregister hws, which makes the program more robust.
-
-Fixes: 9c140d992676 ("clk: imx: Add support for i.MX8MP clock driver")
-Signed-off-by: Yuxing Liu <lyx2022@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20230503070607.2462-1-lyx2022@hust.edu.cn
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Fixes: 2db04f16b589 ("clk: tegra: Add EMC clock driver")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Link: https://lore.kernel.org/r/20221209094124.71043-1-yuancan@huawei.com
+Acked-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mp.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/clk/tegra/clk-tegra124-emc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/imx/clk-imx8mp.c b/drivers/clk/imx/clk-imx8mp.c
-index 72592e35836b3..98a4711ef38d0 100644
---- a/drivers/clk/imx/clk-imx8mp.c
-+++ b/drivers/clk/imx/clk-imx8mp.c
-@@ -425,25 +425,22 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
- 	struct device *dev = &pdev->dev;
- 	struct device_node *np = dev->of_node;
- 	void __iomem *anatop_base, *ccm_base;
-+	int err;
+diff --git a/drivers/clk/tegra/clk-tegra124-emc.c b/drivers/clk/tegra/clk-tegra124-emc.c
+index 733a962ff521a..15f728edc54b5 100644
+--- a/drivers/clk/tegra/clk-tegra124-emc.c
++++ b/drivers/clk/tegra/clk-tegra124-emc.c
+@@ -455,6 +455,7 @@ static int load_timings_from_dt(struct tegra_clk_emc *tegra,
+ 		err = load_one_timing_from_dt(tegra, timing, child);
+ 		if (err) {
+ 			of_node_put(child);
++			kfree(tegra->timings);
+ 			return err;
+ 		}
  
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mp-anatop");
--	anatop_base = of_iomap(np, 0);
-+	anatop_base = devm_of_iomap(dev, np, 0, NULL);
- 	of_node_put(np);
--	if (WARN_ON(!anatop_base))
--		return -ENOMEM;
-+	if (WARN_ON(IS_ERR(anatop_base)))
-+		return PTR_ERR(anatop_base);
- 
- 	np = dev->of_node;
- 	ccm_base = devm_platform_ioremap_resource(pdev, 0);
--	if (WARN_ON(IS_ERR(ccm_base))) {
--		iounmap(anatop_base);
-+	if (WARN_ON(IS_ERR(ccm_base)))
- 		return PTR_ERR(ccm_base);
--	}
- 
--	clk_hw_data = kzalloc(struct_size(clk_hw_data, hws, IMX8MP_CLK_END), GFP_KERNEL);
--	if (WARN_ON(!clk_hw_data)) {
--		iounmap(anatop_base);
-+	clk_hw_data = devm_kzalloc(dev, struct_size(clk_hw_data, hws, IMX8MP_CLK_END), GFP_KERNEL);
-+	if (WARN_ON(!clk_hw_data))
- 		return -ENOMEM;
--	}
- 
- 	clk_hw_data->num = IMX8MP_CLK_END;
- 	hws = clk_hw_data->hws;
-@@ -743,7 +740,12 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
- 
- 	imx_check_clk_hws(hws, IMX8MP_CLK_END);
- 
--	of_clk_add_hw_provider(np, of_clk_hw_onecell_get, clk_hw_data);
-+	err = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, clk_hw_data);
-+	if (err < 0) {
-+		dev_err(dev, "failed to register hws for i.MX8MP\n");
-+		imx_unregister_hw_clocks(hws, IMX8MP_CLK_END);
-+		return err;
-+	}
- 
- 	imx_register_uart_clocks(4);
- 
+@@ -506,6 +507,7 @@ struct clk *tegra_clk_register_emc(void __iomem *base, struct device_node *np,
+ 		err = load_timings_from_dt(tegra, node, node_ram_code);
+ 		if (err) {
+ 			of_node_put(node);
++			kfree(tegra);
+ 			return ERR_PTR(err);
+ 		}
+ 	}
 -- 
 2.39.2
 
