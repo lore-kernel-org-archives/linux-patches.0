@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE481D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:02:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4D7C433C7;
-	Tue, 25 Jul 2023 11:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E461D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:02:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA01C433C7;
+	Tue, 25 Jul 2023 11:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282974;
-	bh=Sgp4N1QHkGLTS+mqtRAZOr4l/8qT9AOQpacWKOKrTYM=;
+	s=korg; t=1690282977;
+	bh=GBPgJfxiQ5r2sx8ga0FfDdUHZokRuoT4MKnvi1S4cGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GX0JJK5ZQ0uQjtBZ/DKgK2K0H3M0/bVx7BChkTExhgBqUYE83Ykl3cIJ5iK6nkXkj
-	 Om0osktkGxgdjj884pcDtFikTrdr1+QrVm4FEfI/ESw10cxCfl+BUc+9FcljfVi/1t
-	 tRbl9WDtzRaLg8w/VvW6EjiUWwDZ0iBOLQ3MKpJI=
+	b=LnQqj080SsdTo2nDSpfPHebflJvlyqRRG0dvPzGRbjy42ObCLX/1hwu18uN3WBhF/
+	 kPQ0H1GcbQR4luOnc9sfNBt6X82eZhEtzdEbDY2gpHmJYI2Eswe8bqxmbEwGEhpeDL
+	 Lkg23j9M1eJnqGO0d7xOQ0QUZTmidHjCejbWBcd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Maxime Bizon <mbizon@freebox.fr>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 065/183] sched/fair: Dont balance task to its current running CPU
-Date: Tue, 25 Jul 2023 12:44:53 +0200
-Message-ID: <20230725104510.300638253@linuxfoundation.org>
+Subject: [PATCH 6.1 066/183] wifi: ath11k: fix registration of 6Ghz-only phy without the full channel range
+Date: Tue, 25 Jul 2023 12:44:54 +0200
+Message-ID: <20230725104510.336069885@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -36,94 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+From: Maxime Bizon <mbizon@freebox.fr>
 
-[ Upstream commit 0dd37d6dd33a9c23351e6115ae8cdac7863bc7de ]
+[ Upstream commit e2ceb1de2f83aafd8003f0b72dfd4b7441e97d14 ]
 
-We've run into the case that the balancer tries to balance a migration
-disabled task and trigger the warning in set_task_cpu() like below:
+Because of what seems to be a typo, a 6Ghz-only phy for which the BDF
+does not allow the 7115Mhz channel will fail to register:
 
- ------------[ cut here ]------------
- WARNING: CPU: 7 PID: 0 at kernel/sched/core.c:3115 set_task_cpu+0x188/0x240
- Modules linked in: hclgevf xt_CHECKSUM ipt_REJECT nf_reject_ipv4 <...snip>
- CPU: 7 PID: 0 Comm: swapper/7 Kdump: loaded Tainted: G           O       6.1.0-rc4+ #1
- Hardware name: Huawei TaiShan 2280 V2/BC82AMDC, BIOS 2280-V2 CS V5.B221.01 12/09/2021
- pstate: 604000c9 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : set_task_cpu+0x188/0x240
- lr : load_balance+0x5d0/0xc60
- sp : ffff80000803bc70
- x29: ffff80000803bc70 x28: ffff004089e190e8 x27: ffff004089e19040
- x26: ffff007effcabc38 x25: 0000000000000000 x24: 0000000000000001
- x23: ffff80000803be84 x22: 000000000000000c x21: ffffb093e79e2a78
- x20: 000000000000000c x19: ffff004089e19040 x18: 0000000000000000
- x17: 0000000000001fad x16: 0000000000000030 x15: 0000000000000000
- x14: 0000000000000003 x13: 0000000000000000 x12: 0000000000000000
- x11: 0000000000000001 x10: 0000000000000400 x9 : ffffb093e4cee530
- x8 : 00000000fffffffe x7 : 0000000000ce168a x6 : 000000000000013e
- x5 : 00000000ffffffe1 x4 : 0000000000000001 x3 : 0000000000000b2a
- x2 : 0000000000000b2a x1 : ffffb093e6d6c510 x0 : 0000000000000001
- Call trace:
-  set_task_cpu+0x188/0x240
-  load_balance+0x5d0/0xc60
-  rebalance_domains+0x26c/0x380
-  _nohz_idle_balance.isra.0+0x1e0/0x370
-  run_rebalance_domains+0x6c/0x80
-  __do_softirq+0x128/0x3d8
-  ____do_softirq+0x18/0x24
-  call_on_irq_stack+0x2c/0x38
-  do_softirq_own_stack+0x24/0x3c
-  __irq_exit_rcu+0xcc/0xf4
-  irq_exit_rcu+0x18/0x24
-  el1_interrupt+0x4c/0xe4
-  el1h_64_irq_handler+0x18/0x2c
-  el1h_64_irq+0x74/0x78
-  arch_cpu_idle+0x18/0x4c
-  default_idle_call+0x58/0x194
-  do_idle+0x244/0x2b0
-  cpu_startup_entry+0x30/0x3c
-  secondary_start_kernel+0x14c/0x190
-  __secondary_switched+0xb0/0xb4
- ---[ end trace 0000000000000000 ]---
+  WARNING: CPU: 2 PID: 106 at net/wireless/core.c:907 wiphy_register+0x914/0x954
+  Modules linked in: ath11k_pci sbsa_gwdt
+  CPU: 2 PID: 106 Comm: kworker/u8:5 Not tainted 6.3.0-rc7-next-20230418-00549-g1e096a17625a-dirty #9
+  Hardware name: Freebox V7R Board (DT)
+  Workqueue: ath11k_qmi_driver_event ath11k_qmi_driver_event_work
+  pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  pc : wiphy_register+0x914/0x954
+  lr : ieee80211_register_hw+0x67c/0xc10
+  sp : ffffff800b123aa0
+  x29: ffffff800b123aa0 x28: 0000000000000000 x27: 0000000000000000
+  x26: 0000000000000000 x25: 0000000000000006 x24: ffffffc008d51418
+  x23: ffffffc008cb0838 x22: ffffff80176c2460 x21: 0000000000000168
+  x20: ffffff80176c0000 x19: ffffff80176c03e0 x18: 0000000000000014
+  x17: 00000000cbef338c x16: 00000000d2a26f21 x15: 00000000ad6bb85f
+  x14: 0000000000000020 x13: 0000000000000020 x12: 00000000ffffffbd
+  x11: 0000000000000208 x10: 00000000fffffdf7 x9 : ffffffc009394718
+  x8 : ffffff80176c0528 x7 : 000000007fffffff x6 : 0000000000000006
+  x5 : 0000000000000005 x4 : ffffff800b304284 x3 : ffffff800b304284
+  x2 : ffffff800b304d98 x1 : 0000000000000000 x0 : 0000000000000000
+  Call trace:
+   wiphy_register+0x914/0x954
+   ieee80211_register_hw+0x67c/0xc10
+   ath11k_mac_register+0x7c4/0xe10
+   ath11k_core_qmi_firmware_ready+0x1f4/0x570
+   ath11k_qmi_driver_event_work+0x198/0x590
+   process_one_work+0x1b8/0x328
+   worker_thread+0x6c/0x414
+   kthread+0x100/0x104
+   ret_from_fork+0x10/0x20
+  ---[ end trace 0000000000000000 ]---
+  ath11k_pci 0002:01:00.0: ieee80211 registration failed: -22
+  ath11k_pci 0002:01:00.0: failed register the radio with mac80211: -22
+  ath11k_pci 0002:01:00.0: failed to create pdev core: -22
 
-Further investigation shows that the warning is superfluous, the migration
-disabled task is just going to be migrated to its current running CPU.
-This is because that on load balance if the dst_cpu is not allowed by the
-task, we'll re-select a new_dst_cpu as a candidate. If no task can be
-balanced to dst_cpu we'll try to balance the task to the new_dst_cpu
-instead. In this case when the migration disabled task is not on CPU it
-only allows to run on its current CPU, load balance will select its
-current CPU as new_dst_cpu and later triggers the warning above.
-
-The new_dst_cpu is chosen from the env->dst_grpmask. Currently it
-contains CPUs in sched_group_span() and if we have overlapped groups it's
-possible to run into this case. This patch makes env->dst_grpmask of
-group_balance_mask() which exclude any CPUs from the busiest group and
-solve the issue. For balancing in a domain with no overlapped groups
-the behaviour keeps same as before.
-
-Suggested-by: Vincent Guittot <vincent.guittot@linaro.org>
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://lore.kernel.org/r/20230530082507.10444-1-yangyicong@huawei.com
+Signed-off-by: Maxime Bizon <mbizon@freebox.fr>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230421145445.2612280-1-mbizon@freebox.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 2 +-
+ drivers/net/wireless/ath/ath11k/mac.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index fa33c441ae867..57d39de0962d7 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -10556,7 +10556,7 @@ static int load_balance(int this_cpu, struct rq *this_rq,
- 		.sd		= sd,
- 		.dst_cpu	= this_cpu,
- 		.dst_rq		= this_rq,
--		.dst_grpmask    = sched_group_span(sd->groups),
-+		.dst_grpmask    = group_balance_mask(sd->groups),
- 		.idle		= idle,
- 		.loop_break	= SCHED_NR_MIGRATE_BREAK,
- 		.cpus		= cpus,
+diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
+index ef7617802491e..b19d44b3f5dfb 100644
+--- a/drivers/net/wireless/ath/ath11k/mac.c
++++ b/drivers/net/wireless/ath/ath11k/mac.c
+@@ -8715,7 +8715,7 @@ static int ath11k_mac_setup_channels_rates(struct ath11k *ar,
+ 	}
+ 
+ 	if (supported_bands & WMI_HOST_WLAN_5G_CAP) {
+-		if (reg_cap->high_5ghz_chan >= ATH11K_MAX_6G_FREQ) {
++		if (reg_cap->high_5ghz_chan >= ATH11K_MIN_6G_FREQ) {
+ 			channels = kmemdup(ath11k_6ghz_channels,
+ 					   sizeof(ath11k_6ghz_channels), GFP_KERNEL);
+ 			if (!channels) {
 -- 
 2.39.2
 
