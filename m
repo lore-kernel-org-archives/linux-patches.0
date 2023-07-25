@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AC31ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:21:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B6CC433C7;
-	Tue, 25 Jul 2023 11:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759D71ED3A
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:21:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E5FC433CA;
+	Tue, 25 Jul 2023 11:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284082;
-	bh=WKNu9Y88XnbLL+iQ/ppEwtB1NNWzf2Yd84/AoouYMK8=;
+	s=korg; t=1690284085;
+	bh=OzYhEx057Gr5b5YW7sdlB7lllVggRZ5wY6X8vBXoSE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ISGKBtdV4xnTb33WeEg5sP++PTxJJ3Fq99v9BLPbzXkVp2BA9fWXahYvUPiGCZmVE
-	 N6yduM6UY+VLC8Gfz9z6Pt7EaFV/M3O22CcroZjN6K1mNByAtQbXXhH+fUdAtuiblM
-	 d9tjY0s2KNUXWMP55PBU7QNWU9gk1zV9PKzqMrKw=
+	b=C/eXwwliSFEi48puFB4OwyfPCZZEZff5ct9UeSzsERv7gv33tjG7yif1xY+MFyjA9
+	 5bTSSGlftBeOyo5JDanxEtYMN7DgsuYDyR0mDjLtruSq9If+9XoqhHCEMSnlQWNTTf
+	 ZIFhMjbc5zu6C26DVsDWc7l2ZO4X6eox4XzQE11A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladislav Efanov <VEfanov@ispras.ru>,
-	Shawn Guo <shawn.guo@linaro.org>,
+	Prashanth K <quic_prashk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 229/509] usb: dwc3: qcom: Fix potential memory leak
-Date: Tue, 25 Jul 2023 12:42:48 +0200
-Message-ID: <20230725104604.248595608@linuxfoundation.org>
+Subject: [PATCH 5.10 230/509] usb: gadget: u_serial: Add null pointer check in gserial_suspend
+Date: Tue, 25 Jul 2023 12:42:49 +0200
+Message-ID: <20230725104604.299030978@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,51 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladislav Efanov <VEfanov@ispras.ru>
+From: Prashanth K <quic_prashk@quicinc.com>
 
-[ Upstream commit 097fb3ee710d4de83b8d4f5589e8ee13e0f0541e ]
+[ Upstream commit 2f6ecb89fe8feb2b60a53325b0eeb9866d88909a ]
 
-Function dwc3_qcom_probe() allocates memory for resource structure
-which is pointed by parent_res pointer. This memory is not
-freed. This leads to memory leak. Use stack memory to prevent
-memory leak.
+Consider a case where gserial_disconnect has already cleared
+gser->ioport. And if gserial_suspend gets called afterwards,
+it will lead to accessing of gser->ioport and thus causing
+null pointer dereference.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Avoid this by adding a null pointer check. Added a static
+spinlock to prevent gser->ioport from becoming null after
+the newly added null pointer check.
 
-Fixes: 2bc02355f8ba ("usb: dwc3: qcom: Add support for booting with ACPI")
-Signed-off-by: Vladislav Efanov <VEfanov@ispras.ru>
-Acked-by: Shawn Guo <shawn.guo@linaro.org>
-Link: https://lore.kernel.org/r/20230517172518.442591-1-VEfanov@ispras.ru
+Fixes: aba3a8d01d62 ("usb: gadget: u_serial: add suspend resume callbacks")
+Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
+Link: https://lore.kernel.org/r/1683278317-11774-1-git-send-email-quic_prashk@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-qcom.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/function/u_serial.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index dac13fe978110..5c66efb05d7f7 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -722,6 +722,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 	struct device		*dev = &pdev->dev;
- 	struct dwc3_qcom	*qcom;
- 	struct resource		*res, *parent_res = NULL;
-+	struct resource		local_res;
- 	int			ret, i;
- 	bool			ignore_pipe_clk;
+diff --git a/drivers/usb/gadget/function/u_serial.c b/drivers/usb/gadget/function/u_serial.c
+index 7b54e814aefb1..3b5a6430e2418 100644
+--- a/drivers/usb/gadget/function/u_serial.c
++++ b/drivers/usb/gadget/function/u_serial.c
+@@ -1421,10 +1421,19 @@ EXPORT_SYMBOL_GPL(gserial_disconnect);
  
-@@ -772,9 +773,8 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 	if (np) {
- 		parent_res = res;
- 	} else {
--		parent_res = kmemdup(res, sizeof(struct resource), GFP_KERNEL);
--		if (!parent_res)
--			return -ENOMEM;
-+		memcpy(&local_res, res, sizeof(struct resource));
-+		parent_res = &local_res;
+ void gserial_suspend(struct gserial *gser)
+ {
+-	struct gs_port	*port = gser->ioport;
++	struct gs_port	*port;
+ 	unsigned long	flags;
  
- 		parent_res->start = res->start +
- 			qcom->acpi_pdata->qscratch_base_offset;
+-	spin_lock_irqsave(&port->port_lock, flags);
++	spin_lock_irqsave(&serial_port_lock, flags);
++	port = gser->ioport;
++
++	if (!port) {
++		spin_unlock_irqrestore(&serial_port_lock, flags);
++		return;
++	}
++
++	spin_lock(&port->port_lock);
++	spin_unlock(&serial_port_lock);
+ 	port->suspended = true;
+ 	spin_unlock_irqrestore(&port->port_lock, flags);
+ }
 -- 
 2.39.2
 
