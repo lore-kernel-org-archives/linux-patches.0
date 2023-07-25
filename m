@@ -1,28 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DAA9440
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:54:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3942BC433C9;
-	Tue, 25 Jul 2023 10:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC4C9440
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:54:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF429C433C8;
+	Tue, 25 Jul 2023 10:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282482;
-	bh=0Zv2vPHDQpDUm6/wIHQuTlBX0ZTVlJmVZWF+eGHjBJI=;
+	s=korg; t=1690282485;
+	bh=iXwbbWYHtCbyGhHnwsiItwAgGDSVUNs61f2DFbQTuu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gPKMI+40x0EopUIH//KPMrBrtIPdaT8iwItiG2qq3MDefSYC4LUX37QSoL8v2+bBQ
-	 jc8C7AYsY3wKDwSFMxVMj9ab6K1SMgrOn5Dgt77es2SjcLRINjD++h+Vt0JvehsdJX
-	 GLzQr2G2fvtaqfzyuOJUaUMwrrIfkTYvF+76Anco=
+	b=SqMbBEhQuXnplj6TSYQaBnxCiSmjZGcIEaXYHkifqBZHbnWhcqeEYqX5u4wdjZiNl
+	 TZBk2nLmWOCK+1iT6UM8TCenz7KNQeP8c+/E9r2bPyT/Z3MeBPmnZUJwaSRuua30zE
+	 6qjj811TRZ4vi3zmnGfXMrqU/VFcVGDGT/aroupA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Simon Horman <simon.horman@corigine.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	James Clark <james.clark@arm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <uwe@kleine-koenig.org>,
+	coresight@lists.linaro.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 128/227] wifi: wext-core: Fix -Wstringop-overflow warning in ioctl_standard_iw_point()
-Date: Tue, 25 Jul 2023 12:44:55 +0200
-Message-ID: <20230725104520.119097578@linuxfoundation.org>
+Subject: [PATCH 6.4 146/227] perf build: Fix library not found error when using CSLIBS
+Date: Tue, 25 Jul 2023 12:45:13 +0200
+Message-ID: <20230725104520.926343410@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -36,68 +46,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: James Clark <james.clark@arm.com>
 
-[ Upstream commit 71e7552c90db2a2767f5c17c7ec72296b0d92061 ]
+[ Upstream commit 1feece2780ac2f8de45177fe53979726cee4b3d1 ]
 
--Wstringop-overflow is legitimately warning us about extra_size
-pontentially being zero at some point, hence potenially ending
-up _allocating_ zero bytes of memory for extra pointer and then
-trying to access such object in a call to copy_from_user().
+-L only specifies the search path for libraries directly provided in the
+link line with -l. Because -lopencsd isn't specified, it's only linked
+because it's a dependency of -lopencsd_c_api. Dependencies like this are
+resolved using the default system search paths or -rpath-link=... rather
+than -L. This means that compilation only works if OpenCSD is installed
+to the system rather than provided with the CSLIBS (-L) option.
 
-Fix this by adding a sanity check to ensure we never end up
-trying to allocate zero bytes of data for extra pointer, before
-continue executing the rest of the code in the function.
+This could be fixed by adding -Wl,-rpath-link=$(CSLIBS) but that is less
+conventional than just adding -lopencsd to the link line so that it uses
+-L. -lopencsd seems to have been removed in commit ed17b1914978eddb
+("perf tools: Drop requirement for libstdc++.so for libopencsd check")
+because it was thought that there was a chance compilation would work
+even if it didn't exist, but I think that only applies to libstdc++ so
+there is no harm to add it back. libopencsd.so and libopencsd_c_api.so
+would always exist together.
 
-Address the following -Wstringop-overflow warning seen when built
-m68k architecture with allyesconfig configuration:
-                 from net/wireless/wext-core.c:11:
-In function '_copy_from_user',
-    inlined from 'copy_from_user' at include/linux/uaccess.h:183:7,
-    inlined from 'ioctl_standard_iw_point' at net/wireless/wext-core.c:825:7:
-arch/m68k/include/asm/string.h:48:25: warning: '__builtin_memset' writing 1 or more bytes into a region of size 0 overflows the destination [-Wstringop-overflow=]
-   48 | #define memset(d, c, n) __builtin_memset(d, c, n)
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~
-include/linux/uaccess.h:153:17: note: in expansion of macro 'memset'
-  153 |                 memset(to + (n - res), 0, res);
-      |                 ^~~~~~
-In function 'kmalloc',
-    inlined from 'kzalloc' at include/linux/slab.h:694:9,
-    inlined from 'ioctl_standard_iw_point' at net/wireless/wext-core.c:819:10:
-include/linux/slab.h:577:16: note: at offset 1 into destination object of size 0 allocated by '__kmalloc'
-  577 |         return __kmalloc(size, flags);
-      |                ^~~~~~~~~~~~~~~~~~~~~~
+Testing
+=======
 
-This help with the ongoing efforts to globally enable
--Wstringop-overflow.
+The following scenarios now all work:
 
-Link: https://github.com/KSPP/linux/issues/315
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/ZItSlzvIpjdjNfd8@work
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+ * Cross build with OpenCSD installed
+ * Cross build using CSLIBS=...
+ * Native build with OpenCSD installed
+ * Native build using CSLIBS=...
+ * Static cross build with OpenCSD installed
+ * Static cross build with CSLIBS=...
+
+Committer testing:
+
+  ⬢[acme@toolbox perf-tools]$ alias m
+  alias m='make -k BUILD_BPF_SKEL=1 CORESIGHT=1 O=/tmp/build/perf-tools -C tools/perf install-bin && git status && perf test python ;  perf record -o /dev/null sleep 0.01 ; perf stat --null sleep 0.01'
+  ⬢[acme@toolbox perf-tools]$ ldd ~/bin/perf | grep csd
+  	libopencsd_c_api.so.1 => /lib64/libopencsd_c_api.so.1 (0x00007fd49c44e000)
+  	libopencsd.so.1 => /lib64/libopencsd.so.1 (0x00007fd49bd56000)
+  ⬢[acme@toolbox perf-tools]$ cat /etc/redhat-release
+  Fedora release 36 (Thirty Six)
+  ⬢[acme@toolbox perf-tools]$
+
+Fixes: ed17b1914978eddb ("perf tools: Drop requirement for libstdc++.so for libopencsd check")
+Reported-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Signed-off-by: James Clark <james.clark@arm.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Tested-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Uwe Kleine-König <uwe@kleine-koenig.org>
+Cc: coresight@lists.linaro.org
+Closes: https://lore.kernel.org/linux-arm-kernel/56905d7a-a91e-883a-b707-9d5f686ba5f1@arm.com/
+Link: https://lore.kernel.org/all/36cc4dc6-bf4b-1093-1c0a-876e368af183@kleine-koenig.org/
+Link: https://lore.kernel.org/r/20230707154546.456720-1-james.clark@arm.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/wext-core.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/perf/Makefile.config | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/wext-core.c b/net/wireless/wext-core.c
-index a125fd1fa1342..a161c64d1765e 100644
---- a/net/wireless/wext-core.c
-+++ b/net/wireless/wext-core.c
-@@ -815,6 +815,12 @@ static int ioctl_standard_iw_point(struct iw_point *iwp, unsigned int cmd,
- 		}
- 	}
- 
-+	/* Sanity-check to ensure we never end up _allocating_ zero
-+	 * bytes of data for extra.
-+	 */
-+	if (extra_size <= 0)
-+		return -EFAULT;
-+
- 	/* kzalloc() ensures NULL-termination for essid_compat. */
- 	extra = kzalloc(extra_size, GFP_KERNEL);
- 	if (!extra)
+diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
+index a794d9eca93d8..72f068682c9a2 100644
+--- a/tools/perf/Makefile.config
++++ b/tools/perf/Makefile.config
+@@ -155,9 +155,9 @@ FEATURE_CHECK_LDFLAGS-libcrypto = -lcrypto
+ ifdef CSINCLUDES
+   LIBOPENCSD_CFLAGS := -I$(CSINCLUDES)
+ endif
+-OPENCSDLIBS := -lopencsd_c_api
++OPENCSDLIBS := -lopencsd_c_api -lopencsd
+ ifeq ($(findstring -static,${LDFLAGS}),-static)
+-  OPENCSDLIBS += -lopencsd -lstdc++
++  OPENCSDLIBS += -lstdc++
+ endif
+ ifdef CSLIBS
+   LIBOPENCSD_LDFLAGS := -L$(CSLIBS)
 -- 
 2.39.2
 
