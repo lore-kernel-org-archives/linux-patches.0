@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7C91ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:13:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF45C433C7;
-	Tue, 25 Jul 2023 11:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B385C1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:13:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBEFFC433C7;
+	Tue, 25 Jul 2023 11:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283629;
-	bh=KLo4viXHZ4dMlleTtve+fXKM/WH3MuMEeYx11aXMzEg=;
+	s=korg; t=1690283632;
+	bh=EM3OOHWpgqGXefUtDHnxTio72huuQV9MBXj/Cjp1BA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TgNKEL9679Si3O98bvO6Nqo+Lcairxvb/UVJq4Cd7CL9ydDvJHwGlrVZUgzin4LAs
-	 PHocbwlzolxwqiiA+zswFkdSnMye3XXD22K64CJjny6E4tmZhV+GOryrC8+qcXSjdt
-	 3Cx4aAjbt0N3fKJomWrICc+2Oh5h2SVNKHYJdCaA=
+	b=pO92iJEZSpmrWvQS1PepPRXZfXGPvNmUuqhDAlk8n6bKcYhjKtk6M90fSwWAUPUGO
+	 +U74YZXCGHrtVjzkM6ESwLeE05yri74MnWEHdjhVRjy8xbUtjQKKulsFiEZKDuoIk3
+	 bsZf8sEhdEugaHXXrG1jw83kE1yJAObCbVHy39M4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b68fbebe56d8362907e8@syzkaller.appspotmail.com,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Marek Vasut <marex@denx.de>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 066/509] wifi: ath9k: dont allow to overwrite ENDPOINT0 attributes
-Date: Tue, 25 Jul 2023 12:40:05 +0200
-Message-ID: <20230725104556.716501515@linuxfoundation.org>
+Subject: [PATCH 5.10 067/509] wifi: rsi: Do not configure WoWlan in shutdown hook if not enabled
+Date: Tue, 25 Jul 2023 12:40:06 +0200
+Message-ID: <20230725104556.768271185@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,49 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 061b0cb9327b80d7a0f63a33e7c3e2a91a71f142 ]
+[ Upstream commit b241e260820b68c09586e8a0ae0fc23c0e3215bd ]
 
-A bad USB device is able to construct a service connection response
-message with target endpoint being ENDPOINT0 which is reserved for
-HTC_CTRL_RSVD_SVC and should not be modified to be used for any other
-services.
+In case WoWlan was never configured during the operation of the system,
+the hw->wiphy->wowlan_config will be NULL. rsi_config_wowlan() checks
+whether wowlan_config is non-NULL and if it is not, then WARNs about it.
+The warning is valid, as during normal operation the rsi_config_wowlan()
+should only ever be called with non-NULL wowlan_config. In shutdown this
+rsi_config_wowlan() should only ever be called if WoWlan was configured
+before by the user.
 
-Reject such service connection responses.
+Add checks for non-NULL wowlan_config into the shutdown hook. While at it,
+check whether the wiphy is also non-NULL before accessing wowlan_config .
+Drop the single-use wowlan_config variable, just inline it into function
+call.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
-Reported-by: syzbot+b68fbebe56d8362907e8@syzkaller.appspotmail.com
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230516150427.79469-1-pchelkin@ispras.ru
+Fixes: 16bbc3eb8372 ("rsi: fix null pointer dereference during rsi_shutdown()")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230527222833.273741-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/htc_hst.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/wireless/rsi/rsi_91x_sdio.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/htc_hst.c b/drivers/net/wireless/ath/ath9k/htc_hst.c
-index fe62ff668f757..99667aba289df 100644
---- a/drivers/net/wireless/ath/ath9k/htc_hst.c
-+++ b/drivers/net/wireless/ath/ath9k/htc_hst.c
-@@ -114,7 +114,13 @@ static void htc_process_conn_rsp(struct htc_target *target,
+diff --git a/drivers/net/wireless/rsi/rsi_91x_sdio.c b/drivers/net/wireless/rsi/rsi_91x_sdio.c
+index 8108f941ccd3f..2c26376faeacc 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_sdio.c
++++ b/drivers/net/wireless/rsi/rsi_91x_sdio.c
+@@ -1463,10 +1463,8 @@ static void rsi_shutdown(struct device *dev)
  
- 	if (svc_rspmsg->status == HTC_SERVICE_SUCCESS) {
- 		epid = svc_rspmsg->endpoint_id;
--		if (epid < 0 || epid >= ENDPOINT_MAX)
-+
-+		/* Check that the received epid for the endpoint to attach
-+		 * a new service is valid. ENDPOINT0 can't be used here as it
-+		 * is already reserved for HTC_CTRL_RSVD_SVC service and thus
-+		 * should not be modified.
-+		 */
-+		if (epid <= ENDPOINT0 || epid >= ENDPOINT_MAX)
- 			return;
+ 	rsi_dbg(ERR_ZONE, "SDIO Bus shutdown =====>\n");
  
- 		service_id = be16_to_cpu(svc_rspmsg->service_id);
+-	if (hw) {
+-		struct cfg80211_wowlan *wowlan = hw->wiphy->wowlan_config;
+-
+-		if (rsi_config_wowlan(adapter, wowlan))
++	if (hw && hw->wiphy && hw->wiphy->wowlan_config) {
++		if (rsi_config_wowlan(adapter, hw->wiphy->wowlan_config))
+ 			rsi_dbg(ERR_ZONE, "Failed to configure WoWLAN\n");
+ 	}
+ 
 -- 
 2.39.2
 
