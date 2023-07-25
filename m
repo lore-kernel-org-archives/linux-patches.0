@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30C61ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:40:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E43BC433C7;
-	Tue, 25 Jul 2023 11:40:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5491ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:40:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E387FC433C8;
+	Tue, 25 Jul 2023 11:40:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285241;
-	bh=zwPAKCtHd3UQM2xQ2KHaJGvz6SPo/bREsR18xXokdMc=;
+	s=korg; t=1690285244;
+	bh=mVN64A7515f3+0XOLCrI5uNtkVrZFuqpJQ9ImPJUDOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n2aewpZd/EKO58NOz4nBPHOJuowmh39iTS9iVwUOsZ/C3ccngZ5b42VB0GwaqZByU
-	 EBQMURWu2Zr8iGfpcKuHhIYVLcltC+taASeZXP0c+63RshxarTvLGR/uKSAzE1Yp9y
-	 nJClzVKrwmKKCsaQun2xmcxJQlWd1efxDySO9z6U=
+	b=eHTv/GUeaD6qJeeHsxToydFqWqcwKFmsQAhAsbQYHlPGG5ZgwjtlAEKoamFOnVjPf
+	 vRr5tGv02FxDDj64pBnlut5Sv0iLIay+ZmFdR/f/nl7cAfP7SnZhF7/oqNuy2vO8aK
+	 tV1T1q2grUPBbdL1B8+tvQ2UCti2st+q7mHrHhZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Jakob Hauser <jahau@rocketmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Lee Jones <lee@kernel.org>,
+	Nico Boehr <nrb@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 135/313] mfd: rt5033: Drop rt5033-battery sub-device
-Date: Tue, 25 Jul 2023 12:44:48 +0200
-Message-ID: <20230725104526.863116427@linuxfoundation.org>
+Subject: [PATCH 5.4 136/313] KVM: s390: fix KVM_S390_GET_CMMA_BITS for GFNs in memslot holes
+Date: Tue, 25 Jul 2023 12:44:49 +0200
+Message-ID: <20230725104526.904140777@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -37,39 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephan Gerhold <stephan@gerhold.net>
+From: Nico Boehr <nrb@linux.ibm.com>
 
-[ Upstream commit 43db1344e0f8c1eb687a1d6cd5b0de3009ab66cb ]
+[ Upstream commit 285cff4c0454340a4dc53f46e67f2cb1c293bd74 ]
 
-The fuel gauge in the RT5033 PMIC (rt5033-battery) has its own I2C bus
-and interrupt lines. Therefore, it is not part of the MFD device
-and needs to be specified separately in the device tree.
+The KVM_S390_GET_CMMA_BITS ioctl may return incorrect values when userspace
+specifies a start_gfn outside of memslots.
 
-Fixes: 0b271258544b ("mfd: rt5033: Add Richtek RT5033 driver core.")
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Signed-off-by: Jakob Hauser <jahau@rocketmail.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/6a8a19bc67b5be3732882e8131ad2ffcb546ac03.1684182964.git.jahau@rocketmail.com
+This can occur when a VM has multiple memslots with a hole in between:
+
++-----+----------+--------+--------+
+| ... | Slot N-1 | <hole> | Slot N |
++-----+----------+--------+--------+
+      ^          ^        ^        ^
+      |          |        |        |
+GFN   A          A+B      |        |
+                          A+B+C    |
+			           A+B+C+D
+
+When userspace specifies a GFN in [A+B, A+B+C), it would expect to get the
+CMMA values of the first dirty page in Slot N. However, userspace may get a
+start_gfn of A+B+C+D with a count of 0, hence completely skipping over any
+dirty pages in slot N.
+
+The error is in kvm_s390_next_dirty_cmma(), which assumes
+gfn_to_memslot_approx() will return the memslot _below_ the specified GFN
+when the specified GFN lies outside a memslot. In reality it may return
+either the memslot below or above the specified GFN.
+
+When a memslot above the specified GFN is returned this happens:
+
+- ofs is calculated, but since the memslot's base_gfn is larger than the
+  specified cur_gfn, ofs will underflow to a huge number.
+- ofs is passed to find_next_bit(). Since ofs will exceed the memslot's
+  number of pages, the number of pages in the memslot is returned,
+  completely skipping over all bits in the memslot userspace would be
+  interested in.
+
+Fix this by resetting ofs to zero when a memslot _above_ cur_gfn is
+returned (cur_gfn < ms->base_gfn).
+
+Signed-off-by: Nico Boehr <nrb@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Fixes: afdad61615cc ("KVM: s390: Fix storage attributes migration with memory slots")
+Message-Id: <20230324145424.293889-2-nrb@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/rt5033.c | 3 ---
- 1 file changed, 3 deletions(-)
+ arch/s390/kvm/kvm-s390.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/mfd/rt5033.c b/drivers/mfd/rt5033.c
-index 48381d9bf7403..302115dabff4b 100644
---- a/drivers/mfd/rt5033.c
-+++ b/drivers/mfd/rt5033.c
-@@ -41,9 +41,6 @@ static const struct mfd_cell rt5033_devs[] = {
- 	{
- 		.name = "rt5033-charger",
- 		.of_compatible = "richtek,rt5033-charger",
--	}, {
--		.name = "rt5033-battery",
--		.of_compatible = "richtek,rt5033-battery",
- 	}, {
- 		.name = "rt5033-led",
- 		.of_compatible = "richtek,rt5033-led",
+diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
+index 9ade970b4232c..b11eb11e2f499 100644
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -1982,6 +1982,10 @@ static unsigned long kvm_s390_next_dirty_cmma(struct kvm_memslots *slots,
+ 		ms = slots->memslots + slotidx;
+ 		ofs = 0;
+ 	}
++
++	if (cur_gfn < ms->base_gfn)
++		ofs = 0;
++
+ 	ofs = find_next_bit(kvm_second_dirty_bitmap(ms), ms->npages, ofs);
+ 	while ((slotidx > 0) && (ofs >= ms->npages)) {
+ 		slotidx--;
 -- 
 2.39.2
 
