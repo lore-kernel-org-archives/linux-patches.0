@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D185D1ED42
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:10:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52AA4C433C8;
-	Tue, 25 Jul 2023 11:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB511ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:10:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D672C433C7;
+	Tue, 25 Jul 2023 11:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283436;
-	bh=35e32ckwrSo9vVcOZtMQvtAevP8aE0KTA12Ls/Qd4zo=;
+	s=korg; t=1690283439;
+	bh=XVFKjGUw27pqHaTGOxos+pOAVpK/ZolEXYxWbWIuVbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MnT9e0qqGNwnmrFuE8wTlqO81OkH7Fli/nwTht+GaRA4zSmZpke17K+Yex1EfDz4d
-	 AvecicOiYKRgQ9MS0lC3GMMInTTj4phO/oc3WVGRHGjmcfFJMY9IGxbP7K5qld/lgd
-	 psAAx66CH2N83JSFV67puTw1IEWKDCI7TiQnFKd0=
+	b=XJD3aBT5uQS685gPfpRE1Y0SMlEE9hTRRMvQt1LU6Fz9FBU2cocMWlZWZyp5Dmb8P
+	 ZK4UHykg5MKQ5ePFQ53VrLaBwEfRR3vLrDNdmEWYAqIaVCBQYtk++dpIQNW3dSwky8
+	 km7nhGnNpTNaihUkpyl2CMuyEBVtDYCu3g72HiVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <linux@armlinux.org.uk>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 75/78] net: phy: prevent stale pointer dereference in phy_init()
-Date: Tue, 25 Jul 2023 12:47:06 +0200
-Message-ID: <20230725104454.180692745@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.15 76/78] jbd2: recheck chechpointing non-dirty buffer
+Date: Tue, 25 Jul 2023 12:47:07 +0200
+Message-ID: <20230725104454.221311267@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104451.275227789@linuxfoundation.org>
 References: <20230725104451.275227789@linuxfoundation.org>
@@ -36,74 +36,191 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 1c613beaf877c0c0d755853dc62687e2013e55c4 ]
+commit c2d6fd9d6f35079f1669f0100f05b46708c74b7f upstream.
 
-mdio_bus_init() and phy_driver_register() both have error paths, and if
-those are ever hit, ethtool will have a stale pointer to the
-phy_ethtool_phy_ops stub structure, which references memory from a
-module that failed to load (phylib).
+There is a long-standing metadata corruption issue that happens from
+time to time, but it's very difficult to reproduce and analyse, benefit
+from the JBD2_CYCLE_RECORD option, we found out that the problem is the
+checkpointing process miss to write out some buffers which are raced by
+another do_get_write_access(). Looks below for detail.
 
-It is probably hard to force an error in this code path even manually,
-but the error teardown path of phy_init() should be the same as
-phy_exit(), which is now simply not the case.
+jbd2_log_do_checkpoint() //transaction X
+ //buffer A is dirty and not belones to any transaction
+ __buffer_relink_io() //move it to the IO list
+ __flush_batch()
+  write_dirty_buffer()
+                             do_get_write_access()
+                             clear_buffer_dirty
+                             __jbd2_journal_file_buffer()
+                             //add buffer A to a new transaction Y
+   lock_buffer(bh)
+   //doesn't write out
+ __jbd2_journal_remove_checkpoint()
+ //finish checkpoint except buffer A
+ //filesystem corrupt if the new transaction Y isn't fully write out.
 
-Fixes: 55d8f053ce1b ("net: phy: Register ethtool PHY operations")
-Link: https://lore.kernel.org/netdev/ZLaiJ4G6TaJYGJyU@shell.armlinux.org.uk/
-Suggested-by: Russell King (Oracle) <linux@armlinux.org.uk>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://lore.kernel.org/r/20230720000231.1939689-1-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Due to the t_checkpoint_list walking loop in jbd2_log_do_checkpoint()
+have already handles waiting for buffers under IO and re-added new
+transaction to complete commit, and it also removing cleaned buffers,
+this makes sure the list will eventually get empty. So it's fine to
+leave buffers on the t_checkpoint_list while flushing out and completely
+stop using the t_checkpoint_io_list.
+
+Cc: stable@vger.kernel.org
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Tested-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230606135928.434610-2-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/phy_device.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ fs/jbd2/checkpoint.c |  102 ++++++++++++++-------------------------------------
+ 1 file changed, 29 insertions(+), 73 deletions(-)
 
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index 73485383db4ef..6085a28cae3d2 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -3253,23 +3253,30 @@ static int __init phy_init(void)
- {
- 	int rc;
- 
-+	ethtool_set_ethtool_phy_ops(&phy_ethtool_phy_ops);
-+
- 	rc = mdio_bus_init();
- 	if (rc)
--		return rc;
-+		goto err_ethtool_phy_ops;
- 
--	ethtool_set_ethtool_phy_ops(&phy_ethtool_phy_ops);
- 	features_init();
- 
- 	rc = phy_driver_register(&genphy_c45_driver, THIS_MODULE);
- 	if (rc)
--		goto err_c45;
-+		goto err_mdio_bus;
- 
- 	rc = phy_driver_register(&genphy_driver, THIS_MODULE);
--	if (rc) {
--		phy_driver_unregister(&genphy_c45_driver);
-+	if (rc)
-+		goto err_c45;
-+
-+	return 0;
-+
- err_c45:
--		mdio_bus_exit();
--	}
-+	phy_driver_unregister(&genphy_c45_driver);
-+err_mdio_bus:
-+	mdio_bus_exit();
-+err_ethtool_phy_ops:
-+	ethtool_set_ethtool_phy_ops(NULL);
- 
- 	return rc;
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -58,28 +58,6 @@ static inline void __buffer_unlink(struc
  }
--- 
-2.39.2
-
+ 
+ /*
+- * Move a buffer from the checkpoint list to the checkpoint io list
+- *
+- * Called with j_list_lock held
+- */
+-static inline void __buffer_relink_io(struct journal_head *jh)
+-{
+-	transaction_t *transaction = jh->b_cp_transaction;
+-
+-	__buffer_unlink_first(jh);
+-
+-	if (!transaction->t_checkpoint_io_list) {
+-		jh->b_cpnext = jh->b_cpprev = jh;
+-	} else {
+-		jh->b_cpnext = transaction->t_checkpoint_io_list;
+-		jh->b_cpprev = transaction->t_checkpoint_io_list->b_cpprev;
+-		jh->b_cpprev->b_cpnext = jh;
+-		jh->b_cpnext->b_cpprev = jh;
+-	}
+-	transaction->t_checkpoint_io_list = jh;
+-}
+-
+-/*
+  * Check a checkpoint buffer could be release or not.
+  *
+  * Requires j_list_lock
+@@ -183,6 +161,7 @@ __flush_batch(journal_t *journal, int *b
+ 		struct buffer_head *bh = journal->j_chkpt_bhs[i];
+ 		BUFFER_TRACE(bh, "brelse");
+ 		__brelse(bh);
++		journal->j_chkpt_bhs[i] = NULL;
+ 	}
+ 	*batch_count = 0;
+ }
+@@ -242,6 +221,11 @@ restart:
+ 		jh = transaction->t_checkpoint_list;
+ 		bh = jh2bh(jh);
+ 
++		/*
++		 * The buffer may be writing back, or flushing out in the
++		 * last couple of cycles, or re-adding into a new transaction,
++		 * need to check it again until it's unlocked.
++		 */
+ 		if (buffer_locked(bh)) {
+ 			get_bh(bh);
+ 			spin_unlock(&journal->j_list_lock);
+@@ -287,28 +271,32 @@ restart:
+ 		}
+ 		if (!buffer_dirty(bh)) {
+ 			BUFFER_TRACE(bh, "remove from checkpoint");
+-			if (__jbd2_journal_remove_checkpoint(jh))
+-				/* The transaction was released; we're done */
++			/*
++			 * If the transaction was released or the checkpoint
++			 * list was empty, we're done.
++			 */
++			if (__jbd2_journal_remove_checkpoint(jh) ||
++			    !transaction->t_checkpoint_list)
+ 				goto out;
+-			continue;
++		} else {
++			/*
++			 * We are about to write the buffer, it could be
++			 * raced by some other transaction shrink or buffer
++			 * re-log logic once we release the j_list_lock,
++			 * leave it on the checkpoint list and check status
++			 * again to make sure it's clean.
++			 */
++			BUFFER_TRACE(bh, "queue");
++			get_bh(bh);
++			J_ASSERT_BH(bh, !buffer_jwrite(bh));
++			journal->j_chkpt_bhs[batch_count++] = bh;
++			transaction->t_chp_stats.cs_written++;
++			transaction->t_checkpoint_list = jh->b_cpnext;
+ 		}
+-		/*
+-		 * Important: we are about to write the buffer, and
+-		 * possibly block, while still holding the journal
+-		 * lock.  We cannot afford to let the transaction
+-		 * logic start messing around with this buffer before
+-		 * we write it to disk, as that would break
+-		 * recoverability.
+-		 */
+-		BUFFER_TRACE(bh, "queue");
+-		get_bh(bh);
+-		J_ASSERT_BH(bh, !buffer_jwrite(bh));
+-		journal->j_chkpt_bhs[batch_count++] = bh;
+-		__buffer_relink_io(jh);
+-		transaction->t_chp_stats.cs_written++;
++
+ 		if ((batch_count == JBD2_NR_BATCH) ||
+-		    need_resched() ||
+-		    spin_needbreak(&journal->j_list_lock))
++		    need_resched() || spin_needbreak(&journal->j_list_lock) ||
++		    jh2bh(transaction->t_checkpoint_list) == journal->j_chkpt_bhs[0])
+ 			goto unlock_and_flush;
+ 	}
+ 
+@@ -322,38 +310,6 @@ restart:
+ 			goto restart;
+ 	}
+ 
+-	/*
+-	 * Now we issued all of the transaction's buffers, let's deal
+-	 * with the buffers that are out for I/O.
+-	 */
+-restart2:
+-	/* Did somebody clean up the transaction in the meanwhile? */
+-	if (journal->j_checkpoint_transactions != transaction ||
+-	    transaction->t_tid != this_tid)
+-		goto out;
+-
+-	while (transaction->t_checkpoint_io_list) {
+-		jh = transaction->t_checkpoint_io_list;
+-		bh = jh2bh(jh);
+-		if (buffer_locked(bh)) {
+-			get_bh(bh);
+-			spin_unlock(&journal->j_list_lock);
+-			wait_on_buffer(bh);
+-			/* the journal_head may have gone by now */
+-			BUFFER_TRACE(bh, "brelse");
+-			__brelse(bh);
+-			spin_lock(&journal->j_list_lock);
+-			goto restart2;
+-		}
+-
+-		/*
+-		 * Now in whatever state the buffer currently is, we
+-		 * know that it has been written out and so we can
+-		 * drop it from the list
+-		 */
+-		if (__jbd2_journal_remove_checkpoint(jh))
+-			break;
+-	}
+ out:
+ 	spin_unlock(&journal->j_list_lock);
+ 	result = jbd2_cleanup_journal_tail(journal);
 
 
