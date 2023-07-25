@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213F51ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:15:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 948DBC433C8;
-	Tue, 25 Jul 2023 11:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF6A1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:15:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C66FC433CC;
+	Tue, 25 Jul 2023 11:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283702;
-	bh=OZgb/T1cYVLmFK0HONuAjP47XrlKfPxQHkIBVY5Jrrw=;
+	s=korg; t=1690283704;
+	bh=QS4XZ1qmL6lNvUke6/Wt6BCb5PZnnYxfn4zhKGcX/Dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q28Le206RSxmqLXCLCnFmPmO99jQ9LaqQx0qQzLcIlGJISkDr+PXcuCr1DEZcjUTN
-	 eIzxoksw2LcVN+oeElemGRbtW95DcOdQkKPpsvlFgfWkc7WWrqbWtRM+vV5gR+MQuv
-	 CO2+A0iGX4rMQzvYKMUqd48HkwVdgWa8bfMQ1DhQ=
+	b=WgW+YJ4sAZz68pW/KPDf1mlp22r9SwJepfyXFR3ZNL5t+CG5ky2GbHznN9H33rVOa
+	 koCcA47ve2XhJJlCcmJQ1T0du5RL26If5wxZH892QnxrLiZFHHSJTDV01B10hRd4Hw
+	 BzHUUfHcGDRHfrupDtSXyolWXo2F0N0dfOFHQOsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 063/509] wifi: ray_cs: Utilize strnlen() in parse_addr()
-Date: Tue, 25 Jul 2023 12:40:02 +0200
-Message-ID: <20230725104556.578809632@linuxfoundation.org>
+Subject: [PATCH 5.10 064/509] wifi: ray_cs: Drop useless status variable in parse_addr()
+Date: Tue, 25 Jul 2023 12:40:03 +0200
+Message-ID: <20230725104556.627051628@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,63 +37,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 9e8e9187673cb24324f9165dd47b2b28f60b0b10 ]
+[ Upstream commit 4dfc63c002a555a2c3c34d89009532ad803be876 ]
 
-Instead of doing simple operations and using an additional variable on stack,
-utilize strnlen() and reuse len variable.
+The status variable assigned only once and used also only once.
+Replace it's usage by actual value.
 
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20220603164414.48436-1-andriy.shevchenko@linux.intel.com
+Link: https://lore.kernel.org/r/20220603164414.48436-2-andriy.shevchenko@linux.intel.com
 Stable-dep-of: 4f8d66a9fb2e ("wifi: ray_cs: Fix an error handling path in ray_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ray_cs.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ drivers/net/wireless/ray_cs.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/drivers/net/wireless/ray_cs.c b/drivers/net/wireless/ray_cs.c
-index 091eea0d958d1..5dcd86f81cbf1 100644
+index 5dcd86f81cbf1..95d5ce1b6dfa0 100644
 --- a/drivers/net/wireless/ray_cs.c
 +++ b/drivers/net/wireless/ray_cs.c
-@@ -1641,31 +1641,29 @@ static void authenticate_timeout(struct timer_list *t)
- /*===========================================================================*/
- static int parse_addr(char *in_str, UCHAR *out)
+@@ -1643,7 +1643,6 @@ static int parse_addr(char *in_str, UCHAR *out)
  {
-+	int i, k;
+ 	int i, k;
  	int len;
--	int i, j, k;
- 	int status;
+-	int status;
  
  	if (in_str == NULL)
  		return 0;
--	if ((len = strlen(in_str)) < 2)
-+	len = strnlen(in_str, ADDRLEN * 2 + 1) - 1;
-+	if (len < 1)
+@@ -1652,7 +1651,6 @@ static int parse_addr(char *in_str, UCHAR *out)
  		return 0;
  	memset(out, 0, ADDRLEN);
  
- 	status = 1;
--	j = len - 1;
--	if (j > 12)
--		j = 12;
+-	status = 1;
  	i = 5;
  
--	while (j > 0) {
--		if ((k = hex_to_bin(in_str[j--])) != -1)
-+	while (len > 0) {
-+		if ((k = hex_to_bin(in_str[len--])) != -1)
- 			out[i] = k;
- 		else
- 			return 0;
- 
--		if (j == 0)
-+		if (len == 0)
+ 	while (len > 0) {
+@@ -1670,7 +1668,7 @@ static int parse_addr(char *in_str, UCHAR *out)
+ 		if (!i--)
  			break;
--		if ((k = hex_to_bin(in_str[j--])) != -1)
-+		if ((k = hex_to_bin(in_str[len--])) != -1)
- 			out[i] += k << 4;
- 		else
- 			return 0;
+ 	}
+-	return status;
++	return 1;
+ }
+ 
+ /*===========================================================================*/
 -- 
 2.39.2
 
