@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B63414263
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:56:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1664C433C8;
-	Tue, 25 Jul 2023 10:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C7014263
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:56:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0EB6C433C8;
+	Tue, 25 Jul 2023 10:56:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282575;
-	bh=1ya9FReZrp0uhli1J8I65X06sI6RJIIFU2P4NpZ2Uqg=;
+	s=korg; t=1690282578;
+	bh=Brdlo8b9PQ91L9E8OYoZ37v5QyHFrWOJuQKU2DiFZXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CdGSUEhqIPcKe7+IAfzLTnRaIaAUTVuwT4ZTNoCyGWZPb+bnpTRfIz+oEAo4Gjs/n
-	 rLAGlPDO73dBpvLCbNOgjq71UBWT5YpjbxVMxwa6oieF8B9XGHMhDYFB4/UT+ZaWnL
-	 Lbt9Rni/0xj2OaFhiopHYW3StWccXhU9miRrHznU=
+	b=T/GywvDa6Zanwzgf4CWICV96mlYHGuWdWObzwCmbgXTfYhlz2VJoM85DOFEh2b8J+
+	 QOVBZLAo4o+545Epx3R678+Ia4hZG0balLuAhfAifmlQXiprCg3ar00Sl9I3d0s2Z2
+	 rxEB62fmj4ECqCnDQ0kiafTDWgIfXJvcPCXKqQeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Sunil Goutham <sgoutham@marvell.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 178/227] vrf: Fix lockdep splat in output path
-Date: Tue, 25 Jul 2023 12:45:45 +0200
-Message-ID: <20230725104522.204982756@linuxfoundation.org>
+Subject: [PATCH 6.4 179/227] octeontx2-pf: Dont allocate BPIDs for LBK interfaces
+Date: Tue, 25 Jul 2023 12:45:46 +0200
+Message-ID: <20230725104522.235898022@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -38,154 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Geetha sowjanya <gakula@marvell.com>
 
-[ Upstream commit 2033ab90380d46e0e9f0520fd6776a73d107fd95 ]
+[ Upstream commit 8fcd7c7b3a38ab5e452f542fda8f7940e77e479a ]
 
-Cited commit converted the neighbour code to use the standard RCU
-variant instead of the RCU-bh variant, but the VRF code still uses
-rcu_read_lock_bh() / rcu_read_unlock_bh() around the neighbour lookup
-code in its IPv4 and IPv6 output paths, resulting in lockdep splats
-[1][2]. Can be reproduced using [3].
+Current driver enables backpressure for LBK interfaces.
+But these interfaces do not support this feature.
+Hence, this patch fixes the issue by skipping the
+backpressure configuration for these interfaces.
 
-Fix by switching to rcu_read_lock() / rcu_read_unlock().
-
-[1]
-=============================
-WARNING: suspicious RCU usage
-6.5.0-rc1-custom-g9c099e6dbf98 #403 Not tainted
------------------------------
-include/net/neighbour.h:302 suspicious rcu_dereference_check() usage!
-
-other info that might help us debug this:
-
-rcu_scheduler_active = 2, debug_locks = 1
-2 locks held by ping/183:
- #0: ffff888105ea1d80 (sk_lock-AF_INET){+.+.}-{0:0}, at: raw_sendmsg+0xc6c/0x33c0
- #1: ffffffff85b46820 (rcu_read_lock_bh){....}-{1:2}, at: vrf_output+0x2e3/0x2030
-
-stack backtrace:
-CPU: 0 PID: 183 Comm: ping Not tainted 6.5.0-rc1-custom-g9c099e6dbf98 #403
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-1.fc37 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0xc1/0xf0
- lockdep_rcu_suspicious+0x211/0x3b0
- vrf_output+0x1380/0x2030
- ip_push_pending_frames+0x125/0x2a0
- raw_sendmsg+0x200d/0x33c0
- inet_sendmsg+0xa2/0xe0
- __sys_sendto+0x2aa/0x420
- __x64_sys_sendto+0xe5/0x1c0
- do_syscall_64+0x38/0x80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-[2]
-=============================
-WARNING: suspicious RCU usage
-6.5.0-rc1-custom-g9c099e6dbf98 #403 Not tainted
------------------------------
-include/net/neighbour.h:302 suspicious rcu_dereference_check() usage!
-
-other info that might help us debug this:
-
-rcu_scheduler_active = 2, debug_locks = 1
-2 locks held by ping6/182:
- #0: ffff888114b63000 (sk_lock-AF_INET6){+.+.}-{0:0}, at: rawv6_sendmsg+0x1602/0x3e50
- #1: ffffffff85b46820 (rcu_read_lock_bh){....}-{1:2}, at: vrf_output6+0xe9/0x1310
-
-stack backtrace:
-CPU: 0 PID: 182 Comm: ping6 Not tainted 6.5.0-rc1-custom-g9c099e6dbf98 #403
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-1.fc37 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0xc1/0xf0
- lockdep_rcu_suspicious+0x211/0x3b0
- vrf_output6+0xd32/0x1310
- ip6_local_out+0xb4/0x1a0
- ip6_send_skb+0xbc/0x340
- ip6_push_pending_frames+0xe5/0x110
- rawv6_sendmsg+0x2e6e/0x3e50
- inet_sendmsg+0xa2/0xe0
- __sys_sendto+0x2aa/0x420
- __x64_sys_sendto+0xe5/0x1c0
- do_syscall_64+0x38/0x80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-[3]
-#!/bin/bash
-
-ip link add name vrf-red up numtxqueues 2 type vrf table 10
-ip link add name swp1 up master vrf-red type dummy
-ip address add 192.0.2.1/24 dev swp1
-ip address add 2001:db8:1::1/64 dev swp1
-ip neigh add 192.0.2.2 lladdr 00:11:22:33:44:55 nud perm dev swp1
-ip neigh add 2001:db8:1::2 lladdr 00:11:22:33:44:55 nud perm dev swp1
-ip vrf exec vrf-red ping 192.0.2.2 -c 1 &> /dev/null
-ip vrf exec vrf-red ping6 2001:db8:1::2 -c 1 &> /dev/null
-
-Fixes: 09eed1192cec ("neighbour: switch to standard rcu, instead of rcu_bh")
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Link: https://lore.kernel.org/netdev/CA+G9fYtEr-=GbcXNDYo3XOkwR+uYgehVoDjsP0pFLUpZ_AZcyg@mail.gmail.com/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230715153605.4068066-1-idosch@nvidia.com
+Fixes: 75f36270990c ("octeontx2-pf: Support to enable/disable pause frames via ethtool").
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
+Link: https://lore.kernel.org/r/20230716093741.28063-1-gakula@marvell.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vrf.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/vrf.c b/drivers/net/vrf.c
-index bdb3a76a352e4..6043e63b42f97 100644
---- a/drivers/net/vrf.c
-+++ b/drivers/net/vrf.c
-@@ -664,7 +664,7 @@ static int vrf_finish_output6(struct net *net, struct sock *sk,
- 	skb->protocol = htons(ETH_P_IPV6);
- 	skb->dev = dev;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+index 18284ad751572..384d26bee9b23 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+@@ -1452,8 +1452,9 @@ static int otx2_init_hw_resources(struct otx2_nic *pf)
+ 	if (err)
+ 		goto err_free_npa_lf;
  
--	rcu_read_lock_bh();
-+	rcu_read_lock();
- 	nexthop = rt6_nexthop((struct rt6_info *)dst, &ipv6_hdr(skb)->daddr);
- 	neigh = __ipv6_neigh_lookup_noref(dst->dev, nexthop);
- 	if (unlikely(!neigh))
-@@ -672,10 +672,10 @@ static int vrf_finish_output6(struct net *net, struct sock *sk,
- 	if (!IS_ERR(neigh)) {
- 		sock_confirm_neigh(skb, neigh);
- 		ret = neigh_output(neigh, skb, false);
--		rcu_read_unlock_bh();
-+		rcu_read_unlock();
- 		return ret;
- 	}
--	rcu_read_unlock_bh();
-+	rcu_read_unlock();
+-	/* Enable backpressure */
+-	otx2_nix_config_bp(pf, true);
++	/* Enable backpressure for CGX mapped PF/VFs */
++	if (!is_otx2_lbkvf(pf->pdev))
++		otx2_nix_config_bp(pf, true);
  
- 	IP6_INC_STATS(dev_net(dst->dev),
- 		      ip6_dst_idev(dst), IPSTATS_MIB_OUTNOROUTES);
-@@ -889,7 +889,7 @@ static int vrf_finish_output(struct net *net, struct sock *sk, struct sk_buff *s
- 		}
- 	}
- 
--	rcu_read_lock_bh();
-+	rcu_read_lock();
- 
- 	neigh = ip_neigh_for_gw(rt, skb, &is_v6gw);
- 	if (!IS_ERR(neigh)) {
-@@ -898,11 +898,11 @@ static int vrf_finish_output(struct net *net, struct sock *sk, struct sk_buff *s
- 		sock_confirm_neigh(skb, neigh);
- 		/* if crossing protocols, can not use the cached header */
- 		ret = neigh_output(neigh, skb, is_v6gw);
--		rcu_read_unlock_bh();
-+		rcu_read_unlock();
- 		return ret;
- 	}
- 
--	rcu_read_unlock_bh();
-+	rcu_read_unlock();
- 	vrf_tx_error(skb->dev, skb);
- 	return -EINVAL;
- }
+ 	/* Init Auras and pools used by NIX RQ, for free buffer ptrs */
+ 	err = otx2_rq_aura_pool_init(pf);
 -- 
 2.39.2
 
