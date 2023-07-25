@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5933C14263
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:26:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0FAAC433CA;
-	Tue, 25 Jul 2023 11:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546FA14263
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:26:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D0BC433C8;
+	Tue, 25 Jul 2023 11:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284395;
-	bh=U3T8hGPr7fGnLvKHuuJk2IUejR58suIjLT5kyk5bWyA=;
+	s=korg; t=1690284397;
+	bh=Dawbfi9cUKcgHz0FMKbti22L1G5HksK8tkVVdpDwyy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fr2fkdXg72kyPi7zyh260VdGplm/9duc6CGB6a8I0dA4DDcqH42X6jjHnuv/IR1BE
-	 OX0inQm3HZuIIKXIo1A1mEs01Fw8zHAslUIta1P/3UXfhnzEKWCiWFmpDke1mfuVmA
-	 y+YT6q1voOY3sGaE3I1N7kc9/As++6V3EwPkoz+M=
+	b=xjUUKTJujHPjZvW73bX0+aPkTdvDaYhoS3m3pNFReKPnFdewL1VdDhj+vZtN0li5N
+	 X1dnRAfqB7Pf/kR8As5SQ63FaRxDaf7UcwRiZgbNF6DuXDVQg+6Q34kmZ1UMiXy61Z
+	 KQG4clN5reQ4tg6dSJL6uxsJv5qZXg1pcB1+VDrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Sasha Neftin <sasha.neftin@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 339/509] igc: Remove delay during TX ring configuration
-Date: Tue, 25 Jul 2023 12:44:38 +0200
-Message-ID: <20230725104609.236273597@linuxfoundation.org>
+Subject: [PATCH 5.10 340/509] net/mlx5e: fix double free in mlx5e_destroy_flow_table
+Date: Tue, 25 Jul 2023 12:44:39 +0200
+Message-ID: <20230725104609.287768790@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,44 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit cca28ceac7c7857bc2d313777017585aef00bcc4 ]
+[ Upstream commit 884abe45a9014d0de2e6edb0630dfd64f23f1d1b ]
 
-Remove unnecessary delay during the TX ring configuration.
-This will cause delay, especially during link down and
-link up activity.
+In function accel_fs_tcp_create_groups(), when the ft->g memory is
+successfully allocated but the 'in' memory fails to be allocated, the
+memory pointed to by ft->g is released once. And in function
+accel_fs_tcp_create_table, mlx5e_destroy_flow_table is called to release
+the memory pointed to by ft->g again. This will cause double free problem.
 
-Furthermore, old SKUs like as I225 will call the reset_adapter
-to reset the controller during TSN mode Gate Control List (GCL)
-setting. This will add more time to the configuration of the
-real-time use case.
-
-It doesn't mentioned about this delay in the Software User Manual.
-It might have been ported from legacy code I210 in the past.
-
-Fixes: 13b5b7fd6a4a ("igc: Add support for Tx/Rx rings")
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Acked-by: Sasha Neftin <sasha.neftin@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: c062d52ac24c ("net/mlx5e: Receive flow steering framework for accelerated TCP flows")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index a15e4b6d7fa40..2b51ee87a2def 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -600,7 +600,6 @@ static void igc_configure_tx_ring(struct igc_adapter *adapter,
- 	/* disable the queue */
- 	wr32(IGC_TXDCTL(reg_idx), 0);
- 	wrfl();
--	mdelay(10);
- 
- 	wr32(IGC_TDLEN(reg_idx),
- 	     ring->count * sizeof(union igc_adv_tx_desc));
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c
+index e51f60b55daa4..2da90f6649d17 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/fs_tcp.c
+@@ -194,6 +194,7 @@ static int accel_fs_tcp_create_groups(struct mlx5e_flow_table *ft,
+ 	in = kvzalloc(inlen, GFP_KERNEL);
+ 	if  (!in || !ft->g) {
+ 		kfree(ft->g);
++		ft->g = NULL;
+ 		kvfree(in);
+ 		return -ENOMEM;
+ 	}
 -- 
 2.39.2
 
