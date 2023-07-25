@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72B514263
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:53:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5913AC433C7;
-	Tue, 25 Jul 2023 10:53:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A19A14263
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:54:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AFBBC433C7;
+	Tue, 25 Jul 2023 10:53:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282437;
-	bh=mAz3AHas66G18RPzS7JDee5JtFE3Vomik05GIdaTHOU=;
+	s=korg; t=1690282440;
+	bh=r3acrmM5R6Trb3LGMO+5Sf8srO34ZIZ0Ug9mIqIz684=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OdKgP822qu+WnuiLw/x+m0pdHkyZLpO9IrwAhnJ8miKYXcLUF5im+hDBL5g1JXCRZ
-	 hwYt70dnBQn00oeREKVbVp3B8V6Vl4ZKoMjvoyU05UxU08ZaC34seMYckpKm+qWDhJ
-	 xryBPu2Z8Hn/MtFCkhSCUDaMG63axQhO5zr+AoEU=
+	b=V0pud6kTCvGyghDp0bkKpM2r+EtUTMRaBeMivWHt65nOfYH73BOpbcp6/yTkwLR+e
+	 sltiBmb5aCf6Uy6hrWSleSDx4+eH2oFpIrwqWOkF6TOCet8Lr18Mo/pZfXgl7KQdpY
+	 /kpxKEQWQW+f/9BvtePpyIgiA1mJJCL3xiU9NL7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hans de Goede <hdegoede@redhat.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 100/227] ACPI: video: Add backlight=native DMI quirk for Apple iMac11,3
-Date: Tue, 25 Jul 2023 12:44:27 +0200
-Message-ID: <20230725104518.875302741@linuxfoundation.org>
+Subject: [PATCH 6.4 101/227] ACPI: video: Add backlight=native DMI quirk for Lenovo ThinkPad X131e (3371 AMD version)
+Date: Tue, 25 Jul 2023 12:44:28 +0200
+Message-ID: <20230725104518.925042005@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -37,10 +37,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 48436f2e9834b46b47b038b605c8142a1c07bc85 ]
+[ Upstream commit bd5d93df86a7ddf98a2a37e9c3751e3cb334a66c ]
 
 Linux defaults to picking the non-working ACPI video backlight interface
-on the Apple iMac11,3 .
+on the Lenovo ThinkPad X131e (3371 AMD version).
 
 Add a DMI quirk to pick the working native radeon_bl0 interface instead.
 
@@ -52,7 +52,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 8 insertions(+)
 
 diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
-index bcc25d457581d..61586caebb01b 100644
+index 61586caebb01b..b87783c5872dd 100644
 --- a/drivers/acpi/video_detect.c
 +++ b/drivers/acpi/video_detect.c
 @@ -470,6 +470,14 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
@@ -61,15 +61,15 @@ index bcc25d457581d..61586caebb01b 100644
  	},
 +	{
 +	 .callback = video_detect_force_native,
-+	 /* Apple iMac11,3 */
++	 /* Lenovo ThinkPad X131e (3371 AMD version) */
 +	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "Apple Inc."),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "iMac11,3"),
++		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++		DMI_MATCH(DMI_PRODUCT_NAME, "3371"),
 +		},
 +	},
  	{
- 	 /* https://bugzilla.redhat.com/show_bug.cgi?id=1217249 */
  	 .callback = video_detect_force_native,
+ 	 /* Apple iMac11,3 */
 -- 
 2.39.2
 
