@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A94182C8
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:30:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 504DFC433C8;
-	Tue, 25 Jul 2023 11:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C86182C8
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:30:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26EA0C433C7;
+	Tue, 25 Jul 2023 11:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284640;
-	bh=xKRkZmxvUuOC4+u+Y8elazlMac925G8ZZUEyBDFRG1M=;
+	s=korg; t=1690284643;
+	bh=VePy0bQcPHZmfvEXYaOTEDqkdbRFhfpENS4TGVRrFMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5NBb62Qj1HJU6sDxtTyZDOV6NbJFnrgjgUOiiiucmkEtDvKt6YPmMV8NN/auf/Ns
-	 8iSt5O5xWuBnnMMf52qep+F5om/HIcZLIucB9F9EirZK4A5Sfv5tpzRcE6i48wsl3B
-	 CoXesjWEv4V6bzoyVTJprWP2xvhAMbd96Yf58vt0=
+	b=Y1OwsE5zR30PLnTYPXG1ITy6O/NN3mk1orfTKqObJ60V5GuyuTd/2RUPpJsc9gZps
+	 Z+DndVA9sYpcPz7QDR0dMWupX5977YRUDBpAD3QF7zO00d4dcJa29IlIMH2ivyl6CN
+	 4rqlx/Q395/T0S1205jtDt0QtHYaQ3Cy8WRFRjA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 428/509] tracing/probes: Fix not to count error code to total length
-Date: Tue, 25 Jul 2023 12:46:07 +0200
-Message-ID: <20230725104613.305003167@linuxfoundation.org>
+	Quinn Tran <qutran@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.10 429/509] scsi: qla2xxx: Wait for io return on terminate rport
+Date: Tue, 25 Jul 2023 12:46:08 +0200
+Message-ID: <20230725104613.354990392@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,38 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Quinn Tran <qutran@marvell.com>
 
-commit b41326b5e0f82e93592c4366359917b5d67b529f upstream.
+commit fc0cba0c7be8261a1625098bd1d695077ec621c9 upstream.
 
-Fix not to count the error code (which is minus value) to the total
-used length of array, because it can mess up the return code of
-process_fetch_insn_bottom(). Also clear the 'ret' value because it
-will be used for calculating next data_loc entry.
+System crash due to use after free.
+Current code allows terminate_rport_io to exit before making
+sure all IOs has returned. For FCP-2 device, IO's can hang
+on in HW because driver has not tear down the session in FW at
+first sign of cable pull. When dev_loss_tmo timer pops,
+terminate_rport_io is called and upper layer is about to
+free various resources. Terminate_rport_io trigger qla to do
+the final cleanup, but the cleanup might not be fast enough where it
+leave qla still holding on to the same resource.
 
-Link: https://lore.kernel.org/all/168908493827.123124.2175257289106364229.stgit@devnote2/
+Wait for IO's to return to upper layer before resources are freed.
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/8819b154-2ba1-43c3-98a2-cbde20892023@moroto.mountain/
-Fixes: 9b960a38835f ("tracing: probeevent: Unify fetch_insn processing common part")
 Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20230428075339.32551-7-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_probe_tmpl.h |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/qla2xxx/qla_attr.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/kernel/trace/trace_probe_tmpl.h
-+++ b/kernel/trace/trace_probe_tmpl.h
-@@ -143,6 +143,8 @@ stage3:
- array:
- 	/* the last stage: Loop on array */
- 	if (code->op == FETCH_OP_LP_ARRAY) {
-+		if (ret < 0)
-+			ret = 0;
- 		total += ret;
- 		if (++i < code->param) {
- 			code = s3;
+--- a/drivers/scsi/qla2xxx/qla_attr.c
++++ b/drivers/scsi/qla2xxx/qla_attr.c
+@@ -2698,6 +2698,7 @@ static void
+ qla2x00_terminate_rport_io(struct fc_rport *rport)
+ {
+ 	fc_port_t *fcport = *(fc_port_t **)rport->dd_data;
++	scsi_qla_host_t *vha;
+ 
+ 	if (!fcport)
+ 		return;
+@@ -2707,9 +2708,12 @@ qla2x00_terminate_rport_io(struct fc_rpo
+ 
+ 	if (test_bit(ABORT_ISP_ACTIVE, &fcport->vha->dpc_flags))
+ 		return;
++	vha = fcport->vha;
+ 
+ 	if (unlikely(pci_channel_offline(fcport->vha->hw->pdev))) {
+ 		qla2x00_abort_all_cmds(fcport->vha, DID_NO_CONNECT << 16);
++		qla2x00_eh_wait_for_pending_commands(fcport->vha, fcport->d_id.b24,
++			0, WAIT_TARGET);
+ 		return;
+ 	}
+ 	/*
+@@ -2724,6 +2728,15 @@ qla2x00_terminate_rport_io(struct fc_rpo
+ 		else
+ 			qla2x00_port_logout(fcport->vha, fcport);
+ 	}
++
++	/* check for any straggling io left behind */
++	if (qla2x00_eh_wait_for_pending_commands(fcport->vha, fcport->d_id.b24, 0, WAIT_TARGET)) {
++		ql_log(ql_log_warn, vha, 0x300b,
++		       "IO not return.  Resetting. \n");
++		set_bit(ISP_ABORT_NEEDED, &vha->dpc_flags);
++		qla2xxx_wake_dpc(vha);
++		qla2x00_wait_for_chip_reset(vha);
++	}
+ }
+ 
+ static int
 
 
