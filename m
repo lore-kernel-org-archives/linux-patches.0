@@ -1,38 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8169F12B98
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:04:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA605C433C9;
-	Tue, 25 Jul 2023 11:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D4F12B98
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:04:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F54C433C7;
+	Tue, 25 Jul 2023 11:04:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283069;
-	bh=6btb+kOCRqTp4R0hKgZdE3qq69oTBLHT1O+BZureoHs=;
+	s=korg; t=1690283072;
+	bh=FQYJiP4xc7/v7gSSGSYZZ3EHFQlZc5QvnamO3NppU0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A22tKKcAeXlmxI/+5uEht69/p0I5KXTvX0FGk9K8E0Qjxp4Un1uS2/NlNTjWRZYhK
-	 +cEeavBus17Kbr5KYM/FaP9S40pNMkrgTUTHQwSVI5/dzCdrJ//at4AQkau5vTb9Nr
-	 +OUJOAQSAPuuc497vo/3YavW0JY2hwekshyRahFE=
+	b=csewitu8ap8Pps0tik/Cf3586Zkp3Dlz9aCQ4KrqErYcgXA3mZahAbgt5WNlJE/t4
+	 9mHmr9KW9gwBvFjiRt6HfExfdUne1lWcTlasLHINIFI2oGXoi5/xkDV0Sf0Et8JkvJ
+	 zr79diWN+eSg74ozBqvpTnIrgPa19ycFqV5kXaOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	James Clark <james.clark@arm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <uwe@kleine-koenig.org>,
-	coresight@lists.linaro.org,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 098/183] perf build: Fix library not found error when using CSLIBS
-Date: Tue, 25 Jul 2023 12:45:26 +0200
-Message-ID: <20230725104511.481356908@linuxfoundation.org>
+Subject: [PATCH 6.1 099/183] btrfs: be a bit more careful when setting mirror_num_ret in btrfs_map_block
+Date: Tue, 25 Jul 2023 12:45:27 +0200
+Message-ID: <20230725104511.516754140@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -46,89 +38,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Clark <james.clark@arm.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 1feece2780ac2f8de45177fe53979726cee4b3d1 ]
+[ Upstream commit 4e7de35eb7d1a1d4f2dda15f39fbedd4798a0b8d ]
 
--L only specifies the search path for libraries directly provided in the
-link line with -l. Because -lopencsd isn't specified, it's only linked
-because it's a dependency of -lopencsd_c_api. Dependencies like this are
-resolved using the default system search paths or -rpath-link=... rather
-than -L. This means that compilation only works if OpenCSD is installed
-to the system rather than provided with the CSLIBS (-L) option.
+The mirror_num_ret is allowed to be NULL, although it has to be set when
+smap is set.  Unfortunately that is not a well enough specifiable
+invariant for static type checkers, so add a NULL check to make sure they
+are fine.
 
-This could be fixed by adding -Wl,-rpath-link=$(CSLIBS) but that is less
-conventional than just adding -lopencsd to the link line so that it uses
--L. -lopencsd seems to have been removed in commit ed17b1914978eddb
-("perf tools: Drop requirement for libstdc++.so for libopencsd check")
-because it was thought that there was a chance compilation would work
-even if it didn't exist, but I think that only applies to libstdc++ so
-there is no harm to add it back. libopencsd.so and libopencsd_c_api.so
-would always exist together.
-
-Testing
-=======
-
-The following scenarios now all work:
-
- * Cross build with OpenCSD installed
- * Cross build using CSLIBS=...
- * Native build with OpenCSD installed
- * Native build using CSLIBS=...
- * Static cross build with OpenCSD installed
- * Static cross build with CSLIBS=...
-
-Committer testing:
-
-  ⬢[acme@toolbox perf-tools]$ alias m
-  alias m='make -k BUILD_BPF_SKEL=1 CORESIGHT=1 O=/tmp/build/perf-tools -C tools/perf install-bin && git status && perf test python ;  perf record -o /dev/null sleep 0.01 ; perf stat --null sleep 0.01'
-  ⬢[acme@toolbox perf-tools]$ ldd ~/bin/perf | grep csd
-  	libopencsd_c_api.so.1 => /lib64/libopencsd_c_api.so.1 (0x00007fd49c44e000)
-  	libopencsd.so.1 => /lib64/libopencsd.so.1 (0x00007fd49bd56000)
-  ⬢[acme@toolbox perf-tools]$ cat /etc/redhat-release
-  Fedora release 36 (Thirty Six)
-  ⬢[acme@toolbox perf-tools]$
-
-Fixes: ed17b1914978eddb ("perf tools: Drop requirement for libstdc++.so for libopencsd check")
-Reported-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Signed-off-by: James Clark <james.clark@arm.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Tested-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Uwe Kleine-König <uwe@kleine-koenig.org>
-Cc: coresight@lists.linaro.org
-Closes: https://lore.kernel.org/linux-arm-kernel/56905d7a-a91e-883a-b707-9d5f686ba5f1@arm.com/
-Link: https://lore.kernel.org/all/36cc4dc6-bf4b-1093-1c0a-876e368af183@kleine-koenig.org/
-Link: https://lore.kernel.org/r/20230707154546.456720-1-james.clark@arm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 03793cbbc80f ("btrfs: add fast path for single device io in __btrfs_map_block")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Makefile.config | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/volumes.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
-index 898226ea8cadc..fac6ba07eacdb 100644
---- a/tools/perf/Makefile.config
-+++ b/tools/perf/Makefile.config
-@@ -149,9 +149,9 @@ FEATURE_CHECK_LDFLAGS-libcrypto = -lcrypto
- ifdef CSINCLUDES
-   LIBOPENCSD_CFLAGS := -I$(CSINCLUDES)
- endif
--OPENCSDLIBS := -lopencsd_c_api
-+OPENCSDLIBS := -lopencsd_c_api -lopencsd
- ifeq ($(findstring -static,${LDFLAGS}),-static)
--  OPENCSDLIBS += -lopencsd -lstdc++
-+  OPENCSDLIBS += -lstdc++
- endif
- ifdef CSLIBS
-   LIBOPENCSD_LDFLAGS := -L$(CSLIBS)
+diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
+index 7433ae929fdcb..2e0832d70406c 100644
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -6595,11 +6595,13 @@ static int __btrfs_map_block(struct btrfs_fs_info *fs_info,
+ 		if (patch_the_first_stripe_for_dev_replace) {
+ 			smap->dev = dev_replace->tgtdev;
+ 			smap->physical = physical_to_patch_in_first_stripe;
+-			*mirror_num_ret = map->num_stripes + 1;
++			if (mirror_num_ret)
++				*mirror_num_ret = map->num_stripes + 1;
+ 		} else {
+ 			set_io_stripe(smap, map, stripe_index, stripe_offset,
+ 				      stripe_nr);
+-			*mirror_num_ret = mirror_num;
++			if (mirror_num_ret)
++				*mirror_num_ret = mirror_num;
+ 		}
+ 		*bioc_ret = NULL;
+ 		ret = 0;
 -- 
 2.39.2
 
