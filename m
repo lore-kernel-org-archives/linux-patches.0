@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8433415AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:52:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05E94C433C7;
-	Tue, 25 Jul 2023 10:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D2D15AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:52:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9AF1C433C7;
+	Tue, 25 Jul 2023 10:52:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282324;
-	bh=XNEGnYTaRZvaf5XGYkYuRvH5jHt41IG3/iZn+E6FlfI=;
+	s=korg; t=1690282327;
+	bh=UGZNxAi0mkTEbho6xJzTAYFYpXuw3NADS3Ic0xURk0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G+SpEm6CH3JTQ/bPW4PPZdw/AFOK4KvlmdQ4u87bjX4Ag0FYOvrSltNglqHNOoMjV
-	 QgQeCaHjc5FRaihbLqecEsTm0NXMbO71lsR0hnWtLQzaiEH396NIny9JLhU+4Ih5H7
-	 /iTzfv99CLKI1w/NjHFL66VFQYVWZ1NC4f3uijbE=
+	b=qBkvs4itvpJLkO39dT82PVSq6u/+dXmoqQBfBmX93yALD7yeo0bYplPyhv/zn1vKb
+	 pT11pntjKsAp1QMP/89jgT9rFYKWVvBOVZrpUIC2pz5KLVv10HLtDTvimZWLPW0UaH
+	 kfUDOGnOleVWrfwKrsm5P6eHe5Xjjg8s7VRoSo00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Neuwirth <reddunur@online.de>,
 	Yu Kuai <yukuai3@huawei.com>,
 	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 088/227] md: fix data corruption for raid456 when reshape restart while grow up
-Date: Tue, 25 Jul 2023 12:44:15 +0200
-Message-ID: <20230725104518.376621555@linuxfoundation.org>
+Subject: [PATCH 6.4 089/227] md/raid10: prevent soft lockup while flush writes
+Date: Tue, 25 Jul 2023 12:44:16 +0200
+Message-ID: <20230725104518.418646628@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -38,55 +37,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 873f50ece41aad5c4f788a340960c53774b5526e ]
+[ Upstream commit 010444623e7f4da6b4a4dd603a7da7469981e293 ]
 
-Currently, if reshape is interrupted, echo "reshape" to sync_action will
-restart reshape from scratch, for example:
+Currently, there is no limit for raid1/raid10 plugged bio. While flushing
+writes, raid1 has cond_resched() while raid10 doesn't, and too many
+writes can cause soft lockup.
 
-echo frozen > sync_action
-echo reshape > sync_action
+Follow up soft lockup can be triggered easily with writeback test for
+raid10 with ramdisks:
 
-This will corrupt data before reshape_position if the array is growing,
-fix the problem by continue reshape from reshape_position.
+watchdog: BUG: soft lockup - CPU#10 stuck for 27s! [md0_raid10:1293]
+Call Trace:
+ <TASK>
+ call_rcu+0x16/0x20
+ put_object+0x41/0x80
+ __delete_object+0x50/0x90
+ delete_object_full+0x2b/0x40
+ kmemleak_free+0x46/0xa0
+ slab_free_freelist_hook.constprop.0+0xed/0x1a0
+ kmem_cache_free+0xfd/0x300
+ mempool_free_slab+0x1f/0x30
+ mempool_free+0x3a/0x100
+ bio_free+0x59/0x80
+ bio_put+0xcf/0x2c0
+ free_r10bio+0xbf/0xf0
+ raid_end_bio_io+0x78/0xb0
+ one_write_done+0x8a/0xa0
+ raid10_end_write_request+0x1b4/0x430
+ bio_endio+0x175/0x320
+ brd_submit_bio+0x3b9/0x9b7 [brd]
+ __submit_bio+0x69/0xe0
+ submit_bio_noacct_nocheck+0x1e6/0x5a0
+ submit_bio_noacct+0x38c/0x7e0
+ flush_pending_writes+0xf0/0x240
+ raid10d+0xac/0x1ed0
 
-Reported-by: Peter Neuwirth <reddunur@online.de>
-Link: https://lore.kernel.org/linux-raid/e2f96772-bfbc-f43b-6da1-f520e5164536@online.de/
+Fix the problem by adding cond_resched() to raid10 like what raid1 did.
+
+Note that unlimited plugged bio still need to be optimized, for example,
+in the case of lots of dirty pages writeback, this will take lots of
+memory and io will spend a long time in plug, hence io latency is bad.
+
 Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230512015610.821290-3-yukuai1@huaweicloud.com
+Link: https://lore.kernel.org/r/20230529131106.2123367-2-yukuai1@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/md/raid10.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 350094f1cb09f..18384251399ab 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -4807,11 +4807,21 @@ action_store(struct mddev *mddev, const char *page, size_t len)
- 			return -EINVAL;
- 		err = mddev_lock(mddev);
- 		if (!err) {
--			if (test_bit(MD_RECOVERY_RUNNING, &mddev->recovery))
-+			if (test_bit(MD_RECOVERY_RUNNING, &mddev->recovery)) {
- 				err =  -EBUSY;
--			else {
-+			} else if (mddev->reshape_position == MaxSector ||
-+				   mddev->pers->check_reshape == NULL ||
-+				   mddev->pers->check_reshape(mddev)) {
- 				clear_bit(MD_RECOVERY_FROZEN, &mddev->recovery);
- 				err = mddev->pers->start_reshape(mddev);
-+			} else {
-+				/*
-+				 * If reshape is still in progress, and
-+				 * md_check_recovery() can continue to reshape,
-+				 * don't restart reshape because data can be
-+				 * corrupted for raid456.
-+				 */
-+				clear_bit(MD_RECOVERY_FROZEN, &mddev->recovery);
- 			}
- 			mddev_unlock(mddev);
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index 9d23963496194..ee75b058438f3 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -920,6 +920,7 @@ static void flush_pending_writes(struct r10conf *conf)
+ 
+ 			raid1_submit_write(bio);
+ 			bio = next;
++			cond_resched();
  		}
+ 		blk_finish_plug(&plug);
+ 	} else
+@@ -1132,6 +1133,7 @@ static void raid10_unplug(struct blk_plug_cb *cb, bool from_schedule)
+ 
+ 		raid1_submit_write(bio);
+ 		bio = next;
++		cond_resched();
+ 	}
+ 	kfree(plug);
+ }
 -- 
 2.39.2
 
