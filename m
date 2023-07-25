@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081641ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:40:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174D1C433CD;
-	Tue, 25 Jul 2023 11:40:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE751ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:40:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE511C433C9;
+	Tue, 25 Jul 2023 11:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285227;
-	bh=l89wX/sYB90K0n/wo1MOR8O5IwE68oRLCuAuE9ANbLk=;
+	s=korg; t=1690285230;
+	bh=HCLC33ytXoiSdWk3Ec1uvJNOlRf9UoaIabqVUoLJ/zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b/HTDRL8o5j4Vf7OSPXYk7HY93ybcX2IWSZmkboPVLqM0AXY3aRu8VQhUHetqIQCf
-	 V8pre02+GurTHw+NFiN+PTclQikhtTNMDHQ7EDTo6ipyIBusLV3cLoJQyGb1UDfP6M
-	 BBx4DhgP8zp2/fHX8+9CbJjiCUyzR/sUNsE+kk+k=
+	b=xMHbks/Sm+mKVGYi2iPmFPjzwPdAL8KfBYndKFIUHi7Ok6bLWyxHH98qXnIj+B1VX
+	 WR+Hp3EZ2F3Yt4kX1t2xK122Fdgge6Gk8XB5rw3I9FssxEw/5IC3OgKmeVj4B+hMls
+	 9A02oPTlZ3f3mLO7n34YQH62L1e4nZPTMZwT0KJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.4 122/313] usb: dwc3: gadget: Propagate core init errors to UDC during pullup
-Date: Tue, 25 Jul 2023 12:44:35 +0200
-Message-ID: <20230725104526.290440017@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 131/313] extcon: Fix kernel doc of property fields to avoid warnings
+Date: Tue, 25 Jul 2023 12:44:44 +0200
+Message-ID: <20230725104526.687557554@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,52 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit c0aabed9cabe057309779a9e26fe86a113d24dad upstream.
+[ Upstream commit 7e77e0b7a9f4cdf91cb0950749b40c840ea63efc ]
 
-In scenarios where pullup relies on resume (get sync) to initialize
-the controller and set the run stop bit, then core_init is followed by
-gadget_resume which will eventually set run stop bit.
+Kernel documentation has to be synchronized with a code, otherwise
+the validator is not happy:
 
-But in cases where the core_init fails, the return value is not sent
-back to udc appropriately. So according to UDC the controller has
-started but in reality we never set the run stop bit.
+     Function parameter or member 'usb_propval' not described in 'extcon_cable'
+     Function parameter or member 'chg_propval' not described in 'extcon_cable'
+     Function parameter or member 'jack_propval' not described in 'extcon_cable'
+     Function parameter or member 'disp_propval' not described in 'extcon_cable'
 
-On systems like Android, there are uevents sent to HAL depending on
-whether the configfs_bind / configfs_disconnect were invoked. In the
-above mentioned scnenario, if the core init fails, the run stop won't
-be set and the cable plug-out won't result in generation of any
-disconnect event and userspace would never get any uevent regarding
-cable plug out and we never call pullup(0) again. Furthermore none of
-the next Plug-In/Plug-Out's would be known to configfs.
+Describe the fields added in the past.
 
-Return back the appropriate result to UDC to let the userspace/
-configfs know that the pullup failed so they can take appropriate
-action.
-
-Fixes: 77adb8bdf422 ("usb: dwc3: gadget: Allow runtime suspend if UDC unbinded")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Message-ID: <20230618120949.14868-1-quic_kriskura@quicinc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 067c1652e7a7 ("extcon: Add the support for extcon property according to extcon type")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/gadget.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/extcon/extcon.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -2077,7 +2077,9 @@ static int dwc3_gadget_pullup(struct usb
- 	ret = pm_runtime_get_sync(dwc->dev);
- 	if (!ret || ret < 0) {
- 		pm_runtime_put(dwc->dev);
--		return 0;
-+		if (ret < 0)
-+			pm_runtime_set_suspended(dwc->dev);
-+		return ret;
- 	}
- 
- 	if (dwc->pullups_connected == is_on) {
+diff --git a/drivers/extcon/extcon.c b/drivers/extcon/extcon.c
+index 6b905c3d30f4f..00ad8b637749b 100644
+--- a/drivers/extcon/extcon.c
++++ b/drivers/extcon/extcon.c
+@@ -196,6 +196,10 @@ static const struct __extcon_info {
+  * @attr_name:		"name" sysfs entry
+  * @attr_state:		"state" sysfs entry
+  * @attrs:		the array pointing to attr_name and attr_state for attr_g
++ * @usb_propval:	the array of USB connector properties
++ * @chg_propval:	the array of charger connector properties
++ * @jack_propval:	the array of jack connector properties
++ * @disp_propval:	the array of display connector properties
+  */
+ struct extcon_cable {
+ 	struct extcon_dev *edev;
+-- 
+2.39.2
+
 
 
