@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBA31D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:17:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB54C433C7;
-	Tue, 25 Jul 2023 11:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B981D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:17:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E0BC433C7;
+	Tue, 25 Jul 2023 11:17:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283863;
-	bh=PhWBYx1Pun4I3gmS2xxsyjjydJTxAmFGHnmI8wVisSE=;
+	s=korg; t=1690283866;
+	bh=HUEROur+Iwzh2YYN2HVMhiVxBAQM3p9BMmwCz5lnvrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cYcj7C9xRU1ISQU5d7MvqhPXGuk7o0rP6IxykXTN5/qQ1eMIkS8TH1rJJrhJcf1/f
-	 Bn6kBe3rKQunvW4Lkd2TNDykJIVzjEliWhIQkX/b/qLQ3pjoTxyrJfE+2DB+Kt5xGH
-	 MqErrLCSrLe6m7SVOYwKRd8DUtMKPxMKq6dKh1gQ=
+	b=XBpd+/YiqXNGywq6nFq0XJETi1QZ/vBU4084NweEDgcZ8+xkkx7w7Tqb2YBVQWuHF
+	 rgmFHocYph34TC/A1TghHu92BHo7avx+cUpLXUnapyl+s9ComFjfBGM3M4pyDasgn/
+	 30Cs41D0NZS3upfSXJ3dHMOtTWTlh4bPHQ/QTuXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chu Lin <linchuyuan@google.com>,
+	Potin Lai <potin.lai@quantatw.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 148/509] hwmon: (adm1275) enable adm1272 temperature reporting
-Date: Tue, 25 Jul 2023 12:41:27 +0200
-Message-ID: <20230725104600.511657100@linuxfoundation.org>
+Subject: [PATCH 5.10 149/509] hwmon: (adm1275) Allow setting sample averaging
+Date: Tue, 25 Jul 2023 12:41:28 +0200
+Message-ID: <20230725104600.549802733@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,63 +35,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chu Lin <linchuyuan@google.com>
+From: Potin Lai <potin.lai@quantatw.com>
 
-[ Upstream commit 9da9c2dc57b2fa2e65521894cb66df4bf615214d ]
+[ Upstream commit a3cd66d7cbadcc0c29884f25b754fd22699c719c ]
 
-adm1272 supports temperature reporting but it is disabled by default.
+Current driver assume PWR_AVG and VI_AVG as 1 by default, and user needs
+to set sample averaging via sysfs manually.
 
-Tested:
-ls temp1_*
-temp1_crit           temp1_highest        temp1_max
-temp1_crit_alarm     temp1_input          temp1_max_alarm
+This patch parses the properties "adi,power-sample-average" and
+"adi,volt-curr-sample-average" from device tree, and setting sample
+averaging during probe. Input value must be one of value in the
+list [1, 2, 4, 8, 16, 32, 64, 128].
 
-cat temp1_input
-26642
-
-Signed-off-by: Chu Lin <linchuyuan@google.com>
-Link: https://lore.kernel.org/r/20210512171043.2433694-1-linchuyuan@google.com
-[groeck: Updated subject to reflect correct driver]
+Signed-off-by: Potin Lai <potin.lai@quantatw.com>
+Link: https://lore.kernel.org/r/20220302123817.27025-2-potin.lai@quantatw.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Stable-dep-of: b153a0bb4199 ("hwmon: (pmbus/adm1275) Fix problems with temperature monitoring on ADM1272")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/adm1275.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ drivers/hwmon/pmbus/adm1275.c | 40 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 39 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
-index e7997f37b2666..0be1b5777d2f0 100644
+index 0be1b5777d2f0..92eb047ff246f 100644
 --- a/drivers/hwmon/pmbus/adm1275.c
 +++ b/drivers/hwmon/pmbus/adm1275.c
-@@ -611,11 +611,13 @@ static int adm1275_probe(struct i2c_client *client)
- 		tindex = 8;
+@@ -475,6 +475,7 @@ static int adm1275_probe(struct i2c_client *client)
+ 	int vindex = -1, voindex = -1, cindex = -1, pindex = -1;
+ 	int tindex = -1;
+ 	u32 shunt;
++	u32 avg;
  
- 		info->func[0] |= PMBUS_HAVE_PIN | PMBUS_HAVE_STATUS_INPUT |
--			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT;
-+			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT |
-+			PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
- 
--		/* Enable VOUT if not enabled (it is disabled by default) */
--		if (!(config & ADM1278_VOUT_EN)) {
--			config |= ADM1278_VOUT_EN;
-+		/* Enable VOUT & TEMP1 if not enabled (disabled by default) */
-+		if ((config & (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) !=
-+		    (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) {
-+			config |= ADM1278_VOUT_EN | ADM1278_TEMP1_EN;
- 			ret = i2c_smbus_write_byte_data(client,
+ 	if (!i2c_check_functionality(client->adapter,
+ 				     I2C_FUNC_SMBUS_READ_BYTE_DATA
+@@ -687,7 +688,7 @@ static int adm1275_probe(struct i2c_client *client)
+ 		if ((config & (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) !=
+ 		    (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) {
+ 			config |= ADM1278_VOUT_EN | ADM1278_TEMP1_EN;
+-			ret = i2c_smbus_write_byte_data(client,
++			ret = i2c_smbus_write_word_data(client,
  							ADM1275_PMON_CONFIG,
  							config);
-@@ -625,10 +627,6 @@ static int adm1275_probe(struct i2c_client *client)
- 				return -ENODEV;
- 			}
- 		}
--
--		if (config & ADM1278_TEMP1_EN)
--			info->func[0] |=
--				PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
- 		if (config & ADM1278_VIN_EN)
- 			info->func[0] |= PMBUS_HAVE_VIN;
- 		break;
+ 			if (ret < 0) {
+@@ -756,6 +757,43 @@ static int adm1275_probe(struct i2c_client *client)
+ 		return -ENODEV;
+ 	}
+ 
++	if (data->have_power_sampling &&
++	    of_property_read_u32(client->dev.of_node,
++				 "adi,power-sample-average", &avg) == 0) {
++		if (!avg || avg > ADM1275_SAMPLES_AVG_MAX ||
++		    BIT(__fls(avg)) != avg) {
++			dev_err(&client->dev,
++				"Invalid number of power samples");
++			return -EINVAL;
++		}
++		ret = adm1275_write_pmon_config(data, client, true,
++						ilog2(avg));
++		if (ret < 0) {
++			dev_err(&client->dev,
++				"Setting power sample averaging failed with error %d",
++				ret);
++			return ret;
++		}
++	}
++
++	if (of_property_read_u32(client->dev.of_node,
++				"adi,volt-curr-sample-average", &avg) == 0) {
++		if (!avg || avg > ADM1275_SAMPLES_AVG_MAX ||
++		    BIT(__fls(avg)) != avg) {
++			dev_err(&client->dev,
++				"Invalid number of voltage/current samples");
++			return -EINVAL;
++		}
++		ret = adm1275_write_pmon_config(data, client, false,
++						ilog2(avg));
++		if (ret < 0) {
++			dev_err(&client->dev,
++				"Setting voltage and current sample averaging failed with error %d",
++				ret);
++			return ret;
++		}
++	}
++
+ 	if (voindex < 0)
+ 		voindex = vindex;
+ 	if (vindex >= 0) {
 -- 
 2.39.2
 
