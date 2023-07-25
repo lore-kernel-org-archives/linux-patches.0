@@ -1,34 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05451ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:23:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17116C433C8;
-	Tue, 25 Jul 2023 11:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B49B1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:23:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1ADEC433C8;
+	Tue, 25 Jul 2023 11:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284224;
-	bh=G9qlrBcJbNn2G7LkTxQCo96rTqU9FkPoHv0glkbqNhU=;
+	s=korg; t=1690284227;
+	bh=uQUY7r8hlWpVURkaCRdL+RvZiSBJ6hX8ALGCIB7YQLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r93zsgasO5q+BNTYE6WCoh2fZ+XSQZez0wK1SZuLXIe5gFraKjbEjJjxAIHdwddZW
-	 8vJI8O+LCGkN77xzFO6pT6sQTo6uzSG/BQHtFVQsrGMtHw13Rc5a0VQ2CryV//48qG
-	 7JNBQj0To4fe6OEX1LP8enJqP+GA3Q1z/XC/8E5M=
+	b=GUmOlCTcZxO9A3wRP8hZlDoENGvWqvqMbWTDHjwc3IR1O4kOf9hQHH/O8zJgSD9sh
+	 86Rldx6JDMcoij3R1to7tlUZj3aQBOvpGd8ESGt2bekGT6a/Yqd/VirCpLsaTcxRPa
+	 FeYo3L5RdBZuriHYIK0gUK/ljAvbSEc6oydSTiOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Kees Cook <keescook@chromium.org>,
-	"Luis R. Rodriguez" <mcgrof@ruslug.rutgers.edu>,
-	Scott Branden <sbranden@broadcom.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Brian Norris <briannorris@chromium.org>,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 250/509] test_firmware: return ENOMEM instead of ENOSPC on failed memory allocation
-Date: Tue, 25 Jul 2023 12:43:09 +0200
-Message-ID: <20230725104605.183881078@linuxfoundation.org>
+Subject: [PATCH 5.10 251/509] mfd: stmfx: Fix error path in stmfx_chip_init
+Date: Tue, 25 Jul 2023 12:43:10 +0200
+Message-ID: <20230725104605.224673701@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -42,108 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+From: Amelie Delaunay <amelie.delaunay@foss.st.com>
 
-[ Upstream commit 7dae593cd226a0bca61201cf85ceb9335cf63682 ]
+[ Upstream commit f592cf624531286f8b52e40dcfc157a5a7fb115c ]
 
-In a couple of situations like
+In error path, disable vdd regulator if it exists, but don't overload ret.
+Because if regulator_disable() is successful, stmfx_chip_init will exit
+successfully while chip init failed.
 
-	name = kstrndup(buf, count, GFP_KERNEL);
-	if (!name)
-		return -ENOSPC;
-
-the error is not actually "No space left on device", but "Out of memory".
-
-It is semantically correct to return -ENOMEM in all failed kstrndup()
-and kzalloc() cases in this driver, as it is not a problem with disk
-space, but with kernel memory allocator failing allocation.
-
-The semantically correct should be:
-
-        name = kstrndup(buf, count, GFP_KERNEL);
-        if (!name)
-                return -ENOMEM;
-
-Cc: Dan Carpenter <error27@gmail.com>
-Cc: Takashi Iwai <tiwai@suse.de>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: "Luis R. Rodriguez" <mcgrof@ruslug.rutgers.edu>
-Cc: Scott Branden <sbranden@broadcom.com>
-Cc: Hans de Goede <hdegoede@redhat.com>
-Cc: Brian Norris <briannorris@chromium.org>
-Fixes: c92316bf8e948 ("test_firmware: add batched firmware tests")
-Fixes: 0a8adf584759c ("test: add firmware_class loader test")
-Fixes: 548193cba2a7d ("test_firmware: add support for firmware_request_platform")
-Fixes: eb910947c82f9 ("test: firmware_class: add asynchronous request trigger")
-Fixes: 061132d2b9c95 ("test_firmware: add test custom fallback trigger")
-Fixes: 7feebfa487b92 ("test_firmware: add support for request_firmware_into_buf")
-Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Message-ID: <20230606070808.9300-1-mirsad.todorovac@alu.unizg.hr>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 06252ade9156 ("mfd: Add ST Multi-Function eXpander (STMFX) core driver")
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Link: https://lore.kernel.org/r/20230609092804.793100-1-amelie.delaunay@foss.st.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_firmware.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/mfd/stmfx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/test_firmware.c b/lib/test_firmware.c
-index ed0455a9ded87..25dc9eb6c902b 100644
---- a/lib/test_firmware.c
-+++ b/lib/test_firmware.c
-@@ -183,7 +183,7 @@ static int __kstrncpy(char **dst, const char *name, size_t count, gfp_t gfp)
- {
- 	*dst = kstrndup(name, count, gfp);
- 	if (!*dst)
--		return -ENOSPC;
-+		return -ENOMEM;
- 	return count;
+diff --git a/drivers/mfd/stmfx.c b/drivers/mfd/stmfx.c
+index 988e2ba6dd0f3..41e74b5dd9901 100644
+--- a/drivers/mfd/stmfx.c
++++ b/drivers/mfd/stmfx.c
+@@ -387,7 +387,7 @@ static int stmfx_chip_init(struct i2c_client *client)
+ 
+ err:
+ 	if (stmfx->vdd)
+-		return regulator_disable(stmfx->vdd);
++		regulator_disable(stmfx->vdd);
+ 
+ 	return ret;
  }
- 
-@@ -606,7 +606,7 @@ static ssize_t trigger_request_store(struct device *dev,
- 
- 	name = kstrndup(buf, count, GFP_KERNEL);
- 	if (!name)
--		return -ENOSPC;
-+		return -ENOMEM;
- 
- 	pr_info("loading '%s'\n", name);
- 
-@@ -654,7 +654,7 @@ static ssize_t trigger_request_platform_store(struct device *dev,
- 
- 	name = kstrndup(buf, count, GFP_KERNEL);
- 	if (!name)
--		return -ENOSPC;
-+		return -ENOMEM;
- 
- 	pr_info("inserting test platform fw '%s'\n", name);
- 	efi_embedded_fw.name = name;
-@@ -707,7 +707,7 @@ static ssize_t trigger_async_request_store(struct device *dev,
- 
- 	name = kstrndup(buf, count, GFP_KERNEL);
- 	if (!name)
--		return -ENOSPC;
-+		return -ENOMEM;
- 
- 	pr_info("loading '%s'\n", name);
- 
-@@ -752,7 +752,7 @@ static ssize_t trigger_custom_fallback_store(struct device *dev,
- 
- 	name = kstrndup(buf, count, GFP_KERNEL);
- 	if (!name)
--		return -ENOSPC;
-+		return -ENOMEM;
- 
- 	pr_info("loading '%s' using custom fallback mechanism\n", name);
- 
-@@ -803,7 +803,7 @@ static int test_fw_run_batch_request(void *data)
- 
- 		test_buf = kzalloc(TEST_FIRMWARE_BUF_SIZE, GFP_KERNEL);
- 		if (!test_buf)
--			return -ENOSPC;
-+			return -ENOMEM;
- 
- 		if (test_fw_config->partial)
- 			req->rc = request_partial_firmware_into_buf
 -- 
 2.39.2
 
