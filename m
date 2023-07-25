@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4408115AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:54:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BECA4C433C9;
-	Tue, 25 Jul 2023 10:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF7015AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:54:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82CC4C433C9;
+	Tue, 25 Jul 2023 10:54:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282457;
-	bh=GMa1Jog/mFpGDVQwhZUWQEQh1lmM2XwvuJHcM48vtHU=;
+	s=korg; t=1690282459;
+	bh=GTCHyTQOwTUqsgZC3Hg9NJPwxHOsATwyKUY4Sl2bHCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ls3Zl1CFmyEk0fBbWGTcyDnClH09v0Qu8K3+Ajyg8CACKWZmrnOpaUXlXO2xB5bKR
-	 R7Tlj/Cv0I5msEH9HqdTBfFguPCSirP0nh4suNsTBjP5IQTyV39/6xCFfv8Y7qaDxA
-	 jd2VlpRn7XQjtr1tjMDrtUJV6ulxQEfdByQQa3ns=
+	b=0yosW7KSukog6R8DI9TDNepiCV2faR++8yu29xtCY+iyC4w5fNaofUyXxf/DIolM9
+	 R08Gs7SrIYOvK8rD2kggOSUaFevvfJqgrkPk34HyVVFBuJEK9VUGUAy9ll7BGhaATE
+	 9JUGHtjIGWhR1B/ON7YRWMS2YNkFGtU3WsBkZImI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 137/227] ASoC: qcom: q6apm: do not close GPR port before closing graph
-Date: Tue, 25 Jul 2023 12:45:04 +0200
-Message-ID: <20230725104520.525137805@linuxfoundation.org>
+Subject: [PATCH 6.4 138/227] iov_iter: Mark copy_iovec_from_user() noclone
+Date: Tue, 25 Jul 2023 12:45:05 +0200
+Message-ID: <20230725104520.571667614@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,58 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit c1be62923d4d86e7c06b1224626e27eb8d9ab32e ]
+[ Upstream commit 719a937b7003933de1298ffa4b881dd6a234e244 ]
 
-Closing GPR port before graph close can result in un handled notifications
-from DSP, this results in spam of errors from GPR driver as there is no
-one to handle these notification at that point in time.
+Extend commit 50f9a76ef127 ("iov_iter: Mark
+copy_compat_iovec_from_user() noinline") to also cover
+copy_iovec_from_user(). Different compiler versions cause the same
+problem on different functions.
 
-Fix this by closing GPR port after graph close is finished.
+lib/iov_iter.o: warning: objtool: .altinstr_replacement+0x1f: redundant UACCESS disable
+lib/iov_iter.o: warning: objtool: iovec_from_user+0x84: call to copy_iovec_from_user.part.0() with UACCESS enabled
+lib/iov_iter.o: warning: objtool: __import_iovec+0x143: call to copy_iovec_from_user.part.0() with UACCESS enabled
 
-Fixes: 5477518b8a0e ("ASoC: qdsp6: audioreach: add q6apm support")
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230705131842.41584-1-srinivas.kandagatla@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 50f9a76ef127 ("iov_iter: Mark copy_compat_iovec_from_user() noinline")
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lkml.kernel.org/r/20230616124354.GD4253@hirez.programming.kicks-ass.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ lib/iov_iter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
-index a7a3f973eb6d5..cdebf209c8a55 100644
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -446,6 +446,8 @@ static int graph_callback(struct gpr_resp_pkt *data, void *priv, int op)
+diff --git a/lib/iov_iter.c b/lib/iov_iter.c
+index 960223ed91991..061cc3ed58f5b 100644
+--- a/lib/iov_iter.c
++++ b/lib/iov_iter.c
+@@ -1795,7 +1795,7 @@ static __noclone int copy_compat_iovec_from_user(struct iovec *iov,
+ 	return ret;
+ }
  
- 	switch (hdr->opcode) {
- 	case DATA_CMD_RSP_WR_SH_MEM_EP_DATA_BUFFER_DONE_V2:
-+		if (!graph->ar_graph)
-+			break;
- 		client_event = APM_CLIENT_EVENT_DATA_WRITE_DONE;
- 		mutex_lock(&graph->lock);
- 		token = hdr->token & APM_WRITE_TOKEN_MASK;
-@@ -479,6 +481,8 @@ static int graph_callback(struct gpr_resp_pkt *data, void *priv, int op)
- 		wake_up(&graph->cmd_wait);
- 		break;
- 	case DATA_CMD_RSP_RD_SH_MEM_EP_DATA_BUFFER_V2:
-+		if (!graph->ar_graph)
-+			break;
- 		client_event = APM_CLIENT_EVENT_DATA_READ_DONE;
- 		mutex_lock(&graph->lock);
- 		rd_done = data->payload;
-@@ -581,8 +585,9 @@ int q6apm_graph_close(struct q6apm_graph *graph)
+-static int copy_iovec_from_user(struct iovec *iov,
++static __noclone int copy_iovec_from_user(struct iovec *iov,
+ 		const struct iovec __user *uiov, unsigned long nr_segs)
  {
- 	struct audioreach_graph *ar_graph = graph->ar_graph;
- 
--	gpr_free_port(graph->port);
-+	graph->ar_graph = NULL;
- 	kref_put(&ar_graph->refcount, q6apm_put_audioreach_graph);
-+	gpr_free_port(graph->port);
- 	kfree(graph);
- 
- 	return 0;
+ 	int ret = -EFAULT;
 -- 
 2.39.2
 
