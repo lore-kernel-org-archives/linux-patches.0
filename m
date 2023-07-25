@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07EBB1D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:03:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD2FC433C7;
-	Tue, 25 Jul 2023 11:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5841D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:03:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF5AC433C7;
+	Tue, 25 Jul 2023 11:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282985;
-	bh=DRqy4J0FbsDMHpC4wjeM+awMaitWaE1HmYJLSpVI+2o=;
+	s=korg; t=1690282988;
+	bh=9b+9aKuIZCx+bFQNZ80VhD+Nbq2DsN2OchqWP/egD/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nc8OMLTWpGa2JN4igrY0D2+8QQECTC7BiF983rcx1tYmmnGFXUL9ivOhuHdZuYfrc
-	 xOtOJinHeAVrFDy3NiErJ77kSpT8FAUA64hSfdwHTseOJPjHrd+bnIKnpPWT8oiRzq
-	 TuKx0di240dA7naYq0GvZvErTCz8rcMx1OEUrW7A=
+	b=drncV65JX3dU4bnEC1Va79p1raeKBD5EZnhDsSyyt9LQoe69BO/8ok+vBeS0a1gzm
+	 sq3U/N4oHND/W3QGjj0wpyNi/lepHkeAyNF44S6pm1GTluQ9CSgZZDKi+5pT/2ZFT+
+	 LLNjUD4QC1tPxS52NGTorEUOAqYJ3xPJvOQUAFN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yhs@meta.com>,
-	Stanislav Fomichev <sdf@google.com>,
-	Aditi Ghag <aditi.ghag@isovalent.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Wen Gong <quic_wgong@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 069/183] bpf: tcp: Avoid taking fast sock lock in iterator
-Date: Tue, 25 Jul 2023 12:44:57 +0200
-Message-ID: <20230725104510.467005012@linuxfoundation.org>
+Subject: [PATCH 6.1 070/183] wifi: ath11k: add support default regdb while searching board-2.bin for WCN6855
+Date: Tue, 25 Jul 2023 12:44:58 +0200
+Message-ID: <20230725104510.503846442@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -37,150 +35,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aditi Ghag <aditi.ghag@isovalent.com>
+From: Wen Gong <quic_wgong@quicinc.com>
 
-[ Upstream commit 9378096e8a656fb5c4099b26b1370c56f056eab9 ]
+[ Upstream commit 88ca89202f8e8afb5225eb5244d79cd67c15d744 ]
 
-This is a preparatory commit to replace `lock_sock_fast` with
-`lock_sock`,and facilitate BPF programs executed from the TCP sockets
-iterator to be able to destroy TCP sockets using the bpf_sock_destroy
-kfunc (implemented in follow-up commits).
+Sometimes board-2.bin does not have the regdb data which matched the
+parameters such as vendor, device, subsystem-vendor, subsystem-device
+and etc. Add default regdb data with 'bus=%s' into board-2.bin for
+WCN6855, then ath11k use 'bus=pci' to search regdb data in board-2.bin
+for WCN6855.
 
-Previously, BPF TCP iterator was acquiring the sock lock with BH
-disabled. This led to scenarios where the sockets hash table bucket lock
-can be acquired with BH enabled in some path versus disabled in other.
-In such situation, kernel issued a warning since it thinks that in the
-BH enabled path the same bucket lock *might* be acquired again in the
-softirq context (BH disabled), which will lead to a potential dead lock.
-Since bpf_sock_destroy also happens in a process context, the potential
-deadlock warning is likely a false alarm.
+kernel: [  122.515808] ath11k_pci 0000:03:00.0: boot using board name 'bus=pci,vendor=17cb,device=1103,subsystem-vendor=17cb,subsystem-device=3374,qmi-chip-id=2,qmi-board-id=262'
+kernel: [  122.517240] ath11k_pci 0000:03:00.0: boot firmware request ath11k/WCN6855/hw2.0/board-2.bin size 6179564
+kernel: [  122.517280] ath11k_pci 0000:03:00.0: failed to fetch regdb data for bus=pci,vendor=17cb,device=1103,subsystem-vendor=17cb,subsystem-device=3374,qmi-chip-id=2,qmi-board-id=262 from ath11k/WCN6855/hw2.0/board-2.bin
+kernel: [  122.517464] ath11k_pci 0000:03:00.0: boot using board name 'bus=pci'
+kernel: [  122.518901] ath11k_pci 0000:03:00.0: boot firmware request ath11k/WCN6855/hw2.0/board-2.bin size 6179564
+kernel: [  122.518915] ath11k_pci 0000:03:00.0: board name
+kernel: [  122.518917] ath11k_pci 0000:03:00.0: 00000000: 62 75 73 3d 70 63 69                             bus=pci
+kernel: [  122.518918] ath11k_pci 0000:03:00.0: boot found match regdb data for name 'bus=pci'
+kernel: [  122.518920] ath11k_pci 0000:03:00.0: boot found regdb data for 'bus=pci'
+kernel: [  122.518921] ath11k_pci 0000:03:00.0: fetched regdb
 
-Here is a snippet of annotated stack trace that motivated this change:
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3
 
-```
-
-Possible interrupt unsafe locking scenario:
-
-      CPU0                    CPU1
-      ----                    ----
- lock(&h->lhash2[i].lock);
-                              local_bh_disable();
-                              lock(&h->lhash2[i].lock);
-kernel imagined possible scenario:
-  local_bh_disable();  /* Possible softirq */
-  lock(&h->lhash2[i].lock);
-*** Potential Deadlock ***
-
-process context:
-
-lock_acquire+0xcd/0x330
-_raw_spin_lock+0x33/0x40
-------> Acquire (bucket) lhash2.lock with BH enabled
-__inet_hash+0x4b/0x210
-inet_csk_listen_start+0xe6/0x100
-inet_listen+0x95/0x1d0
-__sys_listen+0x69/0xb0
-__x64_sys_listen+0x14/0x20
-do_syscall_64+0x3c/0x90
-entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-bpf_sock_destroy run from iterator:
-
-lock_acquire+0xcd/0x330
-_raw_spin_lock+0x33/0x40
-------> Acquire (bucket) lhash2.lock with BH disabled
-inet_unhash+0x9a/0x110
-tcp_set_state+0x6a/0x210
-tcp_abort+0x10d/0x200
-bpf_prog_6793c5ca50c43c0d_iter_tcp6_server+0xa4/0xa9
-bpf_iter_run_prog+0x1ff/0x340
-------> lock_sock_fast that acquires sock lock with BH disabled
-bpf_iter_tcp_seq_show+0xca/0x190
-bpf_seq_read+0x177/0x450
-
-```
-
-Also, Yonghong reported a deadlock for non-listening TCP sockets that
-this change resolves. Previously, `lock_sock_fast` held the sock spin
-lock with BH which was again being acquired in `tcp_abort`:
-
-```
-watchdog: BUG: soft lockup - CPU#0 stuck for 86s! [test_progs:2331]
-RIP: 0010:queued_spin_lock_slowpath+0xd8/0x500
-Call Trace:
- <TASK>
- _raw_spin_lock+0x84/0x90
- tcp_abort+0x13c/0x1f0
- bpf_prog_88539c5453a9dd47_iter_tcp6_client+0x82/0x89
- bpf_iter_run_prog+0x1aa/0x2c0
- ? preempt_count_sub+0x1c/0xd0
- ? from_kuid_munged+0x1c8/0x210
- bpf_iter_tcp_seq_show+0x14e/0x1b0
- bpf_seq_read+0x36c/0x6a0
-
-bpf_iter_tcp_seq_show
-   lock_sock_fast
-     __lock_sock_fast
-       spin_lock_bh(&sk->sk_lock.slock);
-	/* * Fast path return with bottom halves disabled and * sock::sk_lock.slock held.* */
-
- ...
- tcp_abort
-   local_bh_disable();
-   spin_lock(&((sk)->sk_lock.slock)); // from bh_lock_sock(sk)
-
-```
-
-With the switch to `lock_sock`, it calls `spin_unlock_bh` before returning:
-
-```
-lock_sock
-    lock_sock_nested
-       spin_lock_bh(&sk->sk_lock.slock);
-       :
-       spin_unlock_bh(&sk->sk_lock.slock);
-```
-
-Acked-by: Yonghong Song <yhs@meta.com>
-Acked-by: Stanislav Fomichev <sdf@google.com>
-Signed-off-by: Aditi Ghag <aditi.ghag@isovalent.com>
-Link: https://lore.kernel.org/r/20230519225157.760788-2-aditi.ghag@isovalent.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Wen Gong <quic_wgong@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230517133959.8224-1-quic_wgong@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath11k/core.c | 53 +++++++++++++++++++-------
+ 1 file changed, 40 insertions(+), 13 deletions(-)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index b37c1bcb15097..a7de5ba74e7f7 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -2911,7 +2911,6 @@ static int bpf_iter_tcp_seq_show(struct seq_file *seq, void *v)
- 	struct bpf_iter_meta meta;
- 	struct bpf_prog *prog;
- 	struct sock *sk = v;
--	bool slow;
- 	uid_t uid;
+diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+index b99180bc81723..893fefadbba96 100644
+--- a/drivers/net/wireless/ath/ath11k/core.c
++++ b/drivers/net/wireless/ath/ath11k/core.c
+@@ -870,7 +870,8 @@ int ath11k_core_check_dt(struct ath11k_base *ab)
+ }
+ 
+ static int __ath11k_core_create_board_name(struct ath11k_base *ab, char *name,
+-					   size_t name_len, bool with_variant)
++					   size_t name_len, bool with_variant,
++					   bool bus_type_mode)
+ {
+ 	/* strlen(',variant=') + strlen(ab->qmi.target.bdf_ext) */
+ 	char variant[9 + ATH11K_QMI_BDF_EXT_STR_LENGTH] = { 0 };
+@@ -881,15 +882,20 @@ static int __ath11k_core_create_board_name(struct ath11k_base *ab, char *name,
+ 
+ 	switch (ab->id.bdf_search) {
+ 	case ATH11K_BDF_SEARCH_BUS_AND_BOARD:
+-		scnprintf(name, name_len,
+-			  "bus=%s,vendor=%04x,device=%04x,subsystem-vendor=%04x,subsystem-device=%04x,qmi-chip-id=%d,qmi-board-id=%d%s",
+-			  ath11k_bus_str(ab->hif.bus),
+-			  ab->id.vendor, ab->id.device,
+-			  ab->id.subsystem_vendor,
+-			  ab->id.subsystem_device,
+-			  ab->qmi.target.chip_id,
+-			  ab->qmi.target.board_id,
+-			  variant);
++		if (bus_type_mode)
++			scnprintf(name, name_len,
++				  "bus=%s",
++				  ath11k_bus_str(ab->hif.bus));
++		else
++			scnprintf(name, name_len,
++				  "bus=%s,vendor=%04x,device=%04x,subsystem-vendor=%04x,subsystem-device=%04x,qmi-chip-id=%d,qmi-board-id=%d%s",
++				  ath11k_bus_str(ab->hif.bus),
++				  ab->id.vendor, ab->id.device,
++				  ab->id.subsystem_vendor,
++				  ab->id.subsystem_device,
++				  ab->qmi.target.chip_id,
++				  ab->qmi.target.board_id,
++				  variant);
+ 		break;
+ 	default:
+ 		scnprintf(name, name_len,
+@@ -908,13 +914,19 @@ static int __ath11k_core_create_board_name(struct ath11k_base *ab, char *name,
+ static int ath11k_core_create_board_name(struct ath11k_base *ab, char *name,
+ 					 size_t name_len)
+ {
+-	return __ath11k_core_create_board_name(ab, name, name_len, true);
++	return __ath11k_core_create_board_name(ab, name, name_len, true, false);
+ }
+ 
+ static int ath11k_core_create_fallback_board_name(struct ath11k_base *ab, char *name,
+ 						  size_t name_len)
+ {
+-	return __ath11k_core_create_board_name(ab, name, name_len, false);
++	return __ath11k_core_create_board_name(ab, name, name_len, false, false);
++}
++
++static int ath11k_core_create_bus_type_board_name(struct ath11k_base *ab, char *name,
++						  size_t name_len)
++{
++	return __ath11k_core_create_board_name(ab, name, name_len, false, true);
+ }
+ 
+ const struct firmware *ath11k_core_firmware_request(struct ath11k_base *ab,
+@@ -1218,7 +1230,7 @@ int ath11k_core_fetch_bdf(struct ath11k_base *ab, struct ath11k_board_data *bd)
+ 
+ int ath11k_core_fetch_regdb(struct ath11k_base *ab, struct ath11k_board_data *bd)
+ {
+-	char boardname[BOARD_NAME_SIZE];
++	char boardname[BOARD_NAME_SIZE], default_boardname[BOARD_NAME_SIZE];
  	int ret;
  
-@@ -2919,7 +2918,7 @@ static int bpf_iter_tcp_seq_show(struct seq_file *seq, void *v)
- 		return 0;
+ 	ret = ath11k_core_create_board_name(ab, boardname, BOARD_NAME_SIZE);
+@@ -1235,6 +1247,21 @@ int ath11k_core_fetch_regdb(struct ath11k_base *ab, struct ath11k_board_data *bd
+ 	if (!ret)
+ 		goto exit;
  
- 	if (sk_fullsock(sk))
--		slow = lock_sock_fast(sk);
-+		lock_sock(sk);
- 
- 	if (unlikely(sk_unhashed(sk))) {
- 		ret = SEQ_SKIP;
-@@ -2943,7 +2942,7 @@ static int bpf_iter_tcp_seq_show(struct seq_file *seq, void *v)
- 
- unlock:
- 	if (sk_fullsock(sk))
--		unlock_sock_fast(sk, slow);
-+		release_sock(sk);
- 	return ret;
- 
- }
++	ret = ath11k_core_create_bus_type_board_name(ab, default_boardname,
++						     BOARD_NAME_SIZE);
++	if (ret) {
++		ath11k_dbg(ab, ATH11K_DBG_BOOT,
++			   "failed to create default board name for regdb: %d", ret);
++		goto exit;
++	}
++
++	ret = ath11k_core_fetch_board_data_api_n(ab, bd, default_boardname,
++						 ATH11K_BD_IE_REGDB,
++						 ATH11K_BD_IE_REGDB_NAME,
++						 ATH11K_BD_IE_REGDB_DATA);
++	if (!ret)
++		goto exit;
++
+ 	ret = ath11k_core_fetch_board_data_api_1(ab, bd, ATH11K_REGDB_FILE_NAME);
+ 	if (ret)
+ 		ath11k_dbg(ab, ATH11K_DBG_BOOT, "failed to fetch %s from %s\n",
 -- 
 2.39.2
 
