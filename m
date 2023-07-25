@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D8114270
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:52:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE18BC433C8;
-	Tue, 25 Jul 2023 10:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396A114270
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:52:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEFFC433C8;
+	Tue, 25 Jul 2023 10:52:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282360;
-	bh=gsqR/Q+5vVYY4oDeA8IFdrUxI7ZAFi4fmbx+UrzjTXs=;
+	s=korg; t=1690282363;
+	bh=got4Ws7ggV3zCHMha0/hRrpZr/HWX1Nu4xkRbyQ7kEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I00hCFm5piZ5glImPhksLCsIYDVIUxGKS/FOMP0nWZrbLz8cl0HHMQpbJTT5s82dn
-	 3FT9QwyT5vSarhlRDaX8GcNTA/l87UiMlMbxOp8pv4MAo6DzYzaXr/XrA7VFAfcp55
-	 dDOcvFtB/tFBEyAjtA7ueRZa51uvpZO3dB3ULtrY=
+	b=JzIn03R7itr7CzKZ6nHSvTmzw+6I7HIDfs4wdrfTJVTu9YWK/0fToJ/mJ/9SwOYRg
+	 lHCB737NA9osD5QlnfwMscoPzzyVcAv03wCzQnUfFvQxWLyc6PLmJ+QjqV18LlY9FD
+	 YtTzhUgZFpny03TxflTUSwuj30ZpPrlS+yqSQyr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.4 063/227] ASoC: codecs: wcd-mbhc-v2: fix resource leaks on component remove
-Date: Tue, 25 Jul 2023 12:43:50 +0200
-Message-ID: <20230725104517.354771990@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 095/227] btrfs: abort transaction at update_ref_for_cow() when ref count is zero
+Date: Tue, 25 Jul 2023 12:44:22 +0200
+Message-ID: <20230725104518.653215692@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -35,157 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit a5475829adcc600bc69ee9ff7c9e3e43fb4f8d30 upstream.
+[ Upstream commit eced687e224eb3cc5a501cf53ad9291337c8dbc5 ]
 
-The MBHC resources must be released on component probe failure and
-removal so can not be tied to the lifetime of the component device.
+At update_ref_for_cow() we are calling btrfs_handle_fs_error() if we find
+that the extent buffer has an unexpected ref count of zero, however we can
+simply use btrfs_abort_transaction(), which achieves the same purposes: to
+turn the fs to error state, abort the current transaction and turn the fs
+to RO mode as well. Besides that, btrfs_abort_transaction() also prints a
+stack trace which makes it more useful.
 
-This is specifically needed to allow probe deferrals of the sound card
-which otherwise fails when reprobing the codec component:
+Also, as this is a very unexpected situation, indicating a serious
+corruption/inconsistency, tag the if branch as 'unlikely', set the error
+code to -EUCLEAN instead of -EROFS, and log an explicit message.
 
-    snd-sc8280xp sound: ASoC: failed to instantiate card -517
-    genirq: Flags mismatch irq 299. 00002001 (mbhc sw intr) vs. 00002001 (mbhc sw intr)
-    wcd938x_codec audio-codec: Failed to request mbhc interrupts -16
-    wcd938x_codec audio-codec: mbhc initialization failed
-    wcd938x_codec audio-codec: ASoC: error at snd_soc_component_probe on audio-codec: -16
-    snd-sc8280xp sound: ASoC: failed to instantiate card -16
-
-Fixes: 0e5c9e7ff899 ("ASoC: codecs: wcd: add multi button Headset detection support")
-Cc: stable@vger.kernel.org      # 5.14
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230705123018.30903-7-johan+linaro@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wcd-mbhc-v2.c |   57 +++++++++++++++++++++++++++++------------
- 1 file changed, 41 insertions(+), 16 deletions(-)
+ fs/btrfs/ctree.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/sound/soc/codecs/wcd-mbhc-v2.c
-+++ b/sound/soc/codecs/wcd-mbhc-v2.c
-@@ -1454,7 +1454,7 @@ struct wcd_mbhc *wcd_mbhc_init(struct sn
- 		return ERR_PTR(-EINVAL);
- 	}
- 
--	mbhc = devm_kzalloc(dev, sizeof(*mbhc), GFP_KERNEL);
-+	mbhc = kzalloc(sizeof(*mbhc), GFP_KERNEL);
- 	if (!mbhc)
- 		return ERR_PTR(-ENOMEM);
- 
-@@ -1474,61 +1474,76 @@ struct wcd_mbhc *wcd_mbhc_init(struct sn
- 
- 	INIT_WORK(&mbhc->correct_plug_swch, wcd_correct_swch_plug);
- 
--	ret = devm_request_threaded_irq(dev, mbhc->intr_ids->mbhc_sw_intr, NULL,
-+	ret = request_threaded_irq(mbhc->intr_ids->mbhc_sw_intr, NULL,
- 					wcd_mbhc_mech_plug_detect_irq,
- 					IRQF_ONESHOT | IRQF_TRIGGER_RISING,
- 					"mbhc sw intr", mbhc);
- 	if (ret)
--		goto err;
-+		goto err_free_mbhc;
- 
--	ret = devm_request_threaded_irq(dev, mbhc->intr_ids->mbhc_btn_press_intr, NULL,
-+	ret = request_threaded_irq(mbhc->intr_ids->mbhc_btn_press_intr, NULL,
- 					wcd_mbhc_btn_press_handler,
- 					IRQF_ONESHOT | IRQF_TRIGGER_RISING,
- 					"Button Press detect", mbhc);
- 	if (ret)
--		goto err;
-+		goto err_free_sw_intr;
- 
--	ret = devm_request_threaded_irq(dev, mbhc->intr_ids->mbhc_btn_release_intr, NULL,
-+	ret = request_threaded_irq(mbhc->intr_ids->mbhc_btn_release_intr, NULL,
- 					wcd_mbhc_btn_release_handler,
- 					IRQF_ONESHOT | IRQF_TRIGGER_RISING,
- 					"Button Release detect", mbhc);
- 	if (ret)
--		goto err;
-+		goto err_free_btn_press_intr;
- 
--	ret = devm_request_threaded_irq(dev, mbhc->intr_ids->mbhc_hs_ins_intr, NULL,
-+	ret = request_threaded_irq(mbhc->intr_ids->mbhc_hs_ins_intr, NULL,
- 					wcd_mbhc_adc_hs_ins_irq,
- 					IRQF_ONESHOT | IRQF_TRIGGER_RISING,
- 					"Elect Insert", mbhc);
- 	if (ret)
--		goto err;
-+		goto err_free_btn_release_intr;
- 
- 	disable_irq_nosync(mbhc->intr_ids->mbhc_hs_ins_intr);
- 
--	ret = devm_request_threaded_irq(dev, mbhc->intr_ids->mbhc_hs_rem_intr, NULL,
-+	ret = request_threaded_irq(mbhc->intr_ids->mbhc_hs_rem_intr, NULL,
- 					wcd_mbhc_adc_hs_rem_irq,
- 					IRQF_ONESHOT | IRQF_TRIGGER_RISING,
- 					"Elect Remove", mbhc);
- 	if (ret)
--		goto err;
-+		goto err_free_hs_ins_intr;
- 
- 	disable_irq_nosync(mbhc->intr_ids->mbhc_hs_rem_intr);
- 
--	ret = devm_request_threaded_irq(dev, mbhc->intr_ids->hph_left_ocp, NULL,
-+	ret = request_threaded_irq(mbhc->intr_ids->hph_left_ocp, NULL,
- 					wcd_mbhc_hphl_ocp_irq,
- 					IRQF_ONESHOT | IRQF_TRIGGER_RISING,
- 					"HPH_L OCP detect", mbhc);
- 	if (ret)
--		goto err;
-+		goto err_free_hs_rem_intr;
- 
--	ret = devm_request_threaded_irq(dev, mbhc->intr_ids->hph_right_ocp, NULL,
-+	ret = request_threaded_irq(mbhc->intr_ids->hph_right_ocp, NULL,
- 					wcd_mbhc_hphr_ocp_irq,
- 					IRQF_ONESHOT | IRQF_TRIGGER_RISING,
- 					"HPH_R OCP detect", mbhc);
- 	if (ret)
--		goto err;
-+		goto err_free_hph_left_ocp;
- 
- 	return mbhc;
--err:
-+
-+err_free_hph_left_ocp:
-+	free_irq(mbhc->intr_ids->hph_left_ocp, mbhc);
-+err_free_hs_rem_intr:
-+	free_irq(mbhc->intr_ids->mbhc_hs_rem_intr, mbhc);
-+err_free_hs_ins_intr:
-+	free_irq(mbhc->intr_ids->mbhc_hs_ins_intr, mbhc);
-+err_free_btn_release_intr:
-+	free_irq(mbhc->intr_ids->mbhc_btn_release_intr, mbhc);
-+err_free_btn_press_intr:
-+	free_irq(mbhc->intr_ids->mbhc_btn_press_intr, mbhc);
-+err_free_sw_intr:
-+	free_irq(mbhc->intr_ids->mbhc_sw_intr, mbhc);
-+err_free_mbhc:
-+	kfree(mbhc);
-+
- 	dev_err(dev, "Failed to request mbhc interrupts %d\n", ret);
- 
- 	return ERR_PTR(ret);
-@@ -1537,9 +1552,19 @@ EXPORT_SYMBOL(wcd_mbhc_init);
- 
- void wcd_mbhc_deinit(struct wcd_mbhc *mbhc)
- {
-+	free_irq(mbhc->intr_ids->hph_right_ocp, mbhc);
-+	free_irq(mbhc->intr_ids->hph_left_ocp, mbhc);
-+	free_irq(mbhc->intr_ids->mbhc_hs_rem_intr, mbhc);
-+	free_irq(mbhc->intr_ids->mbhc_hs_ins_intr, mbhc);
-+	free_irq(mbhc->intr_ids->mbhc_btn_release_intr, mbhc);
-+	free_irq(mbhc->intr_ids->mbhc_btn_press_intr, mbhc);
-+	free_irq(mbhc->intr_ids->mbhc_sw_intr, mbhc);
-+
- 	mutex_lock(&mbhc->lock);
- 	wcd_cancel_hs_detect_plug(mbhc,	&mbhc->correct_plug_swch);
- 	mutex_unlock(&mbhc->lock);
-+
-+	kfree(mbhc);
- }
- EXPORT_SYMBOL(wcd_mbhc_deinit);
- 
+diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
+index 4912d624ca3d3..886e661a218fc 100644
+--- a/fs/btrfs/ctree.c
++++ b/fs/btrfs/ctree.c
+@@ -417,9 +417,13 @@ static noinline int update_ref_for_cow(struct btrfs_trans_handle *trans,
+ 					       &refs, &flags);
+ 		if (ret)
+ 			return ret;
+-		if (refs == 0) {
+-			ret = -EROFS;
+-			btrfs_handle_fs_error(fs_info, ret, NULL);
++		if (unlikely(refs == 0)) {
++			btrfs_crit(fs_info,
++		"found 0 references for tree block at bytenr %llu level %d root %llu",
++				   buf->start, btrfs_header_level(buf),
++				   btrfs_root_id(root));
++			ret = -EUCLEAN;
++			btrfs_abort_transaction(trans, ret);
+ 			return ret;
+ 		}
+ 	} else {
+-- 
+2.39.2
+
 
 
