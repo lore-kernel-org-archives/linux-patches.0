@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5B01ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:20:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784AEC433C8;
-	Tue, 25 Jul 2023 11:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E986A1D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:20:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44070C433C8;
+	Tue, 25 Jul 2023 11:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284005;
-	bh=CgiuK9I3YI0uxFOMhmBdUXNbzlMsnQSu8zwOcF8YLwk=;
+	s=korg; t=1690284007;
+	bh=5wCYjEP7JQWZOdFJGVBxlpQyoWnx0TL4yNoIl8WWf+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nviX72SGDOEV0oze2drmxS3Wa5PmVRNeOeneYjN8IiE8seY0q18nDrRG0pNcWtJXg
-	 j2tK7RQwTkm45Ji20p9bjabNDfwzelFFXWnOAFEPtb2d0Rn5RLkjCDFI5Ilo29MNBu
-	 kdQYG3Ym3hIJ5SojI9r9gfpoi8HljYihPklhUnqk=
+	b=agIJykuASA5KQptwBVduv3J9W6jaE1GUHrBOBoiJXzTCk+NSr+VOXGIPyQLLM+wt9
+	 y8lwQmvCjGt5nO4Ay2T/KrCKEIfbciRSS9+b1uvprTUUKJnXahSFMvjTe0yVwyc27s
+	 eW2zS73vM91q/JX2NxWRZbOmJFV4kxvzDL1dqVko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	=?UTF-8?q?Breno=20Leit=C3=A3o?= <leitao@debian.org>,
-	Nayna Jain <nayna@linux.ibm.com>,
-	Paulo Flabiano Smorigo <pfsmorigo@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	linux-crypto@vger.kernel.org,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	linuxppc-dev@lists.ozlabs.org,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Andre Fredette <anfredet@redhat.com>,
+	Clark Williams <williams@redhat.com>,
+	Dave Tucker <datucker@redhat.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Derek Barbosa <debarbos@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 201/509] crypto: nx - fix build warnings when DEBUG_FS is not enabled
-Date: Tue, 25 Jul 2023 12:42:20 +0200
-Message-ID: <20230725104602.959346642@linuxfoundation.org>
+Subject: [PATCH 5.10 184/509] perf bench: Add missing setlocale() call to allow usage of %d style formatting
+Date: Tue, 25 Jul 2023 12:42:03 +0200
+Message-ID: <20230725104602.135925031@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -44,83 +44,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit b04b076fb56560b39d695ac3744db457e12278fd ]
+[ Upstream commit 16203e9cd01896b4244100a8e3fb9f6e612ab2b1 ]
 
-Fix build warnings when DEBUG_FS is not enabled by using an empty
-do-while loop instead of a value:
+Without this we were not getting the thousands separator for big
+numbers.
 
-In file included from ../drivers/crypto/nx/nx.c:27:
-../drivers/crypto/nx/nx.c: In function 'nx_register_algs':
-../drivers/crypto/nx/nx.h:173:33: warning: statement with no effect [-Wunused-value]
-  173 | #define NX_DEBUGFS_INIT(drv)    (0)
-../drivers/crypto/nx/nx.c:573:9: note: in expansion of macro 'NX_DEBUGFS_INIT'
-  573 |         NX_DEBUGFS_INIT(&nx_driver);
-../drivers/crypto/nx/nx.c: In function 'nx_remove':
-../drivers/crypto/nx/nx.h:174:33: warning: statement with no effect [-Wunused-value]
-  174 | #define NX_DEBUGFS_FINI(drv)    (0)
-../drivers/crypto/nx/nx.c:793:17: note: in expansion of macro 'NX_DEBUGFS_FINI'
-  793 |                 NX_DEBUGFS_FINI(&nx_driver);
+Noticed while developing 'perf bench uprobe', but the use of %' predates
+that, for instance 'perf bench syscall' uses it.
 
-Also, there is no need to build nx_debugfs.o when DEBUG_FS is not
-enabled, so change the Makefile to accommodate that.
+Before:
 
-Fixes: ae0222b7289d ("powerpc/crypto: nx driver code supporting nx encryption")
-Fixes: aef7b31c8833 ("powerpc/crypto: Build files for the nx device driver")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Breno Leitão <leitao@debian.org>
-Cc: Nayna Jain <nayna@linux.ibm.com>
-Cc: Paulo Flabiano Smorigo <pfsmorigo@gmail.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: linux-crypto@vger.kernel.org
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: linuxppc-dev@lists.ozlabs.org
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+  # perf bench uprobe all
+  # Running uprobe/baseline benchmark...
+  # Executed 1000 usleep(1000) calls
+       Total time: 1054082243ns
+
+   1054082.243000 nsecs/op
+
+  #
+
+After:
+
+  # perf bench uprobe all
+  # Running uprobe/baseline benchmark...
+  # Executed 1,000 usleep(1000) calls
+       Total time: 1,053,715,144ns
+
+   1,053,715.144000 nsecs/op
+
+  #
+
+Fixes: c2a08203052f8975 ("perf bench: Add basic syscall benchmark")
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Andre Fredette <anfredet@redhat.com>
+Cc: Clark Williams <williams@redhat.com>
+Cc: Dave Tucker <datucker@redhat.com>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: Derek Barbosa <debarbos@redhat.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
+Link: https://lore.kernel.org/lkml/ZH3lcepZ4tBYr1jv@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/nx/Makefile | 2 +-
- drivers/crypto/nx/nx.h     | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ tools/perf/builtin-bench.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/crypto/nx/Makefile b/drivers/crypto/nx/Makefile
-index bc89a20e5d9d8..351822a598f97 100644
---- a/drivers/crypto/nx/Makefile
-+++ b/drivers/crypto/nx/Makefile
-@@ -1,7 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0
- obj-$(CONFIG_CRYPTO_DEV_NX_ENCRYPT) += nx-crypto.o
- nx-crypto-objs := nx.o \
--		  nx_debugfs.o \
- 		  nx-aes-cbc.o \
- 		  nx-aes-ecb.o \
- 		  nx-aes-gcm.o \
-@@ -11,6 +10,7 @@ nx-crypto-objs := nx.o \
- 		  nx-sha256.o \
- 		  nx-sha512.o
+diff --git a/tools/perf/builtin-bench.c b/tools/perf/builtin-bench.c
+index 609a941ae2963..fb3029495c23c 100644
+--- a/tools/perf/builtin-bench.c
++++ b/tools/perf/builtin-bench.c
+@@ -21,6 +21,7 @@
+ #include "builtin.h"
+ #include "bench/bench.h"
  
-+nx-crypto-$(CONFIG_DEBUG_FS) += nx_debugfs.o
- obj-$(CONFIG_CRYPTO_DEV_NX_COMPRESS_PSERIES) += nx-compress-pseries.o nx-compress.o
- obj-$(CONFIG_CRYPTO_DEV_NX_COMPRESS_POWERNV) += nx-compress-powernv.o nx-compress.o
- nx-compress-objs := nx-842.o
-diff --git a/drivers/crypto/nx/nx.h b/drivers/crypto/nx/nx.h
-index c6233173c612e..2697baebb6a35 100644
---- a/drivers/crypto/nx/nx.h
-+++ b/drivers/crypto/nx/nx.h
-@@ -170,8 +170,8 @@ struct nx_sg *nx_walk_and_build(struct nx_sg *, unsigned int,
- void nx_debugfs_init(struct nx_crypto_driver *);
- void nx_debugfs_fini(struct nx_crypto_driver *);
- #else
--#define NX_DEBUGFS_INIT(drv)	(0)
--#define NX_DEBUGFS_FINI(drv)	(0)
-+#define NX_DEBUGFS_INIT(drv)	do {} while (0)
-+#define NX_DEBUGFS_FINI(drv)	do {} while (0)
- #endif
++#include <locale.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -247,6 +248,7 @@ int cmd_bench(int argc, const char **argv)
  
- #define NX_PAGE_NUM(x)		((u64)(x) & 0xfffffffffffff000ULL)
+ 	/* Unbuffered output */
+ 	setvbuf(stdout, NULL, _IONBF, 0);
++	setlocale(LC_ALL, "");
+ 
+ 	if (argc < 2) {
+ 		/* No collection specified. */
 -- 
 2.39.2
 
