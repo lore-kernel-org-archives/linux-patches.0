@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D70E1D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:04:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D250C433C8;
-	Tue, 25 Jul 2023 11:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778E71D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:04:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8D15C433C7;
+	Tue, 25 Jul 2023 11:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283080;
-	bh=QtnJ2C31pWj7mpjc8safSPYo5JiHRd0UcIoT/T062sI=;
+	s=korg; t=1690283083;
+	bh=V6M+JrGyH+hOfCc4JytNFGsqgH/MJj1FJlK6P3ofTH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VaJ9z/mdMxtMSyq0CHmvqiJFG85syN98YdRsKWJrFRlYd41VBsqA7mntmU67kq69t
-	 vomx6cRy/P1Q3f9R/9edtWOYAQluyCAe9yDZMJw4e7ckBpi+hbiHuVmNTa+hiMFSmR
-	 OY6oLrH+2IZx8DkcM4kNudWijMyGtRzXFW3R8ERA=
+	b=h22ZZuTwG+Sll+Pf4xDf2H6q5LHtei8f+LTCZ9hwmf0wwL/ovEwWBa3Y5rzkUFrqk
+	 FlhyDweDRpoiKmKZGQjxXqG/mBRV27dF7K9Ky8ox/932XQgpRob60KTeGWFPDkyoF+
+	 pJ4Q8lIoRmIgxJsbOgm8kAaHCn6qvthIWHcYgJxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Jialin <lujialin4@huawei.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ahmed Zaki <ahmed.zaki@intel.com>,
+	Mateusz Palczewski <mateusz.palczewski@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 092/183] sched/psi: use kernfs polling functions for PSI trigger polling
-Date: Tue, 25 Jul 2023 12:45:20 +0200
-Message-ID: <20230725104511.290226576@linuxfoundation.org>
+Subject: [PATCH 6.1 125/183] iavf: fix a deadlock caused by rtnl and drivers lock circular dependencies
+Date: Tue, 25 Jul 2023 12:45:53 +0200
+Message-ID: <20230725104512.433696923@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -36,174 +37,339 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Suren Baghdasaryan <surenb@google.com>
+From: Ahmed Zaki <ahmed.zaki@intel.com>
 
-[ Upstream commit aff037078ecaecf34a7c2afab1341815f90fba5e ]
+[ Upstream commit d1639a17319ba78a018280cd2df6577a7e5d9fab ]
 
-Destroying psi trigger in cgroup_file_release causes UAF issues when
-a cgroup is removed from under a polling process. This is happening
-because cgroup removal causes a call to cgroup_file_release while the
-actual file is still alive. Destroying the trigger at this point would
-also destroy its waitqueue head and if there is still a polling process
-on that file accessing the waitqueue, it will step on the freed pointer:
+A driver's lock (crit_lock) is used to serialize all the driver's tasks.
+Lockdep, however, shows a circular dependency between rtnl and
+crit_lock. This happens when an ndo that already holds the rtnl requests
+the driver to reset, since the reset task (in some paths) tries to grab
+rtnl to either change real number of queues of update netdev features.
 
-do_select
-  vfs_poll
-                           do_rmdir
-                             cgroup_rmdir
-                               kernfs_drain_open_files
-                                 cgroup_file_release
-                                   cgroup_pressure_release
-                                     psi_trigger_destroy
-                                       wake_up_pollfree(&t->event_wait)
-// vfs_poll is unblocked
-                                       synchronize_rcu
-                                       kfree(t)
-  poll_freewait -> UAF access to the trigger's waitqueue head
+  [566.241851] ======================================================
+  [566.241893] WARNING: possible circular locking dependency detected
+  [566.241936] 6.2.14-100.fc36.x86_64+debug #1 Tainted: G           OE
+  [566.241984] ------------------------------------------------------
+  [566.242025] repro.sh/2604 is trying to acquire lock:
+  [566.242061] ffff9280fc5ceee8 (&adapter->crit_lock){+.+.}-{3:3}, at: iavf_close+0x3c/0x240 [iavf]
+  [566.242167]
+               but task is already holding lock:
+  [566.242209] ffffffff9976d350 (rtnl_mutex){+.+.}-{3:3}, at: iavf_remove+0x6b5/0x730 [iavf]
+  [566.242300]
+               which lock already depends on the new lock.
 
-Patch [1] fixed this issue for epoll() case using wake_up_pollfree(),
-however the same issue exists for synchronous poll() case.
-The root cause of this issue is that the lifecycles of the psi trigger's
-waitqueue and of the file associated with the trigger are different. Fix
-this by using kernfs_generic_poll function when polling on cgroup-specific
-psi triggers. It internally uses kernfs_open_node->poll waitqueue head
-with its lifecycle tied to the file's lifecycle. This also renders the
-fix in [1] obsolete, so revert it.
+  [566.242353]
+               the existing dependency chain (in reverse order) is:
+  [566.242401]
+               -> #1 (rtnl_mutex){+.+.}-{3:3}:
+  [566.242451]        __mutex_lock+0xc1/0xbb0
+  [566.242489]        iavf_init_interrupt_scheme+0x179/0x440 [iavf]
+  [566.242560]        iavf_watchdog_task+0x80b/0x1400 [iavf]
+  [566.242627]        process_one_work+0x2b3/0x560
+  [566.242663]        worker_thread+0x4f/0x3a0
+  [566.242696]        kthread+0xf2/0x120
+  [566.242730]        ret_from_fork+0x29/0x50
+  [566.242763]
+               -> #0 (&adapter->crit_lock){+.+.}-{3:3}:
+  [566.242815]        __lock_acquire+0x15ff/0x22b0
+  [566.242869]        lock_acquire+0xd2/0x2c0
+  [566.242901]        __mutex_lock+0xc1/0xbb0
+  [566.242934]        iavf_close+0x3c/0x240 [iavf]
+  [566.242997]        __dev_close_many+0xac/0x120
+  [566.243036]        dev_close_many+0x8b/0x140
+  [566.243071]        unregister_netdevice_many_notify+0x165/0x7c0
+  [566.243116]        unregister_netdevice_queue+0xd3/0x110
+  [566.243157]        iavf_remove+0x6c1/0x730 [iavf]
+  [566.243217]        pci_device_remove+0x33/0xa0
+  [566.243257]        device_release_driver_internal+0x1bc/0x240
+  [566.243299]        pci_stop_bus_device+0x6c/0x90
+  [566.243338]        pci_stop_and_remove_bus_device+0xe/0x20
+  [566.243380]        pci_iov_remove_virtfn+0xd1/0x130
+  [566.243417]        sriov_disable+0x34/0xe0
+  [566.243448]        ice_free_vfs+0x2da/0x330 [ice]
+  [566.244383]        ice_sriov_configure+0x88/0xad0 [ice]
+  [566.245353]        sriov_numvfs_store+0xde/0x1d0
+  [566.246156]        kernfs_fop_write_iter+0x15e/0x210
+  [566.246921]        vfs_write+0x288/0x530
+  [566.247671]        ksys_write+0x74/0xf0
+  [566.248408]        do_syscall_64+0x58/0x80
+  [566.249145]        entry_SYSCALL_64_after_hwframe+0x72/0xdc
+  [566.249886]
+                 other info that might help us debug this:
 
-[1] commit c2dbe32d5db5 ("sched/psi: Fix use-after-free in ep_remove_wait_queue()")
+  [566.252014]  Possible unsafe locking scenario:
 
-Fixes: 0e94682b73bf ("psi: introduce psi monitor")
-Closes: https://lore.kernel.org/all/20230613062306.101831-1-lujialin4@huawei.com/
-Reported-by: Lu Jialin <lujialin4@huawei.com>
-Signed-off-by: Suren Baghdasaryan <surenb@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20230630005612.1014540-1-surenb@google.com
+  [566.253432]        CPU0                    CPU1
+  [566.254118]        ----                    ----
+  [566.254800]   lock(rtnl_mutex);
+  [566.255514]                                lock(&adapter->crit_lock);
+  [566.256233]                                lock(rtnl_mutex);
+  [566.256897]   lock(&adapter->crit_lock);
+  [566.257388]
+                  *** DEADLOCK ***
+
+The deadlock can be triggered by a script that is continuously resetting
+the VF adapter while doing other operations requiring RTNL, e.g:
+
+	while :; do
+		ip link set $VF up
+		ethtool --set-channels $VF combined 2
+		ip link set $VF down
+		ip link set $VF up
+		ethtool --set-channels $VF combined 4
+		ip link set $VF down
+	done
+
+Any operation that triggers a reset can substitute "ethtool --set-channles"
+
+As a fix, add a new task "finish_config" that do all the work which
+needs rtnl lock. With the exception of iavf_remove(), all work that
+require rtnl should be called from this task.
+
+As for iavf_remove(), at the point where we need to call
+unregister_netdevice() (and grab rtnl_lock), we make sure the finish_config
+task is not running (cancel_work_sync()) to safely grab rtnl. Subsequent
+finish_config work cannot restart after that since the task is guarded
+by the __IAVF_IN_REMOVE_TASK bit in iavf_schedule_finish_config().
+
+Fixes: 5ac49f3c2702 ("iavf: use mutexes for locking of critical sections")
+Signed-off-by: Ahmed Zaki <ahmed.zaki@intel.com>
+Signed-off-by: Mateusz Palczewski <mateusz.palczewski@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/psi.h       |  5 +++--
- include/linux/psi_types.h |  3 +++
- kernel/cgroup/cgroup.c    |  2 +-
- kernel/sched/psi.c        | 29 +++++++++++++++++++++--------
- 4 files changed, 28 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf.h        |   2 +
+ drivers/net/ethernet/intel/iavf/iavf_main.c   | 114 +++++++++++++-----
+ .../net/ethernet/intel/iavf/iavf_virtchnl.c   |   1 +
+ 3 files changed, 85 insertions(+), 32 deletions(-)
 
-diff --git a/include/linux/psi.h b/include/linux/psi.h
-index ab26200c28033..e0745873e3f26 100644
---- a/include/linux/psi.h
-+++ b/include/linux/psi.h
-@@ -23,8 +23,9 @@ void psi_memstall_enter(unsigned long *flags);
- void psi_memstall_leave(unsigned long *flags);
+diff --git a/drivers/net/ethernet/intel/iavf/iavf.h b/drivers/net/ethernet/intel/iavf/iavf.h
+index 2fe44e865d0a2..305675042fe55 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf.h
++++ b/drivers/net/ethernet/intel/iavf/iavf.h
+@@ -255,6 +255,7 @@ struct iavf_adapter {
+ 	struct workqueue_struct *wq;
+ 	struct work_struct reset_task;
+ 	struct work_struct adminq_task;
++	struct work_struct finish_config;
+ 	struct delayed_work client_task;
+ 	wait_queue_head_t down_waitqueue;
+ 	wait_queue_head_t reset_waitqueue;
+@@ -521,6 +522,7 @@ int iavf_process_config(struct iavf_adapter *adapter);
+ int iavf_parse_vf_resource_msg(struct iavf_adapter *adapter);
+ void iavf_schedule_reset(struct iavf_adapter *adapter);
+ void iavf_schedule_request_stats(struct iavf_adapter *adapter);
++void iavf_schedule_finish_config(struct iavf_adapter *adapter);
+ void iavf_reset(struct iavf_adapter *adapter);
+ void iavf_set_ethtool_ops(struct net_device *netdev);
+ void iavf_update_stats(struct iavf_adapter *adapter);
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index c2739071149de..0e201d690f0dd 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -1702,10 +1702,10 @@ static int iavf_set_interrupt_capability(struct iavf_adapter *adapter)
+ 		adapter->msix_entries[vector].entry = vector;
  
- int psi_show(struct seq_file *s, struct psi_group *group, enum psi_res res);
--struct psi_trigger *psi_trigger_create(struct psi_group *group,
--			char *buf, enum psi_res res, struct file *file);
-+struct psi_trigger *psi_trigger_create(struct psi_group *group, char *buf,
-+				       enum psi_res res, struct file *file,
-+				       struct kernfs_open_file *of);
- void psi_trigger_destroy(struct psi_trigger *t);
+ 	err = iavf_acquire_msix_vectors(adapter, v_budget);
++	if (!err)
++		iavf_schedule_finish_config(adapter);
  
- __poll_t psi_trigger_poll(void **trigger_ptr, struct file *file,
-diff --git a/include/linux/psi_types.h b/include/linux/psi_types.h
-index 040c089581c6c..f1fd3a8044e0e 100644
---- a/include/linux/psi_types.h
-+++ b/include/linux/psi_types.h
-@@ -137,6 +137,9 @@ struct psi_trigger {
- 	/* Wait queue for polling */
- 	wait_queue_head_t event_wait;
- 
-+	/* Kernfs file for cgroup triggers */
-+	struct kernfs_open_file *of;
-+
- 	/* Pending event flag */
- 	int event;
- 
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index c35efae566a4b..73f11e4db3a4d 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -3771,7 +3771,7 @@ static ssize_t pressure_write(struct kernfs_open_file *of, char *buf,
- 	}
- 
- 	psi = cgroup_psi(cgrp);
--	new = psi_trigger_create(psi, buf, res, of->file);
-+	new = psi_trigger_create(psi, buf, res, of->file, of);
- 	if (IS_ERR(new)) {
- 		cgroup_put(cgrp);
- 		return PTR_ERR(new);
-diff --git a/kernel/sched/psi.c b/kernel/sched/psi.c
-index e072f6b31bf30..80d8c10e93638 100644
---- a/kernel/sched/psi.c
-+++ b/kernel/sched/psi.c
-@@ -494,8 +494,12 @@ static u64 update_triggers(struct psi_group *group, u64 now, bool *update_total,
- 			continue;
- 
- 		/* Generate an event */
--		if (cmpxchg(&t->event, 0, 1) == 0)
--			wake_up_interruptible(&t->event_wait);
-+		if (cmpxchg(&t->event, 0, 1) == 0) {
-+			if (t->of)
-+				kernfs_notify(t->of->kn);
-+			else
-+				wake_up_interruptible(&t->event_wait);
-+		}
- 		t->last_event_time = now;
- 		/* Reset threshold breach flag once event got generated */
- 		t->pending_event = false;
-@@ -1272,8 +1276,9 @@ int psi_show(struct seq_file *m, struct psi_group *group, enum psi_res res)
- 	return 0;
+ out:
+-	netif_set_real_num_rx_queues(adapter->netdev, pairs);
+-	netif_set_real_num_tx_queues(adapter->netdev, pairs);
+ 	return err;
  }
  
--struct psi_trigger *psi_trigger_create(struct psi_group *group,
--			char *buf, enum psi_res res, struct file *file)
-+struct psi_trigger *psi_trigger_create(struct psi_group *group, char *buf,
-+				       enum psi_res res, struct file *file,
-+				       struct kernfs_open_file *of)
- {
- 	struct psi_trigger *t;
- 	enum psi_states state;
-@@ -1333,7 +1338,9 @@ struct psi_trigger *psi_trigger_create(struct psi_group *group,
- 
- 	t->event = 0;
- 	t->last_event_time = 0;
--	init_waitqueue_head(&t->event_wait);
-+	t->of = of;
-+	if (!of)
-+		init_waitqueue_head(&t->event_wait);
- 	t->pending_event = false;
- 	t->aggregator = privileged ? PSI_POLL : PSI_AVGS;
- 
-@@ -1390,7 +1397,10 @@ void psi_trigger_destroy(struct psi_trigger *t)
- 	 * being accessed later. Can happen if cgroup is deleted from under a
- 	 * polling process.
- 	 */
--	wake_up_pollfree(&t->event_wait);
-+	if (t->of)
-+		kernfs_notify(t->of->kn);
-+	else
-+		wake_up_interruptible(&t->event_wait);
- 
- 	if (t->aggregator == PSI_AVGS) {
- 		mutex_lock(&group->avgs_lock);
-@@ -1462,7 +1472,10 @@ __poll_t psi_trigger_poll(void **trigger_ptr,
- 	if (!t)
- 		return DEFAULT_POLLMASK | EPOLLERR | EPOLLPRI;
- 
--	poll_wait(file, &t->event_wait, wait);
-+	if (t->of)
-+		kernfs_generic_poll(t->of, wait);
-+	else
-+		poll_wait(file, &t->event_wait, wait);
- 
- 	if (cmpxchg(&t->event, 1, 0) == 1)
- 		ret |= EPOLLPRI;
-@@ -1532,7 +1545,7 @@ static ssize_t psi_write(struct file *file, const char __user *user_buf,
- 		return -EBUSY;
+@@ -1925,9 +1925,7 @@ static int iavf_init_interrupt_scheme(struct iavf_adapter *adapter)
+ 		goto err_alloc_queues;
  	}
  
--	new = psi_trigger_create(&psi_system, buf, res, file);
-+	new = psi_trigger_create(&psi_system, buf, res, file, NULL);
- 	if (IS_ERR(new)) {
- 		mutex_unlock(&seq->lock);
- 		return PTR_ERR(new);
+-	rtnl_lock();
+ 	err = iavf_set_interrupt_capability(adapter);
+-	rtnl_unlock();
+ 	if (err) {
+ 		dev_err(&adapter->pdev->dev,
+ 			"Unable to setup interrupt capabilities\n");
+@@ -2013,6 +2011,78 @@ static int iavf_reinit_interrupt_scheme(struct iavf_adapter *adapter, bool runni
+ 	return err;
+ }
+ 
++/**
++ * iavf_finish_config - do all netdev work that needs RTNL
++ * @work: our work_struct
++ *
++ * Do work that needs both RTNL and crit_lock.
++ **/
++static void iavf_finish_config(struct work_struct *work)
++{
++	struct iavf_adapter *adapter;
++	int pairs, err;
++
++	adapter = container_of(work, struct iavf_adapter, finish_config);
++
++	/* Always take RTNL first to prevent circular lock dependency */
++	rtnl_lock();
++	mutex_lock(&adapter->crit_lock);
++
++	if ((adapter->flags & IAVF_FLAG_SETUP_NETDEV_FEATURES) &&
++	    adapter->netdev_registered &&
++	    !test_bit(__IAVF_IN_REMOVE_TASK, &adapter->crit_section)) {
++		netdev_update_features(adapter->netdev);
++		adapter->flags &= ~IAVF_FLAG_SETUP_NETDEV_FEATURES;
++	}
++
++	switch (adapter->state) {
++	case __IAVF_DOWN:
++		if (!adapter->netdev_registered) {
++			err = register_netdevice(adapter->netdev);
++			if (err) {
++				dev_err(&adapter->pdev->dev, "Unable to register netdev (%d)\n",
++					err);
++
++				/* go back and try again.*/
++				iavf_free_rss(adapter);
++				iavf_free_misc_irq(adapter);
++				iavf_reset_interrupt_capability(adapter);
++				iavf_change_state(adapter,
++						  __IAVF_INIT_CONFIG_ADAPTER);
++				goto out;
++			}
++			adapter->netdev_registered = true;
++		}
++
++		/* Set the real number of queues when reset occurs while
++		 * state == __IAVF_DOWN
++		 */
++		fallthrough;
++	case __IAVF_RUNNING:
++		pairs = adapter->num_active_queues;
++		netif_set_real_num_rx_queues(adapter->netdev, pairs);
++		netif_set_real_num_tx_queues(adapter->netdev, pairs);
++		break;
++
++	default:
++		break;
++	}
++
++out:
++	mutex_unlock(&adapter->crit_lock);
++	rtnl_unlock();
++}
++
++/**
++ * iavf_schedule_finish_config - Set the flags and schedule a reset event
++ * @adapter: board private structure
++ **/
++void iavf_schedule_finish_config(struct iavf_adapter *adapter)
++{
++	if (!test_bit(__IAVF_IN_REMOVE_TASK, &adapter->crit_section))
++		queue_work(adapter->wq, &adapter->finish_config);
++}
++
+ /**
+  * iavf_process_aq_command - process aq_required flags
+  * and sends aq command
+@@ -2650,22 +2720,8 @@ static void iavf_init_config_adapter(struct iavf_adapter *adapter)
+ 
+ 	netif_carrier_off(netdev);
+ 	adapter->link_up = false;
+-
+-	/* set the semaphore to prevent any callbacks after device registration
+-	 * up to time when state of driver will be set to __IAVF_DOWN
+-	 */
+-	rtnl_lock();
+-	if (!adapter->netdev_registered) {
+-		err = register_netdevice(netdev);
+-		if (err) {
+-			rtnl_unlock();
+-			goto err_register;
+-		}
+-	}
+-
+-	adapter->netdev_registered = true;
+-
+ 	netif_tx_stop_all_queues(netdev);
++
+ 	if (CLIENT_ALLOWED(adapter)) {
+ 		err = iavf_lan_add_device(adapter);
+ 		if (err)
+@@ -2678,7 +2734,6 @@ static void iavf_init_config_adapter(struct iavf_adapter *adapter)
+ 
+ 	iavf_change_state(adapter, __IAVF_DOWN);
+ 	set_bit(__IAVF_VSI_DOWN, adapter->vsi.state);
+-	rtnl_unlock();
+ 
+ 	iavf_misc_irq_enable(adapter);
+ 	wake_up(&adapter->down_waitqueue);
+@@ -2698,10 +2753,11 @@ static void iavf_init_config_adapter(struct iavf_adapter *adapter)
+ 		/* request initial VLAN offload settings */
+ 		iavf_set_vlan_offload_features(adapter, 0, netdev->features);
+ 
++	iavf_schedule_finish_config(adapter);
+ 	return;
++
+ err_mem:
+ 	iavf_free_rss(adapter);
+-err_register:
+ 	iavf_free_misc_irq(adapter);
+ err_sw_init:
+ 	iavf_reset_interrupt_capability(adapter);
+@@ -2728,15 +2784,6 @@ static void iavf_watchdog_task(struct work_struct *work)
+ 		goto restart_watchdog;
+ 	}
+ 
+-	if ((adapter->flags & IAVF_FLAG_SETUP_NETDEV_FEATURES) &&
+-	    adapter->netdev_registered &&
+-	    !test_bit(__IAVF_IN_REMOVE_TASK, &adapter->crit_section) &&
+-	    rtnl_trylock()) {
+-		netdev_update_features(adapter->netdev);
+-		rtnl_unlock();
+-		adapter->flags &= ~IAVF_FLAG_SETUP_NETDEV_FEATURES;
+-	}
+-
+ 	if (adapter->flags & IAVF_FLAG_PF_COMMS_FAILED)
+ 		iavf_change_state(adapter, __IAVF_COMM_FAILED);
+ 
+@@ -4980,6 +5027,7 @@ static int iavf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 
+ 	INIT_WORK(&adapter->reset_task, iavf_reset_task);
+ 	INIT_WORK(&adapter->adminq_task, iavf_adminq_task);
++	INIT_WORK(&adapter->finish_config, iavf_finish_config);
+ 	INIT_DELAYED_WORK(&adapter->watchdog_task, iavf_watchdog_task);
+ 	INIT_DELAYED_WORK(&adapter->client_task, iavf_client_task);
+ 	queue_delayed_work(adapter->wq, &adapter->watchdog_task,
+@@ -5123,13 +5171,15 @@ static void iavf_remove(struct pci_dev *pdev)
+ 		usleep_range(500, 1000);
+ 	}
+ 	cancel_delayed_work_sync(&adapter->watchdog_task);
++	cancel_work_sync(&adapter->finish_config);
+ 
++	rtnl_lock();
+ 	if (adapter->netdev_registered) {
+-		rtnl_lock();
+ 		unregister_netdevice(netdev);
+ 		adapter->netdev_registered = false;
+-		rtnl_unlock();
+ 	}
++	rtnl_unlock();
++
+ 	if (CLIENT_ALLOWED(adapter)) {
+ 		err = iavf_lan_del_device(adapter);
+ 		if (err)
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
+index eec7ac3b7f6ee..35419673b6987 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
+@@ -2237,6 +2237,7 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
+ 
+ 		iavf_process_config(adapter);
+ 		adapter->flags |= IAVF_FLAG_SETUP_NETDEV_FEATURES;
++		iavf_schedule_finish_config(adapter);
+ 
+ 		iavf_set_queue_vlan_tag_loc(adapter);
+ 
 -- 
 2.39.2
 
