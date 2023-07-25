@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8509C182C8
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:27:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086F7C433C8;
-	Tue, 25 Jul 2023 11:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452C51ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:27:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8F5C433C7;
+	Tue, 25 Jul 2023 11:27:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284453;
-	bh=s+usCeWS54WM3fArivoFelxFyjeB6q2DdTANpWsxDMc=;
+	s=korg; t=1690284456;
+	bh=elINvdTGNj+d2nHQGXlZIfCTgjU8uJktCzkoFBPnAOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JudIkLZlIByvTQtHTKO8v73Thzdoi7GLXbNUnuYzPapDHbHSs15GgZJwUo63IZm4V
-	 RSoV4N6EHdlk0BY0GgLgw9jdTjIBZgwSONYLuQgkubZiMoLoEu8lzftXNM7komkHTY
-	 oIivgrIYHtf8+tpqKe/YDDwR8kP1w7TW8d5oEd6E=
+	b=EJKzNO7YfvyXe7zZYH5jAt+A/D5Og2riQtxHaitnWV+iBxi23VbclQ+rixbLMi2lg
+	 9jUaAaa5mvd9o5ilAVYMGxJx0s3UcYiL6tqGAJ34aMc8sHN2ylQitCb6vysIl4zjd4
+	 9ksnxMCvCnoDcWHsJNoWb4qV2WEl61ZSwIntOljg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Armin Wolf <W_Armin@gmx.de>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Florian Kauer <florian.kauer@linutronix.de>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 361/509] platform/x86: wmi: Break possible infinite loop when parsing GUID
-Date: Tue, 25 Jul 2023 12:45:00 +0200
-Message-ID: <20230725104610.241158599@linuxfoundation.org>
+Subject: [PATCH 5.10 362/509] igc: Fix launchtime before start of cycle
+Date: Tue, 25 Jul 2023 12:45:01 +0200
+Message-ID: <20230725104610.291361100@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,82 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Florian Kauer <florian.kauer@linutronix.de>
 
-[ Upstream commit 028e6e204ace1f080cfeacd72c50397eb8ae8883 ]
+[ Upstream commit c1bca9ac0bcb355be11354c2e68bc7bf31f5ac5a ]
 
-The while-loop may break on one of the two conditions, either ID string
-is empty or GUID matches. The second one, may never be reached if the
-parsed string is not correct GUID. In such a case the loop will never
-advance to check the next ID.
+It is possible (verified on a running system) that frames are processed
+by igc_tx_launchtime with a txtime before the start of the cycle
+(baset_est).
 
-Break possible infinite loop by factoring out guid_parse_and_compare()
-helper which may be moved to the generic header for everyone later on
-and preventing from similar mistake in the future.
+However, the result of txtime - baset_est is written into a u32,
+leading to a wrap around to a positive number. The following
+launchtime > 0 check will only branch to executing launchtime = 0
+if launchtime is already 0.
 
-Interestingly that firstly it appeared when WMI was turned into a bus
-driver, but later when duplicated GUIDs were checked, the while-loop
-has been replaced by for-loop and hence no mistake made again.
+Fix it by using a s32 before checking launchtime > 0.
 
-Fixes: a48e23385fcf ("platform/x86: wmi: add context pointer field to struct wmi_device_id")
-Fixes: 844af950da94 ("platform/x86: wmi: Turn WMI into a bus driver")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230621151155.78279-1-andriy.shevchenko@linux.intel.com
-Tested-by: Armin Wolf <W_Armin@gmx.de>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: db0b124f02ba ("igc: Enhance Qbv scheduling by using first flag bit")
+Signed-off-by: Florian Kauer <florian.kauer@linutronix.de>
+Reviewed-by: Kurt Kanzenbach <kurt@linutronix.de>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/wmi.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/wmi.c b/drivers/platform/x86/wmi.c
-index 5e4c03f7db7c0..567c28705cb1b 100644
---- a/drivers/platform/x86/wmi.c
-+++ b/drivers/platform/x86/wmi.c
-@@ -130,6 +130,16 @@ static bool find_guid(const char *guid_string, struct wmi_block **out)
- 	return false;
- }
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index 2b51ee87a2def..051b1048eb41b 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -905,7 +905,7 @@ static __le32 igc_tx_launchtime(struct igc_ring *ring, ktime_t txtime,
+ 	ktime_t base_time = adapter->base_time;
+ 	ktime_t now = ktime_get_clocktai();
+ 	ktime_t baset_est, end_of_cycle;
+-	u32 launchtime;
++	s32 launchtime;
+ 	s64 n;
  
-+static bool guid_parse_and_compare(const char *string, const guid_t *guid)
-+{
-+	guid_t guid_input;
-+
-+	if (guid_parse(string, &guid_input))
-+		return false;
-+
-+	return guid_equal(&guid_input, guid);
-+}
-+
- static const void *find_guid_context(struct wmi_block *wblock,
- 				      struct wmi_driver *wdriver)
- {
-@@ -142,11 +152,7 @@ static const void *find_guid_context(struct wmi_block *wblock,
- 
- 	id = wdriver->id_table;
- 	while (*id->guid_string) {
--		guid_t guid_input;
--
--		if (guid_parse(id->guid_string, &guid_input))
--			continue;
--		if (guid_equal(&wblock->gblock.guid, &guid_input))
-+		if (guid_parse_and_compare(id->guid_string, &wblock->gblock.guid))
- 			return id->context;
- 		id++;
- 	}
-@@ -804,11 +810,7 @@ static int wmi_dev_match(struct device *dev, struct device_driver *driver)
- 		return 0;
- 
- 	while (*id->guid_string) {
--		guid_t driver_guid;
--
--		if (WARN_ON(guid_parse(id->guid_string, &driver_guid)))
--			continue;
--		if (guid_equal(&driver_guid, &wblock->gblock.guid))
-+		if (guid_parse_and_compare(id->guid_string, &wblock->gblock.guid))
- 			return 1;
- 
- 		id++;
+ 	n = div64_s64(ktime_sub_ns(now, base_time), cycle_time);
 -- 
 2.39.2
 
