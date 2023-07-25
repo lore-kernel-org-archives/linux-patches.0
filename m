@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 545E41ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:47:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0BBC433C8;
-	Tue, 25 Jul 2023 11:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77ED11ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:47:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 920BDC433C7;
+	Tue, 25 Jul 2023 11:47:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285662;
-	bh=yFFrRYuObWxpXUe4jw4te5mUJtwHI3A8hz5CrcaMtJY=;
+	s=korg; t=1690285664;
+	bh=tBUw1YMVL1zmNCC5GW5lJsJ5CUD8QGP8X06S7dr0oUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YwU2wFN2CO+4ICqEZn2WUX2PpBfliQ3gLJ253gxNt7UeEqKnMCWQeo2DQ25TmlXoh
-	 N5JrsUIe+BiDeRGE0TT3SBaZf35V8LGZtvRchIpZ+a43UCArSwxspNmsdG5snCHPyZ
-	 iRXBoVLpaesbG95Bc/PqxQny9k/iSovNmhEgS9iY=
+	b=J4qlZmyPuXntoYkf8JYY7bqCscccZHGNDiVsDT2y5DkbgQYxjv71MrOZ0z3ZH8w3U
+	 gVvcbfWCBr4nDyunRKCkSCt1QXmMvg2f56ijTSU3/+MGVePSRb0MpAzJsQ+0r3bnVB
+	 WLy9uzxjGxJsFNr8rxk7eui/8tCykEk3/Truw2oA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Richard Genoud <richard.genoud@gmail.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.4 256/313] serial: atmel: dont enable IRQs prematurely
-Date: Tue, 25 Jul 2023 12:46:49 +0200
-Message-ID: <20230725104532.123445858@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Dinh Nguyen <dinguyen@kernel.org>
+Subject: [PATCH 5.4 257/313] firmware: stratix10-svc: Fix a potential resource leak in svc_create_memory_pool()
+Date: Tue, 25 Jul 2023 12:46:50 +0200
+Message-ID: <20230725104532.171295336@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -36,45 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit 27a826837ec9a3e94cc44bd9328b8289b0fcecd7 upstream.
+commit 1995f15590ca222f91193ed11461862b450abfd6 upstream.
 
-The atmel_complete_tx_dma() function disables IRQs at the start
-of the function by calling spin_lock_irqsave(&port->lock, flags);
-There is no need to disable them a second time using the
-spin_lock_irq() function and, in fact, doing so is a bug because
-it will enable IRQs prematurely when we call spin_unlock_irq().
+svc_create_memory_pool() is only called from stratix10_svc_drv_probe().
+Most of resources in the probe are managed, but not this memremap() call.
 
-Just use spin_lock/unlock() instead without disabling or enabling
-IRQs.
+There is also no memunmap() call in the file.
 
-Fixes: 08f738be88bb ("serial: at91: add tx dma support")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Acked-by: Richard Genoud <richard.genoud@gmail.com>
-Link: https://lore.kernel.org/r/cb7c39a9-c004-4673-92e1-be4e34b85368@moroto.mountain
-Cc: stable <stable@kernel.org>
+So switch to devm_memremap() to avoid a resource leak.
+
+Cc: stable@vger.kernel.org
+Fixes: 7ca5ce896524 ("firmware: add Intel Stratix10 service layer driver")
+Link: https://lore.kernel.org/all/783e9dfbba34e28505c9efa8bba41f97fd0fa1dc.1686109400.git.christophe.jaillet@wanadoo.fr/
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Message-ID: <20230613211521.16366-1-dinguyen@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/atmel_serial.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/firmware/stratix10-svc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/atmel_serial.c
-+++ b/drivers/tty/serial/atmel_serial.c
-@@ -884,11 +884,11 @@ static void atmel_complete_tx_dma(void *
- 
- 	port->icount.tx += atmel_port->tx_len;
- 
--	spin_lock_irq(&atmel_port->lock_tx);
-+	spin_lock(&atmel_port->lock_tx);
- 	async_tx_ack(atmel_port->desc_tx);
- 	atmel_port->cookie_tx = -EINVAL;
- 	atmel_port->desc_tx = NULL;
--	spin_unlock_irq(&atmel_port->lock_tx);
-+	spin_unlock(&atmel_port->lock_tx);
- 
- 	if (uart_circ_chars_pending(xmit) < WAKEUP_CHARS)
- 		uart_write_wakeup(port);
+--- a/drivers/firmware/stratix10-svc.c
++++ b/drivers/firmware/stratix10-svc.c
+@@ -615,7 +615,7 @@ svc_create_memory_pool(struct platform_d
+ 	end = rounddown(sh_memory->addr + sh_memory->size, PAGE_SIZE);
+ 	paddr = begin;
+ 	size = end - begin;
+-	va = memremap(paddr, size, MEMREMAP_WC);
++	va = devm_memremap(dev, paddr, size, MEMREMAP_WC);
+ 	if (!va) {
+ 		dev_err(dev, "fail to remap shared memory\n");
+ 		return ERR_PTR(-EINVAL);
 
 
