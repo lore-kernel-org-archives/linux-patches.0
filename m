@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9151ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:31:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3858C433C7;
-	Tue, 25 Jul 2023 11:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FE81ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:31:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F53C433C8;
+	Tue, 25 Jul 2023 11:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284696;
-	bh=Y1thFwVoES51AB1wPzTd0ivxRPqBzGtpvZ+MM/mJa3Y=;
+	s=korg; t=1690284698;
+	bh=dq1+HV3swrdUEjVKh3IySCv1nLwlhLdp7/OR5kgkhLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o2Iqo9YEJeP0RFEOTFo034CqMBwSW0OqCvfWSEpBAYyjcwwlu6g7cRCwvYwUFNLXG
-	 PvKoflPJJU4y6DF1NRpe/TwfXGV34CjbwLgpUdSWfW4zOboFkQ/bowoY++vtV+q3JF
-	 iULFMXbcMK1IbsfEwMXsdTnp/10VQtHeN4JLlcEc=
+	b=ty6V7uhZVi6SyrFtXCMe8dSaHLoF8Vh9s8X8zjnKz/gdpFd2Ci2x27Kz0GTApVu/5
+	 7f9ByqDaORzmhhGQnB1QmB3bOjF0S5xtRJGcrKXqBBRNutoYOGaZOJMyJiDneb5ZwX
+	 5NAI6n4hRlehoAmrQo0X3snzfA4BVx4ZWorpF4/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Mark Brown <broonie@kernel.org>,
-	Xu Yilun <yilun.xu@intel.com>
-Subject: [PATCH 5.10 449/509] regmap: Account for register length in SMBus I/O limits
-Date: Tue, 25 Jul 2023 12:46:28 +0200
-Message-ID: <20230725104614.308054086@linuxfoundation.org>
+	YueHaibing <yuehaibing@huawei.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.10 450/509] can: bcm: Fix UAF in bcm_proc_show()
+Date: Tue, 25 Jul 2023 12:46:29 +0200
+Message-ID: <20230725104614.340656011@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,54 +35,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: YueHaibing <yuehaibing@huawei.com>
 
-commit 0c9d2eb5e94792fe64019008a04d4df5e57625af upstream.
+commit 55c3b96074f3f9b0aee19bf93cd71af7516582bb upstream.
 
-The SMBus I2C buses have limits on the size of transfers they can do but
-do not factor in the register length meaning we may try to do a transfer
-longer than our length limit, the core will not take care of this.
-Future changes will factor this out into the core but there are a number
-of users that assume current behaviour so let's just do something
-conservative here.
+BUG: KASAN: slab-use-after-free in bcm_proc_show+0x969/0xa80
+Read of size 8 at addr ffff888155846230 by task cat/7862
 
-This does not take account padding bits but practically speaking these
-are very rarely if ever used on I2C buses given that they generally run
-slowly enough to mean there's no issue.
+CPU: 1 PID: 7862 Comm: cat Not tainted 6.5.0-rc1-00153-gc8746099c197 #230
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xd5/0x150
+ print_report+0xc1/0x5e0
+ kasan_report+0xba/0xf0
+ bcm_proc_show+0x969/0xa80
+ seq_read_iter+0x4f6/0x1260
+ seq_read+0x165/0x210
+ proc_reg_read+0x227/0x300
+ vfs_read+0x1d5/0x8d0
+ ksys_read+0x11e/0x240
+ do_syscall_64+0x35/0xb0
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Cc: stable@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Reviewed-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20230712-regmap-max-transfer-v1-2-80e2aed22e83@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Allocated by task 7846:
+ kasan_save_stack+0x1e/0x40
+ kasan_set_track+0x21/0x30
+ __kasan_kmalloc+0x9e/0xa0
+ bcm_sendmsg+0x264b/0x44e0
+ sock_sendmsg+0xda/0x180
+ ____sys_sendmsg+0x735/0x920
+ ___sys_sendmsg+0x11d/0x1b0
+ __sys_sendmsg+0xfa/0x1d0
+ do_syscall_64+0x35/0xb0
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Freed by task 7846:
+ kasan_save_stack+0x1e/0x40
+ kasan_set_track+0x21/0x30
+ kasan_save_free_info+0x27/0x40
+ ____kasan_slab_free+0x161/0x1c0
+ slab_free_freelist_hook+0x119/0x220
+ __kmem_cache_free+0xb4/0x2e0
+ rcu_core+0x809/0x1bd0
+
+bcm_op is freed before procfs entry be removed in bcm_release(),
+this lead to bcm_proc_show() may read the freed bcm_op.
+
+Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://lore.kernel.org/all/20230715092543.15548-1-yuehaibing@huawei.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/regmap/regmap-i2c.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/can/bcm.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/base/regmap/regmap-i2c.c
-+++ b/drivers/base/regmap/regmap-i2c.c
-@@ -242,8 +242,8 @@ static int regmap_i2c_smbus_i2c_read(voi
- static const struct regmap_bus regmap_i2c_smbus_i2c_block = {
- 	.write = regmap_i2c_smbus_i2c_write,
- 	.read = regmap_i2c_smbus_i2c_read,
--	.max_raw_read = I2C_SMBUS_BLOCK_MAX,
--	.max_raw_write = I2C_SMBUS_BLOCK_MAX,
-+	.max_raw_read = I2C_SMBUS_BLOCK_MAX - 1,
-+	.max_raw_write = I2C_SMBUS_BLOCK_MAX - 1,
- };
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -1521,6 +1521,12 @@ static int bcm_release(struct socket *so
  
- static int regmap_i2c_smbus_i2c_write_reg16(void *context, const void *data,
-@@ -299,8 +299,8 @@ static int regmap_i2c_smbus_i2c_read_reg
- static const struct regmap_bus regmap_i2c_smbus_i2c_block_reg16 = {
- 	.write = regmap_i2c_smbus_i2c_write_reg16,
- 	.read = regmap_i2c_smbus_i2c_read_reg16,
--	.max_raw_read = I2C_SMBUS_BLOCK_MAX,
--	.max_raw_write = I2C_SMBUS_BLOCK_MAX,
-+	.max_raw_read = I2C_SMBUS_BLOCK_MAX - 2,
-+	.max_raw_write = I2C_SMBUS_BLOCK_MAX - 2,
- };
+ 	lock_sock(sk);
  
- static const struct regmap_bus *regmap_get_i2c_bus(struct i2c_client *i2c,
++#if IS_ENABLED(CONFIG_PROC_FS)
++	/* remove procfs entry */
++	if (net->can.bcmproc_dir && bo->bcm_proc_read)
++		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
++#endif /* CONFIG_PROC_FS */
++
+ 	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
+ 		bcm_remove_op(op);
+ 
+@@ -1556,12 +1562,6 @@ static int bcm_release(struct socket *so
+ 	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
+ 		bcm_remove_op(op);
+ 
+-#if IS_ENABLED(CONFIG_PROC_FS)
+-	/* remove procfs entry */
+-	if (net->can.bcmproc_dir && bo->bcm_proc_read)
+-		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
+-#endif /* CONFIG_PROC_FS */
+-
+ 	/* remove device reference */
+ 	if (bo->bound) {
+ 		bo->bound   = 0;
 
 
