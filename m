@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C48315AE0
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2195C433C8;
-	Tue, 25 Jul 2023 11:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F3B1ED44
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:12:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DAD1C433C7;
+	Tue, 25 Jul 2023 11:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283517;
-	bh=Hfu3E/HExCBaVoV9H4zCCTGuD5VfAquPL/geKOhyjV8=;
+	s=korg; t=1690283519;
+	bh=W/ommO/fTyWLnvh84ukbSdB/1HtUbU8bHiIlBdYE5DM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=anhxwf7uFWu54/EmR3sxdPJin32CA8Ajo16idSoqxbEesTzEQ5KdbevN17nh5GsBD
-	 2w4vnD72Ru7b6o6khQ4pxQnDa8BkeY7pMurlDejSnboXsC0BzhPtjPPscNUrS8VqaA
-	 jnHLOHmlmtuLLVI9TKl3hnnv6a4usuHftqGNrf8I=
+	b=bPXdTkSezbg8Hw+/ImAu0MHlnB8DJviHSVkTEZX/FENzfyWezMS9K4whu+Dqnakfs
+	 VeA+BEOQuG7ce2N6zUcIV2t2rGygeA5/Hje0C4tdy+kJIQMoTUmRDZXTfroLYiC/2r
+	 IN4TTaf5K2tt9Jolv4fsm5uBeDBsgsomsLWHnDKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carsten Schmidt <carsten.schmidt-achim@t-online.de>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 003/509] can: isotp: isotp_sendmsg(): fix return error fix on TX path
-Date: Tue, 25 Jul 2023 12:39:02 +0200
-Message-ID: <20230725104553.765297422@linuxfoundation.org>
+	Finn Thain <fthain@telegraphics.com.au>,
+	Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+	Rob Herring <robh@kernel.org>
+Subject: [PATCH 5.10 004/509] video: imsttfb: check for ioremap() failures
+Date: Tue, 25 Jul 2023 12:39:03 +0200
+Message-ID: <20230725104553.808190038@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,44 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit e38910c0072b541a91954682c8b074a93e57c09b upstream.
+commit 13b7c0390a5d3840e1e2cda8f44a310fdbb982de upstream.
 
-With commit d674a8f123b4 ("can: isotp: isotp_sendmsg(): fix return
-error on FC timeout on TX path") the missing correct return value in
-the case of a protocol error was introduced.
+We should check if ioremap() were to somehow fail in imsttfb_probe() and
+handle the unwinding of the resources allocated here properly.
 
-But the way the error value has been read and sent to the user space
-does not follow the common scheme to clear the error after reading
-which is provided by the sock_error() function. This leads to an error
-report at the following write() attempt although everything should be
-working.
+Ideally if anyone cares about this driver (it's for a PowerMac era PCI
+display card), they wouldn't even be using fbdev anymore.  Or the devm_*
+apis could be used, but that's just extra work for diminishing
+returns...
 
-Fixes: d674a8f123b4 ("can: isotp: isotp_sendmsg(): fix return error on FC timeout on TX path")
-Reported-by: Carsten Schmidt <carsten.schmidt-achim@t-online.de>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://lore.kernel.org/all/20230607072708.38809-1-socketcan@hartkopp.net
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: Finn Thain <fthain@telegraphics.com.au>
+Cc: Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/20210503115736.2104747-68-gregkh@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/isotp.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/imsttfb.c |   21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -990,8 +990,9 @@ static int isotp_sendmsg(struct socket *
- 		/* wait for complete transmission of current pdu */
- 		wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
- 
--		if (sk->sk_err)
--			return -sk->sk_err;
-+		err = sock_error(sk);
-+		if (err)
-+			return err;
+--- a/drivers/video/fbdev/imsttfb.c
++++ b/drivers/video/fbdev/imsttfb.c
+@@ -1469,6 +1469,7 @@ static int imsttfb_probe(struct pci_dev
+ 	struct imstt_par *par;
+ 	struct fb_info *info;
+ 	struct device_node *dp;
++	int ret = -ENOMEM;
+ 	
+ 	dp = pci_device_to_OF_node(pdev);
+ 	if(dp)
+@@ -1504,23 +1505,37 @@ static int imsttfb_probe(struct pci_dev
+ 		default:
+ 			printk(KERN_INFO "imsttfb: Device 0x%x unknown, "
+ 					 "contact maintainer.\n", pdev->device);
+-			release_mem_region(addr, size);
+-			framebuffer_release(info);
+-			return -ENODEV;
++			ret = -ENODEV;
++			goto error;
  	}
  
- 	return size;
+ 	info->fix.smem_start = addr;
+ 	info->screen_base = (__u8 *)ioremap(addr, par->ramdac == IBM ?
+ 					    0x400000 : 0x800000);
++	if (!info->screen_base)
++		goto error;
+ 	info->fix.mmio_start = addr + 0x800000;
+ 	par->dc_regs = ioremap(addr + 0x800000, 0x1000);
++	if (!par->dc_regs)
++		goto error;
+ 	par->cmap_regs_phys = addr + 0x840000;
+ 	par->cmap_regs = (__u8 *)ioremap(addr + 0x840000, 0x1000);
++	if (!par->cmap_regs)
++		goto error;
+ 	info->pseudo_palette = par->palette;
+ 	init_imstt(info);
+ 
+ 	pci_set_drvdata(pdev, info);
+ 	return 0;
++
++error:
++	if (par->dc_regs)
++		iounmap(par->dc_regs);
++	if (info->screen_base)
++		iounmap(info->screen_base);
++	release_mem_region(addr, size);
++	framebuffer_release(info);
++	return ret;
+ }
+ 
+ static void imsttfb_remove(struct pci_dev *pdev)
 
 
