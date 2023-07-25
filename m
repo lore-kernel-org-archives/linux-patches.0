@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F263A12B98
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:04:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A4DC433C8;
-	Tue, 25 Jul 2023 11:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7115512B98
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:04:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31456C433C8;
+	Tue, 25 Jul 2023 11:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283057;
-	bh=Q3R0nPsVtfhumfGdyaN8MN1C6m7UxsBG9REu40XCPNw=;
+	s=korg; t=1690283061;
+	bh=O30ifgC80Ko/FDr+PbKQ2UKUgJKDx+imM009RG4ets8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PSPPyASMYHKsdqg0K+AlGiN1AV3cu5o8Si3uOBTOEs26eGVqzRQdsz9Q540rXeC06
-	 M/PLAJsNwanOzbAUA1t5rwkEsrbM9B6jz93tLvrt70gjplIY7ft1M8ZWX9ng4TEKIg
-	 11Mfmkcoipue/IJsCIYJoshvyINb4z2XCYM+JyZk=
+	b=IuJhpTlLdW+J1NTgtU9U1/3AUtRZ9KTNXLxg370/wONKuClaqAvzmVHs74H7anGQW
+	 DfGAatf5wY0zJrDfGoueDpZ2PhMbncnO0h8uk+0pbep21OVp2E4ijWeS1LkTVjd07R
+	 Dv+AGN1KVPhupMG2gvKa6/O0phyy3rd8wLf5HCzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmed Zaki <ahmed.zaki@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 122/183] iavf: send VLAN offloading caps once after VFR
-Date: Tue, 25 Jul 2023 12:45:50 +0200
-Message-ID: <20230725104512.335103250@linuxfoundation.org>
+Subject: [PATCH 6.1 123/183] iavf: make functions static where possible
+Date: Tue, 25 Jul 2023 12:45:51 +0200
+Message-ID: <20230725104512.364590327@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -37,64 +36,221 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ahmed Zaki <ahmed.zaki@intel.com>
+From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 
-[ Upstream commit 7dcbdf29282fbcdb646dc785e8a57ed2c2fec8ba ]
+[ Upstream commit a4aadf0f5905661cd25c366b96cc1c840f05b756 ]
 
-When the user disables rxvlan offloading and then changes the number of
-channels, all VLAN ports are unable to receive traffic.
+Make all possible functions static.
 
-Changing the number of channels triggers a VFR reset. During re-init, when
-VIRTCHNL_OP_GET_OFFLOAD_VLAN_V2_CAPS is received, we do:
-1 - set the IAVF_FLAG_SETUP_NETDEV_FEATURES flag
-2 - call
-    iavf_set_vlan_offload_features(adapter, 0, netdev->features);
+Move iavf_force_wb() up to avoid forward declaration.
 
-The second step sends to the PF the __default__ features, in this case
-aq_required |= IAVF_FLAG_AQ_ENABLE_CTAG_VLAN_STRIPPING
-
-While the first step forces the watchdog task to call
-netdev_update_features() ->  iavf_set_features() ->
-iavf_set_vlan_offload_features(adapter, netdev->features, features).
-Since the user disabled the "rxvlan", this sets:
-aq_required |= IAVF_FLAG_AQ_DISABLE_CTAG_VLAN_STRIPPING
-
-When we start processing the AQ commands, both flags are enabled. Since we
-process DISABLE_XTAG first then ENABLE_XTAG, this results in the PF
-enabling the rxvlan offload. This breaks all communications on the VLAN
-net devices.
-
-Fix by removing the call to iavf_set_vlan_offload_features() (second
-step). Calling netdev_update_features() from watchdog task is enough for
-both init and reset paths.
-
-Fixes: 7598f4b40bd6 ("iavf: Move netdev_update_features() into watchdog task")
-Signed-off-by: Ahmed Zaki <ahmed.zaki@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Suggested-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Stable-dep-of: c2ed2403f12c ("iavf: Wait for reset in callbacks which trigger it")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_virtchnl.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf.h      | 10 -----
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 14 +++----
+ drivers/net/ethernet/intel/iavf/iavf_txrx.c | 43 ++++++++++-----------
+ drivers/net/ethernet/intel/iavf/iavf_txrx.h |  4 --
+ 4 files changed, 28 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-index 07d37402a0df5..7b34111fd4eb1 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-@@ -2238,11 +2238,6 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
- 		iavf_process_config(adapter);
- 		adapter->flags |= IAVF_FLAG_SETUP_NETDEV_FEATURES;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf.h b/drivers/net/ethernet/intel/iavf/iavf.h
+index 6625625f91e47..a716ed6bb787d 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf.h
++++ b/drivers/net/ethernet/intel/iavf/iavf.h
+@@ -523,9 +523,6 @@ void iavf_schedule_request_stats(struct iavf_adapter *adapter);
+ void iavf_reset(struct iavf_adapter *adapter);
+ void iavf_set_ethtool_ops(struct net_device *netdev);
+ void iavf_update_stats(struct iavf_adapter *adapter);
+-void iavf_reset_interrupt_capability(struct iavf_adapter *adapter);
+-int iavf_init_interrupt_scheme(struct iavf_adapter *adapter);
+-void iavf_irq_enable_queues(struct iavf_adapter *adapter);
+ void iavf_free_all_tx_resources(struct iavf_adapter *adapter);
+ void iavf_free_all_rx_resources(struct iavf_adapter *adapter);
  
--		/* Request VLAN offload settings */
--		if (VLAN_V2_ALLOWED(adapter))
--			iavf_set_vlan_offload_features(adapter, 0,
--						       netdev->features);
+@@ -579,17 +576,10 @@ void iavf_enable_vlan_stripping_v2(struct iavf_adapter *adapter, u16 tpid);
+ void iavf_disable_vlan_stripping_v2(struct iavf_adapter *adapter, u16 tpid);
+ void iavf_enable_vlan_insertion_v2(struct iavf_adapter *adapter, u16 tpid);
+ void iavf_disable_vlan_insertion_v2(struct iavf_adapter *adapter, u16 tpid);
+-int iavf_replace_primary_mac(struct iavf_adapter *adapter,
+-			     const u8 *new_mac);
+-void
+-iavf_set_vlan_offload_features(struct iavf_adapter *adapter,
+-			       netdev_features_t prev_features,
+-			       netdev_features_t features);
+ void iavf_add_fdir_filter(struct iavf_adapter *adapter);
+ void iavf_del_fdir_filter(struct iavf_adapter *adapter);
+ void iavf_add_adv_rss_cfg(struct iavf_adapter *adapter);
+ void iavf_del_adv_rss_cfg(struct iavf_adapter *adapter);
+ struct iavf_mac_filter *iavf_add_filter(struct iavf_adapter *adapter,
+ 					const u8 *macaddr);
+-int iavf_lock_timeout(struct mutex *lock, unsigned int msecs);
+ #endif /* _IAVF_H_ */
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index 68e951fe5e210..d5b1dcfe0ccdd 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -253,7 +253,7 @@ enum iavf_status iavf_free_virt_mem_d(struct iavf_hw *hw,
+  *
+  * Returns 0 on success, negative on failure
+  **/
+-int iavf_lock_timeout(struct mutex *lock, unsigned int msecs)
++static int iavf_lock_timeout(struct mutex *lock, unsigned int msecs)
+ {
+ 	unsigned int wait, delay = 10;
+ 
+@@ -362,7 +362,7 @@ static void iavf_irq_disable(struct iavf_adapter *adapter)
+  * iavf_irq_enable_queues - Enable interrupt for all queues
+  * @adapter: board private structure
+  **/
+-void iavf_irq_enable_queues(struct iavf_adapter *adapter)
++static void iavf_irq_enable_queues(struct iavf_adapter *adapter)
+ {
+ 	struct iavf_hw *hw = &adapter->hw;
+ 	int i;
+@@ -1003,8 +1003,8 @@ struct iavf_mac_filter *iavf_add_filter(struct iavf_adapter *adapter,
+  *
+  * Do not call this with mac_vlan_list_lock!
+  **/
+-int iavf_replace_primary_mac(struct iavf_adapter *adapter,
+-			     const u8 *new_mac)
++static int iavf_replace_primary_mac(struct iavf_adapter *adapter,
++				    const u8 *new_mac)
+ {
+ 	struct iavf_hw *hw = &adapter->hw;
+ 	struct iavf_mac_filter *f;
+@@ -1860,7 +1860,7 @@ static void iavf_free_q_vectors(struct iavf_adapter *adapter)
+  * @adapter: board private structure
+  *
+  **/
+-void iavf_reset_interrupt_capability(struct iavf_adapter *adapter)
++static void iavf_reset_interrupt_capability(struct iavf_adapter *adapter)
+ {
+ 	if (!adapter->msix_entries)
+ 		return;
+@@ -1875,7 +1875,7 @@ void iavf_reset_interrupt_capability(struct iavf_adapter *adapter)
+  * @adapter: board private structure to initialize
+  *
+  **/
+-int iavf_init_interrupt_scheme(struct iavf_adapter *adapter)
++static int iavf_init_interrupt_scheme(struct iavf_adapter *adapter)
+ {
+ 	int err;
+ 
+@@ -2174,7 +2174,7 @@ static int iavf_process_aq_command(struct iavf_adapter *adapter)
+  * the watchdog if any changes are requested to expedite the request via
+  * virtchnl.
+  **/
+-void
++static void
+ iavf_set_vlan_offload_features(struct iavf_adapter *adapter,
+ 			       netdev_features_t prev_features,
+ 			       netdev_features_t features)
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_txrx.c b/drivers/net/ethernet/intel/iavf/iavf_txrx.c
+index e989feda133c1..8c5f6096b0022 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_txrx.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_txrx.c
+@@ -54,7 +54,7 @@ static void iavf_unmap_and_free_tx_resource(struct iavf_ring *ring,
+  * iavf_clean_tx_ring - Free any empty Tx buffers
+  * @tx_ring: ring to be cleaned
+  **/
+-void iavf_clean_tx_ring(struct iavf_ring *tx_ring)
++static void iavf_clean_tx_ring(struct iavf_ring *tx_ring)
+ {
+ 	unsigned long bi_size;
+ 	u16 i;
+@@ -110,7 +110,7 @@ void iavf_free_tx_resources(struct iavf_ring *tx_ring)
+  * Since there is no access to the ring head register
+  * in XL710, we need to use our local copies
+  **/
+-u32 iavf_get_tx_pending(struct iavf_ring *ring, bool in_sw)
++static u32 iavf_get_tx_pending(struct iavf_ring *ring, bool in_sw)
+ {
+ 	u32 head, tail;
+ 
+@@ -127,6 +127,24 @@ u32 iavf_get_tx_pending(struct iavf_ring *ring, bool in_sw)
+ 	return 0;
+ }
+ 
++/**
++ * iavf_force_wb - Issue SW Interrupt so HW does a wb
++ * @vsi: the VSI we care about
++ * @q_vector: the vector on which to force writeback
++ **/
++static void iavf_force_wb(struct iavf_vsi *vsi, struct iavf_q_vector *q_vector)
++{
++	u32 val = IAVF_VFINT_DYN_CTLN1_INTENA_MASK |
++		  IAVF_VFINT_DYN_CTLN1_ITR_INDX_MASK | /* set noitr */
++		  IAVF_VFINT_DYN_CTLN1_SWINT_TRIG_MASK |
++		  IAVF_VFINT_DYN_CTLN1_SW_ITR_INDX_ENA_MASK
++		  /* allow 00 to be written to the index */;
++
++	wr32(&vsi->back->hw,
++	     IAVF_VFINT_DYN_CTLN1(q_vector->reg_idx),
++	     val);
++}
++
+ /**
+  * iavf_detect_recover_hung - Function to detect and recover hung_queues
+  * @vsi:  pointer to vsi struct with tx queues
+@@ -352,25 +370,6 @@ static void iavf_enable_wb_on_itr(struct iavf_vsi *vsi,
+ 	q_vector->arm_wb_state = true;
+ }
+ 
+-/**
+- * iavf_force_wb - Issue SW Interrupt so HW does a wb
+- * @vsi: the VSI we care about
+- * @q_vector: the vector  on which to force writeback
+- *
+- **/
+-void iavf_force_wb(struct iavf_vsi *vsi, struct iavf_q_vector *q_vector)
+-{
+-	u32 val = IAVF_VFINT_DYN_CTLN1_INTENA_MASK |
+-		  IAVF_VFINT_DYN_CTLN1_ITR_INDX_MASK | /* set noitr */
+-		  IAVF_VFINT_DYN_CTLN1_SWINT_TRIG_MASK |
+-		  IAVF_VFINT_DYN_CTLN1_SW_ITR_INDX_ENA_MASK
+-		  /* allow 00 to be written to the index */;
 -
- 		iavf_set_queue_vlan_tag_loc(adapter);
+-	wr32(&vsi->back->hw,
+-	     IAVF_VFINT_DYN_CTLN1(q_vector->reg_idx),
+-	     val);
+-}
+-
+ static inline bool iavf_container_is_rx(struct iavf_q_vector *q_vector,
+ 					struct iavf_ring_container *rc)
+ {
+@@ -687,7 +686,7 @@ int iavf_setup_tx_descriptors(struct iavf_ring *tx_ring)
+  * iavf_clean_rx_ring - Free Rx buffers
+  * @rx_ring: ring to be cleaned
+  **/
+-void iavf_clean_rx_ring(struct iavf_ring *rx_ring)
++static void iavf_clean_rx_ring(struct iavf_ring *rx_ring)
+ {
+ 	unsigned long bi_size;
+ 	u16 i;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_txrx.h b/drivers/net/ethernet/intel/iavf/iavf_txrx.h
+index 2624bf6d009e3..7e6ee32d19b69 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_txrx.h
++++ b/drivers/net/ethernet/intel/iavf/iavf_txrx.h
+@@ -442,15 +442,11 @@ static inline unsigned int iavf_rx_pg_order(struct iavf_ring *ring)
  
- 		was_mac_changed = !ether_addr_equal(netdev->dev_addr,
+ bool iavf_alloc_rx_buffers(struct iavf_ring *rxr, u16 cleaned_count);
+ netdev_tx_t iavf_xmit_frame(struct sk_buff *skb, struct net_device *netdev);
+-void iavf_clean_tx_ring(struct iavf_ring *tx_ring);
+-void iavf_clean_rx_ring(struct iavf_ring *rx_ring);
+ int iavf_setup_tx_descriptors(struct iavf_ring *tx_ring);
+ int iavf_setup_rx_descriptors(struct iavf_ring *rx_ring);
+ void iavf_free_tx_resources(struct iavf_ring *tx_ring);
+ void iavf_free_rx_resources(struct iavf_ring *rx_ring);
+ int iavf_napi_poll(struct napi_struct *napi, int budget);
+-void iavf_force_wb(struct iavf_vsi *vsi, struct iavf_q_vector *q_vector);
+-u32 iavf_get_tx_pending(struct iavf_ring *ring, bool in_sw);
+ void iavf_detect_recover_hung(struct iavf_vsi *vsi);
+ int __iavf_maybe_stop_tx(struct iavf_ring *tx_ring, int size);
+ bool __iavf_chk_linearize(struct sk_buff *skb);
 -- 
 2.39.2
 
