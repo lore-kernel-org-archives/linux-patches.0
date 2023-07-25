@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397181ED44
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:08:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFC93C433C8;
-	Tue, 25 Jul 2023 11:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A161ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:08:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 639B2C433C8;
+	Tue, 25 Jul 2023 11:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283325;
-	bh=ZOoUxsDyKwEulenjDn/1naBRUgbYK9tIpKiPvo2Coh8=;
+	s=korg; t=1690283327;
+	bh=b5DAxg33cj2tHPTxN31GKwPM82ZUFVAQXamkAOWTxKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rOk6VgFAJL/R2ihtbwQvMqWihiUUj3+MqxsgfQzVZsHmO8qfBR3DXyxtHKT03Gpnq
-	 FO2q6vf5w3NcfePnKXhJm6fl33nes+vsI6nxh8H9cDm1/K5lfgjey8vJ4yOB4/4yxD
-	 YVGcgj+IrzzF4qOggeXIE3EXxndOyIh9c853v7Xg=
+	b=zA3iXncDjKzMMglIocWdk1dCyTbc+lmPf3Fj4X5t6+K35vN5b3xcEPrzFBVdv/TGB
+	 sozD1ae9f/cCLDTzU2grQtSbQySNj6Pk20JNCXZT1/l756B0BI79GFyLY5BcBPEyz6
+	 km+dTRTPapiVbZQ3eN6+6sQ1s1bohPcDHsT+l+eI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f1faa20eec55e0c8644c@syzkaller.appspotmail.com,
 	Immad Mir <mirimmad17@gmail.com>,
 	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 36/78] [PATCH AUTOSEL 4.14 8/9] FS: JFS: Fix null-ptr-deref Read in txBegin
-Date: Tue, 25 Jul 2023 12:46:27 +0200
-Message-ID: <20230725104452.700324647@linuxfoundation.org>
+Subject: [PATCH 5.15 37/78] [PATCH AUTOSEL 4.14 9/9] FS: JFS: Check for read-only mounted filesystem in txBegin
+Date: Tue, 25 Jul 2023 12:46:28 +0200
+Message-ID: <20230725104452.740868338@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104451.275227789@linuxfoundation.org>
 References: <20230725104451.275227789@linuxfoundation.org>
@@ -36,37 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-[ Upstream commit 47cfdc338d674d38f4b2f22b7612cc6a2763ba27 ]
+[ Upstream commit 95e2b352c03b0a86c5717ba1d24ea20969abcacc ]
 
- Syzkaller reported an issue where txBegin may be called
- on a superblock in a read-only mounted filesystem which leads
- to NULL pointer deref. This could be solved by checking if
- the filesystem is read-only before calling txBegin, and returning
- with appropiate error code.
-
-Reported-By: syzbot+f1faa20eec55e0c8644c@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=be7e52c50c5182cc09a09ea6fc456446b2039de3
+ This patch adds a check for read-only mounted filesystem
+ in txBegin before starting a transaction potentially saving
+ from NULL pointer deref.
 
 Signed-off-by: Immad Mir <mirimmad17@gmail.com>
 Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/namei.c |    5 +++++
+ fs/jfs/jfs_txnmgr.c |    5 +++++
  1 file changed, 5 insertions(+)
 
---- a/fs/jfs/namei.c
-+++ b/fs/jfs/namei.c
-@@ -799,6 +799,11 @@ static int jfs_link(struct dentry *old_d
- 	if (rc)
- 		goto out;
+--- a/fs/jfs/jfs_txnmgr.c
++++ b/fs/jfs/jfs_txnmgr.c
+@@ -354,6 +354,11 @@ tid_t txBegin(struct super_block *sb, in
+ 	jfs_info("txBegin: flag = 0x%x", flag);
+ 	log = JFS_SBI(sb)->log;
  
-+	if (isReadOnly(ip)) {
-+		jfs_error(ip->i_sb, "read-only filesystem\n");
-+		return -EROFS;
++	if (!log) {
++		jfs_error(sb, "read-only filesystem\n");
++		return 0;
 +	}
 +
- 	tid = txBegin(ip->i_sb, 0);
+ 	TXN_LOCK();
  
- 	mutex_lock_nested(&JFS_IP(dir)->commit_mutex, COMMIT_MUTEX_PARENT);
+ 	INCREMENT(TxStat.txBegin);
 
 
