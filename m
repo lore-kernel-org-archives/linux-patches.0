@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72B11EA72
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:48:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6596EC433C7;
-	Tue, 25 Jul 2023 10:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25711EA72
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:48:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34261C433C8;
+	Tue, 25 Jul 2023 10:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282123;
-	bh=bHSPKhK+umItmdo8BplFHrAVX6l3M6Qv2Q7VLFh2NzE=;
+	s=korg; t=1690282126;
+	bh=H3SHgQ/P+kfFVzdwd56LXGEMsfLypk8k4dFmJLUu9fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1gq9ah9BJaWTceSWXjYq+GOm+shZuhJER/r3PI/bAiOxvqjtA3tt4Bd90PSSL20X+
-	 NgMJPB5qus9xBE/oONPjjAaxG7We2a1im7iNOrMjfyXDvMYEMaYdT0J5xQHYOUdkIc
-	 dchpTw6SSxTJtb+h7S7seDJh2n6VDlT3LS5+FGEw=
+	b=koo6dfJ3l05X3Nqfvma9pv3BFa2lbv5SeEFD+UB7m1I+GbSsW7yx5zyVM2zlL/AVj
+	 t+GYosdBp0rM93Ju4oBxGnHT/hmG68WM9CCgBwB5iXCRO/uJKZA7q7TpHTybtlvHlf
+	 Yeyp+KjE5Ivbbvyb+xx4I0GswIEMBi9HbQxWLA5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Bernd Schubert <bschubert@ddn.com>,
 	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.4 017/227] fuse: add feature flag for expire-only
-Date: Tue, 25 Jul 2023 12:43:04 +0200
-Message-ID: <20230725104515.511815463@linuxfoundation.org>
+Subject: [PATCH 6.4 018/227] fuse: Apply flags2 only when userspace set the FUSE_INIT_EXT
+Date: Tue, 25 Jul 2023 12:43:05 +0200
+Message-ID: <20230725104515.554038323@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -33,62 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Bernd Schubert <bschubert@ddn.com>
 
-commit 5cadfbd5a11e5495cac217534c5f788168b1afd7 upstream.
+commit 3066ff93476c35679cb07a97cce37d9bb07632ff upstream.
 
-Add an init flag idicating whether the FUSE_EXPIRE_ONLY flag of
-FUSE_NOTIFY_INVAL_ENTRY is effective.
+This is just a safety precaution to avoid checking flags on memory that was
+initialized on the user space side.  libfuse zeroes struct fuse_init_out
+outarg, but this is not guranteed to be done in all implementations.
+Better is to act on flags and to only apply flags2 when FUSE_INIT_EXT is
+set.
 
-This is needed for backports of this feature, otherwise the server could
-just check the protocol version.
+There is a risk with this change, though - it might break existing user
+space libraries, which are already using flags2 without setting
+FUSE_INIT_EXT.
 
-Fixes: 4f8d37020e1f ("fuse: add "expire only" mode to FUSE_NOTIFY_INVAL_ENTRY")
-Cc: <stable@vger.kernel.org> # v6.2
+The corresponding libfuse patch is here
+https://github.com/libfuse/libfuse/pull/662
+
+Signed-off-by: Bernd Schubert <bschubert@ddn.com>
+Fixes: 53db28933e95 ("fuse: extend init flags")
+Cc: <stable@vger.kernel.org> # v5.17
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/inode.c           |    3 ++-
- include/uapi/linux/fuse.h |    3 +++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ fs/fuse/inode.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 --- a/fs/fuse/inode.c
 +++ b/fs/fuse/inode.c
-@@ -1254,7 +1254,8 @@ void fuse_send_init(struct fuse_mount *f
- 		FUSE_ABORT_ERROR | FUSE_MAX_PAGES | FUSE_CACHE_SYMLINKS |
- 		FUSE_NO_OPENDIR_SUPPORT | FUSE_EXPLICIT_INVAL_DATA |
- 		FUSE_HANDLE_KILLPRIV_V2 | FUSE_SETXATTR_EXT | FUSE_INIT_EXT |
--		FUSE_SECURITY_CTX | FUSE_CREATE_SUPP_GROUP;
-+		FUSE_SECURITY_CTX | FUSE_CREATE_SUPP_GROUP |
-+		FUSE_HAS_EXPIRE_ONLY;
- #ifdef CONFIG_FUSE_DAX
- 	if (fm->fc->dax)
- 		flags |= FUSE_MAP_ALIGNMENT;
---- a/include/uapi/linux/fuse.h
-+++ b/include/uapi/linux/fuse.h
-@@ -206,6 +206,7 @@
-  *  - add extension header
-  *  - add FUSE_EXT_GROUPS
-  *  - add FUSE_CREATE_SUPP_GROUP
-+ *  - add FUSE_HAS_EXPIRE_ONLY
-  */
+@@ -1134,7 +1134,10 @@ static void process_init_reply(struct fu
+ 		process_init_limits(fc, arg);
  
- #ifndef _LINUX_FUSE_H
-@@ -369,6 +370,7 @@ struct fuse_file_lock {
-  * FUSE_HAS_INODE_DAX:  use per inode DAX
-  * FUSE_CREATE_SUPP_GROUP: add supplementary group info to create, mkdir,
-  *			symlink and mknod (single group that matches parent)
-+ * FUSE_HAS_EXPIRE_ONLY: kernel supports expiry-only entry invalidation
-  */
- #define FUSE_ASYNC_READ		(1 << 0)
- #define FUSE_POSIX_LOCKS	(1 << 1)
-@@ -406,6 +408,7 @@ struct fuse_file_lock {
- #define FUSE_SECURITY_CTX	(1ULL << 32)
- #define FUSE_HAS_INODE_DAX	(1ULL << 33)
- #define FUSE_CREATE_SUPP_GROUP	(1ULL << 34)
-+#define FUSE_HAS_EXPIRE_ONLY	(1ULL << 35)
+ 		if (arg->minor >= 6) {
+-			u64 flags = arg->flags | (u64) arg->flags2 << 32;
++			u64 flags = arg->flags;
++
++			if (flags & FUSE_INIT_EXT)
++				flags |= (u64) arg->flags2 << 32;
  
- /**
-  * CUSE INIT request/reply flags
+ 			ra_pages = arg->max_readahead / PAGE_SIZE;
+ 			if (flags & FUSE_ASYNC_READ)
 
 
