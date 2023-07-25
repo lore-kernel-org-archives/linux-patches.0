@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A20617AB4
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:58:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC87C433C7;
-	Tue, 25 Jul 2023 10:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012A11ED3A
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:58:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B27C433CD;
+	Tue, 25 Jul 2023 10:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282714;
-	bh=DFaPSBA1ZA/iANkpPfRHuTJyemHtiQDdjfjyzIkuzp8=;
+	s=korg; t=1690282717;
+	bh=RYw+0r434hTKsUAPd6CDp44kVe82PhuFHM5SvMMJmZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iKqiUumAk7Zly+1a2DqOXPBXsMqEXGdftHwreaFU+J8g46fGWZxsEOYMxDVI/Li4S
-	 ZTATcoS9kA05fSFuyec6MLu8c+ivtLGHDX+65M5y1o3Pbk1StNXsaJ8q5BKVVS1KNH
-	 mxDjgucdkOj+FcCH6F3nCI3heF/uMNQyLG6zEPn0=
+	b=PnD/CsvobF9khkIDXr7kZBzKRaQlKQ8PzLTETEHU/vhEoGv362g+j85qa2uDKhYEp
+	 QSqRDvbCUB4I/laVL1UlLmtVap5ZfgJ14BtAE+jclBKsKtjCtd6zoL1OnJAAqTm/8i
+	 oqN7FYDtLGkSjnGGt2YBQPj6LzXp2rCkjNe2w/FA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanjun Gong <ruc_gongyuanjun@163.com>,
-	David Ahern <dsahern@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 189/227] net:ipv6: check return value of pskb_trim()
-Date: Tue, 25 Jul 2023 12:45:56 +0200
-Message-ID: <20230725104522.625529304@linuxfoundation.org>
+	Yunxiang Li <Yunxiang.Li@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
+Subject: [PATCH 6.4 222/227] drm/ttm: fix bulk_move corruption when adding a entry
+Date: Tue, 25 Jul 2023 12:46:29 +0200
+Message-ID: <20230725104523.913133965@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -37,39 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuanjun Gong <ruc_gongyuanjun@163.com>
+From: Yunxiang Li <Yunxiang.Li@amd.com>
 
-[ Upstream commit 4258faa130be4ea43e5e2d839467da421b8ff274 ]
+commit 4481913607e58196c48a4fef5e6f45350684ec3c upstream.
 
-goto tx_err if an unexpected result is returned by pskb_tirm()
-in ip6erspan_tunnel_xmit().
+When the resource is the first in the bulk_move range, adding it again
+(thus moving it to the tail) will corrupt the list since the first
+pointer is not moved. This eventually lead to null pointer deref in
+ttm_lru_bulk_move_del()
 
-Fixes: 5a963eb61b7c ("ip6_gre: Add ERSPAN native tunnel support")
-Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: fee2ede15542 ("drm/ttm: rework bulk move handling v5")
+Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+CC: stable@vger.kernel.org
+Link: https://patchwork.freedesktop.org/patch/msgid/20230622141902.28718-3-Yunxiang.Li@amd.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_gre.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/ttm/ttm_resource.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index da80974ad23ae..070d87abf7c02 100644
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -955,7 +955,8 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
- 		goto tx_err;
- 
- 	if (skb->len > dev->mtu + dev->hard_header_len) {
--		pskb_trim(skb, dev->mtu + dev->hard_header_len);
-+		if (pskb_trim(skb, dev->mtu + dev->hard_header_len))
-+			goto tx_err;
- 		truncate = true;
+--- a/drivers/gpu/drm/ttm/ttm_resource.c
++++ b/drivers/gpu/drm/ttm/ttm_resource.c
+@@ -86,6 +86,8 @@ static void ttm_lru_bulk_move_pos_tail(s
+ 				       struct ttm_resource *res)
+ {
+ 	if (pos->last != res) {
++		if (pos->first == res)
++			pos->first = list_next_entry(res, lru);
+ 		list_move(&res->lru, &pos->last->lru);
+ 		pos->last = res;
  	}
+@@ -111,7 +113,8 @@ static void ttm_lru_bulk_move_del(struct
+ {
+ 	struct ttm_lru_bulk_move_pos *pos = ttm_lru_bulk_move_pos(bulk, res);
  
--- 
-2.39.2
-
+-	if (unlikely(pos->first == res && pos->last == res)) {
++	if (unlikely(WARN_ON(!pos->first || !pos->last) ||
++		     (pos->first == res && pos->last == res))) {
+ 		pos->first = NULL;
+ 		pos->last = NULL;
+ 	} else if (pos->first == res) {
 
 
