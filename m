@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92AD81ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:17:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12012C433C9;
-	Tue, 25 Jul 2023 11:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504771ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:17:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7B7FC433C8;
+	Tue, 25 Jul 2023 11:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283830;
-	bh=HGsENE10OoVv+A8hWrcMQwgYtpA7Ls/fWwInP6CuwQI=;
+	s=korg; t=1690283833;
+	bh=sLI5jFOQC5lhvYPsoEmpMEImX2r2RIbCFH9SYL7BVP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fJXi69SjtgXJvXRe+5bahAzhXnYIwbhUuKLNaM7lB90FXUqVUq5a8Xx934n4NcLNs
-	 6t+8L2ILPfB8YdEq2A6gNm80m1Rr8GOtsTKdFyf+d0sKL164L7eqRo/Nd62KzqtTJm
-	 cZl9j7TKCSxfwn0f985BS78nZpU9ozKFbIdPrm4s=
+	b=AuyD4LYwFViQo6pKE6tWMRuiWbvJoHrFglDlEz/gVkiYXXG5m06kPKaGZWXI7MD6p
+	 BCfkPWNNOBIJihBJzscWOXCLrZQ+NFOAUyBrieoJsU++bdi1IAOy6B8uGVj3zBnDC1
+	 RqXgupaRsbM1HPSpn3XWO2Lz5HMwF/1mOfHhiMRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Weihang Li <liweihang@huawei.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 120/509] arm64: dts: qcom: msm8916: correct camss unit address
-Date: Tue, 25 Jul 2023 12:40:59 +0200
-Message-ID: <20230725104559.174120813@linuxfoundation.org>
+Subject: [PATCH 5.10 138/509] RDMA/hns: Use refcount_t APIs for HEM
+Date: Tue, 25 Jul 2023 12:41:17 +0200
+Message-ID: <20230725104600.070696211@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,37 +35,126 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Weihang Li <liweihang@huawei.com>
 
-[ Upstream commit 48798d992ce276cf0d57bf75318daf8eabd02aa4 ]
+[ Upstream commit 82eb481da64586ccd287b2b2c5a086202c65e7eb ]
 
-Match unit-address to reg entry to fix dtbs W=1 warnings:
+refcount_t is better than integer for reference counting, it will WARN on
+overflow/underflow and avoid use-after-free risks.
 
-  Warning (simple_bus_reg): /soc@0/camss@1b00000: simple-bus unit address format error, expected "1b0ac00"
-
-Fixes: 58f479f90a7c ("arm64: dts: qcom: msm8916: Add CAMSS support")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230419211856.79332-2-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/1621589395-2435-5-git-send-email-liweihang@huawei.com
+Signed-off-by: Weihang Li <liweihang@huawei.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: cf5b608fb0e3 ("RDMA/hns: Fix hns_roce_table_get return value")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/hns/hns_roce_hem.c | 32 +++++++++++-------------
+ drivers/infiniband/hw/hns/hns_roce_hem.h |  4 +--
+ 2 files changed, 17 insertions(+), 19 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index c32e4a3833f23..5b79e4a373311 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1006,7 +1006,7 @@ dsi_phy0: dsi-phy@1a98300 {
- 			};
- 		};
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
+index edc287a0a91a1..831e9476c6284 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hem.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
+@@ -260,7 +260,6 @@ static struct hns_roce_hem *hns_roce_alloc_hem(struct hns_roce_dev *hr_dev,
+ 	if (!hem)
+ 		return NULL;
  
--		camss: camss@1b00000 {
-+		camss: camss@1b0ac00 {
- 			compatible = "qcom,msm8916-camss";
- 			reg = <0x01b0ac00 0x200>,
- 				<0x01b00030 0x4>,
+-	hem->refcount = 0;
+ 	INIT_LIST_HEAD(&hem->chunk_list);
+ 
+ 	order = get_order(hem_alloc_size);
+@@ -607,7 +606,7 @@ static int hns_roce_table_mhop_get(struct hns_roce_dev *hr_dev,
+ 
+ 	mutex_lock(&table->mutex);
+ 	if (table->hem[index.buf]) {
+-		++table->hem[index.buf]->refcount;
++		refcount_inc(&table->hem[index.buf]->refcount);
+ 		goto out;
+ 	}
+ 
+@@ -626,7 +625,7 @@ static int hns_roce_table_mhop_get(struct hns_roce_dev *hr_dev,
+ 		}
+ 	}
+ 
+-	++table->hem[index.buf]->refcount;
++	refcount_set(&table->hem[index.buf]->refcount, 1);
+ 	goto out;
+ 
+ err_alloc:
+@@ -652,7 +651,7 @@ int hns_roce_table_get(struct hns_roce_dev *hr_dev,
+ 	mutex_lock(&table->mutex);
+ 
+ 	if (table->hem[i]) {
+-		++table->hem[i]->refcount;
++		refcount_inc(&table->hem[i]->refcount);
+ 		goto out;
+ 	}
+ 
+@@ -675,7 +674,7 @@ int hns_roce_table_get(struct hns_roce_dev *hr_dev,
+ 		goto out;
+ 	}
+ 
+-	++table->hem[i]->refcount;
++	refcount_set(&table->hem[i]->refcount, 1);
+ out:
+ 	mutex_unlock(&table->mutex);
+ 	return ret;
+@@ -742,11 +741,11 @@ static void hns_roce_table_mhop_put(struct hns_roce_dev *hr_dev,
+ 		return;
+ 	}
+ 
+-	mutex_lock(&table->mutex);
+-	if (check_refcount && (--table->hem[index.buf]->refcount > 0)) {
+-		mutex_unlock(&table->mutex);
++	if (!check_refcount)
++		mutex_lock(&table->mutex);
++	else if (!refcount_dec_and_mutex_lock(&table->hem[index.buf]->refcount,
++					      &table->mutex))
+ 		return;
+-	}
+ 
+ 	clear_mhop_hem(hr_dev, table, obj, &mhop, &index);
+ 	free_mhop_hem(hr_dev, table, &mhop, &index);
+@@ -768,16 +767,15 @@ void hns_roce_table_put(struct hns_roce_dev *hr_dev,
+ 	i = (obj & (table->num_obj - 1)) /
+ 	    (table->table_chunk_size / table->obj_size);
+ 
+-	mutex_lock(&table->mutex);
++	if (!refcount_dec_and_mutex_lock(&table->hem[i]->refcount,
++					 &table->mutex))
++		return;
+ 
+-	if (--table->hem[i]->refcount == 0) {
+-		/* Clear HEM base address */
+-		if (hr_dev->hw->clear_hem(hr_dev, table, obj, 0))
+-			dev_warn(dev, "Clear HEM base address failed.\n");
++	if (hr_dev->hw->clear_hem(hr_dev, table, obj, 0))
++		dev_warn(dev, "failed to clear HEM base address.\n");
+ 
+-		hns_roce_free_hem(hr_dev, table->hem[i]);
+-		table->hem[i] = NULL;
+-	}
++	hns_roce_free_hem(hr_dev, table->hem[i]);
++	table->hem[i] = NULL;
+ 
+ 	mutex_unlock(&table->mutex);
+ }
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.h b/drivers/infiniband/hw/hns/hns_roce_hem.h
+index 112243d112c23..03d44e2efa473 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hem.h
++++ b/drivers/infiniband/hw/hns/hns_roce_hem.h
+@@ -87,8 +87,8 @@ struct hns_roce_hem_chunk {
+ };
+ 
+ struct hns_roce_hem {
+-	struct list_head	 chunk_list;
+-	int			 refcount;
++	struct list_head chunk_list;
++	refcount_t refcount;
+ };
+ 
+ struct hns_roce_hem_iter {
 -- 
 2.39.2
 
