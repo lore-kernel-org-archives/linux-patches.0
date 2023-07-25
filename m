@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F65B1EA74
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:49:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10DDDC433C9;
-	Tue, 25 Jul 2023 10:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500EE1EA72
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:49:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75C6C433C8;
+	Tue, 25 Jul 2023 10:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282188;
-	bh=8/5W2GXxWmIbAvkf807Q61r5u9UpymPMwxCirb9fScE=;
+	s=korg; t=1690282191;
+	bh=fBbc3fg8Ybz07UT0TqBEvEuHPRM0Bc2QgEfyWV2y8SE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UiTz9y2waYEqstR6nDVf264JUbeMKLK7wiC9sHZ2wSUdWKnLhRieP0P8w9w0PoG55
-	 35Uz46eBqKlPyh0y44tvB4ztZbMHjlzWM93Zb7Nd7ZT6C/jT0S5kA2XLEwJ2c18Z2B
-	 YI4ue0GQ8Isho8xbE8zC4OGiBHBHpcLDtH8Jm/dY=
+	b=nPVNfwEUQDocntbgWk9wuigr7T/MUiPY2c7NEcopHfi5qejKeTY3/+VtoB501m7vs
+	 QlCa4uaIMbiMq3MVpzBTqr265/+pC0P1C3HyXaYhGI7hS+uO1nYSQGF84KuV+XVPbh
+	 1z34mFeLO1GoBFmoUO/uOWhF/WvNzzTQoG9zBXCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	matoro <matoro_mailinglist_kernel@matoro.tk>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-ia64@vger.kernel.org,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.4 032/227] ia64: mmap: Consider pgoff when searching for free mapping
-Date: Tue, 25 Jul 2023 12:43:19 +0200
-Message-ID: <20230725104516.170600624@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: [PATCH 6.4 041/227] accel/qaic: tighten bounds checking in decode_message()
+Date: Tue, 25 Jul 2023 12:43:28 +0200
+Message-ID: <20230725104516.520059159@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -37,42 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 07e981137f17e5275b6fa5fd0c28b0ddb4519702 upstream.
+commit 51b56382ed2a2b03347372272362b3baa623ed1e upstream.
 
-IA64 is the only architecture which does not consider the pgoff value when
-searching for a possible free memory region with vm_unmapped_area().
-Adding this seems to have no negative side effect on IA64, so add it now
-to make IA64 consistent with all other architectures.
+Copy the bounds checking from encode_message() to decode_message().
 
-Cc: stable@vger.kernel.org # 6.4
-Signed-off-by: Helge Deller <deller@gmx.de>
-Tested-by: matoro <matoro_mailinglist_kernel@matoro.tk>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: linux-ia64@vger.kernel.org
-Link: https://lore.kernel.org/r/20230721152432.196382-3-deller@gmx.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+This patch addresses the following concerns.  Ensure that there is
+enough space for at least one header so that we don't have a negative
+size later.
+
+	if (msg_hdr_len < sizeof(*trans_hdr))
+
+Ensure that we have enough space to read the next header from the
+msg->data.
+
+	if (msg_len > msg_hdr_len - sizeof(*trans_hdr))
+		return -EINVAL;
+
+Check that the trans_hdr->len is not below the minimum size:
+
+	if (hdr_len < sizeof(*trans_hdr))
+
+This minimum check ensures that we don't corrupt memory in
+decode_passthrough() when we do.
+
+	memcpy(out_trans->data, in_trans->data, len - sizeof(in_trans->hdr));
+
+And finally, use size_add() to prevent an integer overflow:
+
+	if (size_add(msg_len, hdr_len) > msg_hdr_len)
+
+Fixes: 129776ac2e38 ("accel/qaic: Add control path")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc: stable@vger.kernel.org # 6.4.x
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/ZK0Q5nbLyDO7kJa+@moroto
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/ia64/kernel/sys_ia64.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/accel/qaic/qaic_control.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/arch/ia64/kernel/sys_ia64.c b/arch/ia64/kernel/sys_ia64.c
-index 6e948d015332..eb561cc93632 100644
---- a/arch/ia64/kernel/sys_ia64.c
-+++ b/arch/ia64/kernel/sys_ia64.c
-@@ -63,7 +63,7 @@ arch_get_unmapped_area (struct file *filp, unsigned long addr, unsigned long len
- 	info.low_limit = addr;
- 	info.high_limit = TASK_SIZE;
- 	info.align_mask = align_mask;
--	info.align_offset = 0;
-+	info.align_offset = pgoff << PAGE_SHIFT;
- 	return vm_unmapped_area(&info);
- }
+--- a/drivers/accel/qaic/qaic_control.c
++++ b/drivers/accel/qaic/qaic_control.c
+@@ -959,15 +959,23 @@ static int decode_message(struct qaic_de
+ 	int ret;
+ 	int i;
  
--- 
-2.41.0
-
+-	if (msg_hdr_len > QAIC_MANAGE_MAX_MSG_LENGTH)
++	if (msg_hdr_len < sizeof(*trans_hdr) ||
++	    msg_hdr_len > QAIC_MANAGE_MAX_MSG_LENGTH)
+ 		return -EINVAL;
+ 
+ 	user_msg->len = 0;
+ 	user_msg->count = le32_to_cpu(msg->hdr.count);
+ 
+ 	for (i = 0; i < user_msg->count; ++i) {
++		u32 hdr_len;
++
++		if (msg_len > msg_hdr_len - sizeof(*trans_hdr))
++			return -EINVAL;
++
+ 		trans_hdr = (struct wire_trans_hdr *)(msg->data + msg_len);
+-		if (msg_len + le32_to_cpu(trans_hdr->len) > msg_hdr_len)
++		hdr_len = le32_to_cpu(trans_hdr->len);
++		if (hdr_len < sizeof(*trans_hdr) ||
++		    size_add(msg_len, hdr_len) > msg_hdr_len)
+ 			return -EINVAL;
+ 
+ 		switch (le32_to_cpu(trans_hdr->type)) {
 
 
