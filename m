@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3C71ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:33:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82DD8C433C8;
-	Tue, 25 Jul 2023 11:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA711ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:33:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515D8C433C7;
+	Tue, 25 Jul 2023 11:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284796;
-	bh=3EsGSstY+qqV5SRBQZVjiZAXemYqRBaE8rwfnEv8uzc=;
+	s=korg; t=1690284799;
+	bh=8IWUj6y3H6Ha2yGWyqLs1YGPvD5wgjSl19LTfDQUppo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pDyrygQ6tpyQCNgavBjKvVZnamkQiApDF/1GIfknLDVns+Ddbvk/5Vx7aHX0h5kGu
-	 bmJRhvkfVzsMNI3CdO8H3Abr+hK50Wvp9GXuX1PKhORldho23dBU2ePUNRYRw/AAuA
-	 SqixqdS3KcWXQksfQNvT6AxnbCmrc3dswpIxiDe0=
+	b=odjKetIFV0AOXn200CInRfS0fHNeksfm9sR5PLTTx0WkWf53UNd+94VZogH6NZkQf
+	 NUAdPvjqtD2cobqmrLae0KQXQQMztHtNSpKFlwFYC8IxRzH500Vi6E4dI/81Ssf6ZR
+	 jJtp3Vj+GRMCy1CMtgwKgIVJGwFV2jFezFFjWKRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+ebe648a84e8784763f82@syzkaller.appspotmail.com,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Yonghong Song <yhs@fb.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 485/509] Revert "tcp: avoid the lookup process failing to get sk in ehash table"
-Date: Tue, 25 Jul 2023 12:47:04 +0200
-Message-ID: <20230725104615.943471942@linuxfoundation.org>
+Subject: [PATCH 5.10 468/509] bpf: Address KCSAN report on bpf_lru_list
+Date: Tue, 25 Jul 2023 12:46:47 +0200
+Message-ID: <20230725104615.187479785@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,110 +37,175 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Martin KaFai Lau <martin.lau@kernel.org>
 
-[ Upstream commit 81b3ade5d2b98ad6e0a473b0e1e420a801275592 ]
+[ Upstream commit ee9fd0ac3017c4313be91a220a9ac4c99dde7ad4 ]
 
-This reverts commit 3f4ca5fafc08881d7a57daa20449d171f2887043.
+KCSAN reported a data-race when accessing node->ref.
+Although node->ref does not have to be accurate,
+take this chance to use a more common READ_ONCE() and WRITE_ONCE()
+pattern instead of data_race().
 
-Commit 3f4ca5fafc08 ("tcp: avoid the lookup process failing to get sk in
-ehash table") reversed the order in how a socket is inserted into ehash
-to fix an issue that ehash-lookup could fail when reqsk/full sk/twsk are
-swapped.  However, it introduced another lookup failure.
+There is an existing bpf_lru_node_is_ref() and bpf_lru_node_set_ref().
+This patch also adds bpf_lru_node_clear_ref() to do the
+WRITE_ONCE(node->ref, 0) also.
 
-The full socket in ehash is allocated from a slab with SLAB_TYPESAFE_BY_RCU
-and does not have SOCK_RCU_FREE, so the socket could be reused even while
-it is being referenced on another CPU doing RCU lookup.
+==================================================================
+BUG: KCSAN: data-race in __bpf_lru_list_rotate / __htab_lru_percpu_map_update_elem
 
-Let's say a socket is reused and inserted into the same hash bucket during
-lookup.  After the blamed commit, a new socket is inserted at the end of
-the list.  If that happens, we will skip sockets placed after the previous
-position of the reused socket, resulting in ehash lookup failure.
+write to 0xffff888137038deb of 1 bytes by task 11240 on cpu 1:
+__bpf_lru_node_move kernel/bpf/bpf_lru_list.c:113 [inline]
+__bpf_lru_list_rotate_active kernel/bpf/bpf_lru_list.c:149 [inline]
+__bpf_lru_list_rotate+0x1bf/0x750 kernel/bpf/bpf_lru_list.c:240
+bpf_lru_list_pop_free_to_local kernel/bpf/bpf_lru_list.c:329 [inline]
+bpf_common_lru_pop_free kernel/bpf/bpf_lru_list.c:447 [inline]
+bpf_lru_pop_free+0x638/0xe20 kernel/bpf/bpf_lru_list.c:499
+prealloc_lru_pop kernel/bpf/hashtab.c:290 [inline]
+__htab_lru_percpu_map_update_elem+0xe7/0x820 kernel/bpf/hashtab.c:1316
+bpf_percpu_hash_update+0x5e/0x90 kernel/bpf/hashtab.c:2313
+bpf_map_update_value+0x2a9/0x370 kernel/bpf/syscall.c:200
+generic_map_update_batch+0x3ae/0x4f0 kernel/bpf/syscall.c:1687
+bpf_map_do_batch+0x2d9/0x3d0 kernel/bpf/syscall.c:4534
+__sys_bpf+0x338/0x810
+__do_sys_bpf kernel/bpf/syscall.c:5096 [inline]
+__se_sys_bpf kernel/bpf/syscall.c:5094 [inline]
+__x64_sys_bpf+0x43/0x50 kernel/bpf/syscall.c:5094
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-As described in Documentation/RCU/rculist_nulls.rst, we should insert a
-new socket at the head of the list to avoid such an issue.
+read to 0xffff888137038deb of 1 bytes by task 11241 on cpu 0:
+bpf_lru_node_set_ref kernel/bpf/bpf_lru_list.h:70 [inline]
+__htab_lru_percpu_map_update_elem+0x2f1/0x820 kernel/bpf/hashtab.c:1332
+bpf_percpu_hash_update+0x5e/0x90 kernel/bpf/hashtab.c:2313
+bpf_map_update_value+0x2a9/0x370 kernel/bpf/syscall.c:200
+generic_map_update_batch+0x3ae/0x4f0 kernel/bpf/syscall.c:1687
+bpf_map_do_batch+0x2d9/0x3d0 kernel/bpf/syscall.c:4534
+__sys_bpf+0x338/0x810
+__do_sys_bpf kernel/bpf/syscall.c:5096 [inline]
+__se_sys_bpf kernel/bpf/syscall.c:5094 [inline]
+__x64_sys_bpf+0x43/0x50 kernel/bpf/syscall.c:5094
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-This issue, the swap-lookup-failure, and another variant reported in [0]
-can all be handled properly by adding a locked ehash lookup suggested by
-Eric Dumazet [1].
+value changed: 0x01 -> 0x00
 
-However, this issue could occur for every packet, thus more likely than
-the other two races, so let's revert the change for now.
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 11241 Comm: syz-executor.3 Not tainted 6.3.0-rc7-syzkaller-00136-g6a66fdd29ea1 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
+==================================================================
 
-Link: https://lore.kernel.org/netdev/20230606064306.9192-1-duanmuquan@baidu.com/ [0]
-Link: https://lore.kernel.org/netdev/CANn89iK8snOz8TYOhhwfimC7ykYA78GA3Nyv8x06SZYa1nKdyA@mail.gmail.com/ [1]
-Fixes: 3f4ca5fafc08 ("tcp: avoid the lookup process failing to get sk in ehash table")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230717215918.15723-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+ebe648a84e8784763f82@syzkaller.appspotmail.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: Yonghong Song <yhs@fb.com>
+Link: https://lore.kernel.org/r/20230511043748.1384166-1-martin.lau@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_hashtables.c    | 17 ++---------------
- net/ipv4/inet_timewait_sock.c |  8 ++++----
- 2 files changed, 6 insertions(+), 19 deletions(-)
+ kernel/bpf/bpf_lru_list.c | 21 +++++++++++++--------
+ kernel/bpf/bpf_lru_list.h |  7 ++-----
+ 2 files changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index 79bf550c9dfc5..ad050f8476b8e 100644
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -571,20 +571,8 @@ bool inet_ehash_insert(struct sock *sk, struct sock *osk, bool *found_dup_sk)
- 	spin_lock(lock);
- 	if (osk) {
- 		WARN_ON_ONCE(sk->sk_hash != osk->sk_hash);
--		ret = sk_hashed(osk);
--		if (ret) {
--			/* Before deleting the node, we insert a new one to make
--			 * sure that the look-up-sk process would not miss either
--			 * of them and that at least one node would exist in ehash
--			 * table all the time. Otherwise there's a tiny chance
--			 * that lookup process could find nothing in ehash table.
--			 */
--			__sk_nulls_add_node_tail_rcu(sk, list);
--			sk_nulls_del_node_init_rcu(osk);
--		}
--		goto unlock;
--	}
--	if (found_dup_sk) {
-+		ret = sk_nulls_del_node_init_rcu(osk);
-+	} else if (found_dup_sk) {
- 		*found_dup_sk = inet_ehash_lookup_by_sk(sk, list);
- 		if (*found_dup_sk)
- 			ret = false;
-@@ -593,7 +581,6 @@ bool inet_ehash_insert(struct sock *sk, struct sock *osk, bool *found_dup_sk)
- 	if (ret)
- 		__sk_nulls_add_node_rcu(sk, list);
- 
--unlock:
- 	spin_unlock(lock);
- 
- 	return ret;
-diff --git a/net/ipv4/inet_timewait_sock.c b/net/ipv4/inet_timewait_sock.c
-index a00102d7c7fd4..c411c87ae865f 100644
---- a/net/ipv4/inet_timewait_sock.c
-+++ b/net/ipv4/inet_timewait_sock.c
-@@ -81,10 +81,10 @@ void inet_twsk_put(struct inet_timewait_sock *tw)
- }
- EXPORT_SYMBOL_GPL(inet_twsk_put);
- 
--static void inet_twsk_add_node_tail_rcu(struct inet_timewait_sock *tw,
--					struct hlist_nulls_head *list)
-+static void inet_twsk_add_node_rcu(struct inet_timewait_sock *tw,
-+				   struct hlist_nulls_head *list)
+diff --git a/kernel/bpf/bpf_lru_list.c b/kernel/bpf/bpf_lru_list.c
+index d99e89f113c43..3dabdd137d102 100644
+--- a/kernel/bpf/bpf_lru_list.c
++++ b/kernel/bpf/bpf_lru_list.c
+@@ -41,7 +41,12 @@ static struct list_head *local_pending_list(struct bpf_lru_locallist *loc_l)
+ /* bpf_lru_node helpers */
+ static bool bpf_lru_node_is_ref(const struct bpf_lru_node *node)
  {
--	hlist_nulls_add_tail_rcu(&tw->tw_node, list);
-+	hlist_nulls_add_head_rcu(&tw->tw_node, list);
+-	return node->ref;
++	return READ_ONCE(node->ref);
++}
++
++static void bpf_lru_node_clear_ref(struct bpf_lru_node *node)
++{
++	WRITE_ONCE(node->ref, 0);
  }
  
- static void inet_twsk_add_bind_node(struct inet_timewait_sock *tw,
-@@ -120,7 +120,7 @@ void inet_twsk_hashdance(struct inet_timewait_sock *tw, struct sock *sk,
+ static void bpf_lru_list_count_inc(struct bpf_lru_list *l,
+@@ -89,7 +94,7 @@ static void __bpf_lru_node_move_in(struct bpf_lru_list *l,
  
- 	spin_lock(lock);
+ 	bpf_lru_list_count_inc(l, tgt_type);
+ 	node->type = tgt_type;
+-	node->ref = 0;
++	bpf_lru_node_clear_ref(node);
+ 	list_move(&node->list, &l->lists[tgt_type]);
+ }
  
--	inet_twsk_add_node_tail_rcu(tw, &ehead->chain);
-+	inet_twsk_add_node_rcu(tw, &ehead->chain);
+@@ -110,7 +115,7 @@ static void __bpf_lru_node_move(struct bpf_lru_list *l,
+ 		bpf_lru_list_count_inc(l, tgt_type);
+ 		node->type = tgt_type;
+ 	}
+-	node->ref = 0;
++	bpf_lru_node_clear_ref(node);
  
- 	/* Step 3: Remove SK from hash chain */
- 	if (__sk_nulls_del_node_init_rcu(sk))
+ 	/* If the moving node is the next_inactive_rotation candidate,
+ 	 * move the next_inactive_rotation pointer also.
+@@ -353,7 +358,7 @@ static void __local_list_add_pending(struct bpf_lru *lru,
+ 	*(u32 *)((void *)node + lru->hash_offset) = hash;
+ 	node->cpu = cpu;
+ 	node->type = BPF_LRU_LOCAL_LIST_T_PENDING;
+-	node->ref = 0;
++	bpf_lru_node_clear_ref(node);
+ 	list_add(&node->list, local_pending_list(loc_l));
+ }
+ 
+@@ -419,7 +424,7 @@ static struct bpf_lru_node *bpf_percpu_lru_pop_free(struct bpf_lru *lru,
+ 	if (!list_empty(free_list)) {
+ 		node = list_first_entry(free_list, struct bpf_lru_node, list);
+ 		*(u32 *)((void *)node + lru->hash_offset) = hash;
+-		node->ref = 0;
++		bpf_lru_node_clear_ref(node);
+ 		__bpf_lru_node_move(l, node, BPF_LRU_LIST_T_INACTIVE);
+ 	}
+ 
+@@ -522,7 +527,7 @@ static void bpf_common_lru_push_free(struct bpf_lru *lru,
+ 		}
+ 
+ 		node->type = BPF_LRU_LOCAL_LIST_T_FREE;
+-		node->ref = 0;
++		bpf_lru_node_clear_ref(node);
+ 		list_move(&node->list, local_free_list(loc_l));
+ 
+ 		raw_spin_unlock_irqrestore(&loc_l->lock, flags);
+@@ -568,7 +573,7 @@ static void bpf_common_lru_populate(struct bpf_lru *lru, void *buf,
+ 
+ 		node = (struct bpf_lru_node *)(buf + node_offset);
+ 		node->type = BPF_LRU_LIST_T_FREE;
+-		node->ref = 0;
++		bpf_lru_node_clear_ref(node);
+ 		list_add(&node->list, &l->lists[BPF_LRU_LIST_T_FREE]);
+ 		buf += elem_size;
+ 	}
+@@ -594,7 +599,7 @@ static void bpf_percpu_lru_populate(struct bpf_lru *lru, void *buf,
+ 		node = (struct bpf_lru_node *)(buf + node_offset);
+ 		node->cpu = cpu;
+ 		node->type = BPF_LRU_LIST_T_FREE;
+-		node->ref = 0;
++		bpf_lru_node_clear_ref(node);
+ 		list_add(&node->list, &l->lists[BPF_LRU_LIST_T_FREE]);
+ 		i++;
+ 		buf += elem_size;
+diff --git a/kernel/bpf/bpf_lru_list.h b/kernel/bpf/bpf_lru_list.h
+index 6b12f06ee18c3..9c12ee453c616 100644
+--- a/kernel/bpf/bpf_lru_list.h
++++ b/kernel/bpf/bpf_lru_list.h
+@@ -63,11 +63,8 @@ struct bpf_lru {
+ 
+ static inline void bpf_lru_node_set_ref(struct bpf_lru_node *node)
+ {
+-	/* ref is an approximation on access frequency.  It does not
+-	 * have to be very accurate.  Hence, no protection is used.
+-	 */
+-	if (!node->ref)
+-		node->ref = 1;
++	if (!READ_ONCE(node->ref))
++		WRITE_ONCE(node->ref, 1);
+ }
+ 
+ int bpf_lru_init(struct bpf_lru *lru, bool percpu, u32 hash_offset,
 -- 
 2.39.2
 
