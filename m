@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4701ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:31:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 111CBC433C7;
-	Tue, 25 Jul 2023 11:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7145B1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:31:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C26DDC433C8;
+	Tue, 25 Jul 2023 11:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284704;
-	bh=MA5xMtUNpf+N3Kf6oxa0KkgN1FqMWr1DoYT0TsOTkhI=;
+	s=korg; t=1690284707;
+	bh=dZ1WMYtoGzG/ORHegjjw/aXCzTkwgnTo3F8NyxTxSHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m3uyqmWkS6tx+EYkenGEMMJRr/IAJ6q1HXCh7ULGTrBnNP2IFByjUGwKS0VfXzkKh
-	 f70eXBPNDbqubvSgXKIBdE8UaXnxbTGegPajP3w0OmI0dpdoZ41MHx3olw+rL61BEh
-	 JLroA97FlXeqO22MV2byxcadU9OkNk0dWWW+K6fk=
+	b=eruFPI2aLfw3JXdSYII7dSOrzPyeajmJMFOFIP/9UFuww9jwKdATpqvtgc11UnTsk
+	 zQ5UOPoRcn00S5iMNMj0Nqy764qGTiZv41GEIlTFwdSFx7ntEIp1pRxBy2yGOdfg+1
+	 vAdLCKbU8liw13G5T8riYEY+YWwN3j0zxnShrhgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yizhan@redhat.com>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 5.10 452/509] drm/client: Fix memory leak in drm_client_modeset_probe
-Date: Tue, 25 Jul 2023 12:46:31 +0200
-Message-ID: <20230725104614.436381951@linuxfoundation.org>
+	Matus Gajdos <matuszpd@gmail.com>,
+	Shengjiu Wang <shengjiu.wang@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 453/509] ASoC: fsl_sai: Disable bit clock with transmitter
+Date: Tue, 25 Jul 2023 12:46:32 +0200
+Message-ID: <20230725104614.475702645@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,46 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jocelyn Falempe <jfalempe@redhat.com>
+From: Matus Gajdos <matuszpd@gmail.com>
 
-commit 2329cc7a101af1a844fbf706c0724c0baea38365 upstream.
+commit 269f399dc19f0e5c51711c3ba3bd06e0ef6ef403 upstream.
 
-When a new mode is set to modeset->mode, the previous mode should be freed.
-This fixes the following kmemleak report:
+Otherwise bit clock remains running writing invalid data to the DAC.
 
-drm_mode_duplicate+0x45/0x220 [drm]
-drm_client_modeset_probe+0x944/0xf50 [drm]
-__drm_fb_helper_initial_config_and_unlock+0xb4/0x2c0 [drm_kms_helper]
-drm_fbdev_client_hotplug+0x2bc/0x4d0 [drm_kms_helper]
-drm_client_register+0x169/0x240 [drm]
-ast_pci_probe+0x142/0x190 [ast]
-local_pci_probe+0xdc/0x180
-work_for_cpu_fn+0x4e/0xa0
-process_one_work+0x8b7/0x1540
-worker_thread+0x70a/0xed0
-kthread+0x29f/0x340
-ret_from_fork+0x1f/0x30
-
-cc: <stable@vger.kernel.org>
-Reported-by: Zhang Yi <yizhan@redhat.com>
-Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230711092203.68157-3-jfalempe@redhat.com
+Signed-off-by: Matus Gajdos <matuszpd@gmail.com>
+Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230712124934.32232-1-matuszpd@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_client_modeset.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/fsl/fsl_sai.c |    2 +-
+ sound/soc/fsl/fsl_sai.h |    1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/drm_client_modeset.c
-+++ b/drivers/gpu/drm/drm_client_modeset.c
-@@ -864,6 +864,7 @@ int drm_client_modeset_probe(struct drm_
- 				break;
- 			}
+--- a/sound/soc/fsl/fsl_sai.c
++++ b/sound/soc/fsl/fsl_sai.c
+@@ -552,7 +552,7 @@ static void fsl_sai_config_disable(struc
+ 	u32 xcsr, count = 100;
  
-+			kfree(modeset->mode);
- 			modeset->mode = drm_mode_duplicate(dev, mode);
- 			drm_connector_get(connector);
- 			modeset->connectors[modeset->num_connectors++] = connector;
+ 	regmap_update_bits(sai->regmap, FSL_SAI_xCSR(tx, ofs),
+-			   FSL_SAI_CSR_TERE, 0);
++			   FSL_SAI_CSR_TERE | FSL_SAI_CSR_BCE, 0);
+ 
+ 	/* TERE will remain set till the end of current frame */
+ 	do {
+--- a/sound/soc/fsl/fsl_sai.h
++++ b/sound/soc/fsl/fsl_sai.h
+@@ -87,6 +87,7 @@
+ /* SAI Transmit/Receive Control Register */
+ #define FSL_SAI_CSR_TERE	BIT(31)
+ #define FSL_SAI_CSR_SE		BIT(30)
++#define FSL_SAI_CSR_BCE		BIT(28)
+ #define FSL_SAI_CSR_FR		BIT(25)
+ #define FSL_SAI_CSR_SR		BIT(24)
+ #define FSL_SAI_CSR_xF_SHIFT	16
 
 
