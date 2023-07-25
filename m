@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733061D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:17:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7AE0C433CB;
-	Tue, 25 Jul 2023 11:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3497B1D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:17:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACBF5C433C8;
+	Tue, 25 Jul 2023 11:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283855;
-	bh=upDRi5XA/xGN59LYW5xg4m///czAqNETzmL3DKZ1Jts=;
+	s=korg; t=1690283858;
+	bh=3bWOXFNycvTg51YlQThkRNr4GZ4tVRJM3V2cIC31SGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bBvY7+TaSdSf+wpgxL8FBL92v9HVPwOMUJzDDj98npAehsFwLARJ0Vkmnjc33nor9
-	 QtcpQsqLF3z8S34fyDmF3aDi3PZ4HuaW2C+7QJv/OMtdJvj3it5ZkuktzHVAgtKHHh
-	 noGdDHeu7cQ7EXLDRApQHPMzbjzGkWBaMshertcw=
+	b=BEYinG3tbcGd+jb73Sa6wO7dN7ZdcfGn8I76XD/QQVELZbRGbZmAKTpCx4l6fHDzK
+	 Q/IZcBfWSyPTvzwCLdKdEJpi43/bjdcqkdEoG4u6k0Y9wqwR+GKeSA/veG2FqJB4Ij
+	 d2vJxqLvbFiObfgAqOonoMFh3PxOVB4J21hGeHG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Moysan <olivier.moysan@foss.st.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Tim Harvey <tharvey@gateworks.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 146/509] ARM: dts: stm32: fix i2s endpoint format property for stm32mp15xx-dkx
-Date: Tue, 25 Jul 2023 12:41:25 +0200
-Message-ID: <20230725104600.414863219@linuxfoundation.org>
+Subject: [PATCH 5.10 147/509] hwmon: (gsc-hwmon) fix fan pwm temperature scaling
+Date: Tue, 25 Jul 2023 12:41:26 +0200
+Message-ID: <20230725104600.462426301@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,34 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Olivier Moysan <olivier.moysan@foss.st.com>
+From: Tim Harvey <tharvey@gateworks.com>
 
-[ Upstream commit 076c74c592cabe4a47537fe5205b5b678bed010d ]
+[ Upstream commit a6d80df47ee2c69db99e4f2f8871aa4db154620b ]
 
-Use "dai-format" to configure DAI audio format as specified in
-audio-graph-port.yaml bindings.
+The GSC fan pwm temperature register is in centidegrees celcius but the
+Linux hwmon convention is to use milidegrees celcius. Fix the scaling.
 
-Fixes: 144d1ba70548 ("ARM: dts: stm32: Adapt STM32MP157 DK boards to stm32 DT diversity")
-Signed-off-by: Olivier Moysan <olivier.moysan@foss.st.com>
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Fixes: 3bce5377ef66 ("hwmon: Add Gateworks System Controller support")
+Signed-off-by: Tim Harvey <tharvey@gateworks.com>
+Link: https://lore.kernel.org/r/20230606153004.1448086-1-tharvey@gateworks.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/stm32mp15xx-dkx.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/gsc-hwmon.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/stm32mp15xx-dkx.dtsi b/arch/arm/boot/dts/stm32mp15xx-dkx.dtsi
-index 47df8ac67cf1a..75869d6a1ab24 100644
---- a/arch/arm/boot/dts/stm32mp15xx-dkx.dtsi
-+++ b/arch/arm/boot/dts/stm32mp15xx-dkx.dtsi
-@@ -406,7 +406,7 @@ &i2s2 {
- 	i2s2_port: port {
- 		i2s2_endpoint: endpoint {
- 			remote-endpoint = <&sii9022_tx_endpoint>;
--			format = "i2s";
-+			dai-format = "i2s";
- 			mclk-fs = <256>;
- 		};
- 	};
+diff --git a/drivers/hwmon/gsc-hwmon.c b/drivers/hwmon/gsc-hwmon.c
+index f29ce49294daf..89d036bf88df7 100644
+--- a/drivers/hwmon/gsc-hwmon.c
++++ b/drivers/hwmon/gsc-hwmon.c
+@@ -82,8 +82,8 @@ static ssize_t pwm_auto_point_temp_store(struct device *dev,
+ 	if (kstrtol(buf, 10, &temp))
+ 		return -EINVAL;
+ 
+-	temp = clamp_val(temp, 0, 10000);
+-	temp = DIV_ROUND_CLOSEST(temp, 10);
++	temp = clamp_val(temp, 0, 100000);
++	temp = DIV_ROUND_CLOSEST(temp, 100);
+ 
+ 	regs[0] = temp & 0xff;
+ 	regs[1] = (temp >> 8) & 0xff;
+@@ -100,7 +100,7 @@ static ssize_t pwm_auto_point_pwm_show(struct device *dev,
+ {
+ 	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+ 
+-	return sprintf(buf, "%d\n", 255 * (50 + (attr->index * 10)) / 100);
++	return sprintf(buf, "%d\n", 255 * (50 + (attr->index * 10)));
+ }
+ 
+ static SENSOR_DEVICE_ATTR_RO(pwm1_auto_point1_pwm, pwm_auto_point_pwm, 0);
 -- 
 2.39.2
 
