@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527D21ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:32:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F5FBC433C7;
-	Tue, 25 Jul 2023 11:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883AD1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:32:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DE8C433C7;
+	Tue, 25 Jul 2023 11:32:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284729;
-	bh=aeKFfjKwT/mX9zvk9wCighil8LV1zahjBSlt/uG75Nw=;
+	s=korg; t=1690284735;
+	bh=x7QgD5cbrpnxYXtiHTDilUKOuTppJo9uI3sOZCIeioE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vu6RhSncfYsJF73GPayF7FSR38wYecO7bRz+w8sdlAndMCG1Xc1EbTN+YuUL6xh8t
-	 bvlQHglJBhXAoffNwnUdFeiw+fYx8y1AqXzoJKDrXNUQRxeARR5cnZ26H2DtvTenRH
-	 xE6ckrqYkWYfpw7dQhVhSDnpi+0Hh1nQ1AixckU0=
+	b=ymmqA3ygHvdijZfXa9uOBu4DZEbJSOQoMw9HHrdsW1ud3VsHyJP37mY0DeZI8+hGN
+	 4ezaicAnIop7WlNeyMkmvUC/J6YIe4oz9F/6gGFycaE2326oqHXhTCra9lpM4q/mkg
+	 4YcOKgJxN2sDc4wnbElSm1rcOVacCxZvwsT+SzVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	David Sterba <dsterba@suse.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 460/509] btrfs: add xxhash to fast checksum implementations
-Date: Tue, 25 Jul 2023 12:46:39 +0200
-Message-ID: <20230725104614.814806446@linuxfoundation.org>
+Subject: [PATCH 5.10 462/509] ACPI: video: Add backlight=native DMI quirk for Apple iMac11,3
+Date: Tue, 25 Jul 2023 12:46:41 +0200
+Message-ID: <20230725104614.907411520@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,57 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Sterba <dsterba@suse.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit efcfcbc6a36195c42d98e0ee697baba36da94dc8 ]
+[ Upstream commit 48436f2e9834b46b47b038b605c8142a1c07bc85 ]
 
-The implementation of XXHASH is now CPU only but still fast enough to be
-considered for the synchronous checksumming, like non-generic crc32c.
+Linux defaults to picking the non-working ACPI video backlight interface
+on the Apple iMac11,3 .
 
-A userspace benchmark comparing it to various implementations (patched
-hash-speedtest from btrfs-progs):
+Add a DMI quirk to pick the working native radeon_bl0 interface instead.
 
-  Block size:     4096
-  Iterations:     1000000
-  Implementation: builtin
-  Units:          CPU cycles
-
-	NULL-NOP: cycles:     73384294, cycles/i       73
-     NULL-MEMCPY: cycles:    228033868, cycles/i      228,    61664.320 MiB/s
-      CRC32C-ref: cycles:  24758559416, cycles/i    24758,      567.950 MiB/s
-       CRC32C-NI: cycles:   1194350470, cycles/i     1194,    11773.433 MiB/s
-  CRC32C-ADLERSW: cycles:   6150186216, cycles/i     6150,     2286.372 MiB/s
-  CRC32C-ADLERHW: cycles:    626979180, cycles/i      626,    22427.453 MiB/s
-      CRC32C-PCL: cycles:    466746732, cycles/i      466,    30126.699 MiB/s
-	  XXHASH: cycles:    860656400, cycles/i      860,    16338.188 MiB/s
-
-Comparing purely software implementation (ref), current outdated
-accelerated using crc32q instruction (NI), optimized implementations by
-M. Adler (https://stackoverflow.com/questions/17645167/implementing-sse-4-2s-crc32c-in-software/17646775#17646775)
-and the best one that was taken from kernel using the PCLMULQDQ
-instruction (PCL).
-
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/acpi/video_detect.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 5a114cad988a6..608b939a4d287 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -2256,6 +2256,9 @@ static int btrfs_init_csum_hash(struct btrfs_fs_info *fs_info, u16 csum_type)
- 		if (!strstr(crypto_shash_driver_name(csum_shash), "generic"))
- 			set_bit(BTRFS_FS_CSUM_IMPL_FAST, &fs_info->flags);
- 		break;
-+	case BTRFS_CSUM_TYPE_XXHASH:
-+		set_bit(BTRFS_FS_CSUM_IMPL_FAST, &fs_info->flags);
-+		break;
- 	default:
- 		break;
- 	}
+diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
+index 038542b3a80a7..872b5351f0d8f 100644
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -332,6 +332,14 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "82BK"),
+ 		},
+ 	},
++	{
++	 .callback = video_detect_force_native,
++	 /* Apple iMac11,3 */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "Apple Inc."),
++		DMI_MATCH(DMI_PRODUCT_NAME, "iMac11,3"),
++		},
++	},
+ 	{
+ 	 /* https://bugzilla.redhat.com/show_bug.cgi?id=1217249 */
+ 	 .callback = video_detect_force_native,
 -- 
 2.39.2
 
