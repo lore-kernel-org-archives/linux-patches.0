@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE78414263
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:56:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D364C433CB;
-	Tue, 25 Jul 2023 10:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F95E14263
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:56:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6BFFC433C7;
+	Tue, 25 Jul 2023 10:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282597;
-	bh=WPO1UuEb4RrER0+yq49pVuFUQNAzxw8sVkV7Ns7SQDc=;
+	s=korg; t=1690282600;
+	bh=fa7szucgl5x1HD3Q2nSa4kq1A2L5bT4gcrpJYGlFFUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QPOYQi9eCKP1BpUw6qyp/8+SWFBL47ZL22w9vzPgxCE8BX5tGH3L8xipPRYLU4lQ7
-	 7bpFUpV7RtAtXMBYNISbFYc3mcFE8/W0gAZ7LTZJvf28yumzRNDIzQfpkJaWKLXijf
-	 3lnTGMOOc3DqCxKrVr2UX7tcCy7uk7USA7cxf0LQ=
+	b=pqlvFr/eCtZjzegpkHelmZq6Y+hQVQ1rvS/DNXpF0xutQLun6Y22K7gIE4H/G9r/g
+	 hHAK+7hgcmqv+vYSTnRpv+MqXthBufG2YCEZH58OEbUN5wCsFc6h2A786sX9criwiX
+	 N8VCGsw0dBo5fO0DZODtxr3SiivsEW1zIiSCuFDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	syzbot <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 186/227] tcp: annotate data-races around tcp_rsk(req)->txhash
-Date: Tue, 25 Jul 2023 12:45:53 +0200
-Message-ID: <20230725104522.517210634@linuxfoundation.org>
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.4 160/227] ice: prevent NULL pointer deref during reload
+Date: Tue, 25 Jul 2023 12:45:27 +0200
+Message-ID: <20230725104521.557046648@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -37,167 +38,184 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 
-[ Upstream commit 5e5265522a9a7f91d1b0bd411d634bdaf16c80cd ]
+[ Upstream commit b3e7b3a6ee92ab927f750a6b19615ce88ece808f ]
 
-TCP request sockets are lockless, some of their fields
-can change while being read by another cpu as syzbot noticed.
+Calling ethtool during reload can lead to call trace, because VSI isn't
+configured for some time, but netdev is alive.
 
-This is usually harmless, but we should annotate the known
-races.
+To fix it add rtnl lock for VSI deconfig and config. Set ::num_q_vectors
+to 0 after freeing and add a check for ::tx/rx_rings in ring related
+ethtool ops.
 
-This patch takes care of tcp_rsk(req)->txhash,
-a separate one is needed for tcp_rsk(req)->ts_recent.
+Add proper unroll of filters in ice_start_eth().
 
-BUG: KCSAN: data-race in tcp_make_synack / tcp_rtx_synack
+Reproduction:
+$watch -n 0.1 -d 'ethtool -g enp24s0f0np0'
+$devlink dev reload pci/0000:18:00.0 action driver_reinit
 
-write to 0xffff8881362304bc of 4 bytes by task 32083 on cpu 1:
-tcp_rtx_synack+0x9d/0x2a0 net/ipv4/tcp_output.c:4213
-inet_rtx_syn_ack+0x38/0x80 net/ipv4/inet_connection_sock.c:880
-tcp_check_req+0x379/0xc70 net/ipv4/tcp_minisocks.c:665
-tcp_v6_rcv+0x125b/0x1b20 net/ipv6/tcp_ipv6.c:1673
-ip6_protocol_deliver_rcu+0x92f/0xf30 net/ipv6/ip6_input.c:437
-ip6_input_finish net/ipv6/ip6_input.c:482 [inline]
-NF_HOOK include/linux/netfilter.h:303 [inline]
-ip6_input+0xbd/0x1b0 net/ipv6/ip6_input.c:491
-dst_input include/net/dst.h:468 [inline]
-ip6_rcv_finish+0x1e2/0x2e0 net/ipv6/ip6_input.c:79
-NF_HOOK include/linux/netfilter.h:303 [inline]
-ipv6_rcv+0x74/0x150 net/ipv6/ip6_input.c:309
-__netif_receive_skb_one_core net/core/dev.c:5452 [inline]
-__netif_receive_skb+0x90/0x1b0 net/core/dev.c:5566
-netif_receive_skb_internal net/core/dev.c:5652 [inline]
-netif_receive_skb+0x4a/0x310 net/core/dev.c:5711
-tun_rx_batched+0x3bf/0x400
-tun_get_user+0x1d24/0x22b0 drivers/net/tun.c:1997
-tun_chr_write_iter+0x18e/0x240 drivers/net/tun.c:2043
-call_write_iter include/linux/fs.h:1871 [inline]
-new_sync_write fs/read_write.c:491 [inline]
-vfs_write+0x4ab/0x7d0 fs/read_write.c:584
-ksys_write+0xeb/0x1a0 fs/read_write.c:637
-__do_sys_write fs/read_write.c:649 [inline]
-__se_sys_write fs/read_write.c:646 [inline]
-__x64_sys_write+0x42/0x50 fs/read_write.c:646
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Call trace before fix:
+[66303.926205] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[66303.926259] #PF: supervisor read access in kernel mode
+[66303.926286] #PF: error_code(0x0000) - not-present page
+[66303.926311] PGD 0 P4D 0
+[66303.926332] Oops: 0000 [#1] PREEMPT SMP PTI
+[66303.926358] CPU: 4 PID: 933821 Comm: ethtool Kdump: loaded Tainted: G           OE      6.4.0-rc5+ #1
+[66303.926400] Hardware name: Intel Corporation S2600WFT/S2600WFT, BIOS SE5C620.86B.00.01.0014.070920180847 07/09/2018
+[66303.926446] RIP: 0010:ice_get_ringparam+0x22/0x50 [ice]
+[66303.926649] Code: 90 90 90 90 90 90 90 90 f3 0f 1e fa 0f 1f 44 00 00 48 8b 87 c0 09 00 00 c7 46 04 e0 1f 00 00 c7 46 10 e0 1f 00 00 48 8b 50 20 <48> 8b 12 0f b7 52 3a 89 56 14 48 8b 40 28 48 8b 00 0f b7 40 58 48
+[66303.926722] RSP: 0018:ffffad40472f39c8 EFLAGS: 00010246
+[66303.926749] RAX: ffff98a8ada05828 RBX: ffff98a8c46dd060 RCX: ffffad40472f3b48
+[66303.926781] RDX: 0000000000000000 RSI: ffff98a8c46dd068 RDI: ffff98a8b23c4000
+[66303.926811] RBP: ffffad40472f3b48 R08: 00000000000337b0 R09: 0000000000000000
+[66303.926843] R10: 0000000000000001 R11: 0000000000000100 R12: ffff98a8b23c4000
+[66303.926874] R13: ffff98a8c46dd060 R14: 000000000000000f R15: ffffad40472f3a50
+[66303.926906] FS:  00007f6397966740(0000) GS:ffff98b390900000(0000) knlGS:0000000000000000
+[66303.926941] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[66303.926967] CR2: 0000000000000000 CR3: 000000011ac20002 CR4: 00000000007706e0
+[66303.926999] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[66303.927029] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[66303.927060] PKRU: 55555554
+[66303.927075] Call Trace:
+[66303.927094]  <TASK>
+[66303.927111]  ? __die+0x23/0x70
+[66303.927140]  ? page_fault_oops+0x171/0x4e0
+[66303.927176]  ? exc_page_fault+0x7f/0x180
+[66303.927209]  ? asm_exc_page_fault+0x26/0x30
+[66303.927244]  ? ice_get_ringparam+0x22/0x50 [ice]
+[66303.927433]  rings_prepare_data+0x62/0x80
+[66303.927469]  ethnl_default_doit+0xe2/0x350
+[66303.927501]  genl_family_rcv_msg_doit.isra.0+0xe3/0x140
+[66303.927538]  genl_rcv_msg+0x1b1/0x2c0
+[66303.927561]  ? __pfx_ethnl_default_doit+0x10/0x10
+[66303.927590]  ? __pfx_genl_rcv_msg+0x10/0x10
+[66303.927615]  netlink_rcv_skb+0x58/0x110
+[66303.927644]  genl_rcv+0x28/0x40
+[66303.927665]  netlink_unicast+0x19e/0x290
+[66303.927691]  netlink_sendmsg+0x254/0x4d0
+[66303.927717]  sock_sendmsg+0x93/0xa0
+[66303.927743]  __sys_sendto+0x126/0x170
+[66303.927780]  __x64_sys_sendto+0x24/0x30
+[66303.928593]  do_syscall_64+0x5d/0x90
+[66303.929370]  ? __count_memcg_events+0x60/0xa0
+[66303.930146]  ? count_memcg_events.constprop.0+0x1a/0x30
+[66303.930920]  ? handle_mm_fault+0x9e/0x350
+[66303.931688]  ? do_user_addr_fault+0x258/0x740
+[66303.932452]  ? exc_page_fault+0x7f/0x180
+[66303.933193]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-read to 0xffff8881362304bc of 4 bytes by task 32078 on cpu 0:
-tcp_make_synack+0x367/0xb40 net/ipv4/tcp_output.c:3663
-tcp_v6_send_synack+0x72/0x420 net/ipv6/tcp_ipv6.c:544
-tcp_conn_request+0x11a8/0x1560 net/ipv4/tcp_input.c:7059
-tcp_v6_conn_request+0x13f/0x180 net/ipv6/tcp_ipv6.c:1175
-tcp_rcv_state_process+0x156/0x1de0 net/ipv4/tcp_input.c:6494
-tcp_v6_do_rcv+0x98a/0xb70 net/ipv6/tcp_ipv6.c:1509
-tcp_v6_rcv+0x17b8/0x1b20 net/ipv6/tcp_ipv6.c:1735
-ip6_protocol_deliver_rcu+0x92f/0xf30 net/ipv6/ip6_input.c:437
-ip6_input_finish net/ipv6/ip6_input.c:482 [inline]
-NF_HOOK include/linux/netfilter.h:303 [inline]
-ip6_input+0xbd/0x1b0 net/ipv6/ip6_input.c:491
-dst_input include/net/dst.h:468 [inline]
-ip6_rcv_finish+0x1e2/0x2e0 net/ipv6/ip6_input.c:79
-NF_HOOK include/linux/netfilter.h:303 [inline]
-ipv6_rcv+0x74/0x150 net/ipv6/ip6_input.c:309
-__netif_receive_skb_one_core net/core/dev.c:5452 [inline]
-__netif_receive_skb+0x90/0x1b0 net/core/dev.c:5566
-netif_receive_skb_internal net/core/dev.c:5652 [inline]
-netif_receive_skb+0x4a/0x310 net/core/dev.c:5711
-tun_rx_batched+0x3bf/0x400
-tun_get_user+0x1d24/0x22b0 drivers/net/tun.c:1997
-tun_chr_write_iter+0x18e/0x240 drivers/net/tun.c:2043
-call_write_iter include/linux/fs.h:1871 [inline]
-new_sync_write fs/read_write.c:491 [inline]
-vfs_write+0x4ab/0x7d0 fs/read_write.c:584
-ksys_write+0xeb/0x1a0 fs/read_write.c:637
-__do_sys_write fs/read_write.c:649 [inline]
-__se_sys_write fs/read_write.c:646 [inline]
-__x64_sys_write+0x42/0x50 fs/read_write.c:646
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-value changed: 0x91d25731 -> 0xe79325cd
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 32078 Comm: syz-executor.4 Not tainted 6.5.0-rc1-syzkaller-00033-geb26cbb1a754 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/03/2023
-
-Fixes: 58d607d3e52f ("tcp: provide skb->hash to synack packets")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230717144445.653164-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5b246e533d01 ("ice: split probe into smaller functions")
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c      | 3 ++-
- net/ipv4/tcp_minisocks.c | 2 +-
- net/ipv4/tcp_output.c    | 4 ++--
- net/ipv6/tcp_ipv6.c      | 2 +-
- 4 files changed, 6 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_base.c    |  2 ++
+ drivers/net/ethernet/intel/ice/ice_ethtool.c | 13 +++++++++++--
+ drivers/net/ethernet/intel/ice/ice_main.c    | 10 ++++++++--
+ 3 files changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index a64069077e388..52229c75e76f6 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -992,7 +992,8 @@ static void tcp_v4_reqsk_send_ack(const struct sock *sk, struct sk_buff *skb,
- 			0,
- 			tcp_md5_do_lookup(sk, l3index, addr, AF_INET),
- 			inet_rsk(req)->no_srccheck ? IP_REPLY_ARG_NOSRCCHECK : 0,
--			ip_hdr(skb)->tos, tcp_rsk(req)->txhash);
-+			ip_hdr(skb)->tos,
-+			READ_ONCE(tcp_rsk(req)->txhash));
+diff --git a/drivers/net/ethernet/intel/ice/ice_base.c b/drivers/net/ethernet/intel/ice/ice_base.c
+index 1911d644dfa8d..619cb07a40691 100644
+--- a/drivers/net/ethernet/intel/ice/ice_base.c
++++ b/drivers/net/ethernet/intel/ice/ice_base.c
+@@ -758,6 +758,8 @@ void ice_vsi_free_q_vectors(struct ice_vsi *vsi)
+ 
+ 	ice_for_each_q_vector(vsi, v_idx)
+ 		ice_free_q_vector(vsi, v_idx);
++
++	vsi->num_q_vectors = 0;
  }
  
- /*
-diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
-index dac0d62120e62..909f3b4ed2059 100644
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -528,7 +528,7 @@ struct sock *tcp_create_openreq_child(const struct sock *sk,
- 	newicsk->icsk_ack.lrcvtime = tcp_jiffies32;
+ /**
+diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+index f86e814354a31..ec4138e684bd2 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
++++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+@@ -2920,8 +2920,13 @@ ice_get_ringparam(struct net_device *netdev, struct ethtool_ringparam *ring,
  
- 	newtp->lsndtime = tcp_jiffies32;
--	newsk->sk_txhash = treq->txhash;
-+	newsk->sk_txhash = READ_ONCE(treq->txhash);
- 	newtp->total_retrans = req->num_retrans;
+ 	ring->rx_max_pending = ICE_MAX_NUM_DESC;
+ 	ring->tx_max_pending = ICE_MAX_NUM_DESC;
+-	ring->rx_pending = vsi->rx_rings[0]->count;
+-	ring->tx_pending = vsi->tx_rings[0]->count;
++	if (vsi->tx_rings && vsi->rx_rings) {
++		ring->rx_pending = vsi->rx_rings[0]->count;
++		ring->tx_pending = vsi->tx_rings[0]->count;
++	} else {
++		ring->rx_pending = 0;
++		ring->tx_pending = 0;
++	}
  
- 	tcp_init_xmit_timers(newsk);
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index cfe128b81a010..1538b59913777 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -3578,7 +3578,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
- 	rcu_read_lock();
- 	md5 = tcp_rsk(req)->af_specific->req_md5_lookup(sk, req_to_sk(req));
- #endif
--	skb_set_hash(skb, tcp_rsk(req)->txhash, PKT_HASH_TYPE_L4);
-+	skb_set_hash(skb, READ_ONCE(tcp_rsk(req)->txhash), PKT_HASH_TYPE_L4);
- 	/* bpf program will be interested in the tcp_flags */
- 	TCP_SKB_CB(skb)->tcp_flags = TCPHDR_SYN | TCPHDR_ACK;
- 	tcp_header_size = tcp_synack_options(sk, req, mss, skb, &opts, md5,
-@@ -4121,7 +4121,7 @@ int tcp_rtx_synack(const struct sock *sk, struct request_sock *req)
+ 	/* Rx mini and jumbo rings are not supported */
+ 	ring->rx_mini_max_pending = 0;
+@@ -2955,6 +2960,10 @@ ice_set_ringparam(struct net_device *netdev, struct ethtool_ringparam *ring,
+ 		return -EINVAL;
+ 	}
  
- 	/* Paired with WRITE_ONCE() in sock_setsockopt() */
- 	if (READ_ONCE(sk->sk_txrehash) == SOCK_TXREHASH_ENABLED)
--		tcp_rsk(req)->txhash = net_tx_rndhash();
-+		WRITE_ONCE(tcp_rsk(req)->txhash, net_tx_rndhash());
- 	res = af_ops->send_synack(sk, NULL, &fl, req, NULL, TCP_SYNACK_NORMAL,
- 				  NULL);
- 	if (!res) {
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index 7132eb213a7a2..a3c86b714b242 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1133,7 +1133,7 @@ static void tcp_v6_reqsk_send_ack(const struct sock *sk, struct sk_buff *skb,
- 			req->ts_recent, sk->sk_bound_dev_if,
- 			tcp_v6_md5_do_lookup(sk, &ipv6_hdr(skb)->saddr, l3index),
- 			ipv6_get_dsfield(ipv6_hdr(skb)), 0, sk->sk_priority,
--			tcp_rsk(req)->txhash);
-+			READ_ONCE(tcp_rsk(req)->txhash));
++	/* Return if there is no rings (device is reloading) */
++	if (!vsi->tx_rings || !vsi->rx_rings)
++		return -EBUSY;
++
+ 	new_tx_cnt = ALIGN(ring->tx_pending, ICE_REQ_DESC_MULTIPLE);
+ 	if (new_tx_cnt != ring->tx_pending)
+ 		netdev_info(netdev, "Requested Tx descriptor count rounded up to %d\n",
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 1277e0a044ee4..fbe70458fda27 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -4655,9 +4655,9 @@ static int ice_start_eth(struct ice_vsi *vsi)
+ 	if (err)
+ 		return err;
+ 
+-	rtnl_lock();
+ 	err = ice_vsi_open(vsi);
+-	rtnl_unlock();
++	if (err)
++		ice_fltr_remove_all(vsi);
+ 
+ 	return err;
  }
+@@ -5120,6 +5120,7 @@ int ice_load(struct ice_pf *pf)
+ 	params = ice_vsi_to_params(vsi);
+ 	params.flags = ICE_VSI_FLAG_INIT;
  
++	rtnl_lock();
+ 	err = ice_vsi_cfg(vsi, &params);
+ 	if (err)
+ 		goto err_vsi_cfg;
+@@ -5127,6 +5128,7 @@ int ice_load(struct ice_pf *pf)
+ 	err = ice_start_eth(ice_get_main_vsi(pf));
+ 	if (err)
+ 		goto err_start_eth;
++	rtnl_unlock();
+ 
+ 	err = ice_init_rdma(pf);
+ 	if (err)
+@@ -5141,9 +5143,11 @@ int ice_load(struct ice_pf *pf)
+ 
+ err_init_rdma:
+ 	ice_vsi_close(ice_get_main_vsi(pf));
++	rtnl_lock();
+ err_start_eth:
+ 	ice_vsi_decfg(ice_get_main_vsi(pf));
+ err_vsi_cfg:
++	rtnl_unlock();
+ 	ice_deinit_dev(pf);
+ 	return err;
+ }
+@@ -5156,8 +5160,10 @@ void ice_unload(struct ice_pf *pf)
+ {
+ 	ice_deinit_features(pf);
+ 	ice_deinit_rdma(pf);
++	rtnl_lock();
+ 	ice_stop_eth(ice_get_main_vsi(pf));
+ 	ice_vsi_decfg(ice_get_main_vsi(pf));
++	rtnl_unlock();
+ 	ice_deinit_dev(pf);
+ }
  
 -- 
 2.39.2
