@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0901EA7E
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:09:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822E1C433C9;
-	Tue, 25 Jul 2023 11:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56A11EA7E
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:09:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 451C8C433C7;
+	Tue, 25 Jul 2023 11:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283377;
-	bh=qCbDHeZm2q7C4WN7IypEF/PzRSktdCF8+9Q40x0kHmk=;
+	s=korg; t=1690283380;
+	bh=vn1+6KUuDs5vuPg9PDSVYe/0BrWiVIUPjwT4JYb2ixo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gHN/Bfu8qknjRrD4PyeIG1vwpHWg306SLLFajk9tAni3GYz/t0d6H62d1EWoKx03Q
-	 qy+QByVxBuWg4AZ7S/3mji4clA5ezH5iNoNaNyIefRE3lv6+Jub/SDArJ9w8qYs83C
-	 AY/23ySJujWESIyECohpJVo/AOg4lfSewb0KVDf0=
+	b=Dvz5cM8DolbMi6tBOUjPzklmCtZAOosQ9cC7dzRKQ7TE6A/Wc7MlKLzbk5ZJhoUIK
+	 X41dnIADUE2BtKhAE5+RsaDmq+Lgw/xKedcLzPYTdwH3A6k7EBPJZfFGbx4VUQA/zS
+	 0LZWhAUdVi4w4YIYXyU0Tl3cGFdDdPrYuDL90lBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Steev Klimaszewski <steev@kali.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 27/78] ASoC: codecs: wcd938x: fix soundwire initialisation race
-Date: Tue, 25 Jul 2023 12:46:18 +0200
-Message-ID: <20230725104452.368978032@linuxfoundation.org>
+	Florian Kauer <florian.kauer@linutronix.de>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 54/78] igc: Prevent garbled TX queue with XDP ZEROCOPY
+Date: Tue, 25 Jul 2023 12:46:45 +0200
+Message-ID: <20230725104453.364066666@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104451.275227789@linuxfoundation.org>
 References: <20230725104451.275227789@linuxfoundation.org>
@@ -36,55 +40,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Florian Kauer <florian.kauer@linutronix.de>
 
-commit 6f49256897083848ce9a59651f6b53fc80462397 upstream.
+[ Upstream commit 78adb4bcf99effbb960c5f9091e2e062509d1030 ]
 
-Make sure that the soundwire device used for register accesses has been
-enumerated and initialised before trying to read the codec variant
-during component probe.
+In normal operation, each populated queue item has
+next_to_watch pointing to the last TX desc of the packet,
+while each cleaned item has it set to 0. In particular,
+next_to_use that points to the next (necessarily clean)
+item to use has next_to_watch set to 0.
 
-This specifically avoids interpreting (a masked and shifted) -EBUSY
-errno as the variant:
+When the TX queue is used both by an application using
+AF_XDP with ZEROCOPY as well as a second non-XDP application
+generating high traffic, the queue pointers can get in
+an invalid state where next_to_use points to an item
+where next_to_watch is NOT set to 0.
 
-	wcd938x_codec audio-codec: ASoC: error at soc_component_read_no_lock on audio-codec for register: [0x000034b0] -16
+However, the implementation assumes at several places
+that this is never the case, so if it does hold,
+bad things happen. In particular, within the loop inside
+of igc_clean_tx_irq(), next_to_clean can overtake next_to_use.
+Finally, this prevents any further transmission via
+this queue and it never gets unblocked or signaled.
+Secondly, if the queue is in this garbled state,
+the inner loop of igc_clean_tx_ring() will never terminate,
+completely hogging a CPU core.
 
-in case the soundwire device has not yet been initialised, which in turn
-prevents some headphone controls from being registered.
+The reason is that igc_xdp_xmit_zc() reads next_to_use
+before acquiring the lock, and writing it back
+(potentially unmodified) later. If it got modified
+before locking, the outdated next_to_use is written
+pointing to an item that was already used elsewhere
+(and thus next_to_watch got written).
 
-Fixes: 8d78602aa87a ("ASoC: codecs: wcd938x: add basic driver")
-Cc: stable@vger.kernel.org	# 5.14
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Reported-by: Steev Klimaszewski <steev@kali.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Steev Klimaszewski <steev@kali.org>
-Link: https://lore.kernel.org/r/20230701094723.29379-1-johan+linaro@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9acf59a752d4 ("igc: Enable TX via AF_XDP zero-copy")
+Signed-off-by: Florian Kauer <florian.kauer@linutronix.de>
+Reviewed-by: Kurt Kanzenbach <kurt@linutronix.de>
+Tested-by: Kurt Kanzenbach <kurt@linutronix.de>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20230717175444.3217831-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wcd938x.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/ethernet/intel/igc/igc_main.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/soc/codecs/wcd938x.c
-+++ b/sound/soc/codecs/wcd938x.c
-@@ -4086,9 +4086,18 @@ static int wcd938x_irq_init(struct wcd93
- static int wcd938x_soc_codec_probe(struct snd_soc_component *component)
- {
- 	struct wcd938x_priv *wcd938x = snd_soc_component_get_drvdata(component);
-+	struct sdw_slave *tx_sdw_dev = wcd938x->tx_sdw_dev;
- 	struct device *dev = component->dev;
-+	unsigned long time_left;
- 	int ret, i;
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -2748,15 +2748,15 @@ static void igc_xdp_xmit_zc(struct igc_r
+ 	struct netdev_queue *nq = txring_txq(ring);
+ 	union igc_adv_tx_desc *tx_desc = NULL;
+ 	int cpu = smp_processor_id();
+-	u16 ntu = ring->next_to_use;
+ 	struct xdp_desc xdp_desc;
+-	u16 budget;
++	u16 budget, ntu;
  
-+	time_left = wait_for_completion_timeout(&tx_sdw_dev->initialization_complete,
-+						msecs_to_jiffies(2000));
-+	if (!time_left) {
-+		dev_err(dev, "soundwire device init timeout\n");
-+		return -ETIMEDOUT;
-+	}
-+
- 	snd_soc_component_init_regmap(component, wcd938x->regmap);
+ 	if (!netif_carrier_ok(ring->netdev))
+ 		return;
  
- 	ret = pm_runtime_resume_and_get(dev);
+ 	__netif_tx_lock(nq, cpu);
+ 
++	ntu = ring->next_to_use;
+ 	budget = igc_desc_unused(ring);
+ 
+ 	while (xsk_tx_peek_desc(pool, &xdp_desc) && budget--) {
 
 
