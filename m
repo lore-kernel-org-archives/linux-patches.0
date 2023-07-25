@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652221ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFEDC433CA;
-	Tue, 25 Jul 2023 11:11:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B291ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:11:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE08C433CA;
+	Tue, 25 Jul 2023 11:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283489;
-	bh=PpraKKZXFUglXQbwlMyKTobyXN9962JMyVxjvvi+Rag=;
+	s=korg; t=1690283492;
+	bh=Qm0EmyX/CO4b8cPQA5J42T4h4dKyzq9H4SuW/0Paz70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iVotn2eBCTbOZOq2dgSSAS2WluJ4jkraxj7skm03igLd5h4Swb2XmDs4rqafnlo4u
-	 I7m4NKBi05UtQT7SuAZyn3qDR0xN34EyHIhDWPINAZJnl7beqGFJAF2Ib3ZWx+5bpP
-	 TW/aOPuvIX+j7+/S9HmFTCzMtwvVJH09aXx7tA1U=
+	b=KFXUtfCocGQobhprwYCSqE+vbRm1kfKXx2aQ+yFL3FpTJdyOFIWU6eFVlrC/PTyRo
+	 u2oaT0iDxGQ2J8bIiJIpJ6S6zl4hM/icDHi8UiE759iMS46cXEJgQqrxA/tW3T5GNg
+	 i219WkhcUAtM4FPcm7Njj5p+du6mmIJ09fk3rCsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
 	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 016/509] md/raid10: fix overflow of md/safe_mode_delay
-Date: Tue, 25 Jul 2023 12:39:15 +0200
-Message-ID: <20230725104554.390026883@linuxfoundation.org>
+Subject: [PATCH 5.10 017/509] md/raid10: fix wrong setting of max_corr_read_errors
+Date: Tue, 25 Jul 2023 12:39:16 +0200
+Message-ID: <20230725104554.436469543@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,47 +38,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 6beb489b2eed25978523f379a605073f99240c50 ]
+[ Upstream commit f8b20a405428803bd9881881d8242c9d72c6b2b2 ]
 
-There is no input check when echo md/safe_mode_delay in safe_delay_store().
-And msec might also overflow when HZ < 1000 in safe_delay_show(), Fix it by
-checking overflow in safe_delay_store() and use unsigned long conversion in
-safe_delay_show().
+There is no input check when echo md/max_read_errors and overflow might
+occur. Add check of input number.
 
-Fixes: 72e02075a33f ("md: factor out parsing of fixed-point numbers")
+Fixes: 1e50915fe0bb ("raid: improve MD/raid10 handling of correctable read errors.")
 Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230522072535.1523740-2-linan666@huaweicloud.com
+Link: https://lore.kernel.org/r/20230522072535.1523740-3-linan666@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/md/md.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 1553c2495841b..204838a6d443e 100644
+index 204838a6d443e..bbf39abc32b79 100644
 --- a/drivers/md/md.c
 +++ b/drivers/md/md.c
-@@ -3890,8 +3890,9 @@ int strict_strtoul_scaled(const char *cp, unsigned long *res, int scale)
- static ssize_t
- safe_delay_show(struct mddev *mddev, char *page)
- {
--	int msec = (mddev->safemode_delay*1000)/HZ;
--	return sprintf(page, "%d.%03d\n", msec/1000, msec%1000);
-+	unsigned int msec = ((unsigned long)mddev->safemode_delay*1000)/HZ;
-+
-+	return sprintf(page, "%u.%03u\n", msec/1000, msec%1000);
+@@ -4574,6 +4574,8 @@ max_corrected_read_errors_store(struct mddev *mddev, const char *buf, size_t len
+ 	rv = kstrtouint(buf, 10, &n);
+ 	if (rv < 0)
+ 		return rv;
++	if (n > INT_MAX)
++		return -EINVAL;
+ 	atomic_set(&mddev->max_corr_read_errors, n);
+ 	return len;
  }
- static ssize_t
- safe_delay_store(struct mddev *mddev, const char *cbuf, size_t len)
-@@ -3903,7 +3904,7 @@ safe_delay_store(struct mddev *mddev, const char *cbuf, size_t len)
- 		return -EINVAL;
- 	}
- 
--	if (strict_strtoul_scaled(cbuf, &msec, 3) < 0)
-+	if (strict_strtoul_scaled(cbuf, &msec, 3) < 0 || msec > UINT_MAX / HZ)
- 		return -EINVAL;
- 	if (msec == 0)
- 		mddev->safemode_delay = 0;
 -- 
 2.39.2
 
