@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9261ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:21:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE16C433C7;
-	Tue, 25 Jul 2023 11:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7820C1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:21:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E05C433C7;
+	Tue, 25 Jul 2023 11:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284104;
-	bh=HaBgYXY2kiHj3nSgJee2RC8MPmA+pZaBWOzGw6WgdN4=;
+	s=korg; t=1690284107;
+	bh=swAHfD33s/u/gSMbygOmXiXwI1iruQiIsLbB4A8hkKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sa2qcIqsyMVcCu609KLeTFuGR8FzPyv54qZ12c267RVot+NJ4sh6LEO+VksHH5sWf
-	 Q4OdNwx1oZBf9Qx0jt/TES5CkTUGHkZy5U1KYvoV8KcH0QHY7QRLgwLHfpL6aGUjJO
-	 1iFmA8IoCFum3bxwfgKIf9oa5MzQ+57LhSVD8688=
+	b=eawGiPZ6Kc/IrWM84J6/w0xM8uHPPsKtcfXxsVDrhZ4Emflvl5rF69KmM1AVK6cxY
+	 vmprU6zwrMfFECBHjAOcS2jgrOT2VxvQ52SfYiIFvuRtlkWkxu1a+2sA4PJPcPy9lX
+	 AP/H86y0H60ZuNbxn7Gd1UR41JYniyKBPUaKDIvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ogness <john.ogness@linutronix.de>,
-	Tony Lindgren <tony@atomide.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 236/509] serial: 8250: lock port for UART_IER access in omap8250_irq()
-Date: Tue, 25 Jul 2023 12:42:55 +0200
-Message-ID: <20230725104604.566609564@linuxfoundation.org>
+Subject: [PATCH 5.10 237/509] kernfs: fix missing kernfs_idr_lock to remove an ID from the IDR
+Date: Tue, 25 Jul 2023 12:42:56 +0200
+Message-ID: <20230725104604.602358425@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,55 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Ogness <john.ogness@linutronix.de>
+From: Muchun Song <songmuchun@bytedance.com>
 
-[ Upstream commit 25614735a647693c1260f253dc3ab32127697806 ]
+[ Upstream commit 30480b988f88c279752f3202a26b6fee5f586aef ]
 
-omap8250_irq() accesses UART_IER. This register is modified twice
-by each console write (serial8250_console_write()) under the port
-lock. omap8250_irq() must also take the port lock to guanentee
-synchronized access to UART_IER.
+The root->ino_idr is supposed to be protected by kernfs_idr_lock, fix
+it.
 
-Since the port lock is already being taken for the stop_rx() callback
-and since it is safe to call cancel_delayed_work() while holding the
-port lock, simply extend the port lock region to include UART_IER
-access.
-
-Fixes: 1fe0e1fa3209 ("serial: 8250_omap: Handle optional overrun-throttle-ms property")
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20230525093159.223817-8-john.ogness@linutronix.de
+Fixes: 488dee96bb62 ("kernfs: allow creating kernfs objects with arbitrary uid/gid")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20230523024017.24851-1-songmuchun@bytedance.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_omap.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/kernfs/dir.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
-index 6043d4fa08cc2..af39a2c4c2eee 100644
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -653,17 +653,18 @@ static irqreturn_t omap8250_irq(int irq, void *dev_id)
- 	if ((lsr & UART_LSR_OE) && up->overrun_backoff_time_ms > 0) {
- 		unsigned long delay;
+diff --git a/fs/kernfs/dir.c b/fs/kernfs/dir.c
+index 8b3c86a502daa..c91ee05cce74f 100644
+--- a/fs/kernfs/dir.c
++++ b/fs/kernfs/dir.c
+@@ -679,7 +679,9 @@ static struct kernfs_node *__kernfs_new_node(struct kernfs_root *root,
+ 	return kn;
  
-+		/* Synchronize UART_IER access against the console. */
-+		spin_lock(&port->lock);
- 		up->ier = port->serial_in(port, UART_IER);
- 		if (up->ier & (UART_IER_RLSI | UART_IER_RDI)) {
--			spin_lock(&port->lock);
- 			port->ops->stop_rx(port);
--			spin_unlock(&port->lock);
- 		} else {
- 			/* Keep restarting the timer until
- 			 * the input overrun subsides.
- 			 */
- 			cancel_delayed_work(&up->overrun_backoff);
- 		}
-+		spin_unlock(&port->lock);
- 
- 		delay = msecs_to_jiffies(up->overrun_backoff_time_ms);
- 		schedule_delayed_work(&up->overrun_backoff, delay);
+  err_out3:
++	spin_lock(&kernfs_idr_lock);
+ 	idr_remove(&root->ino_idr, (u32)kernfs_ino(kn));
++	spin_unlock(&kernfs_idr_lock);
+  err_out2:
+ 	kmem_cache_free(kernfs_node_cache, kn);
+  err_out1:
 -- 
 2.39.2
 
