@@ -1,33 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79A91ED4F
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:47:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B7F5C433C8;
-	Tue, 25 Jul 2023 11:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895C61ED4F;
+	Tue, 25 Jul 2023 11:47:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F36C433C8;
+	Tue, 25 Jul 2023 11:47:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285634;
-	bh=gbFXmIFnU9PLyfTvzHYYcuKQjES7dc/aVfKMxdAGFUU=;
+	s=korg; t=1690285637;
+	bh=SP7FcrL/n/JbIPYcqAj06Y4gPl8RVIcWqAmrAHKcOK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QpW0DwuleymvyMEGSKfkyZ5NSkxg8xttyXSIoX94yR+t1JJP71wugT3asSQuwjEiX
-	 PcXYRYD+VcXqXIAak1/bjW/QwzzvY6eRp7NP0nhabXwbVMcUYcqnSg12swvm6xx2S5
-	 YpeemKtO9QVSjHsYAA3DYHfnPdZugbOth1KuhmEU=
+	b=zTznM0bdz9TWQlI09pajhGsYvhfDCo7vVLt9l6enzVhRkiH+5gnF9ZUO8B7iVa8Tt
+	 ZvNqLCL8PgiubSVBYNA1TTbkWwOQfFAkXdzklu5n2l1lKdb1WXE3v4K4FtwOWjCic5
+	 oBNOZCSLFmVEH0Hh7efFwe1v/jjRCHEZS/9pVBcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	shanzhulig <shanzhulig@gmail.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	stable@kernel.org,
-	Daniel Vetter <daniel.vetter@intel.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.4 275/313] drm/atomic: Fix potential use-after-free in nonblocking commits
-Date: Tue, 25 Jul 2023 12:47:08 +0200
-Message-ID: <20230725104532.969627955@linuxfoundation.org>
+	=?UTF-8?q?Georg=20M=C3=BCller?= <georgmueller@gmx.net>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	regressions@lists.linux.dev,
+	Arnaldo Carvalho de Melo <acme@redhat.com>
+Subject: [PATCH 5.4 276/313] perf probe: Add test for regression introduced by switch to die_get_decl_file()
+Date: Tue, 25 Jul 2023 12:47:09 +0200
+Message-ID: <20230725104533.013613502@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -41,91 +44,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Vetter <daniel.vetter@ffwll.ch>
+From: Georg Müller <georgmueller@gmx.net>
 
-commit 4e076c73e4f6e90816b30fcd4a0d7ab365087255 upstream.
+commit 56cbeacf143530576905623ac72ae0964f3293a6 upstream.
 
-This requires a bit of background.  Properly done a modeset driver's
-unload/remove sequence should be
+This patch adds a test to validate that 'perf probe' works for binaries
+where DWARF info is split into multiple CUs
 
-	drm_dev_unplug();
-	drm_atomic_helper_shutdown();
-	drm_dev_put();
-
-The trouble is that the drm_dev_unplugged() checks are by design racy,
-they do not synchronize against all outstanding ioctl.  This is because
-those ioctl could block forever (both for modeset and for driver
-specific ioctls), leading to deadlocks in hotunplug.  Instead the code
-sections that touch the hardware need to be annotated with
-drm_dev_enter/exit, to avoid accessing hardware resources after the
-unload/remove has finished.
-
-To avoid use-after-free issues all the involved userspace visible
-objects are supposed to hold a reference on the underlying drm_device,
-like drm_file does.
-
-The issue now is that we missed one, the atomic modeset ioctl can be run
-in a nonblocking fashion, and in that case it cannot rely on the implied
-drm_device reference provided by the ioctl calling context.  This can
-result in a use-after-free if an nonblocking atomic commit is carefully
-raced against a driver unload.
-
-Fix this by unconditionally grabbing a drm_device reference for any
-drm_atomic_state structures.  Strictly speaking this isn't required for
-blocking commits and TEST_ONLY calls, but it's the simpler approach.
-
-Thanks to shanzhulig for the initial idea of grabbing an unconditional
-reference, I just added comments, a condensed commit message and fixed a
-minor potential issue in where exactly we drop the final reference.
-
-Reported-by: shanzhulig <shanzhulig@gmail.com>
-Suggested-by: shanzhulig <shanzhulig@gmail.com>
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: David Airlie <airlied@gmail.com>
-Cc: stable@kernel.org
-Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Georg Müller <georgmueller@gmx.net>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: regressions@lists.linux.dev
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230628084551.1860532-5-georgmueller@gmx.net
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_atomic.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ tools/perf/tests/shell/test_uprobe_from_different_cu.sh |   77 ++++++++++++++++
+ 1 file changed, 77 insertions(+)
+ create mode 100755 tools/perf/tests/shell/test_uprobe_from_different_cu.sh
 
---- a/drivers/gpu/drm/drm_atomic.c
-+++ b/drivers/gpu/drm/drm_atomic.c
-@@ -97,6 +97,12 @@ drm_atomic_state_init(struct drm_device
- 	if (!state->planes)
- 		goto fail;
- 
-+	/*
-+	 * Because drm_atomic_state can be committed asynchronously we need our
-+	 * own reference and cannot rely on the on implied by drm_file in the
-+	 * ioctl call.
-+	 */
-+	drm_dev_get(dev);
- 	state->dev = dev;
- 
- 	DRM_DEBUG_ATOMIC("Allocated atomic state %p\n", state);
-@@ -256,7 +262,8 @@ EXPORT_SYMBOL(drm_atomic_state_clear);
- void __drm_atomic_state_free(struct kref *ref)
- {
- 	struct drm_atomic_state *state = container_of(ref, typeof(*state), ref);
--	struct drm_mode_config *config = &state->dev->mode_config;
-+	struct drm_device *dev = state->dev;
-+	struct drm_mode_config *config = &dev->mode_config;
- 
- 	drm_atomic_state_clear(state);
- 
-@@ -268,6 +275,8 @@ void __drm_atomic_state_free(struct kref
- 		drm_atomic_state_default_release(state);
- 		kfree(state);
- 	}
+--- /dev/null
++++ b/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
+@@ -0,0 +1,77 @@
++#!/bin/bash
++# test perf probe of function from different CU
++# SPDX-License-Identifier: GPL-2.0
 +
-+	drm_dev_put(dev);
- }
- EXPORT_SYMBOL(__drm_atomic_state_free);
- 
++set -e
++
++temp_dir=$(mktemp -d /tmp/perf-uprobe-different-cu-sh.XXXXXXXXXX)
++
++cleanup()
++{
++	trap - EXIT TERM INT
++	if [[ "${temp_dir}" =~ ^/tmp/perf-uprobe-different-cu-sh.*$ ]]; then
++		echo "--- Cleaning up ---"
++		perf probe -x ${temp_dir}/testfile -d foo
++		rm -f "${temp_dir}/"*
++		rmdir "${temp_dir}"
++	fi
++}
++
++trap_cleanup()
++{
++        cleanup
++        exit 1
++}
++
++trap trap_cleanup EXIT TERM INT
++
++cat > ${temp_dir}/testfile-foo.h << EOF
++struct t
++{
++  int *p;
++  int c;
++};
++
++extern int foo (int i, struct t *t);
++EOF
++
++cat > ${temp_dir}/testfile-foo.c << EOF
++#include "testfile-foo.h"
++
++int
++foo (int i, struct t *t)
++{
++  int j, res = 0;
++  for (j = 0; j < i && j < t->c; j++)
++    res += t->p[j];
++
++  return res;
++}
++EOF
++
++cat > ${temp_dir}/testfile-main.c << EOF
++#include "testfile-foo.h"
++
++static struct t g;
++
++int
++main (int argc, char **argv)
++{
++  int i;
++  int j[argc];
++  g.c = argc;
++  g.p = j;
++  for (i = 0; i < argc; i++)
++    j[i] = (int) argv[i][0];
++  return foo (3, &g);
++}
++EOF
++
++gcc -g -Og -flto -c ${temp_dir}/testfile-foo.c -o ${temp_dir}/testfile-foo.o
++gcc -g -Og -c ${temp_dir}/testfile-main.c -o ${temp_dir}/testfile-main.o
++gcc -g -Og -o ${temp_dir}/testfile ${temp_dir}/testfile-foo.o ${temp_dir}/testfile-main.o
++
++perf probe -x ${temp_dir}/testfile --funcs foo
++perf probe -x ${temp_dir}/testfile foo
++
++cleanup
 
 
