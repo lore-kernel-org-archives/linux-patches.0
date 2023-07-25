@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005AC182C8
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:29:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257AFC433C8;
-	Tue, 25 Jul 2023 11:29:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7347E182C8
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:29:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F1CC433C8;
+	Tue, 25 Jul 2023 11:29:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284584;
-	bh=6UA4hZAMCAhify68Xgy63LXOEN6KZ/j/YhyOZbo334I=;
+	s=korg; t=1690284587;
+	bh=r8hUdG5KKj5eKxySeNN88UsLPMCQT6kJPFVgWqUG+Q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FjON9t45hagwrS/RiO36Ew/1OyHkZ1BuYKntvD2jz77yuECa+5EhEAT1yiFfjVEaJ
-	 qqmu6CMvzxgUCk7mHXepPBKjESP4DgZQ4TVBy3GPtRKYIAj46i1nc/m+SOwg03MwpY
-	 D+IskUuP/JAvjG8Fda+QECwJqLNz50jCOitm0Y/s=
+	b=R6G/I/VqXJTHzQqpa4+Z8R4r1gD0iGvE4xHUV5gm2gQHD8CKrZCUzrx/roEJtLCA3
+	 neC/mP7xwtePg4opHsWtTv0JMvtS1VVoKLBd2CWIkxPL3gV5nT4cAZ3tLahbaQyGFW
+	 mRvY6paKqeVQfKs3B6GzkFkEBoizhGUvIC++h2cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Jarkko Sakkinen <jarkko.sakkinen@tuni.fi>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 5.10 380/509] tpm: tpm_vtpm_proxy: fix a race condition in /dev/vtpmx creation
-Date: Tue, 25 Jul 2023 12:45:19 +0200
-Message-ID: <20230725104611.131336803@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.10 381/509] mtd: rawnand: meson: fix unaligned DMA buffers handling
+Date: Tue, 25 Jul 2023 12:45:20 +0200
+Message-ID: <20230725104611.179351812@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,80 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jarkko Sakkinen <jarkko.sakkinen@tuni.fi>
+From: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
 
-commit f4032d615f90970d6c3ac1d9c0bce3351eb4445c upstream.
+commit 98480a181a08ceeede417e5b28f6d0429d8ae156 upstream.
 
-/dev/vtpmx is made visible before 'workqueue' is initialized, which can
-lead to a memory corruption in the worst case scenario.
+Meson NAND controller requires 8 bytes alignment for DMA addresses,
+otherwise it "aligns" passed address by itself thus accessing invalid
+location in the provided buffer. This patch makes unaligned buffers to
+be reallocated to become valid.
 
-Address this by initializing 'workqueue' as the very first step of the
-driver initialization.
-
-Cc: stable@vger.kernel.org
-Fixes: 6f99612e2500 ("tpm: Proxy driver for supporting multiple emulated TPMs")
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Jarkko Sakkinen <jarkko.sakkinen@tuni.fi>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: 8fae856c5350 ("mtd: rawnand: meson: add support for Amlogic NAND flash controller")
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230615080815.3291006-1-AVKrasnov@sberdevices.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm_vtpm_proxy.c |   30 +++++++-----------------------
- 1 file changed, 7 insertions(+), 23 deletions(-)
+ drivers/mtd/nand/raw/meson_nand.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/char/tpm/tpm_vtpm_proxy.c
-+++ b/drivers/char/tpm/tpm_vtpm_proxy.c
-@@ -683,37 +683,21 @@ static struct miscdevice vtpmx_miscdev =
- 	.fops = &vtpmx_fops,
- };
+--- a/drivers/mtd/nand/raw/meson_nand.c
++++ b/drivers/mtd/nand/raw/meson_nand.c
+@@ -72,6 +72,7 @@
+ #define GENCMDIADDRH(aih, addr)		((aih) | (((addr) >> 16) & 0xffff))
  
--static int vtpmx_init(void)
--{
--	return misc_register(&vtpmx_miscdev);
--}
--
--static void vtpmx_cleanup(void)
--{
--	misc_deregister(&vtpmx_miscdev);
--}
--
- static int __init vtpm_module_init(void)
+ #define DMA_DIR(dir)		((dir) ? NFC_CMD_N2M : NFC_CMD_M2N)
++#define DMA_ADDR_ALIGN		8
+ 
+ #define ECC_CHECK_RETURN_FF	(-1)
+ 
+@@ -838,6 +839,9 @@ static int meson_nfc_read_oob(struct nan
+ 
+ static bool meson_nfc_is_buffer_dma_safe(const void *buffer)
  {
- 	int rc;
- 
--	rc = vtpmx_init();
--	if (rc) {
--		pr_err("couldn't create vtpmx device\n");
--		return rc;
--	}
--
- 	workqueue = create_workqueue("tpm-vtpm");
- 	if (!workqueue) {
- 		pr_err("couldn't create workqueue\n");
--		rc = -ENOMEM;
--		goto err_vtpmx_cleanup;
-+		return -ENOMEM;
- 	}
- 
--	return 0;
--
--err_vtpmx_cleanup:
--	vtpmx_cleanup();
-+	rc = misc_register(&vtpmx_miscdev);
-+	if (rc) {
-+		pr_err("couldn't create vtpmx device\n");
-+		destroy_workqueue(workqueue);
-+	}
- 
- 	return rc;
- }
-@@ -721,7 +705,7 @@ err_vtpmx_cleanup:
- static void __exit vtpm_module_exit(void)
- {
- 	destroy_workqueue(workqueue);
--	vtpmx_cleanup();
-+	misc_deregister(&vtpmx_miscdev);
- }
- 
- module_init(vtpm_module_init);
++	if ((uintptr_t)buffer % DMA_ADDR_ALIGN)
++		return false;
++
+ 	if (virt_addr_valid(buffer) && (!object_is_on_stack(buffer)))
+ 		return true;
+ 	return false;
 
 
