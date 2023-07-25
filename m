@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314FD14263
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:56:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A9BC433C7;
-	Tue, 25 Jul 2023 10:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE78414263
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:56:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D364C433CB;
+	Tue, 25 Jul 2023 10:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282594;
-	bh=SqjiS7pFXRAnjlntQamOYggifF7cVL7N1pNqB2IEzL4=;
+	s=korg; t=1690282597;
+	bh=WPO1UuEb4RrER0+yq49pVuFUQNAzxw8sVkV7Ns7SQDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uisGxhkl/NBHOJz3o69smqRleixMGfDS7RzLCdSF50ihE570h1S+MgK2KZ0xvLQqu
-	 Ap1xVe6StsxGyuAHnmUzESBNW410AdXkJUJTpTNEkBtvwXuxRuKc/mAYiMAibvp0We
-	 i4DePyhauNt8jf07UZp++Zxsk1js2y1u5xo3K+U8=
+	b=QPOYQi9eCKP1BpUw6qyp/8+SWFBL47ZL22w9vzPgxCE8BX5tGH3L8xipPRYLU4lQ7
+	 7bpFUpV7RtAtXMBYNISbFYc3mcFE8/W0gAZ7LTZJvf28yumzRNDIzQfpkJaWKLXijf
+	 3lnTGMOOc3DqCxKrVr2UX7tcCy7uk7USA7cxf0LQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoine Tenart <atenart@kernel.org>,
 	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 185/227] net: ipv4: use consistent txhash in TIME_WAIT and SYN_RECV
-Date: Tue, 25 Jul 2023 12:45:52 +0200
-Message-ID: <20230725104522.483559579@linuxfoundation.org>
+Subject: [PATCH 6.4 186/227] tcp: annotate data-races around tcp_rsk(req)->txhash
+Date: Tue, 25 Jul 2023 12:45:53 +0200
+Message-ID: <20230725104522.517210634@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -36,132 +37,168 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c0a8966e2bc7d31f77a7246947ebc09c1ff06066 ]
+[ Upstream commit 5e5265522a9a7f91d1b0bd411d634bdaf16c80cd ]
 
-When using IPv4/TCP, skb->hash comes from sk->sk_txhash except in
-TIME_WAIT and SYN_RECV where it's not set in the reply skb from
-ip_send_unicast_reply. Those packets will have a mismatched hash with
-others from the same flow as their hashes will be 0. IPv6 does not have
-the same issue as the hash is set from the socket txhash in those cases.
+TCP request sockets are lockless, some of their fields
+can change while being read by another cpu as syzbot noticed.
 
-This commits sets the hash in the reply skb from ip_send_unicast_reply,
-which makes the IPv4 code behaving like IPv6.
+This is usually harmless, but we should annotate the known
+races.
 
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 5e5265522a9a ("tcp: annotate data-races around tcp_rsk(req)->txhash")
+This patch takes care of tcp_rsk(req)->txhash,
+a separate one is needed for tcp_rsk(req)->ts_recent.
+
+BUG: KCSAN: data-race in tcp_make_synack / tcp_rtx_synack
+
+write to 0xffff8881362304bc of 4 bytes by task 32083 on cpu 1:
+tcp_rtx_synack+0x9d/0x2a0 net/ipv4/tcp_output.c:4213
+inet_rtx_syn_ack+0x38/0x80 net/ipv4/inet_connection_sock.c:880
+tcp_check_req+0x379/0xc70 net/ipv4/tcp_minisocks.c:665
+tcp_v6_rcv+0x125b/0x1b20 net/ipv6/tcp_ipv6.c:1673
+ip6_protocol_deliver_rcu+0x92f/0xf30 net/ipv6/ip6_input.c:437
+ip6_input_finish net/ipv6/ip6_input.c:482 [inline]
+NF_HOOK include/linux/netfilter.h:303 [inline]
+ip6_input+0xbd/0x1b0 net/ipv6/ip6_input.c:491
+dst_input include/net/dst.h:468 [inline]
+ip6_rcv_finish+0x1e2/0x2e0 net/ipv6/ip6_input.c:79
+NF_HOOK include/linux/netfilter.h:303 [inline]
+ipv6_rcv+0x74/0x150 net/ipv6/ip6_input.c:309
+__netif_receive_skb_one_core net/core/dev.c:5452 [inline]
+__netif_receive_skb+0x90/0x1b0 net/core/dev.c:5566
+netif_receive_skb_internal net/core/dev.c:5652 [inline]
+netif_receive_skb+0x4a/0x310 net/core/dev.c:5711
+tun_rx_batched+0x3bf/0x400
+tun_get_user+0x1d24/0x22b0 drivers/net/tun.c:1997
+tun_chr_write_iter+0x18e/0x240 drivers/net/tun.c:2043
+call_write_iter include/linux/fs.h:1871 [inline]
+new_sync_write fs/read_write.c:491 [inline]
+vfs_write+0x4ab/0x7d0 fs/read_write.c:584
+ksys_write+0xeb/0x1a0 fs/read_write.c:637
+__do_sys_write fs/read_write.c:649 [inline]
+__se_sys_write fs/read_write.c:646 [inline]
+__x64_sys_write+0x42/0x50 fs/read_write.c:646
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+read to 0xffff8881362304bc of 4 bytes by task 32078 on cpu 0:
+tcp_make_synack+0x367/0xb40 net/ipv4/tcp_output.c:3663
+tcp_v6_send_synack+0x72/0x420 net/ipv6/tcp_ipv6.c:544
+tcp_conn_request+0x11a8/0x1560 net/ipv4/tcp_input.c:7059
+tcp_v6_conn_request+0x13f/0x180 net/ipv6/tcp_ipv6.c:1175
+tcp_rcv_state_process+0x156/0x1de0 net/ipv4/tcp_input.c:6494
+tcp_v6_do_rcv+0x98a/0xb70 net/ipv6/tcp_ipv6.c:1509
+tcp_v6_rcv+0x17b8/0x1b20 net/ipv6/tcp_ipv6.c:1735
+ip6_protocol_deliver_rcu+0x92f/0xf30 net/ipv6/ip6_input.c:437
+ip6_input_finish net/ipv6/ip6_input.c:482 [inline]
+NF_HOOK include/linux/netfilter.h:303 [inline]
+ip6_input+0xbd/0x1b0 net/ipv6/ip6_input.c:491
+dst_input include/net/dst.h:468 [inline]
+ip6_rcv_finish+0x1e2/0x2e0 net/ipv6/ip6_input.c:79
+NF_HOOK include/linux/netfilter.h:303 [inline]
+ipv6_rcv+0x74/0x150 net/ipv6/ip6_input.c:309
+__netif_receive_skb_one_core net/core/dev.c:5452 [inline]
+__netif_receive_skb+0x90/0x1b0 net/core/dev.c:5566
+netif_receive_skb_internal net/core/dev.c:5652 [inline]
+netif_receive_skb+0x4a/0x310 net/core/dev.c:5711
+tun_rx_batched+0x3bf/0x400
+tun_get_user+0x1d24/0x22b0 drivers/net/tun.c:1997
+tun_chr_write_iter+0x18e/0x240 drivers/net/tun.c:2043
+call_write_iter include/linux/fs.h:1871 [inline]
+new_sync_write fs/read_write.c:491 [inline]
+vfs_write+0x4ab/0x7d0 fs/read_write.c:584
+ksys_write+0xeb/0x1a0 fs/read_write.c:637
+__do_sys_write fs/read_write.c:649 [inline]
+__se_sys_write fs/read_write.c:646 [inline]
+__x64_sys_write+0x42/0x50 fs/read_write.c:646
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0x91d25731 -> 0xe79325cd
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 32078 Comm: syz-executor.4 Not tainted 6.5.0-rc1-syzkaller-00033-geb26cbb1a754 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/03/2023
+
+Fixes: 58d607d3e52f ("tcp: provide skb->hash to synack packets")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230717144445.653164-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip.h     |  2 +-
- net/ipv4/ip_output.c |  4 +++-
- net/ipv4/tcp_ipv4.c  | 14 +++++++++-----
- 3 files changed, 13 insertions(+), 7 deletions(-)
+ net/ipv4/tcp_ipv4.c      | 3 ++-
+ net/ipv4/tcp_minisocks.c | 2 +-
+ net/ipv4/tcp_output.c    | 4 ++--
+ net/ipv6/tcp_ipv6.c      | 2 +-
+ 4 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/include/net/ip.h b/include/net/ip.h
-index acec504c469a0..83a1a9bc3ceb1 100644
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -282,7 +282,7 @@ void ip_send_unicast_reply(struct sock *sk, struct sk_buff *skb,
- 			   const struct ip_options *sopt,
- 			   __be32 daddr, __be32 saddr,
- 			   const struct ip_reply_arg *arg,
--			   unsigned int len, u64 transmit_time);
-+			   unsigned int len, u64 transmit_time, u32 txhash);
- 
- #define IP_INC_STATS(net, field)	SNMP_INC_STATS64((net)->mib.ip_statistics, field)
- #define __IP_INC_STATS(net, field)	__SNMP_INC_STATS64((net)->mib.ip_statistics, field)
-diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
-index 61892268e8a6c..a1bead441026e 100644
---- a/net/ipv4/ip_output.c
-+++ b/net/ipv4/ip_output.c
-@@ -1692,7 +1692,7 @@ void ip_send_unicast_reply(struct sock *sk, struct sk_buff *skb,
- 			   const struct ip_options *sopt,
- 			   __be32 daddr, __be32 saddr,
- 			   const struct ip_reply_arg *arg,
--			   unsigned int len, u64 transmit_time)
-+			   unsigned int len, u64 transmit_time, u32 txhash)
- {
- 	struct ip_options_data replyopts;
- 	struct ipcm_cookie ipc;
-@@ -1755,6 +1755,8 @@ void ip_send_unicast_reply(struct sock *sk, struct sk_buff *skb,
- 								arg->csum));
- 		nskb->ip_summed = CHECKSUM_NONE;
- 		nskb->mono_delivery_time = !!transmit_time;
-+		if (txhash)
-+			skb_set_hash(nskb, txhash, PKT_HASH_TYPE_L4);
- 		ip_push_pending_frames(sk, &fl4);
- 	}
- out:
 diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 434e5f0c8b99d..a64069077e388 100644
+index a64069077e388..52229c75e76f6 100644
 --- a/net/ipv4/tcp_ipv4.c
 +++ b/net/ipv4/tcp_ipv4.c
-@@ -692,6 +692,7 @@ static void tcp_v4_send_reset(const struct sock *sk, struct sk_buff *skb)
- 	u64 transmit_time = 0;
- 	struct sock *ctl_sk;
- 	struct net *net;
-+	u32 txhash = 0;
- 
- 	/* Never send a reset in response to a reset. */
- 	if (th->rst)
-@@ -829,6 +830,8 @@ static void tcp_v4_send_reset(const struct sock *sk, struct sk_buff *skb)
- 				   inet_twsk(sk)->tw_priority : sk->sk_priority;
- 		transmit_time = tcp_transmit_time(sk);
- 		xfrm_sk_clone_policy(ctl_sk, sk);
-+		txhash = (sk->sk_state == TCP_TIME_WAIT) ?
-+			 inet_twsk(sk)->tw_txhash : sk->sk_txhash;
- 	} else {
- 		ctl_sk->sk_mark = 0;
- 		ctl_sk->sk_priority = 0;
-@@ -837,7 +840,7 @@ static void tcp_v4_send_reset(const struct sock *sk, struct sk_buff *skb)
- 			      skb, &TCP_SKB_CB(skb)->header.h4.opt,
- 			      ip_hdr(skb)->saddr, ip_hdr(skb)->daddr,
- 			      &arg, arg.iov[0].iov_len,
--			      transmit_time);
-+			      transmit_time, txhash);
- 
- 	xfrm_sk_free_policy(ctl_sk);
- 	sock_net_set(ctl_sk, &init_net);
-@@ -859,7 +862,7 @@ static void tcp_v4_send_ack(const struct sock *sk,
- 			    struct sk_buff *skb, u32 seq, u32 ack,
- 			    u32 win, u32 tsval, u32 tsecr, int oif,
- 			    struct tcp_md5sig_key *key,
--			    int reply_flags, u8 tos)
-+			    int reply_flags, u8 tos, u32 txhash)
- {
- 	const struct tcphdr *th = tcp_hdr(skb);
- 	struct {
-@@ -935,7 +938,7 @@ static void tcp_v4_send_ack(const struct sock *sk,
- 			      skb, &TCP_SKB_CB(skb)->header.h4.opt,
- 			      ip_hdr(skb)->saddr, ip_hdr(skb)->daddr,
- 			      &arg, arg.iov[0].iov_len,
--			      transmit_time);
-+			      transmit_time, txhash);
- 
- 	sock_net_set(ctl_sk, &init_net);
- 	__TCP_INC_STATS(net, TCP_MIB_OUTSEGS);
-@@ -955,7 +958,8 @@ static void tcp_v4_timewait_ack(struct sock *sk, struct sk_buff *skb)
- 			tw->tw_bound_dev_if,
- 			tcp_twsk_md5_key(tcptw),
- 			tw->tw_transparent ? IP_REPLY_ARG_NOSRCCHECK : 0,
--			tw->tw_tos
-+			tw->tw_tos,
-+			tw->tw_txhash
- 			);
- 
- 	inet_twsk_put(tw);
-@@ -988,7 +992,7 @@ static void tcp_v4_reqsk_send_ack(const struct sock *sk, struct sk_buff *skb,
+@@ -992,7 +992,8 @@ static void tcp_v4_reqsk_send_ack(const struct sock *sk, struct sk_buff *skb,
  			0,
  			tcp_md5_do_lookup(sk, l3index, addr, AF_INET),
  			inet_rsk(req)->no_srccheck ? IP_REPLY_ARG_NOSRCCHECK : 0,
--			ip_hdr(skb)->tos);
-+			ip_hdr(skb)->tos, tcp_rsk(req)->txhash);
+-			ip_hdr(skb)->tos, tcp_rsk(req)->txhash);
++			ip_hdr(skb)->tos,
++			READ_ONCE(tcp_rsk(req)->txhash));
  }
  
  /*
+diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
+index dac0d62120e62..909f3b4ed2059 100644
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -528,7 +528,7 @@ struct sock *tcp_create_openreq_child(const struct sock *sk,
+ 	newicsk->icsk_ack.lrcvtime = tcp_jiffies32;
+ 
+ 	newtp->lsndtime = tcp_jiffies32;
+-	newsk->sk_txhash = treq->txhash;
++	newsk->sk_txhash = READ_ONCE(treq->txhash);
+ 	newtp->total_retrans = req->num_retrans;
+ 
+ 	tcp_init_xmit_timers(newsk);
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index cfe128b81a010..1538b59913777 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -3578,7 +3578,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
+ 	rcu_read_lock();
+ 	md5 = tcp_rsk(req)->af_specific->req_md5_lookup(sk, req_to_sk(req));
+ #endif
+-	skb_set_hash(skb, tcp_rsk(req)->txhash, PKT_HASH_TYPE_L4);
++	skb_set_hash(skb, READ_ONCE(tcp_rsk(req)->txhash), PKT_HASH_TYPE_L4);
+ 	/* bpf program will be interested in the tcp_flags */
+ 	TCP_SKB_CB(skb)->tcp_flags = TCPHDR_SYN | TCPHDR_ACK;
+ 	tcp_header_size = tcp_synack_options(sk, req, mss, skb, &opts, md5,
+@@ -4121,7 +4121,7 @@ int tcp_rtx_synack(const struct sock *sk, struct request_sock *req)
+ 
+ 	/* Paired with WRITE_ONCE() in sock_setsockopt() */
+ 	if (READ_ONCE(sk->sk_txrehash) == SOCK_TXREHASH_ENABLED)
+-		tcp_rsk(req)->txhash = net_tx_rndhash();
++		WRITE_ONCE(tcp_rsk(req)->txhash, net_tx_rndhash());
+ 	res = af_ops->send_synack(sk, NULL, &fl, req, NULL, TCP_SYNACK_NORMAL,
+ 				  NULL);
+ 	if (!res) {
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 7132eb213a7a2..a3c86b714b242 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -1133,7 +1133,7 @@ static void tcp_v6_reqsk_send_ack(const struct sock *sk, struct sk_buff *skb,
+ 			req->ts_recent, sk->sk_bound_dev_if,
+ 			tcp_v6_md5_do_lookup(sk, &ipv6_hdr(skb)->saddr, l3index),
+ 			ipv6_get_dsfield(ipv6_hdr(skb)), 0, sk->sk_priority,
+-			tcp_rsk(req)->txhash);
++			READ_ONCE(tcp_rsk(req)->txhash));
+ }
+ 
+ 
 -- 
 2.39.2
 
