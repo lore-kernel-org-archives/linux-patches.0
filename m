@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F271D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:03:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13150C433C8;
-	Tue, 25 Jul 2023 11:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743D91D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:04:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09DDC433C8;
+	Tue, 25 Jul 2023 11:04:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283038;
-	bh=njRaw3mogpFUeb28QN4+v1DkZp2ISppWike+/gvGlDY=;
+	s=korg; t=1690283041;
+	bh=1XeDw4OdYLZSeLMwsfwmY4myXT098xFwcPj5JHF7uZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WlSoreh16FGEi6czz58bLVr/hnldd/bF5dmYtmpamT+KJvUGqSs1jZ640UKBtVhtK
-	 KT8QbhxyCx9GIGFgdQvhC6OPAM/mwD6ykusbt/pdOPl7gs7q2J9xZhMvGLlygK3won
-	 I9Ezlju+Fq2Ygxh18+pnTVe51OHPzHkFhVjciUKg=
+	b=itRQRSgx9+IZ5RV4tN6SMYEYYWfMVKbtpqPcfYNOj0lJ4k2co4qY29+Pk3c9vmiuP
+	 kAg6YT4vL3/4viPkAtlqaZ8iwYFf4/S0fF6NFCXwv8cvm1rpcx4fR5B4RkVmxDPfYb
+	 IfkxXVtogCGVH9Z9k8a2K7WaD6x3B1kuC/S5Q2WA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tristram Ha <Tristram.Ha@microchip.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 116/183] net: dsa: microchip: ksz8_r_sta_mac_table(): Avoid using error code for empty entries
-Date: Tue, 25 Jul 2023 12:45:44 +0200
-Message-ID: <20230725104512.140523334@linuxfoundation.org>
+Subject: [PATCH 6.1 117/183] net: dsa: microchip: correct KSZ8795 static MAC table access
+Date: Tue, 25 Jul 2023 12:45:45 +0200
+Message-ID: <20230725104512.171866416@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -36,151 +37,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Tristram Ha <Tristram.Ha@microchip.com>
 
-[ Upstream commit 559901b46810e82ba5321a5e789f994b65d3bc3d ]
+[ Upstream commit 4bdf79d686b49ac49373b36466acfb93972c7d7c ]
 
-Prepare for the next patch by ensuring that ksz8_r_sta_mac_table() does
-not use error codes for empty entries. This change will enable better
-handling of read/write errors in the upcoming patch.
+The KSZ8795 driver code was modified to use on KSZ8863/73, which has
+different register definitions.  Some of the new KSZ8795 register
+information are wrong compared to previous code.
 
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 4bdf79d686b4 ("net: dsa: microchip: correct KSZ8795 static MAC table access")
+KSZ8795 also behaves differently in that the STATIC_MAC_TABLE_USE_FID
+and STATIC_MAC_TABLE_FID bits are off by 1 when doing MAC table reading
+than writing.  To compensate that a special code was added to shift the
+register value by 1 before applying those bits.  This is wrong when the
+code is running on KSZ8863, so this special code is only executed when
+KSZ8795 is detected.
+
+Fixes: 4b20a07e103f ("net: dsa: microchip: ksz8795: add support for ksz88xx chips")
+Signed-off-by: Tristram Ha <Tristram.Ha@microchip.com>
+Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/microchip/ksz8795.c | 87 +++++++++++++++++------------
- 1 file changed, 50 insertions(+), 37 deletions(-)
+ drivers/net/dsa/microchip/ksz8795.c    | 8 +++++++-
+ drivers/net/dsa/microchip/ksz_common.c | 8 ++++----
+ drivers/net/dsa/microchip/ksz_common.h | 7 +++++++
+ 3 files changed, 18 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/net/dsa/microchip/ksz8795.c b/drivers/net/dsa/microchip/ksz8795.c
-index a2f67be66b97d..6639fae56da7f 100644
+index 6639fae56da7f..c63e082dc57dc 100644
 --- a/drivers/net/dsa/microchip/ksz8795.c
 +++ b/drivers/net/dsa/microchip/ksz8795.c
-@@ -407,7 +407,7 @@ int ksz8_r_dyn_mac_table(struct ksz_device *dev, u16 addr, u8 *mac_addr,
+@@ -437,7 +437,13 @@ static int ksz8_r_sta_mac_table(struct ksz_device *dev, u16 addr,
+ 		(data_hi & masks[STATIC_MAC_TABLE_FWD_PORTS]) >>
+ 			shifts[STATIC_MAC_FWD_PORTS];
+ 	alu->is_override = (data_hi & masks[STATIC_MAC_TABLE_OVERRIDE]) ? 1 : 0;
+-	data_hi >>= 1;
++
++	/* KSZ8795 family switches have STATIC_MAC_TABLE_USE_FID and
++	 * STATIC_MAC_TABLE_FID definitions off by 1 when doing read on the
++	 * static MAC table compared to doing write.
++	 */
++	if (ksz_is_ksz87xx(dev))
++		data_hi >>= 1;
+ 	alu->is_static = true;
+ 	alu->is_use_fid = (data_hi & masks[STATIC_MAC_TABLE_USE_FID]) ? 1 : 0;
+ 	alu->fid = (data_hi & masks[STATIC_MAC_TABLE_FID]) >>
+diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
+index 3d59298eaa5cf..8c492d56d2c36 100644
+--- a/drivers/net/dsa/microchip/ksz_common.c
++++ b/drivers/net/dsa/microchip/ksz_common.c
+@@ -286,13 +286,13 @@ static const u32 ksz8795_masks[] = {
+ 	[STATIC_MAC_TABLE_VALID]	= BIT(21),
+ 	[STATIC_MAC_TABLE_USE_FID]	= BIT(23),
+ 	[STATIC_MAC_TABLE_FID]		= GENMASK(30, 24),
+-	[STATIC_MAC_TABLE_OVERRIDE]	= BIT(26),
+-	[STATIC_MAC_TABLE_FWD_PORTS]	= GENMASK(24, 20),
++	[STATIC_MAC_TABLE_OVERRIDE]	= BIT(22),
++	[STATIC_MAC_TABLE_FWD_PORTS]	= GENMASK(20, 16),
+ 	[DYNAMIC_MAC_TABLE_ENTRIES_H]	= GENMASK(6, 0),
+-	[DYNAMIC_MAC_TABLE_MAC_EMPTY]	= BIT(8),
++	[DYNAMIC_MAC_TABLE_MAC_EMPTY]	= BIT(7),
+ 	[DYNAMIC_MAC_TABLE_NOT_READY]	= BIT(7),
+ 	[DYNAMIC_MAC_TABLE_ENTRIES]	= GENMASK(31, 29),
+-	[DYNAMIC_MAC_TABLE_FID]		= GENMASK(26, 20),
++	[DYNAMIC_MAC_TABLE_FID]		= GENMASK(22, 16),
+ 	[DYNAMIC_MAC_TABLE_SRC_PORT]	= GENMASK(26, 24),
+ 	[DYNAMIC_MAC_TABLE_TIMESTAMP]	= GENMASK(28, 27),
+ 	[P_MII_TX_FLOW_CTRL]		= BIT(5),
+diff --git a/drivers/net/dsa/microchip/ksz_common.h b/drivers/net/dsa/microchip/ksz_common.h
+index 9cfa179575ce8..d1b2db8e65331 100644
+--- a/drivers/net/dsa/microchip/ksz_common.h
++++ b/drivers/net/dsa/microchip/ksz_common.h
+@@ -512,6 +512,13 @@ static inline void ksz_regmap_unlock(void *__mtx)
+ 	mutex_unlock(mtx);
  }
  
- static int ksz8_r_sta_mac_table(struct ksz_device *dev, u16 addr,
--				struct alu_struct *alu)
-+				struct alu_struct *alu, bool *valid)
++static inline bool ksz_is_ksz87xx(struct ksz_device *dev)
++{
++	return dev->chip_id == KSZ8795_CHIP_ID ||
++	       dev->chip_id == KSZ8794_CHIP_ID ||
++	       dev->chip_id == KSZ8765_CHIP_ID;
++}
++
+ static inline bool ksz_is_ksz88x3(struct ksz_device *dev)
  {
- 	u32 data_hi, data_lo;
- 	const u8 *shifts;
-@@ -420,28 +420,32 @@ static int ksz8_r_sta_mac_table(struct ksz_device *dev, u16 addr,
- 	ksz8_r_table(dev, TABLE_STATIC_MAC, addr, &data);
- 	data_hi = data >> 32;
- 	data_lo = (u32)data;
--	if (data_hi & (masks[STATIC_MAC_TABLE_VALID] |
--			masks[STATIC_MAC_TABLE_OVERRIDE])) {
--		alu->mac[5] = (u8)data_lo;
--		alu->mac[4] = (u8)(data_lo >> 8);
--		alu->mac[3] = (u8)(data_lo >> 16);
--		alu->mac[2] = (u8)(data_lo >> 24);
--		alu->mac[1] = (u8)data_hi;
--		alu->mac[0] = (u8)(data_hi >> 8);
--		alu->port_forward =
--			(data_hi & masks[STATIC_MAC_TABLE_FWD_PORTS]) >>
--				shifts[STATIC_MAC_FWD_PORTS];
--		alu->is_override =
--			(data_hi & masks[STATIC_MAC_TABLE_OVERRIDE]) ? 1 : 0;
--		data_hi >>= 1;
--		alu->is_static = true;
--		alu->is_use_fid =
--			(data_hi & masks[STATIC_MAC_TABLE_USE_FID]) ? 1 : 0;
--		alu->fid = (data_hi & masks[STATIC_MAC_TABLE_FID]) >>
--				shifts[STATIC_MAC_FID];
-+
-+	if (!(data_hi & (masks[STATIC_MAC_TABLE_VALID] |
-+			 masks[STATIC_MAC_TABLE_OVERRIDE]))) {
-+		*valid = false;
- 		return 0;
- 	}
--	return -ENXIO;
-+
-+	alu->mac[5] = (u8)data_lo;
-+	alu->mac[4] = (u8)(data_lo >> 8);
-+	alu->mac[3] = (u8)(data_lo >> 16);
-+	alu->mac[2] = (u8)(data_lo >> 24);
-+	alu->mac[1] = (u8)data_hi;
-+	alu->mac[0] = (u8)(data_hi >> 8);
-+	alu->port_forward =
-+		(data_hi & masks[STATIC_MAC_TABLE_FWD_PORTS]) >>
-+			shifts[STATIC_MAC_FWD_PORTS];
-+	alu->is_override = (data_hi & masks[STATIC_MAC_TABLE_OVERRIDE]) ? 1 : 0;
-+	data_hi >>= 1;
-+	alu->is_static = true;
-+	alu->is_use_fid = (data_hi & masks[STATIC_MAC_TABLE_USE_FID]) ? 1 : 0;
-+	alu->fid = (data_hi & masks[STATIC_MAC_TABLE_FID]) >>
-+		shifts[STATIC_MAC_FID];
-+
-+	*valid = true;
-+
-+	return 0;
- }
- 
- void ksz8_w_sta_mac_table(struct ksz_device *dev, u16 addr,
-@@ -930,20 +934,25 @@ static int ksz8_add_sta_mac(struct ksz_device *dev, int port,
- 			    const unsigned char *addr, u16 vid)
- {
- 	struct alu_struct alu;
--	int index;
-+	int index, ret;
- 	int empty = 0;
- 
- 	alu.port_forward = 0;
- 	for (index = 0; index < dev->info->num_statics; index++) {
--		if (!ksz8_r_sta_mac_table(dev, index, &alu)) {
--			/* Found one already in static MAC table. */
--			if (!memcmp(alu.mac, addr, ETH_ALEN) &&
--			    alu.fid == vid)
--				break;
--		/* Remember the first empty entry. */
--		} else if (!empty) {
--			empty = index + 1;
-+		bool valid;
-+
-+		ret = ksz8_r_sta_mac_table(dev, index, &alu, &valid);
-+		if (ret)
-+			return ret;
-+		if (!valid) {
-+			/* Remember the first empty entry. */
-+			if (!empty)
-+				empty = index + 1;
-+			continue;
- 		}
-+
-+		if (!memcmp(alu.mac, addr, ETH_ALEN) && alu.fid == vid)
-+			break;
- 	}
- 
- 	/* no available entry */
-@@ -973,15 +982,19 @@ static int ksz8_del_sta_mac(struct ksz_device *dev, int port,
- 			    const unsigned char *addr, u16 vid)
- {
- 	struct alu_struct alu;
--	int index;
-+	int index, ret;
- 
- 	for (index = 0; index < dev->info->num_statics; index++) {
--		if (!ksz8_r_sta_mac_table(dev, index, &alu)) {
--			/* Found one already in static MAC table. */
--			if (!memcmp(alu.mac, addr, ETH_ALEN) &&
--			    alu.fid == vid)
--				break;
--		}
-+		bool valid;
-+
-+		ret = ksz8_r_sta_mac_table(dev, index, &alu, &valid);
-+		if (ret)
-+			return ret;
-+		if (!valid)
-+			continue;
-+
-+		if (!memcmp(alu.mac, addr, ETH_ALEN) && alu.fid == vid)
-+			break;
- 	}
- 
- 	/* no available entry */
+ 	return dev->chip_id == KSZ8830_CHIP_ID;
 -- 
 2.39.2
 
