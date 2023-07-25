@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FECB1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:18:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8641DC433CC;
-	Tue, 25 Jul 2023 11:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D121ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:18:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48782C433C8;
+	Tue, 25 Jul 2023 11:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283935;
-	bh=VfWSuo1bwozaJ9BbQYAKRb+mc/0ZoebbXXDdEI5KPbw=;
+	s=korg; t=1690283938;
+	bh=05fHvXiucLwZZwRCH/g/ugv9yuDnu8rjzel3ZQZzvsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WAXgOwlNSEt678y6m6cBJsGGs+MvSjW41KSgLsF5MZkaIV2I8SrByetjbKmuBa0AR
-	 xrpC1nxaycTEuZMj39izMp5rBMYOkWmHTAxhgDPaWvKDFG7+NA9kDxZBz+Zi6lyf4+
-	 ibkvvPrPr9tkNfg7ijW3g0jw5NqVbVSpC9OCUl+s=
+	b=eJnVy856Ch7nyMEttHLKo3+qCm+9cBHP+Ed20013KpV6Jrg9Vt3TRc++TTmoe/8SX
+	 Gg5Wwl6OBbnIwK4OE4RNcXT4r2Wy0t6QpgOg+dvu1ZIJeAmC+ziEOzXy0M4h8gQFwU
+	 bBKl7JFEY2zI7jEnafABR8klUOw9rs6n13S7Weeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
+	Jinhong Zhu <jinhongzhu@hust.edu.cn>,
+	Dan Carpenter <error27@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 175/509] PCI: cadence: Fix Gen2 Link Retraining process
-Date: Tue, 25 Jul 2023 12:41:54 +0200
-Message-ID: <20230725104601.738674432@linuxfoundation.org>
+Subject: [PATCH 5.10 176/509] scsi: qedf: Fix NULL dereference in error handling
+Date: Tue, 25 Jul 2023 12:41:55 +0200
+Message-ID: <20230725104601.780254379@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,86 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Jinhong Zhu <jinhongzhu@hust.edu.cn>
 
-[ Upstream commit 0e12f830236928b6fadf40d917a7527f0a048d2f ]
+[ Upstream commit f025312b089474a54e4859f3453771314d9e3d4f ]
 
-The Link Retraining process is initiated to account for the Gen2 defect in
-the Cadence PCIe controller in J721E SoC. The errata corresponding to this
-is i2085, documented at:
-https://www.ti.com/lit/er/sprz455c/sprz455c.pdf
+Smatch reported:
 
-The existing workaround implemented for the errata waits for the Data Link
-initialization to complete and assumes that the link retraining process
-at the Physical Layer has completed. However, it is possible that the
-Physical Layer training might be ongoing as indicated by the
-PCI_EXP_LNKSTA_LT bit in the PCI_EXP_LNKSTA register.
+drivers/scsi/qedf/qedf_main.c:3056 qedf_alloc_global_queues()
+warn: missing unwind goto?
 
-Fix the existing workaround, to ensure that the Physical Layer training
-has also completed, in addition to the Data Link initialization.
+At this point in the function, nothing has been allocated so we can return
+directly. In particular the "qedf->global_queues" have not been allocated
+so calling qedf_free_global_queues() will lead to a NULL dereference when
+we check if (!gl[i]) and "gl" is NULL.
 
-Link: https://lore.kernel.org/r/20230315070800.1615527-1-s-vadapalli@ti.com
-Fixes: 4740b969aaf5 ("PCI: cadence: Retrain Link to work around Gen2 training defect")
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Vignesh Raghavendra <vigneshr@ti.com>
+Fixes: 61d8658b4a43 ("scsi: qedf: Add QLogic FastLinQ offload FCoE driver framework.")
+Signed-off-by: Jinhong Zhu <jinhongzhu@hust.edu.cn>
+Link: https://lore.kernel.org/r/20230502140022.2852-1-jinhongzhu@hust.edu.cn
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../controller/cadence/pcie-cadence-host.c    | 27 +++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/scsi/qedf/qedf_main.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/cadence/pcie-cadence-host.c b/drivers/pci/controller/cadence/pcie-cadence-host.c
-index fb96d37a135c1..4d8d15ac51ef4 100644
---- a/drivers/pci/controller/cadence/pcie-cadence-host.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence-host.c
-@@ -12,6 +12,8 @@
- 
- #include "pcie-cadence.h"
- 
-+#define LINK_RETRAIN_TIMEOUT HZ
-+
- static u64 bar_max_size[] = {
- 	[RP_BAR0] = _ULL(128 * SZ_2G),
- 	[RP_BAR1] = SZ_2G,
-@@ -77,6 +79,27 @@ static struct pci_ops cdns_pcie_host_ops = {
- 	.write		= pci_generic_config_write,
- };
- 
-+static int cdns_pcie_host_training_complete(struct cdns_pcie *pcie)
-+{
-+	u32 pcie_cap_off = CDNS_PCIE_RP_CAP_OFFSET;
-+	unsigned long end_jiffies;
-+	u16 lnk_stat;
-+
-+	/* Wait for link training to complete. Exit after timeout. */
-+	end_jiffies = jiffies + LINK_RETRAIN_TIMEOUT;
-+	do {
-+		lnk_stat = cdns_pcie_rp_readw(pcie, pcie_cap_off + PCI_EXP_LNKSTA);
-+		if (!(lnk_stat & PCI_EXP_LNKSTA_LT))
-+			break;
-+		usleep_range(0, 1000);
-+	} while (time_before(jiffies, end_jiffies));
-+
-+	if (!(lnk_stat & PCI_EXP_LNKSTA_LT))
-+		return 0;
-+
-+	return -ETIMEDOUT;
-+}
-+
- static int cdns_pcie_host_wait_for_link(struct cdns_pcie *pcie)
- {
- 	struct device *dev = pcie->dev;
-@@ -118,6 +141,10 @@ static int cdns_pcie_retrain(struct cdns_pcie *pcie)
- 		cdns_pcie_rp_writew(pcie, pcie_cap_off + PCI_EXP_LNKCTL,
- 				    lnk_ctl);
- 
-+		ret = cdns_pcie_host_training_complete(pcie);
-+		if (ret)
-+			return ret;
-+
- 		ret = cdns_pcie_host_wait_for_link(pcie);
+diff --git a/drivers/scsi/qedf/qedf_main.c b/drivers/scsi/qedf/qedf_main.c
+index f48ef47546f4d..b33cb1172f31d 100644
+--- a/drivers/scsi/qedf/qedf_main.c
++++ b/drivers/scsi/qedf/qedf_main.c
+@@ -3042,9 +3042,8 @@ static int qedf_alloc_global_queues(struct qedf_ctx *qedf)
+ 	 * addresses of our queues
+ 	 */
+ 	if (!qedf->p_cpuq) {
+-		status = -EINVAL;
+ 		QEDF_ERR(&qedf->dbg_ctx, "p_cpuq is NULL.\n");
+-		goto mem_alloc_failure;
++		return -EINVAL;
  	}
- 	return ret;
+ 
+ 	qedf->global_queues = kzalloc((sizeof(struct global_queue *)
 -- 
 2.39.2
 
