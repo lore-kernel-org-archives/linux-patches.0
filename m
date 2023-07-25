@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1843B1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:35:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA3BC433C8;
-	Tue, 25 Jul 2023 11:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8EBB1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:35:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB5AC433C8;
+	Tue, 25 Jul 2023 11:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284932;
-	bh=ODi63Xwm3mmXxtPPz5x2wbMoKn+Y4E+kDa1K5VRjd6Y=;
+	s=korg; t=1690284935;
+	bh=ZfQokOKLprrQs26/0+zSfVo47ephKROH4pTDHh2HFkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MDaaukb28X69AmhQtn/njQccbZ22HxK7JVIZ5LgIn9pkkZn58K6euoB9U3+YsvgyA
-	 Ky+Lx5Jho9J0HtLxPM7PzR8vJR/vVZs7S6MKNorrLk8hPgv/76K/bTpLGzfgM7OIqC
-	 GzcgxTN48DyzhtZkJFyjUD+2/7X9dvqiVmvXMI+Q=
+	b=acjVsn9a0mxBahve3JiYOKfssuni/l/SVjFhtwxvIhBpz2hHfW/rFM8u6hzRNtHHg
+	 AJL+r+ua0Q99d6YaNE6c8gijBUqjVQLQ94QslGHKaoH9JOQtI9OFq/Tt6CASJQD8Sz
+	 BPKFLBWwFscvyCzr81ivopF00hXLZmRhIy1dvcZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
 	Arnd Bergmann <arnd@arndb.de>,
-	Zhang Rui <rui.zhang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 023/313] powercap: RAPL: Fix CONFIG_IOSF_MBI dependency
-Date: Tue, 25 Jul 2023 12:42:56 +0200
-Message-ID: <20230725104522.123976049@linuxfoundation.org>
+Subject: [PATCH 5.4 024/313] ARM: 9303/1: kprobes: avoid missing-declaration warnings
+Date: Tue, 25 Jul 2023 12:42:57 +0200
+Message-ID: <20230725104522.174178959@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -36,71 +37,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 4658fe81b3f8afe8adf37734ec5fe595d90415c6 ]
+[ Upstream commit 1b9c3ddcec6a55e15d3e38e7405e2d078db02020 ]
 
-After commit 3382388d7148 ("intel_rapl: abstract RAPL common code"),
-accessing to IOSF_MBI interface is done in the RAPL common code.
+checker_stack_use_t32strd() and kprobe_handler() can be made static since
+they are not used from other files, while coverage_start_registers()
+and __kprobes_test_case() are used from assembler code, and just need
+a declaration to avoid a warning with the global definition.
 
-Thus it is the CONFIG_INTEL_RAPL_CORE that has dependency of
-CONFIG_IOSF_MBI, while CONFIG_INTEL_RAPL_MSR does not.
+arch/arm/probes/kprobes/checkers-common.c:43:18: error: no previous prototype for 'checker_stack_use_t32strd'
+arch/arm/probes/kprobes/core.c:236:16: error: no previous prototype for 'kprobe_handler'
+arch/arm/probes/kprobes/test-core.c:723:10: error: no previous prototype for 'coverage_start_registers'
+arch/arm/probes/kprobes/test-core.c:918:14: error: no previous prototype for '__kprobes_test_case_start'
+arch/arm/probes/kprobes/test-core.c:952:14: error: no previous prototype for '__kprobes_test_case_end_16'
+arch/arm/probes/kprobes/test-core.c:967:14: error: no previous prototype for '__kprobes_test_case_end_32'
 
-This problem was not exposed previously because all the previous RAPL
-common code users, aka, the RAPL MSR and MMIO I/F drivers, have
-CONFIG_IOSF_MBI selected.
-
-Fix the CONFIG_IOSF_MBI dependency in RAPL code. This also fixes a build
-time failure when the RAPL TPMI I/F driver is introduced without
-selecting CONFIG_IOSF_MBI.
-
-x86_64-linux-ld: vmlinux.o: in function `set_floor_freq_atom':
-intel_rapl_common.c:(.text+0x2dac9b8): undefined reference to `iosf_mbi_write'
-x86_64-linux-ld: intel_rapl_common.c:(.text+0x2daca66): undefined reference to `iosf_mbi_read'
-
-Reference to iosf_mbi.h is also removed from the RAPL MSR I/F driver.
-
-Fixes: 3382388d7148 ("intel_rapl: abstract RAPL common code")
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/all/20230601213246.3271412-1-arnd@kernel.org
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 6624cf651f1a ("ARM: kprobes: collects stack consumption for store instructions")
+Fixes: 454f3e132d05 ("ARM/kprobes: Remove jprobe arm implementation")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/powercap/Kconfig          | 4 +++-
- drivers/powercap/intel_rapl_msr.c | 1 -
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ arch/arm/probes/kprobes/checkers-common.c | 2 +-
+ arch/arm/probes/kprobes/core.c            | 2 +-
+ arch/arm/probes/kprobes/opt-arm.c         | 2 --
+ arch/arm/probes/kprobes/test-core.c       | 2 +-
+ arch/arm/probes/kprobes/test-core.h       | 4 ++++
+ 5 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/powercap/Kconfig b/drivers/powercap/Kconfig
-index dc1c1381d7fa9..61fd5dfaf7a0f 100644
---- a/drivers/powercap/Kconfig
-+++ b/drivers/powercap/Kconfig
-@@ -18,10 +18,12 @@ if POWERCAP
- # Client driver configurations go here.
- config INTEL_RAPL_CORE
- 	tristate
-+	depends on PCI
-+	select IOSF_MBI
+diff --git a/arch/arm/probes/kprobes/checkers-common.c b/arch/arm/probes/kprobes/checkers-common.c
+index 4d720990cf2a3..eba7ac4725c02 100644
+--- a/arch/arm/probes/kprobes/checkers-common.c
++++ b/arch/arm/probes/kprobes/checkers-common.c
+@@ -40,7 +40,7 @@ enum probes_insn checker_stack_use_imm_0xx(probes_opcode_t insn,
+  * Different from other insn uses imm8, the real addressing offset of
+  * STRD in T32 encoding should be imm8 * 4. See ARMARM description.
+  */
+-enum probes_insn checker_stack_use_t32strd(probes_opcode_t insn,
++static enum probes_insn checker_stack_use_t32strd(probes_opcode_t insn,
+ 		struct arch_probes_insn *asi,
+ 		const struct decode_header *h)
+ {
+diff --git a/arch/arm/probes/kprobes/core.c b/arch/arm/probes/kprobes/core.c
+index 0a783bd4641c5..44b5f7dbcc00f 100644
+--- a/arch/arm/probes/kprobes/core.c
++++ b/arch/arm/probes/kprobes/core.c
+@@ -231,7 +231,7 @@ singlestep(struct kprobe *p, struct pt_regs *regs, struct kprobe_ctlblk *kcb)
+  * kprobe, and that level is reserved for user kprobe handlers, so we can't
+  * risk encountering a new kprobe in an interrupt handler.
+  */
+-void __kprobes kprobe_handler(struct pt_regs *regs)
++static void __kprobes kprobe_handler(struct pt_regs *regs)
+ {
+ 	struct kprobe *p, *cur;
+ 	struct kprobe_ctlblk *kcb;
+diff --git a/arch/arm/probes/kprobes/opt-arm.c b/arch/arm/probes/kprobes/opt-arm.c
+index c78180172120f..e20304f1d8bc9 100644
+--- a/arch/arm/probes/kprobes/opt-arm.c
++++ b/arch/arm/probes/kprobes/opt-arm.c
+@@ -145,8 +145,6 @@ __arch_remove_optimized_kprobe(struct optimized_kprobe *op, int dirty)
+ 	}
+ }
  
- config INTEL_RAPL
- 	tristate "Intel RAPL Support via MSR Interface"
--	depends on X86 && IOSF_MBI
-+	depends on X86 && PCI
- 	select INTEL_RAPL_CORE
- 	---help---
- 	  This enables support for the Intel Running Average Power Limit (RAPL)
-diff --git a/drivers/powercap/intel_rapl_msr.c b/drivers/powercap/intel_rapl_msr.c
-index d5487965bdfe9..6091e462626a4 100644
---- a/drivers/powercap/intel_rapl_msr.c
-+++ b/drivers/powercap/intel_rapl_msr.c
-@@ -22,7 +22,6 @@
- #include <linux/processor.h>
- #include <linux/platform_device.h>
+-extern void kprobe_handler(struct pt_regs *regs);
+-
+ static void
+ optimized_callback(struct optimized_kprobe *op, struct pt_regs *regs)
+ {
+diff --git a/arch/arm/probes/kprobes/test-core.c b/arch/arm/probes/kprobes/test-core.c
+index c562832b86272..171c7076b89f4 100644
+--- a/arch/arm/probes/kprobes/test-core.c
++++ b/arch/arm/probes/kprobes/test-core.c
+@@ -720,7 +720,7 @@ static const char coverage_register_lookup[16] = {
+ 	[REG_TYPE_NOSPPCX]	= COVERAGE_ANY_REG | COVERAGE_SP,
+ };
  
--#include <asm/iosf_mbi.h>
- #include <asm/cpu_device_id.h>
- #include <asm/intel-family.h>
- 
+-unsigned coverage_start_registers(const struct decode_header *h)
++static unsigned coverage_start_registers(const struct decode_header *h)
+ {
+ 	unsigned regs = 0;
+ 	int i;
+diff --git a/arch/arm/probes/kprobes/test-core.h b/arch/arm/probes/kprobes/test-core.h
+index 19a5b2add41e1..805116c2ec27c 100644
+--- a/arch/arm/probes/kprobes/test-core.h
++++ b/arch/arm/probes/kprobes/test-core.h
+@@ -453,3 +453,7 @@ void kprobe_thumb32_test_cases(void);
+ #else
+ void kprobe_arm_test_cases(void);
+ #endif
++
++void __kprobes_test_case_start(void);
++void __kprobes_test_case_end_16(void);
++void __kprobes_test_case_end_32(void);
 -- 
 2.39.2
 
