@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D401ED45
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:40:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46814C433C8;
-	Tue, 25 Jul 2023 11:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081641ED4F
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:40:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174D1C433CD;
+	Tue, 25 Jul 2023 11:40:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690285224;
-	bh=D429T2mjmVZIwc3ndvZEXn6r5WOeOQQaHYfXCS3drNc=;
+	s=korg; t=1690285227;
+	bh=l89wX/sYB90K0n/wo1MOR8O5IwE68oRLCuAuE9ANbLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AXs5tD24dylc8GROu5PlJZrMDE+f9ruiEPb2J6fviU9dkUUiqF+AlZyH5FqzPYhdr
-	 7kwP6V6plEVxy+7t+z5fhePyAYjulFZtTmDjfko3jw1ATOEPc+N0rVznin1RxEUBMi
-	 qxQE36lcn3gStGa8zvL7t/UjDefqkCglYfSauEn0=
+	b=b/HTDRL8o5j4Vf7OSPXYk7HY93ybcX2IWSZmkboPVLqM0AXY3aRu8VQhUHetqIQCf
+	 V8pre02+GurTHw+NFiN+PTclQikhtTNMDHQ7EDTo6ipyIBusLV3cLoJQyGb1UDfP6M
+	 BBx4DhgP8zp2/fHX8+9CbJjiCUyzR/sUNsE+kk+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 089/313] drm/radeon: fix possible division-by-zero errors
-Date: Tue, 25 Jul 2023 12:44:02 +0200
-Message-ID: <20230725104524.803728479@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.4 122/313] usb: dwc3: gadget: Propagate core init errors to UDC during pullup
+Date: Tue, 25 Jul 2023 12:44:35 +0200
+Message-ID: <20230725104526.290440017@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104521.167250627@linuxfoundation.org>
 References: <20230725104521.167250627@linuxfoundation.org>
@@ -35,94 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Krishna Kurapati <quic_kriskura@quicinc.com>
 
-[ Upstream commit 1becc57cd1a905e2aa0e1eca60d2a37744525c4a ]
+commit c0aabed9cabe057309779a9e26fe86a113d24dad upstream.
 
-Function rv740_get_decoded_reference_divider() may return 0 due to
-unpredictable reference divider value calculated in
-radeon_atom_get_clock_dividers(). This will lead to
-division-by-zero error once that value is used as a divider
-in calculating 'clk_s'.
-While unlikely, this issue should nonetheless be prevented so add a
-sanity check for such cases by testing 'decoded_ref' value against 0.
+In scenarios where pullup relies on resume (get sync) to initialize
+the controller and set the run stop bit, then core_init is followed by
+gadget_resume which will eventually set run stop bit.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+But in cases where the core_init fails, the return value is not sent
+back to udc appropriately. So according to UDC the controller has
+started but in reality we never set the run stop bit.
 
-v2: minor coding style fixes (Alex)
-In practice this should actually happen as the vbios should be
-properly populated.
+On systems like Android, there are uevents sent to HAL depending on
+whether the configfs_bind / configfs_disconnect were invoked. In the
+above mentioned scnenario, if the core init fails, the run stop won't
+be set and the cable plug-out won't result in generation of any
+disconnect event and userspace would never get any uevent regarding
+cable plug out and we never call pullup(0) again. Furthermore none of
+the next Plug-In/Plug-Out's would be known to configfs.
 
-Fixes: 66229b200598 ("drm/radeon/kms: add dpm support for rv7xx (v4)")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Return back the appropriate result to UDC to let the userspace/
+configfs know that the pullup failed so they can take appropriate
+action.
+
+Fixes: 77adb8bdf422 ("usb: dwc3: gadget: Allow runtime suspend if UDC unbinded")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Message-ID: <20230618120949.14868-1-quic_kriskura@quicinc.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/cypress_dpm.c | 8 ++++++--
- drivers/gpu/drm/radeon/ni_dpm.c      | 8 ++++++--
- drivers/gpu/drm/radeon/rv740_dpm.c   | 8 ++++++--
- 3 files changed, 18 insertions(+), 6 deletions(-)
+ drivers/usb/dwc3/gadget.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/radeon/cypress_dpm.c b/drivers/gpu/drm/radeon/cypress_dpm.c
-index 32ed60f1048bd..b31d65a6752f1 100644
---- a/drivers/gpu/drm/radeon/cypress_dpm.c
-+++ b/drivers/gpu/drm/radeon/cypress_dpm.c
-@@ -559,8 +559,12 @@ static int cypress_populate_mclk_value(struct radeon_device *rdev,
- 						     ASIC_INTERNAL_MEMORY_SS, vco_freq)) {
- 			u32 reference_clock = rdev->clock.mpll.reference_freq;
- 			u32 decoded_ref = rv740_get_decoded_reference_divider(dividers.ref_div);
--			u32 clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
--			u32 clk_v = ss.percentage *
-+			u32 clk_s, clk_v;
-+
-+			if (!decoded_ref)
-+				return -EINVAL;
-+			clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
-+			clk_v = ss.percentage *
- 				(0x4000 * dividers.whole_fb_div + 0x800 * dividers.frac_fb_div) / (clk_s * 625);
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -2077,7 +2077,9 @@ static int dwc3_gadget_pullup(struct usb
+ 	ret = pm_runtime_get_sync(dwc->dev);
+ 	if (!ret || ret < 0) {
+ 		pm_runtime_put(dwc->dev);
+-		return 0;
++		if (ret < 0)
++			pm_runtime_set_suspended(dwc->dev);
++		return ret;
+ 	}
  
- 			mpll_ss1 &= ~CLKV_MASK;
-diff --git a/drivers/gpu/drm/radeon/ni_dpm.c b/drivers/gpu/drm/radeon/ni_dpm.c
-index 288ec3039bc2c..cad7a73a551f7 100644
---- a/drivers/gpu/drm/radeon/ni_dpm.c
-+++ b/drivers/gpu/drm/radeon/ni_dpm.c
-@@ -2241,8 +2241,12 @@ static int ni_populate_mclk_value(struct radeon_device *rdev,
- 						     ASIC_INTERNAL_MEMORY_SS, vco_freq)) {
- 			u32 reference_clock = rdev->clock.mpll.reference_freq;
- 			u32 decoded_ref = rv740_get_decoded_reference_divider(dividers.ref_div);
--			u32 clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
--			u32 clk_v = ss.percentage *
-+			u32 clk_s, clk_v;
-+
-+			if (!decoded_ref)
-+				return -EINVAL;
-+			clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
-+			clk_v = ss.percentage *
- 				(0x4000 * dividers.whole_fb_div + 0x800 * dividers.frac_fb_div) / (clk_s * 625);
- 
- 			mpll_ss1 &= ~CLKV_MASK;
-diff --git a/drivers/gpu/drm/radeon/rv740_dpm.c b/drivers/gpu/drm/radeon/rv740_dpm.c
-index 327d65a76e1f4..79b2de65e905e 100644
---- a/drivers/gpu/drm/radeon/rv740_dpm.c
-+++ b/drivers/gpu/drm/radeon/rv740_dpm.c
-@@ -250,8 +250,12 @@ int rv740_populate_mclk_value(struct radeon_device *rdev,
- 						     ASIC_INTERNAL_MEMORY_SS, vco_freq)) {
- 			u32 reference_clock = rdev->clock.mpll.reference_freq;
- 			u32 decoded_ref = rv740_get_decoded_reference_divider(dividers.ref_div);
--			u32 clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
--			u32 clk_v = 0x40000 * ss.percentage *
-+			u32 clk_s, clk_v;
-+
-+			if (!decoded_ref)
-+				return -EINVAL;
-+			clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
-+			clk_v = 0x40000 * ss.percentage *
- 				(dividers.whole_fb_div + (dividers.frac_fb_div / 8)) / (clk_s * 10000);
- 
- 			mpll_ss1 &= ~CLKV_MASK;
--- 
-2.39.2
-
+ 	if (dwc->pullups_connected == is_on) {
 
 
