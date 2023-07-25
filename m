@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD551D301
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:07:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A016C433C7;
-	Tue, 25 Jul 2023 11:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E641D301
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:07:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E84C433C8;
+	Tue, 25 Jul 2023 11:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283272;
-	bh=F3eCiaUAcg3QHaoyKn6aMrx9ZXD5Er2WcoaCX3xk1aA=;
+	s=korg; t=1690283275;
+	bh=sAf9qbD3p5QELsfBa9+L+SSF0rD5lxPxrmG35ziB5lE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Omgj2qGxD+ijL3vgGCyyGAuf2xhBQE4NMaZJAX6is1S8Uswy8zRlN+yZ4AQlZeeCz
-	 BTgomt3jHOdtFdwtuzmCDKEU4Gow66bWidonuHLkik4RlHqWID/UeTk+8+C8cxuLa+
-	 SAbJkmHrF3vnIU74VNNZQGaW9H2kCGh89mZSdYY8=
+	b=EEMD0Go67yrid2Dz1eNthhPm+O/SKeHyV2RBztOF/rhkepkNJy9WpYjs+fffPgggV
+	 BOHl/eLfLcZADRH9WXMtUFeDF0+NhOnWbLK1LX+ekvxN9+z88XLqfFkycmRRFnQnqh
+	 KI6mIkGc147XJv+MxFMb8KKBYLZ0C+vFQ9xxRGNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yizhan@redhat.com>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 5.15 17/78] drm/client: Fix memory leak in drm_client_modeset_probe
-Date: Tue, 25 Jul 2023 12:46:08 +0200
-Message-ID: <20230725104452.007255820@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Alan Liu <haoping.liu@amd.com>,
+	Zhikai Zhai <zhikai.zhai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 5.15 18/78] drm/amd/display: Disable MPC split by default on special asic
+Date: Tue, 25 Jul 2023 12:46:09 +0200
+Message-ID: <20230725104452.042579931@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104451.275227789@linuxfoundation.org>
 References: <20230725104451.275227789@linuxfoundation.org>
@@ -36,46 +38,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jocelyn Falempe <jfalempe@redhat.com>
+From: Zhikai Zhai <zhikai.zhai@amd.com>
 
-commit 2329cc7a101af1a844fbf706c0724c0baea38365 upstream.
+commit a460beefe77d780ac48f19d39333852a7f93ffc1 upstream.
 
-When a new mode is set to modeset->mode, the previous mode should be freed.
-This fixes the following kmemleak report:
+[WHY]
+All of pipes will be used when the MPC split enable on the dcn
+which just has 2 pipes. Then MPO enter will trigger the minimal
+transition which need programe dcn from 2 pipes MPC split to 2
+pipes MPO. This action will cause lag if happen frequently.
 
-drm_mode_duplicate+0x45/0x220 [drm]
-drm_client_modeset_probe+0x944/0xf50 [drm]
-__drm_fb_helper_initial_config_and_unlock+0xb4/0x2c0 [drm_kms_helper]
-drm_fbdev_client_hotplug+0x2bc/0x4d0 [drm_kms_helper]
-drm_client_register+0x169/0x240 [drm]
-ast_pci_probe+0x142/0x190 [ast]
-local_pci_probe+0xdc/0x180
-work_for_cpu_fn+0x4e/0xa0
-process_one_work+0x8b7/0x1540
-worker_thread+0x70a/0xed0
-kthread+0x29f/0x340
-ret_from_fork+0x1f/0x30
+[HOW]
+Disable the MPC split for the platform which dcn resource is limited
 
-cc: <stable@vger.kernel.org>
-Reported-by: Zhang Yi <yizhan@redhat.com>
-Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230711092203.68157-3-jfalempe@redhat.com
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Acked-by: Alan Liu <haoping.liu@amd.com>
+Signed-off-by: Zhikai Zhai <zhikai.zhai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_client_modeset.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/dc/dcn303/dcn303_resource.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/drm_client_modeset.c
-+++ b/drivers/gpu/drm/drm_client_modeset.c
-@@ -865,6 +865,7 @@ int drm_client_modeset_probe(struct drm_
- 				break;
- 			}
- 
-+			kfree(modeset->mode);
- 			modeset->mode = drm_mode_duplicate(dev, mode);
- 			drm_connector_get(connector);
- 			modeset->connectors[modeset->num_connectors++] = connector;
+--- a/drivers/gpu/drm/amd/display/dc/dcn303/dcn303_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn303/dcn303_resource.c
+@@ -193,7 +193,7 @@ static const struct dc_debug_options deb
+ 		.timing_trace = false,
+ 		.clock_trace = true,
+ 		.disable_pplib_clock_request = true,
+-		.pipe_split_policy = MPC_SPLIT_DYNAMIC,
++		.pipe_split_policy = MPC_SPLIT_AVOID,
+ 		.force_single_disp_pipe_split = false,
+ 		.disable_dcc = DCC_ENABLE,
+ 		.vsr_support = true,
 
 
