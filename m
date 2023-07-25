@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA711ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:33:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515D8C433C7;
-	Tue, 25 Jul 2023 11:33:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92521ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:33:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D38C433C7;
+	Tue, 25 Jul 2023 11:33:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284799;
-	bh=8IWUj6y3H6Ha2yGWyqLs1YGPvD5wgjSl19LTfDQUppo=;
+	s=korg; t=1690284802;
+	bh=sHtE15PecU2QpaCoVfQN+PYWLcVMakYcm1Moz9PpAqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=odjKetIFV0AOXn200CInRfS0fHNeksfm9sR5PLTTx0WkWf53UNd+94VZogH6NZkQf
-	 NUAdPvjqtD2cobqmrLae0KQXQQMztHtNSpKFlwFYC8IxRzH500Vi6E4dI/81Ssf6ZR
-	 jJtp3Vj+GRMCy1CMtgwKgIVJGwFV2jFezFFjWKRc=
+	b=yl6Z2jVTE6oik6DHGMMIWNziGv9zEHwOf6C84g1lFcp4UF8xRnrBvtLRXFHK6OlAJ
+	 QzLp1aMXdrJYsiVRxUtKMi0KbbAcX6CL2sBbmMIPAz4ER4xNvHCGBWMhyp14Efbj06
+	 WKZcGaRI0NKaP19/Dj7N93kuv+bY4XQoBE3eNozs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ebe648a84e8784763f82@syzkaller.appspotmail.com,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Yonghong Song <yhs@fb.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 468/509] bpf: Address KCSAN report on bpf_lru_list
-Date: Tue, 25 Jul 2023 12:46:47 +0200
-Message-ID: <20230725104615.187479785@linuxfoundation.org>
+Subject: [PATCH 5.10 486/509] fbdev: au1200fb: Fix missing IRQ check in au1200fb_drv_probe
+Date: Tue, 25 Jul 2023 12:47:05 +0200
+Message-ID: <20230725104615.979528402@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,175 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin KaFai Lau <martin.lau@kernel.org>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit ee9fd0ac3017c4313be91a220a9ac4c99dde7ad4 ]
+[ Upstream commit 4e88761f5f8c7869f15a2046b1a1116f4fab4ac8 ]
 
-KCSAN reported a data-race when accessing node->ref.
-Although node->ref does not have to be accurate,
-take this chance to use a more common READ_ONCE() and WRITE_ONCE()
-pattern instead of data_race().
+This func misses checking for platform_get_irq()'s call and may passes the
+negative error codes to request_irq(), which takes unsigned IRQ #,
+causing it to fail with -EINVAL, overriding an original error code.
 
-There is an existing bpf_lru_node_is_ref() and bpf_lru_node_set_ref().
-This patch also adds bpf_lru_node_clear_ref() to do the
-WRITE_ONCE(node->ref, 0) also.
+Fix this by stop calling request_irq() with invalid IRQ #s.
 
-==================================================================
-BUG: KCSAN: data-race in __bpf_lru_list_rotate / __htab_lru_percpu_map_update_elem
-
-write to 0xffff888137038deb of 1 bytes by task 11240 on cpu 1:
-__bpf_lru_node_move kernel/bpf/bpf_lru_list.c:113 [inline]
-__bpf_lru_list_rotate_active kernel/bpf/bpf_lru_list.c:149 [inline]
-__bpf_lru_list_rotate+0x1bf/0x750 kernel/bpf/bpf_lru_list.c:240
-bpf_lru_list_pop_free_to_local kernel/bpf/bpf_lru_list.c:329 [inline]
-bpf_common_lru_pop_free kernel/bpf/bpf_lru_list.c:447 [inline]
-bpf_lru_pop_free+0x638/0xe20 kernel/bpf/bpf_lru_list.c:499
-prealloc_lru_pop kernel/bpf/hashtab.c:290 [inline]
-__htab_lru_percpu_map_update_elem+0xe7/0x820 kernel/bpf/hashtab.c:1316
-bpf_percpu_hash_update+0x5e/0x90 kernel/bpf/hashtab.c:2313
-bpf_map_update_value+0x2a9/0x370 kernel/bpf/syscall.c:200
-generic_map_update_batch+0x3ae/0x4f0 kernel/bpf/syscall.c:1687
-bpf_map_do_batch+0x2d9/0x3d0 kernel/bpf/syscall.c:4534
-__sys_bpf+0x338/0x810
-__do_sys_bpf kernel/bpf/syscall.c:5096 [inline]
-__se_sys_bpf kernel/bpf/syscall.c:5094 [inline]
-__x64_sys_bpf+0x43/0x50 kernel/bpf/syscall.c:5094
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-read to 0xffff888137038deb of 1 bytes by task 11241 on cpu 0:
-bpf_lru_node_set_ref kernel/bpf/bpf_lru_list.h:70 [inline]
-__htab_lru_percpu_map_update_elem+0x2f1/0x820 kernel/bpf/hashtab.c:1332
-bpf_percpu_hash_update+0x5e/0x90 kernel/bpf/hashtab.c:2313
-bpf_map_update_value+0x2a9/0x370 kernel/bpf/syscall.c:200
-generic_map_update_batch+0x3ae/0x4f0 kernel/bpf/syscall.c:1687
-bpf_map_do_batch+0x2d9/0x3d0 kernel/bpf/syscall.c:4534
-__sys_bpf+0x338/0x810
-__do_sys_bpf kernel/bpf/syscall.c:5096 [inline]
-__se_sys_bpf kernel/bpf/syscall.c:5094 [inline]
-__x64_sys_bpf+0x43/0x50 kernel/bpf/syscall.c:5094
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-value changed: 0x01 -> 0x00
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 11241 Comm: syz-executor.3 Not tainted 6.3.0-rc7-syzkaller-00136-g6a66fdd29ea1 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
-==================================================================
-
-Reported-by: syzbot+ebe648a84e8784763f82@syzkaller.appspotmail.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/r/20230511043748.1384166-1-martin.lau@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 1630d85a8312 ("au1200fb: fix hardcoded IRQ")
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_lru_list.c | 21 +++++++++++++--------
- kernel/bpf/bpf_lru_list.h |  7 ++-----
- 2 files changed, 15 insertions(+), 13 deletions(-)
+ drivers/video/fbdev/au1200fb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/bpf/bpf_lru_list.c b/kernel/bpf/bpf_lru_list.c
-index d99e89f113c43..3dabdd137d102 100644
---- a/kernel/bpf/bpf_lru_list.c
-+++ b/kernel/bpf/bpf_lru_list.c
-@@ -41,7 +41,12 @@ static struct list_head *local_pending_list(struct bpf_lru_locallist *loc_l)
- /* bpf_lru_node helpers */
- static bool bpf_lru_node_is_ref(const struct bpf_lru_node *node)
- {
--	return node->ref;
-+	return READ_ONCE(node->ref);
-+}
+diff --git a/drivers/video/fbdev/au1200fb.c b/drivers/video/fbdev/au1200fb.c
+index a8a0a448cdb5e..80f54111baec1 100644
+--- a/drivers/video/fbdev/au1200fb.c
++++ b/drivers/video/fbdev/au1200fb.c
+@@ -1732,6 +1732,9 @@ static int au1200fb_drv_probe(struct platform_device *dev)
+ 
+ 	/* Now hook interrupt too */
+ 	irq = platform_get_irq(dev, 0);
++	if (irq < 0)
++		return irq;
 +
-+static void bpf_lru_node_clear_ref(struct bpf_lru_node *node)
-+{
-+	WRITE_ONCE(node->ref, 0);
- }
- 
- static void bpf_lru_list_count_inc(struct bpf_lru_list *l,
-@@ -89,7 +94,7 @@ static void __bpf_lru_node_move_in(struct bpf_lru_list *l,
- 
- 	bpf_lru_list_count_inc(l, tgt_type);
- 	node->type = tgt_type;
--	node->ref = 0;
-+	bpf_lru_node_clear_ref(node);
- 	list_move(&node->list, &l->lists[tgt_type]);
- }
- 
-@@ -110,7 +115,7 @@ static void __bpf_lru_node_move(struct bpf_lru_list *l,
- 		bpf_lru_list_count_inc(l, tgt_type);
- 		node->type = tgt_type;
- 	}
--	node->ref = 0;
-+	bpf_lru_node_clear_ref(node);
- 
- 	/* If the moving node is the next_inactive_rotation candidate,
- 	 * move the next_inactive_rotation pointer also.
-@@ -353,7 +358,7 @@ static void __local_list_add_pending(struct bpf_lru *lru,
- 	*(u32 *)((void *)node + lru->hash_offset) = hash;
- 	node->cpu = cpu;
- 	node->type = BPF_LRU_LOCAL_LIST_T_PENDING;
--	node->ref = 0;
-+	bpf_lru_node_clear_ref(node);
- 	list_add(&node->list, local_pending_list(loc_l));
- }
- 
-@@ -419,7 +424,7 @@ static struct bpf_lru_node *bpf_percpu_lru_pop_free(struct bpf_lru *lru,
- 	if (!list_empty(free_list)) {
- 		node = list_first_entry(free_list, struct bpf_lru_node, list);
- 		*(u32 *)((void *)node + lru->hash_offset) = hash;
--		node->ref = 0;
-+		bpf_lru_node_clear_ref(node);
- 		__bpf_lru_node_move(l, node, BPF_LRU_LIST_T_INACTIVE);
- 	}
- 
-@@ -522,7 +527,7 @@ static void bpf_common_lru_push_free(struct bpf_lru *lru,
- 		}
- 
- 		node->type = BPF_LRU_LOCAL_LIST_T_FREE;
--		node->ref = 0;
-+		bpf_lru_node_clear_ref(node);
- 		list_move(&node->list, local_free_list(loc_l));
- 
- 		raw_spin_unlock_irqrestore(&loc_l->lock, flags);
-@@ -568,7 +573,7 @@ static void bpf_common_lru_populate(struct bpf_lru *lru, void *buf,
- 
- 		node = (struct bpf_lru_node *)(buf + node_offset);
- 		node->type = BPF_LRU_LIST_T_FREE;
--		node->ref = 0;
-+		bpf_lru_node_clear_ref(node);
- 		list_add(&node->list, &l->lists[BPF_LRU_LIST_T_FREE]);
- 		buf += elem_size;
- 	}
-@@ -594,7 +599,7 @@ static void bpf_percpu_lru_populate(struct bpf_lru *lru, void *buf,
- 		node = (struct bpf_lru_node *)(buf + node_offset);
- 		node->cpu = cpu;
- 		node->type = BPF_LRU_LIST_T_FREE;
--		node->ref = 0;
-+		bpf_lru_node_clear_ref(node);
- 		list_add(&node->list, &l->lists[BPF_LRU_LIST_T_FREE]);
- 		i++;
- 		buf += elem_size;
-diff --git a/kernel/bpf/bpf_lru_list.h b/kernel/bpf/bpf_lru_list.h
-index 6b12f06ee18c3..9c12ee453c616 100644
---- a/kernel/bpf/bpf_lru_list.h
-+++ b/kernel/bpf/bpf_lru_list.h
-@@ -63,11 +63,8 @@ struct bpf_lru {
- 
- static inline void bpf_lru_node_set_ref(struct bpf_lru_node *node)
- {
--	/* ref is an approximation on access frequency.  It does not
--	 * have to be very accurate.  Hence, no protection is used.
--	 */
--	if (!node->ref)
--		node->ref = 1;
-+	if (!READ_ONCE(node->ref))
-+		WRITE_ONCE(node->ref, 1);
- }
- 
- int bpf_lru_init(struct bpf_lru *lru, bool percpu, u32 hash_offset,
+ 	ret = request_irq(irq, au1200fb_handle_irq,
+ 			  IRQF_SHARED, "lcd", (void *)dev);
+ 	if (ret) {
 -- 
 2.39.2
 
