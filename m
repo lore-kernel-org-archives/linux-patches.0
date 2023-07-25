@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3408E1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:29:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA319C433C8;
-	Tue, 25 Jul 2023 11:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1401ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:29:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724E4C433C7;
+	Tue, 25 Jul 2023 11:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284565;
-	bh=u1AnOVF/RBvsTycPSYCOilZbzFhT5BMsFozY5aq81nk=;
+	s=korg; t=1690284567;
+	bh=QqO25ZSQEgezWIOO+DWpBt3QmruTCgxc/+2akwn3OY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RVhm535PWoGAYH8Bdc2al9IgWu17qo9eLDE7sxK+ToKVR9uDGg2LhYSWT/6YP+Vgd
-	 8VGLhYA2rLyDmsNm+o/2k7ZojI5Z3ujhpJ26V2uJq5NkQtZ5D4fB884ClgUSvG/S3T
-	 u65ynQcycAmpC10PBCa83ND/rKaLAX396d59NoPg=
+	b=qIIHE6/ji6RJ/Xff+ORcohHIKYXD7WPGEXcxbBVHGJLZnppQOw1NZOpJ84XfgX8oV
+	 G1CTJNnE0eGcemkxrMHXcS/VVxkteJJSlwBJB69rw9TSYXiZ53oDTkbKPq7b4xFOYg
+	 6EisAAtMypd+yCml7IDtRVmN2cHNyvm8WpVsoEGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
 	Lorenzo Pieralisi <lpieralisi@kernel.org>
-Subject: [PATCH 5.10 401/509] PCI: rockchip: Fix legacy IRQ generation for RK3399 PCIe endpoint core
-Date: Tue, 25 Jul 2023 12:45:40 +0200
-Message-ID: <20230725104612.107460942@linuxfoundation.org>
+Subject: [PATCH 5.10 402/509] PCI: rockchip: Use u32 variable to access 32-bit registers
+Date: Tue, 25 Jul 2023 12:45:41 +0200
+Message-ID: <20230725104612.142092462@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -37,16 +37,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
 
-commit 166e89d99dd85a856343cca51eee781b793801f2 upstream.
+commit 8962b2cb39119cbda4fc69a1f83957824f102f81 upstream.
 
-Fix legacy IRQ generation for RK3399 PCIe endpoint core according to
-the technical reference manual (TRM). Assert and deassert legacy
-interrupt (INTx) through the legacy interrupt control register
-("PCIE_CLIENT_LEGACY_INT_CTRL") instead of manually generating a PCIe
-message. The generation of the legacy interrupt was tested and validated
-with the PCIe endpoint test driver.
+Previously u16 variables were used to access 32-bit registers, this
+resulted in not all of the data being read from the registers. Also
+the left shift of more than 16-bits would result in moving data out
+of the variable. Use u32 variables to access 32-bit registers
 
-Link: https://lore.kernel.org/r/20230418074700.1083505-8-rick.wertenbroek@gmail.com
+Link: https://lore.kernel.org/r/20230418074700.1083505-10-rick.wertenbroek@gmail.com
 Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
 Tested-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
@@ -55,93 +53,58 @@ Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-rockchip-ep.c |   45 +++++++-----------------------
- drivers/pci/controller/pcie-rockchip.h    |    6 +++-
- 2 files changed, 16 insertions(+), 35 deletions(-)
+ drivers/pci/controller/pcie-rockchip-ep.c |   10 +++++-----
+ drivers/pci/controller/pcie-rockchip.h    |    1 +
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
 --- a/drivers/pci/controller/pcie-rockchip-ep.c
 +++ b/drivers/pci/controller/pcie-rockchip-ep.c
-@@ -347,48 +347,25 @@ static int rockchip_pcie_ep_get_msi(stru
- }
+@@ -314,15 +314,15 @@ static int rockchip_pcie_ep_set_msi(stru
+ {
+ 	struct rockchip_pcie_ep *ep = epc_get_drvdata(epc);
+ 	struct rockchip_pcie *rockchip = &ep->rockchip;
+-	u16 flags;
++	u32 flags;
  
- static void rockchip_pcie_ep_assert_intx(struct rockchip_pcie_ep *ep, u8 fn,
--					 u8 intx, bool is_asserted)
-+					 u8 intx, bool do_assert)
+ 	flags = rockchip_pcie_read(rockchip,
+ 				   ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
+ 				   ROCKCHIP_PCIE_EP_MSI_CTRL_REG);
+ 	flags &= ~ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_MASK;
+ 	flags |=
+-	   ((multi_msg_cap << 1) <<  ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_OFFSET) |
+-	   PCI_MSI_FLAGS_64BIT;
++	   (multi_msg_cap << ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_OFFSET) |
++	   (PCI_MSI_FLAGS_64BIT << ROCKCHIP_PCIE_EP_MSI_FLAGS_OFFSET);
+ 	flags &= ~ROCKCHIP_PCIE_EP_MSI_CTRL_MASK_MSI_CAP;
+ 	rockchip_pcie_write(rockchip, flags,
+ 			    ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
+@@ -334,7 +334,7 @@ static int rockchip_pcie_ep_get_msi(stru
+ {
+ 	struct rockchip_pcie_ep *ep = epc_get_drvdata(epc);
+ 	struct rockchip_pcie *rockchip = &ep->rockchip;
+-	u16 flags;
++	u32 flags;
+ 
+ 	flags = rockchip_pcie_read(rockchip,
+ 				   ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
+@@ -395,7 +395,7 @@ static int rockchip_pcie_ep_send_msi_irq
+ 					 u8 interrupt_num)
  {
  	struct rockchip_pcie *rockchip = &ep->rockchip;
--	u32 r = ep->max_regions - 1;
--	u32 offset;
--	u32 status;
--	u8 msg_code;
--
--	if (unlikely(ep->irq_pci_addr != ROCKCHIP_PCIE_EP_PCI_LEGACY_IRQ_ADDR ||
--		     ep->irq_pci_fn != fn)) {
--		rockchip_pcie_prog_ep_ob_atu(rockchip, fn, r,
--					     AXI_WRAPPER_NOR_MSG,
--					     ep->irq_phys_addr, 0, 0);
--		ep->irq_pci_addr = ROCKCHIP_PCIE_EP_PCI_LEGACY_IRQ_ADDR;
--		ep->irq_pci_fn = fn;
--	}
+-	u16 flags, mme, data, data_mask;
++	u32 flags, mme, data, data_mask;
+ 	u8 msi_count;
+ 	u64 pci_addr, pci_addr_mask = 0xff;
  
- 	intx &= 3;
--	if (is_asserted) {
-+
-+	if (do_assert) {
- 		ep->irq_pending |= BIT(intx);
--		msg_code = ROCKCHIP_PCIE_MSG_CODE_ASSERT_INTA + intx;
-+		rockchip_pcie_write(rockchip,
-+				    PCIE_CLIENT_INT_IN_ASSERT |
-+				    PCIE_CLIENT_INT_PEND_ST_PEND,
-+				    PCIE_CLIENT_LEGACY_INT_CTRL);
- 	} else {
- 		ep->irq_pending &= ~BIT(intx);
--		msg_code = ROCKCHIP_PCIE_MSG_CODE_DEASSERT_INTA + intx;
-+		rockchip_pcie_write(rockchip,
-+				    PCIE_CLIENT_INT_IN_DEASSERT |
-+				    PCIE_CLIENT_INT_PEND_ST_NORMAL,
-+				    PCIE_CLIENT_LEGACY_INT_CTRL);
- 	}
--
--	status = rockchip_pcie_read(rockchip,
--				    ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
--				    ROCKCHIP_PCIE_EP_CMD_STATUS);
--	status &= ROCKCHIP_PCIE_EP_CMD_STATUS_IS;
--
--	if ((status != 0) ^ (ep->irq_pending != 0)) {
--		status ^= ROCKCHIP_PCIE_EP_CMD_STATUS_IS;
--		rockchip_pcie_write(rockchip, status,
--				    ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
--				    ROCKCHIP_PCIE_EP_CMD_STATUS);
--	}
--
--	offset =
--	   ROCKCHIP_PCIE_MSG_ROUTING(ROCKCHIP_PCIE_MSG_ROUTING_LOCAL_INTX) |
--	   ROCKCHIP_PCIE_MSG_CODE(msg_code) | ROCKCHIP_PCIE_MSG_NO_DATA;
--	writel(0, ep->irq_cpu_addr + offset);
- }
- 
- static int rockchip_pcie_ep_send_legacy_irq(struct rockchip_pcie_ep *ep, u8 fn,
 --- a/drivers/pci/controller/pcie-rockchip.h
 +++ b/drivers/pci/controller/pcie-rockchip.h
-@@ -37,6 +37,11 @@
- #define   PCIE_CLIENT_MODE_EP            HIWORD_UPDATE(0x0040, 0)
- #define   PCIE_CLIENT_GEN_SEL_1		  HIWORD_UPDATE(0x0080, 0)
- #define   PCIE_CLIENT_GEN_SEL_2		  HIWORD_UPDATE_BIT(0x0080)
-+#define PCIE_CLIENT_LEGACY_INT_CTRL	(PCIE_CLIENT_BASE + 0x0c)
-+#define   PCIE_CLIENT_INT_IN_ASSERT		HIWORD_UPDATE_BIT(0x0002)
-+#define   PCIE_CLIENT_INT_IN_DEASSERT		HIWORD_UPDATE(0x0002, 0)
-+#define   PCIE_CLIENT_INT_PEND_ST_PEND		HIWORD_UPDATE_BIT(0x0001)
-+#define   PCIE_CLIENT_INT_PEND_ST_NORMAL	HIWORD_UPDATE(0x0001, 0)
- #define PCIE_CLIENT_SIDE_BAND_STATUS	(PCIE_CLIENT_BASE + 0x20)
- #define   PCIE_CLIENT_PHY_ST			BIT(12)
- #define PCIE_CLIENT_DEBUG_OUT_0		(PCIE_CLIENT_BASE + 0x3c)
-@@ -234,7 +239,6 @@
- #define   ROCKCHIP_PCIE_EP_MSI_CTRL_ME				BIT(16)
- #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MASK_MSI_CAP	BIT(24)
- #define ROCKCHIP_PCIE_EP_DUMMY_IRQ_ADDR				0x1
--#define ROCKCHIP_PCIE_EP_PCI_LEGACY_IRQ_ADDR		0x3
- #define ROCKCHIP_PCIE_EP_FUNC_BASE(fn)	(((fn) << 12) & GENMASK(19, 12))
- #define ROCKCHIP_PCIE_AT_IB_EP_FUNC_BAR_ADDR0(fn, bar) \
- 	(PCIE_RC_RP_ATS_BASE + 0x0840 + (fn) * 0x0040 + (bar) * 0x0008)
+@@ -232,6 +232,7 @@
+ #define ROCKCHIP_PCIE_EP_CMD_STATUS			0x4
+ #define   ROCKCHIP_PCIE_EP_CMD_STATUS_IS		BIT(19)
+ #define ROCKCHIP_PCIE_EP_MSI_CTRL_REG			0x90
++#define   ROCKCHIP_PCIE_EP_MSI_FLAGS_OFFSET		16
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_OFFSET		17
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_MASK		GENMASK(19, 17)
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MME_OFFSET		20
 
 
