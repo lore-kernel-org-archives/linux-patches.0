@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2E215AC5
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:58:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5055AC433C7;
-	Tue, 25 Jul 2023 10:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F4915AC5
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 10:58:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19641C433C7;
+	Tue, 25 Jul 2023 10:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690282695;
-	bh=RTZJyYl0kZtVhirUa6qyZyNNRl63+lbtRe8XQTQXLNs=;
+	s=korg; t=1690282698;
+	bh=pHqVaIRZYYRT6M61Ebs6I3DaScTo5Ys/ScJc5Kba/GY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SkF+dIf5KudiH6fyygLLEbwsMLrLjVoaF0cXnO7E7Iy6iaJpDtVgb1EaaRHd2ZW7i
-	 5s5LeOBdxHg1xIuV+sj5KxC0TVhjLzRFLdvTupNI8A8Cht7XZ3aYAW3psSpKllxi+J
-	 AW6LrkjqBp83py0I32Lv+01X0UtzbMuqX8gQ72Hw=
+	b=XWENA1o3+GHikq/EF4j26oC420LriEvMhNNhoR+CaZgNCdwlNbaU/1KsORZgVnv4S
+	 uOV584cEeEuoGwWzTLCloIqf2ArIDv4U+DxwzhSIbNt0t5ksIJps7bVL6OBXavrzUo
+	 qkf7bpDxDk1haAgTdG9qbpsFEp/xFSq+4sCGpebQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Nestler <raphael.nestler@gmail.com>,
-	Andrea Righi <andrea.righi@canonical.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 6.4 220/227] kbuild: rust: avoid creating temporary files
-Date: Tue, 25 Jul 2023 12:46:27 +0200
-Message-ID: <20230725104523.822012845@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 193/227] llc: Dont drop packet from non-root netns.
+Date: Tue, 25 Jul 2023 12:46:00 +0200
+Message-ID: <20230725104522.803845506@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104514.821564989@linuxfoundation.org>
 References: <20230725104514.821564989@linuxfoundation.org>
@@ -37,74 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit df01b7cfcef08bf3fdcac2909d0e1910781d6bfd upstream.
+[ Upstream commit 6631463b6e6673916d2481f692938f393148aa82 ]
 
-`rustc` outputs by default the temporary files (i.e. the ones saved
-by `-Csave-temps`, such as `*.rcgu*` files) in the current working
-directory when `-o` and `--out-dir` are not given (even if
-`--emit=x=path` is given, i.e. it does not use those for temporaries).
+Now these upper layer protocol handlers can be called from llc_rcv()
+as sap->rcv_func(), which is registered by llc_sap_open().
 
-Since out-of-tree modules are compiled from the `linux` tree,
-`rustc` then tries to create them there, which may not be accessible.
+  * function which is passed to register_8022_client()
+    -> no in-kernel user calls register_8022_client().
 
-Thus pass `--out-dir` explicitly, even if it is just for the temporary
-files.
+  * snap_rcv()
+    `- proto->rcvfunc() : registered by register_snap_client()
+       -> aarp_rcv() and atalk_rcv() drop packets from non-root netns
 
-Similarly, do so for Rust host programs too.
+  * stp_pdu_rcv()
+    `- garp_protos[]->rcv() : registered by stp_proto_register()
+       -> garp_pdu_rcv() and br_stp_rcv() are netns-aware
 
-Reported-by: Raphael Nestler <raphael.nestler@gmail.com>
-Closes: https://github.com/Rust-for-Linux/linux/issues/1015
-Reported-by: Andrea Righi <andrea.righi@canonical.com>
-Tested-by: Raphael Nestler <raphael.nestler@gmail.com> # non-hostprogs
-Tested-by: Andrea Righi <andrea.righi@canonical.com> # non-hostprogs
-Fixes: 295d8398c67e ("kbuild: specify output names separately for each emission type from rustc")
-Cc: stable@vger.kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Tested-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+So, we can safely remove the netns restriction in llc_rcv().
+
+Fixes: e730c15519d0 ("[NET]: Make packet reception network namespace safe")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/Makefile.build |    5 ++++-
- scripts/Makefile.host  |    6 +++++-
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ net/llc/llc_input.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/scripts/Makefile.build
-+++ b/scripts/Makefile.build
-@@ -279,6 +279,9 @@ $(obj)/%.lst: $(src)/%.c FORCE
+diff --git a/net/llc/llc_input.c b/net/llc/llc_input.c
+index c309b72a58779..7cac441862e21 100644
+--- a/net/llc/llc_input.c
++++ b/net/llc/llc_input.c
+@@ -163,9 +163,6 @@ int llc_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	void (*sta_handler)(struct sk_buff *skb);
+ 	void (*sap_handler)(struct llc_sap *sap, struct sk_buff *skb);
  
- rust_allowed_features := core_ffi_c,explicit_generic_args_with_impl_trait,new_uninit,pin_macro
- 
-+# `--out-dir` is required to avoid temporaries being created by `rustc` in the
-+# current working directory, which may be not accessible in the out-of-tree
-+# modules case.
- rust_common_cmd = \
- 	RUST_MODFILE=$(modfile) $(RUSTC_OR_CLIPPY) $(rust_flags) \
- 	-Zallow-features=$(rust_allowed_features) \
-@@ -287,7 +290,7 @@ rust_common_cmd = \
- 	--extern alloc --extern kernel \
- 	--crate-type rlib -L $(objtree)/rust/ \
- 	--crate-name $(basename $(notdir $@)) \
--	--emit=dep-info=$(depfile)
-+	--out-dir $(dir $@) --emit=dep-info=$(depfile)
- 
- # `--emit=obj`, `--emit=asm` and `--emit=llvm-ir` imply a single codegen unit
- # will be used. We explicitly request `-Ccodegen-units=1` in any case, and
---- a/scripts/Makefile.host
-+++ b/scripts/Makefile.host
-@@ -86,7 +86,11 @@ hostc_flags    = -Wp,-MMD,$(depfile) \
- hostcxx_flags  = -Wp,-MMD,$(depfile) \
-                  $(KBUILD_HOSTCXXFLAGS) $(HOST_EXTRACXXFLAGS) \
-                  $(HOSTCXXFLAGS_$(target-stem).o)
--hostrust_flags = --emit=dep-info=$(depfile) \
-+
-+# `--out-dir` is required to avoid temporaries being created by `rustc` in the
-+# current working directory, which may be not accessible in the out-of-tree
-+# modules case.
-+hostrust_flags = --out-dir $(dir $@) --emit=dep-info=$(depfile) \
-                  $(KBUILD_HOSTRUSTFLAGS) $(HOST_EXTRARUSTFLAGS) \
-                  $(HOSTRUSTFLAGS_$(target-stem))
- 
+-	if (!net_eq(dev_net(dev), &init_net))
+-		goto drop;
+-
+ 	/*
+ 	 * When the interface is in promisc. mode, drop all the crap that it
+ 	 * receives, do not try to analyse it.
+-- 
+2.39.2
+
 
 
