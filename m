@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4931ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:18:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9F9C433C7;
-	Tue, 25 Jul 2023 11:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321CB1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:18:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F89C433C9;
+	Tue, 25 Jul 2023 11:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283891;
-	bh=p5qR1agZH8OWJrXCTu6rxtoakqnmOlONJ1x3nB+ypf0=;
+	s=korg; t=1690283897;
+	bh=dE5lRReVN9ztAOMX7+mTZTC++utQtG4cHnBVFZjdDKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VSUfdM4JUWV7IKgklDKC2KRDwmpD4NpwEqm/oZI+rxKJYTXbmi7ATtJFVj2qpb1ve
-	 5tg6G0EVU1hH+zg2OXn6Y8eSazo5QQIlJK2zMhxBMKWBAupNaV4EAC4zx5vL9dG84s
-	 dM86b8OKaLf8d7EpvawnOcRZUOpvTGpDCWyJM4ak=
+	b=vSAsH7fw9oH+ZQqMhXGJ/3Zab9zP+x9DRfjdrcFRh68SatvVHh7szSFzGVjLEPD8R
+	 hPsDDNfMXeS8TWkeEPr7PmHN9jLLb4ykd5KI2uGoeZPPEwBMyEJNWLIsZzEzN2g52w
+	 rOMak14Zd1vmjZwGZrPw9vHHJzJtkJDA03ifh9ME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 160/509] ALSA: ac97: Fix possible NULL dereference in snd_ac97_mixer
-Date: Tue, 25 Jul 2023 12:41:39 +0200
-Message-ID: <20230725104601.042906321@linuxfoundation.org>
+Subject: [PATCH 5.10 162/509] drm/msm/dp: Free resources after unregistering them
+Date: Tue, 25 Jul 2023 12:41:41 +0200
+Message-ID: <20230725104601.142404211@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,40 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Su Hui <suhui@nfschina.com>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-[ Upstream commit 79597c8bf64ca99eab385115743131d260339da5 ]
+[ Upstream commit fa0048a4b1fa7a50c8b0e514f5b428abdf69a6f8 ]
 
-smatch error:
-sound/pci/ac97/ac97_codec.c:2354 snd_ac97_mixer() error:
-we previously assumed 'rac97' could be null (see line 2072)
+The DP component's unbind operation walks through the submodules to
+unregister and clean things up. But if the unbind happens because the DP
+controller itself is being removed, all the memory for those submodules
+has just been freed.
 
-remove redundant assignment, return error if rac97 is NULL.
+Change the order of these operations to avoid the many use-after-free
+that otherwise happens in this code path.
 
-Fixes: da3cec35dd3c ("ALSA: Kill snd_assert() in sound/pci/*")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Link: https://lore.kernel.org/r/20230615021732.1972194-1-suhui@nfschina.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/542166/
+Link: https://lore.kernel.org/r/20230612220259.1884381-1-quic_bjorande@quicinc.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ac97/ac97_codec.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/ac97/ac97_codec.c b/sound/pci/ac97/ac97_codec.c
-index cd66632bf1c37..e18572eae5e01 100644
---- a/sound/pci/ac97/ac97_codec.c
-+++ b/sound/pci/ac97/ac97_codec.c
-@@ -2007,8 +2007,8 @@ int snd_ac97_mixer(struct snd_ac97_bus *bus, struct snd_ac97_template *template,
- 		.dev_disconnect =	snd_ac97_dev_disconnect,
- 	};
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 0bcccf422192c..4da8cea76a115 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -1267,9 +1267,9 @@ static int dp_display_remove(struct platform_device *pdev)
+ 	dp = container_of(g_dp_display,
+ 			struct dp_display_private, dp_display);
  
--	if (rac97)
--		*rac97 = NULL;
-+	if (!rac97)
-+		return -EINVAL;
- 	if (snd_BUG_ON(!bus || !template))
- 		return -EINVAL;
- 	if (snd_BUG_ON(template->num >= 4))
++	component_del(&pdev->dev, &dp_display_comp_ops);
+ 	dp_display_deinit_sub_modules(dp);
+ 
+-	component_del(&pdev->dev, &dp_display_comp_ops);
+ 	platform_set_drvdata(pdev, NULL);
+ 
+ 	return 0;
 -- 
 2.39.2
 
