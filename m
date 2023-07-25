@@ -1,97 +1,234 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B621F173;
-	Tue, 25 Jul 2023 15:38:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A70EC433C8;
-	Tue, 25 Jul 2023 15:38:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFEFF21D5D
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 15:54:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BDCAC433C8;
+	Tue, 25 Jul 2023 15:54:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1690299484;
-	bh=bDFdxCN1eadFZ+WEQ9cgpt1sE/nSfwzieXCH199zY6I=;
-	h=From:Date:Subject:To:Cc:From;
-	b=IvFwAQqbuEMRiV2OOwf9mHEaokGwpwNCCMqzzQQVigPyS5F5+8540rbqHI4xBCly6
-	 cdY+4LjXO1AS7SsnLHlEoaSPURRsBBbXyfGJtp4U7dkey43vBt+60VXW3chpB1cf6B
-	 JNwfYvFtyoJlwmc3W8Q58Hwig2B1u4MTTSM/dkLuV5VWUQpHfs578Jc6O066dI5gVT
-	 J7djlfyQ17GTnFsND7rpWOnxybiZ3cIMZoJ+94/HqIx9sXL6sDgepQeyvwnXxtmxSi
-	 CT7lgkrLUjqdBFIHnaw65YumvfL2ltYpv6rSDzm9kLxTrFp1xqYLTR9N4m5Wl1QEs5
-	 n7ZsyjVwHRb9A==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 25 Jul 2023 08:37:56 -0700
-Subject: [PATCH] Input: mcs-touchkey - Fix uninitialized use of error in
- mcs_touchkey_probe()
+	s=k20201202; t=1690300480;
+	bh=Tz60Ac0FER1CvTprz/6D26g4/Q0yzf0YB0v1K+OBh60=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WeOhF5c6isuxxtBsASpJPFQcjkCIppflXFFX/hq8ddOj3/xYd+LuWZ57o8a5H0qOS
+	 jmCH1VKiyEE34V7fClbvv425gb/ve4u9tzNMERuutZ/by0YfUceZKF6VSNs/vD9v0Y
+	 NH6S8CO00AUt5wwb7pGI+BnLkoHek+tp0MrmERt0qGlwJx2nrlLXMXzOx41f77SWGB
+	 T6jwLLSBaaoR4J6oI0wVQJYgVCt0rX66+ZIvyfmPg2aWUGixdXrk6/gwoHP3YzvxcX
+	 CXkCS1u8jefdbPomf4qWQAsu13eztVeEQjB6n9a5IW1OidxybeDHPrVOZc22aaPRS/
+	 ivUfCkZaGhY8w==
+Date: Tue, 25 Jul 2023 08:54:39 -0700
+From: "Darrick J. Wong" <djwong@kernel.org>
+To: Zorro Lang <zlang@redhat.com>
+Cc: Luis Chamberlain <mcgrof@kernel.org>, fstests@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH] fstests: add helper to canonicalize devices used to
+ enable persistent disks
+Message-ID: <20230725155439.GF11340@frogsfrogsfrogs>
+References: <20230720061727.2363548-1-mcgrof@kernel.org>
+ <20230725081307.xydlwjdl4lq3ts3m@zlang-mailbox>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230725-mcs_touchkey-fix-wuninitialized-v1-1-615db39af51c@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAFPsv2QC/x2NXQqDMBAGryL73AVNW0q8ipSyxI1+VKMk2j/x7
- g0+DgwzGyWN0ER1sVHUFxKmkKE6FeR6CZ0y2sxkSnMub+bKo0uPZVpd/9Qve3z4vQYELJABP23
- 54r1aMWJFLOXKHDVbx6G57/sfRpj52nEAAAA=
-To: dmitry.torokhov@gmail.com
-Cc: ndesaulniers@google.com, trix@redhat.com, frank.li@vivo.com, 
- linux-input@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2324; i=nathan@kernel.org;
- h=from:subject:message-id; bh=bDFdxCN1eadFZ+WEQ9cgpt1sE/nSfwzieXCH199zY6I=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDCn738SE+K/TjTLdfS323fwPvezxSzY1/fkVojtvTs2KK
- Z9WTYzM6ShlYRDjYJAVU2Spfqx63NBwzlnGG6cmwcxhZQIZwsDFKQATWejP8Fd+6fRwNgNn6xZl
- ZmeBJ29/xWTeW9o1pfXl28PBHzI8t75kZOg3eLP59t15Bybkivez/GhaoHqaIfRbZP2nBz/C9L0
- uX+IEAA==
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230725081307.xydlwjdl4lq3ts3m@zlang-mailbox>
 
-Clang warns (or errors with CONFIG_WERROR=y):
+On Tue, Jul 25, 2023 at 04:13:07PM +0800, Zorro Lang wrote:
+> On Wed, Jul 19, 2023 at 11:17:27PM -0700, Luis Chamberlain wrote:
+> > The filesystem configuration file does not allow you to use symlinks to
+> > devices given the existing sanity checks verify that the target end
+> > device matches the source.
+> > 
+> > Using a symlink is desirable if you want to enable persistent tests
+> > across reboots. For example you may want to use /dev/disk/by-id/nvme-eui.*
+> > so to ensure that the same drives are used even after reboot. This
+> > is very useful if you are testing for example with a virtualized
+> > environment and are using PCIe passthrough with other qemu NVMe drives
+> > with one or many NVMe drives.
+> > 
+> > To enable support just add a helper to canonicalize devices prior to
+> > running the tests.
+> > 
+> > This allows one test runner, kdevops, which I just extended with
+> > support to use real NVMe drives. The drives it uses for the filesystem
+> > configuration optionally is with NVMe eui symlinks so to allow
+> > the same drives to be used over reboots.
+> > 
+> > Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> > ---
+> 
+> Hi Luis,
+> 
+> Hmmm... this's a default behavior change for fstests, although I'm not sure
+> what will be affect. I'm wondering if we should do this in fstests. I don't
+> want to tell the users that the device names they give to fstests will always
+> be truned to real names from now on.
+> 
+> Generally the users of fstests provide the device names, so the users
+> might need to take care of the name is "/dev/mapper/testvg-testdev"
+> or "/dev/dm-4". The users can deal with the device names when their
+> script prepare to run fstests.
+> 
+> If more developers prefer this change, I'd like to make it to be
+> optional by an option of ./check at least, not always turn devname
+> to realpath. Welcome review points from others.
 
-  drivers/input/keyboard/mcs_touchkey.c:149:49: error: variable 'error' is uninitialized when used here [-Werror,-Wuninitialized]
-    149 |                 dev_err(&client->dev, "i2c read error[%d]\n", error);
-        |                                                               ^~~~~
-  include/linux/dev_printk.h:144:65: note: expanded from macro 'dev_err'
-    144 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
-        |                                                                        ^~~~~~~~~~~
-  include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
-    110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
-        |                                     ^~~~~~~~~~~
-  drivers/input/keyboard/mcs_touchkey.c:110:11: note: initialize the variable 'error' to silence this warning
-    110 |         int error;
-        |                  ^
-        |                   = 0
-  1 error generated.
+Hmm.  SCRATCH_DEV=/dev/testvg/testlv works right now, it'd be sort of
+annoying to have "/dev/dm-4" get written into the report and then you've
+lost the correlation to whatever the user passed in.
 
-A refactoring updated the error handling in this block but did not
-update the dev_err() call to use fw_ver instead of error. Do so now to
-fix the warning and avoid printing uninitialized memory.
+Oh wait.  My giant mound of ./check wrapper script already does that
+canonicalization and has for years.
 
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1893
-Fixes: e175eae16c1b ("Input: mcs-touchkey - convert to use devm_* api")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/input/keyboard/mcs_touchkey.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Ok.  Sounds good to me then. :P
 
-diff --git a/drivers/input/keyboard/mcs_touchkey.c b/drivers/input/keyboard/mcs_touchkey.c
-index f25e2b20e271..2410f676c7f9 100644
---- a/drivers/input/keyboard/mcs_touchkey.c
-+++ b/drivers/input/keyboard/mcs_touchkey.c
-@@ -146,7 +146,7 @@ static int mcs_touchkey_probe(struct i2c_client *client)
- 
- 	fw_ver = i2c_smbus_read_byte_data(client, fw_reg);
- 	if (fw_ver < 0) {
--		dev_err(&client->dev, "i2c read error[%d]\n", error);
-+		dev_err(&client->dev, "i2c read error[%d]\n", fw_ver);
- 		return fw_ver;
- 	}
- 	dev_info(&client->dev, "Firmware version: %d\n", fw_ver);
+> >  check         |  1 +
+> >  common/config | 44 +++++++++++++++++++++++++++++++++++++++++++-
+> >  2 files changed, 44 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/check b/check
+> > index 89e7e7bf20df..d063d3f498fd 100755
+> > --- a/check
+> > +++ b/check
+> > @@ -734,6 +734,7 @@ function run_section()
+> >  	fi
+> >  
+> >  	get_next_config $section
+> > +	_canonicalize_devices
+> >  
+> >  	mkdir -p $RESULT_BASE
+> >  	if [ ! -d $RESULT_BASE ]; then
+> > diff --git a/common/config b/common/config
+> > index 936ac225f4b1..f5a3815a0435 100644
+> > --- a/common/config
+> > +++ b/common/config
+> > @@ -655,6 +655,47 @@ _canonicalize_mountpoint()
+> >  	echo "$parent/$base"
+> >  }
+> >  
+> > +# Enables usage of /dev/disk/by-id/ symlinks to persist target devices
+> > +# over reboots
+> > +_canonicalize_devices()
+> > +{
+> > +	if [ ! -z "$TEST_DEV" ] && [ -L $TEST_DEV ]; then
+> 
+> I think [ -L "$TEST_DEV" ] is enough.
 
----
-base-commit: 447c09544275663e1082f796b26c7959915c922a
-change-id: 20230725-mcs_touchkey-fix-wuninitialized-4ffe9a2a9aa9
+I don't think it is.
 
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
+$ unset moo
+$ [ -L $moo ]
+$ echo $?
+0
+$ realpath -e $moo
+realpath: missing operand
+Try 'realpath --help' for more information.
 
+> > +		TEST_DEV=$(realpath -e $TEST_DEV)
+> 
+> Anyone knows the difference of realpatch and readlink?
+
+readlink doesn't follow nested symlinks; realpath does:
+
+$ touch /tmp/a
+$ ln -s /tmp/a /tmp/b
+$ ln -s /tmp/b /tmp/c
+$ readlink /tmp/c
+/tmp/b
+$ realpath /tmp/c
+/tmp/a
+$ readlink -m /tmp/c
+/tmp/a
+
+> > +	fi
+> > +
+> > +	if [ ! -z "$SCRATCH_DEV" ] && [ -L $SCRATCH_DEV ]; then
+> > +		SCRATCH_DEV=$(realpath -e $SCRATCH_DEV)
+
+Extra question: Shouldn't we be putting theis ^^^ variables in quotes?
+
+Supposing someone starts passing in
+SCRATCH_DEV=/dev/disk/by-label/har har"
+
+This expression will barf everywhere:
+
+$ SCRATCH_DEV=$(realpath -e $SCRATCH_DEV)
+realpath: /dev/disk/by-label/har: No such file or directory
+realpath: har: No such file or directory
+
+Due to the lack of quoting on its way to turning that into /dev/sda3.
+Granted fstests has historically required no spaces in anything, but
+still, it's bad hygiene.
+
+[writing anything in bash is bad hygiene, but for the sweet sweet pipe
+goodness]
+
+> > +	fi
+> > +
+> > +	if [ ! -z "$TEST_LOGDEV" ] && [ -L $TEST_LOGDEV ]; then
+> > +		TEST_LOGDEV=$(realpath -e $TEST_LOGDEV)
+> > +	fi
+> > +
+> > +	if [ ! -z "$TEST_RTDEV" ] && [ -L $TEST_RTDEV ]; then
+> > +		TEST_RTDEV=$(realpath -e $TEST_RTDEV)
+> > +	fi
+> > +
+> > +	if [ ! -z "$SCRATCH_RTDEV" ] && [ -L $SCRATCH_RTDEV ]; then
+> > +		SCRATCH_RTDEV=$(realpath -e $SCRATCH_RTDEV)
+> > +	fi
+> > +
+> > +	if [ ! -z "$LOGWRITES_DEV" ] && [ -L $LOGWRITES_DEV ]; then
+> > +		LOGWRITES_DEV=$(realpath -e $LOGWRITES_DEV)
+> > +	fi
+> > +
+> > +	if [ ! -z "$SCRATCH_DEV_POOL" ]; then
+> > +		NEW_SCRATCH_POOL=""
+> > +		for i in $SCRATCH_DEV_POOL; do
+> > +			if [ -L $i ]; then
+> > +				NEW_SCRATCH_POOL="$NEW_SCRATCH_POOL $(realpath -e $i)"
+> > +			else
+> > +				NEW_SCRATCH_POOL="$NEW_SCRATCH_POOL $i)"
+>                                                                      ^^^
+> 
+> What's this half ")" for ?
+
+Some kind of typo, I assume...
+
+--D
+
+> 
+> Thanks,
+> Zorro
+> 
+> 
+> > +			fi
+> > +		done
+> > +		SCRATCH_DEV_POOL="$NEW_SCRATCH_POOL"
+> > +	fi
+> > +}
+> > +
+> >  # On check -overlay, for the non multi section config case, this
+> >  # function is called on every test, before init_rc().
+> >  # When SCRATCH/TEST_* vars are defined in config file, config file
+> > @@ -785,7 +826,6 @@ get_next_config() {
+> >  	fi
+> >  
+> >  	parse_config_section $1
+> > -
+> >  	if [ ! -z "$OLD_FSTYP" ] && [ $OLD_FSTYP != $FSTYP ]; then
+> >  		[ -z "$MOUNT_OPTIONS" ] && _mount_opts
+> >  		[ -z "$TEST_FS_MOUNT_OPTS" ] && _test_mount_opts
+> > @@ -901,5 +941,7 @@ else
+> >  	fi
+> >  fi
+> >  
+> > +_canonicalize_devices
+> > +
+> >  # make sure this script returns success
+> >  /bin/true
+> > -- 
+> > 2.39.2
+> > 
+> 
