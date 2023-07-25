@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1795C1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:13:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FFEFC433C8;
-	Tue, 25 Jul 2023 11:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C582A1ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:13:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C95C433C8;
+	Tue, 25 Jul 2023 11:13:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283609;
-	bh=cwVomBMHQqKFP9C/ArD09XLryqNUQT/tVt3FirnaOB4=;
+	s=korg; t=1690283612;
+	bh=SE+iWFJUY5CQmpA2iG//KOdabp5zcuUfR+g2dAx5U4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vr6EKRpWo8zajRENse4myqMCZXYo/iI5i+qXKVd+tzKTl/tErrJ+4NTqUqATpiRY/
-	 UWnNu9z+wzpAMui/YClZna72nvDwISnIxjeoKCfiMGugytIK8CmSBVq8Et8qa/z1//
-	 Or34YHqXZnqjFjr6MSB92isVVC85dRBDoQ+srs+s=
+	b=vwHNnLedYax1Fd002MO88SPnDJsFVVsAuvI0UFIBKFvv/XpuuygvDIxZ5GG5VRAri
+	 tsn6qlxfLWkqJkgkOQ/P3PqdwgHTA+ZwWMFNFCDGGp5ENu1L0V4EylyjTwOK0C1RbJ
+	 9MRRDEkPrXsulWMwZFz2InViR/rBHqlczhLfom9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Maxime Ripard <maxime@cerno.tech>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	"Jiangong.Han" <jiangong.han@windriver.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 030/509] thermal/drivers/sun8i: Fix some error handling paths in sun8i_ths_probe()
-Date: Tue, 25 Jul 2023 12:39:29 +0200
-Message-ID: <20230725104555.028006936@linuxfoundation.org>
+Subject: [PATCH 5.10 031/509] rcuscale: Console output claims too few grace periods
+Date: Tue, 25 Jul 2023 12:39:30 +0200
+Message-ID: <20230725104555.076993817@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,141 +35,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Jiangong.Han <jiangong.han@windriver.com>
 
-[ Upstream commit 89382022b370dfd34eaae9c863baa123fcd4d132 ]
+[ Upstream commit 811192c5f24bfd7246ce9ce06f668d8c408bf39b ]
 
-Should an error occur after calling sun8i_ths_resource_init() in the probe
-function, some resources need to be released, as already done in the
-.remove() function.
+The rcuscale console output claims N grace periods, numbered from zero
+to N, which means that there were really N+1 grace periods.  The root
+cause of this bug is that rcu_scale_writer() stores the number of the
+last grace period (numbered from zero) into writer_n_durations[me]
+instead of the number of grace periods.  This commit therefore assigns
+the actual number of grace periods to writer_n_durations[me], and also
+makes the corresponding adjustment to the loop outputting per-grace-period
+measurements.
 
-Switch to the devm_clk_get_enabled() helper and add a new devm_action to
-turn sun8i_ths_resource_init() into a fully managed function.
+Sample of old console output:
+    rcu-scale: writer 0 gps: 133
+    ......
+    rcu-scale:    0 writer-duration:     0 44003961
+    rcu-scale:    0 writer-duration:     1 32003582
+    ......
+    rcu-scale:    0 writer-duration:   132 28004391
+    rcu-scale:    0 writer-duration:   133 27996410
 
-Move the place where reset_control_deassert() is called so that the
-recommended order of reset release/clock enable steps is kept.
-A64 manual states that:
+Sample of new console output:
+    rcu-scale: writer 0 gps: 134
+    ......
+    rcu-scale:    0 writer-duration:     0 44003961
+    rcu-scale:    0 writer-duration:     1 32003582
+    ......
+    rcu-scale:    0 writer-duration:   132 28004391
+    rcu-scale:    0 writer-duration:   133 27996410
 
-	3.3.6.4. Gating and reset
-
-	Make sure that the reset signal has been released before the release of
-	module clock gating;
-
-This fixes the issue and removes some LoC at the same time.
-
-Fixes: dccc5c3b6f30 ("thermal/drivers/sun8i: Add thermal driver for H6/H5/H3/A64/A83T/R40")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Acked-by: Maxime Ripard <maxime@cerno.tech>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/a8ae84bd2dc4b55fe428f8e20f31438bf8bb6762.1684089931.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Jiangong.Han <jiangong.han@windriver.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Stable-dep-of: 23fc8df26dea ("rcu/rcuscale: Stop kfree_scale_thread thread(s) after unloading rcuscale")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/sun8i_thermal.c | 55 +++++++++++----------------------
- 1 file changed, 18 insertions(+), 37 deletions(-)
+ kernel/rcu/rcuscale.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/sun8i_thermal.c b/drivers/thermal/sun8i_thermal.c
-index f8b13071a6f42..e053b06280172 100644
---- a/drivers/thermal/sun8i_thermal.c
-+++ b/drivers/thermal/sun8i_thermal.c
-@@ -318,6 +318,11 @@ static int sun8i_ths_calibrate(struct ths_device *tmdev)
- 	return ret;
- }
- 
-+static void sun8i_ths_reset_control_assert(void *data)
-+{
-+	reset_control_assert(data);
-+}
-+
- static int sun8i_ths_resource_init(struct ths_device *tmdev)
- {
- 	struct device *dev = tmdev->dev;
-@@ -338,47 +343,35 @@ static int sun8i_ths_resource_init(struct ths_device *tmdev)
- 		if (IS_ERR(tmdev->reset))
- 			return PTR_ERR(tmdev->reset);
- 
--		tmdev->bus_clk = devm_clk_get(&pdev->dev, "bus");
-+		ret = reset_control_deassert(tmdev->reset);
-+		if (ret)
-+			return ret;
-+
-+		ret = devm_add_action_or_reset(dev, sun8i_ths_reset_control_assert,
-+					       tmdev->reset);
-+		if (ret)
-+			return ret;
-+
-+		tmdev->bus_clk = devm_clk_get_enabled(&pdev->dev, "bus");
- 		if (IS_ERR(tmdev->bus_clk))
- 			return PTR_ERR(tmdev->bus_clk);
+diff --git a/kernel/rcu/rcuscale.c b/kernel/rcu/rcuscale.c
+index 2819b95479af9..28bc688e2705c 100644
+--- a/kernel/rcu/rcuscale.c
++++ b/kernel/rcu/rcuscale.c
+@@ -457,7 +457,7 @@ rcu_scale_writer(void *arg)
+ 	if (gp_async) {
+ 		cur_ops->gp_barrier();
  	}
- 
- 	if (tmdev->chip->has_mod_clk) {
--		tmdev->mod_clk = devm_clk_get(&pdev->dev, "mod");
-+		tmdev->mod_clk = devm_clk_get_enabled(&pdev->dev, "mod");
- 		if (IS_ERR(tmdev->mod_clk))
- 			return PTR_ERR(tmdev->mod_clk);
- 	}
- 
--	ret = reset_control_deassert(tmdev->reset);
--	if (ret)
--		return ret;
--
--	ret = clk_prepare_enable(tmdev->bus_clk);
--	if (ret)
--		goto assert_reset;
--
- 	ret = clk_set_rate(tmdev->mod_clk, 24000000);
- 	if (ret)
--		goto bus_disable;
--
--	ret = clk_prepare_enable(tmdev->mod_clk);
--	if (ret)
--		goto bus_disable;
-+		return ret;
- 
- 	ret = sun8i_ths_calibrate(tmdev);
- 	if (ret)
--		goto mod_disable;
-+		return ret;
- 
- 	return 0;
--
--mod_disable:
--	clk_disable_unprepare(tmdev->mod_clk);
--bus_disable:
--	clk_disable_unprepare(tmdev->bus_clk);
--assert_reset:
--	reset_control_assert(tmdev->reset);
--
--	return ret;
- }
- 
- static int sun8i_h3_thermal_init(struct ths_device *tmdev)
-@@ -529,17 +522,6 @@ static int sun8i_ths_probe(struct platform_device *pdev)
+-	writer_n_durations[me] = i_max;
++	writer_n_durations[me] = i_max + 1;
+ 	torture_kthread_stopping("rcu_scale_writer");
  	return 0;
  }
- 
--static int sun8i_ths_remove(struct platform_device *pdev)
--{
--	struct ths_device *tmdev = platform_get_drvdata(pdev);
--
--	clk_disable_unprepare(tmdev->mod_clk);
--	clk_disable_unprepare(tmdev->bus_clk);
--	reset_control_assert(tmdev->reset);
--
--	return 0;
--}
--
- static const struct ths_thermal_chip sun8i_a83t_ths = {
- 	.sensor_num = 3,
- 	.scale = 705,
-@@ -641,7 +623,6 @@ MODULE_DEVICE_TABLE(of, of_ths_match);
- 
- static struct platform_driver ths_driver = {
- 	.probe = sun8i_ths_probe,
--	.remove = sun8i_ths_remove,
- 	.driver = {
- 		.name = "sun8i-thermal",
- 		.of_match_table = of_ths_match,
+@@ -531,7 +531,7 @@ rcu_scale_cleanup(void)
+ 			wdpp = writer_durations[i];
+ 			if (!wdpp)
+ 				continue;
+-			for (j = 0; j <= writer_n_durations[i]; j++) {
++			for (j = 0; j < writer_n_durations[i]; j++) {
+ 				wdp = &wdpp[j];
+ 				pr_alert("%s%s %4d writer-duration: %5d %llu\n",
+ 					scale_type, SCALE_FLAG,
 -- 
 2.39.2
 
