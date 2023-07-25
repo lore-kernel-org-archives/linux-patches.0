@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920E312B98
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:04:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC25C433C7;
-	Tue, 25 Jul 2023 11:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F263A12B98
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:04:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A4DC433C8;
+	Tue, 25 Jul 2023 11:04:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690283055;
-	bh=ObqO7+00nlkMK6KGGi4EGZ9qP/vawE+7zD57CJhjyFU=;
+	s=korg; t=1690283057;
+	bh=Q3R0nPsVtfhumfGdyaN8MN1C6m7UxsBG9REu40XCPNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0noNz2YBKU/aX1R0ZK3gXFtet+d+ikhQIzfKgHZrle4hRtxK/bPFnuBGYBxw9eQUh
-	 Jv/GCQ5IGx94nhdCIfwty+bUW7N78JvX+D/hqYQwn/q12dpCH4J+S6iA0jVuk8n5A6
-	 yZ7B/lHrSBs7amboxZ/Reyko7pzdnBgxIBe1YXRk=
+	b=PSPPyASMYHKsdqg0K+AlGiN1AV3cu5o8Si3uOBTOEs26eGVqzRQdsz9Q540rXeC06
+	 M/PLAJsNwanOzbAUA1t5rwkEsrbM9B6jz93tLvrt70gjplIY7ft1M8ZWX9ng4TEKIg
+	 11Mfmkcoipue/IJsCIYJoshvyINb4z2XCYM+JyZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ahmed Zaki <ahmed.zaki@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 095/183] spi: bcm63xx: fix max prepend length
-Date: Tue, 25 Jul 2023 12:45:23 +0200
-Message-ID: <20230725104511.379759227@linuxfoundation.org>
+Subject: [PATCH 6.1 122/183] iavf: send VLAN offloading caps once after VFR
+Date: Tue, 25 Jul 2023 12:45:50 +0200
+Message-ID: <20230725104512.335103250@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
 References: <20230725104507.756981058@linuxfoundation.org>
@@ -35,45 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Ahmed Zaki <ahmed.zaki@intel.com>
 
-[ Upstream commit 5158814cbb37bbb38344b3ecddc24ba2ed0365f2 ]
+[ Upstream commit 7dcbdf29282fbcdb646dc785e8a57ed2c2fec8ba ]
 
-The command word is defined as following:
+When the user disables rxvlan offloading and then changes the number of
+channels, all VLAN ports are unable to receive traffic.
 
-    /* Command */
-    #define SPI_CMD_COMMAND_SHIFT           0
-    #define SPI_CMD_DEVICE_ID_SHIFT         4
-    #define SPI_CMD_PREPEND_BYTE_CNT_SHIFT  8
-    #define SPI_CMD_ONE_BYTE_SHIFT          11
-    #define SPI_CMD_ONE_WIRE_SHIFT          12
+Changing the number of channels triggers a VFR reset. During re-init, when
+VIRTCHNL_OP_GET_OFFLOAD_VLAN_V2_CAPS is received, we do:
+1 - set the IAVF_FLAG_SETUP_NETDEV_FEATURES flag
+2 - call
+    iavf_set_vlan_offload_features(adapter, 0, netdev->features);
 
-If the prepend byte count field starts at bit 8, and the next defined
-bit is SPI_CMD_ONE_BYTE at bit 11, it can be at most 3 bits wide, and
-thus the max value is 7, not 15.
+The second step sends to the PF the __default__ features, in this case
+aq_required |= IAVF_FLAG_AQ_ENABLE_CTAG_VLAN_STRIPPING
 
-Fixes: b17de076062a ("spi/bcm63xx: work around inability to keep CS up")
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Link: https://lore.kernel.org/r/20230629071453.62024-1-jonas.gorski@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+While the first step forces the watchdog task to call
+netdev_update_features() ->  iavf_set_features() ->
+iavf_set_vlan_offload_features(adapter, netdev->features, features).
+Since the user disabled the "rxvlan", this sets:
+aq_required |= IAVF_FLAG_AQ_DISABLE_CTAG_VLAN_STRIPPING
+
+When we start processing the AQ commands, both flags are enabled. Since we
+process DISABLE_XTAG first then ENABLE_XTAG, this results in the PF
+enabling the rxvlan offload. This breaks all communications on the VLAN
+net devices.
+
+Fix by removing the call to iavf_set_vlan_offload_features() (second
+step). Calling netdev_update_features() from watchdog task is enough for
+both init and reset paths.
+
+Fixes: 7598f4b40bd6 ("iavf: Move netdev_update_features() into watchdog task")
+Signed-off-by: Ahmed Zaki <ahmed.zaki@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: c2ed2403f12c ("iavf: Wait for reset in callbacks which trigger it")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm63xx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/iavf/iavf_virtchnl.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
-index 80fa0ef8909ca..147199002df1e 100644
---- a/drivers/spi/spi-bcm63xx.c
-+++ b/drivers/spi/spi-bcm63xx.c
-@@ -126,7 +126,7 @@ enum bcm63xx_regs_spi {
- 	SPI_MSG_DATA_SIZE,
- };
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
+index 07d37402a0df5..7b34111fd4eb1 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
+@@ -2238,11 +2238,6 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
+ 		iavf_process_config(adapter);
+ 		adapter->flags |= IAVF_FLAG_SETUP_NETDEV_FEATURES;
  
--#define BCM63XX_SPI_MAX_PREPEND		15
-+#define BCM63XX_SPI_MAX_PREPEND		7
+-		/* Request VLAN offload settings */
+-		if (VLAN_V2_ALLOWED(adapter))
+-			iavf_set_vlan_offload_features(adapter, 0,
+-						       netdev->features);
+-
+ 		iavf_set_queue_vlan_tag_loc(adapter);
  
- #define BCM63XX_SPI_MAX_CS		8
- #define BCM63XX_SPI_BUS_NUM		0
+ 		was_mac_changed = !ether_addr_equal(netdev->dev_addr,
 -- 
 2.39.2
 
