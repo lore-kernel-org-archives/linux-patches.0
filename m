@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499041ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:23:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCF89C433C7;
-	Tue, 25 Jul 2023 11:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A461ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:23:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D958C433C8;
+	Tue, 25 Jul 2023 11:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284230;
-	bh=ig4R60prGrQS1rLLv0Q9aNv9X50c8B1yKfTsH8g1I1E=;
+	s=korg; t=1690284232;
+	bh=XI6M1w5VTDzPH3F6KzFd7It1qhsg/ujnH8pfIcWkUwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0gnAE3Ky/tlOE8aKMyEgjHRv8M5G8HWclgoKJADnQLRFg07fU+qLx7v4Ay5/1Y7Ih
-	 5Fk5iChs1bjayp3BIXpB4VjRYbmDyBZYTC/duHxxzjdOZiMhityMR4rSNjCrw8FwQ5
-	 zhce/3czk03aUPBJIwZDPPJL1XEHr7TI5u1FT8nA=
+	b=0S/e/z5dQ2tkcuPKsH+yATLbLiF+ktR5/+CmSoYsEMccdyW01N5h+el2fleEeWiPT
+	 9GUckceaiUruSWrMV6wguUG3A3xm8m1agVCy+n2IYspgyfT/97YyPbZMVGngOOOlA+
+	 w+1UHCoj2cqCRxS8FgNmyWLGjjFijuNSubF9wJ4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	Lee Jones <lee@kernel.org>,
+	Pierre Morel <pmorel@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 252/509] mfd: stmfx: Nullify stmfx->vdd in case of error
-Date: Tue, 25 Jul 2023 12:43:11 +0200
-Message-ID: <20230725104605.274302707@linuxfoundation.org>
+Subject: [PATCH 5.10 253/509] KVM: s390: vsie: fix the length of APCB bitmap
+Date: Tue, 25 Jul 2023 12:43:12 +0200
+Message-ID: <20230725104605.321382563@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -35,39 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amelie Delaunay <amelie.delaunay@foss.st.com>
+From: Pierre Morel <pmorel@linux.ibm.com>
 
-[ Upstream commit 7c81582c0bccb4757186176f0ee12834597066ad ]
+[ Upstream commit 246be7d2720ea9a795b576067ecc5e5c7a1e7848 ]
 
-Nullify stmfx->vdd in case devm_regulator_get_optional() returns an error.
-And simplify code by returning an error only if return code is not -ENODEV,
-which means there is no vdd regulator and it is not an issue.
+bit_and() uses the count of bits as the woking length.
+Fix the previous implementation and effectively use
+the right bitmap size.
 
-Fixes: d75846ed08e6 ("mfd: stmfx: Fix dev_err_probe() call in stmfx_chip_init()")
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Link: https://lore.kernel.org/r/20230609092804.793100-2-amelie.delaunay@foss.st.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 19fd83a64718 ("KVM: s390: vsie: allow CRYCB FORMAT-1")
+Fixes: 56019f9aca22 ("KVM: s390: vsie: Allow CRYCB FORMAT-2")
+
+Signed-off-by: Pierre Morel <pmorel@linux.ibm.com>
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+Link: https://lore.kernel.org/kvm/20230511094719.9691-1-pmorel@linux.ibm.com/
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/stmfx.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/s390/kvm/vsie.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mfd/stmfx.c b/drivers/mfd/stmfx.c
-index 41e74b5dd9901..b45d7b0b842c5 100644
---- a/drivers/mfd/stmfx.c
-+++ b/drivers/mfd/stmfx.c
-@@ -330,9 +330,8 @@ static int stmfx_chip_init(struct i2c_client *client)
- 	stmfx->vdd = devm_regulator_get_optional(&client->dev, "vdd");
- 	ret = PTR_ERR_OR_ZERO(stmfx->vdd);
- 	if (ret) {
--		if (ret == -ENODEV)
--			stmfx->vdd = NULL;
--		else
-+		stmfx->vdd = NULL;
-+		if (ret != -ENODEV)
- 			return dev_err_probe(&client->dev, ret, "Failed to get VDD regulator\n");
- 	}
+diff --git a/arch/s390/kvm/vsie.c b/arch/s390/kvm/vsie.c
+index ff58decfef5e8..192eacc8fbb7a 100644
+--- a/arch/s390/kvm/vsie.c
++++ b/arch/s390/kvm/vsie.c
+@@ -168,7 +168,8 @@ static int setup_apcb00(struct kvm_vcpu *vcpu, unsigned long *apcb_s,
+ 			    sizeof(struct kvm_s390_apcb0)))
+ 		return -EFAULT;
  
+-	bitmap_and(apcb_s, apcb_s, apcb_h, sizeof(struct kvm_s390_apcb0));
++	bitmap_and(apcb_s, apcb_s, apcb_h,
++		   BITS_PER_BYTE * sizeof(struct kvm_s390_apcb0));
+ 
+ 	return 0;
+ }
+@@ -190,7 +191,8 @@ static int setup_apcb11(struct kvm_vcpu *vcpu, unsigned long *apcb_s,
+ 			    sizeof(struct kvm_s390_apcb1)))
+ 		return -EFAULT;
+ 
+-	bitmap_and(apcb_s, apcb_s, apcb_h, sizeof(struct kvm_s390_apcb1));
++	bitmap_and(apcb_s, apcb_s, apcb_h,
++		   BITS_PER_BYTE * sizeof(struct kvm_s390_apcb1));
+ 
+ 	return 0;
+ }
 -- 
 2.39.2
 
