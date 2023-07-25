@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315DC1ED38
-	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:33:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B27C433C9;
-	Tue, 25 Jul 2023 11:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DA81ED38
+	for <patches@lists.linux.dev>; Tue, 25 Jul 2023 11:33:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C6BAC433C7;
+	Tue, 25 Jul 2023 11:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690284808;
-	bh=a5f0Vi97/jJDkYzHRFqUqJYXqQi2mLiNM+ab67O5H+A=;
+	s=korg; t=1690284810;
+	bh=1WLLN3JSPaAjoUptlbF9QcLcDXaj1WERrVUtSMRmVIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dntcK6jveLu46nGBjLwgVUIJOv/Ah7lj3Id2SFX+Lw0vzNcnWW8m4kQDEoXtp6R8y
-	 VXz+43sRw0AvUTOKIdli9yS3tK7zkgsmyHNLqSm5sPaT8NxavWrVzvDdwP3QYbyiNe
-	 4V1mWf7ZXlYYk5TlLCZQN9iUbgHfcrQEsHNV3iF4=
+	b=WRLjsLhhgRIXujaSmWD+500wHCxbdNIHkrLY0D9xrUNshxME3Zvuk8WXVyhbR9yb2
+	 Q8Ot+60nRUOabbwiAFTfoCP7p0zZ664ZcRxYYRngGsj7vKEHdF0CxXnCXnqkTNhBv7
+	 y1JbjOweFpcdBr5aa3tedb6IrQdSjW6Oh8cqnP0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 488/509] netfilter: nf_tables: fix spurious set element insertion failure
-Date: Tue, 25 Jul 2023 12:47:07 +0200
-Message-ID: <20230725104616.080641491@linuxfoundation.org>
+Subject: [PATCH 5.10 489/509] netfilter: nf_tables: cant schedule in nft_chain_validate
+Date: Tue, 25 Jul 2023 12:47:08 +0200
+Message-ID: <20230725104616.132381592@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230725104553.588743331@linuxfoundation.org>
 References: <20230725104553.588743331@linuxfoundation.org>
@@ -36,45 +36,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit ddbd8be68941985f166f5107109a90ce13147c44 ]
+[ Upstream commit 314c82841602a111c04a7210c21dc77e0d560242 ]
 
-On some platforms there is a padding hole in the nft_verdict
-structure, between the verdict code and the chain pointer.
+Can be called via nft set element list iteration, which may acquire
+rcu and/or bh read lock (depends on set type).
 
-On element insertion, if the new element clashes with an existing one and
-NLM_F_EXCL flag isn't set, we want to ignore the -EEXIST error as long as
-the data associated with duplicated element is the same as the existing
-one.  The data equality check uses memcmp.
+BUG: sleeping function called from invalid context at net/netfilter/nf_tables_api.c:3353
+in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 1232, name: nft
+preempt_count: 0, expected: 0
+RCU nest depth: 1, expected: 0
+2 locks held by nft/1232:
+ #0: ffff8881180e3ea8 (&nft_net->commit_mutex){+.+.}-{3:3}, at: nf_tables_valid_genid
+ #1: ffffffff83f5f540 (rcu_read_lock){....}-{1:2}, at: rcu_lock_acquire
+Call Trace:
+ nft_chain_validate
+ nft_lookup_validate_setelem
+ nft_pipapo_walk
+ nft_lookup_validate
+ nft_chain_validate
+ nft_immediate_validate
+ nft_chain_validate
+ nf_tables_validate
+ nf_tables_abort
 
-For normal data (NFT_DATA_VALUE) this works fine, but for NFT_DATA_VERDICT
-padding area leads to spurious failure even if the verdict data is the
-same.
+No choice but to move it to nf_tables_validate().
 
-This then makes the insertion fail with 'already exists' error, even
-though the new "key : data" matches an existing entry and userspace
-told the kernel that it doesn't want to receive an error indication.
-
-Fixes: c016c7e45ddf ("netfilter: nf_tables: honor NLM_F_EXCL flag in set element insertion")
+Fixes: 81ea01066741 ("netfilter: nf_tables: add rescheduling points during loop detection walks")
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/netfilter/nf_tables_api.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index d56f5d7fa5455..9c3a9e3f1ede9 100644
+index 9c3a9e3f1ede9..a8d316a58e44c 100644
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -8914,6 +8914,9 @@ static int nft_verdict_init(const struct nft_ctx *ctx, struct nft_data *data,
+@@ -3276,8 +3276,6 @@ int nft_chain_validate(const struct nft_ctx *ctx, const struct nft_chain *chain)
+ 			if (err < 0)
+ 				return err;
+ 		}
+-
+-		cond_resched();
+ 	}
  
- 	if (!tb[NFTA_VERDICT_CODE])
- 		return -EINVAL;
+ 	return 0;
+@@ -3301,6 +3299,8 @@ static int nft_table_validate(struct net *net, const struct nft_table *table)
+ 		err = nft_chain_validate(&ctx, chain);
+ 		if (err < 0)
+ 			return err;
 +
-+	/* zero padding hole for memcmp */
-+	memset(data, 0, sizeof(*data));
- 	data->verdict.code = ntohl(nla_get_be32(tb[NFTA_VERDICT_CODE]));
++		cond_resched();
+ 	}
  
- 	switch (data->verdict.code) {
+ 	return 0;
 -- 
 2.39.2
 
