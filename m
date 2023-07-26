@@ -1,91 +1,222 @@
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7858C1AA81
-	for <patches@lists.linux.dev>; Wed, 26 Jul 2023 17:18:35 +0000 (UTC)
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-403f65a3f8cso52245001cf.2
-        for <patches@lists.linux.dev>; Wed, 26 Jul 2023 10:18:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690391914; x=1690996714;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FW1A4VNorTdwVBkVvQqGIBLGEHRe0ZX2gQnqvSur9/c=;
-        b=NKUjlcvJA5BVtmIFl3QXvmfJxJ1rPk+F2BI2oIo1qsjwKF+OvugHwLzRaDWNa9cm2p
-         qmGXHHowlNid7bfyc8gjSqrinUFgK3EgSw+QQCFvUNDqud7zBzz1svbSH+DVZz6u4WZN
-         Dx4OvyY6EaV1b+wOfXfEKcyrnI1ANxG2e0bAROlvvwKV7NKjbnKzIcCgS//ihwtGyvGa
-         ztBaovJrXPHFG/wwCrm+6rF+ead/0UX3OlnuD+ognZVVeWmfnC4/Yzf/9Ccn+rbBrt3i
-         ziBZBx+ovPXHWWjrCb2d+wM3vkD2tDUoEq9XFn8i+8kkKswEQDAVkeFF/y0MphFCL4da
-         HS6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690391914; x=1690996714;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FW1A4VNorTdwVBkVvQqGIBLGEHRe0ZX2gQnqvSur9/c=;
-        b=aQ2LEdoDJKP5WXW62ef7YfXPG0/oFRmd6dceyuuUacE9PpJ7hg4kw8/CmCqHUaC0Yy
-         ST7k1DC7KVGFMpYI/oPAdD6XI4rbJQu8tAJzWm1LMp7x5kqFSJZrlzu8Rr1f0muIXog+
-         c/kw17KCV26mD6gJ9v8ZEnfhUNnPniR4AZifL2Am24uZXappSmBAGxwIfxcN5lFgtKpA
-         ibx3X4rznk0Y6puQyfDsaekvMcSYXtu5kzbUs8TSmId9hFoo2jeGzOiB8GMlswDETfTy
-         /Ue2zVof6N6OcNLG1h2hSn+z4Jtve6DnPMUXzqNRsnxfW1Kez0RIGUmZbox2i9RCFMvR
-         bfTw==
-X-Gm-Message-State: ABy/qLb53vIf/ih+c7b7eMvSVcqtUgO91hGPu/RdvExVC9zOIx+0e5rq
-	Qf1Ye5MQZuAIrUNYyDUGGe0=
-X-Google-Smtp-Source: APBJJlE7Mg8n2QYpxhgc9RYoF2KdX5wG6cMQxbLCVpDdJaX/CJo0VeLnZrcefcS5vCX2OtOKBHC1Cw==
-X-Received: by 2002:a05:622a:312:b0:403:a338:2c18 with SMTP id q18-20020a05622a031200b00403a3382c18mr2612625qtw.42.1690391914067;
-        Wed, 26 Jul 2023 10:18:34 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id bv22-20020a05622a0a1600b003f9e58afea6sm4907625qtb.12.2023.07.26.10.18.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jul 2023 10:18:33 -0700 (PDT)
-Message-ID: <2f2d416d-90bc-3e04-fa69-0726bfe01055@gmail.com>
-Date: Wed, 26 Jul 2023 10:18:30 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DA01AA81
+	for <patches@lists.linux.dev>; Wed, 26 Jul 2023 17:34:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=66wsCMpQU6FfBWm9l+EX673LWPMXJ2OOrUUr0K2e7g4=; b=SAiGzH+YNs/4c7c+fVGjD6Wi5b
+	66j65ZBDLnqU1rftVrAWXNxbSRQraEKMUHLdgCG/vvBinzOTK107lGJaY1pCJ0DD50CugUoOqlYAI
+	wE8669Fy28G/JulDPzzMyFzuvoLK4IW7P3WfaTMrZpMne0GDalRfVcGIkhdLccm5i9DKj9cpaDcsT
+	elqxek1ngORwtQpyNnlVyWVdsZmnB4RS2KkLPbtxd0wo+MsqdgKq5US3bOq6N48+/fCS8o6GF603v
+	npaDAdsWqmz9PSBYTHYOoYGIp4A/9IfUNgilLuHAd+UBg6/qtLnUBYyCDa3yi2XTSxW2MenGNFgGx
+	zPRbDAkg==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1qOiPS-00BAtc-0C;
+	Wed, 26 Jul 2023 17:34:50 +0000
+Date: Wed, 26 Jul 2023 10:34:50 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Zorro Lang <zlang@redhat.com>
+Cc: "Darrick J. Wong" <djwong@kernel.org>, fstests@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH] fstests: add helper to canonicalize devices used to
+ enable persistent disks
+Message-ID: <ZMFZOi3zJ8sevlb5@bombadil.infradead.org>
+References: <20230720061727.2363548-1-mcgrof@kernel.org>
+ <20230725081307.xydlwjdl4lq3ts3m@zlang-mailbox>
+ <20230725155439.GF11340@frogsfrogsfrogs>
+ <20230725175009.jv4hbqxtags6qh5r@zlang-mailbox>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 5.10 000/508] 5.10.188-rc2 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org
-References: <20230726045328.327600022@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230726045328.327600022@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230725175009.jv4hbqxtags6qh5r@zlang-mailbox>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On 7/25/23 21:54, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.188 release.
-> There are 508 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, Jul 26, 2023 at 01:50:09AM +0800, Zorro Lang wrote:
+> On Tue, Jul 25, 2023 at 08:54:39AM -0700, Darrick J. Wong wrote:
+> > On Tue, Jul 25, 2023 at 04:13:07PM +0800, Zorro Lang wrote:
+> > > On Wed, Jul 19, 2023 at 11:17:27PM -0700, Luis Chamberlain wrote:
+> > > > Using a symlink is desirable if you want to enable persistent tests
+> > > > across reboots. For example you may want to use /dev/disk/by-id/nvme-eui.*
+> > > > so to ensure that the same drives are used even after reboot.
+> > >
+> > > If more developers prefer this change, I'd like to make it to be
+> > > optional by an option of ./check at least, not always turn devname
+> > > to realpath. Welcome review points from others.
+> > 
+> > Hmm.  SCRATCH_DEV=/dev/testvg/testlv works right now, it'd be sort of
+> > annoying to have "/dev/dm-4" get written into the report and then you've
+> > lost the correlation to whatever the user passed in.
+> > 
+> > Oh wait.  My giant mound of ./check wrapper script already does that
+> > canonicalization and has for years.
+> > 
+> > Ok.  Sounds good to me then. :P
 > 
-> Responses should be made by Fri, 28 Jul 2023 04:52:02 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.188-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+> So you hope fstests can do this translation (use real device name) by default?
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+I'm fine if we make this optional too. In my next spin I'll add an
+option that does this.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+> > > I think [ -L "$TEST_DEV" ] is enough.
+> > 
+> > I don't think it is.
+> > 
+> > $ unset moo
+> > $ [ -L $moo ]
+> 
+> The double quotation marks "" are needed.
 
+Indeed it does. Will go with that for v2.
+
+> > $ echo $?
+> > 0
+> > $ realpath -e $moo
+> > realpath: missing operand
+> > Try 'realpath --help' for more information.
+> > 
+> > > > +		TEST_DEV=$(realpath -e $TEST_DEV)
+> > > 
+> > > Anyone knows the difference of realpatch and readlink?
+> > 
+> > readlink doesn't follow nested symlinks; realpath does:
+> > 
+> > $ touch /tmp/a
+> > $ ln -s /tmp/a /tmp/b
+> > $ ln -s /tmp/b /tmp/c
+> > $ readlink /tmp/c
+> > /tmp/b
+> > $ realpath /tmp/c
+> > /tmp/a
+> > $ readlink -m /tmp/c
+> > /tmp/a
+> 
+> The -e option helps:
+> 
+> # readlink -e /tmp/c
+> /tmp/a
+
+I can trace readlink -e support back to 2004:
+
+https://github.com/coreutils/coreutils/commit/e0b8973bd4b146b5fb39641a4ee7984e922c3ff5
+
+> # realpath -e /tmp/c
+> /tmp/a
+
+realpeath is much newer than readlink, it's first commit including
+support for -e dates back to 2011;
+
+https://github.com/coreutils/coreutils/commit/77ea441f79aa115f79b47d9c1fc9c0004c5c7111
+
+And so canonicalizing with readlink is 7 years older and likely to be
+supported in more ancient distros with older coreutils. I'll go with
+readlink -e unless I hear otherwise.
+
+> > > > +	fi
+> > > > +
+> > > > +	if [ ! -z "$SCRATCH_DEV" ] && [ -L $SCRATCH_DEV ]; then
+> > > > +		SCRATCH_DEV=$(realpath -e $SCRATCH_DEV)
+> > 
+> > Extra question: Shouldn't we be putting theis ^^^ variables in quotes?
+> 
+> Make sense to me.
+
+Done. The only eye sore is how to convert the loop for the SCRATCH_DEV_POOL,
+here's what I have for a v2:
+
+diff --git a/README b/README
+index 1ca506492bf0..97ef63d6d693 100644
+--- a/README
++++ b/README
+@@ -268,6 +268,9 @@ Misc:
+    this option is supported for all filesystems currently only -overlay is
+    expected to run without issues. For other filesystems additional patches
+    and fixes to the test suite might be needed.
++ - set CANON_DEVS=yes to canonicalize device symlinks. This will let you
++   for example use something like TEST_DEV/dev/disk/by-id/nvme-* so the
++   device remains persistent between reboots. This is disabled by default.
+ 
+ ______________________
+ USING THE FSQA SUITE
+diff --git a/check b/check
+index 0bf5b22e061a..577e09655844 100755
+--- a/check
++++ b/check
+@@ -711,6 +711,7 @@ function run_section()
+ 	fi
+ 
+ 	get_next_config $section
++	_canonicalize_devices
+ 
+ 	mkdir -p $RESULT_BASE
+ 	if [ ! -d $RESULT_BASE ]; then
+diff --git a/common/config b/common/config
+index 6c8cb3a5ba68..7d74c285ac71 100644
+--- a/common/config
++++ b/common/config
+@@ -25,6 +25,9 @@
+ # KEEP_DMESG -      whether to keep all dmesg for each test case.
+ #                   yes: keep all dmesg
+ #                   no: only keep dmesg with error/warning (default)
++# CANON_DEVS -      whether or not to canonicalize device symlinks
++#                   yes: canonicalize device symlinks
++#                   no (default) do not canonicalize device if they are symlinks
+ #
+ # - These can be added to $HOST_CONFIG_DIR (witch default to ./config)
+ #   below or a separate local configuration file can be used (using
+@@ -644,6 +647,32 @@ _canonicalize_mountpoint()
+ 	echo "$parent/$base"
+ }
+ 
++# Enables usage of /dev/disk/by-id/ symlinks to persist target devices
++# over reboots
++_canonicalize_devices()
++{
++	if [ "$CANON_DEVS" != "yes" ]; then
++		return
++	fi
++	[ -L "$TEST_DEV" ]	&& TEST_DEV=$(readlink -e "$TEST_DEV")
++	[ -L $SCRATCH_DEV ]	&& SCRATCH_DEV=$(readlink -e "$SCRATCH_DEV")
++	[ -L $TEST_LOGDEV ]	&& TEST_LOGDEV=$(readlink -e "$TEST_LOGDEV")
++	[ -L $TEST_RTDEV ]	&& TEST_RTDEV=$(readlink -e "$TEST_RTDEV")
++	[ -L $SCRATCH_RTDEV ]	&& SCRATCH_RTDEV=$(readlink -e "$SCRATCH_RTDEV")
++	[ -L $LOGWRITES_DEV ]	&& LOGWRITES_DEV=$(readlink -e "$LOGWRITES_DEV")
++	if [ ! -z "$SCRATCH_DEV_POOL" ]; then
++		NEW_SCRATCH_POOL=""
++		for i in $SCRATCH_DEV_POOL; do
++			if [ -L $i ]; then
++				NEW_SCRATCH_POOL="$NEW_SCRATCH_POOL $(readlink -e $i)"
++			else
++				NEW_SCRATCH_POOL="$NEW_SCRATCH_POOL $i)"
++			fi
++		done
++		SCRATCH_DEV_POOL="$NEW_SCRATCH_POOL"
++	fi
++}
++
+ # On check -overlay, for the non multi section config case, this
+ # function is called on every test, before init_rc().
+ # When SCRATCH/TEST_* vars are defined in config file, config file
+@@ -774,7 +803,6 @@ get_next_config() {
+ 	fi
+ 
+ 	parse_config_section $1
+-
+ 	if [ ! -z "$OLD_FSTYP" ] && [ $OLD_FSTYP != $FSTYP ]; then
+ 		[ -z "$MOUNT_OPTIONS" ] && _mount_opts
+ 		[ -z "$TEST_FS_MOUNT_OPTS" ] && _test_mount_opts
+@@ -890,5 +918,7 @@ else
+ 	fi
+ fi
+ 
++_canonicalize_devices
++
+ # make sure this script returns success
+ /bin/true
