@@ -1,65 +1,51 @@
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F969C2C5
-	for <patches@lists.linux.dev>; Wed, 26 Jul 2023 13:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D129453
+	for <patches@lists.linux.dev>; Wed, 26 Jul 2023 14:10:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1690379571; x=1721915571;
+  t=1690380631; x=1721916631;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=xvBkwY7sxuWl/Al5gD7mazKVZkI/LarItDLpbbjPsSg=;
-  b=VmUNi8VPfQtLBH5EPRxO4wlAJ/4StfPhCNgYDO1ZdZ171OTJoz7ZDqOr
-   yFoae9XxAe+LST9OFI0liR2gGm5bMSU1t8UwJU6rZRlkF2wzSNqUAVZDa
-   zWVC6UpQzfhQARgCXDgCIrLH2c6Q6K3xcjRZZ/PV8zwTFx0M3xlmq46Cf
-   8N20SSWZZ+hfgYKVHXDPSCvK+FtQTgGfCo7EG1Q7spPDW/CXjMnXJjzbS
-   LxM22cC70f0oDhDCx10VGKCeYyWWKEy9xNsmWnjCo6h26C3JGO5DI9NMX
-   WgC9+SasWWiGoz4/z2OwwWP7MC55zdQnZ/s/N6XgXAzsnp7fDo9R+Pe9Z
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10783"; a="352922614"
+  bh=/MDgNGkVeaPDA3kkMNG+Ho9/GQxRTUSTwqG0wzLJTZk=;
+  b=Sk0ZmT6mVbc7+nbfdOps/DUFU+QvZehbypJ+I2DQywaqHqlZDRN2erXe
+   dSyzpumk9NstK4iUwXxJ/FcDIwdgCdYOrYXmpDdCckbUwuHrnGU/keSjb
+   G+AEmdsuUV8nYcU9xmO2EnkAPMlDQFZbq9PXLYGcO+aHV2o0Lv4xaRUm0
+   PNA3GW+C+SDQzvJ9zGOd6154CPWLgjOrp675jy3NlgE6lnSjjAf0JS0ci
+   F0z6QxMVB6BIjowoiVpCTHu94D940sM6h9CnWcCSvcN5oM1dDcMr+uBQ0
+   qNI3OEpRp2EoVlUB4TpoQs/e0v9dqA/u/aVoZIIujH10uRh+I4wScwnGu
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10783"; a="368045559"
 X-IronPort-AV: E=Sophos;i="6.01,232,1684825200"; 
-   d="scan'208";a="352922614"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jul 2023 06:52:50 -0700
+   d="scan'208";a="368045559"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jul 2023 07:10:30 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10783"; a="796587548"
+X-IronPort-AV: E=McAfee;i="6600,9927,10783"; a="900441006"
 X-IronPort-AV: E=Sophos;i="6.01,232,1684825200"; 
-   d="scan'208";a="796587548"
+   d="scan'208";a="900441006"
 Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jul 2023 06:52:50 -0700
-Date: Wed, 26 Jul 2023 06:52:48 -0700
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jul 2023 07:10:29 -0700
+Date: Wed, 26 Jul 2023 07:10:28 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Drew Fustini <dfustini@baylibre.com>
-Cc: James Morse <james.morse@arm.com>, "Yu, Fenghua" <fenghua.yu@intel.com>,
-	"Chatre, Reinette" <reinette.chatre@intel.com>,
-	Babu Moger <Babu.Moger@amd.com>,
+Cc: Fenghua Yu <fenghua.yu@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
 	Peter Newman <peternewman@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
-	H Peter Anvin <hpa@zytor.com>,
-	"shameerali.kolothum.thodi@huawei.com" <shameerali.kolothum.thodi@huawei.com>,
-	D Scott Phillips OS <scott@os.amperecomputing.com>,
-	"carl@os.amperecomputing.com" <carl@os.amperecomputing.com>,
-	"lcherian@marvell.com" <lcherian@marvell.com>,
-	"bobo.shaobowang@huawei.com" <bobo.shaobowang@huawei.com>,
-	"tan.shaopeng@fujitsu.com" <tan.shaopeng@fujitsu.com>,
-	"xingxin.hx@openanolis.org" <xingxin.hx@openanolis.org>,
-	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org,
+	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>,
 	Jamie Iles <quic_jiles@quicinc.com>,
-	Xin Hao <xhao@linux.alibaba.com>,
-	"Pitre, Nicolas" <npitre@baylibre.com>,
-	Kevin Hilman <khilman@baylibre.com>,
-	"aricciardi@baylibre.com" <aricciardi@baylibre.com>,
-	"x86@kernel.org" <x86@kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [RFC PATCH 0/2] Resctrl - rewrite (WIP)
-Message-ID: <ZMElMLPWi0+2jCp8@agluck-desk3>
-References: <20230620033702.33344-1-tony.luck@intel.com>
- <ZJqhDYLG+/Kr44sp@x1>
- <SJ1PR11MB60832BA425B43CA19C778100FC27A@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <ZJ4clUlN2OujgHlC@agluck-desk3>
- <ZMCEjZgyi5oI+KWh@x1>
+	Babu Moger <babu.moger@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v4 0/7] Add support for Sub-NUMA cluster (SNC) systems
+Message-ID: <ZMEpVBO5dGxtBzfy@agluck-desk3>
+References: <20230713163207.219710-1-tony.luck@intel.com>
+ <20230722190740.326190-1-tony.luck@intel.com>
+ <ZMCOvMfROYhQEFXo@x1>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -68,65 +54,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZMCEjZgyi5oI+KWh@x1>
+In-Reply-To: <ZMCOvMfROYhQEFXo@x1>
 
-On Tue, Jul 25, 2023 at 07:27:25PM -0700, Drew Fustini wrote:
-> I have access to a Xeon Silver 4310 machine which reports to have
-> cat_l3, cqm_mbm_local, cqm_mbm_total and mba.
+On Tue, Jul 25, 2023 at 08:10:52PM -0700, Drew Fustini wrote:
+> I think that the resctrl interface for RISC-V CBQRI could also benefit
+> from separate domain lists for control and monitoring.
 > 
-> I would like to test resctrl2 on it so I can better understand how it
-> works. I think that will help me understand how to adapt the RISC-V
-> CBQRI resctrl proof-of-concept to use resctrl2.
+> For example, the bandwidth controller QoS register [1] interface allows
+> a device to implement both bandwidth usage monitoring and bandwidth
+> allocation. The resctrl proof-of-concept [2] had to awkwardly create two
+> domains for each memory controller in our example SoC, one that would
+> contain the MBA resource and one that would contain the L3 resource to
+> represent MBM files like local_bytes.
 > 
-> Would you be able to provide an example of how you loaded the necessary
-> resctrl2 kernel modules?
-
-Drew,
-
-Sure. You simply mount the filesystem, and then load modules for
-whichever features you'd like to use. This will enable everything
-you list above:
-
-# mount -t resctrl resctrl /sys/fs/resctrl
-# modprobe rdt_l3_cat
-# modprobe rdt_llc_occupancy
-# modprobe rdt_mbm_local_bytes
-# modprobe rdt_mbm_total_bytes
-# modprobe rdt_l3_mba
-
-There are some experimental extras. E.g.
-
-# modprobe rdt_mbm_total_rate
-# modprobe rdt_mbm_local_rate
-
-Will each add an extra file to the mon_data directories to
-report the data rate in MB/s. The value reported is calculated
-by the once-per-second counter roll-over code in the kernel.
-So it might be up to one second out of date, but it is very cheap
-to read since it doesn't involve MSR access (or cross processor
-interrupts if you are reading from a CPU in a different scope).
-
-You can unload modules without unmounting the filesystem and
-load different ones to get different data/control. E.g. to
-switch from L3CAT to L3CDP (which you don't list as supported,
-so this may not work for you:
-
-# rmmod rdt_l3_cat
-# modprobe rdt_l3_cdp
-
-Or to switch from the default MBA that uses percentages to
-specify throttling to the MBM->MBA feedback code that uses
-MB/s in the schemata file:
-
-# rmmod rdt_l3_mba
-# modprobe rdt_l3_mba_MBps
+> This resulted in a very odd looking schemata that would be hard to the
+> user to understand:
 > 
-> Also, is resctrl2_v65rc1 the latest to branch to test?
+>   # cat /sys/fs/resctrl/schemata
+>   MB:4=  80;6=  80;8=  80
+>   L2:0=0fff;1=0fff
+>   L3:2=ffff;3=0000;5=0000;7=0000
+> 
+> Where:
+> 
+>   Domain 0 is L2 cache controller 0 capacity allocation
+>   Domain 1 is L2 cache controller 1 capacity allocation
+>   Domain 2 is L3 cache controller capacity allocation
+> 
+>   Domain 4 is Memory controller 0 bandwidth allocation
+>   Domain 6 is Memory controller 1 bandwidth allocation
+>   Domain 8 is Memory controller 2 bandwidth allocation
+> 
+>   Domain 3 is Memory controller 0 bandwidth monitoring
+>   Domain 5 is Memory controller 1 bandwidth monitoring
+>   Domain 7 is Memory controller 2 bandwidth monitoring
+> 
+> But there is no value of having the domains created for the purposes of
+> bandwidth monitoring in schemata.
 
-Yes. That's the latest. There haven't been any updates for a
-few days because I'm working on a module to support pseudo-locking.
-I'm half-way there (can do most of the bits to set a group into
-pseudo-locked mode ... about to work on the cleanup when the
-group is removed, the filesystem unmounted, or the module unloaded).
+There's certainly no value in exposing those domain numbers
+in the schemata file. There should also be some way for users
+to decode the ids. On x86 the "id" is exposed in sysfs. Though
+the user does need to work to get all the details:
+
+$ cat /sys/devices/system/cpu/cpu36/cache/index3/level
+3
+$ cat /sys/devices/system/cpu/cpu36/cache/index3/id
+1
+$ cat /sys/devices/system/cpu/cpu36/cache/index3/shared_cpu_list
+36-71,108-143
+
+This shows the L3 cachce with id "1" is shared by CPUs 36-71,108-143
+
+X86 also has independent domain numbers for each resource. So the
+L2 ones count 0, 1, 2, ... and so do the L3 ones: 0, 1, 2 and the
+MBA ones: 0, 1, 2
+
+That fits well with the /sys decoding ... but maybe your approach of
+not repeating domain numbers across different resources is less
+confusing?
+
+Note that in my resctrl re-write where each resource is handled by
+a separate loadable module it may be hard for you to keep the unique
+domain scheme as resource modules are unaware of each other. Though
+perhaps its just an arch specific hook to provide domain numbers.
+
+> I've not yet fully understood how the new approach in this patch series
+> could help the situation for CBQRI, but I thought I would mention that
+> separate lists for control and monitoring might be useful.
+
+Good. It's nice to know there's potentially another use case for
+this split besides SNC.
 
 -Tony
