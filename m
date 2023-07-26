@@ -1,74 +1,60 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCF17C
-	for <patches@lists.linux.dev>; Wed, 26 Jul 2023 02:27:29 +0000 (UTC)
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-7653bd3ff2fso638421885a.3
-        for <patches@lists.linux.dev>; Tue, 25 Jul 2023 19:27:29 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03B31101
+	for <patches@lists.linux.dev>; Wed, 26 Jul 2023 03:10:55 +0000 (UTC)
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-1bba04b9df3so22881335ad.0
+        for <patches@lists.linux.dev>; Tue, 25 Jul 2023 20:10:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20221208.gappssmtp.com; s=20221208; t=1690338448; x=1690943248;
+        d=baylibre-com.20221208.gappssmtp.com; s=20221208; t=1690341055; x=1690945855;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Viglh2d5OeFZB4xvJ6G2it4K8JrKHO/8Dv7RWTjX6kM=;
-        b=qiuBPF2hMgALZZur5FAR+HdKzYGyMy5aZ4P02N3w7FWd1Bq1UCB24KYv3PIzmkcwgn
-         5jL+7wud0KqGkqddn84+oqqhrKYTN1xB2JXK1F6UxnuCdlSY5ZOT1qOIqulX1RsjL/Z8
-         yj36fZTmlZ3DLWqG8W+JgUSduItc0u9Q60U1ymm3J2MXaYg2kilpRR61x6fTwGuBaDi7
-         LzILlbb/HJK1siWIEbmUXa68+IQjPCzlYUI0vsPQPXSj4cM9bPulYjGXXSmfd+fT0Wkr
-         lcr3/ssxb2Lgj5vA5tRzhnAQmjQM9GKuiVBM0zZTbyi41QuJkedPdVJi3S6GxN4qVIXJ
-         1GCg==
+        bh=IvvLurWmKpoBDmJ7SuX6DjccQU9JInSh+QxeozTVIBs=;
+        b=CfDRR/MsKQr4yQmvH1tf9lA+6ksK77CLAWkfaZG7w+l/aylzxRwjpL0NhZH+6rqCGP
+         k+7iykahUIt40I/sncUh0d7v16l60BZBJemQgsqnuWRul/lTrqRq8b8FrncslukXg15T
+         18im0RzsPEgylMEn5AMuVo23Z6Tq1NNMUxC/TebzeszW46H4wQ9gcsVc3yurlPbd/ZNP
+         72f69+U9Lb4wxU0Z/AhggqGh/oOIng0YiXIM9TWCEbm0hC1sIu4soiSFy3RFMcoOQF7G
+         M7hLrNQXinkN+jRZsZ24Hu12UJcNTN5+bWSYe61WBJGDuNUFAc1f3wrcAgKAfOmd85TG
+         YkjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690338448; x=1690943248;
+        d=1e100.net; s=20221208; t=1690341055; x=1690945855;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Viglh2d5OeFZB4xvJ6G2it4K8JrKHO/8Dv7RWTjX6kM=;
-        b=XbmwJ9d/9XumtfmoJbtrztn3vjWPh+OOfru9G7dGFx4ETtwuCqxHDKxWskDHbC46T+
-         pAFVo3wWBHRnoO8/IbRdCXVdGX+IZ/u/zxY+5J4qDQUELCo4V5Fq17z4E5qAQaucuGKV
-         OHFOWeTo0AJi2yEU0SyefSgWuqLjt6XrdCuLI15Au6nuEg28QWQwpWWrYFBzuoqy5iZl
-         M0VSHvDgKUxSQUHCXuVDvAeKqZ61U0h/9HJMRfMyl7B701/7FAd9S3wmWOqoHR7la6vI
-         dxMIk88mBMCqrU80EXRkWO0H3M5EAAUA9aYnzRudbs8eh+oA0i0GSnmvTjVkXYfKYukk
-         TLig==
-X-Gm-Message-State: ABy/qLYKdmaWr3VUoYQ3rTupzxkDyma80zjd1wF+DLKatruuU/QCCLzX
-	HF0YtJZlnvFJaR6d2rjpSllYmg==
-X-Google-Smtp-Source: APBJJlHoou/JhXl86qfNBbCvOwucbpA2OuUZCVJ3udRUMF0veeQza39o7kfYXYRLWZCd1fWcueXZRA==
-X-Received: by 2002:a05:620a:44c4:b0:767:dfc8:a944 with SMTP id y4-20020a05620a44c400b00767dfc8a944mr997383qkp.41.1690338448296;
-        Tue, 25 Jul 2023 19:27:28 -0700 (PDT)
+        bh=IvvLurWmKpoBDmJ7SuX6DjccQU9JInSh+QxeozTVIBs=;
+        b=MkbdXrPOoUPdAcVGalioeo/11UyEAwBcDRqe15H/FtZ5bZKtNJ4DX8BDUDo6/2lu49
+         IPpV7r1Wp8LGay2jNjvdFFG8DEouw0cdWbAoHAz3OHHLgw+rYYboM6og/NutfdyLNgx7
+         k2A/hr4mPTweEknolvlG4NKLMSxm2gTqbwQXHtDAJ7rjugb/qtTblzdZRde+3k7QQoJh
+         p5+xDfPLT33UNt11RG9w+wdW8IqKIM69+QpEskTij5878aWT7jZDr+I6O5PI4szzLnjq
+         KGeGwOVC+oyo4QtJaw+Uy7QgIjV9TYgxA6oL8agm4bRgWqhaBoSSQIjK71rtKD6Nzyjh
+         mVow==
+X-Gm-Message-State: ABy/qLbWyUIdSmO8A9mLXrNA3sLaezIIzGYoCvkHUzXWwmDTGPzQDpPd
+	BbQnfYHvTOK1ksWqs2SfLaNqrQ==
+X-Google-Smtp-Source: APBJJlHdYPlsXo+rZE2sLcNGksogngSSyYL2isOJkEoKdAmD1DcjdxQ4s5yVRrn3/tDMHhCWzz/f4w==
+X-Received: by 2002:a17:902:ec89:b0:1ba:fe63:6622 with SMTP id x9-20020a170902ec8900b001bafe636622mr1265902plg.32.1690341054956;
+        Tue, 25 Jul 2023 20:10:54 -0700 (PDT)
 Received: from x1 ([2601:1c2:1800:f680:ab7f:7b75:8135:310])
-        by smtp.gmail.com with ESMTPSA id d18-20020a17090ac25200b00263dee538b1sm219346pjx.25.2023.07.25.19.27.26
+        by smtp.gmail.com with ESMTPSA id p18-20020a170902a41200b001bb9f104333sm5565234plq.12.2023.07.25.20.10.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jul 2023 19:27:27 -0700 (PDT)
-Date: Tue, 25 Jul 2023 19:27:25 -0700
+        Tue, 25 Jul 2023 20:10:54 -0700 (PDT)
+Date: Tue, 25 Jul 2023 20:10:52 -0700
 From: Drew Fustini <dfustini@baylibre.com>
 To: Tony Luck <tony.luck@intel.com>
-Cc: James Morse <james.morse@arm.com>, "Yu, Fenghua" <fenghua.yu@intel.com>,
-	"Chatre, Reinette" <reinette.chatre@intel.com>,
-	Babu Moger <Babu.Moger@amd.com>,
+Cc: Fenghua Yu <fenghua.yu@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
 	Peter Newman <peternewman@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
-	H Peter Anvin <hpa@zytor.com>,
-	"shameerali.kolothum.thodi@huawei.com" <shameerali.kolothum.thodi@huawei.com>,
-	D Scott Phillips OS <scott@os.amperecomputing.com>,
-	"carl@os.amperecomputing.com" <carl@os.amperecomputing.com>,
-	"lcherian@marvell.com" <lcherian@marvell.com>,
-	"bobo.shaobowang@huawei.com" <bobo.shaobowang@huawei.com>,
-	"tan.shaopeng@fujitsu.com" <tan.shaopeng@fujitsu.com>,
-	"xingxin.hx@openanolis.org" <xingxin.hx@openanolis.org>,
-	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org,
+	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>,
 	Jamie Iles <quic_jiles@quicinc.com>,
-	Xin Hao <xhao@linux.alibaba.com>,
-	"Pitre, Nicolas" <npitre@baylibre.com>,
-	Kevin Hilman <khilman@baylibre.com>,
-	"aricciardi@baylibre.com" <aricciardi@baylibre.com>,
-	"x86@kernel.org" <x86@kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [RFC PATCH 0/2] Resctrl - rewrite (WIP)
-Message-ID: <ZMCEjZgyi5oI+KWh@x1>
-References: <20230620033702.33344-1-tony.luck@intel.com>
- <ZJqhDYLG+/Kr44sp@x1>
- <SJ1PR11MB60832BA425B43CA19C778100FC27A@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <ZJ4clUlN2OujgHlC@agluck-desk3>
+	Babu Moger <babu.moger@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v4 0/7] Add support for Sub-NUMA cluster (SNC) systems
+Message-ID: <ZMCOvMfROYhQEFXo@x1>
+References: <20230713163207.219710-1-tony.luck@intel.com>
+ <20230722190740.326190-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -77,40 +63,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZJ4clUlN2OujgHlC@agluck-desk3>
+In-Reply-To: <20230722190740.326190-1-tony.luck@intel.com>
 
-On Thu, Jun 29, 2023 at 05:06:45PM -0700, Tony Luck wrote:
-> On Tue, Jun 27, 2023 at 04:33:52PM +0000, Luck, Tony wrote:
-> > I've made some significant changes since I posted those patches. I pushed
-> > the latest version to:
-> > 
-> > git://git.kernel.org/pub/scm/linux/kernel/git/aegl/linux.git    resctrl2_v64
+On Sat, Jul 22, 2023 at 12:07:33PM -0700, Tony Luck wrote:
+> The Sub-NUMA cluster feature on some Intel processors partitions
+> the CPUs that share an L3 cache into two or more sets. This plays
+> havoc with the Resource Director Technology (RDT) monitoring features.
+> Prior to this patch Intel has advised that SNC and RDT are incompatible.
 > 
-> I just pushed one big commit with all the bits I've updated so far
-> this week. Fixes some serious issues as well as general cleanup.
+> Some of these CPU support an MSR that can partition the RMID
+> counters in the same way. This allows for monitoring features
+> to be used (with the caveat that memory accesses between different
+> SNC NUMA nodes may still not be counted accuratlely.
 > 
-> HEAD is now:
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
 > 
-> afb7cdd4d640 resctrl2: Many cleanups, fixes, and new functionality
+> ---
 > 
-> If you've started writing your own architecture specific modules there
-> are some small interface changes. Most should be found by the compiler
-> barfing, but the new ".reset()" resource function called during unmount
-> of /sys/fs/resctrl might be less obvious.
+> Changes since v3:
 > 
-> -Tony
+> Reinette provided the most excellent suggestion that this series
+> could better achieve its objective if it enabled separate domain
+> lists for control & monitoring within a resource, rather than
+> creating a whole new resource to support separte node scope needed
+> for SNC monitoring. Thus all the pre-amble patches from the previous
+> version have gone, replaced by patches 1-4 of this new series.
 
-I have access to a Xeon Silver 4310 machine which reports to have
-cat_l3, cqm_mbm_local, cqm_mbm_total and mba.
+[This comment is unrelated to Sub-NUMA support so please disregard if
+this is the wrong place to make these comments]
 
-I would like to test resctrl2 on it so I can better understand how it
-works. I think that will help me understand how to adapt the RISC-V
-CBQRI resctrl proof-of-concept to use resctrl2.
+I think that the resctrl interface for RISC-V CBQRI could also benefit
+from separate domain lists for control and monitoring.
 
-Would you be able to provide an example of how you loaded the necessary
-resctrl2 kernel modules?
+For example, the bandwidth controller QoS register [1] interface allows
+a device to implement both bandwidth usage monitoring and bandwidth
+allocation. The resctrl proof-of-concept [2] had to awkwardly create two
+domains for each memory controller in our example SoC, one that would
+contain the MBA resource and one that would contain the L3 resource to
+represent MBM files like local_bytes.
 
-Also, is resctrl2_v65rc1 the latest to branch to test?
+This resulted in a very odd looking schemata that would be hard to the
+user to understand:
 
-Thank you,
+  # cat /sys/fs/resctrl/schemata
+  MB:4=  80;6=  80;8=  80
+  L2:0=0fff;1=0fff
+  L3:2=ffff;3=0000;5=0000;7=0000
+
+Where:
+
+  Domain 0 is L2 cache controller 0 capacity allocation
+  Domain 1 is L2 cache controller 1 capacity allocation
+  Domain 2 is L3 cache controller capacity allocation
+
+  Domain 4 is Memory controller 0 bandwidth allocation
+  Domain 6 is Memory controller 1 bandwidth allocation
+  Domain 8 is Memory controller 2 bandwidth allocation
+
+  Domain 3 is Memory controller 0 bandwidth monitoring
+  Domain 5 is Memory controller 1 bandwidth monitoring
+  Domain 7 is Memory controller 2 bandwidth monitoring
+
+But there is no value of having the domains created for the purposes of
+bandwidth monitoring in schemata.
+
+I've not yet fully understood how the new approach in this patch series
+could help the situation for CBQRI, but I thought I would mention that
+separate lists for control and monitoring might be useful.
+
+Thanks,
 Drew
+
+[1] https://github.com/riscv-non-isa/riscv-cbqri/blob/main/qos_bandwidth.adoc
+[2] https://lore.kernel.org/linux-riscv/20230419111111.477118-1-dfustini@baylibre.com/
