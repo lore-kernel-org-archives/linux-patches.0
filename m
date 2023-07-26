@@ -1,222 +1,94 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from abi149hd127.arn1.oracleemaildelivery.com (abi149hd127.arn1.oracleemaildelivery.com [129.149.84.127])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DA01AA81
-	for <patches@lists.linux.dev>; Wed, 26 Jul 2023 17:34:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=66wsCMpQU6FfBWm9l+EX673LWPMXJ2OOrUUr0K2e7g4=; b=SAiGzH+YNs/4c7c+fVGjD6Wi5b
-	66j65ZBDLnqU1rftVrAWXNxbSRQraEKMUHLdgCG/vvBinzOTK107lGJaY1pCJ0DD50CugUoOqlYAI
-	wE8669Fy28G/JulDPzzMyFzuvoLK4IW7P3WfaTMrZpMne0GDalRfVcGIkhdLccm5i9DKj9cpaDcsT
-	elqxek1ngORwtQpyNnlVyWVdsZmnB4RS2KkLPbtxd0wo+MsqdgKq5US3bOq6N48+/fCS8o6GF603v
-	npaDAdsWqmz9PSBYTHYOoYGIp4A/9IfUNgilLuHAd+UBg6/qtLnUBYyCDa3yi2XTSxW2MenGNFgGx
-	zPRbDAkg==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1qOiPS-00BAtc-0C;
-	Wed, 26 Jul 2023 17:34:50 +0000
-Date: Wed, 26 Jul 2023 10:34:50 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Zorro Lang <zlang@redhat.com>
-Cc: "Darrick J. Wong" <djwong@kernel.org>, fstests@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] fstests: add helper to canonicalize devices used to
- enable persistent disks
-Message-ID: <ZMFZOi3zJ8sevlb5@bombadil.infradead.org>
-References: <20230720061727.2363548-1-mcgrof@kernel.org>
- <20230725081307.xydlwjdl4lq3ts3m@zlang-mailbox>
- <20230725155439.GF11340@frogsfrogsfrogs>
- <20230725175009.jv4hbqxtags6qh5r@zlang-mailbox>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EEE4A93A
+	for <patches@lists.linux.dev>; Wed, 26 Jul 2023 23:11:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=oci-arn1-20220924;
+ d=augustwikerfors.se;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender;
+ bh=adeXy24LwyLPD7w2tMgIdpcV0wWeY6swswqHtjOUS1E=;
+ b=QFBjjb+nrYTVxk07MnTP8AI9i6bAkdHx4YupESzDL6HfH3AGXHp+/gg2W1FVXl2v8FAwwpJkCdvJ
+   UqKJYJng8jCsZkOMkNuAmSA28eqzzOiCMkgGB7g1/Sby7XpMUNGhyWMGA3gvyjP3K3VeHf/fr3DU
+   q0aRsxBS0i1/VUX55LC8UVb5CWIN2lEymChi0KkGcRCjI8AO1tUJgcj1jJ+tvmaGOQoRdzq984wg
+   s7etIboh49c1AJglAvsX25smStTnHnKqnqEAFfwbXyinoo0j6wOjDwpxw3tciC06wNi7E1r2Hpm1
+   OkiN3/RSag0nnQcdM3t+4JmksI99Zj9cnn10jw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-arn-20211201;
+ d=arn1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender;
+ bh=adeXy24LwyLPD7w2tMgIdpcV0wWeY6swswqHtjOUS1E=;
+ b=Yahznc3qgH06ZEqH69Ka73YVus52i6LkjQNaGiAVz7shcyqTXVO4p++c5/3Cx5527Bxmb8Ot+vpT
+   Bbctjxy4lxT9gMv8Zb7mYCjKSyWhsF0XmeaUpvJu9mVs86J4TVA8SRn42ljzA+j3rlNQ2Li+qvPi
+   TuVSSh1Nm0Bh29XRc/JYqjqzwDDzrvJ5T2NOD9yCaeJHJace+Kc7/m5daK6Hj//AnPRQBEboh1R+
+   sBxA3xmBYfT6f3fRyasVzneh7yjFupeEZL4blaDp69GnnxPvoD/O39jnzSqNsqdsAIHy2Zv/81V7
+   Haoa3lKeF92dFNEAbRT/krprdtPsavx8VV9BLA==
+Received: by omta-ad1-fd2-401-eu-stockholm-1.omtaad1.vcndparn.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20230629 64bit (built Jun 29
+ 2023))
+ with ESMTPS id <0RYF00M0KEUSHS20@omta-ad1-fd2-401-eu-stockholm-1.omtaad1.vcndparn.oraclevcn.com>
+ for patches@lists.linux.dev; Wed, 26 Jul 2023 23:06:28 +0000 (GMT)
+Message-id: <5fbe6ee8-f907-ffec-7c6d-400aa74eaf20@augustwikerfors.se>
+Date: Thu, 27 Jul 2023 01:06:25 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230725175009.jv4hbqxtags6qh5r@zlang-mailbox>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+MIME-version: 1.0
+From: August Wikerfors <git@augustwikerfors.se>
+Subject: Re: [PATCH 6.4 102/227] ACPI: resource: Remove "Zen" specific match
+ and quirks
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, evilsnoo@proton.me,
+ ruinairas1992@gmail.com, nmschulte@gmail.com,
+ Mario Limonciello <mario.limonciello@amd.com>,
+ Werner Sembach <wse@tuxedocomputers.com>, Chuanhong Guo <gch981213@gmail.com>,
+ "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+ Sasha Levin <sashal@kernel.org>
+References: <20230725104514.821564989@linuxfoundation.org>
+ <20230725104518.968673115@linuxfoundation.org>
+Content-language: en-US
+In-reply-to: <20230725104518.968673115@linuxfoundation.org>
+Content-type: text/plain; charset=UTF-8; format=flowed
+Content-transfer-encoding: 7bit
+Reporting-Meta:
+ AAHVxkMB8SvPYfOC9e8d1PrwcKCnkwiggtN+41vRCQYWzqY8j5IHfVKfMunb/qoh
+ TQL5PuhsxN3XpcD4ScJsfJHk1VBxEuKwp/4Vr+9tjpkfLbSfDEsPrPfOFs3pL7mt
+ 9FNX+efWJpx3EsJk2bnhc5yoTNxiMnyyIxwo3ssTK/00tWp0TlwMIJjAxUpkaOzv
+ Ok8YRcP+mSi47Cll29a2/1yOiWGwN2VNWOVR2MeKaQRCVVmQVJKFQUp5PTIjuhAh
+ hhA3j99xrXq4pO/r5KvWsR/rWgwWPhZRSk9ze8SnBgaNlh8PHH1BroTKHJ7Oe6Xg
+ LQ2Lz6xyl3Ml5jTvDwlZrqeHqZnkk/Pnh7dtV7SY0WGRxfsoNG7Egqg4QDFP+qHM
+ IGD7cGmA/83VlDxBs/bGjQRN3YT2Y0Cw6w5cddm9t/WXPGG6FA2491ic1RzAgImx AVYu
 
-On Wed, Jul 26, 2023 at 01:50:09AM +0800, Zorro Lang wrote:
-> On Tue, Jul 25, 2023 at 08:54:39AM -0700, Darrick J. Wong wrote:
-> > On Tue, Jul 25, 2023 at 04:13:07PM +0800, Zorro Lang wrote:
-> > > On Wed, Jul 19, 2023 at 11:17:27PM -0700, Luis Chamberlain wrote:
-> > > > Using a symlink is desirable if you want to enable persistent tests
-> > > > across reboots. For example you may want to use /dev/disk/by-id/nvme-eui.*
-> > > > so to ensure that the same drives are used even after reboot.
-> > >
-> > > If more developers prefer this change, I'd like to make it to be
-> > > optional by an option of ./check at least, not always turn devname
-> > > to realpath. Welcome review points from others.
-> > 
-> > Hmm.  SCRATCH_DEV=/dev/testvg/testlv works right now, it'd be sort of
-> > annoying to have "/dev/dm-4" get written into the report and then you've
-> > lost the correlation to whatever the user passed in.
-> > 
-> > Oh wait.  My giant mound of ./check wrapper script already does that
-> > canonicalization and has for years.
-> > 
-> > Ok.  Sounds good to me then. :P
+Hi,
+
+On 2023-07-25 12:44, Greg Kroah-Hartman wrote:
+> From: Mario Limonciello <mario.limonciello@amd.com>
 > 
-> So you hope fstests can do this translation (use real device name) by default?
-
-I'm fine if we make this optional too. In my next spin I'll add an
-option that does this.
-
-> > > I think [ -L "$TEST_DEV" ] is enough.
-> > 
-> > I don't think it is.
-> > 
-> > $ unset moo
-> > $ [ -L $moo ]
+> [ Upstream commit a9c4a912b7dc7ff922d4b9261160c001558f9755 ]
 > 
-> The double quotation marks "" are needed.
-
-Indeed it does. Will go with that for v2.
-
-> > $ echo $?
-> > 0
-> > $ realpath -e $moo
-> > realpath: missing operand
-> > Try 'realpath --help' for more information.
-> > 
-> > > > +		TEST_DEV=$(realpath -e $TEST_DEV)
-> > > 
-> > > Anyone knows the difference of realpatch and readlink?
-> > 
-> > readlink doesn't follow nested symlinks; realpath does:
-> > 
-> > $ touch /tmp/a
-> > $ ln -s /tmp/a /tmp/b
-> > $ ln -s /tmp/b /tmp/c
-> > $ readlink /tmp/c
-> > /tmp/b
-> > $ realpath /tmp/c
-> > /tmp/a
-> > $ readlink -m /tmp/c
-> > /tmp/a
+> commit 9946e39fe8d0 ("ACPI: resource: skip IRQ override on
+> AMD Zen platforms") attempted to overhaul the override logic so it
+> didn't apply on X86 AMD Zen systems.  This was intentional so that
+> systems would prefer DSDT values instead of default MADT value for
+> IRQ 1 on Ryzen 6000 systems which typically uses ActiveLow for IRQ1.
 > 
-> The -e option helps:
+> This turned out to be a bad assumption because several vendors
+> add Interrupt Source Override but don't fix the DSDT. A pile of
+> quirks was collecting that proved this wasn't sustaintable.
 > 
-> # readlink -e /tmp/c
-> /tmp/a
+> Furthermore some vendors have used ActiveHigh for IRQ1.
+> To solve this problem revert the following commits:
+> * commit 17bb7046e7ce ("ACPI: resource: Do IRQ override on all TongFang
+> GMxRGxx")
+> * commit f3cb9b740869 ("ACPI: resource: do IRQ override on Lenovo 14ALC7")
+> * commit bfcdf58380b1 ("ACPI: resource: do IRQ override on LENOVO IdeaPad")
+> * commit 7592b79ba4a9 ("ACPI: resource: do IRQ override on XMG Core 15")
+> * commit 9946e39fe8d0 ("ACPI: resource: skip IRQ override on AMD Zen
+> platforms")
 
-I can trace readlink -e support back to 2004:
+Unfortunately this breaks the keyboard on Lenovo Yoga 7 14ARB7:
+https://lore.kernel.org/all/596b9c4a-fb83-a8ab-3a44-6052d83fa546@augustwikerfors.se/
+https://github.com/tomsom/yoga-linux/issues/47
 
-https://github.com/coreutils/coreutils/commit/e0b8973bd4b146b5fb39641a4ee7984e922c3ff5
-
-> # realpath -e /tmp/c
-> /tmp/a
-
-realpeath is much newer than readlink, it's first commit including
-support for -e dates back to 2011;
-
-https://github.com/coreutils/coreutils/commit/77ea441f79aa115f79b47d9c1fc9c0004c5c7111
-
-And so canonicalizing with readlink is 7 years older and likely to be
-supported in more ancient distros with older coreutils. I'll go with
-readlink -e unless I hear otherwise.
-
-> > > > +	fi
-> > > > +
-> > > > +	if [ ! -z "$SCRATCH_DEV" ] && [ -L $SCRATCH_DEV ]; then
-> > > > +		SCRATCH_DEV=$(realpath -e $SCRATCH_DEV)
-> > 
-> > Extra question: Shouldn't we be putting theis ^^^ variables in quotes?
-> 
-> Make sense to me.
-
-Done. The only eye sore is how to convert the loop for the SCRATCH_DEV_POOL,
-here's what I have for a v2:
-
-diff --git a/README b/README
-index 1ca506492bf0..97ef63d6d693 100644
---- a/README
-+++ b/README
-@@ -268,6 +268,9 @@ Misc:
-    this option is supported for all filesystems currently only -overlay is
-    expected to run without issues. For other filesystems additional patches
-    and fixes to the test suite might be needed.
-+ - set CANON_DEVS=yes to canonicalize device symlinks. This will let you
-+   for example use something like TEST_DEV/dev/disk/by-id/nvme-* so the
-+   device remains persistent between reboots. This is disabled by default.
- 
- ______________________
- USING THE FSQA SUITE
-diff --git a/check b/check
-index 0bf5b22e061a..577e09655844 100755
---- a/check
-+++ b/check
-@@ -711,6 +711,7 @@ function run_section()
- 	fi
- 
- 	get_next_config $section
-+	_canonicalize_devices
- 
- 	mkdir -p $RESULT_BASE
- 	if [ ! -d $RESULT_BASE ]; then
-diff --git a/common/config b/common/config
-index 6c8cb3a5ba68..7d74c285ac71 100644
---- a/common/config
-+++ b/common/config
-@@ -25,6 +25,9 @@
- # KEEP_DMESG -      whether to keep all dmesg for each test case.
- #                   yes: keep all dmesg
- #                   no: only keep dmesg with error/warning (default)
-+# CANON_DEVS -      whether or not to canonicalize device symlinks
-+#                   yes: canonicalize device symlinks
-+#                   no (default) do not canonicalize device if they are symlinks
- #
- # - These can be added to $HOST_CONFIG_DIR (witch default to ./config)
- #   below or a separate local configuration file can be used (using
-@@ -644,6 +647,32 @@ _canonicalize_mountpoint()
- 	echo "$parent/$base"
- }
- 
-+# Enables usage of /dev/disk/by-id/ symlinks to persist target devices
-+# over reboots
-+_canonicalize_devices()
-+{
-+	if [ "$CANON_DEVS" != "yes" ]; then
-+		return
-+	fi
-+	[ -L "$TEST_DEV" ]	&& TEST_DEV=$(readlink -e "$TEST_DEV")
-+	[ -L $SCRATCH_DEV ]	&& SCRATCH_DEV=$(readlink -e "$SCRATCH_DEV")
-+	[ -L $TEST_LOGDEV ]	&& TEST_LOGDEV=$(readlink -e "$TEST_LOGDEV")
-+	[ -L $TEST_RTDEV ]	&& TEST_RTDEV=$(readlink -e "$TEST_RTDEV")
-+	[ -L $SCRATCH_RTDEV ]	&& SCRATCH_RTDEV=$(readlink -e "$SCRATCH_RTDEV")
-+	[ -L $LOGWRITES_DEV ]	&& LOGWRITES_DEV=$(readlink -e "$LOGWRITES_DEV")
-+	if [ ! -z "$SCRATCH_DEV_POOL" ]; then
-+		NEW_SCRATCH_POOL=""
-+		for i in $SCRATCH_DEV_POOL; do
-+			if [ -L $i ]; then
-+				NEW_SCRATCH_POOL="$NEW_SCRATCH_POOL $(readlink -e $i)"
-+			else
-+				NEW_SCRATCH_POOL="$NEW_SCRATCH_POOL $i)"
-+			fi
-+		done
-+		SCRATCH_DEV_POOL="$NEW_SCRATCH_POOL"
-+	fi
-+}
-+
- # On check -overlay, for the non multi section config case, this
- # function is called on every test, before init_rc().
- # When SCRATCH/TEST_* vars are defined in config file, config file
-@@ -774,7 +803,6 @@ get_next_config() {
- 	fi
- 
- 	parse_config_section $1
--
- 	if [ ! -z "$OLD_FSTYP" ] && [ $OLD_FSTYP != $FSTYP ]; then
- 		[ -z "$MOUNT_OPTIONS" ] && _mount_opts
- 		[ -z "$TEST_FS_MOUNT_OPTS" ] && _test_mount_opts
-@@ -890,5 +918,7 @@ else
- 	fi
- fi
- 
-+_canonicalize_devices
-+
- # make sure this script returns success
- /bin/true
+Regards,
+August Wikerfors
