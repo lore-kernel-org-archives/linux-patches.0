@@ -1,102 +1,132 @@
-Received: from gproxy2-pub.mail.unifiedlayer.com (gproxy2-pub.mail.unifiedlayer.com [69.89.18.3])
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D53A927
-	for <patches@lists.linux.dev>; Wed, 26 Jul 2023 13:14:01 +0000 (UTC)
-Received: from cmgw12.mail.unifiedlayer.com (unknown [10.0.90.127])
-	by progateway4.mail.pro1.eigbox.com (Postfix) with ESMTP id 9E0681003EFA4
-	for <patches@lists.linux.dev>; Wed, 26 Jul 2023 13:13:58 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id OeL0qpGz5aShIOeL0qQQUK; Wed, 26 Jul 2023 13:13:58 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=SPmH6MjH c=1 sm=1 tr=0 ts=64c11c16
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10:nop_charset_1 a=ws7JD89P4LkA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=mdOrbuIhtOySShl96DIA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=+95HJXvGghmTnL384aEvqOb5KQL+7mrY/jgSEYmqwoY=; b=rmL0IRnVHKNMI8TzW2DyGirujq
-	Vn0W2eDMvrydAly6HVk4lxYesYLVA5EJtXxTDLg0DnyBzxBnqg10HmGUQ0BTCydxrcwI/0HuSiJnp
-	09P2JB9rrWdImYN2XA/w10V5uj7MrND2bZBYVVrlF5ynqQnfY8ovKuFLi1D5hXov6EVxeIyBanSSC
-	abG0+/i9gzxKl5ZwaZInTp9er+ULgoA3Jjz4uKn32MHFBKYf/k71PxcPkQ5XSU+JkACXeLu9NHvIa
-	zoTrt0gPv+Q1A/FIsh6Ctd5Qp8JWDRBjvL0hMmjlWf8krIaubbmtLUN55jVVi3vIB6LCQHZ+noH/P
-	RKs++yag==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:49500 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96)
-	(envelope-from <re@w6rz.net>)
-	id 1qOeKz-0048G9-1d;
-	Wed, 26 Jul 2023 07:13:57 -0600
-Subject: Re: [PATCH 6.1 000/183] 6.1.42-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org
-References: <20230725104507.756981058@linuxfoundation.org>
-In-Reply-To: <20230725104507.756981058@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <52560da2-a3ba-362f-670e-2bc444ff2ca5@w6rz.net>
-Date: Wed, 26 Jul 2023 06:13:55 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F969C2C5
+	for <patches@lists.linux.dev>; Wed, 26 Jul 2023 13:52:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1690379571; x=1721915571;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=xvBkwY7sxuWl/Al5gD7mazKVZkI/LarItDLpbbjPsSg=;
+  b=VmUNi8VPfQtLBH5EPRxO4wlAJ/4StfPhCNgYDO1ZdZ171OTJoz7ZDqOr
+   yFoae9XxAe+LST9OFI0liR2gGm5bMSU1t8UwJU6rZRlkF2wzSNqUAVZDa
+   zWVC6UpQzfhQARgCXDgCIrLH2c6Q6K3xcjRZZ/PV8zwTFx0M3xlmq46Cf
+   8N20SSWZZ+hfgYKVHXDPSCvK+FtQTgGfCo7EG1Q7spPDW/CXjMnXJjzbS
+   LxM22cC70f0oDhDCx10VGKCeYyWWKEy9xNsmWnjCo6h26C3JGO5DI9NMX
+   WgC9+SasWWiGoz4/z2OwwWP7MC55zdQnZ/s/N6XgXAzsnp7fDo9R+Pe9Z
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10783"; a="352922614"
+X-IronPort-AV: E=Sophos;i="6.01,232,1684825200"; 
+   d="scan'208";a="352922614"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jul 2023 06:52:50 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10783"; a="796587548"
+X-IronPort-AV: E=Sophos;i="6.01,232,1684825200"; 
+   d="scan'208";a="796587548"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
+  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jul 2023 06:52:50 -0700
+Date: Wed, 26 Jul 2023 06:52:48 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Drew Fustini <dfustini@baylibre.com>
+Cc: James Morse <james.morse@arm.com>, "Yu, Fenghua" <fenghua.yu@intel.com>,
+	"Chatre, Reinette" <reinette.chatre@intel.com>,
+	Babu Moger <Babu.Moger@amd.com>,
+	Peter Newman <peternewman@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+	H Peter Anvin <hpa@zytor.com>,
+	"shameerali.kolothum.thodi@huawei.com" <shameerali.kolothum.thodi@huawei.com>,
+	D Scott Phillips OS <scott@os.amperecomputing.com>,
+	"carl@os.amperecomputing.com" <carl@os.amperecomputing.com>,
+	"lcherian@marvell.com" <lcherian@marvell.com>,
+	"bobo.shaobowang@huawei.com" <bobo.shaobowang@huawei.com>,
+	"tan.shaopeng@fujitsu.com" <tan.shaopeng@fujitsu.com>,
+	"xingxin.hx@openanolis.org" <xingxin.hx@openanolis.org>,
+	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Xin Hao <xhao@linux.alibaba.com>,
+	"Pitre, Nicolas" <npitre@baylibre.com>,
+	Kevin Hilman <khilman@baylibre.com>,
+	"aricciardi@baylibre.com" <aricciardi@baylibre.com>,
+	"x86@kernel.org" <x86@kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [RFC PATCH 0/2] Resctrl - rewrite (WIP)
+Message-ID: <ZMElMLPWi0+2jCp8@agluck-desk3>
+References: <20230620033702.33344-1-tony.luck@intel.com>
+ <ZJqhDYLG+/Kr44sp@x1>
+ <SJ1PR11MB60832BA425B43CA19C778100FC27A@SJ1PR11MB6083.namprd11.prod.outlook.com>
+ <ZJ4clUlN2OujgHlC@agluck-desk3>
+ <ZMCEjZgyi5oI+KWh@x1>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1qOeKz-0048G9-1d
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:49500
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZMCEjZgyi5oI+KWh@x1>
 
-On 7/25/23 3:43 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.42 release.
-> There are 183 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 27 Jul 2023 10:44:26 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.42-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Tue, Jul 25, 2023 at 07:27:25PM -0700, Drew Fustini wrote:
+> I have access to a Xeon Silver 4310 machine which reports to have
+> cat_l3, cqm_mbm_local, cqm_mbm_total and mba.
+> 
+> I would like to test resctrl2 on it so I can better understand how it
+> works. I think that will help me understand how to adapt the RISC-V
+> CBQRI resctrl proof-of-concept to use resctrl2.
+> 
+> Would you be able to provide an example of how you loaded the necessary
+> resctrl2 kernel modules?
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Drew,
 
-Tested-by: Ron Economos <re@w6rz.net>
+Sure. You simply mount the filesystem, and then load modules for
+whichever features you'd like to use. This will enable everything
+you list above:
 
+# mount -t resctrl resctrl /sys/fs/resctrl
+# modprobe rdt_l3_cat
+# modprobe rdt_llc_occupancy
+# modprobe rdt_mbm_local_bytes
+# modprobe rdt_mbm_total_bytes
+# modprobe rdt_l3_mba
+
+There are some experimental extras. E.g.
+
+# modprobe rdt_mbm_total_rate
+# modprobe rdt_mbm_local_rate
+
+Will each add an extra file to the mon_data directories to
+report the data rate in MB/s. The value reported is calculated
+by the once-per-second counter roll-over code in the kernel.
+So it might be up to one second out of date, but it is very cheap
+to read since it doesn't involve MSR access (or cross processor
+interrupts if you are reading from a CPU in a different scope).
+
+You can unload modules without unmounting the filesystem and
+load different ones to get different data/control. E.g. to
+switch from L3CAT to L3CDP (which you don't list as supported,
+so this may not work for you:
+
+# rmmod rdt_l3_cat
+# modprobe rdt_l3_cdp
+
+Or to switch from the default MBA that uses percentages to
+specify throttling to the MBM->MBA feedback code that uses
+MB/s in the schemata file:
+
+# rmmod rdt_l3_mba
+# modprobe rdt_l3_mba_MBps
+> 
+> Also, is resctrl2_v65rc1 the latest to branch to test?
+
+Yes. That's the latest. There haven't been any updates for a
+few days because I'm working on a module to support pseudo-locking.
+I'm half-way there (can do most of the bits to set a group into
+pseudo-locked mode ... about to work on the cleanup when the
+group is removed, the filesystem unmounted, or the module unloaded).
+
+-Tony
