@@ -1,120 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D53C8EA
-	for <patches@lists.linux.dev>; Thu, 27 Jul 2023 16:07:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCFBBC433C8;
-	Thu, 27 Jul 2023 16:07:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1690474028;
-	bh=uBvzXfHO1nsSRjLcionOhLpZMwIec1LCVD6wwCarigE=;
-	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
-	b=RYz+SK6ZEzLzz1Mdh24O+2stfplmHIts9XxT584v30nxRw0nUPQc6XakHgC9iMd7n
-	 pBUkiritFqLokBmoWgQ0P7Hh+mjz5+KZ2Tkqf/KACVUkVKX8ww2DMg7L7y7eKqsb3M
-	 UGben2x0vnCsT4p3UJDQjMrvKLX0ddut/p7gPmhBeb5DEsp1QzXINvdytZZ6udQX49
-	 YCGjV5+fy1hEdtaU5ABOsUqrT4Ky8ITEea9kbNnHA8RDeMj9jBWTvArHq+yrGNsKxA
-	 cRcSJJ7lEWQYvzY6H2Y9PLW53FfW4zmH/NaJqS4kjZrr4yXi5LiZv+UtWpTAXiEAY/
-	 TWS7V31i+PJLA==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id 53053CE0B66; Thu, 27 Jul 2023 09:07:08 -0700 (PDT)
-Date: Thu, 27 Jul 2023 09:07:08 -0700
-From: "Paul E. McKenney" <paulmck@kernel.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: Joel Fernandes <joel@joelfernandes.org>, Pavel Machek <pavel@denx.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	rcu@vger.kernel.org
-Subject: Re: [PATCH 6.4 000/227] 6.4.7-rc1 review
-Message-ID: <ebe4a969-8a24-4bb8-8dbe-f77db89f65c9@paulmck-laptop>
-Reply-To: paulmck@kernel.org
-References: <ZMJWet00+9yIl/9c@duo.ucw.cz>
- <78722041-D1F7-45FA-BA1C-41B92209BA6C@joelfernandes.org>
- <0751f5a8-2727-4a08-8bb8-50bbd4244c9c@paulmck-laptop>
- <67eba84a-ae24-2983-a756-463f39f3ca71@roeck-us.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A7FC8EA;
+	Thu, 27 Jul 2023 16:08:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=EQJuMAJSGL6ttEyLaOeJWDVPtC4nPLTazz3w/7T8YEs=; b=iZehVCeZ/aZdcCVwzxFikSCFG2
+	BcyLCLf+Laa1fVdpy4XV/VOvaoENHb9CChj/q9Nbi+q/QYgolctVy9YrQTzdMK6sojLZrCxtnne+M
+	kLLiOnVxckYo2U4KrTm/b57/++cHeaWWWEvO2zHkZRbMtEszjsJWb/a/JAUXA6IbIwH+351cbnkbg
+	L/5f3uTSd09dZaI8/GUGcXz075KfcLYaeFbHxxfcyVZZlF65Qkaw3jPOwr/TucEFgd1zvUSbt+EFL
+	tTPUvxSiFtTqJBvmZziCuogNelVApPFCxDFbOJe8m25U13n4nPRj4Tu3FRF0/TE87Z7x6r1CrYNDF
+	SQkGv7tQ==;
+Received: from [187.36.235.191] (helo=[192.168.1.212])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1qP3XI-004ilg-WB; Thu, 27 Jul 2023 18:08:21 +0200
+Message-ID: <2b3d9647-b1db-cbb6-2421-b12ec3482eae@igalia.com>
+Date: Thu, 27 Jul 2023 13:08:13 -0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 0/2] Avoid -Wconstant-logical-operand in
+ nsecs_to_jiffies_timeout()
+Content-Language: en-US
+To: Nathan Chancellor <nathan@kernel.org>, jani.nikula@linux.intel.com,
+ joonas.lahtinen@linux.intel.com, rodrigo.vivi@intel.com,
+ tvrtko.ursulin@linux.intel.com, emma@anholt.net, mwen@igalia.com
+Cc: trix@redhat.com, intel-gfx@lists.freedesktop.org, llvm@lists.linux.dev,
+ ndesaulniers@google.com, patches@lists.linux.dev,
+ dri-devel@lists.freedesktop.org, justinstitt@google.com
+References: <20230718-nsecs_to_jiffies_timeout-constant-logical-operand-v1-0-36ed8fc8faea@kernel.org>
+From: Maira Canal <mcanal@igalia.com>
+In-Reply-To: <20230718-nsecs_to_jiffies_timeout-constant-logical-operand-v1-0-36ed8fc8faea@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <67eba84a-ae24-2983-a756-463f39f3ca71@roeck-us.net>
 
-On Thu, Jul 27, 2023 at 07:39:54AM -0700, Guenter Roeck wrote:
-> On 7/27/23 07:06, Paul E. McKenney wrote:
-> > On Thu, Jul 27, 2023 at 09:26:52AM -0400, Joel Fernandes wrote:
-> > > 
-> > > 
-> > > > On Jul 27, 2023, at 7:35 AM, Pavel Machek <pavel@denx.de> wrote:
-> > > > 
-> > > > ﻿Hi!
-> > > > 
-> > > > > > This is the start of the stable review cycle for the 6.4.7 release.
-> > > > > > There are 227 patches in this series, all will be posted as a response
-> > > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > > let me know.
-> > > > > > 
-> > > > > > Responses should be made by Thu, 27 Jul 2023 10:44:26 +0000.
-> > > > > > Anything received after that time might be too late.
-> > > > > > 
-> > > > > > The whole patch series can be found in one patch at:
-> > > > > >     https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.7-rc1.gz
-> > > > > > or in the git tree and branch at:
-> > > > > >     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
-> > > > > > and the diffstat can be found below.
-> > > > > 
-> > > > > I saw this when running rcutorture, this one happened in the TREE04
-> > > > > configuration. This is likely due to the stuttering issues we are discussing
-> > > > > in the other thread. Anyway I am just making a note here while I am
-> > > > > continuing to look into it.
-> > > > 
-> > > > So is the stuttering new in 6.4.7?
-> > > 
-> > > No it is an old feature in RCU torture tests. But is dependent on timing. Something
-> > > changed in recent kernels that is making the issues with it more likely. Its hard to bisect as failure sometimes takes hours.
-> > > 
-> > > > 
-> > > > > Other than that, all tests pass:
-> > > > > Tested-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-> > > > 
-> > > > ...or you still believe 6.4.7 is okay to release?
-> > > 
-> > > As such, it should be Ok. However naturally I am not happy that the RCU testing
-> > > is intermittently failing. These issues have been seen in last several 6.4 stable releases
-> > > so since those were released, maybe this one can be too?
-> > > The fix for stuttering is currently being reviewed.
-> > 
-> > Or, to look at it another way, the stuttering fix is specific to torture
-> > testing.  Would we really want to hold up a -stable release only because
-> > rcutorture occasionally gives a false-positive failure on certain types
-> > of systems?
-> > 
+On 7/18/23 18:44, Nathan Chancellor wrote:
+> Hi all,
 > 
-> No. However, (unrelated) in linux-next, rcu tests sometimes result in apparent hangs
-> or long runtime.
+> A proposed update to clang's -Wconstant-logical-operand [1] to warn when
+> the left hand side is a constant as well now triggers with the modulo
+> expression in nsecs_to_jiffies_timeout() when NSEC_PER_SEC is not a
+> multiple of HZ, such as CONFIG_HZ=300:
 > 
-> [    0.778841] Mount-cache hash table entries: 512 (order: 0, 4096 bytes, linear)
-> [    0.779011] Mountpoint-cache hash table entries: 512 (order: 0, 4096 bytes, linear)
-> [    0.797998] Running RCU synchronous self tests
-> [    0.798209] Running RCU synchronous self tests
-> [    0.912368] smpboot: CPU0: AMD Opteron 63xx class CPU (family: 0x15, model: 0x2, stepping: 0x0)
-> [    0.923398] RCU Tasks: Setting shift to 2 and lim to 1 rcu_task_cb_adjust=1.
-> [    0.925419] Running RCU-tasks wait API self tests
+>    drivers/gpu/drm/i915/gem/i915_gem_wait.c:189:24: warning: use of logical '&&' with constant operand [-Wconstant-logical-operand]
+>      189 |         if (NSEC_PER_SEC % HZ &&
+>          |             ~~~~~~~~~~~~~~~~~ ^
+>    drivers/gpu/drm/i915/gem/i915_gem_wait.c:189:24: note: use '&' for a bitwise operation
+>      189 |         if (NSEC_PER_SEC % HZ &&
+>          |                               ^~
+>          |                               &
+>    drivers/gpu/drm/i915/gem/i915_gem_wait.c:189:24: note: remove constant to silence this warning
+>    1 warning generated.
 > 
-> (hangs until aborted). This is primarily with Opteron CPUs, but also with others such as Haswell,
-> Icelake-Server, and pentium3. It is all but impossible to bisect because it doesn't happen
-> all the time. All I was able to figure out was that it has to do with rcu changes in linux-next.
-> I'd be much more concerned about that.
+>    In file included from drivers/gpu/drm/v3d/v3d_debugfs.c:12:
+>    drivers/gpu/drm/v3d/v3d_drv.h:343:24: warning: use of logical '&&' with constant operand [-Wconstant-logical-operand]
+>      343 |         if (NSEC_PER_SEC % HZ &&
+>          |             ~~~~~~~~~~~~~~~~~ ^
+>    drivers/gpu/drm/v3d/v3d_drv.h:343:24: note: use '&' for a bitwise operation
+>      343 |         if (NSEC_PER_SEC % HZ &&
+>          |                               ^~
+>          |                               &
+>    drivers/gpu/drm/v3d/v3d_drv.h:343:24: note: remove constant to silence this warning
+>    1 warning generated.
+> 
+> These patches add an explicit comparison to zero to make the
+> expression a boolean, which clears up the warning.
+> 
+> The patches have no real dependency on each other but I felt like they
+> made send together since it is the same code.
+> 
+> If these could go into mainline sooner rather than later to avoid
+> breaking builds that can hit this with CONFIG_WERROR, that would be
+> nice, but I won't insist since I don't think our own CI has builds that
+> has those conditions, but others might.
+> 
+> ---
+> Nathan Chancellor (2):
+>        drm/v3d: Avoid -Wconstant-logical-operand in nsecs_to_jiffies_timeout()
+>        drm/i915: Avoid -Wconstant-logical-operand in nsecs_to_jiffies_timeout()
 
-First I have heard of this, so thank you for letting me know.
+Applied both patches to drm-misc/drm-misc-next!
 
-About what fraction of the time does this happen?
+Best Regards,
+- Maíra
 
-							Thanx, Paul
+> 
+>   drivers/gpu/drm/i915/gem/i915_gem_wait.c | 2 +-
+>   drivers/gpu/drm/v3d/v3d_drv.h            | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
+> ---
+> base-commit: fdf0eaf11452d72945af31804e2a1048ee1b574c
+> change-id: 20230718-nsecs_to_jiffies_timeout-constant-logical-operand-4a944690f3e9
+> 
+> Best regards,
