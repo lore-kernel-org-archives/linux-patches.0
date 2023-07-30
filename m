@@ -1,136 +1,153 @@
-Received: from mgamail.intel.com (unknown [192.55.52.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722A828E3;
-	Sat, 29 Jul 2023 23:25:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1690673134; x=1722209134;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=lg5Z2zadJltzEJU5eTPAO7fkXvwEPhVsT0zhAmujkSU=;
-  b=Ux/xsRnl3WhBb4Otez1dvh5R8O6L2i2/GVQXpbsVNd3Gi53+LmMtwvHX
-   QhiNfALZVnPqsJT4MfCoGjf+eVUGK0GfGIA6JrAO5i1PDfpD6VPStdG2d
-   VsNptawZC4TP2Po/xS+tcM2WQr+zMEYANj0i60FT4XCCfEaJ6+tbfTB/j
-   6SVevxs3T6I26KZFFi7AOr7pxEKWgsOXfrubThExThfm4I+VoIaBpOI3z
-   YFA/EQehO04EiFmxfzvPJVprQ0jvMC8wA+YuEqXePurkV47Dfk6HIoa9W
-   ftkR1VsBtVhEwNVcxB5hodCXMyddpUW9mlOaXUap8PPUXIcJ3y67PdavC
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10786"; a="366266756"
-X-IronPort-AV: E=Sophos;i="6.01,240,1684825200"; 
-   d="scan'208";a="366266756"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jul 2023 16:25:33 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10786"; a="974471634"
-X-IronPort-AV: E=Sophos;i="6.01,240,1684825200"; 
-   d="scan'208";a="974471634"
-Received: from lkp-server02.sh.intel.com (HELO 953e8cd98f7d) ([10.239.97.151])
-  by fmsmga006.fm.intel.com with ESMTP; 29 Jul 2023 16:25:29 -0700
-Received: from kbuild by 953e8cd98f7d with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1qPtJQ-0004Kl-2g;
-	Sat, 29 Jul 2023 23:25:28 +0000
-Date: Sun, 30 Jul 2023 07:25:07 +0800
-From: kernel test robot <lkp@intel.com>
-To: Miguel Ojeda <ojeda@kernel.org>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 1/2] rust: upgrade to Rust 1.71.0
-Message-ID: <202307300737.8GuKiWIl-lkp@intel.com>
-References: <20230729220317.416771-1-ojeda@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DED62E
+	for <patches@lists.linux.dev>; Sun, 30 Jul 2023 04:00:06 +0000 (UTC)
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1bb893e6365so21336795ad.2
+        for <patches@lists.linux.dev>; Sat, 29 Jul 2023 21:00:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1690689605; x=1691294405;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:sender
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AAH7kcctHGY9q7+ANxa5bVlorYyFiJpGeFYFxj8E/sQ=;
+        b=kUub4sDP5yS8kuvvBs7FUJotIVw6CXrxbwTd5U4zze+9PW3Fqcjh3DULx4HIgM8zEZ
+         IJ5oj2wF/YGTPJ2vHwzw0RVKKtd7Y/RUB5oUkP7O1egAv/m3pMD7I6IJLU4o1+cZgllL
+         4J2+q1lkfydk5+87hao6HxOdKN/m5FRC5Xw1CXqQlvozy0zDYlUW7dt4udwPP/4ifzT+
+         oAilLlsDx+VMDgq2vnl9qtuQwTG9WHQ7in14AoabRPP6fJXhfilDjg2p/xlKTr9n0Jxt
+         5OjLa1rSE0zvONJjNsMRS2VqNYyeHdIffVWXBf8VRITLZ+rVrrf5apszMIXj2WlqH7s6
+         cDIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690689605; x=1691294405;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AAH7kcctHGY9q7+ANxa5bVlorYyFiJpGeFYFxj8E/sQ=;
+        b=dBfOZYwg+100r2gqNrNCoYJkX9jFcJ8uaIs3U+HwSRWezUIAemgM7gwW0ptKj/Efog
+         Oj+WiRkMoKlCf1iUUAh/gG/bY+zEtWw2LIfNbDXMm65rN/DZ+kJx0ZinxXhLqNrT5i6u
+         tnobBf8Ha+FlZYjZSWQyCYo4FWa+IzbJ/wPqcoKwxnKFKx97gFBoNFfVY/iMkrPgdYIn
+         HA/6As/R31iE0U2b/9ZmKPMpwEOpkks7uroMdrg6wU/3XKb6aSvIe1Q6554kub/YvkvY
+         AfbiYgoM+MH0SvMel7/VCKDY2B7zsRA+SOln4uKW0pfWoGbjSkoa9NlMF6ak1m3WhgtU
+         jE1w==
+X-Gm-Message-State: ABy/qLYGjUr2nDAi2LG/OGiUEDVHwLQJQjn7OrPvdWJxJ2/3cVw1Cr1G
+	XBtJhtKiAbvvIjC8uKYw1Wo=
+X-Google-Smtp-Source: APBJJlE4XatKc4s8CMeQH+rvGk5qoJTBZ6cP3YOOttJNhx/ntAHN+p6q2otxn6gaq1UGPyJ+zwjYYw==
+X-Received: by 2002:a17:903:1246:b0:1b7:e86f:7631 with SMTP id u6-20020a170903124600b001b7e86f7631mr7879946plh.19.1690689605362;
+        Sat, 29 Jul 2023 21:00:05 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id l19-20020a170902d35300b001bb9f104330sm5940212plk.240.2023.07.29.21.00.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 29 Jul 2023 21:00:04 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <3da81a5c-700b-8e21-1bde-27dd3a0b8945@roeck-us.net>
+Date: Sat, 29 Jul 2023 21:00:02 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230729220317.416771-1-ojeda@kernel.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Content-Language: en-US
+To: Joel Fernandes <joel@joelfernandes.org>, paulmck@kernel.org
+Cc: Pavel Machek <pavel@denx.de>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, rcu@vger.kernel.org,
+ Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@kernel.org>
+References: <2cfc68cc-3a2f-4350-a711-ef0c0d8385fd@paulmck-laptop>
+ <D56D0318-A2EA-4448-8F4D-BE84706E26A5@joelfernandes.org>
+From: Guenter Roeck <linux@roeck-us.net>
+Subject: scheduler problems in -next (was: Re: [PATCH 6.4 000/227] 6.4.7-rc1
+ review)
+In-Reply-To: <D56D0318-A2EA-4448-8F4D-BE84706E26A5@joelfernandes.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Miguel,
+On 7/27/23 16:18, Joel Fernandes wrote:
 
-kernel test robot noticed the following build errors:
+[ ... ]
 
-[auto build test ERROR on 7c74839b2acc9b5a5d16d3a1737741dd64e1804b]
+>> I freely confess that I am having a hard time imagining what would
+>> be CPU dependent in that code.  Timing, maybe?  Whatever the reason,
+>> I am not seeing these failures in my testing.
+>>
+>> So which of the following Kconfig options is defined in your .config?
+>> CONFIG_TASKS_RCU, CONFIG_TASKS_RUDE_RCU, and CONFIG_TASKS_TRACE_RCU.
+>>
+>> If you have more than one of them, could you please apply this patch
+>> and show me the corresponding console output from the resulting hang?
+> 
+> FWIW, I am not able to repro this issue either. If a .config can be shared of the problem system, I can try it out to see if it can be reproduced on my side.
+> 
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Miguel-Ojeda/rust-enable-no_mangle_with_rust_abi-Clippy-lint/20230730-060434
-base:   7c74839b2acc9b5a5d16d3a1737741dd64e1804b
-patch link:    https://lore.kernel.org/r/20230729220317.416771-1-ojeda%40kernel.org
-patch subject: [PATCH 1/2] rust: upgrade to Rust 1.71.0
-config: x86_64-rhel-8.3-rust (https://download.01.org/0day-ci/archive/20230730/202307300737.8GuKiWIl-lkp@intel.com/config)
-compiler: clang version 16.0.4 (https://github.com/llvm/llvm-project.git ae42196bc493ffe877a7e3dff8be32035dea4d07)
-reproduce: (https://download.01.org/0day-ci/archive/20230730/202307300737.8GuKiWIl-lkp@intel.com/reproduce)
+I managed to bisect the problem. See bisect log below. Bisect repeated twice.
+so it should be reliable. I don't really understand it, but the following
+reverts fix the problem. This is on top of next-20230721 because next-20230728
+crashes immediately in my tests.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202307300737.8GuKiWIl-lkp@intel.com/
+0caafe9b94ab (HEAD) Revert "sched/fair: Remove sched_feat(START_DEBIT)"
+518bdbd39fdb Revert "sched/fair: Add lag based placement"
+a011162c3e32 Revert "sched/fair: Implement an EEVDF-like scheduling policy"
+df579720bf98 Revert "sched/fair: Commit to lag based placement"
+aac459a7e738 Revert "sched/smp: Use lag to simplify cross-runqueue placement"
+8d686eb173e1 Revert "sched/fair: Commit to EEVDF"
+486474c50f95 Revert "sched/debug: Rename sysctl_sched_min_granularity to sysctl_sched_base_slice"
+79e94d67d08a Revert "sched/fair: Propagate enqueue flags into place_entity()"
+ae867bc97b71 (tag: next-20230721) Add linux-next specific files for 20230721
 
-All errors (new ones prefixed by >>):
+For context: x86 images (32 and 64 bit) in -next tend to hang at
 
->> thread 'main' panicked at '"ftrace_branch_data_union_(anonymous_at_include/linux/compiler_types_h_146_2)" is not a valid Ident', /opt/cross/rustc-1.71.0-bindgen-0.56.0/cargo/registry/src/index.crates.io-6f17d22bba15001f/proc-macro2-1.0.24/src/fallback.rs:693:9
-   stack backtrace:
-      0: rust_begin_unwind
-                at /rustc/8ede3aae28fe6e4d52b38157d7bfe0d3bceef225/library/std/src/panicking.rs:593:5
-      1: core::panicking::panic_fmt
-                at /rustc/8ede3aae28fe6e4d52b38157d7bfe0d3bceef225/library/core/src/panicking.rs:67:14
-      2: proc_macro2::fallback::Ident::_new
-      3: proc_macro2::Ident::new
-      4: bindgen::ir::context::BindgenContext::rust_ident
-      5: <bindgen::ir::comp::CompInfo as bindgen::codegen::CodeGenerator>::codegen
-      6: <bindgen::ir::ty::Type as bindgen::codegen::CodeGenerator>::codegen
-      7: <bindgen::ir::item::Item as bindgen::codegen::CodeGenerator>::codegen
-      8: <bindgen::ir::comp::CompInfo as bindgen::codegen::CodeGenerator>::codegen
-      9: <bindgen::ir::ty::Type as bindgen::codegen::CodeGenerator>::codegen
-     10: <bindgen::ir::item::Item as bindgen::codegen::CodeGenerator>::codegen
-     11: <bindgen::ir::module::Module as bindgen::codegen::CodeGenerator>::codegen
-     12: <bindgen::ir::item::Item as bindgen::codegen::CodeGenerator>::codegen
-     13: bindgen::ir::context::BindgenContext::gen
-     14: bindgen::Builder::generate
-     15: bindgen::main
-   note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
-   make[3]: *** [rust/Makefile:316: rust/uapi/uapi_generated.rs] Error 1
-   make[3]: *** Deleting file 'rust/uapi/uapi_generated.rs'
->> thread 'main' panicked at '"ftrace_branch_data_union_(anonymous_at_include/linux/compiler_types_h_146_2)" is not a valid Ident', /opt/cross/rustc-1.71.0-bindgen-0.56.0/cargo/registry/src/index.crates.io-6f17d22bba15001f/proc-macro2-1.0.24/src/fallback.rs:693:9
-   stack backtrace:
-      0: rust_begin_unwind
-                at /rustc/8ede3aae28fe6e4d52b38157d7bfe0d3bceef225/library/std/src/panicking.rs:593:5
-      1: core::panicking::panic_fmt
-                at /rustc/8ede3aae28fe6e4d52b38157d7bfe0d3bceef225/library/core/src/panicking.rs:67:14
-      2: proc_macro2::fallback::Ident::_new
-      3: proc_macro2::Ident::new
-      4: bindgen::ir::context::BindgenContext::rust_ident
-      5: <bindgen::ir::comp::CompInfo as bindgen::codegen::CodeGenerator>::codegen
-      6: <bindgen::ir::ty::Type as bindgen::codegen::CodeGenerator>::codegen
-      7: <bindgen::ir::item::Item as bindgen::codegen::CodeGenerator>::codegen
-      8: <bindgen::ir::comp::CompInfo as bindgen::codegen::CodeGenerator>::codegen
-      9: <bindgen::ir::ty::Type as bindgen::codegen::CodeGenerator>::codegen
-     10: <bindgen::ir::item::Item as bindgen::codegen::CodeGenerator>::codegen
-     11: <bindgen::ir::module::Module as bindgen::codegen::CodeGenerator>::codegen
-     12: <bindgen::ir::item::Item as bindgen::codegen::CodeGenerator>::codegen
-     13: bindgen::ir::context::BindgenContext::gen
-     14: bindgen::Builder::generate
-     15: bindgen::main
-   note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
-   make[3]: *** [rust/Makefile:310: rust/bindings/bindings_generated.rs] Error 1
-   make[3]: *** Deleting file 'rust/bindings/bindings_generated.rs'
-   make[3]: Target 'rust/' not remade because of errors.
-   make[2]: *** [Makefile:1281: prepare] Error 2
-   make[1]: *** [Makefile:234: __sub-make] Error 2
-   make[1]: Target 'prepare' not remade because of errors.
-   make: *** [Makefile:234: __sub-make] Error 2
-   make: Target 'prepare' not remade because of errors.
+[    2.309323] RCU Tasks: Setting shift to 0 and lim to 1 rcu_task_cb_adjust=1.
+[    2.311634] Running RCU-tasks wait API self tests
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+The hang is not seen with every boot; it happens roughly about once every
+10 boot attempts. It is not CPU dependent as I initially thought.
+
+Configuration file is at http://server.roeck-us.net/qemu/x86-next/config.
+Example qemu command line:
+
+qemu-system-x86_64 -kernel arch/x86/boot/bzImage -M q35 -cpu Broadwell-noTSX -no-reboot \
+      -snapshot -device e1000,netdev=net0 -netdev user,id=net0 -m 256 \
+      -drive file=rootfs.ext2,format=raw,if=ide \
+      --append "earlycon=uart8250,io,0x3f8,9600n8 root=/dev/sda console=ttyS0" \
+      -nographic -monitor none
+
+Guenter
+
+---
+# bad: [ae867bc97b713121b2a7f5fcac68378a0774739b] Add linux-next specific files for 20230721
+# good: [fdf0eaf11452d72945af31804e2a1048ee1b574c] Linux 6.5-rc2
+git bisect start 'HEAD' 'v6.5-rc2'
+# good: [f09bf8f6c8cbbff6f52523abcda88c86db72e31c] Merge branch 'for-next' of git://git.kernel.org/pub/scm/linux/kernel/git/rdma/rdma.git
+git bisect good f09bf8f6c8cbbff6f52523abcda88c86db72e31c
+# good: [86374a6210aeebceb927204d80f9e65739134bc3] Merge branch 'for-next' of git://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound.git
+git bisect good 86374a6210aeebceb927204d80f9e65739134bc3
+# bad: [d588c93cae9e3dff15d125e755edcba5d842f41a] Merge branch 'for-next' of git://git.kernel.org/pub/scm/linux/kernel/git/trace/linux-trace.git
+git bisect bad d588c93cae9e3dff15d125e755edcba5d842f41a
+# good: [acadcaf8c67062ad4c1a0ad0e05bf429b04740c5] Merge branch 'for-next' of git://git.kernel.dk/linux-block.git
+git bisect good acadcaf8c67062ad4c1a0ad0e05bf429b04740c5
+# good: [2c73542f4cdc59fd23514f9e963d0b3419bd5e16] Merge branch 'next' of git://git.kernel.org/pub/scm/linux/kernel/git/jarkko/linux-tpmdd.git
+git bisect good 2c73542f4cdc59fd23514f9e963d0b3419bd5e16
+# good: [be15b91155cd5a6c4ac8f46740ae62e610981b79] Merge remote-tracking branch 'spi/for-6.6' into spi-next
+git bisect good be15b91155cd5a6c4ac8f46740ae62e610981b79
+# bad: [8f4995b370a57e7ad92c0f66664d171b23234337] Merge branch into tip/master: 'sched/eevdf'
+git bisect bad 8f4995b370a57e7ad92c0f66664d171b23234337
+# bad: [99d4d26551b56f4e523dd04e4970b94aa796a64e] rbtree: Add rb_add_augmented_cached() helper
+git bisect bad 99d4d26551b56f4e523dd04e4970b94aa796a64e
+# good: [7ff1693236f5d97a939dbeb660c07671a2d57071] sched/fair: Implement prefer sibling imbalance calculation between asymmetric groups
+git bisect good 7ff1693236f5d97a939dbeb660c07671a2d57071
+# good: [48b5583719cdfbdee238f9549a6a1a47af2b0469] sched/headers: Rename task_struct::state to task_struct::__state in the comments too
+git bisect good 48b5583719cdfbdee238f9549a6a1a47af2b0469
+# good: [af4cf40470c22efa3987200fd19478199e08e103] sched/fair: Add cfs_rq::avg_vruntime
+git bisect good af4cf40470c22efa3987200fd19478199e08e103
+# bad: [86bfbb7ce4f67a88df2639198169b685668e7349] sched/fair: Add lag based placement
+git bisect bad 86bfbb7ce4f67a88df2639198169b685668e7349
+# bad: [e0c2ff903c320d3fd3c2c604dc401b3b7c0a1d13] sched/fair: Remove sched_feat(START_DEBIT)
+git bisect bad e0c2ff903c320d3fd3c2c604dc401b3b7c0a1d13
+# first bad commit: [e0c2ff903c320d3fd3c2c604dc401b3b7c0a1d13] sched/fair: Remove sched_feat(START_DEBIT)
+
