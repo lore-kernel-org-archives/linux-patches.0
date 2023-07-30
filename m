@@ -1,153 +1,155 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DED62E
-	for <patches@lists.linux.dev>; Sun, 30 Jul 2023 04:00:06 +0000 (UTC)
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1bb893e6365so21336795ad.2
-        for <patches@lists.linux.dev>; Sat, 29 Jul 2023 21:00:06 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB91C1FA6
+	for <patches@lists.linux.dev>; Sun, 30 Jul 2023 15:04:32 +0000 (UTC)
+Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-3a5a7ebdd9fso2764132b6e.0
+        for <patches@lists.linux.dev>; Sun, 30 Jul 2023 08:04:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690689605; x=1691294405;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id:sender
+        d=gmail.com; s=20221208; t=1690729472; x=1691334272;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=AAH7kcctHGY9q7+ANxa5bVlorYyFiJpGeFYFxj8E/sQ=;
-        b=kUub4sDP5yS8kuvvBs7FUJotIVw6CXrxbwTd5U4zze+9PW3Fqcjh3DULx4HIgM8zEZ
-         IJ5oj2wF/YGTPJ2vHwzw0RVKKtd7Y/RUB5oUkP7O1egAv/m3pMD7I6IJLU4o1+cZgllL
-         4J2+q1lkfydk5+87hao6HxOdKN/m5FRC5Xw1CXqQlvozy0zDYlUW7dt4udwPP/4ifzT+
-         oAilLlsDx+VMDgq2vnl9qtuQwTG9WHQ7in14AoabRPP6fJXhfilDjg2p/xlKTr9n0Jxt
-         5OjLa1rSE0zvONJjNsMRS2VqNYyeHdIffVWXBf8VRITLZ+rVrrf5apszMIXj2WlqH7s6
-         cDIA==
+        bh=E2zpBBpZBXYPQAISvn06iBuDvpcDOCSrd4IGlSeVlOg=;
+        b=YUzPt880xMjeQMJp5vo5iaibSUf3gcr6CPb1B8soLp58TSPeVkarzlCyMd81nrJ8hA
+         XcjkyevonHaNc50OmIQ2JfCwWlksvyrzIRtB5cstfosrnQ3iJdFx7saTOQNd2izUmhIk
+         wr9n6jy5k6N0cohFrApyduylbhEWAg54PtxHHdIwA/EDZqANE5vhZl30983Rn19Yqph1
+         /3l/EgcQ1nZI556xGK3dIGYAadCpidwzHpHL9c7D/ghXy7SZoFnlr2Q64p5Ayp8W4bFA
+         bYBir4s4tV1Uykyh9KZ/7Zy82hs+DHBLwg5zXZesjGbvQUQ1bEsuha1Xc70vlmtZa0Yw
+         HOKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690689605; x=1691294405;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id:sender
+        d=1e100.net; s=20221208; t=1690729472; x=1691334272;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AAH7kcctHGY9q7+ANxa5bVlorYyFiJpGeFYFxj8E/sQ=;
-        b=dBfOZYwg+100r2gqNrNCoYJkX9jFcJ8uaIs3U+HwSRWezUIAemgM7gwW0ptKj/Efog
-         Oj+WiRkMoKlCf1iUUAh/gG/bY+zEtWw2LIfNbDXMm65rN/DZ+kJx0ZinxXhLqNrT5i6u
-         tnobBf8Ha+FlZYjZSWQyCYo4FWa+IzbJ/wPqcoKwxnKFKx97gFBoNFfVY/iMkrPgdYIn
-         HA/6As/R31iE0U2b/9ZmKPMpwEOpkks7uroMdrg6wU/3XKb6aSvIe1Q6554kub/YvkvY
-         AfbiYgoM+MH0SvMel7/VCKDY2B7zsRA+SOln4uKW0pfWoGbjSkoa9NlMF6ak1m3WhgtU
-         jE1w==
-X-Gm-Message-State: ABy/qLYGjUr2nDAi2LG/OGiUEDVHwLQJQjn7OrPvdWJxJ2/3cVw1Cr1G
-	XBtJhtKiAbvvIjC8uKYw1Wo=
-X-Google-Smtp-Source: APBJJlE4XatKc4s8CMeQH+rvGk5qoJTBZ6cP3YOOttJNhx/ntAHN+p6q2otxn6gaq1UGPyJ+zwjYYw==
-X-Received: by 2002:a17:903:1246:b0:1b7:e86f:7631 with SMTP id u6-20020a170903124600b001b7e86f7631mr7879946plh.19.1690689605362;
-        Sat, 29 Jul 2023 21:00:05 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id l19-20020a170902d35300b001bb9f104330sm5940212plk.240.2023.07.29.21.00.03
+        bh=E2zpBBpZBXYPQAISvn06iBuDvpcDOCSrd4IGlSeVlOg=;
+        b=X8c40lcsucaM3GK5mA7lo6+Z276qXabXlEtn/ZQqG6xTr5ZCvbBIyoSNdCOyBA4PC5
+         5Bi7sRxIatr7homdhDg5+QFueceDTIXzrO941XNnaM/5VmJqTdEN/5SbpsLbE+RoLTOR
+         PzIGdxHjGzO8p6Rpv9TGxwLTl4aK82/fq3yOZnsykWrlvWYgiZ09Yq/k0qWe51VItSUf
+         C69RQnM/+3VkyLgw4f47zYe6dMVsOeDUhkmoSeI4whdpWoOaSYHJtHu0vKk8vfMD3ysj
+         WnHyQy+wDdEAb5BJwed9EDyFGLSnjSAAWmkBE6vtvroMcFFu3nFaCV4lbk1sFFZkKcso
+         hMAw==
+X-Gm-Message-State: ABy/qLbZzqwVO4md/5xe7Pk/3Gn5B+b675xE2OXl+y9ImJ96QnljX0V7
+	0FvxpvmmeVAF+8HRehmL5QE=
+X-Google-Smtp-Source: APBJJlFRpM/b6XQ3u3jjqZBlP4x6bfJrNDWH5Riaw34JWKXMNqMmY3dYXLFkNVdVOiKpxGb/0T+CkA==
+X-Received: by 2002:a05:6808:434b:b0:3a4:350e:b226 with SMTP id dx11-20020a056808434b00b003a4350eb226mr6627498oib.33.1690729471583;
+        Sun, 30 Jul 2023 08:04:31 -0700 (PDT)
+Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
+        by smtp.gmail.com with ESMTPSA id j19-20020aca1713000000b003a40b3fce01sm3359309oii.10.2023.07.30.08.04.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 29 Jul 2023 21:00:04 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <3da81a5c-700b-8e21-1bde-27dd3a0b8945@roeck-us.net>
-Date: Sat, 29 Jul 2023 21:00:02 -0700
+        Sun, 30 Jul 2023 08:04:31 -0700 (PDT)
+Message-ID: <808c7eb4-abc6-21c9-f929-7070c0da1d05@gmail.com>
+Date: Sun, 30 Jul 2023 12:04:26 -0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] rust: upgrade to Rust 1.71.0
 Content-Language: en-US
-To: Joel Fernandes <joel@joelfernandes.org>, paulmck@kernel.org
-Cc: Pavel Machek <pavel@denx.de>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, rcu@vger.kernel.org,
- Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@kernel.org>
-References: <2cfc68cc-3a2f-4350-a711-ef0c0d8385fd@paulmck-laptop>
- <D56D0318-A2EA-4448-8F4D-BE84706E26A5@joelfernandes.org>
-From: Guenter Roeck <linux@roeck-us.net>
-Subject: scheduler problems in -next (was: Re: [PATCH 6.4 000/227] 6.4.7-rc1
- review)
-In-Reply-To: <D56D0318-A2EA-4448-8F4D-BE84706E26A5@joelfernandes.org>
+To: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho
+ <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+ =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
+ Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>,
+ Andreas Hindborg <a.hindborg@samsung.com>, rust-for-linux@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <20230729220317.416771-1-ojeda@kernel.org>
+From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+In-Reply-To: <20230729220317.416771-1-ojeda@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 7/27/23 16:18, Joel Fernandes wrote:
-
-[ ... ]
-
->> I freely confess that I am having a hard time imagining what would
->> be CPU dependent in that code.  Timing, maybe?  Whatever the reason,
->> I am not seeing these failures in my testing.
->>
->> So which of the following Kconfig options is defined in your .config?
->> CONFIG_TASKS_RCU, CONFIG_TASKS_RUDE_RCU, and CONFIG_TASKS_TRACE_RCU.
->>
->> If you have more than one of them, could you please apply this patch
->> and show me the corresponding console output from the resulting hang?
+On 7/29/23 19:03, Miguel Ojeda wrote:
+> This is the second upgrade to the Rust toolchain, from 1.68.2 to 1.71.0
+> (i.e. the latest).
 > 
-> FWIW, I am not able to repro this issue either. If a .config can be shared of the problem system, I can try it out to see if it can be reproduced on my side.
+> See the upgrade policy [1] and the comments on the first upgrade in
+> commit 3ed03f4da06e ("rust: upgrade to Rust 1.68.2").
 > 
-
-I managed to bisect the problem. See bisect log below. Bisect repeated twice.
-so it should be reliable. I don't really understand it, but the following
-reverts fix the problem. This is on top of next-20230721 because next-20230728
-crashes immediately in my tests.
-
-0caafe9b94ab (HEAD) Revert "sched/fair: Remove sched_feat(START_DEBIT)"
-518bdbd39fdb Revert "sched/fair: Add lag based placement"
-a011162c3e32 Revert "sched/fair: Implement an EEVDF-like scheduling policy"
-df579720bf98 Revert "sched/fair: Commit to lag based placement"
-aac459a7e738 Revert "sched/smp: Use lag to simplify cross-runqueue placement"
-8d686eb173e1 Revert "sched/fair: Commit to EEVDF"
-486474c50f95 Revert "sched/debug: Rename sysctl_sched_min_granularity to sysctl_sched_base_slice"
-79e94d67d08a Revert "sched/fair: Propagate enqueue flags into place_entity()"
-ae867bc97b71 (tag: next-20230721) Add linux-next specific files for 20230721
-
-For context: x86 images (32 and 64 bit) in -next tend to hang at
-
-[    2.309323] RCU Tasks: Setting shift to 0 and lim to 1 rcu_task_cb_adjust=1.
-[    2.311634] Running RCU-tasks wait API self tests
-
-The hang is not seen with every boot; it happens roughly about once every
-10 boot attempts. It is not CPU dependent as I initially thought.
-
-Configuration file is at http://server.roeck-us.net/qemu/x86-next/config.
-Example qemu command line:
-
-qemu-system-x86_64 -kernel arch/x86/boot/bzImage -M q35 -cpu Broadwell-noTSX -no-reboot \
-      -snapshot -device e1000,netdev=net0 -netdev user,id=net0 -m 256 \
-      -drive file=rootfs.ext2,format=raw,if=ide \
-      --append "earlycon=uart8250,io,0x3f8,9600n8 root=/dev/sda console=ttyS0" \
-      -nographic -monitor none
-
-Guenter
-
----
-# bad: [ae867bc97b713121b2a7f5fcac68378a0774739b] Add linux-next specific files for 20230721
-# good: [fdf0eaf11452d72945af31804e2a1048ee1b574c] Linux 6.5-rc2
-git bisect start 'HEAD' 'v6.5-rc2'
-# good: [f09bf8f6c8cbbff6f52523abcda88c86db72e31c] Merge branch 'for-next' of git://git.kernel.org/pub/scm/linux/kernel/git/rdma/rdma.git
-git bisect good f09bf8f6c8cbbff6f52523abcda88c86db72e31c
-# good: [86374a6210aeebceb927204d80f9e65739134bc3] Merge branch 'for-next' of git://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound.git
-git bisect good 86374a6210aeebceb927204d80f9e65739134bc3
-# bad: [d588c93cae9e3dff15d125e755edcba5d842f41a] Merge branch 'for-next' of git://git.kernel.org/pub/scm/linux/kernel/git/trace/linux-trace.git
-git bisect bad d588c93cae9e3dff15d125e755edcba5d842f41a
-# good: [acadcaf8c67062ad4c1a0ad0e05bf429b04740c5] Merge branch 'for-next' of git://git.kernel.dk/linux-block.git
-git bisect good acadcaf8c67062ad4c1a0ad0e05bf429b04740c5
-# good: [2c73542f4cdc59fd23514f9e963d0b3419bd5e16] Merge branch 'next' of git://git.kernel.org/pub/scm/linux/kernel/git/jarkko/linux-tpmdd.git
-git bisect good 2c73542f4cdc59fd23514f9e963d0b3419bd5e16
-# good: [be15b91155cd5a6c4ac8f46740ae62e610981b79] Merge remote-tracking branch 'spi/for-6.6' into spi-next
-git bisect good be15b91155cd5a6c4ac8f46740ae62e610981b79
-# bad: [8f4995b370a57e7ad92c0f66664d171b23234337] Merge branch into tip/master: 'sched/eevdf'
-git bisect bad 8f4995b370a57e7ad92c0f66664d171b23234337
-# bad: [99d4d26551b56f4e523dd04e4970b94aa796a64e] rbtree: Add rb_add_augmented_cached() helper
-git bisect bad 99d4d26551b56f4e523dd04e4970b94aa796a64e
-# good: [7ff1693236f5d97a939dbeb660c07671a2d57071] sched/fair: Implement prefer sibling imbalance calculation between asymmetric groups
-git bisect good 7ff1693236f5d97a939dbeb660c07671a2d57071
-# good: [48b5583719cdfbdee238f9549a6a1a47af2b0469] sched/headers: Rename task_struct::state to task_struct::__state in the comments too
-git bisect good 48b5583719cdfbdee238f9549a6a1a47af2b0469
-# good: [af4cf40470c22efa3987200fd19478199e08e103] sched/fair: Add cfs_rq::avg_vruntime
-git bisect good af4cf40470c22efa3987200fd19478199e08e103
-# bad: [86bfbb7ce4f67a88df2639198169b685668e7349] sched/fair: Add lag based placement
-git bisect bad 86bfbb7ce4f67a88df2639198169b685668e7349
-# bad: [e0c2ff903c320d3fd3c2c604dc401b3b7c0a1d13] sched/fair: Remove sched_feat(START_DEBIT)
-git bisect bad e0c2ff903c320d3fd3c2c604dc401b3b7c0a1d13
-# first bad commit: [e0c2ff903c320d3fd3c2c604dc401b3b7c0a1d13] sched/fair: Remove sched_feat(START_DEBIT)
-
+> # Unstable features
+> 
+> No unstable features (that we use) were stabilized.
+> 
+> Therefore, the only unstable feature allowed to be used outside
+> the `kernel` crate is still `new_uninit`, though other code to be
+> upstreamed may increase the list.
+> 
+> Please see [2] for details.
+> 
+> # Required changes
+> 
+> For the upgrade, this patch requires the following changes:
+> 
+>    - Removal of the `__rust_*` allocator functions, together with
+>      the addition of the `__rust_no_alloc_shim_is_unstable` static.
+>      See [3] for details.
+> 
+>    - Some more compiler builtins added due to `<f{32,64}>::midpoint()`
+>      that got added in Rust 1.71 [4].
+> 
+> # `alloc` upgrade and reviewing
+> 
+> The vast majority of changes are due to our `alloc` fork being upgraded
+> at once.
+> 
+> There are two kinds of changes to be aware of: the ones coming from
+> upstream, which we should follow as closely as possible, and the updates
+> needed in our added fallible APIs to keep them matching the newer
+> infallible APIs coming from upstream.
+> 
+> Instead of taking a look at the diff of this patch, an alternative
+> approach is reviewing a diff of the changes between upstream `alloc` and
+> the kernel's. This allows to easily inspect the kernel additions only,
+> especially to check if the fallible methods we already have still match
+> the infallible ones in the new version coming from upstream.
+> 
+> Another approach is reviewing the changes introduced in the additions in
+> the kernel fork between the two versions. This is useful to spot
+> potentially unintended changes to our additions.
+> 
+> To apply these approaches, one may follow steps similar to the following
+> to generate a pair of patches that show the differences between upstream
+> Rust and the kernel (for the subset of `alloc` we use) before and after
+> applying this patch:
+> 
+>      # Get the difference with respect to the old version.
+>      git -C rust checkout $(linux/scripts/min-tool-version.sh rustc)
+>      git -C linux ls-tree -r --name-only HEAD -- rust/alloc |
+>          cut -d/ -f3- |
+>          grep -Fv README.md |
+>          xargs -IPATH cp rust/library/alloc/src/PATH linux/rust/alloc/PATH
+>      git -C linux diff --patch-with-stat --summary -R > old.patch
+>      git -C linux restore rust/alloc
+> 
+>      # Apply this patch.
+>      git -C linux am rust-upgrade.patch
+> 
+>      # Get the difference with respect to the new version.
+>      git -C rust checkout $(linux/scripts/min-tool-version.sh rustc)
+>      git -C linux ls-tree -r --name-only HEAD -- rust/alloc |
+>          cut -d/ -f3- |
+>          grep -Fv README.md |
+>          xargs -IPATH cp rust/library/alloc/src/PATH linux/rust/alloc/PATH
+>      git -C linux diff --patch-with-stat --summary -R > new.patch
+>      git -C linux restore rust/alloc
+> 
+> Now one may check the `new.patch` to take a look at the additions (first
+> approach) or at the difference between those two patches (second
+> approach). For the latter, a side-by-side tool is recommended.
+> 
+> Link: https://rust-for-linux.com/rust-version-policy [1]
+> Link: https://github.com/Rust-for-Linux/linux/issues/2 [2]
+> Link: https://github.com/rust-lang/rust/pull/86844 [3]
+> Link: https://github.com/rust-lang/rust/pull/92048 [4]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+> Based on top of `rust-next`, since we want to be on top of commit
+> 7c74839b2acc ("rust: alloc: Add realloc and alloc_zeroed to the
+> GlobalAlloc impl"), in order to be able to simply remove the `__rust_*`
+> functions here.
+> 
+> [...]
+Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
