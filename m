@@ -1,83 +1,169 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2205211C85
-	for <patches@lists.linux.dev>; Mon, 31 Jul 2023 08:17:11 +0000 (UTC)
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-3fbc59de0e2so39086325e9.3
-        for <patches@lists.linux.dev>; Mon, 31 Jul 2023 01:17:11 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E303C3F
+	for <patches@lists.linux.dev>; Mon, 31 Jul 2023 14:35:18 +0000 (UTC)
+Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-34928e9f24bso1678855ab.0
+        for <patches@lists.linux.dev>; Mon, 31 Jul 2023 07:35:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=metaspace-dk.20221208.gappssmtp.com; s=20221208; t=1690791430; x=1691396230;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=tXBhRdUtHPrrcaPCjbweWbD8AMIQH0b5ap+ZgbPohPI=;
-        b=ILtKjJzDWLauNQNKqeZ9L8laJBDSpcEnpFzZw2345aQVHXBXjLv8naR51ob/R/fkrx
-         LZQ9pLNzYOC9T0sKxztD+JEJkuEY0hpTLMAysqz7B9t110z9zYv8l/noosXBA7hkvgnM
-         R3BBSfm03rZ5fIcCvkWZjjghUGA3/PuWfvlSJh49sw+d2lzAKf3M8w0+Jc2Wg/vsadt6
-         7e2rX1FYzM2iz6ku2aEiXRartgWUjhcMWfA6ivOUjTyBy+Z92IgtpVVRpUrmqiFHskS3
-         KE7PJrUIxLGNtTaNrskjbeAHBV2rubibWPoffK0u0IsEn3Ys7JW/MibRhejTuc6j20VB
-         hCcg==
+        d=gmail.com; s=20221208; t=1690814117; x=1691418917;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=eX7bMytNzv0J3fxDqTlC2BO6YnoZqvtt4NQGt1AgiU4=;
+        b=rAXh0Kl41BzPzNoVSMPXW5VZDSHU/rKAb8c/yQY1STNYAQm0EcDwAC1lqjO8xBoftW
+         Z1PwwISf32G10+oYRoUyc3wu6sIOaMyoKNGuGMUZDTHsOlk9einQDaUPEOTqLRLDEoS+
+         BDMCuTecC+d5obNRPuZGZjSdurg91ueXLrfVFTutrUel9vFsDd3vl4bI869rP7fjh8/9
+         QYV5VnIBF0piLC5dvuyosVjYiI7BmRcZ8G/VYI2AKd2q2gcLqwbKu3MH0lQR2iM4i1IJ
+         N078FhR4NMXxVju552ULbWH/aQWITfEjhK+T8WG5b6W+recySTGMdoEkeqocF/XU6aj5
+         pkHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690791430; x=1691396230;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tXBhRdUtHPrrcaPCjbweWbD8AMIQH0b5ap+ZgbPohPI=;
-        b=fLCnIhaEMW7AMJwTQ1n+FD2nG1lO46zh5VPKZgioHWeGEWuL00sXqO641NrPf2PXxs
-         pvghn7k5k5eu7tkf/7/8WK1LITq9C8TfOAWykzXYXWg9T0FiQE06Vr3EdskVbRYZC0w4
-         dNuYh4n3V0UCXi49z1OTkbGZ7xBiqgK8t0UIZIdkdg7UVLeX7SFyQril7eWa5hLHUw1b
-         7E70cQcQW5qxEDURlqupiMKC+pj46jjyvGd5ZIQE9565QvKuHMnWqejAj3f7F47IN9Rn
-         c9jS7V40x4QL2EUWE2+Wk3PKRilAPXRRqLPnZYCp8x0Ylyhm26S2sq2EuWFoB080hxcl
-         XgjQ==
-X-Gm-Message-State: ABy/qLaU2ZO5S/yoE3nfQyBPKYLClalqNsnnJVjPi6I6sIZFqJJxgNMA
-	NPSPh0F0yxNFxTNi5tp5dZegvw==
-X-Google-Smtp-Source: APBJJlGlRoVcspGECVffVhhAtcYYUfteqIvOr8ABivvTLEiMG8/BQmr8aW3Ttv6CWtvng4xkn8QPow==
-X-Received: by 2002:a5d:452d:0:b0:314:133a:f04 with SMTP id j13-20020a5d452d000000b00314133a0f04mr4535091wra.49.1690791429647;
-        Mon, 31 Jul 2023 01:17:09 -0700 (PDT)
-Received: from localhost ([165.225.194.190])
-        by smtp.gmail.com with ESMTPSA id z14-20020a5d4d0e000000b003143bb5ecd5sm12241583wrt.69.2023.07.31.01.17.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Jul 2023 01:17:09 -0700 (PDT)
-References: <20230718054426.1048583-1-ojeda@kernel.org>
-User-agent: mu4e 1.10.5; emacs 28.2.50
-From: "Andreas Hindborg (Samsung)" <nmi@metaspace.dk>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor
- <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo
- <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn?= Roy Baron
- <bjorn3_gh@protonmail.com>, Benno
- Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>,
- rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, Andreas Hindborg <a.hindborg@samsung.com>
-Subject: Re: [PATCH] MAINTAINERS: add Andreas Hindborg as Rust reviewer
-Date: Mon, 31 Jul 2023 10:16:10 +0200
-In-reply-to: <20230718054426.1048583-1-ojeda@kernel.org>
-Message-ID: <877cqgqyuz.fsf@metaspace.dk>
+        d=1e100.net; s=20221208; t=1690814117; x=1691418917;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eX7bMytNzv0J3fxDqTlC2BO6YnoZqvtt4NQGt1AgiU4=;
+        b=CiBJLRmp1cXUn9fXg02l6vNXlyuG6+dbaNV4nXrRVZra7I8KwrqqB4ABDXzBfLDSm+
+         c9xtH4vcHxitov05GO0uTbxOk7h5RDtGZI9MUtgi9n8igkkzqEPhVUePUsgMuLoTBwH6
+         WmvmP4JYFhzBGxTeiwKzU9EMeGKYA8DOw77dPlVqDzmtN6xQpSzxfdF8sEmqf+LBkrDZ
+         77SplP7ro0g5am5ADnMpA6yU8WhsYmbKvArqqU/kptIhjPGwJu2j2nOoUkYpQu8ukTK6
+         wwNDwou3XUHwVz1/JFnGhvH8uVRQXLpHB1bhpLC/ka6+0LM09Sma/TCICitfqvrq9+Ax
+         GBAA==
+X-Gm-Message-State: ABy/qLbcN5uiNR1PUnmliXQjFWQwebmHPOtDsoR0PCkX/jRv0kubHhvx
+	KoYP9C60Pfis9F5cOEiR+pM=
+X-Google-Smtp-Source: APBJJlGikep+h8o7CaYmzfeQ/pBZ2sTGFN74ikCmDl07peGIRp46V+WHUCM8Q04L+ArVJnVtF7Cxkg==
+X-Received: by 2002:a05:6e02:170d:b0:346:24c2:4f87 with SMTP id u13-20020a056e02170d00b0034624c24f87mr10125503ill.32.1690814117204;
+        Mon, 31 Jul 2023 07:35:17 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id b7-20020a05663801a700b0042b09036e5fsm3070050jaq.175.2023.07.31.07.35.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 31 Jul 2023 07:35:16 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <fdaaee62-b67e-556c-2675-aacd3ec994f6@roeck-us.net>
+Date: Mon, 31 Jul 2023 07:35:13 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: scheduler problems in -next (was: Re: [PATCH 6.4 000/227]
+ 6.4.7-rc1 review)
+Content-Language: en-US
+To: Peter Zijlstra <peterz@infradead.org>
+Cc: Joel Fernandes <joel@joelfernandes.org>, paulmck@kernel.org,
+ Pavel Machek <pavel@denx.de>, Greg Kroah-Hartman
+ <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, rcu@vger.kernel.org,
+ Ingo Molnar <mingo@kernel.org>
+References: <2cfc68cc-3a2f-4350-a711-ef0c0d8385fd@paulmck-laptop>
+ <D56D0318-A2EA-4448-8F4D-BE84706E26A5@joelfernandes.org>
+ <3da81a5c-700b-8e21-1bde-27dd3a0b8945@roeck-us.net>
+ <20230731141934.GK29590@hirez.programming.kicks-ass.net>
+From: Guenter Roeck <linux@roeck-us.net>
+In-Reply-To: <20230731141934.GK29590@hirez.programming.kicks-ass.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 7/31/23 07:19, Peter Zijlstra wrote:
+> On Sat, Jul 29, 2023 at 09:00:02PM -0700, Guenter Roeck wrote:
+>> On 7/27/23 16:18, Joel Fernandes wrote:
+>>
+>> [ ... ]
+>>
+>>>> I freely confess that I am having a hard time imagining what would
+>>>> be CPU dependent in that code.  Timing, maybe?  Whatever the reason,
+>>>> I am not seeing these failures in my testing.
+>>>>
+>>>> So which of the following Kconfig options is defined in your .config?
+>>>> CONFIG_TASKS_RCU, CONFIG_TASKS_RUDE_RCU, and CONFIG_TASKS_TRACE_RCU.
+>>>>
+>>>> If you have more than one of them, could you please apply this patch
+>>>> and show me the corresponding console output from the resulting hang?
+>>>
+>>> FWIW, I am not able to repro this issue either. If a .config can be shared of the problem system, I can try it out to see if it can be reproduced on my side.
+>>>
+>>
+>> I managed to bisect the problem. See bisect log below. Bisect repeated twice.
+>> so it should be reliable. I don't really understand it, but the following
+>> reverts fix the problem. This is on top of next-20230721 because next-20230728
+>> crashes immediately in my tests.
+>>
+>> 0caafe9b94ab (HEAD) Revert "sched/fair: Remove sched_feat(START_DEBIT)"
+>> 518bdbd39fdb Revert "sched/fair: Add lag based placement"
+>> a011162c3e32 Revert "sched/fair: Implement an EEVDF-like scheduling policy"
+>> df579720bf98 Revert "sched/fair: Commit to lag based placement"
+>> aac459a7e738 Revert "sched/smp: Use lag to simplify cross-runqueue placement"
+>> 8d686eb173e1 Revert "sched/fair: Commit to EEVDF"
+>> 486474c50f95 Revert "sched/debug: Rename sysctl_sched_min_granularity to sysctl_sched_base_slice"
+>> 79e94d67d08a Revert "sched/fair: Propagate enqueue flags into place_entity()"
+>> ae867bc97b71 (tag: next-20230721) Add linux-next specific files for 20230721
+>>
+>> For context: x86 images (32 and 64 bit) in -next tend to hang at
+>>
+>> [    2.309323] RCU Tasks: Setting shift to 0 and lim to 1 rcu_task_cb_adjust=1.
+>> [    2.311634] Running RCU-tasks wait API self tests
+>>
+>> The hang is not seen with every boot; it happens roughly about once every
+>> 10 boot attempts. It is not CPU dependent as I initially thought.
+>>
+>> Configuration file is at http://server.roeck-us.net/qemu/x86-next/config.
+>> Example qemu command line:
+> 
+> Hurmph, let me see if I can reproduce on next-20230731 (not having the
+> older next thingies around).
 
-Miguel Ojeda <ojeda@kernel.org> writes:
+That crashes hard with my configuration.
 
-> Andreas has been involved with the Rust for Linux project for more than
-> a year now. He has been primarily working on the Rust NVMe driver [1],
-> presenting it in several places (such as LPC [2][3] and Kangrejos [4]).
->
-> In addition, he recently submitted the Rust null block driver [5] and
-> has been reviewing patches in the mailing list for some months.
->
-> Thus add him to the `RUST` entry as reviewer.
->
-> Link: https://rust-for-linux.com/nvme-driver [1]
-> Link: https://lpc.events/event/16/contributions/1180/attachments/1017/1961/deck.pdf [2]
-> Link: https://www.youtube.com/watch?v=BwywU1MqW38 [3]
-> Link: https://kangrejos.com/A%20Linux%20(PCI)%20NVMe%20Driver%20in%20Rust.pdf [4]
-> Link: https://lore.kernel.org/rust-for-linux/20230503090708.2524310-1-nmi@metaspace.dk/ [5]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
+[    6.353191] kernel tried to execute NX-protected page - exploit attempt? (uid: 0)
+[    6.353392] BUG: unable to handle page fault for address: ffff9b10c0013cd0
+[    6.353531] #PF: supervisor instruction fetch in kernel mode
+[    6.353624] #PF: error_code(0x0011) - permissions violation
+[    6.353751] PGD 1000067 P4D 1000067 PUD 1205067 PMD 1206067 PTE 800000000124e063
+[    6.354011] Oops: 0011 [#1] PREEMPT SMP PTI
+[    6.354164] CPU: 0 PID: 182 Comm: kunit_try_catch Tainted: G                 N 6.5.0-rc4-next-20230731 #1
+[    6.354315] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
+[    6.354525] RIP: 0010:0xffff9b10c0013cd0
+[    6.354793] Code: ff ff 60 64 ce a9 ff ff ff ff 00 00 00 00 00 00 00 00 d1 3a bc a8 ff ff ff ff 00 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 <f0> 00 01 44 10 8a ff ff b8 01 01 44 10 8a ff ff 00 00 00 00 00 00
+[    6.355059] RSP: 0000:ffff9b10c027fd60 EFLAGS: 00000246
+[    6.355157] RAX: ffff9b10c0013cd0 RBX: ffff8a1043bdb400 RCX: 0000000000000000
+[    6.355259] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff8a1043bdb400
+[    6.355358] RBP: ffff9b10c027fdc8 R08: 0000000000000001 R09: 0000000000000001
+[    6.355456] R10: 0000000000000001 R11: 0000000000000001 R12: ffff9b10c027fe74
+[    6.355556] R13: ffff8a10440100f0 R14: ffff8a10440101b8 R15: ffff9b10c027fe74
+[    6.355679] FS:  0000000000000000(0000) GS:ffff8a104fc00000(0000) knlGS:0000000000000000
+[    6.355798] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    6.355886] CR2: ffff9b10c0013cd0 CR3: 000000000e048000 CR4: 00000000003506f0
+[    6.356029] Call Trace:
+[    6.356158]  <TASK>
+[    6.356334]  ? __die+0x1f/0x70
+[    6.356472]  ? page_fault_oops+0x14a/0x460
+[    6.356547]  ? exc_page_fault+0xee/0x1c0
+[    6.356612]  ? asm_exc_page_fault+0x26/0x30
+[    6.356703]  ? kunit_filter_attr_tests+0xc4/0x2e0
+[    6.356796]  kunit_filter_suites+0x2e2/0x460
+[    6.356889]  ? __pfx_kunit_generic_run_threadfn_adapter+0x10/0x10
+[    6.356979]  filter_suites_test+0xea/0x2c0
+[    6.357051]  ? __pfx_kunit_generic_run_threadfn_adapter+0x10/0x10
+[    6.357148]  kunit_generic_run_threadfn_adapter+0x15/0x20
+[    6.357228]  kthread+0xef/0x120
+[    6.357282]  ? __pfx_kthread+0x10/0x10
+[    6.357343]  ret_from_fork+0x2f/0x50
+[    6.357399]  ? __pfx_kthread+0x10/0x10
+[    6.357458]  ret_from_fork_asm+0x1b/0x30
+[    6.357560]  </TASK>
+[    6.357632] Modules linked in:
+[    6.357786] CR2: ffff9b10c0013cd0
+[    6.358010] ---[ end trace 0000000000000000 ]---
 
-Acked-by: Andreas Hindborg <a.hindborg@samsung.com>
+Enabling CONFIG_ZERO_CALL_USED_REGS might fix (hide) this, but I have not tried.
+
+Guenter
+
