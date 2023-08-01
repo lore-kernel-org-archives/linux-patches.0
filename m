@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779F31FB45
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:36:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C361C433C8;
-	Tue,  1 Aug 2023 09:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308A4200A9
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:36:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71789C433C7;
+	Tue,  1 Aug 2023 09:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882561;
-	bh=ye/ATdwal3/b7rgiO2DS5ppONayVVWs9/KW+ZqZ0/ZA=;
+	s=korg; t=1690882564;
+	bh=Z0j17gW43x9D+CBrLA+IfYo9ja2zAPqOlz84PxwP1ec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mZ5KZBTpKuHievX9X1DRmQIG2i45WtrsiGgCGvMDD8YmAtXy5XE6CCeqJoYJf4lue
-	 YBJqrnHvO91mtz5/ciptPIxdvUUvWEI5ptL76HUn144rr1sTgG8Yain36YvWFwc/Gj
-	 QLK6nhFBWt8uWeq7+M0fHaieLcesh0sg4cvGILHY=
+	b=dr0XI7WZ/K60ytxa0Ep/67kvL50y5ld17YJH9kZF9dHlZTV7OKbfSqNz5G6Y8TyGA
+	 zo2rzEyg5PVF3clpImvMS+r9+K051e1vgMeUMJyE16NJ0mpXWkjUixNOdljhd++UQP
+	 O/pw2Jj8VOqm3U1XaBzZTEbqd4G6ipLPxh/ufmb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Nogueira <victor@mojatatu.com>,
-	Lin Ma <linma@zju.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 111/228] net/sched: mqprio: Add length check for TCA_MQPRIO_{MAX/MIN}_RATE64
-Date: Tue,  1 Aug 2023 11:19:29 +0200
-Message-ID: <20230801091926.796889835@linuxfoundation.org>
+Subject: [PATCH 6.1 143/228] ata: pata_ns87415: mark ns87560_tf_read static
+Date: Tue,  1 Aug 2023 11:20:01 +0200
+Message-ID: <20230801091928.051413769@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,63 +37,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 6c58c8816abb7b93b21fa3b1d0c1726402e5e568 ]
+[ Upstream commit 3fc2febb0f8ffae354820c1772ec008733237cfa ]
 
-The nla_for_each_nested parsing in function mqprio_parse_nlattr() does
-not check the length of the nested attribute. This can lead to an
-out-of-attribute read and allow a malformed nlattr (e.g., length 0) to
-be viewed as 8 byte integer and passed to priv->max_rate/min_rate.
+The global function triggers a warning because of the missing prototype
 
-This patch adds the check based on nla_len() when check the nla_type(),
-which ensures that the length of these two attribute must equals
-sizeof(u64).
+drivers/ata/pata_ns87415.c:263:6: warning: no previous prototype for 'ns87560_tf_read' [-Wmissing-prototypes]
+  263 | void ns87560_tf_read(struct ata_port *ap, struct ata_taskfile *tf)
 
-Fixes: 4e8b86c06269 ("mqprio: Introduce new hardware offload mode and shaper in mqprio")
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230725024227.426561-1-linma@zju.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+There are no other references to this, so just make it static.
+
+Fixes: c4b5b7b6c4423 ("pata_ns87415: Initial cut at 87415/87560 IDE support")
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_mqprio.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/ata/pata_ns87415.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_mqprio.c b/net/sched/sch_mqprio.c
-index 1ab20d43c50b0..b99e0fe0229cf 100644
---- a/net/sched/sch_mqprio.c
-+++ b/net/sched/sch_mqprio.c
-@@ -174,6 +174,13 @@ static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
- 						    "Attribute type expected to be TCA_MQPRIO_MIN_RATE64");
- 				return -EINVAL;
- 			}
-+
-+			if (nla_len(attr) != sizeof(u64)) {
-+				NL_SET_ERR_MSG_ATTR(extack, attr,
-+						    "Attribute TCA_MQPRIO_MIN_RATE64 expected to have 8 bytes length");
-+				return -EINVAL;
-+			}
-+
- 			if (i >= qopt->num_tc)
- 				break;
- 			priv->min_rate[i] = *(u64 *)nla_data(attr);
-@@ -196,6 +203,13 @@ static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
- 						    "Attribute type expected to be TCA_MQPRIO_MAX_RATE64");
- 				return -EINVAL;
- 			}
-+
-+			if (nla_len(attr) != sizeof(u64)) {
-+				NL_SET_ERR_MSG_ATTR(extack, attr,
-+						    "Attribute TCA_MQPRIO_MAX_RATE64 expected to have 8 bytes length");
-+				return -EINVAL;
-+			}
-+
- 			if (i >= qopt->num_tc)
- 				break;
- 			priv->max_rate[i] = *(u64 *)nla_data(attr);
+diff --git a/drivers/ata/pata_ns87415.c b/drivers/ata/pata_ns87415.c
+index 9dd6bffefb485..602472d4e693e 100644
+--- a/drivers/ata/pata_ns87415.c
++++ b/drivers/ata/pata_ns87415.c
+@@ -260,7 +260,7 @@ static u8 ns87560_check_status(struct ata_port *ap)
+  *	LOCKING:
+  *	Inherited from caller.
+  */
+-void ns87560_tf_read(struct ata_port *ap, struct ata_taskfile *tf)
++static void ns87560_tf_read(struct ata_port *ap, struct ata_taskfile *tf)
+ {
+ 	struct ata_ioports *ioaddr = &ap->ioaddr;
+ 
 -- 
-2.39.2
+2.40.1
 
 
 
