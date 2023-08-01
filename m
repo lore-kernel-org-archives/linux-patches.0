@@ -1,24 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8B21F957
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B37C433C8;
-	Tue,  1 Aug 2023 09:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00141F957
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287AAC433CA;
+	Tue,  1 Aug 2023 09:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882649;
-	bh=JvnTWk9xrQWaRqJBpAOwLeRFiG3PYr8DHyPS8Ozyhmo=;
+	s=korg; t=1690882652;
+	bh=y/bIETCGL3gNQXWpf1U/fD4YwtGOlxsVggONvGCkbZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nCphOWtexaC2Tq640atMfTB1eFoctMrt6VJHcONqbY385wqphDEVqh1ugFbM8u0C4
-	 uA6gbHIeoqhYetDZ8Fik0R//kpwlJexPkCJQYWdajD+DnkrdheTrW7iSugdbcN4lgy
-	 AJGIm/jHG4BPTQXgHHl71paW67vzeOn01j7VDHvk=
+	b=QB6sZM6ENDjPchyu2l6iN/GFuWQfSb2An5Fm42EzrdRtxtusjp/pjZMsirCukF/yg
+	 XSd5YplcemQgVLs89dh420N6xuLhdogAuYu8X3awnDIOwoVeerKCf5pmA9mat4y1+e
+	 RMPzq+73eLPKyriK0rsEMNs/aHi7aUFVwL0uLBF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev
-Subject: [PATCH 6.1 174/228] Documentation: security-bugs.rst: clarify CVE handling
-Date: Tue,  1 Aug 2023 11:20:32 +0200
-Message-ID: <20230801091929.161423549@linuxfoundation.org>
+	patches@lists.linux.dev,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 183/228] btrfs: account block group tree when calculating global reserve size
+Date: Tue,  1 Aug 2023 11:20:41 +0200
+Message-ID: <20230801091929.470263077@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -32,42 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 3c1897ae4b6bc7cc586eda2feaa2cd68325ec29c upstream.
+commit 8dbfc14fc736eb701089aff09645c3d4ad3decb1 upstream.
 
-The kernel security team does NOT assign CVEs, so document that properly
-and provide the "if you want one, ask MITRE for it" response that we
-give on a weekly basis in the document, so we don't have to constantly
-say it to everyone who asks.
+When using the block group tree feature, this tree is a critical tree just
+like the extent, csum and free space trees, and just like them it uses the
+delayed refs block reserve.
 
-Link: https://lore.kernel.org/r/2023063022-retouch-kerosene-7e4a@gregkh
+So take into account the block group tree, and its current size, when
+calculating the size for the global reserve.
+
+CC: stable@vger.kernel.org # 6.1+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/security-bugs.rst |   13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ fs/btrfs/block-rsv.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/Documentation/admin-guide/security-bugs.rst
-+++ b/Documentation/admin-guide/security-bugs.rst
-@@ -79,13 +79,12 @@ not contribute to actually fixing any po
- CVE assignment
- --------------
+--- a/fs/btrfs/block-rsv.c
++++ b/fs/btrfs/block-rsv.c
+@@ -377,6 +377,11 @@ void btrfs_update_global_block_rsv(struc
+ 	}
+ 	read_unlock(&fs_info->global_root_lock);
  
--The security team does not normally assign CVEs, nor do we require them
--for reports or fixes, as this can needlessly complicate the process and
--may delay the bug handling. If a reporter wishes to have a CVE identifier
--assigned ahead of public disclosure, they will need to contact the private
--linux-distros list, described above. When such a CVE identifier is known
--before a patch is provided, it is desirable to mention it in the commit
--message if the reporter agrees.
-+The security team does not assign CVEs, nor do we require them for
-+reports or fixes, as this can needlessly complicate the process and may
-+delay the bug handling.  If a reporter wishes to have a CVE identifier
-+assigned, they should find one by themselves, for example by contacting
-+MITRE directly.  However under no circumstances will a patch inclusion
-+be delayed to wait for a CVE identifier to arrive.
- 
- Non-disclosure agreements
- -------------------------
++	if (btrfs_fs_compat_ro(fs_info, BLOCK_GROUP_TREE)) {
++		num_bytes += btrfs_root_used(&fs_info->block_group_root->root_item);
++		min_items++;
++	}
++
+ 	/*
+ 	 * But we also want to reserve enough space so we can do the fallback
+ 	 * global reserve for an unlink, which is an additional 5 items (see the
 
 
