@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D965F1F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA3DC433C8;
-	Tue,  1 Aug 2023 09:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5B71F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2094CC433C8;
+	Tue,  1 Aug 2023 09:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882765;
-	bh=HsnQURv66rM9bSecLSeDJ24b70s03gW/1MsNquYAx5g=;
+	s=korg; t=1690882768;
+	bh=hzeMK1A/AdPapE9grLO5RqiRntJA6bMvobKpKziMV6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BbzppkQfh8Co/SRJX9g2RbWb7ruiPN6SNKUfP+l2ad7O00hQ/SgM2QzkeZcrQKfHN
-	 mp6oKiXbOTx/Ga0EPRICu0CUdOhMfctuHuHBs/0YQUUkADU9AL2BEy0HybbS2KKDxU
-	 9hjG1V+ZtFPOKjaGuWBkoQoswEbs4mfXlKGHetIo=
+	b=T0HMMSaEVpF9LzG0nPahWZe3nmEfcQR6hKUm299rUCqNzvcGd75BZ1uHdZi0fXKhW
+	 iw67UJbehA8rFiznuMWEe8RzOYOXpa8rCfGI9xQg6q/1R7HwSrHN+OU2svg8k8Am4V
+	 co0ycRjaHwPDHrTQvr9ooXY5OLTqXskrHovTtNQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 206/228] s390/dasd: fix hanging device after quiesce/resume
-Date: Tue,  1 Aug 2023 11:21:04 +0200
-Message-ID: <20230801091930.315227133@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 224/228] mptcp: ensure subflow is unhashed before cleaning the backlog
+Date: Tue,  1 Aug 2023 11:21:22 +0200
+Message-ID: <20230801091930.946662934@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -35,43 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 05f1d8ed03f547054efbc4d29bb7991c958ede95 upstream.
+commit 3fffa15bfef48b0ad6424779c03e68ae8ace5acb upstream.
 
-Quiesce and resume are functions that tell the DASD driver to stop/resume
-issuing I/Os to a specific DASD.
+While tacking care of the mptcp-level listener I unintentionally
+moved the subflow level unhash after the subflow listener backlog
+cleanup.
 
-On resume dasd_schedule_block_bh() is called to kick handling of IO
-requests again. This does unfortunately not cover internal requests which
-are used for path verification for example.
+That could cause some nasty race and makes the code harder to read.
 
-This could lead to a hanging device when a path event or anything else
-that triggers internal requests occurs on a quiesced device.
+Address the issue restoring the proper order of operations.
 
-Fix by also calling dasd_schedule_device_bh() which triggers handling of
-internal requests on resume.
-
-Fixes: 8e09f21574ea ("[S390] dasd: add hyper PAV support to DASD device driver, part 1")
-
+Fixes: 57fc0f1ceaa4 ("mptcp: ensure listener is unhashed before updating the sk status")
 Cc: stable@vger.kernel.org
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230721193647.3889634-2-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd_ioctl.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/mptcp/protocol.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/s390/block/dasd_ioctl.c
-+++ b/drivers/s390/block/dasd_ioctl.c
-@@ -131,6 +131,7 @@ static int dasd_ioctl_resume(struct dasd
- 	spin_unlock_irqrestore(get_ccwdev_lock(base->cdev), flags);
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2945,9 +2945,9 @@ static void mptcp_check_listen_stop(stru
+ 		return;
  
- 	dasd_schedule_block_bh(block);
-+	dasd_schedule_device_bh(base);
- 	return 0;
+ 	lock_sock_nested(ssk, SINGLE_DEPTH_NESTING);
++	tcp_set_state(ssk, TCP_CLOSE);
+ 	mptcp_subflow_queue_clean(sk, ssk);
+ 	inet_csk_listen_stop(ssk);
+-	tcp_set_state(ssk, TCP_CLOSE);
+ 	release_sock(ssk);
  }
  
 
