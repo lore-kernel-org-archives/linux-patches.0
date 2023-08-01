@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B44F1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:46:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0B90C433C9;
-	Tue,  1 Aug 2023 09:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A811FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:46:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2CADC433C7;
+	Tue,  1 Aug 2023 09:46:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883196;
-	bh=ClWwZd3CkcD88TAy1Isc5wAm/UF93+Dtw2FKyC5nWnc=;
+	s=korg; t=1690883199;
+	bh=d6EulDygj8rJMQLCktFMZbCy/cY2VFdd/lQ/qxV5oRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mNrMmCN0yjzhpzywtMASz+sIbAJl2fU6HARYjC3Qn1+s+uQYbyXmGaHUIoVP586s3
-	 WKOBf5qu/TmPDKVE5SZhrIDRBdXLDAoVht3Idrhj1BG4N/pZWBb4DwLhJ2rY4Ku2Jc
-	 afASzdToDgwiiSph+ueYaBJr8XyOmWzSvrtQE960=
+	b=neE1DMw/buX4oAASV5wYuUdKN7DvnrCfdjFwHtLWWHf5vF3n9cudM6W3thFmR99Gi
+	 CNzspalcJV6LkruizS8TGwBj0Q3mbC7L5a7/Nrn8g2FbkBDAdhGIcHiaXOMyRfgBOZ
+	 KJmC5K7xwN7j/28/I9yOaZaMQiX74ACe3jLP/4i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Tony Lindgren <tony@atomide.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.4 149/239] serial: qcom-geni: drop bogus runtime pm state update
-Date: Tue,  1 Aug 2023 11:20:13 +0200
-Message-ID: <20230801091931.038781012@linuxfoundation.org>
+	stable@kernel.org,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>
+Subject: [PATCH 6.4 150/239] tty: serial: sh-sci: Fix sleeping in atomic context
+Date: Tue,  1 Aug 2023 11:20:14 +0200
+Message-ID: <20230801091931.073219207@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -35,42 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit 4dd8752a14ca0303fbdf0a6c68ff65f0a50bd2fa upstream.
+commit 57c984f6fe20ebb9306d6e8c09b4f67fe63298c6 upstream.
 
-The runtime PM state should not be changed by drivers that do not
-implement runtime PM even if it happens to work around a bug in PM core.
+Fix sleeping in atomic context warning as reported by the Smatch static
+checker tool by replacing disable_irq->disable_irq_nosync.
 
-With the wake irq arming now fixed, drop the bogus runtime PM state
-update which left the device in active state (and could potentially
-prevent a parent device from suspending).
+Reported by: Dan Carpenter <dan.carpenter@linaro.org>
 
-Fixes: f3974413cf02 ("tty: serial: qcom_geni_serial: Wakeup IRQ cleanup")
-Cc: 5.6+ <stable@vger.kernel.org> # 5.6+
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 8749061be196 ("tty: serial: sh-sci: Add RZ/G2L SCIFA DMA tx support")
+Cc: stable@kernel.org
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20230704154818.406913-1-biju.das.jz@bp.renesas.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c |    7 -------
- 1 file changed, 7 deletions(-)
+ drivers/tty/serial/sh-sci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1676,13 +1676,6 @@ static int qcom_geni_serial_probe(struct
- 	if (ret)
- 		return ret;
+diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
+index 7c9457962a3d..8b7a42e05d6d 100644
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -590,7 +590,7 @@ static void sci_start_tx(struct uart_port *port)
+ 	    dma_submit_error(s->cookie_tx)) {
+ 		if (s->cfg->regtype == SCIx_RZ_SCIFA_REGTYPE)
+ 			/* Switch irq from SCIF to DMA */
+-			disable_irq(s->irqs[SCIx_TXI_IRQ]);
++			disable_irq_nosync(s->irqs[SCIx_TXI_IRQ]);
  
--	/*
--	 * Set pm_runtime status as ACTIVE so that wakeup_irq gets
--	 * enabled/disabled from dev_pm_arm_wake_irq during system
--	 * suspend/resume respectively.
--	 */
--	pm_runtime_set_active(&pdev->dev);
--
- 	if (port->wakeup_irq > 0) {
- 		device_init_wakeup(&pdev->dev, true);
- 		ret = dev_pm_set_dedicated_wake_irq(&pdev->dev,
+ 		s->cookie_tx = 0;
+ 		schedule_work(&s->work_tx);
+-- 
+2.41.0
+
 
 
