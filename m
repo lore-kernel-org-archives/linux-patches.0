@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6601F95A
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:50:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A295EC433C7;
-	Tue,  1 Aug 2023 09:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C5C1FB44
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:50:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E096C433C7;
+	Tue,  1 Aug 2023 09:50:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883455;
-	bh=NdrbPJ6MjiJEmiINacqUzw5BfzHT6wtgk3NqiQu46l0=;
+	s=korg; t=1690883457;
+	bh=35cMFGabREQ4T4IAtyZmgoIJIpDzH/Mk/P73GWERMN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QAfT//V5yZaMJotPbRViTxeVtwHEnXgU+63s2pDlH+ZBA9ZOrZvON6DFVEjTVxtN5
-	 wECsLLgFSKdzPgoiQsHOHFmycRMXMMIhn8g5g71XM3PJxHecbdxay0PHk5yASKtzS8
-	 5JK19Uka7gW1nlk66f8iINQCGPE1AhiIufTLOTMw=
+	b=dLME0MY1JoMkAQ5sTjoiK/C2emMsYsN9Zzp3w6OnAjX942b8V0pC4z2usUrhaprqK
+	 Cl1YXw1pZUhpppzecpxYgfXaR34vBTYWR0/hfPlDc6E4VjP3iI+R2NS4AbEyIG5E9D
+	 toW/Fp0QDYy9YYKMeMk0Z5pTX35ruD4YxiuZoTN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.4 222/239] s390/dasd: print copy pair message only for the correct error
-Date: Tue,  1 Aug 2023 11:21:26 +0200
-Message-ID: <20230801091933.941201004@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.4 223/239] mptcp: more accurate NL event generation
+Date: Tue,  1 Aug 2023 11:21:27 +0200
+Message-ID: <20230801091933.979481409@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -35,51 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 856d8e3c633b183df23549ce760ae84478a7098d upstream.
+commit 21d9b73a7d5241905367098d260a3c68b811da32 upstream.
 
-The DASD driver has certain types of requests that might be rejected by
-the storage server or z/VM because they are not supported. Since the
-missing support of the command is not a real issue there is no user
-visible kernel error message for this.
+Currently the mptcp code generate a "new listener" event even
+if the actual listen() syscall fails. Address the issue moving
+the event generation call under the successful branch.
 
-For copy pair setups  there is a specific error that IO is not allowed on
-secondary devices. This error case is explicitly handled and an error
-message is printed.
-
-The code checking for the error did use a bitwise 'and' that is used to
-check for specific bits. But in this case the whole sense byte has to
-match.
-
-This leads to the problem that the copy pair related error message is
-erroneously printed for other error cases that are usually not reported.
-This might heavily confuse users and lead to follow on actions that might
-disrupt application processing.
-
-Fix by checking the sense byte for the exact value and not single bits.
-
-Cc: stable@vger.kernel.org # 6.1+
-Fixes: 1fca631a1185 ("s390/dasd: suppress generic error messages for PPRC secondary devices")
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230721193647.3889634-5-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: stable@vger.kernel.org
+Fixes: f8c9dfbd875b ("mptcp: add pm listener events")
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mat Martineau <martineau@kernel.org>
+Link: https://lore.kernel.org/r/20230725-send-net-20230725-v1-2-6f60fe7137a9@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd_3990_erp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mptcp/protocol.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/s390/block/dasd_3990_erp.c
-+++ b/drivers/s390/block/dasd_3990_erp.c
-@@ -1050,7 +1050,7 @@ dasd_3990_erp_com_rej(struct dasd_ccw_re
- 		dev_err(&device->cdev->dev, "An I/O request was rejected"
- 			" because writing is inhibited\n");
- 		erp = dasd_3990_erp_cleanup(erp, DASD_CQR_FAILED);
--	} else if (sense[7] & SNS7_INVALID_ON_SEC) {
-+	} else if (sense[7] == SNS7_INVALID_ON_SEC) {
- 		dev_err(&device->cdev->dev, "An I/O request was rejected on a copy pair secondary device\n");
- 		/* suppress dump of sense data for this error */
- 		set_bit(DASD_CQR_SUPPRESS_CR, &erp->refers->flags);
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3717,10 +3717,9 @@ static int mptcp_listen(struct socket *s
+ 	if (!err) {
+ 		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, 1);
+ 		mptcp_copy_inaddrs(sk, ssock->sk);
++		mptcp_event_pm_listener(ssock->sk, MPTCP_EVENT_LISTENER_CREATED);
+ 	}
+ 
+-	mptcp_event_pm_listener(ssock->sk, MPTCP_EVENT_LISTENER_CREATED);
+-
+ unlock:
+ 	release_sock(sk);
+ 	return err;
 
 
