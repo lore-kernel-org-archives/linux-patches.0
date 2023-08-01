@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A4F1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:48:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B492EC433C7;
-	Tue,  1 Aug 2023 09:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6BA1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:48:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DDEC433C7;
+	Tue,  1 Aug 2023 09:48:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883299;
-	bh=f8g8BzD3wSQbWC97+iyPFgUoqTGX9tkOF6SPvGLXdlk=;
+	s=korg; t=1690883301;
+	bh=osKxvr2rCQ7M/isONJjfJ60w80FM14ABmnvn7fVLBf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rrt+BWFTXbmIYHluUCvafO/AiGV9rH6bLJLSqXMNdyfSuCumhiECr1/dDrP29O8kJ
-	 5xLKYJipMlHBAphXW2n8I8pOlFqEeEuLnwyalnT889LUGz1VXaP7whyMZh/dTrPRIm
-	 cjrEfArHGN0NBylQW5eHhkbwnh+AtkX57fpu2ik8=
+	b=c06ib5YzpED5+sKJTbkKAcBbptf5Hqdp7S7SxY5SOTMc1eQOw0z6Fao+ikyvUa2VA
+	 lM/Xqb7ExHwWjyZKjev0jjkQ1zcUTv9uplS0W6NppuHefeGPzOaQJ59G6bJQRXiMEl
+	 ufvvryP5LRBFsi9/okR0Z7dvfAP2tFMDSXCey/n4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 185/239] btrfs: zoned: do not enable async discard
-Date: Tue,  1 Aug 2023 11:20:49 +0200
-Message-ID: <20230801091932.350512990@linuxfoundation.org>
+	Samuel Thibault <samuel.thibault@ens-lyon.org>,
+	Kees Cook <keescook@chromium.org>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	Jiri Slaby <jirislaby@kernel.org>
+Subject: [PATCH 6.4 158/239] TIOCSTI: always enable for CAP_SYS_ADMIN
+Date: Tue,  1 Aug 2023 11:20:22 +0200
+Message-ID: <20230801091931.342370928@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,66 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Samuel Thibault <samuel.thibault@ens-lyon.org>
 
-commit 95ca6599a589ee84c69f02d0e1d928c8d1367fb1 upstream.
+commit 690c8b804ad2eafbd35da5d3c95ad325ca7d5061 upstream.
 
-The zoned mode need to reset a zone before using it. We rely on btrfs's
-original discard functionality (discarding unused block group range) to do
-the resetting.
+83efeeeb3d04 ("tty: Allow TIOCSTI to be disabled") broke BRLTTY's
+ability to simulate keypresses on the console, thus effectively breaking
+braille keyboards of blind users.
 
-While the commit 63a7cb130718 ("btrfs: auto enable discard=async when
-possible") made the discard done in an async manner, a zoned reset do not
-need to be async, as it is fast enough.
+This restores the TIOCSTI feature for CAP_SYS_ADMIN processes, which
+BRLTTY is, thus fixing braille keyboards without re-opening the security
+issue.
 
-Even worth, delaying zone rests prevents using those zones again. So, let's
-disable async discard on the zoned mode.
-
-Fixes: 63a7cb130718 ("btrfs: auto enable discard=async when possible")
-CC: stable@vger.kernel.org # 6.3+
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-[ update message text ]
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Acked-by: Kees Cook <keescook@chromium.org>
+Fixes: 83efeeeb3d04 ("tty: Allow TIOCSTI to be disabled")
+Cc: stable@vger.kernel.org
+Reported-by: Nicolas Pitre <nico@fluxnic.net>
+Link: https://lore.kernel.org/r/20230710002645.v565c7xq5iddruse@begin
+Acked-by: Jiri Slaby <jirislaby@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c |    7 ++++++-
- fs/btrfs/zoned.c   |    3 +++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/tty/tty_io.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3692,11 +3692,16 @@ int __cold open_ctree(struct super_block
- 	 * For devices supporting discard turn on discard=async automatically,
- 	 * unless it's already set or disabled. This could be turned off by
- 	 * nodiscard for the same mount.
-+	 *
-+	 * The zoned mode piggy backs on the discard functionality for
-+	 * resetting a zone. There is no reason to delay the zone reset as it is
-+	 * fast enough. So, do not enable async discard for zoned mode.
- 	 */
- 	if (!(btrfs_test_opt(fs_info, DISCARD_SYNC) ||
- 	      btrfs_test_opt(fs_info, DISCARD_ASYNC) ||
- 	      btrfs_test_opt(fs_info, NODISCARD)) &&
--	    fs_info->fs_devices->discardable) {
-+	    fs_info->fs_devices->discardable &&
-+	    !btrfs_is_zoned(fs_info)) {
- 		btrfs_set_and_info(fs_info, DISCARD_ASYNC,
- 				   "auto enabling async discard");
- 	}
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -804,6 +804,9 @@ int btrfs_check_mountopts_zoned(struct b
- 		return -EINVAL;
- 	}
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -2276,7 +2276,7 @@ static int tiocsti(struct tty_struct *tt
+ 	char ch, mbz = 0;
+ 	struct tty_ldisc *ld;
  
-+	btrfs_clear_and_info(info, DISCARD_ASYNC,
-+			"zoned: async discard ignored and disabled for zoned mode");
-+
- 	return 0;
- }
+-	if (!tty_legacy_tiocsti)
++	if (!tty_legacy_tiocsti && !capable(CAP_SYS_ADMIN))
+ 		return -EIO;
  
+ 	if ((current->signal->tty != tty) && !capable(CAP_SYS_ADMIN))
 
 
