@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3FD1FB24
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:31:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A1EC433C7;
-	Tue,  1 Aug 2023 09:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251921FB24
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:31:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9739FC433C7;
+	Tue,  1 Aug 2023 09:31:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882270;
-	bh=u+a/YN5RSA6Dxd9P6Tjnv1mbNg9xAQykg2GEYGRJBCE=;
+	s=korg; t=1690882273;
+	bh=PIw9NpGW+ek33rXPYR37p8x8G7v8qErLRZFSjssiGzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zkUFmCUwV8KVES013VBN0vA8S9HU/a5dDIiwtfEt/MhM4kY6/SNYj+cQ174uqwmia
-	 c0acmUUbRRZ7IWx/m04JMkLRrfZeiNNnU76MSUOTkWoNNEb8hgCREldUbM8TyyO9Ey
-	 RIVaDKufUP0YF7RtUn7Ywookx7QcvZBOnbpGJigQ=
+	b=pmAFDpdyxvLMU3CIzW1KUbUWO8qJwOm6HpX+Gb+Y2k0D6Wnnq3nYITP5nKAx7X6VK
+	 iYrejRFHH2BZmmAL9OX9KJNBpl4QFrOwypib9XmIdX49ko5V/QwoAl4TalEvDqjZnT
+	 2wuMat/Sw2lVtNSjaT6fh7skthJrLbfvPbLWqtjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Cruise Hung <cruise.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Sean Wang <sean.ns.wang@amd.com>,
+	Marc Rossi <Marc.Rossi@amd.com>,
+	Hamza Mahfooz <Hamza.Mahfooz@amd.com>,
+	"Tsung-hua (Ryan) Lin" <Tsung-hua.Lin@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/228] drm/amd/display: Update correct DCN314 register header
-Date: Tue,  1 Aug 2023 11:18:23 +0200
-Message-ID: <20230801091924.526950181@linuxfoundation.org>
+Subject: [PATCH 6.1 046/228] drm/amd/display: Set minimum requirement for using PSR-SU on Rembrandt
+Date: Tue,  1 Aug 2023 11:18:24 +0200
+Message-ID: <20230801091924.566787523@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -38,175 +40,150 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cruise Hung <cruise.hung@amd.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 268182606f26434c5d3ebd0e86efcb0418dec487 ]
+[ Upstream commit c35b6ea8f2ecfa9d775530b70d4e727869099a9c ]
 
-[Why]
-The register header for DCN314 is not correct.
+A number of parade TCONs are causing system hangs when utilized with
+older DMUB firmware and PSR-SU. Some changes have been introduced into
+DMUB firmware to add resilience against these failures.
 
-[How]
-Update correct DCN314 register header.
+Don't allow running PSR-SU unless on the newer firmware.
 
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Cruise Hung <cruise.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Cc: stable@vger.kernel.org
+Cc: Sean Wang <sean.ns.wang@amd.com>
+Cc: Marc Rossi <Marc.Rossi@amd.com>
+Cc: Hamza Mahfooz <Hamza.Mahfooz@amd.com>
+Cc: Tsung-hua (Ryan) Lin <Tsung-hua.Lin@amd.com>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2443
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Leo Li <sunpeng.li@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: cd2e31a9ab93 ("drm/amd/display: Set minimum requirement for using PSR-SU on Phoenix")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dmub/src/Makefile |  2 +-
- .../drm/amd/display/dmub/src/dmub_dcn314.c    | 62 +++++++++++++++++++
- .../drm/amd/display/dmub/src/dmub_dcn314.h    | 33 ++++++++++
- .../gpu/drm/amd/display/dmub/src/dmub_srv.c   |  5 +-
- 4 files changed, 100 insertions(+), 2 deletions(-)
- create mode 100644 drivers/gpu/drm/amd/display/dmub/src/dmub_dcn314.c
- create mode 100644 drivers/gpu/drm/amd/display/dmub/src/dmub_dcn314.h
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c |  3 ++-
+ drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c          |  7 +++++++
+ drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h          |  1 +
+ drivers/gpu/drm/amd/display/dmub/dmub_srv.h           |  2 ++
+ drivers/gpu/drm/amd/display/dmub/src/dmub_dcn31.c     |  5 +++++
+ drivers/gpu/drm/amd/display/dmub/src/dmub_dcn31.h     |  2 ++
+ drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c       | 10 ++++++----
+ 7 files changed, 25 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dmub/src/Makefile b/drivers/gpu/drm/amd/display/dmub/src/Makefile
-index 0589ad4778eea..caf095aca8f3f 100644
---- a/drivers/gpu/drm/amd/display/dmub/src/Makefile
-+++ b/drivers/gpu/drm/amd/display/dmub/src/Makefile
-@@ -22,7 +22,7 @@
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c
+index 872d06fe14364..3eb8794807d2b 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c
+@@ -24,6 +24,7 @@
+  */
  
- DMUB = dmub_srv.o dmub_srv_stat.o dmub_reg.o dmub_dcn20.o dmub_dcn21.o
- DMUB += dmub_dcn30.o dmub_dcn301.o dmub_dcn302.o dmub_dcn303.o
--DMUB += dmub_dcn31.o dmub_dcn315.o dmub_dcn316.o
-+DMUB += dmub_dcn31.o dmub_dcn314.o dmub_dcn315.o dmub_dcn316.o
- DMUB += dmub_dcn32.o
+ #include "amdgpu_dm_psr.h"
++#include "dc_dmub_srv.h"
+ #include "dc.h"
+ #include "dm_helpers.h"
+ #include "amdgpu_dm.h"
+@@ -50,7 +51,7 @@ static bool link_supports_psrsu(struct dc_link *link)
+ 	    !link->dpcd_caps.psr_info.psr2_su_y_granularity_cap)
+ 		return false;
  
- AMD_DAL_DMUB = $(addprefix $(AMDDALPATH)/dmub/src/,$(DMUB))
-diff --git a/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn314.c b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn314.c
-new file mode 100644
-index 0000000000000..48a06dbd9be78
---- /dev/null
-+++ b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn314.c
-@@ -0,0 +1,62 @@
-+/*
-+ * Copyright 2021 Advanced Micro Devices, Inc.
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a
-+ * copy of this software and associated documentation files (the "Software"),
-+ * to deal in the Software without restriction, including without limitation
-+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
-+ * and/or sell copies of the Software, and to permit persons to whom the
-+ * Software is furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
-+ * THE COPYRIGHT HOLDER(S) OR AUTHOR(S) BE LIABLE FOR ANY CLAIM, DAMAGES OR
-+ * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-+ * OTHER DEALINGS IN THE SOFTWARE.
-+ *
-+ * Authors: AMD
-+ *
-+ */
+-	return true;
++	return dc_dmub_check_min_version(dc->ctx->dmub_srv->dmub);
+ }
+ 
+ /*
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
+index a461e9463534b..31bb7e782c6b1 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
++++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
+@@ -1026,3 +1026,10 @@ void dc_send_update_cursor_info_to_dmu(
+ 		dc_send_cmd_to_dmu(pCtx->stream->ctx->dmub_srv, &cmd);
+ 	}
+ }
 +
-+#include "../dmub_srv.h"
-+#include "dmub_reg.h"
-+#include "dmub_dcn314.h"
++bool dc_dmub_check_min_version(struct dmub_srv *srv)
++{
++	if (!srv->hw_funcs.is_psrsu_supported)
++		return true;
++	return srv->hw_funcs.is_psrsu_supported(srv);
++}
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h
+index d34f5563df2ec..9a248ced03b9c 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h
+@@ -89,4 +89,5 @@ void dc_dmub_setup_subvp_dmub_command(struct dc *dc, struct dc_state *context, b
+ void dc_dmub_srv_log_diagnostic_data(struct dc_dmub_srv *dc_dmub_srv);
+ 
+ void dc_send_update_cursor_info_to_dmu(struct pipe_ctx *pCtx, uint8_t pipe_idx);
++bool dc_dmub_check_min_version(struct dmub_srv *srv);
+ #endif /* _DMUB_DC_SRV_H_ */
+diff --git a/drivers/gpu/drm/amd/display/dmub/dmub_srv.h b/drivers/gpu/drm/amd/display/dmub/dmub_srv.h
+index b53468aca4a9b..5f17b252e9be4 100644
+--- a/drivers/gpu/drm/amd/display/dmub/dmub_srv.h
++++ b/drivers/gpu/drm/amd/display/dmub/dmub_srv.h
+@@ -350,6 +350,8 @@ struct dmub_srv_hw_funcs {
+ 
+ 	bool (*is_supported)(struct dmub_srv *dmub);
+ 
++	bool (*is_psrsu_supported)(struct dmub_srv *dmub);
 +
-+#include "dcn/dcn_3_1_4_offset.h"
-+#include "dcn/dcn_3_1_4_sh_mask.h"
+ 	bool (*is_hw_init)(struct dmub_srv *dmub);
+ 
+ 	bool (*is_phy_init)(struct dmub_srv *dmub);
+diff --git a/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn31.c b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn31.c
+index c90b9ee42e126..89d24fb7024e2 100644
+--- a/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn31.c
++++ b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn31.c
+@@ -297,6 +297,11 @@ bool dmub_dcn31_is_supported(struct dmub_srv *dmub)
+ 	return supported;
+ }
+ 
++bool dmub_dcn31_is_psrsu_supported(struct dmub_srv *dmub)
++{
++	return dmub->fw_version >= DMUB_FW_VERSION(4, 0, 59);
++}
 +
-+#define DCN_BASE__INST0_SEG0                       0x00000012
-+#define DCN_BASE__INST0_SEG1                       0x000000C0
-+#define DCN_BASE__INST0_SEG2                       0x000034C0
-+#define DCN_BASE__INST0_SEG3                       0x00009000
-+#define DCN_BASE__INST0_SEG4                       0x02403C00
-+#define DCN_BASE__INST0_SEG5                       0
+ void dmub_dcn31_set_gpint(struct dmub_srv *dmub,
+ 			  union dmub_gpint_data_register reg)
+ {
+diff --git a/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn31.h b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn31.h
+index f6db6f89d45dc..eb62410941473 100644
+--- a/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn31.h
++++ b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn31.h
+@@ -219,6 +219,8 @@ bool dmub_dcn31_is_hw_init(struct dmub_srv *dmub);
+ 
+ bool dmub_dcn31_is_supported(struct dmub_srv *dmub);
+ 
++bool dmub_dcn31_is_psrsu_supported(struct dmub_srv *dmub);
 +
-+#define BASE_INNER(seg) DCN_BASE__INST0_SEG##seg
-+#define CTX dmub
-+#define REGS dmub->regs_dcn31
-+#define REG_OFFSET_EXP(reg_name) (BASE(reg##reg_name##_BASE_IDX) + reg##reg_name)
-+
-+/* Registers. */
-+
-+const struct dmub_srv_dcn31_regs dmub_srv_dcn314_regs = {
-+#define DMUB_SR(reg) REG_OFFSET_EXP(reg),
-+	{
-+		DMUB_DCN31_REGS()
-+		DMCUB_INTERNAL_REGS()
-+	},
-+#undef DMUB_SR
-+
-+#define DMUB_SF(reg, field) FD_MASK(reg, field),
-+	{ DMUB_DCN31_FIELDS() },
-+#undef DMUB_SF
-+
-+#define DMUB_SF(reg, field) FD_SHIFT(reg, field),
-+	{ DMUB_DCN31_FIELDS() },
-+#undef DMUB_SF
-+};
-diff --git a/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn314.h b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn314.h
-new file mode 100644
-index 0000000000000..674267a2940e9
---- /dev/null
-+++ b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn314.h
-@@ -0,0 +1,33 @@
-+/*
-+ * Copyright 2021 Advanced Micro Devices, Inc.
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a
-+ * copy of this software and associated documentation files (the "Software"),
-+ * to deal in the Software without restriction, including without limitation
-+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
-+ * and/or sell copies of the Software, and to permit persons to whom the
-+ * Software is furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
-+ * THE COPYRIGHT HOLDER(S) OR AUTHOR(S) BE LIABLE FOR ANY CLAIM, DAMAGES OR
-+ * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-+ * OTHER DEALINGS IN THE SOFTWARE.
-+ *
-+ * Authors: AMD
-+ *
-+ */
-+
-+#ifndef _DMUB_DCN314_H_
-+#define _DMUB_DCN314_H_
-+
-+#include "dmub_dcn31.h"
-+
-+extern const struct dmub_srv_dcn31_regs dmub_srv_dcn314_regs;
-+
-+#endif /* _DMUB_DCN314_H_ */
+ void dmub_dcn31_set_gpint(struct dmub_srv *dmub,
+ 			  union dmub_gpint_data_register reg);
+ 
 diff --git a/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c b/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c
-index 92c18bfb98b3b..6d76ce327d69f 100644
+index 6d76ce327d69f..0f43a05a41874 100644
 --- a/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c
 +++ b/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c
-@@ -32,6 +32,7 @@
- #include "dmub_dcn302.h"
- #include "dmub_dcn303.h"
- #include "dmub_dcn31.h"
-+#include "dmub_dcn314.h"
- #include "dmub_dcn315.h"
- #include "dmub_dcn316.h"
- #include "dmub_dcn32.h"
-@@ -226,7 +227,9 @@ static bool dmub_srv_hw_setup(struct dmub_srv *dmub, enum dmub_asic asic)
+@@ -227,14 +227,16 @@ static bool dmub_srv_hw_setup(struct dmub_srv *dmub, enum dmub_asic asic)
  	case DMUB_ASIC_DCN314:
  	case DMUB_ASIC_DCN315:
  	case DMUB_ASIC_DCN316:
--		if (asic == DMUB_ASIC_DCN315)
-+		if (asic == DMUB_ASIC_DCN314)
-+			dmub->regs_dcn31 = &dmub_srv_dcn314_regs;
-+		else if (asic == DMUB_ASIC_DCN315)
+-		if (asic == DMUB_ASIC_DCN314)
++		if (asic == DMUB_ASIC_DCN314) {
+ 			dmub->regs_dcn31 = &dmub_srv_dcn314_regs;
+-		else if (asic == DMUB_ASIC_DCN315)
++		} else if (asic == DMUB_ASIC_DCN315) {
  			dmub->regs_dcn31 = &dmub_srv_dcn315_regs;
- 		else if (asic == DMUB_ASIC_DCN316)
+-		else if (asic == DMUB_ASIC_DCN316)
++		} else if (asic == DMUB_ASIC_DCN316) {
  			dmub->regs_dcn31 = &dmub_srv_dcn316_regs;
+-		else
++		} else {
+ 			dmub->regs_dcn31 = &dmub_srv_dcn31_regs;
++			funcs->is_psrsu_supported = dmub_dcn31_is_psrsu_supported;
++		}
+ 		funcs->reset = dmub_dcn31_reset;
+ 		funcs->reset_release = dmub_dcn31_reset_release;
+ 		funcs->backdoor_load = dmub_dcn31_backdoor_load;
 -- 
 2.39.2
 
