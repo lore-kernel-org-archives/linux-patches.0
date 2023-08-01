@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D849D1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:43:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53CDFC433C8;
-	Tue,  1 Aug 2023 09:43:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C0E1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:43:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14181C433C8;
+	Tue,  1 Aug 2023 09:43:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882999;
-	bh=RNSpY8Wlq6iZA3NwoukpyH+WE7F5hLROrc7d5GWkqIM=;
+	s=korg; t=1690883002;
+	bh=Nvc8toi2vNy8r6foInbKFGIH+Ap+aRmvmhRjNVyqnBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QAUURy/w0+hBMLAM6cRPnmgnjPTOV/cNCwhBzpCd2S2tEWEubTyzQsKT7+TkvVrZ+
-	 /XBNjVvuLuAMqVA1gx1UB6bQFKluj62TNtblNHoRTjx9T2rIMglziD9B31mjl8f7do
-	 5O8DkoZOXPGaHoiqvvHYtSWzPxuC8PFpogWPuqsE=
+	b=jaUZqIw7KBnyq3bFqsDoPvgSRPzCRlrKdDsaVehiN90SYS+QwGiL00IJVZj0st1hn
+	 6zWJgXtrwKN6aCWZCffvxd1LiRx6MvOU5jFjcujT9af1ODSw0fm6LWfXkIU1mUm04g
+	 oHVUC9PTtbzJyeXNjLp916opinw5DFN8qKgMkaZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jedrzej Jagielski <jedrzej.jagielski@intel.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.4 079/239] ice: Fix memory management in ice_ethtool_fdir.c
-Date: Tue,  1 Aug 2023 11:19:03 +0200
-Message-ID: <20230801091928.573560890@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 062/239] media: mtk_jpeg_core: avoid unused-variable warning
+Date: Tue,  1 Aug 2023 11:18:46 +0200
+Message-ID: <20230801091927.885973392@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -40,101 +36,144 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit a3336056504d780590ac6d6ac94fbba829994594 ]
+[ Upstream commit 20de9fdaf4883deffb0138eef28e9cbbead32cfd ]
 
-Fix ethtool FDIR logic to not use memory after its release.
-In the ice_ethtool_fdir.c file there are 2 spots where code can
-refer to pointers which may be missing.
+The mtk8195_jpegenc_drvdata object was added outside of an #ifdef causing
+a harmless build warning.
 
-In the ice_cfg_fdir_xtrct_seq() function seg may be freed but
-even then may be still used by memcpy(&tun_seg[1], seg, sizeof(*seg)).
+drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c:1879:32: error: 'mtk8195_jpegenc_drvdata' defined but not used [-Werror=unused-variable]
+ 1879 | static struct mtk_jpeg_variant mtk8195_jpegenc_drvdata = {
+      |                                ^~~~~~~~~~~~~~~~~~~~~~~
 
-In the ice_add_fdir_ethtool() function struct ice_fdir_fltr *input
-may first fail to be added via ice_fdir_update_list_entry() but then
-may be deleted by ice_fdir_update_list_entry.
+A follow-up patch moved it inside of an #ifdef, which caused more
+warnings, and a third patch ended up adding even more #ifdefs. These
+were all bogus, since the actual problem here is the incorrect use
+of of_ptr(). Since the driver (like any other modern platform driver)
+only works in combination with CONFIG_OF, there is no point in hiding
+the reference, so just remove that along with all the pointless #ifdef
+checks in the driver.
 
-Terminate in both cases when the returned value of the previous
-operation is other than 0, free memory and don't use it anymore.
+This improves build coverage and avoids running into the same problem
+again when another part of the driver gets changed that relies on
+the #ifdef blocks to be completely matched.
 
-Reported-by: Michal Schmidt <mschmidt@redhat.com>
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2208423
-Fixes: cac2a27cd9ab ("ice: Support IPv4 Flow Director filters")
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20230721155854.1292805-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 934e8bccac95 ("mtk-jpegenc: support jpegenc multi-hardware")
+Fixes: 4ae47770d57b ("media: mtk-jpegenc: Fix a compilation issue")
+Fixes: da4ede4b7fd6 ("media: mtk-jpeg: move data/code inside CONFIG_OF blocks")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/intel/ice/ice_ethtool_fdir.c | 26 ++++++++++---------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c   | 6 +-----
+ drivers/media/platform/mediatek/jpeg/mtk_jpeg_dec_hw.c | 4 +---
+ drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c | 4 +---
+ 3 files changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c b/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
-index ead6d50fc0adc..8c6e13f87b7d3 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
-@@ -1281,16 +1281,21 @@ ice_cfg_fdir_xtrct_seq(struct ice_pf *pf, struct ethtool_rx_flow_spec *fsp,
- 				     ICE_FLOW_FLD_OFF_INVAL);
- 	}
+diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+index 4768156181c99..40cb3cb87ba17 100644
+--- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
++++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+@@ -28,7 +28,6 @@
+ #include "mtk_jpeg_core.h"
+ #include "mtk_jpeg_dec_parse.h"
  
--	/* add filter for outer headers */
- 	fltr_idx = ice_ethtool_flow_to_fltr(fsp->flow_type & ~FLOW_EXT);
-+
-+	assign_bit(fltr_idx, hw->fdir_perfect_fltr, perfect_filter);
-+
-+	/* add filter for outer headers */
- 	ret = ice_fdir_set_hw_fltr_rule(pf, seg, fltr_idx,
- 					ICE_FD_HW_SEG_NON_TUN);
--	if (ret == -EEXIST)
--		/* Rule already exists, free memory and continue */
--		devm_kfree(dev, seg);
--	else if (ret)
-+	if (ret == -EEXIST) {
-+		/* Rule already exists, free memory and count as success */
-+		ret = 0;
-+		goto err_exit;
-+	} else if (ret) {
- 		/* could not write filter, free memory */
- 		goto err_exit;
-+	}
+-#if defined(CONFIG_OF)
+ static struct mtk_jpeg_fmt mtk_jpeg_enc_formats[] = {
+ 	{
+ 		.fourcc		= V4L2_PIX_FMT_JPEG,
+@@ -102,7 +101,6 @@ static struct mtk_jpeg_fmt mtk_jpeg_dec_formats[] = {
+ 		.flags		= MTK_JPEG_FMT_FLAG_CAPTURE,
+ 	},
+ };
+-#endif
  
- 	/* make tunneled filter HW entries if possible */
- 	memcpy(&tun_seg[1], seg, sizeof(*seg));
-@@ -1305,18 +1310,13 @@ ice_cfg_fdir_xtrct_seq(struct ice_pf *pf, struct ethtool_rx_flow_spec *fsp,
- 		devm_kfree(dev, tun_seg);
- 	}
+ #define MTK_JPEG_ENC_NUM_FORMATS ARRAY_SIZE(mtk_jpeg_enc_formats)
+ #define MTK_JPEG_DEC_NUM_FORMATS ARRAY_SIZE(mtk_jpeg_dec_formats)
+@@ -1455,7 +1453,6 @@ static const struct dev_pm_ops mtk_jpeg_pm_ops = {
+ 	SET_RUNTIME_PM_OPS(mtk_jpeg_pm_suspend, mtk_jpeg_pm_resume, NULL)
+ };
  
--	if (perfect_filter)
--		set_bit(fltr_idx, hw->fdir_perfect_fltr);
--	else
--		clear_bit(fltr_idx, hw->fdir_perfect_fltr);
--
- 	return ret;
+-#if defined(CONFIG_OF)
+ static int mtk_jpegenc_get_hw(struct mtk_jpeg_ctx *ctx)
+ {
+ 	struct mtk_jpegenc_comp_dev *comp_jpeg;
+@@ -1951,14 +1948,13 @@ static const struct of_device_id mtk_jpeg_match[] = {
+ };
  
- err_exit:
- 	devm_kfree(dev, tun_seg);
- 	devm_kfree(dev, seg);
+ MODULE_DEVICE_TABLE(of, mtk_jpeg_match);
+-#endif
  
--	return -EOPNOTSUPP;
-+	return ret;
- }
+ static struct platform_driver mtk_jpeg_driver = {
+ 	.probe = mtk_jpeg_probe,
+ 	.remove_new = mtk_jpeg_remove,
+ 	.driver = {
+ 		.name           = MTK_JPEG_NAME,
+-		.of_match_table = of_match_ptr(mtk_jpeg_match),
++		.of_match_table = mtk_jpeg_match,
+ 		.pm             = &mtk_jpeg_pm_ops,
+ 	},
+ };
+diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_dec_hw.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_dec_hw.c
+index 869068fac5e2f..baa7be58ce691 100644
+--- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_dec_hw.c
++++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_dec_hw.c
+@@ -39,7 +39,6 @@ enum mtk_jpeg_color {
+ 	MTK_JPEG_COLOR_400		= 0x00110000
+ };
  
- /**
-@@ -1914,7 +1914,9 @@ int ice_add_fdir_ethtool(struct ice_vsi *vsi, struct ethtool_rxnfc *cmd)
- 	input->comp_report = ICE_FXD_FLTR_QW0_COMP_REPORT_SW_FAIL;
+-#if defined(CONFIG_OF)
+ static const struct of_device_id mtk_jpegdec_hw_ids[] = {
+ 	{
+ 		.compatible = "mediatek,mt8195-jpgdec-hw",
+@@ -47,7 +46,6 @@ static const struct of_device_id mtk_jpegdec_hw_ids[] = {
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(of, mtk_jpegdec_hw_ids);
+-#endif
  
- 	/* input struct is added to the HW filter list */
--	ice_fdir_update_list_entry(pf, input, fsp->location);
-+	ret = ice_fdir_update_list_entry(pf, input, fsp->location);
-+	if (ret)
-+		goto release_lock;
+ static inline int mtk_jpeg_verify_align(u32 val, int align, u32 reg)
+ {
+@@ -653,7 +651,7 @@ static struct platform_driver mtk_jpegdec_hw_driver = {
+ 	.probe = mtk_jpegdec_hw_probe,
+ 	.driver = {
+ 		.name = "mtk-jpegdec-hw",
+-		.of_match_table = of_match_ptr(mtk_jpegdec_hw_ids),
++		.of_match_table = mtk_jpegdec_hw_ids,
+ 	},
+ };
  
- 	ret = ice_fdir_write_all_fltr(pf, input, true);
- 	if (ret)
+diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c
+index 71e85b4bbf127..244018365b6f1 100644
+--- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c
++++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c
+@@ -46,7 +46,6 @@ static const struct mtk_jpeg_enc_qlt mtk_jpeg_enc_quality[] = {
+ 	{.quality_param = 97, .hardware_value = JPEG_ENC_QUALITY_Q97},
+ };
+ 
+-#if defined(CONFIG_OF)
+ static const struct of_device_id mtk_jpegenc_drv_ids[] = {
+ 	{
+ 		.compatible = "mediatek,mt8195-jpgenc-hw",
+@@ -54,7 +53,6 @@ static const struct of_device_id mtk_jpegenc_drv_ids[] = {
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(of, mtk_jpegenc_drv_ids);
+-#endif
+ 
+ void mtk_jpeg_enc_reset(void __iomem *base)
+ {
+@@ -377,7 +375,7 @@ static struct platform_driver mtk_jpegenc_hw_driver = {
+ 	.probe = mtk_jpegenc_hw_probe,
+ 	.driver = {
+ 		.name = "mtk-jpegenc-hw",
+-		.of_match_table = of_match_ptr(mtk_jpegenc_drv_ids),
++		.of_match_table = mtk_jpegenc_drv_ids,
+ 	},
+ };
+ 
 -- 
 2.39.2
 
