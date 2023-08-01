@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027921F95A
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B17EC433C8;
-	Tue,  1 Aug 2023 09:23:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0ABB1F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67EF5C433C8;
+	Tue,  1 Aug 2023 09:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881815;
-	bh=Xn24Qc1lZhLh7IaoAXzcbjwBeXoOke+Wj5dr2tKxAWA=;
+	s=korg; t=1690881818;
+	bh=LxCnBkDsz1wDLWQ1fKfs7UNypKYnWpNau7vkQVyrm2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P5yROoTuYPxMi4qWZZJhYaPoiRLB0HjTPq8uz78/Oozo25kUzTD1VMip7SI1n7fB5
-	 D7saqRWez8jzcwe32UBVjNzzMBoo3TiIkjyu/y58yaLEqHhbbndJWWGPvO0gr17Qq7
-	 F29eGDd9Fj16RFaWngRqgI/UiQWWwWrhaSQlnnQQ=
+	b=PnBhMqxcAWuJXMDnd95ikJ1PEf2IZ9oZiQVGR3NudKPFiwsOH/WSWomBQO0xK8VCF
+	 cJGGo6tOxWAt9EBb1RSNb5tOTl6l5jA1yjCko2jeroX6AjJCOxr9QlOy+WAReLlz1f
+	 QiAaTcHX7OZbwb+z4BViVaTE23AOFiyT4Qq5HFY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Himanshu Madhani <himanshu.madhani@oracle.commailto:himanshu.madhani@oracle.com>
-Subject: [PATCH 5.15 039/155] scsi: qla2xxx: Multi-que support for TMF
-Date: Tue,  1 Aug 2023 11:19:11 +0200
-Message-ID: <20230801091911.570664206@linuxfoundation.org>
+Subject: [PATCH 5.15 040/155] scsi: qla2xxx: Fix task management cmd failure
+Date: Tue,  1 Aug 2023 11:19:12 +0200
+Message-ID: <20230801091911.603850980@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -40,196 +40,321 @@ Content-Transfer-Encoding: 8bit
 
 From: Quinn Tran <qutran@marvell.com>
 
-[ Upstream commit d90171dd0da50212f5950cc708240831e82f2f91 ]
+[ Upstream commit 9803fb5d27597ea98f2e05b0b6cfc48ae808458e ]
 
-Add queue flush for task management command, before
-placing it on the wire.
-Do IO flush for all Request Q's.
+Task management cmd failed with status 30h which means
+FW is not able to finish processing one task management
+before another task management for the same lun.
+Hence add wait for completion of marker to space it out.
 
 Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/oe-kbuild-all/202304271702.GpIL391S-lkp@intel.com/
+Link: https://lore.kernel.org/oe-kbuild-all/202304271802.uCZfwQC1-lkp@intel.com/
 Cc: stable@vger.kernel.org
 Signed-off-by: Quinn Tran <qutran@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230428075339.32551-2-njavali@marvell.com
+Link: https://lore.kernel.org/r/20230428075339.32551-3-njavali@marvell.com
 Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com <mailto:himanshu.madhani@oracle.com>>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: 6a87679626b5 ("scsi: qla2xxx: Fix task management cmd fail due to unavailable resource")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_def.h  |  8 ++++
- drivers/scsi/qla2xxx/qla_gbl.h  |  2 +-
- drivers/scsi/qla2xxx/qla_init.c | 69 ++++++++++++++++++++++++++-------
- drivers/scsi/qla2xxx/qla_iocb.c |  5 ++-
- 4 files changed, 66 insertions(+), 18 deletions(-)
+ drivers/scsi/qla2xxx/qla_def.h  |   6 ++
+ drivers/scsi/qla2xxx/qla_init.c | 102 +++++++++++++++++++++++++++-----
+ drivers/scsi/qla2xxx/qla_iocb.c |  28 +++++++--
+ drivers/scsi/qla2xxx/qla_isr.c  |  26 +++++++-
+ 4 files changed, 139 insertions(+), 23 deletions(-)
 
 diff --git a/drivers/scsi/qla2xxx/qla_def.h b/drivers/scsi/qla2xxx/qla_def.h
-index e674d3fb59269..d4b8d9dd8106d 100644
+index d4b8d9dd8106d..ca63aa8f33b5d 100644
 --- a/drivers/scsi/qla2xxx/qla_def.h
 +++ b/drivers/scsi/qla2xxx/qla_def.h
-@@ -452,6 +452,14 @@ static inline be_id_t port_id_to_be_id(port_id_t port_id)
- 	return res;
- }
+@@ -458,6 +458,7 @@ struct tmf_arg {
+ 	struct scsi_qla_host *vha;
+ 	u64 lun;
+ 	u32 flags;
++	uint8_t modifier;
+ };
  
-+struct tmf_arg {
-+	struct qla_qpair *qpair;
-+	struct fc_port *fcport;
-+	struct scsi_qla_host *vha;
-+	u64 lun;
-+	u32 flags;
-+};
-+
  struct els_logo_payload {
- 	uint8_t opcode;
- 	uint8_t rsvd[3];
-diff --git a/drivers/scsi/qla2xxx/qla_gbl.h b/drivers/scsi/qla2xxx/qla_gbl.h
-index 4ed0777cd2a6f..9e467262c0f17 100644
---- a/drivers/scsi/qla2xxx/qla_gbl.h
-+++ b/drivers/scsi/qla2xxx/qla_gbl.h
-@@ -69,7 +69,7 @@ extern int qla2x00_async_logout(struct scsi_qla_host *, fc_port_t *);
- extern int qla2x00_async_prlo(struct scsi_qla_host *, fc_port_t *);
- extern int qla2x00_async_adisc(struct scsi_qla_host *, fc_port_t *,
-     uint16_t *);
--extern int qla2x00_async_tm_cmd(fc_port_t *, uint32_t, uint32_t, uint32_t);
-+extern int qla2x00_async_tm_cmd(fc_port_t *, uint32_t, uint64_t, uint32_t);
- struct qla_work_evt *qla2x00_alloc_work(struct scsi_qla_host *,
-     enum qla_work_type);
- extern int qla24xx_async_gnl(struct scsi_qla_host *, fc_port_t *);
+@@ -539,6 +540,10 @@ struct srb_iocb {
+ 			uint32_t data;
+ 			struct completion comp;
+ 			__le16 comp_status;
++
++			uint8_t modifier;
++			uint8_t vp_index;
++			uint16_t loop_id;
+ 		} tmf;
+ 		struct {
+ #define SRB_FXDISC_REQ_DMA_VALID	BIT_0
+@@ -642,6 +647,7 @@ struct srb_iocb {
+ #define SRB_SA_UPDATE	25
+ #define SRB_ELS_CMD_HST_NOLOGIN 26
+ #define SRB_SA_REPLACE	27
++#define SRB_MARKER	28
+ 
+ struct qla_els_pt_arg {
+ 	u8 els_opcode;
 diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
-index 37cb469dc9257..f64c238e3a45b 100644
+index f64c238e3a45b..9d9b16f7f34a6 100644
 --- a/drivers/scsi/qla2xxx/qla_init.c
 +++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -2022,17 +2022,19 @@ static void qla2x00_tmf_sp_done(srb_t *sp, int res)
- 	complete(&tmf->u.tmf.comp);
+@@ -2015,6 +2015,80 @@ qla2x00_tmf_iocb_timeout(void *data)
+ 	}
  }
  
--int
--qla2x00_async_tm_cmd(fc_port_t *fcport, uint32_t flags, uint32_t lun,
--	uint32_t tag)
++static void qla_marker_sp_done(srb_t *sp, int res)
++{
++	struct srb_iocb *tmf = &sp->u.iocb_cmd;
++
++	if (res != QLA_SUCCESS)
++		ql_dbg(ql_dbg_taskm, sp->vha, 0x8004,
++		    "Async-marker fail hdl=%x portid=%06x ctrl=%x lun=%lld qp=%d.\n",
++		    sp->handle, sp->fcport->d_id.b24, sp->u.iocb_cmd.u.tmf.flags,
++		    sp->u.iocb_cmd.u.tmf.lun, sp->qpair->id);
++
++	complete(&tmf->u.tmf.comp);
++}
++
++#define  START_SP_W_RETRIES(_sp, _rval) \
++{\
++	int cnt = 5; \
++	do { \
++		_rval = qla2x00_start_sp(_sp); \
++		if (_rval == EAGAIN) \
++			msleep(1); \
++		else \
++			break; \
++		cnt--; \
++	} while (cnt); \
++}
++
 +static int
-+__qla2x00_async_tm_cmd(struct tmf_arg *arg)
- {
--	struct scsi_qla_host *vha = fcport->vha;
++qla26xx_marker(struct tmf_arg *arg)
++{
 +	struct scsi_qla_host *vha = arg->vha;
- 	struct srb_iocb *tm_iocb;
- 	srb_t *sp;
-+	unsigned long flags;
- 	int rval = QLA_FUNCTION_FAILED;
- 
++	struct srb_iocb *tm_iocb;
++	srb_t *sp;
++	int rval = QLA_FUNCTION_FAILED;
 +	fc_port_t *fcport = arg->fcport;
 +
- 	/* ref: INIT */
--	sp = qla2x00_get_sp(vha, fcport, GFP_KERNEL);
++	/* ref: INIT */
 +	sp = qla2xxx_get_qpair_sp(vha, arg->qpair, fcport, GFP_KERNEL);
- 	if (!sp)
- 		goto done;
- 
-@@ -2045,15 +2047,15 @@ qla2x00_async_tm_cmd(fc_port_t *fcport, uint32_t flags, uint32_t lun,
- 
- 	tm_iocb = &sp->u.iocb_cmd;
- 	init_completion(&tm_iocb->u.tmf.comp);
--	tm_iocb->u.tmf.flags = flags;
--	tm_iocb->u.tmf.lun = lun;
-+	tm_iocb->u.tmf.flags = arg->flags;
++	if (!sp)
++		goto done;
++
++	sp->type = SRB_MARKER;
++	sp->name = "marker";
++	qla2x00_init_async_sp(sp, qla2x00_get_async_timeout(vha), qla_marker_sp_done);
++	sp->u.iocb_cmd.timeout = qla2x00_tmf_iocb_timeout;
++
++	tm_iocb = &sp->u.iocb_cmd;
++	init_completion(&tm_iocb->u.tmf.comp);
++	tm_iocb->u.tmf.modifier = arg->modifier;
 +	tm_iocb->u.tmf.lun = arg->lun;
- 
-+	rval = qla2x00_start_sp(sp);
- 	ql_dbg(ql_dbg_taskm, vha, 0x802f,
--	    "Async-tmf hdl=%x loop-id=%x portid=%02x%02x%02x.\n",
-+	    "Async-tmf hdl=%x loop-id=%x portid=%02x%02x%02x ctrl=%x.\n",
- 	    sp->handle, fcport->loop_id, fcport->d_id.b.domain,
--	    fcport->d_id.b.area, fcport->d_id.b.al_pa);
-+	    fcport->d_id.b.area, fcport->d_id.b.al_pa, arg->flags);
- 
--	rval = qla2x00_start_sp(sp);
- 	if (rval != QLA_SUCCESS)
- 		goto done_free_sp;
- 	wait_for_completion(&tm_iocb->u.tmf.comp);
-@@ -2067,12 +2069,14 @@ qla2x00_async_tm_cmd(fc_port_t *fcport, uint32_t flags, uint32_t lun,
- 
- 	if (!test_bit(UNLOADING, &vha->dpc_flags) && !IS_QLAFX00(vha->hw)) {
- 		flags = tm_iocb->u.tmf.flags;
--		lun = (uint16_t)tm_iocb->u.tmf.lun;
-+		if (flags & (TCF_LUN_RESET|TCF_ABORT_TASK_SET|
-+			TCF_CLEAR_TASK_SET|TCF_CLEAR_ACA))
-+			flags = MK_SYNC_ID_LUN;
-+		else
-+			flags = MK_SYNC_ID;
- 
--		/* Issue Marker IOCB */
--		qla2x00_marker(vha, vha->hw->base_qpair,
--		    fcport->loop_id, lun,
--		    flags == TCF_LUN_RESET ? MK_SYNC_ID_LUN : MK_SYNC_ID);
-+		qla2x00_marker(vha, sp->qpair,
-+		    sp->fcport->loop_id, arg->lun, flags);
- 	}
- 
- done_free_sp:
-@@ -2082,6 +2086,41 @@ qla2x00_async_tm_cmd(fc_port_t *fcport, uint32_t flags, uint32_t lun,
- 	return rval;
- }
- 
-+int
-+qla2x00_async_tm_cmd(fc_port_t *fcport, uint32_t flags, uint64_t lun,
-+		     uint32_t tag)
-+{
-+	struct scsi_qla_host *vha = fcport->vha;
-+	struct qla_qpair *qpair;
-+	struct tmf_arg a;
-+	struct completion comp;
-+	int i, rval;
++	tm_iocb->u.tmf.loop_id = fcport->loop_id;
++	tm_iocb->u.tmf.vp_index = vha->vp_idx;
 +
-+	init_completion(&comp);
-+	a.vha = fcport->vha;
-+	a.fcport = fcport;
-+	a.lun = lun;
++	START_SP_W_RETRIES(sp, rval);
 +
-+	if (vha->hw->mqenable) {
-+		for (i = 0; i < vha->hw->num_qpairs; i++) {
-+			qpair = vha->hw->queue_pair_map[i];
-+			if (!qpair)
-+				continue;
-+			a.qpair = qpair;
-+			a.flags = flags|TCF_NOTMCMD_TO_TARGET;
-+			rval = __qla2x00_async_tm_cmd(&a);
-+			if (rval)
-+				break;
-+		}
++	ql_dbg(ql_dbg_taskm, vha, 0x8006,
++	    "Async-marker hdl=%x loop-id=%x portid=%06x modifier=%x lun=%lld qp=%d rval %d.\n",
++	    sp->handle, fcport->loop_id, fcport->d_id.b24,
++	    arg->modifier, arg->lun, sp->qpair->id, rval);
++
++	if (rval != QLA_SUCCESS) {
++		ql_log(ql_log_warn, vha, 0x8031,
++		    "Marker IOCB failed (%x).\n", rval);
++		goto done_free_sp;
 +	}
 +
-+	a.qpair = vha->hw->base_qpair;
-+	a.flags = flags;
-+	rval = __qla2x00_async_tm_cmd(&a);
++	wait_for_completion(&tm_iocb->u.tmf.comp);
 +
++done_free_sp:
++	/* ref: INIT */
++	kref_put(&sp->cmd_kref, qla2x00_sp_release);
++done:
 +	return rval;
 +}
 +
- int
- qla24xx_async_abort_command(srb_t *sp)
+ static void qla2x00_tmf_sp_done(srb_t *sp, int res)
  {
+ 	struct srb_iocb *tmf = &sp->u.iocb_cmd;
+@@ -2028,7 +2102,6 @@ __qla2x00_async_tm_cmd(struct tmf_arg *arg)
+ 	struct scsi_qla_host *vha = arg->vha;
+ 	struct srb_iocb *tm_iocb;
+ 	srb_t *sp;
+-	unsigned long flags;
+ 	int rval = QLA_FUNCTION_FAILED;
+ 
+ 	fc_port_t *fcport = arg->fcport;
+@@ -2050,11 +2123,12 @@ __qla2x00_async_tm_cmd(struct tmf_arg *arg)
+ 	tm_iocb->u.tmf.flags = arg->flags;
+ 	tm_iocb->u.tmf.lun = arg->lun;
+ 
+-	rval = qla2x00_start_sp(sp);
++	START_SP_W_RETRIES(sp, rval);
++
+ 	ql_dbg(ql_dbg_taskm, vha, 0x802f,
+-	    "Async-tmf hdl=%x loop-id=%x portid=%02x%02x%02x ctrl=%x.\n",
+-	    sp->handle, fcport->loop_id, fcport->d_id.b.domain,
+-	    fcport->d_id.b.area, fcport->d_id.b.al_pa, arg->flags);
++	    "Async-tmf hdl=%x loop-id=%x portid=%06x ctrl=%x lun=%lld qp=%d rval=%x.\n",
++	    sp->handle, fcport->loop_id, fcport->d_id.b24,
++	    arg->flags, arg->lun, sp->qpair->id, rval);
+ 
+ 	if (rval != QLA_SUCCESS)
+ 		goto done_free_sp;
+@@ -2067,17 +2141,8 @@ __qla2x00_async_tm_cmd(struct tmf_arg *arg)
+ 		    "TM IOCB failed (%x).\n", rval);
+ 	}
+ 
+-	if (!test_bit(UNLOADING, &vha->dpc_flags) && !IS_QLAFX00(vha->hw)) {
+-		flags = tm_iocb->u.tmf.flags;
+-		if (flags & (TCF_LUN_RESET|TCF_ABORT_TASK_SET|
+-			TCF_CLEAR_TASK_SET|TCF_CLEAR_ACA))
+-			flags = MK_SYNC_ID_LUN;
+-		else
+-			flags = MK_SYNC_ID;
+-
+-		qla2x00_marker(vha, sp->qpair,
+-		    sp->fcport->loop_id, arg->lun, flags);
+-	}
++	if (!test_bit(UNLOADING, &vha->dpc_flags) && !IS_QLAFX00(vha->hw))
++		rval = qla26xx_marker(arg);
+ 
+ done_free_sp:
+ 	/* ref: INIT */
+@@ -2101,6 +2166,11 @@ qla2x00_async_tm_cmd(fc_port_t *fcport, uint32_t flags, uint64_t lun,
+ 	a.fcport = fcport;
+ 	a.lun = lun;
+ 
++	if (flags & (TCF_LUN_RESET|TCF_ABORT_TASK_SET|TCF_CLEAR_TASK_SET|TCF_CLEAR_ACA))
++		a.modifier = MK_SYNC_ID_LUN;
++	else
++		a.modifier = MK_SYNC_ID;
++
+ 	if (vha->hw->mqenable) {
+ 		for (i = 0; i < vha->hw->num_qpairs; i++) {
+ 			qpair = vha->hw->queue_pair_map[i];
 diff --git a/drivers/scsi/qla2xxx/qla_iocb.c b/drivers/scsi/qla2xxx/qla_iocb.c
-index 7a4298388ef1d..ac82392c22eed 100644
+index ac82392c22eed..c9a686f06d29d 100644
 --- a/drivers/scsi/qla2xxx/qla_iocb.c
 +++ b/drivers/scsi/qla2xxx/qla_iocb.c
-@@ -2542,7 +2542,7 @@ qla24xx_tm_iocb(srb_t *sp, struct tsk_mgmt_entry *tsk)
- 	scsi_qla_host_t *vha = fcport->vha;
- 	struct qla_hw_data *ha = vha->hw;
- 	struct srb_iocb *iocb = &sp->u.iocb_cmd;
--	struct req_que *req = vha->req;
-+	struct req_que *req = sp->qpair->req;
+@@ -522,21 +522,25 @@ __qla2x00_marker(struct scsi_qla_host *vha, struct qla_qpair *qpair,
+ 		return (QLA_FUNCTION_FAILED);
+ 	}
  
- 	flags = iocb->u.tmf.flags;
- 	lun = iocb->u.tmf.lun;
-@@ -2558,7 +2558,8 @@ qla24xx_tm_iocb(srb_t *sp, struct tsk_mgmt_entry *tsk)
- 	tsk->port_id[2] = fcport->d_id.b.domain;
- 	tsk->vp_index = fcport->vha->vp_idx;
++	mrk24 = (struct mrk_entry_24xx *)mrk;
++
+ 	mrk->entry_type = MARKER_TYPE;
+ 	mrk->modifier = type;
+ 	if (type != MK_SYNC_ALL) {
+ 		if (IS_FWI2_CAPABLE(ha)) {
+-			mrk24 = (struct mrk_entry_24xx *) mrk;
+ 			mrk24->nport_handle = cpu_to_le16(loop_id);
+ 			int_to_scsilun(lun, (struct scsi_lun *)&mrk24->lun);
+ 			host_to_fcp_swap(mrk24->lun, sizeof(mrk24->lun));
+ 			mrk24->vp_index = vha->vp_idx;
+-			mrk24->handle = make_handle(req->id, mrk24->handle);
+ 		} else {
+ 			SET_TARGET_ID(ha, mrk->target, loop_id);
+ 			mrk->lun = cpu_to_le16((uint16_t)lun);
+ 		}
+ 	}
++
++	if (IS_FWI2_CAPABLE(ha))
++		mrk24->handle = QLA_SKIP_HANDLE;
++
+ 	wmb();
  
--	if (flags == TCF_LUN_RESET) {
-+	if (flags & (TCF_LUN_RESET | TCF_ABORT_TASK_SET|
-+	    TCF_CLEAR_TASK_SET|TCF_CLEAR_ACA)) {
- 		int_to_scsilun(lun, &tsk->lun);
- 		host_to_fcp_swap((uint8_t *)&tsk->lun,
- 			sizeof(tsk->lun));
+ 	qla2x00_start_iocbs(vha, req);
+@@ -3860,9 +3864,9 @@ int qla_get_iocbs_resource(struct srb *sp)
+ 	case SRB_NACK_LOGO:
+ 	case SRB_LOGOUT_CMD:
+ 	case SRB_CTRL_VP:
+-		push_it_through = true;
+-		fallthrough;
++	case SRB_MARKER:
+ 	default:
++		push_it_through = true;
+ 		get_exch = false;
+ 	}
+ 
+@@ -3878,6 +3882,19 @@ int qla_get_iocbs_resource(struct srb *sp)
+ 	return qla_get_fw_resources(sp->qpair, &sp->iores);
+ }
+ 
++static void
++qla_marker_iocb(srb_t *sp, struct mrk_entry_24xx *mrk)
++{
++	mrk->entry_type = MARKER_TYPE;
++	mrk->modifier = sp->u.iocb_cmd.u.tmf.modifier;
++	if (sp->u.iocb_cmd.u.tmf.modifier != MK_SYNC_ALL) {
++		mrk->nport_handle = cpu_to_le16(sp->u.iocb_cmd.u.tmf.loop_id);
++		int_to_scsilun(sp->u.iocb_cmd.u.tmf.lun, (struct scsi_lun *)&mrk->lun);
++		host_to_fcp_swap(mrk->lun, sizeof(mrk->lun));
++		mrk->vp_index = sp->u.iocb_cmd.u.tmf.vp_index;
++	}
++}
++
+ int
+ qla2x00_start_sp(srb_t *sp)
+ {
+@@ -3981,6 +3998,9 @@ qla2x00_start_sp(srb_t *sp)
+ 	case SRB_SA_REPLACE:
+ 		qla24xx_sa_replace_iocb(sp, pkt);
+ 		break;
++	case SRB_MARKER:
++		qla_marker_iocb(sp, pkt);
++		break;
+ 	default:
+ 		break;
+ 	}
+diff --git a/drivers/scsi/qla2xxx/qla_isr.c b/drivers/scsi/qla2xxx/qla_isr.c
+index 665959938e5e3..08d43f43995ef 100644
+--- a/drivers/scsi/qla2xxx/qla_isr.c
++++ b/drivers/scsi/qla2xxx/qla_isr.c
+@@ -3737,6 +3737,28 @@ static int qla_chk_cont_iocb_avail(struct scsi_qla_host *vha,
+ 	return rc;
+ }
+ 
++static void qla_marker_iocb_entry(scsi_qla_host_t *vha, struct req_que *req,
++	struct mrk_entry_24xx *pkt)
++{
++	const char func[] = "MRK-IOCB";
++	srb_t *sp;
++	int res = QLA_SUCCESS;
++
++	if (!IS_FWI2_CAPABLE(vha->hw))
++		return;
++
++	sp = qla2x00_get_sp_from_handle(vha, func, req, pkt);
++	if (!sp)
++		return;
++
++	if (pkt->entry_status) {
++		ql_dbg(ql_dbg_taskm, vha, 0x8025, "marker failure.\n");
++		res = QLA_COMMAND_ERROR;
++	}
++	sp->u.iocb_cmd.u.tmf.data = res;
++	sp->done(sp, res);
++}
++
+ /**
+  * qla24xx_process_response_queue() - Process response queue entries.
+  * @vha: SCSI driver HA context
+@@ -3858,9 +3880,7 @@ void qla24xx_process_response_queue(struct scsi_qla_host *vha,
+ 					(struct nack_to_isp *)pkt);
+ 			break;
+ 		case MARKER_TYPE:
+-			/* Do nothing in this case, this check is to prevent it
+-			 * from falling into default case
+-			 */
++			qla_marker_iocb_entry(vha, rsp->req, (struct mrk_entry_24xx *)pkt);
+ 			break;
+ 		case ABORT_IOCB_TYPE:
+ 			qla24xx_abort_iocb_entry(vha, rsp->req,
 -- 
 2.39.2
 
