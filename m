@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55071FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:43:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B885C433C8;
-	Tue,  1 Aug 2023 09:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D391FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:43:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3A7C433C7;
+	Tue,  1 Aug 2023 09:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883010;
-	bh=I/dCVCOy77eC5j0u8S+/JPAs1oSzQZNWnRRmdoVnzZI=;
+	s=korg; t=1690883013;
+	bh=HwuGX4DSN1NBlbEaLKFPQH9lbqpV1tDj6YmnLmmUkOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M9AFLGhUWtg1/sjp1oQNeagRhXpSHA2N28fGeW44yZh/ci9kMNpklMfBUpkOGuhp3
-	 ZLz5W2iEdPx5Mxs3FWxnxwf+2pFoUTWyesAcW+8izZ3qq6h3Nd6n8oFAqtZSqq3kFU
-	 jD24vflAOxIMh4QOF5p+b5fdJyANc6KQMaoWzPxo=
+	b=oH8IOxFTkwSWsBFmRAffjoWWRlvrQcx2Tfl7+zcvHcD6gKulbmflktjBFFhCcLYDb
+	 Pkm9SZUVOj2PdFO03ZhUxpA44rCjYJR5jmMC0q8GJXTyCPgIfTAGRUVnzzZbDdaAC9
+	 OJFLvG0pQFEkFVJmmFifUWruZ9IJgoNc1suxVqUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Ghosh <sumang@marvell.com>,
+	Vincent Whitchurch <vincent.whitchurch@axis.com>,
 	Simon Horman <simon.horman@corigine.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 082/239] octeontx2-af: Fix hash extraction enable configuration
-Date: Tue,  1 Aug 2023 11:19:06 +0200
-Message-ID: <20230801091928.703902793@linuxfoundation.org>
+Subject: [PATCH 6.4 083/239] net: stmmac: Apply redundant write work around on 4.xx too
+Date: Tue,  1 Aug 2023 11:19:07 +0200
+Message-ID: <20230801091928.738490181@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,115 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Suman Ghosh <sumang@marvell.com>
+From: Vincent Whitchurch <vincent.whitchurch@axis.com>
 
-[ Upstream commit 4e62c99d71e56817c934caa2a709a775c8cee078 ]
+[ Upstream commit 284779dbf4e98753458708783af8c35630674a21 ]
 
-As of today, hash extraction support is enabled for all the silicons.
-Because of which we are facing initialization issues when the silicon
-does not support hash extraction. During creation of the hardware
-parsing table for IPv6 address, we need to consider if hash extraction
-is enabled then extract only 32 bit, otherwise 128 bit needs to be
-extracted. This patch fixes the issue and configures the hardware parser
-based on the availability of the feature.
+commit a3a57bf07de23fe1ff779e0fdf710aa581c3ff73 ("net: stmmac: work
+around sporadic tx issue on link-up") worked around a problem with TX
+sometimes not working after a link-up by avoiding a redundant write to
+MAC_CTRL_REG (aka GMAC_CONFIG), since the IP appeared to have problems
+with handling multiple writes to that register in some cases.
 
-Fixes: a95ab93550d3 ("octeontx2-af: Use hashed field in MCAM key")
-Signed-off-by: Suman Ghosh <sumang@marvell.com>
+That commit however only added the work around to dwmac_lib.c (apart
+from the common code in stmmac_main.c), but my systems with version
+4.21a of the IP exhibit the same problem, so add the work around to
+dwmac4_lib.c too.
+
+Fixes: a3a57bf07de2 ("net: stmmac: work around sporadic tx issue on link-up")
+Signed-off-by: Vincent Whitchurch <vincent.whitchurch@axis.com>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230721061222.2632521-1-sumang@marvell.com
+Link: https://lore.kernel.org/r/20230721-stmmac-tx-workaround-v1-1-9411cbd5ee07@axis.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../marvell/octeontx2/af/rvu_npc_hash.c       | 43 ++++++++++++++++++-
- .../marvell/octeontx2/af/rvu_npc_hash.h       |  8 ++--
- 2 files changed, 46 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-index 6fe67f3a7f6f1..7e20282c12d00 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-@@ -218,13 +218,54 @@ void npc_config_secret_key(struct rvu *rvu, int blkaddr)
- 
- void npc_program_mkex_hash(struct rvu *rvu, int blkaddr)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c
+index df41eac54058f..03ceb6a940732 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c
+@@ -240,13 +240,15 @@ void stmmac_dwmac4_set_mac_addr(void __iomem *ioaddr, const u8 addr[6],
+ void stmmac_dwmac4_set_mac(void __iomem *ioaddr, bool enable)
  {
-+	struct npc_mcam_kex_hash *mh = rvu->kpu.mkex_hash;
- 	struct hw_cap *hwcap = &rvu->hw->cap;
-+	u8 intf, ld, hdr_offset, byte_len;
- 	struct rvu_hwinfo *hw = rvu->hw;
--	u8 intf;
-+	u64 cfg;
+ 	u32 value = readl(ioaddr + GMAC_CONFIG);
++	u32 old_val = value;
  
-+	/* Check if hardware supports hash extraction */
- 	if (!hwcap->npc_hash_extract)
- 		return;
+ 	if (enable)
+ 		value |= GMAC_CONFIG_RE | GMAC_CONFIG_TE;
+ 	else
+ 		value &= ~(GMAC_CONFIG_TE | GMAC_CONFIG_RE);
  
-+	/* Check if IPv6 source/destination address
-+	 * should be hash enabled.
-+	 * Hashing reduces 128bit SIP/DIP fields to 32bit
-+	 * so that 224 bit X2 key can be used for IPv6 based filters as well,
-+	 * which in turn results in more number of MCAM entries available for
-+	 * use.
-+	 *
-+	 * Hashing of IPV6 SIP/DIP is enabled in below scenarios
-+	 * 1. If the silicon variant supports hashing feature
-+	 * 2. If the number of bytes of IP addr being extracted is 4 bytes ie
-+	 *    32bit. The assumption here is that if user wants 8bytes of LSB of
-+	 *    IP addr or full 16 bytes then his intention is not to use 32bit
-+	 *    hash.
-+	 */
-+	for (intf = 0; intf < hw->npc_intfs; intf++) {
-+		for (ld = 0; ld < NPC_MAX_LD; ld++) {
-+			cfg = rvu_read64(rvu, blkaddr,
-+					 NPC_AF_INTFX_LIDX_LTX_LDX_CFG(intf,
-+								       NPC_LID_LC,
-+								       NPC_LT_LC_IP6,
-+								       ld));
-+			hdr_offset = FIELD_GET(NPC_HDR_OFFSET, cfg);
-+			byte_len = FIELD_GET(NPC_BYTESM, cfg);
-+			/* Hashing of IPv6 source/destination address should be
-+			 * enabled if,
-+			 * hdr_offset == 8 (offset of source IPv6 address) or
-+			 * hdr_offset == 24 (offset of destination IPv6)
-+			 * address) and the number of byte to be
-+			 * extracted is 4. As per hardware configuration
-+			 * byte_len should be == actual byte_len - 1.
-+			 * Hence byte_len is checked against 3 but nor 4.
-+			 */
-+			if ((hdr_offset == 8 || hdr_offset == 24) && byte_len == 3)
-+				mh->lid_lt_ld_hash_en[intf][NPC_LID_LC][NPC_LT_LC_IP6][ld] = true;
-+		}
-+	}
-+
-+	/* Update hash configuration if the field is hash enabled */
- 	for (intf = 0; intf < hw->npc_intfs; intf++) {
- 		npc_program_mkex_hash_rx(rvu, blkaddr, intf);
- 		npc_program_mkex_hash_tx(rvu, blkaddr, intf);
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
-index a1c3d987b8044..57a09328d46b5 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
-@@ -70,8 +70,8 @@ static struct npc_mcam_kex_hash npc_mkex_hash_default __maybe_unused = {
- 	[NIX_INTF_RX] = {
- 		[NPC_LID_LC] = {
- 			[NPC_LT_LC_IP6] = {
--				true,
--				true,
-+				false,
-+				false,
- 			},
- 		},
- 	},
-@@ -79,8 +79,8 @@ static struct npc_mcam_kex_hash npc_mkex_hash_default __maybe_unused = {
- 	[NIX_INTF_TX] = {
- 		[NPC_LID_LC] = {
- 			[NPC_LT_LC_IP6] = {
--				true,
--				true,
-+				false,
-+				false,
- 			},
- 		},
- 	},
+-	writel(value, ioaddr + GMAC_CONFIG);
++	if (value != old_val)
++		writel(value, ioaddr + GMAC_CONFIG);
+ }
+ 
+ void stmmac_dwmac4_get_mac_addr(void __iomem *ioaddr, unsigned char *addr,
 -- 
 2.39.2
 
