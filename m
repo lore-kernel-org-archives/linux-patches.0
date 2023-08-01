@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EB61FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:48:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADEB0C433C9;
-	Tue,  1 Aug 2023 09:48:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E6C1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:48:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A07C433C8;
+	Tue,  1 Aug 2023 09:48:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883285;
-	bh=RbuvKrTO/lvaDb9dGFSCkw2dQ23aIzios9ci2FOF2HM=;
+	s=korg; t=1690883287;
+	bh=M+b1jCgVMAsbX2LvexOKncnj3LdgGBaYCFl5fvTNCTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2mq5Yq0zVkR2eQA65qT/MEO+WNJ5D/cL0FKRiEzkhwcEvtHuzhZ7w1QNtugNWcBPn
-	 QrZlltlci9k0MnjZdmMvWncAhLiyfWODMn6BZGrCOl2sKmBYnXGA5XbzjFouXN5bJ8
-	 qiyrrvXfeeCGElwSiOKQvMPfupkWALyzEGHP6HQM=
+	b=yvKcHZ2B0m+uEpB9rqimb6g0i0i2AjqOvETIXhtLBV+wX/Aa6qLPFCmj2wH3pL3yZ
+	 +iCr7g5e0FmVEOHhh14jWuk3K2v+IlnrxWf3JXo/swX76Q6nN9bb8mln6XdTps1N+o
+	 ky14YoUGz+wnAAIy6qTyDFdAJrZ7vnVaZIgCbxY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksa Savic <savicaleksa83@gmail.com>,
+	Patrick Rudolph <patrick.rudolph@9elements.com>,
+	Naresh Solanki <Naresh.Solanki@9elements.com>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.4 181/239] hwmon: (aquacomputer_d5next) Fix incorrect PWM value readout
-Date: Tue,  1 Aug 2023 11:20:45 +0200
-Message-ID: <20230801091932.190096545@linuxfoundation.org>
+Subject: [PATCH 6.4 182/239] hwmon: (pmbus_core) Fix pmbus_is_enabled()
+Date: Tue,  1 Aug 2023 11:20:46 +0200
+Message-ID: <20230801091932.234193253@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -34,36 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aleksa Savic <savicaleksa83@gmail.com>
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
 
-commit a746b3689546da27125da9ccaea62b1dbaaf927c upstream.
+commit 55aab08f1856894d7d47d0ee23abbb4bc4854345 upstream.
 
-Commit 662d20b3a5af ("hwmon: (aquacomputer_d5next) Add support for
-temperature sensor offsets") changed aqc_get_ctrl_val() to return
-the value through a parameter instead of through the return value,
-but didn't fix up a case that relied on the old behavior. Fix it
-to use the proper received value and not the return code.
+Refactor pmbus_is_enabled() to return the status without any additional
+processing as it is already done in _pmbus_is_enabled().
 
-Fixes: 662d20b3a5af ("hwmon: (aquacomputer_d5next) Add support for temperature sensor offsets")
-Cc: stable@vger.kernel.org
-Signed-off-by: Aleksa Savic <savicaleksa83@gmail.com>
-Link: https://lore.kernel.org/r/20230714120712.16721-1-savicaleksa83@gmail.com
+Fixes: df5f6b6af01c ("hwmon: (pmbus/core) Generalise pmbus get status")
+Cc: stable@vger.kernel.org # v6.4
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+Signed-off-by: Naresh Solanki <Naresh.Solanki@9elements.com>
+Link: https://lore.kernel.org/r/20230725125428.3966803-1-Naresh.Solanki@9elements.com
+[groeck: Rephrased commit message]
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/aquacomputer_d5next.c |    2 +-
+ drivers/hwmon/pmbus/pmbus_core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hwmon/aquacomputer_d5next.c
-+++ b/drivers/hwmon/aquacomputer_d5next.c
-@@ -969,7 +969,7 @@ static int aqc_read(struct device *dev,
- 			if (ret < 0)
- 				return ret;
+diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+index fa06325f5a7c..42fb7286805b 100644
+--- a/drivers/hwmon/pmbus/pmbus_core.c
++++ b/drivers/hwmon/pmbus/pmbus_core.c
+@@ -2768,7 +2768,7 @@ static int __maybe_unused pmbus_is_enabled(struct device *dev, u8 page)
+ 	ret = _pmbus_is_enabled(dev, page);
+ 	mutex_unlock(&data->update_lock);
  
--			*val = aqc_percent_to_pwm(ret);
-+			*val = aqc_percent_to_pwm(*val);
- 			break;
- 		}
- 		break;
+-	return !!(ret & PB_OPERATION_CONTROL_ON);
++	return ret;
+ }
+ 
+ #define to_dev_attr(_dev_attr) \
+-- 
+2.41.0
+
 
 
