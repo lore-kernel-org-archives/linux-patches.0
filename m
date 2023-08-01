@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F2A1FB2B
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:33:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABEB1C433C8;
-	Tue,  1 Aug 2023 09:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4851FB2B
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:33:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70AEAC433C8;
+	Tue,  1 Aug 2023 09:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882419;
-	bh=pSVIaabH/x8RFpUQ+q6+6jTXdw9VGLpvYluFLL89k7I=;
+	s=korg; t=1690882421;
+	bh=vR6ufOijG2JxlSxcat6JRpY5chrv+rJ6+Hh1Mss6XCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GIC5Ok6oaiqnjNzAvTuOHIvNCKp8Je74nWtGzdvrlGKuXgpZMXqce6iKwyKYVo5oW
-	 e6LnbG9joLVabxrJohUhES1+BRPWLXmy99llsVuCF5eLa4hzvj4gV5yK06U0CiPYSY
-	 hES5ozUTITyly7/WfTM6nHHklZzwJ6ZOY6Klp8jE=
+	b=2tReDuFdJ4rQatP0TcF09qw9a5LITgm6xpcjEAVkIAcicQKgNIe1zNOtUkrORQxAO
+	 TcRqgpJHKjTxuhSc44YI95vO/wtULjhdTaPL7de68Vp/YKUCPPKp3b2T7v24CK5kf/
+	 LvIkTvBTGNcIjDw4VJNOZDu0++wkBKD4Zi9oHiQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 099/228] octeontx2-af: Removed unnecessary debug messages.
-Date: Tue,  1 Aug 2023 11:19:17 +0200
-Message-ID: <20230801091926.400961556@linuxfoundation.org>
+Subject: [PATCH 6.1 082/228] iavf: fix potential deadlock on allocation failure
+Date: Tue,  1 Aug 2023 11:19:00 +0200
+Message-ID: <20230801091925.808674110@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -37,75 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sunil Goutham <sgoutham@marvell.com>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit 609aa68d60965f70485655def733d533f99b341b ]
+[ Upstream commit a2f054c10bef0b54600ec9cb776508443e941343 ]
 
-NPC exact match feature is supported only on one silicon
-variant, removed debug messages which print that this
-feature is not available on all other silicon variants.
+In iavf_adminq_task(), if kzalloc() fails to allocate the event.msg_buf,
+the function will exit without releasing the adapter->crit_lock.
 
-Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20230201040301.1034843-1-rkannoth@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 4e62c99d71e5 ("octeontx2-af: Fix hash extraction enable configuration")
+This is unlikely, but if it happens, the next access to that mutex will
+deadlock.
+
+Fix this by moving the unlock to the end of the function, and adding a new
+label to allow jumping to the unlock portion of the function exit flow.
+
+Fixes: fc2e6b3b132a ("iavf: Rework mutexes for better synchronisation")
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../marvell/octeontx2/af/rvu_npc_hash.c        | 18 ++++--------------
- 1 file changed, 4 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-index 3b0a66c0977a7..efc2e64689f7d 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-@@ -203,10 +203,8 @@ void npc_config_secret_key(struct rvu *rvu, int blkaddr)
- 	struct rvu_hwinfo *hw = rvu->hw;
- 	u8 intf;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index c1f91c55e1ca7..650a969a69a14 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -3300,7 +3300,7 @@ static void iavf_adminq_task(struct work_struct *work)
+ 	event.buf_len = IAVF_MAX_AQ_BUF_SIZE;
+ 	event.msg_buf = kzalloc(event.buf_len, GFP_KERNEL);
+ 	if (!event.msg_buf)
+-		goto out;
++		goto unlock;
  
--	if (!hwcap->npc_hash_extract) {
--		dev_info(rvu->dev, "HW does not support secret key configuration\n");
-+	if (!hwcap->npc_hash_extract)
- 		return;
--	}
+ 	do {
+ 		ret = iavf_clean_arq_element(hw, &event, &pending);
+@@ -3315,7 +3315,6 @@ static void iavf_adminq_task(struct work_struct *work)
+ 		if (pending != 0)
+ 			memset(event.msg_buf, 0, IAVF_MAX_AQ_BUF_SIZE);
+ 	} while (pending);
+-	mutex_unlock(&adapter->crit_lock);
  
- 	for (intf = 0; intf < hw->npc_intfs; intf++) {
- 		rvu_write64(rvu, blkaddr, NPC_AF_INTFX_SECRET_KEY0(intf),
-@@ -224,10 +222,8 @@ void npc_program_mkex_hash(struct rvu *rvu, int blkaddr)
- 	struct rvu_hwinfo *hw = rvu->hw;
- 	u8 intf;
+ 	if (iavf_is_reset_in_progress(adapter))
+ 		goto freedom;
+@@ -3359,6 +3358,8 @@ static void iavf_adminq_task(struct work_struct *work)
  
--	if (!hwcap->npc_hash_extract) {
--		dev_dbg(rvu->dev, "Field hash extract feature is not supported\n");
-+	if (!hwcap->npc_hash_extract)
- 		return;
--	}
- 
- 	for (intf = 0; intf < hw->npc_intfs; intf++) {
- 		npc_program_mkex_hash_rx(rvu, blkaddr, intf);
-@@ -1864,19 +1860,13 @@ int rvu_npc_exact_init(struct rvu *rvu)
- 
- 	/* Check exact match feature is supported */
- 	npc_const3 = rvu_read64(rvu, blkaddr, NPC_AF_CONST3);
--	if (!(npc_const3 & BIT_ULL(62))) {
--		dev_info(rvu->dev, "%s: No support for exact match support\n",
--			 __func__);
-+	if (!(npc_const3 & BIT_ULL(62)))
- 		return 0;
--	}
- 
- 	/* Check if kex profile has enabled EXACT match nibble */
- 	cfg = rvu_read64(rvu, blkaddr, NPC_AF_INTFX_KEX_CFG(NIX_INTF_RX));
--	if (!(cfg & NPC_EXACT_NIBBLE_HIT)) {
--		dev_info(rvu->dev, "%s: NPC exact match nibble not enabled in KEX profile\n",
--			 __func__);
-+	if (!(cfg & NPC_EXACT_NIBBLE_HIT))
- 		return 0;
--	}
- 
- 	/* Set capability to true */
- 	rvu->hw->cap.npc_exact_match_enabled = true;
+ freedom:
+ 	kfree(event.msg_buf);
++unlock:
++	mutex_unlock(&adapter->crit_lock);
+ out:
+ 	/* re-enable Admin queue interrupt cause */
+ 	iavf_misc_irq_enable(adapter);
 -- 
 2.39.2
 
