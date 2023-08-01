@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A771FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:47:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1FBAC433C9;
-	Tue,  1 Aug 2023 09:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10EFB1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:47:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88113C433C7;
+	Tue,  1 Aug 2023 09:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883221;
-	bh=4QR4i/5FCmjj8vvofHns45GjYebhTG+h+CyJAUo12YA=;
+	s=korg; t=1690883223;
+	bh=OeVLk6mlwRD/ZLauaMFLG2EYUsi3afLuezd1XrFJVvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wkzXth8VRWquiON6+S2T32R12FGVb111gHBBqB/Neh10rwjhFwO7xLqPxiV2fLzx+
-	 0sEdoif+AcnzsruIZBszUXbOWhmvujOS/DLpDE9JjwcGdIxhx0TlTm/tDUl+WO6wRD
-	 jWPT7uqKFUvSWi4h/wObokHM9f1ZhIV9fEVOpI8A=
+	b=g3D3PRy8Pfq0KtqvL1P+k589MVIn1gsPNTCdWhXfB2zDt388MiRN20zFR7DvsT9My
+	 9T4nGwgp/dF7brZ82JtdJGifXRuOUK3WyEA8+P7JEFZ4MIhRT4O29ihdZu7Klwr0cV
+	 HwOqPc/qH0RBtq+Tew67f0ExgvAKbQjLS4NcAgdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 129/239] drm/amd: Fix an error handling mistake in psp_sw_init()
-Date: Tue,  1 Aug 2023 11:19:53 +0200
-Message-ID: <20230801091930.372701769@linuxfoundation.org>
+Subject: [PATCH 6.4 130/239] drm/amd/display: Unlock on error path in dm_handle_mst_sideband_msg_ready_event()
+Date: Tue,  1 Aug 2023 11:19:54 +0200
+Message-ID: <20230801091930.402791817@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,42 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit c01aebeef3ce45f696ffa0a1303cea9b34babb45 ]
+[ Upstream commit 38ac4e8385ffb275b1837986ca6c16f26ea028c5 ]
 
-If the second call to amdgpu_bo_create_kernel() fails, the memory
-allocated from the first call should be cleared.  If the third call
-fails, the memory from the second call should be cleared.
+This error path needs to unlock the "aconnector->handle_mst_msg_ready"
+mutex before returning.
 
-Fixes: b95b5391684b ("drm/amdgpu/psp: move PSP memory alloc from hw_init to sw_init")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Fixes: 4f6d9e38c4d2 ("drm/amd/display: Add polling method to handle MST reply packet")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-index e4757a2807d9a..db820331f2c61 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-@@ -491,11 +491,11 @@ static int psp_sw_init(void *handle)
- 	return 0;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+index 888e80f498e97..9bc86deac9e8e 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -706,7 +706,7 @@ void dm_handle_mst_sideband_msg_ready_event(
  
- failed2:
--	amdgpu_bo_free_kernel(&psp->fw_pri_bo,
--			      &psp->fw_pri_mc_addr, &psp->fw_pri_buf);
--failed1:
- 	amdgpu_bo_free_kernel(&psp->fence_buf_bo,
- 			      &psp->fence_buf_mc_addr, &psp->fence_buf);
-+failed1:
-+	amdgpu_bo_free_kernel(&psp->fw_pri_bo,
-+			      &psp->fw_pri_mc_addr, &psp->fw_pri_buf);
- 	return ret;
- }
+ 			if (retry == 3) {
+ 				DRM_ERROR("Failed to ack MST event.\n");
+-				return;
++				break;
+ 			}
  
+ 			drm_dp_mst_hpd_irq_send_new_request(&aconnector->mst_mgr);
 -- 
 2.40.1
 
