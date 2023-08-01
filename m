@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3FD1F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:25:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2612C433C8;
-	Tue,  1 Aug 2023 09:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FB91F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:26:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B397EC433C8;
+	Tue,  1 Aug 2023 09:26:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881959;
-	bh=cKB9S0g6joTu+S0ZrWaqEgkpGJIGgkLKVWecF7jk2kQ=;
+	s=korg; t=1690881962;
+	bh=+d5mMCIhTSOvYtvKOVHme5m9mXl228xHRH6jts+oFPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qCeYSgtC1QB7DWLy+DtT6HMZOku9kAB2Bz9uRHaw0OYsmGPIBvo2sq2jwQ5Mczwyj
-	 01d/OMo1HzhvQXLDrvOJioWElwNowoPUubmeIS+rUcV2jlgSmUBbCsx80vQKCpWFeX
-	 DnawfxcXlDAKCEPAMLEn0H7JlumcQmyO6HjW20XQ=
+	b=ramCu4MunS8+S2nszP/68iSIa7+HRyrtD09ybUJG7kcMpM4icGibgVtWct5XeKJty
+	 7m3KpnT4vl4sQkK35bMR3sCh/+REG+Pf/vgBrDRfg+h2Gasw+GvZbXvpOsq6xa376M
+	 mi6fkV6p0bciQV7a6Mn9dfrgLvlESjUSjy/JlG6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matus Gajdos <matuszpd@gmail.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 091/155] ASoC: fsl_spdif: Silence output on stop
-Date: Tue,  1 Aug 2023 11:20:03 +0200
-Message-ID: <20230801091913.432368464@linuxfoundation.org>
+Subject: [PATCH 5.15 092/155] block: Fix a source code comment in include/uapi/linux/blkzoned.h
+Date: Tue,  1 Aug 2023 11:20:04 +0200
+Message-ID: <20230801091913.462137417@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -36,36 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matus Gajdos <matuszpd@gmail.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 0e4c2b6b0c4a4b4014d9424c27e5e79d185229c5 ]
+[ Upstream commit e0933b526fbfd937c4a8f4e35fcdd49f0e22d411 ]
 
-Clear TX registers on stop to prevent the SPDIF interface from sending
-last written word over and over again.
+Fix the symbolic names for zone conditions in the blkzoned.h header
+file.
 
-Fixes: a2388a498ad2 ("ASoC: fsl: Add S/PDIF CPU DAI driver")
-Signed-off-by: Matus Gajdos <matuszpd@gmail.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Link: https://lore.kernel.org/r/20230719164729.19969-1-matuszpd@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Hannes Reinecke <hare@suse.de>
+Cc: Damien Le Moal <dlemoal@kernel.org>
+Fixes: 6a0cb1bc106f ("block: Implement support for zoned block devices")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20230706201422.3987341-1-bvanassche@acm.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_spdif.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/uapi/linux/blkzoned.h | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_spdif.c b/sound/soc/fsl/fsl_spdif.c
-index 8b5c3ba48516c..5b107f2555ddb 100644
---- a/sound/soc/fsl/fsl_spdif.c
-+++ b/sound/soc/fsl/fsl_spdif.c
-@@ -666,6 +666,8 @@ static int fsl_spdif_trigger(struct snd_pcm_substream *substream,
- 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
- 		regmap_update_bits(regmap, REG_SPDIF_SCR, dmaen, 0);
- 		regmap_update_bits(regmap, REG_SPDIF_SIE, intr, 0);
-+		regmap_write(regmap, REG_SPDIF_STL, 0x0);
-+		regmap_write(regmap, REG_SPDIF_STR, 0x0);
- 		break;
- 	default:
- 		return -EINVAL;
+diff --git a/include/uapi/linux/blkzoned.h b/include/uapi/linux/blkzoned.h
+index 656a326821a2b..321965feee354 100644
+--- a/include/uapi/linux/blkzoned.h
++++ b/include/uapi/linux/blkzoned.h
+@@ -51,13 +51,13 @@ enum blk_zone_type {
+  *
+  * The Zone Condition state machine in the ZBC/ZAC standards maps the above
+  * deinitions as:
+- *   - ZC1: Empty         | BLK_ZONE_EMPTY
++ *   - ZC1: Empty         | BLK_ZONE_COND_EMPTY
+  *   - ZC2: Implicit Open | BLK_ZONE_COND_IMP_OPEN
+  *   - ZC3: Explicit Open | BLK_ZONE_COND_EXP_OPEN
+- *   - ZC4: Closed        | BLK_ZONE_CLOSED
+- *   - ZC5: Full          | BLK_ZONE_FULL
+- *   - ZC6: Read Only     | BLK_ZONE_READONLY
+- *   - ZC7: Offline       | BLK_ZONE_OFFLINE
++ *   - ZC4: Closed        | BLK_ZONE_COND_CLOSED
++ *   - ZC5: Full          | BLK_ZONE_COND_FULL
++ *   - ZC6: Read Only     | BLK_ZONE_COND_READONLY
++ *   - ZC7: Offline       | BLK_ZONE_COND_OFFLINE
+  *
+  * Conditions 0x5 to 0xC are reserved by the current ZBC/ZAC spec and should
+  * be considered invalid.
 -- 
 2.40.1
 
