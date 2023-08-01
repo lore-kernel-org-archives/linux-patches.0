@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4DE1F95A
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:22:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FEB0C433C8;
-	Tue,  1 Aug 2023 09:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A211F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:22:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377F5C433C7;
+	Tue,  1 Aug 2023 09:22:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881756;
-	bh=UvD4h/mfcucSdjnOdqbpKKtiqWLlRIIc4iiX3OICmpM=;
+	s=korg; t=1690881759;
+	bh=tFSz86ixJOEm7SnK1ea965sMN2zRC1Ny8gbFacfFgww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yd6328h/egRLGaFYeRbNIduLw0mlT2/9u8vZE46QAj1KzzPs7E+SrGpZO8e71/b2O
-	 aabW4R4/eFIki92guUBEACV44vucVJ/ihod8ARv1KqUUnw43hvevXmsAqlc0qEaQO5
-	 HJuzrQVtZQ2HHUJllphdjOznpzupiAOrChYTYB34=
+	b=2ZTXk8NmwzGq+IxdMZy5CLGixyssDISm7JnJx+c7KafVXXvEduv4cn0P1x62jGt0K
+	 LCpinFYQgfPj8OCcu5Mm4iz3yvWpLz6sEejMm+Wj5atT8Xrup8QsJwbaYprNfb3SQw
+	 JIzvzlMYiQvNwwsCWUUX4Mw4e/5v3bqSclB3VNhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 006/155] gpio: mvebu: fix irq domain leak
-Date: Tue,  1 Aug 2023 11:18:38 +0200
-Message-ID: <20230801091910.400983069@linuxfoundation.org>
+Subject: [PATCH 5.15 007/155] btrfs: fix race between quota disable and relocation
+Date: Tue,  1 Aug 2023 11:18:39 +0200
+Message-ID: <20230801091910.446411523@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -36,72 +35,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 644ee70267a934be27370f9aa618b29af7290544 ]
+[ Upstream commit 8a4a0b2a3eaf75ca8854f856ef29690c12b2f531 ]
 
-Uwe Kleine-König pointed out we still have one resource leak in the mvebu
-driver triggered on driver detach. Let's address it with a custom devm
-action.
+If we disable quotas while we have a relocation of a metadata block group
+that has extents belonging to the quota root, we can cause the relocation
+to fail with -ENOENT. This is because relocation builds backref nodes for
+extents of the quota root and later needs to walk the backrefs and access
+the quota root - however if in between a task disables quotas, it results
+in deleting the quota root from the root tree (with btrfs_del_root(),
+called from btrfs_quota_disable().
 
-Fixes: 812d47889a8e ("gpio/mvebu: Use irq_domain_add_linear")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+This can be sporadically triggered by test case btrfs/255 from fstests:
+
+  $ ./check btrfs/255
+  FSTYP         -- btrfs
+  PLATFORM      -- Linux/x86_64 debian0 6.4.0-rc6-btrfs-next-134+ #1 SMP PREEMPT_DYNAMIC Thu Jun 15 11:59:28 WEST 2023
+  MKFS_OPTIONS  -- /dev/sdc
+  MOUNT_OPTIONS -- /dev/sdc /home/fdmanana/btrfs-tests/scratch_1
+
+  btrfs/255 6s ... _check_dmesg: something found in dmesg (see /home/fdmanana/git/hub/xfstests/results//btrfs/255.dmesg)
+  - output mismatch (see /home/fdmanana/git/hub/xfstests/results//btrfs/255.out.bad)
+#      --- tests/btrfs/255.out	2023-03-02 21:47:53.876609426 +0000
+#      +++ /home/fdmanana/git/hub/xfstests/results//btrfs/255.out.bad	2023-06-16 10:20:39.267563212 +0100
+#      @@ -1,2 +1,4 @@
+#       QA output created by 255
+#      +ERROR: error during balancing '/home/fdmanana/btrfs-tests/scratch_1': No such file or directory
+#      +There may be more info in syslog - try dmesg | tail
+#       Silence is golden
+#      ...
+      (Run 'diff -u /home/fdmanana/git/hub/xfstests/tests/btrfs/255.out /home/fdmanana/git/hub/xfstests/results//btrfs/255.out.bad'  to see the entire diff)
+  Ran: btrfs/255
+  Failures: btrfs/255
+  Failed 1 of 1 tests
+
+To fix this make the quota disable operation take the cleaner mutex, as
+relocation of a block group also takes this mutex. This is also what we
+do when deleting a subvolume/snapshot, we take the cleaner mutex in the
+cleaner kthread (at cleaner_kthread()) and then we call btrfs_del_root()
+at btrfs_drop_snapshot() while under the protection of the cleaner mutex.
+
+Fixes: bed92eae26cc ("Btrfs: qgroup implementation and prototypes")
+CC: stable@vger.kernel.org # 5.4+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-mvebu.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ fs/btrfs/qgroup.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpio-mvebu.c b/drivers/gpio/gpio-mvebu.c
-index 4d64b3358c50c..b965513f44fea 100644
---- a/drivers/gpio/gpio-mvebu.c
-+++ b/drivers/gpio/gpio-mvebu.c
-@@ -1112,6 +1112,13 @@ static int mvebu_gpio_probe_syscon(struct platform_device *pdev,
- 	return 0;
- }
- 
-+static void mvebu_gpio_remove_irq_domain(void *data)
-+{
-+	struct irq_domain *domain = data;
-+
-+	irq_domain_remove(domain);
-+}
-+
- static int mvebu_gpio_probe(struct platform_device *pdev)
- {
- 	struct mvebu_gpio_chip *mvchip;
-@@ -1247,13 +1254,18 @@ static int mvebu_gpio_probe(struct platform_device *pdev)
- 		return -ENODEV;
- 	}
- 
-+	err = devm_add_action_or_reset(&pdev->dev, mvebu_gpio_remove_irq_domain,
-+				       mvchip->domain);
-+	if (err)
-+		return err;
-+
- 	err = irq_alloc_domain_generic_chips(
- 	    mvchip->domain, ngpios, 2, np->name, handle_level_irq,
- 	    IRQ_NOREQUEST | IRQ_NOPROBE | IRQ_LEVEL, 0, 0);
- 	if (err) {
- 		dev_err(&pdev->dev, "couldn't allocate irq chips %s (DT).\n",
- 			mvchip->chip.label);
--		goto err_domain;
-+		return err;
- 	}
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index d408d1dfde7c8..d46a070275ff5 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -1201,12 +1201,23 @@ int btrfs_quota_disable(struct btrfs_fs_info *fs_info)
+ 	int ret = 0;
  
  	/*
-@@ -1293,10 +1305,6 @@ static int mvebu_gpio_probe(struct platform_device *pdev)
- 	}
+-	 * We need to have subvol_sem write locked, to prevent races between
+-	 * concurrent tasks trying to disable quotas, because we will unlock
+-	 * and relock qgroup_ioctl_lock across BTRFS_FS_QUOTA_ENABLED changes.
++	 * We need to have subvol_sem write locked to prevent races with
++	 * snapshot creation.
+ 	 */
+ 	lockdep_assert_held_write(&fs_info->subvol_sem);
  
- 	return 0;
--
--err_domain:
--	irq_domain_remove(mvchip->domain);
--	return err;
++	/*
++	 * Lock the cleaner mutex to prevent races with concurrent relocation,
++	 * because relocation may be building backrefs for blocks of the quota
++	 * root while we are deleting the root. This is like dropping fs roots
++	 * of deleted snapshots/subvolumes, we need the same protection.
++	 *
++	 * This also prevents races between concurrent tasks trying to disable
++	 * quotas, because we will unlock and relock qgroup_ioctl_lock across
++	 * BTRFS_FS_QUOTA_ENABLED changes.
++	 */
++	mutex_lock(&fs_info->cleaner_mutex);
++
+ 	mutex_lock(&fs_info->qgroup_ioctl_lock);
+ 	if (!fs_info->quota_root)
+ 		goto out;
+@@ -1287,6 +1298,7 @@ int btrfs_quota_disable(struct btrfs_fs_info *fs_info)
+ 		btrfs_end_transaction(trans);
+ 	else if (trans)
+ 		ret = btrfs_end_transaction(trans);
++	mutex_unlock(&fs_info->cleaner_mutex);
+ 
+ 	return ret;
  }
- 
- static struct platform_driver mvebu_gpio_driver = {
 -- 
 2.39.2
 
