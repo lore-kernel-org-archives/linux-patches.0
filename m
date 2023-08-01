@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB3A1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9B5C433C7;
-	Tue,  1 Aug 2023 09:39:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71441FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F71C433C7;
+	Tue,  1 Aug 2023 09:39:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882743;
-	bh=1mHLiVsseciny1ZAkdSMTZjRUDcm/XUHbuA7jSQUNe8=;
+	s=korg; t=1690882746;
+	bh=mIoDyg6W0uMcmP4ZAvk1kLWEFLfKC+Kga8Vc2WXp9PI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XSkpaJ7BGbPhIiwb2sTTs9vVFA7vxoRqWMMkJAp7k8DUIzoJZPFb8Ni9qkxzHRaY6
-	 ajpV57J/21Km0lARLdP3wzGs3hitX72YbnwLV4pBiCFNcvD4VHvc8Eaow3Xj4IiXGU
-	 Hs3LBPBU1nTYKV7so2fk+ypj58uNysEO/9VWOPIY=
+	b=l56qWhx61Oc/CPyKDJ7bhKJW4ZuHXn2qab0KBmjqxnKlMXXN90vGSz6q+0IU20fOD
+	 6Q8n5BzvWA6g0IaImMjyOYoFrn8UOM1GtzFJUGLfkl74M+PXmu8Q+qB45IAafl1CB4
+	 wStUo7uE6FR6RbNoTlHK0hFLDe1Oem3jXLd9Bj8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Dongsheng Yang <dongsheng.yang@easystack.cn>
-Subject: [PATCH 6.1 216/228] rbd: retrieve and check lock owner twice before blocklisting
-Date: Tue,  1 Aug 2023 11:21:14 +0200
-Message-ID: <20230801091930.655954077@linuxfoundation.org>
+	Mark Broadworth <mark.broadworth@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Dmytro Laktyushkin <Dmytro.Laktyushkin@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 217/228] drm/amd/display: set per pipe dppclk to 0 when dpp is off
+Date: Tue,  1 Aug 2023 11:21:15 +0200
+Message-ID: <20230801091930.696770705@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -34,99 +36,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Dmytro Laktyushkin <Dmytro.Laktyushkin@amd.com>
 
-commit 588159009d5b7a09c3e5904cffddbe4a4e170301 upstream.
+commit 6609141c49df1b86fbad26a8643d4b4044f28b11 upstream.
 
-An attempt to acquire exclusive lock can race with the current lock
-owner closing the image:
+The 'commit 52e4fdf09ebc ("drm/amd/display: use low clocks for no plane
+configs")' introduced a change that set low clock values for DCN31 and
+DCN32. As a result of these changes, DC started to spam the log with the
+following warning:
 
-1. lock is held by client123, rbd_lock() returns -EBUSY
-2. get_lock_owner_info() returns client123 instance details
-3. client123 closes the image, lock is released
-4. find_watcher() returns 0 as there is no matching watcher anymore
-5. client123 instance gets erroneously blocklisted
+------------[ cut here ]------------
+WARNING: CPU: 8 PID: 1486 at
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn20/dcn20_dccg.c:58
+dccg2_update_dpp_dto+0x3f/0xf0 [amdgpu]
+[..]
+CPU: 8 PID: 1486 Comm: kms_atomic Tainted: G W 5.18.0+ #1
+RIP: 0010:dccg2_update_dpp_dto+0x3f/0xf0 [amdgpu]
+RSP: 0018:ffffbbd8025334d0 EFLAGS: 00010206
+RAX: 00000000000001ee RBX: ffffa02c87dd3de0 RCX: 00000000000a7f80
+RDX: 000000000007dec3 RSI: 0000000000000000 RDI: ffffa02c87dd3de0
+RBP: ffffbbd8025334e8 R08: 0000000000000001 R09: 0000000000000005
+R10: 00000000000331a0 R11: ffffffffc0b03d80 R12: ffffa02ca576d000
+R13: ffffa02cd02c0000 R14: 00000000001453bc R15: ffffa02cdc280000
+[..]
+dcn20_update_clocks_update_dpp_dto+0x4e/0xa0 [amdgpu]
+dcn32_update_clocks+0x5d9/0x650 [amdgpu]
+dcn20_prepare_bandwidth+0x49/0x100 [amdgpu]
+dcn30_prepare_bandwidth+0x63/0x80 [amdgpu]
+dc_commit_state_no_check+0x39d/0x13e0 [amdgpu]
+dc_commit_streams+0x1f9/0x3b0 [amdgpu]
+dc_commit_state+0x37/0x120 [amdgpu]
+amdgpu_dm_atomic_commit_tail+0x5e5/0x2520 [amdgpu]
+? _raw_spin_unlock_irqrestore+0x1f/0x40
+? down_trylock+0x2c/0x40
+? vprintk_emit+0x186/0x2c0
+? vprintk_default+0x1d/0x20
+? vprintk+0x4e/0x60
 
-Particularly impacted is mirror snapshot scheduler in snapshot-based
-mirroring since it happens to open and close images a lot (images are
-opened only for as long as it takes to take the next mirror snapshot,
-the same client instance is used for all images).
+We can easily trigger this issue by using a 4k@120 or a 2k@165 and
+running some of the kms_atomic tests. This warning is triggered because
+the per-pipe clock update is not happening; this commit fixes this issue
+by ensuring that DPPCLK is updated when calculating the watermark and
+dlg is invoked.
 
-To reduce the potential for erroneous blocklisting, retrieve the lock
-owner again after find_watcher() returns 0.  If it's still there, make
-sure it matches the previously detected lock owner.
-
-Cc: stable@vger.kernel.org # f38cb9d9c204: rbd: make get_lock_owner_info() return a single locker or NULL
-Cc: stable@vger.kernel.org # 8ff2c64c9765: rbd: harden get_lock_owner_info() a bit
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+Fixes: 2641c7b78081 ("drm/amd/display: use low clocks for no plane configs")
+Reported-by: Mark Broadworth <mark.broadworth@amd.com>
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Dmytro Laktyushkin <Dmytro.Laktyushkin@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |   25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c |    3 +++
+ drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c |    5 ++++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -3850,6 +3850,15 @@ static void wake_lock_waiters(struct rbd
- 	list_splice_tail_init(&rbd_dev->acquiring_list, &rbd_dev->running_list);
- }
- 
-+static bool locker_equal(const struct ceph_locker *lhs,
-+			 const struct ceph_locker *rhs)
-+{
-+	return lhs->id.name.type == rhs->id.name.type &&
-+	       lhs->id.name.num == rhs->id.name.num &&
-+	       !strcmp(lhs->id.cookie, rhs->id.cookie) &&
-+	       ceph_addr_equal_no_type(&lhs->info.addr, &rhs->info.addr);
-+}
-+
- static void free_locker(struct ceph_locker *locker)
- {
- 	if (locker)
-@@ -3970,11 +3979,11 @@ out:
- static int rbd_try_lock(struct rbd_device *rbd_dev)
- {
- 	struct ceph_client *client = rbd_dev->rbd_client->client;
--	struct ceph_locker *locker;
-+	struct ceph_locker *locker, *refreshed_locker;
- 	int ret;
- 
- 	for (;;) {
--		locker = NULL;
-+		locker = refreshed_locker = NULL;
- 
- 		ret = rbd_lock(rbd_dev);
- 		if (ret != -EBUSY)
-@@ -3994,6 +4003,16 @@ static int rbd_try_lock(struct rbd_devic
- 		if (ret)
- 			goto out; /* request lock or error */
- 
-+		refreshed_locker = get_lock_owner_info(rbd_dev);
-+		if (IS_ERR(refreshed_locker)) {
-+			ret = PTR_ERR(refreshed_locker);
-+			refreshed_locker = NULL;
-+			goto out;
-+		}
-+		if (!refreshed_locker ||
-+		    !locker_equal(locker, refreshed_locker))
-+			goto again;
-+
- 		rbd_warn(rbd_dev, "breaking header lock owned by %s%llu",
- 			 ENTITY_NAME(locker->id.name));
- 
-@@ -4015,10 +4034,12 @@ static int rbd_try_lock(struct rbd_devic
- 		}
- 
- again:
-+		free_locker(refreshed_locker);
- 		free_locker(locker);
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c
+@@ -559,6 +559,9 @@ void dcn31_calculate_wm_and_dlg_fp(
+ 		context->bw_ctx.bw.dcn.clk.dramclk_khz = 0;
+ 		context->bw_ctx.bw.dcn.clk.fclk_khz = 0;
+ 		context->bw_ctx.bw.dcn.clk.p_state_change_support = true;
++		for (i = 0; i < dc->res_pool->pipe_count; i++)
++			if (context->res_ctx.pipe_ctx[i].stream)
++				context->res_ctx.pipe_ctx[i].plane_res.bw.dppclk_khz = 0;
  	}
+ 	for (i = 0, pipe_idx = 0; i < dc->res_pool->pipe_count; i++) {
+ 		if (!context->res_ctx.pipe_ctx[i].stream)
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -1305,7 +1305,10 @@ static void dcn32_calculate_dlg_params(s
  
- out:
-+	free_locker(refreshed_locker);
- 	free_locker(locker);
- 	return ret;
- }
+ 		if (context->bw_ctx.bw.dcn.clk.dppclk_khz < pipes[pipe_idx].clks_cfg.dppclk_mhz * 1000)
+ 			context->bw_ctx.bw.dcn.clk.dppclk_khz = pipes[pipe_idx].clks_cfg.dppclk_mhz * 1000;
+-		context->res_ctx.pipe_ctx[i].plane_res.bw.dppclk_khz = pipes[pipe_idx].clks_cfg.dppclk_mhz * 1000;
++		if (context->res_ctx.pipe_ctx[i].plane_state)
++			context->res_ctx.pipe_ctx[i].plane_res.bw.dppclk_khz = pipes[pipe_idx].clks_cfg.dppclk_mhz * 1000;
++		else
++			context->res_ctx.pipe_ctx[i].plane_res.bw.dppclk_khz = 0;
+ 		context->res_ctx.pipe_ctx[i].pipe_dlg_param = pipes[pipe_idx].pipe.dest;
+ 		pipe_idx++;
+ 	}
 
 
