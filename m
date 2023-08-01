@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C5C1FB44
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:50:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E096C433C7;
-	Tue,  1 Aug 2023 09:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27C7200A7
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:51:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25507C433C9;
+	Tue,  1 Aug 2023 09:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883457;
-	bh=35cMFGabREQ4T4IAtyZmgoIJIpDzH/Mk/P73GWERMN4=;
+	s=korg; t=1690883460;
+	bh=4f7fv3dQg7qgakDR+xelOA9Wtmz6SSAgDxL6Ft5RvFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dLME0MY1JoMkAQ5sTjoiK/C2emMsYsN9Zzp3w6OnAjX942b8V0pC4z2usUrhaprqK
-	 Cl1YXw1pZUhpppzecpxYgfXaR34vBTYWR0/hfPlDc6E4VjP3iI+R2NS4AbEyIG5E9D
-	 toW/Fp0QDYy9YYKMeMk0Z5pTX35ruD4YxiuZoTN8=
+	b=rGa9qxtMcEVZUYBUQ+drz0HfPdeVrJWqDt3cubUE6tySkkjRpuz324VkKKA8kMu3B
+	 +dyBSl3KXNf7cJglJqb4ACQA/nT5xe7bcZ66xeq8Mm/sSwATo/JhDH3PU76OT0Ia/s
+	 QfdCGDnuT7PYnoTFgyqlzKcXNl0ibemEc9NGhFZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.4 223/239] mptcp: more accurate NL event generation
-Date: Tue,  1 Aug 2023 11:21:27 +0200
-Message-ID: <20230801091933.979481409@linuxfoundation.org>
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.4 224/239] ASoC: wm8904: Fill the cache for WM8904_ADC_TEST_0 register
+Date: Tue,  1 Aug 2023 11:21:28 +0200
+Message-ID: <20230801091934.018362780@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -35,39 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Mark Brown <broonie@kernel.org>
 
-commit 21d9b73a7d5241905367098d260a3c68b811da32 upstream.
+commit f061e2be8689057cb4ec0dbffa9f03e1a23cdcb2 upstream.
 
-Currently the mptcp code generate a "new listener" event even
-if the actual listen() syscall fails. Address the issue moving
-the event generation call under the successful branch.
+The WM8904_ADC_TEST_0 register is modified as part of updating the OSR
+controls but does not have a cache default, leading to errors when we try
+to modify these controls in cache only mode with no prior read:
 
+wm8904 3-001a: ASoC: error at snd_soc_component_update_bits on wm8904.3-001a for register: [0x000000c6] -16
+
+Add a read of the register to probe() to fill the cache and avoid both the
+error messages and the misconfiguration of the chip which will result.
+
+Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: f8c9dfbd875b ("mptcp: add pm listener events")
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Link: https://lore.kernel.org/r/20230725-send-net-20230725-v1-2-6f60fe7137a9@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20230723-asoc-fix-wm8904-adc-test-read-v1-1-2cdf2edd83fd@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/soc/codecs/wm8904.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3717,10 +3717,9 @@ static int mptcp_listen(struct socket *s
- 	if (!err) {
- 		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, 1);
- 		mptcp_copy_inaddrs(sk, ssock->sk);
-+		mptcp_event_pm_listener(ssock->sk, MPTCP_EVENT_LISTENER_CREATED);
- 	}
+--- a/sound/soc/codecs/wm8904.c
++++ b/sound/soc/codecs/wm8904.c
+@@ -2308,6 +2308,9 @@ static int wm8904_i2c_probe(struct i2c_c
+ 	regmap_update_bits(wm8904->regmap, WM8904_BIAS_CONTROL_0,
+ 			    WM8904_POBCTRL, 0);
  
--	mptcp_event_pm_listener(ssock->sk, MPTCP_EVENT_LISTENER_CREATED);
--
- unlock:
- 	release_sock(sk);
- 	return err;
++	/* Fill the cache for the ADC test register */
++	regmap_read(wm8904->regmap, WM8904_ADC_TEST_0, &val);
++
+ 	/* Can leave the device powered off until we need it */
+ 	regcache_cache_only(wm8904->regmap, true);
+ 	regulator_bulk_disable(ARRAY_SIZE(wm8904->supplies), wm8904->supplies);
 
 
