@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA751FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:47:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E48DDC433C7;
-	Tue,  1 Aug 2023 09:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319531FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:47:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A92ECC433C8;
+	Tue,  1 Aug 2023 09:47:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883260;
-	bh=YKMhp9xMG6FgEvvKAQVnbEfORzXXG7mlgz8YGEb+Lqo=;
+	s=korg; t=1690883263;
+	bh=qHzkB4rDZhclUz0Z8Wnq1Bjd2kYpJ1sHdGLBjwrSiaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=00Tnq0KQXyUjUiDkxxXTXogemcxcRW7qfdyp4AhXQ9jnukPjxjHlfNtFuO1e/I4jG
-	 pNyJlUgbsNIwC4RGsz7g67Ramf0X2XZNuwOMfi5nkuD0wo+kF5t+Pk8UcMNQBGfuhl
-	 bVPG5ELDWlnspg+dk7gF/K7tYkZtSfdJk0CvCyts=
+	b=x0q1qW99OI4+FcBV+iS+wwpBoxvqey+Zd4Fn5scVp8F2XYlXoTp/K/QvhDKE6kZa1
+	 Knigk23zrmqKsRCWi5KeGgr8siTKE2sEWSCitYsJ0KCvefblVh7IUxkGSPuY44+YJK
+	 Uc0Yg4S8YUUVnN+VZsPM2NiTxeEWYYQmsbKPbxEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cf71097ffb6755df8251@syzkaller.appspotmail.com,
-	Nam Cao <namcaov@gmail.com>,
-	Larry Finger <Larry.Finger@lwfinger.net>
-Subject: [PATCH 6.4 173/239] staging: r8712: Fix memory leak in _r8712_init_xmit_priv()
-Date: Tue,  1 Aug 2023 11:20:37 +0200
-Message-ID: <20230801091931.882192587@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.4 156/239] USB: serial: simple: sort driver entries
+Date: Tue,  1 Aug 2023 11:20:20 +0200
+Message-ID: <20230801091931.277136948@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -35,127 +33,157 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Larry Finger <Larry.Finger@lwfinger.net>
+From: Johan Hovold <johan@kernel.org>
 
-commit ac83631230f77dda94154ed0ebfd368fc81c70a3 upstream.
+commit d245aedc00775c4d7265a9f4522cc4e1fd34d102 upstream.
 
-In the above mentioned routine, memory is allocated in several places.
-If the first succeeds and a later one fails, the routine will leak memory.
-This patch fixes commit 2865d42c78a9 ("staging: r8712u: Add the new driver
-to the mainline kernel"). A potential memory leak in
-r8712_xmit_resource_alloc() is also addressed.
+Sort the driver symbols alphabetically in order to make it more obvious
+where new driver entries should be added.
 
-Fixes: 2865d42c78a9 ("staging: r8712u: Add the new driver to the mainline kernel")
-Reported-by: syzbot+cf71097ffb6755df8251@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/x/log.txt?x=11ac3fa0a80000
 Cc: stable@vger.kernel.org
-Cc: Nam Cao <namcaov@gmail.com>
-Signed-off-by: Larry Finger <Larry.Finger@lwfinger.net>
-Reviewed-by: Nam Cao <namcaov@gmail.com>
-Link: https://lore.kernel.org/r/20230714175417.18578-1-Larry.Finger@lwfinger.net
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8712/rtl871x_xmit.c |   43 ++++++++++++++++++++++++++-------
- drivers/staging/rtl8712/xmit_linux.c   |    6 ++++
- 2 files changed, 40 insertions(+), 9 deletions(-)
+ drivers/usb/serial/usb-serial-simple.c |   66 ++++++++++++++++-----------------
+ 1 file changed, 33 insertions(+), 33 deletions(-)
 
---- a/drivers/staging/rtl8712/rtl871x_xmit.c
-+++ b/drivers/staging/rtl8712/rtl871x_xmit.c
-@@ -21,6 +21,7 @@
- #include "osdep_intf.h"
- #include "usb_ops.h"
+--- a/drivers/usb/serial/usb-serial-simple.c
++++ b/drivers/usb/serial/usb-serial-simple.c
+@@ -38,16 +38,6 @@ static struct usb_serial_driver vendor##
+ 	{ USB_DEVICE(0x0a21, 0x8001) }	/* MMT-7305WW */
+ DEVICE(carelink, CARELINK_IDS);
  
-+#include <linux/usb.h>
- #include <linux/ieee80211.h>
+-/* ZIO Motherboard USB driver */
+-#define ZIO_IDS()			\
+-	{ USB_DEVICE(0x1CBE, 0x0103) }
+-DEVICE(zio, ZIO_IDS);
+-
+-/* Funsoft Serial USB driver */
+-#define FUNSOFT_IDS()			\
+-	{ USB_DEVICE(0x1404, 0xcddc) }
+-DEVICE(funsoft, FUNSOFT_IDS);
+-
+ /* Infineon Flashloader driver */
+ #define FLASHLOADER_IDS()		\
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x058b, 0x0041, USB_CLASS_CDC_DATA) }, \
+@@ -55,6 +45,11 @@ DEVICE(funsoft, FUNSOFT_IDS);
+ 	{ USB_DEVICE(0x8087, 0x0801) }
+ DEVICE(flashloader, FLASHLOADER_IDS);
  
- static const u8 P802_1H_OUI[P80211_OUI_LEN] = {0x00, 0x00, 0xf8};
-@@ -55,6 +56,7 @@ int _r8712_init_xmit_priv(struct xmit_pr
- 	sint i;
- 	struct xmit_buf *pxmitbuf;
- 	struct xmit_frame *pxframe;
-+	int j;
- 
- 	memset((unsigned char *)pxmitpriv, 0, sizeof(struct xmit_priv));
- 	spin_lock_init(&pxmitpriv->lock);
-@@ -117,11 +119,8 @@ int _r8712_init_xmit_priv(struct xmit_pr
- 	_init_queue(&pxmitpriv->pending_xmitbuf_queue);
- 	pxmitpriv->pallocated_xmitbuf =
- 		kmalloc(NR_XMITBUFF * sizeof(struct xmit_buf) + 4, GFP_ATOMIC);
--	if (!pxmitpriv->pallocated_xmitbuf) {
--		kfree(pxmitpriv->pallocated_frame_buf);
--		pxmitpriv->pallocated_frame_buf = NULL;
--		return -ENOMEM;
--	}
-+	if (!pxmitpriv->pallocated_xmitbuf)
-+		goto clean_up_frame_buf;
- 	pxmitpriv->pxmitbuf = pxmitpriv->pallocated_xmitbuf + 4 -
- 			      ((addr_t)(pxmitpriv->pallocated_xmitbuf) & 3);
- 	pxmitbuf = (struct xmit_buf *)pxmitpriv->pxmitbuf;
-@@ -129,13 +128,17 @@ int _r8712_init_xmit_priv(struct xmit_pr
- 		INIT_LIST_HEAD(&pxmitbuf->list);
- 		pxmitbuf->pallocated_buf =
- 			kmalloc(MAX_XMITBUF_SZ + XMITBUF_ALIGN_SZ, GFP_ATOMIC);
--		if (!pxmitbuf->pallocated_buf)
--			return -ENOMEM;
-+		if (!pxmitbuf->pallocated_buf) {
-+			j = 0;
-+			goto clean_up_alloc_buf;
-+		}
- 		pxmitbuf->pbuf = pxmitbuf->pallocated_buf + XMITBUF_ALIGN_SZ -
- 				 ((addr_t) (pxmitbuf->pallocated_buf) &
- 				 (XMITBUF_ALIGN_SZ - 1));
--		if (r8712_xmit_resource_alloc(padapter, pxmitbuf))
--			return -ENOMEM;
-+		if (r8712_xmit_resource_alloc(padapter, pxmitbuf)) {
-+			j = 1;
-+			goto clean_up_alloc_buf;
-+		}
- 		list_add_tail(&pxmitbuf->list,
- 				 &(pxmitpriv->free_xmitbuf_queue.queue));
- 		pxmitbuf++;
-@@ -146,6 +149,28 @@ int _r8712_init_xmit_priv(struct xmit_pr
- 	init_hwxmits(pxmitpriv->hwxmits, pxmitpriv->hwxmit_entry);
- 	tasklet_setup(&pxmitpriv->xmit_tasklet, r8712_xmit_bh);
- 	return 0;
++/* Funsoft Serial USB driver */
++#define FUNSOFT_IDS()			\
++	{ USB_DEVICE(0x1404, 0xcddc) }
++DEVICE(funsoft, FUNSOFT_IDS);
 +
-+clean_up_alloc_buf:
-+	if (j) {
-+		/* failure happened in r8712_xmit_resource_alloc()
-+		 * delete extra pxmitbuf->pallocated_buf
-+		 */
-+		kfree(pxmitbuf->pallocated_buf);
-+	}
-+	for (j = 0; j < i; j++) {
-+		int k;
-+
-+		pxmitbuf--;			/* reset pointer */
-+		kfree(pxmitbuf->pallocated_buf);
-+		for (k = 0; k < 8; k++)		/* delete xmit urb's */
-+			usb_free_urb(pxmitbuf->pxmit_urb[k]);
-+	}
-+	kfree(pxmitpriv->pallocated_xmitbuf);
-+	pxmitpriv->pallocated_xmitbuf = NULL;
-+clean_up_frame_buf:
-+	kfree(pxmitpriv->pallocated_frame_buf);
-+	pxmitpriv->pallocated_frame_buf = NULL;
-+	return -ENOMEM;
- }
+ /* Google Serial USB SubClass */
+ #define GOOGLE_IDS()						\
+ 	{ USB_VENDOR_AND_INTERFACE_INFO(0x18d1,			\
+@@ -63,6 +58,11 @@ DEVICE(flashloader, FLASHLOADER_IDS);
+ 					0x01) }
+ DEVICE(google, GOOGLE_IDS);
  
- void _free_xmit_priv(struct xmit_priv *pxmitpriv)
---- a/drivers/staging/rtl8712/xmit_linux.c
-+++ b/drivers/staging/rtl8712/xmit_linux.c
-@@ -112,6 +112,12 @@ int r8712_xmit_resource_alloc(struct _ad
- 	for (i = 0; i < 8; i++) {
- 		pxmitbuf->pxmit_urb[i] = usb_alloc_urb(0, GFP_KERNEL);
- 		if (!pxmitbuf->pxmit_urb[i]) {
-+			int k;
++/* HP4x (48/49) Generic Serial driver */
++#define HP4X_IDS()			\
++	{ USB_DEVICE(0x03f0, 0x0121) }
++DEVICE(hp4x, HP4X_IDS);
 +
-+			for (k = i - 1; k >= 0; k--) {
-+				/* handle allocation errors part way through loop */
-+				usb_free_urb(pxmitbuf->pxmit_urb[k]);
-+			}
- 			netdev_err(padapter->pnetdev, "pxmitbuf->pxmit_urb[i] == NULL\n");
- 			return -ENOMEM;
- 		}
+ /* KAUFMANN RKS+CAN VCP */
+ #define KAUFMANN_IDS()			\
+ 	{ USB_DEVICE(0x16d0, 0x0870) }
+@@ -73,11 +73,6 @@ DEVICE(kaufmann, KAUFMANN_IDS);
+ 	{ USB_DEVICE(0x1209, 0x8b00) }
+ DEVICE(libtransistor, LIBTRANSISTOR_IDS);
+ 
+-/* ViVOpay USB Serial Driver */
+-#define VIVOPAY_IDS()			\
+-	{ USB_DEVICE(0x1d5f, 0x1004) }	/* ViVOpay 8800 */
+-DEVICE(vivopay, VIVOPAY_IDS);
+-
+ /* Motorola USB Phone driver */
+ #define MOTO_IDS()			\
+ 	{ USB_DEVICE(0x05c6, 0x3197) },	/* unknown Motorola phone */	\
+@@ -106,10 +101,10 @@ DEVICE(nokia, NOKIA_IDS);
+ 	{ USB_DEVICE(0x09d7, 0x0100) }	/* NovAtel FlexPack GPS */
+ DEVICE_N(novatel_gps, NOVATEL_IDS, 3);
+ 
+-/* HP4x (48/49) Generic Serial driver */
+-#define HP4X_IDS()			\
+-	{ USB_DEVICE(0x03f0, 0x0121) }
+-DEVICE(hp4x, HP4X_IDS);
++/* Siemens USB/MPI adapter */
++#define SIEMENS_IDS()			\
++	{ USB_DEVICE(0x908, 0x0004) }
++DEVICE(siemens_mpi, SIEMENS_IDS);
+ 
+ /* Suunto ANT+ USB Driver */
+ #define SUUNTO_IDS()			\
+@@ -117,47 +112,52 @@ DEVICE(hp4x, HP4X_IDS);
+ 	{ USB_DEVICE(0x0fcf, 0x1009) } /* Dynastream ANT USB-m Stick */
+ DEVICE(suunto, SUUNTO_IDS);
+ 
+-/* Siemens USB/MPI adapter */
+-#define SIEMENS_IDS()			\
+-	{ USB_DEVICE(0x908, 0x0004) }
+-DEVICE(siemens_mpi, SIEMENS_IDS);
++/* ViVOpay USB Serial Driver */
++#define VIVOPAY_IDS()			\
++	{ USB_DEVICE(0x1d5f, 0x1004) }	/* ViVOpay 8800 */
++DEVICE(vivopay, VIVOPAY_IDS);
++
++/* ZIO Motherboard USB driver */
++#define ZIO_IDS()			\
++	{ USB_DEVICE(0x1CBE, 0x0103) }
++DEVICE(zio, ZIO_IDS);
+ 
+ /* All of the above structures mushed into two lists */
+ static struct usb_serial_driver * const serial_drivers[] = {
+ 	&carelink_device,
+-	&zio_device,
+-	&funsoft_device,
+ 	&flashloader_device,
++	&funsoft_device,
+ 	&google_device,
++	&hp4x_device,
+ 	&kaufmann_device,
+ 	&libtransistor_device,
+-	&vivopay_device,
+ 	&moto_modem_device,
+ 	&motorola_tetra_device,
+ 	&nokia_device,
+ 	&novatel_gps_device,
+-	&hp4x_device,
+-	&suunto_device,
+ 	&siemens_mpi_device,
++	&suunto_device,
++	&vivopay_device,
++	&zio_device,
+ 	NULL
+ };
+ 
+ static const struct usb_device_id id_table[] = {
+ 	CARELINK_IDS(),
+-	ZIO_IDS(),
+-	FUNSOFT_IDS(),
+ 	FLASHLOADER_IDS(),
++	FUNSOFT_IDS(),
+ 	GOOGLE_IDS(),
++	HP4X_IDS(),
+ 	KAUFMANN_IDS(),
+ 	LIBTRANSISTOR_IDS(),
+-	VIVOPAY_IDS(),
+ 	MOTO_IDS(),
+ 	MOTOROLA_TETRA_IDS(),
+ 	NOKIA_IDS(),
+ 	NOVATEL_IDS(),
+-	HP4X_IDS(),
+-	SUUNTO_IDS(),
+ 	SIEMENS_IDS(),
++	SUUNTO_IDS(),
++	VIVOPAY_IDS(),
++	ZIO_IDS(),
+ 	{ },
+ };
+ MODULE_DEVICE_TABLE(usb, id_table);
 
 
