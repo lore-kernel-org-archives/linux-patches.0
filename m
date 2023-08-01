@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7FE1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:44:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7B5C433C8;
-	Tue,  1 Aug 2023 09:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2D61FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:44:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE952C433C8;
+	Tue,  1 Aug 2023 09:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883093;
-	bh=sMRj6gYhlRz0CR6fY7CG8S9UZkKoww4VQMdZp06Br1U=;
+	s=korg; t=1690883096;
+	bh=hZiqTLPZXYoX5V1TR41waoId9oi2nQrkl5lKTbqUuQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q5FbAsKKgGTIo77ns6bC0xfKsySYEyvGqqPAJ45jT257q1N5BKQvc6WC7Rsx49/S7
-	 9z1syTfcSatC/jmIBBQjBFRN/wbrERcqs5c3AJjbzNFgp+PvD6rqGH4P6RUfcfsyMp
-	 XArbB914leNtQ9V9AqYD+ih6D8h9hrU4n/V09MiE=
+	b=scDBGB3VbHKF1MyvJKT63nxlhFPWfXEHNpILlzKE0C0OZ5OvklnNvq91LoOI3HeaC
+	 fRXOoVCcBHkrRlpx9ZrDdsnOqVPfa0rkZq1TGrZCVLC+6O26cyyVZRtfKJAcVUVDht
+	 e8rbOxOIMoWg3eG+hKuOjU5OTxXfdxnirwXVj7U0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 112/239] RDMA/bnxt_re: Avoid the command wait if firmware is inactive
-Date: Tue,  1 Aug 2023 11:19:36 +0200
-Message-ID: <20230801091929.770356732@linuxfoundation.org>
+Subject: [PATCH 6.4 113/239] RDMA/bnxt_re: use shadow qd while posting non blocking rcfw command
+Date: Tue,  1 Aug 2023 11:19:37 +0200
+Message-ID: <20230801091929.810834555@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -38,133 +38,137 @@ Content-Transfer-Encoding: 8bit
 
 From: Kashyap Desai <kashyap.desai@broadcom.com>
 
-[ Upstream commit 3022cc15119733cebaef05feddb5d87b9e401c0e ]
+[ Upstream commit 65288a22ddd81422a2a2a10c15df976a5332e41b ]
 
-Add a check to avoid waiting if driver already detects a
-FW timeout. Return success for resource destroy in case
-the device is detached. Add helper function to map timeout
-error code to success.
+Whenever there is a fast path IO and create/destroy resources from
+the slow path is happening in parallel, we may notice high latency
+of slow path command completion.
+
+Introduces a shadow queue depth to prevent the outstanding requests
+to the FW. Driver will not allow more than #RCFW_CMD_NON_BLOCKING_SHADOW_QD
+non-blocking commands to the Firmware.
+
+Shadow queue depth is a soft limit only for non-blocking
+commands. Blocking commands will be posted to the firmware
+as long as there is a free slot.
 
 Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
 Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://lore.kernel.org/r/1686308514-11996-7-git-send-email-selvin.xavier@broadcom.com
+Link: https://lore.kernel.org/r/1686308514-11996-8-git-send-email-selvin.xavier@broadcom.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Stable-dep-of: 29900bf351e1 ("RDMA/bnxt_re: Fix hang during driver unload")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.c | 52 ++++++++++++++++++++--
- 1 file changed, 48 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_rcfw.c | 60 +++++++++++++++++++++-
+ drivers/infiniband/hw/bnxt_re/qplib_rcfw.h |  3 ++
+ 2 files changed, 61 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-index 918e588588885..bfa0f29c7abf4 100644
+index bfa0f29c7abf4..42484a1149c7c 100644
 --- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
 +++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-@@ -53,10 +53,47 @@
+@@ -281,8 +281,21 @@ static int __send_message(struct bnxt_qplib_rcfw *rcfw,
+ 	return 0;
+ }
  
- static void bnxt_qplib_service_creq(struct tasklet_struct *t);
- 
+-int bnxt_qplib_rcfw_send_message(struct bnxt_qplib_rcfw *rcfw,
+-				 struct bnxt_qplib_cmdqmsg *msg)
 +/**
-+ * bnxt_qplib_map_rc  -  map return type based on opcode
-+ * @opcode    -  roce slow path opcode
++ * __bnxt_qplib_rcfw_send_message   -	qplib interface to send
++ * and complete rcfw command.
++ * @rcfw      -   rcfw channel instance of rdev
++ * @msg      -    qplib message internal
 + *
-+ * In some cases like firmware halt is detected, the driver is supposed to
-+ * remap the error code of the timed out command.
-+ *
-+ * It is not safe to assume hardware is really inactive so certain opcodes
-+ * like destroy qp etc are not safe to be returned success, but this function
-+ * will be called when FW already reports a timeout. This would be possible
-+ * only when FW crashes and resets. This will clear all the HW resources.
++ * This function does not account shadow queue depth. It will send
++ * all the command unconditionally as long as send queue is not full.
 + *
 + * Returns:
-+ * 0 to communicate success to caller.
-+ * Non zero error code to communicate failure to caller.
++ * 0 if command completed by firmware.
++ * Non zero if the command is not completed by firmware.
 + */
-+static int bnxt_qplib_map_rc(u8 opcode)
++static int __bnxt_qplib_rcfw_send_message(struct bnxt_qplib_rcfw *rcfw,
++					  struct bnxt_qplib_cmdqmsg *msg)
+ {
+ 	struct creq_qp_event *evnt = (struct creq_qp_event *)msg->resp;
+ 	u16 cookie;
+@@ -331,6 +344,48 @@ int bnxt_qplib_rcfw_send_message(struct bnxt_qplib_rcfw *rcfw,
+ 
+ 	return rc;
+ }
++
++/**
++ * bnxt_qplib_rcfw_send_message   -	qplib interface to send
++ * and complete rcfw command.
++ * @rcfw      -   rcfw channel instance of rdev
++ * @msg      -    qplib message internal
++ *
++ * Driver interact with Firmware through rcfw channel/slow path in two ways.
++ * a. Blocking rcfw command send. In this path, driver cannot hold
++ * the context for longer period since it is holding cpu until
++ * command is not completed.
++ * b. Non-blocking rcfw command send. In this path, driver can hold the
++ * context for longer period. There may be many pending command waiting
++ * for completion because of non-blocking nature.
++ *
++ * Driver will use shadow queue depth. Current queue depth of 8K
++ * (due to size of rcfw message there can be actual ~4K rcfw outstanding)
++ * is not optimal for rcfw command processing in firmware.
++ *
++ * Restrict at max #RCFW_CMD_NON_BLOCKING_SHADOW_QD Non-Blocking rcfw commands.
++ * Allow all blocking commands until there is no queue full.
++ *
++ * Returns:
++ * 0 if command completed by firmware.
++ * Non zero if the command is not completed by firmware.
++ */
++int bnxt_qplib_rcfw_send_message(struct bnxt_qplib_rcfw *rcfw,
++				 struct bnxt_qplib_cmdqmsg *msg)
 +{
-+	switch (opcode) {
-+	case CMDQ_BASE_OPCODE_DESTROY_QP:
-+	case CMDQ_BASE_OPCODE_DESTROY_SRQ:
-+	case CMDQ_BASE_OPCODE_DESTROY_CQ:
-+	case CMDQ_BASE_OPCODE_DEALLOCATE_KEY:
-+	case CMDQ_BASE_OPCODE_DEREGISTER_MR:
-+	case CMDQ_BASE_OPCODE_DELETE_GID:
-+	case CMDQ_BASE_OPCODE_DESTROY_QP1:
-+	case CMDQ_BASE_OPCODE_DESTROY_AH:
-+	case CMDQ_BASE_OPCODE_DEINITIALIZE_FW:
-+	case CMDQ_BASE_OPCODE_MODIFY_ROCE_CC:
-+	case CMDQ_BASE_OPCODE_SET_LINK_AGGR_MODE:
-+		return 0;
-+	default:
-+		return -ETIMEDOUT;
++	int ret;
++
++	if (!msg->block) {
++		down(&rcfw->rcfw_inflight);
++		ret = __bnxt_qplib_rcfw_send_message(rcfw, msg);
++		up(&rcfw->rcfw_inflight);
++	} else {
++		ret = __bnxt_qplib_rcfw_send_message(rcfw, msg);
 +	}
++
++	return ret;
 +}
 +
- /**
-  * __wait_for_resp   -	Don't hold the cpu context and wait for response
-  * @rcfw      -   rcfw channel instance of rdev
-  * @cookie    -   cookie to track the command
-+ * @opcode    -   rcfw submitted for given opcode
-  *
-  * Wait for command completion in sleepable context.
-  *
-@@ -64,7 +101,7 @@ static void bnxt_qplib_service_creq(struct tasklet_struct *t);
-  * 0 if command is completed by firmware.
-  * Non zero error code for rest of the case.
-  */
--static int __wait_for_resp(struct bnxt_qplib_rcfw *rcfw, u16 cookie)
-+static int __wait_for_resp(struct bnxt_qplib_rcfw *rcfw, u16 cookie, u8 opcode)
- {
- 	struct bnxt_qplib_cmdq_ctx *cmdq;
- 	u16 cbit;
-@@ -74,6 +111,9 @@ static int __wait_for_resp(struct bnxt_qplib_rcfw *rcfw, u16 cookie)
- 	cbit = cookie % rcfw->cmdq_depth;
+ /* Completions */
+ static int bnxt_qplib_process_func_event(struct bnxt_qplib_rcfw *rcfw,
+ 					 struct creq_func_event *func_event)
+@@ -937,6 +992,7 @@ int bnxt_qplib_enable_rcfw_channel(struct bnxt_qplib_rcfw *rcfw,
+ 		return rc;
+ 	}
  
- 	do {
-+		if (test_bit(ERR_DEVICE_DETACHED, &cmdq->flags))
-+			return bnxt_qplib_map_rc(opcode);
-+
- 		/* Non zero means command completed */
- 		ret = wait_event_timeout(cmdq->waitq,
- 					 !test_bit(cbit, cmdq->cmdq_bitmap),
-@@ -94,6 +134,7 @@ static int __wait_for_resp(struct bnxt_qplib_rcfw *rcfw, u16 cookie)
-  * __block_for_resp   -	hold the cpu context and wait for response
-  * @rcfw      -   rcfw channel instance of rdev
-  * @cookie    -   cookie to track the command
-+ * @opcode    -   rcfw submitted for given opcode
-  *
-  * This function will hold the cpu (non-sleepable context) and
-  * wait for command completion. Maximum holding interval is 8 second.
-@@ -102,7 +143,7 @@ static int __wait_for_resp(struct bnxt_qplib_rcfw *rcfw, u16 cookie)
-  * -ETIMEOUT if command is not completed in specific time interval.
-  * 0 if command is completed by firmware.
-  */
--static int __block_for_resp(struct bnxt_qplib_rcfw *rcfw, u16 cookie)
-+static int __block_for_resp(struct bnxt_qplib_rcfw *rcfw, u16 cookie, u8 opcode)
- {
- 	struct bnxt_qplib_cmdq_ctx *cmdq = &rcfw->cmdq;
- 	unsigned long issue_time = 0;
-@@ -112,6 +153,9 @@ static int __block_for_resp(struct bnxt_qplib_rcfw *rcfw, u16 cookie)
- 	issue_time = jiffies;
++	sema_init(&rcfw->rcfw_inflight, RCFW_CMD_NON_BLOCKING_SHADOW_QD);
+ 	bnxt_qplib_start_rcfw(rcfw);
  
- 	do {
-+		if (test_bit(ERR_DEVICE_DETACHED, &cmdq->flags))
-+			return bnxt_qplib_map_rc(opcode);
-+
- 		udelay(1);
+ 	return 0;
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
+index 92f7a25533d3b..675c388348827 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
++++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
+@@ -67,6 +67,8 @@ static inline void bnxt_qplib_rcfw_cmd_prep(struct cmdq_base *req,
+ 	req->cmd_size = cmd_size;
+ }
  
- 		bnxt_qplib_service_creq(&rcfw->creq.creq_tasklet);
-@@ -267,9 +311,9 @@ int bnxt_qplib_rcfw_send_message(struct bnxt_qplib_rcfw *rcfw,
- 	} while (retry_cnt--);
++/* Shadow queue depth for non blocking command */
++#define RCFW_CMD_NON_BLOCKING_SHADOW_QD	64
+ #define RCFW_CMD_WAIT_TIME_MS		20000 /* 20 Seconds timeout */
  
- 	if (msg->block)
--		rc = __block_for_resp(rcfw, cookie);
-+		rc = __block_for_resp(rcfw, cookie, opcode);
- 	else
--		rc = __wait_for_resp(rcfw, cookie);
-+		rc = __wait_for_resp(rcfw, cookie, opcode);
- 	if (rc) {
- 		/* timed out */
- 		dev_err(&rcfw->pdev->dev, "cmdq[%#x]=%#x timedout (%d)msec\n",
+ /* CMDQ elements */
+@@ -201,6 +203,7 @@ struct bnxt_qplib_rcfw {
+ 	u64 oos_prev;
+ 	u32 init_oos_stats;
+ 	u32 cmdq_depth;
++	struct semaphore rcfw_inflight;
+ };
+ 
+ struct bnxt_qplib_cmdqmsg {
 -- 
 2.40.1
 
