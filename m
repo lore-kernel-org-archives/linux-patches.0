@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59CB1F957
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:36:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59917C433C8;
-	Tue,  1 Aug 2023 09:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8081F957
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:36:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C2BC433C7;
+	Tue,  1 Aug 2023 09:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882613;
-	bh=EdJlco+J4sUdxUMYVRQuIKYB38LSkBEY2e1cyt17zm0=;
+	s=korg; t=1690882616;
+	bh=UYaElANgHIMJMp7wt646gtwuPHJpgPH0Jro33rgN+1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OCSIn5DBZIogAgrh6o5n3AF6enmlOo9CSOXDx9pHNsHGAgKmw5Yo2ZBIl99Lz8lw0
-	 eMe7xs8pjMeXxEgCZPOAp//Z4xEEB5HGuHLkwvu/+SNM9UFQeytfTppvyOXKO1FwcA
-	 On/aIrDLIktjfC001hdHZsCAcitfdNfjtahhdh3Q=
+	b=En0gtxeld+3pokU/iaZSTx0OxmA5aV7Cq3dMmNZGH2nrmm6hJQXhINmckM4ccVHZX
+	 CVC8EHA6gtDgp5zgQr0y4mv8SeDq6p5iINVbLfsBdQjtC6JeRmeRQ+hnpOwYTHhT08
+	 Sp8U4kQhvoxXQdpmUUWnjoasAu36BUqWQ82QfhMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guiting Shen <aarongt.shen@gmail.com>,
-	stable <stable@kernel.org>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.1 168/228] usb: ohci-at91: Fix the unhandle interrupt when resume
-Date: Tue,  1 Aug 2023 11:20:26 +0200
-Message-ID: <20230801091928.932213709@linuxfoundation.org>
+	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <lb@semihalf.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.1 169/228] USB: quirks: add quirk for Focusrite Scarlett
+Date: Tue,  1 Aug 2023 11:20:27 +0200
+Message-ID: <20230801091928.971362799@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -35,43 +34,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guiting Shen <aarongt.shen@gmail.com>
+From: Łukasz Bartosik <lb@semihalf.com>
 
-commit c55afcbeaa7a6f4fffdbc999a9bf3f0b29a5186f upstream.
+commit 9dc162e22387080e2d06de708b89920c0e158c9a upstream.
 
-The ohci_hcd_at91_drv_suspend() sets ohci->rh_state to OHCI_RH_HALTED when
-suspend which will let the ohci_irq() skip the interrupt after resume. And
-nobody to handle this interrupt.
+The Focusrite Scarlett audio device does not behave correctly during
+resumes. Below is what happens during every resume (captured with
+Beagle 5000):
 
-According to the comment in ohci_hcd_at91_drv_suspend(), it need to reset
-when resume from suspend(MEM) to fix by setting "hibernated" argument of
-ohci_resume().
+<Suspend>
+<Resume>
+<Reset>/<Chirp J>/<Tiny J>
+<Reset/Target disconnected>
+<High Speed>
 
-Signed-off-by: Guiting Shen <aarongt.shen@gmail.com>
+The Scarlett disconnects and is enumerated again.
+
+However from time to time it drops completely off the USB bus during
+resume. Below is captured occurrence of such an event:
+
+<Suspend>
+<Resume>
+<Reset>/<Chirp J>/<Tiny J>
+<Reset>/<Chirp K>/<Tiny K>
+<High Speed>
+<Corrupted packet>
+<Reset/Target disconnected>
+
+To fix the condition a user has to unplug and plug the device again.
+
+With USB_QUIRK_RESET_RESUME applied ("usbcore.quirks=1235:8211:b")
+for the Scarlett audio device the issue still reproduces.
+
+Applying USB_QUIRK_DISCONNECT_SUSPEND ("usbcore.quirks=1235:8211:m")
+fixed the issue and the Scarlett audio device didn't drop off the USB
+bus for ~5000 suspend/resume cycles where originally issue reproduced in
+~100 or less suspend/resume cycles.
+
+Signed-off-by: Łukasz Bartosik <lb@semihalf.com>
 Cc: stable <stable@kernel.org>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20230626152713.18950-1-aarongt.shen@gmail.com
+Link: https://lore.kernel.org/r/20230724112911.1802577-1-lb@semihalf.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ohci-at91.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/usb/core/quirks.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/host/ohci-at91.c
-+++ b/drivers/usb/host/ohci-at91.c
-@@ -673,7 +673,13 @@ ohci_hcd_at91_drv_resume(struct device *
- 	else
- 		at91_start_clock(ohci_at91);
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -436,6 +436,10 @@ static const struct usb_device_id usb_qu
+ 	/* novation SoundControl XL */
+ 	{ USB_DEVICE(0x1235, 0x0061), .driver_info = USB_QUIRK_RESET_RESUME },
  
--	ohci_resume(hcd, false);
-+	/*
-+	 * According to the comment in ohci_hcd_at91_drv_suspend()
-+	 * we need to do a reset if the 48Mhz clock was stopped,
-+	 * that is, if ohci_at91->wakeup is clear. Tell ohci_resume()
-+	 * to reset in this case by setting its "hibernated" flag.
-+	 */
-+	ohci_resume(hcd, !ohci_at91->wakeup);
- 
- 	return 0;
- }
++	/* Focusrite Scarlett Solo USB */
++	{ USB_DEVICE(0x1235, 0x8211), .driver_info =
++			USB_QUIRK_DISCONNECT_SUSPEND },
++
+ 	/* Huawei 4G LTE module */
+ 	{ USB_DEVICE(0x12d1, 0x15bb), .driver_info =
+ 			USB_QUIRK_DISCONNECT_SUSPEND },
 
 
