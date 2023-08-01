@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17771FB2B
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:32:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CDB7C433C7;
-	Tue,  1 Aug 2023 09:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6711A1FB2B
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:32:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC56C433C8;
+	Tue,  1 Aug 2023 09:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882374;
-	bh=tgKwbgpzRK/KwYyqzWd6IvLXjzSO9eCd/e2rFe+jTkM=;
+	s=korg; t=1690882377;
+	bh=jGhtfD4uoDVbBBJjW7LSXiJwjbmp648vGYJuoyKRpRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dQYWxTHyVYJwHi1xr49ABp77ZhLb571Bq2Z19RGlamnUq5Mrl6Ho/nY39Jxv2f3qH
-	 VP3043yCodj505c6JfT7F491lihozithdJOYv3duI6K/BnLKsPmqQrjmQkaeYb3ASc
-	 tfybLLPMRbHB/34mtBzsCL8NWVtGMJ6Mool21LK8=
+	b=DYugOcRpbtALlTJPFXN4zzHSUxEAzN48/zw7RihkyjFzfK5ammcN+lf2+evK75IUC
+	 1vxXL0tYxtKl6GjJwt79Hf91GZxNardobiXLxBp6LPIKZ8HI5i0FfCKndpB8rNTOOY
+	 SqsXam/JBU/GJerVWVeFQ4G8BMPwLAm+PzXG+m2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	D Scott Phillips <scott@os.amperecomputing.com>,
-	Darren Hart <darren@os.amperecomputing.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Oliver Upton <oliver.upton@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Menglong Dong <imagedong@tencent.com>,
+	Mat Martineau <mathew.j.martineau@linux.intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 054/228] arm64: errata: Mitigate Ampere1 erratum AC03_CPU_38 at stage-2
-Date: Tue,  1 Aug 2023 11:18:32 +0200
-Message-ID: <20230801091924.844204675@linuxfoundation.org>
+Subject: [PATCH 6.1 055/228] mptcp: introduce sk to replace sock->sk in mptcp_listen()
+Date: Tue,  1 Aug 2023 11:18:33 +0200
+Message-ID: <20230801091924.873866539@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -37,139 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oliver Upton <oliver.upton@linux.dev>
+From: Menglong Dong <imagedong@tencent.com>
 
-[ Upstream commit 6df696cd9bc1ceed0e92e36908f88bbd16d18255 ]
+[ Upstream commit cfdcfeed6449d702825d249cb85346ecf56236fc ]
 
-AmpereOne has an erratum in its implementation of FEAT_HAFDBS that
-required disabling the feature on the design. This was done by reporting
-the feature as not implemented in the ID register, although the
-corresponding control bits were not actually RES0. This does not align
-well with the requirements of the architecture, which mandates these
-bits be RES0 if HAFDBS isn't implemented.
+'sock->sk' is used frequently in mptcp_listen(). Therefore, we can
+introduce the 'sk' and replace 'sock->sk' with it.
 
-The kernel's use of stage-1 is unaffected, as the HA and HD bits are
-only set if HAFDBS is detected in the ID register. KVM, on the other
-hand, relies on the RES0 behavior at stage-2 to use the same value for
-VTCR_EL2 on any cpu in the system. Mitigate the non-RES0 behavior by
-leaving VTCR_EL2.HA clear on affected systems.
-
-Cc: stable@vger.kernel.org
-Cc: D Scott Phillips <scott@os.amperecomputing.com>
-Cc: Darren Hart <darren@os.amperecomputing.com>
-Acked-by: D Scott Phillips <scott@os.amperecomputing.com>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Link: https://lore.kernel.org/r/20230609220104.1836988-2-oliver.upton@linux.dev
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Menglong Dong <imagedong@tencent.com>
+Signed-off-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 0226436acf24 ("mptcp: do not rely on implicit state check in mptcp_listen()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/arm64/silicon-errata.rst |  3 +++
- arch/arm64/Kconfig                     | 19 +++++++++++++++++++
- arch/arm64/kernel/cpu_errata.c         |  7 +++++++
- arch/arm64/kvm/hyp/pgtable.c           | 14 +++++++++++---
- arch/arm64/tools/cpucaps               |  1 +
- 5 files changed, 41 insertions(+), 3 deletions(-)
+ net/mptcp/protocol.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/arm64/silicon-errata.rst b/Documentation/arm64/silicon-errata.rst
-index 55492fea44276..bbc80eff03f98 100644
---- a/Documentation/arm64/silicon-errata.rst
-+++ b/Documentation/arm64/silicon-errata.rst
-@@ -52,6 +52,9 @@ stable kernels.
- | Allwinner      | A64/R18         | UNKNOWN1        | SUN50I_ERRATUM_UNKNOWN1     |
- +----------------+-----------------+-----------------+-----------------------------+
- +----------------+-----------------+-----------------+-----------------------------+
-+| Ampere         | AmpereOne       | AC03_CPU_38     | AMPERE_ERRATUM_AC03_CPU_38  |
-++----------------+-----------------+-----------------+-----------------------------+
-++----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Cortex-A510     | #2457168        | ARM64_ERRATUM_2457168       |
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Cortex-A510     | #2064142        | ARM64_ERRATUM_2064142       |
-diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index 20ee745c118ae..d5eb2fbab473e 100644
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -376,6 +376,25 @@ menu "Kernel Features"
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index 4ca61e80f4bb2..208da9a9909c2 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3746,12 +3746,13 @@ static int mptcp_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+ static int mptcp_listen(struct socket *sock, int backlog)
+ {
+ 	struct mptcp_sock *msk = mptcp_sk(sock->sk);
++	struct sock *sk = sock->sk;
+ 	struct socket *ssock;
+ 	int err;
  
- menu "ARM errata workarounds via the alternatives framework"
+ 	pr_debug("msk=%p", msk);
  
-+config AMPERE_ERRATUM_AC03_CPU_38
-+        bool "AmpereOne: AC03_CPU_38: Certain bits in the Virtualization Translation Control Register and Translation Control Registers do not follow RES0 semantics"
-+	default y
-+	help
-+	  This option adds an alternative code sequence to work around Ampere
-+	  erratum AC03_CPU_38 on AmpereOne.
-+
-+	  The affected design reports FEAT_HAFDBS as not implemented in
-+	  ID_AA64MMFR1_EL1.HAFDBS, but (V)TCR_ELx.{HA,HD} are not RES0
-+	  as required by the architecture. The unadvertised HAFDBS
-+	  implementation suffers from an additional erratum where hardware
-+	  A/D updates can occur after a PTE has been marked invalid.
-+
-+	  The workaround forces KVM to explicitly set VTCR_EL2.HA to 0,
-+	  which avoids enabling unadvertised hardware Access Flag management
-+	  at stage-2.
-+
-+	  If unsure, say Y.
-+
- config ARM64_WORKAROUND_CLEAN_CACHE
- 	bool
- 
-diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
-index 89ac00084f38a..8dbf3c21ea22a 100644
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -722,6 +722,13 @@ const struct arm64_cpu_capabilities arm64_errata[] = {
- 		MIDR_FIXED(MIDR_CPU_VAR_REV(1,1), BIT(25)),
- 		.cpu_enable = cpu_clear_bf16_from_user_emulation,
- 	},
-+#endif
-+#ifdef CONFIG_AMPERE_ERRATUM_AC03_CPU_38
-+	{
-+		.desc = "AmpereOne erratum AC03_CPU_38",
-+		.capability = ARM64_WORKAROUND_AMPERE_AC03_CPU_38,
-+		ERRATA_MIDR_ALL_VERSIONS(MIDR_AMPERE1),
-+	},
- #endif
- 	{
+-	lock_sock(sock->sk);
++	lock_sock(sk);
+ 	ssock = __mptcp_nmpc_socket(msk);
+ 	if (!ssock) {
+ 		err = -EINVAL;
+@@ -3759,16 +3760,16 @@ static int mptcp_listen(struct socket *sock, int backlog)
  	}
-diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
-index 8f37e65c23eea..ae5f6b5ac80fd 100644
---- a/arch/arm64/kvm/hyp/pgtable.c
-+++ b/arch/arm64/kvm/hyp/pgtable.c
-@@ -598,10 +598,18 @@ u64 kvm_get_vtcr(u64 mmfr0, u64 mmfr1, u32 phys_shift)
- #ifdef CONFIG_ARM64_HW_AFDBM
- 	/*
- 	 * Enable the Hardware Access Flag management, unconditionally
--	 * on all CPUs. The features is RES0 on CPUs without the support
--	 * and must be ignored by the CPUs.
-+	 * on all CPUs. In systems that have asymmetric support for the feature
-+	 * this allows KVM to leverage hardware support on the subset of cores
-+	 * that implement the feature.
-+	 *
-+	 * The architecture requires VTCR_EL2.HA to be RES0 (thus ignored by
-+	 * hardware) on implementations that do not advertise support for the
-+	 * feature. As such, setting HA unconditionally is safe, unless you
-+	 * happen to be running on a design that has unadvertised support for
-+	 * HAFDBS. Here be dragons.
- 	 */
--	vtcr |= VTCR_EL2_HA;
-+	if (!cpus_have_final_cap(ARM64_WORKAROUND_AMPERE_AC03_CPU_38))
-+		vtcr |= VTCR_EL2_HA;
- #endif /* CONFIG_ARM64_HW_AFDBM */
  
- 	/* Set the vmid bits */
-diff --git a/arch/arm64/tools/cpucaps b/arch/arm64/tools/cpucaps
-index f1c0347ec31a8..14d31d1b2ff02 100644
---- a/arch/arm64/tools/cpucaps
-+++ b/arch/arm64/tools/cpucaps
-@@ -71,6 +71,7 @@ WORKAROUND_2064142
- WORKAROUND_2077057
- WORKAROUND_2457168
- WORKAROUND_2658417
-+WORKAROUND_AMPERE_AC03_CPU_38
- WORKAROUND_TRBE_OVERWRITE_FILL_MODE
- WORKAROUND_TSB_FLUSH_FAILURE
- WORKAROUND_TRBE_WRITE_OUT_OF_RANGE
+ 	mptcp_token_destroy(msk);
+-	inet_sk_state_store(sock->sk, TCP_LISTEN);
+-	sock_set_flag(sock->sk, SOCK_RCU_FREE);
++	inet_sk_state_store(sk, TCP_LISTEN);
++	sock_set_flag(sk, SOCK_RCU_FREE);
+ 
+ 	err = ssock->ops->listen(ssock, backlog);
+-	inet_sk_state_store(sock->sk, inet_sk_state_load(ssock->sk));
++	inet_sk_state_store(sk, inet_sk_state_load(ssock->sk));
+ 	if (!err)
+-		mptcp_copy_inaddrs(sock->sk, ssock->sk);
++		mptcp_copy_inaddrs(sk, ssock->sk);
+ 
+ unlock:
+-	release_sock(sock->sk);
++	release_sock(sk);
+ 	return err;
+ }
+ 
 -- 
 2.39.2
 
