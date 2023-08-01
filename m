@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0E21FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:47:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133D3C433C9;
-	Tue,  1 Aug 2023 09:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514FD1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:47:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F80C433C8;
+	Tue,  1 Aug 2023 09:47:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883229;
-	bh=YUyLLVb3rgS8yxg7hY/o/8b6wKgfNZymevTviuL5LXo=;
+	s=korg; t=1690883232;
+	bh=9ONyQ4ihBn7mfC8UgUwyjEKAdvj/wr1Iu5ByNyvxK8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H/Cu6yDmmyc2xdEdMlK7KBQJZK1kANcZTqn/Wvb/HbFWDDQZyg++xn/kdR1adc7OP
-	 Yz5X2jos6ofc/qluZi5RZyPMrL08JWcK5TYdlhIwuodWfUkT4WWdOlpV+1vSm/zsBE
-	 /ILuslWxqBkuxE8bM9gAvHncCKliVCFdJJOLmZvM=
+	b=FnPxjq1Ic/mkw17lZxg93qo5EI3yPwad1C6eHpIPVPo9WGZNo3YY4tU+Mq+PNcvEH
+	 +iNiVlj1wypK739FNJOnlGxWK5JWOVWNln6bB/cH0atGAGSSTP7ZQwCazgROaPxLcZ
+	 IEtQxtP+QqzUJiBiXlAhqhsWocQsm1S/6p+KIb4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 122/239] block: Fix a source code comment in include/uapi/linux/blkzoned.h
-Date: Tue,  1 Aug 2023 11:19:46 +0200
-Message-ID: <20230801091930.114801291@linuxfoundation.org>
+	Kaufmann Automotive GmbH <info@kaufmann-automotive.ch>,
+	Oliver Neukum <oneukum@suse.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.4 155/239] USB: serial: simple: add Kaufmann RKS+CAN VCP
+Date: Tue,  1 Aug 2023 11:20:19 +0200
+Message-ID: <20230801091931.239696598@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -37,50 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit e0933b526fbfd937c4a8f4e35fcdd49f0e22d411 ]
+commit dd92c8a1f99bcd166204ffc219ea5a23dd65d64f upstream.
 
-Fix the symbolic names for zone conditions in the blkzoned.h header
-file.
+Add the device and product ID for this CAN bus interface / license
+dongle. The device is usable either directly from user space or can be
+attached to a kernel CAN interface with slcan_attach.
 
-Cc: Hannes Reinecke <hare@suse.de>
-Cc: Damien Le Moal <dlemoal@kernel.org>
-Fixes: 6a0cb1bc106f ("block: Implement support for zoned block devices")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20230706201422.3987341-1-bvanassche@acm.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Kaufmann Automotive GmbH <info@kaufmann-automotive.ch>
+Tested-by: Kaufmann Automotive GmbH <info@kaufmann-automotive.ch>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+[ johan: amend commit message and move entries in sort order ]
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/blkzoned.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/usb/serial/usb-serial-simple.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/include/uapi/linux/blkzoned.h b/include/uapi/linux/blkzoned.h
-index b80fcc9ea5257..f85743ef6e7d1 100644
---- a/include/uapi/linux/blkzoned.h
-+++ b/include/uapi/linux/blkzoned.h
-@@ -51,13 +51,13 @@ enum blk_zone_type {
-  *
-  * The Zone Condition state machine in the ZBC/ZAC standards maps the above
-  * deinitions as:
-- *   - ZC1: Empty         | BLK_ZONE_EMPTY
-+ *   - ZC1: Empty         | BLK_ZONE_COND_EMPTY
-  *   - ZC2: Implicit Open | BLK_ZONE_COND_IMP_OPEN
-  *   - ZC3: Explicit Open | BLK_ZONE_COND_EXP_OPEN
-- *   - ZC4: Closed        | BLK_ZONE_CLOSED
-- *   - ZC5: Full          | BLK_ZONE_FULL
-- *   - ZC6: Read Only     | BLK_ZONE_READONLY
-- *   - ZC7: Offline       | BLK_ZONE_OFFLINE
-+ *   - ZC4: Closed        | BLK_ZONE_COND_CLOSED
-+ *   - ZC5: Full          | BLK_ZONE_COND_FULL
-+ *   - ZC6: Read Only     | BLK_ZONE_COND_READONLY
-+ *   - ZC7: Offline       | BLK_ZONE_COND_OFFLINE
-  *
-  * Conditions 0x5 to 0xC are reserved by the current ZBC/ZAC spec and should
-  * be considered invalid.
--- 
-2.40.1
-
+--- a/drivers/usb/serial/usb-serial-simple.c
++++ b/drivers/usb/serial/usb-serial-simple.c
+@@ -63,6 +63,11 @@ DEVICE(flashloader, FLASHLOADER_IDS);
+ 					0x01) }
+ DEVICE(google, GOOGLE_IDS);
+ 
++/* KAUFMANN RKS+CAN VCP */
++#define KAUFMANN_IDS()			\
++	{ USB_DEVICE(0x16d0, 0x0870) }
++DEVICE(kaufmann, KAUFMANN_IDS);
++
+ /* Libtransistor USB console */
+ #define LIBTRANSISTOR_IDS()			\
+ 	{ USB_DEVICE(0x1209, 0x8b00) }
+@@ -124,6 +129,7 @@ static struct usb_serial_driver * const
+ 	&funsoft_device,
+ 	&flashloader_device,
+ 	&google_device,
++	&kaufmann_device,
+ 	&libtransistor_device,
+ 	&vivopay_device,
+ 	&moto_modem_device,
+@@ -142,6 +148,7 @@ static const struct usb_device_id id_tab
+ 	FUNSOFT_IDS(),
+ 	FLASHLOADER_IDS(),
+ 	GOOGLE_IDS(),
++	KAUFMANN_IDS(),
+ 	LIBTRANSISTOR_IDS(),
+ 	VIVOPAY_IDS(),
+ 	MOTO_IDS(),
 
 
