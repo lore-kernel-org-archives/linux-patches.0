@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CF01FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:40:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D32FC433C8;
-	Tue,  1 Aug 2023 09:40:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E455A1F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:40:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2722AC433C9;
+	Tue,  1 Aug 2023 09:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882812;
-	bh=Qpi9eaFEdR3YnrjHpaQ/MiiUXs1K1/UsPbiMmLPstxI=;
+	s=korg; t=1690882815;
+	bh=RO30v2BdLJK9kzPl1OdDpXXFjWK3AqjLCsBItoHK82s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1b1I3wjyCpJXtYbUcilhMpzl2CeSshghxpA5x2l4SKocLAOQhOhZRiR2gTEHBh80V
-	 NNVdkaOGkO3jeURP7ANxkie2sEQ8jKPtpPOu1rUKuwaG7/RQbdH5RkQaDec2d1BQ04
-	 08FFhwXtjz3upePZyoZoeqoYwfZ/U+jptyUnnsKE=
+	b=mkYvMFguSgn6lv1xx+9B9fMd97l2Tyl2cSo/uNrjRzcYhHOnZbnSSHBM9By+4HYI5
+	 ReuNcl24eVTZzrPrGC6MsZ+aWWpDAIKF8UA5t7HD9KpFsqCI4Wq4cTORZulLDOqrvs
+	 I3aTXfwRChTAraDyZYPQce+XC2P9CSxRkfTlClMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Ondrej Mosnacek <omosnace@redhat.com>,
+	Jeff Moyer <jmoyer@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 012/239] s390/mm: fix per vma lock fault handling
-Date: Tue,  1 Aug 2023 11:17:56 +0200
-Message-ID: <20230801091926.095017700@linuxfoundation.org>
+Subject: [PATCH 6.4 013/239] io_uring: dont audit the capability check in io_uring_create()
+Date: Tue,  1 Aug 2023 11:17:57 +0200
+Message-ID: <20230801091926.124709984@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -35,36 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Ondrej Mosnacek <omosnace@redhat.com>
 
-[ Upstream commit 7686762d1ed092db4d120e29b565712c969dc075 ]
+[ Upstream commit 6adc2272aaaf84f34b652cf77f770c6fcc4b8336 ]
 
-With per-vma locks, handle_mm_fault() may return non-fatal error
-flags. In this case the code should reset the fault flags before
-returning.
+The check being unconditional may lead to unwanted denials reported by
+LSMs when a process has the capability granted by DAC, but denied by an
+LSM. In the case of SELinux such denials are a problem, since they can't
+be effectively filtered out via the policy and when not silenced, they
+produce noise that may hide a true problem or an attack.
 
-Fixes: e06f47a16573 ("s390/mm: try VMA lock-based page fault handling first")
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Since not having the capability merely means that the created io_uring
+context will be accounted against the current user's RLIMIT_MEMLOCK
+limit, we can disable auditing of denials for this check by using
+ns_capable_noaudit() instead of capable().
+
+Fixes: 2b188cc1bb85 ("Add io_uring IO interface")
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2193317
+Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
+Reviewed-by: Jeff Moyer <jmoyer@redhat.com>
+Link: https://lore.kernel.org/r/20230718115607.65652-1-omosnace@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/mm/fault.c | 2 ++
- 1 file changed, 2 insertions(+)
+ io_uring/io_uring.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/mm/fault.c b/arch/s390/mm/fault.c
-index dbe8394234e2b..2f123429a291b 100644
---- a/arch/s390/mm/fault.c
-+++ b/arch/s390/mm/fault.c
-@@ -421,6 +421,8 @@ static inline vm_fault_t do_exception(struct pt_regs *regs, int access)
- 	vma_end_read(vma);
- 	if (!(fault & VM_FAULT_RETRY)) {
- 		count_vm_vma_lock_event(VMA_LOCK_SUCCESS);
-+		if (likely(!(fault & VM_FAULT_ERROR)))
-+			fault = 0;
- 		goto out;
- 	}
- 	count_vm_vma_lock_event(VMA_LOCK_RETRY);
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index d6667b435dd39..685cf14a7189e 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -3859,7 +3859,7 @@ static __cold int io_uring_create(unsigned entries, struct io_uring_params *p,
+ 		ctx->syscall_iopoll = 1;
+ 
+ 	ctx->compat = in_compat_syscall();
+-	if (!capable(CAP_IPC_LOCK))
++	if (!ns_capable_noaudit(&init_user_ns, CAP_IPC_LOCK))
+ 		ctx->user = get_uid(current_user());
+ 
+ 	/*
 -- 
 2.39.2
 
