@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B80B1FB2B
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:35:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F81C433C8;
-	Tue,  1 Aug 2023 09:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779F31FB45
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:36:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C361C433C8;
+	Tue,  1 Aug 2023 09:36:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882558;
-	bh=jXusiciCJ3FHDfdjhfaKkRIG/JuO5zzso23/SMafQLM=;
+	s=korg; t=1690882561;
+	bh=ye/ATdwal3/b7rgiO2DS5ppONayVVWs9/KW+ZqZ0/ZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sFZArkf55nccEAsrFvbXO++wOY4tUk5QEQuvIkt7QZRbychA8nN5/cx0ImZquurVy
-	 zPgodT+Dil5zIAvpqvSSm3mF7l2ehgRY8Mv5+DRW3A0ahyfvDyK4iMh2vSCPI/h07u
-	 Wv/loL7nJr/q/1y/GdaRdyaOs8wt6TYzsqy9d8KI=
+	b=mZ5KZBTpKuHievX9X1DRmQIG2i45WtrsiGgCGvMDD8YmAtXy5XE6CCeqJoYJf4lue
+	 YBJqrnHvO91mtz5/ciptPIxdvUUvWEI5ptL76HUn144rr1sTgG8Yain36YvWFwc/Gj
+	 QLK6nhFBWt8uWeq7+M0fHaieLcesh0sg4cvGILHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Lin Ma <linma@zju.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 120/228] RDMA/irdma: Fix data race on CQP request done
-Date: Tue,  1 Aug 2023 11:19:38 +0200
-Message-ID: <20230801091927.090556301@linuxfoundation.org>
+Subject: [PATCH 6.1 111/228] net/sched: mqprio: Add length check for TCA_MQPRIO_{MAX/MIN}_RATE64
+Date: Tue,  1 Aug 2023 11:19:29 +0200
+Message-ID: <20230801091926.796889835@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -35,127 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shiraz Saleem <shiraz.saleem@intel.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit f0842bb3d38863777e3454da5653d80b5fde6321 ]
+[ Upstream commit 6c58c8816abb7b93b21fa3b1d0c1726402e5e568 ]
 
-KCSAN detects a data race on cqp_request->request_done memory location
-which is accessed locklessly in irdma_handle_cqp_op while being
-updated in irdma_cqp_ce_handler.
+The nla_for_each_nested parsing in function mqprio_parse_nlattr() does
+not check the length of the nested attribute. This can lead to an
+out-of-attribute read and allow a malformed nlattr (e.g., length 0) to
+be viewed as 8 byte integer and passed to priv->max_rate/min_rate.
 
-Annotate lockless intent with READ_ONCE/WRITE_ONCE to avoid any
-compiler optimizations like load fusing and/or KCSAN warning.
+This patch adds the check based on nla_len() when check the nla_type(),
+which ensures that the length of these two attribute must equals
+sizeof(u64).
 
-[222808.417128] BUG: KCSAN: data-race in irdma_cqp_ce_handler [irdma] / irdma_wait_event [irdma]
-
-[222808.417532] write to 0xffff8e44107019dc of 1 bytes by task 29658 on cpu 5:
-[222808.417610]  irdma_cqp_ce_handler+0x21e/0x270 [irdma]
-[222808.417725]  cqp_compl_worker+0x1b/0x20 [irdma]
-[222808.417827]  process_one_work+0x4d1/0xa40
-[222808.417835]  worker_thread+0x319/0x700
-[222808.417842]  kthread+0x180/0x1b0
-[222808.417852]  ret_from_fork+0x22/0x30
-
-[222808.417918] read to 0xffff8e44107019dc of 1 bytes by task 29688 on cpu 1:
-[222808.417995]  irdma_wait_event+0x1e2/0x2c0 [irdma]
-[222808.418099]  irdma_handle_cqp_op+0xae/0x170 [irdma]
-[222808.418202]  irdma_cqp_cq_destroy_cmd+0x70/0x90 [irdma]
-[222808.418308]  irdma_puda_dele_rsrc+0x46d/0x4d0 [irdma]
-[222808.418411]  irdma_rt_deinit_hw+0x179/0x1d0 [irdma]
-[222808.418514]  irdma_ib_dealloc_device+0x11/0x40 [irdma]
-[222808.418618]  ib_dealloc_device+0x2a/0x120 [ib_core]
-[222808.418823]  __ib_unregister_device+0xde/0x100 [ib_core]
-[222808.418981]  ib_unregister_device+0x22/0x40 [ib_core]
-[222808.419142]  irdma_ib_unregister_device+0x70/0x90 [irdma]
-[222808.419248]  i40iw_close+0x6f/0xc0 [irdma]
-[222808.419352]  i40e_client_device_unregister+0x14a/0x180 [i40e]
-[222808.419450]  i40iw_remove+0x21/0x30 [irdma]
-[222808.419554]  auxiliary_bus_remove+0x31/0x50
-[222808.419563]  device_remove+0x69/0xb0
-[222808.419572]  device_release_driver_internal+0x293/0x360
-[222808.419582]  driver_detach+0x7c/0xf0
-[222808.419592]  bus_remove_driver+0x8c/0x150
-[222808.419600]  driver_unregister+0x45/0x70
-[222808.419610]  auxiliary_driver_unregister+0x16/0x30
-[222808.419618]  irdma_exit_module+0x18/0x1e [irdma]
-[222808.419733]  __do_sys_delete_module.constprop.0+0x1e2/0x310
-[222808.419745]  __x64_sys_delete_module+0x1b/0x30
-[222808.419755]  do_syscall_64+0x39/0x90
-[222808.419763]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-[222808.419829] value changed: 0x01 -> 0x03
-
-Fixes: 915cc7ac0f8e ("RDMA/irdma: Add miscellaneous utility definitions")
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Link: https://lore.kernel.org/r/20230711175253.1289-4-shiraz.saleem@intel.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 4e8b86c06269 ("mqprio: Introduce new hardware offload mode and shaper in mqprio")
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Link: https://lore.kernel.org/r/20230725024227.426561-1-linma@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/hw.c    | 2 +-
- drivers/infiniband/hw/irdma/main.h  | 2 +-
- drivers/infiniband/hw/irdma/utils.c | 6 +++---
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ net/sched/sch_mqprio.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
-index 43dfa4761f069..05a403f3ffd40 100644
---- a/drivers/infiniband/hw/irdma/hw.c
-+++ b/drivers/infiniband/hw/irdma/hw.c
-@@ -2068,7 +2068,7 @@ void irdma_cqp_ce_handler(struct irdma_pci_f *rf, struct irdma_sc_cq *cq)
- 			cqp_request->compl_info.error = info.error;
- 
- 			if (cqp_request->waiting) {
--				cqp_request->request_done = true;
-+				WRITE_ONCE(cqp_request->request_done, true);
- 				wake_up(&cqp_request->waitq);
- 				irdma_put_cqp_request(&rf->cqp, cqp_request);
- 			} else {
-diff --git a/drivers/infiniband/hw/irdma/main.h b/drivers/infiniband/hw/irdma/main.h
-index 65e966ad34530..e64205839d039 100644
---- a/drivers/infiniband/hw/irdma/main.h
-+++ b/drivers/infiniband/hw/irdma/main.h
-@@ -159,8 +159,8 @@ struct irdma_cqp_request {
- 	void (*callback_fcn)(struct irdma_cqp_request *cqp_request);
- 	void *param;
- 	struct irdma_cqp_compl_info compl_info;
-+	bool request_done; /* READ/WRITE_ONCE macros operate on it */
- 	bool waiting:1;
--	bool request_done:1;
- 	bool dynamic:1;
- };
- 
-diff --git a/drivers/infiniband/hw/irdma/utils.c b/drivers/infiniband/hw/irdma/utils.c
-index 90ca4a1b60c21..8c7617776e58b 100644
---- a/drivers/infiniband/hw/irdma/utils.c
-+++ b/drivers/infiniband/hw/irdma/utils.c
-@@ -481,7 +481,7 @@ void irdma_free_cqp_request(struct irdma_cqp *cqp,
- 	if (cqp_request->dynamic) {
- 		kfree(cqp_request);
- 	} else {
--		cqp_request->request_done = false;
-+		WRITE_ONCE(cqp_request->request_done, false);
- 		cqp_request->callback_fcn = NULL;
- 		cqp_request->waiting = false;
- 
-@@ -515,7 +515,7 @@ irdma_free_pending_cqp_request(struct irdma_cqp *cqp,
- {
- 	if (cqp_request->waiting) {
- 		cqp_request->compl_info.error = true;
--		cqp_request->request_done = true;
-+		WRITE_ONCE(cqp_request->request_done, true);
- 		wake_up(&cqp_request->waitq);
- 	}
- 	wait_event_timeout(cqp->remove_wq,
-@@ -571,7 +571,7 @@ static int irdma_wait_event(struct irdma_pci_f *rf,
- 	do {
- 		irdma_cqp_ce_handler(rf, &rf->ccq.sc_cq);
- 		if (wait_event_timeout(cqp_request->waitq,
--				       cqp_request->request_done,
-+				       READ_ONCE(cqp_request->request_done),
- 				       msecs_to_jiffies(CQP_COMPL_WAIT_TIME_MS)))
- 			break;
- 
+diff --git a/net/sched/sch_mqprio.c b/net/sched/sch_mqprio.c
+index 1ab20d43c50b0..b99e0fe0229cf 100644
+--- a/net/sched/sch_mqprio.c
++++ b/net/sched/sch_mqprio.c
+@@ -174,6 +174,13 @@ static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
+ 						    "Attribute type expected to be TCA_MQPRIO_MIN_RATE64");
+ 				return -EINVAL;
+ 			}
++
++			if (nla_len(attr) != sizeof(u64)) {
++				NL_SET_ERR_MSG_ATTR(extack, attr,
++						    "Attribute TCA_MQPRIO_MIN_RATE64 expected to have 8 bytes length");
++				return -EINVAL;
++			}
++
+ 			if (i >= qopt->num_tc)
+ 				break;
+ 			priv->min_rate[i] = *(u64 *)nla_data(attr);
+@@ -196,6 +203,13 @@ static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
+ 						    "Attribute type expected to be TCA_MQPRIO_MAX_RATE64");
+ 				return -EINVAL;
+ 			}
++
++			if (nla_len(attr) != sizeof(u64)) {
++				NL_SET_ERR_MSG_ATTR(extack, attr,
++						    "Attribute TCA_MQPRIO_MAX_RATE64 expected to have 8 bytes length");
++				return -EINVAL;
++			}
++
+ 			if (i >= qopt->num_tc)
+ 				break;
+ 			priv->max_rate[i] = *(u64 *)nla_data(attr);
 -- 
-2.40.1
+2.39.2
 
 
 
