@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794401FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:48:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFF40C433C8;
-	Tue,  1 Aug 2023 09:48:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EB61FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:48:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADEB0C433C9;
+	Tue,  1 Aug 2023 09:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883282;
-	bh=vIB+txEOnViMd2ZAX8AJdis+7COc7/YFNzm2nB95+eE=;
+	s=korg; t=1690883285;
+	bh=RbuvKrTO/lvaDb9dGFSCkw2dQ23aIzios9ci2FOF2HM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QnCclikGG14ErZ1/zuUB8UVjWumMCjZKYhr4e/MzcENpIk/LfQiG6PlxKjoMJ2ZaG
-	 ROkECMKCS6svULd75cJe+EcMfBYJfWj0EezlOib4pLDBs9hubPDvHsP9sFOhQBvJHj
-	 ORHpUc/YxP5MqN59Xqp8AXYobQBbiJMtcixnyFVQ=
+	b=2mq5Yq0zVkR2eQA65qT/MEO+WNJ5D/cL0FKRiEzkhwcEvtHuzhZ7w1QNtugNWcBPn
+	 QrZlltlci9k0MnjZdmMvWncAhLiyfWODMn6BZGrCOl2sKmBYnXGA5XbzjFouXN5bJ8
+	 qiyrrvXfeeCGElwSiOKQvMPfupkWALyzEGHP6HQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gilles Buloz <gilles.buloz@kontron.com>,
+	Aleksa Savic <savicaleksa83@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.4 180/239] hwmon: (nct7802) Fix for temp6 (PECI1) processed even if PECI1 disabled
-Date: Tue,  1 Aug 2023 11:20:44 +0200
-Message-ID: <20230801091932.157009030@linuxfoundation.org>
+Subject: [PATCH 6.4 181/239] hwmon: (aquacomputer_d5next) Fix incorrect PWM value readout
+Date: Tue,  1 Aug 2023 11:20:45 +0200
+Message-ID: <20230801091932.190096545@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -34,34 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gilles Buloz <Gilles.Buloz@kontron.com>
+From: Aleksa Savic <savicaleksa83@gmail.com>
 
-commit 54685abe660a59402344d5045ce08c43c6a5ac42 upstream.
+commit a746b3689546da27125da9ccaea62b1dbaaf927c upstream.
 
-Because of hex value 0x46 used instead of decimal 46, the temp6
-(PECI1) temperature is always declared visible and then displayed
-even if disabled in the chip
+Commit 662d20b3a5af ("hwmon: (aquacomputer_d5next) Add support for
+temperature sensor offsets") changed aqc_get_ctrl_val() to return
+the value through a parameter instead of through the return value,
+but didn't fix up a case that relied on the old behavior. Fix it
+to use the proper received value and not the return code.
 
-Signed-off-by: Gilles Buloz <gilles.buloz@kontron.com>
-Link: https://lore.kernel.org/r/DU0PR10MB62526435ADBC6A85243B90E08002A@DU0PR10MB6252.EURPRD10.PROD.OUTLOOK.COM
-Fixes: fcdc5739dce03 ("hwmon: (nct7802) add temperature sensor type attribute")
+Fixes: 662d20b3a5af ("hwmon: (aquacomputer_d5next) Add support for temperature sensor offsets")
 Cc: stable@vger.kernel.org
+Signed-off-by: Aleksa Savic <savicaleksa83@gmail.com>
+Link: https://lore.kernel.org/r/20230714120712.16721-1-savicaleksa83@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/nct7802.c |    2 +-
+ drivers/hwmon/aquacomputer_d5next.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hwmon/nct7802.c
-+++ b/drivers/hwmon/nct7802.c
-@@ -725,7 +725,7 @@ static umode_t nct7802_temp_is_visible(s
- 	if (index >= 38 && index < 46 && !(reg & 0x01))		/* PECI 0 */
- 		return 0;
+--- a/drivers/hwmon/aquacomputer_d5next.c
++++ b/drivers/hwmon/aquacomputer_d5next.c
+@@ -969,7 +969,7 @@ static int aqc_read(struct device *dev,
+ 			if (ret < 0)
+ 				return ret;
  
--	if (index >= 0x46 && (!(reg & 0x02)))			/* PECI 1 */
-+	if (index >= 46 && !(reg & 0x02))			/* PECI 1 */
- 		return 0;
- 
- 	return attr->mode;
+-			*val = aqc_percent_to_pwm(ret);
++			*val = aqc_percent_to_pwm(*val);
+ 			break;
+ 		}
+ 		break;
 
 
