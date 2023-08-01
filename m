@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E41200AB
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C808C433C9;
-	Tue,  1 Aug 2023 09:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4BB4200A5
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E32C433C8;
+	Tue,  1 Aug 2023 09:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882660;
-	bh=Jox5gd+Qaq5+/DbN/eI13CvmA860wSs3BcXSfv69Pus=;
+	s=korg; t=1690882663;
+	bh=MKb8QdAp0ZycEec599NIZ60uvBHACSKCrbs1+KGHOmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PsI5Raxd8z8tAJnpX0LF+L0jMyTlwnoH/fE9e4fBRZqfGLvOtum7aUHH2yMIit5Pz
-	 i8fhaP93atxl2AwVr76VXSbFaxnmJk0oTINOmNmnqJsqxglituA/CVtSVyZ5AjHbv8
-	 YWsAlbpSzPP0BNtbU5nIcKSi3txq40IpuPgpGkXY=
+	b=PX92sOlg0U13Wco1hdHrk353rrwpY8TxAM+lG0imQt6RBVA7cJF0nbRZrgAXS3/gF
+	 qca5t0dwsnlGsvPnutx7IIPZni1j7Z2Ln8c43nWAiBalmigoeNqqcgXdIgGncmHq94
+	 jQjF4prDeWwTKI5pIFEG2auLyJsVag5ZGxZF3LfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.1 186/228] x86/MCE/AMD: Decrement threshold_bank refcount when removing threshold blocks
-Date: Tue,  1 Aug 2023 11:20:44 +0200
-Message-ID: <20230801091929.580958007@linuxfoundation.org>
+	stable@kernel.org,
+	Christian Brauner <brauner@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.1 187/228] file: always lock position for FMODE_ATOMIC_POS
+Date: Tue,  1 Aug 2023 11:20:45 +0200
+Message-ID: <20230801091929.619825256@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,93 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yazen Ghannam <yazen.ghannam@amd.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 3ba2e83334bed2b1980b59734e6e84dfaf96026c upstream.
+commit 20ea1e7d13c1b544fe67c4a8dc3943bb1ab33e6f upstream.
 
-AMD systems from Family 10h to 16h share MCA bank 4 across multiple CPUs.
-Therefore, the threshold_bank structure for bank 4, and its threshold_block
-structures, will be initialized once at boot time. And the kobject for the
-shared bank will be added to each of the CPUs that share it. Furthermore,
-the threshold_blocks for the shared bank will be added again to the bank's
-kobject. These additions will increase the refcount for the bank's kobject.
+The pidfd_getfd() system call allows a caller with ptrace_may_access()
+abilities on another process to steal a file descriptor from this
+process. This system call is used by debuggers, container runtimes,
+system call supervisors, networking proxies etc. So while it is a
+special interest system call it is used in common tools.
 
-For example, a shared bank with two blocks and shared across two CPUs will
-be set up like this:
+That ability ends up breaking our long-time optimization in fdget_pos(),
+which "knew" that if we had exclusive access to the file descriptor
+nobody else could access it, and we didn't need the lock for the file
+position.
 
-  CPU0 init
-    bank create and add; bank refcount = 1; threshold_create_bank()
-      block 0 init and add; bank refcount = 2; allocate_threshold_blocks()
-      block 1 init and add; bank refcount = 3; allocate_threshold_blocks()
-  CPU1 init
-    bank add; bank refcount = 3; threshold_create_bank()
-      block 0 add; bank refcount = 4; __threshold_add_blocks()
-      block 1 add; bank refcount = 5; __threshold_add_blocks()
+That check for file_count(file) was always fairly subtle - it depended
+on __fdget() not incrementing the file count for single-threaded
+processes and thus included that as part of the rule - but it did mean
+that we didn't need to take the lock in all those traditional unix
+process contexts.
 
-Currently in threshold_remove_bank(), if the bank is shared then
-__threshold_remove_blocks() is called. Here the shared bank's kobject and
-the bank's blocks' kobjects are deleted. This is done on the first call
-even while the structures are still shared. Subsequent calls from other
-CPUs that share the structures will attempt to delete the kobjects.
+So it's sad to see this go, and I'd love to have some way to re-instate
+the optimization. At the same time, the lock obviously isn't ever
+contended in the case we optimized, so all we were optimizing away is
+the atomics and the cacheline dirtying. Let's see if anybody even
+notices that the optimization is gone.
 
-During kobject_del(), kobject->sd is removed. If the kobject is not part of
-a kset with default_groups, then subsequent kobject_del() calls seem safe
-even with kobject->sd == NULL.
-
-Originally, the AMD MCA thresholding structures did not use default_groups.
-And so the above behavior was not apparent.
-
-However, a recent change implemented default_groups for the thresholding
-structures. Therefore, kobject_del() will go down the sysfs_remove_groups()
-code path. In this case, the first kobject_del() may succeed and remove
-kobject->sd. But subsequent kobject_del() calls will give a WARNing in
-kernfs_remove_by_name_ns() since kobject->sd == NULL.
-
-Use kobject_put() on the shared bank's kobject when "removing" blocks. This
-decrements the bank's refcount while keeping kobjects enabled until the
-bank is no longer shared. At that point, kobject_put() will be called on
-the blocks which drives their refcount to 0 and deletes them and also
-decrementing the bank's refcount. And finally kobject_put() will be called
-on the bank driving its refcount to 0 and deleting it.
-
-The same example above:
-
-  CPU1 shutdown
-    bank is shared; bank refcount = 5; threshold_remove_bank()
-      block 0 put parent bank; bank refcount = 4; __threshold_remove_blocks()
-      block 1 put parent bank; bank refcount = 3; __threshold_remove_blocks()
-  CPU0 shutdown
-    bank is no longer shared; bank refcount = 3; threshold_remove_bank()
-      block 0 put block; bank refcount = 2; deallocate_threshold_blocks()
-      block 1 put block; bank refcount = 1; deallocate_threshold_blocks()
-    put bank; bank refcount = 0; threshold_remove_bank()
-
-Fixes: 7f99cb5e6039 ("x86/CPU/AMD: Use default_groups in kobj_type")
-Reported-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/alpine.LRH.2.02.2205301145540.25840@file01.intranet.prod.int.rdu2.redhat.com
+Link: https://lore.kernel.org/linux-fsdevel/20230724-vfs-fdget_pos-v1-1-a4abfd7103f3@kernel.org/
+Fixes: 8649c322f75c ("pid: Implement pidfd_getfd syscall")
+Cc: stable@kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/mce/amd.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/file.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kernel/cpu/mce/amd.c
-+++ b/arch/x86/kernel/cpu/mce/amd.c
-@@ -1265,10 +1265,10 @@ static void __threshold_remove_blocks(st
- 	struct threshold_block *pos = NULL;
- 	struct threshold_block *tmp = NULL;
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -1042,10 +1042,8 @@ unsigned long __fdget_pos(unsigned int f
+ 	struct file *file = (struct file *)(v & ~3);
  
--	kobject_del(b->kobj);
-+	kobject_put(b->kobj);
- 
- 	list_for_each_entry_safe(pos, tmp, &b->blocks->miscj, miscj)
--		kobject_del(&pos->kobj);
-+		kobject_put(b->kobj);
+ 	if (file && (file->f_mode & FMODE_ATOMIC_POS)) {
+-		if (file_count(file) > 1) {
+-			v |= FDPUT_POS_UNLOCK;
+-			mutex_lock(&file->f_pos_lock);
+-		}
++		v |= FDPUT_POS_UNLOCK;
++		mutex_lock(&file->f_pos_lock);
+ 	}
+ 	return v;
  }
- 
- static void threshold_remove_bank(struct threshold_bank *bank)
 
 
