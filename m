@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FB91F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:26:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B397EC433C8;
-	Tue,  1 Aug 2023 09:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F20B1F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:26:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88908C433C7;
+	Tue,  1 Aug 2023 09:26:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881962;
-	bh=+d5mMCIhTSOvYtvKOVHme5m9mXl228xHRH6jts+oFPk=;
+	s=korg; t=1690881964;
+	bh=toYJ/CO/OMrBMvBx85taIAekcQ7y1dZXKrYDaxLLK8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ramCu4MunS8+S2nszP/68iSIa7+HRyrtD09ybUJG7kcMpM4icGibgVtWct5XeKJty
-	 7m3KpnT4vl4sQkK35bMR3sCh/+REG+Pf/vgBrDRfg+h2Gasw+GvZbXvpOsq6xa376M
-	 mi6fkV6p0bciQV7a6Mn9dfrgLvlESjUSjy/JlG6k=
+	b=FR4/bj26EY5wjFvUEPXJgo5LGmjjxdcAwbmQMiYj463XsZli1BpAKV5ioBCzXA1XN
+	 BU718KkbEECAzoKRTFV7tgjulkQl14L4qIoQJa7UQhtvoG35Y+EOVvtMsXE3umHKLg
+	 XugkpApIb6bHXD1j7nBoVu658xbwbsQCU4UgzAjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 092/155] block: Fix a source code comment in include/uapi/linux/blkzoned.h
-Date: Tue,  1 Aug 2023 11:20:04 +0200
-Message-ID: <20230801091913.462137417@linuxfoundation.org>
+Subject: [PATCH 5.15 093/155] dm raid: fix missing reconfig_mutex unlock in raid_ctr() error paths
+Date: Tue,  1 Aug 2023 11:20:05 +0200
+Message-ID: <20230801091913.501306931@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -37,48 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit e0933b526fbfd937c4a8f4e35fcdd49f0e22d411 ]
+[ Upstream commit bae3028799dc4f1109acc4df37c8ff06f2d8f1a0 ]
 
-Fix the symbolic names for zone conditions in the blkzoned.h header
-file.
+In the error paths 'bad_stripe_cache' and 'bad_check_reshape',
+'reconfig_mutex' is still held after raid_ctr() returns.
 
-Cc: Hannes Reinecke <hare@suse.de>
-Cc: Damien Le Moal <dlemoal@kernel.org>
-Fixes: 6a0cb1bc106f ("block: Implement support for zoned block devices")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20230706201422.3987341-1-bvanassche@acm.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 9dbd1aa3a81c ("dm raid: add reshaping support to the target")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/blkzoned.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/md/dm-raid.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/include/uapi/linux/blkzoned.h b/include/uapi/linux/blkzoned.h
-index 656a326821a2b..321965feee354 100644
---- a/include/uapi/linux/blkzoned.h
-+++ b/include/uapi/linux/blkzoned.h
-@@ -51,13 +51,13 @@ enum blk_zone_type {
-  *
-  * The Zone Condition state machine in the ZBC/ZAC standards maps the above
-  * deinitions as:
-- *   - ZC1: Empty         | BLK_ZONE_EMPTY
-+ *   - ZC1: Empty         | BLK_ZONE_COND_EMPTY
-  *   - ZC2: Implicit Open | BLK_ZONE_COND_IMP_OPEN
-  *   - ZC3: Explicit Open | BLK_ZONE_COND_EXP_OPEN
-- *   - ZC4: Closed        | BLK_ZONE_CLOSED
-- *   - ZC5: Full          | BLK_ZONE_FULL
-- *   - ZC6: Read Only     | BLK_ZONE_READONLY
-- *   - ZC7: Offline       | BLK_ZONE_OFFLINE
-+ *   - ZC4: Closed        | BLK_ZONE_COND_CLOSED
-+ *   - ZC5: Full          | BLK_ZONE_COND_FULL
-+ *   - ZC6: Read Only     | BLK_ZONE_COND_READONLY
-+ *   - ZC7: Offline       | BLK_ZONE_COND_OFFLINE
-  *
-  * Conditions 0x5 to 0xC are reserved by the current ZBC/ZAC spec and should
-  * be considered invalid.
+diff --git a/drivers/md/dm-raid.c b/drivers/md/dm-raid.c
+index eba277bb8a1f1..d3ac3b894bdf5 100644
+--- a/drivers/md/dm-raid.c
++++ b/drivers/md/dm-raid.c
+@@ -3278,15 +3278,19 @@ static int raid_ctr(struct dm_target *ti, unsigned int argc, char **argv)
+ 	/* Try to adjust the raid4/5/6 stripe cache size to the stripe size */
+ 	if (rs_is_raid456(rs)) {
+ 		r = rs_set_raid456_stripe_cache(rs);
+-		if (r)
++		if (r) {
++			mddev_unlock(&rs->md);
+ 			goto bad_stripe_cache;
++		}
+ 	}
+ 
+ 	/* Now do an early reshape check */
+ 	if (test_bit(RT_FLAG_RESHAPE_RS, &rs->runtime_flags)) {
+ 		r = rs_check_reshape(rs);
+-		if (r)
++		if (r) {
++			mddev_unlock(&rs->md);
+ 			goto bad_check_reshape;
++		}
+ 
+ 		/* Restore new, ctr requested layout to perform check */
+ 		rs_config_restore(rs, &rs_layout);
+@@ -3295,6 +3299,7 @@ static int raid_ctr(struct dm_target *ti, unsigned int argc, char **argv)
+ 			r = rs->md.pers->check_reshape(&rs->md);
+ 			if (r) {
+ 				ti->error = "Reshape check failed";
++				mddev_unlock(&rs->md);
+ 				goto bad_check_reshape;
+ 			}
+ 		}
 -- 
 2.40.1
 
