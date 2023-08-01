@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878291FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:46:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D66C433C8;
-	Tue,  1 Aug 2023 09:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7671FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:46:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDAD9C433C7;
+	Tue,  1 Aug 2023 09:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883160;
-	bh=A7jwBXNSjN5gvu4/4jtDYWoLTSc+Gb13j8Gfh7ZfjnU=;
+	s=korg; t=1690883163;
+	bh=8/4yf623rSjI3i44RV1xF28lWzqnoeXZEdFcYBgm05I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ukBh+wcQ0WzQL5tj4lBdv6jU8weXnVDLKr/UDUb9P76Otg/iT12+hWWUkGLHDzhn/
-	 +69bVJ1majCx9M74utS3BFWKqx9uMjHKvp2NKlhhfBqPE4KDpiOVxZFm60vHeVeCwm
-	 wNPz4+I7Ju6cKhBn7uf+F8P7htm0dXsF0PeKnchs=
+	b=0724PI9zczypy8+Pgg+cORLurQB6m23QEvZBahUluE6pIAdR/Dqx9U8IbTg6rL5ax
+	 Mg2CelXPutmPZZA644m0NtkXUTc5io4+qK+NU/s2R6FyQmCuNmKmdPqMfnWZk8ZdaM
+	 z2dsmis+b5/42AglnpfCo3I8nR7wEVQXK2Ym2GhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>,
-	syzbot+7574ebfe589049630608@syzkaller.appspotmail.com,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Hugh Dickins <hughd@google.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 137/239] iommufd: IOMMUFD_DESTROY should not increase the refcount
-Date: Tue,  1 Aug 2023 11:20:01 +0200
-Message-ID: <20230801091930.632624012@linuxfoundation.org>
+Subject: [PATCH 6.4 138/239] tmpfs: fix Documentation of noswap and huge mount options
+Date: Tue,  1 Aug 2023 11:20:02 +0200
+Message-ID: <20230801091930.665877363@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,253 +38,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Hugh Dickins <hughd@google.com>
 
-[ Upstream commit 99f98a7c0d6985d5507c8130a981972e4b7b3bdc ]
+[ Upstream commit 253e5df8b8f0145adb090f57c6f4e6efa52d738e ]
 
-syzkaller found a race where IOMMUFD_DESTROY increments the refcount:
+The noswap mount option is surely not one of the three options for sizing:
+move its description down.
 
-       obj = iommufd_get_object(ucmd->ictx, cmd->id, IOMMUFD_OBJ_ANY);
-       if (IS_ERR(obj))
-               return PTR_ERR(obj);
-       iommufd_ref_to_users(obj);
-       /* See iommufd_ref_to_users() */
-       if (!iommufd_object_destroy_user(ucmd->ictx, obj))
+The huge= mount option does not accept numeric values: those are just in
+an internal enum.  Delete those numbers, and follow the manpage text more
+closely (but there's not yet any fadvise() or fcntl() which applies here).
 
-As part of the sequence to join the two existing primitives together.
+/sys/kernel/mm/transparent_hugepage/shmem_enabled is hard to describe, and
+barely relevant to mounting a tmpfs: just refer to transhuge.rst (while
+still using the words deny and force, to help as informal reminders).
 
-Allowing the refcount the be elevated without holding the destroy_rwsem
-violates the assumption that all temporary refcount elevations are
-protected by destroy_rwsem. Racing IOMMUFD_DESTROY with
-iommufd_object_destroy_user() will cause spurious failures:
-
-  WARNING: CPU: 0 PID: 3076 at drivers/iommu/iommufd/device.c:477 iommufd_access_destroy+0x18/0x20 drivers/iommu/iommufd/device.c:478
-  Modules linked in:
-  CPU: 0 PID: 3076 Comm: syz-executor.0 Not tainted 6.3.0-rc1-syzkaller #0
-  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/03/2023
-  RIP: 0010:iommufd_access_destroy+0x18/0x20 drivers/iommu/iommufd/device.c:477
-  Code: e8 3d 4e 00 00 84 c0 74 01 c3 0f 0b c3 0f 1f 44 00 00 f3 0f 1e fa 48 89 fe 48 8b bf a8 00 00 00 e8 1d 4e 00 00 84 c0 74 01 c3 <0f> 0b c3 0f 1f 44 00 00 41 57 41 56 41 55 4c 8d ae d0 00 00 00 41
-  RSP: 0018:ffffc90003067e08 EFLAGS: 00010246
-  RAX: 0000000000000000 RBX: ffff888109ea0300 RCX: 0000000000000000
-  RDX: 0000000000000001 RSI: 0000000000000000 RDI: 00000000ffffffff
-  RBP: 0000000000000004 R08: 0000000000000000 R09: ffff88810bbb3500
-  R10: ffff88810bbb3e48 R11: 0000000000000000 R12: ffffc90003067e88
-  R13: ffffc90003067ea8 R14: ffff888101249800 R15: 00000000fffffffe
-  FS:  00007ff7254fe6c0(0000) GS:ffff888237c00000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 0000555557262da8 CR3: 000000010a6fd000 CR4: 0000000000350ef0
-  Call Trace:
-   <TASK>
-   iommufd_test_create_access drivers/iommu/iommufd/selftest.c:596 [inline]
-   iommufd_test+0x71c/0xcf0 drivers/iommu/iommufd/selftest.c:813
-   iommufd_fops_ioctl+0x10f/0x1b0 drivers/iommu/iommufd/main.c:337
-   vfs_ioctl fs/ioctl.c:51 [inline]
-   __do_sys_ioctl fs/ioctl.c:870 [inline]
-   __se_sys_ioctl fs/ioctl.c:856 [inline]
-   __x64_sys_ioctl+0x84/0xc0 fs/ioctl.c:856
-   do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-   do_syscall_64+0x38/0x80 arch/x86/entry/common.c:80
-   entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-The solution is to not increment the refcount on the IOMMUFD_DESTROY path
-at all. Instead use the xa_lock to serialize everything. The refcount
-check == 1 and xa_erase can be done under a single critical region. This
-avoids the need for any refcount incrementing.
-
-It has the downside that if userspace races destroy with other operations
-it will get an EBUSY instead of waiting, but this is kind of racing is
-already dangerous.
-
-Fixes: 2ff4bed7fee7 ("iommufd: File descriptor, context, kconfig and makefiles")
-Link: https://lore.kernel.org/r/2-v1-85aacb2af554+bc-iommufd_syz3_jgg@nvidia.com
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reported-by: syzbot+7574ebfe589049630608@syzkaller.appspotmail.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+[rdunlap@infradead.org: fixup Docs table for huge mount options]
+  Link: https://lkml.kernel.org/r/20230725052333.26857-1-rdunlap@infradead.org
+Link: https://lkml.kernel.org/r/986cb0bf-9780-354-9bb-4bf57aadbab@google.com
+Signed-off-by: Hugh Dickins <hughd@google.com>
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Fixes: d0f5a85442d1 ("shmem: update documentation")
+Fixes: 2c6efe9cf2d7 ("shmem: add support to ignore swap")
+Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/device.c          | 12 +---
- drivers/iommu/iommufd/iommufd_private.h | 15 ++++-
- drivers/iommu/iommufd/main.c            | 78 +++++++++++++++++++------
- 3 files changed, 75 insertions(+), 30 deletions(-)
+ Documentation/filesystems/tmpfs.rst | 47 ++++++++++++-----------------
+ 1 file changed, 20 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/iommu/iommufd/device.c b/drivers/iommu/iommufd/device.c
-index 29d05663d4d17..ed2937a4e196f 100644
---- a/drivers/iommu/iommufd/device.c
-+++ b/drivers/iommu/iommufd/device.c
-@@ -109,10 +109,7 @@ EXPORT_SYMBOL_NS_GPL(iommufd_device_bind, IOMMUFD);
-  */
- void iommufd_device_unbind(struct iommufd_device *idev)
- {
--	bool was_destroyed;
+diff --git a/Documentation/filesystems/tmpfs.rst b/Documentation/filesystems/tmpfs.rst
+index f18f46be5c0c7..2cd8fa332feb7 100644
+--- a/Documentation/filesystems/tmpfs.rst
++++ b/Documentation/filesystems/tmpfs.rst
+@@ -84,8 +84,6 @@ nr_inodes  The maximum number of inodes for this instance. The default
+            is half of the number of your physical RAM pages, or (on a
+            machine with highmem) the number of lowmem RAM pages,
+            whichever is the lower.
+-noswap     Disables swap. Remounts must respect the original settings.
+-           By default swap is enabled.
+ =========  ============================================================
+ 
+ These parameters accept a suffix k, m or g for kilo, mega and giga and
+@@ -99,36 +97,31 @@ mount with such options, since it allows any user with write access to
+ use up all the memory on the machine; but enhances the scalability of
+ that instance in a system with many CPUs making intensive use of it.
+ 
++tmpfs blocks may be swapped out, when there is a shortage of memory.
++tmpfs has a mount option to disable its use of swap:
++
++======  ===========================================================
++noswap  Disables swap. Remounts must respect the original settings.
++        By default swap is enabled.
++======  ===========================================================
++
+ tmpfs also supports Transparent Huge Pages which requires a kernel
+ configured with CONFIG_TRANSPARENT_HUGEPAGE and with huge supported for
+ your system (has_transparent_hugepage(), which is architecture specific).
+ The mount options for this are:
+ 
+-======  ============================================================
+-huge=0  never: disables huge pages for the mount
+-huge=1  always: enables huge pages for the mount
+-huge=2  within_size: only allocate huge pages if the page will be
+-        fully within i_size, also respect fadvise()/madvise() hints.
+-huge=3  advise: only allocate huge pages if requested with
+-        fadvise()/madvise()
+-======  ============================================================
 -
--	was_destroyed = iommufd_object_destroy_user(idev->ictx, &idev->obj);
--	WARN_ON(!was_destroyed);
-+	iommufd_object_destroy_user(idev->ictx, &idev->obj);
- }
- EXPORT_SYMBOL_NS_GPL(iommufd_device_unbind, IOMMUFD);
- 
-@@ -382,7 +379,7 @@ void iommufd_device_detach(struct iommufd_device *idev)
- 	mutex_unlock(&hwpt->devices_lock);
- 
- 	if (hwpt->auto_domain)
--		iommufd_object_destroy_user(idev->ictx, &hwpt->obj);
-+		iommufd_object_deref_user(idev->ictx, &hwpt->obj);
- 	else
- 		refcount_dec(&hwpt->obj.users);
- 
-@@ -456,10 +453,7 @@ EXPORT_SYMBOL_NS_GPL(iommufd_access_create, IOMMUFD);
-  */
- void iommufd_access_destroy(struct iommufd_access *access)
- {
--	bool was_destroyed;
+-There is a sysfs file which you can also use to control system wide THP
+-configuration for all tmpfs mounts, the file is:
 -
--	was_destroyed = iommufd_object_destroy_user(access->ictx, &access->obj);
--	WARN_ON(!was_destroyed);
-+	iommufd_object_destroy_user(access->ictx, &access->obj);
- }
- EXPORT_SYMBOL_NS_GPL(iommufd_access_destroy, IOMMUFD);
+-/sys/kernel/mm/transparent_hugepage/shmem_enabled
+-
+-This sysfs file is placed on top of THP sysfs directory and so is registered
+-by THP code. It is however only used to control all tmpfs mounts with one
+-single knob. Since it controls all tmpfs mounts it should only be used either
+-for emergency or testing purposes. The values you can set for shmem_enabled are:
+-
+-==  ============================================================
+--1  deny: disables huge on shm_mnt and all mounts, for
+-    emergency use
+--2  force: enables huge on shm_mnt and all mounts, w/o needing
+-    option, for testing
+-==  ============================================================
++================ ==============================================================
++huge=never       Do not allocate huge pages.  This is the default.
++huge=always      Attempt to allocate huge page every time a new page is needed.
++huge=within_size Only allocate huge page if it will be fully within i_size.
++                 Also respect madvise(2) hints.
++huge=advise      Only allocate huge page if requested with madvise(2).
++================ ==============================================================
++
++See also Documentation/admin-guide/mm/transhuge.rst, which describes the
++sysfs file /sys/kernel/mm/transparent_hugepage/shmem_enabled: which can
++be used to deny huge pages on all tmpfs mounts in an emergency, or to
++force huge pages on all tmpfs mounts for testing.
  
-diff --git a/drivers/iommu/iommufd/iommufd_private.h b/drivers/iommu/iommufd/iommufd_private.h
-index b38e67d1988bd..f9790983699ce 100644
---- a/drivers/iommu/iommufd/iommufd_private.h
-+++ b/drivers/iommu/iommufd/iommufd_private.h
-@@ -176,8 +176,19 @@ void iommufd_object_abort_and_destroy(struct iommufd_ctx *ictx,
- 				      struct iommufd_object *obj);
- void iommufd_object_finalize(struct iommufd_ctx *ictx,
- 			     struct iommufd_object *obj);
--bool iommufd_object_destroy_user(struct iommufd_ctx *ictx,
--				 struct iommufd_object *obj);
-+void __iommufd_object_destroy_user(struct iommufd_ctx *ictx,
-+				   struct iommufd_object *obj, bool allow_fail);
-+static inline void iommufd_object_destroy_user(struct iommufd_ctx *ictx,
-+					       struct iommufd_object *obj)
-+{
-+	__iommufd_object_destroy_user(ictx, obj, false);
-+}
-+static inline void iommufd_object_deref_user(struct iommufd_ctx *ictx,
-+					     struct iommufd_object *obj)
-+{
-+	__iommufd_object_destroy_user(ictx, obj, true);
-+}
-+
- struct iommufd_object *_iommufd_object_alloc(struct iommufd_ctx *ictx,
- 					     size_t size,
- 					     enum iommufd_object_type type);
-diff --git a/drivers/iommu/iommufd/main.c b/drivers/iommu/iommufd/main.c
-index 3fbe636c3d8a6..4cf5f73f27084 100644
---- a/drivers/iommu/iommufd/main.c
-+++ b/drivers/iommu/iommufd/main.c
-@@ -116,14 +116,56 @@ struct iommufd_object *iommufd_get_object(struct iommufd_ctx *ictx, u32 id,
- 	return obj;
- }
- 
-+/*
-+ * Remove the given object id from the xarray if the only reference to the
-+ * object is held by the xarray. The caller must call ops destroy().
-+ */
-+static struct iommufd_object *iommufd_object_remove(struct iommufd_ctx *ictx,
-+						    u32 id, bool extra_put)
-+{
-+	struct iommufd_object *obj;
-+	XA_STATE(xas, &ictx->objects, id);
-+
-+	xa_lock(&ictx->objects);
-+	obj = xas_load(&xas);
-+	if (xa_is_zero(obj) || !obj) {
-+		obj = ERR_PTR(-ENOENT);
-+		goto out_xa;
-+	}
-+
-+	/*
-+	 * If the caller is holding a ref on obj we put it here under the
-+	 * spinlock.
-+	 */
-+	if (extra_put)
-+		refcount_dec(&obj->users);
-+
-+	if (!refcount_dec_if_one(&obj->users)) {
-+		obj = ERR_PTR(-EBUSY);
-+		goto out_xa;
-+	}
-+
-+	xas_store(&xas, NULL);
-+	if (ictx->vfio_ioas == container_of(obj, struct iommufd_ioas, obj))
-+		ictx->vfio_ioas = NULL;
-+
-+out_xa:
-+	xa_unlock(&ictx->objects);
-+
-+	/* The returned object reference count is zero */
-+	return obj;
-+}
-+
- /*
-  * The caller holds a users refcount and wants to destroy the object. Returns
-  * true if the object was destroyed. In all cases the caller no longer has a
-  * reference on obj.
-  */
--bool iommufd_object_destroy_user(struct iommufd_ctx *ictx,
--				 struct iommufd_object *obj)
-+void __iommufd_object_destroy_user(struct iommufd_ctx *ictx,
-+				   struct iommufd_object *obj, bool allow_fail)
- {
-+	struct iommufd_object *ret;
-+
- 	/*
- 	 * The purpose of the destroy_rwsem is to ensure deterministic
- 	 * destruction of objects used by external drivers and destroyed by this
-@@ -131,22 +173,22 @@ bool iommufd_object_destroy_user(struct iommufd_ctx *ictx,
- 	 * side of this, such as during ioctl execution.
- 	 */
- 	down_write(&obj->destroy_rwsem);
--	xa_lock(&ictx->objects);
--	refcount_dec(&obj->users);
--	if (!refcount_dec_if_one(&obj->users)) {
--		xa_unlock(&ictx->objects);
--		up_write(&obj->destroy_rwsem);
--		return false;
--	}
--	__xa_erase(&ictx->objects, obj->id);
--	if (ictx->vfio_ioas && &ictx->vfio_ioas->obj == obj)
--		ictx->vfio_ioas = NULL;
--	xa_unlock(&ictx->objects);
-+	ret = iommufd_object_remove(ictx, obj->id, true);
- 	up_write(&obj->destroy_rwsem);
- 
-+	if (allow_fail && IS_ERR(ret))
-+		return;
-+
-+	/*
-+	 * If there is a bug and we couldn't destroy the object then we did put
-+	 * back the caller's refcount and will eventually try to free it again
-+	 * during close.
-+	 */
-+	if (WARN_ON(IS_ERR(ret)))
-+		return;
-+
- 	iommufd_object_ops[obj->type].destroy(obj);
- 	kfree(obj);
--	return true;
- }
- 
- static int iommufd_destroy(struct iommufd_ucmd *ucmd)
-@@ -154,13 +196,11 @@ static int iommufd_destroy(struct iommufd_ucmd *ucmd)
- 	struct iommu_destroy *cmd = ucmd->cmd;
- 	struct iommufd_object *obj;
- 
--	obj = iommufd_get_object(ucmd->ictx, cmd->id, IOMMUFD_OBJ_ANY);
-+	obj = iommufd_object_remove(ucmd->ictx, cmd->id, false);
- 	if (IS_ERR(obj))
- 		return PTR_ERR(obj);
--	iommufd_ref_to_users(obj);
--	/* See iommufd_ref_to_users() */
--	if (!iommufd_object_destroy_user(ucmd->ictx, obj))
--		return -EBUSY;
-+	iommufd_object_ops[obj->type].destroy(obj);
-+	kfree(obj);
- 	return 0;
- }
- 
+ tmpfs has a mount option to set the NUMA memory allocation policy for
+ all files in that instance (if CONFIG_NUMA is enabled) - which can be
 -- 
 2.40.1
 
