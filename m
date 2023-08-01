@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 330B61FB2B
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:32:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6700C433C7;
-	Tue,  1 Aug 2023 09:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049711FB2B
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:32:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC41C433C8;
+	Tue,  1 Aug 2023 09:32:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882358;
-	bh=oZJEWfjWnijPJojbva5F8R561rZid5WlFHGIXzpZIjY=;
+	s=korg; t=1690882360;
+	bh=CRWiTi9rthkFyDOcPNkIBtgksJKhMHKs1lqq/6hGH/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kMksFJ6bgVqOl0q4CvF1qgVzvs8JZB/MLm4AjA3wx6cTL38aUh/nzdiANYxgT/++e
-	 D2qi1lF6KoiHTF5fCczWgCZg00BSZd5BUe5DR/7eO5n//1yTuugg6jBOYClIxFHRIK
-	 1qTBzZcNpN0bvtTxqdz0H3iekIk73KQXCSPTsSv8=
+	b=08zqf6//DrypLNAhFV8ChLG2wRP6BgYAhLd5XoP41DL04IdalOUnH8t75AR+0yDKG
+	 H/RUOxYmdY3WWZInErlUmP5xfT1swX+/i0/w/08eq209rrz38sZCq57EcjsHMbc694
+	 2FHH5xAeBAyyfl4jbNs6IuqR4iOdQ+LrSPkoaUlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Adrien Thierry <athierry@redhat.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 076/228] phy: qcom-snps-femto-v2: keep cfg_ahb_clk enabled during runtime suspend
-Date: Tue,  1 Aug 2023 11:18:54 +0200
-Message-ID: <20230801091925.586581296@linuxfoundation.org>
+Subject: [PATCH 6.1 077/228] phy: qcom-snps-femto-v2: properly enable ref clock
+Date: Tue,  1 Aug 2023 11:18:55 +0200
+Message-ID: <20230801091925.626968907@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -37,91 +37,169 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrien Thierry <athierry@redhat.com>
 
-[ Upstream commit 45d89a344eb46db9dce851c28e14f5e3c635c251 ]
+[ Upstream commit 8a0eb8f9b9a002291a3934acfd913660b905249e ]
 
-In the dwc3 core, both system and runtime suspend end up calling
-dwc3_suspend_common(). From there, what happens for the PHYs depends on
-the USB mode and whether the controller is entering system or runtime
-suspend.
+The driver is not enabling the ref clock, which thus gets disabled by
+the clk_disable_unused() initcall. This leads to the dwc3 controller
+failing to initialize if probed after clk_disable_unused() is called,
+for instance when the driver is built as a module.
 
-HOST mode:
-  (1) system suspend on a non-wakeup-capable controller
+To fix this, switch to the clk_bulk API to handle both cfg_ahb and ref
+clocks at the proper places.
 
-  The [1] if branch is taken. dwc3_core_exit() is called, which ends up
-  calling phy_power_off() and phy_exit(). Those two functions decrease the
-  PM runtime count at some point, so they will trigger the PHY runtime
-  sleep (assuming the count is right).
+Note that the cfg_ahb clock is currently not used by any device tree
+instantiation of the PHY. Work needs to be done separately to fix this.
 
-  (2) runtime suspend / system suspend on a wakeup-capable controller
-
-  The [1] branch is not taken. dwc3_suspend_common() calls
-  phy_pm_runtime_put_sync(). Assuming the ref count is right, the PHY
-  runtime suspend op is called.
-
-DEVICE mode:
-  dwc3_core_exit() is called on both runtime and system sleep
-  unless the controller is already runtime suspended.
-
-OTG mode:
-  (1) system suspend : dwc3_core_exit() is called
-
-  (2) runtime suspend : do nothing
-
-In host mode, the code seems to make a distinction between 1) runtime
-sleep / system sleep for wakeup-capable controller, and 2) system sleep
-for non-wakeup-capable controller, where phy_power_off() and phy_exit()
-are only called for the latter. This suggests the PHY is not supposed to
-be in a fully powered-off state for runtime sleep and system sleep for
-wakeup-capable controller.
-
-Moreover, downstream, cfg_ahb_clk only gets disabled for system suspend.
-The clocks are disabled by phy->set_suspend() [2] which is only called
-in the system sleep path through dwc3_core_exit() [3].
-
-With that in mind, don't disable the clocks during the femto PHY runtime
-suspend callback. The clocks will only be disabled during system suspend
-for non-wakeup-capable controllers, through dwc3_core_exit().
-
-[1] https://elixir.bootlin.com/linux/v6.4/source/drivers/usb/dwc3/core.c#L1988
-[2] https://git.codelinaro.org/clo/la/kernel/msm-5.4/-/blob/LV.AU.1.2.1.r2-05300-gen3meta.0/drivers/usb/phy/phy-msm-snps-hs.c#L524
-[3] https://git.codelinaro.org/clo/la/kernel/msm-5.4/-/blob/LV.AU.1.2.1.r2-05300-gen3meta.0/drivers/usb/dwc3/core.c#L1915
-
+Link: https://lore.kernel.org/linux-arm-msm/ZEqvy+khHeTkC2hf@fedora/
+Fixes: 51e8114f80d0 ("phy: qcom-snps: Add SNPS USB PHY driver for QCOM based SOCs")
 Signed-off-by: Adrien Thierry <athierry@redhat.com>
-Link: https://lore.kernel.org/r/20230629144542.14906-2-athierry@redhat.com
+Link: https://lore.kernel.org/r/20230629144542.14906-3-athierry@redhat.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 8a0eb8f9b9a0 ("phy: qcom-snps-femto-v2: properly enable ref clock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 9 ---------
- 1 file changed, 9 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 63 ++++++++++++++-----
+ 1 file changed, 48 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-index 6c237f3cc66db..3335480fc395a 100644
+index 3335480fc395a..6170f8fd118e2 100644
 --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
 +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-@@ -165,22 +165,13 @@ static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
- 					   0, USB2_AUTO_RESUME);
- 	}
+@@ -110,11 +110,13 @@ struct phy_override_seq {
+ /**
+  * struct qcom_snps_hsphy - snps hs phy attributes
+  *
++ * @dev: device structure
++ *
+  * @phy: generic phy
+  * @base: iomapped memory space for snps hs phy
+  *
+- * @cfg_ahb_clk: AHB2PHY interface clock
+- * @ref_clk: phy reference clock
++ * @num_clks: number of clocks
++ * @clks: array of clocks
+  * @phy_reset: phy reset control
+  * @vregs: regulator supplies bulk data
+  * @phy_initialized: if PHY has been initialized correctly
+@@ -122,11 +124,13 @@ struct phy_override_seq {
+  * @update_seq_cfg: tuning parameters for phy init
+  */
+ struct qcom_snps_hsphy {
++	struct device *dev;
++
+ 	struct phy *phy;
+ 	void __iomem *base;
  
--	clk_disable_unprepare(hsphy->cfg_ahb_clk);
- 	return 0;
- }
+-	struct clk *cfg_ahb_clk;
+-	struct clk *ref_clk;
++	int num_clks;
++	struct clk_bulk_data *clks;
+ 	struct reset_control *phy_reset;
+ 	struct regulator_bulk_data vregs[SNPS_HS_NUM_VREGS];
  
- static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
+@@ -135,6 +139,34 @@ struct qcom_snps_hsphy {
+ 	struct phy_override_seq update_seq_cfg[NUM_HSPHY_TUNING_PARAMS];
+ };
+ 
++static int qcom_snps_hsphy_clk_init(struct qcom_snps_hsphy *hsphy)
++{
++	struct device *dev = hsphy->dev;
++
++	hsphy->num_clks = 2;
++	hsphy->clks = devm_kcalloc(dev, hsphy->num_clks, sizeof(*hsphy->clks), GFP_KERNEL);
++	if (!hsphy->clks)
++		return -ENOMEM;
++
++	/*
++	 * TODO: Currently no device tree instantiation of the PHY is using the clock.
++	 * This needs to be fixed in order for this code to be able to use devm_clk_bulk_get().
++	 */
++	hsphy->clks[0].id = "cfg_ahb";
++	hsphy->clks[0].clk = devm_clk_get_optional(dev, "cfg_ahb");
++	if (IS_ERR(hsphy->clks[0].clk))
++		return dev_err_probe(dev, PTR_ERR(hsphy->clks[0].clk),
++				     "failed to get cfg_ahb clk\n");
++
++	hsphy->clks[1].id = "ref";
++	hsphy->clks[1].clk = devm_clk_get(dev, "ref");
++	if (IS_ERR(hsphy->clks[1].clk))
++		return dev_err_probe(dev, PTR_ERR(hsphy->clks[1].clk),
++				     "failed to get ref clk\n");
++
++	return 0;
++}
++
+ static inline void qcom_snps_hsphy_write_mask(void __iomem *base, u32 offset,
+ 						u32 mask, u32 val)
  {
--	int ret;
--
- 	dev_dbg(&hsphy->phy->dev, "Resume QCOM SNPS PHY, mode\n");
+@@ -365,16 +397,16 @@ static int qcom_snps_hsphy_init(struct phy *phy)
+ 	if (ret)
+ 		return ret;
  
 -	ret = clk_prepare_enable(hsphy->cfg_ahb_clk);
--	if (ret) {
--		dev_err(&hsphy->phy->dev, "failed to enable cfg ahb clock\n");
--		return ret;
--	}
--
- 	return 0;
- }
++	ret = clk_bulk_prepare_enable(hsphy->num_clks, hsphy->clks);
+ 	if (ret) {
+-		dev_err(&phy->dev, "failed to enable cfg ahb clock, %d\n", ret);
++		dev_err(&phy->dev, "failed to enable clocks, %d\n", ret);
+ 		goto poweroff_phy;
+ 	}
  
+ 	ret = reset_control_assert(hsphy->phy_reset);
+ 	if (ret) {
+ 		dev_err(&phy->dev, "failed to assert phy_reset, %d\n", ret);
+-		goto disable_ahb_clk;
++		goto disable_clks;
+ 	}
+ 
+ 	usleep_range(100, 150);
+@@ -382,7 +414,7 @@ static int qcom_snps_hsphy_init(struct phy *phy)
+ 	ret = reset_control_deassert(hsphy->phy_reset);
+ 	if (ret) {
+ 		dev_err(&phy->dev, "failed to de-assert phy_reset, %d\n", ret);
+-		goto disable_ahb_clk;
++		goto disable_clks;
+ 	}
+ 
+ 	qcom_snps_hsphy_write_mask(hsphy->base, USB2_PHY_USB_PHY_CFG0,
+@@ -439,8 +471,8 @@ static int qcom_snps_hsphy_init(struct phy *phy)
+ 
+ 	return 0;
+ 
+-disable_ahb_clk:
+-	clk_disable_unprepare(hsphy->cfg_ahb_clk);
++disable_clks:
++	clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
+ poweroff_phy:
+ 	regulator_bulk_disable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
+ 
+@@ -452,7 +484,7 @@ static int qcom_snps_hsphy_exit(struct phy *phy)
+ 	struct qcom_snps_hsphy *hsphy = phy_get_drvdata(phy);
+ 
+ 	reset_control_assert(hsphy->phy_reset);
+-	clk_disable_unprepare(hsphy->cfg_ahb_clk);
++	clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
+ 	regulator_bulk_disable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
+ 	hsphy->phy_initialized = false;
+ 
+@@ -545,14 +577,15 @@ static int qcom_snps_hsphy_probe(struct platform_device *pdev)
+ 	if (!hsphy)
+ 		return -ENOMEM;
+ 
++	hsphy->dev = dev;
++
+ 	hsphy->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(hsphy->base))
+ 		return PTR_ERR(hsphy->base);
+ 
+-	hsphy->ref_clk = devm_clk_get(dev, "ref");
+-	if (IS_ERR(hsphy->ref_clk))
+-		return dev_err_probe(dev, PTR_ERR(hsphy->ref_clk),
+-				     "failed to get ref clk\n");
++	ret = qcom_snps_hsphy_clk_init(hsphy);
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to initialize clocks\n");
+ 
+ 	hsphy->phy_reset = devm_reset_control_get_exclusive(&pdev->dev, NULL);
+ 	if (IS_ERR(hsphy->phy_reset)) {
 -- 
 2.39.2
 
