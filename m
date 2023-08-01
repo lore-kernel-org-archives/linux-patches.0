@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994871FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:49:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A251C433C8;
-	Tue,  1 Aug 2023 09:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA7F1ED30
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:49:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0024FC433C8;
+	Tue,  1 Aug 2023 09:49:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883363;
-	bh=H3ZC1kUIui+w/WasGPqsvFTpiAI3fLlRwG41WoG6CCM=;
+	s=korg; t=1690883366;
+	bh=DRupaaE+vVPUtPS1r1zBnTBKkmlKU9OdyYBHqE8qY7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dxZ7IsDveHIwIrXjWNf1kI2+qG6LIK0+gQniB4FgcXNadUsJDI3JxdKbxjnHWCl36
-	 Pv7Uk18hfXsOGX8h+2Mji1UmVBKJSlE/ByLiUJtDZ+osXlniuEHP+YMcvtp08jD49l
-	 IsbjIH2sfOd3bH+x2jjtIM8x0G7jppFTNSWQFquw=
+	b=2l3P/FPY7dPl8za4sgQHZrMLo0axnVO/0fj2r8/QljQ1rvtj5DYrzTc9CV6huplgN
+	 I2WX/u9SjYT5yrtNWCe/qCm6s8pihYmxKDSilLf0o+fSyCy12F7f+Nr6mI/8R6YnWZ
+	 W9s5vPptw5rCXjIDXtKfNQI0ypJpbu4lwQU08Mhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Lewis <aaronlewis@google.com>,
-	kvm@vger.kernel.org,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.4 209/239] selftests/rseq: Play nice with binaries statically linked against glibc 2.35+
-Date: Tue,  1 Aug 2023 11:21:13 +0200
-Message-ID: <20230801091933.368989826@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Mat Martineau <martineau@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.4 210/239] selftests: mptcp: join: only check for ip6tables if needed
+Date: Tue,  1 Aug 2023 11:21:14 +0200
+Message-ID: <20230801091933.412455659@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,78 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 3bcbc20942db5d738221cca31a928efc09827069 upstream.
+commit 016e7ba47f33064fbef8c4307a2485d2669dfd03 upstream.
 
-To allow running rseq and KVM's rseq selftests as statically linked
-binaries, initialize the various "trampoline" pointers to point directly
-at the expect glibc symbols, and skip the dlysm() lookups if the rseq
-size is non-zero, i.e. the binary is statically linked *and* the libc
-registered its own rseq.
+If 'iptables-legacy' is available, 'ip6tables-legacy' command will be
+used instead of 'ip6tables'. So no need to look if 'ip6tables' is
+available in this case.
 
-Define weak versions of the symbols so as not to break linking against
-libc versions that don't support rseq in any capacity.
-
-The KVM selftests in particular are often statically linked so that they
-can be run on targets with very limited runtime environments, i.e. test
-machines.
-
-Fixes: 233e667e1ae3 ("selftests/rseq: Uplift rseq selftests for compatibility with glibc-2.35")
-Cc: Aaron Lewis <aaronlewis@google.com>
-Cc: kvm@vger.kernel.org
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20230721223352.2333911-1-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: 0c4cd3f86a40 ("selftests: mptcp: join: use 'iptables-legacy' if available")
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Mat Martineau <martineau@kernel.org>
+Link: https://lore.kernel.org/r/20230725-send-net-20230725-v1-1-6f60fe7137a9@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/rseq/rseq.c |   28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/tools/testing/selftests/rseq/rseq.c
-+++ b/tools/testing/selftests/rseq/rseq.c
-@@ -34,9 +34,17 @@
- #include "../kselftest.h"
- #include "rseq.h"
- 
--static const ptrdiff_t *libc_rseq_offset_p;
--static const unsigned int *libc_rseq_size_p;
--static const unsigned int *libc_rseq_flags_p;
-+/*
-+ * Define weak versions to play nice with binaries that are statically linked
-+ * against a libc that doesn't support registering its own rseq.
-+ */
-+__weak ptrdiff_t __rseq_offset;
-+__weak unsigned int __rseq_size;
-+__weak unsigned int __rseq_flags;
-+
-+static const ptrdiff_t *libc_rseq_offset_p = &__rseq_offset;
-+static const unsigned int *libc_rseq_size_p = &__rseq_size;
-+static const unsigned int *libc_rseq_flags_p = &__rseq_flags;
- 
- /* Offset from the thread pointer to the rseq area. */
- ptrdiff_t rseq_offset;
-@@ -155,9 +163,17 @@ unsigned int get_rseq_feature_size(void)
- static __attribute__((constructor))
- void rseq_init(void)
- {
--	libc_rseq_offset_p = dlsym(RTLD_NEXT, "__rseq_offset");
--	libc_rseq_size_p = dlsym(RTLD_NEXT, "__rseq_size");
--	libc_rseq_flags_p = dlsym(RTLD_NEXT, "__rseq_flags");
-+	/*
-+	 * If the libc's registered rseq size isn't already valid, it may be
-+	 * because the binary is dynamically linked and not necessarily due to
-+	 * libc not having registered a restartable sequence.  Try to find the
-+	 * symbols if that's the case.
-+	 */
-+	if (!*libc_rseq_size_p) {
-+		libc_rseq_offset_p = dlsym(RTLD_NEXT, "__rseq_offset");
-+		libc_rseq_size_p = dlsym(RTLD_NEXT, "__rseq_size");
-+		libc_rseq_flags_p = dlsym(RTLD_NEXT, "__rseq_flags");
-+	}
- 	if (libc_rseq_size_p && libc_rseq_offset_p && libc_rseq_flags_p &&
- 			*libc_rseq_size_p != 0) {
- 		/* rseq registration owned by glibc */
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -156,9 +156,7 @@ check_tools()
+ 	elif ! iptables -V &> /dev/null; then
+ 		echo "SKIP: Could not run all tests without iptables tool"
+ 		exit $ksft_skip
+-	fi
+-
+-	if ! ip6tables -V &> /dev/null; then
++	elif ! ip6tables -V &> /dev/null; then
+ 		echo "SKIP: Could not run all tests without ip6tables tool"
+ 		exit $ksft_skip
+ 	fi
 
 
