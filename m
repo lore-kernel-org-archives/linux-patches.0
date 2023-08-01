@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7480F1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:45:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC8CC433C8;
-	Tue,  1 Aug 2023 09:45:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444D51FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:45:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA4E3C433C8;
+	Tue,  1 Aug 2023 09:45:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883107;
-	bh=DUuh1cx23MrNuHWu91ral7+h13WYxlVJ+8ljqg0VPaM=;
+	s=korg; t=1690883110;
+	bh=KLrhwMPnhrz98PT6DSU5P0cEV1CnSIpKhRS+Uo0k6vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l0pRD1Dz027o3DWOuvUiRga0/RTltewyVewNgBMoXbzadiYVA4bk7anzF675YLtE2
-	 HY1/G0w/3rFHjAr5y/kDhA2T4VeAtx5a53KyBSggormj6+/cmjMi9Gn9A67iov+2kO
-	 5qi/ejrL/oFZPcN6awsA0/oQgyq7yY1qbsZ+9oYQ=
+	b=WzfnRDOo17ggETFqoLvbY4zQOOueea449YJ1hxkwqkh6/y/Abztnl5GKzZDMQTXRb
+	 wVLJw1weACJlApaceUvMe+xMn5snsx47av7erpM4egB6xbkmc79hfRCuEHEovTlZb6
+	 BmWmBYTVOAmxkHLOsKb6+ilVtTliTUCPpeH3H5NA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
 	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 117/239] drm/msm: Fix IS_ERR_OR_NULL() vs NULL check in a5xx_submit_in_rb()
-Date: Tue,  1 Aug 2023 11:19:41 +0200
-Message-ID: <20230801091929.953611362@linuxfoundation.org>
+Subject: [PATCH 6.4 118/239] drm/msm: Fix hw_fence error path cleanup
+Date: Tue,  1 Aug 2023 11:19:42 +0200
+Message-ID: <20230801091929.982987496@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -38,39 +34,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 6e8a996563ecbe68e49c49abd4aaeef69f11f2dc ]
+[ Upstream commit 1cd0787f082e1a179f2b6e749d08daff1a9f6b1b ]
 
-The msm_gem_get_vaddr() returns an ERR_PTR() on failure, and a null
-is catastrophic here, so we should use IS_ERR_OR_NULL() to check
-the return value.
+In an error path where the submit is free'd without the job being run,
+the hw_fence pointer is simply a kzalloc'd block of memory.  In this
+case we should just kfree() it, rather than trying to decrement it's
+reference count.  Fortunately we can tell that this is the case by
+checking for a zero refcount, since if the job was run, the submit would
+be holding a reference to the hw_fence.
 
-Fixes: 6a8bd08d0465 ("drm/msm: add sudo flag to submit ioctl")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/547712/
+Fixes: f94e6a51e17c ("drm/msm: Pre-allocate hw_fence")
 Signed-off-by: Rob Clark <robdclark@chromium.org>
+Patchwork: https://patchwork.freedesktop.org/patch/547088/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_fence.c      |  6 ++++++
+ drivers/gpu/drm/msm/msm_gem_submit.c | 14 +++++++++++++-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index a99310b687932..bbb1bf33f98ef 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -89,7 +89,7 @@ static void a5xx_submit_in_rb(struct msm_gpu *gpu, struct msm_gem_submit *submit
- 			 * since we've already mapped it once in
- 			 * submit_reloc()
- 			 */
--			if (WARN_ON(!ptr))
-+			if (WARN_ON(IS_ERR_OR_NULL(ptr)))
- 				return;
+diff --git a/drivers/gpu/drm/msm/msm_fence.c b/drivers/gpu/drm/msm/msm_fence.c
+index 96599ec3eb783..1a5d4f1c8b422 100644
+--- a/drivers/gpu/drm/msm/msm_fence.c
++++ b/drivers/gpu/drm/msm/msm_fence.c
+@@ -191,6 +191,12 @@ msm_fence_init(struct dma_fence *fence, struct msm_fence_context *fctx)
  
- 			for (i = 0; i < dwords; i++) {
+ 	f->fctx = fctx;
+ 
++	/*
++	 * Until this point, the fence was just some pre-allocated memory,
++	 * no-one should have taken a reference to it yet.
++	 */
++	WARN_ON(kref_read(&fence->refcount));
++
+ 	dma_fence_init(&f->base, &msm_fence_ops, &fctx->spinlock,
+ 		       fctx->context, ++fctx->last_fence);
+ }
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index 9f5933c75e3df..10cad7b99bac8 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -86,7 +86,19 @@ void __msm_gem_submit_destroy(struct kref *kref)
+ 	}
+ 
+ 	dma_fence_put(submit->user_fence);
+-	dma_fence_put(submit->hw_fence);
++
++	/*
++	 * If the submit is freed before msm_job_run(), then hw_fence is
++	 * just some pre-allocated memory, not a reference counted fence.
++	 * Once the job runs and the hw_fence is initialized, it will
++	 * have a refcount of at least one, since the submit holds a ref
++	 * to the hw_fence.
++	 */
++	if (kref_read(&submit->hw_fence->refcount) == 0) {
++		kfree(submit->hw_fence);
++	} else {
++		dma_fence_put(submit->hw_fence);
++	}
+ 
+ 	put_pid(submit->pid);
+ 	msm_submitqueue_put(submit->queue);
 -- 
 2.40.1
 
