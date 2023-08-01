@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8403F1F95A
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 049A8C433C7;
-	Tue,  1 Aug 2023 09:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B281F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6131C433C8;
+	Tue,  1 Aug 2023 09:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881824;
-	bh=Vz5hG1JxxNlikl/2NGUElIdhXWsnSa9iup05i25o6r8=;
+	s=korg; t=1690881827;
+	bh=Oz+ApuPLdBUzlT5GVIBC2x3SbFhRxGhpohRDGJEQNO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PWoAeI/zeEkNjJWHKCgK/0tYXgncoKO+mytaBlRdrx+VAeGQ/nRi8eJSjcUU61Hqt
-	 D6B9NTWOdpYk2nmpDAi9TbvTMp0oUbOPjWviqOgXvBswsjH//XBvc5WQju38vLMi/p
-	 zZioWHnvJ01BFYnmJ/mfehc7wBcz3AtcWHlOR7hM=
+	b=s7RqlhAwStVHikljS60u02I11mZuiU7Tt4F5ATx77vBeqbbE7RPbBfeAyJ+D6AuoW
+	 1IcbRPf51MvQUbFilRhn4kNaKd8pVJUSxaqUgbzpPPWxfP4hi/MobhysheRGJkyY22
+	 kn8UFPSUKdYzCu94QzavH1MTLfU22hYLI1bXZiis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arun Easi <aeasi@marvell.com>,
+	Quinn Tran <qutran@marvell.com>,
 	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 042/155] scsi: qla2xxx: Add debug prints in the device remove path
-Date: Tue,  1 Aug 2023 11:19:14 +0200
-Message-ID: <20230801091911.686278325@linuxfoundation.org>
+Subject: [PATCH 5.15 043/155] scsi: qla2xxx: Fix hang in task management
+Date: Tue,  1 Aug 2023 11:19:15 +0200
+Message-ID: <20230801091911.717237959@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -36,52 +37,193 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arun Easi <aeasi@marvell.com>
+From: Quinn Tran <qutran@marvell.com>
 
-[ Upstream commit f12d2d130efc49464ef0666789bfeb9073162743 ]
+[ Upstream commit 9ae615c5bfd37bd091772969b1153de5335ea986 ]
 
-Add a debug print in the devloss callback.
+Task management command hangs where a side
+band chip reset failed to nudge the TMF
+from it's current send path.
 
-Link: https://lore.kernel.org/r/20220616053508.27186-9-njavali@marvell.com
-Signed-off-by: Arun Easi <aeasi@marvell.com>
+Add additional error check to block TMF
+from entering during chip reset and along
+the TMF path to cause it to bail out, skip
+over abort of marker.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Quinn Tran <qutran@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20230428075339.32551-5-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 9ae615c5bfd3 ("scsi: qla2xxx: Fix hang in task management")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_attr.c | 3 +++
- drivers/scsi/qla2xxx/qla_def.h  | 6 ++++++
- 2 files changed, 9 insertions(+)
+ drivers/scsi/qla2xxx/qla_def.h  |  4 +++
+ drivers/scsi/qla2xxx/qla_init.c | 60 +++++++++++++++++++++++++++++++--
+ 2 files changed, 61 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_attr.c b/drivers/scsi/qla2xxx/qla_attr.c
-index de57d45ffc5cb..4a5df867057bc 100644
---- a/drivers/scsi/qla2xxx/qla_attr.c
-+++ b/drivers/scsi/qla2xxx/qla_attr.c
-@@ -2705,6 +2705,9 @@ qla2x00_dev_loss_tmo_callbk(struct fc_rport *rport)
- 	if (!fcport)
- 		return;
- 
-+	ql_dbg(ql_dbg_async, fcport->vha, 0x5101,
-+	       DBG_FCPORT_PRFMT(fcport, "dev_loss_tmo expiry, rport_state=%d",
-+				rport->port_state));
- 
- 	/*
- 	 * Now that the rport has been deleted, set the fcport state to
 diff --git a/drivers/scsi/qla2xxx/qla_def.h b/drivers/scsi/qla2xxx/qla_def.h
-index bbeb116c16cc3..2a2bca2fb57ee 100644
+index 2a2bca2fb57ee..83228ce822af3 100644
 --- a/drivers/scsi/qla2xxx/qla_def.h
 +++ b/drivers/scsi/qla2xxx/qla_def.h
-@@ -5475,4 +5475,10 @@ struct ql_vnd_tgt_stats_resp {
- #define IS_SESSION_DELETED(_fcport) (_fcport->disc_state == DSC_DELETE_PEND || \
- 				      _fcport->disc_state == DSC_DELETED)
+@@ -5481,4 +5481,8 @@ struct ql_vnd_tgt_stats_resp {
+ 	_fp->disc_state, _fp->scan_state, _fp->loop_id, _fp->deleted, \
+ 	_fp->flags
  
-+#define DBG_FCPORT_PRFMT(_fp, _fmt, _args...) \
-+	"%s: %8phC: " _fmt " (state=%d disc_state=%d scan_state=%d loopid=0x%x deleted=%d flags=0x%x)\n", \
-+	__func__, _fp->port_name, ##_args, atomic_read(&_fp->state), \
-+	_fp->disc_state, _fp->scan_state, _fp->loop_id, _fp->deleted, \
-+	_fp->flags
++#define TMF_NOT_READY(_fcport) \
++	(!_fcport || IS_SESSION_DELETED(_fcport) || atomic_read(&_fcport->state) != FCS_ONLINE || \
++	!_fcport->vha->hw->flags.fw_started)
 +
  #endif
+diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
+index 2c42ecb2a64a5..a97872b6350ca 100644
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -1998,6 +1998,11 @@ qla2x00_tmf_iocb_timeout(void *data)
+ 	int rc, h;
+ 	unsigned long flags;
+ 
++	if (sp->type == SRB_MARKER) {
++		complete(&tmf->u.tmf.comp);
++		return;
++	}
++
+ 	rc = qla24xx_async_abort_cmd(sp, false);
+ 	if (rc) {
+ 		spin_lock_irqsave(sp->qpair->qp_lock_ptr, flags);
+@@ -2025,6 +2030,7 @@ static void qla_marker_sp_done(srb_t *sp, int res)
+ 		    sp->handle, sp->fcport->d_id.b24, sp->u.iocb_cmd.u.tmf.flags,
+ 		    sp->u.iocb_cmd.u.tmf.lun, sp->qpair->id);
+ 
++	sp->u.iocb_cmd.u.tmf.data = res;
+ 	complete(&tmf->u.tmf.comp);
+ }
+ 
+@@ -2041,6 +2047,11 @@ static void qla_marker_sp_done(srb_t *sp, int res)
+ 	} while (cnt); \
+ }
+ 
++/**
++ * qla26xx_marker: send marker IOCB and wait for the completion of it.
++ * @arg: pointer to argument list.
++ *    It is assume caller will provide an fcport pointer and modifier
++ */
+ static int
+ qla26xx_marker(struct tmf_arg *arg)
+ {
+@@ -2050,6 +2061,14 @@ qla26xx_marker(struct tmf_arg *arg)
+ 	int rval = QLA_FUNCTION_FAILED;
+ 	fc_port_t *fcport = arg->fcport;
+ 
++	if (TMF_NOT_READY(arg->fcport)) {
++		ql_dbg(ql_dbg_taskm, vha, 0x8039,
++		    "FC port not ready for marker loop-id=%x portid=%06x modifier=%x lun=%lld qp=%d.\n",
++		    fcport->loop_id, fcport->d_id.b24,
++		    arg->modifier, arg->lun, arg->qpair->id);
++		return QLA_SUSPENDED;
++	}
++
+ 	/* ref: INIT */
+ 	sp = qla2xxx_get_qpair_sp(vha, arg->qpair, fcport, GFP_KERNEL);
+ 	if (!sp)
+@@ -2076,11 +2095,19 @@ qla26xx_marker(struct tmf_arg *arg)
+ 
+ 	if (rval != QLA_SUCCESS) {
+ 		ql_log(ql_log_warn, vha, 0x8031,
+-		    "Marker IOCB failed (%x).\n", rval);
++		    "Marker IOCB send failure (%x).\n", rval);
+ 		goto done_free_sp;
+ 	}
+ 
+ 	wait_for_completion(&tm_iocb->u.tmf.comp);
++	rval = tm_iocb->u.tmf.data;
++
++	if (rval != QLA_SUCCESS) {
++		ql_log(ql_log_warn, vha, 0x8019,
++		    "Marker failed hdl=%x loop-id=%x portid=%06x modifier=%x lun=%lld qp=%d rval %d.\n",
++		    sp->handle, fcport->loop_id, fcport->d_id.b24,
++		    arg->modifier, arg->lun, sp->qpair->id, rval);
++	}
+ 
+ done_free_sp:
+ 	/* ref: INIT */
+@@ -2093,6 +2120,8 @@ static void qla2x00_tmf_sp_done(srb_t *sp, int res)
+ {
+ 	struct srb_iocb *tmf = &sp->u.iocb_cmd;
+ 
++	if (res)
++		tmf->u.tmf.data = res;
+ 	complete(&tmf->u.tmf.comp);
+ }
+ 
+@@ -2106,6 +2135,14 @@ __qla2x00_async_tm_cmd(struct tmf_arg *arg)
+ 
+ 	fc_port_t *fcport = arg->fcport;
+ 
++	if (TMF_NOT_READY(arg->fcport)) {
++		ql_dbg(ql_dbg_taskm, vha, 0x8032,
++		    "FC port not ready for TM command loop-id=%x portid=%06x modifier=%x lun=%lld qp=%d.\n",
++		    fcport->loop_id, fcport->d_id.b24,
++		    arg->modifier, arg->lun, arg->qpair->id);
++		return QLA_SUSPENDED;
++	}
++
+ 	/* ref: INIT */
+ 	sp = qla2xxx_get_qpair_sp(vha, arg->qpair, fcport, GFP_KERNEL);
+ 	if (!sp)
+@@ -2180,7 +2217,9 @@ int qla_get_tmf(fc_port_t *fcport)
+ 		msleep(1);
+ 
+ 		spin_lock_irqsave(&ha->tgt.sess_lock, flags);
+-		if (fcport->deleted) {
++		if (TMF_NOT_READY(fcport)) {
++			ql_log(ql_log_warn, vha, 0x802c,
++			    "Unable to acquire TM resource due to disruption.\n");
+ 			rc = EIO;
+ 			break;
+ 		}
+@@ -2206,7 +2245,10 @@ qla2x00_async_tm_cmd(fc_port_t *fcport, uint32_t flags, uint64_t lun,
+ 	struct scsi_qla_host *vha = fcport->vha;
+ 	struct qla_qpair *qpair;
+ 	struct tmf_arg a;
+-	int i, rval;
++	int i, rval = QLA_SUCCESS;
++
++	if (TMF_NOT_READY(fcport))
++		return QLA_SUSPENDED;
+ 
+ 	a.vha = fcport->vha;
+ 	a.fcport = fcport;
+@@ -2225,6 +2267,14 @@ qla2x00_async_tm_cmd(fc_port_t *fcport, uint32_t flags, uint64_t lun,
+ 			qpair = vha->hw->queue_pair_map[i];
+ 			if (!qpair)
+ 				continue;
++
++			if (TMF_NOT_READY(fcport)) {
++				ql_log(ql_log_warn, vha, 0x8026,
++				    "Unable to send TM due to disruption.\n");
++				rval = QLA_SUSPENDED;
++				break;
++			}
++
+ 			a.qpair = qpair;
+ 			a.flags = flags|TCF_NOTMCMD_TO_TARGET;
+ 			rval = __qla2x00_async_tm_cmd(&a);
+@@ -2233,10 +2283,14 @@ qla2x00_async_tm_cmd(fc_port_t *fcport, uint32_t flags, uint64_t lun,
+ 		}
+ 	}
+ 
++	if (rval)
++		goto bailout;
++
+ 	a.qpair = vha->hw->base_qpair;
+ 	a.flags = flags;
+ 	rval = __qla2x00_async_tm_cmd(&a);
+ 
++bailout:
+ 	if (a.modifier == MK_SYNC_ID_LUN)
+ 		qla_put_tmf(fcport);
+ 
 -- 
 2.39.2
 
