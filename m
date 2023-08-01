@@ -1,28 +1,24 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430AD1F957
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71E88C433C7;
-	Tue,  1 Aug 2023 09:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8B21F957
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B37C433C8;
+	Tue,  1 Aug 2023 09:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882646;
-	bh=OtlCOv7y1KS4aAhsJVBob3yhZ2R4YHNWX7HvK8oZm0g=;
+	s=korg; t=1690882649;
+	bh=JvnTWk9xrQWaRqJBpAOwLeRFiG3PYr8DHyPS8Ozyhmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uB4/hI6+aArGxGw7rapp6qE+ppsSPiATs2UzvJjoHrCSXJb8DzmyFTnzZn2BBfnJg
-	 9/czLKyWawFvIjjrYieDLkglBimD/cMgJjlmyaGMyIntzXty9NCEGVzE5Q/HZ8zJZL
-	 wMAc/NzMZzN6j1JeKkdWI4GFpA1yJZ2Ebo5o6rc4=
+	b=nCphOWtexaC2Tq640atMfTB1eFoctMrt6VJHcONqbY385wqphDEVqh1ugFbM8u0C4
+	 uA6gbHIeoqhYetDZ8Fik0R//kpwlJexPkCJQYWdajD+DnkrdheTrW7iSugdbcN4lgy
+	 AJGIm/jHG4BPTQXgHHl71paW67vzeOn01j7VDHvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 142/228] ublk: fail to recover device if queue setup is interrupted
-Date: Tue,  1 Aug 2023 11:20:00 +0200
-Message-ID: <20230801091928.012463844@linuxfoundation.org>
+	patches@lists.linux.dev
+Subject: [PATCH 6.1 174/228] Documentation: security-bugs.rst: clarify CVE handling
+Date: Tue,  1 Aug 2023 11:20:32 +0200
+Message-ID: <20230801091929.161423549@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,43 +32,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 0c0cbd4ebc375ceebc75c89df04b74f215fab23a ]
+commit 3c1897ae4b6bc7cc586eda2feaa2cd68325ec29c upstream.
 
-In ublk_ctrl_end_recovery(), if wait_for_completion_interruptible() is
-interrupted by signal, queues aren't setup successfully yet, so we
-have to fail UBLK_CMD_END_USER_RECOVERY, otherwise kernel oops can be
-triggered.
+The kernel security team does NOT assign CVEs, so document that properly
+and provide the "if you want one, ask MITRE for it" response that we
+give on a weekly basis in the document, so we don't have to constantly
+say it to everyone who asks.
 
-Fixes: c732a852b419 ("ublk_drv: add START_USER_RECOVERY and END_USER_RECOVERY support")
-Reported-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://lore.kernel.org/r/20230726144502.566785-3-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/2023063022-retouch-kerosene-7e4a@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/ublk_drv.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ Documentation/admin-guide/security-bugs.rst |   13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 495e1bf9003b6..4459cfbdbcb18 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -1954,7 +1954,9 @@ static int ublk_ctrl_end_recovery(struct ublk_device *ub,
- 	pr_devel("%s: Waiting for new ubq_daemons(nr: %d) are ready, dev id %d...\n",
- 			__func__, ub->dev_info.nr_hw_queues, header->dev_id);
- 	/* wait until new ubq_daemon sending all FETCH_REQ */
--	wait_for_completion_interruptible(&ub->completion);
-+	if (wait_for_completion_interruptible(&ub->completion))
-+		return -EINTR;
-+
- 	pr_devel("%s: All new ubq_daemons(nr: %d) are ready, dev id %d\n",
- 			__func__, ub->dev_info.nr_hw_queues, header->dev_id);
+--- a/Documentation/admin-guide/security-bugs.rst
++++ b/Documentation/admin-guide/security-bugs.rst
+@@ -79,13 +79,12 @@ not contribute to actually fixing any po
+ CVE assignment
+ --------------
  
--- 
-2.40.1
-
+-The security team does not normally assign CVEs, nor do we require them
+-for reports or fixes, as this can needlessly complicate the process and
+-may delay the bug handling. If a reporter wishes to have a CVE identifier
+-assigned ahead of public disclosure, they will need to contact the private
+-linux-distros list, described above. When such a CVE identifier is known
+-before a patch is provided, it is desirable to mention it in the commit
+-message if the reporter agrees.
++The security team does not assign CVEs, nor do we require them for
++reports or fixes, as this can needlessly complicate the process and may
++delay the bug handling.  If a reporter wishes to have a CVE identifier
++assigned, they should find one by themselves, for example by contacting
++MITRE directly.  However under no circumstances will a patch inclusion
++be delayed to wait for a CVE identifier to arrive.
+ 
+ Non-disclosure agreements
+ -------------------------
 
 
