@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4BB4200A5
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E32C433C8;
-	Tue,  1 Aug 2023 09:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73585200A5
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94D0C433C7;
+	Tue,  1 Aug 2023 09:37:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882663;
-	bh=MKb8QdAp0ZycEec599NIZ60uvBHACSKCrbs1+KGHOmg=;
+	s=korg; t=1690882666;
+	bh=MVsZTdPBatzoGBtZmicW1uSbOYfj4vZ1VaGwyhUljKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PX92sOlg0U13Wco1hdHrk353rrwpY8TxAM+lG0imQt6RBVA7cJF0nbRZrgAXS3/gF
-	 qca5t0dwsnlGsvPnutx7IIPZni1j7Z2Ln8c43nWAiBalmigoeNqqcgXdIgGncmHq94
-	 jQjF4prDeWwTKI5pIFEG2auLyJsVag5ZGxZF3LfQ=
+	b=1V7RpvH89HMyNHwffegmw5ZlKt4txm6Z27XI01oYtdNKV2yv2gZJCin6/ZSUzs6JD
+	 lGJtkZrEGr3+QEkbBFpSviu1+jwA/prBbA18bRYl5Yjhv0gZ4/sbJ6Nqj8l0PiZuhi
+	 9EHMJZQK3T96+C5OEMHl5UGmAZxX7T/DpMclwyLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Christian Brauner <brauner@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.1 187/228] file: always lock position for FMODE_ATOMIC_POS
-Date: Tue,  1 Aug 2023 11:20:45 +0200
-Message-ID: <20230801091929.619825256@linuxfoundation.org>
+	"Frank Ch. Eigler" <fche@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 188/228] nfsd: Remove incorrect check in nfsd4_validate_stateid
+Date: Tue,  1 Aug 2023 11:20:46 +0200
+Message-ID: <20230801091929.650621748@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -35,57 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Brauner <brauner@kernel.org>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit 20ea1e7d13c1b544fe67c4a8dc3943bb1ab33e6f upstream.
+commit f75546f58a70da5cfdcec5a45ffc377885ccbee8 upstream.
 
-The pidfd_getfd() system call allows a caller with ptrace_may_access()
-abilities on another process to steal a file descriptor from this
-process. This system call is used by debuggers, container runtimes,
-system call supervisors, networking proxies etc. So while it is a
-special interest system call it is used in common tools.
+If the client is calling TEST_STATEID, then it is because some event
+occurred that requires it to check all the stateids for validity and
+call FREE_STATEID on the ones that have been revoked. In this case,
+either the stateid exists in the list of stateids associated with that
+nfs4_client, in which case it should be tested, or it does not. There
+are no additional conditions to be considered.
 
-That ability ends up breaking our long-time optimization in fdget_pos(),
-which "knew" that if we had exclusive access to the file descriptor
-nobody else could access it, and we didn't need the lock for the file
-position.
-
-That check for file_count(file) was always fairly subtle - it depended
-on __fdget() not incrementing the file count for single-threaded
-processes and thus included that as part of the rule - but it did mean
-that we didn't need to take the lock in all those traditional unix
-process contexts.
-
-So it's sad to see this go, and I'd love to have some way to re-instate
-the optimization. At the same time, the lock obviously isn't ever
-contended in the case we optimized, so all we were optimizing away is
-the atomics and the cacheline dirtying. Let's see if anybody even
-notices that the optimization is gone.
-
-Link: https://lore.kernel.org/linux-fsdevel/20230724-vfs-fdget_pos-v1-1-a4abfd7103f3@kernel.org/
-Fixes: 8649c322f75c ("pid: Implement pidfd_getfd syscall")
-Cc: stable@kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Reported-by: "Frank Ch. Eigler" <fche@redhat.com>
+Fixes: 7df302f75ee2 ("NFSD: TEST_STATEID should not return NFS4ERR_STALE_STATEID")
+Cc: stable@vger.kernel.org # v5.7+
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/file.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs4state.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -1042,10 +1042,8 @@ unsigned long __fdget_pos(unsigned int f
- 	struct file *file = (struct file *)(v & ~3);
- 
- 	if (file && (file->f_mode & FMODE_ATOMIC_POS)) {
--		if (file_count(file) > 1) {
--			v |= FDPUT_POS_UNLOCK;
--			mutex_lock(&file->f_pos_lock);
--		}
-+		v |= FDPUT_POS_UNLOCK;
-+		mutex_lock(&file->f_pos_lock);
- 	}
- 	return v;
- }
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -6269,8 +6269,6 @@ static __be32 nfsd4_validate_stateid(str
+ 	if (ZERO_STATEID(stateid) || ONE_STATEID(stateid) ||
+ 		CLOSE_STATEID(stateid))
+ 		return status;
+-	if (!same_clid(&stateid->si_opaque.so_clid, &cl->cl_clientid))
+-		return status;
+ 	spin_lock(&cl->cl_lock);
+ 	s = find_stateid_locked(cl, stateid);
+ 	if (!s)
 
 
