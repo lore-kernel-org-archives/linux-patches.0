@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6BA1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:48:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DDEC433C7;
-	Tue,  1 Aug 2023 09:48:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0CDA1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:48:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 517EEC433C7;
+	Tue,  1 Aug 2023 09:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883301;
-	bh=osKxvr2rCQ7M/isONJjfJ60w80FM14ABmnvn7fVLBf8=;
+	s=korg; t=1690883304;
+	bh=mFw4hYtk1K7dScW5T/6+dgMBtlOXJLkXp/wAiuIkrd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c06ib5YzpED5+sKJTbkKAcBbptf5Hqdp7S7SxY5SOTMc1eQOw0z6Fao+ikyvUa2VA
-	 lM/Xqb7ExHwWjyZKjev0jjkQ1zcUTv9uplS0W6NppuHefeGPzOaQJ59G6bJQRXiMEl
-	 ufvvryP5LRBFsi9/okR0Z7dvfAP2tFMDSXCey/n4=
+	b=KiYhSTxEbgS1OWiEmOJ3boSXAM/x+g+uoHa30KmJzSVB+DayKDPcYJxaHP/4/8B4S
+	 r5Mm97U+DaDiywKKdxgcqYL+UigPU5mF+g3RGiTYHUVBLX3PbbQ9bQ0fl16OtNLL+h
+	 2TkPbo2b0YHB1EJ3pQWk3oNReePyWdhGcFiqoWzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Thibault <samuel.thibault@ens-lyon.org>,
-	Kees Cook <keescook@chromium.org>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Jiri Slaby <jirislaby@kernel.org>
-Subject: [PATCH 6.4 158/239] TIOCSTI: always enable for CAP_SYS_ADMIN
-Date: Tue,  1 Aug 2023 11:20:22 +0200
-Message-ID: <20230801091931.342370928@linuxfoundation.org>
+	Kyle Tso <kyletso@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.4 159/239] usb: typec: Set port->pd before adding device for typec_port
+Date: Tue,  1 Aug 2023 11:20:23 +0200
+Message-ID: <20230801091931.371116787@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,40 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Samuel Thibault <samuel.thibault@ens-lyon.org>
+From: Kyle Tso <kyletso@google.com>
 
-commit 690c8b804ad2eafbd35da5d3c95ad325ca7d5061 upstream.
+commit b33ebb2415e7e0a55ee3d049c2890d3a3e3805b6 upstream.
 
-83efeeeb3d04 ("tty: Allow TIOCSTI to be disabled") broke BRLTTY's
-ability to simulate keypresses on the console, thus effectively breaking
-braille keyboards of blind users.
+When calling device_add in the registration of typec_port, it will do
+the NULL check on usb_power_delivery handle in typec_port for the
+visibility of the device attributes. It is always NULL because port->pd
+is set in typec_port_set_usb_power_delivery which is later than the
+device_add call.
 
-This restores the TIOCSTI feature for CAP_SYS_ADMIN processes, which
-BRLTTY is, thus fixing braille keyboards without re-opening the security
-issue.
+Set port->pd before device_add and only link the device after that.
 
-Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Acked-by: Kees Cook <keescook@chromium.org>
-Fixes: 83efeeeb3d04 ("tty: Allow TIOCSTI to be disabled")
+Fixes: a7cff92f0635 ("usb: typec: USB Power Delivery helpers for ports and partners")
 Cc: stable@vger.kernel.org
-Reported-by: Nicolas Pitre <nico@fluxnic.net>
-Link: https://lore.kernel.org/r/20230710002645.v565c7xq5iddruse@begin
-Acked-by: Jiri Slaby <jirislaby@kernel.org>
+Signed-off-by: Kyle Tso <kyletso@google.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20230623151036.3955013-2-kyletso@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/tty_io.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/class.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -2276,7 +2276,7 @@ static int tiocsti(struct tty_struct *tt
- 	char ch, mbz = 0;
- 	struct tty_ldisc *ld;
+--- a/drivers/usb/typec/class.c
++++ b/drivers/usb/typec/class.c
+@@ -2288,6 +2288,8 @@ struct typec_port *typec_register_port(s
+ 		return ERR_PTR(ret);
+ 	}
  
--	if (!tty_legacy_tiocsti)
-+	if (!tty_legacy_tiocsti && !capable(CAP_SYS_ADMIN))
- 		return -EIO;
++	port->pd = cap->pd;
++
+ 	ret = device_add(&port->dev);
+ 	if (ret) {
+ 		dev_err(parent, "failed to register port (%d)\n", ret);
+@@ -2295,7 +2297,7 @@ struct typec_port *typec_register_port(s
+ 		return ERR_PTR(ret);
+ 	}
  
- 	if ((current->signal->tty != tty) && !capable(CAP_SYS_ADMIN))
+-	ret = typec_port_set_usb_power_delivery(port, cap->pd);
++	ret = usb_power_delivery_link_device(port->pd, &port->dev);
+ 	if (ret) {
+ 		dev_err(&port->dev, "failed to link pd\n");
+ 		device_unregister(&port->dev);
 
 
