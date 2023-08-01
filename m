@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8B51FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:48:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A1F8C433C9;
-	Tue,  1 Aug 2023 09:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23F51FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:48:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C4CC433C7;
+	Tue,  1 Aug 2023 09:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883290;
-	bh=dl9so49zX5+pwokDGFm0VI8GY1mht+rVIs0ov3NRTUU=;
+	s=korg; t=1690883293;
+	bh=vPYIpFkgv3Rl3JKU7FCLtnoMAWiPhxoMuioVrUrAmY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nE5EVTcLCj5VaRUHWy5Zu4PPXO8lUQRdEe21rF757ngP3sH8fWC6mdcTjoIJDTBch
-	 VT12j+oxP+j7g71mID8y1gisbXJUNqVeniKZEdS13vsIfkZQI4wNZLapJ/Lc5r+ACU
-	 LtDwQdWmrgBzTZZ5hriiw69TgfxfSyt/RFvVarJ4=
+	b=yhCQNTlUXqimvYW/ozwp0ALGaDXd00uoESV5OT4SlhSLJQeorvt6Aoooed8edYXLT
+	 aH1axH75H7uuKnsOOjxxK6a+P7leK7gA2xuVPkQfFtSWeLuanucFskX1XbrA0I8GYw
+	 mVeSG3bJecQ7FmEcJM3FiZRuMN+DXde8zfv7TnKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrick Rudolph <patrick.rudolph@9elements.com>,
-	Naresh Solanki <Naresh.Solanki@9elements.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.4 183/239] hwmon: (pmbus_core) Fix NULL pointer dereference
-Date: Tue,  1 Aug 2023 11:20:47 +0200
-Message-ID: <20230801091932.268596440@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.4 157/239] can: gs_usb: gs_can_close(): add missing set of CAN state to CAN_STATE_STOPPED
+Date: Tue,  1 Aug 2023 11:20:21 +0200
+Message-ID: <20230801091931.312031524@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -35,82 +33,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Patrick Rudolph <patrick.rudolph@9elements.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-commit 0bd66784274a287beada2933c2c0fa3a0ddae0d7 upstream.
+commit f8a2da6ec2417cca169fa85a8ab15817bccbb109 upstream.
 
-Pass i2c_client to _pmbus_is_enabled to drop the assumption
-that a regulator device is passed in.
+After an initial link up the CAN device is in ERROR-ACTIVE mode. Due
+to a missing CAN_STATE_STOPPED in gs_can_close() it doesn't change to
+STOPPED after a link down:
 
-This will fix the issue of a NULL pointer dereference when called from
-_pmbus_get_flags.
+| ip link set dev can0 up
+| ip link set dev can0 down
+| ip --details link show can0
+| 13: can0: <NOARP,ECHO> mtu 16 qdisc pfifo_fast state DOWN mode DEFAULT group default qlen 10
+|     link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0
+|     can state ERROR-ACTIVE restart-ms 1000
 
-Fixes: df5f6b6af01c ("hwmon: (pmbus/core) Generalise pmbus get status")
-Cc: stable@vger.kernel.org # v6.4
-Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
-Signed-off-by: Naresh Solanki <Naresh.Solanki@9elements.com>
-Link: https://lore.kernel.org/r/20230725125428.3966803-2-Naresh.Solanki@9elements.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Add missing assignment of CAN_STATE_STOPPED in gs_can_close().
+
+Cc: stable@vger.kernel.org
+Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
+Link: https://lore.kernel.org/all/20230718-gs_usb-fix-can-state-v1-1-f19738ae2c23@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/pmbus_core.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/net/can/usb/gs_usb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index 42fb7286805b..30aeb59062a5 100644
---- a/drivers/hwmon/pmbus/pmbus_core.c
-+++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -2745,9 +2745,8 @@ static const struct pmbus_status_category __maybe_unused pmbus_status_flag_map[]
- 	},
- };
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -1030,6 +1030,8 @@ static int gs_can_close(struct net_devic
+ 	usb_kill_anchored_urbs(&dev->tx_submitted);
+ 	atomic_set(&dev->active_tx_urbs, 0);
  
--static int _pmbus_is_enabled(struct device *dev, u8 page)
-+static int _pmbus_is_enabled(struct i2c_client *client, u8 page)
- {
--	struct i2c_client *client = to_i2c_client(dev->parent);
- 	int ret;
- 
- 	ret = _pmbus_read_byte_data(client, page, PMBUS_OPERATION);
-@@ -2758,14 +2757,13 @@ static int _pmbus_is_enabled(struct device *dev, u8 page)
- 	return !!(ret & PB_OPERATION_CONTROL_ON);
- }
- 
--static int __maybe_unused pmbus_is_enabled(struct device *dev, u8 page)
-+static int __maybe_unused pmbus_is_enabled(struct i2c_client *client, u8 page)
- {
--	struct i2c_client *client = to_i2c_client(dev->parent);
- 	struct pmbus_data *data = i2c_get_clientdata(client);
- 	int ret;
- 
- 	mutex_lock(&data->update_lock);
--	ret = _pmbus_is_enabled(dev, page);
-+	ret = _pmbus_is_enabled(client, page);
- 	mutex_unlock(&data->update_lock);
- 
- 	return ret;
-@@ -2844,7 +2842,7 @@ static int _pmbus_get_flags(struct pmbus_data *data, u8 page, unsigned int *flag
- 	if (status < 0)
- 		return status;
- 
--	if (_pmbus_is_enabled(dev, page)) {
-+	if (_pmbus_is_enabled(client, page)) {
- 		if (status & PB_STATUS_OFF) {
- 			*flags |= REGULATOR_ERROR_FAIL;
- 			*event |= REGULATOR_EVENT_FAIL;
-@@ -2898,7 +2896,10 @@ static int __maybe_unused pmbus_get_flags(struct pmbus_data *data, u8 page, unsi
- #if IS_ENABLED(CONFIG_REGULATOR)
- static int pmbus_regulator_is_enabled(struct regulator_dev *rdev)
- {
--	return pmbus_is_enabled(rdev_get_dev(rdev), rdev_get_id(rdev));
-+	struct device *dev = rdev_get_dev(rdev);
-+	struct i2c_client *client = to_i2c_client(dev->parent);
++	dev->can.state = CAN_STATE_STOPPED;
 +
-+	return pmbus_is_enabled(client, rdev_get_id(rdev));
- }
- 
- static int _pmbus_regulator_on_off(struct regulator_dev *rdev, bool enable)
--- 
-2.41.0
-
+ 	/* reset the device */
+ 	rc = gs_cmd_reset(dev);
+ 	if (rc < 0)
 
 
