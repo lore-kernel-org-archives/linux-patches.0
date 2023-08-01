@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B471F95A
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A758C433C7;
-	Tue,  1 Aug 2023 09:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4261F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A574C433C7;
+	Tue,  1 Aug 2023 09:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881830;
-	bh=rwgP3lqA5k0OP4yaS3FooERxQ1rdwFL0Uuu1kVKlOoA=;
+	s=korg; t=1690881832;
+	bh=fjGg2Dg+UHZnuLr1G+E3JECMYkHvWKgRexQ5fC9X1XU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ud4PvIQ5VdZBqI/xX9cbbcSxsKuygiYRIGlen2Fbz/5APR2HM/Vm2kG1eOJaFGZSb
-	 gX3NxeHmMF2Fv/ajSK3TbnXTGBytHnwzsM8TeVzX21S+JbR90OYYhoadX1RHi3lcmt
-	 +bhayTrui/HUQz32bQ/umN/dctEtgXIkwi4aZjGk=
+	b=m4j2hs1OOAgX6EFhxAnfHyWjwH4iYcenox+BgJGofvNHvgMDQLtsg3ACnIGOtrGet
+	 e/npEFAl3qPTLB6TpgVPbG7Z2HzLs7M3S9JJyPDqKo9LmbswNgy5spbO3F2wlgalaT
+	 qIaNxurcdipnPyr/rVH2JGRR4PLwU94ztEjdnCYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Flora Cui <flora.cui@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 044/155] drm/amdgpu: fix vkms crtc settings
-Date: Tue,  1 Aug 2023 11:19:16 +0200
-Message-ID: <20230801091911.752485569@linuxfoundation.org>
+Subject: [PATCH 5.15 018/155] PCI: rockchip: Dont advertise MSI-X in PCIe capabilities
+Date: Tue,  1 Aug 2023 11:18:50 +0200
+Message-ID: <20230801091910.859689420@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -35,166 +36,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Flora Cui <flora.cui@amd.com>
+From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
 
-[ Upstream commit deefd07eedb7baa25956c8365373e6a58c81565a ]
+[ Upstream commit a52587e0bee14cbeeadf48a24013828cb04b8df8 ]
 
-otherwise adev->mode_info.crtcs[] is NULL
+The RK3399 PCIe endpoint controller cannot generate MSI-X IRQs.
+This is documented in the RK3399 technical reference manual (TRM)
+section 17.5.9 "Interrupt Support".
 
-Signed-off-by: Flora Cui <flora.cui@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: b42ae87a7b38 ("drm/amdgpu/vkms: relax timer deactivation by hrtimer_try_to_cancel")
+MSI-X capability should therefore not be advertised. Remove the
+MSI-X capability by editing the capability linked-list. The
+previous entry is the MSI capability, therefore get the next
+entry from the MSI-X capability entry and set it as next entry
+for the MSI capability. This in effect removes MSI-X from the list.
+
+Linked list before : MSI cap -> MSI-X cap -> PCIe Device cap -> ...
+Linked list now : MSI cap -> PCIe Device cap -> ...
+
+Link: https://lore.kernel.org/r/20230418074700.1083505-11-rick.wertenbroek@gmail.com
+Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
+Tested-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c | 42 ++++++++++++++++--------
- drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.h |  5 ++-
- 2 files changed, 30 insertions(+), 17 deletions(-)
+ drivers/pci/controller/pcie-rockchip-ep.c | 24 +++++++++++++++++++++++
+ drivers/pci/controller/pcie-rockchip.h    |  5 +++++
+ 2 files changed, 29 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c
-index 7d58bf410be05..24251cdf95073 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c
-@@ -16,6 +16,8 @@
- #include "ivsrcid/ivsrcid_vislands30.h"
- #include "amdgpu_vkms.h"
- #include "amdgpu_display.h"
-+#include "atom.h"
-+#include "amdgpu_irq.h"
+diff --git a/drivers/pci/controller/pcie-rockchip-ep.c b/drivers/pci/controller/pcie-rockchip-ep.c
+index 3d6f828d29fc2..0af0e965fb57e 100644
+--- a/drivers/pci/controller/pcie-rockchip-ep.c
++++ b/drivers/pci/controller/pcie-rockchip-ep.c
+@@ -508,6 +508,7 @@ static int rockchip_pcie_ep_probe(struct platform_device *pdev)
+ 	size_t max_regions;
+ 	struct pci_epc_mem_window *windows = NULL;
+ 	int err, i;
++	u32 cfg_msi, cfg_msix_cp;
  
- /**
-  * DOC: amdgpu_vkms
-@@ -41,14 +43,13 @@ static const u32 amdgpu_vkms_formats[] = {
+ 	ep = devm_kzalloc(dev, sizeof(*ep), GFP_KERNEL);
+ 	if (!ep)
+@@ -583,6 +584,29 @@ static int rockchip_pcie_ep_probe(struct platform_device *pdev)
  
- static enum hrtimer_restart amdgpu_vkms_vblank_simulate(struct hrtimer *timer)
- {
--	struct amdgpu_vkms_output *output = container_of(timer,
--							 struct amdgpu_vkms_output,
--							 vblank_hrtimer);
--	struct drm_crtc *crtc = &output->crtc;
-+	struct amdgpu_crtc *amdgpu_crtc = container_of(timer, struct amdgpu_crtc, vblank_timer);
-+	struct drm_crtc *crtc = &amdgpu_crtc->base;
-+	struct amdgpu_vkms_output *output = drm_crtc_to_amdgpu_vkms_output(crtc);
- 	u64 ret_overrun;
- 	bool ret;
+ 	ep->irq_pci_addr = ROCKCHIP_PCIE_EP_DUMMY_IRQ_ADDR;
  
--	ret_overrun = hrtimer_forward_now(&output->vblank_hrtimer,
-+	ret_overrun = hrtimer_forward_now(&amdgpu_crtc->vblank_timer,
- 					  output->period_ns);
- 	WARN_ON(ret_overrun != 1);
- 
-@@ -65,22 +66,21 @@ static int amdgpu_vkms_enable_vblank(struct drm_crtc *crtc)
- 	unsigned int pipe = drm_crtc_index(crtc);
- 	struct drm_vblank_crtc *vblank = &dev->vblank[pipe];
- 	struct amdgpu_vkms_output *out = drm_crtc_to_amdgpu_vkms_output(crtc);
-+	struct amdgpu_crtc *amdgpu_crtc = to_amdgpu_crtc(crtc);
- 
- 	drm_calc_timestamping_constants(crtc, &crtc->mode);
- 
--	hrtimer_init(&out->vblank_hrtimer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
--	out->vblank_hrtimer.function = &amdgpu_vkms_vblank_simulate;
- 	out->period_ns = ktime_set(0, vblank->framedur_ns);
--	hrtimer_start(&out->vblank_hrtimer, out->period_ns, HRTIMER_MODE_REL);
-+	hrtimer_start(&amdgpu_crtc->vblank_timer, out->period_ns, HRTIMER_MODE_REL);
- 
- 	return 0;
- }
- 
- static void amdgpu_vkms_disable_vblank(struct drm_crtc *crtc)
- {
--	struct amdgpu_vkms_output *out = drm_crtc_to_amdgpu_vkms_output(crtc);
-+	struct amdgpu_crtc *amdgpu_crtc = to_amdgpu_crtc(crtc);
- 
--	hrtimer_cancel(&out->vblank_hrtimer);
-+	hrtimer_cancel(&amdgpu_crtc->vblank_timer);
- }
- 
- static bool amdgpu_vkms_get_vblank_timestamp(struct drm_crtc *crtc,
-@@ -92,13 +92,14 @@ static bool amdgpu_vkms_get_vblank_timestamp(struct drm_crtc *crtc,
- 	unsigned int pipe = crtc->index;
- 	struct amdgpu_vkms_output *output = drm_crtc_to_amdgpu_vkms_output(crtc);
- 	struct drm_vblank_crtc *vblank = &dev->vblank[pipe];
-+	struct amdgpu_crtc *amdgpu_crtc = to_amdgpu_crtc(crtc);
- 
- 	if (!READ_ONCE(vblank->enabled)) {
- 		*vblank_time = ktime_get();
- 		return true;
- 	}
- 
--	*vblank_time = READ_ONCE(output->vblank_hrtimer.node.expires);
-+	*vblank_time = READ_ONCE(amdgpu_crtc->vblank_timer.node.expires);
- 
- 	if (WARN_ON(*vblank_time == vblank->time))
- 		return true;
-@@ -166,6 +167,8 @@ static const struct drm_crtc_helper_funcs amdgpu_vkms_crtc_helper_funcs = {
- static int amdgpu_vkms_crtc_init(struct drm_device *dev, struct drm_crtc *crtc,
- 			  struct drm_plane *primary, struct drm_plane *cursor)
- {
-+	struct amdgpu_device *adev = drm_to_adev(dev);
-+	struct amdgpu_crtc *amdgpu_crtc = to_amdgpu_crtc(crtc);
- 	int ret;
- 
- 	ret = drm_crtc_init_with_planes(dev, crtc, primary, cursor,
-@@ -177,6 +180,17 @@ static int amdgpu_vkms_crtc_init(struct drm_device *dev, struct drm_crtc *crtc,
- 
- 	drm_crtc_helper_add(crtc, &amdgpu_vkms_crtc_helper_funcs);
- 
-+	amdgpu_crtc->crtc_id = drm_crtc_index(crtc);
-+	adev->mode_info.crtcs[drm_crtc_index(crtc)] = amdgpu_crtc;
++	/*
++	 * MSI-X is not supported but the controller still advertises the MSI-X
++	 * capability by default, which can lead to the Root Complex side
++	 * allocating MSI-X vectors which cannot be used. Avoid this by skipping
++	 * the MSI-X capability entry in the PCIe capabilities linked-list: get
++	 * the next pointer from the MSI-X entry and set that in the MSI
++	 * capability entry (which is the previous entry). This way the MSI-X
++	 * entry is skipped (left out of the linked-list) and not advertised.
++	 */
++	cfg_msi = rockchip_pcie_read(rockchip, PCIE_EP_CONFIG_BASE +
++				     ROCKCHIP_PCIE_EP_MSI_CTRL_REG);
 +
-+	amdgpu_crtc->pll_id = ATOM_PPLL_INVALID;
-+	amdgpu_crtc->encoder = NULL;
-+	amdgpu_crtc->connector = NULL;
-+	amdgpu_crtc->vsync_timer_enabled = AMDGPU_IRQ_STATE_DISABLE;
++	cfg_msi &= ~ROCKCHIP_PCIE_EP_MSI_CP1_MASK;
 +
-+	hrtimer_init(&amdgpu_crtc->vblank_timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
-+	amdgpu_crtc->vblank_timer.function = &amdgpu_vkms_vblank_simulate;
++	cfg_msix_cp = rockchip_pcie_read(rockchip, PCIE_EP_CONFIG_BASE +
++					 ROCKCHIP_PCIE_EP_MSIX_CAP_REG) &
++					 ROCKCHIP_PCIE_EP_MSIX_CAP_CP_MASK;
 +
- 	return ret;
- }
++	cfg_msi |= cfg_msix_cp;
++
++	rockchip_pcie_write(rockchip, cfg_msi,
++			    PCIE_EP_CONFIG_BASE + ROCKCHIP_PCIE_EP_MSI_CTRL_REG);
++
+ 	rockchip_pcie_write(rockchip, PCIE_CLIENT_CONF_ENABLE,
+ 			    PCIE_CLIENT_CONFIG);
  
-@@ -402,7 +416,7 @@ int amdgpu_vkms_output_init(struct drm_device *dev,
- {
- 	struct drm_connector *connector = &output->connector;
- 	struct drm_encoder *encoder = &output->encoder;
--	struct drm_crtc *crtc = &output->crtc;
-+	struct drm_crtc *crtc = &output->crtc.base;
- 	struct drm_plane *primary, *cursor = NULL;
- 	int ret;
- 
-@@ -505,8 +519,8 @@ static int amdgpu_vkms_sw_fini(void *handle)
- 	int i = 0;
- 
- 	for (i = 0; i < adev->mode_info.num_crtc; i++)
--		if (adev->amdgpu_vkms_output[i].vblank_hrtimer.function)
--			hrtimer_cancel(&adev->amdgpu_vkms_output[i].vblank_hrtimer);
-+		if (adev->mode_info.crtcs[i])
-+			hrtimer_cancel(&adev->mode_info.crtcs[i]->vblank_timer);
- 
- 	kfree(adev->mode_info.bios_hardcoded_edid);
- 	kfree(adev->amdgpu_vkms_output);
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.h
-index 97f1b79c0724e..4f8722ff37c25 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.h
-@@ -10,15 +10,14 @@
- #define YRES_MAX  16384
- 
- #define drm_crtc_to_amdgpu_vkms_output(target) \
--	container_of(target, struct amdgpu_vkms_output, crtc)
-+	container_of(target, struct amdgpu_vkms_output, crtc.base)
- 
- extern const struct amdgpu_ip_block_version amdgpu_vkms_ip_block;
- 
- struct amdgpu_vkms_output {
--	struct drm_crtc crtc;
-+	struct amdgpu_crtc crtc;
- 	struct drm_encoder encoder;
- 	struct drm_connector connector;
--	struct hrtimer vblank_hrtimer;
- 	ktime_t period_ns;
- 	struct drm_pending_vblank_event *event;
- };
+diff --git a/drivers/pci/controller/pcie-rockchip.h b/drivers/pci/controller/pcie-rockchip.h
+index 498a40251d0be..88e2bf65e433a 100644
+--- a/drivers/pci/controller/pcie-rockchip.h
++++ b/drivers/pci/controller/pcie-rockchip.h
+@@ -228,6 +228,8 @@
+ #define ROCKCHIP_PCIE_EP_CMD_STATUS			0x4
+ #define   ROCKCHIP_PCIE_EP_CMD_STATUS_IS		BIT(19)
+ #define ROCKCHIP_PCIE_EP_MSI_CTRL_REG			0x90
++#define   ROCKCHIP_PCIE_EP_MSI_CP1_OFFSET		8
++#define   ROCKCHIP_PCIE_EP_MSI_CP1_MASK			GENMASK(15, 8)
+ #define   ROCKCHIP_PCIE_EP_MSI_FLAGS_OFFSET		16
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_OFFSET		17
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_MASK		GENMASK(19, 17)
+@@ -235,6 +237,9 @@
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MME_MASK		GENMASK(22, 20)
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_ME				BIT(16)
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MASK_MSI_CAP	BIT(24)
++#define ROCKCHIP_PCIE_EP_MSIX_CAP_REG			0xb0
++#define   ROCKCHIP_PCIE_EP_MSIX_CAP_CP_OFFSET		8
++#define   ROCKCHIP_PCIE_EP_MSIX_CAP_CP_MASK		GENMASK(15, 8)
+ #define ROCKCHIP_PCIE_EP_DUMMY_IRQ_ADDR				0x1
+ #define ROCKCHIP_PCIE_EP_PCI_LEGACY_IRQ_ADDR		0x3
+ #define ROCKCHIP_PCIE_EP_FUNC_BASE(fn) \
 -- 
 2.39.2
 
