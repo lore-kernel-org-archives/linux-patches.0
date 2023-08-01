@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF041F95A
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42976C433C7;
-	Tue,  1 Aug 2023 09:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885381F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098A3C433C8;
+	Tue,  1 Aug 2023 09:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881804;
-	bh=e8Sn9gEc3MkU5ZIixcQYdGwkIffoH7At60y/dXMOxhM=;
+	s=korg; t=1690881807;
+	bh=2SJQnLtg9IBgEELKFZxGGLYlZ4XuM5VNPa1/SkNC2ug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZtlXrFfetVcthsNfRGBUNZS/WrXwnxDcJa4cXR6GRs0ITGku9VfHX3o3Dw6cs4q+F
-	 RCC7wLfmzfyJ3r5hnuhly/vZE1jOh+OofFM8qVEZT5V2UB01CO4k5CmYd4kABryanc
-	 9fg7/wzh6JJpYP0/YG//oqXLJvWkelm2QpquNc2s=
+	b=N2Q/IbTY1KguMYusxMrqB76vIs1SlTZ4mjWD/IUvVe+a7XhkgDy93DaRqYA+6HuLq
+	 UIQhTrHvbEj/HyPKzoldd8BgKnVRIi1AjuNucr+ML7UQApGzp6QgoVp417hxs+DToe
+	 qmr1IFo24oH3Lyyc4PyEUIiUx54s8TaJfgG+U6KM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Tom Zanussi <zanussi@kernel.org>,
-	Ross Zwisler <zwisler@google.com>,
-	Ching-lin Yu <chinglinyu@google.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 035/155] tracing: Allow synthetic events to pass around stacktraces
-Date: Tue,  1 Aug 2023 11:19:07 +0200
-Message-ID: <20230801091911.439756974@linuxfoundation.org>
+Subject: [PATCH 5.15 036/155] Revert "tracing: Add "(fault)" name injection to kernel probes"
+Date: Tue,  1 Aug 2023 11:19:08 +0200
+Message-ID: <20230801091911.469165142@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -39,280 +37,133 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 00cf3d672a9dd409418647e9f98784c339c3ff63 ]
+[ Upstream commit 4ed8f337dee32df71435689c19d22e4ee846e15a ]
 
-Allow a stacktrace from one event to be displayed by the end event of a
-synthetic event. This is very useful when looking for the longest latency
-of a sleep or something blocked on I/O.
+This reverts commit 2e9906f84fc7c99388bb7123ade167250d50f1c0.
 
- # cd /sys/kernel/tracing/
- # echo 's:block_lat pid_t pid; u64 delta; unsigned long[] stack;' > dynamic_events
- # echo 'hist:keys=next_pid:ts=common_timestamp.usecs,st=stacktrace  if prev_state == 1||prev_state == 2' > events/sched/sched_switch/trigger
- # echo 'hist:keys=prev_pid:delta=common_timestamp.usecs-$ts,s=$st:onmax($delta).trace(block_lat,prev_pid,$delta,$s)' >> events/sched/sched_switch/trigger
+It was turned out that commit 2e9906f84fc7 ("tracing: Add "(fault)"
+name injection to kernel probes") did not work correctly and probe
+events still show just '(fault)' (instead of '"(fault)"'). Also,
+current '(fault)' is more explicit that it faulted.
 
-The above creates a "block_lat" synthetic event that take the stacktrace of
-when a task schedules out in either the interruptible or uninterruptible
-states, and on a new per process max $delta (the time it was scheduled
-out), will print the process id and the stacktrace.
+This also moves FAULT_STRING macro to trace.h so that synthetic
+event can keep using it, and uses it in trace_probe.c too.
 
-  # echo 1 > events/synthetic/block_lat/enable
-  # cat trace
- #           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
- #              | |         |   |||||     |         |
-    kworker/u16:0-767     [006] d..4.   560.645045: block_lat: pid=767 delta=66 stack=STACK:
- => __schedule
- => schedule
- => pipe_read
- => vfs_read
- => ksys_read
- => do_syscall_64
- => 0x966000aa
+Link: https://lore.kernel.org/all/168908495772.123124.1250788051922100079.stgit@devnote2/
+Link: https://lore.kernel.org/all/20230706230642.3793a593@rorschach.local.home/
 
-           <idle>-0       [003] d..4.   561.132117: block_lat: pid=0 delta=413787 stack=STACK:
- => __schedule
- => schedule
- => schedule_hrtimeout_range_clock
- => do_sys_poll
- => __x64_sys_poll
- => do_syscall_64
- => 0x966000aa
-
-            <...>-153     [006] d..4.   562.068407: block_lat: pid=153 delta=54 stack=STACK:
- => __schedule
- => schedule
- => io_schedule
- => rq_qos_wait
- => wbt_wait
- => __rq_qos_throttle
- => blk_mq_submit_bio
- => submit_bio_noacct_nocheck
- => ext4_bio_write_page
- => mpage_submit_page
- => mpage_process_page_bufs
- => mpage_prepare_extent_to_map
- => ext4_do_writepages
- => ext4_writepages
- => do_writepages
- => __writeback_single_inode
-
-Link: https://lkml.kernel.org/r/20230117152236.010941267@goodmis.org
-
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: stable@vger.kernel.org
 Cc: Andrew Morton <akpm@linux-foundation.org>
 Cc: Tom Zanussi <zanussi@kernel.org>
-Cc: Ross Zwisler <zwisler@google.com>
-Cc: Ching-lin Yu <chinglinyu@google.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Stable-dep-of: 797311bce5c2 ("tracing/probes: Fix to record 0-length data_loc in fetch_store_string*() if fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.h              |  4 ++
- kernel/trace/trace_events_hist.c  |  7 ++-
- kernel/trace/trace_events_synth.c | 80 ++++++++++++++++++++++++++++++-
- kernel/trace/trace_synth.h        |  1 +
- 4 files changed, 87 insertions(+), 5 deletions(-)
+ kernel/trace/trace.h              |  2 ++
+ kernel/trace/trace_probe.c        |  2 +-
+ kernel/trace/trace_probe_kernel.h | 31 ++++++-------------------------
+ 3 files changed, 9 insertions(+), 26 deletions(-)
 
 diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
-index 2c3d9b6ce1485..33c55c8826a7e 100644
+index 33c55c8826a7e..43058077a4def 100644
 --- a/kernel/trace/trace.h
 +++ b/kernel/trace/trace.h
-@@ -113,6 +113,10 @@ enum trace_type {
+@@ -113,6 +113,8 @@ enum trace_type {
  #define MEM_FAIL(condition, fmt, ...)					\
  	DO_ONCE_LITE_IF(condition, pr_err, "ERROR: " fmt, ##__VA_ARGS__)
  
-+#define HIST_STACKTRACE_DEPTH	16
-+#define HIST_STACKTRACE_SIZE	(HIST_STACKTRACE_DEPTH * sizeof(unsigned long))
-+#define HIST_STACKTRACE_SKIP	5
++#define FAULT_STRING "(fault)"
 +
- /*
-  * syscalls are special, and need special handling, this is why
-  * they are not included in trace_entries.h
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 1b70fc4c703f7..c32a53f089229 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -315,10 +315,6 @@ DEFINE_HIST_FIELD_FN(u8);
- #define for_each_hist_key_field(i, hist_data)	\
- 	for ((i) = (hist_data)->n_vals; (i) < (hist_data)->n_fields; (i)++)
+ #define HIST_STACKTRACE_DEPTH	16
+ #define HIST_STACKTRACE_SIZE	(HIST_STACKTRACE_DEPTH * sizeof(unsigned long))
+ #define HIST_STACKTRACE_SKIP	5
+diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
+index 90bae188d0928..0888f0644d257 100644
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -64,7 +64,7 @@ int PRINT_TYPE_FUNC_NAME(string)(struct trace_seq *s, void *data, void *ent)
+ 	int len = *(u32 *)data >> 16;
  
--#define HIST_STACKTRACE_DEPTH	16
--#define HIST_STACKTRACE_SIZE	(HIST_STACKTRACE_DEPTH * sizeof(unsigned long))
--#define HIST_STACKTRACE_SKIP	5
+ 	if (!len)
+-		trace_seq_puts(s, "(fault)");
++		trace_seq_puts(s, FAULT_STRING);
+ 	else
+ 		trace_seq_printf(s, "\"%s\"",
+ 				 (const char *)get_loc_data(data, ent));
+diff --git a/kernel/trace/trace_probe_kernel.h b/kernel/trace/trace_probe_kernel.h
+index 77dbd9ff97826..1d43df29a1f8e 100644
+--- a/kernel/trace/trace_probe_kernel.h
++++ b/kernel/trace/trace_probe_kernel.h
+@@ -2,8 +2,6 @@
+ #ifndef __TRACE_PROBE_KERNEL_H_
+ #define __TRACE_PROBE_KERNEL_H_
+ 
+-#define FAULT_STRING "(fault)"
 -
- #define HITCOUNT_IDX		0
- #define HIST_KEY_SIZE_MAX	(MAX_FILTER_STR_VAL + HIST_STACKTRACE_SIZE)
- 
-@@ -3431,6 +3427,9 @@ static int check_synth_field(struct synth_event *event,
- 	    && field->is_dynamic)
- 		return 0;
- 
-+	if (strstr(hist_field->type, "long[") && field->is_stack)
-+		return 0;
-+
- 	if (strcmp(field->type, hist_field->type) != 0) {
- 		if (field->size != hist_field->size ||
- 		    (!field->is_string && field->is_signed != hist_field->is_signed))
-diff --git a/kernel/trace/trace_events_synth.c b/kernel/trace/trace_events_synth.c
-index 08c7df42ade7e..ce8fad956b38d 100644
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -165,6 +165,14 @@ static int synth_field_is_string(char *type)
- 	return false;
- }
- 
-+static int synth_field_is_stack(char *type)
-+{
-+	if (strstr(type, "long[") != NULL)
-+		return true;
-+
-+	return false;
-+}
-+
- static int synth_field_string_size(char *type)
+ /*
+  * This depends on trace_probe.h, but can not include it due to
+  * the way trace_probe_tmpl.h is used by trace_kprobe.c and trace_eprobe.c.
+@@ -15,16 +13,8 @@ static nokprobe_inline int
+ kern_fetch_store_strlen_user(unsigned long addr)
  {
- 	char buf[4], *end, *start;
-@@ -240,6 +248,8 @@ static int synth_field_size(char *type)
- 		size = sizeof(gfp_t);
- 	else if (synth_field_is_string(type))
- 		size = synth_field_string_size(type);
-+	else if (synth_field_is_stack(type))
-+		size = 0;
+ 	const void __user *uaddr =  (__force const void __user *)addr;
+-	int ret;
  
- 	return size;
- }
-@@ -284,6 +294,8 @@ static const char *synth_field_fmt(char *type)
- 		fmt = "%x";
- 	else if (synth_field_is_string(type))
- 		fmt = "%.*s";
-+	else if (synth_field_is_stack(type))
-+		fmt = "%s";
- 
- 	return fmt;
- }
-@@ -363,6 +375,23 @@ static enum print_line_t print_synth_event(struct trace_iterator *iter,
- 						 i == se->n_fields - 1 ? "" : " ");
- 				n_u64 += STR_VAR_LEN_MAX / sizeof(u64);
- 			}
-+		} else if (se->fields[i]->is_stack) {
-+			u32 offset, data_offset, len;
-+			unsigned long *p, *end;
-+
-+			offset = (u32)entry->fields[n_u64];
-+			data_offset = offset & 0xffff;
-+			len = offset >> 16;
-+
-+			p = (void *)entry + data_offset;
-+			end = (void *)p + len - (sizeof(long) - 1);
-+
-+			trace_seq_printf(s, "%s=STACK:\n", se->fields[i]->name);
-+
-+			for (; *p && p < end; p++)
-+				trace_seq_printf(s, "=> %pS\n", (void *)*p);
-+			n_u64++;
-+
- 		} else {
- 			struct trace_print_flags __flags[] = {
- 			    __def_gfpflag_names, {-1, NULL} };
-@@ -439,6 +468,43 @@ static unsigned int trace_string(struct synth_trace_event *entry,
- 	return len;
+-	ret = strnlen_user_nofault(uaddr, MAX_STRING_SIZE);
+-	/*
+-	 * strnlen_user_nofault returns zero on fault, insert the
+-	 * FAULT_STRING when that occurs.
+-	 */
+-	if (ret <= 0)
+-		return strlen(FAULT_STRING) + 1;
+-	return ret;
++	return strnlen_user_nofault(uaddr, MAX_STRING_SIZE);
  }
  
-+static unsigned int trace_stack(struct synth_trace_event *entry,
-+				 struct synth_event *event,
-+				 long *stack,
-+				 unsigned int data_size,
-+				 unsigned int *n_u64)
-+{
-+	unsigned int len;
-+	u32 data_offset;
-+	void *data_loc;
-+
-+	data_offset = struct_size(entry, fields, event->n_u64);
-+	data_offset += data_size;
-+
-+	for (len = 0; len < HIST_STACKTRACE_DEPTH; len++) {
-+		if (!stack[len])
-+			break;
-+	}
-+
-+	/* Include the zero'd element if it fits */
-+	if (len < HIST_STACKTRACE_DEPTH)
-+		len++;
-+
-+	len *= sizeof(long);
-+
-+	/* Find the dynamic section to copy the stack into. */
-+	data_loc = (void *)entry + data_offset;
-+	memcpy(data_loc, stack, len);
-+
-+	/* Fill in the field that holds the offset/len combo */
-+	data_offset |= len << 16;
-+	*(u32 *)&entry->fields[*n_u64] = data_offset;
-+
-+	(*n_u64)++;
-+
-+	return len;
-+}
-+
- static notrace void trace_event_raw_event_synth(void *__data,
- 						u64 *var_ref_vals,
- 						unsigned int *var_ref_idx)
-@@ -491,6 +557,12 @@ static notrace void trace_event_raw_event_synth(void *__data,
- 					   event->fields[i]->is_dynamic,
- 					   data_size, &n_u64);
- 			data_size += len; /* only dynamic string increments */
-+		} if (event->fields[i]->is_stack) {
-+		        long *stack = (long *)(long)var_ref_vals[val_idx];
-+
-+			len = trace_stack(entry, event, stack,
-+					   data_size, &n_u64);
-+			data_size += len;
- 		} else {
- 			struct synth_field *field = event->fields[i];
- 			u64 val = var_ref_vals[val_idx];
-@@ -553,6 +625,9 @@ static int __set_synth_event_print_fmt(struct synth_event *event,
- 		    event->fields[i]->is_dynamic)
- 			pos += snprintf(buf + pos, LEN_OR_ZERO,
- 				", __get_str(%s)", event->fields[i]->name);
-+		else if (event->fields[i]->is_stack)
-+			pos += snprintf(buf + pos, LEN_OR_ZERO,
-+				", __get_stacktrace(%s)", event->fields[i]->name);
- 		else
- 			pos += snprintf(buf + pos, LEN_OR_ZERO,
- 					", REC->%s", event->fields[i]->name);
-@@ -689,7 +764,8 @@ static struct synth_field *parse_synth_field(int argc, char **argv,
- 		ret = -EINVAL;
- 		goto free;
- 	} else if (size == 0) {
--		if (synth_field_is_string(field->type)) {
-+		if (synth_field_is_string(field->type) ||
-+		    synth_field_is_stack(field->type)) {
- 			char *type;
+ /* Return the length of string -- including null terminal byte */
+@@ -44,18 +34,7 @@ kern_fetch_store_strlen(unsigned long addr)
+ 		len++;
+ 	} while (c && ret == 0 && len < MAX_STRING_SIZE);
  
- 			len = sizeof("__data_loc ") + strlen(field->type) + 1;
-@@ -720,6 +796,8 @@ static struct synth_field *parse_synth_field(int argc, char **argv,
+-	/* For faults, return enough to hold the FAULT_STRING */
+-	return (ret < 0) ? strlen(FAULT_STRING) + 1 : len;
+-}
+-
+-static nokprobe_inline void set_data_loc(int ret, void *dest, void *__dest, void *base, int len)
+-{
+-	if (ret >= 0) {
+-		*(u32 *)dest = make_data_loc(ret, __dest - base);
+-	} else {
+-		strscpy(__dest, FAULT_STRING, len);
+-		ret = strlen(__dest) + 1;
+-	}
++	return (ret < 0) ? ret : len;
+ }
  
- 	if (synth_field_is_string(field->type))
- 		field->is_string = true;
-+	else if (synth_field_is_stack(field->type))
-+		field->is_stack = true;
+ /*
+@@ -76,7 +55,8 @@ kern_fetch_store_string_user(unsigned long addr, void *dest, void *base)
+ 	__dest = get_loc_data(dest, base);
  
- 	field->is_signed = synth_field_signed(field->type);
-  out:
-diff --git a/kernel/trace/trace_synth.h b/kernel/trace/trace_synth.h
-index b29595fe3ac5a..43f6fb6078dbf 100644
---- a/kernel/trace/trace_synth.h
-+++ b/kernel/trace/trace_synth.h
-@@ -18,6 +18,7 @@ struct synth_field {
- 	bool is_signed;
- 	bool is_string;
- 	bool is_dynamic;
-+	bool is_stack;
- };
+ 	ret = strncpy_from_user_nofault(__dest, uaddr, maxlen);
+-	set_data_loc(ret, dest, __dest, base, maxlen);
++	if (ret >= 0)
++		*(u32 *)dest = make_data_loc(ret, __dest - base);
  
- struct synth_event {
+ 	return ret;
+ }
+@@ -107,7 +87,8 @@ kern_fetch_store_string(unsigned long addr, void *dest, void *base)
+ 	 * probing.
+ 	 */
+ 	ret = strncpy_from_kernel_nofault(__dest, (void *)addr, maxlen);
+-	set_data_loc(ret, dest, __dest, base, maxlen);
++	if (ret >= 0)
++		*(u32 *)dest = make_data_loc(ret, __dest - base);
+ 
+ 	return ret;
+ }
 -- 
 2.39.2
 
