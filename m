@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96671F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:41:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 290D1C433C8;
-	Tue,  1 Aug 2023 09:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2F51F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:41:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6484C433C7;
+	Tue,  1 Aug 2023 09:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882905;
-	bh=nNuiOaKqtBeLM+JfogWZTQsSR86XZdFAN1n7h6vgWIk=;
+	s=korg; t=1690882908;
+	bh=y31RUH6m1hoTULCEVwvDLd/dGbvo+5TNHYZShc1V794=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DwLg60uZR1vVocd8Chet/3rlEDv87yc4MjhjAdx4fXXwKkyi7QYbkmuirPQ48MDjH
-	 tqdzjtJcR54GLGR5yaexctcS26UNJ2eo9E42jkyUCwP6QI7hsKTptgqFFCAprh3zDF
-	 zrNbZLl2IWL0qda7VbkWJfXC3tgsry6ioJn70WG4=
+	b=AC4K522LQxxs+l0xdTkiHBCbQZsy2lJO2rxuDaL6Z3XObDNuoQw1THwLdld/CbGIh
+	 uv6JhFGCk/k3RgjHWae6lTWQmSrhnOqoS0WsrcjxQ+F4ea51v3+0JhZNVQlaSIAsxb
+	 phBhBNYsX/KTsip7TTwR9vqknjeO0Cc6TotE4DkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Alan Liu <haoping.liu@amd.com>,
-	Daniel Miess <daniel.miess@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 045/239] drm/amd/display: Prevent vtotal from being set to 0
-Date: Tue,  1 Aug 2023 11:18:29 +0200
-Message-ID: <20230801091927.201063460@linuxfoundation.org>
+Subject: [PATCH 6.4 046/239] jbd2: remove t_checkpoint_io_list
+Date: Tue,  1 Aug 2023 11:18:30 +0200
+Message-ID: <20230801091927.232170784@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -39,49 +36,144 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Miess <daniel.miess@amd.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 2a9482e55968ed7368afaa9c2133404069117320 ]
+[ Upstream commit be22255360f80d3af789daad00025171a65424a5 ]
 
-[Why]
-In dcn314 DML the destination pipe vtotal was being set
-to the crtc adjustment vtotal_min value even in cases
-where that value is 0.
+Since t_checkpoint_io_list was stop using in jbd2_log_do_checkpoint()
+now, it's time to remove the whole t_checkpoint_io_list logic.
 
-[How]
-Only set vtotal to the crtc adjustment vtotal_min value
-in cases where the value is non-zero.
-
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Acked-by: Alan Liu <haoping.liu@amd.com>
-Signed-off-by: Daniel Miess <daniel.miess@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230606135928.434610-3-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 46f881b5b175 ("jbd2: fix a race when checking checkpoint buffer busy")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/jbd2/checkpoint.c | 42 ++----------------------------------------
+ fs/jbd2/commit.c     |  3 +--
+ include/linux/jbd2.h |  6 ------
+ 3 files changed, 3 insertions(+), 48 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
-index 554152371eb53..b878effa2129b 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
-@@ -300,7 +300,11 @@ int dcn314_populate_dml_pipes_from_context_fpu(struct dc *dc, struct dc_state *c
- 		pipe = &res_ctx->pipe_ctx[i];
- 		timing = &pipe->stream->timing;
+diff --git a/fs/jbd2/checkpoint.c b/fs/jbd2/checkpoint.c
+index c4e0da6db7195..723b4eb112828 100644
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -27,7 +27,7 @@
+  *
+  * Called with j_list_lock held.
+  */
+-static inline void __buffer_unlink_first(struct journal_head *jh)
++static inline void __buffer_unlink(struct journal_head *jh)
+ {
+ 	transaction_t *transaction = jh->b_cp_transaction;
  
--		pipes[pipe_cnt].pipe.dest.vtotal = pipe->stream->adjust.v_total_min;
-+		if (pipe->stream->adjust.v_total_min != 0)
-+			pipes[pipe_cnt].pipe.dest.vtotal = pipe->stream->adjust.v_total_min;
-+		else
-+			pipes[pipe_cnt].pipe.dest.vtotal = timing->v_total;
-+
- 		pipes[pipe_cnt].pipe.dest.vblank_nom = timing->v_total - pipes[pipe_cnt].pipe.dest.vactive;
- 		pipes[pipe_cnt].pipe.dest.vblank_nom = min(pipes[pipe_cnt].pipe.dest.vblank_nom, dcn3_14_ip.VBlankNomDefaultUS);
- 		pipes[pipe_cnt].pipe.dest.vblank_nom = max(pipes[pipe_cnt].pipe.dest.vblank_nom, timing->v_sync_width);
+@@ -40,23 +40,6 @@ static inline void __buffer_unlink_first(struct journal_head *jh)
+ 	}
+ }
+ 
+-/*
+- * Unlink a buffer from a transaction checkpoint(io) list.
+- *
+- * Called with j_list_lock held.
+- */
+-static inline void __buffer_unlink(struct journal_head *jh)
+-{
+-	transaction_t *transaction = jh->b_cp_transaction;
+-
+-	__buffer_unlink_first(jh);
+-	if (transaction->t_checkpoint_io_list == jh) {
+-		transaction->t_checkpoint_io_list = jh->b_cpnext;
+-		if (transaction->t_checkpoint_io_list == jh)
+-			transaction->t_checkpoint_io_list = NULL;
+-	}
+-}
+-
+ /*
+  * Check a checkpoint buffer could be release or not.
+  *
+@@ -505,15 +488,6 @@ unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal,
+ 			break;
+ 		if (need_resched() || spin_needbreak(&journal->j_list_lock))
+ 			break;
+-		if (released)
+-			continue;
+-
+-		nr_freed += journal_shrink_one_cp_list(transaction->t_checkpoint_io_list,
+-						       nr_to_scan, &released);
+-		if (*nr_to_scan == 0)
+-			break;
+-		if (need_resched() || spin_needbreak(&journal->j_list_lock))
+-			break;
+ 	} while (transaction != last_transaction);
+ 
+ 	if (transaction != last_transaction) {
+@@ -568,17 +542,6 @@ void __jbd2_journal_clean_checkpoint_list(journal_t *journal, bool destroy)
+ 		 */
+ 		if (need_resched())
+ 			return;
+-		if (ret)
+-			continue;
+-		/*
+-		 * It is essential that we are as careful as in the case of
+-		 * t_checkpoint_list with removing the buffer from the list as
+-		 * we can possibly see not yet submitted buffers on io_list
+-		 */
+-		ret = journal_clean_one_cp_list(transaction->
+-				t_checkpoint_io_list, destroy);
+-		if (need_resched())
+-			return;
+ 		/*
+ 		 * Stop scanning if we couldn't free the transaction. This
+ 		 * avoids pointless scanning of transactions which still
+@@ -663,7 +626,7 @@ int __jbd2_journal_remove_checkpoint(struct journal_head *jh)
+ 	jbd2_journal_put_journal_head(jh);
+ 
+ 	/* Is this transaction empty? */
+-	if (transaction->t_checkpoint_list || transaction->t_checkpoint_io_list)
++	if (transaction->t_checkpoint_list)
+ 		return 0;
+ 
+ 	/*
+@@ -755,7 +718,6 @@ void __jbd2_journal_drop_transaction(journal_t *journal, transaction_t *transact
+ 	J_ASSERT(transaction->t_forget == NULL);
+ 	J_ASSERT(transaction->t_shadow_list == NULL);
+ 	J_ASSERT(transaction->t_checkpoint_list == NULL);
+-	J_ASSERT(transaction->t_checkpoint_io_list == NULL);
+ 	J_ASSERT(atomic_read(&transaction->t_updates) == 0);
+ 	J_ASSERT(journal->j_committing_transaction != transaction);
+ 	J_ASSERT(journal->j_running_transaction != transaction);
+diff --git a/fs/jbd2/commit.c b/fs/jbd2/commit.c
+index b33155dd70017..1073259902a60 100644
+--- a/fs/jbd2/commit.c
++++ b/fs/jbd2/commit.c
+@@ -1141,8 +1141,7 @@ void jbd2_journal_commit_transaction(journal_t *journal)
+ 	spin_lock(&journal->j_list_lock);
+ 	commit_transaction->t_state = T_FINISHED;
+ 	/* Check if the transaction can be dropped now that we are finished */
+-	if (commit_transaction->t_checkpoint_list == NULL &&
+-	    commit_transaction->t_checkpoint_io_list == NULL) {
++	if (commit_transaction->t_checkpoint_list == NULL) {
+ 		__jbd2_journal_drop_transaction(journal, commit_transaction);
+ 		jbd2_journal_free_transaction(commit_transaction);
+ 	}
+diff --git a/include/linux/jbd2.h b/include/linux/jbd2.h
+index f619bae1dcc5d..91a2cf4bc5756 100644
+--- a/include/linux/jbd2.h
++++ b/include/linux/jbd2.h
+@@ -622,12 +622,6 @@ struct transaction_s
+ 	 */
+ 	struct journal_head	*t_checkpoint_list;
+ 
+-	/*
+-	 * Doubly-linked circular list of all buffers submitted for IO while
+-	 * checkpointing. [j_list_lock]
+-	 */
+-	struct journal_head	*t_checkpoint_io_list;
+-
+ 	/*
+ 	 * Doubly-linked circular list of metadata buffers being
+ 	 * shadowed by log IO.  The IO buffers on the iobuf list and
 -- 
 2.39.2
 
