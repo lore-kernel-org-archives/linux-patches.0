@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E711F1F95E
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:30:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DA7C433C9;
-	Tue,  1 Aug 2023 09:30:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B05FB1F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:30:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32395C433C8;
+	Tue,  1 Aug 2023 09:30:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882219;
-	bh=MaCnA114Q4wiDh/jo5pOSFNm9RPVukngW9L2/J0wIhY=;
+	s=korg; t=1690882222;
+	bh=HJAwzRLsjyOYCHE2bjv/pnqYY6tI9G9ysmS5TMVjSA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hn1TQtqao4Qn900E379QTpr8bLzz0EtRGQLEMHkdK2/zTg5NOYuQe+Ll/m0q58oDF
-	 J7+ofWPQiataMX1dqhzVvrfI0n5+4AVRPMR0nqZDbK7WBxkJ76R4X5DWBPF2hyujLL
-	 azima8mpRpV0nbmucZnINKBMcOp+1T7EEewDL8jc=
+	b=KbBUBraXFaFIpqS/kmkGKnalYFVA0ByaOVeQK6kvGmL/bqSIbNU4jA0Flc3coVIiF
+	 tIefHSDGxY5ma27LSyYv9kF3d2WpyJtrDNUPVL1LDuVdXx5B3v8Lb7cF/W0mWdbIzt
+	 HKzGubpT3Bm412KOdAlCeIGlKv5UF6DyOsP+O2S0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Elfring <elfring@users.sourceforge.net>,
-	Wolfram Sang <wsa@kernel.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 020/228] i2c: Delete error messages for failed memory allocations
-Date: Tue,  1 Aug 2023 11:17:58 +0200
-Message-ID: <20230801091923.588463232@linuxfoundation.org>
+Subject: [PATCH 6.1 029/228] PCI/ASPM: Avoid link retraining race
+Date: Tue,  1 Aug 2023 11:18:07 +0200
+Message-ID: <20230801091923.929094528@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -35,79 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Markus Elfring <elfring@users.sourceforge.net>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 6b3b21a8542fd2fb6ffc61bc13b9419f0c58ebad ]
+[ Upstream commit e7e39756363ad5bd83ddeae1063193d0f13870fd ]
 
-These issues were detected by using the Coccinelle software.
+PCIe r6.0.1, sec 7.5.3.7, recommends setting the link control parameters,
+then waiting for the Link Training bit to be clear before setting the
+Retrain Link bit.
 
-Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Stable-dep-of: 05f933d5f731 ("i2c: nomadik: Remove a useless call in the remove function")
+This avoids a race where the LTSSM may not use the updated parameters if it
+is already in the midst of link training because of other normal link
+activity.
+
+Wait for the Link Training bit to be clear before toggling the Retrain Link
+bit to ensure that the LTSSM uses the updated link control parameters.
+
+[bhelgaas: commit log, return 0 (success)/-ETIMEDOUT instead of bool for
+both pcie_wait_for_retrain() and the existing pcie_retrain_link()]
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Fixes: 7d715a6c1ae5 ("PCI: add PCI Express ASPM support")
+Link: https://lore.kernel.org/r/20230502083923.34562-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-ibm_iic.c  | 4 +---
- drivers/i2c/busses/i2c-nomadik.c  | 1 -
- drivers/i2c/busses/i2c-sh7760.c   | 1 -
- drivers/i2c/busses/i2c-tiny-usb.c | 4 +---
- 4 files changed, 2 insertions(+), 8 deletions(-)
+ drivers/pci/pcie/aspm.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-ibm_iic.c b/drivers/i2c/busses/i2c-ibm_iic.c
-index eeb80e34f9ad7..de3b609515e08 100644
---- a/drivers/i2c/busses/i2c-ibm_iic.c
-+++ b/drivers/i2c/busses/i2c-ibm_iic.c
-@@ -694,10 +694,8 @@ static int iic_probe(struct platform_device *ofdev)
- 	int ret;
+diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+index f6b91252bebc2..07166a4ec27ad 100644
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -213,8 +213,19 @@ static int pcie_wait_for_retrain(struct pci_dev *pdev)
+ static int pcie_retrain_link(struct pcie_link_state *link)
+ {
+ 	struct pci_dev *parent = link->pdev;
++	int rc;
+ 	u16 reg16;
  
- 	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
--	if (!dev) {
--		dev_err(&ofdev->dev, "failed to allocate device data\n");
-+	if (!dev)
- 		return -ENOMEM;
--	}
- 
- 	platform_set_drvdata(ofdev, dev);
- 
-diff --git a/drivers/i2c/busses/i2c-nomadik.c b/drivers/i2c/busses/i2c-nomadik.c
-index a2d12a5b1c34c..05eaae5aeb180 100644
---- a/drivers/i2c/busses/i2c-nomadik.c
-+++ b/drivers/i2c/busses/i2c-nomadik.c
-@@ -972,7 +972,6 @@ static int nmk_i2c_probe(struct amba_device *adev, const struct amba_id *id)
- 
- 	dev = devm_kzalloc(&adev->dev, sizeof(struct nmk_i2c_dev), GFP_KERNEL);
- 	if (!dev) {
--		dev_err(&adev->dev, "cannot allocate memory\n");
- 		ret = -ENOMEM;
- 		goto err_no_mem;
- 	}
-diff --git a/drivers/i2c/busses/i2c-sh7760.c b/drivers/i2c/busses/i2c-sh7760.c
-index 319d1fa617c88..a0ccc5d009874 100644
---- a/drivers/i2c/busses/i2c-sh7760.c
-+++ b/drivers/i2c/busses/i2c-sh7760.c
-@@ -445,7 +445,6 @@ static int sh7760_i2c_probe(struct platform_device *pdev)
- 
- 	id = kzalloc(sizeof(struct cami2c), GFP_KERNEL);
- 	if (!id) {
--		dev_err(&pdev->dev, "no mem for private data\n");
- 		ret = -ENOMEM;
- 		goto out0;
- 	}
-diff --git a/drivers/i2c/busses/i2c-tiny-usb.c b/drivers/i2c/busses/i2c-tiny-usb.c
-index 7279ca0eaa2d0..d1fa9ff5aeab4 100644
---- a/drivers/i2c/busses/i2c-tiny-usb.c
-+++ b/drivers/i2c/busses/i2c-tiny-usb.c
-@@ -226,10 +226,8 @@ static int i2c_tiny_usb_probe(struct usb_interface *interface,
- 
- 	/* allocate memory for our device state and initialize it */
- 	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
--	if (dev == NULL) {
--		dev_err(&interface->dev, "Out of memory\n");
-+	if (!dev)
- 		goto error;
--	}
- 
- 	dev->usb_dev = usb_get_dev(interface_to_usbdev(interface));
- 	dev->interface = interface;
++	/*
++	 * Ensure the updated LNKCTL parameters are used during link
++	 * training by checking that there is no ongoing link training to
++	 * avoid LTSSM race as recommended in Implementation Note at the
++	 * end of PCIe r6.0.1 sec 7.5.3.7.
++	 */
++	rc = pcie_wait_for_retrain(parent);
++	if (rc)
++		return rc;
++
+ 	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
+ 	reg16 |= PCI_EXP_LNKCTL_RL;
+ 	pcie_capability_write_word(parent, PCI_EXP_LNKCTL, reg16);
 -- 
 2.39.2
 
