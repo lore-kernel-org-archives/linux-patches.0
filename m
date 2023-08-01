@@ -1,35 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E835200A3
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:32:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9821C433C8;
-	Tue,  1 Aug 2023 09:32:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FABF200A5
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:32:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49AAC433C8;
+	Tue,  1 Aug 2023 09:32:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882327;
-	bh=1rDH38Fe9oXo2eELUsDo4U+VpucVbyz4LiiLWYXx2II=;
+	s=korg; t=1690882330;
+	bh=tMoUAGfdj66RAtX806LNdzBDqN9RZZW2WJx1QIK0ExM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0+yBh58FNmlbW3XUsnEDoBneQ7lRax+sbI/sO1//xrLLtHM8epR1uzZrCa+1tqxXC
-	 BlvUQvLONWC6L2idWhahm1e1RY4LjnbcrYIAs8AmKFEyj/UgFdCo8CRXtl+EMCGv8P
-	 GGfmx2HB8bC5o5cyY9uJfYw9jmy8gEh9qS5BQADA=
+	b=MJDwgu4QiiicFcIysFR/LX1NGBLM6+mmS/FQRFR8FkCYTWBVqYgsc4nn59LmQTN1a
+	 +pTyssZpJZFb2TamPxCSQ6jHIo7gOsg5hbZJjcfJkLDbh78EYF4gKnHsHwO6Ehc1h6
+	 N9m0WJH33MpK2fH7lSaV+Alx2uCL4u7ou1XXvhd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	kernel test robot <lkp@intel.com>,
+	Alvin Lee <Alvin.Lee2@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
 	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Leo Li <sunpeng.li@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	"Pan, Xinhui" <Xinhui.Pan@amd.com>,
-	amd-gfx@lists.freedesktop.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 066/228] drm/amd/display: fix dc/core/dc.c kernel-doc
-Date: Tue,  1 Aug 2023 11:18:44 +0200
-Message-ID: <20230801091925.222236760@linuxfoundation.org>
+Subject: [PATCH 6.1 067/228] drm/amd/display: Add FAMS validation before trying to use it
+Date: Tue,  1 Aug 2023 11:18:45 +0200
+Message-ID: <20230801091925.254191995@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -43,164 +38,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 
-[ Upstream commit db4107e92a817502ad19fdd30250f87dcb6f6331 ]
+[ Upstream commit e3416e872f84086667df21daf166506fab97358d ]
 
-Fix all kernel-doc warnings in dc/core/dc.c:
+To ensure that FAMS can be used, DC must check if there is VRR support.
+This commit adds the required configuration to ensure FAMS can be executed in the target system.
 
-dc.c:385: warning: missing initial short description on line:
- *  dc_stream_adjust_vmin_vmax:
-dc.c:392: warning: contents before sections
-dc.c:399: warning: No description found for return value of 'dc_stream_adjust_vmin_vmax'
-dc.c:434: warning: Excess function parameter 'adjust' description in 'dc_stream_get_last_used_drr_vtotal'
-dc.c:434: warning: No description found for return value of 'dc_stream_get_last_used_drr_vtotal'
-dc.c:574: warning: No description found for return value of 'dc_stream_configure_crc'
-dc.c:1746: warning: No description found for return value of 'dc_commit_state_no_check'
-dc.c:4991: warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
- * dc_extended_blank_supported 0 Decide whether extended blank is supported
-dc.c:4991: warning: missing initial short description on line:
- * dc_extended_blank_supported 0 Decide whether extended blank is supported
-dc.c:4723: warning: Function parameter or member 'dc' not described in 'dc_enable_dmub_outbox'
-dc.c:4926: warning: Function parameter or member 'dc' not described in 'dc_process_dmub_dpia_hpd_int_enable'
-dc.c:4926: warning: Function parameter or member 'hpd_int_enable' not described in 'dc_process_dmub_dpia_hpd_int_enable'
-12 warnings
-
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Leo Li <sunpeng.li@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
-Cc: amd-gfx@lists.freedesktop.org
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: 2a9482e55968 ("drm/amd/display: Prevent vtotal from being set to 0")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c | 40 +++++++++++++++---------
- 1 file changed, 25 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c          | 6 ++++++
+ drivers/gpu/drm/amd/display/dc/dc_stream.h        | 1 +
+ drivers/gpu/drm/amd/display/dc/dcn30/dcn30_optc.c | 7 ++++++-
+ drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h   | 2 +-
+ 4 files changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 85ed1c7cdeaa9..6e2220e2e5ba3 100644
+index 6e2220e2e5ba3..27cec123cb06f 100644
 --- a/drivers/gpu/drm/amd/display/dc/core/dc.c
 +++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -382,16 +382,18 @@ static void dc_perf_trace_destroy(struct dc_perf_trace **perf_trace)
- }
+@@ -2588,6 +2588,12 @@ static enum surface_update_type check_update_surfaces_for_stream(
  
- /**
-- *  dc_stream_adjust_vmin_vmax:
-+ *  dc_stream_adjust_vmin_vmax - look up pipe context & update parts of DRR
-+ *  @dc:     dc reference
-+ *  @stream: Initial dc stream state
-+ *  @adjust: Updated parameters for vertical_total_min and vertical_total_max
-  *
-  *  Looks up the pipe context of dc_stream_state and updates the
-  *  vertical_total_min and vertical_total_max of the DRR, Dynamic Refresh
-  *  Rate, which is a power-saving feature that targets reducing panel
-  *  refresh rate while the screen is static
-  *
-- *  @dc:     dc reference
-- *  @stream: Initial dc stream state
-- *  @adjust: Updated parameters for vertical_total_min and vertical_total_max
-+ *  Return: %true if the pipe context is found and adjusted;
-+ *          %false if the pipe context is not found.
-  */
- bool dc_stream_adjust_vmin_vmax(struct dc *dc,
- 		struct dc_stream_state *stream,
-@@ -427,14 +429,17 @@ bool dc_stream_adjust_vmin_vmax(struct dc *dc,
- }
+ 		if (stream_update->mst_bw_update)
+ 			su_flags->bits.mst_bw = 1;
++
++		if (stream_update->stream && stream_update->stream->freesync_on_desktop &&
++			(stream_update->vrr_infopacket || stream_update->allow_freesync ||
++				stream_update->vrr_active_variable))
++			su_flags->bits.fams_changed = 1;
++
+ 		if (stream_update->crtc_timing_adjust && dc_extended_blank_supported(dc))
+ 			su_flags->bits.crtc_timing_adjust = 1;
  
- /**
-- * dc_stream_get_last_used_drr_vtotal - dc_stream_get_last_vrr_vtotal
-+ * dc_stream_get_last_used_drr_vtotal - Looks up the pipe context of
-+ * dc_stream_state and gets the last VTOTAL used by DRR (Dynamic Refresh Rate)
-  *
-  * @dc: [in] dc reference
-  * @stream: [in] Initial dc stream state
-- * @adjust: [in] Updated parameters for vertical_total_min and
-+ * @refresh_rate: [in] new refresh_rate
-  *
-- * Looks up the pipe context of dc_stream_state and gets the last VTOTAL used
-- * by DRR (Dynamic Refresh Rate)
-+ * Return: %true if the pipe context is found and there is an associated
-+ *         timing_generator for the DC;
-+ *         %false if the pipe context is not found or there is no
-+ *         timing_generator for the DC.
-  */
- bool dc_stream_get_last_used_drr_vtotal(struct dc *dc,
- 		struct dc_stream_state *stream,
-@@ -581,7 +586,10 @@ bool dc_stream_stop_dmcu_crc_win_update(struct dc *dc, struct dc_stream_state *s
-  *              once.
-  *
-  * By default, only CRC0 is configured, and the entire frame is used to
-- * calculate the crc.
-+ * calculate the CRC.
-+ *
-+ * Return: %false if the stream is not found or CRC capture is not supported;
-+ *         %true if the stream has been configured.
-  */
- bool dc_stream_configure_crc(struct dc *dc, struct dc_stream_state *stream,
- 			     struct crc_params *crc_window, bool enable, bool continuous)
-@@ -650,7 +658,7 @@ bool dc_stream_configure_crc(struct dc *dc, struct dc_stream_state *stream,
-  * dc_stream_configure_crc needs to be called beforehand to enable CRCs.
-  *
-  * Return:
-- * false if stream is not found, or if CRCs are not enabled.
-+ * %false if stream is not found, or if CRCs are not enabled.
-  */
- bool dc_stream_get_crc(struct dc *dc, struct dc_stream_state *stream,
- 		       uint32_t *r_cr, uint32_t *g_y, uint32_t *b_cb)
-@@ -1739,6 +1747,8 @@ void dc_z10_save_init(struct dc *dc)
- /*
-  * Applies given context to HW and copy it into current context.
-  * It's up to the user to release the src context afterwards.
-+ *
-+ * Return: an enum dc_status result code for the operation
-  */
- static enum dc_status dc_commit_state_no_check(struct dc *dc, struct dc_state *context)
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_stream.h b/drivers/gpu/drm/amd/display/dc/dc_stream.h
+index 73dccd485895d..364ff913527d8 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_stream.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_stream.h
+@@ -131,6 +131,7 @@ union stream_update_flags {
+ 		uint32_t dsc_changed : 1;
+ 		uint32_t mst_bw : 1;
+ 		uint32_t crtc_timing_adjust : 1;
++		uint32_t fams_changed : 1;
+ 	} bits;
+ 
+ 	uint32_t raw;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_optc.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_optc.c
+index 25749f7d88366..94894fd6c9062 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_optc.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_optc.c
+@@ -292,7 +292,12 @@ void optc3_wait_drr_doublebuffer_pending_clear(struct timing_generator *optc)
+ 
+ void optc3_set_vtotal_min_max(struct timing_generator *optc, int vtotal_min, int vtotal_max)
  {
-@@ -4600,7 +4610,7 @@ bool dc_enable_dmub_notifications(struct dc *dc)
- /**
-  * dc_enable_dmub_outbox - Enables DMUB unsolicited notification
-  *
-- * dc: [in] dc structure
-+ * @dc: [in] dc structure
-  *
-  * Enables DMUB unsolicited notifications to x86 via outbox.
-  */
-@@ -4801,8 +4811,8 @@ enum dc_status dc_process_dmub_set_mst_slots(const struct dc *dc,
- /**
-  * dc_process_dmub_dpia_hpd_int_enable - Submits DPIA DPD interruption
-  *
-- * @dc [in]: dc structure
-- * @hpd_int_enable [in]: 1 for hpd int enable, 0 to disable
-+ * @dc: [in] dc structure
-+ * @hpd_int_enable: [in] 1 for hpd int enable, 0 to disable
-  *
-  * Submits dpia hpd int enable command to dmub via inbox message
-  */
-@@ -4883,7 +4893,7 @@ void dc_notify_vsync_int_state(struct dc *dc, struct dc_stream_state *stream, bo
+-	optc1_set_vtotal_min_max(optc, vtotal_min, vtotal_max);
++	struct dc *dc = optc->ctx->dc;
++
++	if (dc->caps.dmub_caps.mclk_sw && !dc->debug.disable_fams)
++		dc_dmub_srv_drr_update_cmd(dc, optc->inst, vtotal_min, vtotal_max);
++	else
++		optc1_set_vtotal_min_max(optc, vtotal_min, vtotal_max);
  }
  
- /**
-- * dc_extended_blank_supported 0 Decide whether extended blank is supported
-+ * dc_extended_blank_supported - Decide whether extended blank is supported
-  *
-  * @dc: [in] Current DC state
-  *
-@@ -4892,7 +4902,7 @@ void dc_notify_vsync_int_state(struct dc *dc, struct dc_stream_state *stream, bo
-  * ability to enter z9/z10.
-  *
-  * Return:
-- * Indicate whether extended blank is supported (true or false)
-+ * Indicate whether extended blank is supported (%true or %false)
-  */
- bool dc_extended_blank_supported(struct dc *dc)
- {
+ void optc3_tg_init(struct timing_generator *optc)
+diff --git a/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h b/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
+index 27a4ea7dc74ec..d8c05bc45957b 100644
+--- a/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
++++ b/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
+@@ -345,7 +345,7 @@ union dmub_fw_boot_status {
+ 		uint32_t optimized_init_done : 1; /**< 1 if optimized init done */
+ 		uint32_t restore_required : 1; /**< 1 if driver should call restore */
+ 		uint32_t defer_load : 1; /**< 1 if VBIOS data is deferred programmed */
+-		uint32_t reserved : 1;
++		uint32_t fams_enabled : 1; /**< 1 if VBIOS data is deferred programmed */
+ 		uint32_t detection_required: 1; /**<  if detection need to be triggered by driver */
+ 
+ 	} bits; /**< status bits */
 -- 
 2.39.2
 
