@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5B71F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2094CC433C8;
-	Tue,  1 Aug 2023 09:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C091F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8E5C433C7;
+	Tue,  1 Aug 2023 09:39:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882768;
-	bh=hzeMK1A/AdPapE9grLO5RqiRntJA6bMvobKpKziMV6M=;
+	s=korg; t=1690882771;
+	bh=mXIVyBKcZTTKoFbBaFMpC2ju2+x+K8fEARmph0vdraw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T0HMMSaEVpF9LzG0nPahWZe3nmEfcQR6hKUm299rUCqNzvcGd75BZ1uHdZi0fXKhW
-	 iw67UJbehA8rFiznuMWEe8RzOYOXpa8rCfGI9xQg6q/1R7HwSrHN+OU2svg8k8Am4V
-	 co0ycRjaHwPDHrTQvr9ooXY5OLTqXskrHovTtNQA=
+	b=SXcDCwA/6rKKGsPpTsbceHVfgTkrhIxxkmSsUuxqzvrKmi2Rl6asO4ZvfbEKUFXq4
+	 1oHwBrxEbft9I1tKTtyo5ODC1D5xT7M2qJit2XrEOv3gsisFBlbgLZ4lRPZUHrTprR
+	 b2FGguPB0a7jzEDDyTsSFMnxJz1MJhxmjGUDQROk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Matthieu Baerts <matthieu.baerts@tessares.net>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 224/228] mptcp: ensure subflow is unhashed before cleaning the backlog
-Date: Tue,  1 Aug 2023 11:21:22 +0200
-Message-ID: <20230801091930.946662934@linuxfoundation.org>
+Subject: [PATCH 6.1 225/228] selftests: mptcp: sockopt: use iptables-legacy if available
+Date: Tue,  1 Aug 2023 11:21:23 +0200
+Message-ID: <20230801091930.977104536@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -35,42 +35,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 3fffa15bfef48b0ad6424779c03e68ae8ace5acb upstream.
+commit a5a5990c099dd354e05e89ee77cd2dbf6655d4a1 upstream.
 
-While tacking care of the mptcp-level listener I unintentionally
-moved the subflow level unhash after the subflow listener backlog
-cleanup.
+IPTables commands using 'iptables-nft' fail on old kernels, at least
+on v5.15 because it doesn't see the default IPTables chains:
 
-That could cause some nasty race and makes the code harder to read.
+  $ iptables -L
+  iptables/1.8.2 Failed to initialize nft: Protocol not supported
 
-Address the issue restoring the proper order of operations.
+As a first step before switching to NFTables, we can use iptables-legacy
+if available.
 
-Fixes: 57fc0f1ceaa4 ("mptcp: ensure listener is unhashed before updating the sk status")
+Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
+Fixes: dc65fe82fb07 ("selftests: mptcp: add packet mark test case")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/mptcp/mptcp_sockopt.sh |   24 +++++++++++----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2945,9 +2945,9 @@ static void mptcp_check_listen_stop(stru
- 		return;
+--- a/tools/testing/selftests/net/mptcp/mptcp_sockopt.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_sockopt.sh
+@@ -13,13 +13,15 @@ timeout_poll=30
+ timeout_test=$((timeout_poll * 2 + 1))
+ mptcp_connect=""
+ do_all_tests=1
++iptables="iptables"
++ip6tables="ip6tables"
  
- 	lock_sock_nested(ssk, SINGLE_DEPTH_NESTING);
-+	tcp_set_state(ssk, TCP_CLOSE);
- 	mptcp_subflow_queue_clean(sk, ssk);
- 	inet_csk_listen_stop(ssk);
--	tcp_set_state(ssk, TCP_CLOSE);
- 	release_sock(ssk);
- }
+ add_mark_rules()
+ {
+ 	local ns=$1
+ 	local m=$2
  
+-	for t in iptables ip6tables; do
++	for t in ${iptables} ${ip6tables}; do
+ 		# just to debug: check we have multiple subflows connection requests
+ 		ip netns exec $ns $t -A OUTPUT -p tcp --syn -m mark --mark $m -j ACCEPT
+ 
+@@ -92,14 +94,14 @@ if [ $? -ne 0 ];then
+ 	exit $ksft_skip
+ fi
+ 
+-iptables -V > /dev/null 2>&1
+-if [ $? -ne 0 ];then
++# Use the legacy version if available to support old kernel versions
++if iptables-legacy -V &> /dev/null; then
++	iptables="iptables-legacy"
++	ip6tables="ip6tables-legacy"
++elif ! iptables -V &> /dev/null; then
+ 	echo "SKIP: Could not run all tests without iptables tool"
+ 	exit $ksft_skip
+-fi
+-
+-ip6tables -V > /dev/null 2>&1
+-if [ $? -ne 0 ];then
++elif ! ip6tables -V &> /dev/null; then
+ 	echo "SKIP: Could not run all tests without ip6tables tool"
+ 	exit $ksft_skip
+ fi
+@@ -109,10 +111,10 @@ check_mark()
+ 	local ns=$1
+ 	local af=$2
+ 
+-	tables=iptables
++	tables=${iptables}
+ 
+ 	if [ $af -eq 6 ];then
+-		tables=ip6tables
++		tables=${ip6tables}
+ 	fi
+ 
+ 	counters=$(ip netns exec $ns $tables -v -L OUTPUT | grep DROP)
+@@ -314,8 +316,8 @@ do_tcpinq_tests()
+ {
+ 	local lret=0
+ 
+-	ip netns exec "$ns1" iptables -F
+-	ip netns exec "$ns1" ip6tables -F
++	ip netns exec "$ns1" ${iptables} -F
++	ip netns exec "$ns1" ${ip6tables} -F
+ 
+ 	if ! mptcp_lib_kallsyms_has "mptcp_ioctl$"; then
+ 		echo "INFO: TCP_INQ not supported: SKIP"
 
 
