@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7E9200A5
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04A39C433C7;
-	Tue,  1 Aug 2023 09:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8BD200A8
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5BF4C433C9;
+	Tue,  1 Aug 2023 09:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882793;
-	bh=8HpwwKDOchzyf9YRaW2hYZj5dlLXrLKoNrFLKdosg+M=;
+	s=korg; t=1690882796;
+	bh=dJwhxcZD/MAAxzrG1zgBMGMBqDn9vvMG+m3IWTMk2HY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cbff9tZo4KD8Fo2byhTz71NwuLQKKTZjZql9/TmKg4R8T/A+1GByKI+AhEyktbOlM
-	 mrayKoFDTcdIK71XEPUzoTgf6bFKFF/ocBXrqoDcfCBvLmMqRDSwdHHCX3W628jqxs
-	 qJXsWhFbljEsk2LZSqi+qpWz+Wv5ep3eMKPRvzsw=
+	b=u46dggobJNnUu47JTvw9brAAs8piTeM+9jtH/J4OJzfTTbz5fV/yggo6mVzIiPOO7
+	 V0K3QceTJ0k05uxzgwMgPPX+N5dRfAi4yh3diW/QWSw8y0E1SbyBOeLkjtDQcsqj0r
+	 17G6PVLHj5eF2yMkwMF6l1rv0WdWZSNd7jCA0z1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubli@redhat.com>,
-	Venky Shankar <vshankar@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.1 211/228] ceph: never send metrics if disable_send_metrics is set
-Date: Tue,  1 Aug 2023 11:21:09 +0200
-Message-ID: <20230801091930.488700837@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+	Chris Wilson <chris.p.wilson@intel.com>,
+	Fei Yang <fei.yang@intel.com>,
+	Radhakrishna Sripada <radhakrishna.sripada@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Subject: [PATCH 6.1 212/228] drm/i915/dpt: Use shmem for dpt objects
+Date: Tue,  1 Aug 2023 11:21:10 +0200
+Message-ID: <20230801091930.522886608@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,34 +38,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Radhakrishna Sripada <radhakrishna.sripada@intel.com>
 
-commit 50164507f6b7b7ed85d8c3ac0266849fbd908db7 upstream.
+commit 3844ed5e78823eebb5f0f1edefc403310693d402 upstream.
 
-Even the 'disable_send_metrics' is true so when the session is
-being opened it will always trigger to send the metric for the
-first time.
+Dpt objects that are created from internal get evicted when there is
+memory pressure and do not get restored when pinned during scanout. The
+pinned page table entries look corrupted and programming the display
+engine with the incorrect pte's result in DE throwing pipe faults.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Venky Shankar <vshankar@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Create DPT objects from shmem and mark the object as dirty when pinning so
+that the object is restored when shrinker evicts an unpinned buffer object.
+
+v2: Unconditionally mark the dpt objects dirty during pinning(Chris).
+
+Fixes: 0dc987b699ce ("drm/i915/display: Add smem fallback allocation for dpt")
+Cc: <stable@vger.kernel.org> # v6.0+
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Suggested-by: Chris Wilson <chris.p.wilson@intel.com>
+Signed-off-by: Fei Yang <fei.yang@intel.com>
+Signed-off-by: Radhakrishna Sripada <radhakrishna.sripada@intel.com>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230718225118.2562132-1-radhakrishna.sripada@intel.com
+(cherry picked from commit e91a777a6e602ba0e3366e053e4e094a334a1244)
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/metric.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_dpt.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/ceph/metric.c
-+++ b/fs/ceph/metric.c
-@@ -208,7 +208,7 @@ static void metric_delayed_work(struct w
- 	struct ceph_mds_client *mdsc =
- 		container_of(m, struct ceph_mds_client, metric);
+--- a/drivers/gpu/drm/i915/display/intel_dpt.c
++++ b/drivers/gpu/drm/i915/display/intel_dpt.c
+@@ -163,6 +163,8 @@ struct i915_vma *intel_dpt_pin(struct i9
+ 		i915_vma_get(vma);
+ 	}
  
--	if (mdsc->stopping)
-+	if (mdsc->stopping || disable_send_metrics)
- 		return;
++	dpt->obj->mm.dirty = true;
++
+ 	atomic_dec(&i915->gpu_error.pending_fb_pin);
+ 	intel_runtime_pm_put(&i915->runtime_pm, wakeref);
  
- 	if (!m->session || !check_session_state(m->session)) {
+@@ -258,7 +260,7 @@ intel_dpt_create(struct intel_framebuffe
+ 		dpt_obj = i915_gem_object_create_stolen(i915, size);
+ 	if (IS_ERR(dpt_obj) && !HAS_LMEM(i915)) {
+ 		drm_dbg_kms(&i915->drm, "Allocating dpt from smem\n");
+-		dpt_obj = i915_gem_object_create_internal(i915, size);
++		dpt_obj = i915_gem_object_create_shmem(i915, size);
+ 	}
+ 	if (IS_ERR(dpt_obj))
+ 		return ERR_CAST(dpt_obj);
 
 
