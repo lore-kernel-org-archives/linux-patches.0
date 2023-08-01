@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311831FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:45:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BE3C433C8;
-	Tue,  1 Aug 2023 09:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012CD1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:45:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74EF7C433C7;
+	Tue,  1 Aug 2023 09:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883141;
-	bh=//5jYeo8U8YuRZlT0XV+A/crE2kZsIB3RHjpibMsCi0=;
+	s=korg; t=1690883143;
+	bh=rrhgRIRVtRSDOtXfH4MAY1t2sEX3vUNAY620I4DKhok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IfnjhJTncxfE1qn7OTL0OK1mXvluxEjSJIwWFlfHgDzTzQukLeJdgE1kha1SbWwmq
-	 flMQS96WWAVOG/26SrCKP05NORucDMDRt6diUIHxY3E8K83IRjrelZx5XV7wudZzCc
-	 uBDLGgTuI6hv0eLTa4yvkm6WamNH6vM5zL7c0S/s=
+	b=Jty8C89ntB8vW+Pjxv3bJO/XRuojN8e6sh9aPtgYrfMH9SVH0VFiHqUgHsZUqGsa2
+	 7UZDVQiPzmATKYrPf7uIX489KYOSh7sQeBPArBZvxbvhXJPty1cvn/+Q4IrgmNLtML
+	 fHkhyH9dSjuvlnoI9q2gF2aKYd46Tq3dr/vDN8Fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Lamprecht <t.lamprecht@proxmox.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Fiona Ebner <f.ebner@proxmox.com>
-Subject: [PATCH 6.4 091/239] mm: suppress mm fault logging if fatal signal already pending
-Date: Tue,  1 Aug 2023 11:19:15 +0200
-Message-ID: <20230801091929.017974308@linuxfoundation.org>
+	Roy Shterman <roy.shterman@gmail.com>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 123/239] smb3: do not set NTLMSSP_VERSION flag for negotiate not auth request
+Date: Tue,  1 Aug 2023 11:19:47 +0200
+Message-ID: <20230801091930.153827706@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -37,73 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit 5f0bc0b042fc77ff70e14c790abdec960cde4ec1 ]
+[ Upstream commit 19826558210b9102a7d4681c91784d137d60d71b ]
 
-Commit eda0047296a1 ("mm: make the page fault mmap locking killable")
-intentionally made it much easier to trigger the "page fault fails
-because a fatal signal is pending" situation, by having the mmap locking
-fail early in that case.
+The NTLMSSP_NEGOTIATE_VERSION flag only needs to be sent during
+the NTLMSSP NEGOTIATE (not the AUTH) request, so filter it out for
+NTLMSSP AUTH requests. See MS-NLMP 2.2.1.3
 
-We have long aborted page faults in other fatal cases when the actual IO
-for a page is interrupted by SIGKILL - which is particularly useful for
-the traditional case of NFS hanging due to network issues, but local
-filesystems could cause it too if you happened to get the SIGKILL while
-waiting for a page to be faulted in (eg lock_folio_maybe_drop_mmap()).
+This fixes a problem found by the gssntlmssp server.
 
-So aborting the page fault wasn't a new condition - but it now triggers
-earlier, before we even get to 'handle_mm_fault()'.  And as a result the
-error doesn't go through our 'fault_signal_pending()' logic, and doesn't
-get filtered away there.
-
-Normally you'd never even notice, because if a fatal signal is pending,
-the new SIGSEGV we send ends up being ignored anyway.
-
-But it turns out that there is one very noticeable exception: if you
-enable 'show_unhandled_signals', the aborted page fault will be logged
-in the kernel messages, and you'll get a scary line looking something
-like this in your logs:
-
-  pverados[2183248]: segfault at 55e5a00f9ae0 ip 000055e5a00f9ae0 sp 00007ffc0720bea8 error 14 in perl[55e5a00d4000+195000] likely on CPU 10 (core 4, socket 0)
-
-which is rather misleading.  It's not really a segfault at all, it's
-just "the thread was killed before the page fault completed, so we
-aborted the page fault".
-
-Fix this by just making it clear that a pending fatal signal means that
-any new signal coming in after that is implicitly handled.  This will
-avoid the misleading logging, since now the signal isn't 'unhandled' any
-more.
-
-Reported-and-tested-by: Fiona Ebner <f.ebner@proxmox.com>
-Tested-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
-Link: https://lore.kernel.org/lkml/8d063a26-43f5-0bb7-3203-c6a04dc159f8@proxmox.com/
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Fixes: eda0047296a1 ("mm: make the page fault mmap locking killable")
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://github.com/gssapi/gss-ntlmssp/issues/95
+Fixes: 52d005337b2c ("smb3: send NTLMSSP version information")
+Acked-by: Roy Shterman <roy.shterman@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/signal.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/smb/client/sess.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/signal.c b/kernel/signal.c
-index 2547fa73bde51..1b39cba7dfd38 100644
---- a/kernel/signal.c
-+++ b/kernel/signal.c
-@@ -561,6 +561,10 @@ bool unhandled_signal(struct task_struct *tsk, int sig)
- 	if (handler != SIG_IGN && handler != SIG_DFL)
- 		return false;
- 
-+	/* If dying, we handle all new signals by ignoring them */
-+	if (fatal_signal_pending(tsk))
-+		return false;
-+
- 	/* if ptraced, let the tracer determine */
- 	return !tsk->ptrace;
+diff --git a/fs/smb/client/sess.c b/fs/smb/client/sess.c
+index 335c078c42fb5..c57ca2050b73f 100644
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -1013,6 +1013,7 @@ int build_ntlmssp_smb3_negotiate_blob(unsigned char **pbuffer,
  }
+ 
+ 
++/* See MS-NLMP 2.2.1.3 */
+ int build_ntlmssp_auth_blob(unsigned char **pbuffer,
+ 					u16 *buflen,
+ 				   struct cifs_ses *ses,
+@@ -1047,7 +1048,8 @@ int build_ntlmssp_auth_blob(unsigned char **pbuffer,
+ 
+ 	flags = ses->ntlmssp->server_flags | NTLMSSP_REQUEST_TARGET |
+ 		NTLMSSP_NEGOTIATE_TARGET_INFO | NTLMSSP_NEGOTIATE_WORKSTATION_SUPPLIED;
+-
++	/* we only send version information in ntlmssp negotiate, so do not set this flag */
++	flags = flags & ~NTLMSSP_NEGOTIATE_VERSION;
+ 	tmp = *pbuffer + sizeof(AUTHENTICATE_MESSAGE);
+ 	sec_blob->NegotiateFlags = cpu_to_le32(flags);
+ 
 -- 
-2.39.2
+2.40.1
 
 
 
