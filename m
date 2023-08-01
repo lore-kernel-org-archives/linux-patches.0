@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403FA1F959
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:34:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7F59C433C8;
-	Tue,  1 Aug 2023 09:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F6E1F959
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:34:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7945FC433C9;
+	Tue,  1 Aug 2023 09:34:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882486;
-	bh=S+h7iIiAlFKsHxTDOwMLX3m4N5EzIKr5CiQ+PmjQWXQ=;
+	s=korg; t=1690882488;
+	bh=DTkJxz3/2TgfE2GBjpQgR1MsLiLUEEVAou0uXS9Uk/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ry3jz1Dcs++OKC7aU/hmFAivzXIxKhf0T1pv1+m3i3cvleK8lOCtIDcTX0wCL67i8
-	 lIsWj/4+kfsiPTlQNBxHpTvPHpRA5ZMKGH1i8G34xbgWfoRO5i+HlKszJ76iHUnZIe
-	 XccOTKmQY/yWUOS6sqivsM79lRXWxuS6S9Zmj/vU=
+	b=1cnh4M/KnEBIodr+qjiM2bMNyNaeQLXxCaUGbnL33efeWb4m8B67ycLZKYoxbTJtG
+	 qvMEiFrxGAYSJZPDCwftOeEiub8qUG9qyhb/4BV5j976VoGTHTK/AN6OII0CGcoavL
+	 Wn3q/Qm3DsiKuuHsTJQsF/ZUgmoZiSD2YgHxl0cU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	Rob Clark <robdclark@chromium.org>,
+	Breno Leitao <leitao@debian.org>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 123/228] drm/msm: Fix IS_ERR_OR_NULL() vs NULL check in a5xx_submit_in_rb()
-Date: Tue,  1 Aug 2023 11:19:41 +0200
-Message-ID: <20230801091927.188781687@linuxfoundation.org>
+Subject: [PATCH 6.1 124/228] cxl/acpi: Fix a use-after-free in cxl_parse_cfmws()
+Date: Tue,  1 Aug 2023 11:19:42 +0200
+Message-ID: <20230801091927.227821219@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -38,39 +38,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 6e8a996563ecbe68e49c49abd4aaeef69f11f2dc ]
+[ Upstream commit 4cf67d3cc9994a59cf77bb9c0ccf9007fe916afe ]
 
-The msm_gem_get_vaddr() returns an ERR_PTR() on failure, and a null
-is catastrophic here, so we should use IS_ERR_OR_NULL() to check
-the return value.
+KASAN and KFENCE detected an user-after-free in the CXL driver. This
+happens in the cxl_decoder_add() fail path. KASAN prints the following
+error:
 
-Fixes: 6a8bd08d0465 ("drm/msm: add sudo flag to submit ioctl")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/547712/
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+   BUG: KASAN: slab-use-after-free in cxl_parse_cfmws (drivers/cxl/acpi.c:299)
+
+This happens in cxl_parse_cfmws(), where put_device() is called,
+releasing cxld, which is accessed later.
+
+Use the local variables in the dev_err() instead of pointing to the
+released memory. Since the dev_err() is printing a resource, change the open
+coded print format to use the %pr format specifier.
+
+Fixes: e50fe01e1f2a ("cxl/core: Drop ->platform_res attribute for root decoders")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://lore.kernel.org/r/20230714093146.2253438-1-leitao@debian.org
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cxl/acpi.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index 0829eaf2cd4e8..895a0e9db1f09 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -89,7 +89,7 @@ static void a5xx_submit_in_rb(struct msm_gpu *gpu, struct msm_gem_submit *submit
- 			 * since we've already mapped it once in
- 			 * submit_reloc()
- 			 */
--			if (WARN_ON(!ptr))
-+			if (WARN_ON(IS_ERR_OR_NULL(ptr)))
- 				return;
- 
- 			for (i = 0; i < dwords; i++) {
+diff --git a/drivers/cxl/acpi.c b/drivers/cxl/acpi.c
+index fb649683dd3ac..55907a94cb388 100644
+--- a/drivers/cxl/acpi.c
++++ b/drivers/cxl/acpi.c
+@@ -154,8 +154,7 @@ static int cxl_parse_cfmws(union acpi_subtable_headers *header, void *arg,
+ 	else
+ 		rc = cxl_decoder_autoremove(dev, cxld);
+ 	if (rc) {
+-		dev_err(dev, "Failed to add decode range [%#llx - %#llx]\n",
+-			cxld->hpa_range.start, cxld->hpa_range.end);
++		dev_err(dev, "Failed to add decode range: %pr", res);
+ 		return 0;
+ 	}
+ 	dev_dbg(dev, "add: %s node: %d range [%#llx - %#llx]\n",
 -- 
 2.40.1
 
