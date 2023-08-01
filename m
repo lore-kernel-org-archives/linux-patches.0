@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603671FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:43:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D13C433C7;
-	Tue,  1 Aug 2023 09:43:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9EE1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:43:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 964FAC433C8;
+	Tue,  1 Aug 2023 09:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883016;
-	bh=EpNFu8Jlt3/GZAud0zqcsX1eGCKySFG8ZTlQ2RO55iQ=;
+	s=korg; t=1690883019;
+	bh=QqwJY+ySwCqO7WC+ryRyakA9eXfd4moYo0GTumijseU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wfrwr9MN65/VHkc9oAC60kp8m9mNr914ycJrSCwOd4ecS1tuRQj8BBzeimqviMdJ8
-	 eHcATN2Bn/OSCt9zY/jjWNYxfeC8SSsminAyXNNkqwJAgOgJmCrZe1vIRcBgvwo/aU
-	 zlBcC8FN+Y5MElebMp0QuIM3S48M7jAZWDm3K4CM=
+	b=rAjFp8kcoMph8FFhftnmPNn+sEipcaj3FGAH8fJuRcCtUCVwvbqdMkubtPxVOqB1E
+	 +qgn6M+NMf27Iir1h4U2ONqgl3Lxl1MyYVysUUMfP76l6kIcJx/hFSi3tXSAlw7RXR
+	 DL8IhKY/4DLkIsmYFRD/3Mwz0ZEUcgx3bU6kgKtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Mikityanskiy <maxtram95@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Michael Kelley <mikelley@microsoft.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 084/239] platform/x86: msi-laptop: Fix rfkill out-of-sync on MSI Wind U100
-Date: Tue,  1 Aug 2023 11:19:08 +0200
-Message-ID: <20230801091928.777855887@linuxfoundation.org>
+Subject: [PATCH 6.4 085/239] x86/traps: Fix load_unaligned_zeropad() handling for shared TDX memory
+Date: Tue,  1 Aug 2023 11:19:09 +0200
+Message-ID: <20230801091928.808563572@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -35,76 +37,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Mikityanskiy <maxtram95@gmail.com>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-[ Upstream commit ad084a6d99bc182bf109c190c808e2ea073ec57b ]
+[ Upstream commit 9f9116406120638b4d8db3831ffbc430dd2e1e95 ]
 
-Only the HW rfkill state is toggled on laptops with quirks->ec_read_only
-(so far only MSI Wind U90/U100). There are, however, a few issues with
-the implementation:
+Commit c4e34dd99f2e ("x86: simplify load_unaligned_zeropad()
+implementation") changes how exceptions around load_unaligned_zeropad()
+handled.  The kernel now uses the fault_address in fixup_exception() to
+verify the address calculations for the load_unaligned_zeropad().
 
-1. The initial HW state is always unblocked, regardless of the actual
-   state on boot, because msi_init_rfkill only sets the SW state,
-   regardless of ec_read_only.
+It works fine for #PF, but breaks on #VE since no fault address is
+passed down to fixup_exception().
 
-2. The initial SW state corresponds to the actual state on boot, but it
-   can't be changed afterwards, because set_device_state returns
-   -EOPNOTSUPP. It confuses the userspace, making Wi-Fi and/or Bluetooth
-   unusable if it was blocked on boot, and breaking the airplane mode if
-   the rfkill was unblocked on boot.
+Propagating ve_info.gla down to fixup_exception() resolves the issue.
 
-Address the above issues by properly initializing the HW state on
-ec_read_only laptops and by allowing the userspace to toggle the SW
-state. Don't set the SW state ourselves and let the userspace fully
-control it. Toggling the SW state is a no-op, however, it allows the
-userspace to properly toggle the airplane mode. The actual SW radio
-disablement is handled by the corresponding rtl818x_pci and btusb
-drivers that have their own rfkills.
+See commit 1e7769653b06 ("x86/tdx: Handle load_unaligned_zeropad()
+page-cross to a shared page") for more context.
 
-Tested on MSI Wind U100 Plus, BIOS ver 1.0G, EC ver 130.
-
-Fixes: 0816392b97d4 ("msi-laptop: merge quirk tables to one")
-Fixes: 0de6575ad0a8 ("msi-laptop: Add MSI Wind U90/U100 support")
-Signed-off-by: Maxim Mikityanskiy <maxtram95@gmail.com>
-Link: https://lore.kernel.org/r/20230721145423.161057-1-maxtram95@gmail.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Reported-by: Michael Kelley <mikelley@microsoft.com>
+Fixes: c4e34dd99f2e ("x86: simplify load_unaligned_zeropad() implementation")
+Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/msi-laptop.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/kernel/traps.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/platform/x86/msi-laptop.c b/drivers/platform/x86/msi-laptop.c
-index 6b18ec543ac3a..f4c6c36e05a52 100644
---- a/drivers/platform/x86/msi-laptop.c
-+++ b/drivers/platform/x86/msi-laptop.c
-@@ -208,7 +208,7 @@ static ssize_t set_device_state(const char *buf, size_t count, u8 mask)
- 		return -EINVAL;
+diff --git a/arch/x86/kernel/traps.c b/arch/x86/kernel/traps.c
+index 58b1f208eff51..4a817d20ce3bb 100644
+--- a/arch/x86/kernel/traps.c
++++ b/arch/x86/kernel/traps.c
+@@ -697,9 +697,10 @@ static bool try_fixup_enqcmd_gp(void)
+ }
  
- 	if (quirks->ec_read_only)
--		return -EOPNOTSUPP;
-+		return 0;
- 
- 	/* read current device state */
- 	result = ec_read(MSI_STANDARD_EC_COMMAND_ADDRESS, &rdata);
-@@ -838,15 +838,15 @@ static bool msi_laptop_i8042_filter(unsigned char data, unsigned char str,
- static void msi_init_rfkill(struct work_struct *ignored)
+ static bool gp_try_fixup_and_notify(struct pt_regs *regs, int trapnr,
+-				    unsigned long error_code, const char *str)
++				    unsigned long error_code, const char *str,
++				    unsigned long address)
  {
- 	if (rfk_wlan) {
--		rfkill_set_sw_state(rfk_wlan, !wlan_s);
-+		msi_rfkill_set_state(rfk_wlan, !wlan_s);
- 		rfkill_wlan_set(NULL, !wlan_s);
+-	if (fixup_exception(regs, trapnr, error_code, 0))
++	if (fixup_exception(regs, trapnr, error_code, address))
+ 		return true;
+ 
+ 	current->thread.error_code = error_code;
+@@ -759,7 +760,7 @@ DEFINE_IDTENTRY_ERRORCODE(exc_general_protection)
+ 		goto exit;
  	}
- 	if (rfk_bluetooth) {
--		rfkill_set_sw_state(rfk_bluetooth, !bluetooth_s);
-+		msi_rfkill_set_state(rfk_bluetooth, !bluetooth_s);
- 		rfkill_bluetooth_set(NULL, !bluetooth_s);
+ 
+-	if (gp_try_fixup_and_notify(regs, X86_TRAP_GP, error_code, desc))
++	if (gp_try_fixup_and_notify(regs, X86_TRAP_GP, error_code, desc, 0))
+ 		goto exit;
+ 
+ 	if (error_code)
+@@ -1357,17 +1358,20 @@ DEFINE_IDTENTRY(exc_device_not_available)
+ 
+ #define VE_FAULT_STR "VE fault"
+ 
+-static void ve_raise_fault(struct pt_regs *regs, long error_code)
++static void ve_raise_fault(struct pt_regs *regs, long error_code,
++			   unsigned long address)
+ {
+ 	if (user_mode(regs)) {
+ 		gp_user_force_sig_segv(regs, X86_TRAP_VE, error_code, VE_FAULT_STR);
+ 		return;
  	}
- 	if (rfk_threeg) {
--		rfkill_set_sw_state(rfk_threeg, !threeg_s);
-+		msi_rfkill_set_state(rfk_threeg, !threeg_s);
- 		rfkill_threeg_set(NULL, !threeg_s);
- 	}
+ 
+-	if (gp_try_fixup_and_notify(regs, X86_TRAP_VE, error_code, VE_FAULT_STR))
++	if (gp_try_fixup_and_notify(regs, X86_TRAP_VE, error_code,
++				    VE_FAULT_STR, address)) {
+ 		return;
++	}
+ 
+-	die_addr(VE_FAULT_STR, regs, error_code, 0);
++	die_addr(VE_FAULT_STR, regs, error_code, address);
+ }
+ 
+ /*
+@@ -1431,7 +1435,7 @@ DEFINE_IDTENTRY(exc_virtualization_exception)
+ 	 * it successfully, treat it as #GP(0) and handle it.
+ 	 */
+ 	if (!tdx_handle_virt_exception(regs, &ve))
+-		ve_raise_fault(regs, 0);
++		ve_raise_fault(regs, 0, ve.gla);
+ 
+ 	cond_local_irq_disable(regs);
  }
 -- 
 2.39.2
