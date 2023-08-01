@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6921F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:26:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B584FC433C7;
-	Tue,  1 Aug 2023 09:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29051F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:26:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746B5C433C7;
+	Tue,  1 Aug 2023 09:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881976;
-	bh=VdoAnmAghW5n7L4tAa7XxhiCJm/5zVHUbts1bxfJiTo=;
+	s=korg; t=1690881978;
+	bh=Z0j17gW43x9D+CBrLA+IfYo9ja2zAPqOlz84PxwP1ec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ySvxAHBNZULDS2AkIH9/jhGe/B1TpSfjKeQNWlnMg+9TeiegUjYvlRAzmDIUL7Uu6
-	 DZj6qX18T3h5LILl1kwixhEe3ANkyEu7kXXstIGFBClTJ3ZpoPeTD4ylAN+lbpOkbG
-	 Gqq3j01uS0XGBf1q9Yoljy1UxypgLjXAM6Th0ihA=
+	b=tcewGhEatwPnRr4md3hnYhsq3OZSFcqNPLTIxyHm2J4BRVjwMhJaHtoqaAwrYuokd
+	 AcI+QbyqNZRQU39IJK5akIwgHXf+4TcKadEcc0xIbLlq7PM7lK7RzJBY0VqOPplQc6
+	 5QdM0dIC1WPfXw2oSH3vvorTXexKM1zrmfX6+j2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sindhu Devale <sindhu.devale@intel.com>,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 097/155] RDMA/irdma: Report correct WC error
-Date: Tue,  1 Aug 2023 11:20:09 +0200
-Message-ID: <20230801091913.671519062@linuxfoundation.org>
+Subject: [PATCH 5.15 098/155] ata: pata_ns87415: mark ns87560_tf_read static
+Date: Tue,  1 Aug 2023 11:20:10 +0200
+Message-ID: <20230801091913.712067466@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -36,35 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sindhu Devale <sindhu.devale@intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit ae463563b7a1b7d4a3d0b065b09d37a76b693937 ]
+[ Upstream commit 3fc2febb0f8ffae354820c1772ec008733237cfa ]
 
-Report the correct WC error if a MW bind is performed
-on an already valid/bound window.
+The global function triggers a warning because of the missing prototype
 
-Fixes: 44d9e52977a1 ("RDMA/irdma: Implement device initialization definitions")
-Signed-off-by: Sindhu Devale <sindhu.devale@intel.com>
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Link: https://lore.kernel.org/r/20230725155439.1057-2-shiraz.saleem@intel.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+drivers/ata/pata_ns87415.c:263:6: warning: no previous prototype for 'ns87560_tf_read' [-Wmissing-prototypes]
+  263 | void ns87560_tf_read(struct ata_port *ap, struct ata_taskfile *tf)
+
+There are no other references to this, so just make it static.
+
+Fixes: c4b5b7b6c4423 ("pata_ns87415: Initial cut at 87415/87560 IDE support")
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/hw.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/ata/pata_ns87415.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
-index 0221200e16541..70dffa9a9f674 100644
---- a/drivers/infiniband/hw/irdma/hw.c
-+++ b/drivers/infiniband/hw/irdma/hw.c
-@@ -191,6 +191,7 @@ static void irdma_set_flush_fields(struct irdma_sc_qp *qp,
- 	case IRDMA_AE_AMP_MWBIND_INVALID_RIGHTS:
- 	case IRDMA_AE_AMP_MWBIND_BIND_DISABLED:
- 	case IRDMA_AE_AMP_MWBIND_INVALID_BOUNDS:
-+	case IRDMA_AE_AMP_MWBIND_VALID_STAG:
- 		qp->flush_code = FLUSH_MW_BIND_ERR;
- 		qp->event_type = IRDMA_QP_EVENT_ACCESS_ERR;
- 		break;
+diff --git a/drivers/ata/pata_ns87415.c b/drivers/ata/pata_ns87415.c
+index 9dd6bffefb485..602472d4e693e 100644
+--- a/drivers/ata/pata_ns87415.c
++++ b/drivers/ata/pata_ns87415.c
+@@ -260,7 +260,7 @@ static u8 ns87560_check_status(struct ata_port *ap)
+  *	LOCKING:
+  *	Inherited from caller.
+  */
+-void ns87560_tf_read(struct ata_port *ap, struct ata_taskfile *tf)
++static void ns87560_tf_read(struct ata_port *ap, struct ata_taskfile *tf)
+ {
+ 	struct ata_ioports *ioaddr = &ap->ioaddr;
+ 
 -- 
 2.40.1
 
