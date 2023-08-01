@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDF81FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:48:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5937C433C8;
-	Tue,  1 Aug 2023 09:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 281611FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:48:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB4AC433C9;
+	Tue,  1 Aug 2023 09:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883310;
-	bh=6nDTA5dSPRFhD+LRx17yxe+1axQfS9QwS/DF8h6+PUY=;
+	s=korg; t=1690883313;
+	bh=SXeYeVflk51aWDhxsEcVqz/xdKMFfZo4z9lhGhU9kS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N+vsi7MVtukeHzXB+r4MIREViwIum0BXSyPQgLJnoEmn6KyaPNFWSWG3JstX9z8rn
-	 wUzCtg0mmjcbxn4RIKtYnc2Dp9HcLGjASYPCljqrxqMsU6jMZsrO9eZuAyD1mVccz6
-	 nhJvCDlY6n+fSzNKzkFSCwuhXi7cjRJAqRJj0m8M=
+	b=oyA6J923nDJIXcxQbfM/pHO0DFM6gWr1TZMFMdeqM8MtoJzCfERlBAVqu4bkahVsi
+	 IcZRcn1eKTOqs9FGd5ey5wPjC46CedD1cM8iXxXxmi9fIb77sMLPdo/PehX81IDajG
+	 oGKlegN9kGrfetEOLJo6n7QO+biUAMwG882wDDcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Tso <kyletso@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.4 161/239] usb: typec: Use sysfs_emit_at when concatenating the string
-Date: Tue,  1 Aug 2023 11:20:25 +0200
-Message-ID: <20230801091931.432511949@linuxfoundation.org>
+	Mauro Ribeiro <mauro.ribeiro@hardkernel.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Jakub Vanek <linuxtardis@gmail.com>
+Subject: [PATCH 6.4 162/239] Revert "usb: dwc3: core: Enable AutoRetry feature in the controller"
+Date: Tue,  1 Aug 2023 11:20:26 +0200
+Message-ID: <20230801091931.462887742@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -34,36 +36,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kyle Tso <kyletso@google.com>
+From: Jakub Vanek <linuxtardis@gmail.com>
 
-commit 609fded3f91972ada551c141c5d04a71704f8967 upstream.
+commit 734ae15ab95a18d3d425fc9cb38b7a627d786f08 upstream.
 
-The buffer address used in sysfs_emit should be aligned to PAGE_SIZE.
-Use sysfs_emit_at instead to offset the buffer.
+This reverts commit b138e23d3dff90c0494925b4c1874227b81bddf7.
 
-Fixes: a7cff92f0635 ("usb: typec: USB Power Delivery helpers for ports and partners")
+AutoRetry has been found to sometimes cause controller freezes when
+communicating with buggy USB devices.
+
+This controller feature allows the controller in host mode to send
+non-terminating/burst retry ACKs instead of terminating retry ACKs
+to devices when a transaction error (CRC error or overflow) occurs.
+
+Unfortunately, if the USB device continues to respond with a CRC error,
+the controller will not complete endpoint-related commands while it
+keeps trying to auto-retry. [3] The xHCI driver will notice this once
+it tries to abort the transfer using a Stop Endpoint command and
+does not receive a completion in time. [1]
+This situation is reported to dmesg:
+
+[sda] tag#29 uas_eh_abort_handler 0 uas-tag 1 inflight: CMD IN
+[sda] tag#29 CDB: opcode=0x28 28 00 00 69 42 80 00 00 48 00
+xhci-hcd: xHCI host not responding to stop endpoint command
+xhci-hcd: xHCI host controller not responding, assume dead
+xhci-hcd: HC died; cleaning up
+
+Some users observed this problem on an Odroid HC2 with the JMS578
+USB3-to-SATA bridge. The issue can be triggered by starting
+a read-heavy workload on an attached SSD. After a while, the host
+controller would die and the SSD would disappear from the system. [1]
+
+Further analysis by Synopsys determined that controller revisions
+other than the one in Odroid HC2 are also affected by this.
+The recommended solution was to disable AutoRetry altogether.
+This change does not have a noticeable performance impact. [2]
+
+Revert the enablement commit. This will keep the AutoRetry bit in
+the default state configured during SoC design [2].
+
+Fixes: b138e23d3dff ("usb: dwc3: core: Enable AutoRetry feature in the controller")
+Link: https://lore.kernel.org/r/a21f34c04632d250cd0a78c7c6f4a1c9c7a43142.camel@gmail.com/ [1]
+Link: https://lore.kernel.org/r/20230711214834.kyr6ulync32d4ktk@synopsys.com/ [2]
+Link: https://lore.kernel.org/r/20230712225518.2smu7wse6djc7l5o@synopsys.com/ [3]
 Cc: stable@vger.kernel.org
-Signed-off-by: Kyle Tso <kyletso@google.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20230623151036.3955013-4-kyletso@google.com
+Cc: Mauro Ribeiro <mauro.ribeiro@hardkernel.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Suggested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Jakub Vanek <linuxtardis@gmail.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20230714122419.27741-1-linuxtardis@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/class.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/dwc3/core.c |   16 ----------------
+ drivers/usb/dwc3/core.h |    3 ---
+ 2 files changed, 19 deletions(-)
 
---- a/drivers/usb/typec/class.c
-+++ b/drivers/usb/typec/class.c
-@@ -1288,9 +1288,9 @@ static ssize_t select_usb_power_delivery
- 
- 	for (i = 0; pds[i]; i++) {
- 		if (pds[i] == port->pd)
--			ret += sysfs_emit(buf + ret, "[%s] ", dev_name(&pds[i]->dev));
-+			ret += sysfs_emit_at(buf, ret, "[%s] ", dev_name(&pds[i]->dev));
- 		else
--			ret += sysfs_emit(buf + ret, "%s ", dev_name(&pds[i]->dev));
-+			ret += sysfs_emit_at(buf, ret, "%s ", dev_name(&pds[i]->dev));
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1209,22 +1209,6 @@ static int dwc3_core_init(struct dwc3 *d
+ 		dwc3_writel(dwc->regs, DWC3_GUCTL1, reg);
  	}
  
- 	buf[ret - 1] = '\n';
+-	if (dwc->dr_mode == USB_DR_MODE_HOST ||
+-	    dwc->dr_mode == USB_DR_MODE_OTG) {
+-		reg = dwc3_readl(dwc->regs, DWC3_GUCTL);
+-
+-		/*
+-		 * Enable Auto retry Feature to make the controller operating in
+-		 * Host mode on seeing transaction errors(CRC errors or internal
+-		 * overrun scenerios) on IN transfers to reply to the device
+-		 * with a non-terminating retry ACK (i.e, an ACK transcation
+-		 * packet with Retry=1 & Nump != 0)
+-		 */
+-		reg |= DWC3_GUCTL_HSTINAUTORETRY;
+-
+-		dwc3_writel(dwc->regs, DWC3_GUCTL, reg);
+-	}
+-
+ 	/*
+ 	 * Must config both number of packets and max burst settings to enable
+ 	 * RX and/or TX threshold.
+--- a/drivers/usb/dwc3/core.h
++++ b/drivers/usb/dwc3/core.h
+@@ -254,9 +254,6 @@
+ #define DWC3_GCTL_GBLHIBERNATIONEN	BIT(1)
+ #define DWC3_GCTL_DSBLCLKGTNG		BIT(0)
+ 
+-/* Global User Control Register */
+-#define DWC3_GUCTL_HSTINAUTORETRY	BIT(14)
+-
+ /* Global User Control 1 Register */
+ #define DWC3_GUCTL1_DEV_DECOUPLE_L1L2_EVT	BIT(31)
+ #define DWC3_GUCTL1_TX_IPGAP_LINECHECK_DIS	BIT(28)
 
 
