@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2AF1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:44:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127BBC433C7;
-	Tue,  1 Aug 2023 09:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523861FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:44:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D12C433C7;
+	Tue,  1 Aug 2023 09:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883071;
-	bh=LPFd2x3PeWqVB6TuzmyW/N5yvT9lfH8qbx2UvNsVqIg=;
+	s=korg; t=1690883074;
+	bh=Xnkv0rb0LKedvPmaz7rECaem/cf2rLcVV8EexT1wras=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tq5xuk8iaG2WXgRQlt65kRwXn/d65kjb9YLlWB5kmg5apXBdEiFqwpgm9WA1j66hw
-	 zVVVEUU/OpNMPa+DlkxwvINgeUC7ebNu2yDYGxdN9SlqG8z7DArHKP02u0ttwqWdjp
-	 tU7bqvUdSXhtp8F96V/hNJ+XWXRFwzsmg8sIhrvM=
+	b=yFQj8XqHHRqyOWbms685rTh1bQDIkn2ctOLkr6sdZGkNSzGzx/CZlWhB5704uTKBF
+	 GVu4/gNYzv5PXTPB9bj6TbWPXV8I+8aZYeI3oH9l1sn2b7PZs6mxAtlmi7kvA85hWZ
+	 s0HjMnynaiZNgD2f6v/eA6Ilv5R9E663s/dpmc0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shiraz Saleem <shiraz.saleem@intel.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 105/239] RDMA/irdma: Add missing read barriers
-Date: Tue,  1 Aug 2023 11:19:29 +0200
-Message-ID: <20230801091929.508976737@linuxfoundation.org>
+Subject: [PATCH 6.4 106/239] RDMA/irdma: Fix data race on CQP completion stats
+Date: Tue,  1 Aug 2023 11:19:30 +0200
+Message-ID: <20230801091929.549664196@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -37,97 +37,213 @@ Content-Transfer-Encoding: 8bit
 
 From: Shiraz Saleem <shiraz.saleem@intel.com>
 
-[ Upstream commit 4984eb51453ff7eddee9e5ce816145be39c0ec5c ]
+[ Upstream commit f2c3037811381f9149243828c7eb9a1631df9f9c ]
 
-On code inspection, there are many instances in the driver where
-CEQE and AEQE fields written to by HW are read without guaranteeing
-that the polarity bit has been read and checked first.
+CQP completion statistics is read lockesly in irdma_wait_event and
+irdma_check_cqp_progress while it can be updated in the completion
+thread irdma_sc_ccq_get_cqe_info on another CPU as KCSAN reports.
 
-Add a read barrier to avoid reordering of loads on the CEQE/AEQE fields
-prior to checking the polarity bit.
+Make completion statistics an atomic variable to reflect coherent updates
+to it. This will also avoid load/store tearing logic bug potentially
+possible by compiler optimizations.
 
-Fixes: 3f49d6842569 ("RDMA/irdma: Implement HW Admin Queue OPs")
+[77346.170861] BUG: KCSAN: data-race in irdma_handle_cqp_op [irdma] / irdma_sc_ccq_get_cqe_info [irdma]
+
+[77346.171383] write to 0xffff8a3250b108e0 of 8 bytes by task 9544 on cpu 4:
+[77346.171483]  irdma_sc_ccq_get_cqe_info+0x27a/0x370 [irdma]
+[77346.171658]  irdma_cqp_ce_handler+0x164/0x270 [irdma]
+[77346.171835]  cqp_compl_worker+0x1b/0x20 [irdma]
+[77346.172009]  process_one_work+0x4d1/0xa40
+[77346.172024]  worker_thread+0x319/0x700
+[77346.172037]  kthread+0x180/0x1b0
+[77346.172054]  ret_from_fork+0x22/0x30
+
+[77346.172136] read to 0xffff8a3250b108e0 of 8 bytes by task 9838 on cpu 2:
+[77346.172234]  irdma_handle_cqp_op+0xf4/0x4b0 [irdma]
+[77346.172413]  irdma_cqp_aeq_cmd+0x75/0xa0 [irdma]
+[77346.172592]  irdma_create_aeq+0x390/0x45a [irdma]
+[77346.172769]  irdma_rt_init_hw.cold+0x212/0x85d [irdma]
+[77346.172944]  irdma_probe+0x54f/0x620 [irdma]
+[77346.173122]  auxiliary_bus_probe+0x66/0xa0
+[77346.173137]  really_probe+0x140/0x540
+[77346.173154]  __driver_probe_device+0xc7/0x220
+[77346.173173]  driver_probe_device+0x5f/0x140
+[77346.173190]  __driver_attach+0xf0/0x2c0
+[77346.173208]  bus_for_each_dev+0xa8/0xf0
+[77346.173225]  driver_attach+0x29/0x30
+[77346.173240]  bus_add_driver+0x29c/0x2f0
+[77346.173255]  driver_register+0x10f/0x1a0
+[77346.173272]  __auxiliary_driver_register+0xbc/0x140
+[77346.173287]  irdma_init_module+0x55/0x1000 [irdma]
+[77346.173460]  do_one_initcall+0x7d/0x410
+[77346.173475]  do_init_module+0x81/0x2c0
+[77346.173491]  load_module+0x1232/0x12c0
+[77346.173506]  __do_sys_finit_module+0x101/0x180
+[77346.173522]  __x64_sys_finit_module+0x3c/0x50
+[77346.173538]  do_syscall_64+0x39/0x90
+[77346.173553]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+[77346.173634] value changed: 0x0000000000000094 -> 0x0000000000000095
+
+Fixes: 915cc7ac0f8e ("RDMA/irdma: Add miscellaneous utility definitions")
 Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Link: https://lore.kernel.org/r/20230711175253.1289-2-shiraz.saleem@intel.com
+Link: https://lore.kernel.org/r/20230711175253.1289-3-shiraz.saleem@intel.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/ctrl.c | 9 ++++++++-
- drivers/infiniband/hw/irdma/puda.c | 6 ++++++
- drivers/infiniband/hw/irdma/uk.c   | 3 +++
- 3 files changed, 17 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/irdma/ctrl.c  | 22 +++++++-------
+ drivers/infiniband/hw/irdma/defs.h  | 46 ++++++++++++++---------------
+ drivers/infiniband/hw/irdma/type.h  |  2 ++
+ drivers/infiniband/hw/irdma/utils.c |  2 +-
+ 4 files changed, 36 insertions(+), 36 deletions(-)
 
 diff --git a/drivers/infiniband/hw/irdma/ctrl.c b/drivers/infiniband/hw/irdma/ctrl.c
-index d88c9184007ea..c91439f428c76 100644
+index c91439f428c76..45e3344daa048 100644
 --- a/drivers/infiniband/hw/irdma/ctrl.c
 +++ b/drivers/infiniband/hw/irdma/ctrl.c
-@@ -3363,6 +3363,9 @@ int irdma_sc_ccq_get_cqe_info(struct irdma_sc_cq *ccq,
- 	if (polarity != ccq->cq_uk.polarity)
- 		return -ENOENT;
- 
-+	/* Ensure CEQE contents are read after valid bit is checked */
-+	dma_rmb();
+@@ -2712,13 +2712,13 @@ static int irdma_sc_cq_modify(struct irdma_sc_cq *cq,
+  */
+ void irdma_check_cqp_progress(struct irdma_cqp_timeout *timeout, struct irdma_sc_dev *dev)
+ {
+-	if (timeout->compl_cqp_cmds != dev->cqp_cmd_stats[IRDMA_OP_CMPL_CMDS]) {
+-		timeout->compl_cqp_cmds = dev->cqp_cmd_stats[IRDMA_OP_CMPL_CMDS];
++	u64 completed_ops = atomic64_read(&dev->cqp->completed_ops);
 +
- 	get_64bit_val(cqe, 8, &qp_ctx);
- 	cqp = (struct irdma_sc_cqp *)(unsigned long)qp_ctx;
- 	info->error = (bool)FIELD_GET(IRDMA_CQ_ERROR, temp);
-@@ -4009,13 +4012,17 @@ int irdma_sc_get_next_aeqe(struct irdma_sc_aeq *aeq,
- 	u8 polarity;
++	if (timeout->compl_cqp_cmds != completed_ops) {
++		timeout->compl_cqp_cmds = completed_ops;
+ 		timeout->count = 0;
+-	} else {
+-		if (dev->cqp_cmd_stats[IRDMA_OP_REQ_CMDS] !=
+-		    timeout->compl_cqp_cmds)
+-			timeout->count++;
++	} else if (timeout->compl_cqp_cmds != dev->cqp->requested_ops) {
++		timeout->count++;
+ 	}
+ }
  
- 	aeqe = IRDMA_GET_CURRENT_AEQ_ELEM(aeq);
--	get_64bit_val(aeqe, 0, &compl_ctx);
- 	get_64bit_val(aeqe, 8, &temp);
- 	polarity = (u8)FIELD_GET(IRDMA_AEQE_VALID, temp);
+@@ -2761,7 +2761,7 @@ static int irdma_cqp_poll_registers(struct irdma_sc_cqp *cqp, u32 tail,
+ 		if (newtail != tail) {
+ 			/* SUCCESS */
+ 			IRDMA_RING_MOVE_TAIL(cqp->sq_ring);
+-			cqp->dev->cqp_cmd_stats[IRDMA_OP_CMPL_CMDS]++;
++			atomic64_inc(&cqp->completed_ops);
+ 			return 0;
+ 		}
+ 		udelay(cqp->dev->hw_attrs.max_sleep_count);
+@@ -3121,8 +3121,8 @@ int irdma_sc_cqp_init(struct irdma_sc_cqp *cqp,
+ 	info->dev->cqp = cqp;
  
- 	if (aeq->polarity != polarity)
- 		return -ENOENT;
+ 	IRDMA_RING_INIT(cqp->sq_ring, cqp->sq_size);
+-	cqp->dev->cqp_cmd_stats[IRDMA_OP_REQ_CMDS] = 0;
+-	cqp->dev->cqp_cmd_stats[IRDMA_OP_CMPL_CMDS] = 0;
++	cqp->requested_ops = 0;
++	atomic64_set(&cqp->completed_ops, 0);
+ 	/* for the cqp commands backlog. */
+ 	INIT_LIST_HEAD(&cqp->dev->cqp_cmd_head);
  
-+	/* Ensure AEQE contents are read after valid bit is checked */
-+	dma_rmb();
-+
-+	get_64bit_val(aeqe, 0, &compl_ctx);
-+
- 	print_hex_dump_debug("WQE: AEQ_ENTRY WQE", DUMP_PREFIX_OFFSET, 16, 8,
- 			     aeqe, 16, false);
+@@ -3274,7 +3274,7 @@ __le64 *irdma_sc_cqp_get_next_send_wqe_idx(struct irdma_sc_cqp *cqp, u64 scratch
+ 	if (ret_code)
+ 		return NULL;
  
-diff --git a/drivers/infiniband/hw/irdma/puda.c b/drivers/infiniband/hw/irdma/puda.c
-index 4ec9639f1bdbf..562531712ea44 100644
---- a/drivers/infiniband/hw/irdma/puda.c
-+++ b/drivers/infiniband/hw/irdma/puda.c
-@@ -230,6 +230,9 @@ static int irdma_puda_poll_info(struct irdma_sc_cq *cq,
- 	if (valid_bit != cq_uk->polarity)
- 		return -ENOENT;
+-	cqp->dev->cqp_cmd_stats[IRDMA_OP_REQ_CMDS]++;
++	cqp->requested_ops++;
+ 	if (!*wqe_idx)
+ 		cqp->polarity = !cqp->polarity;
+ 	wqe = cqp->sq_base[*wqe_idx].elem;
+@@ -3400,7 +3400,7 @@ int irdma_sc_ccq_get_cqe_info(struct irdma_sc_cq *ccq,
+ 	dma_wmb(); /* make sure shadow area is updated before moving tail */
  
-+	/* Ensure CQE contents are read after valid bit is checked */
-+	dma_rmb();
-+
- 	if (cq->dev->hw_attrs.uk_attrs.hw_rev >= IRDMA_GEN_2)
- 		ext_valid = (bool)FIELD_GET(IRDMA_CQ_EXTCQE, qword3);
+ 	IRDMA_RING_MOVE_TAIL(cqp->sq_ring);
+-	ccq->dev->cqp_cmd_stats[IRDMA_OP_CMPL_CMDS]++;
++	atomic64_inc(&cqp->completed_ops);
  
-@@ -243,6 +246,9 @@ static int irdma_puda_poll_info(struct irdma_sc_cq *cq,
- 		if (polarity != cq_uk->polarity)
- 			return -ENOENT;
+ 	return ret_code;
+ }
+diff --git a/drivers/infiniband/hw/irdma/defs.h b/drivers/infiniband/hw/irdma/defs.h
+index 6014b9d06a9ba..d06e45d2c23fd 100644
+--- a/drivers/infiniband/hw/irdma/defs.h
++++ b/drivers/infiniband/hw/irdma/defs.h
+@@ -191,32 +191,30 @@ enum irdma_cqp_op_type {
+ 	IRDMA_OP_MANAGE_VF_PBLE_BP		= 25,
+ 	IRDMA_OP_QUERY_FPM_VAL			= 26,
+ 	IRDMA_OP_COMMIT_FPM_VAL			= 27,
+-	IRDMA_OP_REQ_CMDS			= 28,
+-	IRDMA_OP_CMPL_CMDS			= 29,
+-	IRDMA_OP_AH_CREATE			= 30,
+-	IRDMA_OP_AH_MODIFY			= 31,
+-	IRDMA_OP_AH_DESTROY			= 32,
+-	IRDMA_OP_MC_CREATE			= 33,
+-	IRDMA_OP_MC_DESTROY			= 34,
+-	IRDMA_OP_MC_MODIFY			= 35,
+-	IRDMA_OP_STATS_ALLOCATE			= 36,
+-	IRDMA_OP_STATS_FREE			= 37,
+-	IRDMA_OP_STATS_GATHER			= 38,
+-	IRDMA_OP_WS_ADD_NODE			= 39,
+-	IRDMA_OP_WS_MODIFY_NODE			= 40,
+-	IRDMA_OP_WS_DELETE_NODE			= 41,
+-	IRDMA_OP_WS_FAILOVER_START		= 42,
+-	IRDMA_OP_WS_FAILOVER_COMPLETE		= 43,
+-	IRDMA_OP_SET_UP_MAP			= 44,
+-	IRDMA_OP_GEN_AE				= 45,
+-	IRDMA_OP_QUERY_RDMA_FEATURES		= 46,
+-	IRDMA_OP_ALLOC_LOCAL_MAC_ENTRY		= 47,
+-	IRDMA_OP_ADD_LOCAL_MAC_ENTRY		= 48,
+-	IRDMA_OP_DELETE_LOCAL_MAC_ENTRY		= 49,
+-	IRDMA_OP_CQ_MODIFY			= 50,
++	IRDMA_OP_AH_CREATE			= 28,
++	IRDMA_OP_AH_MODIFY			= 29,
++	IRDMA_OP_AH_DESTROY			= 30,
++	IRDMA_OP_MC_CREATE			= 31,
++	IRDMA_OP_MC_DESTROY			= 32,
++	IRDMA_OP_MC_MODIFY			= 33,
++	IRDMA_OP_STATS_ALLOCATE			= 34,
++	IRDMA_OP_STATS_FREE			= 35,
++	IRDMA_OP_STATS_GATHER			= 36,
++	IRDMA_OP_WS_ADD_NODE			= 37,
++	IRDMA_OP_WS_MODIFY_NODE			= 38,
++	IRDMA_OP_WS_DELETE_NODE			= 39,
++	IRDMA_OP_WS_FAILOVER_START		= 40,
++	IRDMA_OP_WS_FAILOVER_COMPLETE		= 41,
++	IRDMA_OP_SET_UP_MAP			= 42,
++	IRDMA_OP_GEN_AE				= 43,
++	IRDMA_OP_QUERY_RDMA_FEATURES		= 44,
++	IRDMA_OP_ALLOC_LOCAL_MAC_ENTRY		= 45,
++	IRDMA_OP_ADD_LOCAL_MAC_ENTRY		= 46,
++	IRDMA_OP_DELETE_LOCAL_MAC_ENTRY		= 47,
++	IRDMA_OP_CQ_MODIFY			= 48,
  
-+		/* Ensure ext CQE contents are read after ext valid bit is checked */
-+		dma_rmb();
-+
- 		IRDMA_RING_MOVE_HEAD_NOCHECK(cq_uk->cq_ring);
- 		if (!IRDMA_RING_CURRENT_HEAD(cq_uk->cq_ring))
- 			cq_uk->polarity = !cq_uk->polarity;
-diff --git a/drivers/infiniband/hw/irdma/uk.c b/drivers/infiniband/hw/irdma/uk.c
-index dd428d915c175..ea2c07751245a 100644
---- a/drivers/infiniband/hw/irdma/uk.c
-+++ b/drivers/infiniband/hw/irdma/uk.c
-@@ -1527,6 +1527,9 @@ void irdma_uk_clean_cq(void *q, struct irdma_cq_uk *cq)
- 		if (polarity != temp)
- 			break;
+ 	/* Must be last entry*/
+-	IRDMA_MAX_CQP_OPS			= 51,
++	IRDMA_MAX_CQP_OPS			= 49,
+ };
  
-+		/* Ensure CQE contents are read after valid bit is checked */
-+		dma_rmb();
-+
- 		get_64bit_val(cqe, 8, &comp_ctx);
- 		if ((void *)(unsigned long)comp_ctx == q)
- 			set_64bit_val(cqe, 8, 0);
+ /* CQP SQ WQES */
+diff --git a/drivers/infiniband/hw/irdma/type.h b/drivers/infiniband/hw/irdma/type.h
+index 5ee68604e59fc..a20709577ab0a 100644
+--- a/drivers/infiniband/hw/irdma/type.h
++++ b/drivers/infiniband/hw/irdma/type.h
+@@ -365,6 +365,8 @@ struct irdma_sc_cqp {
+ 	struct irdma_dcqcn_cc_params dcqcn_params;
+ 	__le64 *host_ctx;
+ 	u64 *scratch_array;
++	u64 requested_ops;
++	atomic64_t completed_ops;
+ 	u32 cqp_id;
+ 	u32 sq_size;
+ 	u32 hw_sq_size;
+diff --git a/drivers/infiniband/hw/irdma/utils.c b/drivers/infiniband/hw/irdma/utils.c
+index 71e1c5d347092..775a79946f7df 100644
+--- a/drivers/infiniband/hw/irdma/utils.c
++++ b/drivers/infiniband/hw/irdma/utils.c
+@@ -567,7 +567,7 @@ static int irdma_wait_event(struct irdma_pci_f *rf,
+ 	bool cqp_error = false;
+ 	int err_code = 0;
+ 
+-	cqp_timeout.compl_cqp_cmds = rf->sc_dev.cqp_cmd_stats[IRDMA_OP_CMPL_CMDS];
++	cqp_timeout.compl_cqp_cmds = atomic64_read(&rf->sc_dev.cqp->completed_ops);
+ 	do {
+ 		irdma_cqp_ce_handler(rf, &rf->ccq.sc_cq);
+ 		if (wait_event_timeout(cqp_request->waitq,
 -- 
 2.40.1
 
