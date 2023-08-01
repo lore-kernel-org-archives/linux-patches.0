@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CF31FB2B
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:35:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6885C433C7;
-	Tue,  1 Aug 2023 09:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010931FB2B
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:35:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7561CC433C8;
+	Tue,  1 Aug 2023 09:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882536;
-	bh=fohDFOiY9V0RysZNTzK0dahzNi6lHMFuSBWQ07TGyJ0=;
+	s=korg; t=1690882538;
+	bh=AYkv6W6HnroIuvJYfo6XuT/dRUdCdjWdMMLKbEVVLbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZltFiQkw7skEipojWdnonCkJjOu3rl6/0Qi69UlbyGNG416rC4sijz52d3VZSTfwH
-	 rjyHcTRtFhNGB/1VxMjbKNP7ZbxfoBC2d82ZyKM61gHGrJcefoMvFoKQGIdBhohIRE
-	 d+FP5HnMba2TAmDdo9cDz+bnQVKsD8btElzYlmkU=
+	b=ELPhGtHPd4kOnDk+fYj8IbqdysqqBojCB+jJg+Y7PzkY4rH1nq+fMAa5b07eaVQYl
+	 89Gf3veesFikeQ1kYVcau9XHuPfK8PJAXtZUaMnX3AfTMXiGKzeZfmjR78r/tNyROI
+	 1bRV9ycDngZ+GvP5MJZOPts72PZMner67fgfMDKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZiyangZhang <ZiyangZhang@linux.alibaba.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Xin Long <lucien.xin@gmail.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 140/228] ublk_drv: move ublk_get_device_from_id into ublk_ctrl_uring_cmd
-Date: Tue,  1 Aug 2023 11:19:58 +0200
-Message-ID: <20230801091927.923350409@linuxfoundation.org>
+Subject: [PATCH 6.1 114/228] tipc: stop tipc crypto on failure in tipc_node_create
+Date: Tue,  1 Aug 2023 11:19:32 +0200
+Message-ID: <20230801091926.898831349@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,378 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit bfbcef036396a73fbf4b3fee385cc670159df5ad ]
+[ Upstream commit de52e17326c3e9a719c9ead4adb03467b8fae0ef ]
 
-It is annoying for each control command handler to get/put ublk
-device and deal with failure.
+If tipc_link_bc_create() fails inside tipc_node_create() for a newly
+allocated tipc node then we should stop its tipc crypto and free the
+resources allocated with a call to tipc_crypto_start().
 
-Control command handler is simplified a lot by moving
-ublk_get_device_from_id into ublk_ctrl_uring_cmd().
+As the node ref is initialized to one to that point, just put the ref on
+tipc_link_bc_create() error case that would lead to tipc_node_free() be
+eventually executed and properly clean the node and its crypto resources.
 
-Reviewed-by: ZiyangZhang <ZiyangZhang@linux.alibaba.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20230106041711.914434-4-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 53e7d08f6d6e ("ublk: fail to start device if queue setup is interrupted")
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: cb8092d70a6f ("tipc: move bc link creation back to tipc_node_create")
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/20230725214628.25246-1-pchelkin@ispras.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 138 ++++++++++++++-------------------------
- 1 file changed, 49 insertions(+), 89 deletions(-)
+ net/tipc/node.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index c56d1c6d8e58d..3ae22e7eb0b09 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -1529,21 +1529,16 @@ static struct ublk_device *ublk_get_device_from_id(int idx)
- 	return ub;
- }
- 
--static int ublk_ctrl_start_dev(struct io_uring_cmd *cmd)
-+static int ublk_ctrl_start_dev(struct ublk_device *ub, struct io_uring_cmd *cmd)
- {
- 	struct ublksrv_ctrl_cmd *header = (struct ublksrv_ctrl_cmd *)cmd->cmd;
- 	int ublksrv_pid = (int)header->data[0];
--	struct ublk_device *ub;
- 	struct gendisk *disk;
- 	int ret = -EINVAL;
- 
- 	if (ublksrv_pid <= 0)
- 		return -EINVAL;
- 
--	ub = ublk_get_device_from_id(header->dev_id);
--	if (!ub)
--		return -EINVAL;
--
- 	wait_for_completion_interruptible(&ub->completion);
- 
- 	schedule_delayed_work(&ub->monitor_work, UBLK_DAEMON_MONITOR_PERIOD);
-@@ -1593,21 +1588,20 @@ static int ublk_ctrl_start_dev(struct io_uring_cmd *cmd)
- 		put_disk(disk);
- out_unlock:
- 	mutex_unlock(&ub->mutex);
--	ublk_put_device(ub);
- 	return ret;
- }
- 
--static int ublk_ctrl_get_queue_affinity(struct io_uring_cmd *cmd)
-+static int ublk_ctrl_get_queue_affinity(struct ublk_device *ub,
-+		struct io_uring_cmd *cmd)
- {
- 	struct ublksrv_ctrl_cmd *header = (struct ublksrv_ctrl_cmd *)cmd->cmd;
- 	void __user *argp = (void __user *)(unsigned long)header->addr;
--	struct ublk_device *ub;
- 	cpumask_var_t cpumask;
- 	unsigned long queue;
- 	unsigned int retlen;
- 	unsigned int i;
--	int ret = -EINVAL;
--	
-+	int ret;
-+
- 	if (header->len * BITS_PER_BYTE < nr_cpu_ids)
- 		return -EINVAL;
- 	if (header->len & (sizeof(unsigned long)-1))
-@@ -1615,17 +1609,12 @@ static int ublk_ctrl_get_queue_affinity(struct io_uring_cmd *cmd)
- 	if (!header->addr)
- 		return -EINVAL;
- 
--	ub = ublk_get_device_from_id(header->dev_id);
--	if (!ub)
--		return -EINVAL;
--
- 	queue = header->data[0];
- 	if (queue >= ub->dev_info.nr_hw_queues)
--		goto out_put_device;
-+		return -EINVAL;
- 
--	ret = -ENOMEM;
- 	if (!zalloc_cpumask_var(&cpumask, GFP_KERNEL))
--		goto out_put_device;
-+		return -ENOMEM;
- 
- 	for_each_possible_cpu(i) {
- 		if (ub->tag_set.map[HCTX_TYPE_DEFAULT].mq_map[i] == queue)
-@@ -1643,8 +1632,6 @@ static int ublk_ctrl_get_queue_affinity(struct io_uring_cmd *cmd)
- 	ret = 0;
- out_free_cpumask:
- 	free_cpumask_var(cpumask);
--out_put_device:
--	ublk_put_device(ub);
- 	return ret;
- }
- 
-@@ -1765,30 +1752,27 @@ static inline bool ublk_idr_freed(int id)
- 	return ptr == NULL;
- }
- 
--static int ublk_ctrl_del_dev(int idx)
-+static int ublk_ctrl_del_dev(struct ublk_device **p_ub)
- {
--	struct ublk_device *ub;
-+	struct ublk_device *ub = *p_ub;
-+	int idx = ub->ub_number;
- 	int ret;
- 
- 	ret = mutex_lock_killable(&ublk_ctl_mutex);
- 	if (ret)
- 		return ret;
- 
--	ub = ublk_get_device_from_id(idx);
--	if (ub) {
--		ublk_remove(ub);
--		ublk_put_device(ub);
--		ret = 0;
--	} else {
--		ret = -ENODEV;
--	}
-+	ublk_remove(ub);
-+
-+	/* Mark the reference as consumed */
-+	*p_ub = NULL;
-+	ublk_put_device(ub);
- 
- 	/*
- 	 * Wait until the idr is removed, then it can be reused after
- 	 * DEL_DEV command is returned.
- 	 */
--	if (!ret)
--		wait_event(ublk_idr_wq, ublk_idr_freed(idx));
-+	wait_event(ublk_idr_wq, ublk_idr_freed(idx));
- 	mutex_unlock(&ublk_ctl_mutex);
- 
- 	return ret;
-@@ -1803,50 +1787,36 @@ static inline void ublk_ctrl_cmd_dump(struct io_uring_cmd *cmd)
- 			header->data[0], header->addr, header->len);
- }
- 
--static int ublk_ctrl_stop_dev(struct io_uring_cmd *cmd)
-+static int ublk_ctrl_stop_dev(struct ublk_device *ub)
- {
--	struct ublksrv_ctrl_cmd *header = (struct ublksrv_ctrl_cmd *)cmd->cmd;
--	struct ublk_device *ub;
--
--	ub = ublk_get_device_from_id(header->dev_id);
--	if (!ub)
--		return -EINVAL;
--
- 	ublk_stop_dev(ub);
- 	cancel_work_sync(&ub->stop_work);
- 	cancel_work_sync(&ub->quiesce_work);
- 
--	ublk_put_device(ub);
- 	return 0;
- }
- 
--static int ublk_ctrl_get_dev_info(struct io_uring_cmd *cmd)
-+static int ublk_ctrl_get_dev_info(struct ublk_device *ub,
-+		struct io_uring_cmd *cmd)
- {
- 	struct ublksrv_ctrl_cmd *header = (struct ublksrv_ctrl_cmd *)cmd->cmd;
- 	void __user *argp = (void __user *)(unsigned long)header->addr;
--	struct ublk_device *ub;
--	int ret = 0;
- 
- 	if (header->len < sizeof(struct ublksrv_ctrl_dev_info) || !header->addr)
- 		return -EINVAL;
- 
--	ub = ublk_get_device_from_id(header->dev_id);
--	if (!ub)
--		return -EINVAL;
--
- 	if (copy_to_user(argp, &ub->dev_info, sizeof(ub->dev_info)))
--		ret = -EFAULT;
--	ublk_put_device(ub);
-+		return -EFAULT;
- 
--	return ret;
-+	return 0;
- }
- 
--static int ublk_ctrl_get_params(struct io_uring_cmd *cmd)
-+static int ublk_ctrl_get_params(struct ublk_device *ub,
-+		struct io_uring_cmd *cmd)
- {
- 	struct ublksrv_ctrl_cmd *header = (struct ublksrv_ctrl_cmd *)cmd->cmd;
- 	void __user *argp = (void __user *)(unsigned long)header->addr;
- 	struct ublk_params_header ph;
--	struct ublk_device *ub;
- 	int ret;
- 
- 	if (header->len <= sizeof(ph) || !header->addr)
-@@ -1861,10 +1831,6 @@ static int ublk_ctrl_get_params(struct io_uring_cmd *cmd)
- 	if (ph.len > sizeof(struct ublk_params))
- 		ph.len = sizeof(struct ublk_params);
- 
--	ub = ublk_get_device_from_id(header->dev_id);
--	if (!ub)
--		return -EINVAL;
--
- 	mutex_lock(&ub->mutex);
- 	if (copy_to_user(argp, &ub->params, ph.len))
- 		ret = -EFAULT;
-@@ -1872,16 +1838,15 @@ static int ublk_ctrl_get_params(struct io_uring_cmd *cmd)
- 		ret = 0;
- 	mutex_unlock(&ub->mutex);
- 
--	ublk_put_device(ub);
- 	return ret;
- }
- 
--static int ublk_ctrl_set_params(struct io_uring_cmd *cmd)
-+static int ublk_ctrl_set_params(struct ublk_device *ub,
-+		struct io_uring_cmd *cmd)
- {
- 	struct ublksrv_ctrl_cmd *header = (struct ublksrv_ctrl_cmd *)cmd->cmd;
- 	void __user *argp = (void __user *)(unsigned long)header->addr;
- 	struct ublk_params_header ph;
--	struct ublk_device *ub;
- 	int ret = -EFAULT;
- 
- 	if (header->len <= sizeof(ph) || !header->addr)
-@@ -1896,10 +1861,6 @@ static int ublk_ctrl_set_params(struct io_uring_cmd *cmd)
- 	if (ph.len > sizeof(struct ublk_params))
- 		ph.len = sizeof(struct ublk_params);
- 
--	ub = ublk_get_device_from_id(header->dev_id);
--	if (!ub)
--		return -EINVAL;
--
- 	/* parameters can only be changed when device isn't live */
- 	mutex_lock(&ub->mutex);
- 	if (ub->dev_info.state == UBLK_S_DEV_LIVE) {
-@@ -1914,7 +1875,6 @@ static int ublk_ctrl_set_params(struct io_uring_cmd *cmd)
- 			ub->params.types = 0;
+diff --git a/net/tipc/node.c b/net/tipc/node.c
+index 5e000fde80676..a9c5b6594889b 100644
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -583,7 +583,7 @@ struct tipc_node *tipc_node_create(struct net *net, u32 addr, u8 *peer_id,
+ 				 n->capabilities, &n->bc_entry.inputq1,
+ 				 &n->bc_entry.namedq, snd_l, &n->bc_entry.link)) {
+ 		pr_warn("Broadcast rcv link creation failed, no memory\n");
+-		kfree(n);
++		tipc_node_put(n);
+ 		n = NULL;
+ 		goto exit;
  	}
- 	mutex_unlock(&ub->mutex);
--	ublk_put_device(ub);
- 
- 	return ret;
- }
-@@ -1941,17 +1901,13 @@ static void ublk_queue_reinit(struct ublk_device *ub, struct ublk_queue *ubq)
- 	}
- }
- 
--static int ublk_ctrl_start_recovery(struct io_uring_cmd *cmd)
-+static int ublk_ctrl_start_recovery(struct ublk_device *ub,
-+		struct io_uring_cmd *cmd)
- {
- 	struct ublksrv_ctrl_cmd *header = (struct ublksrv_ctrl_cmd *)cmd->cmd;
--	struct ublk_device *ub;
- 	int ret = -EINVAL;
- 	int i;
- 
--	ub = ublk_get_device_from_id(header->dev_id);
--	if (!ub)
--		return ret;
--
- 	mutex_lock(&ub->mutex);
- 	if (!ublk_can_use_recovery(ub))
- 		goto out_unlock;
-@@ -1984,21 +1940,16 @@ static int ublk_ctrl_start_recovery(struct io_uring_cmd *cmd)
- 	ret = 0;
-  out_unlock:
- 	mutex_unlock(&ub->mutex);
--	ublk_put_device(ub);
- 	return ret;
- }
- 
--static int ublk_ctrl_end_recovery(struct io_uring_cmd *cmd)
-+static int ublk_ctrl_end_recovery(struct ublk_device *ub,
-+		struct io_uring_cmd *cmd)
- {
- 	struct ublksrv_ctrl_cmd *header = (struct ublksrv_ctrl_cmd *)cmd->cmd;
- 	int ublksrv_pid = (int)header->data[0];
--	struct ublk_device *ub;
- 	int ret = -EINVAL;
- 
--	ub = ublk_get_device_from_id(header->dev_id);
--	if (!ub)
--		return ret;
--
- 	pr_devel("%s: Waiting for new ubq_daemons(nr: %d) are ready, dev id %d...\n",
- 			__func__, ub->dev_info.nr_hw_queues, header->dev_id);
- 	/* wait until new ubq_daemon sending all FETCH_REQ */
-@@ -2026,7 +1977,6 @@ static int ublk_ctrl_end_recovery(struct io_uring_cmd *cmd)
- 	ret = 0;
-  out_unlock:
- 	mutex_unlock(&ub->mutex);
--	ublk_put_device(ub);
- 	return ret;
- }
- 
-@@ -2034,6 +1984,7 @@ static int ublk_ctrl_uring_cmd(struct io_uring_cmd *cmd,
- 		unsigned int issue_flags)
- {
- 	struct ublksrv_ctrl_cmd *header = (struct ublksrv_ctrl_cmd *)cmd->cmd;
-+	struct ublk_device *ub = NULL;
- 	int ret = -EINVAL;
- 
- 	if (issue_flags & IO_URING_F_NONBLOCK)
-@@ -2048,41 +1999,50 @@ static int ublk_ctrl_uring_cmd(struct io_uring_cmd *cmd,
- 	if (!capable(CAP_SYS_ADMIN))
- 		goto out;
- 
--	ret = -ENODEV;
-+	if (cmd->cmd_op != UBLK_CMD_ADD_DEV) {
-+		ret = -ENODEV;
-+		ub = ublk_get_device_from_id(header->dev_id);
-+		if (!ub)
-+			goto out;
-+	}
-+
- 	switch (cmd->cmd_op) {
- 	case UBLK_CMD_START_DEV:
--		ret = ublk_ctrl_start_dev(cmd);
-+		ret = ublk_ctrl_start_dev(ub, cmd);
- 		break;
- 	case UBLK_CMD_STOP_DEV:
--		ret = ublk_ctrl_stop_dev(cmd);
-+		ret = ublk_ctrl_stop_dev(ub);
- 		break;
- 	case UBLK_CMD_GET_DEV_INFO:
--		ret = ublk_ctrl_get_dev_info(cmd);
-+		ret = ublk_ctrl_get_dev_info(ub, cmd);
- 		break;
- 	case UBLK_CMD_ADD_DEV:
- 		ret = ublk_ctrl_add_dev(cmd);
- 		break;
- 	case UBLK_CMD_DEL_DEV:
--		ret = ublk_ctrl_del_dev(header->dev_id);
-+		ret = ublk_ctrl_del_dev(&ub);
- 		break;
- 	case UBLK_CMD_GET_QUEUE_AFFINITY:
--		ret = ublk_ctrl_get_queue_affinity(cmd);
-+		ret = ublk_ctrl_get_queue_affinity(ub, cmd);
- 		break;
- 	case UBLK_CMD_GET_PARAMS:
--		ret = ublk_ctrl_get_params(cmd);
-+		ret = ublk_ctrl_get_params(ub, cmd);
- 		break;
- 	case UBLK_CMD_SET_PARAMS:
--		ret = ublk_ctrl_set_params(cmd);
-+		ret = ublk_ctrl_set_params(ub, cmd);
- 		break;
- 	case UBLK_CMD_START_USER_RECOVERY:
--		ret = ublk_ctrl_start_recovery(cmd);
-+		ret = ublk_ctrl_start_recovery(ub, cmd);
- 		break;
- 	case UBLK_CMD_END_USER_RECOVERY:
--		ret = ublk_ctrl_end_recovery(cmd);
-+		ret = ublk_ctrl_end_recovery(ub, cmd);
- 		break;
- 	default:
-+		ret = -ENOTSUPP;
- 		break;
- 	}
-+	if (ub)
-+		ublk_put_device(ub);
-  out:
- 	io_uring_cmd_done(cmd, ret, 0, issue_flags);
- 	pr_devel("%s: cmd done ret %d cmd_op %x, dev id %d qid %d\n",
 -- 
-2.40.1
+2.39.2
 
 
 
