@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17EA71F957
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89CB3C433C7;
-	Tue,  1 Aug 2023 09:37:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA811F957
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50873C433C7;
+	Tue,  1 Aug 2023 09:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882621;
-	bh=YwIsGVHUr2sJbtY7RJIj1Acb16lWFaaKz5yceoW/yf4=;
+	s=korg; t=1690882624;
+	bh=kJdMXd6X2kPO5wBqKYMxJhczIp0kN0JN+SO1qv/fL/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1EkPfLHR4aexnC7qq26eCI61vCq1uETQ38KjA6UyQaQMuQrbv2Mj1sNUa0sIXe+Ol
-	 5+cqsjLQ1fVm0N8BoKAjAYqch6ORWfuJP28HAApN21QNxajrmBX39ZR74rRqbQc31l
-	 MabPf6sLhWTatKJq0HAkrbM23i1pg989PU711dtU=
+	b=U3NnrKXodYk/T933onnVHDZ2jBaKheWC4UkZEBW+fRAEzM8sY9ZCpTWD5KPo8xapk
+	 y5tBejPWuHgk3IWMsOXBLIXKodh7ton1neE19hjIDWBIumMN5Byi3UKBwrl2U1xhOV
+	 laKZoA/bysU11AtvxOwBTC3Wy+VaK5GNVSUfPbH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Zubin Mithra <zsm@chromium.org>,
-	Ricardo Ribalda <ribalda@chromium.org>
-Subject: [PATCH 6.1 171/228] usb: xhci-mtk: set the dma max_seg_size
-Date: Tue,  1 Aug 2023 11:20:29 +0200
-Message-ID: <20230801091929.046331744@linuxfoundation.org>
+	mhiramat@kernel.org,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 145/228] tracing: Fix warning in trace_buffered_event_disable()
+Date: Tue,  1 Aug 2023 11:20:03 +0200
+Message-ID: <20230801091928.127461850@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -35,35 +36,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-commit 9fd10829a9eb482e192a845675ecc5480e0bfa10 upstream.
+[ Upstream commit dea499781a1150d285c62b26659f62fb00824fce ]
 
-Allow devices to have dma operations beyond 64K, and avoid warnings such
-as:
+Warning happened in trace_buffered_event_disable() at
+  WARN_ON_ONCE(!trace_buffered_event_ref)
 
-DMA-API: xhci-mtk 11200000.usb: mapping sg segment longer than device claims to support [len=98304] [max=65536]
+  Call Trace:
+   ? __warn+0xa5/0x1b0
+   ? trace_buffered_event_disable+0x189/0x1b0
+   __ftrace_event_enable_disable+0x19e/0x3e0
+   free_probe_data+0x3b/0xa0
+   unregister_ftrace_function_probe_func+0x6b8/0x800
+   event_enable_func+0x2f0/0x3d0
+   ftrace_process_regex.isra.0+0x12d/0x1b0
+   ftrace_filter_write+0xe6/0x140
+   vfs_write+0x1c9/0x6f0
+   [...]
 
-Fixes: 0cbd4b34cda9 ("xhci: mediatek: support MTK xHCI host controller")
-Cc: stable <stable@kernel.org>
-Tested-by: Zubin Mithra <zsm@chromium.org>
-Reported-by: Zubin Mithra <zsm@chromium.org>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://lore.kernel.org/r/20230628-mtk-usb-v2-1-c8c34eb9f229@chromium.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The cause of the warning is in __ftrace_event_enable_disable(),
+trace_buffered_event_enable() was called once while
+trace_buffered_event_disable() was called twice.
+Reproduction script show as below, for analysis, see the comments:
+ ```
+ #!/bin/bash
+
+ cd /sys/kernel/tracing/
+
+ # 1. Register a 'disable_event' command, then:
+ #    1) SOFT_DISABLED_BIT was set;
+ #    2) trace_buffered_event_enable() was called first time;
+ echo 'cmdline_proc_show:disable_event:initcall:initcall_finish' > \
+     set_ftrace_filter
+
+ # 2. Enable the event registered, then:
+ #    1) SOFT_DISABLED_BIT was cleared;
+ #    2) trace_buffered_event_disable() was called first time;
+ echo 1 > events/initcall/initcall_finish/enable
+
+ # 3. Try to call into cmdline_proc_show(), then SOFT_DISABLED_BIT was
+ #    set again!!!
+ cat /proc/cmdline
+
+ # 4. Unregister the 'disable_event' command, then:
+ #    1) SOFT_DISABLED_BIT was cleared again;
+ #    2) trace_buffered_event_disable() was called second time!!!
+ echo '!cmdline_proc_show:disable_event:initcall:initcall_finish' > \
+     set_ftrace_filter
+ ```
+
+To fix it, IIUC, we can change to call trace_buffered_event_enable() at
+fist time soft-mode enabled, and call trace_buffered_event_disable() at
+last time soft-mode disabled.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230726095804.920457-1-zhengyejian1@huawei.com
+
+Cc: <mhiramat@kernel.org>
+Fixes: 0fc1b09ff1ff ("tracing: Use temp buffer when filtering events")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-mtk.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/trace_events.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
---- a/drivers/usb/host/xhci-mtk.c
-+++ b/drivers/usb/host/xhci-mtk.c
-@@ -590,6 +590,7 @@ static int xhci_mtk_probe(struct platfor
+diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
+index e679239864965..0447c46ef4d71 100644
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -609,7 +609,6 @@ static int __ftrace_event_enable_disable(struct trace_event_file *file,
+ {
+ 	struct trace_event_call *call = file->event_call;
+ 	struct trace_array *tr = file->tr;
+-	unsigned long file_flags = file->flags;
+ 	int ret = 0;
+ 	int disable;
+ 
+@@ -633,6 +632,8 @@ static int __ftrace_event_enable_disable(struct trace_event_file *file,
+ 				break;
+ 			disable = file->flags & EVENT_FILE_FL_SOFT_DISABLED;
+ 			clear_bit(EVENT_FILE_FL_SOFT_MODE_BIT, &file->flags);
++			/* Disable use of trace_buffered_event */
++			trace_buffered_event_disable();
+ 		} else
+ 			disable = !(file->flags & EVENT_FILE_FL_SOFT_MODE);
+ 
+@@ -671,6 +672,8 @@ static int __ftrace_event_enable_disable(struct trace_event_file *file,
+ 			if (atomic_inc_return(&file->sm_ref) > 1)
+ 				break;
+ 			set_bit(EVENT_FILE_FL_SOFT_MODE_BIT, &file->flags);
++			/* Enable use of trace_buffered_event */
++			trace_buffered_event_enable();
+ 		}
+ 
+ 		if (!(file->flags & EVENT_FILE_FL_ENABLED)) {
+@@ -710,15 +713,6 @@ static int __ftrace_event_enable_disable(struct trace_event_file *file,
+ 		break;
  	}
  
- 	device_init_wakeup(dev, true);
-+	dma_set_max_seg_size(dev, UINT_MAX);
+-	/* Enable or disable use of trace_buffered_event */
+-	if ((file_flags & EVENT_FILE_FL_SOFT_DISABLED) !=
+-	    (file->flags & EVENT_FILE_FL_SOFT_DISABLED)) {
+-		if (file->flags & EVENT_FILE_FL_SOFT_DISABLED)
+-			trace_buffered_event_enable();
+-		else
+-			trace_buffered_event_disable();
+-	}
+-
+ 	return ret;
+ }
  
- 	xhci = hcd_to_xhci(hcd);
- 	xhci->main_hcd = hcd;
+-- 
+2.40.1
+
 
 
