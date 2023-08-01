@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29051F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:26:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746B5C433C7;
-	Tue,  1 Aug 2023 09:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B464C1F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:26:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37325C433C7;
+	Tue,  1 Aug 2023 09:26:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881978;
-	bh=Z0j17gW43x9D+CBrLA+IfYo9ja2zAPqOlz84PxwP1ec=;
+	s=korg; t=1690881981;
+	bh=AYkv6W6HnroIuvJYfo6XuT/dRUdCdjWdMMLKbEVVLbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tcewGhEatwPnRr4md3hnYhsq3OZSFcqNPLTIxyHm2J4BRVjwMhJaHtoqaAwrYuokd
-	 AcI+QbyqNZRQU39IJK5akIwgHXf+4TcKadEcc0xIbLlq7PM7lK7RzJBY0VqOPplQc6
-	 5QdM0dIC1WPfXw2oSH3vvorTXexKM1zrmfX6+j2g=
+	b=FPs5fXscByN6SXuRSR8ce8NohVVThmaK7uV97nqGcPlTKFfCTKeZJk5SQywE8Afwi
+	 Sqj/pDr7kXaIpGc7j+bQFUqOrnVLDVK73U/elQJCTTCp9zwHnEVR0Upo0naNvLT2re
+	 J9YteIQlw+h5c0jtKxwDdIroSrKKD0hoc40bNTFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Xin Long <lucien.xin@gmail.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 098/155] ata: pata_ns87415: mark ns87560_tf_read static
-Date: Tue,  1 Aug 2023 11:20:10 +0200
-Message-ID: <20230801091913.712067466@linuxfoundation.org>
+Subject: [PATCH 5.15 081/155] tipc: stop tipc crypto on failure in tipc_node_create
+Date: Tue,  1 Aug 2023 11:19:53 +0200
+Message-ID: <20230801091913.043282878@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -37,42 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 3fc2febb0f8ffae354820c1772ec008733237cfa ]
+[ Upstream commit de52e17326c3e9a719c9ead4adb03467b8fae0ef ]
 
-The global function triggers a warning because of the missing prototype
+If tipc_link_bc_create() fails inside tipc_node_create() for a newly
+allocated tipc node then we should stop its tipc crypto and free the
+resources allocated with a call to tipc_crypto_start().
 
-drivers/ata/pata_ns87415.c:263:6: warning: no previous prototype for 'ns87560_tf_read' [-Wmissing-prototypes]
-  263 | void ns87560_tf_read(struct ata_port *ap, struct ata_taskfile *tf)
+As the node ref is initialized to one to that point, just put the ref on
+tipc_link_bc_create() error case that would lead to tipc_node_free() be
+eventually executed and properly clean the node and its crypto resources.
 
-There are no other references to this, so just make it static.
+Found by Linux Verification Center (linuxtesting.org).
 
-Fixes: c4b5b7b6c4423 ("pata_ns87415: Initial cut at 87415/87560 IDE support")
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Fixes: cb8092d70a6f ("tipc: move bc link creation back to tipc_node_create")
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/20230725214628.25246-1-pchelkin@ispras.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_ns87415.c | 2 +-
+ net/tipc/node.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ata/pata_ns87415.c b/drivers/ata/pata_ns87415.c
-index 9dd6bffefb485..602472d4e693e 100644
---- a/drivers/ata/pata_ns87415.c
-+++ b/drivers/ata/pata_ns87415.c
-@@ -260,7 +260,7 @@ static u8 ns87560_check_status(struct ata_port *ap)
-  *	LOCKING:
-  *	Inherited from caller.
-  */
--void ns87560_tf_read(struct ata_port *ap, struct ata_taskfile *tf)
-+static void ns87560_tf_read(struct ata_port *ap, struct ata_taskfile *tf)
- {
- 	struct ata_ioports *ioaddr = &ap->ioaddr;
- 
+diff --git a/net/tipc/node.c b/net/tipc/node.c
+index 5e000fde80676..a9c5b6594889b 100644
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -583,7 +583,7 @@ struct tipc_node *tipc_node_create(struct net *net, u32 addr, u8 *peer_id,
+ 				 n->capabilities, &n->bc_entry.inputq1,
+ 				 &n->bc_entry.namedq, snd_l, &n->bc_entry.link)) {
+ 		pr_warn("Broadcast rcv link creation failed, no memory\n");
+-		kfree(n);
++		tipc_node_put(n);
+ 		n = NULL;
+ 		goto exit;
+ 	}
 -- 
-2.40.1
+2.39.2
 
 
 
