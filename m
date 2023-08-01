@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA7B1F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36806C433C8;
-	Tue,  1 Aug 2023 09:39:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B4D1F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01DD3C433C7;
+	Tue,  1 Aug 2023 09:39:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882779;
-	bh=Z/quAPdbPq9ut+BE9T7MZZjmWh6JfpZ2WFydCUkmnwA=;
+	s=korg; t=1690882782;
+	bh=sOhTtpSTGO4zvMRThBKUmr/OrBRzO1KuEy8ktvG9A5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OdGzcN/WIKNWXbbmlL/+sIOLgEtJs2S4T6IT/Raq3qu9V8QVDqNCtvuNm09m+b0tQ
-	 YpBtjo9a4syQql2BxAEIVCRkhCT5MCIXHFnvsMKGKvVkuNHWRNtIeXx8VLVnZLjXv2
-	 d1ykdpNO5rcWnGJgAERFjS+/14wtwADU7r0L3aYY=
+	b=ryE0XmuyNZGq1BxUip7BuOc2GVl88HNRd9ZkkLdAvHYCYPJUIca+1fN02UbRxyMmr
+	 wVU1MEv6trt+vjrLDb46YY7EBSdl1o4b0hSE5G2rkUEhd2S4bcogjxN48TbHDFlRzi
+	 tEBWlPaE7aYo3IhY6lbcUb0vqa8fe011t7FHP6xE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Jindong Yue <jindong.yue@nxp.com>
-Subject: [PATCH 6.1 228/228] dma-buf: fix an error pointer vs NULL bug
-Date: Tue,  1 Aug 2023 11:21:26 +0200
-Message-ID: <20230801091931.078947464@linuxfoundation.org>
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 207/228] s390/dasd: print copy pair message only for the correct error
+Date: Tue,  1 Aug 2023 11:21:05 +0200
+Message-ID: <20230801091930.345676883@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,56 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-commit 00ae1491f970acc454be0df63f50942d94825860 upstream.
+commit 856d8e3c633b183df23549ce760ae84478a7098d upstream.
 
-Smatch detected potential error pointer dereference.
+The DASD driver has certain types of requests that might be rejected by
+the storage server or z/VM because they are not supported. Since the
+missing support of the command is not a real issue there is no user
+visible kernel error message for this.
 
-    drivers/gpu/drm/drm_syncobj.c:888 drm_syncobj_transfer_to_timeline()
-    error: 'fence' dereferencing possible ERR_PTR()
+For copy pair setups  there is a specific error that IO is not allowed on
+secondary devices. This error case is explicitly handled and an error
+message is printed.
 
-The error pointer comes from dma_fence_allocate_private_stub().  One
-caller expected error pointers and one expected NULL pointers.  Change
-it to return NULL and update the caller which expected error pointers,
-drm_syncobj_assign_null_handle(), to check for NULL instead.
+The code checking for the error did use a bitwise 'and' that is used to
+check for specific bits. But in this case the whole sense byte has to
+match.
 
-Fixes: f781f661e8c9 ("dma-buf: keep the signaling time of merged fences v3")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Sumit Semwal <sumit.semwal@linaro.org>
-Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/b09f1996-3838-4fa2-9193-832b68262e43@moroto.mountain
-Cc: Jindong Yue <jindong.yue@nxp.com>
+This leads to the problem that the copy pair related error message is
+erroneously printed for other error cases that are usually not reported.
+This might heavily confuse users and lead to follow on actions that might
+disrupt application processing.
+
+Fix by checking the sense byte for the exact value and not single bits.
+
+Cc: stable@vger.kernel.org # 6.1+
+Fixes: 1fca631a1185 ("s390/dasd: suppress generic error messages for PPRC secondary devices")
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230721193647.3889634-5-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/dma-fence.c   |    2 +-
- drivers/gpu/drm/drm_syncobj.c |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/s390/block/dasd_3990_erp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/dma-buf/dma-fence.c
-+++ b/drivers/dma-buf/dma-fence.c
-@@ -160,7 +160,7 @@ struct dma_fence *dma_fence_allocate_pri
- 
- 	fence = kzalloc(sizeof(*fence), GFP_KERNEL);
- 	if (fence == NULL)
--		return ERR_PTR(-ENOMEM);
-+		return NULL;
- 
- 	dma_fence_init(fence,
- 		       &dma_fence_stub_ops,
---- a/drivers/gpu/drm/drm_syncobj.c
-+++ b/drivers/gpu/drm/drm_syncobj.c
-@@ -355,8 +355,8 @@ static int drm_syncobj_assign_null_handl
- {
- 	struct dma_fence *fence = dma_fence_allocate_private_stub(ktime_get());
- 
--	if (IS_ERR(fence))
--		return PTR_ERR(fence);
-+	if (!fence)
-+		return -ENOMEM;
- 
- 	drm_syncobj_replace_fence(syncobj, fence);
- 	dma_fence_put(fence);
+diff --git a/drivers/s390/block/dasd_3990_erp.c b/drivers/s390/block/dasd_3990_erp.c
+index 91e9a17b848e..89957bb7244d 100644
+--- a/drivers/s390/block/dasd_3990_erp.c
++++ b/drivers/s390/block/dasd_3990_erp.c
+@@ -1050,7 +1050,7 @@ dasd_3990_erp_com_rej(struct dasd_ccw_req * erp, char *sense)
+ 		dev_err(&device->cdev->dev, "An I/O request was rejected"
+ 			" because writing is inhibited\n");
+ 		erp = dasd_3990_erp_cleanup(erp, DASD_CQR_FAILED);
+-	} else if (sense[7] & SNS7_INVALID_ON_SEC) {
++	} else if (sense[7] == SNS7_INVALID_ON_SEC) {
+ 		dev_err(&device->cdev->dev, "An I/O request was rejected on a copy pair secondary device\n");
+ 		/* suppress dump of sense data for this error */
+ 		set_bit(DASD_CQR_SUPPRESS_CR, &erp->refers->flags);
+-- 
+2.41.0
+
 
 
