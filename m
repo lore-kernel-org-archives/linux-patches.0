@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458E81F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:26:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC411C433C7;
-	Tue,  1 Aug 2023 09:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8721F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:26:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834D8C433C8;
+	Tue,  1 Aug 2023 09:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881987;
-	bh=5+q7U4Oe+Pe9PLvo+QTpPoTFNBRt4dwi/TM0h/nuzok=;
+	s=korg; t=1690881989;
+	bh=cL36K4y4OXkEPJFAVIIAlf+r8PfIytVsB7zp/nZPlO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QViPoBYDmEyJ7T1pjhKuDTbs+NBqi8miBTyLDejaOouxkkMrBvGH1rArz7JT4ng+3
-	 BC35vYtRMXPOYwhm4JXbo9LODPVa6UK4fSmS7eWIvaiNuc6DQb3FfxKNpFiJulOlI+
-	 OfNBBce/9bocUOHHb8dVRz1ZHq8Dv6kkJFXL1Y2Y=
+	b=LoOJy/ynZrEbucmdSCNG/eRRFCRUTXKBCUk258Ejo0y6L3GAkzRCoaHBE8eWi0/ba
+	 6Ft0fhogvPm3FqGOAm2Q9mULJKaf1fp6mtO3bFUpjZzHK/U6i0UUrsGVYGyXPSw7mx
+	 1Go2vao/NvYl/PKNOKStAhg6ytFNULawKpCE2kYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 100/155] tracing: Fix warning in trace_buffered_event_disable()
-Date: Tue,  1 Aug 2023 11:20:12 +0200
-Message-ID: <20230801091913.795445654@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 101/155] Revert "usb: gadget: tegra-xudc: Fix error check in tegra_xudc_powerdomain_init()"
+Date: Tue,  1 Aug 2023 11:20:13 +0200
+Message-ID: <20230801091913.834003253@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -36,119 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit dea499781a1150d285c62b26659f62fb00824fce ]
+commit a8291be6b5dd465c22af229483dbac543a91e24e upstream.
 
-Warning happened in trace_buffered_event_disable() at
-  WARN_ON_ONCE(!trace_buffered_event_ref)
+This reverts commit f08aa7c80dac27ee00fa6827f447597d2fba5465.
 
-  Call Trace:
-   ? __warn+0xa5/0x1b0
-   ? trace_buffered_event_disable+0x189/0x1b0
-   __ftrace_event_enable_disable+0x19e/0x3e0
-   free_probe_data+0x3b/0xa0
-   unregister_ftrace_function_probe_func+0x6b8/0x800
-   event_enable_func+0x2f0/0x3d0
-   ftrace_process_regex.isra.0+0x12d/0x1b0
-   ftrace_filter_write+0xe6/0x140
-   vfs_write+0x1c9/0x6f0
-   [...]
+The reverted commit was based on static analysis and a misunderstanding
+of how PTR_ERR() and NULLs are supposed to work.  When a function
+returns both pointer errors and NULL then normally the NULL means
+"continue operating without a feature because it was deliberately
+turned off".  The NULL should not be treated as a failure.  If a driver
+cannot work when that feature is disabled then the KConfig should
+enforce that the function cannot return NULL.  We should not need to
+test for it.
 
-The cause of the warning is in __ftrace_event_enable_disable(),
-trace_buffered_event_enable() was called once while
-trace_buffered_event_disable() was called twice.
-Reproduction script show as below, for analysis, see the comments:
- ```
- #!/bin/bash
+In this driver, the bug means that probe cannot succeed when CONFIG_PM
+is disabled.
 
- cd /sys/kernel/tracing/
-
- # 1. Register a 'disable_event' command, then:
- #    1) SOFT_DISABLED_BIT was set;
- #    2) trace_buffered_event_enable() was called first time;
- echo 'cmdline_proc_show:disable_event:initcall:initcall_finish' > \
-     set_ftrace_filter
-
- # 2. Enable the event registered, then:
- #    1) SOFT_DISABLED_BIT was cleared;
- #    2) trace_buffered_event_disable() was called first time;
- echo 1 > events/initcall/initcall_finish/enable
-
- # 3. Try to call into cmdline_proc_show(), then SOFT_DISABLED_BIT was
- #    set again!!!
- cat /proc/cmdline
-
- # 4. Unregister the 'disable_event' command, then:
- #    1) SOFT_DISABLED_BIT was cleared again;
- #    2) trace_buffered_event_disable() was called second time!!!
- echo '!cmdline_proc_show:disable_event:initcall:initcall_finish' > \
-     set_ftrace_filter
- ```
-
-To fix it, IIUC, we can change to call trace_buffered_event_enable() at
-fist time soft-mode enabled, and call trace_buffered_event_disable() at
-last time soft-mode disabled.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230726095804.920457-1-zhengyejian1@huawei.com
-
-Cc: <mhiramat@kernel.org>
-Fixes: 0fc1b09ff1ff ("tracing: Use temp buffer when filtering events")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: f08aa7c80dac ("usb: gadget: tegra-xudc: Fix error check in tegra_xudc_powerdomain_init()")
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/ZKQoBa84U/ykEh3C@moroto
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events.c | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ drivers/usb/gadget/udc/tegra-xudc.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
-index 160298d285c0b..2a2a599997671 100644
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -594,7 +594,6 @@ static int __ftrace_event_enable_disable(struct trace_event_file *file,
- {
- 	struct trace_event_call *call = file->event_call;
- 	struct trace_array *tr = file->tr;
--	unsigned long file_flags = file->flags;
- 	int ret = 0;
- 	int disable;
+--- a/drivers/usb/gadget/udc/tegra-xudc.c
++++ b/drivers/usb/gadget/udc/tegra-xudc.c
+@@ -3689,15 +3689,15 @@ static int tegra_xudc_powerdomain_init(s
+ 	int err;
  
-@@ -618,6 +617,8 @@ static int __ftrace_event_enable_disable(struct trace_event_file *file,
- 				break;
- 			disable = file->flags & EVENT_FILE_FL_SOFT_DISABLED;
- 			clear_bit(EVENT_FILE_FL_SOFT_MODE_BIT, &file->flags);
-+			/* Disable use of trace_buffered_event */
-+			trace_buffered_event_disable();
- 		} else
- 			disable = !(file->flags & EVENT_FILE_FL_SOFT_MODE);
- 
-@@ -656,6 +657,8 @@ static int __ftrace_event_enable_disable(struct trace_event_file *file,
- 			if (atomic_inc_return(&file->sm_ref) > 1)
- 				break;
- 			set_bit(EVENT_FILE_FL_SOFT_MODE_BIT, &file->flags);
-+			/* Enable use of trace_buffered_event */
-+			trace_buffered_event_enable();
- 		}
- 
- 		if (!(file->flags & EVENT_FILE_FL_ENABLED)) {
-@@ -695,15 +698,6 @@ static int __ftrace_event_enable_disable(struct trace_event_file *file,
- 		break;
+ 	xudc->genpd_dev_device = dev_pm_domain_attach_by_name(dev, "dev");
+-	if (IS_ERR_OR_NULL(xudc->genpd_dev_device)) {
+-		err = PTR_ERR(xudc->genpd_dev_device) ? : -ENODATA;
++	if (IS_ERR(xudc->genpd_dev_device)) {
++		err = PTR_ERR(xudc->genpd_dev_device);
+ 		dev_err(dev, "failed to get device power domain: %d\n", err);
+ 		return err;
  	}
  
--	/* Enable or disable use of trace_buffered_event */
--	if ((file_flags & EVENT_FILE_FL_SOFT_DISABLED) !=
--	    (file->flags & EVENT_FILE_FL_SOFT_DISABLED)) {
--		if (file->flags & EVENT_FILE_FL_SOFT_DISABLED)
--			trace_buffered_event_enable();
--		else
--			trace_buffered_event_disable();
--	}
--
- 	return ret;
- }
- 
--- 
-2.40.1
-
+ 	xudc->genpd_dev_ss = dev_pm_domain_attach_by_name(dev, "ss");
+-	if (IS_ERR_OR_NULL(xudc->genpd_dev_ss)) {
+-		err = PTR_ERR(xudc->genpd_dev_ss) ? : -ENODATA;
++	if (IS_ERR(xudc->genpd_dev_ss)) {
++		err = PTR_ERR(xudc->genpd_dev_ss);
+ 		dev_err(dev, "failed to get SuperSpeed power domain: %d\n", err);
+ 		return err;
+ 	}
 
 
