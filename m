@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10A01F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:41:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749ABC433C8;
-	Tue,  1 Aug 2023 09:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF14D1F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:41:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47959C433C8;
+	Tue,  1 Aug 2023 09:41:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882913;
-	bh=SPxlo0SBPLH/rxOxd/VlpL3S+xzqvaZyiMPKbJvZYb4=;
+	s=korg; t=1690882916;
+	bh=qt36tPoTUJwAqv0gPlijQkN/nGCiTHoShrlnSPJMePM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cULyHUD5YwHtHZ3n3h9v1xmY4VxmHvWLQBnyMJ+8hFEtiuVP4k1NC8d1BFeIG8WK/
-	 3VNbTPb4k07sgsld4zSkZjn4YayLQTSBCPxLiC5bbQff2/9BCX8ImJC77UDgTa4l3c
-	 teAdte5IBaR8DXfYX8zovt/gVPD7oTRIbmEDcOIk=
+	b=BBAaX/ZVr/TEbzqgEhZ0er8hW4BLpOUyo5KbTlkdiUzJl2YmQFLHEibX6c3tPzW9p
+	 zWkXpdUx1KRTRkaT/7G1Aw/rlIPBo1ESnEGLz4wOwy+EiA3dfiR6KzxUg54aQU7R8r
+	 93YE+muuYZAFq5fzqgrUt8bGPWjYZjCwxJ04vnUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 048/239] jbd2: fix a race when checking checkpoint buffer busy
-Date: Tue,  1 Aug 2023 11:18:32 +0200
-Message-ID: <20230801091927.295294043@linuxfoundation.org>
+Subject: [PATCH 6.4 031/239] PCI: rockchip: Dont advertise MSI-X in PCIe capabilities
+Date: Tue,  1 Aug 2023 11:18:15 +0200
+Message-ID: <20230801091926.736194564@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,148 +36,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
 
-[ Upstream commit 46f881b5b1758dc4a35fba4a643c10717d0cf427 ]
+[ Upstream commit a52587e0bee14cbeeadf48a24013828cb04b8df8 ]
 
-Before removing checkpoint buffer from the t_checkpoint_list, we have to
-check both BH_Dirty and BH_Lock bits together to distinguish buffers
-have not been or were being written back. But __cp_buffer_busy() checks
-them separately, it first check lock state and then check dirty, the
-window between these two checks could be raced by writing back
-procedure, which locks buffer and clears buffer dirty before I/O
-completes. So it cannot guarantee checkpointing buffers been written
-back to disk if some error happens later. Finally, it may clean
-checkpoint transactions and lead to inconsistent filesystem.
+The RK3399 PCIe endpoint controller cannot generate MSI-X IRQs.
+This is documented in the RK3399 technical reference manual (TRM)
+section 17.5.9 "Interrupt Support".
 
-jbd2_journal_forget() and __journal_try_to_free_buffer() also have the
-same problem (journal_unmap_buffer() escape from this issue since it's
-running under the buffer lock), so fix them through introducing a new
-helper to try holding the buffer lock and remove really clean buffer.
+MSI-X capability should therefore not be advertised. Remove the
+MSI-X capability by editing the capability linked-list. The
+previous entry is the MSI capability, therefore get the next
+entry from the MSI-X capability entry and set it as next entry
+for the MSI capability. This in effect removes MSI-X from the list.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217490
+Linked list before : MSI cap -> MSI-X cap -> PCIe Device cap -> ...
+Linked list now : MSI cap -> PCIe Device cap -> ...
+
+Link: https://lore.kernel.org/r/20230418074700.1083505-11-rick.wertenbroek@gmail.com
+Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
+Tested-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Cc: stable@vger.kernel.org
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230606135928.434610-6-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/checkpoint.c  | 38 +++++++++++++++++++++++++++++++++++---
- fs/jbd2/transaction.c | 17 +++++------------
- include/linux/jbd2.h  |  1 +
- 3 files changed, 41 insertions(+), 15 deletions(-)
+ drivers/pci/controller/pcie-rockchip-ep.c | 24 +++++++++++++++++++++++
+ drivers/pci/controller/pcie-rockchip.h    |  5 +++++
+ 2 files changed, 29 insertions(+)
 
-diff --git a/fs/jbd2/checkpoint.c b/fs/jbd2/checkpoint.c
-index 42b34cab64fbd..9ec91017a7f3c 100644
---- a/fs/jbd2/checkpoint.c
-+++ b/fs/jbd2/checkpoint.c
-@@ -376,11 +376,15 @@ static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
- 		jh = next_jh;
- 		next_jh = jh->b_cpnext;
+diff --git a/drivers/pci/controller/pcie-rockchip-ep.c b/drivers/pci/controller/pcie-rockchip-ep.c
+index 3d6f828d29fc2..0af0e965fb57e 100644
+--- a/drivers/pci/controller/pcie-rockchip-ep.c
++++ b/drivers/pci/controller/pcie-rockchip-ep.c
+@@ -508,6 +508,7 @@ static int rockchip_pcie_ep_probe(struct platform_device *pdev)
+ 	size_t max_regions;
+ 	struct pci_epc_mem_window *windows = NULL;
+ 	int err, i;
++	u32 cfg_msi, cfg_msix_cp;
  
--		if (!destroy && __cp_buffer_busy(jh))
--			continue;
-+		if (destroy) {
-+			ret = __jbd2_journal_remove_checkpoint(jh);
-+		} else {
-+			ret = jbd2_journal_try_remove_checkpoint(jh);
-+			if (ret < 0)
-+				continue;
-+		}
+ 	ep = devm_kzalloc(dev, sizeof(*ep), GFP_KERNEL);
+ 	if (!ep)
+@@ -583,6 +584,29 @@ static int rockchip_pcie_ep_probe(struct platform_device *pdev)
  
- 		nr_freed++;
--		ret = __jbd2_journal_remove_checkpoint(jh);
- 		if (ret) {
- 			*released = true;
- 			break;
-@@ -616,6 +620,34 @@ int __jbd2_journal_remove_checkpoint(struct journal_head *jh)
- 	return 1;
- }
+ 	ep->irq_pci_addr = ROCKCHIP_PCIE_EP_DUMMY_IRQ_ADDR;
  
-+/*
-+ * Check the checkpoint buffer and try to remove it from the checkpoint
-+ * list if it's clean. Returns -EBUSY if it is not clean, returns 1 if
-+ * it frees the transaction, 0 otherwise.
-+ *
-+ * This function is called with j_list_lock held.
-+ */
-+int jbd2_journal_try_remove_checkpoint(struct journal_head *jh)
-+{
-+	struct buffer_head *bh = jh2bh(jh);
-+
-+	if (!trylock_buffer(bh))
-+		return -EBUSY;
-+	if (buffer_dirty(bh)) {
-+		unlock_buffer(bh);
-+		return -EBUSY;
-+	}
-+	unlock_buffer(bh);
-+
 +	/*
-+	 * Buffer is clean and the IO has finished (we held the buffer
-+	 * lock) so the checkpoint is done. We can safely remove the
-+	 * buffer from this transaction.
++	 * MSI-X is not supported but the controller still advertises the MSI-X
++	 * capability by default, which can lead to the Root Complex side
++	 * allocating MSI-X vectors which cannot be used. Avoid this by skipping
++	 * the MSI-X capability entry in the PCIe capabilities linked-list: get
++	 * the next pointer from the MSI-X entry and set that in the MSI
++	 * capability entry (which is the previous entry). This way the MSI-X
++	 * entry is skipped (left out of the linked-list) and not advertised.
 +	 */
-+	JBUFFER_TRACE(jh, "remove from checkpoint list");
-+	return __jbd2_journal_remove_checkpoint(jh);
-+}
++	cfg_msi = rockchip_pcie_read(rockchip, PCIE_EP_CONFIG_BASE +
++				     ROCKCHIP_PCIE_EP_MSI_CTRL_REG);
 +
- /*
-  * journal_insert_checkpoint: put a committed buffer onto a checkpoint
-  * list so that we know when it is safe to clean the transaction out of
-diff --git a/fs/jbd2/transaction.c b/fs/jbd2/transaction.c
-index 18611241f4513..6ef5022949c46 100644
---- a/fs/jbd2/transaction.c
-+++ b/fs/jbd2/transaction.c
-@@ -1784,8 +1784,7 @@ int jbd2_journal_forget(handle_t *handle, struct buffer_head *bh)
- 		 * Otherwise, if the buffer has been written to disk,
- 		 * it is safe to remove the checkpoint and drop it.
- 		 */
--		if (!buffer_dirty(bh)) {
--			__jbd2_journal_remove_checkpoint(jh);
-+		if (jbd2_journal_try_remove_checkpoint(jh) >= 0) {
- 			spin_unlock(&journal->j_list_lock);
- 			goto drop;
- 		}
-@@ -2112,20 +2111,14 @@ __journal_try_to_free_buffer(journal_t *journal, struct buffer_head *bh)
++	cfg_msi &= ~ROCKCHIP_PCIE_EP_MSI_CP1_MASK;
++
++	cfg_msix_cp = rockchip_pcie_read(rockchip, PCIE_EP_CONFIG_BASE +
++					 ROCKCHIP_PCIE_EP_MSIX_CAP_REG) &
++					 ROCKCHIP_PCIE_EP_MSIX_CAP_CP_MASK;
++
++	cfg_msi |= cfg_msix_cp;
++
++	rockchip_pcie_write(rockchip, cfg_msi,
++			    PCIE_EP_CONFIG_BASE + ROCKCHIP_PCIE_EP_MSI_CTRL_REG);
++
+ 	rockchip_pcie_write(rockchip, PCIE_CLIENT_CONF_ENABLE,
+ 			    PCIE_CLIENT_CONFIG);
  
- 	jh = bh2jh(bh);
- 
--	if (buffer_locked(bh) || buffer_dirty(bh))
--		goto out;
--
- 	if (jh->b_next_transaction != NULL || jh->b_transaction != NULL)
--		goto out;
-+		return;
- 
- 	spin_lock(&journal->j_list_lock);
--	if (jh->b_cp_transaction != NULL) {
--		/* written-back checkpointed metadata buffer */
--		JBUFFER_TRACE(jh, "remove from checkpoint list");
--		__jbd2_journal_remove_checkpoint(jh);
--	}
-+	/* Remove written-back checkpointed metadata buffer */
-+	if (jh->b_cp_transaction != NULL)
-+		jbd2_journal_try_remove_checkpoint(jh);
- 	spin_unlock(&journal->j_list_lock);
--out:
- 	return;
- }
- 
-diff --git a/include/linux/jbd2.h b/include/linux/jbd2.h
-index 91a2cf4bc5756..c212da35a052c 100644
---- a/include/linux/jbd2.h
-+++ b/include/linux/jbd2.h
-@@ -1443,6 +1443,7 @@ extern void jbd2_journal_commit_transaction(journal_t *);
- void __jbd2_journal_clean_checkpoint_list(journal_t *journal, bool destroy);
- unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal, unsigned long *nr_to_scan);
- int __jbd2_journal_remove_checkpoint(struct journal_head *);
-+int jbd2_journal_try_remove_checkpoint(struct journal_head *jh);
- void jbd2_journal_destroy_checkpoint(journal_t *journal);
- void __jbd2_journal_insert_checkpoint(struct journal_head *, transaction_t *);
- 
+diff --git a/drivers/pci/controller/pcie-rockchip.h b/drivers/pci/controller/pcie-rockchip.h
+index 501d859420b4c..fe0333778fd93 100644
+--- a/drivers/pci/controller/pcie-rockchip.h
++++ b/drivers/pci/controller/pcie-rockchip.h
+@@ -227,6 +227,8 @@
+ #define ROCKCHIP_PCIE_EP_CMD_STATUS			0x4
+ #define   ROCKCHIP_PCIE_EP_CMD_STATUS_IS		BIT(19)
+ #define ROCKCHIP_PCIE_EP_MSI_CTRL_REG			0x90
++#define   ROCKCHIP_PCIE_EP_MSI_CP1_OFFSET		8
++#define   ROCKCHIP_PCIE_EP_MSI_CP1_MASK			GENMASK(15, 8)
+ #define   ROCKCHIP_PCIE_EP_MSI_FLAGS_OFFSET		16
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_OFFSET		17
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_MASK		GENMASK(19, 17)
+@@ -234,6 +236,9 @@
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MME_MASK		GENMASK(22, 20)
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_ME				BIT(16)
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MASK_MSI_CAP	BIT(24)
++#define ROCKCHIP_PCIE_EP_MSIX_CAP_REG			0xb0
++#define   ROCKCHIP_PCIE_EP_MSIX_CAP_CP_OFFSET		8
++#define   ROCKCHIP_PCIE_EP_MSIX_CAP_CP_MASK		GENMASK(15, 8)
+ #define ROCKCHIP_PCIE_EP_DUMMY_IRQ_ADDR				0x1
+ #define ROCKCHIP_PCIE_EP_PCI_LEGACY_IRQ_ADDR		0x3
+ #define ROCKCHIP_PCIE_EP_FUNC_BASE(fn) \
 -- 
 2.39.2
 
