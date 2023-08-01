@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE6A1F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:27:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDFD4C433C8;
-	Tue,  1 Aug 2023 09:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A86B1F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:27:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90BBEC433C7;
+	Tue,  1 Aug 2023 09:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882037;
-	bh=B28jOyjaNmF2IVqKPmCZXi/DGMf3VnPp980hBsyqFxM=;
+	s=korg; t=1690882039;
+	bh=J6vCGbfp5FWz7VcQcYgSNZ4pVC3Nkfpp+15loiSdsrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GYKgiWmfAbUOOFO4nAgANEYepMNBU/Bno1amTg5VwmtvMdtr8hMfFr4khmUy0OlOa
-	 BCS51oqqlw9xldVrWko/HiWmsbzlw7ngDCk22yz97ItW+XRC3RX26ECdkJLYICuyBe
-	 bJ8fPy3AobcvUDEb4UmN1ALgyVbh81icTpiDCTOI=
+	b=eRdpyC8yzNUdMrEA27Ew4ts2aep7pQHsm0qbG2Y1ojHOoFfD4wTNkHtuZgxbatfYk
+	 ijD9cwhVqJefUAgNVB+mDftxPT4RghlmY/PcUOEbkbjG+CL3uNvVZrscFbUO3Sif/z
+	 fSJD1w0Vd63Q3q0kfg9Ag5bpM/2yI25sGHnZCdfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bogendoerfer <tbogendoerfer@suse.de>,
-	Leon Romanovsky <leon@kernel.org>,
+	Yuanjun Gong <ruc_gongyuanjun@163.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 088/155] RDMA/mthca: Fix crash when polling CQ for shared QPs
-Date: Tue,  1 Aug 2023 11:20:00 +0200
-Message-ID: <20230801091913.324096885@linuxfoundation.org>
+Subject: [PATCH 5.15 079/155] benet: fix return value check in be_lancer_xmit_workarounds()
+Date: Tue,  1 Aug 2023 11:19:51 +0200
+Message-ID: <20230801091912.974131706@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -35,40 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Bogendoerfer <tbogendoerfer@suse.de>
+From: Yuanjun Gong <ruc_gongyuanjun@163.com>
 
-[ Upstream commit dc52aadbc1849cbe3fcf6bc54d35f6baa396e0a1 ]
+[ Upstream commit 5c85f7065718a949902b238a6abd8fc907c5d3e0 ]
 
-Commit 21c2fe94abb2 ("RDMA/mthca: Combine special QP struct with mthca QP")
-introduced a new struct mthca_sqp which doesn't contain struct mthca_qp
-any longer. Placing a pointer of this new struct into qptable leads
-to crashes, because mthca_poll_one() expects a qp pointer. Fix this
-by putting the correct pointer into qptable.
+in be_lancer_xmit_workarounds(), it should go to label 'tx_drop'
+if an unexpected value is returned by pskb_trim().
 
-Fixes: 21c2fe94abb2 ("RDMA/mthca: Combine special QP struct with mthca QP")
-Signed-off-by: Thomas Bogendoerfer <tbogendoerfer@suse.de>
-Link: https://lore.kernel.org/r/20230713141658.9426-1-tbogendoerfer@suse.de
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 93040ae5cc8d ("be2net: Fix to trim skb for padded vlan packets to workaround an ASIC Bug")
+Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
+Link: https://lore.kernel.org/r/20230725032726.15002-1-ruc_gongyuanjun@163.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mthca/mthca_qp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/emulex/benet/be_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mthca/mthca_qp.c b/drivers/infiniband/hw/mthca/mthca_qp.c
-index 69bba0ef4a5df..53f43649f7d08 100644
---- a/drivers/infiniband/hw/mthca/mthca_qp.c
-+++ b/drivers/infiniband/hw/mthca/mthca_qp.c
-@@ -1393,7 +1393,7 @@ int mthca_alloc_sqp(struct mthca_dev *dev,
- 	if (mthca_array_get(&dev->qp_table.qp, mqpn))
- 		err = -EBUSY;
- 	else
--		mthca_array_set(&dev->qp_table.qp, mqpn, qp->sqp);
-+		mthca_array_set(&dev->qp_table.qp, mqpn, qp);
- 	spin_unlock_irq(&dev->qp_table.lock);
+diff --git a/drivers/net/ethernet/emulex/benet/be_main.c b/drivers/net/ethernet/emulex/benet/be_main.c
+index 3ccb955eb6f23..c14a3dbd075cc 100644
+--- a/drivers/net/ethernet/emulex/benet/be_main.c
++++ b/drivers/net/ethernet/emulex/benet/be_main.c
+@@ -1139,7 +1139,8 @@ static struct sk_buff *be_lancer_xmit_workarounds(struct be_adapter *adapter,
+ 	    (lancer_chip(adapter) || BE3_chip(adapter) ||
+ 	     skb_vlan_tag_present(skb)) && is_ipv4_pkt(skb)) {
+ 		ip = (struct iphdr *)ip_hdr(skb);
+-		pskb_trim(skb, eth_hdr_len + ntohs(ip->tot_len));
++		if (unlikely(pskb_trim(skb, eth_hdr_len + ntohs(ip->tot_len))))
++			goto tx_drop;
+ 	}
  
- 	if (err)
+ 	/* If vlan tag is already inlined in the packet, skip HW VLAN
 -- 
-2.40.1
+2.39.2
 
 
 
