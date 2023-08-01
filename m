@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9EE1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:43:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 964FAC433C8;
-	Tue,  1 Aug 2023 09:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CD11FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:43:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 586E1C433C7;
+	Tue,  1 Aug 2023 09:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883019;
-	bh=QqwJY+ySwCqO7WC+ryRyakA9eXfd4moYo0GTumijseU=;
+	s=korg; t=1690883021;
+	bh=nqXUpcsp+/BUIRwwPKLlWWYzLBlqVzpOUkNRtjvXT6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rAjFp8kcoMph8FFhftnmPNn+sEipcaj3FGAH8fJuRcCtUCVwvbqdMkubtPxVOqB1E
-	 +qgn6M+NMf27Iir1h4U2ONqgl3Lxl1MyYVysUUMfP76l6kIcJx/hFSi3tXSAlw7RXR
-	 DL8IhKY/4DLkIsmYFRD/3Mwz0ZEUcgx3bU6kgKtE=
+	b=PblTfjfHlQpVTBr1962c4UoC6cMPBw+EGudr+oAo7dtN+/FwLMq/e0ms6VtXER1Jo
+	 WC/t3K0PXTxAovIVajypUZRRWr+EuZa2Quw6vdAJeNFYtwoxGgCGrSaEOhgPF5nlj5
+	 sLjk6N/2hE3FmcWrD49Fu0jKiDt9VG0TibhbW/G8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Michael Kelley <mikelley@microsoft.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Lin Ma <linma@zju.edu.cn>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 085/239] x86/traps: Fix load_unaligned_zeropad() handling for shared TDX memory
-Date: Tue,  1 Aug 2023 11:19:09 +0200
-Message-ID: <20230801091928.808563572@linuxfoundation.org>
+Subject: [PATCH 6.4 086/239] macvlan: add forgotten nla_policy for IFLA_MACVLAN_BC_CUTOFF
+Date: Tue,  1 Aug 2023 11:19:10 +0200
+Message-ID: <20230801091928.844736046@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -37,92 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 9f9116406120638b4d8db3831ffbc430dd2e1e95 ]
+[ Upstream commit 55cef78c244d0d076f5a75a35530ca63c92f4426 ]
 
-Commit c4e34dd99f2e ("x86: simplify load_unaligned_zeropad()
-implementation") changes how exceptions around load_unaligned_zeropad()
-handled.  The kernel now uses the fault_address in fixup_exception() to
-verify the address calculations for the load_unaligned_zeropad().
+The previous commit 954d1fa1ac93 ("macvlan: Add netlink attribute for
+broadcast cutoff") added one additional attribute named
+IFLA_MACVLAN_BC_CUTOFF to allow broadcast cutfoff.
 
-It works fine for #PF, but breaks on #VE since no fault address is
-passed down to fixup_exception().
+However, it forgot to describe the nla_policy at macvlan_policy
+(drivers/net/macvlan.c). Hence, this suppose NLA_S32 (4 bytes) integer
+can be faked as empty (0 bytes) by a malicious user, which could leads
+to OOB in heap just like CVE-2023-3773.
 
-Propagating ve_info.gla down to fixup_exception() resolves the issue.
+To fix it, this commit just completes the nla_policy description for
+IFLA_MACVLAN_BC_CUTOFF. This enforces the length check and avoids the
+potential OOB read.
 
-See commit 1e7769653b06 ("x86/tdx: Handle load_unaligned_zeropad()
-page-cross to a shared page") for more context.
-
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Reported-by: Michael Kelley <mikelley@microsoft.com>
-Fixes: c4e34dd99f2e ("x86: simplify load_unaligned_zeropad() implementation")
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 954d1fa1ac93 ("macvlan: Add netlink attribute for broadcast cutoff")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230723080205.3715164-1-linma@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/traps.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/net/macvlan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/kernel/traps.c b/arch/x86/kernel/traps.c
-index 58b1f208eff51..4a817d20ce3bb 100644
---- a/arch/x86/kernel/traps.c
-+++ b/arch/x86/kernel/traps.c
-@@ -697,9 +697,10 @@ static bool try_fixup_enqcmd_gp(void)
- }
+diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
+index 4a53debf9d7c4..ed908165a8b4e 100644
+--- a/drivers/net/macvlan.c
++++ b/drivers/net/macvlan.c
+@@ -1746,6 +1746,7 @@ static const struct nla_policy macvlan_policy[IFLA_MACVLAN_MAX + 1] = {
+ 	[IFLA_MACVLAN_MACADDR_COUNT] = { .type = NLA_U32 },
+ 	[IFLA_MACVLAN_BC_QUEUE_LEN] = { .type = NLA_U32 },
+ 	[IFLA_MACVLAN_BC_QUEUE_LEN_USED] = { .type = NLA_REJECT },
++	[IFLA_MACVLAN_BC_CUTOFF] = { .type = NLA_S32 },
+ };
  
- static bool gp_try_fixup_and_notify(struct pt_regs *regs, int trapnr,
--				    unsigned long error_code, const char *str)
-+				    unsigned long error_code, const char *str,
-+				    unsigned long address)
- {
--	if (fixup_exception(regs, trapnr, error_code, 0))
-+	if (fixup_exception(regs, trapnr, error_code, address))
- 		return true;
- 
- 	current->thread.error_code = error_code;
-@@ -759,7 +760,7 @@ DEFINE_IDTENTRY_ERRORCODE(exc_general_protection)
- 		goto exit;
- 	}
- 
--	if (gp_try_fixup_and_notify(regs, X86_TRAP_GP, error_code, desc))
-+	if (gp_try_fixup_and_notify(regs, X86_TRAP_GP, error_code, desc, 0))
- 		goto exit;
- 
- 	if (error_code)
-@@ -1357,17 +1358,20 @@ DEFINE_IDTENTRY(exc_device_not_available)
- 
- #define VE_FAULT_STR "VE fault"
- 
--static void ve_raise_fault(struct pt_regs *regs, long error_code)
-+static void ve_raise_fault(struct pt_regs *regs, long error_code,
-+			   unsigned long address)
- {
- 	if (user_mode(regs)) {
- 		gp_user_force_sig_segv(regs, X86_TRAP_VE, error_code, VE_FAULT_STR);
- 		return;
- 	}
- 
--	if (gp_try_fixup_and_notify(regs, X86_TRAP_VE, error_code, VE_FAULT_STR))
-+	if (gp_try_fixup_and_notify(regs, X86_TRAP_VE, error_code,
-+				    VE_FAULT_STR, address)) {
- 		return;
-+	}
- 
--	die_addr(VE_FAULT_STR, regs, error_code, 0);
-+	die_addr(VE_FAULT_STR, regs, error_code, address);
- }
- 
- /*
-@@ -1431,7 +1435,7 @@ DEFINE_IDTENTRY(exc_virtualization_exception)
- 	 * it successfully, treat it as #GP(0) and handle it.
- 	 */
- 	if (!tdx_handle_virt_exception(regs, &ve))
--		ve_raise_fault(regs, 0);
-+		ve_raise_fault(regs, 0, ve.gla);
- 
- 	cond_local_irq_disable(regs);
- }
+ int macvlan_link_register(struct rtnl_link_ops *ops)
 -- 
 2.39.2
 
