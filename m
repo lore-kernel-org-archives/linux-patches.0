@@ -1,32 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903071FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:43:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 132A0C433C7;
-	Tue,  1 Aug 2023 09:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9651F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:43:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2858C433C7;
+	Tue,  1 Aug 2023 09:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883024;
-	bh=m5n1WHcM3fsEZsw+OFh+XAFKg0uHGcP/G94y7RtlMn4=;
+	s=korg; t=1690883027;
+	bh=SCnDX6zxS/BovP1ObVCNx8DgiNnWQyFjmD7rbAi92K4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ToWrqusZHS6QIK8d0vr4cJIXWpq7suswtnzI+VjUwzUXDpkv8CqpyCOUS5lmQyrnK
-	 uOkKq9sQkfvdxR4rzEDYvBZHi92yiGAifyneTqL26aRSF4fRbjdhjBAkKvpR5x6+05
-	 6Msw7YAw9/4e5UlKRv6oCzdk+sa2d7Qo3bGEvJAc=
+	b=Mj588TOb7aXXn33b+wJ6vI4G9F+ppXTlI28LDWbnTGPa7d9F7Zra1e6zWsus+WmzL
+	 kqYU4Fs+D/VvZlzdWBhr2t4uSJ1t8NSDkLTisPG3uDMJTt/56n58esuO592eZNKB1R
+	 RkhO33c82zHVVOxHJ7jLJZc66a9oAmsbUc4IYYvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alejandra Victoria Alcaraz <alejandra.victoria.alcaraz@intel.com>,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Sasha Neftin <sasha.neftin@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 087/239] igc: Fix Kernel Panic during ndo_tx_timeout callback
-Date: Tue,  1 Aug 2023 11:19:11 +0200
-Message-ID: <20230801091928.874151838@linuxfoundation.org>
+Subject: [PATCH 6.4 088/239] netfilter: nft_set_rbtree: fix overlap expiration walk
+Date: Tue,  1 Aug 2023 11:19:12 +0200
+Message-ID: <20230801091928.909524361@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -40,388 +34,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit d4a7ce642100765119a872d4aba1bf63e3a22c8a ]
+[ Upstream commit f718863aca469a109895cb855e6b81fff4827d71 ]
 
-The Xeon validation group has been carrying out some loaded tests
-with various HW configurations, and they have seen some transmit
-queue time out happening during the test. This will cause the
-reset adapter function to be called by igc_tx_timeout().
-Similar race conditions may arise when the interface is being brought
-down and up in igc_reinit_locked(), an interrupt being generated, and
-igc_clean_tx_irq() being called to complete the TX.
+The lazy gc on insert that should remove timed-out entries fails to release
+the other half of the interval, if any.
 
-When the igc_tx_timeout() function is invoked, this patch will turn
-off all TX ring HW queues during igc_down() process. TX ring HW queues
-will be activated again during the igc_configure_tx_ring() process
-when performing the igc_up() procedure later.
+Can be reproduced with tests/shell/testcases/sets/0044interval_overlap_0
+in nftables.git and kmemleak enabled kernel.
 
-This patch also moved existing igc_disable_tx_ring_hw() to avoid using
-forward declaration.
+Second bug is the use of rbe_prev vs. prev pointer.
+If rbe_prev() returns NULL after at least one iteration, rbe_prev points
+to element that is not an end interval, hence it should not be removed.
 
-Kernel trace:
-[ 7678.747813] ------------[ cut here ]------------
-[ 7678.757914] NETDEV WATCHDOG: enp1s0 (igc): transmit queue 2 timed out
-[ 7678.770117] WARNING: CPU: 0 PID: 13 at net/sched/sch_generic.c:525 dev_watchdog+0x1ae/0x1f0
-[ 7678.784459] Modules linked in: xt_conntrack nft_chain_nat xt_MASQUERADE xt_addrtype nft_compat
-nf_tables nfnetlink br_netfilter bridge stp llc overlay dm_mod emrcha(PO) emriio(PO) rktpm(PO)
-cegbuf_mod(PO) patch_update(PO) se(PO) sgx_tgts(PO) mktme(PO) keylocker(PO) svtdx(PO) svfs_pci_hotplug(PO)
-vtd_mod(PO) davemem(PO) svmabort(PO) svindexio(PO) usbx2(PO) ehci_sched(PO) svheartbeat(PO) ioapic(PO)
-sv8259(PO) svintr(PO) lt(PO) pcierootport(PO) enginefw_mod(PO) ata(PO) smbus(PO) spiflash_cdf(PO) arden(PO)
-dsa_iax(PO) oobmsm_punit(PO) cpm(PO) svkdb(PO) ebg_pch(PO) pch(PO) sviotargets(PO) svbdf(PO) svmem(PO)
-svbios(PO) dram(PO) svtsc(PO) targets(PO) superio(PO) svkernel(PO) cswitch(PO) mcf(PO) pentiumIII_mod(PO)
-fs_svfs(PO) mdevdefdb(PO) svfs_os_services(O) ixgbe mdio mdio_devres libphy emeraldrapids_svdefs(PO)
-regsupport(O) libnvdimm nls_cp437 snd_hda_codec_realtek snd_hda_codec_generic ledtrig_audio snd_hda_intel
-snd_intel_dspcfg snd_hda_codec snd_hwdep x86_pkg_temp_thermal snd_hda_core snd_pcm snd_timer isst_if_mbox_pci
-[ 7678.784496]  input_leds isst_if_mmio sg snd isst_if_common soundcore wmi button sad9(O) drm fuse backlight
-configfs efivarfs ip_tables x_tables vmd sdhci led_class rtl8150 r8152 hid_generic pegasus mmc_block usbhid
-mmc_core hid megaraid_sas ixgb igb i2c_algo_bit ice i40e hpsa scsi_transport_sas e1000e e1000 e100 ax88179_178a
-usbnet xhci_pci sd_mod xhci_hcd t10_pi crc32c_intel crc64_rocksoft igc crc64 crc_t10dif usbcore
-crct10dif_generic ptp crct10dif_common usb_common pps_core
-[ 7679.200403] RIP: 0010:dev_watchdog+0x1ae/0x1f0
-[ 7679.210201] Code: 28 e9 53 ff ff ff 4c 89 e7 c6 05 06 42 b9 00 01 e8 17 d1 fb ff 44 89 e9 4c
-89 e6 48 c7 c7 40 ad fb 81 48 89 c2 e8 52 62 82 ff <0f> 0b e9 72 ff ff ff 65 8b 05 80 7d 7c 7e
-89 c0 48 0f a3 05 0a c1
-[ 7679.245438] RSP: 0018:ffa00000001f7d90 EFLAGS: 00010282
-[ 7679.256021] RAX: 0000000000000000 RBX: ff11000109938440 RCX: 0000000000000000
-[ 7679.268710] RDX: ff11000361e26cd8 RSI: ff11000361e1b880 RDI: ff11000361e1b880
-[ 7679.281314] RBP: ffa00000001f7da8 R08: ff1100035f8fffe8 R09: 0000000000027ffb
-[ 7679.293840] R10: 0000000000001f0a R11: ff1100035f840000 R12: ff11000109938000
-[ 7679.306276] R13: 0000000000000002 R14: dead000000000122 R15: ffa00000001f7e18
-[ 7679.318648] FS:  0000000000000000(0000) GS:ff11000361e00000(0000) knlGS:0000000000000000
-[ 7679.332064] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 7679.342757] CR2: 00007ffff7fca168 CR3: 000000013b08a006 CR4: 0000000000471ef8
-[ 7679.354984] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[ 7679.367207] DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
-[ 7679.379370] PKRU: 55555554
-[ 7679.386446] Call Trace:
-[ 7679.393152]  <TASK>
-[ 7679.399363]  ? __pfx_dev_watchdog+0x10/0x10
-[ 7679.407870]  call_timer_fn+0x31/0x110
-[ 7679.415698]  expire_timers+0xb2/0x120
-[ 7679.423403]  run_timer_softirq+0x179/0x1e0
-[ 7679.431532]  ? __schedule+0x2b1/0x820
-[ 7679.439078]  __do_softirq+0xd1/0x295
-[ 7679.446426]  ? __pfx_smpboot_thread_fn+0x10/0x10
-[ 7679.454867]  run_ksoftirqd+0x22/0x30
-[ 7679.462058]  smpboot_thread_fn+0xb7/0x160
-[ 7679.469670]  kthread+0xcd/0xf0
-[ 7679.476097]  ? __pfx_kthread+0x10/0x10
-[ 7679.483211]  ret_from_fork+0x29/0x50
-[ 7679.490047]  </TASK>
-[ 7679.495204] ---[ end trace 0000000000000000 ]---
-[ 7679.503179] igc 0000:01:00.0 enp1s0: Register Dump
-[ 7679.511230] igc 0000:01:00.0 enp1s0: Register Name   Value
-[ 7679.519892] igc 0000:01:00.0 enp1s0: CTRL            181c0641
-[ 7679.528782] igc 0000:01:00.0 enp1s0: STATUS          40280683
-[ 7679.537551] igc 0000:01:00.0 enp1s0: CTRL_EXT        10000040
-[ 7679.546284] igc 0000:01:00.0 enp1s0: MDIC            180a3800
-[ 7679.554942] igc 0000:01:00.0 enp1s0: ICR             00000081
-[ 7679.563503] igc 0000:01:00.0 enp1s0: RCTL            04408022
-[ 7679.571963] igc 0000:01:00.0 enp1s0: RDLEN[0-3]      00001000 00001000 00001000 00001000
-[ 7679.583075] igc 0000:01:00.0 enp1s0: RDH[0-3]        00000068 000000b6 0000000f 00000031
-[ 7679.594162] igc 0000:01:00.0 enp1s0: RDT[0-3]        00000066 000000b2 0000000e 00000030
-[ 7679.605174] igc 0000:01:00.0 enp1s0: RXDCTL[0-3]     02040808 02040808 02040808 02040808
-[ 7679.616196] igc 0000:01:00.0 enp1s0: RDBAL[0-3]      1bb7c000 1bb7f000 1bb82000 0ef33000
-[ 7679.627242] igc 0000:01:00.0 enp1s0: RDBAH[0-3]      00000001 00000001 00000001 00000001
-[ 7679.638256] igc 0000:01:00.0 enp1s0: TCTL            a503f0fa
-[ 7679.646607] igc 0000:01:00.0 enp1s0: TDBAL[0-3]      2ba4a000 1bb6f000 1bb74000 1bb79000
-[ 7679.657609] igc 0000:01:00.0 enp1s0: TDBAH[0-3]      00000001 00000001 00000001 00000001
-[ 7679.668551] igc 0000:01:00.0 enp1s0: TDLEN[0-3]      00001000 00001000 00001000 00001000
-[ 7679.679470] igc 0000:01:00.0 enp1s0: TDH[0-3]        000000a7 0000002d 000000bf 000000d9
-[ 7679.690406] igc 0000:01:00.0 enp1s0: TDT[0-3]        000000a7 0000002d 000000bf 000000d9
-[ 7679.701264] igc 0000:01:00.0 enp1s0: TXDCTL[0-3]     02100108 02100108 02100108 02100108
-[ 7679.712123] igc 0000:01:00.0 enp1s0: Reset adapter
-[ 7683.085967] igc 0000:01:00.0 enp1s0: NIC Link is Up 1000 Mbps Full Duplex, Flow Control: RX/TX
-[ 8086.945561] ------------[ cut here ]------------
-Entering kdb (current=0xffffffff8220b200, pid 0) on processor 0
-Oops: (null) due to oops @ 0xffffffff81573888
-RIP: 0010:dql_completed+0x148/0x160
-Code: c9 00 48 89 57 58 e9 46 ff ff ff 45 85 e4 41 0f 95 c4 41 39 db 0f 95
-c1 41 84 cc 74 05 45 85 ed 78 0a 44 89 c1 e9 27 ff ff ff <0f> 0b 01 f6 44 89
-c1 29 f1 0f 48 ca eb 8c cc cc cc cc cc cc cc cc
-RSP: 0018:ffa0000000003e00 EFLAGS: 00010287
-RAX: 000000000000006c RBX: ffa0000003eb0f78 RCX: ff11000109938000
-RDX: 0000000000000003 RSI: 0000000000000160 RDI: ff110001002e9480
-RBP: ffa0000000003ed8 R08: ff110001002e93c0 R09: ffa0000000003d28
-R10: 0000000000007cc0 R11: 0000000000007c54 R12: 00000000ffffffd9
-R13: ff1100037039cb00 R14: 00000000ffffffd9 R15: ff1100037039c048
-FS:  0000000000000000(0000) GS:ff11000361e00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ffff7fca168 CR3: 000000013b08a003 CR4: 0000000000471ef8
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- <IRQ>
- ? igc_poll+0x1a9/0x14d0 [igc]
- __napi_poll+0x2e/0x1b0
- net_rx_action+0x126/0x250
- __do_softirq+0xd1/0x295
- irq_exit_rcu+0xc5/0xf0
- common_interrupt+0x86/0xa0
- </IRQ>
- <TASK>
- asm_common_interrupt+0x27/0x40
-RIP: 0010:cpuidle_enter_state+0xd3/0x3e0
-Code: 73 f1 ff ff 49 89 c6 8b 05 e2 ca a7 00 85 c0 0f 8f b3 02 00 00 31 ff e8 1b
-de 75 ff 80 7d d7 00 0f 85 cd 01 00 00 fb 45 85 ff <0f> 88 fd 00 00 00 49 63 cf
-4c 2b 75 c8 48 8d 04 49 48 89 ca 48 8d
-RSP: 0018:ffffffff82203df0 EFLAGS: 00000202
-RAX: ff11000361e2a200 RBX: 0000000000000002 RCX: 000000000000001f
-RDX: 0000000000000000 RSI: 000000003cf3cf3d RDI: 0000000000000000
-RBP: ffffffff82203e28 R08: 0000075ae38471c8 R09: 0000000000000018
-R10: 000000000000031a R11: ffffffff8238dca0 R12: ffd1ffffff200000
-R13: ffffffff8238dca0 R14: 0000075ae38471c8 R15: 0000000000000002
- cpuidle_enter+0x2e/0x50
- call_cpuidle+0x23/0x40
- do_idle+0x1be/0x220
- cpu_startup_entry+0x20/0x30
- rest_init+0xb5/0xc0
- arch_call_rest_init+0xe/0x30
- start_kernel+0x448/0x760
- x86_64_start_kernel+0x109/0x150
- secondary_startup_64_no_verify+0xe0/0xeb
- </TASK>
-more>
-[0]kdb>
+Lastly, check the genmask of the end interval if this is active in the
+current generation.
 
-[0]kdb>
-[0]kdb> go
-Catastrophic error detected
-kdb_continue_catastrophic=0, type go a second time if you really want to
-continue
-[0]kdb> go
-Catastrophic error detected
-kdb_continue_catastrophic=0, attempting to continue
-[ 8086.955689] refcount_t: underflow; use-after-free.
-[ 8086.955697] WARNING: CPU: 0 PID: 0 at lib/refcount.c:28 refcount_warn_saturate+0xc2/0x110
-[ 8086.955706] Modules linked in: xt_conntrack nft_chain_nat xt_MASQUERADE xt_addrtype nft_compat
-nf_tables nfnetlink br_netfilter bridge stp llc overlay dm_mod emrcha(PO) emriio(PO) rktpm(PO)
-cegbuf_mod(PO) patch_update(PO) se(PO) sgx_tgts(PO) mktme(PO) keylocker(PO) svtdx(PO)
-svfs_pci_hotplug(PO) vtd_mod(PO) davemem(PO) svmabort(PO) svindexio(PO) usbx2(PO) ehci_sched(PO)
-svheartbeat(PO) ioapic(PO) sv8259(PO) svintr(PO) lt(PO) pcierootport(PO) enginefw_mod(PO) ata(PO)
-smbus(PO) spiflash_cdf(PO) arden(PO) dsa_iax(PO) oobmsm_punit(PO) cpm(PO) svkdb(PO) ebg_pch(PO)
-pch(PO) sviotargets(PO) svbdf(PO) svmem(PO) svbios(PO) dram(PO) svtsc(PO) targets(PO) superio(PO)
-svkernel(PO) cswitch(PO) mcf(PO) pentiumIII_mod(PO) fs_svfs(PO) mdevdefdb(PO) svfs_os_services(O)
-ixgbe mdio mdio_devres libphy emeraldrapids_svdefs(PO) regsupport(O) libnvdimm nls_cp437
-snd_hda_codec_realtek snd_hda_codec_generic ledtrig_audio snd_hda_intel snd_intel_dspcfg
-snd_hda_codec snd_hwdep x86_pkg_temp_thermal snd_hda_core snd_pcm snd_timer isst_if_mbox_pci
-[ 8086.955751]  input_leds isst_if_mmio sg snd isst_if_common soundcore wmi button sad9(O) drm
-fuse backlight configfs efivarfs ip_tables x_tables vmd sdhci led_class rtl8150 r8152 hid_generic
-pegasus mmc_block usbhid mmc_core hid megaraid_sas ixgb igb i2c_algo_bit ice i40e hpsa
-scsi_transport_sas e1000e e1000 e100 ax88179_178a usbnet xhci_pci sd_mod xhci_hcd t10_pi
-crc32c_intel crc64_rocksoft igc crc64 crc_t10dif usbcore crct10dif_generic ptp crct10dif_common
-usb_common pps_core
-[ 8086.955784] RIP: 0010:refcount_warn_saturate+0xc2/0x110
-[ 8086.955788] Code: 01 e8 82 e7 b4 ff 0f 0b 5d c3 cc cc cc cc 80 3d 68 c6 eb 00 00 75 81
-48 c7 c7 a0 87 f6 81 c6 05 58 c6 eb 00 01 e8 5e e7 b4 ff <0f> 0b 5d c3 cc cc cc cc 80 3d
-42 c6 eb 00 00 0f 85 59 ff ff ff 48
-[ 8086.955790] RSP: 0018:ffa0000000003da0 EFLAGS: 00010286
-[ 8086.955793] RAX: 0000000000000000 RBX: ff1100011da40ee0 RCX: ff11000361e1b888
-[ 8086.955794] RDX: 00000000ffffffd8 RSI: 0000000000000027 RDI: ff11000361e1b880
-[ 8086.955795] RBP: ffa0000000003da0 R08: 80000000ffff9f45 R09: ffa0000000003d28
-[ 8086.955796] R10: ff1100035f840000 R11: 0000000000000028 R12: ff11000319ff8000
-[ 8086.955797] R13: ff1100011bb79d60 R14: 00000000ffffffd6 R15: ff1100037039cb00
-[ 8086.955798] FS:  0000000000000000(0000) GS:ff11000361e00000(0000) knlGS:0000000000000000
-[ 8086.955800] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 8086.955801] CR2: 00007ffff7fca168 CR3: 000000013b08a003 CR4: 0000000000471ef8
-[ 8086.955803] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[ 8086.955803] DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
-[ 8086.955804] PKRU: 55555554
-[ 8086.955805] Call Trace:
-[ 8086.955806]  <IRQ>
-[ 8086.955808]  tcp_wfree+0x112/0x130
-[ 8086.955814]  skb_release_head_state+0x24/0xa0
-[ 8086.955818]  napi_consume_skb+0x9c/0x160
-[ 8086.955821]  igc_poll+0x5d8/0x14d0 [igc]
-[ 8086.955835]  __napi_poll+0x2e/0x1b0
-[ 8086.955839]  net_rx_action+0x126/0x250
-[ 8086.955843]  __do_softirq+0xd1/0x295
-[ 8086.955846]  irq_exit_rcu+0xc5/0xf0
-[ 8086.955851]  common_interrupt+0x86/0xa0
-[ 8086.955857]  </IRQ>
-[ 8086.955857]  <TASK>
-[ 8086.955858]  asm_common_interrupt+0x27/0x40
-[ 8086.955862] RIP: 0010:cpuidle_enter_state+0xd3/0x3e0
-[ 8086.955866] Code: 73 f1 ff ff 49 89 c6 8b 05 e2 ca a7 00 85 c0 0f 8f b3 02 00 00 31 ff e8
-1b de 75 ff 80 7d d7 00 0f 85 cd 01 00 00 fb 45 85 ff <0f> 88 fd 00 00 00 49 63 cf 4c 2b 75
-c8 48 8d 04 49 48 89 ca 48 8d
-[ 8086.955867] RSP: 0018:ffffffff82203df0 EFLAGS: 00000202
-[ 8086.955869] RAX: ff11000361e2a200 RBX: 0000000000000002 RCX: 000000000000001f
-[ 8086.955870] RDX: 0000000000000000 RSI: 000000003cf3cf3d RDI: 0000000000000000
-[ 8086.955871] RBP: ffffffff82203e28 R08: 0000075ae38471c8 R09: 0000000000000018
-[ 8086.955872] R10: 000000000000031a R11: ffffffff8238dca0 R12: ffd1ffffff200000
-[ 8086.955873] R13: ffffffff8238dca0 R14: 0000075ae38471c8 R15: 0000000000000002
-[ 8086.955875]  cpuidle_enter+0x2e/0x50
-[ 8086.955880]  call_cpuidle+0x23/0x40
-[ 8086.955884]  do_idle+0x1be/0x220
-[ 8086.955887]  cpu_startup_entry+0x20/0x30
-[ 8086.955889]  rest_init+0xb5/0xc0
-[ 8086.955892]  arch_call_rest_init+0xe/0x30
-[ 8086.955895]  start_kernel+0x448/0x760
-[ 8086.955898]  x86_64_start_kernel+0x109/0x150
-[ 8086.955900]  secondary_startup_64_no_verify+0xe0/0xeb
-[ 8086.955904]  </TASK>
-[ 8086.955904] ---[ end trace 0000000000000000 ]---
-[ 8086.955912] ------------[ cut here ]------------
-[ 8086.955913] kernel BUG at lib/dynamic_queue_limits.c:27!
-[ 8086.955918] invalid opcode: 0000 [#1] SMP
-[ 8086.955922] RIP: 0010:dql_completed+0x148/0x160
-[ 8086.955925] Code: c9 00 48 89 57 58 e9 46 ff ff ff 45 85 e4 41 0f 95 c4 41 39 db
-0f 95 c1 41 84 cc 74 05 45 85 ed 78 0a 44 89 c1 e9 27 ff ff ff <0f> 0b 01 f6 44 89
-c1 29 f1 0f 48 ca eb 8c cc cc cc cc cc cc cc cc
-[ 8086.955927] RSP: 0018:ffa0000000003e00 EFLAGS: 00010287
-[ 8086.955928] RAX: 000000000000006c RBX: ffa0000003eb0f78 RCX: ff11000109938000
-[ 8086.955929] RDX: 0000000000000003 RSI: 0000000000000160 RDI: ff110001002e9480
-[ 8086.955930] RBP: ffa0000000003ed8 R08: ff110001002e93c0 R09: ffa0000000003d28
-[ 8086.955931] R10: 0000000000007cc0 R11: 0000000000007c54 R12: 00000000ffffffd9
-[ 8086.955932] R13: ff1100037039cb00 R14: 00000000ffffffd9 R15: ff1100037039c048
-[ 8086.955933] FS:  0000000000000000(0000) GS:ff11000361e00000(0000) knlGS:0000000000000000
-[ 8086.955934] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 8086.955935] CR2: 00007ffff7fca168 CR3: 000000013b08a003 CR4: 0000000000471ef8
-[ 8086.955936] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[ 8086.955937] DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
-[ 8086.955938] PKRU: 55555554
-[ 8086.955939] Call Trace:
-[ 8086.955939]  <IRQ>
-[ 8086.955940]  ? igc_poll+0x1a9/0x14d0 [igc]
-[ 8086.955949]  __napi_poll+0x2e/0x1b0
-[ 8086.955952]  net_rx_action+0x126/0x250
-[ 8086.955956]  __do_softirq+0xd1/0x295
-[ 8086.955958]  irq_exit_rcu+0xc5/0xf0
-[ 8086.955961]  common_interrupt+0x86/0xa0
-[ 8086.955964]  </IRQ>
-[ 8086.955965]  <TASK>
-[ 8086.955965]  asm_common_interrupt+0x27/0x40
-[ 8086.955968] RIP: 0010:cpuidle_enter_state+0xd3/0x3e0
-[ 8086.955971] Code: 73 f1 ff ff 49 89 c6 8b 05 e2 ca a7 00 85 c0 0f 8f b3 02 00 00
-31 ff e8 1b de 75 ff 80 7d d7 00 0f 85 cd 01 00 00 fb 45 85 ff <0f> 88 fd 00 00 00
-49 63 cf 4c 2b 75 c8 48 8d 04 49 48 89 ca 48 8d
-[ 8086.955972] RSP: 0018:ffffffff82203df0 EFLAGS: 00000202
-[ 8086.955973] RAX: ff11000361e2a200 RBX: 0000000000000002 RCX: 000000000000001f
-[ 8086.955974] RDX: 0000000000000000 RSI: 000000003cf3cf3d RDI: 0000000000000000
-[ 8086.955974] RBP: ffffffff82203e28 R08: 0000075ae38471c8 R09: 0000000000000018
-[ 8086.955975] R10: 000000000000031a R11: ffffffff8238dca0 R12: ffd1ffffff200000
-[ 8086.955976] R13: ffffffff8238dca0 R14: 0000075ae38471c8 R15: 0000000000000002
-[ 8086.955978]  cpuidle_enter+0x2e/0x50
-[ 8086.955981]  call_cpuidle+0x23/0x40
-[ 8086.955984]  do_idle+0x1be/0x220
-[ 8086.955985]  cpu_startup_entry+0x20/0x30
-[ 8086.955987]  rest_init+0xb5/0xc0
-[ 8086.955990]  arch_call_rest_init+0xe/0x30
-[ 8086.955992]  start_kernel+0x448/0x760
-[ 8086.955994]  x86_64_start_kernel+0x109/0x150
-[ 8086.955996]  secondary_startup_64_no_verify+0xe0/0xeb
-[ 8086.955998]  </TASK>
-[ 8086.955999] Modules linked in: xt_conntrack nft_chain_nat xt_MASQUERADE xt_addrtype
-nft_compat nf_tables nfnetlink br_netfilter bridge stp llc overlay dm_mod emrcha(PO) emriio(PO)
-rktpm(PO) cegbuf_mod(PO) patch_update(PO) se(PO) sgx_tgts(PO) mktme(PO) keylocker(PO) svtdx(PO)
-svfs_pci_hotplug(PO) vtd_mod(PO) davemem(PO) svmabort(PO) svindexio(PO) usbx2(PO) ehci_sched(PO)
-svheartbeat(PO) ioapic(PO) sv8259(PO) svintr(PO) lt(PO) pcierootport(PO) enginefw_mod(PO) ata(PO)
-smbus(PO) spiflash_cdf(PO) arden(PO) dsa_iax(PO) oobmsm_punit(PO) cpm(PO) svkdb(PO) ebg_pch(PO)
-pch(PO) sviotargets(PO) svbdf(PO) svmem(PO) svbios(PO) dram(PO) svtsc(PO) targets(PO) superio(PO)
-svkernel(PO) cswitch(PO) mcf(PO) pentiumIII_mod(PO) fs_svfs(PO) mdevdefdb(PO) svfs_os_services(O)
-ixgbe mdio mdio_devres libphy emeraldrapids_svdefs(PO) regsupport(O) libnvdimm nls_cp437
-snd_hda_codec_realtek snd_hda_codec_generic ledtrig_audio snd_hda_intel snd_intel_dspcfg
-snd_hda_codec snd_hwdep x86_pkg_temp_thermal snd_hda_core snd_pcm snd_timer isst_if_mbox_pci
-[ 8086.956029]  input_leds isst_if_mmio sg snd isst_if_common soundcore wmi button sad9(O) drm
-fuse backlight configfs efivarfs ip_tables x_tables vmd sdhci led_class rtl8150 r8152 hid_generic
-pegasus mmc_block usbhid mmc_core hid megaraid_sas ixgb igb i2c_algo_bit ice i40e hpsa
-scsi_transport_sas e1000e e1000 e100 ax88179_178a usbnet xhci_pci sd_mod xhci_hcd t10_pi
-crc32c_intel crc64_rocksoft igc crc64 crc_t10dif usbcore crct10dif_generic ptp crct10dif_common
-usb_common pps_core
-[16762.543675] INFO: NMI handler (kgdb_nmi_handler) took too long to run: 8675587.593 msecs
-[16762.543678] INFO: NMI handler (kgdb_nmi_handler) took too long to run: 8675587.595 msecs
-[16762.543673] INFO: NMI handler (kgdb_nmi_handler) took too long to run: 8675587.495 msecs
-[16762.543679] INFO: NMI handler (kgdb_nmi_handler) took too long to run: 8675587.599 msecs
-[16762.543678] INFO: NMI handler (kgdb_nmi_handler) took too long to run: 8675587.598 msecs
-[16762.543690] INFO: NMI handler (kgdb_nmi_handler) took too long to run: 8675587.605 msecs
-[16762.543684] INFO: NMI handler (kgdb_nmi_handler) took too long to run: 8675587.599 msecs
-[16762.543693] INFO: NMI handler (kgdb_nmi_handler) took too long to run: 8675587.613 msecs
-[16762.543784] ---[ end trace 0000000000000000 ]---
-[16762.849099] RIP: 0010:dql_completed+0x148/0x160
-PANIC: Fatal exception in interrupt
-
-Fixes: 9b275176270e ("igc: Add ndo_tx_timeout support")
-Tested-by: Alejandra Victoria Alcaraz <alejandra.victoria.alcaraz@intel.com>
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Acked-by: Sasha Neftin <sasha.neftin@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c9e6978e2725 ("netfilter: nft_set_rbtree: Switch to node list walk for overlap detection")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 40 ++++++++++++++++-------
- 1 file changed, 28 insertions(+), 12 deletions(-)
+ net/netfilter/nft_set_rbtree.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 496a4eb687b00..3ccf2fedc5af7 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -316,6 +316,33 @@ static void igc_clean_all_tx_rings(struct igc_adapter *adapter)
- 			igc_clean_tx_ring(adapter->tx_ring[i]);
- }
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index 5c05c9b990fba..8d73fffd2d09d 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -217,29 +217,37 @@ static void *nft_rbtree_get(const struct net *net, const struct nft_set *set,
  
-+static void igc_disable_tx_ring_hw(struct igc_ring *ring)
-+{
-+	struct igc_hw *hw = &ring->q_vector->adapter->hw;
-+	u8 idx = ring->reg_idx;
-+	u32 txdctl;
-+
-+	txdctl = rd32(IGC_TXDCTL(idx));
-+	txdctl &= ~IGC_TXDCTL_QUEUE_ENABLE;
-+	txdctl |= IGC_TXDCTL_SWFLUSH;
-+	wr32(IGC_TXDCTL(idx), txdctl);
-+}
-+
-+/**
-+ * igc_disable_all_tx_rings_hw - Disable all transmit queue operation
-+ * @adapter: board private structure
-+ */
-+static void igc_disable_all_tx_rings_hw(struct igc_adapter *adapter)
-+{
-+	int i;
-+
-+	for (i = 0; i < adapter->num_tx_queues; i++) {
-+		struct igc_ring *tx_ring = adapter->tx_ring[i];
-+
-+		igc_disable_tx_ring_hw(tx_ring);
-+	}
-+}
-+
- /**
-  * igc_setup_tx_resources - allocate Tx resources (Descriptors)
-  * @tx_ring: tx descriptor ring (for a specific queue) to setup
-@@ -5056,6 +5083,7 @@ void igc_down(struct igc_adapter *adapter)
- 	/* clear VLAN promisc flag so VFTA will be updated if necessary */
- 	adapter->flags &= ~IGC_FLAG_VLAN_PROMISC;
- 
-+	igc_disable_all_tx_rings_hw(adapter);
- 	igc_clean_all_tx_rings(adapter);
- 	igc_clean_all_rx_rings(adapter);
- }
-@@ -7274,18 +7302,6 @@ void igc_enable_rx_ring(struct igc_ring *ring)
- 		igc_alloc_rx_buffers(ring, igc_desc_unused(ring));
- }
- 
--static void igc_disable_tx_ring_hw(struct igc_ring *ring)
--{
--	struct igc_hw *hw = &ring->q_vector->adapter->hw;
--	u8 idx = ring->reg_idx;
--	u32 txdctl;
--
--	txdctl = rd32(IGC_TXDCTL(idx));
--	txdctl &= ~IGC_TXDCTL_QUEUE_ENABLE;
--	txdctl |= IGC_TXDCTL_SWFLUSH;
--	wr32(IGC_TXDCTL(idx), txdctl);
--}
--
- void igc_disable_tx_ring(struct igc_ring *ring)
+ static int nft_rbtree_gc_elem(const struct nft_set *__set,
+ 			      struct nft_rbtree *priv,
+-			      struct nft_rbtree_elem *rbe)
++			      struct nft_rbtree_elem *rbe,
++			      u8 genmask)
  {
- 	igc_disable_tx_ring_hw(ring);
+ 	struct nft_set *set = (struct nft_set *)__set;
+ 	struct rb_node *prev = rb_prev(&rbe->node);
+-	struct nft_rbtree_elem *rbe_prev = NULL;
++	struct nft_rbtree_elem *rbe_prev;
+ 	struct nft_set_gc_batch *gcb;
+ 
+ 	gcb = nft_set_gc_batch_check(set, NULL, GFP_ATOMIC);
+ 	if (!gcb)
+ 		return -ENOMEM;
+ 
+-	/* search for expired end interval coming before this element. */
++	/* search for end interval coming before this element.
++	 * end intervals don't carry a timeout extension, they
++	 * are coupled with the interval start element.
++	 */
+ 	while (prev) {
+ 		rbe_prev = rb_entry(prev, struct nft_rbtree_elem, node);
+-		if (nft_rbtree_interval_end(rbe_prev))
++		if (nft_rbtree_interval_end(rbe_prev) &&
++		    nft_set_elem_active(&rbe_prev->ext, genmask))
+ 			break;
+ 
+ 		prev = rb_prev(prev);
+ 	}
+ 
+-	if (rbe_prev) {
++	if (prev) {
++		rbe_prev = rb_entry(prev, struct nft_rbtree_elem, node);
++
+ 		rb_erase(&rbe_prev->node, &priv->root);
+ 		atomic_dec(&set->nelems);
++		nft_set_gc_batch_add(gcb, rbe_prev);
+ 	}
+ 
+ 	rb_erase(&rbe->node, &priv->root);
+@@ -321,7 +329,7 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 
+ 		/* perform garbage collection to avoid bogus overlap reports. */
+ 		if (nft_set_elem_expired(&rbe->ext)) {
+-			err = nft_rbtree_gc_elem(set, priv, rbe);
++			err = nft_rbtree_gc_elem(set, priv, rbe, genmask);
+ 			if (err < 0)
+ 				return err;
+ 
 -- 
 2.39.2
 
