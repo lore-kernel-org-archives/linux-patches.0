@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62561F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:41:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E94C43391;
-	Tue,  1 Aug 2023 09:41:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501E01F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:41:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67F5C433C7;
+	Tue,  1 Aug 2023 09:41:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882894;
-	bh=2VzeC+8Z8lQSffTQdhl/+Ayiwv4cntheT+WHaTZjW1g=;
+	s=korg; t=1690882897;
+	bh=vvIN/bvJt/7/D6iga7F5HNJzNtLUoCmzqX7pNkWlpME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vFOyEuOmYbzSmpcUzCdvoLAAg7ZFHlnDA7k7GFAuHI3lFj9PlBS4OOuQNTX2zDfII
-	 r16gYIPaKh5AtlV4ciQ9UpTaO9tlMNM84NykoReZcsrKEkjOJNup5P154239kQvyK2
-	 znmpjZJgtTX6xILXIjR8jurj9Ot5wQTpqvdfOwT4=
+	b=T2qiGIsjcw3jluoVCMDxAQg+0kIUqRgrXOVHIIH1kIjU9fK5So032dL1dAgIvJbiA
+	 lZlMeND+drrcOzQq6X2jUy+UyH73Q6XzaarcPKQFOTKob70tqf6AQ0E+rA1hYaNlMa
+	 I4W065zXNR3d06m67GnQVdDoMC47whErbMznUz8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Alvin Lee <Alvin.Lee2@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 041/239] maple_tree: fix 32 bit mas_next testing
-Date: Tue,  1 Aug 2023 11:18:25 +0200
-Message-ID: <20230801091927.055514312@linuxfoundation.org>
+Subject: [PATCH 6.4 042/239] drm/amd/display: Add FAMS validation before trying to use it
+Date: Tue,  1 Aug 2023 11:18:26 +0200
+Message-ID: <20230801091927.090555991@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,60 +38,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liam R. Howlett <Liam.Howlett@oracle.com>
+From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 
-[ Upstream commit 7a93c71a6714ca1a9c03d70432dac104b0cfb815 ]
+[ Upstream commit e3416e872f84086667df21daf166506fab97358d ]
 
-The test setup of mas_next is dependent on node entry size to create a 2
-level tree, but the tests did not account for this in the expected value
-when shifting beyond the scope of the tree.
+To ensure that FAMS can be used, DC must check if there is VRR support.
+This commit adds the required configuration to ensure FAMS can be executed in the target system.
 
-Fix this by setting up the test to succeed depending on the node entries
-which is dependent on the 32/64 bit setup.
-
-Link: https://lkml.kernel.org/r/20230712173916.168805-1-Liam.Howlett@oracle.com
-Fixes: 120b116208a0 ("maple_tree: reorganize testing to restore module testing")
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-  Closes: https://lore.kernel.org/linux-mm/CAMuHMdV4T53fOw7VPoBgPR7fP6RYqf=CBhD_y_vOg53zZX_DnA@mail.gmail.com/
-Tested-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 2a9482e55968 ("drm/amd/display: Prevent vtotal from being set to 0")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_maple_tree.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c          | 6 ++++++
+ drivers/gpu/drm/amd/display/dc/dc_stream.h        | 1 +
+ drivers/gpu/drm/amd/display/dc/dcn30/dcn30_optc.c | 7 ++++++-
+ drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h   | 2 +-
+ 4 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/lib/test_maple_tree.c b/lib/test_maple_tree.c
-index 261bad680f81d..fad668042f3e7 100644
---- a/lib/test_maple_tree.c
-+++ b/lib/test_maple_tree.c
-@@ -1863,13 +1863,16 @@ static noinline void __init next_prev_test(struct maple_tree *mt)
- 						   725};
- 	static const unsigned long level2_32[] = { 1747, 2000, 1750, 1755,
- 						   1760, 1765};
-+	unsigned long last_index;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 6eace83c9c6f5..7f6bdad57c920 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -2626,6 +2626,12 @@ static enum surface_update_type check_update_surfaces_for_stream(
  
- 	if (MAPLE_32BIT) {
- 		nr_entries = 500;
- 		level2 = level2_32;
-+		last_index = 0x138e;
- 	} else {
- 		nr_entries = 200;
- 		level2 = level2_64;
-+		last_index = 0x7d6;
- 	}
+ 		if (stream_update->mst_bw_update)
+ 			su_flags->bits.mst_bw = 1;
++
++		if (stream_update->stream && stream_update->stream->freesync_on_desktop &&
++			(stream_update->vrr_infopacket || stream_update->allow_freesync ||
++				stream_update->vrr_active_variable))
++			su_flags->bits.fams_changed = 1;
++
+ 		if (stream_update->crtc_timing_adjust && dc_extended_blank_supported(dc))
+ 			su_flags->bits.crtc_timing_adjust = 1;
  
- 	for (i = 0; i <= nr_entries; i++)
-@@ -1976,7 +1979,7 @@ static noinline void __init next_prev_test(struct maple_tree *mt)
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_stream.h b/drivers/gpu/drm/amd/display/dc/dc_stream.h
+index 25284006019c3..270282fbda4ab 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_stream.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_stream.h
+@@ -131,6 +131,7 @@ union stream_update_flags {
+ 		uint32_t dsc_changed : 1;
+ 		uint32_t mst_bw : 1;
+ 		uint32_t crtc_timing_adjust : 1;
++		uint32_t fams_changed : 1;
+ 	} bits;
  
- 	val = mas_next(&mas, ULONG_MAX);
- 	MT_BUG_ON(mt, val != NULL);
--	MT_BUG_ON(mt, mas.index != ULONG_MAX);
-+	MT_BUG_ON(mt, mas.index != last_index);
- 	MT_BUG_ON(mt, mas.last != ULONG_MAX);
+ 	uint32_t raw;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_optc.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_optc.c
+index c95f000b63b28..34b08d90dc1da 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_optc.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_optc.c
+@@ -301,7 +301,12 @@ static void optc3_wait_drr_doublebuffer_pending_clear(struct timing_generator *o
  
- 	val = mas_prev(&mas, 0);
+ void optc3_set_vtotal_min_max(struct timing_generator *optc, int vtotal_min, int vtotal_max)
+ {
+-	optc1_set_vtotal_min_max(optc, vtotal_min, vtotal_max);
++	struct dc *dc = optc->ctx->dc;
++
++	if (dc->caps.dmub_caps.mclk_sw && !dc->debug.disable_fams)
++		dc_dmub_srv_drr_update_cmd(dc, optc->inst, vtotal_min, vtotal_max);
++	else
++		optc1_set_vtotal_min_max(optc, vtotal_min, vtotal_max);
+ }
+ 
+ void optc3_tg_init(struct timing_generator *optc)
+diff --git a/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h b/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
+index 598fa1de54ce3..1c55d3b01f53e 100644
+--- a/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
++++ b/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
+@@ -360,7 +360,7 @@ union dmub_fw_boot_status {
+ 		uint32_t optimized_init_done : 1; /**< 1 if optimized init done */
+ 		uint32_t restore_required : 1; /**< 1 if driver should call restore */
+ 		uint32_t defer_load : 1; /**< 1 if VBIOS data is deferred programmed */
+-		uint32_t reserved : 1;
++		uint32_t fams_enabled : 1; /**< 1 if VBIOS data is deferred programmed */
+ 		uint32_t detection_required: 1; /**<  if detection need to be triggered by driver */
+ 		uint32_t hw_power_init_done: 1; /**< 1 if hw power init is completed */
+ 	} bits; /**< status bits */
 -- 
 2.39.2
 
