@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D013E1F95A
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5277AC433C7;
-	Tue,  1 Aug 2023 09:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917DB1F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119F6C433C8;
+	Tue,  1 Aug 2023 09:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881790;
-	bh=iZfqOiSekW2FvF6r6qAy7wb9D+r3e/leeGtkMW54PuA=;
+	s=korg; t=1690881793;
+	bh=FCShCS+fCSQ+GKKgeu38iIvgOPgpJor28S1Rai/MqqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VLZRdtNs0GNev9fouZn/pmpQKqFll99gD0R9VpatsaI0sc9SUflGefbkvMJI9WPzN
-	 B1anKyDPTBVVc0oUwBVtNnHiWxZl7iWm9FVcpFOq305KjrUkTEL/YgpL9Kg+MdxDPl
-	 h80AXbbejJywXvqPo8Tvg2yWDG2FvszyUbiqaolA=
+	b=teJBKoQw8QP9jv8Sbsuzw66DPoGnSACJfGMRF34L6sQZ0X8yYX9ObnRvH+Ul1MNG0
+	 EipAxH6nflqjoWz4smD3NHDXAXTqco6eYT629sh/rEO9v2+jndDlpX6nEr+zx+fWMC
+	 QTg2E6nwD0M9u7oXUXt7cRzXOHUTCSbvRHaIi7g8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
 	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 031/155] pwm: meson: Simplify duplicated per-channel tracking
-Date: Tue,  1 Aug 2023 11:19:03 +0200
-Message-ID: <20230801091911.309013468@linuxfoundation.org>
+Subject: [PATCH 5.15 032/155] pwm: meson: fix handling of period/duty if greater than UINT_MAX
+Date: Tue,  1 Aug 2023 11:19:04 +0200
+Message-ID: <20230801091911.338480266@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -36,72 +37,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 5f97f18feac9bd5a8163b108aee52d783114b36f ]
+[ Upstream commit 87a2cbf02d7701255f9fcca7e5bd864a7bb397cf ]
 
-The driver tracks per-channel data via struct pwm_device::chip_data and
-struct meson_pwm::channels[]. The latter holds the actual data, the former
-is only a pointer to the latter. So simplify by using struct
-meson_pwm::channels[] consistently.
+state->period/duty are of type u64, and if their value is greater than
+UINT_MAX, then the cast to uint will cause problems. Fix this by
+changing the type of the respective local variables to u64.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Fixes: b79c3670e120 ("pwm: meson: Don't duplicate the polarity internally")
+Cc: stable@vger.kernel.org
+Suggested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
 Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-Stable-dep-of: 87a2cbf02d77 ("pwm: meson: fix handling of period/duty if greater than UINT_MAX")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-meson.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/pwm/pwm-meson.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/pwm/pwm-meson.c b/drivers/pwm/pwm-meson.c
-index 76f702c43cbc3..37bbad88a3ee5 100644
+index 37bbad88a3ee5..ec6a544d6f526 100644
 --- a/drivers/pwm/pwm-meson.c
 +++ b/drivers/pwm/pwm-meson.c
-@@ -147,12 +147,13 @@ static int meson_pwm_request(struct pwm_chip *chip, struct pwm_device *pwm)
- 		return err;
- 	}
- 
--	return pwm_set_chip_data(pwm, channel);
-+	return 0;
- }
- 
- static void meson_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
- {
--	struct meson_pwm_channel *channel = pwm_get_chip_data(pwm);
-+	struct meson_pwm *meson = to_meson_pwm(chip);
-+	struct meson_pwm_channel *channel = &meson->channels[pwm->hwpwm];
- 
- 	if (channel)
- 		clk_disable_unprepare(channel->clk);
-@@ -161,7 +162,7 @@ static void meson_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
- static int meson_pwm_calc(struct meson_pwm *meson, struct pwm_device *pwm,
+@@ -163,8 +163,9 @@ static int meson_pwm_calc(struct meson_pwm *meson, struct pwm_device *pwm,
  			  const struct pwm_state *state)
  {
--	struct meson_pwm_channel *channel = pwm_get_chip_data(pwm);
-+	struct meson_pwm_channel *channel = &meson->channels[pwm->hwpwm];
- 	unsigned int duty, period, pre_div, cnt, duty_cnt;
+ 	struct meson_pwm_channel *channel = &meson->channels[pwm->hwpwm];
+-	unsigned int duty, period, pre_div, cnt, duty_cnt;
++	unsigned int pre_div, cnt, duty_cnt;
  	unsigned long fin_freq;
++	u64 duty, period;
  
-@@ -230,7 +231,7 @@ static int meson_pwm_calc(struct meson_pwm *meson, struct pwm_device *pwm,
+ 	duty = state->duty_cycle;
+ 	period = state->period;
+@@ -186,19 +187,19 @@ static int meson_pwm_calc(struct meson_pwm *meson, struct pwm_device *pwm,
  
- static void meson_pwm_enable(struct meson_pwm *meson, struct pwm_device *pwm)
- {
--	struct meson_pwm_channel *channel = pwm_get_chip_data(pwm);
-+	struct meson_pwm_channel *channel = &meson->channels[pwm->hwpwm];
- 	struct meson_pwm_channel_data *channel_data;
- 	unsigned long flags;
- 	u32 value;
-@@ -273,8 +274,8 @@ static void meson_pwm_disable(struct meson_pwm *meson, struct pwm_device *pwm)
- static int meson_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 			   const struct pwm_state *state)
- {
--	struct meson_pwm_channel *channel = pwm_get_chip_data(pwm);
- 	struct meson_pwm *meson = to_meson_pwm(chip);
-+	struct meson_pwm_channel *channel = &meson->channels[pwm->hwpwm];
- 	int err = 0;
+ 	dev_dbg(meson->chip.dev, "fin_freq: %lu Hz\n", fin_freq);
  
- 	if (!state)
+-	pre_div = div64_u64(fin_freq * (u64)period, NSEC_PER_SEC * 0xffffLL);
++	pre_div = div64_u64(fin_freq * period, NSEC_PER_SEC * 0xffffLL);
+ 	if (pre_div > MISC_CLK_DIV_MASK) {
+ 		dev_err(meson->chip.dev, "unable to get period pre_div\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	cnt = div64_u64(fin_freq * (u64)period, NSEC_PER_SEC * (pre_div + 1));
++	cnt = div64_u64(fin_freq * period, NSEC_PER_SEC * (pre_div + 1));
+ 	if (cnt > 0xffff) {
+ 		dev_err(meson->chip.dev, "unable to get period cnt\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	dev_dbg(meson->chip.dev, "period=%u pre_div=%u cnt=%u\n", period,
++	dev_dbg(meson->chip.dev, "period=%llu pre_div=%u cnt=%u\n", period,
+ 		pre_div, cnt);
+ 
+ 	if (duty == period) {
+@@ -211,14 +212,13 @@ static int meson_pwm_calc(struct meson_pwm *meson, struct pwm_device *pwm,
+ 		channel->lo = cnt;
+ 	} else {
+ 		/* Then check is we can have the duty with the same pre_div */
+-		duty_cnt = div64_u64(fin_freq * (u64)duty,
+-				     NSEC_PER_SEC * (pre_div + 1));
++		duty_cnt = div64_u64(fin_freq * duty, NSEC_PER_SEC * (pre_div + 1));
+ 		if (duty_cnt > 0xffff) {
+ 			dev_err(meson->chip.dev, "unable to get duty cycle\n");
+ 			return -EINVAL;
+ 		}
+ 
+-		dev_dbg(meson->chip.dev, "duty=%u pre_div=%u duty_cnt=%u\n",
++		dev_dbg(meson->chip.dev, "duty=%llu pre_div=%u duty_cnt=%u\n",
+ 			duty, pre_div, duty_cnt);
+ 
+ 		channel->pre_div = pre_div;
 -- 
 2.39.2
 
