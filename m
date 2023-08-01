@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1501F959
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:34:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A011BC433C8;
-	Tue,  1 Aug 2023 09:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74B01F959
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:34:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6901BC433C7;
+	Tue,  1 Aug 2023 09:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882475;
-	bh=kBBgDVDUZifAbBP8gsbhqfnQWJEadzb/7Jk/QGTido8=;
+	s=korg; t=1690882477;
+	bh=yYsJ7lLKumtt4kH5ImeCFbWtRUsl90ILKBFjvNYupc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S4YwhamteLgFRnB2+PHEqg5KFn+c2gxr+3RRBV3ccnbCD5m0IR/iEGgkAjnS8/mBY
-	 hYQ6M9ACvTIhRphE+Bgz17uEVqpGBS8a6KKPIAqFnXEnqBTSAgrpEaeLpxzqj7xV4h
-	 eCOdahmhRky61gPQpx49JlNDob26JlNkpOeGGgRU=
+	b=tqxyhhvcV5RY4hHs+8X/mv2nPl+LBVeoIHychDaqp23JGb1vH/ClzHpsAYSpy1Hdw
+	 NYmHgK6FzCMqatoufi9FoCUHZUUex1SyCtxksjTf2eZDvZaznQ2pCoO7XOk3OFNj3c
+	 lQXJ1kT685d7Tr9a9Uo2KveZdY5BZAZyyNtCjLrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Yuanjun Gong <ruc_gongyuanjun@163.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/228] media: amphion: Fix firmware path to match linux-firmware
-Date: Tue,  1 Aug 2023 11:18:58 +0200
-Message-ID: <20230801091925.721169736@linuxfoundation.org>
+Subject: [PATCH 6.1 112/228] benet: fix return value check in be_lancer_xmit_workarounds()
+Date: Tue,  1 Aug 2023 11:19:30 +0200
+Message-ID: <20230801091926.829618084@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,44 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+From: Yuanjun Gong <ruc_gongyuanjun@163.com>
 
-[ Upstream commit dcff0b56f661b6b42e828012b464d22cc2068c38 ]
+[ Upstream commit 5c85f7065718a949902b238a6abd8fc907c5d3e0 ]
 
-The path did not match the one it was submitted into linux-firmware
-which prevented generic distribution from having working CODEC.
+in be_lancer_xmit_workarounds(), it should go to label 'tx_drop'
+if an unexpected value is returned by pskb_trim().
 
-Fixes: 9f599f351e86 ("media: amphion: add vpu core driver")
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 93040ae5cc8d ("be2net: Fix to trim skb for padded vlan packets to workaround an ASIC Bug")
+Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
+Link: https://lore.kernel.org/r/20230725032726.15002-1-ruc_gongyuanjun@163.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/emulex/benet/be_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/amphion/vpu_core.c b/drivers/media/platform/amphion/vpu_core.c
-index f9ec1753f7c86..be80410682681 100644
---- a/drivers/media/platform/amphion/vpu_core.c
-+++ b/drivers/media/platform/amphion/vpu_core.c
-@@ -828,7 +828,7 @@ static const struct dev_pm_ops vpu_core_pm_ops = {
+diff --git a/drivers/net/ethernet/emulex/benet/be_main.c b/drivers/net/ethernet/emulex/benet/be_main.c
+index 5d39df8452653..b12152e2fca0a 100644
+--- a/drivers/net/ethernet/emulex/benet/be_main.c
++++ b/drivers/net/ethernet/emulex/benet/be_main.c
+@@ -1139,7 +1139,8 @@ static struct sk_buff *be_lancer_xmit_workarounds(struct be_adapter *adapter,
+ 	    (lancer_chip(adapter) || BE3_chip(adapter) ||
+ 	     skb_vlan_tag_present(skb)) && is_ipv4_pkt(skb)) {
+ 		ip = (struct iphdr *)ip_hdr(skb);
+-		pskb_trim(skb, eth_hdr_len + ntohs(ip->tot_len));
++		if (unlikely(pskb_trim(skb, eth_hdr_len + ntohs(ip->tot_len))))
++			goto tx_drop;
+ 	}
  
- static struct vpu_core_resources imx8q_enc = {
- 	.type = VPU_CORE_TYPE_ENC,
--	.fwname = "vpu/vpu_fw_imx8_enc.bin",
-+	.fwname = "amphion/vpu/vpu_fw_imx8_enc.bin",
- 	.stride = 16,
- 	.max_width = 1920,
- 	.max_height = 1920,
-@@ -843,7 +843,7 @@ static struct vpu_core_resources imx8q_enc = {
- 
- static struct vpu_core_resources imx8q_dec = {
- 	.type = VPU_CORE_TYPE_DEC,
--	.fwname = "vpu/vpu_fw_imx8_dec.bin",
-+	.fwname = "amphion/vpu/vpu_fw_imx8_dec.bin",
- 	.stride = 256,
- 	.max_width = 8188,
- 	.max_height = 8188,
+ 	/* If vlan tag is already inlined in the packet, skip HW VLAN
 -- 
 2.39.2
 
