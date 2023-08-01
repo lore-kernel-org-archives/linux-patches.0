@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998BD1F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:41:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DDAC433C8;
-	Tue,  1 Aug 2023 09:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F3C1F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:41:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC9F5C433C7;
+	Tue,  1 Aug 2023 09:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882874;
-	bh=Z9uNomDFjyB2mj3LXsDoWRMyH2ITl55T+HmSLcNkqz0=;
+	s=korg; t=1690882877;
+	bh=w+avc87IUA49qshDebpm+os9gnuFYcn9IGfIZQlT+qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SLh6weH1/U9fRbNOVzUWhUW8CB4Fb8QouAFFxyv+IbsGbxu2VFh83lCmtru5adXLb
-	 0WtBLH8FqzntsBvH+Po72Yv1ywc3ZF8lzZebH9rWcu1weRPa5p+goktGwMnae9vKxQ
-	 vwUmhfQBe2MaKBNJ2licr4nqd2tIfcWOvsjj3Y6s=
+	b=mO9+p5l0VrYjiZtOPY0Wv1A0n/4SxuWGK+KRKsavTHBzO23fK8lQMbBaqiJpHK65F
+	 RSAPJn9JHCWt47k6COBfhvtAc9W6vWzyaR93oydlrh6WJ1ORbwvZtHNf6pVTKcz8tz
+	 2juic8KhHyyhLjcuFUWIeT7qTYovFh4PlHDHPY6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>,
-	James Morse <james.morse@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Zenghui Yu <yuzenghui@huawei.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Ross Lagerwall <ross.lagerwall@citrix.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 007/239] KVM: arm64: Handle kvm_arm_init failure correctly in finalize_pkvm
-Date: Tue,  1 Aug 2023 11:17:51 +0200
-Message-ID: <20230801091925.907386001@linuxfoundation.org>
+Subject: [PATCH 6.4 008/239] blk-mq: Fix stall due to recursive flush plug
+Date: Tue,  1 Aug 2023 11:17:52 +0200
+Message-ID: <20230801091925.947372651@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -40,171 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
 
-[ Upstream commit fa729bc7c9c8c17a2481358c841ef8ca920485d3 ]
+[ Upstream commit 70904263512a74a3b8941dd9e6e515ca6fc57821 ]
 
-Currently there is no synchronisation between finalize_pkvm() and
-kvm_arm_init() initcalls. The finalize_pkvm() proceeds happily even if
-kvm_arm_init() fails resulting in the following warning on all the CPUs
-and eventually a HYP panic:
+We have seen rare IO stalls as follows:
 
-  | kvm [1]: IPA Size Limit: 48 bits
-  | kvm [1]: Failed to init hyp memory protection
-  | kvm [1]: error initializing Hyp mode: -22
-  |
-  | <snip>
-  |
-  | WARNING: CPU: 0 PID: 0 at arch/arm64/kvm/pkvm.c:226 _kvm_host_prot_finalize+0x30/0x50
-  | Modules linked in:
-  | CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.4.0 #237
-  | Hardware name: FVP Base RevC (DT)
-  | pstate: 634020c5 (nZCv daIF +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
-  | pc : _kvm_host_prot_finalize+0x30/0x50
-  | lr : __flush_smp_call_function_queue+0xd8/0x230
-  |
-  | Call trace:
-  |  _kvm_host_prot_finalize+0x3c/0x50
-  |  on_each_cpu_cond_mask+0x3c/0x6c
-  |  pkvm_drop_host_privileges+0x4c/0x78
-  |  finalize_pkvm+0x3c/0x5c
-  |  do_one_initcall+0xcc/0x240
-  |  do_initcall_level+0x8c/0xac
-  |  do_initcalls+0x54/0x94
-  |  do_basic_setup+0x1c/0x28
-  |  kernel_init_freeable+0x100/0x16c
-  |  kernel_init+0x20/0x1a0
-  |  ret_from_fork+0x10/0x20
-  | Failed to finalize Hyp protection: -22
-  |     dtb=fvp-base-revc.dtb
-  | kvm [95]: nVHE hyp BUG at: arch/arm64/kvm/hyp/nvhe/mem_protect.c:540!
-  | kvm [95]: nVHE call trace:
-  | kvm [95]:  [<ffff800081052984>] __kvm_nvhe_hyp_panic+0xac/0xf8
-  | kvm [95]:  [<ffff800081059644>] __kvm_nvhe_handle_host_mem_abort+0x1a0/0x2ac
-  | kvm [95]:  [<ffff80008105511c>] __kvm_nvhe_handle_trap+0x4c/0x160
-  | kvm [95]:  [<ffff8000810540fc>] __kvm_nvhe___skip_pauth_save+0x4/0x4
-  | kvm [95]: ---[ end nVHE call trace ]---
-  | kvm [95]: Hyp Offset: 0xfffe8db00ffa0000
-  | Kernel panic - not syncing: HYP panic:
-  | PS:a34023c9 PC:0000f250710b973c ESR:00000000f2000800
-  | FAR:ffff000800cb00d0 HPFAR:000000000880cb00 PAR:0000000000000000
-  | VCPU:0000000000000000
-  | CPU: 3 PID: 95 Comm: kworker/u16:2 Tainted: G        W          6.4.0 #237
-  | Hardware name: FVP Base RevC (DT)
-  | Workqueue: rpciod rpc_async_schedule
-  | Call trace:
-  |  dump_backtrace+0xec/0x108
-  |  show_stack+0x18/0x2c
-  |  dump_stack_lvl+0x50/0x68
-  |  dump_stack+0x18/0x24
-  |  panic+0x138/0x33c
-  |  nvhe_hyp_panic_handler+0x100/0x184
-  |  new_slab+0x23c/0x54c
-  |  ___slab_alloc+0x3e4/0x770
-  |  kmem_cache_alloc_node+0x1f0/0x278
-  |  __alloc_skb+0xdc/0x294
-  |  tcp_stream_alloc_skb+0x2c/0xf0
-  |  tcp_sendmsg_locked+0x3d0/0xda4
-  |  tcp_sendmsg+0x38/0x5c
-  |  inet_sendmsg+0x44/0x60
-  |  sock_sendmsg+0x1c/0x34
-  |  xprt_sock_sendmsg+0xdc/0x274
-  |  xs_tcp_send_request+0x1ac/0x28c
-  |  xprt_transmit+0xcc/0x300
-  |  call_transmit+0x78/0x90
-  |  __rpc_execute+0x114/0x3d8
-  |  rpc_async_schedule+0x28/0x48
-  |  process_one_work+0x1d8/0x314
-  |  worker_thread+0x248/0x474
-  |  kthread+0xfc/0x184
-  |  ret_from_fork+0x10/0x20
-  | SMP: stopping secondary CPUs
-  | Kernel Offset: 0x57c5cb460000 from 0xffff800080000000
-  | PHYS_OFFSET: 0x80000000
-  | CPU features: 0x00000000,1035b7a3,ccfe773f
-  | Memory Limit: none
-  | ---[ end Kernel panic - not syncing: HYP panic:
-  | PS:a34023c9 PC:0000f250710b973c ESR:00000000f2000800
-  | FAR:ffff000800cb00d0 HPFAR:000000000880cb00 PAR:0000000000000000
-  | VCPU:0000000000000000 ]---
+* blk_mq_plug_issue_direct() is entered with an mq_list containing two
+requests.
+* For the first request, it sets last == false and enters the driver's
+queue_rq callback.
+* The driver queue_rq callback indirectly calls schedule() which calls
+blk_flush_plug(). This may happen if the driver has the
+BLK_MQ_F_BLOCKING flag set and is allowed to sleep in ->queue_rq.
+* blk_flush_plug() handles the remaining request in the mq_list. mq_list
+is now empty.
+* The original call to queue_rq resumes (with last == false).
+* The loop in blk_mq_plug_issue_direct() terminates because there are no
+remaining requests in mq_list.
 
-Fix it by checking for the successfull initialisation of kvm_arm_init()
-in finalize_pkvm() before proceeding any futher.
+The IO is now stalled because the last request submitted to the driver
+had last == false and there was no subsequent call to commit_rqs().
 
-Fixes: 87727ba2bb05 ("KVM: arm64: Ensure CPU PMU probes before pKVM host de-privilege")
-Cc: Will Deacon <will@kernel.org>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Oliver Upton <oliver.upton@linux.dev>
-Cc: James Morse <james.morse@arm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc: Zenghui Yu <yuzenghui@huawei.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230704193243.3300506-1-sudeep.holla@arm.com
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Fix this by returning early in blk_mq_flush_plug_list() if rq_count is 0
+which it will be in the recursive case, rather than checking if the
+mq_list is empty. At the same time, adjust one of the callers to skip
+the mq_list empty check as it is not necessary.
+
+Fixes: dc5fc361d891 ("block: attempt direct issue of plug list")
+Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20230714101106.3635611-1-ross.lagerwall@citrix.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/virt.h | 1 +
- arch/arm64/kvm/arm.c          | 9 ++++++++-
- arch/arm64/kvm/pkvm.c         | 2 +-
- 3 files changed, 10 insertions(+), 2 deletions(-)
+ block/blk-core.c | 3 +--
+ block/blk-mq.c   | 9 ++++++++-
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/include/asm/virt.h b/arch/arm64/include/asm/virt.h
-index 4eb601e7de507..06382da630123 100644
---- a/arch/arm64/include/asm/virt.h
-+++ b/arch/arm64/include/asm/virt.h
-@@ -78,6 +78,7 @@ extern u32 __boot_cpu_mode[2];
- 
- void __hyp_set_vectors(phys_addr_t phys_vector_base);
- void __hyp_reset_vectors(void);
-+bool is_kvm_arm_initialised(void);
- 
- DECLARE_STATIC_KEY_FALSE(kvm_protected_mode_initialized);
- 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 7d8c3dd8b7ca9..3a2606ba3e583 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -51,11 +51,16 @@ DECLARE_KVM_HYP_PER_CPU(unsigned long, kvm_hyp_vector);
- DEFINE_PER_CPU(unsigned long, kvm_arm_hyp_stack_page);
- DECLARE_KVM_NVHE_PER_CPU(struct kvm_nvhe_init_params, kvm_init_params);
- 
--static bool vgic_present;
-+static bool vgic_present, kvm_arm_initialised;
- 
- static DEFINE_PER_CPU(unsigned char, kvm_arm_hardware_enabled);
- DEFINE_STATIC_KEY_FALSE(userspace_irqchip_in_use);
- 
-+bool is_kvm_arm_initialised(void)
-+{
-+	return kvm_arm_initialised;
-+}
-+
- int kvm_arch_vcpu_should_kick(struct kvm_vcpu *vcpu)
+diff --git a/block/blk-core.c b/block/blk-core.c
+index 3fc68b9444791..0434f5a8151fe 100644
+--- a/block/blk-core.c
++++ b/block/blk-core.c
+@@ -1141,8 +1141,7 @@ void __blk_flush_plug(struct blk_plug *plug, bool from_schedule)
  {
- 	return kvm_vcpu_exiting_guest_mode(vcpu) == IN_GUEST_MODE;
-@@ -2396,6 +2401,8 @@ static __init int kvm_arm_init(void)
- 	if (err)
- 		goto out_subs;
- 
-+	kvm_arm_initialised = true;
-+
- 	return 0;
- 
- out_subs:
-diff --git a/arch/arm64/kvm/pkvm.c b/arch/arm64/kvm/pkvm.c
-index 6e9ece1ebbe72..3895416cb15ae 100644
---- a/arch/arm64/kvm/pkvm.c
-+++ b/arch/arm64/kvm/pkvm.c
-@@ -243,7 +243,7 @@ static int __init finalize_pkvm(void)
- {
- 	int ret;
- 
--	if (!is_protected_kvm_enabled())
-+	if (!is_protected_kvm_enabled() || !is_kvm_arm_initialised())
- 		return 0;
- 
+ 	if (!list_empty(&plug->cb_list))
+ 		flush_plug_callbacks(plug, from_schedule);
+-	if (!rq_list_empty(plug->mq_list))
+-		blk_mq_flush_plug_list(plug, from_schedule);
++	blk_mq_flush_plug_list(plug, from_schedule);
  	/*
+ 	 * Unconditionally flush out cached requests, even if the unplug
+ 	 * event came from schedule. Since we know hold references to the
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 73ed8ccb09ce8..58bf41e8e66c7 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -2754,7 +2754,14 @@ void blk_mq_flush_plug_list(struct blk_plug *plug, bool from_schedule)
+ {
+ 	struct request *rq;
+ 
+-	if (rq_list_empty(plug->mq_list))
++	/*
++	 * We may have been called recursively midway through handling
++	 * plug->mq_list via a schedule() in the driver's queue_rq() callback.
++	 * To avoid mq_list changing under our feet, clear rq_count early and
++	 * bail out specifically if rq_count is 0 rather than checking
++	 * whether the mq_list is empty.
++	 */
++	if (plug->rq_count == 0)
+ 		return;
+ 	plug->rq_count = 0;
+ 
 -- 
 2.39.2
 
