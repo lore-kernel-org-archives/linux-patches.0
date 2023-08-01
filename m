@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A833C200A5
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:38:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26C2BC433C8;
-	Tue,  1 Aug 2023 09:38:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701A7200A5
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:38:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E68FAC433C8;
+	Tue,  1 Aug 2023 09:38:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882685;
-	bh=XhABoXK3MZ6InE6Cx6RgE3IE/CjlFi6FEWpFYGZGxb8=;
+	s=korg; t=1690882688;
+	bh=8HXLGUrCNiavyQ6pVX0C+j0ohz4Q5cHmJEclUQg60fQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mpZSuTi+HmApGffraDKet8fFx8ZNSpV5GINf27ShVLZHPD+9OxkSD+gwPGZloi2fq
-	 SCLNQiGaSJfThR6Pv2XTCeUYxbeAKbgBG5mmKRhGI41Dp0rlizvVfPZU/kn5RcQRnA
-	 LzOQzUcp+XMHMONmqD/MNPdZPupOG2qbiHLTwrc4=
+	b=cLqX007oQXFRQ4JQHr81j9V8NIQjBVEgHdv8jqW6pKlTE5ULvoyApH+onnswE4L/W
+	 HfPFoJqNTuHOsPq5PmjoPBQ7rXtpQcunBIFx/3fwZ0IB8XN4pxYvsrRidNcStAmhUA
+	 gH7GF21xmu4C0okyOZPALQnrxZFY6dd7uwlG5/Jk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Baoquan He <bhe@redhat.com>,
-	Dave Young <dyoung@redhat.com>,
-	Vivek Goyal <vgoyal@redhat.com>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 194/228] proc/vmcore: fix signedness bug in read_from_oldmem()
-Date: Tue,  1 Aug 2023 11:20:52 +0200
-Message-ID: <20230801091929.874597014@linuxfoundation.org>
+	Demi Marie Obenour <demi@invisiblethingslab.com>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 6.1 195/228] xen: speed up grant-table reclaim
+Date: Tue,  1 Aug 2023 11:20:53 +0200
+Message-ID: <20230801091929.912618240@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -39,45 +34,143 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
 
-commit 641db40f3afe7998011bfabc726dba3e698f8196 upstream.
+commit c04e9894846c663f3278a414f34416e6e45bbe68 upstream.
 
-The bug is the error handling:
+When a grant entry is still in use by the remote domain, Linux must put
+it on a deferred list.  Normally, this list is very short, because
+the PV network and block protocols expect the backend to unmap the grant
+first.  However, Qubes OS's GUI protocol is subject to the constraints
+of the X Window System, and as such winds up with the frontend unmapping
+the window first.  As a result, the list can grow very large, resulting
+in a massive memory leak and eventual VM freeze.
 
-	if (tmp < nr_bytes) {
+To partially solve this problem, make the number of entries that the VM
+will attempt to free at each iteration tunable.  The default is still
+10, but it can be overridden via a module parameter.
 
-"tmp" can hold negative error codes but because "nr_bytes" is type size_t
-the negative error codes are treated as very high positive values
-(success).  Fix this by changing "nr_bytes" to type ssize_t.  The
-"nr_bytes" variable is used to store values between 1 and PAGE_SIZE and
-they can fit in ssize_t without any issue.
+This is Cc: stable because (when combined with appropriate userspace
+changes) it fixes a severe performance and stability problem for Qubes
+OS users.
 
-Link: https://lkml.kernel.org/r/b55f7eed-1c65-4adc-95d1-6c7c65a54a6e@moroto.mountain
-Fixes: 5d8de293c224 ("vmcore: convert copy_oldmem_page() to take an iov_iter")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Acked-by: Baoquan He <bhe@redhat.com>
-Cc: Dave Young <dyoung@redhat.com>
-Cc: Vivek Goyal <vgoyal@redhat.com>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Demi Marie Obenour <demi@invisiblethingslab.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/20230726165354.1252-1-demi@invisiblethingslab.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/vmcore.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/ABI/testing/sysfs-module |   11 +++++++++
+ drivers/xen/grant-table.c              |   40 +++++++++++++++++++++++----------
+ 2 files changed, 40 insertions(+), 11 deletions(-)
 
---- a/fs/proc/vmcore.c
-+++ b/fs/proc/vmcore.c
-@@ -132,7 +132,7 @@ ssize_t read_from_oldmem(struct iov_iter
- 			 u64 *ppos, bool encrypted)
- {
- 	unsigned long pfn, offset;
--	size_t nr_bytes;
-+	ssize_t nr_bytes;
- 	ssize_t read = 0, tmp;
- 	int idx;
+--- a/Documentation/ABI/testing/sysfs-module
++++ b/Documentation/ABI/testing/sysfs-module
+@@ -60,3 +60,14 @@ Description:	Module taint flags:
+ 			C   staging driver module
+ 			E   unsigned module
+ 			==  =====================
++
++What:		/sys/module/grant_table/parameters/free_per_iteration
++Date:		July 2023
++KernelVersion:	6.5 but backported to all supported stable branches
++Contact:	Xen developer discussion <xen-devel@lists.xenproject.org>
++Description:	Read and write number of grant entries to attempt to free per iteration.
++
++		Note: Future versions of Xen and Linux may provide a better
++		interface for controlling the rate of deferred grant reclaim
++		or may not need it at all.
++Users:		Qubes OS (https://www.qubes-os.org)
+--- a/drivers/xen/grant-table.c
++++ b/drivers/xen/grant-table.c
+@@ -498,14 +498,21 @@ static LIST_HEAD(deferred_list);
+ static void gnttab_handle_deferred(struct timer_list *);
+ static DEFINE_TIMER(deferred_timer, gnttab_handle_deferred);
  
++static atomic64_t deferred_count;
++static atomic64_t leaked_count;
++static unsigned int free_per_iteration = 10;
++module_param(free_per_iteration, uint, 0600);
++
+ static void gnttab_handle_deferred(struct timer_list *unused)
+ {
+-	unsigned int nr = 10;
++	unsigned int nr = READ_ONCE(free_per_iteration);
++	const bool ignore_limit = nr == 0;
+ 	struct deferred_entry *first = NULL;
+ 	unsigned long flags;
++	size_t freed = 0;
+ 
+ 	spin_lock_irqsave(&gnttab_list_lock, flags);
+-	while (nr--) {
++	while ((ignore_limit || nr--) && !list_empty(&deferred_list)) {
+ 		struct deferred_entry *entry
+ 			= list_first_entry(&deferred_list,
+ 					   struct deferred_entry, list);
+@@ -515,10 +522,14 @@ static void gnttab_handle_deferred(struc
+ 		list_del(&entry->list);
+ 		spin_unlock_irqrestore(&gnttab_list_lock, flags);
+ 		if (_gnttab_end_foreign_access_ref(entry->ref)) {
++			uint64_t ret = atomic64_dec_return(&deferred_count);
++
+ 			put_free_entry(entry->ref);
+-			pr_debug("freeing g.e. %#x (pfn %#lx)\n",
+-				 entry->ref, page_to_pfn(entry->page));
++			pr_debug("freeing g.e. %#x (pfn %#lx), %llu remaining\n",
++				 entry->ref, page_to_pfn(entry->page),
++				 (unsigned long long)ret);
+ 			put_page(entry->page);
++			freed++;
+ 			kfree(entry);
+ 			entry = NULL;
+ 		} else {
+@@ -530,21 +541,22 @@ static void gnttab_handle_deferred(struc
+ 		spin_lock_irqsave(&gnttab_list_lock, flags);
+ 		if (entry)
+ 			list_add_tail(&entry->list, &deferred_list);
+-		else if (list_empty(&deferred_list))
+-			break;
+ 	}
+-	if (!list_empty(&deferred_list) && !timer_pending(&deferred_timer)) {
++	if (list_empty(&deferred_list))
++		WARN_ON(atomic64_read(&deferred_count));
++	else if (!timer_pending(&deferred_timer)) {
+ 		deferred_timer.expires = jiffies + HZ;
+ 		add_timer(&deferred_timer);
+ 	}
+ 	spin_unlock_irqrestore(&gnttab_list_lock, flags);
++	pr_debug("Freed %zu references", freed);
+ }
+ 
+ static void gnttab_add_deferred(grant_ref_t ref, struct page *page)
+ {
+ 	struct deferred_entry *entry;
+ 	gfp_t gfp = (in_atomic() || irqs_disabled()) ? GFP_ATOMIC : GFP_KERNEL;
+-	const char *what = KERN_WARNING "leaking";
++	uint64_t leaked, deferred;
+ 
+ 	entry = kmalloc(sizeof(*entry), gfp);
+ 	if (!page) {
+@@ -567,10 +579,16 @@ static void gnttab_add_deferred(grant_re
+ 			add_timer(&deferred_timer);
+ 		}
+ 		spin_unlock_irqrestore(&gnttab_list_lock, flags);
+-		what = KERN_DEBUG "deferring";
++		deferred = atomic64_inc_return(&deferred_count);
++		leaked = atomic64_read(&leaked_count);
++		pr_debug("deferring g.e. %#x (pfn %#lx) (total deferred %llu, total leaked %llu)\n",
++			 ref, page ? page_to_pfn(page) : -1, deferred, leaked);
++	} else {
++		deferred = atomic64_read(&deferred_count);
++		leaked = atomic64_inc_return(&leaked_count);
++		pr_warn("leaking g.e. %#x (pfn %#lx) (total deferred %llu, total leaked %llu)\n",
++			ref, page ? page_to_pfn(page) : -1, deferred, leaked);
+ 	}
+-	printk("%s g.e. %#x (pfn %#lx)\n",
+-	       what, ref, page ? page_to_pfn(page) : -1);
+ }
+ 
+ int gnttab_try_end_foreign_access(grant_ref_t ref)
 
 
