@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336D31FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:45:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5BDC433C7;
-	Tue,  1 Aug 2023 09:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0626C1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:45:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7305EC433C8;
+	Tue,  1 Aug 2023 09:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883127;
-	bh=ZvATkJ8PIJA8nhtnyjwRe8nCoJKJJnIKKCfZc0vuBDE=;
+	s=korg; t=1690883129;
+	bh=AYkv6W6HnroIuvJYfo6XuT/dRUdCdjWdMMLKbEVVLbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S7XQcM3hg9bPLzHsPKoqS3PRSBogC9Ou3qekNEJ/h7VZhBUEsctRC4+cuUSAUdUqY
-	 hFkdQojXbtkJN1MVzv2lCdSRowOVpuIrh1XaFxsi4b/4IUgx1Fn7Brx9h7Q0Bkusdj
-	 389S6TNEupGI029/oRdSiqwWUfWpG/dbRbxv+8YE=
+	b=YKTcUyfREd5QPIqmIAnqDhMfaP61pBZmmsIQsUi0CSdlb6Ub0Ws/8Hzd+X34k75LT
+	 eV6WxY45Jly6F4Y6h4csu949FyBbobo9V/gmA1quEhhEaVCp0INZ0H1Vedm0CACqTQ
+	 GwFTL1emwT2P7oOVaCFosuYpsxRXWYe0LJ6rqDM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanjun Gong <ruc_gongyuanjun@163.com>,
-	Tung Nguyen <tung.q.nguyen@dektech.com.au>,
+	Xin Long <lucien.xin@gmail.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 096/239] tipc: check return value of pskb_trim()
-Date: Tue,  1 Aug 2023 11:19:20 +0200
-Message-ID: <20230801091929.201488521@linuxfoundation.org>
+Subject: [PATCH 6.4 097/239] tipc: stop tipc crypto on failure in tipc_node_create
+Date: Tue,  1 Aug 2023 11:19:21 +0200
+Message-ID: <20230801091929.231815544@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,37 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuanjun Gong <ruc_gongyuanjun@163.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit e46e06ffc6d667a89b979701288e2264f45e6a7b ]
+[ Upstream commit de52e17326c3e9a719c9ead4adb03467b8fae0ef ]
 
-goto free_skb if an unexpected result is returned by pskb_tirm()
-in tipc_crypto_rcv_complete().
+If tipc_link_bc_create() fails inside tipc_node_create() for a newly
+allocated tipc node then we should stop its tipc crypto and free the
+resources allocated with a call to tipc_crypto_start().
 
-Fixes: fc1b6d6de220 ("tipc: introduce TIPC encryption & authentication")
-Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
-Reviewed-by: Tung Nguyen <tung.q.nguyen@dektech.com.au>
-Link: https://lore.kernel.org/r/20230725064810.5820-1-ruc_gongyuanjun@163.com
+As the node ref is initialized to one to that point, just put the ref on
+tipc_link_bc_create() error case that would lead to tipc_node_free() be
+eventually executed and properly clean the node and its crypto resources.
+
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: cb8092d70a6f ("tipc: move bc link creation back to tipc_node_create")
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/20230725214628.25246-1-pchelkin@ispras.ru
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/crypto.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/tipc/node.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
-index 577fa5af33ec7..302fd749c4249 100644
---- a/net/tipc/crypto.c
-+++ b/net/tipc/crypto.c
-@@ -1960,7 +1960,8 @@ static void tipc_crypto_rcv_complete(struct net *net, struct tipc_aead *aead,
- 
- 	skb_reset_network_header(*skb);
- 	skb_pull(*skb, tipc_ehdr_size(ehdr));
--	pskb_trim(*skb, (*skb)->len - aead->authsize);
-+	if (pskb_trim(*skb, (*skb)->len - aead->authsize))
-+		goto free_skb;
- 
- 	/* Validate TIPCv2 message */
- 	if (unlikely(!tipc_msg_validate(skb))) {
+diff --git a/net/tipc/node.c b/net/tipc/node.c
+index 5e000fde80676..a9c5b6594889b 100644
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -583,7 +583,7 @@ struct tipc_node *tipc_node_create(struct net *net, u32 addr, u8 *peer_id,
+ 				 n->capabilities, &n->bc_entry.inputq1,
+ 				 &n->bc_entry.namedq, snd_l, &n->bc_entry.link)) {
+ 		pr_warn("Broadcast rcv link creation failed, no memory\n");
+-		kfree(n);
++		tipc_node_put(n);
+ 		n = NULL;
+ 		goto exit;
+ 	}
 -- 
 2.39.2
 
