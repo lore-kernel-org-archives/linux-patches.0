@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911E21F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:31:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 117B4C433C8;
-	Tue,  1 Aug 2023 09:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3FD1FB24
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:31:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A1EC433C7;
+	Tue,  1 Aug 2023 09:31:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882267;
-	bh=LKJVr04grVPhYAiQAmW9rlGWFRAAlQubJBvFgVHc3f8=;
+	s=korg; t=1690882270;
+	bh=u+a/YN5RSA6Dxd9P6Tjnv1mbNg9xAQykg2GEYGRJBCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nq1IsfIHyfthVcpzlro2CWo/CHFIodNQwcpm3cutNPXAa5woVzzF/iwcrhcuh/KtD
-	 4EqRHuzqciNgjy8gsU1VZzZpoA+bBBAyBqM+FJMpZFN5EYm/7RlkAa4BHViTpvdhfe
-	 R/Y5vgD4yT9ZZRPE69YdEvo1TjX4OEqDXwZ8ixPA=
+	b=zkUFmCUwV8KVES013VBN0vA8S9HU/a5dDIiwtfEt/MhM4kY6/SNYj+cQ174uqwmia
+	 c0acmUUbRRZ7IWx/m04JMkLRrfZeiNNnU76MSUOTkWoNNEb8hgCREldUbM8TyyO9Ey
+	 RIVaDKufUP0YF7RtUn7Ywookx7QcvZBOnbpGJigQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Stylon Wang <stylon.wang@amd.com>,
-	Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>,
-	Charlene Liu <Charlene.Liu@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Cruise Hung <cruise.hung@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 044/228] drm/amd/display: fix dcn315 single stream crb allocation
-Date: Tue,  1 Aug 2023 11:18:22 +0200
-Message-ID: <20230801091924.479706591@linuxfoundation.org>
+Subject: [PATCH 6.1 045/228] drm/amd/display: Update correct DCN314 register header
+Date: Tue,  1 Aug 2023 11:18:23 +0200
+Message-ID: <20230801091924.526950181@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -39,76 +38,175 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>
+From: Cruise Hung <cruise.hung@amd.com>
 
-[ Upstream commit 49f26218c344741cb3eaa740b1e44e960551a87f ]
+[ Upstream commit 268182606f26434c5d3ebd0e86efcb0418dec487 ]
 
-Change to improve avoiding asymetric crb calculations for single stream
-scenarios.
+[Why]
+The register header for DCN314 is not correct.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Acked-by: Stylon Wang <stylon.wang@amd.com>
-Signed-off-by: Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>
-Reviewed-by: Charlene Liu <Charlene.Liu@amd.com>
+[How]
+Update correct DCN314 register header.
+
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Cruise Hung <cruise.hung@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: cd2e31a9ab93 ("drm/amd/display: Set minimum requirement for using PSR-SU on Phoenix")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/dcn315/dcn315_resource.c   | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dmub/src/Makefile |  2 +-
+ .../drm/amd/display/dmub/src/dmub_dcn314.c    | 62 +++++++++++++++++++
+ .../drm/amd/display/dmub/src/dmub_dcn314.h    | 33 ++++++++++
+ .../gpu/drm/amd/display/dmub/src/dmub_srv.c   |  5 +-
+ 4 files changed, 100 insertions(+), 2 deletions(-)
+ create mode 100644 drivers/gpu/drm/amd/display/dmub/src/dmub_dcn314.c
+ create mode 100644 drivers/gpu/drm/amd/display/dmub/src/dmub_dcn314.h
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn315/dcn315_resource.c b/drivers/gpu/drm/amd/display/dc/dcn315/dcn315_resource.c
-index 88c4a378daa12..b9b1e5ac4f538 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn315/dcn315_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn315/dcn315_resource.c
-@@ -1662,6 +1662,10 @@ static bool allow_pixel_rate_crb(struct dc *dc, struct dc_state *context)
- 	int i;
- 	struct resource_context *res_ctx = &context->res_ctx;
+diff --git a/drivers/gpu/drm/amd/display/dmub/src/Makefile b/drivers/gpu/drm/amd/display/dmub/src/Makefile
+index 0589ad4778eea..caf095aca8f3f 100644
+--- a/drivers/gpu/drm/amd/display/dmub/src/Makefile
++++ b/drivers/gpu/drm/amd/display/dmub/src/Makefile
+@@ -22,7 +22,7 @@
  
-+	/*Don't apply for single stream*/
-+	if (context->stream_count < 2)
-+		return false;
+ DMUB = dmub_srv.o dmub_srv_stat.o dmub_reg.o dmub_dcn20.o dmub_dcn21.o
+ DMUB += dmub_dcn30.o dmub_dcn301.o dmub_dcn302.o dmub_dcn303.o
+-DMUB += dmub_dcn31.o dmub_dcn315.o dmub_dcn316.o
++DMUB += dmub_dcn31.o dmub_dcn314.o dmub_dcn315.o dmub_dcn316.o
+ DMUB += dmub_dcn32.o
+ 
+ AMD_DAL_DMUB = $(addprefix $(AMDDALPATH)/dmub/src/,$(DMUB))
+diff --git a/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn314.c b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn314.c
+new file mode 100644
+index 0000000000000..48a06dbd9be78
+--- /dev/null
++++ b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn314.c
+@@ -0,0 +1,62 @@
++/*
++ * Copyright 2021 Advanced Micro Devices, Inc.
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a
++ * copy of this software and associated documentation files (the "Software"),
++ * to deal in the Software without restriction, including without limitation
++ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
++ * and/or sell copies of the Software, and to permit persons to whom the
++ * Software is furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
++ * THE COPYRIGHT HOLDER(S) OR AUTHOR(S) BE LIABLE FOR ANY CLAIM, DAMAGES OR
++ * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
++ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
++ * OTHER DEALINGS IN THE SOFTWARE.
++ *
++ * Authors: AMD
++ *
++ */
 +
- 	for (i = 0; i < dc->res_pool->pipe_count; i++) {
- 		if (!res_ctx->pipe_ctx[i].stream)
- 			continue;
-@@ -1749,19 +1753,23 @@ static int dcn315_populate_dml_pipes_from_context(
- 		pipe_cnt++;
- 	}
- 
--	/* Spread remaining unreserved crb evenly among all pipes, use default policy if not enough det or single pipe */
-+	/* Spread remaining unreserved crb evenly among all pipes*/
- 	if (pixel_rate_crb) {
- 		for (i = 0, pipe_cnt = 0, crb_idx = 0; i < dc->res_pool->pipe_count; i++) {
- 			pipe = &res_ctx->pipe_ctx[i];
- 			if (!pipe->stream)
- 				continue;
- 
-+			/* Do not use asymetric crb if not enough for pstate support */
-+			if (remaining_det_segs < 0) {
-+				pipes[pipe_cnt].pipe.src.det_size_override = 0;
-+				continue;
-+			}
++#include "../dmub_srv.h"
++#include "dmub_reg.h"
++#include "dmub_dcn314.h"
 +
- 			if (!pipe->top_pipe && !pipe->prev_odm_pipe) {
- 				bool split_required = pipe->stream->timing.pix_clk_100hz >= dcn_get_max_non_odm_pix_rate_100hz(&dc->dml.soc)
- 						|| (pipe->plane_state && pipe->plane_state->src_rect.width > 5120);
- 
--				if (remaining_det_segs < 0 || crb_pipes == 1)
--					pipes[pipe_cnt].pipe.src.det_size_override = 0;
- 				if (remaining_det_segs > MIN_RESERVED_DET_SEGS)
- 					pipes[pipe_cnt].pipe.src.det_size_override += (remaining_det_segs - MIN_RESERVED_DET_SEGS) / crb_pipes +
- 							(crb_idx < (remaining_det_segs - MIN_RESERVED_DET_SEGS) % crb_pipes ? 1 : 0);
-@@ -1777,6 +1785,7 @@ static int dcn315_populate_dml_pipes_from_context(
- 				}
- 				/* Convert segments into size for DML use */
- 				pipes[pipe_cnt].pipe.src.det_size_override *= DCN3_15_CRB_SEGMENT_SIZE_KB;
++#include "dcn/dcn_3_1_4_offset.h"
++#include "dcn/dcn_3_1_4_sh_mask.h"
 +
- 				crb_idx++;
- 			}
- 			pipe_cnt++;
++#define DCN_BASE__INST0_SEG0                       0x00000012
++#define DCN_BASE__INST0_SEG1                       0x000000C0
++#define DCN_BASE__INST0_SEG2                       0x000034C0
++#define DCN_BASE__INST0_SEG3                       0x00009000
++#define DCN_BASE__INST0_SEG4                       0x02403C00
++#define DCN_BASE__INST0_SEG5                       0
++
++#define BASE_INNER(seg) DCN_BASE__INST0_SEG##seg
++#define CTX dmub
++#define REGS dmub->regs_dcn31
++#define REG_OFFSET_EXP(reg_name) (BASE(reg##reg_name##_BASE_IDX) + reg##reg_name)
++
++/* Registers. */
++
++const struct dmub_srv_dcn31_regs dmub_srv_dcn314_regs = {
++#define DMUB_SR(reg) REG_OFFSET_EXP(reg),
++	{
++		DMUB_DCN31_REGS()
++		DMCUB_INTERNAL_REGS()
++	},
++#undef DMUB_SR
++
++#define DMUB_SF(reg, field) FD_MASK(reg, field),
++	{ DMUB_DCN31_FIELDS() },
++#undef DMUB_SF
++
++#define DMUB_SF(reg, field) FD_SHIFT(reg, field),
++	{ DMUB_DCN31_FIELDS() },
++#undef DMUB_SF
++};
+diff --git a/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn314.h b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn314.h
+new file mode 100644
+index 0000000000000..674267a2940e9
+--- /dev/null
++++ b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn314.h
+@@ -0,0 +1,33 @@
++/*
++ * Copyright 2021 Advanced Micro Devices, Inc.
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a
++ * copy of this software and associated documentation files (the "Software"),
++ * to deal in the Software without restriction, including without limitation
++ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
++ * and/or sell copies of the Software, and to permit persons to whom the
++ * Software is furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
++ * THE COPYRIGHT HOLDER(S) OR AUTHOR(S) BE LIABLE FOR ANY CLAIM, DAMAGES OR
++ * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
++ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
++ * OTHER DEALINGS IN THE SOFTWARE.
++ *
++ * Authors: AMD
++ *
++ */
++
++#ifndef _DMUB_DCN314_H_
++#define _DMUB_DCN314_H_
++
++#include "dmub_dcn31.h"
++
++extern const struct dmub_srv_dcn31_regs dmub_srv_dcn314_regs;
++
++#endif /* _DMUB_DCN314_H_ */
+diff --git a/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c b/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c
+index 92c18bfb98b3b..6d76ce327d69f 100644
+--- a/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c
++++ b/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c
+@@ -32,6 +32,7 @@
+ #include "dmub_dcn302.h"
+ #include "dmub_dcn303.h"
+ #include "dmub_dcn31.h"
++#include "dmub_dcn314.h"
+ #include "dmub_dcn315.h"
+ #include "dmub_dcn316.h"
+ #include "dmub_dcn32.h"
+@@ -226,7 +227,9 @@ static bool dmub_srv_hw_setup(struct dmub_srv *dmub, enum dmub_asic asic)
+ 	case DMUB_ASIC_DCN314:
+ 	case DMUB_ASIC_DCN315:
+ 	case DMUB_ASIC_DCN316:
+-		if (asic == DMUB_ASIC_DCN315)
++		if (asic == DMUB_ASIC_DCN314)
++			dmub->regs_dcn31 = &dmub_srv_dcn314_regs;
++		else if (asic == DMUB_ASIC_DCN315)
+ 			dmub->regs_dcn31 = &dmub_srv_dcn315_regs;
+ 		else if (asic == DMUB_ASIC_DCN316)
+ 			dmub->regs_dcn31 = &dmub_srv_dcn316_regs;
 -- 
 2.39.2
 
