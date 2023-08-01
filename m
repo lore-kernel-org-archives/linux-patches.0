@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73585200A5
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94D0C433C7;
-	Tue,  1 Aug 2023 09:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E571200A5
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0EC5C433C7;
+	Tue,  1 Aug 2023 09:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882666;
-	bh=MVsZTdPBatzoGBtZmicW1uSbOYfj4vZ1VaGwyhUljKo=;
+	s=korg; t=1690882669;
+	bh=SrCFbNO3u2UL/0daFKDVllSug2gXOuRXA0l+xpMPo9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1V7RpvH89HMyNHwffegmw5ZlKt4txm6Z27XI01oYtdNKV2yv2gZJCin6/ZSUzs6JD
-	 lGJtkZrEGr3+QEkbBFpSviu1+jwA/prBbA18bRYl5Yjhv0gZ4/sbJ6Nqj8l0PiZuhi
-	 9EHMJZQK3T96+C5OEMHl5UGmAZxX7T/DpMclwyLU=
+	b=SFDZ8u9XoqGlv/0k/cjO22zkFSypWyFUhLFso84oAcfgnFrXKoR3pDKVTIOZwb8d0
+	 ijiaVyMCXjn8KWC+hq7+2Gdm7yywHkVLaMiMEuQLcJx2p6V/yr/wg7S4Y6mHKu4BGq
+	 /ZfRuIdx+bA/QmsE8uVlUsZNWi+Qo4dLGxMCDjzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Frank Ch. Eigler" <fche@redhat.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 188/228] nfsd: Remove incorrect check in nfsd4_validate_stateid
-Date: Tue,  1 Aug 2023 11:20:46 +0200
-Message-ID: <20230801091929.650621748@linuxfoundation.org>
+	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.1 189/228] ACPI/IORT: Remove erroneous id_count check in iort_node_get_rmr_info()
+Date: Tue,  1 Aug 2023 11:20:47 +0200
+Message-ID: <20230801091929.682449828@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,38 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
 
-commit f75546f58a70da5cfdcec5a45ffc377885ccbee8 upstream.
+commit 003e6b56d780095a9adc23efc9cb4b4b4717169b upstream.
 
-If the client is calling TEST_STATEID, then it is because some event
-occurred that requires it to check all the stateids for validity and
-call FREE_STATEID on the ones that have been revoked. In this case,
-either the stateid exists in the list of stateids associated with that
-nfs4_client, in which case it should be tested, or it does not. There
-are no additional conditions to be considered.
+According to the ARM IORT specifications DEN 0049 issue E,
+the "Number of IDs" field in the ID mapping format reports
+the number of IDs in the mapping range minus one.
 
-Reported-by: "Frank Ch. Eigler" <fche@redhat.com>
-Fixes: 7df302f75ee2 ("NFSD: TEST_STATEID should not return NFS4ERR_STALE_STATEID")
-Cc: stable@vger.kernel.org # v5.7+
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+In iort_node_get_rmr_info(), we erroneously skip ID mappings
+whose "Number of IDs" equal to 0, resulting in valid mapping
+nodes with a single ID to map being skipped, which is wrong.
+
+Fix iort_node_get_rmr_info() by removing the bogus id_count
+check.
+
+Fixes: 491cf4a6735a ("ACPI/IORT: Add support to retrieve IORT RMR reserved regions")
+Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+Cc: <stable@vger.kernel.org> # 6.0.x
+Acked-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Tested-by: Hanjun Guo <guohanjun@huawei.com>
+Link: https://lore.kernel.org/r/1689593625-45213-1-git-send-email-guanghuifeng@linux.alibaba.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/acpi/arm64/iort.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -6269,8 +6269,6 @@ static __be32 nfsd4_validate_stateid(str
- 	if (ZERO_STATEID(stateid) || ONE_STATEID(stateid) ||
- 		CLOSE_STATEID(stateid))
- 		return status;
--	if (!same_clid(&stateid->si_opaque.so_clid, &cl->cl_clientid))
--		return status;
- 	spin_lock(&cl->cl_lock);
- 	s = find_stateid_locked(cl, stateid);
- 	if (!s)
+--- a/drivers/acpi/arm64/iort.c
++++ b/drivers/acpi/arm64/iort.c
+@@ -998,9 +998,6 @@ static void iort_node_get_rmr_info(struc
+ 	for (i = 0; i < node->mapping_count; i++, map++) {
+ 		struct acpi_iort_node *parent;
+ 
+-		if (!map->id_count)
+-			continue;
+-
+ 		parent = ACPI_ADD_PTR(struct acpi_iort_node, iort_table,
+ 				      map->output_reference);
+ 		if (parent != iommu)
 
 
