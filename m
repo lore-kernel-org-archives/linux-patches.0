@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33721F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:25:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 664F0C433C8;
-	Tue,  1 Aug 2023 09:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E941F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:25:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D04C433C7;
+	Tue,  1 Aug 2023 09:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881902;
-	bh=HYjfseIgSeINR8T61KEHTcbWwlSO+jxhNtFATCB3IPI=;
+	s=korg; t=1690881905;
+	bh=NNSGxKrDbuhcyX5wdq1hV2DeSjsnKp+QjZ20Z33GBJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uKLX7wOmhsH3VUWNB/S3VgDfvsy+CQ9nlCYR8A8S3+zgS6xwyXAYZkiR4YtXqtauj
-	 k/kq94pbp6rvlcWy14i/yX5utKWRO/ANAM23XRO1rP0h1Xu572OXpH85TUYma185AO
-	 mSmfqpvqCxRmG1meKLEy/0Tx60NV8r2o0kCxyifo=
+	b=ueNTAhEI9f/7qv176xPpRJjjKM7gJlrfH8SO1hamEFQWgbWUu2H+tShpKz2886O5R
+	 TnSSFJ/TgRR3U3o2duNptIiHw7oPGL12xPZVPUvI2djBbtDmL1Kab6xXepm5aE2yEE
+	 Nfot/efgI1B/jQw9tyP6bLXcBuNEBjDhDOZNTp2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Whitchurch <vincent.whitchurch@axis.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Maxim Mikityanskiy <maxtram95@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/155] net: stmmac: Apply redundant write work around on 4.xx too
-Date: Tue,  1 Aug 2023 11:19:42 +0200
-Message-ID: <20230801091912.674610940@linuxfoundation.org>
+Subject: [PATCH 5.15 071/155] platform/x86: msi-laptop: Fix rfkill out-of-sync on MSI Wind U100
+Date: Tue,  1 Aug 2023 11:19:43 +0200
+Message-ID: <20230801091912.703388824@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -36,52 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vincent Whitchurch <vincent.whitchurch@axis.com>
+From: Maxim Mikityanskiy <maxtram95@gmail.com>
 
-[ Upstream commit 284779dbf4e98753458708783af8c35630674a21 ]
+[ Upstream commit ad084a6d99bc182bf109c190c808e2ea073ec57b ]
 
-commit a3a57bf07de23fe1ff779e0fdf710aa581c3ff73 ("net: stmmac: work
-around sporadic tx issue on link-up") worked around a problem with TX
-sometimes not working after a link-up by avoiding a redundant write to
-MAC_CTRL_REG (aka GMAC_CONFIG), since the IP appeared to have problems
-with handling multiple writes to that register in some cases.
+Only the HW rfkill state is toggled on laptops with quirks->ec_read_only
+(so far only MSI Wind U90/U100). There are, however, a few issues with
+the implementation:
 
-That commit however only added the work around to dwmac_lib.c (apart
-from the common code in stmmac_main.c), but my systems with version
-4.21a of the IP exhibit the same problem, so add the work around to
-dwmac4_lib.c too.
+1. The initial HW state is always unblocked, regardless of the actual
+   state on boot, because msi_init_rfkill only sets the SW state,
+   regardless of ec_read_only.
 
-Fixes: a3a57bf07de2 ("net: stmmac: work around sporadic tx issue on link-up")
-Signed-off-by: Vincent Whitchurch <vincent.whitchurch@axis.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230721-stmmac-tx-workaround-v1-1-9411cbd5ee07@axis.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+2. The initial SW state corresponds to the actual state on boot, but it
+   can't be changed afterwards, because set_device_state returns
+   -EOPNOTSUPP. It confuses the userspace, making Wi-Fi and/or Bluetooth
+   unusable if it was blocked on boot, and breaking the airplane mode if
+   the rfkill was unblocked on boot.
+
+Address the above issues by properly initializing the HW state on
+ec_read_only laptops and by allowing the userspace to toggle the SW
+state. Don't set the SW state ourselves and let the userspace fully
+control it. Toggling the SW state is a no-op, however, it allows the
+userspace to properly toggle the airplane mode. The actual SW radio
+disablement is handled by the corresponding rtl818x_pci and btusb
+drivers that have their own rfkills.
+
+Tested on MSI Wind U100 Plus, BIOS ver 1.0G, EC ver 130.
+
+Fixes: 0816392b97d4 ("msi-laptop: merge quirk tables to one")
+Fixes: 0de6575ad0a8 ("msi-laptop: Add MSI Wind U90/U100 support")
+Signed-off-by: Maxim Mikityanskiy <maxtram95@gmail.com>
+Link: https://lore.kernel.org/r/20230721145423.161057-1-maxtram95@gmail.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/platform/x86/msi-laptop.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c
-index 9292a1fab7d32..7011c08d2e012 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_lib.c
-@@ -207,13 +207,15 @@ void stmmac_dwmac4_set_mac_addr(void __iomem *ioaddr, u8 addr[6],
- void stmmac_dwmac4_set_mac(void __iomem *ioaddr, bool enable)
+diff --git a/drivers/platform/x86/msi-laptop.c b/drivers/platform/x86/msi-laptop.c
+index 0e804b6c2d242..dfb4af759aa75 100644
+--- a/drivers/platform/x86/msi-laptop.c
++++ b/drivers/platform/x86/msi-laptop.c
+@@ -210,7 +210,7 @@ static ssize_t set_device_state(const char *buf, size_t count, u8 mask)
+ 		return -EINVAL;
+ 
+ 	if (quirks->ec_read_only)
+-		return -EOPNOTSUPP;
++		return 0;
+ 
+ 	/* read current device state */
+ 	result = ec_read(MSI_STANDARD_EC_COMMAND_ADDRESS, &rdata);
+@@ -841,15 +841,15 @@ static bool msi_laptop_i8042_filter(unsigned char data, unsigned char str,
+ static void msi_init_rfkill(struct work_struct *ignored)
  {
- 	u32 value = readl(ioaddr + GMAC_CONFIG);
-+	u32 old_val = value;
- 
- 	if (enable)
- 		value |= GMAC_CONFIG_RE | GMAC_CONFIG_TE;
- 	else
- 		value &= ~(GMAC_CONFIG_TE | GMAC_CONFIG_RE);
- 
--	writel(value, ioaddr + GMAC_CONFIG);
-+	if (value != old_val)
-+		writel(value, ioaddr + GMAC_CONFIG);
+ 	if (rfk_wlan) {
+-		rfkill_set_sw_state(rfk_wlan, !wlan_s);
++		msi_rfkill_set_state(rfk_wlan, !wlan_s);
+ 		rfkill_wlan_set(NULL, !wlan_s);
+ 	}
+ 	if (rfk_bluetooth) {
+-		rfkill_set_sw_state(rfk_bluetooth, !bluetooth_s);
++		msi_rfkill_set_state(rfk_bluetooth, !bluetooth_s);
+ 		rfkill_bluetooth_set(NULL, !bluetooth_s);
+ 	}
+ 	if (rfk_threeg) {
+-		rfkill_set_sw_state(rfk_threeg, !threeg_s);
++		msi_rfkill_set_state(rfk_threeg, !threeg_s);
+ 		rfkill_threeg_set(NULL, !threeg_s);
+ 	}
  }
- 
- void stmmac_dwmac4_get_mac_addr(void __iomem *ioaddr, unsigned char *addr,
 -- 
 2.39.2
 
