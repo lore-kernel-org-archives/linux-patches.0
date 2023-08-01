@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC2D1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:44:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F88CC433C8;
-	Tue,  1 Aug 2023 09:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC351FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:44:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D579C433C8;
+	Tue,  1 Aug 2023 09:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883079;
-	bh=DVRq9JzMiTX+edFuq5y5a1+M41FagFy1S0ymQxAGsSA=;
+	s=korg; t=1690883082;
+	bh=B28jOyjaNmF2IVqKPmCZXi/DGMf3VnPp980hBsyqFxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KssIfUCqVH9bxcR4CsVvB3DxtxDcXgT7iyszL7UZW9+MK5WMLdjp4yZ4f8XVAGPYl
-	 Kt3naugK6w3XDYPcsnGnAXsCnlGzRJADRFiD4K8dCzb9GXg7At3rhsh6AjKd45IXfJ
-	 K/1+NI4yrUttIXjdpTdx6F+keKHkWg+EwKdkajn0=
+	b=hk6WHqmdQKVKtQnKsimaPhJpeAGHYPyLq/I281h0KzP8d8wGcnzFXlnE13m7MzGQB
+	 g34GhePOJa9tOK88HkueA1ioRgowMnoRYZ64G0RuT0wRhLRzD3MOcPExSJn8iGKAVn
+	 C5puShN3N3GfjSz6gIcK+4bTSecpdJ1ap527QJFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Thomas Bogendoerfer <tbogendoerfer@suse.de>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 108/239] RDMA/core: Update CMA destination address on rdma_resolve_addr
-Date: Tue,  1 Aug 2023 11:19:32 +0200
-Message-ID: <20230801091929.625664579@linuxfoundation.org>
+Subject: [PATCH 6.4 109/239] RDMA/mthca: Fix crash when polling CQ for shared QPs
+Date: Tue,  1 Aug 2023 11:19:33 +0200
+Message-ID: <20230801091929.663487038@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -35,56 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shiraz Saleem <shiraz.saleem@intel.com>
+From: Thomas Bogendoerfer <tbogendoerfer@suse.de>
 
-[ Upstream commit 0e15863015d97c1ee2cc29d599abcc7fa2dc3e95 ]
+[ Upstream commit dc52aadbc1849cbe3fcf6bc54d35f6baa396e0a1 ]
 
-8d037973d48c ("RDMA/core: Refactor rdma_bind_addr") intoduces as regression
-on irdma devices on certain tests which uses rdma CM, such as cmtime.
+Commit 21c2fe94abb2 ("RDMA/mthca: Combine special QP struct with mthca QP")
+introduced a new struct mthca_sqp which doesn't contain struct mthca_qp
+any longer. Placing a pointer of this new struct into qptable leads
+to crashes, because mthca_poll_one() expects a qp pointer. Fix this
+by putting the correct pointer into qptable.
 
-No connections can be established with the MAD QP experiences a fatal
-error on the active side.
-
-The cma destination address is not updated with the dst_addr when ULP
-on active side calls rdma_bind_addr followed by rdma_resolve_addr.
-The id_priv state is 'bound' in resolve_prepare_src and update is skipped.
-
-This leaves the dgid passed into irdma driver to create an Address Handle
-(AH) for the MAD QP at 0. The create AH descriptor as well as the ARP cache
-entry is invalid and HW throws an asynchronous events as result.
-
-[ 1207.656888] resolve_prepare_src caller: ucma_resolve_addr+0xff/0x170 [rdma_ucm] daddr=200.0.4.28 id_priv->state=7
-[....]
-[ 1207.680362] ice 0000:07:00.1 rocep7s0f1: caller: irdma_create_ah+0x3e/0x70 [irdma] ah_id=0 arp_idx=0 dest_ip=0.0.0.0
-destMAC=00:00:64:ca:b7:52 ipvalid=1 raw=0000:0000:0000:0000:0000:ffff:0000:0000
-[ 1207.682077] ice 0000:07:00.1 rocep7s0f1: abnormal ae_id = 0x401 bool qp=1 qp_id = 1, ae_src=5
-[ 1207.691657] infiniband rocep7s0f1: Fatal error (1) on MAD QP (1)
-
-Fix this by updating the CMA destination address when the ULP calls
-a resolve address with the CM state already bound.
-
-Fixes: 8d037973d48c ("RDMA/core: Refactor rdma_bind_addr")
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Link: https://lore.kernel.org/r/20230712234133.1343-1-shiraz.saleem@intel.com
+Fixes: 21c2fe94abb2 ("RDMA/mthca: Combine special QP struct with mthca QP")
+Signed-off-by: Thomas Bogendoerfer <tbogendoerfer@suse.de>
+Link: https://lore.kernel.org/r/20230713141658.9426-1-tbogendoerfer@suse.de
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cma.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/hw/mthca/mthca_qp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/cma.c b/drivers/infiniband/core/cma.c
-index 6b3f4384e46ac..a60e587aea817 100644
---- a/drivers/infiniband/core/cma.c
-+++ b/drivers/infiniband/core/cma.c
-@@ -4062,6 +4062,8 @@ static int resolve_prepare_src(struct rdma_id_private *id_priv,
- 					   RDMA_CM_ADDR_QUERY)))
- 			return -EINVAL;
+diff --git a/drivers/infiniband/hw/mthca/mthca_qp.c b/drivers/infiniband/hw/mthca/mthca_qp.c
+index 69bba0ef4a5df..53f43649f7d08 100644
+--- a/drivers/infiniband/hw/mthca/mthca_qp.c
++++ b/drivers/infiniband/hw/mthca/mthca_qp.c
+@@ -1393,7 +1393,7 @@ int mthca_alloc_sqp(struct mthca_dev *dev,
+ 	if (mthca_array_get(&dev->qp_table.qp, mqpn))
+ 		err = -EBUSY;
+ 	else
+-		mthca_array_set(&dev->qp_table.qp, mqpn, qp->sqp);
++		mthca_array_set(&dev->qp_table.qp, mqpn, qp);
+ 	spin_unlock_irq(&dev->qp_table.lock);
  
-+	} else {
-+		memcpy(cma_dst_addr(id_priv), dst_addr, rdma_addr_size(dst_addr));
- 	}
- 
- 	if (cma_family(id_priv) != dst_addr->sa_family) {
+ 	if (err)
 -- 
 2.40.1
 
