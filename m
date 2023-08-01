@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF48D1F959
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:34:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7D8C433C8;
-	Tue,  1 Aug 2023 09:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05931F959
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:34:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18FB0C433C7;
+	Tue,  1 Aug 2023 09:34:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882466;
-	bh=C6S3t9K1J8+mYPfxizhKkb9eFRUqcE+P5hs9d9gOoF8=;
+	s=korg; t=1690882469;
+	bh=d8SJIAraXPe7TUCo43OD0g1bLH56SY/1momEi1bJIgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QLUYu8LuswrCHIE/IZnABWtWeFhC0szacDQSxu3K/rtD4OlTtc+ulmyTirDH9LvT1
-	 jstZ4B2wdmc/VuRWKufKf/FwdZumcexVvSpY1SwJcaWqfcGf/rK4KU3DrN6uI5lWqQ
-	 B0X+fqV0dqcDaTk1VchXUTTvsy13d0aDenjnSecE=
+	b=Jf6N3kxiSOAoUGRmNx4D7jaTJalwCmTsEeC0mHWtXiTJ5veYHMtirhISlbKn5vCYz
+	 FEgkfkf6+dNUlNVXTJqNBwvMsa/qRQp1ix3y+RJoX4Mzx8hh8sqOsnJyaLdLIx+CzC
+	 zIjqvgOwwnOkRt/X5nD9g8kYgh1LvGc50h5/PWV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Wang <wangjie125@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
+	Jiri Benc <jbenc@redhat.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 087/228] net: hns3: fix wrong bw weight of disabled tc issue
-Date: Tue,  1 Aug 2023 11:19:05 +0200
-Message-ID: <20230801091926.004801872@linuxfoundation.org>
+Subject: [PATCH 6.1 088/228] vxlan: calculate correct header length for GPE
+Date: Tue,  1 Aug 2023 11:19:06 +0200
+Message-ID: <20230801091926.038042429@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,96 +36,162 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jijie Shao <shaojijie@huawei.com>
+From: Jiri Benc <jbenc@redhat.com>
 
-[ Upstream commit 882481b1c55fc44861d7e2d54b4e0936b1b39f2c ]
+[ Upstream commit 94d166c5318c6edd1e079df8552233443e909c33 ]
 
-In dwrr mode, the default bandwidth weight of disabled tc is set to 0.
-If the bandwidth weight is 0, the mode will change to sp.
-Therefore, disabled tc default bandwidth weight need changed to 1,
-and 0 is returned when query the bandwidth weight of disabled tc.
-In addition, driver need stop configure bandwidth weight if tc is disabled.
+VXLAN-GPE does not add an extra inner Ethernet header. Take that into
+account when calculating header length.
 
-Fixes: 848440544b41 ("net: hns3: Add support of TX Scheduler & Shaper to HNS3 driver")
-Signed-off-by: Jie Wang <wangjie125@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+This causes problems in skb_tunnel_check_pmtu, where incorrect PMTU is
+cached.
+
+In the collect_md mode (which is the only mode that VXLAN-GPE
+supports), there's no magic auto-setting of the tunnel interface MTU.
+It can't be, since the destination and thus the underlying interface
+may be different for each packet.
+
+So, the administrator is responsible for setting the correct tunnel
+interface MTU. Apparently, the administrators are capable enough to
+calculate that the maximum MTU for VXLAN-GPE is (their_lower_MTU - 36).
+They set the tunnel interface MTU to 1464. If you run a TCP stream over
+such interface, it's then segmented according to the MTU 1464, i.e.
+producing 1514 bytes frames. Which is okay, this still fits the lower
+MTU.
+
+However, skb_tunnel_check_pmtu (called from vxlan_xmit_one) uses 50 as
+the header size and thus incorrectly calculates the frame size to be
+1528. This leads to ICMP too big message being generated (locally),
+PMTU of 1450 to be cached and the TCP stream to be resegmented.
+
+The fix is to use the correct actual header size, especially for
+skb_tunnel_check_pmtu calculation.
+
+Fixes: e1e5314de08ba ("vxlan: implement GPE")
+Signed-off-by: Jiri Benc <jbenc@redhat.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/hisilicon/hns3/hns3pf/hclge_dcb.c  | 17 ++++++++++++++---
- .../ethernet/hisilicon/hns3/hns3pf/hclge_tm.c   |  3 ++-
- 2 files changed, 16 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_main.c |  2 +-
+ drivers/net/vxlan/vxlan_core.c                | 23 ++++++++-----------
+ include/net/vxlan.h                           | 13 +++++++----
+ 3 files changed, 20 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_dcb.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_dcb.c
-index c4aded65e848b..09362823140d5 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_dcb.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_dcb.c
-@@ -52,7 +52,10 @@ static void hclge_tm_info_to_ieee_ets(struct hclge_dev *hdev,
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
+index 9b8848daeb430..6105419ae2d5f 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
+@@ -8499,7 +8499,7 @@ static void ixgbe_atr(struct ixgbe_ring *ring,
+ 		struct ixgbe_adapter *adapter = q_vector->adapter;
  
- 	for (i = 0; i < HNAE3_MAX_TC; i++) {
- 		ets->prio_tc[i] = hdev->tm_info.prio_tc[i];
--		ets->tc_tx_bw[i] = hdev->tm_info.pg_info[0].tc_dwrr[i];
-+		if (i < hdev->tm_info.num_tc)
-+			ets->tc_tx_bw[i] = hdev->tm_info.pg_info[0].tc_dwrr[i];
-+		else
-+			ets->tc_tx_bw[i] = 0;
+ 		if (unlikely(skb_tail_pointer(skb) < hdr.network +
+-			     VXLAN_HEADROOM))
++			     vxlan_headroom(0)))
+ 			return;
  
- 		if (hdev->tm_info.tc_info[i].tc_sch_mode ==
- 		    HCLGE_SCH_MODE_SP)
-@@ -123,7 +126,8 @@ static u8 hclge_ets_tc_changed(struct hclge_dev *hdev, struct ieee_ets *ets,
- }
+ 		/* verify the port is recognized as VXLAN */
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index d4be39b19a6be..719f862fa55eb 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -2584,7 +2584,7 @@ static void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 		}
  
- static int hclge_ets_sch_mode_validate(struct hclge_dev *hdev,
--				       struct ieee_ets *ets, bool *changed)
-+				       struct ieee_ets *ets, bool *changed,
-+				       u8 tc_num)
- {
- 	bool has_ets_tc = false;
- 	u32 total_ets_bw = 0;
-@@ -137,6 +141,13 @@ static int hclge_ets_sch_mode_validate(struct hclge_dev *hdev,
- 				*changed = true;
- 			break;
- 		case IEEE_8021QAZ_TSA_ETS:
-+			if (i >= tc_num) {
-+				dev_err(&hdev->pdev->dev,
-+					"tc%u is disabled, cannot set ets bw\n",
-+					i);
-+				return -EINVAL;
-+			}
-+
- 			/* The hardware will switch to sp mode if bandwidth is
- 			 * 0, so limit ets bandwidth must be greater than 0.
- 			 */
-@@ -176,7 +187,7 @@ static int hclge_ets_validate(struct hclge_dev *hdev, struct ieee_ets *ets,
- 	if (ret)
- 		return ret;
+ 		ndst = &rt->dst;
+-		err = skb_tunnel_check_pmtu(skb, ndst, VXLAN_HEADROOM,
++		err = skb_tunnel_check_pmtu(skb, ndst, vxlan_headroom(flags & VXLAN_F_GPE),
+ 					    netif_is_any_bridge_port(dev));
+ 		if (err < 0) {
+ 			goto tx_error;
+@@ -2645,7 +2645,8 @@ static void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 				goto out_unlock;
+ 		}
  
--	ret = hclge_ets_sch_mode_validate(hdev, ets, changed);
-+	ret = hclge_ets_sch_mode_validate(hdev, ets, changed, tc_num);
- 	if (ret)
- 		return ret;
+-		err = skb_tunnel_check_pmtu(skb, ndst, VXLAN6_HEADROOM,
++		err = skb_tunnel_check_pmtu(skb, ndst,
++					    vxlan_headroom((flags & VXLAN_F_GPE) | VXLAN_F_IPV6),
+ 					    netif_is_any_bridge_port(dev));
+ 		if (err < 0) {
+ 			goto tx_error;
+@@ -3034,14 +3035,12 @@ static int vxlan_change_mtu(struct net_device *dev, int new_mtu)
+ 	struct vxlan_rdst *dst = &vxlan->default_dst;
+ 	struct net_device *lowerdev = __dev_get_by_index(vxlan->net,
+ 							 dst->remote_ifindex);
+-	bool use_ipv6 = !!(vxlan->cfg.flags & VXLAN_F_IPV6);
  
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_tm.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_tm.c
-index 922c0da3660c7..150f146fa24fb 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_tm.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_tm.c
-@@ -785,6 +785,7 @@ static void hclge_tm_tc_info_init(struct hclge_dev *hdev)
- static void hclge_tm_pg_info_init(struct hclge_dev *hdev)
- {
- #define BW_PERCENT	100
-+#define DEFAULT_BW_WEIGHT	1
- 
- 	u8 i;
- 
-@@ -806,7 +807,7 @@ static void hclge_tm_pg_info_init(struct hclge_dev *hdev)
- 		for (k = 0; k < hdev->tm_info.num_tc; k++)
- 			hdev->tm_info.pg_info[i].tc_dwrr[k] = BW_PERCENT;
- 		for (; k < HNAE3_MAX_TC; k++)
--			hdev->tm_info.pg_info[i].tc_dwrr[k] = 0;
-+			hdev->tm_info.pg_info[i].tc_dwrr[k] = DEFAULT_BW_WEIGHT;
+ 	/* This check is different than dev->max_mtu, because it looks at
+ 	 * the lowerdev->mtu, rather than the static dev->max_mtu
+ 	 */
+ 	if (lowerdev) {
+-		int max_mtu = lowerdev->mtu -
+-			      (use_ipv6 ? VXLAN6_HEADROOM : VXLAN_HEADROOM);
++		int max_mtu = lowerdev->mtu - vxlan_headroom(vxlan->cfg.flags);
+ 		if (new_mtu > max_mtu)
+ 			return -EINVAL;
  	}
+@@ -3684,11 +3683,11 @@ static void vxlan_config_apply(struct net_device *dev,
+ 	struct vxlan_dev *vxlan = netdev_priv(dev);
+ 	struct vxlan_rdst *dst = &vxlan->default_dst;
+ 	unsigned short needed_headroom = ETH_HLEN;
+-	bool use_ipv6 = !!(conf->flags & VXLAN_F_IPV6);
+ 	int max_mtu = ETH_MAX_MTU;
++	u32 flags = conf->flags;
+ 
+ 	if (!changelink) {
+-		if (conf->flags & VXLAN_F_GPE)
++		if (flags & VXLAN_F_GPE)
+ 			vxlan_raw_setup(dev);
+ 		else
+ 			vxlan_ether_setup(dev);
+@@ -3713,8 +3712,7 @@ static void vxlan_config_apply(struct net_device *dev,
+ 
+ 		dev->needed_tailroom = lowerdev->needed_tailroom;
+ 
+-		max_mtu = lowerdev->mtu - (use_ipv6 ? VXLAN6_HEADROOM :
+-					   VXLAN_HEADROOM);
++		max_mtu = lowerdev->mtu - vxlan_headroom(flags);
+ 		if (max_mtu < ETH_MIN_MTU)
+ 			max_mtu = ETH_MIN_MTU;
+ 
+@@ -3725,10 +3723,9 @@ static void vxlan_config_apply(struct net_device *dev,
+ 	if (dev->mtu > max_mtu)
+ 		dev->mtu = max_mtu;
+ 
+-	if (use_ipv6 || conf->flags & VXLAN_F_COLLECT_METADATA)
+-		needed_headroom += VXLAN6_HEADROOM;
+-	else
+-		needed_headroom += VXLAN_HEADROOM;
++	if (flags & VXLAN_F_COLLECT_METADATA)
++		flags |= VXLAN_F_IPV6;
++	needed_headroom += vxlan_headroom(flags);
+ 	dev->needed_headroom = needed_headroom;
+ 
+ 	memcpy(&vxlan->cfg, conf, sizeof(*conf));
+diff --git a/include/net/vxlan.h b/include/net/vxlan.h
+index bca5b01af2475..03bcc1ef0d61e 100644
+--- a/include/net/vxlan.h
++++ b/include/net/vxlan.h
+@@ -378,10 +378,15 @@ static inline netdev_features_t vxlan_features_check(struct sk_buff *skb,
+ 	return features;
  }
  
+-/* IP header + UDP + VXLAN + Ethernet header */
+-#define VXLAN_HEADROOM (20 + 8 + 8 + 14)
+-/* IPv6 header + UDP + VXLAN + Ethernet header */
+-#define VXLAN6_HEADROOM (40 + 8 + 8 + 14)
++static inline int vxlan_headroom(u32 flags)
++{
++	/* VXLAN:     IP4/6 header + UDP + VXLAN + Ethernet header */
++	/* VXLAN-GPE: IP4/6 header + UDP + VXLAN */
++	return (flags & VXLAN_F_IPV6 ? sizeof(struct ipv6hdr) :
++				       sizeof(struct iphdr)) +
++	       sizeof(struct udphdr) + sizeof(struct vxlanhdr) +
++	       (flags & VXLAN_F_GPE ? 0 : ETH_HLEN);
++}
+ 
+ static inline struct vxlanhdr *vxlan_hdr(struct sk_buff *skb)
+ {
 -- 
 2.39.2
 
