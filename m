@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6D61FB24
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:30:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3647C433C8;
-	Tue,  1 Aug 2023 09:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4591FB24
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:30:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE23AC433C8;
+	Tue,  1 Aug 2023 09:30:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882208;
-	bh=hw6JS4fcj4nptFVARt+WCMmcChQXms9A/uQTfnGfl5I=;
+	s=korg; t=1690882211;
+	bh=6yYoTQ/WN45aLACgt3kxuHv4ey876XlhEV+Z/YxN8z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MV976uLMpfBvAxORXyeGaGqDk/LunOSe2GHqnr5y0uDpLj6OhvNhYJPZqRSJeqX+l
-	 r1skLkwDlqPz/HS13A1Re6M6LtilcuIPiVWVX/mYGlI0PsifF6WaDQC7mkebqtX0Jq
-	 FQ40l5Gz4vtGnBnCwR6wRzs3tiy1wP2IpmDGgmcU=
+	b=ilbI9WQUh2JiB+i/F0TlDQ/LQYcZW5gN/47JpNPsd6EKy8FpYlNBklcivinWs9ijs
+	 RIwmW26FKidr7EVOGIdxAT9edL/2jCbW+0mczC9YXvp/DWTkZWa70wAXf/cN99S+pP
+	 dk8ak1jI56XMqt19cSfYMSxBUIg5dvgbuSclFs00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Evan Quan <evan.quan@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 007/228] drm/amd: Move helper for dynamic speed switch check out of smu13
-Date: Tue,  1 Aug 2023 11:17:45 +0200
-Message-ID: <20230801091923.087337470@linuxfoundation.org>
+Subject: [PATCH 6.1 008/228] drm/amd: Align SMU11 SMU_MSG_OverridePcieParameters implementation with SMU13
+Date: Tue,  1 Aug 2023 11:17:46 +0200
+Message-ID: <20230801091923.123178826@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -37,11 +37,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 188623076d0f1a500583d392b6187056bf7cc71a upstream.
+commit e701156ccc6c7a5f104a968dda74cd6434178712 upstream.
 
-This helper is used for checking if the connected host supports
-the feature, it can be moved into generic code to be used by other
-smu implementations as well.
+SMU13 overrides dynamic PCIe lane width and dynamic speed by when on
+certain hosts. commit 38e4ced80479 ("drm/amd/pm: conditionally disable
+pcie lane switching for some sienna_cichlid SKUs") worked around this
+issue by setting up certain SKUs to set up certain limits, but the same
+fundamental problem with those hosts affects all SMU11 implmentations
+as well, so align the SMU11 and SMU13 driver handling.
 
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Reviewed-by: Evan Quan <evan.quan@amd.com>
@@ -49,85 +52,120 @@ Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org # 6.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu.h            |    1 +
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c     |   19 +++++++++++++++++++
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c |   21 +--------------------
- 3 files changed, 21 insertions(+), 20 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c |   93 +++-------------
+ 1 file changed, 20 insertions(+), 73 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-@@ -1262,6 +1262,7 @@ int amdgpu_device_gpu_recover(struct amd
- void amdgpu_device_pci_config_reset(struct amdgpu_device *adev);
- int amdgpu_device_pci_reset(struct amdgpu_device *adev);
- bool amdgpu_device_need_post(struct amdgpu_device *adev);
-+bool amdgpu_device_pcie_dynamic_switching_supported(void);
- bool amdgpu_device_should_use_aspm(struct amdgpu_device *adev);
- bool amdgpu_device_aspm_support_quirk(void);
- 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -1333,6 +1333,25 @@ bool amdgpu_device_need_post(struct amdg
- 	return true;
- }
- 
-+/*
-+ * Intel hosts such as Raptor Lake and Sapphire Rapids don't support dynamic
-+ * speed switching. Until we have confirmation from Intel that a specific host
-+ * supports it, it's safer that we keep it disabled for all.
-+ *
-+ * https://edc.intel.com/content/www/us/en/design/products/platforms/details/raptor-lake-s/13th-generation-core-processors-datasheet-volume-1-of-2/005/pci-express-support/
-+ * https://gitlab.freedesktop.org/drm/amd/-/issues/2663
-+ */
-+bool amdgpu_device_pcie_dynamic_switching_supported(void)
-+{
-+#if IS_ENABLED(CONFIG_X86)
-+	struct cpuinfo_x86 *c = &cpu_data(0);
-+
-+	if (c->x86_vendor == X86_VENDOR_INTEL)
-+		return false;
-+#endif
-+	return true;
-+}
-+
- /**
-  * amdgpu_device_should_use_aspm - check if the device should program ASPM
-  *
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-@@ -2490,25 +2490,6 @@ int smu_v13_0_mode1_reset(struct smu_con
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
+@@ -2081,89 +2081,36 @@ static int sienna_cichlid_display_disabl
  	return ret;
  }
  
--/*
-- * Intel hosts such as Raptor Lake and Sapphire Rapids don't support dynamic
-- * speed switching. Until we have confirmation from Intel that a specific host
-- * supports it, it's safer that we keep it disabled for all.
-- *
-- * https://edc.intel.com/content/www/us/en/design/products/platforms/details/raptor-lake-s/13th-generation-core-processors-datasheet-volume-1-of-2/005/pci-express-support/
-- * https://gitlab.freedesktop.org/drm/amd/-/issues/2663
-- */
--static bool smu_v13_0_is_pcie_dynamic_switching_supported(void)
+-static void sienna_cichlid_get_override_pcie_settings(struct smu_context *smu,
+-						      uint32_t *gen_speed_override,
+-						      uint32_t *lane_width_override)
 -{
--#if IS_ENABLED(CONFIG_X86)
--	struct cpuinfo_x86 *c = &cpu_data(0);
+-	struct amdgpu_device *adev = smu->adev;
 -
--	if (c->x86_vendor == X86_VENDOR_INTEL)
--		return false;
--#endif
--	return true;
+-	*gen_speed_override = 0xff;
+-	*lane_width_override = 0xff;
+-
+-	switch (adev->pdev->device) {
+-	case 0x73A0:
+-	case 0x73A1:
+-	case 0x73A2:
+-	case 0x73A3:
+-	case 0x73AB:
+-	case 0x73AE:
+-		/* Bit 7:0: PCIE lane width, 1 to 7 corresponds is x1 to x32 */
+-		*lane_width_override = 6;
+-		break;
+-	case 0x73E0:
+-	case 0x73E1:
+-	case 0x73E3:
+-		*lane_width_override = 4;
+-		break;
+-	case 0x7420:
+-	case 0x7421:
+-	case 0x7422:
+-	case 0x7423:
+-	case 0x7424:
+-		*lane_width_override = 3;
+-		break;
+-	default:
+-		break;
+-	}
 -}
 -
- int smu_v13_0_update_pcie_parameters(struct smu_context *smu,
- 				     uint32_t pcie_gen_cap,
- 				     uint32_t pcie_width_cap)
-@@ -2520,7 +2501,7 @@ int smu_v13_0_update_pcie_parameters(str
- 	uint32_t smu_pcie_arg;
+-#define MAX(a, b)	((a) > (b) ? (a) : (b))
+-
+ static int sienna_cichlid_update_pcie_parameters(struct smu_context *smu,
+ 					 uint32_t pcie_gen_cap,
+ 					 uint32_t pcie_width_cap)
+ {
+ 	struct smu_11_0_dpm_context *dpm_context = smu->smu_dpm.dpm_context;
+ 	struct smu_11_0_pcie_table *pcie_table = &dpm_context->dpm_tables.pcie_table;
+-	uint32_t gen_speed_override, lane_width_override;
+-	uint8_t *table_member1, *table_member2;
+-	uint32_t min_gen_speed, max_gen_speed;
+-	uint32_t min_lane_width, max_lane_width;
+-	uint32_t smu_pcie_arg;
++	u32 smu_pcie_arg;
  	int ret, i;
  
--	if (!smu_v13_0_is_pcie_dynamic_switching_supported()) {
+-	GET_PPTABLE_MEMBER(PcieGenSpeed, &table_member1);
+-	GET_PPTABLE_MEMBER(PcieLaneCount, &table_member2);
+-
+-	sienna_cichlid_get_override_pcie_settings(smu,
+-						  &gen_speed_override,
+-						  &lane_width_override);
+-
+-	/* PCIE gen speed override */
+-	if (gen_speed_override != 0xff) {
+-		min_gen_speed = MIN(pcie_gen_cap, gen_speed_override);
+-		max_gen_speed = MIN(pcie_gen_cap, gen_speed_override);
+-	} else {
+-		min_gen_speed = MAX(0, table_member1[0]);
+-		max_gen_speed = MIN(pcie_gen_cap, table_member1[1]);
+-		min_gen_speed = min_gen_speed > max_gen_speed ?
+-				max_gen_speed : min_gen_speed;
+-	}
+-	pcie_table->pcie_gen[0] = min_gen_speed;
+-	pcie_table->pcie_gen[1] = max_gen_speed;
+-
+-	/* PCIE lane width override */
+-	if (lane_width_override != 0xff) {
+-		min_lane_width = MIN(pcie_width_cap, lane_width_override);
+-		max_lane_width = MIN(pcie_width_cap, lane_width_override);
++	/* PCIE gen speed and lane width override */
 +	if (!amdgpu_device_pcie_dynamic_switching_supported()) {
- 		if (pcie_table->pcie_gen[num_of_levels - 1] < pcie_gen_cap)
- 			pcie_gen_cap = pcie_table->pcie_gen[num_of_levels - 1];
++		if (pcie_table->pcie_gen[NUM_LINK_LEVELS - 1] < pcie_gen_cap)
++			pcie_gen_cap = pcie_table->pcie_gen[NUM_LINK_LEVELS - 1];
++
++		if (pcie_table->pcie_lane[NUM_LINK_LEVELS - 1] < pcie_width_cap)
++			pcie_width_cap = pcie_table->pcie_lane[NUM_LINK_LEVELS - 1];
++
++		/* Force all levels to use the same settings */
++		for (i = 0; i < NUM_LINK_LEVELS; i++) {
++			pcie_table->pcie_gen[i] = pcie_gen_cap;
++			pcie_table->pcie_lane[i] = pcie_width_cap;
++		}
+ 	} else {
+-		min_lane_width = MAX(1, table_member2[0]);
+-		max_lane_width = MIN(pcie_width_cap, table_member2[1]);
+-		min_lane_width = min_lane_width > max_lane_width ?
+-				 max_lane_width : min_lane_width;
++		for (i = 0; i < NUM_LINK_LEVELS; i++) {
++			if (pcie_table->pcie_gen[i] > pcie_gen_cap)
++				pcie_table->pcie_gen[i] = pcie_gen_cap;
++			if (pcie_table->pcie_lane[i] > pcie_width_cap)
++				pcie_table->pcie_lane[i] = pcie_width_cap;
++		}
+ 	}
+-	pcie_table->pcie_lane[0] = min_lane_width;
+-	pcie_table->pcie_lane[1] = max_lane_width;
  
+ 	for (i = 0; i < NUM_LINK_LEVELS; i++) {
+ 		smu_pcie_arg = (i << 16 |
 
 
