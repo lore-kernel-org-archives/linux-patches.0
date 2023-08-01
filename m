@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8262D1FB24
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:31:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B86C433C8;
-	Tue,  1 Aug 2023 09:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518231FB24
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:31:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8113C433C8;
+	Tue,  1 Aug 2023 09:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882290;
-	bh=B2L++1REw280gUtS+wMInmWJ0TE/a2go2Yu1ppkM1dE=;
+	s=korg; t=1690882293;
+	bh=wft9sfC9PyfWiLcy6uXG/tKJfb7M2dPL+oK0oNzXAuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oicmGH617vpwoJAG+MPHEXfc6lVeypXh8SwcC3W9Clv0t37RsgGZNXdpXrzL+8qF8
-	 8/8+ZIFy0XFgdSdeo1JM4LQnNuCVg6n7hXA66yWawMvRtq3BaGsA+eHSvxBlSvZNE3
-	 pydcz/TD0UVPuDz6psnA3mptRlg12hGasrukRkMA=
+	b=gQwXQ75Ek9Cnz1m3h+aYfz4InnipA1nQZ1cdiGaZGLB0xsNk0Z2vtfw2PZnaAs0eb
+	 +mrJMF19CpQGsZ4J+ucc95ZRYgI3ENKMNfIY8IsGCk6+1BoBrxVbIefmF7hEG+QTwZ
+	 HN8e0tVoQJEpAXDWpzYl+nTnOh8lnDaLqgDqnJ1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Feiyang Chen <chenfeiyang@loongson.cn>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 025/228] MIPS: Loongson: Move arch cflags to MIPS top level Makefile
-Date: Tue,  1 Aug 2023 11:18:03 +0200
-Message-ID: <20230801091923.784646409@linuxfoundation.org>
+Subject: [PATCH 6.1 026/228] MIPS: Loongson: Fix build error when make modules_install
+Date: Tue,  1 Aug 2023 11:18:04 +0200
+Message-ID: <20230801091923.818181558@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -35,144 +38,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 194a835210521282ad31e8f7047556318611f596 ]
+[ Upstream commit 531b3d1195d096f14e030c4b01ec3a53b80276bf ]
 
-Arch cflags should be independent to Platform.
+After commit 0e96ea5c3eb5904e5dc2f ("MIPS: Loongson64: Clean up use of
+cc-ifversion") we get a build error when make modules_install:
 
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+cc1: error: '-mloongson-mmi' must be used with '-mhard-float'
+
+The reason is when make modules_install, 'call cc-option' doesn't work
+in $(KBUILD_CFLAGS) of 'CHECKFLAGS'. Then there is no -mno-loongson-mmi
+applied and -march=loongson3a enable MMI instructions.
+
+To be detail, the error message comes from the CHECKFLAGS invocation of
+$(CC) but it has no impact on the final result of make modules_install,
+it is purely a cosmetic issue. The error occurs because cc-option is
+defined in scripts/Makefile.compiler, which is not included in Makefile
+when running 'make modules_install', as install targets are not supposed
+to require the compiler; see commit 805b2e1d427aab4b ("kbuild: include
+Makefile.compiler only when compiler is needed"). As a result, the call
+to check for '-mno-loongson-mmi' just never happens.
+
+Fix this by partially reverting to the old logic, use 'call cc-option'
+to conditionally apply -march=loongson3a and -march=mips64r2.
+
+By the way, Loongson-2E/2F is also broken in commit 13ceb48bc19c563e05f4
+("MIPS: Loongson2ef: Remove unnecessary {as,cc}-option calls") so fix it
+together.
+
+Fixes: 13ceb48bc19c563e05f4 ("MIPS: Loongson2ef: Remove unnecessary {as,cc}-option calls")
+Fixes: 0e96ea5c3eb5904e5dc2 ("MIPS: Loongson64: Clean up use of cc-ifversion")
+Cc: stable@vger.kernel.org
+Cc: Feiyang Chen <chenfeiyang@loongson.cn>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Stable-dep-of: 531b3d1195d0 ("MIPS: Loongson: Fix build error when make modules_install")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/Makefile             | 38 ++++++++++++++++++++++++++++++++++
- arch/mips/loongson2ef/Platform | 35 -------------------------------
- arch/mips/loongson64/Platform  | 16 --------------
- 3 files changed, 38 insertions(+), 51 deletions(-)
+ arch/mips/Makefile | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
 diff --git a/arch/mips/Makefile b/arch/mips/Makefile
-index 85d3c3b4b7bdc..ca457f19f7fe0 100644
+index ca457f19f7fe0..fe64ad43ba882 100644
 --- a/arch/mips/Makefile
 +++ b/arch/mips/Makefile
-@@ -190,9 +190,47 @@ endif
+@@ -190,16 +190,12 @@ endif
  cflags-$(CONFIG_CAVIUM_CN63XXP1) += -Wa,-mfix-cn63xxp1
  cflags-$(CONFIG_CPU_BMIPS)	+= -march=mips32 -Wa,-mips32 -Wa,--trap
  
-+cflags-$(CONFIG_CPU_LOONGSON2E) += -march=loongson2e -Wa,--trap
-+cflags-$(CONFIG_CPU_LOONGSON2F) += -march=loongson2f -Wa,--trap
-+# Some -march= flags enable MMI instructions, and GCC complains about that
-+# support being enabled alongside -msoft-float. Thus explicitly disable MMI.
-+cflags-$(CONFIG_CPU_LOONGSON2EF) += $(call cc-option,-mno-loongson-mmi)
-+ifdef CONFIG_CPU_LOONGSON64
-+cflags-$(CONFIG_CPU_LOONGSON64)	+= -Wa,--trap
-+cflags-$(CONFIG_CC_IS_GCC) += -march=loongson3a
-+cflags-$(CONFIG_CC_IS_CLANG) += -march=mips64r2
-+endif
-+cflags-$(CONFIG_CPU_LOONGSON64) += $(call cc-option,-mno-loongson-mmi)
-+
- cflags-$(CONFIG_CPU_R4000_WORKAROUNDS)	+= $(call cc-option,-mfix-r4000,)
- cflags-$(CONFIG_CPU_R4400_WORKAROUNDS)	+= $(call cc-option,-mfix-r4400,)
- cflags-$(CONFIG_CPU_DADDI_WORKAROUNDS)	+= $(call cc-option,-mno-daddi,)
-+ifdef CONFIG_CPU_LOONGSON2F_WORKAROUNDS
-+cflags-$(CONFIG_CPU_NOP_WORKAROUNDS) += -Wa,-mfix-loongson2f-nop
-+cflags-$(CONFIG_CPU_JUMP_WORKAROUNDS) += -Wa,-mfix-loongson2f-jump
-+endif
-+
-+#
-+# Some versions of binutils, not currently mainline as of 2019/02/04, support
-+# an -mfix-loongson3-llsc flag which emits a sync prior to each ll instruction
-+# to work around a CPU bug (see __SYNC_loongson3_war in asm/sync.h for a
-+# description).
-+#
-+# We disable this in order to prevent the assembler meddling with the
-+# instruction that labels refer to, ie. if we label an ll instruction:
-+#
-+# 1: ll v0, 0(a0)
-+#
-+# ...then with the assembler fix applied the label may actually point at a sync
-+# instruction inserted by the assembler, and if we were using the label in an
-+# exception table the table would no longer contain the address of the ll
-+# instruction.
-+#
-+# Avoid this by explicitly disabling that assembler behaviour. If upstream
-+# binutils does not merge support for the flag then we can revisit & remove
-+# this later - for now it ensures vendor toolchains don't cause problems.
-+#
-+cflags-$(CONFIG_CPU_LOONGSON64)	+= $(call as-option,-Wa$(comma)-mno-fix-loongson3-llsc,)
- 
- # For smartmips configurations, there are hundreds of warnings due to ISA overrides
- # in assembly and header files. smartmips is only supported for MIPS32r1 onwards
-diff --git a/arch/mips/loongson2ef/Platform b/arch/mips/loongson2ef/Platform
-index c6f7a4b959978..d446b705fba47 100644
---- a/arch/mips/loongson2ef/Platform
-+++ b/arch/mips/loongson2ef/Platform
-@@ -2,41 +2,6 @@
- # Loongson Processors' Support
- #
- 
--cflags-$(CONFIG_CPU_LOONGSON2EF)	+= -Wa,--trap
--cflags-$(CONFIG_CPU_LOONGSON2E) += -march=loongson2e
--cflags-$(CONFIG_CPU_LOONGSON2F) += -march=loongson2f
--#
--# Some versions of binutils, not currently mainline as of 2019/02/04, support
--# an -mfix-loongson3-llsc flag which emits a sync prior to each ll instruction
--# to work around a CPU bug (see __SYNC_loongson3_war in asm/sync.h for a
--# description).
--#
--# We disable this in order to prevent the assembler meddling with the
--# instruction that labels refer to, ie. if we label an ll instruction:
--#
--# 1: ll v0, 0(a0)
--#
--# ...then with the assembler fix applied the label may actually point at a sync
--# instruction inserted by the assembler, and if we were using the label in an
--# exception table the table would no longer contain the address of the ll
--# instruction.
--#
--# Avoid this by explicitly disabling that assembler behaviour. If upstream
--# binutils does not merge support for the flag then we can revisit & remove
--# this later - for now it ensures vendor toolchains don't cause problems.
--#
--cflags-$(CONFIG_CPU_LOONGSON2EF)	+= $(call cc-option,-Wa$(comma)-mno-fix-loongson3-llsc,)
--
--# Enable the workarounds for Loongson2f
--ifdef CONFIG_CPU_LOONGSON2F_WORKAROUNDS
--cflags-$(CONFIG_CPU_NOP_WORKAROUNDS) += -Wa,-mfix-loongson2f-nop
--cflags-$(CONFIG_CPU_JUMP_WORKAROUNDS) += -Wa,-mfix-loongson2f-jump
--endif
--
--# Some -march= flags enable MMI instructions, and GCC complains about that
--# support being enabled alongside -msoft-float. Thus explicitly disable MMI.
--cflags-y += $(call cc-option,-mno-loongson-mmi)
--
- #
- # Loongson Machines' Support
- #
-diff --git a/arch/mips/loongson64/Platform b/arch/mips/loongson64/Platform
-index 473404cae1c44..49c9889e3d563 100644
---- a/arch/mips/loongson64/Platform
-+++ b/arch/mips/loongson64/Platform
-@@ -1,19 +1,3 @@
--#
--# Loongson Processors' Support
--#
--
--
--cflags-$(CONFIG_CPU_LOONGSON64)	+= -Wa,--trap
--
+-cflags-$(CONFIG_CPU_LOONGSON2E) += -march=loongson2e -Wa,--trap
+-cflags-$(CONFIG_CPU_LOONGSON2F) += -march=loongson2f -Wa,--trap
++cflags-$(CONFIG_CPU_LOONGSON2E) += $(call cc-option,-march=loongson2e) -Wa,--trap
++cflags-$(CONFIG_CPU_LOONGSON2F) += $(call cc-option,-march=loongson2f) -Wa,--trap
++cflags-$(CONFIG_CPU_LOONGSON64) += $(call cc-option,-march=loongson3a,-march=mips64r2) -Wa,--trap
+ # Some -march= flags enable MMI instructions, and GCC complains about that
+ # support being enabled alongside -msoft-float. Thus explicitly disable MMI.
+ cflags-$(CONFIG_CPU_LOONGSON2EF) += $(call cc-option,-mno-loongson-mmi)
 -ifdef CONFIG_CPU_LOONGSON64
+-cflags-$(CONFIG_CPU_LOONGSON64)	+= -Wa,--trap
 -cflags-$(CONFIG_CC_IS_GCC) += -march=loongson3a
 -cflags-$(CONFIG_CC_IS_CLANG) += -march=mips64r2
 -endif
--
--# Some -march= flags enable MMI instructions, and GCC complains about that
--# support being enabled alongside -msoft-float. Thus explicitly disable MMI.
--cflags-y += $(call cc-option,-mno-loongson-mmi)
--
- #
- # Loongson Machines' Support
- #
+ cflags-$(CONFIG_CPU_LOONGSON64) += $(call cc-option,-mno-loongson-mmi)
+ 
+ cflags-$(CONFIG_CPU_R4000_WORKAROUNDS)	+= $(call cc-option,-mfix-r4000,)
 -- 
 2.39.2
 
