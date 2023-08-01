@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5171F957
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:36:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B73C433C8;
-	Tue,  1 Aug 2023 09:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E071F957
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:36:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6ABCC433C9;
+	Tue,  1 Aug 2023 09:36:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882605;
-	bh=3Nh3D8CBtAxB6c53PlWkSigr9b5Zo7q561335aYFoNQ=;
+	s=korg; t=1690882608;
+	bh=hB7NuOiQg8PlTLYscv7D/DffUh8UyxyCY7hI5dm6BQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z/7wyemug4NsqHVgnk8cYKh4ukGc+MfPsWaf9Xn9/1E8vnBeBQ4xho+IC7cuNf6g6
-	 USwkK1N2hXZq4h5coFqMEbXJ3rdf8QNnlTqeNZeyAMGbVdERPjkhNwhsodRWeiKPDf
-	 AIki09OKg170xqlFR3JzdLSO1Xzlw3kwVS6yNW7k=
+	b=R9iduapVGEDVSso8pau6elIIdedBv3g5dFcn4a6vVqtFlMz4eRXdsy/9EC2TdH9iv
+	 UjdVDpgMh10ApLAC+6rX6KwS91Z+zYrVl0zb+jsT51xBdUbU/rzYzsz+kGv8yFwCW4
+	 cLiyekQIyiDqX3aumenFinpY+CnhcQfkEal4/8kw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Gratian Crisan <gratian.crisan@ni.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 165/228] usb: dwc3: pci: skip BYT GPIO lookup table for hardwired phy
-Date: Tue,  1 Aug 2023 11:20:23 +0200
-Message-ID: <20230801091928.834385701@linuxfoundation.org>
+	Jisheng Zhang <jszhang@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.1 166/228] usb: dwc3: dont reset device side if dwc3 was configured as host-only
+Date: Tue,  1 Aug 2023 11:20:24 +0200
+Message-ID: <20230801091928.865156933@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -35,69 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gratian Crisan <gratian.crisan@ni.com>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-commit b32b8f2b9542d8039f5468303a6ca78c1b5611a5 upstream.
+commit e835c0a4e23c38531dcee5ef77e8d1cf462658c7 upstream.
 
-Hardware based on the Bay Trail / BYT SoCs require an external ULPI phy for
-USB device-mode. The phy chip usually has its 'reset' and 'chip select'
-lines connected to GPIOs described by ACPI fwnodes in the DSDT table.
+Commit c4a5153e87fd ("usb: dwc3: core: Power-off core/PHYs on
+system_suspend in host mode") replaces check for HOST only dr_mode with
+current_dr_role. But during booting, the current_dr_role isn't
+initialized, thus the device side reset is always issued even if dwc3
+was configured as host-only. What's more, on some platforms with host
+only dwc3, aways issuing device side reset by accessing device register
+block can cause kernel panic.
 
-Because of hardware with missing ACPI resources for the 'reset' and 'chip
-select' GPIOs commit 5741022cbdf3 ("usb: dwc3: pci: Add GPIO lookup table
-on platforms without ACPI GPIO resources") introduced a fallback
-gpiod_lookup_table with hard-coded mappings for Bay Trail devices.
-
-However there are existing Bay Trail based devices, like the National
-Instruments cRIO-903x series, where the phy chip has its 'reset' and
-'chip-select' lines always asserted in hardware via resistor pull-ups. On
-this hardware the phy chip is always enabled and the ACPI dsdt table is
-missing information not only for the 'chip-select' and 'reset' lines but
-also for the BYT GPIO controller itself "INT33FC".
-
-With the introduction of the gpiod_lookup_table initializing the USB
-device-mode on these hardware now errors out. The error comes from the
-gpiod_get_optional() calls in dwc3_pci_quirks() which will now return an
--ENOENT error due to the missing ACPI entry for the INT33FC gpio controller
-used in the aforementioned table.
-
-This hardware used to work before because gpiod_get_optional() will return
-NULL instead of -ENOENT if no GPIO has been assigned to the requested
-function. The dwc3_pci_quirks() code for setting the 'cs' and 'reset' GPIOs
-was then skipped (due to the NULL return). This is the correct behavior in
-cases where the phy chip is hardwired and there are no GPIOs to control.
-
-Since the gpiod_lookup_table relies on the presence of INT33FC fwnode
-in ACPI tables only add the table if we know the entry for the INT33FC
-gpio controller is present. This allows Bay Trail based devices with
-hardwired dwc3 ULPI phys to continue working.
-
-Fixes: 5741022cbdf3 ("usb: dwc3: pci: Add GPIO lookup table on platforms without ACPI GPIO resources")
+Fixes: c4a5153e87fd ("usb: dwc3: core: Power-off core/PHYs on system_suspend in host mode")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Gratian Crisan <gratian.crisan@ni.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230726184555.218091-2-gratian.crisan@ni.com
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20230627162018.739-1-jszhang@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-pci.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/dwc3/core.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/dwc3/dwc3-pci.c
-+++ b/drivers/usb/dwc3/dwc3-pci.c
-@@ -233,10 +233,12 @@ static int dwc3_pci_quirks(struct dwc3_p
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -277,9 +277,9 @@ int dwc3_core_soft_reset(struct dwc3 *dw
+ 	/*
+ 	 * We're resetting only the device side because, if we're in host mode,
+ 	 * XHCI driver will reset the host block. If dwc3 was configured for
+-	 * host-only mode, then we can return early.
++	 * host-only mode or current role is host, then we can return early.
+ 	 */
+-	if (dwc->current_dr_role == DWC3_GCTL_PRTCAP_HOST)
++	if (dwc->dr_mode == USB_DR_MODE_HOST || dwc->current_dr_role == DWC3_GCTL_PRTCAP_HOST)
+ 		return 0;
  
- 			/*
- 			 * A lot of BYT devices lack ACPI resource entries for
--			 * the GPIOs, add a fallback mapping to the reference
-+			 * the GPIOs. If the ACPI entry for the GPIO controller
-+			 * is present add a fallback mapping to the reference
- 			 * design GPIOs which all boards seem to use.
- 			 */
--			gpiod_add_lookup_table(&platform_bytcr_gpios);
-+			if (acpi_dev_present("INT33FC", NULL, -1))
-+				gpiod_add_lookup_table(&platform_bytcr_gpios);
- 
- 			/*
- 			 * These GPIOs will turn on the USB2 PHY. Note that we have to
+ 	reg = dwc3_readl(dwc->regs, DWC3_DCTL);
 
 
