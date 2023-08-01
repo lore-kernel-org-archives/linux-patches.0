@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772011F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:26:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECA0AC433C8;
-	Tue,  1 Aug 2023 09:26:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6921F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:26:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B584FC433C7;
+	Tue,  1 Aug 2023 09:26:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881973;
-	bh=EcqhSCjgIROBiFLPRFCf18cataeVuyiG4n5wDIhvlLo=;
+	s=korg; t=1690881976;
+	bh=VdoAnmAghW5n7L4tAa7XxhiCJm/5zVHUbts1bxfJiTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oVBRM1PQFME2MaRe7K8TZldmdSJUa0glkNwAKmYK3PYEyWw6mfy9EV+kUkQXt+CFy
-	 pcfqXNOa5enFEFQ7SDCvM45d20cVIIxk/n729JNytmQBZhaOMJThdvEuPmEo3ULUZM
-	 SCEb7kMWqd3BPrGiWM0/zi3EmHelNNQkwIrx6L6M=
+	b=ySvxAHBNZULDS2AkIH9/jhGe/B1TpSfjKeQNWlnMg+9TeiegUjYvlRAzmDIUL7Uu6
+	 DZj6qX18T3h5LILl1kwixhEe3ANkyEu7kXXstIGFBClTJ3ZpoPeTD4ylAN+lbpOkbG
+	 Gqq3j01uS0XGBf1q9Yoljy1UxypgLjXAM6Th0ihA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Sindhu Devale <sindhu.devale@intel.com>,
+	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 096/155] drm/amd: Fix an error handling mistake in psp_sw_init()
-Date: Tue,  1 Aug 2023 11:20:08 +0200
-Message-ID: <20230801091913.631606534@linuxfoundation.org>
+Subject: [PATCH 5.15 097/155] RDMA/irdma: Report correct WC error
+Date: Tue,  1 Aug 2023 11:20:09 +0200
+Message-ID: <20230801091913.671519062@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -36,42 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Sindhu Devale <sindhu.devale@intel.com>
 
-[ Upstream commit c01aebeef3ce45f696ffa0a1303cea9b34babb45 ]
+[ Upstream commit ae463563b7a1b7d4a3d0b065b09d37a76b693937 ]
 
-If the second call to amdgpu_bo_create_kernel() fails, the memory
-allocated from the first call should be cleared.  If the third call
-fails, the memory from the second call should be cleared.
+Report the correct WC error if a MW bind is performed
+on an already valid/bound window.
 
-Fixes: b95b5391684b ("drm/amdgpu/psp: move PSP memory alloc from hw_init to sw_init")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 44d9e52977a1 ("RDMA/irdma: Implement device initialization definitions")
+Signed-off-by: Sindhu Devale <sindhu.devale@intel.com>
+Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Link: https://lore.kernel.org/r/20230725155439.1057-2-shiraz.saleem@intel.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/irdma/hw.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-index 65744c3bd3648..f305a0f8e9b9a 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-@@ -341,11 +341,11 @@ static int psp_sw_init(void *handle)
- 	return 0;
- 
- failed2:
--	amdgpu_bo_free_kernel(&psp->fw_pri_bo,
--			      &psp->fw_pri_mc_addr, &psp->fw_pri_buf);
--failed1:
- 	amdgpu_bo_free_kernel(&psp->fence_buf_bo,
- 			      &psp->fence_buf_mc_addr, &psp->fence_buf);
-+failed1:
-+	amdgpu_bo_free_kernel(&psp->fw_pri_bo,
-+			      &psp->fw_pri_mc_addr, &psp->fw_pri_buf);
- 	return ret;
- }
- 
+diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
+index 0221200e16541..70dffa9a9f674 100644
+--- a/drivers/infiniband/hw/irdma/hw.c
++++ b/drivers/infiniband/hw/irdma/hw.c
+@@ -191,6 +191,7 @@ static void irdma_set_flush_fields(struct irdma_sc_qp *qp,
+ 	case IRDMA_AE_AMP_MWBIND_INVALID_RIGHTS:
+ 	case IRDMA_AE_AMP_MWBIND_BIND_DISABLED:
+ 	case IRDMA_AE_AMP_MWBIND_INVALID_BOUNDS:
++	case IRDMA_AE_AMP_MWBIND_VALID_STAG:
+ 		qp->flush_code = FLUSH_MW_BIND_ERR;
+ 		qp->event_type = IRDMA_QP_EVENT_ACCESS_ERR;
+ 		break;
 -- 
 2.40.1
 
