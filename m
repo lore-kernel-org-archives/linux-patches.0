@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F91200A5
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:36:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A43DC433C8;
-	Tue,  1 Aug 2023 09:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6278F1F957
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:36:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D643DC433C8;
+	Tue,  1 Aug 2023 09:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882594;
-	bh=NibyUMpGG+Nz4Atlqq0i416mRoYyP5CEACAwdDs5q4A=;
+	s=korg; t=1690882597;
+	bh=UP9HvCUR7vB/WPAzwB92Wnz5jo7cvdsxeYTqtQF+00Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=081rdOzuUnA5zj79Q3FP8tH+2FfWuovnk8Njo+ltP3TtTvh0JQX0gBTFDw+7JXYPu
-	 jLGi6gXRXGr6B0i1Duno5mx0IiEHCkKSugt02GO/Omh6WOk2LoW9K+IEYIQMirOvxC
-	 g+cO0/AhXNkbsLkyKt5m920bmjueOPjkxO79Vutw=
+	b=eb/9+6xwZl4VqYEonKukSHjNylnVgxjRijzJHrb+3M3RUvP3Vp62yH+bzVulhCoQZ
+	 YtawNNEdFy9GilW0kT7o5+40lGMLhMXa6g9cdg6K45Dt/oO65FbZ4+TExyzusXDpjQ
+	 ceUQeL/JSN8997D9l+oSjwqsktAOlks3ufXv4sVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	vnagarnaik@google.com,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 144/228] ring-buffer: Fix wrong stat of cpu_buffer->read
-Date: Tue,  1 Aug 2023 11:20:02 +0200
-Message-ID: <20230801091928.091500749@linuxfoundation.org>
+	Kyle Tso <kyletso@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.1 162/228] usb: typec: Iterate pds array when showing the pd list
+Date: Tue,  1 Aug 2023 11:20:20 +0200
+Message-ID: <20230801091928.731945864@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -37,130 +34,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Kyle Tso <kyletso@google.com>
 
-[ Upstream commit 2d093282b0d4357373497f65db6a05eb0c28b7c8 ]
+commit 4b642dc9829507e4afabc03d32a18abbdb192c5e upstream.
 
-When pages are removed in rb_remove_pages(), 'cpu_buffer->read' is set
-to 0 in order to make sure any read iterators reset themselves. However,
-this will mess 'entries' stating, see following steps:
+The pointers of each usb_power_delivery handles are stored in "pds"
+array returned from the pd_get ops but not in the adjacent memory
+calculated from "pd". Get the handles from "pds" array directly instead
+of deriving them from "pd".
 
-  # cd /sys/kernel/tracing/
-  # 1. Enlarge ring buffer prepare for later reducing:
-  # echo 20 > per_cpu/cpu0/buffer_size_kb
-  # 2. Write a log into ring buffer of cpu0:
-  # taskset -c 0 echo "hello1" > trace_marker
-  # 3. Read the log:
-  # cat per_cpu/cpu0/trace_pipe
-       <...>-332     [000] .....    62.406844: tracing_mark_write: hello1
-  # 4. Stop reading and see the stats, now 0 entries, and 1 event readed:
-  # cat per_cpu/cpu0/stats
-   entries: 0
-   [...]
-   read events: 1
-  # 5. Reduce the ring buffer
-  # echo 7 > per_cpu/cpu0/buffer_size_kb
-  # 6. Now entries became unexpected 1 because actually no entries!!!
-  # cat per_cpu/cpu0/stats
-   entries: 1
-   [...]
-   read events: 0
-
-To fix it, introduce 'page_removed' field to count total removed pages
-since last reset, then use it to let read iterators reset themselves
-instead of changing the 'read' pointer.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230724054040.3489499-1-zhengyejian1@huawei.com
-
-Cc: <mhiramat@kernel.org>
-Cc: <vnagarnaik@google.com>
-Fixes: 83f40318dab0 ("ring-buffer: Make removal of ring buffer pages atomic")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a7cff92f0635 ("usb: typec: USB Power Delivery helpers for ports and partners")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kyle Tso <kyletso@google.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20230623151036.3955013-3-kyletso@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/usb/typec/class.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index c264421c4ecd8..c49ed619a64dd 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -529,6 +529,8 @@ struct ring_buffer_per_cpu {
- 	rb_time_t			before_stamp;
- 	u64				event_stamp[MAX_NEST];
- 	u64				read_stamp;
-+	/* pages removed since last reset */
-+	unsigned long			pages_removed;
- 	/* ring buffer pages to update, > 0 to add, < 0 to remove */
- 	long				nr_pages_to_update;
- 	struct list_head		new_pages; /* new pages to add */
-@@ -564,6 +566,7 @@ struct ring_buffer_iter {
- 	struct buffer_page		*head_page;
- 	struct buffer_page		*cache_reader_page;
- 	unsigned long			cache_read;
-+	unsigned long			cache_pages_removed;
- 	u64				read_stamp;
- 	u64				page_stamp;
- 	struct ring_buffer_event	*event;
-@@ -1967,6 +1970,8 @@ rb_remove_pages(struct ring_buffer_per_cpu *cpu_buffer, unsigned long nr_pages)
- 		to_remove = rb_list_head(to_remove)->next;
- 		head_bit |= (unsigned long)to_remove & RB_PAGE_HEAD;
+--- a/drivers/usb/typec/class.c
++++ b/drivers/usb/typec/class.c
+@@ -1258,8 +1258,7 @@ static ssize_t select_usb_power_delivery
+ {
+ 	struct typec_port *port = to_typec_port(dev);
+ 	struct usb_power_delivery **pds;
+-	struct usb_power_delivery *pd;
+-	int ret = 0;
++	int i, ret = 0;
+ 
+ 	if (!port->ops || !port->ops->pd_get)
+ 		return -EOPNOTSUPP;
+@@ -1268,11 +1267,11 @@ static ssize_t select_usb_power_delivery
+ 	if (!pds)
+ 		return 0;
+ 
+-	for (pd = pds[0]; pd; pd++) {
+-		if (pd == port->pd)
+-			ret += sysfs_emit(buf + ret, "[%s] ", dev_name(&pd->dev));
++	for (i = 0; pds[i]; i++) {
++		if (pds[i] == port->pd)
++			ret += sysfs_emit(buf + ret, "[%s] ", dev_name(&pds[i]->dev));
+ 		else
+-			ret += sysfs_emit(buf + ret, "%s ", dev_name(&pd->dev));
++			ret += sysfs_emit(buf + ret, "%s ", dev_name(&pds[i]->dev));
  	}
-+	/* Read iterators need to reset themselves when some pages removed */
-+	cpu_buffer->pages_removed += nr_removed;
  
- 	next_page = rb_list_head(to_remove)->next;
- 
-@@ -1988,12 +1993,6 @@ rb_remove_pages(struct ring_buffer_per_cpu *cpu_buffer, unsigned long nr_pages)
- 		cpu_buffer->head_page = list_entry(next_page,
- 						struct buffer_page, list);
- 
--	/*
--	 * change read pointer to make sure any read iterators reset
--	 * themselves
--	 */
--	cpu_buffer->read = 0;
--
- 	/* pages are removed, resume tracing and then free the pages */
- 	atomic_dec(&cpu_buffer->record_disabled);
- 	raw_spin_unlock_irq(&cpu_buffer->reader_lock);
-@@ -4385,6 +4384,7 @@ static void rb_iter_reset(struct ring_buffer_iter *iter)
- 
- 	iter->cache_reader_page = iter->head_page;
- 	iter->cache_read = cpu_buffer->read;
-+	iter->cache_pages_removed = cpu_buffer->pages_removed;
- 
- 	if (iter->head) {
- 		iter->read_stamp = cpu_buffer->read_stamp;
-@@ -4841,12 +4841,13 @@ rb_iter_peek(struct ring_buffer_iter *iter, u64 *ts)
- 	buffer = cpu_buffer->buffer;
- 
- 	/*
--	 * Check if someone performed a consuming read to
--	 * the buffer. A consuming read invalidates the iterator
--	 * and we need to reset the iterator in this case.
-+	 * Check if someone performed a consuming read to the buffer
-+	 * or removed some pages from the buffer. In these cases,
-+	 * iterator was invalidated and we need to reset it.
- 	 */
- 	if (unlikely(iter->cache_read != cpu_buffer->read ||
--		     iter->cache_reader_page != cpu_buffer->reader_page))
-+		     iter->cache_reader_page != cpu_buffer->reader_page ||
-+		     iter->cache_pages_removed != cpu_buffer->pages_removed))
- 		rb_iter_reset(iter);
- 
-  again:
-@@ -5291,6 +5292,7 @@ rb_reset_cpu(struct ring_buffer_per_cpu *cpu_buffer)
- 	cpu_buffer->last_overrun = 0;
- 
- 	rb_head_page_activate(cpu_buffer);
-+	cpu_buffer->pages_removed = 0;
- }
- 
- /* Must have disabled the cpu buffer then done a synchronize_rcu */
--- 
-2.40.1
-
+ 	buf[ret - 1] = '\n';
 
 
