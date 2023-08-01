@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2215D1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9834EC433C8;
-	Tue,  1 Aug 2023 09:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB3A1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9B5C433C7;
+	Tue,  1 Aug 2023 09:39:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882741;
-	bh=ChY9JAkgqybK9cQlnUbYEfoq5MZSFtJFx2q5DO+1RoE=;
+	s=korg; t=1690882743;
+	bh=1mHLiVsseciny1ZAkdSMTZjRUDcm/XUHbuA7jSQUNe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=of8msWoouSq3dchS9x99GOpAaJm2B6JefY8iBlk9aaGC7YWNAI/O8j/VBpWyA3LYI
-	 DxbdoVSGVa1lST83PYeMQl5boJbT+ueN7egHikQIvIhdF3drpb6+o2mgG7EZZpE3SJ
-	 J17Uyj/allwXBCXtTeDCCod7J7uPptg30ckZ+P5o=
+	b=XSkpaJ7BGbPhIiwb2sTTs9vVFA7vxoRqWMMkJAp7k8DUIzoJZPFb8Ni9qkxzHRaY6
+	 ajpV57J/21Km0lARLdP3wzGs3hitX72YbnwLV4pBiCFNcvD4VHvc8Eaow3Xj4IiXGU
+	 Hs3LBPBU1nTYKV7so2fk+ypj58uNysEO/9VWOPIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Dongsheng Yang <dongsheng.yang@easystack.cn>
-Subject: [PATCH 6.1 215/228] rbd: harden get_lock_owner_info() a bit
-Date: Tue,  1 Aug 2023 11:21:13 +0200
-Message-ID: <20230801091930.627316218@linuxfoundation.org>
+Subject: [PATCH 6.1 216/228] rbd: retrieve and check lock owner twice before blocklisting
+Date: Tue,  1 Aug 2023 11:21:14 +0200
+Message-ID: <20230801091930.655954077@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,77 +36,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilya Dryomov <idryomov@gmail.com>
 
-commit 8ff2c64c9765446c3cef804fb99da04916603e27 upstream.
+commit 588159009d5b7a09c3e5904cffddbe4a4e170301 upstream.
 
-- we want the exclusive lock type, so test for it directly
-- use sscanf() to actually parse the lock cookie and avoid admitting
-  invalid handles
-- bail if locker has a blank address
+An attempt to acquire exclusive lock can race with the current lock
+owner closing the image:
 
+1. lock is held by client123, rbd_lock() returns -EBUSY
+2. get_lock_owner_info() returns client123 instance details
+3. client123 closes the image, lock is released
+4. find_watcher() returns 0 as there is no matching watcher anymore
+5. client123 instance gets erroneously blocklisted
+
+Particularly impacted is mirror snapshot scheduler in snapshot-based
+mirroring since it happens to open and close images a lot (images are
+opened only for as long as it takes to take the next mirror snapshot,
+the same client instance is used for all images).
+
+To reduce the potential for erroneous blocklisting, retrieve the lock
+owner again after find_watcher() returns 0.  If it's still there, make
+sure it matches the previously detected lock owner.
+
+Cc: stable@vger.kernel.org # f38cb9d9c204: rbd: make get_lock_owner_info() return a single locker or NULL
+Cc: stable@vger.kernel.org # 8ff2c64c9765: rbd: harden get_lock_owner_info() a bit
+Cc: stable@vger.kernel.org
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c  |   21 +++++++++++++++------
- net/ceph/messenger.c |    1 +
- 2 files changed, 16 insertions(+), 6 deletions(-)
+ drivers/block/rbd.c |   25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
 --- a/drivers/block/rbd.c
 +++ b/drivers/block/rbd.c
-@@ -3863,10 +3863,9 @@ static struct ceph_locker *get_lock_owne
- 	u32 num_lockers;
- 	u8 lock_type;
- 	char *lock_tag;
-+	u64 handle;
+@@ -3850,6 +3850,15 @@ static void wake_lock_waiters(struct rbd
+ 	list_splice_tail_init(&rbd_dev->acquiring_list, &rbd_dev->running_list);
+ }
+ 
++static bool locker_equal(const struct ceph_locker *lhs,
++			 const struct ceph_locker *rhs)
++{
++	return lhs->id.name.type == rhs->id.name.type &&
++	       lhs->id.name.num == rhs->id.name.num &&
++	       !strcmp(lhs->id.cookie, rhs->id.cookie) &&
++	       ceph_addr_equal_no_type(&lhs->info.addr, &rhs->info.addr);
++}
++
+ static void free_locker(struct ceph_locker *locker)
+ {
+ 	if (locker)
+@@ -3970,11 +3979,11 @@ out:
+ static int rbd_try_lock(struct rbd_device *rbd_dev)
+ {
+ 	struct ceph_client *client = rbd_dev->rbd_client->client;
+-	struct ceph_locker *locker;
++	struct ceph_locker *locker, *refreshed_locker;
  	int ret;
  
--	dout("%s rbd_dev %p\n", __func__, rbd_dev);
--
- 	ret = ceph_cls_lock_info(osdc, &rbd_dev->header_oid,
- 				 &rbd_dev->header_oloc, RBD_LOCK_NAME,
- 				 &lock_type, &lock_tag, &lockers, &num_lockers);
-@@ -3887,18 +3886,28 @@ static struct ceph_locker *get_lock_owne
- 		goto err_busy;
- 	}
+ 	for (;;) {
+-		locker = NULL;
++		locker = refreshed_locker = NULL;
  
--	if (lock_type == CEPH_CLS_LOCK_SHARED) {
--		rbd_warn(rbd_dev, "shared lock type detected");
-+	if (lock_type != CEPH_CLS_LOCK_EXCLUSIVE) {
-+		rbd_warn(rbd_dev, "incompatible lock type detected");
- 		goto err_busy;
- 	}
+ 		ret = rbd_lock(rbd_dev);
+ 		if (ret != -EBUSY)
+@@ -3994,6 +4003,16 @@ static int rbd_try_lock(struct rbd_devic
+ 		if (ret)
+ 			goto out; /* request lock or error */
  
- 	WARN_ON(num_lockers != 1);
--	if (strncmp(lockers[0].id.cookie, RBD_LOCK_COOKIE_PREFIX,
--		    strlen(RBD_LOCK_COOKIE_PREFIX))) {
-+	ret = sscanf(lockers[0].id.cookie, RBD_LOCK_COOKIE_PREFIX " %llu",
-+		     &handle);
-+	if (ret != 1) {
- 		rbd_warn(rbd_dev, "locked by external mechanism, cookie %s",
- 			 lockers[0].id.cookie);
- 		goto err_busy;
- 	}
-+	if (ceph_addr_is_blank(&lockers[0].info.addr)) {
-+		rbd_warn(rbd_dev, "locker has a blank address");
-+		goto err_busy;
-+	}
++		refreshed_locker = get_lock_owner_info(rbd_dev);
++		if (IS_ERR(refreshed_locker)) {
++			ret = PTR_ERR(refreshed_locker);
++			refreshed_locker = NULL;
++			goto out;
++		}
++		if (!refreshed_locker ||
++		    !locker_equal(locker, refreshed_locker))
++			goto again;
 +
-+	dout("%s rbd_dev %p got locker %s%llu@%pISpc/%u handle %llu\n",
-+	     __func__, rbd_dev, ENTITY_NAME(lockers[0].id.name),
-+	     &lockers[0].info.addr.in_addr,
-+	     le32_to_cpu(lockers[0].info.addr.nonce), handle);
+ 		rbd_warn(rbd_dev, "breaking header lock owned by %s%llu",
+ 			 ENTITY_NAME(locker->id.name));
+ 
+@@ -4015,10 +4034,12 @@ static int rbd_try_lock(struct rbd_devic
+ 		}
+ 
+ again:
++		free_locker(refreshed_locker);
+ 		free_locker(locker);
+ 	}
  
  out:
- 	kfree(lock_tag);
---- a/net/ceph/messenger.c
-+++ b/net/ceph/messenger.c
-@@ -1118,6 +1118,7 @@ bool ceph_addr_is_blank(const struct cep
- 		return true;
- 	}
++	free_locker(refreshed_locker);
+ 	free_locker(locker);
+ 	return ret;
  }
-+EXPORT_SYMBOL(ceph_addr_is_blank);
- 
- int ceph_addr_port(const struct ceph_entity_addr *addr)
- {
 
 
