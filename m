@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE091ED30
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:50:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E42DDC433CA;
-	Tue,  1 Aug 2023 09:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415E11ED30
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:50:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6CCAC433CC;
+	Tue,  1 Aug 2023 09:50:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883419;
-	bh=2FbyhBgzqZ32SlJh8mD4cGhg0v8bqfxsHGztINJ0zLQ=;
+	s=korg; t=1690883422;
+	bh=YRMtNtav3gVqdcHAkbWNC9yrLjYEj6kibvPgitcshP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JMMFwql3/MBnTXvzqm3Eelw2yjURx0SUx0tMqUI5L0IoIV6qfCDj9ej5IbExhpfol
-	 do9Yf7JyP9ZSl2rKHizduJfWQis0cMnjpoiMG6norj9REMqGb3FbYtCkfhsCEI7SLk
-	 tAdotTiGLIYp931egY2303vYzEJDMB20rB2BflPY=
+	b=2L87r30Mth6n5VCF4qYCNWXiwgmBxE/n8lmeTEcHDQw0iyUn+kKzNxZYZObWJ3TLy
+	 OAZg/TEalrQ6LpDEf5v3LsQNQGBwiOdVeMiXiQRVeL+Pk3ECcpgAInTj9LKXpJx3ke
+	 zqltwmOgWEu0rzksuhpi6qwxzWk24yds7mUvm6Fo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Jeffery <djeffery@redhat.com>,
-	Joe Thornber <ejt@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.4 230/239] dm cache policy smq: ensure IO doesnt prevent cleaner policy progress
-Date: Tue,  1 Aug 2023 11:21:34 +0200
-Message-ID: <20230801091934.275690206@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>
+Subject: [PATCH 6.4 231/239] rbd: make get_lock_owner_info() return a single locker or NULL
+Date: Tue,  1 Aug 2023 11:21:35 +0200
+Message-ID: <20230801091934.327634697@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -35,106 +34,176 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joe Thornber <ejt@redhat.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit 1e4ab7b4c881cf26c1c72b3f56519e03475486fb upstream.
+commit f38cb9d9c2045dad16eead4a2e1aedfddd94603b upstream.
 
-When using the cleaner policy to decommission the cache, there is
-never any writeback started from the cache as it is constantly delayed
-due to normal I/O keeping the device busy. Meaning @idle=false was
-always being passed to clean_target_met()
+Make the "num_lockers can be only 0 or 1" assumption explicit and
+simplify the API by getting rid of output parameters in preparation
+for calling get_lock_owner_info() twice before blocklisting.
 
-Fix this by adding a specific 'cleaner' flag that is set when the
-cleaner policy is configured. This flag serves to always allow the
-cleaner's writeback work to be queued until the cache is
-decommissioned (even if the cache isn't idle).
-
-Reported-by: David Jeffery <djeffery@redhat.com>
-Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Joe Thornber <ejt@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-policy-smq.c |   28 ++++++++++++++++++----------
- 1 file changed, 18 insertions(+), 10 deletions(-)
+ drivers/block/rbd.c |   84 +++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 51 insertions(+), 33 deletions(-)
 
---- a/drivers/md/dm-cache-policy-smq.c
-+++ b/drivers/md/dm-cache-policy-smq.c
-@@ -857,7 +857,13 @@ struct smq_policy {
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -3849,10 +3849,17 @@ static void wake_lock_waiters(struct rbd
+ 	list_splice_tail_init(&rbd_dev->acquiring_list, &rbd_dev->running_list);
+ }
  
- 	struct background_tracker *bg_work;
- 
--	bool migrations_allowed;
-+	bool migrations_allowed:1;
+-static int get_lock_owner_info(struct rbd_device *rbd_dev,
+-			       struct ceph_locker **lockers, u32 *num_lockers)
++static void free_locker(struct ceph_locker *locker)
++{
++	if (locker)
++		ceph_free_lockers(locker, 1);
++}
 +
-+	/*
-+	 * If this is set the policy will try and clean the whole cache
-+	 * even if the device is not idle.
-+	 */
-+	bool cleaner:1;
- };
++static struct ceph_locker *get_lock_owner_info(struct rbd_device *rbd_dev)
+ {
+ 	struct ceph_osd_client *osdc = &rbd_dev->rbd_client->client->osdc;
++	struct ceph_locker *lockers;
++	u32 num_lockers;
+ 	u8 lock_type;
+ 	char *lock_tag;
+ 	int ret;
+@@ -3861,39 +3868,45 @@ static int get_lock_owner_info(struct rb
  
- /*----------------------------------------------------------------*/
-@@ -1138,7 +1144,7 @@ static bool clean_target_met(struct smq_
- 	 * Cache entries may not be populated.  So we cannot rely on the
- 	 * size of the clean queue.
- 	 */
--	if (idle) {
-+	if (idle || mq->cleaner) {
- 		/*
- 		 * We'd like to clean everything.
- 		 */
-@@ -1722,11 +1728,9 @@ static void calc_hotspot_params(sector_t
- 		*hotspot_block_size /= 2u;
+ 	ret = ceph_cls_lock_info(osdc, &rbd_dev->header_oid,
+ 				 &rbd_dev->header_oloc, RBD_LOCK_NAME,
+-				 &lock_type, &lock_tag, lockers, num_lockers);
+-	if (ret)
+-		return ret;
++				 &lock_type, &lock_tag, &lockers, &num_lockers);
++	if (ret) {
++		rbd_warn(rbd_dev, "failed to retrieve lockers: %d", ret);
++		return ERR_PTR(ret);
++	}
+ 
+-	if (*num_lockers == 0) {
++	if (num_lockers == 0) {
+ 		dout("%s rbd_dev %p no lockers detected\n", __func__, rbd_dev);
++		lockers = NULL;
+ 		goto out;
+ 	}
+ 
+ 	if (strcmp(lock_tag, RBD_LOCK_TAG)) {
+ 		rbd_warn(rbd_dev, "locked by external mechanism, tag %s",
+ 			 lock_tag);
+-		ret = -EBUSY;
+-		goto out;
++		goto err_busy;
+ 	}
+ 
+ 	if (lock_type == CEPH_CLS_LOCK_SHARED) {
+ 		rbd_warn(rbd_dev, "shared lock type detected");
+-		ret = -EBUSY;
+-		goto out;
++		goto err_busy;
+ 	}
+ 
+-	if (strncmp((*lockers)[0].id.cookie, RBD_LOCK_COOKIE_PREFIX,
++	WARN_ON(num_lockers != 1);
++	if (strncmp(lockers[0].id.cookie, RBD_LOCK_COOKIE_PREFIX,
+ 		    strlen(RBD_LOCK_COOKIE_PREFIX))) {
+ 		rbd_warn(rbd_dev, "locked by external mechanism, cookie %s",
+-			 (*lockers)[0].id.cookie);
+-		ret = -EBUSY;
+-		goto out;
++			 lockers[0].id.cookie);
++		goto err_busy;
+ 	}
+ 
+ out:
+ 	kfree(lock_tag);
+-	return ret;
++	return lockers;
++
++err_busy:
++	kfree(lock_tag);
++	ceph_free_lockers(lockers, num_lockers);
++	return ERR_PTR(-EBUSY);
  }
  
--static struct dm_cache_policy *__smq_create(dm_cblock_t cache_size,
--					    sector_t origin_size,
--					    sector_t cache_block_size,
--					    bool mimic_mq,
--					    bool migrations_allowed)
-+static struct dm_cache_policy *
-+__smq_create(dm_cblock_t cache_size, sector_t origin_size, sector_t cache_block_size,
-+	     bool mimic_mq, bool migrations_allowed, bool cleaner)
+ static int find_watcher(struct rbd_device *rbd_dev,
+@@ -3947,51 +3960,56 @@ out:
+ static int rbd_try_lock(struct rbd_device *rbd_dev)
  {
- 	unsigned int i;
- 	unsigned int nr_sentinels_per_queue = 2u * NR_CACHE_LEVELS;
-@@ -1813,6 +1817,7 @@ static struct dm_cache_policy *__smq_cre
- 		goto bad_btracker;
+ 	struct ceph_client *client = rbd_dev->rbd_client->client;
+-	struct ceph_locker *lockers;
+-	u32 num_lockers;
++	struct ceph_locker *locker;
+ 	int ret;
  
- 	mq->migrations_allowed = migrations_allowed;
-+	mq->cleaner = cleaner;
+ 	for (;;) {
++		locker = NULL;
++
+ 		ret = rbd_lock(rbd_dev);
+ 		if (ret != -EBUSY)
+-			return ret;
++			goto out;
  
- 	return &mq->policy;
+ 		/* determine if the current lock holder is still alive */
+-		ret = get_lock_owner_info(rbd_dev, &lockers, &num_lockers);
+-		if (ret)
+-			return ret;
+-
+-		if (num_lockers == 0)
++		locker = get_lock_owner_info(rbd_dev);
++		if (IS_ERR(locker)) {
++			ret = PTR_ERR(locker);
++			locker = NULL;
++			goto out;
++		}
++		if (!locker)
+ 			goto again;
  
-@@ -1836,21 +1841,24 @@ static struct dm_cache_policy *smq_creat
- 					  sector_t origin_size,
- 					  sector_t cache_block_size)
- {
--	return __smq_create(cache_size, origin_size, cache_block_size, false, true);
-+	return __smq_create(cache_size, origin_size, cache_block_size,
-+			    false, true, false);
+-		ret = find_watcher(rbd_dev, lockers);
++		ret = find_watcher(rbd_dev, locker);
+ 		if (ret)
+ 			goto out; /* request lock or error */
+ 
+ 		rbd_warn(rbd_dev, "breaking header lock owned by %s%llu",
+-			 ENTITY_NAME(lockers[0].id.name));
++			 ENTITY_NAME(locker->id.name));
+ 
+ 		ret = ceph_monc_blocklist_add(&client->monc,
+-					      &lockers[0].info.addr);
++					      &locker->info.addr);
+ 		if (ret) {
+-			rbd_warn(rbd_dev, "blocklist of %s%llu failed: %d",
+-				 ENTITY_NAME(lockers[0].id.name), ret);
++			rbd_warn(rbd_dev, "failed to blocklist %s%llu: %d",
++				 ENTITY_NAME(locker->id.name), ret);
+ 			goto out;
+ 		}
+ 
+ 		ret = ceph_cls_break_lock(&client->osdc, &rbd_dev->header_oid,
+ 					  &rbd_dev->header_oloc, RBD_LOCK_NAME,
+-					  lockers[0].id.cookie,
+-					  &lockers[0].id.name);
+-		if (ret && ret != -ENOENT)
++					  locker->id.cookie, &locker->id.name);
++		if (ret && ret != -ENOENT) {
++			rbd_warn(rbd_dev, "failed to break header lock: %d",
++				 ret);
+ 			goto out;
++		}
+ 
+ again:
+-		ceph_free_lockers(lockers, num_lockers);
++		free_locker(locker);
+ 	}
+ 
+ out:
+-	ceph_free_lockers(lockers, num_lockers);
++	free_locker(locker);
+ 	return ret;
  }
  
- static struct dm_cache_policy *mq_create(dm_cblock_t cache_size,
- 					 sector_t origin_size,
- 					 sector_t cache_block_size)
- {
--	return __smq_create(cache_size, origin_size, cache_block_size, true, true);
-+	return __smq_create(cache_size, origin_size, cache_block_size,
-+			    true, true, false);
- }
- 
- static struct dm_cache_policy *cleaner_create(dm_cblock_t cache_size,
- 					      sector_t origin_size,
- 					      sector_t cache_block_size)
- {
--	return __smq_create(cache_size, origin_size, cache_block_size, false, false);
-+	return __smq_create(cache_size, origin_size, cache_block_size,
-+			    false, false, true);
- }
- 
- /*----------------------------------------------------------------*/
 
 
