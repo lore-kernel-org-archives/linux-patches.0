@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C091F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8E5C433C7;
-	Tue,  1 Aug 2023 09:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247151F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C5E1C433C7;
+	Tue,  1 Aug 2023 09:39:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882771;
-	bh=mXIVyBKcZTTKoFbBaFMpC2ju2+x+K8fEARmph0vdraw=;
+	s=korg; t=1690882774;
+	bh=T0PPXgufBph/UaoXC+Qp51QV/sijMBGbEccxd9zQBng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SXcDCwA/6rKKGsPpTsbceHVfgTkrhIxxkmSsUuxqzvrKmi2Rl6asO4ZvfbEKUFXq4
-	 1oHwBrxEbft9I1tKTtyo5ODC1D5xT7M2qJit2XrEOv3gsisFBlbgLZ4lRPZUHrTprR
-	 b2FGguPB0a7jzEDDyTsSFMnxJz1MJhxmjGUDQROk=
+	b=iKGAry6X106buxVDjTf6NACezIMA6xMb8yleqQO5CDm3CNqpOXi/uJmubGxE/jsR8
+	 k6M8TPgLoWqXVXQOdPzgCUwRV+Hf+RmVC6XF8iwce2hPNOd/vbQu3LPcQe/XEtca4F
+	 +XxQFLUJjFLfdOoiKPo7QMPyS3e9upx3imDj4jn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 225/228] selftests: mptcp: sockopt: use iptables-legacy if available
-Date: Tue,  1 Aug 2023 11:21:23 +0200
-Message-ID: <20230801091930.977104536@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Kees Cook <keescook@chromium.org>,
+	"Luis R. Rodriguez" <mcgrof@ruslug.rutgers.edu>,
+	Scott Branden <sbranden@broadcom.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Brian Norris <briannorris@chromium.org>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Dan Carpenter <dan.carpenter@linaro.org>
+Subject: [PATCH 6.1 226/228] test_firmware: return ENOMEM instead of ENOSPC on failed memory allocation
+Date: Tue,  1 Aug 2023 11:21:24 +0200
+Message-ID: <20230801091931.014786810@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -35,93 +41,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 
-commit a5a5990c099dd354e05e89ee77cd2dbf6655d4a1 upstream.
+commit 7dae593cd226a0bca61201cf85ceb9335cf63682 upstream.
 
-IPTables commands using 'iptables-nft' fail on old kernels, at least
-on v5.15 because it doesn't see the default IPTables chains:
+In a couple of situations like
 
-  $ iptables -L
-  iptables/1.8.2 Failed to initialize nft: Protocol not supported
+	name = kstrndup(buf, count, GFP_KERNEL);
+	if (!name)
+		return -ENOSPC;
 
-As a first step before switching to NFTables, we can use iptables-legacy
-if available.
+the error is not actually "No space left on device", but "Out of memory".
 
-Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
-Fixes: dc65fe82fb07 ("selftests: mptcp: add packet mark test case")
-Cc: stable@vger.kernel.org
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+It is semantically correct to return -ENOMEM in all failed kstrndup()
+and kzalloc() cases in this driver, as it is not a problem with disk
+space, but with kernel memory allocator failing allocation.
+
+The semantically correct should be:
+
+        name = kstrndup(buf, count, GFP_KERNEL);
+        if (!name)
+                return -ENOMEM;
+
+Cc: Dan Carpenter <error27@gmail.com>
+Cc: Takashi Iwai <tiwai@suse.de>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: "Luis R. Rodriguez" <mcgrof@ruslug.rutgers.edu>
+Cc: Scott Branden <sbranden@broadcom.com>
+Cc: Hans de Goede <hdegoede@redhat.com>
+Cc: Brian Norris <briannorris@chromium.org>
+Fixes: c92316bf8e948 ("test_firmware: add batched firmware tests")
+Fixes: 0a8adf584759c ("test: add firmware_class loader test")
+Fixes: 548193cba2a7d ("test_firmware: add support for firmware_request_platform")
+Fixes: eb910947c82f9 ("test: firmware_class: add asynchronous request trigger")
+Fixes: 061132d2b9c95 ("test_firmware: add test custom fallback trigger")
+Fixes: 7feebfa487b92 ("test_firmware: add support for request_firmware_into_buf")
+Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Message-ID: <20230606070808.9300-1-mirsad.todorovac@alu.unizg.hr>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_sockopt.sh |   24 +++++++++++----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ lib/test_firmware.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_sockopt.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_sockopt.sh
-@@ -13,13 +13,15 @@ timeout_poll=30
- timeout_test=$((timeout_poll * 2 + 1))
- mptcp_connect=""
- do_all_tests=1
-+iptables="iptables"
-+ip6tables="ip6tables"
- 
- add_mark_rules()
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -214,7 +214,7 @@ static int __kstrncpy(char **dst, const
  {
- 	local ns=$1
- 	local m=$2
+ 	*dst = kstrndup(name, count, gfp);
+ 	if (!*dst)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 	return count;
+ }
  
--	for t in iptables ip6tables; do
-+	for t in ${iptables} ${ip6tables}; do
- 		# just to debug: check we have multiple subflows connection requests
- 		ip netns exec $ns $t -A OUTPUT -p tcp --syn -m mark --mark $m -j ACCEPT
+@@ -671,7 +671,7 @@ static ssize_t trigger_request_store(str
  
-@@ -92,14 +94,14 @@ if [ $? -ne 0 ];then
- 	exit $ksft_skip
- fi
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
  
--iptables -V > /dev/null 2>&1
--if [ $? -ne 0 ];then
-+# Use the legacy version if available to support old kernel versions
-+if iptables-legacy -V &> /dev/null; then
-+	iptables="iptables-legacy"
-+	ip6tables="ip6tables-legacy"
-+elif ! iptables -V &> /dev/null; then
- 	echo "SKIP: Could not run all tests without iptables tool"
- 	exit $ksft_skip
--fi
--
--ip6tables -V > /dev/null 2>&1
--if [ $? -ne 0 ];then
-+elif ! ip6tables -V &> /dev/null; then
- 	echo "SKIP: Could not run all tests without ip6tables tool"
- 	exit $ksft_skip
- fi
-@@ -109,10 +111,10 @@ check_mark()
- 	local ns=$1
- 	local af=$2
+ 	pr_info("loading '%s'\n", name);
  
--	tables=iptables
-+	tables=${iptables}
+@@ -719,7 +719,7 @@ static ssize_t trigger_request_platform_
  
- 	if [ $af -eq 6 ];then
--		tables=ip6tables
-+		tables=${ip6tables}
- 	fi
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
  
- 	counters=$(ip netns exec $ns $tables -v -L OUTPUT | grep DROP)
-@@ -314,8 +316,8 @@ do_tcpinq_tests()
- {
- 	local lret=0
+ 	pr_info("inserting test platform fw '%s'\n", name);
+ 	efi_embedded_fw.name = name;
+@@ -772,7 +772,7 @@ static ssize_t trigger_async_request_sto
  
--	ip netns exec "$ns1" iptables -F
--	ip netns exec "$ns1" ip6tables -F
-+	ip netns exec "$ns1" ${iptables} -F
-+	ip netns exec "$ns1" ${ip6tables} -F
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
  
- 	if ! mptcp_lib_kallsyms_has "mptcp_ioctl$"; then
- 		echo "INFO: TCP_INQ not supported: SKIP"
+ 	pr_info("loading '%s'\n", name);
+ 
+@@ -817,7 +817,7 @@ static ssize_t trigger_custom_fallback_s
+ 
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 
+ 	pr_info("loading '%s' using custom fallback mechanism\n", name);
+ 
+@@ -868,7 +868,7 @@ static int test_fw_run_batch_request(voi
+ 
+ 		test_buf = kzalloc(TEST_FIRMWARE_BUF_SIZE, GFP_KERNEL);
+ 		if (!test_buf)
+-			return -ENOSPC;
++			return -ENOMEM;
+ 
+ 		if (test_fw_config->partial)
+ 			req->rc = request_partial_firmware_into_buf
 
 
