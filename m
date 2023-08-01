@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12DBD1F95A
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:43:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88380C433B8;
-	Tue,  1 Aug 2023 09:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14F41F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:43:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54BABC433C9;
+	Tue,  1 Aug 2023 09:43:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883029;
-	bh=4RkXQ/cpYQTA4qoN1lOpq68AzvAQRfWxxa0hjcGRXto=;
+	s=korg; t=1690883032;
+	bh=LQxBeP3jiXLti73sf7JueMSehpo0kMd32jrw08jXhxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PNUhKazgZB/Rp9wyrDy3N7vhvLMrImXMxcjxW6Sv8ZjFQ+F5/KspPUYSOx4aPw8X0
-	 aHuKfWziR7nEOJakZDEVAlZm4cUIYZkFP+OuAO6Xnb4B0YDBldFDPDGumy7uDcleDM
-	 NyIkyEr42j8FZgqOlH1dufiylo0RVVEjzaF3PQkQ=
+	b=jgkeLQY8LcYkGWRVHGAWb+7iXg6smepikVOftR3J+ff/qD1MlCDynmoaJx/vWHaBc
+	 yZWtS6DZLfUHe9//DPqJhbw1aQc+nkX9XQB5lJN/WnbCFwShELw9sESkHUE7L67O9W
+	 H35voz7QKdUXH+x1JXYBRQaYfGjW3xsvSz5GmBwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Rich <kevinrich1337@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 089/239] netfilter: nf_tables: skip immediate deactivate in _PREPARE_ERROR
-Date: Tue,  1 Aug 2023 11:19:13 +0200
-Message-ID: <20230801091928.938959332@linuxfoundation.org>
+	Wang Ming <machel@vivo.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.4 063/239] i40e: Fix an NULL vs IS_ERR() bug for debugfs_create_dir()
+Date: Tue,  1 Aug 2023 11:18:47 +0200
+Message-ID: <20230801091927.932957572@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,87 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Wang Ming <machel@vivo.com>
 
-[ Upstream commit 0a771f7b266b02d262900c75f1e175c7fe76fec2 ]
+[ Upstream commit 043b1f185fb0f3939b7427f634787706f45411c4 ]
 
-On error when building the rule, the immediate expression unbinds the
-chain, hence objects can be deactivated by the transaction records.
+The debugfs_create_dir() function returns error pointers.
+It never returns NULL. Most incorrect error checks were fixed,
+but the one in i40e_dbg_init() was forgotten.
 
-Otherwise, it is possible to trigger the following warning:
+Fix the remaining error check.
 
- WARNING: CPU: 3 PID: 915 at net/netfilter/nf_tables_api.c:2013 nf_tables_chain_destroy+0x1f7/0x210 [nf_tables]
- CPU: 3 PID: 915 Comm: chain-bind-err- Not tainted 6.1.39 #1
- RIP: 0010:nf_tables_chain_destroy+0x1f7/0x210 [nf_tables]
-
-Fixes: 4bedf9eee016 ("netfilter: nf_tables: fix chain binding transaction logic")
-Reported-by: Kevin Rich <kevinrich1337@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 02e9c290814c ("i40e: debugfs interface")
+Signed-off-by: Wang Ming <machel@vivo.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_immediate.c | 27 ++++++++++++++++++---------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_immediate.c b/net/netfilter/nft_immediate.c
-index 407d7197f75bb..fccb3cf7749c1 100644
---- a/net/netfilter/nft_immediate.c
-+++ b/net/netfilter/nft_immediate.c
-@@ -125,15 +125,27 @@ static void nft_immediate_activate(const struct nft_ctx *ctx,
- 	return nft_data_hold(&priv->data, nft_dreg_to_type(priv->dreg));
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_debugfs.c b/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
+index 9954493cd4489..62497f5565c59 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
+@@ -1839,7 +1839,7 @@ void i40e_dbg_pf_exit(struct i40e_pf *pf)
+ void i40e_dbg_init(void)
+ {
+ 	i40e_dbg_root = debugfs_create_dir(i40e_driver_name, NULL);
+-	if (!i40e_dbg_root)
++	if (IS_ERR(i40e_dbg_root))
+ 		pr_info("init of debugfs failed\n");
  }
  
-+static void nft_immediate_chain_deactivate(const struct nft_ctx *ctx,
-+					   struct nft_chain *chain,
-+					   enum nft_trans_phase phase)
-+{
-+	struct nft_ctx chain_ctx;
-+	struct nft_rule *rule;
-+
-+	chain_ctx = *ctx;
-+	chain_ctx.chain = chain;
-+
-+	list_for_each_entry(rule, &chain->rules, list)
-+		nft_rule_expr_deactivate(&chain_ctx, rule, phase);
-+}
-+
- static void nft_immediate_deactivate(const struct nft_ctx *ctx,
- 				     const struct nft_expr *expr,
- 				     enum nft_trans_phase phase)
- {
- 	const struct nft_immediate_expr *priv = nft_expr_priv(expr);
- 	const struct nft_data *data = &priv->data;
--	struct nft_ctx chain_ctx;
- 	struct nft_chain *chain;
--	struct nft_rule *rule;
- 
- 	if (priv->dreg == NFT_REG_VERDICT) {
- 		switch (data->verdict.code) {
-@@ -143,20 +155,17 @@ static void nft_immediate_deactivate(const struct nft_ctx *ctx,
- 			if (!nft_chain_binding(chain))
- 				break;
- 
--			chain_ctx = *ctx;
--			chain_ctx.chain = chain;
--
--			list_for_each_entry(rule, &chain->rules, list)
--				nft_rule_expr_deactivate(&chain_ctx, rule, phase);
--
- 			switch (phase) {
- 			case NFT_TRANS_PREPARE_ERROR:
- 				nf_tables_unbind_chain(ctx, chain);
--				fallthrough;
-+				nft_deactivate_next(ctx->net, chain);
-+				break;
- 			case NFT_TRANS_PREPARE:
-+				nft_immediate_chain_deactivate(ctx, chain, phase);
- 				nft_deactivate_next(ctx->net, chain);
- 				break;
- 			default:
-+				nft_immediate_chain_deactivate(ctx, chain, phase);
- 				nft_chain_del(chain);
- 				chain->bound = false;
- 				nft_use_dec(&chain->table->use);
 -- 
 2.39.2
 
