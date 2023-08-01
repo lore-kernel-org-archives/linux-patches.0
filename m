@@ -1,124 +1,88 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f67.google.com (mail-io1-f67.google.com [209.85.166.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D144A235A3
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 19:14:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4E6C433C7;
-	Tue,  1 Aug 2023 19:14:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1690917271;
-	bh=JIJPdUANHrD6Yb6wBmrW7GHkKKSJRvPopi+aSXxrjwU=;
-	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
-	b=K3zM9rcgo3wdtzWy15KNTAuv1/KkedB/OkEMO8niKImrZX2KnF8/+q1k9MF4shlrF
-	 /8JAwuV0xhzD8drIZSDYedqbz3E4QhMeOGA1jjT+RP4e+RzuEXoEvsQEh3W97CCtKZ
-	 2PhC0Wy4cepJaTvG2cSfrtHbYTJveoeMatC7wWG8vQ8S3tmUo2y8U5MQidSwBB0Nxu
-	 kaSseiqQ88kh1EjduVUFyB17HARd8hBk1+d5tgW/QWQGTvrSaVcjfqP+c/nOzgFjpO
-	 YC63toNsjnwQ10vRnSH7Kyo35ryDaUelBVz1RtbfOfFcbhlJ0wqxHMgsCYZ0OIM+fl
-	 jgXq/t7kXF8wg==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id D1E36CE0908; Tue,  1 Aug 2023 12:14:30 -0700 (PDT)
-Date: Tue, 1 Aug 2023 12:14:30 -0700
-From: "Paul E. McKenney" <paulmck@kernel.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: Peter Zijlstra <peterz@infradead.org>, Roy Hopkins <rhopkins@suse.de>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	Pavel Machek <pavel@denx.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	rcu@vger.kernel.org, Ingo Molnar <mingo@kernel.org>
-Subject: Re: scheduler problems in -next (was: Re: [PATCH 6.4 000/227]
- 6.4.7-rc1 review)
-Message-ID: <aec97d62-a07d-45f3-9cf8-5a7ad0e98e47@paulmck-laptop>
-Reply-To: paulmck@kernel.org
-References: <20230731141934.GK29590@hirez.programming.kicks-ass.net>
- <20230731143954.GB37820@hirez.programming.kicks-ass.net>
- <f5a18aa3-9db7-6ad2-33d5-3335a18e4e2f@roeck-us.net>
- <20230731145232.GM29590@hirez.programming.kicks-ass.net>
- <7ff2a2393d78275b14ff867f3af902b5d4b93ea2.camel@suse.de>
- <20230731161452.GA40850@hirez.programming.kicks-ass.net>
- <baa58a8e-54f0-2309-b34e-d62999a452a1@roeck-us.net>
- <20230731211517.GA51835@hirez.programming.kicks-ass.net>
- <a05743a3-4dec-6af7-302f-d1d2a0db7d3e@roeck-us.net>
- <8215f037-63e9-4e92-8403-c5431ada9cc9@paulmck-laptop>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC1E253CF
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 20:08:15 +0000 (UTC)
+Received: by mail-io1-f67.google.com with SMTP id ca18e2360f4ac-77dcff76e35so73432239f.1
+        for <patches@lists.linux.dev>; Tue, 01 Aug 2023 13:08:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1690920495; x=1691525295;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qGwXx3KOfKZdlW9q4qIboZeupOtTw2c7/yPWU17zfUY=;
+        b=cTmSS8ZCb3+sHnVnW+0ROnlOAFrjtMNiSg4vWSXaQ7eEiABh/knJcF6+qc41JWMoEb
+         Ge5drTPwhRhrEjQO/+4tixsrBxjz3t73WLoU6lsD5JknlzjX1oxhkiuszFdOX1cAjUIx
+         MDAOlmEP15Mx5lb3xrh1HTpLiMWDiU7H/Ncq8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690920495; x=1691525295;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qGwXx3KOfKZdlW9q4qIboZeupOtTw2c7/yPWU17zfUY=;
+        b=lBpEWCLOyh+cGBlorFW4ppA7Mr+ZQRhPvcjjCBmjJRzbmK8ZbkGiageVG4QCl8RgWG
+         k1WeU//qAcsX1QCDkP+k0MXCoC1CrbU/NTbev6tQig/N8s4ILaOQvbezPMiyGEjQlsMI
+         m3AQqMtJj8cBX6kIQZnK6JodPPiSH1mFs8da03OjyLsxJfsRb810gwtU5+W4wQ1FCxHd
+         yIzykOApgdhet5x5N/2xu83yeOUvsKujhwBswi6/jns8lZHYyzIJ6VWWPSpZWpzWdW5M
+         C5bFu/bms+lfiq6UStlRMj2HI0+G2eiQCMu1xDMM7QVA6xiPCX71QtFTsg4rokLyZLw6
+         6bJw==
+X-Gm-Message-State: ABy/qLaV/GI9JFAj7LeZzEY7k0MokcD7Z9jtSuIvpGYExDcko/yllRK+
+	NIuOF3ZvDvy6/IkRv3BoJEmi4A==
+X-Google-Smtp-Source: APBJJlEfXOObYKBwXKqr86KaNuXOU6D7KQEKoOJ2zSv9v6mNaZX5XkMSztmkOL3XIqru6Hmri1r7LA==
+X-Received: by 2002:a6b:c3c2:0:b0:790:958e:a667 with SMTP id t185-20020a6bc3c2000000b00790958ea667mr8992208iof.2.1690920494927;
+        Tue, 01 Aug 2023 13:08:14 -0700 (PDT)
+Received: from [192.168.1.128] ([38.15.45.1])
+        by smtp.gmail.com with ESMTPSA id s4-20020a6bd304000000b0076ffebfc9fasm4161813iob.47.2023.08.01.13.08.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Aug 2023 13:08:14 -0700 (PDT)
+Message-ID: <87daf7ca-7ae6-1a21-90e3-5b109c4f3d12@linuxfoundation.org>
+Date: Tue, 1 Aug 2023 14:08:13 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8215f037-63e9-4e92-8403-c5431ada9cc9@paulmck-laptop>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 6.4 000/239] 6.4.8-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, Shuah Khan <skhan@linuxfoundation.org>
+References: <20230801091925.659598007@linuxfoundation.org>
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Aug 01, 2023 at 12:11:04PM -0700, Paul E. McKenney wrote:
-> On Tue, Aug 01, 2023 at 10:32:45AM -0700, Guenter Roeck wrote:
-> > On 7/31/23 14:15, Peter Zijlstra wrote:
-> > > On Mon, Jul 31, 2023 at 09:34:29AM -0700, Guenter Roeck wrote:
-> > > > > Ha!, I was poking around the same thing. My hack below seems to (so far,
-> > > > > <20 boots) help things.
-> > > > > 
-> > > > 
-> > > > So, dumb question:
-> > > > How comes this bisects to "sched/fair: Remove sched_feat(START_DEBIT)" ?
-> > > 
-> > > That commit changes the timings of things; dumb luck otherwise.
-> > 
-> > Kind of scary. So I only experienced the problem because the START_DEBIT patch
-> > happened to be queued roughly at the same time, and it might otherwise have
-> > found its way unnoticed into the upstream kernel.
+On 8/1/23 03:17, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.4.8 release.
+> There are 239 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 03 Aug 2023 09:18:38 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.8-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-And just to set the record straight, this bug has been in mainline for
-about a year, since v5.19.
+Compiled and booted on my test system. No dmesg regressions.
 
-							Thanx, Paul
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-> >                                                   That makes me wonder if this
-> > or other similar patches may uncover similar problems elsewhere in the kernel
-> > (i.e., either hide new or existing race conditions or expose existing ones).
-> > 
-> > This in turn makes me wonder if it would be possible to define a test which
-> > would uncover such problems without the START_DEBIT patch. Any idea ?
-> 
-> Thank you all for tracking this down!
-> 
-> One way is to put a schedule_timeout_idle(100) right before the call to
-> rcu_tasks_one_gp() from synchronize_rcu_tasks_generic().  That is quite
-> specific to this particular issue, but it does have the virtue of making
-> it actually happen in my testing.
-> 
-> There have been a few academic projects that inject delays at points
-> chosen by various heuristics plus some randomness.  But this would be
-> a bit of a challenge to those because each kernel only passes through
-> this window once at boot time.
-> 
-> Please see below for my preferred fix.  Does this work for you guys?
-> 
-> Back to figuring out why recent kernels occasionally to blow up all
-> rcutorture guest OSes...
-> 
-> 							Thanx, Paul
-> 
-> ------------------------------------------------------------------------
-> 
-> diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-> index 7294be62727b..2d5b8385c357 100644
-> --- a/kernel/rcu/tasks.h
-> +++ b/kernel/rcu/tasks.h
-> @@ -570,10 +570,12 @@ static void rcu_tasks_one_gp(struct rcu_tasks *rtp, bool midboot)
->  	if (unlikely(midboot)) {
->  		needgpcb = 0x2;
->  	} else {
-> +		mutex_unlock(&rtp->tasks_gp_mutex);
->  		set_tasks_gp_state(rtp, RTGS_WAIT_CBS);
->  		rcuwait_wait_event(&rtp->cbs_wait,
->  				   (needgpcb = rcu_tasks_need_gpcb(rtp)),
->  				   TASK_IDLE);
-> +		mutex_lock(&rtp->tasks_gp_mutex);
->  	}
->  
->  	if (needgpcb & 0x2) {
+thanks,
+-- Shuah
