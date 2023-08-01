@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44BF1F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:30:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674EFC433C9;
-	Tue,  1 Aug 2023 09:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2CDF1F95E
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:30:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2493CC433CB;
+	Tue,  1 Aug 2023 09:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882247;
-	bh=rDz+xYDGJkjUgseg2h1usRidbWl7V2tmGo4HId7wXMY=;
+	s=korg; t=1690882250;
+	bh=uIsY3qB5y7J/YErIoaxKxt45A82bLthalDtnSBT7pI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JaA+PO7COshJCNMXZqNjpCX8MMHgp6H32J2L2bTq0K6LecP01CGcmJ3LXnuBE0EcD
-	 Wvz9zgF3tXlSZpc6nQgoi5i22C75nbMJlT/gOfgcKYmWMF1bddMj3Td+xI6GSTaGRd
-	 ECXmiZ5BPLdwhy3td4CAjHcRk6+ddl3IjnDjO0o4=
+	b=w5OLeLw4GRx72KJeUA4aL/X2154HG+K8yfprxsGx4mv3wRIUxIZ7YeCxM0H7lQFER
+	 a/GeYmhOZXCbz1qKeLbHDbDosOwpWlzxXaIeXRTV+IcprrJGbDADn1xHRXO9QT9PF7
+	 fKXxUqnvq6tWVb9nSc0UWjoh789rEc67kbgrdz/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Markus Elfring <elfring@users.sourceforge.net>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/228] drm/amd/display: Include surface of unaffected streams
-Date: Tue,  1 Aug 2023 11:18:16 +0200
-Message-ID: <20230801091924.270192789@linuxfoundation.org>
+Subject: [PATCH 6.1 021/228] i2c: Improve size determinations
+Date: Tue,  1 Aug 2023 11:17:59 +0200
+Message-ID: <20230801091923.628935798@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -37,110 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+From: Markus Elfring <elfring@users.sourceforge.net>
 
-[ Upstream commit f6ae69f49fcf697b6ffa93d58eb3746897f61cf8 ]
+[ Upstream commit 06e989578232da33a7fe96b04191b862af8b2cec ]
 
-The commit stream function does not include surfaces of unaffected
-streams, which may lead to some blank screens during mode change in some
-edge cases. This commit adds surfaces of unaffected streams followed by
-kernel-doc for documenting some of the fields that participate in this
-change.
+Replace the specification of a data structure by a pointer dereference
+as the parameter for the operator "sizeof" to make the corresponding
+size determination a bit safer according to the Linux coding style
+convention.
 
-v2: squash in kerneldoc warning fix (Alex)
+This issue was detected by using the Coccinelle software.
 
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Co-developed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 59de751e3845 ("drm/amd/display: add ODM case when looking for first split pipe")
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Stable-dep-of: 05f933d5f731 ("i2c: nomadik: Remove a useless call in the remove function")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c   | 12 +++++++++++-
- drivers/gpu/drm/amd/display/dc/dc.h        | 15 +++++++++++++--
- drivers/gpu/drm/amd/display/dc/dc_stream.h |  4 ++++
- 3 files changed, 28 insertions(+), 3 deletions(-)
+ drivers/i2c/busses/i2c-nomadik.c | 2 +-
+ drivers/i2c/busses/i2c-sh7760.c  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 31791c557c8f8..cbbad496cfc63 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -1930,9 +1930,10 @@ enum dc_status dc_commit_streams(struct dc *dc,
- 				 struct dc_stream_state *streams[],
- 				 uint8_t stream_count)
- {
--	int i;
-+	int i, j;
- 	struct dc_state *context;
- 	enum dc_status res = DC_OK;
-+	struct dc_validation_set set[MAX_STREAMS] = {0};
+diff --git a/drivers/i2c/busses/i2c-nomadik.c b/drivers/i2c/busses/i2c-nomadik.c
+index 05eaae5aeb180..5004b9dd98563 100644
+--- a/drivers/i2c/busses/i2c-nomadik.c
++++ b/drivers/i2c/busses/i2c-nomadik.c
+@@ -970,7 +970,7 @@ static int nmk_i2c_probe(struct amba_device *adev, const struct amba_id *id)
+ 	struct i2c_vendor_data *vendor = id->data;
+ 	u32 max_fifo_threshold = (vendor->fifodepth / 2) - 1;
  
- 	if (!streams_changed(dc, streams, stream_count))
- 		return res;
-@@ -1941,8 +1942,17 @@ enum dc_status dc_commit_streams(struct dc *dc,
- 
- 	for (i = 0; i < stream_count; i++) {
- 		struct dc_stream_state *stream = streams[i];
-+		struct dc_stream_status *status = dc_stream_get_status(stream);
- 
- 		dc_stream_log(dc, stream);
-+
-+		set[i].stream = stream;
-+
-+		if (status) {
-+			set[i].plane_count = status->plane_count;
-+			for (j = 0; j < status->plane_count; j++)
-+				set[i].plane_states[j] = status->plane_states[j];
-+		}
+-	dev = devm_kzalloc(&adev->dev, sizeof(struct nmk_i2c_dev), GFP_KERNEL);
++	dev = devm_kzalloc(&adev->dev, sizeof(*dev), GFP_KERNEL);
+ 	if (!dev) {
+ 		ret = -ENOMEM;
+ 		goto err_no_mem;
+diff --git a/drivers/i2c/busses/i2c-sh7760.c b/drivers/i2c/busses/i2c-sh7760.c
+index a0ccc5d009874..051b904cb35f6 100644
+--- a/drivers/i2c/busses/i2c-sh7760.c
++++ b/drivers/i2c/busses/i2c-sh7760.c
+@@ -443,7 +443,7 @@ static int sh7760_i2c_probe(struct platform_device *pdev)
+ 		goto out0;
  	}
  
- 	context = dc_create_state(dc);
-diff --git a/drivers/gpu/drm/amd/display/dc/dc.h b/drivers/gpu/drm/amd/display/dc/dc.h
-index 78b7dbd23a3b7..e2c5a68bbc807 100644
---- a/drivers/gpu/drm/amd/display/dc/dc.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc.h
-@@ -1274,12 +1274,23 @@ void dc_post_update_surfaces_to_stream(
- 
- #include "dc_stream.h"
- 
--/*
-- * Structure to store surface/stream associations for validation
-+/**
-+ * struct dc_validation_set - Struct to store surface/stream associations for validation
-  */
- struct dc_validation_set {
-+	/**
-+	 * @stream: Stream state properties
-+	 */
- 	struct dc_stream_state *stream;
-+
-+	/**
-+	 * @plane_state: Surface state
-+	 */
- 	struct dc_plane_state *plane_states[MAX_SURFACES];
-+
-+	/**
-+	 * @plane_count: Total of active planes
-+	 */
- 	uint8_t plane_count;
- };
- 
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_stream.h b/drivers/gpu/drm/amd/display/dc/dc_stream.h
-index 9e6025c98db91..73dccd485895d 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_stream.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_stream.h
-@@ -41,6 +41,10 @@ struct timing_sync_info {
- struct dc_stream_status {
- 	int primary_otg_inst;
- 	int stream_enc_inst;
-+
-+	/**
-+	 * @plane_count: Total of planes attached to a single stream
-+	 */
- 	int plane_count;
- 	int audio_inst;
- 	struct timing_sync_info timing_sync_info;
+-	id = kzalloc(sizeof(struct cami2c), GFP_KERNEL);
++	id = kzalloc(sizeof(*id), GFP_KERNEL);
+ 	if (!id) {
+ 		ret = -ENOMEM;
+ 		goto out0;
 -- 
 2.39.2
 
