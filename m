@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF90F1FB2B
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:35:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6381DC433C8;
-	Tue,  1 Aug 2023 09:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A931FB2B
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:35:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F689C433C8;
+	Tue,  1 Aug 2023 09:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882502;
-	bh=anNq+DgTWNlMX1ULsb+0b5vq3jTs2vPSLz4jNs/1vmA=;
+	s=korg; t=1690882505;
+	bh=A6+Al5i39VM4XIx65EAS8+h+NSAGGCHmal1OJ1Q5NLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0slums7cGkyWdzZsz8VvOXvszygfhSq0Zck/HvN2M/LKs2iZM3UTlbTFOQo2ibcTo
-	 h60+xkh3iW2Ri8/lu+A5GAhsLRuQmSKHjn0kDijZVZ5pEPAJ8IXz4T6r7dWtYqMPJb
-	 zPDW5ShqfeL0kK2zL/3ZkeJXL9OCYlXa/oNk2GFM=
+	b=EEQjVD7s82BuoXKMDJUrrrva7Vm6JN3P9wmGiNLRw/Yd+KPW3ucZrV837vWmBu7/W
+	 IiS87Q0ireavvMpwPBmGYLNEjYhD2VJwdTHCwRxDDdcWLCpv/L7qlNurU96pdlXQId
+	 bxeWIyFJVx9m9ckvgu98HcGdChKdgzJrSLe+Wmn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Stefano Stabellini <stefano.stabellini@amd.com>,
+	Petr Mladek <pmladek@suse.com>,
+	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 129/228] drm/i915: Fix an error handling path in igt_write_huge()
-Date: Tue,  1 Aug 2023 11:19:47 +0200
-Message-ID: <20230801091927.408426825@linuxfoundation.org>
+Subject: [PATCH 6.1 130/228] xenbus: check xen_domain in xenbus_probe_initcall
+Date: Tue,  1 Aug 2023 11:19:48 +0200
+Message-ID: <20230801091927.441709632@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -37,43 +37,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Stefano Stabellini <sstabellini@kernel.org>
 
-[ Upstream commit e354f67733115b4453268f61e6e072e9b1ea7a2f ]
+[ Upstream commit 0d8f7cc8057890db08c54fe610d8a94af59da082 ]
 
-All error handling paths go to 'out', except this one. Be consistent and
-also branch to 'out' here.
+The same way we already do in xenbus_init.
+Fixes the following warning:
 
-Fixes: c10a652e239e ("drm/i915/selftests: Rework context handling in hugepages selftests")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/7a036b88671312ee9adc01c74ef5b3376f690b76.1689619758.git.christophe.jaillet@wanadoo.fr
-(cherry picked from commit 361ecaadb1ce3c5312c7c4c419271326d43899eb)
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+[  352.175563] Trying to free already-free IRQ 0
+[  352.177355] WARNING: CPU: 1 PID: 88 at kernel/irq/manage.c:1893 free_irq+0xbf/0x350
+[...]
+[  352.213951] Call Trace:
+[  352.214390]  <TASK>
+[  352.214717]  ? __warn+0x81/0x170
+[  352.215436]  ? free_irq+0xbf/0x350
+[  352.215906]  ? report_bug+0x10b/0x200
+[  352.216408]  ? prb_read_valid+0x17/0x20
+[  352.216926]  ? handle_bug+0x44/0x80
+[  352.217409]  ? exc_invalid_op+0x13/0x60
+[  352.217932]  ? asm_exc_invalid_op+0x16/0x20
+[  352.218497]  ? free_irq+0xbf/0x350
+[  352.218979]  ? __pfx_xenbus_probe_thread+0x10/0x10
+[  352.219600]  xenbus_probe+0x7a/0x80
+[  352.221030]  xenbus_probe_thread+0x76/0xc0
+
+Fixes: 5b3353949e89 ("xen: add support for initializing xenstore later as HVM domain")
+Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
+Tested-by: Petr Mladek <pmladek@suse.com>
+Reviewed-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
+
+Link: https://lore.kernel.org/r/alpine.DEB.2.22.394.2307211609140.3118466@ubuntu-linux-20-04-desktop
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gem/selftests/huge_pages.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/xen/xenbus/xenbus_probe.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/gem/selftests/huge_pages.c b/drivers/gpu/drm/i915/gem/selftests/huge_pages.c
-index 436598f19522c..02fe7ea8c5df8 100644
---- a/drivers/gpu/drm/i915/gem/selftests/huge_pages.c
-+++ b/drivers/gpu/drm/i915/gem/selftests/huge_pages.c
-@@ -1185,8 +1185,10 @@ static int igt_write_huge(struct drm_i915_private *i915,
- 	 * times in succession a possibility by enlarging the permutation array.
- 	 */
- 	order = i915_random_order(count * count, &prng);
--	if (!order)
--		return -ENOMEM;
-+	if (!order) {
-+		err = -ENOMEM;
-+		goto out;
-+	}
+diff --git a/drivers/xen/xenbus/xenbus_probe.c b/drivers/xen/xenbus/xenbus_probe.c
+index 58b732dcbfb83..639bf628389ba 100644
+--- a/drivers/xen/xenbus/xenbus_probe.c
++++ b/drivers/xen/xenbus/xenbus_probe.c
+@@ -811,6 +811,9 @@ static int xenbus_probe_thread(void *unused)
  
- 	max_page_size = rounddown_pow_of_two(obj->mm.page_sizes.sg);
- 	max = div_u64(max - size, max_page_size);
+ static int __init xenbus_probe_initcall(void)
+ {
++	if (!xen_domain())
++		return -ENODEV;
++
+ 	/*
+ 	 * Probe XenBus here in the XS_PV case, and also XS_HVM unless we
+ 	 * need to wait for the platform PCI device to come up or
 -- 
 2.40.1
 
