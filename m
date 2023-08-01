@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229CC1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:49:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95730C433CB;
-	Tue,  1 Aug 2023 09:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F3B1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:49:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52981C433B9;
+	Tue,  1 Aug 2023 09:49:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883358;
-	bh=yk1dnTiTN5hhO1OfOdeMulKRxehiVlE+uLyY8efFnfo=;
+	s=korg; t=1690883360;
+	bh=bhI1XMp4LNAjbKRv3x2jUyFYp4WRfZKzqo2vqmpKhps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iYBeseyu8wAu2pNsAOCy1+eCXK/+yEBNrRph2BnWsB6PHk6hRNw3k+aL/UbX7t6V8
-	 wJfZOptFL4bOAqeBkmtGVS6SpSNLJExSYgzzS5ahNE9WWq8yGrW0BNiFe189RC8j4X
-	 ix9DU07qRkylahZ1SHw5EI2RNZqkrBgngSLsAD/0=
+	b=ae72hx082QcDWERL+esz539qwgnCrWT1TJU/f+U0fcX9ChW3dS8E1zEoT+aaUVobq
+	 J80i1KJKKOvoAi02dreGfjVNh1qWtUebF3I8n/NT89MohmYKOSJxGLc0aCs0qlwcsW
+	 c8W6/wT4KPOHSCHRsUV0vVbmj4lXOCp08NIxrIs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksandr Natalenko <oleksandr@natalenko.name>,
-	Phil Elwell <phil@raspberrypi.com>,
-	Andres Freund <andres@anarazel.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.4 207/239] io_uring: gate iowait schedule on having pending requests
-Date: Tue,  1 Aug 2023 11:21:11 +0200
-Message-ID: <20230801091933.281555192@linuxfoundation.org>
+	Kevin Tian <kevin.tian@intel.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.4 208/239] iommufd: Set end correctly when doing batch carry
+Date: Tue,  1 Aug 2023 11:21:12 +0200
+Message-ID: <20230801091933.322306263@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,82 +35,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit 7b72d661f1f2f950ab8c12de7e2bc48bdac8ed69 upstream.
+commit b7c822fa6b7701b17e139f1c562fc24135880ed4 upstream.
 
-A previous commit made all cqring waits marked as iowait, as a way to
-improve performance for short schedules with pending IO. However, for
-use cases that have a special reaper thread that does nothing but
-wait on events on the ring, this causes a cosmetic issue where we
-know have one core marked as being "busy" with 100% iowait.
+Even though the test suite covers this it somehow became obscured that
+this wasn't working.
 
-While this isn't a grave issue, it is confusing to users. Rather than
-always mark us as being in iowait, gate setting of current->in_iowait
-to 1 by whether or not the waiting task has pending requests.
+The test iommufd_ioas.mock_domain.access_domain_destory would blow up
+rarely.
 
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/io-uring/CAMEGJJ2RxopfNQ7GNLhr7X9=bHXKo+G5OOe0LUq=+UgLXsv1Xg@mail.gmail.com/
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217699
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217700
-Reported-by: Oleksandr Natalenko <oleksandr@natalenko.name>
-Reported-by: Phil Elwell <phil@raspberrypi.com>
-Tested-by: Andres Freund <andres@anarazel.de>
-Fixes: 8a796565cec3 ("io_uring: Use io_schedule* in cqring wait")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+end should be set to 1 because this just pushed an item, the carry, to the
+pfns list.
+
+Sometimes the test would blow up with:
+
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 0 P4D 0
+  Oops: 0000 [#1] SMP
+  CPU: 5 PID: 584 Comm: iommufd Not tainted 6.5.0-rc1-dirty #1236
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+  RIP: 0010:batch_unpin+0xa2/0x100 [iommufd]
+  Code: 17 48 81 fe ff ff 07 00 77 70 48 8b 15 b7 be 97 e2 48 85 d2 74 14 48 8b 14 fa 48 85 d2 74 0b 40 0f b6 f6 48 c1 e6 04 48 01 f2 <48> 8b 3a 48 c1 e0 06 89 ca 48 89 de 48 83 e7 f0 48 01 c7 e8 96 dc
+  RSP: 0018:ffffc90001677a58 EFLAGS: 00010246
+  RAX: 00007f7e2646f000 RBX: 0000000000000000 RCX: 0000000000000001
+  RDX: 0000000000000000 RSI: 00000000fefc4c8d RDI: 0000000000fefc4c
+  RBP: ffffc90001677a80 R08: 0000000000000048 R09: 0000000000000200
+  R10: 0000000000030b98 R11: ffffffff81f3bb40 R12: 0000000000000001
+  R13: ffff888101f75800 R14: ffffc90001677ad0 R15: 00000000000001fe
+  FS:  00007f9323679740(0000) GS:ffff8881ba540000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 0000000000000000 CR3: 0000000105ede003 CR4: 00000000003706a0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  Call Trace:
+   <TASK>
+   ? show_regs+0x5c/0x70
+   ? __die+0x1f/0x60
+   ? page_fault_oops+0x15d/0x440
+   ? lock_release+0xbc/0x240
+   ? exc_page_fault+0x4a4/0x970
+   ? asm_exc_page_fault+0x27/0x30
+   ? batch_unpin+0xa2/0x100 [iommufd]
+   ? batch_unpin+0xba/0x100 [iommufd]
+   __iopt_area_unfill_domain+0x198/0x430 [iommufd]
+   ? __mutex_lock+0x8c/0xb80
+   ? __mutex_lock+0x6aa/0xb80
+   ? xa_erase+0x28/0x30
+   ? iopt_table_remove_domain+0x162/0x320 [iommufd]
+   ? lock_release+0xbc/0x240
+   iopt_area_unfill_domain+0xd/0x10 [iommufd]
+   iopt_table_remove_domain+0x195/0x320 [iommufd]
+   iommufd_hw_pagetable_destroy+0xb3/0x110 [iommufd]
+   iommufd_object_destroy_user+0x8e/0xf0 [iommufd]
+   iommufd_device_detach+0xc5/0x140 [iommufd]
+   iommufd_selftest_destroy+0x1f/0x70 [iommufd]
+   iommufd_object_destroy_user+0x8e/0xf0 [iommufd]
+   iommufd_destroy+0x3a/0x50 [iommufd]
+   iommufd_fops_ioctl+0xfb/0x170 [iommufd]
+   __x64_sys_ioctl+0x40d/0x9a0
+   do_syscall_64+0x3c/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+Link: https://lore.kernel.org/r/3-v1-85aacb2af554+bc-iommufd_syz3_jgg@nvidia.com
+Cc: <stable@vger.kernel.org>
+Fixes: f394576eb11d ("iommufd: PFN handling for iopt_pages")
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Reported-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ drivers/iommu/iommufd/pages.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2579,11 +2579,20 @@ int io_run_task_work_sig(struct io_ring_
- 	return 0;
+--- a/drivers/iommu/iommufd/pages.c
++++ b/drivers/iommu/iommufd/pages.c
+@@ -297,7 +297,7 @@ static void batch_clear_carry(struct pfn
+ 	batch->pfns[0] = batch->pfns[batch->end - 1] +
+ 			 (batch->npfns[batch->end - 1] - keep_pfns);
+ 	batch->npfns[0] = keep_pfns;
+-	batch->end = 0;
++	batch->end = 1;
  }
  
-+static bool current_pending_io(void)
-+{
-+	struct io_uring_task *tctx = current->io_uring;
-+
-+	if (!tctx)
-+		return false;
-+	return percpu_counter_read_positive(&tctx->inflight);
-+}
-+
- /* when returns >0, the caller should retry */
- static inline int io_cqring_wait_schedule(struct io_ring_ctx *ctx,
- 					  struct io_wait_queue *iowq)
- {
--	int token, ret;
-+	int io_wait, ret;
- 
- 	if (unlikely(READ_ONCE(ctx->check_cq)))
- 		return 1;
-@@ -2597,17 +2606,19 @@ static inline int io_cqring_wait_schedul
- 		return 0;
- 
- 	/*
--	 * Use io_schedule_prepare/finish, so cpufreq can take into account
--	 * that the task is waiting for IO - turns out to be important for low
--	 * QD IO.
-+	 * Mark us as being in io_wait if we have pending requests, so cpufreq
-+	 * can take into account that the task is waiting for IO - turns out
-+	 * to be important for low QD IO.
- 	 */
--	token = io_schedule_prepare();
-+	io_wait = current->in_iowait;
-+	if (current_pending_io())
-+		current->in_iowait = 1;
- 	ret = 0;
- 	if (iowq->timeout == KTIME_MAX)
- 		schedule();
- 	else if (!schedule_hrtimeout(&iowq->timeout, HRTIMER_MODE_ABS))
- 		ret = -ETIME;
--	io_schedule_finish(token);
-+	current->in_iowait = io_wait;
- 	return ret;
- }
- 
+ static void batch_skip_carry(struct pfn_batch *batch, unsigned int skip_pfns)
 
 
