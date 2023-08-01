@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585861FB2B
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:35:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0DECC433C7;
-	Tue,  1 Aug 2023 09:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D481FB2B
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:35:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987CFC433C8;
+	Tue,  1 Aug 2023 09:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882547;
-	bh=/7pizk2TmIgPofxJ0nHnMOqVYzAzUkwOChP4OtPV1/s=;
+	s=korg; t=1690882550;
+	bh=le5Ynu7DgH0MFEEY5pLxmkTysxO7Q6Nllms9PheMAZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VHC2qnOBEQIo4fj5LikMubDRS2iGDyCWDUdz56YceyTVFrF4jMxQinH8Q11Nisewb
-	 SIByTyMDBIi1PvxpusEqppalPapiPjU+VMmV5B8gDFWKc5snN3C2xKEDxbZ4YmSEDc
-	 PLj2nL342avL79LV1Q8SQmlsz2bI4yk4HVoCfpG8=
+	b=VzKRXxRP1ybvfGuq8QnjwXhjmU3jBH47d51Xlg3JVRaJUb7WpUQDvrNbmJA0PUdr5
+	 utPa71RRNr3rdPveDr9mVi6p05TSGjY9hoipWgPevjgCJR0RmE5d/lOhKSbUSpeQRm
+	 pGVUylqDDlu7nHOIF/1nAnP7pSKfO8fQCZUOUj90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 116/228] drm/msm/dpu: drop enum dpu_core_perf_data_bus_id
-Date: Tue,  1 Aug 2023 11:19:34 +0200
-Message-ID: <20230801091926.958367463@linuxfoundation.org>
+Subject: [PATCH 6.1 117/228] drm/msm/adreno: Fix snapshot BINDLESS_DATA size
+Date: Tue,  1 Aug 2023 11:19:35 +0200
+Message-ID: <20230801091926.988911679@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,49 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit e8383f5cf1b3573ce140a80bfbfd809278ab16d6 ]
+[ Upstream commit bd846ceee9c478d0397428f02696602ba5eb264a ]
 
-Drop the leftover of bus-client -> interconnect conversion, the enum
-dpu_core_perf_data_bus_id.
+The incorrect size was causing "CP | AHB bus error" when snapshotting
+the GPU state on a6xx gen4 (a660 family).
 
-Fixes: cb88482e2570 ("drm/msm/dpu: clean up references of DPU custom bus scaling")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/546048/
-Link: https://lore.kernel.org/r/20230707193942.3806526-2-dmitry.baryshkov@linaro.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/26
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Fixes: 1707add81551 ("drm/msm/a6xx: Add a6xx gpu state")
+Patchwork: https://patchwork.freedesktop.org/patch/546763/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h | 13 -------------
- 1 file changed, 13 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-index e3795995e1454..29bb8ee2bc266 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-@@ -14,19 +14,6 @@
- 
- #define	DPU_PERF_DEFAULT_MAX_CORE_CLK_RATE	412500000
- 
--/**
-- * enum dpu_core_perf_data_bus_id - data bus identifier
-- * @DPU_CORE_PERF_DATA_BUS_ID_MNOC: DPU/MNOC data bus
-- * @DPU_CORE_PERF_DATA_BUS_ID_LLCC: MNOC/LLCC data bus
-- * @DPU_CORE_PERF_DATA_BUS_ID_EBI: LLCC/EBI data bus
-- */
--enum dpu_core_perf_data_bus_id {
--	DPU_CORE_PERF_DATA_BUS_ID_MNOC,
--	DPU_CORE_PERF_DATA_BUS_ID_LLCC,
--	DPU_CORE_PERF_DATA_BUS_ID_EBI,
--	DPU_CORE_PERF_DATA_BUS_ID_MAX,
--};
--
- /**
-  * struct dpu_core_perf_params - definition of performance parameters
-  * @max_per_pipe_ib: maximum instantaneous bandwidth request
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
+index 2fb58b7098e4b..3bd2065a9d30e 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
+@@ -200,7 +200,7 @@ static const struct a6xx_shader_block {
+ 	SHADER(A6XX_SP_LB_3_DATA, 0x800),
+ 	SHADER(A6XX_SP_LB_4_DATA, 0x800),
+ 	SHADER(A6XX_SP_LB_5_DATA, 0x200),
+-	SHADER(A6XX_SP_CB_BINDLESS_DATA, 0x2000),
++	SHADER(A6XX_SP_CB_BINDLESS_DATA, 0x800),
+ 	SHADER(A6XX_SP_CB_LEGACY_DATA, 0x280),
+ 	SHADER(A6XX_SP_UAV_DATA, 0x80),
+ 	SHADER(A6XX_SP_INST_TAG, 0x80),
 -- 
 2.40.1
 
