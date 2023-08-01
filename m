@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29A21F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:41:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21647C433C9;
-	Tue,  1 Aug 2023 09:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998BD1F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:41:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DDAC433C8;
+	Tue,  1 Aug 2023 09:41:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882871;
-	bh=WzHTNSA87HLxOruL4ex5cs3VyHc/Wppr3H1ANaX10Xk=;
+	s=korg; t=1690882874;
+	bh=Z9uNomDFjyB2mj3LXsDoWRMyH2ITl55T+HmSLcNkqz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V7YMaegcOKnoBZzd9/+LF5P9QFS53KnWFIhjj72Y4zoVCzgbvey3DjUnJ3em8ZrR0
-	 3tfOsnb28yhPVcWUJA88outUQO7PFcSpyU659aCBx0pQbT8xLqT1AsmcmBY9xlxPge
-	 7g7BT+X1gg8ozAzMVS0PImfbJ0ox5Af3/tdeGxMY=
+	b=SLh6weH1/U9fRbNOVzUWhUW8CB4Fb8QouAFFxyv+IbsGbxu2VFh83lCmtru5adXLb
+	 0WtBLH8FqzntsBvH+Po72Yv1ywc3ZF8lzZebH9rWcu1weRPa5p+goktGwMnae9vKxQ
+	 vwUmhfQBe2MaKBNJ2licr4nqd2tIfcWOvsjj3Y6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Will Deacon <will@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	James Morse <james.morse@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Zenghui Yu <yuzenghui@huawei.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 006/239] jbd2: Fix wrongly judgement for buffer head removing while doing checkpoint
-Date: Tue,  1 Aug 2023 11:17:50 +0200
-Message-ID: <20230801091925.877746747@linuxfoundation.org>
+Subject: [PATCH 6.4 007/239] KVM: arm64: Handle kvm_arm_init failure correctly in finalize_pkvm
+Date: Tue,  1 Aug 2023 11:17:51 +0200
+Message-ID: <20230801091925.907386001@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -37,103 +40,171 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Sudeep Holla <sudeep.holla@arm.com>
 
-[ Upstream commit e34c8dd238d0c9368b746480f313055f5bab5040 ]
+[ Upstream commit fa729bc7c9c8c17a2481358c841ef8ca920485d3 ]
 
-Following process,
+Currently there is no synchronisation between finalize_pkvm() and
+kvm_arm_init() initcalls. The finalize_pkvm() proceeds happily even if
+kvm_arm_init() fails resulting in the following warning on all the CPUs
+and eventually a HYP panic:
 
-jbd2_journal_commit_transaction
-// there are several dirty buffer heads in transaction->t_checkpoint_list
-          P1                   wb_workfn
-jbd2_log_do_checkpoint
- if (buffer_locked(bh)) // false
-                            __block_write_full_page
-                             trylock_buffer(bh)
-                             test_clear_buffer_dirty(bh)
- if (!buffer_dirty(bh))
-  __jbd2_journal_remove_checkpoint(jh)
-   if (buffer_write_io_error(bh)) // false
-                             >> bh IO error occurs <<
- jbd2_cleanup_journal_tail
-  __jbd2_update_log_tail
-   jbd2_write_superblock
-   // The bh won't be replayed in next mount.
-, which could corrupt the ext4 image, fetch a reproducer in [Link].
+  | kvm [1]: IPA Size Limit: 48 bits
+  | kvm [1]: Failed to init hyp memory protection
+  | kvm [1]: error initializing Hyp mode: -22
+  |
+  | <snip>
+  |
+  | WARNING: CPU: 0 PID: 0 at arch/arm64/kvm/pkvm.c:226 _kvm_host_prot_finalize+0x30/0x50
+  | Modules linked in:
+  | CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.4.0 #237
+  | Hardware name: FVP Base RevC (DT)
+  | pstate: 634020c5 (nZCv daIF +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+  | pc : _kvm_host_prot_finalize+0x30/0x50
+  | lr : __flush_smp_call_function_queue+0xd8/0x230
+  |
+  | Call trace:
+  |  _kvm_host_prot_finalize+0x3c/0x50
+  |  on_each_cpu_cond_mask+0x3c/0x6c
+  |  pkvm_drop_host_privileges+0x4c/0x78
+  |  finalize_pkvm+0x3c/0x5c
+  |  do_one_initcall+0xcc/0x240
+  |  do_initcall_level+0x8c/0xac
+  |  do_initcalls+0x54/0x94
+  |  do_basic_setup+0x1c/0x28
+  |  kernel_init_freeable+0x100/0x16c
+  |  kernel_init+0x20/0x1a0
+  |  ret_from_fork+0x10/0x20
+  | Failed to finalize Hyp protection: -22
+  |     dtb=fvp-base-revc.dtb
+  | kvm [95]: nVHE hyp BUG at: arch/arm64/kvm/hyp/nvhe/mem_protect.c:540!
+  | kvm [95]: nVHE call trace:
+  | kvm [95]:  [<ffff800081052984>] __kvm_nvhe_hyp_panic+0xac/0xf8
+  | kvm [95]:  [<ffff800081059644>] __kvm_nvhe_handle_host_mem_abort+0x1a0/0x2ac
+  | kvm [95]:  [<ffff80008105511c>] __kvm_nvhe_handle_trap+0x4c/0x160
+  | kvm [95]:  [<ffff8000810540fc>] __kvm_nvhe___skip_pauth_save+0x4/0x4
+  | kvm [95]: ---[ end nVHE call trace ]---
+  | kvm [95]: Hyp Offset: 0xfffe8db00ffa0000
+  | Kernel panic - not syncing: HYP panic:
+  | PS:a34023c9 PC:0000f250710b973c ESR:00000000f2000800
+  | FAR:ffff000800cb00d0 HPFAR:000000000880cb00 PAR:0000000000000000
+  | VCPU:0000000000000000
+  | CPU: 3 PID: 95 Comm: kworker/u16:2 Tainted: G        W          6.4.0 #237
+  | Hardware name: FVP Base RevC (DT)
+  | Workqueue: rpciod rpc_async_schedule
+  | Call trace:
+  |  dump_backtrace+0xec/0x108
+  |  show_stack+0x18/0x2c
+  |  dump_stack_lvl+0x50/0x68
+  |  dump_stack+0x18/0x24
+  |  panic+0x138/0x33c
+  |  nvhe_hyp_panic_handler+0x100/0x184
+  |  new_slab+0x23c/0x54c
+  |  ___slab_alloc+0x3e4/0x770
+  |  kmem_cache_alloc_node+0x1f0/0x278
+  |  __alloc_skb+0xdc/0x294
+  |  tcp_stream_alloc_skb+0x2c/0xf0
+  |  tcp_sendmsg_locked+0x3d0/0xda4
+  |  tcp_sendmsg+0x38/0x5c
+  |  inet_sendmsg+0x44/0x60
+  |  sock_sendmsg+0x1c/0x34
+  |  xprt_sock_sendmsg+0xdc/0x274
+  |  xs_tcp_send_request+0x1ac/0x28c
+  |  xprt_transmit+0xcc/0x300
+  |  call_transmit+0x78/0x90
+  |  __rpc_execute+0x114/0x3d8
+  |  rpc_async_schedule+0x28/0x48
+  |  process_one_work+0x1d8/0x314
+  |  worker_thread+0x248/0x474
+  |  kthread+0xfc/0x184
+  |  ret_from_fork+0x10/0x20
+  | SMP: stopping secondary CPUs
+  | Kernel Offset: 0x57c5cb460000 from 0xffff800080000000
+  | PHYS_OFFSET: 0x80000000
+  | CPU features: 0x00000000,1035b7a3,ccfe773f
+  | Memory Limit: none
+  | ---[ end Kernel panic - not syncing: HYP panic:
+  | PS:a34023c9 PC:0000f250710b973c ESR:00000000f2000800
+  | FAR:ffff000800cb00d0 HPFAR:000000000880cb00 PAR:0000000000000000
+  | VCPU:0000000000000000 ]---
 
-Since writeback process clears buffer dirty after locking buffer head,
-we can fix it by try locking buffer and check dirtiness while buffer is
-locked, the buffer head can be removed if it is neither dirty nor locked.
+Fix it by checking for the successfull initialisation of kvm_arm_init()
+in finalize_pkvm() before proceeding any futher.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217490
-Fixes: 470decc613ab ("[PATCH] jbd2: initial copy of files from jbd")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230606135928.434610-5-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 87727ba2bb05 ("KVM: arm64: Ensure CPU PMU probes before pKVM host de-privilege")
+Cc: Will Deacon <will@kernel.org>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Oliver Upton <oliver.upton@linux.dev>
+Cc: James Morse <james.morse@arm.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc: Zenghui Yu <yuzenghui@huawei.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230704193243.3300506-1-sudeep.holla@arm.com
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/checkpoint.c | 32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ arch/arm64/include/asm/virt.h | 1 +
+ arch/arm64/kvm/arm.c          | 9 ++++++++-
+ arch/arm64/kvm/pkvm.c         | 2 +-
+ 3 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/fs/jbd2/checkpoint.c b/fs/jbd2/checkpoint.c
-index 25e3c20eb19f6..c4e0da6db7195 100644
---- a/fs/jbd2/checkpoint.c
-+++ b/fs/jbd2/checkpoint.c
-@@ -221,20 +221,6 @@ int jbd2_log_do_checkpoint(journal_t *journal)
- 		jh = transaction->t_checkpoint_list;
- 		bh = jh2bh(jh);
+diff --git a/arch/arm64/include/asm/virt.h b/arch/arm64/include/asm/virt.h
+index 4eb601e7de507..06382da630123 100644
+--- a/arch/arm64/include/asm/virt.h
++++ b/arch/arm64/include/asm/virt.h
+@@ -78,6 +78,7 @@ extern u32 __boot_cpu_mode[2];
  
--		/*
--		 * The buffer may be writing back, or flushing out in the
--		 * last couple of cycles, or re-adding into a new transaction,
--		 * need to check it again until it's unlocked.
--		 */
--		if (buffer_locked(bh)) {
--			get_bh(bh);
--			spin_unlock(&journal->j_list_lock);
--			wait_on_buffer(bh);
--			/* the journal_head may have gone by now */
--			BUFFER_TRACE(bh, "brelse");
--			__brelse(bh);
--			goto retry;
--		}
- 		if (jh->b_transaction != NULL) {
- 			transaction_t *t = jh->b_transaction;
- 			tid_t tid = t->t_tid;
-@@ -269,7 +255,22 @@ int jbd2_log_do_checkpoint(journal_t *journal)
- 			spin_lock(&journal->j_list_lock);
- 			goto restart;
- 		}
--		if (!buffer_dirty(bh)) {
-+		if (!trylock_buffer(bh)) {
-+			/*
-+			 * The buffer is locked, it may be writing back, or
-+			 * flushing out in the last couple of cycles, or
-+			 * re-adding into a new transaction, need to check
-+			 * it again until it's unlocked.
-+			 */
-+			get_bh(bh);
-+			spin_unlock(&journal->j_list_lock);
-+			wait_on_buffer(bh);
-+			/* the journal_head may have gone by now */
-+			BUFFER_TRACE(bh, "brelse");
-+			__brelse(bh);
-+			goto retry;
-+		} else if (!buffer_dirty(bh)) {
-+			unlock_buffer(bh);
- 			BUFFER_TRACE(bh, "remove from checkpoint");
- 			/*
- 			 * If the transaction was released or the checkpoint
-@@ -279,6 +280,7 @@ int jbd2_log_do_checkpoint(journal_t *journal)
- 			    !transaction->t_checkpoint_list)
- 				goto out;
- 		} else {
-+			unlock_buffer(bh);
- 			/*
- 			 * We are about to write the buffer, it could be
- 			 * raced by some other transaction shrink or buffer
+ void __hyp_set_vectors(phys_addr_t phys_vector_base);
+ void __hyp_reset_vectors(void);
++bool is_kvm_arm_initialised(void);
+ 
+ DECLARE_STATIC_KEY_FALSE(kvm_protected_mode_initialized);
+ 
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 7d8c3dd8b7ca9..3a2606ba3e583 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -51,11 +51,16 @@ DECLARE_KVM_HYP_PER_CPU(unsigned long, kvm_hyp_vector);
+ DEFINE_PER_CPU(unsigned long, kvm_arm_hyp_stack_page);
+ DECLARE_KVM_NVHE_PER_CPU(struct kvm_nvhe_init_params, kvm_init_params);
+ 
+-static bool vgic_present;
++static bool vgic_present, kvm_arm_initialised;
+ 
+ static DEFINE_PER_CPU(unsigned char, kvm_arm_hardware_enabled);
+ DEFINE_STATIC_KEY_FALSE(userspace_irqchip_in_use);
+ 
++bool is_kvm_arm_initialised(void)
++{
++	return kvm_arm_initialised;
++}
++
+ int kvm_arch_vcpu_should_kick(struct kvm_vcpu *vcpu)
+ {
+ 	return kvm_vcpu_exiting_guest_mode(vcpu) == IN_GUEST_MODE;
+@@ -2396,6 +2401,8 @@ static __init int kvm_arm_init(void)
+ 	if (err)
+ 		goto out_subs;
+ 
++	kvm_arm_initialised = true;
++
+ 	return 0;
+ 
+ out_subs:
+diff --git a/arch/arm64/kvm/pkvm.c b/arch/arm64/kvm/pkvm.c
+index 6e9ece1ebbe72..3895416cb15ae 100644
+--- a/arch/arm64/kvm/pkvm.c
++++ b/arch/arm64/kvm/pkvm.c
+@@ -243,7 +243,7 @@ static int __init finalize_pkvm(void)
+ {
+ 	int ret;
+ 
+-	if (!is_protected_kvm_enabled())
++	if (!is_protected_kvm_enabled() || !is_kvm_arm_initialised())
+ 		return 0;
+ 
+ 	/*
 -- 
 2.39.2
 
