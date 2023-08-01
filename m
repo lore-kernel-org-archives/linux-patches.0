@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7877F1FB2B
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:33:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D31C433C8;
-	Tue,  1 Aug 2023 09:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728321FB2B
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:33:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77C1C433C7;
+	Tue,  1 Aug 2023 09:33:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882413;
-	bh=s+E6fFIK/MGqjjbX8twbGT9940TD1Eqw4K3MjyHYWVY=;
+	s=korg; t=1690882416;
+	bh=8D3e7Ra4T6kJ0JM6h38bYs3iaJUiBYBr0O2en0/7Hyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yTrnIpTWRmNwc8PNQoRrVoBo+cBXqz3f5L0JJ9cZ5dSSFTR379Oxu4colXJJ0lPxr
-	 GlkQThxur02z0vZe+8Co5DvFxYue+JwQh4iLokHClWnKqFjtJpPk41rJxl5Fj4SViT
-	 mA7F7YwPPUEC0Zb33W1kfKodLH4Hg3RtqX4xZbXE=
+	b=ncRzPS5jVjwbk+Jf2VHYin/9G6czignZsec0jZ2WzOi1hwFYfYAExmjzobk1xPKZM
+	 2J9pdHXj0RhIpXvHhVIGIvHjJbV2Gl3UUSjiiCV/bvzztTFf+M5n7eE9iT04ujFcic
+	 /O5EF7KEI/caGkKdjSmg0YsE1XLfl4EUefSf72dM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hangbin Liu <liuhangbin@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 097/228] bonding: reset bonds flags when down link is P2P device
-Date: Tue,  1 Aug 2023 11:19:15 +0200
-Message-ID: <20230801091926.338247230@linuxfoundation.org>
+Subject: [PATCH 6.1 098/228] team: reset teams flags when down link is P2P device
+Date: Tue,  1 Aug 2023 11:19:16 +0200
+Message-ID: <20230801091926.368040661@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -38,57 +38,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit da19a2b967cf1e2c426f50d28550d1915214a81d ]
+[ Upstream commit fa532bee17d15acf8bba4bc8e2062b7a093ba801 ]
 
-When adding a point to point downlink to the bond, we neglected to reset
-the bond's flags, which were still using flags like BROADCAST and
+When adding a point to point downlink to team device, we neglected to reset
+the team's flags, which were still using flags like BROADCAST and
 MULTICAST. Consequently, this would initiate ARP/DAD for P2P downlink
-interfaces, such as when adding a GRE device to the bonding.
+interfaces, such as when adding a GRE device to team device. Fix this by
+remove multicast/broadcast flags and add p2p and noarp flags.
 
-To address this issue, let's reset the bond's flags for P2P interfaces.
-
-Before fix:
-7: gre0@NONE: <POINTOPOINT,NOARP,SLAVE,UP,LOWER_UP> mtu 1500 qdisc noqueue master bond0 state UNKNOWN group default qlen 1000
-    link/gre6 2006:70:10::1 peer 2006:70:10::2 permaddr 167f:18:f188::
-8: bond0: <BROADCAST,MULTICAST,MASTER,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
-    link/gre6 2006:70:10::1 brd 2006:70:10::2
-    inet6 fe80::200:ff:fe00:0/64 scope link
-       valid_lft forever preferred_lft forever
-
-After fix:
-7: gre0@NONE: <POINTOPOINT,NOARP,SLAVE,UP,LOWER_UP> mtu 1500 qdisc noqueue master bond2 state UNKNOWN group default qlen 1000
-    link/gre6 2006:70:10::1 peer 2006:70:10::2 permaddr c29e:557a:e9d9::
-8: bond0: <POINTOPOINT,NOARP,MASTER,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
-    link/gre6 2006:70:10::1 peer 2006:70:10::2
-    inet6 fe80::1/64 scope link
-       valid_lft forever preferred_lft forever
+After removing the none ethernet interface and adding an ethernet interface
+to team, we need to reset team interface flags. Unlike bonding interface,
+team do not need restore IFF_MASTER, IFF_SLAVE flags.
 
 Reported-by: Liang Li <liali@redhat.com>
 Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2221438
-Fixes: 872254dd6b1f ("net/bonding: Enable bonding to enslave non ARPHRD_ETHER")
+Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
 Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/team/team.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 91d84df91123b..576370f89c755 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -1512,6 +1512,11 @@ static void bond_setup_by_slave(struct net_device *bond_dev,
- 
- 	memcpy(bond_dev->broadcast, slave_dev->broadcast,
- 		slave_dev->addr_len);
+diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
+index b524bd374d685..509ba706781ed 100644
+--- a/drivers/net/team/team.c
++++ b/drivers/net/team/team.c
+@@ -2135,6 +2135,15 @@ static void team_setup_by_port(struct net_device *dev,
+ 	dev->mtu = port_dev->mtu;
+ 	memcpy(dev->broadcast, port_dev->broadcast, port_dev->addr_len);
+ 	eth_hw_addr_inherit(dev, port_dev);
 +
-+	if (slave_dev->flags & IFF_POINTOPOINT) {
-+		bond_dev->flags &= ~(IFF_BROADCAST | IFF_MULTICAST);
-+		bond_dev->flags |= (IFF_POINTOPOINT | IFF_NOARP);
++	if (port_dev->flags & IFF_POINTOPOINT) {
++		dev->flags &= ~(IFF_BROADCAST | IFF_MULTICAST);
++		dev->flags |= (IFF_POINTOPOINT | IFF_NOARP);
++	} else if ((port_dev->flags & (IFF_BROADCAST | IFF_MULTICAST)) ==
++		    (IFF_BROADCAST | IFF_MULTICAST)) {
++		dev->flags |= (IFF_BROADCAST | IFF_MULTICAST);
++		dev->flags &= ~(IFF_POINTOPOINT | IFF_NOARP);
 +	}
  }
  
- /* On bonding slaves other than the currently active slave, suppress
+ static int team_dev_type_check_change(struct net_device *dev,
 -- 
 2.39.2
 
