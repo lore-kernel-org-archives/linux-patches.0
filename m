@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B0C1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:38:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDDACC433C8;
-	Tue,  1 Aug 2023 09:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2215D1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9834EC433C8;
+	Tue,  1 Aug 2023 09:39:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882738;
-	bh=US/jeUgSAEVyfTeDn5qQMyBonK+TdnJelKJTKYCLzCU=;
+	s=korg; t=1690882741;
+	bh=ChY9JAkgqybK9cQlnUbYEfoq5MZSFtJFx2q5DO+1RoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BI5BCWumDKALqnK0QPAcrpBRTtPB/2rmu5cII+2KC+mKLXY6VNoGwgoK0sqEPbuZJ
-	 mrvkBC5dOqIrG9+ry8a1x0w80PHuvyTpVneCglgT4fTXgkNLmqEWY4VO5WSGo0YSEJ
-	 g21ZYnWAVvHHX1wlh+IJg/cdO+cN9hbEYbM2c/40=
+	b=of8msWoouSq3dchS9x99GOpAaJm2B6JefY8iBlk9aaGC7YWNAI/O8j/VBpWyA3LYI
+	 DxbdoVSGVa1lST83PYeMQl5boJbT+ueN7egHikQIvIhdF3drpb6+o2mgG7EZZpE3SJ
+	 J17Uyj/allwXBCXtTeDCCod7J7uPptg30ckZ+P5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Dongsheng Yang <dongsheng.yang@easystack.cn>
-Subject: [PATCH 6.1 214/228] rbd: make get_lock_owner_info() return a single locker or NULL
-Date: Tue,  1 Aug 2023 11:21:12 +0200
-Message-ID: <20230801091930.598150968@linuxfoundation.org>
+Subject: [PATCH 6.1 215/228] rbd: harden get_lock_owner_info() a bit
+Date: Tue,  1 Aug 2023 11:21:13 +0200
+Message-ID: <20230801091930.627316218@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,174 +36,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilya Dryomov <idryomov@gmail.com>
 
-commit f38cb9d9c2045dad16eead4a2e1aedfddd94603b upstream.
+commit 8ff2c64c9765446c3cef804fb99da04916603e27 upstream.
 
-Make the "num_lockers can be only 0 or 1" assumption explicit and
-simplify the API by getting rid of output parameters in preparation
-for calling get_lock_owner_info() twice before blocklisting.
+- we want the exclusive lock type, so test for it directly
+- use sscanf() to actually parse the lock cookie and avoid admitting
+  invalid handles
+- bail if locker has a blank address
 
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |   84 +++++++++++++++++++++++++++++++---------------------
- 1 file changed, 51 insertions(+), 33 deletions(-)
+ drivers/block/rbd.c  |   21 +++++++++++++++------
+ net/ceph/messenger.c |    1 +
+ 2 files changed, 16 insertions(+), 6 deletions(-)
 
 --- a/drivers/block/rbd.c
 +++ b/drivers/block/rbd.c
-@@ -3850,10 +3850,17 @@ static void wake_lock_waiters(struct rbd
- 	list_splice_tail_init(&rbd_dev->acquiring_list, &rbd_dev->running_list);
- }
- 
--static int get_lock_owner_info(struct rbd_device *rbd_dev,
--			       struct ceph_locker **lockers, u32 *num_lockers)
-+static void free_locker(struct ceph_locker *locker)
-+{
-+	if (locker)
-+		ceph_free_lockers(locker, 1);
-+}
-+
-+static struct ceph_locker *get_lock_owner_info(struct rbd_device *rbd_dev)
- {
- 	struct ceph_osd_client *osdc = &rbd_dev->rbd_client->client->osdc;
-+	struct ceph_locker *lockers;
-+	u32 num_lockers;
+@@ -3863,10 +3863,9 @@ static struct ceph_locker *get_lock_owne
+ 	u32 num_lockers;
  	u8 lock_type;
  	char *lock_tag;
++	u64 handle;
  	int ret;
-@@ -3862,39 +3869,45 @@ static int get_lock_owner_info(struct rb
  
+-	dout("%s rbd_dev %p\n", __func__, rbd_dev);
+-
  	ret = ceph_cls_lock_info(osdc, &rbd_dev->header_oid,
  				 &rbd_dev->header_oloc, RBD_LOCK_NAME,
--				 &lock_type, &lock_tag, lockers, num_lockers);
--	if (ret)
--		return ret;
-+				 &lock_type, &lock_tag, &lockers, &num_lockers);
-+	if (ret) {
-+		rbd_warn(rbd_dev, "failed to retrieve lockers: %d", ret);
-+		return ERR_PTR(ret);
-+	}
- 
--	if (*num_lockers == 0) {
-+	if (num_lockers == 0) {
- 		dout("%s rbd_dev %p no lockers detected\n", __func__, rbd_dev);
-+		lockers = NULL;
- 		goto out;
+ 				 &lock_type, &lock_tag, &lockers, &num_lockers);
+@@ -3887,18 +3886,28 @@ static struct ceph_locker *get_lock_owne
+ 		goto err_busy;
  	}
  
- 	if (strcmp(lock_tag, RBD_LOCK_TAG)) {
- 		rbd_warn(rbd_dev, "locked by external mechanism, tag %s",
- 			 lock_tag);
--		ret = -EBUSY;
--		goto out;
-+		goto err_busy;
+-	if (lock_type == CEPH_CLS_LOCK_SHARED) {
+-		rbd_warn(rbd_dev, "shared lock type detected");
++	if (lock_type != CEPH_CLS_LOCK_EXCLUSIVE) {
++		rbd_warn(rbd_dev, "incompatible lock type detected");
+ 		goto err_busy;
  	}
  
- 	if (lock_type == CEPH_CLS_LOCK_SHARED) {
- 		rbd_warn(rbd_dev, "shared lock type detected");
--		ret = -EBUSY;
--		goto out;
-+		goto err_busy;
- 	}
- 
--	if (strncmp((*lockers)[0].id.cookie, RBD_LOCK_COOKIE_PREFIX,
-+	WARN_ON(num_lockers != 1);
-+	if (strncmp(lockers[0].id.cookie, RBD_LOCK_COOKIE_PREFIX,
- 		    strlen(RBD_LOCK_COOKIE_PREFIX))) {
+ 	WARN_ON(num_lockers != 1);
+-	if (strncmp(lockers[0].id.cookie, RBD_LOCK_COOKIE_PREFIX,
+-		    strlen(RBD_LOCK_COOKIE_PREFIX))) {
++	ret = sscanf(lockers[0].id.cookie, RBD_LOCK_COOKIE_PREFIX " %llu",
++		     &handle);
++	if (ret != 1) {
  		rbd_warn(rbd_dev, "locked by external mechanism, cookie %s",
--			 (*lockers)[0].id.cookie);
--		ret = -EBUSY;
--		goto out;
-+			 lockers[0].id.cookie);
-+		goto err_busy;
+ 			 lockers[0].id.cookie);
+ 		goto err_busy;
  	}
++	if (ceph_addr_is_blank(&lockers[0].info.addr)) {
++		rbd_warn(rbd_dev, "locker has a blank address");
++		goto err_busy;
++	}
++
++	dout("%s rbd_dev %p got locker %s%llu@%pISpc/%u handle %llu\n",
++	     __func__, rbd_dev, ENTITY_NAME(lockers[0].id.name),
++	     &lockers[0].info.addr.in_addr,
++	     le32_to_cpu(lockers[0].info.addr.nonce), handle);
  
  out:
  	kfree(lock_tag);
--	return ret;
-+	return lockers;
-+
-+err_busy:
-+	kfree(lock_tag);
-+	ceph_free_lockers(lockers, num_lockers);
-+	return ERR_PTR(-EBUSY);
- }
- 
- static int find_watcher(struct rbd_device *rbd_dev,
-@@ -3948,51 +3961,56 @@ out:
- static int rbd_try_lock(struct rbd_device *rbd_dev)
- {
- 	struct ceph_client *client = rbd_dev->rbd_client->client;
--	struct ceph_locker *lockers;
--	u32 num_lockers;
-+	struct ceph_locker *locker;
- 	int ret;
- 
- 	for (;;) {
-+		locker = NULL;
-+
- 		ret = rbd_lock(rbd_dev);
- 		if (ret != -EBUSY)
--			return ret;
-+			goto out;
- 
- 		/* determine if the current lock holder is still alive */
--		ret = get_lock_owner_info(rbd_dev, &lockers, &num_lockers);
--		if (ret)
--			return ret;
--
--		if (num_lockers == 0)
-+		locker = get_lock_owner_info(rbd_dev);
-+		if (IS_ERR(locker)) {
-+			ret = PTR_ERR(locker);
-+			locker = NULL;
-+			goto out;
-+		}
-+		if (!locker)
- 			goto again;
- 
--		ret = find_watcher(rbd_dev, lockers);
-+		ret = find_watcher(rbd_dev, locker);
- 		if (ret)
- 			goto out; /* request lock or error */
- 
- 		rbd_warn(rbd_dev, "breaking header lock owned by %s%llu",
--			 ENTITY_NAME(lockers[0].id.name));
-+			 ENTITY_NAME(locker->id.name));
- 
- 		ret = ceph_monc_blocklist_add(&client->monc,
--					      &lockers[0].info.addr);
-+					      &locker->info.addr);
- 		if (ret) {
--			rbd_warn(rbd_dev, "blocklist of %s%llu failed: %d",
--				 ENTITY_NAME(lockers[0].id.name), ret);
-+			rbd_warn(rbd_dev, "failed to blocklist %s%llu: %d",
-+				 ENTITY_NAME(locker->id.name), ret);
- 			goto out;
- 		}
- 
- 		ret = ceph_cls_break_lock(&client->osdc, &rbd_dev->header_oid,
- 					  &rbd_dev->header_oloc, RBD_LOCK_NAME,
--					  lockers[0].id.cookie,
--					  &lockers[0].id.name);
--		if (ret && ret != -ENOENT)
-+					  locker->id.cookie, &locker->id.name);
-+		if (ret && ret != -ENOENT) {
-+			rbd_warn(rbd_dev, "failed to break header lock: %d",
-+				 ret);
- 			goto out;
-+		}
- 
- again:
--		ceph_free_lockers(lockers, num_lockers);
-+		free_locker(locker);
+--- a/net/ceph/messenger.c
++++ b/net/ceph/messenger.c
+@@ -1118,6 +1118,7 @@ bool ceph_addr_is_blank(const struct cep
+ 		return true;
  	}
- 
- out:
--	ceph_free_lockers(lockers, num_lockers);
-+	free_locker(locker);
- 	return ret;
  }
++EXPORT_SYMBOL(ceph_addr_is_blank);
  
+ int ceph_addr_port(const struct ceph_entity_addr *addr)
+ {
 
 
