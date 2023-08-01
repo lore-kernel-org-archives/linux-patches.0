@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423AD1F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:29:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC41C433B9;
-	Tue,  1 Aug 2023 09:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC8981F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:30:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0EFC433CC;
+	Tue,  1 Aug 2023 09:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882199;
-	bh=xa210WyPwxKWiyvN6sIxjtQJaL0inWUD2OC29I9DK1Y=;
+	s=korg; t=1690882202;
+	bh=ze6kmQ3r7UqTDogfJhqBwT2aGGzgxuSSSizaNcVqibU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QRHvZvCGB3zu40Eos5qiQazYpilMqPqBs4aPAUMxaW2b/D6gNz/4SuV7rS3GU3nxJ
-	 T97eJrpxB+cZFuOEg0244FSJoi7xsIpb1tQghCajAfUlrGNdRXTOuYEnAsxlPvAeHW
-	 epS70iCx+ZRaf1SCbohl2vTiinG44+4rH7iV9TA4=
+	b=o3yAO+IXbe7m73wvSzS2ZhRceMHdQQYbs6DIfn/YQxIvZ5tqavVklffsC1ULJYbYk
+	 MNlw81VbJ1Hku67/fBbHG6xOe1c6L42NVEKrGIrIPpK5zIwYRPM+0C7YqOOzRQF2IL
+	 q/3qcKSvscyAfUD0+FSxqKBM/hJjN81ejnM2sYag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 004/228] platform/x86/amd/pmf: reduce verbosity of apmf_get_system_params
-Date: Tue,  1 Aug 2023 11:17:42 +0200
-Message-ID: <20230801091922.980886094@linuxfoundation.org>
+	Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Agustin Gutierrez <agustin.gutierrez@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 005/228] drm/amd/display: Keep PHY active for dp config
+Date: Tue,  1 Aug 2023 11:17:43 +0200
+Message-ID: <20230801091923.015668714@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -35,33 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+From: Agustin Gutierrez <agustin.gutierrez@amd.com>
 
-commit 839e90e75e695b3d9ee17f5a2811e7ee5aea8d4a upstream.
+commit 2b02d746c1818baf741f4eeeff9b97ab4b81e1cf upstream.
 
-apmf_get_system_params() failure is not a critical event, reduce its
-verbosity from dev_err to dev_dbg.
+[Why]
+Current hotplug sequence causes temporary hang at the re-entry of the
+optimized power state.
 
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Link: https://lore.kernel.org/r/20230714144435.1239776-1-Shyam-sundar.S-k@amd.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+[How]
+Keep a PHY active when detecting DP signal + DPMS active
+
+Reviewed-by: Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Agustin Gutierrez <agustin.gutierrez@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd/pmf/acpi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/clk_mgr/dcn314/dcn314_clk_mgr.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/platform/x86/amd/pmf/acpi.c
-+++ b/drivers/platform/x86/amd/pmf/acpi.c
-@@ -310,7 +310,7 @@ int apmf_acpi_init(struct amd_pmf_dev *p
- 
- 	ret = apmf_get_system_params(pmf_dev);
- 	if (ret) {
--		dev_err(pmf_dev->dev, "APMF apmf_get_system_params failed :%d\n", ret);
-+		dev_dbg(pmf_dev->dev, "APMF apmf_get_system_params failed :%d\n", ret);
- 		goto out;
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn314/dcn314_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn314/dcn314_clk_mgr.c
+@@ -108,6 +108,11 @@ static int dcn314_get_active_display_cnt
+ 				stream->signal == SIGNAL_TYPE_DVI_SINGLE_LINK ||
+ 				stream->signal == SIGNAL_TYPE_DVI_DUAL_LINK)
+ 			tmds_present = true;
++
++		/* Checking stream / link detection ensuring that PHY is active*/
++		if (dc_is_dp_signal(stream->signal) && !stream->dpms_off)
++			display_count++;
++
  	}
  
+ 	for (i = 0; i < dc->link_count; i++) {
 
 
