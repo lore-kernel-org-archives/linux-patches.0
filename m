@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D0E1F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:30:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97EFC433C8;
-	Tue,  1 Aug 2023 09:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1271F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:30:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B32E5C433C8;
+	Tue,  1 Aug 2023 09:30:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882256;
-	bh=OtBbTJXbei7AIMkTk0OMvawEXU0GjdvQbnpxyq9zbog=;
+	s=korg; t=1690882259;
+	bh=KIpLyrl4ZFhrzX6oWGp8tSYN9SyYTsfjVX4nRfjiO4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J2b6JlKG13eg95Qc413guxLOmzcWf39SUnUecMPfhSZRBAqM9V2BrurPRBCz7byRL
-	 UE/AJ0eJsyrcKdZSPunhBB14cNaRnCB34KyHzkbvHonZ/c5wa7NB5uqhJNl71pZTVS
-	 kbrLsJ8qjb9G9BWlZ2q9uD4hHWK1FlMc4DzUl3U0=
+	b=bH/flocc3oWl4nZxNIzAobiY4NmMDwsGhUTotIGAMTORqDSqoqNCM9QLIZNVrVeJM
+	 SBdaUcXxPfvPAHHnvC2/56V5Y1if3Yyfg5GVboW7jRiUdN+lFdtf/9k3RcNRgDmUoL
+	 OKwKuRpa59IkYuZg6Z/Mp2+3n/2SccUEbFr2KS1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Stylon Wang <stylon.wang@amd.com>,
-	Samson Tam <samson.tam@amd.com>,
-	Alvin Lee <Alvin.Lee2@amd.com>,
+	Charlene Liu <Charlene.Liu@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Dmytro Laktyushkin <Dmytro.Laktyushkin@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/228] drm/amd/display: add ODM case when looking for first split pipe
-Date: Tue,  1 Aug 2023 11:18:18 +0200
-Message-ID: <20230801091924.332598868@linuxfoundation.org>
+Subject: [PATCH 6.1 041/228] drm/amd/display: use low clocks for no plane configs
+Date: Tue,  1 Aug 2023 11:18:19 +0200
+Message-ID: <20230801091924.362986956@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -39,149 +38,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Samson Tam <samson.tam@amd.com>
+From: Dmytro Laktyushkin <Dmytro.Laktyushkin@amd.com>
 
-[ Upstream commit 59de751e3845d699e02dc4da47322b92d83a41e2 ]
+[ Upstream commit 2641c7b7808191cba25ba28b82bb73ca294924cc ]
 
-[Why]
-When going from ODM 2:1 single display case to max displays, second
-odm pipe needs to be repurposed for one of the new single displays.
-However, acquire_first_split_pipe() only handles MPC case and not
-ODM case
+Stream only configurations do not require DCFCLK, SOCCLK, DPPCLK
+or FCLK. They also always allow pstate change.
 
-[How]
-Add ODM conditions in acquire_first_split_pipe()
-Add commit_minimal_transition_state() in commit_streams() to handle
-odm 2:1 exit first, and then process new streams
-Handle ODM condition in commit_minimal_transition_state()
-
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Acked-by: Stylon Wang <stylon.wang@amd.com>
-Signed-off-by: Samson Tam <samson.tam@amd.com>
-Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
+Reviewed-by: Charlene Liu <Charlene.Liu@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Dmytro Laktyushkin <Dmytro.Laktyushkin@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 49f26218c344 ("drm/amd/display: fix dcn315 single stream crb allocation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c      | 36 ++++++++++++++++++-
- .../gpu/drm/amd/display/dc/core/dc_resource.c | 20 +++++++++++
- 2 files changed, 55 insertions(+), 1 deletion(-)
+ .../drm/amd/display/dc/dml/dcn31/dcn31_fpu.c   | 18 ++++++++++++++----
+ .../drm/amd/display/dc/dml/dcn32/dcn32_fpu.c   | 14 +++++++++++++-
+ 2 files changed, 27 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index c429748c86cdb..629bc53f61877 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -1913,6 +1913,9 @@ static enum dc_status dc_commit_state_no_check(struct dc *dc, struct dc_state *c
- 	return result;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c
+index 8e416433184cf..aa1c2917a4a1d 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c
+@@ -483,7 +483,7 @@ void dcn31_calculate_wm_and_dlg_fp(
+ 		int pipe_cnt,
+ 		int vlevel)
+ {
+-	int i, pipe_idx, active_dpp_count = 0;
++	int i, pipe_idx, active_hubp_count = 0;
+ 	double dcfclk = context->bw_ctx.dml.vba.DCFCLKState[vlevel][context->bw_ctx.dml.vba.maxMpcComb];
+ 
+ 	dc_assert_fp_enabled();
+@@ -529,7 +529,7 @@ void dcn31_calculate_wm_and_dlg_fp(
+ 			continue;
+ 
+ 		if (context->res_ctx.pipe_ctx[i].plane_state)
+-			active_dpp_count++;
++			active_hubp_count++;
+ 
+ 		pipes[pipe_idx].clks_cfg.dispclk_mhz = get_dispclk_calculated(&context->bw_ctx.dml, pipes, pipe_cnt);
+ 		pipes[pipe_idx].clks_cfg.dppclk_mhz = get_dppclk_calculated(&context->bw_ctx.dml, pipes, pipe_cnt, pipe_idx);
+@@ -547,9 +547,19 @@ void dcn31_calculate_wm_and_dlg_fp(
+ 	}
+ 
+ 	dcn20_calculate_dlg_params(dc, context, pipes, pipe_cnt, vlevel);
+-	/* For 31x apu pstate change is only supported if possible in vactive or if there are no active dpps */
++	/* For 31x apu pstate change is only supported if possible in vactive*/
+ 	context->bw_ctx.bw.dcn.clk.p_state_change_support =
+-			context->bw_ctx.dml.vba.DRAMClockChangeSupport[vlevel][context->bw_ctx.dml.vba.maxMpcComb] == dm_dram_clock_change_vactive || !active_dpp_count;
++			context->bw_ctx.dml.vba.DRAMClockChangeSupport[vlevel][context->bw_ctx.dml.vba.maxMpcComb] == dm_dram_clock_change_vactive;
++	/* If DCN isn't making memory requests we can allow pstate change and lower clocks */
++	if (!active_hubp_count) {
++		context->bw_ctx.bw.dcn.clk.socclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dppclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dcfclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dcfclk_deep_sleep_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dramclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.fclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.p_state_change_support = true;
++	}
  }
  
-+static bool commit_minimal_transition_state(struct dc *dc,
-+		struct dc_state *transition_base_context);
-+
- /**
-  * dc_commit_streams - Commit current stream state
-  *
-@@ -1934,6 +1937,8 @@ enum dc_status dc_commit_streams(struct dc *dc,
- 	struct dc_state *context;
- 	enum dc_status res = DC_OK;
- 	struct dc_validation_set set[MAX_STREAMS] = {0};
-+	struct pipe_ctx *pipe;
-+	bool handle_exit_odm2to1 = false;
+ void dcn31_update_bw_bounding_box(struct dc *dc, struct clk_bw_params *bw_params)
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+index f28caece5f901..f88c80594bd7e 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -1237,7 +1237,7 @@ static void dcn32_calculate_dlg_params(struct dc *dc, struct dc_state *context,
+ 				       display_e2e_pipe_params_st *pipes,
+ 				       int pipe_cnt, int vlevel)
+ {
+-	int i, pipe_idx;
++	int i, pipe_idx, active_hubp_count = 0;
+ 	bool usr_retraining_support = false;
+ 	bool unbounded_req_enabled = false;
  
- 	if (!streams_changed(dc, streams, stream_count))
- 		return res;
-@@ -1955,6 +1960,22 @@ enum dc_status dc_commit_streams(struct dc *dc,
- 		}
+@@ -1282,6 +1282,8 @@ static void dcn32_calculate_dlg_params(struct dc *dc, struct dc_state *context,
+ 	for (i = 0, pipe_idx = 0; i < dc->res_pool->pipe_count; i++) {
+ 		if (!context->res_ctx.pipe_ctx[i].stream)
+ 			continue;
++		if (context->res_ctx.pipe_ctx[i].plane_state)
++			active_hubp_count++;
+ 		pipes[pipe_idx].pipe.dest.vstartup_start = get_vstartup(&context->bw_ctx.dml, pipes, pipe_cnt,
+ 				pipe_idx);
+ 		pipes[pipe_idx].pipe.dest.vupdate_offset = get_vupdate_offset(&context->bw_ctx.dml, pipes, pipe_cnt,
+@@ -1307,6 +1309,16 @@ static void dcn32_calculate_dlg_params(struct dc *dc, struct dc_state *context,
+ 		context->res_ctx.pipe_ctx[i].pipe_dlg_param = pipes[pipe_idx].pipe.dest;
+ 		pipe_idx++;
  	}
- 
-+	/* Check for case where we are going from odm 2:1 to max
-+	 *  pipe scenario.  For these cases, we will call
-+	 *  commit_minimal_transition_state() to exit out of odm 2:1
-+	 *  first before processing new streams
-+	 */
-+	if (stream_count == dc->res_pool->pipe_count) {
-+		for (i = 0; i < dc->res_pool->pipe_count; i++) {
-+			pipe = &dc->current_state->res_ctx.pipe_ctx[i];
-+			if (pipe->next_odm_pipe)
-+				handle_exit_odm2to1 = true;
-+		}
++	/* If DCN isn't making memory requests we can allow pstate change and lower clocks */
++	if (!active_hubp_count) {
++		context->bw_ctx.bw.dcn.clk.socclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dppclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dcfclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dcfclk_deep_sleep_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dramclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.fclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.p_state_change_support = true;
 +	}
-+
-+	if (handle_exit_odm2to1)
-+		res = commit_minimal_transition_state(dc, dc->current_state);
-+
- 	context = dc_create_state(dc);
- 	if (!context)
- 		goto context_alloc_fail;
-@@ -3759,6 +3780,7 @@ static bool commit_minimal_transition_state(struct dc *dc,
- 	unsigned int i, j;
- 	unsigned int pipe_in_use = 0;
- 	bool subvp_in_use = false;
-+	bool odm_in_use = false;
- 
- 	if (!transition_context)
- 		return false;
-@@ -3783,6 +3805,18 @@ static bool commit_minimal_transition_state(struct dc *dc,
- 		}
- 	}
- 
-+	/* If ODM is enabled and we are adding or removing planes from any ODM
-+	 * pipe, we must use the minimal transition.
-+	 */
-+	for (i = 0; i < dc->res_pool->pipe_count; i++) {
-+		struct pipe_ctx *pipe = &dc->current_state->res_ctx.pipe_ctx[i];
-+
-+		if (pipe->stream && pipe->next_odm_pipe) {
-+			odm_in_use = true;
-+			break;
-+		}
-+	}
-+
- 	/* When the OS add a new surface if we have been used all of pipes with odm combine
- 	 * and mpc split feature, it need use commit_minimal_transition_state to transition safely.
- 	 * After OS exit MPO, it will back to use odm and mpc split with all of pipes, we need
-@@ -3791,7 +3825,7 @@ static bool commit_minimal_transition_state(struct dc *dc,
- 	 * Reduce the scenarios to use dc_commit_state_no_check in the stage of flip. Especially
- 	 * enter/exit MPO when DCN still have enough resources.
- 	 */
--	if (pipe_in_use != dc->res_pool->pipe_count && !subvp_in_use) {
-+	if (pipe_in_use != dc->res_pool->pipe_count && !subvp_in_use && !odm_in_use) {
- 		dc_release_state(transition_context);
- 		return true;
- 	}
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-index f0d05829288bd..a26e52abc9898 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -1444,6 +1444,26 @@ static int acquire_first_split_pipe(
- 			split_pipe->plane_res.mpcc_inst = pool->dpps[i]->inst;
- 			split_pipe->pipe_idx = i;
- 
-+			split_pipe->stream = stream;
-+			return i;
-+		} else if (split_pipe->prev_odm_pipe &&
-+				split_pipe->prev_odm_pipe->plane_state == split_pipe->plane_state) {
-+			split_pipe->prev_odm_pipe->next_odm_pipe = split_pipe->next_odm_pipe;
-+			if (split_pipe->next_odm_pipe)
-+				split_pipe->next_odm_pipe->prev_odm_pipe = split_pipe->prev_odm_pipe;
-+
-+			if (split_pipe->prev_odm_pipe->plane_state)
-+				resource_build_scaling_params(split_pipe->prev_odm_pipe);
-+
-+			memset(split_pipe, 0, sizeof(*split_pipe));
-+			split_pipe->stream_res.tg = pool->timing_generators[i];
-+			split_pipe->plane_res.hubp = pool->hubps[i];
-+			split_pipe->plane_res.ipp = pool->ipps[i];
-+			split_pipe->plane_res.dpp = pool->dpps[i];
-+			split_pipe->stream_res.opp = pool->opps[i];
-+			split_pipe->plane_res.mpcc_inst = pool->dpps[i]->inst;
-+			split_pipe->pipe_idx = i;
-+
- 			split_pipe->stream = stream;
- 			return i;
- 		}
+ 	/*save a original dppclock copy*/
+ 	context->bw_ctx.bw.dcn.clk.bw_dppclk_khz = context->bw_ctx.bw.dcn.clk.dppclk_khz;
+ 	context->bw_ctx.bw.dcn.clk.bw_dispclk_khz = context->bw_ctx.bw.dcn.clk.dispclk_khz;
 -- 
 2.39.2
 
