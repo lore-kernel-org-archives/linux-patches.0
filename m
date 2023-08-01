@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B65200AB
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE52EC433C8;
-	Tue,  1 Aug 2023 09:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E41200AB
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C808C433C9;
+	Tue,  1 Aug 2023 09:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882658;
-	bh=HvztnuwF7w1fGTZ2N8H++pRHCr97hNp9DUOYsEQlZ4U=;
+	s=korg; t=1690882660;
+	bh=Jox5gd+Qaq5+/DbN/eI13CvmA860wSs3BcXSfv69Pus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ma2WhVirTwBEL1KlAkFTRUPFQLWl6Sj8UCCTkBi60/3U0SmGx7wcdhTjuzewmLEMg
-	 3BcYoYt7SeRQUszJ5kbvKCORdiVtPWDw4FBNp9GTAyx+iaEppQyLeU2+iIPix2Dt6C
-	 VHHEMXbEv8zXnSgR2JZExCr2BK8WE1XTHbVUq/GI=
+	b=PsI5Raxd8z8tAJnpX0LF+L0jMyTlwnoH/fE9e4fBRZqfGLvOtum7aUHH2yMIit5Pz
+	 i8fhaP93atxl2AwVr76VXSbFaxnmJk0oTINOmNmnqJsqxglituA/CVtSVyZ5AjHbv8
+	 YWsAlbpSzPP0BNtbU5nIcKSi3txq40IpuPgpGkXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 185/228] btrfs: check for commit error at btrfs_attach_transaction_barrier()
-Date: Tue,  1 Aug 2023 11:20:43 +0200
-Message-ID: <20230801091929.548739736@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 6.1 186/228] x86/MCE/AMD: Decrement threshold_bank refcount when removing threshold blocks
+Date: Tue,  1 Aug 2023 11:20:44 +0200
+Message-ID: <20230801091929.580958007@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -35,53 +36,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-commit b28ff3a7d7e97456fd86b68d24caa32e1cfa7064 upstream.
+commit 3ba2e83334bed2b1980b59734e6e84dfaf96026c upstream.
 
-btrfs_attach_transaction_barrier() is used to get a handle pointing to the
-current running transaction if the transaction has not started its commit
-yet (its state is < TRANS_STATE_COMMIT_START). If the transaction commit
-has started, then we wait for the transaction to commit and finish before
-returning - however we completely ignore if the transaction was aborted
-due to some error during its commit, we simply return ERR_PT(-ENOENT),
-which makes the caller assume everything is fine and no errors happened.
+AMD systems from Family 10h to 16h share MCA bank 4 across multiple CPUs.
+Therefore, the threshold_bank structure for bank 4, and its threshold_block
+structures, will be initialized once at boot time. And the kobject for the
+shared bank will be added to each of the CPUs that share it. Furthermore,
+the threshold_blocks for the shared bank will be added again to the bank's
+kobject. These additions will increase the refcount for the bank's kobject.
 
-This could make an fsync return success (0) to user space when in fact we
-had a transaction abort and the target inode changes were therefore not
-persisted.
+For example, a shared bank with two blocks and shared across two CPUs will
+be set up like this:
 
-Fix this by checking for the return value from btrfs_wait_for_commit(),
-and if it returned an error, return it back to the caller.
+  CPU0 init
+    bank create and add; bank refcount = 1; threshold_create_bank()
+      block 0 init and add; bank refcount = 2; allocate_threshold_blocks()
+      block 1 init and add; bank refcount = 3; allocate_threshold_blocks()
+  CPU1 init
+    bank add; bank refcount = 3; threshold_create_bank()
+      block 0 add; bank refcount = 4; __threshold_add_blocks()
+      block 1 add; bank refcount = 5; __threshold_add_blocks()
 
-Fixes: d4edf39bd5db ("Btrfs: fix uncompleted transaction")
-CC: stable@vger.kernel.org # 4.19+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Currently in threshold_remove_bank(), if the bank is shared then
+__threshold_remove_blocks() is called. Here the shared bank's kobject and
+the bank's blocks' kobjects are deleted. This is done on the first call
+even while the structures are still shared. Subsequent calls from other
+CPUs that share the structures will attempt to delete the kobjects.
+
+During kobject_del(), kobject->sd is removed. If the kobject is not part of
+a kset with default_groups, then subsequent kobject_del() calls seem safe
+even with kobject->sd == NULL.
+
+Originally, the AMD MCA thresholding structures did not use default_groups.
+And so the above behavior was not apparent.
+
+However, a recent change implemented default_groups for the thresholding
+structures. Therefore, kobject_del() will go down the sysfs_remove_groups()
+code path. In this case, the first kobject_del() may succeed and remove
+kobject->sd. But subsequent kobject_del() calls will give a WARNing in
+kernfs_remove_by_name_ns() since kobject->sd == NULL.
+
+Use kobject_put() on the shared bank's kobject when "removing" blocks. This
+decrements the bank's refcount while keeping kobjects enabled until the
+bank is no longer shared. At that point, kobject_put() will be called on
+the blocks which drives their refcount to 0 and deletes them and also
+decrementing the bank's refcount. And finally kobject_put() will be called
+on the bank driving its refcount to 0 and deleting it.
+
+The same example above:
+
+  CPU1 shutdown
+    bank is shared; bank refcount = 5; threshold_remove_bank()
+      block 0 put parent bank; bank refcount = 4; __threshold_remove_blocks()
+      block 1 put parent bank; bank refcount = 3; __threshold_remove_blocks()
+  CPU0 shutdown
+    bank is no longer shared; bank refcount = 3; threshold_remove_bank()
+      block 0 put block; bank refcount = 2; deallocate_threshold_blocks()
+      block 1 put block; bank refcount = 1; deallocate_threshold_blocks()
+    put bank; bank refcount = 0; threshold_remove_bank()
+
+Fixes: 7f99cb5e6039 ("x86/CPU/AMD: Use default_groups in kobj_type")
+Reported-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/alpine.LRH.2.02.2205301145540.25840@file01.intranet.prod.int.rdu2.redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/transaction.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/mce/amd.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -814,8 +814,13 @@ btrfs_attach_transaction_barrier(struct
+--- a/arch/x86/kernel/cpu/mce/amd.c
++++ b/arch/x86/kernel/cpu/mce/amd.c
+@@ -1265,10 +1265,10 @@ static void __threshold_remove_blocks(st
+ 	struct threshold_block *pos = NULL;
+ 	struct threshold_block *tmp = NULL;
  
- 	trans = start_transaction(root, 0, TRANS_ATTACH,
- 				  BTRFS_RESERVE_NO_FLUSH, true);
--	if (trans == ERR_PTR(-ENOENT))
--		btrfs_wait_for_commit(root->fs_info, 0);
-+	if (trans == ERR_PTR(-ENOENT)) {
-+		int ret;
-+
-+		ret = btrfs_wait_for_commit(root->fs_info, 0);
-+		if (ret)
-+			return ERR_PTR(ret);
-+	}
+-	kobject_del(b->kobj);
++	kobject_put(b->kobj);
  
- 	return trans;
+ 	list_for_each_entry_safe(pos, tmp, &b->blocks->miscj, miscj)
+-		kobject_del(&pos->kobj);
++		kobject_put(b->kobj);
  }
+ 
+ static void threshold_remove_bank(struct threshold_bank *bank)
 
 
