@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC971F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:30:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48685C433C7;
-	Tue,  1 Aug 2023 09:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9024D1F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:30:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10BA2C433C8;
+	Tue,  1 Aug 2023 09:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882236;
-	bh=07eLiQdKwf8weSQ2QC1cOc9LAUcXi11CgR/gAamRBoE=;
+	s=korg; t=1690882239;
+	bh=Pz3YqO73rXJKqjcY8D2uZ0PO5Tvlicb3eF3JALTnjMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2j6Rmi+rCAIIEaHrbfi2+ZrvXPdRuDHEZTUUPWkMeXfdD/RwMGL69AA/UV2nc2/VQ
-	 uop5yelJJlPJ32czUMRdMJhz5NheDPH/yGYsOHmCORK4IpgX/BOi/8K+rCxl2n2F8d
-	 ZGCTLaIXv8qHwcdMsh6GcfCSSvj0G/HpxgsxBIrA=
+	b=zb3miEdFHvy47dahOl6e1JAwBABmFwEiX43imE3t6nmEQMAlXvwcE/sS6R852hGCW
+	 +qd489D/lWDBnRTbha7UfUL4kQ5pLTWAdMpoOYN9Ij8F1mGaXHeUCEbypLV5DGCcbe
+	 iOltPrb34tlo3oXnQxhbTKo6OwvoHJ6BLGHIq70o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aurabindo Pillai <aurabindo.pillai@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 034/228] drm/amd/display: Check if link state is valid
-Date: Tue,  1 Aug 2023 11:18:12 +0200
-Message-ID: <20230801091924.119614462@linuxfoundation.org>
+Subject: [PATCH 6.1 035/228] drm/amd/display: Rework context change check
+Date: Tue,  1 Aug 2023 11:18:13 +0200
+Message-ID: <20230801091924.160281645@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -39,11 +39,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 
-[ Upstream commit 03ce7b387e8b0f4a1dc97a878545bdf7c7f23251 ]
+[ Upstream commit 10fdb0a11c555e0d6f7698d2874581d06e99ee71 ]
 
-The link state is set to false if there is no link and local sink. Even
-though the stream state may not change, it is desirable to commit the
-new stream when HPD goes low to high.
+Context change is all about streams; for this reason, this commit
+renames context_changed to streams_changed. Additionally, to make this
+function more flexible, this commit changes the function signature to
+receive the stream array and the stream count as a parameter.
 
 Reviewed-by: Harry Wentland <harry.wentland@amd.com>
 Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
@@ -53,22 +54,48 @@ Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: 59de751e3845 ("drm/amd/display: add ODM case when looking for first split pipe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index cca0143444164..beb2d7f103c58 100644
+index beb2d7f103c58..226c17e78d3e1 100644
 --- a/drivers/gpu/drm/amd/display/dc/core/dc.c
 +++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -1517,6 +1517,8 @@ static bool context_changed(
+@@ -1505,19 +1505,19 @@ static void program_timing_sync(
+ 	}
+ }
+ 
+-static bool context_changed(
+-		struct dc *dc,
+-		struct dc_state *context)
++static bool streams_changed(struct dc *dc,
++			    struct dc_stream_state *streams[],
++			    uint8_t stream_count)
+ {
+ 	uint8_t i;
+ 
+-	if (context->stream_count != dc->current_state->stream_count)
++	if (stream_count != dc->current_state->stream_count)
+ 		return true;
+ 
  	for (i = 0; i < dc->current_state->stream_count; i++) {
- 		if (dc->current_state->streams[i] != context->streams[i])
+-		if (dc->current_state->streams[i] != context->streams[i])
++		if (dc->current_state->streams[i] != streams[i])
  			return true;
-+		if (!context->streams[i]->link->link_state_valid)
-+			return true;
+-		if (!context->streams[i]->link->link_state_valid)
++		if (!streams[i]->link->link_state_valid)
+ 			return true;
  	}
  
- 	return false;
+@@ -1918,7 +1918,7 @@ bool dc_commit_state(struct dc *dc, struct dc_state *context)
+ 	enum dc_status result = DC_ERROR_UNEXPECTED;
+ 	int i;
+ 
+-	if (!context_changed(dc, context))
++	if (!streams_changed(dc, context->streams, context->stream_count))
+ 		return DC_OK;
+ 
+ 	DC_LOG_DC("%s: %d streams\n",
 -- 
 2.39.2
 
