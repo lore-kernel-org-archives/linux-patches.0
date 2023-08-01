@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1271F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:30:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B32E5C433C8;
-	Tue,  1 Aug 2023 09:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF921F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:31:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 802D1C433C8;
+	Tue,  1 Aug 2023 09:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882259;
-	bh=KIpLyrl4ZFhrzX6oWGp8tSYN9SyYTsfjVX4nRfjiO4M=;
+	s=korg; t=1690882261;
+	bh=H0tGj3e9QajFw5Qzb6rsA9a+53NAdZWBXe6wwXhvosY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bH/flocc3oWl4nZxNIzAobiY4NmMDwsGhUTotIGAMTORqDSqoqNCM9QLIZNVrVeJM
-	 SBdaUcXxPfvPAHHnvC2/56V5Y1if3Yyfg5GVboW7jRiUdN+lFdtf/9k3RcNRgDmUoL
-	 OKwKuRpa59IkYuZg6Z/Mp2+3n/2SccUEbFr2KS1g=
+	b=LkdzQdfwZwXCR7f1O57Jl4mnWwUylxdjv/FSkwvKNubPkEE/Ytz8nc3fADxPdW1P9
+	 S5OGwLQ7XJhx9yYTBNuGEz8DGx+PQLrvC3ymTgw5wL+D9WFW8uOlK3j5j6CRnidGy+
+	 FD+mRKpbd3YaE3/4zm1xKoT75/yVd1m93R/yx8kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlene Liu <Charlene.Liu@amd.com>,
+	Jun Lei <Jun.Lei@amd.com>,
 	Tom Chung <chiahsuan.chung@amd.com>,
 	Dmytro Laktyushkin <Dmytro.Laktyushkin@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/228] drm/amd/display: use low clocks for no plane configs
-Date: Tue,  1 Aug 2023 11:18:19 +0200
-Message-ID: <20230801091924.362986956@linuxfoundation.org>
+Subject: [PATCH 6.1 042/228] drm/amd/display: fix unbounded requesting for high pixel rate modes on dcn315
+Date: Tue,  1 Aug 2023 11:18:20 +0200
+Message-ID: <20230801091924.398784906@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -40,12 +40,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmytro Laktyushkin <Dmytro.Laktyushkin@amd.com>
 
-[ Upstream commit 2641c7b7808191cba25ba28b82bb73ca294924cc ]
+[ Upstream commit 655435df0936ce2fda0d5ced7e50101179a3acfd ]
 
-Stream only configurations do not require DCFCLK, SOCCLK, DPPCLK
-or FCLK. They also always allow pstate change.
+Unbounded requesting is getting configured for odm mode calculations which
+is incorrect. This change checks whether mode requires odm ahead of time.
 
-Reviewed-by: Charlene Liu <Charlene.Liu@amd.com>
+Reviewed-by: Jun Lei <Jun.Lei@amd.com>
 Acked-by: Tom Chung <chiahsuan.chung@amd.com>
 Signed-off-by: Dmytro Laktyushkin <Dmytro.Laktyushkin@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
@@ -53,93 +53,50 @@ Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: 49f26218c344 ("drm/amd/display: fix dcn315 single stream crb allocation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/dml/dcn31/dcn31_fpu.c   | 18 ++++++++++++++----
- .../drm/amd/display/dc/dml/dcn32/dcn32_fpu.c   | 14 +++++++++++++-
- 2 files changed, 27 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn315/dcn315_resource.c | 4 +++-
+ drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c    | 5 +++++
+ drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.h    | 1 +
+ 3 files changed, 9 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn315/dcn315_resource.c b/drivers/gpu/drm/amd/display/dc/dcn315/dcn315_resource.c
+index 31cbc5762eab3..19f2025cb7907 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn315/dcn315_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn315/dcn315_resource.c
+@@ -1707,7 +1707,9 @@ static int dcn315_populate_dml_pipes_from_context(
+ 			dc->config.enable_4to1MPC = true;
+ 			context->bw_ctx.dml.ip.det_buffer_size_kbytes =
+ 					(max_usable_det / DCN3_15_CRB_SEGMENT_SIZE_KB / 4) * DCN3_15_CRB_SEGMENT_SIZE_KB;
+-		} else if (!is_dual_plane(pipe->plane_state->format) && pipe->plane_state->src_rect.width <= 5120) {
++		} else if (!is_dual_plane(pipe->plane_state->format)
++				&& pipe->plane_state->src_rect.width <= 5120
++				&& pipe->stream->timing.pix_clk_100hz < dcn_get_max_non_odm_pix_rate_100hz(&dc->dml.soc)) {
+ 			/* Limit to 5k max to avoid forced pipe split when there is not enough detile for swath */
+ 			context->bw_ctx.dml.ip.det_buffer_size_kbytes = 192;
+ 			pipes[0].pipe.src.unbounded_req_mode = true;
 diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c
-index 8e416433184cf..aa1c2917a4a1d 100644
+index aa1c2917a4a1d..e48923f314b36 100644
 --- a/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c
 +++ b/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c
-@@ -483,7 +483,7 @@ void dcn31_calculate_wm_and_dlg_fp(
- 		int pipe_cnt,
- 		int vlevel)
- {
--	int i, pipe_idx, active_dpp_count = 0;
-+	int i, pipe_idx, active_hubp_count = 0;
- 	double dcfclk = context->bw_ctx.dml.vba.DCFCLKState[vlevel][context->bw_ctx.dml.vba.maxMpcComb];
- 
- 	dc_assert_fp_enabled();
-@@ -529,7 +529,7 @@ void dcn31_calculate_wm_and_dlg_fp(
- 			continue;
- 
- 		if (context->res_ctx.pipe_ctx[i].plane_state)
--			active_dpp_count++;
-+			active_hubp_count++;
- 
- 		pipes[pipe_idx].clks_cfg.dispclk_mhz = get_dispclk_calculated(&context->bw_ctx.dml, pipes, pipe_cnt);
- 		pipes[pipe_idx].clks_cfg.dppclk_mhz = get_dppclk_calculated(&context->bw_ctx.dml, pipes, pipe_cnt, pipe_idx);
-@@ -547,9 +547,19 @@ void dcn31_calculate_wm_and_dlg_fp(
- 	}
- 
- 	dcn20_calculate_dlg_params(dc, context, pipes, pipe_cnt, vlevel);
--	/* For 31x apu pstate change is only supported if possible in vactive or if there are no active dpps */
-+	/* For 31x apu pstate change is only supported if possible in vactive*/
- 	context->bw_ctx.bw.dcn.clk.p_state_change_support =
--			context->bw_ctx.dml.vba.DRAMClockChangeSupport[vlevel][context->bw_ctx.dml.vba.maxMpcComb] == dm_dram_clock_change_vactive || !active_dpp_count;
-+			context->bw_ctx.dml.vba.DRAMClockChangeSupport[vlevel][context->bw_ctx.dml.vba.maxMpcComb] == dm_dram_clock_change_vactive;
-+	/* If DCN isn't making memory requests we can allow pstate change and lower clocks */
-+	if (!active_hubp_count) {
-+		context->bw_ctx.bw.dcn.clk.socclk_khz = 0;
-+		context->bw_ctx.bw.dcn.clk.dppclk_khz = 0;
-+		context->bw_ctx.bw.dcn.clk.dcfclk_khz = 0;
-+		context->bw_ctx.bw.dcn.clk.dcfclk_deep_sleep_khz = 0;
-+		context->bw_ctx.bw.dcn.clk.dramclk_khz = 0;
-+		context->bw_ctx.bw.dcn.clk.fclk_khz = 0;
-+		context->bw_ctx.bw.dcn.clk.p_state_change_support = true;
-+	}
+@@ -807,3 +807,8 @@ void dcn316_update_bw_bounding_box(struct dc *dc, struct clk_bw_params *bw_param
+ 	else
+ 		dml_init_instance(&dc->dml, &dcn3_16_soc, &dcn3_16_ip, DML_PROJECT_DCN31_FPGA);
  }
++
++int dcn_get_max_non_odm_pix_rate_100hz(struct _vcs_dpi_soc_bounding_box_st *soc)
++{
++	return soc->clock_limits[0].dispclk_mhz * 10000.0 / (1.0 + soc->dcn_downspread_percent / 100.0);
++}
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.h b/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.h
+index fd58b2561ec9e..ab8c48b8b7e05 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.h
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.h
+@@ -46,5 +46,6 @@ void dcn31_calculate_wm_and_dlg_fp(
+ void dcn31_update_bw_bounding_box(struct dc *dc, struct clk_bw_params *bw_params);
+ void dcn315_update_bw_bounding_box(struct dc *dc, struct clk_bw_params *bw_params);
+ void dcn316_update_bw_bounding_box(struct dc *dc, struct clk_bw_params *bw_params);
++int dcn_get_max_non_odm_pix_rate_100hz(struct _vcs_dpi_soc_bounding_box_st *soc);
  
- void dcn31_update_bw_bounding_box(struct dc *dc, struct clk_bw_params *bw_params)
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-index f28caece5f901..f88c80594bd7e 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-@@ -1237,7 +1237,7 @@ static void dcn32_calculate_dlg_params(struct dc *dc, struct dc_state *context,
- 				       display_e2e_pipe_params_st *pipes,
- 				       int pipe_cnt, int vlevel)
- {
--	int i, pipe_idx;
-+	int i, pipe_idx, active_hubp_count = 0;
- 	bool usr_retraining_support = false;
- 	bool unbounded_req_enabled = false;
- 
-@@ -1282,6 +1282,8 @@ static void dcn32_calculate_dlg_params(struct dc *dc, struct dc_state *context,
- 	for (i = 0, pipe_idx = 0; i < dc->res_pool->pipe_count; i++) {
- 		if (!context->res_ctx.pipe_ctx[i].stream)
- 			continue;
-+		if (context->res_ctx.pipe_ctx[i].plane_state)
-+			active_hubp_count++;
- 		pipes[pipe_idx].pipe.dest.vstartup_start = get_vstartup(&context->bw_ctx.dml, pipes, pipe_cnt,
- 				pipe_idx);
- 		pipes[pipe_idx].pipe.dest.vupdate_offset = get_vupdate_offset(&context->bw_ctx.dml, pipes, pipe_cnt,
-@@ -1307,6 +1309,16 @@ static void dcn32_calculate_dlg_params(struct dc *dc, struct dc_state *context,
- 		context->res_ctx.pipe_ctx[i].pipe_dlg_param = pipes[pipe_idx].pipe.dest;
- 		pipe_idx++;
- 	}
-+	/* If DCN isn't making memory requests we can allow pstate change and lower clocks */
-+	if (!active_hubp_count) {
-+		context->bw_ctx.bw.dcn.clk.socclk_khz = 0;
-+		context->bw_ctx.bw.dcn.clk.dppclk_khz = 0;
-+		context->bw_ctx.bw.dcn.clk.dcfclk_khz = 0;
-+		context->bw_ctx.bw.dcn.clk.dcfclk_deep_sleep_khz = 0;
-+		context->bw_ctx.bw.dcn.clk.dramclk_khz = 0;
-+		context->bw_ctx.bw.dcn.clk.fclk_khz = 0;
-+		context->bw_ctx.bw.dcn.clk.p_state_change_support = true;
-+	}
- 	/*save a original dppclock copy*/
- 	context->bw_ctx.bw.dcn.clk.bw_dppclk_khz = context->bw_ctx.bw.dcn.clk.dppclk_khz;
- 	context->bw_ctx.bw.dcn.clk.bw_dispclk_khz = context->bw_ctx.bw.dcn.clk.dispclk_khz;
+ #endif /* __DCN31_FPU_H__*/
 -- 
 2.39.2
 
