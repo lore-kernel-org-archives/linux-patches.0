@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F3B1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:49:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52981C433B9;
-	Tue,  1 Aug 2023 09:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994871FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:49:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A251C433C8;
+	Tue,  1 Aug 2023 09:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883360;
-	bh=bhI1XMp4LNAjbKRv3x2jUyFYp4WRfZKzqo2vqmpKhps=;
+	s=korg; t=1690883363;
+	bh=H3ZC1kUIui+w/WasGPqsvFTpiAI3fLlRwG41WoG6CCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ae72hx082QcDWERL+esz539qwgnCrWT1TJU/f+U0fcX9ChW3dS8E1zEoT+aaUVobq
-	 J80i1KJKKOvoAi02dreGfjVNh1qWtUebF3I8n/NT89MohmYKOSJxGLc0aCs0qlwcsW
-	 c8W6/wT4KPOHSCHRsUV0vVbmj4lXOCp08NIxrIs0=
+	b=dxZ7IsDveHIwIrXjWNf1kI2+qG6LIK0+gQniB4FgcXNadUsJDI3JxdKbxjnHWCl36
+	 Pv7Uk18hfXsOGX8h+2Mji1UmVBKJSlE/ByLiUJtDZ+osXlniuEHP+YMcvtp08jD49l
+	 IsbjIH2sfOd3bH+x2jjtIM8x0G7jppFTNSWQFquw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.4 208/239] iommufd: Set end correctly when doing batch carry
-Date: Tue,  1 Aug 2023 11:21:12 +0200
-Message-ID: <20230801091933.322306263@linuxfoundation.org>
+	Aaron Lewis <aaronlewis@google.com>,
+	kvm@vger.kernel.org,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.4 209/239] selftests/rseq: Play nice with binaries statically linked against glibc 2.35+
+Date: Tue,  1 Aug 2023 11:21:13 +0200
+Message-ID: <20230801091933.368989826@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -35,92 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit b7c822fa6b7701b17e139f1c562fc24135880ed4 upstream.
+commit 3bcbc20942db5d738221cca31a928efc09827069 upstream.
 
-Even though the test suite covers this it somehow became obscured that
-this wasn't working.
+To allow running rseq and KVM's rseq selftests as statically linked
+binaries, initialize the various "trampoline" pointers to point directly
+at the expect glibc symbols, and skip the dlysm() lookups if the rseq
+size is non-zero, i.e. the binary is statically linked *and* the libc
+registered its own rseq.
 
-The test iommufd_ioas.mock_domain.access_domain_destory would blow up
-rarely.
+Define weak versions of the symbols so as not to break linking against
+libc versions that don't support rseq in any capacity.
 
-end should be set to 1 because this just pushed an item, the carry, to the
-pfns list.
+The KVM selftests in particular are often statically linked so that they
+can be run on targets with very limited runtime environments, i.e. test
+machines.
 
-Sometimes the test would blow up with:
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 0 P4D 0
-  Oops: 0000 [#1] SMP
-  CPU: 5 PID: 584 Comm: iommufd Not tainted 6.5.0-rc1-dirty #1236
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-  RIP: 0010:batch_unpin+0xa2/0x100 [iommufd]
-  Code: 17 48 81 fe ff ff 07 00 77 70 48 8b 15 b7 be 97 e2 48 85 d2 74 14 48 8b 14 fa 48 85 d2 74 0b 40 0f b6 f6 48 c1 e6 04 48 01 f2 <48> 8b 3a 48 c1 e0 06 89 ca 48 89 de 48 83 e7 f0 48 01 c7 e8 96 dc
-  RSP: 0018:ffffc90001677a58 EFLAGS: 00010246
-  RAX: 00007f7e2646f000 RBX: 0000000000000000 RCX: 0000000000000001
-  RDX: 0000000000000000 RSI: 00000000fefc4c8d RDI: 0000000000fefc4c
-  RBP: ffffc90001677a80 R08: 0000000000000048 R09: 0000000000000200
-  R10: 0000000000030b98 R11: ffffffff81f3bb40 R12: 0000000000000001
-  R13: ffff888101f75800 R14: ffffc90001677ad0 R15: 00000000000001fe
-  FS:  00007f9323679740(0000) GS:ffff8881ba540000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 0000000000000000 CR3: 0000000105ede003 CR4: 00000000003706a0
-  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-  Call Trace:
-   <TASK>
-   ? show_regs+0x5c/0x70
-   ? __die+0x1f/0x60
-   ? page_fault_oops+0x15d/0x440
-   ? lock_release+0xbc/0x240
-   ? exc_page_fault+0x4a4/0x970
-   ? asm_exc_page_fault+0x27/0x30
-   ? batch_unpin+0xa2/0x100 [iommufd]
-   ? batch_unpin+0xba/0x100 [iommufd]
-   __iopt_area_unfill_domain+0x198/0x430 [iommufd]
-   ? __mutex_lock+0x8c/0xb80
-   ? __mutex_lock+0x6aa/0xb80
-   ? xa_erase+0x28/0x30
-   ? iopt_table_remove_domain+0x162/0x320 [iommufd]
-   ? lock_release+0xbc/0x240
-   iopt_area_unfill_domain+0xd/0x10 [iommufd]
-   iopt_table_remove_domain+0x195/0x320 [iommufd]
-   iommufd_hw_pagetable_destroy+0xb3/0x110 [iommufd]
-   iommufd_object_destroy_user+0x8e/0xf0 [iommufd]
-   iommufd_device_detach+0xc5/0x140 [iommufd]
-   iommufd_selftest_destroy+0x1f/0x70 [iommufd]
-   iommufd_object_destroy_user+0x8e/0xf0 [iommufd]
-   iommufd_destroy+0x3a/0x50 [iommufd]
-   iommufd_fops_ioctl+0xfb/0x170 [iommufd]
-   __x64_sys_ioctl+0x40d/0x9a0
-   do_syscall_64+0x3c/0x80
-   entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-Link: https://lore.kernel.org/r/3-v1-85aacb2af554+bc-iommufd_syz3_jgg@nvidia.com
-Cc: <stable@vger.kernel.org>
-Fixes: f394576eb11d ("iommufd: PFN handling for iopt_pages")
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Reported-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 233e667e1ae3 ("selftests/rseq: Uplift rseq selftests for compatibility with glibc-2.35")
+Cc: Aaron Lewis <aaronlewis@google.com>
+Cc: kvm@vger.kernel.org
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20230721223352.2333911-1-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/pages.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/rseq/rseq.c |   28 ++++++++++++++++++++++------
+ 1 file changed, 22 insertions(+), 6 deletions(-)
 
---- a/drivers/iommu/iommufd/pages.c
-+++ b/drivers/iommu/iommufd/pages.c
-@@ -297,7 +297,7 @@ static void batch_clear_carry(struct pfn
- 	batch->pfns[0] = batch->pfns[batch->end - 1] +
- 			 (batch->npfns[batch->end - 1] - keep_pfns);
- 	batch->npfns[0] = keep_pfns;
--	batch->end = 0;
-+	batch->end = 1;
- }
+--- a/tools/testing/selftests/rseq/rseq.c
++++ b/tools/testing/selftests/rseq/rseq.c
+@@ -34,9 +34,17 @@
+ #include "../kselftest.h"
+ #include "rseq.h"
  
- static void batch_skip_carry(struct pfn_batch *batch, unsigned int skip_pfns)
+-static const ptrdiff_t *libc_rseq_offset_p;
+-static const unsigned int *libc_rseq_size_p;
+-static const unsigned int *libc_rseq_flags_p;
++/*
++ * Define weak versions to play nice with binaries that are statically linked
++ * against a libc that doesn't support registering its own rseq.
++ */
++__weak ptrdiff_t __rseq_offset;
++__weak unsigned int __rseq_size;
++__weak unsigned int __rseq_flags;
++
++static const ptrdiff_t *libc_rseq_offset_p = &__rseq_offset;
++static const unsigned int *libc_rseq_size_p = &__rseq_size;
++static const unsigned int *libc_rseq_flags_p = &__rseq_flags;
+ 
+ /* Offset from the thread pointer to the rseq area. */
+ ptrdiff_t rseq_offset;
+@@ -155,9 +163,17 @@ unsigned int get_rseq_feature_size(void)
+ static __attribute__((constructor))
+ void rseq_init(void)
+ {
+-	libc_rseq_offset_p = dlsym(RTLD_NEXT, "__rseq_offset");
+-	libc_rseq_size_p = dlsym(RTLD_NEXT, "__rseq_size");
+-	libc_rseq_flags_p = dlsym(RTLD_NEXT, "__rseq_flags");
++	/*
++	 * If the libc's registered rseq size isn't already valid, it may be
++	 * because the binary is dynamically linked and not necessarily due to
++	 * libc not having registered a restartable sequence.  Try to find the
++	 * symbols if that's the case.
++	 */
++	if (!*libc_rseq_size_p) {
++		libc_rseq_offset_p = dlsym(RTLD_NEXT, "__rseq_offset");
++		libc_rseq_size_p = dlsym(RTLD_NEXT, "__rseq_size");
++		libc_rseq_flags_p = dlsym(RTLD_NEXT, "__rseq_flags");
++	}
+ 	if (libc_rseq_size_p && libc_rseq_offset_p && libc_rseq_flags_p &&
+ 			*libc_rseq_size_p != 0) {
+ 		/* rseq registration owned by glibc */
 
 
