@@ -1,27 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C121FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:38:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1491FC433C7;
-	Tue,  1 Aug 2023 09:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3C01FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:38:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C59C433C8;
+	Tue,  1 Aug 2023 09:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882710;
-	bh=klIyRPhZk1qjMfAf/bEyH2s8w7OPj8rpn0B/fHo3njE=;
+	s=korg; t=1690882713;
+	bh=TVORKfXwLGfddHDv9j3C7863sVnGBVkq2BWq3blA7e8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ov/hcT14i2ohqNbPaT3Ol9niqFrH6pbsTV2kRg9shgnMIZqS/H8vOZqqf1PUqUuWe
-	 Q1HNltrvWoLIf/SnTTbERcY6spA8Qy3TlSL0xG80HByAM7DWRlFrMWAS87D9dezDkO
-	 2kwXwNI1SV8ihIHxBEfLSIVzS/ULE33NDSMT4Vn4=
+	b=QqX1gb7NdukT59yqHAcnaHAe2CjBVonXLD1kYSgVYrAZt6KLEsMKpbU8G/YCfE0pe
+	 AcEQWQrkPmPi2yMsScnPLVAul8ESk62XhNZqqrqr6E23JMNanxsRjyVYSaETgnamiq
+	 dbrHi01gzioUka0SslqG6Vug/TJjxR6pCAhqMK3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>
-Subject: [PATCH 6.1 176/228] staging: ks7010: potential buffer overflow in ks_wlan_set_encode_ext()
-Date: Tue,  1 Aug 2023 11:20:34 +0200
-Message-ID: <20230801091929.230743107@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Herve Codina <herve.codina@bootlin.com>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Richard Weinberger <richard@nod.at>,
+	Yang Guang <yang.guang5@zte.com.cn>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 203/228] Revert "um: Use swap() to make code cleaner"
+Date: Tue,  1 Aug 2023 11:21:01 +0200
+Message-ID: <20230801091930.206809090@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -35,37 +42,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 5f1c7031e044cb2fba82836d55cc235e2ad619dc upstream.
+commit dddfa05eb58076ad60f9a66e7155a5b3502b2dd5 upstream.
 
-The "exc->key_len" is a u16 that comes from the user.  If it's over
-IW_ENCODING_TOKEN_MAX (64) that could lead to memory corruption.
+This reverts commit 9b0da3f22307af693be80f5d3a89dc4c7f360a85.
 
-Fixes: b121d84882b9 ("staging: ks7010: simplify calls to memcpy()")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/tencent_5153B668C0283CAA15AA518325346E026A09@qq.com
+The sigio.c is clearly user space code which is handled by
+arch/um/scripts/Makefile.rules (see USER_OBJS rule).
+
+The above mentioned commit simply broke this agreement,
+we may not use Linux kernel internal headers in them without
+thorough thinking.
+
+Hence, revert the wrong commit.
+
+Link: https://lkml.kernel.org/r/20230724143131.30090-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202307212304.cH79zJp1-lkp@intel.com/
+Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Cc: Herve Codina <herve.codina@bootlin.com>
+Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>
+Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Yang Guang <yang.guang5@zte.com.cn>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/ks7010/ks_wlan_net.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/um/os-Linux/sigio.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/staging/ks7010/ks_wlan_net.c
-+++ b/drivers/staging/ks7010/ks_wlan_net.c
-@@ -1584,8 +1584,10 @@ static int ks_wlan_set_encode_ext(struct
- 			commit |= SME_WEP_FLAG;
- 		}
- 		if (enc->key_len) {
--			memcpy(&key->key_val[0], &enc->key[0], enc->key_len);
--			key->key_len = enc->key_len;
-+			int key_len = clamp_val(enc->key_len, 0, IW_ENCODING_TOKEN_MAX);
-+
-+			memcpy(&key->key_val[0], &enc->key[0], key_len);
-+			key->key_len = key_len;
- 			commit |= (SME_WEP_VAL1 << index);
- 		}
- 		break;
+--- a/arch/um/os-Linux/sigio.c
++++ b/arch/um/os-Linux/sigio.c
+@@ -3,7 +3,6 @@
+  * Copyright (C) 2002 - 2008 Jeff Dike (jdike@{addtoit,linux.intel}.com)
+  */
+ 
+-#include <linux/minmax.h>
+ #include <unistd.h>
+ #include <errno.h>
+ #include <fcntl.h>
+@@ -51,7 +50,7 @@ static struct pollfds all_sigio_fds;
+ 
+ static int write_sigio_thread(void *unused)
+ {
+-	struct pollfds *fds;
++	struct pollfds *fds, tmp;
+ 	struct pollfd *p;
+ 	int i, n, respond_fd;
+ 	char c;
+@@ -78,7 +77,9 @@ static int write_sigio_thread(void *unus
+ 					       "write_sigio_thread : "
+ 					       "read on socket failed, "
+ 					       "err = %d\n", errno);
+-				swap(current_poll, next_poll);
++				tmp = current_poll;
++				current_poll = next_poll;
++				next_poll = tmp;
+ 				respond_fd = sigio_private[1];
+ 			}
+ 			else {
 
 
