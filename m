@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBB01FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:47:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FAFDC433C9;
-	Tue,  1 Aug 2023 09:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20FF1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:47:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 469C9C433C8;
+	Tue,  1 Aug 2023 09:47:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883251;
-	bh=eKptBPxHQ2G1T44618ga8rrIQiIoYGCCl8BLvBDoWP8=;
+	s=korg; t=1690883254;
+	bh=FfHIKz/WQERcoj73Cjg2kDwe32ot7nbXHVZ5x3B02F8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IGyUf3eKJCCfZFFopPV9+PxiRc6tx9QprVrvIKc+sueYCymaPm1kkc3gQPndRZb/2
-	 XwUXGPIJAZuRFqS+vRgYuXXxRBKX7DAnuwVc6qR/K+cKnyWq+xpMB0yNuc90OCF1cR
-	 c2NRJsw39a6FjuGK6LXoOmmtWR3BqJFEfsLpWoQk=
+	b=Fr26t8UKdKLX94JzM5DE+raV+WX8DiiC0Q9SRMmRSuHqkiQXRV1N5YlaxirkzsJad
+	 BElkdYsiovA2uW7/4km+GKa0q1I7GRdVyMsuKadzP0b8oWsqlW7MAJBVcb/nZ98+tw
+	 qTurG8fjhKNB85cuB2gY7NpjGmxcBfMY4nU7nO/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.4 170/239] Revert "usb: xhci: tegra: Fix error check"
-Date: Tue,  1 Aug 2023 11:20:34 +0200
-Message-ID: <20230801091931.764272886@linuxfoundation.org>
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.4 171/239] Documentation: security-bugs.rst: update preferences when dealing with the linux-distros group
+Date: Tue,  1 Aug 2023 11:20:35 +0200
+Message-ID: <20230801091931.801863853@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -34,54 +33,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 288b4fa1798e3637a9304c6e90a93d900e02369c upstream.
+commit 4fee0915e649bd0cea56dece6d96f8f4643df33c upstream.
 
-This reverts commit 18fc7c435be3f17ea26a21b2e2312fcb9088e01f.
+Because the linux-distros group forces reporters to release information
+about reported bugs, and they impose arbitrary deadlines in having those
+bugs fixed despite not actually being kernel developers, the kernel
+security team recommends not interacting with them at all as this just
+causes confusion and the early-release of reported security problems.
 
-The reverted commit was based on static analysis and a misunderstanding
-of how PTR_ERR() and NULLs are supposed to work.  When a function
-returns both pointer errors and NULL then normally the NULL means
-"continue operating without a feature because it was deliberately
-turned off".  The NULL should not be treated as a failure.  If a driver
-cannot work when that feature is disabled then the KConfig should
-enforce that the function cannot return NULL.  We should not need to
-test for it.
-
-In this code, the patch means that certain tegra_xusb_probe() will
-fail if the firmware supports power-domains but CONFIG_PM is disabled.
-
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: 18fc7c435be3 ("usb: xhci: tegra: Fix error check")
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/8baace8d-fb4b-41a4-ad5f-848ae643a23b@moroto.mountain
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/2023063020-throat-pantyhose-f110@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-tegra.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/process/security-bugs.rst |   24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
---- a/drivers/usb/host/xhci-tegra.c
-+++ b/drivers/usb/host/xhci-tegra.c
-@@ -1145,15 +1145,15 @@ static int tegra_xusb_powerdomain_init(s
- 	int err;
+--- a/Documentation/process/security-bugs.rst
++++ b/Documentation/process/security-bugs.rst
+@@ -63,20 +63,18 @@ information submitted to the security li
+ of the report are treated confidentially even after the embargo has been
+ lifted, in perpetuity.
  
- 	tegra->genpd_dev_host = dev_pm_domain_attach_by_name(dev, "xusb_host");
--	if (IS_ERR_OR_NULL(tegra->genpd_dev_host)) {
--		err = PTR_ERR(tegra->genpd_dev_host) ? : -ENODATA;
-+	if (IS_ERR(tegra->genpd_dev_host)) {
-+		err = PTR_ERR(tegra->genpd_dev_host);
- 		dev_err(dev, "failed to get host pm-domain: %d\n", err);
- 		return err;
- 	}
+-Coordination
+-------------
++Coordination with other groups
++------------------------------
  
- 	tegra->genpd_dev_ss = dev_pm_domain_attach_by_name(dev, "xusb_ss");
--	if (IS_ERR_OR_NULL(tegra->genpd_dev_ss)) {
--		err = PTR_ERR(tegra->genpd_dev_ss) ? : -ENODATA;
-+	if (IS_ERR(tegra->genpd_dev_ss)) {
-+		err = PTR_ERR(tegra->genpd_dev_ss);
- 		dev_err(dev, "failed to get superspeed pm-domain: %d\n", err);
- 		return err;
- 	}
+-Fixes for sensitive bugs, such as those that might lead to privilege
+-escalations, may need to be coordinated with the private
+-<linux-distros@vs.openwall.org> mailing list so that distribution vendors
+-are well prepared to issue a fixed kernel upon public disclosure of the
+-upstream fix. Distros will need some time to test the proposed patch and
+-will generally request at least a few days of embargo, and vendor update
+-publication prefers to happen Tuesday through Thursday. When appropriate,
+-the security team can assist with this coordination, or the reporter can
+-include linux-distros from the start. In this case, remember to prefix
+-the email Subject line with "[vs]" as described in the linux-distros wiki:
+-<http://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists>
++The kernel security team strongly recommends that reporters of potential
++security issues NEVER contact the "linux-distros" mailing list until
++AFTER discussing it with the kernel security team.  Do not Cc: both
++lists at once.  You may contact the linux-distros mailing list after a
++fix has been agreed on and you fully understand the requirements that
++doing so will impose on you and the kernel community.
++
++The different lists have different goals and the linux-distros rules do
++not contribute to actually fixing any potential security problems.
+ 
+ CVE assignment
+ --------------
 
 
