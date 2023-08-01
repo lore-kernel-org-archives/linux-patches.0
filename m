@@ -1,33 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247151F95A
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C5E1C433C7;
-	Tue,  1 Aug 2023 09:39:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0E11F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D67DC433C8;
+	Tue,  1 Aug 2023 09:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882774;
-	bh=T0PPXgufBph/UaoXC+Qp51QV/sijMBGbEccxd9zQBng=;
+	s=korg; t=1690882776;
+	bh=KB/fP6fNdtA0F55tyGHdtj+Ewi021HP4dbYgWLeF288=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iKGAry6X106buxVDjTf6NACezIMA6xMb8yleqQO5CDm3CNqpOXi/uJmubGxE/jsR8
-	 k6M8TPgLoWqXVXQOdPzgCUwRV+Hf+RmVC6XF8iwce2hPNOd/vbQu3LPcQe/XEtca4F
-	 +XxQFLUJjFLfdOoiKPo7QMPyS3e9upx3imDj4jn0=
+	b=DBr4DxyWa2LHXEK9EBuh1IgQqa6HImQfwA+2CfReMfW1CCmsWG369PBlTMRFo+bR7
+	 cYmmDJV6Vda1JIoK7v2otlwss0Kxc27Usk4b1iIGSyvUocRDbixSWt+BtPLYpDUKU3
+	 TYY1FSdWPSgQmjBhp1QGN22xCL3ekQllgizRRy6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Kees Cook <keescook@chromium.org>,
-	"Luis R. Rodriguez" <mcgrof@ruslug.rutgers.edu>,
-	Scott Branden <sbranden@broadcom.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Brian Norris <briannorris@chromium.org>,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Dan Carpenter <dan.carpenter@linaro.org>
-Subject: [PATCH 6.1 226/228] test_firmware: return ENOMEM instead of ENOSPC on failed memory allocation
-Date: Tue,  1 Aug 2023 11:21:24 +0200
-Message-ID: <20230801091931.014786810@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Luben Tuikov <luben.tuikov@amd.com>,
+	Jindong Yue <jindong.yue@nxp.com>
+Subject: [PATCH 6.1 227/228] dma-buf: keep the signaling time of merged fences v3
+Date: Tue,  1 Aug 2023 11:21:25 +0200
+Message-ID: <20230801091931.044903339@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -41,104 +35,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+From: Christian König <christian.koenig@amd.com>
 
-commit 7dae593cd226a0bca61201cf85ceb9335cf63682 upstream.
+commit f781f661e8c99b0cb34129f2e374234d61864e77 upstream.
 
-In a couple of situations like
+Some Android CTS is testing if the signaling time keeps consistent
+during merges.
 
-	name = kstrndup(buf, count, GFP_KERNEL);
-	if (!name)
-		return -ENOSPC;
+v2: use the current time if the fence is still in the signaling path and
+the timestamp not yet available.
+v3: improve comment, fix one more case to use the correct timestamp
 
-the error is not actually "No space left on device", but "Out of memory".
-
-It is semantically correct to return -ENOMEM in all failed kstrndup()
-and kzalloc() cases in this driver, as it is not a problem with disk
-space, but with kernel memory allocator failing allocation.
-
-The semantically correct should be:
-
-        name = kstrndup(buf, count, GFP_KERNEL);
-        if (!name)
-                return -ENOMEM;
-
-Cc: Dan Carpenter <error27@gmail.com>
-Cc: Takashi Iwai <tiwai@suse.de>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: "Luis R. Rodriguez" <mcgrof@ruslug.rutgers.edu>
-Cc: Scott Branden <sbranden@broadcom.com>
-Cc: Hans de Goede <hdegoede@redhat.com>
-Cc: Brian Norris <briannorris@chromium.org>
-Fixes: c92316bf8e948 ("test_firmware: add batched firmware tests")
-Fixes: 0a8adf584759c ("test: add firmware_class loader test")
-Fixes: 548193cba2a7d ("test_firmware: add support for firmware_request_platform")
-Fixes: eb910947c82f9 ("test: firmware_class: add asynchronous request trigger")
-Fixes: 061132d2b9c95 ("test_firmware: add test custom fallback trigger")
-Fixes: 7feebfa487b92 ("test_firmware: add support for request_firmware_into_buf")
-Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Message-ID: <20230606070808.9300-1-mirsad.todorovac@alu.unizg.hr>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Luben Tuikov <luben.tuikov@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230630120041.109216-1-christian.koenig@amd.com
+Cc: Jindong Yue <jindong.yue@nxp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/test_firmware.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/dma-buf/dma-fence-unwrap.c |   26 ++++++++++++++++++++++----
+ drivers/dma-buf/dma-fence.c        |    5 +++--
+ drivers/gpu/drm/drm_syncobj.c      |    2 +-
+ include/linux/dma-fence.h          |    2 +-
+ 4 files changed, 27 insertions(+), 8 deletions(-)
 
---- a/lib/test_firmware.c
-+++ b/lib/test_firmware.c
-@@ -214,7 +214,7 @@ static int __kstrncpy(char **dst, const
+--- a/drivers/dma-buf/dma-fence-unwrap.c
++++ b/drivers/dma-buf/dma-fence-unwrap.c
+@@ -66,18 +66,36 @@ struct dma_fence *__dma_fence_unwrap_mer
  {
- 	*dst = kstrndup(name, count, gfp);
- 	if (!*dst)
--		return -ENOSPC;
-+		return -ENOMEM;
- 	return count;
+ 	struct dma_fence_array *result;
+ 	struct dma_fence *tmp, **array;
++	ktime_t timestamp;
+ 	unsigned int i;
+ 	size_t count;
+ 
+ 	count = 0;
++	timestamp = ns_to_ktime(0);
+ 	for (i = 0; i < num_fences; ++i) {
+-		dma_fence_unwrap_for_each(tmp, &iter[i], fences[i])
+-			if (!dma_fence_is_signaled(tmp))
++		dma_fence_unwrap_for_each(tmp, &iter[i], fences[i]) {
++			if (!dma_fence_is_signaled(tmp)) {
+ 				++count;
++			} else if (test_bit(DMA_FENCE_FLAG_TIMESTAMP_BIT,
++					    &tmp->flags)) {
++				if (ktime_after(tmp->timestamp, timestamp))
++					timestamp = tmp->timestamp;
++			} else {
++				/*
++				 * Use the current time if the fence is
++				 * currently signaling.
++				 */
++				timestamp = ktime_get();
++			}
++		}
+ 	}
+ 
++	/*
++	 * If we couldn't find a pending fence just return a private signaled
++	 * fence with the timestamp of the last signaled one.
++	 */
+ 	if (count == 0)
+-		return dma_fence_get_stub();
++		return dma_fence_allocate_private_stub(timestamp);
+ 
+ 	array = kmalloc_array(count, sizeof(*array), GFP_KERNEL);
+ 	if (!array)
+@@ -138,7 +156,7 @@ restart:
+ 	} while (tmp);
+ 
+ 	if (count == 0) {
+-		tmp = dma_fence_get_stub();
++		tmp = dma_fence_allocate_private_stub(ktime_get());
+ 		goto return_tmp;
+ 	}
+ 
+--- a/drivers/dma-buf/dma-fence.c
++++ b/drivers/dma-buf/dma-fence.c
+@@ -150,10 +150,11 @@ EXPORT_SYMBOL(dma_fence_get_stub);
+ 
+ /**
+  * dma_fence_allocate_private_stub - return a private, signaled fence
++ * @timestamp: timestamp when the fence was signaled
+  *
+  * Return a newly allocated and signaled stub fence.
+  */
+-struct dma_fence *dma_fence_allocate_private_stub(void)
++struct dma_fence *dma_fence_allocate_private_stub(ktime_t timestamp)
+ {
+ 	struct dma_fence *fence;
+ 
+@@ -169,7 +170,7 @@ struct dma_fence *dma_fence_allocate_pri
+ 	set_bit(DMA_FENCE_FLAG_ENABLE_SIGNAL_BIT,
+ 		&fence->flags);
+ 
+-	dma_fence_signal(fence);
++	dma_fence_signal_timestamp(fence, timestamp);
+ 
+ 	return fence;
+ }
+--- a/drivers/gpu/drm/drm_syncobj.c
++++ b/drivers/gpu/drm/drm_syncobj.c
+@@ -353,7 +353,7 @@ EXPORT_SYMBOL(drm_syncobj_replace_fence)
+  */
+ static int drm_syncobj_assign_null_handle(struct drm_syncobj *syncobj)
+ {
+-	struct dma_fence *fence = dma_fence_allocate_private_stub();
++	struct dma_fence *fence = dma_fence_allocate_private_stub(ktime_get());
+ 
+ 	if (IS_ERR(fence))
+ 		return PTR_ERR(fence);
+--- a/include/linux/dma-fence.h
++++ b/include/linux/dma-fence.h
+@@ -584,7 +584,7 @@ static inline signed long dma_fence_wait
  }
  
-@@ -671,7 +671,7 @@ static ssize_t trigger_request_store(str
+ struct dma_fence *dma_fence_get_stub(void);
+-struct dma_fence *dma_fence_allocate_private_stub(void);
++struct dma_fence *dma_fence_allocate_private_stub(ktime_t timestamp);
+ u64 dma_fence_context_alloc(unsigned num);
  
- 	name = kstrndup(buf, count, GFP_KERNEL);
- 	if (!name)
--		return -ENOSPC;
-+		return -ENOMEM;
- 
- 	pr_info("loading '%s'\n", name);
- 
-@@ -719,7 +719,7 @@ static ssize_t trigger_request_platform_
- 
- 	name = kstrndup(buf, count, GFP_KERNEL);
- 	if (!name)
--		return -ENOSPC;
-+		return -ENOMEM;
- 
- 	pr_info("inserting test platform fw '%s'\n", name);
- 	efi_embedded_fw.name = name;
-@@ -772,7 +772,7 @@ static ssize_t trigger_async_request_sto
- 
- 	name = kstrndup(buf, count, GFP_KERNEL);
- 	if (!name)
--		return -ENOSPC;
-+		return -ENOMEM;
- 
- 	pr_info("loading '%s'\n", name);
- 
-@@ -817,7 +817,7 @@ static ssize_t trigger_custom_fallback_s
- 
- 	name = kstrndup(buf, count, GFP_KERNEL);
- 	if (!name)
--		return -ENOSPC;
-+		return -ENOMEM;
- 
- 	pr_info("loading '%s' using custom fallback mechanism\n", name);
- 
-@@ -868,7 +868,7 @@ static int test_fw_run_batch_request(voi
- 
- 		test_buf = kzalloc(TEST_FIRMWARE_BUF_SIZE, GFP_KERNEL);
- 		if (!test_buf)
--			return -ENOSPC;
-+			return -ENOMEM;
- 
- 		if (test_fw_config->partial)
- 			req->rc = request_partial_firmware_into_buf
+ extern const struct dma_fence_ops dma_fence_array_ops;
 
 
