@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC601FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:49:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 250BAC433C8;
-	Tue,  1 Aug 2023 09:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94EB01FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:49:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AA4C433C8;
+	Tue,  1 Aug 2023 09:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883349;
-	bh=LBSfsY6zlm4YOd0TUpP/n5yXkyhetkYV/YMH9ZAWa10=;
+	s=korg; t=1690883352;
+	bh=qDjDRUtcOY/MS2lsWc+t32KZydNOPBTBVVaPUjiRfb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VEN6i9BAWpzUy9jzKB+Ai/5JH8+LHfYKox1wNvhHCGJlvCAOOJVbxekfg1CL/Q7de
-	 wooFIYtTT34TPhmQDFLRUZZPguY95a1TD+6uhGXuiZ3Ith1feEK/w/cApANMyxNULb
-	 n5L2NObzK4C3Tnnv1qK4jp0GiJFMPjTglcPGWxPU=
+	b=11ULswjSd+582inrUw/50P9vF4QNMgHTqgQwN8cIi+ZBKhiN7OHVUJF14UpeMrMt3
+	 usBNpqEmD3tJTnrJTi2VuFEUpvIEAR2M9ihsPuahHre7xMMewOKVUqOfsx8IOVKLIZ
+	 +Bkx0lm312H/qLw7SdznzPtTywuua6UUcQp+CK18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.4 205/239] net: dsa: qca8k: fix broken search_and_del
-Date: Tue,  1 Aug 2023 11:21:09 +0200
-Message-ID: <20230801091933.198019504@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.4 188/239] btrfs: check for commit error at btrfs_attach_transaction_barrier()
+Date: Tue,  1 Aug 2023 11:20:52 +0200
+Message-ID: <20230801091932.473798568@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -34,44 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit ae70dcb9d9ecaf7d9836d3e1b5bef654d7ef5680 upstream.
+commit b28ff3a7d7e97456fd86b68d24caa32e1cfa7064 upstream.
 
-On deleting an MDB entry for a port, fdb_search_and_del is used.
-An FDB entry can't be modified so it needs to be deleted and readded
-again with the new portmap (and the port deleted as requested)
+btrfs_attach_transaction_barrier() is used to get a handle pointing to the
+current running transaction if the transaction has not started its commit
+yet (its state is < TRANS_STATE_COMMIT_START). If the transaction commit
+has started, then we wait for the transaction to commit and finish before
+returning - however we completely ignore if the transaction was aborted
+due to some error during its commit, we simply return ERR_PT(-ENOENT),
+which makes the caller assume everything is fine and no errors happened.
 
-We use the SEARCH operator to search the entry to edit by vid and mac
-address and then we check the aging if we actually found an entry.
+This could make an fsync return success (0) to user space when in fact we
+had a transaction abort and the target inode changes were therefore not
+persisted.
 
-Currently the code suffer from a bug where the searched fdb entry is
-never read again with the found values (if found) resulting in the code
-always returning -EINVAL as aging was always 0.
+Fix this by checking for the return value from btrfs_wait_for_commit(),
+and if it returned an error, return it back to the caller.
 
-Fix this by correctly read the fdb entry after it was searched.
-
-Fixes: ba8f870dfa63 ("net: dsa: qca8k: add support for mdb_add/del")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: d4edf39bd5db ("Btrfs: fix uncompleted transaction")
+CC: stable@vger.kernel.org # 4.19+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/qca/qca8k-common.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/btrfs/transaction.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/net/dsa/qca/qca8k-common.c
-+++ b/drivers/net/dsa/qca/qca8k-common.c
-@@ -293,6 +293,10 @@ static int qca8k_fdb_search_and_del(stru
- 	if (ret < 0)
- 		goto exit;
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -828,8 +828,13 @@ btrfs_attach_transaction_barrier(struct
  
-+	ret = qca8k_fdb_read(priv, &fdb);
-+	if (ret < 0)
-+		goto exit;
+ 	trans = start_transaction(root, 0, TRANS_ATTACH,
+ 				  BTRFS_RESERVE_NO_FLUSH, true);
+-	if (trans == ERR_PTR(-ENOENT))
+-		btrfs_wait_for_commit(root->fs_info, 0);
++	if (trans == ERR_PTR(-ENOENT)) {
++		int ret;
 +
- 	/* Rule doesn't exist. Why delete? */
- 	if (!fdb.aging) {
- 		ret = -EINVAL;
++		ret = btrfs_wait_for_commit(root->fs_info, 0);
++		if (ret)
++			return ERR_PTR(ret);
++	}
+ 
+ 	return trans;
+ }
 
 
