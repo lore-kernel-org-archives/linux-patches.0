@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62611EA8F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:50:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A7BC433CA;
-	Tue,  1 Aug 2023 09:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637171EA8F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:50:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE5BFC433CA;
+	Tue,  1 Aug 2023 09:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883449;
-	bh=7en2ZsGzG4GBq5c5OHJtj5w8xAVrjarutFS4cVjJ3TM=;
+	s=korg; t=1690883452;
+	bh=HsnQURv66rM9bSecLSeDJ24b70s03gW/1MsNquYAx5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mnE3xLaYlI5Fkz4kHcR/sCLtXjpoB/Yn1PCARtd5gRlqt7ofRhu2KTTykV3bMOdbF
-	 Rbyb+KjykCWvB3hV1ra/pQZlWv0uVwpLf6gVmKRmf61N8nqTVlvgf1wA1sYTylhFIK
-	 tS/7TL512MHDxI6mlL0lh8KfUs3k86NQ6/+rdKQs=
+	b=IMLNN56U9G2mttY0DnDe10nRvjHAeaFs6E7TBaBblpPk1kAjWCE/KnBb3mNZPloBe
+	 I1r00Ks6hmOjdxur3inTgilq4FWkrGl+0ge9BmsqYD6M4IYHFQUDqclR09dKQrTKjn
+	 3zwI+aYaHqGA3wCg8UPmScQyB3lgF6dO7nxBdXQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Eric Van Hensbergen <ericvh@kernel.org>
-Subject: [PATCH 6.4 220/239] fs/9p: remove unnecessary invalidate_inode_pages2
-Date: Tue,  1 Aug 2023 11:21:24 +0200
-Message-ID: <20230801091933.859126844@linuxfoundation.org>
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.4 221/239] s390/dasd: fix hanging device after quiesce/resume
+Date: Tue,  1 Aug 2023 11:21:25 +0200
+Message-ID: <20230801091933.898556124@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -34,32 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Van Hensbergen <ericvh@kernel.org>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-commit 350cd9b959757e7c571f45fab29d116d5f67cbff upstream.
+commit 05f1d8ed03f547054efbc4d29bb7991c958ede95 upstream.
 
-There was an invalidate_inode_pages2 added to readonly mmap path
-that is unnecessary since that path is only entered when writeback
-cache is disabled on mount.
+Quiesce and resume are functions that tell the DASD driver to stop/resume
+issuing I/Os to a specific DASD.
+
+On resume dasd_schedule_block_bh() is called to kick handling of IO
+requests again. This does unfortunately not cover internal requests which
+are used for path verification for example.
+
+This could lead to a hanging device when a path event or anything else
+that triggers internal requests occurs on a quiesced device.
+
+Fix by also calling dasd_schedule_device_bh() which triggers handling of
+internal requests on resume.
+
+Fixes: 8e09f21574ea ("[S390] dasd: add hyper PAV support to DASD device driver, part 1")
 
 Cc: stable@vger.kernel.org
-Fixes: 1543b4c5071c ("fs/9p: remove writeback fid and fix per-file modes")
-Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230721193647.3889634-2-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/9p/vfs_file.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/s390/block/dasd_ioctl.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/9p/vfs_file.c
-+++ b/fs/9p/vfs_file.c
-@@ -484,7 +484,6 @@ v9fs_file_mmap(struct file *filp, struct
+--- a/drivers/s390/block/dasd_ioctl.c
++++ b/drivers/s390/block/dasd_ioctl.c
+@@ -131,6 +131,7 @@ static int dasd_ioctl_resume(struct dasd
+ 	spin_unlock_irqrestore(get_ccwdev_lock(base->cdev), flags);
  
- 	if (!(v9ses->cache & CACHE_WRITEBACK)) {
- 		p9_debug(P9_DEBUG_CACHE, "(read-only mmap mode)");
--		invalidate_inode_pages2(filp->f_mapping);
- 		return generic_file_readonly_mmap(filp, vma);
- 	}
+ 	dasd_schedule_block_bh(block);
++	dasd_schedule_device_bh(base);
+ 	return 0;
+ }
  
 
 
