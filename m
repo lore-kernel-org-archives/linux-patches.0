@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1838E1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:44:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E43DC433C7;
-	Tue,  1 Aug 2023 09:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F931FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:44:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50701C433C7;
+	Tue,  1 Aug 2023 09:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883054;
-	bh=+21/ymggUEfksUToKNnnOu9YT62fk9C0mkY8CafhxXo=;
+	s=korg; t=1690883057;
+	bh=B2mW4Gx0u6r+8zI8UrjHClmYvLOZ1MKRhs4OSPSp+OM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dVzJ27a5M69hsIvJ7pSMb+/8nYo8RBtz/QCACqeDas1lKk9vtkgWuqtZ92749Wjto
-	 TYjmQx3bCb7Jsz8Lhmm21+ZawG3f20RsQy3SujqS/pIpK6hJ1USN32a4hxZaT7vWTH
-	 rjLPOJGqlWqz8mWwJ2l1/oNNAz6fzLDMp4AqmEDE=
+	b=ZJ7R48fIIi9oguHA3p2fk37A76mt8BEzwdB05fpJ7vZ31IBEZ+Ox7mnV4Gg8h2Pm3
+	 Ou5tgq9+Fpn4SH0dl/gq1s9d0QBX82tb5QcOCf7lXhpSjmyA5XdUP7DLVXD3ACAgon
+	 dGpkb8fls+7ntIqhz40yN7qG0NLNFgKJg4VvJKCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	Donald Hunter <donald.hunter@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 060/239] media: amphion: Fix firmware path to match linux-firmware
-Date: Tue,  1 Aug 2023 11:18:44 +0200
-Message-ID: <20230801091927.814036325@linuxfoundation.org>
+Subject: [PATCH 6.4 092/239] tools: ynl-gen: fix enum index in _decode_enum(..)
+Date: Tue,  1 Aug 2023 11:19:16 +0200
+Message-ID: <20230801091929.060294721@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,44 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+From: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
 
-[ Upstream commit dcff0b56f661b6b42e828012b464d22cc2068c38 ]
+[ Upstream commit d7ddf5f4269fcaf19aafe971e635d91897423a3a ]
 
-The path did not match the one it was submitted into linux-firmware
-which prevented generic distribution from having working CODEC.
+Remove wrong index adjustment, which is leftover from adding
+support for sparse enums.
+enum.entries_by_val() function shall not subtract the start-value, as
+it is indexed with real enum value.
 
-Fixes: 9f599f351e86 ("media: amphion: add vpu core driver")
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: c311aaa74ca1 ("tools: ynl: fix enum-as-flags in the generic CLI")
+Signed-off-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+Link: https://lore.kernel.org/r/20230725101642.267248-2-arkadiusz.kubalewski@intel.com
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_core.c | 4 ++--
+ tools/net/ynl/lib/ynl.py | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/amphion/vpu_core.c b/drivers/media/platform/amphion/vpu_core.c
-index de23627a119a0..82bf8b3be66a2 100644
---- a/drivers/media/platform/amphion/vpu_core.c
-+++ b/drivers/media/platform/amphion/vpu_core.c
-@@ -826,7 +826,7 @@ static const struct dev_pm_ops vpu_core_pm_ops = {
+diff --git a/tools/net/ynl/lib/ynl.py b/tools/net/ynl/lib/ynl.py
+index 3144f33196be4..35462c7ce48b5 100644
+--- a/tools/net/ynl/lib/ynl.py
++++ b/tools/net/ynl/lib/ynl.py
+@@ -405,8 +405,8 @@ class YnlFamily(SpecFamily):
+     def _decode_enum(self, rsp, attr_spec):
+         raw = rsp[attr_spec['name']]
+         enum = self.consts[attr_spec['enum']]
+-        i = attr_spec.get('value-start', 0)
+         if 'enum-as-flags' in attr_spec and attr_spec['enum-as-flags']:
++            i = 0
+             value = set()
+             while raw:
+                 if raw & 1:
+@@ -414,7 +414,7 @@ class YnlFamily(SpecFamily):
+                 raw >>= 1
+                 i += 1
+         else:
+-            value = enum.entries_by_val[raw - i].name
++            value = enum.entries_by_val[raw].name
+         rsp[attr_spec['name']] = value
  
- static struct vpu_core_resources imx8q_enc = {
- 	.type = VPU_CORE_TYPE_ENC,
--	.fwname = "vpu/vpu_fw_imx8_enc.bin",
-+	.fwname = "amphion/vpu/vpu_fw_imx8_enc.bin",
- 	.stride = 16,
- 	.max_width = 1920,
- 	.max_height = 1920,
-@@ -841,7 +841,7 @@ static struct vpu_core_resources imx8q_enc = {
- 
- static struct vpu_core_resources imx8q_dec = {
- 	.type = VPU_CORE_TYPE_DEC,
--	.fwname = "vpu/vpu_fw_imx8_dec.bin",
-+	.fwname = "amphion/vpu/vpu_fw_imx8_dec.bin",
- 	.stride = 256,
- 	.max_width = 8188,
- 	.max_height = 8188,
+     def _decode_binary(self, attr, attr_spec):
 -- 
 2.39.2
 
