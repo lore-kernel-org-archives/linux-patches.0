@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB141F959
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:29:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7CAC433C8;
-	Tue,  1 Aug 2023 09:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A23C1FB51
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:29:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B673DC433CA;
+	Tue,  1 Aug 2023 09:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882166;
-	bh=z5MfgUmg5NYljhDHK/+c3C8fb60dUwcSoZgDvTrqHMY=;
+	s=korg; t=1690882169;
+	bh=F5hhHch9TM0KYxE61L1WFASF78qhA6eZDL+R+MI4PSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A5pxhcvuIzBYDlVHmakB8pM8dFRPtFdQ09LTrzCAVTb00hjZO76j1XuCq28mkSGNW
-	 vSeg7PffzGz4lWvSqfYi3cHY79g5kwpLkNeZjSPaKt3j6iJziOj2wdvBidYjBwHsjl
-	 izUMiW4tnwDD6t7ub5UUVHSLHUsE6BatL0t/0cQo=
+	b=ihkb3Zsaz0ei0qqfdQSxIjQIrgh7fTp+OBHE8oCStG4Y9NuT44pBL/FCvHau7/znn
+	 gro3SWBA5J0r0jsyZbFN3JlFmeeTQAFiEmBl4kx098/Rtn9uU4AP2ZGgpaCXQoUd4X
+	 4Zd5QI5mLuCkzt9eDXvKWyvL7w4YGMEOy+fxOK9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.1 001/228] netfilter: nf_tables: fix underflow in object reference counter
-Date: Tue,  1 Aug 2023 11:17:39 +0200
-Message-ID: <20230801091922.862467071@linuxfoundation.org>
+	Ross Lagerwall <ross.lagerwall@citrix.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 010/228] blk-mq: Fix stall due to recursive flush plug
+Date: Tue,  1 Aug 2023 11:17:48 +0200
+Message-ID: <20230801091923.194540900@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,57 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
 
-commit d6b478666ffa6d2c25386d78bf1c4640d4da305e upstream.
+[ Upstream commit 70904263512a74a3b8941dd9e6e515ca6fc57821 ]
 
-Since ("netfilter: nf_tables: drop map element references from
-preparation phase"), integration with commit protocol is better,
-therefore drop the workaround that b91d90368837 ("netfilter: nf_tables:
-fix leaking object reference count") provides.
+We have seen rare IO stalls as follows:
 
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+* blk_mq_plug_issue_direct() is entered with an mq_list containing two
+requests.
+* For the first request, it sets last == false and enters the driver's
+queue_rq callback.
+* The driver queue_rq callback indirectly calls schedule() which calls
+blk_flush_plug(). This may happen if the driver has the
+BLK_MQ_F_BLOCKING flag set and is allowed to sleep in ->queue_rq.
+* blk_flush_plug() handles the remaining request in the mq_list. mq_list
+is now empty.
+* The original call to queue_rq resumes (with last == false).
+* The loop in blk_mq_plug_issue_direct() terminates because there are no
+remaining requests in mq_list.
+
+The IO is now stalled because the last request submitted to the driver
+had last == false and there was no subsequent call to commit_rqs().
+
+Fix this by returning early in blk_mq_flush_plug_list() if rq_count is 0
+which it will be in the recursive case, rather than checking if the
+mq_list is empty. At the same time, adjust one of the callers to skip
+the mq_list empty check as it is not necessary.
+
+Fixes: dc5fc361d891 ("block: attempt direct issue of plug list")
+Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20230714101106.3635611-1-ross.lagerwall@citrix.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c |   13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ block/blk-core.c | 3 +--
+ block/blk-mq.c   | 9 ++++++++-
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6504,19 +6504,19 @@ static int nft_add_set_elem(struct nft_c
- 	if (flags)
- 		*nft_set_ext_flags(ext) = flags;
+diff --git a/block/blk-core.c b/block/blk-core.c
+index 24ee7785a5ad5..ebb7a1689b261 100644
+--- a/block/blk-core.c
++++ b/block/blk-core.c
+@@ -1140,8 +1140,7 @@ void __blk_flush_plug(struct blk_plug *plug, bool from_schedule)
+ {
+ 	if (!list_empty(&plug->cb_list))
+ 		flush_plug_callbacks(plug, from_schedule);
+-	if (!rq_list_empty(plug->mq_list))
+-		blk_mq_flush_plug_list(plug, from_schedule);
++	blk_mq_flush_plug_list(plug, from_schedule);
+ 	/*
+ 	 * Unconditionally flush out cached requests, even if the unplug
+ 	 * event came from schedule. Since we know hold references to the
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index add013d5bbdab..100fb0c3114f8 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -2749,7 +2749,14 @@ void blk_mq_flush_plug_list(struct blk_plug *plug, bool from_schedule)
+ {
+ 	struct request *rq;
  
-+	if (obj) {
-+		*nft_set_ext_obj(ext) = obj;
-+		obj->use++;
-+	}
- 	if (ulen > 0) {
- 		if (nft_set_ext_check(&tmpl, NFT_SET_EXT_USERDATA, ulen) < 0) {
- 			err = -EINVAL;
--			goto err_elem_userdata;
-+			goto err_elem_free;
- 		}
- 		udata = nft_set_ext_userdata(ext);
- 		udata->len = ulen - 1;
- 		nla_memcpy(&udata->data, nla[NFTA_SET_ELEM_USERDATA], ulen);
- 	}
--	if (obj) {
--		*nft_set_ext_obj(ext) = obj;
--		obj->use++;
--	}
- 	err = nft_set_elem_expr_setup(ctx, &tmpl, ext, expr_array, num_exprs);
- 	if (err < 0)
- 		goto err_elem_free;
-@@ -6571,9 +6571,6 @@ err_set_full:
- err_element_clash:
- 	kfree(trans);
- err_elem_free:
--	if (obj)
--		obj->use--;
--err_elem_userdata:
- 	nft_set_elem_destroy(set, elem.priv, true);
- err_parse_data:
- 	if (nla[NFTA_SET_ELEM_DATA] != NULL)
+-	if (rq_list_empty(plug->mq_list))
++	/*
++	 * We may have been called recursively midway through handling
++	 * plug->mq_list via a schedule() in the driver's queue_rq() callback.
++	 * To avoid mq_list changing under our feet, clear rq_count early and
++	 * bail out specifically if rq_count is 0 rather than checking
++	 * whether the mq_list is empty.
++	 */
++	if (plug->rq_count == 0)
+ 		return;
+ 	plug->rq_count = 0;
+ 
+-- 
+2.39.2
+
 
 
