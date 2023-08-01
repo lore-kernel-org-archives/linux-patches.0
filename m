@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308A4200A9
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:36:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71789C433C7;
-	Tue,  1 Aug 2023 09:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D683A200A9
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:36:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58300C433C8;
+	Tue,  1 Aug 2023 09:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882564;
-	bh=Z0j17gW43x9D+CBrLA+IfYo9ja2zAPqOlz84PxwP1ec=;
+	s=korg; t=1690882566;
+	bh=LOxEQoBYWPYScWerRaBBMwsG6HbGuVS3LF3S38sxTUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dr0XI7WZ/K60ytxa0Ep/67kvL50y5ld17YJH9kZF9dHlZTV7OKbfSqNz5G6Y8TyGA
-	 zo2rzEyg5PVF3clpImvMS+r9+K051e1vgMeUMJyE16NJ0mpXWkjUixNOdljhd++UQP
-	 O/pw2Jj8VOqm3U1XaBzZTEbqd4G6ipLPxh/ufmb0=
+	b=rHo7DhZ7Hi/9JruFRPPpzTs9+KIYqfd9VKv26mJpWHHLQl3IG3/PLbYmfQkbL/Boj
+	 GoqGf4Q3IzWEOwlD5QYYsw9uvBDl0cd2thDGg/tCir9T957pNtSF2USOb1jkPz5y7g
+	 /MbDqo9bDwCY/XmNE2+fD/VAslHWxqQYpGlTCw3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 143/228] ata: pata_ns87415: mark ns87560_tf_read static
-Date: Tue,  1 Aug 2023 11:20:01 +0200
-Message-ID: <20230801091928.051413769@linuxfoundation.org>
+	syzbot+5feef0b9ee9c8e9e5689@syzkaller.appspotmail.com,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.1 152/228] KVM: x86: Disallow KVM_SET_SREGS{2} if incoming CR0 is invalid
+Date: Tue,  1 Aug 2023 11:20:10 +0200
+Message-ID: <20230801091928.387809510@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -37,42 +35,204 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 3fc2febb0f8ffae354820c1772ec008733237cfa ]
+commit 26a0652cb453c72f6aab0974bc4939e9b14f886b upstream.
 
-The global function triggers a warning because of the missing prototype
+Reject KVM_SET_SREGS{2} with -EINVAL if the incoming CR0 is invalid,
+e.g. due to setting bits 63:32, illegal combinations, or to a value that
+isn't allowed in VMX (non-)root mode.  The VMX checks in particular are
+"fun" as failure to disallow Real Mode for an L2 that is configured with
+unrestricted guest disabled, when KVM itself has unrestricted guest
+enabled, will result in KVM forcing VM86 mode to virtual Real Mode for
+L2, but then fail to unwind the related metadata when synthesizing a
+nested VM-Exit back to L1 (which has unrestricted guest enabled).
 
-drivers/ata/pata_ns87415.c:263:6: warning: no previous prototype for 'ns87560_tf_read' [-Wmissing-prototypes]
-  263 | void ns87560_tf_read(struct ata_port *ap, struct ata_taskfile *tf)
+Opportunistically fix a benign typo in the prototype for is_valid_cr4().
 
-There are no other references to this, so just make it static.
-
-Fixes: c4b5b7b6c4423 ("pata_ns87415: Initial cut at 87415/87560 IDE support")
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+5feef0b9ee9c8e9e5689@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/000000000000f316b705fdf6e2b4@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20230613203037.1968489-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/pata_ns87415.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/kvm-x86-ops.h |    1 +
+ arch/x86/include/asm/kvm_host.h    |    3 ++-
+ arch/x86/kvm/svm/svm.c             |    6 ++++++
+ arch/x86/kvm/vmx/vmx.c             |   28 +++++++++++++++++++++-------
+ arch/x86/kvm/x86.c                 |   34 ++++++++++++++++++++++------------
+ 5 files changed, 52 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/ata/pata_ns87415.c b/drivers/ata/pata_ns87415.c
-index 9dd6bffefb485..602472d4e693e 100644
---- a/drivers/ata/pata_ns87415.c
-+++ b/drivers/ata/pata_ns87415.c
-@@ -260,7 +260,7 @@ static u8 ns87560_check_status(struct ata_port *ap)
-  *	LOCKING:
-  *	Inherited from caller.
-  */
--void ns87560_tf_read(struct ata_port *ap, struct ata_taskfile *tf)
-+static void ns87560_tf_read(struct ata_port *ap, struct ata_taskfile *tf)
- {
- 	struct ata_ioports *ioaddr = &ap->ioaddr;
+--- a/arch/x86/include/asm/kvm-x86-ops.h
++++ b/arch/x86/include/asm/kvm-x86-ops.h
+@@ -36,6 +36,7 @@ KVM_X86_OP(get_segment)
+ KVM_X86_OP(get_cpl)
+ KVM_X86_OP(set_segment)
+ KVM_X86_OP(get_cs_db_l_bits)
++KVM_X86_OP(is_valid_cr0)
+ KVM_X86_OP(set_cr0)
+ KVM_X86_OP_OPTIONAL(post_set_cr3)
+ KVM_X86_OP(is_valid_cr4)
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1488,9 +1488,10 @@ struct kvm_x86_ops {
+ 	void (*set_segment)(struct kvm_vcpu *vcpu,
+ 			    struct kvm_segment *var, int seg);
+ 	void (*get_cs_db_l_bits)(struct kvm_vcpu *vcpu, int *db, int *l);
++	bool (*is_valid_cr0)(struct kvm_vcpu *vcpu, unsigned long cr0);
+ 	void (*set_cr0)(struct kvm_vcpu *vcpu, unsigned long cr0);
+ 	void (*post_set_cr3)(struct kvm_vcpu *vcpu, unsigned long cr3);
+-	bool (*is_valid_cr4)(struct kvm_vcpu *vcpu, unsigned long cr0);
++	bool (*is_valid_cr4)(struct kvm_vcpu *vcpu, unsigned long cr4);
+ 	void (*set_cr4)(struct kvm_vcpu *vcpu, unsigned long cr4);
+ 	int (*set_efer)(struct kvm_vcpu *vcpu, u64 efer);
+ 	void (*get_idt)(struct kvm_vcpu *vcpu, struct desc_ptr *dt);
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -1763,6 +1763,11 @@ static void sev_post_set_cr3(struct kvm_
+ 	}
+ }
  
--- 
-2.40.1
-
++static bool svm_is_valid_cr0(struct kvm_vcpu *vcpu, unsigned long cr0)
++{
++	return true;
++}
++
+ void svm_set_cr0(struct kvm_vcpu *vcpu, unsigned long cr0)
+ {
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+@@ -4749,6 +4754,7 @@ static struct kvm_x86_ops svm_x86_ops __
+ 	.set_segment = svm_set_segment,
+ 	.get_cpl = svm_get_cpl,
+ 	.get_cs_db_l_bits = svm_get_cs_db_l_bits,
++	.is_valid_cr0 = svm_is_valid_cr0,
+ 	.set_cr0 = svm_set_cr0,
+ 	.post_set_cr3 = sev_post_set_cr3,
+ 	.is_valid_cr4 = svm_is_valid_cr4,
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -2975,6 +2975,15 @@ static void enter_rmode(struct kvm_vcpu
+ 	struct vcpu_vmx *vmx = to_vmx(vcpu);
+ 	struct kvm_vmx *kvm_vmx = to_kvm_vmx(vcpu->kvm);
+ 
++	/*
++	 * KVM should never use VM86 to virtualize Real Mode when L2 is active,
++	 * as using VM86 is unnecessary if unrestricted guest is enabled, and
++	 * if unrestricted guest is disabled, VM-Enter (from L1) with CR0.PG=0
++	 * should VM-Fail and KVM should reject userspace attempts to stuff
++	 * CR0.PG=0 when L2 is active.
++	 */
++	WARN_ON_ONCE(is_guest_mode(vcpu));
++
+ 	vmx_get_segment(vcpu, &vmx->rmode.segs[VCPU_SREG_TR], VCPU_SREG_TR);
+ 	vmx_get_segment(vcpu, &vmx->rmode.segs[VCPU_SREG_ES], VCPU_SREG_ES);
+ 	vmx_get_segment(vcpu, &vmx->rmode.segs[VCPU_SREG_DS], VCPU_SREG_DS);
+@@ -3165,6 +3174,17 @@ void ept_save_pdptrs(struct kvm_vcpu *vc
+ #define CR3_EXITING_BITS (CPU_BASED_CR3_LOAD_EXITING | \
+ 			  CPU_BASED_CR3_STORE_EXITING)
+ 
++static bool vmx_is_valid_cr0(struct kvm_vcpu *vcpu, unsigned long cr0)
++{
++	if (is_guest_mode(vcpu))
++		return nested_guest_cr0_valid(vcpu, cr0);
++
++	if (to_vmx(vcpu)->nested.vmxon)
++		return nested_host_cr0_valid(vcpu, cr0);
++
++	return true;
++}
++
+ void vmx_set_cr0(struct kvm_vcpu *vcpu, unsigned long cr0)
+ {
+ 	struct vcpu_vmx *vmx = to_vmx(vcpu);
+@@ -5316,18 +5336,11 @@ static int handle_set_cr0(struct kvm_vcp
+ 		val = (val & ~vmcs12->cr0_guest_host_mask) |
+ 			(vmcs12->guest_cr0 & vmcs12->cr0_guest_host_mask);
+ 
+-		if (!nested_guest_cr0_valid(vcpu, val))
+-			return 1;
+-
+ 		if (kvm_set_cr0(vcpu, val))
+ 			return 1;
+ 		vmcs_writel(CR0_READ_SHADOW, orig_val);
+ 		return 0;
+ 	} else {
+-		if (to_vmx(vcpu)->nested.vmxon &&
+-		    !nested_host_cr0_valid(vcpu, val))
+-			return 1;
+-
+ 		return kvm_set_cr0(vcpu, val);
+ 	}
+ }
+@@ -8117,6 +8130,7 @@ static struct kvm_x86_ops vmx_x86_ops __
+ 	.set_segment = vmx_set_segment,
+ 	.get_cpl = vmx_get_cpl,
+ 	.get_cs_db_l_bits = vmx_get_cs_db_l_bits,
++	.is_valid_cr0 = vmx_is_valid_cr0,
+ 	.set_cr0 = vmx_set_cr0,
+ 	.is_valid_cr4 = vmx_is_valid_cr4,
+ 	.set_cr4 = vmx_set_cr4,
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -908,6 +908,22 @@ int load_pdptrs(struct kvm_vcpu *vcpu, u
+ }
+ EXPORT_SYMBOL_GPL(load_pdptrs);
+ 
++static bool kvm_is_valid_cr0(struct kvm_vcpu *vcpu, unsigned long cr0)
++{
++#ifdef CONFIG_X86_64
++	if (cr0 & 0xffffffff00000000UL)
++		return false;
++#endif
++
++	if ((cr0 & X86_CR0_NW) && !(cr0 & X86_CR0_CD))
++		return false;
++
++	if ((cr0 & X86_CR0_PG) && !(cr0 & X86_CR0_PE))
++		return false;
++
++	return static_call(kvm_x86_is_valid_cr0)(vcpu, cr0);
++}
++
+ void kvm_post_set_cr0(struct kvm_vcpu *vcpu, unsigned long old_cr0, unsigned long cr0)
+ {
+ 	/*
+@@ -948,20 +964,13 @@ int kvm_set_cr0(struct kvm_vcpu *vcpu, u
+ {
+ 	unsigned long old_cr0 = kvm_read_cr0(vcpu);
+ 
+-	cr0 |= X86_CR0_ET;
+-
+-#ifdef CONFIG_X86_64
+-	if (cr0 & 0xffffffff00000000UL)
++	if (!kvm_is_valid_cr0(vcpu, cr0))
+ 		return 1;
+-#endif
+-
+-	cr0 &= ~CR0_RESERVED_BITS;
+ 
+-	if ((cr0 & X86_CR0_NW) && !(cr0 & X86_CR0_CD))
+-		return 1;
++	cr0 |= X86_CR0_ET;
+ 
+-	if ((cr0 & X86_CR0_PG) && !(cr0 & X86_CR0_PE))
+-		return 1;
++	/* Write to CR0 reserved bits are ignored, even on Intel. */
++	cr0 &= ~CR0_RESERVED_BITS;
+ 
+ #ifdef CONFIG_X86_64
+ 	if ((vcpu->arch.efer & EFER_LME) && !is_paging(vcpu) &&
+@@ -11532,7 +11541,8 @@ static bool kvm_is_valid_sregs(struct kv
+ 			return false;
+ 	}
+ 
+-	return kvm_is_valid_cr4(vcpu, sregs->cr4);
++	return kvm_is_valid_cr4(vcpu, sregs->cr4) &&
++	       kvm_is_valid_cr0(vcpu, sregs->cr0);
+ }
+ 
+ static int __set_sregs_common(struct kvm_vcpu *vcpu, struct kvm_sregs *sregs,
 
 
