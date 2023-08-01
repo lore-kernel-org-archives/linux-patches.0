@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9BB1FB2B
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:35:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 439CFC433C9;
-	Tue,  1 Aug 2023 09:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922341FB2B
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:35:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13092C433C7;
+	Tue,  1 Aug 2023 09:35:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882541;
-	bh=6+6Xg7DpzUeH8KhdYxZHiaof8dcWcbQ5IlZTwNrBHqA=;
+	s=korg; t=1690882544;
+	bh=VNghHi08ay2I90ltuMo9NhGFydrdgAtYDXfdwayzGU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ScuSa21/Joa6qlFoqf4sdlshiKdpSwmNBo8LAxfZ0TsF6vMD1g8j9RGVMdm9idzUZ
-	 uUOu1RM1dL9Pya0yXzgYJOn9fgP/YkIawDVkLpNm5GPULfpsmSgrnH3l12aMTfGfx5
-	 8FCd5XxVAtkOK2JgKUWwzVhzZz2c1Vp88UttRSh0=
+	b=DLAFdf6DceneUdD3WNeeu8jtS2f3jmmMl4kJ8jGT8m4X39R2BwEfW6seA+6ImjCvs
+	 bh7buYlxovn4THB/u8ONvQxgFjzaNaHSO8Qn1PaUDCpJnGBt1JA8JSAHZqosGxsrV3
+	 HTqfMM1q35hGk+JpwGIDWN8FI6YFhNy48Ba0+yUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	German Maglione <gmaglione@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 141/228] ublk: fail to start device if queue setup is interrupted
-Date: Tue,  1 Aug 2023 11:19:59 +0200
-Message-ID: <20230801091927.963042348@linuxfoundation.org>
+Subject: [PATCH 6.1 115/228] RDMA/mlx4: Make check for invalid flags stricter
+Date: Tue,  1 Aug 2023 11:19:33 +0200
+Message-ID: <20230801091926.928816496@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,41 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 53e7d08f6d6e214c40db1f51291bb2975c789dc2 ]
+[ Upstream commit d64b1ee12a168030fbb3e0aebf7bce49e9a07589 ]
 
-In ublk_ctrl_start_dev(), if wait_for_completion_interruptible() is
-interrupted by signal, queues aren't setup successfully yet, so we
-have to fail UBLK_CMD_START_DEV, otherwise kernel oops can be triggered.
+This code is trying to ensure that only the flags specified in the list
+are allowed.  The problem is that ucmd->rx_hash_fields_mask is a u64 and
+the flags are an enum which is treated as a u32 in this context.  That
+means the test doesn't check whether the highest 32 bits are zero.
 
-Reported by German when working on qemu-storage-deamon which requires
-single thread ublk daemon.
-
-Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
-Reported-by: German Maglione <gmaglione@redhat.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20230726144502.566785-2-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 4d02ebd9bbbd ("IB/mlx4: Fix RSS hash fields restrictions")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/233ed975-982d-422a-b498-410f71d8a101@moroto.mountain
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx4/qp.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 3ae22e7eb0b09..495e1bf9003b6 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -1539,7 +1539,8 @@ static int ublk_ctrl_start_dev(struct ublk_device *ub, struct io_uring_cmd *cmd)
- 	if (ublksrv_pid <= 0)
- 		return -EINVAL;
+diff --git a/drivers/infiniband/hw/mlx4/qp.c b/drivers/infiniband/hw/mlx4/qp.c
+index 488c906c0432c..ac479e81ddee8 100644
+--- a/drivers/infiniband/hw/mlx4/qp.c
++++ b/drivers/infiniband/hw/mlx4/qp.c
+@@ -530,15 +530,15 @@ static int set_qp_rss(struct mlx4_ib_dev *dev, struct mlx4_ib_rss *rss_ctx,
+ 		return (-EOPNOTSUPP);
+ 	}
  
--	wait_for_completion_interruptible(&ub->completion);
-+	if (wait_for_completion_interruptible(&ub->completion) != 0)
-+		return -EINTR;
- 
- 	schedule_delayed_work(&ub->monitor_work, UBLK_DAEMON_MONITOR_PERIOD);
- 
+-	if (ucmd->rx_hash_fields_mask & ~(MLX4_IB_RX_HASH_SRC_IPV4	|
+-					  MLX4_IB_RX_HASH_DST_IPV4	|
+-					  MLX4_IB_RX_HASH_SRC_IPV6	|
+-					  MLX4_IB_RX_HASH_DST_IPV6	|
+-					  MLX4_IB_RX_HASH_SRC_PORT_TCP	|
+-					  MLX4_IB_RX_HASH_DST_PORT_TCP	|
+-					  MLX4_IB_RX_HASH_SRC_PORT_UDP	|
+-					  MLX4_IB_RX_HASH_DST_PORT_UDP  |
+-					  MLX4_IB_RX_HASH_INNER)) {
++	if (ucmd->rx_hash_fields_mask & ~(u64)(MLX4_IB_RX_HASH_SRC_IPV4	|
++					       MLX4_IB_RX_HASH_DST_IPV4	|
++					       MLX4_IB_RX_HASH_SRC_IPV6	|
++					       MLX4_IB_RX_HASH_DST_IPV6	|
++					       MLX4_IB_RX_HASH_SRC_PORT_TCP |
++					       MLX4_IB_RX_HASH_DST_PORT_TCP |
++					       MLX4_IB_RX_HASH_SRC_PORT_UDP |
++					       MLX4_IB_RX_HASH_DST_PORT_UDP |
++					       MLX4_IB_RX_HASH_INNER)) {
+ 		pr_debug("RX Hash fields_mask has unsupported mask (0x%llx)\n",
+ 			 ucmd->rx_hash_fields_mask);
+ 		return (-EOPNOTSUPP);
 -- 
 2.40.1
 
