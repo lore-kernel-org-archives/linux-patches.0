@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50EC1F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:40:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4983EC433C8;
-	Tue,  1 Aug 2023 09:40:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC2F1F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:40:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C79C433C8;
+	Tue,  1 Aug 2023 09:40:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882840;
-	bh=MaCnA114Q4wiDh/jo5pOSFNm9RPVukngW9L2/J0wIhY=;
+	s=korg; t=1690882843;
+	bh=uIsY3qB5y7J/YErIoaxKxt45A82bLthalDtnSBT7pI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yd1TAD0LcJ2vG1qidPXq+HLhHa9Ei7LhB27ItWQGfe8z4jBlb/UUonFgTaNxk5S29
-	 yPZ+ip59OalM9k04CD7DBE3Mn4PhS8q08Px93GckSu9DcdqCPidIUL7drwHz1ZD0yS
-	 cXIA2nzJ+Q/XBVForqE/xXQH9T451U4LWVboClC0=
+	b=DrUYRYAOGi4TFoBif7a/NcUdHExVQStCkPn1ik59V8SqlmJ8LsTfvry44QEl8cU+q
+	 XASzSSDcEPjTDt+Br4qDEa+IVZr8YxFkXfrfG5i5KE1hXVDAw4Izu/7104lNIvcmkQ
+	 7JgFwIJ6/4pQhkmL46VoYhmqXcb4kMVZcnWBCxMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Markus Elfring <elfring@users.sourceforge.net>,
 	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 021/239] i2c: Delete error messages for failed memory allocations
-Date: Tue,  1 Aug 2023 11:18:05 +0200
-Message-ID: <20230801091926.406599793@linuxfoundation.org>
+Subject: [PATCH 6.4 022/239] i2c: Improve size determinations
+Date: Tue,  1 Aug 2023 11:18:06 +0200
+Message-ID: <20230801091926.437652047@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -37,77 +37,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Markus Elfring <elfring@users.sourceforge.net>
 
-[ Upstream commit 6b3b21a8542fd2fb6ffc61bc13b9419f0c58ebad ]
+[ Upstream commit 06e989578232da33a7fe96b04191b862af8b2cec ]
 
-These issues were detected by using the Coccinelle software.
+Replace the specification of a data structure by a pointer dereference
+as the parameter for the operator "sizeof" to make the corresponding
+size determination a bit safer according to the Linux coding style
+convention.
+
+This issue was detected by using the Coccinelle software.
 
 Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
 Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Stable-dep-of: 05f933d5f731 ("i2c: nomadik: Remove a useless call in the remove function")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-ibm_iic.c  | 4 +---
- drivers/i2c/busses/i2c-nomadik.c  | 1 -
- drivers/i2c/busses/i2c-sh7760.c   | 1 -
- drivers/i2c/busses/i2c-tiny-usb.c | 4 +---
- 4 files changed, 2 insertions(+), 8 deletions(-)
+ drivers/i2c/busses/i2c-nomadik.c | 2 +-
+ drivers/i2c/busses/i2c-sh7760.c  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-ibm_iic.c b/drivers/i2c/busses/i2c-ibm_iic.c
-index eeb80e34f9ad7..de3b609515e08 100644
---- a/drivers/i2c/busses/i2c-ibm_iic.c
-+++ b/drivers/i2c/busses/i2c-ibm_iic.c
-@@ -694,10 +694,8 @@ static int iic_probe(struct platform_device *ofdev)
- 	int ret;
- 
- 	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
--	if (!dev) {
--		dev_err(&ofdev->dev, "failed to allocate device data\n");
-+	if (!dev)
- 		return -ENOMEM;
--	}
- 
- 	platform_set_drvdata(ofdev, dev);
- 
 diff --git a/drivers/i2c/busses/i2c-nomadik.c b/drivers/i2c/busses/i2c-nomadik.c
-index a2d12a5b1c34c..05eaae5aeb180 100644
+index 05eaae5aeb180..5004b9dd98563 100644
 --- a/drivers/i2c/busses/i2c-nomadik.c
 +++ b/drivers/i2c/busses/i2c-nomadik.c
-@@ -972,7 +972,6 @@ static int nmk_i2c_probe(struct amba_device *adev, const struct amba_id *id)
+@@ -970,7 +970,7 @@ static int nmk_i2c_probe(struct amba_device *adev, const struct amba_id *id)
+ 	struct i2c_vendor_data *vendor = id->data;
+ 	u32 max_fifo_threshold = (vendor->fifodepth / 2) - 1;
  
- 	dev = devm_kzalloc(&adev->dev, sizeof(struct nmk_i2c_dev), GFP_KERNEL);
+-	dev = devm_kzalloc(&adev->dev, sizeof(struct nmk_i2c_dev), GFP_KERNEL);
++	dev = devm_kzalloc(&adev->dev, sizeof(*dev), GFP_KERNEL);
  	if (!dev) {
--		dev_err(&adev->dev, "cannot allocate memory\n");
  		ret = -ENOMEM;
  		goto err_no_mem;
- 	}
 diff --git a/drivers/i2c/busses/i2c-sh7760.c b/drivers/i2c/busses/i2c-sh7760.c
-index 319d1fa617c88..a0ccc5d009874 100644
+index a0ccc5d009874..051b904cb35f6 100644
 --- a/drivers/i2c/busses/i2c-sh7760.c
 +++ b/drivers/i2c/busses/i2c-sh7760.c
-@@ -445,7 +445,6 @@ static int sh7760_i2c_probe(struct platform_device *pdev)
- 
- 	id = kzalloc(sizeof(struct cami2c), GFP_KERNEL);
- 	if (!id) {
--		dev_err(&pdev->dev, "no mem for private data\n");
- 		ret = -ENOMEM;
+@@ -443,7 +443,7 @@ static int sh7760_i2c_probe(struct platform_device *pdev)
  		goto out0;
  	}
-diff --git a/drivers/i2c/busses/i2c-tiny-usb.c b/drivers/i2c/busses/i2c-tiny-usb.c
-index 7279ca0eaa2d0..d1fa9ff5aeab4 100644
---- a/drivers/i2c/busses/i2c-tiny-usb.c
-+++ b/drivers/i2c/busses/i2c-tiny-usb.c
-@@ -226,10 +226,8 @@ static int i2c_tiny_usb_probe(struct usb_interface *interface,
  
- 	/* allocate memory for our device state and initialize it */
- 	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
--	if (dev == NULL) {
--		dev_err(&interface->dev, "Out of memory\n");
-+	if (!dev)
- 		goto error;
--	}
- 
- 	dev->usb_dev = usb_get_dev(interface_to_usbdev(interface));
- 	dev->interface = interface;
+-	id = kzalloc(sizeof(struct cami2c), GFP_KERNEL);
++	id = kzalloc(sizeof(*id), GFP_KERNEL);
+ 	if (!id) {
+ 		ret = -ENOMEM;
+ 		goto out0;
 -- 
 2.39.2
 
