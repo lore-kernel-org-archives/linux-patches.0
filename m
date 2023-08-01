@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 065CF1FB30
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:32:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDEFC433AB;
-	Tue,  1 Aug 2023 09:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4201FB2B
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:32:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4937FC433C9;
+	Tue,  1 Aug 2023 09:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882332;
-	bh=IoVLudT4XhlCm1faUftc0Fb3TvDBEK5KScDqXV3+Fl0=;
+	s=korg; t=1690882335;
+	bh=RP9L5GmslPfL0N6mbExezSHQ3+jsesR8MSWBjXSdGFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FHMLz5PGng+271AQK2/vJT0/Af9GPmwmgLnTiwA9bklT/Uxe+A/eehMFrjyBxStku
-	 CCoCMVCyjoU/IfjUCBUTxRf7RKcaBhOM8JcVTy4tMjjR6L8X7vM9LgKkXjDPc70Wxh
-	 bIqGgFzeSP/VAnKs76yK2F8Vcg1QOjamFsSx2P6M=
+	b=ISA42+IdY84YPMm3+1qbYtnbCW3yRDYySMxqpSgM5u+nYCIQcKW3QqnUqMAUvI3Bb
+	 +zwjU+RiJLn0Th2tqxPv6Xd3KwdRJYD9+Ie64fLXVebsuCmz7ceiQXd4VSpDPjsVst
+	 ojuRSEOS9aEBz/KlDIdBIKzt7dj3mKNRnOXDAYMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Gabe Teeger <gabe.teeger@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Hui Li <caelli@tencent.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/228] drm/amd/display: update extended blank for dcn314 onwards
-Date: Tue,  1 Aug 2023 11:18:46 +0200
-Message-ID: <20230801091925.284235531@linuxfoundation.org>
+Subject: [PATCH 6.1 051/228] tty: fix hang on tty device with no_room set
+Date: Tue,  1 Aug 2023 11:18:29 +0200
+Message-ID: <20230801091924.751207012@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -38,286 +35,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gabe Teeger <gabe.teeger@amd.com>
+From: Hui Li <caelli@tencent.com>
 
-[ Upstream commit 469a62938a45ef382c9cb7b9fec6c6c1fcd781c0 ]
+[ Upstream commit 4903fde8047a28299d1fc79c1a0dcc255e928f12 ]
 
-[Why]
-Flickering and underflow was observed when testing extended
-blank on dcn314.
+It is possible to hang pty devices in this case, the reader was
+blocking at epoll on master side, the writer was sleeping at
+wait_woken inside n_tty_write on slave side, and the write buffer
+on tty_port was full, we found that the reader and writer would
+never be woken again and blocked forever.
 
-[What]
-Vstartup is contrainted by vblank_nom, so adjusting it to include
-non-adjusted vtotal in its calculation during freesync video
-means that Vstartup is not changed when vtotal changes.
-This fixed the flickering + underflow.
+The problem was caused by a race between reader and kworker:
+n_tty_read(reader):  n_tty_receive_buf_common(kworker):
+copy_from_read_buf()|
+                    |room = N_TTY_BUF_SIZE - (ldata->read_head - tail)
+                    |room <= 0
+n_tty_kick_worker() |
+                    |ldata->no_room = true
 
-dc_extended_blank_supported function was removed
-because extended blank is only relevant to when
-zstate is supported. The increased vtotal during
-freesync can be passed to dml regardless of whether
-extended blank is supported or not, so this function is
-not needed.
+After writing to slave device, writer wakes up kworker to flush
+data on tty_port to reader, and the kworker finds that reader
+has no room to store data so room <= 0 is met. At this moment,
+reader consumes all the data on reader buffer and calls
+n_tty_kick_worker to check ldata->no_room which is false and
+reader quits reading. Then kworker sets ldata->no_room=true
+and quits too.
 
-Updates were made recently in dml to the calculation of
-min_dst_y_next_start. Dml input for dcn314 will now
-always use the newer calculation for min_dst_y_next_start.
-Dml input for older dcn versions remains untouched.
+If write buffer is not full, writer will wake kworker to flush data
+again after following writes, but if write buffer is full and writer
+goes to sleep, kworker will never be woken again and tty device is
+blocked.
 
-The variable optimized_min_dst_y_next_start
-is replaced everywhere with min_dst_y_next_start,
-and the updated dml allows min_dst_y_next_start to
-increase to an optimized value during freesync video,
-then return to default when freesync is disengaged.
+This problem can be solved with a check for read buffer size inside
+n_tty_receive_buf_common, if read buffer is empty and ldata->no_room
+is true, a call to n_tty_kick_worker is necessary to keep flushing
+data to reader.
 
-Also removed registry key for controlling
-extended blank feature.
-
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Reviewed-by: Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>
-Acked-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Gabe Teeger <gabe.teeger@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 2a9482e55968 ("drm/amd/display: Prevent vtotal from being set to 0")
+Cc: <stable@vger.kernel.org>
+Fixes: 42458f41d08f ("n_tty: Ensure reader restarts worker for next reader")
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Hui Li <caelli@tencent.com>
+Message-ID: <1680749090-14106-1-git-send-email-caelli@tencent.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c      | 21 -----------------
- drivers/gpu/drm/amd/display/dc/dc.h           |  2 --
- .../drm/amd/display/dc/dcn20/dcn20_hwseq.c    |  4 ++--
- .../drm/amd/display/dc/dml/dcn20/dcn20_fpu.c  | 23 +++++++++----------
- .../dc/dml/dcn31/display_rq_dlg_calc_31.c     |  3 +--
- .../amd/display/dc/dml/dcn314/dcn314_fpu.c    | 14 +++++++----
- .../dc/dml/dcn314/display_rq_dlg_calc_314.c   | 16 ++++---------
- .../amd/display/dc/dml/display_mode_structs.h |  3 +--
- 8 files changed, 29 insertions(+), 57 deletions(-)
+ drivers/tty/n_tty.c | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 27cec123cb06f..8f9c60ed6f8b8 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -2594,9 +2594,6 @@ static enum surface_update_type check_update_surfaces_for_stream(
- 				stream_update->vrr_active_variable))
- 			su_flags->bits.fams_changed = 1;
+diff --git a/drivers/tty/n_tty.c b/drivers/tty/n_tty.c
+index c8f56c9b1a1c8..4dff2f34e2d06 100644
+--- a/drivers/tty/n_tty.c
++++ b/drivers/tty/n_tty.c
+@@ -204,8 +204,8 @@ static void n_tty_kick_worker(struct tty_struct *tty)
+ 	struct n_tty_data *ldata = tty->disc_data;
  
--		if (stream_update->crtc_timing_adjust && dc_extended_blank_supported(dc))
--			su_flags->bits.crtc_timing_adjust = 1;
--
- 		if (su_flags->raw != 0)
- 			overall_type = UPDATE_TYPE_FULL;
+ 	/* Did the input worker stop? Restart it */
+-	if (unlikely(ldata->no_room)) {
+-		ldata->no_room = 0;
++	if (unlikely(READ_ONCE(ldata->no_room))) {
++		WRITE_ONCE(ldata->no_room, 0);
  
-@@ -4897,21 +4894,3 @@ void dc_notify_vsync_int_state(struct dc *dc, struct dc_stream_state *stream, bo
- 	if (pipe->stream_res.abm && pipe->stream_res.abm->funcs->set_abm_pause)
- 		pipe->stream_res.abm->funcs->set_abm_pause(pipe->stream_res.abm, !enable, i, pipe->stream_res.tg->inst);
- }
--
--/**
-- * dc_extended_blank_supported - Decide whether extended blank is supported
-- *
-- * @dc: [in] Current DC state
-- *
-- * Extended blank is a freesync optimization feature to be enabled in the
-- * future.  During the extra vblank period gained from freesync, we have the
-- * ability to enter z9/z10.
-- *
-- * Return:
-- * Indicate whether extended blank is supported (%true or %false)
-- */
--bool dc_extended_blank_supported(struct dc *dc)
--{
--	return dc->debug.extended_blank_optimization && !dc->debug.disable_z10
--		&& dc->caps.zstate_support && dc->caps.is_apu;
--}
-diff --git a/drivers/gpu/drm/amd/display/dc/dc.h b/drivers/gpu/drm/amd/display/dc/dc.h
-index 178d410183631..6409b8d8ff71e 100644
---- a/drivers/gpu/drm/amd/display/dc/dc.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc.h
-@@ -1520,8 +1520,6 @@ struct dc_sink_init_data {
- 	bool converter_disable_audio;
- };
+ 		WARN_RATELIMIT(tty->port->itty == NULL,
+ 				"scheduling with invalid itty\n");
+@@ -1698,7 +1698,7 @@ n_tty_receive_buf_common(struct tty_struct *tty, const unsigned char *cp,
+ 			if (overflow && room < 0)
+ 				ldata->read_head--;
+ 			room = overflow;
+-			ldata->no_room = flow && !room;
++			WRITE_ONCE(ldata->no_room, flow && !room);
+ 		} else
+ 			overflow = 0;
  
--bool dc_extended_blank_supported(struct dc *dc);
--
- struct dc_sink *dc_sink_create(const struct dc_sink_init_data *init_params);
+@@ -1729,6 +1729,17 @@ n_tty_receive_buf_common(struct tty_struct *tty, const unsigned char *cp,
+ 	} else
+ 		n_tty_check_throttle(tty);
  
- /* Newer interfaces  */
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-index 622efa556e7ad..4ef632864948e 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-@@ -2036,7 +2036,7 @@ void dcn20_optimize_bandwidth(
- 			dc->clk_mgr,
- 			context,
- 			true);
--	if (dc_extended_blank_supported(dc) && context->bw_ctx.bw.dcn.clk.zstate_support == DCN_ZSTATE_SUPPORT_ALLOW) {
-+	if (context->bw_ctx.bw.dcn.clk.zstate_support == DCN_ZSTATE_SUPPORT_ALLOW) {
- 		for (i = 0; i < dc->res_pool->pipe_count; ++i) {
- 			struct pipe_ctx *pipe_ctx = &context->res_ctx.pipe_ctx[i];
++	if (unlikely(ldata->no_room)) {
++		/*
++		 * Barrier here is to ensure to read the latest read_tail in
++		 * chars_in_buffer() and to make sure that read_tail is not loaded
++		 * before ldata->no_room is set.
++		 */
++		smp_mb();
++		if (!chars_in_buffer(tty))
++			n_tty_kick_worker(tty);
++	}
++
+ 	up_read(&tty->termios_rwsem);
  
-@@ -2044,7 +2044,7 @@ void dcn20_optimize_bandwidth(
- 				&& pipe_ctx->stream->adjust.v_total_min == pipe_ctx->stream->adjust.v_total_max
- 				&& pipe_ctx->stream->adjust.v_total_max > pipe_ctx->stream->timing.v_total)
- 					pipe_ctx->plane_res.hubp->funcs->program_extended_blank(pipe_ctx->plane_res.hubp,
--						pipe_ctx->dlg_regs.optimized_min_dst_y_next_start);
-+						pipe_ctx->dlg_regs.min_dst_y_next_start);
- 		}
+ 	return rcvd;
+@@ -2282,8 +2293,14 @@ static ssize_t n_tty_read(struct tty_struct *tty, struct file *file,
+ 		if (time)
+ 			timeout = time;
  	}
- }
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
-index 186538e3e3c0c..dbe5d2efa4a30 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
-@@ -948,10 +948,10 @@ static enum dcn_zstate_support_state  decide_zstate_support(struct dc *dc, struc
- {
- 	int plane_count;
- 	int i;
--	unsigned int optimized_min_dst_y_next_start_us;
-+	unsigned int min_dst_y_next_start_us;
+-	if (old_tail != ldata->read_tail)
++	if (old_tail != ldata->read_tail) {
++		/*
++		 * Make sure no_room is not read in n_tty_kick_worker()
++		 * before setting ldata->read_tail in copy_from_read_buf().
++		 */
++		smp_mb();
+ 		n_tty_kick_worker(tty);
++	}
+ 	up_read(&tty->termios_rwsem);
  
- 	plane_count = 0;
--	optimized_min_dst_y_next_start_us = 0;
-+	min_dst_y_next_start_us = 0;
- 	for (i = 0; i < dc->res_pool->pipe_count; i++) {
- 		if (context->res_ctx.pipe_ctx[i].plane_state)
- 			plane_count++;
-@@ -973,19 +973,18 @@ static enum dcn_zstate_support_state  decide_zstate_support(struct dc *dc, struc
- 	else if (context->stream_count == 1 &&  context->streams[0]->signal == SIGNAL_TYPE_EDP) {
- 		struct dc_link *link = context->streams[0]->sink->link;
- 		struct dc_stream_status *stream_status = &context->stream_status[0];
-+		struct dc_stream_state *current_stream = context->streams[0];
- 		int minmum_z8_residency = dc->debug.minimum_z8_residency_time > 0 ? dc->debug.minimum_z8_residency_time : 1000;
- 		bool allow_z8 = context->bw_ctx.dml.vba.StutterPeriod > (double)minmum_z8_residency;
- 		bool is_pwrseq0 = link->link_index == 0;
-+		bool isFreesyncVideo;
- 
--		if (dc_extended_blank_supported(dc)) {
--			for (i = 0; i < dc->res_pool->pipe_count; i++) {
--				if (context->res_ctx.pipe_ctx[i].stream == context->streams[0]
--					&& context->res_ctx.pipe_ctx[i].stream->adjust.v_total_min == context->res_ctx.pipe_ctx[i].stream->adjust.v_total_max
--					&& context->res_ctx.pipe_ctx[i].stream->adjust.v_total_min > context->res_ctx.pipe_ctx[i].stream->timing.v_total) {
--						optimized_min_dst_y_next_start_us =
--							context->res_ctx.pipe_ctx[i].dlg_regs.optimized_min_dst_y_next_start_us;
--						break;
--				}
-+		isFreesyncVideo = current_stream->adjust.v_total_min == current_stream->adjust.v_total_max;
-+		isFreesyncVideo = isFreesyncVideo && current_stream->timing.v_total < current_stream->adjust.v_total_min;
-+		for (i = 0; i < dc->res_pool->pipe_count; i++) {
-+			if (context->res_ctx.pipe_ctx[i].stream == current_stream && isFreesyncVideo) {
-+				min_dst_y_next_start_us = context->res_ctx.pipe_ctx[i].dlg_regs.min_dst_y_next_start_us;
-+				break;
- 			}
- 		}
- 
-@@ -993,7 +992,7 @@ static enum dcn_zstate_support_state  decide_zstate_support(struct dc *dc, struc
- 		if (stream_status->plane_count > 1)
- 			return DCN_ZSTATE_SUPPORT_DISALLOW;
- 
--		if (is_pwrseq0 && (context->bw_ctx.dml.vba.StutterPeriod > 5000.0 || optimized_min_dst_y_next_start_us > 5000))
-+		if (is_pwrseq0 && (context->bw_ctx.dml.vba.StutterPeriod > 5000.0 || min_dst_y_next_start_us > 5000))
- 			return DCN_ZSTATE_SUPPORT_ALLOW;
- 		else if (is_pwrseq0 && link->psr_settings.psr_version == DC_PSR_VERSION_1 && !link->panel_config.psr.disable_psr)
- 			return allow_z8 ? DCN_ZSTATE_SUPPORT_ALLOW_Z8_Z10_ONLY : DCN_ZSTATE_SUPPORT_ALLOW_Z10_ONLY;
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn31/display_rq_dlg_calc_31.c b/drivers/gpu/drm/amd/display/dc/dml/dcn31/display_rq_dlg_calc_31.c
-index 35d10b4d018bf..d7ee26b62a5eb 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn31/display_rq_dlg_calc_31.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn31/display_rq_dlg_calc_31.c
-@@ -988,8 +988,7 @@ static void dml_rq_dlg_get_dlg_params(
- 
- 	dlg_vblank_start = interlaced ? (vblank_start / 2) : vblank_start;
- 	disp_dlg_regs->min_dst_y_next_start = (unsigned int) (((double) dlg_vblank_start) * dml_pow(2, 2));
--	disp_dlg_regs->optimized_min_dst_y_next_start_us = 0;
--	disp_dlg_regs->optimized_min_dst_y_next_start = disp_dlg_regs->min_dst_y_next_start;
-+	disp_dlg_regs->min_dst_y_next_start_us = 0;
- 	ASSERT(disp_dlg_regs->min_dst_y_next_start < (unsigned int)dml_pow(2, 18));
- 
- 	dml_print("DML_DLG: %s: min_ttu_vblank (us)         = %3.2f\n", __func__, min_ttu_vblank);
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
-index bf77e56c3f3ef..395eed9f6b1be 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
-@@ -288,6 +288,7 @@ int dcn314_populate_dml_pipes_from_context_fpu(struct dc *dc, struct dc_state *c
- 	struct resource_context *res_ctx = &context->res_ctx;
- 	struct pipe_ctx *pipe;
- 	bool upscaled = false;
-+	bool isFreesyncVideo = false;
- 
- 	dc_assert_fp_enabled();
- 
-@@ -301,9 +302,16 @@ int dcn314_populate_dml_pipes_from_context_fpu(struct dc *dc, struct dc_state *c
- 		pipe = &res_ctx->pipe_ctx[i];
- 		timing = &pipe->stream->timing;
- 
--		if (dc_extended_blank_supported(dc) && pipe->stream->adjust.v_total_max == pipe->stream->adjust.v_total_min
--			&& pipe->stream->adjust.v_total_min > timing->v_total)
-+		isFreesyncVideo = pipe->stream->adjust.v_total_max == pipe->stream->adjust.v_total_min;
-+		isFreesyncVideo = isFreesyncVideo && pipe->stream->adjust.v_total_min > timing->v_total;
-+
-+		if (!isFreesyncVideo) {
-+			pipes[pipe_cnt].pipe.dest.vblank_nom =
-+				dcn3_14_ip.VBlankNomDefaultUS / (timing->h_total / (timing->pix_clk_100hz / 10000.0));
-+		} else {
- 			pipes[pipe_cnt].pipe.dest.vtotal = pipe->stream->adjust.v_total_min;
-+			pipes[pipe_cnt].pipe.dest.vblank_nom = timing->v_total - pipes[pipe_cnt].pipe.dest.vactive;
-+		}
- 
- 		if (pipe->plane_state &&
- 				(pipe->plane_state->src_rect.height < pipe->plane_state->dst_rect.height ||
-@@ -327,8 +335,6 @@ int dcn314_populate_dml_pipes_from_context_fpu(struct dc *dc, struct dc_state *c
- 		pipes[pipe_cnt].pipe.src.dcc_fraction_of_zs_req_luma = 0;
- 		pipes[pipe_cnt].pipe.src.dcc_fraction_of_zs_req_chroma = 0;
- 		pipes[pipe_cnt].pipe.dest.vfront_porch = timing->v_front_porch;
--		pipes[pipe_cnt].pipe.dest.vblank_nom =
--				dcn3_14_ip.VBlankNomDefaultUS / (timing->h_total / (timing->pix_clk_100hz / 10000.0));
- 		pipes[pipe_cnt].pipe.src.dcc_rate = 3;
- 		pipes[pipe_cnt].dout.dsc_input_bpc = 0;
- 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn314/display_rq_dlg_calc_314.c b/drivers/gpu/drm/amd/display/dc/dml/dcn314/display_rq_dlg_calc_314.c
-index 61ee9ba063a78..26561c0f5fbb6 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn314/display_rq_dlg_calc_314.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn314/display_rq_dlg_calc_314.c
-@@ -1053,7 +1053,6 @@ static void dml_rq_dlg_get_dlg_params(
- 
- 	float vba__refcyc_per_req_delivery_pre_l = get_refcyc_per_req_delivery_pre_l_in_us(mode_lib, e2e_pipe_param, num_pipes, pipe_idx) * refclk_freq_in_mhz;  // From VBA
- 	float vba__refcyc_per_req_delivery_l = get_refcyc_per_req_delivery_l_in_us(mode_lib, e2e_pipe_param, num_pipes, pipe_idx) * refclk_freq_in_mhz;  // From VBA
--	int blank_lines = 0;
- 
- 	memset(disp_dlg_regs, 0, sizeof(*disp_dlg_regs));
- 	memset(disp_ttu_regs, 0, sizeof(*disp_ttu_regs));
-@@ -1077,17 +1076,10 @@ static void dml_rq_dlg_get_dlg_params(
- 	min_ttu_vblank = get_min_ttu_vblank_in_us(mode_lib, e2e_pipe_param, num_pipes, pipe_idx);	// From VBA
- 
- 	dlg_vblank_start = interlaced ? (vblank_start / 2) : vblank_start;
--	disp_dlg_regs->optimized_min_dst_y_next_start = disp_dlg_regs->min_dst_y_next_start;
--	disp_dlg_regs->optimized_min_dst_y_next_start_us = 0;
--	disp_dlg_regs->min_dst_y_next_start = (unsigned int) (((double) dlg_vblank_start) * dml_pow(2, 2));
--	blank_lines = (dst->vblank_end + dst->vtotal_min - dst->vblank_start - dst->vstartup_start - 1);
--	if (blank_lines < 0)
--		blank_lines = 0;
--	if (blank_lines != 0) {
--		disp_dlg_regs->optimized_min_dst_y_next_start = vba__min_dst_y_next_start;
--		disp_dlg_regs->optimized_min_dst_y_next_start_us = (disp_dlg_regs->optimized_min_dst_y_next_start * dst->hactive) / (unsigned int) dst->pixel_rate_mhz;
--		disp_dlg_regs->min_dst_y_next_start = disp_dlg_regs->optimized_min_dst_y_next_start;
--	}
-+	disp_dlg_regs->min_dst_y_next_start_us =
-+		(vba__min_dst_y_next_start * dst->hactive) / (unsigned int) dst->pixel_rate_mhz;
-+	disp_dlg_regs->min_dst_y_next_start = vba__min_dst_y_next_start * dml_pow(2, 2);
-+
- 	ASSERT(disp_dlg_regs->min_dst_y_next_start < (unsigned int)dml_pow(2, 18));
- 
- 	dml_print("DML_DLG: %s: min_ttu_vblank (us)         = %3.2f\n", __func__, min_ttu_vblank);
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/display_mode_structs.h b/drivers/gpu/drm/amd/display/dc/dml/display_mode_structs.h
-index 64d602e6412f1..6af0d5f469aeb 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/display_mode_structs.h
-+++ b/drivers/gpu/drm/amd/display/dc/dml/display_mode_structs.h
-@@ -618,8 +618,7 @@ struct _vcs_dpi_display_dlg_regs_st {
- 	unsigned int refcyc_h_blank_end;
- 	unsigned int dlg_vblank_end;
- 	unsigned int min_dst_y_next_start;
--	unsigned int optimized_min_dst_y_next_start;
--	unsigned int optimized_min_dst_y_next_start_us;
-+	unsigned int min_dst_y_next_start_us;
- 	unsigned int refcyc_per_htotal;
- 	unsigned int refcyc_x_after_scaler;
- 	unsigned int dst_y_after_scaler;
+ 	remove_wait_queue(&tty->read_wait, &wait);
 -- 
 2.39.2
 
