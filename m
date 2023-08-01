@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B464C1F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:26:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37325C433C7;
-	Tue,  1 Aug 2023 09:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8871F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:26:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DEFC433C8;
+	Tue,  1 Aug 2023 09:26:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881981;
-	bh=AYkv6W6HnroIuvJYfo6XuT/dRUdCdjWdMMLKbEVVLbk=;
+	s=korg; t=1690881984;
+	bh=euf1xA+gyLAP9SF/I0tZK84pENCS4EQNoMUiiZTb8yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FPs5fXscByN6SXuRSR8ce8NohVVThmaK7uV97nqGcPlTKFfCTKeZJk5SQywE8Afwi
-	 Sqj/pDr7kXaIpGc7j+bQFUqOrnVLDVK73U/elQJCTTCp9zwHnEVR0Upo0naNvLT2re
-	 J9YteIQlw+h5c0jtKxwDdIroSrKKD0hoc40bNTFA=
+	b=A1/WWCEt06WFVkdfOgZKH/x0yjw5+6mFVuekacZjdkNu4KmPx8kDZb1IDMtVJn0rE
+	 wOzHfCB5DXr1jfBQiMLRbRUQSKY3ehNpNdpquzuwyrCOAZrn06cDWRhh10pvYbkRpX
+	 BsnJPBSbRdUcz0ZsBJ/xojNDAZfrQwYOHAkdeFuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Paolo Abeni <pabeni@redhat.com>,
+	mhiramat@kernel.org,
+	vnagarnaik@google.com,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 081/155] tipc: stop tipc crypto on failure in tipc_node_create
-Date: Tue,  1 Aug 2023 11:19:53 +0200
-Message-ID: <20230801091913.043282878@linuxfoundation.org>
+Subject: [PATCH 5.15 099/155] ring-buffer: Fix wrong stat of cpu_buffer->read
+Date: Tue,  1 Aug 2023 11:20:11 +0200
+Message-ID: <20230801091913.760742931@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -36,46 +37,130 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit de52e17326c3e9a719c9ead4adb03467b8fae0ef ]
+[ Upstream commit 2d093282b0d4357373497f65db6a05eb0c28b7c8 ]
 
-If tipc_link_bc_create() fails inside tipc_node_create() for a newly
-allocated tipc node then we should stop its tipc crypto and free the
-resources allocated with a call to tipc_crypto_start().
+When pages are removed in rb_remove_pages(), 'cpu_buffer->read' is set
+to 0 in order to make sure any read iterators reset themselves. However,
+this will mess 'entries' stating, see following steps:
 
-As the node ref is initialized to one to that point, just put the ref on
-tipc_link_bc_create() error case that would lead to tipc_node_free() be
-eventually executed and properly clean the node and its crypto resources.
+  # cd /sys/kernel/tracing/
+  # 1. Enlarge ring buffer prepare for later reducing:
+  # echo 20 > per_cpu/cpu0/buffer_size_kb
+  # 2. Write a log into ring buffer of cpu0:
+  # taskset -c 0 echo "hello1" > trace_marker
+  # 3. Read the log:
+  # cat per_cpu/cpu0/trace_pipe
+       <...>-332     [000] .....    62.406844: tracing_mark_write: hello1
+  # 4. Stop reading and see the stats, now 0 entries, and 1 event readed:
+  # cat per_cpu/cpu0/stats
+   entries: 0
+   [...]
+   read events: 1
+  # 5. Reduce the ring buffer
+  # echo 7 > per_cpu/cpu0/buffer_size_kb
+  # 6. Now entries became unexpected 1 because actually no entries!!!
+  # cat per_cpu/cpu0/stats
+   entries: 1
+   [...]
+   read events: 0
 
-Found by Linux Verification Center (linuxtesting.org).
+To fix it, introduce 'page_removed' field to count total removed pages
+since last reset, then use it to let read iterators reset themselves
+instead of changing the 'read' pointer.
 
-Fixes: cb8092d70a6f ("tipc: move bc link creation back to tipc_node_create")
-Suggested-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/20230725214628.25246-1-pchelkin@ispras.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/linux-trace-kernel/20230724054040.3489499-1-zhengyejian1@huawei.com
+
+Cc: <mhiramat@kernel.org>
+Cc: <vnagarnaik@google.com>
+Fixes: 83f40318dab0 ("ring-buffer: Make removal of ring buffer pages atomic")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/node.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/net/tipc/node.c b/net/tipc/node.c
-index 5e000fde80676..a9c5b6594889b 100644
---- a/net/tipc/node.c
-+++ b/net/tipc/node.c
-@@ -583,7 +583,7 @@ struct tipc_node *tipc_node_create(struct net *net, u32 addr, u8 *peer_id,
- 				 n->capabilities, &n->bc_entry.inputq1,
- 				 &n->bc_entry.namedq, snd_l, &n->bc_entry.link)) {
- 		pr_warn("Broadcast rcv link creation failed, no memory\n");
--		kfree(n);
-+		tipc_node_put(n);
- 		n = NULL;
- 		goto exit;
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index ceeba8bf1265b..e1cef097b0df5 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -520,6 +520,8 @@ struct ring_buffer_per_cpu {
+ 	rb_time_t			before_stamp;
+ 	u64				event_stamp[MAX_NEST];
+ 	u64				read_stamp;
++	/* pages removed since last reset */
++	unsigned long			pages_removed;
+ 	/* ring buffer pages to update, > 0 to add, < 0 to remove */
+ 	long				nr_pages_to_update;
+ 	struct list_head		new_pages; /* new pages to add */
+@@ -555,6 +557,7 @@ struct ring_buffer_iter {
+ 	struct buffer_page		*head_page;
+ 	struct buffer_page		*cache_reader_page;
+ 	unsigned long			cache_read;
++	unsigned long			cache_pages_removed;
+ 	u64				read_stamp;
+ 	u64				page_stamp;
+ 	struct ring_buffer_event	*event;
+@@ -1931,6 +1934,8 @@ rb_remove_pages(struct ring_buffer_per_cpu *cpu_buffer, unsigned long nr_pages)
+ 		to_remove = rb_list_head(to_remove)->next;
+ 		head_bit |= (unsigned long)to_remove & RB_PAGE_HEAD;
  	}
++	/* Read iterators need to reset themselves when some pages removed */
++	cpu_buffer->pages_removed += nr_removed;
+ 
+ 	next_page = rb_list_head(to_remove)->next;
+ 
+@@ -1952,12 +1957,6 @@ rb_remove_pages(struct ring_buffer_per_cpu *cpu_buffer, unsigned long nr_pages)
+ 		cpu_buffer->head_page = list_entry(next_page,
+ 						struct buffer_page, list);
+ 
+-	/*
+-	 * change read pointer to make sure any read iterators reset
+-	 * themselves
+-	 */
+-	cpu_buffer->read = 0;
+-
+ 	/* pages are removed, resume tracing and then free the pages */
+ 	atomic_dec(&cpu_buffer->record_disabled);
+ 	raw_spin_unlock_irq(&cpu_buffer->reader_lock);
+@@ -4347,6 +4346,7 @@ static void rb_iter_reset(struct ring_buffer_iter *iter)
+ 
+ 	iter->cache_reader_page = iter->head_page;
+ 	iter->cache_read = cpu_buffer->read;
++	iter->cache_pages_removed = cpu_buffer->pages_removed;
+ 
+ 	if (iter->head) {
+ 		iter->read_stamp = cpu_buffer->read_stamp;
+@@ -4800,12 +4800,13 @@ rb_iter_peek(struct ring_buffer_iter *iter, u64 *ts)
+ 	buffer = cpu_buffer->buffer;
+ 
+ 	/*
+-	 * Check if someone performed a consuming read to
+-	 * the buffer. A consuming read invalidates the iterator
+-	 * and we need to reset the iterator in this case.
++	 * Check if someone performed a consuming read to the buffer
++	 * or removed some pages from the buffer. In these cases,
++	 * iterator was invalidated and we need to reset it.
+ 	 */
+ 	if (unlikely(iter->cache_read != cpu_buffer->read ||
+-		     iter->cache_reader_page != cpu_buffer->reader_page))
++		     iter->cache_reader_page != cpu_buffer->reader_page ||
++		     iter->cache_pages_removed != cpu_buffer->pages_removed))
+ 		rb_iter_reset(iter);
+ 
+  again:
+@@ -5249,6 +5250,7 @@ rb_reset_cpu(struct ring_buffer_per_cpu *cpu_buffer)
+ 	cpu_buffer->last_overrun = 0;
+ 
+ 	rb_head_page_activate(cpu_buffer);
++	cpu_buffer->pages_removed = 0;
+ }
+ 
+ /* Must have disabled the cpu buffer then done a synchronize_rcu */
 -- 
-2.39.2
+2.40.1
 
 
 
