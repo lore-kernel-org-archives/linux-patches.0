@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728321FB2B
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:33:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77C1C433C7;
-	Tue,  1 Aug 2023 09:33:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F2A1FB2B
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:33:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABEB1C433C8;
+	Tue,  1 Aug 2023 09:33:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882416;
-	bh=8D3e7Ra4T6kJ0JM6h38bYs3iaJUiBYBr0O2en0/7Hyw=;
+	s=korg; t=1690882419;
+	bh=pSVIaabH/x8RFpUQ+q6+6jTXdw9VGLpvYluFLL89k7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ncRzPS5jVjwbk+Jf2VHYin/9G6czignZsec0jZ2WzOi1hwFYfYAExmjzobk1xPKZM
-	 2J9pdHXj0RhIpXvHhVIGIvHjJbV2Gl3UUSjiiCV/bvzztTFf+M5n7eE9iT04ujFcic
-	 /O5EF7KEI/caGkKdjSmg0YsE1XLfl4EUefSf72dM=
+	b=GIC5Ok6oaiqnjNzAvTuOHIvNCKp8Je74nWtGzdvrlGKuXgpZMXqce6iKwyKYVo5oW
+	 e6LnbG9joLVabxrJohUhES1+BRPWLXmy99llsVuCF5eLa4hzvj4gV5yK06U0CiPYSY
+	 hES5ozUTITyly7/WfTM6nHHklZzwJ6ZOY6Klp8jE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang Li <liali@redhat.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sunil Goutham <sgoutham@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 098/228] team: reset teams flags when down link is P2P device
-Date: Tue,  1 Aug 2023 11:19:16 +0200
-Message-ID: <20230801091926.368040661@linuxfoundation.org>
+Subject: [PATCH 6.1 099/228] octeontx2-af: Removed unnecessary debug messages.
+Date: Tue,  1 Aug 2023 11:19:17 +0200
+Message-ID: <20230801091926.400961556@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,50 +37,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Sunil Goutham <sgoutham@marvell.com>
 
-[ Upstream commit fa532bee17d15acf8bba4bc8e2062b7a093ba801 ]
+[ Upstream commit 609aa68d60965f70485655def733d533f99b341b ]
 
-When adding a point to point downlink to team device, we neglected to reset
-the team's flags, which were still using flags like BROADCAST and
-MULTICAST. Consequently, this would initiate ARP/DAD for P2P downlink
-interfaces, such as when adding a GRE device to team device. Fix this by
-remove multicast/broadcast flags and add p2p and noarp flags.
+NPC exact match feature is supported only on one silicon
+variant, removed debug messages which print that this
+feature is not available on all other silicon variants.
 
-After removing the none ethernet interface and adding an ethernet interface
-to team, we need to reset team interface flags. Unlike bonding interface,
-team do not need restore IFF_MASTER, IFF_SLAVE flags.
-
-Reported-by: Liang Li <liali@redhat.com>
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2221438
-Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20230201040301.1034843-1-rkannoth@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 4e62c99d71e5 ("octeontx2-af: Fix hash extraction enable configuration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ .../marvell/octeontx2/af/rvu_npc_hash.c        | 18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index b524bd374d685..509ba706781ed 100644
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -2135,6 +2135,15 @@ static void team_setup_by_port(struct net_device *dev,
- 	dev->mtu = port_dev->mtu;
- 	memcpy(dev->broadcast, port_dev->broadcast, port_dev->addr_len);
- 	eth_hw_addr_inherit(dev, port_dev);
-+
-+	if (port_dev->flags & IFF_POINTOPOINT) {
-+		dev->flags &= ~(IFF_BROADCAST | IFF_MULTICAST);
-+		dev->flags |= (IFF_POINTOPOINT | IFF_NOARP);
-+	} else if ((port_dev->flags & (IFF_BROADCAST | IFF_MULTICAST)) ==
-+		    (IFF_BROADCAST | IFF_MULTICAST)) {
-+		dev->flags |= (IFF_BROADCAST | IFF_MULTICAST);
-+		dev->flags &= ~(IFF_POINTOPOINT | IFF_NOARP);
-+	}
- }
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
+index 3b0a66c0977a7..efc2e64689f7d 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
+@@ -203,10 +203,8 @@ void npc_config_secret_key(struct rvu *rvu, int blkaddr)
+ 	struct rvu_hwinfo *hw = rvu->hw;
+ 	u8 intf;
  
- static int team_dev_type_check_change(struct net_device *dev,
+-	if (!hwcap->npc_hash_extract) {
+-		dev_info(rvu->dev, "HW does not support secret key configuration\n");
++	if (!hwcap->npc_hash_extract)
+ 		return;
+-	}
+ 
+ 	for (intf = 0; intf < hw->npc_intfs; intf++) {
+ 		rvu_write64(rvu, blkaddr, NPC_AF_INTFX_SECRET_KEY0(intf),
+@@ -224,10 +222,8 @@ void npc_program_mkex_hash(struct rvu *rvu, int blkaddr)
+ 	struct rvu_hwinfo *hw = rvu->hw;
+ 	u8 intf;
+ 
+-	if (!hwcap->npc_hash_extract) {
+-		dev_dbg(rvu->dev, "Field hash extract feature is not supported\n");
++	if (!hwcap->npc_hash_extract)
+ 		return;
+-	}
+ 
+ 	for (intf = 0; intf < hw->npc_intfs; intf++) {
+ 		npc_program_mkex_hash_rx(rvu, blkaddr, intf);
+@@ -1864,19 +1860,13 @@ int rvu_npc_exact_init(struct rvu *rvu)
+ 
+ 	/* Check exact match feature is supported */
+ 	npc_const3 = rvu_read64(rvu, blkaddr, NPC_AF_CONST3);
+-	if (!(npc_const3 & BIT_ULL(62))) {
+-		dev_info(rvu->dev, "%s: No support for exact match support\n",
+-			 __func__);
++	if (!(npc_const3 & BIT_ULL(62)))
+ 		return 0;
+-	}
+ 
+ 	/* Check if kex profile has enabled EXACT match nibble */
+ 	cfg = rvu_read64(rvu, blkaddr, NPC_AF_INTFX_KEX_CFG(NIX_INTF_RX));
+-	if (!(cfg & NPC_EXACT_NIBBLE_HIT)) {
+-		dev_info(rvu->dev, "%s: NPC exact match nibble not enabled in KEX profile\n",
+-			 __func__);
++	if (!(cfg & NPC_EXACT_NIBBLE_HIT))
+ 		return 0;
+-	}
+ 
+ 	/* Set capability to true */
+ 	rvu->hw->cap.npc_exact_match_enabled = true;
 -- 
 2.39.2
 
