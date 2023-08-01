@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216E11F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:24:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945BCC433C7;
-	Tue,  1 Aug 2023 09:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E226E1F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:24:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 656FEC433C8;
+	Tue,  1 Aug 2023 09:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881883;
-	bh=BMSeTONBd8bnHHZa1d+3UP8n8ZYo+bQ8cs5WjK6Gtrg=;
+	s=korg; t=1690881885;
+	bh=TE/k2mMYsxCkBm+8tiVVOvK6kAQPsHzknj5qrXq6NBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dKmFp0br0l/pYjAgANxXq2XlJId0invphjFoLNcyyz/zRFu+Saw2O0jcXgpWbj0gl
-	 CniJcAnU2HAwVS3oECw4wOng3C7V+VGK0fVw/XjcBgzc/VD8To9nJrmdhHMXvJuAzV
-	 uZ/8qK7hlS5fRJosb6sZayXAvPcmLpA7aIghgX/o=
+	b=b8C0lSCeIka+pTIkqcUs2UYwKBpGpCIfSTOT4RMqK8HH5S1x/ndtJbXNjHNGksscZ
+	 sdR2zVBl/Upz5sIEH9LgoaZYpfHayOj5+/0EvnQQpG+1Kcq+wvQV01DHIGmNWWeDCi
+	 1kM7kBi9InRYh9Mj8KA+xU5+H4fD67emivAXFB5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanjun Gong <ruc_gongyuanjun@163.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	Jiri Pirko <jiri@resnulli.us>,
+	Xiao Ma <xiaom@google.com>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 064/155] ethernet: atheros: fix return value check in atl1e_tso_csum()
-Date: Tue,  1 Aug 2023 11:19:36 +0200
-Message-ID: <20230801091912.476379334@linuxfoundation.org>
+Subject: [PATCH 5.15 065/155] ipv6 addrconf: fix bug where deleting a mngtmpaddr can create a new temporary address
+Date: Tue,  1 Aug 2023 11:19:37 +0200
+Message-ID: <20230801091912.507276821@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -36,42 +38,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuanjun Gong <ruc_gongyuanjun@163.com>
+From: Maciej Żenczykowski <maze@google.com>
 
-[ Upstream commit 69a184f7a372aac588babfb0bd681aaed9779f5b ]
+[ Upstream commit 69172f0bcb6a09110c5d2a6d792627f5095a9018 ]
 
-in atl1e_tso_csum, it should check the return value of pskb_trim(),
-and return an error code if an unexpected value is returned
-by pskb_trim().
+currently on 6.4 net/main:
 
-Fixes: a6a5325239c2 ("atl1e: Atheros L1E Gigabit Ethernet driver")
-Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230720144219.39285-1-ruc_gongyuanjun@163.com
+  # ip link add dummy1 type dummy
+  # echo 1 > /proc/sys/net/ipv6/conf/dummy1/use_tempaddr
+  # ip link set dummy1 up
+  # ip -6 addr add 2000::1/64 mngtmpaddr dev dummy1
+  # ip -6 addr show dev dummy1
+
+  11: dummy1: <BROADCAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN group default qlen 1000
+      inet6 2000::44f3:581c:8ca:3983/64 scope global temporary dynamic
+         valid_lft 604800sec preferred_lft 86172sec
+      inet6 2000::1/64 scope global mngtmpaddr
+         valid_lft forever preferred_lft forever
+      inet6 fe80::e8a8:a6ff:fed5:56d4/64 scope link
+         valid_lft forever preferred_lft forever
+
+  # ip -6 addr del 2000::44f3:581c:8ca:3983/64 dev dummy1
+
+  (can wait a few seconds if you want to, the above delete isn't [directly] the problem)
+
+  # ip -6 addr show dev dummy1
+
+  11: dummy1: <BROADCAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN group default qlen 1000
+      inet6 2000::1/64 scope global mngtmpaddr
+         valid_lft forever preferred_lft forever
+      inet6 fe80::e8a8:a6ff:fed5:56d4/64 scope link
+         valid_lft forever preferred_lft forever
+
+  # ip -6 addr del 2000::1/64 mngtmpaddr dev dummy1
+  # ip -6 addr show dev dummy1
+
+  11: dummy1: <BROADCAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN group default qlen 1000
+      inet6 2000::81c9:56b7:f51a:b98f/64 scope global temporary dynamic
+         valid_lft 604797sec preferred_lft 86169sec
+      inet6 fe80::e8a8:a6ff:fed5:56d4/64 scope link
+         valid_lft forever preferred_lft forever
+
+This patch prevents this new 'global temporary dynamic' address from being
+created by the deletion of the related (same subnet prefix) 'mngtmpaddr'
+(which is triggered by there already being no temporary addresses).
+
+Cc: Jiri Pirko <jiri@resnulli.us>
+Fixes: 53bd67491537 ("ipv6 addrconf: introduce IFA_F_MANAGETEMPADDR to tell kernel to manage temporary addresses")
+Reported-by: Xiao Ma <xiaom@google.com>
+Signed-off-by: Maciej Żenczykowski <maze@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20230720160022.1887942-1-maze@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/atheros/atl1e/atl1e_main.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/ipv6/addrconf.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/atheros/atl1e/atl1e_main.c b/drivers/net/ethernet/atheros/atl1e/atl1e_main.c
-index 753973ac922e9..db13311e77e73 100644
---- a/drivers/net/ethernet/atheros/atl1e/atl1e_main.c
-+++ b/drivers/net/ethernet/atheros/atl1e/atl1e_main.c
-@@ -1642,8 +1642,11 @@ static int atl1e_tso_csum(struct atl1e_adapter *adapter,
- 			real_len = (((unsigned char *)ip_hdr(skb) - skb->data)
- 					+ ntohs(ip_hdr(skb)->tot_len));
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index e0d3909172a84..0c0b7969840f5 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -2565,12 +2565,18 @@ static void manage_tempaddrs(struct inet6_dev *idev,
+ 			ipv6_ifa_notify(0, ift);
+ 	}
  
--			if (real_len < skb->len)
--				pskb_trim(skb, real_len);
-+			if (real_len < skb->len) {
-+				err = pskb_trim(skb, real_len);
-+				if (err)
-+					return err;
-+			}
- 
- 			hdr_len = (skb_transport_offset(skb) + tcp_hdrlen(skb));
- 			if (unlikely(skb->len == hdr_len)) {
+-	if ((create || list_empty(&idev->tempaddr_list)) &&
+-	    idev->cnf.use_tempaddr > 0) {
++	/* Also create a temporary address if it's enabled but no temporary
++	 * address currently exists.
++	 * However, we get called with valid_lft == 0, prefered_lft == 0, create == false
++	 * as part of cleanup (ie. deleting the mngtmpaddr).
++	 * We don't want that to result in creating a new temporary ip address.
++	 */
++	if (list_empty(&idev->tempaddr_list) && (valid_lft || prefered_lft))
++		create = true;
++
++	if (create && idev->cnf.use_tempaddr > 0) {
+ 		/* When a new public address is created as described
+ 		 * in [ADDRCONF], also create a new temporary address.
+-		 * Also create a temporary address if it's enabled but
+-		 * no temporary address currently exists.
+ 		 */
+ 		read_unlock_bh(&idev->lock);
+ 		ipv6_create_tempaddr(ifp, false);
 -- 
 2.39.2
 
