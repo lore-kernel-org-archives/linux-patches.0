@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A031EA8F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:50:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88D4C433C8;
-	Tue,  1 Aug 2023 09:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE581EA8F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:50:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99583C433C8;
+	Tue,  1 Aug 2023 09:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883441;
-	bh=xQ0T0vI8Z7xS+7Ts1lyIfeWB9UPz0g1wrLrRbSViaZ4=;
+	s=korg; t=1690883444;
+	bh=sJsafFDedZLtkkRHhZ4Zb3t48A2S29HP/j+E2LTYALM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dgqaoGHNkwbrYcx5eRGxTtbxyoMg1nL25VELIFgf/TOQvnelUT7qEcZnXDcDy0int
-	 T6C+YP+FdG/6N3iz5ijczA1uDOE6lDmwXdGBHP0QU0aIAJUTGdGtdmRXibNXiFwhhd
-	 7iHPMiBpZHgRAR0ky4kTRBR96Gi63gUliUYcjh58=
+	b=LQrQB6FODlhbaY5DJjvipcY17rn2WgHtLjhEzoaWqqpFy2H2XP1BWVTKbOSq6pdN3
+	 +IIcy3SHb3bKlO9loOeGK4c1cT2k5wiBJ/0AYXZXlIewIERIGmSfrrd9JbKmgGhaNv
+	 BjRovD5VnvNAtUse6p4/JN36yS9e+R+G4CSdGfJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	stable@kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.4 237/239] mm/mempolicy: Take VMA lock before replacing policy
-Date: Tue,  1 Aug 2023 11:21:41 +0200
-Message-ID: <20230801091934.599552469@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Luben Tuikov <luben.tuikov@amd.com>,
+	Jindong Yue <jindong.yue@nxp.com>
+Subject: [PATCH 6.4 238/239] dma-buf: keep the signaling time of merged fences v3
+Date: Tue,  1 Aug 2023 11:21:42 +0200
+Message-ID: <20230801091934.639356142@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,78 +35,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jann Horn <jannh@google.com>
+From: Christian König <christian.koenig@amd.com>
 
-commit 6c21e066f9256ea1df6f88768f6ae1080b7cf509 upstream.
+commit f781f661e8c99b0cb34129f2e374234d61864e77 upstream.
 
-mbind() calls down into vma_replace_policy() without taking the per-VMA
-locks, replaces the VMA's vma->vm_policy pointer, and frees the old
-policy.  That's bad; a concurrent page fault might still be using the
-old policy (in vma_alloc_folio()), resulting in use-after-free.
+Some Android CTS is testing if the signaling time keeps consistent
+during merges.
 
-Normally this will manifest as a use-after-free read first, but it can
-result in memory corruption, including because vma_alloc_folio() can
-call mpol_cond_put() on the freed policy, which conditionally changes
-the policy's refcount member.
+v2: use the current time if the fence is still in the signaling path and
+the timestamp not yet available.
+v3: improve comment, fix one more case to use the correct timestamp
 
-This bug is specific to CONFIG_NUMA, but it does also affect non-NUMA
-systems as long as the kernel was built with CONFIG_NUMA.
-
-Signed-off-by: Jann Horn <jannh@google.com>
-Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-Fixes: 5e31275cc997 ("mm: add per-VMA lock and helper functions to control it")
-Cc: stable@kernel.org
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Luben Tuikov <luben.tuikov@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230630120041.109216-1-christian.koenig@amd.com
+Cc: Jindong Yue <jindong.yue@nxp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mempolicy.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/dma-buf/dma-fence-unwrap.c |   26 ++++++++++++++++++++++----
+ drivers/dma-buf/dma-fence.c        |    5 +++--
+ drivers/gpu/drm/drm_syncobj.c      |    2 +-
+ include/linux/dma-fence.h          |    2 +-
+ 4 files changed, 27 insertions(+), 8 deletions(-)
 
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -384,8 +384,10 @@ void mpol_rebind_mm(struct mm_struct *mm
- 	VMA_ITERATOR(vmi, mm, 0);
+--- a/drivers/dma-buf/dma-fence-unwrap.c
++++ b/drivers/dma-buf/dma-fence-unwrap.c
+@@ -66,18 +66,36 @@ struct dma_fence *__dma_fence_unwrap_mer
+ {
+ 	struct dma_fence_array *result;
+ 	struct dma_fence *tmp, **array;
++	ktime_t timestamp;
+ 	unsigned int i;
+ 	size_t count;
  
- 	mmap_write_lock(mm);
--	for_each_vma(vmi, vma)
-+	for_each_vma(vmi, vma) {
-+		vma_start_write(vma);
- 		mpol_rebind_policy(vma->vm_policy, new);
-+	}
- 	mmap_write_unlock(mm);
- }
- 
-@@ -765,6 +767,8 @@ static int vma_replace_policy(struct vm_
- 	struct mempolicy *old;
- 	struct mempolicy *new;
- 
-+	vma_assert_write_locked(vma);
-+
- 	pr_debug("vma %lx-%lx/%lx vm_ops %p vm_file %p set_policy %p\n",
- 		 vma->vm_start, vma->vm_end, vma->vm_pgoff,
- 		 vma->vm_ops, vma->vm_file,
-@@ -1313,6 +1317,14 @@ static long do_mbind(unsigned long start
- 	if (err)
- 		goto mpol_out;
+ 	count = 0;
++	timestamp = ns_to_ktime(0);
+ 	for (i = 0; i < num_fences; ++i) {
+-		dma_fence_unwrap_for_each(tmp, &iter[i], fences[i])
+-			if (!dma_fence_is_signaled(tmp))
++		dma_fence_unwrap_for_each(tmp, &iter[i], fences[i]) {
++			if (!dma_fence_is_signaled(tmp)) {
+ 				++count;
++			} else if (test_bit(DMA_FENCE_FLAG_TIMESTAMP_BIT,
++					    &tmp->flags)) {
++				if (ktime_after(tmp->timestamp, timestamp))
++					timestamp = tmp->timestamp;
++			} else {
++				/*
++				 * Use the current time if the fence is
++				 * currently signaling.
++				 */
++				timestamp = ktime_get();
++			}
++		}
+ 	}
  
 +	/*
-+	 * Lock the VMAs before scanning for pages to migrate, to ensure we don't
-+	 * miss a concurrently inserted page.
++	 * If we couldn't find a pending fence just return a private signaled
++	 * fence with the timestamp of the last signaled one.
 +	 */
-+	vma_iter_init(&vmi, mm, start);
-+	for_each_vma_range(vmi, vma, end)
-+		vma_start_write(vma);
-+
- 	ret = queue_pages_range(mm, start, end, nmask,
- 			  flags | MPOL_MF_INVERT, &pagelist);
+ 	if (count == 0)
+-		return dma_fence_get_stub();
++		return dma_fence_allocate_private_stub(timestamp);
  
-@@ -1538,6 +1550,7 @@ SYSCALL_DEFINE4(set_mempolicy_home_node,
- 			break;
- 		}
+ 	array = kmalloc_array(count, sizeof(*array), GFP_KERNEL);
+ 	if (!array)
+@@ -138,7 +156,7 @@ restart:
+ 	} while (tmp);
  
-+		vma_start_write(vma);
- 		new->home_node = home_node;
- 		err = mbind_range(&vmi, vma, &prev, start, end, new);
- 		mpol_put(new);
+ 	if (count == 0) {
+-		tmp = dma_fence_get_stub();
++		tmp = dma_fence_allocate_private_stub(ktime_get());
+ 		goto return_tmp;
+ 	}
+ 
+--- a/drivers/dma-buf/dma-fence.c
++++ b/drivers/dma-buf/dma-fence.c
+@@ -150,10 +150,11 @@ EXPORT_SYMBOL(dma_fence_get_stub);
+ 
+ /**
+  * dma_fence_allocate_private_stub - return a private, signaled fence
++ * @timestamp: timestamp when the fence was signaled
+  *
+  * Return a newly allocated and signaled stub fence.
+  */
+-struct dma_fence *dma_fence_allocate_private_stub(void)
++struct dma_fence *dma_fence_allocate_private_stub(ktime_t timestamp)
+ {
+ 	struct dma_fence *fence;
+ 
+@@ -169,7 +170,7 @@ struct dma_fence *dma_fence_allocate_pri
+ 	set_bit(DMA_FENCE_FLAG_ENABLE_SIGNAL_BIT,
+ 		&fence->flags);
+ 
+-	dma_fence_signal(fence);
++	dma_fence_signal_timestamp(fence, timestamp);
+ 
+ 	return fence;
+ }
+--- a/drivers/gpu/drm/drm_syncobj.c
++++ b/drivers/gpu/drm/drm_syncobj.c
+@@ -353,7 +353,7 @@ EXPORT_SYMBOL(drm_syncobj_replace_fence)
+  */
+ static int drm_syncobj_assign_null_handle(struct drm_syncobj *syncobj)
+ {
+-	struct dma_fence *fence = dma_fence_allocate_private_stub();
++	struct dma_fence *fence = dma_fence_allocate_private_stub(ktime_get());
+ 
+ 	if (IS_ERR(fence))
+ 		return PTR_ERR(fence);
+--- a/include/linux/dma-fence.h
++++ b/include/linux/dma-fence.h
+@@ -606,7 +606,7 @@ static inline signed long dma_fence_wait
+ void dma_fence_set_deadline(struct dma_fence *fence, ktime_t deadline);
+ 
+ struct dma_fence *dma_fence_get_stub(void);
+-struct dma_fence *dma_fence_allocate_private_stub(void);
++struct dma_fence *dma_fence_allocate_private_stub(ktime_t timestamp);
+ u64 dma_fence_context_alloc(unsigned num);
+ 
+ extern const struct dma_fence_ops dma_fence_array_ops;
 
 
