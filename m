@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D261FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:38:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96EC9C433C9;
-	Tue,  1 Aug 2023 09:38:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004361FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:38:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727D9C433C8;
+	Tue,  1 Aug 2023 09:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882716;
-	bh=/XxyUVd3LdGuIXfN5xmcDxUdMWkLrA2PWRWuDlzDEaI=;
+	s=korg; t=1690882718;
+	bh=YfBoT7EsLVlgYZYAQf2aZOJ6OmK5MC6sKNzyszKlQqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ye8xikWmoiAwsyfHkAK+fWWlX20F45K7wLZyqgglVqhN+OiP/OsPwMk128YOmSGXp
-	 6XknkVzpZnKonjTcttJOo5HrerX5y6spenc84DTRg+qLG4G0AHVWLowvfA0UmM4kg3
-	 jFhZnMocLpOnsWtP+6661FJZ4fsAPRVwM3Nf2Z2Y=
+	b=Wv0Hp0IE4cENvfGzqpWqsE436+oE/wi+vwgjY+LUct/3Es8JdNDPm1+qgErfwBG8K
+	 D1O/oVT7IYrlNsms+b2uoxBLOyCKUEKsBdh2DauetU5OwATrpsm0kIVSAdATrEJGWT
+	 ZI8oDAM7scHCU308YubAwpXxRiEezogS66PaTvOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaoyuan Peng <hedonistsmith@gmail.com>,
+	Oliver Neukum <oneukum@suse.com>,
 	stable <stable@kernel.org>
-Subject: [PATCH 6.1 177/228] tty: n_gsm: fix UAF in gsm_cleanup_mux
-Date: Tue,  1 Aug 2023 11:20:35 +0200
-Message-ID: <20230801091929.264728950@linuxfoundation.org>
+Subject: [PATCH 6.1 178/228] Revert "xhci: add quirk for host controllers that dont update endpoint DCS"
+Date: Tue,  1 Aug 2023 11:20:36 +0200
+Message-ID: <20230801091929.293971697@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -34,100 +34,146 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chaoyuan Peng <hedonistsmith@gmail.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 9b9c8195f3f0d74a826077fc1c01b9ee74907239 upstream.
+commit 5bef4b3cb95a5b883dfec8b3ffc0d671323d55bb upstream.
 
-In gsm_cleanup_mux() the 'gsm->dlci' pointer was not cleaned properly,
-leaving it a dangling pointer after gsm_dlci_release.
-This leads to use-after-free where 'gsm->dlci[0]' are freed and accessed
-by the subsequent gsm_cleanup_mux().
+This reverts commit 5255660b208aebfdb71d574f3952cf48392f4306.
 
-Such is the case in the following call trace:
+This quirk breaks at least the following hardware:
 
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x1e3/0x2cb lib/dump_stack.c:106
- print_address_description+0x63/0x3b0 mm/kasan/report.c:248
- __kasan_report mm/kasan/report.c:434 [inline]
- kasan_report+0x16b/0x1c0 mm/kasan/report.c:451
- gsm_cleanup_mux+0x76a/0x850 drivers/tty/n_gsm.c:2397
- gsm_config drivers/tty/n_gsm.c:2653 [inline]
- gsmld_ioctl+0xaae/0x15b0 drivers/tty/n_gsm.c:2986
- tty_ioctl+0x8ff/0xc50 drivers/tty/tty_io.c:2816
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:874 [inline]
- __se_sys_ioctl+0xf1/0x160 fs/ioctl.c:860
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x61/0xcb
- </TASK>
+0b:00.0 0c03: 1106:3483 (rev 01) (prog-if 30 [XHCI])
+        Subsystem: 1106:3483
+        Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+        Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+        Latency: 0, Cache Line Size: 64 bytes
+        Interrupt: pin A routed to IRQ 66
+        Region 0: Memory at fb400000 (64-bit, non-prefetchable) [size=4K]
+        Capabilities: [80] Power Management version 3
+                Flags: PMEClk- DSI- D1- D2- AuxCurrent=375mA PME(D0+,D1+,D2+,D3hot+,D3cold+)
+                Status: D0 NoSoftRst- PME-Enable- DSel=0 DScale=0 PME-
+        Capabilities: [90] MSI: Enable+ Count=1/4 Maskable- 64bit+
+                Address: 00000000fee007b8  Data: 0000
+        Capabilities: [c4] Express (v2) Endpoint, MSI 00
+                DevCap: MaxPayload 256 bytes, PhantFunc 0, Latency L0s <64ns, L1 <1us
+                        ExtTag- AttnBtn- AttnInd- PwrInd- RBE+ FLReset- SlotPowerLimit 89W
+                DevCtl: CorrErr- NonFatalErr- FatalErr- UnsupReq-
+                        RlxdOrd- ExtTag- PhantFunc- AuxPwr- NoSnoop+
+                        MaxPayload 128 bytes, MaxReadReq 512 bytes
+                DevSta: CorrErr- NonFatalErr- FatalErr- UnsupReq- AuxPwr+ TransPend-
+                LnkCap: Port #0, Speed 5GT/s, Width x1, ASPM L0s L1, Exit Latency L0s <2us, L1 <16us
+                        ClockPM+ Surprise- LLActRep- BwNot- ASPMOptComp-
+                LnkCtl: ASPM Disabled; RCB 64 bytes, Disabled- CommClk+
+                        ExtSynch- ClockPM- AutWidDis- BWInt- AutBWInt-
+                LnkSta: Speed 5GT/s, Width x1
+                        TrErr- Train- SlotClk+ DLActive- BWMgmt- ABWMgmt-
+                DevCap2: Completion Timeout: Range B, TimeoutDis+ NROPrPrP- LTR-
+                         10BitTagComp- 10BitTagReq- OBFF Not Supported, ExtFmt- EETLPPrefix-
+                         EmergencyPowerReduction Not Supported, EmergencyPowerReductionInit-
+                         FRS- TPHComp- ExtTPHComp-
+                         AtomicOpsCap: 32bit- 64bit- 128bitCAS-
+                DevCtl2: Completion Timeout: 50us to 50ms, TimeoutDis- LTR- 10BitTagReq- OBFF Disabled,
+                         AtomicOpsCtl: ReqEn-
+                LnkCtl2: Target Link Speed: 5GT/s, EnterCompliance- SpeedDis-
+                         Transmit Margin: Normal Operating Range, EnterModifiedCompliance- ComplianceSOS-
+                         Compliance Preset/De-emphasis: -6dB de-emphasis, 0dB preshoot
+                LnkSta2: Current De-emphasis Level: -6dB, EqualizationComplete- EqualizationPhase1-
+                         EqualizationPhase2- EqualizationPhase3- LinkEqualizationRequest-
+                         Retimer- 2Retimers- CrosslinkRes: unsupported
+       Capabilities: [100 v1] Advanced Error Reporting
+                UESta:  DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP- ECRC- UnsupReq- ACSViol-
+                UEMsk:  DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP- ECRC- UnsupReq- ACSViol-
+                UESvrt: DLP+ SDES+ TLP- FCP+ CmpltTO- CmpltAbrt- UnxCmplt- RxOF+ MalfTLP+ ECRC- UnsupReq- ACSViol-
+                CESta:  RxErr- BadTLP- BadDLLP- Rollover- Timeout- AdvNonFatalErr-
+                CEMsk:  RxErr- BadTLP- BadDLLP- Rollover- Timeout- AdvNonFatalErr+
+                AERCap: First Error Pointer: 00, ECRCGenCap- ECRCGenEn- ECRCChkCap- ECRCChkEn-
+                        MultHdrRecCap- MultHdrRecEn- TLPPfxPres- HdrLogCap-
+                HeaderLog: 00000000 00000000 00000000 00000000
+        Kernel driver in use: xhci_hcd
+        Kernel modules: xhci_pci
 
-Allocated by task 3501:
- kasan_save_stack mm/kasan/common.c:38 [inline]
- kasan_set_track mm/kasan/common.c:46 [inline]
- set_alloc_info mm/kasan/common.c:434 [inline]
- ____kasan_kmalloc+0xba/0xf0 mm/kasan/common.c:513
- kasan_kmalloc include/linux/kasan.h:264 [inline]
- kmem_cache_alloc_trace+0x143/0x290 mm/slub.c:3247
- kmalloc include/linux/slab.h:591 [inline]
- kzalloc include/linux/slab.h:721 [inline]
- gsm_dlci_alloc+0x53/0x3a0 drivers/tty/n_gsm.c:1932
- gsm_activate_mux+0x1c/0x330 drivers/tty/n_gsm.c:2438
- gsm_config drivers/tty/n_gsm.c:2677 [inline]
- gsmld_ioctl+0xd46/0x15b0 drivers/tty/n_gsm.c:2986
- tty_ioctl+0x8ff/0xc50 drivers/tty/tty_io.c:2816
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:874 [inline]
- __se_sys_ioctl+0xf1/0x160 fs/ioctl.c:860
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x61/0xcb
+with the quirk enabled it fails early with
 
-Freed by task 3501:
- kasan_save_stack mm/kasan/common.c:38 [inline]
- kasan_set_track+0x4b/0x80 mm/kasan/common.c:46
- kasan_set_free_info+0x1f/0x40 mm/kasan/generic.c:360
- ____kasan_slab_free+0xd8/0x120 mm/kasan/common.c:366
- kasan_slab_free include/linux/kasan.h:230 [inline]
- slab_free_hook mm/slub.c:1705 [inline]
- slab_free_freelist_hook+0xdd/0x160 mm/slub.c:1731
- slab_free mm/slub.c:3499 [inline]
- kfree+0xf1/0x270 mm/slub.c:4559
- dlci_put drivers/tty/n_gsm.c:1988 [inline]
- gsm_dlci_release drivers/tty/n_gsm.c:2021 [inline]
- gsm_cleanup_mux+0x574/0x850 drivers/tty/n_gsm.c:2415
- gsm_config drivers/tty/n_gsm.c:2653 [inline]
- gsmld_ioctl+0xaae/0x15b0 drivers/tty/n_gsm.c:2986
- tty_ioctl+0x8ff/0xc50 drivers/tty/tty_io.c:2816
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:874 [inline]
- __se_sys_ioctl+0xf1/0x160 fs/ioctl.c:860
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x61/0xcb
+[    0.754373] pci 0000:0b:00.0: xHCI HW did not halt within 32000 usec status = 0x1000
+[    0.754419] pci 0000:0b:00.0: quirk_usb_early_handoff+0x0/0x7a0 took 31459 usecs
+[    2.228048] xhci_hcd 0000:0b:00.0: xHCI Host Controller
+[    2.228053] xhci_hcd 0000:0b:00.0: new USB bus registered, assigned bus number 7
+[    2.260073] xhci_hcd 0000:0b:00.0: Host halt failed, -110
+[    2.260079] xhci_hcd 0000:0b:00.0: can't setup: -110
+[    2.260551] xhci_hcd 0000:0b:00.0: USB bus 7 deregistered
+[    2.260624] xhci_hcd 0000:0b:00.0: init 0000:0b:00.0 fail, -110
+[    2.260639] xhci_hcd: probe of 0000:0b:00.0 failed with error -110
 
-Fixes: aa371e96f05d ("tty: n_gsm: fix restart handling via CLD command")
-Signed-off-by: Chaoyuan Peng <hedonistsmith@gmail.com>
+The hardware in question is an external PCIe card. It looks to me like the quirk
+needs to be narrowed down. But this needs information about the hardware showing
+the issue this quirk is to fix. So for now a clean revert.
+
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Fixes: 5255660b208a ("xhci: add quirk for host controllers that don't update endpoint DCS")
 Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230713112830.21773-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/n_gsm.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/host/xhci-pci.c  |    4 +---
+ drivers/usb/host/xhci-ring.c |   25 +------------------------
+ 2 files changed, 2 insertions(+), 27 deletions(-)
 
---- a/drivers/tty/n_gsm.c
-+++ b/drivers/tty/n_gsm.c
-@@ -2508,8 +2508,10 @@ static void gsm_cleanup_mux(struct gsm_m
- 		gsm->has_devices = false;
- 	}
- 	for (i = NUM_DLCI - 1; i >= 0; i--)
--		if (gsm->dlci[i])
-+		if (gsm->dlci[i]) {
- 			gsm_dlci_release(gsm->dlci[i]);
-+			gsm->dlci[i] = NULL;
-+		}
- 	mutex_unlock(&gsm->mutex);
- 	/* Now wipe the queues */
- 	tty_ldisc_flush(gsm->tty);
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -293,10 +293,8 @@ static void xhci_pci_quirks(struct devic
+ 			pdev->device == 0x3432)
+ 		xhci->quirks |= XHCI_BROKEN_STREAMS;
+ 
+-	if (pdev->vendor == PCI_VENDOR_ID_VIA && pdev->device == 0x3483) {
++	if (pdev->vendor == PCI_VENDOR_ID_VIA && pdev->device == 0x3483)
+ 		xhci->quirks |= XHCI_LPM_SUPPORT;
+-		xhci->quirks |= XHCI_EP_CTX_BROKEN_DCS;
+-	}
+ 
+ 	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA &&
+ 		pdev->device == PCI_DEVICE_ID_ASMEDIA_1042_XHCI) {
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -592,11 +592,8 @@ static int xhci_move_dequeue_past_td(str
+ 	struct xhci_ring *ep_ring;
+ 	struct xhci_command *cmd;
+ 	struct xhci_segment *new_seg;
+-	struct xhci_segment *halted_seg = NULL;
+ 	union xhci_trb *new_deq;
+ 	int new_cycle;
+-	union xhci_trb *halted_trb;
+-	int index = 0;
+ 	dma_addr_t addr;
+ 	u64 hw_dequeue;
+ 	bool cycle_found = false;
+@@ -634,27 +631,7 @@ static int xhci_move_dequeue_past_td(str
+ 	hw_dequeue = xhci_get_hw_deq(xhci, dev, ep_index, stream_id);
+ 	new_seg = ep_ring->deq_seg;
+ 	new_deq = ep_ring->dequeue;
+-
+-	/*
+-	 * Quirk: xHC write-back of the DCS field in the hardware dequeue
+-	 * pointer is wrong - use the cycle state of the TRB pointed to by
+-	 * the dequeue pointer.
+-	 */
+-	if (xhci->quirks & XHCI_EP_CTX_BROKEN_DCS &&
+-	    !(ep->ep_state & EP_HAS_STREAMS))
+-		halted_seg = trb_in_td(xhci, td->start_seg,
+-				       td->first_trb, td->last_trb,
+-				       hw_dequeue & ~0xf, false);
+-	if (halted_seg) {
+-		index = ((dma_addr_t)(hw_dequeue & ~0xf) - halted_seg->dma) /
+-			 sizeof(*halted_trb);
+-		halted_trb = &halted_seg->trbs[index];
+-		new_cycle = halted_trb->generic.field[3] & 0x1;
+-		xhci_dbg(xhci, "Endpoint DCS = %d TRB index = %d cycle = %d\n",
+-			 (u8)(hw_dequeue & 0x1), index, new_cycle);
+-	} else {
+-		new_cycle = hw_dequeue & 0x1;
+-	}
++	new_cycle = hw_dequeue & 0x1;
+ 
+ 	/*
+ 	 * We want to find the pointer, segment and cycle state of the new trb
 
 
