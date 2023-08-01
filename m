@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6989B1F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:25:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A38C433C8;
-	Tue,  1 Aug 2023 09:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F84F1F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:25:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2760C433C7;
+	Tue,  1 Aug 2023 09:25:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881928;
-	bh=Xjh2YxxXbOvBnH2ULj7nSvr60t+1ddqErZx/QSd7eaA=;
+	s=korg; t=1690881931;
+	bh=8XYO5Fs3XGCJan3ht12nOXKFKl4/FYRTCY3Bo75DSgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wh8Zlr5V9JrlfcBnqlyovbHXS1RBxo+wIanCnRhr+Isu7YdPD87loh1vWdLiiKM0c
-	 axCgQE+rEZfx+uaSZA8dlYbjJZEzF3nOUsLlGjh2qbDtXuil4wRmvZhM66pTXRE17z
-	 0APWi07OQ25u0Mo5rqwfErQw92Pk325QA00o8rQE=
+	b=WTqO14xAljawvRQrUkY37wcXVFrcOZ6fWUSSRH3QnjLtCvmgjwKvcktWGzpRrhlQB
+	 B1Y3U0VfOqF36uMGrKhWktdmWBOxTY6Q4AV6h+64zkyBorT4V8+G8hlaJRB93COyXA
+	 k8moVfDjAp1pM57U12HETAAr6Evt0J22m+tEf1Tw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Nogueira <victor@mojatatu.com>,
-	Lin Ma <linma@zju.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Adrien Thierry <athierry@redhat.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 078/155] net/sched: mqprio: Add length check for TCA_MQPRIO_{MAX/MIN}_RATE64
-Date: Tue,  1 Aug 2023 11:19:50 +0200
-Message-ID: <20230801091912.935133019@linuxfoundation.org>
+Subject: [PATCH 5.15 051/155] phy: qcom-snps-femto-v2: keep cfg_ahb_clk enabled during runtime suspend
+Date: Tue,  1 Aug 2023 11:19:23 +0200
+Message-ID: <20230801091912.007023584@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -36,61 +35,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Adrien Thierry <athierry@redhat.com>
 
-[ Upstream commit 6c58c8816abb7b93b21fa3b1d0c1726402e5e568 ]
+[ Upstream commit 45d89a344eb46db9dce851c28e14f5e3c635c251 ]
 
-The nla_for_each_nested parsing in function mqprio_parse_nlattr() does
-not check the length of the nested attribute. This can lead to an
-out-of-attribute read and allow a malformed nlattr (e.g., length 0) to
-be viewed as 8 byte integer and passed to priv->max_rate/min_rate.
+In the dwc3 core, both system and runtime suspend end up calling
+dwc3_suspend_common(). From there, what happens for the PHYs depends on
+the USB mode and whether the controller is entering system or runtime
+suspend.
 
-This patch adds the check based on nla_len() when check the nla_type(),
-which ensures that the length of these two attribute must equals
-sizeof(u64).
+HOST mode:
+  (1) system suspend on a non-wakeup-capable controller
 
-Fixes: 4e8b86c06269 ("mqprio: Introduce new hardware offload mode and shaper in mqprio")
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230725024227.426561-1-linma@zju.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  The [1] if branch is taken. dwc3_core_exit() is called, which ends up
+  calling phy_power_off() and phy_exit(). Those two functions decrease the
+  PM runtime count at some point, so they will trigger the PHY runtime
+  sleep (assuming the count is right).
+
+  (2) runtime suspend / system suspend on a wakeup-capable controller
+
+  The [1] branch is not taken. dwc3_suspend_common() calls
+  phy_pm_runtime_put_sync(). Assuming the ref count is right, the PHY
+  runtime suspend op is called.
+
+DEVICE mode:
+  dwc3_core_exit() is called on both runtime and system sleep
+  unless the controller is already runtime suspended.
+
+OTG mode:
+  (1) system suspend : dwc3_core_exit() is called
+
+  (2) runtime suspend : do nothing
+
+In host mode, the code seems to make a distinction between 1) runtime
+sleep / system sleep for wakeup-capable controller, and 2) system sleep
+for non-wakeup-capable controller, where phy_power_off() and phy_exit()
+are only called for the latter. This suggests the PHY is not supposed to
+be in a fully powered-off state for runtime sleep and system sleep for
+wakeup-capable controller.
+
+Moreover, downstream, cfg_ahb_clk only gets disabled for system suspend.
+The clocks are disabled by phy->set_suspend() [2] which is only called
+in the system sleep path through dwc3_core_exit() [3].
+
+With that in mind, don't disable the clocks during the femto PHY runtime
+suspend callback. The clocks will only be disabled during system suspend
+for non-wakeup-capable controllers, through dwc3_core_exit().
+
+[1] https://elixir.bootlin.com/linux/v6.4/source/drivers/usb/dwc3/core.c#L1988
+[2] https://git.codelinaro.org/clo/la/kernel/msm-5.4/-/blob/LV.AU.1.2.1.r2-05300-gen3meta.0/drivers/usb/phy/phy-msm-snps-hs.c#L524
+[3] https://git.codelinaro.org/clo/la/kernel/msm-5.4/-/blob/LV.AU.1.2.1.r2-05300-gen3meta.0/drivers/usb/dwc3/core.c#L1915
+
+Signed-off-by: Adrien Thierry <athierry@redhat.com>
+Link: https://lore.kernel.org/r/20230629144542.14906-2-athierry@redhat.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 8a0eb8f9b9a0 ("phy: qcom-snps-femto-v2: properly enable ref clock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_mqprio.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-diff --git a/net/sched/sch_mqprio.c b/net/sched/sch_mqprio.c
-index 4ec222a5530d1..56d3dc5e95c7c 100644
---- a/net/sched/sch_mqprio.c
-+++ b/net/sched/sch_mqprio.c
-@@ -174,6 +174,13 @@ static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
- 						    "Attribute type expected to be TCA_MQPRIO_MIN_RATE64");
- 				return -EINVAL;
- 			}
-+
-+			if (nla_len(attr) != sizeof(u64)) {
-+				NL_SET_ERR_MSG_ATTR(extack, attr,
-+						    "Attribute TCA_MQPRIO_MIN_RATE64 expected to have 8 bytes length");
-+				return -EINVAL;
-+			}
-+
- 			if (i >= qopt->num_tc)
- 				break;
- 			priv->min_rate[i] = *(u64 *)nla_data(attr);
-@@ -196,6 +203,13 @@ static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
- 						    "Attribute type expected to be TCA_MQPRIO_MAX_RATE64");
- 				return -EINVAL;
- 			}
-+
-+			if (nla_len(attr) != sizeof(u64)) {
-+				NL_SET_ERR_MSG_ATTR(extack, attr,
-+						    "Attribute TCA_MQPRIO_MAX_RATE64 expected to have 8 bytes length");
-+				return -EINVAL;
-+			}
-+
- 			if (i >= qopt->num_tc)
- 				break;
- 			priv->max_rate[i] = *(u64 *)nla_data(attr);
+diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+index 136b45903c798..dfe5f09449100 100644
+--- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
++++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+@@ -122,22 +122,13 @@ static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
+ 					   0, USB2_AUTO_RESUME);
+ 	}
+ 
+-	clk_disable_unprepare(hsphy->cfg_ahb_clk);
+ 	return 0;
+ }
+ 
+ static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
+ {
+-	int ret;
+-
+ 	dev_dbg(&hsphy->phy->dev, "Resume QCOM SNPS PHY, mode\n");
+ 
+-	ret = clk_prepare_enable(hsphy->cfg_ahb_clk);
+-	if (ret) {
+-		dev_err(&hsphy->phy->dev, "failed to enable cfg ahb clock\n");
+-		return ret;
+-	}
+-
+ 	return 0;
+ }
+ 
 -- 
 2.39.2
 
