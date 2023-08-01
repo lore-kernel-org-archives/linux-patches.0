@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2D61FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:44:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE952C433C8;
-	Tue,  1 Aug 2023 09:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E7D1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:44:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B70E6C433C7;
+	Tue,  1 Aug 2023 09:44:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883096;
-	bh=hZiqTLPZXYoX5V1TR41waoId9oi2nQrkl5lKTbqUuQo=;
+	s=korg; t=1690883099;
+	bh=Tw6hD+fiFWKtO5y1N4QWvgp8CyJLAdZvCdTCpTmNrvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=scDBGB3VbHKF1MyvJKT63nxlhFPWfXEHNpILlzKE0C0OZ5OvklnNvq91LoOI3HeaC
-	 fRXOoVCcBHkrRlpx9ZrDdsnOqVPfa0rkZq1TGrZCVLC+6O26cyyVZRtfKJAcVUVDht
-	 e8rbOxOIMoWg3eG+hKuOjU5OTxXfdxnirwXVj7U0=
+	b=GpDnZ/fLjcniHDbf25OSdaGORWu5vAmADlZ3sm16hEoNw0+hg1ILpXJWjtlfzChB+
+	 Z7Bz/bh0Yce6eGtKnq9weguCi4I0X38I7u1DCxoe6wSJQ8zprPAF2hsoxKrUq3ol1J
+	 w10BtYmciNXAtrvAKtKYTbvQDNsBT34r2pHuwwMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 113/239] RDMA/bnxt_re: use shadow qd while posting non blocking rcfw command
-Date: Tue,  1 Aug 2023 11:19:37 +0200
-Message-ID: <20230801091929.810834555@linuxfoundation.org>
+Subject: [PATCH 6.4 114/239] RDMA/bnxt_re: Simplify the function that sends the FW commands
+Date: Tue,  1 Aug 2023 11:19:38 +0200
+Message-ID: <20230801091929.844728441@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -38,137 +38,264 @@ Content-Transfer-Encoding: 8bit
 
 From: Kashyap Desai <kashyap.desai@broadcom.com>
 
-[ Upstream commit 65288a22ddd81422a2a2a10c15df976a5332e41b ]
+[ Upstream commit 159cf95e42a7ca7375646fab82c0056cbb71f9e9 ]
 
-Whenever there is a fast path IO and create/destroy resources from
-the slow path is happening in parallel, we may notice high latency
-of slow path command completion.
-
-Introduces a shadow queue depth to prevent the outstanding requests
-to the FW. Driver will not allow more than #RCFW_CMD_NON_BLOCKING_SHADOW_QD
-non-blocking commands to the Firmware.
-
-Shadow queue depth is a soft limit only for non-blocking
-commands. Blocking commands will be posted to the firmware
-as long as there is a free slot.
+ - Use __send_message_basic_sanity helper function.
+ - Do not retry posting same command if there is a queue full detection.
+ - ENXIO is used to indicate controller recovery.
+ - In the case of ERR_DEVICE_DETACHED state, the driver should not post
+   commands to the firmware, but also return fabricated written code.
 
 Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
 Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://lore.kernel.org/r/1686308514-11996-8-git-send-email-selvin.xavier@broadcom.com
+Link: https://lore.kernel.org/r/1686308514-11996-9-git-send-email-selvin.xavier@broadcom.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Stable-dep-of: 29900bf351e1 ("RDMA/bnxt_re: Fix hang during driver unload")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.c | 60 +++++++++++++++++++++-
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.h |  3 ++
- 2 files changed, 61 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_rcfw.c | 125 +++++++++++----------
+ drivers/infiniband/hw/bnxt_re/qplib_rcfw.h |  22 ++++
+ 2 files changed, 86 insertions(+), 61 deletions(-)
 
 diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-index bfa0f29c7abf4..42484a1149c7c 100644
+index 42484a1149c7c..f867507d427f9 100644
 --- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
 +++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-@@ -281,8 +281,21 @@ static int __send_message(struct bnxt_qplib_rcfw *rcfw,
+@@ -170,34 +170,22 @@ static int __block_for_resp(struct bnxt_qplib_rcfw *rcfw, u16 cookie, u8 opcode)
+ static int __send_message(struct bnxt_qplib_rcfw *rcfw,
+ 			  struct bnxt_qplib_cmdqmsg *msg)
+ {
+-	struct bnxt_qplib_cmdq_ctx *cmdq = &rcfw->cmdq;
+-	struct bnxt_qplib_hwq *hwq = &cmdq->hwq;
++	u32 bsize, opcode, free_slots, required_slots;
++	struct bnxt_qplib_cmdq_ctx *cmdq;
+ 	struct bnxt_qplib_crsqe *crsqe;
+ 	struct bnxt_qplib_cmdqe *cmdqe;
++	struct bnxt_qplib_hwq *hwq;
+ 	u32 sw_prod, cmdq_prod;
+ 	struct pci_dev *pdev;
+ 	unsigned long flags;
+-	u32 bsize, opcode;
+ 	u16 cookie, cbit;
+ 	u8 *preq;
+ 
++	cmdq = &rcfw->cmdq;
++	hwq = &cmdq->hwq;
+ 	pdev = rcfw->pdev;
+ 
+ 	opcode = __get_cmdq_base_opcode(msg->req, msg->req_sz);
+-	if (!test_bit(FIRMWARE_INITIALIZED_FLAG, &cmdq->flags) &&
+-	    (opcode != CMDQ_BASE_OPCODE_QUERY_FUNC &&
+-	     opcode != CMDQ_BASE_OPCODE_INITIALIZE_FW &&
+-	     opcode != CMDQ_BASE_OPCODE_QUERY_VERSION)) {
+-		dev_err(&pdev->dev,
+-			"RCFW not initialized, reject opcode 0x%x\n", opcode);
+-		return -EINVAL;
+-	}
+-
+-	if (test_bit(FIRMWARE_INITIALIZED_FLAG, &cmdq->flags) &&
+-	    opcode == CMDQ_BASE_OPCODE_INITIALIZE_FW) {
+-		dev_err(&pdev->dev, "RCFW already initialized!\n");
+-		return -EINVAL;
+-	}
+ 
+ 	if (test_bit(FIRMWARE_TIMED_OUT, &cmdq->flags))
+ 		return -ETIMEDOUT;
+@@ -206,40 +194,37 @@ static int __send_message(struct bnxt_qplib_rcfw *rcfw,
+ 	 * cmdqe
+ 	 */
+ 	spin_lock_irqsave(&hwq->lock, flags);
+-	if (msg->req->cmd_size >= HWQ_FREE_SLOTS(hwq)) {
+-		dev_err(&pdev->dev, "RCFW: CMDQ is full!\n");
++	required_slots = bnxt_qplib_get_cmd_slots(msg->req);
++	free_slots = HWQ_FREE_SLOTS(hwq);
++	cookie = cmdq->seq_num & RCFW_MAX_COOKIE_VALUE;
++	cbit = cookie % rcfw->cmdq_depth;
++
++	if (required_slots >= free_slots ||
++	    test_bit(cbit, cmdq->cmdq_bitmap)) {
++		dev_info_ratelimited(&pdev->dev,
++				     "CMDQ is full req/free %d/%d!",
++				     required_slots, free_slots);
+ 		spin_unlock_irqrestore(&hwq->lock, flags);
+ 		return -EAGAIN;
+ 	}
+-
+-
+-	cookie = cmdq->seq_num & RCFW_MAX_COOKIE_VALUE;
+-	cbit = cookie % rcfw->cmdq_depth;
+ 	if (msg->block)
+ 		cookie |= RCFW_CMD_IS_BLOCKING;
+-
+ 	set_bit(cbit, cmdq->cmdq_bitmap);
+ 	__set_cmdq_base_cookie(msg->req, msg->req_sz, cpu_to_le16(cookie));
+ 	crsqe = &rcfw->crsqe_tbl[cbit];
+-	if (crsqe->resp) {
+-		spin_unlock_irqrestore(&hwq->lock, flags);
+-		return -EBUSY;
+-	}
+-
+-	/* change the cmd_size to the number of 16byte cmdq unit.
+-	 * req->cmd_size is modified here
+-	 */
+ 	bsize = bnxt_qplib_set_cmd_slots(msg->req);
+-
+-	memset(msg->resp, 0, sizeof(*msg->resp));
++	crsqe->free_slots = free_slots;
+ 	crsqe->resp = (struct creq_qp_event *)msg->resp;
+ 	crsqe->resp->cookie = cpu_to_le16(cookie);
+ 	crsqe->req_size = __get_cmdq_base_cmd_size(msg->req, msg->req_sz);
+ 	if (__get_cmdq_base_resp_size(msg->req, msg->req_sz) && msg->sb) {
+ 		struct bnxt_qplib_rcfw_sbuf *sbuf = msg->sb;
+-		__set_cmdq_base_resp_addr(msg->req, msg->req_sz, cpu_to_le64(sbuf->dma_addr));
++
++		__set_cmdq_base_resp_addr(msg->req, msg->req_sz,
++					  cpu_to_le64(sbuf->dma_addr));
+ 		__set_cmdq_base_resp_size(msg->req, msg->req_sz,
+-					  ALIGN(sbuf->size, BNXT_QPLIB_CMDQE_UNITS));
++					  ALIGN(sbuf->size,
++						BNXT_QPLIB_CMDQE_UNITS));
+ 	}
+ 
+ 	preq = (u8 *)msg->req;
+@@ -247,11 +232,6 @@ static int __send_message(struct bnxt_qplib_rcfw *rcfw,
+ 		/* Locate the next cmdq slot */
+ 		sw_prod = HWQ_CMP(hwq->prod, hwq);
+ 		cmdqe = bnxt_qplib_get_qe(hwq, sw_prod, NULL);
+-		if (!cmdqe) {
+-			dev_err(&pdev->dev,
+-				"RCFW request failed with no cmdqe!\n");
+-			goto done;
+-		}
+ 		/* Copy a segment of the req cmd to the cmdq */
+ 		memset(cmdqe, 0, sizeof(*cmdqe));
+ 		memcpy(cmdqe, preq, min_t(u32, bsize, sizeof(*cmdqe)));
+@@ -275,12 +255,43 @@ static int __send_message(struct bnxt_qplib_rcfw *rcfw,
+ 	wmb();
+ 	writel(cmdq_prod, cmdq->cmdq_mbox.prod);
+ 	writel(RCFW_CMDQ_TRIG_VAL, cmdq->cmdq_mbox.db);
+-done:
+ 	spin_unlock_irqrestore(&hwq->lock, flags);
+ 	/* Return the CREQ response pointer */
  	return 0;
  }
  
--int bnxt_qplib_rcfw_send_message(struct bnxt_qplib_rcfw *rcfw,
--				 struct bnxt_qplib_cmdqmsg *msg)
-+/**
-+ * __bnxt_qplib_rcfw_send_message   -	qplib interface to send
-+ * and complete rcfw command.
-+ * @rcfw      -   rcfw channel instance of rdev
-+ * @msg      -    qplib message internal
-+ *
-+ * This function does not account shadow queue depth. It will send
-+ * all the command unconditionally as long as send queue is not full.
-+ *
-+ * Returns:
-+ * 0 if command completed by firmware.
-+ * Non zero if the command is not completed by firmware.
-+ */
-+static int __bnxt_qplib_rcfw_send_message(struct bnxt_qplib_rcfw *rcfw,
-+					  struct bnxt_qplib_cmdqmsg *msg)
++static int __send_message_basic_sanity(struct bnxt_qplib_rcfw *rcfw,
++				       struct bnxt_qplib_cmdqmsg *msg)
++{
++	struct bnxt_qplib_cmdq_ctx *cmdq;
++	u32 opcode;
++
++	cmdq = &rcfw->cmdq;
++	opcode = __get_cmdq_base_opcode(msg->req, msg->req_sz);
++
++	/* Prevent posting if f/w is not in a state to process */
++	if (test_bit(ERR_DEVICE_DETACHED, &rcfw->cmdq.flags))
++		return -ENXIO;
++
++	if (test_bit(FIRMWARE_INITIALIZED_FLAG, &cmdq->flags) &&
++	    opcode == CMDQ_BASE_OPCODE_INITIALIZE_FW) {
++		dev_err(&rcfw->pdev->dev, "QPLIB: RCFW already initialized!");
++		return -EINVAL;
++	}
++
++	if (!test_bit(FIRMWARE_INITIALIZED_FLAG, &cmdq->flags) &&
++	    (opcode != CMDQ_BASE_OPCODE_QUERY_FUNC &&
++	     opcode != CMDQ_BASE_OPCODE_INITIALIZE_FW &&
++	     opcode != CMDQ_BASE_OPCODE_QUERY_VERSION)) {
++		dev_err(&rcfw->pdev->dev,
++			"QPLIB: RCFW not initialized, reject opcode 0x%x",
++			opcode);
++		return -EOPNOTSUPP;
++	}
++
++	return 0;
++}
++
+ /**
+  * __bnxt_qplib_rcfw_send_message   -	qplib interface to send
+  * and complete rcfw command.
+@@ -299,29 +310,21 @@ static int __bnxt_qplib_rcfw_send_message(struct bnxt_qplib_rcfw *rcfw,
  {
  	struct creq_qp_event *evnt = (struct creq_qp_event *)msg->resp;
  	u16 cookie;
-@@ -331,6 +344,48 @@ int bnxt_qplib_rcfw_send_message(struct bnxt_qplib_rcfw *rcfw,
+-	u8 opcode, retry_cnt = 0xFF;
+ 	int rc = 0;
++	u8 opcode;
  
- 	return rc;
- }
-+
-+/**
-+ * bnxt_qplib_rcfw_send_message   -	qplib interface to send
-+ * and complete rcfw command.
-+ * @rcfw      -   rcfw channel instance of rdev
-+ * @msg      -    qplib message internal
-+ *
-+ * Driver interact with Firmware through rcfw channel/slow path in two ways.
-+ * a. Blocking rcfw command send. In this path, driver cannot hold
-+ * the context for longer period since it is holding cpu until
-+ * command is not completed.
-+ * b. Non-blocking rcfw command send. In this path, driver can hold the
-+ * context for longer period. There may be many pending command waiting
-+ * for completion because of non-blocking nature.
-+ *
-+ * Driver will use shadow queue depth. Current queue depth of 8K
-+ * (due to size of rcfw message there can be actual ~4K rcfw outstanding)
-+ * is not optimal for rcfw command processing in firmware.
-+ *
-+ * Restrict at max #RCFW_CMD_NON_BLOCKING_SHADOW_QD Non-Blocking rcfw commands.
-+ * Allow all blocking commands until there is no queue full.
-+ *
-+ * Returns:
-+ * 0 if command completed by firmware.
-+ * Non zero if the command is not completed by firmware.
-+ */
-+int bnxt_qplib_rcfw_send_message(struct bnxt_qplib_rcfw *rcfw,
-+				 struct bnxt_qplib_cmdqmsg *msg)
-+{
-+	int ret;
-+
-+	if (!msg->block) {
-+		down(&rcfw->rcfw_inflight);
-+		ret = __bnxt_qplib_rcfw_send_message(rcfw, msg);
-+		up(&rcfw->rcfw_inflight);
-+	} else {
-+		ret = __bnxt_qplib_rcfw_send_message(rcfw, msg);
-+	}
-+
-+	return ret;
-+}
-+
- /* Completions */
- static int bnxt_qplib_process_func_event(struct bnxt_qplib_rcfw *rcfw,
- 					 struct creq_func_event *func_event)
-@@ -937,6 +992,7 @@ int bnxt_qplib_enable_rcfw_channel(struct bnxt_qplib_rcfw *rcfw,
- 		return rc;
- 	}
+-	/* Prevent posting if f/w is not in a state to process */
+-	if (test_bit(ERR_DEVICE_DETACHED, &rcfw->cmdq.flags))
+-		return 0;
++	opcode = __get_cmdq_base_opcode(msg->req, msg->req_sz);
  
-+	sema_init(&rcfw->rcfw_inflight, RCFW_CMD_NON_BLOCKING_SHADOW_QD);
- 	bnxt_qplib_start_rcfw(rcfw);
+-	do {
+-		opcode = __get_cmdq_base_opcode(msg->req, msg->req_sz);
+-		rc = __send_message(rcfw, msg);
+-		cookie = le16_to_cpu(__get_cmdq_base_cookie(msg->req, msg->req_sz)) &
+-				RCFW_MAX_COOKIE_VALUE;
+-		if (!rc)
+-			break;
+-		if (!retry_cnt || (rc != -EAGAIN && rc != -EBUSY)) {
+-			/* send failed */
+-			dev_err(&rcfw->pdev->dev, "cmdq[%#x]=%#x send failed\n",
+-				cookie, opcode);
+-			return rc;
+-		}
+-		msg->block ? mdelay(1) : usleep_range(500, 1000);
++	rc = __send_message_basic_sanity(rcfw, msg);
++	if (rc)
++		return rc == -ENXIO ? bnxt_qplib_map_rc(opcode) : rc;
++
++	rc = __send_message(rcfw, msg);
++	if (rc)
++		return rc;
  
- 	return 0;
+-	} while (retry_cnt--);
++	cookie = le16_to_cpu(__get_cmdq_base_cookie(msg->req, msg->req_sz))
++				& RCFW_MAX_COOKIE_VALUE;
+ 
+ 	if (msg->block)
+ 		rc = __block_for_resp(rcfw, cookie, opcode);
 diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
-index 92f7a25533d3b..675c388348827 100644
+index 675c388348827..43dc11febf46a 100644
 --- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
 +++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
-@@ -67,6 +67,8 @@ static inline void bnxt_qplib_rcfw_cmd_prep(struct cmdq_base *req,
- 	req->cmd_size = cmd_size;
+@@ -91,6 +91,26 @@ static inline u32 bnxt_qplib_cmdqe_page_size(u32 depth)
+ 	return (bnxt_qplib_cmdqe_npages(depth) * PAGE_SIZE);
  }
  
-+/* Shadow queue depth for non blocking command */
-+#define RCFW_CMD_NON_BLOCKING_SHADOW_QD	64
- #define RCFW_CMD_WAIT_TIME_MS		20000 /* 20 Seconds timeout */
- 
- /* CMDQ elements */
-@@ -201,6 +203,7 @@ struct bnxt_qplib_rcfw {
- 	u64 oos_prev;
- 	u32 init_oos_stats;
- 	u32 cmdq_depth;
-+	struct semaphore rcfw_inflight;
++/* Get the number of command units required for the req. The
++ * function returns correct value only if called before
++ * setting using bnxt_qplib_set_cmd_slots
++ */
++static inline u32 bnxt_qplib_get_cmd_slots(struct cmdq_base *req)
++{
++	u32 cmd_units = 0;
++
++	if (HAS_TLV_HEADER(req)) {
++		struct roce_tlv *tlv_req = (struct roce_tlv *)req;
++
++		cmd_units = tlv_req->total_size;
++	} else {
++		cmd_units = (req->cmd_size + BNXT_QPLIB_CMDQE_UNITS - 1) /
++			    BNXT_QPLIB_CMDQE_UNITS;
++	}
++
++	return cmd_units;
++}
++
+ static inline u32 bnxt_qplib_set_cmd_slots(struct cmdq_base *req)
+ {
+ 	u32 cmd_byte = 0;
+@@ -134,6 +154,8 @@ typedef int (*aeq_handler_t)(struct bnxt_qplib_rcfw *, void *, void *);
+ struct bnxt_qplib_crsqe {
+ 	struct creq_qp_event	*resp;
+ 	u32			req_size;
++	/* Free slots at the time of submission */
++	u32			free_slots;
  };
  
- struct bnxt_qplib_cmdqmsg {
+ struct bnxt_qplib_rcfw_sbuf {
 -- 
 2.40.1
 
