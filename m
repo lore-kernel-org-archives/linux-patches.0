@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A211F95A
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:22:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377F5C433C7;
-	Tue,  1 Aug 2023 09:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FB01F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:22:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C07DC433C9;
+	Tue,  1 Aug 2023 09:22:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881759;
-	bh=tFSz86ixJOEm7SnK1ea965sMN2zRC1Ny8gbFacfFgww=;
+	s=korg; t=1690881762;
+	bh=Ui4NihlIv0+S1U4E7ZfEE2TQSCpeites75t3ZEOu6Yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ZTXk8NmwzGq+IxdMZy5CLGixyssDISm7JnJx+c7KafVXXvEduv4cn0P1x62jGt0K
-	 LCpinFYQgfPj8OCcu5Mm4iz3yvWpLz6sEejMm+Wj5atT8Xrup8QsJwbaYprNfb3SQw
-	 JIzvzlMYiQvNwwsCWUUX4Mw4e/5v3bqSclB3VNhQ=
+	b=Y12MdBVaJIfNEaXcM/K290y0IwpXS4peXOZ0xZuJMm+dfjdYDkV1rfLcUqQp0LUoA
+	 MHujylywj5qGrVrbDj+FznRfoJwrbAoc7xdxQS8sQdlc8jbAsPjVIdlG42fTW5yiqv
+	 GZMPssh9NT3E0ZAULHZpr3gAHMur6CNmUZ5idBRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Markus Elfring <elfring@users.sourceforge.net>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 007/155] btrfs: fix race between quota disable and relocation
-Date: Tue,  1 Aug 2023 11:18:39 +0200
-Message-ID: <20230801091910.446411523@linuxfoundation.org>
+Subject: [PATCH 5.15 008/155] i2c: Delete error messages for failed memory allocations
+Date: Tue,  1 Aug 2023 11:18:40 +0200
+Message-ID: <20230801091910.488340673@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -35,95 +35,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Markus Elfring <elfring@users.sourceforge.net>
 
-[ Upstream commit 8a4a0b2a3eaf75ca8854f856ef29690c12b2f531 ]
+[ Upstream commit 6b3b21a8542fd2fb6ffc61bc13b9419f0c58ebad ]
 
-If we disable quotas while we have a relocation of a metadata block group
-that has extents belonging to the quota root, we can cause the relocation
-to fail with -ENOENT. This is because relocation builds backref nodes for
-extents of the quota root and later needs to walk the backrefs and access
-the quota root - however if in between a task disables quotas, it results
-in deleting the quota root from the root tree (with btrfs_del_root(),
-called from btrfs_quota_disable().
+These issues were detected by using the Coccinelle software.
 
-This can be sporadically triggered by test case btrfs/255 from fstests:
-
-  $ ./check btrfs/255
-  FSTYP         -- btrfs
-  PLATFORM      -- Linux/x86_64 debian0 6.4.0-rc6-btrfs-next-134+ #1 SMP PREEMPT_DYNAMIC Thu Jun 15 11:59:28 WEST 2023
-  MKFS_OPTIONS  -- /dev/sdc
-  MOUNT_OPTIONS -- /dev/sdc /home/fdmanana/btrfs-tests/scratch_1
-
-  btrfs/255 6s ... _check_dmesg: something found in dmesg (see /home/fdmanana/git/hub/xfstests/results//btrfs/255.dmesg)
-  - output mismatch (see /home/fdmanana/git/hub/xfstests/results//btrfs/255.out.bad)
-#      --- tests/btrfs/255.out	2023-03-02 21:47:53.876609426 +0000
-#      +++ /home/fdmanana/git/hub/xfstests/results//btrfs/255.out.bad	2023-06-16 10:20:39.267563212 +0100
-#      @@ -1,2 +1,4 @@
-#       QA output created by 255
-#      +ERROR: error during balancing '/home/fdmanana/btrfs-tests/scratch_1': No such file or directory
-#      +There may be more info in syslog - try dmesg | tail
-#       Silence is golden
-#      ...
-      (Run 'diff -u /home/fdmanana/git/hub/xfstests/tests/btrfs/255.out /home/fdmanana/git/hub/xfstests/results//btrfs/255.out.bad'  to see the entire diff)
-  Ran: btrfs/255
-  Failures: btrfs/255
-  Failed 1 of 1 tests
-
-To fix this make the quota disable operation take the cleaner mutex, as
-relocation of a block group also takes this mutex. This is also what we
-do when deleting a subvolume/snapshot, we take the cleaner mutex in the
-cleaner kthread (at cleaner_kthread()) and then we call btrfs_del_root()
-at btrfs_drop_snapshot() while under the protection of the cleaner mutex.
-
-Fixes: bed92eae26cc ("Btrfs: qgroup implementation and prototypes")
-CC: stable@vger.kernel.org # 5.4+
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Stable-dep-of: 05f933d5f731 ("i2c: nomadik: Remove a useless call in the remove function")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/qgroup.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/i2c/busses/i2c-ibm_iic.c  | 4 +---
+ drivers/i2c/busses/i2c-nomadik.c  | 1 -
+ drivers/i2c/busses/i2c-sh7760.c   | 1 -
+ drivers/i2c/busses/i2c-tiny-usb.c | 4 +---
+ 4 files changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
-index d408d1dfde7c8..d46a070275ff5 100644
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -1201,12 +1201,23 @@ int btrfs_quota_disable(struct btrfs_fs_info *fs_info)
- 	int ret = 0;
+diff --git a/drivers/i2c/busses/i2c-ibm_iic.c b/drivers/i2c/busses/i2c-ibm_iic.c
+index 9f71daf6db64b..c073f5b8833a2 100644
+--- a/drivers/i2c/busses/i2c-ibm_iic.c
++++ b/drivers/i2c/busses/i2c-ibm_iic.c
+@@ -694,10 +694,8 @@ static int iic_probe(struct platform_device *ofdev)
+ 	int ret;
  
- 	/*
--	 * We need to have subvol_sem write locked, to prevent races between
--	 * concurrent tasks trying to disable quotas, because we will unlock
--	 * and relock qgroup_ioctl_lock across BTRFS_FS_QUOTA_ENABLED changes.
-+	 * We need to have subvol_sem write locked to prevent races with
-+	 * snapshot creation.
- 	 */
- 	lockdep_assert_held_write(&fs_info->subvol_sem);
+ 	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
+-	if (!dev) {
+-		dev_err(&ofdev->dev, "failed to allocate device data\n");
++	if (!dev)
+ 		return -ENOMEM;
+-	}
  
-+	/*
-+	 * Lock the cleaner mutex to prevent races with concurrent relocation,
-+	 * because relocation may be building backrefs for blocks of the quota
-+	 * root while we are deleting the root. This is like dropping fs roots
-+	 * of deleted snapshots/subvolumes, we need the same protection.
-+	 *
-+	 * This also prevents races between concurrent tasks trying to disable
-+	 * quotas, because we will unlock and relock qgroup_ioctl_lock across
-+	 * BTRFS_FS_QUOTA_ENABLED changes.
-+	 */
-+	mutex_lock(&fs_info->cleaner_mutex);
-+
- 	mutex_lock(&fs_info->qgroup_ioctl_lock);
- 	if (!fs_info->quota_root)
- 		goto out;
-@@ -1287,6 +1298,7 @@ int btrfs_quota_disable(struct btrfs_fs_info *fs_info)
- 		btrfs_end_transaction(trans);
- 	else if (trans)
- 		ret = btrfs_end_transaction(trans);
-+	mutex_unlock(&fs_info->cleaner_mutex);
+ 	platform_set_drvdata(ofdev, dev);
  
- 	return ret;
- }
+diff --git a/drivers/i2c/busses/i2c-nomadik.c b/drivers/i2c/busses/i2c-nomadik.c
+index a2d12a5b1c34c..05eaae5aeb180 100644
+--- a/drivers/i2c/busses/i2c-nomadik.c
++++ b/drivers/i2c/busses/i2c-nomadik.c
+@@ -972,7 +972,6 @@ static int nmk_i2c_probe(struct amba_device *adev, const struct amba_id *id)
+ 
+ 	dev = devm_kzalloc(&adev->dev, sizeof(struct nmk_i2c_dev), GFP_KERNEL);
+ 	if (!dev) {
+-		dev_err(&adev->dev, "cannot allocate memory\n");
+ 		ret = -ENOMEM;
+ 		goto err_no_mem;
+ 	}
+diff --git a/drivers/i2c/busses/i2c-sh7760.c b/drivers/i2c/busses/i2c-sh7760.c
+index 319d1fa617c88..a0ccc5d009874 100644
+--- a/drivers/i2c/busses/i2c-sh7760.c
++++ b/drivers/i2c/busses/i2c-sh7760.c
+@@ -445,7 +445,6 @@ static int sh7760_i2c_probe(struct platform_device *pdev)
+ 
+ 	id = kzalloc(sizeof(struct cami2c), GFP_KERNEL);
+ 	if (!id) {
+-		dev_err(&pdev->dev, "no mem for private data\n");
+ 		ret = -ENOMEM;
+ 		goto out0;
+ 	}
+diff --git a/drivers/i2c/busses/i2c-tiny-usb.c b/drivers/i2c/busses/i2c-tiny-usb.c
+index 7279ca0eaa2d0..d1fa9ff5aeab4 100644
+--- a/drivers/i2c/busses/i2c-tiny-usb.c
++++ b/drivers/i2c/busses/i2c-tiny-usb.c
+@@ -226,10 +226,8 @@ static int i2c_tiny_usb_probe(struct usb_interface *interface,
+ 
+ 	/* allocate memory for our device state and initialize it */
+ 	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
+-	if (dev == NULL) {
+-		dev_err(&interface->dev, "Out of memory\n");
++	if (!dev)
+ 		goto error;
+-	}
+ 
+ 	dev->usb_dev = usb_get_dev(interface_to_usbdev(interface));
+ 	dev->interface = interface;
 -- 
 2.39.2
 
