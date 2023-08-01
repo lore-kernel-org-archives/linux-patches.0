@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010931FB2B
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:35:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7561CC433C8;
-	Tue,  1 Aug 2023 09:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9BB1FB2B
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:35:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 439CFC433C9;
+	Tue,  1 Aug 2023 09:35:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882538;
-	bh=AYkv6W6HnroIuvJYfo6XuT/dRUdCdjWdMMLKbEVVLbk=;
+	s=korg; t=1690882541;
+	bh=6+6Xg7DpzUeH8KhdYxZHiaof8dcWcbQ5IlZTwNrBHqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ELPhGtHPd4kOnDk+fYj8IbqdysqqBojCB+jJg+Y7PzkY4rH1nq+fMAa5b07eaVQYl
-	 89Gf3veesFikeQ1kYVcau9XHuPfK8PJAXtZUaMnX3AfTMXiGKzeZfmjR78r/tNyROI
-	 1bRV9ycDngZ+GvP5MJZOPts72PZMner67fgfMDKo=
+	b=ScuSa21/Joa6qlFoqf4sdlshiKdpSwmNBo8LAxfZ0TsF6vMD1g8j9RGVMdm9idzUZ
+	 uUOu1RM1dL9Pya0yXzgYJOn9fgP/YkIawDVkLpNm5GPULfpsmSgrnH3l12aMTfGfx5
+	 8FCd5XxVAtkOK2JgKUWwzVhzZz2c1Vp88UttRSh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Paolo Abeni <pabeni@redhat.com>,
+	German Maglione <gmaglione@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 114/228] tipc: stop tipc crypto on failure in tipc_node_create
-Date: Tue,  1 Aug 2023 11:19:32 +0200
-Message-ID: <20230801091926.898831349@linuxfoundation.org>
+Subject: [PATCH 6.1 141/228] ublk: fail to start device if queue setup is interrupted
+Date: Tue,  1 Aug 2023 11:19:59 +0200
+Message-ID: <20230801091927.963042348@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,46 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit de52e17326c3e9a719c9ead4adb03467b8fae0ef ]
+[ Upstream commit 53e7d08f6d6e214c40db1f51291bb2975c789dc2 ]
 
-If tipc_link_bc_create() fails inside tipc_node_create() for a newly
-allocated tipc node then we should stop its tipc crypto and free the
-resources allocated with a call to tipc_crypto_start().
+In ublk_ctrl_start_dev(), if wait_for_completion_interruptible() is
+interrupted by signal, queues aren't setup successfully yet, so we
+have to fail UBLK_CMD_START_DEV, otherwise kernel oops can be triggered.
 
-As the node ref is initialized to one to that point, just put the ref on
-tipc_link_bc_create() error case that would lead to tipc_node_free() be
-eventually executed and properly clean the node and its crypto resources.
+Reported by German when working on qemu-storage-deamon which requires
+single thread ublk daemon.
 
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: cb8092d70a6f ("tipc: move bc link creation back to tipc_node_create")
-Suggested-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/20230725214628.25246-1-pchelkin@ispras.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
+Reported-by: German Maglione <gmaglione@redhat.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20230726144502.566785-2-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/node.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/ublk_drv.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/tipc/node.c b/net/tipc/node.c
-index 5e000fde80676..a9c5b6594889b 100644
---- a/net/tipc/node.c
-+++ b/net/tipc/node.c
-@@ -583,7 +583,7 @@ struct tipc_node *tipc_node_create(struct net *net, u32 addr, u8 *peer_id,
- 				 n->capabilities, &n->bc_entry.inputq1,
- 				 &n->bc_entry.namedq, snd_l, &n->bc_entry.link)) {
- 		pr_warn("Broadcast rcv link creation failed, no memory\n");
--		kfree(n);
-+		tipc_node_put(n);
- 		n = NULL;
- 		goto exit;
- 	}
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index 3ae22e7eb0b09..495e1bf9003b6 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -1539,7 +1539,8 @@ static int ublk_ctrl_start_dev(struct ublk_device *ub, struct io_uring_cmd *cmd)
+ 	if (ublksrv_pid <= 0)
+ 		return -EINVAL;
+ 
+-	wait_for_completion_interruptible(&ub->completion);
++	if (wait_for_completion_interruptible(&ub->completion) != 0)
++		return -EINTR;
+ 
+ 	schedule_delayed_work(&ub->monitor_work, UBLK_DAEMON_MONITOR_PERIOD);
+ 
 -- 
-2.39.2
+2.40.1
 
 
 
