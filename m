@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E354B1FB24
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:31:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E95C433C7;
-	Tue,  1 Aug 2023 09:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A6C1FB24
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:31:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B05C433C7;
+	Tue,  1 Aug 2023 09:31:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882284;
-	bh=mdpyvY6EAWFvMTznOX9R64TzTvnevr5Ow6QqsgaoGRM=;
+	s=korg; t=1690882287;
+	bh=GYRMifDyhnXB1Cz/4bFT/SPKGdSY5r0YuvITARtiFZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EirCz+nQEZD0gqiUvypeRLdOZOeD+CbRiyOBArBwMZqI/iluKm+scFaeL5NHo2SYX
-	 XCQK0rEoZNmiJThXaCquBH1bvrdQKoPSb9GYnrplR7XxPVL52Y1MCQq3EDSpvFm1HQ
-	 iTHmbURkaaZVcw0yG5mBaMWiFVIbwHiDJaOwYMEE=
+	b=PI2/VsRNv41b+DB5xz34lQvv47NGjY2jq2y2wcnb4JeVe7TgGemwFyY/9h+44kTvB
+	 ZyLfXj3XlH6ofvt2XwZHhEVy9RMBM2+BY0iyFdl0al/CAnHz5ulQUrQ1VkrfA5MP3U
+	 rBBgVxFodoaRwOGZ1lsJjl2Q+yRdHkASDdh9rUl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Shyti <andi.shyti@kernel.org>,
 	Linus Walleij <linus.walleij@linaro.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/228] i2c: nomadik: Use devm_clk_get_enabled()
-Date: Tue,  1 Aug 2023 11:18:01 +0200
-Message-ID: <20230801091923.698329654@linuxfoundation.org>
+Subject: [PATCH 6.1 024/228] i2c: nomadik: Remove a useless call in the remove function
+Date: Tue,  1 Aug 2023 11:18:02 +0200
+Message-ID: <20230801091923.744156364@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,74 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andi Shyti <andi.shyti@kernel.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 9c7174db4cdd111e10d19eed5c36fd978a14c8a2 ]
+[ Upstream commit 05f933d5f7318b03ff2028c1704dc867ac16f2c7 ]
 
-Replace the pair of functions, devm_clk_get() and
-clk_prepare_enable(), with a single function
-devm_clk_get_enabled().
+Since commit 235602146ec9 ("i2c-nomadik: turn the platform driver to an amba
+driver"), there is no more request_mem_region() call in this driver.
 
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+So remove the release_mem_region() call from the remove function which is
+likely a left over.
+
+Fixes: 235602146ec9 ("i2c-nomadik: turn the platform driver to an amba driver")
+Cc: <stable@vger.kernel.org> # v3.6+
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Stable-dep-of: 05f933d5f731 ("i2c: nomadik: Remove a useless call in the remove function")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-nomadik.c | 18 +++---------------
- 1 file changed, 3 insertions(+), 15 deletions(-)
+ drivers/i2c/busses/i2c-nomadik.c | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/drivers/i2c/busses/i2c-nomadik.c b/drivers/i2c/busses/i2c-nomadik.c
-index 8b9577318388e..2141ba05dfece 100644
+index 2141ba05dfece..9c5d66bd6dc1c 100644
 --- a/drivers/i2c/busses/i2c-nomadik.c
 +++ b/drivers/i2c/busses/i2c-nomadik.c
-@@ -1005,18 +1005,12 @@ static int nmk_i2c_probe(struct amba_device *adev, const struct amba_id *id)
- 		return ret;
- 	}
- 
--	dev->clk = devm_clk_get(&adev->dev, NULL);
-+	dev->clk = devm_clk_get_enabled(&adev->dev, NULL);
- 	if (IS_ERR(dev->clk)) {
--		dev_err(&adev->dev, "could not get i2c clock\n");
-+		dev_err(&adev->dev, "could enable i2c clock\n");
- 		return PTR_ERR(dev->clk);
- 	}
- 
--	ret = clk_prepare_enable(dev->clk);
--	if (ret) {
--		dev_err(&adev->dev, "can't prepare_enable clock\n");
--		return ret;
--	}
--
- 	init_hw(dev);
- 
- 	adap = &dev->adap;
-@@ -1037,16 +1031,11 @@ static int nmk_i2c_probe(struct amba_device *adev, const struct amba_id *id)
- 
- 	ret = i2c_add_adapter(adap);
- 	if (ret)
--		goto err_no_adap;
-+		return ret;
- 
- 	pm_runtime_put(&adev->dev);
- 
- 	return 0;
--
-- err_no_adap:
--	clk_disable_unprepare(dev->clk);
--
--	return ret;
- }
+@@ -1040,7 +1040,6 @@ static int nmk_i2c_probe(struct amba_device *adev, const struct amba_id *id)
  
  static void nmk_i2c_remove(struct amba_device *adev)
-@@ -1060,7 +1049,6 @@ static void nmk_i2c_remove(struct amba_device *adev)
+ {
+-	struct resource *res = &adev->res;
+ 	struct nmk_i2c_dev *dev = amba_get_drvdata(adev);
+ 
+ 	i2c_del_adapter(&dev->adap);
+@@ -1049,7 +1048,6 @@ static void nmk_i2c_remove(struct amba_device *adev)
  	clear_all_interrupts(dev);
  	/* disable the controller */
  	i2c_clr_bit(dev->virtbase + I2C_CR, I2C_CR_PE);
--	clk_disable_unprepare(dev->clk);
- 	release_mem_region(res->start, resource_size(res));
+-	release_mem_region(res->start, resource_size(res));
  }
  
+ static struct i2c_vendor_data vendor_stn8815 = {
 -- 
 2.39.2
 
