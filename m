@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844511F957
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08FF5C433C7;
-	Tue,  1 Aug 2023 09:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F2E1F957
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF160C433C7;
+	Tue,  1 Aug 2023 09:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882630;
-	bh=/MRTaWhEZFeKmFXq9RoCd5IgLsD1oPButfjvBYLrfBI=;
+	s=korg; t=1690882633;
+	bh=RhIRMisYeWKO7rE968tMf/1PaqzuGf0pNCd/FUD5u1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BfXD8M4Svuk+zM+05ZFrngKilQat/cIh2qp84Ostyis1PDQoXoFBa1N+zDPPiabpf
-	 toi0inPcKU1iofX3wXDubqQbHG3y+wJ/J4C5q9rIlZMBWylzdNy2TmAxQDVL7X9+KZ
-	 Mtw0y3L9cTakB0BCwevcFnERuBrDN+IKbGDRNcKc=
+	b=HjNMAG0ajpQl40XMAgVD+EF2tgfkqyQwZUy5DuYbnDoi3CX4dC5l2kJHXPXyzv3XA
+	 e+bZrkHdGiRmdfdaJeCB62xN8h/Gw0tSr/jpbEc2+keGoZ+4IvMmv/F9elkYYUwaAa
+	 YKr2SPDoX+gZRqooSXznrdOmnUwQNzryeVFAJPOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.1 146/228] Revert "usb: gadget: tegra-xudc: Fix error check in tegra_xudc_powerdomain_init()"
-Date: Tue,  1 Aug 2023 11:20:04 +0200
-Message-ID: <20230801091928.174848851@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ravi Gunasekaran <r-gunasekaran@ti.com>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 6.1 147/228] usb: gadget: call usb_gadget_check_config() to verify UDC capability
+Date: Tue,  1 Aug 2023 11:20:05 +0200
+Message-ID: <20230801091928.214073750@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -34,54 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit a8291be6b5dd465c22af229483dbac543a91e24e upstream.
+commit f4fc01af5b640bc39bd9403b5fd855345a2ad5f8 upstream.
 
-This reverts commit f08aa7c80dac27ee00fa6827f447597d2fba5465.
+The legacy gadget driver omitted calling usb_gadget_check_config()
+to ensure that the USB device controller (UDC) has adequate resources,
+including sufficient endpoint numbers and types, to support the given
+configuration.
 
-The reverted commit was based on static analysis and a misunderstanding
-of how PTR_ERR() and NULLs are supposed to work.  When a function
-returns both pointer errors and NULL then normally the NULL means
-"continue operating without a feature because it was deliberately
-turned off".  The NULL should not be treated as a failure.  If a driver
-cannot work when that feature is disabled then the KConfig should
-enforce that the function cannot return NULL.  We should not need to
-test for it.
+Previously, usb_add_config() was solely invoked by the legacy gadget
+driver. Adds the necessary usb_gadget_check_config() after the bind()
+operation to fix the issue.
 
-In this driver, the bug means that probe cannot succeed when CONFIG_PM
-is disabled.
-
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: f08aa7c80dac ("usb: gadget: tegra-xudc: Fix error check in tegra_xudc_powerdomain_init()")
+Fixes: dce49449e04f ("usb: cdns3: allocate TX FIFO size according to composite EP number")
 Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/ZKQoBa84U/ykEh3C@moroto
+Reported-by: Ravi Gunasekaran <r-gunasekaran@ti.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20230707230015.494999-1-Frank.Li@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/tegra-xudc.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/composite.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/gadget/udc/tegra-xudc.c
-+++ b/drivers/usb/gadget/udc/tegra-xudc.c
-@@ -3695,15 +3695,15 @@ static int tegra_xudc_powerdomain_init(s
- 	int err;
+--- a/drivers/usb/gadget/composite.c
++++ b/drivers/usb/gadget/composite.c
+@@ -1029,6 +1029,10 @@ int usb_add_config(struct usb_composite_
+ 		goto done;
  
- 	xudc->genpd_dev_device = dev_pm_domain_attach_by_name(dev, "dev");
--	if (IS_ERR_OR_NULL(xudc->genpd_dev_device)) {
--		err = PTR_ERR(xudc->genpd_dev_device) ? : -ENODATA;
-+	if (IS_ERR(xudc->genpd_dev_device)) {
-+		err = PTR_ERR(xudc->genpd_dev_device);
- 		dev_err(dev, "failed to get device power domain: %d\n", err);
- 		return err;
- 	}
- 
- 	xudc->genpd_dev_ss = dev_pm_domain_attach_by_name(dev, "ss");
--	if (IS_ERR_OR_NULL(xudc->genpd_dev_ss)) {
--		err = PTR_ERR(xudc->genpd_dev_ss) ? : -ENODATA;
-+	if (IS_ERR(xudc->genpd_dev_ss)) {
-+		err = PTR_ERR(xudc->genpd_dev_ss);
- 		dev_err(dev, "failed to get SuperSpeed power domain: %d\n", err);
- 		return err;
- 	}
+ 	status = bind(config);
++
++	if (status == 0)
++		status = usb_gadget_check_config(cdev->gadget);
++
+ 	if (status < 0) {
+ 		while (!list_empty(&config->functions)) {
+ 			struct usb_function		*f;
 
 
