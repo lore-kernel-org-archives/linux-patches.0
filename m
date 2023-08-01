@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106F61F95A
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850DFC433C8;
-	Tue,  1 Aug 2023 09:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF041F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42976C433C7;
+	Tue,  1 Aug 2023 09:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881801;
-	bh=44vPPhfvLwQ98QV6vfLSM/l7DgQxAJx8cjsvOde434s=;
+	s=korg; t=1690881804;
+	bh=e8Sn9gEc3MkU5ZIixcQYdGwkIffoH7At60y/dXMOxhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nKVWilvJddupAAtAZO7x435OxNRXF26W9MegLF6A9sjSD3Qn54eIGmXCXYYlR3TWJ
-	 9zb/q1vVM+ZllJNTQGFT6//7X0rNN/ZVzq9S+rE4icw4Ut6pv21DWnQr1sE/fbypXC
-	 dfh6QjIoQYe7CyNyIxdETuw/fmWQHDm8IEzGttfM=
+	b=ZtlXrFfetVcthsNfRGBUNZS/WrXwnxDcJa4cXR6GRs0ITGku9VfHX3o3Dw6cs4q+F
+	 RCC7wLfmzfyJ3r5hnuhly/vZE1jOh+OofFM8qVEZT5V2UB01CO4k5CmYd4kABryanc
+	 9fg7/wzh6JJpYP0/YG//oqXLJvWkelm2QpquNc2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Tom Zanussi <zanussi@kernel.org>,
+	Ross Zwisler <zwisler@google.com>,
+	Ching-lin Yu <chinglinyu@google.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 017/155] PCI: rockchip: Fix window mapping and address translation for endpoint
-Date: Tue,  1 Aug 2023 11:18:49 +0200
-Message-ID: <20230801091910.816565756@linuxfoundation.org>
+Subject: [PATCH 5.15 035/155] tracing: Allow synthetic events to pass around stacktraces
+Date: Tue,  1 Aug 2023 11:19:07 +0200
+Message-ID: <20230801091911.439756974@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -36,337 +39,280 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit dc73ed0f1b8bddd7f2bf70d123e68ffc99ad71ce ]
+[ Upstream commit 00cf3d672a9dd409418647e9f98784c339c3ff63 ]
 
-The RK3399 PCI endpoint core has 33 windows for PCIe space, now in the
-driver up to 32 fixed size (1M) windows are used and pages are allocated
-and mapped accordingly. The driver first used a single window and allocated
-space inside which caused translation issues (between CPU space and PCI
-space) because a window can only have a single translation at a given
-time, which if multiple pages are allocated inside will cause conflicts.
-Now each window is a single region of 1M which will always guarantee that
-the translation is not in conflict.
+Allow a stacktrace from one event to be displayed by the end event of a
+synthetic event. This is very useful when looking for the longest latency
+of a sleep or something blocked on I/O.
 
-Set the translation register addresses for physical function. As documented
-in the technical reference manual (TRM) section 17.5.5 "PCIe Address
-Translation" and section 17.6.8 "Address Translation Registers Description"
+ # cd /sys/kernel/tracing/
+ # echo 's:block_lat pid_t pid; u64 delta; unsigned long[] stack;' > dynamic_events
+ # echo 'hist:keys=next_pid:ts=common_timestamp.usecs,st=stacktrace  if prev_state == 1||prev_state == 2' > events/sched/sched_switch/trigger
+ # echo 'hist:keys=prev_pid:delta=common_timestamp.usecs-$ts,s=$st:onmax($delta).trace(block_lat,prev_pid,$delta,$s)' >> events/sched/sched_switch/trigger
 
-Link: https://lore.kernel.org/r/20230418074700.1083505-9-rick.wertenbroek@gmail.com
-Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
-Tested-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Cc: stable@vger.kernel.org
+The above creates a "block_lat" synthetic event that take the stacktrace of
+when a task schedules out in either the interruptible or uninterruptible
+states, and on a new per process max $delta (the time it was scheduled
+out), will print the process id and the stacktrace.
+
+  # echo 1 > events/synthetic/block_lat/enable
+  # cat trace
+ #           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
+ #              | |         |   |||||     |         |
+    kworker/u16:0-767     [006] d..4.   560.645045: block_lat: pid=767 delta=66 stack=STACK:
+ => __schedule
+ => schedule
+ => pipe_read
+ => vfs_read
+ => ksys_read
+ => do_syscall_64
+ => 0x966000aa
+
+           <idle>-0       [003] d..4.   561.132117: block_lat: pid=0 delta=413787 stack=STACK:
+ => __schedule
+ => schedule
+ => schedule_hrtimeout_range_clock
+ => do_sys_poll
+ => __x64_sys_poll
+ => do_syscall_64
+ => 0x966000aa
+
+            <...>-153     [006] d..4.   562.068407: block_lat: pid=153 delta=54 stack=STACK:
+ => __schedule
+ => schedule
+ => io_schedule
+ => rq_qos_wait
+ => wbt_wait
+ => __rq_qos_throttle
+ => blk_mq_submit_bio
+ => submit_bio_noacct_nocheck
+ => ext4_bio_write_page
+ => mpage_submit_page
+ => mpage_process_page_bufs
+ => mpage_prepare_extent_to_map
+ => ext4_do_writepages
+ => ext4_writepages
+ => do_writepages
+ => __writeback_single_inode
+
+Link: https://lkml.kernel.org/r/20230117152236.010941267@goodmis.org
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Tom Zanussi <zanussi@kernel.org>
+Cc: Ross Zwisler <zwisler@google.com>
+Cc: Ching-lin Yu <chinglinyu@google.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: 797311bce5c2 ("tracing/probes: Fix to record 0-length data_loc in fetch_store_string*() if fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rockchip-ep.c | 128 ++++++++++------------
- drivers/pci/controller/pcie-rockchip.h    |  35 +++---
- 2 files changed, 75 insertions(+), 88 deletions(-)
+ kernel/trace/trace.h              |  4 ++
+ kernel/trace/trace_events_hist.c  |  7 ++-
+ kernel/trace/trace_events_synth.c | 80 ++++++++++++++++++++++++++++++-
+ kernel/trace/trace_synth.h        |  1 +
+ 4 files changed, 87 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-rockchip-ep.c b/drivers/pci/controller/pcie-rockchip-ep.c
-index 9e17f3dba743a..3d6f828d29fc2 100644
---- a/drivers/pci/controller/pcie-rockchip-ep.c
-+++ b/drivers/pci/controller/pcie-rockchip-ep.c
-@@ -64,52 +64,29 @@ static void rockchip_pcie_clear_ep_ob_atu(struct rockchip_pcie *rockchip,
- }
+diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
+index 2c3d9b6ce1485..33c55c8826a7e 100644
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -113,6 +113,10 @@ enum trace_type {
+ #define MEM_FAIL(condition, fmt, ...)					\
+ 	DO_ONCE_LITE_IF(condition, pr_err, "ERROR: " fmt, ##__VA_ARGS__)
  
- static void rockchip_pcie_prog_ep_ob_atu(struct rockchip_pcie *rockchip, u8 fn,
--					 u32 r, u32 type, u64 cpu_addr,
--					 u64 pci_addr, size_t size)
-+					 u32 r, u64 cpu_addr, u64 pci_addr,
-+					 size_t size)
- {
--	u64 sz = 1ULL << fls64(size - 1);
--	int num_pass_bits = ilog2(sz);
--	u32 addr0, addr1, desc0, desc1;
--	bool is_nor_msg = (type == AXI_WRAPPER_NOR_MSG);
-+	int num_pass_bits = fls64(size - 1);
-+	u32 addr0, addr1, desc0;
- 
--	/* The minimal region size is 1MB */
- 	if (num_pass_bits < 8)
- 		num_pass_bits = 8;
- 
--	cpu_addr -= rockchip->mem_res->start;
--	addr0 = ((is_nor_msg ? 0x10 : (num_pass_bits - 1)) &
--		PCIE_CORE_OB_REGION_ADDR0_NUM_BITS) |
--		(lower_32_bits(cpu_addr) & PCIE_CORE_OB_REGION_ADDR0_LO_ADDR);
--	addr1 = upper_32_bits(is_nor_msg ? cpu_addr : pci_addr);
--	desc0 = ROCKCHIP_PCIE_AT_OB_REGION_DESC0_DEVFN(fn) | type;
--	desc1 = 0;
--
--	if (is_nor_msg) {
--		rockchip_pcie_write(rockchip, 0,
--				    ROCKCHIP_PCIE_AT_OB_REGION_PCI_ADDR0(r));
--		rockchip_pcie_write(rockchip, 0,
--				    ROCKCHIP_PCIE_AT_OB_REGION_PCI_ADDR1(r));
--		rockchip_pcie_write(rockchip, desc0,
--				    ROCKCHIP_PCIE_AT_OB_REGION_DESC0(r));
--		rockchip_pcie_write(rockchip, desc1,
--				    ROCKCHIP_PCIE_AT_OB_REGION_DESC1(r));
--	} else {
--		/* PCI bus address region */
--		rockchip_pcie_write(rockchip, addr0,
--				    ROCKCHIP_PCIE_AT_OB_REGION_PCI_ADDR0(r));
--		rockchip_pcie_write(rockchip, addr1,
--				    ROCKCHIP_PCIE_AT_OB_REGION_PCI_ADDR1(r));
--		rockchip_pcie_write(rockchip, desc0,
--				    ROCKCHIP_PCIE_AT_OB_REGION_DESC0(r));
--		rockchip_pcie_write(rockchip, desc1,
--				    ROCKCHIP_PCIE_AT_OB_REGION_DESC1(r));
--
--		addr0 =
--		    ((num_pass_bits - 1) & PCIE_CORE_OB_REGION_ADDR0_NUM_BITS) |
--		    (lower_32_bits(cpu_addr) &
--		     PCIE_CORE_OB_REGION_ADDR0_LO_ADDR);
--		addr1 = upper_32_bits(cpu_addr);
--	}
-+	addr0 = ((num_pass_bits - 1) & PCIE_CORE_OB_REGION_ADDR0_NUM_BITS) |
-+		(lower_32_bits(pci_addr) & PCIE_CORE_OB_REGION_ADDR0_LO_ADDR);
-+	addr1 = upper_32_bits(pci_addr);
-+	desc0 = ROCKCHIP_PCIE_AT_OB_REGION_DESC0_DEVFN(fn) | AXI_WRAPPER_MEM_WRITE;
++#define HIST_STACKTRACE_DEPTH	16
++#define HIST_STACKTRACE_SIZE	(HIST_STACKTRACE_DEPTH * sizeof(unsigned long))
++#define HIST_STACKTRACE_SKIP	5
 +
-+	/* PCI bus address region */
-+	rockchip_pcie_write(rockchip, addr0,
-+			    ROCKCHIP_PCIE_AT_OB_REGION_PCI_ADDR0(r));
-+	rockchip_pcie_write(rockchip, addr1,
-+			    ROCKCHIP_PCIE_AT_OB_REGION_PCI_ADDR1(r));
-+	rockchip_pcie_write(rockchip, desc0,
-+			    ROCKCHIP_PCIE_AT_OB_REGION_DESC0(r));
-+	rockchip_pcie_write(rockchip, 0,
-+			    ROCKCHIP_PCIE_AT_OB_REGION_DESC1(r));
+ /*
+  * syscalls are special, and need special handling, this is why
+  * they are not included in trace_entries.h
+diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
+index 1b70fc4c703f7..c32a53f089229 100644
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -315,10 +315,6 @@ DEFINE_HIST_FIELD_FN(u8);
+ #define for_each_hist_key_field(i, hist_data)	\
+ 	for ((i) = (hist_data)->n_vals; (i) < (hist_data)->n_fields; (i)++)
+ 
+-#define HIST_STACKTRACE_DEPTH	16
+-#define HIST_STACKTRACE_SIZE	(HIST_STACKTRACE_DEPTH * sizeof(unsigned long))
+-#define HIST_STACKTRACE_SKIP	5
+-
+ #define HITCOUNT_IDX		0
+ #define HIST_KEY_SIZE_MAX	(MAX_FILTER_STR_VAL + HIST_STACKTRACE_SIZE)
+ 
+@@ -3431,6 +3427,9 @@ static int check_synth_field(struct synth_event *event,
+ 	    && field->is_dynamic)
+ 		return 0;
+ 
++	if (strstr(hist_field->type, "long[") && field->is_stack)
++		return 0;
++
+ 	if (strcmp(field->type, hist_field->type) != 0) {
+ 		if (field->size != hist_field->size ||
+ 		    (!field->is_string && field->is_signed != hist_field->is_signed))
+diff --git a/kernel/trace/trace_events_synth.c b/kernel/trace/trace_events_synth.c
+index 08c7df42ade7e..ce8fad956b38d 100644
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -165,6 +165,14 @@ static int synth_field_is_string(char *type)
+ 	return false;
  }
  
- static int rockchip_pcie_ep_write_header(struct pci_epc *epc, u8 fn, u8 vfn,
-@@ -248,26 +225,20 @@ static void rockchip_pcie_ep_clear_bar(struct pci_epc *epc, u8 fn, u8 vfn,
- 			    ROCKCHIP_PCIE_AT_IB_EP_FUNC_BAR_ADDR1(fn, bar));
- }
- 
-+static inline u32 rockchip_ob_region(phys_addr_t addr)
++static int synth_field_is_stack(char *type)
 +{
-+	return (addr >> ilog2(SZ_1M)) & 0x1f;
++	if (strstr(type, "long[") != NULL)
++		return true;
++
++	return false;
 +}
 +
- static int rockchip_pcie_ep_map_addr(struct pci_epc *epc, u8 fn, u8 vfn,
- 				     phys_addr_t addr, u64 pci_addr,
- 				     size_t size)
+ static int synth_field_string_size(char *type)
  {
- 	struct rockchip_pcie_ep *ep = epc_get_drvdata(epc);
- 	struct rockchip_pcie *pcie = &ep->rockchip;
--	u32 r;
-+	u32 r = rockchip_ob_region(addr);
+ 	char buf[4], *end, *start;
+@@ -240,6 +248,8 @@ static int synth_field_size(char *type)
+ 		size = sizeof(gfp_t);
+ 	else if (synth_field_is_string(type))
+ 		size = synth_field_string_size(type);
++	else if (synth_field_is_stack(type))
++		size = 0;
  
--	r = find_first_zero_bit(&ep->ob_region_map, BITS_PER_LONG);
--	/*
--	 * Region 0 is reserved for configuration space and shouldn't
--	 * be used elsewhere per TRM, so leave it out.
--	 */
--	if (r >= ep->max_regions - 1) {
--		dev_err(&epc->dev, "no free outbound region\n");
--		return -EINVAL;
--	}
--
--	rockchip_pcie_prog_ep_ob_atu(pcie, fn, r, AXI_WRAPPER_MEM_WRITE, addr,
--				     pci_addr, size);
-+	rockchip_pcie_prog_ep_ob_atu(pcie, fn, r, addr, pci_addr, size);
+ 	return size;
+ }
+@@ -284,6 +294,8 @@ static const char *synth_field_fmt(char *type)
+ 		fmt = "%x";
+ 	else if (synth_field_is_string(type))
+ 		fmt = "%.*s";
++	else if (synth_field_is_stack(type))
++		fmt = "%s";
  
- 	set_bit(r, &ep->ob_region_map);
- 	ep->ob_addr[r] = addr;
-@@ -282,15 +253,11 @@ static void rockchip_pcie_ep_unmap_addr(struct pci_epc *epc, u8 fn, u8 vfn,
- 	struct rockchip_pcie *rockchip = &ep->rockchip;
- 	u32 r;
- 
--	for (r = 0; r < ep->max_regions - 1; r++)
-+	for (r = 0; r < ep->max_regions; r++)
- 		if (ep->ob_addr[r] == addr)
- 			break;
- 
--	/*
--	 * Region 0 is reserved for configuration space and shouldn't
--	 * be used elsewhere per TRM, so leave it out.
--	 */
--	if (r == ep->max_regions - 1)
-+	if (r == ep->max_regions)
- 		return;
- 
- 	rockchip_pcie_clear_ep_ob_atu(rockchip, r);
-@@ -387,7 +354,8 @@ static int rockchip_pcie_ep_send_msi_irq(struct rockchip_pcie_ep *ep, u8 fn,
- 	struct rockchip_pcie *rockchip = &ep->rockchip;
- 	u32 flags, mme, data, data_mask;
- 	u8 msi_count;
--	u64 pci_addr, pci_addr_mask = 0xff;
-+	u64 pci_addr;
-+	u32 r;
- 
- 	/* Check MSI enable bit */
- 	flags = rockchip_pcie_read(&ep->rockchip,
-@@ -421,21 +389,20 @@ static int rockchip_pcie_ep_send_msi_irq(struct rockchip_pcie_ep *ep, u8 fn,
- 				       ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
- 				       ROCKCHIP_PCIE_EP_MSI_CTRL_REG +
- 				       PCI_MSI_ADDRESS_LO);
--	pci_addr &= GENMASK_ULL(63, 2);
- 
- 	/* Set the outbound region if needed. */
--	if (unlikely(ep->irq_pci_addr != (pci_addr & ~pci_addr_mask) ||
-+	if (unlikely(ep->irq_pci_addr != (pci_addr & PCIE_ADDR_MASK) ||
- 		     ep->irq_pci_fn != fn)) {
--		rockchip_pcie_prog_ep_ob_atu(rockchip, fn, ep->max_regions - 1,
--					     AXI_WRAPPER_MEM_WRITE,
-+		r = rockchip_ob_region(ep->irq_phys_addr);
-+		rockchip_pcie_prog_ep_ob_atu(rockchip, fn, r,
- 					     ep->irq_phys_addr,
--					     pci_addr & ~pci_addr_mask,
--					     pci_addr_mask + 1);
--		ep->irq_pci_addr = (pci_addr & ~pci_addr_mask);
-+					     pci_addr & PCIE_ADDR_MASK,
-+					     ~PCIE_ADDR_MASK + 1);
-+		ep->irq_pci_addr = (pci_addr & PCIE_ADDR_MASK);
- 		ep->irq_pci_fn = fn;
- 	}
- 
--	writew(data, ep->irq_cpu_addr + (pci_addr & pci_addr_mask));
-+	writew(data, ep->irq_cpu_addr + (pci_addr & ~PCIE_ADDR_MASK));
- 	return 0;
+ 	return fmt;
+ }
+@@ -363,6 +375,23 @@ static enum print_line_t print_synth_event(struct trace_iterator *iter,
+ 						 i == se->n_fields - 1 ? "" : " ");
+ 				n_u64 += STR_VAR_LEN_MAX / sizeof(u64);
+ 			}
++		} else if (se->fields[i]->is_stack) {
++			u32 offset, data_offset, len;
++			unsigned long *p, *end;
++
++			offset = (u32)entry->fields[n_u64];
++			data_offset = offset & 0xffff;
++			len = offset >> 16;
++
++			p = (void *)entry + data_offset;
++			end = (void *)p + len - (sizeof(long) - 1);
++
++			trace_seq_printf(s, "%s=STACK:\n", se->fields[i]->name);
++
++			for (; *p && p < end; p++)
++				trace_seq_printf(s, "=> %pS\n", (void *)*p);
++			n_u64++;
++
+ 		} else {
+ 			struct trace_print_flags __flags[] = {
+ 			    __def_gfpflag_names, {-1, NULL} };
+@@ -439,6 +468,43 @@ static unsigned int trace_string(struct synth_trace_event *entry,
+ 	return len;
  }
  
-@@ -517,6 +484,8 @@ static int rockchip_pcie_parse_ep_dt(struct rockchip_pcie *rockchip,
- 	if (err < 0 || ep->max_regions > MAX_REGION_LIMIT)
- 		ep->max_regions = MAX_REGION_LIMIT;
- 
-+	ep->ob_region_map = 0;
++static unsigned int trace_stack(struct synth_trace_event *entry,
++				 struct synth_event *event,
++				 long *stack,
++				 unsigned int data_size,
++				 unsigned int *n_u64)
++{
++	unsigned int len;
++	u32 data_offset;
++	void *data_loc;
 +
- 	err = of_property_read_u8(dev->of_node, "max-functions",
- 				  &ep->epc->max_functions);
- 	if (err < 0)
-@@ -537,7 +506,8 @@ static int rockchip_pcie_ep_probe(struct platform_device *pdev)
- 	struct rockchip_pcie *rockchip;
- 	struct pci_epc *epc;
- 	size_t max_regions;
--	int err;
-+	struct pci_epc_mem_window *windows = NULL;
-+	int err, i;
- 
- 	ep = devm_kzalloc(dev, sizeof(*ep), GFP_KERNEL);
- 	if (!ep)
-@@ -584,15 +554,27 @@ static int rockchip_pcie_ep_probe(struct platform_device *pdev)
- 	/* Only enable function 0 by default */
- 	rockchip_pcie_write(rockchip, BIT(0), PCIE_CORE_PHY_FUNC_CFG);
- 
--	err = pci_epc_mem_init(epc, rockchip->mem_res->start,
--			       resource_size(rockchip->mem_res), PAGE_SIZE);
-+	windows = devm_kcalloc(dev, ep->max_regions,
-+			       sizeof(struct pci_epc_mem_window), GFP_KERNEL);
-+	if (!windows) {
-+		err = -ENOMEM;
-+		goto err_uninit_port;
-+	}
-+	for (i = 0; i < ep->max_regions; i++) {
-+		windows[i].phys_base = rockchip->mem_res->start + (SZ_1M * i);
-+		windows[i].size = SZ_1M;
-+		windows[i].page_size = SZ_1M;
-+	}
-+	err = pci_epc_multi_mem_init(epc, windows, ep->max_regions);
-+	devm_kfree(dev, windows);
++	data_offset = struct_size(entry, fields, event->n_u64);
++	data_offset += data_size;
 +
- 	if (err < 0) {
- 		dev_err(dev, "failed to initialize the memory space\n");
- 		goto err_uninit_port;
- 	}
++	for (len = 0; len < HIST_STACKTRACE_DEPTH; len++) {
++		if (!stack[len])
++			break;
++	}
++
++	/* Include the zero'd element if it fits */
++	if (len < HIST_STACKTRACE_DEPTH)
++		len++;
++
++	len *= sizeof(long);
++
++	/* Find the dynamic section to copy the stack into. */
++	data_loc = (void *)entry + data_offset;
++	memcpy(data_loc, stack, len);
++
++	/* Fill in the field that holds the offset/len combo */
++	data_offset |= len << 16;
++	*(u32 *)&entry->fields[*n_u64] = data_offset;
++
++	(*n_u64)++;
++
++	return len;
++}
++
+ static notrace void trace_event_raw_event_synth(void *__data,
+ 						u64 *var_ref_vals,
+ 						unsigned int *var_ref_idx)
+@@ -491,6 +557,12 @@ static notrace void trace_event_raw_event_synth(void *__data,
+ 					   event->fields[i]->is_dynamic,
+ 					   data_size, &n_u64);
+ 			data_size += len; /* only dynamic string increments */
++		} if (event->fields[i]->is_stack) {
++		        long *stack = (long *)(long)var_ref_vals[val_idx];
++
++			len = trace_stack(entry, event, stack,
++					   data_size, &n_u64);
++			data_size += len;
+ 		} else {
+ 			struct synth_field *field = event->fields[i];
+ 			u64 val = var_ref_vals[val_idx];
+@@ -553,6 +625,9 @@ static int __set_synth_event_print_fmt(struct synth_event *event,
+ 		    event->fields[i]->is_dynamic)
+ 			pos += snprintf(buf + pos, LEN_OR_ZERO,
+ 				", __get_str(%s)", event->fields[i]->name);
++		else if (event->fields[i]->is_stack)
++			pos += snprintf(buf + pos, LEN_OR_ZERO,
++				", __get_stacktrace(%s)", event->fields[i]->name);
+ 		else
+ 			pos += snprintf(buf + pos, LEN_OR_ZERO,
+ 					", REC->%s", event->fields[i]->name);
+@@ -689,7 +764,8 @@ static struct synth_field *parse_synth_field(int argc, char **argv,
+ 		ret = -EINVAL;
+ 		goto free;
+ 	} else if (size == 0) {
+-		if (synth_field_is_string(field->type)) {
++		if (synth_field_is_string(field->type) ||
++		    synth_field_is_stack(field->type)) {
+ 			char *type;
  
- 	ep->irq_cpu_addr = pci_epc_mem_alloc_addr(epc, &ep->irq_phys_addr,
--						  SZ_128K);
-+						  SZ_1M);
- 	if (!ep->irq_cpu_addr) {
- 		dev_err(dev, "failed to reserve memory space for MSI\n");
- 		err = -ENOMEM;
-diff --git a/drivers/pci/controller/pcie-rockchip.h b/drivers/pci/controller/pcie-rockchip.h
-index cbd2fd25ba761..498a40251d0be 100644
---- a/drivers/pci/controller/pcie-rockchip.h
-+++ b/drivers/pci/controller/pcie-rockchip.h
-@@ -139,6 +139,7 @@
+ 			len = sizeof("__data_loc ") + strlen(field->type) + 1;
+@@ -720,6 +796,8 @@ static struct synth_field *parse_synth_field(int argc, char **argv,
  
- #define PCIE_RC_RP_ATS_BASE		0x400000
- #define PCIE_RC_CONFIG_NORMAL_BASE	0x800000
-+#define PCIE_EP_PF_CONFIG_REGS_BASE	0x800000
- #define PCIE_RC_CONFIG_BASE		0xa00000
- #define PCIE_EP_CONFIG_BASE		0xa00000
- #define PCIE_EP_CONFIG_DID_VID		(PCIE_EP_CONFIG_BASE + 0x00)
-@@ -158,10 +159,11 @@
- #define PCIE_RC_CONFIG_THP_CAP		(PCIE_RC_CONFIG_BASE + 0x274)
- #define   PCIE_RC_CONFIG_THP_CAP_NEXT_MASK	GENMASK(31, 20)
+ 	if (synth_field_is_string(field->type))
+ 		field->is_string = true;
++	else if (synth_field_is_stack(field->type))
++		field->is_stack = true;
  
-+#define PCIE_ADDR_MASK			0xffffff00
- #define PCIE_CORE_AXI_CONF_BASE		0xc00000
- #define PCIE_CORE_OB_REGION_ADDR0	(PCIE_CORE_AXI_CONF_BASE + 0x0)
- #define   PCIE_CORE_OB_REGION_ADDR0_NUM_BITS	0x3f
--#define   PCIE_CORE_OB_REGION_ADDR0_LO_ADDR	0xffffff00
-+#define   PCIE_CORE_OB_REGION_ADDR0_LO_ADDR	PCIE_ADDR_MASK
- #define PCIE_CORE_OB_REGION_ADDR1	(PCIE_CORE_AXI_CONF_BASE + 0x4)
- #define PCIE_CORE_OB_REGION_DESC0	(PCIE_CORE_AXI_CONF_BASE + 0x8)
- #define PCIE_CORE_OB_REGION_DESC1	(PCIE_CORE_AXI_CONF_BASE + 0xc)
-@@ -169,7 +171,7 @@
- #define PCIE_CORE_AXI_INBOUND_BASE	0xc00800
- #define PCIE_RP_IB_ADDR0		(PCIE_CORE_AXI_INBOUND_BASE + 0x0)
- #define   PCIE_CORE_IB_REGION_ADDR0_NUM_BITS	0x3f
--#define   PCIE_CORE_IB_REGION_ADDR0_LO_ADDR	0xffffff00
-+#define   PCIE_CORE_IB_REGION_ADDR0_LO_ADDR	PCIE_ADDR_MASK
- #define PCIE_RP_IB_ADDR1		(PCIE_CORE_AXI_INBOUND_BASE + 0x4)
+ 	field->is_signed = synth_field_signed(field->type);
+  out:
+diff --git a/kernel/trace/trace_synth.h b/kernel/trace/trace_synth.h
+index b29595fe3ac5a..43f6fb6078dbf 100644
+--- a/kernel/trace/trace_synth.h
++++ b/kernel/trace/trace_synth.h
+@@ -18,6 +18,7 @@ struct synth_field {
+ 	bool is_signed;
+ 	bool is_string;
+ 	bool is_dynamic;
++	bool is_stack;
+ };
  
- /* Size of one AXI Region (not Region 0) */
-@@ -234,13 +236,15 @@
- #define   ROCKCHIP_PCIE_EP_MSI_CTRL_ME				BIT(16)
- #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MASK_MSI_CAP	BIT(24)
- #define ROCKCHIP_PCIE_EP_DUMMY_IRQ_ADDR				0x1
--#define ROCKCHIP_PCIE_EP_FUNC_BASE(fn)	(((fn) << 12) & GENMASK(19, 12))
-+#define ROCKCHIP_PCIE_EP_PCI_LEGACY_IRQ_ADDR		0x3
-+#define ROCKCHIP_PCIE_EP_FUNC_BASE(fn) \
-+	(PCIE_EP_PF_CONFIG_REGS_BASE + (((fn) << 12) & GENMASK(19, 12)))
-+#define ROCKCHIP_PCIE_EP_VIRT_FUNC_BASE(fn) \
-+	(PCIE_EP_PF_CONFIG_REGS_BASE + 0x10000 + (((fn) << 12) & GENMASK(19, 12)))
- #define ROCKCHIP_PCIE_AT_IB_EP_FUNC_BAR_ADDR0(fn, bar) \
--	(PCIE_RC_RP_ATS_BASE + 0x0840 + (fn) * 0x0040 + (bar) * 0x0008)
-+	(PCIE_CORE_AXI_CONF_BASE + 0x0828 + (fn) * 0x0040 + (bar) * 0x0008)
- #define ROCKCHIP_PCIE_AT_IB_EP_FUNC_BAR_ADDR1(fn, bar) \
--	(PCIE_RC_RP_ATS_BASE + 0x0844 + (fn) * 0x0040 + (bar) * 0x0008)
--#define ROCKCHIP_PCIE_AT_OB_REGION_PCI_ADDR0(r) \
--	(PCIE_RC_RP_ATS_BASE + 0x0000 + ((r) & 0x1f) * 0x0020)
-+	(PCIE_CORE_AXI_CONF_BASE + 0x082c + (fn) * 0x0040 + (bar) * 0x0008)
- #define ROCKCHIP_PCIE_AT_OB_REGION_PCI_ADDR0_DEVFN_MASK	GENMASK(19, 12)
- #define ROCKCHIP_PCIE_AT_OB_REGION_PCI_ADDR0_DEVFN(devfn) \
- 	(((devfn) << 12) & \
-@@ -248,20 +252,21 @@
- #define ROCKCHIP_PCIE_AT_OB_REGION_PCI_ADDR0_BUS_MASK	GENMASK(27, 20)
- #define ROCKCHIP_PCIE_AT_OB_REGION_PCI_ADDR0_BUS(bus) \
- 		(((bus) << 20) & ROCKCHIP_PCIE_AT_OB_REGION_PCI_ADDR0_BUS_MASK)
-+#define PCIE_RC_EP_ATR_OB_REGIONS_1_32 (PCIE_CORE_AXI_CONF_BASE + 0x0020)
-+#define ROCKCHIP_PCIE_AT_OB_REGION_PCI_ADDR0(r) \
-+		(PCIE_RC_EP_ATR_OB_REGIONS_1_32 + 0x0000 + ((r) & 0x1f) * 0x0020)
- #define ROCKCHIP_PCIE_AT_OB_REGION_PCI_ADDR1(r) \
--		(PCIE_RC_RP_ATS_BASE + 0x0004 + ((r) & 0x1f) * 0x0020)
-+		(PCIE_RC_EP_ATR_OB_REGIONS_1_32 + 0x0004 + ((r) & 0x1f) * 0x0020)
- #define ROCKCHIP_PCIE_AT_OB_REGION_DESC0_HARDCODED_RID	BIT(23)
- #define ROCKCHIP_PCIE_AT_OB_REGION_DESC0_DEVFN_MASK	GENMASK(31, 24)
- #define ROCKCHIP_PCIE_AT_OB_REGION_DESC0_DEVFN(devfn) \
- 		(((devfn) << 24) & ROCKCHIP_PCIE_AT_OB_REGION_DESC0_DEVFN_MASK)
- #define ROCKCHIP_PCIE_AT_OB_REGION_DESC0(r) \
--		(PCIE_RC_RP_ATS_BASE + 0x0008 + ((r) & 0x1f) * 0x0020)
--#define ROCKCHIP_PCIE_AT_OB_REGION_DESC1(r)	\
--		(PCIE_RC_RP_ATS_BASE + 0x000c + ((r) & 0x1f) * 0x0020)
--#define ROCKCHIP_PCIE_AT_OB_REGION_CPU_ADDR0(r) \
--		(PCIE_RC_RP_ATS_BASE + 0x0018 + ((r) & 0x1f) * 0x0020)
--#define ROCKCHIP_PCIE_AT_OB_REGION_CPU_ADDR1(r) \
--		(PCIE_RC_RP_ATS_BASE + 0x001c + ((r) & 0x1f) * 0x0020)
-+		(PCIE_RC_EP_ATR_OB_REGIONS_1_32 + 0x0008 + ((r) & 0x1f) * 0x0020)
-+#define ROCKCHIP_PCIE_AT_OB_REGION_DESC1(r) \
-+		(PCIE_RC_EP_ATR_OB_REGIONS_1_32 + 0x000c + ((r) & 0x1f) * 0x0020)
-+#define ROCKCHIP_PCIE_AT_OB_REGION_DESC2(r) \
-+		(PCIE_RC_EP_ATR_OB_REGIONS_1_32 + 0x0010 + ((r) & 0x1f) * 0x0020)
- 
- #define ROCKCHIP_PCIE_CORE_EP_FUNC_BAR_CFG0(fn) \
- 		(PCIE_CORE_CTRL_MGMT_BASE + 0x0240 + (fn) * 0x0008)
+ struct synth_event {
 -- 
 2.39.2
 
