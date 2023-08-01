@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0037E1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:44:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7FFC433C7;
-	Tue,  1 Aug 2023 09:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32D91FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:44:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50320C433C7;
+	Tue,  1 Aug 2023 09:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883065;
-	bh=H2poTrPZzfwau/81M7CFMAeFmbKZ+ib77jUqK2qh7EQ=;
+	s=korg; t=1690883068;
+	bh=7e6mV0+RY5C+ienizJVk2zUseDVvNJ79g6hbRdxEU7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1RzGihk4/H+Vhj4ITt+78l/MysifHEDEBOy4/MqTe462TqZbajqG5ijKJP8xjxI7q
-	 EpG6PVNQVtA9TAot2Tgv28PSLTLjojU79ujUOwBf7v9OqiOOB7gyN6e+7YVJQYsrdZ
-	 Vop3fyfEF4IEHvxmFjZKEzjJd4c/FO6Itl51IwBU=
+	b=197OzosGyyTsjKGek6/Z5XDtbTiM80Nph5w/4/Awc7y4F7iq+AwwILRSkzj6ktrIB
+	 UHGDzBR5ckS64FMfjV9OJf3O6ydpPt4Yef99q3+2UMevl1QJPU7I+Pze1Kgc6Ldy+d
+	 aW6201rjiNDTmT7TzCUaB7G4cQqN/Cr+fHYfmjnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Rob Clark <robdclark@chromium.org>,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 103/239] drm/msm/dsi: Drop unused regulators from QCM2290 14nm DSI PHY config
-Date: Tue,  1 Aug 2023 11:19:27 +0200
-Message-ID: <20230801091929.425356250@linuxfoundation.org>
+Subject: [PATCH 6.4 104/239] drm/msm/adreno: Fix snapshot BINDLESS_DATA size
+Date: Tue,  1 Aug 2023 11:19:28 +0200
+Message-ID: <20230801091929.465080379@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -37,40 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 97368254a08e2ca4766e7f84a45840230fe77fa3 ]
+[ Upstream commit bd846ceee9c478d0397428f02696602ba5eb264a ]
 
-The regulator setup was likely copied from other SoCs by mistake.  Just
-like SM6125 the DSI PHY on this platform is not getting power from a
-regulator but from the MX power domain.
+The incorrect size was causing "CP | AHB bus error" when snapshotting
+the GPU state on a6xx gen4 (a660 family).
 
-Fixes: 572e9fd6d14a ("drm/msm/dsi: Add phy configuration for QCM2290")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/544536/
-Link: https://lore.kernel.org/r/20230627-sm6125-dpu-v2-1-03e430a2078c@somainline.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/26
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Fixes: 1707add81551 ("drm/msm/a6xx: Add a6xx gpu state")
+Patchwork: https://patchwork.freedesktop.org/patch/546763/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-index 3ce45b023e637..31deda1c664ad 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-@@ -1087,8 +1087,6 @@ const struct msm_dsi_phy_cfg dsi_phy_14nm_8953_cfgs = {
- 
- const struct msm_dsi_phy_cfg dsi_phy_14nm_2290_cfgs = {
- 	.has_phy_lane = true,
--	.regulator_data = dsi_phy_14nm_17mA_regulators,
--	.num_regulators = ARRAY_SIZE(dsi_phy_14nm_17mA_regulators),
- 	.ops = {
- 		.enable = dsi_14nm_phy_enable,
- 		.disable = dsi_14nm_phy_disable,
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
+index 790f55e245332..e788ed72eb0d3 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
+@@ -206,7 +206,7 @@ static const struct a6xx_shader_block {
+ 	SHADER(A6XX_SP_LB_3_DATA, 0x800),
+ 	SHADER(A6XX_SP_LB_4_DATA, 0x800),
+ 	SHADER(A6XX_SP_LB_5_DATA, 0x200),
+-	SHADER(A6XX_SP_CB_BINDLESS_DATA, 0x2000),
++	SHADER(A6XX_SP_CB_BINDLESS_DATA, 0x800),
+ 	SHADER(A6XX_SP_CB_LEGACY_DATA, 0x280),
+ 	SHADER(A6XX_SP_UAV_DATA, 0x80),
+ 	SHADER(A6XX_SP_INST_TAG, 0x80),
 -- 
 2.40.1
 
