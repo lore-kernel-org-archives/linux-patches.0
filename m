@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B251FB2B
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:33:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5575C433C9;
-	Tue,  1 Aug 2023 09:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFB31FB2B
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:33:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B58A9C433C7;
+	Tue,  1 Aug 2023 09:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882388;
-	bh=4hagUchIK6IgqB/H0UMPIh8EqW5NAsEHAHl5TVb7uko=;
+	s=korg; t=1690882391;
+	bh=LQxBeP3jiXLti73sf7JueMSehpo0kMd32jrw08jXhxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TXzDHF+UQFEK6FIcP4OUQU51eE79zF3hJGxRoxRHH6tLBsa9ntzOsMh2DbFp2ZDSq
-	 /8JqU5ciVs6lmn8zRYSB/Zm3gqCL9HXDo81uGG0oej+2vDfjJ7zgUNex0jaS8xcX/i
-	 qKH2dK0/pRi8Uaqz4Yc0A98L1AHpneeBx0Aj4dsY=
+	b=H816bgaqKX9vzbLe7MZQjAsKO3gRF9PrsZDlhai4lv9X4uZbzt7soyYkzzO6jaSLx
+	 p5JpFHlOUW8Xy5cDxxSDxconS/t9eXHw0dPFAewfrrptfQ7hEYoti57X6IO83g/asQ
+	 rv31zC+GfdijecXN4BsCdaufW7czivl8pw1c5VL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Grodzovsky <andrey.grodzovsky@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Huang Rui <ray.huang@amd.com>,
-	dri-devel@lists.freedesktop.org,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
+	Wang Ming <machel@vivo.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	Nirmoy Das <nirmoy.das@intel.com>
-Subject: [PATCH 6.1 049/228] drm/ttm: Dont leak a resource on eviction error
-Date: Tue,  1 Aug 2023 11:18:27 +0200
-Message-ID: <20230801091924.676118500@linuxfoundation.org>
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.1 081/228] i40e: Fix an NULL vs IS_ERR() bug for debugfs_create_dir()
+Date: Tue,  1 Aug 2023 11:18:59 +0200
+Message-ID: <20230801091925.767330872@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -40,67 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+From: Wang Ming <machel@vivo.com>
 
-[ Upstream commit e8188c461ee015ba0b9ab2fc82dbd5ebca5a5532 ]
+[ Upstream commit 043b1f185fb0f3939b7427f634787706f45411c4 ]
 
-On eviction errors other than -EMULTIHOP we were leaking a resource.
-Fix.
+The debugfs_create_dir() function returns error pointers.
+It never returns NULL. Most incorrect error checks were fixed,
+but the one in i40e_dbg_init() was forgotten.
 
-v2:
-- Avoid yet another goto (Andi Shyti)
+Fix the remaining error check.
 
-Fixes: 403797925768 ("drm/ttm: Fix multihop assert on eviction.")
-Cc: Andrey Grodzovsky <andrey.grodzovsky@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Christian Koenig <christian.koenig@amd.com>
-Cc: Huang Rui <ray.huang@amd.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v5.15+
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Nirmoy Das <nirmoy.das@intel.com> #v1
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230626091450.14757-4-thomas.hellstrom@linux.intel.com
+Fixes: 02e9c290814c ("i40e: debugfs interface")
+Signed-off-by: Wang Ming <machel@vivo.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ttm/ttm_bo.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/ttm/ttm_bo.c b/drivers/gpu/drm/ttm/ttm_bo.c
-index 85f7f5cd4589a..1c891b5839316 100644
---- a/drivers/gpu/drm/ttm/ttm_bo.c
-+++ b/drivers/gpu/drm/ttm/ttm_bo.c
-@@ -499,18 +499,18 @@ static int ttm_bo_evict(struct ttm_buffer_object *bo,
- 		goto out;
- 	}
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_debugfs.c b/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
+index 9954493cd4489..62497f5565c59 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
+@@ -1839,7 +1839,7 @@ void i40e_dbg_pf_exit(struct i40e_pf *pf)
+ void i40e_dbg_init(void)
+ {
+ 	i40e_dbg_root = debugfs_create_dir(i40e_driver_name, NULL);
+-	if (!i40e_dbg_root)
++	if (IS_ERR(i40e_dbg_root))
+ 		pr_info("init of debugfs failed\n");
+ }
  
--bounce:
--	ret = ttm_bo_handle_move_mem(bo, evict_mem, true, ctx, &hop);
--	if (ret == -EMULTIHOP) {
-+	do {
-+		ret = ttm_bo_handle_move_mem(bo, evict_mem, true, ctx, &hop);
-+		if (ret != -EMULTIHOP)
-+			break;
-+
- 		ret = ttm_bo_bounce_temp_buffer(bo, &evict_mem, ctx, &hop);
--		if (ret) {
--			if (ret != -ERESTARTSYS && ret != -EINTR)
--				pr_err("Buffer eviction failed\n");
--			ttm_resource_free(bo, &evict_mem);
--			goto out;
--		}
--		/* try and move to final place now. */
--		goto bounce;
-+	} while (!ret);
-+
-+	if (ret) {
-+		ttm_resource_free(bo, &evict_mem);
-+		if (ret != -ERESTARTSYS && ret != -EINTR)
-+			pr_err("Buffer eviction failed\n");
- 	}
- out:
- 	return ret;
 -- 
 2.39.2
 
