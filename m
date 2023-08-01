@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71710200A7
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:51:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87BAC433C7;
-	Tue,  1 Aug 2023 09:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293DE200A7
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:51:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2EF7C433C8;
+	Tue,  1 Aug 2023 09:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883463;
-	bh=uJxlDFOPK3w/8qVVhFZBlAYqHTuYbFOEP4+eMFD0+0c=;
+	s=korg; t=1690883466;
+	bh=uP1BCu97EO7i66fjrnBIZ2nuAZEzIeOO3qwgIbMS1Hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MVOIwOsKGI9mHL1oZmj9yQN18coVs6Di/qlTzwgAJG/98LJ12o4zLMJmRmYHyrnVg
-	 YHgYhiqG9o9raUgH+cqGOKxVkogjr2PJmFsafuOiW2kPXnfcPvIeQmA3hCK/fJcABM
-	 qHXMagsSSIpKJ+sYC/P5SEg6Fmb4sC68nEGj426o=
+	b=nYhBzsUFrAn6LBdUUGcluo7kLOW2fKA21QDu+TmcM6K1M/sYpf9wpzpY973BMe8iK
+	 PfWsL2+sJHP0AaOyEVLoyxyb1IvQa3lHbe3AFPgj9AHl4OwD2bSBS0+EQPEKMuR+3a
+	 ZKRfyR40Beii41JtTPH9TYa518+v2WxgTQS0jzlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.4 225/239] arm64/sme: Set new vector length before reallocating
-Date: Tue,  1 Aug 2023 11:21:29 +0200
-Message-ID: <20230801091934.058482096@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Tony Lindgren <tony@atomide.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.4 226/239] PM: sleep: wakeirq: fix wake irq arming
+Date: Tue,  1 Aug 2023 11:21:30 +0200
+Message-ID: <20230801091934.099065352@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -34,54 +35,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 05d881b85b48c7ac6a7c92ce00aa916c4a84d052 upstream.
+commit 8527beb12087238d4387607597b4020bc393c4b4 upstream.
 
-As part of fixing the allocation of the buffer for SVE state when changing
-SME vector length we introduced an immediate reallocation of the SVE state,
-this is also done when changing the SVE vector length for consistency.
-Unfortunately this reallocation is done prior to writing the new vector
-length to the task struct, meaning the allocation is done with the old
-vector length and can lead to memory corruption due to an undersized buffer
-being used.
+The decision whether to enable a wake irq during suspend can not be done
+based on the runtime PM state directly as a driver may use wake irqs
+without implementing runtime PM. Such drivers specifically leave the
+state set to the default 'suspended' and the wake irq is thus never
+enabled at suspend.
 
-Move the update of the vector length before the allocation to ensure that
-the new vector length is taken into account.
+Add a new wake irq flag to track whether a dedicated wake irq has been
+enabled at runtime suspend and therefore must not be enabled at system
+suspend.
 
-For some reason this isn't triggering any problems when running tests on
-the arm64 fixes branch (even after repeated tries) but is triggering
-issues very often after merge into mainline.
+Note that pm_runtime_enabled() can not be used as runtime PM is always
+disabled during late suspend.
 
-Fixes: d4d5be94a878 ("arm64/fpsimd: Ensure SME storage is allocated after SVE VL changes")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230726-arm64-fix-sme-fix-v1-1-7752ec58af27@kernel.org
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 69728051f5bf ("PM / wakeirq: Fix unbalanced IRQ enable for wakeirq")
+Cc: 4.16+ <stable@vger.kernel.org> # 4.16+
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Tested-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/fpsimd.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/base/power/power.h   |    1 +
+ drivers/base/power/wakeirq.c |   12 ++++++++----
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
---- a/arch/arm64/kernel/fpsimd.c
-+++ b/arch/arm64/kernel/fpsimd.c
-@@ -917,6 +917,8 @@ int vec_set_vector_length(struct task_st
- 	if (task == current)
- 		put_cpu_fpsimd_context();
+--- a/drivers/base/power/power.h
++++ b/drivers/base/power/power.h
+@@ -29,6 +29,7 @@ extern u64 pm_runtime_active_time(struct
+ #define WAKE_IRQ_DEDICATED_MASK		(WAKE_IRQ_DEDICATED_ALLOCATED | \
+ 					 WAKE_IRQ_DEDICATED_MANAGED | \
+ 					 WAKE_IRQ_DEDICATED_REVERSE)
++#define WAKE_IRQ_DEDICATED_ENABLED	BIT(3)
  
-+	task_set_vl(task, type, vl);
-+
- 	/*
- 	 * Free the changed states if they are not in use, SME will be
- 	 * reallocated to the correct size on next use and we just
-@@ -931,8 +933,6 @@ int vec_set_vector_length(struct task_st
- 	if (free_sme)
- 		sme_free(task);
+ struct wake_irq {
+ 	struct device *dev;
+--- a/drivers/base/power/wakeirq.c
++++ b/drivers/base/power/wakeirq.c
+@@ -314,8 +314,10 @@ void dev_pm_enable_wake_irq_check(struct
+ 	return;
  
--	task_set_vl(task, type, vl);
--
- out:
- 	update_tsk_thread_flag(task, vec_vl_inherit_flag(type),
- 			       flags & PR_SVE_VL_INHERIT);
+ enable:
+-	if (!can_change_status || !(wirq->status & WAKE_IRQ_DEDICATED_REVERSE))
++	if (!can_change_status || !(wirq->status & WAKE_IRQ_DEDICATED_REVERSE)) {
+ 		enable_irq(wirq->irq);
++		wirq->status |= WAKE_IRQ_DEDICATED_ENABLED;
++	}
+ }
+ 
+ /**
+@@ -336,8 +338,10 @@ void dev_pm_disable_wake_irq_check(struc
+ 	if (cond_disable && (wirq->status & WAKE_IRQ_DEDICATED_REVERSE))
+ 		return;
+ 
+-	if (wirq->status & WAKE_IRQ_DEDICATED_MANAGED)
++	if (wirq->status & WAKE_IRQ_DEDICATED_MANAGED) {
++		wirq->status &= ~WAKE_IRQ_DEDICATED_ENABLED;
+ 		disable_irq_nosync(wirq->irq);
++	}
+ }
+ 
+ /**
+@@ -376,7 +380,7 @@ void dev_pm_arm_wake_irq(struct wake_irq
+ 
+ 	if (device_may_wakeup(wirq->dev)) {
+ 		if (wirq->status & WAKE_IRQ_DEDICATED_ALLOCATED &&
+-		    !pm_runtime_status_suspended(wirq->dev))
++		    !(wirq->status & WAKE_IRQ_DEDICATED_ENABLED))
+ 			enable_irq(wirq->irq);
+ 
+ 		enable_irq_wake(wirq->irq);
+@@ -399,7 +403,7 @@ void dev_pm_disarm_wake_irq(struct wake_
+ 		disable_irq_wake(wirq->irq);
+ 
+ 		if (wirq->status & WAKE_IRQ_DEDICATED_ALLOCATED &&
+-		    !pm_runtime_status_suspended(wirq->dev))
++		    !(wirq->status & WAKE_IRQ_DEDICATED_ENABLED))
+ 			disable_irq_nosync(wirq->irq);
+ 	}
+ }
 
 
