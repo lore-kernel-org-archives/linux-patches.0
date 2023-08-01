@@ -1,55 +1,66 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from mgamail.intel.com (unknown [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22CE1DDE3
-	for <patches@lists.linux.dev>; Mon, 31 Jul 2023 21:15:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=8Z0bnX+zfeyn+xeBGa8nfbsyJ1d05F9zNyCvh1HSV9w=; b=n40PUItnguJa/y82nltY7Rc44c
-	+JlbSn6ruHARFqpzY2jyIWVoWeQAf+RLrBocwqvKvSmdycbPKFNJoD/cT8kWhIwk4tzm3aw1MkNq0
-	Yq8Do9CYvKeDskBbOWCUbd8bnENCsN0g5AxUDspkPTzjqvANZ1ukB0YSgF4CjWY5a3YeT+/Jl3yWa
-	dGwnZFPC9SuESSDeUV/WnaH05c711yYFDAZQEAt5jYD7I+k3M7wvXkp5fP4zIRtRaYYEQGMHksZhr
-	jvyuCsqxhnNBiVKMxqoW9Ssk76Ky1w59zFSb+jZJkT+dojcWl5BBd/byXawMq8xZEeVHm+j3aQq4e
-	bPuQIEtg==;
-Received: from j130084.upc-j.chello.nl ([24.132.130.84] helo=noisy.programming.kicks-ass.net)
-	by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1qQaEY-003rwv-Bn; Mon, 31 Jul 2023 21:15:18 +0000
-Received: from hirez.programming.kicks-ass.net (hirez.programming.kicks-ass.net [192.168.1.225])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id 919023002CE;
-	Mon, 31 Jul 2023 23:15:17 +0200 (CEST)
-Received: by hirez.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 7B21620D70602; Mon, 31 Jul 2023 23:15:17 +0200 (CEST)
-Date: Mon, 31 Jul 2023 23:15:17 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: Roy Hopkins <rhopkins@suse.de>, Joel Fernandes <joel@joelfernandes.org>,
-	paulmck@kernel.org, Pavel Machek <pavel@denx.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	rcu@vger.kernel.org, Ingo Molnar <mingo@kernel.org>
-Subject: Re: scheduler problems in -next (was: Re: [PATCH 6.4 000/227]
- 6.4.7-rc1 review)
-Message-ID: <20230731211517.GA51835@hirez.programming.kicks-ass.net>
-References: <2cfc68cc-3a2f-4350-a711-ef0c0d8385fd@paulmck-laptop>
- <D56D0318-A2EA-4448-8F4D-BE84706E26A5@joelfernandes.org>
- <3da81a5c-700b-8e21-1bde-27dd3a0b8945@roeck-us.net>
- <20230731141934.GK29590@hirez.programming.kicks-ass.net>
- <20230731143954.GB37820@hirez.programming.kicks-ass.net>
- <f5a18aa3-9db7-6ad2-33d5-3335a18e4e2f@roeck-us.net>
- <20230731145232.GM29590@hirez.programming.kicks-ass.net>
- <7ff2a2393d78275b14ff867f3af902b5d4b93ea2.camel@suse.de>
- <20230731161452.GA40850@hirez.programming.kicks-ass.net>
- <baa58a8e-54f0-2309-b34e-d62999a452a1@roeck-us.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3F036C
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 00:19:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1690849174; x=1722385174;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=ZEulNWdnP1duSXBMmYXkpzEDKmjHjBb+oQsjgX3lU0w=;
+  b=jSGvCXp6cmIsjZVh88vu8BeLa9XhmwlGqIa9RqLbW5SI+ApyDR9W49OA
+   X663NWPvG06s0+HlnyBDz/Zu27GreVvJTNewyvbpAgEnnC6qgq4vzv/gL
+   cI0CMfRPb5AZVoa9vqjS13cLTU7hH98b7r0C6BVZh2mZJdB9fB4lJR3Sd
+   jPKUE93vaGkRO+PiH0e0wOy7qLFbpUQHrRJfuxPCDVRmbf7a96d6lY4hD
+   Kmeq9XyrtdhnzqPtrEWGYBN5zumDdoN42DhGOstjm/dsKgIXf26bqvH/I
+   jHNdZt6Tv8yMrVB/zc0j/SsIlEpy6zdvBRuemFE+JXTqPNwArxYtu05KX
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10788"; a="348754691"
+X-IronPort-AV: E=Sophos;i="6.01,246,1684825200"; 
+   d="scan'208";a="348754691"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Jul 2023 17:19:33 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10788"; a="728465612"
+X-IronPort-AV: E=Sophos;i="6.01,246,1684825200"; 
+   d="scan'208";a="728465612"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
+  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Jul 2023 17:19:32 -0700
+Date: Mon, 31 Jul 2023 17:19:31 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Drew Fustini <dfustini@baylibre.com>
+Cc: James Morse <james.morse@arm.com>, "Yu, Fenghua" <fenghua.yu@intel.com>,
+	"Chatre, Reinette" <reinette.chatre@intel.com>,
+	Babu Moger <Babu.Moger@amd.com>,
+	Peter Newman <peternewman@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+	H Peter Anvin <hpa@zytor.com>,
+	"shameerali.kolothum.thodi@huawei.com" <shameerali.kolothum.thodi@huawei.com>,
+	D Scott Phillips OS <scott@os.amperecomputing.com>,
+	"carl@os.amperecomputing.com" <carl@os.amperecomputing.com>,
+	"lcherian@marvell.com" <lcherian@marvell.com>,
+	"bobo.shaobowang@huawei.com" <bobo.shaobowang@huawei.com>,
+	"tan.shaopeng@fujitsu.com" <tan.shaopeng@fujitsu.com>,
+	"xingxin.hx@openanolis.org" <xingxin.hx@openanolis.org>,
+	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Xin Hao <xhao@linux.alibaba.com>,
+	"Pitre, Nicolas" <npitre@baylibre.com>,
+	Kevin Hilman <khilman@baylibre.com>,
+	"aricciardi@baylibre.com" <aricciardi@baylibre.com>,
+	"x86@kernel.org" <x86@kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [RFC PATCH 0/2] Resctrl - rewrite (WIP)
+Message-ID: <ZMhPk8xckzkLEGJc@agluck-desk3>
+References: <20230620033702.33344-1-tony.luck@intel.com>
+ <ZJqhDYLG+/Kr44sp@x1>
+ <SJ1PR11MB60832BA425B43CA19C778100FC27A@SJ1PR11MB6083.namprd11.prod.outlook.com>
+ <ZJ4clUlN2OujgHlC@agluck-desk3>
+ <ZMCEjZgyi5oI+KWh@x1>
+ <ZMElMLPWi0+2jCp8@agluck-desk3>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -58,14 +69,27 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <baa58a8e-54f0-2309-b34e-d62999a452a1@roeck-us.net>
+In-Reply-To: <ZMElMLPWi0+2jCp8@agluck-desk3>
 
-On Mon, Jul 31, 2023 at 09:34:29AM -0700, Guenter Roeck wrote:
-> > Ha!, I was poking around the same thing. My hack below seems to (so far,
-> > <20 boots) help things.
+On Wed, Jul 26, 2023 at 06:52:48AM -0700, Tony Luck wrote:
+> On Tue, Jul 25, 2023 at 07:27:25PM -0700, Drew Fustini wrote:
 > > 
+> > Also, is resctrl2_v65rc1 the latest to branch to test?
 > 
-> So, dumb question:
-> How comes this bisects to "sched/fair: Remove sched_feat(START_DEBIT)" ?
+> Yes. That's the latest. There haven't been any updates for a
+> few days because I'm working on a module to support pseudo-locking.
+> I'm half-way there (can do most of the bits to set a group into
+> pseudo-locked mode ... about to work on the cleanup when the
+> group is removed, the filesystem unmounted, or the module unloaded).
 
-That commit changes the timings of things; dumb luck otherwise.
+Updated version available at:
+
+git://git.kernel.org/pub/scm/linux/kernel/git/aegl/linux.git
+
+Branch: resctrl2_v65rc4
+
+Some minor fixes to core code, also changes to support pseudo-locking
+(core code for the "mode" file plus some new functions in the resource
+structure to call into modules to support this).
+
+-Tony
