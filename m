@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE581F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:41:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94140C433C8;
-	Tue,  1 Aug 2023 09:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89CC1F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:41:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58DD6C433C7;
+	Tue,  1 Aug 2023 09:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882866;
-	bh=6yYoTQ/WN45aLACgt3kxuHv4ey876XlhEV+Z/YxN8z4=;
+	s=korg; t=1690882868;
+	bh=Z2dVW5ltn2ElYLZWBhidtHujT4gfctGfMvwQrSfG71c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WG10bcpRXU283Bp3bMJR1LO/EwMch2RrZrPXR9x88aQkQtdV9mFK9HH3kc51ZKszY
-	 FsZCWgvyUyvfaqST8bdNycAiUoNJDPzD5IEvKUwDYsEeuH+pf6VzD/k6CdfGZP0sw3
-	 HPq26M/Gr8dqjmybNI6C0FePeOAP+Zz7bl/54XQ8=
+	b=IrEKj44aNy4XODLRPH9Cn4H7Xvkw+xNjogh62cSSr+E5NAfk4PjaoI/c1Kh3i8+Bt
+	 GaGRQua+/mlZlOo94ONM5vyuLdy5moezgVzkJOwBQZhrA3vK6A8ZpofnNETFEXWWO6
+	 MaZ478LuSOLL7A+fhlRJLuJWbyjd2OpySPpT8GXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Evan Quan <evan.quan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.4 004/239] drm/amd: Align SMU11 SMU_MSG_OverridePcieParameters implementation with SMU13
-Date: Tue,  1 Aug 2023 11:17:48 +0200
-Message-ID: <20230801091925.806342331@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.4 005/239] r8169: revert 2ab19de62d67 ("r8169: remove ASPM restrictions now that ASPM is disabled during NAPI poll")
+Date: Tue,  1 Aug 2023 11:17:49 +0200
+Message-ID: <20230801091925.837435794@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -35,137 +34,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit e701156ccc6c7a5f104a968dda74cd6434178712 upstream.
+commit cf2ffdea0839398cb0551762af7f5efb0a6e0fea upstream.
 
-SMU13 overrides dynamic PCIe lane width and dynamic speed by when on
-certain hosts. commit 38e4ced80479 ("drm/amd/pm: conditionally disable
-pcie lane switching for some sienna_cichlid SKUs") worked around this
-issue by setting up certain SKUs to set up certain limits, but the same
-fundamental problem with those hosts affects all SMU11 implmentations
-as well, so align the SMU11 and SMU13 driver handling.
+There have been reports that on a number of systems this change breaks
+network connectivity. Therefore effectively revert it. Mainly affected
+seem to be systems where BIOS denies ASPM access to OS.
+Due to later changes we can't do a direct revert.
 
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Evan Quan <evan.quan@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.1.x
+Fixes: 2ab19de62d67 ("r8169: remove ASPM restrictions now that ASPM is disabled during NAPI poll")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/netdev/e47bac0d-e802-65e1-b311-6acb26d5cf10@freenet.de/T/
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217596
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://lore.kernel.org/r/57f13ec0-b216-d5d8-363d-5b05528ec5fb@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c |   93 +++-------------
- 1 file changed, 20 insertions(+), 73 deletions(-)
+ drivers/net/ethernet/realtek/r8169_main.c |   27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-@@ -2081,89 +2081,36 @@ static int sienna_cichlid_display_disabl
- 	return ret;
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -623,6 +623,7 @@ struct rtl8169_private {
+ 	int cfg9346_usage_count;
+ 
+ 	unsigned supports_gmii:1;
++	unsigned aspm_manageable:1;
+ 	dma_addr_t counters_phys_addr;
+ 	struct rtl8169_counters *counters;
+ 	struct rtl8169_tc_offsets tc_offset;
+@@ -2746,7 +2747,8 @@ static void rtl_hw_aspm_clkreq_enable(st
+ 	if (tp->mac_version < RTL_GIGA_MAC_VER_32)
+ 		return;
+ 
+-	if (enable) {
++	/* Don't enable ASPM in the chip if OS can't control ASPM */
++	if (enable && tp->aspm_manageable) {
+ 		/* On these chip versions ASPM can even harm
+ 		 * bus communication of other PCI devices.
+ 		 */
+@@ -5156,6 +5158,16 @@ done:
+ 	rtl_rar_set(tp, mac_addr);
  }
  
--static void sienna_cichlid_get_override_pcie_settings(struct smu_context *smu,
--						      uint32_t *gen_speed_override,
--						      uint32_t *lane_width_override)
--{
--	struct amdgpu_device *adev = smu->adev;
--
--	*gen_speed_override = 0xff;
--	*lane_width_override = 0xff;
--
--	switch (adev->pdev->device) {
--	case 0x73A0:
--	case 0x73A1:
--	case 0x73A2:
--	case 0x73A3:
--	case 0x73AB:
--	case 0x73AE:
--		/* Bit 7:0: PCIE lane width, 1 to 7 corresponds is x1 to x32 */
--		*lane_width_override = 6;
--		break;
--	case 0x73E0:
--	case 0x73E1:
--	case 0x73E3:
--		*lane_width_override = 4;
--		break;
--	case 0x7420:
--	case 0x7421:
--	case 0x7422:
--	case 0x7423:
--	case 0x7424:
--		*lane_width_override = 3;
--		break;
--	default:
--		break;
--	}
--}
--
--#define MAX(a, b)	((a) > (b) ? (a) : (b))
--
- static int sienna_cichlid_update_pcie_parameters(struct smu_context *smu,
- 					 uint32_t pcie_gen_cap,
- 					 uint32_t pcie_width_cap)
++/* register is set if system vendor successfully tested ASPM 1.2 */
++static bool rtl_aspm_is_safe(struct rtl8169_private *tp)
++{
++	if (tp->mac_version >= RTL_GIGA_MAC_VER_61 &&
++	    r8168_mac_ocp_read(tp, 0xc0b2) & 0xf)
++		return true;
++
++	return false;
++}
++
+ static int rtl_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
  {
- 	struct smu_11_0_dpm_context *dpm_context = smu->smu_dpm.dpm_context;
- 	struct smu_11_0_pcie_table *pcie_table = &dpm_context->dpm_tables.pcie_table;
--	uint32_t gen_speed_override, lane_width_override;
--	uint8_t *table_member1, *table_member2;
--	uint32_t min_gen_speed, max_gen_speed;
--	uint32_t min_lane_width, max_lane_width;
--	uint32_t smu_pcie_arg;
-+	u32 smu_pcie_arg;
- 	int ret, i;
+ 	struct rtl8169_private *tp;
+@@ -5227,6 +5239,19 @@ static int rtl_init_one(struct pci_dev *
  
--	GET_PPTABLE_MEMBER(PcieGenSpeed, &table_member1);
--	GET_PPTABLE_MEMBER(PcieLaneCount, &table_member2);
--
--	sienna_cichlid_get_override_pcie_settings(smu,
--						  &gen_speed_override,
--						  &lane_width_override);
--
--	/* PCIE gen speed override */
--	if (gen_speed_override != 0xff) {
--		min_gen_speed = MIN(pcie_gen_cap, gen_speed_override);
--		max_gen_speed = MIN(pcie_gen_cap, gen_speed_override);
--	} else {
--		min_gen_speed = MAX(0, table_member1[0]);
--		max_gen_speed = MIN(pcie_gen_cap, table_member1[1]);
--		min_gen_speed = min_gen_speed > max_gen_speed ?
--				max_gen_speed : min_gen_speed;
--	}
--	pcie_table->pcie_gen[0] = min_gen_speed;
--	pcie_table->pcie_gen[1] = max_gen_speed;
--
--	/* PCIE lane width override */
--	if (lane_width_override != 0xff) {
--		min_lane_width = MIN(pcie_width_cap, lane_width_override);
--		max_lane_width = MIN(pcie_width_cap, lane_width_override);
-+	/* PCIE gen speed and lane width override */
-+	if (!amdgpu_device_pcie_dynamic_switching_supported()) {
-+		if (pcie_table->pcie_gen[NUM_LINK_LEVELS - 1] < pcie_gen_cap)
-+			pcie_gen_cap = pcie_table->pcie_gen[NUM_LINK_LEVELS - 1];
-+
-+		if (pcie_table->pcie_lane[NUM_LINK_LEVELS - 1] < pcie_width_cap)
-+			pcie_width_cap = pcie_table->pcie_lane[NUM_LINK_LEVELS - 1];
-+
-+		/* Force all levels to use the same settings */
-+		for (i = 0; i < NUM_LINK_LEVELS; i++) {
-+			pcie_table->pcie_gen[i] = pcie_gen_cap;
-+			pcie_table->pcie_lane[i] = pcie_width_cap;
-+		}
- 	} else {
--		min_lane_width = MAX(1, table_member2[0]);
--		max_lane_width = MIN(pcie_width_cap, table_member2[1]);
--		min_lane_width = min_lane_width > max_lane_width ?
--				 max_lane_width : min_lane_width;
-+		for (i = 0; i < NUM_LINK_LEVELS; i++) {
-+			if (pcie_table->pcie_gen[i] > pcie_gen_cap)
-+				pcie_table->pcie_gen[i] = pcie_gen_cap;
-+			if (pcie_table->pcie_lane[i] > pcie_width_cap)
-+				pcie_table->pcie_lane[i] = pcie_width_cap;
-+		}
- 	}
--	pcie_table->pcie_lane[0] = min_lane_width;
--	pcie_table->pcie_lane[1] = max_lane_width;
+ 	tp->mac_version = chipset;
  
- 	for (i = 0; i < NUM_LINK_LEVELS; i++) {
- 		smu_pcie_arg = (i << 16 |
++	/* Disable ASPM L1 as that cause random device stop working
++	 * problems as well as full system hangs for some PCIe devices users.
++	 * Chips from RTL8168h partially have issues with L1.2, but seem
++	 * to work fine with L1 and L1.1.
++	 */
++	if (rtl_aspm_is_safe(tp))
++		rc = 0;
++	else if (tp->mac_version >= RTL_GIGA_MAC_VER_46)
++		rc = pci_disable_link_state(pdev, PCIE_LINK_STATE_L1_2);
++	else
++		rc = pci_disable_link_state(pdev, PCIE_LINK_STATE_L1);
++	tp->aspm_manageable = !rc;
++
+ 	tp->dash_type = rtl_check_dash(tp);
+ 
+ 	tp->cp_cmd = RTL_R16(tp, CPlusCmd) & CPCMD_MASK;
 
 
