@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60ED51FB2B
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:34:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 875CEC433C8;
-	Tue,  1 Aug 2023 09:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19FC1FB30
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:34:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E02C433C9;
+	Tue,  1 Aug 2023 09:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882446;
-	bh=brnI0aWeulcmZKDmA06WqhfxXqaHfgPAw8Y6jBhDdEo=;
+	s=korg; t=1690882449;
+	bh=8l0xQ4SbPGo3979oqp0KS2xm9KZ2g41JpJcmL6rI3M8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z4o4qecsajYmEDW8aQFgwBVdkcZa1nw+pMsVSKUk+h5Ylla7K3xQO88n9wbkaNZmV
-	 /uLYKe7HQOSqgeS4QZAdnTSDSdkuxVQHhexLH2NMlDNcbpIt+eGBemyNJqY4dGW6bM
-	 AhYqtdU/uXfhLgB/U2fJnm3xTnd5Jtm75s61bu0w=
+	b=wuqTh4dlMljD8tO77NTD7DSC2NfbKKd8b5xllIZmw1+VxU7itJ3cUlKT76ktlT8yj
+	 T8qZgmN+pTkzKhdD8SJnEcinGMiB9HX11vXwLmxRnEGqQ7Iaacmsvth+KN64WFbtJ4
+	 Vqic8G5DUsQPNFRsnoxhwZ4MF3sYgYUmEGagh6bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Lamprecht <t.lamprecht@proxmox.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Fiona Ebner <f.ebner@proxmox.com>
-Subject: [PATCH 6.1 108/228] mm: suppress mm fault logging if fatal signal already pending
-Date: Tue,  1 Aug 2023 11:19:26 +0200
-Message-ID: <20230801091926.698484835@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 109/228] net/sched: mqprio: refactor nlattr parsing to a separate function
+Date: Tue,  1 Aug 2023 11:19:27 +0200
+Message-ID: <20230801091926.729169957@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -37,71 +37,163 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 5f0bc0b042fc77ff70e14c790abdec960cde4ec1 ]
+[ Upstream commit feb2cf3dcfb930aec2ca65c66d1365543d5ba943 ]
 
-Commit eda0047296a1 ("mm: make the page fault mmap locking killable")
-intentionally made it much easier to trigger the "page fault fails
-because a fatal signal is pending" situation, by having the mmap locking
-fail early in that case.
+mqprio_init() is quite large and unwieldy to add more code to.
+Split the netlink attribute parsing to a dedicated function.
 
-We have long aborted page faults in other fatal cases when the actual IO
-for a page is interrupted by SIGKILL - which is particularly useful for
-the traditional case of NFS hanging due to network issues, but local
-filesystems could cause it too if you happened to get the SIGKILL while
-waiting for a page to be faulted in (eg lock_folio_maybe_drop_mmap()).
-
-So aborting the page fault wasn't a new condition - but it now triggers
-earlier, before we even get to 'handle_mm_fault()'.  And as a result the
-error doesn't go through our 'fault_signal_pending()' logic, and doesn't
-get filtered away there.
-
-Normally you'd never even notice, because if a fatal signal is pending,
-the new SIGSEGV we send ends up being ignored anyway.
-
-But it turns out that there is one very noticeable exception: if you
-enable 'show_unhandled_signals', the aborted page fault will be logged
-in the kernel messages, and you'll get a scary line looking something
-like this in your logs:
-
-  pverados[2183248]: segfault at 55e5a00f9ae0 ip 000055e5a00f9ae0 sp 00007ffc0720bea8 error 14 in perl[55e5a00d4000+195000] likely on CPU 10 (core 4, socket 0)
-
-which is rather misleading.  It's not really a segfault at all, it's
-just "the thread was killed before the page fault completed, so we
-aborted the page fault".
-
-Fix this by just making it clear that a pending fatal signal means that
-any new signal coming in after that is implicitly handled.  This will
-avoid the misleading logging, since now the signal isn't 'unhandled' any
-more.
-
-Reported-and-tested-by: Fiona Ebner <f.ebner@proxmox.com>
-Tested-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
-Link: https://lore.kernel.org/lkml/8d063a26-43f5-0bb7-3203-c6a04dc159f8@proxmox.com/
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Fixes: eda0047296a1 ("mm: make the page fault mmap locking killable")
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 6c58c8816abb ("net/sched: mqprio: Add length check for TCA_MQPRIO_{MAX/MIN}_RATE64")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/signal.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/sched/sch_mqprio.c | 114 +++++++++++++++++++++++------------------
+ 1 file changed, 63 insertions(+), 51 deletions(-)
 
-diff --git a/kernel/signal.c b/kernel/signal.c
-index d140672185a48..5d45f5da2b36e 100644
---- a/kernel/signal.c
-+++ b/kernel/signal.c
-@@ -561,6 +561,10 @@ bool unhandled_signal(struct task_struct *tsk, int sig)
- 	if (handler != SIG_IGN && handler != SIG_DFL)
- 		return false;
- 
-+	/* If dying, we handle all new signals by ignoring them */
-+	if (fatal_signal_pending(tsk))
-+		return false;
-+
- 	/* if ptraced, let the tracer determine */
- 	return !tsk->ptrace;
+diff --git a/net/sched/sch_mqprio.c b/net/sched/sch_mqprio.c
+index 9f26fb7d5823c..166b22601e60f 100644
+--- a/net/sched/sch_mqprio.c
++++ b/net/sched/sch_mqprio.c
+@@ -130,6 +130,67 @@ static int parse_attr(struct nlattr *tb[], int maxtype, struct nlattr *nla,
+ 	return 0;
  }
+ 
++static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
++			       struct nlattr *opt)
++{
++	struct mqprio_sched *priv = qdisc_priv(sch);
++	struct nlattr *tb[TCA_MQPRIO_MAX + 1];
++	struct nlattr *attr;
++	int i, rem, err;
++
++	err = parse_attr(tb, TCA_MQPRIO_MAX, opt, mqprio_policy,
++			 sizeof(*qopt));
++	if (err < 0)
++		return err;
++
++	if (!qopt->hw)
++		return -EINVAL;
++
++	if (tb[TCA_MQPRIO_MODE]) {
++		priv->flags |= TC_MQPRIO_F_MODE;
++		priv->mode = *(u16 *)nla_data(tb[TCA_MQPRIO_MODE]);
++	}
++
++	if (tb[TCA_MQPRIO_SHAPER]) {
++		priv->flags |= TC_MQPRIO_F_SHAPER;
++		priv->shaper = *(u16 *)nla_data(tb[TCA_MQPRIO_SHAPER]);
++	}
++
++	if (tb[TCA_MQPRIO_MIN_RATE64]) {
++		if (priv->shaper != TC_MQPRIO_SHAPER_BW_RATE)
++			return -EINVAL;
++		i = 0;
++		nla_for_each_nested(attr, tb[TCA_MQPRIO_MIN_RATE64],
++				    rem) {
++			if (nla_type(attr) != TCA_MQPRIO_MIN_RATE64)
++				return -EINVAL;
++			if (i >= qopt->num_tc)
++				break;
++			priv->min_rate[i] = *(u64 *)nla_data(attr);
++			i++;
++		}
++		priv->flags |= TC_MQPRIO_F_MIN_RATE;
++	}
++
++	if (tb[TCA_MQPRIO_MAX_RATE64]) {
++		if (priv->shaper != TC_MQPRIO_SHAPER_BW_RATE)
++			return -EINVAL;
++		i = 0;
++		nla_for_each_nested(attr, tb[TCA_MQPRIO_MAX_RATE64],
++				    rem) {
++			if (nla_type(attr) != TCA_MQPRIO_MAX_RATE64)
++				return -EINVAL;
++			if (i >= qopt->num_tc)
++				break;
++			priv->max_rate[i] = *(u64 *)nla_data(attr);
++			i++;
++		}
++		priv->flags |= TC_MQPRIO_F_MAX_RATE;
++	}
++
++	return 0;
++}
++
+ static int mqprio_init(struct Qdisc *sch, struct nlattr *opt,
+ 		       struct netlink_ext_ack *extack)
+ {
+@@ -139,9 +200,6 @@ static int mqprio_init(struct Qdisc *sch, struct nlattr *opt,
+ 	struct Qdisc *qdisc;
+ 	int i, err = -EOPNOTSUPP;
+ 	struct tc_mqprio_qopt *qopt = NULL;
+-	struct nlattr *tb[TCA_MQPRIO_MAX + 1];
+-	struct nlattr *attr;
+-	int rem;
+ 	int len;
+ 
+ 	BUILD_BUG_ON(TC_MAX_QUEUE != TC_QOPT_MAX_QUEUE);
+@@ -166,55 +224,9 @@ static int mqprio_init(struct Qdisc *sch, struct nlattr *opt,
+ 
+ 	len = nla_len(opt) - NLA_ALIGN(sizeof(*qopt));
+ 	if (len > 0) {
+-		err = parse_attr(tb, TCA_MQPRIO_MAX, opt, mqprio_policy,
+-				 sizeof(*qopt));
+-		if (err < 0)
++		err = mqprio_parse_nlattr(sch, qopt, opt);
++		if (err)
+ 			return err;
+-
+-		if (!qopt->hw)
+-			return -EINVAL;
+-
+-		if (tb[TCA_MQPRIO_MODE]) {
+-			priv->flags |= TC_MQPRIO_F_MODE;
+-			priv->mode = *(u16 *)nla_data(tb[TCA_MQPRIO_MODE]);
+-		}
+-
+-		if (tb[TCA_MQPRIO_SHAPER]) {
+-			priv->flags |= TC_MQPRIO_F_SHAPER;
+-			priv->shaper = *(u16 *)nla_data(tb[TCA_MQPRIO_SHAPER]);
+-		}
+-
+-		if (tb[TCA_MQPRIO_MIN_RATE64]) {
+-			if (priv->shaper != TC_MQPRIO_SHAPER_BW_RATE)
+-				return -EINVAL;
+-			i = 0;
+-			nla_for_each_nested(attr, tb[TCA_MQPRIO_MIN_RATE64],
+-					    rem) {
+-				if (nla_type(attr) != TCA_MQPRIO_MIN_RATE64)
+-					return -EINVAL;
+-				if (i >= qopt->num_tc)
+-					break;
+-				priv->min_rate[i] = *(u64 *)nla_data(attr);
+-				i++;
+-			}
+-			priv->flags |= TC_MQPRIO_F_MIN_RATE;
+-		}
+-
+-		if (tb[TCA_MQPRIO_MAX_RATE64]) {
+-			if (priv->shaper != TC_MQPRIO_SHAPER_BW_RATE)
+-				return -EINVAL;
+-			i = 0;
+-			nla_for_each_nested(attr, tb[TCA_MQPRIO_MAX_RATE64],
+-					    rem) {
+-				if (nla_type(attr) != TCA_MQPRIO_MAX_RATE64)
+-					return -EINVAL;
+-				if (i >= qopt->num_tc)
+-					break;
+-				priv->max_rate[i] = *(u64 *)nla_data(attr);
+-				i++;
+-			}
+-			priv->flags |= TC_MQPRIO_F_MAX_RATE;
+-		}
+ 	}
+ 
+ 	/* pre-allocate qdisc, attachment can't fail */
 -- 
 2.39.2
 
