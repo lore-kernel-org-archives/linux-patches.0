@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF14D1F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:41:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47959C433C8;
-	Tue,  1 Aug 2023 09:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92D81F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:41:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F827C433CA;
+	Tue,  1 Aug 2023 09:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882916;
-	bh=qt36tPoTUJwAqv0gPlijQkN/nGCiTHoShrlnSPJMePM=;
+	s=korg; t=1690882919;
+	bh=K+c6ZgIpMdNOstUWNKAlRjYro6ySQaDe8wh9ZpH11wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BBAaX/ZVr/TEbzqgEhZ0er8hW4BLpOUyo5KbTlkdiUzJl2YmQFLHEibX6c3tPzW9p
-	 zWkXpdUx1KRTRkaT/7G1Aw/rlIPBo1ESnEGLz4wOwy+EiA3dfiR6KzxUg54aQU7R8r
-	 93YE+muuYZAFq5fzqgrUt8bGPWjYZjCwxJ04vnUc=
+	b=cDRYw/BjCxrcclSGe3X7guucl8srES3RBFp04xfp5I39rR6aFWQmnDpNrs7vSyRLJ
+	 V6U/yXr24bwxdzJ4aqtceEGdk0QlDPzwMEFVvCy7kGZO4AnbV+a0Ck7YK5btdqFuWx
+	 CUEGL7zyBHnH58QAGy46+S1Ws0JwtOHJ08ZoeBCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 031/239] PCI: rockchip: Dont advertise MSI-X in PCIe capabilities
-Date: Tue,  1 Aug 2023 11:18:15 +0200
-Message-ID: <20230801091926.736194564@linuxfoundation.org>
+Subject: [PATCH 6.4 049/239] ext4: add EXT4_MB_HINT_GOAL_ONLY test in ext4_mb_use_preallocated
+Date: Tue,  1 Aug 2023 11:18:33 +0200
+Message-ID: <20230801091927.325093666@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,101 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit a52587e0bee14cbeeadf48a24013828cb04b8df8 ]
+[ Upstream commit 1eff590489a213a213c57d96b86f48b32cdf8c3a ]
 
-The RK3399 PCIe endpoint controller cannot generate MSI-X IRQs.
-This is documented in the RK3399 technical reference manual (TRM)
-section 17.5.9 "Interrupt Support".
+ext4_mb_use_preallocated will ignore the demand to alloc goal blocks,
+although the EXT4_MB_HINT_GOAL_ONLY is requested.
+For group pa, ext4_mb_group_or_file will not set EXT4_MB_HINT_GROUP_ALLOC
+if EXT4_MB_HINT_GOAL_ONLY is set. So we will not alloc goal blocks from
+group pa if EXT4_MB_HINT_GOAL_ONLY is set.
+For inode pa, ext4_mb_pa_goal_check is added to check if free extent in
+found inode pa meets goal blocks when EXT4_MB_HINT_GOAL_ONLY is set.
 
-MSI-X capability should therefore not be advertised. Remove the
-MSI-X capability by editing the capability linked-list. The
-previous entry is the MSI capability, therefore get the next
-entry from the MSI-X capability entry and set it as next entry
-for the MSI capability. This in effect removes MSI-X from the list.
-
-Linked list before : MSI cap -> MSI-X cap -> PCIe Device cap -> ...
-Linked list now : MSI cap -> PCIe Device cap -> ...
-
-Link: https://lore.kernel.org/r/20230418074700.1083505-11-rick.wertenbroek@gmail.com
-Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
-Tested-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Cc: stable@vger.kernel.org
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Suggested-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230603150327.3596033-6-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 9d3de7ee192a ("ext4: fix rbtree traversal bug in ext4_mb_use_preallocated")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rockchip-ep.c | 24 +++++++++++++++++++++++
- drivers/pci/controller/pcie-rockchip.h    |  5 +++++
- 2 files changed, 29 insertions(+)
+ fs/ext4/mballoc.c | 34 +++++++++++++++++++++++++++++++++-
+ 1 file changed, 33 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/pcie-rockchip-ep.c b/drivers/pci/controller/pcie-rockchip-ep.c
-index 3d6f828d29fc2..0af0e965fb57e 100644
---- a/drivers/pci/controller/pcie-rockchip-ep.c
-+++ b/drivers/pci/controller/pcie-rockchip-ep.c
-@@ -508,6 +508,7 @@ static int rockchip_pcie_ep_probe(struct platform_device *pdev)
- 	size_t max_regions;
- 	struct pci_epc_mem_window *windows = NULL;
- 	int err, i;
-+	u32 cfg_msi, cfg_msix_cp;
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index fd4d12c58c3b4..1f4d00a4308dc 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -4528,6 +4528,37 @@ ext4_mb_check_group_pa(ext4_fsblk_t goal_block,
+ 	return pa;
+ }
  
- 	ep = devm_kzalloc(dev, sizeof(*ep), GFP_KERNEL);
- 	if (!ep)
-@@ -583,6 +584,29 @@ static int rockchip_pcie_ep_probe(struct platform_device *pdev)
- 
- 	ep->irq_pci_addr = ROCKCHIP_PCIE_EP_DUMMY_IRQ_ADDR;
- 
++/*
++ * check if found pa meets EXT4_MB_HINT_GOAL_ONLY
++ */
++static bool
++ext4_mb_pa_goal_check(struct ext4_allocation_context *ac,
++		      struct ext4_prealloc_space *pa)
++{
++	struct ext4_sb_info *sbi = EXT4_SB(ac->ac_sb);
++	ext4_fsblk_t start;
++
++	if (likely(!(ac->ac_flags & EXT4_MB_HINT_GOAL_ONLY)))
++		return true;
++
 +	/*
-+	 * MSI-X is not supported but the controller still advertises the MSI-X
-+	 * capability by default, which can lead to the Root Complex side
-+	 * allocating MSI-X vectors which cannot be used. Avoid this by skipping
-+	 * the MSI-X capability entry in the PCIe capabilities linked-list: get
-+	 * the next pointer from the MSI-X entry and set that in the MSI
-+	 * capability entry (which is the previous entry). This way the MSI-X
-+	 * entry is skipped (left out of the linked-list) and not advertised.
++	 * If EXT4_MB_HINT_GOAL_ONLY is set, ac_g_ex will not be adjusted
++	 * in ext4_mb_normalize_request and will keep same with ac_o_ex
++	 * from ext4_mb_initialize_context. Choose ac_g_ex here to keep
++	 * consistent with ext4_mb_find_by_goal.
 +	 */
-+	cfg_msi = rockchip_pcie_read(rockchip, PCIE_EP_CONFIG_BASE +
-+				     ROCKCHIP_PCIE_EP_MSI_CTRL_REG);
++	start = pa->pa_pstart +
++		(ac->ac_g_ex.fe_logical - pa->pa_lstart);
++	if (ext4_grp_offs_to_block(ac->ac_sb, &ac->ac_g_ex) != start)
++		return false;
 +
-+	cfg_msi &= ~ROCKCHIP_PCIE_EP_MSI_CP1_MASK;
++	if (ac->ac_g_ex.fe_len > pa->pa_len -
++	    EXT4_B2C(sbi, ac->ac_g_ex.fe_logical - pa->pa_lstart))
++		return false;
 +
-+	cfg_msix_cp = rockchip_pcie_read(rockchip, PCIE_EP_CONFIG_BASE +
-+					 ROCKCHIP_PCIE_EP_MSIX_CAP_REG) &
-+					 ROCKCHIP_PCIE_EP_MSIX_CAP_CP_MASK;
++	return true;
++}
 +
-+	cfg_msi |= cfg_msix_cp;
-+
-+	rockchip_pcie_write(rockchip, cfg_msi,
-+			    PCIE_EP_CONFIG_BASE + ROCKCHIP_PCIE_EP_MSI_CTRL_REG);
-+
- 	rockchip_pcie_write(rockchip, PCIE_CLIENT_CONF_ENABLE,
- 			    PCIE_CLIENT_CONFIG);
+ /*
+  * search goal blocks in preallocated space
+  */
+@@ -4578,7 +4609,8 @@ ext4_mb_use_preallocated(struct ext4_allocation_context *ac)
  
-diff --git a/drivers/pci/controller/pcie-rockchip.h b/drivers/pci/controller/pcie-rockchip.h
-index 501d859420b4c..fe0333778fd93 100644
---- a/drivers/pci/controller/pcie-rockchip.h
-+++ b/drivers/pci/controller/pcie-rockchip.h
-@@ -227,6 +227,8 @@
- #define ROCKCHIP_PCIE_EP_CMD_STATUS			0x4
- #define   ROCKCHIP_PCIE_EP_CMD_STATUS_IS		BIT(19)
- #define ROCKCHIP_PCIE_EP_MSI_CTRL_REG			0x90
-+#define   ROCKCHIP_PCIE_EP_MSI_CP1_OFFSET		8
-+#define   ROCKCHIP_PCIE_EP_MSI_CP1_MASK			GENMASK(15, 8)
- #define   ROCKCHIP_PCIE_EP_MSI_FLAGS_OFFSET		16
- #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_OFFSET		17
- #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_MASK		GENMASK(19, 17)
-@@ -234,6 +236,9 @@
- #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MME_MASK		GENMASK(22, 20)
- #define   ROCKCHIP_PCIE_EP_MSI_CTRL_ME				BIT(16)
- #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MASK_MSI_CAP	BIT(24)
-+#define ROCKCHIP_PCIE_EP_MSIX_CAP_REG			0xb0
-+#define   ROCKCHIP_PCIE_EP_MSIX_CAP_CP_OFFSET		8
-+#define   ROCKCHIP_PCIE_EP_MSIX_CAP_CP_MASK		GENMASK(15, 8)
- #define ROCKCHIP_PCIE_EP_DUMMY_IRQ_ADDR				0x1
- #define ROCKCHIP_PCIE_EP_PCI_LEGACY_IRQ_ADDR		0x3
- #define ROCKCHIP_PCIE_EP_FUNC_BASE(fn) \
+ 		/* found preallocated blocks, use them */
+ 		spin_lock(&tmp_pa->pa_lock);
+-		if (tmp_pa->pa_deleted == 0 && tmp_pa->pa_free) {
++		if (tmp_pa->pa_deleted == 0 && tmp_pa->pa_free &&
++		    likely(ext4_mb_pa_goal_check(ac, tmp_pa))) {
+ 			atomic_inc(&tmp_pa->pa_count);
+ 			ext4_mb_use_inode_pa(ac, tmp_pa);
+ 			spin_unlock(&tmp_pa->pa_lock);
 -- 
 2.39.2
 
