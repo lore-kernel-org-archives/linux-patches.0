@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E3D1ED30
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:50:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A977C433C7;
-	Tue,  1 Aug 2023 09:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572AF1ED30
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:50:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB321C433C7;
+	Tue,  1 Aug 2023 09:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883405;
-	bh=6hSXEj0CDhgWglOtH5cIrOW2HkZJorFM0jvomap85/M=;
+	s=korg; t=1690883408;
+	bh=eN3TeVouy+YgkIOcn66HdzCY3A/6qD8SxHfI+JlouEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O8U47kIft5JeNh9tCgzHvG79XNAjyPVpWiq7wtCt+bgp1Q+2LSKHMMQsbrI7n85kP
-	 rE1/74bmumvVrYhJIomxdvcO+YNcIbggqYSg67Hr2peAVKODDk9VeSW8aHrmo0uimU
-	 MCetoz0wc15t35TvJN06/kBW8Uo3w1YDQluzGJq4=
+	b=xoLxEGsnJsI/edmeWMAKncUtYlO0rLOzdHn9/O7x422ENFWpZLMvrBcE/ZEzegzS1
+	 7lcLXvJsrYOtFnCVD5VOS3uv7iPEA/nXcFlFUcsRQVRpyAmwAUHOSDV3M7svl8CM9U
+	 wjd2Zzr846wp+rjxKatBLJTy8C9Jhu/PZ7Bs1hvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 186/239] btrfs: account block group tree when calculating global reserve size
-Date: Tue,  1 Aug 2023 11:20:50 +0200
-Message-ID: <20230801091932.384568495@linuxfoundation.org>
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Eric Van Hensbergen <ericvh@kernel.org>
+Subject: [PATCH 6.4 218/239] fs/9p: fix typo in comparison logic for cache mode
+Date: Tue,  1 Aug 2023 11:21:22 +0200
+Message-ID: <20230801091933.781790093@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -34,39 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Eric Van Hensbergen <ericvh@kernel.org>
 
-commit 8dbfc14fc736eb701089aff09645c3d4ad3decb1 upstream.
+commit 878cb3e0337d7c3096aee301a2a3cd358dc8aa81 upstream.
 
-When using the block group tree feature, this tree is a critical tree just
-like the extent, csum and free space trees, and just like them it uses the
-delayed refs block reserve.
+There appears to be a typo in the comparison statement for the logic
+which sets a file's cache mode based on mount flags.
 
-So take into account the block group tree, and its current size, when
-calculating the size for the global reserve.
-
-CC: stable@vger.kernel.org # 6.1+
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Fixes: 1543b4c5071c ("fs/9p: remove writeback fid and fix per-file modes")
+Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Reviewed-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/block-rsv.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/9p/fid.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/block-rsv.c
-+++ b/fs/btrfs/block-rsv.c
-@@ -349,6 +349,11 @@ void btrfs_update_global_block_rsv(struc
+--- a/fs/9p/fid.h
++++ b/fs/9p/fid.h
+@@ -57,7 +57,7 @@ static inline void v9fs_fid_add_modes(st
+ 	   (s_flags & V9FS_DIRECT_IO) || (f_flags & O_DIRECT)) {
+ 		fid->mode |= P9L_DIRECT; /* no read or write cache */
+ 	} else if ((!(s_cache & CACHE_WRITEBACK)) ||
+-				(f_flags & O_DSYNC) | (s_flags & V9FS_SYNC)) {
++				(f_flags & O_DSYNC) || (s_flags & V9FS_SYNC)) {
+ 		fid->mode |= P9L_NOWRITECACHE;
  	}
- 	read_unlock(&fs_info->global_root_lock);
- 
-+	if (btrfs_fs_compat_ro(fs_info, BLOCK_GROUP_TREE)) {
-+		num_bytes += btrfs_root_used(&fs_info->block_group_root->root_item);
-+		min_items++;
-+	}
-+
- 	/*
- 	 * But we also want to reserve enough space so we can do the fallback
- 	 * global reserve for an unlink, which is an additional
+ }
 
 
