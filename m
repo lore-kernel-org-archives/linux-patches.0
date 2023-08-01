@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E226E1F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:24:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 656FEC433C8;
-	Tue,  1 Aug 2023 09:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92011F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:24:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378B8C433C7;
+	Tue,  1 Aug 2023 09:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881885;
-	bh=TE/k2mMYsxCkBm+8tiVVOvK6kAQPsHzknj5qrXq6NBA=;
+	s=korg; t=1690881888;
+	bh=/TxF209rKHZHs9+r8S9347W8bTErflIoDYGy7VWdAWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b8C0lSCeIka+pTIkqcUs2UYwKBpGpCIfSTOT4RMqK8HH5S1x/ndtJbXNjHNGksscZ
-	 sdR2zVBl/Upz5sIEH9LgoaZYpfHayOj5+/0EvnQQpG+1Kcq+wvQV01DHIGmNWWeDCi
-	 1kM7kBi9InRYh9Mj8KA+xU5+H4fD67emivAXFB5Q=
+	b=RPJJuh+4AA1o5R/R/X9xWtsL7A2+0j8TL/LUNrQn5VhZNRhHGfmdCSk+Yv7QxXhIy
+	 fNx45+fYI4eZ123imDpnhJDh0Mp/zwT4FrLm25W40TLuOShhmcqyaFeT4ud79ranfy
+	 /ZcO0a1VaS3mAA4hFOi3ZgyxcrmSpRfoYsoUCSNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@resnulli.us>,
-	Xiao Ma <xiaom@google.com>,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
-	David Ahern <dsahern@kernel.org>,
+	Stewart Smith <trawets@amazon.com>,
+	Samuel Mendoza-Jonas <samjonas@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 065/155] ipv6 addrconf: fix bug where deleting a mngtmpaddr can create a new temporary address
-Date: Tue,  1 Aug 2023 11:19:37 +0200
-Message-ID: <20230801091912.507276821@linuxfoundation.org>
+Subject: [PATCH 5.15 066/155] tcp: Reduce chance of collisions in inet6_hashfn().
+Date: Tue,  1 Aug 2023 11:19:38 +0200
+Message-ID: <20230801091912.551742318@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -38,90 +38,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maciej Żenczykowski <maze@google.com>
+From: Stewart Smith <trawets@amazon.com>
 
-[ Upstream commit 69172f0bcb6a09110c5d2a6d792627f5095a9018 ]
+[ Upstream commit d11b0df7ddf1831f3e170972f43186dad520bfcc ]
 
-currently on 6.4 net/main:
+For both IPv4 and IPv6 incoming TCP connections are tracked in a hash
+table with a hash over the source & destination addresses and ports.
+However, the IPv6 hash is insufficient and can lead to a high rate of
+collisions.
 
-  # ip link add dummy1 type dummy
-  # echo 1 > /proc/sys/net/ipv6/conf/dummy1/use_tempaddr
-  # ip link set dummy1 up
-  # ip -6 addr add 2000::1/64 mngtmpaddr dev dummy1
-  # ip -6 addr show dev dummy1
+The IPv6 hash used an XOR to fit everything into the 96 bits for the
+fast jenkins hash, meaning it is possible for an external entity to
+ensure the hash collides, thus falling back to a linear search in the
+bucket, which is slow.
 
-  11: dummy1: <BROADCAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN group default qlen 1000
-      inet6 2000::44f3:581c:8ca:3983/64 scope global temporary dynamic
-         valid_lft 604800sec preferred_lft 86172sec
-      inet6 2000::1/64 scope global mngtmpaddr
-         valid_lft forever preferred_lft forever
-      inet6 fe80::e8a8:a6ff:fed5:56d4/64 scope link
-         valid_lft forever preferred_lft forever
+We take the approach of hash the full length of IPv6 address in
+__ipv6_addr_jhash() so that all users can benefit from a more secure
+version.
 
-  # ip -6 addr del 2000::44f3:581c:8ca:3983/64 dev dummy1
+While this may look like it adds overhead, the reality of modern CPUs
+means that this is unmeasurable in real world scenarios.
 
-  (can wait a few seconds if you want to, the above delete isn't [directly] the problem)
+In simulating with llvm-mca, the increase in cycles for the hashing
+code was ~16 cycles on Skylake (from a base of ~155), and an extra ~9
+on Nehalem (base of ~173).
 
-  # ip -6 addr show dev dummy1
+In commit dd6d2910c5e0 ("netfilter: conntrack: switch to siphash")
+netfilter switched from a jenkins hash to a siphash, but even the faster
+hsiphash is a more significant overhead (~20-30%) in some preliminary
+testing.  So, in this patch, we keep to the more conservative approach to
+ensure we don't add much overhead per SYN.
 
-  11: dummy1: <BROADCAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN group default qlen 1000
-      inet6 2000::1/64 scope global mngtmpaddr
-         valid_lft forever preferred_lft forever
-      inet6 fe80::e8a8:a6ff:fed5:56d4/64 scope link
-         valid_lft forever preferred_lft forever
+In testing, this results in a consistently even spread across the
+connection buckets.  In both testing and real-world scenarios, we have
+not found any measurable performance impact.
 
-  # ip -6 addr del 2000::1/64 mngtmpaddr dev dummy1
-  # ip -6 addr show dev dummy1
-
-  11: dummy1: <BROADCAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN group default qlen 1000
-      inet6 2000::81c9:56b7:f51a:b98f/64 scope global temporary dynamic
-         valid_lft 604797sec preferred_lft 86169sec
-      inet6 fe80::e8a8:a6ff:fed5:56d4/64 scope link
-         valid_lft forever preferred_lft forever
-
-This patch prevents this new 'global temporary dynamic' address from being
-created by the deletion of the related (same subnet prefix) 'mngtmpaddr'
-(which is triggered by there already being no temporary addresses).
-
-Cc: Jiri Pirko <jiri@resnulli.us>
-Fixes: 53bd67491537 ("ipv6 addrconf: introduce IFA_F_MANAGETEMPADDR to tell kernel to manage temporary addresses")
-Reported-by: Xiao Ma <xiaom@google.com>
-Signed-off-by: Maciej Żenczykowski <maze@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20230720160022.1887942-1-maze@google.com
+Fixes: 08dcdbf6a7b9 ("ipv6: use a stronger hash for tcp")
+Signed-off-by: Stewart Smith <trawets@amazon.com>
+Signed-off-by: Samuel Mendoza-Jonas <samjonas@amazon.com>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230721222410.17914-1-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ include/net/ipv6.h | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index e0d3909172a84..0c0b7969840f5 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -2565,12 +2565,18 @@ static void manage_tempaddrs(struct inet6_dev *idev,
- 			ipv6_ifa_notify(0, ift);
- 	}
+diff --git a/include/net/ipv6.h b/include/net/ipv6.h
+index e3ab99f4edab7..20930086b2288 100644
+--- a/include/net/ipv6.h
++++ b/include/net/ipv6.h
+@@ -664,12 +664,8 @@ static inline u32 ipv6_addr_hash(const struct in6_addr *a)
+ /* more secured version of ipv6_addr_hash() */
+ static inline u32 __ipv6_addr_jhash(const struct in6_addr *a, const u32 initval)
+ {
+-	u32 v = (__force u32)a->s6_addr32[0] ^ (__force u32)a->s6_addr32[1];
+-
+-	return jhash_3words(v,
+-			    (__force u32)a->s6_addr32[2],
+-			    (__force u32)a->s6_addr32[3],
+-			    initval);
++	return jhash2((__force const u32 *)a->s6_addr32,
++		      ARRAY_SIZE(a->s6_addr32), initval);
+ }
  
--	if ((create || list_empty(&idev->tempaddr_list)) &&
--	    idev->cnf.use_tempaddr > 0) {
-+	/* Also create a temporary address if it's enabled but no temporary
-+	 * address currently exists.
-+	 * However, we get called with valid_lft == 0, prefered_lft == 0, create == false
-+	 * as part of cleanup (ie. deleting the mngtmpaddr).
-+	 * We don't want that to result in creating a new temporary ip address.
-+	 */
-+	if (list_empty(&idev->tempaddr_list) && (valid_lft || prefered_lft))
-+		create = true;
-+
-+	if (create && idev->cnf.use_tempaddr > 0) {
- 		/* When a new public address is created as described
- 		 * in [ADDRCONF], also create a new temporary address.
--		 * Also create a temporary address if it's enabled but
--		 * no temporary address currently exists.
- 		 */
- 		read_unlock_bh(&idev->lock);
- 		ipv6_create_tempaddr(ifp, false);
+ static inline bool ipv6_addr_loopback(const struct in6_addr *a)
 -- 
 2.39.2
 
