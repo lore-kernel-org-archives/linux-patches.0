@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6921F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:26:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11CEBC433C7;
-	Tue,  1 Aug 2023 09:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623B01F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:26:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95CFC433C7;
+	Tue,  1 Aug 2023 09:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882009;
-	bh=6RW2i1VRdJfLd8i6gA4hhIJE3cdM5H5MYF8qE4J2bco=;
+	s=korg; t=1690882012;
+	bh=O4PmndeqTsi2EL8yJKVnA8HiSaciF889/IwDkEAPz8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iHNAlLwNBgB6oAYKHmn28NfJx7LX+zMiv4J9gF/0O81m3MN1l+JC8Uu0gwP44Qlhr
-	 9BpAz7XYnPSpCh83/VNwX3YhqXfLLCeAPwiRPyOsX3OB4cwmpqGYigjLis59FpWP6y
-	 8hMfbr0IEZygN+0byBPh1E0bSEYMuMBry+qzC2p4=
+	b=dj3QO1G8Bt2oZG0zHjkAezRliRLx3pTWRKR4ICmKulRsaBuAlaIRTFJ7xj4aK2fqU
+	 Vm0lR6W4cKk6ZkKqDTTEORTfCd+8gmqU3p+hUUJwotX6D2cjHcfN3BjydJLFiQ1Pfm
+	 //XSg4IS6knXMk+lSyvHlghTFTSAvkJ9RnSmsOLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Samuel Holland <samuel.holland@sifive.com>
-Subject: [PATCH 5.15 108/155] serial: sifive: Fix sifive_serial_console_setup() section
-Date: Tue,  1 Aug 2023 11:20:20 +0200
-Message-ID: <20230801091914.085050600@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 082/155] RDMA/mlx4: Make check for invalid flags stricter
+Date: Tue,  1 Aug 2023 11:19:54 +0200
+Message-ID: <20230801091913.092279516@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -34,34 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Samuel Holland <samuel.holland@sifive.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 9b8fef6345d5487137d4193bb0a0eae2203c284e upstream.
+[ Upstream commit d64b1ee12a168030fbb3e0aebf7bce49e9a07589 ]
 
-This function is called indirectly from the platform driver probe
-function. Even if the driver is built in, it may be probed after
-free_initmem() due to deferral or unbinding/binding via sysfs.
-Thus the function cannot be marked as __init.
+This code is trying to ensure that only the flags specified in the list
+are allowed.  The problem is that ucmd->rx_hash_fields_mask is a u64 and
+the flags are an enum which is treated as a u32 in this context.  That
+means the test doesn't check whether the highest 32 bits are zero.
 
-Fixes: 45c054d0815b ("tty: serial: add driver for the SiFive UART")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
-Link: https://lore.kernel.org/r/20230624060159.3401369-1-samuel.holland@sifive.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4d02ebd9bbbd ("IB/mlx4: Fix RSS hash fields restrictions")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/233ed975-982d-422a-b498-410f71d8a101@moroto.mountain
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sifive.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx4/qp.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/drivers/tty/serial/sifive.c
-+++ b/drivers/tty/serial/sifive.c
-@@ -843,7 +843,7 @@ static void sifive_serial_console_write(
- 	local_irq_restore(flags);
- }
+diff --git a/drivers/infiniband/hw/mlx4/qp.c b/drivers/infiniband/hw/mlx4/qp.c
+index ec545b8858cc0..43b2aad845917 100644
+--- a/drivers/infiniband/hw/mlx4/qp.c
++++ b/drivers/infiniband/hw/mlx4/qp.c
+@@ -530,15 +530,15 @@ static int set_qp_rss(struct mlx4_ib_dev *dev, struct mlx4_ib_rss *rss_ctx,
+ 		return (-EOPNOTSUPP);
+ 	}
  
--static int __init sifive_serial_console_setup(struct console *co, char *options)
-+static int sifive_serial_console_setup(struct console *co, char *options)
- {
- 	struct sifive_serial_port *ssp;
- 	int baud = SIFIVE_DEFAULT_BAUD_RATE;
+-	if (ucmd->rx_hash_fields_mask & ~(MLX4_IB_RX_HASH_SRC_IPV4	|
+-					  MLX4_IB_RX_HASH_DST_IPV4	|
+-					  MLX4_IB_RX_HASH_SRC_IPV6	|
+-					  MLX4_IB_RX_HASH_DST_IPV6	|
+-					  MLX4_IB_RX_HASH_SRC_PORT_TCP	|
+-					  MLX4_IB_RX_HASH_DST_PORT_TCP	|
+-					  MLX4_IB_RX_HASH_SRC_PORT_UDP	|
+-					  MLX4_IB_RX_HASH_DST_PORT_UDP  |
+-					  MLX4_IB_RX_HASH_INNER)) {
++	if (ucmd->rx_hash_fields_mask & ~(u64)(MLX4_IB_RX_HASH_SRC_IPV4	|
++					       MLX4_IB_RX_HASH_DST_IPV4	|
++					       MLX4_IB_RX_HASH_SRC_IPV6	|
++					       MLX4_IB_RX_HASH_DST_IPV6	|
++					       MLX4_IB_RX_HASH_SRC_PORT_TCP |
++					       MLX4_IB_RX_HASH_DST_PORT_TCP |
++					       MLX4_IB_RX_HASH_SRC_PORT_UDP |
++					       MLX4_IB_RX_HASH_DST_PORT_UDP |
++					       MLX4_IB_RX_HASH_INNER)) {
+ 		pr_debug("RX Hash fields_mask has unsupported mask (0x%llx)\n",
+ 			 ucmd->rx_hash_fields_mask);
+ 		return (-EOPNOTSUPP);
+-- 
+2.40.1
+
 
 
