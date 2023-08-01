@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123731F95A
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 895B7C433C8;
-	Tue,  1 Aug 2023 09:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D013E1F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5277AC433C7;
+	Tue,  1 Aug 2023 09:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881787;
-	bh=CqjoQAyrb2U2oRQ4o+05CRFmvMjznyypOp5H4uUDxP8=;
+	s=korg; t=1690881790;
+	bh=iZfqOiSekW2FvF6r6qAy7wb9D+r3e/leeGtkMW54PuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xTGODkmSybhrExy3d2G4Dy9lQUqfDlc5xZPHvPDOJB+rpfE8KVHc9GkANTmFx7Gl0
-	 9NR8Te67IOzpEEF29tnPWbce5YD23e5oD7zZ4x3fQFqBjQwfsphImEIfg256Qco9se
-	 CWN9oaSnVZ/2XCKV79ZeSpvCKHbw8zGxwtcZ0q1U=
+	b=VLZRdtNs0GNev9fouZn/pmpQKqFll99gD0R9VpatsaI0sc9SUflGefbkvMJI9WPzN
+	 B1anKyDPTBVVc0oUwBVtNnHiWxZl7iWm9FVcpFOq305KjrUkTEL/YgpL9Kg+MdxDPl
+	 h80AXbbejJywXvqPo8Tvg2yWDG2FvszyUbiqaolA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bharath SM <bharathsm@microsoft.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 030/155] cifs: if deferred close is disabled then close files immediately
-Date: Tue,  1 Aug 2023 11:19:02 +0200
-Message-ID: <20230801091911.278732839@linuxfoundation.org>
+Subject: [PATCH 5.15 031/155] pwm: meson: Simplify duplicated per-channel tracking
+Date: Tue,  1 Aug 2023 11:19:03 +0200
+Message-ID: <20230801091911.309013468@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -36,39 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bharath SM <bharathsm@microsoft.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit df9d70c18616760c6504b97fec66b6379c172dbb ]
+[ Upstream commit 5f97f18feac9bd5a8163b108aee52d783114b36f ]
 
-If defer close timeout value is set to 0, then there is no
-need to include files in the deferred close list and utilize
-the delayed worker for closing. Instead, we can close them
-immediately.
+The driver tracks per-channel data via struct pwm_device::chip_data and
+struct meson_pwm::channels[]. The latter holds the actual data, the former
+is only a pointer to the latter. So simplify by using struct
+meson_pwm::channels[] consistently.
 
-Signed-off-by: Bharath SM <bharathsm@microsoft.com>
-Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Stable-dep-of: 87a2cbf02d77 ("pwm: meson: fix handling of period/duty if greater than UINT_MAX")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/file.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pwm/pwm-meson.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/fs/cifs/file.c b/fs/cifs/file.c
-index 4e4f73a90574b..e65fbae9e804b 100644
---- a/fs/cifs/file.c
-+++ b/fs/cifs/file.c
-@@ -880,8 +880,8 @@ int cifs_close(struct inode *inode, struct file *file)
- 		cfile = file->private_data;
- 		file->private_data = NULL;
- 		dclose = kmalloc(sizeof(struct cifs_deferred_close), GFP_KERNEL);
--		if ((cinode->oplock == CIFS_CACHE_RHW_FLG) &&
--		    cinode->lease_granted &&
-+		if ((cifs_sb->ctx->closetimeo && cinode->oplock == CIFS_CACHE_RHW_FLG)
-+		    && cinode->lease_granted &&
- 		    !test_bit(CIFS_INO_CLOSE_ON_LOCK, &cinode->flags) &&
- 		    dclose) {
- 			if (test_and_clear_bit(CIFS_INO_MODIFIED_ATTR, &cinode->flags)) {
+diff --git a/drivers/pwm/pwm-meson.c b/drivers/pwm/pwm-meson.c
+index 76f702c43cbc3..37bbad88a3ee5 100644
+--- a/drivers/pwm/pwm-meson.c
++++ b/drivers/pwm/pwm-meson.c
+@@ -147,12 +147,13 @@ static int meson_pwm_request(struct pwm_chip *chip, struct pwm_device *pwm)
+ 		return err;
+ 	}
+ 
+-	return pwm_set_chip_data(pwm, channel);
++	return 0;
+ }
+ 
+ static void meson_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
+ {
+-	struct meson_pwm_channel *channel = pwm_get_chip_data(pwm);
++	struct meson_pwm *meson = to_meson_pwm(chip);
++	struct meson_pwm_channel *channel = &meson->channels[pwm->hwpwm];
+ 
+ 	if (channel)
+ 		clk_disable_unprepare(channel->clk);
+@@ -161,7 +162,7 @@ static void meson_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
+ static int meson_pwm_calc(struct meson_pwm *meson, struct pwm_device *pwm,
+ 			  const struct pwm_state *state)
+ {
+-	struct meson_pwm_channel *channel = pwm_get_chip_data(pwm);
++	struct meson_pwm_channel *channel = &meson->channels[pwm->hwpwm];
+ 	unsigned int duty, period, pre_div, cnt, duty_cnt;
+ 	unsigned long fin_freq;
+ 
+@@ -230,7 +231,7 @@ static int meson_pwm_calc(struct meson_pwm *meson, struct pwm_device *pwm,
+ 
+ static void meson_pwm_enable(struct meson_pwm *meson, struct pwm_device *pwm)
+ {
+-	struct meson_pwm_channel *channel = pwm_get_chip_data(pwm);
++	struct meson_pwm_channel *channel = &meson->channels[pwm->hwpwm];
+ 	struct meson_pwm_channel_data *channel_data;
+ 	unsigned long flags;
+ 	u32 value;
+@@ -273,8 +274,8 @@ static void meson_pwm_disable(struct meson_pwm *meson, struct pwm_device *pwm)
+ static int meson_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 			   const struct pwm_state *state)
+ {
+-	struct meson_pwm_channel *channel = pwm_get_chip_data(pwm);
+ 	struct meson_pwm *meson = to_meson_pwm(chip);
++	struct meson_pwm_channel *channel = &meson->channels[pwm->hwpwm];
+ 	int err = 0;
+ 
+ 	if (!state)
 -- 
 2.39.2
 
