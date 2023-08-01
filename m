@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38C51FB2B
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:34:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4461DC433C7;
-	Tue,  1 Aug 2023 09:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961301FB2B
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:34:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B53C433CC;
+	Tue,  1 Aug 2023 09:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882452;
-	bh=qzmJOWR/rSdkwTgbT8onOxhUNTVa0tv09CNeEJ2Gkko=;
+	s=korg; t=1690882455;
+	bh=KjHEaMl2cXLGv+WaI1/Ho+9ij72207x1P/B7xUfWL3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tfGOQzUEAggHw4+k5RWGPVffF1fvrC+++20lXmaSZTftoCay1MlzWRncc9csBt3lD
-	 4/mlTHagpmemmu1QaRZo0lJcEFax/InJh1ZooXKUBWccPGVWOi5lYjxtMOFhPe6lcD
-	 lkbt0kxa+1TqxtDLed0jNnNGgUXTxutBJwNht0ZQ=
+	b=QrXfZGwlY2VZ8EtDOs7QxyCXBE+T//c+9LwI4HQAwtUT92xV/i7Ff+KqGdV9oih5x
+	 vlbI2BdjEKNtRmyla/OTdLg7K1egLW71YFduwDLUN7ZDevNE+Wb2OFIS6vXKVdgHwI
+	 y4crm3qQxilwlEFj/pzoU4k2pew0lU6XkzpiEpLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Ferenc Fejes <fejes@inf.elte.hu>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 083/228] iavf: check for removal state before IAVF_FLAG_PF_COMMS_FAILED
-Date: Tue,  1 Aug 2023 11:19:01 +0200
-Message-ID: <20230801091925.844908211@linuxfoundation.org>
+Subject: [PATCH 6.1 110/228] net/sched: mqprio: add extack to mqprio_parse_nlattr()
+Date: Tue,  1 Aug 2023 11:19:28 +0200
+Message-ID: <20230801091926.762200860@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,57 +38,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 91896c8acce23d33ed078cffd46a9534b1f82be5 ]
+[ Upstream commit 57f21bf85400abadac0cb2a4db5de1d663f8863f ]
 
-In iavf_adminq_task(), if the function can't acquire the
-adapter->crit_lock, it checks if the driver is removing. If so, it simply
-exits without re-enabling the interrupt. This is done to ensure that the
-task stops processing as soon as possible once the driver is being removed.
+Netlink attribute parsing in mqprio is a minesweeper game, with many
+options having the possibility of being passed incorrectly and the user
+being none the wiser.
 
-However, if the IAVF_FLAG_PF_COMMS_FAILED is set, the function checks this
-before attempting to acquire the lock. In this case, the function exits
-early and re-enables the interrupt. This will happen even if the driver is
-already removing.
+Try to make errors less sour by giving user space some information
+regarding what went wrong.
 
-Avoid this, by moving the check to after the adapter->crit_lock is
-acquired. This way, if the driver is removing, we will not re-enable the
-interrupt.
-
-Fixes: fc2e6b3b132a ("iavf: Rework mutexes for better synchronisation")
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Ferenc Fejes <fejes@inf.elte.hu>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 6c58c8816abb ("net/sched: mqprio: Add length check for TCA_MQPRIO_{MAX/MIN}_RATE64")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/sched/sch_mqprio.c | 30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index 650a969a69a14..22bc57ee24228 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -3286,9 +3286,6 @@ static void iavf_adminq_task(struct work_struct *work)
- 	u32 val, oldval;
- 	u16 pending;
+diff --git a/net/sched/sch_mqprio.c b/net/sched/sch_mqprio.c
+index 166b22601e60f..1ab20d43c50b0 100644
+--- a/net/sched/sch_mqprio.c
++++ b/net/sched/sch_mqprio.c
+@@ -131,7 +131,8 @@ static int parse_attr(struct nlattr *tb[], int maxtype, struct nlattr *nla,
+ }
  
--	if (adapter->flags & IAVF_FLAG_PF_COMMS_FAILED)
--		goto out;
--
- 	if (!mutex_trylock(&adapter->crit_lock)) {
- 		if (adapter->state == __IAVF_REMOVE)
- 			return;
-@@ -3297,6 +3294,9 @@ static void iavf_adminq_task(struct work_struct *work)
- 		goto out;
+ static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
+-			       struct nlattr *opt)
++			       struct nlattr *opt,
++			       struct netlink_ext_ack *extack)
+ {
+ 	struct mqprio_sched *priv = qdisc_priv(sch);
+ 	struct nlattr *tb[TCA_MQPRIO_MAX + 1];
+@@ -143,8 +144,11 @@ static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
+ 	if (err < 0)
+ 		return err;
+ 
+-	if (!qopt->hw)
++	if (!qopt->hw) {
++		NL_SET_ERR_MSG(extack,
++			       "mqprio TCA_OPTIONS can only contain netlink attributes in hardware mode");
+ 		return -EINVAL;
++	}
+ 
+ 	if (tb[TCA_MQPRIO_MODE]) {
+ 		priv->flags |= TC_MQPRIO_F_MODE;
+@@ -157,13 +161,19 @@ static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
  	}
  
-+	if (adapter->flags & IAVF_FLAG_PF_COMMS_FAILED)
-+		goto unlock;
-+
- 	event.buf_len = IAVF_MAX_AQ_BUF_SIZE;
- 	event.msg_buf = kzalloc(event.buf_len, GFP_KERNEL);
- 	if (!event.msg_buf)
+ 	if (tb[TCA_MQPRIO_MIN_RATE64]) {
+-		if (priv->shaper != TC_MQPRIO_SHAPER_BW_RATE)
++		if (priv->shaper != TC_MQPRIO_SHAPER_BW_RATE) {
++			NL_SET_ERR_MSG_ATTR(extack, tb[TCA_MQPRIO_MIN_RATE64],
++					    "min_rate accepted only when shaper is in bw_rlimit mode");
+ 			return -EINVAL;
++		}
+ 		i = 0;
+ 		nla_for_each_nested(attr, tb[TCA_MQPRIO_MIN_RATE64],
+ 				    rem) {
+-			if (nla_type(attr) != TCA_MQPRIO_MIN_RATE64)
++			if (nla_type(attr) != TCA_MQPRIO_MIN_RATE64) {
++				NL_SET_ERR_MSG_ATTR(extack, attr,
++						    "Attribute type expected to be TCA_MQPRIO_MIN_RATE64");
+ 				return -EINVAL;
++			}
+ 			if (i >= qopt->num_tc)
+ 				break;
+ 			priv->min_rate[i] = *(u64 *)nla_data(attr);
+@@ -173,13 +183,19 @@ static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
+ 	}
+ 
+ 	if (tb[TCA_MQPRIO_MAX_RATE64]) {
+-		if (priv->shaper != TC_MQPRIO_SHAPER_BW_RATE)
++		if (priv->shaper != TC_MQPRIO_SHAPER_BW_RATE) {
++			NL_SET_ERR_MSG_ATTR(extack, tb[TCA_MQPRIO_MAX_RATE64],
++					    "max_rate accepted only when shaper is in bw_rlimit mode");
+ 			return -EINVAL;
++		}
+ 		i = 0;
+ 		nla_for_each_nested(attr, tb[TCA_MQPRIO_MAX_RATE64],
+ 				    rem) {
+-			if (nla_type(attr) != TCA_MQPRIO_MAX_RATE64)
++			if (nla_type(attr) != TCA_MQPRIO_MAX_RATE64) {
++				NL_SET_ERR_MSG_ATTR(extack, attr,
++						    "Attribute type expected to be TCA_MQPRIO_MAX_RATE64");
+ 				return -EINVAL;
++			}
+ 			if (i >= qopt->num_tc)
+ 				break;
+ 			priv->max_rate[i] = *(u64 *)nla_data(attr);
+@@ -224,7 +240,7 @@ static int mqprio_init(struct Qdisc *sch, struct nlattr *opt,
+ 
+ 	len = nla_len(opt) - NLA_ALIGN(sizeof(*qopt));
+ 	if (len > 0) {
+-		err = mqprio_parse_nlattr(sch, qopt, opt);
++		err = mqprio_parse_nlattr(sch, qopt, opt, extack);
+ 		if (err)
+ 			return err;
+ 	}
 -- 
 2.39.2
 
