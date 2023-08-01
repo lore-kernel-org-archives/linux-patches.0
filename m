@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0E11F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D67DC433C8;
-	Tue,  1 Aug 2023 09:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA7B1F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:39:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36806C433C8;
+	Tue,  1 Aug 2023 09:39:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882776;
-	bh=KB/fP6fNdtA0F55tyGHdtj+Ewi021HP4dbYgWLeF288=;
+	s=korg; t=1690882779;
+	bh=Z/quAPdbPq9ut+BE9T7MZZjmWh6JfpZ2WFydCUkmnwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DBr4DxyWa2LHXEK9EBuh1IgQqa6HImQfwA+2CfReMfW1CCmsWG369PBlTMRFo+bR7
-	 cYmmDJV6Vda1JIoK7v2otlwss0Kxc27Usk4b1iIGSyvUocRDbixSWt+BtPLYpDUKU3
-	 TYY1FSdWPSgQmjBhp1QGN22xCL3ekQllgizRRy6c=
+	b=OdGzcN/WIKNWXbbmlL/+sIOLgEtJs2S4T6IT/Raq3qu9V8QVDqNCtvuNm09m+b0tQ
+	 YpBtjo9a4syQql2BxAEIVCRkhCT5MCIXHFnvsMKGKvVkuNHWRNtIeXx8VLVnZLjXv2
+	 d1ykdpNO5rcWnGJgAERFjS+/14wtwADU7r0L3aYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Luben Tuikov <luben.tuikov@amd.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
 	Jindong Yue <jindong.yue@nxp.com>
-Subject: [PATCH 6.1 227/228] dma-buf: keep the signaling time of merged fences v3
-Date: Tue,  1 Aug 2023 11:21:25 +0200
-Message-ID: <20230801091931.044903339@linuxfoundation.org>
+Subject: [PATCH 6.1 228/228] dma-buf: fix an error pointer vs NULL bug
+Date: Tue,  1 Aug 2023 11:21:26 +0200
+Message-ID: <20230801091931.078947464@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -35,125 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian König <christian.koenig@amd.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit f781f661e8c99b0cb34129f2e374234d61864e77 upstream.
+commit 00ae1491f970acc454be0df63f50942d94825860 upstream.
 
-Some Android CTS is testing if the signaling time keeps consistent
-during merges.
+Smatch detected potential error pointer dereference.
 
-v2: use the current time if the fence is still in the signaling path and
-the timestamp not yet available.
-v3: improve comment, fix one more case to use the correct timestamp
+    drivers/gpu/drm/drm_syncobj.c:888 drm_syncobj_transfer_to_timeline()
+    error: 'fence' dereferencing possible ERR_PTR()
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Luben Tuikov <luben.tuikov@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230630120041.109216-1-christian.koenig@amd.com
+The error pointer comes from dma_fence_allocate_private_stub().  One
+caller expected error pointers and one expected NULL pointers.  Change
+it to return NULL and update the caller which expected error pointers,
+drm_syncobj_assign_null_handle(), to check for NULL instead.
+
+Fixes: f781f661e8c9 ("dma-buf: keep the signaling time of merged fences v3")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Sumit Semwal <sumit.semwal@linaro.org>
+Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/b09f1996-3838-4fa2-9193-832b68262e43@moroto.mountain
 Cc: Jindong Yue <jindong.yue@nxp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/dma-fence-unwrap.c |   26 ++++++++++++++++++++++----
- drivers/dma-buf/dma-fence.c        |    5 +++--
- drivers/gpu/drm/drm_syncobj.c      |    2 +-
- include/linux/dma-fence.h          |    2 +-
- 4 files changed, 27 insertions(+), 8 deletions(-)
+ drivers/dma-buf/dma-fence.c   |    2 +-
+ drivers/gpu/drm/drm_syncobj.c |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/dma-buf/dma-fence-unwrap.c
-+++ b/drivers/dma-buf/dma-fence-unwrap.c
-@@ -66,18 +66,36 @@ struct dma_fence *__dma_fence_unwrap_mer
- {
- 	struct dma_fence_array *result;
- 	struct dma_fence *tmp, **array;
-+	ktime_t timestamp;
- 	unsigned int i;
- 	size_t count;
- 
- 	count = 0;
-+	timestamp = ns_to_ktime(0);
- 	for (i = 0; i < num_fences; ++i) {
--		dma_fence_unwrap_for_each(tmp, &iter[i], fences[i])
--			if (!dma_fence_is_signaled(tmp))
-+		dma_fence_unwrap_for_each(tmp, &iter[i], fences[i]) {
-+			if (!dma_fence_is_signaled(tmp)) {
- 				++count;
-+			} else if (test_bit(DMA_FENCE_FLAG_TIMESTAMP_BIT,
-+					    &tmp->flags)) {
-+				if (ktime_after(tmp->timestamp, timestamp))
-+					timestamp = tmp->timestamp;
-+			} else {
-+				/*
-+				 * Use the current time if the fence is
-+				 * currently signaling.
-+				 */
-+				timestamp = ktime_get();
-+			}
-+		}
- 	}
- 
-+	/*
-+	 * If we couldn't find a pending fence just return a private signaled
-+	 * fence with the timestamp of the last signaled one.
-+	 */
- 	if (count == 0)
--		return dma_fence_get_stub();
-+		return dma_fence_allocate_private_stub(timestamp);
- 
- 	array = kmalloc_array(count, sizeof(*array), GFP_KERNEL);
- 	if (!array)
-@@ -138,7 +156,7 @@ restart:
- 	} while (tmp);
- 
- 	if (count == 0) {
--		tmp = dma_fence_get_stub();
-+		tmp = dma_fence_allocate_private_stub(ktime_get());
- 		goto return_tmp;
- 	}
- 
 --- a/drivers/dma-buf/dma-fence.c
 +++ b/drivers/dma-buf/dma-fence.c
-@@ -150,10 +150,11 @@ EXPORT_SYMBOL(dma_fence_get_stub);
+@@ -160,7 +160,7 @@ struct dma_fence *dma_fence_allocate_pri
  
- /**
-  * dma_fence_allocate_private_stub - return a private, signaled fence
-+ * @timestamp: timestamp when the fence was signaled
-  *
-  * Return a newly allocated and signaled stub fence.
-  */
--struct dma_fence *dma_fence_allocate_private_stub(void)
-+struct dma_fence *dma_fence_allocate_private_stub(ktime_t timestamp)
- {
- 	struct dma_fence *fence;
+ 	fence = kzalloc(sizeof(*fence), GFP_KERNEL);
+ 	if (fence == NULL)
+-		return ERR_PTR(-ENOMEM);
++		return NULL;
  
-@@ -169,7 +170,7 @@ struct dma_fence *dma_fence_allocate_pri
- 	set_bit(DMA_FENCE_FLAG_ENABLE_SIGNAL_BIT,
- 		&fence->flags);
- 
--	dma_fence_signal(fence);
-+	dma_fence_signal_timestamp(fence, timestamp);
- 
- 	return fence;
- }
+ 	dma_fence_init(fence,
+ 		       &dma_fence_stub_ops,
 --- a/drivers/gpu/drm/drm_syncobj.c
 +++ b/drivers/gpu/drm/drm_syncobj.c
-@@ -353,7 +353,7 @@ EXPORT_SYMBOL(drm_syncobj_replace_fence)
-  */
- static int drm_syncobj_assign_null_handle(struct drm_syncobj *syncobj)
+@@ -355,8 +355,8 @@ static int drm_syncobj_assign_null_handl
  {
--	struct dma_fence *fence = dma_fence_allocate_private_stub();
-+	struct dma_fence *fence = dma_fence_allocate_private_stub(ktime_get());
+ 	struct dma_fence *fence = dma_fence_allocate_private_stub(ktime_get());
  
- 	if (IS_ERR(fence))
- 		return PTR_ERR(fence);
---- a/include/linux/dma-fence.h
-+++ b/include/linux/dma-fence.h
-@@ -584,7 +584,7 @@ static inline signed long dma_fence_wait
- }
+-	if (IS_ERR(fence))
+-		return PTR_ERR(fence);
++	if (!fence)
++		return -ENOMEM;
  
- struct dma_fence *dma_fence_get_stub(void);
--struct dma_fence *dma_fence_allocate_private_stub(void);
-+struct dma_fence *dma_fence_allocate_private_stub(ktime_t timestamp);
- u64 dma_fence_context_alloc(unsigned num);
- 
- extern const struct dma_fence_ops dma_fence_array_ops;
+ 	drm_syncobj_replace_fence(syncobj, fence);
+ 	dma_fence_put(fence);
 
 
