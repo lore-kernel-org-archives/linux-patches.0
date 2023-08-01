@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E571200A5
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0EC5C433C7;
-	Tue,  1 Aug 2023 09:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07771200A5
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B57C433CC;
+	Tue,  1 Aug 2023 09:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882669;
-	bh=SrCFbNO3u2UL/0daFKDVllSug2gXOuRXA0l+xpMPo9Q=;
+	s=korg; t=1690882671;
+	bh=M2ADGH8y1eFZsJZHKWgKMvnjauSSTTseTqainU8f23E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SFDZ8u9XoqGlv/0k/cjO22zkFSypWyFUhLFso84oAcfgnFrXKoR3pDKVTIOZwb8d0
-	 ijiaVyMCXjn8KWC+hq7+2Gdm7yywHkVLaMiMEuQLcJx2p6V/yr/wg7S4Y6mHKu4BGq
-	 /ZfRuIdx+bA/QmsE8uVlUsZNWi+Qo4dLGxMCDjzc=
+	b=0o5gw4FqDm/U9Tug/kSRp4BWiYdqxd1Rm7Q82aYA/GkXEpImF5Page2b4du80puR/
+	 PMKfPID6Fe0c+D9XCBZDBmnnq1XBUwEdPX9Z4qsLGTuoG/ccZW7feKeRb/C2QyCXLB
+	 HtY4q9+ZBpMcLiC1sFHbFU9BBsldQ3GQXqMkdm4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.1 189/228] ACPI/IORT: Remove erroneous id_count check in iort_node_get_rmr_info()
-Date: Tue,  1 Aug 2023 11:20:47 +0200
-Message-ID: <20230801091929.682449828@linuxfoundation.org>
+	Alexander Steffen <Alexander.Steffen@infineon.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.1 190/228] tpm_tis: Explicitly check for error code
+Date: Tue,  1 Aug 2023 11:20:48 +0200
+Message-ID: <20230801091929.721991261@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,44 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+From: Alexander Steffen <Alexander.Steffen@infineon.com>
 
-commit 003e6b56d780095a9adc23efc9cb4b4b4717169b upstream.
+commit 513253f8c293c0c8bd46d09d337fc892bf8f9f48 upstream.
 
-According to the ARM IORT specifications DEN 0049 issue E,
-the "Number of IDs" field in the ID mapping format reports
-the number of IDs in the mapping range minus one.
+recv_data either returns the number of received bytes, or a negative value
+representing an error code. Adding the return value directly to the total
+number of received bytes therefore looks a little weird, since it might add
+a negative error code to a sum of bytes.
 
-In iort_node_get_rmr_info(), we erroneously skip ID mappings
-whose "Number of IDs" equal to 0, resulting in valid mapping
-nodes with a single ID to map being skipped, which is wrong.
+The following check for size < expected usually makes the function return
+ETIME in that case, so it does not cause too many problems in practice. But
+to make the code look cleaner and because the caller might still be
+interested in the original error code, explicitly check for the presence of
+an error code and pass that through.
 
-Fix iort_node_get_rmr_info() by removing the bogus id_count
-check.
-
-Fixes: 491cf4a6735a ("ACPI/IORT: Add support to retrieve IORT RMR reserved regions")
-Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
-Cc: <stable@vger.kernel.org> # 6.0.x
-Acked-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Tested-by: Hanjun Guo <guohanjun@huawei.com>
-Link: https://lore.kernel.org/r/1689593625-45213-1-git-send-email-guanghuifeng@linux.alibaba.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: stable@vger.kernel.org
+Fixes: cb5354253af2 ("[PATCH] tpm: spacing cleanups 2")
+Signed-off-by: Alexander Steffen <Alexander.Steffen@infineon.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/arm64/iort.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/acpi/arm64/iort.c
-+++ b/drivers/acpi/arm64/iort.c
-@@ -998,9 +998,6 @@ static void iort_node_get_rmr_info(struc
- 	for (i = 0; i < node->mapping_count; i++, map++) {
- 		struct acpi_iort_node *parent;
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -356,8 +356,13 @@ static int tpm_tis_recv(struct tpm_chip
+ 		goto out;
+ 	}
  
--		if (!map->id_count)
--			continue;
--
- 		parent = ACPI_ADD_PTR(struct acpi_iort_node, iort_table,
- 				      map->output_reference);
- 		if (parent != iommu)
+-	size += recv_data(chip, &buf[TPM_HEADER_SIZE],
+-			  expected - TPM_HEADER_SIZE);
++	rc = recv_data(chip, &buf[TPM_HEADER_SIZE],
++		       expected - TPM_HEADER_SIZE);
++	if (rc < 0) {
++		size = rc;
++		goto out;
++	}
++	size += rc;
+ 	if (size < expected) {
+ 		dev_err(&chip->dev, "Unable to read remainder of result\n");
+ 		size = -ETIME;
 
 
