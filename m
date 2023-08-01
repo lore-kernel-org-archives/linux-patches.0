@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566CE1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:45:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA792C433C8;
-	Tue,  1 Aug 2023 09:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311831FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:45:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BE3C433C8;
+	Tue,  1 Aug 2023 09:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883138;
-	bh=1Nf/KDsMLV+nlbpAYw8FLANkyBtbYIi1RS58w/n3wQ8=;
+	s=korg; t=1690883141;
+	bh=//5jYeo8U8YuRZlT0XV+A/crE2kZsIB3RHjpibMsCi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P1n9Z7JTFm1CkQzLDCd+vcCKNT7wqU+yflV4VopwpjHl/tH+ne6n0f92cJ2W3mDEe
-	 8EB7vDho6/4ICqDxArQMdk/K7SkwR+YYMDgwd3eMwkPlHZPkOmcbFl1Eq/qA5HGC1P
-	 HYHOjiCf/yKjshh9GacCZ84PjuMzH0kFFUR8IDmY=
+	b=IfnjhJTncxfE1qn7OTL0OK1mXvluxEjSJIwWFlfHgDzTzQukLeJdgE1kha1SbWwmq
+	 flMQS96WWAVOG/26SrCKP05NORucDMDRt6diUIHxY3E8K83IRjrelZx5XV7wudZzCc
+	 uBDLGgTuI6hv0eLTa4yvkm6WamNH6vM5zL7c0S/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 100/239] drm/msm/mdss: correct UBWC programming for SM8550
-Date: Tue,  1 Aug 2023 11:19:24 +0200
-Message-ID: <20230801091929.327377283@linuxfoundation.org>
+	Thomas Lamprecht <t.lamprecht@proxmox.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Fiona Ebner <f.ebner@proxmox.com>
+Subject: [PATCH 6.4 091/239] mm: suppress mm fault logging if fatal signal already pending
+Date: Tue,  1 Aug 2023 11:19:15 +0200
+Message-ID: <20230801091929.017974308@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -35,84 +37,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit a85c238c5ccd64f8d4c4560702c65cb25dee791c ]
+[ Upstream commit 5f0bc0b042fc77ff70e14c790abdec960cde4ec1 ]
 
-The SM8550 platform employs newer UBWC decoder, which requires slightly
-different programming.
+Commit eda0047296a1 ("mm: make the page fault mmap locking killable")
+intentionally made it much easier to trigger the "page fault fails
+because a fatal signal is pending" situation, by having the mmap locking
+fail early in that case.
 
-Fixes: a2f33995c19d ("drm/msm: mdss: add support for SM8550")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/546934/
-Link: https://lore.kernel.org/r/20230712121145.1994830-3-dmitry.baryshkov@linaro.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+We have long aborted page faults in other fatal cases when the actual IO
+for a page is interrupted by SIGKILL - which is particularly useful for
+the traditional case of NFS hanging due to network issues, but local
+filesystems could cause it too if you happened to get the SIGKILL while
+waiting for a page to be faulted in (eg lock_folio_maybe_drop_mmap()).
+
+So aborting the page fault wasn't a new condition - but it now triggers
+earlier, before we even get to 'handle_mm_fault()'.  And as a result the
+error doesn't go through our 'fault_signal_pending()' logic, and doesn't
+get filtered away there.
+
+Normally you'd never even notice, because if a fatal signal is pending,
+the new SIGSEGV we send ends up being ignored anyway.
+
+But it turns out that there is one very noticeable exception: if you
+enable 'show_unhandled_signals', the aborted page fault will be logged
+in the kernel messages, and you'll get a scary line looking something
+like this in your logs:
+
+  pverados[2183248]: segfault at 55e5a00f9ae0 ip 000055e5a00f9ae0 sp 00007ffc0720bea8 error 14 in perl[55e5a00d4000+195000] likely on CPU 10 (core 4, socket 0)
+
+which is rather misleading.  It's not really a segfault at all, it's
+just "the thread was killed before the page fault completed, so we
+aborted the page fault".
+
+Fix this by just making it clear that a pending fatal signal means that
+any new signal coming in after that is implicitly handled.  This will
+avoid the misleading logging, since now the signal isn't 'unhandled' any
+more.
+
+Reported-and-tested-by: Fiona Ebner <f.ebner@proxmox.com>
+Tested-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
+Link: https://lore.kernel.org/lkml/8d063a26-43f5-0bb7-3203-c6a04dc159f8@proxmox.com/
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Fixes: eda0047296a1 ("mm: make the page fault mmap locking killable")
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_mdss.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ kernel/signal.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-index e8c93731aaa18..4ae6fac20e48c 100644
---- a/drivers/gpu/drm/msm/msm_mdss.c
-+++ b/drivers/gpu/drm/msm/msm_mdss.c
-@@ -189,6 +189,7 @@ static int _msm_mdss_irq_domain_add(struct msm_mdss *msm_mdss)
- #define UBWC_2_0 0x20000000
- #define UBWC_3_0 0x30000000
- #define UBWC_4_0 0x40000000
-+#define UBWC_4_3 0x40030000
+diff --git a/kernel/signal.c b/kernel/signal.c
+index 2547fa73bde51..1b39cba7dfd38 100644
+--- a/kernel/signal.c
++++ b/kernel/signal.c
+@@ -561,6 +561,10 @@ bool unhandled_signal(struct task_struct *tsk, int sig)
+ 	if (handler != SIG_IGN && handler != SIG_DFL)
+ 		return false;
  
- static void msm_mdss_setup_ubwc_dec_20(struct msm_mdss *msm_mdss)
- {
-@@ -227,7 +228,10 @@ static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss)
- 		writel_relaxed(1, msm_mdss->mmio + UBWC_CTRL_2);
- 		writel_relaxed(0, msm_mdss->mmio + UBWC_PREDICTION_MODE);
- 	} else {
--		writel_relaxed(2, msm_mdss->mmio + UBWC_CTRL_2);
-+		if (data->ubwc_dec_version == UBWC_4_3)
-+			writel_relaxed(3, msm_mdss->mmio + UBWC_CTRL_2);
-+		else
-+			writel_relaxed(2, msm_mdss->mmio + UBWC_CTRL_2);
- 		writel_relaxed(1, msm_mdss->mmio + UBWC_PREDICTION_MODE);
- 	}
- }
-@@ -271,6 +275,7 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
- 		msm_mdss_setup_ubwc_dec_30(msm_mdss);
- 		break;
- 	case UBWC_4_0:
-+	case UBWC_4_3:
- 		msm_mdss_setup_ubwc_dec_40(msm_mdss);
- 		break;
- 	default:
-@@ -561,6 +566,16 @@ static const struct msm_mdss_data sm8250_data = {
- 	.macrotile_mode = 1,
- };
- 
-+static const struct msm_mdss_data sm8550_data = {
-+	.ubwc_version = UBWC_4_0,
-+	.ubwc_dec_version = UBWC_4_3,
-+	.ubwc_swizzle = 6,
-+	.ubwc_static = 1,
-+	/* TODO: highest_bank_bit = 2 for LP_DDR4 */
-+	.highest_bank_bit = 3,
-+	.macrotile_mode = 1,
-+};
++	/* If dying, we handle all new signals by ignoring them */
++	if (fatal_signal_pending(tsk))
++		return false;
 +
- static const struct of_device_id mdss_dt_match[] = {
- 	{ .compatible = "qcom,mdss" },
- 	{ .compatible = "qcom,msm8998-mdss" },
-@@ -575,7 +590,7 @@ static const struct of_device_id mdss_dt_match[] = {
- 	{ .compatible = "qcom,sm8250-mdss", .data = &sm8250_data },
- 	{ .compatible = "qcom,sm8350-mdss", .data = &sm8250_data },
- 	{ .compatible = "qcom,sm8450-mdss", .data = &sm8250_data },
--	{ .compatible = "qcom,sm8550-mdss", .data = &sm8250_data },
-+	{ .compatible = "qcom,sm8550-mdss", .data = &sm8550_data },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, mdss_dt_match);
+ 	/* if ptraced, let the tracer determine */
+ 	return !tsk->ptrace;
+ }
 -- 
-2.40.1
+2.39.2
 
 
 
