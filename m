@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7626E1FB2B
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:35:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC280C433CD;
-	Tue,  1 Aug 2023 09:35:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4541C1FB2B
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:35:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC01BC433C9;
+	Tue,  1 Aug 2023 09:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882508;
-	bh=OXYG/4/8EYhSl9aJlyWy7w/Q03QcE/r4l6+lwDCLK+0=;
+	s=korg; t=1690882511;
+	bh=zwsiGjh/mfJKZo7GcuHEku71pnBeEVPLwTtVJAVCCNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xvmb4xJVRwS99t5LUE1cHFZ01gwWluEPpFvF7xZu2Vx6AeaFDEmQhgWCE29QNcC6C
-	 xpjf2mCcmnkihI9zwoCBI6yg7Ewsv6LiyJ6jqkf+3QGWIOdsmBHioGaSLBZXYi8hnC
-	 /uu8ve75P4KVSZLOb4pcbFycnlW8nw2HrHyIfa64=
+	b=M+HO/jzLcx/4abTiY/wuo0bf/z5nYZ4WlIlwVf/YHLKFksKSy/R4MoWiUaUbUYHiW
+	 isSjwl8vWIKmMGHeL10WugNF9OPYpxV7JDOz/GZWpCKqY8wzdHAJJQ88O451K24TcU
+	 kvFzcfqKeEqPuiOBaHSAEh1OJCFDkaOUrerX5Ya0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanjun Gong <ruc_gongyuanjun@163.com>,
-	Tung Nguyen <tung.q.nguyen@dektech.com.au>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 113/228] tipc: check return value of pskb_trim()
-Date: Tue,  1 Aug 2023 11:19:31 +0200
-Message-ID: <20230801091926.868060457@linuxfoundation.org>
+Subject: [PATCH 6.1 131/228] dm raid: fix missing reconfig_mutex unlock in raid_ctr() error paths
+Date: Tue,  1 Aug 2023 11:19:49 +0200
+Message-ID: <20230801091927.471513934@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,39 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuanjun Gong <ruc_gongyuanjun@163.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit e46e06ffc6d667a89b979701288e2264f45e6a7b ]
+[ Upstream commit bae3028799dc4f1109acc4df37c8ff06f2d8f1a0 ]
 
-goto free_skb if an unexpected result is returned by pskb_tirm()
-in tipc_crypto_rcv_complete().
+In the error paths 'bad_stripe_cache' and 'bad_check_reshape',
+'reconfig_mutex' is still held after raid_ctr() returns.
 
-Fixes: fc1b6d6de220 ("tipc: introduce TIPC encryption & authentication")
-Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
-Reviewed-by: Tung Nguyen <tung.q.nguyen@dektech.com.au>
-Link: https://lore.kernel.org/r/20230725064810.5820-1-ruc_gongyuanjun@163.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 9dbd1aa3a81c ("dm raid: add reshaping support to the target")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/crypto.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/md/dm-raid.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
-index d67440de011e7..2b236d95a6469 100644
---- a/net/tipc/crypto.c
-+++ b/net/tipc/crypto.c
-@@ -1960,7 +1960,8 @@ static void tipc_crypto_rcv_complete(struct net *net, struct tipc_aead *aead,
+diff --git a/drivers/md/dm-raid.c b/drivers/md/dm-raid.c
+index b26c12856b1db..bd0da5bbd57b0 100644
+--- a/drivers/md/dm-raid.c
++++ b/drivers/md/dm-raid.c
+@@ -3274,15 +3274,19 @@ static int raid_ctr(struct dm_target *ti, unsigned int argc, char **argv)
+ 	/* Try to adjust the raid4/5/6 stripe cache size to the stripe size */
+ 	if (rs_is_raid456(rs)) {
+ 		r = rs_set_raid456_stripe_cache(rs);
+-		if (r)
++		if (r) {
++			mddev_unlock(&rs->md);
+ 			goto bad_stripe_cache;
++		}
+ 	}
  
- 	skb_reset_network_header(*skb);
- 	skb_pull(*skb, tipc_ehdr_size(ehdr));
--	pskb_trim(*skb, (*skb)->len - aead->authsize);
-+	if (pskb_trim(*skb, (*skb)->len - aead->authsize))
-+		goto free_skb;
+ 	/* Now do an early reshape check */
+ 	if (test_bit(RT_FLAG_RESHAPE_RS, &rs->runtime_flags)) {
+ 		r = rs_check_reshape(rs);
+-		if (r)
++		if (r) {
++			mddev_unlock(&rs->md);
+ 			goto bad_check_reshape;
++		}
  
- 	/* Validate TIPCv2 message */
- 	if (unlikely(!tipc_msg_validate(skb))) {
+ 		/* Restore new, ctr requested layout to perform check */
+ 		rs_config_restore(rs, &rs_layout);
+@@ -3291,6 +3295,7 @@ static int raid_ctr(struct dm_target *ti, unsigned int argc, char **argv)
+ 			r = rs->md.pers->check_reshape(&rs->md);
+ 			if (r) {
+ 				ti->error = "Reshape check failed";
++				mddev_unlock(&rs->md);
+ 				goto bad_check_reshape;
+ 			}
+ 		}
 -- 
-2.39.2
+2.40.1
 
 
 
