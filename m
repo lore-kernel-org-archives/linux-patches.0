@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89CC1F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:41:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58DD6C433C7;
-	Tue,  1 Aug 2023 09:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29A21F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:41:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21647C433C9;
+	Tue,  1 Aug 2023 09:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882868;
-	bh=Z2dVW5ltn2ElYLZWBhidtHujT4gfctGfMvwQrSfG71c=;
+	s=korg; t=1690882871;
+	bh=WzHTNSA87HLxOruL4ex5cs3VyHc/Wppr3H1ANaX10Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IrEKj44aNy4XODLRPH9Cn4H7Xvkw+xNjogh62cSSr+E5NAfk4PjaoI/c1Kh3i8+Bt
-	 GaGRQua+/mlZlOo94ONM5vyuLdy5moezgVzkJOwBQZhrA3vK6A8ZpofnNETFEXWWO6
-	 MaZ478LuSOLL7A+fhlRJLuJWbyjd2OpySPpT8GXQ=
+	b=V7YMaegcOKnoBZzd9/+LF5P9QFS53KnWFIhjj72Y4zoVCzgbvey3DjUnJ3em8ZrR0
+	 3tfOsnb28yhPVcWUJA88outUQO7PFcSpyU659aCBx0pQbT8xLqT1AsmcmBY9xlxPge
+	 7g7BT+X1gg8ozAzMVS0PImfbJ0ox5Af3/tdeGxMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.4 005/239] r8169: revert 2ab19de62d67 ("r8169: remove ASPM restrictions now that ASPM is disabled during NAPI poll")
-Date: Tue,  1 Aug 2023 11:17:49 +0200
-Message-ID: <20230801091925.837435794@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 006/239] jbd2: Fix wrongly judgement for buffer head removing while doing checkpoint
+Date: Tue,  1 Aug 2023 11:17:50 +0200
+Message-ID: <20230801091925.877746747@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -34,83 +37,105 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-commit cf2ffdea0839398cb0551762af7f5efb0a6e0fea upstream.
+[ Upstream commit e34c8dd238d0c9368b746480f313055f5bab5040 ]
 
-There have been reports that on a number of systems this change breaks
-network connectivity. Therefore effectively revert it. Mainly affected
-seem to be systems where BIOS denies ASPM access to OS.
-Due to later changes we can't do a direct revert.
+Following process,
 
-Fixes: 2ab19de62d67 ("r8169: remove ASPM restrictions now that ASPM is disabled during NAPI poll")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/netdev/e47bac0d-e802-65e1-b311-6acb26d5cf10@freenet.de/T/
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217596
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/57f13ec0-b216-d5d8-363d-5b05528ec5fb@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+jbd2_journal_commit_transaction
+// there are several dirty buffer heads in transaction->t_checkpoint_list
+          P1                   wb_workfn
+jbd2_log_do_checkpoint
+ if (buffer_locked(bh)) // false
+                            __block_write_full_page
+                             trylock_buffer(bh)
+                             test_clear_buffer_dirty(bh)
+ if (!buffer_dirty(bh))
+  __jbd2_journal_remove_checkpoint(jh)
+   if (buffer_write_io_error(bh)) // false
+                             >> bh IO error occurs <<
+ jbd2_cleanup_journal_tail
+  __jbd2_update_log_tail
+   jbd2_write_superblock
+   // The bh won't be replayed in next mount.
+, which could corrupt the ext4 image, fetch a reproducer in [Link].
+
+Since writeback process clears buffer dirty after locking buffer head,
+we can fix it by try locking buffer and check dirtiness while buffer is
+locked, the buffer head can be removed if it is neither dirty nor locked.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217490
+Fixes: 470decc613ab ("[PATCH] jbd2: initial copy of files from jbd")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230606135928.434610-5-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c |   27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ fs/jbd2/checkpoint.c | 32 +++++++++++++++++---------------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
 
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -623,6 +623,7 @@ struct rtl8169_private {
- 	int cfg9346_usage_count;
+diff --git a/fs/jbd2/checkpoint.c b/fs/jbd2/checkpoint.c
+index 25e3c20eb19f6..c4e0da6db7195 100644
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -221,20 +221,6 @@ int jbd2_log_do_checkpoint(journal_t *journal)
+ 		jh = transaction->t_checkpoint_list;
+ 		bh = jh2bh(jh);
  
- 	unsigned supports_gmii:1;
-+	unsigned aspm_manageable:1;
- 	dma_addr_t counters_phys_addr;
- 	struct rtl8169_counters *counters;
- 	struct rtl8169_tc_offsets tc_offset;
-@@ -2746,7 +2747,8 @@ static void rtl_hw_aspm_clkreq_enable(st
- 	if (tp->mac_version < RTL_GIGA_MAC_VER_32)
- 		return;
- 
--	if (enable) {
-+	/* Don't enable ASPM in the chip if OS can't control ASPM */
-+	if (enable && tp->aspm_manageable) {
- 		/* On these chip versions ASPM can even harm
- 		 * bus communication of other PCI devices.
- 		 */
-@@ -5156,6 +5158,16 @@ done:
- 	rtl_rar_set(tp, mac_addr);
- }
- 
-+/* register is set if system vendor successfully tested ASPM 1.2 */
-+static bool rtl_aspm_is_safe(struct rtl8169_private *tp)
-+{
-+	if (tp->mac_version >= RTL_GIGA_MAC_VER_61 &&
-+	    r8168_mac_ocp_read(tp, 0xc0b2) & 0xf)
-+		return true;
-+
-+	return false;
-+}
-+
- static int rtl_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- {
- 	struct rtl8169_private *tp;
-@@ -5227,6 +5239,19 @@ static int rtl_init_one(struct pci_dev *
- 
- 	tp->mac_version = chipset;
- 
-+	/* Disable ASPM L1 as that cause random device stop working
-+	 * problems as well as full system hangs for some PCIe devices users.
-+	 * Chips from RTL8168h partially have issues with L1.2, but seem
-+	 * to work fine with L1 and L1.1.
-+	 */
-+	if (rtl_aspm_is_safe(tp))
-+		rc = 0;
-+	else if (tp->mac_version >= RTL_GIGA_MAC_VER_46)
-+		rc = pci_disable_link_state(pdev, PCIE_LINK_STATE_L1_2);
-+	else
-+		rc = pci_disable_link_state(pdev, PCIE_LINK_STATE_L1);
-+	tp->aspm_manageable = !rc;
-+
- 	tp->dash_type = rtl_check_dash(tp);
- 
- 	tp->cp_cmd = RTL_R16(tp, CPlusCmd) & CPCMD_MASK;
+-		/*
+-		 * The buffer may be writing back, or flushing out in the
+-		 * last couple of cycles, or re-adding into a new transaction,
+-		 * need to check it again until it's unlocked.
+-		 */
+-		if (buffer_locked(bh)) {
+-			get_bh(bh);
+-			spin_unlock(&journal->j_list_lock);
+-			wait_on_buffer(bh);
+-			/* the journal_head may have gone by now */
+-			BUFFER_TRACE(bh, "brelse");
+-			__brelse(bh);
+-			goto retry;
+-		}
+ 		if (jh->b_transaction != NULL) {
+ 			transaction_t *t = jh->b_transaction;
+ 			tid_t tid = t->t_tid;
+@@ -269,7 +255,22 @@ int jbd2_log_do_checkpoint(journal_t *journal)
+ 			spin_lock(&journal->j_list_lock);
+ 			goto restart;
+ 		}
+-		if (!buffer_dirty(bh)) {
++		if (!trylock_buffer(bh)) {
++			/*
++			 * The buffer is locked, it may be writing back, or
++			 * flushing out in the last couple of cycles, or
++			 * re-adding into a new transaction, need to check
++			 * it again until it's unlocked.
++			 */
++			get_bh(bh);
++			spin_unlock(&journal->j_list_lock);
++			wait_on_buffer(bh);
++			/* the journal_head may have gone by now */
++			BUFFER_TRACE(bh, "brelse");
++			__brelse(bh);
++			goto retry;
++		} else if (!buffer_dirty(bh)) {
++			unlock_buffer(bh);
+ 			BUFFER_TRACE(bh, "remove from checkpoint");
+ 			/*
+ 			 * If the transaction was released or the checkpoint
+@@ -279,6 +280,7 @@ int jbd2_log_do_checkpoint(journal_t *journal)
+ 			    !transaction->t_checkpoint_list)
+ 				goto out;
+ 		} else {
++			unlock_buffer(bh);
+ 			/*
+ 			 * We are about to write the buffer, it could be
+ 			 * raced by some other transaction shrink or buffer
+-- 
+2.39.2
+
 
 
