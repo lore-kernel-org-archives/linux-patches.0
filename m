@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654E61F95A
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:22:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F20C433C8;
-	Tue,  1 Aug 2023 09:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3311F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F489C433C8;
+	Tue,  1 Aug 2023 09:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881779;
-	bh=MMaxMew6TxnEmlQh21Et921H/nCAgy1CIQL4Wwiu+mI=;
+	s=korg; t=1690881782;
+	bh=blNJlT2cc4WgFVq2jJ5hYbrNH1gHuksOUvpm4utPe84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lG6u5ydDsc5iXdIV8f7/tSx4dKOEjmq4pD3HJg7KM2sbXKLHbb8pj73Fb86rQejfN
-	 YI7iS4PEslU9iWwSHZwUQiPVymuX8ydRQa2m3VM1UoenXnbhFUtrc2IQFBEvbPAQ02
-	 oubGowNd2zk8uoQms3LXlZ9Ozwoa6StTaGX8srus=
+	b=jTcGf/6CamJoWc2TpiKdTaHGt+2HYrlrElJJQL0vpPbdNrpLR/QnZS2suy5pthp7y
+	 Ykq8lTO5RHZVbNlL7bcLRzPQWVDRSMmwXTsugWAGE1P5XXhj6x8i8nv3KB1xNlKRba
+	 dG4yloTJv4SorrMixgPHIwMvgtKMHWVVtBpqGzfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/155] cifs: missing directory in MAINTAINERS file
-Date: Tue,  1 Aug 2023 11:18:59 +0200
-Message-ID: <20230801091911.176249037@linuxfoundation.org>
+Subject: [PATCH 5.15 028/155] cifs: use fs_context for automounts
+Date: Tue,  1 Aug 2023 11:19:00 +0200
+Message-ID: <20230801091911.208174701@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -35,34 +35,166 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve French <stfrench@microsoft.com>
+From: Paulo Alcantara <pc@cjr.nz>
 
-[ Upstream commit 5dd8ce24667a70bb9f7808f5eec0354bd37290c6 ]
+[ Upstream commit 9fd29a5bae6e8f94b410374099a6fddb253d2d5f ]
 
-The include/uapi/linux/cifs directory (not just fs/cifs and
-fs/smbfs_common) should be included in cifs entry in the
-MAINTAINERS file.
+Use filesystem context support to handle dfs links.
 
-Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Stable-dep-of: df9d70c18616 ("cifs: if deferred close is disabled then close files immediately")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+ fs/cifs/cifs_dfs_ref.c | 100 +++++++++++++++++------------------------
+ 1 file changed, 40 insertions(+), 60 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 2bf1ad0fb2a6f..e6b53e76651be 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4666,6 +4666,7 @@ T:	git git://git.samba.org/sfrench/cifs-2.6.git
- F:	Documentation/admin-guide/cifs/
- F:	fs/cifs/
- F:	fs/smbfs_common/
-+F:	include/uapi/linux/cifs
+diff --git a/fs/cifs/cifs_dfs_ref.c b/fs/cifs/cifs_dfs_ref.c
+index b0864da9ef434..020e71fe1454e 100644
+--- a/fs/cifs/cifs_dfs_ref.c
++++ b/fs/cifs/cifs_dfs_ref.c
+@@ -258,61 +258,23 @@ char *cifs_compose_mount_options(const char *sb_mountdata,
+ 	goto compose_mount_options_out;
+ }
  
- COMPACTPCI HOTPLUG CORE
- M:	Scott Murray <scott@spiteful.org>
+-/**
+- * cifs_dfs_do_mount - mounts specified path using DFS full path
+- *
+- * Always pass down @fullpath to smb3_do_mount() so we can use the root server
+- * to perform failover in case we failed to connect to the first target in the
+- * referral.
+- *
+- * @mntpt:		directory entry for the path we are trying to automount
+- * @cifs_sb:		parent/root superblock
+- * @fullpath:		full path in UNC format
+- */
+-static struct vfsmount *cifs_dfs_do_mount(struct dentry *mntpt,
+-					  struct cifs_sb_info *cifs_sb,
+-					  const char *fullpath)
+-{
+-	struct vfsmount *mnt;
+-	char *mountdata;
+-	char *devname;
+-
+-	devname = kstrdup(fullpath, GFP_KERNEL);
+-	if (!devname)
+-		return ERR_PTR(-ENOMEM);
+-
+-	convert_delimiter(devname, '/');
+-
+-	/* TODO: change to call fs_context_for_mount(), fill in context directly, call fc_mount */
+-
+-	/* See afs_mntpt_do_automount in fs/afs/mntpt.c for an example */
+-
+-	/* strip first '\' from fullpath */
+-	mountdata = cifs_compose_mount_options(cifs_sb->ctx->mount_options,
+-					       fullpath + 1, NULL, NULL);
+-	if (IS_ERR(mountdata)) {
+-		kfree(devname);
+-		return (struct vfsmount *)mountdata;
+-	}
+-
+-	mnt = vfs_submount(mntpt, &cifs_fs_type, devname, mountdata);
+-	kfree(mountdata);
+-	kfree(devname);
+-	return mnt;
+-}
+-
+ /*
+  * Create a vfsmount that we can automount
+  */
+-static struct vfsmount *cifs_dfs_do_automount(struct dentry *mntpt)
++static struct vfsmount *cifs_dfs_do_automount(struct path *path)
+ {
++	int rc;
++	struct dentry *mntpt = path->dentry;
++	struct fs_context *fc;
+ 	struct cifs_sb_info *cifs_sb;
+-	void *page;
++	void *page = NULL;
++	struct smb3_fs_context *ctx, *cur_ctx;
++	struct smb3_fs_context tmp;
+ 	char *full_path;
+ 	struct vfsmount *mnt;
+ 
+-	cifs_dbg(FYI, "in %s\n", __func__);
+-	BUG_ON(IS_ROOT(mntpt));
++	if (IS_ROOT(mntpt))
++		return ERR_PTR(-ESTALE);
+ 
+ 	/*
+ 	 * The MSDFS spec states that paths in DFS referral requests and
+@@ -321,29 +283,47 @@ static struct vfsmount *cifs_dfs_do_automount(struct dentry *mntpt)
+ 	 * gives us the latter, so we must adjust the result.
+ 	 */
+ 	cifs_sb = CIFS_SB(mntpt->d_sb);
+-	if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_NO_DFS) {
+-		mnt = ERR_PTR(-EREMOTE);
+-		goto cdda_exit;
+-	}
++	if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_NO_DFS)
++		return ERR_PTR(-EREMOTE);
++
++	cur_ctx = cifs_sb->ctx;
++
++	fc = fs_context_for_submount(path->mnt->mnt_sb->s_type, mntpt);
++	if (IS_ERR(fc))
++		return ERR_CAST(fc);
++
++	ctx = smb3_fc2context(fc);
+ 
+ 	page = alloc_dentry_path();
+ 	/* always use tree name prefix */
+ 	full_path = build_path_from_dentry_optional_prefix(mntpt, page, true);
+ 	if (IS_ERR(full_path)) {
+ 		mnt = ERR_CAST(full_path);
+-		goto free_full_path;
++		goto out;
+ 	}
+ 
+-	convert_delimiter(full_path, '\\');
++	convert_delimiter(full_path, '/');
+ 	cifs_dbg(FYI, "%s: full_path: %s\n", __func__, full_path);
+ 
+-	mnt = cifs_dfs_do_mount(mntpt, cifs_sb, full_path);
+-	cifs_dbg(FYI, "%s: cifs_dfs_do_mount:%s , mnt:%p\n", __func__, full_path + 1, mnt);
++	tmp = *cur_ctx;
++	tmp.source = full_path;
++	tmp.UNC = tmp.prepath = NULL;
++
++	rc = smb3_fs_context_dup(ctx, &tmp);
++	if (rc) {
++		mnt = ERR_PTR(rc);
++		goto out;
++	}
++
++	rc = smb3_parse_devname(full_path, ctx);
++	if (!rc)
++		mnt = fc_mount(fc);
++	else
++		mnt = ERR_PTR(rc);
+ 
+-free_full_path:
++out:
++	put_fs_context(fc);
+ 	free_dentry_path(page);
+-cdda_exit:
+-	cifs_dbg(FYI, "leaving %s\n" , __func__);
+ 	return mnt;
+ }
+ 
+@@ -354,9 +334,9 @@ struct vfsmount *cifs_dfs_d_automount(struct path *path)
+ {
+ 	struct vfsmount *newmnt;
+ 
+-	cifs_dbg(FYI, "in %s\n", __func__);
++	cifs_dbg(FYI, "%s: %pd\n", __func__, path->dentry);
+ 
+-	newmnt = cifs_dfs_do_automount(path->dentry);
++	newmnt = cifs_dfs_do_automount(path);
+ 	if (IS_ERR(newmnt)) {
+ 		cifs_dbg(FYI, "leaving %s [automount failed]\n" , __func__);
+ 		return newmnt;
 -- 
 2.39.2
 
