@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9B31ED30
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:50:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D83C433C8;
-	Tue,  1 Aug 2023 09:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B0F1F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:50:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF6FC433C8;
+	Tue,  1 Aug 2023 09:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883427;
-	bh=VRv0KG7kVkvukKxUhwfTvvLmib0j4Lh6C7qUMYvUxB4=;
+	s=korg; t=1690883430;
+	bh=P0cv7mtuM/xucLEWDgmSXOUo/dHnKUBWmknw7veC/7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJkaTk2i0Iwx76l47qKWdLf65Gq+pzXg7kjfjRrWrshztr2dnML8c2+lIKdNRPMx9
-	 dR7FebLMUyga5HYJa3z3EUfc6LH1bUHmtxMc8h0s+bXz8m33CIhS8l15wDbzMOfyKt
-	 Uw/E2cQfuSbI+lK/hRj21hhdhX+UaRh0mrvO9wkc=
+	b=vcZlREsfgRqm3EcMds8Rgm8DzzHArjFdwXrP4m2AY5Hr8gh5AfdGcKXrtDsC1qcYk
+	 bmDRiWyB0xyDjI9z1kT4boTqqZXo4a7Grf1K0cy571CX2APVWRDykIszZVyCHSaLCL
+	 WZUITx6Ys3WK2ZfrU7J0sQySBtlX5zltV+CCh2Wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Dongsheng Yang <dongsheng.yang@easystack.cn>
-Subject: [PATCH 6.4 233/239] rbd: retrieve and check lock owner twice before blocklisting
-Date: Tue,  1 Aug 2023 11:21:37 +0200
-Message-ID: <20230801091934.418822273@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.4 234/239] mm: lock VMA in dup_anon_vma() before setting ->anon_vma
+Date: Tue,  1 Aug 2023 11:21:38 +0200
+Message-ID: <20230801091934.461315217@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -34,99 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Jann Horn <jannh@google.com>
 
-commit 588159009d5b7a09c3e5904cffddbe4a4e170301 upstream.
+commit d8ab9f7b644a2c9b64de405c1953c905ff219dc9 upstream.
 
-An attempt to acquire exclusive lock can race with the current lock
-owner closing the image:
+When VMAs are merged, dup_anon_vma() is called with `dst` pointing to the
+VMA that is being expanded to cover the area previously occupied by
+another VMA.  This currently happens while `dst` is not write-locked.
 
-1. lock is held by client123, rbd_lock() returns -EBUSY
-2. get_lock_owner_info() returns client123 instance details
-3. client123 closes the image, lock is released
-4. find_watcher() returns 0 as there is no matching watcher anymore
-5. client123 instance gets erroneously blocklisted
+This means that, in the `src->anon_vma && !dst->anon_vma` case, as soon as
+the assignment `dst->anon_vma = src->anon_vma` has happened, concurrent
+page faults can happen on `dst` under the per-VMA lock.  This is already
+icky in itself, since such page faults can now install pages into `dst`
+that are attached to an `anon_vma` that is not yet tied back to the
+`anon_vma` with an `anon_vma_chain`.  But if `anon_vma_clone()` fails due
+to an out-of-memory error, things get much worse: `anon_vma_clone()` then
+reverts `dst->anon_vma` back to NULL, and `dst` remains completely
+unconnected to the `anon_vma`, even though we can have pages in the area
+covered by `dst` that point to the `anon_vma`.
 
-Particularly impacted is mirror snapshot scheduler in snapshot-based
-mirroring since it happens to open and close images a lot (images are
-opened only for as long as it takes to take the next mirror snapshot,
-the same client instance is used for all images).
+This means the `anon_vma` of such pages can be freed while the pages are
+still mapped into userspace, which leads to UAF when a helper like
+folio_lock_anon_vma_read() tries to look up the anon_vma of such a page.
 
-To reduce the potential for erroneous blocklisting, retrieve the lock
-owner again after find_watcher() returns 0.  If it's still there, make
-sure it matches the previously detected lock owner.
+This theoretically is a security bug, but I believe it is really hard to
+actually trigger as an unprivileged user because it requires that you can
+make an order-0 GFP_KERNEL allocation fail, and the page allocator tries
+pretty hard to prevent that.
 
-Cc: stable@vger.kernel.org # f38cb9d9c204: rbd: make get_lock_owner_info() return a single locker or NULL
-Cc: stable@vger.kernel.org # 8ff2c64c9765: rbd: harden get_lock_owner_info() a bit
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+I think doing the vma_start_write() call inside dup_anon_vma() is the most
+straightforward fix for now.
+
+For a kernel-assisted reproducer, see the notes section of the patch mail.
+
+Link: https://lkml.kernel.org/r/20230721034643.616851-1-jannh@google.com
+Fixes: 5e31275cc997 ("mm: add per-VMA lock and helper functions to control it")
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |   25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+ mm/mmap.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -3849,6 +3849,15 @@ static void wake_lock_waiters(struct rbd
- 	list_splice_tail_init(&rbd_dev->acquiring_list, &rbd_dev->running_list);
- }
- 
-+static bool locker_equal(const struct ceph_locker *lhs,
-+			 const struct ceph_locker *rhs)
-+{
-+	return lhs->id.name.type == rhs->id.name.type &&
-+	       lhs->id.name.num == rhs->id.name.num &&
-+	       !strcmp(lhs->id.cookie, rhs->id.cookie) &&
-+	       ceph_addr_equal_no_type(&lhs->info.addr, &rhs->info.addr);
-+}
-+
- static void free_locker(struct ceph_locker *locker)
- {
- 	if (locker)
-@@ -3969,11 +3978,11 @@ out:
- static int rbd_try_lock(struct rbd_device *rbd_dev)
- {
- 	struct ceph_client *client = rbd_dev->rbd_client->client;
--	struct ceph_locker *locker;
-+	struct ceph_locker *locker, *refreshed_locker;
- 	int ret;
- 
- 	for (;;) {
--		locker = NULL;
-+		locker = refreshed_locker = NULL;
- 
- 		ret = rbd_lock(rbd_dev);
- 		if (ret != -EBUSY)
-@@ -3993,6 +4002,16 @@ static int rbd_try_lock(struct rbd_devic
- 		if (ret)
- 			goto out; /* request lock or error */
- 
-+		refreshed_locker = get_lock_owner_info(rbd_dev);
-+		if (IS_ERR(refreshed_locker)) {
-+			ret = PTR_ERR(refreshed_locker);
-+			refreshed_locker = NULL;
-+			goto out;
-+		}
-+		if (!refreshed_locker ||
-+		    !locker_equal(locker, refreshed_locker))
-+			goto again;
-+
- 		rbd_warn(rbd_dev, "breaking header lock owned by %s%llu",
- 			 ENTITY_NAME(locker->id.name));
- 
-@@ -4014,10 +4033,12 @@ static int rbd_try_lock(struct rbd_devic
- 		}
- 
- again:
-+		free_locker(refreshed_locker);
- 		free_locker(locker);
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -647,6 +647,7 @@ static inline int dup_anon_vma(struct vm
+ 	 * anon pages imported.
+ 	 */
+ 	if (src->anon_vma && !dst->anon_vma) {
++		vma_start_write(dst);
+ 		dst->anon_vma = src->anon_vma;
+ 		return anon_vma_clone(dst, src);
  	}
- 
- out:
-+	free_locker(refreshed_locker);
- 	free_locker(locker);
- 	return ret;
- }
 
 
