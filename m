@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C441FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:48:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15C48C433C7;
-	Tue,  1 Aug 2023 09:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67DDE1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:48:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC6D0C433CA;
+	Tue,  1 Aug 2023 09:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883321;
-	bh=qzPLeVpAPGwxJgvvJOrR3xVkTEY54jDBCbQtesfK6qM=;
+	s=korg; t=1690883324;
+	bh=HAAFwBRpDho/3G6ruXQdWMUPmwPoqXn7qB3+rtO2SE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=apMWVZYVj7W0pDa/MPf3kdU2p44L+uk7D8ObWq8VUTvbMfMp4IWfetKx9joIMcVLZ
-	 1X3O1WOnZTu4GIkjjOV8c6DddCfL1Hyj0rHWopQQsolEMK03/LOD9BMqqwDFbOG+W5
-	 i3V7W4hxOzOD4JQbQIFnKuTaPrxSLJtUCFzHfkmQ=
+	b=ALDK6OYNNFGEfY08GQH1Psy7hKIIPlZ8k5GWyFGVjq9HtqvXM2evlb4KMgRZziakn
+	 N64z2zeFMubp5sROuVvXRq05YJMvnIX8gH+Wi9h+vi1QYdnFoRpQzoCUOlXHis8Oxx
+	 KavwJNM4Asr937zOSNd2LrsfPaMQc/4wvkZ2+ITs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 187/239] btrfs: check if the transaction was aborted at btrfs_wait_for_commit()
-Date: Tue,  1 Aug 2023 11:20:51 +0200
-Message-ID: <20230801091932.427452650@linuxfoundation.org>
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 196/239] irq-bcm6345-l1: Do not assume a fixed block to cpu mapping
+Date: Tue,  1 Aug 2023 11:21:00 +0200
+Message-ID: <20230801091932.799021086@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -35,35 +37,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-commit bf7ecbe9875061bf3fce1883e3b26b77f847d1e8 upstream.
+[ Upstream commit 55ad24857341c36616ecc1d9580af5626c226cf1 ]
 
-At btrfs_wait_for_commit() we wait for a transaction to finish and then
-always return 0 (success) without checking if it was aborted, in which
-case the transaction didn't happen due to some critical error. Fix this
-by checking if the transaction was aborted.
+The irq to block mapping is fixed, and interrupts from the first block
+will always be routed to the first parent IRQ. But the parent interrupts
+themselves can be routed to any available CPU.
 
-Fixes: 462045928bda ("Btrfs: add START_SYNC, WAIT_SYNC ioctls")
-CC: stable@vger.kernel.org # 4.19+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is used by the bootloader to map the first parent interrupt to the
+boot CPU, regardless wether the boot CPU is the first one or the second
+one.
+
+When booting from the second CPU, the assumption that the first block's
+IRQ is mapped to the first CPU breaks, and the system hangs because
+interrupts do not get routed correctly.
+
+Fix this by passing the appropriate bcm6434_l1_cpu to the interrupt
+handler instead of the chip itself, so the handler always has the right
+block.
+
+Fixes: c7c42ec2baa1 ("irqchips/bmips: Add bcm6345-l1 interrupt controller")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230629072620.62527-1-jonas.gorski@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/transaction.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/irqchip/irq-bcm6345-l1.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -933,6 +933,7 @@ int btrfs_wait_for_commit(struct btrfs_f
- 	}
+diff --git a/drivers/irqchip/irq-bcm6345-l1.c b/drivers/irqchip/irq-bcm6345-l1.c
+index fa113cb2529a4..6341c0167c4ab 100644
+--- a/drivers/irqchip/irq-bcm6345-l1.c
++++ b/drivers/irqchip/irq-bcm6345-l1.c
+@@ -82,6 +82,7 @@ struct bcm6345_l1_chip {
+ };
  
- 	wait_for_commit(cur_trans, TRANS_STATE_COMPLETED);
-+	ret = cur_trans->aborted;
- 	btrfs_put_transaction(cur_trans);
- out:
- 	return ret;
+ struct bcm6345_l1_cpu {
++	struct bcm6345_l1_chip	*intc;
+ 	void __iomem		*map_base;
+ 	unsigned int		parent_irq;
+ 	u32			enable_cache[];
+@@ -115,17 +116,11 @@ static inline unsigned int cpu_for_irq(struct bcm6345_l1_chip *intc,
+ 
+ static void bcm6345_l1_irq_handle(struct irq_desc *desc)
+ {
+-	struct bcm6345_l1_chip *intc = irq_desc_get_handler_data(desc);
+-	struct bcm6345_l1_cpu *cpu;
++	struct bcm6345_l1_cpu *cpu = irq_desc_get_handler_data(desc);
++	struct bcm6345_l1_chip *intc = cpu->intc;
+ 	struct irq_chip *chip = irq_desc_get_chip(desc);
+ 	unsigned int idx;
+ 
+-#ifdef CONFIG_SMP
+-	cpu = intc->cpus[cpu_logical_map(smp_processor_id())];
+-#else
+-	cpu = intc->cpus[0];
+-#endif
+-
+ 	chained_irq_enter(chip, desc);
+ 
+ 	for (idx = 0; idx < intc->n_words; idx++) {
+@@ -253,6 +248,7 @@ static int __init bcm6345_l1_init_one(struct device_node *dn,
+ 	if (!cpu)
+ 		return -ENOMEM;
+ 
++	cpu->intc = intc;
+ 	cpu->map_base = ioremap(res.start, sz);
+ 	if (!cpu->map_base)
+ 		return -ENOMEM;
+@@ -271,7 +267,7 @@ static int __init bcm6345_l1_init_one(struct device_node *dn,
+ 		return -EINVAL;
+ 	}
+ 	irq_set_chained_handler_and_data(cpu->parent_irq,
+-						bcm6345_l1_irq_handle, intc);
++						bcm6345_l1_irq_handle, cpu);
+ 
+ 	return 0;
+ }
+-- 
+2.40.1
+
 
 
