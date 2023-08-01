@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 969CA1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:38:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17F7AC433C7;
-	Tue,  1 Aug 2023 09:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B0C1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:38:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDDACC433C8;
+	Tue,  1 Aug 2023 09:38:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882735;
-	bh=dapewlmgn1iX7NzDhkWk1UhF7p+4BcincWUQ84QoK8Q=;
+	s=korg; t=1690882738;
+	bh=US/jeUgSAEVyfTeDn5qQMyBonK+TdnJelKJTKYCLzCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CVVkcab/mDsRHa1+uxoFLoGtj9klZqdX32Y7m2lcXsrHxkN2ttLITXcXVm0axl9JO
-	 PFqlXfUVuCN0ngV2QrZi3Dnl9rosxOiIV1/ctCPKZ3/4ev4a6RcXLHf8hffw6/D3AZ
-	 xq2DMDU7uwcZLJ3odf6m2wQ5zknJkTKZ3w5HzKj0=
+	b=BI5BCWumDKALqnK0QPAcrpBRTtPB/2rmu5cII+2KC+mKLXY6VNoGwgoK0sqEPbuZJ
+	 mrvkBC5dOqIrG9+ry8a1x0w80PHuvyTpVneCglgT4fTXgkNLmqEWY4VO5WSGo0YSEJ
+	 g21ZYnWAVvHHX1wlh+IJg/cdO+cN9hbEYbM2c/40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 205/228] LoongArch: BPF: Enable bpf_probe_read{, str}() on LoongArch
-Date: Tue,  1 Aug 2023 11:21:03 +0200
-Message-ID: <20230801091930.284888819@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>
+Subject: [PATCH 6.1 214/228] rbd: make get_lock_owner_info() return a single locker or NULL
+Date: Tue,  1 Aug 2023 11:21:12 +0200
+Message-ID: <20230801091930.598150968@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -34,39 +34,176 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit de0e30bee86d0f99c696a1fea34474e556a946ec upstream.
+commit f38cb9d9c2045dad16eead4a2e1aedfddd94603b upstream.
 
-Currently nettrace does not work on LoongArch due to missing
-bpf_probe_read{,str}() support, with the error message:
+Make the "num_lockers can be only 0 or 1" assumption explicit and
+simplify the API by getting rid of output parameters in preparation
+for calling get_lock_owner_info() twice before blocklisting.
 
-     ERROR: failed to load kprobe-based eBPF
-     ERROR: failed to load kprobe-based bpf
-
-According to commit 0ebeea8ca8a4d1d ("bpf: Restrict bpf_probe_read{,
-str}() only to archs where they work"), we only need to select
-CONFIG_ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE to add said support,
-because LoongArch does have non-overlapping address ranges for kernel
-and userspace.
-
-Cc: stable@vger.kernel.org # 6.1
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/block/rbd.c |   84 +++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 51 insertions(+), 33 deletions(-)
 
---- a/arch/loongarch/Kconfig
-+++ b/arch/loongarch/Kconfig
-@@ -10,6 +10,7 @@ config LOONGARCH
- 	select ARCH_ENABLE_MEMORY_HOTPLUG
- 	select ARCH_ENABLE_MEMORY_HOTREMOVE
- 	select ARCH_HAS_ACPI_TABLE_UPGRADE	if ACPI
-+	select ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE
- 	select ARCH_HAS_PTE_SPECIAL
- 	select ARCH_HAS_TICK_BROADCAST if GENERIC_CLOCKEVENTS_BROADCAST
- 	select ARCH_INLINE_READ_LOCK if !PREEMPTION
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -3850,10 +3850,17 @@ static void wake_lock_waiters(struct rbd
+ 	list_splice_tail_init(&rbd_dev->acquiring_list, &rbd_dev->running_list);
+ }
+ 
+-static int get_lock_owner_info(struct rbd_device *rbd_dev,
+-			       struct ceph_locker **lockers, u32 *num_lockers)
++static void free_locker(struct ceph_locker *locker)
++{
++	if (locker)
++		ceph_free_lockers(locker, 1);
++}
++
++static struct ceph_locker *get_lock_owner_info(struct rbd_device *rbd_dev)
+ {
+ 	struct ceph_osd_client *osdc = &rbd_dev->rbd_client->client->osdc;
++	struct ceph_locker *lockers;
++	u32 num_lockers;
+ 	u8 lock_type;
+ 	char *lock_tag;
+ 	int ret;
+@@ -3862,39 +3869,45 @@ static int get_lock_owner_info(struct rb
+ 
+ 	ret = ceph_cls_lock_info(osdc, &rbd_dev->header_oid,
+ 				 &rbd_dev->header_oloc, RBD_LOCK_NAME,
+-				 &lock_type, &lock_tag, lockers, num_lockers);
+-	if (ret)
+-		return ret;
++				 &lock_type, &lock_tag, &lockers, &num_lockers);
++	if (ret) {
++		rbd_warn(rbd_dev, "failed to retrieve lockers: %d", ret);
++		return ERR_PTR(ret);
++	}
+ 
+-	if (*num_lockers == 0) {
++	if (num_lockers == 0) {
+ 		dout("%s rbd_dev %p no lockers detected\n", __func__, rbd_dev);
++		lockers = NULL;
+ 		goto out;
+ 	}
+ 
+ 	if (strcmp(lock_tag, RBD_LOCK_TAG)) {
+ 		rbd_warn(rbd_dev, "locked by external mechanism, tag %s",
+ 			 lock_tag);
+-		ret = -EBUSY;
+-		goto out;
++		goto err_busy;
+ 	}
+ 
+ 	if (lock_type == CEPH_CLS_LOCK_SHARED) {
+ 		rbd_warn(rbd_dev, "shared lock type detected");
+-		ret = -EBUSY;
+-		goto out;
++		goto err_busy;
+ 	}
+ 
+-	if (strncmp((*lockers)[0].id.cookie, RBD_LOCK_COOKIE_PREFIX,
++	WARN_ON(num_lockers != 1);
++	if (strncmp(lockers[0].id.cookie, RBD_LOCK_COOKIE_PREFIX,
+ 		    strlen(RBD_LOCK_COOKIE_PREFIX))) {
+ 		rbd_warn(rbd_dev, "locked by external mechanism, cookie %s",
+-			 (*lockers)[0].id.cookie);
+-		ret = -EBUSY;
+-		goto out;
++			 lockers[0].id.cookie);
++		goto err_busy;
+ 	}
+ 
+ out:
+ 	kfree(lock_tag);
+-	return ret;
++	return lockers;
++
++err_busy:
++	kfree(lock_tag);
++	ceph_free_lockers(lockers, num_lockers);
++	return ERR_PTR(-EBUSY);
+ }
+ 
+ static int find_watcher(struct rbd_device *rbd_dev,
+@@ -3948,51 +3961,56 @@ out:
+ static int rbd_try_lock(struct rbd_device *rbd_dev)
+ {
+ 	struct ceph_client *client = rbd_dev->rbd_client->client;
+-	struct ceph_locker *lockers;
+-	u32 num_lockers;
++	struct ceph_locker *locker;
+ 	int ret;
+ 
+ 	for (;;) {
++		locker = NULL;
++
+ 		ret = rbd_lock(rbd_dev);
+ 		if (ret != -EBUSY)
+-			return ret;
++			goto out;
+ 
+ 		/* determine if the current lock holder is still alive */
+-		ret = get_lock_owner_info(rbd_dev, &lockers, &num_lockers);
+-		if (ret)
+-			return ret;
+-
+-		if (num_lockers == 0)
++		locker = get_lock_owner_info(rbd_dev);
++		if (IS_ERR(locker)) {
++			ret = PTR_ERR(locker);
++			locker = NULL;
++			goto out;
++		}
++		if (!locker)
+ 			goto again;
+ 
+-		ret = find_watcher(rbd_dev, lockers);
++		ret = find_watcher(rbd_dev, locker);
+ 		if (ret)
+ 			goto out; /* request lock or error */
+ 
+ 		rbd_warn(rbd_dev, "breaking header lock owned by %s%llu",
+-			 ENTITY_NAME(lockers[0].id.name));
++			 ENTITY_NAME(locker->id.name));
+ 
+ 		ret = ceph_monc_blocklist_add(&client->monc,
+-					      &lockers[0].info.addr);
++					      &locker->info.addr);
+ 		if (ret) {
+-			rbd_warn(rbd_dev, "blocklist of %s%llu failed: %d",
+-				 ENTITY_NAME(lockers[0].id.name), ret);
++			rbd_warn(rbd_dev, "failed to blocklist %s%llu: %d",
++				 ENTITY_NAME(locker->id.name), ret);
+ 			goto out;
+ 		}
+ 
+ 		ret = ceph_cls_break_lock(&client->osdc, &rbd_dev->header_oid,
+ 					  &rbd_dev->header_oloc, RBD_LOCK_NAME,
+-					  lockers[0].id.cookie,
+-					  &lockers[0].id.name);
+-		if (ret && ret != -ENOENT)
++					  locker->id.cookie, &locker->id.name);
++		if (ret && ret != -ENOENT) {
++			rbd_warn(rbd_dev, "failed to break header lock: %d",
++				 ret);
+ 			goto out;
++		}
+ 
+ again:
+-		ceph_free_lockers(lockers, num_lockers);
++		free_locker(locker);
+ 	}
+ 
+ out:
+-	ceph_free_lockers(lockers, num_lockers);
++	free_locker(locker);
+ 	return ret;
+ }
+ 
 
 
