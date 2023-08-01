@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B2A1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:44:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3CEC433C8;
-	Tue,  1 Aug 2023 09:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9DE1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:44:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8308DC433C8;
+	Tue,  1 Aug 2023 09:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883041;
-	bh=Irz36TBrvqhmPQCU/glQw/kKYdz7mRCL0tJmOEteYLo=;
+	s=korg; t=1690883043;
+	bh=ykVIKyTFpX13SS9l/l26l9z+3cu40jOgDav6a4etMwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t1fbNH0RTk4O0zrXl1l8ZswBjAdRddfZQewaDBOkt6aXagzozT4Ps/XouhBDjdcMV
-	 9VC64/4Ub3f7eWpEFy+e7TVjcjPw0LrkWL60Ez875+VbgCAuBJIQRJyV4Th+is2TpX
-	 H+YhQA30pYvL7QDVFHTU8KHg2z7fej4eu+/gG8nE=
+	b=mq0BI8zz+Y5uZqwo/32QNc5dB4D4wUYWGanEU8GQrwsI4fsPoyiZeBFiyGQ0INg/L
+	 j13mPJ9lP+C7BdtXQZWp86wBvM/UJPSyUqSx9WAQ5zLmPODBZXlvQcMch9HdbsB44K
+	 cOA4qETj7vp/LG5ZZm/kdA/K1S4slNi+EUzB0XPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 065/239] iavf: check for removal state before IAVF_FLAG_PF_COMMS_FAILED
-Date: Tue,  1 Aug 2023 11:18:49 +0200
-Message-ID: <20230801091928.006965674@linuxfoundation.org>
+Subject: [PATCH 6.4 066/239] net: phy: marvell10g: fix 88x3310 power up
+Date: Tue,  1 Aug 2023 11:18:50 +0200
+Message-ID: <20230801091928.051864639@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,57 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-[ Upstream commit 91896c8acce23d33ed078cffd46a9534b1f82be5 ]
+[ Upstream commit c7b75bea853daeb64fc831dbf39a6bbabcc402ac ]
 
-In iavf_adminq_task(), if the function can't acquire the
-adapter->crit_lock, it checks if the driver is removing. If so, it simply
-exits without re-enabling the interrupt. This is done to ensure that the
-task stops processing as soon as possible once the driver is being removed.
+Clear MV_V2_PORT_CTRL_PWRDOWN bit to set power up for 88x3310 PHY,
+it sometimes does not take effect immediately. And a read of this
+register causes the bit not to clear. This will cause mv3310_reset()
+to time out, which will fail the config initialization. So add a delay
+before the next access.
 
-However, if the IAVF_FLAG_PF_COMMS_FAILED is set, the function checks this
-before attempting to acquire the lock. In this case, the function exits
-early and re-enables the interrupt. This will happen even if the driver is
-already removing.
-
-Avoid this, by moving the check to after the adapter->crit_lock is
-acquired. This way, if the driver is removing, we will not re-enable the
-interrupt.
-
-Fixes: fc2e6b3b132a ("iavf: Rework mutexes for better synchronisation")
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: c9cc1c815d36 ("net: phy: marvell10g: place in powersave mode at probe")
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/phy/marvell10g.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index 6c25d240e70bc..e48810e0627d2 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -3286,9 +3286,6 @@ static void iavf_adminq_task(struct work_struct *work)
- 	u32 val, oldval;
- 	u16 pending;
+diff --git a/drivers/net/phy/marvell10g.c b/drivers/net/phy/marvell10g.c
+index 55d9d7acc32eb..d4bb90d768811 100644
+--- a/drivers/net/phy/marvell10g.c
++++ b/drivers/net/phy/marvell10g.c
+@@ -328,6 +328,13 @@ static int mv3310_power_up(struct phy_device *phydev)
+ 	ret = phy_clear_bits_mmd(phydev, MDIO_MMD_VEND2, MV_V2_PORT_CTRL,
+ 				 MV_V2_PORT_CTRL_PWRDOWN);
  
--	if (adapter->flags & IAVF_FLAG_PF_COMMS_FAILED)
--		goto out;
--
- 	if (!mutex_trylock(&adapter->crit_lock)) {
- 		if (adapter->state == __IAVF_REMOVE)
- 			return;
-@@ -3297,6 +3294,9 @@ static void iavf_adminq_task(struct work_struct *work)
- 		goto out;
- 	}
- 
-+	if (adapter->flags & IAVF_FLAG_PF_COMMS_FAILED)
-+		goto unlock;
++	/* Sometimes, the power down bit doesn't clear immediately, and
++	 * a read of this register causes the bit not to clear. Delay
++	 * 100us to allow the PHY to come out of power down mode before
++	 * the next access.
++	 */
++	udelay(100);
 +
- 	event.buf_len = IAVF_MAX_AQ_BUF_SIZE;
- 	event.msg_buf = kzalloc(event.buf_len, GFP_KERNEL);
- 	if (!event.msg_buf)
+ 	if (phydev->drv->phy_id != MARVELL_PHY_ID_88X3310 ||
+ 	    priv->firmware_ver < 0x00030000)
+ 		return ret;
 -- 
 2.39.2
 
