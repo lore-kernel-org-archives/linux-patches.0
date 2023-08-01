@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B97C1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:49:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DD2C433C7;
-	Tue,  1 Aug 2023 09:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229CC1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:49:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95730C433CB;
+	Tue,  1 Aug 2023 09:49:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883355;
-	bh=43J0HHvCc63AeqPCrdVY75NniK/07YDiYE0wKZyyY4I=;
+	s=korg; t=1690883358;
+	bh=yk1dnTiTN5hhO1OfOdeMulKRxehiVlE+uLyY8efFnfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hX3ZNQkeaZ9RHXf8gtyYOmx/kQGGqLxJBRPzk6Vo63xovxk0rKAny1fYYC5FaueqU
-	 fg8ZDog6IXPbHxIeFwTW9hgEPu3En73CTNxuQFIDP+viVZ5Zbl5QO4+wRAy1isad8w
-	 ZtoHdFXwwY55O3pHPtTtvD+xWBz6Yhw9qJWzb6Gs=
+	b=iYBeseyu8wAu2pNsAOCy1+eCXK/+yEBNrRph2BnWsB6PHk6hRNw3k+aL/UbX7t6V8
+	 wJfZOptFL4bOAqeBkmtGVS6SpSNLJExSYgzzS5ahNE9WWq8yGrW0BNiFe189RC8j4X
+	 ix9DU07qRkylahZ1SHw5EI2RNZqkrBgngSLsAD/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.4 206/239] net: dsa: qca8k: fix mdb add/del case with 0 VID
-Date: Tue,  1 Aug 2023 11:21:10 +0200
-Message-ID: <20230801091933.233769993@linuxfoundation.org>
+	Oleksandr Natalenko <oleksandr@natalenko.name>,
+	Phil Elwell <phil@raspberrypi.com>,
+	Andres Freund <andres@anarazel.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.4 207/239] io_uring: gate iowait schedule on having pending requests
+Date: Tue,  1 Aug 2023 11:21:11 +0200
+Message-ID: <20230801091933.281555192@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -34,46 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit dfd739f182b00b02bd7470ed94d112684cc04fa2 upstream.
+commit 7b72d661f1f2f950ab8c12de7e2bc48bdac8ed69 upstream.
 
-The qca8k switch doesn't support using 0 as VID and require a default
-VID to be always set. MDB add/del function doesn't currently handle
-this and are currently setting the default VID.
+A previous commit made all cqring waits marked as iowait, as a way to
+improve performance for short schedules with pending IO. However, for
+use cases that have a special reaper thread that does nothing but
+wait on events on the ring, this causes a cosmetic issue where we
+know have one core marked as being "busy" with 100% iowait.
 
-Fix this by correctly handling this corner case and internally use the
-default VID for VID 0 case.
+While this isn't a grave issue, it is confusing to users. Rather than
+always mark us as being in iowait, gate setting of current->in_iowait
+to 1 by whether or not the waiting task has pending requests.
 
-Fixes: ba8f870dfa63 ("net: dsa: qca8k: add support for mdb_add/del")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/io-uring/CAMEGJJ2RxopfNQ7GNLhr7X9=bHXKo+G5OOe0LUq=+UgLXsv1Xg@mail.gmail.com/
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217699
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217700
+Reported-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+Reported-by: Phil Elwell <phil@raspberrypi.com>
+Tested-by: Andres Freund <andres@anarazel.de>
+Fixes: 8a796565cec3 ("io_uring: Use io_schedule* in cqring wait")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/qca/qca8k-common.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ io_uring/io_uring.c |   23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
---- a/drivers/net/dsa/qca/qca8k-common.c
-+++ b/drivers/net/dsa/qca/qca8k-common.c
-@@ -816,6 +816,9 @@ int qca8k_port_mdb_add(struct dsa_switch
- 	const u8 *addr = mdb->addr;
- 	u16 vid = mdb->vid;
- 
-+	if (!vid)
-+		vid = QCA8K_PORT_VID_DEF;
-+
- 	return qca8k_fdb_search_and_insert(priv, BIT(port), addr, vid,
- 					   QCA8K_ATU_STATUS_STATIC);
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2579,11 +2579,20 @@ int io_run_task_work_sig(struct io_ring_
+ 	return 0;
  }
-@@ -828,6 +831,9 @@ int qca8k_port_mdb_del(struct dsa_switch
- 	const u8 *addr = mdb->addr;
- 	u16 vid = mdb->vid;
  
-+	if (!vid)
-+		vid = QCA8K_PORT_VID_DEF;
++static bool current_pending_io(void)
++{
++	struct io_uring_task *tctx = current->io_uring;
 +
- 	return qca8k_fdb_search_and_del(priv, BIT(port), addr, vid);
++	if (!tctx)
++		return false;
++	return percpu_counter_read_positive(&tctx->inflight);
++}
++
+ /* when returns >0, the caller should retry */
+ static inline int io_cqring_wait_schedule(struct io_ring_ctx *ctx,
+ 					  struct io_wait_queue *iowq)
+ {
+-	int token, ret;
++	int io_wait, ret;
+ 
+ 	if (unlikely(READ_ONCE(ctx->check_cq)))
+ 		return 1;
+@@ -2597,17 +2606,19 @@ static inline int io_cqring_wait_schedul
+ 		return 0;
+ 
+ 	/*
+-	 * Use io_schedule_prepare/finish, so cpufreq can take into account
+-	 * that the task is waiting for IO - turns out to be important for low
+-	 * QD IO.
++	 * Mark us as being in io_wait if we have pending requests, so cpufreq
++	 * can take into account that the task is waiting for IO - turns out
++	 * to be important for low QD IO.
+ 	 */
+-	token = io_schedule_prepare();
++	io_wait = current->in_iowait;
++	if (current_pending_io())
++		current->in_iowait = 1;
+ 	ret = 0;
+ 	if (iowq->timeout == KTIME_MAX)
+ 		schedule();
+ 	else if (!schedule_hrtimeout(&iowq->timeout, HRTIMER_MODE_ABS))
+ 		ret = -ETIME;
+-	io_schedule_finish(token);
++	current->in_iowait = io_wait;
+ 	return ret;
  }
  
 
