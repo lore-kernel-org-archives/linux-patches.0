@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B05FB1F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:30:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32395C433C8;
-	Tue,  1 Aug 2023 09:30:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1651F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:30:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A892C433C8;
+	Tue,  1 Aug 2023 09:30:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882222;
-	bh=HJAwzRLsjyOYCHE2bjv/pnqYY6tI9G9ysmS5TMVjSA4=;
+	s=korg; t=1690882225;
+	bh=3JWXxAibJDxCkJu3mzdiwzqp6n094e8wPBSTXZrhSY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KbBUBraXFaFIpqS/kmkGKnalYFVA0ByaOVeQK6kvGmL/bqSIbNU4jA0Flc3coVIiF
-	 tIefHSDGxY5ma27LSyYv9kF3d2WpyJtrDNUPVL1LDuVdXx5B3v8Lb7cF/W0mWdbIzt
-	 HKzGubpT3Bm412KOdAlCeIGlKv5UF6DyOsP+O2S0=
+	b=ToHEq2kdM4Rbi9JV07OHMB2vJ5zjwvNypEQ+ll0Q5d1fj8FQBAjBfxxWuDZKqMZ2R
+	 eiS5Lc5nGE7J4ROLyI8B5pAhk9kMrUZNGeVQ8PkZBbnlMOP9c/yQX1gVp/ytlbUL1k
+	 XGTaqpeRLfNRJxjK7oz+f+lNaJx+HzS1DPQxBNs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/228] PCI/ASPM: Avoid link retraining race
-Date: Tue,  1 Aug 2023 11:18:07 +0200
-Message-ID: <20230801091923.929094528@linuxfoundation.org>
+Subject: [PATCH 6.1 030/228] PCI: rockchip: Remove writes to unused registers
+Date: Tue,  1 Aug 2023 11:18:08 +0200
+Message-ID: <20230801091923.963909527@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,59 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
 
-[ Upstream commit e7e39756363ad5bd83ddeae1063193d0f13870fd ]
+[ Upstream commit 92a9c57c325dd51682d428ba960d961fec3c8a08 ]
 
-PCIe r6.0.1, sec 7.5.3.7, recommends setting the link control parameters,
-then waiting for the Link Training bit to be clear before setting the
-Retrain Link bit.
+Remove write accesses to registers that are marked "unused" (and
+therefore read-only) in the technical reference manual (TRM)
+(see RK3399 TRM 17.6.8.1)
 
-This avoids a race where the LTSSM may not use the updated parameters if it
-is already in the midst of link training because of other normal link
-activity.
-
-Wait for the Link Training bit to be clear before toggling the Retrain Link
-bit to ensure that the LTSSM uses the updated link control parameters.
-
-[bhelgaas: commit log, return 0 (success)/-ETIMEDOUT instead of bool for
-both pcie_wait_for_retrain() and the existing pcie_retrain_link()]
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Fixes: 7d715a6c1ae5 ("PCI: add PCI Express ASPM support")
-Link: https://lore.kernel.org/r/20230502083923.34562-1-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230418074700.1083505-2-rick.wertenbroek@gmail.com
+Tested-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Stable-dep-of: dc73ed0f1b8b ("PCI: rockchip: Fix window mapping and address translation for endpoint")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/aspm.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/pci/controller/pcie-rockchip-ep.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-index f6b91252bebc2..07166a4ec27ad 100644
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -213,8 +213,19 @@ static int pcie_wait_for_retrain(struct pci_dev *pdev)
- static int pcie_retrain_link(struct pcie_link_state *link)
- {
- 	struct pci_dev *parent = link->pdev;
-+	int rc;
- 	u16 reg16;
+diff --git a/drivers/pci/controller/pcie-rockchip-ep.c b/drivers/pci/controller/pcie-rockchip-ep.c
+index 827d91e73efab..9e17f3dba743a 100644
+--- a/drivers/pci/controller/pcie-rockchip-ep.c
++++ b/drivers/pci/controller/pcie-rockchip-ep.c
+@@ -61,10 +61,6 @@ static void rockchip_pcie_clear_ep_ob_atu(struct rockchip_pcie *rockchip,
+ 			    ROCKCHIP_PCIE_AT_OB_REGION_DESC0(region));
+ 	rockchip_pcie_write(rockchip, 0,
+ 			    ROCKCHIP_PCIE_AT_OB_REGION_DESC1(region));
+-	rockchip_pcie_write(rockchip, 0,
+-			    ROCKCHIP_PCIE_AT_OB_REGION_CPU_ADDR0(region));
+-	rockchip_pcie_write(rockchip, 0,
+-			    ROCKCHIP_PCIE_AT_OB_REGION_CPU_ADDR1(region));
+ }
  
-+	/*
-+	 * Ensure the updated LNKCTL parameters are used during link
-+	 * training by checking that there is no ongoing link training to
-+	 * avoid LTSSM race as recommended in Implementation Note at the
-+	 * end of PCIe r6.0.1 sec 7.5.3.7.
-+	 */
-+	rc = pcie_wait_for_retrain(parent);
-+	if (rc)
-+		return rc;
-+
- 	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
- 	reg16 |= PCI_EXP_LNKCTL_RL;
- 	pcie_capability_write_word(parent, PCI_EXP_LNKCTL, reg16);
+ static void rockchip_pcie_prog_ep_ob_atu(struct rockchip_pcie *rockchip, u8 fn,
+@@ -114,12 +110,6 @@ static void rockchip_pcie_prog_ep_ob_atu(struct rockchip_pcie *rockchip, u8 fn,
+ 		     PCIE_CORE_OB_REGION_ADDR0_LO_ADDR);
+ 		addr1 = upper_32_bits(cpu_addr);
+ 	}
+-
+-	/* CPU bus address region */
+-	rockchip_pcie_write(rockchip, addr0,
+-			    ROCKCHIP_PCIE_AT_OB_REGION_CPU_ADDR0(r));
+-	rockchip_pcie_write(rockchip, addr1,
+-			    ROCKCHIP_PCIE_AT_OB_REGION_CPU_ADDR1(r));
+ }
+ 
+ static int rockchip_pcie_ep_write_header(struct pci_epc *epc, u8 fn, u8 vfn,
 -- 
 2.39.2
 
