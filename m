@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F07B1FB51
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:29:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83AFCC433C8;
-	Tue,  1 Aug 2023 09:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36371FB24
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:29:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5210BC433C8;
+	Tue,  1 Aug 2023 09:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882171;
-	bh=VWfNMe8kmAKFD6sqF8IDUl7cmA/NafciYJoUzMKftk0=;
+	s=korg; t=1690882174;
+	bh=jTbswkzDPhIVOFs1/1bs6Q946Gf651tfGhjo+nxkGzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YufGKSb5Upo9KeX6a656uA0C+MRRNjHdPSum3KeuHSvAHqeOjb4pDem/AKIlZ/FTH
-	 eOBmxuphNCdFBW/310Dj044NrMZ7TPoCCIfqtUg3p25tYrgg+j6OIEyRdu+b5eQSfh
-	 mzEXtP+vdG082sKftC+In6hfQ096afK/wlDlZGu4=
+	b=TW0UugMDvJvhUono55CUv+8tL3Zz49IxlYq5+I3lJ7iB2wWGl2hRlGkJGY2MG3gfe
+	 nT/cc4ParUIZnvYrQtvoG0VRcvnFhd8Mh1SJzygcwm5unODRlbxNUFcXTTjjE5D0DM
+	 cZPpyoGb657ZBR0M3H/dVM/UjDdgf8zcEhAmk/ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haren Myneni <haren@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Janosch Frank <frankja@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/228] powerpc/pseries/vas: Hold mmap_mutex after mmap lock during window close
-Date: Tue,  1 Aug 2023 11:17:49 +0200
-Message-ID: <20230801091923.243105710@linuxfoundation.org>
+Subject: [PATCH 6.1 012/228] KVM: s390: pv: fix index value of replaced ASCE
+Date: Tue,  1 Aug 2023 11:17:50 +0200
+Message-ID: <20230801091923.278441678@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -35,85 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Haren Myneni <haren@linux.ibm.com>
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-[ Upstream commit b59c9dc4d9d47b3c4572d826603fde507055b656 ]
+[ Upstream commit c2fceb59bbda16468bda82b002383bff59de89ab ]
 
-Commit 8ef7b9e1765a ("powerpc/pseries/vas: Close windows with DLPAR
-core removal") unmaps the window paste address and issues HCALL to
-close window in the hypervisor for migration or DLPAR core removal
-events. So holds mmap_mutex and then mmap lock before unmap the
-paste address. But if the user space issue mmap paste address at
-the same time with the migration event, coproc_mmap() is called
-after holding the mmap lock which can trigger deadlock when trying
-to acquire mmap_mutex in coproc_mmap().
+The index field of the struct page corresponding to a guest ASCE should
+be 0. When replacing the ASCE in s390_replace_asce(), the index of the
+new ASCE should also be set to 0.
 
-t1: mmap() call to mmap              t2: Migration event
-    window paste address
+Having the wrong index might lead to the wrong addresses being passed
+around when notifying pte invalidations, and eventually to validity
+intercepts (VM crash) if the prefix gets unmapped and the notifier gets
+called with the wrong address.
 
-do_mmap2()                           migration_store()
- ksys_mmap_pgoff()                    pseries_migrate_partition()
-  vm_mmap_pgoff()                      vas_migration_handler()
-    Acquire mmap lock                   reconfig_close_windows()
-    do_mmap()                             lock mmap_mutex
-     mmap_region()                        Acquire mmap lock
-      call_mmap()                         //Wait for mmap lock
-       coproc_mmap()                        unmap vma
-         lock mmap_mutex                    update window status
-         //wait for mmap_mutex            Release mmap lock
-          mmap vma                        unlock mmap_mutex
-          update window status
-         unlock mmap_mutex
-    ...
-    Release mmap lock
-
-Fix this deadlock issue by holding mmap lock first before mmap_mutex
-in reconfig_close_windows().
-
-Fixes: 8ef7b9e1765a ("powerpc/pseries/vas: Close windows with DLPAR core removal")
-Signed-off-by: Haren Myneni <haren@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230716100506.7833-1-haren@linux.ibm.com
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Fixes: faa2f72cb356 ("KVM: s390: pv: leak the topmost page table when destroy fails")
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Message-ID: <20230705111937.33472-3-imbrenda@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/vas.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/s390/mm/gmap.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/platforms/pseries/vas.c b/arch/powerpc/platforms/pseries/vas.c
-index 880b962afc057..041a25c08066b 100644
---- a/arch/powerpc/platforms/pseries/vas.c
-+++ b/arch/powerpc/platforms/pseries/vas.c
-@@ -744,6 +744,12 @@ static int reconfig_close_windows(struct vas_caps *vcap, int excess_creds,
- 		}
+diff --git a/arch/s390/mm/gmap.c b/arch/s390/mm/gmap.c
+index 02d15c8dc92e9..243f673fa6515 100644
+--- a/arch/s390/mm/gmap.c
++++ b/arch/s390/mm/gmap.c
+@@ -2843,6 +2843,7 @@ int s390_replace_asce(struct gmap *gmap)
+ 	page = alloc_pages(GFP_KERNEL_ACCOUNT, CRST_ALLOC_ORDER);
+ 	if (!page)
+ 		return -ENOMEM;
++	page->index = 0;
+ 	table = page_to_virt(page);
+ 	memcpy(table, gmap->table, 1UL << (CRST_ALLOC_ORDER + PAGE_SHIFT));
  
- 		task_ref = &win->vas_win.task_ref;
-+		/*
-+		 * VAS mmap (coproc_mmap()) and its fault handler
-+		 * (vas_mmap_fault()) are called after holding mmap lock.
-+		 * So hold mmap mutex after mmap_lock to avoid deadlock.
-+		 */
-+		mmap_write_lock(task_ref->mm);
- 		mutex_lock(&task_ref->mmap_mutex);
- 		vma = task_ref->vma;
- 		/*
-@@ -752,7 +758,6 @@ static int reconfig_close_windows(struct vas_caps *vcap, int excess_creds,
- 		 */
- 		win->vas_win.status |= flag;
- 
--		mmap_write_lock(task_ref->mm);
- 		/*
- 		 * vma is set in the original mapping. But this mapping
- 		 * is done with mmap() after the window is opened with ioctl.
-@@ -763,8 +768,8 @@ static int reconfig_close_windows(struct vas_caps *vcap, int excess_creds,
- 			zap_page_range(vma, vma->vm_start,
- 					vma->vm_end - vma->vm_start);
- 
--		mmap_write_unlock(task_ref->mm);
- 		mutex_unlock(&task_ref->mmap_mutex);
-+		mmap_write_unlock(task_ref->mm);
- 		/*
- 		 * Close VAS window in the hypervisor, but do not
- 		 * free vas_window struct since it may be reused
 -- 
 2.39.2
 
