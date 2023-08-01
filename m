@@ -1,306 +1,136 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2046.outbound.protection.outlook.com [40.107.220.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF8A1FB5F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 13:09:52 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id E91AC1FD71;
-	Tue,  1 Aug 2023 13:09:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1690895384; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=lsa5moaEw3yYrBGKqxNgGv59gqUakEyFOpX7t8BOEks=;
-	b=gPOhGG9H3rjEN4F1EisHlpNNC/goGO0c3G0dzPfmNUUPEZG0Qy2FlemX1z7Z7NhYxZUlrp
-	53GVfRkfpL7gISvnzFca0NSDuTKE3o9jSxYqENHMDdshD+bO/cSHRXNWNWd0KrNFlfGyLG
-	0dTtMIFO6irdcRD1um2kxfRzRmsglug=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1690895384;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=lsa5moaEw3yYrBGKqxNgGv59gqUakEyFOpX7t8BOEks=;
-	b=XAxXu+Wrjffn+l2uaY0IXmXe6S+BTUuVcQ6YlqmxmrI0//AJpUmb+cMgLqRLKentEyepEv
-	H/oIqSPkcPHI9bBA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id DA780139BD;
-	Tue,  1 Aug 2023 13:09:44 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id TXRMNRgEyWQMPAAAMHmgww
-	(envelope-from <jack@suse.cz>); Tue, 01 Aug 2023 13:09:44 +0000
-Received: by quack3.suse.cz (Postfix, from userid 1000)
-	id 72152A076B; Tue,  1 Aug 2023 15:09:44 +0200 (CEST)
-Date: Tue, 1 Aug 2023 15:09:44 +0200
-From: Jan Kara <jack@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC291ADCA
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 15:52:21 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=AHk61HI31TTgQPxOxpecn587M4SEI4+o5zkjfcS5bg2ECrO3Q9YKtMGdUX1cA1mQMVmoE6obWdQwyDCBSvkHYVOw2C/oljoRt3RHhSlF8kqB/3wbXco4EAHRTqpiNWAFKwXULs7jH4oJCdD7AxxDo6+8seknlQTNSoDUFtbwR1ce4gM8id0hKKiD94hMsqZJH14DOYMgezJRHLR4DLh9A063Z0Xrqktd4iIpIFw0vTpGQYbOUiRWIg7GGL9L0kjSdQETVqNdbmyCNLHou4N5BLqjsPKwqG6UkokjCHywjy4uUuHLyV7NEuDHg2pHWYOCjmYvEQcBXNnSsq7swmWJ+w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uUw7ykoTxepQmoR6ojbOaUU2N6Wzh68ILzO2HZEb7Kg=;
+ b=bzzuu57zBurAQCwk4mvPVKQhRefHiCigYOqXvwn6JsfRwEOB/03UI9x+U4Q3RYL06NDmcjMHksySPsyZWPwXYPA9BMyvedL/eJliH6RyMcZpzCQ8+y6nHgaLYBo6YYE8NR7g3JSNzBLSTl2PmX/7UoBZ8qn2h4te9ZXveGJUgiJzeWSbmvX1c5nFn6+dp8zbOtoqEunjDls7h0MXhErFKTK8rpLcP5Qvi70MtiTkK3Af6Fg4O+QZ/Fui/1YOLHRns+SyeSf0A49dvH5ufkMPVYh8EgeINEY8OV6qFXwr6JQyg2cr1BrMOUnpnsLqqQTUifouTDWqwYa/UvSqKFqmCQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uUw7ykoTxepQmoR6ojbOaUU2N6Wzh68ILzO2HZEb7Kg=;
+ b=o1+EiXD3F0T0CyfdyZRee5QuSKyC++CkZS6pV3bFazDeECWXDbDG5WzUKYVX+Z0BMLO6D6md7eHBLw9xjx0LqjHhg6M0f4HfSM57Q33qj5WlLp0UbQbBb0yiNv7eVD6TBR7swq5VsqDrI1mhR5ncbUJsOdeo4jtI3IZ05GDnuiQw+YbY4cbZneZsBAUXbbhC4tZVLGRyhVc1SovMQ2s/XXYoKsTO6ukOeqJsmcEKO2L0DY2wgQVeHj2WmjG2ODTwhcUZBF1tXaKK1VpyPnhZB4e0u0NuuVqgckT7NcRIGZf50HQu2CMx8p1mVUAiwpLPpCbp80EqbkDks4TyN7EWog==
+Received: from SA9PR13CA0102.namprd13.prod.outlook.com (2603:10b6:806:24::17)
+ by MW3PR12MB4377.namprd12.prod.outlook.com (2603:10b6:303:55::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6631.29; Tue, 1 Aug
+ 2023 15:52:19 +0000
+Received: from SN1PEPF0002636B.namprd02.prod.outlook.com
+ (2603:10b6:806:24:cafe::c6) by SA9PR13CA0102.outlook.office365.com
+ (2603:10b6:806:24::17) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6652.18 via Frontend
+ Transport; Tue, 1 Aug 2023 15:52:19 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ SN1PEPF0002636B.mail.protection.outlook.com (10.167.241.136) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6631.22 via Frontend Transport; Tue, 1 Aug 2023 15:52:19 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Tue, 1 Aug 2023
+ 08:52:09 -0700
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37; Tue, 1 Aug 2023
+ 08:52:09 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37 via Frontend
+ Transport; Tue, 1 Aug 2023 08:52:09 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>, Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 047/155] jbd2: remove journal_clean_one_cp_list()
-Message-ID: <20230801130944.7e3hhyosweufeuaf@quack3>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <linux-tegra@vger.kernel.org>,
+	<stable@vger.kernel.org>
+Subject: Re: [PATCH 5.15 000/155] 5.15.124-rc1 review
+In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
- <20230801091911.867814225@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230801091911.867814225@linuxfoundation.org>
+Message-ID: <31a94827-0fbc-4903-b87e-f8036c0d5155@rnnvmail202.nvidia.com>
+Date: Tue, 1 Aug 2023 08:52:09 -0700
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN1PEPF0002636B:EE_|MW3PR12MB4377:EE_
+X-MS-Office365-Filtering-Correlation-Id: 42453fa6-1245-4465-6b3d-08db92a7497f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	prnH4eyfpYeAkP66VrBZK4wix3MUSdd+/EkhQOcWfrCA8xEGDNpKQRBSgFMgse7w/8w/YuIEb3YuS7QffMLoMZdpAfu8sKA4BZYUskbc1UamSlrRqmS3cD7O3UOdGExenSRnyBPniPZVeT2tcJXB0AugnNuUEdl6g7XXhlR49I/y/Ex62hoxO+Vxxzf/Px9ww9CLOLWnZPzZNwPiEGY0ePd+FFnqsUHwlYM9uAYw+Zo7ukdGDLqfMPwxgE90x+hCUhJ9sSVy8Fiob9m4nAQkWgAyhHty43ALUwf1i3PqzwHcdB5+jem6eGcCu1jQl/PnHsYlZa6Q2t4/1U3CVziTsuNy9hiit/L7YALXi4FJI4g7Z4NaDOcBFNK4rppr/FGCe3p29HLnQXmsjOoTDn/lt/5C9C9jW3ydE9/zmQC2YhksTlP+J+VE6tvnmW2ahbK1agGjVtkK3vstRLzl8idJhpgmbhktWrqG22IvbJbt4WMnwWDkYRt7T/xgk47rTTlVPNH4x5ZNhZDIrT90KoWFXqSJz2gxFrwmXgfSbR0rilwiEJxqLtLLJHAclnv7WRkG1+Acfu6qxFWwxMrLJAJMBdioCva9DhguKU1zwBprJheTB58DbM7mQhb36SfN+tJXuCdX2VJAtTOSOKZhNvTfiZo4iAZjkpmPEBQf328CVB1kvKiEMGIlfbzeLaqItNAsXuhB5/WPsO636JmosrMNCxF4fIAtawJdugxoTQotqiT1KGCbt2qvx8mHGe/f//JsGyj4v2n40kyOEVcV1AeAImJoc05JveFS7ewINbt9Olg=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230028)(4636009)(39860400002)(376002)(136003)(396003)(346002)(451199021)(82310400008)(46966006)(40470700004)(36840700001)(36860700001)(26005)(8936002)(47076005)(31686004)(8676002)(336012)(86362001)(186003)(5660300002)(31696002)(426003)(41300700001)(966005)(82740400003)(356005)(7416002)(2906002)(40460700003)(7636003)(478600001)(54906003)(316002)(40480700001)(70206006)(70586007)(4326008)(6916009);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Aug 2023 15:52:19.1931
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 42453fa6-1245-4465-6b3d-08db92a7497f
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SN1PEPF0002636B.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4377
 
-On Tue 01-08-23 11:19:19, Greg Kroah-Hartman wrote:
-> From: Zhang Yi <yi.zhang@huawei.com>
+On Tue, 01 Aug 2023 11:18:32 +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.124 release.
+> There are 155 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> [ Upstream commit b98dba273a0e47dbfade89c9af73c5b012a4eabb ]
+> Responses should be made by Thu, 03 Aug 2023 09:18:38 +0000.
+> Anything received after that time might be too late.
 > 
-> journal_clean_one_cp_list() and journal_shrink_one_cp_list() are almost
-> the same, so merge them into journal_shrink_one_cp_list(), remove the
-> nr_to_scan parameter, always scan and try to free the whole checkpoint
-> list.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.124-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
 > 
-> Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-> Reviewed-by: Jan Kara <jack@suse.cz>
-> Link: https://lore.kernel.org/r/20230606135928.434610-4-yi.zhang@huaweicloud.com
-> Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-> Stable-dep-of: 46f881b5b175 ("jbd2: fix a race when checking checkpoint buffer busy")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> thanks,
+> 
+> greg k-h
 
-This and the following patch (46f881b5b175) have some issues [1] and cause a
-performance regression for some workloads and possible metadata corruption
-after a crash. So please drop these two patches from the stable trees for
-now. We can include them again later once the code has stabilized...
-Thanks!
+All tests passing for Tegra ...
 
-								Honza
+Test results for stable-v5.15:
+    11 builds:	11 pass, 0 fail
+    28 boots:	28 pass, 0 fail
+    114 tests:	114 pass, 0 fail
 
-[1] https://lore.kernel.org/all/20230714025528.564988-1-yi.zhang@huaweicloud.com
+Linux version:	5.15.124-rc1-gb2c388dc2443
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
 
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
 
->  fs/jbd2/checkpoint.c        | 75 +++++++++----------------------------
->  include/trace/events/jbd2.h | 12 ++----
->  2 files changed, 21 insertions(+), 66 deletions(-)
-> 
-> diff --git a/fs/jbd2/checkpoint.c b/fs/jbd2/checkpoint.c
-> index c1f543e86170a..ab72aeb766a74 100644
-> --- a/fs/jbd2/checkpoint.c
-> +++ b/fs/jbd2/checkpoint.c
-> @@ -349,50 +349,10 @@ int jbd2_cleanup_journal_tail(journal_t *journal)
->  
->  /* Checkpoint list management */
->  
-> -/*
-> - * journal_clean_one_cp_list
-> - *
-> - * Find all the written-back checkpoint buffers in the given list and
-> - * release them. If 'destroy' is set, clean all buffers unconditionally.
-> - *
-> - * Called with j_list_lock held.
-> - * Returns 1 if we freed the transaction, 0 otherwise.
-> - */
-> -static int journal_clean_one_cp_list(struct journal_head *jh, bool destroy)
-> -{
-> -	struct journal_head *last_jh;
-> -	struct journal_head *next_jh = jh;
-> -
-> -	if (!jh)
-> -		return 0;
-> -
-> -	last_jh = jh->b_cpprev;
-> -	do {
-> -		jh = next_jh;
-> -		next_jh = jh->b_cpnext;
-> -
-> -		if (!destroy && __cp_buffer_busy(jh))
-> -			return 0;
-> -
-> -		if (__jbd2_journal_remove_checkpoint(jh))
-> -			return 1;
-> -		/*
-> -		 * This function only frees up some memory
-> -		 * if possible so we dont have an obligation
-> -		 * to finish processing. Bail out if preemption
-> -		 * requested:
-> -		 */
-> -		if (need_resched())
-> -			return 0;
-> -	} while (jh != last_jh);
-> -
-> -	return 0;
-> -}
-> -
->  /*
->   * journal_shrink_one_cp_list
->   *
-> - * Find 'nr_to_scan' written-back checkpoint buffers in the given list
-> + * Find all the written-back checkpoint buffers in the given list
->   * and try to release them. If the whole transaction is released, set
->   * the 'released' parameter. Return the number of released checkpointed
->   * buffers.
-> @@ -400,15 +360,15 @@ static int journal_clean_one_cp_list(struct journal_head *jh, bool destroy)
->   * Called with j_list_lock held.
->   */
->  static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
-> -						unsigned long *nr_to_scan,
-> -						bool *released)
-> +						bool destroy, bool *released)
->  {
->  	struct journal_head *last_jh;
->  	struct journal_head *next_jh = jh;
->  	unsigned long nr_freed = 0;
->  	int ret;
->  
-> -	if (!jh || *nr_to_scan == 0)
-> +	*released = false;
-> +	if (!jh)
->  		return 0;
->  
->  	last_jh = jh->b_cpprev;
-> @@ -416,8 +376,7 @@ static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
->  		jh = next_jh;
->  		next_jh = jh->b_cpnext;
->  
-> -		(*nr_to_scan)--;
-> -		if (__cp_buffer_busy(jh))
-> +		if (!destroy && __cp_buffer_busy(jh))
->  			continue;
->  
->  		nr_freed++;
-> @@ -429,7 +388,7 @@ static unsigned long journal_shrink_one_cp_list(struct journal_head *jh,
->  
->  		if (need_resched())
->  			break;
-> -	} while (jh != last_jh && *nr_to_scan);
-> +	} while (jh != last_jh);
->  
->  	return nr_freed;
->  }
-> @@ -447,11 +406,11 @@ unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal,
->  						  unsigned long *nr_to_scan)
->  {
->  	transaction_t *transaction, *last_transaction, *next_transaction;
-> -	bool released;
-> +	bool __maybe_unused released;
->  	tid_t first_tid = 0, last_tid = 0, next_tid = 0;
->  	tid_t tid = 0;
->  	unsigned long nr_freed = 0;
-> -	unsigned long nr_scanned = *nr_to_scan;
-> +	unsigned long freed;
->  
->  again:
->  	spin_lock(&journal->j_list_lock);
-> @@ -480,10 +439,11 @@ unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal,
->  		transaction = next_transaction;
->  		next_transaction = transaction->t_cpnext;
->  		tid = transaction->t_tid;
-> -		released = false;
->  
-> -		nr_freed += journal_shrink_one_cp_list(transaction->t_checkpoint_list,
-> -						       nr_to_scan, &released);
-> +		freed = journal_shrink_one_cp_list(transaction->t_checkpoint_list,
-> +						   false, &released);
-> +		nr_freed += freed;
-> +		(*nr_to_scan) -= min(*nr_to_scan, freed);
->  		if (*nr_to_scan == 0)
->  			break;
->  		if (need_resched() || spin_needbreak(&journal->j_list_lock))
-> @@ -504,9 +464,8 @@ unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal,
->  	if (*nr_to_scan && next_tid)
->  		goto again;
->  out:
-> -	nr_scanned -= *nr_to_scan;
->  	trace_jbd2_shrink_checkpoint_list(journal, first_tid, tid, last_tid,
-> -					  nr_freed, nr_scanned, next_tid);
-> +					  nr_freed, next_tid);
->  
->  	return nr_freed;
->  }
-> @@ -522,7 +481,7 @@ unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal,
->  void __jbd2_journal_clean_checkpoint_list(journal_t *journal, bool destroy)
->  {
->  	transaction_t *transaction, *last_transaction, *next_transaction;
-> -	int ret;
-> +	bool released;
->  
->  	transaction = journal->j_checkpoint_transactions;
->  	if (!transaction)
-> @@ -533,8 +492,8 @@ void __jbd2_journal_clean_checkpoint_list(journal_t *journal, bool destroy)
->  	do {
->  		transaction = next_transaction;
->  		next_transaction = transaction->t_cpnext;
-> -		ret = journal_clean_one_cp_list(transaction->t_checkpoint_list,
-> -						destroy);
-> +		journal_shrink_one_cp_list(transaction->t_checkpoint_list,
-> +					   destroy, &released);
->  		/*
->  		 * This function only frees up some memory if possible so we
->  		 * dont have an obligation to finish processing. Bail out if
-> @@ -547,7 +506,7 @@ void __jbd2_journal_clean_checkpoint_list(journal_t *journal, bool destroy)
->  		 * avoids pointless scanning of transactions which still
->  		 * weren't checkpointed.
->  		 */
-> -		if (!ret)
-> +		if (!released)
->  			return;
->  	} while (transaction != last_transaction);
->  }
-> diff --git a/include/trace/events/jbd2.h b/include/trace/events/jbd2.h
-> index 29414288ea3e0..34ce197bd76e0 100644
-> --- a/include/trace/events/jbd2.h
-> +++ b/include/trace/events/jbd2.h
-> @@ -462,11 +462,9 @@ TRACE_EVENT(jbd2_shrink_scan_exit,
->  TRACE_EVENT(jbd2_shrink_checkpoint_list,
->  
->  	TP_PROTO(journal_t *journal, tid_t first_tid, tid_t tid, tid_t last_tid,
-> -		 unsigned long nr_freed, unsigned long nr_scanned,
-> -		 tid_t next_tid),
-> +		 unsigned long nr_freed, tid_t next_tid),
->  
-> -	TP_ARGS(journal, first_tid, tid, last_tid, nr_freed,
-> -		nr_scanned, next_tid),
-> +	TP_ARGS(journal, first_tid, tid, last_tid, nr_freed, next_tid),
->  
->  	TP_STRUCT__entry(
->  		__field(dev_t, dev)
-> @@ -474,7 +472,6 @@ TRACE_EVENT(jbd2_shrink_checkpoint_list,
->  		__field(tid_t, tid)
->  		__field(tid_t, last_tid)
->  		__field(unsigned long, nr_freed)
-> -		__field(unsigned long, nr_scanned)
->  		__field(tid_t, next_tid)
->  	),
->  
-> @@ -484,15 +481,14 @@ TRACE_EVENT(jbd2_shrink_checkpoint_list,
->  		__entry->tid		= tid;
->  		__entry->last_tid	= last_tid;
->  		__entry->nr_freed	= nr_freed;
-> -		__entry->nr_scanned	= nr_scanned;
->  		__entry->next_tid	= next_tid;
->  	),
->  
->  	TP_printk("dev %d,%d shrink transaction %u-%u(%u) freed %lu "
-> -		  "scanned %lu next transaction %u",
-> +		  "next transaction %u",
->  		  MAJOR(__entry->dev), MINOR(__entry->dev),
->  		  __entry->first_tid, __entry->tid, __entry->last_tid,
-> -		  __entry->nr_freed, __entry->nr_scanned, __entry->next_tid)
-> +		  __entry->nr_freed, __entry->next_tid)
->  );
->  
->  #endif /* _TRACE_JBD2_H */
-> -- 
-> 2.39.2
-> 
-> 
-> 
--- 
-Jan Kara <jack@suse.com>
-SUSE Labs, CR
+Jon
