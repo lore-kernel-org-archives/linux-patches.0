@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518231FB24
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:31:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8113C433C8;
-	Tue,  1 Aug 2023 09:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9136E1FB24
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:31:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1466BC433C9;
+	Tue,  1 Aug 2023 09:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882293;
-	bh=wft9sfC9PyfWiLcy6uXG/tKJfb7M2dPL+oK0oNzXAuU=;
+	s=korg; t=1690882296;
+	bh=MMpgwVfwRIr3R/7D1k6okb5eVbRSG1k7+QbWCCu0RO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gQwXQ75Ek9Cnz1m3h+aYfz4InnipA1nQZ1cdiGaZGLB0xsNk0Z2vtfw2PZnaAs0eb
-	 +mrJMF19CpQGsZ4J+ucc95ZRYgI3ENKMNfIY8IsGCk6+1BoBrxVbIefmF7hEG+QTwZ
-	 HN8e0tVoQJEpAXDWpzYl+nTnOh8lnDaLqgDqnJ1k=
+	b=qP97lNXIDQVOs4kgFmpzHeWLGIu0u6yihnuUmrnpHZQ4lNCf4PLscGSDTfgCH9L/2
+	 exRi3QcRogkLfceUjAWOllIWkMTajIc5GgBuONQtunpVfZvdHPqJacOSt7BBSAgZJt
+	 s2O0xzQtejBYUeBOeBhjB3J9c061M8QnXg35LeVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feiyang Chen <chenfeiyang@loongson.cn>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/228] MIPS: Loongson: Fix build error when make modules_install
-Date: Tue,  1 Aug 2023 11:18:04 +0200
-Message-ID: <20230801091923.818181558@linuxfoundation.org>
+Subject: [PATCH 6.1 027/228] PCI/ASPM: Return 0 or -ETIMEDOUT from pcie_retrain_link()
+Date: Tue,  1 Aug 2023 11:18:05 +0200
+Message-ID: <20230801091923.858472548@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -38,73 +34,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-[ Upstream commit 531b3d1195d096f14e030c4b01ec3a53b80276bf ]
+[ Upstream commit f5297a01ee805d7fa569d288ed65fc0f9ac9b03d ]
 
-After commit 0e96ea5c3eb5904e5dc2f ("MIPS: Loongson64: Clean up use of
-cc-ifversion") we get a build error when make modules_install:
+"pcie_retrain_link" is not a question with a true/false answer, so "bool"
+isn't quite the right return type.  Return 0 for success or -ETIMEDOUT if
+the retrain failed.  No functional change intended.
 
-cc1: error: '-mloongson-mmi' must be used with '-mhard-float'
-
-The reason is when make modules_install, 'call cc-option' doesn't work
-in $(KBUILD_CFLAGS) of 'CHECKFLAGS'. Then there is no -mno-loongson-mmi
-applied and -march=loongson3a enable MMI instructions.
-
-To be detail, the error message comes from the CHECKFLAGS invocation of
-$(CC) but it has no impact on the final result of make modules_install,
-it is purely a cosmetic issue. The error occurs because cc-option is
-defined in scripts/Makefile.compiler, which is not included in Makefile
-when running 'make modules_install', as install targets are not supposed
-to require the compiler; see commit 805b2e1d427aab4b ("kbuild: include
-Makefile.compiler only when compiler is needed"). As a result, the call
-to check for '-mno-loongson-mmi' just never happens.
-
-Fix this by partially reverting to the old logic, use 'call cc-option'
-to conditionally apply -march=loongson3a and -march=mips64r2.
-
-By the way, Loongson-2E/2F is also broken in commit 13ceb48bc19c563e05f4
-("MIPS: Loongson2ef: Remove unnecessary {as,cc}-option calls") so fix it
-together.
-
-Fixes: 13ceb48bc19c563e05f4 ("MIPS: Loongson2ef: Remove unnecessary {as,cc}-option calls")
-Fixes: 0e96ea5c3eb5904e5dc2 ("MIPS: Loongson64: Clean up use of cc-ifversion")
-Cc: stable@vger.kernel.org
-Cc: Feiyang Chen <chenfeiyang@loongson.cn>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+[bhelgaas: based on Ilpo's patch below]
+Link: https://lore.kernel.org/r/20230502083923.34562-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Stable-dep-of: e7e39756363a ("PCI/ASPM: Avoid link retraining race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/Makefile | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ drivers/pci/pcie/aspm.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/arch/mips/Makefile b/arch/mips/Makefile
-index ca457f19f7fe0..fe64ad43ba882 100644
---- a/arch/mips/Makefile
-+++ b/arch/mips/Makefile
-@@ -190,16 +190,12 @@ endif
- cflags-$(CONFIG_CAVIUM_CN63XXP1) += -Wa,-mfix-cn63xxp1
- cflags-$(CONFIG_CPU_BMIPS)	+= -march=mips32 -Wa,-mips32 -Wa,--trap
+diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+index 74b8183c305df..96e7031a3b56f 100644
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -193,7 +193,7 @@ static void pcie_clkpm_cap_init(struct pcie_link_state *link, int blacklist)
+ 	link->clkpm_disable = blacklist ? 1 : 0;
+ }
  
--cflags-$(CONFIG_CPU_LOONGSON2E) += -march=loongson2e -Wa,--trap
--cflags-$(CONFIG_CPU_LOONGSON2F) += -march=loongson2f -Wa,--trap
-+cflags-$(CONFIG_CPU_LOONGSON2E) += $(call cc-option,-march=loongson2e) -Wa,--trap
-+cflags-$(CONFIG_CPU_LOONGSON2F) += $(call cc-option,-march=loongson2f) -Wa,--trap
-+cflags-$(CONFIG_CPU_LOONGSON64) += $(call cc-option,-march=loongson3a,-march=mips64r2) -Wa,--trap
- # Some -march= flags enable MMI instructions, and GCC complains about that
- # support being enabled alongside -msoft-float. Thus explicitly disable MMI.
- cflags-$(CONFIG_CPU_LOONGSON2EF) += $(call cc-option,-mno-loongson-mmi)
--ifdef CONFIG_CPU_LOONGSON64
--cflags-$(CONFIG_CPU_LOONGSON64)	+= -Wa,--trap
--cflags-$(CONFIG_CC_IS_GCC) += -march=loongson3a
--cflags-$(CONFIG_CC_IS_CLANG) += -march=mips64r2
--endif
- cflags-$(CONFIG_CPU_LOONGSON64) += $(call cc-option,-mno-loongson-mmi)
+-static bool pcie_retrain_link(struct pcie_link_state *link)
++static int pcie_retrain_link(struct pcie_link_state *link)
+ {
+ 	struct pci_dev *parent = link->pdev;
+ 	unsigned long end_jiffies;
+@@ -220,7 +220,9 @@ static bool pcie_retrain_link(struct pcie_link_state *link)
+ 			break;
+ 		msleep(1);
+ 	} while (time_before(jiffies, end_jiffies));
+-	return !(reg16 & PCI_EXP_LNKSTA_LT);
++	if (reg16 & PCI_EXP_LNKSTA_LT)
++		return -ETIMEDOUT;
++	return 0;
+ }
  
- cflags-$(CONFIG_CPU_R4000_WORKAROUNDS)	+= $(call cc-option,-mfix-r4000,)
+ /*
+@@ -289,15 +291,15 @@ static void pcie_aspm_configure_common_clock(struct pcie_link_state *link)
+ 		reg16 &= ~PCI_EXP_LNKCTL_CCC;
+ 	pcie_capability_write_word(parent, PCI_EXP_LNKCTL, reg16);
+ 
+-	if (pcie_retrain_link(link))
+-		return;
++	if (pcie_retrain_link(link)) {
+ 
+-	/* Training failed. Restore common clock configurations */
+-	pci_err(parent, "ASPM: Could not configure common clock\n");
+-	list_for_each_entry(child, &linkbus->devices, bus_list)
+-		pcie_capability_write_word(child, PCI_EXP_LNKCTL,
++		/* Training failed. Restore common clock configurations */
++		pci_err(parent, "ASPM: Could not configure common clock\n");
++		list_for_each_entry(child, &linkbus->devices, bus_list)
++			pcie_capability_write_word(child, PCI_EXP_LNKCTL,
+ 					   child_reg[PCI_FUNC(child->devfn)]);
+-	pcie_capability_write_word(parent, PCI_EXP_LNKCTL, parent_reg);
++		pcie_capability_write_word(parent, PCI_EXP_LNKCTL, parent_reg);
++	}
+ }
+ 
+ /* Convert L0s latency encoding to ns */
 -- 
 2.39.2
 
