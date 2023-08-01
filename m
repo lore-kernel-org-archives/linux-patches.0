@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF41B1F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:27:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61ABAC433C8;
-	Tue,  1 Aug 2023 09:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16A41F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:27:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F608C433C9;
+	Tue,  1 Aug 2023 09:27:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882042;
-	bh=ofz8n2r47jYTluDLcurNJCtpQuBROZB9DtXWN4VQw0g=;
+	s=korg; t=1690882045;
+	bh=D6/ImxoH9T4HOxUCh1VIDSXf5DTrEFBySBTS6g6aIAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1cYghuHut4r5dKjBdEmztvbrihBpxEan5kKOsHxOIymmQQxasXoBrPy5t0KS3i2E/
-	 2fblG0b4yp7H6JN4+Yz1B1X6V2mdHilHek5y0Qipiljpgm8lUnq/oo+7aLG3bO++w6
-	 cgCeOG99CcicY+s0TAyrT0/eQLkNBl6jxTLmCO5s=
+	b=cfndPw+82ywDGhW8EJFkgkrChNmCVRGXX1Ke047YymsDMvHk3mm9wrfLBpeXNxP2F
+	 y9+n9Zp922KLhkIVqtucnp/WiAk/FscLG+MLH3URdKV6FUKxFuqRlkSGSVRP5phrgW
+	 M+NZGUuVPe970qB9eo82gmfsTBngyJpNCa/4W+X4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.15 113/155] can: gs_usb: gs_can_close(): add missing set of CAN state to CAN_STATE_STOPPED
-Date: Tue,  1 Aug 2023 11:20:25 +0200
-Message-ID: <20230801091914.258801627@linuxfoundation.org>
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 5.15 122/155] Documentation: security-bugs.rst: update preferences when dealing with the linux-distros group
+Date: Tue,  1 Aug 2023 11:20:34 +0200
+Message-ID: <20230801091914.566835831@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -33,42 +33,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit f8a2da6ec2417cca169fa85a8ab15817bccbb109 upstream.
+commit 4fee0915e649bd0cea56dece6d96f8f4643df33c upstream.
 
-After an initial link up the CAN device is in ERROR-ACTIVE mode. Due
-to a missing CAN_STATE_STOPPED in gs_can_close() it doesn't change to
-STOPPED after a link down:
+Because the linux-distros group forces reporters to release information
+about reported bugs, and they impose arbitrary deadlines in having those
+bugs fixed despite not actually being kernel developers, the kernel
+security team recommends not interacting with them at all as this just
+causes confusion and the early-release of reported security problems.
 
-| ip link set dev can0 up
-| ip link set dev can0 down
-| ip --details link show can0
-| 13: can0: <NOARP,ECHO> mtu 16 qdisc pfifo_fast state DOWN mode DEFAULT group default qlen 10
-|     link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0
-|     can state ERROR-ACTIVE restart-ms 1000
-
-Add missing assignment of CAN_STATE_STOPPED in gs_can_close().
-
-Cc: stable@vger.kernel.org
-Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
-Link: https://lore.kernel.org/all/20230718-gs_usb-fix-can-state-v1-1-f19738ae2c23@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/2023063020-throat-pantyhose-f110@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/gs_usb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/admin-guide/security-bugs.rst |   24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -734,6 +734,8 @@ static int gs_can_close(struct net_devic
- 	usb_kill_anchored_urbs(&dev->tx_submitted);
- 	atomic_set(&dev->active_tx_urbs, 0);
+--- a/Documentation/admin-guide/security-bugs.rst
++++ b/Documentation/admin-guide/security-bugs.rst
+@@ -63,20 +63,18 @@ information submitted to the security li
+ of the report are treated confidentially even after the embargo has been
+ lifted, in perpetuity.
  
-+	dev->can.state = CAN_STATE_STOPPED;
+-Coordination
+-------------
++Coordination with other groups
++------------------------------
+ 
+-Fixes for sensitive bugs, such as those that might lead to privilege
+-escalations, may need to be coordinated with the private
+-<linux-distros@vs.openwall.org> mailing list so that distribution vendors
+-are well prepared to issue a fixed kernel upon public disclosure of the
+-upstream fix. Distros will need some time to test the proposed patch and
+-will generally request at least a few days of embargo, and vendor update
+-publication prefers to happen Tuesday through Thursday. When appropriate,
+-the security team can assist with this coordination, or the reporter can
+-include linux-distros from the start. In this case, remember to prefix
+-the email Subject line with "[vs]" as described in the linux-distros wiki:
+-<http://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists>
++The kernel security team strongly recommends that reporters of potential
++security issues NEVER contact the "linux-distros" mailing list until
++AFTER discussing it with the kernel security team.  Do not Cc: both
++lists at once.  You may contact the linux-distros mailing list after a
++fix has been agreed on and you fully understand the requirements that
++doing so will impose on you and the kernel community.
 +
- 	/* reset the device */
- 	rc = gs_cmd_reset(dev);
- 	if (rc < 0)
++The different lists have different goals and the linux-distros rules do
++not contribute to actually fixing any potential security problems.
+ 
+ CVE assignment
+ --------------
 
 
