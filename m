@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1581F95A
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:24:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DFFFC433C8;
-	Tue,  1 Aug 2023 09:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7B41F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:24:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98E8C433C9;
+	Tue,  1 Aug 2023 09:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881849;
-	bh=KLiV0EFTD7wFFcDB+KeO9xC/kKrt3pEEnLWxbgM5Mrc=;
+	s=korg; t=1690881852;
+	bh=7bgiO5N7NJOuZuG3Rlc75W6jB4nwmpaBTAdxigSzbX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cpbh93KTwr78WTxQrEOnLkr2vxUYgtrFfdJUx9X4w9EkTDW6WNfN+jUri284ACGQ2
-	 9E68dZiQfuNs1wreR3cxH4hIegApLlYfAluJXeC6xBaOELtvQY7RjpbdTL1hs9r1fB
-	 NwqIe0cRj+aFnvt+b2rVu6ubsl+ntlRcKMVdxDsQ=
+	b=cwORnmggyt9ZxOkYovvKtb61YJioyvzZL2F2HErUaAWX7Jva02sH8FajggEAbPzwK
+	 zdzwlS+XCfWl9qZkkiXvnx/bTDTfoWa5OhPZ+9lDVD/RWDupmpV/KDu9zEFc3sHzED
+	 Npic5yqVj2is/+VbJVIBN2NQ7UHFuXsxctd+Eryg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Andrey Grodzovsky <andrey.grodzovsky@amd.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 022/155] drm/ttm: Dont print error message if eviction was interrupted
-Date: Tue,  1 Aug 2023 11:18:54 +0200
-Message-ID: <20230801091910.998421425@linuxfoundation.org>
+	Huang Rui <ray.huang@amd.com>,
+	dri-devel@lists.freedesktop.org,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Nirmoy Das <nirmoy.das@intel.com>
+Subject: [PATCH 5.15 023/155] drm/ttm: Dont leak a resource on eviction error
+Date: Tue,  1 Aug 2023 11:18:55 +0200
+Message-ID: <20230801091911.034163924@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -37,35 +42,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-[ Upstream commit 8ab3b0663e279ab550bc2c0b5d602960e8b94e02 ]
+[ Upstream commit e8188c461ee015ba0b9ab2fc82dbd5ebca5a5532 ]
 
-Avoid printing an error message if eviction was interrupted by,
-for example, the user pressing CTRL-C. That may happen if eviction
-is waiting for something, like for example a free batch-buffer.
+On eviction errors other than -EMULTIHOP we were leaking a resource.
+Fix.
 
+v2:
+- Avoid yet another goto (Andi Shyti)
+
+Fixes: 403797925768 ("drm/ttm: Fix multihop assert on eviction.")
+Cc: Andrey Grodzovsky <andrey.grodzovsky@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Christian Koenig <christian.koenig@amd.com>
+Cc: Huang Rui <ray.huang@amd.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v5.15+
 Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Nirmoy Das <nirmoy.das@intel.com> #v1
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
 Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230307144621.10748-6-thomas.hellstrom@linux.intel.com
-Stable-dep-of: e8188c461ee0 ("drm/ttm: Don't leak a resource on eviction error")
+Link: https://patchwork.freedesktop.org/patch/msgid/20230626091450.14757-4-thomas.hellstrom@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ttm/ttm_bo.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/ttm/ttm_bo.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/gpu/drm/ttm/ttm_bo.c b/drivers/gpu/drm/ttm/ttm_bo.c
-index d5a2b69489e7f..cf390ab636978 100644
+index cf390ab636978..6080f4b5c450c 100644
 --- a/drivers/gpu/drm/ttm/ttm_bo.c
 +++ b/drivers/gpu/drm/ttm/ttm_bo.c
-@@ -557,7 +557,8 @@ static int ttm_bo_evict(struct ttm_buffer_object *bo,
- 	if (ret == -EMULTIHOP) {
+@@ -552,18 +552,18 @@ static int ttm_bo_evict(struct ttm_buffer_object *bo,
+ 		goto out;
+ 	}
+ 
+-bounce:
+-	ret = ttm_bo_handle_move_mem(bo, evict_mem, true, ctx, &hop);
+-	if (ret == -EMULTIHOP) {
++	do {
++		ret = ttm_bo_handle_move_mem(bo, evict_mem, true, ctx, &hop);
++		if (ret != -EMULTIHOP)
++			break;
++
  		ret = ttm_bo_bounce_temp_buffer(bo, &evict_mem, ctx, &hop);
- 		if (ret) {
--			pr_err("Buffer eviction failed\n");
-+			if (ret != -ERESTARTSYS && ret != -EINTR)
-+				pr_err("Buffer eviction failed\n");
- 			ttm_resource_free(bo, &evict_mem);
- 			goto out;
- 		}
+-		if (ret) {
+-			if (ret != -ERESTARTSYS && ret != -EINTR)
+-				pr_err("Buffer eviction failed\n");
+-			ttm_resource_free(bo, &evict_mem);
+-			goto out;
+-		}
+-		/* try and move to final place now. */
+-		goto bounce;
++	} while (!ret);
++
++	if (ret) {
++		ttm_resource_free(bo, &evict_mem);
++		if (ret != -ERESTARTSYS && ret != -EINTR)
++			pr_err("Buffer eviction failed\n");
+ 	}
+ out:
+ 	return ret;
 -- 
 2.39.2
 
