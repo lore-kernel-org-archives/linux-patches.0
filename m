@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CFFF1F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:27:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68DEC433C9;
-	Tue,  1 Aug 2023 09:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8851F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:27:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823B0C433C8;
+	Tue,  1 Aug 2023 09:27:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882068;
-	bh=uGvdWJCsFNbf5m4VfhCqMqS0rCknEsFqq072qKtJ14I=;
+	s=korg; t=1690882070;
+	bh=UsvybR/eQInHUzkWNh36Hdv50SGT0lNb8iTRR9+DykM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T0bW3EzS69dtejm9moQh2tizugJe75xLW4xFLQy1zxi1fqDVqrZOvRxfeQSoFH5Nl
-	 ag6ZqifBKZOikuIec3+FV6HGdTSGuztCTxmnZqW+o/SKyAFgdP5kBg+e0YXwRLfrhm
-	 Cl89ZnrqJE7gCH6iaYgXPcrCp8CcABxXbfL7Notg=
+	b=OPQpq4G2xVm7SO5stbuc6WdWcOkQtCCtCnTPf/v0XSVp7SJncc9A+LdUIJHX5ohEs
+	 HeidpJJc92tXEvJSdJtKFfGC+I6nfbDZgG0hvtR92QOjZq5s0x4jI3kaLZcSrmvi8I
+	 +3a+9tAodwHYs4NdorhmufYlpc04zdGsag1w2W3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gilles Buloz <gilles.buloz@kontron.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 5.15 130/155] hwmon: (nct7802) Fix for temp6 (PECI1) processed even if PECI1 disabled
-Date: Tue,  1 Aug 2023 11:20:42 +0200
-Message-ID: <20230801091914.824675703@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 131/155] btrfs: check if the transaction was aborted at btrfs_wait_for_commit()
+Date: Tue,  1 Aug 2023 11:20:43 +0200
+Message-ID: <20230801091914.854964055@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -34,34 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gilles Buloz <Gilles.Buloz@kontron.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 54685abe660a59402344d5045ce08c43c6a5ac42 upstream.
+commit bf7ecbe9875061bf3fce1883e3b26b77f847d1e8 upstream.
 
-Because of hex value 0x46 used instead of decimal 46, the temp6
-(PECI1) temperature is always declared visible and then displayed
-even if disabled in the chip
+At btrfs_wait_for_commit() we wait for a transaction to finish and then
+always return 0 (success) without checking if it was aborted, in which
+case the transaction didn't happen due to some critical error. Fix this
+by checking if the transaction was aborted.
 
-Signed-off-by: Gilles Buloz <gilles.buloz@kontron.com>
-Link: https://lore.kernel.org/r/DU0PR10MB62526435ADBC6A85243B90E08002A@DU0PR10MB6252.EURPRD10.PROD.OUTLOOK.COM
-Fixes: fcdc5739dce03 ("hwmon: (nct7802) add temperature sensor type attribute")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 462045928bda ("Btrfs: add START_SYNC, WAIT_SYNC ioctls")
+CC: stable@vger.kernel.org # 4.19+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/nct7802.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/transaction.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/hwmon/nct7802.c
-+++ b/drivers/hwmon/nct7802.c
-@@ -708,7 +708,7 @@ static umode_t nct7802_temp_is_visible(s
- 	if (index >= 38 && index < 46 && !(reg & 0x01))		/* PECI 0 */
- 		return 0;
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -936,6 +936,7 @@ int btrfs_wait_for_commit(struct btrfs_f
+ 	}
  
--	if (index >= 0x46 && (!(reg & 0x02)))			/* PECI 1 */
-+	if (index >= 46 && !(reg & 0x02))			/* PECI 1 */
- 		return 0;
- 
- 	return attr->mode;
+ 	wait_for_commit(cur_trans, TRANS_STATE_COMPLETED);
++	ret = cur_trans->aborted;
+ 	btrfs_put_transaction(cur_trans);
+ out:
+ 	return ret;
 
 
