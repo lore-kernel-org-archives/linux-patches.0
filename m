@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B281F95A
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6131C433C8;
-	Tue,  1 Aug 2023 09:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B471F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A758C433C7;
+	Tue,  1 Aug 2023 09:23:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881827;
-	bh=Oz+ApuPLdBUzlT5GVIBC2x3SbFhRxGhpohRDGJEQNO0=;
+	s=korg; t=1690881830;
+	bh=rwgP3lqA5k0OP4yaS3FooERxQ1rdwFL0Uuu1kVKlOoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s7RqlhAwStVHikljS60u02I11mZuiU7Tt4F5ATx77vBeqbbE7RPbBfeAyJ+D6AuoW
-	 1IcbRPf51MvQUbFilRhn4kNaKd8pVJUSxaqUgbzpPPWxfP4hi/MobhysheRGJkyY22
-	 kn8UFPSUKdYzCu94QzavH1MTLfU22hYLI1bXZiis=
+	b=Ud4PvIQ5VdZBqI/xX9cbbcSxsKuygiYRIGlen2Fbz/5APR2HM/Vm2kG1eOJaFGZSb
+	 gX3NxeHmMF2Fv/ajSK3TbnXTGBytHnwzsM8TeVzX21S+JbR90OYYhoadX1RHi3lcmt
+	 +bhayTrui/HUQz32bQ/umN/dctEtgXIkwi4aZjGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quinn Tran <qutran@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Flora Cui <flora.cui@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 043/155] scsi: qla2xxx: Fix hang in task management
-Date: Tue,  1 Aug 2023 11:19:15 +0200
-Message-ID: <20230801091911.717237959@linuxfoundation.org>
+Subject: [PATCH 5.15 044/155] drm/amdgpu: fix vkms crtc settings
+Date: Tue,  1 Aug 2023 11:19:16 +0200
+Message-ID: <20230801091911.752485569@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -37,193 +35,166 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Quinn Tran <qutran@marvell.com>
+From: Flora Cui <flora.cui@amd.com>
 
-[ Upstream commit 9ae615c5bfd37bd091772969b1153de5335ea986 ]
+[ Upstream commit deefd07eedb7baa25956c8365373e6a58c81565a ]
 
-Task management command hangs where a side
-band chip reset failed to nudge the TMF
-from it's current send path.
+otherwise adev->mode_info.crtcs[] is NULL
 
-Add additional error check to block TMF
-from entering during chip reset and along
-the TMF path to cause it to bail out, skip
-over abort of marker.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Quinn Tran <qutran@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230428075339.32551-5-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Flora Cui <flora.cui@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: b42ae87a7b38 ("drm/amdgpu/vkms: relax timer deactivation by hrtimer_try_to_cancel")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_def.h  |  4 +++
- drivers/scsi/qla2xxx/qla_init.c | 60 +++++++++++++++++++++++++++++++--
- 2 files changed, 61 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c | 42 ++++++++++++++++--------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.h |  5 ++-
+ 2 files changed, 30 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_def.h b/drivers/scsi/qla2xxx/qla_def.h
-index 2a2bca2fb57ee..83228ce822af3 100644
---- a/drivers/scsi/qla2xxx/qla_def.h
-+++ b/drivers/scsi/qla2xxx/qla_def.h
-@@ -5481,4 +5481,8 @@ struct ql_vnd_tgt_stats_resp {
- 	_fp->disc_state, _fp->scan_state, _fp->loop_id, _fp->deleted, \
- 	_fp->flags
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c
+index 7d58bf410be05..24251cdf95073 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c
+@@ -16,6 +16,8 @@
+ #include "ivsrcid/ivsrcid_vislands30.h"
+ #include "amdgpu_vkms.h"
+ #include "amdgpu_display.h"
++#include "atom.h"
++#include "amdgpu_irq.h"
  
-+#define TMF_NOT_READY(_fcport) \
-+	(!_fcport || IS_SESSION_DELETED(_fcport) || atomic_read(&_fcport->state) != FCS_ONLINE || \
-+	!_fcport->vha->hw->flags.fw_started)
-+
- #endif
-diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
-index 2c42ecb2a64a5..a97872b6350ca 100644
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -1998,6 +1998,11 @@ qla2x00_tmf_iocb_timeout(void *data)
- 	int rc, h;
- 	unsigned long flags;
+ /**
+  * DOC: amdgpu_vkms
+@@ -41,14 +43,13 @@ static const u32 amdgpu_vkms_formats[] = {
  
-+	if (sp->type == SRB_MARKER) {
-+		complete(&tmf->u.tmf.comp);
-+		return;
-+	}
-+
- 	rc = qla24xx_async_abort_cmd(sp, false);
- 	if (rc) {
- 		spin_lock_irqsave(sp->qpair->qp_lock_ptr, flags);
-@@ -2025,6 +2030,7 @@ static void qla_marker_sp_done(srb_t *sp, int res)
- 		    sp->handle, sp->fcport->d_id.b24, sp->u.iocb_cmd.u.tmf.flags,
- 		    sp->u.iocb_cmd.u.tmf.lun, sp->qpair->id);
- 
-+	sp->u.iocb_cmd.u.tmf.data = res;
- 	complete(&tmf->u.tmf.comp);
- }
- 
-@@ -2041,6 +2047,11 @@ static void qla_marker_sp_done(srb_t *sp, int res)
- 	} while (cnt); \
- }
- 
-+/**
-+ * qla26xx_marker: send marker IOCB and wait for the completion of it.
-+ * @arg: pointer to argument list.
-+ *    It is assume caller will provide an fcport pointer and modifier
-+ */
- static int
- qla26xx_marker(struct tmf_arg *arg)
+ static enum hrtimer_restart amdgpu_vkms_vblank_simulate(struct hrtimer *timer)
  {
-@@ -2050,6 +2061,14 @@ qla26xx_marker(struct tmf_arg *arg)
- 	int rval = QLA_FUNCTION_FAILED;
- 	fc_port_t *fcport = arg->fcport;
+-	struct amdgpu_vkms_output *output = container_of(timer,
+-							 struct amdgpu_vkms_output,
+-							 vblank_hrtimer);
+-	struct drm_crtc *crtc = &output->crtc;
++	struct amdgpu_crtc *amdgpu_crtc = container_of(timer, struct amdgpu_crtc, vblank_timer);
++	struct drm_crtc *crtc = &amdgpu_crtc->base;
++	struct amdgpu_vkms_output *output = drm_crtc_to_amdgpu_vkms_output(crtc);
+ 	u64 ret_overrun;
+ 	bool ret;
  
-+	if (TMF_NOT_READY(arg->fcport)) {
-+		ql_dbg(ql_dbg_taskm, vha, 0x8039,
-+		    "FC port not ready for marker loop-id=%x portid=%06x modifier=%x lun=%lld qp=%d.\n",
-+		    fcport->loop_id, fcport->d_id.b24,
-+		    arg->modifier, arg->lun, arg->qpair->id);
-+		return QLA_SUSPENDED;
-+	}
-+
- 	/* ref: INIT */
- 	sp = qla2xxx_get_qpair_sp(vha, arg->qpair, fcport, GFP_KERNEL);
- 	if (!sp)
-@@ -2076,11 +2095,19 @@ qla26xx_marker(struct tmf_arg *arg)
+-	ret_overrun = hrtimer_forward_now(&output->vblank_hrtimer,
++	ret_overrun = hrtimer_forward_now(&amdgpu_crtc->vblank_timer,
+ 					  output->period_ns);
+ 	WARN_ON(ret_overrun != 1);
  
- 	if (rval != QLA_SUCCESS) {
- 		ql_log(ql_log_warn, vha, 0x8031,
--		    "Marker IOCB failed (%x).\n", rval);
-+		    "Marker IOCB send failure (%x).\n", rval);
- 		goto done_free_sp;
+@@ -65,22 +66,21 @@ static int amdgpu_vkms_enable_vblank(struct drm_crtc *crtc)
+ 	unsigned int pipe = drm_crtc_index(crtc);
+ 	struct drm_vblank_crtc *vblank = &dev->vblank[pipe];
+ 	struct amdgpu_vkms_output *out = drm_crtc_to_amdgpu_vkms_output(crtc);
++	struct amdgpu_crtc *amdgpu_crtc = to_amdgpu_crtc(crtc);
+ 
+ 	drm_calc_timestamping_constants(crtc, &crtc->mode);
+ 
+-	hrtimer_init(&out->vblank_hrtimer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
+-	out->vblank_hrtimer.function = &amdgpu_vkms_vblank_simulate;
+ 	out->period_ns = ktime_set(0, vblank->framedur_ns);
+-	hrtimer_start(&out->vblank_hrtimer, out->period_ns, HRTIMER_MODE_REL);
++	hrtimer_start(&amdgpu_crtc->vblank_timer, out->period_ns, HRTIMER_MODE_REL);
+ 
+ 	return 0;
+ }
+ 
+ static void amdgpu_vkms_disable_vblank(struct drm_crtc *crtc)
+ {
+-	struct amdgpu_vkms_output *out = drm_crtc_to_amdgpu_vkms_output(crtc);
++	struct amdgpu_crtc *amdgpu_crtc = to_amdgpu_crtc(crtc);
+ 
+-	hrtimer_cancel(&out->vblank_hrtimer);
++	hrtimer_cancel(&amdgpu_crtc->vblank_timer);
+ }
+ 
+ static bool amdgpu_vkms_get_vblank_timestamp(struct drm_crtc *crtc,
+@@ -92,13 +92,14 @@ static bool amdgpu_vkms_get_vblank_timestamp(struct drm_crtc *crtc,
+ 	unsigned int pipe = crtc->index;
+ 	struct amdgpu_vkms_output *output = drm_crtc_to_amdgpu_vkms_output(crtc);
+ 	struct drm_vblank_crtc *vblank = &dev->vblank[pipe];
++	struct amdgpu_crtc *amdgpu_crtc = to_amdgpu_crtc(crtc);
+ 
+ 	if (!READ_ONCE(vblank->enabled)) {
+ 		*vblank_time = ktime_get();
+ 		return true;
  	}
  
- 	wait_for_completion(&tm_iocb->u.tmf.comp);
-+	rval = tm_iocb->u.tmf.data;
-+
-+	if (rval != QLA_SUCCESS) {
-+		ql_log(ql_log_warn, vha, 0x8019,
-+		    "Marker failed hdl=%x loop-id=%x portid=%06x modifier=%x lun=%lld qp=%d rval %d.\n",
-+		    sp->handle, fcport->loop_id, fcport->d_id.b24,
-+		    arg->modifier, arg->lun, sp->qpair->id, rval);
-+	}
+-	*vblank_time = READ_ONCE(output->vblank_hrtimer.node.expires);
++	*vblank_time = READ_ONCE(amdgpu_crtc->vblank_timer.node.expires);
  
- done_free_sp:
- 	/* ref: INIT */
-@@ -2093,6 +2120,8 @@ static void qla2x00_tmf_sp_done(srb_t *sp, int res)
+ 	if (WARN_ON(*vblank_time == vblank->time))
+ 		return true;
+@@ -166,6 +167,8 @@ static const struct drm_crtc_helper_funcs amdgpu_vkms_crtc_helper_funcs = {
+ static int amdgpu_vkms_crtc_init(struct drm_device *dev, struct drm_crtc *crtc,
+ 			  struct drm_plane *primary, struct drm_plane *cursor)
  {
- 	struct srb_iocb *tmf = &sp->u.iocb_cmd;
++	struct amdgpu_device *adev = drm_to_adev(dev);
++	struct amdgpu_crtc *amdgpu_crtc = to_amdgpu_crtc(crtc);
+ 	int ret;
  
-+	if (res)
-+		tmf->u.tmf.data = res;
- 	complete(&tmf->u.tmf.comp);
+ 	ret = drm_crtc_init_with_planes(dev, crtc, primary, cursor,
+@@ -177,6 +180,17 @@ static int amdgpu_vkms_crtc_init(struct drm_device *dev, struct drm_crtc *crtc,
+ 
+ 	drm_crtc_helper_add(crtc, &amdgpu_vkms_crtc_helper_funcs);
+ 
++	amdgpu_crtc->crtc_id = drm_crtc_index(crtc);
++	adev->mode_info.crtcs[drm_crtc_index(crtc)] = amdgpu_crtc;
++
++	amdgpu_crtc->pll_id = ATOM_PPLL_INVALID;
++	amdgpu_crtc->encoder = NULL;
++	amdgpu_crtc->connector = NULL;
++	amdgpu_crtc->vsync_timer_enabled = AMDGPU_IRQ_STATE_DISABLE;
++
++	hrtimer_init(&amdgpu_crtc->vblank_timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
++	amdgpu_crtc->vblank_timer.function = &amdgpu_vkms_vblank_simulate;
++
+ 	return ret;
  }
  
-@@ -2106,6 +2135,14 @@ __qla2x00_async_tm_cmd(struct tmf_arg *arg)
+@@ -402,7 +416,7 @@ int amdgpu_vkms_output_init(struct drm_device *dev,
+ {
+ 	struct drm_connector *connector = &output->connector;
+ 	struct drm_encoder *encoder = &output->encoder;
+-	struct drm_crtc *crtc = &output->crtc;
++	struct drm_crtc *crtc = &output->crtc.base;
+ 	struct drm_plane *primary, *cursor = NULL;
+ 	int ret;
  
- 	fc_port_t *fcport = arg->fcport;
+@@ -505,8 +519,8 @@ static int amdgpu_vkms_sw_fini(void *handle)
+ 	int i = 0;
  
-+	if (TMF_NOT_READY(arg->fcport)) {
-+		ql_dbg(ql_dbg_taskm, vha, 0x8032,
-+		    "FC port not ready for TM command loop-id=%x portid=%06x modifier=%x lun=%lld qp=%d.\n",
-+		    fcport->loop_id, fcport->d_id.b24,
-+		    arg->modifier, arg->lun, arg->qpair->id);
-+		return QLA_SUSPENDED;
-+	}
-+
- 	/* ref: INIT */
- 	sp = qla2xxx_get_qpair_sp(vha, arg->qpair, fcport, GFP_KERNEL);
- 	if (!sp)
-@@ -2180,7 +2217,9 @@ int qla_get_tmf(fc_port_t *fcport)
- 		msleep(1);
+ 	for (i = 0; i < adev->mode_info.num_crtc; i++)
+-		if (adev->amdgpu_vkms_output[i].vblank_hrtimer.function)
+-			hrtimer_cancel(&adev->amdgpu_vkms_output[i].vblank_hrtimer);
++		if (adev->mode_info.crtcs[i])
++			hrtimer_cancel(&adev->mode_info.crtcs[i]->vblank_timer);
  
- 		spin_lock_irqsave(&ha->tgt.sess_lock, flags);
--		if (fcport->deleted) {
-+		if (TMF_NOT_READY(fcport)) {
-+			ql_log(ql_log_warn, vha, 0x802c,
-+			    "Unable to acquire TM resource due to disruption.\n");
- 			rc = EIO;
- 			break;
- 		}
-@@ -2206,7 +2245,10 @@ qla2x00_async_tm_cmd(fc_port_t *fcport, uint32_t flags, uint64_t lun,
- 	struct scsi_qla_host *vha = fcport->vha;
- 	struct qla_qpair *qpair;
- 	struct tmf_arg a;
--	int i, rval;
-+	int i, rval = QLA_SUCCESS;
-+
-+	if (TMF_NOT_READY(fcport))
-+		return QLA_SUSPENDED;
+ 	kfree(adev->mode_info.bios_hardcoded_edid);
+ 	kfree(adev->amdgpu_vkms_output);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.h
+index 97f1b79c0724e..4f8722ff37c25 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.h
+@@ -10,15 +10,14 @@
+ #define YRES_MAX  16384
  
- 	a.vha = fcport->vha;
- 	a.fcport = fcport;
-@@ -2225,6 +2267,14 @@ qla2x00_async_tm_cmd(fc_port_t *fcport, uint32_t flags, uint64_t lun,
- 			qpair = vha->hw->queue_pair_map[i];
- 			if (!qpair)
- 				continue;
-+
-+			if (TMF_NOT_READY(fcport)) {
-+				ql_log(ql_log_warn, vha, 0x8026,
-+				    "Unable to send TM due to disruption.\n");
-+				rval = QLA_SUSPENDED;
-+				break;
-+			}
-+
- 			a.qpair = qpair;
- 			a.flags = flags|TCF_NOTMCMD_TO_TARGET;
- 			rval = __qla2x00_async_tm_cmd(&a);
-@@ -2233,10 +2283,14 @@ qla2x00_async_tm_cmd(fc_port_t *fcport, uint32_t flags, uint64_t lun,
- 		}
- 	}
+ #define drm_crtc_to_amdgpu_vkms_output(target) \
+-	container_of(target, struct amdgpu_vkms_output, crtc)
++	container_of(target, struct amdgpu_vkms_output, crtc.base)
  
-+	if (rval)
-+		goto bailout;
-+
- 	a.qpair = vha->hw->base_qpair;
- 	a.flags = flags;
- 	rval = __qla2x00_async_tm_cmd(&a);
+ extern const struct amdgpu_ip_block_version amdgpu_vkms_ip_block;
  
-+bailout:
- 	if (a.modifier == MK_SYNC_ID_LUN)
- 		qla_put_tmf(fcport);
- 
+ struct amdgpu_vkms_output {
+-	struct drm_crtc crtc;
++	struct amdgpu_crtc crtc;
+ 	struct drm_encoder encoder;
+ 	struct drm_connector connector;
+-	struct hrtimer vblank_hrtimer;
+ 	ktime_t period_ns;
+ 	struct drm_pending_vblank_event *event;
+ };
 -- 
 2.39.2
 
