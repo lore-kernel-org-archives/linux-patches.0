@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0FD1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:46:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB8CC433C7;
-	Tue,  1 Aug 2023 09:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE741FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:46:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13521C433C7;
+	Tue,  1 Aug 2023 09:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883179;
-	bh=uRoFGTK+T1FTI6P7B5c8o4N5arElCcjD9cHNwfj3Qys=;
+	s=korg; t=1690883182;
+	bh=4AOESYfP77Vum7J+TeoWldEo1RwjK13yRPp2luh9O1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vh6aSf20+mDag9kYnM0liAg3yUaOG+NdlcnoJK/w5U/vSALYviUEI+bLAFNZwb7Pi
-	 W6XmpgRu0drtyuG85YLulcHkmBRLvGu3nLf/2gQJlCSrl6Za8U03zVCfRQOWb7qnvl
-	 d1QmEzq/O5nnNt+qAA7HCU09tEYFUAq/0BOGixKw=
+	b=SUT8Vt+hyfQnQ/+OCgJkN/Ztw9p8CNhPaDXWyAk/uBps/IwBHSOoEBFkmxPGvNR0m
+	 QmtSgNmjjImy4VtKmd2/WpYrXrSvQ4lX/5jZSCQItTk6ivcyiM2KXG3LRE2HHite85
+	 hJp5ZBcMPAJTfR7Iok0V9p/0tq4NvL4ufQOWpdqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+feb045d335c1fdde5bf7@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
-	Ravi Gunasekaran <r-gunasekaran@ti.com>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 6.4 143/239] usb: gadget: call usb_gadget_check_config() to verify UDC capability
-Date: Tue,  1 Aug 2023 11:20:07 +0200
-Message-ID: <20230801091930.830443511@linuxfoundation.org>
+	Zqiang <qiang.zhang1211@gmail.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>
+Subject: [PATCH 6.4 144/239] USB: gadget: Fix the memory leak in raw_gadget driver
+Date: Tue,  1 Aug 2023 11:20:08 +0200
+Message-ID: <20230801091930.861347731@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -35,41 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Zqiang <qiang.zhang1211@gmail.com>
 
-commit f4fc01af5b640bc39bd9403b5fd855345a2ad5f8 upstream.
+commit 83e30f2bf86ef7c38fbd476ed81a88522b620628 upstream.
 
-The legacy gadget driver omitted calling usb_gadget_check_config()
-to ensure that the USB device controller (UDC) has adequate resources,
-including sufficient endpoint numbers and types, to support the given
-configuration.
+Currently, increasing raw_dev->count happens before invoke the
+raw_queue_event(), if the raw_queue_event() return error, invoke
+raw_release() will not trigger the dev_free() to be called.
 
-Previously, usb_add_config() was solely invoked by the legacy gadget
-driver. Adds the necessary usb_gadget_check_config() after the bind()
-operation to fix the issue.
+[  268.905865][ T5067] raw-gadget.0 gadget.0: failed to queue event
+[  268.912053][ T5067] udc dummy_udc.0: failed to start USB Raw Gadget: -12
+[  268.918885][ T5067] raw-gadget.0: probe of gadget.0 failed with error -12
+[  268.925956][ T5067] UDC core: USB Raw Gadget: couldn't find an available UDC or it's busy
+[  268.934657][ T5067] misc raw-gadget: fail, usb_gadget_register_driver returned -16
 
-Fixes: dce49449e04f ("usb: cdns3: allocate TX FIFO size according to composite EP number")
+BUG: memory leak
+
+[<ffffffff8154bf94>] kmalloc_trace+0x24/0x90 mm/slab_common.c:1076
+[<ffffffff8347eb55>] kmalloc include/linux/slab.h:582 [inline]
+[<ffffffff8347eb55>] kzalloc include/linux/slab.h:703 [inline]
+[<ffffffff8347eb55>] dev_new drivers/usb/gadget/legacy/raw_gadget.c:191 [inline]
+[<ffffffff8347eb55>] raw_open+0x45/0x110 drivers/usb/gadget/legacy/raw_gadget.c:385
+[<ffffffff827d1d09>] misc_open+0x1a9/0x1f0 drivers/char/misc.c:165
+
+[<ffffffff8154bf94>] kmalloc_trace+0x24/0x90 mm/slab_common.c:1076
+[<ffffffff8347cd2f>] kmalloc include/linux/slab.h:582 [inline]
+[<ffffffff8347cd2f>] raw_ioctl_init+0xdf/0x410 drivers/usb/gadget/legacy/raw_gadget.c:460
+[<ffffffff8347dfe9>] raw_ioctl+0x5f9/0x1120 drivers/usb/gadget/legacy/raw_gadget.c:1250
+[<ffffffff81685173>] vfs_ioctl fs/ioctl.c:51 [inline]
+
+[<ffffffff8154bf94>] kmalloc_trace+0x24/0x90 mm/slab_common.c:1076
+[<ffffffff833ecc6a>] kmalloc include/linux/slab.h:582 [inline]
+[<ffffffff833ecc6a>] kzalloc include/linux/slab.h:703 [inline]
+[<ffffffff833ecc6a>] dummy_alloc_request+0x5a/0xe0 drivers/usb/gadget/udc/dummy_hcd.c:665
+[<ffffffff833e9132>] usb_ep_alloc_request+0x22/0xd0 drivers/usb/gadget/udc/core.c:196
+[<ffffffff8347f13d>] gadget_bind+0x6d/0x370 drivers/usb/gadget/legacy/raw_gadget.c:292
+
+This commit therefore invoke kref_get() under the condition that
+raw_queue_event() return success.
+
+Reported-by: syzbot+feb045d335c1fdde5bf7@syzkaller.appspotmail.com
 Cc: stable <stable@kernel.org>
-Reported-by: Ravi Gunasekaran <r-gunasekaran@ti.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20230707230015.494999-1-Frank.Li@nxp.com
+Closes: https://syzkaller.appspot.com/bug?extid=feb045d335c1fdde5bf7
+Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
+Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
+Tested-by: Andrey Konovalov <andreyknvl@gmail.com>
+Link: https://lore.kernel.org/r/20230714074011.20989-1-qiang.zhang1211@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/composite.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/gadget/legacy/raw_gadget.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/gadget/composite.c
-+++ b/drivers/usb/gadget/composite.c
-@@ -1125,6 +1125,10 @@ int usb_add_config(struct usb_composite_
- 		goto done;
+diff --git a/drivers/usb/gadget/legacy/raw_gadget.c b/drivers/usb/gadget/legacy/raw_gadget.c
+index 2acece16b890..e549022642e5 100644
+--- a/drivers/usb/gadget/legacy/raw_gadget.c
++++ b/drivers/usb/gadget/legacy/raw_gadget.c
+@@ -310,13 +310,15 @@ static int gadget_bind(struct usb_gadget *gadget,
+ 	dev->eps_num = i;
+ 	spin_unlock_irqrestore(&dev->lock, flags);
  
- 	status = bind(config);
-+
-+	if (status == 0)
-+		status = usb_gadget_check_config(cdev->gadget);
-+
- 	if (status < 0) {
- 		while (!list_empty(&config->functions)) {
- 			struct usb_function		*f;
+-	/* Matches kref_put() in gadget_unbind(). */
+-	kref_get(&dev->count);
+-
+ 	ret = raw_queue_event(dev, USB_RAW_EVENT_CONNECT, 0, NULL);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		dev_err(&gadget->dev, "failed to queue event\n");
++		set_gadget_data(gadget, NULL);
++		return ret;
++	}
+ 
++	/* Matches kref_put() in gadget_unbind(). */
++	kref_get(&dev->count);
+ 	return ret;
+ }
+ 
+-- 
+2.41.0
+
 
 
