@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501E01F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:41:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67F5C433C7;
-	Tue,  1 Aug 2023 09:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1841F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:41:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9380EC433C7;
+	Tue,  1 Aug 2023 09:41:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882897;
-	bh=vvIN/bvJt/7/D6iga7F5HNJzNtLUoCmzqX7pNkWlpME=;
+	s=korg; t=1690882900;
+	bh=xLjSVerhn4X//0sE/dQM5fnkdHrDCmB3fKjFWIt4+Lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T2qiGIsjcw3jluoVCMDxAQg+0kIUqRgrXOVHIIH1kIjU9fK5So032dL1dAgIvJbiA
-	 lZlMeND+drrcOzQq6X2jUy+UyH73Q6XzaarcPKQFOTKob70tqf6AQ0E+rA1hYaNlMa
-	 I4W065zXNR3d06m67GnQVdDoMC47whErbMznUz8I=
+	b=KHHayNoIgPJ7kWUzlUBZ9mLbanQixH1SLWYfzI9dflB6ewPTgRdEXfVBABho5RdYR
+	 kVqoAnv4QvmEMX3INQMc8vQKwxzHAsQp+XMIELmO1f/5+HBgOQwLyBkUdfs2/ZkOBH
+	 pSSXJ3NjGylGMg5iFgOp9ZYcbD5uM2hNyWHeMBlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <Alvin.Lee2@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Gabe Teeger <gabe.teeger@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 042/239] drm/amd/display: Add FAMS validation before trying to use it
-Date: Tue,  1 Aug 2023 11:18:26 +0200
-Message-ID: <20230801091927.090555991@linuxfoundation.org>
+Subject: [PATCH 6.4 043/239] drm/amd/display: update extended blank for dcn314 onwards
+Date: Tue,  1 Aug 2023 11:18:27 +0200
+Message-ID: <20230801091927.124141481@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -38,87 +38,286 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+From: Gabe Teeger <gabe.teeger@amd.com>
 
-[ Upstream commit e3416e872f84086667df21daf166506fab97358d ]
+[ Upstream commit 469a62938a45ef382c9cb7b9fec6c6c1fcd781c0 ]
 
-To ensure that FAMS can be used, DC must check if there is VRR support.
-This commit adds the required configuration to ensure FAMS can be executed in the target system.
+[Why]
+Flickering and underflow was observed when testing extended
+blank on dcn314.
 
-Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+[What]
+Vstartup is contrainted by vblank_nom, so adjusting it to include
+non-adjusted vtotal in its calculation during freesync video
+means that Vstartup is not changed when vtotal changes.
+This fixed the flickering + underflow.
+
+dc_extended_blank_supported function was removed
+because extended blank is only relevant to when
+zstate is supported. The increased vtotal during
+freesync can be passed to dml regardless of whether
+extended blank is supported or not, so this function is
+not needed.
+
+Updates were made recently in dml to the calculation of
+min_dst_y_next_start. Dml input for dcn314 will now
+always use the newer calculation for min_dst_y_next_start.
+Dml input for older dcn versions remains untouched.
+
+The variable optimized_min_dst_y_next_start
+is replaced everywhere with min_dst_y_next_start,
+and the updated dml allows min_dst_y_next_start to
+increase to an optimized value during freesync video,
+then return to default when freesync is disengaged.
+
+Also removed registry key for controlling
+extended blank feature.
+
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>
+Acked-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Gabe Teeger <gabe.teeger@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: 2a9482e55968 ("drm/amd/display: Prevent vtotal from being set to 0")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c          | 6 ++++++
- drivers/gpu/drm/amd/display/dc/dc_stream.h        | 1 +
- drivers/gpu/drm/amd/display/dc/dcn30/dcn30_optc.c | 7 ++++++-
- drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h   | 2 +-
- 4 files changed, 14 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c      | 21 -----------------
+ drivers/gpu/drm/amd/display/dc/dc.h           |  2 --
+ .../drm/amd/display/dc/dcn20/dcn20_hwseq.c    |  4 ++--
+ .../drm/amd/display/dc/dml/dcn20/dcn20_fpu.c  | 23 +++++++++----------
+ .../dc/dml/dcn31/display_rq_dlg_calc_31.c     |  3 +--
+ .../amd/display/dc/dml/dcn314/dcn314_fpu.c    | 14 +++++++----
+ .../dc/dml/dcn314/display_rq_dlg_calc_314.c   | 16 ++++---------
+ .../amd/display/dc/dml/display_mode_structs.h |  3 +--
+ 8 files changed, 29 insertions(+), 57 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 6eace83c9c6f5..7f6bdad57c920 100644
+index 7f6bdad57c920..d22095a3a265a 100644
 --- a/drivers/gpu/drm/amd/display/dc/core/dc.c
 +++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -2626,6 +2626,12 @@ static enum surface_update_type check_update_surfaces_for_stream(
+@@ -2632,9 +2632,6 @@ static enum surface_update_type check_update_surfaces_for_stream(
+ 				stream_update->vrr_active_variable))
+ 			su_flags->bits.fams_changed = 1;
  
- 		if (stream_update->mst_bw_update)
- 			su_flags->bits.mst_bw = 1;
-+
-+		if (stream_update->stream && stream_update->stream->freesync_on_desktop &&
-+			(stream_update->vrr_infopacket || stream_update->allow_freesync ||
-+				stream_update->vrr_active_variable))
-+			su_flags->bits.fams_changed = 1;
-+
- 		if (stream_update->crtc_timing_adjust && dc_extended_blank_supported(dc))
- 			su_flags->bits.crtc_timing_adjust = 1;
+-		if (stream_update->crtc_timing_adjust && dc_extended_blank_supported(dc))
+-			su_flags->bits.crtc_timing_adjust = 1;
+-
+ 		if (su_flags->raw != 0)
+ 			overall_type = UPDATE_TYPE_FULL;
  
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_stream.h b/drivers/gpu/drm/amd/display/dc/dc_stream.h
-index 25284006019c3..270282fbda4ab 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_stream.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_stream.h
-@@ -131,6 +131,7 @@ union stream_update_flags {
- 		uint32_t dsc_changed : 1;
- 		uint32_t mst_bw : 1;
- 		uint32_t crtc_timing_adjust : 1;
-+		uint32_t fams_changed : 1;
- 	} bits;
- 
- 	uint32_t raw;
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_optc.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_optc.c
-index c95f000b63b28..34b08d90dc1da 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_optc.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_optc.c
-@@ -301,7 +301,12 @@ static void optc3_wait_drr_doublebuffer_pending_clear(struct timing_generator *o
- 
- void optc3_set_vtotal_min_max(struct timing_generator *optc, int vtotal_min, int vtotal_max)
- {
--	optc1_set_vtotal_min_max(optc, vtotal_min, vtotal_max);
-+	struct dc *dc = optc->ctx->dc;
-+
-+	if (dc->caps.dmub_caps.mclk_sw && !dc->debug.disable_fams)
-+		dc_dmub_srv_drr_update_cmd(dc, optc->inst, vtotal_min, vtotal_max);
-+	else
-+		optc1_set_vtotal_min_max(optc, vtotal_min, vtotal_max);
+@@ -4900,21 +4897,3 @@ void dc_notify_vsync_int_state(struct dc *dc, struct dc_stream_state *stream, bo
+ 	if (pipe->stream_res.abm && pipe->stream_res.abm->funcs->set_abm_pause)
+ 		pipe->stream_res.abm->funcs->set_abm_pause(pipe->stream_res.abm, !enable, i, pipe->stream_res.tg->inst);
  }
+-
+-/**
+- * dc_extended_blank_supported - Decide whether extended blank is supported
+- *
+- * @dc: [in] Current DC state
+- *
+- * Extended blank is a freesync optimization feature to be enabled in the
+- * future.  During the extra vblank period gained from freesync, we have the
+- * ability to enter z9/z10.
+- *
+- * Return:
+- * Indicate whether extended blank is supported (%true or %false)
+- */
+-bool dc_extended_blank_supported(struct dc *dc)
+-{
+-	return dc->debug.extended_blank_optimization && !dc->debug.disable_z10
+-		&& dc->caps.zstate_support && dc->caps.is_apu;
+-}
+diff --git a/drivers/gpu/drm/amd/display/dc/dc.h b/drivers/gpu/drm/amd/display/dc/dc.h
+index 07d86b961c798..9279990e43694 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc.h
++++ b/drivers/gpu/drm/amd/display/dc/dc.h
+@@ -2125,8 +2125,6 @@ struct dc_sink_init_data {
+ 	bool converter_disable_audio;
+ };
  
- void optc3_tg_init(struct timing_generator *optc)
-diff --git a/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h b/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
-index 598fa1de54ce3..1c55d3b01f53e 100644
---- a/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
-+++ b/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
-@@ -360,7 +360,7 @@ union dmub_fw_boot_status {
- 		uint32_t optimized_init_done : 1; /**< 1 if optimized init done */
- 		uint32_t restore_required : 1; /**< 1 if driver should call restore */
- 		uint32_t defer_load : 1; /**< 1 if VBIOS data is deferred programmed */
--		uint32_t reserved : 1;
-+		uint32_t fams_enabled : 1; /**< 1 if VBIOS data is deferred programmed */
- 		uint32_t detection_required: 1; /**<  if detection need to be triggered by driver */
- 		uint32_t hw_power_init_done: 1; /**< 1 if hw power init is completed */
- 	} bits; /**< status bits */
+-bool dc_extended_blank_supported(struct dc *dc);
+-
+ struct dc_sink *dc_sink_create(const struct dc_sink_init_data *init_params);
+ 
+ /* Newer interfaces  */
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
+index c38be3c6c234e..a621b6a27c1fc 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
+@@ -2128,7 +2128,7 @@ void dcn20_optimize_bandwidth(
+ 			dc->clk_mgr,
+ 			context,
+ 			true);
+-	if (dc_extended_blank_supported(dc) && context->bw_ctx.bw.dcn.clk.zstate_support == DCN_ZSTATE_SUPPORT_ALLOW) {
++	if (context->bw_ctx.bw.dcn.clk.zstate_support == DCN_ZSTATE_SUPPORT_ALLOW) {
+ 		for (i = 0; i < dc->res_pool->pipe_count; ++i) {
+ 			struct pipe_ctx *pipe_ctx = &context->res_ctx.pipe_ctx[i];
+ 
+@@ -2136,7 +2136,7 @@ void dcn20_optimize_bandwidth(
+ 				&& pipe_ctx->stream->adjust.v_total_min == pipe_ctx->stream->adjust.v_total_max
+ 				&& pipe_ctx->stream->adjust.v_total_max > pipe_ctx->stream->timing.v_total)
+ 					pipe_ctx->plane_res.hubp->funcs->program_extended_blank(pipe_ctx->plane_res.hubp,
+-						pipe_ctx->dlg_regs.optimized_min_dst_y_next_start);
++						pipe_ctx->dlg_regs.min_dst_y_next_start);
+ 		}
+ 	}
+ }
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
+index f1c1a4b5fcac3..7661f8946aa31 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
+@@ -948,10 +948,10 @@ static enum dcn_zstate_support_state  decide_zstate_support(struct dc *dc, struc
+ {
+ 	int plane_count;
+ 	int i;
+-	unsigned int optimized_min_dst_y_next_start_us;
++	unsigned int min_dst_y_next_start_us;
+ 
+ 	plane_count = 0;
+-	optimized_min_dst_y_next_start_us = 0;
++	min_dst_y_next_start_us = 0;
+ 	for (i = 0; i < dc->res_pool->pipe_count; i++) {
+ 		if (context->res_ctx.pipe_ctx[i].plane_state)
+ 			plane_count++;
+@@ -973,19 +973,18 @@ static enum dcn_zstate_support_state  decide_zstate_support(struct dc *dc, struc
+ 	else if (context->stream_count == 1 &&  context->streams[0]->signal == SIGNAL_TYPE_EDP) {
+ 		struct dc_link *link = context->streams[0]->sink->link;
+ 		struct dc_stream_status *stream_status = &context->stream_status[0];
++		struct dc_stream_state *current_stream = context->streams[0];
+ 		int minmum_z8_residency = dc->debug.minimum_z8_residency_time > 0 ? dc->debug.minimum_z8_residency_time : 1000;
+ 		bool allow_z8 = context->bw_ctx.dml.vba.StutterPeriod > (double)minmum_z8_residency;
+ 		bool is_pwrseq0 = link->link_index == 0;
++		bool isFreesyncVideo;
+ 
+-		if (dc_extended_blank_supported(dc)) {
+-			for (i = 0; i < dc->res_pool->pipe_count; i++) {
+-				if (context->res_ctx.pipe_ctx[i].stream == context->streams[0]
+-					&& context->res_ctx.pipe_ctx[i].stream->adjust.v_total_min == context->res_ctx.pipe_ctx[i].stream->adjust.v_total_max
+-					&& context->res_ctx.pipe_ctx[i].stream->adjust.v_total_min > context->res_ctx.pipe_ctx[i].stream->timing.v_total) {
+-						optimized_min_dst_y_next_start_us =
+-							context->res_ctx.pipe_ctx[i].dlg_regs.optimized_min_dst_y_next_start_us;
+-						break;
+-				}
++		isFreesyncVideo = current_stream->adjust.v_total_min == current_stream->adjust.v_total_max;
++		isFreesyncVideo = isFreesyncVideo && current_stream->timing.v_total < current_stream->adjust.v_total_min;
++		for (i = 0; i < dc->res_pool->pipe_count; i++) {
++			if (context->res_ctx.pipe_ctx[i].stream == current_stream && isFreesyncVideo) {
++				min_dst_y_next_start_us = context->res_ctx.pipe_ctx[i].dlg_regs.min_dst_y_next_start_us;
++				break;
+ 			}
+ 		}
+ 
+@@ -993,7 +992,7 @@ static enum dcn_zstate_support_state  decide_zstate_support(struct dc *dc, struc
+ 		if (stream_status->plane_count > 1)
+ 			return DCN_ZSTATE_SUPPORT_DISALLOW;
+ 
+-		if (is_pwrseq0 && (context->bw_ctx.dml.vba.StutterPeriod > 5000.0 || optimized_min_dst_y_next_start_us > 5000))
++		if (is_pwrseq0 && (context->bw_ctx.dml.vba.StutterPeriod > 5000.0 || min_dst_y_next_start_us > 5000))
+ 			return DCN_ZSTATE_SUPPORT_ALLOW;
+ 		else if (is_pwrseq0 && link->psr_settings.psr_version == DC_PSR_VERSION_1 && !link->panel_config.psr.disable_psr)
+ 			return allow_z8 ? DCN_ZSTATE_SUPPORT_ALLOW_Z8_Z10_ONLY : DCN_ZSTATE_SUPPORT_ALLOW_Z10_ONLY;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn31/display_rq_dlg_calc_31.c b/drivers/gpu/drm/amd/display/dc/dml/dcn31/display_rq_dlg_calc_31.c
+index 2244e4fb8c96d..fcde8f21b8be0 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn31/display_rq_dlg_calc_31.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn31/display_rq_dlg_calc_31.c
+@@ -987,8 +987,7 @@ static void dml_rq_dlg_get_dlg_params(
+ 
+ 	dlg_vblank_start = interlaced ? (vblank_start / 2) : vblank_start;
+ 	disp_dlg_regs->min_dst_y_next_start = (unsigned int) (((double) dlg_vblank_start) * dml_pow(2, 2));
+-	disp_dlg_regs->optimized_min_dst_y_next_start_us = 0;
+-	disp_dlg_regs->optimized_min_dst_y_next_start = disp_dlg_regs->min_dst_y_next_start;
++	disp_dlg_regs->min_dst_y_next_start_us = 0;
+ 	ASSERT(disp_dlg_regs->min_dst_y_next_start < (unsigned int)dml_pow(2, 18));
+ 
+ 	dml_print("DML_DLG: %s: min_ttu_vblank (us)         = %3.2f\n", __func__, min_ttu_vblank);
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
+index 9e54e3d0eb780..1d00eb9e73c62 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
+@@ -286,6 +286,7 @@ int dcn314_populate_dml_pipes_from_context_fpu(struct dc *dc, struct dc_state *c
+ 	struct resource_context *res_ctx = &context->res_ctx;
+ 	struct pipe_ctx *pipe;
+ 	bool upscaled = false;
++	bool isFreesyncVideo = false;
+ 
+ 	dc_assert_fp_enabled();
+ 
+@@ -299,9 +300,16 @@ int dcn314_populate_dml_pipes_from_context_fpu(struct dc *dc, struct dc_state *c
+ 		pipe = &res_ctx->pipe_ctx[i];
+ 		timing = &pipe->stream->timing;
+ 
+-		if (dc_extended_blank_supported(dc) && pipe->stream->adjust.v_total_max == pipe->stream->adjust.v_total_min
+-			&& pipe->stream->adjust.v_total_min > timing->v_total)
++		isFreesyncVideo = pipe->stream->adjust.v_total_max == pipe->stream->adjust.v_total_min;
++		isFreesyncVideo = isFreesyncVideo && pipe->stream->adjust.v_total_min > timing->v_total;
++
++		if (!isFreesyncVideo) {
++			pipes[pipe_cnt].pipe.dest.vblank_nom =
++				dcn3_14_ip.VBlankNomDefaultUS / (timing->h_total / (timing->pix_clk_100hz / 10000.0));
++		} else {
+ 			pipes[pipe_cnt].pipe.dest.vtotal = pipe->stream->adjust.v_total_min;
++			pipes[pipe_cnt].pipe.dest.vblank_nom = timing->v_total - pipes[pipe_cnt].pipe.dest.vactive;
++		}
+ 
+ 		if (pipe->plane_state &&
+ 				(pipe->plane_state->src_rect.height < pipe->plane_state->dst_rect.height ||
+@@ -323,8 +331,6 @@ int dcn314_populate_dml_pipes_from_context_fpu(struct dc *dc, struct dc_state *c
+ 		pipes[pipe_cnt].pipe.src.dcc_fraction_of_zs_req_luma = 0;
+ 		pipes[pipe_cnt].pipe.src.dcc_fraction_of_zs_req_chroma = 0;
+ 		pipes[pipe_cnt].pipe.dest.vfront_porch = timing->v_front_porch;
+-		pipes[pipe_cnt].pipe.dest.vblank_nom =
+-				dcn3_14_ip.VBlankNomDefaultUS / (timing->h_total / (timing->pix_clk_100hz / 10000.0));
+ 		pipes[pipe_cnt].pipe.src.dcc_rate = 3;
+ 		pipes[pipe_cnt].dout.dsc_input_bpc = 0;
+ 
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn314/display_rq_dlg_calc_314.c b/drivers/gpu/drm/amd/display/dc/dml/dcn314/display_rq_dlg_calc_314.c
+index ea4eb66066c42..4f945458b2b7e 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn314/display_rq_dlg_calc_314.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn314/display_rq_dlg_calc_314.c
+@@ -1051,7 +1051,6 @@ static void dml_rq_dlg_get_dlg_params(
+ 
+ 	float vba__refcyc_per_req_delivery_pre_l = get_refcyc_per_req_delivery_pre_l_in_us(mode_lib, e2e_pipe_param, num_pipes, pipe_idx) * refclk_freq_in_mhz;  // From VBA
+ 	float vba__refcyc_per_req_delivery_l = get_refcyc_per_req_delivery_l_in_us(mode_lib, e2e_pipe_param, num_pipes, pipe_idx) * refclk_freq_in_mhz;  // From VBA
+-	int blank_lines = 0;
+ 
+ 	memset(disp_dlg_regs, 0, sizeof(*disp_dlg_regs));
+ 	memset(disp_ttu_regs, 0, sizeof(*disp_ttu_regs));
+@@ -1075,17 +1074,10 @@ static void dml_rq_dlg_get_dlg_params(
+ 	min_ttu_vblank = get_min_ttu_vblank_in_us(mode_lib, e2e_pipe_param, num_pipes, pipe_idx);	// From VBA
+ 
+ 	dlg_vblank_start = interlaced ? (vblank_start / 2) : vblank_start;
+-	disp_dlg_regs->optimized_min_dst_y_next_start = disp_dlg_regs->min_dst_y_next_start;
+-	disp_dlg_regs->optimized_min_dst_y_next_start_us = 0;
+-	disp_dlg_regs->min_dst_y_next_start = (unsigned int) (((double) dlg_vblank_start) * dml_pow(2, 2));
+-	blank_lines = (dst->vblank_end + dst->vtotal_min - dst->vblank_start - dst->vstartup_start - 1);
+-	if (blank_lines < 0)
+-		blank_lines = 0;
+-	if (blank_lines != 0) {
+-		disp_dlg_regs->optimized_min_dst_y_next_start = vba__min_dst_y_next_start;
+-		disp_dlg_regs->optimized_min_dst_y_next_start_us = (disp_dlg_regs->optimized_min_dst_y_next_start * dst->hactive) / (unsigned int) dst->pixel_rate_mhz;
+-		disp_dlg_regs->min_dst_y_next_start = disp_dlg_regs->optimized_min_dst_y_next_start;
+-	}
++	disp_dlg_regs->min_dst_y_next_start_us =
++		(vba__min_dst_y_next_start * dst->hactive) / (unsigned int) dst->pixel_rate_mhz;
++	disp_dlg_regs->min_dst_y_next_start = vba__min_dst_y_next_start * dml_pow(2, 2);
++
+ 	ASSERT(disp_dlg_regs->min_dst_y_next_start < (unsigned int)dml_pow(2, 18));
+ 
+ 	dml_print("DML_DLG: %s: min_ttu_vblank (us)         = %3.2f\n", __func__, min_ttu_vblank);
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/display_mode_structs.h b/drivers/gpu/drm/amd/display/dc/dml/display_mode_structs.h
+index 3c077164f3620..ff0246a9458fd 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/display_mode_structs.h
++++ b/drivers/gpu/drm/amd/display/dc/dml/display_mode_structs.h
+@@ -619,8 +619,7 @@ struct _vcs_dpi_display_dlg_regs_st {
+ 	unsigned int refcyc_h_blank_end;
+ 	unsigned int dlg_vblank_end;
+ 	unsigned int min_dst_y_next_start;
+-	unsigned int optimized_min_dst_y_next_start;
+-	unsigned int optimized_min_dst_y_next_start_us;
++	unsigned int min_dst_y_next_start_us;
+ 	unsigned int refcyc_per_htotal;
+ 	unsigned int refcyc_x_after_scaler;
+ 	unsigned int dst_y_after_scaler;
 -- 
 2.39.2
 
