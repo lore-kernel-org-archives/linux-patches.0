@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36371FB24
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:29:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5210BC433C8;
-	Tue,  1 Aug 2023 09:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DF91FB24
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:29:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B307C433C8;
+	Tue,  1 Aug 2023 09:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882174;
-	bh=jTbswkzDPhIVOFs1/1bs6Q946Gf651tfGhjo+nxkGzo=;
+	s=korg; t=1690882177;
+	bh=rsHBuiY/LmukncKYCylwlWYBkUTf8Yfhe1ZQ2zqP6Wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TW0UugMDvJvhUono55CUv+8tL3Zz49IxlYq5+I3lJ7iB2wWGl2hRlGkJGY2MG3gfe
-	 nT/cc4ParUIZnvYrQtvoG0VRcvnFhd8Mh1SJzygcwm5unODRlbxNUFcXTTjjE5D0DM
-	 cZPpyoGb657ZBR0M3H/dVM/UjDdgf8zcEhAmk/ok=
+	b=idLpVaEazIGuMu9qd9fG09j2Ccmo+RYPm7WbHx/d140WosdJFFZjzsSdJUunPT5dH
+	 ObGuTYJahkrv8iFSRsN46swTKGhGOBSwhNkLcjwA4nGfknfSInxYmqODvYdZBuiFcF
+	 9YpQWtdwFgZMt6wwSiLOVEP6JLsHwizcscUIudUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
-	Janosch Frank <frankja@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Ondrej Mosnacek <omosnace@redhat.com>,
+	Jeff Moyer <jmoyer@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 012/228] KVM: s390: pv: fix index value of replaced ASCE
-Date: Tue,  1 Aug 2023 11:17:50 +0200
-Message-ID: <20230801091923.278441678@linuxfoundation.org>
+Subject: [PATCH 6.1 013/228] io_uring: dont audit the capability check in io_uring_create()
+Date: Tue,  1 Aug 2023 11:17:51 +0200
+Message-ID: <20230801091923.314241667@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,41 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudio Imbrenda <imbrenda@linux.ibm.com>
+From: Ondrej Mosnacek <omosnace@redhat.com>
 
-[ Upstream commit c2fceb59bbda16468bda82b002383bff59de89ab ]
+[ Upstream commit 6adc2272aaaf84f34b652cf77f770c6fcc4b8336 ]
 
-The index field of the struct page corresponding to a guest ASCE should
-be 0. When replacing the ASCE in s390_replace_asce(), the index of the
-new ASCE should also be set to 0.
+The check being unconditional may lead to unwanted denials reported by
+LSMs when a process has the capability granted by DAC, but denied by an
+LSM. In the case of SELinux such denials are a problem, since they can't
+be effectively filtered out via the policy and when not silenced, they
+produce noise that may hide a true problem or an attack.
 
-Having the wrong index might lead to the wrong addresses being passed
-around when notifying pte invalidations, and eventually to validity
-intercepts (VM crash) if the prefix gets unmapped and the notifier gets
-called with the wrong address.
+Since not having the capability merely means that the created io_uring
+context will be accounted against the current user's RLIMIT_MEMLOCK
+limit, we can disable auditing of denials for this check by using
+ns_capable_noaudit() instead of capable().
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Fixes: faa2f72cb356 ("KVM: s390: pv: leak the topmost page table when destroy fails")
-Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20230705111937.33472-3-imbrenda@linux.ibm.com>
+Fixes: 2b188cc1bb85 ("Add io_uring IO interface")
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2193317
+Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
+Reviewed-by: Jeff Moyer <jmoyer@redhat.com>
+Link: https://lore.kernel.org/r/20230718115607.65652-1-omosnace@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/mm/gmap.c | 1 +
- 1 file changed, 1 insertion(+)
+ io_uring/io_uring.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/mm/gmap.c b/arch/s390/mm/gmap.c
-index 02d15c8dc92e9..243f673fa6515 100644
---- a/arch/s390/mm/gmap.c
-+++ b/arch/s390/mm/gmap.c
-@@ -2843,6 +2843,7 @@ int s390_replace_asce(struct gmap *gmap)
- 	page = alloc_pages(GFP_KERNEL_ACCOUNT, CRST_ALLOC_ORDER);
- 	if (!page)
- 		return -ENOMEM;
-+	page->index = 0;
- 	table = page_to_virt(page);
- 	memcpy(table, gmap->table, 1UL << (CRST_ALLOC_ORDER + PAGE_SHIFT));
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index bd7b8cf8bc677..f091153bc8540 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -3477,7 +3477,7 @@ static __cold int io_uring_create(unsigned entries, struct io_uring_params *p,
+ 		ctx->syscall_iopoll = 1;
  
+ 	ctx->compat = in_compat_syscall();
+-	if (!capable(CAP_IPC_LOCK))
++	if (!ns_capable_noaudit(&init_user_ns, CAP_IPC_LOCK))
+ 		ctx->user = get_uid(current_user());
+ 
+ 	/*
 -- 
 2.39.2
 
