@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641BC1F959
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:34:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9741C433C7;
-	Tue,  1 Aug 2023 09:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1501F959
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:34:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A011BC433C8;
+	Tue,  1 Aug 2023 09:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882472;
-	bh=3WgsGndg6SuR2kMCp0pNceBgAiPDZeB5+MErOJkq6r4=;
+	s=korg; t=1690882475;
+	bh=kBBgDVDUZifAbBP8gsbhqfnQWJEadzb/7Jk/QGTido8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zQFYT2c0nA6+Fo+SKbktHG340yMZMk4FEXgVgFFaaDBjQr+3RueqSAOp86/LgKDgt
-	 vuojQm5Od6lhFxTmE9O0AvvawLzV/j/C8f5MjxD7l/1pqUje4lFh8d62xq1pKLGXcB
-	 jtxXZMpye+JbYAkfJm4F3earMI+uusW7SMHGUykQ=
+	b=S4YwhamteLgFRnB2+PHEqg5KFn+c2gxr+3RRBV3ccnbCD5m0IR/iEGgkAjnS8/mBY
+	 hYQ6M9ACvTIhRphE+Bgz17uEVqpGBS8a6KKPIAqFnXEnqBTSAgrpEaeLpxzqj7xV4h
+	 eCOdahmhRky61gPQpx49JlNDob26JlNkpOeGGgRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Benc <jbenc@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 089/228] vxlan: generalize vxlan_parse_gpe_hdr and remove unused args
-Date: Tue,  1 Aug 2023 11:19:07 +0200
-Message-ID: <20230801091926.067793681@linuxfoundation.org>
+Subject: [PATCH 6.1 080/228] media: amphion: Fix firmware path to match linux-firmware
+Date: Tue,  1 Aug 2023 11:18:58 +0200
+Message-ID: <20230801091925.721169736@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -35,113 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Benc <jbenc@redhat.com>
+From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 
-[ Upstream commit 17a0a64448b568442a101de09575f81ffdc45d15 ]
+[ Upstream commit dcff0b56f661b6b42e828012b464d22cc2068c38 ]
 
-The vxlan_parse_gpe_hdr function extracts the next protocol value from
-the GPE header and marks GPE bits as parsed.
+The path did not match the one it was submitted into linux-firmware
+which prevented generic distribution from having working CODEC.
 
-In order to be used in the next patch, split the function into protocol
-extraction and bit marking. The bit marking is meaningful only in
-vxlan_rcv; move it directly there.
-
-Rename the function to vxlan_parse_gpe_proto to reflect what it now
-does. Remove unused arguments skb and vxflags. Move the function earlier
-in the file to allow it to be called from more places in the next patch.
-
-Signed-off-by: Jiri Benc <jbenc@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: b0b672c4d095 ("vxlan: fix GRO with VXLAN-GPE")
+Fixes: 9f599f351e86 ("media: amphion: add vpu core driver")
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 58 ++++++++++++++++------------------
- 1 file changed, 28 insertions(+), 30 deletions(-)
+ drivers/media/platform/amphion/vpu_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 719f862fa55eb..0dc7326fd6ed4 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -670,6 +670,32 @@ static int vxlan_fdb_append(struct vxlan_fdb *f,
- 	return 1;
- }
+diff --git a/drivers/media/platform/amphion/vpu_core.c b/drivers/media/platform/amphion/vpu_core.c
+index f9ec1753f7c86..be80410682681 100644
+--- a/drivers/media/platform/amphion/vpu_core.c
++++ b/drivers/media/platform/amphion/vpu_core.c
+@@ -828,7 +828,7 @@ static const struct dev_pm_ops vpu_core_pm_ops = {
  
-+static bool vxlan_parse_gpe_proto(struct vxlanhdr *hdr, __be16 *protocol)
-+{
-+	struct vxlanhdr_gpe *gpe = (struct vxlanhdr_gpe *)hdr;
-+
-+	/* Need to have Next Protocol set for interfaces in GPE mode. */
-+	if (!gpe->np_applied)
-+		return false;
-+	/* "The initial version is 0. If a receiver does not support the
-+	 * version indicated it MUST drop the packet.
-+	 */
-+	if (gpe->version != 0)
-+		return false;
-+	/* "When the O bit is set to 1, the packet is an OAM packet and OAM
-+	 * processing MUST occur." However, we don't implement OAM
-+	 * processing, thus drop the packet.
-+	 */
-+	if (gpe->oam_flag)
-+		return false;
-+
-+	*protocol = tun_p_to_eth_p(gpe->next_protocol);
-+	if (!*protocol)
-+		return false;
-+
-+	return true;
-+}
-+
- static struct vxlanhdr *vxlan_gro_remcsum(struct sk_buff *skb,
- 					  unsigned int off,
- 					  struct vxlanhdr *vh, size_t hdrlen,
-@@ -1572,35 +1598,6 @@ static void vxlan_parse_gbp_hdr(struct vxlanhdr *unparsed,
- 	unparsed->vx_flags &= ~VXLAN_GBP_USED_BITS;
- }
+ static struct vpu_core_resources imx8q_enc = {
+ 	.type = VPU_CORE_TYPE_ENC,
+-	.fwname = "vpu/vpu_fw_imx8_enc.bin",
++	.fwname = "amphion/vpu/vpu_fw_imx8_enc.bin",
+ 	.stride = 16,
+ 	.max_width = 1920,
+ 	.max_height = 1920,
+@@ -843,7 +843,7 @@ static struct vpu_core_resources imx8q_enc = {
  
--static bool vxlan_parse_gpe_hdr(struct vxlanhdr *unparsed,
--				__be16 *protocol,
--				struct sk_buff *skb, u32 vxflags)
--{
--	struct vxlanhdr_gpe *gpe = (struct vxlanhdr_gpe *)unparsed;
--
--	/* Need to have Next Protocol set for interfaces in GPE mode. */
--	if (!gpe->np_applied)
--		return false;
--	/* "The initial version is 0. If a receiver does not support the
--	 * version indicated it MUST drop the packet.
--	 */
--	if (gpe->version != 0)
--		return false;
--	/* "When the O bit is set to 1, the packet is an OAM packet and OAM
--	 * processing MUST occur." However, we don't implement OAM
--	 * processing, thus drop the packet.
--	 */
--	if (gpe->oam_flag)
--		return false;
--
--	*protocol = tun_p_to_eth_p(gpe->next_protocol);
--	if (!*protocol)
--		return false;
--
--	unparsed->vx_flags &= ~VXLAN_GPE_USED_BITS;
--	return true;
--}
--
- static bool vxlan_set_mac(struct vxlan_dev *vxlan,
- 			  struct vxlan_sock *vs,
- 			  struct sk_buff *skb, __be32 vni)
-@@ -1702,8 +1699,9 @@ static int vxlan_rcv(struct sock *sk, struct sk_buff *skb)
- 	 * used by VXLAN extensions if explicitly requested.
- 	 */
- 	if (vs->flags & VXLAN_F_GPE) {
--		if (!vxlan_parse_gpe_hdr(&unparsed, &protocol, skb, vs->flags))
-+		if (!vxlan_parse_gpe_proto(&unparsed, &protocol))
- 			goto drop;
-+		unparsed.vx_flags &= ~VXLAN_GPE_USED_BITS;
- 		raw_proto = true;
- 	}
- 
+ static struct vpu_core_resources imx8q_dec = {
+ 	.type = VPU_CORE_TYPE_DEC,
+-	.fwname = "vpu/vpu_fw_imx8_dec.bin",
++	.fwname = "amphion/vpu/vpu_fw_imx8_dec.bin",
+ 	.stride = 256,
+ 	.max_width = 8188,
+ 	.max_height = 8188,
 -- 
 2.39.2
 
