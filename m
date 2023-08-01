@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02C01F95A
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:42:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21C88C433C8;
-	Tue,  1 Aug 2023 09:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2DD1F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:42:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE20BC433C7;
+	Tue,  1 Aug 2023 09:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882941;
-	bh=P/civ6XNJrhtPRBxZ6s0TL04LScZyh6k5LLPhp3P6h4=;
+	s=korg; t=1690882944;
+	bh=KaFARStEbsP4AiT6iSo+JtrNslN+0r00H2IoIuavtDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CuugHrgE/LKZnm18vmc3Jr7COpcvTx0MnCUAEBSjF3XGu79eKmaLDV+XALXBSbTyD
-	 eJvcjS9dVbDNFBTehAMQEEg8c2jRKU1Zb/nfBNaL10MIE7D1wBVQIGevYRiTcPHazt
-	 /rvu3cp1G0N4soIETvMFG81oYO9VsB/CuF8SkVZE=
+	b=ytmUZ6A+2cw347OQTEg1w+uUQcSqowGh5+OuP/pO5cVGllQPnCX/Pjdd2t5wbhU/8
+	 xpQuY3KsbJiT1AjV6CDFJTk9EsFGKYQW0ol7RpgVHp0HX+KAxCX+MwqmFsGEpyCO6B
+	 EKaPANbsGiAPTjyrWkw62P+QiXWPztmdbUvOFiXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mukunda,Vijendar" <vijendar.mukunda@amd.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 057/239] soundwire: amd: Fix a check for errors in probe()
-Date: Tue,  1 Aug 2023 11:18:41 +0200
-Message-ID: <20230801091927.587431667@linuxfoundation.org>
+Subject: [PATCH 6.4 058/239] media: tc358746: Address compiler warnings
+Date: Tue,  1 Aug 2023 11:18:42 +0200
+Message-ID: <20230801091927.725919778@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,40 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit 7891d0a5ce6f627132d3068ba925cf86f29008b1 ]
+[ Upstream commit 9c2dcfc2cf0f2e4e0a0db33bc1a626e35928c475 ]
 
-This code has two problems:
-1) The devm_ioremap() function returns NULL, not error pointers.
-2) It's checking the wrong variable.  ->mmio instead of ->acp_mmio.
+Address these compiler warnings by initialising the m_best and p_best
+values to 0 and 1 respectively (as latter is used as a divisor):
 
-Fixes: d8f48fbdfd9a ("soundwire: amd: Add support for AMD Manager driver")
-Suggested-by: "Mukunda,Vijendar" <vijendar.mukunda@amd.com>
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/9863b2bf-0de2-4bf8-8f09-fe24dc5c63ff@moroto.mountain
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+   drivers/media/i2c/tc358746.c: In function 'tc358746_find_pll_settings':
+>> drivers/media/i2c/tc358746.c:817:13: warning: 'p_best' is used uninitialized
+[-Wuninitialized]
+     817 |         u16 p_best, p;
+         |             ^~~~~~
+>> drivers/media/i2c/tc358746.c:816:13: warning: 'm_best' is used uninitialized
+[-Wuninitialized]
+     816 |         u16 m_best, mul;
+         |             ^~~~~~
+
+The warnings may well be a false positive but it is difficult for a
+compiler to find out whether that truly is the case.
+
+Closes: https://lore.kernel.org/oe-kbuild-all/202305301627.fLT3Bkds-lkp@intel.com/
+
+Reported-by: kernel test robot <lkp@intel.com>
+Fixes: 80a21da3605 ("media: tc358746: add Toshiba TC358746 Parallel to CSI-2 bridge driver")
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/amd_manager.c | 4 ++--
+ drivers/media/i2c/tc358746.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soundwire/amd_manager.c b/drivers/soundwire/amd_manager.c
-index 9fb7f91ca1827..21c638e38c51f 100644
---- a/drivers/soundwire/amd_manager.c
-+++ b/drivers/soundwire/amd_manager.c
-@@ -910,9 +910,9 @@ static int amd_sdw_manager_probe(struct platform_device *pdev)
- 		return -ENOMEM;
+diff --git a/drivers/media/i2c/tc358746.c b/drivers/media/i2c/tc358746.c
+index ec1a193ba161a..25fbce5cabdaa 100644
+--- a/drivers/media/i2c/tc358746.c
++++ b/drivers/media/i2c/tc358746.c
+@@ -813,8 +813,8 @@ static unsigned long tc358746_find_pll_settings(struct tc358746 *tc358746,
+ 	u32 min_delta = 0xffffffff;
+ 	u16 prediv_max = 17;
+ 	u16 prediv_min = 1;
+-	u16 m_best, mul;
+-	u16 p_best, p;
++	u16 m_best = 0, mul;
++	u16 p_best = 1, p;
+ 	u8 postdiv;
  
- 	amd_manager->acp_mmio = devm_ioremap(dev, res->start, resource_size(res));
--	if (IS_ERR(amd_manager->mmio)) {
-+	if (!amd_manager->acp_mmio) {
- 		dev_err(dev, "mmio not found\n");
--		return PTR_ERR(amd_manager->mmio);
-+		return -ENOMEM;
- 	}
- 	amd_manager->instance = pdata->instance;
- 	amd_manager->mmio = amd_manager->acp_mmio +
+ 	if (fout > 1000 * HZ_PER_MHZ) {
 -- 
 2.39.2
 
