@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38DEB1FB2B
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:34:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0556C433C8;
-	Tue,  1 Aug 2023 09:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60ED51FB2B
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:34:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 875CEC433C8;
+	Tue,  1 Aug 2023 09:34:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882444;
-	bh=3MCRaZ2ro62yTZdIbEfzhF3TO7F3/AbZpBCiurAclbY=;
+	s=korg; t=1690882446;
+	bh=brnI0aWeulcmZKDmA06WqhfxXqaHfgPAw8Y6jBhDdEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0vnHMAVupXTTWafIpfxmzo3ewHGjQMVWWT7I3yVh7ZIY9c2Ld3kHLiaCu1BKswFcX
-	 SnM2cT/12piuVZR//BZ+vPpgR4mRLtu1Tpi79DJ3umu/1YEfPmawji5Nd9DLkf+XYi
-	 T+h1iik2MNxpq8sk/AZs3dndph63OEIw0X/3ujj0=
+	b=Z4o4qecsajYmEDW8aQFgwBVdkcZa1nw+pMsVSKUk+h5Ylla7K3xQO88n9wbkaNZmV
+	 /uLYKe7HQOSqgeS4QZAdnTSDSdkuxVQHhexLH2NMlDNcbpIt+eGBemyNJqY4dGW6bM
+	 AhYqtdU/uXfhLgB/U2fJnm3xTnd5Jtm75s61bu0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Rich <kevinrich1337@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 107/228] netfilter: nf_tables: disallow rule addition to bound chain via NFTA_RULE_CHAIN_ID
-Date: Tue,  1 Aug 2023 11:19:25 +0200
-Message-ID: <20230801091926.660211517@linuxfoundation.org>
+	Thomas Lamprecht <t.lamprecht@proxmox.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Fiona Ebner <f.ebner@proxmox.com>
+Subject: [PATCH 6.1 108/228] mm: suppress mm fault logging if fatal signal already pending
+Date: Tue,  1 Aug 2023 11:19:26 +0200
+Message-ID: <20230801091926.698484835@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -36,50 +37,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 0ebc1064e4874d5987722a2ddbc18f94aa53b211 ]
+[ Upstream commit 5f0bc0b042fc77ff70e14c790abdec960cde4ec1 ]
 
-Bail out with EOPNOTSUPP when adding rule to bound chain via
-NFTA_RULE_CHAIN_ID. The following warning splat is shown when
-adding a rule to a deleted bound chain:
+Commit eda0047296a1 ("mm: make the page fault mmap locking killable")
+intentionally made it much easier to trigger the "page fault fails
+because a fatal signal is pending" situation, by having the mmap locking
+fail early in that case.
 
- WARNING: CPU: 2 PID: 13692 at net/netfilter/nf_tables_api.c:2013 nf_tables_chain_destroy+0x1f7/0x210 [nf_tables]
- CPU: 2 PID: 13692 Comm: chain-bound-rul Not tainted 6.1.39 #1
- RIP: 0010:nf_tables_chain_destroy+0x1f7/0x210 [nf_tables]
+We have long aborted page faults in other fatal cases when the actual IO
+for a page is interrupted by SIGKILL - which is particularly useful for
+the traditional case of NFS hanging due to network issues, but local
+filesystems could cause it too if you happened to get the SIGKILL while
+waiting for a page to be faulted in (eg lock_folio_maybe_drop_mmap()).
 
-Fixes: d0e2c7de92c7 ("netfilter: nf_tables: add NFT_CHAIN_BINDING")
-Reported-by: Kevin Rich <kevinrich1337@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+So aborting the page fault wasn't a new condition - but it now triggers
+earlier, before we even get to 'handle_mm_fault()'.  And as a result the
+error doesn't go through our 'fault_signal_pending()' logic, and doesn't
+get filtered away there.
+
+Normally you'd never even notice, because if a fatal signal is pending,
+the new SIGSEGV we send ends up being ignored anyway.
+
+But it turns out that there is one very noticeable exception: if you
+enable 'show_unhandled_signals', the aborted page fault will be logged
+in the kernel messages, and you'll get a scary line looking something
+like this in your logs:
+
+  pverados[2183248]: segfault at 55e5a00f9ae0 ip 000055e5a00f9ae0 sp 00007ffc0720bea8 error 14 in perl[55e5a00d4000+195000] likely on CPU 10 (core 4, socket 0)
+
+which is rather misleading.  It's not really a segfault at all, it's
+just "the thread was killed before the page fault completed, so we
+aborted the page fault".
+
+Fix this by just making it clear that a pending fatal signal means that
+any new signal coming in after that is implicitly handled.  This will
+avoid the misleading logging, since now the signal isn't 'unhandled' any
+more.
+
+Reported-and-tested-by: Fiona Ebner <f.ebner@proxmox.com>
+Tested-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
+Link: https://lore.kernel.org/lkml/8d063a26-43f5-0bb7-3203-c6a04dc159f8@proxmox.com/
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Fixes: eda0047296a1 ("mm: make the page fault mmap locking killable")
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/signal.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index e2e5ff6acd2bf..dd57a9ebe113d 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -3626,8 +3626,6 @@ static int nf_tables_newrule(struct sk_buff *skb, const struct nfnl_info *info,
- 			NL_SET_BAD_ATTR(extack, nla[NFTA_RULE_CHAIN]);
- 			return PTR_ERR(chain);
- 		}
--		if (nft_chain_is_bound(chain))
--			return -EOPNOTSUPP;
+diff --git a/kernel/signal.c b/kernel/signal.c
+index d140672185a48..5d45f5da2b36e 100644
+--- a/kernel/signal.c
++++ b/kernel/signal.c
+@@ -561,6 +561,10 @@ bool unhandled_signal(struct task_struct *tsk, int sig)
+ 	if (handler != SIG_IGN && handler != SIG_DFL)
+ 		return false;
  
- 	} else if (nla[NFTA_RULE_CHAIN_ID]) {
- 		chain = nft_chain_lookup_byid(net, table, nla[NFTA_RULE_CHAIN_ID],
-@@ -3640,6 +3638,9 @@ static int nf_tables_newrule(struct sk_buff *skb, const struct nfnl_info *info,
- 		return -EINVAL;
- 	}
- 
-+	if (nft_chain_is_bound(chain))
-+		return -EOPNOTSUPP;
++	/* If dying, we handle all new signals by ignoring them */
++	if (fatal_signal_pending(tsk))
++		return false;
 +
- 	if (nla[NFTA_RULE_HANDLE]) {
- 		handle = be64_to_cpu(nla_get_be64(nla[NFTA_RULE_HANDLE]));
- 		rule = __nft_rule_lookup(chain, handle);
+ 	/* if ptraced, let the tracer determine */
+ 	return !tsk->ptrace;
+ }
 -- 
 2.39.2
 
