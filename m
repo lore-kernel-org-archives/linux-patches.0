@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621AF1F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:28:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8CB7C433C8;
-	Tue,  1 Aug 2023 09:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283D51F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:28:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ECD8C433C7;
+	Tue,  1 Aug 2023 09:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882127;
-	bh=qHzkB4rDZhclUz0Z8Wnq1Bjd2kYpJ1sHdGLBjwrSiaw=;
+	s=korg; t=1690882130;
+	bh=6hIdId1yqY9QBdbekgub2Y2doSMGNu3qzrtXTVKKTDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vm+8Ou3rpnrdxiCDZ+9uiOw6brYjHkafPV7+TtKPmZjBaWqVlPLGStGlTD+fsm9T4
-	 qCV2SYLiqXjpwq0HSn41xSzxT1E6vRY+r+m8uFFjqSO5NCK5agoj/UqacuLOtQPxAm
-	 0IiK3gY/ttBE4avbm7diGDYd7aepzf4ZsB703h3U=
+	b=oSO4RwJBvK+jsYFTmcugmOVF8yhumB5CwfEk/oEi9zA6DwIso+awJ3T1E21pjlVRf
+	 HqtDpfqQ4ru0TqeR2kJMnF7tP1qZCeXnWBxem3xNDcOznCusOuduTPiswvWncoWMoj
+	 TU0nJ87HvgfHDDQBzjnAMHZsNNb03HI3L0Ih+ovY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 112/155] USB: serial: simple: sort driver entries
-Date: Tue,  1 Aug 2023 11:20:24 +0200
-Message-ID: <20230801091914.212720483@linuxfoundation.org>
+	David Jeffery <djeffery@redhat.com>,
+	Joe Thornber <ejt@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 5.15 144/155] dm cache policy smq: ensure IO doesnt prevent cleaner policy progress
+Date: Tue,  1 Aug 2023 11:20:56 +0200
+Message-ID: <20230801091915.281789505@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -33,157 +35,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan@kernel.org>
+From: Joe Thornber <ejt@redhat.com>
 
-commit d245aedc00775c4d7265a9f4522cc4e1fd34d102 upstream.
+commit 1e4ab7b4c881cf26c1c72b3f56519e03475486fb upstream.
 
-Sort the driver symbols alphabetically in order to make it more obvious
-where new driver entries should be added.
+When using the cleaner policy to decommission the cache, there is
+never any writeback started from the cache as it is constantly delayed
+due to normal I/O keeping the device busy. Meaning @idle=false was
+always being passed to clean_target_met()
 
+Fix this by adding a specific 'cleaner' flag that is set when the
+cleaner policy is configured. This flag serves to always allow the
+cleaner's writeback work to be queued until the cache is
+decommissioned (even if the cache isn't idle).
+
+Reported-by: David Jeffery <djeffery@redhat.com>
+Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
 Cc: stable@vger.kernel.org
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Joe Thornber <ejt@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/usb-serial-simple.c |   66 ++++++++++++++++-----------------
- 1 file changed, 33 insertions(+), 33 deletions(-)
+ drivers/md/dm-cache-policy-smq.c |   28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
---- a/drivers/usb/serial/usb-serial-simple.c
-+++ b/drivers/usb/serial/usb-serial-simple.c
-@@ -38,16 +38,6 @@ static struct usb_serial_driver vendor##
- 	{ USB_DEVICE(0x0a21, 0x8001) }	/* MMT-7305WW */
- DEVICE(carelink, CARELINK_IDS);
+--- a/drivers/md/dm-cache-policy-smq.c
++++ b/drivers/md/dm-cache-policy-smq.c
+@@ -854,7 +854,13 @@ struct smq_policy {
  
--/* ZIO Motherboard USB driver */
--#define ZIO_IDS()			\
--	{ USB_DEVICE(0x1CBE, 0x0103) }
--DEVICE(zio, ZIO_IDS);
--
--/* Funsoft Serial USB driver */
--#define FUNSOFT_IDS()			\
--	{ USB_DEVICE(0x1404, 0xcddc) }
--DEVICE(funsoft, FUNSOFT_IDS);
--
- /* Infineon Flashloader driver */
- #define FLASHLOADER_IDS()		\
- 	{ USB_DEVICE_INTERFACE_CLASS(0x058b, 0x0041, USB_CLASS_CDC_DATA) }, \
-@@ -55,6 +45,11 @@ DEVICE(funsoft, FUNSOFT_IDS);
- 	{ USB_DEVICE(0x8087, 0x0801) }
- DEVICE(flashloader, FLASHLOADER_IDS);
+ 	struct background_tracker *bg_work;
  
-+/* Funsoft Serial USB driver */
-+#define FUNSOFT_IDS()			\
-+	{ USB_DEVICE(0x1404, 0xcddc) }
-+DEVICE(funsoft, FUNSOFT_IDS);
+-	bool migrations_allowed;
++	bool migrations_allowed:1;
 +
- /* Google Serial USB SubClass */
- #define GOOGLE_IDS()						\
- 	{ USB_VENDOR_AND_INTERFACE_INFO(0x18d1,			\
-@@ -63,6 +58,11 @@ DEVICE(flashloader, FLASHLOADER_IDS);
- 					0x01) }
- DEVICE(google, GOOGLE_IDS);
- 
-+/* HP4x (48/49) Generic Serial driver */
-+#define HP4X_IDS()			\
-+	{ USB_DEVICE(0x03f0, 0x0121) }
-+DEVICE(hp4x, HP4X_IDS);
-+
- /* KAUFMANN RKS+CAN VCP */
- #define KAUFMANN_IDS()			\
- 	{ USB_DEVICE(0x16d0, 0x0870) }
-@@ -73,11 +73,6 @@ DEVICE(kaufmann, KAUFMANN_IDS);
- 	{ USB_DEVICE(0x1209, 0x8b00) }
- DEVICE(libtransistor, LIBTRANSISTOR_IDS);
- 
--/* ViVOpay USB Serial Driver */
--#define VIVOPAY_IDS()			\
--	{ USB_DEVICE(0x1d5f, 0x1004) }	/* ViVOpay 8800 */
--DEVICE(vivopay, VIVOPAY_IDS);
--
- /* Motorola USB Phone driver */
- #define MOTO_IDS()			\
- 	{ USB_DEVICE(0x05c6, 0x3197) },	/* unknown Motorola phone */	\
-@@ -106,10 +101,10 @@ DEVICE(nokia, NOKIA_IDS);
- 	{ USB_DEVICE(0x09d7, 0x0100) }	/* NovAtel FlexPack GPS */
- DEVICE_N(novatel_gps, NOVATEL_IDS, 3);
- 
--/* HP4x (48/49) Generic Serial driver */
--#define HP4X_IDS()			\
--	{ USB_DEVICE(0x03f0, 0x0121) }
--DEVICE(hp4x, HP4X_IDS);
-+/* Siemens USB/MPI adapter */
-+#define SIEMENS_IDS()			\
-+	{ USB_DEVICE(0x908, 0x0004) }
-+DEVICE(siemens_mpi, SIEMENS_IDS);
- 
- /* Suunto ANT+ USB Driver */
- #define SUUNTO_IDS()			\
-@@ -117,47 +112,52 @@ DEVICE(hp4x, HP4X_IDS);
- 	{ USB_DEVICE(0x0fcf, 0x1009) } /* Dynastream ANT USB-m Stick */
- DEVICE(suunto, SUUNTO_IDS);
- 
--/* Siemens USB/MPI adapter */
--#define SIEMENS_IDS()			\
--	{ USB_DEVICE(0x908, 0x0004) }
--DEVICE(siemens_mpi, SIEMENS_IDS);
-+/* ViVOpay USB Serial Driver */
-+#define VIVOPAY_IDS()			\
-+	{ USB_DEVICE(0x1d5f, 0x1004) }	/* ViVOpay 8800 */
-+DEVICE(vivopay, VIVOPAY_IDS);
-+
-+/* ZIO Motherboard USB driver */
-+#define ZIO_IDS()			\
-+	{ USB_DEVICE(0x1CBE, 0x0103) }
-+DEVICE(zio, ZIO_IDS);
- 
- /* All of the above structures mushed into two lists */
- static struct usb_serial_driver * const serial_drivers[] = {
- 	&carelink_device,
--	&zio_device,
--	&funsoft_device,
- 	&flashloader_device,
-+	&funsoft_device,
- 	&google_device,
-+	&hp4x_device,
- 	&kaufmann_device,
- 	&libtransistor_device,
--	&vivopay_device,
- 	&moto_modem_device,
- 	&motorola_tetra_device,
- 	&nokia_device,
- 	&novatel_gps_device,
--	&hp4x_device,
--	&suunto_device,
- 	&siemens_mpi_device,
-+	&suunto_device,
-+	&vivopay_device,
-+	&zio_device,
- 	NULL
++	/*
++	 * If this is set the policy will try and clean the whole cache
++	 * even if the device is not idle.
++	 */
++	bool cleaner:1;
  };
  
- static const struct usb_device_id id_table[] = {
- 	CARELINK_IDS(),
--	ZIO_IDS(),
--	FUNSOFT_IDS(),
- 	FLASHLOADER_IDS(),
-+	FUNSOFT_IDS(),
- 	GOOGLE_IDS(),
-+	HP4X_IDS(),
- 	KAUFMANN_IDS(),
- 	LIBTRANSISTOR_IDS(),
--	VIVOPAY_IDS(),
- 	MOTO_IDS(),
- 	MOTOROLA_TETRA_IDS(),
- 	NOKIA_IDS(),
- 	NOVATEL_IDS(),
--	HP4X_IDS(),
--	SUUNTO_IDS(),
- 	SIEMENS_IDS(),
-+	SUUNTO_IDS(),
-+	VIVOPAY_IDS(),
-+	ZIO_IDS(),
- 	{ },
- };
- MODULE_DEVICE_TABLE(usb, id_table);
+ /*----------------------------------------------------------------*/
+@@ -1133,7 +1139,7 @@ static bool clean_target_met(struct smq_
+ 	 * Cache entries may not be populated.  So we cannot rely on the
+ 	 * size of the clean queue.
+ 	 */
+-	if (idle) {
++	if (idle || mq->cleaner) {
+ 		/*
+ 		 * We'd like to clean everything.
+ 		 */
+@@ -1716,11 +1722,9 @@ static void calc_hotspot_params(sector_t
+ 		*hotspot_block_size /= 2u;
+ }
+ 
+-static struct dm_cache_policy *__smq_create(dm_cblock_t cache_size,
+-					    sector_t origin_size,
+-					    sector_t cache_block_size,
+-					    bool mimic_mq,
+-					    bool migrations_allowed)
++static struct dm_cache_policy *
++__smq_create(dm_cblock_t cache_size, sector_t origin_size, sector_t cache_block_size,
++	     bool mimic_mq, bool migrations_allowed, bool cleaner)
+ {
+ 	unsigned i;
+ 	unsigned nr_sentinels_per_queue = 2u * NR_CACHE_LEVELS;
+@@ -1807,6 +1811,7 @@ static struct dm_cache_policy *__smq_cre
+ 		goto bad_btracker;
+ 
+ 	mq->migrations_allowed = migrations_allowed;
++	mq->cleaner = cleaner;
+ 
+ 	return &mq->policy;
+ 
+@@ -1830,21 +1835,24 @@ static struct dm_cache_policy *smq_creat
+ 					  sector_t origin_size,
+ 					  sector_t cache_block_size)
+ {
+-	return __smq_create(cache_size, origin_size, cache_block_size, false, true);
++	return __smq_create(cache_size, origin_size, cache_block_size,
++			    false, true, false);
+ }
+ 
+ static struct dm_cache_policy *mq_create(dm_cblock_t cache_size,
+ 					 sector_t origin_size,
+ 					 sector_t cache_block_size)
+ {
+-	return __smq_create(cache_size, origin_size, cache_block_size, true, true);
++	return __smq_create(cache_size, origin_size, cache_block_size,
++			    true, true, false);
+ }
+ 
+ static struct dm_cache_policy *cleaner_create(dm_cblock_t cache_size,
+ 					      sector_t origin_size,
+ 					      sector_t cache_block_size)
+ {
+-	return __smq_create(cache_size, origin_size, cache_block_size, false, false);
++	return __smq_create(cache_size, origin_size, cache_block_size,
++			    false, false, true);
+ }
+ 
+ /*----------------------------------------------------------------*/
 
 
