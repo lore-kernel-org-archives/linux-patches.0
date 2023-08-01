@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD0B1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:45:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417A9C433C8;
-	Tue,  1 Aug 2023 09:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E372E1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:45:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17068C433C8;
+	Tue,  1 Aug 2023 09:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883118;
-	bh=Kghv55kihN/uXVOFLfX12mVjiXFUB0Nq0hq/76ygEog=;
+	s=korg; t=1690883121;
+	bh=jvYokCJ5F34jY8LlAShv27Ja7+q8Vny0G4oJvcQLrFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TFOOWuu09MmJNPaxDtmgKoxDhoRv6K6Ry1A31JTZq8dAsYuyc+g2TYK0H616IBn/N
-	 Sf+tVkvaA9HVV7J6UAnlwdFGz554c1Y6o1xVadV+4aeQMRWRPhItCpZkcvv1adbfit
-	 0wOuGwzKzr2kbfXYh73waEMDWXGrSOEDPnjM5y6k=
+	b=MCpPCt0A9cB1pG4771s6M1RAUkXOTrwa4ila+nqOYtqN+2fMaey2eZyDux2EAJeJL
+	 /cFF/Pny/dVWCJglIGFrwxSJkUlA6xGfMpyNicJmvv0BUNfjFlp8clJ3q6EsVLyUXf
+	 x6/TqZ4DNAwyQM79xWBEIIonB0Pmz+ZrMU8WKfI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Nogueira <victor@mojatatu.com>,
-	Lin Ma <linma@zju.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Matus Gajdos <matuszpd@gmail.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 094/239] net/sched: mqprio: Add length check for TCA_MQPRIO_{MAX/MIN}_RATE64
-Date: Tue,  1 Aug 2023 11:19:18 +0200
-Message-ID: <20230801091929.124031120@linuxfoundation.org>
+Subject: [PATCH 6.4 121/239] ASoC: fsl_spdif: Silence output on stop
+Date: Tue,  1 Aug 2023 11:19:45 +0200
+Message-ID: <20230801091930.081661428@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,63 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Matus Gajdos <matuszpd@gmail.com>
 
-[ Upstream commit 6c58c8816abb7b93b21fa3b1d0c1726402e5e568 ]
+[ Upstream commit 0e4c2b6b0c4a4b4014d9424c27e5e79d185229c5 ]
 
-The nla_for_each_nested parsing in function mqprio_parse_nlattr() does
-not check the length of the nested attribute. This can lead to an
-out-of-attribute read and allow a malformed nlattr (e.g., length 0) to
-be viewed as 8 byte integer and passed to priv->max_rate/min_rate.
+Clear TX registers on stop to prevent the SPDIF interface from sending
+last written word over and over again.
 
-This patch adds the check based on nla_len() when check the nla_type(),
-which ensures that the length of these two attribute must equals
-sizeof(u64).
-
-Fixes: 4e8b86c06269 ("mqprio: Introduce new hardware offload mode and shaper in mqprio")
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230725024227.426561-1-linma@zju.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a2388a498ad2 ("ASoC: fsl: Add S/PDIF CPU DAI driver")
+Signed-off-by: Matus Gajdos <matuszpd@gmail.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Link: https://lore.kernel.org/r/20230719164729.19969-1-matuszpd@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_mqprio.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ sound/soc/fsl/fsl_spdif.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/sched/sch_mqprio.c b/net/sched/sch_mqprio.c
-index ab69ff7577fc7..793009f445c03 100644
---- a/net/sched/sch_mqprio.c
-+++ b/net/sched/sch_mqprio.c
-@@ -290,6 +290,13 @@ static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
- 						    "Attribute type expected to be TCA_MQPRIO_MIN_RATE64");
- 				return -EINVAL;
- 			}
-+
-+			if (nla_len(attr) != sizeof(u64)) {
-+				NL_SET_ERR_MSG_ATTR(extack, attr,
-+						    "Attribute TCA_MQPRIO_MIN_RATE64 expected to have 8 bytes length");
-+				return -EINVAL;
-+			}
-+
- 			if (i >= qopt->num_tc)
- 				break;
- 			priv->min_rate[i] = nla_get_u64(attr);
-@@ -312,6 +319,13 @@ static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
- 						    "Attribute type expected to be TCA_MQPRIO_MAX_RATE64");
- 				return -EINVAL;
- 			}
-+
-+			if (nla_len(attr) != sizeof(u64)) {
-+				NL_SET_ERR_MSG_ATTR(extack, attr,
-+						    "Attribute TCA_MQPRIO_MAX_RATE64 expected to have 8 bytes length");
-+				return -EINVAL;
-+			}
-+
- 			if (i >= qopt->num_tc)
- 				break;
- 			priv->max_rate[i] = nla_get_u64(attr);
+diff --git a/sound/soc/fsl/fsl_spdif.c b/sound/soc/fsl/fsl_spdif.c
+index 015c3708aa04e..3fd26f2cdd60f 100644
+--- a/sound/soc/fsl/fsl_spdif.c
++++ b/sound/soc/fsl/fsl_spdif.c
+@@ -751,6 +751,8 @@ static int fsl_spdif_trigger(struct snd_pcm_substream *substream,
+ 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+ 		regmap_update_bits(regmap, REG_SPDIF_SCR, dmaen, 0);
+ 		regmap_update_bits(regmap, REG_SPDIF_SIE, intr, 0);
++		regmap_write(regmap, REG_SPDIF_STL, 0x0);
++		regmap_write(regmap, REG_SPDIF_STR, 0x0);
+ 		break;
+ 	default:
+ 		return -EINVAL;
 -- 
-2.39.2
+2.40.1
 
 
 
