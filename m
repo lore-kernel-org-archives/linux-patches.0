@@ -1,25 +1,24 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16A41F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:27:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F608C433C9;
-	Tue,  1 Aug 2023 09:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5AFC1F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:27:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EDEBC433C7;
+	Tue,  1 Aug 2023 09:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882045;
-	bh=D6/ImxoH9T4HOxUCh1VIDSXf5DTrEFBySBTS6g6aIAI=;
+	s=korg; t=1690882048;
+	bh=JvnTWk9xrQWaRqJBpAOwLeRFiG3PYr8DHyPS8Ozyhmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cfndPw+82ywDGhW8EJFkgkrChNmCVRGXX1Ke047YymsDMvHk3mm9wrfLBpeXNxP2F
-	 y9+n9Zp922KLhkIVqtucnp/WiAk/FscLG+MLH3URdKV6FUKxFuqRlkSGSVRP5phrgW
-	 M+NZGUuVPe970qB9eo82gmfsTBngyJpNCa/4W+X4=
+	b=Be5AJn0XzZfxxHAuYAnIVlqYu+pBH1oqMYgOOAh3glpHr/p7yrBB+/p0RBCWa/O9f
+	 thmCPa1NyDz70oQCz9FKsfCX7iOWx+IN+9eRwHnRou9YViGK9xXDQBwai7XhZRXt0n
+	 27QQ+bMFhUqtQfL7WXLTyV1/ywszPHkpnmCFEIjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 5.15 122/155] Documentation: security-bugs.rst: update preferences when dealing with the linux-distros group
-Date: Tue,  1 Aug 2023 11:20:34 +0200
-Message-ID: <20230801091914.566835831@linuxfoundation.org>
+	patches@lists.linux.dev
+Subject: [PATCH 5.15 123/155] Documentation: security-bugs.rst: clarify CVE handling
+Date: Tue,  1 Aug 2023 11:20:35 +0200
+Message-ID: <20230801091914.596937237@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -35,54 +34,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 4fee0915e649bd0cea56dece6d96f8f4643df33c upstream.
+commit 3c1897ae4b6bc7cc586eda2feaa2cd68325ec29c upstream.
 
-Because the linux-distros group forces reporters to release information
-about reported bugs, and they impose arbitrary deadlines in having those
-bugs fixed despite not actually being kernel developers, the kernel
-security team recommends not interacting with them at all as this just
-causes confusion and the early-release of reported security problems.
+The kernel security team does NOT assign CVEs, so document that properly
+and provide the "if you want one, ask MITRE for it" response that we
+give on a weekly basis in the document, so we don't have to constantly
+say it to everyone who asks.
 
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/2023063020-throat-pantyhose-f110@gregkh
+Link: https://lore.kernel.org/r/2023063022-retouch-kerosene-7e4a@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/security-bugs.rst |   24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
+ Documentation/admin-guide/security-bugs.rst |   13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
 --- a/Documentation/admin-guide/security-bugs.rst
 +++ b/Documentation/admin-guide/security-bugs.rst
-@@ -63,20 +63,18 @@ information submitted to the security li
- of the report are treated confidentially even after the embargo has been
- lifted, in perpetuity.
- 
--Coordination
--------------
-+Coordination with other groups
-+------------------------------
- 
--Fixes for sensitive bugs, such as those that might lead to privilege
--escalations, may need to be coordinated with the private
--<linux-distros@vs.openwall.org> mailing list so that distribution vendors
--are well prepared to issue a fixed kernel upon public disclosure of the
--upstream fix. Distros will need some time to test the proposed patch and
--will generally request at least a few days of embargo, and vendor update
--publication prefers to happen Tuesday through Thursday. When appropriate,
--the security team can assist with this coordination, or the reporter can
--include linux-distros from the start. In this case, remember to prefix
--the email Subject line with "[vs]" as described in the linux-distros wiki:
--<http://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists>
-+The kernel security team strongly recommends that reporters of potential
-+security issues NEVER contact the "linux-distros" mailing list until
-+AFTER discussing it with the kernel security team.  Do not Cc: both
-+lists at once.  You may contact the linux-distros mailing list after a
-+fix has been agreed on and you fully understand the requirements that
-+doing so will impose on you and the kernel community.
-+
-+The different lists have different goals and the linux-distros rules do
-+not contribute to actually fixing any potential security problems.
- 
+@@ -79,13 +79,12 @@ not contribute to actually fixing any po
  CVE assignment
  --------------
+ 
+-The security team does not normally assign CVEs, nor do we require them
+-for reports or fixes, as this can needlessly complicate the process and
+-may delay the bug handling. If a reporter wishes to have a CVE identifier
+-assigned ahead of public disclosure, they will need to contact the private
+-linux-distros list, described above. When such a CVE identifier is known
+-before a patch is provided, it is desirable to mention it in the commit
+-message if the reporter agrees.
++The security team does not assign CVEs, nor do we require them for
++reports or fixes, as this can needlessly complicate the process and may
++delay the bug handling.  If a reporter wishes to have a CVE identifier
++assigned, they should find one by themselves, for example by contacting
++MITRE directly.  However under no circumstances will a patch inclusion
++be delayed to wait for a CVE identifier to arrive.
+ 
+ Non-disclosure agreements
+ -------------------------
 
 
