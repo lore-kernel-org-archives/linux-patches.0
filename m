@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3F01F95A
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FCE5C433C8;
-	Tue,  1 Aug 2023 09:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFE81F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:23:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1872C433C7;
+	Tue,  1 Aug 2023 09:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690881835;
-	bh=KxWhGFmNxnlZhbb7jhFrRW+I5cu5SPscdslyPFSVyjQ=;
+	s=korg; t=1690881838;
+	bh=ahITj23HydiKsWK51fNOuU1r05dyXmP4bEJC6fauEqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jsQPrwD2MNIO/OFjiNlQfXZJ2CI7VhLs6qDQ0f4vdqRrdLsn5qFKWF6VvIK2cz043
-	 26GjhlrkalKQ88YJu1lILtNpKqY0mcaMOgSH0vmuFsIhXGYI2aNeoSqWdEWSJkzTO6
-	 b14MvFaBrrpVTMFLyWXu63mMKMc5YRhgAA8HZxh0=
+	b=qc/57ChSpC4BU7/ij2aOne9u3rt0cXbWjPT+LrZup7M/bRJmsKdoCWh7HJBT8qt2p
+	 /yXOAaRfjdD6lDlxq74XzkH1X2UnApAmE39kxXGToeet7NPFE4EktlMRYXn8oLprM/
+	 3CVj0iQbmPgVX/wLeu7VFhxDjcCa7ZjW4XM8iAqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Guchun Chen <guchun.chen@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 045/155] drm/amdgpu/vkms: relax timer deactivation by hrtimer_try_to_cancel
-Date: Tue,  1 Aug 2023 11:19:17 +0200
-Message-ID: <20230801091911.795872839@linuxfoundation.org>
+Subject: [PATCH 5.15 046/155] jbd2: remove t_checkpoint_io_list
+Date: Tue,  1 Aug 2023 11:19:18 +0200
+Message-ID: <20230801091911.825792826@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -36,101 +36,144 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guchun Chen <guchun.chen@amd.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit b42ae87a7b3878afaf4c3852ca66c025a5b996e0 ]
+[ Upstream commit be22255360f80d3af789daad00025171a65424a5 ]
 
-In below thousands of screen rotation loop tests with virtual display
-enabled, a CPU hard lockup issue may happen, leading system to unresponsive
-and crash.
+Since t_checkpoint_io_list was stop using in jbd2_log_do_checkpoint()
+now, it's time to remove the whole t_checkpoint_io_list logic.
 
-do {
-	xrandr --output Virtual --rotate inverted
-	xrandr --output Virtual --rotate right
-	xrandr --output Virtual --rotate left
-	xrandr --output Virtual --rotate normal
-} while (1);
-
-NMI watchdog: Watchdog detected hard LOCKUP on cpu 1
-
-? hrtimer_run_softirq+0x140/0x140
-? store_vblank+0xe0/0xe0 [drm]
-hrtimer_cancel+0x15/0x30
-amdgpu_vkms_disable_vblank+0x15/0x30 [amdgpu]
-drm_vblank_disable_and_save+0x185/0x1f0 [drm]
-drm_crtc_vblank_off+0x159/0x4c0 [drm]
-? record_print_text.cold+0x11/0x11
-? wait_for_completion_timeout+0x232/0x280
-? drm_crtc_wait_one_vblank+0x40/0x40 [drm]
-? bit_wait_io_timeout+0xe0/0xe0
-? wait_for_completion_interruptible+0x1d7/0x320
-? mutex_unlock+0x81/0xd0
-amdgpu_vkms_crtc_atomic_disable
-
-It's caused by a stuck in lock dependency in such scenario on different
-CPUs.
-
-CPU1                                             CPU2
-drm_crtc_vblank_off                              hrtimer_interrupt
-    grab event_lock (irq disabled)                   __hrtimer_run_queues
-        grab vbl_lock/vblank_time_block                  amdgpu_vkms_vblank_simulate
-            amdgpu_vkms_disable_vblank                       drm_handle_vblank
-                hrtimer_cancel                                         grab dev->event_lock
-
-So CPU1 stucks in hrtimer_cancel as timer callback is running endless on
-current clock base, as that timer queue on CPU2 has no chance to finish it
-because of failing to hold the lock. So NMI watchdog will throw the errors
-after its threshold, and all later CPUs are impacted/blocked.
-
-So use hrtimer_try_to_cancel to fix this, as disable_vblank callback
-does not need to wait the handler to finish. And also it's not necessary
-to check the return value of hrtimer_try_to_cancel, because even if it's
--1 which means current timer callback is running, it will be reprogrammed
-in hrtimer_start with calling enable_vblank to make it works.
-
-v2: only re-arm timer when vblank is enabled (Christian) and add a Fixes
-tag as well
-
-v3: drop warn printing (Christian)
-
-v4: drop superfluous check of blank->enabled in timer function, as it's
-guaranteed in drm_handle_vblank (Christian)
-
-Fixes: 84ec374bd580 ("drm/amdgpu: create amdgpu_vkms (v4)")
-Cc: stable@vger.kernel.org
-Suggested-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Guchun Chen <guchun.chen@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230606135928.434610-3-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 46f881b5b175 ("jbd2: fix a race when checking checkpoint buffer busy")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/jbd2/checkpoint.c | 42 ++----------------------------------------
+ fs/jbd2/commit.c     |  3 +--
+ include/linux/jbd2.h |  6 ------
+ 3 files changed, 3 insertions(+), 48 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c
-index 24251cdf95073..4e8274de8fc0c 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vkms.c
-@@ -54,8 +54,9 @@ static enum hrtimer_restart amdgpu_vkms_vblank_simulate(struct hrtimer *timer)
- 	WARN_ON(ret_overrun != 1);
- 
- 	ret = drm_crtc_handle_vblank(crtc);
-+	/* Don't queue timer again when vblank is disabled. */
- 	if (!ret)
--		DRM_ERROR("amdgpu_vkms failure on handling vblank");
-+		return HRTIMER_NORESTART;
- 
- 	return HRTIMER_RESTART;
- }
-@@ -80,7 +81,7 @@ static void amdgpu_vkms_disable_vblank(struct drm_crtc *crtc)
+diff --git a/fs/jbd2/checkpoint.c b/fs/jbd2/checkpoint.c
+index d2aba55833f92..c1f543e86170a 100644
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -27,7 +27,7 @@
+  *
+  * Called with j_list_lock held.
+  */
+-static inline void __buffer_unlink_first(struct journal_head *jh)
++static inline void __buffer_unlink(struct journal_head *jh)
  {
- 	struct amdgpu_crtc *amdgpu_crtc = to_amdgpu_crtc(crtc);
+ 	transaction_t *transaction = jh->b_cp_transaction;
  
--	hrtimer_cancel(&amdgpu_crtc->vblank_timer);
-+	hrtimer_try_to_cancel(&amdgpu_crtc->vblank_timer);
+@@ -40,23 +40,6 @@ static inline void __buffer_unlink_first(struct journal_head *jh)
+ 	}
  }
  
- static bool amdgpu_vkms_get_vblank_timestamp(struct drm_crtc *crtc,
+-/*
+- * Unlink a buffer from a transaction checkpoint(io) list.
+- *
+- * Called with j_list_lock held.
+- */
+-static inline void __buffer_unlink(struct journal_head *jh)
+-{
+-	transaction_t *transaction = jh->b_cp_transaction;
+-
+-	__buffer_unlink_first(jh);
+-	if (transaction->t_checkpoint_io_list == jh) {
+-		transaction->t_checkpoint_io_list = jh->b_cpnext;
+-		if (transaction->t_checkpoint_io_list == jh)
+-			transaction->t_checkpoint_io_list = NULL;
+-	}
+-}
+-
+ /*
+  * Check a checkpoint buffer could be release or not.
+  *
+@@ -505,15 +488,6 @@ unsigned long jbd2_journal_shrink_checkpoint_list(journal_t *journal,
+ 			break;
+ 		if (need_resched() || spin_needbreak(&journal->j_list_lock))
+ 			break;
+-		if (released)
+-			continue;
+-
+-		nr_freed += journal_shrink_one_cp_list(transaction->t_checkpoint_io_list,
+-						       nr_to_scan, &released);
+-		if (*nr_to_scan == 0)
+-			break;
+-		if (need_resched() || spin_needbreak(&journal->j_list_lock))
+-			break;
+ 	} while (transaction != last_transaction);
+ 
+ 	if (transaction != last_transaction) {
+@@ -568,17 +542,6 @@ void __jbd2_journal_clean_checkpoint_list(journal_t *journal, bool destroy)
+ 		 */
+ 		if (need_resched())
+ 			return;
+-		if (ret)
+-			continue;
+-		/*
+-		 * It is essential that we are as careful as in the case of
+-		 * t_checkpoint_list with removing the buffer from the list as
+-		 * we can possibly see not yet submitted buffers on io_list
+-		 */
+-		ret = journal_clean_one_cp_list(transaction->
+-				t_checkpoint_io_list, destroy);
+-		if (need_resched())
+-			return;
+ 		/*
+ 		 * Stop scanning if we couldn't free the transaction. This
+ 		 * avoids pointless scanning of transactions which still
+@@ -663,7 +626,7 @@ int __jbd2_journal_remove_checkpoint(struct journal_head *jh)
+ 	jbd2_journal_put_journal_head(jh);
+ 
+ 	/* Is this transaction empty? */
+-	if (transaction->t_checkpoint_list || transaction->t_checkpoint_io_list)
++	if (transaction->t_checkpoint_list)
+ 		return 0;
+ 
+ 	/*
+@@ -755,7 +718,6 @@ void __jbd2_journal_drop_transaction(journal_t *journal, transaction_t *transact
+ 	J_ASSERT(transaction->t_forget == NULL);
+ 	J_ASSERT(transaction->t_shadow_list == NULL);
+ 	J_ASSERT(transaction->t_checkpoint_list == NULL);
+-	J_ASSERT(transaction->t_checkpoint_io_list == NULL);
+ 	J_ASSERT(atomic_read(&transaction->t_updates) == 0);
+ 	J_ASSERT(journal->j_committing_transaction != transaction);
+ 	J_ASSERT(journal->j_running_transaction != transaction);
+diff --git a/fs/jbd2/commit.c b/fs/jbd2/commit.c
+index ac328e3321242..20294c1bbeab7 100644
+--- a/fs/jbd2/commit.c
++++ b/fs/jbd2/commit.c
+@@ -1184,8 +1184,7 @@ void jbd2_journal_commit_transaction(journal_t *journal)
+ 	spin_lock(&journal->j_list_lock);
+ 	commit_transaction->t_state = T_FINISHED;
+ 	/* Check if the transaction can be dropped now that we are finished */
+-	if (commit_transaction->t_checkpoint_list == NULL &&
+-	    commit_transaction->t_checkpoint_io_list == NULL) {
++	if (commit_transaction->t_checkpoint_list == NULL) {
+ 		__jbd2_journal_drop_transaction(journal, commit_transaction);
+ 		jbd2_journal_free_transaction(commit_transaction);
+ 	}
+diff --git a/include/linux/jbd2.h b/include/linux/jbd2.h
+index d63b8106796e2..e6cfbcde96f29 100644
+--- a/include/linux/jbd2.h
++++ b/include/linux/jbd2.h
+@@ -626,12 +626,6 @@ struct transaction_s
+ 	 */
+ 	struct journal_head	*t_checkpoint_list;
+ 
+-	/*
+-	 * Doubly-linked circular list of all buffers submitted for IO while
+-	 * checkpointing. [j_list_lock]
+-	 */
+-	struct journal_head	*t_checkpoint_io_list;
+-
+ 	/*
+ 	 * Doubly-linked circular list of metadata buffers being
+ 	 * shadowed by log IO.  The IO buffers on the iobuf list and
 -- 
 2.39.2
 
