@@ -1,95 +1,143 @@
-Received: from mgamail.intel.com (unknown [192.55.52.136])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3F036C
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 00:19:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1690849174; x=1722385174;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=ZEulNWdnP1duSXBMmYXkpzEDKmjHjBb+oQsjgX3lU0w=;
-  b=jSGvCXp6cmIsjZVh88vu8BeLa9XhmwlGqIa9RqLbW5SI+ApyDR9W49OA
-   X663NWPvG06s0+HlnyBDz/Zu27GreVvJTNewyvbpAgEnnC6qgq4vzv/gL
-   cI0CMfRPb5AZVoa9vqjS13cLTU7hH98b7r0C6BVZh2mZJdB9fB4lJR3Sd
-   jPKUE93vaGkRO+PiH0e0wOy7qLFbpUQHrRJfuxPCDVRmbf7a96d6lY4hD
-   Kmeq9XyrtdhnzqPtrEWGYBN5zumDdoN42DhGOstjm/dsKgIXf26bqvH/I
-   jHNdZt6Tv8yMrVB/zc0j/SsIlEpy6zdvBRuemFE+JXTqPNwArxYtu05KX
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10788"; a="348754691"
-X-IronPort-AV: E=Sophos;i="6.01,246,1684825200"; 
-   d="scan'208";a="348754691"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Jul 2023 17:19:33 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10788"; a="728465612"
-X-IronPort-AV: E=Sophos;i="6.01,246,1684825200"; 
-   d="scan'208";a="728465612"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Jul 2023 17:19:32 -0700
-Date: Mon, 31 Jul 2023 17:19:31 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Drew Fustini <dfustini@baylibre.com>
-Cc: James Morse <james.morse@arm.com>, "Yu, Fenghua" <fenghua.yu@intel.com>,
-	"Chatre, Reinette" <reinette.chatre@intel.com>,
-	Babu Moger <Babu.Moger@amd.com>,
-	Peter Newman <peternewman@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
-	H Peter Anvin <hpa@zytor.com>,
-	"shameerali.kolothum.thodi@huawei.com" <shameerali.kolothum.thodi@huawei.com>,
-	D Scott Phillips OS <scott@os.amperecomputing.com>,
-	"carl@os.amperecomputing.com" <carl@os.amperecomputing.com>,
-	"lcherian@marvell.com" <lcherian@marvell.com>,
-	"bobo.shaobowang@huawei.com" <bobo.shaobowang@huawei.com>,
-	"tan.shaopeng@fujitsu.com" <tan.shaopeng@fujitsu.com>,
-	"xingxin.hx@openanolis.org" <xingxin.hx@openanolis.org>,
-	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Xin Hao <xhao@linux.alibaba.com>,
-	"Pitre, Nicolas" <npitre@baylibre.com>,
-	Kevin Hilman <khilman@baylibre.com>,
-	"aricciardi@baylibre.com" <aricciardi@baylibre.com>,
-	"x86@kernel.org" <x86@kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [RFC PATCH 0/2] Resctrl - rewrite (WIP)
-Message-ID: <ZMhPk8xckzkLEGJc@agluck-desk3>
-References: <20230620033702.33344-1-tony.luck@intel.com>
- <ZJqhDYLG+/Kr44sp@x1>
- <SJ1PR11MB60832BA425B43CA19C778100FC27A@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <ZJ4clUlN2OujgHlC@agluck-desk3>
- <ZMCEjZgyi5oI+KWh@x1>
- <ZMElMLPWi0+2jCp8@agluck-desk3>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCC61110
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:22:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3343CC433C8;
+	Tue,  1 Aug 2023 09:22:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1690881727;
+	bh=etEUEnIIUuSVB7G64SER9qlxsSkk2hD9EdpDIej0PIs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=jvtU6sUgOAa8G0DgONaBG8xNxNE9ed7JBNkkEFNrYVE6hHL+TXswhUxnuZIesP2Wg
+	 e+8vmd8yULC0gDhs2xQTZwtrCuOiQKY+3zkaRV9C57TsqvyRpfrNU1SZc0oXqCzh8/
+	 fLsbCJVgwWKXMxwwz/FoPgVHrgMDIFmqqNZ431Q4=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 001/155] jbd2: Fix wrongly judgement for buffer head removing while doing checkpoint
+Date: Tue,  1 Aug 2023 11:18:33 +0200
+Message-ID: <20230801091910.214783607@linuxfoundation.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
+References: <20230801091910.165050260@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZMElMLPWi0+2jCp8@agluck-desk3>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jul 26, 2023 at 06:52:48AM -0700, Tony Luck wrote:
-> On Tue, Jul 25, 2023 at 07:27:25PM -0700, Drew Fustini wrote:
-> > 
-> > Also, is resctrl2_v65rc1 the latest to branch to test?
-> 
-> Yes. That's the latest. There haven't been any updates for a
-> few days because I'm working on a module to support pseudo-locking.
-> I'm half-way there (can do most of the bits to set a group into
-> pseudo-locked mode ... about to work on the cleanup when the
-> group is removed, the filesystem unmounted, or the module unloaded).
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-Updated version available at:
+[ Upstream commit e34c8dd238d0c9368b746480f313055f5bab5040 ]
 
-git://git.kernel.org/pub/scm/linux/kernel/git/aegl/linux.git
+Following process,
 
-Branch: resctrl2_v65rc4
+jbd2_journal_commit_transaction
+// there are several dirty buffer heads in transaction->t_checkpoint_list
+          P1                   wb_workfn
+jbd2_log_do_checkpoint
+ if (buffer_locked(bh)) // false
+                            __block_write_full_page
+                             trylock_buffer(bh)
+                             test_clear_buffer_dirty(bh)
+ if (!buffer_dirty(bh))
+  __jbd2_journal_remove_checkpoint(jh)
+   if (buffer_write_io_error(bh)) // false
+                             >> bh IO error occurs <<
+ jbd2_cleanup_journal_tail
+  __jbd2_update_log_tail
+   jbd2_write_superblock
+   // The bh won't be replayed in next mount.
+, which could corrupt the ext4 image, fetch a reproducer in [Link].
 
-Some minor fixes to core code, also changes to support pseudo-locking
-(core code for the "mode" file plus some new functions in the resource
-structure to call into modules to support this).
+Since writeback process clears buffer dirty after locking buffer head,
+we can fix it by try locking buffer and check dirtiness while buffer is
+locked, the buffer head can be removed if it is neither dirty nor locked.
 
--Tony
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217490
+Fixes: 470decc613ab ("[PATCH] jbd2: initial copy of files from jbd")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230606135928.434610-5-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/jbd2/checkpoint.c | 32 +++++++++++++++++---------------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
+
+diff --git a/fs/jbd2/checkpoint.c b/fs/jbd2/checkpoint.c
+index fe8bb031b7d7f..d2aba55833f92 100644
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -221,20 +221,6 @@ int jbd2_log_do_checkpoint(journal_t *journal)
+ 		jh = transaction->t_checkpoint_list;
+ 		bh = jh2bh(jh);
+ 
+-		/*
+-		 * The buffer may be writing back, or flushing out in the
+-		 * last couple of cycles, or re-adding into a new transaction,
+-		 * need to check it again until it's unlocked.
+-		 */
+-		if (buffer_locked(bh)) {
+-			get_bh(bh);
+-			spin_unlock(&journal->j_list_lock);
+-			wait_on_buffer(bh);
+-			/* the journal_head may have gone by now */
+-			BUFFER_TRACE(bh, "brelse");
+-			__brelse(bh);
+-			goto retry;
+-		}
+ 		if (jh->b_transaction != NULL) {
+ 			transaction_t *t = jh->b_transaction;
+ 			tid_t tid = t->t_tid;
+@@ -269,7 +255,22 @@ int jbd2_log_do_checkpoint(journal_t *journal)
+ 			spin_lock(&journal->j_list_lock);
+ 			goto restart;
+ 		}
+-		if (!buffer_dirty(bh)) {
++		if (!trylock_buffer(bh)) {
++			/*
++			 * The buffer is locked, it may be writing back, or
++			 * flushing out in the last couple of cycles, or
++			 * re-adding into a new transaction, need to check
++			 * it again until it's unlocked.
++			 */
++			get_bh(bh);
++			spin_unlock(&journal->j_list_lock);
++			wait_on_buffer(bh);
++			/* the journal_head may have gone by now */
++			BUFFER_TRACE(bh, "brelse");
++			__brelse(bh);
++			goto retry;
++		} else if (!buffer_dirty(bh)) {
++			unlock_buffer(bh);
+ 			BUFFER_TRACE(bh, "remove from checkpoint");
+ 			/*
+ 			 * If the transaction was released or the checkpoint
+@@ -279,6 +280,7 @@ int jbd2_log_do_checkpoint(journal_t *journal)
+ 			    !transaction->t_checkpoint_list)
+ 				goto out;
+ 		} else {
++			unlock_buffer(bh);
+ 			/*
+ 			 * We are about to write the buffer, it could be
+ 			 * raced by some other transaction shrink or buffer
+-- 
+2.39.2
+
+
+
