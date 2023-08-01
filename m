@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0626C1FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:45:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7305EC433C8;
-	Tue,  1 Aug 2023 09:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4881FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:45:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36554C433C8;
+	Tue,  1 Aug 2023 09:45:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883129;
-	bh=AYkv6W6HnroIuvJYfo6XuT/dRUdCdjWdMMLKbEVVLbk=;
+	s=korg; t=1690883132;
+	bh=mtw/MHBNl9ETuwSFHKTtVsS0iNwUBSK6kVq4OwBqROw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YKTcUyfREd5QPIqmIAnqDhMfaP61pBZmmsIQsUi0CSdlb6Ub0Ws/8Hzd+X34k75LT
-	 eV6WxY45Jly6F4Y6h4csu949FyBbobo9V/gmA1quEhhEaVCp0INZ0H1Vedm0CACqTQ
-	 GwFTL1emwT2P7oOVaCFosuYpsxRXWYe0LJ6rqDM4=
+	b=zGk+NrhZo3lZOj3Wcdgtxmf8en6C8jzE6cm3RLKRJn3iO/3SvJG+8dJh1OTY1OnE/
+	 VOWuuMEobAJZ5xcRJwv9b9fjUzRhXoUV3FjUtkmyWErtfuaQiYBGLXG9cSuhW5I5M9
+	 XmXfbzOfaCpgsCUev8FtrVxIQTJKLIUjqxDxg44o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Eric Van Hensbergen <ericvh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 097/239] tipc: stop tipc crypto on failure in tipc_node_create
-Date: Tue,  1 Aug 2023 11:19:21 +0200
-Message-ID: <20230801091929.231815544@linuxfoundation.org>
+Subject: [PATCH 6.4 098/239] fs/9p: Fix a datatype used with V9FS_DIRECT_IO
+Date: Tue,  1 Aug 2023 11:19:22 +0200
+Message-ID: <20230801091929.261002571@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,46 +37,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit de52e17326c3e9a719c9ead4adb03467b8fae0ef ]
+[ Upstream commit 95f41d87810083d8b3dedcce46a4e356cf4a9673 ]
 
-If tipc_link_bc_create() fails inside tipc_node_create() for a newly
-allocated tipc node then we should stop its tipc crypto and free the
-resources allocated with a call to tipc_crypto_start().
+The commit in Fixes has introduced some "enum p9_session_flags" values
+larger than a char.
+Such values are stored in "v9fs_session_info->flags" which is a char only.
 
-As the node ref is initialized to one to that point, just put the ref on
-tipc_link_bc_create() error case that would lead to tipc_node_free() be
-eventually executed and properly clean the node and its crypto resources.
+Turn it into an int so that the "enum p9_session_flags" values can fit in
+it.
 
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: cb8092d70a6f ("tipc: move bc link creation back to tipc_node_create")
-Suggested-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/20230725214628.25246-1-pchelkin@ispras.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 6deffc8924b5 ("fs/9p: Add new mount modes")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Dominique Martinet <asmadeus@codewreck.org>
+Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/node.c | 2 +-
+ fs/9p/v9fs.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tipc/node.c b/net/tipc/node.c
-index 5e000fde80676..a9c5b6594889b 100644
---- a/net/tipc/node.c
-+++ b/net/tipc/node.c
-@@ -583,7 +583,7 @@ struct tipc_node *tipc_node_create(struct net *net, u32 addr, u8 *peer_id,
- 				 n->capabilities, &n->bc_entry.inputq1,
- 				 &n->bc_entry.namedq, snd_l, &n->bc_entry.link)) {
- 		pr_warn("Broadcast rcv link creation failed, no memory\n");
--		kfree(n);
-+		tipc_node_put(n);
- 		n = NULL;
- 		goto exit;
- 	}
+diff --git a/fs/9p/v9fs.h b/fs/9p/v9fs.h
+index 06a2514f0d882..698c43dd5dc86 100644
+--- a/fs/9p/v9fs.h
++++ b/fs/9p/v9fs.h
+@@ -108,7 +108,7 @@ enum p9_cache_bits {
+ 
+ struct v9fs_session_info {
+ 	/* options */
+-	unsigned char flags;
++	unsigned int flags;
+ 	unsigned char nodev;
+ 	unsigned short debug;
+ 	unsigned int afid;
 -- 
-2.39.2
+2.40.1
 
 
 
