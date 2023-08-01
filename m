@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637171EA8F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:50:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE5BFC433CA;
-	Tue,  1 Aug 2023 09:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6601F95A
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:50:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A295EC433C7;
+	Tue,  1 Aug 2023 09:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883452;
-	bh=HsnQURv66rM9bSecLSeDJ24b70s03gW/1MsNquYAx5g=;
+	s=korg; t=1690883455;
+	bh=NdrbPJ6MjiJEmiINacqUzw5BfzHT6wtgk3NqiQu46l0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IMLNN56U9G2mttY0DnDe10nRvjHAeaFs6E7TBaBblpPk1kAjWCE/KnBb3mNZPloBe
-	 I1r00Ks6hmOjdxur3inTgilq4FWkrGl+0ge9BmsqYD6M4IYHFQUDqclR09dKQrTKjn
-	 3zwI+aYaHqGA3wCg8UPmScQyB3lgF6dO7nxBdXQA=
+	b=QAfT//V5yZaMJotPbRViTxeVtwHEnXgU+63s2pDlH+ZBA9ZOrZvON6DFVEjTVxtN5
+	 wECsLLgFSKdzPgoiQsHOHFmycRMXMMIhn8g5g71XM3PJxHecbdxay0PHk5yASKtzS8
+	 5JK19Uka7gW1nlk66f8iINQCGPE1AhiIufTLOTMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stefan Haberland <sth@linux.ibm.com>,
 	Jan Hoeppner <hoeppner@linux.ibm.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.4 221/239] s390/dasd: fix hanging device after quiesce/resume
-Date: Tue,  1 Aug 2023 11:21:25 +0200
-Message-ID: <20230801091933.898556124@linuxfoundation.org>
+Subject: [PATCH 6.4 222/239] s390/dasd: print copy pair message only for the correct error
+Date: Tue,  1 Aug 2023 11:21:26 +0200
+Message-ID: <20230801091933.941201004@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -37,42 +37,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Stefan Haberland <sth@linux.ibm.com>
 
-commit 05f1d8ed03f547054efbc4d29bb7991c958ede95 upstream.
+commit 856d8e3c633b183df23549ce760ae84478a7098d upstream.
 
-Quiesce and resume are functions that tell the DASD driver to stop/resume
-issuing I/Os to a specific DASD.
+The DASD driver has certain types of requests that might be rejected by
+the storage server or z/VM because they are not supported. Since the
+missing support of the command is not a real issue there is no user
+visible kernel error message for this.
 
-On resume dasd_schedule_block_bh() is called to kick handling of IO
-requests again. This does unfortunately not cover internal requests which
-are used for path verification for example.
+For copy pair setups  there is a specific error that IO is not allowed on
+secondary devices. This error case is explicitly handled and an error
+message is printed.
 
-This could lead to a hanging device when a path event or anything else
-that triggers internal requests occurs on a quiesced device.
+The code checking for the error did use a bitwise 'and' that is used to
+check for specific bits. But in this case the whole sense byte has to
+match.
 
-Fix by also calling dasd_schedule_device_bh() which triggers handling of
-internal requests on resume.
+This leads to the problem that the copy pair related error message is
+erroneously printed for other error cases that are usually not reported.
+This might heavily confuse users and lead to follow on actions that might
+disrupt application processing.
 
-Fixes: 8e09f21574ea ("[S390] dasd: add hyper PAV support to DASD device driver, part 1")
+Fix by checking the sense byte for the exact value and not single bits.
 
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # 6.1+
+Fixes: 1fca631a1185 ("s390/dasd: suppress generic error messages for PPRC secondary devices")
 Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
 Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230721193647.3889634-2-sth@linux.ibm.com
+Link: https://lore.kernel.org/r/20230721193647.3889634-5-sth@linux.ibm.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd_ioctl.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/s390/block/dasd_3990_erp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/s390/block/dasd_ioctl.c
-+++ b/drivers/s390/block/dasd_ioctl.c
-@@ -131,6 +131,7 @@ static int dasd_ioctl_resume(struct dasd
- 	spin_unlock_irqrestore(get_ccwdev_lock(base->cdev), flags);
- 
- 	dasd_schedule_block_bh(block);
-+	dasd_schedule_device_bh(base);
- 	return 0;
- }
- 
+--- a/drivers/s390/block/dasd_3990_erp.c
++++ b/drivers/s390/block/dasd_3990_erp.c
+@@ -1050,7 +1050,7 @@ dasd_3990_erp_com_rej(struct dasd_ccw_re
+ 		dev_err(&device->cdev->dev, "An I/O request was rejected"
+ 			" because writing is inhibited\n");
+ 		erp = dasd_3990_erp_cleanup(erp, DASD_CQR_FAILED);
+-	} else if (sense[7] & SNS7_INVALID_ON_SEC) {
++	} else if (sense[7] == SNS7_INVALID_ON_SEC) {
+ 		dev_err(&device->cdev->dev, "An I/O request was rejected on a copy pair secondary device\n");
+ 		/* suppress dump of sense data for this error */
+ 		set_bit(DASD_CQR_SUPPRESS_CR, &erp->refers->flags);
 
 
