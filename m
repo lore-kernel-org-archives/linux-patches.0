@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9024D1F955
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:30:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10BA2C433C8;
-	Tue,  1 Aug 2023 09:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B65F1F955
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:30:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0319C433C8;
+	Tue,  1 Aug 2023 09:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882239;
-	bh=Pz3YqO73rXJKqjcY8D2uZ0PO5Tvlicb3eF3JALTnjMU=;
+	s=korg; t=1690882242;
+	bh=/ArQNZo8tyONr7yReGwjuNQOVX4Ox1yYPYDCocFzzgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zb3miEdFHvy47dahOl6e1JAwBABmFwEiX43imE3t6nmEQMAlXvwcE/sS6R852hGCW
-	 +qd489D/lWDBnRTbha7UfUL4kQ5pLTWAdMpoOYN9Ij8F1mGaXHeUCEbypLV5DGCcbe
-	 iOltPrb34tlo3oXnQxhbTKo6OwvoHJ6BLGHIq70o=
+	b=qdfxqIxMggD//jjRRwsMS89OQj6kZ6cnJTu4CPk7QWm1pkGr9mewWpHeU+gIcYwA3
+	 8V7aUSvIU2fu15fBP+Bs4xkFnW6Q8AQAD8yR3eObdbIBD3Cfd/WidbqkCDfiqMdfgb
+	 i0Oy0ighnDS7tjaUIDl9lKuwFZU50PYre78wbLo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aurabindo Pillai <aurabindo.pillai@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 035/228] drm/amd/display: Rework context change check
-Date: Tue,  1 Aug 2023 11:18:13 +0200
-Message-ID: <20230801091924.160281645@linuxfoundation.org>
+Subject: [PATCH 6.1 036/228] drm/amd/display: Enable new commit sequence only for DCN32x
+Date: Tue,  1 Aug 2023 11:18:14 +0200
+Message-ID: <20230801091924.198196978@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -39,12 +39,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 
-[ Upstream commit 10fdb0a11c555e0d6f7698d2874581d06e99ee71 ]
+[ Upstream commit 7b36f4d18e3e4941d12fe027ad6ad6123c257027 ]
 
-Context change is all about streams; for this reason, this commit
-renames context_changed to streams_changed. Additionally, to make this
-function more flexible, this commit changes the function signature to
-receive the stream array and the stream count as a parameter.
+Change commit sequence will impact all ASICs. It is prudent to run this
+update in small steps to keep issues under control and avoid any
+potential regression. With this idea in mind, this commit is preparation
+work for the complete transition to the new commit sequence. To maintain
+this change manageable across multiple ASICs, this commit adds a new
+function named dc_commit_streams which is a copy of the dc_commit_state
+with some minor changes. Finally, inside the dc_commit_state, we check
+if we are using DCN32x or above and enable the new sequence only for
+those devices.
 
 Reviewed-by: Harry Wentland <harry.wentland@amd.com>
 Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
@@ -54,48 +59,96 @@ Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: 59de751e3845 ("drm/amd/display: add ODM case when looking for first split pipe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 46 ++++++++++++++++++++++++
+ drivers/gpu/drm/amd/display/dc/dc.h      | 13 +++----
+ 2 files changed, 50 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index beb2d7f103c58..226c17e78d3e1 100644
+index 226c17e78d3e1..a457b87d23c41 100644
 --- a/drivers/gpu/drm/amd/display/dc/core/dc.c
 +++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -1505,19 +1505,19 @@ static void program_timing_sync(
- 	}
+@@ -1913,11 +1913,57 @@ static enum dc_status dc_commit_state_no_check(struct dc *dc, struct dc_state *c
+ 	return result;
  }
  
--static bool context_changed(
--		struct dc *dc,
--		struct dc_state *context)
-+static bool streams_changed(struct dc *dc,
-+			    struct dc_stream_state *streams[],
-+			    uint8_t stream_count)
++enum dc_status dc_commit_streams(struct dc *dc, struct dc_state *context)
++{
++	enum dc_status res = DC_OK;
++	int i;
++
++	if (!streams_changed(dc, context->streams, context->stream_count))
++		return res;
++
++	DC_LOG_DC("%s: %d streams\n",
++				__func__, context->stream_count);
++
++	for (i = 0; i < context->stream_count; i++) {
++		struct dc_stream_state *stream = context->streams[i];
++
++		dc_stream_log(dc, stream);
++	}
++
++	/*
++	 * Previous validation was perfomred with fast_validation = true and
++	 * the full DML state required for hardware programming was skipped.
++	 *
++	 * Re-validate here to calculate these parameters / watermarks.
++	 */
++	res = dc_validate_global_state(dc, context, false);
++	if (res != DC_OK) {
++		DC_LOG_ERROR("DC commit global validation failure: %s (%d)",
++			     dc_status_to_str(res), res);
++		return res;
++	}
++
++	res = dc_commit_state_no_check(dc, context);
++
++	return (res == DC_OK);
++}
++
++/* TODO: When the transition to the new commit sequence is done, remove this
++ * function in favor of dc_commit_streams. */
+ bool dc_commit_state(struct dc *dc, struct dc_state *context)
  {
- 	uint8_t i;
- 
--	if (context->stream_count != dc->current_state->stream_count)
-+	if (stream_count != dc->current_state->stream_count)
- 		return true;
- 
- 	for (i = 0; i < dc->current_state->stream_count; i++) {
--		if (dc->current_state->streams[i] != context->streams[i])
-+		if (dc->current_state->streams[i] != streams[i])
- 			return true;
--		if (!context->streams[i]->link->link_state_valid)
-+		if (!streams[i]->link->link_state_valid)
- 			return true;
- 	}
- 
-@@ -1918,7 +1918,7 @@ bool dc_commit_state(struct dc *dc, struct dc_state *context)
  	enum dc_status result = DC_ERROR_UNEXPECTED;
  	int i;
  
--	if (!context_changed(dc, context))
-+	if (!streams_changed(dc, context->streams, context->stream_count))
++	/* TODO: Since change commit sequence can have a huge impact,
++	 * we decided to only enable it for DCN3x. However, as soon as
++	 * we get more confident about this change we'll need to enable
++	 * the new sequence for all ASICs. */
++	if (dc->ctx->dce_version >= DCN_VERSION_3_2) {
++		result = dc_commit_streams(dc, context);
++		return result == DC_OK;
++	}
++
+ 	if (!streams_changed(dc, context->streams, context->stream_count))
  		return DC_OK;
  
- 	DC_LOG_DC("%s: %d streams\n",
+diff --git a/drivers/gpu/drm/amd/display/dc/dc.h b/drivers/gpu/drm/amd/display/dc/dc.h
+index 3f277009075fd..3db3554c289b4 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc.h
++++ b/drivers/gpu/drm/amd/display/dc/dc.h
+@@ -1326,15 +1326,10 @@ void dc_resource_state_destruct(struct dc_state *context);
+ 
+ bool dc_resource_is_dsc_encoding_supported(const struct dc *dc);
+ 
+-/*
+- * TODO update to make it about validation sets
+- * Set up streams and links associated to drive sinks
+- * The streams parameter is an absolute set of all active streams.
+- *
+- * After this call:
+- *   Phy, Encoder, Timing Generator are programmed and enabled.
+- *   New streams are enabled with blank stream; no memory read.
+- */
++enum dc_status dc_commit_streams(struct dc *dc, struct dc_state *context);
++
++/* TODO: When the transition to the new commit sequence is done, remove this
++ * function in favor of dc_commit_streams. */
+ bool dc_commit_state(struct dc *dc, struct dc_state *context);
+ 
+ struct dc_state *dc_create_state(struct dc *dc);
 -- 
 2.39.2
 
