@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BBA71F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:28:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A444DC433C8;
-	Tue,  1 Aug 2023 09:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F761F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:28:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67053C433C8;
+	Tue,  1 Aug 2023 09:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882102;
-	bh=HsnQURv66rM9bSecLSeDJ24b70s03gW/1MsNquYAx5g=;
+	s=korg; t=1690882104;
+	bh=rNCzcZmK60mJYzUTbnDpFOToZwXaxdUomogcZh5PnbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R1Lkypn6OUtEjFsuYvLcp3RL6jtNiP8CDUbavIR3trZsozYSRxYgBIVELZ18/nLfi
-	 yFjmxPjbATl1tOtGbKZjkXCTeCP/A9lOfCI0+V26JH8K7DJyl2Hru9A8RK7+fY1oxZ
-	 6nyFgXw5Rxt9WXIR8SP+e4FxCmZ0TWlyM35ksGOA=
+	b=EqZUgMxHIhZytT30XSnaLxFwrEx1RcyU22fQoHM2/IC634xQbJXxvxTPHH3HbfSWV
+	 AMCgEMxxNJv8p6sBE56E7ecVLHKobmg9dtuOQ+rD56I0iNEE96tPaLaD08zVzYq5nF
+	 pm3wF5VGRIl43fIWCdRWFxiHoaUdRNmgaXFL34WE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 141/155] s390/dasd: fix hanging device after quiesce/resume
-Date: Tue,  1 Aug 2023 11:20:53 +0200
-Message-ID: <20230801091915.174661956@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Gratian Crisan <gratian.crisan@ni.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 5.15 115/155] usb: dwc3: pci: skip BYT GPIO lookup table for hardwired phy
+Date: Tue,  1 Aug 2023 11:20:27 +0200
+Message-ID: <20230801091914.326815986@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -35,44 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Gratian Crisan <gratian.crisan@ni.com>
 
-commit 05f1d8ed03f547054efbc4d29bb7991c958ede95 upstream.
+commit b32b8f2b9542d8039f5468303a6ca78c1b5611a5 upstream.
 
-Quiesce and resume are functions that tell the DASD driver to stop/resume
-issuing I/Os to a specific DASD.
+Hardware based on the Bay Trail / BYT SoCs require an external ULPI phy for
+USB device-mode. The phy chip usually has its 'reset' and 'chip select'
+lines connected to GPIOs described by ACPI fwnodes in the DSDT table.
 
-On resume dasd_schedule_block_bh() is called to kick handling of IO
-requests again. This does unfortunately not cover internal requests which
-are used for path verification for example.
+Because of hardware with missing ACPI resources for the 'reset' and 'chip
+select' GPIOs commit 5741022cbdf3 ("usb: dwc3: pci: Add GPIO lookup table
+on platforms without ACPI GPIO resources") introduced a fallback
+gpiod_lookup_table with hard-coded mappings for Bay Trail devices.
 
-This could lead to a hanging device when a path event or anything else
-that triggers internal requests occurs on a quiesced device.
+However there are existing Bay Trail based devices, like the National
+Instruments cRIO-903x series, where the phy chip has its 'reset' and
+'chip-select' lines always asserted in hardware via resistor pull-ups. On
+this hardware the phy chip is always enabled and the ACPI dsdt table is
+missing information not only for the 'chip-select' and 'reset' lines but
+also for the BYT GPIO controller itself "INT33FC".
 
-Fix by also calling dasd_schedule_device_bh() which triggers handling of
-internal requests on resume.
+With the introduction of the gpiod_lookup_table initializing the USB
+device-mode on these hardware now errors out. The error comes from the
+gpiod_get_optional() calls in dwc3_pci_quirks() which will now return an
+-ENOENT error due to the missing ACPI entry for the INT33FC gpio controller
+used in the aforementioned table.
 
-Fixes: 8e09f21574ea ("[S390] dasd: add hyper PAV support to DASD device driver, part 1")
+This hardware used to work before because gpiod_get_optional() will return
+NULL instead of -ENOENT if no GPIO has been assigned to the requested
+function. The dwc3_pci_quirks() code for setting the 'cs' and 'reset' GPIOs
+was then skipped (due to the NULL return). This is the correct behavior in
+cases where the phy chip is hardwired and there are no GPIOs to control.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230721193647.3889634-2-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Since the gpiod_lookup_table relies on the presence of INT33FC fwnode
+in ACPI tables only add the table if we know the entry for the INT33FC
+gpio controller is present. This allows Bay Trail based devices with
+hardwired dwc3 ULPI phys to continue working.
+
+Fixes: 5741022cbdf3 ("usb: dwc3: pci: Add GPIO lookup table on platforms without ACPI GPIO resources")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Gratian Crisan <gratian.crisan@ni.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230726184555.218091-2-gratian.crisan@ni.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd_ioctl.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/dwc3/dwc3-pci.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/s390/block/dasd_ioctl.c
-+++ b/drivers/s390/block/dasd_ioctl.c
-@@ -131,6 +131,7 @@ static int dasd_ioctl_resume(struct dasd
- 	spin_unlock_irqrestore(get_ccwdev_lock(base->cdev), flags);
+--- a/drivers/usb/dwc3/dwc3-pci.c
++++ b/drivers/usb/dwc3/dwc3-pci.c
+@@ -219,10 +219,12 @@ static int dwc3_pci_quirks(struct dwc3_p
  
- 	dasd_schedule_block_bh(block);
-+	dasd_schedule_device_bh(base);
- 	return 0;
- }
+ 			/*
+ 			 * A lot of BYT devices lack ACPI resource entries for
+-			 * the GPIOs, add a fallback mapping to the reference
++			 * the GPIOs. If the ACPI entry for the GPIO controller
++			 * is present add a fallback mapping to the reference
+ 			 * design GPIOs which all boards seem to use.
+ 			 */
+-			gpiod_add_lookup_table(&platform_bytcr_gpios);
++			if (acpi_dev_present("INT33FC", NULL, -1))
++				gpiod_add_lookup_table(&platform_bytcr_gpios);
  
+ 			/*
+ 			 * These GPIOs will turn on the USB2 PHY. Note that we have to
 
 
