@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36E21FB4F
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:46:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630FFC433C7;
-	Tue,  1 Aug 2023 09:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A254B1FB4F
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:46:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23502C433C7;
+	Tue,  1 Aug 2023 09:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690883201;
-	bh=l6Pcvzb0AvMm9DsHofV8Ursvkib+BQffG9sT3tfszYQ=;
+	s=korg; t=1690883204;
+	bh=A6+Al5i39VM4XIx65EAS8+h+NSAGGCHmal1OJ1Q5NLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V3WTRPsAP6+KL7IQg7znDSWmxbSmrIgQt7ZDSJAkf1W4ZDB034sYcmzwn7u78fyt8
-	 h62H83aaQSlwSnm6EjsEuUcE+8QpS8GynQHAISfnqrdB3nItkvix+zcgdfkt+o+qAx
-	 kV/JlSEnCaGhrucQExNd6Gn4Rn7Zaf+wNbWJ2jnA=
+	b=UmzRTe8+t6Q5oHhTUC//a5px9vPMzJeXQqEbDg351XzpG3i4RIc4tvl6B5A+ieM2i
+	 XKzkZOaFn7ACg8IxLdyX7QbxEkEVoViTZl/Nsy3gVhB2SS3ItXR2R1kxDwuMwzF6CQ
+	 zvoz7SGsLM46nPhuKHW2cvkRB2kJW/ITuPj1LHeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ruihong Luo <colorsu1922@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 6.4 151/239] serial: 8250_dw: Preserve original value of DLF register
-Date: Tue,  1 Aug 2023 11:20:15 +0200
-Message-ID: <20230801091931.102302108@linuxfoundation.org>
+	Stefano Stabellini <stefano.stabellini@amd.com>,
+	Petr Mladek <pmladek@suse.com>,
+	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+	Juergen Gross <jgross@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 125/239] xenbus: check xen_domain in xenbus_probe_initcall
+Date: Tue,  1 Aug 2023 11:19:49 +0200
+Message-ID: <20230801091930.225363607@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 References: <20230801091925.659598007@linuxfoundation.org>
@@ -36,50 +37,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ruihong Luo <colorsu1922@gmail.com>
+From: Stefano Stabellini <sstabellini@kernel.org>
 
-commit 748c5ea8b8796ae8ee80b8d3a3d940570b588d59 upstream.
+[ Upstream commit 0d8f7cc8057890db08c54fe610d8a94af59da082 ]
 
-Preserve the original value of the Divisor Latch Fraction (DLF) register.
-When the DLF register is modified without preservation, it can disrupt
-the baudrate settings established by firmware or bootloader, leading to
-data corruption and the generation of unreadable or distorted characters.
+The same way we already do in xenbus_init.
+Fixes the following warning:
 
-Fixes: 701c5e73b296 ("serial: 8250_dw: add fractional divisor support")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ruihong Luo <colorsu1922@gmail.com>
-Link: https://lore.kernel.org/stable/20230713004235.35904-1-colorsu1922%40gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230713004235.35904-1-colorsu1922@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[  352.175563] Trying to free already-free IRQ 0
+[  352.177355] WARNING: CPU: 1 PID: 88 at kernel/irq/manage.c:1893 free_irq+0xbf/0x350
+[...]
+[  352.213951] Call Trace:
+[  352.214390]  <TASK>
+[  352.214717]  ? __warn+0x81/0x170
+[  352.215436]  ? free_irq+0xbf/0x350
+[  352.215906]  ? report_bug+0x10b/0x200
+[  352.216408]  ? prb_read_valid+0x17/0x20
+[  352.216926]  ? handle_bug+0x44/0x80
+[  352.217409]  ? exc_invalid_op+0x13/0x60
+[  352.217932]  ? asm_exc_invalid_op+0x16/0x20
+[  352.218497]  ? free_irq+0xbf/0x350
+[  352.218979]  ? __pfx_xenbus_probe_thread+0x10/0x10
+[  352.219600]  xenbus_probe+0x7a/0x80
+[  352.221030]  xenbus_probe_thread+0x76/0xc0
+
+Fixes: 5b3353949e89 ("xen: add support for initializing xenstore later as HVM domain")
+Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
+Tested-by: Petr Mladek <pmladek@suse.com>
+Reviewed-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
+
+Link: https://lore.kernel.org/r/alpine.DEB.2.22.394.2307211609140.3118466@ubuntu-linux-20-04-desktop
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_dwlib.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/xen/xenbus/xenbus_probe.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/tty/serial/8250/8250_dwlib.c
-+++ b/drivers/tty/serial/8250/8250_dwlib.c
-@@ -244,7 +244,7 @@ void dw8250_setup_port(struct uart_port
- 	struct dw8250_port_data *pd = p->private_data;
- 	struct dw8250_data *data = to_dw8250_data(pd);
- 	struct uart_8250_port *up = up_to_u8250p(p);
--	u32 reg;
-+	u32 reg, old_dlf;
+diff --git a/drivers/xen/xenbus/xenbus_probe.c b/drivers/xen/xenbus/xenbus_probe.c
+index 58b732dcbfb83..639bf628389ba 100644
+--- a/drivers/xen/xenbus/xenbus_probe.c
++++ b/drivers/xen/xenbus/xenbus_probe.c
+@@ -811,6 +811,9 @@ static int xenbus_probe_thread(void *unused)
  
- 	pd->hw_rs485_support = dw8250_detect_rs485_hw(p);
- 	if (pd->hw_rs485_support) {
-@@ -270,9 +270,11 @@ void dw8250_setup_port(struct uart_port
- 	dev_dbg(p->dev, "Designware UART version %c.%c%c\n",
- 		(reg >> 24) & 0xff, (reg >> 16) & 0xff, (reg >> 8) & 0xff);
- 
-+	/* Preserve value written by firmware or bootloader  */
-+	old_dlf = dw8250_readl_ext(p, DW_UART_DLF);
- 	dw8250_writel_ext(p, DW_UART_DLF, ~0U);
- 	reg = dw8250_readl_ext(p, DW_UART_DLF);
--	dw8250_writel_ext(p, DW_UART_DLF, 0);
-+	dw8250_writel_ext(p, DW_UART_DLF, old_dlf);
- 
- 	if (reg) {
- 		pd->dlf_size = fls(reg);
+ static int __init xenbus_probe_initcall(void)
+ {
++	if (!xen_domain())
++		return -ENODEV;
++
+ 	/*
+ 	 * Probe XenBus here in the XS_PV case, and also XS_HVM unless we
+ 	 * need to wait for the platform PCI device to come up or
+-- 
+2.40.1
+
 
 
