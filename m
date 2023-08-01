@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B536D1FB2B
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:32:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30DBCC433C7;
-	Tue,  1 Aug 2023 09:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649771FB2B
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:32:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7DF2C433C7;
+	Tue,  1 Aug 2023 09:32:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882363;
-	bh=GLrhHTWQzFyP/mmDzB7bTzS7cWv5cDQLzpA58zFDXlk=;
+	s=korg; t=1690882366;
+	bh=ikO7GB8FLZXT4H2WBGojcJwoQ58k/aJxg+ra0J05E7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yhV/VIw2NThiSpl3A1THCIs2C9i7jd7CZsYV3nD61E43OZzne0ODiEdn9Rpp+DM06
-	 +CqWOUOqhYQfCrGPeqMUbrjxQr6yCAdNE6gvTAAeF2/U0Wh8ka8WJBshoO6Q9bjTHL
-	 y9jFLDFFz8qf+GyTwYyeaFekBXqwgqe7VmJ6572g=
+	b=BWrsAJhykczTmTRHZBwz/DMV3y6u98V+t5Hfv2rGxrYRhc3a5Dc0aHr94E+Zsp/38
+	 CnCSQYTMCvOJgX9pEpMjfIVcwZzjisvTEE7C1aJmDK7y8bDV7nRXruOR1CgOAzs0kS
+	 3etd/4gQvPTpigmU0LWH5lZ+no9g4f782viRmOZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 078/228] soundwire: qcom: update status correctly with mask
-Date: Tue,  1 Aug 2023 11:18:56 +0200
-Message-ID: <20230801091925.657458863@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	"Pelloux-Prayer, Pierre-Eric" <Pierre-eric.Pelloux-prayer@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pelloux-Prayer
+Subject: [PATCH 6.1 052/228] drm/ttm: never consider pinned BOs for eviction&swap
+Date: Tue,  1 Aug 2023 11:18:30 +0200
+Message-ID: <20230801091924.780239870@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -35,35 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit f84d41b2a083b990cbdf70f3b24b6b108b9678ad ]
+[ Upstream commit a2848d08742c8e8494675892c02c0d22acbe3cf8 ]
 
-SoundWire device status can be incorrectly updated without
-proper mask, fix this by adding a mask before updating the status.
+There is a small window where we have already incremented the pin count
+but not yet moved the bo from the lru to the pinned list.
 
-Fixes: c7d49c76d1d5 ("soundwire: qcom: add support to new interrupts")
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230525133812.30841-2-srinivas.kandagatla@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reported-by: Pelloux-Prayer, Pierre-Eric <Pierre-eric.Pelloux-prayer@amd.com>
+Tested-by: Pelloux-Prayer, Pierre-Eric <Pierre-eric.Pelloux-prayer@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Link: https://patchwork.freedesktop.org/patch/msgid/20230707120826.3701-1-christian.koenig@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/ttm/ttm_bo.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 08934d27f709e..a51c8a670d38a 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -434,7 +434,7 @@ static int qcom_swrm_get_alert_slave_dev_num(struct qcom_swrm_ctrl *ctrl)
- 		status = (val >> (dev_num * SWRM_MCP_SLV_STATUS_SZ));
+diff --git a/drivers/gpu/drm/ttm/ttm_bo.c b/drivers/gpu/drm/ttm/ttm_bo.c
+index 1c891b5839316..f7aeeee6f5266 100644
+--- a/drivers/gpu/drm/ttm/ttm_bo.c
++++ b/drivers/gpu/drm/ttm/ttm_bo.c
+@@ -550,6 +550,12 @@ static bool ttm_bo_evict_swapout_allowable(struct ttm_buffer_object *bo,
+ {
+ 	bool ret = false;
  
- 		if ((status & SWRM_MCP_SLV_STATUS_MASK) == SDW_SLAVE_ALERT) {
--			ctrl->status[dev_num] = status;
-+			ctrl->status[dev_num] = status & SWRM_MCP_SLV_STATUS_MASK;
- 			return dev_num;
- 		}
- 	}
++	if (bo->pin_count) {
++		*locked = false;
++		*busy = false;
++		return false;
++	}
++
+ 	if (bo->base.resv == ctx->resv) {
+ 		dma_resv_assert_held(bo->base.resv);
+ 		if (ctx->allow_res_evict)
 -- 
 2.39.2
 
