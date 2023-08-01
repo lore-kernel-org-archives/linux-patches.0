@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A381F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:28:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46312C433C7;
-	Tue,  1 Aug 2023 09:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822441F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:28:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04855C433C8;
+	Tue,  1 Aug 2023 09:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882107;
-	bh=mK4jzzk1Cxm6X7pkLQWYMyWY1HS0bGMVS3TqrXeCoN4=;
+	s=korg; t=1690882110;
+	bh=2ZAgWxFFDNJ1Ecg1q5Ivvkui9ZuQkNELJi6W3qHWkb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X5DiNYGMqmLdK+Ua9ric5qGjblLa2ohOY+uTmyoJIW32upn34foN5zfNr3E00gX6M
-	 qu/x4HJUeql86P7nlEsHOv9MukmOZoIAAtun1w+Fabf7hUQdWIoYMy2yV0hfwM4/Nv
-	 dBSeZOMOJvriSGgp6EZhidEoDrUi5Y5JTM8ys85c=
+	b=r0onNj+Ok290vO8sW0FoclddqcbMvkUOQRxSPjs12qXyopqJguJ67vB1vvztCftDu
+	 e2MRZzl5AzUTJJ7nslKRfd41i3w5qdQFNl1oqbFrYH2rpzTDkJ5+zB108mzvVxgUa6
+	 1sBDhDCqGYptkyDBmtKc2rf7rENWKQ86s4zPa+DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 142/155] ASoC: wm8904: Fill the cache for WM8904_ADC_TEST_0 register
-Date: Tue,  1 Aug 2023 11:20:54 +0200
-Message-ID: <20230801091915.210668882@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.15 116/155] usb: dwc3: dont reset device side if dwc3 was configured as host-only
+Date: Tue,  1 Aug 2023 11:20:28 +0200
+Message-ID: <20230801091914.367275514@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -34,40 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-commit f061e2be8689057cb4ec0dbffa9f03e1a23cdcb2 upstream.
+commit e835c0a4e23c38531dcee5ef77e8d1cf462658c7 upstream.
 
-The WM8904_ADC_TEST_0 register is modified as part of updating the OSR
-controls but does not have a cache default, leading to errors when we try
-to modify these controls in cache only mode with no prior read:
+Commit c4a5153e87fd ("usb: dwc3: core: Power-off core/PHYs on
+system_suspend in host mode") replaces check for HOST only dr_mode with
+current_dr_role. But during booting, the current_dr_role isn't
+initialized, thus the device side reset is always issued even if dwc3
+was configured as host-only. What's more, on some platforms with host
+only dwc3, aways issuing device side reset by accessing device register
+block can cause kernel panic.
 
-wm8904 3-001a: ASoC: error at snd_soc_component_update_bits on wm8904.3-001a for register: [0x000000c6] -16
-
-Add a read of the register to probe() to fill the cache and avoid both the
-error messages and the misconfiguration of the chip which will result.
-
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230723-asoc-fix-wm8904-adc-test-read-v1-1-2cdf2edd83fd@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: c4a5153e87fd ("usb: dwc3: core: Power-off core/PHYs on system_suspend in host mode")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20230627162018.739-1-jszhang@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wm8904.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/dwc3/core.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/soc/codecs/wm8904.c
-+++ b/sound/soc/codecs/wm8904.c
-@@ -2306,6 +2306,9 @@ static int wm8904_i2c_probe(struct i2c_c
- 	regmap_update_bits(wm8904->regmap, WM8904_BIAS_CONTROL_0,
- 			    WM8904_POBCTRL, 0);
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -275,9 +275,9 @@ int dwc3_core_soft_reset(struct dwc3 *dw
+ 	/*
+ 	 * We're resetting only the device side because, if we're in host mode,
+ 	 * XHCI driver will reset the host block. If dwc3 was configured for
+-	 * host-only mode, then we can return early.
++	 * host-only mode or current role is host, then we can return early.
+ 	 */
+-	if (dwc->current_dr_role == DWC3_GCTL_PRTCAP_HOST)
++	if (dwc->dr_mode == USB_DR_MODE_HOST || dwc->current_dr_role == DWC3_GCTL_PRTCAP_HOST)
+ 		return 0;
  
-+	/* Fill the cache for the ADC test register */
-+	regmap_read(wm8904->regmap, WM8904_ADC_TEST_0, &val);
-+
- 	/* Can leave the device powered off until we need it */
- 	regcache_cache_only(wm8904->regmap, true);
- 	regulator_bulk_disable(ARRAY_SIZE(wm8904->supplies), wm8904->supplies);
+ 	reg = dwc3_readl(dwc->regs, DWC3_DCTL);
 
 
