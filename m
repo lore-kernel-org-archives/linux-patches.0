@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D236200A5
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:37:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F219DC433C8;
-	Tue,  1 Aug 2023 09:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A282200A5
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:38:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F0DC433C7;
+	Tue,  1 Aug 2023 09:37:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882677;
-	bh=Um2ir3MDtuo8rV8+KGgxA+leEpZG9Z4o8PbZV1lQ6OY=;
+	s=korg; t=1690882680;
+	bh=YKMhp9xMG6FgEvvKAQVnbEfORzXXG7mlgz8YGEb+Lqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M5m22TetGBraIH0Xv6hOk6RBCPNd9X8MRvJJvrPtzmkDW4U4RtyyFwIv+awqPiDKw
-	 umsfAz3GyoDmDoIYEAKYsvBz2Q9o094yKySzFcMXxRWYTjgu/6Xs9hZDWyk7XvzNjb
-	 Tnd/5mgc0TdmAS5Fg6S3Fk4pHn9Hrbz49JWCT9MY=
+	b=IZoSWpAJH3FQJjK1HVnTWsOT//UJq0eSE3V1KplWxJKGDeKd+cFlwsk7QPHpcq77k
+	 kH7b+B0/6j8Mk+XR2IhPqkLeZU6ieGuKu8hd8TF4guWBVJIBD7yNwaAAn8/718jM/J
+	 PTCfw9BRN63Y55kaqBgIORJwfaz7uK26ubquR5oM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunkun Jiang <jiangkunkun@huawei.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Zenghui Yu <yuzenghui@huawei.com>,
-	wanghaibin.wang@huawei.com,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 192/228] irqchip/gic-v4.1: Properly lock VPEs when doing a directLPI invalidation
-Date: Tue,  1 Aug 2023 11:20:50 +0200
-Message-ID: <20230801091929.803062095@linuxfoundation.org>
+	syzbot+cf71097ffb6755df8251@syzkaller.appspotmail.com,
+	Nam Cao <namcaov@gmail.com>,
+	Larry Finger <Larry.Finger@lwfinger.net>
+Subject: [PATCH 6.1 175/228] staging: r8712: Fix memory leak in _r8712_init_xmit_priv()
+Date: Tue,  1 Aug 2023 11:20:33 +0200
+Message-ID: <20230801091929.195688367@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
 References: <20230801091922.799813980@linuxfoundation.org>
@@ -37,160 +35,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Larry Finger <Larry.Finger@lwfinger.net>
 
-[ Upstream commit 926846a703cbf5d0635cc06e67d34b228746554b ]
+commit ac83631230f77dda94154ed0ebfd368fc81c70a3 upstream.
 
-We normally rely on the irq_to_cpuid_[un]lock() primitives to make
-sure nothing will change col->idx while performing a LPI invalidation.
+In the above mentioned routine, memory is allocated in several places.
+If the first succeeds and a later one fails, the routine will leak memory.
+This patch fixes commit 2865d42c78a9 ("staging: r8712u: Add the new driver
+to the mainline kernel"). A potential memory leak in
+r8712_xmit_resource_alloc() is also addressed.
 
-However, these primitives do not cover VPE doorbells, and we have
-some open-coded locking for that. Unfortunately, this locking is
-pretty bogus.
-
-Instead, extend the above primitives to cover VPE doorbells and
-convert the whole thing to it.
-
-Fixes: f3a059219bc7 ("irqchip/gic-v4.1: Ensure mutual exclusion between vPE affinity change and RD access")
-Reported-by: Kunkun Jiang <jiangkunkun@huawei.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: Zenghui Yu <yuzenghui@huawei.com>
-Cc: wanghaibin.wang@huawei.com
-Tested-by: Kunkun Jiang <jiangkunkun@huawei.com>
-Reviewed-by: Zenghui Yu <yuzenghui@huawei.com>
-Link: https://lore.kernel.org/r/20230617073242.3199746-1-maz@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2865d42c78a9 ("staging: r8712u: Add the new driver to the mainline kernel")
+Reported-by: syzbot+cf71097ffb6755df8251@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/x/log.txt?x=11ac3fa0a80000
+Cc: stable@vger.kernel.org
+Cc: Nam Cao <namcaov@gmail.com>
+Signed-off-by: Larry Finger <Larry.Finger@lwfinger.net>
+Reviewed-by: Nam Cao <namcaov@gmail.com>
+Link: https://lore.kernel.org/r/20230714175417.18578-1-Larry.Finger@lwfinger.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 75 ++++++++++++++++++++------------
- 1 file changed, 46 insertions(+), 29 deletions(-)
+ drivers/staging/rtl8712/rtl871x_xmit.c |   43 ++++++++++++++++++++++++++-------
+ drivers/staging/rtl8712/xmit_linux.c   |    6 ++++
+ 2 files changed, 40 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 973ede0197e36..8956881503d9a 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -271,13 +271,23 @@ static void vpe_to_cpuid_unlock(struct its_vpe *vpe, unsigned long flags)
- 	raw_spin_unlock_irqrestore(&vpe->vpe_lock, flags);
- }
+--- a/drivers/staging/rtl8712/rtl871x_xmit.c
++++ b/drivers/staging/rtl8712/rtl871x_xmit.c
+@@ -21,6 +21,7 @@
+ #include "osdep_intf.h"
+ #include "usb_ops.h"
  
-+static struct irq_chip its_vpe_irq_chip;
-+
- static int irq_to_cpuid_lock(struct irq_data *d, unsigned long *flags)
- {
--	struct its_vlpi_map *map = get_vlpi_map(d);
-+	struct its_vpe *vpe = NULL;
- 	int cpu;
++#include <linux/usb.h>
+ #include <linux/ieee80211.h>
  
--	if (map) {
--		cpu = vpe_to_cpuid_lock(map->vpe, flags);
-+	if (d->chip == &its_vpe_irq_chip) {
-+		vpe = irq_data_get_irq_chip_data(d);
-+	} else {
-+		struct its_vlpi_map *map = get_vlpi_map(d);
-+		if (map)
-+			vpe = map->vpe;
-+	}
-+
-+	if (vpe) {
-+		cpu = vpe_to_cpuid_lock(vpe, flags);
- 	} else {
- 		/* Physical LPIs are already locked via the irq_desc lock */
- 		struct its_device *its_dev = irq_data_get_irq_chip_data(d);
-@@ -291,10 +301,18 @@ static int irq_to_cpuid_lock(struct irq_data *d, unsigned long *flags)
+ static const u8 P802_1H_OUI[P80211_OUI_LEN] = {0x00, 0x00, 0xf8};
+@@ -55,6 +56,7 @@ int _r8712_init_xmit_priv(struct xmit_pr
+ 	sint i;
+ 	struct xmit_buf *pxmitbuf;
+ 	struct xmit_frame *pxframe;
++	int j;
  
- static void irq_to_cpuid_unlock(struct irq_data *d, unsigned long flags)
- {
--	struct its_vlpi_map *map = get_vlpi_map(d);
-+	struct its_vpe *vpe = NULL;
-+
-+	if (d->chip == &its_vpe_irq_chip) {
-+		vpe = irq_data_get_irq_chip_data(d);
-+	} else {
-+		struct its_vlpi_map *map = get_vlpi_map(d);
-+		if (map)
-+			vpe = map->vpe;
-+	}
- 
--	if (map)
--		vpe_to_cpuid_unlock(map->vpe, flags);
-+	if (vpe)
-+		vpe_to_cpuid_unlock(vpe, flags);
- }
- 
- static struct its_collection *valid_col(struct its_collection *col)
-@@ -1431,14 +1449,29 @@ static void wait_for_syncr(void __iomem *rdbase)
- 		cpu_relax();
- }
- 
--static void direct_lpi_inv(struct irq_data *d)
-+static void __direct_lpi_inv(struct irq_data *d, u64 val)
- {
--	struct its_vlpi_map *map = get_vlpi_map(d);
- 	void __iomem *rdbase;
- 	unsigned long flags;
--	u64 val;
- 	int cpu;
- 
-+	/* Target the redistributor this LPI is currently routed to */
-+	cpu = irq_to_cpuid_lock(d, &flags);
-+	raw_spin_lock(&gic_data_rdist_cpu(cpu)->rd_lock);
-+
-+	rdbase = per_cpu_ptr(gic_rdists->rdist, cpu)->rd_base;
-+	gic_write_lpir(val, rdbase + GICR_INVLPIR);
-+	wait_for_syncr(rdbase);
-+
-+	raw_spin_unlock(&gic_data_rdist_cpu(cpu)->rd_lock);
-+	irq_to_cpuid_unlock(d, flags);
-+}
-+
-+static void direct_lpi_inv(struct irq_data *d)
-+{
-+	struct its_vlpi_map *map = get_vlpi_map(d);
-+	u64 val;
-+
- 	if (map) {
- 		struct its_device *its_dev = irq_data_get_irq_chip_data(d);
- 
-@@ -1451,15 +1484,7 @@ static void direct_lpi_inv(struct irq_data *d)
- 		val = d->hwirq;
- 	}
- 
--	/* Target the redistributor this LPI is currently routed to */
--	cpu = irq_to_cpuid_lock(d, &flags);
--	raw_spin_lock(&gic_data_rdist_cpu(cpu)->rd_lock);
--	rdbase = per_cpu_ptr(gic_rdists->rdist, cpu)->rd_base;
--	gic_write_lpir(val, rdbase + GICR_INVLPIR);
--
--	wait_for_syncr(rdbase);
--	raw_spin_unlock(&gic_data_rdist_cpu(cpu)->rd_lock);
--	irq_to_cpuid_unlock(d, flags);
-+	__direct_lpi_inv(d, val);
- }
- 
- static void lpi_update_config(struct irq_data *d, u8 clr, u8 set)
-@@ -3941,18 +3966,10 @@ static void its_vpe_send_inv(struct irq_data *d)
- {
- 	struct its_vpe *vpe = irq_data_get_irq_chip_data(d);
- 
--	if (gic_rdists->has_direct_lpi) {
--		void __iomem *rdbase;
--
--		/* Target the redistributor this VPE is currently known on */
--		raw_spin_lock(&gic_data_rdist_cpu(vpe->col_idx)->rd_lock);
--		rdbase = per_cpu_ptr(gic_rdists->rdist, vpe->col_idx)->rd_base;
--		gic_write_lpir(d->parent_data->hwirq, rdbase + GICR_INVLPIR);
--		wait_for_syncr(rdbase);
--		raw_spin_unlock(&gic_data_rdist_cpu(vpe->col_idx)->rd_lock);
--	} else {
-+	if (gic_rdists->has_direct_lpi)
-+		__direct_lpi_inv(d, d->parent_data->hwirq);
-+	else
- 		its_vpe_send_cmd(vpe, its_send_inv);
+ 	memset((unsigned char *)pxmitpriv, 0, sizeof(struct xmit_priv));
+ 	spin_lock_init(&pxmitpriv->lock);
+@@ -117,11 +119,8 @@ int _r8712_init_xmit_priv(struct xmit_pr
+ 	_init_queue(&pxmitpriv->pending_xmitbuf_queue);
+ 	pxmitpriv->pallocated_xmitbuf =
+ 		kmalloc(NR_XMITBUFF * sizeof(struct xmit_buf) + 4, GFP_ATOMIC);
+-	if (!pxmitpriv->pallocated_xmitbuf) {
+-		kfree(pxmitpriv->pallocated_frame_buf);
+-		pxmitpriv->pallocated_frame_buf = NULL;
+-		return -ENOMEM;
 -	}
++	if (!pxmitpriv->pallocated_xmitbuf)
++		goto clean_up_frame_buf;
+ 	pxmitpriv->pxmitbuf = pxmitpriv->pallocated_xmitbuf + 4 -
+ 			      ((addr_t)(pxmitpriv->pallocated_xmitbuf) & 3);
+ 	pxmitbuf = (struct xmit_buf *)pxmitpriv->pxmitbuf;
+@@ -129,13 +128,17 @@ int _r8712_init_xmit_priv(struct xmit_pr
+ 		INIT_LIST_HEAD(&pxmitbuf->list);
+ 		pxmitbuf->pallocated_buf =
+ 			kmalloc(MAX_XMITBUF_SZ + XMITBUF_ALIGN_SZ, GFP_ATOMIC);
+-		if (!pxmitbuf->pallocated_buf)
+-			return -ENOMEM;
++		if (!pxmitbuf->pallocated_buf) {
++			j = 0;
++			goto clean_up_alloc_buf;
++		}
+ 		pxmitbuf->pbuf = pxmitbuf->pallocated_buf + XMITBUF_ALIGN_SZ -
+ 				 ((addr_t) (pxmitbuf->pallocated_buf) &
+ 				 (XMITBUF_ALIGN_SZ - 1));
+-		if (r8712_xmit_resource_alloc(padapter, pxmitbuf))
+-			return -ENOMEM;
++		if (r8712_xmit_resource_alloc(padapter, pxmitbuf)) {
++			j = 1;
++			goto clean_up_alloc_buf;
++		}
+ 		list_add_tail(&pxmitbuf->list,
+ 				 &(pxmitpriv->free_xmitbuf_queue.queue));
+ 		pxmitbuf++;
+@@ -146,6 +149,28 @@ int _r8712_init_xmit_priv(struct xmit_pr
+ 	init_hwxmits(pxmitpriv->hwxmits, pxmitpriv->hwxmit_entry);
+ 	tasklet_setup(&pxmitpriv->xmit_tasklet, r8712_xmit_bh);
+ 	return 0;
++
++clean_up_alloc_buf:
++	if (j) {
++		/* failure happened in r8712_xmit_resource_alloc()
++		 * delete extra pxmitbuf->pallocated_buf
++		 */
++		kfree(pxmitbuf->pallocated_buf);
++	}
++	for (j = 0; j < i; j++) {
++		int k;
++
++		pxmitbuf--;			/* reset pointer */
++		kfree(pxmitbuf->pallocated_buf);
++		for (k = 0; k < 8; k++)		/* delete xmit urb's */
++			usb_free_urb(pxmitbuf->pxmit_urb[k]);
++	}
++	kfree(pxmitpriv->pallocated_xmitbuf);
++	pxmitpriv->pallocated_xmitbuf = NULL;
++clean_up_frame_buf:
++	kfree(pxmitpriv->pallocated_frame_buf);
++	pxmitpriv->pallocated_frame_buf = NULL;
++	return -ENOMEM;
  }
  
- static void its_vpe_mask_irq(struct irq_data *d)
--- 
-2.40.1
-
+ void _free_xmit_priv(struct xmit_priv *pxmitpriv)
+--- a/drivers/staging/rtl8712/xmit_linux.c
++++ b/drivers/staging/rtl8712/xmit_linux.c
+@@ -112,6 +112,12 @@ int r8712_xmit_resource_alloc(struct _ad
+ 	for (i = 0; i < 8; i++) {
+ 		pxmitbuf->pxmit_urb[i] = usb_alloc_urb(0, GFP_KERNEL);
+ 		if (!pxmitbuf->pxmit_urb[i]) {
++			int k;
++
++			for (k = i - 1; k >= 0; k--) {
++				/* handle allocation errors part way through loop */
++				usb_free_urb(pxmitbuf->pxmit_urb[k]);
++			}
+ 			netdev_err(padapter->pnetdev, "pxmitbuf->pxmit_urb[i] == NULL\n");
+ 			return -ENOMEM;
+ 		}
 
 
