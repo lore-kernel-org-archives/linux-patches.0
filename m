@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DD31F953
-	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:28:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB373C433C8;
-	Tue,  1 Aug 2023 09:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BBA71F953
+	for <patches@lists.linux.dev>; Tue,  1 Aug 2023 09:28:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A444DC433C8;
+	Tue,  1 Aug 2023 09:28:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1690882099;
-	bh=VB1l31Zp5b2x9syZ6CT7bXKWUzgEqpS6HwcpukrYBtY=;
+	s=korg; t=1690882102;
+	bh=HsnQURv66rM9bSecLSeDJ24b70s03gW/1MsNquYAx5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mHY10LMNqAqNO8ki64AQZ1s5u+lvX3EMPj0P35LEaq91zYQUBK7U8fNS+Du/o9W3p
-	 7oy7ulfs+FuEhhHmI8e4oWkomI7+PwMgN3t5ZtgkjsCgNVB16Uznuk4xm3ONXW7MTf
-	 NCE+W00lxEEwltzhHYGp2LlJsIoUJ7mAXZrc8vf4=
+	b=R1Lkypn6OUtEjFsuYvLcp3RL6jtNiP8CDUbavIR3trZsozYSRxYgBIVELZ18/nLfi
+	 yFjmxPjbATl1tOtGbKZjkXCTeCP/A9lOfCI0+V26JH8K7DJyl2Hru9A8RK7+fY1oxZ
+	 6nyFgXw5Rxt9WXIR8SP+e4FxCmZ0TWlyM35ksGOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 140/155] virtio-net: fix race between set queues and probe
-Date: Tue,  1 Aug 2023 11:20:52 +0200
-Message-ID: <20230801091915.139370484@linuxfoundation.org>
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 141/155] s390/dasd: fix hanging device after quiesce/resume
+Date: Tue,  1 Aug 2023 11:20:53 +0200
+Message-ID: <20230801091915.174661956@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 References: <20230801091910.165050260@linuxfoundation.org>
@@ -36,47 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Wang <jasowang@redhat.com>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-commit 25266128fe16d5632d43ada34c847d7b8daba539 upstream.
+commit 05f1d8ed03f547054efbc4d29bb7991c958ede95 upstream.
 
-A race were found where set_channels could be called after registering
-but before virtnet_set_queues() in virtnet_probe(). Fixing this by
-moving the virtnet_set_queues() before netdevice registering. While at
-it, use _virtnet_set_queues() to avoid holding rtnl as the device is
-not even registered at that time.
+Quiesce and resume are functions that tell the DASD driver to stop/resume
+issuing I/Os to a specific DASD.
+
+On resume dasd_schedule_block_bh() is called to kick handling of IO
+requests again. This does unfortunately not cover internal requests which
+are used for path verification for example.
+
+This could lead to a hanging device when a path event or anything else
+that triggers internal requests occurs on a quiesced device.
+
+Fix by also calling dasd_schedule_device_bh() which triggers handling of
+internal requests on resume.
+
+Fixes: 8e09f21574ea ("[S390] dasd: add hyper PAV support to DASD device driver, part 1")
 
 Cc: stable@vger.kernel.org
-Fixes: a220871be66f ("virtio-net: correctly enable multiqueue")
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20230725072049.617289-1-jasowang@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230721193647.3889634-2-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/virtio_net.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/s390/block/dasd_ioctl.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -3319,6 +3319,8 @@ static int virtnet_probe(struct virtio_d
- 		}
- 	}
+--- a/drivers/s390/block/dasd_ioctl.c
++++ b/drivers/s390/block/dasd_ioctl.c
+@@ -131,6 +131,7 @@ static int dasd_ioctl_resume(struct dasd
+ 	spin_unlock_irqrestore(get_ccwdev_lock(base->cdev), flags);
  
-+	_virtnet_set_queues(vi, vi->curr_queue_pairs);
-+
- 	/* serialize netdev register + virtio_device_ready() with ndo_open() */
- 	rtnl_lock();
+ 	dasd_schedule_block_bh(block);
++	dasd_schedule_device_bh(base);
+ 	return 0;
+ }
  
-@@ -3339,8 +3341,6 @@ static int virtnet_probe(struct virtio_d
- 		goto free_unregister_netdev;
- 	}
- 
--	virtnet_set_queues(vi, vi->curr_queue_pairs);
--
- 	/* Assume link up if device can't report link status,
- 	   otherwise get link status from config. */
- 	netif_carrier_off(dev);
 
 
