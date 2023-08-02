@@ -1,105 +1,104 @@
-Received: from qproxy3-pub.mail.unifiedlayer.com (qproxy3-pub.mail.unifiedlayer.com [67.222.38.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01A1100DA
-	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 19:31:42 +0000 (UTC)
-Received: from outbound-ss-761.bluehost.com (outbound-ss-761.bluehost.com [74.220.211.250])
-	by qproxy3.mail.unifiedlayer.com (Postfix) with ESMTP id D80FF8027B05
-	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 19:07:58 +0000 (UTC)
-Received: from cmgw14.mail.unifiedlayer.com (unknown [10.0.90.129])
-	by progateway8.mail.pro1.eigbox.com (Postfix) with ESMTP id A27A31004E80A
-	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 19:07:52 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id RHCKqCdv8YDyaRHCKqK0go; Wed, 02 Aug 2023 19:07:52 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=cZwXElPM c=1 sm=1 tr=0 ts=64caa988
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10:nop_charset_1 a=UttIx32zK-AA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=NdBnnewdSvZJlXb8GnEolVkAQ6bNVN3LuP+EMh2TV3c=; b=gW+c0UnHwptEDyQyzE46JOIih2
-	T6d0mgnkonXu3UC1AGeb4gVnlht6qEMqb3pDrtQHM4QKWu0mO2/+qKWbSTCO02yWBXdE3o1sb2OcY
-	AGd7LPJXO0QiK+iUdbhtdIaVfPYx2J9Wzykf5lRJXOe2OOTZZKY3a3htMTGTRob/sM7cNTRzzvtNh
-	oso81i+UqXrfkCjuVxxrcF/iKyONef3AAfiC4OtZKd4kDA5+3UnPyf3zeX7LRMwuG3+hxeE4F4ltS
-	COg0mim8z3jRcepczAn2aJKy4/a5zFowm9AD2arvfXwOyzfA2FLoUSAjjQx/duy9+LZ9rCH0mBSZO
-	42Tw2rrQ==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:50480 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96)
-	(envelope-from <re@w6rz.net>)
-	id 1qRHCJ-001Rfn-14;
-	Wed, 02 Aug 2023 13:07:51 -0600
-Subject: Re: [PATCH 6.1 000/225] 6.1.43-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org
-References: <20230802065510.869511253@linuxfoundation.org>
-In-Reply-To: <20230802065510.869511253@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <f9b60c93-d5da-0075-31ce-46b956eaf5cf@w6rz.net>
-Date: Wed, 2 Aug 2023 12:07:49 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81DC10945
+	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 19:59:14 +0000 (UTC)
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-686be28e1a8so146614b3a.0
+        for <patches@lists.linux.dev>; Wed, 02 Aug 2023 12:59:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1691006354; x=1691611154;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=/aA++90/fHCZVh7rcJAqnB4uADfByOv/2qJK2PTK8tE=;
+        b=AVzmg/QvoodRNbXCaoo6UCWEOmJTDZkOPCrWOd7bjQlQCeeTdfqXGImKbUmMcbqts0
+         P/zl0oxtVZrnw13aqmoicSmo+GrW8bz7RtfVM3F1J4jtovkb811JIMCaBVmWnpfSXviP
+         Gw0JeczO8k98S2psQSEENSvByatX1RS6Yckh8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691006354; x=1691611154;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/aA++90/fHCZVh7rcJAqnB4uADfByOv/2qJK2PTK8tE=;
+        b=cJSYx2vZm5XsPCS9blNxzOO4mULUZKlwSct9FKF4XUGbhJLfpLVTGka0gAGJZWCF2+
+         sTSELL3/bYpOMpZOLmCG/tj1+mhRv4n7YpcIwJUXDk8prM0cXoQl/ZbwqibqaeqWbgQa
+         hwPXG3HmkW3LfwVuOpzV3QrmZlQjezs8XnGeABiBEymGi7d9o1twnnBktABCD/1GzblP
+         uIu6IbcgCx3OxiEQDNdL9hnCuaWaqAUjl77LBE0Kr3xBiFRWLxZ3Kn9z6wl/vsYviPKC
+         avniIwKayGatbTOnkMWrwGR705u8xhbLYG6RFvLOdtAaf7hyytEXwIDUf7yKPcJ1nJ2z
+         R+7A==
+X-Gm-Message-State: ABy/qLZipLgXdOJd4OWVhuWPjdg+kBLoKaoevbXzH3oIA35G78Q9aLyO
+	Vj7X5fMS+NKdM30vgCJYRESN5A==
+X-Google-Smtp-Source: APBJJlGRIRM0zaiDLPqaJbDXG+V7IHTHMlItsJinyOGJ/4TgiIKhU0mdE0RQajnU+sOFZQM9vrkuRQ==
+X-Received: by 2002:a05:6a00:16c2:b0:687:570:5021 with SMTP id l2-20020a056a0016c200b0068705705021mr19158141pfc.15.1691006353941;
+        Wed, 02 Aug 2023 12:59:13 -0700 (PDT)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id b9-20020aa78109000000b0064378c52398sm11403642pfi.25.2023.08.02.12.59.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Aug 2023 12:59:13 -0700 (PDT)
+Date: Wed, 2 Aug 2023 12:59:12 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: isdn@linux-pingi.de, netdev@vger.kernel.org, samitolvanen@google.com,
+	llvm@lists.linux.dev, patches@lists.linux.dev,
+	kernel test robot <oliver.sang@intel.com>
+Subject: Re: [PATCH] mISDN: Update parameter type of dsp_cmx_send()
+Message-ID: <202308021255.9A6328D@keescook>
+References: <20230802-fix-dsp_cmx_send-cfi-failure-v1-1-2f2e79b0178d@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1qRHCJ-001Rfn-14
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:50480
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 20
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230802-fix-dsp_cmx_send-cfi-failure-v1-1-2f2e79b0178d@kernel.org>
 
-On 8/2/23 12:41 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.43 release.
-> There are 225 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 04 Aug 2023 06:54:28 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.43-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Wed, Aug 02, 2023 at 10:40:29AM -0700, Nathan Chancellor wrote:
+> When booting a kernel with CONFIG_MISDN_DSP=y and CONFIG_CFI_CLANG=y,
+> there is a failure when dsp_cmx_send() is called indirectly from
+> call_timer_fn():
+> 
+>   [    0.371412] CFI failure at call_timer_fn+0x2f/0x150 (target: dsp_cmx_send+0x0/0x530; expected type: 0x92ada1e9)
+> 
+> The function pointer prototype that call_timer_fn() expects is
+> 
+>   void (*fn)(struct timer_list *)
+> 
+> whereas dsp_cmx_send() has a parameter type of 'void *', which causes
+> the control flow integrity checks to fail because the parameter types do
+> not match.
+> 
+> Change dsp_cmx_send()'s parameter type to be 'struct timer_list' to
+> match the expected prototype. The argument is unused anyways, so this
+> has no functional change, aside from avoiding the CFI failure.
+> 
+> Reported-by: kernel test robot <oliver.sang@intel.com>
+> Closes: https://lore.kernel.org/oe-lkp/202308020936.58787e6c-oliver.sang@intel.com
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> I am not sure if there is an appropriate fixes tag for this, I see this
+> area was modified by commit e313ac12eb13 ("mISDN: Convert timers to use
+> timer_setup()") but I don't think it was the original source of the
+> issue. It could also be commit cf68fffb66d6 ("add support for Clang
+> CFI") but I think that just exposes the problem/makes it fatal.
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Oh man. I missed one! How did I miss that one? I think "Fixes:
+e313ac12eb13" is the most correct. That was the patch that went through
+trying to fix all the prototypes, and _did_ fix all the _other_ prototypes
+in there.
 
-Tested-by: Ron Economos <re@w6rz.net>
+Thanks for the patch!
 
+Reviewed-by: Kees Cook <keescook@chromium.org>
+
+> 
+> Also not sure who should take this or how soon it should go in, I'll let
+> that to maintainers to figure out :)
+
+If no one speaks up, I'll snag it, but since this got aimed at netdev, I
+suspect someone may pick it up. :)
+
+-Kees
+
+-- 
+Kees Cook
