@@ -1,130 +1,181 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC33DF58;
-	Wed,  2 Aug 2023 17:40:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E21C5C433C7;
-	Wed,  2 Aug 2023 17:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97DA6101D0
+	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 17:48:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236FFC433C8;
+	Wed,  2 Aug 2023 17:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1690998039;
-	bh=4hVTE+i9pfxMJ2F33rRe90JktNk2rYBpP+Ie4qp/6l4=;
-	h=From:Date:Subject:To:Cc:From;
-	b=HPfWdXroeHcDcrpC5fkZfN4KTlRSZs9yzMI/sMX97S+GCtokJz7LftdBXVv+oHbcl
-	 uAU2H52CnhuYzec7rTBmcNFd+AT5Gw+12zgO6onJ2Jslf62kpseuKKntvM9i9AWIbp
-	 NXblaM82SWFBPeafHA+mtWaJagY1VAWap+4KLynWH6UnElnzXDz84MiOF4F93vmU9z
-	 Lsv4Z01gg34jUHlht1NL5EnIq9iQ/lWlw1EQucXGaJKq8TYB6lUFabrxJjRN53EGeP
-	 OnfW36l2J8xfxJ2DHm3SkrXI4x3U9fgtV8wyaIfr9SGATj49Qli6IIHROf0+sbS0qK
-	 5PaMEOpohlDJw==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 02 Aug 2023 10:40:29 -0700
-Subject: [PATCH] mISDN: Update parameter type of dsp_cmx_send()
+	s=k20201202; t=1690998534;
+	bh=ec++qd+96KFIy686wWR0g6gZlFG7AhB4I5X3AHouovE=;
+	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
+	b=gQgov8TXV7aMMrG4qm3LbiCBnMZBGnIhXpvZ3e/awF1e7R8hw19JT/Urv7O3laRfT
+	 fshhhiU4UR5UXbvsf8Y81pRqirlso7KI13sNI2AXwcFemvPj9iYIX5zErlveCaFYoS
+	 0EOExx6E60EDCMnxxO66zLQn3T5EBeoZ9rVW1dSHsThPovkvNqHPMaUS1WZwgv1IZ4
+	 os+UAD2cg5KaUBykb4cfjfeQ9qwZFeVAUjB4Ija7ecOw61LYXJLul1oEt7sQ5ucFqI
+	 DW06aWKd2Jk3M4ba3qq0Ula1BIkilSRa+BJaBqAMchOEWVJ7EkrhOiDR76FEHS5wut
+	 m3YSwr8S2IKZw==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id A8786CE0927; Wed,  2 Aug 2023 10:48:53 -0700 (PDT)
+Date: Wed, 2 Aug 2023 10:48:53 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Guenter Roeck <linux@roeck-us.net>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Roy Hopkins <rhopkins@suse.de>,
+	Joel Fernandes <joel@joelfernandes.org>,
+	Pavel Machek <pavel@denx.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, akpm@linux-foundation.org,
+	shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	rcu@vger.kernel.org, Ingo Molnar <mingo@kernel.org>
+Subject: Re: scheduler problems in -next (was: Re: [PATCH 6.4 000/227]
+ 6.4.7-rc1 review)
+Message-ID: <8ab3ca72-e20c-4b18-803f-bf6937c2cd70@paulmck-laptop>
+Reply-To: paulmck@kernel.org
+References: <20230731143954.GB37820@hirez.programming.kicks-ass.net>
+ <f5a18aa3-9db7-6ad2-33d5-3335a18e4e2f@roeck-us.net>
+ <20230731145232.GM29590@hirez.programming.kicks-ass.net>
+ <7ff2a2393d78275b14ff867f3af902b5d4b93ea2.camel@suse.de>
+ <20230731161452.GA40850@hirez.programming.kicks-ass.net>
+ <baa58a8e-54f0-2309-b34e-d62999a452a1@roeck-us.net>
+ <20230731211517.GA51835@hirez.programming.kicks-ass.net>
+ <a05743a3-4dec-6af7-302f-d1d2a0db7d3e@roeck-us.net>
+ <8215f037-63e9-4e92-8403-c5431ada9cc9@paulmck-laptop>
+ <CAHk-=wj5iESP-=gJSHe0Mfi=Xh2HdSsy+nm8NSr7DbXB9aBDGQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230802-fix-dsp_cmx_send-cfi-failure-v1-1-2f2e79b0178d@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAAyVymQC/x3MQQqEMAxA0atI1gZqFBGvIiK1TTWgVRpmEMS7W
- 1w++PwblJOwQl/ckPgvKkfMqMoC3Grjwig+G8hQbTpDGORCr+fk9mtSjh5dEAxWtl9iJN8Y6ub
- K2baGvDgT5/7bD+PzvI+Wm7luAAAA
-To: isdn@linux-pingi.de, netdev@vger.kernel.org
-Cc: keescook@chromium.org, samitolvanen@google.com, llvm@lists.linux.dev, 
- patches@lists.linux.dev, kernel test robot <oliver.sang@intel.com>, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3446; i=nathan@kernel.org;
- h=from:subject:message-id; bh=4hVTE+i9pfxMJ2F33rRe90JktNk2rYBpP+Ie4qp/6l4=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDCmnpord7Q27f92HKWzldR65BfcMn4lFJczqeB4Zxz7bb
- LONZ3B8RykLgxgHg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZjIzNOMDI030o6+6T63bsfV
- Nfn57TtWrdZXzl3atCNZqnPXwsTjEhsZGTbWXQ4+tZznD7uP3sJjiVVPVnvnhhov2inzNNXa4+r
- NQ8wA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHk-=wj5iESP-=gJSHe0Mfi=Xh2HdSsy+nm8NSr7DbXB9aBDGQ@mail.gmail.com>
 
-When booting a kernel with CONFIG_MISDN_DSP=y and CONFIG_CFI_CLANG=y,
-there is a failure when dsp_cmx_send() is called indirectly from
-call_timer_fn():
+On Wed, Aug 02, 2023 at 10:14:51AM -0700, Linus Torvalds wrote:
+> Two quick comments, both of them "this code is a bit odd" rather than
+> anything else.
 
-  [    0.371412] CFI failure at call_timer_fn+0x2f/0x150 (target: dsp_cmx_send+0x0/0x530; expected type: 0x92ada1e9)
+Good to get eyes on this code, so thank you very much!!!
 
-The function pointer prototype that call_timer_fn() expects is
+> On Tue, 1 Aug 2023 at 12:11, Paul E. McKenney <paulmck@kernel.org> wrote:
+> >
+> > diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+> 
+> Why is this file called "tasks.h"?
+> 
+> It's not a header file. It makes no sense. It's full of C code. It's
+> included in only one place. It's just _weird_.
 
-  void (*fn)(struct timer_list *)
+You are right, it is weird.
 
-whereas dsp_cmx_send() has a parameter type of 'void *', which causes
-the control flow integrity checks to fail because the parameter types do
-not match.
+This is a holdover from when I was much more concerned about being
+criticized for having #ifdef in a .c file, and pretty much every
+line in this file is under some combination or another of #ifdefs.
+This concern led to kernel/rcu/tree_plugin.h being set up in this way
+back when preemptible RCU was introduced, and for good or for bad I just
+kept following that pattern.
 
-Change dsp_cmx_send()'s parameter type to be 'struct timer_list' to
-match the expected prototype. The argument is unused anyways, so this
-has no functional change, aside from avoiding the CFI failure.
+We could convert this to a .c file, keep the #ifdefs, drop some instances
+of "static", add a bunch of declarations, and maybe (or maybe not) push a
+function or two into some .h file for performance/inlining reasons.  Me, I
+would prefer to leave it alone, but we can certainly change it.
 
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202308020936.58787e6c-oliver.sang@intel.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-I am not sure if there is an appropriate fixes tag for this, I see this
-area was modified by commit e313ac12eb13 ("mISDN: Convert timers to use
-timer_setup()") but I don't think it was the original source of the
-issue. It could also be commit cf68fffb66d6 ("add support for Clang
-CFI") but I think that just exposes the problem/makes it fatal.
+> However, more relevantly:
+> 
+> > +               mutex_unlock(&rtp->tasks_gp_mutex);
+> >                 set_tasks_gp_state(rtp, RTGS_WAIT_CBS);
+> 
+> Isn't the tasks_gp_mutex the thing that protects the gp state here?
+> Shouldn't it be after setting?
 
-Also not sure who should take this or how soon it should go in, I'll let
-that to maintainers to figure out :)
----
- drivers/isdn/mISDN/dsp.h      | 2 +-
- drivers/isdn/mISDN/dsp_cmx.c  | 2 +-
- drivers/isdn/mISDN/dsp_core.c | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+Much of the gp state is protected by being accessed only by the gp
+kthread.  But there is a window in time where the gp might be driven
+directly out of the synchronize_rcu_tasks() call.  That window in time
+does not have a definite end, so this ->tasks_gp_mutex does the needed
+mutual exclusion during the transition of gp processing to the newly
+created gp kthread.
 
-diff --git a/drivers/isdn/mISDN/dsp.h b/drivers/isdn/mISDN/dsp.h
-index fa09d511a8ed..baf31258f5c9 100644
---- a/drivers/isdn/mISDN/dsp.h
-+++ b/drivers/isdn/mISDN/dsp.h
-@@ -247,7 +247,7 @@ extern void dsp_cmx_hardware(struct dsp_conf *conf, struct dsp *dsp);
- extern int dsp_cmx_conf(struct dsp *dsp, u32 conf_id);
- extern void dsp_cmx_receive(struct dsp *dsp, struct sk_buff *skb);
- extern void dsp_cmx_hdlc(struct dsp *dsp, struct sk_buff *skb);
--extern void dsp_cmx_send(void *arg);
-+extern void dsp_cmx_send(struct timer_list *arg);
- extern void dsp_cmx_transmit(struct dsp *dsp, struct sk_buff *skb);
- extern int dsp_cmx_del_conf_member(struct dsp *dsp);
- extern int dsp_cmx_del_conf(struct dsp_conf *conf);
-diff --git a/drivers/isdn/mISDN/dsp_cmx.c b/drivers/isdn/mISDN/dsp_cmx.c
-index 357b87592eb4..61cb45c5d0d8 100644
---- a/drivers/isdn/mISDN/dsp_cmx.c
-+++ b/drivers/isdn/mISDN/dsp_cmx.c
-@@ -1614,7 +1614,7 @@ static u16	dsp_count; /* last sample count */
- static int	dsp_count_valid; /* if we have last sample count */
- 
- void
--dsp_cmx_send(void *arg)
-+dsp_cmx_send(struct timer_list *arg)
+> >                 rcuwait_wait_event(&rtp->cbs_wait,
+> >                                    (needgpcb = rcu_tasks_need_gpcb(rtp)),
+> >                                    TASK_IDLE);
+> 
+> Also, looking at rcu_tasks_need_gpcb() that is now called outside the
+> lock, it does something quite odd.
+
+The state of each callback list is protected by the ->lock field of
+the rcu_tasks_percpu structure.  Yes, rcu_segcblist_n_cbs() is invoked
+int rcu_tasks_need_gpcb() outside of the lock, but it is designed for
+lockless use.  If it is modified just after the check, then there will
+be a later wakeup on the one hand or we will just uselessly acquire that
+->lock this one time on the other.
+
+Also, ncbs records the number of callbacks seen in that first loop,
+then used later, where its value might be stale.  This might result in
+a collapse back to single-callback-queue operation and a later expansion
+back up.  Except that at this point we are still in single-CPU mode, so
+there should not be any lock contention, which means that there should
+still be but a single callback queue.  The transition itself is protected
+by ->cbs_gbl_lock.
+
+> At the very top of the function does
+> 
+>         for (cpu = 0; cpu < smp_load_acquire(&rtp->percpu_dequeue_lim); cpu++) {
+> 
+> and 'smp_load_acquire()' is all about saying "everything *after* this
+> load is ordered,
+> 
+> But the way it is done in that loop, it is indeed done at the
+> beginning of the loop, but then it's done *after* the loop too, so the
+> last smp_load_acquire seems a bit nonsensical.
+> 
+> If you want to load a value and say "this value is now sensible for
+> everything that follows", I think you should load it *first*. No?
+> 
+> IOW, wouldn't the whole sequence make more sense as
+> 
+>         dequeue_limit = smp_load_acquire(&rtp->percpu_dequeue_lim);
+>         for (cpu = 0; cpu < dequeue_limit; cpu++) {
+> 
+> and say that everything in rcu_tasks_need_gpcb() is ordered wrt the
+> initial limit on entry?
+> 
+> I dunno. That use of "smp_load_acquire()" just seems odd. Memory
+> ordering is hard to understand to begin with, but then when you have
+> things like loops that do the same ordered load multiple times, it
+> goes from "hard to understand" to positively confusing.
+
+Excellent point.  I am queueing that change with your Suggested-by.
+If testing goes well, it will be as shown below.
+
+							Thanx, Paul
+
+------------------------------------------------------------------------
+
+diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+index 83049a893de5..94bb5abdbb37 100644
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -432,6 +432,7 @@ static void rcu_barrier_tasks_generic(struct rcu_tasks *rtp)
+ static int rcu_tasks_need_gpcb(struct rcu_tasks *rtp)
  {
- 	struct dsp_conf *conf;
- 	struct dsp_conf_member *member;
-diff --git a/drivers/isdn/mISDN/dsp_core.c b/drivers/isdn/mISDN/dsp_core.c
-index 386084530c2f..fae95f166688 100644
---- a/drivers/isdn/mISDN/dsp_core.c
-+++ b/drivers/isdn/mISDN/dsp_core.c
-@@ -1195,7 +1195,7 @@ static int __init dsp_init(void)
- 	}
+ 	int cpu;
++	int dequeue_limit;
+ 	unsigned long flags;
+ 	bool gpdone = poll_state_synchronize_rcu(rtp->percpu_dequeue_gpseq);
+ 	long n;
+@@ -439,7 +440,8 @@ static int rcu_tasks_need_gpcb(struct rcu_tasks *rtp)
+ 	long ncbsnz = 0;
+ 	int needgpcb = 0;
  
- 	/* set sample timer */
--	timer_setup(&dsp_spl_tl, (void *)dsp_cmx_send, 0);
-+	timer_setup(&dsp_spl_tl, dsp_cmx_send, 0);
- 	dsp_spl_tl.expires = jiffies + dsp_tics;
- 	dsp_spl_jiffies = dsp_spl_tl.expires;
- 	add_timer(&dsp_spl_tl);
-
----
-base-commit: 5d0c230f1de8c7515b6567d9afba1f196fb4e2f4
-change-id: 20230802-fix-dsp_cmx_send-cfi-failure-2d4028b1ca63
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+-	for (cpu = 0; cpu < smp_load_acquire(&rtp->percpu_dequeue_lim); cpu++) {
++	dequeue_limit = smp_load_acquire(&rtp->percpu_dequeue_lim);
++	for (cpu = 0; cpu < dequeue_limit; cpu++) {
+ 		struct rcu_tasks_percpu *rtpcp = per_cpu_ptr(rtp->rtpcpu, cpu);
+ 
+ 		/* Advance and accelerate any new callbacks. */
