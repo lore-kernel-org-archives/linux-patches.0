@@ -1,107 +1,107 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [85.220.165.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2594C9D
-	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 07:49:56 +0000 (UTC)
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-99c3d3c3db9so108045666b.3
-        for <patches@lists.linux.dev>; Wed, 02 Aug 2023 00:49:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03; t=1690962595; x=1691567395;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=c0VJhH2Z756QKOs3JZdHMzRvuHXC7tOpXij3aANtcuY=;
-        b=Og7ZHsEohQK5gYKe0PKPpZmtqnSLba+zO0Hc3g1vhp26ob/YEsPA/vYuYs3R2k9vAH
-         bDjXL+l1tDQUffpFsyketbLsigIqcppC3CsVb/lPXoq+T1stMompu09UbE9sQg6paLTy
-         asWZ3r0Dx1vkonGTGf+z7UEV0L8sqaj/BKZRvLudBnQstzPyRpwJ8wBlwwHWTjb9D/td
-         X/6rDTbf/Lc3eZpatSdk9916uZHmyk4Ht2zNBjx7LzoHAy8dcSV03yo+1aFyqOFkGzFY
-         ybuwytlo28jNOrXG7Qi6duJuU/ZL6cW87OKXS8/4JsFbTdbwnDwnPzCgBIV4mMgjd1bu
-         m+gA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690962595; x=1691567395;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=c0VJhH2Z756QKOs3JZdHMzRvuHXC7tOpXij3aANtcuY=;
-        b=OfddXenQROKAFoJSJcQuvwOLwfdeN47Z43cVOKlSdt4C4xX+pHLK8+t1GgZHnvzlIp
-         r8CV1EU43fzCU3Cxv3XOJGIFzh91WDR3hpsXCydUOYVh20jGKliSQ2XcqrScC1fcmzjv
-         IRhYDOeC2SJnopjIr6pOMuI88bYfJgP248tHWdYn4nddOb8gRJBZYA0n625+fp9H+lK1
-         zrKgy0Dn9SPOPK1rqYTQOuzDscQpKE2OB1JDgHeji+EpX1Xsa0qpWCBcChiMWkwHW4Z2
-         /YtDaYgvPu9wHDOPpyv0r/AHCbb227HgLYg4GwyBtrK0xwutzC6xJvuhfeZpPtMJG5dC
-         ldvA==
-X-Gm-Message-State: ABy/qLZdgHe4GtlFdgeqdoehgddCSi6nXEvgVJrpOjnqskGtWMo2jDw7
-	Viojy3oDCaSTw7g5caNyZPxQqUxop/xtbCMs74HV1w==
-X-Google-Smtp-Source: APBJJlH2YkiZGbYVtxer1W7isty1PVaWaBz7UcC5TW/uFSLk6MRTNTLb52mcEMYXUbNlQNO8Fpo6SQSvROqt/6IYpCQ=
-X-Received: by 2002:a17:907:a070:b0:99b:ed18:7a10 with SMTP id
- ia16-20020a170907a07000b0099bed187a10mr3803171ejc.36.1690962595084; Wed, 02
- Aug 2023 00:49:55 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFBAD53B9
+	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 08:22:32 +0000 (UTC)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qR77l-0003y4-B3; Wed, 02 Aug 2023 10:22:29 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qR77j-000ZVR-38; Wed, 02 Aug 2023 10:22:27 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qR77i-009pAW-Cd; Wed, 02 Aug 2023 10:22:26 +0200
+Date: Wed, 2 Aug 2023 10:22:26 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	Andy Shevchenko <andy@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH 6.1 000/228] 6.1.43-rc1 review
+Message-ID: <20230802082226.ok23iygasc3byc35@pengutronix.de>
+References: <20230801091922.799813980@linuxfoundation.org>
+ <CA+G9fYsqEE6P8vKKvWgFDjpgT64FebUssPNS48n6qfUriu6Z1w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230729220317.416771-1-ojeda@kernel.org> <20230729220317.416771-2-ojeda@kernel.org>
-In-Reply-To: <20230729220317.416771-2-ojeda@kernel.org>
-From: Trevor Gross <tmgross@umich.edu>
-Date: Wed, 2 Aug 2023 03:49:43 -0400
-Message-ID: <CALNs47sn5GT9_VKn-SGb+STFwpbUipoNyU_+ZbpDwzLXUknUUQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] rust: enable `no_mangle_with_rust_abi` Clippy lint
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
-	Andreas Hindborg <a.hindborg@samsung.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="lhcm5ps2paryt6e6"
+Content-Disposition: inline
+In-Reply-To: <CA+G9fYsqEE6P8vKKvWgFDjpgT64FebUssPNS48n6qfUriu6Z1w@mail.gmail.com>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: patches@lists.linux.dev
+
+
+--lhcm5ps2paryt6e6
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jul 29, 2023 at 6:05=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> Introduced in Rust 1.69.0 [1], this lint prevents forgetting to set
-> the C ABI when using `#[no_mangle]` (or thinking it is implied).
->
-> For instance, it would have prevented the issue [2] fixed by commit
-> c682e4c37d2b ("rust: kernel: Mark rust_fmt_argument as extern "C"").
->
->     error: `#[no_mangle]` set on a function with the default (`Rust`) ABI
->       --> rust/kernel/print.rs:21:1
->        |
->     21 | / unsafe fn rust_fmt_argument(
->     22 | |     buf: *mut c_char,
->     23 | |     end: *mut c_char,
->     24 | |     ptr: *const c_void,
->     25 | | ) -> *mut c_char {
->        | |________________^
->        |
->        =3D help: for further information visit https://rust-lang.github.i=
-o/rust-clippy/master/index.html#no_mangle_with_rust_abi
->        =3D note: requested on the command line with `-D clippy::no-mangle=
--with-rust-abi`
->     help: set an ABI
->        |
->     21 | unsafe extern "C" fn rust_fmt_argument(
->        |        ++++++++++
->     help: or explicitly set the default
->        |
->     21 | unsafe extern "Rust" fn rust_fmt_argument(
->        |        +++++++++++++
->
-> Thus enable it.
->
-> In rare cases, we may need to use the Rust ABI even with `#[no_mangle]`
-> (e.g. one case, before 1.71.0, would have been the `__rust_*`
-> functions). In those cases, we would need to `#[allow(...)]` the lint,
-> since using `extern "Rust"` explicitly (as the compiler suggests)
-> currently gets overwritten by `rustfmt` [3].
->
-> Link: https://github.com/rust-lang/rust-clippy/issues/10347 [1]
-> Link: https://github.com/Rust-for-Linux/linux/pull/967 [2]
-> Link: https://github.com/rust-lang/rustfmt/issues/5701 [3]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
-> [...]
+On Wed, Aug 02, 2023 at 07:24:23AM +0530, Naresh Kamboju wrote:
+> On Tue, 1 Aug 2023 at 15:00, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 6.1.43 release.
+> > There are 228 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Thu, 03 Aug 2023 09:18:38 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patc=
+h-6.1.43-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stab=
+le-rc.git linux-6.1.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
+>=20
+> Following patch caused build regression on stable-rc 6.1 and 5.15,
 
-Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Looking at 6.1.x, cherry-picking
+88da4e8113110d5f4ebdd2f8cd0899e300cd1954 can be done without conflicts
+and fixes this regression.
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--lhcm5ps2paryt6e6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmTKEkEACgkQj4D7WH0S
+/k5wvggAgtrCjOYtlxIf+mTuERuXed1KoBxR5BVykRI0G1jdxrdZValMvoqkksAf
+dtCGlrNmzTInIDBC6ih9a6lNZeQ+J0I8L69d2Tnf5ik375mJRi9ChsBvfWT4aCcY
+AEc3tfKL2eB8CvHickjAqJ98ddRdQgD2FI1331x/kGS/mCtTpPECOd/6g+fwntYl
+pafHicNklXmeDeQ07fsuEx4kqLLD3+JUma6+9bsqdu8njK3Eu9nbF7WjHYr/B1gB
+tlgEvCtxz/qKRgzp6l/Gi4K1ZkvHfzBcteFDrXjOfk2wxhJdLLz5pIQYV705ftsR
+4jYySnxN7+BIKX+GLFhsUzy4Bm6AAg==
+=rbCs
+-----END PGP SIGNATURE-----
+
+--lhcm5ps2paryt6e6--
