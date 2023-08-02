@@ -1,100 +1,142 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from JPN01-OS0-obe.outbound.protection.outlook.com (mail-os0jpn01on2106.outbound.protection.outlook.com [40.107.113.106])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6201B8BED
-	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 15:05:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4CAC433C8;
-	Wed,  2 Aug 2023 15:05:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1690988708;
-	bh=r1VqFu8OfO1u5SoU4EmzmyOkzQIjy5fxk4p2tga+KAM=;
-	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
-	b=OwkIN+dIl1O3NsTYTQe/70zZ0rznSUs8gByfm0OBc7zvmQMLiMvn3CLkT+eKbTOUj
-	 PAil3+ubHsZ183mPtIUzm7PUQB6y0mAJCa+ZRi4IFyAsz+TTY/1TkUdSiXarHW0wAz
-	 iOQIdIMPD+I6kqL3/keDQMu2JiUg6eDoND0lZQeE8NMIt/M0MS6SiHL4vgzDv8IXWm
-	 SbiGyEPgRIcHXNwuZR+KJ0+uo/YJIVF0VevuHZ1ptU8COE5mi0ssQMF5ifOCf/ll3L
-	 X216QF4sppcAbe5WSg6P4NdMjHWOwYBPW6WG3U0mSYjjAHuD4c86lo34qhNQpb9FZp
-	 ZZ0ci2gx+3C6w==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id 5C2E3CE092F; Wed,  2 Aug 2023 08:05:08 -0700 (PDT)
-Date: Wed, 2 Aug 2023 08:05:08 -0700
-From: "Paul E. McKenney" <paulmck@kernel.org>
-To: Roy Hopkins <rhopkins@suse.de>
-Cc: Guenter Roeck <linux@roeck-us.net>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	Pavel Machek <pavel@denx.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	rcu@vger.kernel.org, Ingo Molnar <mingo@kernel.org>
-Subject: Re: scheduler problems in -next (was: Re: [PATCH 6.4 000/227]
- 6.4.7-rc1 review)
-Message-ID: <063a2eba-6b5e-40bc-afd4-7d26f12762e4@paulmck-laptop>
-Reply-To: paulmck@kernel.org
-References: <20230731143954.GB37820@hirez.programming.kicks-ass.net>
- <f5a18aa3-9db7-6ad2-33d5-3335a18e4e2f@roeck-us.net>
- <20230731145232.GM29590@hirez.programming.kicks-ass.net>
- <7ff2a2393d78275b14ff867f3af902b5d4b93ea2.camel@suse.de>
- <20230731161452.GA40850@hirez.programming.kicks-ass.net>
- <baa58a8e-54f0-2309-b34e-d62999a452a1@roeck-us.net>
- <20230731211517.GA51835@hirez.programming.kicks-ass.net>
- <a05743a3-4dec-6af7-302f-d1d2a0db7d3e@roeck-us.net>
- <8215f037-63e9-4e92-8403-c5431ada9cc9@paulmck-laptop>
- <4f18d78411a5477690640a168e0e5d9f28d1c015.camel@suse.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DE833E5
+	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 15:06:23 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ENksNgi40YwRv7AL80ZuV45sIV1/q2vakWN30dZrxHhPqPoftAHUwvH0vDV1n60dybsdsLgGfXUp9jbYdnWhJaevTCn5ssoCdvIJKHR9n10qvuX/Yz4/5ncT56V7pTJYQ00dieHil32OfHKsuN2P1Dr0Q5KQ/TYDQYS1Y0SYEhTGnJaQNjOvl3EKQpnj/8ZwqkRQ7hL8urW1YYeRCCj/ISI9v3+0xMrJMZedSucAi9Lmv8d5vFyoCAfiqYW/VQxpq2Z0AYE8R853/VlBcSB4N8SRzWwBU67VHStdCw768wrxPMTWal01uOTXbVlKgVPzlJFTFo2V4J7ZHHcxwMYVYw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=RMvllFJ3CJglRFldJ3zQrbvlON8fOxR76CmPCbdYFNg=;
+ b=SMfVk4ulK6Yu2SBI8/AcSBIlLPc0wQgtJhujHaweR40DydkrcMBKwLt+uBpl/eim7jjifLcof+Zxf/wzSWVLpMgPuKJolKSpVq8PQcQ36AHe8td/6xbPejiDbuxGmQsCT3GoqDYT0LwN6FW4xxnF5bA6TN9E+IJudwPs7tDWScjL5ROVNUcE9kjNkqR0Fz1DCAhtS0HPYXpr1BltuF8PMQ9DWAPCLyUqN8sGglczAeaBl1zN2tEukHUdhHnPbksqbLmDhFrjTku7h1BRvAWgDt3nDWIqnr2MuIjuL9HAlkTBTrEt8L2F/AQ5XXFfMUGcslcdF5xLGsIVVK6pi6nFkQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
+ dkim=pass header.d=renesas.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=RMvllFJ3CJglRFldJ3zQrbvlON8fOxR76CmPCbdYFNg=;
+ b=dtbWlcMzg4/7B0HYor/7QBnSOm4FYtA/ahSu8zvbdYCnNPoWx0xCZlr+MZFVWq0P4soH9KHviqIjqPr2gIQwN14BePf8nzuFZpC71aomfvIQ9jH/BlCB+tsYYafEpeycVBM7kQ3NiEa8155HGAdj14pDqtLdGSL26LslbM6l3Bg=
+Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com (2603:1096:404:dd::14)
+ by TYWPR01MB11909.jpnprd01.prod.outlook.com (2603:1096:400:3fc::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6652.20; Wed, 2 Aug
+ 2023 15:06:18 +0000
+Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com
+ ([fe80::5cff:5d90:9b08:6a7d]) by TY2PR01MB3788.jpnprd01.prod.outlook.com
+ ([fe80::5cff:5d90:9b08:6a7d%4]) with mapi id 15.20.6631.045; Wed, 2 Aug 2023
+ 15:06:18 +0000
+From: Chris Paterson <Chris.Paterson2@renesas.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "stable@vger.kernel.org"
+	<stable@vger.kernel.org>
+CC: "patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>,
+	"akpm@linux-foundation.org" <akpm@linux-foundation.org>, "linux@roeck-us.net"
+	<linux@roeck-us.net>, "shuah@kernel.org" <shuah@kernel.org>,
+	"patches@kernelci.org" <patches@kernelci.org>, "lkft-triage@lists.linaro.org"
+	<lkft-triage@lists.linaro.org>, "pavel@denx.de" <pavel@denx.de>,
+	"jonathanh@nvidia.com" <jonathanh@nvidia.com>, "f.fainelli@gmail.com"
+	<f.fainelli@gmail.com>, "sudipm.mukherjee@gmail.com"
+	<sudipm.mukherjee@gmail.com>, "srw@sladewatkins.net" <srw@sladewatkins.net>,
+	"rwarsow@gmx.de" <rwarsow@gmx.de>, "conor@kernel.org" <conor@kernel.org>
+Subject: RE: [PATCH 6.1 000/225] 6.1.43-rc2 review
+Thread-Topic: [PATCH 6.1 000/225] 6.1.43-rc2 review
+Thread-Index: AQHZxRUt6f5nblshPEyhYw85CjqIS6/XGfJA
+Date: Wed, 2 Aug 2023 15:06:18 +0000
+Message-ID:
+ <TY2PR01MB378850FE6D032ACEB09F44CCB70BA@TY2PR01MB3788.jpnprd01.prod.outlook.com>
+References: <20230802065510.869511253@linuxfoundation.org>
+In-Reply-To: <20230802065510.869511253@linuxfoundation.org>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=renesas.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TY2PR01MB3788:EE_|TYWPR01MB11909:EE_
+x-ms-office365-filtering-correlation-id: 7f3043a8-21e1-4302-1e7f-08db936a0621
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ KgEqZkEcpGJ0c9v8sDmr4oYURiU3yxxYzD+3HRiExoBKTeaEDMI9MV6ORPzx4fZW3bHlhhSO82z04D/SvqgcCYsDol2JWrmet6cTl6GXH1JlwW3R1FGZxdptcIerS5yq1BhSJ9n2NFhRI3rgKVdg4m6j6RF6q3Rhasx1bVkReobGisvn1VYod8nGqDFcVbiJnLYp4gYi5HNbz+Jh8/DqyCsdmQe3iDQx0u/7JqQDDBG5ZDk7cn+Vh/kS7DWmJiP7UTAELVlQXLmdetJ1iaGSVmSrjQbUdlA4w3ByWhzVI1RU76rJ2ivtrEOrRyeljujDih/xuSZ5eJsMsNWWgNZB1Ia1mFDK3zYRrHzuSdLD/XywLK1oU1Y13ot4fjmJy3Ms2V4BmQ3Le/rxXNv//hvdhfjyI6gnJWeoweSIrqUavyXk92vnAgKuWp/bDmuqmL/WybuyaFrrTWIBIplSDOzaGo29ZNoSnQZiegs0LMLG9fn+D81UqrGYnwwyiE5Og296xKZ+rGjP0Ahqbbi/ofnPrLWg78Klju/RoGvl1vpoHnPA7W22cYgpxQ4WwBm9pk/fENQnyWMVj/o4Hh24JBw/Ix1M0QkJqzex6dx/xivmeJEP07Mr9x2Jk12ccs7daCzrMwisTPoTGPT9WytEzFbWOQ==
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY2PR01MB3788.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(396003)(346002)(376002)(39860400002)(136003)(366004)(451199021)(33656002)(86362001)(38070700005)(38100700002)(122000001)(4326008)(316002)(76116006)(66946007)(66556008)(66476007)(66446008)(64756008)(8936002)(8676002)(7416002)(41300700001)(5660300002)(52536014)(478600001)(110136005)(54906003)(4744005)(2906002)(6506007)(966005)(7696005)(9686003)(71200400001)(186003)(55016003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-2?Q?lzq7oT8Bq8NDOe/UU4aLdXwQlFhLF2QJ42WKZck2UvMPb6fcB9sw5n5ujy?=
+ =?iso-8859-2?Q?Y5pNHUuEBYkRZqhoLmE7yz8ql/xLk7tBAXdz97R2pwttFRjX3ZrXX6SMqM?=
+ =?iso-8859-2?Q?DgNoSHOCQHiXefBXBYPXW/iJDVThzIPaFOzsHFVGfUFFTU4uYvNxeLB2bg?=
+ =?iso-8859-2?Q?3BlHyvzEJojcaBLPz21eyTGcIEWUj0kHjJ6dTlcn+x0vXs9XvwC8V5CXc7?=
+ =?iso-8859-2?Q?3oWbBE2chZoI6sibiwh9/KR6z75QH8Il0+5dpYHFXEczd6840PiVQqif1j?=
+ =?iso-8859-2?Q?0Hpj8+AsM+iPxg/tNLGv7V884NYFJP2gRh+FYNoOfElXE+fj7YlBs1GCm8?=
+ =?iso-8859-2?Q?S/XMcKckkDLnAxiUGDorQN4i7Iv/veh0CxICDPZlwRASs/pQMVkwif3Uxf?=
+ =?iso-8859-2?Q?Zxmttotzl09E/19trP/mhQYAqPiLZEa7/O0w9cErMHu2pmi6pPvRw9mpDq?=
+ =?iso-8859-2?Q?1f0WyKqXNTAHVeeSSweujKiD7YheSgPuAxRPYrBVTA68TVmqpUFZbzJh7F?=
+ =?iso-8859-2?Q?dA3otVLqz20Ly3rWvemZr5IF2mw8OVhRxeU+1YKAyM76Vw4yZ4ga3VVf5q?=
+ =?iso-8859-2?Q?pgT6Cd+U6fAipk/JQvda4THALEQ7JX311IOZIEQ10aSd3TKjEI+yS6Gf6X?=
+ =?iso-8859-2?Q?wRflKvCB5pgEAudLxRhM3Cy8HD8DnbthbdWb+57xCvDlBlshnKNM+DOW8X?=
+ =?iso-8859-2?Q?vEQYE2pjCERj82h9vPZIHSebOzgTKYPhDyP2RkcruFe6++sy+qxZCXJ4Cb?=
+ =?iso-8859-2?Q?0/+22pqGOloSfyl9AC9WlKmgoZyH562kBmg/aSJP0nYdcc1Gp47K+7OctK?=
+ =?iso-8859-2?Q?u7cgm6cSA+HEjuTpUwLG0vozuG+LXU9ProCP7g2z8jaRT4NKfslwoKArrG?=
+ =?iso-8859-2?Q?CsGD0ArxdV1r6/VyUzzWJU7qXN85cWGmAOU0dPX7xmxVv3u4GKe0PWfj1E?=
+ =?iso-8859-2?Q?YJ3XjtNxGVI23O6jnFWA2f4niqa8ZVsNm4YIol8YgvzIzAwt7KLako4cHB?=
+ =?iso-8859-2?Q?reXmEhIUl2BnA6JrQlQ0WR7krIQlPdE4RV0jec8yy2X+62UaZKX3/f5FwV?=
+ =?iso-8859-2?Q?5jILy8fq1uOT7NPijnEXeayCaMpjzC7hWfyOoneMiTqqAWiuYnaMA2H6Hu?=
+ =?iso-8859-2?Q?DQSC7YPABwgHNCCsZwt9y5j+PuurUnGo71tyQzFWGVqcQqor6076c+V9bg?=
+ =?iso-8859-2?Q?+vzCYpxe0/d+WLhqs59x1lg2XHLSDfuq/mKjledqyBQvP/pFqf6X7ViZ/0?=
+ =?iso-8859-2?Q?RIBWqqp2BeZ8znKSKTGK6/jAYarjM2mY41d4WG18go/ty7sdlvWsnGvHo6?=
+ =?iso-8859-2?Q?ioqhpWPPqjKdMEkEfZWX9uYWNQlcBfw9kbrH5nTOjM44Vg7qXk3lwdYDVT?=
+ =?iso-8859-2?Q?nrLaTl73lDAV+dTZc0jGYFv12Jf9OuyIh30rWsRKS7bh8ea5x15N+BqoE1?=
+ =?iso-8859-2?Q?tNgnwqQ/zb3dlCgHatX04r7YLR/MgNoF1vwnqVH0WVzKma3MlHN4fIcz+N?=
+ =?iso-8859-2?Q?NCOba2cEioKfgCds0sMW1rb/7m2ogGEm8N6EF6OuXbkDYo0w+RE04TDwIa?=
+ =?iso-8859-2?Q?GUpH0nvXdRkRj6KRLpNLodG79abrPLH3OZK1kubN7bUXeMQ4gUcmDElULW?=
+ =?iso-8859-2?Q?6T8Cbzy/etypY=3D?=
+Content-Type: text/plain; charset="iso-8859-2"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4f18d78411a5477690640a168e0e5d9f28d1c015.camel@suse.de>
+X-OriginatorOrg: renesas.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TY2PR01MB3788.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7f3043a8-21e1-4302-1e7f-08db936a0621
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Aug 2023 15:06:18.1619
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: /jqgkgoX0T9A0nDo5DNYdXqfacxKZ95mrpO7bGfEFExdxjzynmM5sqI10vS0StZhxXdb4wFX1k9grsOsuPGdISkmFPcyECI7awg5pbJ9fpA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYWPR01MB11909
 
-On Wed, Aug 02, 2023 at 02:57:56PM +0100, Roy Hopkins wrote:
-> On Tue, 2023-08-01 at 12:11 -0700, Paul E. McKenney wrote:
-> > On Tue, Aug 01, 2023 at 10:32:45AM -0700, Guenter Roeck wrote:
-> > 
-> > 
-> > Please see below for my preferred fix.  Does this work for you guys?
-> > 
-> > Back to figuring out why recent kernels occasionally to blow up all
-> > rcutorture guest OSes...
-> > 
-> >                                                         Thanx, Paul
-> > 
-> > ------------------------------------------------------------------------
-> > 
-> > diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-> > index 7294be62727b..2d5b8385c357 100644
-> > --- a/kernel/rcu/tasks.h
-> > +++ b/kernel/rcu/tasks.h
-> > @@ -570,10 +570,12 @@ static void rcu_tasks_one_gp(struct rcu_tasks *rtp, bool midboot)
-> >         if (unlikely(midboot)) {
-> >                 needgpcb = 0x2;
-> >         } else {
-> > +               mutex_unlock(&rtp->tasks_gp_mutex);
-> >                 set_tasks_gp_state(rtp, RTGS_WAIT_CBS);
-> >                 rcuwait_wait_event(&rtp->cbs_wait,
-> >                                    (needgpcb = rcu_tasks_need_gpcb(rtp)),
-> >                                    TASK_IDLE);
-> > +               mutex_lock(&rtp->tasks_gp_mutex);
-> >         }
-> >  
-> >         if (needgpcb & 0x2) {
-> 
-> Your preferred fix looks good to me.
-> 
-> With the original code I can quite easily reproduce the problem on my 
-> system every 10 reboots or so. With your fix in place the problem no
-> longer occurs.
+Hello Greg,
 
-Very good, thank you!  May I add your Tested-by?
+> From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Sent: Wednesday, August 2, 2023 8:42 AM
+>=20
+> This is the start of the stable review cycle for the 6.1.43 release.
+> There are 225 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
+> Responses should be made by Fri, 04 Aug 2023 06:54:28 +0000.
+> Anything received after that time might be too late.
 
-							Thanx, Paul
+Thank you for the release!
+
+CIP configurations built and booted okay with Linux 6.1.43-rc2 (bdcf4e82a08=
+8):
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/9=
+52990993/
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/commits/lin=
+ux-6.1.y
+
+Tested-by: Chris Paterson (CIP) <chris.paterson2@renesas.com>
+
+Kind regards, Chris
