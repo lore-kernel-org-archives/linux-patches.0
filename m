@@ -1,142 +1,114 @@
-Received: from JPN01-OS0-obe.outbound.protection.outlook.com (mail-os0jpn01on2136.outbound.protection.outlook.com [40.107.113.136])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9628BE3
-	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 15:09:41 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=KAVTMMxgOZ6clYH5RlvZLmAFjn5DDNRAbuAHVFTCrKT+UkqDy7H+mTJ6tgl0YbQPd6PaL/Qs4/+cPqbPlENUVnGfU/ck4WfXg7c4BpL4CSziqYMINyn4esofRIiOD0ybmavLmn6GyJwZTee8mLIsrBKcI5hCGanpVwu0G8faS/NzM0ag413yRbIt79qGK8CYPN+uqyboGBh5f8Dvv99Ctxg+YpjEPfAExlplETvPFwbDW6OqCas3WuR+iBz0QPVS9s9u5akp7WHoPkvtSeaqEqta1NZIzSQV3+kvdxTCukbIYEpGo56hhR61t0D4zNIXkNE2gb+0k+ygToRDgZbjKA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7OPj+yyx+gI1r73H7Aq57jnAbnExMFKTMGp2ux8kBA4=;
- b=B2+XyfrVaQObwFga8wld8FX9k2qOj3reA6KD0dVP7e010EGUpk0xGqwcqxA/bIJz/CzLQVB70q7XSmH7kJQWDlnMpMRVcE0NlYzhy2hCytRwVi6s+xSBhvYTGg2VhJ15nBDnaMcxUfHu5aeYnS1YfyrcUcH4jWYG52709IRMNeSnCGPkS4SE6J5iq0tYDwTb8WLJegizAE29ShTfagt/Fe3wTd7xzR54GsQENRK/q5nOIJXlVlX2BszBe56+bb6GsxBqqKrVkbq9Ak2ovGP1fgFB2VrSWYRtXmftEzqXBF3KewwKx84n9lfqbq6CB7A661BweattemsalzDRQFHHhw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
- dkim=pass header.d=renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7OPj+yyx+gI1r73H7Aq57jnAbnExMFKTMGp2ux8kBA4=;
- b=FqVV3rnei+S4cwIni/aqBwcoQnrh0K1jzjWHxAkU6BsDSL0QabmSlh3dGse4DJv3IdkSgCDTxvQRfdYUqYJIod91PzU5jREktlm11x/Xec80ghvCwTyJ6e3b+acNhNQY25AonfU5txFcOETLUl6zXBF0JYJcdMpmfKwwDztWxjQ=
-Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com (2603:1096:404:dd::14)
- by TYWPR01MB11909.jpnprd01.prod.outlook.com (2603:1096:400:3fc::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6652.20; Wed, 2 Aug
- 2023 15:09:38 +0000
-Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com
- ([fe80::5cff:5d90:9b08:6a7d]) by TY2PR01MB3788.jpnprd01.prod.outlook.com
- ([fe80::5cff:5d90:9b08:6a7d%4]) with mapi id 15.20.6631.045; Wed, 2 Aug 2023
- 15:09:38 +0000
-From: Chris Paterson <Chris.Paterson2@renesas.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "stable@vger.kernel.org"
-	<stable@vger.kernel.org>
-CC: "patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>,
-	"akpm@linux-foundation.org" <akpm@linux-foundation.org>, "linux@roeck-us.net"
-	<linux@roeck-us.net>, "shuah@kernel.org" <shuah@kernel.org>,
-	"patches@kernelci.org" <patches@kernelci.org>, "lkft-triage@lists.linaro.org"
-	<lkft-triage@lists.linaro.org>, "pavel@denx.de" <pavel@denx.de>,
-	"jonathanh@nvidia.com" <jonathanh@nvidia.com>, "f.fainelli@gmail.com"
-	<f.fainelli@gmail.com>, "sudipm.mukherjee@gmail.com"
-	<sudipm.mukherjee@gmail.com>, "srw@sladewatkins.net" <srw@sladewatkins.net>,
-	"rwarsow@gmx.de" <rwarsow@gmx.de>, "conor@kernel.org" <conor@kernel.org>
-Subject: RE: [PATCH 5.15 000/153] 5.15.124-rc2 review
-Thread-Topic: [PATCH 5.15 000/153] 5.15.124-rc2 review
-Thread-Index: AQHZxRUskexH9V4r70WENx3lSQmuRa/XGjRA
-Date: Wed, 2 Aug 2023 15:09:38 +0000
-Message-ID:
- <TY2PR01MB3788870B013549AAE2E0146CB70BA@TY2PR01MB3788.jpnprd01.prod.outlook.com>
-References: <20230802065452.161574662@linuxfoundation.org>
-In-Reply-To: <20230802065452.161574662@linuxfoundation.org>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=renesas.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TY2PR01MB3788:EE_|TYWPR01MB11909:EE_
-x-ms-office365-filtering-correlation-id: 120e7f67-5419-4d06-948a-08db936a7da3
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- 8/yOv1dPG+ZKl1it0QcjI15MPbfHD2ZDHpr+Gn69eei88vrsLOEH76E8oYefxh7tBoGD9wi9s8gvKH2WLtvjbb9/5Sav/EyK568d+P+aan5ZcMPrisl9BN/by4s9ZiEahezETisFyQ92C7YF5a/Z0cbvjt55AJ08xx00w673LPKgYDQu0QNWSz2oElY+oM7167ynFVzJ/tBJuLJ5Hh6Skd6+fj74KkIRnv68nHBmwjJ+suZ741AxlC1SCWm3Ek2ksEKz+UlRR9c201vzcH5TKoWJ0WYCHS5lWt5axYIKWUEyE4KQLJUglWvPHemlJZqkMLRXrNK0Jjl++MDR10KwV0BLMDFMzMvZkj71Lllb/55f9/+8dpYDKBF5wLiVYIUg0jbmpILBx8dyJJhOtjyJj06lryQoLfnC3gnYR5gpDkVDmVBBmee8ET1AzqeLFkBJgESyTnrnKriDxxGVDpflZkuGq+M73rbWbtd7eck0+HjhTbXmxjX5a+aBFB22fTnx5oKyIGQQt94YPNNj6ZQRLcVVmHUeSq9fyhuT8mBMt4QbgSkpTO+XKlABQ10eoC9p/q2mkcMqX9O6Qrj1dU92x5zKhkyRse7sW2LUvNLFIIlIvZtKWy4pY5P39yAWXyp9mDw7ndang0G/jr91ez5rqA==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY2PR01MB3788.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(396003)(346002)(376002)(39860400002)(136003)(366004)(451199021)(33656002)(86362001)(38070700005)(38100700002)(122000001)(4326008)(316002)(76116006)(66946007)(66556008)(66476007)(66446008)(64756008)(8936002)(8676002)(7416002)(41300700001)(5660300002)(52536014)(478600001)(110136005)(54906003)(4744005)(2906002)(6506007)(966005)(7696005)(9686003)(71200400001)(186003)(55016003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-2?Q?pFQapVznskK3vMPn0SrGDs0ZtgVR/ZLTU2KbMBG9u6lIaPigE7hmRLyqK/?=
- =?iso-8859-2?Q?zRUPXnGlyfjzkIM2O3Qft+ApJSmo+P/D7He4kOV+/LwIDnGGvj+0IL/UNX?=
- =?iso-8859-2?Q?Gj+yno4iCZfWFayL8BzznPszqvBPJRFXu5V+rGoJMzm/D9TQMWd495HJTB?=
- =?iso-8859-2?Q?6VD435NWeoN8r7B6ywNvPTVq6WgeBKIf/lEK06L6v8Kq72TnYIsnVZSpUE?=
- =?iso-8859-2?Q?dcyG+MF1XlVpsPzfK3jGMy/zfIe38UrATE0gAhY4AWM6KDFNrxp6lqo+tU?=
- =?iso-8859-2?Q?iJnr9Jz5qURzqLJ9JyUGuesfJ7PuLW7Zk7hX1ZBFvcVe9J8qiLO3Ej+U0F?=
- =?iso-8859-2?Q?WXfjZ/zc+mEJYF3yE0Poo9pee/qddX7KssjudBS+JgJaAKkq0pQHWlLFRI?=
- =?iso-8859-2?Q?nfc6SP+NcllJDKShLu5VPnoFEl7Uqtoe0ugMPqExCKZEFTPPw96D5osDMJ?=
- =?iso-8859-2?Q?T9jNGFr7buXFSRzQyj/38R6CtHgxGmd/B4xsfGDXni6OHSnrEmPoSQ4L5g?=
- =?iso-8859-2?Q?I60zdBqVBNKFIla57zJc2V7jGnMeepoCapH37gSFI3YEr4hqFbCZPk4e/C?=
- =?iso-8859-2?Q?Wa5e8KJgulV7GdDBF7mN+ySD4UPuQO1cVH5fl5PGbYe+YdEnizAjKTz7sV?=
- =?iso-8859-2?Q?664TBFDs25B83+qQCsLx2mUffsnfNSFuu/EA5q7OutBTfS4dY13GXYgarX?=
- =?iso-8859-2?Q?ERJYXc0eYXenZa+hKwm6+cbolUPsG/hIWvR2HKTwMeQU9HmBDo047IFQ+p?=
- =?iso-8859-2?Q?9KNY2ek12qxKx8c03QxQ3sm90bPs6fDsl+6Bs3s7xn5FTFBcG6+dwUzThh?=
- =?iso-8859-2?Q?DEL6mRmbAYGHvk65F+9H+6XRrTmrMVTk5rwcVtrj8QLchVdIj5qJ5uTVN2?=
- =?iso-8859-2?Q?GFZubovLZkjN2c2J907X5JnRIi0llfcTFyayzY0MlsosIQBPOqWw7jndAQ?=
- =?iso-8859-2?Q?mhYJOqkjl6wXIg10NTn3ogthpzQ4URri4cmX+ESgBI350H0XcxfjG4DvTT?=
- =?iso-8859-2?Q?wniHYc+FAnqI/LOI+Ljf7eF26kma5kpOrFj+EfjqKfh635fb0jCkz7wlWF?=
- =?iso-8859-2?Q?IAeJ0IIintS2XlOcUtEppQcwx5ZnWXmF5MuvjKMONtKt6WLugwCOADtQ9F?=
- =?iso-8859-2?Q?XGhn7MDaBtdZbjJ9x60ysQwPEWPk0/jU9PVweic0qQnaZOk6yp3Oa8GO+7?=
- =?iso-8859-2?Q?DLivWHSJ8uDQ4GEtNBoCuw7MKAV1jFzYZ1YbYcmnckQ3wREsByqbSFGLmh?=
- =?iso-8859-2?Q?hawLg08HlceNDUP1vmt3qtU5CcQbGwsyM6fVPS45WX9H6bDIDvVbvgM5Ho?=
- =?iso-8859-2?Q?8NJ2jfdho6n3F+iIhlYh+CdGNi7XggxCo9lFjr5YrBFksRNvzqIBsnCJvC?=
- =?iso-8859-2?Q?cUSHHAH3Mu/hlhFoe3/9aSPSBy8F662ER3gAfRWfo1YI0I2CGmAPqk+bgt?=
- =?iso-8859-2?Q?5AB1+0LxKj02P7cwlmw4Kmuf2bBnCPXiRUOqcxid7W9NbuUNOE+RcxHKBV?=
- =?iso-8859-2?Q?sNYoIvuqS2RWm9g2a+v9cwILlxLP7k5WBgbe2NlG7BU+cgxfMo9mTI4jxx?=
- =?iso-8859-2?Q?2Cy8v9ltUXpGl+DwJufzAhiUOgbmKbuF6mEp1t6zFQyA9b6ql7CfkHVLvH?=
- =?iso-8859-2?Q?ctkCIooYec8DI=3D?=
-Content-Type: text/plain; charset="iso-8859-2"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E16C8C13
+	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 15:31:16 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 8995121A0F;
+	Wed,  2 Aug 2023 15:31:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1690990274; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PJ1ozCIxCoCOh6j1//RRkt4MpdElTDbfhOayXF9q86o=;
+	b=E66j+uoP3FBwS1b6Pwwk3exJFzee3+7rqhTIC6a+Q5Oxa2TFuqTLwqgX1lsp43kLZl9XUE
+	GYLlykVWbXyDzvDvFXmIVJLrbjy5HXMhznIcer5aJvpvR4SCIBLN0zN0RHj6vF7e2W2BQw
+	kWeweb3pRkSXYL1/tjJ3gmqJDw3NzzY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1690990274;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PJ1ozCIxCoCOh6j1//RRkt4MpdElTDbfhOayXF9q86o=;
+	b=jgU0HALcsE/eSXNKzIi1/gOVT0UEyXkzupdQRK3VWTGV4iTHP8um7lFXgCIrc7dvZTzNpd
+	0tB1PZsCxjYF28Dg==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 8173313919;
+	Wed,  2 Aug 2023 15:31:13 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id +9Y9HcF2ymRmLwAAMHmgww
+	(envelope-from <rhopkins@suse.de>); Wed, 02 Aug 2023 15:31:13 +0000
+Message-ID: <10f9d5152389e3e76f200f737f11ec721a8e148f.camel@suse.de>
+Subject: Re: scheduler problems in -next (was: Re: [PATCH 6.4 000/227]
+ 6.4.7-rc1 review)
+From: Roy Hopkins <rhopkins@suse.de>
+To: paulmck@kernel.org
+Cc: Guenter Roeck <linux@roeck-us.net>, Peter Zijlstra
+ <peterz@infradead.org>,  Joel Fernandes <joel@joelfernandes.org>, Pavel
+ Machek <pavel@denx.de>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ stable@vger.kernel.org, patches@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+ akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org, 
+ lkft-triage@lists.linaro.org, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org,  rcu@vger.kernel.org, Ingo Molnar <mingo@kernel.org>
+Date: Wed, 02 Aug 2023 16:31:12 +0100
+In-Reply-To: <063a2eba-6b5e-40bc-afd4-7d26f12762e4@paulmck-laptop>
+References: <20230731143954.GB37820@hirez.programming.kicks-ass.net>
+	 <f5a18aa3-9db7-6ad2-33d5-3335a18e4e2f@roeck-us.net>
+	 <20230731145232.GM29590@hirez.programming.kicks-ass.net>
+	 <7ff2a2393d78275b14ff867f3af902b5d4b93ea2.camel@suse.de>
+	 <20230731161452.GA40850@hirez.programming.kicks-ass.net>
+	 <baa58a8e-54f0-2309-b34e-d62999a452a1@roeck-us.net>
+	 <20230731211517.GA51835@hirez.programming.kicks-ass.net>
+	 <a05743a3-4dec-6af7-302f-d1d2a0db7d3e@roeck-us.net>
+	 <8215f037-63e9-4e92-8403-c5431ada9cc9@paulmck-laptop>
+	 <4f18d78411a5477690640a168e0e5d9f28d1c015.camel@suse.de>
+	 <063a2eba-6b5e-40bc-afd4-7d26f12762e4@paulmck-laptop>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.46.4 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: renesas.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TY2PR01MB3788.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 120e7f67-5419-4d06-948a-08db936a7da3
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Aug 2023 15:09:38.6307
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: GoYqSWpwMBrMOG5X3r4UMHogoDX4Oer4kvhdSLy+eGkP06TSI0iBbu7sPMJm5AX5uTfCO+JDj3/fflwEOK3hEOU7cuYwcK4avkLMzinamZQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYWPR01MB11909
 
-Hello Greg,
+T24gV2VkLCAyMDIzLTA4LTAyIGF0IDA4OjA1IC0wNzAwLCBQYXVsIEUuIE1jS2VubmV5IHdyb3Rl
+Ogo+IE9uIFdlZCwgQXVnIDAyLCAyMDIzIGF0IDAyOjU3OjU2UE0gKzAxMDAsIFJveSBIb3BraW5z
+IHdyb3RlOgo+ID4gT24gVHVlLCAyMDIzLTA4LTAxIGF0IDEyOjExIC0wNzAwLCBQYXVsIEUuIE1j
+S2VubmV5IHdyb3RlOgo+ID4gPiBPbiBUdWUsIEF1ZyAwMSwgMjAyMyBhdCAxMDozMjo0NUFNIC0w
+NzAwLCBHdWVudGVyIFJvZWNrIHdyb3RlOgo+ID4gPiAKPiA+ID4gCj4gPiA+IFBsZWFzZSBzZWUg
+YmVsb3cgZm9yIG15IHByZWZlcnJlZCBmaXguwqAgRG9lcyB0aGlzIHdvcmsgZm9yIHlvdSBndXlz
+Pwo+ID4gPiAKPiA+ID4gQmFjayB0byBmaWd1cmluZyBvdXQgd2h5IHJlY2VudCBrZXJuZWxzIG9j
+Y2FzaW9uYWxseSB0byBibG93IHVwIGFsbAo+ID4gPiByY3V0b3J0dXJlIGd1ZXN0IE9TZXMuLi4K
+PiA+ID4gCj4gPiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqBUaGFueCwgUGF1bAo+ID4gPiAKPiA+ID4gLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCj4gPiA+
+IAo+ID4gPiBkaWZmIC0tZ2l0IGEva2VybmVsL3JjdS90YXNrcy5oIGIva2VybmVsL3JjdS90YXNr
+cy5oCj4gPiA+IGluZGV4IDcyOTRiZTYyNzI3Yi4uMmQ1YjgzODVjMzU3IDEwMDY0NAo+ID4gPiAt
+LS0gYS9rZXJuZWwvcmN1L3Rhc2tzLmgKPiA+ID4gKysrIGIva2VybmVsL3JjdS90YXNrcy5oCj4g
+PiA+IEBAIC01NzAsMTAgKzU3MCwxMiBAQCBzdGF0aWMgdm9pZCByY3VfdGFza3Nfb25lX2dwKHN0
+cnVjdCByY3VfdGFza3MgKnJ0cCwKPiA+ID4gYm9vbCBtaWRib290KQo+ID4gPiDCoMKgwqDCoMKg
+wqDCoMKgaWYgKHVubGlrZWx5KG1pZGJvb3QpKSB7Cj4gPiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgbmVlZGdwY2IgPSAweDI7Cj4gPiA+IMKgwqDCoMKgwqDCoMKgwqB9IGVsc2Ug
+ewo+ID4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgbXV0ZXhfdW5sb2NrKCZydHAt
+PnRhc2tzX2dwX211dGV4KTsKPiA+ID4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBz
+ZXRfdGFza3NfZ3Bfc3RhdGUocnRwLCBSVEdTX1dBSVRfQ0JTKTsKPiA+ID4gwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqByY3V3YWl0X3dhaXRfZXZlbnQoJnJ0cC0+Y2JzX3dhaXQsCj4g
+PiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIChuZWVkZ3BjYiA9IHJjdV90YXNrc19uZWVkX2dwY2IocnRwKSksCj4g
+PiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIFRBU0tfSURMRSk7Cj4gPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqBtdXRleF9sb2NrKCZydHAtPnRhc2tzX2dwX211dGV4KTsKPiA+ID4gwqDCoMKgwqDC
+oMKgwqDCoH0KPiA+ID4gwqAKPiA+ID4gwqDCoMKgwqDCoMKgwqDCoGlmIChuZWVkZ3BjYiAmIDB4
+Mikgewo+ID4gCj4gPiBZb3VyIHByZWZlcnJlZCBmaXggbG9va3MgZ29vZCB0byBtZS4KPiA+IAo+
+ID4gV2l0aCB0aGUgb3JpZ2luYWwgY29kZSBJIGNhbiBxdWl0ZSBlYXNpbHkgcmVwcm9kdWNlIHRo
+ZSBwcm9ibGVtIG9uIG15wqAKPiA+IHN5c3RlbSBldmVyeSAxMCByZWJvb3RzIG9yIHNvLiBXaXRo
+IHlvdXIgZml4IGluIHBsYWNlIHRoZSBwcm9ibGVtIG5vCj4gPiBsb25nZXIgb2NjdXJzLgo+IAo+
+IFZlcnkgZ29vZCwgdGhhbmsgeW91IcKgIE1heSBJIGFkZCB5b3VyIFRlc3RlZC1ieT8KPiAKPiDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgVGhh
+bngsIFBhdWwKWWVzLCBwbGVhc2UgZG8uCg==
 
-> From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Sent: Wednesday, August 2, 2023 8:42 AM
->=20
-> This is the start of the stable review cycle for the 5.15.124 release.
-> There are 153 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
-> Responses should be made by Fri, 04 Aug 2023 06:54:22 +0000.
-> Anything received after that time might be too late.
-
-Thank you for the release!
-
-CIP configurations built and booted okay with Linux 5.15.124-rc2 (b261bd72e=
-eda):
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/9=
-52990959
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/commits/lin=
-ux-5.15.y
-
-Tested-by: Chris Paterson (CIP) <chris.paterson2@renesas.com>
-
-Kind regards, Chris
