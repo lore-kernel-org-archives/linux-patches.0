@@ -1,114 +1,162 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E16C8C13
-	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 15:31:16 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 8995121A0F;
-	Wed,  2 Aug 2023 15:31:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1690990274; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=PJ1ozCIxCoCOh6j1//RRkt4MpdElTDbfhOayXF9q86o=;
-	b=E66j+uoP3FBwS1b6Pwwk3exJFzee3+7rqhTIC6a+Q5Oxa2TFuqTLwqgX1lsp43kLZl9XUE
-	GYLlykVWbXyDzvDvFXmIVJLrbjy5HXMhznIcer5aJvpvR4SCIBLN0zN0RHj6vF7e2W2BQw
-	kWeweb3pRkSXYL1/tjJ3gmqJDw3NzzY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1690990274;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=PJ1ozCIxCoCOh6j1//RRkt4MpdElTDbfhOayXF9q86o=;
-	b=jgU0HALcsE/eSXNKzIi1/gOVT0UEyXkzupdQRK3VWTGV4iTHP8um7lFXgCIrc7dvZTzNpd
-	0tB1PZsCxjYF28Dg==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 8173313919;
-	Wed,  2 Aug 2023 15:31:13 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id +9Y9HcF2ymRmLwAAMHmgww
-	(envelope-from <rhopkins@suse.de>); Wed, 02 Aug 2023 15:31:13 +0000
-Message-ID: <10f9d5152389e3e76f200f737f11ec721a8e148f.camel@suse.de>
-Subject: Re: scheduler problems in -next (was: Re: [PATCH 6.4 000/227]
- 6.4.7-rc1 review)
-From: Roy Hopkins <rhopkins@suse.de>
-To: paulmck@kernel.org
-Cc: Guenter Roeck <linux@roeck-us.net>, Peter Zijlstra
- <peterz@infradead.org>,  Joel Fernandes <joel@joelfernandes.org>, Pavel
- Machek <pavel@denx.de>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- stable@vger.kernel.org, patches@lists.linux.dev, 
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
- akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org, 
- lkft-triage@lists.linaro.org, jonathanh@nvidia.com, f.fainelli@gmail.com, 
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org,  rcu@vger.kernel.org, Ingo Molnar <mingo@kernel.org>
-Date: Wed, 02 Aug 2023 16:31:12 +0100
-In-Reply-To: <063a2eba-6b5e-40bc-afd4-7d26f12762e4@paulmck-laptop>
-References: <20230731143954.GB37820@hirez.programming.kicks-ass.net>
-	 <f5a18aa3-9db7-6ad2-33d5-3335a18e4e2f@roeck-us.net>
-	 <20230731145232.GM29590@hirez.programming.kicks-ass.net>
-	 <7ff2a2393d78275b14ff867f3af902b5d4b93ea2.camel@suse.de>
-	 <20230731161452.GA40850@hirez.programming.kicks-ass.net>
-	 <baa58a8e-54f0-2309-b34e-d62999a452a1@roeck-us.net>
-	 <20230731211517.GA51835@hirez.programming.kicks-ass.net>
-	 <a05743a3-4dec-6af7-302f-d1d2a0db7d3e@roeck-us.net>
-	 <8215f037-63e9-4e92-8403-c5431ada9cc9@paulmck-laptop>
-	 <4f18d78411a5477690640a168e0e5d9f28d1c015.camel@suse.de>
-	 <063a2eba-6b5e-40bc-afd4-7d26f12762e4@paulmck-laptop>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-User-Agent: Evolution 3.46.4 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D6A8C0C
+	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 15:45:09 +0000 (UTC)
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-267ffa55791so3963502a91.1
+        for <patches@lists.linux.dev>; Wed, 02 Aug 2023 08:45:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1690991109; x=1691595909;
+        h=content-transfer-encoding:in-reply-to:subject:from:content-language
+         :references:cc:to:user-agent:mime-version:date:message-id:sender
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EiYaQWCPiFv33eUKHe5JFxulExXwgyEegp8iSsFgI3U=;
+        b=O7o8JQ35k2U6XbsP2NIAfgQvoQAOP73QN4mQ/OxXKxIgm7+PejmNKmNIOKCsxTp1ZG
+         +VsJUNf9yBpJtConwMf5bmAF1dzWuoZGFlKrfLjRM5T/W+H0bZ0UU2l9V0vNl/13nJJY
+         OyPltdHr46cQNLF6RX5HHyS2LXAJqs9hzzHc7HTomovfu0kTD874LUW5SDseJUvyH2a6
+         ZNObt6c00bk7gDYIjX94Lvk9XFX9jjTdX9lli6n+Mr5/8FcB5GWA9YzQmpdKD9b+Nz4V
+         yCDzbrQxP2Mog4o0MYakBc8th3g8X2m2yt4UCzl753xVqB3FJcaMlbgVn1bJJWEc7K/z
+         TOqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690991109; x=1691595909;
+        h=content-transfer-encoding:in-reply-to:subject:from:content-language
+         :references:cc:to:user-agent:mime-version:date:message-id:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EiYaQWCPiFv33eUKHe5JFxulExXwgyEegp8iSsFgI3U=;
+        b=IQl2TvS2BECx4rxMuVnY9YUFJZ+AFJznwRM+mEFHTHckssJNoOBtXE+XmKetOdaKXd
+         Yjvp3qYeP9g8bnDDqY9D03CmzkHwQD7X4v/DjEHEmLN1rOVQpQuLg+NP52MfQeolhD01
+         N0hrCopzygbXuwsluJlucxPxcukrPP3dkk3bvWRfuqdcUz9Fw0Lpb413Fyarq4UJhkKs
+         hdG8jXzFgYLGHU5RWqdCIXFmkrVju72b10Wb+dKLuwBFn9QrR+dLM3rYu+9lk+P5km7n
+         UQvjICq409kNt7CoD6voCEP9eIWKTkqb0WYU8Oe/eFbmVqq+xkdQP5jNnSjrHuZHzUyL
+         9oHA==
+X-Gm-Message-State: ABy/qLYb1RaMmyQm2mdLCQUnwT1ZzFD90VvKxsPiWL1mkIjdk18J9dLP
+	fX47zf3NFb9HY9xulo1N/lo=
+X-Google-Smtp-Source: APBJJlGU5Zlj1Fd6LQFGB8eDSOq6XWpB1qOhzSqiCFBj97NEmLc2w23uzqbr/BOwLRBpt5RBZ5HRcA==
+X-Received: by 2002:a17:90a:66c8:b0:268:f38:b2a1 with SMTP id z8-20020a17090a66c800b002680f38b2a1mr13300934pjl.41.1690991108748;
+        Wed, 02 Aug 2023 08:45:08 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id 29-20020a17090a199d00b0025dc5749b4csm1369555pji.21.2023.08.02.08.45.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Aug 2023 08:45:08 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <2568f0ca-af88-4001-79c4-571a9b6a8fb3@roeck-us.net>
+Date: Wed, 2 Aug 2023 08:45:06 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+To: paulmck@kernel.org, Roy Hopkins <rhopkins@suse.de>
+Cc: Peter Zijlstra <peterz@infradead.org>,
+ Joel Fernandes <joel@joelfernandes.org>, Pavel Machek <pavel@denx.de>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, rcu@vger.kernel.org,
+ Ingo Molnar <mingo@kernel.org>
+References: <20230731143954.GB37820@hirez.programming.kicks-ass.net>
+ <f5a18aa3-9db7-6ad2-33d5-3335a18e4e2f@roeck-us.net>
+ <20230731145232.GM29590@hirez.programming.kicks-ass.net>
+ <7ff2a2393d78275b14ff867f3af902b5d4b93ea2.camel@suse.de>
+ <20230731161452.GA40850@hirez.programming.kicks-ass.net>
+ <baa58a8e-54f0-2309-b34e-d62999a452a1@roeck-us.net>
+ <20230731211517.GA51835@hirez.programming.kicks-ass.net>
+ <a05743a3-4dec-6af7-302f-d1d2a0db7d3e@roeck-us.net>
+ <8215f037-63e9-4e92-8403-c5431ada9cc9@paulmck-laptop>
+ <4f18d78411a5477690640a168e0e5d9f28d1c015.camel@suse.de>
+ <063a2eba-6b5e-40bc-afd4-7d26f12762e4@paulmck-laptop>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Subject: Re: scheduler problems in -next (was: Re: [PATCH 6.4 000/227]
+ 6.4.7-rc1 review)
+In-Reply-To: <063a2eba-6b5e-40bc-afd4-7d26f12762e4@paulmck-laptop>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-T24gV2VkLCAyMDIzLTA4LTAyIGF0IDA4OjA1IC0wNzAwLCBQYXVsIEUuIE1jS2VubmV5IHdyb3Rl
-Ogo+IE9uIFdlZCwgQXVnIDAyLCAyMDIzIGF0IDAyOjU3OjU2UE0gKzAxMDAsIFJveSBIb3BraW5z
-IHdyb3RlOgo+ID4gT24gVHVlLCAyMDIzLTA4LTAxIGF0IDEyOjExIC0wNzAwLCBQYXVsIEUuIE1j
-S2VubmV5IHdyb3RlOgo+ID4gPiBPbiBUdWUsIEF1ZyAwMSwgMjAyMyBhdCAxMDozMjo0NUFNIC0w
-NzAwLCBHdWVudGVyIFJvZWNrIHdyb3RlOgo+ID4gPiAKPiA+ID4gCj4gPiA+IFBsZWFzZSBzZWUg
-YmVsb3cgZm9yIG15IHByZWZlcnJlZCBmaXguwqAgRG9lcyB0aGlzIHdvcmsgZm9yIHlvdSBndXlz
-Pwo+ID4gPiAKPiA+ID4gQmFjayB0byBmaWd1cmluZyBvdXQgd2h5IHJlY2VudCBrZXJuZWxzIG9j
-Y2FzaW9uYWxseSB0byBibG93IHVwIGFsbAo+ID4gPiByY3V0b3J0dXJlIGd1ZXN0IE9TZXMuLi4K
-PiA+ID4gCj4gPiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqBUaGFueCwgUGF1bAo+ID4gPiAKPiA+ID4gLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCj4gPiA+
-IAo+ID4gPiBkaWZmIC0tZ2l0IGEva2VybmVsL3JjdS90YXNrcy5oIGIva2VybmVsL3JjdS90YXNr
-cy5oCj4gPiA+IGluZGV4IDcyOTRiZTYyNzI3Yi4uMmQ1YjgzODVjMzU3IDEwMDY0NAo+ID4gPiAt
-LS0gYS9rZXJuZWwvcmN1L3Rhc2tzLmgKPiA+ID4gKysrIGIva2VybmVsL3JjdS90YXNrcy5oCj4g
-PiA+IEBAIC01NzAsMTAgKzU3MCwxMiBAQCBzdGF0aWMgdm9pZCByY3VfdGFza3Nfb25lX2dwKHN0
-cnVjdCByY3VfdGFza3MgKnJ0cCwKPiA+ID4gYm9vbCBtaWRib290KQo+ID4gPiDCoMKgwqDCoMKg
-wqDCoMKgaWYgKHVubGlrZWx5KG1pZGJvb3QpKSB7Cj4gPiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgbmVlZGdwY2IgPSAweDI7Cj4gPiA+IMKgwqDCoMKgwqDCoMKgwqB9IGVsc2Ug
-ewo+ID4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgbXV0ZXhfdW5sb2NrKCZydHAt
-PnRhc2tzX2dwX211dGV4KTsKPiA+ID4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBz
-ZXRfdGFza3NfZ3Bfc3RhdGUocnRwLCBSVEdTX1dBSVRfQ0JTKTsKPiA+ID4gwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqByY3V3YWl0X3dhaXRfZXZlbnQoJnJ0cC0+Y2JzX3dhaXQsCj4g
-PiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIChuZWVkZ3BjYiA9IHJjdV90YXNrc19uZWVkX2dwY2IocnRwKSksCj4g
-PiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIFRBU0tfSURMRSk7Cj4gPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqBtdXRleF9sb2NrKCZydHAtPnRhc2tzX2dwX211dGV4KTsKPiA+ID4gwqDCoMKgwqDC
-oMKgwqDCoH0KPiA+ID4gwqAKPiA+ID4gwqDCoMKgwqDCoMKgwqDCoGlmIChuZWVkZ3BjYiAmIDB4
-Mikgewo+ID4gCj4gPiBZb3VyIHByZWZlcnJlZCBmaXggbG9va3MgZ29vZCB0byBtZS4KPiA+IAo+
-ID4gV2l0aCB0aGUgb3JpZ2luYWwgY29kZSBJIGNhbiBxdWl0ZSBlYXNpbHkgcmVwcm9kdWNlIHRo
-ZSBwcm9ibGVtIG9uIG15wqAKPiA+IHN5c3RlbSBldmVyeSAxMCByZWJvb3RzIG9yIHNvLiBXaXRo
-IHlvdXIgZml4IGluIHBsYWNlIHRoZSBwcm9ibGVtIG5vCj4gPiBsb25nZXIgb2NjdXJzLgo+IAo+
-IFZlcnkgZ29vZCwgdGhhbmsgeW91IcKgIE1heSBJIGFkZCB5b3VyIFRlc3RlZC1ieT8KPiAKPiDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgVGhh
-bngsIFBhdWwKWWVzLCBwbGVhc2UgZG8uCg==
+On 8/2/23 08:05, Paul E. McKenney wrote:
+> On Wed, Aug 02, 2023 at 02:57:56PM +0100, Roy Hopkins wrote:
+>> On Tue, 2023-08-01 at 12:11 -0700, Paul E. McKenney wrote:
+>>> On Tue, Aug 01, 2023 at 10:32:45AM -0700, Guenter Roeck wrote:
+>>>
+>>>
+>>> Please see below for my preferred fix.  Does this work for you guys?
+>>>
+>>> Back to figuring out why recent kernels occasionally to blow up all
+>>> rcutorture guest OSes...
+>>>
+>>>                                                          Thanx, Paul
+>>>
+>>> ------------------------------------------------------------------------
+>>>
+>>> diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+>>> index 7294be62727b..2d5b8385c357 100644
+>>> --- a/kernel/rcu/tasks.h
+>>> +++ b/kernel/rcu/tasks.h
+>>> @@ -570,10 +570,12 @@ static void rcu_tasks_one_gp(struct rcu_tasks *rtp, bool midboot)
+>>>          if (unlikely(midboot)) {
+>>>                  needgpcb = 0x2;
+>>>          } else {
+>>> +               mutex_unlock(&rtp->tasks_gp_mutex);
+>>>                  set_tasks_gp_state(rtp, RTGS_WAIT_CBS);
+>>>                  rcuwait_wait_event(&rtp->cbs_wait,
+>>>                                     (needgpcb = rcu_tasks_need_gpcb(rtp)),
+>>>                                     TASK_IDLE);
+>>> +               mutex_lock(&rtp->tasks_gp_mutex);
+>>>          }
+>>>   
+>>>          if (needgpcb & 0x2) {
+>>
+>> Your preferred fix looks good to me.
+>>
+>> With the original code I can quite easily reproduce the problem on my
+>> system every 10 reboots or so. With your fix in place the problem no
+>> longer occurs.
+> 
+> Very good, thank you!  May I add your Tested-by?
+> 
+
+FWIW, I am still working on it. So far I get
+
+[    8.191589]     KTAP version 1
+[    8.191769]     # Subtest: kunit_executor_test
+[    8.191972]     # module: kunit
+[    8.192012]     1..8
+[    8.197643]     ok 1 parse_filter_test
+[    8.201851]     ok 2 filter_suites_test
+[    8.206713]     ok 3 filter_suites_test_glob_test
+[    8.211806]     ok 4 filter_suites_to_empty_test
+[    8.214077] kunit executor: filter operation not found: speed>slow, module!=example
+[    8.217933]     # parse_filter_attr_test: ASSERTION FAILED at lib/kunit/executor_test.c:126
+[    8.217933]     Expected err == 0, but
+[    8.217933]         err == -22 (0xffffffffffffffea)
+[    8.217933]
+[    8.217933] failed to parse filter '(efault)'
+[    8.221266]     not ok 5 parse_filter_attr_test
+[    8.224224] kunit executor: filter operation not found: speed>slow
+[    8.225837]     # filter_attr_test: ASSERTION FAILED at lib/kunit/executor_test.c:165
+[    8.225837]     Expected err == 0, but
+[    8.225837]         err == -22 (0xffffffffffffffea)
+[    8.228850]     not ok 6 filter_attr_test
+[    8.230942] kunit executor: filter operation not found: module!=dummy
+[    8.232167]     # filter_attr_empty_test: ASSERTION FAILED at lib/kunit/executor_test.c:190
+[    8.232167]     Expected err == 0, but
+[    8.232167]         err == -22 (0xffffffffffffffea)
+[    8.235317]     not ok 7 filter_attr_empty_test
+[    8.237065] kunit executor: filter operation not found: speed>slow
+[    8.238796]     # filter_attr_skip_test: ASSERTION FAILED at lib/kunit/executor_test.c:209
+[    8.238796]     Expected err == 0, but
+[    8.238796]         err == -22 (0xffffffffffffffea)
+[    8.241897]     not ok 8 filter_attr_skip_test
+[    8.241947] # kunit_executor_test: pass:4 fail:4 skip:0 total:8
+[    8.242144] # Totals: pass:4 fail:4 skip:0 total:8
+
+and it looks like the console no longer works. Most likely this is some other problem
+that was introduced while tests were broken. It will take me some time to track that down.
+
+Guenter
 
