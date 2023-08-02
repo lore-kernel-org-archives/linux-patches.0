@@ -1,65 +1,68 @@
-Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
+Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B63B7E
-	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 01:57:16 +0000 (UTC)
-Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-48642554ef1so2533139e0c.3
-        for <patches@lists.linux.dev>; Tue, 01 Aug 2023 18:57:15 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4BDA3D
+	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 02:53:12 +0000 (UTC)
+Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-48645045826so2415374e0c.2
+        for <patches@lists.linux.dev>; Tue, 01 Aug 2023 19:53:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690941435; x=1691546235;
+        d=linaro.org; s=google; t=1690944791; x=1691549591;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=du9gT3nEt+eVSe4TYuA1bs7ljCbROmy1XMMZ5PJR5GA=;
-        b=Rvd2+4Yywg8ZcmZi2a/qLKRqvq/9yK8B9pk6oqe5l9/Q7ugzflHiUc0ybk95JCYS2a
-         E6I4Br5GJfH1OJysf8bzX6KZAXWwnUWY3YWSn/vKEKCMHVQoGwxtSOA702CKmqZPcMlP
-         E27uFiGYpPNn/sfcDFalTP9qb+ef5XeFoJHELHbK3nogUsA5TzV8fmwGeDFuDZeGd3Rj
-         hd/0LRP5K1O9vZezZoK8QXMT5W56tPfdwktAG4i+H+8XXT4WdjY2a4u0BHLVfImi398Y
-         3Zxw/wAhMdowOpwNghl5y9uaxDtxSNxUzKUeyy343KMWryGmEg39pCqDWfZpTmM01i2X
-         Xncw==
+        bh=b6/35ZoKcBhfJYY+Rmmtzdcbq9J4zFITai0RFdfSbKg=;
+        b=GFFHVZxFzhErjyxupkWSnu/vaA8M1Nq7no8oPjk3qW1UIOCo5AKVjDfmJmi7ayFaJT
+         vD+t4WD8+T+AY+agUnbVx89OBhk72U57EV0jFQh59gUK2/8m0ECt2ipZPB6NB9jfn+AT
+         uhA31zLtxJP9fnwh50y3A0ZU+eBGnS8ZTf73tOKuiy1L/zKm8tXzYYlUw3c2kSZZtYvg
+         jxlkGpCX7CEiIxgKaDbdUUFG1+NOX3u0Lp6yCLmU5YrWrVAdmDXu7T/zHJEtdhs2mXB4
+         496KGV/XVZnw7gRe8On02O4wSFzzDh7AS7ti2PNiDd+lFX0Yn46zQeAwJf1ZHkks4KDu
+         pi6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690941435; x=1691546235;
+        d=1e100.net; s=20221208; t=1690944791; x=1691549591;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=du9gT3nEt+eVSe4TYuA1bs7ljCbROmy1XMMZ5PJR5GA=;
-        b=fI6YysxLMtG9x/UgWpClZwnCf7ekCy18PvmxYJEtsJyw/rg9pB+NRMPV/l4D2oflt7
-         5lh+RqGBD9sKalv0xTljmN0ZhDEmrIoTAf4aePcTR+YaGw3qN1XgcmHYV31DizKm7m+E
-         xfgl1HogfZ0ucjXKAhvfihUtxFnc0s7viWKy9mWKWilY5KbpwvLT0X9HXq0SkSveqYH/
-         9eydnxvGkL1ePBVEXmDD2+W5f6F+f0HxLgXRBUEFI6Ll9HYiYiWCqOhCuK7Vc1IfkGqu
-         38vf9c0HfDSL3gs1XaKFMVf2D43bDCpW1uUA80KfuGmQjiMVXsPKxowCCF/S7zc6pco2
-         NZrw==
-X-Gm-Message-State: ABy/qLYCG3vdrXu61sh/4z/f/i9CQL5uXgUq2rLspIdOmncSsSWWaXhc
-	bfYF5Qsm5PSKcF90usLOT763JxnNfGw2OUa3lhP/4w==
-X-Google-Smtp-Source: APBJJlGWKFhhmL48f26bOfdV+vak3IRD/bcJYZAXm2uQvWL+oHbaEnsw3yuZ6sZ0lfhUB2Nhbw2fFgMEIz/15MCf5W0=
-X-Received: by 2002:a1f:5f90:0:b0:46e:85b8:c019 with SMTP id
- t138-20020a1f5f90000000b0046e85b8c019mr4191070vkb.1.1690941434912; Tue, 01
- Aug 2023 18:57:14 -0700 (PDT)
+        bh=b6/35ZoKcBhfJYY+Rmmtzdcbq9J4zFITai0RFdfSbKg=;
+        b=Yt9X38z4XT/gY4GQJbA+WtGKddVbMprJMM5cDPsYE6/GIRV1hk/dm6YNmQbixKQ9St
+         RrTU8ULl0S9EWCdegnsH1fzjafmotPRpjQ+gg5FKW5AdpGwmRRGyLLa3Kb6P5JIimdel
+         yvMyp3m1BA5ipq+RNLs9TvGhdxi/vR3KNSveCYDU1jr2GzrUf/N0T8QDI03dU4AP8yTz
+         JrrAJwiyWV1XOeoLGJgK2xr6nc/bINnQSAvO2YJ9LWGFeLYvmqDljwucTlTVvilfCU6J
+         tqra6d57Z6cU5b9wnin+pBjexy39GDG9uZ8zj2FRGDBq6SCxorrPP5emGEVEtXewgd/y
+         e/Lg==
+X-Gm-Message-State: ABy/qLamiRwGl2jpXtr53/WJPEXkQeay/18VAB6tvFVxoZtXxQckqPdb
+	Sj0PqZuO9bmsZipRBIfod/PIrJnmue1evlTjzQSHkQ==
+X-Google-Smtp-Source: APBJJlE1gCA8tKH5sYTEP/FZeFFoep4cuyxkMCDwNwtcVmaE3u/k2C0/DAImLXlO/nZL9KA/7Dms2iGYeM3LrVk5CUs=
+X-Received: by 2002:a1f:c304:0:b0:471:7996:228f with SMTP id
+ t4-20020a1fc304000000b004717996228fmr3664338vkf.7.1690944791082; Tue, 01 Aug
+ 2023 19:53:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230801091910.165050260@linuxfoundation.org>
-In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
+References: <20230801091925.659598007@linuxfoundation.org>
+In-Reply-To: <20230801091925.659598007@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 2 Aug 2023 07:27:03 +0530
-Message-ID: <CA+G9fYtCYSQ2fzmJU0t7ZCOUWjeRp9+Dn3gJ=4oRJP_CJttOcw@mail.gmail.com>
-Subject: Re: [PATCH 5.15 000/155] 5.15.124-rc1 review
+Date: Wed, 2 Aug 2023 08:22:59 +0530
+Message-ID: <CA+G9fYsv5dFJfjNq7O+CW3J9jEV0zDQiOR+8dyacwhpDih0xJw@mail.gmail.com>
+Subject: Re: [PATCH 6.4 000/239] 6.4.8-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
 	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
+	Aaron Lewis <aaronlewis@google.com>, kvm list <kvm@vger.kernel.org>, 
+	Sean Christopherson <seanjc@google.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+	"open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Tue, 1 Aug 2023 at 14:52, Greg Kroah-Hartman
+On Tue, 1 Aug 2023 at 15:11, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 5.15.124 release.
-> There are 155 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.4.8 release.
+> There are 239 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -67,42 +70,81 @@ On Tue, 1 Aug 2023 at 14:52, Greg Kroah-Hartman
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.124-rc1.gz
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.8-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
 
-Following patch caused build regression on stable-rc 5.15 and stable-rc 6.1,
+Following kselftest build regression found,
 
-Regressions found on arm:
+    selftests/rseq: Play nice with binaries statically linked against
+glibc 2.35+
+    commit 3bcbc20942db5d738221cca31a928efc09827069 upstream.
 
-  - build/gcc-12-orion5x_defconfig
-  - build/clang-nightly-orion5x_defconfig
-  - build/gcc-8-orion5x_defconfig
-  - build/clang-16-orion5x_defconfig
 
-gpio: mvebu: Make use of devm_pwmchip_add
-[ Upstream commit 1945063eb59e64d2919cb14d54d081476d9e53bb ]
+    To allow running rseq and KVM's rseq selftests as statically linked
+    binaries, initialize the various "trampoline" pointers to point directly
+    at the expect glibc symbols, and skip the dlysm() lookups if the rseq
+    size is non-zero, i.e. the binary is statically linked *and* the libc
+    registered its own rseq.
+
+    Define weak versions of the symbols so as not to break linking against
+    libc versions that don't support rseq in any capacity.
+
+    The KVM selftests in particular are often statically linked so that they
+    can be run on targets with very limited runtime environments, i.e. test
+    machines.
+
+    Fixes: 233e667e1ae3 ("selftests/rseq: Uplift rseq selftests for
+compatibility with glibc-2.35")
+    Cc: Aaron Lewis <aaronlewis@google.com>
+    Cc: kvm@vger.kernel.org
+    Cc: stable@vger.kernel.org
+    Signed-off-by: Sean Christopherson <seanjc@google.com>
+    Message-Id: <20230721223352.2333911-1-seanjc@google.com>
+    Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+    Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+
 
 Build log:
-------
-drivers/gpio/gpio-mvebu.c: In function 'mvebu_pwm_probe':
-drivers/gpio/gpio-mvebu.c:877:16: error: implicit declaration of
-function 'devm_pwmchip_add'; did you mean 'pwmchip_add'?
-[-Werror=implicit-function-declaration]
-  877 |         return devm_pwmchip_add(dev, &mvpwm->chip);
-      |                ^~~~~~~~~~~~~~~~
-      |                pwmchip_add
-cc1: some warnings being treated as errors
+----
+x86_64-linux-gnu-gcc -O2 -Wall -g -I./ -isystem
+/home/tuxbuild/.cache/tuxmake/builds/1/build/usr/include
+-L/home/tuxbuild/.cache/tuxmake/builds/1/build/kselftest/rseq
+-Wl,-rpath=./   -shared -fPIC rseq.c -lpthread -ldl -o
+/home/tuxbuild/.cache/tuxmake/builds/1/build/kselftest/rseq/librseq.so
+rseq.c:41:1: error: unknown type name '__weak'
+   41 | __weak ptrdiff_t __rseq_offset;
+      | ^~~~~~
+rseq.c:41:18: error: expected '=', ',', ';', 'asm' or '__attribute__'
+before '__rseq_offset'
+   41 | __weak ptrdiff_t __rseq_offset;
+      |                  ^~~~~~~~~~~~~
+rseq.c:42:7: error: expected ';' before 'unsigned'
+   42 | __weak unsigned int __rseq_size;
+      |       ^~~~~~~~~
+      |       ;
+rseq.c:43:7: error: expected ';' before 'unsigned'
+   43 | __weak unsigned int __rseq_flags;
+      |       ^~~~~~~~~
+      |       ;
+rseq.c:45:47: error: '__rseq_offset' undeclared here (not in a
+function); did you mean 'rseq_offset'?
+   45 | static const ptrdiff_t *libc_rseq_offset_p = &__rseq_offset;
+      |                                               ^~~~~~~~~~~~~
+      |                                               rseq_offset
+make[3]: Leaving directory 'tools/testing/selftests/rseq'
 
 Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
 Links:
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.123-156-gb2c388dc2443/testrun/18771613/suite/build/test/gcc-12-orion5x_defconfig/details/
+ - https://storage.tuxsuite.com/public/linaro/lkft/builds/2TNSVjRCfcIaJWQNkPwDQ9jn2ls/build.log
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.4.y/build/v6.4.7-240-g2c273bf138a4/testrun/18770115/suite/kselftest-rseq/test/shardfile-rseq/details/
+
 
 --
 Linaro LKFT
