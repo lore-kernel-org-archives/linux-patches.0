@@ -1,32 +1,32 @@
-Received: from JPN01-OS0-obe.outbound.protection.outlook.com (mail-os0jpn01on2106.outbound.protection.outlook.com [40.107.113.106])
+Received: from JPN01-OS0-obe.outbound.protection.outlook.com (mail-os0jpn01on2137.outbound.protection.outlook.com [40.107.113.137])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DE833E5
-	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 15:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63CE8BE3
+	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 15:08:25 +0000 (UTC)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ENksNgi40YwRv7AL80ZuV45sIV1/q2vakWN30dZrxHhPqPoftAHUwvH0vDV1n60dybsdsLgGfXUp9jbYdnWhJaevTCn5ssoCdvIJKHR9n10qvuX/Yz4/5ncT56V7pTJYQ00dieHil32OfHKsuN2P1Dr0Q5KQ/TYDQYS1Y0SYEhTGnJaQNjOvl3EKQpnj/8ZwqkRQ7hL8urW1YYeRCCj/ISI9v3+0xMrJMZedSucAi9Lmv8d5vFyoCAfiqYW/VQxpq2Z0AYE8R853/VlBcSB4N8SRzWwBU67VHStdCw768wrxPMTWal01uOTXbVlKgVPzlJFTFo2V4J7ZHHcxwMYVYw==
+ b=coybeytcACRWD2Iw9/ywKZokcLZEbdJE1GhP4Aq1S5eecP9ypScEPDgnwNJmhOLXlpco2H9+mpVHHY/5raBCCB7jTCjApzB0u/VUZU8PK0AS/6wm7AtArfHo2sW24oLHD1FM+zrnc/IzmgOkFlvRal9DHSoDaf1JPLjtzRGhhWRtCfC3J+eadFtdQpWlMJEeXjWSnW1jlbXAMIayclrquHybdbwmd/Jamf2ATCxC1xfWHK1LW78tJHnZqoz4a2qoCb63WN+2AxJ6a1TvfG5zgy5VhsKN/L4lhB/vPsWqast9yq9QE/67MqjRQhXY1cL2E47oHYEVZxWhj83zo+Zt/w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RMvllFJ3CJglRFldJ3zQrbvlON8fOxR76CmPCbdYFNg=;
- b=SMfVk4ulK6Yu2SBI8/AcSBIlLPc0wQgtJhujHaweR40DydkrcMBKwLt+uBpl/eim7jjifLcof+Zxf/wzSWVLpMgPuKJolKSpVq8PQcQ36AHe8td/6xbPejiDbuxGmQsCT3GoqDYT0LwN6FW4xxnF5bA6TN9E+IJudwPs7tDWScjL5ROVNUcE9kjNkqR0Fz1DCAhtS0HPYXpr1BltuF8PMQ9DWAPCLyUqN8sGglczAeaBl1zN2tEukHUdhHnPbksqbLmDhFrjTku7h1BRvAWgDt3nDWIqnr2MuIjuL9HAlkTBTrEt8L2F/AQ5XXFfMUGcslcdF5xLGsIVVK6pi6nFkQ==
+ bh=0YfgyswgAa3w8QGlpbchY2J3A9hwYe7z2Gk9kr9PJY8=;
+ b=n/1bokrardo6L+lGYUpvzkEAspLa8FpewijJ+EaSlQb8lmcRnyXpLiDPnzxQFnLx+QTfGZcn1yU4tTfb1/zPlmOoaY4xnDudUKAsm4Sh8cFIyjsOriUbtsQHS3sizS16e4zgQW7JrzKg/z3nBvIfpquLOXtsfy/DCIEjASuqSeP25RAqz2NZPWsHGG9ZIwdvXsLALwiJfaSBRzAVRcMYcKHDJoQzft8YQaWGjXG2jVzA+cg+s+3+fAJgkQKGwm8UE4Mt4woCGWXkXTHUzMOSQ7lTfy3HMD950MzllzovnvhMZlfqiT6xKoiZ9bE2DHgmZXrCK1OS5U2YgcuVPB+NVg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
  dkim=pass header.d=renesas.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RMvllFJ3CJglRFldJ3zQrbvlON8fOxR76CmPCbdYFNg=;
- b=dtbWlcMzg4/7B0HYor/7QBnSOm4FYtA/ahSu8zvbdYCnNPoWx0xCZlr+MZFVWq0P4soH9KHviqIjqPr2gIQwN14BePf8nzuFZpC71aomfvIQ9jH/BlCB+tsYYafEpeycVBM7kQ3NiEa8155HGAdj14pDqtLdGSL26LslbM6l3Bg=
+ bh=0YfgyswgAa3w8QGlpbchY2J3A9hwYe7z2Gk9kr9PJY8=;
+ b=p7pXRDG6dvXN0fUQDAwE8o7ZBuK7H+7BZb7J4dea+vRdKKZz9o9IySNvczu3No1OoU9Ln9q11lqv3khTtsI+fBWlhdfqr2P+xTYC9EAx18PJOwrbBKtYStxMoKOW+SxFG236L1CYVv9mpSyOd4Pt2ydxGoYrWChieCGd0pCyZVw=
 Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com (2603:1096:404:dd::14)
  by TYWPR01MB11909.jpnprd01.prod.outlook.com (2603:1096:400:3fc::7) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6652.20; Wed, 2 Aug
- 2023 15:06:18 +0000
+ 2023 15:08:22 +0000
 Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com
  ([fe80::5cff:5d90:9b08:6a7d]) by TY2PR01MB3788.jpnprd01.prod.outlook.com
  ([fe80::5cff:5d90:9b08:6a7d%4]) with mapi id 15.20.6631.045; Wed, 2 Aug 2023
- 15:06:18 +0000
+ 15:08:22 +0000
 From: Chris Paterson <Chris.Paterson2@renesas.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "stable@vger.kernel.org"
 	<stable@vger.kernel.org>
@@ -41,14 +41,14 @@ CC: "patches@lists.linux.dev" <patches@lists.linux.dev>,
 	<f.fainelli@gmail.com>, "sudipm.mukherjee@gmail.com"
 	<sudipm.mukherjee@gmail.com>, "srw@sladewatkins.net" <srw@sladewatkins.net>,
 	"rwarsow@gmx.de" <rwarsow@gmx.de>, "conor@kernel.org" <conor@kernel.org>
-Subject: RE: [PATCH 6.1 000/225] 6.1.43-rc2 review
-Thread-Topic: [PATCH 6.1 000/225] 6.1.43-rc2 review
-Thread-Index: AQHZxRUt6f5nblshPEyhYw85CjqIS6/XGfJA
-Date: Wed, 2 Aug 2023 15:06:18 +0000
+Subject: RE: [PATCH 6.4 000/235] 6.4.8-rc2 review
+Thread-Topic: [PATCH 6.4 000/235] 6.4.8-rc2 review
+Thread-Index: AQHZxRVPHCiNrzRz606w3U1I+fAm3q/XGhqQ
+Date: Wed, 2 Aug 2023 15:08:22 +0000
 Message-ID:
- <TY2PR01MB378850FE6D032ACEB09F44CCB70BA@TY2PR01MB3788.jpnprd01.prod.outlook.com>
-References: <20230802065510.869511253@linuxfoundation.org>
-In-Reply-To: <20230802065510.869511253@linuxfoundation.org>
+ <TY2PR01MB3788C4188411C8C2D9E5D603B70BA@TY2PR01MB3788.jpnprd01.prod.outlook.com>
+References: <20230802065501.780725463@linuxfoundation.org>
+In-Reply-To: <20230802065501.780725463@linuxfoundation.org>
 Accept-Language: en-US, en-GB
 Content-Language: en-US
 X-MS-Has-Attach:
@@ -57,44 +57,44 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=renesas.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TY2PR01MB3788:EE_|TYWPR01MB11909:EE_
-x-ms-office365-filtering-correlation-id: 7f3043a8-21e1-4302-1e7f-08db936a0621
+x-ms-office365-filtering-correlation-id: 19ed0d42-e152-44bf-58b4-08db936a505c
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
 x-microsoft-antispam-message-info:
- KgEqZkEcpGJ0c9v8sDmr4oYURiU3yxxYzD+3HRiExoBKTeaEDMI9MV6ORPzx4fZW3bHlhhSO82z04D/SvqgcCYsDol2JWrmet6cTl6GXH1JlwW3R1FGZxdptcIerS5yq1BhSJ9n2NFhRI3rgKVdg4m6j6RF6q3Rhasx1bVkReobGisvn1VYod8nGqDFcVbiJnLYp4gYi5HNbz+Jh8/DqyCsdmQe3iDQx0u/7JqQDDBG5ZDk7cn+Vh/kS7DWmJiP7UTAELVlQXLmdetJ1iaGSVmSrjQbUdlA4w3ByWhzVI1RU76rJ2ivtrEOrRyeljujDih/xuSZ5eJsMsNWWgNZB1Ia1mFDK3zYRrHzuSdLD/XywLK1oU1Y13ot4fjmJy3Ms2V4BmQ3Le/rxXNv//hvdhfjyI6gnJWeoweSIrqUavyXk92vnAgKuWp/bDmuqmL/WybuyaFrrTWIBIplSDOzaGo29ZNoSnQZiegs0LMLG9fn+D81UqrGYnwwyiE5Og296xKZ+rGjP0Ahqbbi/ofnPrLWg78Klju/RoGvl1vpoHnPA7W22cYgpxQ4WwBm9pk/fENQnyWMVj/o4Hh24JBw/Ix1M0QkJqzex6dx/xivmeJEP07Mr9x2Jk12ccs7daCzrMwisTPoTGPT9WytEzFbWOQ==
+ 61GzuSDT2S/ALTfaOLu+6oODtE2H3LrosR8vUQCB+VXO+yKjpGvQ1k8tOgZ8z29UQZ2HavFHwB6M+Dy1Fx4ibjX1UOh4rW5BYmMaGvzS4JM1KzlpaNsRlXNEbhsDm5FNS8DU+ohdkrfI7t+uD2dL8SmEoX/e6Coh6OrXmr8mSclBVICvT5Z+BluI8e8SUC0nxCFtvMZ7lwwHqF+R8Lw9mw7Zqxh26k3QKS8UOjhtdOafC/Amy2iIv8ls4VzLpr0l7I/YmX7xLhPfYY816ffuQktYVG+mWASpSO4/Pa/QtrJChBa9RTOvhHzWsRpaLir8lDmq9dwcP7jbpVyG0MDlWreo6HCpSf05Al87EDikG/TDGt1DhlnJcW8+PyBLAUAzs1Q2IF1mHjkkugT8savwE+isObvlZqgRU4qy7LCEe45/leGXCb+mSRuHdyCZPnwMZBqcht/C9QVdMq+ElncDoY/UvFI/Xiq1hwDgCk7sUkxvAEPZmgsGggb9VP9GvfncZeq0xMOEbcCJzxLkiLmHuk2ogFKzSYOiPmi4gUmndajk0ya4tDISaUBFwp6SIQAX9oNti38DgWXnpIItNGl18JaPYfGzUDgttllmnqugxNfuFgypyYxua5LWAkKahAm+jM1oiqsUWqDzFCwDFxtSBA==
 x-forefront-antispam-report:
  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY2PR01MB3788.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(396003)(346002)(376002)(39860400002)(136003)(366004)(451199021)(33656002)(86362001)(38070700005)(38100700002)(122000001)(4326008)(316002)(76116006)(66946007)(66556008)(66476007)(66446008)(64756008)(8936002)(8676002)(7416002)(41300700001)(5660300002)(52536014)(478600001)(110136005)(54906003)(4744005)(2906002)(6506007)(966005)(7696005)(9686003)(71200400001)(186003)(55016003);DIR:OUT;SFP:1102;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
 x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-2?Q?lzq7oT8Bq8NDOe/UU4aLdXwQlFhLF2QJ42WKZck2UvMPb6fcB9sw5n5ujy?=
- =?iso-8859-2?Q?Y5pNHUuEBYkRZqhoLmE7yz8ql/xLk7tBAXdz97R2pwttFRjX3ZrXX6SMqM?=
- =?iso-8859-2?Q?DgNoSHOCQHiXefBXBYPXW/iJDVThzIPaFOzsHFVGfUFFTU4uYvNxeLB2bg?=
- =?iso-8859-2?Q?3BlHyvzEJojcaBLPz21eyTGcIEWUj0kHjJ6dTlcn+x0vXs9XvwC8V5CXc7?=
- =?iso-8859-2?Q?3oWbBE2chZoI6sibiwh9/KR6z75QH8Il0+5dpYHFXEczd6840PiVQqif1j?=
- =?iso-8859-2?Q?0Hpj8+AsM+iPxg/tNLGv7V884NYFJP2gRh+FYNoOfElXE+fj7YlBs1GCm8?=
- =?iso-8859-2?Q?S/XMcKckkDLnAxiUGDorQN4i7Iv/veh0CxICDPZlwRASs/pQMVkwif3Uxf?=
- =?iso-8859-2?Q?Zxmttotzl09E/19trP/mhQYAqPiLZEa7/O0w9cErMHu2pmi6pPvRw9mpDq?=
- =?iso-8859-2?Q?1f0WyKqXNTAHVeeSSweujKiD7YheSgPuAxRPYrBVTA68TVmqpUFZbzJh7F?=
- =?iso-8859-2?Q?dA3otVLqz20Ly3rWvemZr5IF2mw8OVhRxeU+1YKAyM76Vw4yZ4ga3VVf5q?=
- =?iso-8859-2?Q?pgT6Cd+U6fAipk/JQvda4THALEQ7JX311IOZIEQ10aSd3TKjEI+yS6Gf6X?=
- =?iso-8859-2?Q?wRflKvCB5pgEAudLxRhM3Cy8HD8DnbthbdWb+57xCvDlBlshnKNM+DOW8X?=
- =?iso-8859-2?Q?vEQYE2pjCERj82h9vPZIHSebOzgTKYPhDyP2RkcruFe6++sy+qxZCXJ4Cb?=
- =?iso-8859-2?Q?0/+22pqGOloSfyl9AC9WlKmgoZyH562kBmg/aSJP0nYdcc1Gp47K+7OctK?=
- =?iso-8859-2?Q?u7cgm6cSA+HEjuTpUwLG0vozuG+LXU9ProCP7g2z8jaRT4NKfslwoKArrG?=
- =?iso-8859-2?Q?CsGD0ArxdV1r6/VyUzzWJU7qXN85cWGmAOU0dPX7xmxVv3u4GKe0PWfj1E?=
- =?iso-8859-2?Q?YJ3XjtNxGVI23O6jnFWA2f4niqa8ZVsNm4YIol8YgvzIzAwt7KLako4cHB?=
- =?iso-8859-2?Q?reXmEhIUl2BnA6JrQlQ0WR7krIQlPdE4RV0jec8yy2X+62UaZKX3/f5FwV?=
- =?iso-8859-2?Q?5jILy8fq1uOT7NPijnEXeayCaMpjzC7hWfyOoneMiTqqAWiuYnaMA2H6Hu?=
- =?iso-8859-2?Q?DQSC7YPABwgHNCCsZwt9y5j+PuurUnGo71tyQzFWGVqcQqor6076c+V9bg?=
- =?iso-8859-2?Q?+vzCYpxe0/d+WLhqs59x1lg2XHLSDfuq/mKjledqyBQvP/pFqf6X7ViZ/0?=
- =?iso-8859-2?Q?RIBWqqp2BeZ8znKSKTGK6/jAYarjM2mY41d4WG18go/ty7sdlvWsnGvHo6?=
- =?iso-8859-2?Q?ioqhpWPPqjKdMEkEfZWX9uYWNQlcBfw9kbrH5nTOjM44Vg7qXk3lwdYDVT?=
- =?iso-8859-2?Q?nrLaTl73lDAV+dTZc0jGYFv12Jf9OuyIh30rWsRKS7bh8ea5x15N+BqoE1?=
- =?iso-8859-2?Q?tNgnwqQ/zb3dlCgHatX04r7YLR/MgNoF1vwnqVH0WVzKma3MlHN4fIcz+N?=
- =?iso-8859-2?Q?NCOba2cEioKfgCds0sMW1rb/7m2ogGEm8N6EF6OuXbkDYo0w+RE04TDwIa?=
- =?iso-8859-2?Q?GUpH0nvXdRkRj6KRLpNLodG79abrPLH3OZK1kubN7bUXeMQ4gUcmDElULW?=
- =?iso-8859-2?Q?6T8Cbzy/etypY=3D?=
+ =?iso-8859-2?Q?KRzfMx/3nEcmspA+xJ1cO0DrEYIUxrg+9WvjiX2C6iixLynrdm8SkWl9pZ?=
+ =?iso-8859-2?Q?nNh6Be++p/usxDcV6MgQe6rq1rGpGFI3xnZTmfDZdpBEDKYwO+NvVeTOgM?=
+ =?iso-8859-2?Q?8TK3GSyUdBjrlprpYyNr/9J9oBEZDvGXLMFj8MBwM18jF6Etgr0C3ThJ8H?=
+ =?iso-8859-2?Q?Fccfl1QNkipmNWUXI34p6eEsfEZ+YP6DhM58hUqPAEmfK/doQGvxh/qff3?=
+ =?iso-8859-2?Q?zomhBIYD0C0rzHKzEWvEXN/kUb81oktDEfGP9geCCAP7WxGVHG51VCmgsL?=
+ =?iso-8859-2?Q?TDURRpg6Jr526fkjAcfgewX/IOAZ0lnBeE8eHRBvgKtT14J9QwX7MTUEN8?=
+ =?iso-8859-2?Q?IMaPbtYmg8o083XbnTmRH0fczfWewBF6EWq2pUGxggPxAQEGD9plLCylMp?=
+ =?iso-8859-2?Q?qy2HEvJc95m+YGArRe7PgU/aM0yEftisJNE1mHSWO0IkapNC4Zz/0TSu9P?=
+ =?iso-8859-2?Q?h+CIYBivZxiFHJ+VovH9QIB1Q0t6XjQidVKFA/qVdp9TzGj/E1+Bi7qK+/?=
+ =?iso-8859-2?Q?1km0eE1mwE9Rwua2O9IZ8IDXDUrHP96HxsH/ZMefu+rAwcodnOUtubR2qQ?=
+ =?iso-8859-2?Q?sCNIROwtCK5lXWqzIPVB/ejsRJtcPYKwIeo1/tvSJCzWbsrYXceFC/qlsU?=
+ =?iso-8859-2?Q?5enxykOAc3d8BmDT0FTOwkC4fL/BSh5GXCQTkLwauPq0HWr3XKHqsKpqaN?=
+ =?iso-8859-2?Q?TL4UuvKqDXDzICXoOBJJFbwtCvuZB/VL+5N41kzmK8On/uX9OE1LZJynCr?=
+ =?iso-8859-2?Q?Wj0Fyua0liFroxMET4rY7leV7hOka08u7bjbXdwdSX4iMOiS0kOCl/2ZiS?=
+ =?iso-8859-2?Q?9CQQimaAUhMD2bKW3bir0xgHZISNHQi/5VIxuCyaEQHcHJefbCa0Iw3fa2?=
+ =?iso-8859-2?Q?RN66/pJPwtZudqNl8f0XlTHWzsK6f4YFxbn5t6bCS//WBX2f0HwAVkQmiH?=
+ =?iso-8859-2?Q?I9GDEK5kV9nVra/bGPzfFfcE3qJflpSvAq4HkLEURUsLf+NQUxNVRXRnWR?=
+ =?iso-8859-2?Q?Rl8RwoD2zVU4XFDq+d30MEhsd1uTb/rVNngU1OgooFkALvt+zoWOO6sKkp?=
+ =?iso-8859-2?Q?RN0TKc6Bh+JDTdKzEQRNs/uS4o6wWYzMlqObQ4al0+UNSCxrKu5dCWikqx?=
+ =?iso-8859-2?Q?CW1MpFsZzjnNDoLuHKhGQQREgOTfd1+WoT/gBP1L+l14sQea1aEa+5MFEp?=
+ =?iso-8859-2?Q?WDUvaw8Ae5qdoFRtP4hzJHa1E+dKVtQ1c6B1aEAFBRLXtaJ1L1nXpNEKYQ?=
+ =?iso-8859-2?Q?+ST76VEVOCIrcaiIUkGBsLqI/UtpFK9I1BzKJGSQPZFBUKxqQFUrekq0Mm?=
+ =?iso-8859-2?Q?YKbr3a6DbN7vL3St52smkSorDqtpnA9H/daRY+tDKnyUEfG4OqDFZwEuLV?=
+ =?iso-8859-2?Q?CkIJxjvQMFtmybgLiTUaKM4wnMpVNLRrAb5gQihWT/LjWUsDR+YIbooedS?=
+ =?iso-8859-2?Q?MC15tPm3U3a0sPuIiMIlZNLUPoT4LKLV905YxljSYlYLAR9/6yGIbTRxEF?=
+ =?iso-8859-2?Q?3Azp1ysXKp2Uv03P5EVJWyegzv8ERoSXPvaQbcmPoCU/YRu8RRdQbAd+tD?=
+ =?iso-8859-2?Q?LGWVEB1R7MVJHDJKvLEVUTsJEkZ5h08gvUBV2sOc1GPWfZ4zw0/VvsknNd?=
+ =?iso-8859-2?Q?hKi0MAWiWyCko=3D?=
 Content-Type: text/plain; charset="iso-8859-2"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
@@ -106,13 +106,13 @@ MIME-Version: 1.0
 X-OriginatorOrg: renesas.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TY2PR01MB3788.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7f3043a8-21e1-4302-1e7f-08db936a0621
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Aug 2023 15:06:18.1619
+X-MS-Exchange-CrossTenant-Network-Message-Id: 19ed0d42-e152-44bf-58b4-08db936a505c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Aug 2023 15:08:22.6972
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: /jqgkgoX0T9A0nDo5DNYdXqfacxKZ95mrpO7bGfEFExdxjzynmM5sqI10vS0StZhxXdb4wFX1k9grsOsuPGdISkmFPcyECI7awg5pbJ9fpA=
+X-MS-Exchange-CrossTenant-userprincipalname: TapfTAKaVaBfDjGwYUZmLQfexUWeI2SYdM+cBzejMQjY4+9QBmc5iUyG6ndsqlUKdZKLYNEBvFXDB7Skq+PkY4QLyFPYK9JVvQa1Vxw4Foo=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYWPR01MB11909
 
 Hello Greg,
@@ -120,22 +120,22 @@ Hello Greg,
 > From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 > Sent: Wednesday, August 2, 2023 8:42 AM
 >=20
-> This is the start of the stable review cycle for the 6.1.43 release.
-> There are 225 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.4.8 release.
+> There are 235 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >=20
-> Responses should be made by Fri, 04 Aug 2023 06:54:28 +0000.
+> Responses should be made by Fri, 04 Aug 2023 06:54:15 +0000.
 > Anything received after that time might be too late.
 
 Thank you for the release!
 
-CIP configurations built and booted okay with Linux 6.1.43-rc2 (bdcf4e82a08=
-8):
+CIP configurations built and booted okay with Linux 6.4.8-rc2 (6a44ac630b76=
+):
 https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/9=
-52990993/
+52990388
 https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/commits/lin=
-ux-6.1.y
+ux-6.4.y
 
 Tested-by: Chris Paterson (CIP) <chris.paterson2@renesas.com>
 
