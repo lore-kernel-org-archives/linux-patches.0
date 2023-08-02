@@ -1,67 +1,65 @@
-Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
+Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDF17E
-	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 01:54:36 +0000 (UTC)
-Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-4476a9e8812so2061229137.2
-        for <patches@lists.linux.dev>; Tue, 01 Aug 2023 18:54:35 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B63B7E
+	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 01:57:16 +0000 (UTC)
+Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-48642554ef1so2533139e0c.3
+        for <patches@lists.linux.dev>; Tue, 01 Aug 2023 18:57:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1690941275; x=1691546075;
+        d=linaro.org; s=google; t=1690941435; x=1691546235;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Il+U9n5lkmGrYzbgPyJy+8Iv+Ld+DI3VHeIjDoz9VUM=;
-        b=vSL0H8DTXB0Kmux8lwHUA0+W91duPqgibPyWwXQ6YMB+vb1l4P2S5ewfEHHHnR4WIN
-         4DdmLWqkZyUM2yUIa/LA/VGeYSRLQTUtw1HTiMhy+PE9fkfpGO8Nm7rdXYatSGDhEkQs
-         imK3HsRUgwVo2eeH+4FjzpfgZzjFzX6kjXTYqGVXAG+DPHsvM5t1n4ujqIUXcznjO4+z
-         /ssmOzh6Bp2DD//7d2bf/zApW8dDuKVx+4cYL7TXCRDXXFe2gMeo+n37VFRXZ0uXspqg
-         w867U2wDo3tVKXXNxVyumM7zKmroWlSSMHsghwAIiYCqwlP1DCLmqmIgjg8/MARKAcF8
-         jhPw==
+        bh=du9gT3nEt+eVSe4TYuA1bs7ljCbROmy1XMMZ5PJR5GA=;
+        b=Rvd2+4Yywg8ZcmZi2a/qLKRqvq/9yK8B9pk6oqe5l9/Q7ugzflHiUc0ybk95JCYS2a
+         E6I4Br5GJfH1OJysf8bzX6KZAXWwnUWY3YWSn/vKEKCMHVQoGwxtSOA702CKmqZPcMlP
+         E27uFiGYpPNn/sfcDFalTP9qb+ef5XeFoJHELHbK3nogUsA5TzV8fmwGeDFuDZeGd3Rj
+         hd/0LRP5K1O9vZezZoK8QXMT5W56tPfdwktAG4i+H+8XXT4WdjY2a4u0BHLVfImi398Y
+         3Zxw/wAhMdowOpwNghl5y9uaxDtxSNxUzKUeyy343KMWryGmEg39pCqDWfZpTmM01i2X
+         Xncw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690941275; x=1691546075;
+        d=1e100.net; s=20221208; t=1690941435; x=1691546235;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Il+U9n5lkmGrYzbgPyJy+8Iv+Ld+DI3VHeIjDoz9VUM=;
-        b=hzr2KBcz92IsgfjqacdRpOiJQN1O7OmxLKVp6ZDpjuFpiXC66ZX2+Jh5uwmToMuXVK
-         5ot+kS0xXoSuIgjz4gPfrXHq49v9RNtvYbGwvNNJka3byCP5YpCEKHrO3CaeXkVl96ld
-         0IqMwUbtcL62z/xKCybfX67xrG60GdIYrD8WjBXtnx3fIim0r7RJbkXokYwhpOSppx4B
-         3TzNuqlX9lvVp+5THS7X1c/TTCv7NLEzH9zPoPTnw8ZgfeE4zI/0at5fOqCBEorESlto
-         AYDRNTICDArHsGnnsw3vvs8z2BIIxmF11S5Ypmu6VgsOQLe72ssJl2CMFLBPBbwlU70H
-         Z2oA==
-X-Gm-Message-State: ABy/qLYann2zr4Giropnj2dXyDENUe+otFUqVHZ17cQat47HLz+yLr6u
-	mlJ5gpDLNI/WJDok4T71OA7EQ0pjK4Q2csEqhoE4jg==
-X-Google-Smtp-Source: APBJJlHVwke1xKedtBlG6j6nnQKNFJJs08fE/jID+0Q0nxx/66rdtlH74xRK3FUg7aXspTtHo+zeGBv+Kznh+Q3Z30Q=
-X-Received: by 2002:a67:eb92:0:b0:443:6052:43a7 with SMTP id
- e18-20020a67eb92000000b00443605243a7mr3785649vso.32.1690941274911; Tue, 01
- Aug 2023 18:54:34 -0700 (PDT)
+        bh=du9gT3nEt+eVSe4TYuA1bs7ljCbROmy1XMMZ5PJR5GA=;
+        b=fI6YysxLMtG9x/UgWpClZwnCf7ekCy18PvmxYJEtsJyw/rg9pB+NRMPV/l4D2oflt7
+         5lh+RqGBD9sKalv0xTljmN0ZhDEmrIoTAf4aePcTR+YaGw3qN1XgcmHYV31DizKm7m+E
+         xfgl1HogfZ0ucjXKAhvfihUtxFnc0s7viWKy9mWKWilY5KbpwvLT0X9HXq0SkSveqYH/
+         9eydnxvGkL1ePBVEXmDD2+W5f6F+f0HxLgXRBUEFI6Ll9HYiYiWCqOhCuK7Vc1IfkGqu
+         38vf9c0HfDSL3gs1XaKFMVf2D43bDCpW1uUA80KfuGmQjiMVXsPKxowCCF/S7zc6pco2
+         NZrw==
+X-Gm-Message-State: ABy/qLYCG3vdrXu61sh/4z/f/i9CQL5uXgUq2rLspIdOmncSsSWWaXhc
+	bfYF5Qsm5PSKcF90usLOT763JxnNfGw2OUa3lhP/4w==
+X-Google-Smtp-Source: APBJJlGWKFhhmL48f26bOfdV+vak3IRD/bcJYZAXm2uQvWL+oHbaEnsw3yuZ6sZ0lfhUB2Nhbw2fFgMEIz/15MCf5W0=
+X-Received: by 2002:a1f:5f90:0:b0:46e:85b8:c019 with SMTP id
+ t138-20020a1f5f90000000b0046e85b8c019mr4191070vkb.1.1690941434912; Tue, 01
+ Aug 2023 18:57:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230801091922.799813980@linuxfoundation.org>
-In-Reply-To: <20230801091922.799813980@linuxfoundation.org>
+References: <20230801091910.165050260@linuxfoundation.org>
+In-Reply-To: <20230801091910.165050260@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 2 Aug 2023 07:24:23 +0530
-Message-ID: <CA+G9fYsqEE6P8vKKvWgFDjpgT64FebUssPNS48n6qfUriu6Z1w@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/228] 6.1.43-rc1 review
+Date: Wed, 2 Aug 2023 07:27:03 +0530
+Message-ID: <CA+G9fYtCYSQ2fzmJU0t7ZCOUWjeRp9+Dn3gJ=4oRJP_CJttOcw@mail.gmail.com>
+Subject: Re: [PATCH 5.15 000/155] 5.15.124-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
 	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@pengutronix.de>, 
-	Andy Shevchenko <andy@kernel.org>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Tue, 1 Aug 2023 at 15:00, Greg Kroah-Hartman
+On Tue, 1 Aug 2023 at 14:52, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.1.43 release.
-> There are 228 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 5.15.124 release.
+> There are 155 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -69,16 +67,16 @@ On Tue, 1 Aug 2023 at 15:00, Greg Kroah-Hartman
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.43-rc1.gz
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.124-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
 
-Following patch caused build regression on stable-rc 6.1 and 5.15,
+Following patch caused build regression on stable-rc 5.15 and stable-rc 6.1,
 
 Regressions found on arm:
 
@@ -102,6 +100,9 @@ function 'devm_pwmchip_add'; did you mean 'pwmchip_add'?
 cc1: some warnings being treated as errors
 
 Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+Links:
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.123-156-gb2c388dc2443/testrun/18771613/suite/build/test/gcc-12-orion5x_defconfig/details/
 
 --
 Linaro LKFT
