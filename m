@@ -1,106 +1,100 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0051579F0
-	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 13:58:05 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id B71B31F889;
-	Wed,  2 Aug 2023 13:57:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1690984677; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=pP0tjlFxJUsves+h5UQpQ/VI40XUAuXUc434UuEEXzc=;
-	b=NtGW65uvX6z0QRtIpaJS3fbOrIy1GC3KFNBwZSkKfQOFwc1WuAdCHvCyPSkJCGq5jQw5gc
-	rzhAf0nf/XTUTH95rnazWrTic1AtT4u1JXQyQhtFdAXKBxYyx+ypNQ9vhSFP9OrQaIpEiw
-	PmunLT76CVUK7sE5r8JcaK05copYLW8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1690984677;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=pP0tjlFxJUsves+h5UQpQ/VI40XUAuXUc434UuEEXzc=;
-	b=2jdaxtNuejtl2acEEY38pHvyeNX4cPPR+7rnIAiMWimubsHwfCPac1nvkCUSFtOdk8eO+2
-	Rpt6IEJmGhpXAvAw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id BF7EC13909;
-	Wed,  2 Aug 2023 13:57:56 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id PZk9LORgymSRfQAAMHmgww
-	(envelope-from <rhopkins@suse.de>); Wed, 02 Aug 2023 13:57:56 +0000
-Message-ID: <4f18d78411a5477690640a168e0e5d9f28d1c015.camel@suse.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6201B8BED
+	for <patches@lists.linux.dev>; Wed,  2 Aug 2023 15:05:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4CAC433C8;
+	Wed,  2 Aug 2023 15:05:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1690988708;
+	bh=r1VqFu8OfO1u5SoU4EmzmyOkzQIjy5fxk4p2tga+KAM=;
+	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
+	b=OwkIN+dIl1O3NsTYTQe/70zZ0rznSUs8gByfm0OBc7zvmQMLiMvn3CLkT+eKbTOUj
+	 PAil3+ubHsZ183mPtIUzm7PUQB6y0mAJCa+ZRi4IFyAsz+TTY/1TkUdSiXarHW0wAz
+	 iOQIdIMPD+I6kqL3/keDQMu2JiUg6eDoND0lZQeE8NMIt/M0MS6SiHL4vgzDv8IXWm
+	 SbiGyEPgRIcHXNwuZR+KJ0+uo/YJIVF0VevuHZ1ptU8COE5mi0ssQMF5ifOCf/ll3L
+	 X216QF4sppcAbe5WSg6P4NdMjHWOwYBPW6WG3U0mSYjjAHuD4c86lo34qhNQpb9FZp
+	 ZZ0ci2gx+3C6w==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id 5C2E3CE092F; Wed,  2 Aug 2023 08:05:08 -0700 (PDT)
+Date: Wed, 2 Aug 2023 08:05:08 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: Roy Hopkins <rhopkins@suse.de>
+Cc: Guenter Roeck <linux@roeck-us.net>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Joel Fernandes <joel@joelfernandes.org>,
+	Pavel Machek <pavel@denx.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	rcu@vger.kernel.org, Ingo Molnar <mingo@kernel.org>
 Subject: Re: scheduler problems in -next (was: Re: [PATCH 6.4 000/227]
  6.4.7-rc1 review)
-From: Roy Hopkins <rhopkins@suse.de>
-To: paulmck@kernel.org, Guenter Roeck <linux@roeck-us.net>
-Cc: Peter Zijlstra <peterz@infradead.org>, Joel Fernandes
- <joel@joelfernandes.org>, Pavel Machek <pavel@denx.de>, Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- patches@lists.linux.dev,  linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org,  akpm@linux-foundation.org,
- shuah@kernel.org, patches@kernelci.org,  lkft-triage@lists.linaro.org,
- jonathanh@nvidia.com, f.fainelli@gmail.com,  sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
- rcu@vger.kernel.org, Ingo Molnar <mingo@kernel.org>
-Date: Wed, 02 Aug 2023 14:57:56 +0100
-In-Reply-To: <8215f037-63e9-4e92-8403-c5431ada9cc9@paulmck-laptop>
-References: <3da81a5c-700b-8e21-1bde-27dd3a0b8945@roeck-us.net>
-	 <20230731141934.GK29590@hirez.programming.kicks-ass.net>
-	 <20230731143954.GB37820@hirez.programming.kicks-ass.net>
-	 <f5a18aa3-9db7-6ad2-33d5-3335a18e4e2f@roeck-us.net>
-	 <20230731145232.GM29590@hirez.programming.kicks-ass.net>
-	 <7ff2a2393d78275b14ff867f3af902b5d4b93ea2.camel@suse.de>
-	 <20230731161452.GA40850@hirez.programming.kicks-ass.net>
-	 <baa58a8e-54f0-2309-b34e-d62999a452a1@roeck-us.net>
-	 <20230731211517.GA51835@hirez.programming.kicks-ass.net>
-	 <a05743a3-4dec-6af7-302f-d1d2a0db7d3e@roeck-us.net>
-	 <8215f037-63e9-4e92-8403-c5431ada9cc9@paulmck-laptop>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-User-Agent: Evolution 3.46.4 
+Message-ID: <063a2eba-6b5e-40bc-afd4-7d26f12762e4@paulmck-laptop>
+Reply-To: paulmck@kernel.org
+References: <20230731143954.GB37820@hirez.programming.kicks-ass.net>
+ <f5a18aa3-9db7-6ad2-33d5-3335a18e4e2f@roeck-us.net>
+ <20230731145232.GM29590@hirez.programming.kicks-ass.net>
+ <7ff2a2393d78275b14ff867f3af902b5d4b93ea2.camel@suse.de>
+ <20230731161452.GA40850@hirez.programming.kicks-ass.net>
+ <baa58a8e-54f0-2309-b34e-d62999a452a1@roeck-us.net>
+ <20230731211517.GA51835@hirez.programming.kicks-ass.net>
+ <a05743a3-4dec-6af7-302f-d1d2a0db7d3e@roeck-us.net>
+ <8215f037-63e9-4e92-8403-c5431ada9cc9@paulmck-laptop>
+ <4f18d78411a5477690640a168e0e5d9f28d1c015.camel@suse.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4f18d78411a5477690640a168e0e5d9f28d1c015.camel@suse.de>
 
-T24gVHVlLCAyMDIzLTA4LTAxIGF0IDEyOjExIC0wNzAwLCBQYXVsIEUuIE1jS2VubmV5IHdyb3Rl
-Ogo+IE9uIFR1ZSwgQXVnIDAxLCAyMDIzIGF0IDEwOjMyOjQ1QU0gLTA3MDAsIEd1ZW50ZXIgUm9l
-Y2sgd3JvdGU6Cj4gCj4gCj4gUGxlYXNlIHNlZSBiZWxvdyBmb3IgbXkgcHJlZmVycmVkIGZpeC7C
-oCBEb2VzIHRoaXMgd29yayBmb3IgeW91IGd1eXM/Cj4gCj4gQmFjayB0byBmaWd1cmluZyBvdXQg
-d2h5IHJlY2VudCBrZXJuZWxzIG9jY2FzaW9uYWxseSB0byBibG93IHVwIGFsbAo+IHJjdXRvcnR1
-cmUgZ3Vlc3QgT1Nlcy4uLgo+IAo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqBUaGFueCwgUGF1bAo+IAo+IC0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQo+IAo+
-IGRpZmYgLS1naXQgYS9rZXJuZWwvcmN1L3Rhc2tzLmggYi9rZXJuZWwvcmN1L3Rhc2tzLmgKPiBp
-bmRleCA3Mjk0YmU2MjcyN2IuLjJkNWI4Mzg1YzM1NyAxMDA2NDQKPiAtLS0gYS9rZXJuZWwvcmN1
-L3Rhc2tzLmgKPiArKysgYi9rZXJuZWwvcmN1L3Rhc2tzLmgKPiBAQCAtNTcwLDEwICs1NzAsMTIg
-QEAgc3RhdGljIHZvaWQgcmN1X3Rhc2tzX29uZV9ncChzdHJ1Y3QgcmN1X3Rhc2tzICpydHAsIGJv
-b2wgbWlkYm9vdCkKPiDCoMKgwqDCoMKgwqDCoMKgaWYgKHVubGlrZWx5KG1pZGJvb3QpKSB7Cj4g
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBuZWVkZ3BjYiA9IDB4MjsKPiDCoMKgwqDC
-oMKgwqDCoMKgfSBlbHNlIHsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgbXV0ZXhf
-dW5sb2NrKCZydHAtPnRhc2tzX2dwX211dGV4KTsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoHNldF90YXNrc19ncF9zdGF0ZShydHAsIFJUR1NfV0FJVF9DQlMpOwo+IMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgcmN1d2FpdF93YWl0X2V2ZW50KCZydHAtPmNic193YWl0
-LAo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIChuZWVkZ3BjYiA9IHJjdV90YXNrc19uZWVkX2dwY2IocnRwKSksCj4g
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgVEFTS19JRExFKTsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-bXV0ZXhfbG9jaygmcnRwLT50YXNrc19ncF9tdXRleCk7Cj4gwqDCoMKgwqDCoMKgwqDCoH0KPiDC
-oAo+IMKgwqDCoMKgwqDCoMKgwqBpZiAobmVlZGdwY2IgJiAweDIpIHsKCllvdXIgcHJlZmVycmVk
-IGZpeCBsb29rcyBnb29kIHRvIG1lLgoKV2l0aCB0aGUgb3JpZ2luYWwgY29kZSBJIGNhbiBxdWl0
-ZSBlYXNpbHkgcmVwcm9kdWNlIHRoZSBwcm9ibGVtIG9uIG15wqAKc3lzdGVtIGV2ZXJ5IDEwIHJl
-Ym9vdHMgb3Igc28uIFdpdGggeW91ciBmaXggaW4gcGxhY2UgdGhlIHByb2JsZW0gbm8KbG9uZ2Vy
-IG9jY3Vycy4KCgo=
+On Wed, Aug 02, 2023 at 02:57:56PM +0100, Roy Hopkins wrote:
+> On Tue, 2023-08-01 at 12:11 -0700, Paul E. McKenney wrote:
+> > On Tue, Aug 01, 2023 at 10:32:45AM -0700, Guenter Roeck wrote:
+> > 
+> > 
+> > Please see below for my preferred fix.  Does this work for you guys?
+> > 
+> > Back to figuring out why recent kernels occasionally to blow up all
+> > rcutorture guest OSes...
+> > 
+> >                                                         Thanx, Paul
+> > 
+> > ------------------------------------------------------------------------
+> > 
+> > diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+> > index 7294be62727b..2d5b8385c357 100644
+> > --- a/kernel/rcu/tasks.h
+> > +++ b/kernel/rcu/tasks.h
+> > @@ -570,10 +570,12 @@ static void rcu_tasks_one_gp(struct rcu_tasks *rtp, bool midboot)
+> >         if (unlikely(midboot)) {
+> >                 needgpcb = 0x2;
+> >         } else {
+> > +               mutex_unlock(&rtp->tasks_gp_mutex);
+> >                 set_tasks_gp_state(rtp, RTGS_WAIT_CBS);
+> >                 rcuwait_wait_event(&rtp->cbs_wait,
+> >                                    (needgpcb = rcu_tasks_need_gpcb(rtp)),
+> >                                    TASK_IDLE);
+> > +               mutex_lock(&rtp->tasks_gp_mutex);
+> >         }
+> >  
+> >         if (needgpcb & 0x2) {
+> 
+> Your preferred fix looks good to me.
+> 
+> With the original code I can quite easily reproduce the problem on my 
+> system every 10 reboots or so. With your fix in place the problem no
+> longer occurs.
 
+Very good, thank you!  May I add your Tested-by?
+
+							Thanx, Paul
