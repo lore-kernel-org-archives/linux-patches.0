@@ -1,95 +1,210 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019ED63BC;
-	Thu,  3 Aug 2023 18:57:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B82C433C8;
-	Thu,  3 Aug 2023 18:57:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1691089040;
-	bh=nN9RdtMuoDd4BD4OQl9XyjQwduTf3ta0lGqm9Vxh4KQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HPYn2pVmAphcPEpAJXGdDTYA7do39vTJQkvqiYp2ELqMboQWxzOh3k0BCIjEuVzgV
-	 FmPGXmWBa31A1Z4bJTbmDiCqpP3YcREdbLhOYpFFkKYoxUHHMBfOfnLsUCpiHIMNJ4
-	 +/kvP4uVanX5VWycEZKyKXHe+HeT5bHpOd7ezDOZk++i9WezxeHRuq40IiQf9xmHVK
-	 /fZAwmWqvpXzWiPjYmEStznNW1PjK6iJbFzFt+M4qMDA2BuGP526VQ4NYMwCRiISnx
-	 ABfjTKjurAmj5+njMsYMmkJfL19g4YbZM3a48pHf4S1ZBF+yI6rQze/ve9+3T5kISM
-	 /annht/cjjyZw==
-Date: Thu, 3 Aug 2023 11:57:18 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Kees Cook <keescook@chromium.org>
-Cc: isdn@linux-pingi.de, netdev@vger.kernel.org, samitolvanen@google.com,
-	llvm@lists.linux.dev, patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>
-Subject: Re: [PATCH] mISDN: Update parameter type of dsp_cmx_send()
-Message-ID: <20230803185718.GA2864317@dev-arch.thelio-3990X>
-References: <20230802-fix-dsp_cmx_send-cfi-failure-v1-1-2f2e79b0178d@kernel.org>
- <202308021255.9A6328D@keescook>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3642591C
+	for <patches@lists.linux.dev>; Thu,  3 Aug 2023 19:18:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=t0TbnvGpxcMLXyXHUZ0m2svnUuAhcbLL5LDUOoEa528=; b=DSDXYpbnNh6FmWxcNrgUyz+uKZ
+	bqOs9CSFijKfMsHTZdXaPgw5Mv3MtReHduoW1qwYLDO70dCJtgpQrqhkCsJ8Ps5aBeuGsCGkU89WV
+	L33LwfwT1lANgMFLCFPbWbPc3gNatbmTLyl4LjeOcmFM4TB7BXXd+B8dkJ0vzUEN4EvVoka3ryddG
+	HHjr87Mhl7HQlGYBqRdN58p9uAjzDZhPQtl9VKSP+ld7jmycL9CgLy/ssN/h1pbJohTozREAa7B1k
+	n2gh+XvVts+rvyNFO5MMmv3HB1KuPZ73SO49cpQ0l+bHyGkyGQdUF+rSli39tyeNx7Yj+TsIey+2P
+	kEdUZZ3w==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1qRdqN-00Aj2k-0L;
+	Thu, 03 Aug 2023 19:18:48 +0000
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: fstests@vger.kernel.org,
+	aalbersh@redhat.com,
+	chandan.babu@oracle.com,
+	amir73il@gmail.com,
+	josef@toxicpanda.com,
+	djwong@kernel.org
+Cc: linux-fsdevel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH v3] fstests: add helper to canonicalize devices used to enable persistent disks
+Date: Thu,  3 Aug 2023 12:18:41 -0700
+Message-Id: <20230803191841.2556370-1-mcgrof@kernel.org>
+X-Mailer: git-send-email 2.38.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <202308021255.9A6328D@keescook>
+Content-Transfer-Encoding: 8bit
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Wed, Aug 02, 2023 at 12:59:12PM -0700, Kees Cook wrote:
-> On Wed, Aug 02, 2023 at 10:40:29AM -0700, Nathan Chancellor wrote:
-> > When booting a kernel with CONFIG_MISDN_DSP=y and CONFIG_CFI_CLANG=y,
-> > there is a failure when dsp_cmx_send() is called indirectly from
-> > call_timer_fn():
-> > 
-> >   [    0.371412] CFI failure at call_timer_fn+0x2f/0x150 (target: dsp_cmx_send+0x0/0x530; expected type: 0x92ada1e9)
-> > 
-> > The function pointer prototype that call_timer_fn() expects is
-> > 
-> >   void (*fn)(struct timer_list *)
-> > 
-> > whereas dsp_cmx_send() has a parameter type of 'void *', which causes
-> > the control flow integrity checks to fail because the parameter types do
-> > not match.
-> > 
-> > Change dsp_cmx_send()'s parameter type to be 'struct timer_list' to
-> > match the expected prototype. The argument is unused anyways, so this
-> > has no functional change, aside from avoiding the CFI failure.
-> > 
-> > Reported-by: kernel test robot <oliver.sang@intel.com>
-> > Closes: https://lore.kernel.org/oe-lkp/202308020936.58787e6c-oliver.sang@intel.com
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > ---
-> > I am not sure if there is an appropriate fixes tag for this, I see this
-> > area was modified by commit e313ac12eb13 ("mISDN: Convert timers to use
-> > timer_setup()") but I don't think it was the original source of the
-> > issue. It could also be commit cf68fffb66d6 ("add support for Clang
-> > CFI") but I think that just exposes the problem/makes it fatal.
-> 
-> Oh man. I missed one! How did I miss that one? I think "Fixes:
-> e313ac12eb13" is the most correct. That was the patch that went through
-> trying to fix all the prototypes, and _did_ fix all the _other_ prototypes
-> in there.
+The filesystem configuration file does not allow you to use symlinks to
+real devices given the existing sanity checks verify that the target end
+device matches the source. Device mapper links work but not symlinks for
+real drives do not.
 
-Sounds reasonable to me. netdev folks, if you intend to take this, do
-you want a v2 or can you pick it up with
+Using a symlink is desirable if you want to enable persistent tests
+across reboots. For example you may want to use /dev/disk/by-id/nvme-eui.*
+so to ensure that the same drives are used even after reboot. This
+is very useful if you are testing for example with a virtualized
+environment and are using PCIe passthrough with other qemu NVMe drives
+with one or many NVMe drives.
 
-Fixes: e313ac12eb13 ("mISDN: Convert timers to use timer_setup()")
+To enable support just add a helper to canonicalize devices prior to
+running the tests.
 
-added on top?
+This allows one test runner, kdevops, which I just extended with
+support to use real NVMe drives it has support now to use nvme EUI
+symlinks and fallbacks to nvme model + serial symlinks as not all
+NVMe drives support EUIs. The drives it uses for the filesystem
+configuration optionally is with NVMe eui symlinks so to allow
+the same drives to be used over reboots.
 
-> Thanks for the patch!
-> 
-> Reviewed-by: Kees Cook <keescook@chromium.org>
-> 
-> > 
-> > Also not sure who should take this or how soon it should go in, I'll let
-> > that to maintainers to figure out :)
-> 
-> If no one speaks up, I'll snag it, but since this got aimed at netdev, I
-> suspect someone may pick it up. :)
+For instance this works today with real nvme drives:
 
-Sounds good, I do see it in the netdev patchwork, so we can watch it at
-least.
+mkfs.xfs -f /dev/nvme0n1
+mount /dev/nvme0n1 /mnt
+TEST_DIR=/mnt TEST_DEV=/dev/nvme0n1 FSTYP=xfs ./check generic/110
 
-Cheers,
-Nathan
+FSTYP         -- xfs (debug)
+PLATFORM      -- Linux/x86_64 flax-mtr01 6.5.0-rc3-djwx #rc3 SMP PREEMPT_DYNAMIC Wed Jul 26 14:26:48 PDT 2023
+
+generic/110        2s
+Ran: generic/110
+Passed all 1 tests
+
+But this does not:
+
+TEST_DIR=/mnt TEST_DEV=/dev/disk/by-id/nvme-eui.0035385411904c1e FSTYP=xfs ./check generic/110
+mount: /mnt: /dev/disk/by-id/nvme-eui.0035385411904c1e already mounted on /mnt.
+common/rc: retrying test device mount with external set
+mount: /mnt: /dev/disk/by-id/nvme-eui.0035385411904c1e already mounted on /mnt.
+common/rc: could not mount /dev/disk/by-id/nvme-eui.0035385411904c1e on /mnt
+
+umount /mnt
+TEST_DIR=/mnt TEST_DEV=/dev/disk/by-id/nvme-eui.0035385411904c1e FSTYP=xfs ./check generic/110
+TEST_DEV=/dev/disk/by-id/nvme-eui.0035385411904c1e is mounted but not on TEST_DIR=/mnt - aborting
+Already mounted result:
+/dev/disk/by-id/nvme-eui.0035385411904c1e /mnt
+
+This fixes this. This allows the same real drives for a test to be
+used over and over after reboots.
+
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
+
+Changes on v3:
+
+  - local varible for tmp variable as suggested by Zorro
+  - use quotes in all places as suggested by Zorro
+
+Changes on v2:
+
+ - Enhanced the commit log to describe the existing status quo where
+   at least device mapper symlinks work but not for real drives. Also
+   provide an example output of the issue and use case as implied by
+   Darrick.
+ - Added CANON_DEVS to disable this by default, document it
+ - simplify _canonicalize_devices() with as many one liners as possible
+ - use readlink -e because my history scavanging has found it has existed for
+   7 years longer thjan realpath -e support. Documen this on the commit
+   log as well.
+
+ README        |  3 +++
+ check         |  1 +
+ common/config | 32 +++++++++++++++++++++++++++++++-
+ 3 files changed, 35 insertions(+), 1 deletion(-)
+
+diff --git a/README b/README
+index 1ca506492bf0..97ef63d6d693 100644
+--- a/README
++++ b/README
+@@ -268,6 +268,9 @@ Misc:
+    this option is supported for all filesystems currently only -overlay is
+    expected to run without issues. For other filesystems additional patches
+    and fixes to the test suite might be needed.
++ - set CANON_DEVS=yes to canonicalize device symlinks. This will let you
++   for example use something like TEST_DEV/dev/disk/by-id/nvme-* so the
++   device remains persistent between reboots. This is disabled by default.
+ 
+ ______________________
+ USING THE FSQA SUITE
+diff --git a/check b/check
+index 0bf5b22e061a..577e09655844 100755
+--- a/check
++++ b/check
+@@ -711,6 +711,7 @@ function run_section()
+ 	fi
+ 
+ 	get_next_config $section
++	_canonicalize_devices
+ 
+ 	mkdir -p $RESULT_BASE
+ 	if [ ! -d $RESULT_BASE ]; then
+diff --git a/common/config b/common/config
+index 6c8cb3a5ba68..d1ea7fe07a32 100644
+--- a/common/config
++++ b/common/config
+@@ -25,6 +25,9 @@
+ # KEEP_DMESG -      whether to keep all dmesg for each test case.
+ #                   yes: keep all dmesg
+ #                   no: only keep dmesg with error/warning (default)
++# CANON_DEVS -      whether or not to canonicalize device symlinks
++#                   yes: canonicalize device symlinks
++#                   no (default) do not canonicalize device if they are symlinks
+ #
+ # - These can be added to $HOST_CONFIG_DIR (witch default to ./config)
+ #   below or a separate local configuration file can be used (using
+@@ -644,6 +647,32 @@ _canonicalize_mountpoint()
+ 	echo "$parent/$base"
+ }
+ 
++# Enables usage of /dev/disk/by-id/ symlinks to persist target devices
++# over reboots
++_canonicalize_devices()
++{
++	if [ "$CANON_DEVS" != "yes" ]; then
++		return
++	fi
++	[ -L "$TEST_DEV" ]	&& TEST_DEV=$(readlink -e "$TEST_DEV")
++	[ -L "$SCRATCH_DEV" ]	&& SCRATCH_DEV=$(readlink -e "$SCRATCH_DEV")
++	[ -L "$TEST_LOGDEV" ]	&& TEST_LOGDEV=$(readlink -e "$TEST_LOGDEV")
++	[ -L "$TEST_RTDEV" ]	&& TEST_RTDEV=$(readlink -e "$TEST_RTDEV")
++	[ -L "$SCRATCH_RTDEV" ]	&& SCRATCH_RTDEV=$(readlink -e "$SCRATCH_RTDEV")
++	[ -L "$LOGWRITES_DEV" ]	&& LOGWRITES_DEV=$(readlink -e "$LOGWRITES_DEV")
++	if [ ! -z "$SCRATCH_DEV_POOL" ]; then
++		local NEW_SCRATCH_POOL=""
++		for i in $SCRATCH_DEV_POOL; do
++			if [ -L $i ]; then
++				NEW_SCRATCH_POOL="$NEW_SCRATCH_POOL $(readlink -e $i)"
++			else
++				NEW_SCRATCH_POOL="$NEW_SCRATCH_POOL $i)"
++			fi
++		done
++		SCRATCH_DEV_POOL="$NEW_SCRATCH_POOL"
++	fi
++}
++
+ # On check -overlay, for the non multi section config case, this
+ # function is called on every test, before init_rc().
+ # When SCRATCH/TEST_* vars are defined in config file, config file
+@@ -774,7 +803,6 @@ get_next_config() {
+ 	fi
+ 
+ 	parse_config_section $1
+-
+ 	if [ ! -z "$OLD_FSTYP" ] && [ $OLD_FSTYP != $FSTYP ]; then
+ 		[ -z "$MOUNT_OPTIONS" ] && _mount_opts
+ 		[ -z "$TEST_FS_MOUNT_OPTS" ] && _test_mount_opts
+@@ -890,5 +918,7 @@ else
+ 	fi
+ fi
+ 
++_canonicalize_devices
++
+ # make sure this script returns success
+ /bin/true
+-- 
+2.39.2
+
