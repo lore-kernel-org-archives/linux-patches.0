@@ -1,98 +1,95 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB9F24161;
-	Thu,  3 Aug 2023 18:14:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3B0C433C8;
-	Thu,  3 Aug 2023 18:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019ED63BC;
+	Thu,  3 Aug 2023 18:57:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B82C433C8;
+	Thu,  3 Aug 2023 18:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1691086488;
-	bh=DVr3vaTop5aEKN2dLg5oZiV7ia5I3foLhPl+u/44NRs=;
-	h=From:Date:Subject:To:Cc:From;
-	b=n7hK2tD4MHYvXJVjnymrwlE2xwawPQaiCptAbypypiqVPnACyrbQoRvIXJRyXoo2J
-	 93zFUjaqiB1gCCZD1curb8hO3l4qcngmj4Rt2doGTwE1ZzM/4NoRqNK5Er2XggA1mw
-	 wd113T5Kc927+S0MFJ6PNBOigste8fF2q85qmoJvPMoAL3fTO4078Tgs21opo+n/P2
-	 1EJYW5O1u+ywZrwjQlDsij5UVfx1gkxDCwMAaqY2SABWE5DzgZQVKRc2hEpl/fkSig
-	 UFm6ofo89sg47+CRlk+Uu3ZdBRwjDdAdbI18b7B3NVrRyi48Vrc//4uad8vb0wGuLP
-	 qp6Bq+BTRh/Mw==
+	s=k20201202; t=1691089040;
+	bh=nN9RdtMuoDd4BD4OQl9XyjQwduTf3ta0lGqm9Vxh4KQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=HPYn2pVmAphcPEpAJXGdDTYA7do39vTJQkvqiYp2ELqMboQWxzOh3k0BCIjEuVzgV
+	 FmPGXmWBa31A1Z4bJTbmDiCqpP3YcREdbLhOYpFFkKYoxUHHMBfOfnLsUCpiHIMNJ4
+	 +/kvP4uVanX5VWycEZKyKXHe+HeT5bHpOd7ezDOZk++i9WezxeHRuq40IiQf9xmHVK
+	 /fZAwmWqvpXzWiPjYmEStznNW1PjK6iJbFzFt+M4qMDA2BuGP526VQ4NYMwCRiISnx
+	 ABfjTKjurAmj5+njMsYMmkJfL19g4YbZM3a48pHf4S1ZBF+yI6rQze/ve9+3T5kISM
+	 /annht/cjjyZw==
+Date: Thu, 3 Aug 2023 11:57:18 -0700
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 03 Aug 2023 11:14:42 -0700
-Subject: [PATCH] lib: test_scanf: Add explicit type cast to result
- initialization in test_number_prefix()
+To: Kees Cook <keescook@chromium.org>
+Cc: isdn@linux-pingi.de, netdev@vger.kernel.org, samitolvanen@google.com,
+	llvm@lists.linux.dev, patches@lists.linux.dev,
+	kernel test robot <oliver.sang@intel.com>
+Subject: Re: [PATCH] mISDN: Update parameter type of dsp_cmx_send()
+Message-ID: <20230803185718.GA2864317@dev-arch.thelio-3990X>
+References: <20230802-fix-dsp_cmx_send-cfi-failure-v1-1-2f2e79b0178d@kernel.org>
+ <202308021255.9A6328D@keescook>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230803-test_scanf-wconstant-conversion-v1-1-74da994dedbc@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAJHuy2QC/x2NywqDMBBFf0Vm7UBqKNb+ShHJY1JnM5ZMUEH8d
- 1N35yzOvQcoZSaFd3NAppWVF6nyaBsIs5MvIcfq0JnOmpexWEjLpMFJwi0sosVJwQor5X+Lceg
- p+WS9f0aoK79Miff74TOe5wUM3bQecQAAAA==
-To: pmladek@suse.com, rostedt@goodmis.org
-Cc: senozhatsky@chromium.org, andriy.shevchenko@linux.intel.com, 
- linux@rasmusvillemoes.dk, ndesaulniers@google.com, trix@redhat.com, 
- linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2281; i=nathan@kernel.org;
- h=from:subject:message-id; bh=DVr3vaTop5aEKN2dLg5oZiV7ia5I3foLhPl+u/44NRs=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDCmn301/wDvtlZH5Zb4DV5+lduXoX/qgX1+y/KOOXdgFP
- rGPbkv1O0pZGMQ4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEPqUzMuyqNjt2tkBUdqFR
- CZugIV/xNsXY1CPqahmpW+eWvLcUfcvI0Hc0Tq1LtjP7+hTRXXsWTjd7d3Lpod9BWXfDm6ZqfnW
- YzA8A
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <202308021255.9A6328D@keescook>
 
-A recent change in clang allows it to consider more expressions as
-compile time constants, which causes it to point out an implicit
-conversion in the scanf tests:
+On Wed, Aug 02, 2023 at 12:59:12PM -0700, Kees Cook wrote:
+> On Wed, Aug 02, 2023 at 10:40:29AM -0700, Nathan Chancellor wrote:
+> > When booting a kernel with CONFIG_MISDN_DSP=y and CONFIG_CFI_CLANG=y,
+> > there is a failure when dsp_cmx_send() is called indirectly from
+> > call_timer_fn():
+> > 
+> >   [    0.371412] CFI failure at call_timer_fn+0x2f/0x150 (target: dsp_cmx_send+0x0/0x530; expected type: 0x92ada1e9)
+> > 
+> > The function pointer prototype that call_timer_fn() expects is
+> > 
+> >   void (*fn)(struct timer_list *)
+> > 
+> > whereas dsp_cmx_send() has a parameter type of 'void *', which causes
+> > the control flow integrity checks to fail because the parameter types do
+> > not match.
+> > 
+> > Change dsp_cmx_send()'s parameter type to be 'struct timer_list' to
+> > match the expected prototype. The argument is unused anyways, so this
+> > has no functional change, aside from avoiding the CFI failure.
+> > 
+> > Reported-by: kernel test robot <oliver.sang@intel.com>
+> > Closes: https://lore.kernel.org/oe-lkp/202308020936.58787e6c-oliver.sang@intel.com
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > ---
+> > I am not sure if there is an appropriate fixes tag for this, I see this
+> > area was modified by commit e313ac12eb13 ("mISDN: Convert timers to use
+> > timer_setup()") but I don't think it was the original source of the
+> > issue. It could also be commit cf68fffb66d6 ("add support for Clang
+> > CFI") but I think that just exposes the problem/makes it fatal.
+> 
+> Oh man. I missed one! How did I miss that one? I think "Fixes:
+> e313ac12eb13" is the most correct. That was the patch that went through
+> trying to fix all the prototypes, and _did_ fix all the _other_ prototypes
+> in there.
 
-  lib/test_scanf.c:661:2: warning: implicit conversion from 'int' to 'unsigned char' changes value from -168 to 88 [-Wconstant-conversion]
-    661 |         test_number_prefix(unsigned char,       "0xA7", "%2hhx%hhx", 0, 0xa7, 2, check_uchar);
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  lib/test_scanf.c:609:29: note: expanded from macro 'test_number_prefix'
-    609 |         T result[2] = {~expect[0], ~expect[1]};                                 \
-        |                       ~            ^~~~~~~~~~
-  1 warning generated.
+Sounds reasonable to me. netdev folks, if you intend to take this, do
+you want a v2 or can you pick it up with
 
-The result of the bitwise negation is the type of the operand after
-going through the integer promotion rules, so this truncation is
-expected but harmless, as the initial values in the result array get
-overwritten by _test() anyways. Add an explicit cast to the expected
-type in test_number_prefix() to silence the warning. There is no
-functional change, as all the tests still pass with GCC 13.1.0 and clang
-18.0.0.
+Fixes: e313ac12eb13 ("mISDN: Convert timers to use timer_setup()")
 
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1899
-Link: https://github.com/llvm/llvm-project/commit/610ec954e1f81c0e8fcadedcd25afe643f5a094e
-Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- lib/test_scanf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+added on top?
 
-diff --git a/lib/test_scanf.c b/lib/test_scanf.c
-index b620cf7de503..10d557b3738f 100644
---- a/lib/test_scanf.c
-+++ b/lib/test_scanf.c
-@@ -606,7 +606,7 @@ static void __init numbers_slice(void)
- #define test_number_prefix(T, str, scan_fmt, expect0, expect1, n_args, fn)	\
- do {										\
- 	const T expect[2] = { expect0, expect1 };				\
--	T result[2] = {~expect[0], ~expect[1]};					\
-+	T result[2] = {(T)~expect[0], (T)~expect[1]};				\
- 										\
- 	_test(fn, &expect, str, scan_fmt, n_args, &result[0], &result[1]);	\
- } while (0)
+> Thanks for the patch!
+> 
+> Reviewed-by: Kees Cook <keescook@chromium.org>
+> 
+> > 
+> > Also not sure who should take this or how soon it should go in, I'll let
+> > that to maintainers to figure out :)
+> 
+> If no one speaks up, I'll snag it, but since this got aimed at netdev, I
+> suspect someone may pick it up. :)
 
----
-base-commit: 5d0c230f1de8c7515b6567d9afba1f196fb4e2f4
-change-id: 20230803-test_scanf-wconstant-conversion-d97efbf3bb5d
+Sounds good, I do see it in the netdev patchwork, so we can watch it at
+least.
 
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Cheers,
+Nathan
