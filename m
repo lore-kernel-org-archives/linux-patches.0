@@ -1,57 +1,66 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC4C2590D
-	for <patches@lists.linux.dev>; Thu,  3 Aug 2023 21:58:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Type:MIME-Version:
-	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=ZHbIryY9gskXGXB8j+RYa0B+c1niHcG/r49470j3gDA=; b=CCk6zcKiq3oy2oHn0qof4F9g9E
-	4SKcH7gP2iahHtuGcZELjx1Yf6oz71X90NM00FVDhcXa4zdooGNjDBlQn4tqalSmIZf+eGkYMM7uA
-	uSY2q99nBRhPBiYLR3SfbtxO2cAL6Y+91DO4/TCjBCREBlceFfSlg2WgHsLK/CK1kiaR9ndC4nj+6
-	4EXlS5CIDJcf3eAI7KnHO3kNNlEkWWLwWCgW8BzJwHpJNt2RUAKY+u9QROZwhaiWqv6K2dRufbTS/
-	XB/7tJdmOVeHr7Zo0gbN/FtK4ot7CWkZKVK0mcpzbo5iScvAxzUQ4rndnQK7pxEcP25UMdH9GZhfx
-	g/dwfLGg==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1qRgKU-00Ax9r-2r;
-	Thu, 03 Aug 2023 21:57:58 +0000
-Date: Thu, 3 Aug 2023 14:57:58 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: rt@kernel.org, chandan.babu@oracle.com, jlayton@kernel.org,
-	amir73il@gmail.com, josef@toxicpanda.com, a.manzanares@samsung.com
-Cc: patches@lists.linux.dev
-Subject: Mailing list request for kdevops enable persistent disks
-Message-ID: <ZMwi5oDiAKGpPh8B@bombadil.infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962067E5;
+	Fri,  4 Aug 2023 01:20:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0F866C433CA;
+	Fri,  4 Aug 2023 01:20:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1691112021;
+	bh=NyQViIbcv2wtLMjRQWh1tgUGameZLLC2Kz6PfNBMJig=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=aBEZdPjv83k/U64YozPn99tGBeB5Ed6cS7GO66MOW97NSfwjbkDl8s5fJL7e6Hy+G
+	 byTl+KhIfxZIHQUBRLvkwyl1yIpyhP/CnLcwD+zAcp7R03sGMv56kREGXq0t0YnlAc
+	 ceMU1oIkiEI/lBFJEg1ERlou0NpmF8d19xNpErbIWp28eRDhN7tFA/c8FVVBBTDeUM
+	 D790C1qhgknQadHhVBNQOyfNitufKAM75x49VugELNa/fOCzenin55F945BtJSjPAt
+	 qXz6hKHQVwc1MojF1fNb+wWV+a3vMcLfSOxP2/6+J9q+UAflGcVGV9AV+73pkjvLHM
+	 sPYh2EZyuwYBQ==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E4965C595C1;
+	Fri,  4 Aug 2023 01:20:20 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] mISDN: Update parameter type of dsp_cmx_send()
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <169111202093.20038.18092602618780856244.git-patchwork-notify@kernel.org>
+Date: Fri, 04 Aug 2023 01:20:20 +0000
+References: <20230802-fix-dsp_cmx_send-cfi-failure-v1-1-2f2e79b0178d@kernel.org>
+In-Reply-To: <20230802-fix-dsp_cmx_send-cfi-failure-v1-1-2f2e79b0178d@kernel.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: isdn@linux-pingi.de, netdev@vger.kernel.org, keescook@chromium.org,
+ samitolvanen@google.com, llvm@lists.linux.dev, patches@lists.linux.dev,
+ oliver.sang@intel.com
 
-kdevops [0]  has picked up momentum over the years to the point we now have
-a community and reviewing patches is becoming more important. Although
-we are on github and gitlab and share an organization together I just
-noticed 3 pull requests have gone unnoticed for a while. So I'd prefer
-to just avoid web GUI pull requests and instead we deal with patches
-and whoever of us can first review patches and:
+Hello:
 
-b4 am -s message-id
-git am foo.mbx
+This patch was applied to netdev/net.git (main)
+by Jakub Kicinski <kuba@kernel.org>:
 
-Will get to apply patches. We can simply divide an conquer later and
-if needed send pull request etc, but the web gui crap, I'd really love
-to avoid it.
+On Wed, 02 Aug 2023 10:40:29 -0700 you wrote:
+> When booting a kernel with CONFIG_MISDN_DSP=y and CONFIG_CFI_CLANG=y,
+> there is a failure when dsp_cmx_send() is called indirectly from
+> call_timer_fn():
+> 
+>   [    0.371412] CFI failure at call_timer_fn+0x2f/0x150 (target: dsp_cmx_send+0x0/0x530; expected type: 0x92ada1e9)
+> 
+> The function pointer prototype that call_timer_fn() expects is
+> 
+> [...]
 
-But we need a list. Otherwise we gotta start Cc'ing everyone.
+Here is the summary with links:
+  - mISDN: Update parameter type of dsp_cmx_send()
+    https://git.kernel.org/netdev/net/c/1696ec865401
 
-Although we could abuse patches@lists.linux.dev it seems the timing
-is right for a mailing list dedicated for kdevops. Could we have one?
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
-[0] https://github.com/linux-kdevops/kdevops
 
-  Luis
