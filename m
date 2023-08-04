@@ -1,81 +1,72 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72923C14A;
-	Fri,  4 Aug 2023 14:49:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52AF6C433C9;
-	Fri,  4 Aug 2023 14:49:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1691160541;
-	bh=xQy0735LbfWCkytz1dXsO/muUeNMgiKlX1anJPkBEHA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nABWueLbmtLzqyKR8KGQBt4dq+v1tebs0Y/Wal5qtcKyPqnR3CKFbEoO94AiCqY3d
-	 yHUP83Dpi2ywalDYsdGEJy3HNXenf59G/4yB33p41bi2iqD/uibNtdNh1rKBDqwVab
-	 VSen3p2K42vvLa0MAEZazwEM7LBV5sICPs0lfqVOtiYsf7RcJEAAR5hrDolRBcQG9Z
-	 JZ3tJ21qi+N8VWoL6pIkTF+21f9UNTyA1f176ocEVZLEqqqZvQG3tAWrkiV2KUBfg1
-	 KTUOAnAM9l/CGkucfhW8VUqLtg3gbB5+76yLi05wIFORbl0XhiNQ3qiBBAvVbIlY0q
-	 ZysMW50RzNp8w==
-Date: Fri, 4 Aug 2023 07:48:59 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: pmladek@suse.com, rostedt@goodmis.org, senozhatsky@chromium.org,
-	linux@rasmusvillemoes.dk, ndesaulniers@google.com, trix@redhat.com,
-	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] lib: test_scanf: Add explicit type cast to result
- initialization in test_number_prefix()
-Message-ID: <20230804144859.GA3027708@dev-arch.thelio-3990X>
-References: <20230803-test_scanf-wconstant-conversion-v1-1-74da994dedbc@kernel.org>
- <ZMx9nDQVaoRwN5oK@smile.fi.intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB6DBE6D
+	for <patches@lists.linux.dev>; Fri,  4 Aug 2023 15:22:38 +0000 (UTC)
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-d18566dc0c1so2531953276.0
+        for <patches@lists.linux.dev>; Fri, 04 Aug 2023 08:22:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1691162558; x=1691767358;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VHCF9fKDds1FJUzMr1VGs/NaEo+emI+wbuPv25TLjM0=;
+        b=MuR2SN4aYLm1GiLgd5/KilEg7EL+2slAUiEErfzFvhBiuRCeNgpTwbFy5KDTHawMxu
+         CoV1hiJ6rp117BeTruF8jpAtu0mmWPF5qcXy2a5uS05Bgii2kK5W6Xq3BQ9A90ogEMjc
+         I6EQ6pWSPOgmM6nT6ohJ03bfwDKsZwL+NtbLwToHjorxsM4xLQ+c7SEhG5OZpA0ykH6y
+         XvNcbCuCygnnMuKLoU5wJZ/5F43L7gQbvn7GYrGhuO0nFzjCl6qAb7i39HFwkBb2eA3a
+         wy3LpzNF9JfNhbwRFxiW1Y+0Btlg/0uuOQULrYCRfHghYCxPKK1j6VsaKzDZDE6mJB21
+         a4Ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691162558; x=1691767358;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VHCF9fKDds1FJUzMr1VGs/NaEo+emI+wbuPv25TLjM0=;
+        b=b8eMbb3RHWJTindl8pu3jUBI1afB3PFbLBBXEyd2crUeeRXDgWkmm6CVBXJUTTz77y
+         HTJOaLkFCzpL8cDawihJ/Bs+pcBR62FzIelOmUWri8/1EkYYxbzl0PF4eKc0VWJYG0kF
+         8Wxq2qMZrCXomCsWDxq4mdWNotAwb9i+kGCcE9VGFpIGBc4K8x44eML30YNPXG5VMgdQ
+         z1dmgANXK5fzByVtVClKeXxOfNN0QmohZHyhvBQRrQ/0c2EAR3M2vjq/J+EGg/vRQp/6
+         5pH1uPYZly+qt+9DipVn97acZbFLmpyGZwNh7wPnHuyfOvGU8xI2e2eq1Oppr252O4h6
+         2niQ==
+X-Gm-Message-State: AOJu0YyBxVA0qBWHu6rgW5AhrLzBSjMWkFdbYADpt9ssVLIToJccA8fm
+	CC92Fypl9bKaAfgdYlNMiXkn4kt7IpDt65vCM08=
+X-Google-Smtp-Source: AGHT+IHSW6KSyVijXTnHLVhmSKfARRFqrCNhdB9A+IPeVKDWWkxJJl5HK6FI2+xM1ORovZnaC2mV8iYnIXcrNPq3Soo=
+X-Received: by 2002:a25:74c6:0:b0:d43:34a5:fbe7 with SMTP id
+ p189-20020a2574c6000000b00d4334a5fbe7mr1829727ybc.26.1691162557951; Fri, 04
+ Aug 2023 08:22:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZMx9nDQVaoRwN5oK@smile.fi.intel.com>
+References: <20230729220317.416771-1-ojeda@kernel.org>
+In-Reply-To: <20230729220317.416771-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Fri, 4 Aug 2023 17:22:26 +0200
+Message-ID: <CANiq72n0ivS9huBQfkPhEANbco3V46KhKRgWAw4Oj6uAMJj0rA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] rust: upgrade to Rust 1.71.0
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
+	Andreas Hindborg <a.hindborg@samsung.com>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Aug 04, 2023 at 07:25:00AM +0300, Andy Shevchenko wrote:
-> On Thu, Aug 03, 2023 at 11:14:42AM -0700, Nathan Chancellor wrote:
-> > A recent change in clang allows it to consider more expressions as
-> > compile time constants, which causes it to point out an implicit
-> > conversion in the scanf tests:
-> > 
-> >   lib/test_scanf.c:661:2: warning: implicit conversion from 'int' to 'unsigned char' changes value from -168 to 88 [-Wconstant-conversion]
-> >     661 |         test_number_prefix(unsigned char,       "0xA7", "%2hhx%hhx", 0, 0xa7, 2, check_uchar);
-> >         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> >   lib/test_scanf.c:609:29: note: expanded from macro 'test_number_prefix'
-> >     609 |         T result[2] = {~expect[0], ~expect[1]};                                 \
-> >         |                       ~            ^~~~~~~~~~
-> >   1 warning generated.
-> > 
-> > The result of the bitwise negation is the type of the operand after
-> > going through the integer promotion rules, so this truncation is
-> > expected but harmless, as the initial values in the result array get
-> > overwritten by _test() anyways. Add an explicit cast to the expected
-> > type in test_number_prefix() to silence the warning. There is no
-> > functional change, as all the tests still pass with GCC 13.1.0 and clang
-> > 18.0.0.
-> 
-> >  do {										\
-> >  	const T expect[2] = { expect0, expect1 };				\
-> > -	T result[2] = {~expect[0], ~expect[1]};					\
-> > +	T result[2] = {(T)~expect[0], (T)~expect[1]};				\
-> 
-> Can we add spaces as above, while at it?
-> 
-> 	T result[2] = { (T)~expect[0], (T)~expect[1] };				\
+On Sun, Jul 30, 2023 at 12:04=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wr=
+ote:
+>
+> This is the second upgrade to the Rust toolchain, from 1.68.2 to 1.71.0
+> (i.e. the latest).
 
-Sure. I can send a v2 on Monday to give folks a chance to chime in with
-other comments.
+When I apply it, I will update to 1.71.1 instead, which got released
+yesterday, since I assume that is what most people would want to use.
+There should be no difference for this patch apart from the version
+number, since `alloc` did not change upstream.
 
-> >  	_test(fn, &expect, str, scan_fmt, n_args, &result[0], &result[1]);	\
-> >  } while (0)
-> 
-> -- 
-> With Best Regards,
-> Andy Shevchenko
-> 
-> 
+Cheers,
+Miguel
