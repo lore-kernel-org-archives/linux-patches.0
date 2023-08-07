@@ -1,72 +1,106 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB6DBE6D
-	for <patches@lists.linux.dev>; Fri,  4 Aug 2023 15:22:38 +0000 (UTC)
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-d18566dc0c1so2531953276.0
-        for <patches@lists.linux.dev>; Fri, 04 Aug 2023 08:22:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691162558; x=1691767358;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VHCF9fKDds1FJUzMr1VGs/NaEo+emI+wbuPv25TLjM0=;
-        b=MuR2SN4aYLm1GiLgd5/KilEg7EL+2slAUiEErfzFvhBiuRCeNgpTwbFy5KDTHawMxu
-         CoV1hiJ6rp117BeTruF8jpAtu0mmWPF5qcXy2a5uS05Bgii2kK5W6Xq3BQ9A90ogEMjc
-         I6EQ6pWSPOgmM6nT6ohJ03bfwDKsZwL+NtbLwToHjorxsM4xLQ+c7SEhG5OZpA0ykH6y
-         XvNcbCuCygnnMuKLoU5wJZ/5F43L7gQbvn7GYrGhuO0nFzjCl6qAb7i39HFwkBb2eA3a
-         wy3LpzNF9JfNhbwRFxiW1Y+0Btlg/0uuOQULrYCRfHghYCxPKK1j6VsaKzDZDE6mJB21
-         a4Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691162558; x=1691767358;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VHCF9fKDds1FJUzMr1VGs/NaEo+emI+wbuPv25TLjM0=;
-        b=b8eMbb3RHWJTindl8pu3jUBI1afB3PFbLBBXEyd2crUeeRXDgWkmm6CVBXJUTTz77y
-         HTJOaLkFCzpL8cDawihJ/Bs+pcBR62FzIelOmUWri8/1EkYYxbzl0PF4eKc0VWJYG0kF
-         8Wxq2qMZrCXomCsWDxq4mdWNotAwb9i+kGCcE9VGFpIGBc4K8x44eML30YNPXG5VMgdQ
-         z1dmgANXK5fzByVtVClKeXxOfNN0QmohZHyhvBQRrQ/0c2EAR3M2vjq/J+EGg/vRQp/6
-         5pH1uPYZly+qt+9DipVn97acZbFLmpyGZwNh7wPnHuyfOvGU8xI2e2eq1Oppr252O4h6
-         2niQ==
-X-Gm-Message-State: AOJu0YyBxVA0qBWHu6rgW5AhrLzBSjMWkFdbYADpt9ssVLIToJccA8fm
-	CC92Fypl9bKaAfgdYlNMiXkn4kt7IpDt65vCM08=
-X-Google-Smtp-Source: AGHT+IHSW6KSyVijXTnHLVhmSKfARRFqrCNhdB9A+IPeVKDWWkxJJl5HK6FI2+xM1ORovZnaC2mV8iYnIXcrNPq3Soo=
-X-Received: by 2002:a25:74c6:0:b0:d43:34a5:fbe7 with SMTP id
- p189-20020a2574c6000000b00d4334a5fbe7mr1829727ybc.26.1691162557951; Fri, 04
- Aug 2023 08:22:37 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA03BA40;
+	Mon,  7 Aug 2023 15:37:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68116C433C7;
+	Mon,  7 Aug 2023 15:37:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1691422630;
+	bh=Tv6VzIDd4SIlArHBmIHp9VMuLmiykxV8wOzCt+lQsFg=;
+	h=From:Date:Subject:To:Cc:From;
+	b=pYDj8uco4GtRbiwzZQvDQuZqaghPK/L/nkZ2pZfUDnIp7eOfWyTy/bnDqck2DL0gE
+	 8/J8KohuKXxPgOci7K/A8KXF6nnLlgrH1pHUpNk8WGaZtjV1crio+MHCk8fjkQBjPb
+	 CY1iec/HzpPhW3xRDtkKQ+TBmSba1u33OsXGvvv1NKSpJnDCZlzFSg+Ukjgldo+khW
+	 hkBW83rtyKiJj5XWDeHSlFTKBJZH9vPpe7hUyAnitqiN0abMEoeBCyXVJwvI15Mck7
+	 IUf3QHQ/Zl76gPtJEiy8nLKVqbBbA+2zPP6WvhNW+FOwHpha5VtoxoPOMx7osRLVXH
+	 uIYxVPT/mrtUg==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 07 Aug 2023 08:36:28 -0700
+Subject: [PATCH v2] lib: test_scanf: Add explicit type cast to result
+ initialization in test_number_prefix()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230729220317.416771-1-ojeda@kernel.org>
-In-Reply-To: <20230729220317.416771-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Fri, 4 Aug 2023 17:22:26 +0200
-Message-ID: <CANiq72n0ivS9huBQfkPhEANbco3V46KhKRgWAw4Oj6uAMJj0rA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] rust: upgrade to Rust 1.71.0
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
-	Andreas Hindborg <a.hindborg@samsung.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230807-test_scanf-wconstant-conversion-v2-1-839ca39083e1@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAHsP0WQC/42NXQrCMBCEr1L22ZU2rdT65D2kSH42bVAS2YSol
+ N7dtCfwbb6B+WaBSOwowqVagCm76IIvIA4V6Fn6idCZwiBq0dbnusVEMd2jlt7iWwcfk/QJS8j
+ E2xbN0JNVtlXqZKBYXkzWffaH21h4djEF/u6Hudna/925wQb7zshh6AwZpa8PYk/PY+AJxnVdf
+ 2Pr4zvPAAAA
+To: pmladek@suse.com, rostedt@goodmis.org
+Cc: senozhatsky@chromium.org, andriy.shevchenko@linux.intel.com, 
+ linux@rasmusvillemoes.dk, ndesaulniers@google.com, trix@redhat.com, 
+ linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ stable@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2585; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=Tv6VzIDd4SIlArHBmIHp9VMuLmiykxV8wOzCt+lQsFg=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCkX+ZfeXZ6ZtHxLf+QKvwd7Tp7avsChcfJjk+TXPnrKr
+ //+fHzwV0cpC4MYB4OsmCJL9WPV44aGc84y3jg1CWYOKxPIEAYuTgGYiMJORoav2WeXuqfc1LXM
+ uqpxcbGBc36moElHXIvRPN9Z00otxX0Y/kpIswrm9WVFdX77Iffx5Yzku3Ou3OPevTddYY1pq5N
+ AOA8A
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Sun, Jul 30, 2023 at 12:04=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wr=
-ote:
->
-> This is the second upgrade to the Rust toolchain, from 1.68.2 to 1.71.0
-> (i.e. the latest).
+A recent change in clang allows it to consider more expressions as
+compile time constants, which causes it to point out an implicit
+conversion in the scanf tests:
 
-When I apply it, I will update to 1.71.1 instead, which got released
-yesterday, since I assume that is what most people would want to use.
-There should be no difference for this patch apart from the version
-number, since `alloc` did not change upstream.
+  lib/test_scanf.c:661:2: warning: implicit conversion from 'int' to 'unsigned char' changes value from -168 to 88 [-Wconstant-conversion]
+    661 |         test_number_prefix(unsigned char,       "0xA7", "%2hhx%hhx", 0, 0xa7, 2, check_uchar);
+        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  lib/test_scanf.c:609:29: note: expanded from macro 'test_number_prefix'
+    609 |         T result[2] = {~expect[0], ~expect[1]};                                 \
+        |                       ~            ^~~~~~~~~~
+  1 warning generated.
 
-Cheers,
-Miguel
+The result of the bitwise negation is the type of the operand after
+going through the integer promotion rules, so this truncation is
+expected but harmless, as the initial values in the result array get
+overwritten by _test() anyways. Add an explicit cast to the expected
+type in test_number_prefix() to silence the warning. There is no
+functional change, as all the tests still pass with GCC 13.1.0 and clang
+18.0.0.
+
+Cc: stable@vger.kernel.org
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1899
+Link: https://github.com/llvm/llvm-project/commit/610ec954e1f81c0e8fcadedcd25afe643f5a094e
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+Changes in v2:
+- Add spaces in initializer to match result (Andy)
+- Add 'Cc: stable', as builds with CONFIG_WERROR will be broken, such as
+  allmodconfig
+- Link to v1: https://lore.kernel.org/r/20230803-test_scanf-wconstant-conversion-v1-1-74da994dedbc@kernel.org
+---
+ lib/test_scanf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/test_scanf.c b/lib/test_scanf.c
+index b620cf7de503..a2707af2951a 100644
+--- a/lib/test_scanf.c
++++ b/lib/test_scanf.c
+@@ -606,7 +606,7 @@ static void __init numbers_slice(void)
+ #define test_number_prefix(T, str, scan_fmt, expect0, expect1, n_args, fn)	\
+ do {										\
+ 	const T expect[2] = { expect0, expect1 };				\
+-	T result[2] = {~expect[0], ~expect[1]};					\
++	T result[2] = { (T)~expect[0], (T)~expect[1] };				\
+ 										\
+ 	_test(fn, &expect, str, scan_fmt, n_args, &result[0], &result[1]);	\
+ } while (0)
+
+---
+base-commit: 5d0c230f1de8c7515b6567d9afba1f196fb4e2f4
+change-id: 20230803-test_scanf-wconstant-conversion-d97efbf3bb5d
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
