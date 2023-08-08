@@ -1,106 +1,170 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA03BA40;
-	Mon,  7 Aug 2023 15:37:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68116C433C7;
-	Mon,  7 Aug 2023 15:37:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1691422630;
-	bh=Tv6VzIDd4SIlArHBmIHp9VMuLmiykxV8wOzCt+lQsFg=;
-	h=From:Date:Subject:To:Cc:From;
-	b=pYDj8uco4GtRbiwzZQvDQuZqaghPK/L/nkZ2pZfUDnIp7eOfWyTy/bnDqck2DL0gE
-	 8/J8KohuKXxPgOci7K/A8KXF6nnLlgrH1pHUpNk8WGaZtjV1crio+MHCk8fjkQBjPb
-	 CY1iec/HzpPhW3xRDtkKQ+TBmSba1u33OsXGvvv1NKSpJnDCZlzFSg+Ukjgldo+khW
-	 hkBW83rtyKiJj5XWDeHSlFTKBJZH9vPpe7hUyAnitqiN0abMEoeBCyXVJwvI15Mck7
-	 IUf3QHQ/Zl76gPtJEiy8nLKVqbBbA+2zPP6WvhNW+FOwHpha5VtoxoPOMx7osRLVXH
-	 uIYxVPT/mrtUg==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 07 Aug 2023 08:36:28 -0700
-Subject: [PATCH v2] lib: test_scanf: Add explicit type cast to result
- initialization in test_number_prefix()
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF4E8492
+	for <patches@lists.linux.dev>; Tue,  8 Aug 2023 09:53:53 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 949231F88D;
+	Tue,  8 Aug 2023 09:53:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1691488432; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=mE/Rlif6LEotEbhW7qL2YSR5OM+dvqWF2/m03kvt0U0=;
+	b=DvAX8NpbbBMqlMysbAG+fvQDGkmOrXEnblMCzccKAo+xL0aP0tDUfc+TKuoKgigvLFBpAm
+	wMIbsOj3BbC3tmFDw56FqL+p6V0HK4/yEs6LkLNlcISHGFGYSZHRlOT7fXERua/QBNiZfA
+	Oom//yntN8wykThY1yl9lnlENpHwyQ8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1691488432;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=mE/Rlif6LEotEbhW7qL2YSR5OM+dvqWF2/m03kvt0U0=;
+	b=lWyzyMKKMywL36JbUfDPqD01yvvtDsJ+aNWVgtYFd44duwe5t5YZyhSH//3WkNBkaKQxrp
+	TP/N0eVhQTSA//Aw==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 60A6A13451;
+	Tue,  8 Aug 2023 09:53:52 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id YNCLFrAQ0mSBJQAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Tue, 08 Aug 2023 09:53:52 +0000
+From: Vlastimil Babka <vbabka@suse.cz>
+To: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Christoph Lameter <cl@linux.com>,
+	David Rientjes <rientjes@google.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>
+Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [RFC v1 0/5] SLUB percpu array caches and maple tree nodes
+Date: Tue,  8 Aug 2023 11:53:43 +0200
+Message-ID: <20230808095342.12637-7-vbabka@suse.cz>
+X-Mailer: git-send-email 2.41.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230807-test_scanf-wconstant-conversion-v2-1-839ca39083e1@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAHsP0WQC/42NXQrCMBCEr1L22ZU2rdT65D2kSH42bVAS2YSol
- N7dtCfwbb6B+WaBSOwowqVagCm76IIvIA4V6Fn6idCZwiBq0dbnusVEMd2jlt7iWwcfk/QJS8j
- E2xbN0JNVtlXqZKBYXkzWffaH21h4djEF/u6Hudna/925wQb7zshh6AwZpa8PYk/PY+AJxnVdf
- 2Pr4zvPAAAA
-To: pmladek@suse.com, rostedt@goodmis.org
-Cc: senozhatsky@chromium.org, andriy.shevchenko@linux.intel.com, 
- linux@rasmusvillemoes.dk, ndesaulniers@google.com, trix@redhat.com, 
- linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- stable@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2585; i=nathan@kernel.org;
- h=from:subject:message-id; bh=Tv6VzIDd4SIlArHBmIHp9VMuLmiykxV8wOzCt+lQsFg=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDCkX+ZfeXZ6ZtHxLf+QKvwd7Tp7avsChcfJjk+TXPnrKr
- //+fHzwV0cpC4MYB4OsmCJL9WPV44aGc84y3jg1CWYOKxPIEAYuTgGYiMJORoav2WeXuqfc1LXM
- uqpxcbGBc36moElHXIvRPN9Z00otxX0Y/kpIswrm9WVFdX77Iffx5Yzku3Ou3OPevTddYY1pq5N
- AOA8A
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Transfer-Encoding: 8bit
 
-A recent change in clang allows it to consider more expressions as
-compile time constants, which causes it to point out an implicit
-conversion in the scanf tests:
+Also available in git, based on v6.5-rc5:
 
-  lib/test_scanf.c:661:2: warning: implicit conversion from 'int' to 'unsigned char' changes value from -168 to 88 [-Wconstant-conversion]
-    661 |         test_number_prefix(unsigned char,       "0xA7", "%2hhx%hhx", 0, 0xa7, 2, check_uchar);
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  lib/test_scanf.c:609:29: note: expanded from macro 'test_number_prefix'
-    609 |         T result[2] = {~expect[0], ~expect[1]};                                 \
-        |                       ~            ^~~~~~~~~~
-  1 warning generated.
+https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git/log/?h=slub-percpu-caches-v1
 
-The result of the bitwise negation is the type of the operand after
-going through the integer promotion rules, so this truncation is
-expected but harmless, as the initial values in the result array get
-overwritten by _test() anyways. Add an explicit cast to the expected
-type in test_number_prefix() to silence the warning. There is no
-functional change, as all the tests still pass with GCC 13.1.0 and clang
-18.0.0.
+At LSF/MM I've mentioned that I see several use cases for introducing
+opt-in percpu arrays for caching alloc/free objects in SLUB. This is my
+first exploration of this idea, speficially for the use case of maple
+tree nodes. We have brainstormed this use case on IRC last week with
+Liam and Matthew and this how I understood the requirements:
 
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1899
-Link: https://github.com/llvm/llvm-project/commit/610ec954e1f81c0e8fcadedcd25afe643f5a094e
-Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-Changes in v2:
-- Add spaces in initializer to match result (Andy)
-- Add 'Cc: stable', as builds with CONFIG_WERROR will be broken, such as
-  allmodconfig
-- Link to v1: https://lore.kernel.org/r/20230803-test_scanf-wconstant-conversion-v1-1-74da994dedbc@kernel.org
----
- lib/test_scanf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+- percpu arrays will be faster thank bulk alloc/free which needs
+  relatively long freelists to work well. Especially in the freeing case
+  we need the nodes to come from the same slab (or small set of those)
 
-diff --git a/lib/test_scanf.c b/lib/test_scanf.c
-index b620cf7de503..a2707af2951a 100644
---- a/lib/test_scanf.c
-+++ b/lib/test_scanf.c
-@@ -606,7 +606,7 @@ static void __init numbers_slice(void)
- #define test_number_prefix(T, str, scan_fmt, expect0, expect1, n_args, fn)	\
- do {										\
- 	const T expect[2] = { expect0, expect1 };				\
--	T result[2] = {~expect[0], ~expect[1]};					\
-+	T result[2] = { (T)~expect[0], (T)~expect[1] };				\
- 										\
- 	_test(fn, &expect, str, scan_fmt, n_args, &result[0], &result[1]);	\
- } while (0)
+- preallocation for the worst case of needed nodes for a tree operation
+  that can't reclaim due to locks is wasteful. We could instead expect
+  that most of the time percpu arrays would satisfy the constained
+  allocations, and in the rare cases it does not we can dip into
+  GFP_ATOMIC reserves temporarily. Instead of preallocation just prefill
+  the arrays.
 
----
-base-commit: 5d0c230f1de8c7515b6567d9afba1f196fb4e2f4
-change-id: 20230803-test_scanf-wconstant-conversion-d97efbf3bb5d
+- NUMA locality is not a concern as the nodes of a process's VMA tree
+  end up all over the place anyway.
 
-Best regards,
+So this RFC patchset adds such percpu array in Patch 2. Locking is
+stolen from Mel's recent page allocator's pcplists implementation so it
+can avoid disabling IRQs and just disable preemption, but the trylocks
+can fail in rare situations.
+
+Then maple tree is modified in patches 3-5 to benefit from this. This is
+done in a very crude way as I'm not so familiar with the code.
+
+I've briefly tested this with virtme VM boot and checking the stats from
+CONFIG_SLUB_STATS in sysfs.
+
+Patch 2:
+
+slub changes implemented including new counters alloc_cpu_cache
+and free_cpu_cache but maple tree doesn't use them yet
+
+(none):/sys/kernel/slab/maple_node # grep . alloc_cpu_cache alloc_*path free_cpu_cache free_*path | cut -d' ' -f1
+alloc_cpu_cache:0
+alloc_fastpath:56604
+alloc_slowpath:7279
+free_cpu_cache:0
+free_fastpath:35087
+free_slowpath:22403
+
+Patch 3:
+
+maple node cache creates percpu array with 32 entries,
+not changed anything else
+
+-> some allocs/free satisfied by the array
+
+alloc_cpu_cache:11950
+alloc_fastpath:39955
+alloc_slowpath:7989
+free_cpu_cache:12076
+free_fastpath:22878
+free_slowpath:18677
+
+Patch 4:
+
+maple tree nodes bulk alloc/free converted to loop of normal alloc to use
+percpu array more, because bulk alloc bypasses it
+
+-> majority alloc/free now satisfied by percpu array
+
+alloc_cpu_cache:54178
+alloc_fastpath:4959
+alloc_slowpath:727
+free_cpu_cache:54244
+free_fastpath:354
+free_slowpath:5159
+
+Patch 5:
+
+mas_preallocate() just prefills the percpu array, actually preallocates only a single node
+mas_store_prealloc() gains a retry loop with mas_nomem(mas, GFP_ATOMIC | __GFP_NOFAIL)
+
+-> major drop of actual alloc/free
+
+alloc_cpu_cache:17031
+alloc_fastpath:5324
+alloc_slowpath:631
+free_cpu_cache:17099
+free_fastpath:277
+free_slowpath:5503
+
+Would be interesting to see how it affects the workloads that saw
+regressions from the maple tree introduction, as the slab operations
+were suspected to be a major factor.
+
+Vlastimil Babka (5):
+  mm, slub: fix bulk alloc and free stats
+  mm, slub: add opt-in slub_percpu_array
+  maple_tree: use slub percpu array
+  maple_tree: avoid bulk alloc/free to use percpu array more
+  maple_tree: replace preallocation with slub percpu array prefill
+
+ include/linux/slab.h     |   4 +
+ include/linux/slub_def.h |  10 ++
+ lib/maple_tree.c         |  30 +++++-
+ mm/slub.c                | 221 ++++++++++++++++++++++++++++++++++++++-
+ 4 files changed, 258 insertions(+), 7 deletions(-)
+
 -- 
-Nathan Chancellor <nathan@kernel.org>
+2.41.0
 
