@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93E815AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:46:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90C0C433C8;
-	Wed,  9 Aug 2023 10:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D2715AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:47:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5955C433C8;
+	Wed,  9 Aug 2023 10:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578018;
-	bh=5EwwGNDNLDK6cd7nAr2s3dmNDzdgrz8OKeJMmm7OI4w=;
+	s=korg; t=1691578021;
+	bh=+7xrCzg2jqH0q0/YVq5rnv//pL5Hjw01irjiVhjf4PU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1AsaJybwa55BoguG40sayMIZ/SXBe/YAD9pMrPJKhtXgXIwAA1JH0sqQRtbB8wBOw
-	 DvpFcpCMdhZbleUBtQv89oTQ8Xz4jPFToCMR37dxS8riwJ92uyCaATWFGgHbrMSuYx
-	 Zydfe1lJ8qi13eoEfwjh1tx9GXXsLw1T1m48NwaY=
+	b=FElxd0lxK2f+vU46WjnwIS8gSACN1hlLQguaE3hZ56+YKRQqYY4RB7H6bUUcQeGEi
+	 TbYmKkwTuP15aDNhLZ52Qb6UuJKkNx+UOAM4hJ4ufxcTYiWtmerxMxynR9YHUfIi23
+	 CNnAwf+9eBxIVAV+P5wTr3JtIJjonYWVW5wW/8YY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 077/165] net: netsec: Ignore phy-mode on SynQuacer in DT mode
-Date: Wed,  9 Aug 2023 12:40:08 +0200
-Message-ID: <20230809103645.316704004@linuxfoundation.org>
+Subject: [PATCH 6.4 078/165] selftest: net: Assert on a proper value in so_incoming_cpu.c.
+Date: Wed,  9 Aug 2023 12:40:09 +0200
+Message-ID: <20230809103645.353270435@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -38,59 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit f3bb7759a924713bc54d15f6d0d70733b5935fad ]
+[ Upstream commit 3ff1617450eceb290ac17120fc172815e09a93cf ]
 
-As documented in acd7aaf51b20 ("netsec: ignore 'phy-mode' device
-property on ACPI systems") the SocioNext SynQuacer platform ships with
-firmware defining the PHY mode as RGMII even though the physical
-configuration of the PHY is for TX and RX delays.  Since bbc4d71d63549bc
-("net: phy: realtek: fix rtl8211e rx/tx delay config") this has caused
-misconfiguration of the PHY, rendering the network unusable.
+Dan Carpenter reported an error spotted by Smatch.
 
-This was worked around for ACPI by ignoring the phy-mode property but
-the system is also used with DT.  For DT instead if we're running on a
-SynQuacer force a working PHY mode, as well as the standard EDK2
-firmware with DT there are also some of these systems that use u-boot
-and might not initialise the PHY if not netbooting.  Newer firmware
-imagaes for at least EDK2 are available from Linaro so print a warning
-when doing this.
+  ./tools/testing/selftests/net/so_incoming_cpu.c:163 create_clients()
+  error: uninitialized symbol 'ret'.
 
-Fixes: 533dd11a12f6 ("net: socionext: Add Synquacer NetSec driver")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Acked-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20230731-synquacer-net-v3-1-944be5f06428@kernel.org
+The returned value of sched_setaffinity() should be checked with
+ASSERT_EQ(), but the value was not saved in a proper variable,
+resulting in an error above.
+
+Let's save the returned value of with sched_setaffinity().
+
+Fixes: 6df96146b202 ("selftest: Add test for SO_INCOMING_CPU.")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/linux-kselftest/fe376760-33b6-4fc9-88e8-178e809af1ac@moroto.mountain/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230731181553.5392-1-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/socionext/netsec.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ tools/testing/selftests/net/so_incoming_cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/socionext/netsec.c b/drivers/net/ethernet/socionext/netsec.c
-index 2d7347b71c41b..0dcd6a568b061 100644
---- a/drivers/net/ethernet/socionext/netsec.c
-+++ b/drivers/net/ethernet/socionext/netsec.c
-@@ -1851,6 +1851,17 @@ static int netsec_of_probe(struct platform_device *pdev,
- 		return err;
- 	}
+diff --git a/tools/testing/selftests/net/so_incoming_cpu.c b/tools/testing/selftests/net/so_incoming_cpu.c
+index 0e04f9fef9867..a148181641026 100644
+--- a/tools/testing/selftests/net/so_incoming_cpu.c
++++ b/tools/testing/selftests/net/so_incoming_cpu.c
+@@ -159,7 +159,7 @@ void create_clients(struct __test_metadata *_metadata,
+ 		/* Make sure SYN will be processed on the i-th CPU
+ 		 * and finally distributed to the i-th listener.
+ 		 */
+-		sched_setaffinity(0, sizeof(cpu_set), &cpu_set);
++		ret = sched_setaffinity(0, sizeof(cpu_set), &cpu_set);
+ 		ASSERT_EQ(ret, 0);
  
-+	/*
-+	 * SynQuacer is physically configured with TX and RX delays
-+	 * but the standard firmware claimed otherwise for a long
-+	 * time, ignore it.
-+	 */
-+	if (of_machine_is_compatible("socionext,developer-box") &&
-+	    priv->phy_interface != PHY_INTERFACE_MODE_RGMII_ID) {
-+		dev_warn(&pdev->dev, "Outdated firmware reports incorrect PHY mode, overriding\n");
-+		priv->phy_interface = PHY_INTERFACE_MODE_RGMII_ID;
-+	}
-+
- 	priv->phy_np = of_parse_phandle(pdev->dev.of_node, "phy-handle", 0);
- 	if (!priv->phy_np) {
- 		dev_err(&pdev->dev, "missing required property 'phy-handle'\n");
+ 		for (j = 0; j < CLIENT_PER_SERVER; j++) {
 -- 
 2.40.1
 
