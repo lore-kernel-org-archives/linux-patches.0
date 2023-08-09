@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A37C17AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:10:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EFD6C433C7;
-	Wed,  9 Aug 2023 11:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B7263B4
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:10:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7BCAC433C9;
+	Wed,  9 Aug 2023 11:10:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579408;
-	bh=j0YQz9AIiVhJO/AanZ5uQmh8cSP2OegfTpjz5CJFV1k=;
+	s=korg; t=1691579411;
+	bh=XoXqVPI2PELrrucaFDP1BVbC04TlvPP5fAFvnKTmcxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YXdkFv6euiv3s/7J9SJ+Oa3ZSvM2tqyP/xn5Q8ZuSq92DvaVBf5JFR1fCurztyWt4
-	 n1QtOE69Jgyr62kVaLzOmcQdpcDRZ3MvXMbfjr4LcMNPZ23n+WBU2OX9mIEWrd/60O
-	 69bXBgVZ7a351UhYyMjL8izSVVAgiKidLYvkLsVo=
+	b=cTBuaStQarnZPA8kK4RmJ2kP4u3IhNjGMKwtPwgS73DxOYNBx7jDsccAnlWsg+V5G
+	 RZoqeQC5jTaY2TaPmefI3YKi5pc+akmO+7vqVpw9KHIoeMa516ZO3+r5THV8NdK0af
+	 GQQc0yYZsKwvo8zi30Li1ikQ3KqfeKOEmDaImc0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	valis <sec@valis.email>,
+	M A Ramdhan <ramdhan@starlabs.sg>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 186/204] net: add missing data-race annotation for sk_ll_usec
-Date: Wed,  9 Aug 2023 12:42:04 +0200
-Message-ID: <20230809103648.711202702@linuxfoundation.org>
+Subject: [PATCH 4.14 187/204] net/sched: cls_u32: No longer copy tcf_result on update to avoid use-after-free
+Date: Wed,  9 Aug 2023 12:42:05 +0200
+Message-ID: <20230809103648.741675220@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -35,33 +39,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: valis <sec@valis.email>
 
-[ Upstream commit e5f0d2dd3c2faa671711dac6d3ff3cef307bcfe3 ]
+[ Upstream commit 3044b16e7c6fe5d24b1cdbcf1bd0a9d92d1ebd81 ]
 
-In a prior commit I forgot that sk_getsockopt() reads
-sk->sk_ll_usec without holding a lock.
+When u32_change() is called on an existing filter, the whole
+tcf_result struct is always copied into the new instance of the filter.
 
-Fixes: 0dbffbb5335a ("net: annotate data race around sk_ll_usec")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This causes a problem when updating a filter bound to a class,
+as tcf_unbind_filter() is always called on the old instance in the
+success path, decreasing filter_cnt of the still referenced class
+and allowing it to be deleted, leading to a use-after-free.
+
+Fix this by no longer copying the tcf_result struct from the old filter.
+
+Fixes: de5df63228fc ("net: sched: cls_u32 changes to knode must appear atomic to readers")
+Reported-by: valis <sec@valis.email>
+Reported-by: M A Ramdhan <ramdhan@starlabs.sg>
+Signed-off-by: valis <sec@valis.email>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: M A Ramdhan <ramdhan@starlabs.sg>
+Link: https://lore.kernel.org/r/20230729123202.72406-2-jhs@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/cls_u32.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index d938b7f2bac32..0ff80718f194d 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -1359,7 +1359,7 @@ int sock_getsockopt(struct socket *sock, int level, int optname,
- 
- #ifdef CONFIG_NET_RX_BUSY_POLL
- 	case SO_BUSY_POLL:
--		v.val = sk->sk_ll_usec;
-+		v.val = READ_ONCE(sk->sk_ll_usec);
- 		break;
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index a4e01220a53a1..8a2fc40ae8402 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -870,7 +870,6 @@ static struct tc_u_knode *u32_init_knode(struct tcf_proto *tp,
+ 	new->ifindex = n->ifindex;
  #endif
+ 	new->fshift = n->fshift;
+-	new->res = n->res;
+ 	new->flags = n->flags;
+ 	RCU_INIT_POINTER(new->ht_down, n->ht_down);
  
 -- 
 2.40.1
