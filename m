@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B14617AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:28:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B94C433C7;
-	Wed,  9 Aug 2023 11:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5487917AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:28:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC4BCC433C7;
+	Wed,  9 Aug 2023 11:28:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580521;
-	bh=lPugAP0vYa6mjlja02DZJMNKUKeEy+qevsAcwIEyhxk=;
+	s=korg; t=1691580525;
+	bh=sKx8U7hKkA7P7iEjnCeFXEoD91iSuFfhE0nT1fM+Azg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B4vbrm9hnII4D0D8D2PB0Pi7q88ynXzSCfLP8HwaVmV8CrGsEK5WZ9ZXiEDfDIpiy
-	 gkzP414/V7Q0YzN+3f+tCPnI0LJRl1nDWIJBf+BWkuH8iYf/F1jlyPyIkROGvnVURx
-	 nEIM3Omh6bC2rHJunp1G70M/aAM8kHNmWci/AHrs=
+	b=S/5xRCjyMnKC1FVHPEQeoB8RFMSeT5SKE+kDOD1rGO7XFLqXc50ojyV6XC7Ff850l
+	 y7Zfmj4U/QJ75Z1/ADVWyQBOgtQ1vUfe452V2qyN4uA6To3bDC8HKWEmozejdsb08V
+	 t95Hs33j9uUlfiwO3FHsHZsyTWvpSqYtAmDXr7Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 015/154] PCI/ASPM: Factor out pcie_wait_for_retrain()
-Date: Wed,  9 Aug 2023 12:40:46 +0200
-Message-ID: <20230809103637.446355788@linuxfoundation.org>
+Subject: [PATCH 5.4 048/154] drm/msm: Fix IS_ERR_OR_NULL() vs NULL check in a5xx_submit_in_rb()
+Date: Wed,  9 Aug 2023 12:41:19 +0200
+Message-ID: <20230809103638.609680539@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -35,76 +38,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 9c7f136433d26592cb4d9cd00b4e15c33d9797c6 ]
+[ Upstream commit 6e8a996563ecbe68e49c49abd4aaeef69f11f2dc ]
 
-Factor pcie_wait_for_retrain() out from pcie_retrain_link().  No functional
-change intended.
+The msm_gem_get_vaddr() returns an ERR_PTR() on failure, and a null
+is catastrophic here, so we should use IS_ERR_OR_NULL() to check
+the return value.
 
-[bhelgaas: split out from
-https: //lore.kernel.org/r/20230502083923.34562-1-ilpo.jarvinen@linux.intel.com]
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Stable-dep-of: e7e39756363a ("PCI/ASPM: Avoid link retraining race")
+Fixes: 6a8bd08d0465 ("drm/msm: add sudo flag to submit ioctl")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/547712/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/aspm.c | 30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-index 3197ac6dda35b..749a367bde2df 100644
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -200,10 +200,26 @@ static void pcie_clkpm_cap_init(struct pcie_link_state *link, int blacklist)
- 	link->clkpm_disable = blacklist ? 1 : 0;
- }
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index 593b8d83179c9..65c2c5361e5fc 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -71,7 +71,7 @@ static void a5xx_submit_in_rb(struct msm_gpu *gpu, struct msm_gem_submit *submit
+ 			 * since we've already mapped it once in
+ 			 * submit_reloc()
+ 			 */
+-			if (WARN_ON(!ptr))
++			if (WARN_ON(IS_ERR_OR_NULL(ptr)))
+ 				return;
  
-+static int pcie_wait_for_retrain(struct pci_dev *pdev)
-+{
-+	unsigned long end_jiffies;
-+	u16 reg16;
-+
-+	/* Wait for Link Training to be cleared by hardware */
-+	end_jiffies = jiffies + LINK_RETRAIN_TIMEOUT;
-+	do {
-+		pcie_capability_read_word(pdev, PCI_EXP_LNKSTA, &reg16);
-+		if (!(reg16 & PCI_EXP_LNKSTA_LT))
-+			return 0;
-+		msleep(1);
-+	} while (time_before(jiffies, end_jiffies));
-+
-+	return -ETIMEDOUT;
-+}
-+
- static int pcie_retrain_link(struct pcie_link_state *link)
- {
- 	struct pci_dev *parent = link->pdev;
--	unsigned long end_jiffies;
- 	u16 reg16;
- 
- 	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
-@@ -219,17 +235,7 @@ static int pcie_retrain_link(struct pcie_link_state *link)
- 		pcie_capability_write_word(parent, PCI_EXP_LNKCTL, reg16);
- 	}
- 
--	/* Wait for link training end. Break out after waiting for timeout */
--	end_jiffies = jiffies + LINK_RETRAIN_TIMEOUT;
--	do {
--		pcie_capability_read_word(parent, PCI_EXP_LNKSTA, &reg16);
--		if (!(reg16 & PCI_EXP_LNKSTA_LT))
--			break;
--		msleep(1);
--	} while (time_before(jiffies, end_jiffies));
--	if (reg16 & PCI_EXP_LNKSTA_LT)
--		return -ETIMEDOUT;
--	return 0;
-+	return pcie_wait_for_retrain(parent);
- }
- 
- /*
+ 			for (i = 0; i < dwords; i++) {
 -- 
-2.39.2
+2.40.1
 
 
 
