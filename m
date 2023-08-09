@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5652C53B7
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:52:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF39C433C8;
-	Wed,  9 Aug 2023 10:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A86453B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:52:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A08C433C7;
+	Wed,  9 Aug 2023 10:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578368;
-	bh=AqAh7YCAiUeU0r707uGxMBwKEUx2DmtY4bG0LN6OTqI=;
+	s=korg; t=1691578371;
+	bh=cMA3oev4frsrMIowZpPgyLwH83iCO8YTuH1at/X1fiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZCPGFe6B4wbHu7MPRegeIU5Me1MWAGIfX2tTCZ0oj/Hi2CjDGFGVxkIEhaUv15ftD
-	 qNyW1Q+T8eZVbes1xjOhGJVkJafzuyGmeg9y8L2GUNWPpRIWcNNAijgnCxleSu/UR/
-	 a2NpDpf5i2MR2TqA8Ap5LFvoKND13MlSKzruRbZI=
+	b=XErv0TNhjvKuWLVd4Xt6IFz9VO2BC1jZKmUMXwTRz9TeC8RG6Azd/mUwBZeLZ6/MF
+	 m0qQF+OBUKsgdtm+IajOILhGRaVOZYjvI8fHGyky201yg/ifD/8zdAnzTRRKmqdVNl
+	 6Ca6JMKJcwv9rgilKO2O4V40Sy30e+KRIxx3InTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/127] mISDN: hfcpci: Fix potential deadlock on &hc->lock
-Date: Wed,  9 Aug 2023 12:40:20 +0200
-Message-ID: <20230809103637.760403953@linuxfoundation.org>
+	Robin Murphy <robin.murphy@arm.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Will Deacon <will@kernel.org>,
+	Easwar Hariharan <eahariha@linux.microsoft.com>
+Subject: [PATCH 6.1 006/127] iommu/arm-smmu-v3: Document MMU-700 erratum 2812531
+Date: Wed,  9 Aug 2023 12:39:53 +0200
+Message-ID: <20230809103636.833476032@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -35,88 +36,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit 56c6be35fcbed54279df0a2c9e60480a61841d6f ]
+commit 309a15cb16bb075da1c99d46fb457db6a1a2669e upstream
 
-As &hc->lock is acquired by both timer _hfcpci_softirq() and hardirq
-hfcpci_int(), the timer should disable irq before lock acquisition
-otherwise deadlock could happen if the timmer is preemtped by the hadr irq.
+To work around MMU-700 erratum 2812531 we need to ensure that certain
+sequences of commands cannot be issued without an intervening sync. In
+practice this falls out of our current command-batching machinery
+anyway - each batch only contains a single type of invalidation command,
+and ends with a sync. The only exception is when a batch is sufficiently
+large to need issuing across multiple command queue slots, wherein the
+earlier slots will not contain a sync and thus may in theory interleave
+with another batch being issued in parallel to create an affected
+sequence across the slot boundary.
 
-Possible deadlock scenario:
-hfcpci_softirq() (timer)
-    -> _hfcpci_softirq()
-    -> spin_lock(&hc->lock);
-        <irq interruption>
-        -> hfcpci_int()
-        -> spin_lock(&hc->lock); (deadlock here)
+Since MMU-700 supports range invalidate commands and thus we will prefer
+to use them (which also happens to avoid conditions for other errata),
+I'm not entirely sure it's even possible for a single high-level
+invalidate call to generate a batch of more than 63 commands, but for
+the sake of robustness and documentation, wire up an option to enforce
+that a sync is always inserted for every slot issued.
 
-This flaw was found by an experimental static analysis tool I am developing
-for irq-related deadlock.
+The other aspect is that the relative order of DVM commands cannot be
+controlled, so DVM cannot be used. Again that is already the status quo,
+but since we have at least defined ARM_SMMU_FEAT_BTM, we can explicitly
+disable it for documentation purposes even if it's not wired up anywhere
+yet.
 
-The tentative patch fixes the potential deadlock by spin_lock_irq()
-in timer.
-
-Fixes: b36b654a7e82 ("mISDN: Create /sys/class/mISDN")
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Link: https://lore.kernel.org/r/20230727085619.7419-1-dg573847474@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Link: https://lore.kernel.org/r/330221cdfd0003cd51b6c04e7ff3566741ad8374.1683731256.git.robin.murphy@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/isdn/hardware/mISDN/hfcpci.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ Documentation/arm64/silicon-errata.rst      |    2 ++
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |   12 ++++++++++++
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |    1 +
+ 3 files changed, 15 insertions(+)
 
-diff --git a/drivers/isdn/hardware/mISDN/hfcpci.c b/drivers/isdn/hardware/mISDN/hfcpci.c
-index c0331b2680108..fe391de1aba32 100644
---- a/drivers/isdn/hardware/mISDN/hfcpci.c
-+++ b/drivers/isdn/hardware/mISDN/hfcpci.c
-@@ -839,7 +839,7 @@ hfcpci_fill_fifo(struct bchannel *bch)
- 		*z1t = cpu_to_le16(new_z1);	/* now send data */
- 		if (bch->tx_idx < bch->tx_skb->len)
- 			return;
--		dev_kfree_skb(bch->tx_skb);
-+		dev_kfree_skb_any(bch->tx_skb);
- 		if (get_next_bframe(bch))
- 			goto next_t_frame;
- 		return;
-@@ -895,7 +895,7 @@ hfcpci_fill_fifo(struct bchannel *bch)
- 	}
- 	bz->za[new_f1].z1 = cpu_to_le16(new_z1);	/* for next buffer */
- 	bz->f1 = new_f1;	/* next frame */
--	dev_kfree_skb(bch->tx_skb);
-+	dev_kfree_skb_any(bch->tx_skb);
- 	get_next_bframe(bch);
- }
+--- a/Documentation/arm64/silicon-errata.rst
++++ b/Documentation/arm64/silicon-errata.rst
+@@ -143,6 +143,8 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | MMU-600         | #1076982        | N/A                         |
+ +----------------+-----------------+-----------------+-----------------------------+
++| ARM            | MMU-700         | #2812531        | N/A                         |
+++----------------+-----------------+-----------------+-----------------------------+
+ +----------------+-----------------+-----------------+-----------------------------+
+ | Broadcom       | Brahma-B53      | N/A             | ARM64_ERRATUM_845719        |
+ +----------------+-----------------+-----------------+-----------------------------+
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -882,6 +882,12 @@ static void arm_smmu_cmdq_batch_add(stru
+ {
+ 	int index;
  
-@@ -1119,7 +1119,7 @@ tx_birq(struct bchannel *bch)
- 	if (bch->tx_skb && bch->tx_idx < bch->tx_skb->len)
- 		hfcpci_fill_fifo(bch);
- 	else {
--		dev_kfree_skb(bch->tx_skb);
-+		dev_kfree_skb_any(bch->tx_skb);
- 		if (get_next_bframe(bch))
- 			hfcpci_fill_fifo(bch);
- 	}
-@@ -2277,7 +2277,7 @@ _hfcpci_softirq(struct device *dev, void *unused)
- 		return 0;
++	if (cmds->num == CMDQ_BATCH_ENTRIES - 1 &&
++	    (smmu->options & ARM_SMMU_OPT_CMDQ_FORCE_SYNC)) {
++		arm_smmu_cmdq_issue_cmdlist(smmu, cmds->cmds, cmds->num, true);
++		cmds->num = 0;
++	}
++
+ 	if (cmds->num == CMDQ_BATCH_ENTRIES) {
+ 		arm_smmu_cmdq_issue_cmdlist(smmu, cmds->cmds, cmds->num, false);
+ 		cmds->num = 0;
+@@ -3412,6 +3418,7 @@ static int arm_smmu_device_reset(struct
  
- 	if (hc->hw.int_m2 & HFCPCI_IRQ_ENABLE) {
--		spin_lock(&hc->lock);
-+		spin_lock_irq(&hc->lock);
- 		bch = Sel_BCS(hc, hc->hw.bswapped ? 2 : 1);
- 		if (bch && bch->state == ISDN_P_B_RAW) { /* B1 rx&tx */
- 			main_rec_hfcpci(bch);
-@@ -2288,7 +2288,7 @@ _hfcpci_softirq(struct device *dev, void *unused)
- 			main_rec_hfcpci(bch);
- 			tx_birq(bch);
+ #define IIDR_IMPLEMENTER_ARM		0x43b
+ #define IIDR_PRODUCTID_ARM_MMU_600	0x483
++#define IIDR_PRODUCTID_ARM_MMU_700	0x487
+ 
+ static void arm_smmu_device_iidr_probe(struct arm_smmu_device *smmu)
+ {
+@@ -3432,6 +3439,11 @@ static void arm_smmu_device_iidr_probe(s
+ 			if (variant == 0 && revision <= 2)
+ 				smmu->features &= ~ARM_SMMU_FEAT_SEV;
+ 			break;
++		case IIDR_PRODUCTID_ARM_MMU_700:
++			/* Arm erratum 2812531 */
++			smmu->features &= ~ARM_SMMU_FEAT_BTM;
++			smmu->options |= ARM_SMMU_OPT_CMDQ_FORCE_SYNC;
++			break;
  		}
--		spin_unlock(&hc->lock);
-+		spin_unlock_irq(&hc->lock);
+ 		break;
  	}
- 	return 0;
- }
--- 
-2.40.1
-
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+@@ -650,6 +650,7 @@ struct arm_smmu_device {
+ #define ARM_SMMU_OPT_SKIP_PREFETCH	(1 << 0)
+ #define ARM_SMMU_OPT_PAGE0_REGS_ONLY	(1 << 1)
+ #define ARM_SMMU_OPT_MSIPOLL		(1 << 2)
++#define ARM_SMMU_OPT_CMDQ_FORCE_SYNC	(1 << 3)
+ 	u32				options;
+ 
+ 	struct arm_smmu_cmdq		cmdq;
 
 
