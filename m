@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 054811774C
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:12:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 792E4C433C8;
-	Wed,  9 Aug 2023 11:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E73C1774C
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:12:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43272C433C8;
+	Wed,  9 Aug 2023 11:12:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579523;
-	bh=2AUoi+Eh6f9jS0WgCASibHl3Q3chur6VBj02AYF57bQ=;
+	s=korg; t=1691579526;
+	bh=7WqIXVJjjXn4YyVH0aXGZLycQ7Al6o78RONUKWpTe4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HQBJ6m2uUj7AiTw0nlcu7Tp7p9MbL4Id1LKIe38hsbErxJnFBmy0B71HSHRfxMa6c
-	 1NGQlVrQDS9c27Xan95nYUhu0GC9KowXJmpq40LPMz5CkGHaAnj14EJcMUiS1qc6lW
-	 BWU5itAUyNPEcPQAgaksR3DZl0u8pU0q2dDETlEE=
+	b=cJ/6BWa9dLSRmcONz/BFKJni8tZYCXSSlf7pjAMc3kuNW+CekUy4TlnqPZCnDTt1b
+	 PXocMGQx6HXIBmQFgH5Z2Yat5a0vzHbngfYWbaIdZj1XcQ+BAEek50apvDhfkCERVI
+	 ihM1wSTdGt14rsVdMaEIOQ0moFH1XGMIHN27CZIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+f2cb6e0ffdb961921e4d@syzkaller.appspotmail.com
-Subject: [PATCH 4.19 022/323] wifi: ath9k: avoid referencing uninit memory in ath9k_wmi_ctrl_rx
-Date: Wed,  9 Aug 2023 12:37:40 +0200
-Message-ID: <20230809103659.128865631@linuxfoundation.org>
+	Pengcheng Yang <yangpc@wangsu.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 023/323] samples/bpf: Fix buffer overflow in tcp_basertt
+Date: Wed,  9 Aug 2023 12:37:41 +0200
+Message-ID: <20230809103659.178192322@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -37,53 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Pengcheng Yang <yangpc@wangsu.com>
 
-[ Upstream commit f24292e827088bba8de7158501ac25a59b064953 ]
+[ Upstream commit f4dea9689c5fea3d07170c2cb0703e216f1a0922 ]
 
-For the reasons also described in commit b383e8abed41 ("wifi: ath9k: avoid
-uninit memory read in ath9k_htc_rx_msg()"), ath9k_htc_rx_msg() should
-validate pkt_len before accessing the SKB.
+Using sizeof(nv) or strlen(nv)+1 is correct.
 
-For example, the obtained SKB may have been badly constructed with
-pkt_len = 8. In this case, the SKB can only contain a valid htc_frame_hdr
-but after being processed in ath9k_htc_rx_msg() and passed to
-ath9k_wmi_ctrl_rx() endpoint RX handler, it is expected to have a WMI
-command header which should be located inside its data payload.
-
-Implement sanity checking inside ath9k_wmi_ctrl_rx(). Otherwise, uninit
-memory can be referenced.
-
-Tested on Qualcomm Atheros Communications AR9271 802.11n .
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
-Reported-and-tested-by: syzbot+f2cb6e0ffdb961921e4d@syzkaller.appspotmail.com
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230424183348.111355-1-pchelkin@ispras.ru
+Fixes: c890063e4404 ("bpf: sample BPF_SOCKET_OPS_BASE_RTT program")
+Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
+Link: https://lore.kernel.org/r/1683276658-2860-1-git-send-email-yangpc@wangsu.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/wmi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ samples/bpf/tcp_basertt_kern.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
-index e4ea6f5cc78ab..5e2a610df61cf 100644
---- a/drivers/net/wireless/ath/ath9k/wmi.c
-+++ b/drivers/net/wireless/ath/ath9k/wmi.c
-@@ -218,6 +218,10 @@ static void ath9k_wmi_ctrl_rx(void *priv, struct sk_buff *skb,
- 	if (unlikely(wmi->stopped))
- 		goto free_skb;
- 
-+	/* Validate the obtained SKB. */
-+	if (unlikely(skb->len < sizeof(struct wmi_cmd_hdr)))
-+		goto free_skb;
-+
- 	hdr = (struct wmi_cmd_hdr *) skb->data;
- 	cmd_id = be16_to_cpu(hdr->command_id);
- 
+diff --git a/samples/bpf/tcp_basertt_kern.c b/samples/bpf/tcp_basertt_kern.c
+index 4bf4fc597db9a..653d233714ad0 100644
+--- a/samples/bpf/tcp_basertt_kern.c
++++ b/samples/bpf/tcp_basertt_kern.c
+@@ -54,7 +54,7 @@ int bpf_basertt(struct bpf_sock_ops *skops)
+ 		case BPF_SOCK_OPS_BASE_RTT:
+ 			n = bpf_getsockopt(skops, SOL_TCP, TCP_CONGESTION,
+ 					   cong, sizeof(cong));
+-			if (!n && !__builtin_memcmp(cong, nv, sizeof(nv)+1)) {
++			if (!n && !__builtin_memcmp(cong, nv, sizeof(nv))) {
+ 				/* Set base_rtt to 80us */
+ 				rv = 80;
+ 			} else if (n) {
 -- 
 2.39.2
 
