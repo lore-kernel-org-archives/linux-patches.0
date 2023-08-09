@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7FD51773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:17:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4AA6C433C8;
-	Wed,  9 Aug 2023 11:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D431773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:17:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6DFFC433CA;
+	Wed,  9 Aug 2023 11:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579845;
-	bh=CqZUhKiageJBhoOSo3349zHjEr2/lK6MP1/azHcegg8=;
+	s=korg; t=1691579848;
+	bh=qacnWpiMSs2ffUkdlqDWiyWpqV8QPgByhPr87WH7Koo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IiJXVol5zhE+iB5KzSd0k/D3uQgkvqSkEKe9juoiYBfgFBX4j/Gsq2WwVa1Ulw7fB
-	 nJRR+Ma+LImyDWW+v/vCezrNelyh26b59O2PjvVrjdvZCut3H8f6eZGVu+tuXqgDYc
-	 1e62ojE8seOxoDMbws7R4DdThTFnwSarSUTqbclM=
+	b=ADPO91UFg9fWLGklC/Y1hQYgZ4f6vfT6C2SfxTEnK+BMU6OESjvmb3P5BbJ1Tss3Y
+	 p6S7Uy+PVkQmAcjJRjhGdnEbxrGNGJHFE0nHGkjR9qTFmmpJCYX+0P5xE2RbuUl77K
+	 LhKcdP3nG8NnDTvx9GEUPQB63XYm7ycMlyJnkwy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Lin Ma <linma@zju.edu.cn>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 107/323] tcp: annotate data races in __tcp_oow_rate_limited()
-Date: Wed,  9 Aug 2023 12:39:05 +0200
-Message-ID: <20230809103702.969930187@linuxfoundation.org>
+Subject: [PATCH 4.19 108/323] net/sched: act_pedit: Add size check for TCA_PEDIT_PARMS_EX
+Date: Wed,  9 Aug 2023 12:39:06 +0200
+Message-ID: <20230809103703.022839765@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,53 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 998127cdb4699b9d470a9348ffe9f1154346be5f ]
+[ Upstream commit 30c45b5361d39b4b793780ffac5538090b9e2eb1 ]
 
-request sockets are lockless, __tcp_oow_rate_limited() could be called
-on the same object from different cpus. This is harmless.
+The attribute TCA_PEDIT_PARMS_EX is not be included in pedit_policy and
+one malicious user could fake a TCA_PEDIT_PARMS_EX whose length is
+smaller than the intended sizeof(struct tc_pedit). Hence, the
+dereference in tcf_pedit_init() could access dirty heap data.
 
-Add READ_ONCE()/WRITE_ONCE() annotations to avoid a KCSAN report.
+static int tcf_pedit_init(...)
+{
+  // ...
+  pattr = tb[TCA_PEDIT_PARMS]; // TCA_PEDIT_PARMS is included
+  if (!pattr)
+    pattr = tb[TCA_PEDIT_PARMS_EX]; // but this is not
 
-Fixes: 4ce7e93cb3fe ("tcp: rate limit ACK sent by SYN_RECV request sockets")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+  // ...
+  parm = nla_data(pattr);
+
+  index = parm->index; // parm is able to be smaller than 4 bytes
+                       // and this dereference gets dirty skb_buff
+                       // data created in netlink_sendmsg
+}
+
+This commit adds TCA_PEDIT_PARMS_EX length in pedit_policy which avoid
+the above case, just like the TCA_PEDIT_PARMS.
+
+Fixes: 71d0ed7079df ("net/act_pedit: Support using offset relative to the conventional network headers")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
+Link: https://lore.kernel.org/r/20230703110842.590282-1-linma@zju.edu.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ net/sched/act_pedit.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index bd921fa7b9ab4..281f7799aeafc 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -3429,8 +3429,11 @@ static int tcp_ack_update_window(struct sock *sk, const struct sk_buff *skb, u32
- static bool __tcp_oow_rate_limited(struct net *net, int mib_idx,
- 				   u32 *last_oow_ack_time)
- {
--	if (*last_oow_ack_time) {
--		s32 elapsed = (s32)(tcp_jiffies32 - *last_oow_ack_time);
-+	/* Paired with the WRITE_ONCE() in this function. */
-+	u32 val = READ_ONCE(*last_oow_ack_time);
-+
-+	if (val) {
-+		s32 elapsed = (s32)(tcp_jiffies32 - val);
+diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
+index aeb8f84cbd9e2..255d4ecf62522 100644
+--- a/net/sched/act_pedit.c
++++ b/net/sched/act_pedit.c
+@@ -29,6 +29,7 @@ static struct tc_action_ops act_pedit_ops;
  
- 		if (0 <= elapsed &&
- 		    elapsed < READ_ONCE(net->ipv4.sysctl_tcp_invalid_ratelimit)) {
-@@ -3439,7 +3442,10 @@ static bool __tcp_oow_rate_limited(struct net *net, int mib_idx,
- 		}
- 	}
+ static const struct nla_policy pedit_policy[TCA_PEDIT_MAX + 1] = {
+ 	[TCA_PEDIT_PARMS]	= { .len = sizeof(struct tc_pedit) },
++	[TCA_PEDIT_PARMS_EX]	= { .len = sizeof(struct tc_pedit) },
+ 	[TCA_PEDIT_KEYS_EX]   = { .type = NLA_NESTED },
+ };
  
--	*last_oow_ack_time = tcp_jiffies32;
-+	/* Paired with the prior READ_ONCE() and with itself,
-+	 * as we might be lockless.
-+	 */
-+	WRITE_ONCE(*last_oow_ack_time, tcp_jiffies32);
- 
- 	return false;	/* not rate-limited: go ahead, send dupack now! */
- }
 -- 
 2.39.2
 
