@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DF21773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:15:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C4F8C433C8;
-	Wed,  9 Aug 2023 11:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7F41773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:15:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA976C433C8;
+	Wed,  9 Aug 2023 11:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579741;
-	bh=Loy1l09wQmN+xGENzRLkK1bK6n3Ih4AHIJfD5X4MVKk=;
+	s=korg; t=1691579744;
+	bh=dvJZmvyo1H6AaegGuiBlfE7X/cckUiTVWq714Ro/3JI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ExjVyA5qhZO81UxPSoB3CJasIZrKVqex/YurJ0RlaI6mUWNbrHvPRQ9nBNs5kwxM2
-	 kxW5oIuxSqD/Sh/SPTq2fjd94s0lksXGHkbl4uccDuLBy3Jb66iyWvDi7k63HslLqK
-	 ZNWMxtvTF1hTqTRAiogymOmftlZAQpxq6eK8PxWg=
+	b=Sew77MaRzqMudvk6K2FPgGjrEgMLGxw6dID/MwpP8XnWXW5uDw5SII/yCDw2J0tBs
+	 u637pIKxpyY5ohQw6h85QX5TaAzx/dq/wmekwLJ/aoeBNFfuzi/B26Wt6HXk+apa9v
+	 k1h+hqt3J4TvfzJ6+Y5mQZYH6C3ChHzzWQiAH9Ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Vivier <lvivier@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 072/323] hwrng: virtio - add an internal buffer
-Date: Wed,  9 Aug 2023 12:38:30 +0200
-Message-ID: <20230809103701.450413171@linuxfoundation.org>
+Subject: [PATCH 4.19 099/323] rtc: st-lpc: Release some resources in st_rtc_probe() in case of error
+Date: Wed,  9 Aug 2023 12:38:57 +0200
+Message-ID: <20230809103702.589651280@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,125 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit bf3175bc50a3754dc427e2f5046e17a9fafc8be7 ]
+[ Upstream commit 06c6e1b01d9261f03629cefd1f3553503291e6cf ]
 
-hwrng core uses two buffers that can be mixed in the
-virtio-rng queue.
+If an error occurs after clk_get(), the corresponding resources should be
+released.
 
-If the buffer is provided with wait=0 it is enqueued in the
-virtio-rng queue but unused by the caller.
-On the next call, core provides another buffer but the
-first one is filled instead and the new one queued.
-And the caller reads the data from the new one that is not
-updated, and the data in the first one are lost.
+Use devm_clk_get() to fix it.
 
-To avoid this mix, virtio-rng needs to use its own unique
-internal buffer at a cost of a data copy to the caller buffer.
-
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Link: https://lore.kernel.org/r/20211028101111.128049-2-lvivier@redhat.com
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Stable-dep-of: ac52578d6e8d ("hwrng: virtio - Fix race on data_avail and actual data")
+Fixes: b5b2bdfc2893 ("rtc: st: Add new driver for ST's LPC RTC")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/866af6adbc7454a7b4505eb6c28fbdc86ccff39e.1686251455.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/virtio-rng.c | 43 ++++++++++++++++++++++-------
- 1 file changed, 33 insertions(+), 10 deletions(-)
+ drivers/rtc/rtc-st-lpc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/char/hw_random/virtio-rng.c b/drivers/char/hw_random/virtio-rng.c
-index 7abd604e938c2..999f523c80c1e 100644
---- a/drivers/char/hw_random/virtio-rng.c
-+++ b/drivers/char/hw_random/virtio-rng.c
-@@ -30,13 +30,20 @@ static DEFINE_IDA(rng_index_ida);
- struct virtrng_info {
- 	struct hwrng hwrng;
- 	struct virtqueue *vq;
--	struct completion have_data;
- 	char name[25];
--	unsigned int data_avail;
- 	int index;
- 	bool busy;
- 	bool hwrng_register_done;
- 	bool hwrng_removed;
-+	/* data transfer */
-+	struct completion have_data;
-+	unsigned int data_avail;
-+	/* minimal size returned by rng_buffer_size() */
-+#if SMP_CACHE_BYTES < 32
-+	u8 data[32];
-+#else
-+	u8 data[SMP_CACHE_BYTES];
-+#endif
- };
+diff --git a/drivers/rtc/rtc-st-lpc.c b/drivers/rtc/rtc-st-lpc.c
+index e66439b6247a4..e8a8ca3545f00 100644
+--- a/drivers/rtc/rtc-st-lpc.c
++++ b/drivers/rtc/rtc-st-lpc.c
+@@ -239,7 +239,7 @@ static int st_rtc_probe(struct platform_device *pdev)
+ 	enable_irq_wake(rtc->irq);
+ 	disable_irq(rtc->irq);
  
- static void random_recv_done(struct virtqueue *vq)
-@@ -51,14 +58,14 @@ static void random_recv_done(struct virtqueue *vq)
- }
- 
- /* The host will fill any buffer we give it with sweet, sweet randomness. */
--static void register_buffer(struct virtrng_info *vi, u8 *buf, size_t size)
-+static void register_buffer(struct virtrng_info *vi)
- {
- 	struct scatterlist sg;
- 
--	sg_init_one(&sg, buf, size);
-+	sg_init_one(&sg, vi->data, sizeof(vi->data));
- 
- 	/* There should always be room for one buffer. */
--	virtqueue_add_inbuf(vi->vq, &sg, 1, buf, GFP_KERNEL);
-+	virtqueue_add_inbuf(vi->vq, &sg, 1, vi->data, GFP_KERNEL);
- 
- 	virtqueue_kick(vi->vq);
- }
-@@ -67,6 +74,8 @@ static int virtio_read(struct hwrng *rng, void *buf, size_t size, bool wait)
- {
- 	int ret;
- 	struct virtrng_info *vi = (struct virtrng_info *)rng->priv;
-+	unsigned int chunk;
-+	size_t read;
- 
- 	if (vi->hwrng_removed)
- 		return -ENODEV;
-@@ -74,19 +83,33 @@ static int virtio_read(struct hwrng *rng, void *buf, size_t size, bool wait)
- 	if (!vi->busy) {
- 		vi->busy = true;
- 		reinit_completion(&vi->have_data);
--		register_buffer(vi, buf, size);
-+		register_buffer(vi);
- 	}
- 
- 	if (!wait)
- 		return 0;
- 
--	ret = wait_for_completion_killable(&vi->have_data);
--	if (ret < 0)
--		return ret;
-+	read = 0;
-+	while (size != 0) {
-+		ret = wait_for_completion_killable(&vi->have_data);
-+		if (ret < 0)
-+			return ret;
-+
-+		chunk = min_t(unsigned int, size, vi->data_avail);
-+		memcpy(buf + read, vi->data, chunk);
-+		read += chunk;
-+		size -= chunk;
-+		vi->data_avail = 0;
-+
-+		if (size != 0) {
-+			reinit_completion(&vi->have_data);
-+			register_buffer(vi);
-+		}
-+	}
- 
- 	vi->busy = false;
- 
--	return vi->data_avail;
-+	return read;
- }
- 
- static void virtio_cleanup(struct hwrng *rng)
+-	rtc->clk = clk_get(&pdev->dev, NULL);
++	rtc->clk = devm_clk_get(&pdev->dev, NULL);
+ 	if (IS_ERR(rtc->clk)) {
+ 		dev_err(&pdev->dev, "Unable to request clock\n");
+ 		return PTR_ERR(rtc->clk);
 -- 
 2.39.2
 
