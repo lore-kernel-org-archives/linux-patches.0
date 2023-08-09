@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4EC14F8E
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:10:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBFD9C433C8;
-	Wed,  9 Aug 2023 11:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23174171CC
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:10:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B03DC433C8;
+	Wed,  9 Aug 2023 11:10:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579442;
-	bh=b6D4oGDJPJ/t8wjEXFx6aE0D7uDPZU5QAoKaGZliVC4=;
+	s=korg; t=1691579445;
+	bh=JFIKuiG9uSjQgF5I6dOS/VXrYBV4MJXE3RwoL4unqVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BwfC4GlPv/3AIoKTZLSA6VjtAzpDDxIpdEpNUGMYF+zztoynY6WHEjHCyBgFeKLFp
-	 Rriv3BB0e2pMHnCJR+3CC9m9pNr/tmY5EflrWqysUWe/K8KBulVUjNbB1tp9TLPjru
-	 YwmXju/5SwVfxaXvqhmTeSMEKiWIX00QgANWW50I=
+	b=WyP7ALA08tFNH/4ABRiYlfoYbyILdhCxfsnsRbNLchpagUXOqRmL2JFzow22C/Pfl
+	 sG4OKh20RxteNfDwSej3EyxgPJZxe7zAGeYFjyGmumQdulA66Umcdq60oeCFhTFctb
+	 7V30qBlTXp7TVrvhWP8nfxoIogSBtoPGoV42AROw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Dongsheng Yang <dongsheng.yang@easystack.cn>,
-	Xiubo Li <xiubli@redhat.com>
-Subject: [PATCH 4.14 197/204] libceph: fix potential hang in ceph_osdc_notify()
-Date: Wed,  9 Aug 2023 12:42:15 +0200
-Message-ID: <20230809103649.081278214@linuxfoundation.org>
+	Ross Maynard <bids.7405@bigpond.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.14 198/204] USB: zaurus: Add ID for A-300/B-500/C-700
+Date: Wed,  9 Aug 2023 12:42:16 +0200
+Message-ID: <20230809103649.120475269@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -35,69 +35,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Ross Maynard <bids.7405@bigpond.com>
 
-commit e6e2843230799230fc5deb8279728a7218b0d63c upstream.
+commit b99225b4fe297d07400f9e2332ecd7347b224f8d upstream.
 
-If the cluster becomes unavailable, ceph_osdc_notify() may hang even
-with osd_request_timeout option set because linger_notify_finish_wait()
-waits for MWatchNotify NOTIFY_COMPLETE message with no associated OSD
-request in flight -- it's completely asynchronous.
+The SL-A300, B500/5600, and C700 devices no longer auto-load because of
+"usbnet: Remove over-broad module alias from zaurus."
+This patch adds IDs for those 3 devices.
 
-Introduce an additional timeout, derived from the specified notify
-timeout.  While at it, switch both waits to killable which is more
-correct.
-
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217632
+Fixes: 16adf5d07987 ("usbnet: Remove over-broad module alias from zaurus.")
+Signed-off-by: Ross Maynard <bids.7405@bigpond.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
-Reviewed-by: Xiubo Li <xiubli@redhat.com>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/69b5423b-2013-9fc9-9569-58e707d9bafb@bigpond.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osd_client.c |   20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ drivers/net/usb/cdc_ether.c |   21 +++++++++++++++++++++
+ drivers/net/usb/zaurus.c    |   21 +++++++++++++++++++++
+ 2 files changed, 42 insertions(+)
 
---- a/net/ceph/osd_client.c
-+++ b/net/ceph/osd_client.c
-@@ -3041,17 +3041,24 @@ static int linger_reg_commit_wait(struct
- 	int ret;
- 
- 	dout("%s lreq %p linger_id %llu\n", __func__, lreq, lreq->linger_id);
--	ret = wait_for_completion_interruptible(&lreq->reg_commit_wait);
-+	ret = wait_for_completion_killable(&lreq->reg_commit_wait);
- 	return ret ?: lreq->reg_commit_error;
- }
- 
--static int linger_notify_finish_wait(struct ceph_osd_linger_request *lreq)
-+static int linger_notify_finish_wait(struct ceph_osd_linger_request *lreq,
-+				     unsigned long timeout)
- {
--	int ret;
-+	long left;
- 
- 	dout("%s lreq %p linger_id %llu\n", __func__, lreq, lreq->linger_id);
--	ret = wait_for_completion_interruptible(&lreq->notify_finish_wait);
--	return ret ?: lreq->notify_finish_error;
-+	left = wait_for_completion_killable_timeout(&lreq->notify_finish_wait,
-+						ceph_timeout_jiffies(timeout));
-+	if (left <= 0)
-+		left = left ?: -ETIMEDOUT;
-+	else
-+		left = lreq->notify_finish_error; /* completed */
-+
-+	return left;
- }
- 
- /*
-@@ -4666,7 +4673,8 @@ int ceph_osdc_notify(struct ceph_osd_cli
- 
- 	ret = linger_reg_commit_wait(lreq);
- 	if (!ret)
--		ret = linger_notify_finish_wait(lreq);
-+		ret = linger_notify_finish_wait(lreq,
-+				 msecs_to_jiffies(2 * timeout * MSEC_PER_SEC));
- 	else
- 		dout("lreq %p failed to initiate notify %d\n", lreq, ret);
- 
+--- a/drivers/net/usb/cdc_ether.c
++++ b/drivers/net/usb/cdc_ether.c
+@@ -618,6 +618,13 @@ static const struct usb_device_id	produc
+ 	.match_flags	=   USB_DEVICE_ID_MATCH_INT_INFO
+ 			  | USB_DEVICE_ID_MATCH_DEVICE,
+ 	.idVendor		= 0x04DD,
++	.idProduct		= 0x8005,   /* A-300 */
++	ZAURUS_FAKE_INTERFACE,
++	.driver_info        = 0,
++}, {
++	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
++			  | USB_DEVICE_ID_MATCH_DEVICE,
++	.idVendor		= 0x04DD,
+ 	.idProduct		= 0x8006,	/* B-500/SL-5600 */
+ 	ZAURUS_MASTER_INTERFACE,
+ 	.driver_info		= 0,
+@@ -625,11 +632,25 @@ static const struct usb_device_id	produc
+ 	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
+ 			  | USB_DEVICE_ID_MATCH_DEVICE,
+ 	.idVendor		= 0x04DD,
++	.idProduct		= 0x8006,   /* B-500/SL-5600 */
++	ZAURUS_FAKE_INTERFACE,
++	.driver_info        = 0,
++}, {
++	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
++			  | USB_DEVICE_ID_MATCH_DEVICE,
++	.idVendor		= 0x04DD,
+ 	.idProduct		= 0x8007,	/* C-700 */
+ 	ZAURUS_MASTER_INTERFACE,
+ 	.driver_info		= 0,
+ }, {
+ 	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
++			  | USB_DEVICE_ID_MATCH_DEVICE,
++	.idVendor		= 0x04DD,
++	.idProduct		= 0x8007,   /* C-700 */
++	ZAURUS_FAKE_INTERFACE,
++	.driver_info        = 0,
++}, {
++	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
+ 		 | USB_DEVICE_ID_MATCH_DEVICE,
+ 	.idVendor               = 0x04DD,
+ 	.idProduct              = 0x9031,	/* C-750 C-760 */
+--- a/drivers/net/usb/zaurus.c
++++ b/drivers/net/usb/zaurus.c
+@@ -301,11 +301,25 @@ static const struct usb_device_id	produc
+ 	.match_flags	=   USB_DEVICE_ID_MATCH_INT_INFO
+ 			  | USB_DEVICE_ID_MATCH_DEVICE,
+ 	.idVendor		= 0x04DD,
++	.idProduct		= 0x8005,	/* A-300 */
++	ZAURUS_FAKE_INTERFACE,
++	.driver_info = (unsigned long)&bogus_mdlm_info,
++}, {
++	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
++			  | USB_DEVICE_ID_MATCH_DEVICE,
++	.idVendor		= 0x04DD,
+ 	.idProduct		= 0x8006,	/* B-500/SL-5600 */
+ 	ZAURUS_MASTER_INTERFACE,
+ 	.driver_info = ZAURUS_PXA_INFO,
+ }, {
+ 	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
++			  | USB_DEVICE_ID_MATCH_DEVICE,
++	.idVendor		= 0x04DD,
++	.idProduct		= 0x8006,	/* B-500/SL-5600 */
++	ZAURUS_FAKE_INTERFACE,
++	.driver_info = (unsigned long)&bogus_mdlm_info,
++}, {
++	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
+ 	          | USB_DEVICE_ID_MATCH_DEVICE,
+ 	.idVendor		= 0x04DD,
+ 	.idProduct		= 0x8007,	/* C-700 */
+@@ -313,6 +327,13 @@ static const struct usb_device_id	produc
+ 	.driver_info = ZAURUS_PXA_INFO,
+ }, {
+ 	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
++			  | USB_DEVICE_ID_MATCH_DEVICE,
++	.idVendor		= 0x04DD,
++	.idProduct		= 0x8007,	/* C-700 */
++	ZAURUS_FAKE_INTERFACE,
++	.driver_info = (unsigned long)&bogus_mdlm_info,
++}, {
++	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
+ 		 | USB_DEVICE_ID_MATCH_DEVICE,
+ 	.idVendor               = 0x04DD,
+ 	.idProduct              = 0x9031,	/* C-750 C-760 */
 
 
