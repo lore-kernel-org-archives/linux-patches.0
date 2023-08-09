@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96CCA174F0
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:48:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE414C433D9;
-	Wed,  9 Aug 2023 10:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43BAA174EE
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:48:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14BBC433C7;
+	Wed,  9 Aug 2023 10:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578125;
-	bh=1g4NKE7ziG5yB3fVf2fTsDUzYjCajxUhRMOqE15E93E=;
+	s=korg; t=1691578128;
+	bh=HrLJv5CHEXEZye7nf+ZWk4xLjtdLwahWPBddOkNAsHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1h5rTCje9bNJyChu0Kal3OrqU6AqzPKQDQmv90Wf/b9AMLAuRCzphYTz7OSB0Ct3I
-	 ceJ+yxDJUaafulVEm4Wh8Eu6+aCIFJrrhze9/6du8Ex9B2lulowDK4BeiJuhd1LrF1
-	 /XViTnWm4c5weDgOSG4utdepr8HXtttn8v+WH38g=
+	b=0iZrK5ac2ur0CfjJMQm2kSSkuPb16DdOrjI2pTphSAv/n6hmBnwzXE6VJGC1ImwKG
+	 WVP6RgeBGwqSV8dNbhrGH60wLUlzCYsIbT1635JPtcuvgvEw0r3EgvWD3WRirNj0gX
+	 zxpR2Rx5gSNhL1z9Lh4Bs5riXguSd7bie33eOK7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Block <bblock@linux.ibm.com>,
-	Fedor Loshakov <loshakov@linux.ibm.com>,
-	Steffen Maier <maier@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.4 097/165] scsi: zfcp: Defer fc_rport blocking until after ADISC response
-Date: Wed,  9 Aug 2023 12:40:28 +0200
-Message-ID: <20230809103645.952154656@linuxfoundation.org>
+	Rani Hod <rani.hod@gmail.com>,
+	Paul Fertser <fercerpav@gmail.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.4 115/165] wifi: mt76: mt7615: do not advertise 5 GHz on first phy of MT7615D (DBDC)
+Date: Wed,  9 Aug 2023 12:40:46 +0200
+Message-ID: <20230809103646.560595847@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -36,60 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steffen Maier <maier@linux.ibm.com>
+From: Paul Fertser <fercerpav@gmail.com>
 
-commit e65851989001c0c9ba9177564b13b38201c0854c upstream.
+commit 421033deb91521aa6a9255e495cb106741a52275 upstream.
 
-Storage devices are free to send RSCNs, e.g. for internal state changes. If
-this happens on all connected paths, zfcp risks temporarily losing all
-paths at the same time. This has strong requirements on multipath
-configuration such as "no_path_retry queue".
+On DBDC devices the first (internal) phy is only capable of using
+2.4 GHz band, and the 5 GHz band is exposed via a separate phy object,
+so avoid the false advertising.
 
-Avoid such situations by deferring fc_rport blocking until after the ADISC
-response, when any actual state change of the remote port became clear.
-The already existing port recovery triggers explicitly block the fc_rport.
-The triggers are: on ADISC reject or timeout (typical cable pull case), and
-on ADISC indicating that the remote port has changed its WWPN or
-the port is meanwhile no longer open.
-
-As a side effect, this also removes a confusing direct function call to
-another work item function zfcp_scsi_rport_work() instead of scheduling
-that other work item. It was probably done that way to have the rport block
-side effect immediate and synchronous to the caller.
-
-Fixes: a2fa0aede07c ("[SCSI] zfcp: Block FC transport rports early on errors")
-Cc: stable@vger.kernel.org #v2.6.30+
-Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
-Reviewed-by: Fedor Loshakov <loshakov@linux.ibm.com>
-Signed-off-by: Steffen Maier <maier@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230724145156.3920244-1-maier@linux.ibm.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Rani Hod <rani.hod@gmail.com>
+Closes: https://github.com/openwrt/openwrt/pull/12361
+Fixes: 7660a1bd0c22 ("mt76: mt7615: register ext_phy if DBDC is detected")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paul Fertser <fercerpav@gmail.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Acked-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230605073408.8699-1-fercerpav@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/scsi/zfcp_fc.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7615/eeprom.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/s390/scsi/zfcp_fc.c
-+++ b/drivers/s390/scsi/zfcp_fc.c
-@@ -534,8 +534,7 @@ static void zfcp_fc_adisc_handler(void *
- 
- 	/* re-init to undo drop from zfcp_fc_adisc() */
- 	port->d_id = ntoh24(adisc_resp->adisc_port_id);
--	/* port is good, unblock rport without going through erp */
--	zfcp_scsi_schedule_rport_register(port);
-+	/* port is still good, nothing to do */
-  out:
- 	atomic_andnot(ZFCP_STATUS_PORT_LINK_TEST, &port->status);
- 	put_device(&port->dev);
-@@ -595,9 +594,6 @@ void zfcp_fc_link_test_work(struct work_
- 	int retval;
- 
- 	set_worker_desc("zadisc%16llx", port->wwpn); /* < WORKER_DESC_LEN=24 */
--	get_device(&port->dev);
--	port->rport_task = RPORT_DEL;
--	zfcp_scsi_rport_work(&port->rport_work);
- 
- 	/* only issue one test command at one time per port */
- 	if (atomic_read(&port->status) & ZFCP_STATUS_PORT_LINK_TEST)
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/eeprom.c
+@@ -128,12 +128,12 @@ mt7615_eeprom_parse_hw_band_cap(struct m
+ 	case MT_EE_5GHZ:
+ 		dev->mphy.cap.has_5ghz = true;
+ 		break;
+-	case MT_EE_2GHZ:
+-		dev->mphy.cap.has_2ghz = true;
+-		break;
+ 	case MT_EE_DBDC:
+ 		dev->dbdc_support = true;
+ 		fallthrough;
++	case MT_EE_2GHZ:
++		dev->mphy.cap.has_2ghz = true;
++		break;
+ 	default:
+ 		dev->mphy.cap.has_2ghz = true;
+ 		dev->mphy.cap.has_5ghz = true;
 
 
