@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300EA17AAB
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:32:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A46E8C433C8;
-	Wed,  9 Aug 2023 11:32:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094A917AAB;
+	Wed,  9 Aug 2023 11:32:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A32C433C7;
+	Wed,  9 Aug 2023 11:32:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580721;
-	bh=o4XvyzxS8+kuJ5Os7qTVa1Oc2UMnarGcaFG3Yn6j+MQ=;
+	s=korg; t=1691580723;
+	bh=vzhlfpb3fAu57RQ73yklDZT8zzxAWTiocZEqj/AFnEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1t+46dYxOI+3h+lqobcyLrz4wiEVstu9aWlfJTxb/y0ZYnrNoKvTV6D0P/L8nH2E8
-	 0LRtTP4rDuM8lXK0IJ3ivzbCLQ48gYK78+x218PbWvVJzOQLKg5ikAyQjuZwfns3+S
-	 XdzJwZpD+4daHAsmDqLBxcMtGh0yMpN4UBs3d3PM=
+	b=M/r/5DDIPbwTFS3MTrs8UGNQQQuKmoQuZacc/K6qzdWVdwIS4/Spz06VzxUM94ElW
+	 7uyOl97s/eWLdlXlZ7SPRUEX+nUpA/HZf8W0Ufpe9jHD9GjJYj+dojLTXecLX12tF6
+	 kjPx7LvN9Z3V9KBmcunuPo7sWYcWqokIMkiEniGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.4 126/154] mtd: rawnand: meson: fix OOB available bytes for ECC
-Date: Wed,  9 Aug 2023 12:42:37 +0200
-Message-ID: <20230809103641.069518507@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Lorenzo Colitti <lorenzo@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	netdev@vger.kernel.org,
+	Laszlo Ersek <lersek@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.4 127/154] net: tun_chr_open(): set sk_uid from current_fsuid()
+Date: Wed,  9 Aug 2023 12:42:38 +0200
+Message-ID: <20230809103641.099103532@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -35,44 +39,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
+From: Laszlo Ersek <lersek@redhat.com>
 
-commit 7e6b04f9238eab0f684fafd158c1f32ea65b9eaa upstream.
+commit 9bc3047374d5bec163e83e743709e23753376f0c upstream.
 
-It is incorrect to calculate number of OOB bytes for ECC engine using
-some "already known" ECC step size (1024 bytes here). Number of such
-bytes for ECC engine must be whole OOB except 2 bytes for bad block
-marker, while proper ECC step size and strength will be selected by
-ECC logic.
+Commit a096ccca6e50 initializes the "sk_uid" field in the protocol socket
+(struct sock) from the "/dev/net/tun" device node's owner UID. Per
+original commit 86741ec25462 ("net: core: Add a UID field to struct
+sock.", 2016-11-04), that's wrong: the idea is to cache the UID of the
+userspace process that creates the socket. Commit 86741ec25462 mentions
+socket() and accept(); with "tun", the action that creates the socket is
+open("/dev/net/tun").
 
-Fixes: 8fae856c5350 ("mtd: rawnand: meson: add support for Amlogic NAND flash controller")
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230705065211.293500-1-AVKrasnov@sberdevices.ru
+Therefore the device node's owner UID is irrelevant. In most cases,
+"/dev/net/tun" will be owned by root, so in practice, commit a096ccca6e50
+has no observable effect:
+
+- before, "sk_uid" would be zero, due to undefined behavior
+  (CVE-2023-1076),
+
+- after, "sk_uid" would be zero, due to "/dev/net/tun" being owned by root.
+
+What matters is the (fs)UID of the process performing the open(), so cache
+that in "sk_uid".
+
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Lorenzo Colitti <lorenzo@google.com>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Pietro Borrello <borrello@diag.uniroma1.it>
+Cc: netdev@vger.kernel.org
+Cc: stable@vger.kernel.org
+Fixes: a096ccca6e50 ("tun: tun_chr_open(): correctly initialize socket uid")
+Bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=2173435
+Signed-off-by: Laszlo Ersek <lersek@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/meson_nand.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/tun.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/meson_nand.c
-+++ b/drivers/mtd/nand/raw/meson_nand.c
-@@ -1177,7 +1177,6 @@ static int meson_nand_attach_chip(struct
- 	struct meson_nfc *nfc = nand_get_controller_data(nand);
- 	struct meson_nfc_nand_chip *meson_chip = to_meson_nand(nand);
- 	struct mtd_info *mtd = nand_to_mtd(nand);
--	int nsectors = mtd->writesize / 1024;
- 	int ret;
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -3534,7 +3534,7 @@ static int tun_chr_open(struct inode *in
+ 	tfile->socket.file = file;
+ 	tfile->socket.ops = &tun_socket_ops;
  
- 	if (!mtd->name) {
-@@ -1195,7 +1194,7 @@ static int meson_nand_attach_chip(struct
- 	nand->options |= NAND_NO_SUBPAGE_WRITE;
+-	sock_init_data_uid(&tfile->socket, &tfile->sk, inode->i_uid);
++	sock_init_data_uid(&tfile->socket, &tfile->sk, current_fsuid());
  
- 	ret = nand_ecc_choose_conf(nand, nfc->data->ecc_caps,
--				   mtd->oobsize - 2 * nsectors);
-+				   mtd->oobsize - 2);
- 	if (ret) {
- 		dev_err(nfc->dev, "failed to ECC init\n");
- 		return -EINVAL;
+ 	tfile->sk.sk_write_space = tun_sock_write_space;
+ 	tfile->sk.sk_sndbuf = INT_MAX;
 
 
