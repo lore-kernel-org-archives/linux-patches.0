@@ -1,36 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344A215AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:45:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E9EC433C9;
-	Wed,  9 Aug 2023 10:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0054715AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:45:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 772B5C433C8;
+	Wed,  9 Aug 2023 10:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691577926;
-	bh=31HqNmphNVvCIARF6+f3rsUCFR54BlZLVf+HFB64Jbg=;
+	s=korg; t=1691577928;
+	bh=yWzzgJy+J9SMT3pq8rPKkcsqQUjrDcxavqZPhd03S78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nxahGxXVmLUQ0YEszaT3uHgBoDNY3rCiatwXJuumiU2iMDMTSlTAam65/baGb3aLa
-	 ypTJBB0q2RSoLs9jYtncWIOrVql+1OVZSxL6Ac/LntcFLCDn7Szm9XR8C3sFtiDW6z
-	 K1cmC+TXojQCRFWF/dQnOgEsga/pRqDi8pan9ZUk=
+	b=p21Oq9jSNkhoT90goAeZ6iaDIKWFLtDMJU1zhpcjqHdzDZ/3dWBRV5Y6eF520vZGW
+	 nGwdrUIqcLWD1FJV1ESFuPG5LQOt3ES6WmVuhlKohbACuY3fHc77z3VBATq+IkP40F
+	 a13bQbVl3/Pe0g+xT324CIpzB5SPmNxSLnd3whSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Georg=20M=C3=BCller?= <georgmueller@gmx.net>,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Mingi Cho <mgcho.minic@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 044/165] perf test uprobe_from_different_cu: Skip if there is no gcc
-Date: Wed,  9 Aug 2023 12:39:35 +0200
-Message-ID: <20230809103644.263395968@linuxfoundation.org>
+Subject: [PATCH 6.4 045/165] net: sched: cls_u32: Fix match key mis-addressing
+Date: Wed,  9 Aug 2023 12:39:36 +0200
+Message-ID: <20230809103644.296938557@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -44,61 +36,143 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Georg Müller <georgmueller@gmx.net>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 98ce8e4a9dcfb448b30a2d7a16190f4a00382377 ]
+[ Upstream commit e68409db995380d1badacba41ff24996bd396171 ]
 
-Without gcc, the test will fail.
+A match entry is uniquely identified with an "address" or "path" in the
+form of: hashtable ID(12b):bucketid(8b):nodeid(12b).
 
-On cleanup, ignore probe removal errors. Otherwise, in case of an error
-adding the probe, the temporary directory is not removed.
+When creating table match entries all of hash table id, bucket id and
+node (match entry id) are needed to be either specified by the user or
+reasonable in-kernel defaults are used. The in-kernel default for a table id is
+0x800(omnipresent root table); for bucketid it is 0x0. Prior to this fix there
+was none for a nodeid i.e. the code assumed that the user passed the correct
+nodeid and if the user passes a nodeid of 0 (as Mingi Cho did) then that is what
+was used. But nodeid of 0 is reserved for identifying the table. This is not
+a problem until we dump. The dump code notices that the nodeid is zero and
+assumes it is referencing a table and therefore references table struct
+tc_u_hnode instead of what was created i.e match entry struct tc_u_knode.
 
-Fixes: 56cbeacf14353057 ("perf probe: Add test for regression introduced by switch to die_get_decl_file()")
-Signed-off-by: Georg Müller <georgmueller@gmx.net>
-Acked-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Georg Müller <georgmueller@gmx.net>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20230728151812.454806-2-georgmueller@gmx.net
-Link: https://lore.kernel.org/r/CAP-5=fUP6UuLgRty3t2=fQsQi3k4hDMz415vWdp1x88QMvZ8ug@mail.gmail.com/
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Ming does an equivalent of:
+tc filter add dev dummy0 parent 10: prio 1 handle 0x1000 \
+protocol ip u32 match ip src 10.0.0.1/32 classid 10:1 action ok
+
+Essentially specifying a table id 0, bucketid 1 and nodeid of zero
+Tableid 0 is remapped to the default of 0x800.
+Bucketid 1 is ignored and defaults to 0x00.
+Nodeid was assumed to be what Ming passed - 0x000
+
+dumping before fix shows:
+~$ tc filter ls dev dummy0 parent 10:
+filter protocol ip pref 1 u32 chain 0
+filter protocol ip pref 1 u32 chain 0 fh 800: ht divisor 1
+filter protocol ip pref 1 u32 chain 0 fh 800: ht divisor -30591
+
+Note that the last line reports a table instead of a match entry
+(you can tell this because it says "ht divisor...").
+As a result of reporting the wrong data type (misinterpretting of struct
+tc_u_knode as being struct tc_u_hnode) the divisor is reported with value
+of -30591. Ming identified this as part of the heap address
+(physmap_base is 0xffff8880 (-30591 - 1)).
+
+The fix is to ensure that when table entry matches are added and no
+nodeid is specified (i.e nodeid == 0) then we get the next available
+nodeid from the table's pool.
+
+After the fix, this is what the dump shows:
+$ tc filter ls dev dummy0 parent 10:
+filter protocol ip pref 1 u32 chain 0
+filter protocol ip pref 1 u32 chain 0 fh 800: ht divisor 1
+filter protocol ip pref 1 u32 chain 0 fh 800::800 order 2048 key ht 800 bkt 0 flowid 10:1 not_in_hw
+  match 0a000001/ffffffff at 12
+	action order 1: gact action pass
+	 random type none pass val 0
+	 index 1 ref 1 bind 1
+
+Reported-by: Mingi Cho <mgcho.minic@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://lore.kernel.org/r/20230726135151.416917-1-jhs@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/test_uprobe_from_different_cu.sh | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/sched/cls_u32.c | 56 ++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 50 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/tests/shell/test_uprobe_from_different_cu.sh b/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
-index 00d2e0e2e0c28..319f36ebb9a40 100644
---- a/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
-+++ b/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
-@@ -4,6 +4,12 @@
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index 5abf31e432caf..907e58841fe80 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -1024,18 +1024,62 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 		return -EINVAL;
+ 	}
  
- set -e
++	/* At this point, we need to derive the new handle that will be used to
++	 * uniquely map the identity of this table match entry. The
++	 * identity of the entry that we need to construct is 32 bits made of:
++	 *     htid(12b):bucketid(8b):node/entryid(12b)
++	 *
++	 * At this point _we have the table(ht)_ in which we will insert this
++	 * entry. We carry the table's id in variable "htid".
++	 * Note that earlier code picked the ht selection either by a) the user
++	 * providing the htid specified via TCA_U32_HASH attribute or b) when
++	 * no such attribute is passed then the root ht, is default to at ID
++	 * 0x[800][00][000]. Rule: the root table has a single bucket with ID 0.
++	 * If OTOH the user passed us the htid, they may also pass a bucketid of
++	 * choice. 0 is fine. For example a user htid is 0x[600][01][000] it is
++	 * indicating hash bucketid of 1. Rule: the entry/node ID _cannot_ be
++	 * passed via the htid, so even if it was non-zero it will be ignored.
++	 *
++	 * We may also have a handle, if the user passed one. The handle also
++	 * carries the same addressing of htid(12b):bucketid(8b):node/entryid(12b).
++	 * Rule: the bucketid on the handle is ignored even if one was passed;
++	 * rather the value on "htid" is always assumed to be the bucketid.
++	 */
+ 	if (handle) {
++		/* Rule: The htid from handle and tableid from htid must match */
+ 		if (TC_U32_HTID(handle) && TC_U32_HTID(handle ^ htid)) {
+ 			NL_SET_ERR_MSG_MOD(extack, "Handle specified hash table address mismatch");
+ 			return -EINVAL;
+ 		}
+-		handle = htid | TC_U32_NODE(handle);
+-		err = idr_alloc_u32(&ht->handle_idr, NULL, &handle, handle,
+-				    GFP_KERNEL);
+-		if (err)
+-			return err;
+-	} else
++		/* Ok, so far we have a valid htid(12b):bucketid(8b) but we
++		 * need to finalize the table entry identification with the last
++		 * part - the node/entryid(12b)). Rule: Nodeid _cannot be 0_ for
++		 * entries. Rule: nodeid of 0 is reserved only for tables(see
++		 * earlier code which processes TC_U32_DIVISOR attribute).
++		 * Rule: The nodeid can only be derived from the handle (and not
++		 * htid).
++		 * Rule: if the handle specified zero for the node id example
++		 * 0x60000000, then pick a new nodeid from the pool of IDs
++		 * this hash table has been allocating from.
++		 * If OTOH it is specified (i.e for example the user passed a
++		 * handle such as 0x60000123), then we use it generate our final
++		 * handle which is used to uniquely identify the match entry.
++		 */
++		if (!TC_U32_NODE(handle)) {
++			handle = gen_new_kid(ht, htid);
++		} else {
++			handle = htid | TC_U32_NODE(handle);
++			err = idr_alloc_u32(&ht->handle_idr, NULL, &handle,
++					    handle, GFP_KERNEL);
++			if (err)
++				return err;
++		}
++	} else {
++		/* The user did not give us a handle; lets just generate one
++		 * from the table's pool of nodeids.
++		 */
+ 		handle = gen_new_kid(ht, htid);
++	}
  
-+# skip if there's no gcc
-+if ! [ -x "$(command -v gcc)" ]; then
-+        echo "failed: no gcc compiler"
-+        exit 2
-+fi
-+
- temp_dir=$(mktemp -d /tmp/perf-uprobe-different-cu-sh.XXXXXXXXXX)
- 
- cleanup()
-@@ -11,7 +17,7 @@ cleanup()
- 	trap - EXIT TERM INT
- 	if [[ "${temp_dir}" =~ ^/tmp/perf-uprobe-different-cu-sh.*$ ]]; then
- 		echo "--- Cleaning up ---"
--		perf probe -x ${temp_dir}/testfile -d foo
-+		perf probe -x ${temp_dir}/testfile -d foo || true
- 		rm -f "${temp_dir}/"*
- 		rmdir "${temp_dir}"
- 	fi
+ 	if (tb[TCA_U32_SEL] == NULL) {
+ 		NL_SET_ERR_MSG_MOD(extack, "Selector not specified");
 -- 
 2.40.1
 
