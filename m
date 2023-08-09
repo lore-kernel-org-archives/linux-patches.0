@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63FB17AB6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:32:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45BFBC433C7;
-	Wed,  9 Aug 2023 11:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E4317AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:32:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14357C433CA;
+	Wed,  9 Aug 2023 11:32:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580771;
-	bh=yXhS/abqS7zlCSJ3cHBMaA/Hp27HnZgm0SZKGE/FGCM=;
+	s=korg; t=1691580774;
+	bh=h8RWDouXx/uxGIg7JJjGwBYhAXOHdayLZGqwbwc6LZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cd1na0rXATLodfAlD04PfSEe3DWwFbIQDm0u8rbh+vO1EI7NQTEk0hkLYimDDs7Nv
-	 aFiKBQcaHkJzGxZBnKOHjYCYY/1vxOPEJZguyVKiZTp3tj9FFxPfCziMfCHQj3WML1
-	 d+Zln+A4O9dN63Sv/A/TWbYMfy64sap0QaBXfHes=
+	b=ZZmEmrwhRJNKWfvWrdlPBgHYBX6UvJplUBPLKdPeP0ipOLxCwVqnp3Ch0IEPGCm9z
+	 n/yEdNdhEAVLLQfKMEQGYgXDPvPVMOvVxUgsUr98azMMBUzeZSQY2BPO12eqDlNkwh
+	 15vJmZp0Lf9yLQ6Xd2BUN9bKlmzw1J0Ju1nKZy4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	"Yan, Zheng" <zyan@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Lin Ma <linma@zju.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 142/154] ceph: show tasks waiting on caps in debugfs caps file
-Date: Wed,  9 Aug 2023 12:42:53 +0200
-Message-ID: <20230809103641.564000283@linuxfoundation.org>
+Subject: [PATCH 5.4 114/154] net: dcb: choose correct policy to parse DCB_ATTR_BCN
+Date: Wed,  9 Aug 2023 12:42:25 +0200
+Message-ID: <20230809103640.708663755@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -36,132 +36,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 3a3430affce5de301fc8e6e50fa3543d7597820e ]
+[ Upstream commit 31d49ba033095f6e8158c60f69714a500922e0c3 ]
 
-Add some visibility of tasks that are waiting for caps to the "caps"
-debugfs file. Display the tgid of the waiting task, inode number, and
-the caps the task needs and wants.
+The dcbnl_bcn_setcfg uses erroneous policy to parse tb[DCB_ATTR_BCN],
+which is introduced in commit 859ee3c43812 ("DCB: Add support for DCB
+BCN"). Please see the comment in below code
 
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: "Yan, Zheng" <zyan@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Stable-dep-of: e7e607bd0048 ("ceph: defer stopping mdsc delayed_work")
+static int dcbnl_bcn_setcfg(...)
+{
+  ...
+  ret = nla_parse_nested_deprecated(..., dcbnl_pfc_up_nest, .. )
+  // !!! dcbnl_pfc_up_nest for attributes
+  //  DCB_PFC_UP_ATTR_0 to DCB_PFC_UP_ATTR_ALL in enum dcbnl_pfc_up_attrs
+  ...
+  for (i = DCB_BCN_ATTR_RP_0; i <= DCB_BCN_ATTR_RP_7; i++) {
+  // !!! DCB_BCN_ATTR_RP_0 to DCB_BCN_ATTR_RP_7 in enum dcbnl_bcn_attrs
+    ...
+    value_byte = nla_get_u8(data[i]);
+    ...
+  }
+  ...
+  for (i = DCB_BCN_ATTR_BCNA_0; i <= DCB_BCN_ATTR_RI; i++) {
+  // !!! DCB_BCN_ATTR_BCNA_0 to DCB_BCN_ATTR_RI in enum dcbnl_bcn_attrs
+  ...
+    value_int = nla_get_u32(data[i]);
+  ...
+  }
+  ...
+}
+
+That is, the nla_parse_nested_deprecated uses dcbnl_pfc_up_nest
+attributes to parse nlattr defined in dcbnl_pfc_up_attrs. But the
+following access code fetch each nlattr as dcbnl_bcn_attrs attributes.
+By looking up the associated nla_policy for dcbnl_bcn_attrs. We can find
+the beginning part of these two policies are "same".
+
+static const struct nla_policy dcbnl_pfc_up_nest[...] = {
+        [DCB_PFC_UP_ATTR_0]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_1]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_2]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_3]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_4]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_5]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_6]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_7]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_ALL] = {.type = NLA_FLAG},
+};
+
+static const struct nla_policy dcbnl_bcn_nest[...] = {
+        [DCB_BCN_ATTR_RP_0]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_1]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_2]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_3]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_4]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_5]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_6]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_7]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_ALL]       = {.type = NLA_FLAG},
+        // from here is somewhat different
+        [DCB_BCN_ATTR_BCNA_0]       = {.type = NLA_U32},
+        ...
+        [DCB_BCN_ATTR_ALL]          = {.type = NLA_FLAG},
+};
+
+Therefore, the current code is buggy and this
+nla_parse_nested_deprecated could overflow the dcbnl_pfc_up_nest and use
+the adjacent nla_policy to parse attributes from DCB_BCN_ATTR_BCNA_0.
+
+Hence use the correct policy dcbnl_bcn_nest to parse the nested
+tb[DCB_ATTR_BCN] TLV.
+
+Fixes: 859ee3c43812 ("DCB: Add support for DCB BCN")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230801013248.87240-1-linma@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/caps.c       | 17 +++++++++++++++++
- fs/ceph/debugfs.c    | 13 +++++++++++++
- fs/ceph/mds_client.c |  1 +
- fs/ceph/mds_client.h |  9 +++++++++
- 4 files changed, 40 insertions(+)
+ net/dcb/dcbnl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
-index 243e246cb5046..4e88cb9907230 100644
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -2790,7 +2790,19 @@ int ceph_get_caps(struct file *filp, int need, int want,
- 		if (ret == -EAGAIN)
- 			continue;
- 		if (!ret) {
-+			struct ceph_mds_client *mdsc = fsc->mdsc;
-+			struct cap_wait cw;
- 			DEFINE_WAIT_FUNC(wait, woken_wake_function);
-+
-+			cw.ino = inode->i_ino;
-+			cw.tgid = current->tgid;
-+			cw.need = need;
-+			cw.want = want;
-+
-+			spin_lock(&mdsc->caps_list_lock);
-+			list_add(&cw.list, &mdsc->cap_wait_list);
-+			spin_unlock(&mdsc->caps_list_lock);
-+
- 			add_wait_queue(&ci->i_cap_wq, &wait);
+diff --git a/net/dcb/dcbnl.c b/net/dcb/dcbnl.c
+index b53d5e1d026fe..71e97e2a36845 100644
+--- a/net/dcb/dcbnl.c
++++ b/net/dcb/dcbnl.c
+@@ -946,7 +946,7 @@ static int dcbnl_bcn_setcfg(struct net_device *netdev, struct nlmsghdr *nlh,
+ 		return -EOPNOTSUPP;
  
- 			flags |= NON_BLOCKING;
-@@ -2804,6 +2816,11 @@ int ceph_get_caps(struct file *filp, int need, int want,
- 			}
- 
- 			remove_wait_queue(&ci->i_cap_wq, &wait);
-+
-+			spin_lock(&mdsc->caps_list_lock);
-+			list_del(&cw.list);
-+			spin_unlock(&mdsc->caps_list_lock);
-+
- 			if (ret == -EAGAIN)
- 				continue;
- 		}
-diff --git a/fs/ceph/debugfs.c b/fs/ceph/debugfs.c
-index facb387c27356..c281f32b54f7b 100644
---- a/fs/ceph/debugfs.c
-+++ b/fs/ceph/debugfs.c
-@@ -139,6 +139,7 @@ static int caps_show(struct seq_file *s, void *p)
- 	struct ceph_fs_client *fsc = s->private;
- 	struct ceph_mds_client *mdsc = fsc->mdsc;
- 	int total, avail, used, reserved, min, i;
-+	struct cap_wait	*cw;
- 
- 	ceph_reservation_status(fsc, &total, &avail, &used, &reserved, &min);
- 	seq_printf(s, "total\t\t%d\n"
-@@ -166,6 +167,18 @@ static int caps_show(struct seq_file *s, void *p)
- 	}
- 	mutex_unlock(&mdsc->mutex);
- 
-+	seq_printf(s, "\n\nWaiters:\n--------\n");
-+	seq_printf(s, "tgid         ino                need             want\n");
-+	seq_printf(s, "-----------------------------------------------------\n");
-+
-+	spin_lock(&mdsc->caps_list_lock);
-+	list_for_each_entry(cw, &mdsc->cap_wait_list, list) {
-+		seq_printf(s, "%-13d0x%-17lx%-17s%-17s\n", cw->tgid, cw->ino,
-+				ceph_cap_string(cw->need),
-+				ceph_cap_string(cw->want));
-+	}
-+	spin_unlock(&mdsc->caps_list_lock);
-+
- 	return 0;
- }
- 
-diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
-index 3bf81fe5f10a3..6ceda2a4791c4 100644
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -4174,6 +4174,7 @@ int ceph_mdsc_init(struct ceph_fs_client *fsc)
- 	INIT_DELAYED_WORK(&mdsc->delayed_work, delayed_work);
- 	mdsc->last_renew_caps = jiffies;
- 	INIT_LIST_HEAD(&mdsc->cap_delay_list);
-+	INIT_LIST_HEAD(&mdsc->cap_wait_list);
- 	spin_lock_init(&mdsc->cap_delay_lock);
- 	INIT_LIST_HEAD(&mdsc->snap_flush_list);
- 	spin_lock_init(&mdsc->snap_flush_lock);
-diff --git a/fs/ceph/mds_client.h b/fs/ceph/mds_client.h
-index 5cd131b41d84f..14c7e8c49970a 100644
---- a/fs/ceph/mds_client.h
-+++ b/fs/ceph/mds_client.h
-@@ -340,6 +340,14 @@ struct ceph_quotarealm_inode {
- 	struct inode *inode;
- };
- 
-+struct cap_wait {
-+	struct list_head	list;
-+	unsigned long		ino;
-+	pid_t			tgid;
-+	int			need;
-+	int			want;
-+};
-+
- /*
-  * mds client state
-  */
-@@ -416,6 +424,7 @@ struct ceph_mds_client {
- 	spinlock_t	caps_list_lock;
- 	struct		list_head caps_list; /* unused (reserved or
- 						unreserved) */
-+	struct		list_head cap_wait_list;
- 	int		caps_total_count;    /* total caps allocated */
- 	int		caps_use_count;      /* in use */
- 	int		caps_use_max;	     /* max used caps */
+ 	ret = nla_parse_nested_deprecated(data, DCB_BCN_ATTR_MAX,
+-					  tb[DCB_ATTR_BCN], dcbnl_pfc_up_nest,
++					  tb[DCB_ATTR_BCN], dcbnl_bcn_nest,
+ 					  NULL);
+ 	if (ret)
+ 		return ret;
 -- 
 2.40.1
 
