@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0FC517AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 422B4C433C7;
-	Wed,  9 Aug 2023 11:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6D117AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5B7C433C7;
+	Wed,  9 Aug 2023 11:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581114;
-	bh=7T0JucRwyr7f6pc+4XRNiKVYEA/e3rkZKfiDFNsQgM4=;
+	s=korg; t=1691581117;
+	bh=klIyRPhZk1qjMfAf/bEyH2s8w7OPj8rpn0B/fHo3njE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ruUKf+EdbwQ6BKW6wXiZippZZ4pL54rrpZ72BG8CFNOJp5d+aTsJY7SK/tCv4jUQ1
-	 nuiSCl7j+Gp/jK7YR2J+D/ej7uyUGOQFqJh4sqF8W0kbLrg12agqiWq0BWBspyAJJR
-	 4413fqqH7blpAQz6gVLjHANixYSB86Ums6it3YZg=
+	b=KabHQ0M75hTc1Ch8gAJOKcsJVEvIHORmgLky2MKsoWxiirNn4CBnLxkwP9WcXBw0P
+	 s57w44lkKI2zfgXNni7KFlrc+OplnlNBouMJHAjijHQd2z0sOiOenXoxzPvbROb5oj
+	 lFRhllVnpT+44QeXLC7OJ7mgyv5f0c8IL0+Ac/sY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 110/201] selftests: mptcp: depend on SYN_COOKIES
-Date: Wed,  9 Aug 2023 12:41:52 +0200
-Message-ID: <20230809103647.479286395@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>
+Subject: [PATCH 5.10 084/201] staging: ks7010: potential buffer overflow in ks_wlan_set_encode_ext()
+Date: Wed,  9 Aug 2023 12:41:26 +0200
+Message-ID: <20230809103646.617931408@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -34,37 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-commit 6c8880fcaa5c45355179b759c1d11737775e31fc upstream.
+commit 5f1c7031e044cb2fba82836d55cc235e2ad619dc upstream.
 
-MPTCP selftests are using TCP SYN Cookies for quite a while now, since
-v5.9.
+The "exc->key_len" is a u16 that comes from the user.  If it's over
+IW_ENCODING_TOKEN_MAX (64) that could lead to memory corruption.
 
-Some CIs don't have this config option enabled and this is causing
-issues in the tests:
-
-  # ns1 MPTCP -> ns1 (10.0.1.1:10000      ) MPTCP     (duration   167ms) sysctl: cannot stat /proc/sys/net/ipv4/tcp_syncookies: No such file or directory
-  # [ OK ]./mptcp_connect.sh: line 554: [: -eq: unary operator expected
-
-There is no impact in the results but the test is not doing what it is
-supposed to do.
-
-Fixes: fed61c4b584c ("selftests: mptcp: make 2nd net namespace use tcp syn cookies unconditionally")
-Cc: stable@vger.kernel.org
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: b121d84882b9 ("staging: ks7010: simplify calls to memcpy()")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/tencent_5153B668C0283CAA15AA518325346E026A09@qq.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/config |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/staging/ks7010/ks_wlan_net.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/config
-+++ b/tools/testing/selftests/net/mptcp/config
-@@ -6,3 +6,4 @@ CONFIG_INET_DIAG=m
- CONFIG_INET_MPTCP_DIAG=m
- CONFIG_VETH=y
- CONFIG_NET_SCH_NETEM=m
-+CONFIG_SYN_COOKIES=y
+--- a/drivers/staging/ks7010/ks_wlan_net.c
++++ b/drivers/staging/ks7010/ks_wlan_net.c
+@@ -1584,8 +1584,10 @@ static int ks_wlan_set_encode_ext(struct
+ 			commit |= SME_WEP_FLAG;
+ 		}
+ 		if (enc->key_len) {
+-			memcpy(&key->key_val[0], &enc->key[0], enc->key_len);
+-			key->key_len = enc->key_len;
++			int key_len = clamp_val(enc->key_len, 0, IW_ENCODING_TOKEN_MAX);
++
++			memcpy(&key->key_val[0], &enc->key[0], key_len);
++			key->key_len = key_len;
+ 			commit |= (SME_WEP_VAL1 << index);
+ 		}
+ 		break;
 
 
