@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD261774C
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:11:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C174EC433C7;
-	Wed,  9 Aug 2023 11:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F3F1774C
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:11:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791DBC433C7;
+	Wed,  9 Aug 2023 11:11:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579467;
-	bh=F4DG/9CPpBBSe3WFuB9X4t3IEXxaZt8yTLR4kpZuK64=;
+	s=korg; t=1691579469;
+	bh=I3UXroALJLUEpABFaBQQqmNLj4WewaGE1AGtLJ8LP+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ezM3solCI+Jhk60BgFs4b8rZiYpIXWI5ccMjPw8zo0yZh3DO5ySrF7wPRaUMgXACC
-	 cxPdNv3lZl33QgoRs/0s5RjDNXYpiDP/bQbGivGn2QJpKUCTlzArEbNOrswc2opyRx
-	 Cdn2LPz3DHtZHUH/nztCpWDGFKOsPTjstm7m/7/s=
+	b=iKcgs/awWwVnFGT6pRKBGrGPduOKDmbnNVv3yi1f7jommEVrOm/MG1zhFrRWaS4Kp
+	 YN8BSI+t4HconWo20MiUpIJ8KS+N44zFsuQOIXLhWh4KatvaO7UwGHhKs7WxvQ+bza
+	 V/I4TE5nz091XKj+6kdZ6rmupcMCuwPejdDX05Bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yizhan@redhat.com>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 4.14 177/204] drm/client: Fix memory leak in drm_client_target_cloned
-Date: Wed,  9 Aug 2023 12:41:55 +0200
-Message-ID: <20230809103648.432229069@linuxfoundation.org>
+	M A Ramdhan <ramdhan@starlabs.sg>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	SeongJae Park <sj@kernel.org>
+Subject: [PATCH 4.14 178/204] net/sched: cls_fw: Fix improper refcount update leads to use-after-free
+Date: Wed,  9 Aug 2023 12:41:56 +0200
+Message-ID: <20230809103648.460763089@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -36,69 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jocelyn Falempe <jfalempe@redhat.com>
+From: M A Ramdhan <ramdhan@starlabs.sg>
 
-commit c2a88e8bdf5f6239948d75283d0ae7e0c7945b03 upstream.
+commit 0323bce598eea038714f941ce2b22541c46d488f upstream.
 
-dmt_mode is allocated and never freed in this function.
-It was found with the ast driver, but most drivers using generic fbdev
-setup are probably affected.
+In the event of a failure in tcf_change_indev(), fw_set_parms() will
+immediately return an error after incrementing or decrementing
+reference counter in tcf_bind_filter().  If attacker can control
+reference counter to zero and make reference freed, leading to
+use after free.
 
-This fixes the following kmemleak report:
-  backtrace:
-    [<00000000b391296d>] drm_mode_duplicate+0x45/0x220 [drm]
-    [<00000000e45bb5b3>] drm_client_target_cloned.constprop.0+0x27b/0x480 [drm]
-    [<00000000ed2d3a37>] drm_client_modeset_probe+0x6bd/0xf50 [drm]
-    [<0000000010e5cc9d>] __drm_fb_helper_initial_config_and_unlock+0xb4/0x2c0 [drm_kms_helper]
-    [<00000000909f82ca>] drm_fbdev_client_hotplug+0x2bc/0x4d0 [drm_kms_helper]
-    [<00000000063a69aa>] drm_client_register+0x169/0x240 [drm]
-    [<00000000a8c61525>] ast_pci_probe+0x142/0x190 [ast]
-    [<00000000987f19bb>] local_pci_probe+0xdc/0x180
-    [<000000004fca231b>] work_for_cpu_fn+0x4e/0xa0
-    [<0000000000b85301>] process_one_work+0x8b7/0x1540
-    [<000000003375b17c>] worker_thread+0x70a/0xed0
-    [<00000000b0d43cd9>] kthread+0x29f/0x340
-    [<000000008d770833>] ret_from_fork+0x1f/0x30
-unreferenced object 0xff11000333089a00 (size 128):
+In order to prevent this, move the point of possible failure above the
+point where the TC_FW_CLASSID is handled.
 
-cc: <stable@vger.kernel.org>
-Fixes: 1d42bbc8f7f9 ("drm/fbdev: fix cloning on fbcon")
-Reported-by: Zhang Yi <yizhan@redhat.com>
-Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230711092203.68157-2-jfalempe@redhat.com
-Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: M A Ramdhan <ramdhan@starlabs.sg>
+Signed-off-by: M A Ramdhan <ramdhan@starlabs.sg>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
+Message-ID: <20230705161530.52003-1-ramdhan@starlabs.sg>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: SeongJae Park <sj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_fb_helper.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/sched/cls_fw.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/drm_fb_helper.c
-+++ b/drivers/gpu/drm/drm_fb_helper.c
-@@ -2112,6 +2112,9 @@ static bool drm_target_cloned(struct drm
- 	can_clone = true;
- 	dmt_mode = drm_mode_find_dmt(fb_helper->dev, 1024, 768, 60, false);
+--- a/net/sched/cls_fw.c
++++ b/net/sched/cls_fw.c
+@@ -225,11 +225,6 @@ static int fw_set_parms(struct net *net,
+ 	if (err < 0)
+ 		return err;
  
-+	if (!dmt_mode)
-+		goto fail;
+-	if (tb[TCA_FW_CLASSID]) {
+-		f->res.classid = nla_get_u32(tb[TCA_FW_CLASSID]);
+-		tcf_bind_filter(tp, &f->res, base);
+-	}
+-
+ #ifdef CONFIG_NET_CLS_IND
+ 	if (tb[TCA_FW_INDEV]) {
+ 		int ret;
+@@ -248,6 +243,11 @@ static int fw_set_parms(struct net *net,
+ 	} else if (head->mask != 0xFFFFFFFF)
+ 		return err;
+ 
++	if (tb[TCA_FW_CLASSID]) {
++		f->res.classid = nla_get_u32(tb[TCA_FW_CLASSID]);
++		tcf_bind_filter(tp, &f->res, base);
++	}
 +
- 	drm_fb_helper_for_each_connector(fb_helper, i) {
- 		if (!enabled[i])
- 			continue;
-@@ -2124,11 +2127,13 @@ static bool drm_target_cloned(struct drm
- 		if (!modes[i])
- 			can_clone = false;
- 	}
-+	kfree(dmt_mode);
- 
- 	if (can_clone) {
- 		DRM_DEBUG_KMS("can clone using 1024x768\n");
- 		return true;
- 	}
-+fail:
- 	DRM_INFO("kms: can't enable cloning when we probably wanted to.\n");
- 	return false;
+ 	return 0;
  }
+ 
 
 
