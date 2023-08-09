@@ -1,28 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3141117AB6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:10:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9155CC43397;
-	Wed,  9 Aug 2023 11:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFAFF17AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:10:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45733C433CB;
+	Wed,  9 Aug 2023 11:10:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579399;
-	bh=EPqlSTCY14pZjhj4Wi5mzQMmTm7xkJM4f0PkNcSY+Ik=;
+	s=korg; t=1691579402;
+	bh=31HqNmphNVvCIARF6+f3rsUCFR54BlZLVf+HFB64Jbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WGsCeXry3crAgdvPBu+GwDfDuAedPMCN0d6inVye/4d64Rw8wXtZR1KqSUmtCUylo
-	 dToHIvP1wEMeU5ZcBDqAT0VNS8c40TXJTnanDm7vGGZmzGPVnCs3TnJQKc6xlpZB0H
-	 aqy/XvZjKYVRmrqUyi8BKy4UMsAwWascspOndzg4=
+	b=AjRbM96UPycoHpNpylFuSCOLQPggEIKDgPe0kuF6tuuUecL/mrBtgMocUyC9QE0yJ
+	 sdwCEcMsy/qaMQp2UOZzk3cEkg/Z4NNQ2PMWnL3EhWqUnRyZ/e9h3i8XcqRCkPxp4w
+	 NxOy9+QewopVrw8BAk3P3AeEkoSgfdW5+lvJpZuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanjun Gong <ruc_gongyuanjun@163.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	=?UTF-8?q?Georg=20M=C3=BCller?= <georgmueller@gmx.net>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 183/204] net/mlx5e: fix return value check in mlx5e_ipsec_remove_trailer()
-Date: Wed,  9 Aug 2023 12:42:01 +0200
-Message-ID: <20230809103648.619935872@linuxfoundation.org>
+Subject: [PATCH 4.14 184/204] perf test uprobe_from_different_cu: Skip if there is no gcc
+Date: Wed,  9 Aug 2023 12:42:02 +0200
+Message-ID: <20230809103648.653516773@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -36,37 +44,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuanjun Gong <ruc_gongyuanjun@163.com>
+From: Georg Müller <georgmueller@gmx.net>
 
-[ Upstream commit e5bcb7564d3bd0c88613c76963c5349be9c511c5 ]
+[ Upstream commit 98ce8e4a9dcfb448b30a2d7a16190f4a00382377 ]
 
-mlx5e_ipsec_remove_trailer() should return an error code if function
-pskb_trim() returns an unexpected value.
+Without gcc, the test will fail.
 
-Fixes: 2ac9cfe78223 ("net/mlx5e: IPSec, Add Innova IPSec offload TX data path")
-Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+On cleanup, ignore probe removal errors. Otherwise, in case of an error
+adding the probe, the temporary directory is not removed.
+
+Fixes: 56cbeacf14353057 ("perf probe: Add test for regression introduced by switch to die_get_decl_file()")
+Signed-off-by: Georg Müller <georgmueller@gmx.net>
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Georg Müller <georgmueller@gmx.net>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20230728151812.454806-2-georgmueller@gmx.net
+Link: https://lore.kernel.org/r/CAP-5=fUP6UuLgRty3t2=fQsQi3k4hDMz415vWdp1x88QMvZ8ug@mail.gmail.com/
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/perf/tests/shell/test_uprobe_from_different_cu.sh | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c
-index 4614ddfa91ebc..3803e7f23299e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c
-@@ -119,7 +119,9 @@ static int mlx5e_ipsec_remove_trailer(struct sk_buff *skb, struct xfrm_state *x)
+diff --git a/tools/perf/tests/shell/test_uprobe_from_different_cu.sh b/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
+index 00d2e0e2e0c28..319f36ebb9a40 100644
+--- a/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
++++ b/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
+@@ -4,6 +4,12 @@
  
- 	trailer_len = alen + plen + 2;
+ set -e
  
--	pskb_trim(skb, skb->len - trailer_len);
-+	ret = pskb_trim(skb, skb->len - trailer_len);
-+	if (unlikely(ret))
-+		return ret;
- 	if (skb->protocol == htons(ETH_P_IP)) {
- 		ipv4hdr->tot_len = htons(ntohs(ipv4hdr->tot_len) - trailer_len);
- 		ip_send_check(ipv4hdr);
++# skip if there's no gcc
++if ! [ -x "$(command -v gcc)" ]; then
++        echo "failed: no gcc compiler"
++        exit 2
++fi
++
+ temp_dir=$(mktemp -d /tmp/perf-uprobe-different-cu-sh.XXXXXXXXXX)
+ 
+ cleanup()
+@@ -11,7 +17,7 @@ cleanup()
+ 	trap - EXIT TERM INT
+ 	if [[ "${temp_dir}" =~ ^/tmp/perf-uprobe-different-cu-sh.*$ ]]; then
+ 		echo "--- Cleaning up ---"
+-		perf probe -x ${temp_dir}/testfile -d foo
++		perf probe -x ${temp_dir}/testfile -d foo || true
+ 		rm -f "${temp_dir}/"*
+ 		rmdir "${temp_dir}"
+ 	fi
 -- 
 2.40.1
 
