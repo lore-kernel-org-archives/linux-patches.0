@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72523174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:56:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E0EC433C8;
-	Wed,  9 Aug 2023 10:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57302174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:56:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB54FC433C8;
+	Wed,  9 Aug 2023 10:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578605;
-	bh=Ye3ys9UcDM6pMksK+MRq0l+vVAWGIT5xFw4fgsIyerM=;
+	s=korg; t=1691578608;
+	bh=ts0HoAKwS5L6WNsMqhyS/jSb8UGdVxG5F7XAFrVNKIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hV7/vtBwdNKloQAMxauNprhskkV7MaQn+D2lQUMKFhOhxBdYMJUA2nVIcFCK2mzF7
-	 ib9Zg04J+xGNLsI125GfXooAIrLUJoc5sgIObYq9WILQ8ftLgjSWOgPMKWFh46iFdW
-	 9X1xY9h2TAHFPALVP8SNnLdBfIa5itFGjS7Bqdz8=
+	b=p2tQQTil/ZvXwQRMN4ixdqd59VoTaZZyA/adQV1AnqIc+Mi2IUYdWTvdJIcX7Ozia
+	 sb+uCZACMe/PM+rS3u3joFpRT03QLSeaVijNscu+TdL7avLyPxDh9mTxnnaXptpqfV
+	 addzQEWWwF5c13/r8EdfXXeRBX7wIPT8s2fEZO6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Lewis <aaronlewis@google.com>,
-	kvm@vger.kernel.org,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Chao Yu <chao@kernel.org>,
+	Yangtao Li <frank.li@vivo.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 119/127] selftests/rseq: Play nice with binaries statically linked against glibc 2.35+
-Date: Wed,  9 Aug 2023 12:41:46 +0200
-Message-ID: <20230809103640.548687186@linuxfoundation.org>
+Subject: [PATCH 6.1 120/127] f2fs: fix to set flush_merge opt and show noflush_merge
+Date: Wed,  9 Aug 2023 12:41:47 +0200
+Message-ID: <20230809103640.581982648@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -37,81 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Yangtao Li <frank.li@vivo.com>
 
-[ Upstream commit 3bcbc20942db5d738221cca31a928efc09827069 ]
+[ Upstream commit 967eaad1fed5f6335ea97a47d45214744dc57925 ]
 
-To allow running rseq and KVM's rseq selftests as statically linked
-binaries, initialize the various "trampoline" pointers to point directly
-at the expect glibc symbols, and skip the dlysm() lookups if the rseq
-size is non-zero, i.e. the binary is statically linked *and* the libc
-registered its own rseq.
+Some minor modifications to flush_merge and related parameters:
 
-Define weak versions of the symbols so as not to break linking against
-libc versions that don't support rseq in any capacity.
+  1.The FLUSH_MERGE opt is set by default only in non-ro mode.
+  2.When ro and merge are set at the same time, an error is reported.
+  3.Display noflush_merge mount opt.
 
-The KVM selftests in particular are often statically linked so that they
-can be run on targets with very limited runtime environments, i.e. test
-machines.
-
-Fixes: 233e667e1ae3 ("selftests/rseq: Uplift rseq selftests for compatibility with glibc-2.35")
-Cc: Aaron Lewis <aaronlewis@google.com>
-Cc: kvm@vger.kernel.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20230721223352.2333911-1-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Suggested-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: 458c15dfbce6 ("f2fs: don't reset unchangable mount option in f2fs_remount()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/rseq/rseq.c | 28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ fs/f2fs/super.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/rseq/rseq.c b/tools/testing/selftests/rseq/rseq.c
-index 4177f9507bbee..b736a5169aad0 100644
---- a/tools/testing/selftests/rseq/rseq.c
-+++ b/tools/testing/selftests/rseq/rseq.c
-@@ -32,9 +32,17 @@
- #include "../kselftest.h"
- #include "rseq.h"
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index b6dad389fa144..36bb1c969e8bb 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1347,6 +1347,12 @@ static int parse_options(struct super_block *sb, char *options, bool is_remount)
+ 		return -EINVAL;
+ 	}
  
--static const ptrdiff_t *libc_rseq_offset_p;
--static const unsigned int *libc_rseq_size_p;
--static const unsigned int *libc_rseq_flags_p;
-+/*
-+ * Define weak versions to play nice with binaries that are statically linked
-+ * against a libc that doesn't support registering its own rseq.
-+ */
-+__weak ptrdiff_t __rseq_offset;
-+__weak unsigned int __rseq_size;
-+__weak unsigned int __rseq_flags;
-+
-+static const ptrdiff_t *libc_rseq_offset_p = &__rseq_offset;
-+static const unsigned int *libc_rseq_size_p = &__rseq_size;
-+static const unsigned int *libc_rseq_flags_p = &__rseq_flags;
- 
- /* Offset from the thread pointer to the rseq area.  */
- ptrdiff_t rseq_offset;
-@@ -108,9 +116,17 @@ int rseq_unregister_current_thread(void)
- static __attribute__((constructor))
- void rseq_init(void)
- {
--	libc_rseq_offset_p = dlsym(RTLD_NEXT, "__rseq_offset");
--	libc_rseq_size_p = dlsym(RTLD_NEXT, "__rseq_size");
--	libc_rseq_flags_p = dlsym(RTLD_NEXT, "__rseq_flags");
-+	/*
-+	 * If the libc's registered rseq size isn't already valid, it may be
-+	 * because the binary is dynamically linked and not necessarily due to
-+	 * libc not having registered a restartable sequence.  Try to find the
-+	 * symbols if that's the case.
-+	 */
-+	if (!*libc_rseq_size_p) {
-+		libc_rseq_offset_p = dlsym(RTLD_NEXT, "__rseq_offset");
-+		libc_rseq_size_p = dlsym(RTLD_NEXT, "__rseq_size");
-+		libc_rseq_flags_p = dlsym(RTLD_NEXT, "__rseq_flags");
++	if ((f2fs_sb_has_readonly(sbi) || f2fs_readonly(sbi->sb)) &&
++		test_opt(sbi, FLUSH_MERGE)) {
++		f2fs_err(sbi, "FLUSH_MERGE not compatible with readonly mode");
++		return -EINVAL;
 +	}
- 	if (libc_rseq_size_p && libc_rseq_offset_p && libc_rseq_flags_p &&
- 			*libc_rseq_size_p != 0) {
- 		/* rseq registration owned by glibc */
++
+ 	if (f2fs_sb_has_readonly(sbi) && !f2fs_readonly(sbi->sb)) {
+ 		f2fs_err(sbi, "Allow to mount readonly mode only");
+ 		return -EROFS;
+@@ -1933,8 +1939,10 @@ static int f2fs_show_options(struct seq_file *seq, struct dentry *root)
+ 		seq_puts(seq, ",inline_dentry");
+ 	else
+ 		seq_puts(seq, ",noinline_dentry");
+-	if (!f2fs_readonly(sbi->sb) && test_opt(sbi, FLUSH_MERGE))
++	if (test_opt(sbi, FLUSH_MERGE))
+ 		seq_puts(seq, ",flush_merge");
++	else
++		seq_puts(seq, ",noflush_merge");
+ 	if (test_opt(sbi, NOBARRIER))
+ 		seq_puts(seq, ",nobarrier");
+ 	if (test_opt(sbi, FASTBOOT))
+@@ -2063,7 +2071,8 @@ static void default_options(struct f2fs_sb_info *sbi)
+ 	set_opt(sbi, MERGE_CHECKPOINT);
+ 	F2FS_OPTION(sbi).unusable_cap = 0;
+ 	sbi->sb->s_flags |= SB_LAZYTIME;
+-	set_opt(sbi, FLUSH_MERGE);
++	if (!f2fs_sb_has_readonly(sbi) && !f2fs_readonly(sbi->sb))
++		set_opt(sbi, FLUSH_MERGE);
+ 	if (f2fs_hw_support_discard(sbi) || f2fs_hw_should_discard(sbi))
+ 		set_opt(sbi, DISCARD);
+ 	if (f2fs_sb_has_blkzoned(sbi)) {
 -- 
 2.40.1
 
