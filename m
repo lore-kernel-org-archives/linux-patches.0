@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB765847D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:52:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0A1C433C8;
-	Wed,  9 Aug 2023 10:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908D0847D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:52:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 137C3C433C7;
+	Wed,  9 Aug 2023 10:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578340;
-	bh=W8gTjz6JBWRo1z3n/Cjmmi/MrMHg5XQxAkz4MYEtOjo=;
+	s=korg; t=1691578343;
+	bh=HKwoXg/T2iLRfYfAhZ2dTMwwPm0v6Q6aWeA9eOkxd3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sQs+MEUBfOo+WzHXIIjmsGY7xl3m1k6Au52RRfz6tBc/QxxXvaNRaictxLa7cwTY4
-	 +PJQ1ku8apN2C4YB1cJO39aWSzyWgSel2KL8vy6cXHT7NGWeHpnTfwWKKtsLW6UI7S
-	 89fMsgBaVFg9AysSmD+K5Brxq9rjDLhNIBkn0hmM=
+	b=lQXc8+8CyQ/9k0UIN39h3UZorG0QWRdvJ3R4X5hq/U6F5vri0LW1rZEMM2tbdbyeF
+	 YkL+DV27pTy46uk9kWVWPIcaXIyBOekOIfLtQ2Y1Brrz18ZEnvCtHs6nlsBcZwzUd4
+	 /M1ucW+EX4nFRdI6ivy6sMElGLX22TUryJAt2P7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Yuanjun Gong <ruc_gongyuanjun@163.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/127] net/mlx5: fix potential memory leak in mlx5e_init_rep_rx
-Date: Wed,  9 Aug 2023 12:40:11 +0200
-Message-ID: <20230809103637.436814138@linuxfoundation.org>
+Subject: [PATCH 6.1 025/127] net/mlx5e: fix return value check in mlx5e_ipsec_remove_trailer()
+Date: Wed,  9 Aug 2023 12:40:12 +0200
+Message-ID: <20230809103637.475664445@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -37,46 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Yuanjun Gong <ruc_gongyuanjun@163.com>
 
-[ Upstream commit c6cf0b6097bf1bf1b2a89b521e9ecd26b581a93a ]
+[ Upstream commit e5bcb7564d3bd0c88613c76963c5349be9c511c5 ]
 
-The memory pointed to by the priv->rx_res pointer is not freed in the error
-path of mlx5e_init_rep_rx, which can lead to a memory leak. Fix by freeing
-the memory in the error path, thereby making the error path identical to
-mlx5e_cleanup_rep_rx().
+mlx5e_ipsec_remove_trailer() should return an error code if function
+pskb_trim() returns an unexpected value.
 
-Fixes: af8bbf730068 ("net/mlx5e: Convert mlx5e_flow_steering member of mlx5e_priv to pointer")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Fixes: 2ac9cfe78223 ("net/mlx5e: IPSec, Add Innova IPSec offload TX data path")
+Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rep.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index 9bd1a93a512d4..ff0c025db1402 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -912,7 +912,7 @@ static int mlx5e_init_rep_rx(struct mlx5e_priv *priv)
- 	err = mlx5e_open_drop_rq(priv, &priv->drop_rq);
- 	if (err) {
- 		mlx5_core_err(mdev, "open drop rq failed, %d\n", err);
--		return err;
-+		goto err_rx_res_free;
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c
+index 6859f1c1a8319..c4a84f0a3b733 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c
+@@ -58,7 +58,9 @@ static int mlx5e_ipsec_remove_trailer(struct sk_buff *skb, struct xfrm_state *x)
  
- 	err = mlx5e_rx_res_init(priv->rx_res, priv->mdev, 0,
-@@ -946,6 +946,7 @@ static int mlx5e_init_rep_rx(struct mlx5e_priv *priv)
- 	mlx5e_rx_res_destroy(priv->rx_res);
- err_close_drop_rq:
- 	mlx5e_close_drop_rq(&priv->drop_rq);
-+err_rx_res_free:
- 	mlx5e_rx_res_free(priv->rx_res);
- 	priv->rx_res = NULL;
- err_free_fs:
+ 	trailer_len = alen + plen + 2;
+ 
+-	pskb_trim(skb, skb->len - trailer_len);
++	ret = pskb_trim(skb, skb->len - trailer_len);
++	if (unlikely(ret))
++		return ret;
+ 	if (skb->protocol == htons(ETH_P_IP)) {
+ 		ipv4hdr->tot_len = htons(ntohs(ipv4hdr->tot_len) - trailer_len);
+ 		ip_send_check(ipv4hdr);
 -- 
 2.40.1
 
