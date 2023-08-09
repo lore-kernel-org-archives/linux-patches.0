@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB4853B7
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:14:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F710C433C8;
-	Wed,  9 Aug 2023 11:14:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7DD53B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:14:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD8AC433C7;
+	Wed,  9 Aug 2023 11:14:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579682;
-	bh=fIbIexN/PwieNz9wogcGqDRjx5VT9i5L/oCNbr7eD9o=;
+	s=korg; t=1691579685;
+	bh=OTNG/ysHhnRdqsIky9K/xCdaG6fR/3rOa+a0/cLbH8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IsbHYOOybrxjK9V42gY8jvYtffjbroFwo83XsP1Z1wb/2ApuD0lwZqh4MRgIELRzE
-	 IZaGVMqtC8cInkUGBdBnLIll4SHxWWnO2Kt6cMq3vYP63a5DYmFWi4Ay9fGKObx2SF
-	 iFeb3GKe1TFfn32kfxcNi1u4joYWJzCl/uRK7gkI=
+	b=PiEDQnvNvO8jz/4ne8DxwB1ObzATXC6s7RtJmj1TILVsu8AFBFckI0eRKCFPOy2IW
+	 N5e3CUqKPLGnYBauRCqIYIdOW3nihTEVTlwpjlk3hqeI2G6rthvuc966l6rjhmdXap
+	 9cLHYELfkTp552wGzZ7Q0VP5/hwFAq0oQcc9wUs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Vineet Gupta <vgupta@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 079/323] modpost: fix section mismatch message for R_ARM_{PC24,CALL,JUMP24}
-Date: Wed,  9 Aug 2023 12:38:37 +0200
-Message-ID: <20230809103701.764099575@linuxfoundation.org>
+Subject: [PATCH 4.19 080/323] ARCv2: entry: comments about hardware auto-save on taken interrupts
+Date: Wed,  9 Aug 2023 12:38:38 +0200
+Message-ID: <20230809103701.797548716@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -34,104 +34,156 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Vineet Gupta <vgupta@synopsys.com>
 
-[ Upstream commit 56a24b8ce6a7f9c4a21b2276a8644f6f3d8fc14d ]
+[ Upstream commit 45869eb0c0afd72bd5ab2437d4b00915697c044a ]
 
-addend_arm_rel() processes R_ARM_PC24, R_ARM_CALL, R_ARM_JUMP24 in a
-wrong way.
-
-Here, test code.
-
-[test code for R_ARM_JUMP24]
-
-  .section .init.text,"ax"
-  bar:
-          bx      lr
-
-  .section .text,"ax"
-  .globl foo
-  foo:
-          b       bar
-
-[test code for R_ARM_CALL]
-
-  .section .init.text,"ax"
-  bar:
-          bx      lr
-
-  .section .text,"ax"
-  .globl foo
-  foo:
-          push    {lr}
-          bl      bar
-          pop     {pc}
-
-If you compile it with ARM multi_v7_defconfig, modpost will show the
-symbol name, (unknown).
-
-  WARNING: modpost: vmlinux.o: section mismatch in reference: foo (section: .text) -> (unknown) (section: .init.text)
-
-(You need to use GNU linker instead of LLD to reproduce it.)
-
-Fix the code to make modpost show the correct symbol name.
-
-I imported (with adjustment) sign_extend32() from include/linux/bitops.h.
-
-The '+8' is the compensation for pc-relative instruction. It is
-documented in "ELF for the Arm Architecture" [1].
-
-  "If the relocation is pc-relative then compensation for the PC bias
-  (the PC value is 8 bytes ahead of the executing instruction in Arm
-  state and 4 bytes in Thumb state) must be encoded in the relocation
-  by the object producer."
-
-[1]: https://github.com/ARM-software/abi-aa/blob/main/aaelf32/aaelf32.rst
-
-Fixes: 56a974fa2d59 ("kbuild: make better section mismatch reports on arm")
-Fixes: 6e2e340b59d2 ("ARM: 7324/1: modpost: Fix section warnings for ARM for many compilers")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Vineet Gupta <vgupta@synopsys.com>
+Stable-dep-of: 92e2921eeafd ("ARC: define ASM_NL and __ALIGN(_STR) outside #ifdef __ASSEMBLY__ guard")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/modpost.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ arch/arc/include/asm/entry-arcv2.h | 78 ++++++++++++++++++++++++------
+ 1 file changed, 62 insertions(+), 16 deletions(-)
 
-diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index 41b1791a9463b..2060a3fe9691d 100644
---- a/scripts/mod/modpost.c
-+++ b/scripts/mod/modpost.c
-@@ -1751,12 +1751,20 @@ static int addend_386_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
- #define	R_ARM_THM_JUMP19	51
- #endif
+diff --git a/arch/arc/include/asm/entry-arcv2.h b/arch/arc/include/asm/entry-arcv2.h
+index 225e7df2d8ed8..1c3520d1fa420 100644
+--- a/arch/arc/include/asm/entry-arcv2.h
++++ b/arch/arc/include/asm/entry-arcv2.h
+@@ -7,15 +7,54 @@
+ #include <asm/irqflags-arcv2.h>
+ #include <asm/thread_info.h>	/* For THREAD_SIZE */
  
-+static int32_t sign_extend32(int32_t value, int index)
-+{
-+	uint8_t shift = 31 - index;
++/*
++ * Interrupt/Exception stack layout (pt_regs) for ARCv2
++ *   (End of struct aligned to end of page [unless nested])
++ *
++ *  INTERRUPT                          EXCEPTION
++ *
++ *    manual    ---------------------  manual
++ *              |      orig_r0      |
++ *              |      event/ECR    |
++ *              |      bta          |
++ *              |      user_r25     |
++ *              |      gp           |
++ *              |      fp           |
++ *              |      sp           |
++ *              |      r12          |
++ *              |      r30          |
++ *              |      r58          |
++ *              |      r59          |
++ *  hw autosave ---------------------
++ *    optional  |      r0           |
++ *              |      r1           |
++ *              ~                   ~
++ *              |      r9           |
++ *              |      r10          |
++ *              |      r11          |
++ *              |      blink        |
++ *              |      lpe          |
++ *              |      lps          |
++ *              |      lpc          |
++ *              |      ei base      |
++ *              |      ldi base     |
++ *              |      jli base     |
++ *              ---------------------
++ *  hw autosave |       pc / eret   |
++ *   mandatory  | stat32 / erstatus |
++ *              ---------------------
++ */
 +
-+	return (int32_t)(value << shift) >> shift;
-+}
-+
- static int addend_arm_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
- {
- 	unsigned int r_typ = ELF_R_TYPE(r->r_info);
- 	Elf_Sym *sym = elf->symtab_start + ELF_R_SYM(r->r_info);
- 	void *loc = reloc_location(elf, sechdr, r);
- 	uint32_t inst;
-+	int32_t offset;
+ /*------------------------------------------------------------------------*/
+ .macro INTERRUPT_PROLOGUE	called_from
+-
+-	; Before jumping to Interrupt Vector, hardware micro-ops did following:
++	; (A) Before jumping to Interrupt Vector, hardware micro-ops did following:
+ 	;   1. SP auto-switched to kernel mode stack
+-	;   2. STATUS32.Z flag set to U mode at time of interrupt (U:1, K:0)
+-	;   3. Auto saved: r0-r11, blink, LPE,LPS,LPC, JLI,LDI,EI, PC, STAT32
++	;   2. STATUS32.Z flag set if in U mode at time of interrupt (U:1,K:0)
++	;   3. Auto save: (mandatory) Push PC and STAT32 on stack
++	;                 hardware does even if CONFIG_ARC_IRQ_NO_AUTOSAVE
++	;   4. Auto save: (optional) r0-r11, blink, LPE,LPS,LPC, JLI,LDI,EI
+ 	;
+-	; Now manually save: r12, sp, fp, gp, r25
++	; (B) Manually saved some regs: r12,r25,r30, sp,fp,gp, ACCL pair
  
- 	switch (r_typ) {
- 	case R_ARM_ABS32:
-@@ -1766,6 +1774,10 @@ static int addend_arm_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
- 	case R_ARM_PC24:
- 	case R_ARM_CALL:
- 	case R_ARM_JUMP24:
-+		inst = TO_NATIVE(*(uint32_t *)loc);
-+		offset = sign_extend32((inst & 0x00ffffff) << 2, 25);
-+		r->r_addend = offset + sym->st_value + 8;
-+		break;
- 	case R_ARM_THM_CALL:
- 	case R_ARM_THM_JUMP24:
- 	case R_ARM_THM_JUMP19:
+ #ifdef CONFIG_ARC_IRQ_NO_AUTOSAVE
+ .ifnc \called_from, exception
+@@ -57,14 +96,17 @@
+ 	;  - U mode: retrieve it from AUX_USER_SP
+ 	;  - K mode: add the offset from current SP where H/w starts auto push
+ 	;
+-	; Utilize the fact that Z bit is set if Intr taken in U mode
++	; 1. Utilize the fact that Z bit is set if Intr taken in U mode
++	; 2. Upon entry SP is always saved (for any inspection, unwinding etc),
++	;    but on return, restored only if U mode
++
+ 	mov.nz	r9, sp
+-	add.nz	r9, r9, SZ_PT_REGS - PT_sp - 4
++	add.nz	r9, r9, SZ_PT_REGS - PT_sp - 4		; K mode SP
+ 	bnz	1f
+ 
+-	lr	r9, [AUX_USER_SP]
++	lr	r9, [AUX_USER_SP]			; U mode SP
+ 1:
+-	PUSH	r9	; SP
++	PUSH	r9					; SP (pt_regs->sp)
+ 
+ 	PUSH	fp
+ 	PUSH	gp
+@@ -85,6 +127,8 @@
+ /*------------------------------------------------------------------------*/
+ .macro INTERRUPT_EPILOGUE	called_from
+ 
++	; INPUT: r0 has STAT32 of calling context
++	; INPUT: Z flag set if returning to K mode
+ .ifnc \called_from, exception
+ 	add	sp, sp, 12	; skip BTA/ECR/orig_r0 placeholderss
+ .endif
+@@ -98,9 +142,10 @@
+ 	POP	gp
+ 	POP	fp
+ 
+-	; Don't touch AUX_USER_SP if returning to K mode (Z bit set)
+-	; (Z bit set on K mode is inverse of INTERRUPT_PROLOGUE)
+-	add.z	sp, sp, 4
++	; Restore SP (into AUX_USER_SP) only if returning to U mode
++	;  - for K mode, it will be implicitly restored as stack is unwound
++	;  - Z flag set on K is inverse of what hardware does on interrupt entry
++	;    but that doesn't really matter
+ 	bz	1f
+ 
+ 	POPAX	AUX_USER_SP
+@@ -145,11 +190,11 @@
+ /*------------------------------------------------------------------------*/
+ .macro EXCEPTION_PROLOGUE
+ 
+-	; Before jumping to Exception Vector, hardware micro-ops did following:
++	; (A) Before jumping to Exception Vector, hardware micro-ops did following:
+ 	;   1. SP auto-switched to kernel mode stack
+-	;   2. STATUS32.Z flag set to U mode at time of interrupt (U:1,K:0)
++	;   2. STATUS32.Z flag set if in U mode at time of exception (U:1,K:0)
+ 	;
+-	; Now manually save the complete reg file
++	; (B) Manually save the complete reg file below
+ 
+ 	PUSH	r9		; freeup a register: slot of erstatus
+ 
+@@ -195,12 +240,13 @@
+ 	PUSHAX	ecr		; r9 contains ECR, expected by EV_Trap
+ 
+ 	PUSH	r0		; orig_r0
++	; OUTPUT: r9 has ECR
+ .endm
+ 
+ /*------------------------------------------------------------------------*/
+ .macro EXCEPTION_EPILOGUE
+ 
+-	; Assumes r0 has PT_status32
++	; INPUT: r0 has STAT32 of calling context
+ 	btst   r0, STATUS_U_BIT	; Z flag set if K, used in INTERRUPT_EPILOGUE
+ 
+ 	add	sp, sp, 8	; orig_r0/ECR don't need restoring
 -- 
 2.39.2
 
