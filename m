@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10116174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:02:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87AE0C433C7;
-	Wed,  9 Aug 2023 11:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB360174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:02:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D00C433C8;
+	Wed,  9 Aug 2023 11:02:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578975;
-	bh=Gw3ueeG8xgQsFn26viLDJJvO6y6+E1nOpEnokn4qqm4=;
+	s=korg; t=1691578978;
+	bh=6vGXeVQlHc4YB0qM9k27AkeH/leB3WiFtiewHLBer80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mi3r5W4dxnz7Esv31uyj0BY/CQI4RW6/y8J8COTBcOGtAoiwkC+UmqFkSnvm5Km0d
-	 7TRfvRZOo0c27Bc7gvTIAHt94FRmh7iDbbbo/zqaAVjmGFUuN8A9sND89nPTLkRrJ6
-	 VSZ3crb5rxQ8Ga2AVks3un+ama4eVNiIgtZWO+0A=
+	b=T/nvgQQtV5kZFAfqJ80GIJ5tCrmfSDLM8yAUj8BZnSp7eWYjhmyiDdIYnrgTPiFEa
+	 iJlvqN8KqsN97G1RFMnJGpzzK74dyHTQTv+d9X4S73cETQCqECQR9ln0O8PJ7cvyGu
+	 YGLvKK+KUweD2DX1EaitOE8XsReDweIOiM7sQszI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Jeremy Sowden <jeremy@azazel.net>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 013/204] evm: Complete description of evm_inode_setattr()
-Date: Wed,  9 Aug 2023 12:39:11 +0200
-Message-ID: <20230809103643.029150193@linuxfoundation.org>
+Subject: [PATCH 4.14 031/204] lib/ts_bm: reset initial match offset for every block of text
+Date: Wed,  9 Aug 2023 12:39:29 +0200
+Message-ID: <20230809103643.629359826@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -36,37 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Jeremy Sowden <jeremy@azazel.net>
 
-[ Upstream commit b1de86d4248b273cb12c4cd7d20c08d459519f7d ]
+[ Upstream commit 6f67fbf8192da80c4db01a1800c7fceaca9cf1f9 ]
 
-Add the description for missing parameters of evm_inode_setattr() to
-avoid the warning arising with W=n compile option.
+The `shift` variable which indicates the offset in the string at which
+to start matching the pattern is initialized to `bm->patlen - 1`, but it
+is not reset when a new block is retrieved.  This means the implemen-
+tation may start looking at later and later positions in each successive
+block and miss occurrences of the pattern at the beginning.  E.g.,
+consider a HTTP packet held in a non-linear skb, where the HTTP request
+line occurs in the second block:
 
-Fixes: 817b54aa45db ("evm: add evm_inode_setattr to prevent updating an invalid security.evm") # v3.2+
-Fixes: c1632a0f1120 ("fs: port ->setattr() to pass mnt_idmap") # v6.3+
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+  [... 52 bytes of packet headers ...]
+  GET /bmtest HTTP/1.1\r\nHost: www.example.com\r\n\r\n
+
+and the pattern is "GET /bmtest".
+
+Once the first block comprising the packet headers has been examined,
+`shift` will be pointing to somewhere near the end of the block, and so
+when the second block is examined the request line at the beginning will
+be missed.
+
+Reinitialize the variable for each new block.
+
+Fixes: 8082e4ed0a61 ("[LIB]: Boyer-Moore extension for textsearch infrastructure strike #2")
+Link: https://bugzilla.netfilter.org/show_bug.cgi?id=1390
+Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/evm/evm_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ lib/ts_bm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/security/integrity/evm/evm_main.c b/security/integrity/evm/evm_main.c
-index 6e761b07cb3f0..9b75166619236 100644
---- a/security/integrity/evm/evm_main.c
-+++ b/security/integrity/evm/evm_main.c
-@@ -427,7 +427,9 @@ void evm_inode_post_removexattr(struct dentry *dentry, const char *xattr_name)
+diff --git a/lib/ts_bm.c b/lib/ts_bm.c
+index 9e66ee4020e90..5de382e79a45a 100644
+--- a/lib/ts_bm.c
++++ b/lib/ts_bm.c
+@@ -64,10 +64,12 @@ static unsigned int bm_find(struct ts_config *conf, struct ts_state *state)
+ 	struct ts_bm *bm = ts_config_priv(conf);
+ 	unsigned int i, text_len, consumed = state->offset;
+ 	const u8 *text;
+-	int shift = bm->patlen - 1, bs;
++	int bs;
+ 	const u8 icase = conf->flags & TS_IGNORECASE;
  
- /**
-  * evm_inode_setattr - prevent updating an invalid EVM extended attribute
-+ * @idmap: idmap of the mount
-  * @dentry: pointer to the affected dentry
-+ * @attr: iattr structure containing the new file attributes
-  *
-  * Permit update of file attributes when files have a valid EVM signature,
-  * except in the case of them having an immutable portable signature.
+ 	for (;;) {
++		int shift = bm->patlen - 1;
++
+ 		text_len = conf->get_next_block(consumed, &text, conf, state);
+ 
+ 		if (unlikely(text_len == 0))
 -- 
 2.39.2
 
