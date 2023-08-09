@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1B117FE3;
-	Wed,  9 Aug 2023 11:41:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57EAAC433C9;
-	Wed,  9 Aug 2023 11:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ECDC17FE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:41:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A12BC433CD;
+	Wed,  9 Aug 2023 11:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581288;
-	bh=dVBAkrIYNCNukXN1fuSFIY/HtrxN633d6BXx6ActWB8=;
+	s=korg; t=1691581291;
+	bh=IQBtOGjNxfHn59n5dPCv5/Biz6+b7nw7U74JHeLgm+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wda5k3iHkwPFV9E/ZcXZjDiG6pi1k+G8W2kyQvAWCHP/+mIx9SbafNUug1ZlutuUu
-	 AG464MryZxTFOL39IOETCxUuopaCrbQcM9QqJGvqtbv0cnFv3FZwSPtTfW09m5nd7w
-	 XPH9wXhuxuB+v1n2c16LIYpjhMwgkq1KG29CEdmo=
+	b=NNmPl3DdAc56IcJw4kBHaw6P9rd+IkzU2J4w83AQArEpSHI0ZTlLUoODBUDjNeqdu
+	 GxlJ3lufhYYanDLHHWS0qWKqT0xc1Jr6RrdhSRYXSH1z7B9s1oEkFjG2b46tmfC27w
+	 RrUnt6suBJwymAxEAVDqeTIOv8/XLpYiBYaDTOJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Lorenzo Colitti <lorenzo@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	netdev@vger.kernel.org,
-	Laszlo Ersek <lersek@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 172/201] net: tap_open(): set sk_uid from current_fsuid()
-Date: Wed,  9 Aug 2023 12:42:54 +0200
-Message-ID: <20230809103649.479837718@linuxfoundation.org>
+	=?UTF-8?q?Oleg=20 livelace =20Popov?= <o.popov@livelace.ru>,
+	Hou Tao <houtao1@huawei.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 5.10 173/201] bpf: Disable preemption in bpf_event_output
+Date: Wed,  9 Aug 2023 12:42:55 +0200
+Message-ID: <20230809103649.509581622@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -39,55 +36,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laszlo Ersek <lersek@redhat.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit 5c9241f3ceab3257abe2923a59950db0dc8bb737 upstream.
+commit d62cc390c2e99ae267ffe4b8d7e2e08b6c758c32 upstream.
 
-Commit 66b2c338adce initializes the "sk_uid" field in the protocol socket
-(struct sock) from the "/dev/tapX" device node's owner UID. Per original
-commit 86741ec25462 ("net: core: Add a UID field to struct sock.",
-2016-11-04), that's wrong: the idea is to cache the UID of the userspace
-process that creates the socket. Commit 86741ec25462 mentions socket() and
-accept(); with "tap", the action that creates the socket is
-open("/dev/tapX").
+We received report [1] of kernel crash, which is caused by
+using nesting protection without disabled preemption.
 
-Therefore the device node's owner UID is irrelevant. In most cases,
-"/dev/tapX" will be owned by root, so in practice, commit 66b2c338adce has
-no observable effect:
+The bpf_event_output can be called by programs executed by
+bpf_prog_run_array_cg function that disabled migration but
+keeps preemption enabled.
 
-- before, "sk_uid" would be zero, due to undefined behavior
-  (CVE-2023-1076),
+This can cause task to be preempted by another one inside the
+nesting protection and lead eventually to two tasks using same
+perf_sample_data buffer and cause crashes like:
 
-- after, "sk_uid" would be zero, due to "/dev/tapX" being owned by root.
+  BUG: kernel NULL pointer dereference, address: 0000000000000001
+  #PF: supervisor instruction fetch in kernel mode
+  #PF: error_code(0x0010) - not-present page
+  ...
+  ? perf_output_sample+0x12a/0x9a0
+  ? finish_task_switch.isra.0+0x81/0x280
+  ? perf_event_output+0x66/0xa0
+  ? bpf_event_output+0x13a/0x190
+  ? bpf_event_output_data+0x22/0x40
+  ? bpf_prog_dfc84bbde731b257_cil_sock4_connect+0x40a/0xacb
+  ? xa_load+0x87/0xe0
+  ? __cgroup_bpf_run_filter_sock_addr+0xc1/0x1a0
+  ? release_sock+0x3e/0x90
+  ? sk_setsockopt+0x1a1/0x12f0
+  ? udp_pre_connect+0x36/0x50
+  ? inet_dgram_connect+0x93/0xa0
+  ? __sys_connect+0xb4/0xe0
+  ? udp_setsockopt+0x27/0x40
+  ? __pfx_udp_push_pending_frames+0x10/0x10
+  ? __sys_setsockopt+0xdf/0x1a0
+  ? __x64_sys_connect+0xf/0x20
+  ? do_syscall_64+0x3a/0x90
+  ? entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-What matters is the (fs)UID of the process performing the open(), so cache
-that in "sk_uid".
+Fixing this by disabling preemption in bpf_event_output.
 
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Lorenzo Colitti <lorenzo@google.com>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Pietro Borrello <borrello@diag.uniroma1.it>
-Cc: netdev@vger.kernel.org
+[1] https://github.com/cilium/cilium/issues/26756
 Cc: stable@vger.kernel.org
-Fixes: 66b2c338adce ("tap: tap_open(): correctly initialize socket uid")
-Bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=2173435
-Signed-off-by: Laszlo Ersek <lersek@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: Oleg "livelace" Popov <o.popov@livelace.ru>
+Closes: https://github.com/cilium/cilium/issues/26756
+Fixes: 2a916f2f546c ("bpf: Use migrate_disable/enable in array macros and cgroup/lirc code.")
+Acked-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20230725084206.580930-3-jolsa@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/tap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/bpf_trace.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/net/tap.c
-+++ b/drivers/net/tap.c
-@@ -523,7 +523,7 @@ static int tap_open(struct inode *inode,
- 	q->sock.state = SS_CONNECTED;
- 	q->sock.file = file;
- 	q->sock.ops = &tap_socket_ops;
--	sock_init_data_uid(&q->sock, &q->sk, inode->i_uid);
-+	sock_init_data_uid(&q->sock, &q->sk, current_fsuid());
- 	q->sk.sk_write_space = tap_sock_write_space;
- 	q->sk.sk_destruct = tap_sock_destruct;
- 	q->flags = IFF_VNET_HDR | IFF_NO_PI | IFF_TAP;
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -970,7 +970,6 @@ static DEFINE_PER_CPU(struct bpf_trace_s
+ u64 bpf_event_output(struct bpf_map *map, u64 flags, void *meta, u64 meta_size,
+ 		     void *ctx, u64 ctx_size, bpf_ctx_copy_t ctx_copy)
+ {
+-	int nest_level = this_cpu_inc_return(bpf_event_output_nest_level);
+ 	struct perf_raw_frag frag = {
+ 		.copy		= ctx_copy,
+ 		.size		= ctx_size,
+@@ -987,8 +986,12 @@ u64 bpf_event_output(struct bpf_map *map
+ 	};
+ 	struct perf_sample_data *sd;
+ 	struct pt_regs *regs;
++	int nest_level;
+ 	u64 ret;
+ 
++	preempt_disable();
++	nest_level = this_cpu_inc_return(bpf_event_output_nest_level);
++
+ 	if (WARN_ON_ONCE(nest_level > ARRAY_SIZE(bpf_misc_sds.sds))) {
+ 		ret = -EBUSY;
+ 		goto out;
+@@ -1003,6 +1006,7 @@ u64 bpf_event_output(struct bpf_map *map
+ 	ret = __bpf_perf_event_output(regs, map, flags, sd);
+ out:
+ 	this_cpu_dec(bpf_event_output_nest_level);
++	preempt_enable();
+ 	return ret;
+ }
+ 
 
 
