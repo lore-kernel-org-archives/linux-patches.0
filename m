@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BC01773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:15:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD02C433C7;
-	Wed,  9 Aug 2023 11:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DF21773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:15:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C4F8C433C8;
+	Wed,  9 Aug 2023 11:15:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579738;
-	bh=6JDC17LJIuuzIteAkk6FYq4riJuhw3qeR9tzdTmUCn8=;
+	s=korg; t=1691579741;
+	bh=Loy1l09wQmN+xGENzRLkK1bK6n3Ih4AHIJfD5X4MVKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O/jA5EBmwIbLD1BA1THowGL/Awdc44G79SqypkKrl7oLWgHb460ZuIGFdwKt3GNLP
-	 6ZVf11spwglccaCukMxPox+EfMGqMgK8ykzmgJAouoNhwMpzDBWkkbGtl420a6TuQJ
-	 DuDuyKjCcsVa8eKzcWlArbRgoAr5F0FMueT0FJH8=
+	b=ExjVyA5qhZO81UxPSoB3CJasIZrKVqex/YurJ0RlaI6mUWNbrHvPRQ9nBNs5kwxM2
+	 kxW5oIuxSqD/Sh/SPTq2fjd94s0lksXGHkbl4uccDuLBy3Jb66iyWvDi7k63HslLqK
+	 ZNWMxtvTF1hTqTRAiogymOmftlZAQpxq6eK8PxWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Lee Jones <lee@kernel.org>,
+	Laurent Vivier <lvivier@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 098/323] mfd: stmpe: Only disable the regulators if they are enabled
-Date: Wed,  9 Aug 2023 12:38:56 +0200
-Message-ID: <20230809103702.545676326@linuxfoundation.org>
+Subject: [PATCH 4.19 072/323] hwrng: virtio - add an internal buffer
+Date: Wed,  9 Aug 2023 12:38:30 +0200
+Message-ID: <20230809103701.450413171@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,43 +35,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Laurent Vivier <lvivier@redhat.com>
 
-[ Upstream commit 104d32bd81f620bb9f67fbf7d1159c414e89f05f ]
+[ Upstream commit bf3175bc50a3754dc427e2f5046e17a9fafc8be7 ]
 
-In stmpe_probe(), if some regulator_enable() calls fail, probing continues
-and there is only a dev_warn().
+hwrng core uses two buffers that can be mixed in the
+virtio-rng queue.
 
-So, if stmpe_probe() is called the regulator may not be enabled. It is
-cleaner to test it before calling regulator_disable() in the remove
-function.
+If the buffer is provided with wait=0 it is enqueued in the
+virtio-rng queue but unused by the caller.
+On the next call, core provides another buffer but the
+first one is filled instead and the new one queued.
+And the caller reads the data from the new one that is not
+updated, and the data in the first one are lost.
 
-Fixes: 9c9e321455fb ("mfd: stmpe: add optional regulators")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/8de3aaf297931d655b9ad6aed548f4de8b85425a.1686998575.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Lee Jones <lee@kernel.org>
+To avoid this mix, virtio-rng needs to use its own unique
+internal buffer at a cost of a data copy to the caller buffer.
+
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Link: https://lore.kernel.org/r/20211028101111.128049-2-lvivier@redhat.com
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Stable-dep-of: ac52578d6e8d ("hwrng: virtio - Fix race on data_avail and actual data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/stmpe.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/char/hw_random/virtio-rng.c | 43 ++++++++++++++++++++++-------
+ 1 file changed, 33 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/mfd/stmpe.c b/drivers/mfd/stmpe.c
-index 722ad2c368a56..d752c56d60e42 100644
---- a/drivers/mfd/stmpe.c
-+++ b/drivers/mfd/stmpe.c
-@@ -1428,9 +1428,9 @@ int stmpe_probe(struct stmpe_client_info *ci, enum stmpe_partnum partnum)
+diff --git a/drivers/char/hw_random/virtio-rng.c b/drivers/char/hw_random/virtio-rng.c
+index 7abd604e938c2..999f523c80c1e 100644
+--- a/drivers/char/hw_random/virtio-rng.c
++++ b/drivers/char/hw_random/virtio-rng.c
+@@ -30,13 +30,20 @@ static DEFINE_IDA(rng_index_ida);
+ struct virtrng_info {
+ 	struct hwrng hwrng;
+ 	struct virtqueue *vq;
+-	struct completion have_data;
+ 	char name[25];
+-	unsigned int data_avail;
+ 	int index;
+ 	bool busy;
+ 	bool hwrng_register_done;
+ 	bool hwrng_removed;
++	/* data transfer */
++	struct completion have_data;
++	unsigned int data_avail;
++	/* minimal size returned by rng_buffer_size() */
++#if SMP_CACHE_BYTES < 32
++	u8 data[32];
++#else
++	u8 data[SMP_CACHE_BYTES];
++#endif
+ };
  
- int stmpe_remove(struct stmpe *stmpe)
+ static void random_recv_done(struct virtqueue *vq)
+@@ -51,14 +58,14 @@ static void random_recv_done(struct virtqueue *vq)
+ }
+ 
+ /* The host will fill any buffer we give it with sweet, sweet randomness. */
+-static void register_buffer(struct virtrng_info *vi, u8 *buf, size_t size)
++static void register_buffer(struct virtrng_info *vi)
  {
--	if (!IS_ERR(stmpe->vio))
-+	if (!IS_ERR(stmpe->vio) && regulator_is_enabled(stmpe->vio))
- 		regulator_disable(stmpe->vio);
--	if (!IS_ERR(stmpe->vcc))
-+	if (!IS_ERR(stmpe->vcc) && regulator_is_enabled(stmpe->vcc))
- 		regulator_disable(stmpe->vcc);
+ 	struct scatterlist sg;
  
- 	mfd_remove_devices(stmpe->dev);
+-	sg_init_one(&sg, buf, size);
++	sg_init_one(&sg, vi->data, sizeof(vi->data));
+ 
+ 	/* There should always be room for one buffer. */
+-	virtqueue_add_inbuf(vi->vq, &sg, 1, buf, GFP_KERNEL);
++	virtqueue_add_inbuf(vi->vq, &sg, 1, vi->data, GFP_KERNEL);
+ 
+ 	virtqueue_kick(vi->vq);
+ }
+@@ -67,6 +74,8 @@ static int virtio_read(struct hwrng *rng, void *buf, size_t size, bool wait)
+ {
+ 	int ret;
+ 	struct virtrng_info *vi = (struct virtrng_info *)rng->priv;
++	unsigned int chunk;
++	size_t read;
+ 
+ 	if (vi->hwrng_removed)
+ 		return -ENODEV;
+@@ -74,19 +83,33 @@ static int virtio_read(struct hwrng *rng, void *buf, size_t size, bool wait)
+ 	if (!vi->busy) {
+ 		vi->busy = true;
+ 		reinit_completion(&vi->have_data);
+-		register_buffer(vi, buf, size);
++		register_buffer(vi);
+ 	}
+ 
+ 	if (!wait)
+ 		return 0;
+ 
+-	ret = wait_for_completion_killable(&vi->have_data);
+-	if (ret < 0)
+-		return ret;
++	read = 0;
++	while (size != 0) {
++		ret = wait_for_completion_killable(&vi->have_data);
++		if (ret < 0)
++			return ret;
++
++		chunk = min_t(unsigned int, size, vi->data_avail);
++		memcpy(buf + read, vi->data, chunk);
++		read += chunk;
++		size -= chunk;
++		vi->data_avail = 0;
++
++		if (size != 0) {
++			reinit_completion(&vi->have_data);
++			register_buffer(vi);
++		}
++	}
+ 
+ 	vi->busy = false;
+ 
+-	return vi->data_avail;
++	return read;
+ }
+ 
+ static void virtio_cleanup(struct hwrng *rng)
 -- 
 2.39.2
 
