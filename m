@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE9617AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FEDEC433C9;
-	Wed,  9 Aug 2023 11:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EEDD17AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3882C433C8;
+	Wed,  9 Aug 2023 11:38:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581134;
-	bh=uGvdWJCsFNbf5m4VfhCqMqS0rCknEsFqq072qKtJ14I=;
+	s=korg; t=1691581137;
+	bh=GCLxDoEtHAV2WhOdjxedXUmAyJKNm3XJIYWA/GkFfk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QlZvvFfIebjHzhclcT7nCghJtNaDJHJzoD8mlma4HwAZiwiEtzrB4eYh25BKzAHOb
-	 w1qwfJNER7PPcQTsa/9i8bFk7sBXT5TMZ/P2F7aOtFoivCPAwCwTfy8JZqw9t1htYB
-	 AQ81/kmMr5Z/5KVtwVGgcnEwFw1JwIMp5Iy3mQWI=
+	b=ADznsLXFHQL85CpzaQJElUoGiuC+jjakc1tHkraE2s9liscdm5Xn4lmlNBfW1f7os
+	 8CrMyjVuvhf46UBCucT0uUhs+E78h/i4xkvuGaz7H0HVx2GLxGrPFC05LOwGsQCcXP
+	 J6PS0kGNnIYH2u4kpfU0F7aT1Bs/zjcA9ZyfYiFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gilles Buloz <gilles.buloz@kontron.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 5.10 087/201] hwmon: (nct7802) Fix for temp6 (PECI1) processed even if PECI1 disabled
-Date: Wed,  9 Aug 2023 12:41:29 +0200
-Message-ID: <20230809103646.715403407@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.10 088/201] btrfs: check for commit error at btrfs_attach_transaction_barrier()
+Date: Wed,  9 Aug 2023 12:41:30 +0200
+Message-ID: <20230809103646.757947301@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -34,34 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gilles Buloz <Gilles.Buloz@kontron.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 54685abe660a59402344d5045ce08c43c6a5ac42 upstream.
+commit b28ff3a7d7e97456fd86b68d24caa32e1cfa7064 upstream.
 
-Because of hex value 0x46 used instead of decimal 46, the temp6
-(PECI1) temperature is always declared visible and then displayed
-even if disabled in the chip
+btrfs_attach_transaction_barrier() is used to get a handle pointing to the
+current running transaction if the transaction has not started its commit
+yet (its state is < TRANS_STATE_COMMIT_START). If the transaction commit
+has started, then we wait for the transaction to commit and finish before
+returning - however we completely ignore if the transaction was aborted
+due to some error during its commit, we simply return ERR_PT(-ENOENT),
+which makes the caller assume everything is fine and no errors happened.
 
-Signed-off-by: Gilles Buloz <gilles.buloz@kontron.com>
-Link: https://lore.kernel.org/r/DU0PR10MB62526435ADBC6A85243B90E08002A@DU0PR10MB6252.EURPRD10.PROD.OUTLOOK.COM
-Fixes: fcdc5739dce03 ("hwmon: (nct7802) add temperature sensor type attribute")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+This could make an fsync return success (0) to user space when in fact we
+had a transaction abort and the target inode changes were therefore not
+persisted.
+
+Fix this by checking for the return value from btrfs_wait_for_commit(),
+and if it returned an error, return it back to the caller.
+
+Fixes: d4edf39bd5db ("Btrfs: fix uncompleted transaction")
+CC: stable@vger.kernel.org # 4.19+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/nct7802.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/transaction.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/hwmon/nct7802.c
-+++ b/drivers/hwmon/nct7802.c
-@@ -708,7 +708,7 @@ static umode_t nct7802_temp_is_visible(s
- 	if (index >= 38 && index < 46 && !(reg & 0x01))		/* PECI 0 */
- 		return 0;
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -821,8 +821,13 @@ btrfs_attach_transaction_barrier(struct
  
--	if (index >= 0x46 && (!(reg & 0x02)))			/* PECI 1 */
-+	if (index >= 46 && !(reg & 0x02))			/* PECI 1 */
- 		return 0;
+ 	trans = start_transaction(root, 0, TRANS_ATTACH,
+ 				  BTRFS_RESERVE_NO_FLUSH, true);
+-	if (trans == ERR_PTR(-ENOENT))
+-		btrfs_wait_for_commit(root->fs_info, 0);
++	if (trans == ERR_PTR(-ENOENT)) {
++		int ret;
++
++		ret = btrfs_wait_for_commit(root->fs_info, 0);
++		if (ret)
++			return ERR_PTR(ret);
++	}
  
- 	return attr->mode;
+ 	return trans;
+ }
 
 
