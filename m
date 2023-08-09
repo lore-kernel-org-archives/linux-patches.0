@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9F517756
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:22:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFC2AC433C7;
-	Wed,  9 Aug 2023 11:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEAC017756
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:22:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CCCBC433C8;
+	Wed,  9 Aug 2023 11:22:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580139;
-	bh=oV63F7UrIOHVArua4huUmmIbm6Sk9j5iNap6f4tzkrA=;
+	s=korg; t=1691580141;
+	bh=1f2CzCxWgO+NAKN7Mnq3dm77xwPTZyMhjxr9cmXjI2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kaBsqwocrtkQYTZV4gaOWJyDrrpg+2HwdgdzJ5zU+rsNxhOT6oB4F8PSk0PmUiWE+
-	 JT/EjlNBD7aO8OUgqtWp8Jp8lfeJSaCV0SFG2Pss9XmFoLd2Tb7e2cWd7RucrZ2J14
-	 Gej3ST2jK5O414EHPzgJKhdFwQTdvrJrW6oQetUc=
+	b=lf2xTFD7y53QFMZYvnlYdpnIHPPE4YPH0X9yRmgVXM/vRNSxzpVrB4Tu0vyZFbfzR
+	 X0A7vzKK+D8AKCaGJZ/VRsA9ECNcfMUhkCIFVeUntAbCJzR3cj716AnptXSXBFcIgu
+	 /Mtsky8AhB5HOd5MxDmu+H4gcvByDfAgzTrM0Uq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Zheng Yejian <zhengyejian1@huawei.com>,
+	Liang Li <liali@redhat.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 234/323] ftrace: Fix possible warning on checking all pages used in ftrace_process_locs()
-Date: Wed,  9 Aug 2023 12:41:12 +0200
-Message-ID: <20230809103708.788357104@linuxfoundation.org>
+Subject: [PATCH 4.19 243/323] bonding: reset bonds flags when down link is P2P device
+Date: Wed,  9 Aug 2023 12:41:21 +0200
+Message-ID: <20230809103709.192568159@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,134 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 26efd79c4624294e553aeaa3439c646729bad084 ]
+[ Upstream commit da19a2b967cf1e2c426f50d28550d1915214a81d ]
 
-As comments in ftrace_process_locs(), there may be NULL pointers in
-mcount_loc section:
- > Some architecture linkers will pad between
- > the different mcount_loc sections of different
- > object files to satisfy alignments.
- > Skip any NULL pointers.
+When adding a point to point downlink to the bond, we neglected to reset
+the bond's flags, which were still using flags like BROADCAST and
+MULTICAST. Consequently, this would initiate ARP/DAD for P2P downlink
+interfaces, such as when adding a GRE device to the bonding.
 
-After commit 20e5227e9f55 ("ftrace: allow NULL pointers in mcount_loc"),
-NULL pointers will be accounted when allocating ftrace pages but skipped
-before adding into ftrace pages, this may result in some pages not being
-used. Then after commit 706c81f87f84 ("ftrace: Remove extra helper
-functions"), warning may occur at:
-  WARN_ON(pg->next);
+To address this issue, let's reset the bond's flags for P2P interfaces.
 
-To fix it, only warn for case that no pointers skipped but pages not used
-up, then free those unused pages after releasing ftrace_lock.
+Before fix:
+7: gre0@NONE: <POINTOPOINT,NOARP,SLAVE,UP,LOWER_UP> mtu 1500 qdisc noqueue master bond0 state UNKNOWN group default qlen 1000
+    link/gre6 2006:70:10::1 peer 2006:70:10::2 permaddr 167f:18:f188::
+8: bond0: <BROADCAST,MULTICAST,MASTER,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/gre6 2006:70:10::1 brd 2006:70:10::2
+    inet6 fe80::200:ff:fe00:0/64 scope link
+       valid_lft forever preferred_lft forever
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230712060452.3175675-1-zhengyejian1@huawei.com
+After fix:
+7: gre0@NONE: <POINTOPOINT,NOARP,SLAVE,UP,LOWER_UP> mtu 1500 qdisc noqueue master bond2 state UNKNOWN group default qlen 1000
+    link/gre6 2006:70:10::1 peer 2006:70:10::2 permaddr c29e:557a:e9d9::
+8: bond0: <POINTOPOINT,NOARP,MASTER,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/gre6 2006:70:10::1 peer 2006:70:10::2
+    inet6 fe80::1/64 scope link
+       valid_lft forever preferred_lft forever
 
-Cc: stable@vger.kernel.org
-Fixes: 706c81f87f84 ("ftrace: Remove extra helper functions")
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reported-by: Liang Li <liali@redhat.com>
+Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2221438
+Fixes: 872254dd6b1f ("net/bonding: Enable bonding to enslave non ARPHRD_ETHER")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ftrace.c | 45 +++++++++++++++++++++++++++++--------------
- 1 file changed, 31 insertions(+), 14 deletions(-)
+ drivers/net/bonding/bond_main.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
-index 6b1ba7f510e2c..81f5c9c85d066 100644
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -3053,6 +3053,22 @@ static int ftrace_allocate_records(struct ftrace_page *pg, int count)
- 	return cnt;
- }
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 4e4adacb5c2c1..47e02c5342b28 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1128,6 +1128,11 @@ static void bond_setup_by_slave(struct net_device *bond_dev,
  
-+static void ftrace_free_pages(struct ftrace_page *pages)
-+{
-+	struct ftrace_page *pg = pages;
+ 	memcpy(bond_dev->broadcast, slave_dev->broadcast,
+ 		slave_dev->addr_len);
 +
-+	while (pg) {
-+		if (pg->records) {
-+			free_pages((unsigned long)pg->records, pg->order);
-+			ftrace_number_of_pages -= 1 << pg->order;
-+		}
-+		pages = pg->next;
-+		kfree(pg);
-+		pg = pages;
-+		ftrace_number_of_groups--;
++	if (slave_dev->flags & IFF_POINTOPOINT) {
++		bond_dev->flags &= ~(IFF_BROADCAST | IFF_MULTICAST);
++		bond_dev->flags |= (IFF_POINTOPOINT | IFF_NOARP);
 +	}
-+}
-+
- static struct ftrace_page *
- ftrace_allocate_pages(unsigned long num_to_init)
- {
-@@ -3091,17 +3107,7 @@ ftrace_allocate_pages(unsigned long num_to_init)
- 	return start_pg;
- 
-  free_pages:
--	pg = start_pg;
--	while (pg) {
--		if (pg->records) {
--			free_pages((unsigned long)pg->records, pg->order);
--			ftrace_number_of_pages -= 1 << pg->order;
--		}
--		start_pg = pg->next;
--		kfree(pg);
--		pg = start_pg;
--		ftrace_number_of_groups--;
--	}
-+	ftrace_free_pages(start_pg);
- 	pr_info("ftrace: FAILED to allocate memory for functions\n");
- 	return NULL;
- }
-@@ -5593,9 +5599,11 @@ static int ftrace_process_locs(struct module *mod,
- 			       unsigned long *start,
- 			       unsigned long *end)
- {
-+	struct ftrace_page *pg_unuse = NULL;
- 	struct ftrace_page *start_pg;
- 	struct ftrace_page *pg;
- 	struct dyn_ftrace *rec;
-+	unsigned long skipped = 0;
- 	unsigned long count;
- 	unsigned long *p;
- 	unsigned long addr;
-@@ -5649,8 +5657,10 @@ static int ftrace_process_locs(struct module *mod,
- 		 * object files to satisfy alignments.
- 		 * Skip any NULL pointers.
- 		 */
--		if (!addr)
-+		if (!addr) {
-+			skipped++;
- 			continue;
-+		}
- 
- 		end_offset = (pg->index+1) * sizeof(pg->records[0]);
- 		if (end_offset > PAGE_SIZE << pg->order) {
-@@ -5664,8 +5674,10 @@ static int ftrace_process_locs(struct module *mod,
- 		rec->ip = addr;
- 	}
- 
--	/* We should have used all pages */
--	WARN_ON(pg->next);
-+	if (pg->next) {
-+		pg_unuse = pg->next;
-+		pg->next = NULL;
-+	}
- 
- 	/* Assign the last page to ftrace_pages */
- 	ftrace_pages = pg;
-@@ -5687,6 +5699,11 @@ static int ftrace_process_locs(struct module *mod,
-  out:
- 	mutex_unlock(&ftrace_lock);
- 
-+	/* We should have used all pages unless we skipped some */
-+	if (pg_unuse) {
-+		WARN_ON(!skipped);
-+		ftrace_free_pages(pg_unuse);
-+	}
- 	return ret;
  }
  
+ /* On bonding slaves other than the currently active slave, suppress
 -- 
 2.39.2
 
