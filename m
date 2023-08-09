@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DACA53B7
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:54:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008C5C433C9;
-	Wed,  9 Aug 2023 10:54:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A98C53B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:54:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF081C433C7;
+	Wed,  9 Aug 2023 10:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578491;
-	bh=ogEyB2jafn+lL0XcfemZLOnlaxUvSvCl+NBfFQsP8A8=;
+	s=korg; t=1691578494;
+	bh=8PotWt2WRbU2C8ZpTP2s4gYfkiZfIyyFJ1H8NqhZja8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f1I+d+kQJczcP+lgFFxQkcPnCCukEv+reQM9CBjAHcHaX/tCrwWM0eRnO/UWCJC5N
-	 7JPnVMo7c98k4PKwoj6Mgvk+XDcz2WodZCu62mUbivGgDddD9fgqR2oOm7UOX4dZvP
-	 iLTlX8B1QbvnS20EPpdLo5ir6d7ZrFx5B54V2080=
+	b=M4TBSubFbj4y/BfkTdnVQhuUAEi3qknATarqlOSLE8kc6WC15Y4f6nkxkEGwudHpZ
+	 JL9l8JjvCeYnmXkuFD4cjx+GQA6fgRMho9EuKrQPMC54PF44aeCKJ/S6HsrhlXZHF+
+	 QOviWP25SzTNzTUd5tQX5C5K7gIeOpDWKXrsP0t0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Maignial <olivier.maignial@hotmail.fr>,
+	Stable@vger.kernel.org,
+	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.1 079/127] mtd: spinand: toshiba: Fix ecc_get_status
-Date: Wed,  9 Aug 2023 12:41:06 +0200
-Message-ID: <20230809103639.268420058@linuxfoundation.org>
+Subject: [PATCH 6.1 080/127] mtd: rawnand: meson: fix OOB available bytes for ECC
+Date: Wed,  9 Aug 2023 12:41:07 +0200
+Message-ID: <20230809103639.303372179@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -34,54 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Olivier Maignial <olivier.maignial@hotmail.fr>
+From: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
 
-commit 8544cda94dae6be3f1359539079c68bb731428b1 upstream.
+commit 7e6b04f9238eab0f684fafd158c1f32ea65b9eaa upstream.
 
-Reading ECC status is failing.
+It is incorrect to calculate number of OOB bytes for ECC engine using
+some "already known" ECC step size (1024 bytes here). Number of such
+bytes for ECC engine must be whole OOB except 2 bytes for bad block
+marker, while proper ECC step size and strength will be selected by
+ECC logic.
 
-tx58cxgxsxraix_ecc_get_status() is using on-stack buffer
-for SPINAND_GET_FEATURE_OP() output. It is not suitable
-for DMA needs of spi-mem.
-
-Fix this by using the spi-mem operations dedicated buffer
-spinand->scratchbuf.
-
-See
-spinand->scratchbuf:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/linux/mtd/spinand.h?h=v6.3#n418
-spi_mem_check_op():
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/spi/spi-mem.c?h=v6.3#n199
-
-Fixes: 10949af1681d ("mtd: spinand: Add initial support for Toshiba TC58CVG2S0H")
-Cc: stable@vger.kernel.org
-Signed-off-by: Olivier Maignial <olivier.maignial@hotmail.fr>
+Fixes: 8fae856c5350 ("mtd: rawnand: meson: add support for Amlogic NAND flash controller")
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/DB4P250MB1032553D05FBE36DEE0D311EFE23A@DB4P250MB1032.EURP250.PROD.OUTLOOK.COM
+Link: https://lore.kernel.org/linux-mtd/20230705065211.293500-1-AVKrasnov@sberdevices.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/spi/toshiba.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/raw/meson_nand.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/mtd/nand/spi/toshiba.c
-+++ b/drivers/mtd/nand/spi/toshiba.c
-@@ -73,7 +73,7 @@ static int tx58cxgxsxraix_ecc_get_status
- {
- 	struct nand_device *nand = spinand_to_nand(spinand);
- 	u8 mbf = 0;
--	struct spi_mem_op op = SPINAND_GET_FEATURE_OP(0x30, &mbf);
-+	struct spi_mem_op op = SPINAND_GET_FEATURE_OP(0x30, spinand->scratchbuf);
+--- a/drivers/mtd/nand/raw/meson_nand.c
++++ b/drivers/mtd/nand/raw/meson_nand.c
+@@ -1184,7 +1184,6 @@ static int meson_nand_attach_chip(struct
+ 	struct meson_nfc *nfc = nand_get_controller_data(nand);
+ 	struct meson_nfc_nand_chip *meson_chip = to_meson_nand(nand);
+ 	struct mtd_info *mtd = nand_to_mtd(nand);
+-	int nsectors = mtd->writesize / 1024;
+ 	int ret;
  
- 	switch (status & STATUS_ECC_MASK) {
- 	case STATUS_ECC_NO_BITFLIPS:
-@@ -92,7 +92,7 @@ static int tx58cxgxsxraix_ecc_get_status
- 		if (spi_mem_exec_op(spinand->spimem, &op))
- 			return nanddev_get_ecc_conf(nand)->strength;
+ 	if (!mtd->name) {
+@@ -1202,7 +1201,7 @@ static int meson_nand_attach_chip(struct
+ 	nand->options |= NAND_NO_SUBPAGE_WRITE;
  
--		mbf >>= 4;
-+		mbf = *(spinand->scratchbuf) >> 4;
- 
- 		if (WARN_ON(mbf > nanddev_get_ecc_conf(nand)->strength || !mbf))
- 			return nanddev_get_ecc_conf(nand)->strength;
+ 	ret = nand_ecc_choose_conf(nand, nfc->data->ecc_caps,
+-				   mtd->oobsize - 2 * nsectors);
++				   mtd->oobsize - 2);
+ 	if (ret) {
+ 		dev_err(nfc->dev, "failed to ECC init\n");
+ 		return -EINVAL;
 
 
