@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53AF31FA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:09:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C78BEC433C8;
-	Wed,  9 Aug 2023 11:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B2E174EE
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:09:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BCC1C433C7;
+	Wed,  9 Aug 2023 11:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579372;
-	bh=5CJc6/eZqUP61Yq9eiHGiTKvxNnhZJs6E42OX+mnhdw=;
+	s=korg; t=1691579374;
+	bh=dIJvGF0Fah4s4s5NfQBGRqogt6x3lfyn164Tl/Og6q8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dkN/k3HnvYfbBtrDy2uXhdK0TfcTE88edkQjoMSSyXowBALSSAZKVOPWe3zysJp8/
-	 jBiYbQ63CfOLTAtS6DKpPrDEHbJ990jW5Xg98cpKYk+MTe8SBorVtc7XT3pcu5Fq9J
-	 5PgpdF6E847jVOxnSJHNM4J92DZPuCYlpsMQUoVM=
+	b=HfRGpudU7ELUeeR0gc/ES1jcaNK/uXEKrVbqsGkDiqYUHM3bdl5uNxkFtt79CPdNn
+	 uEeylUjOAbDtgY6+iaOuUes4GyQyOcPzOVar8NzVl5XRbeCeF5b3d44Z+1dS0rEjcZ
+	 YVfjXudC5zvbFJmouMNl41Y6YbO0BMfkgTb3bEJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 141/204] fbdev: au1200fb: Fix missing IRQ check in au1200fb_drv_probe
-Date: Wed,  9 Aug 2023 12:41:19 +0200
-Message-ID: <20230809103647.305576922@linuxfoundation.org>
+Subject: [PATCH 4.14 142/204] llc: Dont drop packet from non-root netns.
+Date: Wed,  9 Aug 2023 12:41:20 +0200
+Message-ID: <20230809103647.339887928@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -35,38 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 4e88761f5f8c7869f15a2046b1a1116f4fab4ac8 ]
+[ Upstream commit 6631463b6e6673916d2481f692938f393148aa82 ]
 
-This func misses checking for platform_get_irq()'s call and may passes the
-negative error codes to request_irq(), which takes unsigned IRQ #,
-causing it to fail with -EINVAL, overriding an original error code.
+Now these upper layer protocol handlers can be called from llc_rcv()
+as sap->rcv_func(), which is registered by llc_sap_open().
 
-Fix this by stop calling request_irq() with invalid IRQ #s.
+  * function which is passed to register_8022_client()
+    -> no in-kernel user calls register_8022_client().
 
-Fixes: 1630d85a8312 ("au1200fb: fix hardcoded IRQ")
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+  * snap_rcv()
+    `- proto->rcvfunc() : registered by register_snap_client()
+       -> aarp_rcv() and atalk_rcv() drop packets from non-root netns
+
+  * stp_pdu_rcv()
+    `- garp_protos[]->rcv() : registered by stp_proto_register()
+       -> garp_pdu_rcv() and br_stp_rcv() are netns-aware
+
+So, we can safely remove the netns restriction in llc_rcv().
+
+Fixes: e730c15519d0 ("[NET]: Make packet reception network namespace safe")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/au1200fb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/llc/llc_input.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/video/fbdev/au1200fb.c b/drivers/video/fbdev/au1200fb.c
-index e17a083f849ad..cae4a04cba48e 100644
---- a/drivers/video/fbdev/au1200fb.c
-+++ b/drivers/video/fbdev/au1200fb.c
-@@ -1748,6 +1748,9 @@ static int au1200fb_drv_probe(struct platform_device *dev)
+diff --git a/net/llc/llc_input.c b/net/llc/llc_input.c
+index dd3e83328ad54..d5c6fb41be92e 100644
+--- a/net/llc/llc_input.c
++++ b/net/llc/llc_input.c
+@@ -162,9 +162,6 @@ int llc_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	void (*sta_handler)(struct sk_buff *skb);
+ 	void (*sap_handler)(struct llc_sap *sap, struct sk_buff *skb);
  
- 	/* Now hook interrupt too */
- 	irq = platform_get_irq(dev, 0);
-+	if (irq < 0)
-+		return irq;
-+
- 	ret = request_irq(irq, au1200fb_handle_irq,
- 			  IRQF_SHARED, "lcd", (void *)dev);
- 	if (ret) {
+-	if (!net_eq(dev_net(dev), &init_net))
+-		goto drop;
+-
+ 	/*
+ 	 * When the interface is in promisc. mode, drop all the crap that it
+ 	 * receives, do not try to analyse it.
 -- 
 2.39.2
 
