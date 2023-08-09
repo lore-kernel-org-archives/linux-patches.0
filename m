@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9624317AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:28:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14485C433C7;
-	Wed,  9 Aug 2023 11:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C41917AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:28:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0CA2C433CC;
+	Wed,  9 Aug 2023 11:28:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580491;
-	bh=Xjh2YxxXbOvBnH2ULj7nSvr60t+1ddqErZx/QSd7eaA=;
+	s=korg; t=1691580494;
+	bh=FWkv7CJOmSyN5OB1teJ3E6sAr+f9Pf6bp5Gf34FTrQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gzsB6plzPbA3d4/pjdyWq3Frc4W+Y75NEHhBPhDGm7AQo1EOi9tyeJUOH4WFtlRfv
-	 KtIZNiTgp9o7rBHFWgqO1kE9S/aIBHshDv3hjDA5KsP2PMlg3Sq0f2bm6f4p/vluXS
-	 dsyqm4G4hdBBF0Ht4NesC4Eo+99oeNusV22ZdPpM=
+	b=fjsow/rCu8iZevXx8uwg+UrZ0oXKLKi3ZNMfmJPMxEl1qhT0e7P67WN7m2jtRE/W7
+	 VXy3Lj/OQtQ70JSn5zpw5MPqR56F7Xfv9QRajnATO7CJADnx0qYfQEUh4xnl576Lwg
+	 Y2i84UlhEShcSioP3yGGt7IXxJIzBrponhNBzZYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Nogueira <victor@mojatatu.com>,
-	Lin Ma <linma@zju.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yuanjun Gong <ruc_gongyuanjun@163.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 043/154] net/sched: mqprio: Add length check for TCA_MQPRIO_{MAX/MIN}_RATE64
-Date: Wed,  9 Aug 2023 12:41:14 +0200
-Message-ID: <20230809103638.446511040@linuxfoundation.org>
+Subject: [PATCH 5.4 044/154] benet: fix return value check in be_lancer_xmit_workarounds()
+Date: Wed,  9 Aug 2023 12:41:15 +0200
+Message-ID: <20230809103638.477365338@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -36,61 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Yuanjun Gong <ruc_gongyuanjun@163.com>
 
-[ Upstream commit 6c58c8816abb7b93b21fa3b1d0c1726402e5e568 ]
+[ Upstream commit 5c85f7065718a949902b238a6abd8fc907c5d3e0 ]
 
-The nla_for_each_nested parsing in function mqprio_parse_nlattr() does
-not check the length of the nested attribute. This can lead to an
-out-of-attribute read and allow a malformed nlattr (e.g., length 0) to
-be viewed as 8 byte integer and passed to priv->max_rate/min_rate.
+in be_lancer_xmit_workarounds(), it should go to label 'tx_drop'
+if an unexpected value is returned by pskb_trim().
 
-This patch adds the check based on nla_len() when check the nla_type(),
-which ensures that the length of these two attribute must equals
-sizeof(u64).
-
-Fixes: 4e8b86c06269 ("mqprio: Introduce new hardware offload mode and shaper in mqprio")
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230725024227.426561-1-linma@zju.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 93040ae5cc8d ("be2net: Fix to trim skb for padded vlan packets to workaround an ASIC Bug")
+Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
+Link: https://lore.kernel.org/r/20230725032726.15002-1-ruc_gongyuanjun@163.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_mqprio.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/net/ethernet/emulex/benet/be_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_mqprio.c b/net/sched/sch_mqprio.c
-index 4ec222a5530d1..56d3dc5e95c7c 100644
---- a/net/sched/sch_mqprio.c
-+++ b/net/sched/sch_mqprio.c
-@@ -174,6 +174,13 @@ static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
- 						    "Attribute type expected to be TCA_MQPRIO_MIN_RATE64");
- 				return -EINVAL;
- 			}
-+
-+			if (nla_len(attr) != sizeof(u64)) {
-+				NL_SET_ERR_MSG_ATTR(extack, attr,
-+						    "Attribute TCA_MQPRIO_MIN_RATE64 expected to have 8 bytes length");
-+				return -EINVAL;
-+			}
-+
- 			if (i >= qopt->num_tc)
- 				break;
- 			priv->min_rate[i] = *(u64 *)nla_data(attr);
-@@ -196,6 +203,13 @@ static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
- 						    "Attribute type expected to be TCA_MQPRIO_MAX_RATE64");
- 				return -EINVAL;
- 			}
-+
-+			if (nla_len(attr) != sizeof(u64)) {
-+				NL_SET_ERR_MSG_ATTR(extack, attr,
-+						    "Attribute TCA_MQPRIO_MAX_RATE64 expected to have 8 bytes length");
-+				return -EINVAL;
-+			}
-+
- 			if (i >= qopt->num_tc)
- 				break;
- 			priv->max_rate[i] = *(u64 *)nla_data(attr);
+diff --git a/drivers/net/ethernet/emulex/benet/be_main.c b/drivers/net/ethernet/emulex/benet/be_main.c
+index f1cce7636722e..a7a3e2ee06768 100644
+--- a/drivers/net/ethernet/emulex/benet/be_main.c
++++ b/drivers/net/ethernet/emulex/benet/be_main.c
+@@ -1140,7 +1140,8 @@ static struct sk_buff *be_lancer_xmit_workarounds(struct be_adapter *adapter,
+ 	    (lancer_chip(adapter) || BE3_chip(adapter) ||
+ 	     skb_vlan_tag_present(skb)) && is_ipv4_pkt(skb)) {
+ 		ip = (struct iphdr *)ip_hdr(skb);
+-		pskb_trim(skb, eth_hdr_len + ntohs(ip->tot_len));
++		if (unlikely(pskb_trim(skb, eth_hdr_len + ntohs(ip->tot_len))))
++			goto tx_drop;
+ 	}
+ 
+ 	/* If vlan tag is already inlined in the packet, skip HW VLAN
 -- 
 2.39.2
 
