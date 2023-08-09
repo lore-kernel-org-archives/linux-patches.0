@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328F617AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:37:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA217C433C7;
-	Wed,  9 Aug 2023 11:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5338417AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:37:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7644BC433C7;
+	Wed,  9 Aug 2023 11:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581064;
-	bh=5u/D3ArNmHqIDpCkBJ186gF0t2XzKvfOpUT/sCf6hZE=;
+	s=korg; t=1691581066;
+	bh=sGfr9qVlXBCbSwrRZvXj7sy5R6dx9c9NxFyxmVNElJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fn15iC1ES6iAdCK2C4QOBU+zJiXZ2wr4RgnqmsKTRUsITinheVueLWsEIkRuco3ep
-	 CWY6GOU3du7cLU+CAijdPHqZd7+5HK0wa4GXRoZ5IhjyQyI3IBKWleb023ArVTZthO
-	 d+VeSrg6i7Re4zWB5aJwcWvEnrKHw7C+nT5AFqfg=
+	b=EUyFP9LOttYKHB4mWeyDRg9v2SZxUfXwl1yYr/NvWENNnH/OXXWqakiAP0oXK37TG
+	 gIQZkc1QAxIL9njir5wUBWe1CoCp+F7J5GoiN7+OOybJEiekRd9KbFKnZGBjMPA9y7
+	 DHPZbL/c9jJ3WKy52hBaizT/oAqfcW2kbZFmFtYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunkun Jiang <jiangkunkun@huawei.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Zenghui Yu <yuzenghui@huawei.com>,
-	wanghaibin.wang@huawei.com,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 093/201] irqchip/gic-v4.1: Properly lock VPEs when doing a directLPI invalidation
-Date: Wed,  9 Aug 2023 12:41:35 +0200
-Message-ID: <20230809103646.929638606@linuxfoundation.org>
+Subject: [PATCH 5.10 094/201] KVM: VMX: Invert handling of CR0.WP for EPT without unrestricted guest
+Date: Wed,  9 Aug 2023 12:41:36 +0200
+Message-ID: <20230809103646.962841888@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -37,158 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 926846a703cbf5d0635cc06e67d34b228746554b ]
+[ Upstream commit ee5a5584cba316bc90bc2fad0c6d10b71f1791cb ]
 
-We normally rely on the irq_to_cpuid_[un]lock() primitives to make
-sure nothing will change col->idx while performing a LPI invalidation.
+Opt-in to forcing CR0.WP=1 for shadow paging, and stop lying about WP
+being "always on" for unrestricted guest.  In addition to making KVM a
+wee bit more honest, this paves the way for additional cleanup.
 
-However, these primitives do not cover VPE doorbells, and we have
-some open-coded locking for that. Unfortunately, this locking is
-pretty bogus.
+No functional change intended.
 
-Instead, extend the above primitives to cover VPE doorbells and
-convert the whole thing to it.
-
-Fixes: f3a059219bc7 ("irqchip/gic-v4.1: Ensure mutual exclusion between vPE affinity change and RD access")
-Reported-by: Kunkun Jiang <jiangkunkun@huawei.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: Zenghui Yu <yuzenghui@huawei.com>
-Cc: wanghaibin.wang@huawei.com
-Tested-by: Kunkun Jiang <jiangkunkun@huawei.com>
-Reviewed-by: Zenghui Yu <yuzenghui@huawei.com>
-Link: https://lore.kernel.org/r/20230617073242.3199746-1-maz@kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20210713163324.627647-22-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Stable-dep-of: c4abd7352023 ("KVM: VMX: Don't fudge CR0 and CR4 for restricted L2 guest")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 75 ++++++++++++++++++++------------
- 1 file changed, 46 insertions(+), 29 deletions(-)
+ arch/x86/kvm/vmx/vmx.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 5ec091c64d47f..f1fa98e5ea13f 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -267,13 +267,23 @@ static void vpe_to_cpuid_unlock(struct its_vpe *vpe, unsigned long flags)
- 	raw_spin_unlock_irqrestore(&vpe->vpe_lock, flags);
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index 9aedc7b06da7a..574acfa98fa9b 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -135,8 +135,7 @@ module_param(allow_smaller_maxphyaddr, bool, S_IRUGO);
+ #define KVM_VM_CR0_ALWAYS_OFF (X86_CR0_NW | X86_CR0_CD)
+ #define KVM_VM_CR0_ALWAYS_ON_UNRESTRICTED_GUEST X86_CR0_NE
+ #define KVM_VM_CR0_ALWAYS_ON				\
+-	(KVM_VM_CR0_ALWAYS_ON_UNRESTRICTED_GUEST | 	\
+-	 X86_CR0_WP | X86_CR0_PG | X86_CR0_PE)
++	(KVM_VM_CR0_ALWAYS_ON_UNRESTRICTED_GUEST | X86_CR0_PG | X86_CR0_PE)
+ 
+ #define KVM_VM_CR4_ALWAYS_ON_UNRESTRICTED_GUEST X86_CR4_VMXE
+ #define KVM_PMODE_VM_CR4_ALWAYS_ON (X86_CR4_PAE | X86_CR4_VMXE)
+@@ -3064,9 +3063,7 @@ void ept_save_pdptrs(struct kvm_vcpu *vcpu)
+ 	kvm_register_mark_dirty(vcpu, VCPU_EXREG_PDPTR);
  }
  
-+static struct irq_chip its_vpe_irq_chip;
-+
- static int irq_to_cpuid_lock(struct irq_data *d, unsigned long *flags)
+-static void ept_update_paging_mode_cr0(unsigned long *hw_cr0,
+-					unsigned long cr0,
+-					struct kvm_vcpu *vcpu)
++static void ept_update_paging_mode_cr0(unsigned long cr0, struct kvm_vcpu *vcpu)
  {
--	struct its_vlpi_map *map = get_vlpi_map(d);
-+	struct its_vpe *vpe = NULL;
- 	int cpu;
+ 	struct vcpu_vmx *vmx = to_vmx(vcpu);
  
--	if (map) {
--		cpu = vpe_to_cpuid_lock(map->vpe, flags);
-+	if (d->chip == &its_vpe_irq_chip) {
-+		vpe = irq_data_get_irq_chip_data(d);
-+	} else {
-+		struct its_vlpi_map *map = get_vlpi_map(d);
-+		if (map)
-+			vpe = map->vpe;
-+	}
-+
-+	if (vpe) {
-+		cpu = vpe_to_cpuid_lock(vpe, flags);
- 	} else {
- 		/* Physical LPIs are already locked via the irq_desc lock */
- 		struct its_device *its_dev = irq_data_get_irq_chip_data(d);
-@@ -287,10 +297,18 @@ static int irq_to_cpuid_lock(struct irq_data *d, unsigned long *flags)
- 
- static void irq_to_cpuid_unlock(struct irq_data *d, unsigned long flags)
- {
--	struct its_vlpi_map *map = get_vlpi_map(d);
-+	struct its_vpe *vpe = NULL;
-+
-+	if (d->chip == &its_vpe_irq_chip) {
-+		vpe = irq_data_get_irq_chip_data(d);
-+	} else {
-+		struct its_vlpi_map *map = get_vlpi_map(d);
-+		if (map)
-+			vpe = map->vpe;
-+	}
- 
--	if (map)
--		vpe_to_cpuid_unlock(map->vpe, flags);
-+	if (vpe)
-+		vpe_to_cpuid_unlock(vpe, flags);
- }
- 
- static struct its_collection *valid_col(struct its_collection *col)
-@@ -1422,14 +1440,29 @@ static void wait_for_syncr(void __iomem *rdbase)
- 		cpu_relax();
- }
- 
--static void direct_lpi_inv(struct irq_data *d)
-+static void __direct_lpi_inv(struct irq_data *d, u64 val)
- {
--	struct its_vlpi_map *map = get_vlpi_map(d);
- 	void __iomem *rdbase;
- 	unsigned long flags;
--	u64 val;
- 	int cpu;
- 
-+	/* Target the redistributor this LPI is currently routed to */
-+	cpu = irq_to_cpuid_lock(d, &flags);
-+	raw_spin_lock(&gic_data_rdist_cpu(cpu)->rd_lock);
-+
-+	rdbase = per_cpu_ptr(gic_rdists->rdist, cpu)->rd_base;
-+	gic_write_lpir(val, rdbase + GICR_INVLPIR);
-+	wait_for_syncr(rdbase);
-+
-+	raw_spin_unlock(&gic_data_rdist_cpu(cpu)->rd_lock);
-+	irq_to_cpuid_unlock(d, flags);
-+}
-+
-+static void direct_lpi_inv(struct irq_data *d)
-+{
-+	struct its_vlpi_map *map = get_vlpi_map(d);
-+	u64 val;
-+
- 	if (map) {
- 		struct its_device *its_dev = irq_data_get_irq_chip_data(d);
- 
-@@ -1442,15 +1475,7 @@ static void direct_lpi_inv(struct irq_data *d)
- 		val = d->hwirq;
+@@ -3085,9 +3082,6 @@ static void ept_update_paging_mode_cr0(unsigned long *hw_cr0,
+ 		vcpu->arch.cr0 = cr0;
+ 		vmx_set_cr4(vcpu, kvm_read_cr4(vcpu));
  	}
- 
--	/* Target the redistributor this LPI is currently routed to */
--	cpu = irq_to_cpuid_lock(d, &flags);
--	raw_spin_lock(&gic_data_rdist_cpu(cpu)->rd_lock);
--	rdbase = per_cpu_ptr(gic_rdists->rdist, cpu)->rd_base;
--	gic_write_lpir(val, rdbase + GICR_INVLPIR);
 -
--	wait_for_syncr(rdbase);
--	raw_spin_unlock(&gic_data_rdist_cpu(cpu)->rd_lock);
--	irq_to_cpuid_unlock(d, flags);
-+	__direct_lpi_inv(d, val);
+-	if (!(cr0 & X86_CR0_WP))
+-		*hw_cr0 &= ~X86_CR0_WP;
  }
  
- static void lpi_update_config(struct irq_data *d, u8 clr, u8 set)
-@@ -3916,18 +3941,10 @@ static void its_vpe_send_inv(struct irq_data *d)
- {
- 	struct its_vpe *vpe = irq_data_get_irq_chip_data(d);
+ void vmx_set_cr0(struct kvm_vcpu *vcpu, unsigned long cr0)
+@@ -3100,6 +3094,8 @@ void vmx_set_cr0(struct kvm_vcpu *vcpu, unsigned long cr0)
+ 		hw_cr0 |= KVM_VM_CR0_ALWAYS_ON_UNRESTRICTED_GUEST;
+ 	else {
+ 		hw_cr0 |= KVM_VM_CR0_ALWAYS_ON;
++		if (!enable_ept)
++			hw_cr0 |= X86_CR0_WP;
  
--	if (gic_rdists->has_direct_lpi) {
--		void __iomem *rdbase;
--
--		/* Target the redistributor this VPE is currently known on */
--		raw_spin_lock(&gic_data_rdist_cpu(vpe->col_idx)->rd_lock);
--		rdbase = per_cpu_ptr(gic_rdists->rdist, vpe->col_idx)->rd_base;
--		gic_write_lpir(d->parent_data->hwirq, rdbase + GICR_INVLPIR);
--		wait_for_syncr(rdbase);
--		raw_spin_unlock(&gic_data_rdist_cpu(vpe->col_idx)->rd_lock);
--	} else {
-+	if (gic_rdists->has_direct_lpi)
-+		__direct_lpi_inv(d, d->parent_data->hwirq);
-+	else
- 		its_vpe_send_cmd(vpe, its_send_inv);
--	}
- }
+ 		if (vmx->rmode.vm86_active && (cr0 & X86_CR0_PE))
+ 			enter_pmode(vcpu);
+@@ -3118,7 +3114,7 @@ void vmx_set_cr0(struct kvm_vcpu *vcpu, unsigned long cr0)
+ #endif
  
- static void its_vpe_mask_irq(struct irq_data *d)
+ 	if (enable_ept && !is_unrestricted_guest(vcpu))
+-		ept_update_paging_mode_cr0(&hw_cr0, cr0, vcpu);
++		ept_update_paging_mode_cr0(cr0, vcpu);
+ 
+ 	vmcs_writel(CR0_READ_SHADOW, cr0);
+ 	vmcs_writel(GUEST_CR0, hw_cr0);
 -- 
 2.40.1
 
