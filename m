@@ -1,33 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DF31773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:14:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8BCEC433C8;
-	Wed,  9 Aug 2023 11:14:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB4853B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:14:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F710C433C8;
+	Wed,  9 Aug 2023 11:14:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579680;
-	bh=Cx+oHc5C1/TLQN/ZEoNlJ80KiHNwabEJ1ixRT3W8pY4=;
+	s=korg; t=1691579682;
+	bh=fIbIexN/PwieNz9wogcGqDRjx5VT9i5L/oCNbr7eD9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aSL3JtNvGk7p+HquK/JpbbF5JM9oB037qU4w+IqzD/JQEaxgFgD8aJJV2UUhrn9nv
-	 4iGJTPezQsO2zypvX+UUGbi1IdyLM6KekZixCIHC2y+xFit8sNZ7bp3v+dun6IDtVL
-	 bzZPhyJr4B95HgW2mURzGmuD22lSZj/y2R7znR1A=
+	b=IsbHYOOybrxjK9V42gY8jvYtffjbroFwo83XsP1Z1wb/2ApuD0lwZqh4MRgIELRzE
+	 IZaGVMqtC8cInkUGBdBnLIll4SHxWWnO2Kt6cMq3vYP63a5DYmFWi4Ay9fGKObx2SF
+	 iFeb3GKe1TFfn32kfxcNi1u4joYWJzCl/uRK7gkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 070/323] perf dwarf-aux: Fix off-by-one in die_get_varname()
-Date: Wed,  9 Aug 2023 12:38:28 +0200
-Message-ID: <20230809103701.347409607@linuxfoundation.org>
+Subject: [PATCH 4.19 079/323] modpost: fix section mismatch message for R_ARM_{PC24,CALL,JUMP24}
+Date: Wed,  9 Aug 2023 12:38:37 +0200
+Message-ID: <20230809103701.764099575@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -41,43 +34,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 3abfcfd847717d232e36963f31a361747c388fe7 ]
+[ Upstream commit 56a24b8ce6a7f9c4a21b2276a8644f6f3d8fc14d ]
 
-The die_get_varname() returns "(unknown_type)" string if it failed to
-find a type for the variable.  But it had a space before the opening
-parenthesis and it made the closing parenthesis cut off due to the
-off-by-one in the string length (14).
+addend_arm_rel() processes R_ARM_PC24, R_ARM_CALL, R_ARM_JUMP24 in a
+wrong way.
 
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Fixes: 88fd633cdfa19060 ("perf probe: No need to use formatting strbuf method")
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20230612234102.3909116-1-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Here, test code.
+
+[test code for R_ARM_JUMP24]
+
+  .section .init.text,"ax"
+  bar:
+          bx      lr
+
+  .section .text,"ax"
+  .globl foo
+  foo:
+          b       bar
+
+[test code for R_ARM_CALL]
+
+  .section .init.text,"ax"
+  bar:
+          bx      lr
+
+  .section .text,"ax"
+  .globl foo
+  foo:
+          push    {lr}
+          bl      bar
+          pop     {pc}
+
+If you compile it with ARM multi_v7_defconfig, modpost will show the
+symbol name, (unknown).
+
+  WARNING: modpost: vmlinux.o: section mismatch in reference: foo (section: .text) -> (unknown) (section: .init.text)
+
+(You need to use GNU linker instead of LLD to reproduce it.)
+
+Fix the code to make modpost show the correct symbol name.
+
+I imported (with adjustment) sign_extend32() from include/linux/bitops.h.
+
+The '+8' is the compensation for pc-relative instruction. It is
+documented in "ELF for the Arm Architecture" [1].
+
+  "If the relocation is pc-relative then compensation for the PC bias
+  (the PC value is 8 bytes ahead of the executing instruction in Arm
+  state and 4 bytes in Thumb state) must be encoded in the relocation
+  by the object producer."
+
+[1]: https://github.com/ARM-software/abi-aa/blob/main/aaelf32/aaelf32.rst
+
+Fixes: 56a974fa2d59 ("kbuild: make better section mismatch reports on arm")
+Fixes: 6e2e340b59d2 ("ARM: 7324/1: modpost: Fix section warnings for ARM for many compilers")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dwarf-aux.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/mod/modpost.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
-index 6de57d9ee7cc2..db099dc20a682 100644
---- a/tools/perf/util/dwarf-aux.c
-+++ b/tools/perf/util/dwarf-aux.c
-@@ -1020,7 +1020,7 @@ int die_get_varname(Dwarf_Die *vr_die, struct strbuf *buf)
- 	ret = die_get_typename(vr_die, buf);
- 	if (ret < 0) {
- 		pr_debug("Failed to get type, make it unknown.\n");
--		ret = strbuf_add(buf, " (unknown_type)", 14);
-+		ret = strbuf_add(buf, "(unknown_type)", 14);
- 	}
+diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
+index 41b1791a9463b..2060a3fe9691d 100644
+--- a/scripts/mod/modpost.c
++++ b/scripts/mod/modpost.c
+@@ -1751,12 +1751,20 @@ static int addend_386_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
+ #define	R_ARM_THM_JUMP19	51
+ #endif
  
- 	return ret < 0 ? ret : strbuf_addf(buf, "\t%s", dwarf_diename(vr_die));
++static int32_t sign_extend32(int32_t value, int index)
++{
++	uint8_t shift = 31 - index;
++
++	return (int32_t)(value << shift) >> shift;
++}
++
+ static int addend_arm_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
+ {
+ 	unsigned int r_typ = ELF_R_TYPE(r->r_info);
+ 	Elf_Sym *sym = elf->symtab_start + ELF_R_SYM(r->r_info);
+ 	void *loc = reloc_location(elf, sechdr, r);
+ 	uint32_t inst;
++	int32_t offset;
+ 
+ 	switch (r_typ) {
+ 	case R_ARM_ABS32:
+@@ -1766,6 +1774,10 @@ static int addend_arm_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
+ 	case R_ARM_PC24:
+ 	case R_ARM_CALL:
+ 	case R_ARM_JUMP24:
++		inst = TO_NATIVE(*(uint32_t *)loc);
++		offset = sign_extend32((inst & 0x00ffffff) << 2, 25);
++		r->r_addend = offset + sym->st_value + 8;
++		break;
+ 	case R_ARM_THM_CALL:
+ 	case R_ARM_THM_JUMP24:
+ 	case R_ARM_THM_JUMP19:
 -- 
 2.39.2
 
