@@ -1,36 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C62174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:59:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 952C8C433C7;
-	Wed,  9 Aug 2023 10:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AA5174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:59:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92532C433C8;
+	Wed,  9 Aug 2023 10:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578792;
-	bh=31HqNmphNVvCIARF6+f3rsUCFR54BlZLVf+HFB64Jbg=;
+	s=korg; t=1691578795;
+	bh=ZvQdwN+165wF2gWyzmHSFGBbUJ7XJBFwN3y8jvA0vOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zHldijnhvvytrLg8znchopZOWceDp0rb+JUfkajLg8pJoXxg2pMhZzswrMwV3O6hs
-	 XZew5GesmWOXotZbAiunF41OKsrs56HGjns4XZFAHcRmGkaLIvLKy40N00V4NUXtUb
-	 dcRcYQm/rvg5KSRuxCYsytBjvHcfN218GgpS115I=
+	b=QUCJVhND1dga0gjePjOMpp7gyRPjWgOHDTwl1ld/EGQJ/wb8/grZ2D30cxFKSymQ/
+	 imJN5DpE5oxqp7Zxlk6rcgWs8+YbOAaGENBjZnB1c29p3RuRysvbEL2Wl1bxELtjbr
+	 d/Sdzj9moveSnsNepYpSDOQhLWqDymwuQc3rDOG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Georg=20M=C3=BCller?= <georgmueller@gmx.net>,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 20/92] perf test uprobe_from_different_cu: Skip if there is no gcc
-Date: Wed,  9 Aug 2023 12:40:56 +0200
-Message-ID: <20230809103634.319813295@linuxfoundation.org>
+Subject: [PATCH 5.15 52/92] tcp_metrics: annotate data-races around tm->tcpm_net
+Date: Wed,  9 Aug 2023 12:41:28 +0200
+Message-ID: <20230809103635.403231969@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -44,61 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Georg Müller <georgmueller@gmx.net>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 98ce8e4a9dcfb448b30a2d7a16190f4a00382377 ]
+[ Upstream commit d5d986ce42c71a7562d32c4e21e026b0f87befec ]
 
-Without gcc, the test will fail.
+tm->tcpm_net can be read or written locklessly.
 
-On cleanup, ignore probe removal errors. Otherwise, in case of an error
-adding the probe, the temporary directory is not removed.
+Instead of changing write_pnet() and read_pnet() and potentially
+hurt performance, add the needed READ_ONCE()/WRITE_ONCE()
+in tm_net() and tcpm_new().
 
-Fixes: 56cbeacf14353057 ("perf probe: Add test for regression introduced by switch to die_get_decl_file()")
-Signed-off-by: Georg Müller <georgmueller@gmx.net>
-Acked-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Georg Müller <georgmueller@gmx.net>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20230728151812.454806-2-georgmueller@gmx.net
-Link: https://lore.kernel.org/r/CAP-5=fUP6UuLgRty3t2=fQsQi3k4hDMz415vWdp1x88QMvZ8ug@mail.gmail.com/
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 849e8a0ca8d5 ("tcp_metrics: Add a field tcpm_net and verify it matches on lookup")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230802131500.1478140-6-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/test_uprobe_from_different_cu.sh | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/ipv4/tcp_metrics.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/tests/shell/test_uprobe_from_different_cu.sh b/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
-index 00d2e0e2e0c28..319f36ebb9a40 100644
---- a/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
-+++ b/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
-@@ -4,6 +4,12 @@
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index 0c309fd4e04b2..88b0d952a2888 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -40,7 +40,7 @@ struct tcp_fastopen_metrics {
  
- set -e
+ struct tcp_metrics_block {
+ 	struct tcp_metrics_block __rcu	*tcpm_next;
+-	possible_net_t			tcpm_net;
++	struct net			*tcpm_net;
+ 	struct inetpeer_addr		tcpm_saddr;
+ 	struct inetpeer_addr		tcpm_daddr;
+ 	unsigned long			tcpm_stamp;
+@@ -51,9 +51,10 @@ struct tcp_metrics_block {
+ 	struct rcu_head			rcu_head;
+ };
  
-+# skip if there's no gcc
-+if ! [ -x "$(command -v gcc)" ]; then
-+        echo "failed: no gcc compiler"
-+        exit 2
-+fi
+-static inline struct net *tm_net(struct tcp_metrics_block *tm)
++static inline struct net *tm_net(const struct tcp_metrics_block *tm)
+ {
+-	return read_pnet(&tm->tcpm_net);
++	/* Paired with the WRITE_ONCE() in tcpm_new() */
++	return READ_ONCE(tm->tcpm_net);
+ }
+ 
+ static bool tcp_metric_locked(struct tcp_metrics_block *tm,
+@@ -197,7 +198,9 @@ static struct tcp_metrics_block *tcpm_new(struct dst_entry *dst,
+ 		if (!tm)
+ 			goto out_unlock;
+ 	}
+-	write_pnet(&tm->tcpm_net, net);
++	/* Paired with the READ_ONCE() in tm_net() */
++	WRITE_ONCE(tm->tcpm_net, net);
 +
- temp_dir=$(mktemp -d /tmp/perf-uprobe-different-cu-sh.XXXXXXXXXX)
+ 	tm->tcpm_saddr = *saddr;
+ 	tm->tcpm_daddr = *daddr;
  
- cleanup()
-@@ -11,7 +17,7 @@ cleanup()
- 	trap - EXIT TERM INT
- 	if [[ "${temp_dir}" =~ ^/tmp/perf-uprobe-different-cu-sh.*$ ]]; then
- 		echo "--- Cleaning up ---"
--		perf probe -x ${temp_dir}/testfile -d foo
-+		perf probe -x ${temp_dir}/testfile -d foo || true
- 		rm -f "${temp_dir}/"*
- 		rmdir "${temp_dir}"
- 	fi
 -- 
 2.40.1
 
