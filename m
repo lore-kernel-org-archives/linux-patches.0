@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8694717AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:33:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 052BAC433C7;
-	Wed,  9 Aug 2023 11:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694D617AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:33:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76C6C433C8;
+	Wed,  9 Aug 2023 11:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580805;
-	bh=wj1wvRZqwv3FlKm248L3GE5DboYLg/+NDDWWN3AQAkk=;
+	s=korg; t=1691580808;
+	bh=vymIiQPiC+ZheR4SGZ9/OtZWUbS0CfwJSSBinSlp4Ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yXho73hM7idg86jvW4JnY6qcA+9B2ozTu9nTBxkSvEkFhCrvCo05KPYLgyrDNNWPL
-	 88lQeltUyXZbEb0B+lwWSqaE3wsOMHwZutYnEx0/j5Q8eEasF0Nlznk3aQLMHPSzBt
-	 zsEWO3BK0kk5huVrNxZbYiVuokxdVSKVZ5PBmqxQ=
+	b=oPF7I3hDtBiDmNy3e0wEsZy5AxaAxiFuSrve5I7BK8r7sAEgMhWYS3/2jdcziAfe4
+	 EDg61J5oNoxxzK/LJpcMhEB5J4jpMmQFwmpUp5AjANSjLioRNNothPLun3ZifdqLO4
+	 SeZWGHSiQzuWzbO/3Ju+ad4GtNZlM6jFrEZ6jocI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 146/154] ARM: dts: imx6sll: Make ssi node name same as other platforms
-Date: Wed,  9 Aug 2023 12:42:57 +0200
-Message-ID: <20230809103641.689420458@linuxfoundation.org>
+Subject: [PATCH 5.4 147/154] ARM: dts: imx: Align L2 cache-controller nodename with dtschema
+Date: Wed,  9 Aug 2023 12:42:58 +0200
+Message-ID: <20230809103641.719143652@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -35,58 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 
-[ Upstream commit 5da1b522cf7dc51f7fde2cca8d90406b0291c503 ]
+[ Upstream commit 69cc1502a87f5ed12e27dbe5fe2bfdd5540826c7 ]
 
-In imx6sll.dtsi, the ssi node name is different with other
-platforms (imx6qdl, imx6sl, imx6sx), but the
-sound/soc/fsl/fsl-asoc-card.c machine driver needs to check
-ssi node name for audmux configuration, then different ssi
-node name causes issue on imx6sll platform.
+Fix dtschema validator warnings like:
+    l2-cache@a02000: $nodename:0:
+        'l2-cache@a02000' does not match '^(cache-controller|cpu)(@[0-9a-f,]+)*$'
 
-So we change ssi node name to make all platforms have same
-name.
-
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Stable-dep-of: ee70b908f77a ("ARM: dts: nxp/imx6sll: fix wrong property name in usbphy node")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6sll.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/imx35.dtsi   | 2 +-
+ arch/arm/boot/dts/imx6qdl.dtsi | 2 +-
+ arch/arm/boot/dts/imx6sl.dtsi  | 2 +-
+ arch/arm/boot/dts/imx6sll.dtsi | 2 +-
+ arch/arm/boot/dts/imx6sx.dtsi  | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
 
+diff --git a/arch/arm/boot/dts/imx35.dtsi b/arch/arm/boot/dts/imx35.dtsi
+index 9cbdc1a15cda2..d326b18333d15 100644
+--- a/arch/arm/boot/dts/imx35.dtsi
++++ b/arch/arm/boot/dts/imx35.dtsi
+@@ -59,7 +59,7 @@ soc {
+ 		interrupt-parent = <&avic>;
+ 		ranges;
+ 
+-		L2: l2-cache@30000000 {
++		L2: cache-controller@30000000 {
+ 			compatible = "arm,l210-cache";
+ 			reg = <0x30000000 0x1000>;
+ 			cache-unified;
+diff --git a/arch/arm/boot/dts/imx6qdl.dtsi b/arch/arm/boot/dts/imx6qdl.dtsi
+index e9955ef12e02d..9105e614fe5c6 100644
+--- a/arch/arm/boot/dts/imx6qdl.dtsi
++++ b/arch/arm/boot/dts/imx6qdl.dtsi
+@@ -255,7 +255,7 @@ intc: interrupt-controller@a01000 {
+ 			interrupt-parent = <&intc>;
+ 		};
+ 
+-		L2: l2-cache@a02000 {
++		L2: cache-controller@a02000 {
+ 			compatible = "arm,pl310-cache";
+ 			reg = <0x00a02000 0x1000>;
+ 			interrupts = <0 92 IRQ_TYPE_LEVEL_HIGH>;
+diff --git a/arch/arm/boot/dts/imx6sl.dtsi b/arch/arm/boot/dts/imx6sl.dtsi
+index 852f66944c7d4..452a77552e3d0 100644
+--- a/arch/arm/boot/dts/imx6sl.dtsi
++++ b/arch/arm/boot/dts/imx6sl.dtsi
+@@ -136,7 +136,7 @@ intc: interrupt-controller@a01000 {
+ 			interrupt-parent = <&intc>;
+ 		};
+ 
+-		L2: l2-cache@a02000 {
++		L2: cache-controller@a02000 {
+ 			compatible = "arm,pl310-cache";
+ 			reg = <0x00a02000 0x1000>;
+ 			interrupts = <0 92 IRQ_TYPE_LEVEL_HIGH>;
 diff --git a/arch/arm/boot/dts/imx6sll.dtsi b/arch/arm/boot/dts/imx6sll.dtsi
-index 39500b84673b9..cf81c7b949e62 100644
+index cf81c7b949e62..27c253d0fdde2 100644
 --- a/arch/arm/boot/dts/imx6sll.dtsi
 +++ b/arch/arm/boot/dts/imx6sll.dtsi
-@@ -272,7 +272,7 @@ uart2: serial@2024000 {
- 					status = "disabled";
- 				};
+@@ -137,7 +137,7 @@ intc: interrupt-controller@a01000 {
+ 			interrupt-parent = <&intc>;
+ 		};
  
--				ssi1: ssi-controller@2028000 {
-+				ssi1: ssi@2028000 {
- 					compatible = "fsl,imx6sl-ssi", "fsl,imx51-ssi";
- 					reg = <0x02028000 0x4000>;
- 					interrupts = <GIC_SPI 46 IRQ_TYPE_LEVEL_HIGH>;
-@@ -285,7 +285,7 @@ ssi1: ssi-controller@2028000 {
- 					status = "disabled";
- 				};
+-		L2: l2-cache@a02000 {
++		L2: cache-controller@a02000 {
+ 			compatible = "arm,pl310-cache";
+ 			reg = <0x00a02000 0x1000>;
+ 			interrupts = <GIC_SPI 92 IRQ_TYPE_LEVEL_HIGH>;
+diff --git a/arch/arm/boot/dts/imx6sx.dtsi b/arch/arm/boot/dts/imx6sx.dtsi
+index b3e24d8bd2994..072d5fc9c6db9 100644
+--- a/arch/arm/boot/dts/imx6sx.dtsi
++++ b/arch/arm/boot/dts/imx6sx.dtsi
+@@ -187,7 +187,7 @@ intc: interrupt-controller@a01000 {
+ 			interrupt-parent = <&intc>;
+ 		};
  
--				ssi2: ssi-controller@202c000 {
-+				ssi2: ssi@202c000 {
- 					compatible = "fsl,imx6sl-ssi", "fsl,imx51-ssi";
- 					reg = <0x0202c000 0x4000>;
- 					interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>;
-@@ -298,7 +298,7 @@ ssi2: ssi-controller@202c000 {
- 					status = "disabled";
- 				};
- 
--				ssi3: ssi-controller@2030000 {
-+				ssi3: ssi@2030000 {
- 					compatible = "fsl,imx6sl-ssi", "fsl,imx51-ssi";
- 					reg = <0x02030000 0x4000>;
- 					interrupts = <GIC_SPI 48 IRQ_TYPE_LEVEL_HIGH>;
+-		L2: l2-cache@a02000 {
++		L2: cache-controller@a02000 {
+ 			compatible = "arm,pl310-cache";
+ 			reg = <0x00a02000 0x1000>;
+ 			interrupts = <GIC_SPI 92 IRQ_TYPE_LEVEL_HIGH>;
 -- 
 2.40.1
 
