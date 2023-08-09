@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3572A53B7
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:53:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA468C433C8;
-	Wed,  9 Aug 2023 10:53:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F332253B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:53:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74F52C433C7;
+	Wed,  9 Aug 2023 10:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578430;
-	bh=CP+m6OiCvJjydhiiP8VVZY25lYLszjj7A3Kya1sc5mI=;
+	s=korg; t=1691578432;
+	bh=9opQW3mhR3qd7E0c/wpJlIun4dCB8V6v/twdVEbfSpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Ba4PGxFdw5pItb3fgsBjtheOJDfyd0rswlytj9rhQuPFWyRTpeYz1o5eY7TUuD5v
-	 FF12tS6kmZc68k9TfkOnv3U/nq7IWzrpxIHf1seSPE1C6X/DZ4fjvBkbSfrCbASDYd
-	 AA21DorgSD2UoZc4BTeNcO393ld9aK8utf4ImnbY=
+	b=VBD4fxfyHd7YTIUnNUkrYffrVLF6N01XDi/JUVSqTSYZ3dd5y8E93N0P/eO7Jt4pu
+	 HbOL/Hp+mjTP77j4sQ1QK4gEm0PsbvmCmI64vZh1eP7dg3qL3KnmhFOWANl0embF1t
+	 cRwyr63Uuo4uN+DTi9t3QHBhiQBYPT1zoG9xWZGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Ajit Khaparde <ajit.khaparde@broadcom.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
+	Lin Ma <linma@zju.edu.cn>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 056/127] bnxt_en: Fix max_mtu setting for multi-buf XDP
-Date: Wed,  9 Aug 2023 12:40:43 +0200
-Message-ID: <20230809103638.536365979@linuxfoundation.org>
+Subject: [PATCH 6.1 057/127] net: dcb: choose correct policy to parse DCB_ATTR_BCN
+Date: Wed,  9 Aug 2023 12:40:44 +0200
+Message-ID: <20230809103638.566350110@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -38,70 +36,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 08450ea98ae98d5a35145b675b76db616046ea11 ]
+[ Upstream commit 31d49ba033095f6e8158c60f69714a500922e0c3 ]
 
-The existing code does not allow the MTU to be set to the maximum even
-after an XDP program supporting multiple buffers is attached.  Fix it
-to set the netdev->max_mtu to the maximum value if the attached XDP
-program supports mutiple buffers, regardless of the current MTU value.
+The dcbnl_bcn_setcfg uses erroneous policy to parse tb[DCB_ATTR_BCN],
+which is introduced in commit 859ee3c43812 ("DCB: Add support for DCB
+BCN"). Please see the comment in below code
 
-Also use a local variable dev instead of repeatedly using bp->dev.
+static int dcbnl_bcn_setcfg(...)
+{
+  ...
+  ret = nla_parse_nested_deprecated(..., dcbnl_pfc_up_nest, .. )
+  // !!! dcbnl_pfc_up_nest for attributes
+  //  DCB_PFC_UP_ATTR_0 to DCB_PFC_UP_ATTR_ALL in enum dcbnl_pfc_up_attrs
+  ...
+  for (i = DCB_BCN_ATTR_RP_0; i <= DCB_BCN_ATTR_RP_7; i++) {
+  // !!! DCB_BCN_ATTR_RP_0 to DCB_BCN_ATTR_RP_7 in enum dcbnl_bcn_attrs
+    ...
+    value_byte = nla_get_u8(data[i]);
+    ...
+  }
+  ...
+  for (i = DCB_BCN_ATTR_BCNA_0; i <= DCB_BCN_ATTR_RI; i++) {
+  // !!! DCB_BCN_ATTR_BCNA_0 to DCB_BCN_ATTR_RI in enum dcbnl_bcn_attrs
+  ...
+    value_int = nla_get_u32(data[i]);
+  ...
+  }
+  ...
+}
 
-Fixes: 1dc4c557bfed ("bnxt: adding bnxt_xdp_build_skb to build skb from multibuffer xdp_buff")
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Reviewed-by: Ajit Khaparde <ajit.khaparde@broadcom.com>
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://lore.kernel.org/r/20230731142043.58855-3-michael.chan@broadcom.com
+That is, the nla_parse_nested_deprecated uses dcbnl_pfc_up_nest
+attributes to parse nlattr defined in dcbnl_pfc_up_attrs. But the
+following access code fetch each nlattr as dcbnl_bcn_attrs attributes.
+By looking up the associated nla_policy for dcbnl_bcn_attrs. We can find
+the beginning part of these two policies are "same".
+
+static const struct nla_policy dcbnl_pfc_up_nest[...] = {
+        [DCB_PFC_UP_ATTR_0]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_1]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_2]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_3]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_4]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_5]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_6]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_7]   = {.type = NLA_U8},
+        [DCB_PFC_UP_ATTR_ALL] = {.type = NLA_FLAG},
+};
+
+static const struct nla_policy dcbnl_bcn_nest[...] = {
+        [DCB_BCN_ATTR_RP_0]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_1]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_2]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_3]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_4]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_5]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_6]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_7]         = {.type = NLA_U8},
+        [DCB_BCN_ATTR_RP_ALL]       = {.type = NLA_FLAG},
+        // from here is somewhat different
+        [DCB_BCN_ATTR_BCNA_0]       = {.type = NLA_U32},
+        ...
+        [DCB_BCN_ATTR_ALL]          = {.type = NLA_FLAG},
+};
+
+Therefore, the current code is buggy and this
+nla_parse_nested_deprecated could overflow the dcbnl_pfc_up_nest and use
+the adjacent nla_policy to parse attributes from DCB_BCN_ATTR_BCNA_0.
+
+Hence use the correct policy dcbnl_bcn_nest to parse the nested
+tb[DCB_ATTR_BCN] TLV.
+
+Fixes: 859ee3c43812 ("DCB: Add support for DCB BCN")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20230801013248.87240-1-linma@zju.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ net/dcb/dcbnl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 9bd18c2b10bc6..969db3c45d176 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -4027,26 +4027,29 @@ void bnxt_set_ring_params(struct bnxt *bp)
-  */
- int bnxt_set_rx_skb_mode(struct bnxt *bp, bool page_mode)
- {
-+	struct net_device *dev = bp->dev;
-+
- 	if (page_mode) {
- 		bp->flags &= ~BNXT_FLAG_AGG_RINGS;
- 		bp->flags |= BNXT_FLAG_RX_PAGE_MODE;
+diff --git a/net/dcb/dcbnl.c b/net/dcb/dcbnl.c
+index dc4fb699b56c3..d2981e89d3638 100644
+--- a/net/dcb/dcbnl.c
++++ b/net/dcb/dcbnl.c
+@@ -946,7 +946,7 @@ static int dcbnl_bcn_setcfg(struct net_device *netdev, struct nlmsghdr *nlh,
+ 		return -EOPNOTSUPP;
  
--		if (bp->dev->mtu > BNXT_MAX_PAGE_MODE_MTU) {
-+		if (bp->xdp_prog->aux->xdp_has_frags)
-+			dev->max_mtu = min_t(u16, bp->max_mtu, BNXT_MAX_MTU);
-+		else
-+			dev->max_mtu =
-+				min_t(u16, bp->max_mtu, BNXT_MAX_PAGE_MODE_MTU);
-+		if (dev->mtu > BNXT_MAX_PAGE_MODE_MTU) {
- 			bp->flags |= BNXT_FLAG_JUMBO;
- 			bp->rx_skb_func = bnxt_rx_multi_page_skb;
--			bp->dev->max_mtu =
--				min_t(u16, bp->max_mtu, BNXT_MAX_MTU);
- 		} else {
- 			bp->flags |= BNXT_FLAG_NO_AGG_RINGS;
- 			bp->rx_skb_func = bnxt_rx_page_skb;
--			bp->dev->max_mtu =
--				min_t(u16, bp->max_mtu, BNXT_MAX_PAGE_MODE_MTU);
- 		}
- 		bp->rx_dir = DMA_BIDIRECTIONAL;
- 		/* Disable LRO or GRO_HW */
--		netdev_update_features(bp->dev);
-+		netdev_update_features(dev);
- 	} else {
--		bp->dev->max_mtu = bp->max_mtu;
-+		dev->max_mtu = bp->max_mtu;
- 		bp->flags &= ~BNXT_FLAG_RX_PAGE_MODE;
- 		bp->rx_dir = DMA_FROM_DEVICE;
- 		bp->rx_skb_func = bnxt_rx_skb;
+ 	ret = nla_parse_nested_deprecated(data, DCB_BCN_ATTR_MAX,
+-					  tb[DCB_ATTR_BCN], dcbnl_pfc_up_nest,
++					  tb[DCB_ATTR_BCN], dcbnl_bcn_nest,
+ 					  NULL);
+ 	if (ret)
+ 		return ret;
 -- 
 2.40.1
 
