@@ -1,89 +1,127 @@
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A230224528
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 20:15:35 +0000 (UTC)
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-6bca3588edbso195070a34.0
-        for <patches@lists.linux.dev>; Wed, 09 Aug 2023 13:15:35 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECE22453D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 20:38:22 +0000 (UTC)
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-686be28e1a8so164301b3a.0
+        for <patches@lists.linux.dev>; Wed, 09 Aug 2023 13:38:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691612134; x=1692216934;
+        d=gmail.com; s=20221208; t=1691613502; x=1692218302;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mD3lZ+cedaC3uh75ynu2ZL3JyVWBLEXJVSbA+C3K0LU=;
-        b=eu8uD+QFcUZ38jGEmySOr/1VMtkfXYu9r93sNp/ePwPq83li5VR93dBVyNgY9L7Cfc
-         WgNqkoL2GSmDl/o/6yYY5DTr9hxcezCRzpgSytKFBXwe0lQMnp1kwkQc8p+YxAuz9z1Y
-         hxU8EDW8bvGyNjEY3YfY5B3FXr8r/SEmwN49H4G3Kp9VduX3saJOq4wPFF4qBiujEJ2g
-         Qh9y2oIUFP/RdFF7M6bQusB5GMBvU1wh0tppVi1KD+Nz5b6/9jq5TM1L1cGsexin5fW+
-         tvTXov1jyvcbGi6L7uLvxc9oT7wAnHxa4w1CRCCvU8x+oMNeHHbYfVDO/4gUdiHRuwoG
-         wLig==
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=8/Z0/25k8a2DdGjSrsbfbrWoP5/6dQQ99jfQZHEVRjo=;
+        b=dRz0yFgQzbfuX9vkGGccYHxbFHhxQ6KAXJ4UcMl5NW9UV/Y/pEtXFondu7uzAB1K3s
+         rhYhFXeK0vT+WE8wnt37SQmasXng5hOYl/VYifq+GtoR2lZxh0Q6bQL35VyZ5G+OG+Nc
+         yg0Lz09nyNyTTphM0tohD11++U9AzKujcXDrQyKoddRx2LMfnpbFEBLTwoPQYrTdsvkE
+         p/v5LeGRv8zL07CNbeUG8JmB1ytUkpQkRS9zlr2AHwBRa7J8Tu8XCNXsKWeoNI1IF64c
+         nLo2dAXrV3TnYheIIAalUIiMbBgH1YWpfpJjAfvGyW8p4j1UXwsB3YxXmzUQdEo2Yly2
+         T6Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691612134; x=1692216934;
+        d=1e100.net; s=20221208; t=1691613502; x=1692218302;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mD3lZ+cedaC3uh75ynu2ZL3JyVWBLEXJVSbA+C3K0LU=;
-        b=bEXdE+j0lHP1CXdIUILoRep7yPRI4m6ZG4FQBoFcDZn68IOrMK7Kp1jOGifxljZaLH
-         z84xgmWte/xZhgVPiIC+tW8gTaJ3nNH7HoRFVAsWJfrU6x5b/A/PKxN8F7r4stlSILy0
-         r8o5d39CaM28lBwtqoaRRNy1A3PD1RmHMNJumJQ30ARIZ56vErr3AL7jF3iqRusqllog
-         9O08IXXhEw0/0G00iup0YX/hSxYqW7LzpXFZmzH+IMWImVmXy+Mmo9v953C3vgln5DaK
-         IkuVSQhjR7q4lazRQnoLrlzFpVLQ9Eb98r/JjNvMrltu0Ed4zAuK98z3cmaiF+ceMcOI
-         fLwQ==
-X-Gm-Message-State: AOJu0Yw/3oXa030727Yx1YrCXpNlrbC3AaAo3WeeY7O9BERLG5GLDED9
-	j5sMRNSKRAI4vME9r8llcCM=
-X-Google-Smtp-Source: AGHT+IGmy/YEk0/6tf7GbIdqdSbviX+FQ1mwJv6DoHjtUIF0cXpMUJL6SRyWRhjyQR8256ApJQZ9WQ==
-X-Received: by 2002:a9d:798b:0:b0:6bd:bcd:43f8 with SMTP id h11-20020a9d798b000000b006bd0bcd43f8mr118188otm.21.1691612134452;
-        Wed, 09 Aug 2023 13:15:34 -0700 (PDT)
-Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id z21-20020a9d7a55000000b006b8ad42654csm14147otm.0.2023.08.09.13.15.30
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8/Z0/25k8a2DdGjSrsbfbrWoP5/6dQQ99jfQZHEVRjo=;
+        b=RtJ+WcCAdnTlCbmZCCGVzb0/H1YMotY2j4aCEL0llH/8qkW+ddJE7j4UfXTnTP4vWm
+         5G668XLbvfrlhQb8wLc/a2b67Xj9M1Ma89LOXPyG0XlmSxHQploKWtUJRgd0jnj/p35U
+         Qdbe5m5hPWZ/yqH/a2xJ+Yg0CgpAOW4YQcckHzsIpyX/aeUd7bCjHF0t0EsGrbW7zPrG
+         gaUwP1P0pp2iP6tRux/D9Yyykb+3/tK5efl7AyOmTML+kxYl8d2JLnSTIzd54qSg+Z67
+         RyDT225GdfDNGqafHPtptb0Jn50RBRfhJEaleT8HC2MkAZSUFwzdczFu3Fk+0KGp1gWF
+         tWoA==
+X-Gm-Message-State: AOJu0YycPprvU/mhflJY6dTKaMqs5CsDQ5Wsc4CkeMPVQSGs/QSWYwp+
+	t4423+CX3QiL/t1yY3v0kqM=
+X-Google-Smtp-Source: AGHT+IHkFNDOn/FAlzafEaJxRJP9XQUbV3GceIFwoTCQdlCbZk4ltJqhObVljQSbzJ10ojQ8l6gzRg==
+X-Received: by 2002:a05:6a20:5507:b0:140:324c:124c with SMTP id ko7-20020a056a20550700b00140324c124cmr248997pzb.62.1691613502129;
+        Wed, 09 Aug 2023 13:38:22 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id y11-20020a63ad4b000000b00564250660f3sm12857pgo.78.2023.08.09.13.38.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Aug 2023 13:15:34 -0700 (PDT)
-Message-ID: <8313fb24-5fbb-4408-825d-974da33a4353@gmail.com>
-Date: Wed, 9 Aug 2023 17:15:29 -0300
+        Wed, 09 Aug 2023 13:38:21 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <6b05a082-41a7-f0cf-c0a4-1cced8d5a230@roeck-us.net>
+Date: Wed, 9 Aug 2023 13:38:19 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 5/5] rust: file: add `DeferredFdCloser`
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 5.15 00/92] 5.15.126-rc1 review
 Content-Language: en-US
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
- linux-fsdevel@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>,
- Alexander Viro <viro@zeniv.linux.org.uk>,
- Christian Brauner <brauner@kernel.org>,
- Wedson Almeida Filho <wedsonaf@gmail.com>,
- Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
- Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?=
- <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <20230720152820.3566078-1-aliceryhl@google.com>
- <20230720152820.3566078-6-aliceryhl@google.com>
- <bee24ff5-444c-44f9-81c8-88ff310b401a@gmail.com>
- <CANiq72mHU7n2jTPFsO=tjfqucrbe2ABSUYPUG6ctEerh4J+U_g@mail.gmail.com>
- <CANiq72m5tbj2_N_s371d5N_4H1xpE2ahTHOUvFtUd+N0Y=0tsA@mail.gmail.com>
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-In-Reply-To: <CANiq72m5tbj2_N_s371d5N_4H1xpE2ahTHOUvFtUd+N0Y=0tsA@mail.gmail.com>
+To: Joel Fernandes <joel@joelfernandes.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, paulmck@kernel.org
+References: <20230809103633.485906560@linuxfoundation.org>
+ <20230809135326.GE3031656@google.com>
+ <f47340c6-3c41-1f91-d0f9-fe0b59a23aac@roeck-us.net>
+ <CAEXW_YQ4GqPwvUF8=8CWmdj=cD56v_eEVK-EirsObQXyBDFVpg@mail.gmail.com>
+ <35e4b770-2ead-4a19-ad01-fa75996adef4@roeck-us.net>
+ <20230809201413.GA3374446@google.com>
+From: Guenter Roeck <linux@roeck-us.net>
+In-Reply-To: <20230809201413.GA3374446@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 8/9/23 06:09, Miguel Ojeda wrote:
-> On Wed, Aug 9, 2023 at 11:00 AM Miguel Ojeda
-> <miguel.ojeda.sandonis@gmail.com> wrote:
+On 8/9/23 13:14, Joel Fernandes wrote:
+> On Wed, Aug 09, 2023 at 12:25:48PM -0700, Guenter Roeck wrote:
+>> On Wed, Aug 09, 2023 at 02:35:59PM -0400, Joel Fernandes wrote:
+>>> On Wed, Aug 9, 2023 at 12:18 PM Guenter Roeck <linux@roeck-us.net> wrote:
+>>>>
+>>>> On 8/9/23 06:53, Joel Fernandes wrote:
+>>>>> On Wed, Aug 09, 2023 at 12:40:36PM +0200, Greg Kroah-Hartman wrote:
+>>>>>> This is the start of the stable review cycle for the 5.15.126 release.
+>>>>>> There are 92 patches in this series, all will be posted as a response
+>>>>>> to this one.  If anyone has any issues with these being applied, please
+>>>>>> let me know.
+>>>>>>
+>>>>>> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
+>>>>>> Anything received after that time might be too late.
+>>>>>>
+>>>>>> The whole patch series can be found in one patch at:
+>>>>>>       https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.126-rc1.gz
+>>>>>> or in the git tree and branch at:
+>>>>>>       git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+>>>>>> and the diffstat can be found below.
+>>>>>
+>>>>> Not necesscarily new with 5.15 stable but 3 of the 19 rcutorture scenarios
+>>>>> hang with this -rc: TREE04, TREE07, TASKS03.
+>>>>>
+>>>>> 5.15 has a known stop machine issue where it hangs after 1.5 hours with cpu
+>>>>> hotplug rcutorture testing. Me and tglx are continuing to debug this. The
+>>>>> issue does not show up on anything but 5.15 stable kernels and neither on
+>>>>> mainline.
+>>>>>
+>>>>
+>>>> Do you by any have a crash pattern that we could possibly use to find the crash
+>>>> in ChromeOS crash logs ? No idea if that would help, but it could provide some
+>>>> additional data points.
+>>>
+>>> The pattern shows as a hard hang, the system is unresponsive and all CPUs
+>>> are stuck in stop_machine. Sometimes it recovers on its own from the
+>>> hang and then RCU immediately gives stall warnings. It takes 1.5 hour
+>>> to reproduce and sometimes never happens for several hours.
+>>>
+>>> It appears related to CPU hotplug since gdb showed me most of the CPUs
+>>> are spinning in multi_cpu_stop() / stop machine after the hang.
+>>>
 >>
->> If you mean for the commit, then we should follow the kernel
->> convention instead. Please see my reply to Alice above.
+>> Hmm, we do see lots of soft lockups with multi_cpu_stop() in the backtrace,
+>> but not with v5.15.y but with v5.4.y. The actual hang is in stop_machine_yield().
 > 
-> One extra note: if it is a external repository, then yes, I would
-> definitely recommend adding a `Link` because readers may not be able
-> to easily `git show` the hash. But if it is the kernel tree, then it
-> is not needed.
+> Interesting. It looks similar as far as the stack dump in gdb goes, here are
+> the stacks I dumped with the hang I referred to:
+> https://paste.debian.net/1288308/
 > 
-> Cheers,
-> Miguel
 
-Gotcha
+That link gives me "Entry not found".
 
--> Martin
+Guenter
+
