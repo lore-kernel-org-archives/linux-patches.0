@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B87915AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:44:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE99AC433C8;
-	Wed,  9 Aug 2023 10:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1507415AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:44:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D288C433C7;
+	Wed,  9 Aug 2023 10:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691577881;
-	bh=bIeuvSK9pQQp9rLnSwGqz0mUjOfxtqsUlBzYFIa4ctU=;
+	s=korg; t=1691577883;
+	bh=IbLQd1GGPb4pBMfSdqe1d7LnApxgegLE4r0Kg2GK4SU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L6YhoJVpfdHqnlXM5jiE6Ygp2p99nEof2DaPhpyR32gZnHk7p02kO7+O+Xo4KSRj5
-	 SYu7rSro2hGOUDs9/n3eybvyPINvwOT8aK8KCjFCQjTxJ9NV6f+xrBIeTr7qG+WBJb
-	 POwPXQihhSAPGDF0kKgeNVphgdgJAFcpE0RywBH0=
+	b=NNk8IGje9gav9bfOUBA1ArtU19CwULGA39HjFg+Oz6Zfb8mO+DDSPJdkXGxstYesm
+	 oBs/zzmcabp+ZSz1CJGvKn46udtw8Baj1kD7F11EMiAkSWGKIRcpbPoqnP3fUWhJtK
+	 HKbUTlTGf4k3VfIsglsg5H57qYdz+R7+M7wd1TqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 027/165] wifi: cfg80211: Fix return value in scan logic
-Date: Wed,  9 Aug 2023 12:39:18 +0200
-Message-ID: <20230809103643.703064145@linuxfoundation.org>
+Subject: [PATCH 6.4 028/165] net/mlx5e: fix double free in macsec_fs_tx_create_crypto_table_groups
+Date: Wed,  9 Aug 2023 12:39:19 +0200
+Message-ID: <20230809103643.732595150@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -35,41 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit fd7f08d92fcd7cc3eca0dd6c853f722a4c6176df ]
+[ Upstream commit aeb660171b0663847fa04806a96302ac6112ad26 ]
 
-The reporter noticed a warning when running iwlwifi:
+In function macsec_fs_tx_create_crypto_table_groups(), when the ft->g
+memory is successfully allocated but the 'in' memory fails to be
+allocated, the memory pointed to by ft->g is released once. And in function
+macsec_fs_tx_create(), macsec_fs_tx_destroy() is called to release the
+memory pointed to by ft->g again. This will cause double free problem.
 
-WARNING: CPU: 8 PID: 659 at mm/page_alloc.c:4453 __alloc_pages+0x329/0x340
-
-As cfg80211_parse_colocated_ap() is not expected to return a negative
-value return 0 and not a negative value if cfg80211_calc_short_ssid()
-fails.
-
-Fixes: c8cb5b854b40f ("nl80211/cfg80211: support 6 GHz scanning")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217675
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230723201043.3007430-1-ilan.peer@intel.com
+Fixes: e467b283ffd5 ("net/mlx5e: Add MACsec TX steering rules")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 396c63431e1f3..e9a3b0f724f18 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -640,7 +640,7 @@ static int cfg80211_parse_colocated_ap(const struct cfg80211_bss_ies *ies,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c
+index 7fc901a6ec5fc..414e285848813 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c
+@@ -161,6 +161,7 @@ static int macsec_fs_tx_create_crypto_table_groups(struct mlx5e_flow_table *ft)
  
- 	ret = cfg80211_calc_short_ssid(ies, &ssid_elem, &s_ssid_tmp);
- 	if (ret)
--		return ret;
-+		return 0;
+ 	if (!in) {
+ 		kfree(ft->g);
++		ft->g = NULL;
+ 		return -ENOMEM;
+ 	}
  
- 	/* RNR IE may contain more than one NEIGHBOR_AP_INFO */
- 	while (pos + sizeof(*ap_info) <= end) {
 -- 
 2.40.1
 
