@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B4A15AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:46:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077ABC433C8;
-	Wed,  9 Aug 2023 10:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93E815AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:46:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90C0C433C8;
+	Wed,  9 Aug 2023 10:46:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578015;
-	bh=eZrklH5sZ77N4MIS5E+KpLGufMYlpx9j5J25AaEjfYA=;
+	s=korg; t=1691578018;
+	bh=5EwwGNDNLDK6cd7nAr2s3dmNDzdgrz8OKeJMmm7OI4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LGVaS+SPLIM9giAB/cS9v3c8YfepEUJCP9vklo4qL6LeQ276DGaKNFHHZT1yL6qEe
-	 FQnHz9xvOe2zzsF0iCKhLFgegGULKg2W9vKef1r2Eu+cmgHtiJjnPcjxFXUv1C8Dbt
-	 wJir0tsN0TG8nB0bnSz6w97VBIZSu7y9YO2Kwq5o=
+	b=1AsaJybwa55BoguG40sayMIZ/SXBe/YAD9pMrPJKhtXgXIwAA1JH0sqQRtbB8wBOw
+	 DvpFcpCMdhZbleUBtQv89oTQ8Xz4jPFToCMR37dxS8riwJ92uyCaATWFGgHbrMSuYx
+	 Zydfe1lJ8qi13eoEfwjh1tx9GXXsLw1T1m48NwaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanjun Gong <ruc_gongyuanjun@163.com>,
+	Mark Brown <broonie@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 076/165] net: korina: handle clk prepare error in korina_probe()
-Date: Wed,  9 Aug 2023 12:40:07 +0200
-Message-ID: <20230809103645.283733060@linuxfoundation.org>
+Subject: [PATCH 6.4 077/165] net: netsec: Ignore phy-mode on SynQuacer in DT mode
+Date: Wed,  9 Aug 2023 12:40:08 +0200
+Message-ID: <20230809103645.316704004@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -35,41 +38,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuanjun Gong <ruc_gongyuanjun@163.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 0b6291ad1940c403734312d0e453e8dac9148f69 ]
+[ Upstream commit f3bb7759a924713bc54d15f6d0d70733b5935fad ]
 
-in korina_probe(), the return value of clk_prepare_enable()
-should be checked since it might fail. we can use
-devm_clk_get_optional_enabled() instead of devm_clk_get_optional()
-and clk_prepare_enable() to automatically handle the error.
+As documented in acd7aaf51b20 ("netsec: ignore 'phy-mode' device
+property on ACPI systems") the SocioNext SynQuacer platform ships with
+firmware defining the PHY mode as RGMII even though the physical
+configuration of the PHY is for TX and RX delays.  Since bbc4d71d63549bc
+("net: phy: realtek: fix rtl8211e rx/tx delay config") this has caused
+misconfiguration of the PHY, rendering the network unusable.
 
-Fixes: e4cd854ec487 ("net: korina: Get mdio input clock via common clock framework")
-Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
-Link: https://lore.kernel.org/r/20230731090535.21416-1-ruc_gongyuanjun@163.com
+This was worked around for ACPI by ignoring the phy-mode property but
+the system is also used with DT.  For DT instead if we're running on a
+SynQuacer force a working PHY mode, as well as the standard EDK2
+firmware with DT there are also some of these systems that use u-boot
+and might not initialise the PHY if not netbooting.  Newer firmware
+imagaes for at least EDK2 are available from Linaro so print a warning
+when doing this.
+
+Fixes: 533dd11a12f6 ("net: socionext: Add Synquacer NetSec driver")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Acked-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20230731-synquacer-net-v3-1-944be5f06428@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/korina.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/socionext/netsec.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/net/ethernet/korina.c b/drivers/net/ethernet/korina.c
-index 2b9335cb4bb3a..8537578e1cf1d 100644
---- a/drivers/net/ethernet/korina.c
-+++ b/drivers/net/ethernet/korina.c
-@@ -1302,11 +1302,10 @@ static int korina_probe(struct platform_device *pdev)
- 	else if (of_get_ethdev_address(pdev->dev.of_node, dev) < 0)
- 		eth_hw_addr_random(dev);
+diff --git a/drivers/net/ethernet/socionext/netsec.c b/drivers/net/ethernet/socionext/netsec.c
+index 2d7347b71c41b..0dcd6a568b061 100644
+--- a/drivers/net/ethernet/socionext/netsec.c
++++ b/drivers/net/ethernet/socionext/netsec.c
+@@ -1851,6 +1851,17 @@ static int netsec_of_probe(struct platform_device *pdev,
+ 		return err;
+ 	}
  
--	clk = devm_clk_get_optional(&pdev->dev, "mdioclk");
-+	clk = devm_clk_get_optional_enabled(&pdev->dev, "mdioclk");
- 	if (IS_ERR(clk))
- 		return PTR_ERR(clk);
- 	if (clk) {
--		clk_prepare_enable(clk);
- 		lp->mii_clock_freq = clk_get_rate(clk);
- 	} else {
- 		lp->mii_clock_freq = 200000000; /* max possible input clk */
++	/*
++	 * SynQuacer is physically configured with TX and RX delays
++	 * but the standard firmware claimed otherwise for a long
++	 * time, ignore it.
++	 */
++	if (of_machine_is_compatible("socionext,developer-box") &&
++	    priv->phy_interface != PHY_INTERFACE_MODE_RGMII_ID) {
++		dev_warn(&pdev->dev, "Outdated firmware reports incorrect PHY mode, overriding\n");
++		priv->phy_interface = PHY_INTERFACE_MODE_RGMII_ID;
++	}
++
+ 	priv->phy_np = of_parse_phandle(pdev->dev.of_node, "phy-handle", 0);
+ 	if (!priv->phy_np) {
+ 		dev_err(&pdev->dev, "missing required property 'phy-handle'\n");
 -- 
 2.40.1
 
