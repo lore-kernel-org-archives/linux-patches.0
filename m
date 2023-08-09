@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224A517756
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:23:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965AFC433C7;
-	Wed,  9 Aug 2023 11:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC74717756
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:23:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61647C433C8;
+	Wed,  9 Aug 2023 11:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580184;
-	bh=jdx9Eglzl1XYswc2joIxJNEQbqWMC0+tYWZFH+sQy3s=;
+	s=korg; t=1691580186;
+	bh=RL9RBXmGnk83Lglxc1dK+n6oKfAAOT68XQuTr52dmGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V2xZaF7N0trg/8LBPQVlete1ITkURpg20YHOpWzAH+x6LvDuuHinZ5aaOo0GC/k34
-	 l59M/1tcS24l2dlUCZt7uhsRIF8ggR1UHLS5UoyWCbQMiN2oSJxMstGtvMa8/W9kmH
-	 NjC/fZDesBuvNHpL5C6O4kH46mmivZ2+Tm8TxGnU=
+	b=F/7MltxCN/DYuaQrhuu2fSEOlkHTBQ/IKAhJaXZ1973tlL7Y2V2mtUaRrmX8Nz47b
+	 0BuOATux7Aay+COjcKRJ8e8xtiy7Ombc6QzGKlzsVq4mjpR9/CtorwIjuzPhcbalLM
+	 FYrdA4eSFp0MT+mC/SfYyUM0uzxTUtyRNPtOLjSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 257/323] tracing: Fix warning in trace_buffered_event_disable()
-Date: Wed,  9 Aug 2023 12:41:35 +0200
-Message-ID: <20230809103709.850133595@linuxfoundation.org>
+	Jerry Meng <jerry-meng@foxmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 4.19 258/323] USB: serial: option: support Quectel EM060K_128
+Date: Wed,  9 Aug 2023 12:41:36 +0200
+Message-ID: <20230809103709.897918565@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,119 +34,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Jerry Meng <jerry-meng@foxmail.com>
 
-[ Upstream commit dea499781a1150d285c62b26659f62fb00824fce ]
+commit 4f7cab49cecee16120d27c1734cfdf3d6c0e5329 upstream.
 
-Warning happened in trace_buffered_event_disable() at
-  WARN_ON_ONCE(!trace_buffered_event_ref)
+EM060K_128 is EM060K's sub-model, having the same name "Quectel EM060K-GL"
 
-  Call Trace:
-   ? __warn+0xa5/0x1b0
-   ? trace_buffered_event_disable+0x189/0x1b0
-   __ftrace_event_enable_disable+0x19e/0x3e0
-   free_probe_data+0x3b/0xa0
-   unregister_ftrace_function_probe_func+0x6b8/0x800
-   event_enable_func+0x2f0/0x3d0
-   ftrace_process_regex.isra.0+0x12d/0x1b0
-   ftrace_filter_write+0xe6/0x140
-   vfs_write+0x1c9/0x6f0
-   [...]
+MBIM + GNSS + DIAG + NMEA + AT + QDSS + DPL
 
-The cause of the warning is in __ftrace_event_enable_disable(),
-trace_buffered_event_enable() was called once while
-trace_buffered_event_disable() was called twice.
-Reproduction script show as below, for analysis, see the comments:
- ```
- #!/bin/bash
+T:  Bus=03 Lev=01 Prnt=01 Port=01 Cnt=02 Dev#=  8 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2c7c ProdID=0128 Rev= 5.04
+S:  Manufacturer=Quectel
+S:  Product=Quectel EM060K-GL
+S:  SerialNumber=f6fa08b6
+C:* #Ifs= 8 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=8f(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
- cd /sys/kernel/tracing/
-
- # 1. Register a 'disable_event' command, then:
- #    1) SOFT_DISABLED_BIT was set;
- #    2) trace_buffered_event_enable() was called first time;
- echo 'cmdline_proc_show:disable_event:initcall:initcall_finish' > \
-     set_ftrace_filter
-
- # 2. Enable the event registered, then:
- #    1) SOFT_DISABLED_BIT was cleared;
- #    2) trace_buffered_event_disable() was called first time;
- echo 1 > events/initcall/initcall_finish/enable
-
- # 3. Try to call into cmdline_proc_show(), then SOFT_DISABLED_BIT was
- #    set again!!!
- cat /proc/cmdline
-
- # 4. Unregister the 'disable_event' command, then:
- #    1) SOFT_DISABLED_BIT was cleared again;
- #    2) trace_buffered_event_disable() was called second time!!!
- echo '!cmdline_proc_show:disable_event:initcall:initcall_finish' > \
-     set_ftrace_filter
- ```
-
-To fix it, IIUC, we can change to call trace_buffered_event_enable() at
-fist time soft-mode enabled, and call trace_buffered_event_disable() at
-last time soft-mode disabled.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230726095804.920457-1-zhengyejian1@huawei.com
-
-Cc: <mhiramat@kernel.org>
-Fixes: 0fc1b09ff1ff ("tracing: Use temp buffer when filtering events")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jerry Meng <jerry-meng@foxmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events.c | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ drivers/usb/serial/option.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
-index d2f9146d1ad74..a3dc6c126b3ee 100644
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -372,7 +372,6 @@ static int __ftrace_event_enable_disable(struct trace_event_file *file,
- {
- 	struct trace_event_call *call = file->event_call;
- 	struct trace_array *tr = file->tr;
--	unsigned long file_flags = file->flags;
- 	int ret = 0;
- 	int disable;
- 
-@@ -396,6 +395,8 @@ static int __ftrace_event_enable_disable(struct trace_event_file *file,
- 				break;
- 			disable = file->flags & EVENT_FILE_FL_SOFT_DISABLED;
- 			clear_bit(EVENT_FILE_FL_SOFT_MODE_BIT, &file->flags);
-+			/* Disable use of trace_buffered_event */
-+			trace_buffered_event_disable();
- 		} else
- 			disable = !(file->flags & EVENT_FILE_FL_SOFT_MODE);
- 
-@@ -434,6 +435,8 @@ static int __ftrace_event_enable_disable(struct trace_event_file *file,
- 			if (atomic_inc_return(&file->sm_ref) > 1)
- 				break;
- 			set_bit(EVENT_FILE_FL_SOFT_MODE_BIT, &file->flags);
-+			/* Enable use of trace_buffered_event */
-+			trace_buffered_event_enable();
- 		}
- 
- 		if (!(file->flags & EVENT_FILE_FL_ENABLED)) {
-@@ -473,15 +476,6 @@ static int __ftrace_event_enable_disable(struct trace_event_file *file,
- 		break;
- 	}
- 
--	/* Enable or disable use of trace_buffered_event */
--	if ((file_flags & EVENT_FILE_FL_SOFT_DISABLED) !=
--	    (file->flags & EVENT_FILE_FL_SOFT_DISABLED)) {
--		if (file->flags & EVENT_FILE_FL_SOFT_DISABLED)
--			trace_buffered_event_enable();
--		else
--			trace_buffered_event_disable();
--	}
--
- 	return ret;
- }
- 
--- 
-2.40.1
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -251,6 +251,7 @@ static void option_instat_callback(struc
+ #define QUECTEL_PRODUCT_EM061K_LTA		0x0123
+ #define QUECTEL_PRODUCT_EM061K_LMS		0x0124
+ #define QUECTEL_PRODUCT_EC25			0x0125
++#define QUECTEL_PRODUCT_EM060K_128		0x0128
+ #define QUECTEL_PRODUCT_EG91			0x0191
+ #define QUECTEL_PRODUCT_EG95			0x0195
+ #define QUECTEL_PRODUCT_BG96			0x0296
+@@ -1197,6 +1198,9 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K, 0xff, 0x00, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K_128, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K_128, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K_128, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LCN, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LCN, 0xff, 0x00, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LCN, 0xff, 0xff, 0x40) },
 
 
