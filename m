@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0F5174EE
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:04:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDE7C433C7;
-	Wed,  9 Aug 2023 11:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8DA174EE
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:04:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17F4C433C7;
+	Wed,  9 Aug 2023 11:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579093;
-	bh=h/cPMvtRti7OdvZ22JmrPiENwxL304ipaY4YcZseOmc=;
+	s=korg; t=1691579096;
+	bh=zUlKosISIYRhQx6oAgf6EnY2l+tVIA0qDV4LVlsb/eM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QKiCBwW8OiPYqeMIgmxC6gxNoXBYzajRwIAcuUtE76dD1/C+HrXekEjAmL4ES4lFf
-	 3nSJU6XP5QkBhGMRPOymlkmuNOX2eJ9i0cQL2g+CMqcEmzgFpai3p1+3O9xb49U3yW
-	 Iixe/0y7Sknl7AuNuUi7hpg6ealOXDHj4HQMwHAU=
+	b=gcu7slFouDi9cjtmx4XC7AaAFS5jil3KlKJR0XhDZJnOUeuEGb8j+suEfBtAvDK0h
+	 KCFXfj9InN5o/09LbrduwBy7hPIp1Mq15OriWH/hp7w+zTk4ILQQq2OZ+9pqWibAm2
+	 4EYLrJ5Ncc26PGx5heYKOE4J+QpVKbtNAZuDb050=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuchen Yang <u202114568@hust.edu.cn>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 045/204] scsi: 3w-xxxx: Add error handling for initialization failure in tw_probe()
-Date: Wed,  9 Aug 2023 12:39:43 +0200
-Message-ID: <20230809103644.070519955@linuxfoundation.org>
+Subject: [PATCH 4.14 072/204] powerpc: allow PPC_EARLY_DEBUG_CPM only when SERIAL_CPM=y
+Date: Wed,  9 Aug 2023 12:40:10 +0200
+Message-ID: <20230809103645.057989444@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -36,44 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuchen Yang <u202114568@hust.edu.cn>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 2e2fe5ac695a00ab03cab4db1f4d6be07168ed9d ]
+[ Upstream commit 39f49684036d24af800ff194c33c7b2653c591d7 ]
 
-Smatch complains that:
+In a randconfig with CONFIG_SERIAL_CPM=m and
+CONFIG_PPC_EARLY_DEBUG_CPM=y, there is a build error:
+ERROR: modpost: "udbg_putc" [drivers/tty/serial/cpm_uart/cpm_uart.ko] undefined!
 
-tw_probe() warn: missing error code 'retval'
+Prevent the build error by allowing PPC_EARLY_DEBUG_CPM only when
+SERIAL_CPM=y.
 
-This patch adds error checking to tw_probe() to handle initialization
-failure. If tw_reset_sequence() function returns a non-zero value, the
-function will return -EINVAL to indicate initialization failure.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yuchen Yang <u202114568@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230505141259.7730-1-u202114568@hust.edu.cn
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: c374e00e17f1 ("[POWERPC] Add early debug console for CPM serial ports.")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Pali Rohár <pali@kernel.org>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230701054714.30512-1-rdunlap@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/3w-xxxx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/powerpc/Kconfig.debug | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/3w-xxxx.c b/drivers/scsi/3w-xxxx.c
-index 961ea6f7def87..7f21d724461ed 100644
---- a/drivers/scsi/3w-xxxx.c
-+++ b/drivers/scsi/3w-xxxx.c
-@@ -2303,8 +2303,10 @@ static int tw_probe(struct pci_dev *pdev, const struct pci_device_id *dev_id)
- 	TW_DISABLE_INTERRUPTS(tw_dev);
+diff --git a/arch/powerpc/Kconfig.debug b/arch/powerpc/Kconfig.debug
+index 762bb08b0f59f..6c60cc03a53c2 100644
+--- a/arch/powerpc/Kconfig.debug
++++ b/arch/powerpc/Kconfig.debug
+@@ -231,7 +231,7 @@ config PPC_EARLY_DEBUG_40x
  
- 	/* Initialize the card */
--	if (tw_reset_sequence(tw_dev))
-+	if (tw_reset_sequence(tw_dev)) {
-+		retval = -EINVAL;
- 		goto out_release_mem_region;
-+	}
- 
- 	/* Set host specific parameters */
- 	host->max_id = TW_MAX_UNITS;
+ config PPC_EARLY_DEBUG_CPM
+ 	bool "Early serial debugging for Freescale CPM-based serial ports"
+-	depends on SERIAL_CPM
++	depends on SERIAL_CPM=y
+ 	help
+ 	  Select this to enable early debugging for Freescale chips
+ 	  using a CPM-based serial port.  This assumes that the bootwrapper
 -- 
 2.39.2
 
