@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B304417AAB
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:29:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345A3C433C7;
-	Wed,  9 Aug 2023 11:29:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBE517AAB
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:29:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7336C433C9;
+	Wed,  9 Aug 2023 11:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580583;
-	bh=/WRBvWGVG7RkHzuXV21BKs3nkK2w1tXGY1UeJlWxZ/w=;
+	s=korg; t=1691580586;
+	bh=a2+rYSzIzyrKN0bsKx86g9Py5nRj81i/DWuOUvi9XY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cVaxNta5k8k9bg5s0J5ZLO3cIgP4UPuIEbxt0sKtey6vAE7GODrbA14LH0JdoDgiK
-	 WeHf5CwSLAb4K9rdO2uaK65E4NC4K2W+LxdQGAtYX02L/9OC+0271GrCBtPYeo6kaK
-	 NtqSatsRGTvYpZQX45wl7vd/dE972WeA07ty8Ifw=
+	b=MfKBrEET3+xYF9T2tHIz3jllEpF9Ci2cZD4W3XZaEgFjCdJFsIVERouztbDm8HPbV
+	 N473tXK6ct4prXffkeM0n+JYoUYAO555BpkHEUMoSOYBwiGlMht/vcGU/d97wu+ZPB
+	 QxN+ECzQBKxu8G1Mkdl/nCPW2vSoOUZzyrBJxncA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 076/154] btrfs: check if the transaction was aborted at btrfs_wait_for_commit()
-Date: Wed,  9 Aug 2023 12:41:47 +0200
-Message-ID: <20230809103639.499682180@linuxfoundation.org>
+Subject: [PATCH 5.4 050/154] block: Fix a source code comment in include/uapi/linux/blkzoned.h
+Date: Wed,  9 Aug 2023 12:41:21 +0200
+Message-ID: <20230809103638.668967618@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -36,38 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit bf7ecbe9875061bf3fce1883e3b26b77f847d1e8 ]
+[ Upstream commit e0933b526fbfd937c4a8f4e35fcdd49f0e22d411 ]
 
-At btrfs_wait_for_commit() we wait for a transaction to finish and then
-always return 0 (success) without checking if it was aborted, in which
-case the transaction didn't happen due to some critical error. Fix this
-by checking if the transaction was aborted.
+Fix the symbolic names for zone conditions in the blkzoned.h header
+file.
 
-Fixes: 462045928bda ("Btrfs: add START_SYNC, WAIT_SYNC ioctls")
-CC: stable@vger.kernel.org # 4.19+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: Hannes Reinecke <hare@suse.de>
+Cc: Damien Le Moal <dlemoal@kernel.org>
+Fixes: 6a0cb1bc106f ("block: Implement support for zoned block devices")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20230706201422.3987341-1-bvanassche@acm.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/transaction.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/uapi/linux/blkzoned.h | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index f2bd9f833e8d7..f2e348d22dc1e 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -776,6 +776,7 @@ int btrfs_wait_for_commit(struct btrfs_fs_info *fs_info, u64 transid)
- 	}
- 
- 	wait_for_commit(cur_trans);
-+	ret = cur_trans->aborted;
- 	btrfs_put_transaction(cur_trans);
- out:
- 	return ret;
+diff --git a/include/uapi/linux/blkzoned.h b/include/uapi/linux/blkzoned.h
+index 498eec813494c..94649130e3d74 100644
+--- a/include/uapi/linux/blkzoned.h
++++ b/include/uapi/linux/blkzoned.h
+@@ -51,13 +51,13 @@ enum blk_zone_type {
+  *
+  * The Zone Condition state machine in the ZBC/ZAC standards maps the above
+  * deinitions as:
+- *   - ZC1: Empty         | BLK_ZONE_EMPTY
++ *   - ZC1: Empty         | BLK_ZONE_COND_EMPTY
+  *   - ZC2: Implicit Open | BLK_ZONE_COND_IMP_OPEN
+  *   - ZC3: Explicit Open | BLK_ZONE_COND_EXP_OPEN
+- *   - ZC4: Closed        | BLK_ZONE_CLOSED
+- *   - ZC5: Full          | BLK_ZONE_FULL
+- *   - ZC6: Read Only     | BLK_ZONE_READONLY
+- *   - ZC7: Offline       | BLK_ZONE_OFFLINE
++ *   - ZC4: Closed        | BLK_ZONE_COND_CLOSED
++ *   - ZC5: Full          | BLK_ZONE_COND_FULL
++ *   - ZC6: Read Only     | BLK_ZONE_COND_READONLY
++ *   - ZC7: Offline       | BLK_ZONE_COND_OFFLINE
+  *
+  * Conditions 0x5 to 0xC are reserved by the current ZBC/ZAC spec and should
+  * be considered invalid.
 -- 
 2.40.1
 
