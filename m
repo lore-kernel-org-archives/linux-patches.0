@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F3A17756
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:20:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72432C433C8;
-	Wed,  9 Aug 2023 11:20:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB7317756
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:20:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E58AC433C8;
+	Wed,  9 Aug 2023 11:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580049;
-	bh=2gADQCweMX9/a+LVw/fVAVpRUw8A6CjTa0O3+lO06vg=;
+	s=korg; t=1691580052;
+	bh=TnAYbfVoSZrUMPy8eAlpWCJVB8r01TL2fjoRLO6Wc78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ROluxSjEUzhdAJiKmFYU6iqp3M/XZBLIHdfvIpR5Lwom1bCXb1hlJsAKDbQVhGXwb
-	 6Otb6rwx3noXaaScNTcoll+pY+z6YbeSRGJkkI4M2FhUgBTiqdG0UWy6Y6bw+qDFwC
-	 9M1r4z0QAt+aiM1ZjaCiU//0WInqnrTmsVLUcWow=
+	b=RtumMOcV/YHdM6ANO7IgOsId9XqW1zGfb3Y7LEDpQ+U6qw+YHBpCdn76/BfA5Lynb
+	 x69XBSae3z6UvVLTQ217thnc8wRSsfEc7dfuKJx6lWLSDnySicd/AzpSwxgN46VIJf
+	 +BlVGcoMDliRXik+VQdFtFl6AuxmBDlhS+l7YW/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Cambda Zhu <cambda@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 210/323] netfilter: nf_tables: cant schedule in nft_chain_validate
-Date: Wed,  9 Aug 2023 12:40:48 +0200
-Message-ID: <20230809103707.744052423@linuxfoundation.org>
+Subject: [PATCH 4.19 211/323] net: Replace the limit of TCP_LINGER2 with TCP_FIN_TIMEOUT_MAX
+Date: Wed,  9 Aug 2023 12:40:49 +0200
+Message-ID: <20230809103707.791899223@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -34,62 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Cambda Zhu <cambda@linux.alibaba.com>
 
-[ Upstream commit 314c82841602a111c04a7210c21dc77e0d560242 ]
+[ Upstream commit f0628c524fd188c3f9418e12478dfdfadacba815 ]
 
-Can be called via nft set element list iteration, which may acquire
-rcu and/or bh read lock (depends on set type).
+This patch changes the behavior of TCP_LINGER2 about its limit. The
+sysctl_tcp_fin_timeout used to be the limit of TCP_LINGER2 but now it's
+only the default value. A new macro named TCP_FIN_TIMEOUT_MAX is added
+as the limit of TCP_LINGER2, which is 2 minutes.
 
-BUG: sleeping function called from invalid context at net/netfilter/nf_tables_api.c:3353
-in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 1232, name: nft
-preempt_count: 0, expected: 0
-RCU nest depth: 1, expected: 0
-2 locks held by nft/1232:
- #0: ffff8881180e3ea8 (&nft_net->commit_mutex){+.+.}-{3:3}, at: nf_tables_valid_genid
- #1: ffffffff83f5f540 (rcu_read_lock){....}-{1:2}, at: rcu_lock_acquire
-Call Trace:
- nft_chain_validate
- nft_lookup_validate_setelem
- nft_pipapo_walk
- nft_lookup_validate
- nft_chain_validate
- nft_immediate_validate
- nft_chain_validate
- nf_tables_validate
- nf_tables_abort
+Since TCP_LINGER2 used sysctl_tcp_fin_timeout as the default value
+and the limit in the past, the system administrator cannot set the
+default value for most of sockets and let some sockets have a greater
+timeout. It might be a mistake that let the sysctl to be the limit of
+the TCP_LINGER2. Maybe we can add a new sysctl to set the max of
+TCP_LINGER2, but FIN-WAIT-2 timeout is usually no need to be too long
+and 2 minutes are legal considering TCP specs.
 
-No choice but to move it to nf_tables_validate().
+Changes in v3:
+- Remove the new socket option and change the TCP_LINGER2 behavior so
+  that the timeout can be set to value between sysctl_tcp_fin_timeout
+  and 2 minutes.
 
-Fixes: 81ea01066741 ("netfilter: nf_tables: add rescheduling points during loop detection walks")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Changes in v2:
+- Add int overflow check for the new socket option.
+
+Changes in v1:
+- Add a new socket option to set timeout greater than
+  sysctl_tcp_fin_timeout.
+
+Signed-off-by: Cambda Zhu <cambda@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 9df5335ca974 ("tcp: annotate data-races around tp->linger2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/tcp.h | 1 +
+ net/ipv4/tcp.c    | 4 ++--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index f25b6337f150a..115bc79ec9055 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -2602,8 +2602,6 @@ int nft_chain_validate(const struct nft_ctx *ctx, const struct nft_chain *chain)
- 			if (err < 0)
- 				return err;
- 		}
--
--		cond_resched();
- 	}
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 81300a04b5808..22cca858f2678 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -128,6 +128,7 @@ void tcp_time_wait(struct sock *sk, int state, int timeo);
+ 				  * to combine FIN-WAIT-2 timeout with
+ 				  * TIME-WAIT timer.
+ 				  */
++#define TCP_FIN_TIMEOUT_MAX (120 * HZ) /* max TCP_LINGER2 value (two minutes) */
  
- 	return 0;
-@@ -2627,6 +2625,8 @@ static int nft_table_validate(struct net *net, const struct nft_table *table)
- 		err = nft_chain_validate(&ctx, chain);
- 		if (err < 0)
- 			return err;
-+
-+		cond_resched();
- 	}
- 
- 	return 0;
+ #define TCP_DELACK_MAX	((unsigned)(HZ/5))	/* maximal time to delay before sending an ACK */
+ #if HZ >= 100
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index cb96775fc86f6..9f3cdcbbb7590 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -3001,8 +3001,8 @@ static int do_tcp_setsockopt(struct sock *sk, int level,
+ 	case TCP_LINGER2:
+ 		if (val < 0)
+ 			tp->linger2 = -1;
+-		else if (val > net->ipv4.sysctl_tcp_fin_timeout / HZ)
+-			tp->linger2 = 0;
++		else if (val > TCP_FIN_TIMEOUT_MAX / HZ)
++			tp->linger2 = TCP_FIN_TIMEOUT_MAX;
+ 		else
+ 			tp->linger2 = val * HZ;
+ 		break;
 -- 
 2.39.2
 
