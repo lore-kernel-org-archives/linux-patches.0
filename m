@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E6414A8D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:51:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FEFAC433C7;
-	Wed,  9 Aug 2023 10:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30AE14A8D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:51:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62111C433C8;
+	Wed,  9 Aug 2023 10:51:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578267;
-	bh=ldIHsHWBIL20Eu1g1t8jASQBmtybSnCfPApNXoURqq0=;
+	s=korg; t=1691578270;
+	bh=KWNLgesY/Rb7cY0OLiQ4Uptk/7pRFBOKDOI5cWp7gxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BzrG2M483MPu3R/oKI0D7TG1HQQ/2FvzhgnBRfaCBBZaf9dgcWTbi7ixzjYoqBY9a
-	 cl8XFjNIoBqmMbHNs1zlbpg6y06Dqlp+1zVZjwHX8yRGHyAV6WKjt2DNyns9JkB7l+
-	 Y4IRdFH/zxalC34x81//DUdjQSRpqgeA2dw5IgWg=
+	b=HKfI614luaLHh0yMOU7rOilxY0eziem04js6ue9l1J2pQTqfGgxWnc93YdD5H5i6H
+	 k1s+sgfYzOXMc5d0YlWxo7a8yT6hsE+aVYwBOxCXA3uWDCxpE++OGIpnnJQLNok8tT
+	 y5sz7ZzygYgoK4P5QbTl8W8UC8uNOeGTCPJ5bJ/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+89dbb3a789a5b9711793@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.4 136/165] fs/ntfs3: Use __GFP_NOWARN allocation at ntfs_load_attr_list()
-Date: Wed,  9 Aug 2023 12:41:07 +0200
-Message-ID: <20230809103647.268671233@linuxfoundation.org>
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.4 127/165] open: make RESOLVE_CACHED correctly test for O_TMPFILE
+Date: Wed,  9 Aug 2023 12:40:58 +0200
+Message-ID: <20230809103646.956840756@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -35,41 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Aleksa Sarai <cyphar@cyphar.com>
 
-commit ea303f72d70ce2f0b0aa94ab127085289768c5a6 upstream.
+commit a0fc452a5d7fed986205539259df1d60546f536c upstream.
 
-syzbot is reporting too large allocation at ntfs_load_attr_list(), for
-a crafted filesystem can have huge data_size.
+O_TMPFILE is actually __O_TMPFILE|O_DIRECTORY. This means that the old
+fast-path check for RESOLVE_CACHED would reject all users passing
+O_DIRECTORY with -EAGAIN, when in fact the intended test was to check
+for __O_TMPFILE.
 
-Reported-by: syzbot <syzbot+89dbb3a789a5b9711793@syzkaller.appspotmail.com>
-Link: https://syzkaller.appspot.com/bug?extid=89dbb3a789a5b9711793
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Cc: stable@vger.kernel.org # v5.12+
+Fixes: 99668f618062 ("fs: expose LOOKUP_CACHED through openat2() RESOLVE_CACHED")
+Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
+Message-Id: <20230806-resolve_cached-o_tmpfile-v1-1-7ba16308465e@cyphar.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/attrlist.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/open.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ntfs3/attrlist.c
-+++ b/fs/ntfs3/attrlist.c
-@@ -52,7 +52,7 @@ int ntfs_load_attr_list(struct ntfs_inod
- 
- 	if (!attr->non_res) {
- 		lsize = le32_to_cpu(attr->res.data_size);
--		le = kmalloc(al_aligned(lsize), GFP_NOFS);
-+		le = kmalloc(al_aligned(lsize), GFP_NOFS | __GFP_NOWARN);
- 		if (!le) {
- 			err = -ENOMEM;
- 			goto out;
-@@ -80,7 +80,7 @@ int ntfs_load_attr_list(struct ntfs_inod
- 		if (err < 0)
- 			goto out;
- 
--		le = kmalloc(al_aligned(lsize), GFP_NOFS);
-+		le = kmalloc(al_aligned(lsize), GFP_NOFS | __GFP_NOWARN);
- 		if (!le) {
- 			err = -ENOMEM;
- 			goto out;
+--- a/fs/open.c
++++ b/fs/open.c
+@@ -1271,7 +1271,7 @@ inline int build_open_flags(const struct
+ 		lookup_flags |= LOOKUP_IN_ROOT;
+ 	if (how->resolve & RESOLVE_CACHED) {
+ 		/* Don't bother even trying for create/truncate/tmpfile open */
+-		if (flags & (O_TRUNC | O_CREAT | O_TMPFILE))
++		if (flags & (O_TRUNC | O_CREAT | __O_TMPFILE))
+ 			return -EAGAIN;
+ 		lookup_flags |= LOOKUP_CACHED;
+ 	}
 
 
