@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4858217731
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:08:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFCFDC433C7;
-	Wed,  9 Aug 2023 11:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E67917731
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:08:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80E67C433C7;
+	Wed,  9 Aug 2023 11:08:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579319;
-	bh=m+a0k2j14ItIrk2tBZdzZuNVu8ofQQ7C0kmbW2FBohQ=;
+	s=korg; t=1691579321;
+	bh=LCJND+ZgM67MnRWij1mZk8+CUts9KAhUOPGIXFTIKoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tvozvRAnxrSh/XJPHiN3wpM92yUfwpRjxptQuqiX01rY7ZFdShklD+qrJHCJJNPUV
-	 mF+7+vz87WSN+A3cWYuYTM8ewq/FZr0YJDpUFjlALZj7I4xf7oYcEB1wBgirjJu0tf
-	 9EaXU4PBwsr3OL0Q2X7kQqWyZcr+GoW7fZ/IYvY8=
+	b=JZnQfAg5O0U2DmWrkB3N1V0XbdjvH3MaI0WOH7ijvv1E01vpcYh5nmPHB4fY2nsGS
+	 OQjrdwBLhC5SJcvYsX7vxXniw3KMBcdSvB0zo30jRZUiD9YFUNPMAdzjZwVnXCOR/q
+	 2wpQDYFk2+XHmKyaGPrkuXa6ys12i4rTocn0itPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Mikityanskiy <maxtram95@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Yuanjun Gong <ruc_gongyuanjun@163.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 154/204] platform/x86: msi-laptop: Fix rfkill out-of-sync on MSI Wind U100
-Date: Wed,  9 Aug 2023 12:41:32 +0200
-Message-ID: <20230809103647.699525976@linuxfoundation.org>
+Subject: [PATCH 4.14 155/204] benet: fix return value check in be_lancer_xmit_workarounds()
+Date: Wed,  9 Aug 2023 12:41:33 +0200
+Message-ID: <20230809103647.737251739@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -35,77 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Mikityanskiy <maxtram95@gmail.com>
+From: Yuanjun Gong <ruc_gongyuanjun@163.com>
 
-[ Upstream commit ad084a6d99bc182bf109c190c808e2ea073ec57b ]
+[ Upstream commit 5c85f7065718a949902b238a6abd8fc907c5d3e0 ]
 
-Only the HW rfkill state is toggled on laptops with quirks->ec_read_only
-(so far only MSI Wind U90/U100). There are, however, a few issues with
-the implementation:
+in be_lancer_xmit_workarounds(), it should go to label 'tx_drop'
+if an unexpected value is returned by pskb_trim().
 
-1. The initial HW state is always unblocked, regardless of the actual
-   state on boot, because msi_init_rfkill only sets the SW state,
-   regardless of ec_read_only.
-
-2. The initial SW state corresponds to the actual state on boot, but it
-   can't be changed afterwards, because set_device_state returns
-   -EOPNOTSUPP. It confuses the userspace, making Wi-Fi and/or Bluetooth
-   unusable if it was blocked on boot, and breaking the airplane mode if
-   the rfkill was unblocked on boot.
-
-Address the above issues by properly initializing the HW state on
-ec_read_only laptops and by allowing the userspace to toggle the SW
-state. Don't set the SW state ourselves and let the userspace fully
-control it. Toggling the SW state is a no-op, however, it allows the
-userspace to properly toggle the airplane mode. The actual SW radio
-disablement is handled by the corresponding rtl818x_pci and btusb
-drivers that have their own rfkills.
-
-Tested on MSI Wind U100 Plus, BIOS ver 1.0G, EC ver 130.
-
-Fixes: 0816392b97d4 ("msi-laptop: merge quirk tables to one")
-Fixes: 0de6575ad0a8 ("msi-laptop: Add MSI Wind U90/U100 support")
-Signed-off-by: Maxim Mikityanskiy <maxtram95@gmail.com>
-Link: https://lore.kernel.org/r/20230721145423.161057-1-maxtram95@gmail.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 93040ae5cc8d ("be2net: Fix to trim skb for padded vlan packets to workaround an ASIC Bug")
+Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
+Link: https://lore.kernel.org/r/20230725032726.15002-1-ruc_gongyuanjun@163.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/msi-laptop.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/emulex/benet/be_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/msi-laptop.c b/drivers/platform/x86/msi-laptop.c
-index 42b31c549db00..1781e67781a55 100644
---- a/drivers/platform/x86/msi-laptop.c
-+++ b/drivers/platform/x86/msi-laptop.c
-@@ -223,7 +223,7 @@ static ssize_t set_device_state(const char *buf, size_t count, u8 mask)
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/emulex/benet/be_main.c b/drivers/net/ethernet/emulex/benet/be_main.c
+index f8541d0c7bd52..bbe8f4b250d15 100644
+--- a/drivers/net/ethernet/emulex/benet/be_main.c
++++ b/drivers/net/ethernet/emulex/benet/be_main.c
+@@ -1132,7 +1132,8 @@ static struct sk_buff *be_lancer_xmit_workarounds(struct be_adapter *adapter,
+ 	    (lancer_chip(adapter) || BE3_chip(adapter) ||
+ 	     skb_vlan_tag_present(skb)) && is_ipv4_pkt(skb)) {
+ 		ip = (struct iphdr *)ip_hdr(skb);
+-		pskb_trim(skb, eth_hdr_len + ntohs(ip->tot_len));
++		if (unlikely(pskb_trim(skb, eth_hdr_len + ntohs(ip->tot_len))))
++			goto tx_drop;
+ 	}
  
- 	if (quirks->ec_read_only)
--		return -EOPNOTSUPP;
-+		return 0;
- 
- 	/* read current device state */
- 	result = ec_read(MSI_STANDARD_EC_COMMAND_ADDRESS, &rdata);
-@@ -854,15 +854,15 @@ static bool msi_laptop_i8042_filter(unsigned char data, unsigned char str,
- static void msi_init_rfkill(struct work_struct *ignored)
- {
- 	if (rfk_wlan) {
--		rfkill_set_sw_state(rfk_wlan, !wlan_s);
-+		msi_rfkill_set_state(rfk_wlan, !wlan_s);
- 		rfkill_wlan_set(NULL, !wlan_s);
- 	}
- 	if (rfk_bluetooth) {
--		rfkill_set_sw_state(rfk_bluetooth, !bluetooth_s);
-+		msi_rfkill_set_state(rfk_bluetooth, !bluetooth_s);
- 		rfkill_bluetooth_set(NULL, !bluetooth_s);
- 	}
- 	if (rfk_threeg) {
--		rfkill_set_sw_state(rfk_threeg, !threeg_s);
-+		msi_rfkill_set_state(rfk_threeg, !threeg_s);
- 		rfkill_threeg_set(NULL, !threeg_s);
- 	}
- }
+ 	/* If vlan tag is already inlined in the packet, skip HW VLAN
 -- 
 2.39.2
 
