@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AA153B7
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:54:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2860BC433C9;
-	Wed,  9 Aug 2023 10:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8079D53B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:54:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1B0DC433C7;
+	Wed,  9 Aug 2023 10:54:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578449;
-	bh=4r/gPKm8RhZ12hkDca9EgcaHoF/eESdU0IKNTZ5h8Lg=;
+	s=korg; t=1691578452;
+	bh=Vus+KXvu5H5osl7xlXrlu4eGgWLpI2j/VgrSuVLkJRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rFxya5GwQTiavco8QFKIoKmz8mKqTiLHKgGKKk+uAtvkvC3mQ0C3pQp+gHozXr4sq
-	 bWRf34MjA7cY43XoELeyIc2a498qckqMFJLflTJ0CVGRMVAH4NVCxUSea6cRRSY0dI
-	 lW1+/NtdNtLtfMLoCw+IDHNXiNTeU9yvKQ9s6KPY=
+	b=j5qmqENBdGirqRjaiuDy895LterywINIswFZi5ayBjU8OqVpKroOABt9f7lQfDU49
+	 8GBKGwJi0iRWG+woVbh5HkAStyCBblNShuNshluCX+mjC6AlzZNeEQL+1/0xo0+t+Q
+	 2vtdUJc1ic1O0Di/a5uTh3BGVN4SYIMA9DpPN7+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@bisdn.de>,
-	Elad Nachman <enachman@marvell.com>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	Taras Chornyi <taras.chornyi@plvision.eu>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/127] prestera: fix fallback to previous version on same major version
-Date: Wed,  9 Aug 2023 12:40:50 +0200
-Message-ID: <20230809103638.752152587@linuxfoundation.org>
+Subject: [PATCH 6.1 037/127] net: annotate data-races around sk->sk_max_pacing_rate
+Date: Wed,  9 Aug 2023 12:40:24 +0200
+Message-ID: <20230809103637.893942098@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -38,63 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonas Gorski <jonas.gorski@bisdn.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b755c25fbcd568821a3bb0e0d5c2daa5fcb00bba ]
+[ Upstream commit ea7f45ef77b39e72244d282e47f6cb1ef4135cd2 ]
 
-When both supported and previous version have the same major version,
-and the firmwares are missing, the driver ends in a loop requesting the
-same (previous) version over and over again:
+sk_getsockopt() runs locklessly. This means sk->sk_max_pacing_rate
+can be read while other threads are changing its value.
 
-    [   76.327413] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.1.img firmware, fall-back to previous 4.0 version
-    [   76.339802] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.352162] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.364502] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.376848] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.389183] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.401522] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.413860] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.426199] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    ...
-
-Fix this by inverting the check to that we aren't yet at the previous
-version, and also check the minor version.
-
-This also catches the case where both versions are the same, as it was
-after commit bb5dbf2cc64d ("net: marvell: prestera: add firmware v4.0
-support").
-
-With this fix applied:
-
-    [   88.499622] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.1.img firmware, fall-back to previous 4.0 version
-    [   88.511995] Prestera DX 0000:01:00.0: failed to request previous firmware: mrvl/prestera/mvsw_prestera_fw-v4.0.img
-    [   88.522403] Prestera DX: probe of 0000:01:00.0 failed with error -2
-
-Fixes: 47f26018a414 ("net: marvell: prestera: try to load previous fw version")
-Signed-off-by: Jonas Gorski <jonas.gorski@bisdn.de>
-Acked-by: Elad Nachman <enachman@marvell.com>
-Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Acked-by: Taras Chornyi <taras.chornyi@plvision.eu>
-Link: https://lore.kernel.org/r/20230802092357.163944-1-jonas.gorski@bisdn.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 62748f32d501 ("net: introduce SO_MAX_PACING_RATE")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/prestera/prestera_pci.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/core/sock.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/prestera/prestera_pci.c b/drivers/net/ethernet/marvell/prestera/prestera_pci.c
-index 59470d99f5228..a37dbbda8de39 100644
---- a/drivers/net/ethernet/marvell/prestera/prestera_pci.c
-+++ b/drivers/net/ethernet/marvell/prestera/prestera_pci.c
-@@ -702,7 +702,8 @@ static int prestera_fw_get(struct prestera_fw *fw)
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 77abd69c56dde..86e88de1238b1 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -1426,7 +1426,8 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
+ 			cmpxchg(&sk->sk_pacing_status,
+ 				SK_PACING_NONE,
+ 				SK_PACING_NEEDED);
+-		sk->sk_max_pacing_rate = ulval;
++		/* Pairs with READ_ONCE() from sk_getsockopt() */
++		WRITE_ONCE(sk->sk_max_pacing_rate, ulval);
+ 		sk->sk_pacing_rate = min(sk->sk_pacing_rate, ulval);
+ 		break;
+ 		}
+@@ -1852,12 +1853,14 @@ int sk_getsockopt(struct sock *sk, int level, int optname,
+ #endif
  
- 	err = request_firmware_direct(&fw->bin, fw_path, fw->dev.dev);
- 	if (err) {
--		if (ver_maj == PRESTERA_SUPP_FW_MAJ_VER) {
-+		if (ver_maj != PRESTERA_PREV_FW_MAJ_VER ||
-+		    ver_min != PRESTERA_PREV_FW_MIN_VER) {
- 			ver_maj = PRESTERA_PREV_FW_MAJ_VER;
- 			ver_min = PRESTERA_PREV_FW_MIN_VER;
+ 	case SO_MAX_PACING_RATE:
++		/* The READ_ONCE() pair with the WRITE_ONCE() in sk_setsockopt() */
+ 		if (sizeof(v.ulval) != sizeof(v.val) && len >= sizeof(v.ulval)) {
+ 			lv = sizeof(v.ulval);
+-			v.ulval = sk->sk_max_pacing_rate;
++			v.ulval = READ_ONCE(sk->sk_max_pacing_rate);
+ 		} else {
+ 			/* 32bit version */
+-			v.val = min_t(unsigned long, sk->sk_max_pacing_rate, ~0U);
++			v.val = min_t(unsigned long, ~0U,
++				      READ_ONCE(sk->sk_max_pacing_rate));
+ 		}
+ 		break;
  
 -- 
 2.40.1
