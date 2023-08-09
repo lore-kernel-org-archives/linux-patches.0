@@ -1,28 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7851FA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:49:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1AE3C433C8;
-	Wed,  9 Aug 2023 10:49:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C591FA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:49:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7EFC433C7;
+	Wed,  9 Aug 2023 10:49:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578184;
-	bh=0q/s4nldAFDJo1bC4gD9B/sBEXenqnWeY5kDQaVyT8c=;
+	s=korg; t=1691578187;
+	bh=cyiCJhAjrEvCmmdDk6LeUkn/43xZoWgsNe7RPfTE/Kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ia7joxYX/taPCpmGVhsD7MBg19iCh+rfxgibYYP1aqMkwVHQouIrAlTeoPJ0LVKXz
-	 JFDVP8Xyn/xH01g9D4lauUjRwPV6ijd+1MyfuH7tpyNKAbacD5WxId8rDdKZ5dNHts
-	 VeWQ3eSTEcfEaeezV2LkJjkHogREMRSoOnurjB9A=
+	b=G4P5UcTOy/q/wtRD0zjWEmueG9Jb+iy3x2iejjextNMQXas8/qUqDO0TfPy4hMALn
+	 tovFjZK16SD20JV0X/p1h4u5dVeKSwwsqQqCwBpTyrdpT4AMRjDh72K7d1JsryufbR
+	 hj7f2+6m/iZmWEZIoYjCea2dKTemDjkMgnZ91CZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Guchun Chen <guchun.chen@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
-Subject: [PATCH 6.4 128/165] drm/ttm: check null pointer before accessing when swapping
-Date: Wed,  9 Aug 2023 12:40:59 +0200
-Message-ID: <20230809103647.003812212@linuxfoundation.org>
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	syzbot <syzbot+ece2915262061d6e0ac1@syzkaller.appspotmail.com>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Marco Elver <elver@google.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.4 137/165] kasan,kmsan: remove __GFP_KSWAPD_RECLAIM usage from kasan/kmsan
+Date: Wed,  9 Aug 2023 12:41:08 +0200
+Message-ID: <20230809103647.299809609@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -36,68 +44,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guchun Chen <guchun.chen@amd.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit 2dedcf414bb01b8d966eb445db1d181d92304fb2 upstream.
+commit 726ccdba1521007fab4b2b7565d255fa0f2b770c upstream.
 
-Add a check to avoid null pointer dereference as below:
+syzbot is reporting lockdep warning in __stack_depot_save(), for
+the caller of __stack_depot_save() (i.e. __kasan_record_aux_stack() in
+this report) is responsible for masking __GFP_KSWAPD_RECLAIM flag in
+order not to wake kswapd which in turn wakes kcompactd.
 
-[   90.002283] general protection fault, probably for non-canonical
-address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN NOPTI
-[   90.002292] KASAN: null-ptr-deref in range
-[0x0000000000000000-0x0000000000000007]
-[   90.002346]  ? exc_general_protection+0x159/0x240
-[   90.002352]  ? asm_exc_general_protection+0x26/0x30
-[   90.002357]  ? ttm_bo_evict_swapout_allowable+0x322/0x5e0 [ttm]
-[   90.002365]  ? ttm_bo_evict_swapout_allowable+0x42e/0x5e0 [ttm]
-[   90.002373]  ttm_bo_swapout+0x134/0x7f0 [ttm]
-[   90.002383]  ? __pfx_ttm_bo_swapout+0x10/0x10 [ttm]
-[   90.002391]  ? lock_acquire+0x44d/0x4f0
-[   90.002398]  ? ttm_device_swapout+0xa5/0x260 [ttm]
-[   90.002412]  ? lock_acquired+0x355/0xa00
-[   90.002416]  ? do_raw_spin_trylock+0xb6/0x190
-[   90.002421]  ? __pfx_lock_acquired+0x10/0x10
-[   90.002426]  ? ttm_global_swapout+0x25/0x210 [ttm]
-[   90.002442]  ttm_device_swapout+0x198/0x260 [ttm]
-[   90.002456]  ? __pfx_ttm_device_swapout+0x10/0x10 [ttm]
-[   90.002472]  ttm_global_swapout+0x75/0x210 [ttm]
-[   90.002486]  ttm_tt_populate+0x187/0x3f0 [ttm]
-[   90.002501]  ttm_bo_handle_move_mem+0x437/0x590 [ttm]
-[   90.002517]  ttm_bo_validate+0x275/0x430 [ttm]
-[   90.002530]  ? __pfx_ttm_bo_validate+0x10/0x10 [ttm]
-[   90.002544]  ? kasan_save_stack+0x33/0x60
-[   90.002550]  ? kasan_set_track+0x25/0x30
-[   90.002554]  ? __kasan_kmalloc+0x8f/0xa0
-[   90.002558]  ? amdgpu_gtt_mgr_new+0x81/0x420 [amdgpu]
-[   90.003023]  ? ttm_resource_alloc+0xf6/0x220 [ttm]
-[   90.003038]  amdgpu_bo_pin_restricted+0x2dd/0x8b0 [amdgpu]
-[   90.003210]  ? __x64_sys_ioctl+0x131/0x1a0
-[   90.003210]  ? do_syscall_64+0x60/0x90
+Since kasan/kmsan functions might be called with arbitrary locks held,
+mask __GFP_KSWAPD_RECLAIM flag from all GFP_NOWAIT/GFP_ATOMIC allocations
+in kasan/kmsan.
 
-Fixes: a2848d08742c ("drm/ttm: never consider pinned BOs for eviction&swap")
-Tested-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Signed-off-by: Guchun Chen <guchun.chen@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Cc: stable@vger.kernel.org
-Link: https://patchwork.freedesktop.org/patch/msgid/20230724024229.1118444-1-guchun.chen@amd.com
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Note that kmsan_save_stack_with_flags() is changed to mask both
+__GFP_DIRECT_RECLAIM flag and __GFP_KSWAPD_RECLAIM flag, for
+wakeup_kswapd() from wake_all_kswapds() from __alloc_pages_slowpath()
+calls wakeup_kcompactd() if __GFP_KSWAPD_RECLAIM flag is set and
+__GFP_DIRECT_RECLAIM flag is not set.
+
+Link: https://lkml.kernel.org/r/656cb4f5-998b-c8d7-3c61-c2d37aa90f9a@I-love.SAKURA.ne.jp
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reported-by: syzbot <syzbot+ece2915262061d6e0ac1@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=ece2915262061d6e0ac1
+Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Marco Elver <elver@google.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ttm/ttm_bo.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/kasan/generic.c         |    4 ++--
+ mm/kasan/tags.c            |    2 +-
+ mm/kmsan/core.c            |    6 +++---
+ mm/kmsan/instrumentation.c |    2 +-
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/ttm/ttm_bo.c
-+++ b/drivers/gpu/drm/ttm/ttm_bo.c
-@@ -519,7 +519,8 @@ static bool ttm_bo_evict_swapout_allowab
+--- a/mm/kasan/generic.c
++++ b/mm/kasan/generic.c
+@@ -489,7 +489,7 @@ static void __kasan_record_aux_stack(voi
+ 		return;
  
- 	if (bo->pin_count) {
- 		*locked = false;
--		*busy = false;
-+		if (busy)
-+			*busy = false;
- 		return false;
- 	}
+ 	alloc_meta->aux_stack[1] = alloc_meta->aux_stack[0];
+-	alloc_meta->aux_stack[0] = kasan_save_stack(GFP_NOWAIT, can_alloc);
++	alloc_meta->aux_stack[0] = kasan_save_stack(0, can_alloc);
+ }
  
+ void kasan_record_aux_stack(void *addr)
+@@ -519,7 +519,7 @@ void kasan_save_free_info(struct kmem_ca
+ 	if (!free_meta)
+ 		return;
+ 
+-	kasan_set_track(&free_meta->free_track, GFP_NOWAIT);
++	kasan_set_track(&free_meta->free_track, 0);
+ 	/* The object was freed and has free track set. */
+ 	*(u8 *)kasan_mem_to_shadow(object) = KASAN_SLAB_FREETRACK;
+ }
+--- a/mm/kasan/tags.c
++++ b/mm/kasan/tags.c
+@@ -140,5 +140,5 @@ void kasan_save_alloc_info(struct kmem_c
+ 
+ void kasan_save_free_info(struct kmem_cache *cache, void *object)
+ {
+-	save_stack_info(cache, object, GFP_NOWAIT, true);
++	save_stack_info(cache, object, 0, true);
+ }
+--- a/mm/kmsan/core.c
++++ b/mm/kmsan/core.c
+@@ -74,7 +74,7 @@ depot_stack_handle_t kmsan_save_stack_wi
+ 	nr_entries = stack_trace_save(entries, KMSAN_STACK_DEPTH, 0);
+ 
+ 	/* Don't sleep. */
+-	flags &= ~__GFP_DIRECT_RECLAIM;
++	flags &= ~(__GFP_DIRECT_RECLAIM | __GFP_KSWAPD_RECLAIM);
+ 
+ 	handle = __stack_depot_save(entries, nr_entries, flags, true);
+ 	return stack_depot_set_extra_bits(handle, extra);
+@@ -245,7 +245,7 @@ depot_stack_handle_t kmsan_internal_chai
+ 	extra_bits = kmsan_extra_bits(depth, uaf);
+ 
+ 	entries[0] = KMSAN_CHAIN_MAGIC_ORIGIN;
+-	entries[1] = kmsan_save_stack_with_flags(GFP_ATOMIC, 0);
++	entries[1] = kmsan_save_stack_with_flags(__GFP_HIGH, 0);
+ 	entries[2] = id;
+ 	/*
+ 	 * @entries is a local var in non-instrumented code, so KMSAN does not
+@@ -253,7 +253,7 @@ depot_stack_handle_t kmsan_internal_chai
+ 	 * positives when __stack_depot_save() passes it to instrumented code.
+ 	 */
+ 	kmsan_internal_unpoison_memory(entries, sizeof(entries), false);
+-	handle = __stack_depot_save(entries, ARRAY_SIZE(entries), GFP_ATOMIC,
++	handle = __stack_depot_save(entries, ARRAY_SIZE(entries), __GFP_HIGH,
+ 				    true);
+ 	return stack_depot_set_extra_bits(handle, extra_bits);
+ }
+--- a/mm/kmsan/instrumentation.c
++++ b/mm/kmsan/instrumentation.c
+@@ -282,7 +282,7 @@ void __msan_poison_alloca(void *address,
+ 
+ 	/* stack_depot_save() may allocate memory. */
+ 	kmsan_enter_runtime();
+-	handle = stack_depot_save(entries, ARRAY_SIZE(entries), GFP_ATOMIC);
++	handle = stack_depot_save(entries, ARRAY_SIZE(entries), __GFP_HIGH);
+ 	kmsan_leave_runtime();
+ 
+ 	kmsan_internal_set_shadow_origin(address, size, -1, handle,
 
 
