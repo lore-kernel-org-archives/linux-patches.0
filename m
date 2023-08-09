@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C15E15AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:46:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F215C433C7;
-	Wed,  9 Aug 2023 10:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BFD15AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:46:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A095C433C7;
+	Wed,  9 Aug 2023 10:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578006;
-	bh=Sq70zDpA9bUaqA8q/43orJPsjhYX4lbqEdOc+1lX/WA=;
+	s=korg; t=1691578009;
+	bh=86G+5AeVL5igzoEb2318b/GYvKv5NH01/jGTFknCEoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aA0PL4NLfTre+DhSFyr5O8l5ckH04psfU3B8qzL4ozDW6IR80Zm+zt0CYzGojFGNG
-	 7n3lA8ts1ewomhVe4OzZUKiFSdoQUoh/gHOvRmjRgY4C7rB3Z8I+sbuESfxGEZLQEC
-	 94F49eaz74IbdXbixUsR+uPROwyx1uz0LSO9OOfA=
+	b=1n8hHOX3rTZfi5U+43p4bLWBhCmTh9Nr5RkCGcH6yeDx8a0EKLxpyemGhhOT13kCF
+	 zl1X3ySkrzZTKx9xlhaEwxTu04pVEioFykY/n2/n1tIxB+lD2WB1IZLDeuLwBArfC8
+	 er9mTfpK5CZ/uLuqvUFLp3KY+Qd83xXfzIpGC6AM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	valis <sec@valis.email>,
-	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	M A Ramdhan <ramdhan@starlabs.sg>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tomas Glozar <tglozar@redhat.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 073/165] net/sched: cls_route: No longer copy tcf_result on update to avoid use-after-free
-Date: Wed,  9 Aug 2023 12:40:04 +0200
-Message-ID: <20230809103645.191283349@linuxfoundation.org>
+Subject: [PATCH 6.4 074/165] bpf: sockmap: Remove preempt_disable in sock_map_sk_acquire
+Date: Wed,  9 Aug 2023 12:40:05 +0200
+Message-ID: <20230809103645.219963459@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -40,47 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: valis <sec@valis.email>
+From: Tomas Glozar <tglozar@redhat.com>
 
-[ Upstream commit b80b829e9e2c1b3f7aae34855e04d8f6ecaf13c8 ]
+[ Upstream commit 13d2618b48f15966d1adfe1ff6a1985f5eef40ba ]
 
-When route4_change() is called on an existing filter, the whole
-tcf_result struct is always copied into the new instance of the filter.
+Disabling preemption in sock_map_sk_acquire conflicts with GFP_ATOMIC
+allocation later in sk_psock_init_link on PREEMPT_RT kernels, since
+GFP_ATOMIC might sleep on RT (see bpf: Make BPF and PREEMPT_RT co-exist
+patchset notes for details).
 
-This causes a problem when updating a filter bound to a class,
-as tcf_unbind_filter() is always called on the old instance in the
-success path, decreasing filter_cnt of the still referenced class
-and allowing it to be deleted, leading to a use-after-free.
+This causes calling bpf_map_update_elem on BPF_MAP_TYPE_SOCKMAP maps to
+BUG (sleeping function called from invalid context) on RT kernels.
 
-Fix this by no longer copying the tcf_result struct from the old filter.
+preempt_disable was introduced together with lock_sk and rcu_read_lock
+in commit 99ba2b5aba24e ("bpf: sockhash, disallow bpf_tcp_close and update
+in parallel"), probably to match disabled migration of BPF programs, and
+is no longer necessary.
 
-Fixes: 1109c00547fc ("net: sched: RCU cls_route")
-Reported-by: valis <sec@valis.email>
-Reported-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
-Signed-off-by: valis <sec@valis.email>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: M A Ramdhan <ramdhan@starlabs.sg>
-Link: https://lore.kernel.org/r/20230729123202.72406-4-jhs@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Remove preempt_disable to fix BUG in sock_map_update_common on RT.
+
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/all/20200224140131.461979697@linutronix.de/
+Fixes: 99ba2b5aba24 ("bpf: sockhash, disallow bpf_tcp_close and update in parallel")
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/20230728064411.305576-1-tglozar@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_route.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/core/sock_map.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
-index d0c53724d3e86..1e20bbd687f1d 100644
---- a/net/sched/cls_route.c
-+++ b/net/sched/cls_route.c
-@@ -513,7 +513,6 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
- 	if (fold) {
- 		f->id = fold->id;
- 		f->iif = fold->iif;
--		f->res = fold->res;
- 		f->handle = fold->handle;
+diff --git a/net/core/sock_map.c b/net/core/sock_map.c
+index 19538d6287144..08ab108206bf8 100644
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -115,7 +115,6 @@ static void sock_map_sk_acquire(struct sock *sk)
+ 	__acquires(&sk->sk_lock.slock)
+ {
+ 	lock_sock(sk);
+-	preempt_disable();
+ 	rcu_read_lock();
+ }
  
- 		f->tp = fold->tp;
+@@ -123,7 +122,6 @@ static void sock_map_sk_release(struct sock *sk)
+ 	__releases(&sk->sk_lock.slock)
+ {
+ 	rcu_read_unlock();
+-	preempt_enable();
+ 	release_sock(sk);
+ }
+ 
 -- 
 2.40.1
 
