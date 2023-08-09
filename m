@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6D117AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5B7C433C7;
-	Wed,  9 Aug 2023 11:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1AC17AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEAD0C433C7;
+	Wed,  9 Aug 2023 11:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581117;
-	bh=klIyRPhZk1qjMfAf/bEyH2s8w7OPj8rpn0B/fHo3njE=;
+	s=korg; t=1691581120;
+	bh=XQC8+iGxxE9zBySSBhy5e8kBDg4YBjsFmK52LaxctyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KabHQ0M75hTc1Ch8gAJOKcsJVEvIHORmgLky2MKsoWxiirNn4CBnLxkwP9WcXBw0P
-	 s57w44lkKI2zfgXNni7KFlrc+OplnlNBouMJHAjijHQd2z0sOiOenXoxzPvbROb5oj
-	 lFRhllVnpT+44QeXLC7OJ7mgyv5f0c8IL0+Ac/sY=
+	b=BcCnwpq0vv69kAA3Fwhvx0eBd2ljZ1rVHGxmh4m6z2HJiLcTEc7RQ/XwdYxWEjoe+
+	 WaGcvY7HtZ3SfoM/0YavGGjw3Kkp1mB1qarSZmixehcrgCY39tQHPI1Clwz75IlzzW
+	 lyDXwAMs5Vk7D4J+G9Zl3YD4y0ze+JxSsFCmY0Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>
-Subject: [PATCH 5.10 084/201] staging: ks7010: potential buffer overflow in ks_wlan_set_encode_ext()
-Date: Wed,  9 Aug 2023 12:41:26 +0200
-Message-ID: <20230809103646.617931408@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 111/201] io_uring: treat -EAGAIN for REQ_F_NOWAIT as final for io-wq
+Date: Wed,  9 Aug 2023 12:41:53 +0200
+Message-ID: <20230809103647.508267884@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -35,37 +33,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 5f1c7031e044cb2fba82836d55cc235e2ad619dc upstream.
+commit a9be202269580ca611c6cebac90eaf1795497800 upstream.
 
-The "exc->key_len" is a u16 that comes from the user.  If it's over
-IW_ENCODING_TOKEN_MAX (64) that could lead to memory corruption.
+io-wq assumes that an issue is blocking, but it may not be if the
+request type has asked for a non-blocking attempt. If we get
+-EAGAIN for that case, then we need to treat it as a final result
+and not retry or arm poll for it.
 
-Fixes: b121d84882b9 ("staging: ks7010: simplify calls to memcpy()")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/tencent_5153B668C0283CAA15AA518325346E026A09@qq.com
+Cc: stable@vger.kernel.org # 5.10+
+Link: https://github.com/axboe/liburing/issues/897
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/ks7010/ks_wlan_net.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/staging/ks7010/ks_wlan_net.c
-+++ b/drivers/staging/ks7010/ks_wlan_net.c
-@@ -1584,8 +1584,10 @@ static int ks_wlan_set_encode_ext(struct
- 			commit |= SME_WEP_FLAG;
- 		}
- 		if (enc->key_len) {
--			memcpy(&key->key_val[0], &enc->key[0], enc->key_len);
--			key->key_len = enc->key_len;
-+			int key_len = clamp_val(enc->key_len, 0, IW_ENCODING_TOKEN_MAX);
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -6895,6 +6895,14 @@ static void io_wq_submit_work(struct io_
+ 			 */
+ 			if (ret != -EAGAIN || !(req->ctx->flags & IORING_SETUP_IOPOLL))
+ 				break;
 +
-+			memcpy(&key->key_val[0], &enc->key[0], key_len);
-+			key->key_len = key_len;
- 			commit |= (SME_WEP_VAL1 << index);
- 		}
- 		break;
++			/*
++			 * If REQ_F_NOWAIT is set, then don't wait or retry with
++			 * poll. -EAGAIN is final for that case.
++			 */
++			if (req->flags & REQ_F_NOWAIT)
++				break;
++
+ 			cond_resched();
+ 		} while (1);
+ 	}
 
 
