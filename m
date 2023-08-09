@@ -1,33 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473D017731
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:09:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388FAC433C8;
-	Wed,  9 Aug 2023 11:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FFD217731
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:09:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 009FCC433C7;
+	Wed,  9 Aug 2023 11:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579355;
-	bh=98/SW1TaQhTG1o/tAMMFjjkpLc5Xugrna2t/92Hcnao=;
+	s=korg; t=1691579358;
+	bh=Iis8/QwiIQV66BJkAfti8pEHPAYQNXJji++l6bf+3ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KGfjvzLywP7aCsk2wGKnZW1+uvYz+40BKqbwzE6GHI4lrpIwnLW4lb9AukEl9Q4JN
-	 KilRtWiFPQ6894HDHArXeAgi6oFuZovwfE0t9clV79w4j3RdgXj6CI3jksoYqqa2qp
-	 Wznq8jY1aGF9Rkernf4bzf83xPnByYPtZ/J1O2ws=
+	b=hHpb1Xl6IWFwg5bCilIEn6wOZjt8pbe0EhtXpf8EZft0ox80wI3qPvG3wN/IVpw7R
+	 H+85CjxD8Uej/X3poDs2oMUlu4dOFEPo4omNf54jyfTeUPt8Hpk/L1q58ow2D9+abe
+	 QtGKVxKSEYzuxtoKRghQuG3atK0s41UpltN3AOQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nik P <npliashechnikov@gmail.com>,
-	Nathan Schulte <nmschulte@gmail.com>,
-	Friedrich Vock <friedrich.vock@gmx.de>,
-	dridri85@gmail.com,
-	Jan Visser <starquake@linuxeverywhere.org>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 139/204] pinctrl: amd: Use amd_pinconf_set() for all config options
-Date: Wed,  9 Aug 2023 12:41:17 +0200
-Message-ID: <20230809103647.234645927@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 4.14 166/204] can: gs_usb: gs_can_close(): add missing set of CAN state to CAN_STATE_STOPPED
+Date: Wed,  9 Aug 2023 12:41:44 +0200
+Message-ID: <20230809103648.072918878@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -41,108 +33,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 635a750d958e158e17af0f524bedc484b27fbb93 ]
+commit f8a2da6ec2417cca169fa85a8ab15817bccbb109 upstream.
 
-On ASUS TUF A16 it is reported that the ITE5570 ACPI device connected to
-GPIO 7 is causing an interrupt storm.  This issue doesn't happen on
-Windows.
+After an initial link up the CAN device is in ERROR-ACTIVE mode. Due
+to a missing CAN_STATE_STOPPED in gs_can_close() it doesn't change to
+STOPPED after a link down:
 
-Comparing the GPIO register configuration between Windows and Linux
-bit 20 has been configured as a pull up on Windows, but not on Linux.
-Checking GPIO declaration from the firmware it is clear it *should* have
-been a pull up on Linux as well.
+| ip link set dev can0 up
+| ip link set dev can0 down
+| ip --details link show can0
+| 13: can0: <NOARP,ECHO> mtu 16 qdisc pfifo_fast state DOWN mode DEFAULT group default qlen 10
+|     link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0
+|     can state ERROR-ACTIVE restart-ms 1000
 
-```
-GpioInt (Level, ActiveLow, Exclusive, PullUp, 0x0000,
-	 "\\_SB.GPIO", 0x00, ResourceConsumer, ,)
-{   // Pin list
-0x0007
-}
-```
+Add missing assignment of CAN_STATE_STOPPED in gs_can_close().
 
-On Linux amd_gpio_set_config() is currently only used for programming
-the debounce. Actually the GPIO core calls it with all the arguments
-that are supported by a GPIO, pinctrl-amd just responds `-ENOTSUPP`.
-
-To solve this issue expand amd_gpio_set_config() to support the other
-arguments amd_pinconf_set() supports, namely `PIN_CONFIG_BIAS_PULL_DOWN`,
-`PIN_CONFIG_BIAS_PULL_UP`, and `PIN_CONFIG_DRIVE_STRENGTH`.
-
-Reported-by: Nik P <npliashechnikov@gmail.com>
-Reported-by: Nathan Schulte <nmschulte@gmail.com>
-Reported-by: Friedrich Vock <friedrich.vock@gmx.de>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217336
-Reported-by: dridri85@gmail.com
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217493
-Link: https://lore.kernel.org/linux-input/20230530154058.17594-1-friedrich.vock@gmx.de/
-Tested-by: Jan Visser <starquake@linuxeverywhere.org>
-Fixes: 2956b5d94a76 ("pinctrl / gpio: Introduce .set_config() callback for GPIO chips")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230705133005.577-3-mario.limonciello@amd.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
+Link: https://lore.kernel.org/all/20230718-gs_usb-fix-can-state-v1-1-f19738ae2c23@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-amd.c | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ drivers/net/can/usb/gs_usb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pinctrl/pinctrl-amd.c b/drivers/pinctrl/pinctrl-amd.c
-index c57f91f484235..fbec8a07e942e 100644
---- a/drivers/pinctrl/pinctrl-amd.c
-+++ b/drivers/pinctrl/pinctrl-amd.c
-@@ -169,18 +169,6 @@ static int amd_gpio_set_debounce(struct gpio_chip *gc, unsigned offset,
- 	return ret;
- }
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -740,6 +740,8 @@ static int gs_can_close(struct net_devic
+ 	usb_kill_anchored_urbs(&dev->tx_submitted);
+ 	atomic_set(&dev->active_tx_urbs, 0);
  
--static int amd_gpio_set_config(struct gpio_chip *gc, unsigned offset,
--			       unsigned long config)
--{
--	u32 debounce;
--
--	if (pinconf_to_config_param(config) != PIN_CONFIG_INPUT_DEBOUNCE)
--		return -ENOTSUPP;
--
--	debounce = pinconf_to_config_argument(config);
--	return amd_gpio_set_debounce(gc, offset, debounce);
--}
--
- #ifdef CONFIG_DEBUG_FS
- static void amd_gpio_dbg_show(struct seq_file *s, struct gpio_chip *gc)
- {
-@@ -632,7 +620,7 @@ static int amd_pinconf_get(struct pinctrl_dev *pctldev,
- }
- 
- static int amd_pinconf_set(struct pinctrl_dev *pctldev, unsigned int pin,
--				unsigned long *configs, unsigned num_configs)
-+			   unsigned long *configs, unsigned int num_configs)
- {
- 	int i;
- 	u32 arg;
-@@ -722,6 +710,20 @@ static int amd_pinconf_group_set(struct pinctrl_dev *pctldev,
- 	return 0;
- }
- 
-+static int amd_gpio_set_config(struct gpio_chip *gc, unsigned int pin,
-+			       unsigned long config)
-+{
-+	struct amd_gpio *gpio_dev = gpiochip_get_data(gc);
++	dev->can.state = CAN_STATE_STOPPED;
 +
-+	if (pinconf_to_config_param(config) == PIN_CONFIG_INPUT_DEBOUNCE) {
-+		u32 debounce = pinconf_to_config_argument(config);
-+
-+		return amd_gpio_set_debounce(gc, pin, debounce);
-+	}
-+
-+	return amd_pinconf_set(gpio_dev->pctrl, pin, &config, 1);
-+}
-+
- static const struct pinconf_ops amd_pinconf_ops = {
- 	.pin_config_get		= amd_pinconf_get,
- 	.pin_config_set		= amd_pinconf_set,
--- 
-2.39.2
-
+ 	/* reset the device */
+ 	rc = gs_cmd_reset(parent, dev);
+ 	if (rc < 0)
 
 
