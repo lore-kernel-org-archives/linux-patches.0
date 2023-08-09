@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD03D17AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:33:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CDE7C433C7;
-	Wed,  9 Aug 2023 11:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2B61775C
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:33:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C87C433C7;
+	Wed,  9 Aug 2023 11:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580788;
-	bh=hyzram7K7JUyg7jzU8rDIOBtjYdxRcMdVBx59tI/mRY=;
+	s=korg; t=1691580791;
+	bh=pI9bFq7VPF1xITaYmm/XT2e2r9qk9+47LCaxyjPepw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qpko9kUT17raRY5k1hC3++NO2XvKR4AhR1QFvtE3PI9d5mpuFRuqku0+kO7mCQBN7
-	 2JuJwozODVLSqcYLo4bldcW77yjhiHBL70r3YPRd7B5LxwR/BfSvksD7Z6oCCwkCLH
-	 v8Wo6dxf0HNNwY6YJX6gCYqzEJ3EinWl7v45pBnA=
+	b=KTum65E6Yw03HDJ9Oe85xm5Adw5Q2uECAWjugu9yCBp1tjI8AAUgOE9UNMgjEkVoE
+	 XlE1H4fyci4Z0O1QUT0cEiDNyVmN3dUx51mrqT38GuNUctXQnN1C0rb1mvUjBITwx9
+	 H5NITfQixM4TN2xUnz2H90b0jUnmA+MvZIxF/ZE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tomas Glozar <tglozar@redhat.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 119/154] tcp_metrics: annotate data-races around tm->tcpm_vals[]
-Date: Wed,  9 Aug 2023 12:42:30 +0200
-Message-ID: <20230809103640.857362995@linuxfoundation.org>
+Subject: [PATCH 5.4 110/154] bpf: sockmap: Remove preempt_disable in sock_map_sk_acquire
+Date: Wed,  9 Aug 2023 12:42:21 +0200
+Message-ID: <20230809103640.587038156@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -37,83 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tomas Glozar <tglozar@redhat.com>
 
-[ Upstream commit 8c4d04f6b443869d25e59822f7cec88d647028a9 ]
+[ Upstream commit 13d2618b48f15966d1adfe1ff6a1985f5eef40ba ]
 
-tm->tcpm_vals[] values can be read or written locklessly.
+Disabling preemption in sock_map_sk_acquire conflicts with GFP_ATOMIC
+allocation later in sk_psock_init_link on PREEMPT_RT kernels, since
+GFP_ATOMIC might sleep on RT (see bpf: Make BPF and PREEMPT_RT co-exist
+patchset notes for details).
 
-Add needed READ_ONCE()/WRITE_ONCE() to document this,
-and force use of tcp_metric_get() and tcp_metric_set()
+This causes calling bpf_map_update_elem on BPF_MAP_TYPE_SOCKMAP maps to
+BUG (sleeping function called from invalid context) on RT kernels.
 
-Fixes: 51c5d0c4b169 ("tcp: Maintain dynamic metrics in local cache.")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+preempt_disable was introduced together with lock_sk and rcu_read_lock
+in commit 99ba2b5aba24e ("bpf: sockhash, disallow bpf_tcp_close and update
+in parallel"), probably to match disabled migration of BPF programs, and
+is no longer necessary.
+
+Remove preempt_disable to fix BUG in sock_map_update_common on RT.
+
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/all/20200224140131.461979697@linutronix.de/
+Fixes: 99ba2b5aba24 ("bpf: sockhash, disallow bpf_tcp_close and update in parallel")
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/20230728064411.305576-1-tglozar@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_metrics.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ net/core/sock_map.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
-index 2dac82154af85..29261aa96eb40 100644
---- a/net/ipv4/tcp_metrics.c
-+++ b/net/ipv4/tcp_metrics.c
-@@ -63,17 +63,19 @@ static bool tcp_metric_locked(struct tcp_metrics_block *tm,
- 	return READ_ONCE(tm->tcpm_lock) & (1 << idx);
- }
- 
--static u32 tcp_metric_get(struct tcp_metrics_block *tm,
-+static u32 tcp_metric_get(const struct tcp_metrics_block *tm,
- 			  enum tcp_metric_index idx)
+diff --git a/net/core/sock_map.c b/net/core/sock_map.c
+index 5bce6d4d20573..5b82ff0e2680f 100644
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -115,7 +115,6 @@ static void sock_map_sk_acquire(struct sock *sk)
+ 	__acquires(&sk->sk_lock.slock)
  {
--	return tm->tcpm_vals[idx];
-+	/* Paired with WRITE_ONCE() in tcp_metric_set() */
-+	return READ_ONCE(tm->tcpm_vals[idx]);
+ 	lock_sock(sk);
+-	preempt_disable();
+ 	rcu_read_lock();
  }
  
- static void tcp_metric_set(struct tcp_metrics_block *tm,
- 			   enum tcp_metric_index idx,
- 			   u32 val)
+@@ -123,7 +122,6 @@ static void sock_map_sk_release(struct sock *sk)
+ 	__releases(&sk->sk_lock.slock)
  {
--	tm->tcpm_vals[idx] = val;
-+	/* Paired with READ_ONCE() in tcp_metric_get() */
-+	WRITE_ONCE(tm->tcpm_vals[idx], val);
+ 	rcu_read_unlock();
+-	preempt_enable();
+ 	release_sock(sk);
  }
  
- static bool addr_same(const struct inetpeer_addr *a,
-@@ -115,13 +117,16 @@ static void tcpm_suck_dst(struct tcp_metrics_block *tm,
- 	WRITE_ONCE(tm->tcpm_lock, val);
- 
- 	msval = dst_metric_raw(dst, RTAX_RTT);
--	tm->tcpm_vals[TCP_METRIC_RTT] = msval * USEC_PER_MSEC;
-+	tcp_metric_set(tm, TCP_METRIC_RTT, msval * USEC_PER_MSEC);
- 
- 	msval = dst_metric_raw(dst, RTAX_RTTVAR);
--	tm->tcpm_vals[TCP_METRIC_RTTVAR] = msval * USEC_PER_MSEC;
--	tm->tcpm_vals[TCP_METRIC_SSTHRESH] = dst_metric_raw(dst, RTAX_SSTHRESH);
--	tm->tcpm_vals[TCP_METRIC_CWND] = dst_metric_raw(dst, RTAX_CWND);
--	tm->tcpm_vals[TCP_METRIC_REORDERING] = dst_metric_raw(dst, RTAX_REORDERING);
-+	tcp_metric_set(tm, TCP_METRIC_RTTVAR, msval * USEC_PER_MSEC);
-+	tcp_metric_set(tm, TCP_METRIC_SSTHRESH,
-+		       dst_metric_raw(dst, RTAX_SSTHRESH));
-+	tcp_metric_set(tm, TCP_METRIC_CWND,
-+		       dst_metric_raw(dst, RTAX_CWND));
-+	tcp_metric_set(tm, TCP_METRIC_REORDERING,
-+		       dst_metric_raw(dst, RTAX_REORDERING));
- 	if (fastopen_clear) {
- 		tm->tcpm_fastopen.mss = 0;
- 		tm->tcpm_fastopen.syn_loss = 0;
-@@ -662,7 +667,7 @@ static int tcp_metrics_fill_info(struct sk_buff *msg,
- 		if (!nest)
- 			goto nla_put_failure;
- 		for (i = 0; i < TCP_METRIC_MAX_KERNEL + 1; i++) {
--			u32 val = tm->tcpm_vals[i];
-+			u32 val = tcp_metric_get(tm, i);
- 
- 			if (!val)
- 				continue;
 -- 
 2.40.1
 
