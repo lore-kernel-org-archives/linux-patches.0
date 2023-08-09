@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7A31774E
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:04:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29CDEC433C9;
-	Wed,  9 Aug 2023 11:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A711774E
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:04:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5571C433C9;
+	Wed,  9 Aug 2023 11:04:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579040;
-	bh=vo4O3qNH5lZiNF4agQOgzAdB5eIIPYDt8mcspxOKJ+k=;
+	s=korg; t=1691579043;
+	bh=W9lKpO2hpnjOaCep9TJPM21+VDoQMnHx66l/UlLwexw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=arQEtuJXByCBK4zO1+nPYLwJQ6UB5nauOFX4doIICaujMn08UlWZFRBOPDYqP3f0l
-	 xQObyEtqdBfEbPqFyROmuL1KMR3iHX6e81ldWf1AE5ICrbq/wgZhliCdzT55LLLqyd
-	 8LO4EnCSyiC2MPIBSofbZhsMHn3bUqpGidhUXtdw=
+	b=UA0crWUkUegfwJCADxLhorbJXy9qtrhGJKGfNYsTSyXaAUy6j0U89qEF43FlyVwUq
+	 O9PRvSb1SP6e4VRrqFoKzMUn+kzyy7CpCnNSfh33/mk2gVcmm2yHyAl6jeQ1Ccz0wg
+	 Ar1HHSQfdQJVlQnS5ppmOezIqtnL5Hz1SZMQxmEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davide Tronchin <davide.tronchin.94@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.14 054/204] USB: serial: option: add LARA-R6 01B PIDs
-Date: Wed,  9 Aug 2023 12:39:52 +0200
-Message-ID: <20230809103644.412349375@linuxfoundation.org>
+	Martin Steigerwald <Martin@lichtvoll.de>,
+	Michael Schmitz <schmitzmic@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 4.14 055/204] block: change all __u32 annotations to __be32 in affs_hardblocks.h
+Date: Wed,  9 Aug 2023 12:39:53 +0200
+Message-ID: <20230809103644.442244448@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -34,65 +37,142 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Davide Tronchin <davide.tronchin.94@gmail.com>
+From: Michael Schmitz <schmitzmic@gmail.com>
 
-commit ffa5f7a3bf28c1306eef85d4056539c2d4b8eb09 upstream.
+commit 95a55437dc49fb3342c82e61f5472a71c63d9ed0 upstream.
 
-The new LARA-R6 product variant identified by the "01B" string can be
-configured (by AT interface) in three different USB modes:
+The Amiga partition parser module uses signed int for partition sector
+address and count, which will overflow for disks larger than 1 TB.
 
-* Default mode (Vendor ID: 0x1546 Product ID: 0x1311) with 4 serial
-interfaces
+Use u64 as type for sector address and size to allow using disks up to
+2 TB without LBD support, and disks larger than 2 TB with LBD. The RBD
+format allows to specify disk sizes up to 2^128 bytes (though native
+OS limitations reduce this somewhat, to max 2^68 bytes), so check for
+u64 overflow carefully to protect against overflowing sector_t.
 
-* RmNet mode (Vendor ID: 0x1546 Product ID: 0x1312) with 4 serial
-interfaces and 1 RmNet virtual network interface
+This bug was reported originally in 2012, and the fix was created by
+the RDB author, Joanne Dow <jdow@earthlink.net>. A patch had been
+discussed and reviewed on linux-m68k at that time but never officially
+submitted (now resubmitted as patch 1 of this series).
 
-* CDC-ECM mode (Vendor ID: 0x1546 Product ID: 0x1313) with 4 serial
-interface and 1 CDC-ECM virtual network interface
-The first 4 interfaces of all the 3 USB configurations (default, RmNet,
-CDC-ECM) are the same.
+Patch 3 (this series) adds additional error checking and warning
+messages. One of the error checks now makes use of the previously
+unused rdb_CylBlocks field, which causes a 'sparse' warning
+(cast to restricted __be32).
 
-In default mode LARA-R6 01B exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parser/alternative functions
+Annotate all 32 bit fields in affs_hardblocks.h as __be32, as the
+on-disk format of RDB and partition blocks is always big endian.
 
-In RmNet mode LARA-R6 01B exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parser/alternative functions
-If 4: RMNET interface
-
-In CDC-ECM mode LARA-R6 01B exposes the following interfaces:
-If 0: Diagnostic
-If 1: AT parser
-If 2: AT parser
-If 3: AT parser/alternative functions
-If 4: CDC-ECM interface
-
-Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
-Link: https://lore.kernel.org/r/20230622092921.12651-1-davide.tronchin.94@gmail.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Reported-by: Martin Steigerwald <Martin@lichtvoll.de>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=43511
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Message-ID: <201206192146.09327.Martin@lichtvoll.de>
+Cc: <stable@vger.kernel.org> # 5.2
+Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/20230620201725.7020-3-schmitzmic@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ include/uapi/linux/affs_hardblocks.h |   68 +++++++++++++++++------------------
+ 1 file changed, 34 insertions(+), 34 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1154,6 +1154,10 @@ static const struct usb_device_id option
- 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90fa),
- 	  .driver_info = RSVD(3) },
- 	/* u-blox products */
-+	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1311) },	/* u-blox LARA-R6 01B */
-+	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1312),		/* u-blox LARA-R6 01B (RMNET) */
-+	  .driver_info = RSVD(4) },
-+	{ USB_DEVICE_INTERFACE_CLASS(UBLOX_VENDOR_ID, 0x1313, 0xff) },	/* u-blox LARA-R6 01B (ECM) */
- 	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1341) },	/* u-blox LARA-L6 */
- 	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1342),		/* u-blox LARA-L6 (RMNET) */
- 	  .driver_info = RSVD(4) },
+--- a/include/uapi/linux/affs_hardblocks.h
++++ b/include/uapi/linux/affs_hardblocks.h
+@@ -7,42 +7,42 @@
+ /* Just the needed definitions for the RDB of an Amiga HD. */
+ 
+ struct RigidDiskBlock {
+-	__u32	rdb_ID;
++	__be32	rdb_ID;
+ 	__be32	rdb_SummedLongs;
+-	__s32	rdb_ChkSum;
+-	__u32	rdb_HostID;
++	__be32	rdb_ChkSum;
++	__be32	rdb_HostID;
+ 	__be32	rdb_BlockBytes;
+-	__u32	rdb_Flags;
+-	__u32	rdb_BadBlockList;
++	__be32	rdb_Flags;
++	__be32	rdb_BadBlockList;
+ 	__be32	rdb_PartitionList;
+-	__u32	rdb_FileSysHeaderList;
+-	__u32	rdb_DriveInit;
+-	__u32	rdb_Reserved1[6];
+-	__u32	rdb_Cylinders;
+-	__u32	rdb_Sectors;
+-	__u32	rdb_Heads;
+-	__u32	rdb_Interleave;
+-	__u32	rdb_Park;
+-	__u32	rdb_Reserved2[3];
+-	__u32	rdb_WritePreComp;
+-	__u32	rdb_ReducedWrite;
+-	__u32	rdb_StepRate;
+-	__u32	rdb_Reserved3[5];
+-	__u32	rdb_RDBBlocksLo;
+-	__u32	rdb_RDBBlocksHi;
+-	__u32	rdb_LoCylinder;
+-	__u32	rdb_HiCylinder;
+-	__u32	rdb_CylBlocks;
+-	__u32	rdb_AutoParkSeconds;
+-	__u32	rdb_HighRDSKBlock;
+-	__u32	rdb_Reserved4;
++	__be32	rdb_FileSysHeaderList;
++	__be32	rdb_DriveInit;
++	__be32	rdb_Reserved1[6];
++	__be32	rdb_Cylinders;
++	__be32	rdb_Sectors;
++	__be32	rdb_Heads;
++	__be32	rdb_Interleave;
++	__be32	rdb_Park;
++	__be32	rdb_Reserved2[3];
++	__be32	rdb_WritePreComp;
++	__be32	rdb_ReducedWrite;
++	__be32	rdb_StepRate;
++	__be32	rdb_Reserved3[5];
++	__be32	rdb_RDBBlocksLo;
++	__be32	rdb_RDBBlocksHi;
++	__be32	rdb_LoCylinder;
++	__be32	rdb_HiCylinder;
++	__be32	rdb_CylBlocks;
++	__be32	rdb_AutoParkSeconds;
++	__be32	rdb_HighRDSKBlock;
++	__be32	rdb_Reserved4;
+ 	char	rdb_DiskVendor[8];
+ 	char	rdb_DiskProduct[16];
+ 	char	rdb_DiskRevision[4];
+ 	char	rdb_ControllerVendor[8];
+ 	char	rdb_ControllerProduct[16];
+ 	char	rdb_ControllerRevision[4];
+-	__u32	rdb_Reserved5[10];
++	__be32	rdb_Reserved5[10];
+ };
+ 
+ #define	IDNAME_RIGIDDISK	0x5244534B	/* "RDSK" */
+@@ -50,16 +50,16 @@ struct RigidDiskBlock {
+ struct PartitionBlock {
+ 	__be32	pb_ID;
+ 	__be32	pb_SummedLongs;
+-	__s32	pb_ChkSum;
+-	__u32	pb_HostID;
++	__be32	pb_ChkSum;
++	__be32	pb_HostID;
+ 	__be32	pb_Next;
+-	__u32	pb_Flags;
+-	__u32	pb_Reserved1[2];
+-	__u32	pb_DevFlags;
++	__be32	pb_Flags;
++	__be32	pb_Reserved1[2];
++	__be32	pb_DevFlags;
+ 	__u8	pb_DriveName[32];
+-	__u32	pb_Reserved2[15];
++	__be32	pb_Reserved2[15];
+ 	__be32	pb_Environment[17];
+-	__u32	pb_EReserved[15];
++	__be32	pb_EReserved[15];
+ };
+ 
+ #define	IDNAME_PARTITION	0x50415254	/* "PART" */
 
 
