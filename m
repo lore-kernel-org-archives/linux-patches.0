@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786D9174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:56:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4FDBC433C7;
-	Wed,  9 Aug 2023 10:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D326174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:57:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6661C433C8;
+	Wed,  9 Aug 2023 10:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578619;
-	bh=1C11SlrnTHj7pjtXBb3q6Z2PveBZ0QrCfdOPZdTNWwM=;
+	s=korg; t=1691578622;
+	bh=w83JBWnLbCdEyXcGMhBuD7QPY5MpWujUSQxL4zK+sJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SLiqif+y7k22mJcnPiXzQpFLls3lejfreQDgHJ/uAEGsRxQDmHZEp+aYh12Ur8+mJ
-	 ZfJzaGqeRtu6HCcPjG1e4RaYaPz5e+L4BLbJTFa+rx4DicXdHMTRFLMN6WDp7JUP6P
-	 S3AaChtPY9ICx8yfdUxN3xIEmrEkQuuIhm4Hz52A=
+	b=dWbBd0QbSSWH7wUxIUUvziyL0pLjGZkHqreuK3ci9EMkJnsuRd+rpjYgpWllX3pNk
+	 30sKGKTictHpc26ojYVjAhWKf6EG6CROLYnutXx0UJc3vNLKYzdNSg6YDYG3K/Iq2w
+	 w7An3pBR/VR+BlbmCNZLKptCP6pZWAodj62eJo0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mario Limonciello <mario.limonciello@amd.com>,
-	Tong Liu01 <Tong.Liu01@amd.com>,
+	Alex Deucher <Alexander.Deucher@amd.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	AMD Graphics <amd-gfx@lists.freedesktop.org>,
+	Luben Tuikov <luben.tuikov@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 124/127] drm/amdgpu: add vram reservation based on vram_usagebyfirmware_v2_2
-Date: Wed,  9 Aug 2023 12:41:51 +0200
-Message-ID: <20230809103640.701148923@linuxfoundation.org>
+Subject: [PATCH 6.1 125/127] drm/amdgpu: Remove unnecessary domain argument
+Date: Wed,  9 Aug 2023 12:41:52 +0200
+Message-ID: <20230809103640.735137300@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -36,319 +38,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tong Liu01 <Tong.Liu01@amd.com>
+From: Luben Tuikov <luben.tuikov@amd.com>
 
-commit 4864f2ee9ee2acf4a1009b58fbc62f17fa086d4e upstream
+commit 3273f11675ef11959d25a56df3279f712bcd41b7 upstream
 
-Move TMR region from top of FB to 2MB for FFBM, so we need to
-reserve TMR region firstly to make sure TMR can be allocated at 2MB
+Remove the "domain" argument to amdgpu_bo_create_kernel_at() since this
+function takes an "offset" argument which is the offset off of VRAM, and as
+such allocation always takes place in VRAM. Thus, the "domain" argument is
+unnecessary.
 
-Signed-off-by: Tong Liu01 <Tong.Liu01@amd.com>
-Acked-by: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <Alexander.Deucher@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: AMD Graphics <amd-gfx@lists.freedesktop.org>
+Signed-off-by: Luben Tuikov <luben.tuikov@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c |  104 +++++++++++++++++------
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c          |   51 +++++++++++
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h          |    5 +
- drivers/gpu/drm/amd/include/atomfirmware.h       |   63 +++++++++++--
- 4 files changed, 191 insertions(+), 32 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_object.c |   10 +++++-----
+ drivers/gpu/drm/amd/amdgpu/amdgpu_object.h |    2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c    |    7 -------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c   |    1 -
+ 4 files changed, 6 insertions(+), 14 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c
-@@ -101,39 +101,97 @@ void amdgpu_atomfirmware_scratch_regs_in
- 	}
- }
- 
-+static int amdgpu_atomfirmware_allocate_fb_v2_1(struct amdgpu_device *adev,
-+	struct vram_usagebyfirmware_v2_1 *fw_usage, int *usage_bytes)
-+{
-+	uint32_t start_addr, fw_size, drv_size;
-+
-+	start_addr = le32_to_cpu(fw_usage->start_address_in_kb);
-+	fw_size = le16_to_cpu(fw_usage->used_by_firmware_in_kb);
-+	drv_size = le16_to_cpu(fw_usage->used_by_driver_in_kb);
-+
-+	DRM_DEBUG("atom firmware v2_1 requested %08x %dkb fw %dkb drv\n",
-+			  start_addr,
-+			  fw_size,
-+			  drv_size);
-+
-+	if ((start_addr & ATOM_VRAM_OPERATION_FLAGS_MASK) ==
-+		(uint32_t)(ATOM_VRAM_BLOCK_SRIOV_MSG_SHARE_RESERVATION <<
-+		ATOM_VRAM_OPERATION_FLAGS_SHIFT)) {
-+		/* Firmware request VRAM reservation for SR-IOV */
-+		adev->mman.fw_vram_usage_start_offset = (start_addr &
-+			(~ATOM_VRAM_OPERATION_FLAGS_MASK)) << 10;
-+		adev->mman.fw_vram_usage_size = fw_size << 10;
-+		/* Use the default scratch size */
-+		*usage_bytes = 0;
-+	} else {
-+		*usage_bytes = drv_size << 10;
-+	}
-+	return 0;
-+}
-+
-+static int amdgpu_atomfirmware_allocate_fb_v2_2(struct amdgpu_device *adev,
-+		struct vram_usagebyfirmware_v2_2 *fw_usage, int *usage_bytes)
-+{
-+	uint32_t fw_start_addr, fw_size, drv_start_addr, drv_size;
-+
-+	fw_start_addr = le32_to_cpu(fw_usage->fw_region_start_address_in_kb);
-+	fw_size = le16_to_cpu(fw_usage->used_by_firmware_in_kb);
-+
-+	drv_start_addr = le32_to_cpu(fw_usage->driver_region0_start_address_in_kb);
-+	drv_size = le32_to_cpu(fw_usage->used_by_driver_region0_in_kb);
-+
-+	DRM_DEBUG("atom requested fw start at %08x %dkb and drv start at %08x %dkb\n",
-+			  fw_start_addr,
-+			  fw_size,
-+			  drv_start_addr,
-+			  drv_size);
-+
-+	if ((fw_start_addr & (ATOM_VRAM_BLOCK_NEEDS_NO_RESERVATION << 30)) == 0) {
-+		/* Firmware request VRAM reservation for SR-IOV */
-+		adev->mman.fw_vram_usage_start_offset = (fw_start_addr &
-+			(~ATOM_VRAM_OPERATION_FLAGS_MASK)) << 10;
-+		adev->mman.fw_vram_usage_size = fw_size << 10;
-+	}
-+
-+	if ((drv_start_addr & (ATOM_VRAM_BLOCK_NEEDS_NO_RESERVATION << 30)) == 0) {
-+		/* driver request VRAM reservation for SR-IOV */
-+		adev->mman.drv_vram_usage_start_offset = (drv_start_addr &
-+			(~ATOM_VRAM_OPERATION_FLAGS_MASK)) << 10;
-+		adev->mman.drv_vram_usage_size = drv_size << 10;
-+	}
-+
-+	*usage_bytes = 0;
-+	return 0;
-+}
-+
- int amdgpu_atomfirmware_allocate_fb_scratch(struct amdgpu_device *adev)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+@@ -347,17 +347,16 @@ int amdgpu_bo_create_kernel(struct amdgp
+  * @adev: amdgpu device object
+  * @offset: offset of the BO
+  * @size: size of the BO
+- * @domain: where to place it
+  * @bo_ptr:  used to initialize BOs in structures
+  * @cpu_addr: optional CPU address mapping
+  *
+- * Creates a kernel BO at a specific offset in the address space of the domain.
++ * Creates a kernel BO at a specific offset in VRAM.
+  *
+  * Returns:
+  * 0 on success, negative error code otherwise.
+  */
+ int amdgpu_bo_create_kernel_at(struct amdgpu_device *adev,
+-			       uint64_t offset, uint64_t size, uint32_t domain,
++			       uint64_t offset, uint64_t size,
+ 			       struct amdgpu_bo **bo_ptr, void **cpu_addr)
  {
- 	struct atom_context *ctx = adev->mode_info.atom_context;
- 	int index = get_index_into_master_table(atom_master_list_of_data_tables_v2_1,
- 						vram_usagebyfirmware);
--	struct vram_usagebyfirmware_v2_1 *firmware_usage;
--	uint32_t start_addr, size;
-+	struct vram_usagebyfirmware_v2_1 *fw_usage_v2_1;
-+	struct vram_usagebyfirmware_v2_2 *fw_usage_v2_2;
- 	uint16_t data_offset;
-+	uint8_t frev, crev;
- 	int usage_bytes = 0;
+ 	struct ttm_operation_ctx ctx = { false, false };
+@@ -367,8 +366,9 @@ int amdgpu_bo_create_kernel_at(struct am
+ 	offset &= PAGE_MASK;
+ 	size = ALIGN(size, PAGE_SIZE);
  
--	if (amdgpu_atom_parse_data_header(ctx, index, NULL, NULL, NULL, &data_offset)) {
--		firmware_usage = (struct vram_usagebyfirmware_v2_1 *)(ctx->bios + data_offset);
--		DRM_DEBUG("atom firmware requested %08x %dkb fw %dkb drv\n",
--			  le32_to_cpu(firmware_usage->start_address_in_kb),
--			  le16_to_cpu(firmware_usage->used_by_firmware_in_kb),
--			  le16_to_cpu(firmware_usage->used_by_driver_in_kb));
--
--		start_addr = le32_to_cpu(firmware_usage->start_address_in_kb);
--		size = le16_to_cpu(firmware_usage->used_by_firmware_in_kb);
--
--		if ((uint32_t)(start_addr & ATOM_VRAM_OPERATION_FLAGS_MASK) ==
--			(uint32_t)(ATOM_VRAM_BLOCK_SRIOV_MSG_SHARE_RESERVATION <<
--			ATOM_VRAM_OPERATION_FLAGS_SHIFT)) {
--			/* Firmware request VRAM reservation for SR-IOV */
--			adev->mman.fw_vram_usage_start_offset = (start_addr &
--				(~ATOM_VRAM_OPERATION_FLAGS_MASK)) << 10;
--			adev->mman.fw_vram_usage_size = size << 10;
--			/* Use the default scratch size */
--			usage_bytes = 0;
--		} else {
--			usage_bytes = le16_to_cpu(firmware_usage->used_by_driver_in_kb) << 10;
-+	if (amdgpu_atom_parse_data_header(ctx, index, NULL, &frev, &crev, &data_offset)) {
-+		if (frev == 2 && crev == 1) {
-+			fw_usage_v2_1 =
-+				(struct vram_usagebyfirmware_v2_1 *)(ctx->bios + data_offset);
-+			amdgpu_atomfirmware_allocate_fb_v2_1(adev,
-+					fw_usage_v2_1,
-+					&usage_bytes);
-+		} else if (frev >= 2 && crev >= 2) {
-+			fw_usage_v2_2 =
-+				(struct vram_usagebyfirmware_v2_2 *)(ctx->bios + data_offset);
-+			amdgpu_atomfirmware_allocate_fb_v2_2(adev,
-+					fw_usage_v2_2,
-+					&usage_bytes);
- 		}
- 	}
-+
- 	ctx->scratch_size_bytes = 0;
- 	if (usage_bytes == 0)
- 		usage_bytes = 20 * 1024;
+-	r = amdgpu_bo_create_reserved(adev, size, PAGE_SIZE, domain, bo_ptr,
+-				      NULL, cpu_addr);
++	r = amdgpu_bo_create_reserved(adev, size, PAGE_SIZE,
++				      AMDGPU_GEM_DOMAIN_VRAM, bo_ptr, NULL,
++				      cpu_addr);
+ 	if (r)
+ 		return r;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.h
+@@ -284,7 +284,7 @@ int amdgpu_bo_create_kernel(struct amdgp
+ 			    u32 domain, struct amdgpu_bo **bo_ptr,
+ 			    u64 *gpu_addr, void **cpu_addr);
+ int amdgpu_bo_create_kernel_at(struct amdgpu_device *adev,
+-			       uint64_t offset, uint64_t size, uint32_t domain,
++			       uint64_t offset, uint64_t size,
+ 			       struct amdgpu_bo **bo_ptr, void **cpu_addr);
+ int amdgpu_bo_create_user(struct amdgpu_device *adev,
+ 			  struct amdgpu_bo_param *bp,
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -1537,6 +1537,23 @@ static void amdgpu_ttm_fw_reserve_vram_f
- 		NULL, &adev->mman.fw_vram_usage_va);
- }
- 
-+/*
-+ * Driver Reservation functions
-+ */
-+/**
-+ * amdgpu_ttm_drv_reserve_vram_fini - free drv reserved vram
-+ *
-+ * @adev: amdgpu_device pointer
-+ *
-+ * free drv reserved vram if it has been reserved.
-+ */
-+static void amdgpu_ttm_drv_reserve_vram_fini(struct amdgpu_device *adev)
-+{
-+	amdgpu_bo_free_kernel(&adev->mman.drv_vram_usage_reserved_bo,
-+						  NULL,
-+						  NULL);
-+}
-+
- /**
-  * amdgpu_ttm_fw_reserve_vram_init - create bo vram reservation from fw
-  *
-@@ -1563,6 +1580,31 @@ static int amdgpu_ttm_fw_reserve_vram_in
+@@ -1575,7 +1575,6 @@ static int amdgpu_ttm_fw_reserve_vram_in
+ 	return amdgpu_bo_create_kernel_at(adev,
+ 					  adev->mman.fw_vram_usage_start_offset,
+ 					  adev->mman.fw_vram_usage_size,
+-					  AMDGPU_GEM_DOMAIN_VRAM,
+ 					  &adev->mman.fw_vram_usage_reserved_bo,
  					  &adev->mman.fw_vram_usage_va);
  }
+@@ -1600,7 +1599,6 @@ static int amdgpu_ttm_drv_reserve_vram_i
+ 	return amdgpu_bo_create_kernel_at(adev,
+ 					  adev->mman.drv_vram_usage_start_offset,
+ 					  adev->mman.drv_vram_usage_size,
+-					  AMDGPU_GEM_DOMAIN_VRAM,
+ 					  &adev->mman.drv_vram_usage_reserved_bo,
+ 					  NULL);
+ }
+@@ -1681,7 +1679,6 @@ static int amdgpu_ttm_reserve_tmr(struct
+ 		ret = amdgpu_bo_create_kernel_at(adev,
+ 					 ctx->c2p_train_data_offset,
+ 					 ctx->train_data_size,
+-					 AMDGPU_GEM_DOMAIN_VRAM,
+ 					 &ctx->c2p_bo,
+ 					 NULL);
+ 		if (ret) {
+@@ -1695,7 +1692,6 @@ static int amdgpu_ttm_reserve_tmr(struct
+ 	ret = amdgpu_bo_create_kernel_at(adev,
+ 				adev->gmc.real_vram_size - adev->mman.discovery_tmr_size,
+ 				adev->mman.discovery_tmr_size,
+-				AMDGPU_GEM_DOMAIN_VRAM,
+ 				&adev->mman.discovery_memory,
+ 				NULL);
+ 	if (ret) {
+@@ -1796,21 +1792,18 @@ int amdgpu_ttm_init(struct amdgpu_device
+ 	 * avoid display artifacts while transitioning between pre-OS
+ 	 * and driver.  */
+ 	r = amdgpu_bo_create_kernel_at(adev, 0, adev->mman.stolen_vga_size,
+-				       AMDGPU_GEM_DOMAIN_VRAM,
+ 				       &adev->mman.stolen_vga_memory,
+ 				       NULL);
+ 	if (r)
+ 		return r;
+ 	r = amdgpu_bo_create_kernel_at(adev, adev->mman.stolen_vga_size,
+ 				       adev->mman.stolen_extended_size,
+-				       AMDGPU_GEM_DOMAIN_VRAM,
+ 				       &adev->mman.stolen_extended_memory,
+ 				       NULL);
+ 	if (r)
+ 		return r;
+ 	r = amdgpu_bo_create_kernel_at(adev, adev->mman.stolen_reserved_offset,
+ 				       adev->mman.stolen_reserved_size,
+-				       AMDGPU_GEM_DOMAIN_VRAM,
+ 				       &adev->mman.stolen_reserved_memory,
+ 				       NULL);
+ 	if (r)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
+@@ -391,7 +391,6 @@ static void amdgpu_virt_ras_reserve_bps(
+ 		 */
+ 		if (amdgpu_bo_create_kernel_at(adev, bp << AMDGPU_GPU_PAGE_SHIFT,
+ 					       AMDGPU_GPU_PAGE_SIZE,
+-					       AMDGPU_GEM_DOMAIN_VRAM,
+ 					       &bo, NULL))
+ 			DRM_DEBUG("RAS WARN: reserve vram for retired page %llx fail\n", bp);
  
-+/**
-+ * amdgpu_ttm_drv_reserve_vram_init - create bo vram reservation from driver
-+ *
-+ * @adev: amdgpu_device pointer
-+ *
-+ * create bo vram reservation from drv.
-+ */
-+static int amdgpu_ttm_drv_reserve_vram_init(struct amdgpu_device *adev)
-+{
-+	uint64_t vram_size = adev->gmc.visible_vram_size;
-+
-+	adev->mman.drv_vram_usage_reserved_bo = NULL;
-+
-+	if (adev->mman.drv_vram_usage_size == 0 ||
-+	    adev->mman.drv_vram_usage_size > vram_size)
-+		return 0;
-+
-+	return amdgpu_bo_create_kernel_at(adev,
-+					  adev->mman.drv_vram_usage_start_offset,
-+					  adev->mman.drv_vram_usage_size,
-+					  AMDGPU_GEM_DOMAIN_VRAM,
-+					  &adev->mman.drv_vram_usage_reserved_bo,
-+					  NULL);
-+}
-+
- /*
-  * Memoy training reservation functions
-  */
-@@ -1731,6 +1773,14 @@ int amdgpu_ttm_init(struct amdgpu_device
- 	}
- 
- 	/*
-+	 *The reserved vram for driver must be pinned to the specified
-+	 *place on the VRAM, so reserve it early.
-+	 */
-+	r = amdgpu_ttm_drv_reserve_vram_init(adev);
-+	if (r)
-+		return r;
-+
-+	/*
- 	 * only NAVI10 and onwards ASIC support for IP discovery.
- 	 * If IP discovery enabled, a block of memory should be
- 	 * reserved for IP discovey.
-@@ -1855,6 +1905,7 @@ void amdgpu_ttm_fini(struct amdgpu_devic
- 	amdgpu_bo_free_kernel(&adev->mman.sdma_access_bo, NULL,
- 					&adev->mman.sdma_access_ptr);
- 	amdgpu_ttm_fw_reserve_vram_fini(adev);
-+	amdgpu_ttm_drv_reserve_vram_fini(adev);
- 
- 	if (drm_dev_enter(adev_to_drm(adev), &idx)) {
- 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h
-@@ -86,6 +86,11 @@ struct amdgpu_mman {
- 	struct amdgpu_bo	*fw_vram_usage_reserved_bo;
- 	void		*fw_vram_usage_va;
- 
-+	/* driver VRAM reservation */
-+	u64		drv_vram_usage_start_offset;
-+	u64		drv_vram_usage_size;
-+	struct amdgpu_bo	*drv_vram_usage_reserved_bo;
-+
- 	/* PAGE_SIZE'd BO for process memory r/w over SDMA. */
- 	struct amdgpu_bo	*sdma_access_bo;
- 	void			*sdma_access_ptr;
---- a/drivers/gpu/drm/amd/include/atomfirmware.h
-+++ b/drivers/gpu/drm/amd/include/atomfirmware.h
-@@ -705,20 +705,65 @@ struct atom_gpio_pin_lut_v2_1
- };
- 
- 
--/* 
--  ***************************************************************************
--    Data Table vram_usagebyfirmware  structure
--  ***************************************************************************
--*/
-+/*
-+ * VBIOS/PRE-OS always reserve a FB region at the top of frame buffer. driver should not write
-+ * access that region. driver can allocate their own reservation region as long as it does not
-+ * overlap firwmare's reservation region.
-+ * if (pre-NV1X) atom data table firmwareInfoTable version < 3.3:
-+ * in this case, atom data table vram_usagebyfirmwareTable version always <= 2.1
-+ *   if VBIOS/UEFI GOP is posted:
-+ *     VBIOS/UEFIGOP update used_by_firmware_in_kb = total reserved size by VBIOS
-+ *     update start_address_in_kb = total_mem_size_in_kb - used_by_firmware_in_kb;
-+ *     ( total_mem_size_in_kb = reg(CONFIG_MEMSIZE)<<10)
-+ *     driver can allocate driver reservation region under firmware reservation,
-+ *     used_by_driver_in_kb = driver reservation size
-+ *     driver reservation start address =  (start_address_in_kb - used_by_driver_in_kb)
-+ *     Comment1[hchan]: There is only one reservation at the beginning of the FB reserved by
-+ *     host driver. Host driver would overwrite the table with the following
-+ *     used_by_firmware_in_kb = total reserved size for pf-vf info exchange and
-+ *     set SRIOV_MSG_SHARE_RESERVATION mask start_address_in_kb = 0
-+ *   else there is no VBIOS reservation region:
-+ *     driver must allocate driver reservation region at top of FB.
-+ *     driver set used_by_driver_in_kb = driver reservation size
-+ *     driver reservation start address =  (total_mem_size_in_kb - used_by_driver_in_kb)
-+ *     same as Comment1
-+ * else (NV1X and after):
-+ *   if VBIOS/UEFI GOP is posted:
-+ *     VBIOS/UEFIGOP update:
-+ *       used_by_firmware_in_kb = atom_firmware_Info_v3_3.fw_reserved_size_in_kb;
-+ *       start_address_in_kb = total_mem_size_in_kb - used_by_firmware_in_kb;
-+ *       (total_mem_size_in_kb = reg(CONFIG_MEMSIZE)<<10)
-+ *   if vram_usagebyfirmwareTable version <= 2.1:
-+ *     driver can allocate driver reservation region under firmware reservation,
-+ *     driver set used_by_driver_in_kb = driver reservation size
-+ *     driver reservation start address = start_address_in_kb - used_by_driver_in_kb
-+ *     same as Comment1
-+ *   else driver can:
-+ *     allocate it reservation any place as long as it does overlap pre-OS FW reservation area
-+ *     set used_by_driver_region0_in_kb = driver reservation size
-+ *     set driver_region0_start_address_in_kb =  driver reservation region start address
-+ *     Comment2[hchan]: Host driver can set used_by_firmware_in_kb and start_address_in_kb to
-+ *     zero as the reservation for VF as it doesn’t exist.  And Host driver should also
-+ *     update atom_firmware_Info table to remove the same VBIOS reservation as well.
-+ */
- 
- struct vram_usagebyfirmware_v2_1
- {
--  struct  atom_common_table_header  table_header;
--  uint32_t  start_address_in_kb;
--  uint16_t  used_by_firmware_in_kb;
--  uint16_t  used_by_driver_in_kb; 
-+	struct  atom_common_table_header  table_header;
-+	uint32_t  start_address_in_kb;
-+	uint16_t  used_by_firmware_in_kb;
-+	uint16_t  used_by_driver_in_kb;
- };
- 
-+struct vram_usagebyfirmware_v2_2 {
-+	struct  atom_common_table_header  table_header;
-+	uint32_t  fw_region_start_address_in_kb;
-+	uint16_t  used_by_firmware_in_kb;
-+	uint16_t  reserved;
-+	uint32_t  driver_region0_start_address_in_kb;
-+	uint32_t  used_by_driver_region0_in_kb;
-+	uint32_t  reserved32[7];
-+};
- 
- /* 
-   ***************************************************************************
 
 
