@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255DC1774C
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:11:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB24C433C8;
-	Wed,  9 Aug 2023 11:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ECC81774C
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:11:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E475C433C7;
+	Wed,  9 Aug 2023 11:11:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579512;
-	bh=+x7aS1R7vQ6ShWVgwfES8oIz6kAW0O++jLfC0KeH2XM=;
+	s=korg; t=1691579515;
+	bh=wkBjhZyWQIQx1FGwsOlfSUH/zjSGbLMJg+cLH8edqws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P/tgmWYtQhVLm7eLX4zMozZbjzMWaqSDMFOeLRxfvOX+cl+bGwYGL932aHkeRJ3DU
-	 wG63d0HlOg6zkp/42WEPvuRwBYIbIMbpbuqYJlolh8uF7vzh4M18fqXFQziv0NTiuS
-	 4W02/UjZB+QvGzSSvZjCugM/VvqIPShKbJ0366ZY=
+	b=AIaOKJ+Uten+w1D4szbLHcY8pNB1NDvnj0/e3Xu31okYpZMQhqJVEBZ5KcjQpmEgJ
+	 5cHmRpG+gXDYpB6zd0TJyGEx9EMCNpcdTi2DsTBDixZCxgk4DBUE1Urxo9bI6Hnro3
+	 M3dMxHXK2F65446s70wh74KxI1MAE6n0U2EM8GDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 018/323] PM: domains: fix integer overflow issues in genpd_parse_state()
-Date: Wed,  9 Aug 2023 12:37:36 +0200
-Message-ID: <20230809103658.940653801@linuxfoundation.org>
+Subject: [PATCH 4.19 019/323] ARM: 9303/1: kprobes: avoid missing-declaration warnings
+Date: Wed,  9 Aug 2023 12:37:37 +0200
+Message-ID: <20230809103658.981210317@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,46 +37,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit e5d1c8722083f0332dcd3c85fa1273d85fb6bed8 ]
+[ Upstream commit 1b9c3ddcec6a55e15d3e38e7405e2d078db02020 ]
 
-Currently, while calculating residency and latency values, right
-operands may overflow if resulting values are big enough.
+checker_stack_use_t32strd() and kprobe_handler() can be made static since
+they are not used from other files, while coverage_start_registers()
+and __kprobes_test_case() are used from assembler code, and just need
+a declaration to avoid a warning with the global definition.
 
-To prevent this, albeit unlikely case, play it safe and convert
-right operands to left ones' type s64.
+arch/arm/probes/kprobes/checkers-common.c:43:18: error: no previous prototype for 'checker_stack_use_t32strd'
+arch/arm/probes/kprobes/core.c:236:16: error: no previous prototype for 'kprobe_handler'
+arch/arm/probes/kprobes/test-core.c:723:10: error: no previous prototype for 'coverage_start_registers'
+arch/arm/probes/kprobes/test-core.c:918:14: error: no previous prototype for '__kprobes_test_case_start'
+arch/arm/probes/kprobes/test-core.c:952:14: error: no previous prototype for '__kprobes_test_case_end_16'
+arch/arm/probes/kprobes/test-core.c:967:14: error: no previous prototype for '__kprobes_test_case_end_32'
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: 30f604283e05 ("PM / Domains: Allow domain power states to be read from DT")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 6624cf651f1a ("ARM: kprobes: collects stack consumption for store instructions")
+Fixes: 454f3e132d05 ("ARM/kprobes: Remove jprobe arm implementation")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/domain.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm/probes/kprobes/checkers-common.c | 2 +-
+ arch/arm/probes/kprobes/core.c            | 2 +-
+ arch/arm/probes/kprobes/opt-arm.c         | 2 --
+ arch/arm/probes/kprobes/test-core.c       | 2 +-
+ arch/arm/probes/kprobes/test-core.h       | 4 ++++
+ 5 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-index e865aa4b25047..b32d3cf4f670d 100644
---- a/drivers/base/power/domain.c
-+++ b/drivers/base/power/domain.c
-@@ -2433,10 +2433,10 @@ static int genpd_parse_state(struct genpd_power_state *genpd_state,
+diff --git a/arch/arm/probes/kprobes/checkers-common.c b/arch/arm/probes/kprobes/checkers-common.c
+index 971119c294741..aa10e5e46ebb2 100644
+--- a/arch/arm/probes/kprobes/checkers-common.c
++++ b/arch/arm/probes/kprobes/checkers-common.c
+@@ -48,7 +48,7 @@ enum probes_insn checker_stack_use_imm_0xx(probes_opcode_t insn,
+  * Different from other insn uses imm8, the real addressing offset of
+  * STRD in T32 encoding should be imm8 * 4. See ARMARM description.
+  */
+-enum probes_insn checker_stack_use_t32strd(probes_opcode_t insn,
++static enum probes_insn checker_stack_use_t32strd(probes_opcode_t insn,
+ 		struct arch_probes_insn *asi,
+ 		const struct decode_header *h)
+ {
+diff --git a/arch/arm/probes/kprobes/core.c b/arch/arm/probes/kprobes/core.c
+index 62da8e2211e4b..0a7090a65bcad 100644
+--- a/arch/arm/probes/kprobes/core.c
++++ b/arch/arm/probes/kprobes/core.c
+@@ -239,7 +239,7 @@ singlestep(struct kprobe *p, struct pt_regs *regs, struct kprobe_ctlblk *kcb)
+  * kprobe, and that level is reserved for user kprobe handlers, so we can't
+  * risk encountering a new kprobe in an interrupt handler.
+  */
+-void __kprobes kprobe_handler(struct pt_regs *regs)
++static void __kprobes kprobe_handler(struct pt_regs *regs)
+ {
+ 	struct kprobe *p, *cur;
+ 	struct kprobe_ctlblk *kcb;
+diff --git a/arch/arm/probes/kprobes/opt-arm.c b/arch/arm/probes/kprobes/opt-arm.c
+index cf08cb7267670..1516c340a0766 100644
+--- a/arch/arm/probes/kprobes/opt-arm.c
++++ b/arch/arm/probes/kprobes/opt-arm.c
+@@ -158,8 +158,6 @@ __arch_remove_optimized_kprobe(struct optimized_kprobe *op, int dirty)
+ 	}
+ }
  
- 	err = of_property_read_u32(state_node, "min-residency-us", &residency);
- 	if (!err)
--		genpd_state->residency_ns = 1000 * residency;
-+		genpd_state->residency_ns = 1000LL * residency;
+-extern void kprobe_handler(struct pt_regs *regs);
+-
+ static void
+ optimized_callback(struct optimized_kprobe *op, struct pt_regs *regs)
+ {
+diff --git a/arch/arm/probes/kprobes/test-core.c b/arch/arm/probes/kprobes/test-core.c
+index cc237fa9b90fb..1c86c5d980c5b 100644
+--- a/arch/arm/probes/kprobes/test-core.c
++++ b/arch/arm/probes/kprobes/test-core.c
+@@ -723,7 +723,7 @@ static const char coverage_register_lookup[16] = {
+ 	[REG_TYPE_NOSPPCX]	= COVERAGE_ANY_REG | COVERAGE_SP,
+ };
  
--	genpd_state->power_on_latency_ns = 1000 * exit_latency;
--	genpd_state->power_off_latency_ns = 1000 * entry_latency;
-+	genpd_state->power_on_latency_ns = 1000LL * exit_latency;
-+	genpd_state->power_off_latency_ns = 1000LL * entry_latency;
- 	genpd_state->fwnode = &state_node->fwnode;
- 
- 	return 0;
+-unsigned coverage_start_registers(const struct decode_header *h)
++static unsigned coverage_start_registers(const struct decode_header *h)
+ {
+ 	unsigned regs = 0;
+ 	int i;
+diff --git a/arch/arm/probes/kprobes/test-core.h b/arch/arm/probes/kprobes/test-core.h
+index 94285203e9f74..459ebda077139 100644
+--- a/arch/arm/probes/kprobes/test-core.h
++++ b/arch/arm/probes/kprobes/test-core.h
+@@ -456,3 +456,7 @@ void kprobe_thumb32_test_cases(void);
+ #else
+ void kprobe_arm_test_cases(void);
+ #endif
++
++void __kprobes_test_case_start(void);
++void __kprobes_test_case_end_16(void);
++void __kprobes_test_case_end_32(void);
 -- 
 2.39.2
 
