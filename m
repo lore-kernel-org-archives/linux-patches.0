@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A32C14279
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:31:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B833C433C7;
-	Wed,  9 Aug 2023 11:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440AD17AB5
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:31:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F75C433C7;
+	Wed,  9 Aug 2023 11:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580692;
-	bh=ZrNMPEQnIK2dj2XX2tD/cW80yHgonQ/cuPldIwSJ8OM=;
+	s=korg; t=1691580695;
+	bh=b4tEXfw2Sego/01f9fZM0X7NLRDSgZJZUJvsMBnhA6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LsAPH/Ws9JDCHuK42Ae7fQa73Id+zofP7bBjPpF+Zin+U//rgjJmTy/6p54/0H6pH
-	 KIqWXmo6z6htt15OSAk7hHbp9UQSIKnbWeW1atgReXzNseboyFlutaipxd6Z4rfuGw
-	 kBO6MZHKQYRC0LSZLHBvp/IagOvGGeVDsqDQYM+M=
+	b=TzJl0tpQ74o+ZoGn66ZmOPvinIo4cakdb0/w383+qq4gFkTCEaPZH3GvIo736fK87
+	 tjhyFR7VNiorlodS0e9LkWCq8+B7qC4DkTZctS6HA9CEYefebLppLVIV0BgX5/TI1i
+	 59OgnGDq/6rXoR7m9Yh9OHTsrqIm8gFSqHig6CWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	butt3rflyh4ck <butterflyhuangxx@gmail.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
-Subject: [PATCH 5.4 086/154] btrfs: fix race between quota disable and quota assign ioctls
-Date: Wed,  9 Aug 2023 12:41:57 +0200
-Message-ID: <20230809103639.833965699@linuxfoundation.org>
+	Lion <nnamrec@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Shaoying Xu <shaoyi@amazon.com>
+Subject: [PATCH 5.4 087/154] net/sched: sch_qfq: account for stab overhead in qfq_enqueue
+Date: Wed,  9 Aug 2023 12:41:58 +0200
+Message-ID: <20230809103639.869268488@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -37,194 +39,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-commit 2f1a6be12ab6c8470d5776e68644726c94257c54 upstream.
+commit 3e337087c3b5805fe0b8a46ba622a962880b5d64 upstream.
 
-The quota assign ioctl can currently run in parallel with a quota disable
-ioctl call. The assign ioctl uses the quota root, while the disable ioctl
-frees that root, and therefore we can have a use-after-free triggered in
-the assign ioctl, leading to a trace like the following when KASAN is
-enabled:
+Lion says:
+-------
+In the QFQ scheduler a similar issue to CVE-2023-31436
+persists.
 
-  [672.723][T736] BUG: KASAN: slab-use-after-free in btrfs_search_slot+0x2962/0x2db0
-  [672.723][T736] Read of size 8 at addr ffff888022ec0208 by task btrfs_search_sl/27736
-  [672.724][T736]
-  [672.725][T736] CPU: 1 PID: 27736 Comm: btrfs_search_sl Not tainted 6.3.0-rc3 #37
-  [672.723][T736] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-  [672.727][T736] Call Trace:
-  [672.728][T736]  <TASK>
-  [672.728][T736]  dump_stack_lvl+0xd9/0x150
-  [672.725][T736]  print_report+0xc1/0x5e0
-  [672.720][T736]  ? __virt_addr_valid+0x61/0x2e0
-  [672.727][T736]  ? __phys_addr+0xc9/0x150
-  [672.725][T736]  ? btrfs_search_slot+0x2962/0x2db0
-  [672.722][T736]  kasan_report+0xc0/0xf0
-  [672.729][T736]  ? btrfs_search_slot+0x2962/0x2db0
-  [672.724][T736]  btrfs_search_slot+0x2962/0x2db0
-  [672.723][T736]  ? fs_reclaim_acquire+0xba/0x160
-  [672.722][T736]  ? split_leaf+0x13d0/0x13d0
-  [672.726][T736]  ? rcu_is_watching+0x12/0xb0
-  [672.723][T736]  ? kmem_cache_alloc+0x338/0x3c0
-  [672.722][T736]  update_qgroup_status_item+0xf7/0x320
-  [672.724][T736]  ? add_qgroup_rb+0x3d0/0x3d0
-  [672.739][T736]  ? do_raw_spin_lock+0x12d/0x2b0
-  [672.730][T736]  ? spin_bug+0x1d0/0x1d0
-  [672.737][T736]  btrfs_run_qgroups+0x5de/0x840
-  [672.730][T736]  ? btrfs_qgroup_rescan_worker+0xa70/0xa70
-  [672.738][T736]  ? __del_qgroup_relation+0x4ba/0xe00
-  [672.738][T736]  btrfs_ioctl+0x3d58/0x5d80
-  [672.735][T736]  ? tomoyo_path_number_perm+0x16a/0x550
-  [672.737][T736]  ? tomoyo_execute_permission+0x4a0/0x4a0
-  [672.731][T736]  ? btrfs_ioctl_get_supported_features+0x50/0x50
-  [672.737][T736]  ? __sanitizer_cov_trace_switch+0x54/0x90
-  [672.734][T736]  ? do_vfs_ioctl+0x132/0x1660
-  [672.730][T736]  ? vfs_fileattr_set+0xc40/0xc40
-  [672.730][T736]  ? _raw_spin_unlock_irq+0x2e/0x50
-  [672.732][T736]  ? sigprocmask+0xf2/0x340
-  [672.737][T736]  ? __fget_files+0x26a/0x480
-  [672.732][T736]  ? bpf_lsm_file_ioctl+0x9/0x10
-  [672.738][T736]  ? btrfs_ioctl_get_supported_features+0x50/0x50
-  [672.736][T736]  __x64_sys_ioctl+0x198/0x210
-  [672.736][T736]  do_syscall_64+0x39/0xb0
-  [672.731][T736]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-  [672.739][T736] RIP: 0033:0x4556ad
-  [672.742][T736]  </TASK>
-  [672.743][T736]
-  [672.748][T736] Allocated by task 27677:
-  [672.743][T736]  kasan_save_stack+0x22/0x40
-  [672.741][T736]  kasan_set_track+0x25/0x30
-  [672.741][T736]  __kasan_kmalloc+0xa4/0xb0
-  [672.749][T736]  btrfs_alloc_root+0x48/0x90
-  [672.746][T736]  btrfs_create_tree+0x146/0xa20
-  [672.744][T736]  btrfs_quota_enable+0x461/0x1d20
-  [672.743][T736]  btrfs_ioctl+0x4a1c/0x5d80
-  [672.747][T736]  __x64_sys_ioctl+0x198/0x210
-  [672.749][T736]  do_syscall_64+0x39/0xb0
-  [672.744][T736]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-  [672.756][T736]
-  [672.757][T736] Freed by task 27677:
-  [672.759][T736]  kasan_save_stack+0x22/0x40
-  [672.759][T736]  kasan_set_track+0x25/0x30
-  [672.756][T736]  kasan_save_free_info+0x2e/0x50
-  [672.751][T736]  ____kasan_slab_free+0x162/0x1c0
-  [672.758][T736]  slab_free_freelist_hook+0x89/0x1c0
-  [672.752][T736]  __kmem_cache_free+0xaf/0x2e0
-  [672.752][T736]  btrfs_put_root+0x1ff/0x2b0
-  [672.759][T736]  btrfs_quota_disable+0x80a/0xbc0
-  [672.752][T736]  btrfs_ioctl+0x3e5f/0x5d80
-  [672.756][T736]  __x64_sys_ioctl+0x198/0x210
-  [672.753][T736]  do_syscall_64+0x39/0xb0
-  [672.765][T736]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-  [672.769][T736]
-  [672.768][T736] The buggy address belongs to the object at ffff888022ec0000
-  [672.768][T736]  which belongs to the cache kmalloc-4k of size 4096
-  [672.769][T736] The buggy address is located 520 bytes inside of
-  [672.769][T736]  freed 4096-byte region [ffff888022ec0000, ffff888022ec1000)
-  [672.760][T736]
-  [672.764][T736] The buggy address belongs to the physical page:
-  [672.761][T736] page:ffffea00008bb000 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x22ec0
-  [672.766][T736] head:ffffea00008bb000 order:3 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-  [672.779][T736] flags: 0xfff00000010200(slab|head|node=0|zone=1|lastcpupid=0x7ff)
-  [672.770][T736] raw: 00fff00000010200 ffff888012842140 ffffea000054ba00 dead000000000002
-  [672.770][T736] raw: 0000000000000000 0000000000040004 00000001ffffffff 0000000000000000
-  [672.771][T736] page dumped because: kasan: bad access detected
-  [672.778][T736] page_owner tracks the page as allocated
-  [672.777][T736] page last allocated via order 3, migratetype Unmovable, gfp_mask 0xd2040(__GFP_IO|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC), pid 88
-  [672.779][T736]  get_page_from_freelist+0x119c/0x2d50
-  [672.779][T736]  __alloc_pages+0x1cb/0x4a0
-  [672.776][T736]  alloc_pages+0x1aa/0x270
-  [672.773][T736]  allocate_slab+0x260/0x390
-  [672.771][T736]  ___slab_alloc+0xa9a/0x13e0
-  [672.778][T736]  __slab_alloc.constprop.0+0x56/0xb0
-  [672.771][T736]  __kmem_cache_alloc_node+0x136/0x320
-  [672.789][T736]  __kmalloc+0x4e/0x1a0
-  [672.783][T736]  tomoyo_realpath_from_path+0xc3/0x600
-  [672.781][T736]  tomoyo_path_perm+0x22f/0x420
-  [672.782][T736]  tomoyo_path_unlink+0x92/0xd0
-  [672.780][T736]  security_path_unlink+0xdb/0x150
-  [672.788][T736]  do_unlinkat+0x377/0x680
-  [672.788][T736]  __x64_sys_unlink+0xca/0x110
-  [672.789][T736]  do_syscall_64+0x39/0xb0
-  [672.783][T736]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-  [672.784][T736] page last free stack trace:
-  [672.787][T736]  free_pcp_prepare+0x4e5/0x920
-  [672.787][T736]  free_unref_page+0x1d/0x4e0
-  [672.784][T736]  __unfreeze_partials+0x17c/0x1a0
-  [672.797][T736]  qlist_free_all+0x6a/0x180
-  [672.796][T736]  kasan_quarantine_reduce+0x189/0x1d0
-  [672.797][T736]  __kasan_slab_alloc+0x64/0x90
-  [672.793][T736]  kmem_cache_alloc+0x17c/0x3c0
-  [672.799][T736]  getname_flags.part.0+0x50/0x4e0
-  [672.799][T736]  getname_flags+0x9e/0xe0
-  [672.792][T736]  vfs_fstatat+0x77/0xb0
-  [672.791][T736]  __do_sys_newlstat+0x84/0x100
-  [672.798][T736]  do_syscall_64+0x39/0xb0
-  [672.796][T736]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-  [672.790][T736]
-  [672.791][T736] Memory state around the buggy address:
-  [672.799][T736]  ffff888022ec0100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-  [672.805][T736]  ffff888022ec0180: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-  [672.802][T736] >ffff888022ec0200: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-  [672.809][T736]                       ^
-  [672.809][T736]  ffff888022ec0280: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-  [672.809][T736]  ffff888022ec0300: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+Consider the following code in net/sched/sch_qfq.c:
 
-Fix this by having the qgroup assign ioctl take the qgroup ioctl mutex
-before calling btrfs_run_qgroups(), which is what all qgroup ioctls should
-call.
+static int qfq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+                struct sk_buff **to_free)
+{
+     unsigned int len = qdisc_pkt_len(skb), gso_segs;
 
-Reported-by: butt3rflyh4ck <butterflyhuangxx@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/CAFcO6XN3VD8ogmHwqRk4kbiwtpUSNySu2VAxN8waEPciCHJvMA@mail.gmail.com/
-CC: stable@vger.kernel.org # 5.10+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
+    // ...
+
+     if (unlikely(cl->agg->lmax < len)) {
+         pr_debug("qfq: increasing maxpkt from %u to %u for class %u",
+              cl->agg->lmax, len, cl->common.classid);
+         err = qfq_change_agg(sch, cl, cl->agg->class_weight, len);
+         if (err) {
+             cl->qstats.drops++;
+             return qdisc_drop(skb, sch, to_free);
+         }
+
+    // ...
+
+     }
+
+Similarly to CVE-2023-31436, "lmax" is increased without any bounds
+checks according to the packet length "len". Usually this would not
+impose a problem because packet sizes are naturally limited.
+
+This is however not the actual packet length, rather the
+"qdisc_pkt_len(skb)" which might apply size transformations according to
+"struct qdisc_size_table" as created by "qdisc_get_stab()" in
+net/sched/sch_api.c if the TCA_STAB option was set when modifying the qdisc.
+
+A user may choose virtually any size using such a table.
+
+As a result the same issue as in CVE-2023-31436 can occur, allowing heap
+out-of-bounds read / writes in the kmalloc-8192 cache.
+-------
+
+We can create the issue with the following commands:
+
+tc qdisc add dev $DEV root handle 1: stab mtu 2048 tsize 512 mpu 0 \
+overhead 999999999 linklayer ethernet qfq
+tc class add dev $DEV parent 1: classid 1:1 htb rate 6mbit burst 15k
+tc filter add dev $DEV parent 1: matchall classid 1:1
+ping -I $DEV 1.1.1.2
+
+This is caused by incorrectly assuming that qdisc_pkt_len() returns a
+length within the QFQ_MIN_LMAX < len < QFQ_MAX_LMAX.
+
+Fixes: 462dbc9101ac ("pkt_sched: QFQ Plus: fair-queueing service at DRR cost")
+Reported-by: Lion <nnamrec@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Shaoying Xu <shaoyi@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ioctl.c  |    2 ++
- fs/btrfs/qgroup.c |   11 ++++++++++-
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ net/sched/sch_qfq.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -4917,7 +4917,9 @@ static long btrfs_ioctl_qgroup_assign(st
- 	}
- 
- 	/* update qgroup status and info */
-+	mutex_lock(&fs_info->qgroup_ioctl_lock);
- 	err = btrfs_run_qgroups(trans);
-+	mutex_unlock(&fs_info->qgroup_ioctl_lock);
- 	if (err < 0)
- 		btrfs_handle_fs_error(fs_info, err,
- 				      "failed to update qgroup status and info");
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -2721,13 +2721,22 @@ cleanup:
- }
- 
- /*
-- * called from commit_transaction. Writes all changed qgroups to disk.
-+ * Writes all changed qgroups to disk.
-+ * Called by the transaction commit path and the qgroup assign ioctl.
-  */
- int btrfs_run_qgroups(struct btrfs_trans_handle *trans)
+--- a/net/sched/sch_qfq.c
++++ b/net/sched/sch_qfq.c
+@@ -375,8 +375,13 @@ static int qfq_change_agg(struct Qdisc *
+ 			   u32 lmax)
  {
- 	struct btrfs_fs_info *fs_info = trans->fs_info;
- 	int ret = 0;
+ 	struct qfq_sched *q = qdisc_priv(sch);
+-	struct qfq_aggregate *new_agg = qfq_find_agg(q, lmax, weight);
++	struct qfq_aggregate *new_agg;
  
-+	/*
-+	 * In case we are called from the qgroup assign ioctl, assert that we
-+	 * are holding the qgroup_ioctl_lock, otherwise we can race with a quota
-+	 * disable operation (ioctl) and access a freed quota root.
-+	 */
-+	if (trans->transaction->state != TRANS_STATE_COMMIT_DOING)
-+		lockdep_assert_held(&fs_info->qgroup_ioctl_lock);
++	/* 'lmax' can range from [QFQ_MIN_LMAX, pktlen + stab overhead] */
++	if (lmax > (1UL << QFQ_MTU_SHIFT))
++		return -EINVAL;
 +
- 	if (!fs_info->quota_root)
- 		return ret;
- 
++	new_agg = qfq_find_agg(q, lmax, weight);
+ 	if (new_agg == NULL) { /* create new aggregate */
+ 		new_agg = kzalloc(sizeof(*new_agg), GFP_ATOMIC);
+ 		if (new_agg == NULL)
 
 
