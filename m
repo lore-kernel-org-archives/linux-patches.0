@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7386417756
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:21:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4342C433C9;
-	Wed,  9 Aug 2023 11:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FBF17756
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:21:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD11C433C8;
+	Wed,  9 Aug 2023 11:21:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580069;
-	bh=A8h31/oX3dqLXdzJMAQvlBClgdzboMUqP23qpJXtQ5U=;
+	s=korg; t=1691580072;
+	bh=Ca2xW03CkZsnqK+E76VYFr7uIFkOOdn/ahPLoWva4HY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=axckv4owrTwp5AAwu/dLN7MOd0ggZpRIz7g3hbTGb9eLPjdXG8TEpCfCJXcNoSW2C
-	 d9hAW10oUKcMmEwtcCZOyYw4a5vW87Vz/9EazLuHrd0B+G2DFnSLjyitj/0YnppEpi
-	 dNkBCo6VGcN3kTL7mANcOCDU6Q0a7swAWm4E45Fc=
+	b=yT7MJttbKoSQPsjB6OoUeKyJQjCCLTOtYz1Hm2syjgTEZFcNn90kJZoTyh5k3e9Q3
+	 DRQW+/cf/IixUEtME/xTJNvNvA128QHNXRBz2X/pN+kJHicZ/sAjxSaaI6kAmAhG0e
+	 I5NVL4Lzm3P4XqV75ZlGv8oGpj0Q5yOI/p1n+dWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Daniel Scally <dan.scally@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Shenghui Wang <shhuiw@foxmail.com>,
+	Coly Li <colyli@suse.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 217/323] gpio: tps68470: Make tps68470_gpio_output() always set the initial value
-Date: Wed,  9 Aug 2023 12:40:55 +0200
-Message-ID: <20230809103708.035101638@linuxfoundation.org>
+Subject: [PATCH 4.19 218/323] bcache: use MAX_CACHES_PER_SET instead of magic number 8 in __bch_bucket_alloc_set
+Date: Wed,  9 Aug 2023 12:40:56 +0200
+Message-ID: <20230809103708.083779483@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -38,47 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Shenghui Wang <shhuiw@foxmail.com>
 
-[ Upstream commit 5a7adc6c1069ce31ef4f606ae9c05592c80a6ab5 ]
+[ Upstream commit 8792099f9ad487cf381f4e8199ff2158ba0f6eb5 ]
 
-Make tps68470_gpio_output() call tps68470_gpio_set() for output-only pins
-too, so that the initial value passed to gpiod_direction_output() is
-honored for these pins too.
+Current cache_set has MAX_CACHES_PER_SET caches most, and the macro
+is used for
+"
+	struct cache *cache_by_alloc[MAX_CACHES_PER_SET];
+"
+in the define of struct cache_set.
 
-Fixes: 275b13a65547 ("gpio: Add support for TPS68470 GPIOs")
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
-Tested-by: Daniel Scally <dan.scally@ideasonboard.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Use MAX_CACHES_PER_SET instead of magic number 8 in
+__bch_bucket_alloc_set.
+
+Signed-off-by: Shenghui Wang <shhuiw@foxmail.com>
+Signed-off-by: Coly Li <colyli@suse.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 80fca8a10b60 ("bcache: Fix __bch_btree_node_alloc to make the failure behavior consistent")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-tps68470.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/md/bcache/alloc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-tps68470.c b/drivers/gpio/gpio-tps68470.c
-index aff6e504c6668..9704cff9b4aa3 100644
---- a/drivers/gpio/gpio-tps68470.c
-+++ b/drivers/gpio/gpio-tps68470.c
-@@ -91,13 +91,13 @@ static int tps68470_gpio_output(struct gpio_chip *gc, unsigned int offset,
- 	struct tps68470_gpio_data *tps68470_gpio = gpiochip_get_data(gc);
- 	struct regmap *regmap = tps68470_gpio->tps68470_regmap;
+diff --git a/drivers/md/bcache/alloc.c b/drivers/md/bcache/alloc.c
+index 46794cac167e7..a1df0d95151c6 100644
+--- a/drivers/md/bcache/alloc.c
++++ b/drivers/md/bcache/alloc.c
+@@ -497,7 +497,7 @@ int __bch_bucket_alloc_set(struct cache_set *c, unsigned int reserve,
+ 		return -1;
  
-+	/* Set the initial value */
-+	tps68470_gpio_set(gc, offset, value);
-+
- 	/* rest are always outputs */
- 	if (offset >= TPS68470_N_REGULAR_GPIO)
- 		return 0;
+ 	lockdep_assert_held(&c->bucket_lock);
+-	BUG_ON(!n || n > c->caches_loaded || n > 8);
++	BUG_ON(!n || n > c->caches_loaded || n > MAX_CACHES_PER_SET);
  
--	/* Set the initial value */
--	tps68470_gpio_set(gc, offset, value);
--
- 	return regmap_update_bits(regmap, TPS68470_GPIO_CTL_REG_A(offset),
- 				 TPS68470_GPIO_MODE_MASK,
- 				 TPS68470_GPIO_MODE_OUT_CMOS);
+ 	bkey_init(k);
+ 
 -- 
 2.39.2
 
