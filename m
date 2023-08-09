@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40FAE17AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:36:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6312C433C7;
-	Wed,  9 Aug 2023 11:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038C117AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:36:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ACC0C433C8;
+	Wed,  9 Aug 2023 11:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580991;
-	bh=k7/hkVGP6UcjzypddqUKrV+Gaju3YZtSySciLE2E0cs=;
+	s=korg; t=1691580993;
+	bh=v/YyHskIMONw7W8OYh+x6h1qcGTm1Mgs/t4Mnf22p58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gjgyPqtzsOadcMavpKIjAB2Rf3x9vWBsOQcRrjqZoIzKkVYQ8z9emvcgzBOOLYa5U
-	 N9ouKFYtAEZ6ags6M3ERl704NcBNb+pqwGvkgwM62ClEAvCD8y7WvEMwasqIPTC/Hq
-	 9oeaEtYuOgjp/m9KIMH8Pv67baiW49iJ2AGnX1nU=
+	b=Id2O4Vv/8cEWRRZPa8ui4zcirbxaxc31DYTfLkq1MySjbIk0NwvXPz8wbcE8d5rf8
+	 R7Pi491jln4RMZ0yGyhtgt68yUIGbjPGnJY2uLn+vwHkDsr+AsslhGi0GlmzXC1I0X
+	 yRdceyEkXQ9CNaJ1P/K1m53gbFAALDwxqfnY35OQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Tony Lindgren <tony@atomide.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.10 067/201] serial: qcom-geni: drop bogus runtime pm state update
-Date: Wed,  9 Aug 2023 12:41:09 +0200
-Message-ID: <20230809103646.076519547@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ruihong Luo <colorsu1922@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 5.10 068/201] serial: 8250_dw: Preserve original value of DLF register
+Date: Wed,  9 Aug 2023 12:41:10 +0200
+Message-ID: <20230809103646.109426702@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -35,42 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Ruihong Luo <colorsu1922@gmail.com>
 
-commit 4dd8752a14ca0303fbdf0a6c68ff65f0a50bd2fa upstream.
+commit 748c5ea8b8796ae8ee80b8d3a3d940570b588d59 upstream.
 
-The runtime PM state should not be changed by drivers that do not
-implement runtime PM even if it happens to work around a bug in PM core.
+Preserve the original value of the Divisor Latch Fraction (DLF) register.
+When the DLF register is modified without preservation, it can disrupt
+the baudrate settings established by firmware or bootloader, leading to
+data corruption and the generation of unreadable or distorted characters.
 
-With the wake irq arming now fixed, drop the bogus runtime PM state
-update which left the device in active state (and could potentially
-prevent a parent device from suspending).
-
-Fixes: f3974413cf02 ("tty: serial: qcom_geni_serial: Wakeup IRQ cleanup")
-Cc: 5.6+ <stable@vger.kernel.org> # 5.6+
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 701c5e73b296 ("serial: 8250_dw: add fractional divisor support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ruihong Luo <colorsu1922@gmail.com>
+Link: https://lore.kernel.org/stable/20230713004235.35904-1-colorsu1922%40gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230713004235.35904-1-colorsu1922@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c |    7 -------
- 1 file changed, 7 deletions(-)
+ drivers/tty/serial/8250/8250_dwlib.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1468,13 +1468,6 @@ static int qcom_geni_serial_probe(struct
- 		goto err;
- 	}
+--- a/drivers/tty/serial/8250/8250_dwlib.c
++++ b/drivers/tty/serial/8250/8250_dwlib.c
+@@ -80,7 +80,7 @@ static void dw8250_set_divisor(struct ua
+ void dw8250_setup_port(struct uart_port *p)
+ {
+ 	struct uart_8250_port *up = up_to_u8250p(p);
+-	u32 reg;
++	u32 reg, old_dlf;
  
--	/*
--	 * Set pm_runtime status as ACTIVE so that wakeup_irq gets
--	 * enabled/disabled from dev_pm_arm_wake_irq during system
--	 * suspend/resume respectively.
--	 */
--	pm_runtime_set_active(&pdev->dev);
--
- 	if (port->wakeup_irq > 0) {
- 		device_init_wakeup(&pdev->dev, true);
- 		ret = dev_pm_set_dedicated_wake_irq(&pdev->dev,
+ 	/*
+ 	 * If the Component Version Register returns zero, we know that
+@@ -93,9 +93,11 @@ void dw8250_setup_port(struct uart_port
+ 	dev_dbg(p->dev, "Designware UART version %c.%c%c\n",
+ 		(reg >> 24) & 0xff, (reg >> 16) & 0xff, (reg >> 8) & 0xff);
+ 
++	/* Preserve value written by firmware or bootloader  */
++	old_dlf = dw8250_readl_ext(p, DW_UART_DLF);
+ 	dw8250_writel_ext(p, DW_UART_DLF, ~0U);
+ 	reg = dw8250_readl_ext(p, DW_UART_DLF);
+-	dw8250_writel_ext(p, DW_UART_DLF, 0);
++	dw8250_writel_ext(p, DW_UART_DLF, old_dlf);
+ 
+ 	if (reg) {
+ 		struct dw8250_port_data *d = p->private_data;
 
 
