@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AAFD17ACB
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:41:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8539C433C8;
-	Wed,  9 Aug 2023 11:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3DCD17AAB
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:41:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0347C433C7;
+	Wed,  9 Aug 2023 11:41:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581297;
-	bh=TF8awLNAWMyfKfqf/NoFcly3KNIifN/kJPW7HHyDj2c=;
+	s=korg; t=1691581300;
+	bh=Rq4TIkjNywYrrIUVt/Gn1ER0N8t9snhKECXo1UcQkUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J7RSQBIsnWOD6b3+PE3BhOjwy5Jk9plXnbsLfv4XjlTU8WJ42IqjQotn2puvgUkIR
-	 cW1UfXTZKc9phTKaW7Lc2SxHz0RaVE047b9F0qe0chWbUFDYqMx0I4xhMVruVruISU
-	 o6gjmj8euZID2l4n3KQb77gOYC5QQjsGgZH6jGa4=
+	b=GDUVDXaiEIZniS8iXp8D9AUP3haMj16BuiAzPhiM3bLnCbTdyBl8ceNurFbzNGSnl
+	 QrzU6QWCIt5z8FJePML91O6V+9xivFIHlXG1NtQ9GgAhmkqLtSxTQ1+mLMAFLWZU2N
+	 A4NCUYFYbYPTH/LQ3KuUKAJHN2ZbFGCu68c539/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Guchun Chen <guchun.chen@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
-Subject: [PATCH 5.10 175/201] drm/ttm: check null pointer before accessing when swapping
-Date: Wed,  9 Aug 2023 12:42:57 +0200
-Message-ID: <20230809103649.592015855@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 149/201] net: netsec: Ignore phy-mode on SynQuacer in DT mode
+Date: Wed,  9 Aug 2023 12:42:31 +0200
+Message-ID: <20230809103648.694317927@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -36,68 +38,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guchun Chen <guchun.chen@amd.com>
+From: Mark Brown <broonie@kernel.org>
 
-commit 2dedcf414bb01b8d966eb445db1d181d92304fb2 upstream.
+[ Upstream commit f3bb7759a924713bc54d15f6d0d70733b5935fad ]
 
-Add a check to avoid null pointer dereference as below:
+As documented in acd7aaf51b20 ("netsec: ignore 'phy-mode' device
+property on ACPI systems") the SocioNext SynQuacer platform ships with
+firmware defining the PHY mode as RGMII even though the physical
+configuration of the PHY is for TX and RX delays.  Since bbc4d71d63549bc
+("net: phy: realtek: fix rtl8211e rx/tx delay config") this has caused
+misconfiguration of the PHY, rendering the network unusable.
 
-[   90.002283] general protection fault, probably for non-canonical
-address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN NOPTI
-[   90.002292] KASAN: null-ptr-deref in range
-[0x0000000000000000-0x0000000000000007]
-[   90.002346]  ? exc_general_protection+0x159/0x240
-[   90.002352]  ? asm_exc_general_protection+0x26/0x30
-[   90.002357]  ? ttm_bo_evict_swapout_allowable+0x322/0x5e0 [ttm]
-[   90.002365]  ? ttm_bo_evict_swapout_allowable+0x42e/0x5e0 [ttm]
-[   90.002373]  ttm_bo_swapout+0x134/0x7f0 [ttm]
-[   90.002383]  ? __pfx_ttm_bo_swapout+0x10/0x10 [ttm]
-[   90.002391]  ? lock_acquire+0x44d/0x4f0
-[   90.002398]  ? ttm_device_swapout+0xa5/0x260 [ttm]
-[   90.002412]  ? lock_acquired+0x355/0xa00
-[   90.002416]  ? do_raw_spin_trylock+0xb6/0x190
-[   90.002421]  ? __pfx_lock_acquired+0x10/0x10
-[   90.002426]  ? ttm_global_swapout+0x25/0x210 [ttm]
-[   90.002442]  ttm_device_swapout+0x198/0x260 [ttm]
-[   90.002456]  ? __pfx_ttm_device_swapout+0x10/0x10 [ttm]
-[   90.002472]  ttm_global_swapout+0x75/0x210 [ttm]
-[   90.002486]  ttm_tt_populate+0x187/0x3f0 [ttm]
-[   90.002501]  ttm_bo_handle_move_mem+0x437/0x590 [ttm]
-[   90.002517]  ttm_bo_validate+0x275/0x430 [ttm]
-[   90.002530]  ? __pfx_ttm_bo_validate+0x10/0x10 [ttm]
-[   90.002544]  ? kasan_save_stack+0x33/0x60
-[   90.002550]  ? kasan_set_track+0x25/0x30
-[   90.002554]  ? __kasan_kmalloc+0x8f/0xa0
-[   90.002558]  ? amdgpu_gtt_mgr_new+0x81/0x420 [amdgpu]
-[   90.003023]  ? ttm_resource_alloc+0xf6/0x220 [ttm]
-[   90.003038]  amdgpu_bo_pin_restricted+0x2dd/0x8b0 [amdgpu]
-[   90.003210]  ? __x64_sys_ioctl+0x131/0x1a0
-[   90.003210]  ? do_syscall_64+0x60/0x90
+This was worked around for ACPI by ignoring the phy-mode property but
+the system is also used with DT.  For DT instead if we're running on a
+SynQuacer force a working PHY mode, as well as the standard EDK2
+firmware with DT there are also some of these systems that use u-boot
+and might not initialise the PHY if not netbooting.  Newer firmware
+imagaes for at least EDK2 are available from Linaro so print a warning
+when doing this.
 
-Fixes: a2848d08742c ("drm/ttm: never consider pinned BOs for eviction&swap")
-Tested-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Signed-off-by: Guchun Chen <guchun.chen@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Cc: stable@vger.kernel.org
-Link: https://patchwork.freedesktop.org/patch/msgid/20230724024229.1118444-1-guchun.chen@amd.com
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 533dd11a12f6 ("net: socionext: Add Synquacer NetSec driver")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Acked-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20230731-synquacer-net-v3-1-944be5f06428@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ttm/ttm_bo.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/socionext/netsec.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/gpu/drm/ttm/ttm_bo.c
-+++ b/drivers/gpu/drm/ttm/ttm_bo.c
-@@ -674,7 +674,8 @@ static bool ttm_bo_evict_swapout_allowab
- 
- 	if (bo->pin_count) {
- 		*locked = false;
--		*busy = false;
-+		if (busy)
-+			*busy = false;
- 		return false;
+diff --git a/drivers/net/ethernet/socionext/netsec.c b/drivers/net/ethernet/socionext/netsec.c
+index b9acee214bb6a..bb86315581818 100644
+--- a/drivers/net/ethernet/socionext/netsec.c
++++ b/drivers/net/ethernet/socionext/netsec.c
+@@ -1845,6 +1845,17 @@ static int netsec_of_probe(struct platform_device *pdev,
+ 		return err;
  	}
  
++	/*
++	 * SynQuacer is physically configured with TX and RX delays
++	 * but the standard firmware claimed otherwise for a long
++	 * time, ignore it.
++	 */
++	if (of_machine_is_compatible("socionext,developer-box") &&
++	    priv->phy_interface != PHY_INTERFACE_MODE_RGMII_ID) {
++		dev_warn(&pdev->dev, "Outdated firmware reports incorrect PHY mode, overriding\n");
++		priv->phy_interface = PHY_INTERFACE_MODE_RGMII_ID;
++	}
++
+ 	priv->phy_np = of_parse_phandle(pdev->dev.of_node, "phy-handle", 0);
+ 	if (!priv->phy_np) {
+ 		dev_err(&pdev->dev, "missing required property 'phy-handle'\n");
+-- 
+2.40.1
+
 
 
