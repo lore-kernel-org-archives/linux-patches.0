@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FEB156DA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:44:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8CAC433C7;
-	Wed,  9 Aug 2023 10:44:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CDC215AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:44:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F028C433C9;
+	Wed,  9 Aug 2023 10:44:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691577850;
-	bh=xrXZL5mrMmzRsXNYFrAlnKFGnManhVpHfFV2vW7IcHo=;
+	s=korg; t=1691577852;
+	bh=60DFOGa/HHKmdf1Yd0iNhzdGpOWjP3yJ+d5qQGWMFZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vfDJO8k37RMtyHHEDXZHtfKz64PFmNQ7Xj3mbi6ASEJJ31lGsDa2k3k++u1k0QjOO
-	 ++gYCv4ImvVvZFakY8GYoQbYA9D1iTMTv0A+qJ+YUg3Ot3odmmNqpI01iW8iorO9lk
-	 IW4b3Lovvxt7Hq41nUe6byPg8lFX/gyzmxxgY3DI=
+	b=yVb0/01WJMJ94LtSGQ4bn44ZMqYt/PGepAN9xz8gwZB/IWqjjHtrwD7wqqS/L+mIf
+	 l+6ll2RA2vKj5hxLEBjn+P/X9DqKfHCa66oKn94x1maK8qcVB6pVPkgc6ibf4dpohl
+	 +YfzVk3UHm5CR/5AhAwm0fV8lxhKq6ye37VBmvnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 017/165] firmware: arm_scmi: Fix chan_free cleanup on SMC
-Date: Wed,  9 Aug 2023 12:39:08 +0200
-Message-ID: <20230809103643.345905951@linuxfoundation.org>
+Subject: [PATCH 6.4 018/165] ARM: dts: at91: use clock-controller name for PMC nodes
+Date: Wed,  9 Aug 2023 12:39:09 +0200
+Message-ID: <20230809103643.375905843@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -36,87 +34,285 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit d1ff11d7ad8704f8d615f6446041c221b2d2ec4d ]
+[ Upstream commit d08f92bdfb2dc4a2a14237cfd8a22c568781797c ]
 
-SCMI transport based on SMC can optionally use an additional IRQ to
-signal message completion. The associated interrupt handler is currently
-allocated using devres but on shutdown the core SCMI stack will call
-.chan_free() well before any managed cleanup is invoked by devres.
-As a consequence, the arrival of a late reply to an in-flight pending
-transaction could still trigger the interrupt handler well after the
-SCMI core has cleaned up the channels, with unpleasant results.
+Use clock-controller generic name for PMC nodes.
 
-Inhibit further message processing on the IRQ path by explicitly freeing
-the IRQ inside .chan_free() callback itself.
-
-Fixes: dd820ee21d5e ("firmware: arm_scmi: Augment SMC/HVC to allow optional interrupt")
-Reported-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20230719173533.2739319-1-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230517094119.2894220-2-claudiu.beznea@microchip.com
+Stable-dep-of: f6ad3c13f1b8 ("ARM: dts: at91: sam9x60: fix the SOC detection")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/smc.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ arch/arm/boot/dts/at91rm9200.dtsi   | 2 +-
+ arch/arm/boot/dts/at91sam9260.dtsi  | 2 +-
+ arch/arm/boot/dts/at91sam9261.dtsi  | 2 +-
+ arch/arm/boot/dts/at91sam9263.dtsi  | 2 +-
+ arch/arm/boot/dts/at91sam9g20.dtsi  | 2 +-
+ arch/arm/boot/dts/at91sam9g25.dtsi  | 2 +-
+ arch/arm/boot/dts/at91sam9g35.dtsi  | 2 +-
+ arch/arm/boot/dts/at91sam9g45.dtsi  | 2 +-
+ arch/arm/boot/dts/at91sam9n12.dtsi  | 2 +-
+ arch/arm/boot/dts/at91sam9rl.dtsi   | 2 +-
+ arch/arm/boot/dts/at91sam9x25.dtsi  | 2 +-
+ arch/arm/boot/dts/at91sam9x35.dtsi  | 2 +-
+ arch/arm/boot/dts/at91sam9x5.dtsi   | 2 +-
+ arch/arm/boot/dts/sam9x60.dtsi      | 2 +-
+ arch/arm/boot/dts/sama5d2.dtsi      | 2 +-
+ arch/arm/boot/dts/sama5d3.dtsi      | 2 +-
+ arch/arm/boot/dts/sama5d3_emac.dtsi | 2 +-
+ arch/arm/boot/dts/sama5d4.dtsi      | 2 +-
+ arch/arm/boot/dts/sama7g5.dtsi      | 2 +-
+ 19 files changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/smc.c b/drivers/firmware/arm_scmi/smc.c
-index 93272e4bbd12b..d0c9fce44d322 100644
---- a/drivers/firmware/arm_scmi/smc.c
-+++ b/drivers/firmware/arm_scmi/smc.c
-@@ -23,6 +23,7 @@
- /**
-  * struct scmi_smc - Structure representing a SCMI smc transport
-  *
-+ * @irq: An optional IRQ for completion
-  * @cinfo: SCMI channel info
-  * @shmem: Transmit/Receive shared memory area
-  * @shmem_lock: Lock to protect access to Tx/Rx shared memory area.
-@@ -33,6 +34,7 @@
-  */
+diff --git a/arch/arm/boot/dts/at91rm9200.dtsi b/arch/arm/boot/dts/at91rm9200.dtsi
+index 6f9004ebf4245..37b500f6f3956 100644
+--- a/arch/arm/boot/dts/at91rm9200.dtsi
++++ b/arch/arm/boot/dts/at91rm9200.dtsi
+@@ -102,7 +102,7 @@
+ 				reg = <0xffffff00 0x100>;
+ 			};
  
- struct scmi_smc {
-+	int irq;
- 	struct scmi_chan_info *cinfo;
- 	struct scmi_shared_mem __iomem *shmem;
- 	/* Protect access to shmem area */
-@@ -106,7 +108,7 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
- 	struct resource res;
- 	struct device_node *np;
- 	u32 func_id;
--	int ret, irq;
-+	int ret;
+-			pmc: pmc@fffffc00 {
++			pmc: clock-controller@fffffc00 {
+ 				compatible = "atmel,at91rm9200-pmc", "syscon";
+ 				reg = <0xfffffc00 0x100>;
+ 				interrupts = <1 IRQ_TYPE_LEVEL_HIGH 7>;
+diff --git a/arch/arm/boot/dts/at91sam9260.dtsi b/arch/arm/boot/dts/at91sam9260.dtsi
+index 789fe356dbf60..16e3b24b4dddb 100644
+--- a/arch/arm/boot/dts/at91sam9260.dtsi
++++ b/arch/arm/boot/dts/at91sam9260.dtsi
+@@ -115,7 +115,7 @@
+ 				reg = <0xffffee00 0x200>;
+ 			};
  
- 	if (!tx)
- 		return -ENODEV;
-@@ -142,11 +144,10 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
- 	 * completion of a message is signaled by an interrupt rather than by
- 	 * the return of the SMC call.
- 	 */
--	irq = of_irq_get_byname(cdev->of_node, "a2p");
--	if (irq > 0) {
--		ret = devm_request_irq(dev, irq, smc_msg_done_isr,
--				       IRQF_NO_SUSPEND,
--				       dev_name(dev), scmi_info);
-+	scmi_info->irq = of_irq_get_byname(cdev->of_node, "a2p");
-+	if (scmi_info->irq > 0) {
-+		ret = request_irq(scmi_info->irq, smc_msg_done_isr,
-+				  IRQF_NO_SUSPEND, dev_name(dev), scmi_info);
- 		if (ret) {
- 			dev_err(dev, "failed to setup SCMI smc irq\n");
- 			return ret;
-@@ -168,6 +169,10 @@ static int smc_chan_free(int id, void *p, void *data)
- 	struct scmi_chan_info *cinfo = p;
- 	struct scmi_smc *scmi_info = cinfo->transport_info;
+-			pmc: pmc@fffffc00 {
++			pmc: clock-controller@fffffc00 {
+ 				compatible = "atmel,at91sam9260-pmc", "syscon";
+ 				reg = <0xfffffc00 0x100>;
+ 				interrupts = <1 IRQ_TYPE_LEVEL_HIGH 7>;
+diff --git a/arch/arm/boot/dts/at91sam9261.dtsi b/arch/arm/boot/dts/at91sam9261.dtsi
+index ee0bd1aceb3f0..fe9ead867e2ab 100644
+--- a/arch/arm/boot/dts/at91sam9261.dtsi
++++ b/arch/arm/boot/dts/at91sam9261.dtsi
+@@ -599,7 +599,7 @@
+ 				};
+ 			};
  
-+	/* Ignore any possible further reception on the IRQ path */
-+	if (scmi_info->irq > 0)
-+		free_irq(scmi_info->irq, scmi_info);
-+
- 	cinfo->transport_info = NULL;
- 	scmi_info->cinfo = NULL;
+-			pmc: pmc@fffffc00 {
++			pmc: clock-controller@fffffc00 {
+ 				compatible = "atmel,at91sam9261-pmc", "syscon";
+ 				reg = <0xfffffc00 0x100>;
+ 				interrupts = <1 IRQ_TYPE_LEVEL_HIGH 7>;
+diff --git a/arch/arm/boot/dts/at91sam9263.dtsi b/arch/arm/boot/dts/at91sam9263.dtsi
+index 3ce9ea9873129..ee5e6ed44dd40 100644
+--- a/arch/arm/boot/dts/at91sam9263.dtsi
++++ b/arch/arm/boot/dts/at91sam9263.dtsi
+@@ -101,7 +101,7 @@
+ 				atmel,external-irqs = <30 31>;
+ 			};
  
+-			pmc: pmc@fffffc00 {
++			pmc: clock-controller@fffffc00 {
+ 				compatible = "atmel,at91sam9263-pmc", "syscon";
+ 				reg = <0xfffffc00 0x100>;
+ 				interrupts = <1 IRQ_TYPE_LEVEL_HIGH 7>;
+diff --git a/arch/arm/boot/dts/at91sam9g20.dtsi b/arch/arm/boot/dts/at91sam9g20.dtsi
+index 708e1646b7f46..738a43ffd2281 100644
+--- a/arch/arm/boot/dts/at91sam9g20.dtsi
++++ b/arch/arm/boot/dts/at91sam9g20.dtsi
+@@ -41,7 +41,7 @@
+ 				atmel,adc-startup-time = <40>;
+ 			};
+ 
+-			pmc: pmc@fffffc00 {
++			pmc: clock-controller@fffffc00 {
+ 				compatible = "atmel,at91sam9g20-pmc", "atmel,at91sam9260-pmc", "syscon";
+ 			};
+ 		};
+diff --git a/arch/arm/boot/dts/at91sam9g25.dtsi b/arch/arm/boot/dts/at91sam9g25.dtsi
+index d2f13afb35eaf..ec3c77221881c 100644
+--- a/arch/arm/boot/dts/at91sam9g25.dtsi
++++ b/arch/arm/boot/dts/at91sam9g25.dtsi
+@@ -26,7 +26,7 @@
+ 				      >;
+ 			};
+ 
+-			pmc: pmc@fffffc00 {
++			pmc: clock-controller@fffffc00 {
+ 				compatible = "atmel,at91sam9g25-pmc", "atmel,at91sam9x5-pmc", "syscon";
+ 			};
+ 		};
+diff --git a/arch/arm/boot/dts/at91sam9g35.dtsi b/arch/arm/boot/dts/at91sam9g35.dtsi
+index 48c2bc4a7753d..c9cfb93092ee6 100644
+--- a/arch/arm/boot/dts/at91sam9g35.dtsi
++++ b/arch/arm/boot/dts/at91sam9g35.dtsi
+@@ -25,7 +25,7 @@
+ 				      >;
+ 			};
+ 
+-			pmc: pmc@fffffc00 {
++			pmc: clock-controller@fffffc00 {
+ 				compatible = "atmel,at91sam9g35-pmc", "atmel,at91sam9x5-pmc", "syscon";
+ 			};
+ 		};
+diff --git a/arch/arm/boot/dts/at91sam9g45.dtsi b/arch/arm/boot/dts/at91sam9g45.dtsi
+index 95f5d76234dbb..76afeb31b7f54 100644
+--- a/arch/arm/boot/dts/at91sam9g45.dtsi
++++ b/arch/arm/boot/dts/at91sam9g45.dtsi
+@@ -129,7 +129,7 @@
+ 				reg = <0xffffea00 0x200>;
+ 			};
+ 
+-			pmc: pmc@fffffc00 {
++			pmc: clock-controller@fffffc00 {
+ 				compatible = "atmel,at91sam9g45-pmc", "syscon";
+ 				reg = <0xfffffc00 0x100>;
+ 				interrupts = <1 IRQ_TYPE_LEVEL_HIGH 7>;
+diff --git a/arch/arm/boot/dts/at91sam9n12.dtsi b/arch/arm/boot/dts/at91sam9n12.dtsi
+index 83114d26f10d0..c2e7460fb7ff6 100644
+--- a/arch/arm/boot/dts/at91sam9n12.dtsi
++++ b/arch/arm/boot/dts/at91sam9n12.dtsi
+@@ -118,7 +118,7 @@
+ 				reg = <0xffffea00 0x200>;
+ 			};
+ 
+-			pmc: pmc@fffffc00 {
++			pmc: clock-controller@fffffc00 {
+ 				compatible = "atmel,at91sam9n12-pmc", "syscon";
+ 				reg = <0xfffffc00 0x200>;
+ 				#clock-cells = <2>;
+diff --git a/arch/arm/boot/dts/at91sam9rl.dtsi b/arch/arm/boot/dts/at91sam9rl.dtsi
+index 364a2ff0a763d..a12e6c419fe3d 100644
+--- a/arch/arm/boot/dts/at91sam9rl.dtsi
++++ b/arch/arm/boot/dts/at91sam9rl.dtsi
+@@ -763,7 +763,7 @@
+ 				};
+ 			};
+ 
+-			pmc: pmc@fffffc00 {
++			pmc: clock-controller@fffffc00 {
+ 				compatible = "atmel,at91sam9rl-pmc", "syscon";
+ 				reg = <0xfffffc00 0x100>;
+ 				interrupts = <1 IRQ_TYPE_LEVEL_HIGH 7>;
+diff --git a/arch/arm/boot/dts/at91sam9x25.dtsi b/arch/arm/boot/dts/at91sam9x25.dtsi
+index 0fe8802e1242b..7036f5f045715 100644
+--- a/arch/arm/boot/dts/at91sam9x25.dtsi
++++ b/arch/arm/boot/dts/at91sam9x25.dtsi
+@@ -27,7 +27,7 @@
+ 				      >;
+ 			};
+ 
+-			pmc: pmc@fffffc00 {
++			pmc: clock-controller@fffffc00 {
+ 				compatible = "atmel,at91sam9x25-pmc", "atmel,at91sam9x5-pmc", "syscon";
+ 			};
+ 		};
+diff --git a/arch/arm/boot/dts/at91sam9x35.dtsi b/arch/arm/boot/dts/at91sam9x35.dtsi
+index 0bfa21f18f870..eb03b0497e371 100644
+--- a/arch/arm/boot/dts/at91sam9x35.dtsi
++++ b/arch/arm/boot/dts/at91sam9x35.dtsi
+@@ -26,7 +26,7 @@
+ 				      >;
+ 			};
+ 
+-			pmc: pmc@fffffc00 {
++			pmc: clock-controller@fffffc00 {
+ 				compatible = "atmel,at91sam9x35-pmc", "atmel,at91sam9x5-pmc", "syscon";
+ 			};
+ 		};
+diff --git a/arch/arm/boot/dts/at91sam9x5.dtsi b/arch/arm/boot/dts/at91sam9x5.dtsi
+index 0c26c925761b2..af19ef2a875c4 100644
+--- a/arch/arm/boot/dts/at91sam9x5.dtsi
++++ b/arch/arm/boot/dts/at91sam9x5.dtsi
+@@ -126,7 +126,7 @@
+ 				reg = <0xffffea00 0x200>;
+ 			};
+ 
+-			pmc: pmc@fffffc00 {
++			pmc: clock-controller@fffffc00 {
+ 				compatible = "atmel,at91sam9x5-pmc", "syscon";
+ 				reg = <0xfffffc00 0x200>;
+ 				interrupts = <1 IRQ_TYPE_LEVEL_HIGH 7>;
+diff --git a/arch/arm/boot/dts/sam9x60.dtsi b/arch/arm/boot/dts/sam9x60.dtsi
+index e67ede940071f..89aafb9a8b0fe 100644
+--- a/arch/arm/boot/dts/sam9x60.dtsi
++++ b/arch/arm/boot/dts/sam9x60.dtsi
+@@ -1282,7 +1282,7 @@
+ 				};
+ 			};
+ 
+-			pmc: pmc@fffffc00 {
++			pmc: clock-controller@fffffc00 {
+ 				compatible = "microchip,sam9x60-pmc", "syscon";
+ 				reg = <0xfffffc00 0x200>;
+ 				interrupts = <1 IRQ_TYPE_LEVEL_HIGH 7>;
+diff --git a/arch/arm/boot/dts/sama5d2.dtsi b/arch/arm/boot/dts/sama5d2.dtsi
+index 14c35c12a115f..86009dd28e623 100644
+--- a/arch/arm/boot/dts/sama5d2.dtsi
++++ b/arch/arm/boot/dts/sama5d2.dtsi
+@@ -284,7 +284,7 @@
+ 				clock-names = "dma_clk";
+ 			};
+ 
+-			pmc: pmc@f0014000 {
++			pmc: clock-controller@f0014000 {
+ 				compatible = "atmel,sama5d2-pmc", "syscon";
+ 				reg = <0xf0014000 0x160>;
+ 				interrupts = <74 IRQ_TYPE_LEVEL_HIGH 7>;
+diff --git a/arch/arm/boot/dts/sama5d3.dtsi b/arch/arm/boot/dts/sama5d3.dtsi
+index bde8e92d60bb1..4524a16322d16 100644
+--- a/arch/arm/boot/dts/sama5d3.dtsi
++++ b/arch/arm/boot/dts/sama5d3.dtsi
+@@ -1001,7 +1001,7 @@
+ 				};
+ 			};
+ 
+-			pmc: pmc@fffffc00 {
++			pmc: clock-controller@fffffc00 {
+ 				compatible = "atmel,sama5d3-pmc", "syscon";
+ 				reg = <0xfffffc00 0x120>;
+ 				interrupts = <1 IRQ_TYPE_LEVEL_HIGH 7>;
+diff --git a/arch/arm/boot/dts/sama5d3_emac.dtsi b/arch/arm/boot/dts/sama5d3_emac.dtsi
+index 45226108850d2..5d7ce13de8ccf 100644
+--- a/arch/arm/boot/dts/sama5d3_emac.dtsi
++++ b/arch/arm/boot/dts/sama5d3_emac.dtsi
+@@ -30,7 +30,7 @@
+ 				};
+ 			};
+ 
+-			pmc: pmc@fffffc00 {
++			pmc: clock-controller@fffffc00 {
+ 			};
+ 
+ 			macb1: ethernet@f802c000 {
+diff --git a/arch/arm/boot/dts/sama5d4.dtsi b/arch/arm/boot/dts/sama5d4.dtsi
+index af62157ae214f..e94f3a661f4bb 100644
+--- a/arch/arm/boot/dts/sama5d4.dtsi
++++ b/arch/arm/boot/dts/sama5d4.dtsi
+@@ -250,7 +250,7 @@
+ 				clock-names = "dma_clk";
+ 			};
+ 
+-			pmc: pmc@f0018000 {
++			pmc: clock-controller@f0018000 {
+ 				compatible = "atmel,sama5d4-pmc", "syscon";
+ 				reg = <0xf0018000 0x120>;
+ 				interrupts = <1 IRQ_TYPE_LEVEL_HIGH 7>;
+diff --git a/arch/arm/boot/dts/sama7g5.dtsi b/arch/arm/boot/dts/sama7g5.dtsi
+index 929ba73702e93..b55adb96a06ec 100644
+--- a/arch/arm/boot/dts/sama7g5.dtsi
++++ b/arch/arm/boot/dts/sama7g5.dtsi
+@@ -241,7 +241,7 @@
+ 			clocks = <&pmc PMC_TYPE_PERIPHERAL 11>;
+ 		};
+ 
+-		pmc: pmc@e0018000 {
++		pmc: clock-controller@e0018000 {
+ 			compatible = "microchip,sama7g5-pmc", "syscon";
+ 			reg = <0xe0018000 0x200>;
+ 			interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
 -- 
 2.40.1
 
