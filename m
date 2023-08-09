@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10EE76131
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:14:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 815BFC433C8;
-	Wed,  9 Aug 2023 11:14:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC0953B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:14:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E510C433C8;
+	Wed,  9 Aug 2023 11:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579696;
-	bh=dfrgnTLMx0/ysv8HjD1iJheDyOkG4zgx6Bx3sZUdBx0=;
+	s=korg; t=1691579699;
+	bh=ZVAjFBOIiZqTllOdsL2izGmL4Zv10JOIcoF7WTvg5tQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j/i7PSIxegn+g4Q6g1mb3mwo/JKstHWn80vsCrDLGO7ZjbJvD3AQXhNq6l4usIw0q
-	 fqsN/QLiRvucowDWInNhtU4MM3AF4Af5nk28z3nYFeKXZqXoZK23XGSVsAOqGHYh2w
-	 Oo5erG65TkqEY51EoiMGpNZ8EDnL51490effsKC0=
+	b=rzs5lGyNrp81fx4Gif0fv3+DDg7//QAIkz5Vb/7QslRtw9Brd8rursfKhC4KzgWie
+	 U9QEBqFudHPc2HpOY2hzM/m7CiJtQa3ScoHSz5755Mnq4QRxJUtN/I+6BkIHN1bhl1
+	 d6mwq3skNepNgZ0bzoGY81woeiIi4Gfwa9QVC0ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 084/323] ARC: define ASM_NL and __ALIGN(_STR) outside #ifdef __ASSEMBLY__ guard
-Date: Wed,  9 Aug 2023 12:38:42 +0200
-Message-ID: <20230809103701.965870201@linuxfoundation.org>
+	Davide Tronchin <davide.tronchin.94@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 4.19 085/323] USB: serial: option: add LARA-R6 01B PIDs
+Date: Wed,  9 Aug 2023 12:38:43 +0200
+Message-ID: <20230809103701.995118637@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -34,61 +34,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Davide Tronchin <davide.tronchin.94@gmail.com>
 
-[ Upstream commit 92e2921eeafdfca9acd9b83f07d2b7ca099bac24 ]
+commit ffa5f7a3bf28c1306eef85d4056539c2d4b8eb09 upstream.
 
-ASM_NL is useful not only in *.S files but also in .c files for using
-inline assembler in C code.
+The new LARA-R6 product variant identified by the "01B" string can be
+configured (by AT interface) in three different USB modes:
 
-On ARC, however, ASM_NL is evaluated inconsistently. It is expanded to
-a backquote (`) in *.S files, but a semicolon (;) in *.c files because
-arch/arc/include/asm/linkage.h defines it inside #ifdef __ASSEMBLY__,
-so the definition for C code falls back to the default value defined in
-include/linux/linkage.h.
+* Default mode (Vendor ID: 0x1546 Product ID: 0x1311) with 4 serial
+interfaces
 
-If ASM_NL is used in inline assembler in .c files, it will result in
-wrong assembly code because a semicolon is not an instruction separator,
-but the start of a comment for ARC.
+* RmNet mode (Vendor ID: 0x1546 Product ID: 0x1312) with 4 serial
+interfaces and 1 RmNet virtual network interface
 
-Move ASM_NL (also __ALIGN and __ALIGN_STR) out of the #ifdef.
+* CDC-ECM mode (Vendor ID: 0x1546 Product ID: 0x1313) with 4 serial
+interface and 1 CDC-ECM virtual network interface
+The first 4 interfaces of all the 3 USB configurations (default, RmNet,
+CDC-ECM) are the same.
 
-Fixes: 9df62f054406 ("arch: use ASM_NL instead of ';' for assembler new line character in the macro")
-Fixes: 8d92e992a785 ("ARC: define __ALIGN_STR and __ALIGN symbols for ARC")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In default mode LARA-R6 01B exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parser/alternative functions
+
+In RmNet mode LARA-R6 01B exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parser/alternative functions
+If 4: RMNET interface
+
+In CDC-ECM mode LARA-R6 01B exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parser/alternative functions
+If 4: CDC-ECM interface
+
+Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
+Link: https://lore.kernel.org/r/20230622092921.12651-1-davide.tronchin.94@gmail.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arc/include/asm/linkage.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/serial/option.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arc/include/asm/linkage.h b/arch/arc/include/asm/linkage.h
-index f3d29d4840d58..b89ca8b4d5975 100644
---- a/arch/arc/include/asm/linkage.h
-+++ b/arch/arc/include/asm/linkage.h
-@@ -11,6 +11,10 @@
- 
- #include <asm/dwarf.h>
- 
-+#define ASM_NL		 `	/* use '`' to mark new line in macro */
-+#define __ALIGN		.align 4
-+#define __ALIGN_STR	__stringify(__ALIGN)
-+
- #ifdef __ASSEMBLY__
- 
- .macro ST2 e, o, off
-@@ -31,10 +35,6 @@
- #endif
- .endm
- 
--#define ASM_NL		 `	/* use '`' to mark new line in macro */
--#define __ALIGN		.align 4
--#define __ALIGN_STR	__stringify(__ALIGN)
--
- /* annotation for data we want in DCCM - if enabled in .config */
- .macro ARCFP_DATA nm
- #ifdef CONFIG_ARC_HAS_DCCM
--- 
-2.39.2
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1151,6 +1151,10 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90fa),
+ 	  .driver_info = RSVD(3) },
+ 	/* u-blox products */
++	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1311) },	/* u-blox LARA-R6 01B */
++	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1312),		/* u-blox LARA-R6 01B (RMNET) */
++	  .driver_info = RSVD(4) },
++	{ USB_DEVICE_INTERFACE_CLASS(UBLOX_VENDOR_ID, 0x1313, 0xff) },	/* u-blox LARA-R6 01B (ECM) */
+ 	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1341) },	/* u-blox LARA-L6 */
+ 	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1342),		/* u-blox LARA-L6 (RMNET) */
+ 	  .driver_info = RSVD(4) },
 
 
