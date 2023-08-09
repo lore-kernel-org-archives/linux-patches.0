@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D1E17AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:41:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D34C433C7;
-	Wed,  9 Aug 2023 11:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DACB17AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:41:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D26BC433AD;
+	Wed,  9 Aug 2023 11:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581266;
-	bh=zxzhvY/D/PYJEspPjj4s+zTdSCY4VjdWjAMx6CTSzSU=;
+	s=korg; t=1691581268;
+	bh=cPzV7UBio9D2qI/Kd9yHCRxi+JdGjD62PCgI3EzNUmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eRUQPpHJly5NQ/UyO2prk+n7dW9fnKFrnNx2zsug6LKrvSlbLO412VS6R1Ud3EH/F
-	 re25cwTNLns9ZEGKOQsYem2AgcgPAJ053aUyBpeGGsi0yumcuv7KBFQ3BtSxfu8l4H
-	 nFX69hNWazILFggpduhCs+0/8TJJXL7pi/vkaBxA=
+	b=0pQ1ct33NFKu5qrbiUon4LJA5LFU3q2PuCYJFE2vntIF9lVL44fqE7+Ob2NX2De04
+	 9ISJXzhNqvuT2mvQmwQsWwscM4Aht6CTdbXv+PpD9D0a4R5FsLdl787+DX29OxXCsV
+	 XLFZJZ4te2KxcjR/19oadRWUV6+JmDNWDHngJCKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubli@redhat.com>,
-	Milind Changire <mchangir@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.10 165/201] ceph: defer stopping mdsc delayed_work
-Date: Wed,  9 Aug 2023 12:42:47 +0200
-Message-ID: <20230809103649.258742973@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Esben Haabendal <esben@geanix.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Harini Katakam <harini.katakam@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 148/201] net: ll_temac: fix error checking of irq_of_parse_and_map()
+Date: Wed,  9 Aug 2023 12:42:30 +0200
+Message-ID: <20230809103648.664753123@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -35,79 +38,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit e7e607bd00481745550389a29ecabe33e13d67cf upstream.
+[ Upstream commit ef45e8400f5bb66b03cc949f76c80e2a118447de ]
 
-Flushing the dirty buffer may take a long time if the cluster is
-overloaded or if there is network issue. So we should ping the
-MDSs periodically to keep alive, else the MDS will blocklist
-the kclient.
+Most kernel functions return negative error codes but some irq functions
+return zero on error.  In this code irq_of_parse_and_map(), returns zero
+and platform_get_irq() returns negative error codes.  We need to handle
+both cases appropriately.
 
-Cc: stable@vger.kernel.org
-Link: https://tracker.ceph.com/issues/61843
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Milind Changire <mchangir@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8425c41d1ef7 ("net: ll_temac: Extend support to non-device-tree platforms")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: Esben Haabendal <esben@geanix.com>
+Reviewed-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Harini Katakam <harini.katakam@amd.com>
+Link: https://lore.kernel.org/r/3d0aef75-06e0-45a5-a2a6-2cc4738d4143@moroto.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/mds_client.c |    4 ++--
- fs/ceph/mds_client.h |    5 +++++
- fs/ceph/super.c      |   10 ++++++++++
- 3 files changed, 17 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/xilinx/ll_temac_main.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -4511,7 +4511,7 @@ static void delayed_work(struct work_str
+diff --git a/drivers/net/ethernet/xilinx/ll_temac_main.c b/drivers/net/ethernet/xilinx/ll_temac_main.c
+index 2f27e93370c6c..da136abba1520 100644
+--- a/drivers/net/ethernet/xilinx/ll_temac_main.c
++++ b/drivers/net/ethernet/xilinx/ll_temac_main.c
+@@ -1550,12 +1550,16 @@ static int temac_probe(struct platform_device *pdev)
+ 	}
  
- 	dout("mdsc delayed_work\n");
+ 	/* Error handle returned DMA RX and TX interrupts */
+-	if (lp->rx_irq < 0)
+-		return dev_err_probe(&pdev->dev, lp->rx_irq,
++	if (lp->rx_irq <= 0) {
++		rc = lp->rx_irq ?: -EINVAL;
++		return dev_err_probe(&pdev->dev, rc,
+ 				     "could not get DMA RX irq\n");
+-	if (lp->tx_irq < 0)
+-		return dev_err_probe(&pdev->dev, lp->tx_irq,
++	}
++	if (lp->tx_irq <= 0) {
++		rc = lp->tx_irq ?: -EINVAL;
++		return dev_err_probe(&pdev->dev, rc,
+ 				     "could not get DMA TX irq\n");
++	}
  
--	if (mdsc->stopping)
-+	if (mdsc->stopping >= CEPH_MDSC_STOPPING_FLUSHED)
- 		return;
- 
- 	mutex_lock(&mdsc->mutex);
-@@ -4701,7 +4701,7 @@ void send_flush_mdlog(struct ceph_mds_se
- void ceph_mdsc_pre_umount(struct ceph_mds_client *mdsc)
- {
- 	dout("pre_umount\n");
--	mdsc->stopping = 1;
-+	mdsc->stopping = CEPH_MDSC_STOPPING_BEGIN;
- 
- 	ceph_mdsc_iterate_sessions(mdsc, send_flush_mdlog, true);
- 	ceph_mdsc_iterate_sessions(mdsc, lock_unlock_session, false);
---- a/fs/ceph/mds_client.h
-+++ b/fs/ceph/mds_client.h
-@@ -372,6 +372,11 @@ struct cap_wait {
- 	int			want;
- };
- 
-+enum {
-+       CEPH_MDSC_STOPPING_BEGIN = 1,
-+       CEPH_MDSC_STOPPING_FLUSHED = 2,
-+};
-+
- /*
-  * mds client state
-  */
---- a/fs/ceph/super.c
-+++ b/fs/ceph/super.c
-@@ -1222,6 +1222,16 @@ static void ceph_kill_sb(struct super_bl
- 	ceph_mdsc_pre_umount(fsc->mdsc);
- 	flush_fs_workqueues(fsc);
- 
-+	/*
-+	 * Though the kill_anon_super() will finally trigger the
-+	 * sync_filesystem() anyway, we still need to do it here
-+	 * and then bump the stage of shutdown to stop the work
-+	 * queue as earlier as possible.
-+	 */
-+	sync_filesystem(s);
-+
-+	fsc->mdsc->stopping = CEPH_MDSC_STOPPING_FLUSHED;
-+
- 	kill_anon_super(s);
- 
- 	fsc->client->extra_mon_dispatch = NULL;
+ 	if (temac_np) {
+ 		/* Retrieve the MAC address */
+-- 
+2.40.1
+
 
 
