@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF9F1773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:13:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C6CC433C8;
-	Wed,  9 Aug 2023 11:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51CF81773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:13:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA295C433C7;
+	Wed,  9 Aug 2023 11:13:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579630;
-	bh=KZnft3sVw5x33P3BLTN2j1AAlZ2+XyVaeAqZgoxC67k=;
+	s=korg; t=1691579633;
+	bh=uk12KAA6JkvVx4dCV5nHD6A1hj5qDg9buvL5nuQny1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QDTl2lM+FyeJSmepGxEPgTNWR9Q5qomevHh4AKDw9GTBDUd/drGSapoqIFyGrrr6x
-	 xAsZmhBHIeasUkV+Y7frgbsk6xmWu3Shu2NdqUDZuS1uVM8sBHBjPT6lk1Rvl4dH39
-	 VRJ+LWFiPiD0ZD5xKOVi3qlo6jn2LOw61YC+LBwE=
+	b=rC8+46dW8OAUJU6CTlKCQQJUJE/MEjz/fAYTfgtLGQHcOx0eSfUv+8lzucuk00STd
+	 LDZUCtRms/acwdGwN5CqZ6YMKxC4TI7GFU+VKiUs8YIDScmXGXw9AVWaODq1+8sgoR
+	 xUxHzJxxMEJNyKBYbl5PRl14cmK/8emc5mQml+AQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 059/323] ARM: ep93xx: fix missing-prototype warnings
-Date: Wed,  9 Aug 2023 12:38:17 +0200
-Message-ID: <20230809103700.839223552@linuxfoundation.org>
+Subject: [PATCH 4.19 060/323] ASoC: es8316: Increment max value for ALC Capture Target Volume control
+Date: Wed,  9 Aug 2023 12:38:18 +0200
+Message-ID: <20230809103700.889966824@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,46 +35,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 419013740ea1e4343d8ade535d999f59fa28e460 ]
+[ Upstream commit 6f073429037cd79d7311cd8236311c53f5ea8f01 ]
 
-ep93xx_clocksource_read() is only called from the file it is declared in,
-while ep93xx_timer_init() is declared in a header that is not included here.
+The following error occurs when trying to restore a previously saved
+ALSA mixer state (tested on a Rock 5B board):
 
-arch/arm/mach-ep93xx/timer-ep93xx.c:120:13: error: no previous prototype for 'ep93xx_timer_init'
-arch/arm/mach-ep93xx/timer-ep93xx.c:63:5: error: no previous prototype for 'ep93xx_clocksource_read'
+  $ alsactl --no-ucm -f /tmp/asound.state store hw:Analog
+  $ alsactl --no-ucm -I -f /tmp/asound.state restore hw:Analog
+  alsactl: set_control:1475: Cannot write control '2:0:0:ALC Capture Target Volume:0' : Invalid argument
 
-Fixes: 000bc17817bf ("ARM: ep93xx: switch to GENERIC_CLOCKEVENTS")
-Acked-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-Link: https://lore.kernel.org/r/20230516153109.514251-3-arnd@kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+According to ES8316 datasheet, the register at address 0x2B, which is
+related to the above mixer control, contains by default the value 0xB0.
+Considering the corresponding ALC target bits (ALCLVL) are 7:4, the
+control is initialized with 11, which is one step above the maximum
+value allowed by the driver:
+
+ ALCLVL | dB gain
+ -------+--------
+  0000  |  -16.5
+  0001  |  -15.0
+  0010  |  -13.5
+  ....  |  .....
+  0111  |   -6.0
+  1000  |   -4.5
+  1001  |   -3.0
+  1010  |   -1.5
+  ....  |  .....
+  1111  |   -1.5
+
+The tests performed using the VU meter feature (--vumeter=TYPE) of
+arecord/aplay confirm the specs are correct and there is no measured
+gain if the 1011-1111 range would have been mapped to 0 dB:
+
+ dB gain | VU meter %
+ --------+-----------
+   -6.0  |  30-31
+   -4.5  |  35-36
+   -3.0  |  42-43
+   -1.5  |  50-51
+    0.0  |  50-51
+
+Increment the max value allowed for ALC Capture Target Volume control,
+so that it matches the hardware default.  Additionally, update the
+related TLV to prevent an artificial extension of the dB gain range.
+
+Fixes: b8b88b70875a ("ASoC: add es8316 codec driver")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://lore.kernel.org/r/20230530181140.483936-2-cristian.ciocaltea@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-ep93xx/timer-ep93xx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/es8316.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-ep93xx/timer-ep93xx.c b/arch/arm/mach-ep93xx/timer-ep93xx.c
-index de998830f534f..b07956883e165 100644
---- a/arch/arm/mach-ep93xx/timer-ep93xx.c
-+++ b/arch/arm/mach-ep93xx/timer-ep93xx.c
-@@ -9,6 +9,7 @@
- #include <linux/io.h>
- #include <asm/mach/time.h>
- #include "soc.h"
-+#include "platform.h"
- 
- /*************************************************************************
-  * Timer handling for EP93xx
-@@ -60,7 +61,7 @@ static u64 notrace ep93xx_read_sched_clock(void)
- 	return ret;
- }
- 
--u64 ep93xx_clocksource_read(struct clocksource *c)
-+static u64 ep93xx_clocksource_read(struct clocksource *c)
- {
- 	u64 ret;
- 
+diff --git a/sound/soc/codecs/es8316.c b/sound/soc/codecs/es8316.c
+index 57130edaf3aba..834e542021fee 100644
+--- a/sound/soc/codecs/es8316.c
++++ b/sound/soc/codecs/es8316.c
+@@ -45,7 +45,12 @@ static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(dac_vol_tlv, -9600, 50, 1);
+ static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(adc_vol_tlv, -9600, 50, 1);
+ static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(alc_max_gain_tlv, -650, 150, 0);
+ static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(alc_min_gain_tlv, -1200, 150, 0);
+-static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(alc_target_tlv, -1650, 150, 0);
++
++static const SNDRV_CTL_TLVD_DECLARE_DB_RANGE(alc_target_tlv,
++	0, 10, TLV_DB_SCALE_ITEM(-1650, 150, 0),
++	11, 11, TLV_DB_SCALE_ITEM(-150, 0, 0),
++);
++
+ static const SNDRV_CTL_TLVD_DECLARE_DB_RANGE(hpmixer_gain_tlv,
+ 	0, 4, TLV_DB_SCALE_ITEM(-1200, 150, 0),
+ 	8, 11, TLV_DB_SCALE_ITEM(-450, 150, 0),
+@@ -107,7 +112,7 @@ static const struct snd_kcontrol_new es8316_snd_controls[] = {
+ 		       alc_max_gain_tlv),
+ 	SOC_SINGLE_TLV("ALC Capture Min Volume", ES8316_ADC_ALC2, 0, 28, 0,
+ 		       alc_min_gain_tlv),
+-	SOC_SINGLE_TLV("ALC Capture Target Volume", ES8316_ADC_ALC3, 4, 10, 0,
++	SOC_SINGLE_TLV("ALC Capture Target Volume", ES8316_ADC_ALC3, 4, 11, 0,
+ 		       alc_target_tlv),
+ 	SOC_SINGLE("ALC Capture Hold Time", ES8316_ADC_ALC3, 0, 10, 0),
+ 	SOC_SINGLE("ALC Capture Decay Time", ES8316_ADC_ALC4, 4, 10, 0),
 -- 
 2.39.2
 
