@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D21517AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5DCC433C7;
-	Wed,  9 Aug 2023 11:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F80617AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:26:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4294C433C8;
+	Wed,  9 Aug 2023 11:26:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580359;
-	bh=cYaSP2DfhiFv8EgyERl99h2EsgBV+APSYi2fASBmTpg=;
+	s=korg; t=1691580362;
+	bh=0rCsx7MG+QWZXXMsdArJRIqz4nLNyF8/Tic0wIe0kyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nHTmMNos8fFsjEcyktNVN8P/c/hrYqD1+LoJhmU2GSNcd0nxRoxIfoeoNGbqZBYXm
-	 h+gK2B4VAU+7Cwq74lX8iHnT/hf1NabP8wjQhKFpeTRuFXOufSAkyIIoj1V7ZTUzWM
-	 l+5/R9hahEM+XgXAoq/mMp9rdS28Uz7L4jXBke+o=
+	b=dD3QMKrqRvJaHmQJ+hB22QJ2IxtbNdBqRy5w/qw7EtZAiMplzj+aSreQmP7p0Zxo9
+	 KuI4GrzZ1/v2MyARNK3jxmG7p7Xn1JT4Xji4+QY0ASH2C6uwa7dZBf0TpJGjI1Bx1C
+	 PdWnIN20nmKPUUhDnmBNtMGd0vbCbE/SkQnYgPgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 320/323] ARM: dts: imx6sll: fixup of operating points
-Date: Wed,  9 Aug 2023 12:42:38 +0200
-Message-ID: <20230809103712.722459687@linuxfoundation.org>
+Subject: [PATCH 4.19 321/323] ARM: dts: nxp/imx6sll: fix wrong property name in usbphy node
+Date: Wed,  9 Aug 2023 12:42:39 +0200
+Message-ID: <20230809103712.773087160@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,57 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit 1875903019ea6e32e6e544c1631b119e4fd60b20 ]
+[ Upstream commit ee70b908f77a9d8f689dea986f09e6d7dc481934 ]
 
-Make operating point definitions comply with binding
-specifications.
+Property name "phy-3p0-supply" is used instead of "phy-reg_3p0-supply".
 
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Fixes: 9f30b6b1a957 ("ARM: dts: imx: Add basic dtsi file for imx6sll")
+cc: <stable@vger.kernel.org>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Stable-dep-of: ee70b908f77a ("ARM: dts: nxp/imx6sll: fix wrong property name in usbphy node")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6sll.dtsi | 22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ arch/arm/boot/dts/imx6sll.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm/boot/dts/imx6sll.dtsi b/arch/arm/boot/dts/imx6sll.dtsi
-index b519ab87c4596..164836fe63cc2 100644
+index 164836fe63cc2..9f0c82d79a361 100644
 --- a/arch/arm/boot/dts/imx6sll.dtsi
 +++ b/arch/arm/boot/dts/imx6sll.dtsi
-@@ -51,20 +51,18 @@ cpu0: cpu@0 {
- 			device_type = "cpu";
- 			reg = <0>;
- 			next-level-cache = <&L2>;
--			operating-points = <
-+			operating-points =
- 				/* kHz    uV */
--				996000  1275000
--				792000  1175000
--				396000  1075000
--				198000	975000
--			>;
--			fsl,soc-operating-points = <
-+				<996000  1275000>,
-+				<792000  1175000>,
-+				<396000  1075000>,
-+				<198000	  975000>;
-+			fsl,soc-operating-points =
- 				/* ARM kHz      SOC-PU uV */
--				996000          1175000
--				792000          1175000
--				396000          1175000
--				198000		1175000
--			>;
-+				<996000         1175000>,
-+				<792000         1175000>,
-+				<396000         1175000>,
-+				<198000		1175000>;
- 			clock-latency = <61036>; /* two CLK32 periods */
- 			clocks = <&clks IMX6SLL_CLK_ARM>,
- 				 <&clks IMX6SLL_CLK_PLL2_PFD2>,
+@@ -518,7 +518,7 @@ usbphy2: usb-phy@20ca000 {
+ 				reg = <0x020ca000 0x1000>;
+ 				interrupts = <GIC_SPI 41 IRQ_TYPE_LEVEL_HIGH>;
+ 				clocks = <&clks IMX6SLL_CLK_USBPHY2>;
+-				phy-reg_3p0-supply = <&reg_3p0>;
++				phy-3p0-supply = <&reg_3p0>;
+ 				fsl,anatop = <&anatop>;
+ 			};
+ 
 -- 
 2.40.1
 
