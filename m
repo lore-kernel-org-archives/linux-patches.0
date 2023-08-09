@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDBA17AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:28:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F1EC433C9;
-	Wed,  9 Aug 2023 11:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0223A17AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:28:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 782ECC433C8;
+	Wed,  9 Aug 2023 11:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580482;
-	bh=NNSGxKrDbuhcyX5wdq1hV2DeSjsnKp+QjZ20Z33GBJQ=;
+	s=korg; t=1691580485;
+	bh=MjS7szhwt4eZbtsTc8VHrzn8mYK/yeqIsUTF0FsxBSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rcgVqT2Y6CTEtuGuJtLAG4DsfGS9hzGsjnYrtiLTFHDjx0g5VpMkkmSi3W6nYlZc+
-	 AAc5rdxdnSIHfJigPD8wxTKw4qPk/NPAsxPXjH4ZHVEdZUQVZdQ+GSzKX/5D/wRt3C
-	 SpfiWkCqz2J54BgIkjvZSFNfczcWOrvZOy902Fgw=
+	b=g/EiPFvpiuOAJ4YVtkD7jXCov6mKv5Kd/F9dfJsxVkZbgbzWuCMBzvVjjtBcrvE+P
+	 ELefhQeG2qJdgHn5MAh0KgBFaf7UzaaoBHAc4wUjMxfcxDWHMkMVJ06/vNa0vUrXe/
+	 Op+rtP89iiILLR6tqfvpMdPFWxmq7ahKbz9ysJyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Mikityanskiy <maxtram95@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 040/154] platform/x86: msi-laptop: Fix rfkill out-of-sync on MSI Wind U100
-Date: Wed,  9 Aug 2023 12:41:11 +0200
-Message-ID: <20230809103638.348101576@linuxfoundation.org>
+Subject: [PATCH 5.4 041/154] net/sched: mqprio: refactor nlattr parsing to a separate function
+Date: Wed,  9 Aug 2023 12:41:12 +0200
+Message-ID: <20230809103638.376976566@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -35,77 +37,163 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Mikityanskiy <maxtram95@gmail.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit ad084a6d99bc182bf109c190c808e2ea073ec57b ]
+[ Upstream commit feb2cf3dcfb930aec2ca65c66d1365543d5ba943 ]
 
-Only the HW rfkill state is toggled on laptops with quirks->ec_read_only
-(so far only MSI Wind U90/U100). There are, however, a few issues with
-the implementation:
+mqprio_init() is quite large and unwieldy to add more code to.
+Split the netlink attribute parsing to a dedicated function.
 
-1. The initial HW state is always unblocked, regardless of the actual
-   state on boot, because msi_init_rfkill only sets the SW state,
-   regardless of ec_read_only.
-
-2. The initial SW state corresponds to the actual state on boot, but it
-   can't be changed afterwards, because set_device_state returns
-   -EOPNOTSUPP. It confuses the userspace, making Wi-Fi and/or Bluetooth
-   unusable if it was blocked on boot, and breaking the airplane mode if
-   the rfkill was unblocked on boot.
-
-Address the above issues by properly initializing the HW state on
-ec_read_only laptops and by allowing the userspace to toggle the SW
-state. Don't set the SW state ourselves and let the userspace fully
-control it. Toggling the SW state is a no-op, however, it allows the
-userspace to properly toggle the airplane mode. The actual SW radio
-disablement is handled by the corresponding rtl818x_pci and btusb
-drivers that have their own rfkills.
-
-Tested on MSI Wind U100 Plus, BIOS ver 1.0G, EC ver 130.
-
-Fixes: 0816392b97d4 ("msi-laptop: merge quirk tables to one")
-Fixes: 0de6575ad0a8 ("msi-laptop: Add MSI Wind U90/U100 support")
-Signed-off-by: Maxim Mikityanskiy <maxtram95@gmail.com>
-Link: https://lore.kernel.org/r/20230721145423.161057-1-maxtram95@gmail.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 6c58c8816abb ("net/sched: mqprio: Add length check for TCA_MQPRIO_{MAX/MIN}_RATE64")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/msi-laptop.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/sched/sch_mqprio.c | 114 +++++++++++++++++++++++------------------
+ 1 file changed, 63 insertions(+), 51 deletions(-)
 
-diff --git a/drivers/platform/x86/msi-laptop.c b/drivers/platform/x86/msi-laptop.c
-index 0e804b6c2d242..dfb4af759aa75 100644
---- a/drivers/platform/x86/msi-laptop.c
-+++ b/drivers/platform/x86/msi-laptop.c
-@@ -210,7 +210,7 @@ static ssize_t set_device_state(const char *buf, size_t count, u8 mask)
- 		return -EINVAL;
- 
- 	if (quirks->ec_read_only)
--		return -EOPNOTSUPP;
-+		return 0;
- 
- 	/* read current device state */
- 	result = ec_read(MSI_STANDARD_EC_COMMAND_ADDRESS, &rdata);
-@@ -841,15 +841,15 @@ static bool msi_laptop_i8042_filter(unsigned char data, unsigned char str,
- static void msi_init_rfkill(struct work_struct *ignored)
- {
- 	if (rfk_wlan) {
--		rfkill_set_sw_state(rfk_wlan, !wlan_s);
-+		msi_rfkill_set_state(rfk_wlan, !wlan_s);
- 		rfkill_wlan_set(NULL, !wlan_s);
- 	}
- 	if (rfk_bluetooth) {
--		rfkill_set_sw_state(rfk_bluetooth, !bluetooth_s);
-+		msi_rfkill_set_state(rfk_bluetooth, !bluetooth_s);
- 		rfkill_bluetooth_set(NULL, !bluetooth_s);
- 	}
- 	if (rfk_threeg) {
--		rfkill_set_sw_state(rfk_threeg, !threeg_s);
-+		msi_rfkill_set_state(rfk_threeg, !threeg_s);
- 		rfkill_threeg_set(NULL, !threeg_s);
- 	}
+diff --git a/net/sched/sch_mqprio.c b/net/sched/sch_mqprio.c
+index 50e15add6068f..a5df5604e0150 100644
+--- a/net/sched/sch_mqprio.c
++++ b/net/sched/sch_mqprio.c
+@@ -130,6 +130,67 @@ static int parse_attr(struct nlattr *tb[], int maxtype, struct nlattr *nla,
+ 	return 0;
  }
+ 
++static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
++			       struct nlattr *opt)
++{
++	struct mqprio_sched *priv = qdisc_priv(sch);
++	struct nlattr *tb[TCA_MQPRIO_MAX + 1];
++	struct nlattr *attr;
++	int i, rem, err;
++
++	err = parse_attr(tb, TCA_MQPRIO_MAX, opt, mqprio_policy,
++			 sizeof(*qopt));
++	if (err < 0)
++		return err;
++
++	if (!qopt->hw)
++		return -EINVAL;
++
++	if (tb[TCA_MQPRIO_MODE]) {
++		priv->flags |= TC_MQPRIO_F_MODE;
++		priv->mode = *(u16 *)nla_data(tb[TCA_MQPRIO_MODE]);
++	}
++
++	if (tb[TCA_MQPRIO_SHAPER]) {
++		priv->flags |= TC_MQPRIO_F_SHAPER;
++		priv->shaper = *(u16 *)nla_data(tb[TCA_MQPRIO_SHAPER]);
++	}
++
++	if (tb[TCA_MQPRIO_MIN_RATE64]) {
++		if (priv->shaper != TC_MQPRIO_SHAPER_BW_RATE)
++			return -EINVAL;
++		i = 0;
++		nla_for_each_nested(attr, tb[TCA_MQPRIO_MIN_RATE64],
++				    rem) {
++			if (nla_type(attr) != TCA_MQPRIO_MIN_RATE64)
++				return -EINVAL;
++			if (i >= qopt->num_tc)
++				break;
++			priv->min_rate[i] = *(u64 *)nla_data(attr);
++			i++;
++		}
++		priv->flags |= TC_MQPRIO_F_MIN_RATE;
++	}
++
++	if (tb[TCA_MQPRIO_MAX_RATE64]) {
++		if (priv->shaper != TC_MQPRIO_SHAPER_BW_RATE)
++			return -EINVAL;
++		i = 0;
++		nla_for_each_nested(attr, tb[TCA_MQPRIO_MAX_RATE64],
++				    rem) {
++			if (nla_type(attr) != TCA_MQPRIO_MAX_RATE64)
++				return -EINVAL;
++			if (i >= qopt->num_tc)
++				break;
++			priv->max_rate[i] = *(u64 *)nla_data(attr);
++			i++;
++		}
++		priv->flags |= TC_MQPRIO_F_MAX_RATE;
++	}
++
++	return 0;
++}
++
+ static int mqprio_init(struct Qdisc *sch, struct nlattr *opt,
+ 		       struct netlink_ext_ack *extack)
+ {
+@@ -139,9 +200,6 @@ static int mqprio_init(struct Qdisc *sch, struct nlattr *opt,
+ 	struct Qdisc *qdisc;
+ 	int i, err = -EOPNOTSUPP;
+ 	struct tc_mqprio_qopt *qopt = NULL;
+-	struct nlattr *tb[TCA_MQPRIO_MAX + 1];
+-	struct nlattr *attr;
+-	int rem;
+ 	int len;
+ 
+ 	BUILD_BUG_ON(TC_MAX_QUEUE != TC_QOPT_MAX_QUEUE);
+@@ -166,55 +224,9 @@ static int mqprio_init(struct Qdisc *sch, struct nlattr *opt,
+ 
+ 	len = nla_len(opt) - NLA_ALIGN(sizeof(*qopt));
+ 	if (len > 0) {
+-		err = parse_attr(tb, TCA_MQPRIO_MAX, opt, mqprio_policy,
+-				 sizeof(*qopt));
+-		if (err < 0)
++		err = mqprio_parse_nlattr(sch, qopt, opt);
++		if (err)
+ 			return err;
+-
+-		if (!qopt->hw)
+-			return -EINVAL;
+-
+-		if (tb[TCA_MQPRIO_MODE]) {
+-			priv->flags |= TC_MQPRIO_F_MODE;
+-			priv->mode = *(u16 *)nla_data(tb[TCA_MQPRIO_MODE]);
+-		}
+-
+-		if (tb[TCA_MQPRIO_SHAPER]) {
+-			priv->flags |= TC_MQPRIO_F_SHAPER;
+-			priv->shaper = *(u16 *)nla_data(tb[TCA_MQPRIO_SHAPER]);
+-		}
+-
+-		if (tb[TCA_MQPRIO_MIN_RATE64]) {
+-			if (priv->shaper != TC_MQPRIO_SHAPER_BW_RATE)
+-				return -EINVAL;
+-			i = 0;
+-			nla_for_each_nested(attr, tb[TCA_MQPRIO_MIN_RATE64],
+-					    rem) {
+-				if (nla_type(attr) != TCA_MQPRIO_MIN_RATE64)
+-					return -EINVAL;
+-				if (i >= qopt->num_tc)
+-					break;
+-				priv->min_rate[i] = *(u64 *)nla_data(attr);
+-				i++;
+-			}
+-			priv->flags |= TC_MQPRIO_F_MIN_RATE;
+-		}
+-
+-		if (tb[TCA_MQPRIO_MAX_RATE64]) {
+-			if (priv->shaper != TC_MQPRIO_SHAPER_BW_RATE)
+-				return -EINVAL;
+-			i = 0;
+-			nla_for_each_nested(attr, tb[TCA_MQPRIO_MAX_RATE64],
+-					    rem) {
+-				if (nla_type(attr) != TCA_MQPRIO_MAX_RATE64)
+-					return -EINVAL;
+-				if (i >= qopt->num_tc)
+-					break;
+-				priv->max_rate[i] = *(u64 *)nla_data(attr);
+-				i++;
+-			}
+-			priv->flags |= TC_MQPRIO_F_MAX_RATE;
+-		}
+ 	}
+ 
+ 	/* pre-allocate qdisc, attachment can't fail */
 -- 
 2.39.2
 
