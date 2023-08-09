@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C12E17AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:40:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC80AC433C8;
-	Wed,  9 Aug 2023 11:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A9D17AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:40:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE5AC433C8;
+	Wed,  9 Aug 2023 11:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581221;
-	bh=kewrziL5Hub/1PIVYSkHs63X2ux0ZmyLeNffAsgNFTY=;
+	s=korg; t=1691581224;
+	bh=fZAj6kHqRhjylCF05G6BmiRfN2FDZ4H8z8vbS0p/zR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mZdqoCxlp//KroGVQGj2s1B04rb3fnqD4ZH8l6wnma6dxlVNB8+93b4nmohsa5Zoz
-	 EpGmKuR0pS8SQnFWwwTIsGBkLs8+fTHUOzgs/poY3KjLeSTXxyh7VdkEo5qZVaIKnk
-	 UyWTlceEE+C6AKzAMB/ZMxB2GJBpd0H28ZPwIiug=
+	b=bVHLrU49cLPvg17tzw8l2qE5/hXyH6BXwXe7/Elu5HX1ZzEFL7EQj2Tn6H2sIM9Ol
+	 HG/pS1SsJnpnfb0IVA7L/mCe0snCgQXM2Jn54x9gBgzmUptujfBAMa8RD3CVqwY7Nu
+	 No1/01SLbSBBG73FXX7MxGrSsnzmgJKQBWWuuPA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hulk Robot <hulkci@huawei.com>,
-	Wei Yongjun <weiyongjun1@huawei.com>,
+	=?UTF-8?q?Daniel=20M=C3=BCller?= <deso@posteo.net>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Ingo Molnar <mingo@kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
 	Li Huafei <lihuafei1@huawei.com>
-Subject: [PATCH 5.10 119/201] x86/kprobes: Move inline to the beginning of the kprobe_is_ss() declaration
-Date: Wed,  9 Aug 2023 12:42:01 +0200
-Message-ID: <20230809103647.749163395@linuxfoundation.org>
+Subject: [PATCH 5.10 120/201] x86/kprobes: Update kcb status flag after singlestepping
+Date: Wed,  9 Aug 2023 12:42:02 +0200
+Message-ID: <20230809103647.778302502@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -37,41 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+From: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
 
-[ Upstream commit 2304d14db6595bea5292bece06c4c625b12d8f89 ]
+[ Upstream commit dec8784c9088b131a1523f582c2194cfc8107dc0 ]
 
-Address this GCC warning:
+Fix kprobes to update kcb (kprobes control block) status flag to
+KPROBE_HIT_SSDONE even if the kp->post_handler is not set.
 
-  arch/x86/kernel/kprobes/core.c:940:1:
-   warning: 'inline' is not at beginning of declaration [-Wold-style-declaration]
-    940 | static int nokprobe_inline kprobe_is_ss(struct kprobe_ctlblk *kcb)
-        | ^~~~~~
+This bug may cause a kernel panic if another INT3 user runs right
+after kprobes because kprobe_int3_handler() misunderstands the
+INT3 is kprobe's single stepping INT3.
 
-[ mingo: Tidied up the changelog. ]
-
-Fixes: 6256e668b7af: ("x86/kprobes: Use int3 instead of debug trap for single-step")
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Fixes: 6256e668b7af ("x86/kprobes: Use int3 instead of debug trap for single-step")
+Reported-by: Daniel Müller <deso@posteo.net>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Masami Hiramatsu <mhiramat@kernel.org>
-Link: https://lore.kernel.org/r/20210324144502.1154883-1-weiyongjun1@huawei.com
+Tested-by: Daniel Müller <deso@posteo.net>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20220727210136.jjgc3lpqeq42yr3m@muellerd-fedora-PC2BDTX9
+Link: https://lore.kernel.org/r/165942025658.342061.12452378391879093249.stgit@devnote2
 Signed-off-by: Li Huafei <lihuafei1@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/kprobes/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/kprobes/core.c |   18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
 --- a/arch/x86/kernel/kprobes/core.c
 +++ b/arch/x86/kernel/kprobes/core.c
-@@ -944,7 +944,7 @@ static int reenter_kprobe(struct kprobe
- }
- NOKPROBE_SYMBOL(reenter_kprobe);
- 
--static int nokprobe_inline kprobe_is_ss(struct kprobe_ctlblk *kcb)
-+static nokprobe_inline int kprobe_is_ss(struct kprobe_ctlblk *kcb)
+@@ -826,16 +826,20 @@ NOKPROBE_SYMBOL(arch_prepare_kretprobe);
+ static void kprobe_post_process(struct kprobe *cur, struct pt_regs *regs,
+ 			       struct kprobe_ctlblk *kcb)
  {
- 	return (kcb->kprobe_status == KPROBE_HIT_SS ||
- 		kcb->kprobe_status == KPROBE_REENTER);
+-	if ((kcb->kprobe_status != KPROBE_REENTER) && cur->post_handler) {
+-		kcb->kprobe_status = KPROBE_HIT_SSDONE;
+-		cur->post_handler(cur, regs, 0);
+-	}
+-
+ 	/* Restore back the original saved kprobes variables and continue. */
+-	if (kcb->kprobe_status == KPROBE_REENTER)
++	if (kcb->kprobe_status == KPROBE_REENTER) {
++		/* This will restore both kcb and current_kprobe */
+ 		restore_previous_kprobe(kcb);
+-	else
++	} else {
++		/*
++		 * Always update the kcb status because
++		 * reset_curent_kprobe() doesn't update kcb.
++		 */
++		kcb->kprobe_status = KPROBE_HIT_SSDONE;
++		if (cur->post_handler)
++			cur->post_handler(cur, regs, 0);
+ 		reset_current_kprobe();
++	}
+ }
+ NOKPROBE_SYMBOL(kprobe_post_process);
+ 
 
 
