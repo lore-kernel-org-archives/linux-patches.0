@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19429174EE
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:02:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E61C433C9;
-	Wed,  9 Aug 2023 11:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27F1174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:02:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D65C433C9;
+	Wed,  9 Aug 2023 11:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578944;
-	bh=fQwm54PJ9LKRdartTV0gjwgb9A7N+N+dqhZhI5HepnM=;
+	s=korg; t=1691578947;
+	bh=QJFF7zTsqjbqZRrmulPJ7eGSWYaKhVrLAORr/2wJ2Z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B/xAXYjhKydsnk+1e/yE0dnNfvKuf/TIYLyuv1cO1rQ4oCwFgTAf0t3YyrFzFEEmz
-	 y3s34fx2MirCWtW5Xap66B9ZNhZ5oFmjAsR3/9S/XDa8hzE1nnocOo/3TuJD8XB1wg
-	 vTK/3vaUOISX7NEruky9t04Ykfvunj4hz25IyTxs=
+	b=CiODINm/rQVVKLKKi8xpS0kuNOqDbz0GAeOvartlKTD7TPPTLlb6sztehVHHbPhYR
+	 tjwf8KG/KMpzDtfPTCAOYQWE7LomccauG3bZHSqoNuV63MAzbVxRcSDLsP9qCbmnHS
+	 lA+vmjrP3GCuPF+NkwqSG19reuu2sgb/YMPG3qnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	syzbot+b68fbebe56d8362907e8@syzkaller.appspotmail.com,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 012/204] PM: domains: fix integer overflow issues in genpd_parse_state()
-Date: Wed,  9 Aug 2023 12:39:10 +0200
-Message-ID: <20230809103642.990816393@linuxfoundation.org>
+Subject: [PATCH 4.14 021/204] wifi: ath9k: dont allow to overwrite ENDPOINT0 attributes
+Date: Wed,  9 Aug 2023 12:39:19 +0200
+Message-ID: <20230809103643.280622169@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -36,46 +37,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit e5d1c8722083f0332dcd3c85fa1273d85fb6bed8 ]
+[ Upstream commit 061b0cb9327b80d7a0f63a33e7c3e2a91a71f142 ]
 
-Currently, while calculating residency and latency values, right
-operands may overflow if resulting values are big enough.
+A bad USB device is able to construct a service connection response
+message with target endpoint being ENDPOINT0 which is reserved for
+HTC_CTRL_RSVD_SVC and should not be modified to be used for any other
+services.
 
-To prevent this, albeit unlikely case, play it safe and convert
-right operands to left ones' type s64.
+Reject such service connection responses.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-Fixes: 30f604283e05 ("PM / Domains: Allow domain power states to be read from DT")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Reported-by: syzbot+b68fbebe56d8362907e8@syzkaller.appspotmail.com
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230516150427.79469-1-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/domain.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath9k/htc_hst.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-index a64b093a88cf4..0f38df5856e12 100644
---- a/drivers/base/power/domain.c
-+++ b/drivers/base/power/domain.c
-@@ -2206,10 +2206,10 @@ static int genpd_parse_state(struct genpd_power_state *genpd_state,
+diff --git a/drivers/net/wireless/ath/ath9k/htc_hst.c b/drivers/net/wireless/ath/ath9k/htc_hst.c
+index 6331c98088e03..d5e5f9cf4ca86 100644
+--- a/drivers/net/wireless/ath/ath9k/htc_hst.c
++++ b/drivers/net/wireless/ath/ath9k/htc_hst.c
+@@ -114,7 +114,13 @@ static void htc_process_conn_rsp(struct htc_target *target,
  
- 	err = of_property_read_u32(state_node, "min-residency-us", &residency);
- 	if (!err)
--		genpd_state->residency_ns = 1000 * residency;
-+		genpd_state->residency_ns = 1000LL * residency;
+ 	if (svc_rspmsg->status == HTC_SERVICE_SUCCESS) {
+ 		epid = svc_rspmsg->endpoint_id;
+-		if (epid < 0 || epid >= ENDPOINT_MAX)
++
++		/* Check that the received epid for the endpoint to attach
++		 * a new service is valid. ENDPOINT0 can't be used here as it
++		 * is already reserved for HTC_CTRL_RSVD_SVC service and thus
++		 * should not be modified.
++		 */
++		if (epid <= ENDPOINT0 || epid >= ENDPOINT_MAX)
+ 			return;
  
--	genpd_state->power_on_latency_ns = 1000 * exit_latency;
--	genpd_state->power_off_latency_ns = 1000 * entry_latency;
-+	genpd_state->power_on_latency_ns = 1000LL * exit_latency;
-+	genpd_state->power_off_latency_ns = 1000LL * entry_latency;
- 	genpd_state->fwnode = &state_node->fwnode;
- 
- 	return 0;
+ 		service_id = be16_to_cpu(svc_rspmsg->service_id);
 -- 
 2.39.2
 
