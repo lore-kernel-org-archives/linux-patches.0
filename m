@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908D0847D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:52:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 137C3C433C7;
-	Wed,  9 Aug 2023 10:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633A3847D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:52:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76B1C433C7;
+	Wed,  9 Aug 2023 10:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578343;
-	bh=HKwoXg/T2iLRfYfAhZ2dTMwwPm0v6Q6aWeA9eOkxd3E=;
+	s=korg; t=1691578346;
+	bh=iTnnX3OC5vcKNl7qEsmrQqC732q4InTfn4rldMu+0bI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lQXc8+8CyQ/9k0UIN39h3UZorG0QWRdvJ3R4X5hq/U6F5vri0LW1rZEMM2tbdbyeF
-	 YkL+DV27pTy46uk9kWVWPIcaXIyBOekOIfLtQ2Y1Brrz18ZEnvCtHs6nlsBcZwzUd4
-	 /M1ucW+EX4nFRdI6ivy6sMElGLX22TUryJAt2P7w=
+	b=Qkbx1u17dCYJPgVs9V3fvRPvZ3kLv5hFdldE5jy68vMzruSOBPm6hak3y49U3g3/O
+	 Lr/j+ANrhwrRGj2rtC7IhTunfxeTTM5MfsLK/xAL1RvZpBsAepVh6Bl4BE2zHINlII
+	 2QqLj7B1D+sf1iw6He8ddQsjD4o5jGwegz8uGY0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanjun Gong <ruc_gongyuanjun@163.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Amir Tzin <amirtz@nvidia.com>,
+	Aya Levin <ayal@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 025/127] net/mlx5e: fix return value check in mlx5e_ipsec_remove_trailer()
-Date: Wed,  9 Aug 2023 12:40:12 +0200
-Message-ID: <20230809103637.475664445@linuxfoundation.org>
+Subject: [PATCH 6.1 026/127] net/mlx5e: Fix crash moving to switchdev mode when ntuple offload is set
+Date: Wed,  9 Aug 2023 12:40:13 +0200
+Message-ID: <20230809103637.509494872@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -36,37 +36,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuanjun Gong <ruc_gongyuanjun@163.com>
+From: Amir Tzin <amirtz@nvidia.com>
 
-[ Upstream commit e5bcb7564d3bd0c88613c76963c5349be9c511c5 ]
+[ Upstream commit 3ec43c1b082a8804472430e1253544d75f4b540e ]
 
-mlx5e_ipsec_remove_trailer() should return an error code if function
-pskb_trim() returns an unexpected value.
+Moving to switchdev mode with ntuple offload on causes the kernel to
+crash since fs->arfs is freed during nic profile cleanup flow.
 
-Fixes: 2ac9cfe78223 ("net/mlx5e: IPSec, Add Innova IPSec offload TX data path")
-Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Ntuple offload is not supported in switchdev mode and it is already
+unset by mlx5 fix feature ndo in switchdev mode. Verify fs->arfs is
+valid before disabling it.
+
+trace:
+[] RIP: 0010:_raw_spin_lock_bh+0x17/0x30
+[] arfs_del_rules+0x44/0x1a0 [mlx5_core]
+[] mlx5e_arfs_disable+0xe/0x20 [mlx5_core]
+[] mlx5e_handle_feature+0x3d/0xb0 [mlx5_core]
+[] ? __rtnl_unlock+0x25/0x50
+[] mlx5e_set_features+0xfe/0x160 [mlx5_core]
+[] __netdev_update_features+0x278/0xa50
+[] ? netdev_run_todo+0x5e/0x2a0
+[] netdev_update_features+0x22/0x70
+[] ? _cond_resched+0x15/0x30
+[] mlx5e_attach_netdev+0x12a/0x1e0 [mlx5_core]
+[] mlx5e_netdev_attach_profile+0xa1/0xc0 [mlx5_core]
+[] mlx5e_netdev_change_profile+0x77/0xe0 [mlx5_core]
+[] mlx5e_vport_rep_load+0x1ed/0x290 [mlx5_core]
+[] mlx5_esw_offloads_rep_load+0x88/0xd0 [mlx5_core]
+[] esw_offloads_load_rep.part.38+0x31/0x50 [mlx5_core]
+[] esw_offloads_enable+0x6c5/0x710 [mlx5_core]
+[] mlx5_eswitch_enable_locked+0x1bb/0x290 [mlx5_core]
+[] mlx5_devlink_eswitch_mode_set+0x14f/0x320 [mlx5_core]
+[] devlink_nl_cmd_eswitch_set_doit+0x94/0x120
+[] genl_family_rcv_msg_doit.isra.17+0x113/0x150
+[] genl_family_rcv_msg+0xb7/0x170
+[] ? devlink_nl_cmd_port_split_doit+0x100/0x100
+[] genl_rcv_msg+0x47/0xa0
+[] ? genl_family_rcv_msg+0x170/0x170
+[] netlink_rcv_skb+0x4c/0x130
+[] genl_rcv+0x24/0x40
+[] netlink_unicast+0x19a/0x230
+[] netlink_sendmsg+0x204/0x3d0
+[] sock_sendmsg+0x50/0x60
+
+Fixes: 90b22b9bcd24 ("net/mlx5e: Disable Rx ntuple offload for uplink representor")
+Signed-off-by: Amir Tzin <amirtz@nvidia.com>
+Reviewed-by: Aya Levin <ayal@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c
-index 6859f1c1a8319..c4a84f0a3b733 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.c
-@@ -58,7 +58,9 @@ static int mlx5e_ipsec_remove_trailer(struct sk_buff *skb, struct xfrm_state *x)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c
+index 0ae1865086ff1..dc0a0a27ac84a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c
+@@ -136,6 +136,16 @@ static void arfs_del_rules(struct mlx5e_flow_steering *fs);
  
- 	trailer_len = alen + plen + 2;
+ int mlx5e_arfs_disable(struct mlx5e_flow_steering *fs)
+ {
++	/* Moving to switchdev mode, fs->arfs is freed by mlx5e_nic_profile
++	 * cleanup_rx callback and it is not recreated when
++	 * mlx5e_uplink_rep_profile is loaded as mlx5e_create_flow_steering()
++	 * is not called by the uplink_rep profile init_rx callback. Thus, if
++	 * ntuple is set, moving to switchdev flow will enter this function
++	 * with fs->arfs nullified.
++	 */
++	if (!mlx5e_fs_get_arfs(fs))
++		return 0;
++
+ 	arfs_del_rules(fs);
  
--	pskb_trim(skb, skb->len - trailer_len);
-+	ret = pskb_trim(skb, skb->len - trailer_len);
-+	if (unlikely(ret))
-+		return ret;
- 	if (skb->protocol == htons(ETH_P_IP)) {
- 		ipv4hdr->tot_len = htons(ntohs(ipv4hdr->tot_len) - trailer_len);
- 		ip_send_check(ipv4hdr);
+ 	return arfs_disable(fs);
 -- 
 2.40.1
 
