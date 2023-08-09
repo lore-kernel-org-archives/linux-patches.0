@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E84174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:03:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB1DC433C8;
-	Wed,  9 Aug 2023 11:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7CC174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:03:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F37E4C433C8;
+	Wed,  9 Aug 2023 11:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579012;
-	bh=Dnw/d8rilFZHZ8g9g/s/5gE42wKWRitPaW2JKgNyU4U=;
+	s=korg; t=1691579015;
+	bh=jXMu5i5rhqurSYTDGtvJ7Kb3ZPzWEJNw/7nn02n5vq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S/g/8gSD24aS7Ov55cGhT35O6s1L78mfSjtPan6m4qNusmNpmlJIPubC53FbGanMJ
-	 YjB7cGzJmFqcBFUOMArBaY6p+xeFL6Nkt3nMTnSTgxH5oo7pdMcBHBpr6ZVijJWBIn
-	 k0zn8thI6juhcM7XDvQ1c6yuPS7oWCGwcuO5KhSM=
+	b=gccHoOWn7wOSEc6777iptaaA91P4yON6ETGQgtECgLYOL1vxt70MH7uEoTtNs5o+3
+	 e11Zc6zOWizCXwprXCKvm1w/7s18pXw/3oFo5AWZptZd0shtsrY6CgBSWKrYpF7A3a
+	 wIJMNP8PfqF0xkrn1zeZsCty2b9f7cS7DGpyDtlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+f2cb6e0ffdb961921e4d@syzkaller.appspotmail.com
-Subject: [PATCH 4.14 015/204] wifi: ath9k: avoid referencing uninit memory in ath9k_wmi_ctrl_rx
-Date: Wed,  9 Aug 2023 12:39:13 +0200
-Message-ID: <20230809103643.098919777@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 016/204] wifi: orinoco: Fix an error handling path in spectrum_cs_probe()
+Date: Wed,  9 Aug 2023 12:39:14 +0200
+Message-ID: <20230809103643.128590670@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -37,53 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit f24292e827088bba8de7158501ac25a59b064953 ]
+[ Upstream commit 925244325159824385209e3e0e3f91fa6bf0646c ]
 
-For the reasons also described in commit b383e8abed41 ("wifi: ath9k: avoid
-uninit memory read in ath9k_htc_rx_msg()"), ath9k_htc_rx_msg() should
-validate pkt_len before accessing the SKB.
+Should spectrum_cs_config() fail, some resources need to be released as
+already done in the remove function.
 
-For example, the obtained SKB may have been badly constructed with
-pkt_len = 8. In this case, the SKB can only contain a valid htc_frame_hdr
-but after being processed in ath9k_htc_rx_msg() and passed to
-ath9k_wmi_ctrl_rx() endpoint RX handler, it is expected to have a WMI
-command header which should be located inside its data payload.
+While at it, remove a useless and erroneous comment. The probe is
+spectrum_cs_probe(), not spectrum_cs_attach().
 
-Implement sanity checking inside ath9k_wmi_ctrl_rx(). Otherwise, uninit
-memory can be referenced.
-
-Tested on Qualcomm Atheros Communications AR9271 802.11n .
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
-Reported-and-tested-by: syzbot+f2cb6e0ffdb961921e4d@syzkaller.appspotmail.com
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230424183348.111355-1-pchelkin@ispras.ru
+Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/c0bc0c21c58ca477fc5521607615bafbf2aef8eb.1684567733.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/wmi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/intersil/orinoco/spectrum_cs.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
-index 9a17f7a07b1e8..7b4e922181190 100644
---- a/drivers/net/wireless/ath/ath9k/wmi.c
-+++ b/drivers/net/wireless/ath/ath9k/wmi.c
-@@ -217,6 +217,10 @@ static void ath9k_wmi_ctrl_rx(void *priv, struct sk_buff *skb,
- 	if (unlikely(wmi->stopped))
- 		goto free_skb;
+diff --git a/drivers/net/wireless/intersil/orinoco/spectrum_cs.c b/drivers/net/wireless/intersil/orinoco/spectrum_cs.c
+index b60048c95e0a8..011c86e55923e 100644
+--- a/drivers/net/wireless/intersil/orinoco/spectrum_cs.c
++++ b/drivers/net/wireless/intersil/orinoco/spectrum_cs.c
+@@ -157,6 +157,7 @@ spectrum_cs_probe(struct pcmcia_device *link)
+ {
+ 	struct orinoco_private *priv;
+ 	struct orinoco_pccard *card;
++	int ret;
  
-+	/* Validate the obtained SKB. */
-+	if (unlikely(skb->len < sizeof(struct wmi_cmd_hdr)))
-+		goto free_skb;
+ 	priv = alloc_orinocodev(sizeof(*card), &link->dev,
+ 				spectrum_cs_hard_reset,
+@@ -169,8 +170,16 @@ spectrum_cs_probe(struct pcmcia_device *link)
+ 	card->p_dev = link;
+ 	link->priv = priv;
+ 
+-	return spectrum_cs_config(link);
+-}				/* spectrum_cs_attach */
++	ret = spectrum_cs_config(link);
++	if (ret)
++		goto err_free_orinocodev;
 +
- 	hdr = (struct wmi_cmd_hdr *) skb->data;
- 	cmd_id = be16_to_cpu(hdr->command_id);
++	return 0;
++
++err_free_orinocodev:
++	free_orinocodev(priv);
++	return ret;
++}
  
+ static void spectrum_cs_detach(struct pcmcia_device *link)
+ {
 -- 
 2.39.2
 
