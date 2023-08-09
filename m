@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A807A6131
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:00:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29FB6C433C8;
-	Wed,  9 Aug 2023 11:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F11F6131
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:00:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6BFCC433C9;
+	Wed,  9 Aug 2023 11:00:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578820;
-	bh=AC0uBao4KIafDZjUGYhJmvO1fM0Vx30S+GywV4P56cM=;
+	s=korg; t=1691578823;
+	bh=v5h+tYdujvm5cFiK8gO0xrMsONU7KRDjBCSvajPtnQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T7F1YdX8rNESraoy9dEaY1A7SC6OatSfisp53OJlkS04nryZ3BEZ4FGvw7avRvAkH
-	 CYbX1XZrHjTtuSBZuyWDqC2kTN718QFMSZVflh/j8F0adIpn0gczVrQmO7cIiXlilR
-	 jb660f4MBzMhqNPeI8diE9Oe+uhfqZ61TR2PHGCg=
+	b=RxKZL0aWHXNFr4dGEdVHv6b7MK+GpPVJH0PqRTIYrkn29kCqd9pUnv0CcQvBfWWQv
+	 9W0H1dA51Z7KPj6hpk/qJDra0rpiFmFPMZs+FJLYkxLHLnX74kYQT0k54nTVasWqL1
+	 H/M3EKjlgdESYeDMwGHpAVefS66vjrZb40M3fk4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Oleg=20 livelace =20Popov?= <o.popov@livelace.ru>,
-	Hou Tao <houtao1@huawei.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 5.15 69/92] bpf: Disable preemption in bpf_event_output
-Date: Wed,  9 Aug 2023 12:41:45 +0200
-Message-ID: <20230809103635.963261225@linuxfoundation.org>
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.15 70/92] open: make RESOLVE_CACHED correctly test for O_TMPFILE
+Date: Wed,  9 Aug 2023 12:41:46 +0200
+Message-ID: <20230809103635.992572073@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -36,91 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Aleksa Sarai <cyphar@cyphar.com>
 
-commit d62cc390c2e99ae267ffe4b8d7e2e08b6c758c32 upstream.
+commit a0fc452a5d7fed986205539259df1d60546f536c upstream.
 
-We received report [1] of kernel crash, which is caused by
-using nesting protection without disabled preemption.
+O_TMPFILE is actually __O_TMPFILE|O_DIRECTORY. This means that the old
+fast-path check for RESOLVE_CACHED would reject all users passing
+O_DIRECTORY with -EAGAIN, when in fact the intended test was to check
+for __O_TMPFILE.
 
-The bpf_event_output can be called by programs executed by
-bpf_prog_run_array_cg function that disabled migration but
-keeps preemption enabled.
-
-This can cause task to be preempted by another one inside the
-nesting protection and lead eventually to two tasks using same
-perf_sample_data buffer and cause crashes like:
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000001
-  #PF: supervisor instruction fetch in kernel mode
-  #PF: error_code(0x0010) - not-present page
-  ...
-  ? perf_output_sample+0x12a/0x9a0
-  ? finish_task_switch.isra.0+0x81/0x280
-  ? perf_event_output+0x66/0xa0
-  ? bpf_event_output+0x13a/0x190
-  ? bpf_event_output_data+0x22/0x40
-  ? bpf_prog_dfc84bbde731b257_cil_sock4_connect+0x40a/0xacb
-  ? xa_load+0x87/0xe0
-  ? __cgroup_bpf_run_filter_sock_addr+0xc1/0x1a0
-  ? release_sock+0x3e/0x90
-  ? sk_setsockopt+0x1a1/0x12f0
-  ? udp_pre_connect+0x36/0x50
-  ? inet_dgram_connect+0x93/0xa0
-  ? __sys_connect+0xb4/0xe0
-  ? udp_setsockopt+0x27/0x40
-  ? __pfx_udp_push_pending_frames+0x10/0x10
-  ? __sys_setsockopt+0xdf/0x1a0
-  ? __x64_sys_connect+0xf/0x20
-  ? do_syscall_64+0x3a/0x90
-  ? entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-Fixing this by disabling preemption in bpf_event_output.
-
-[1] https://github.com/cilium/cilium/issues/26756
-Cc: stable@vger.kernel.org
-Reported-by: Oleg "livelace" Popov <o.popov@livelace.ru>
-Closes: https://github.com/cilium/cilium/issues/26756
-Fixes: 2a916f2f546c ("bpf: Use migrate_disable/enable in array macros and cgroup/lirc code.")
-Acked-by: Hou Tao <houtao1@huawei.com>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20230725084206.580930-3-jolsa@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Cc: stable@vger.kernel.org # v5.12+
+Fixes: 99668f618062 ("fs: expose LOOKUP_CACHED through openat2() RESOLVE_CACHED")
+Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
+Message-Id: <20230806-resolve_cached-o_tmpfile-v1-1-7ba16308465e@cyphar.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/bpf_trace.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/open.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -662,7 +662,6 @@ static DEFINE_PER_CPU(struct bpf_trace_s
- u64 bpf_event_output(struct bpf_map *map, u64 flags, void *meta, u64 meta_size,
- 		     void *ctx, u64 ctx_size, bpf_ctx_copy_t ctx_copy)
- {
--	int nest_level = this_cpu_inc_return(bpf_event_output_nest_level);
- 	struct perf_raw_frag frag = {
- 		.copy		= ctx_copy,
- 		.size		= ctx_size,
-@@ -679,8 +678,12 @@ u64 bpf_event_output(struct bpf_map *map
- 	};
- 	struct perf_sample_data *sd;
- 	struct pt_regs *regs;
-+	int nest_level;
- 	u64 ret;
- 
-+	preempt_disable();
-+	nest_level = this_cpu_inc_return(bpf_event_output_nest_level);
-+
- 	if (WARN_ON_ONCE(nest_level > ARRAY_SIZE(bpf_misc_sds.sds))) {
- 		ret = -EBUSY;
- 		goto out;
-@@ -695,6 +698,7 @@ u64 bpf_event_output(struct bpf_map *map
- 	ret = __bpf_perf_event_output(regs, map, flags, sd);
- out:
- 	this_cpu_dec(bpf_event_output_nest_level);
-+	preempt_enable();
- 	return ret;
- }
- 
+--- a/fs/open.c
++++ b/fs/open.c
+@@ -1126,7 +1126,7 @@ inline int build_open_flags(const struct
+ 		lookup_flags |= LOOKUP_IN_ROOT;
+ 	if (how->resolve & RESOLVE_CACHED) {
+ 		/* Don't bother even trying for create/truncate/tmpfile open */
+-		if (flags & (O_TRUNC | O_CREAT | O_TMPFILE))
++		if (flags & (O_TRUNC | O_CREAT | __O_TMPFILE))
+ 			return -EAGAIN;
+ 		lookup_flags |= LOOKUP_CACHED;
+ 	}
 
 
