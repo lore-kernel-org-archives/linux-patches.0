@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A0617756
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:21:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9D6C433C8;
-	Wed,  9 Aug 2023 11:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F6817756
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:21:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C020C433C8;
+	Wed,  9 Aug 2023 11:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580061;
-	bh=Dm6bfopdTDWnSNXRKctymaICBEIE+G88r3ySXY5m6e4=;
+	s=korg; t=1691580063;
+	bh=3dDmqRs1+KJeocEbYKj3S47rnYJ2FjhhtVxXzyKUCno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0+5gshDc1+Q/rx7jjTLiqoZ1h6RtShlGtTxwuEfA2dJ2BuIsX7pYqSigt5cWtIUoU
-	 HyAU4Tg45W6adnGbXeA8NowrvX/TcDLxPz08O9qtAqt+APUIaZuCWZSiwCAhOQfdI4
-	 PdREfrJITpSEUGNuVShoj9Zuxt4HidYW6fYaK5Mk=
+	b=wg9IFR2p9/S2HdkhcOaLCgbi8ISDSI0hkmBgiq1/qzZLR/Mt/ickXPmhLG7Hq8W/R
+	 J9Wn32KtCudJXIeM3Vs7RDuqjrvxhTUio4dOTH33g38p8JyXbVfHncGfOD5CQtPDi4
+	 IaUv/J3KpRhrPGCvsOmkv7RFXH/VpWAXPmRdx38o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 214/323] tcp: annotate data-races around tp->notsent_lowat
-Date: Wed,  9 Aug 2023 12:40:52 +0200
-Message-ID: <20230809103707.907837336@linuxfoundation.org>
+Subject: [PATCH 4.19 215/323] tcp: annotate data-races around fastopenq.max_qlen
+Date: Wed,  9 Aug 2023 12:40:53 +0200
+Message-ID: <20230809103707.946509953@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -37,60 +37,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1aeb87bc1440c5447a7fa2d6e3c2cca52cbd206b ]
+[ Upstream commit 70f360dd7042cb843635ece9d28335a4addff9eb ]
 
-tp->notsent_lowat can be read locklessly from do_tcp_getsockopt()
-and tcp_poll().
+This field can be read locklessly.
 
-Fixes: c9bee3b7fdec ("tcp: TCP_NOTSENT_LOWAT socket option")
+Fixes: 1536e2857bd3 ("tcp: Add a TCP_FASTOPEN socket option to get a max backlog on its listner")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230719212857.3943972-10-edumazet@google.com
+Link: https://lore.kernel.org/r/20230719212857.3943972-12-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h | 6 +++++-
- net/ipv4/tcp.c    | 4 ++--
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ include/linux/tcp.h     | 2 +-
+ net/ipv4/tcp.c          | 2 +-
+ net/ipv4/tcp_fastopen.c | 6 ++++--
+ 3 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 22cca858f2678..c6c48409e7b42 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -1883,7 +1883,11 @@ void __tcp_v4_send_check(struct sk_buff *skb, __be32 saddr, __be32 daddr);
- static inline u32 tcp_notsent_lowat(const struct tcp_sock *tp)
- {
- 	struct net *net = sock_net((struct sock *)tp);
--	return tp->notsent_lowat ?: READ_ONCE(net->ipv4.sysctl_tcp_notsent_lowat);
-+	u32 val;
-+
-+	val = READ_ONCE(tp->notsent_lowat);
-+
-+	return val ?: READ_ONCE(net->ipv4.sysctl_tcp_notsent_lowat);
+diff --git a/include/linux/tcp.h b/include/linux/tcp.h
+index 621ab5a7fb8fa..0d63a428e6f9c 100644
+--- a/include/linux/tcp.h
++++ b/include/linux/tcp.h
+@@ -460,7 +460,7 @@ static inline void fastopen_queue_tune(struct sock *sk, int backlog)
+ 	struct request_sock_queue *queue = &inet_csk(sk)->icsk_accept_queue;
+ 	int somaxconn = READ_ONCE(sock_net(sk)->core.sysctl_somaxconn);
+ 
+-	queue->fastopenq.max_qlen = min_t(unsigned int, backlog, somaxconn);
++	WRITE_ONCE(queue->fastopenq.max_qlen, min_t(unsigned int, backlog, somaxconn));
  }
  
- /* @wake is one when sk_stream_write_space() calls us.
+ static inline void tcp_move_syn(struct tcp_sock *tp,
 diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 853a33bf8863e..373bf3d3be592 100644
+index 373bf3d3be592..00648a478c6a5 100644
 --- a/net/ipv4/tcp.c
 +++ b/net/ipv4/tcp.c
-@@ -3099,7 +3099,7 @@ static int do_tcp_setsockopt(struct sock *sk, int level,
- 		err = tcp_repair_set_window(tp, optval, optlen);
+@@ -3554,7 +3554,7 @@ static int do_tcp_getsockopt(struct sock *sk, int level,
  		break;
- 	case TCP_NOTSENT_LOWAT:
--		tp->notsent_lowat = val;
-+		WRITE_ONCE(tp->notsent_lowat, val);
- 		sk->sk_write_space(sk);
+ 
+ 	case TCP_FASTOPEN:
+-		val = icsk->icsk_accept_queue.fastopenq.max_qlen;
++		val = READ_ONCE(icsk->icsk_accept_queue.fastopenq.max_qlen);
  		break;
- 	case TCP_INQ:
-@@ -3569,7 +3569,7 @@ static int do_tcp_getsockopt(struct sock *sk, int level,
- 		val = tcp_time_stamp_raw() + tp->tsoffset;
- 		break;
- 	case TCP_NOTSENT_LOWAT:
--		val = tp->notsent_lowat;
-+		val = READ_ONCE(tp->notsent_lowat);
- 		break;
- 	case TCP_INQ:
- 		val = tp->recvmsg_inq;
+ 
+ 	case TCP_FASTOPEN_CONNECT:
+diff --git a/net/ipv4/tcp_fastopen.c b/net/ipv4/tcp_fastopen.c
+index f726591de7c7a..f7bb78b443fa9 100644
+--- a/net/ipv4/tcp_fastopen.c
++++ b/net/ipv4/tcp_fastopen.c
+@@ -276,6 +276,7 @@ static struct sock *tcp_fastopen_create_child(struct sock *sk,
+ static bool tcp_fastopen_queue_check(struct sock *sk)
+ {
+ 	struct fastopen_queue *fastopenq;
++	int max_qlen;
+ 
+ 	/* Make sure the listener has enabled fastopen, and we don't
+ 	 * exceed the max # of pending TFO requests allowed before trying
+@@ -288,10 +289,11 @@ static bool tcp_fastopen_queue_check(struct sock *sk)
+ 	 * temporarily vs a server not supporting Fast Open at all.
+ 	 */
+ 	fastopenq = &inet_csk(sk)->icsk_accept_queue.fastopenq;
+-	if (fastopenq->max_qlen == 0)
++	max_qlen = READ_ONCE(fastopenq->max_qlen);
++	if (max_qlen == 0)
+ 		return false;
+ 
+-	if (fastopenq->qlen >= fastopenq->max_qlen) {
++	if (fastopenq->qlen >= max_qlen) {
+ 		struct request_sock *req1;
+ 		spin_lock(&fastopenq->lock);
+ 		req1 = fastopenq->rskq_rst_head;
 -- 
 2.39.2
 
