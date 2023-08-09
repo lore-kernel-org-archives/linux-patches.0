@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6B8171A6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:01:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F3CC433C8;
-	Wed,  9 Aug 2023 11:01:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34899171A6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:01:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79EEC433C8;
+	Wed,  9 Aug 2023 11:01:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578916;
-	bh=xbSIp34dYYSYHFp77J0JcqfudBeVm7WjxLqFCBdZGjY=;
+	s=korg; t=1691578919;
+	bh=JMtCCH4S/dMNJD/3rhmgPyRs59S9ef4h5jIeCn9jeSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z1Kt0TljsnsG80m97KewkUPyTp/MaTS0b/fmKBj0BqPEQax7VeeoARWAZYEDUtAMl
-	 mGwEE/Cvp7EMOZEe+8F9jbCT7y4NAvc4aTbLqjOw6R3flzVPJvkmD1IW+8lFwnYCc4
-	 EYPZyhjfV8l66upKiU72KT9w5a6n3OLiuvwv8NkY=
+	b=P2KiCk5SbHcSFSUCZ9Ouzl2oD3NpdB+YQpFcpohXJoT7zS7hqlvDO3LCnNidvIntM
+	 8l/eL0/ShbdMX27gpPJ2ZIvTfeG21nYsP42gR+0vd18yxYVui3i6VtwzFaNwWty1ho
+	 kksP0W0zrZoCAv+veSOLxZj5PmTQIQBLHgyJ26Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 010/204] md/raid10: fix wrong setting of max_corr_read_errors
-Date: Wed,  9 Aug 2023 12:39:08 +0200
-Message-ID: <20230809103642.926760784@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 4.14 002/204] x86/microcode/AMD: Load late on both threads too
+Date: Wed,  9 Aug 2023 12:39:00 +0200
+Message-ID: <20230809103642.640256387@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -36,38 +34,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Nan <linan122@huawei.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-[ Upstream commit f8b20a405428803bd9881881d8242c9d72c6b2b2 ]
+commit a32b0f0db3f396f1c9be2fe621e77c09ec3d8e7d upstream.
 
-There is no input check when echo md/max_read_errors and overflow might
-occur. Add check of input number.
+Do the same as early loading - load on both threads.
 
-Fixes: 1e50915fe0bb ("raid: improve MD/raid10 handling of correctable read errors.")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230522072535.1523740-3-linan666@huaweicloud.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230605141332.25948-1-bp@alien8.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kernel/cpu/microcode/amd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index f2f3b42e44287..12392a4fb9c0d 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -4313,6 +4313,8 @@ max_corrected_read_errors_store(struct mddev *mddev, const char *buf, size_t len
- 	rv = kstrtouint(buf, 10, &n);
- 	if (rv < 0)
- 		return rv;
-+	if (n > INT_MAX)
-+		return -EINVAL;
- 	atomic_set(&mddev->max_corr_read_errors, n);
- 	return len;
- }
--- 
-2.39.2
-
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -532,7 +532,7 @@ static enum ucode_state apply_microcode_
+ 	rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
+ 
+ 	/* need to apply patch? */
+-	if (rev >= mc_amd->hdr.patch_id) {
++	if (rev > mc_amd->hdr.patch_id) {
+ 		ret = UCODE_OK;
+ 		goto out;
+ 	}
 
 
