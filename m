@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E3A17AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:36:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83E2C433C7;
-	Wed,  9 Aug 2023 11:35:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5E817AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:36:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB11FC433C8;
+	Wed,  9 Aug 2023 11:36:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580960;
-	bh=FYId0g5PhR+EKtuWQGUMcWaCC80YXL75T4ECqqG25HM=;
+	s=korg; t=1691580963;
+	bh=7iVtdQOXVNuAZZ8zJA6u6WZZEjRDGGgfPcy9t4San+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r2Lym4L2HyTorPozlkQv/7GYR5JMQEjyVW4/FEmZRRLuFfe6aYVeFGn5QtksgCi3N
-	 tEsTQViH6W0VAtnLtOy+V9v6gZqXD0oVt29bF0mnux6Ei8eQQ+AH+3yo6MCrQri2SE
-	 oVRPGQeN2LENKGX5ZhmU+O2RUpu5+RT964FVLcDc=
+	b=OlM79G2AWfaEaeMxuignBh5scHGrGpCW2qdhk2XfVSk3L3SabYBUEy9uZ+RbyEVLc
+	 BQeLApZxnrIl3HKPUNJioOk0V2wahSnNc/0JyUb5bRxHGRNcaWjrssRMNErcSGyxlK
+	 L5oGHIefDePiCkeS2Um71P/ttd6a7WmtIxJN+LZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrien Thierry <athierry@redhat.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Dave Airlie <airlied@redhat.com>,
+	Huang Rui <ray.huang@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 026/201] phy: qcom-snps-femto-v2: properly enable ref clock
-Date: Wed,  9 Aug 2023 12:40:28 +0200
-Message-ID: <20230809103644.714222775@linuxfoundation.org>
+Subject: [PATCH 5.10 017/201] drm/ttm: add ttm_bo_pin()/ttm_bo_unpin() v2
+Date: Wed,  9 Aug 2023 12:40:19 +0200
+Message-ID: <20230809103644.406751041@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -35,171 +36,133 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrien Thierry <athierry@redhat.com>
+From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit 8a0eb8f9b9a002291a3934acfd913660b905249e ]
+[ Upstream commit deb0814b43f370a448a498409d949e38c9d8f02e ]
 
-The driver is not enabling the ref clock, which thus gets disabled by
-the clk_disable_unused() initcall. This leads to the dwc3 controller
-failing to initialize if probed after clk_disable_unused() is called,
-for instance when the driver is built as a module.
+As an alternative to the placement flag add a
+pin count to the ttm buffer object.
 
-To fix this, switch to the clk_bulk API to handle both cfg_ahb and ref
-clocks at the proper places.
+v2: add dma_resv_assert_help() calls
 
-Note that the cfg_ahb clock is currently not used by any device tree
-instantiation of the PHY. Work needs to be done separately to fix this.
-
-Link: https://lore.kernel.org/linux-arm-msm/ZEqvy+khHeTkC2hf@fedora/
-Fixes: 51e8114f80d0 ("phy: qcom-snps: Add SNPS USB PHY driver for QCOM based SOCs")
-Signed-off-by: Adrien Thierry <athierry@redhat.com>
-Link: https://lore.kernel.org/r/20230629144542.14906-3-athierry@redhat.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Dave Airlie <airlied@redhat.com>
+Reviewed-by: Huang Rui <ray.huang@amd.com>
+Link: https://patchwork.freedesktop.org/patch/391596/?series=81973&rev=1
+Stable-dep-of: a2848d08742c ("drm/ttm: never consider pinned BOs for eviction&swap")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 63 ++++++++++++++-----
- 1 file changed, 48 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/ttm/ttm_bo.c      |  9 ++++++---
+ drivers/gpu/drm/ttm/ttm_bo_util.c |  2 +-
+ include/drm/ttm/ttm_bo_api.h      | 26 ++++++++++++++++++++++++++
+ 3 files changed, 33 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-index dfe5f09449100..abb9264569336 100644
---- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-+++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-@@ -68,11 +68,13 @@ static const char * const qcom_snps_hsphy_vreg_names[] = {
- /**
-  * struct qcom_snps_hsphy - snps hs phy attributes
-  *
-+ * @dev: device structure
-+ *
-  * @phy: generic phy
-  * @base: iomapped memory space for snps hs phy
-  *
-- * @cfg_ahb_clk: AHB2PHY interface clock
-- * @ref_clk: phy reference clock
-+ * @num_clks: number of clocks
-+ * @clks: array of clocks
-  * @phy_reset: phy reset control
-  * @vregs: regulator supplies bulk data
-  * @phy_initialized: if PHY has been initialized correctly
-@@ -80,11 +82,13 @@ static const char * const qcom_snps_hsphy_vreg_names[] = {
-  * @update_seq_cfg: tuning parameters for phy init
-  */
- struct qcom_snps_hsphy {
-+	struct device *dev;
-+
- 	struct phy *phy;
- 	void __iomem *base;
+diff --git a/drivers/gpu/drm/ttm/ttm_bo.c b/drivers/gpu/drm/ttm/ttm_bo.c
+index f673292eec9db..9a05caec3c996 100644
+--- a/drivers/gpu/drm/ttm/ttm_bo.c
++++ b/drivers/gpu/drm/ttm/ttm_bo.c
+@@ -115,7 +115,7 @@ static void ttm_bo_add_mem_to_lru(struct ttm_buffer_object *bo,
+ 	struct ttm_bo_device *bdev = bo->bdev;
+ 	struct ttm_resource_manager *man;
  
--	struct clk *cfg_ahb_clk;
--	struct clk *ref_clk;
-+	int num_clks;
-+	struct clk_bulk_data *clks;
- 	struct reset_control *phy_reset;
- 	struct regulator_bulk_data vregs[SNPS_HS_NUM_VREGS];
+-	if (!list_empty(&bo->lru))
++	if (!list_empty(&bo->lru) || bo->pin_count)
+ 		return;
  
-@@ -92,6 +96,34 @@ struct qcom_snps_hsphy {
- 	enum phy_mode mode;
- };
+ 	if (mem->placement & TTM_PL_FLAG_NO_EVICT)
+@@ -165,7 +165,8 @@ void ttm_bo_move_to_lru_tail(struct ttm_buffer_object *bo,
+ 	ttm_bo_del_from_lru(bo);
+ 	ttm_bo_add_mem_to_lru(bo, &bo->mem);
  
-+static int qcom_snps_hsphy_clk_init(struct qcom_snps_hsphy *hsphy)
-+{
-+	struct device *dev = hsphy->dev;
-+
-+	hsphy->num_clks = 2;
-+	hsphy->clks = devm_kcalloc(dev, hsphy->num_clks, sizeof(*hsphy->clks), GFP_KERNEL);
-+	if (!hsphy->clks)
-+		return -ENOMEM;
-+
-+	/*
-+	 * TODO: Currently no device tree instantiation of the PHY is using the clock.
-+	 * This needs to be fixed in order for this code to be able to use devm_clk_bulk_get().
-+	 */
-+	hsphy->clks[0].id = "cfg_ahb";
-+	hsphy->clks[0].clk = devm_clk_get_optional(dev, "cfg_ahb");
-+	if (IS_ERR(hsphy->clks[0].clk))
-+		return dev_err_probe(dev, PTR_ERR(hsphy->clks[0].clk),
-+				     "failed to get cfg_ahb clk\n");
-+
-+	hsphy->clks[1].id = "ref";
-+	hsphy->clks[1].clk = devm_clk_get(dev, "ref");
-+	if (IS_ERR(hsphy->clks[1].clk))
-+		return dev_err_probe(dev, PTR_ERR(hsphy->clks[1].clk),
-+				     "failed to get ref clk\n");
-+
-+	return 0;
-+}
-+
- static inline void qcom_snps_hsphy_write_mask(void __iomem *base, u32 offset,
- 						u32 mask, u32 val)
- {
-@@ -174,16 +206,16 @@ static int qcom_snps_hsphy_init(struct phy *phy)
- 	if (ret)
- 		return ret;
- 
--	ret = clk_prepare_enable(hsphy->cfg_ahb_clk);
-+	ret = clk_bulk_prepare_enable(hsphy->num_clks, hsphy->clks);
- 	if (ret) {
--		dev_err(&phy->dev, "failed to enable cfg ahb clock, %d\n", ret);
-+		dev_err(&phy->dev, "failed to enable clocks, %d\n", ret);
- 		goto poweroff_phy;
- 	}
- 
- 	ret = reset_control_assert(hsphy->phy_reset);
- 	if (ret) {
- 		dev_err(&phy->dev, "failed to assert phy_reset, %d\n", ret);
--		goto disable_ahb_clk;
-+		goto disable_clks;
- 	}
- 
- 	usleep_range(100, 150);
-@@ -191,7 +223,7 @@ static int qcom_snps_hsphy_init(struct phy *phy)
- 	ret = reset_control_deassert(hsphy->phy_reset);
- 	if (ret) {
- 		dev_err(&phy->dev, "failed to de-assert phy_reset, %d\n", ret);
--		goto disable_ahb_clk;
-+		goto disable_clks;
- 	}
- 
- 	qcom_snps_hsphy_write_mask(hsphy->base, USB2_PHY_USB_PHY_CFG0,
-@@ -237,8 +269,8 @@ static int qcom_snps_hsphy_init(struct phy *phy)
- 
- 	return 0;
- 
--disable_ahb_clk:
--	clk_disable_unprepare(hsphy->cfg_ahb_clk);
-+disable_clks:
-+	clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
- poweroff_phy:
- 	regulator_bulk_disable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
- 
-@@ -250,7 +282,7 @@ static int qcom_snps_hsphy_exit(struct phy *phy)
- 	struct qcom_snps_hsphy *hsphy = phy_get_drvdata(phy);
- 
- 	reset_control_assert(hsphy->phy_reset);
--	clk_disable_unprepare(hsphy->cfg_ahb_clk);
-+	clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
- 	regulator_bulk_disable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
- 	hsphy->phy_initialized = false;
- 
-@@ -290,14 +322,15 @@ static int qcom_snps_hsphy_probe(struct platform_device *pdev)
- 	if (!hsphy)
+-	if (bulk && !(bo->mem.placement & TTM_PL_FLAG_NO_EVICT)) {
++	if (bulk && !(bo->mem.placement & TTM_PL_FLAG_NO_EVICT) &&
++	    !bo->pin_count) {
+ 		switch (bo->mem.mem_type) {
+ 		case TTM_PL_TT:
+ 			ttm_bo_bulk_move_set_pos(&bulk->tt[bo->priority], bo);
+@@ -544,8 +545,9 @@ static void ttm_bo_release(struct kref *kref)
+ 		 * shrinkers, now that they are queued for
+ 		 * destruction.
+ 		 */
+-		if (bo->mem.placement & TTM_PL_FLAG_NO_EVICT) {
++		if (bo->mem.placement & TTM_PL_FLAG_NO_EVICT || bo->pin_count) {
+ 			bo->mem.placement &= ~TTM_PL_FLAG_NO_EVICT;
++			bo->pin_count = 0;
+ 			ttm_bo_del_from_lru(bo);
+ 			ttm_bo_add_mem_to_lru(bo, &bo->mem);
+ 		}
+@@ -1174,6 +1176,7 @@ int ttm_bo_init_reserved(struct ttm_bo_device *bdev,
+ 	bo->moving = NULL;
+ 	bo->mem.placement = TTM_PL_FLAG_CACHED;
+ 	bo->acc_size = acc_size;
++	bo->pin_count = 0;
+ 	bo->sg = sg;
+ 	if (resv) {
+ 		bo->base.resv = resv;
+diff --git a/drivers/gpu/drm/ttm/ttm_bo_util.c b/drivers/gpu/drm/ttm/ttm_bo_util.c
+index fb2a25f8408fc..1968df9743fcb 100644
+--- a/drivers/gpu/drm/ttm/ttm_bo_util.c
++++ b/drivers/gpu/drm/ttm/ttm_bo_util.c
+@@ -352,7 +352,6 @@ static int ttm_buffer_object_transfer(struct ttm_buffer_object *bo,
  		return -ENOMEM;
  
-+	hsphy->dev = dev;
+ 	fbo->base = *bo;
+-	fbo->base.mem.placement |= TTM_PL_FLAG_NO_EVICT;
+ 
+ 	ttm_bo_get(bo);
+ 	fbo->bo = bo;
+@@ -372,6 +371,7 @@ static int ttm_buffer_object_transfer(struct ttm_buffer_object *bo,
+ 	kref_init(&fbo->base.kref);
+ 	fbo->base.destroy = &ttm_transfered_destroy;
+ 	fbo->base.acc_size = 0;
++	fbo->base.pin_count = 1;
+ 	if (bo->type != ttm_bo_type_sg)
+ 		fbo->base.base.resv = &fbo->base.base._resv;
+ 
+diff --git a/include/drm/ttm/ttm_bo_api.h b/include/drm/ttm/ttm_bo_api.h
+index 0f7cd21d6d748..33aca60870e26 100644
+--- a/include/drm/ttm/ttm_bo_api.h
++++ b/include/drm/ttm/ttm_bo_api.h
+@@ -157,6 +157,7 @@ struct ttm_buffer_object {
+ 
+ 	struct dma_fence *moving;
+ 	unsigned priority;
++	unsigned pin_count;
+ 
+ 	/**
+ 	 * Special members that are protected by the reserve lock
+@@ -606,6 +607,31 @@ static inline bool ttm_bo_uses_embedded_gem_object(struct ttm_buffer_object *bo)
+ 	return bo->base.dev != NULL;
+ }
+ 
++/**
++ * ttm_bo_pin - Pin the buffer object.
++ * @bo: The buffer object to pin
++ *
++ * Make sure the buffer is not evicted any more during memory pressure.
++ */
++static inline void ttm_bo_pin(struct ttm_buffer_object *bo)
++{
++	dma_resv_assert_held(bo->base.resv);
++	++bo->pin_count;
++}
 +
- 	hsphy->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(hsphy->base))
- 		return PTR_ERR(hsphy->base);
- 
--	hsphy->ref_clk = devm_clk_get(dev, "ref");
--	if (IS_ERR(hsphy->ref_clk))
--		return dev_err_probe(dev, PTR_ERR(hsphy->ref_clk),
--				     "failed to get ref clk\n");
-+	ret = qcom_snps_hsphy_clk_init(hsphy);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to initialize clocks\n");
- 
- 	hsphy->phy_reset = devm_reset_control_get_exclusive(&pdev->dev, NULL);
- 	if (IS_ERR(hsphy->phy_reset)) {
++/**
++ * ttm_bo_unpin - Unpin the buffer object.
++ * @bo: The buffer object to unpin
++ *
++ * Allows the buffer object to be evicted again during memory pressure.
++ */
++static inline void ttm_bo_unpin(struct ttm_buffer_object *bo)
++{
++	dma_resv_assert_held(bo->base.resv);
++	WARN_ON_ONCE(!bo->pin_count);
++	--bo->pin_count;
++}
++
+ int ttm_mem_evict_first(struct ttm_bo_device *bdev,
+ 			struct ttm_resource_manager *man,
+ 			const struct ttm_place *place,
 -- 
 2.39.2
 
