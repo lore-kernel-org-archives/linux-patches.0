@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31598174EE
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:48:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C60C433C8;
-	Wed,  9 Aug 2023 10:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E596131
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:48:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E2FC433C7;
+	Wed,  9 Aug 2023 10:48:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578131;
-	bh=z7oZgN4W5OQsSVx+1AW/vrQO+wsiT8Yp/xbeilDoZSo=;
+	s=korg; t=1691578133;
+	bh=ZWr4A6f7OluqMPKskemNZ9VWQGqgXQ6/ciRFmKNIfZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5I4IhKZ9n3xBu67/64xnejcH3CoQridL5B4mAIAouO4E7pV1Wlex3MQwAq/UBGeS
-	 QjfsfpJdP7s7Yf7OKyBSYtKcHU5m8Wz8VBeMhNZJ1+cJaCwCH6ASDmnEx7AeR+KL2W
-	 43uWXKlRyCvIW+s7DFhnYfDpL2nUx5uH+cqvqjgY=
+	b=L8lzFyXXfgG9xbvPMNq+cvJFyE8qAeKxEb3RIsyADzVEFQEPNeCy0r/OzPVxRphDk
+	 SA3Z9c/Y7KG7rQOSl+UzsR1k34nSNS4qCBWBOh4WcEDV/uTNNk+KoFt5w/kdZoa0WU
+	 sFEDYV5Icss52UTv0BWc6SNh/FmEfZzrCAGOxva8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mikelley@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 6.4 116/165] x86/hyperv: Disable IBT when hypercall page lacks ENDBR instruction
-Date: Wed,  9 Aug 2023 12:40:47 +0200
-Message-ID: <20230809103646.589643174@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>
+Subject: [PATCH 6.4 117/165] rbd: prevent busy loop when requesting exclusive lock
+Date: Wed,  9 Aug 2023 12:40:48 +0200
+Message-ID: <20230809103646.618610684@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -34,70 +34,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Kelley <mikelley@microsoft.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit d5ace2a776442d80674eff9ed42e737f7dd95056 upstream.
+commit 9d01e07fd1bfb4daae156ab528aa196f5ac2b2bc upstream.
 
-On hardware that supports Indirect Branch Tracking (IBT), Hyper-V VMs
-with ConfigVersion 9.3 or later support IBT in the guest. However,
-current versions of Hyper-V have a bug in that there's not an ENDBR64
-instruction at the beginning of the hypercall page. Since hypercalls are
-made with an indirect call to the hypercall page, all hypercall attempts
-fail with an exception and Linux panics.
+Due to rbd_try_acquire_lock() effectively swallowing all but
+EBLOCKLISTED error from rbd_try_lock() ("request lock anyway") and
+rbd_request_lock() returning ETIMEDOUT error not only for an actual
+notify timeout but also when the lock owner doesn't respond, a busy
+loop inside of rbd_acquire_lock() between rbd_try_acquire_lock() and
+rbd_request_lock() is possible.
 
-A Hyper-V fix is in progress to add ENDBR64. But guard against the Linux
-panic by clearing X86_FEATURE_IBT if the hypercall page doesn't start
-with ENDBR. The VM will boot and run without IBT.
+Requesting the lock on EBUSY error (returned by get_lock_owner_info()
+if an incompatible lock or invalid lock owner is detected) makes very
+little sense.  The same goes for ETIMEDOUT error (might pop up pretty
+much anywhere if osd_request_timeout option is set) and many others.
 
-If future Linux 32-bit kernels were to support IBT, additional hypercall
-page hackery would be needed to make IBT work for such kernels in a
-Hyper-V VM.
+Just fail I/O requests on rbd_dev->acquiring_list immediately on any
+error from rbd_try_lock().
 
+Cc: stable@vger.kernel.org # 588159009d5b: rbd: retrieve and check lock owner twice before blocklisting
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/1690001476-98594-1-git-send-email-mikelley@microsoft.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/hyperv/hv_init.c |   21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/block/rbd.c |   28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
---- a/arch/x86/hyperv/hv_init.c
-+++ b/arch/x86/hyperv/hv_init.c
-@@ -14,6 +14,7 @@
- #include <asm/apic.h>
- #include <asm/desc.h>
- #include <asm/sev.h>
-+#include <asm/ibt.h>
- #include <asm/hypervisor.h>
- #include <asm/hyperv-tlfs.h>
- #include <asm/mshyperv.h>
-@@ -472,6 +473,26 @@ void __init hyperv_init(void)
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -3675,7 +3675,7 @@ static int rbd_lock(struct rbd_device *r
+ 	ret = ceph_cls_lock(osdc, &rbd_dev->header_oid, &rbd_dev->header_oloc,
+ 			    RBD_LOCK_NAME, CEPH_CLS_LOCK_EXCLUSIVE, cookie,
+ 			    RBD_LOCK_TAG, "", 0);
+-	if (ret)
++	if (ret && ret != -EEXIST)
+ 		return ret;
+ 
+ 	__rbd_lock(rbd_dev, cookie);
+@@ -3878,7 +3878,7 @@ static struct ceph_locker *get_lock_owne
+ 				 &rbd_dev->header_oloc, RBD_LOCK_NAME,
+ 				 &lock_type, &lock_tag, &lockers, &num_lockers);
+ 	if (ret) {
+-		rbd_warn(rbd_dev, "failed to retrieve lockers: %d", ret);
++		rbd_warn(rbd_dev, "failed to get header lockers: %d", ret);
+ 		return ERR_PTR(ret);
  	}
  
- 	/*
-+	 * Some versions of Hyper-V that provide IBT in guest VMs have a bug
-+	 * in that there's no ENDBR64 instruction at the entry to the
-+	 * hypercall page. Because hypercalls are invoked via an indirect call
-+	 * to the hypercall page, all hypercall attempts fail when IBT is
-+	 * enabled, and Linux panics. For such buggy versions, disable IBT.
-+	 *
-+	 * Fixed versions of Hyper-V always provide ENDBR64 on the hypercall
-+	 * page, so if future Linux kernel versions enable IBT for 32-bit
-+	 * builds, additional hypercall page hackery will be required here
-+	 * to provide an ENDBR32.
-+	 */
-+#ifdef CONFIG_X86_KERNEL_IBT
-+	if (cpu_feature_enabled(X86_FEATURE_IBT) &&
-+	    *(u32 *)hv_hypercall_pg != gen_endbr()) {
-+		setup_clear_cpu_cap(X86_FEATURE_IBT);
-+		pr_warn("Hyper-V: Disabling IBT because of Hyper-V bug\n");
+@@ -3940,8 +3940,10 @@ static int find_watcher(struct rbd_devic
+ 	ret = ceph_osdc_list_watchers(osdc, &rbd_dev->header_oid,
+ 				      &rbd_dev->header_oloc, &watchers,
+ 				      &num_watchers);
+-	if (ret)
++	if (ret) {
++		rbd_warn(rbd_dev, "failed to get watchers: %d", ret);
+ 		return ret;
 +	}
-+#endif
-+
-+	/*
- 	 * hyperv_init() is called before LAPIC is initialized: see
- 	 * apic_intr_mode_init() -> x86_platform.apic_post_init() and
- 	 * apic_bsp_setup() -> setup_local_APIC(). The direct-mode STIMER
+ 
+ 	sscanf(locker->id.cookie, RBD_LOCK_COOKIE_PREFIX " %llu", &cookie);
+ 	for (i = 0; i < num_watchers; i++) {
+@@ -3985,8 +3987,12 @@ static int rbd_try_lock(struct rbd_devic
+ 		locker = refreshed_locker = NULL;
+ 
+ 		ret = rbd_lock(rbd_dev);
+-		if (ret != -EBUSY)
++		if (!ret)
++			goto out;
++		if (ret != -EBUSY) {
++			rbd_warn(rbd_dev, "failed to lock header: %d", ret);
+ 			goto out;
++		}
+ 
+ 		/* determine if the current lock holder is still alive */
+ 		locker = get_lock_owner_info(rbd_dev);
+@@ -4089,11 +4095,8 @@ static int rbd_try_acquire_lock(struct r
+ 
+ 	ret = rbd_try_lock(rbd_dev);
+ 	if (ret < 0) {
+-		rbd_warn(rbd_dev, "failed to lock header: %d", ret);
+-		if (ret == -EBLOCKLISTED)
+-			goto out;
+-
+-		ret = 1; /* request lock anyway */
++		rbd_warn(rbd_dev, "failed to acquire lock: %d", ret);
++		goto out;
+ 	}
+ 	if (ret > 0) {
+ 		up_write(&rbd_dev->lock_rwsem);
+@@ -6627,12 +6630,11 @@ static int rbd_add_acquire_lock(struct r
+ 		cancel_delayed_work_sync(&rbd_dev->lock_dwork);
+ 		if (!ret)
+ 			ret = -ETIMEDOUT;
+-	}
+ 
+-	if (ret) {
+-		rbd_warn(rbd_dev, "failed to acquire exclusive lock: %ld", ret);
+-		return ret;
++		rbd_warn(rbd_dev, "failed to acquire lock: %ld", ret);
+ 	}
++	if (ret)
++		return ret;
+ 
+ 	/*
+ 	 * The lock may have been released by now, unless automatic lock
 
 
