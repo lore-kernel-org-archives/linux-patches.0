@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4090F53B7
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:14:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF20BC433C7;
-	Wed,  9 Aug 2023 11:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10EE76131
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:14:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 815BFC433C8;
+	Wed,  9 Aug 2023 11:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579694;
-	bh=CscIbcQwl/dg5WtAjm6CyfoUPtpxM5xGWdLTKUK9pWw=;
+	s=korg; t=1691579696;
+	bh=dfrgnTLMx0/ysv8HjD1iJheDyOkG4zgx6Bx3sZUdBx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u7qU6eRpjd/KqTt6zOjFkEfh8ar5E58SZbL5oM851EZPgLWkSpHvDjJrCANuwtQp4
-	 ESX0g//1h62/p2gxw5U0R+JuzctkwT1LQCF6QuQ7ixUNL9jAZ3zEcUmVByUoS9ffCc
-	 9BJpKDFdhZBbhYDUvgfQ3wiWOZ41wVEM1P0ZciPE=
+	b=j/i7PSIxegn+g4Q6g1mb3mwo/JKstHWn80vsCrDLGO7ZjbJvD3AQXhNq6l4usIw0q
+	 fqsN/QLiRvucowDWInNhtU4MM3AF4Af5nk28z3nYFeKXZqXoZK23XGSVsAOqGHYh2w
+	 Oo5erG65TkqEY51EoiMGpNZ8EDnL51490effsKC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vineet Gupta <vgupta@synopsys.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 083/323] ARCv2: entry: rewrite to enable use of double load/stores LDD/STD
-Date: Wed,  9 Aug 2023 12:38:41 +0200
-Message-ID: <20230809103701.917012417@linuxfoundation.org>
+Subject: [PATCH 4.19 084/323] ARC: define ASM_NL and __ALIGN(_STR) outside #ifdef __ASSEMBLY__ guard
+Date: Wed,  9 Aug 2023 12:38:42 +0200
+Message-ID: <20230809103701.965870201@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -34,464 +34,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vineet Gupta <vgupta@synopsys.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit a4880801a72ecc2dcdfa432f81a754f3e7438567 ]
+[ Upstream commit 92e2921eeafdfca9acd9b83f07d2b7ca099bac24 ]
 
- - the motivation was to be remove blatent copy-paste due to hasty support
-   of CONFIG_ARC_IRQ_NO_AUTOSAVE support
+ASM_NL is useful not only in *.S files but also in .c files for using
+inline assembler in C code.
 
- - but with refactoring we could use LDD/STD to greatly optimize the code
+On ARC, however, ASM_NL is evaluated inconsistently. It is expanded to
+a backquote (`) in *.S files, but a semicolon (;) in *.c files because
+arch/arc/include/asm/linkage.h defines it inside #ifdef __ASSEMBLY__,
+so the definition for C code falls back to the default value defined in
+include/linux/linkage.h.
 
-Signed-off-by: Vineet Gupta <vgupta@synopsys.com>
-Stable-dep-of: 92e2921eeafd ("ARC: define ASM_NL and __ALIGN(_STR) outside #ifdef __ASSEMBLY__ guard")
+If ASM_NL is used in inline assembler in .c files, it will result in
+wrong assembly code because a semicolon is not an instruction separator,
+but the start of a comment for ARC.
+
+Move ASM_NL (also __ALIGN and __ALIGN_STR) out of the #ifdef.
+
+Fixes: 9df62f054406 ("arch: use ASM_NL instead of ';' for assembler new line character in the macro")
+Fixes: 8d92e992a785 ("ARC: define __ALIGN_STR and __ALIGN symbols for ARC")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arc/include/asm/entry-arcv2.h | 297 ++++++++++++++---------------
- arch/arc/include/asm/linkage.h     |  18 ++
- arch/arc/kernel/asm-offsets.c      |   7 +
- arch/arc/kernel/entry-arcv2.S      |   4 +-
- 4 files changed, 167 insertions(+), 159 deletions(-)
+ arch/arc/include/asm/linkage.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arc/include/asm/entry-arcv2.h b/arch/arc/include/asm/entry-arcv2.h
-index beaf655666cbd..0733752ce7fe8 100644
---- a/arch/arc/include/asm/entry-arcv2.h
-+++ b/arch/arc/include/asm/entry-arcv2.h
-@@ -46,7 +46,8 @@
-  */
- 
- /*------------------------------------------------------------------------*/
--.macro INTERRUPT_PROLOGUE	called_from
-+.macro INTERRUPT_PROLOGUE
-+
- 	; (A) Before jumping to Interrupt Vector, hardware micro-ops did following:
- 	;   1. SP auto-switched to kernel mode stack
- 	;   2. STATUS32.Z flag set if in U mode at time of interrupt (U:1,K:0)
-@@ -57,39 +58,87 @@
- 	; (B) Manually saved some regs: r12,r25,r30, sp,fp,gp, ACCL pair
- 
- #ifdef CONFIG_ARC_IRQ_NO_AUTOSAVE
--.ifnc \called_from, exception
--	st.as	r9, [sp, -10]	; save r9 in it's final stack slot
--	sub	sp, sp, 12	; skip JLI, LDI, EI
--
--	PUSH	lp_count
--	PUSHAX	lp_start
--	PUSHAX	lp_end
--	PUSH	blink
--
--	PUSH	r11
--	PUSH	r10
--
--	sub	sp, sp, 4	; skip r9
--
--	PUSH	r8
--	PUSH	r7
--	PUSH	r6
--	PUSH	r5
--	PUSH	r4
--	PUSH	r3
--	PUSH	r2
--	PUSH	r1
--	PUSH	r0
--.endif
--#endif
-+	; carve pt_regs on stack (case #3), PC/STAT32 already on stack
-+	sub	sp, sp, SZ_PT_REGS - 8
- 
--#ifdef CONFIG_ARC_HAS_ACCL_REGS
--	PUSH	r59
--	PUSH	r58
-+	__SAVE_REGFILE_HARD
-+#else
-+	; carve pt_regs on stack (case #4), which grew partially already
-+	sub	sp, sp, PT_r0
- #endif
- 
--	PUSH	r30
--	PUSH	r12
-+	__SAVE_REGFILE_SOFT
-+.endm
-+
-+/*------------------------------------------------------------------------*/
-+.macro EXCEPTION_PROLOGUE
-+
-+	; (A) Before jumping to Exception Vector, hardware micro-ops did following:
-+	;   1. SP auto-switched to kernel mode stack
-+	;   2. STATUS32.Z flag set if in U mode at time of exception (U:1,K:0)
-+	;
-+	; (B) Manually save the complete reg file below
-+
-+	sub	sp, sp, SZ_PT_REGS	; carve pt_regs
-+
-+	; _HARD saves r10 clobbered by _SOFT as scratch hence comes first
-+
-+	__SAVE_REGFILE_HARD
-+	__SAVE_REGFILE_SOFT
-+
-+	st	r0, [sp]	; orig_r0
-+
-+	lr	r10, [eret]
-+	lr	r11, [erstatus]
-+	ST2	r10, r11, PT_ret
-+
-+	lr	r10, [ecr]
-+	lr	r11, [erbta]
-+	ST2	r10, r11, PT_event
-+	mov	r9, r10
-+
-+	; OUTPUT: r9 has ECR
-+.endm
-+
-+/*------------------------------------------------------------------------
-+ * This macro saves the registers manually which would normally be autosaved
-+ * by hardware on taken interrupts. It is used by
-+ *   - exception handlers (which don't have autosave)
-+ *   - interrupt autosave disabled due to CONFIG_ARC_IRQ_NO_AUTOSAVE
-+ */
-+.macro __SAVE_REGFILE_HARD
-+
-+	ST2	r0,  r1,  PT_r0
-+	ST2	r2,  r3,  PT_r2
-+	ST2	r4,  r5,  PT_r4
-+	ST2	r6,  r7,  PT_r6
-+	ST2	r8,  r9,  PT_r8
-+	ST2	r10, r11, PT_r10
-+
-+	st	blink, [sp, PT_blink]
-+
-+	lr	r10, [lp_end]
-+	lr	r11, [lp_start]
-+	ST2	r10, r11, PT_lpe
-+
-+	st	lp_count, [sp, PT_lpc]
-+
-+	; skip JLI, LDI, EI for now
-+.endm
-+
-+/*------------------------------------------------------------------------
-+ * This macros saves a bunch of other registers which can't be autosaved for
-+ * various reasons:
-+ *   - r12: the last caller saved scratch reg since hardware saves in pairs so r0-r11
-+ *   - r30: free reg, used by gcc as scratch
-+ *   - ACCL/ACCH pair when they exist
-+ */
-+.macro __SAVE_REGFILE_SOFT
-+
-+	ST2	gp, fp, PT_r26		; gp (r26), fp (r27)
-+
-+	st	r12, [sp, PT_sp + 4]
-+	st	r30, [sp, PT_sp + 8]
- 
- 	; Saving pt_regs->sp correctly requires some extra work due to the way
- 	; Auto stack switch works
-@@ -100,46 +149,32 @@
- 	; 2. Upon entry SP is always saved (for any inspection, unwinding etc),
- 	;    but on return, restored only if U mode
- 
--	lr	r9, [AUX_USER_SP]			; U mode SP
-+	lr	r10, [AUX_USER_SP]	; U mode SP
- 
--	mov.nz	r9, sp
--	add.nz	r9, r9, SZ_PT_REGS - PT_sp - 4		; K mode SP
-+	; ISA requires ADD.nz to have same dest and src reg operands
-+	mov.nz	r10, sp
-+	add.nz	r10, r10, SZ_PT_REGS	; K mode SP
- 
--	PUSH	r9					; SP (pt_regs->sp)
--
--	PUSH	fp
--	PUSH	gp
-+	st	r10, [sp, PT_sp]	; SP (pt_regs->sp)
- 
- #ifdef CONFIG_ARC_CURR_IN_REG
--	PUSH	r25			; user_r25
-+	st	r25, [sp, PT_user_r25]
- 	GET_CURR_TASK_ON_CPU	r25
--#else
--	sub	sp, sp, 4
- #endif
- 
--.ifnc \called_from, exception
--	sub	sp, sp, 12	; BTA/ECR/orig_r0 placeholder per pt_regs
--.endif
-+#ifdef CONFIG_ARC_HAS_ACCL_REGS
-+	ST2	r58, r59, PT_sp + 12
-+#endif
- 
- .endm
- 
- /*------------------------------------------------------------------------*/
--.macro INTERRUPT_EPILOGUE	called_from
-+.macro __RESTORE_REGFILE_SOFT
- 
--	; INPUT: r0 has STAT32 of calling context
--	; INPUT: Z flag set if returning to K mode
--.ifnc \called_from, exception
--	add	sp, sp, 12	; skip BTA/ECR/orig_r0 placeholderss
--.endif
--
--#ifdef CONFIG_ARC_CURR_IN_REG
--	POP	r25
--#else
--	add	sp, sp, 4
--#endif
-+	LD2	gp, fp, PT_r26		; gp (r26), fp (r27)
- 
--	POP	gp
--	POP	fp
-+	ld	r12, [sp, PT_sp + 4]
-+	ld	r30, [sp, PT_sp + 8]
- 
- 	; Restore SP (into AUX_USER_SP) only if returning to U mode
- 	;  - for K mode, it will be implicitly restored as stack is unwound
-@@ -147,129 +182,77 @@
- 	;    but that doesn't really matter
- 	bz	1f
- 
--	POPAX	AUX_USER_SP
-+	ld	r10, [sp, PT_sp]	; SP (pt_regs->sp)
-+	sr	r10, [AUX_USER_SP]
- 1:
--	POP	r12
--	POP	r30
- 
--#ifdef CONFIG_ARC_HAS_ACCL_REGS
--	POP	r58
--	POP	r59
-+#ifdef CONFIG_ARC_CURR_IN_REG
-+	ld	r25, [sp, PT_user_r25]
- #endif
- 
--#ifdef CONFIG_ARC_IRQ_NO_AUTOSAVE
--.ifnc \called_from, exception
--	POP	r0
--	POP	r1
--	POP	r2
--	POP	r3
--	POP	r4
--	POP	r5
--	POP	r6
--	POP	r7
--	POP	r8
--	POP	r9
--	POP	r10
--	POP	r11
--
--	POP	blink
--	POPAX	lp_end
--	POPAX	lp_start
--
--	POP	r9
--	mov	lp_count, r9
--
--	add	sp, sp, 12	; skip JLI, LDI, EI
--	ld.as	r9, [sp, -10]	; reload r9 which got clobbered
--.endif
-+#ifdef CONFIG_ARC_HAS_ACCL_REGS
-+	LD2	r58, r59, PT_sp + 12
- #endif
--
- .endm
- 
- /*------------------------------------------------------------------------*/
--.macro EXCEPTION_PROLOGUE
-+.macro __RESTORE_REGFILE_HARD
- 
--	; (A) Before jumping to Exception Vector, hardware micro-ops did following:
--	;   1. SP auto-switched to kernel mode stack
--	;   2. STATUS32.Z flag set if in U mode at time of exception (U:1,K:0)
--	;
--	; (B) Manually save the complete reg file below
-+	ld	blink, [sp, PT_blink]
- 
--	PUSH	r9		; freeup a register: slot of erstatus
-+	LD2	r10, r11, PT_lpe
-+	sr	r10, [lp_end]
-+	sr	r11, [lp_start]
- 
--	PUSHAX	eret
--	sub	sp, sp, 12	; skip JLI, LDI, EI
--	PUSH	lp_count
--	PUSHAX	lp_start
--	PUSHAX	lp_end
--	PUSH	blink
-+	ld	r10, [sp, PT_lpc]	; lp_count can't be target of LD
-+	mov	lp_count, r10
- 
--	PUSH	r11
--	PUSH	r10
-+	LD2	r0,  r1,  PT_r0
-+	LD2	r2,  r3,  PT_r2
-+	LD2	r4,  r5,  PT_r4
-+	LD2	r6,  r7,  PT_r6
-+	LD2	r8,  r9,  PT_r8
-+	LD2	r10, r11, PT_r10
-+.endm
- 
--	ld.as	r9,  [sp, 10]	; load stashed r9 (status32 stack slot)
--	lr	r10, [erstatus]
--	st.as	r10, [sp, 10]	; save status32 at it's right stack slot
- 
--	PUSH	r9
--	PUSH	r8
--	PUSH	r7
--	PUSH	r6
--	PUSH	r5
--	PUSH	r4
--	PUSH	r3
--	PUSH	r2
--	PUSH	r1
--	PUSH	r0
-+/*------------------------------------------------------------------------*/
-+.macro INTERRUPT_EPILOGUE
- 
--	; -- for interrupts, regs above are auto-saved by h/w in that order --
--	; Now do what ISR prologue does (manually save r12, sp, fp, gp, r25)
-+	; INPUT: r0 has STAT32 of calling context
-+	; INPUT: Z flag set if returning to K mode
- 
--	INTERRUPT_PROLOGUE  exception
-+	; _SOFT clobbers r10 restored by _HARD hence the order
- 
--	PUSHAX	erbta
--	PUSHAX	ecr		; r9 contains ECR, expected by EV_Trap
-+	__RESTORE_REGFILE_SOFT
-+
-+#ifdef CONFIG_ARC_IRQ_NO_AUTOSAVE
-+	__RESTORE_REGFILE_HARD
-+	add	sp, sp, SZ_PT_REGS - 8
-+#else
-+	add	sp, sp, PT_r0
-+#endif
- 
--	PUSH	r0		; orig_r0
--	; OUTPUT: r9 has ECR
- .endm
- 
- /*------------------------------------------------------------------------*/
- .macro EXCEPTION_EPILOGUE
- 
- 	; INPUT: r0 has STAT32 of calling context
--	btst   r0, STATUS_U_BIT	; Z flag set if K, used in INTERRUPT_EPILOGUE
--
--	add	sp, sp, 8	; orig_r0/ECR don't need restoring
--	POPAX	erbta
--
--	INTERRUPT_EPILOGUE  exception
--
--	POP	r0
--	POP	r1
--	POP	r2
--	POP	r3
--	POP	r4
--	POP	r5
--	POP	r6
--	POP	r7
--	POP	r8
--	POP	r9
--	POP	r10
--	POP	r11
--
--	POP	blink
--	POPAX	lp_end
--	POPAX	lp_start
--
--	POP	r9
--	mov	lp_count, r9
--
--	add	sp, sp, 12	; skip JLI, LDI, EI
--	POPAX	eret
--	POPAX	erstatus
--
--	ld.as	r9, [sp, -12]	; reload r9 which got clobbered
-+
-+	btst	r0, STATUS_U_BIT	; Z flag set if K, used in restoring SP
-+
-+	ld	r10, [sp, PT_event + 4]
-+	sr	r10, [erbta]
-+
-+	LD2	r10, r11, PT_ret
-+	sr	r10, [eret]
-+	sr	r11, [erstatus]
-+
-+	__RESTORE_REGFILE_SOFT
-+	__RESTORE_REGFILE_HARD
-+
-+	add	sp, sp, SZ_PT_REGS
- .endm
- 
- .macro FAKE_RET_FROM_EXCPN
 diff --git a/arch/arc/include/asm/linkage.h b/arch/arc/include/asm/linkage.h
-index 07c8e1a6c56e2..f3d29d4840d58 100644
+index f3d29d4840d58..b89ca8b4d5975 100644
 --- a/arch/arc/include/asm/linkage.h
 +++ b/arch/arc/include/asm/linkage.h
-@@ -13,6 +13,24 @@
+@@ -11,6 +11,10 @@
  
+ #include <asm/dwarf.h>
+ 
++#define ASM_NL		 `	/* use '`' to mark new line in macro */
++#define __ALIGN		.align 4
++#define __ALIGN_STR	__stringify(__ALIGN)
++
  #ifdef __ASSEMBLY__
  
-+.macro ST2 e, o, off
-+#ifdef CONFIG_ARC_HAS_LL64
-+	std	\e, [sp, \off]
-+#else
-+	st	\e, [sp, \off]
-+	st	\o, [sp, \off+4]
-+#endif
-+.endm
-+
-+.macro LD2 e, o, off
-+#ifdef CONFIG_ARC_HAS_LL64
-+	ldd	\e, [sp, \off]
-+#else
-+	ld	\e, [sp, \off]
-+	ld	\o, [sp, \off+4]
-+#endif
-+.endm
-+
- #define ASM_NL		 `	/* use '`' to mark new line in macro */
- #define __ALIGN		.align 4
- #define __ALIGN_STR	__stringify(__ALIGN)
-diff --git a/arch/arc/kernel/asm-offsets.c b/arch/arc/kernel/asm-offsets.c
-index ecaf34e9235c2..e90dccecfd833 100644
---- a/arch/arc/kernel/asm-offsets.c
-+++ b/arch/arc/kernel/asm-offsets.c
-@@ -58,7 +58,14 @@ int main(void)
- 	DEFINE(PT_r5, offsetof(struct pt_regs, r5));
- 	DEFINE(PT_r6, offsetof(struct pt_regs, r6));
- 	DEFINE(PT_r7, offsetof(struct pt_regs, r7));
-+	DEFINE(PT_r8, offsetof(struct pt_regs, r8));
-+	DEFINE(PT_r10, offsetof(struct pt_regs, r10));
-+	DEFINE(PT_r26, offsetof(struct pt_regs, r26));
- 	DEFINE(PT_ret, offsetof(struct pt_regs, ret));
-+	DEFINE(PT_blink, offsetof(struct pt_regs, blink));
-+	DEFINE(PT_lpe, offsetof(struct pt_regs, lp_end));
-+	DEFINE(PT_lpc, offsetof(struct pt_regs, lp_count));
-+	DEFINE(PT_user_r25, offsetof(struct pt_regs, user_r25));
+ .macro ST2 e, o, off
+@@ -31,10 +35,6 @@
+ #endif
+ .endm
  
- 	DEFINE(SZ_CALLEE_REGS, sizeof(struct callee_regs));
- 	DEFINE(SZ_PT_REGS, sizeof(struct pt_regs));
-diff --git a/arch/arc/kernel/entry-arcv2.S b/arch/arc/kernel/entry-arcv2.S
-index 562089d62d9d6..6cbf0ee8a20a7 100644
---- a/arch/arc/kernel/entry-arcv2.S
-+++ b/arch/arc/kernel/entry-arcv2.S
-@@ -70,7 +70,7 @@ reserved:
- 
- ENTRY(handle_interrupt)
- 
--	INTERRUPT_PROLOGUE  irq
-+	INTERRUPT_PROLOGUE
- 
- 	# irq control APIs local_irq_save/restore/disable/enable fiddle with
- 	# global interrupt enable bits in STATUS32 (.IE for 1 prio, .E[] for 2 prio)
-@@ -226,7 +226,7 @@ debug_marker_l1:
- 	bset.nz	r11, r11, AUX_IRQ_ACT_BIT_U	; NZ means U
- 	sr	r11, [AUX_IRQ_ACT]
- 
--	INTERRUPT_EPILOGUE  irq
-+	INTERRUPT_EPILOGUE
- 	rtie
- 
- ;####### Return from Exception / pure kernel mode #######
+-#define ASM_NL		 `	/* use '`' to mark new line in macro */
+-#define __ALIGN		.align 4
+-#define __ALIGN_STR	__stringify(__ALIGN)
+-
+ /* annotation for data we want in DCCM - if enabled in .config */
+ .macro ARCFP_DATA nm
+ #ifdef CONFIG_ARC_HAS_DCCM
 -- 
 2.39.2
 
