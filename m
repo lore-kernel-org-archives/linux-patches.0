@@ -1,30 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4789C174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:03:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB72DC433CD;
-	Wed,  9 Aug 2023 11:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03437174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:03:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52E40C433CC;
+	Wed,  9 Aug 2023 11:03:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579007;
-	bh=T/J1WAEOqzayksZ9saLnJHZw+g65Ve8XALJc3hruitg=;
+	s=korg; t=1691579009;
+	bh=dp+8IKv4mgmy3Z/UBKxdAA2/zaz9V9IQSESzQaPR1qM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FeDYwQ5oK6g/9GWPp0YE5LN4Us7sX6dMRekiFtRaVYY+MTc9AvI6IELPS9aoS2Tz2
-	 E+WmkS6wPnSbFNtabRJjYgYktaAVqkeIr0T6zYsyh3hZfeVLkKQU425+wHXJnG7THR
-	 zoHg8QfNwnz9mw5pQ92cvt4+rupybsWd+GYZgcfQ=
+	b=p2Yq0HrJPSKS8B96rcRLlFsDYvngKZ2ylsPwPLWXLouadHQfoX+TTYJSEw3tSVIBT
+	 EIuSMijrMAYNeuFJHXctN38x692uObFaDGdFqYN5neNmU8t51T0NF+R/kr9fnGLTPR
+	 VOyTA0AtCEesoDRPuZwgMLsvBx4Jzt8n13V3xXd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregg Wonderly <greggwonderly@seqtechllc.com>,
-	Peter Seiderer <ps.report@gmx.net>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Leo Li <leoyang.li@nxp.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Qiang Zhao <qiang.zhao@nxp.com>,
+	linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Kumar Gala <galak@kernel.crashing.org>,
+	Nicolas Schier <nicolas@jasle.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 014/204] wifi: ath9k: fix AR9003 mac hardware hang check register offset calculation
-Date: Wed,  9 Aug 2023 12:39:12 +0200
-Message-ID: <20230809103643.068630236@linuxfoundation.org>
+Subject: [PATCH 4.14 041/204] soc/fsl/qe: fix usb.c build errors
+Date: Wed,  9 Aug 2023 12:39:39 +0200
+Message-ID: <20230809103643.950006860@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -38,89 +45,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Seiderer <ps.report@gmx.net>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 3e56c80931c7615250fe4bf83f93b57881969266 ]
+[ Upstream commit 7b1a78babd0d2cd27aa07255dee0c2d7ac0f31e3 ]
 
-Fix ath9k_hw_verify_hang()/ar9003_hw_detect_mac_hang() register offset
-calculation (do not overflow the shift for the second register/queues
-above five, use the register layout described in the comments above
-ath9k_hw_verify_hang() instead).
+Fix build errors in soc/fsl/qe/usb.c when QUICC_ENGINE is not set.
+This happens when PPC_EP88XC is set, which selects CPM1 & CPM.
+When CPM is set, USB_FSL_QE can be set without QUICC_ENGINE
+being set. When USB_FSL_QE is set, QE_USB deafults to y, which
+causes build errors when QUICC_ENGINE is not set. Making
+QE_USB depend on QUICC_ENGINE prevents QE_USB from defaulting to y.
 
-Fixes: 222e04830ff0 ("ath9k: Fix MAC HW hang check for AR9003")
+Fixes these build errors:
 
-Reported-by: Gregg Wonderly <greggwonderly@seqtechllc.com>
-Link: https://lore.kernel.org/linux-wireless/E3A9C354-0CB7-420C-ADEF-F0177FB722F4@seqtechllc.com/
-Signed-off-by: Peter Seiderer <ps.report@gmx.net>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230422212423.26065-1-ps.report@gmx.net
+drivers/soc/fsl/qe/usb.o: in function `qe_usb_clock_set':
+usb.c:(.text+0x1e): undefined reference to `qe_immr'
+powerpc-linux-ld: usb.c:(.text+0x2a): undefined reference to `qe_immr'
+powerpc-linux-ld: usb.c:(.text+0xbc): undefined reference to `qe_setbrg'
+powerpc-linux-ld: usb.c:(.text+0xca): undefined reference to `cmxgcr_lock'
+powerpc-linux-ld: usb.c:(.text+0xce): undefined reference to `cmxgcr_lock'
+
+Fixes: 5e41486c408e ("powerpc/QE: add support for QE USB clocks routing")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/all/202301101500.pillNv6R-lkp@intel.com/
+Suggested-by: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Leo Li <leoyang.li@nxp.com>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nicolas Schier <nicolas@fjasle.eu>
+Cc: Qiang Zhao <qiang.zhao@nxp.com>
+Cc: linuxppc-dev <linuxppc-dev@lists.ozlabs.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: Kumar Gala <galak@kernel.crashing.org>
+Acked-by: Nicolas Schier <nicolas@jasle.eu>
+Signed-off-by: Li Yang <leoyang.li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/ar9003_hw.c | 27 ++++++++++++++--------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ drivers/soc/fsl/qe/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath9k/ar9003_hw.c b/drivers/net/wireless/ath/ath9k/ar9003_hw.c
-index 2fe12b0de5b4f..dea8a998fb622 100644
---- a/drivers/net/wireless/ath/ath9k/ar9003_hw.c
-+++ b/drivers/net/wireless/ath/ath9k/ar9003_hw.c
-@@ -1099,17 +1099,22 @@ static bool ath9k_hw_verify_hang(struct ath_hw *ah, unsigned int queue)
- {
- 	u32 dma_dbg_chain, dma_dbg_complete;
- 	u8 dcu_chain_state, dcu_complete_state;
-+	unsigned int dbg_reg, reg_offset;
- 	int i;
+diff --git a/drivers/soc/fsl/qe/Kconfig b/drivers/soc/fsl/qe/Kconfig
+index 73a2e08b47ef9..e2ccddd348b5b 100644
+--- a/drivers/soc/fsl/qe/Kconfig
++++ b/drivers/soc/fsl/qe/Kconfig
+@@ -37,6 +37,7 @@ config QE_TDM
  
--	for (i = 0; i < NUM_STATUS_READS; i++) {
--		if (queue < 6)
--			dma_dbg_chain = REG_READ(ah, AR_DMADBG_4);
--		else
--			dma_dbg_chain = REG_READ(ah, AR_DMADBG_5);
-+	if (queue < 6) {
-+		dbg_reg = AR_DMADBG_4;
-+		reg_offset = queue * 5;
-+	} else {
-+		dbg_reg = AR_DMADBG_5;
-+		reg_offset = (queue - 6) * 5;
-+	}
- 
-+	for (i = 0; i < NUM_STATUS_READS; i++) {
-+		dma_dbg_chain = REG_READ(ah, dbg_reg);
- 		dma_dbg_complete = REG_READ(ah, AR_DMADBG_6);
- 
--		dcu_chain_state = (dma_dbg_chain >> (5 * queue)) & 0x1f;
-+		dcu_chain_state = (dma_dbg_chain >> reg_offset) & 0x1f;
- 		dcu_complete_state = dma_dbg_complete & 0x3;
- 
- 		if ((dcu_chain_state != 0x6) || (dcu_complete_state != 0x1))
-@@ -1128,6 +1133,7 @@ static bool ar9003_hw_detect_mac_hang(struct ath_hw *ah)
- 	u8 dcu_chain_state, dcu_complete_state;
- 	bool dcu_wait_frdone = false;
- 	unsigned long chk_dcu = 0;
-+	unsigned int reg_offset;
- 	unsigned int i = 0;
- 
- 	dma_dbg_4 = REG_READ(ah, AR_DMADBG_4);
-@@ -1139,12 +1145,15 @@ static bool ar9003_hw_detect_mac_hang(struct ath_hw *ah)
- 		goto exit;
- 
- 	for (i = 0; i < ATH9K_NUM_TX_QUEUES; i++) {
--		if (i < 6)
-+		if (i < 6) {
- 			chk_dbg = dma_dbg_4;
--		else
-+			reg_offset = i * 5;
-+		} else {
- 			chk_dbg = dma_dbg_5;
-+			reg_offset = (i - 6) * 5;
-+		}
- 
--		dcu_chain_state = (chk_dbg >> (5 * i)) & 0x1f;
-+		dcu_chain_state = (chk_dbg >> reg_offset) & 0x1f;
- 		if (dcu_chain_state == 0x6) {
- 			dcu_wait_frdone = true;
- 			chk_dcu |= BIT(i);
+ config QE_USB
+ 	bool
++	depends on QUICC_ENGINE
+ 	default y if USB_FSL_QE
+ 	help
+ 	  QE USB Controller support
 -- 
 2.39.2
 
