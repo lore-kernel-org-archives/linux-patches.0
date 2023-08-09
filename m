@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C546131
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:04:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A068CC433C8;
-	Wed,  9 Aug 2023 11:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA236131
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:04:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D622C433C7;
+	Wed,  9 Aug 2023 11:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579074;
-	bh=3c7ap01Zl4Uhy4WQkYjigLEqaNEEdIkr+TE3d7D20RY=;
+	s=korg; t=1691579076;
+	bh=6JDC17LJIuuzIteAkk6FYq4riJuhw3qeR9tzdTmUCn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mQIye5LwiWiBnVg29EYDCuLhqtDmWolEVCdflNth+pax1ISpVIlRbLq811nKQrHK6
-	 9gTA4OrONxtvvDf/ifZsfT7Ix/Fbfm5NNdM6UBEp4jgecgBSNCCNdXC5Dg0OPkPPCe
-	 NZesCjeAQWCp2z5jWpu/w9JZynzyVo5VOCtudD8I=
+	b=yuJl8Ws4ilhRAlFPouQuzOpq3xjbe1P5Ax/U7/iBN/VYIVcZpv6jn1se21hXQn09n
+	 uXasaEcdCH7zSgIgDsUxmeBFQ8/1w4IgdygfAIzUXlHamCrVyR5lcrwXRQu2WCC6C1
+	 pQijmDS8WmMK2vne6azky8AmfFnHPxIgXUL71iXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 065/204] mfd: intel-lpss: Add missing check for platform_get_resource
-Date: Wed,  9 Aug 2023 12:40:03 +0200
-Message-ID: <20230809103644.825832937@linuxfoundation.org>
+Subject: [PATCH 4.14 066/204] mfd: stmpe: Only disable the regulators if they are enabled
+Date: Wed,  9 Aug 2023 12:40:04 +0200
+Message-ID: <20230809103644.855300462@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -35,36 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit d918e0d5824495a75d00b879118b098fcab36fdb ]
+[ Upstream commit 104d32bd81f620bb9f67fbf7d1159c414e89f05f ]
 
-Add the missing check for platform_get_resource and return error
-if it fails.
+In stmpe_probe(), if some regulator_enable() calls fail, probing continues
+and there is only a dev_warn().
 
-Fixes: 4b45efe85263 ("mfd: Add support for Intel Sunrisepoint LPSS devices")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+So, if stmpe_probe() is called the regulator may not be enabled. It is
+cleaner to test it before calling regulator_disable() in the remove
+function.
+
+Fixes: 9c9e321455fb ("mfd: stmpe: add optional regulators")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/8de3aaf297931d655b9ad6aed548f4de8b85425a.1686998575.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20230609014818.28475-1-jiasheng@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/intel-lpss-acpi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mfd/stmpe.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mfd/intel-lpss-acpi.c b/drivers/mfd/intel-lpss-acpi.c
-index fc44fb7c595bc..281ef5f52eb55 100644
---- a/drivers/mfd/intel-lpss-acpi.c
-+++ b/drivers/mfd/intel-lpss-acpi.c
-@@ -92,6 +92,9 @@ static int intel_lpss_acpi_probe(struct platform_device *pdev)
- 		return -ENOMEM;
+diff --git a/drivers/mfd/stmpe.c b/drivers/mfd/stmpe.c
+index 722ad2c368a56..d752c56d60e42 100644
+--- a/drivers/mfd/stmpe.c
++++ b/drivers/mfd/stmpe.c
+@@ -1428,9 +1428,9 @@ int stmpe_probe(struct stmpe_client_info *ci, enum stmpe_partnum partnum)
  
- 	info->mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+	if (!info->mem)
-+		return -ENODEV;
-+
- 	info->irq = platform_get_irq(pdev, 0);
+ int stmpe_remove(struct stmpe *stmpe)
+ {
+-	if (!IS_ERR(stmpe->vio))
++	if (!IS_ERR(stmpe->vio) && regulator_is_enabled(stmpe->vio))
+ 		regulator_disable(stmpe->vio);
+-	if (!IS_ERR(stmpe->vcc))
++	if (!IS_ERR(stmpe->vcc) && regulator_is_enabled(stmpe->vcc))
+ 		regulator_disable(stmpe->vcc);
  
- 	ret = intel_lpss_probe(&pdev->dev, info);
+ 	mfd_remove_devices(stmpe->dev);
 -- 
 2.39.2
 
