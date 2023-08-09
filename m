@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90811171A6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:02:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15CE2C433C8;
-	Wed,  9 Aug 2023 11:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536A8171A6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:02:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7642C433C8;
+	Wed,  9 Aug 2023 11:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578930;
-	bh=MkjWwhlPWgLrOJ4MNuKArkGuM9h79tqyoDFgMaMk4h8=;
+	s=korg; t=1691578933;
+	bh=PJm1jLcCLU2IAKB8lg4Ibyd4e30cRAj79dScY5xtqEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IKi+uphSfLI2+Xf8InhjZ5Mzy4eLuVDwrDhyJgwbum7OeUXo/z12I+erKpNimF64j
-	 o12FW53dKrroxyIdujwsy4MLCcaA0PAfUOeDvkYzEd0bNbDACR47gm5Dr5tMxdh6qh
-	 xuvD487u0Ale4SywdHvnCLRhBe3R4nk4TXoMCDHg=
+	b=KPpTrmrHfcFE8LXQNwe+qQc5wtUcwFQs4f56FiiPfz4HHEzl2s0IpiMOvJA08IX9D
+	 j52nmnwu9vxSfkGxuTCZ1YldifzS0I3JX8Nxzd6Xy4cP7n9YUENVAxP48k0ERUeCA9
+	 CiVKxO/JOqvUzq3Nn/5s/lSMzZPZ/8pB4tVyA5Pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ahmed S. Darwish" <darwi@linutronix.de>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 4.14 006/204] scripts/tags.sh: Resolve gtags empty index generation
-Date: Wed,  9 Aug 2023 12:39:04 +0200
-Message-ID: <20230809103642.773270455@linuxfoundation.org>
+	Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 4.14 007/204] drm/amdgpu: Validate VM ioctl flags.
+Date: Wed,  9 Aug 2023 12:39:05 +0200
+Message-ID: <20230809103642.813575642@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -34,65 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ahmed S. Darwish <darwi@linutronix.de>
+From: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
 
-commit e1b37563caffc410bb4b55f153ccb14dede66815 upstream.
+commit a2b308044dcaca8d3e580959a4f867a1d5c37fac upstream.
 
-gtags considers any file outside of its current working directory
-"outside the source tree" and refuses to index it. For O= kernel builds,
-or when "make" is invoked from a directory other then the kernel source
-tree, gtags ignores the entire kernel source and generates an empty
-index.
+None have been defined yet, so reject anybody setting any. Mesa sets
+it to 0 anyway.
 
-Force-set gtags current working directory to the kernel source tree.
-
-Due to commit 9da0763bdd82 ("kbuild: Use relative path when building in
-a subdir of the source tree"), if the kernel build is done in a
-sub-directory of the kernel source tree, the kernel Makefile will set
-the kernel's $srctree to ".." for shorter compile-time and run-time
-warnings. Consequently, the list of files to be indexed will be in the
-"../*" form, rendering all such paths invalid once gtags switches to the
-kernel source tree as its current working directory.
-
-If gtags indexing is requested and the build directory is not the kernel
-source tree, index all files in absolute-path form.
-
-Note, indexing in absolute-path form will not affect the generated
-index, as paths in gtags indices are always relative to the gtags "root
-directory" anyway (as evidenced by "gtags --dump").
-
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/tags.sh |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/scripts/tags.sh
-+++ b/scripts/tags.sh
-@@ -37,6 +37,13 @@ find_all_archs()
- 	done
- }
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -2712,6 +2712,10 @@ int amdgpu_vm_ioctl(struct drm_device *d
+ 	struct amdgpu_fpriv *fpriv = filp->driver_priv;
+ 	int r;
  
-+# gtags(1) refuses to index any file outside of its current working dir.
-+# If gtags indexing is requested and the build output directory is not
-+# the kernel source tree, index all files in absolute-path form.
-+if [[ "$1" == "gtags" && -n "${tree}" ]]; then
-+	tree=$(realpath "$tree")/
-+fi
++	/* No valid flags defined yet */
++	if (args->in.flags)
++		return -EINVAL;
 +
- # Detect if ALLSOURCE_ARCHS is set. If not, we assume SRCARCH
- if [ "${ALLSOURCE_ARCHS}" = "" ]; then
- 	ALLSOURCE_ARCHS=${SRCARCH}
-@@ -145,7 +152,7 @@ docscope()
- 
- dogtags()
- {
--	all_target_sources | gtags -i -f -
-+	all_target_sources | gtags -i -C "${tree:-.}" -f - "$PWD"
- }
- 
- # Basic regular expressions with an optional /kind-spec/ for ctags and
+ 	switch (args->in.op) {
+ 	case AMDGPU_VM_OP_RESERVE_VMID:
+ 		/* current, we only have requirement to reserve vmid from gfxhub */
 
 
