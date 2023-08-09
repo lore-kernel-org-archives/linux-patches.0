@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF96717744
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:31:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34B4DC433C7;
-	Wed,  9 Aug 2023 11:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760AC17AAB
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:31:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE566C433C8;
+	Wed,  9 Aug 2023 11:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580681;
-	bh=neC51Y0PDL9Aw9f6ud1M8ut0384NXKPeGvxiEUROiD8=;
+	s=korg; t=1691580684;
+	bh=jYgu7Q+2WLtmfEgmUWcqkXZ+JSW1XMyO3nKSVjvUxDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EJSAyVqP7C6NcBrOQcA8PUWsF/6UH4SWR7EOpBGKOjvNigK5mBeFwr69INKzwzOqV
-	 CKX209QVpId4xZoQ8oZwHLKukuS5uSzWA5yYt8JIipv6qAju0E3eCGCw3xkFpHs+4A
-	 Yzjz1DG1M7aVUcWU+xHnbw8uhH7IbayO82PsHmEU=
+	b=vPNptBcD1bNOtPAEGJMi8Bo/BR4RmjrJnPVtRfnorvk6qQmPF71CDgQqTmrC6+zY/
+	 PrNpe43qdCPkyOgGPOUHSBYpRcjVokeXciFfy28iofxJdFTD2OHA9hUxQa//bgKN3G
+	 y865BOGWZyKK0EP8ff0yKvSEvhZ9LRJN+rWtcTco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Hagar Hemdan <hagarhem@amazon.de>
-Subject: [PATCH 5.4 082/154] ACPI: processor: perflib: Avoid updating frequency QoS unnecessarily
-Date: Wed,  9 Aug 2023 12:41:53 +0200
-Message-ID: <20230809103639.705410704@linuxfoundation.org>
+Subject: [PATCH 5.4 083/154] cpufreq: intel_pstate: Drop ACPI _PSS states table patching
+Date: Wed,  9 Aug 2023 12:41:54 +0200
+Message-ID: <20230809103639.743032759@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -36,65 +36,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 99387b016022c29234c4ebf9abd34358c6e56532 upstream.
+commit e8a0e30b742f76ebd0f3b196973df4bf65d8fbbb upstream.
 
-Modify acpi_processor_get_platform_limit() to avoid updating its
-frequency QoS request when the _PPC return value has not changed
-by comparing that value to the previous _PPC return value stored in
-the performance_platform_limit field of the struct acpi_processor
-corresponding to the given CPU.
-
-While at it, do the _PPC return value check against the state count
-earlier, to avoid setting performance_platform_limit to an invalid
-value, and make acpi_processor_ppc_init() use FREQ_QOS_MAX_DEFAULT_VALUE
-as the "no limit" frequency QoS for consistency.
+After making acpi_processor_get_platform_limit() use the "no limit"
+value for its frequency QoS request when _PPC returns 0, it is not
+necessary to replace the frequency corresponding to the first _PSS
+return package entry with the maximum turbo frequency of the given
+CPU in intel_pstate_init_acpi_perf_limits() any more, so drop the
+code doing that along with the comment explaining it.
 
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Tested-by: Hagar Hemdan <hagarhem@amazon.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/processor_perflib.c |   18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/cpufreq/intel_pstate.c |   14 --------------
+ 1 file changed, 14 deletions(-)
 
---- a/drivers/acpi/processor_perflib.c
-+++ b/drivers/acpi/processor_perflib.c
-@@ -79,13 +79,16 @@ static int acpi_processor_get_platform_l
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -442,20 +442,6 @@ static void intel_pstate_init_acpi_perf_
+ 			 (u32) cpu->acpi_perf_data.states[i].control);
+ 	}
  
- 	index = ppc;
+-	/*
+-	 * The _PSS table doesn't contain whole turbo frequency range.
+-	 * This just contains +1 MHZ above the max non turbo frequency,
+-	 * with control value corresponding to max turbo ratio. But
+-	 * when cpufreq set policy is called, it will call with this
+-	 * max frequency, which will cause a reduced performance as
+-	 * this driver uses real max turbo frequency as the max
+-	 * frequency. So correct this frequency in _PSS table to
+-	 * correct max turbo frequency based on the turbo state.
+-	 * Also need to convert to MHz as _PSS freq is in MHz.
+-	 */
+-	if (!global.turbo_disabled)
+-		cpu->acpi_perf_data.states[0].core_frequency =
+-					policy->cpuinfo.max_freq / 1000;
+ 	cpu->valid_pss_table = true;
+ 	pr_debug("_PPC limits will be enforced\n");
  
-+	if (pr->performance_platform_limit == index ||
-+	    ppc >= pr->performance->state_count)
-+		return 0;
-+
- 	pr_debug("CPU %d: _PPC is %d - frequency %s limited\n", pr->id,
- 		 index, index ? "is" : "is not");
- 
- 	pr->performance_platform_limit = index;
- 
--	if (ppc >= pr->performance->state_count ||
--	    unlikely(!freq_qos_request_active(&pr->perflib_req)))
-+	if (unlikely(!freq_qos_request_active(&pr->perflib_req)))
- 		return 0;
- 
- 	/*
-@@ -180,9 +183,16 @@ void acpi_processor_ppc_init(struct cpuf
- 		if (!pr)
- 			continue;
- 
-+		/*
-+		 * Reset performance_platform_limit in case there is a stale
-+		 * value in it, so as to make it match the "no limit" QoS value
-+		 * below.
-+		 */
-+		pr->performance_platform_limit = 0;
-+
- 		ret = freq_qos_add_request(&policy->constraints,
--					   &pr->perflib_req,
--					   FREQ_QOS_MAX, INT_MAX);
-+					   &pr->perflib_req, FREQ_QOS_MAX,
-+					   FREQ_QOS_MAX_DEFAULT_VALUE);
- 		if (ret < 0)
- 			pr_err("Failed to add freq constraint for CPU%d (%d)\n",
- 			       cpu, ret);
 
 
