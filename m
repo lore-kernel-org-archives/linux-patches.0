@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18760171A6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:59:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878AFC433C8;
-	Wed,  9 Aug 2023 10:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6EB2171A6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:59:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57462C433C7;
+	Wed,  9 Aug 2023 10:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578760;
-	bh=fuAG/aautlX2TX97i0dkGrXJEbWc0zxu6wDrDAaaX0c=;
+	s=korg; t=1691578763;
+	bh=qIgf2Nh/zO7TYCNzaF5xKpYy0vFOaG7wNC/PREuHGjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ZL82Kp+einTvo+dg3IJ82oDKAka8kefvXdggYI00zaU7eVeK76Funf8G48GRwhAo
-	 B2zLB1KB59BAyr7N7FINGCVsQDpJ3vP26rfAJaqu39DPTwjFfJj2SQw4sKNVSA85Ow
-	 ErgHLwoBebNPb/2lOBeP07tEJsSjdoEZr/GECwoM=
+	b=NkBh3pHGHCZLor+j9WwlyUAYZ87gh4NIDln4HudMTyozlhSYRgEfn7enZ6MJk6QSK
+	 wylLyGk90Niq+sHlN5QW5QJnQOelDkRmiFHV5qWvwD68aREgze7mhm4MASJnUTlEUp
+	 zHGJFFo7a5sx1CnSML+Xfj2BxPvzrhJRwRotQFPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@bisdn.de>,
-	Elad Nachman <enachman@marvell.com>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	Taras Chornyi <taras.chornyi@plvision.eu>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 47/92] prestera: fix fallback to previous version on same major version
-Date: Wed,  9 Aug 2023 12:41:23 +0200
-Message-ID: <20230809103635.230116892@linuxfoundation.org>
+Subject: [PATCH 5.15 48/92] tcp_metrics: fix addr_same() helper
+Date: Wed,  9 Aug 2023 12:41:24 +0200
+Message-ID: <20230809103635.260542631@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -38,64 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonas Gorski <jonas.gorski@bisdn.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b755c25fbcd568821a3bb0e0d5c2daa5fcb00bba ]
+[ Upstream commit e6638094d7af6c7b9dcca05ad009e79e31b4f670 ]
 
-When both supported and previous version have the same major version,
-and the firmwares are missing, the driver ends in a loop requesting the
-same (previous) version over and over again:
+Because v4 and v6 families use separate inetpeer trees (respectively
+net->ipv4.peers and net->ipv6.peers), inetpeer_addr_cmp(a, b) assumes
+a & b share the same family.
 
-    [   76.327413] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.1.img firmware, fall-back to previous 4.0 version
-    [   76.339802] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.352162] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.364502] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.376848] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.389183] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.401522] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.413860] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.426199] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    ...
+tcp_metrics use a common hash table, where entries can have different
+families.
 
-Fix this by inverting the check to that we aren't yet at the previous
-version, and also check the minor version.
+We must therefore make sure to not call inetpeer_addr_cmp()
+if the families do not match.
 
-This also catches the case where both versions are the same, as it was
-after commit bb5dbf2cc64d ("net: marvell: prestera: add firmware v4.0
-support").
-
-With this fix applied:
-
-    [   88.499622] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.1.img firmware, fall-back to previous 4.0 version
-    [   88.511995] Prestera DX 0000:01:00.0: failed to request previous firmware: mrvl/prestera/mvsw_prestera_fw-v4.0.img
-    [   88.522403] Prestera DX: probe of 0000:01:00.0 failed with error -2
-
-Fixes: 47f26018a414 ("net: marvell: prestera: try to load previous fw version")
-Signed-off-by: Jonas Gorski <jonas.gorski@bisdn.de>
-Acked-by: Elad Nachman <enachman@marvell.com>
-Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Acked-by: Taras Chornyi <taras.chornyi@plvision.eu>
-Link: https://lore.kernel.org/r/20230802092357.163944-1-jonas.gorski@bisdn.de
+Fixes: d39d14ffa24c ("net: Add helper function to compare inetpeer addresses")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230802131500.1478140-2-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/prestera/prestera_pci.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv4/tcp_metrics.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/prestera/prestera_pci.c b/drivers/net/ethernet/marvell/prestera/prestera_pci.c
-index a8d7b889ebeee..6bef633aa6330 100644
---- a/drivers/net/ethernet/marvell/prestera/prestera_pci.c
-+++ b/drivers/net/ethernet/marvell/prestera/prestera_pci.c
-@@ -645,7 +645,8 @@ static int prestera_fw_get(struct prestera_fw *fw)
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index d58e672be31c7..6a06d2e0e11db 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -78,7 +78,7 @@ static void tcp_metric_set(struct tcp_metrics_block *tm,
+ static bool addr_same(const struct inetpeer_addr *a,
+ 		      const struct inetpeer_addr *b)
+ {
+-	return inetpeer_addr_cmp(a, b) == 0;
++	return (a->family == b->family) && !inetpeer_addr_cmp(a, b);
+ }
  
- 	err = request_firmware_direct(&fw->bin, fw_path, fw->dev.dev);
- 	if (err) {
--		if (ver_maj == PRESTERA_SUPP_FW_MAJ_VER) {
-+		if (ver_maj != PRESTERA_PREV_FW_MAJ_VER ||
-+		    ver_min != PRESTERA_PREV_FW_MIN_VER) {
- 			ver_maj = PRESTERA_PREV_FW_MAJ_VER;
- 			ver_min = PRESTERA_PREV_FW_MIN_VER;
- 
+ struct tcpm_hash_bucket {
 -- 
 2.40.1
 
