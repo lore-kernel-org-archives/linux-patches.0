@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38408174EE
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:05:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8C4C433C8;
-	Wed,  9 Aug 2023 11:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B72E174EE
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:05:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C68BC433C9;
+	Wed,  9 Aug 2023 11:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579101;
-	bh=ZDMpIubM1v32g8pNp/YyAiSgc/f69umD6k7k3bUO+2c=;
+	s=korg; t=1691579104;
+	bh=rLFJCWiG2eGiCjB58qNPRmfGBIT6AIWutEi+ZFiX7ek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xvph5pyk/x2ZintAOJj/3uWw6gQpIbYrK+AbffesI5/hJStpnEx4NXue7NsfL8yjG
-	 TsZI/QX/5PkIVXxRli5HK5uDa+uuPoOKFyNlwCOs2rgBkPsjuHdXUFjAANc1oRwwI0
-	 NjXxbCc3OoS7vTD4DOBeVIX/WmaujK13iN4gjVlI=
+	b=ZPhA0crkSfFDI9/j945ClLmZSe+cYzpC5ZMDT/NxpKWaxTC6TzwLwWz1+ibhmhrZP
+	 6sDiHvNzmcPusMjd/TRHbBg1xka/Ub0prChk7SzSV1SyA0tRuiLeGVna8QGrZ/338N
+	 DNoorj1/yZOoLu/srgVPjDDFJ+krs87bQMvbzWQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sui Jingfeng <suijingfeng@loongson.cn>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 046/204] PCI: Add pci_clear_master() stub for non-CONFIG_PCI
-Date: Wed,  9 Aug 2023 12:39:44 +0200
-Message-ID: <20230809103644.105614305@linuxfoundation.org>
+Subject: [PATCH 4.14 047/204] pinctrl: cherryview: Return correct value if pin in push-pull mode
+Date: Wed,  9 Aug 2023 12:39:45 +0200
+Message-ID: <20230809103644.143726627@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -36,37 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sui Jingfeng <suijingfeng@loongson.cn>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 2aa5ac633259843f656eb6ecff4cf01e8e810c5e ]
+[ Upstream commit 5835196a17be5cfdcad0b617f90cf4abe16951a4 ]
 
-Add a pci_clear_master() stub when CONFIG_PCI is not set so drivers that
-support both PCI and platform devices don't need #ifdefs or extra Kconfig
-symbols for the PCI parts.
+Currently the getter returns ENOTSUPP on pin configured in
+the push-pull mode. Fix this by adding the missed switch case.
 
-[bhelgaas: commit log]
-Fixes: 6a479079c072 ("PCI: Add pci_clear_master() as opposite of pci_set_master()")
-Link: https://lore.kernel.org/r/20230531102744.2354313-1-suijingfeng@loongson.cn
-Signed-off-by: Sui Jingfeng <suijingfeng@loongson.cn>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Fixes: ccdf81d08dbe ("pinctrl: cherryview: add option to set open-drain pin config")
+Fixes: 6e08d6bbebeb ("pinctrl: Add Intel Cherryview/Braswell pin controller support")
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/pci.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pinctrl/intel/pinctrl-cherryview.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 521030233c8d3..7f93c39199471 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -1630,6 +1630,7 @@ static inline struct pci_dev *pci_get_class(unsigned int class,
- #define pci_dev_put(dev)	do { } while (0)
+diff --git a/drivers/pinctrl/intel/pinctrl-cherryview.c b/drivers/pinctrl/intel/pinctrl-cherryview.c
+index d39718b4242d9..fa4a9ccef1f49 100644
+--- a/drivers/pinctrl/intel/pinctrl-cherryview.c
++++ b/drivers/pinctrl/intel/pinctrl-cherryview.c
+@@ -1040,11 +1040,6 @@ static int chv_config_get(struct pinctrl_dev *pctldev, unsigned pin,
  
- static inline void pci_set_master(struct pci_dev *dev) { }
-+static inline void pci_clear_master(struct pci_dev *dev) { }
- static inline int pci_enable_device(struct pci_dev *dev) { return -EIO; }
- static inline void pci_disable_device(struct pci_dev *dev) { }
- static inline int pci_assign_resource(struct pci_dev *dev, int i)
+ 		break;
+ 
+-	case PIN_CONFIG_DRIVE_OPEN_DRAIN:
+-		if (!(ctrl1 & CHV_PADCTRL1_ODEN))
+-			return -EINVAL;
+-		break;
+-
+ 	case PIN_CONFIG_BIAS_HIGH_IMPEDANCE: {
+ 		u32 cfg;
+ 
+@@ -1054,6 +1049,16 @@ static int chv_config_get(struct pinctrl_dev *pctldev, unsigned pin,
+ 			return -EINVAL;
+ 
+ 		break;
++
++	case PIN_CONFIG_DRIVE_PUSH_PULL:
++		if (ctrl1 & CHV_PADCTRL1_ODEN)
++			return -EINVAL;
++		break;
++
++	case PIN_CONFIG_DRIVE_OPEN_DRAIN:
++		if (!(ctrl1 & CHV_PADCTRL1_ODEN))
++			return -EINVAL;
++		break;
+ 	}
+ 
+ 	default:
 -- 
 2.39.2
 
