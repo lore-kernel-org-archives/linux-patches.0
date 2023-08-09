@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98BF815AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:51:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17C12C433C8;
-	Wed,  9 Aug 2023 10:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601A315AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:51:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D428DC433C7;
+	Wed,  9 Aug 2023 10:51:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578307;
-	bh=kHtrEE6ToEs9T8f/zG0VQZWoE0DTPdqZCLeu+k/00Z8=;
+	s=korg; t=1691578310;
+	bh=m32v1OU2t/Sk7F7pAGVyC2uXdMNoNki8aX3j8pTj6hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hIsbHuJoujPkkrBXgswHvfqHraMX0GDw3LcFWYoMZVfhldUWN/mt20xkkMO3Mf2RM
-	 XEAPQG3MqEo6227GFFc4/XHk2WBjKGeLn3Pcbqrhql1GXHWq6Kvp09q3nCid8eXiGa
-	 l8vKNAxmZ3MhSSAPHgngigDIvBiYfq3cvrNrKSXo=
+	b=Xg9sdhxKjAJybEfE8T70f0A4Y4v3DVgVziAkO/MhbiHlYrLlkLW1CdMfLVMFqksgB
+	 J64OcoGxTboSaRsZIDMBq+mqVBX1fqM1pJMHH0aUSPZMOSoZyNwK6ekDP0SmfeZJ/Q
+	 4zO6XKajKjOtXzAfCMGe4XhbRD4dxIdXCmmtPiUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Fabio Estevam <festevam@gmail.com>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/127] arm64: dts: imx8mn-var-som: add missing pull-up for onboard PHY reset pinmux
-Date: Wed,  9 Aug 2023 12:40:00 +0200
-Message-ID: <20230809103637.071019226@linuxfoundation.org>
+Subject: [PATCH 6.1 014/127] arm64: dts: freescale: Fix VPU G2 clock
+Date: Wed,  9 Aug 2023 12:40:01 +0200
+Message-ID: <20230809103637.108862719@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -36,44 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 
-[ Upstream commit 253be5b53c2792fb4384f8005b05421e6f040ee3 ]
+[ Upstream commit b27bfc5103c72f84859bd32731b6a09eafdeda05 ]
 
-For SOMs with an onboard PHY, the RESET_N pull-up resistor is
-currently deactivated in the pinmux configuration. When the pinmux
-code selects the GPIO function for this pin, with a default direction
-of input, this prevents the RESET_N pin from being taken to the proper
-3.3V level (deasserted), and this results in the PHY being not
-detected since it is held in reset.
+Set VPU G2 clock to 300MHz like described in documentation.
+This fixes pixels error occurring with large resolution ( >= 2560x1600)
+HEVC test stream when using the postprocessor to produce NV12.
 
-Taken from RESET_N pin description in ADIN13000 datasheet:
-    This pin requires a 1K pull-up resistor to AVDD_3P3.
-
-Activate the pull-up resistor to fix the issue.
-
-Fixes: ade0176dd8a0 ("arm64: dts: imx8mn-var-som: Add Variscite VAR-SOM-MX8MN System on Module")
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Fixes: 4ac7e4a81272 ("arm64: dts: imx8mq: Enable both G1 and G2 VPU's with vpu-blk-ctrl")
+Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi | 2 +-
+ arch/arm64/boot/dts/freescale/imx8mq.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi
-index d053ef302fb82..faafefe562e4b 100644
---- a/arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi
-@@ -351,7 +351,7 @@
- 			MX8MN_IOMUXC_ENET_RXC_ENET1_RGMII_RXC		0x91
- 			MX8MN_IOMUXC_ENET_RX_CTL_ENET1_RGMII_RX_CTL	0x91
- 			MX8MN_IOMUXC_ENET_TX_CTL_ENET1_RGMII_TX_CTL	0x1f
--			MX8MN_IOMUXC_GPIO1_IO09_GPIO1_IO9		0x19
-+			MX8MN_IOMUXC_GPIO1_IO09_GPIO1_IO9		0x159
- 		>;
- 	};
- 
+diff --git a/arch/arm64/boot/dts/freescale/imx8mq.dtsi b/arch/arm64/boot/dts/freescale/imx8mq.dtsi
+index 4724ed0cbff94..bf8f02c1535c1 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mq.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mq.dtsi
+@@ -756,7 +756,7 @@
+ 									 <&clk IMX8MQ_SYS1_PLL_800M>,
+ 									 <&clk IMX8MQ_VPU_PLL>;
+ 						assigned-clock-rates = <600000000>,
+-								       <600000000>,
++								       <300000000>,
+ 								       <800000000>,
+ 								       <0>;
+ 					};
 -- 
 2.40.1
 
