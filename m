@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE5E17731
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:07:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41CFBC433C8;
-	Wed,  9 Aug 2023 11:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E7E17731
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:07:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49867C433C9;
+	Wed,  9 Aug 2023 11:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579257;
-	bh=AFj/zl8rGeSxxDo2tsI753xkbWhSov2vs0dhTnVGScU=;
+	s=korg; t=1691579260;
+	bh=09GqMt05XsMA4chiJqgKrE8nX8SgCDAI5shmy9Hl7ZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l3VxiajuWNe7auD77TZSa9i3u3jVr6/4X30DM13bsv4HjORGWsQLpth9IY769wQmF
-	 goxdJegn2OSJfBSGstwTVRI+8nGJsA8S98i0CwS2BOL9fSpgWmtDPtP1ouKORiIf9b
-	 6pCNGjjwkEws8yLOtsFYmbI9NFxA/R6ep/Ly1pgs=
+	b=LTQGcFh0EYEglEyQDY89KqAh8P+Qer6Hzxyj6SQEPXCzlUJJU8KPqdMBUPPHEjOwT
+	 0L1zJzDkMghBcTOYgY3tF1eAGSvtkmWLTHDdq/zmA/fPDsfNtx2HwjaOiYfSk0hzQD
+	 9MbphUqB04ee29zr6iqhTqgwoV+foS53x8C8ZGZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	syzbot+5c54bd3eb218bb595aa9@syzkaller.appspotmail.com,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 131/204] md/raid10: prevent soft lockup while flush writes
-Date: Wed,  9 Aug 2023 12:41:09 +0200
-Message-ID: <20230809103646.981522172@linuxfoundation.org>
+Subject: [PATCH 4.14 132/204] posix-timers: Ensure timer ID search-loop limit is valid
+Date: Wed,  9 Aug 2023 12:41:10 +0200
+Message-ID: <20230809103647.011073086@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -35,77 +37,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 010444623e7f4da6b4a4dd603a7da7469981e293 ]
+[ Upstream commit 8ce8849dd1e78dadcee0ec9acbd259d239b7069f ]
 
-Currently, there is no limit for raid1/raid10 plugged bio. While flushing
-writes, raid1 has cond_resched() while raid10 doesn't, and too many
-writes can cause soft lockup.
+posix_timer_add() tries to allocate a posix timer ID by starting from the
+cached ID which was stored by the last successful allocation.
 
-Follow up soft lockup can be triggered easily with writeback test for
-raid10 with ramdisks:
+This is done in a loop searching the ID space for a free slot one by
+one. The loop has to terminate when the search wrapped around to the
+starting point.
 
-watchdog: BUG: soft lockup - CPU#10 stuck for 27s! [md0_raid10:1293]
-Call Trace:
- <TASK>
- call_rcu+0x16/0x20
- put_object+0x41/0x80
- __delete_object+0x50/0x90
- delete_object_full+0x2b/0x40
- kmemleak_free+0x46/0xa0
- slab_free_freelist_hook.constprop.0+0xed/0x1a0
- kmem_cache_free+0xfd/0x300
- mempool_free_slab+0x1f/0x30
- mempool_free+0x3a/0x100
- bio_free+0x59/0x80
- bio_put+0xcf/0x2c0
- free_r10bio+0xbf/0xf0
- raid_end_bio_io+0x78/0xb0
- one_write_done+0x8a/0xa0
- raid10_end_write_request+0x1b4/0x430
- bio_endio+0x175/0x320
- brd_submit_bio+0x3b9/0x9b7 [brd]
- __submit_bio+0x69/0xe0
- submit_bio_noacct_nocheck+0x1e6/0x5a0
- submit_bio_noacct+0x38c/0x7e0
- flush_pending_writes+0xf0/0x240
- raid10d+0xac/0x1ed0
+But that's racy vs. establishing the starting point. That is read out
+lockless, which leads to the following problem:
 
-Fix the problem by adding cond_resched() to raid10 like what raid1 did.
+CPU0	  	      	     	   CPU1
+posix_timer_add()
+  start = sig->posix_timer_id;
+  lock(hash_lock);
+  ...				   posix_timer_add()
+  if (++sig->posix_timer_id < 0)
+      			             start = sig->posix_timer_id;
+     sig->posix_timer_id = 0;
 
-Note that unlimited plugged bio still need to be optimized, for example,
-in the case of lots of dirty pages writeback, this will take lots of
-memory and io will spend a long time in plug, hence io latency is bad.
+So CPU1 can observe a negative start value, i.e. -1, and the loop break
+never happens because the condition can never be true:
 
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230529131106.2123367-2-yukuai1@huaweicloud.com
+  if (sig->posix_timer_id == start)
+     break;
+
+While this is unlikely to ever turn into an endless loop as the ID space is
+huge (INT_MAX), the racy read of the start value caught the attention of
+KCSAN and Dmitry unearthed that incorrectness.
+
+Rewrite it so that all id operations are under the hash lock.
+
+Reported-by: syzbot+5c54bd3eb218bb595aa9@syzkaller.appspotmail.com
+Reported-by: Dmitry Vyukov <dvyukov@google.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://lore.kernel.org/r/87bkhzdn6g.ffs@tglx
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/sched/signal.h |  2 +-
+ kernel/time/posix-timers.c   | 31 ++++++++++++++++++-------------
+ 2 files changed, 19 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 25c8f3e3d2edb..6ecc68fd702e4 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -924,6 +924,7 @@ static void flush_pending_writes(struct r10conf *conf)
- 			else
- 				generic_make_request(bio);
- 			bio = next;
-+			cond_resched();
+diff --git a/include/linux/sched/signal.h b/include/linux/sched/signal.h
+index bcaba7e8ca6ea..916f4807cc9a6 100644
+--- a/include/linux/sched/signal.h
++++ b/include/linux/sched/signal.h
+@@ -119,7 +119,7 @@ struct signal_struct {
+ #ifdef CONFIG_POSIX_TIMERS
+ 
+ 	/* POSIX.1b Interval Timers */
+-	int			posix_timer_id;
++	unsigned int		next_posix_timer_id;
+ 	struct list_head	posix_timers;
+ 
+ 	/* ITIMER_REAL timer for the process */
+diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
+index 8b90abd690730..309c551ac18fd 100644
+--- a/kernel/time/posix-timers.c
++++ b/kernel/time/posix-timers.c
+@@ -168,25 +168,30 @@ static struct k_itimer *posix_timer_by_id(timer_t id)
+ static int posix_timer_add(struct k_itimer *timer)
+ {
+ 	struct signal_struct *sig = current->signal;
+-	int first_free_id = sig->posix_timer_id;
+ 	struct hlist_head *head;
+-	int ret = -ENOENT;
++	unsigned int cnt, id;
+ 
+-	do {
++	/*
++	 * FIXME: Replace this by a per signal struct xarray once there is
++	 * a plan to handle the resulting CRIU regression gracefully.
++	 */
++	for (cnt = 0; cnt <= INT_MAX; cnt++) {
+ 		spin_lock(&hash_lock);
+-		head = &posix_timers_hashtable[hash(sig, sig->posix_timer_id)];
+-		if (!__posix_timers_find(head, sig, sig->posix_timer_id)) {
++		id = sig->next_posix_timer_id;
++
++		/* Write the next ID back. Clamp it to the positive space */
++		sig->next_posix_timer_id = (id + 1) & INT_MAX;
++
++		head = &posix_timers_hashtable[hash(sig, id)];
++		if (!__posix_timers_find(head, sig, id)) {
+ 			hlist_add_head_rcu(&timer->t_hash, head);
+-			ret = sig->posix_timer_id;
++			spin_unlock(&hash_lock);
++			return id;
  		}
- 		blk_finish_plug(&plug);
- 	} else
-@@ -1109,6 +1110,7 @@ static void raid10_unplug(struct blk_plug_cb *cb, bool from_schedule)
- 		else
- 			generic_make_request(bio);
- 		bio = next;
-+		cond_resched();
- 	}
- 	kfree(plug);
+-		if (++sig->posix_timer_id < 0)
+-			sig->posix_timer_id = 0;
+-		if ((sig->posix_timer_id == first_free_id) && (ret == -ENOENT))
+-			/* Loop over all possible ids completed */
+-			ret = -EAGAIN;
+ 		spin_unlock(&hash_lock);
+-	} while (ret == -ENOENT);
+-	return ret;
++	}
++	/* POSIX return code when no timer ID could be allocated */
++	return -EAGAIN;
  }
+ 
+ static inline void unlock_timer(struct k_itimer *timr, unsigned long flags)
 -- 
 2.39.2
 
