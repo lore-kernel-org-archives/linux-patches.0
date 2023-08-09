@@ -1,27 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2399317744
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:30:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A32C433C7;
-	Wed,  9 Aug 2023 11:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38CC17744
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:30:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AABFC433C8;
+	Wed,  9 Aug 2023 11:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580642;
-	bh=6hIdId1yqY9QBdbekgub2Y2doSMGNu3qzrtXTVKKTDU=;
+	s=korg; t=1691580644;
+	bh=31HqNmphNVvCIARF6+f3rsUCFR54BlZLVf+HFB64Jbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ulb+KFrEgImMqmxe6TirAwENnKYIF/IQz1Mtc5dNjEEclKrhAk8bjWh72TvvQJ+Gi
-	 01tfTDvYEWdZeA4Jn5uQbrMHWZE66zCyvc4Il0qQVOHsryfEbf3dC+QK3xajZTYIOM
-	 re2SWeVFLbVhJ6WhlnbHkKvOo5u2oUwAI/ZAMNRQ=
+	b=IGkhn5thvWl262tUSRoXzjszqDXGFePEbnqi2CYa87UvWvCkp9sAdlznSqeeKwVWj
+	 7AeMyozSgF1Alm+GFPJaJEk8b6DSGk724I+anegk3L18G54TG8sXS6VWolQYKyxjIv
+	 VYZF5vJ52zyJeFquT9acV+G3X0gtyQBOD/vHwNm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Jeffery <djeffery@redhat.com>,
-	Joe Thornber <ejt@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.4 080/154] dm cache policy smq: ensure IO doesnt prevent cleaner policy progress
-Date: Wed,  9 Aug 2023 12:41:51 +0200
-Message-ID: <20230809103639.634727085@linuxfoundation.org>
+	=?UTF-8?q?Georg=20M=C3=BCller?= <georgmueller@gmx.net>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 098/154] perf test uprobe_from_different_cu: Skip if there is no gcc
+Date: Wed,  9 Aug 2023 12:42:09 +0200
+Message-ID: <20230809103640.223235763@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -35,106 +44,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joe Thornber <ejt@redhat.com>
+From: Georg Müller <georgmueller@gmx.net>
 
-commit 1e4ab7b4c881cf26c1c72b3f56519e03475486fb upstream.
+[ Upstream commit 98ce8e4a9dcfb448b30a2d7a16190f4a00382377 ]
 
-When using the cleaner policy to decommission the cache, there is
-never any writeback started from the cache as it is constantly delayed
-due to normal I/O keeping the device busy. Meaning @idle=false was
-always being passed to clean_target_met()
+Without gcc, the test will fail.
 
-Fix this by adding a specific 'cleaner' flag that is set when the
-cleaner policy is configured. This flag serves to always allow the
-cleaner's writeback work to be queued until the cache is
-decommissioned (even if the cache isn't idle).
+On cleanup, ignore probe removal errors. Otherwise, in case of an error
+adding the probe, the temporary directory is not removed.
 
-Reported-by: David Jeffery <djeffery@redhat.com>
-Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Joe Thornber <ejt@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 56cbeacf14353057 ("perf probe: Add test for regression introduced by switch to die_get_decl_file()")
+Signed-off-by: Georg Müller <georgmueller@gmx.net>
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Georg Müller <georgmueller@gmx.net>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20230728151812.454806-2-georgmueller@gmx.net
+Link: https://lore.kernel.org/r/CAP-5=fUP6UuLgRty3t2=fQsQi3k4hDMz415vWdp1x88QMvZ8ug@mail.gmail.com/
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-policy-smq.c |   28 ++++++++++++++++++----------
- 1 file changed, 18 insertions(+), 10 deletions(-)
+ tools/perf/tests/shell/test_uprobe_from_different_cu.sh | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-cache-policy-smq.c
-+++ b/drivers/md/dm-cache-policy-smq.c
-@@ -854,7 +854,13 @@ struct smq_policy {
+diff --git a/tools/perf/tests/shell/test_uprobe_from_different_cu.sh b/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
+index 00d2e0e2e0c28..319f36ebb9a40 100644
+--- a/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
++++ b/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
+@@ -4,6 +4,12 @@
  
- 	struct background_tracker *bg_work;
+ set -e
  
--	bool migrations_allowed;
-+	bool migrations_allowed:1;
++# skip if there's no gcc
++if ! [ -x "$(command -v gcc)" ]; then
++        echo "failed: no gcc compiler"
++        exit 2
++fi
 +
-+	/*
-+	 * If this is set the policy will try and clean the whole cache
-+	 * even if the device is not idle.
-+	 */
-+	bool cleaner:1;
- };
+ temp_dir=$(mktemp -d /tmp/perf-uprobe-different-cu-sh.XXXXXXXXXX)
  
- /*----------------------------------------------------------------*/
-@@ -1133,7 +1139,7 @@ static bool clean_target_met(struct smq_
- 	 * Cache entries may not be populated.  So we cannot rely on the
- 	 * size of the clean queue.
- 	 */
--	if (idle) {
-+	if (idle || mq->cleaner) {
- 		/*
- 		 * We'd like to clean everything.
- 		 */
-@@ -1716,11 +1722,9 @@ static void calc_hotspot_params(sector_t
- 		*hotspot_block_size /= 2u;
- }
- 
--static struct dm_cache_policy *__smq_create(dm_cblock_t cache_size,
--					    sector_t origin_size,
--					    sector_t cache_block_size,
--					    bool mimic_mq,
--					    bool migrations_allowed)
-+static struct dm_cache_policy *
-+__smq_create(dm_cblock_t cache_size, sector_t origin_size, sector_t cache_block_size,
-+	     bool mimic_mq, bool migrations_allowed, bool cleaner)
- {
- 	unsigned i;
- 	unsigned nr_sentinels_per_queue = 2u * NR_CACHE_LEVELS;
-@@ -1807,6 +1811,7 @@ static struct dm_cache_policy *__smq_cre
- 		goto bad_btracker;
- 
- 	mq->migrations_allowed = migrations_allowed;
-+	mq->cleaner = cleaner;
- 
- 	return &mq->policy;
- 
-@@ -1830,21 +1835,24 @@ static struct dm_cache_policy *smq_creat
- 					  sector_t origin_size,
- 					  sector_t cache_block_size)
- {
--	return __smq_create(cache_size, origin_size, cache_block_size, false, true);
-+	return __smq_create(cache_size, origin_size, cache_block_size,
-+			    false, true, false);
- }
- 
- static struct dm_cache_policy *mq_create(dm_cblock_t cache_size,
- 					 sector_t origin_size,
- 					 sector_t cache_block_size)
- {
--	return __smq_create(cache_size, origin_size, cache_block_size, true, true);
-+	return __smq_create(cache_size, origin_size, cache_block_size,
-+			    true, true, false);
- }
- 
- static struct dm_cache_policy *cleaner_create(dm_cblock_t cache_size,
- 					      sector_t origin_size,
- 					      sector_t cache_block_size)
- {
--	return __smq_create(cache_size, origin_size, cache_block_size, false, false);
-+	return __smq_create(cache_size, origin_size, cache_block_size,
-+			    false, false, true);
- }
- 
- /*----------------------------------------------------------------*/
+ cleanup()
+@@ -11,7 +17,7 @@ cleanup()
+ 	trap - EXIT TERM INT
+ 	if [[ "${temp_dir}" =~ ^/tmp/perf-uprobe-different-cu-sh.*$ ]]; then
+ 		echo "--- Cleaning up ---"
+-		perf probe -x ${temp_dir}/testfile -d foo
++		perf probe -x ${temp_dir}/testfile -d foo || true
+ 		rm -f "${temp_dir}/"*
+ 		rmdir "${temp_dir}"
+ 	fi
+-- 
+2.40.1
+
 
 
