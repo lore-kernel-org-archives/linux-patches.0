@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484921773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:18:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA09AC433C9;
-	Wed,  9 Aug 2023 11:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F281773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:18:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D075C433C7;
+	Wed,  9 Aug 2023 11:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579929;
-	bh=9eA43b5hxcwOqZ8FmnCj8mcCmk3oLMDuCQpe1Y0BvpY=;
+	s=korg; t=1691579932;
+	bh=FSI0STsjghi8Qoq5OUEGKHdc/TJwzVCNs3Otdy3gwSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ge/+x4szG/9B90qp0U51M+luqUlLHyidlf7t7peTG2b3gWVtjmK3A+/FhuxtNq1Q7
-	 B/byhe1GiKaKiiDFKDJwYtvqI3LxXmEA4bjvOwnxpUwZ0DoJxJP6l4mn0hcz1mzJl1
-	 uhrqlYVE511xai8g6BkOZo5gP+vmTN9SPVtNc9mE=
+	b=fG8Fnf9K1qCUqKlGlRSTBjLP2ECO5rJRS5BWvvNU+N0Eahc2ikgYED8K5rOll1eRD
+	 BeSuzmj8ABKCJwtAedwJo4FkYIASEC8joCpzmP8GJ1NNaBCkqCAztPWFU3y6NrKGMR
+	 4cnhlN0svMSZCNtJ+FnzA2xKIfdi8nR6CTpgijC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>
-Subject: [PATCH 4.19 165/323] PCI: rockchip: Add poll and timeout to wait for PHY PLLs to be locked
-Date: Wed,  9 Aug 2023 12:40:03 +0200
-Message-ID: <20230809103705.703005411@linuxfoundation.org>
+	Dave Airlie <airlied@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Tejun Heo <tj@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 4.19 137/323] workqueue: clean up WORK_* constant types, clarify masking
+Date: Wed,  9 Aug 2023 12:39:35 +0200
+Message-ID: <20230809103704.413508717@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,81 +38,137 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 9dd3c7c4c8c3f7f010d9cdb7c3f42506d93c9527 upstream.
+commit afa4bb778e48d79e4a642ed41e3b4e0de7489a6c upstream.
 
-The RK3399 PCIe controller should wait until the PHY PLLs are locked.
-Add poll and timeout to wait for PHY PLLs to be locked. If they cannot
-be locked generate error message and jump to error handler. Accessing
-registers in the PHY clock domain when PLLs are not locked causes hang
-The PHY PLLs status is checked through a side channel register.
-This is documented in the TRM section 17.5.8.1 "PCIe Initialization
-Sequence".
+Dave Airlie reports that gcc-13.1.1 has started complaining about some
+of the workqueue code in 32-bit arm builds:
 
-Link: https://lore.kernel.org/r/20230418074700.1083505-5-rick.wertenbroek@gmail.com
-Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
-Tested-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Cc: stable@vger.kernel.org
+  kernel/workqueue.c: In function ‘get_work_pwq’:
+  kernel/workqueue.c:713:24: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
+    713 |                 return (void *)(data & WORK_STRUCT_WQ_DATA_MASK);
+        |                        ^
+  [ ... a couple of other cases ... ]
+
+and while it's not immediately clear exactly why gcc started complaining
+about it now, I suspect it's some C23-induced enum type handlign fixup in
+gcc-13 is the cause.
+
+Whatever the reason for starting to complain, the code and data types
+are indeed disgusting enough that the complaint is warranted.
+
+The wq code ends up creating various "helper constants" (like that
+WORK_STRUCT_WQ_DATA_MASK) using an enum type, which is all kinds of
+confused.  The mask needs to be 'unsigned long', not some unspecified
+enum type.
+
+To make matters worse, the actual "mask and cast to a pointer" is
+repeated a couple of times, and the cast isn't even always done to the
+right pointer, but - as the error case above - to a 'void *' with then
+the compiler finishing the job.
+
+That's now how we roll in the kernel.
+
+So create the masks using the proper types rather than some ambiguous
+enumeration, and use a nice helper that actually does the type
+conversion in one well-defined place.
+
+Incidentally, this magically makes clang generate better code.  That,
+admittedly, is really just a sign of clang having been seriously
+confused before, and cleaning up the typing unconfuses the compiler too.
+
+Reported-by: Dave Airlie <airlied@gmail.com>
+Link: https://lore.kernel.org/lkml/CAPM=9twNnV4zMCvrPkw3H-ajZOH-01JVh_kDrxdPYQErz8ZTdA@mail.gmail.com/
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-rockchip.c |   17 +++++++++++++++++
- drivers/pci/controller/pcie-rockchip.h |    2 ++
- 2 files changed, 19 insertions(+)
+ include/linux/workqueue.h |   15 ++++++++-------
+ kernel/workqueue.c        |   13 ++++++++-----
+ 2 files changed, 16 insertions(+), 12 deletions(-)
 
---- a/drivers/pci/controller/pcie-rockchip.c
-+++ b/drivers/pci/controller/pcie-rockchip.c
-@@ -14,6 +14,7 @@
- #include <linux/clk.h>
- #include <linux/delay.h>
- #include <linux/gpio/consumer.h>
-+#include <linux/iopoll.h>
- #include <linux/of_pci.h>
- #include <linux/phy/phy.h>
- #include <linux/platform_device.h>
-@@ -154,6 +155,12 @@ int rockchip_pcie_parse_dt(struct rockch
- }
- EXPORT_SYMBOL_GPL(rockchip_pcie_parse_dt);
+--- a/include/linux/workqueue.h
++++ b/include/linux/workqueue.h
+@@ -73,7 +73,6 @@ enum {
+ 	WORK_OFFQ_FLAG_BASE	= WORK_STRUCT_COLOR_SHIFT,
  
-+#define rockchip_pcie_read_addr(addr) rockchip_pcie_read(rockchip, addr)
-+/* 100 ms max wait time for PHY PLLs to lock */
-+#define RK_PHY_PLL_LOCK_TIMEOUT_US 100000
-+/* Sleep should be less than 20ms */
-+#define RK_PHY_PLL_LOCK_SLEEP_US 1000
-+
- int rockchip_pcie_init_port(struct rockchip_pcie *rockchip)
- {
- 	struct device *dev = rockchip->dev;
-@@ -255,6 +262,16 @@ int rockchip_pcie_init_port(struct rockc
- 		}
- 	}
+ 	__WORK_OFFQ_CANCELING	= WORK_OFFQ_FLAG_BASE,
+-	WORK_OFFQ_CANCELING	= (1 << __WORK_OFFQ_CANCELING),
  
-+	err = readx_poll_timeout(rockchip_pcie_read_addr,
-+				 PCIE_CLIENT_SIDE_BAND_STATUS,
-+				 regs, !(regs & PCIE_CLIENT_PHY_ST),
-+				 RK_PHY_PLL_LOCK_SLEEP_US,
-+				 RK_PHY_PLL_LOCK_TIMEOUT_US);
-+	if (err) {
-+		dev_err(dev, "PHY PLLs could not lock, %d\n", err);
-+		goto err_power_off_phy;
-+	}
-+
  	/*
- 	 * Please don't reorder the deassert sequence of the following
- 	 * four reset pins.
---- a/drivers/pci/controller/pcie-rockchip.h
-+++ b/drivers/pci/controller/pcie-rockchip.h
-@@ -37,6 +37,8 @@
- #define   PCIE_CLIENT_MODE_EP            HIWORD_UPDATE(0x0040, 0)
- #define   PCIE_CLIENT_GEN_SEL_1		  HIWORD_UPDATE(0x0080, 0)
- #define   PCIE_CLIENT_GEN_SEL_2		  HIWORD_UPDATE_BIT(0x0080)
-+#define PCIE_CLIENT_SIDE_BAND_STATUS	(PCIE_CLIENT_BASE + 0x20)
-+#define   PCIE_CLIENT_PHY_ST			BIT(12)
- #define PCIE_CLIENT_DEBUG_OUT_0		(PCIE_CLIENT_BASE + 0x3c)
- #define   PCIE_CLIENT_DEBUG_LTSSM_MASK		GENMASK(5, 0)
- #define   PCIE_CLIENT_DEBUG_LTSSM_L1		0x18
+ 	 * When a work item is off queue, its high bits point to the last
+@@ -84,12 +83,6 @@ enum {
+ 	WORK_OFFQ_POOL_SHIFT	= WORK_OFFQ_FLAG_BASE + WORK_OFFQ_FLAG_BITS,
+ 	WORK_OFFQ_LEFT		= BITS_PER_LONG - WORK_OFFQ_POOL_SHIFT,
+ 	WORK_OFFQ_POOL_BITS	= WORK_OFFQ_LEFT <= 31 ? WORK_OFFQ_LEFT : 31,
+-	WORK_OFFQ_POOL_NONE	= (1LU << WORK_OFFQ_POOL_BITS) - 1,
+-
+-	/* convenience constants */
+-	WORK_STRUCT_FLAG_MASK	= (1UL << WORK_STRUCT_FLAG_BITS) - 1,
+-	WORK_STRUCT_WQ_DATA_MASK = ~WORK_STRUCT_FLAG_MASK,
+-	WORK_STRUCT_NO_POOL	= (unsigned long)WORK_OFFQ_POOL_NONE << WORK_OFFQ_POOL_SHIFT,
+ 
+ 	/* bit mask for work_busy() return values */
+ 	WORK_BUSY_PENDING	= 1 << 0,
+@@ -99,6 +92,14 @@ enum {
+ 	WORKER_DESC_LEN		= 24,
+ };
+ 
++/* Convenience constants - of type 'unsigned long', not 'enum'! */
++#define WORK_OFFQ_CANCELING	(1ul << __WORK_OFFQ_CANCELING)
++#define WORK_OFFQ_POOL_NONE	((1ul << WORK_OFFQ_POOL_BITS) - 1)
++#define WORK_STRUCT_NO_POOL	(WORK_OFFQ_POOL_NONE << WORK_OFFQ_POOL_SHIFT)
++
++#define WORK_STRUCT_FLAG_MASK    ((1ul << WORK_STRUCT_FLAG_BITS) - 1)
++#define WORK_STRUCT_WQ_DATA_MASK (~WORK_STRUCT_FLAG_MASK)
++
+ struct work_struct {
+ 	atomic_long_t data;
+ 	struct list_head entry;
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -680,12 +680,17 @@ static void clear_work_data(struct work_
+ 	set_work_data(work, WORK_STRUCT_NO_POOL, 0);
+ }
+ 
++static inline struct pool_workqueue *work_struct_pwq(unsigned long data)
++{
++	return (struct pool_workqueue *)(data & WORK_STRUCT_WQ_DATA_MASK);
++}
++
+ static struct pool_workqueue *get_work_pwq(struct work_struct *work)
+ {
+ 	unsigned long data = atomic_long_read(&work->data);
+ 
+ 	if (data & WORK_STRUCT_PWQ)
+-		return (void *)(data & WORK_STRUCT_WQ_DATA_MASK);
++		return work_struct_pwq(data);
+ 	else
+ 		return NULL;
+ }
+@@ -713,8 +718,7 @@ static struct worker_pool *get_work_pool
+ 	assert_rcu_or_pool_mutex();
+ 
+ 	if (data & WORK_STRUCT_PWQ)
+-		return ((struct pool_workqueue *)
+-			(data & WORK_STRUCT_WQ_DATA_MASK))->pool;
++		return work_struct_pwq(data)->pool;
+ 
+ 	pool_id = data >> WORK_OFFQ_POOL_SHIFT;
+ 	if (pool_id == WORK_OFFQ_POOL_NONE)
+@@ -735,8 +739,7 @@ static int get_work_pool_id(struct work_
+ 	unsigned long data = atomic_long_read(&work->data);
+ 
+ 	if (data & WORK_STRUCT_PWQ)
+-		return ((struct pool_workqueue *)
+-			(data & WORK_STRUCT_WQ_DATA_MASK))->pool->id;
++		return work_struct_pwq(data)->pool->id;
+ 
+ 	return data >> WORK_OFFQ_POOL_SHIFT;
+ }
 
 
