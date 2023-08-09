@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F033174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:57:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E7CC433C9;
-	Wed,  9 Aug 2023 10:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9E7174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:57:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81CBDC433B8;
+	Wed,  9 Aug 2023 10:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578647;
-	bh=9tdeZa8YNi0iO5GpH4IB6YGcUBkCa2cvR5KIzeN442Y=;
+	s=korg; t=1691578649;
+	bh=VyamkGxHw20EZnr6NfjS7vn1NEbDOapFJzrIPRFpVuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qnnZ1JeVrlcEeBpL2VpvPpejQ64MkzwJxFFvpAvHLY15/5wVfUzaiEguvsYfNrEaF
-	 yUZZwM+QJ6oAaGvHAAzm1lyjIFTmFz4tAsLRTYTfkuw9A39dzhh963GroHpPReTaF7
-	 HEBjv3OtarrsV41mzQEMqndnB024kDtqZUO5Szfk=
+	b=tdkb0o5NLt0gYHKtFKJmV9z3E48n7MEKsq2kImypIF36DybGoSDEdcm4EZMbKmqf1
+	 5owFQb4qu3WiQ4C9ydE9+1Up0kIHB9ubYJu3vrqk/Q8Kc2hreiSTqocd14UCWmqleg
+	 HeBpMRPHA6oEFScQ/kXM/V2uRAdEBkS9YWSo0gk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3ba856e07b7127889d8c@syzkaller.appspotmail.com,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 108/127] btrfs: remove BUG_ON()s in add_new_free_space()
-Date: Wed,  9 Aug 2023 12:41:35 +0200
-Message-ID: <20230809103640.194657582@linuxfoundation.org>
+	Mateusz Guzik <mjguzik@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.1 099/127] file: reinstate f_pos locking optimization for regular files
+Date: Wed,  9 Aug 2023 12:41:26 +0200
+Message-ID: <20230809103639.904565867@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -35,214 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit d8ccbd21918fd7fa6ce3226cffc22c444228e8ad upstream.
+commit 797964253d358cf8d705614dda394dbe30120223 upstream.
 
-At add_new_free_space() we have these BUG_ON()'s that are there to deal
-with any failure to add free space to the in memory free space cache.
-Such failures are mostly -ENOMEM that should be very rare. However there's
-no need to have these BUG_ON()'s, we can just return any error to the
-caller and all callers and their upper call chain are already dealing with
-errors.
+In commit 20ea1e7d13c1 ("file: always lock position for
+FMODE_ATOMIC_POS") we ended up always taking the file pos lock, because
+pidfd_getfd() could get a reference to the file even when it didn't have
+an elevated file count due to threading of other sharing cases.
 
-So just make add_new_free_space() return any errors, while removing the
-BUG_ON()'s, and returning the total amount of added free space to an
-optional u64 pointer argument.
+But Mateusz Guzik reports that the extra locking is actually measurable,
+so let's re-introduce the optimization, and only force the locking for
+directory traversal.
 
-Reported-by: syzbot+3ba856e07b7127889d8c@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/000000000000e9cb8305ff4e8327@google.com/
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Directories need the lock for correctness reasons, while regular files
+only need it for "POSIX semantics".  Since pidfd_getfd() is about
+debuggers etc special things that are _way_ outside of POSIX, we can
+relax the rules for that case.
+
+Reported-by: Mateusz Guzik <mjguzik@gmail.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Link: https://lore.kernel.org/linux-fsdevel/20230803095311.ijpvhx3fyrbkasul@f/
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/block-group.c     |   51 ++++++++++++++++++++++++++++++---------------
- fs/btrfs/block-group.h     |    4 +--
- fs/btrfs/free-space-tree.c |   24 +++++++++++++++------
- 3 files changed, 53 insertions(+), 26 deletions(-)
+ fs/file.c |   18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -494,12 +494,16 @@ static void fragment_free_space(struct b
-  * used yet since their free space will be released as soon as the transaction
-  * commits.
-  */
--u64 add_new_free_space(struct btrfs_block_group *block_group, u64 start, u64 end)
-+int add_new_free_space(struct btrfs_block_group *block_group, u64 start, u64 end,
-+		       u64 *total_added_ret)
- {
- 	struct btrfs_fs_info *info = block_group->fs_info;
--	u64 extent_start, extent_end, size, total_added = 0;
-+	u64 extent_start, extent_end, size;
- 	int ret;
- 
-+	if (total_added_ret)
-+		*total_added_ret = 0;
-+
- 	while (start < end) {
- 		ret = find_first_extent_bit(&info->excluded_extents, start,
- 					    &extent_start, &extent_end,
-@@ -512,10 +516,12 @@ u64 add_new_free_space(struct btrfs_bloc
- 			start = extent_end + 1;
- 		} else if (extent_start > start && extent_start < end) {
- 			size = extent_start - start;
--			total_added += size;
- 			ret = btrfs_add_free_space_async_trimmed(block_group,
- 								 start, size);
--			BUG_ON(ret); /* -ENOMEM or logic error */
-+			if (ret)
-+				return ret;
-+			if (total_added_ret)
-+				*total_added_ret += size;
- 			start = extent_end + 1;
- 		} else {
- 			break;
-@@ -524,13 +530,15 @@ u64 add_new_free_space(struct btrfs_bloc
- 
- 	if (start < end) {
- 		size = end - start;
--		total_added += size;
- 		ret = btrfs_add_free_space_async_trimmed(block_group, start,
- 							 size);
--		BUG_ON(ret); /* -ENOMEM or logic error */
-+		if (ret)
-+			return ret;
-+		if (total_added_ret)
-+			*total_added_ret += size;
- 	}
- 
--	return total_added;
-+	return 0;
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -1036,12 +1036,28 @@ unsigned long __fdget_raw(unsigned int f
+ 	return __fget_light(fd, 0);
  }
  
- static int load_extent_tree_free(struct btrfs_caching_control *caching_ctl)
-@@ -637,8 +645,13 @@ next:
- 
- 		if (key.type == BTRFS_EXTENT_ITEM_KEY ||
- 		    key.type == BTRFS_METADATA_ITEM_KEY) {
--			total_found += add_new_free_space(block_group, last,
--							  key.objectid);
-+			u64 space_added;
++/*
++ * Try to avoid f_pos locking. We only need it if the
++ * file is marked for FMODE_ATOMIC_POS, and it can be
++ * accessed multiple ways.
++ *
++ * Always do it for directories, because pidfd_getfd()
++ * can make a file accessible even if it otherwise would
++ * not be, and for directories this is a correctness
++ * issue, not a "POSIX requirement".
++ */
++static inline bool file_needs_f_pos_lock(struct file *file)
++{
++	return (file->f_mode & FMODE_ATOMIC_POS) &&
++		(file_count(file) > 1 || S_ISDIR(file_inode(file)->i_mode));
++}
 +
-+			ret = add_new_free_space(block_group, last, key.objectid,
-+						 &space_added);
-+			if (ret)
-+				goto out;
-+			total_found += space_added;
- 			if (key.type == BTRFS_METADATA_ITEM_KEY)
- 				last = key.objectid +
- 					fs_info->nodesize;
-@@ -653,11 +666,10 @@ next:
- 		}
- 		path->slots[0]++;
+ unsigned long __fdget_pos(unsigned int fd)
+ {
+ 	unsigned long v = __fdget(fd);
+ 	struct file *file = (struct file *)(v & ~3);
+ 
+-	if (file && (file->f_mode & FMODE_ATOMIC_POS)) {
++	if (file && file_needs_f_pos_lock(file)) {
+ 		v |= FDPUT_POS_UNLOCK;
+ 		mutex_lock(&file->f_pos_lock);
  	}
--	ret = 0;
--
--	total_found += add_new_free_space(block_group, last,
--				block_group->start + block_group->length);
- 
-+	ret = add_new_free_space(block_group, last,
-+				 block_group->start + block_group->length,
-+				 NULL);
- out:
- 	btrfs_free_path(path);
- 	return ret;
-@@ -2101,9 +2113,11 @@ static int read_one_block_group(struct b
- 		btrfs_free_excluded_extents(cache);
- 	} else if (cache->used == 0) {
- 		cache->cached = BTRFS_CACHE_FINISHED;
--		add_new_free_space(cache, cache->start,
--				   cache->start + cache->length);
-+		ret = add_new_free_space(cache, cache->start,
-+					 cache->start + cache->length, NULL);
- 		btrfs_free_excluded_extents(cache);
-+		if (ret)
-+			goto error;
- 	}
- 
- 	ret = btrfs_add_block_group_cache(info, cache);
-@@ -2529,9 +2543,12 @@ struct btrfs_block_group *btrfs_make_blo
- 		return ERR_PTR(ret);
- 	}
- 
--	add_new_free_space(cache, chunk_offset, chunk_offset + size);
--
-+	ret = add_new_free_space(cache, chunk_offset, chunk_offset + size, NULL);
- 	btrfs_free_excluded_extents(cache);
-+	if (ret) {
-+		btrfs_put_block_group(cache);
-+		return ERR_PTR(ret);
-+	}
- 
- 	/*
- 	 * Ensure the corresponding space_info object is created and
---- a/fs/btrfs/block-group.h
-+++ b/fs/btrfs/block-group.h
-@@ -284,8 +284,8 @@ int btrfs_cache_block_group(struct btrfs
- void btrfs_put_caching_control(struct btrfs_caching_control *ctl);
- struct btrfs_caching_control *btrfs_get_caching_control(
- 		struct btrfs_block_group *cache);
--u64 add_new_free_space(struct btrfs_block_group *block_group,
--		       u64 start, u64 end);
-+int add_new_free_space(struct btrfs_block_group *block_group,
-+		       u64 start, u64 end, u64 *total_added_ret);
- struct btrfs_trans_handle *btrfs_start_trans_remove_block_group(
- 				struct btrfs_fs_info *fs_info,
- 				const u64 chunk_offset);
---- a/fs/btrfs/free-space-tree.c
-+++ b/fs/btrfs/free-space-tree.c
-@@ -1510,9 +1510,13 @@ static int load_free_space_bitmaps(struc
- 			if (prev_bit == 0 && bit == 1) {
- 				extent_start = offset;
- 			} else if (prev_bit == 1 && bit == 0) {
--				total_found += add_new_free_space(block_group,
--								  extent_start,
--								  offset);
-+				u64 space_added;
-+
-+				ret = add_new_free_space(block_group, extent_start,
-+							 offset, &space_added);
-+				if (ret)
-+					goto out;
-+				total_found += space_added;
- 				if (total_found > CACHING_CTL_WAKE_UP) {
- 					total_found = 0;
- 					wake_up(&caching_ctl->wait);
-@@ -1524,8 +1528,9 @@ static int load_free_space_bitmaps(struc
- 		}
- 	}
- 	if (prev_bit == 1) {
--		total_found += add_new_free_space(block_group, extent_start,
--						  end);
-+		ret = add_new_free_space(block_group, extent_start, end, NULL);
-+		if (ret)
-+			goto out;
- 		extent_count++;
- 	}
- 
-@@ -1564,6 +1569,8 @@ static int load_free_space_extents(struc
- 	end = block_group->start + block_group->length;
- 
- 	while (1) {
-+		u64 space_added;
-+
- 		ret = btrfs_next_item(root, path);
- 		if (ret < 0)
- 			goto out;
-@@ -1578,8 +1585,11 @@ static int load_free_space_extents(struc
- 		ASSERT(key.type == BTRFS_FREE_SPACE_EXTENT_KEY);
- 		ASSERT(key.objectid < end && key.objectid + key.offset <= end);
- 
--		total_found += add_new_free_space(block_group, key.objectid,
--						  key.objectid + key.offset);
-+		ret = add_new_free_space(block_group, key.objectid,
-+					 key.objectid + key.offset, &space_added);
-+		if (ret)
-+			goto out;
-+		total_found += space_added;
- 		if (total_found > CACHING_CTL_WAKE_UP) {
- 			total_found = 0;
- 			wake_up(&caching_ctl->wait);
 
 
