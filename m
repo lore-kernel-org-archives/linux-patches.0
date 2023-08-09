@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E65816428
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:58:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F9CC433C9;
-	Wed,  9 Aug 2023 10:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07A9168B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:58:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432F9C433C7;
+	Wed,  9 Aug 2023 10:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578727;
-	bh=hAq4wA3iZaQs7gsL0TDsyBa62aiRfwkbC1AqTmSZTW4=;
+	s=korg; t=1691578730;
+	bh=pgjFsfYEuytySKKJNCu/JFmZeJEODP2OP4MBeb4/C58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JjH37FVw/qKR4EcVzRDSwrNlV4zrhZSJuDDRoR+qxIFNNqTO0e6nMmrorTGfseNQz
-	 SjvTBqFVJWVi6TVmbJxp7gtVj+wgE+4glgIHj7FHDqxlNWKFWKP/DDP1nZ/p2XEaVr
-	 4FDx8DCut5uv0FFaCrPQjeWL/0pegc28aS11mNBs=
+	b=B/lWFzl0u946UgnpGaOHjr0UIwFFbLGtuD26rjVMDi4kjVNCUMt/8HR2vVm8X268Z
+	 g4zZUX6rr79IKNEOFoYFiAV8R5lCySkjGRr59a3wdj+W6ld6sceInFRZ9RDvZ3VUra
+	 6FMw3qWyOzVGkt6l4m6NOWk+h5Jwa2oYj1BzEFHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Glozar <tglozar@redhat.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 36/92] bpf: sockmap: Remove preempt_disable in sock_map_sk_acquire
-Date: Wed,  9 Aug 2023 12:41:12 +0200
-Message-ID: <20230809103634.864526648@linuxfoundation.org>
+Subject: [PATCH 5.15 37/92] net: ll_temac: Switch to use dev_err_probe() helper
+Date: Wed,  9 Aug 2023 12:41:13 +0200
+Message-ID: <20230809103634.904124590@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -37,57 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomas Glozar <tglozar@redhat.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 13d2618b48f15966d1adfe1ff6a1985f5eef40ba ]
+[ Upstream commit 75ae8c284c00dc3584b7c173f6fcf96ee15bd02c ]
 
-Disabling preemption in sock_map_sk_acquire conflicts with GFP_ATOMIC
-allocation later in sk_psock_init_link on PREEMPT_RT kernels, since
-GFP_ATOMIC might sleep on RT (see bpf: Make BPF and PREEMPT_RT co-exist
-patchset notes for details).
+dev_err() can be replace with dev_err_probe() which will check if error
+code is -EPROBE_DEFER.
 
-This causes calling bpf_map_update_elem on BPF_MAP_TYPE_SOCKMAP maps to
-BUG (sleeping function called from invalid context) on RT kernels.
-
-preempt_disable was introduced together with lock_sk and rcu_read_lock
-in commit 99ba2b5aba24e ("bpf: sockhash, disallow bpf_tcp_close and update
-in parallel"), probably to match disabled migration of BPF programs, and
-is no longer necessary.
-
-Remove preempt_disable to fix BUG in sock_map_update_common on RT.
-
-Signed-off-by: Tomas Glozar <tglozar@redhat.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/all/20200224140131.461979697@linutronix.de/
-Fixes: 99ba2b5aba24 ("bpf: sockhash, disallow bpf_tcp_close and update in parallel")
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/r/20230728064411.305576-1-tglozar@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: ef45e8400f5b ("net: ll_temac: fix error checking of irq_of_parse_and_map()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_map.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/ethernet/xilinx/ll_temac_main.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index 86b4e8909ad1e..85d3c62bdfa6a 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -117,7 +117,6 @@ static void sock_map_sk_acquire(struct sock *sk)
- 	__acquires(&sk->sk_lock.slock)
- {
- 	lock_sock(sk);
--	preempt_disable();
- 	rcu_read_lock();
- }
+diff --git a/drivers/net/ethernet/xilinx/ll_temac_main.c b/drivers/net/ethernet/xilinx/ll_temac_main.c
+index 2ab29efa6b6e4..303de9293fc71 100644
+--- a/drivers/net/ethernet/xilinx/ll_temac_main.c
++++ b/drivers/net/ethernet/xilinx/ll_temac_main.c
+@@ -1556,16 +1556,12 @@ static int temac_probe(struct platform_device *pdev)
+ 	}
  
-@@ -125,7 +124,6 @@ static void sock_map_sk_release(struct sock *sk)
- 	__releases(&sk->sk_lock.slock)
- {
- 	rcu_read_unlock();
--	preempt_enable();
- 	release_sock(sk);
- }
+ 	/* Error handle returned DMA RX and TX interrupts */
+-	if (lp->rx_irq < 0) {
+-		if (lp->rx_irq != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "could not get DMA RX irq\n");
+-		return lp->rx_irq;
+-	}
+-	if (lp->tx_irq < 0) {
+-		if (lp->tx_irq != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "could not get DMA TX irq\n");
+-		return lp->tx_irq;
+-	}
++	if (lp->rx_irq < 0)
++		return dev_err_probe(&pdev->dev, lp->rx_irq,
++				     "could not get DMA RX irq\n");
++	if (lp->tx_irq < 0)
++		return dev_err_probe(&pdev->dev, lp->tx_irq,
++				     "could not get DMA TX irq\n");
  
+ 	if (temac_np) {
+ 		/* Retrieve the MAC address */
 -- 
 2.40.1
 
