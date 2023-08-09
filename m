@@ -1,40 +1,40 @@
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878D18BE0
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 09:01:07 +0000 (UTC)
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-d3d729a08e4so7264345276.3
-        for <patches@lists.linux.dev>; Wed, 09 Aug 2023 02:01:07 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3433A613F
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 09:09:37 +0000 (UTC)
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-d35e565071aso6827858276.2
+        for <patches@lists.linux.dev>; Wed, 09 Aug 2023 02:09:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691571666; x=1692176466;
+        d=gmail.com; s=20221208; t=1691572177; x=1692176977;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=X8p6/0KX3fVxDGykNsAB8y9ONKtikHgYp/M2932Yhtg=;
-        b=a+Zu8NL83uIaY2kPK/hzZzHyi7vS7ZDBxBzBas0D7lsWImIDv7Qwd1BiEcv6FKTPP1
-         BdMSYMPzdND5JC7oC8v9M124xkp5LnmnJE5/klfgAzt2xAFxC8Ix/ATgHA73sGHIq6M5
-         8OrafZcJ9GdZPgCALz/hIhLavsI9b/Dr6TdEQlqt8LZqcG0yWZaerqRjYwnLJH58K7vt
-         JQ3+FbcofYPvCtDrlcpkILNmTu7Hd19Y/cUYPc+r6qC4noDNhfIpgilb6dDWBQ7jRR1L
-         /D8Jy5DP8f/9nxAZ93mmMJwTgohGO38fsuD20oMAYUxgObu8MmDLJJ/dTzqsykEe/tu+
-         mlnw==
+        bh=4ZRqyHdN+bb6JjBx+blO7CBOqR+vtAkWtIczQCNF/E8=;
+        b=Vljv67WcCWPeKntdb3UPEU3bBrZSQYa8jxfh1h9QnK/XV98cHxr6j0Bal4qB9v9Qo4
+         EkWjXbov5A+PAY39tnYkElkqzoo6WUb6MB6eopabCJNmcKPZPrhkca0TY+iu73iujQ8I
+         1kr4lcXU2tVcFppRdfb97vBaI332NZtNvQzT3tvel10z6M1lnVhiqG+GNS/tdfw7rV2U
+         /eV3aOdWsakwGVV2JN6boFdyRj3Ebkx7DKyCeoeKLGk6wM1CNbgrbOjbZyZOu12iwhr8
+         Fd4ov14gKvxbU1WOMBhbvxMJn+ppB7Z3llr3sWQgg+R8q9q31P/LrU2nLUrd+H9IhBfb
+         I6Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691571666; x=1692176466;
+        d=1e100.net; s=20221208; t=1691572177; x=1692176977;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=X8p6/0KX3fVxDGykNsAB8y9ONKtikHgYp/M2932Yhtg=;
-        b=HsDeQhJQq68rb6xNqg39g5ORioE8SCP0hq39PyXipKOYh1zd6bGERyz4cQsb/oOlR8
-         IioQ/tAVAYs9OpME0qN4obrzZs6ETDtCsdQl0CmrgPdqtoSAs1klFf2+ecGS1Vrxm7pj
-         BfsKrBA8rA71TYr+PlBVI7+N6nhEkepfZeutUeYfhDJ7FKesy2orA24swOPxHTm4n862
-         YPrnui1DLUZZTIAYnRzfHuYUbFkaRMiHQP3mlm2GvcGM5MmsXtkjFzVHrydEe3x84sZH
-         libybn+8NZZQPIfLWit7kUqgMmS/JWtJO1Pb7eYow+D4kM7sUIjaHsohlPMNZ72qFQ9H
-         ExAw==
-X-Gm-Message-State: AOJu0YyubXkh2268lBCK4gb2Yl4YFwlNK/seaUbIu2qIlj4SS4YOeN61
-	fypUr8thngktlA04OX1zh5eZTpZCdwnl9fX1oxY=
-X-Google-Smtp-Source: AGHT+IHuTiTRTDu7yLIKac8kPi++wFPcYqkZyXa6gABjSHv6p2rSzxLSrZKIX6NfdlXPlBCmD9m9fopnnqjOidvHgH4=
-X-Received: by 2002:a25:e704:0:b0:cad:347e:2c8f with SMTP id
- e4-20020a25e704000000b00cad347e2c8fmr1661550ybh.39.1691571666128; Wed, 09 Aug
- 2023 02:01:06 -0700 (PDT)
+        bh=4ZRqyHdN+bb6JjBx+blO7CBOqR+vtAkWtIczQCNF/E8=;
+        b=J3/FLliSdP+Bvlf2Po/QQ7v18b2+Q55IRBvC/FX5nEiYvFx0rqAFLMn4YW/4hfVx3R
+         XFsuZEYIR6/sKcTj0nCSPVTgjpbnC2LmmloFl1p9qWJyh4m2y4POV3Bi4RUyfUE3RR6o
+         xkpCawwP2Vl+sQFu6DIm8TOTl/UjmvbZZO8wg/6sSSTzmNlQYFQJVZ5AdvC5p4ZD2o9R
+         et1Y1uSihYP5eLzARaQNYAVrPAxSZro+7DjKiQJ47OiMJrK22wJDtHWzGabQD29TlGXR
+         6RGJU1kqNbYvOsTfw9psDmrulC1wgCWFXr4Hl30tpGdqProGQTYRe7ySCR9Clf8bKqOi
+         5auQ==
+X-Gm-Message-State: AOJu0YxDb3oC8tz+1096qI5ncgwyrlkXr93I47lzh/cZF2/7MiPz8Dow
+	ucxKbsNmA5+0AoQzOIyKfQ8ZTbUcNh7PDFj76Ow=
+X-Google-Smtp-Source: AGHT+IHYrGM2sNe8AaJmcFQSYvY+3ZVZmxRS/X5P4nJUNrhefBxGURmr3eFs3XSlOQdA1MhdArfePH5CX2RXeqHTtHw=
+X-Received: by 2002:a25:db88:0:b0:d10:7acb:24e0 with SMTP id
+ g130-20020a25db88000000b00d107acb24e0mr2113431ybf.41.1691572176991; Wed, 09
+ Aug 2023 02:09:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,10 +43,11 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20230720152820.3566078-1-aliceryhl@google.com>
  <20230720152820.3566078-6-aliceryhl@google.com> <bee24ff5-444c-44f9-81c8-88ff310b401a@gmail.com>
-In-Reply-To: <bee24ff5-444c-44f9-81c8-88ff310b401a@gmail.com>
+ <CANiq72mHU7n2jTPFsO=tjfqucrbe2ABSUYPUG6ctEerh4J+U_g@mail.gmail.com>
+In-Reply-To: <CANiq72mHU7n2jTPFsO=tjfqucrbe2ABSUYPUG6ctEerh4J+U_g@mail.gmail.com>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 9 Aug 2023 11:00:54 +0200
-Message-ID: <CANiq72mHU7n2jTPFsO=tjfqucrbe2ABSUYPUG6ctEerh4J+U_g@mail.gmail.com>
+Date: Wed, 9 Aug 2023 11:09:25 +0200
+Message-ID: <CANiq72m5tbj2_N_s371d5N_4H1xpE2ahTHOUvFtUd+N0Y=0tsA@mail.gmail.com>
 Subject: Re: [RFC PATCH v1 5/5] rust: file: add `DeferredFdCloser`
 To: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
 Cc: Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
@@ -60,17 +61,16 @@ Cc: Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 9, 2023 at 6:34=E2=80=AFAM Martin Rodriguez Reboredo
-<yakoyoku@gmail.com> wrote:
+On Wed, Aug 9, 2023 at 11:00=E2=80=AFAM Miguel Ojeda
+<miguel.ojeda.sandonis@gmail.com> wrote:
 >
-> Please provide links, at least for the doc comment.
+> If you mean for the commit, then we should follow the kernel
+> convention instead. Please see my reply to Alice above.
 
-If you mean for the commit, then we should follow the kernel
-convention instead. Please see my reply to Alice above.
-
-> Ditto.
-
-For code, we are also using the same convention.
+One extra note: if it is a external repository, then yes, I would
+definitely recommend adding a `Link` because readers may not be able
+to easily `git show` the hash. But if it is the kernel tree, then it
+is not needed.
 
 Cheers,
 Miguel
