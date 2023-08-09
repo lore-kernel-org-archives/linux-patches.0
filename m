@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF4C17AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:37:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9E5C433CD;
-	Wed,  9 Aug 2023 11:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E1D17AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:37:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF8FCC433C8;
+	Wed,  9 Aug 2023 11:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581038;
-	bh=le5Ynu7DgH0MFEEY5pLxmkTysxO7Q6Nllms9PheMAZw=;
+	s=korg; t=1691581041;
+	bh=WuRcf7NTsT+vMms9zLqIZ851iIGflwb13qu7kPnfZKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aOw0tPdITsZ0361LgxMYr0ysdZ3n2A4gvQkH70JTQdVhxU4rYFG7Wp0qlUYvfFAYK
-	 cvNVdjyot8+THE2J5w+/jeu+cvMHC1bp89jTLEDRX68etwlUJOiPghLUIuiYdsMZTG
-	 pwVSi/fvaCoUcbtRq7rWt307EOnS3IXtIGdFeIOA=
+	b=KHCQR48NPyQ5S3iG1GhczMMhykNx2i+2X5axrI746DCdqQB49q0gnBOPhqDFg7yk3
+	 bkvCcbFwo7swgg4zlQN1gZejNai3WYrsEf9NuX9JphBPi05j/FOxeSTitCjSW92jK8
+	 sj+y3U4L7Swom0+maxC85YdL5icWAsdj+J8Bcw6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
+	Thomas Bogendoerfer <tbogendoerfer@suse.de>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 054/201] drm/msm/adreno: Fix snapshot BINDLESS_DATA size
-Date: Wed,  9 Aug 2023 12:40:56 +0200
-Message-ID: <20230809103645.653854833@linuxfoundation.org>
+Subject: [PATCH 5.10 055/201] RDMA/mthca: Fix crash when polling CQ for shared QPs
+Date: Wed,  9 Aug 2023 12:40:57 +0200
+Message-ID: <20230809103645.683635667@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -35,36 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+From: Thomas Bogendoerfer <tbogendoerfer@suse.de>
 
-[ Upstream commit bd846ceee9c478d0397428f02696602ba5eb264a ]
+[ Upstream commit dc52aadbc1849cbe3fcf6bc54d35f6baa396e0a1 ]
 
-The incorrect size was causing "CP | AHB bus error" when snapshotting
-the GPU state on a6xx gen4 (a660 family).
+Commit 21c2fe94abb2 ("RDMA/mthca: Combine special QP struct with mthca QP")
+introduced a new struct mthca_sqp which doesn't contain struct mthca_qp
+any longer. Placing a pointer of this new struct into qptable leads
+to crashes, because mthca_poll_one() expects a qp pointer. Fix this
+by putting the correct pointer into qptable.
 
-Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/26
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Fixes: 1707add81551 ("drm/msm/a6xx: Add a6xx gpu state")
-Patchwork: https://patchwork.freedesktop.org/patch/546763/
+Fixes: 21c2fe94abb2 ("RDMA/mthca: Combine special QP struct with mthca QP")
+Signed-off-by: Thomas Bogendoerfer <tbogendoerfer@suse.de>
+Link: https://lore.kernel.org/r/20230713141658.9426-1-tbogendoerfer@suse.de
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h | 2 +-
+ drivers/infiniband/hw/mthca/mthca_qp.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-index 2fb58b7098e4b..3bd2065a9d30e 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-@@ -200,7 +200,7 @@ static const struct a6xx_shader_block {
- 	SHADER(A6XX_SP_LB_3_DATA, 0x800),
- 	SHADER(A6XX_SP_LB_4_DATA, 0x800),
- 	SHADER(A6XX_SP_LB_5_DATA, 0x200),
--	SHADER(A6XX_SP_CB_BINDLESS_DATA, 0x2000),
-+	SHADER(A6XX_SP_CB_BINDLESS_DATA, 0x800),
- 	SHADER(A6XX_SP_CB_LEGACY_DATA, 0x280),
- 	SHADER(A6XX_SP_UAV_DATA, 0x80),
- 	SHADER(A6XX_SP_INST_TAG, 0x80),
+diff --git a/drivers/infiniband/hw/mthca/mthca_qp.c b/drivers/infiniband/hw/mthca/mthca_qp.c
+index 08a2a7afafd3d..3f57f7dfb822f 100644
+--- a/drivers/infiniband/hw/mthca/mthca_qp.c
++++ b/drivers/infiniband/hw/mthca/mthca_qp.c
+@@ -1390,7 +1390,7 @@ int mthca_alloc_sqp(struct mthca_dev *dev,
+ 	if (mthca_array_get(&dev->qp_table.qp, mqpn))
+ 		err = -EBUSY;
+ 	else
+-		mthca_array_set(&dev->qp_table.qp, mqpn, qp->sqp);
++		mthca_array_set(&dev->qp_table.qp, mqpn, qp);
+ 	spin_unlock_irq(&dev->qp_table.lock);
+ 
+ 	if (err)
 -- 
 2.40.1
 
