@@ -1,37 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03437174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:03:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52E40C433CC;
-	Wed,  9 Aug 2023 11:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E84174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:03:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB1DC433C8;
+	Wed,  9 Aug 2023 11:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579009;
-	bh=dp+8IKv4mgmy3Z/UBKxdAA2/zaz9V9IQSESzQaPR1qM=;
+	s=korg; t=1691579012;
+	bh=Dnw/d8rilFZHZ8g9g/s/5gE42wKWRitPaW2JKgNyU4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p2Yq0HrJPSKS8B96rcRLlFsDYvngKZ2ylsPwPLWXLouadHQfoX+TTYJSEw3tSVIBT
-	 EIuSMijrMAYNeuFJHXctN38x692uObFaDGdFqYN5neNmU8t51T0NF+R/kr9fnGLTPR
-	 VOyTA0AtCEesoDRPuZwgMLsvBx4Jzt8n13V3xXd4=
+	b=S/g/8gSD24aS7Ov55cGhT35O6s1L78mfSjtPan6m4qNusmNpmlJIPubC53FbGanMJ
+	 YjB7cGzJmFqcBFUOMArBaY6p+xeFL6Nkt3nMTnSTgxH5oo7pdMcBHBpr6ZVijJWBIn
+	 k0zn8thI6juhcM7XDvQ1c6yuPS7oWCGwcuO5KhSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	kernel test robot <lkp@intel.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Leo Li <leoyang.li@nxp.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	Qiang Zhao <qiang.zhao@nxp.com>,
-	linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Kumar Gala <galak@kernel.crashing.org>,
-	Nicolas Schier <nicolas@jasle.eu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 041/204] soc/fsl/qe: fix usb.c build errors
-Date: Wed,  9 Aug 2023 12:39:39 +0200
-Message-ID: <20230809103643.950006860@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+f2cb6e0ffdb961921e4d@syzkaller.appspotmail.com
+Subject: [PATCH 4.14 015/204] wifi: ath9k: avoid referencing uninit memory in ath9k_wmi_ctrl_rx
+Date: Wed,  9 Aug 2023 12:39:13 +0200
+Message-ID: <20230809103643.098919777@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -45,58 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 7b1a78babd0d2cd27aa07255dee0c2d7ac0f31e3 ]
+[ Upstream commit f24292e827088bba8de7158501ac25a59b064953 ]
 
-Fix build errors in soc/fsl/qe/usb.c when QUICC_ENGINE is not set.
-This happens when PPC_EP88XC is set, which selects CPM1 & CPM.
-When CPM is set, USB_FSL_QE can be set without QUICC_ENGINE
-being set. When USB_FSL_QE is set, QE_USB deafults to y, which
-causes build errors when QUICC_ENGINE is not set. Making
-QE_USB depend on QUICC_ENGINE prevents QE_USB from defaulting to y.
+For the reasons also described in commit b383e8abed41 ("wifi: ath9k: avoid
+uninit memory read in ath9k_htc_rx_msg()"), ath9k_htc_rx_msg() should
+validate pkt_len before accessing the SKB.
 
-Fixes these build errors:
+For example, the obtained SKB may have been badly constructed with
+pkt_len = 8. In this case, the SKB can only contain a valid htc_frame_hdr
+but after being processed in ath9k_htc_rx_msg() and passed to
+ath9k_wmi_ctrl_rx() endpoint RX handler, it is expected to have a WMI
+command header which should be located inside its data payload.
 
-drivers/soc/fsl/qe/usb.o: in function `qe_usb_clock_set':
-usb.c:(.text+0x1e): undefined reference to `qe_immr'
-powerpc-linux-ld: usb.c:(.text+0x2a): undefined reference to `qe_immr'
-powerpc-linux-ld: usb.c:(.text+0xbc): undefined reference to `qe_setbrg'
-powerpc-linux-ld: usb.c:(.text+0xca): undefined reference to `cmxgcr_lock'
-powerpc-linux-ld: usb.c:(.text+0xce): undefined reference to `cmxgcr_lock'
+Implement sanity checking inside ath9k_wmi_ctrl_rx(). Otherwise, uninit
+memory can be referenced.
 
-Fixes: 5e41486c408e ("powerpc/QE: add support for QE USB clocks routing")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/all/202301101500.pillNv6R-lkp@intel.com/
-Suggested-by: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Leo Li <leoyang.li@nxp.com>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Nicolas Schier <nicolas@fjasle.eu>
-Cc: Qiang Zhao <qiang.zhao@nxp.com>
-Cc: linuxppc-dev <linuxppc-dev@lists.ozlabs.org>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: Kumar Gala <galak@kernel.crashing.org>
-Acked-by: Nicolas Schier <nicolas@jasle.eu>
-Signed-off-by: Li Yang <leoyang.li@nxp.com>
+Tested on Qualcomm Atheros Communications AR9271 802.11n .
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Reported-and-tested-by: syzbot+f2cb6e0ffdb961921e4d@syzkaller.appspotmail.com
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230424183348.111355-1-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/fsl/qe/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/ath/ath9k/wmi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/soc/fsl/qe/Kconfig b/drivers/soc/fsl/qe/Kconfig
-index 73a2e08b47ef9..e2ccddd348b5b 100644
---- a/drivers/soc/fsl/qe/Kconfig
-+++ b/drivers/soc/fsl/qe/Kconfig
-@@ -37,6 +37,7 @@ config QE_TDM
+diff --git a/drivers/net/wireless/ath/ath9k/wmi.c b/drivers/net/wireless/ath/ath9k/wmi.c
+index 9a17f7a07b1e8..7b4e922181190 100644
+--- a/drivers/net/wireless/ath/ath9k/wmi.c
++++ b/drivers/net/wireless/ath/ath9k/wmi.c
+@@ -217,6 +217,10 @@ static void ath9k_wmi_ctrl_rx(void *priv, struct sk_buff *skb,
+ 	if (unlikely(wmi->stopped))
+ 		goto free_skb;
  
- config QE_USB
- 	bool
-+	depends on QUICC_ENGINE
- 	default y if USB_FSL_QE
- 	help
- 	  QE USB Controller support
++	/* Validate the obtained SKB. */
++	if (unlikely(skb->len < sizeof(struct wmi_cmd_hdr)))
++		goto free_skb;
++
+ 	hdr = (struct wmi_cmd_hdr *) skb->data;
+ 	cmd_id = be16_to_cpu(hdr->command_id);
+ 
 -- 
 2.39.2
 
