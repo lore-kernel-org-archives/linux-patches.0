@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17244847D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:53:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BCBBC433C7;
-	Wed,  9 Aug 2023 10:53:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC68353B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:53:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B2FEC433C9;
+	Wed,  9 Aug 2023 10:53:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578401;
-	bh=ZDRv62iHnx15vR5/unuhXh0ZVIK1FV3ojU97Kwd0vUE=;
+	s=korg; t=1691578404;
+	bh=juH9ctId16XYf5gpF5PmDGH6XwvebujxUwswtrc4IEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nQbIRxPcqU9jT4kK3OIOyp9qV20YWQ0pqdK4lO+21q1IzvgMK7ISOZ2vPNM5eGh4q
-	 eHgjrpOAoX3/Ns6i9x0MO1/fM4sfv9YoK3NIErO8B11x2lrHCk0zE6KGl/zD8FOS6t
-	 vDqLugMB4GmPYILK+Na/y8haqRmC0tp2EDDItSsA=
+	b=kx3WrvJVwiqDngS6+yX3vgcw+HC75BArmG6GK8kk+mh+oeHAox43e9qshfvVu4pUE
+	 kmYq2VzhDLtNjKlbPiFZy4KKIdrvpUBiBg2oUmC+JPg1B88PGvFUfYVDhMhmL8COo4
+	 DGIu5AVL804fQJ4xjB9rVQJaUPB4jlXEXx0mTPqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	valis <sec@valis.email>,
+	M A Ramdhan <ramdhan@starlabs.sg>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/127] bpf, cpumap: Handle skb as well when clean up ptr_ring
-Date: Wed,  9 Aug 2023 12:40:34 +0200
-Message-ID: <20230809103638.242033030@linuxfoundation.org>
+Subject: [PATCH 6.1 048/127] net/sched: cls_u32: No longer copy tcf_result on update to avoid use-after-free
+Date: Wed,  9 Aug 2023 12:40:35 +0200
+Message-ID: <20230809103638.272885876@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -36,83 +39,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hou Tao <houtao1@huawei.com>
+From: valis <sec@valis.email>
 
-[ Upstream commit 7c62b75cd1a792e14b037fa4f61f9b18914e7de1 ]
+[ Upstream commit 3044b16e7c6fe5d24b1cdbcf1bd0a9d92d1ebd81 ]
 
-The following warning was reported when running xdp_redirect_cpu with
-both skb-mode and stress-mode enabled:
+When u32_change() is called on an existing filter, the whole
+tcf_result struct is always copied into the new instance of the filter.
 
-  ------------[ cut here ]------------
-  Incorrect XDP memory type (-2128176192) usage
-  WARNING: CPU: 7 PID: 1442 at net/core/xdp.c:405
-  Modules linked in:
-  CPU: 7 PID: 1442 Comm: kworker/7:0 Tainted: G  6.5.0-rc2+ #1
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
-  Workqueue: events __cpu_map_entry_free
-  RIP: 0010:__xdp_return+0x1e4/0x4a0
-  ......
-  Call Trace:
-   <TASK>
-   ? show_regs+0x65/0x70
-   ? __warn+0xa5/0x240
-   ? __xdp_return+0x1e4/0x4a0
-   ......
-   xdp_return_frame+0x4d/0x150
-   __cpu_map_entry_free+0xf9/0x230
-   process_one_work+0x6b0/0xb80
-   worker_thread+0x96/0x720
-   kthread+0x1a5/0x1f0
-   ret_from_fork+0x3a/0x70
-   ret_from_fork_asm+0x1b/0x30
-   </TASK>
+This causes a problem when updating a filter bound to a class,
+as tcf_unbind_filter() is always called on the old instance in the
+success path, decreasing filter_cnt of the still referenced class
+and allowing it to be deleted, leading to a use-after-free.
 
-The reason for the warning is twofold. One is due to the kthread
-cpu_map_kthread_run() is stopped prematurely. Another one is
-__cpu_map_ring_cleanup() doesn't handle skb mode and treats skbs in
-ptr_ring as XDP frames.
+Fix this by no longer copying the tcf_result struct from the old filter.
 
-Prematurely-stopped kthread will be fixed by the preceding patch and
-ptr_ring will be empty when __cpu_map_ring_cleanup() is called. But
-as the comments in __cpu_map_ring_cleanup() said, handling and freeing
-skbs in ptr_ring as well to "catch any broken behaviour gracefully".
-
-Fixes: 11941f8a8536 ("bpf: cpumap: Implement generic cpumap")
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Link: https://lore.kernel.org/r/20230729095107.1722450-3-houtao@huaweicloud.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: de5df63228fc ("net: sched: cls_u32 changes to knode must appear atomic to readers")
+Reported-by: valis <sec@valis.email>
+Reported-by: M A Ramdhan <ramdhan@starlabs.sg>
+Signed-off-by: valis <sec@valis.email>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: M A Ramdhan <ramdhan@starlabs.sg>
+Link: https://lore.kernel.org/r/20230729123202.72406-2-jhs@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cpumap.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ net/sched/cls_u32.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/kernel/bpf/cpumap.c b/kernel/bpf/cpumap.c
-index 09141351d5457..e5888d401d799 100644
---- a/kernel/bpf/cpumap.c
-+++ b/kernel/bpf/cpumap.c
-@@ -134,11 +134,17 @@ static void __cpu_map_ring_cleanup(struct ptr_ring *ring)
- 	 * invoked cpu_map_kthread_stop(). Catch any broken behaviour
- 	 * gracefully and warn once.
- 	 */
--	struct xdp_frame *xdpf;
-+	void *ptr;
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index 0e3bb1d65be1c..ba93e2a6bdbb4 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -824,7 +824,6 @@ static struct tc_u_knode *u32_init_knode(struct net *net, struct tcf_proto *tp,
  
--	while ((xdpf = ptr_ring_consume(ring)))
--		if (WARN_ON_ONCE(xdpf))
--			xdp_return_frame(xdpf);
-+	while ((ptr = ptr_ring_consume(ring))) {
-+		WARN_ON_ONCE(1);
-+		if (unlikely(__ptr_test_bit(0, &ptr))) {
-+			__ptr_clear_bit(0, &ptr);
-+			kfree_skb(ptr);
-+			continue;
-+		}
-+		xdp_return_frame(ptr);
-+	}
- }
+ 	new->ifindex = n->ifindex;
+ 	new->fshift = n->fshift;
+-	new->res = n->res;
+ 	new->flags = n->flags;
+ 	RCU_INIT_POINTER(new->ht_down, ht);
  
- static void put_cpu_map_entry(struct bpf_cpu_map_entry *rcpu)
 -- 
 2.40.1
 
