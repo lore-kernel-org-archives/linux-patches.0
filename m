@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F281773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:18:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D075C433C7;
-	Wed,  9 Aug 2023 11:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026151773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:18:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 773DDC433C8;
+	Wed,  9 Aug 2023 11:18:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579932;
-	bh=FSI0STsjghi8Qoq5OUEGKHdc/TJwzVCNs3Otdy3gwSY=;
+	s=korg; t=1691579934;
+	bh=fGeovoFhlI+GA4ikgjCjGOE/jQvGD87dRSJljQv41MQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fG8Fnf9K1qCUqKlGlRSTBjLP2ECO5rJRS5BWvvNU+N0Eahc2ikgYED8K5rOll1eRD
-	 BeSuzmj8ABKCJwtAedwJo4FkYIASEC8joCpzmP8GJ1NNaBCkqCAztPWFU3y6NrKGMR
-	 4cnhlN0svMSZCNtJ+FnzA2xKIfdi8nR6CTpgijC8=
+	b=R9RtRZbzwEkTFuf0c3nhC5QjFCsBFWjSNjTEnoQ4XuA4bq/YtWmTSNtsXy0poQuQf
+	 5FTlkfKzpF2PCzXHHIZzWoDF0ROIxVRF0T7ZyiXL2sIyKRP++KdCPeMb12h7nZ5eTB
+	 qXtyDKs6TCcgmZ+cHih7Zyz+TMfn65eXzpXR7/Jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Tejun Heo <tj@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 4.19 137/323] workqueue: clean up WORK_* constant types, clarify masking
-Date: Wed,  9 Aug 2023 12:39:35 +0200
-Message-ID: <20230809103704.413508717@linuxfoundation.org>
+	Klaus Kudielka <klaus.kudielka@gmail.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 138/323] net: mvneta: fix txq_map in case of txq_number==1
+Date: Wed,  9 Aug 2023 12:39:36 +0200
+Message-ID: <20230809103704.455070745@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -38,137 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Klaus Kudielka <klaus.kudielka@gmail.com>
 
-commit afa4bb778e48d79e4a642ed41e3b4e0de7489a6c upstream.
+[ Upstream commit 21327f81db6337c8843ce755b01523c7d3df715b ]
 
-Dave Airlie reports that gcc-13.1.1 has started complaining about some
-of the workqueue code in 32-bit arm builds:
+If we boot with mvneta.txq_number=1, the txq_map is set incorrectly:
+MVNETA_CPU_TXQ_ACCESS(1) refers to TX queue 1, but only TX queue 0 is
+initialized. Fix this.
 
-  kernel/workqueue.c: In function ‘get_work_pwq’:
-  kernel/workqueue.c:713:24: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
-    713 |                 return (void *)(data & WORK_STRUCT_WQ_DATA_MASK);
-        |                        ^
-  [ ... a couple of other cases ... ]
-
-and while it's not immediately clear exactly why gcc started complaining
-about it now, I suspect it's some C23-induced enum type handlign fixup in
-gcc-13 is the cause.
-
-Whatever the reason for starting to complain, the code and data types
-are indeed disgusting enough that the complaint is warranted.
-
-The wq code ends up creating various "helper constants" (like that
-WORK_STRUCT_WQ_DATA_MASK) using an enum type, which is all kinds of
-confused.  The mask needs to be 'unsigned long', not some unspecified
-enum type.
-
-To make matters worse, the actual "mask and cast to a pointer" is
-repeated a couple of times, and the cast isn't even always done to the
-right pointer, but - as the error case above - to a 'void *' with then
-the compiler finishing the job.
-
-That's now how we roll in the kernel.
-
-So create the masks using the proper types rather than some ambiguous
-enumeration, and use a nice helper that actually does the type
-conversion in one well-defined place.
-
-Incidentally, this magically makes clang generate better code.  That,
-admittedly, is really just a sign of clang having been seriously
-confused before, and cleaning up the typing unconfuses the compiler too.
-
-Reported-by: Dave Airlie <airlied@gmail.com>
-Link: https://lore.kernel.org/lkml/CAPM=9twNnV4zMCvrPkw3H-ajZOH-01JVh_kDrxdPYQErz8ZTdA@mail.gmail.com/
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 50bf8cb6fc9c ("net: mvneta: Configure XPS support")
+Signed-off-by: Klaus Kudielka <klaus.kudielka@gmail.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Link: https://lore.kernel.org/r/20230705053712.3914-1-klaus.kudielka@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/workqueue.h |   15 ++++++++-------
- kernel/workqueue.c        |   13 ++++++++-----
- 2 files changed, 16 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/marvell/mvneta.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/linux/workqueue.h
-+++ b/include/linux/workqueue.h
-@@ -73,7 +73,6 @@ enum {
- 	WORK_OFFQ_FLAG_BASE	= WORK_STRUCT_COLOR_SHIFT,
+diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
+index f1a4b11ce0d19..512f9cd68070a 100644
+--- a/drivers/net/ethernet/marvell/mvneta.c
++++ b/drivers/net/ethernet/marvell/mvneta.c
+@@ -1415,7 +1415,7 @@ static void mvneta_defaults_set(struct mvneta_port *pp)
+ 			 */
+ 			if (txq_number == 1)
+ 				txq_map = (cpu == pp->rxq_def) ?
+-					MVNETA_CPU_TXQ_ACCESS(1) : 0;
++					MVNETA_CPU_TXQ_ACCESS(0) : 0;
  
- 	__WORK_OFFQ_CANCELING	= WORK_OFFQ_FLAG_BASE,
--	WORK_OFFQ_CANCELING	= (1 << __WORK_OFFQ_CANCELING),
- 
- 	/*
- 	 * When a work item is off queue, its high bits point to the last
-@@ -84,12 +83,6 @@ enum {
- 	WORK_OFFQ_POOL_SHIFT	= WORK_OFFQ_FLAG_BASE + WORK_OFFQ_FLAG_BITS,
- 	WORK_OFFQ_LEFT		= BITS_PER_LONG - WORK_OFFQ_POOL_SHIFT,
- 	WORK_OFFQ_POOL_BITS	= WORK_OFFQ_LEFT <= 31 ? WORK_OFFQ_LEFT : 31,
--	WORK_OFFQ_POOL_NONE	= (1LU << WORK_OFFQ_POOL_BITS) - 1,
--
--	/* convenience constants */
--	WORK_STRUCT_FLAG_MASK	= (1UL << WORK_STRUCT_FLAG_BITS) - 1,
--	WORK_STRUCT_WQ_DATA_MASK = ~WORK_STRUCT_FLAG_MASK,
--	WORK_STRUCT_NO_POOL	= (unsigned long)WORK_OFFQ_POOL_NONE << WORK_OFFQ_POOL_SHIFT,
- 
- 	/* bit mask for work_busy() return values */
- 	WORK_BUSY_PENDING	= 1 << 0,
-@@ -99,6 +92,14 @@ enum {
- 	WORKER_DESC_LEN		= 24,
- };
- 
-+/* Convenience constants - of type 'unsigned long', not 'enum'! */
-+#define WORK_OFFQ_CANCELING	(1ul << __WORK_OFFQ_CANCELING)
-+#define WORK_OFFQ_POOL_NONE	((1ul << WORK_OFFQ_POOL_BITS) - 1)
-+#define WORK_STRUCT_NO_POOL	(WORK_OFFQ_POOL_NONE << WORK_OFFQ_POOL_SHIFT)
-+
-+#define WORK_STRUCT_FLAG_MASK    ((1ul << WORK_STRUCT_FLAG_BITS) - 1)
-+#define WORK_STRUCT_WQ_DATA_MASK (~WORK_STRUCT_FLAG_MASK)
-+
- struct work_struct {
- 	atomic_long_t data;
- 	struct list_head entry;
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -680,12 +680,17 @@ static void clear_work_data(struct work_
- 	set_work_data(work, WORK_STRUCT_NO_POOL, 0);
- }
- 
-+static inline struct pool_workqueue *work_struct_pwq(unsigned long data)
-+{
-+	return (struct pool_workqueue *)(data & WORK_STRUCT_WQ_DATA_MASK);
-+}
-+
- static struct pool_workqueue *get_work_pwq(struct work_struct *work)
- {
- 	unsigned long data = atomic_long_read(&work->data);
- 
- 	if (data & WORK_STRUCT_PWQ)
--		return (void *)(data & WORK_STRUCT_WQ_DATA_MASK);
-+		return work_struct_pwq(data);
- 	else
- 		return NULL;
- }
-@@ -713,8 +718,7 @@ static struct worker_pool *get_work_pool
- 	assert_rcu_or_pool_mutex();
- 
- 	if (data & WORK_STRUCT_PWQ)
--		return ((struct pool_workqueue *)
--			(data & WORK_STRUCT_WQ_DATA_MASK))->pool;
-+		return work_struct_pwq(data)->pool;
- 
- 	pool_id = data >> WORK_OFFQ_POOL_SHIFT;
- 	if (pool_id == WORK_OFFQ_POOL_NONE)
-@@ -735,8 +739,7 @@ static int get_work_pool_id(struct work_
- 	unsigned long data = atomic_long_read(&work->data);
- 
- 	if (data & WORK_STRUCT_PWQ)
--		return ((struct pool_workqueue *)
--			(data & WORK_STRUCT_WQ_DATA_MASK))->pool->id;
-+		return work_struct_pwq(data)->pool->id;
- 
- 	return data >> WORK_OFFQ_POOL_SHIFT;
- }
+ 		} else {
+ 			txq_map = MVNETA_CPU_TXQ_ACCESS_ALL_MASK;
+@@ -3665,7 +3665,7 @@ static void mvneta_percpu_elect(struct mvneta_port *pp)
+ 		 */
+ 		if (txq_number == 1)
+ 			txq_map = (cpu == elected_cpu) ?
+-				MVNETA_CPU_TXQ_ACCESS(1) : 0;
++				MVNETA_CPU_TXQ_ACCESS(0) : 0;
+ 		else
+ 			txq_map = mvreg_read(pp, MVNETA_CPU_MAP(cpu)) &
+ 				MVNETA_CPU_TXQ_ACCESS_ALL_MASK;
+-- 
+2.39.2
+
 
 
