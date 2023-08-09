@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F52847D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:49:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF9CC433C9;
-	Wed,  9 Aug 2023 10:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF0C847D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:49:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 849FFC433C8;
+	Wed,  9 Aug 2023 10:49:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578159;
-	bh=xvYD1dep1YWhzvTQn6m/GySYPcIrno23nZcZoGGRNKc=;
+	s=korg; t=1691578161;
+	bh=45H3qdFufe7+Z2hcJRyLfXzKsuvd/80K7z6JYFAkOU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h2khPX9V7JG/PekarjiqJUXHaL2lfSAz8ReB9salUDyWVa9lO8vIfOWS0afRgjGgO
-	 39TBer2/zhuGOEiqSQ+ZQqArfbUKBKDgji8MBidE11QQ46IiFb0ahRp2zjfU1Dkbp/
-	 IE4tFEkNtlAIZGtlcrVmca1px3MQEA8Ng7uSHNco=
+	b=LQRDenU8t6tWxcSljxmb9PypJVzrOAu6UyuIfuN886P9ePbcGr9zBJ/yRHvyHSV5/
+	 SUjpZSsn96Pyc0lXT5fV0MnPKtOdAgXw3qBzRY97HnWe65JKGYmFzaumCNF+QL2iB5
+	 9VIimsUap9mOWB8//ae4VR5NJ/Z3zBng5TGsKtWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mark Brown <broonie@kernel.org>,
 	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.4 125/165] arm64/ptrace: Flush FP state when setting ZT0
-Date: Wed,  9 Aug 2023 12:40:56 +0200
-Message-ID: <20230809103646.889060040@linuxfoundation.org>
+Subject: [PATCH 6.4 126/165] arm64/ptrace: Dont enable SVE when setting streaming SVE
+Date: Wed,  9 Aug 2023 12:40:57 +0200
+Message-ID: <20230809103646.927259911@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -36,41 +36,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Mark Brown <broonie@kernel.org>
 
-commit 89a65c3f170e5c3b05a626046c68354e2afd7912 upstream.
+commit 045aecdfcb2e060db142d83a0f4082380c465d2c upstream.
 
-When setting ZT0 via ptrace we do not currently force a reload of the
-floating point register state from memory, do that to ensure that the newly
-set value gets loaded into the registers on next task execution.
+Systems which implement SME without also implementing SVE are
+architecturally valid but were not initially supported by the kernel,
+unfortunately we missed one issue in the ptrace code.
 
-The function was templated off the function for FPSIMD which due to our
-providing the option of embedding a FPSIMD regset within the SVE regset
-does not directly include the flush.
+The SVE register setting code is shared between SVE and streaming mode
+SVE. When we set full SVE register state we currently enable TIF_SVE
+unconditionally, in the case where streaming SVE is being configured on a
+system that supports vanilla SVE this is not an issue since we always
+initialise enough state for both vector lengths but on a system which only
+support SME it will result in us attempting to restore the SVE vector
+length after having set streaming SVE registers.
 
-Fixes: f90b529bcbe5 ("arm64/sme: Implement ZT0 ptrace support")
+Fix this by making the enabling of SVE conditional on setting SVE vector
+state. If we set streaming SVE state and SVE was not already enabled this
+will result in a SVE access trap on next use of normal SVE, this will cause
+us to flush our register state but this is fine since the only way to
+trigger a SVE access trap would be to exit streaming mode which will cause
+the in register state to be flushed anyway.
+
+Fixes: e12310a0d30f ("arm64/sme: Implement ptrace support for streaming mode SVE registers")
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230803-arm64-fix-ptrace-zt0-flush-v1-1-72e854eaf96e@kernel.org
+Link: https://lore.kernel.org/r/20230803-arm64-fix-ptrace-ssve-no-sve-v1-1-49df214bfb3e@kernel.org
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/ptrace.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/kernel/ptrace.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/kernel/ptrace.c b/arch/arm64/kernel/ptrace.c
-index d7f4f0d1ae12..740e81e9db04 100644
 --- a/arch/arm64/kernel/ptrace.c
 +++ b/arch/arm64/kernel/ptrace.c
-@@ -1180,6 +1180,8 @@ static int zt_set(struct task_struct *target,
- 	if (ret == 0)
- 		target->thread.svcr |= SVCR_ZA_MASK;
+@@ -932,11 +932,13 @@ static int sve_set_common(struct task_st
+ 	/*
+ 	 * Ensure target->thread.sve_state is up to date with target's
+ 	 * FPSIMD regs, so that a short copyin leaves trailing
+-	 * registers unmodified.  Always enable SVE even if going into
+-	 * streaming mode.
++	 * registers unmodified.  Only enable SVE if we are
++	 * configuring normal SVE, a system with streaming SVE may not
++	 * have normal SVE.
+ 	 */
+ 	fpsimd_sync_to_sve(target);
+-	set_tsk_thread_flag(target, TIF_SVE);
++	if (type == ARM64_VEC_SVE)
++		set_tsk_thread_flag(target, TIF_SVE);
+ 	target->thread.fp_type = FP_STATE_SVE;
  
-+	fpsimd_flush_task_state(target);
-+
- 	return ret;
- }
- 
--- 
-2.41.0
-
+ 	BUILD_BUG_ON(SVE_PT_SVE_OFFSET != sizeof(header));
 
 
