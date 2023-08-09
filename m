@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F95317AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F06C433C8;
-	Wed,  9 Aug 2023 11:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F3C17AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51C3C433C7;
+	Wed,  9 Aug 2023 11:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580348;
-	bh=hVVao+3uHAgTLzd5Oj3YmgPuqcrubzUBNGWiwhXd840=;
+	s=korg; t=1691580351;
+	bh=ptEUBx7NXouPTs9vL8NHlnPpdkt6EHNCSTVer9zT52c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MmhJQI1CTMZjP7OLsxubjrSw/OWhrU+qyrLy6ZrgdRm/zTMY420U1NvV6jvdJlDp7
-	 Z1Kev/sz15Pv5zIUsT0PLdOGbBFFDscCeaxVmFNX3XWPka+TaM3EchlvhUxfePIs9O
-	 Cm5C2RL/JwJEcQSiTLa7Zs+pXrWMqWFkOGf1vEps=
+	b=YVZOZAxSqyJsSIYwS7XxUAPR+es/xg70xrR0yx8oYlVLw/m2tUU27jMdTFe4puYjH
+	 1sr51NS/itDv6BiGMnWVt+ajzNlxiwloCejFXkO42mnteX6dL+CJCxaF4khwIiJNWN
+	 1Tw67b/90vu04RMBD1KxRL4NUV0a9Y94gDxFxCk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Tony Lindgren <tony@atomide.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 317/323] PM: sleep: wakeirq: fix wake irq arming
-Date: Wed,  9 Aug 2023 12:42:35 +0200
-Message-ID: <20230809103712.577932024@linuxfoundation.org>
+Subject: [PATCH 4.19 318/323] ARM: dts: imx6sll: Make ssi node name same as other platforms
+Date: Wed,  9 Aug 2023 12:42:36 +0200
+Message-ID: <20230809103712.625522815@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,93 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 8527beb12087238d4387607597b4020bc393c4b4 ]
+[ Upstream commit 5da1b522cf7dc51f7fde2cca8d90406b0291c503 ]
 
-The decision whether to enable a wake irq during suspend can not be done
-based on the runtime PM state directly as a driver may use wake irqs
-without implementing runtime PM. Such drivers specifically leave the
-state set to the default 'suspended' and the wake irq is thus never
-enabled at suspend.
+In imx6sll.dtsi, the ssi node name is different with other
+platforms (imx6qdl, imx6sl, imx6sx), but the
+sound/soc/fsl/fsl-asoc-card.c machine driver needs to check
+ssi node name for audmux configuration, then different ssi
+node name causes issue on imx6sll platform.
 
-Add a new wake irq flag to track whether a dedicated wake irq has been
-enabled at runtime suspend and therefore must not be enabled at system
-suspend.
+So we change ssi node name to make all platforms have same
+name.
 
-Note that pm_runtime_enabled() can not be used as runtime PM is always
-disabled during late suspend.
-
-Fixes: 69728051f5bf ("PM / wakeirq: Fix unbalanced IRQ enable for wakeirq")
-Cc: 4.16+ <stable@vger.kernel.org> # 4.16+
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Tested-by: Tony Lindgren <tony@atomide.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Stable-dep-of: ee70b908f77a ("ARM: dts: nxp/imx6sll: fix wrong property name in usbphy node")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/power.h   |  1 +
- drivers/base/power/wakeirq.c | 12 ++++++++----
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/imx6sll.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/base/power/power.h b/drivers/base/power/power.h
-index 55f32bd390007..3f9934bd6137d 100644
---- a/drivers/base/power/power.h
-+++ b/drivers/base/power/power.h
-@@ -28,6 +28,7 @@ extern void pm_runtime_remove(struct device *dev);
- #define WAKE_IRQ_DEDICATED_MASK		(WAKE_IRQ_DEDICATED_ALLOCATED | \
- 					 WAKE_IRQ_DEDICATED_MANAGED | \
- 					 WAKE_IRQ_DEDICATED_REVERSE)
-+#define WAKE_IRQ_DEDICATED_ENABLED	BIT(3)
+diff --git a/arch/arm/boot/dts/imx6sll.dtsi b/arch/arm/boot/dts/imx6sll.dtsi
+index d7d092a5522a3..8197767de69d7 100644
+--- a/arch/arm/boot/dts/imx6sll.dtsi
++++ b/arch/arm/boot/dts/imx6sll.dtsi
+@@ -271,7 +271,7 @@ uart2: serial@2024000 {
+ 					status = "disabled";
+ 				};
  
- struct wake_irq {
- 	struct device *dev;
-diff --git a/drivers/base/power/wakeirq.c b/drivers/base/power/wakeirq.c
-index fa69e4ce47527..e7ba514999163 100644
---- a/drivers/base/power/wakeirq.c
-+++ b/drivers/base/power/wakeirq.c
-@@ -328,8 +328,10 @@ void dev_pm_enable_wake_irq_check(struct device *dev,
- 	return;
+-				ssi1: ssi-controller@2028000 {
++				ssi1: ssi@2028000 {
+ 					compatible = "fsl,imx6sl-ssi", "fsl,imx51-ssi";
+ 					reg = <0x02028000 0x4000>;
+ 					interrupts = <GIC_SPI 46 IRQ_TYPE_LEVEL_HIGH>;
+@@ -284,7 +284,7 @@ ssi1: ssi-controller@2028000 {
+ 					status = "disabled";
+ 				};
  
- enable:
--	if (!can_change_status || !(wirq->status & WAKE_IRQ_DEDICATED_REVERSE))
-+	if (!can_change_status || !(wirq->status & WAKE_IRQ_DEDICATED_REVERSE)) {
- 		enable_irq(wirq->irq);
-+		wirq->status |= WAKE_IRQ_DEDICATED_ENABLED;
-+	}
- }
+-				ssi2: ssi-controller@202c000 {
++				ssi2: ssi@202c000 {
+ 					compatible = "fsl,imx6sl-ssi", "fsl,imx51-ssi";
+ 					reg = <0x0202c000 0x4000>;
+ 					interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>;
+@@ -297,7 +297,7 @@ ssi2: ssi-controller@202c000 {
+ 					status = "disabled";
+ 				};
  
- /**
-@@ -350,8 +352,10 @@ void dev_pm_disable_wake_irq_check(struct device *dev, bool cond_disable)
- 	if (cond_disable && (wirq->status & WAKE_IRQ_DEDICATED_REVERSE))
- 		return;
- 
--	if (wirq->status & WAKE_IRQ_DEDICATED_MANAGED)
-+	if (wirq->status & WAKE_IRQ_DEDICATED_MANAGED) {
-+		wirq->status &= ~WAKE_IRQ_DEDICATED_ENABLED;
- 		disable_irq_nosync(wirq->irq);
-+	}
- }
- 
- /**
-@@ -390,7 +394,7 @@ void dev_pm_arm_wake_irq(struct wake_irq *wirq)
- 
- 	if (device_may_wakeup(wirq->dev)) {
- 		if (wirq->status & WAKE_IRQ_DEDICATED_ALLOCATED &&
--		    !pm_runtime_status_suspended(wirq->dev))
-+		    !(wirq->status & WAKE_IRQ_DEDICATED_ENABLED))
- 			enable_irq(wirq->irq);
- 
- 		enable_irq_wake(wirq->irq);
-@@ -413,7 +417,7 @@ void dev_pm_disarm_wake_irq(struct wake_irq *wirq)
- 		disable_irq_wake(wirq->irq);
- 
- 		if (wirq->status & WAKE_IRQ_DEDICATED_ALLOCATED &&
--		    !pm_runtime_status_suspended(wirq->dev))
-+		    !(wirq->status & WAKE_IRQ_DEDICATED_ENABLED))
- 			disable_irq_nosync(wirq->irq);
- 	}
- }
+-				ssi3: ssi-controller@2030000 {
++				ssi3: ssi@2030000 {
+ 					compatible = "fsl,imx6sl-ssi", "fsl,imx51-ssi";
+ 					reg = <0x02030000 0x4000>;
+ 					interrupts = <GIC_SPI 48 IRQ_TYPE_LEVEL_HIGH>;
 -- 
 2.40.1
 
