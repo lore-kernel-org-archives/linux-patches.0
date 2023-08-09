@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C61017AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:34:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18ABC433C8;
-	Wed,  9 Aug 2023 11:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9ACB17AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:34:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D113C433C7;
+	Wed,  9 Aug 2023 11:34:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580853;
-	bh=/b8ZxgOBLhdEfBczTIuNocqx+K3bQ16KGdVzpeJ/fVs=;
+	s=korg; t=1691580855;
+	bh=nDpWQFNmQonVzqavfzVuG+CmSZ5vsZSlCiQILpDqbd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EqOsLzAkqkpmbYsFvJnjqfyLXJmQEgeq4KSFpsV+7qnZh86Af7kPbIo8a7dwKtUhP
-	 8O3cOn7ccCMg20pyk5LEs0Q12/TeEmU81vjFRhjTpBWfHtEFg09i0Evl3t0p8AGfGD
-	 e4+BhxD71kdYcbX39gx5p0w9wupoah5907xsjQ88=
+	b=Myz56GtTu1+nyLkMMxPWO0UfDMGgCY5LsDALpyNFIqNm1Mz7cuEGlJZZb0HM+bDW0
+	 c4v/Okuba2A+OXbnKMTgsKjyf7784qhdYF4o8vWtEMGMxWZgj9xIQyn1/S/8ikhV7G
+	 yTHZ0WHawFjrBp5/xeVHsAf9V2SPxio9sQxlelGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Daniel Scally <dan.scally@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 003/201] gpio: tps68470: Make tps68470_gpio_output() always set the initial value
-Date: Wed,  9 Aug 2023 12:40:05 +0200
-Message-ID: <20230809103643.911719979@linuxfoundation.org>
+Subject: [PATCH 5.10 004/201] btrfs: fix race between quota disable and relocation
+Date: Wed,  9 Aug 2023 12:40:06 +0200
+Message-ID: <20230809103643.950079499@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -38,47 +35,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 5a7adc6c1069ce31ef4f606ae9c05592c80a6ab5 ]
+[ Upstream commit 8a4a0b2a3eaf75ca8854f856ef29690c12b2f531 ]
 
-Make tps68470_gpio_output() call tps68470_gpio_set() for output-only pins
-too, so that the initial value passed to gpiod_direction_output() is
-honored for these pins too.
+If we disable quotas while we have a relocation of a metadata block group
+that has extents belonging to the quota root, we can cause the relocation
+to fail with -ENOENT. This is because relocation builds backref nodes for
+extents of the quota root and later needs to walk the backrefs and access
+the quota root - however if in between a task disables quotas, it results
+in deleting the quota root from the root tree (with btrfs_del_root(),
+called from btrfs_quota_disable().
 
-Fixes: 275b13a65547 ("gpio: Add support for TPS68470 GPIOs")
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
-Tested-by: Daniel Scally <dan.scally@ideasonboard.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+This can be sporadically triggered by test case btrfs/255 from fstests:
+
+  $ ./check btrfs/255
+  FSTYP         -- btrfs
+  PLATFORM      -- Linux/x86_64 debian0 6.4.0-rc6-btrfs-next-134+ #1 SMP PREEMPT_DYNAMIC Thu Jun 15 11:59:28 WEST 2023
+  MKFS_OPTIONS  -- /dev/sdc
+  MOUNT_OPTIONS -- /dev/sdc /home/fdmanana/btrfs-tests/scratch_1
+
+  btrfs/255 6s ... _check_dmesg: something found in dmesg (see /home/fdmanana/git/hub/xfstests/results//btrfs/255.dmesg)
+  - output mismatch (see /home/fdmanana/git/hub/xfstests/results//btrfs/255.out.bad)
+#      --- tests/btrfs/255.out	2023-03-02 21:47:53.876609426 +0000
+#      +++ /home/fdmanana/git/hub/xfstests/results//btrfs/255.out.bad	2023-06-16 10:20:39.267563212 +0100
+#      @@ -1,2 +1,4 @@
+#       QA output created by 255
+#      +ERROR: error during balancing '/home/fdmanana/btrfs-tests/scratch_1': No such file or directory
+#      +There may be more info in syslog - try dmesg | tail
+#       Silence is golden
+#      ...
+      (Run 'diff -u /home/fdmanana/git/hub/xfstests/tests/btrfs/255.out /home/fdmanana/git/hub/xfstests/results//btrfs/255.out.bad'  to see the entire diff)
+  Ran: btrfs/255
+  Failures: btrfs/255
+  Failed 1 of 1 tests
+
+To fix this make the quota disable operation take the cleaner mutex, as
+relocation of a block group also takes this mutex. This is also what we
+do when deleting a subvolume/snapshot, we take the cleaner mutex in the
+cleaner kthread (at cleaner_kthread()) and then we call btrfs_del_root()
+at btrfs_drop_snapshot() while under the protection of the cleaner mutex.
+
+Fixes: bed92eae26cc ("Btrfs: qgroup implementation and prototypes")
+CC: stable@vger.kernel.org # 5.4+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-tps68470.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/btrfs/qgroup.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpio-tps68470.c b/drivers/gpio/gpio-tps68470.c
-index f7f5f770e0fbb..e19eb7c982a13 100644
---- a/drivers/gpio/gpio-tps68470.c
-+++ b/drivers/gpio/gpio-tps68470.c
-@@ -91,13 +91,13 @@ static int tps68470_gpio_output(struct gpio_chip *gc, unsigned int offset,
- 	struct tps68470_gpio_data *tps68470_gpio = gpiochip_get_data(gc);
- 	struct regmap *regmap = tps68470_gpio->tps68470_regmap;
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index 828a7ff4aebe7..a67323c2d41f7 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -1202,12 +1202,23 @@ int btrfs_quota_disable(struct btrfs_fs_info *fs_info)
+ 	int ret = 0;
  
-+	/* Set the initial value */
-+	tps68470_gpio_set(gc, offset, value);
+ 	/*
+-	 * We need to have subvol_sem write locked, to prevent races between
+-	 * concurrent tasks trying to disable quotas, because we will unlock
+-	 * and relock qgroup_ioctl_lock across BTRFS_FS_QUOTA_ENABLED changes.
++	 * We need to have subvol_sem write locked to prevent races with
++	 * snapshot creation.
+ 	 */
+ 	lockdep_assert_held_write(&fs_info->subvol_sem);
+ 
++	/*
++	 * Lock the cleaner mutex to prevent races with concurrent relocation,
++	 * because relocation may be building backrefs for blocks of the quota
++	 * root while we are deleting the root. This is like dropping fs roots
++	 * of deleted snapshots/subvolumes, we need the same protection.
++	 *
++	 * This also prevents races between concurrent tasks trying to disable
++	 * quotas, because we will unlock and relock qgroup_ioctl_lock across
++	 * BTRFS_FS_QUOTA_ENABLED changes.
++	 */
++	mutex_lock(&fs_info->cleaner_mutex);
 +
- 	/* rest are always outputs */
- 	if (offset >= TPS68470_N_REGULAR_GPIO)
- 		return 0;
+ 	mutex_lock(&fs_info->qgroup_ioctl_lock);
+ 	if (!fs_info->quota_root)
+ 		goto out;
+@@ -1287,6 +1298,7 @@ int btrfs_quota_disable(struct btrfs_fs_info *fs_info)
+ 		btrfs_end_transaction(trans);
+ 	else if (trans)
+ 		ret = btrfs_end_transaction(trans);
++	mutex_unlock(&fs_info->cleaner_mutex);
  
--	/* Set the initial value */
--	tps68470_gpio_set(gc, offset, value);
--
- 	return regmap_update_bits(regmap, TPS68470_GPIO_CTL_REG_A(offset),
- 				 TPS68470_GPIO_MODE_MASK,
- 				 TPS68470_GPIO_MODE_OUT_CMOS);
+ 	return ret;
+ }
 -- 
 2.39.2
 
