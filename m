@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D541417758
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:32:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54EDDC433C7;
-	Wed,  9 Aug 2023 11:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B6617758
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:32:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 159ACC433C7;
+	Wed,  9 Aug 2023 11:32:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580740;
-	bh=g79FXCclP/QUdKks1Plf94RX2TPZM8s0yZXFbUi2a7k=;
+	s=korg; t=1691580743;
+	bh=ezHrH/ZySxNIQPLt9ut/xd5iMDGRr9oxn5avmfh7Vk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=acZW1dy8P6vuaccBofSzrW2uQvEqLiPTLpTq9FP63qCgrdLY1pp6IeBTBI3+kO/hi
-	 XQpAprEw97bJwl+/GWGvZCdYD+YwnCzr0Kmf9YkDq4ZBnK6XXZUwm1zZduKyuRRa0V
-	 0aw2MbveX4s+fFXd9bS89gWxC84NMlUrxA6PbzYQ=
+	b=GWPqgD4HJcbNBZhQq+w54b7DYz0MhRPpKfpBH3jg5bm3+0VbxhUOiKhwB5WSuhtWv
+	 RZm/6VPL+cNKvhRMRYvrL90Xo7NoQHKrPj6mMF+z3YbmMdJoVDTkYI3hzOZa/00gWD
+	 Qv31Kw8wKQhEBkyGOtDAbb7EnvCkpMfbLFbAttu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.4 132/154] fs: Protect reconfiguration of sb read-write from racing writes
-Date: Wed,  9 Aug 2023 12:42:43 +0200
-Message-ID: <20230809103641.253221448@linuxfoundation.org>
+	syzbot+af5e10f73dbff48f70af@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 5.4 133/154] ext2: Drop fragment support
+Date: Wed,  9 Aug 2023 12:42:44 +0200
+Message-ID: <20230809103641.283869416@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -36,66 +36,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-commit c541dce86c537714b6761a79a969c1623dfa222b upstream.
+commit 404615d7f1dcd4cca200e9a7a9df3a1dcae1dd62 upstream.
 
-The reconfigure / remount code takes a lot of effort to protect
-filesystem's reconfiguration code from racing writes on remounting
-read-only. However during remounting read-only filesystem to read-write
-mode userspace writes can start immediately once we clear SB_RDONLY
-flag. This is inconvenient for example for ext4 because we need to do
-some writes to the filesystem (such as preparation of quota files)
-before we can take userspace writes so we are clearing SB_RDONLY flag
-before we are fully ready to accept userpace writes and syzbot has found
-a way to exploit this [1]. Also as far as I'm reading the code
-the filesystem remount code was protected from racing writes in the
-legacy mount path by the mount's MNT_READONLY flag so this is relatively
-new problem. It is actually fairly easy to protect remount read-write
-from racing writes using sb->s_readonly_remount flag so let's just do
-that instead of having to workaround these races in the filesystem code.
+Ext2 has fields in superblock reserved for subblock allocation support.
+However that never landed. Drop the many years dead code.
 
-[1] https://lore.kernel.org/all/00000000000006a0df05f6667499@google.com/T/
-
+Reported-by: syzbot+af5e10f73dbff48f70af@syzkaller.appspotmail.com
 Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20230615113848.8439-1-jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/super.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ fs/ext2/ext2.h  |   12 ------------
+ fs/ext2/super.c |   23 ++++-------------------
+ 2 files changed, 4 insertions(+), 31 deletions(-)
 
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -905,6 +905,7 @@ int reconfigure_super(struct fs_context
- 	struct super_block *sb = fc->root->d_sb;
- 	int retval;
- 	bool remount_ro = false;
-+	bool remount_rw = false;
- 	bool force = fc->sb_flags & SB_FORCE;
+--- a/fs/ext2/ext2.h
++++ b/fs/ext2/ext2.h
+@@ -68,10 +68,7 @@ struct mb_cache;
+  * second extended-fs super-block data in memory
+  */
+ struct ext2_sb_info {
+-	unsigned long s_frag_size;	/* Size of a fragment in bytes */
+-	unsigned long s_frags_per_block;/* Number of fragments per block */
+ 	unsigned long s_inodes_per_block;/* Number of inodes per block */
+-	unsigned long s_frags_per_group;/* Number of fragments in a group */
+ 	unsigned long s_blocks_per_group;/* Number of blocks in a group */
+ 	unsigned long s_inodes_per_group;/* Number of inodes in a group */
+ 	unsigned long s_itb_per_group;	/* Number of inode table blocks per group */
+@@ -186,15 +183,6 @@ static inline struct ext2_sb_info *EXT2_
+ #define EXT2_FIRST_INO(s)		(EXT2_SB(s)->s_first_ino)
  
- 	if (fc->sb_flags_mask & ~MS_RMT_MASK)
-@@ -921,7 +922,7 @@ int reconfigure_super(struct fs_context
- 		if (!(fc->sb_flags & SB_RDONLY) && bdev_read_only(sb->s_bdev))
- 			return -EACCES;
- #endif
+ /*
+- * Macro-instructions used to manage fragments
+- */
+-#define EXT2_MIN_FRAG_SIZE		1024
+-#define	EXT2_MAX_FRAG_SIZE		4096
+-#define EXT2_MIN_FRAG_LOG_SIZE		  10
+-#define EXT2_FRAG_SIZE(s)		(EXT2_SB(s)->s_frag_size)
+-#define EXT2_FRAGS_PER_BLOCK(s)		(EXT2_SB(s)->s_frags_per_block)
 -
-+		remount_rw = !(fc->sb_flags & SB_RDONLY) && sb_rdonly(sb);
- 		remount_ro = (fc->sb_flags & SB_RDONLY) && !sb_rdonly(sb);
- 	}
- 
-@@ -951,6 +952,14 @@ int reconfigure_super(struct fs_context
- 			if (retval)
- 				return retval;
+-/*
+  * Structure of a blocks group descriptor
+  */
+ struct ext2_group_desc
+--- a/fs/ext2/super.c
++++ b/fs/ext2/super.c
+@@ -681,10 +681,9 @@ static int ext2_setup_super (struct supe
+ 		es->s_max_mnt_count = cpu_to_le16(EXT2_DFL_MAX_MNT_COUNT);
+ 	le16_add_cpu(&es->s_mnt_count, 1);
+ 	if (test_opt (sb, DEBUG))
+-		ext2_msg(sb, KERN_INFO, "%s, %s, bs=%lu, fs=%lu, gc=%lu, "
++		ext2_msg(sb, KERN_INFO, "%s, %s, bs=%lu, gc=%lu, "
+ 			"bpg=%lu, ipg=%lu, mo=%04lx]",
+ 			EXT2FS_VERSION, EXT2FS_DATE, sb->s_blocksize,
+-			sbi->s_frag_size,
+ 			sbi->s_groups_count,
+ 			EXT2_BLOCKS_PER_GROUP(sb),
+ 			EXT2_INODES_PER_GROUP(sb),
+@@ -1031,14 +1030,7 @@ static int ext2_fill_super(struct super_
  		}
-+	} else if (remount_rw) {
-+		/*
-+		 * We set s_readonly_remount here to protect filesystem's
-+		 * reconfigure code from writes from userspace until
-+		 * reconfigure finishes.
-+		 */
-+		sb->s_readonly_remount = 1;
-+		smp_wmb();
  	}
  
- 	if (fc->ops->reconfigure) {
+-	sbi->s_frag_size = EXT2_MIN_FRAG_SIZE <<
+-				   le32_to_cpu(es->s_log_frag_size);
+-	if (sbi->s_frag_size == 0)
+-		goto cantfind_ext2;
+-	sbi->s_frags_per_block = sb->s_blocksize / sbi->s_frag_size;
+-
+ 	sbi->s_blocks_per_group = le32_to_cpu(es->s_blocks_per_group);
+-	sbi->s_frags_per_group = le32_to_cpu(es->s_frags_per_group);
+ 	sbi->s_inodes_per_group = le32_to_cpu(es->s_inodes_per_group);
+ 
+ 	sbi->s_inodes_per_block = sb->s_blocksize / EXT2_INODE_SIZE(sb);
+@@ -1064,11 +1056,10 @@ static int ext2_fill_super(struct super_
+ 		goto failed_mount;
+ 	}
+ 
+-	if (sb->s_blocksize != sbi->s_frag_size) {
++	if (es->s_log_frag_size != es->s_log_block_size) {
+ 		ext2_msg(sb, KERN_ERR,
+-			"error: fragsize %lu != blocksize %lu"
+-			"(not supported yet)",
+-			sbi->s_frag_size, sb->s_blocksize);
++			"error: fragsize log %u != blocksize log %u",
++			le32_to_cpu(es->s_log_frag_size), sb->s_blocksize_bits);
+ 		goto failed_mount;
+ 	}
+ 
+@@ -1078,12 +1069,6 @@ static int ext2_fill_super(struct super_
+ 			sbi->s_blocks_per_group);
+ 		goto failed_mount;
+ 	}
+-	if (sbi->s_frags_per_group > sb->s_blocksize * 8) {
+-		ext2_msg(sb, KERN_ERR,
+-			"error: #fragments per group too big: %lu",
+-			sbi->s_frags_per_group);
+-		goto failed_mount;
+-	}
+ 	if (sbi->s_inodes_per_group < sbi->s_inodes_per_block ||
+ 	    sbi->s_inodes_per_group > sb->s_blocksize * 8) {
+ 		ext2_msg(sb, KERN_ERR,
 
 
