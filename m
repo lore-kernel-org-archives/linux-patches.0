@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF2D53B7
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:00:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37CBC433C8;
-	Wed,  9 Aug 2023 11:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC7853B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:00:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A25C433C8;
+	Wed,  9 Aug 2023 11:00:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578834;
-	bh=LxxPAO363gau4k3+8+d5yNDcEhAjhPn+8KCtVlaA+Mo=;
+	s=korg; t=1691578837;
+	bh=ldIHsHWBIL20Eu1g1t8jASQBmtybSnCfPApNXoURqq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yloFmPo0GQ2B5F4zJ9W/yTFdZ3rxzHq5mBi1NpeZ08yrFEd6+3hjw8o58TflwtvYb
-	 +JYdy3sLfCw8SDnW7CQ3fYrDsryE7NdmFPOtB/4nQP5K7KdnvkimWY7Ie4GYMpdTfL
-	 7i0EpYqt36QJkwAxniQZKWh1+sM2Ucyj/TwNFst8=
+	b=UFcAMlcez6MRy8H4zzoxXJLoSjyg+2rp1E7sz0JkrKNsULSo74XNg3BHoNUyAMx8z
+	 j6GrU+jSC+29USeh6IYitiRLZxDma+1QZznhI802iChFSS1JR5txlUsiEZehzrIaDt
+	 dIrZIry/NMX//5zWj1McKJN+jBVqaSZYpgz3dc6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.15 73/92] file: reinstate f_pos locking optimization for regular files
-Date: Wed,  9 Aug 2023 12:41:49 +0200
-Message-ID: <20230809103636.087989996@linuxfoundation.org>
+	syzbot <syzbot+89dbb3a789a5b9711793@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 5.15 74/92] fs/ntfs3: Use __GFP_NOWARN allocation at ntfs_load_attr_list()
+Date: Wed,  9 Aug 2023 12:41:50 +0200
+Message-ID: <20230809103636.118091827@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -35,64 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit 797964253d358cf8d705614dda394dbe30120223 upstream.
+commit ea303f72d70ce2f0b0aa94ab127085289768c5a6 upstream.
 
-In commit 20ea1e7d13c1 ("file: always lock position for
-FMODE_ATOMIC_POS") we ended up always taking the file pos lock, because
-pidfd_getfd() could get a reference to the file even when it didn't have
-an elevated file count due to threading of other sharing cases.
+syzbot is reporting too large allocation at ntfs_load_attr_list(), for
+a crafted filesystem can have huge data_size.
 
-But Mateusz Guzik reports that the extra locking is actually measurable,
-so let's re-introduce the optimization, and only force the locking for
-directory traversal.
-
-Directories need the lock for correctness reasons, while regular files
-only need it for "POSIX semantics".  Since pidfd_getfd() is about
-debuggers etc special things that are _way_ outside of POSIX, we can
-relax the rules for that case.
-
-Reported-by: Mateusz Guzik <mjguzik@gmail.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Link: https://lore.kernel.org/linux-fsdevel/20230803095311.ijpvhx3fyrbkasul@f/
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Reported-by: syzbot <syzbot+89dbb3a789a5b9711793@syzkaller.appspotmail.com>
+Link: https://syzkaller.appspot.com/bug?extid=89dbb3a789a5b9711793
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/file.c |   18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ fs/ntfs3/attrlist.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -1062,12 +1062,28 @@ unsigned long __fdget_raw(unsigned int f
- 	return __fget_light(fd, 0);
- }
+--- a/fs/ntfs3/attrlist.c
++++ b/fs/ntfs3/attrlist.c
+@@ -52,7 +52,7 @@ int ntfs_load_attr_list(struct ntfs_inod
  
-+/*
-+ * Try to avoid f_pos locking. We only need it if the
-+ * file is marked for FMODE_ATOMIC_POS, and it can be
-+ * accessed multiple ways.
-+ *
-+ * Always do it for directories, because pidfd_getfd()
-+ * can make a file accessible even if it otherwise would
-+ * not be, and for directories this is a correctness
-+ * issue, not a "POSIX requirement".
-+ */
-+static inline bool file_needs_f_pos_lock(struct file *file)
-+{
-+	return (file->f_mode & FMODE_ATOMIC_POS) &&
-+		(file_count(file) > 1 || S_ISDIR(file_inode(file)->i_mode));
-+}
-+
- unsigned long __fdget_pos(unsigned int fd)
- {
- 	unsigned long v = __fdget(fd);
- 	struct file *file = (struct file *)(v & ~3);
+ 	if (!attr->non_res) {
+ 		lsize = le32_to_cpu(attr->res.data_size);
+-		le = kmalloc(al_aligned(lsize), GFP_NOFS);
++		le = kmalloc(al_aligned(lsize), GFP_NOFS | __GFP_NOWARN);
+ 		if (!le) {
+ 			err = -ENOMEM;
+ 			goto out;
+@@ -80,7 +80,7 @@ int ntfs_load_attr_list(struct ntfs_inod
+ 		if (err < 0)
+ 			goto out;
  
--	if (file && (file->f_mode & FMODE_ATOMIC_POS)) {
-+	if (file && file_needs_f_pos_lock(file)) {
- 		v |= FDPUT_POS_UNLOCK;
- 		mutex_lock(&file->f_pos_lock);
- 	}
+-		le = kmalloc(al_aligned(lsize), GFP_NOFS);
++		le = kmalloc(al_aligned(lsize), GFP_NOFS | __GFP_NOWARN);
+ 		if (!le) {
+ 			err = -ENOMEM;
+ 			goto out;
 
 
