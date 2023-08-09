@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A40E613A;
-	Wed,  9 Aug 2023 10:55:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFF75C433C8;
-	Wed,  9 Aug 2023 10:55:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3B41774C;
+	Wed,  9 Aug 2023 10:55:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCFEBC433CD;
+	Wed,  9 Aug 2023 10:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578502;
-	bh=B1QedS+pB//tSBuJSmXwg7w1JvOxIlQtpHnhU9RrjF4=;
+	s=korg; t=1691578505;
+	bh=o5kVOmmulYHn0UuyrUiUIxhNbTitBnpOWApY0H1ojgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O18Wm0Vv9GT9Z3XCEDzFXMVwZxf9H6JiVdSh7QmqrRwJfNKJcQotiTPYs9OPwD6CB
-	 LlH0f+jZND9itCLmgqGG995KCgD9ANDPCviRpXr7pWGHGle77QD4eGfh1bpZMgBD37
-	 mA7W9KAZUeg3l4mGKdHyphOeQFf03YGeWmm+gzcI=
+	b=QuLApYWH8OVHeqvtqJ0pkRnmA9kCTl1HDzaoUmIpid5LEQPeyswE7HMyOxi6nQety
+	 uECT/CXiPuX4+E2TjVwYBxZdGpqpVTUkM8o5cEmJJDJ5yfapF4X20Og0TPZLb6zFgz
+	 4953EWBYUqM91+gbTnymCWMHljbLG8iayOrjhq4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,9 +23,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	netdev@vger.kernel.org,
 	Laszlo Ersek <lersek@redhat.com>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 083/127] net: tun_chr_open(): set sk_uid from current_fsuid()
-Date: Wed,  9 Aug 2023 12:41:10 +0200
-Message-ID: <20230809103639.406806992@linuxfoundation.org>
+Subject: [PATCH 6.1 084/127] net: tap_open(): set sk_uid from current_fsuid()
+Date: Wed,  9 Aug 2023 12:41:11 +0200
+Message-ID: <20230809103639.436767604@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -41,24 +41,24 @@ Content-Transfer-Encoding: 8bit
 
 From: Laszlo Ersek <lersek@redhat.com>
 
-commit 9bc3047374d5bec163e83e743709e23753376f0c upstream.
+commit 5c9241f3ceab3257abe2923a59950db0dc8bb737 upstream.
 
-Commit a096ccca6e50 initializes the "sk_uid" field in the protocol socket
-(struct sock) from the "/dev/net/tun" device node's owner UID. Per
-original commit 86741ec25462 ("net: core: Add a UID field to struct
-sock.", 2016-11-04), that's wrong: the idea is to cache the UID of the
-userspace process that creates the socket. Commit 86741ec25462 mentions
-socket() and accept(); with "tun", the action that creates the socket is
-open("/dev/net/tun").
+Commit 66b2c338adce initializes the "sk_uid" field in the protocol socket
+(struct sock) from the "/dev/tapX" device node's owner UID. Per original
+commit 86741ec25462 ("net: core: Add a UID field to struct sock.",
+2016-11-04), that's wrong: the idea is to cache the UID of the userspace
+process that creates the socket. Commit 86741ec25462 mentions socket() and
+accept(); with "tap", the action that creates the socket is
+open("/dev/tapX").
 
 Therefore the device node's owner UID is irrelevant. In most cases,
-"/dev/net/tun" will be owned by root, so in practice, commit a096ccca6e50
-has no observable effect:
+"/dev/tapX" will be owned by root, so in practice, commit 66b2c338adce has
+no observable effect:
 
 - before, "sk_uid" would be zero, due to undefined behavior
   (CVE-2023-1076),
 
-- after, "sk_uid" would be zero, due to "/dev/net/tun" being owned by root.
+- after, "sk_uid" would be zero, due to "/dev/tapX" being owned by root.
 
 What matters is the (fs)UID of the process performing the open(), so cache
 that in "sk_uid".
@@ -69,25 +69,25 @@ Cc: Paolo Abeni <pabeni@redhat.com>
 Cc: Pietro Borrello <borrello@diag.uniroma1.it>
 Cc: netdev@vger.kernel.org
 Cc: stable@vger.kernel.org
-Fixes: a096ccca6e50 ("tun: tun_chr_open(): correctly initialize socket uid")
+Fixes: 66b2c338adce ("tap: tap_open(): correctly initialize socket uid")
 Bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=2173435
 Signed-off-by: Laszlo Ersek <lersek@redhat.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/tun.c |    2 +-
+ drivers/net/tap.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -3457,7 +3457,7 @@ static int tun_chr_open(struct inode *in
- 	tfile->socket.file = file;
- 	tfile->socket.ops = &tun_socket_ops;
- 
--	sock_init_data_uid(&tfile->socket, &tfile->sk, inode->i_uid);
-+	sock_init_data_uid(&tfile->socket, &tfile->sk, current_fsuid());
- 
- 	tfile->sk.sk_write_space = tun_sock_write_space;
- 	tfile->sk.sk_sndbuf = INT_MAX;
+--- a/drivers/net/tap.c
++++ b/drivers/net/tap.c
+@@ -533,7 +533,7 @@ static int tap_open(struct inode *inode,
+ 	q->sock.state = SS_CONNECTED;
+ 	q->sock.file = file;
+ 	q->sock.ops = &tap_socket_ops;
+-	sock_init_data_uid(&q->sock, &q->sk, inode->i_uid);
++	sock_init_data_uid(&q->sock, &q->sk, current_fsuid());
+ 	q->sk.sk_write_space = tap_sock_write_space;
+ 	q->sk.sk_destruct = tap_sock_destruct;
+ 	q->flags = IFF_VNET_HDR | IFF_NO_PI | IFF_TAP;
 
 
