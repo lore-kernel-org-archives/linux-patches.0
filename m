@@ -1,36 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C591FA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:49:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7EFC433C7;
-	Wed,  9 Aug 2023 10:49:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088501FA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:49:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D325C433C8;
+	Wed,  9 Aug 2023 10:49:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578187;
-	bh=cyiCJhAjrEvCmmdDk6LeUkn/43xZoWgsNe7RPfTE/Kg=;
+	s=korg; t=1691578189;
+	bh=EQ4ZQNWXbrWOvn9E46s0iU/rYrE5RbLdcOQhsusyyiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G4P5UcTOy/q/wtRD0zjWEmueG9Jb+iy3x2iejjextNMQXas8/qUqDO0TfPy4hMALn
-	 tovFjZK16SD20JV0X/p1h4u5dVeKSwwsqQqCwBpTyrdpT4AMRjDh72K7d1JsryufbR
-	 hj7f2+6m/iZmWEZIoYjCea2dKTemDjkMgnZ91CZs=
+	b=L8jOjASdk0thO1tD3l59XKmZlK6Z8iFyxMaupBcBcOxr16F1z1ZqpMDxvXAlnLBBF
+	 q2f7eEwYF3Igs7VSEth6/mgKK4I+qYAgaiztO9FqdGZQnQu/PT/bK1vCUBXJo+hWIU
+	 3zc8hEyd2v5oAEyem1vpVwhPgXEF/avYGcMhHZ4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	syzbot <syzbot+ece2915262061d6e0ac1@syzkaller.appspotmail.com>,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Marco Elver <elver@google.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.4 137/165] kasan,kmsan: remove __GFP_KSWAPD_RECLAIM usage from kasan/kmsan
-Date: Wed,  9 Aug 2023 12:41:08 +0200
-Message-ID: <20230809103647.299809609@linuxfoundation.org>
+	syzbot+aad58150cbc64ba41bdc@syzkaller.appspotmail.com,
+	Prince Kumar Maurya <princekumarmaurya06@gmail.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.4 138/165] fs/sysv: Null check to prevent null-ptr-deref bug
+Date: Wed,  9 Aug 2023 12:41:09 +0200
+Message-ID: <20230809103647.330181268@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -44,115 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Prince Kumar Maurya <princekumarmaurya06@gmail.com>
 
-commit 726ccdba1521007fab4b2b7565d255fa0f2b770c upstream.
+commit ea2b62f305893992156a798f665847e0663c9f41 upstream.
 
-syzbot is reporting lockdep warning in __stack_depot_save(), for
-the caller of __stack_depot_save() (i.e. __kasan_record_aux_stack() in
-this report) is responsible for masking __GFP_KSWAPD_RECLAIM flag in
-order not to wake kswapd which in turn wakes kcompactd.
+sb_getblk(inode->i_sb, parent) return a null ptr and taking lock on
+that leads to the null-ptr-deref bug.
 
-Since kasan/kmsan functions might be called with arbitrary locks held,
-mask __GFP_KSWAPD_RECLAIM flag from all GFP_NOWAIT/GFP_ATOMIC allocations
-in kasan/kmsan.
-
-Note that kmsan_save_stack_with_flags() is changed to mask both
-__GFP_DIRECT_RECLAIM flag and __GFP_KSWAPD_RECLAIM flag, for
-wakeup_kswapd() from wake_all_kswapds() from __alloc_pages_slowpath()
-calls wakeup_kcompactd() if __GFP_KSWAPD_RECLAIM flag is set and
-__GFP_DIRECT_RECLAIM flag is not set.
-
-Link: https://lkml.kernel.org/r/656cb4f5-998b-c8d7-3c61-c2d37aa90f9a@I-love.SAKURA.ne.jp
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reported-by: syzbot <syzbot+ece2915262061d6e0ac1@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=ece2915262061d6e0ac1
-Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: syzbot+aad58150cbc64ba41bdc@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=aad58150cbc64ba41bdc
+Signed-off-by: Prince Kumar Maurya <princekumarmaurya06@gmail.com>
+Message-Id: <20230531013141.19487-1-princekumarmaurya06@gmail.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kasan/generic.c         |    4 ++--
- mm/kasan/tags.c            |    2 +-
- mm/kmsan/core.c            |    6 +++---
- mm/kmsan/instrumentation.c |    2 +-
- 4 files changed, 7 insertions(+), 7 deletions(-)
+ fs/sysv/itree.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/mm/kasan/generic.c
-+++ b/mm/kasan/generic.c
-@@ -489,7 +489,7 @@ static void __kasan_record_aux_stack(voi
- 		return;
- 
- 	alloc_meta->aux_stack[1] = alloc_meta->aux_stack[0];
--	alloc_meta->aux_stack[0] = kasan_save_stack(GFP_NOWAIT, can_alloc);
-+	alloc_meta->aux_stack[0] = kasan_save_stack(0, can_alloc);
- }
- 
- void kasan_record_aux_stack(void *addr)
-@@ -519,7 +519,7 @@ void kasan_save_free_info(struct kmem_ca
- 	if (!free_meta)
- 		return;
- 
--	kasan_set_track(&free_meta->free_track, GFP_NOWAIT);
-+	kasan_set_track(&free_meta->free_track, 0);
- 	/* The object was freed and has free track set. */
- 	*(u8 *)kasan_mem_to_shadow(object) = KASAN_SLAB_FREETRACK;
- }
---- a/mm/kasan/tags.c
-+++ b/mm/kasan/tags.c
-@@ -140,5 +140,5 @@ void kasan_save_alloc_info(struct kmem_c
- 
- void kasan_save_free_info(struct kmem_cache *cache, void *object)
- {
--	save_stack_info(cache, object, GFP_NOWAIT, true);
-+	save_stack_info(cache, object, 0, true);
- }
---- a/mm/kmsan/core.c
-+++ b/mm/kmsan/core.c
-@@ -74,7 +74,7 @@ depot_stack_handle_t kmsan_save_stack_wi
- 	nr_entries = stack_trace_save(entries, KMSAN_STACK_DEPTH, 0);
- 
- 	/* Don't sleep. */
--	flags &= ~__GFP_DIRECT_RECLAIM;
-+	flags &= ~(__GFP_DIRECT_RECLAIM | __GFP_KSWAPD_RECLAIM);
- 
- 	handle = __stack_depot_save(entries, nr_entries, flags, true);
- 	return stack_depot_set_extra_bits(handle, extra);
-@@ -245,7 +245,7 @@ depot_stack_handle_t kmsan_internal_chai
- 	extra_bits = kmsan_extra_bits(depth, uaf);
- 
- 	entries[0] = KMSAN_CHAIN_MAGIC_ORIGIN;
--	entries[1] = kmsan_save_stack_with_flags(GFP_ATOMIC, 0);
-+	entries[1] = kmsan_save_stack_with_flags(__GFP_HIGH, 0);
- 	entries[2] = id;
- 	/*
- 	 * @entries is a local var in non-instrumented code, so KMSAN does not
-@@ -253,7 +253,7 @@ depot_stack_handle_t kmsan_internal_chai
- 	 * positives when __stack_depot_save() passes it to instrumented code.
- 	 */
- 	kmsan_internal_unpoison_memory(entries, sizeof(entries), false);
--	handle = __stack_depot_save(entries, ARRAY_SIZE(entries), GFP_ATOMIC,
-+	handle = __stack_depot_save(entries, ARRAY_SIZE(entries), __GFP_HIGH,
- 				    true);
- 	return stack_depot_set_extra_bits(handle, extra_bits);
- }
---- a/mm/kmsan/instrumentation.c
-+++ b/mm/kmsan/instrumentation.c
-@@ -282,7 +282,7 @@ void __msan_poison_alloca(void *address,
- 
- 	/* stack_depot_save() may allocate memory. */
- 	kmsan_enter_runtime();
--	handle = stack_depot_save(entries, ARRAY_SIZE(entries), GFP_ATOMIC);
-+	handle = stack_depot_save(entries, ARRAY_SIZE(entries), __GFP_HIGH);
- 	kmsan_leave_runtime();
- 
- 	kmsan_internal_set_shadow_origin(address, size, -1, handle,
+--- a/fs/sysv/itree.c
++++ b/fs/sysv/itree.c
+@@ -145,6 +145,10 @@ static int alloc_branch(struct inode *in
+ 		 */
+ 		parent = block_to_cpu(SYSV_SB(inode->i_sb), branch[n-1].key);
+ 		bh = sb_getblk(inode->i_sb, parent);
++		if (!bh) {
++			sysv_free_block(inode->i_sb, branch[n].key);
++			break;
++		}
+ 		lock_buffer(bh);
+ 		memset(bh->b_data, 0, blocksize);
+ 		branch[n].bh = bh;
 
 
