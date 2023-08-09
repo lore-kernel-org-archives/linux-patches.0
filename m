@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA2E17AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:28:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903B2C433C9;
-	Wed,  9 Aug 2023 11:28:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3A317AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:28:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF9BC433C7;
+	Wed,  9 Aug 2023 11:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580496;
-	bh=dWcf/R750Buawz2Py6+NQACT1zETv7K1TX4Qd6rwSso=;
+	s=korg; t=1691580499;
+	bh=xBH/tG141jmPTLoCMD5zyciakySYrBEF2Fzz85AglRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k6J83F5Sy3N1RxRGgSdcCHcc/5c57izIbTlKtmAkCR+oLb1ApNTWOMuFyruAQqn/+
-	 kMEq4jy8P+x9ZHPRh2Zr6PELSOBboFWavyhVhe56WzmBcl7SDgklsuQoSEckO8CA/Z
-	 fzyLMz2Bfpzr/QB+x2KnDO37nhQiN9c2b3fq9n4A=
+	b=wgx8nXX7sqceSktEfCH7OW3VC/UWtRoUFmM/Ro4V2HL4nqOdH4Hg60SJKTg7ntl4s
+	 83hBaiR2ZoKaehkXuLxL+/lHee1A+6c9ecYKeW/JO0rFxur76ZSkCM/YczyAC9UNiG
+	 JZaNqY0iQiR0NT2OavdwosS1GD5InEgkOwWwuvxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 018/154] dlm: rearrange async condition return
-Date: Wed,  9 Aug 2023 12:40:49 +0200
-Message-ID: <20230809103637.553024040@linuxfoundation.org>
+Subject: [PATCH 5.4 045/154] RDMA/mlx4: Make check for invalid flags stricter
+Date: Wed,  9 Aug 2023 12:41:16 +0200
+Message-ID: <20230809103638.507385609@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -35,67 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit a800ba77fd285c6391a82819867ac64e9ab3af46 ]
+[ Upstream commit d64b1ee12a168030fbb3e0aebf7bce49e9a07589 ]
 
-This patch moves the return of FILE_LOCK_DEFERRED a little bit earlier
-than checking afterwards again if the request was an asynchronous request.
+This code is trying to ensure that only the flags specified in the list
+are allowed.  The problem is that ucmd->rx_hash_fields_mask is a u64 and
+the flags are an enum which is treated as a u32 in this context.  That
+means the test doesn't check whether the highest 32 bits are zero.
 
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
-Stable-dep-of: 59e45c758ca1 ("fs: dlm: interrupt posix locks only when process is killed")
+Fixes: 4d02ebd9bbbd ("IB/mlx4: Fix RSS hash fields restrictions")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/233ed975-982d-422a-b498-410f71d8a101@moroto.mountain
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/plock.c | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+ drivers/infiniband/hw/mlx4/qp.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/fs/dlm/plock.c b/fs/dlm/plock.c
-index e70e23eca03ec..01fb7d8c0bca5 100644
---- a/fs/dlm/plock.c
-+++ b/fs/dlm/plock.c
-@@ -149,26 +149,25 @@ int dlm_posix_lock(dlm_lockspace_t *lockspace, u64 number, struct file *file,
- 		op_data->file	= file;
- 
- 		op->data = op_data;
-+
-+		send_op(op);
-+		rv = FILE_LOCK_DEFERRED;
-+		goto out;
- 	} else {
- 		op->info.owner	= (__u64)(long) fl->fl_owner;
+diff --git a/drivers/infiniband/hw/mlx4/qp.c b/drivers/infiniband/hw/mlx4/qp.c
+index 02caf9a439cf1..395d8a99b12e4 100644
+--- a/drivers/infiniband/hw/mlx4/qp.c
++++ b/drivers/infiniband/hw/mlx4/qp.c
+@@ -556,15 +556,15 @@ static int set_qp_rss(struct mlx4_ib_dev *dev, struct mlx4_ib_rss *rss_ctx,
+ 		return (-EOPNOTSUPP);
  	}
  
- 	send_op(op);
- 
--	if (!op->data) {
--		rv = wait_event_interruptible(recv_wq, (op->done != 0));
--		if (rv == -ERESTARTSYS) {
--			log_debug(ls, "dlm_posix_lock: wait killed %llx",
--				  (unsigned long long)number);
--			spin_lock(&ops_lock);
--			list_del(&op->list);
--			spin_unlock(&ops_lock);
--			dlm_release_plock_op(op);
--			do_unlock_close(ls, number, file, fl);
--			goto out;
--		}
--	} else {
--		rv = FILE_LOCK_DEFERRED;
-+	rv = wait_event_interruptible(recv_wq, (op->done != 0));
-+	if (rv == -ERESTARTSYS) {
-+		log_debug(ls, "%s: wait killed %llx", __func__,
-+			  (unsigned long long)number);
-+		spin_lock(&ops_lock);
-+		list_del(&op->list);
-+		spin_unlock(&ops_lock);
-+		dlm_release_plock_op(op);
-+		do_unlock_close(ls, number, file, fl);
- 		goto out;
- 	}
- 
+-	if (ucmd->rx_hash_fields_mask & ~(MLX4_IB_RX_HASH_SRC_IPV4	|
+-					  MLX4_IB_RX_HASH_DST_IPV4	|
+-					  MLX4_IB_RX_HASH_SRC_IPV6	|
+-					  MLX4_IB_RX_HASH_DST_IPV6	|
+-					  MLX4_IB_RX_HASH_SRC_PORT_TCP	|
+-					  MLX4_IB_RX_HASH_DST_PORT_TCP	|
+-					  MLX4_IB_RX_HASH_SRC_PORT_UDP	|
+-					  MLX4_IB_RX_HASH_DST_PORT_UDP  |
+-					  MLX4_IB_RX_HASH_INNER)) {
++	if (ucmd->rx_hash_fields_mask & ~(u64)(MLX4_IB_RX_HASH_SRC_IPV4	|
++					       MLX4_IB_RX_HASH_DST_IPV4	|
++					       MLX4_IB_RX_HASH_SRC_IPV6	|
++					       MLX4_IB_RX_HASH_DST_IPV6	|
++					       MLX4_IB_RX_HASH_SRC_PORT_TCP |
++					       MLX4_IB_RX_HASH_DST_PORT_TCP |
++					       MLX4_IB_RX_HASH_SRC_PORT_UDP |
++					       MLX4_IB_RX_HASH_DST_PORT_UDP |
++					       MLX4_IB_RX_HASH_INNER)) {
+ 		pr_debug("RX Hash fields_mask has unsupported mask (0x%llx)\n",
+ 			 ucmd->rx_hash_fields_mask);
+ 		return (-EOPNOTSUPP);
 -- 
-2.39.2
+2.40.1
 
 
 
