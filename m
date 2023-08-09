@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8079D53B7
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:54:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1B0DC433C7;
-	Wed,  9 Aug 2023 10:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA06B171B3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:54:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C33C433C7;
+	Wed,  9 Aug 2023 10:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578452;
-	bh=Vus+KXvu5H5osl7xlXrlu4eGgWLpI2j/VgrSuVLkJRs=;
+	s=korg; t=1691578455;
+	bh=ym55Z87JiY8qWPBJSsqJ7I6NZWwChYv7feAfOj6Givc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j5qmqENBdGirqRjaiuDy895LterywINIswFZi5ayBjU8OqVpKroOABt9f7lQfDU49
-	 8GBKGwJi0iRWG+woVbh5HkAStyCBblNShuNshluCX+mjC6AlzZNeEQL+1/0xo0+t+Q
-	 2vtdUJc1ic1O0Di/a5uTh3BGVN4SYIMA9DpPN7+c=
+	b=La1tjdIbJDNEPA2cPZFyiJO+R+VQBF55p6G4EngEwgyMfDA2NWF53Z90PjEI/SA1g
+	 pnaYeS2kcIJZaqZ0SpVolfR1FVeokpceR95+o9KzrcD8KuX+iZcsEPFneBSPV4V/Al
+	 Pp5f9zKJpaWKK63msDvaULIZOUkFQbnzbgXYUMJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	David Ahern <dsahern@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/127] net: annotate data-races around sk->sk_max_pacing_rate
-Date: Wed,  9 Aug 2023 12:40:24 +0200
-Message-ID: <20230809103637.893942098@linuxfoundation.org>
+Subject: [PATCH 6.1 064/127] tcp_metrics: fix addr_same() helper
+Date: Wed,  9 Aug 2023 12:40:51 +0200
+Message-ID: <20230809103638.781735813@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -37,50 +39,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ea7f45ef77b39e72244d282e47f6cb1ef4135cd2 ]
+[ Upstream commit e6638094d7af6c7b9dcca05ad009e79e31b4f670 ]
 
-sk_getsockopt() runs locklessly. This means sk->sk_max_pacing_rate
-can be read while other threads are changing its value.
+Because v4 and v6 families use separate inetpeer trees (respectively
+net->ipv4.peers and net->ipv6.peers), inetpeer_addr_cmp(a, b) assumes
+a & b share the same family.
 
-Fixes: 62748f32d501 ("net: introduce SO_MAX_PACING_RATE")
+tcp_metrics use a common hash table, where entries can have different
+families.
+
+We must therefore make sure to not call inetpeer_addr_cmp()
+if the families do not match.
+
+Fixes: d39d14ffa24c ("net: Add helper function to compare inetpeer addresses")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230802131500.1478140-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/ipv4/tcp_metrics.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 77abd69c56dde..86e88de1238b1 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -1426,7 +1426,8 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
- 			cmpxchg(&sk->sk_pacing_status,
- 				SK_PACING_NONE,
- 				SK_PACING_NEEDED);
--		sk->sk_max_pacing_rate = ulval;
-+		/* Pairs with READ_ONCE() from sk_getsockopt() */
-+		WRITE_ONCE(sk->sk_max_pacing_rate, ulval);
- 		sk->sk_pacing_rate = min(sk->sk_pacing_rate, ulval);
- 		break;
- 		}
-@@ -1852,12 +1853,14 @@ int sk_getsockopt(struct sock *sk, int level, int optname,
- #endif
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index 82f4575f9cd90..c4daf0aa2d4d9 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -78,7 +78,7 @@ static void tcp_metric_set(struct tcp_metrics_block *tm,
+ static bool addr_same(const struct inetpeer_addr *a,
+ 		      const struct inetpeer_addr *b)
+ {
+-	return inetpeer_addr_cmp(a, b) == 0;
++	return (a->family == b->family) && !inetpeer_addr_cmp(a, b);
+ }
  
- 	case SO_MAX_PACING_RATE:
-+		/* The READ_ONCE() pair with the WRITE_ONCE() in sk_setsockopt() */
- 		if (sizeof(v.ulval) != sizeof(v.val) && len >= sizeof(v.ulval)) {
- 			lv = sizeof(v.ulval);
--			v.ulval = sk->sk_max_pacing_rate;
-+			v.ulval = READ_ONCE(sk->sk_max_pacing_rate);
- 		} else {
- 			/* 32bit version */
--			v.val = min_t(unsigned long, sk->sk_max_pacing_rate, ~0U);
-+			v.val = min_t(unsigned long, ~0U,
-+				      READ_ONCE(sk->sk_max_pacing_rate));
- 		}
- 		break;
- 
+ struct tcpm_hash_bucket {
 -- 
 2.40.1
 
