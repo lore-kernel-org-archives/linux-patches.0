@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4498174EE
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:51:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF40C433C8;
-	Wed,  9 Aug 2023 10:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A268F174EE
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:51:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269C5C433C7;
+	Wed,  9 Aug 2023 10:51:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578315;
-	bh=i+Wyuf2ihGUIbQ+jf9qHIatb0ECYuRajE/rWuuGKUxM=;
+	s=korg; t=1691578318;
+	bh=KLHxyIfove8co41ZqW2w2HZBguBQ3LJUZ8bWyb2oW0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cc4lvjDOtE7FuaQWQqhn4BIVSCpiWXk3VjhtFKe6jNm3g0KWYath6LAlvtkGdLSIb
-	 Z9RtBaMfFHNs0t99K6CjONzTMfP/bptmL4owXH+SuSPm0JJp/Ea5EqK/XP8Ns3RlgX
-	 aP+g2W1trnHQDMKNPHYDa7V/PbEu2yA6peTTIERo=
+	b=l2NfsNMPq08rZKX7pyBXwrxomeOnoc+epr4LRoGJV+u7Grm3cLS11u1cSSKXVrf8M
+	 uVCVfS7+liG0SWQmRnf7oNXJO1Eh0rO1vs3AwmKBD66qpGPciL4mCXC0UGP7KFPQGQ
+	 rP9j3snmkvn6nmE95RNiRbxBXCWpUSr+PDRLERos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Yury Norov <yury.norov@gmail.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 016/127] lib/bitmap: workaround const_eval test build failure
-Date: Wed,  9 Aug 2023 12:40:03 +0200
-Message-ID: <20230809103637.180809899@linuxfoundation.org>
+Subject: [PATCH 6.1 017/127] firmware: arm_scmi: Fix chan_free cleanup on SMC
+Date: Wed,  9 Aug 2023 12:40:04 +0200
+Message-ID: <20230809103637.219995004@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -38,104 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yury Norov <yury.norov@gmail.com>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-[ Upstream commit 2356d198d2b4ddec24efea98271cb3be230bc787 ]
+[ Upstream commit d1ff11d7ad8704f8d615f6446041c221b2d2ec4d ]
 
-When building with Clang, and when KASAN and GCOV_PROFILE_ALL are both
-enabled, the test fails to build [1]:
+SCMI transport based on SMC can optionally use an additional IRQ to
+signal message completion. The associated interrupt handler is currently
+allocated using devres but on shutdown the core SCMI stack will call
+.chan_free() well before any managed cleanup is invoked by devres.
+As a consequence, the arrival of a late reply to an in-flight pending
+transaction could still trigger the interrupt handler well after the
+SCMI core has cleaned up the channels, with unpleasant results.
 
->> lib/test_bitmap.c:920:2: error: call to '__compiletime_assert_239' declared with 'error' attribute: BUILD_BUG_ON failed: !__builtin_constant_p(res)
-           BUILD_BUG_ON(!__builtin_constant_p(res));
-           ^
-   include/linux/build_bug.h:50:2: note: expanded from macro 'BUILD_BUG_ON'
-           BUILD_BUG_ON_MSG(condition, "BUILD_BUG_ON failed: " #condition)
-           ^
-   include/linux/build_bug.h:39:37: note: expanded from macro 'BUILD_BUG_ON_MSG'
-   #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
-                                       ^
-   include/linux/compiler_types.h:352:2: note: expanded from macro 'compiletime_assert'
-           _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
-           ^
-   include/linux/compiler_types.h:340:2: note: expanded from macro '_compiletime_assert'
-           __compiletime_assert(condition, msg, prefix, suffix)
-           ^
-   include/linux/compiler_types.h:333:4: note: expanded from macro '__compiletime_assert'
-                           prefix ## suffix();                             \
-                           ^
-   <scratch space>:185:1: note: expanded from here
-   __compiletime_assert_239
+Inhibit further message processing on the IRQ path by explicitly freeing
+the IRQ inside .chan_free() callback itself.
 
-Originally it was attributed to s390, which now looks seemingly wrong. The
-issue is not related to bitmap code itself, but it breaks build for a given
-configuration.
-
-Disabling the const_eval test under that config may potentially hide other
-bugs. Instead, workaround it by disabling GCOV for the test_bitmap unless
-the compiler will get fixed.
-
-[1] https://github.com/ClangBuiltLinux/linux/issues/1874
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202307171254.yFcH97ej-lkp@intel.com/
-Fixes: dc34d5036692 ("lib: test_bitmap: add compile-time optimization/evaluations assertions")
-Co-developed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Yury Norov <yury.norov@gmail.com>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Fixes: dd820ee21d5e ("firmware: arm_scmi: Augment SMC/HVC to allow optional interrupt")
+Reported-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://lore.kernel.org/r/20230719173533.2739319-1-cristian.marussi@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/Makefile      | 6 ++++++
- lib/test_bitmap.c | 8 ++++----
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ drivers/firmware/arm_scmi/smc.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/lib/Makefile b/lib/Makefile
-index 59bd7c2f793a7..5ffe72ec99797 100644
---- a/lib/Makefile
-+++ b/lib/Makefile
-@@ -81,8 +81,14 @@ obj-$(CONFIG_TEST_STATIC_KEYS) += test_static_key_base.o
- obj-$(CONFIG_TEST_DYNAMIC_DEBUG) += test_dynamic_debug.o
- obj-$(CONFIG_TEST_PRINTF) += test_printf.o
- obj-$(CONFIG_TEST_SCANF) += test_scanf.o
-+
- obj-$(CONFIG_TEST_BITMAP) += test_bitmap.o
- obj-$(CONFIG_TEST_STRSCPY) += test_strscpy.o
-+ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_KASAN),yy)
-+# FIXME: Clang breaks test_bitmap_const_eval when KASAN and GCOV are enabled
-+GCOV_PROFILE_test_bitmap.o := n
-+endif
-+
- obj-$(CONFIG_TEST_UUID) += test_uuid.o
- obj-$(CONFIG_TEST_XARRAY) += test_xarray.o
- obj-$(CONFIG_TEST_MAPLE_TREE) += test_maple_tree.o
-diff --git a/lib/test_bitmap.c b/lib/test_bitmap.c
-index a8005ad3bd589..37a9108c4f588 100644
---- a/lib/test_bitmap.c
-+++ b/lib/test_bitmap.c
-@@ -1149,6 +1149,10 @@ static void __init test_bitmap_print_buf(void)
- 	}
- }
+diff --git a/drivers/firmware/arm_scmi/smc.c b/drivers/firmware/arm_scmi/smc.c
+index 87a7b13cf868b..dc383d874ee3a 100644
+--- a/drivers/firmware/arm_scmi/smc.c
++++ b/drivers/firmware/arm_scmi/smc.c
+@@ -23,6 +23,7 @@
+ /**
+  * struct scmi_smc - Structure representing a SCMI smc transport
+  *
++ * @irq: An optional IRQ for completion
+  * @cinfo: SCMI channel info
+  * @shmem: Transmit/Receive shared memory area
+  * @shmem_lock: Lock to protect access to Tx/Rx shared memory area.
+@@ -33,6 +34,7 @@
+  */
  
-+/*
-+ * FIXME: Clang breaks compile-time evaluations when KASAN and GCOV are enabled.
-+ * To workaround it, GCOV is force-disabled in Makefile for this configuration.
-+ */
- static void __init test_bitmap_const_eval(void)
- {
- 	DECLARE_BITMAP(bitmap, BITS_PER_LONG);
-@@ -1174,11 +1178,7 @@ static void __init test_bitmap_const_eval(void)
- 	 * the compiler is fixed.
+ struct scmi_smc {
++	int irq;
+ 	struct scmi_chan_info *cinfo;
+ 	struct scmi_shared_mem __iomem *shmem;
+ 	/* Protect access to shmem area */
+@@ -106,7 +108,7 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+ 	struct resource res;
+ 	struct device_node *np;
+ 	u32 func_id;
+-	int ret, irq;
++	int ret;
+ 
+ 	if (!tx)
+ 		return -ENODEV;
+@@ -142,11 +144,10 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+ 	 * completion of a message is signaled by an interrupt rather than by
+ 	 * the return of the SMC call.
  	 */
- 	bitmap_clear(bitmap, 0, BITS_PER_LONG);
--#if defined(__s390__) && defined(__clang__)
--	if (!const_test_bit(7, bitmap))
--#else
- 	if (!test_bit(7, bitmap))
--#endif
- 		bitmap_set(bitmap, 5, 2);
+-	irq = of_irq_get_byname(cdev->of_node, "a2p");
+-	if (irq > 0) {
+-		ret = devm_request_irq(dev, irq, smc_msg_done_isr,
+-				       IRQF_NO_SUSPEND,
+-				       dev_name(dev), scmi_info);
++	scmi_info->irq = of_irq_get_byname(cdev->of_node, "a2p");
++	if (scmi_info->irq > 0) {
++		ret = request_irq(scmi_info->irq, smc_msg_done_isr,
++				  IRQF_NO_SUSPEND, dev_name(dev), scmi_info);
+ 		if (ret) {
+ 			dev_err(dev, "failed to setup SCMI smc irq\n");
+ 			return ret;
+@@ -168,6 +169,10 @@ static int smc_chan_free(int id, void *p, void *data)
+ 	struct scmi_chan_info *cinfo = p;
+ 	struct scmi_smc *scmi_info = cinfo->transport_info;
  
- 	/* Equals to `unsigned long bitopvar = BIT(20)` */
++	/* Ignore any possible further reception on the IRQ path */
++	if (scmi_info->irq > 0)
++		free_irq(scmi_info->irq, scmi_info);
++
+ 	cinfo->transport_info = NULL;
+ 	scmi_info->cinfo = NULL;
+ 
 -- 
 2.40.1
 
