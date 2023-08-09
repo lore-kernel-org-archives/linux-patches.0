@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19EF6174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:02:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3BDC433C7;
-	Wed,  9 Aug 2023 11:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72B2174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:02:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A96C433C8;
+	Wed,  9 Aug 2023 11:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578958;
-	bh=cbszPOScgMv7dTvAKfrpJMZ3J5fwdSsHNmNvFWw+LN8=;
+	s=korg; t=1691578961;
+	bh=dG63SZkzQW8LeRT59yp6af79QlvI3n455f0E5DhJZck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A4+lD3e6ijhC6HYJFT3AHzX+zAE8yVQ0LUzPPoFcMrINsIQQwuztVjQR9IxdBK5xQ
-	 b4XFtAqHk3y/H4YdKFXuz5x+DAGuK3cLib51rulpdAzYNFPscWp27sRcfBSRckACiK
-	 AqekZfiQYjYtCZO9PsP6oHWhFElNFms0WBC7N/5s=
+	b=AUn7NC9UBYYgX8qkaHzYSJW+uEzqqaEYo07Ge3r496TJQE/W7ZfSV5xi2+riGpTRr
+	 jZD+XkEsqcg+yhGD0f5qddTsYG3WUDI5D1nq2h/KEaTFxXSLxSJiIkDFIF1fIKPgPP
+	 cbo/7w1sz2/okYVxuBhElBXSmBmLHBYkUHFD3STs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Remi Pommarel <repk@triplefau.lt>,
+	Nicolas Escande <nico.escande@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 025/204] memstick r592: make memstick_debug_get_tpc_name() static
-Date: Wed,  9 Aug 2023 12:39:23 +0200
-Message-ID: <20230809103643.411652659@linuxfoundation.org>
+Subject: [PATCH 4.14 026/204] wifi: ath9k: Fix possible stall on ath9k_txq_list_has_key()
+Date: Wed,  9 Aug 2023 12:39:24 +0200
+Message-ID: <20230809103643.445871334@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -35,47 +37,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Remi Pommarel <repk@triplefau.lt>
 
-[ Upstream commit 434587df9f7fd68575f99a889cc5f2efc2eaee5e ]
+[ Upstream commit 75086cc6dee046e3fbb3dba148b376d8802f83bc ]
 
-There are no other files referencing this function, apparently
-it was left global to avoid an 'unused function' warning when
-the only caller is left out. With a 'W=1' build, it causes
-a 'missing prototype' warning though:
+On EDMA capable hardware, ath9k_txq_list_has_key() can enter infinite
+loop if it is called while all txq_fifos have packets that use different
+key that the one we are looking for. Fix it by exiting the loop if all
+txq_fifos have been checked already.
 
-drivers/memstick/host/r592.c:47:13: error: no previous prototype for 'memstick_debug_get_tpc_name' [-Werror=missing-prototypes]
+Because this loop is called under spin_lock_bh() (see ath_txq_lock) it
+causes the following rcu stall:
 
-Annotate the function as 'static __maybe_unused' to avoid both
-problems.
+rcu: INFO: rcu_sched self-detected stall on CPU
+ath10k_pci 0000:01:00.0: failed to read temperature -11
+rcu:    1-....: (5254 ticks this GP) idle=189/1/0x4000000000000002 softirq=8442983/8442984 fqs=2579
+        (t=5257 jiffies g=17983297 q=334)
+Task dump for CPU 1:
+task:hostapd         state:R  running task     stack:    0 pid:  297 ppid:   289 flags:0x0000000a
+Call trace:
+ dump_backtrace+0x0/0x170
+ show_stack+0x1c/0x24
+ sched_show_task+0x140/0x170
+ dump_cpu_task+0x48/0x54
+ rcu_dump_cpu_stacks+0xf0/0x134
+ rcu_sched_clock_irq+0x8d8/0x9fc
+ update_process_times+0xa0/0xec
+ tick_sched_timer+0x5c/0xd0
+ __hrtimer_run_queues+0x154/0x320
+ hrtimer_interrupt+0x120/0x2f0
+ arch_timer_handler_virt+0x38/0x44
+ handle_percpu_devid_irq+0x9c/0x1e0
+ handle_domain_irq+0x64/0x90
+ gic_handle_irq+0x78/0xb0
+ call_on_irq_stack+0x28/0x38
+ do_interrupt_handler+0x54/0x5c
+ el1_interrupt+0x2c/0x4c
+ el1h_64_irq_handler+0x14/0x1c
+ el1h_64_irq+0x74/0x78
+ ath9k_txq_has_key+0x1bc/0x250 [ath9k]
+ ath9k_set_key+0x1cc/0x3dc [ath9k]
+ drv_set_key+0x78/0x170
+ ieee80211_key_replace+0x564/0x6cc
+ ieee80211_key_link+0x174/0x220
+ ieee80211_add_key+0x11c/0x300
+ nl80211_new_key+0x12c/0x330
+ genl_family_rcv_msg_doit+0xbc/0x11c
+ genl_rcv_msg+0xd8/0x1c4
+ netlink_rcv_skb+0x40/0x100
+ genl_rcv+0x3c/0x50
+ netlink_unicast+0x1ec/0x2c0
+ netlink_sendmsg+0x198/0x3c0
+ ____sys_sendmsg+0x210/0x250
+ ___sys_sendmsg+0x78/0xc4
+ __sys_sendmsg+0x4c/0x90
+ __arm64_sys_sendmsg+0x28/0x30
+ invoke_syscall.constprop.0+0x60/0x100
+ do_el0_svc+0x48/0xd0
+ el0_svc+0x14/0x50
+ el0t_64_sync_handler+0xa8/0xb0
+ el0t_64_sync+0x158/0x15c
 
-Fixes: 926341250102 ("memstick: add driver for Ricoh R5C592 card reader")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230516202714.560929-1-arnd@kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+This rcu stall is hard to reproduce as is, but changing ATH_TXFIFO_DEPTH
+from 8 to 2 makes it reasonably easy to reproduce.
+
+Fixes: ca2848022c12 ("ath9k: Postpone key cache entry deletion for TXQ frames reference it")
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Tested-by: Nicolas Escande <nico.escande@gmail.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230609093744.1985-1-repk@triplefau.lt
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memstick/host/r592.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath9k/main.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/memstick/host/r592.c b/drivers/memstick/host/r592.c
-index d52c89b2a1d58..a2dbf3331689f 100644
---- a/drivers/memstick/host/r592.c
-+++ b/drivers/memstick/host/r592.c
-@@ -47,12 +47,10 @@ static const char *tpc_names[] = {
-  * memstick_debug_get_tpc_name - debug helper that returns string for
-  * a TPC number
-  */
--const char *memstick_debug_get_tpc_name(int tpc)
-+static __maybe_unused const char *memstick_debug_get_tpc_name(int tpc)
+diff --git a/drivers/net/wireless/ath/ath9k/main.c b/drivers/net/wireless/ath/ath9k/main.c
+index 507d8c5149686..1afaa437619d3 100644
+--- a/drivers/net/wireless/ath/ath9k/main.c
++++ b/drivers/net/wireless/ath/ath9k/main.c
+@@ -846,7 +846,7 @@ static bool ath9k_txq_list_has_key(struct list_head *txq_list, u32 keyix)
+ static bool ath9k_txq_has_key(struct ath_softc *sc, u32 keyix)
  {
- 	return tpc_names[tpc-1];
- }
--EXPORT_SYMBOL(memstick_debug_get_tpc_name);
--
+ 	struct ath_hw *ah = sc->sc_ah;
+-	int i;
++	int i, j;
+ 	struct ath_txq *txq;
+ 	bool key_in_use = false;
  
- /* Read a register*/
- static inline u32 r592_read_reg(struct r592_device *dev, int address)
+@@ -864,8 +864,9 @@ static bool ath9k_txq_has_key(struct ath_softc *sc, u32 keyix)
+ 		if (sc->sc_ah->caps.hw_caps & ATH9K_HW_CAP_EDMA) {
+ 			int idx = txq->txq_tailidx;
+ 
+-			while (!key_in_use &&
+-			       !list_empty(&txq->txq_fifo[idx])) {
++			for (j = 0; !key_in_use &&
++			     !list_empty(&txq->txq_fifo[idx]) &&
++			     j < ATH_TXFIFO_DEPTH; j++) {
+ 				key_in_use = ath9k_txq_list_has_key(
+ 					&txq->txq_fifo[idx], keyix);
+ 				INCR(idx, ATH_TXFIFO_DEPTH);
 -- 
 2.39.2
 
