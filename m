@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65DDE17AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF1C1C433C8;
-	Wed,  9 Aug 2023 11:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391E417AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F57C433C8;
+	Wed,  9 Aug 2023 11:25:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580323;
-	bh=CtRVQ1HArlvmOiHPI06ZSmMPFmraF5erJhSN72kI8X8=;
+	s=korg; t=1691580326;
+	bh=Fzha8nyrheL1IBtc4IcCsfXL2+v48fDBj8pSIkOYB+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qs2TTKBq/PBRVI07YO/NsxPowtgHGRwM90Z/g7RKeTGEje+dljTLIFlPrVxwg6ySp
-	 qZuupSGbpYmQ1fNp7OTz8pYxELeZNlqS8BJVawh6oMje91h/JF+W1R3/YYUdqM/rxm
-	 PaxmPVUtjiocbvBBdKl9gT1Z4O4RVO25Fw231oYY=
+	b=WoeOTmDiCgIqZFwoIi02OfSR78YlkZR8H8ieg1mJrG82nRGR9hpzi+FH1TtSYJvfm
+	 YIxq4uxYKgO4fQShCQItRCcvE8JbPhsy/6sodTL4O/3uurNQGdobI7sYUfXrtds1tk
+	 CVBnCVYcwVQha57eshI/rmTscLtQNMEL8WNSGNUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 300/323] tcp_metrics: annotate data-races around tm->tcpm_stamp
-Date: Wed,  9 Aug 2023 12:42:18 +0200
-Message-ID: <20230809103711.795347363@linuxfoundation.org>
+	Sungwoo Kim <iam@sung-woo.kim>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.19 309/323] Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_ready_cb
+Date: Wed,  9 Aug 2023 12:42:27 +0200
+Message-ID: <20230809103712.208127464@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -37,88 +35,150 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Sungwoo Kim <iam@sung-woo.kim>
 
-[ Upstream commit 949ad62a5d5311d36fce2e14fe5fed3f936da51c ]
+commit 1728137b33c00d5a2b5110ed7aafb42e7c32e4a1 upstream.
 
-tm->tcpm_stamp can be read or written locklessly.
+l2cap_sock_release(sk) frees sk. However, sk's children are still alive
+and point to the already free'd sk's address.
+To fix this, l2cap_sock_release(sk) also cleans sk's children.
 
-Add needed READ_ONCE()/WRITE_ONCE() to document this.
+==================================================================
+BUG: KASAN: use-after-free in l2cap_sock_ready_cb+0xb7/0x100 net/bluetooth/l2cap_sock.c:1650
+Read of size 8 at addr ffff888104617aa8 by task kworker/u3:0/276
 
-Also constify tcpm_check_stamp() dst argument.
+CPU: 0 PID: 276 Comm: kworker/u3:0 Not tainted 6.2.0-00001-gef397bd4d5fb-dirty #59
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Workqueue: hci2 hci_rx_work
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x72/0x95 lib/dump_stack.c:106
+ print_address_description mm/kasan/report.c:306 [inline]
+ print_report+0x175/0x478 mm/kasan/report.c:417
+ kasan_report+0xb1/0x130 mm/kasan/report.c:517
+ l2cap_sock_ready_cb+0xb7/0x100 net/bluetooth/l2cap_sock.c:1650
+ l2cap_chan_ready+0x10e/0x1e0 net/bluetooth/l2cap_core.c:1386
+ l2cap_config_req+0x753/0x9f0 net/bluetooth/l2cap_core.c:4480
+ l2cap_bredr_sig_cmd net/bluetooth/l2cap_core.c:5739 [inline]
+ l2cap_sig_channel net/bluetooth/l2cap_core.c:6509 [inline]
+ l2cap_recv_frame+0xe2e/0x43c0 net/bluetooth/l2cap_core.c:7788
+ l2cap_recv_acldata+0x6ed/0x7e0 net/bluetooth/l2cap_core.c:8506
+ hci_acldata_packet net/bluetooth/hci_core.c:3813 [inline]
+ hci_rx_work+0x66e/0xbc0 net/bluetooth/hci_core.c:4048
+ process_one_work+0x4ea/0x8e0 kernel/workqueue.c:2289
+ worker_thread+0x364/0x8e0 kernel/workqueue.c:2436
+ kthread+0x1b9/0x200 kernel/kthread.c:376
+ ret_from_fork+0x2c/0x50 arch/x86/entry/entry_64.S:308
+ </TASK>
 
-Fixes: 51c5d0c4b169 ("tcp: Maintain dynamic metrics in local cache.")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230802131500.1478140-3-edumazet@google.com
+Allocated by task 288:
+ kasan_save_stack+0x22/0x50 mm/kasan/common.c:45
+ kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+ ____kasan_kmalloc mm/kasan/common.c:374 [inline]
+ __kasan_kmalloc+0x82/0x90 mm/kasan/common.c:383
+ kasan_kmalloc include/linux/kasan.h:211 [inline]
+ __do_kmalloc_node mm/slab_common.c:968 [inline]
+ __kmalloc+0x5a/0x140 mm/slab_common.c:981
+ kmalloc include/linux/slab.h:584 [inline]
+ sk_prot_alloc+0x113/0x1f0 net/core/sock.c:2040
+ sk_alloc+0x36/0x3c0 net/core/sock.c:2093
+ l2cap_sock_alloc.constprop.0+0x39/0x1c0 net/bluetooth/l2cap_sock.c:1852
+ l2cap_sock_create+0x10d/0x220 net/bluetooth/l2cap_sock.c:1898
+ bt_sock_create+0x183/0x290 net/bluetooth/af_bluetooth.c:132
+ __sock_create+0x226/0x380 net/socket.c:1518
+ sock_create net/socket.c:1569 [inline]
+ __sys_socket_create net/socket.c:1606 [inline]
+ __sys_socket_create net/socket.c:1591 [inline]
+ __sys_socket+0x112/0x200 net/socket.c:1639
+ __do_sys_socket net/socket.c:1652 [inline]
+ __se_sys_socket net/socket.c:1650 [inline]
+ __x64_sys_socket+0x40/0x50 net/socket.c:1650
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3f/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+Freed by task 288:
+ kasan_save_stack+0x22/0x50 mm/kasan/common.c:45
+ kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+ kasan_save_free_info+0x2e/0x50 mm/kasan/generic.c:523
+ ____kasan_slab_free mm/kasan/common.c:236 [inline]
+ ____kasan_slab_free mm/kasan/common.c:200 [inline]
+ __kasan_slab_free+0x10a/0x190 mm/kasan/common.c:244
+ kasan_slab_free include/linux/kasan.h:177 [inline]
+ slab_free_hook mm/slub.c:1781 [inline]
+ slab_free_freelist_hook mm/slub.c:1807 [inline]
+ slab_free mm/slub.c:3787 [inline]
+ __kmem_cache_free+0x88/0x1f0 mm/slub.c:3800
+ sk_prot_free net/core/sock.c:2076 [inline]
+ __sk_destruct+0x347/0x430 net/core/sock.c:2168
+ sk_destruct+0x9c/0xb0 net/core/sock.c:2183
+ __sk_free+0x82/0x220 net/core/sock.c:2194
+ sk_free+0x7c/0xa0 net/core/sock.c:2205
+ sock_put include/net/sock.h:1991 [inline]
+ l2cap_sock_kill+0x256/0x2b0 net/bluetooth/l2cap_sock.c:1257
+ l2cap_sock_release+0x1a7/0x220 net/bluetooth/l2cap_sock.c:1428
+ __sock_release+0x80/0x150 net/socket.c:650
+ sock_close+0x19/0x30 net/socket.c:1368
+ __fput+0x17a/0x5c0 fs/file_table.c:320
+ task_work_run+0x132/0x1c0 kernel/task_work.c:179
+ resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
+ exit_to_user_mode_loop kernel/entry/common.c:171 [inline]
+ exit_to_user_mode_prepare+0x113/0x120 kernel/entry/common.c:203
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:285 [inline]
+ syscall_exit_to_user_mode+0x21/0x50 kernel/entry/common.c:296
+ do_syscall_64+0x4c/0x90 arch/x86/entry/common.c:86
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+The buggy address belongs to the object at ffff888104617800
+ which belongs to the cache kmalloc-1k of size 1024
+The buggy address is located 680 bytes inside of
+ 1024-byte region [ffff888104617800, ffff888104617c00)
+
+The buggy address belongs to the physical page:
+page:00000000dbca6a80 refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff888104614000 pfn:0x104614
+head:00000000dbca6a80 order:2 compound_mapcount:0 subpages_mapcount:0 compound_pincount:0
+flags: 0x200000000010200(slab|head|node=0|zone=2)
+raw: 0200000000010200 ffff888100041dc0 ffffea0004212c10 ffffea0004234b10
+raw: ffff888104614000 0000000000080002 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff888104617980: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff888104617a00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>ffff888104617a80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                  ^
+ ffff888104617b00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff888104617b80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================
+
+Ack: This bug is found by FuzzBT with a modified Syzkaller. Other
+contributors are Ruoyu Wu and Hui Peng.
+Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_metrics.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ net/bluetooth/l2cap_sock.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
-index c3e133c0510ea..2d9d95559f5fa 100644
---- a/net/ipv4/tcp_metrics.c
-+++ b/net/ipv4/tcp_metrics.c
-@@ -97,7 +97,7 @@ static void tcpm_suck_dst(struct tcp_metrics_block *tm,
- 	u32 msval;
- 	u32 val;
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -45,6 +45,7 @@ static const struct proto_ops l2cap_sock
+ static void l2cap_sock_init(struct sock *sk, struct sock *parent);
+ static struct sock *l2cap_sock_alloc(struct net *net, struct socket *sock,
+ 				     int proto, gfp_t prio, int kern);
++static void l2cap_sock_cleanup_listen(struct sock *parent);
  
--	tm->tcpm_stamp = jiffies;
-+	WRITE_ONCE(tm->tcpm_stamp, jiffies);
- 
- 	val = 0;
- 	if (dst_metric_locked(dst, RTAX_RTT))
-@@ -131,9 +131,15 @@ static void tcpm_suck_dst(struct tcp_metrics_block *tm,
- 
- #define TCP_METRICS_TIMEOUT		(60 * 60 * HZ)
- 
--static void tcpm_check_stamp(struct tcp_metrics_block *tm, struct dst_entry *dst)
-+static void tcpm_check_stamp(struct tcp_metrics_block *tm,
-+			     const struct dst_entry *dst)
+ bool l2cap_is_socket(struct socket *sock)
  {
--	if (tm && unlikely(time_after(jiffies, tm->tcpm_stamp + TCP_METRICS_TIMEOUT)))
-+	unsigned long limit;
-+
-+	if (!tm)
-+		return;
-+	limit = READ_ONCE(tm->tcpm_stamp) + TCP_METRICS_TIMEOUT;
-+	if (unlikely(time_after(jiffies, limit)))
- 		tcpm_suck_dst(tm, dst, false);
- }
+@@ -1205,6 +1206,7 @@ static int l2cap_sock_release(struct soc
+ 	if (!sk)
+ 		return 0;
  
-@@ -174,7 +180,8 @@ static struct tcp_metrics_block *tcpm_new(struct dst_entry *dst,
- 		oldest = deref_locked(tcp_metrics_hash[hash].chain);
- 		for (tm = deref_locked(oldest->tcpm_next); tm;
- 		     tm = deref_locked(tm->tcpm_next)) {
--			if (time_before(tm->tcpm_stamp, oldest->tcpm_stamp))
-+			if (time_before(READ_ONCE(tm->tcpm_stamp),
-+					READ_ONCE(oldest->tcpm_stamp)))
- 				oldest = tm;
- 		}
- 		tm = oldest;
-@@ -431,7 +438,7 @@ void tcp_update_metrics(struct sock *sk)
- 					       tp->reordering);
- 		}
- 	}
--	tm->tcpm_stamp = jiffies;
-+	WRITE_ONCE(tm->tcpm_stamp, jiffies);
- out_unlock:
- 	rcu_read_unlock();
- }
-@@ -652,7 +659,7 @@ static int tcp_metrics_fill_info(struct sk_buff *msg,
- 	}
++	l2cap_sock_cleanup_listen(sk);
+ 	bt_sock_unlink(&l2cap_sk_list, sk);
  
- 	if (nla_put_msecs(msg, TCP_METRICS_ATTR_AGE,
--			  jiffies - tm->tcpm_stamp,
-+			  jiffies - READ_ONCE(tm->tcpm_stamp),
- 			  TCP_METRICS_ATTR_PAD) < 0)
- 		goto nla_put_failure;
- 
--- 
-2.40.1
-
+ 	err = l2cap_sock_shutdown(sock, 2);
 
 
