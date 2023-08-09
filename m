@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA981773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:14:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A569C433C7;
-	Wed,  9 Aug 2023 11:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7FA71773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:14:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3670EC433C8;
+	Wed,  9 Aug 2023 11:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579649;
-	bh=9ZBU2mkstEnpQmkDWvP9SiXAKtAXNUhMmzFQyiT0nuM=;
+	s=korg; t=1691579652;
+	bh=AmRjzmCSLB/hvjpFlI5dEQqVIe7s7TwLAi8TNeBoVrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=shUA8K5OLLtGlK4LPWEB7Yu+FvG3JSffMDUKzEJ5X9/HFPK/MShj+uS3zt/iONGZS
-	 bFM4fLf8PaHQRc1KWk+sFiUAsZ4HKpd3+CrMXlJ2kUyT5K8haDCUhh8uNqUJW7fez0
-	 VLI1cVc5CeYP99wQoX3PbZtEYcpKYCFZBafpXB1M=
+	b=fzuqekJB20U1CRGRaDPTkvuAMHreUWPSMvOnbznSbiaWbF/fnF3/Vil1GjDIBVWIo
+	 eNqlNu1AuQwSJHLmUz2W0T9O8MuYPjVVjRxX/18kEpvYZbK887sVeeMxt7PXDvX3gX
+	 LFF1etUrROEfm4YDrDAKt1oIrjP8TuFrnupatW5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Yuchen Yang <u202114568@hust.edu.cn>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 066/323] ALSA: ac97: Fix possible NULL dereference in snd_ac97_mixer
-Date: Wed,  9 Aug 2023 12:38:24 +0200
-Message-ID: <20230809103701.179974487@linuxfoundation.org>
+Subject: [PATCH 4.19 067/323] scsi: 3w-xxxx: Add error handling for initialization failure in tw_probe()
+Date: Wed,  9 Aug 2023 12:38:25 +0200
+Message-ID: <20230809103701.212759091@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,40 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Su Hui <suhui@nfschina.com>
+From: Yuchen Yang <u202114568@hust.edu.cn>
 
-[ Upstream commit 79597c8bf64ca99eab385115743131d260339da5 ]
+[ Upstream commit 2e2fe5ac695a00ab03cab4db1f4d6be07168ed9d ]
 
-smatch error:
-sound/pci/ac97/ac97_codec.c:2354 snd_ac97_mixer() error:
-we previously assumed 'rac97' could be null (see line 2072)
+Smatch complains that:
 
-remove redundant assignment, return error if rac97 is NULL.
+tw_probe() warn: missing error code 'retval'
 
-Fixes: da3cec35dd3c ("ALSA: Kill snd_assert() in sound/pci/*")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Link: https://lore.kernel.org/r/20230615021732.1972194-1-suhui@nfschina.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This patch adds error checking to tw_probe() to handle initialization
+failure. If tw_reset_sequence() function returns a non-zero value, the
+function will return -EINVAL to indicate initialization failure.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yuchen Yang <u202114568@hust.edu.cn>
+Link: https://lore.kernel.org/r/20230505141259.7730-1-u202114568@hust.edu.cn
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ac97/ac97_codec.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/3w-xxxx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/ac97/ac97_codec.c b/sound/pci/ac97/ac97_codec.c
-index a276c4283c7bb..3f13666a01904 100644
---- a/sound/pci/ac97/ac97_codec.c
-+++ b/sound/pci/ac97/ac97_codec.c
-@@ -2026,8 +2026,8 @@ int snd_ac97_mixer(struct snd_ac97_bus *bus, struct snd_ac97_template *template,
- 		.dev_disconnect =	snd_ac97_dev_disconnect,
- 	};
+diff --git a/drivers/scsi/3w-xxxx.c b/drivers/scsi/3w-xxxx.c
+index 471366945bd4f..8a61e832607eb 100644
+--- a/drivers/scsi/3w-xxxx.c
++++ b/drivers/scsi/3w-xxxx.c
+@@ -2303,8 +2303,10 @@ static int tw_probe(struct pci_dev *pdev, const struct pci_device_id *dev_id)
+ 	TW_DISABLE_INTERRUPTS(tw_dev);
  
--	if (rac97)
--		*rac97 = NULL;
-+	if (!rac97)
-+		return -EINVAL;
- 	if (snd_BUG_ON(!bus || !template))
- 		return -EINVAL;
- 	if (snd_BUG_ON(template->num >= 4))
+ 	/* Initialize the card */
+-	if (tw_reset_sequence(tw_dev))
++	if (tw_reset_sequence(tw_dev)) {
++		retval = -EINVAL;
+ 		goto out_release_mem_region;
++	}
+ 
+ 	/* Set host specific parameters */
+ 	host->max_id = TW_MAX_UNITS;
 -- 
 2.39.2
 
