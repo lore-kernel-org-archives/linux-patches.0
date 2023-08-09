@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B324C17731
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:06:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F65C433C9;
-	Wed,  9 Aug 2023 11:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7630717731
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:06:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA95C433C7;
+	Wed,  9 Aug 2023 11:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579207;
-	bh=kI1IM5uVWAjpVbj+TIZ8qJl4PPqz/z03YTvbyZYKBUw=;
+	s=korg; t=1691579210;
+	bh=iudBw1+AR8C14+FxMr0Mi7sD6sTVtCktiY0tqXGjGt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KKjnsJfvEAVUJMk4rY/mocqu2ToeZvIwH3YvNZlQSkAZXyX4V/UBRYSXgotR+mCC0
-	 LWUSs0LZmMnxaUtAkS1kY+gL5yO+tlqV2OoHCKzyRHwz0fRRKZJJ2d1O8926myLv36
-	 EhXG/4LNHPh7PAv/TM+Wykv+AcXSOZXP/UJ3d7OM=
+	b=qlrdVDcLLaic5nvfKzt0JXG8Bodd1smYXORuCpF21nF5+zepQnwZXKlw9tNcBcY2Y
+	 w/x+19ys7ZLU+pMeXIqklivC3sfC4lEAF/rvoLO2O1akeSJcp78ptvi9/Ztgxl0YJN
+	 X8i9QLyJdQurgo5HcAL+IVuvJZostukGDFZr8Rvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 4.14 106/204] ext4: only update i_reserved_data_blocks on successful block allocation
-Date: Wed,  9 Aug 2023 12:40:44 +0200
-Message-ID: <20230809103646.159715376@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Jiri Slaby <jirislaby@kernel.org>
+Subject: [PATCH 4.14 115/204] tty: serial: samsung_tty: Fix a memory leak in s3c24xx_serial_getclk() in case of error
+Date: Wed,  9 Aug 2023 12:40:53 +0200
+Message-ID: <20230809103646.442249017@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -36,92 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit de25d6e9610a8b30cce9bbb19b50615d02ebca02 upstream.
+commit a9c09546e903f1068acfa38e1ee18bded7114b37 upstream.
 
-In our fault injection test, we create an ext4 file, migrate it to
-non-extent based file, then punch a hole and finally trigger a WARN_ON
-in the ext4_da_update_reserve_space():
+If clk_get_rate() fails, the clk that has just been allocated needs to be
+freed.
 
-EXT4-fs warning (device sda): ext4_da_update_reserve_space:369:
-ino 14, used 11 with only 10 reserved data blocks
-
-When writing back a non-extent based file, if we enable delalloc, the
-number of reserved blocks will be subtracted from the number of blocks
-mapped by ext4_ind_map_blocks(), and the extent status tree will be
-updated. We update the extent status tree by first removing the old
-extent_status and then inserting the new extent_status. If the block range
-we remove happens to be in an extent, then we need to allocate another
-extent_status with ext4_es_alloc_extent().
-
-       use old    to remove   to add new
-    |----------|------------|------------|
-              old extent_status
-
-The problem is that the allocation of a new extent_status failed due to a
-fault injection, and __es_shrink() did not get free memory, resulting in
-a return of -ENOMEM. Then do_writepages() retries after receiving -ENOMEM,
-we map to the same extent again, and the number of reserved blocks is again
-subtracted from the number of blocks in that extent. Since the blocks in
-the same extent are subtracted twice, we end up triggering WARN_ON at
-ext4_da_update_reserve_space() because used > ei->i_reserved_data_blocks.
-
-For non-extent based file, we update the number of reserved blocks after
-ext4_ind_map_blocks() is executed, which causes a problem that when we call
-ext4_ind_map_blocks() to create a block, it doesn't always create a block,
-but we always reduce the number of reserved blocks. So we move the logic
-for updating reserved blocks to ext4_ind_map_blocks() to ensure that the
-number of reserved blocks is updated only after we do succeed in allocating
-some new blocks.
-
-Fixes: 5f634d064c70 ("ext4: Fix quota accounting error with fallocate")
-Cc: stable@kernel.org
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230424033846.4732-2-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: <stable@vger.kernel.org> # v3.3+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Fixes: 5f5a7a5578c5 ("serial: samsung: switch to clkdev based clock lookup")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Message-ID: <e4baf6039368f52e5a5453982ddcb9a330fc689e.1686412569.git.christophe.jaillet@wanadoo.fr>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/indirect.c |    8 ++++++++
- fs/ext4/inode.c    |   10 ----------
- 2 files changed, 8 insertions(+), 10 deletions(-)
+ drivers/tty/serial/samsung.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/indirect.c
-+++ b/fs/ext4/indirect.c
-@@ -642,6 +642,14 @@ int ext4_ind_map_blocks(handle_t *handle
+--- a/drivers/tty/serial/samsung.c
++++ b/drivers/tty/serial/samsung.c
+@@ -1177,8 +1177,12 @@ static unsigned int s3c24xx_serial_getcl
+ 			continue;
  
- 	ext4_update_inode_fsync_trans(handle, inode, 1);
- 	count = ar.len;
-+
-+	/*
-+	 * Update reserved blocks/metadata blocks after successful block
-+	 * allocation which had been deferred till now.
-+	 */
-+	if (flags & EXT4_GET_BLOCKS_DELALLOC_RESERVE)
-+		ext4_da_update_reserve_space(inode, count, 1);
-+
- got_it:
- 	map->m_flags |= EXT4_MAP_MAPPED;
- 	map->m_pblk = le32_to_cpu(chain[depth-1].key);
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -665,16 +665,6 @@ found:
- 			 */
- 			ext4_clear_inode_state(inode, EXT4_STATE_EXT_MIGRATE);
- 		}
--
--		/*
--		 * Update reserved blocks/metadata blocks after successful
--		 * block allocation which had been deferred till now. We don't
--		 * support fallocate for non extent files. So we can update
--		 * reserve space here.
--		 */
--		if ((retval > 0) &&
--			(flags & EXT4_GET_BLOCKS_DELALLOC_RESERVE))
--			ext4_da_update_reserve_space(inode, retval, 1);
- 	}
+ 		rate = clk_get_rate(clk);
+-		if (!rate)
++		if (!rate) {
++			dev_err(ourport->port.dev,
++				"Failed to get clock rate for %s.\n", clkname);
++			clk_put(clk);
+ 			continue;
++		}
  
- 	if (retval > 0) {
+ 		if (ourport->info->has_divslot) {
+ 			unsigned long div = rate / req_baud;
 
 
