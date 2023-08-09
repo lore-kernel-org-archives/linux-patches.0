@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14ED217756
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:21:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D114C433C7;
-	Wed,  9 Aug 2023 11:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D739217756
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:21:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D6FC433C9;
+	Wed,  9 Aug 2023 11:21:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580096;
-	bh=I0p4BZfjI/TuLXgC92TcaEA15eXFIOFFW7HefsT2jIw=;
+	s=korg; t=1691580099;
+	bh=Db9OxNFxw241siNFh1QxZuiqbOyemDmCLZ30HL9J2B0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mjhDb4I5VwZvmV1wAU7zPJWBxia26gBPfni//43NGMf2sxlP3DhDc+tKpaEkPJ7H6
-	 2khnFWtN+VYsSS+i6AuqKvErswt5RoLQKadgd5pch3iWlvEBbv8dWc8/Ix2O2T/BOn
-	 qM1LWqRqJqb8u+b+gC4swyNgBsdz8CB+CNMtpq2M=
+	b=kl0gBSo4GydoN9HvkmMT8FxfjCOYSZZqlmoKeiDa+YKRbwXLfeNbffpRroEQ12ZkJ
+	 6NqJ5w5OGnondXrjY2jFlqENgLd1qAgc+2ojObTZ4qZiskE+92L0VFCXTQunvF4/4N
+	 hrpd/7kpCex7vkgKeb2SzfhF223pcHFWmRnzPoBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Lukas Wunner <lukas@wunner.de>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 226/323] PCI/ASPM: Factor out pcie_wait_for_retrain()
-Date: Wed,  9 Aug 2023 12:41:04 +0200
-Message-ID: <20230809103708.433791488@linuxfoundation.org>
+Subject: [PATCH 4.19 227/323] PCI/ASPM: Avoid link retraining race
+Date: Wed,  9 Aug 2023 12:41:05 +0200
+Message-ID: <20230809103708.482702161@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -37,72 +38,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 9c7f136433d26592cb4d9cd00b4e15c33d9797c6 ]
+[ Upstream commit e7e39756363ad5bd83ddeae1063193d0f13870fd ]
 
-Factor pcie_wait_for_retrain() out from pcie_retrain_link().  No functional
-change intended.
+PCIe r6.0.1, sec 7.5.3.7, recommends setting the link control parameters,
+then waiting for the Link Training bit to be clear before setting the
+Retrain Link bit.
 
-[bhelgaas: split out from
-https: //lore.kernel.org/r/20230502083923.34562-1-ilpo.jarvinen@linux.intel.com]
+This avoids a race where the LTSSM may not use the updated parameters if it
+is already in the midst of link training because of other normal link
+activity.
+
+Wait for the Link Training bit to be clear before toggling the Retrain Link
+bit to ensure that the LTSSM uses the updated link control parameters.
+
+[bhelgaas: commit log, return 0 (success)/-ETIMEDOUT instead of bool for
+both pcie_wait_for_retrain() and the existing pcie_retrain_link()]
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Fixes: 7d715a6c1ae5 ("PCI: add PCI Express ASPM support")
+Link: https://lore.kernel.org/r/20230502083923.34562-1-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Stable-dep-of: e7e39756363a ("PCI/ASPM: Avoid link retraining race")
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/aspm.c | 30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ drivers/pci/pcie/aspm.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-index 86bf1356cfa3f..7b1fb6cb16fba 100644
+index 7b1fb6cb16fba..eec62f7377f48 100644
 --- a/drivers/pci/pcie/aspm.c
 +++ b/drivers/pci/pcie/aspm.c
-@@ -203,10 +203,26 @@ static void pcie_clkpm_cap_init(struct pcie_link_state *link, int blacklist)
- 	link->clkpm_disable = blacklist ? 1 : 0;
- }
- 
-+static int pcie_wait_for_retrain(struct pci_dev *pdev)
-+{
-+	unsigned long end_jiffies;
-+	u16 reg16;
-+
-+	/* Wait for Link Training to be cleared by hardware */
-+	end_jiffies = jiffies + LINK_RETRAIN_TIMEOUT;
-+	do {
-+		pcie_capability_read_word(pdev, PCI_EXP_LNKSTA, &reg16);
-+		if (!(reg16 & PCI_EXP_LNKSTA_LT))
-+			return 0;
-+		msleep(1);
-+	} while (time_before(jiffies, end_jiffies));
-+
-+	return -ETIMEDOUT;
-+}
-+
+@@ -223,8 +223,19 @@ static int pcie_wait_for_retrain(struct pci_dev *pdev)
  static int pcie_retrain_link(struct pcie_link_state *link)
  {
  	struct pci_dev *parent = link->pdev;
--	unsigned long end_jiffies;
++	int rc;
  	u16 reg16;
  
++	/*
++	 * Ensure the updated LNKCTL parameters are used during link
++	 * training by checking that there is no ongoing link training to
++	 * avoid LTSSM race as recommended in Implementation Note at the
++	 * end of PCIe r6.0.1 sec 7.5.3.7.
++	 */
++	rc = pcie_wait_for_retrain(parent);
++	if (rc)
++		return rc;
++
  	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
-@@ -222,17 +238,7 @@ static int pcie_retrain_link(struct pcie_link_state *link)
- 		pcie_capability_write_word(parent, PCI_EXP_LNKCTL, reg16);
- 	}
- 
--	/* Wait for link training end. Break out after waiting for timeout */
--	end_jiffies = jiffies + LINK_RETRAIN_TIMEOUT;
--	do {
--		pcie_capability_read_word(parent, PCI_EXP_LNKSTA, &reg16);
--		if (!(reg16 & PCI_EXP_LNKSTA_LT))
--			break;
--		msleep(1);
--	} while (time_before(jiffies, end_jiffies));
--	if (reg16 & PCI_EXP_LNKSTA_LT)
--		return -ETIMEDOUT;
--	return 0;
-+	return pcie_wait_for_retrain(parent);
- }
- 
- /*
+ 	reg16 |= PCI_EXP_LNKCTL_RL;
+ 	pcie_capability_write_word(parent, PCI_EXP_LNKCTL, reg16);
 -- 
 2.39.2
 
