@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0C51773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:17:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13427C433C8;
-	Wed,  9 Aug 2023 11:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F13BF1773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:17:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14A5EC433C8;
+	Wed,  9 Aug 2023 11:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579856;
-	bh=XKMvlpQiebUz0raSIgkFdwC0+CISbZxE/4eU6syaOuE=;
+	s=korg; t=1691579859;
+	bh=buP/FGRKPUxJthJElta5nZpJM7nRhZYn9P09UrslmWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yU2/UwtydjslpoVXhsh1tQhVH8XKjoxz4Q595THhPyHJfBsJXEMEaV1StWfIMmHGO
-	 d5749Fg3OOwc/1VkzY3fcr4QaurkAWVD+9uqMdhBKs5AlXzzV168/r1hMG0QHN6JwK
-	 M3Oz+jXx2795Zw1E3TWWGG8Bl+MKrIw8s5+NZAU4=
+	b=T43JR+kPxDRe0SrXPKR5wSH2Qzd7J/Fo0pXx1d5NOr/xNGl4dJDbzNkjKieRz0U+a
+	 M9uCyU3WfMPA1dN2ywTioWukqLrsqMKZ6Z73Muhf3Kq8RREB5RwXosA2OejL80Z5zL
+	 O4Bqbk2y2ycN4DK1R5lPVlmlyaJRWcYgtK0wKAFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Heider <me@tobhe.de>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 101/323] Add MODULE_FIRMWARE() for FIRMWARE_TG357766.
-Date: Wed,  9 Aug 2023 12:38:59 +0200
-Message-ID: <20230809103702.686779861@linuxfoundation.org>
+	Florent Revest <revest@chromium.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 4.19 134/323] netfilter: conntrack: Avoid nf_ct_helper_hash uses after free
+Date: Wed,  9 Aug 2023 12:39:32 +0200
+Message-ID: <20230809103704.265098017@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,37 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tobias Heider <me@tobhe.de>
+From: Florent Revest <revest@chromium.org>
 
-[ Upstream commit 046f753da6143ee16452966915087ec8b0de3c70 ]
+commit 6eef7a2b933885a17679eb8ed0796ddf0ee5309b upstream.
 
-Fixes a bug where on the M1 mac mini initramfs-tools fails to
-include the necessary firmware into the initrd.
+If nf_conntrack_init_start() fails (for example due to a
+register_nf_conntrack_bpf() failure), the nf_conntrack_helper_fini()
+clean-up path frees the nf_ct_helper_hash map.
 
-Fixes: c4dab50697ff ("tg3: Download 57766 EEE service patch firmware")
-Signed-off-by: Tobias Heider <me@tobhe.de>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://lore.kernel.org/r/ZJt7LKzjdz8+dClx@tobhe.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+When built with NF_CONNTRACK=y, further netfilter modules (e.g:
+netfilter_conntrack_ftp) can still be loaded and call
+nf_conntrack_helpers_register(), independently of whether nf_conntrack
+initialized correctly. This accesses the nf_ct_helper_hash dangling
+pointer and causes a uaf, possibly leading to random memory corruption.
+
+This patch guards nf_conntrack_helper_register() from accessing a freed
+or uninitialized nf_ct_helper_hash pointer and fixes possible
+uses-after-free when loading a conntrack module.
+
+Cc: stable@vger.kernel.org
+Fixes: 12f7a505331e ("netfilter: add user-space connection tracking helper infrastructure")
+Signed-off-by: Florent Revest <revest@chromium.org>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/tg3.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/nf_conntrack_helper.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
-index 2cf144bbef3ee..43b83a3a28049 100644
---- a/drivers/net/ethernet/broadcom/tg3.c
-+++ b/drivers/net/ethernet/broadcom/tg3.c
-@@ -235,6 +235,7 @@ MODULE_DESCRIPTION("Broadcom Tigon3 ethernet driver");
- MODULE_LICENSE("GPL");
- MODULE_VERSION(DRV_MODULE_VERSION);
- MODULE_FIRMWARE(FIRMWARE_TG3);
-+MODULE_FIRMWARE(FIRMWARE_TG357766);
- MODULE_FIRMWARE(FIRMWARE_TG3TSO);
- MODULE_FIRMWARE(FIRMWARE_TG3TSO5);
+--- a/net/netfilter/nf_conntrack_helper.c
++++ b/net/netfilter/nf_conntrack_helper.c
+@@ -400,6 +400,9 @@ int nf_conntrack_helper_register(struct
+ 	BUG_ON(me->expect_class_max >= NF_CT_MAX_EXPECT_CLASSES);
+ 	BUG_ON(strlen(me->name) > NF_CT_HELPER_NAME_LEN - 1);
  
--- 
-2.39.2
-
++	if (!nf_ct_helper_hash)
++		return -ENOENT;
++
+ 	if (me->expect_policy->max_expected > NF_CT_EXPECT_MAX_CNT)
+ 		return -EINVAL;
+ 
+@@ -570,4 +573,5 @@ void nf_conntrack_helper_fini(void)
+ {
+ 	nf_ct_extend_unregister(&helper_extend);
+ 	kvfree(nf_ct_helper_hash);
++	nf_ct_helper_hash = NULL;
+ }
 
 
