@@ -1,25 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0494517731
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:09:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76BF0C433C8;
-	Wed,  9 Aug 2023 11:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473D017731
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:09:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388FAC433C8;
+	Wed,  9 Aug 2023 11:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579352;
-	bh=Abm8rZvBiLy5+tBL4LcLiiGfrik4KtzTOZjgbtTCtoE=;
+	s=korg; t=1691579355;
+	bh=98/SW1TaQhTG1o/tAMMFjjkpLc5Xugrna2t/92Hcnao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TilzfdG0EfZMDxI1fWxA7GcTBOECrPkyvQ6qeT13rP4OTGyvdg0UpnYDxdQxftCWC
-	 jYQvi7OkxBVhbaHPlHrRoFWJgFTDgxApLH0hN8JXWg64UMIM3E7NzkXQlg0kDzL5sW
-	 VEj7RCZJYtOy9ETBNdbvM9czq/zBb7WjmIJ+1yJA=
+	b=KGfjvzLywP7aCsk2wGKnZW1+uvYz+40BKqbwzE6GHI4lrpIwnLW4lb9AukEl9Q4JN
+	 KilRtWiFPQ6894HDHArXeAgi6oFuZovwfE0t9clV79w4j3RdgXj6CI3jksoYqqa2qp
+	 Wznq8jY1aGF9Rkernf4bzf83xPnByYPtZ/J1O2ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.14 165/204] USB: serial: simple: sort driver entries
-Date: Wed,  9 Aug 2023 12:41:43 +0200
-Message-ID: <20230809103648.034122351@linuxfoundation.org>
+	Nik P <npliashechnikov@gmail.com>,
+	Nathan Schulte <nmschulte@gmail.com>,
+	Friedrich Vock <friedrich.vock@gmx.de>,
+	dridri85@gmail.com,
+	Jan Visser <starquake@linuxeverywhere.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 139/204] pinctrl: amd: Use amd_pinconf_set() for all config options
+Date: Wed,  9 Aug 2023 12:41:17 +0200
+Message-ID: <20230809103647.234645927@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -33,157 +41,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan@kernel.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit d245aedc00775c4d7265a9f4522cc4e1fd34d102 upstream.
+[ Upstream commit 635a750d958e158e17af0f524bedc484b27fbb93 ]
 
-Sort the driver symbols alphabetically in order to make it more obvious
-where new driver entries should be added.
+On ASUS TUF A16 it is reported that the ITE5570 ACPI device connected to
+GPIO 7 is causing an interrupt storm.  This issue doesn't happen on
+Windows.
 
-Cc: stable@vger.kernel.org
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Comparing the GPIO register configuration between Windows and Linux
+bit 20 has been configured as a pull up on Windows, but not on Linux.
+Checking GPIO declaration from the firmware it is clear it *should* have
+been a pull up on Linux as well.
+
+```
+GpioInt (Level, ActiveLow, Exclusive, PullUp, 0x0000,
+	 "\\_SB.GPIO", 0x00, ResourceConsumer, ,)
+{   // Pin list
+0x0007
+}
+```
+
+On Linux amd_gpio_set_config() is currently only used for programming
+the debounce. Actually the GPIO core calls it with all the arguments
+that are supported by a GPIO, pinctrl-amd just responds `-ENOTSUPP`.
+
+To solve this issue expand amd_gpio_set_config() to support the other
+arguments amd_pinconf_set() supports, namely `PIN_CONFIG_BIAS_PULL_DOWN`,
+`PIN_CONFIG_BIAS_PULL_UP`, and `PIN_CONFIG_DRIVE_STRENGTH`.
+
+Reported-by: Nik P <npliashechnikov@gmail.com>
+Reported-by: Nathan Schulte <nmschulte@gmail.com>
+Reported-by: Friedrich Vock <friedrich.vock@gmx.de>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217336
+Reported-by: dridri85@gmail.com
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217493
+Link: https://lore.kernel.org/linux-input/20230530154058.17594-1-friedrich.vock@gmx.de/
+Tested-by: Jan Visser <starquake@linuxeverywhere.org>
+Fixes: 2956b5d94a76 ("pinctrl / gpio: Introduce .set_config() callback for GPIO chips")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230705133005.577-3-mario.limonciello@amd.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/usb-serial-simple.c |   66 ++++++++++++++++-----------------
- 1 file changed, 33 insertions(+), 33 deletions(-)
+ drivers/pinctrl/pinctrl-amd.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
---- a/drivers/usb/serial/usb-serial-simple.c
-+++ b/drivers/usb/serial/usb-serial-simple.c
-@@ -41,16 +41,6 @@ static struct usb_serial_driver vendor##
- 	{ USB_DEVICE(0x0a21, 0x8001) }	/* MMT-7305WW */
- DEVICE(carelink, CARELINK_IDS);
+diff --git a/drivers/pinctrl/pinctrl-amd.c b/drivers/pinctrl/pinctrl-amd.c
+index c57f91f484235..fbec8a07e942e 100644
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -169,18 +169,6 @@ static int amd_gpio_set_debounce(struct gpio_chip *gc, unsigned offset,
+ 	return ret;
+ }
  
--/* ZIO Motherboard USB driver */
--#define ZIO_IDS()			\
--	{ USB_DEVICE(0x1CBE, 0x0103) }
--DEVICE(zio, ZIO_IDS);
+-static int amd_gpio_set_config(struct gpio_chip *gc, unsigned offset,
+-			       unsigned long config)
+-{
+-	u32 debounce;
 -
--/* Funsoft Serial USB driver */
--#define FUNSOFT_IDS()			\
--	{ USB_DEVICE(0x1404, 0xcddc) }
--DEVICE(funsoft, FUNSOFT_IDS);
+-	if (pinconf_to_config_param(config) != PIN_CONFIG_INPUT_DEBOUNCE)
+-		return -ENOTSUPP;
 -
- /* Infineon Flashloader driver */
- #define FLASHLOADER_IDS()		\
- 	{ USB_DEVICE_INTERFACE_CLASS(0x058b, 0x0041, USB_CLASS_CDC_DATA) }, \
-@@ -58,6 +48,11 @@ DEVICE(funsoft, FUNSOFT_IDS);
- 	{ USB_DEVICE(0x8087, 0x0801) }
- DEVICE(flashloader, FLASHLOADER_IDS);
- 
-+/* Funsoft Serial USB driver */
-+#define FUNSOFT_IDS()			\
-+	{ USB_DEVICE(0x1404, 0xcddc) }
-+DEVICE(funsoft, FUNSOFT_IDS);
-+
- /* Google Serial USB SubClass */
- #define GOOGLE_IDS()						\
- 	{ USB_VENDOR_AND_INTERFACE_INFO(0x18d1,			\
-@@ -66,6 +61,11 @@ DEVICE(flashloader, FLASHLOADER_IDS);
- 					0x01) }
- DEVICE(google, GOOGLE_IDS);
- 
-+/* HP4x (48/49) Generic Serial driver */
-+#define HP4X_IDS()			\
-+	{ USB_DEVICE(0x03f0, 0x0121) }
-+DEVICE(hp4x, HP4X_IDS);
-+
- /* KAUFMANN RKS+CAN VCP */
- #define KAUFMANN_IDS()			\
- 	{ USB_DEVICE(0x16d0, 0x0870) }
-@@ -76,11 +76,6 @@ DEVICE(kaufmann, KAUFMANN_IDS);
- 	{ USB_DEVICE(0x1209, 0x8b00) }
- DEVICE(libtransistor, LIBTRANSISTOR_IDS);
- 
--/* ViVOpay USB Serial Driver */
--#define VIVOPAY_IDS()			\
--	{ USB_DEVICE(0x1d5f, 0x1004) }	/* ViVOpay 8800 */
--DEVICE(vivopay, VIVOPAY_IDS);
+-	debounce = pinconf_to_config_argument(config);
+-	return amd_gpio_set_debounce(gc, offset, debounce);
+-}
 -
- /* Motorola USB Phone driver */
- #define MOTO_IDS()			\
- 	{ USB_DEVICE(0x05c6, 0x3197) },	/* unknown Motorola phone */	\
-@@ -109,10 +104,10 @@ DEVICE(nokia, NOKIA_IDS);
- 	{ USB_DEVICE(0x09d7, 0x0100) }	/* NovAtel FlexPack GPS */
- DEVICE_N(novatel_gps, NOVATEL_IDS, 3);
+ #ifdef CONFIG_DEBUG_FS
+ static void amd_gpio_dbg_show(struct seq_file *s, struct gpio_chip *gc)
+ {
+@@ -632,7 +620,7 @@ static int amd_pinconf_get(struct pinctrl_dev *pctldev,
+ }
  
--/* HP4x (48/49) Generic Serial driver */
--#define HP4X_IDS()			\
--	{ USB_DEVICE(0x03f0, 0x0121) }
--DEVICE(hp4x, HP4X_IDS);
-+/* Siemens USB/MPI adapter */
-+#define SIEMENS_IDS()			\
-+	{ USB_DEVICE(0x908, 0x0004) }
-+DEVICE(siemens_mpi, SIEMENS_IDS);
+ static int amd_pinconf_set(struct pinctrl_dev *pctldev, unsigned int pin,
+-				unsigned long *configs, unsigned num_configs)
++			   unsigned long *configs, unsigned int num_configs)
+ {
+ 	int i;
+ 	u32 arg;
+@@ -722,6 +710,20 @@ static int amd_pinconf_group_set(struct pinctrl_dev *pctldev,
+ 	return 0;
+ }
  
- /* Suunto ANT+ USB Driver */
- #define SUUNTO_IDS()			\
-@@ -120,47 +115,52 @@ DEVICE(hp4x, HP4X_IDS);
- 	{ USB_DEVICE(0x0fcf, 0x1009) } /* Dynastream ANT USB-m Stick */
- DEVICE(suunto, SUUNTO_IDS);
- 
--/* Siemens USB/MPI adapter */
--#define SIEMENS_IDS()			\
--	{ USB_DEVICE(0x908, 0x0004) }
--DEVICE(siemens_mpi, SIEMENS_IDS);
-+/* ViVOpay USB Serial Driver */
-+#define VIVOPAY_IDS()			\
-+	{ USB_DEVICE(0x1d5f, 0x1004) }	/* ViVOpay 8800 */
-+DEVICE(vivopay, VIVOPAY_IDS);
++static int amd_gpio_set_config(struct gpio_chip *gc, unsigned int pin,
++			       unsigned long config)
++{
++	struct amd_gpio *gpio_dev = gpiochip_get_data(gc);
 +
-+/* ZIO Motherboard USB driver */
-+#define ZIO_IDS()			\
-+	{ USB_DEVICE(0x1CBE, 0x0103) }
-+DEVICE(zio, ZIO_IDS);
- 
- /* All of the above structures mushed into two lists */
- static struct usb_serial_driver * const serial_drivers[] = {
- 	&carelink_device,
--	&zio_device,
--	&funsoft_device,
- 	&flashloader_device,
-+	&funsoft_device,
- 	&google_device,
-+	&hp4x_device,
- 	&kaufmann_device,
- 	&libtransistor_device,
--	&vivopay_device,
- 	&moto_modem_device,
- 	&motorola_tetra_device,
- 	&nokia_device,
- 	&novatel_gps_device,
--	&hp4x_device,
--	&suunto_device,
- 	&siemens_mpi_device,
-+	&suunto_device,
-+	&vivopay_device,
-+	&zio_device,
- 	NULL
- };
- 
- static const struct usb_device_id id_table[] = {
- 	CARELINK_IDS(),
--	ZIO_IDS(),
--	FUNSOFT_IDS(),
- 	FLASHLOADER_IDS(),
-+	FUNSOFT_IDS(),
- 	GOOGLE_IDS(),
-+	HP4X_IDS(),
- 	KAUFMANN_IDS(),
- 	LIBTRANSISTOR_IDS(),
--	VIVOPAY_IDS(),
- 	MOTO_IDS(),
- 	MOTOROLA_TETRA_IDS(),
- 	NOKIA_IDS(),
- 	NOVATEL_IDS(),
--	HP4X_IDS(),
--	SUUNTO_IDS(),
- 	SIEMENS_IDS(),
-+	SUUNTO_IDS(),
-+	VIVOPAY_IDS(),
-+	ZIO_IDS(),
- 	{ },
- };
- MODULE_DEVICE_TABLE(usb, id_table);
++	if (pinconf_to_config_param(config) == PIN_CONFIG_INPUT_DEBOUNCE) {
++		u32 debounce = pinconf_to_config_argument(config);
++
++		return amd_gpio_set_debounce(gc, pin, debounce);
++	}
++
++	return amd_pinconf_set(gpio_dev->pctrl, pin, &config, 1);
++}
++
+ static const struct pinconf_ops amd_pinconf_ops = {
+ 	.pin_config_get		= amd_pinconf_get,
+ 	.pin_config_set		= amd_pinconf_set,
+-- 
+2.39.2
+
 
 
