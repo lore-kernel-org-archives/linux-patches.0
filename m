@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F03414F9E
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:58:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1360CC433C8;
-	Wed,  9 Aug 2023 10:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9672216428
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:58:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42EFC433C7;
+	Wed,  9 Aug 2023 10:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578700;
-	bh=AdBK4lV/4VfebT2P5xydP8CDuj8fxXCcTMuLELqE/4o=;
+	s=korg; t=1691578703;
+	bh=kHtrEE6ToEs9T8f/zG0VQZWoE0DTPdqZCLeu+k/00Z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CF4GUNgS6jwl//6tBhSgazJvpohathWLTqPCU+pgiI91x9N5Toyb0W9n5Bvnfj26Q
-	 0k50wfX25TjNx1TOdZR4ZwmW0MPSNr9k7v8rYs+vh/CuMJ/FPU2QeXQhrU6c8Xej84
-	 JivSqJlqGmE6aTEEsM4+kbs9jvsX547f9eB7+m0M=
+	b=s1QpkcdmtfCzoWAQMYR1/Cp966QGu46CFzS0jeiOdD3Vq110PCy09Mi7y/0c6iD7n
+	 uNyRO+wWc2z4WKqtYNW+0iVnFxA4/5Q+s1NFXFRPJLFodI3qHjlPF5gQk/fUnKChd/
+	 PlFRzv8e+RA/Je7ym+HyMaOw+PwQaM2wKeQcZIbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Will Deacon <will@kernel.org>,
-	Easwar Hariharan <eahariha@linux.microsoft.com>
-Subject: [PATCH 5.15 09/92] iommu/arm-smmu-v3: Document nesting-related errata
-Date: Wed,  9 Aug 2023 12:40:45 +0200
-Message-ID: <20230809103633.870874013@linuxfoundation.org>
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 10/92] arm64: dts: imx8mn-var-som: add missing pull-up for onboard PHY reset pinmux
+Date: Wed,  9 Aug 2023 12:40:46 +0200
+Message-ID: <20230809103633.913431767@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -36,59 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit 0bfbfc526c70606bf0fad302e4821087cbecfaf4 upstream
+[ Upstream commit 253be5b53c2792fb4384f8005b05421e6f040ee3 ]
 
-Both MMU-600 and MMU-700 have similar errata around TLB invalidation
-while both stages of translation are active, which will need some
-consideration once nesting support is implemented. For now, though,
-it's very easy to make our implicit lack of nesting support explicit
-for those cases, so they're less likely to be missed in future.
+For SOMs with an onboard PHY, the RESET_N pull-up resistor is
+currently deactivated in the pinmux configuration. When the pinmux
+code selects the GPIO function for this pin, with a default direction
+of input, this prevents the RESET_N pin from being taken to the proper
+3.3V level (deasserted), and this results in the PHY being not
+detected since it is held in reset.
 
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Link: https://lore.kernel.org/r/696da78d32bb4491f898f11b0bb4d850a8aa7c6a.1683731256.git.robin.murphy@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Taken from RESET_N pin description in ADIN13000 datasheet:
+    This pin requires a 1K pull-up resistor to AVDD_3P3.
+
+Activate the pull-up resistor to fix the issue.
+
+Fixes: ade0176dd8a0 ("arm64: dts: imx8mn-var-som: Add Variscite VAR-SOM-MX8MN System on Module")
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/arm64/silicon-errata.rst      |    4 ++--
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |    5 +++++
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Documentation/arm64/silicon-errata.rst
-+++ b/Documentation/arm64/silicon-errata.rst
-@@ -122,9 +122,9 @@ stable kernels.
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | MMU-500         | #841119,826419  | N/A                         |
- +----------------+-----------------+-----------------+-----------------------------+
--| ARM            | MMU-600         | #1076982        | N/A                         |
-+| ARM            | MMU-600         | #1076982,1209401| N/A                         |
- +----------------+-----------------+-----------------+-----------------------------+
--| ARM            | MMU-700         | #2812531        | N/A                         |
-+| ARM            | MMU-700         | #2268618,2812531| N/A                         |
- +----------------+-----------------+-----------------+-----------------------------+
- +----------------+-----------------+-----------------+-----------------------------+
- | Broadcom       | Brahma-B53      | N/A             | ARM64_ERRATUM_845719        |
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -3487,11 +3487,16 @@ static void arm_smmu_device_iidr_probe(s
- 			/* Arm erratum 1076982 */
- 			if (variant == 0 && revision <= 2)
- 				smmu->features &= ~ARM_SMMU_FEAT_SEV;
-+			/* Arm erratum 1209401 */
-+			if (variant < 2)
-+				smmu->features &= ~ARM_SMMU_FEAT_NESTING;
- 			break;
- 		case IIDR_PRODUCTID_ARM_MMU_700:
- 			/* Arm erratum 2812531 */
- 			smmu->features &= ~ARM_SMMU_FEAT_BTM;
- 			smmu->options |= ARM_SMMU_OPT_CMDQ_FORCE_SYNC;
-+			/* Arm errata 2268618, 2812531 */
-+			smmu->features &= ~ARM_SMMU_FEAT_NESTING;
- 			break;
- 		}
- 		break;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi
+index d053ef302fb82..faafefe562e4b 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi
+@@ -351,7 +351,7 @@
+ 			MX8MN_IOMUXC_ENET_RXC_ENET1_RGMII_RXC		0x91
+ 			MX8MN_IOMUXC_ENET_RX_CTL_ENET1_RGMII_RX_CTL	0x91
+ 			MX8MN_IOMUXC_ENET_TX_CTL_ENET1_RGMII_TX_CTL	0x1f
+-			MX8MN_IOMUXC_GPIO1_IO09_GPIO1_IO9		0x19
++			MX8MN_IOMUXC_GPIO1_IO09_GPIO1_IO9		0x159
+ 		>;
+ 	};
+ 
+-- 
+2.40.1
+
 
 
