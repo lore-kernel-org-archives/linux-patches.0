@@ -1,154 +1,89 @@
-Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
+Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DDB924536
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 20:14:15 +0000 (UTC)
-Received: by mail-il1-f181.google.com with SMTP id e9e14a558f8ab-3491a8e6fd1so752785ab.3
-        for <patches@lists.linux.dev>; Wed, 09 Aug 2023 13:14:15 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A230224528
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 20:15:35 +0000 (UTC)
+Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-6bca3588edbso195070a34.0
+        for <patches@lists.linux.dev>; Wed, 09 Aug 2023 13:15:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=joelfernandes.org; s=google; t=1691612054; x=1692216854;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=guZ5vpqqJqA9daPfYYnKXLU14D1mpOwdXtcKs7C1O6E=;
-        b=teRQ96U/IkC6y31VwU1NjtwjZdh80fpd032mGixaFIjCCO+6DahLSaWhjFgwyX+D0s
-         7xRN+Sng3LnCEh0nCfXyr3x+CDQfV8BGwj/0ILM/ErxHnOnPzHOafQSHWHEo2t26Z43A
-         vLYFxhySi1w09JWBgEBF0tV1pLt8s+pU8wCZQ=
+        d=gmail.com; s=20221208; t=1691612134; x=1692216934;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mD3lZ+cedaC3uh75ynu2ZL3JyVWBLEXJVSbA+C3K0LU=;
+        b=eu8uD+QFcUZ38jGEmySOr/1VMtkfXYu9r93sNp/ePwPq83li5VR93dBVyNgY9L7Cfc
+         WgNqkoL2GSmDl/o/6yYY5DTr9hxcezCRzpgSytKFBXwe0lQMnp1kwkQc8p+YxAuz9z1Y
+         hxU8EDW8bvGyNjEY3YfY5B3FXr8r/SEmwN49H4G3Kp9VduX3saJOq4wPFF4qBiujEJ2g
+         Qh9y2oIUFP/RdFF7M6bQusB5GMBvU1wh0tppVi1KD+Nz5b6/9jq5TM1L1cGsexin5fW+
+         tvTXov1jyvcbGi6L7uLvxc9oT7wAnHxa4w1CRCCvU8x+oMNeHHbYfVDO/4gUdiHRuwoG
+         wLig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691612054; x=1692216854;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20221208; t=1691612134; x=1692216934;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=guZ5vpqqJqA9daPfYYnKXLU14D1mpOwdXtcKs7C1O6E=;
-        b=IuGCTOI5L4SE16OdyX3vsorw37ueNsWV3TRWXUl0n+THFKtw34KI5WipMXlopmthQe
-         RbRlQ+BjSDbIWq+Ocy80u2fq8BaVlq1qb0WsDxXm/sI/vTF6N8Ey7KBuZXuFrXGvNraq
-         s2uWGZGGrFQvAssqpYww6iQzjDQzetEgBy2gtHOKJpM0++tdl9VduTU7mfp7pGkXls7H
-         pD6gkq1g5U2Ry1kCDeK9UfUIeiOFTO7anDBewW/hTkqxb942swekAL4Y0ea3vhttCVBt
-         HbJB5cdBfl7oeSulB5mnYqJsjL7p0s7VY3GtcGZ96BTypROA866yAwWEkwYIYUQe7BOo
-         rLcQ==
-X-Gm-Message-State: AOJu0Yw6CXlBxpidjJF1OxvrLIeyqv0qAzuU/0reAqGW7ZQBDpKoGCzp
-	AH+ZkzRjVKF+T2yLqcJyCKCYKQ==
-X-Google-Smtp-Source: AGHT+IHFssVCaalC7OaCchaWhg7XXfx3K1aZGh4DfLLnCZfW44BE6qugHkyqKK6ivgJmigJ1V78RCA==
-X-Received: by 2002:a05:6e02:20c8:b0:347:693a:a52b with SMTP id 8-20020a056e0220c800b00347693aa52bmr199791ilq.6.1691612054245;
-        Wed, 09 Aug 2023 13:14:14 -0700 (PDT)
-Received: from localhost (254.82.172.34.bc.googleusercontent.com. [34.172.82.254])
-        by smtp.gmail.com with ESMTPSA id j10-20020a02cb0a000000b0042b8566a982sm4189018jap.41.2023.08.09.13.14.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Aug 2023 13:14:13 -0700 (PDT)
-Date: Wed, 9 Aug 2023 20:14:13 +0000
-From: Joel Fernandes <joel@joelfernandes.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	paulmck@kernel.org
-Subject: Re: [PATCH 5.15 00/92] 5.15.126-rc1 review
-Message-ID: <20230809201413.GA3374446@google.com>
-References: <20230809103633.485906560@linuxfoundation.org>
- <20230809135326.GE3031656@google.com>
- <f47340c6-3c41-1f91-d0f9-fe0b59a23aac@roeck-us.net>
- <CAEXW_YQ4GqPwvUF8=8CWmdj=cD56v_eEVK-EirsObQXyBDFVpg@mail.gmail.com>
- <35e4b770-2ead-4a19-ad01-fa75996adef4@roeck-us.net>
+        bh=mD3lZ+cedaC3uh75ynu2ZL3JyVWBLEXJVSbA+C3K0LU=;
+        b=bEXdE+j0lHP1CXdIUILoRep7yPRI4m6ZG4FQBoFcDZn68IOrMK7Kp1jOGifxljZaLH
+         z84xgmWte/xZhgVPiIC+tW8gTaJ3nNH7HoRFVAsWJfrU6x5b/A/PKxN8F7r4stlSILy0
+         r8o5d39CaM28lBwtqoaRRNy1A3PD1RmHMNJumJQ30ARIZ56vErr3AL7jF3iqRusqllog
+         9O08IXXhEw0/0G00iup0YX/hSxYqW7LzpXFZmzH+IMWImVmXy+Mmo9v953C3vgln5DaK
+         IkuVSQhjR7q4lazRQnoLrlzFpVLQ9Eb98r/JjNvMrltu0Ed4zAuK98z3cmaiF+ceMcOI
+         fLwQ==
+X-Gm-Message-State: AOJu0Yw/3oXa030727Yx1YrCXpNlrbC3AaAo3WeeY7O9BERLG5GLDED9
+	j5sMRNSKRAI4vME9r8llcCM=
+X-Google-Smtp-Source: AGHT+IGmy/YEk0/6tf7GbIdqdSbviX+FQ1mwJv6DoHjtUIF0cXpMUJL6SRyWRhjyQR8256ApJQZ9WQ==
+X-Received: by 2002:a9d:798b:0:b0:6bd:bcd:43f8 with SMTP id h11-20020a9d798b000000b006bd0bcd43f8mr118188otm.21.1691612134452;
+        Wed, 09 Aug 2023 13:15:34 -0700 (PDT)
+Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
+        by smtp.gmail.com with ESMTPSA id z21-20020a9d7a55000000b006b8ad42654csm14147otm.0.2023.08.09.13.15.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Aug 2023 13:15:34 -0700 (PDT)
+Message-ID: <8313fb24-5fbb-4408-825d-974da33a4353@gmail.com>
+Date: Wed, 9 Aug 2023 17:15:29 -0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v1 5/5] rust: file: add `DeferredFdCloser`
+Content-Language: en-US
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
+ linux-fsdevel@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>,
+ Alexander Viro <viro@zeniv.linux.org.uk>,
+ Christian Brauner <brauner@kernel.org>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>,
+ Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
+ Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?=
+ <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <20230720152820.3566078-1-aliceryhl@google.com>
+ <20230720152820.3566078-6-aliceryhl@google.com>
+ <bee24ff5-444c-44f9-81c8-88ff310b401a@gmail.com>
+ <CANiq72mHU7n2jTPFsO=tjfqucrbe2ABSUYPUG6ctEerh4J+U_g@mail.gmail.com>
+ <CANiq72m5tbj2_N_s371d5N_4H1xpE2ahTHOUvFtUd+N0Y=0tsA@mail.gmail.com>
+From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+In-Reply-To: <CANiq72m5tbj2_N_s371d5N_4H1xpE2ahTHOUvFtUd+N0Y=0tsA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <35e4b770-2ead-4a19-ad01-fa75996adef4@roeck-us.net>
 
-On Wed, Aug 09, 2023 at 12:25:48PM -0700, Guenter Roeck wrote:
-> On Wed, Aug 09, 2023 at 02:35:59PM -0400, Joel Fernandes wrote:
-> > On Wed, Aug 9, 2023 at 12:18 PM Guenter Roeck <linux@roeck-us.net> wrote:
-> > >
-> > > On 8/9/23 06:53, Joel Fernandes wrote:
-> > > > On Wed, Aug 09, 2023 at 12:40:36PM +0200, Greg Kroah-Hartman wrote:
-> > > >> This is the start of the stable review cycle for the 5.15.126 release.
-> > > >> There are 92 patches in this series, all will be posted as a response
-> > > >> to this one.  If anyone has any issues with these being applied, please
-> > > >> let me know.
-> > > >>
-> > > >> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
-> > > >> Anything received after that time might be too late.
-> > > >>
-> > > >> The whole patch series can be found in one patch at:
-> > > >>      https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.126-rc1.gz
-> > > >> or in the git tree and branch at:
-> > > >>      git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > > >> and the diffstat can be found below.
-> > > >
-> > > > Not necesscarily new with 5.15 stable but 3 of the 19 rcutorture scenarios
-> > > > hang with this -rc: TREE04, TREE07, TASKS03.
-> > > >
-> > > > 5.15 has a known stop machine issue where it hangs after 1.5 hours with cpu
-> > > > hotplug rcutorture testing. Me and tglx are continuing to debug this. The
-> > > > issue does not show up on anything but 5.15 stable kernels and neither on
-> > > > mainline.
-> > > >
-> > >
-> > > Do you by any have a crash pattern that we could possibly use to find the crash
-> > > in ChromeOS crash logs ? No idea if that would help, but it could provide some
-> > > additional data points.
-> > 
-> > The pattern shows as a hard hang, the system is unresponsive and all CPUs
-> > are stuck in stop_machine. Sometimes it recovers on its own from the
-> > hang and then RCU immediately gives stall warnings. It takes 1.5 hour
-> > to reproduce and sometimes never happens for several hours.
-> > 
-> > It appears related to CPU hotplug since gdb showed me most of the CPUs
-> > are spinning in multi_cpu_stop() / stop machine after the hang.
-> > 
+On 8/9/23 06:09, Miguel Ojeda wrote:
+> On Wed, Aug 9, 2023 at 11:00 AM Miguel Ojeda
+> <miguel.ojeda.sandonis@gmail.com> wrote:
+>>
+>> If you mean for the commit, then we should follow the kernel
+>> convention instead. Please see my reply to Alice above.
 > 
-> Hmm, we do see lots of soft lockups with multi_cpu_stop() in the backtrace,
-> but not with v5.15.y but with v5.4.y. The actual hang is in stop_machine_yield().
+> One extra note: if it is a external repository, then yes, I would
+> definitely recommend adding a `Link` because readers may not be able
+> to easily `git show` the hash. But if it is the kernel tree, then it
+> is not needed.
+> 
+> Cheers,
+> Miguel
 
-Interesting. It looks similar as far as the stack dump in gdb goes, here are
-the stacks I dumped with the hang I referred to:
-https://paste.debian.net/1288308/
+Gotcha
 
-But in dmesg, it prints nothing for about 20-30 mins before recovering, then
-I get RCU stalls. It looks like this:
-
-[  682.721962] kvm-clock: cpu 7, msr 199981c1, secondary cpu clock
-[  682.736830] kvm-guest: stealtime: cpu 7, msr 1f5db140
-[  684.445875] smpboot: Booting Node 0 Processor 5 APIC 0x5
-[  684.467831] kvm-clock: cpu 5, msr 19998141, secondary cpu clock
-[  684.555766] kvm-guest: stealtime: cpu 5, msr 1f55b140
-[  687.356637] smpboot: Booting Node 0 Processor 4 APIC 0x4
-[  687.377214] kvm-clock: cpu 4, msr 19998101, secondary cpu clock
-[ 2885.473742] kvm-guest: stealtime: cpu 4, msr 1f51b140
-[ 2886.456408] rcu: INFO: rcu_sched self-detected stall on CPU
-[ 2886.457590] rcu_torture_fwd_prog_nr: Duration 15423 cver 170 gps 337
-[ 2886.464934] rcu: 0-...!: (2 ticks this GP) idle=7eb/0/0x1 softirq=118271/118271 fqs=0 last_accelerate: e3cd/71c0 dyntick_enabled: 1
-[ 2886.490837] (t=2199034 jiffies g=185489 q=4)
-[ 2886.497297] rcu: rcu_sched kthread timer wakeup didn't happen for 2199031 jiffies! g185489 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402
-[ 2886.514201] rcu: Possible timer handling issue on cpu=0 timer-softirq=441616
-[ 2886.524593] rcu: rcu_sched kthread starved for 2199034 jiffies! g185489 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402 ->cpu=0
-[ 2886.540067] rcu: Unless rcu_sched kthread gets sufficient CPU time, OOM is now expected behavior.
-[ 2886.551967] rcu: RCU grace-period kthread stack dump:
-[ 2886.558644] task:rcu_sched       state:I stack:14896 pid:   15 ppid:     2 flags:0x00004000
-[ 2886.569640] Call Trace:
-[ 2886.572940]  <TASK>
-[ 2886.575902]  __schedule+0x284/0x6e0
-[ 2886.580969]  schedule+0x53/0xa0
-[ 2886.585231]  schedule_timeout+0x8f/0x130
-
-In that huge gap, I connect gdb and dumped those stacks in above link.
-
-On 5.15 stable you could repro it in about an hour and a half most of the time by running something like:
-tools/testing/selftests/rcutorture/bin/kvm.sh --cpus 48 --duration 60 --configs TREE04
-
-Let me know if you saw anything like this. I am currently trying to panic the
-kernel when the hang happens so I can get better traces.
-
-thanks,
-
- - Joel
-
+-> Martin
