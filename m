@@ -1,26 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B6617758
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:32:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 159ACC433C7;
-	Wed,  9 Aug 2023 11:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6184417758
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:32:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0F44C433C7;
+	Wed,  9 Aug 2023 11:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580743;
-	bh=ezHrH/ZySxNIQPLt9ut/xd5iMDGRr9oxn5avmfh7Vk4=;
+	s=korg; t=1691580746;
+	bh=H0Kgj2G+tzyFVyobL8tvaICL+dtROPMNNGVJrzBnUPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GWPqgD4HJcbNBZhQq+w54b7DYz0MhRPpKfpBH3jg5bm3+0VbxhUOiKhwB5WSuhtWv
-	 RZm/6VPL+cNKvhRMRYvrL90Xo7NoQHKrPj6mMF+z3YbmMdJoVDTkYI3hzOZa/00gWD
-	 Qv31Kw8wKQhEBkyGOtDAbb7EnvCkpMfbLFbAttu8=
+	b=zosaT9nZtIirWG916EfiiMEmqTFXh6HWcZkWM1RcScllfSDZe4gWTrb/aUvpT1VvP
+	 oAwzk6nhS9hpEWx5cgsz2zs3JN0ep3Ydyuo8T1bSTUnyjqW4lT31tX52Cr/TyBrl9O
+	 KK1mMQsTxKB6eA03oQ49f+cy8Ol3erc1cTWNQo9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+af5e10f73dbff48f70af@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.4 133/154] ext2: Drop fragment support
-Date: Wed,  9 Aug 2023 12:42:44 +0200
-Message-ID: <20230809103641.283869416@linuxfoundation.org>
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Russ Weight <russell.h.weight@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Tianfei Zhang <tianfei.zhang@intel.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	linux-kselftest@vger.kernel.org,
+	Dan Carpenter <error27@gmail.com>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Subject: [PATCH 5.4 134/154] test_firmware: prevent race conditions by a correct implementation of locking
+Date: Wed,  9 Aug 2023 12:42:45 +0200
+Message-ID: <20230809103641.322333265@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -34,106 +42,205 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 
-commit 404615d7f1dcd4cca200e9a7a9df3a1dcae1dd62 upstream.
+commit 4acfe3dfde685a5a9eaec5555351918e2d7266a1 upstream.
 
-Ext2 has fields in superblock reserved for subblock allocation support.
-However that never landed. Drop the many years dead code.
+Dan Carpenter spotted a race condition in a couple of situations like
+these in the test_firmware driver:
 
-Reported-by: syzbot+af5e10f73dbff48f70af@syzkaller.appspotmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
+{
+        u8 val;
+        int ret;
+
+        ret = kstrtou8(buf, 10, &val);
+        if (ret)
+                return ret;
+
+        mutex_lock(&test_fw_mutex);
+        *(u8 *)cfg = val;
+        mutex_unlock(&test_fw_mutex);
+
+        /* Always return full write size even if we didn't consume all */
+        return size;
+}
+
+static ssize_t config_num_requests_store(struct device *dev,
+                                         struct device_attribute *attr,
+                                         const char *buf, size_t count)
+{
+        int rc;
+
+        mutex_lock(&test_fw_mutex);
+        if (test_fw_config->reqs) {
+                pr_err("Must call release_all_firmware prior to changing config\n");
+                rc = -EINVAL;
+                mutex_unlock(&test_fw_mutex);
+                goto out;
+        }
+        mutex_unlock(&test_fw_mutex);
+
+        rc = test_dev_config_update_u8(buf, count,
+                                       &test_fw_config->num_requests);
+
+out:
+        return rc;
+}
+
+static ssize_t config_read_fw_idx_store(struct device *dev,
+                                        struct device_attribute *attr,
+                                        const char *buf, size_t count)
+{
+        return test_dev_config_update_u8(buf, count,
+                                         &test_fw_config->read_fw_idx);
+}
+
+The function test_dev_config_update_u8() is called from both the locked
+and the unlocked context, function config_num_requests_store() and
+config_read_fw_idx_store() which can both be called asynchronously as
+they are driver's methods, while test_dev_config_update_u8() and siblings
+change their argument pointed to by u8 *cfg or similar pointer.
+
+To avoid deadlock on test_fw_mutex, the lock is dropped before calling
+test_dev_config_update_u8() and re-acquired within test_dev_config_update_u8()
+itself, but alas this creates a race condition.
+
+Having two locks wouldn't assure a race-proof mutual exclusion.
+
+This situation is best avoided by the introduction of a new, unlocked
+function __test_dev_config_update_u8() which can be called from the locked
+context and reducing test_dev_config_update_u8() to:
+
+static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
+{
+        int ret;
+
+        mutex_lock(&test_fw_mutex);
+        ret = __test_dev_config_update_u8(buf, size, cfg);
+        mutex_unlock(&test_fw_mutex);
+
+        return ret;
+}
+
+doing the locking and calling the unlocked primitive, which enables both
+locked and unlocked versions without duplication of code.
+
+The similar approach was applied to all functions called from the locked
+and the unlocked context, which safely mitigates both deadlocks and race
+conditions in the driver.
+
+__test_dev_config_update_bool(), __test_dev_config_update_u8() and
+__test_dev_config_update_size_t() unlocked versions of the functions
+were introduced to be called from the locked contexts as a workaround
+without releasing the main driver's lock and thereof causing a race
+condition.
+
+The test_dev_config_update_bool(), test_dev_config_update_u8() and
+test_dev_config_update_size_t() locked versions of the functions
+are being called from driver methods without the unnecessary multiplying
+of the locking and unlocking code for each method, and complicating
+the code with saving of the return value across lock.
+
+Fixes: 7feebfa487b92 ("test_firmware: add support for request_firmware_into_buf")
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Russ Weight <russell.h.weight@intel.com>
+Cc: Takashi Iwai <tiwai@suse.de>
+Cc: Tianfei Zhang <tianfei.zhang@intel.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Colin Ian King <colin.i.king@gmail.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: linux-kselftest@vger.kernel.org
+Cc: stable@vger.kernel.org # v5.4
+Suggested-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Link: https://lore.kernel.org/r/20230509084746.48259-1-mirsad.todorovac@alu.unizg.hr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext2/ext2.h  |   12 ------------
- fs/ext2/super.c |   23 ++++-------------------
- 2 files changed, 4 insertions(+), 31 deletions(-)
+ lib/test_firmware.c |   37 ++++++++++++++++++++++++++++---------
+ 1 file changed, 28 insertions(+), 9 deletions(-)
 
---- a/fs/ext2/ext2.h
-+++ b/fs/ext2/ext2.h
-@@ -68,10 +68,7 @@ struct mb_cache;
-  * second extended-fs super-block data in memory
-  */
- struct ext2_sb_info {
--	unsigned long s_frag_size;	/* Size of a fragment in bytes */
--	unsigned long s_frags_per_block;/* Number of fragments per block */
- 	unsigned long s_inodes_per_block;/* Number of inodes per block */
--	unsigned long s_frags_per_group;/* Number of fragments in a group */
- 	unsigned long s_blocks_per_group;/* Number of blocks in a group */
- 	unsigned long s_inodes_per_group;/* Number of inodes in a group */
- 	unsigned long s_itb_per_group;	/* Number of inode table blocks per group */
-@@ -186,15 +183,6 @@ static inline struct ext2_sb_info *EXT2_
- #define EXT2_FIRST_INO(s)		(EXT2_SB(s)->s_first_ino)
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -301,16 +301,26 @@ static ssize_t config_test_show_str(char
+ 	return len;
+ }
  
- /*
-- * Macro-instructions used to manage fragments
-- */
--#define EXT2_MIN_FRAG_SIZE		1024
--#define	EXT2_MAX_FRAG_SIZE		4096
--#define EXT2_MIN_FRAG_LOG_SIZE		  10
--#define EXT2_FRAG_SIZE(s)		(EXT2_SB(s)->s_frag_size)
--#define EXT2_FRAGS_PER_BLOCK(s)		(EXT2_SB(s)->s_frags_per_block)
--
--/*
-  * Structure of a blocks group descriptor
-  */
- struct ext2_group_desc
---- a/fs/ext2/super.c
-+++ b/fs/ext2/super.c
-@@ -681,10 +681,9 @@ static int ext2_setup_super (struct supe
- 		es->s_max_mnt_count = cpu_to_le16(EXT2_DFL_MAX_MNT_COUNT);
- 	le16_add_cpu(&es->s_mnt_count, 1);
- 	if (test_opt (sb, DEBUG))
--		ext2_msg(sb, KERN_INFO, "%s, %s, bs=%lu, fs=%lu, gc=%lu, "
-+		ext2_msg(sb, KERN_INFO, "%s, %s, bs=%lu, gc=%lu, "
- 			"bpg=%lu, ipg=%lu, mo=%04lx]",
- 			EXT2FS_VERSION, EXT2FS_DATE, sb->s_blocksize,
--			sbi->s_frag_size,
- 			sbi->s_groups_count,
- 			EXT2_BLOCKS_PER_GROUP(sb),
- 			EXT2_INODES_PER_GROUP(sb),
-@@ -1031,14 +1030,7 @@ static int ext2_fill_super(struct super_
- 		}
+-static int test_dev_config_update_bool(const char *buf, size_t size,
+-				       bool *cfg)
++static inline int __test_dev_config_update_bool(const char *buf, size_t size,
++						bool *cfg)
+ {
+ 	int ret;
+ 
+-	mutex_lock(&test_fw_mutex);
+ 	if (strtobool(buf, cfg) < 0)
+ 		ret = -EINVAL;
+ 	else
+ 		ret = size;
++
++	return ret;
++}
++
++static int test_dev_config_update_bool(const char *buf, size_t size,
++				       bool *cfg)
++{
++	int ret;
++
++	mutex_lock(&test_fw_mutex);
++	ret = __test_dev_config_update_bool(buf, size, cfg);
+ 	mutex_unlock(&test_fw_mutex);
+ 
+ 	return ret;
+@@ -340,7 +350,7 @@ static ssize_t test_dev_config_show_int(
+ 	return snprintf(buf, PAGE_SIZE, "%d\n", val);
+ }
+ 
+-static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
++static inline int __test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
+ {
+ 	int ret;
+ 	long new;
+@@ -352,14 +362,23 @@ static int test_dev_config_update_u8(con
+ 	if (new > U8_MAX)
+ 		return -EINVAL;
+ 
+-	mutex_lock(&test_fw_mutex);
+ 	*(u8 *)cfg = new;
+-	mutex_unlock(&test_fw_mutex);
+ 
+ 	/* Always return full write size even if we didn't consume all */
+ 	return size;
+ }
+ 
++static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
++{
++	int ret;
++
++	mutex_lock(&test_fw_mutex);
++	ret = __test_dev_config_update_u8(buf, size, cfg);
++	mutex_unlock(&test_fw_mutex);
++
++	return ret;
++}
++
+ static ssize_t test_dev_config_show_u8(char *buf, u8 cfg)
+ {
+ 	u8 val;
+@@ -392,10 +411,10 @@ static ssize_t config_num_requests_store
+ 		mutex_unlock(&test_fw_mutex);
+ 		goto out;
  	}
+-	mutex_unlock(&test_fw_mutex);
  
--	sbi->s_frag_size = EXT2_MIN_FRAG_SIZE <<
--				   le32_to_cpu(es->s_log_frag_size);
--	if (sbi->s_frag_size == 0)
--		goto cantfind_ext2;
--	sbi->s_frags_per_block = sb->s_blocksize / sbi->s_frag_size;
--
- 	sbi->s_blocks_per_group = le32_to_cpu(es->s_blocks_per_group);
--	sbi->s_frags_per_group = le32_to_cpu(es->s_frags_per_group);
- 	sbi->s_inodes_per_group = le32_to_cpu(es->s_inodes_per_group);
+-	rc = test_dev_config_update_u8(buf, count,
+-				       &test_fw_config->num_requests);
++	rc = __test_dev_config_update_u8(buf, count,
++					 &test_fw_config->num_requests);
++	mutex_unlock(&test_fw_mutex);
  
- 	sbi->s_inodes_per_block = sb->s_blocksize / EXT2_INODE_SIZE(sb);
-@@ -1064,11 +1056,10 @@ static int ext2_fill_super(struct super_
- 		goto failed_mount;
- 	}
- 
--	if (sb->s_blocksize != sbi->s_frag_size) {
-+	if (es->s_log_frag_size != es->s_log_block_size) {
- 		ext2_msg(sb, KERN_ERR,
--			"error: fragsize %lu != blocksize %lu"
--			"(not supported yet)",
--			sbi->s_frag_size, sb->s_blocksize);
-+			"error: fragsize log %u != blocksize log %u",
-+			le32_to_cpu(es->s_log_frag_size), sb->s_blocksize_bits);
- 		goto failed_mount;
- 	}
- 
-@@ -1078,12 +1069,6 @@ static int ext2_fill_super(struct super_
- 			sbi->s_blocks_per_group);
- 		goto failed_mount;
- 	}
--	if (sbi->s_frags_per_group > sb->s_blocksize * 8) {
--		ext2_msg(sb, KERN_ERR,
--			"error: #fragments per group too big: %lu",
--			sbi->s_frags_per_group);
--		goto failed_mount;
--	}
- 	if (sbi->s_inodes_per_group < sbi->s_inodes_per_block ||
- 	    sbi->s_inodes_per_group > sb->s_blocksize * 8) {
- 		ext2_msg(sb, KERN_ERR,
+ out:
+ 	return rc;
 
 
