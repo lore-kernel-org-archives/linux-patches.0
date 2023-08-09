@@ -1,36 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3480653B7
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:52:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 849EBC433C8;
-	Wed,  9 Aug 2023 10:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6F653B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:52:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C75C433C7;
+	Wed,  9 Aug 2023 10:52:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578360;
-	bh=31HqNmphNVvCIARF6+f3rsUCFR54BlZLVf+HFB64Jbg=;
+	s=korg; t=1691578362;
+	bh=UiaCMuCVGz9274qc5gu7dqJkCUGmGxq6AdgH9Bcoeo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zDtcPS9glNuyTYunFeyApWLZStxHy5HjlgJcs99IJ/zM5rWUyzPvcS70BUyXWjjym
-	 +juVF4NAJykeqqJf0ClgrM79b5qAPXhPnPnXa/3y2v0NcKQPceNMdHvlchCwSANEVx
-	 NVKfB255ZnoGME4FUBH9EMabFsYqz2Hxv/8fWOe0=
+	b=mKXSuFrsoEeMU08Dp0vS3+J+wrvKmPXjsDdZVxYwTlZlJL4tP3Rd2qcm7I0UO1fJ4
+	 24sGBOlSlLrS8tUvXuTEzqj8sSrG8hjbPqfqyA/HOgpgpimu+JO+C3TsH4pfY/BEEV
+	 qZINi6MOUBcY7lBVMdwVtmorc3FHZWNfvy1QHCK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Georg=20M=C3=BCller?= <georgmueller@gmx.net>,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 031/127] perf test uprobe_from_different_cu: Skip if there is no gcc
-Date: Wed,  9 Aug 2023 12:40:18 +0200
-Message-ID: <20230809103637.690754338@linuxfoundation.org>
+	Robin Murphy <robin.murphy@arm.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Will Deacon <will@kernel.org>,
+	Easwar Hariharan <eahariha@linux.microsoft.com>
+Subject: [PATCH 6.1 005/127] iommu/arm-smmu-v3: Work around MMU-600 erratum 1076982
+Date: Wed,  9 Aug 2023 12:39:52 +0200
+Message-ID: <20230809103636.802481326@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -44,63 +36,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Georg Müller <georgmueller@gmx.net>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit 98ce8e4a9dcfb448b30a2d7a16190f4a00382377 ]
+commit f322e8af35c7f23a8c08b595c38d6c855b2d836f upstream
 
-Without gcc, the test will fail.
+MMU-600 versions prior to r1p0 fail to correctly generate a WFE wakeup
+event when the command queue transitions fom full to non-full. We can
+easily work around this by simply hiding the SEV capability such that we
+fall back to polling for space in the queue - since MMU-600 implements
+MSIs we wouldn't expect to need SEV for sync completion either, so this
+should have little to no impact.
 
-On cleanup, ignore probe removal errors. Otherwise, in case of an error
-adding the probe, the temporary directory is not removed.
-
-Fixes: 56cbeacf14353057 ("perf probe: Add test for regression introduced by switch to die_get_decl_file()")
-Signed-off-by: Georg Müller <georgmueller@gmx.net>
-Acked-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Georg Müller <georgmueller@gmx.net>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20230728151812.454806-2-georgmueller@gmx.net
-Link: https://lore.kernel.org/r/CAP-5=fUP6UuLgRty3t2=fQsQi3k4hDMz415vWdp1x88QMvZ8ug@mail.gmail.com/
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Link: https://lore.kernel.org/r/08adbe3d01024d8382a478325f73b56851f76e49.1683731256.git.robin.murphy@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/tests/shell/test_uprobe_from_different_cu.sh | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ Documentation/arm64/silicon-errata.rst      |    2 +
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |   29 ++++++++++++++++++++++++++++
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |    6 +++++
+ 3 files changed, 37 insertions(+)
 
-diff --git a/tools/perf/tests/shell/test_uprobe_from_different_cu.sh b/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
-index 00d2e0e2e0c28..319f36ebb9a40 100644
---- a/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
-+++ b/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
-@@ -4,6 +4,12 @@
+--- a/Documentation/arm64/silicon-errata.rst
++++ b/Documentation/arm64/silicon-errata.rst
+@@ -141,6 +141,8 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | MMU-500         | #841119,826419  | N/A                         |
+ +----------------+-----------------+-----------------+-----------------------------+
++| ARM            | MMU-600         | #1076982        | N/A                         |
+++----------------+-----------------+-----------------+-----------------------------+
+ +----------------+-----------------+-----------------+-----------------------------+
+ | Broadcom       | Brahma-B53      | N/A             | ARM64_ERRATUM_845719        |
+ +----------------+-----------------+-----------------+-----------------------------+
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -3410,6 +3410,33 @@ static int arm_smmu_device_reset(struct
+ 	return 0;
+ }
  
- set -e
- 
-+# skip if there's no gcc
-+if ! [ -x "$(command -v gcc)" ]; then
-+        echo "failed: no gcc compiler"
-+        exit 2
-+fi
++#define IIDR_IMPLEMENTER_ARM		0x43b
++#define IIDR_PRODUCTID_ARM_MMU_600	0x483
 +
- temp_dir=$(mktemp -d /tmp/perf-uprobe-different-cu-sh.XXXXXXXXXX)
++static void arm_smmu_device_iidr_probe(struct arm_smmu_device *smmu)
++{
++	u32 reg;
++	unsigned int implementer, productid, variant, revision;
++
++	reg = readl_relaxed(smmu->base + ARM_SMMU_IIDR);
++	implementer = FIELD_GET(IIDR_IMPLEMENTER, reg);
++	productid = FIELD_GET(IIDR_PRODUCTID, reg);
++	variant = FIELD_GET(IIDR_VARIANT, reg);
++	revision = FIELD_GET(IIDR_REVISION, reg);
++
++	switch (implementer) {
++	case IIDR_IMPLEMENTER_ARM:
++		switch (productid) {
++		case IIDR_PRODUCTID_ARM_MMU_600:
++			/* Arm erratum 1076982 */
++			if (variant == 0 && revision <= 2)
++				smmu->features &= ~ARM_SMMU_FEAT_SEV;
++			break;
++		}
++		break;
++	}
++}
++
+ static int arm_smmu_device_hw_probe(struct arm_smmu_device *smmu)
+ {
+ 	u32 reg;
+@@ -3615,6 +3642,8 @@ static int arm_smmu_device_hw_probe(stru
  
- cleanup()
-@@ -11,7 +17,7 @@ cleanup()
- 	trap - EXIT TERM INT
- 	if [[ "${temp_dir}" =~ ^/tmp/perf-uprobe-different-cu-sh.*$ ]]; then
- 		echo "--- Cleaning up ---"
--		perf probe -x ${temp_dir}/testfile -d foo
-+		perf probe -x ${temp_dir}/testfile -d foo || true
- 		rm -f "${temp_dir}/"*
- 		rmdir "${temp_dir}"
- 	fi
--- 
-2.40.1
-
+ 	smmu->ias = max(smmu->ias, smmu->oas);
+ 
++	arm_smmu_device_iidr_probe(smmu);
++
+ 	if (arm_smmu_sva_supported(smmu))
+ 		smmu->features |= ARM_SMMU_FEAT_SVA;
+ 
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+@@ -69,6 +69,12 @@
+ #define IDR5_VAX			GENMASK(11, 10)
+ #define IDR5_VAX_52_BIT			1
+ 
++#define ARM_SMMU_IIDR			0x18
++#define IIDR_PRODUCTID			GENMASK(31, 20)
++#define IIDR_VARIANT			GENMASK(19, 16)
++#define IIDR_REVISION			GENMASK(15, 12)
++#define IIDR_IMPLEMENTER		GENMASK(11, 0)
++
+ #define ARM_SMMU_CR0			0x20
+ #define CR0_ATSCHK			(1 << 4)
+ #define CR0_CMDQEN			(1 << 3)
 
 
