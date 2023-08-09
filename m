@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E375171A6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:01:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22410C433C8;
-	Wed,  9 Aug 2023 11:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D28171A6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:01:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86B3C433C8;
+	Wed,  9 Aug 2023 11:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578877;
-	bh=34IZI6J+9VCtP2DJwMSfurinIzc9SPD1ACQoE9wPedw=;
+	s=korg; t=1691578880;
+	bh=ot4ESK1ax2QUv/6eDRIHPmNi+ZFcWbmMZuL06tVnyKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kz81zBBVGgPAO9DGykUupr54k57J7x0a+c1DSy+6Rso5nPsP4zTXUdD3dbOpBpbK5
-	 eZdNXVtOVsBVBWS6ykGbBJj9oY/pRlnYKnpJtw1N10pmAYqbtEqlJgTa3Wp3gN8K0O
-	 lOnNFyccGKmHHCn7J2Ebdko3WSryCr/Jkv8jj28Q=
+	b=uZFZHnyXMzUlmDVKZluGTFva0NbtTJ60Mr2uaDZjFfil7qqHwhlA6L5V73Zwhshct
+	 qjagEMhgYo6KJjKEyUvR+IygWE7cBF/OjMYaL1UrH4D0/jw0Mut6JNd+lF8KeHNmo7
+	 zZHrgoRL4DhwA2ByKDAG0ACldmZEejcZwKoExhxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	gaoming <gaoming20@hihonor.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 5.15 60/92] exfat: use kvmalloc_array/kvfree instead of kmalloc_array/kfree
-Date: Wed,  9 Aug 2023 12:41:36 +0200
-Message-ID: <20230809103635.663586380@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 51/92] tcp_metrics: annotate data-races around tm->tcpm_vals[]
+Date: Wed,  9 Aug 2023 12:41:27 +0200
+Message-ID: <20230809103635.373459935@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -34,81 +37,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: gaoming <gaoming20@hihonor.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit daf60d6cca26e50d65dac374db92e58de745ad26 upstream.
+[ Upstream commit 8c4d04f6b443869d25e59822f7cec88d647028a9 ]
 
-The call stack shown below is a scenario in the Linux 4.19 kernel.
-Allocating memory failed where exfat fs use kmalloc_array due to
-system memory fragmentation, while the u-disk was inserted without
-recognition.
-Devices such as u-disk using the exfat file system are pluggable and
-may be insert into the system at any time.
-However, long-term running systems cannot guarantee the continuity of
-physical memory. Therefore, it's necessary to address this issue.
+tm->tcpm_vals[] values can be read or written locklessly.
 
-Binder:2632_6: page allocation failure: order:4,
- mode:0x6040c0(GFP_KERNEL|__GFP_COMP), nodemask=(null)
-Call trace:
-[242178.097582]  dump_backtrace+0x0/0x4
-[242178.097589]  dump_stack+0xf4/0x134
-[242178.097598]  warn_alloc+0xd8/0x144
-[242178.097603]  __alloc_pages_nodemask+0x1364/0x1384
-[242178.097608]  kmalloc_order+0x2c/0x510
-[242178.097612]  kmalloc_order_trace+0x40/0x16c
-[242178.097618]  __kmalloc+0x360/0x408
-[242178.097624]  load_alloc_bitmap+0x160/0x284
-[242178.097628]  exfat_fill_super+0xa3c/0xe7c
-[242178.097635]  mount_bdev+0x2e8/0x3a0
-[242178.097638]  exfat_fs_mount+0x40/0x50
-[242178.097643]  mount_fs+0x138/0x2e8
-[242178.097649]  vfs_kern_mount+0x90/0x270
-[242178.097655]  do_mount+0x798/0x173c
-[242178.097659]  ksys_mount+0x114/0x1ac
-[242178.097665]  __arm64_sys_mount+0x24/0x34
-[242178.097671]  el0_svc_common+0xb8/0x1b8
-[242178.097676]  el0_svc_handler+0x74/0x90
-[242178.097681]  el0_svc+0x8/0x340
+Add needed READ_ONCE()/WRITE_ONCE() to document this,
+and force use of tcp_metric_get() and tcp_metric_set()
 
-By analyzing the exfat code,we found that continuous physical memory
-is not required here,so kvmalloc_array is used can solve this problem.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: gaoming <gaoming20@hihonor.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 51c5d0c4b169 ("tcp: Maintain dynamic metrics in local cache.")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/balloc.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/ipv4/tcp_metrics.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
---- a/fs/exfat/balloc.c
-+++ b/fs/exfat/balloc.c
-@@ -69,7 +69,7 @@ static int exfat_allocate_bitmap(struct
- 	}
- 	sbi->map_sectors = ((need_map_size - 1) >>
- 			(sb->s_blocksize_bits)) + 1;
--	sbi->vol_amap = kmalloc_array(sbi->map_sectors,
-+	sbi->vol_amap = kvmalloc_array(sbi->map_sectors,
- 				sizeof(struct buffer_head *), GFP_KERNEL);
- 	if (!sbi->vol_amap)
- 		return -ENOMEM;
-@@ -84,7 +84,7 @@ static int exfat_allocate_bitmap(struct
- 			while (j < i)
- 				brelse(sbi->vol_amap[j++]);
- 
--			kfree(sbi->vol_amap);
-+			kvfree(sbi->vol_amap);
- 			sbi->vol_amap = NULL;
- 			return -EIO;
- 		}
-@@ -138,7 +138,7 @@ void exfat_free_bitmap(struct exfat_sb_i
- 	for (i = 0; i < sbi->map_sectors; i++)
- 		__brelse(sbi->vol_amap[i]);
- 
--	kfree(sbi->vol_amap);
-+	kvfree(sbi->vol_amap);
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index 07bce467c71a7..0c309fd4e04b2 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -63,17 +63,19 @@ static bool tcp_metric_locked(struct tcp_metrics_block *tm,
+ 	return READ_ONCE(tm->tcpm_lock) & (1 << idx);
  }
  
- int exfat_set_bitmap(struct inode *inode, unsigned int clu, bool sync)
+-static u32 tcp_metric_get(struct tcp_metrics_block *tm,
++static u32 tcp_metric_get(const struct tcp_metrics_block *tm,
+ 			  enum tcp_metric_index idx)
+ {
+-	return tm->tcpm_vals[idx];
++	/* Paired with WRITE_ONCE() in tcp_metric_set() */
++	return READ_ONCE(tm->tcpm_vals[idx]);
+ }
+ 
+ static void tcp_metric_set(struct tcp_metrics_block *tm,
+ 			   enum tcp_metric_index idx,
+ 			   u32 val)
+ {
+-	tm->tcpm_vals[idx] = val;
++	/* Paired with READ_ONCE() in tcp_metric_get() */
++	WRITE_ONCE(tm->tcpm_vals[idx], val);
+ }
+ 
+ static bool addr_same(const struct inetpeer_addr *a,
+@@ -115,13 +117,16 @@ static void tcpm_suck_dst(struct tcp_metrics_block *tm,
+ 	WRITE_ONCE(tm->tcpm_lock, val);
+ 
+ 	msval = dst_metric_raw(dst, RTAX_RTT);
+-	tm->tcpm_vals[TCP_METRIC_RTT] = msval * USEC_PER_MSEC;
++	tcp_metric_set(tm, TCP_METRIC_RTT, msval * USEC_PER_MSEC);
+ 
+ 	msval = dst_metric_raw(dst, RTAX_RTTVAR);
+-	tm->tcpm_vals[TCP_METRIC_RTTVAR] = msval * USEC_PER_MSEC;
+-	tm->tcpm_vals[TCP_METRIC_SSTHRESH] = dst_metric_raw(dst, RTAX_SSTHRESH);
+-	tm->tcpm_vals[TCP_METRIC_CWND] = dst_metric_raw(dst, RTAX_CWND);
+-	tm->tcpm_vals[TCP_METRIC_REORDERING] = dst_metric_raw(dst, RTAX_REORDERING);
++	tcp_metric_set(tm, TCP_METRIC_RTTVAR, msval * USEC_PER_MSEC);
++	tcp_metric_set(tm, TCP_METRIC_SSTHRESH,
++		       dst_metric_raw(dst, RTAX_SSTHRESH));
++	tcp_metric_set(tm, TCP_METRIC_CWND,
++		       dst_metric_raw(dst, RTAX_CWND));
++	tcp_metric_set(tm, TCP_METRIC_REORDERING,
++		       dst_metric_raw(dst, RTAX_REORDERING));
+ 	if (fastopen_clear) {
+ 		tm->tcpm_fastopen.mss = 0;
+ 		tm->tcpm_fastopen.syn_loss = 0;
+@@ -667,7 +672,7 @@ static int tcp_metrics_fill_info(struct sk_buff *msg,
+ 		if (!nest)
+ 			goto nla_put_failure;
+ 		for (i = 0; i < TCP_METRIC_MAX_KERNEL + 1; i++) {
+-			u32 val = tm->tcpm_vals[i];
++			u32 val = tcp_metric_get(tm, i);
+ 
+ 			if (!val)
+ 				continue;
+-- 
+2.40.1
+
 
 
