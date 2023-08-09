@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB7317756
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:20:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E58AC433C8;
-	Wed,  9 Aug 2023 11:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CFBD17756
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:20:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E481C433C8;
+	Wed,  9 Aug 2023 11:20:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580052;
-	bh=TnAYbfVoSZrUMPy8eAlpWCJVB8r01TL2fjoRLO6Wc78=;
+	s=korg; t=1691580055;
+	bh=q4Z7s2QYT6XHIW8+sih7dykltDnnCwI5m4UK0TfmINQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RtumMOcV/YHdM6ANO7IgOsId9XqW1zGfb3Y7LEDpQ+U6qw+YHBpCdn76/BfA5Lynb
-	 x69XBSae3z6UvVLTQ217thnc8wRSsfEc7dfuKJx6lWLSDnySicd/AzpSwxgN46VIJf
-	 +BlVGcoMDliRXik+VQdFtFl6AuxmBDlhS+l7YW/o=
+	b=iUG0K3+wlvhOeYFUPrIJA/lsVROku1MCCYUA+3Km7977APfW0fpG/HSm9u2hwbuTN
+	 2IwW8M8cH3RkgWKihPMtVxhSB+GOmPix0sMaNytcH1LA4WZEJw0yLlaD46C80bslqy
+	 OoevAlA8LKs32oDd+Zc5MivUzWqlN0Taq4wwhxvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cambda Zhu <cambda@linux.alibaba.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 211/323] net: Replace the limit of TCP_LINGER2 with TCP_FIN_TIMEOUT_MAX
-Date: Wed,  9 Aug 2023 12:40:49 +0200
-Message-ID: <20230809103707.791899223@linuxfoundation.org>
+Subject: [PATCH 4.19 212/323] tcp: annotate data-races around tp->linger2
+Date: Wed,  9 Aug 2023 12:40:50 +0200
+Message-ID: <20230809103707.832332000@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,70 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cambda Zhu <cambda@linux.alibaba.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f0628c524fd188c3f9418e12478dfdfadacba815 ]
+[ Upstream commit 9df5335ca974e688389c875546e5819778a80d59 ]
 
-This patch changes the behavior of TCP_LINGER2 about its limit. The
-sysctl_tcp_fin_timeout used to be the limit of TCP_LINGER2 but now it's
-only the default value. A new macro named TCP_FIN_TIMEOUT_MAX is added
-as the limit of TCP_LINGER2, which is 2 minutes.
+do_tcp_getsockopt() reads tp->linger2 while another cpu
+might change its value.
 
-Since TCP_LINGER2 used sysctl_tcp_fin_timeout as the default value
-and the limit in the past, the system administrator cannot set the
-default value for most of sockets and let some sockets have a greater
-timeout. It might be a mistake that let the sysctl to be the limit of
-the TCP_LINGER2. Maybe we can add a new sysctl to set the max of
-TCP_LINGER2, but FIN-WAIT-2 timeout is usually no need to be too long
-and 2 minutes are legal considering TCP specs.
-
-Changes in v3:
-- Remove the new socket option and change the TCP_LINGER2 behavior so
-  that the timeout can be set to value between sysctl_tcp_fin_timeout
-  and 2 minutes.
-
-Changes in v2:
-- Add int overflow check for the new socket option.
-
-Changes in v1:
-- Add a new socket option to set timeout greater than
-  sysctl_tcp_fin_timeout.
-
-Signed-off-by: Cambda Zhu <cambda@linux.alibaba.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 9df5335ca974 ("tcp: annotate data-races around tp->linger2")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230719212857.3943972-8-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h | 1 +
- net/ipv4/tcp.c    | 4 ++--
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ net/ipv4/tcp.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 81300a04b5808..22cca858f2678 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -128,6 +128,7 @@ void tcp_time_wait(struct sock *sk, int state, int timeo);
- 				  * to combine FIN-WAIT-2 timeout with
- 				  * TIME-WAIT timer.
- 				  */
-+#define TCP_FIN_TIMEOUT_MAX (120 * HZ) /* max TCP_LINGER2 value (two minutes) */
- 
- #define TCP_DELACK_MAX	((unsigned)(HZ/5))	/* maximal time to delay before sending an ACK */
- #if HZ >= 100
 diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index cb96775fc86f6..9f3cdcbbb7590 100644
+index 9f3cdcbbb7590..4711963413a49 100644
 --- a/net/ipv4/tcp.c
 +++ b/net/ipv4/tcp.c
-@@ -3001,8 +3001,8 @@ static int do_tcp_setsockopt(struct sock *sk, int level,
+@@ -3000,11 +3000,11 @@ static int do_tcp_setsockopt(struct sock *sk, int level,
+ 
  	case TCP_LINGER2:
  		if (val < 0)
- 			tp->linger2 = -1;
--		else if (val > net->ipv4.sysctl_tcp_fin_timeout / HZ)
--			tp->linger2 = 0;
-+		else if (val > TCP_FIN_TIMEOUT_MAX / HZ)
-+			tp->linger2 = TCP_FIN_TIMEOUT_MAX;
+-			tp->linger2 = -1;
++			WRITE_ONCE(tp->linger2, -1);
+ 		else if (val > TCP_FIN_TIMEOUT_MAX / HZ)
+-			tp->linger2 = TCP_FIN_TIMEOUT_MAX;
++			WRITE_ONCE(tp->linger2, TCP_FIN_TIMEOUT_MAX);
  		else
- 			tp->linger2 = val * HZ;
+-			tp->linger2 = val * HZ;
++			WRITE_ONCE(tp->linger2, val * HZ);
+ 		break;
+ 
+ 	case TCP_DEFER_ACCEPT:
+@@ -3401,7 +3401,7 @@ static int do_tcp_getsockopt(struct sock *sk, int level,
+ 		val = icsk->icsk_syn_retries ? : net->ipv4.sysctl_tcp_syn_retries;
+ 		break;
+ 	case TCP_LINGER2:
+-		val = tp->linger2;
++		val = READ_ONCE(tp->linger2);
+ 		if (val >= 0)
+ 			val = (val ? : READ_ONCE(net->ipv4.sysctl_tcp_fin_timeout)) / HZ;
  		break;
 -- 
 2.39.2
