@@ -1,26 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5E51773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:19:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA6CCC433C7;
-	Wed,  9 Aug 2023 11:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BBC11773D;
+	Wed,  9 Aug 2023 11:19:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8758EC433C7;
+	Wed,  9 Aug 2023 11:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579985;
-	bh=n9C1qj3uEH7oFeSXLN5izOYMoP9sZSaXM2OPJ3IR1/k=;
+	s=korg; t=1691579988;
+	bh=SP7FcrL/n/JbIPYcqAj06Y4gPl8RVIcWqAmrAHKcOK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sN2mRsBX+eW1BI01rsN439Ey/YyfkLlbscXnJp+ceRANUbhbamOS1YfLdnl38ubkq
-	 dv81OOlz0oYOo57uswZnJ8VbGwedWulyeeNfEyReeYQQ/m6rpEKOl3h8VyX9xcjNAo
-	 OjIdjqyCGR5VJsiYrnMba/TWlFhAylH5bT4T0nDU=
+	b=QcavQlKiBdbMLD4lP9TyzHfoeQMLQNV+A4/yEpw17MCkDPeMNjyNsx96xYKNwzug1
+	 y8Kot2rKX1HUaQJAGcBhV193k9y3eLmCg+GwWhvlPc6btBTlvE1CxKbW4S93g5+YfY
+	 pljUryUsZZte/Xfejc35HWAGB4bb5PEcGj4tHej8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Khalfella <mkhalfella@purestorage.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 4.19 186/323] tracing/histograms: Add histograms to hist_vars if they have referenced variables
-Date: Wed,  9 Aug 2023 12:40:24 +0200
-Message-ID: <20230809103706.682516699@linuxfoundation.org>
+	=?UTF-8?q?Georg=20M=C3=BCller?= <georgmueller@gmx.net>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	regressions@lists.linux.dev,
+	Arnaldo Carvalho de Melo <acme@redhat.com>
+Subject: [PATCH 4.19 187/323] perf probe: Add test for regression introduced by switch to die_get_decl_file()
+Date: Wed,  9 Aug 2023 12:40:25 +0200
+Message-ID: <20230809103706.730699027@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -34,127 +44,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mohamed Khalfella <mkhalfella@purestorage.com>
+From: Georg Müller <georgmueller@gmx.net>
 
-commit 6018b585e8c6fa7d85d4b38d9ce49a5b67be7078 upstream.
+commit 56cbeacf143530576905623ac72ae0964f3293a6 upstream.
 
-Hist triggers can have referenced variables without having direct
-variables fields. This can be the case if referenced variables are added
-for trigger actions. In this case the newly added references will not
-have field variables. Not taking such referenced variables into
-consideration can result in a bug where it would be possible to remove
-hist trigger with variables being refenced. This will result in a bug
-that is easily reproducable like so
+This patch adds a test to validate that 'perf probe' works for binaries
+where DWARF info is split into multiple CUs
 
-$ cd /sys/kernel/tracing
-$ echo 'synthetic_sys_enter char[] comm; long id' >> synthetic_events
-$ echo 'hist:keys=common_pid.execname,id.syscall:vals=hitcount:comm=common_pid.execname' >> events/raw_syscalls/sys_enter/trigger
-$ echo 'hist:keys=common_pid.execname,id.syscall:onmatch(raw_syscalls.sys_enter).synthetic_sys_enter($comm, id)' >> events/raw_syscalls/sys_enter/trigger
-$ echo '!hist:keys=common_pid.execname,id.syscall:vals=hitcount:comm=common_pid.execname' >> events/raw_syscalls/sys_enter/trigger
-
-[  100.263533] ==================================================================
-[  100.264634] BUG: KASAN: slab-use-after-free in resolve_var_refs+0xc7/0x180
-[  100.265520] Read of size 8 at addr ffff88810375d0f0 by task bash/439
-[  100.266320]
-[  100.266533] CPU: 2 PID: 439 Comm: bash Not tainted 6.5.0-rc1 #4
-[  100.267277] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.0-20220807_005459-localhost 04/01/2014
-[  100.268561] Call Trace:
-[  100.268902]  <TASK>
-[  100.269189]  dump_stack_lvl+0x4c/0x70
-[  100.269680]  print_report+0xc5/0x600
-[  100.270165]  ? resolve_var_refs+0xc7/0x180
-[  100.270697]  ? kasan_complete_mode_report_info+0x80/0x1f0
-[  100.271389]  ? resolve_var_refs+0xc7/0x180
-[  100.271913]  kasan_report+0xbd/0x100
-[  100.272380]  ? resolve_var_refs+0xc7/0x180
-[  100.272920]  __asan_load8+0x71/0xa0
-[  100.273377]  resolve_var_refs+0xc7/0x180
-[  100.273888]  event_hist_trigger+0x749/0x860
-[  100.274505]  ? kasan_save_stack+0x2a/0x50
-[  100.275024]  ? kasan_set_track+0x29/0x40
-[  100.275536]  ? __pfx_event_hist_trigger+0x10/0x10
-[  100.276138]  ? ksys_write+0xd1/0x170
-[  100.276607]  ? do_syscall_64+0x3c/0x90
-[  100.277099]  ? entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-[  100.277771]  ? destroy_hist_data+0x446/0x470
-[  100.278324]  ? event_hist_trigger_parse+0xa6c/0x3860
-[  100.278962]  ? __pfx_event_hist_trigger_parse+0x10/0x10
-[  100.279627]  ? __kasan_check_write+0x18/0x20
-[  100.280177]  ? mutex_unlock+0x85/0xd0
-[  100.280660]  ? __pfx_mutex_unlock+0x10/0x10
-[  100.281200]  ? kfree+0x7b/0x120
-[  100.281619]  ? ____kasan_slab_free+0x15d/0x1d0
-[  100.282197]  ? event_trigger_write+0xac/0x100
-[  100.282764]  ? __kasan_slab_free+0x16/0x20
-[  100.283293]  ? __kmem_cache_free+0x153/0x2f0
-[  100.283844]  ? sched_mm_cid_remote_clear+0xb1/0x250
-[  100.284550]  ? __pfx_sched_mm_cid_remote_clear+0x10/0x10
-[  100.285221]  ? event_trigger_write+0xbc/0x100
-[  100.285781]  ? __kasan_check_read+0x15/0x20
-[  100.286321]  ? __bitmap_weight+0x66/0xa0
-[  100.286833]  ? _find_next_bit+0x46/0xe0
-[  100.287334]  ? task_mm_cid_work+0x37f/0x450
-[  100.287872]  event_triggers_call+0x84/0x150
-[  100.288408]  trace_event_buffer_commit+0x339/0x430
-[  100.289073]  ? ring_buffer_event_data+0x3f/0x60
-[  100.292189]  trace_event_raw_event_sys_enter+0x8b/0xe0
-[  100.295434]  syscall_trace_enter.constprop.0+0x18f/0x1b0
-[  100.298653]  syscall_enter_from_user_mode+0x32/0x40
-[  100.301808]  do_syscall_64+0x1a/0x90
-[  100.304748]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-[  100.307775] RIP: 0033:0x7f686c75c1cb
-[  100.310617] Code: 73 01 c3 48 8b 0d 65 3c 10 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa b8 21 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 35 3c 10 00 f7 d8 64 89 01 48
-[  100.317847] RSP: 002b:00007ffc60137a38 EFLAGS: 00000246 ORIG_RAX: 0000000000000021
-[  100.321200] RAX: ffffffffffffffda RBX: 000055f566469ea0 RCX: 00007f686c75c1cb
-[  100.324631] RDX: 0000000000000001 RSI: 0000000000000001 RDI: 000000000000000a
-[  100.328104] RBP: 00007ffc60137ac0 R08: 00007f686c818460 R09: 000000000000000a
-[  100.331509] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000009
-[  100.334992] R13: 0000000000000007 R14: 000000000000000a R15: 0000000000000007
-[  100.338381]  </TASK>
-
-We hit the bug because when second hist trigger has was created
-has_hist_vars() returned false because hist trigger did not have
-variables. As a result of that save_hist_vars() was not called to add
-the trigger to trace_array->hist_vars. Later on when we attempted to
-remove the first histogram find_any_var_ref() failed to detect it is
-being used because it did not find the second trigger in hist_vars list.
-
-With this change we wait until trigger actions are created so we can take
-into consideration if hist trigger has variable references. Also, now we
-check the return value of save_hist_vars() and fail trigger creation if
-save_hist_vars() fails.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230712223021.636335-1-mkhalfella@purestorage.com
-
+Signed-off-by: Georg Müller <georgmueller@gmx.net>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: regressions@lists.linux.dev
 Cc: stable@vger.kernel.org
-Fixes: 067fe038e70f6 ("tracing: Add variable reference handling to hist triggers")
-Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lore.kernel.org/r/20230628084551.1860532-5-georgmueller@gmx.net
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ tools/perf/tests/shell/test_uprobe_from_different_cu.sh |   77 ++++++++++++++++
+ 1 file changed, 77 insertions(+)
+ create mode 100755 tools/perf/tests/shell/test_uprobe_from_different_cu.sh
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -5787,13 +5787,15 @@ static int event_hist_trigger_func(struc
- 	if (get_named_trigger_data(trigger_data))
- 		goto enable;
- 
--	if (has_hist_vars(hist_data))
--		save_hist_vars(hist_data);
--
- 	ret = create_actions(hist_data, file);
- 	if (ret)
- 		goto out_unreg;
- 
-+	if (has_hist_vars(hist_data) || hist_data->n_var_refs) {
-+		if (save_hist_vars(hist_data))
-+			goto out_unreg;
-+	}
+--- /dev/null
++++ b/tools/perf/tests/shell/test_uprobe_from_different_cu.sh
+@@ -0,0 +1,77 @@
++#!/bin/bash
++# test perf probe of function from different CU
++# SPDX-License-Identifier: GPL-2.0
 +
- 	ret = tracing_map_init(hist_data->map);
- 	if (ret)
- 		goto out_unreg;
++set -e
++
++temp_dir=$(mktemp -d /tmp/perf-uprobe-different-cu-sh.XXXXXXXXXX)
++
++cleanup()
++{
++	trap - EXIT TERM INT
++	if [[ "${temp_dir}" =~ ^/tmp/perf-uprobe-different-cu-sh.*$ ]]; then
++		echo "--- Cleaning up ---"
++		perf probe -x ${temp_dir}/testfile -d foo
++		rm -f "${temp_dir}/"*
++		rmdir "${temp_dir}"
++	fi
++}
++
++trap_cleanup()
++{
++        cleanup
++        exit 1
++}
++
++trap trap_cleanup EXIT TERM INT
++
++cat > ${temp_dir}/testfile-foo.h << EOF
++struct t
++{
++  int *p;
++  int c;
++};
++
++extern int foo (int i, struct t *t);
++EOF
++
++cat > ${temp_dir}/testfile-foo.c << EOF
++#include "testfile-foo.h"
++
++int
++foo (int i, struct t *t)
++{
++  int j, res = 0;
++  for (j = 0; j < i && j < t->c; j++)
++    res += t->p[j];
++
++  return res;
++}
++EOF
++
++cat > ${temp_dir}/testfile-main.c << EOF
++#include "testfile-foo.h"
++
++static struct t g;
++
++int
++main (int argc, char **argv)
++{
++  int i;
++  int j[argc];
++  g.c = argc;
++  g.p = j;
++  for (i = 0; i < argc; i++)
++    j[i] = (int) argv[i][0];
++  return foo (3, &g);
++}
++EOF
++
++gcc -g -Og -flto -c ${temp_dir}/testfile-foo.c -o ${temp_dir}/testfile-foo.o
++gcc -g -Og -c ${temp_dir}/testfile-main.c -o ${temp_dir}/testfile-main.o
++gcc -g -Og -o ${temp_dir}/testfile ${temp_dir}/testfile-foo.o ${temp_dir}/testfile-main.o
++
++perf probe -x ${temp_dir}/testfile --funcs foo
++perf probe -x ${temp_dir}/testfile foo
++
++cleanup
 
 
