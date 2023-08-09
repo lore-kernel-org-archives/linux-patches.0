@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A7C15AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:47:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ABF7C433C8;
-	Wed,  9 Aug 2023 10:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A970F15AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:47:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29FBEC433C8;
+	Wed,  9 Aug 2023 10:47:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578071;
-	bh=Ipu8Q0YS64p/0teQKnzEFQUtTOc66WHT7o5srnnbMXo=;
+	s=korg; t=1691578074;
+	bh=eqMjIeACuqBaU+tdq/JmjYe2fBgD1+vLuvGkii3UAF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LgIv1Lc+Jcnf5awFM1i5I+KJ8efV1trCxUvpX02Dk+btHR+lzrkOABIMtJDGttGrI
-	 OJYmxEsGM1FsuPh8ZuUKux/4pJb15hur6YnIvy83ICuwGC8sBhxKtNxEHJeLJy13Jw
-	 1QKnN0XxwF8iyW72oq7YGOh7K8HGVqVF/7gJg9og=
+	b=0/ZMRZ6ttawUlcW41YrhtYS+mcqt2qa8UDgmJbWxgdz4tsFjyEMEzz8jeCUWBjX8k
+	 HRS4BHv2JyYvJDV84gG6kN9Hb9CHQszR44kUgodnb24a0zZDKLLKMahiptcH12Ewgu
+	 ggoyNosZAiTci/bL2kYvH9c4EfqdtvsIEA5jGqeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Stanislav Fomichev <sdf@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 094/165] tcp_metrics: fix data-race in tcpm_suck_dst() vs fastopen
-Date: Wed,  9 Aug 2023 12:40:25 +0200
-Message-ID: <20230809103645.862262899@linuxfoundation.org>
+Subject: [PATCH 6.4 067/165] bpf: Inline map creation logic in map_create() function
+Date: Wed,  9 Aug 2023 12:39:58 +0200
+Message-ID: <20230809103645.006991822@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -37,83 +36,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit ddf251fa2bc1d3699eec0bae6ed0bc373b8fda79 ]
+[ Upstream commit 22db41226b679768df8f0a4ff5de8e58f625f45b ]
 
-Whenever tcpm_new() reclaims an old entry, tcpm_suck_dst()
-would overwrite data that could be read from tcp_fastopen_cache_get()
-or tcp_metrics_fill_info().
+Currently find_and_alloc_map() performs two separate functions: some
+argument sanity checking and partial map creation workflow hanling.
+Neither of those functions are self-sufficient and are augmented by
+further checks and initialization logic in the caller (map_create()
+function). So unify all the sanity checks, permission checks, and
+creation and initialization logic in one linear piece of code in
+map_create() instead. This also make it easier to further enhance
+permission checks and keep them located in one place.
 
-We need to acquire fastopen_seqlock to maintain consistency.
-
-For newly allocated objects, tcpm_new() can switch to kzalloc()
-to avoid an extra fastopen_seqlock acquisition.
-
-Fixes: 1fe4c481ba63 ("net-tcp: Fast Open client - cookie cache")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Yuchung Cheng <ycheng@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230802131500.1478140-7-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/bpf/20230613223533.3689589-3-andrii@kernel.org
+Stable-dep-of: 640a604585aa ("bpf, cpumap: Make sure kthread is running before map update returns")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_metrics.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ kernel/bpf/syscall.c | 57 +++++++++++++++++++-------------------------
+ 1 file changed, 24 insertions(+), 33 deletions(-)
 
-diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
-index 4fd274836a48f..99ac5efe244d3 100644
---- a/net/ipv4/tcp_metrics.c
-+++ b/net/ipv4/tcp_metrics.c
-@@ -93,6 +93,7 @@ static struct tcpm_hash_bucket	*tcp_metrics_hash __read_mostly;
- static unsigned int		tcp_metrics_hash_log __read_mostly;
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 0a7238125e1a4..8fddf0eea9bf2 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -109,37 +109,6 @@ const struct bpf_map_ops bpf_map_offload_ops = {
+ 	.map_mem_usage = bpf_map_offload_map_mem_usage,
+ };
  
- static DEFINE_SPINLOCK(tcp_metrics_lock);
-+static DEFINE_SEQLOCK(fastopen_seqlock);
- 
- static void tcpm_suck_dst(struct tcp_metrics_block *tm,
- 			  const struct dst_entry *dst,
-@@ -129,11 +130,13 @@ static void tcpm_suck_dst(struct tcp_metrics_block *tm,
- 	tcp_metric_set(tm, TCP_METRIC_REORDERING,
- 		       dst_metric_raw(dst, RTAX_REORDERING));
- 	if (fastopen_clear) {
-+		write_seqlock(&fastopen_seqlock);
- 		tm->tcpm_fastopen.mss = 0;
- 		tm->tcpm_fastopen.syn_loss = 0;
- 		tm->tcpm_fastopen.try_exp = 0;
- 		tm->tcpm_fastopen.cookie.exp = false;
- 		tm->tcpm_fastopen.cookie.len = 0;
-+		write_sequnlock(&fastopen_seqlock);
- 	}
- }
- 
-@@ -194,7 +197,7 @@ static struct tcp_metrics_block *tcpm_new(struct dst_entry *dst,
- 		}
- 		tm = oldest;
- 	} else {
--		tm = kmalloc(sizeof(*tm), GFP_ATOMIC);
-+		tm = kzalloc(sizeof(*tm), GFP_ATOMIC);
- 		if (!tm)
- 			goto out_unlock;
- 	}
-@@ -204,7 +207,7 @@ static struct tcp_metrics_block *tcpm_new(struct dst_entry *dst,
- 	tm->tcpm_saddr = *saddr;
- 	tm->tcpm_daddr = *daddr;
- 
--	tcpm_suck_dst(tm, dst, true);
-+	tcpm_suck_dst(tm, dst, reclaim);
- 
- 	if (likely(!reclaim)) {
- 		tm->tcpm_next = tcp_metrics_hash[hash].chain;
-@@ -556,8 +559,6 @@ bool tcp_peer_is_proven(struct request_sock *req, struct dst_entry *dst)
- 	return ret;
- }
- 
--static DEFINE_SEQLOCK(fastopen_seqlock);
+-static struct bpf_map *find_and_alloc_map(union bpf_attr *attr)
+-{
+-	const struct bpf_map_ops *ops;
+-	u32 type = attr->map_type;
+-	struct bpf_map *map;
+-	int err;
 -
- void tcp_fastopen_cache_get(struct sock *sk, u16 *mss,
- 			    struct tcp_fastopen_cookie *cookie)
+-	if (type >= ARRAY_SIZE(bpf_map_types))
+-		return ERR_PTR(-EINVAL);
+-	type = array_index_nospec(type, ARRAY_SIZE(bpf_map_types));
+-	ops = bpf_map_types[type];
+-	if (!ops)
+-		return ERR_PTR(-EINVAL);
+-
+-	if (ops->map_alloc_check) {
+-		err = ops->map_alloc_check(attr);
+-		if (err)
+-			return ERR_PTR(err);
+-	}
+-	if (attr->map_ifindex)
+-		ops = &bpf_map_offload_ops;
+-	if (!ops->map_mem_usage)
+-		return ERR_PTR(-EINVAL);
+-	map = ops->map_alloc(attr);
+-	if (IS_ERR(map))
+-		return map;
+-	map->ops = ops;
+-	map->map_type = type;
+-	return map;
+-}
+-
+ static void bpf_map_write_active_inc(struct bpf_map *map)
  {
+ 	atomic64_inc(&map->writecnt);
+@@ -1127,7 +1096,9 @@ static int map_check_btf(struct bpf_map *map, const struct btf *btf,
+ /* called via syscall */
+ static int map_create(union bpf_attr *attr)
+ {
++	const struct bpf_map_ops *ops;
+ 	int numa_node = bpf_map_attr_numa_node(attr);
++	u32 map_type = attr->map_type;
+ 	struct bpf_map *map;
+ 	int f_flags;
+ 	int err;
+@@ -1157,6 +1128,25 @@ static int map_create(union bpf_attr *attr)
+ 	     !node_online(numa_node)))
+ 		return -EINVAL;
+ 
++	/* find map type and init map: hashtable vs rbtree vs bloom vs ... */
++	map_type = attr->map_type;
++	if (map_type >= ARRAY_SIZE(bpf_map_types))
++		return -EINVAL;
++	map_type = array_index_nospec(map_type, ARRAY_SIZE(bpf_map_types));
++	ops = bpf_map_types[map_type];
++	if (!ops)
++		return -EINVAL;
++
++	if (ops->map_alloc_check) {
++		err = ops->map_alloc_check(attr);
++		if (err)
++			return err;
++	}
++	if (attr->map_ifindex)
++		ops = &bpf_map_offload_ops;
++	if (!ops->map_mem_usage)
++		return -EINVAL;
++
+ 	/* Intent here is for unprivileged_bpf_disabled to block BPF map
+ 	 * creation for unprivileged users; other actions depend
+ 	 * on fd availability and access to bpffs, so are dependent on
+@@ -1166,10 +1156,11 @@ static int map_create(union bpf_attr *attr)
+ 	if (sysctl_unprivileged_bpf_disabled && !bpf_capable())
+ 		return -EPERM;
+ 
+-	/* find map type and init map: hashtable vs rbtree vs bloom vs ... */
+-	map = find_and_alloc_map(attr);
++	map = ops->map_alloc(attr);
+ 	if (IS_ERR(map))
+ 		return PTR_ERR(map);
++	map->ops = ops;
++	map->map_type = map_type;
+ 
+ 	err = bpf_obj_name_cpy(map->name, attr->map_name,
+ 			       sizeof(attr->map_name));
 -- 
 2.40.1
 
