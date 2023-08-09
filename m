@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD3E17AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E1FC433C8;
-	Wed,  9 Aug 2023 11:38:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0565517AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77222C433C7;
+	Wed,  9 Aug 2023 11:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581095;
-	bh=mK4jzzk1Cxm6X7pkLQWYMyWY1HS0bGMVS3TqrXeCoN4=;
+	s=korg; t=1691581097;
+	bh=bIjZC+gC1LrTCzylNlPNZ71ePlH1kNrg5QUBN2j29pY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YMa6MGf0c3ZyIJZv2u805U0NQMvQc8ej7mJT3mGCgURLT5bLz79onYV7gNtmq1QjI
-	 RnTSWm3mNLXYFHp7Yxa0WJfh3wiESnXEDSB2Ziol1MQgFxvIocxHWbaQb9LRZGFeYz
-	 kOjNAeTV12y47PWigWs3mb7YR2f/8dm1MkIAh1Jo=
+	b=K9Kqn2jKOpkPxSyInTxpeXfyXSrOt8m4uwQJUIQ7eLdeR9NYEQUrq+fLXNo2awujG
+	 W2AJ5bpRx4LRJz/I5PTcg1U5Qfqd7qBn0QCqCCSITNq7pIQyhtaAcHuGs2B+W8FwDA
+	 qzor43tYZv6MrjoM7VnCoXIZnsdB7TB2REmW9m5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 103/201] ASoC: wm8904: Fill the cache for WM8904_ADC_TEST_0 register
-Date: Wed,  9 Aug 2023 12:41:45 +0200
-Message-ID: <20230809103647.259169133@linuxfoundation.org>
+	Xiubo Li <xiubli@redhat.com>,
+	Venky Shankar <vshankar@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 5.10 104/201] ceph: never send metrics if disable_send_metrics is set
+Date: Wed,  9 Aug 2023 12:41:46 +0200
+Message-ID: <20230809103647.289950990@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -34,40 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Xiubo Li <xiubli@redhat.com>
 
-commit f061e2be8689057cb4ec0dbffa9f03e1a23cdcb2 upstream.
+commit 50164507f6b7b7ed85d8c3ac0266849fbd908db7 upstream.
 
-The WM8904_ADC_TEST_0 register is modified as part of updating the OSR
-controls but does not have a cache default, leading to errors when we try
-to modify these controls in cache only mode with no prior read:
+Even the 'disable_send_metrics' is true so when the session is
+being opened it will always trigger to send the metric for the
+first time.
 
-wm8904 3-001a: ASoC: error at snd_soc_component_update_bits on wm8904.3-001a for register: [0x000000c6] -16
-
-Add a read of the register to probe() to fill the cache and avoid both the
-error messages and the misconfiguration of the chip which will result.
-
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230723-asoc-fix-wm8904-adc-test-read-v1-1-2cdf2edd83fd@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Venky Shankar <vshankar@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wm8904.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/ceph/metric.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/codecs/wm8904.c
-+++ b/sound/soc/codecs/wm8904.c
-@@ -2306,6 +2306,9 @@ static int wm8904_i2c_probe(struct i2c_c
- 	regmap_update_bits(wm8904->regmap, WM8904_BIAS_CONTROL_0,
- 			    WM8904_POBCTRL, 0);
+--- a/fs/ceph/metric.c
++++ b/fs/ceph/metric.c
+@@ -130,7 +130,7 @@ static void metric_delayed_work(struct w
+ 	struct ceph_mds_client *mdsc =
+ 		container_of(m, struct ceph_mds_client, metric);
  
-+	/* Fill the cache for the ADC test register */
-+	regmap_read(wm8904->regmap, WM8904_ADC_TEST_0, &val);
-+
- 	/* Can leave the device powered off until we need it */
- 	regcache_cache_only(wm8904->regmap, true);
- 	regulator_bulk_disable(ARRAY_SIZE(wm8904->supplies), wm8904->supplies);
+-	if (mdsc->stopping)
++	if (mdsc->stopping || disable_send_metrics)
+ 		return;
+ 
+ 	if (!m->session || !check_session_state(m->session)) {
 
 
