@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C3517AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:24:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45512C433C9;
-	Wed,  9 Aug 2023 11:24:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9ECA17AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:24:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01B4DC433C8;
+	Wed,  9 Aug 2023 11:24:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580295;
-	bh=V5wxOqbu7K5ExT1f4cIWnFpO2Bns+3jY0dmR1G6F2Lw=;
+	s=korg; t=1691580298;
+	bh=mpcXgRsh1nvIrmTn5KcbhwRHmQJl4vncAkJHoYTy9gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bxBY6mtr1ogb11DGxp1g6pwodm/3uFIAUUnYQQTxFBF7eBzZM98TLJVVBxS7gu7ht
-	 4m6XRhgw37cuymbhgJpH4Fc4hsQhKAsRDm8bO0SluVmiMp7aLU9H46f0o4XSBoUr4p
-	 4kPc85CQwUuXqIfeC+eJ1hMotHNlX/7OpY/s/IxA=
+	b=V21kOEL4WtPncXhyuWCs1vdCftVso0jJQEOQe0kn/R+vwkYpkUrtyra0TIshhRK1w
+	 kUxeBWyq33qYtCk3hyWI9/61OBgrJr0fjRzWRpDOhXLuTQA5E12SklFl+3tSmUrAqi
+	 YUne08vrB85rg5f5qcVVtkgdZxgrcgLyCecXOzkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	valis <sec@valis.email>,
-	M A Ramdhan <ramdhan@starlabs.sg>,
+	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Victor Nogueira <victor@mojatatu.com>,
 	Pedro Tammela <pctammela@mojatatu.com>,
+	M A Ramdhan <ramdhan@starlabs.sg>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 296/323] net/sched: cls_u32: No longer copy tcf_result on update to avoid use-after-free
-Date: Wed,  9 Aug 2023 12:42:14 +0200
-Message-ID: <20230809103711.614578907@linuxfoundation.org>
+Subject: [PATCH 4.19 297/323] net/sched: cls_route: No longer copy tcf_result on update to avoid use-after-free
+Date: Wed,  9 Aug 2023 12:42:15 +0200
+Message-ID: <20230809103711.661374154@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -41,9 +42,9 @@ Content-Transfer-Encoding: 8bit
 
 From: valis <sec@valis.email>
 
-[ Upstream commit 3044b16e7c6fe5d24b1cdbcf1bd0a9d92d1ebd81 ]
+[ Upstream commit b80b829e9e2c1b3f7aae34855e04d8f6ecaf13c8 ]
 
-When u32_change() is called on an existing filter, the whole
+When route4_change() is called on an existing filter, the whole
 tcf_result struct is always copied into the new instance of the filter.
 
 This causes a problem when updating a filter bound to a class,
@@ -53,33 +54,33 @@ and allowing it to be deleted, leading to a use-after-free.
 
 Fix this by no longer copying the tcf_result struct from the old filter.
 
-Fixes: de5df63228fc ("net: sched: cls_u32 changes to knode must appear atomic to readers")
+Fixes: 1109c00547fc ("net: sched: RCU cls_route")
 Reported-by: valis <sec@valis.email>
-Reported-by: M A Ramdhan <ramdhan@starlabs.sg>
+Reported-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
 Signed-off-by: valis <sec@valis.email>
 Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Reviewed-by: Victor Nogueira <victor@mojatatu.com>
 Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
 Reviewed-by: M A Ramdhan <ramdhan@starlabs.sg>
-Link: https://lore.kernel.org/r/20230729123202.72406-2-jhs@mojatatu.com
+Link: https://lore.kernel.org/r/20230729123202.72406-4-jhs@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_u32.c | 1 -
+ net/sched/cls_route.c | 1 -
  1 file changed, 1 deletion(-)
 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index 5e052c7342b9f..1e71ff093c91d 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -879,7 +879,6 @@ static struct tc_u_knode *u32_init_knode(struct tcf_proto *tp,
- 	new->ifindex = n->ifindex;
- #endif
- 	new->fshift = n->fshift;
--	new->res = n->res;
- 	new->flags = n->flags;
- 	RCU_INIT_POINTER(new->ht_down, ht);
+diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
+index 4c7fa1cfd8e38..a924292623ecf 100644
+--- a/net/sched/cls_route.c
++++ b/net/sched/cls_route.c
+@@ -513,7 +513,6 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
+ 	if (fold) {
+ 		f->id = fold->id;
+ 		f->iif = fold->iif;
+-		f->res = fold->res;
+ 		f->handle = fold->handle;
  
+ 		f->tp = fold->tp;
 -- 
 2.40.1
 
