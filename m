@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15CF853B7
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:55:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C498C433C7;
-	Wed,  9 Aug 2023 10:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF3353B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:55:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5062DC433C9;
+	Wed,  9 Aug 2023 10:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578543;
-	bh=4DWjEd7YS3jv/zrqFsmL5H1ZPV55s1rtosvskZZIr2w=;
+	s=korg; t=1691578546;
+	bh=AUSJjO8iLedBWXK4Qln94xwvLx2VeLDBhdpx6dI/S/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hxa3+7heUN2lVpxhLJHlx1Sfy4Ib7AJXoN1S9ktr5ulUVNcJX0t+QfFJvw5ZJBwux
-	 Heg2kl5kRFP+zqE78Wyg76zTf3UwhPer73HfRIToR6oHxoX7jItoBbKCoza7duzheD
-	 wJUQhoPbhTFJEFGc/PweF7gstv+j2okZN2ertcA8=
+	b=ZysiIXAoUjokQUu2xAHZ55ztlRR2LKQVfHvphdMk4o/xa7L63acxddb5LImQhZb/K
+	 yXkAMukur0+Foxs6VRF9D8ZQ85AcrCjzpkCkurC9Xg9ZgUQ22dHhJEttjELRGVWDae
+	 5RiTA0yHJDPNEyezOFw4mfQJ/iRIgXbYb/py9c0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Subject: [PATCH 6.1 096/127] drm/i915/gt: Cleanup aux invalidation registers
-Date: Wed,  9 Aug 2023 12:41:23 +0200
-Message-ID: <20230809103639.816150560@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	kernel test robot <lkp@intel.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Peng Fan <peng.fan@nxp.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 6.1 097/127] clk: imx93: Propagate correct error in imx93_clocks_probe()
+Date: Wed,  9 Aug 2023 12:41:24 +0200
+Message-ID: <20230809103639.846155263@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -36,117 +37,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andi Shyti <andi.shyti@linux.intel.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit d14560ac1b595aa2e792365e91fea6aeaee66c2b upstream.
+commit a29b2fccf5f2689a9637be85ff1f51c834c6fb33 upstream.
 
-Fix the 'NV' definition postfix that is supposed to be INV.
+smatch reports:
 
-Take the chance to also order properly the registers based on
-their address and call the GEN12_GFX_CCS_AUX_INV address as
-GEN12_CCS_AUX_INV like all the other similar registers.
+    drivers/clk/imx/clk-imx93.c:294 imx93_clocks_probe() error: uninitialized symbol 'base'.
 
-Remove also VD1, VD3 and VE1 registers that don't exist and add
-BCS0 and CCS0.
+Indeed, in case of an error, the wrong (yet uninitialized) variable is
+converted to an error code and returned.
+Fix this by propagating the error code in the correct variable.
 
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Cc: <stable@vger.kernel.org> # v5.8+
-Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230725001950.1014671-2-andi.shyti@linux.intel.com
-(cherry picked from commit 2f0b927d3ca3440445975ebde27f3df1c3ed6f76)
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Fixes: e02ba11b45764705 ("clk: imx93: fix memory leak and missing unwind goto in imx93_clocks_probe")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/9c2acd81-3ad8-485d-819e-9e4201277831@kadam.mountain
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/all/202306161533.4YDmL22b-lkp@intel.com/
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20230711150812.3562221-1-geert+renesas@glider.be
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/gen8_engine_cs.c |    8 ++++----
- drivers/gpu/drm/i915/gt/intel_gt_regs.h  |   16 ++++++++--------
- drivers/gpu/drm/i915/gt/intel_lrc.c      |    6 +++---
- 3 files changed, 15 insertions(+), 15 deletions(-)
+ drivers/clk/imx/clk-imx93.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
-+++ b/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
-@@ -256,8 +256,8 @@ int gen12_emit_flush_rcs(struct i915_req
- 
- 		if (!HAS_FLAT_CCS(rq->engine->i915)) {
- 			/* hsdes: 1809175790 */
--			cs = gen12_emit_aux_table_inv(rq->engine->gt,
--						      cs, GEN12_GFX_CCS_AUX_NV);
-+			cs = gen12_emit_aux_table_inv(rq->engine->gt, cs,
-+						      GEN12_CCS_AUX_INV);
- 		}
- 
- 		*cs++ = preparser_disable(false);
-@@ -317,10 +317,10 @@ int gen12_emit_flush_xcs(struct i915_req
- 	if (aux_inv) { /* hsdes: 1809175790 */
- 		if (rq->engine->class == VIDEO_DECODE_CLASS)
- 			cs = gen12_emit_aux_table_inv(rq->engine->gt,
--						      cs, GEN12_VD0_AUX_NV);
-+						      cs, GEN12_VD0_AUX_INV);
- 		else
- 			cs = gen12_emit_aux_table_inv(rq->engine->gt,
--						      cs, GEN12_VE0_AUX_NV);
-+						      cs, GEN12_VE0_AUX_INV);
+--- a/drivers/clk/imx/clk-imx93.c
++++ b/drivers/clk/imx/clk-imx93.c
+@@ -288,7 +288,7 @@ static int imx93_clocks_probe(struct pla
+ 	anatop_base = devm_of_iomap(dev, np, 0, NULL);
+ 	of_node_put(np);
+ 	if (WARN_ON(IS_ERR(anatop_base))) {
+-		ret = PTR_ERR(base);
++		ret = PTR_ERR(anatop_base);
+ 		goto unregister_hws;
  	}
  
- 	if (mode & EMIT_INVALIDATE)
---- a/drivers/gpu/drm/i915/gt/intel_gt_regs.h
-+++ b/drivers/gpu/drm/i915/gt/intel_gt_regs.h
-@@ -301,9 +301,11 @@
- #define GEN8_PRIVATE_PAT_HI			_MMIO(0x40e0 + 4)
- #define GEN10_PAT_INDEX(index)			_MMIO(0x40e0 + (index) * 4)
- #define BSD_HWS_PGA_GEN7			_MMIO(0x4180)
--#define GEN12_GFX_CCS_AUX_NV			_MMIO(0x4208)
--#define GEN12_VD0_AUX_NV			_MMIO(0x4218)
--#define GEN12_VD1_AUX_NV			_MMIO(0x4228)
-+
-+#define GEN12_CCS_AUX_INV			_MMIO(0x4208)
-+#define GEN12_VD0_AUX_INV			_MMIO(0x4218)
-+#define GEN12_VE0_AUX_INV			_MMIO(0x4238)
-+#define GEN12_BCS0_AUX_INV			_MMIO(0x4248)
- 
- #define GEN8_RTCR				_MMIO(0x4260)
- #define GEN8_M1TCR				_MMIO(0x4264)
-@@ -311,14 +313,12 @@
- #define GEN8_BTCR				_MMIO(0x426c)
- #define GEN8_VTCR				_MMIO(0x4270)
- 
--#define GEN12_VD2_AUX_NV			_MMIO(0x4298)
--#define GEN12_VD3_AUX_NV			_MMIO(0x42a8)
--#define GEN12_VE0_AUX_NV			_MMIO(0x4238)
--
- #define BLT_HWS_PGA_GEN7			_MMIO(0x4280)
- 
--#define GEN12_VE1_AUX_NV			_MMIO(0x42b8)
-+#define GEN12_VD2_AUX_INV			_MMIO(0x4298)
-+#define GEN12_CCS0_AUX_INV			_MMIO(0x42c8)
- #define   AUX_INV				REG_BIT(0)
-+
- #define VEBOX_HWS_PGA_GEN7			_MMIO(0x4380)
- 
- #define GEN12_AUX_ERR_DBG			_MMIO(0x43f4)
---- a/drivers/gpu/drm/i915/gt/intel_lrc.c
-+++ b/drivers/gpu/drm/i915/gt/intel_lrc.c
-@@ -1299,7 +1299,7 @@ gen12_emit_indirect_ctx_rcs(const struct
- 	/* hsdes: 1809175790 */
- 	if (!HAS_FLAT_CCS(ce->engine->i915))
- 		cs = gen12_emit_aux_table_inv(ce->engine->gt,
--					      cs, GEN12_GFX_CCS_AUX_NV);
-+					      cs, GEN12_CCS_AUX_INV);
- 
- 	/* Wa_16014892111 */
- 	if (IS_DG2(ce->engine->i915))
-@@ -1326,10 +1326,10 @@ gen12_emit_indirect_ctx_xcs(const struct
- 	if (!HAS_FLAT_CCS(ce->engine->i915)) {
- 		if (ce->engine->class == VIDEO_DECODE_CLASS)
- 			cs = gen12_emit_aux_table_inv(ce->engine->gt,
--						      cs, GEN12_VD0_AUX_NV);
-+						      cs, GEN12_VD0_AUX_INV);
- 		else if (ce->engine->class == VIDEO_ENHANCEMENT_CLASS)
- 			cs = gen12_emit_aux_table_inv(ce->engine->gt,
--						      cs, GEN12_VE0_AUX_NV);
-+						      cs, GEN12_VE0_AUX_INV);
- 	}
- 
- 	return cs;
 
 
