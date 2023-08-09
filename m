@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42129171A6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:59:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82A3C433C7;
-	Wed,  9 Aug 2023 10:59:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF12171A6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:59:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B2FC433C8;
+	Wed,  9 Aug 2023 10:59:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578747;
-	bh=22IxmQ5bqN2fwbXT7iIs1aDEVw7lXsw+KhPzF2kldCo=;
+	s=korg; t=1691578749;
+	bh=EF1hZlgU2KnKbx+/+OpANbWNgOk94yEqmmtZf8ypHjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sos3CkXdULkH4ino7PlPksHZMc3zXWXSS/a9gghxgoGhJT6lPcUuPDa0npSa4XPkf
-	 XYrsR7aoUUj5lFMf7r+F0J4Md9qZLNaQU3NPoBPZvlCsx1ymTOQoDLbOl2ixKJQeB7
-	 9gE9nvuN/hndBZwU76iEzoZlZgk8FhUdz4ODwTg8=
+	b=YuI2Piyv+h+lt6KdrVEEb+AleSUab/YLp8ySr5yQUITH5GVw4INOc0Z1lKVNtonbi
+	 4nijYm9INMprAF9hR+PuKzUvUaNgW7sVMpp+PsWuqJtsd+ZOKw4Vll/QMfKilzwNLD
+	 SVBA9ffgSUHDuEC3pULBz60yeeI6ss2YlLciS8JI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Yue Haibing <yuehaibing@huawei.com>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 42/92] s390/qeth: Dont call dev_close/dev_open (DOWN/UP)
-Date: Wed,  9 Aug 2023 12:41:18 +0200
-Message-ID: <20230809103635.075826857@linuxfoundation.org>
+Subject: [PATCH 5.15 43/92] ip6mr: Fix skb_under_panic in ip6mr_cache_report()
+Date: Wed,  9 Aug 2023 12:41:19 +0200
+Message-ID: <20230809103635.110555490@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -36,102 +36,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Yue Haibing <yuehaibing@huawei.com>
 
-[ Upstream commit 1cfef80d4c2b2c599189f36f36320b205d9447d9 ]
+[ Upstream commit 30e0191b16e8a58e4620fa3e2839ddc7b9d4281c ]
 
-dev_close() and dev_open() are issued to change the interface state to DOWN
-or UP (dev->flags IFF_UP). When the netdev is set DOWN it loses e.g its
-Ipv6 addresses and routes. We don't want this in cases of device recovery
-(triggered by hardware or software) or when the qeth device is set
-offline.
+skbuff: skb_under_panic: text:ffffffff88771f69 len:56 put:-4
+ head:ffff88805f86a800 data:ffff887f5f86a850 tail:0x88 end:0x2c0 dev:pim6reg
+ ------------[ cut here ]------------
+ kernel BUG at net/core/skbuff.c:192!
+ invalid opcode: 0000 [#1] PREEMPT SMP KASAN
+ CPU: 2 PID: 22968 Comm: kworker/2:11 Not tainted 6.5.0-rc3-00044-g0a8db05b571a #236
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+ Workqueue: ipv6_addrconf addrconf_dad_work
+ RIP: 0010:skb_panic+0x152/0x1d0
+ Call Trace:
+  <TASK>
+  skb_push+0xc4/0xe0
+  ip6mr_cache_report+0xd69/0x19b0
+  reg_vif_xmit+0x406/0x690
+  dev_hard_start_xmit+0x17e/0x6e0
+  __dev_queue_xmit+0x2d6a/0x3d20
+  vlan_dev_hard_start_xmit+0x3ab/0x5c0
+  dev_hard_start_xmit+0x17e/0x6e0
+  __dev_queue_xmit+0x2d6a/0x3d20
+  neigh_connected_output+0x3ed/0x570
+  ip6_finish_output2+0x5b5/0x1950
+  ip6_finish_output+0x693/0x11c0
+  ip6_output+0x24b/0x880
+  NF_HOOK.constprop.0+0xfd/0x530
+  ndisc_send_skb+0x9db/0x1400
+  ndisc_send_rs+0x12a/0x6c0
+  addrconf_dad_completed+0x3c9/0xea0
+  addrconf_dad_work+0x849/0x1420
+  process_one_work+0xa22/0x16e0
+  worker_thread+0x679/0x10c0
+  ret_from_fork+0x28/0x60
+  ret_from_fork_asm+0x11/0x20
 
-Setting a qeth device offline or online and device recovery actions call
-netif_device_detach() and/or netif_device_attach(). That will reset or
-set the LOWER_UP indication i.e. change the dev->state Bit
-__LINK_STATE_PRESENT. That is enough to e.g. cause bond failovers, and
-still preserves the interface settings that are handled by the network
-stack.
+When setup a vlan device on dev pim6reg, DAD ns packet may sent on reg_vif_xmit().
+reg_vif_xmit()
+    ip6mr_cache_report()
+        skb_push(skb, -skb_network_offset(pkt));//skb_network_offset(pkt) is 4
+And skb_push declared as:
+	void *skb_push(struct sk_buff *skb, unsigned int len);
+		skb->data -= len;
+		//0xffff88805f86a84c - 0xfffffffc = 0xffff887f5f86a850
+skb->data is set to 0xffff887f5f86a850, which is invalid mem addr, lead to skb_push() fails.
 
-Don't call dev_open() nor dev_close() from the qeth device driver. Let the
-network stack handle this.
-
-Fixes: d4560150cb47 ("s390/qeth: call dev_close() during recovery")
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
+Fixes: 14fb64e1f449 ("[IPV6] MROUTE: Support PIM-SM (SSM).")
+Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/net/qeth_core.h      | 1 -
- drivers/s390/net/qeth_core_main.c | 2 --
- drivers/s390/net/qeth_l2_main.c   | 9 ++++++---
- drivers/s390/net/qeth_l3_main.c   | 8 +++++---
- 4 files changed, 11 insertions(+), 9 deletions(-)
+ net/ipv6/ip6mr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/s390/net/qeth_core.h b/drivers/s390/net/qeth_core.h
-index a5aa0bdc61d69..e8c360879883b 100644
---- a/drivers/s390/net/qeth_core.h
-+++ b/drivers/s390/net/qeth_core.h
-@@ -717,7 +717,6 @@ struct qeth_card_info {
- 	u16 chid;
- 	u8 ids_valid:1; /* cssid,iid,chid */
- 	u8 dev_addr_is_registered:1;
--	u8 open_when_online:1;
- 	u8 promisc_mode:1;
- 	u8 use_v1_blkt:1;
- 	u8 is_vm_nic:1;
-diff --git a/drivers/s390/net/qeth_core_main.c b/drivers/s390/net/qeth_core_main.c
-index e9807d2996a9d..62e7576bff536 100644
---- a/drivers/s390/net/qeth_core_main.c
-+++ b/drivers/s390/net/qeth_core_main.c
-@@ -5459,8 +5459,6 @@ int qeth_set_offline(struct qeth_card *card, const struct qeth_discipline *disc,
- 	qeth_clear_ipacmd_list(card);
+diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
+index 91f1c5f56d5fa..ee094645c7cea 100644
+--- a/net/ipv6/ip6mr.c
++++ b/net/ipv6/ip6mr.c
+@@ -1068,7 +1068,7 @@ static int ip6mr_cache_report(struct mr_table *mrt, struct sk_buff *pkt,
+ 		   And all this only to mangle msg->im6_msgtype and
+ 		   to set msg->im6_mbz to "mbz" :-)
+ 		 */
+-		skb_push(skb, -skb_network_offset(pkt));
++		__skb_pull(skb, skb_network_offset(pkt));
  
- 	rtnl_lock();
--	card->info.open_when_online = card->dev->flags & IFF_UP;
--	dev_close(card->dev);
- 	netif_device_detach(card->dev);
- 	netif_carrier_off(card->dev);
- 	rtnl_unlock();
-diff --git a/drivers/s390/net/qeth_l2_main.c b/drivers/s390/net/qeth_l2_main.c
-index d694e3ff80865..7cdf3274cf964 100644
---- a/drivers/s390/net/qeth_l2_main.c
-+++ b/drivers/s390/net/qeth_l2_main.c
-@@ -2373,9 +2373,12 @@ static int qeth_l2_set_online(struct qeth_card *card, bool carrier_ok)
- 		qeth_enable_hw_features(dev);
- 		qeth_l2_enable_brport_features(card);
- 
--		if (card->info.open_when_online) {
--			card->info.open_when_online = 0;
--			dev_open(dev, NULL);
-+		if (netif_running(dev)) {
-+			local_bh_disable();
-+			napi_schedule(&card->napi);
-+			/* kick-start the NAPI softirq: */
-+			local_bh_enable();
-+			qeth_l2_set_rx_mode(dev);
- 		}
- 		rtnl_unlock();
- 	}
-diff --git a/drivers/s390/net/qeth_l3_main.c b/drivers/s390/net/qeth_l3_main.c
-index 6fd3e288f0595..93f55c7348026 100644
---- a/drivers/s390/net/qeth_l3_main.c
-+++ b/drivers/s390/net/qeth_l3_main.c
-@@ -2029,9 +2029,11 @@ static int qeth_l3_set_online(struct qeth_card *card, bool carrier_ok)
- 		netif_device_attach(dev);
- 		qeth_enable_hw_features(dev);
- 
--		if (card->info.open_when_online) {
--			card->info.open_when_online = 0;
--			dev_open(dev, NULL);
-+		if (netif_running(dev)) {
-+			local_bh_disable();
-+			napi_schedule(&card->napi);
-+			/* kick-start the NAPI softirq: */
-+			local_bh_enable();
- 		}
- 		rtnl_unlock();
- 	}
+ 		skb_push(skb, sizeof(*msg));
+ 		skb_reset_transport_header(skb);
 -- 
 2.40.1
 
