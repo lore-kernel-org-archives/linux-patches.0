@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D81415AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:48:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77415C433C8;
-	Wed,  9 Aug 2023 10:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E511915AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:48:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6365CC433C7;
+	Wed,  9 Aug 2023 10:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578113;
-	bh=eTcz6bIUyGp53N9M8fXParpMDa0FbsuPIF2BGIJYRq8=;
+	s=korg; t=1691578116;
+	bh=V7G+holsThWloMXbTQ2nVssqirkjVAIo9GB+txgNUDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YE8hgaHd0MATgSf81QwJlorOphWt77BSc+3iklIZ4wJXzfcOgNHB9ZRQoNLJeoiG0
-	 qo3D+sbxOVGCbmKnNLeoHn4d40XKPjHgm93AKKGMI4l+Gd+XKoeD6NKVf+5Gucf7ao
-	 FYI8Z1QkjB+TcdqSWAPask+LoMv9WcAxmWBqem20=
+	b=06H+RpYfxXQQWN8zZPnplg72PXpN82lpQ4lN05xQjuM3uXsGIlvhspwJvdOrUmG+e
+	 UnVrp+7whxy7Vi3BWhie1mwOgVt182holsvqEV7EZSs/qQJMsNLVfFfVqK5iuHnOs6
+	 W3yALKS4iVRkjuggYS1mhl6eJM6n97t6g1GUehtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.4 111/165] bpf: Disable preemption in bpf_perf_event_output
-Date: Wed,  9 Aug 2023 12:40:42 +0200
-Message-ID: <20230809103646.425080696@linuxfoundation.org>
+	Dinh Nguyen <dinguyen@kernel.org>
+Subject: [PATCH 6.4 112/165] arm64: dts: stratix10: fix incorrect I2C property for SCL signal
+Date: Wed,  9 Aug 2023 12:40:43 +0200
+Message-ID: <20230809103646.456668857@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -35,89 +33,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Dinh Nguyen <dinguyen@kernel.org>
 
-commit f2c67a3e60d1071b65848efaa8c3b66c363dd025 upstream.
+commit db66795f61354c373ecdadbdae1ed253a96c47cb upstream.
 
-The nesting protection in bpf_perf_event_output relies on disabled
-preemption, which is guaranteed for kprobes and tracepoints.
+The correct dts property for the SCL falling time is
+"i2c-scl-falling-time-ns".
 
-However bpf_perf_event_output can be also called from uprobes context
-through bpf_prog_run_array_sleepable function which disables migration,
-but keeps preemption enabled.
-
-This can cause task to be preempted by another one inside the nesting
-protection and lead eventually to two tasks using same perf_sample_data
-buffer and cause crashes like:
-
-  kernel tried to execute NX-protected page - exploit attempt? (uid: 0)
-  BUG: unable to handle page fault for address: ffffffff82be3eea
-  ...
-  Call Trace:
-   ? __die+0x1f/0x70
-   ? page_fault_oops+0x176/0x4d0
-   ? exc_page_fault+0x132/0x230
-   ? asm_exc_page_fault+0x22/0x30
-   ? perf_output_sample+0x12b/0x910
-   ? perf_event_output+0xd0/0x1d0
-   ? bpf_perf_event_output+0x162/0x1d0
-   ? bpf_prog_c6271286d9a4c938_krava1+0x76/0x87
-   ? __uprobe_perf_func+0x12b/0x540
-   ? uprobe_dispatcher+0x2c4/0x430
-   ? uprobe_notify_resume+0x2da/0xce0
-   ? atomic_notifier_call_chain+0x7b/0x110
-   ? exit_to_user_mode_prepare+0x13e/0x290
-   ? irqentry_exit_to_user_mode+0x5/0x30
-   ? asm_exc_int3+0x35/0x40
-
-Fixing this by disabling preemption in bpf_perf_event_output.
-
+Fixes: c8da1d15b8a4 ("arm64: dts: stratix10: i2c clock running out of spec")
 Cc: stable@vger.kernel.org
-Fixes: 8c7dcb84e3b7 ("bpf: implement sleepable uprobes by chaining gps")
-Acked-by: Hou Tao <houtao1@huawei.com>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20230725084206.580930-2-jolsa@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/bpf_trace.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/altera/socfpga_stratix10_socdk.dts      |    2 +-
+ arch/arm64/boot/dts/altera/socfpga_stratix10_socdk_nand.dts |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -661,8 +661,7 @@ static DEFINE_PER_CPU(int, bpf_trace_nes
- BPF_CALL_5(bpf_perf_event_output, struct pt_regs *, regs, struct bpf_map *, map,
- 	   u64, flags, void *, data, u64, size)
- {
--	struct bpf_trace_sample_data *sds = this_cpu_ptr(&bpf_trace_sds);
--	int nest_level = this_cpu_inc_return(bpf_trace_nest_level);
-+	struct bpf_trace_sample_data *sds;
- 	struct perf_raw_record raw = {
- 		.frag = {
- 			.size = size,
-@@ -670,7 +669,11 @@ BPF_CALL_5(bpf_perf_event_output, struct
- 		},
- 	};
- 	struct perf_sample_data *sd;
--	int err;
-+	int nest_level, err;
-+
-+	preempt_disable();
-+	sds = this_cpu_ptr(&bpf_trace_sds);
-+	nest_level = this_cpu_inc_return(bpf_trace_nest_level);
+--- a/arch/arm64/boot/dts/altera/socfpga_stratix10_socdk.dts
++++ b/arch/arm64/boot/dts/altera/socfpga_stratix10_socdk.dts
+@@ -145,7 +145,7 @@
+ 	status = "okay";
+ 	clock-frequency = <100000>;
+ 	i2c-sda-falling-time-ns = <890>;  /* hcnt */
+-	i2c-sdl-falling-time-ns = <890>;  /* lcnt */
++	i2c-scl-falling-time-ns = <890>;  /* lcnt */
  
- 	if (WARN_ON_ONCE(nest_level > ARRAY_SIZE(sds->sds))) {
- 		err = -EBUSY;
-@@ -688,9 +691,9 @@ BPF_CALL_5(bpf_perf_event_output, struct
- 	perf_sample_save_raw_data(sd, &raw);
+ 	pinctrl-names = "default", "gpio";
+ 	pinctrl-0 = <&i2c1_pmx_func>;
+--- a/arch/arm64/boot/dts/altera/socfpga_stratix10_socdk_nand.dts
++++ b/arch/arm64/boot/dts/altera/socfpga_stratix10_socdk_nand.dts
+@@ -141,7 +141,7 @@
+ 	status = "okay";
+ 	clock-frequency = <100000>;
+ 	i2c-sda-falling-time-ns = <890>;  /* hcnt */
+-	i2c-sdl-falling-time-ns = <890>;  /* lcnt */
++	i2c-scl-falling-time-ns = <890>;  /* lcnt */
  
- 	err = __bpf_perf_event_output(regs, map, flags, sd);
--
- out:
- 	this_cpu_dec(bpf_trace_nest_level);
-+	preempt_enable();
- 	return err;
- }
- 
+ 	adc@14 {
+ 		compatible = "lltc,ltc2497";
 
 
