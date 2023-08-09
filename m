@@ -1,29 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C166115AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:44:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 414E1C433C8;
-	Wed,  9 Aug 2023 10:44:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F9615AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:44:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD997C433C7;
+	Wed,  9 Aug 2023 10:44:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691577875;
-	bh=auQ52G1uv/fBXl0ISBN+jSXMtoyKyYwBp1qb5Qn69no=;
+	s=korg; t=1691577878;
+	bh=1p+ZaaiirH1QJYwhEVbbjQXfkOCiHm/fkZERm1Saqe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AXiyVHyuHDSm5rr7T/o6LaTeZiJjZ3Qn81lKsRycdeLftC0I1YH1dIY3wrEI4A5bE
-	 yf4a2oCfVnS6llbZSUDqklBmxLMUaFgDRPJ4JWgxEHmQI9YYpJs+ETD3AimCsVo8cf
-	 70OS8ouYdal6LRP9H2Bv/1rh39uthEFr3nyNOO8U=
+	b=XPtpyVnYrK7EJmyWBM/LOZjrDMyXJ4dLrcnneY2JKjLpB9x7YYefDRCaOr/isjHpj
+	 cNS0nFwxxbEkZGsHuybRZEErEgeoecVQhhkYhx+OEmqPjxrp9L+cC+5Si3ONrfLH+W
+	 nwSiNZjw44edjK4b9wrdZI+8yXYitlZiOmTB8AYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shijie Sun <sunshijie@xiaomi.com>,
-	Yue Hu <huyue2@coolpad.com>,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Haixin Yu <yuhaixin.yhx@linux.alibaba.com>,
+	Jing Zhang <renyu.zj@linux.alibaba.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@arm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	John Garry <john.g.garry@oracle.com>,
+	Leo Yan <leo.yan@linaro.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Will Deacon <will@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 025/165] erofs: fix wrong primary bvec selection on deduplicated extents
-Date: Wed,  9 Aug 2023 12:39:16 +0200
-Message-ID: <20230809103643.634655293@linuxfoundation.org>
+Subject: [PATCH 6.4 026/165] perf pmu arm64: Fix reading the PMU cpu slots in sysfs
+Date: Wed,  9 Aug 2023 12:39:17 +0200
+Message-ID: <20230809103643.673268041@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -37,68 +50,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Haixin Yu <yuhaixin.yhx@linux.alibaba.com>
 
-[ Upstream commit 94c43de73521d8ed7ebcfc6191d9dace1cbf7caa ]
+[ Upstream commit 9754353d0ab123d71bf572a483ecc8b330ef36a3 ]
 
-When handling deduplicated compressed data, there can be multiple
-decompressed extents pointing to the same compressed data in one shot.
+Commit f8ad6018ce3c065a ("perf pmu: Remove duplication around
+EVENT_SOURCE_DEVICE_PATH") uses sysfs__read_ull() to read a full sysfs
+path, which will never succeeds as it already comes with the sysfs mount
+point in it, which sysfs__read_ull() will add again.
 
-In such cases, the bvecs which belong to the longest extent will be
-selected as the primary bvecs for real decompressors to decode and the
-other duplicated bvecs will be directly copied from the primary bvecs.
+Fix it by reading the file using filename__read_ull(), that will not add
+the sysfs mount point.
 
-Previously, only relative offsets of the longest extent were checked to
-decompress the primary bvecs.  On rare occasions, it can be incorrect
-if there are several extents with the same start relative offset.
-As a result, some short bvecs could be selected for decompression and
-then cause data corruption.
-
-For example, as Shijie Sun reported off-list, considering the following
-extents of a file:
- 117:   903345..  915250 |   11905 :     385024..    389120 |    4096
-...
- 119:   919729..  930323 |   10594 :     385024..    389120 |    4096
-...
- 124:   968881..  980786 |   11905 :     385024..    389120 |    4096
-
-The start relative offset is the same: 2225, but extent 119 (919729..
-930323) is shorter than the others.
-
-Let's restrict the bvec length in addition to the start offset if bvecs
-are not full.
-
-Reported-by: Shijie Sun <sunshijie@xiaomi.com>
-Fixes: 5c2a64252c5d ("erofs: introduce partial-referenced pclusters")
-Tested-by Shijie Sun <sunshijie@xiaomi.com>
-Reviewed-by: Yue Hu <huyue2@coolpad.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20230719065459.60083-1-hsiangkao@linux.alibaba.com
+Fixes: f8ad6018ce3c065a ("perf pmu: Remove duplication around EVENT_SOURCE_DEVICE_PATH")
+Signed-off-by: Haixin Yu <yuhaixin.yhx@linux.alibaba.com>
+Tested-by: Jing Zhang <renyu.zj@linux.alibaba.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: John Garry <john.g.garry@oracle.com>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mike Leach <mike.leach@linaro.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Link: https://lore.kernel.org/r/ZL4G7rWXkfv-Ectq@B-Q60VQ05P-2326.local
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 7 ++++---
+ tools/perf/arch/arm64/util/pmu.c | 7 ++++---
  1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index 4a1c238600c52..470988bb7867e 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1110,10 +1110,11 @@ static void z_erofs_do_decompressed_bvec(struct z_erofs_decompress_backend *be,
- 					 struct z_erofs_bvec *bvec)
- {
- 	struct z_erofs_bvec_item *item;
-+	unsigned int pgnr;
+diff --git a/tools/perf/arch/arm64/util/pmu.c b/tools/perf/arch/arm64/util/pmu.c
+index ef1ed645097c6..ce0d1c7578348 100644
+--- a/tools/perf/arch/arm64/util/pmu.c
++++ b/tools/perf/arch/arm64/util/pmu.c
+@@ -56,10 +56,11 @@ double perf_pmu__cpu_slots_per_cycle(void)
+ 		perf_pmu__pathname_scnprintf(path, sizeof(path),
+ 					     pmu->name, "caps/slots");
+ 		/*
+-		 * The value of slots is not greater than 32 bits, but sysfs__read_int
+-		 * can't read value with 0x prefix, so use sysfs__read_ull instead.
++		 * The value of slots is not greater than 32 bits, but
++		 * filename__read_int can't read value with 0x prefix,
++		 * so use filename__read_ull instead.
+ 		 */
+-		sysfs__read_ull(path, &slots);
++		filename__read_ull(path, &slots);
+ 	}
  
--	if (!((bvec->offset + be->pcl->pageofs_out) & ~PAGE_MASK)) {
--		unsigned int pgnr;
--
-+	if (!((bvec->offset + be->pcl->pageofs_out) & ~PAGE_MASK) &&
-+	    (bvec->end == PAGE_SIZE ||
-+	     bvec->offset + bvec->end == be->pcl->length)) {
- 		pgnr = (bvec->offset + be->pcl->pageofs_out) >> PAGE_SHIFT;
- 		DBG_BUGON(pgnr >= be->nr_pages);
- 		if (!be->decompressed_pages[pgnr]) {
+ 	return slots ? (double)slots : NAN;
 -- 
 2.40.1
 
