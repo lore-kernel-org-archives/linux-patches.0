@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C364174F0
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:13:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A54D8C433C8;
-	Wed,  9 Aug 2023 11:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0658F174F0
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:13:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B354C433C9;
+	Wed,  9 Aug 2023 11:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579586;
-	bh=bagmIbV1nwDNCHl7KbGKA/QUvQ+rWOlS6GKdmsltRjw=;
+	s=korg; t=1691579588;
+	bh=dB4i023ufZ1dnK0w1/jujlQDKggac9FZJ6Xs3fHcVvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zuUJWCG+L0CqezfXB0Dg3cYyk4AO4cQo9rRkq5v/1ZbFNz1JpnMCYsZYYAbKTtWjK
-	 AecLr0SdEOmt23hKtrAJfGLMSiW3+s02gZVY5s/OdR6sv44WJMlaG7X8euO7cTHMf0
-	 2gMO5ZUYEEvb5KMONGj7NQB9NmdGc1ri5LJmPKjw=
+	b=o4Zpti0Qv3Pe497CVhP/i3AFj3t7MlTltQYMDKijXeWzjBwqF8gdQ763aKFu802d7
+	 g5bclVx1Mq3VmbXZXBI4b370mFJWz+6Rv+QPPtMw+vhlbdGe4lDFckVPr/YvM8GT29
+	 vrzL5pWQ6pYdftVv+SM/SsG+77W07HtJwvQ4E+Ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Rajan Vaja <rajan.vaja@xilinx.com>,
+	Michal Simek <michal.simek@xilinx.com>,
 	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 015/323] clocksource/drivers: Unify the names to timer-* format
-Date: Wed,  9 Aug 2023 12:37:33 +0200
-Message-ID: <20230809103658.791517986@linuxfoundation.org>
+Subject: [PATCH 4.19 016/323] clocksource/drivers/cadence-ttc: Use ttc driver as platform driver
+Date: Wed,  9 Aug 2023 12:37:34 +0200
+Message-ID: <20230809103658.838891209@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -37,214 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Lezcano <daniel.lezcano@linaro.org>
+From: Rajan Vaja <rajan.vaja@xilinx.com>
 
-[ Upstream commit 9d8d47ea6ec6048abc75ccc4486aff1a7db1ff4b ]
+[ Upstream commit f5ac896b6a23eb46681cdbef440c1d991b04e519 ]
 
-In order to make some housekeeping in the directory, this patch renames
-drivers to the timer-* format in order to unify their names.
+Currently TTC driver is TIMER_OF_DECLARE type driver. Because of
+that, TTC driver may be initialized before other clock drivers. If
+TTC driver is dependent on that clock driver then initialization of
+TTC driver will failed.
 
-There is no functional changes.
+So use TTC driver as platform driver instead of using
+TIMER_OF_DECLARE.
 
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Acked-by: Vladimir Zapolskiy <vz@mleia.com>
-Acked-by: Liviu Dudau <liviu.dudau@arm.com>
-
+Signed-off-by: Rajan Vaja <rajan.vaja@xilinx.com>
+Tested-by: Michal Simek <michal.simek@xilinx.com>
+Acked-by: Michal Simek <michal.simek@xilinx.com>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://lore.kernel.org/r/1573122988-18399-1-git-send-email-rajan.vaja@xilinx.com
 Stable-dep-of: 8b5bf64c89c7 ("clocksource/drivers/cadence-ttc: Fix memory leak in ttc_timer_probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- MAINTAINERS                                   | 10 +++----
- drivers/clocksource/Makefile                  | 26 +++++++++----------
- ...-armada-370-xp.c => timer-armada-370-xp.c} |  0
- ...adence_ttc_timer.c => timer-cadence-ttc.c} |  0
- .../{time-efm32.c => timer-efm32.c}           |  0
- .../{fsl_ftm_timer.c => timer-fsl-ftm.c}      |  0
- .../{time-lpc32xx.c => timer-lpc32xx.c}       |  0
- .../{time-orion.c => timer-orion.c}           |  0
- .../clocksource/{owl-timer.c => timer-owl.c}  |  0
- .../{time-pistachio.c => timer-pistachio.c}   |  0
- .../{qcom-timer.c => timer-qcom.c}            |  0
- .../{versatile.c => timer-versatile.c}        |  0
- .../{vf_pit_timer.c => timer-vf-pit.c}        |  0
- .../{vt8500_timer.c => timer-vt8500.c}        |  0
- .../{zevio-timer.c => timer-zevio.c}          |  0
- 15 files changed, 18 insertions(+), 18 deletions(-)
- rename drivers/clocksource/{time-armada-370-xp.c => timer-armada-370-xp.c} (100%)
- rename drivers/clocksource/{cadence_ttc_timer.c => timer-cadence-ttc.c} (100%)
- rename drivers/clocksource/{time-efm32.c => timer-efm32.c} (100%)
- rename drivers/clocksource/{fsl_ftm_timer.c => timer-fsl-ftm.c} (100%)
- rename drivers/clocksource/{time-lpc32xx.c => timer-lpc32xx.c} (100%)
- rename drivers/clocksource/{time-orion.c => timer-orion.c} (100%)
- rename drivers/clocksource/{owl-timer.c => timer-owl.c} (100%)
- rename drivers/clocksource/{time-pistachio.c => timer-pistachio.c} (100%)
- rename drivers/clocksource/{qcom-timer.c => timer-qcom.c} (100%)
- rename drivers/clocksource/{versatile.c => timer-versatile.c} (100%)
- rename drivers/clocksource/{vf_pit_timer.c => timer-vf-pit.c} (100%)
- rename drivers/clocksource/{vt8500_timer.c => timer-vt8500.c} (100%)
- rename drivers/clocksource/{zevio-timer.c => timer-zevio.c} (100%)
+ drivers/clocksource/timer-cadence-ttc.c | 26 +++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 3d3d7f5d1c3f1..59003315a9597 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1180,7 +1180,7 @@ N:	owl
- F:	arch/arm/mach-actions/
- F:	arch/arm/boot/dts/owl-*
- F:	arch/arm64/boot/dts/actions/
--F:	drivers/clocksource/owl-*
-+F:	drivers/clocksource/timer-owl*
- F:	drivers/pinctrl/actions/*
- F:	drivers/soc/actions/
- F:	include/dt-bindings/power/owl-*
-@@ -1603,7 +1603,7 @@ L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
- S:	Maintained
- F:	arch/arm/boot/dts/lpc43*
- F:	drivers/clk/nxp/clk-lpc18xx*
--F:	drivers/clocksource/time-lpc32xx.c
-+F:	drivers/clocksource/timer-lpc32xx.c
- F:	drivers/i2c/busses/i2c-lpc2k.c
- F:	drivers/memory/pl172.c
- F:	drivers/mtd/spi-nor/nxp-spifi.c
-@@ -2219,7 +2219,7 @@ F:	arch/arm/mach-vexpress/
- F:	*/*/vexpress*
- F:	*/*/*/vexpress*
- F:	drivers/clk/versatile/clk-vexpress-osc.c
--F:	drivers/clocksource/versatile.c
-+F:	drivers/clocksource/timer-versatile.c
- N:	mps2
+diff --git a/drivers/clocksource/timer-cadence-ttc.c b/drivers/clocksource/timer-cadence-ttc.c
+index a7eb858a84a0f..b1df0ded8f521 100644
+--- a/drivers/clocksource/timer-cadence-ttc.c
++++ b/drivers/clocksource/timer-cadence-ttc.c
+@@ -23,6 +23,8 @@
+ #include <linux/of_irq.h>
+ #include <linux/slab.h>
+ #include <linux/sched_clock.h>
++#include <linux/module.h>
++#include <linux/of_platform.h>
  
- ARM/VFP SUPPORT
-@@ -2241,7 +2241,7 @@ M:	Tony Prisk <linux@prisktech.co.nz>
- L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
- S:	Maintained
- F:	arch/arm/mach-vt8500/
--F:	drivers/clocksource/vt8500_timer.c
-+F:	drivers/clocksource/timer-vt8500.c
- F:	drivers/i2c/busses/i2c-wmt.c
- F:	drivers/mmc/host/wmt-sdmmc.c
- F:	drivers/pwm/pwm-vt8500.c
-@@ -2306,7 +2306,7 @@ F:	drivers/cpuidle/cpuidle-zynq.c
- F:	drivers/block/xsysace.c
- N:	zynq
- N:	xilinx
--F:	drivers/clocksource/cadence_ttc_timer.c
-+F:	drivers/clocksource/timer-cadence-ttc.c
- F:	drivers/i2c/busses/i2c-cadence.c
- F:	drivers/mmc/host/sdhci-of-arasan.c
- F:	drivers/edac/synopsys_edac.c
-diff --git a/drivers/clocksource/Makefile b/drivers/clocksource/Makefile
-index db51b2427e8a6..e33b21d3f9d8b 100644
---- a/drivers/clocksource/Makefile
-+++ b/drivers/clocksource/Makefile
-@@ -23,8 +23,8 @@ obj-$(CONFIG_FTTMR010_TIMER)	+= timer-fttmr010.o
- obj-$(CONFIG_ROCKCHIP_TIMER)      += rockchip_timer.o
- obj-$(CONFIG_CLKSRC_NOMADIK_MTU)	+= nomadik-mtu.o
- obj-$(CONFIG_CLKSRC_DBX500_PRCMU)	+= clksrc-dbx500-prcmu.o
--obj-$(CONFIG_ARMADA_370_XP_TIMER)	+= time-armada-370-xp.o
--obj-$(CONFIG_ORION_TIMER)	+= time-orion.o
-+obj-$(CONFIG_ARMADA_370_XP_TIMER)	+= timer-armada-370-xp.o
-+obj-$(CONFIG_ORION_TIMER)	+= timer-orion.o
- obj-$(CONFIG_BCM2835_TIMER)	+= bcm2835_timer.o
- obj-$(CONFIG_CLPS711X_TIMER)	+= clps711x-timer.o
- obj-$(CONFIG_ATLAS7_TIMER)	+= timer-atlas7.o
-@@ -36,25 +36,25 @@ obj-$(CONFIG_SUN4I_TIMER)	+= sun4i_timer.o
- obj-$(CONFIG_SUN5I_HSTIMER)	+= timer-sun5i.o
- obj-$(CONFIG_MESON6_TIMER)	+= meson6_timer.o
- obj-$(CONFIG_TEGRA_TIMER)	+= tegra20_timer.o
--obj-$(CONFIG_VT8500_TIMER)	+= vt8500_timer.o
--obj-$(CONFIG_NSPIRE_TIMER)	+= zevio-timer.o
-+obj-$(CONFIG_VT8500_TIMER)	+= timer-vt8500.o
-+obj-$(CONFIG_NSPIRE_TIMER)	+= timer-zevio.o
- obj-$(CONFIG_BCM_KONA_TIMER)	+= bcm_kona_timer.o
--obj-$(CONFIG_CADENCE_TTC_TIMER)	+= cadence_ttc_timer.o
--obj-$(CONFIG_CLKSRC_EFM32)	+= time-efm32.o
-+obj-$(CONFIG_CADENCE_TTC_TIMER)	+= timer-cadence-ttc.o
-+obj-$(CONFIG_CLKSRC_EFM32)	+= timer-efm32.o
- obj-$(CONFIG_CLKSRC_STM32)	+= timer-stm32.o
- obj-$(CONFIG_CLKSRC_EXYNOS_MCT)	+= exynos_mct.o
--obj-$(CONFIG_CLKSRC_LPC32XX)	+= time-lpc32xx.o
-+obj-$(CONFIG_CLKSRC_LPC32XX)	+= timer-lpc32xx.o
- obj-$(CONFIG_CLKSRC_MPS2)	+= mps2-timer.o
- obj-$(CONFIG_CLKSRC_SAMSUNG_PWM)	+= samsung_pwm_timer.o
--obj-$(CONFIG_FSL_FTM_TIMER)	+= fsl_ftm_timer.o
--obj-$(CONFIG_VF_PIT_TIMER)	+= vf_pit_timer.o
--obj-$(CONFIG_CLKSRC_QCOM)	+= qcom-timer.o
-+obj-$(CONFIG_FSL_FTM_TIMER)	+= timer-fsl-ftm.o
-+obj-$(CONFIG_VF_PIT_TIMER)	+= timer-vf-pit.o
-+obj-$(CONFIG_CLKSRC_QCOM)	+= timer-qcom.o
- obj-$(CONFIG_MTK_TIMER)		+= timer-mediatek.o
--obj-$(CONFIG_CLKSRC_PISTACHIO)	+= time-pistachio.o
-+obj-$(CONFIG_CLKSRC_PISTACHIO)	+= timer-pistachio.o
- obj-$(CONFIG_CLKSRC_TI_32K)	+= timer-ti-32k.o
- obj-$(CONFIG_CLKSRC_NPS)	+= timer-nps.o
- obj-$(CONFIG_OXNAS_RPS_TIMER)	+= timer-oxnas-rps.o
--obj-$(CONFIG_OWL_TIMER)		+= owl-timer.o
-+obj-$(CONFIG_OWL_TIMER)		+= timer-owl.o
- obj-$(CONFIG_SPRD_TIMER)	+= timer-sprd.o
- obj-$(CONFIG_NPCM7XX_TIMER)	+= timer-npcm7xx.o
+ /*
+  * This driver configures the 2 16/32-bit count-up timers as follows:
+@@ -472,13 +474,7 @@ static int __init ttc_setup_clockevent(struct clk *clk,
+ 	return err;
+ }
  
-@@ -66,7 +66,7 @@ obj-$(CONFIG_ARM_TIMER_SP804)		+= timer-sp804.o
- obj-$(CONFIG_ARCH_HAS_TICK_BROADCAST)	+= dummy_timer.o
- obj-$(CONFIG_KEYSTONE_TIMER)		+= timer-keystone.o
- obj-$(CONFIG_INTEGRATOR_AP_TIMER)	+= timer-integrator-ap.o
--obj-$(CONFIG_CLKSRC_VERSATILE)		+= versatile.o
-+obj-$(CONFIG_CLKSRC_VERSATILE)		+= timer-versatile.o
- obj-$(CONFIG_CLKSRC_MIPS_GIC)		+= mips-gic-timer.o
- obj-$(CONFIG_CLKSRC_TANGO_XTAL)		+= tango_xtal.o
- obj-$(CONFIG_CLKSRC_IMX_GPT)		+= timer-imx-gpt.o
-diff --git a/drivers/clocksource/time-armada-370-xp.c b/drivers/clocksource/timer-armada-370-xp.c
-similarity index 100%
-rename from drivers/clocksource/time-armada-370-xp.c
-rename to drivers/clocksource/timer-armada-370-xp.c
-diff --git a/drivers/clocksource/cadence_ttc_timer.c b/drivers/clocksource/timer-cadence-ttc.c
-similarity index 100%
-rename from drivers/clocksource/cadence_ttc_timer.c
-rename to drivers/clocksource/timer-cadence-ttc.c
-diff --git a/drivers/clocksource/time-efm32.c b/drivers/clocksource/timer-efm32.c
-similarity index 100%
-rename from drivers/clocksource/time-efm32.c
-rename to drivers/clocksource/timer-efm32.c
-diff --git a/drivers/clocksource/fsl_ftm_timer.c b/drivers/clocksource/timer-fsl-ftm.c
-similarity index 100%
-rename from drivers/clocksource/fsl_ftm_timer.c
-rename to drivers/clocksource/timer-fsl-ftm.c
-diff --git a/drivers/clocksource/time-lpc32xx.c b/drivers/clocksource/timer-lpc32xx.c
-similarity index 100%
-rename from drivers/clocksource/time-lpc32xx.c
-rename to drivers/clocksource/timer-lpc32xx.c
-diff --git a/drivers/clocksource/time-orion.c b/drivers/clocksource/timer-orion.c
-similarity index 100%
-rename from drivers/clocksource/time-orion.c
-rename to drivers/clocksource/timer-orion.c
-diff --git a/drivers/clocksource/owl-timer.c b/drivers/clocksource/timer-owl.c
-similarity index 100%
-rename from drivers/clocksource/owl-timer.c
-rename to drivers/clocksource/timer-owl.c
-diff --git a/drivers/clocksource/time-pistachio.c b/drivers/clocksource/timer-pistachio.c
-similarity index 100%
-rename from drivers/clocksource/time-pistachio.c
-rename to drivers/clocksource/timer-pistachio.c
-diff --git a/drivers/clocksource/qcom-timer.c b/drivers/clocksource/timer-qcom.c
-similarity index 100%
-rename from drivers/clocksource/qcom-timer.c
-rename to drivers/clocksource/timer-qcom.c
-diff --git a/drivers/clocksource/versatile.c b/drivers/clocksource/timer-versatile.c
-similarity index 100%
-rename from drivers/clocksource/versatile.c
-rename to drivers/clocksource/timer-versatile.c
-diff --git a/drivers/clocksource/vf_pit_timer.c b/drivers/clocksource/timer-vf-pit.c
-similarity index 100%
-rename from drivers/clocksource/vf_pit_timer.c
-rename to drivers/clocksource/timer-vf-pit.c
-diff --git a/drivers/clocksource/vt8500_timer.c b/drivers/clocksource/timer-vt8500.c
-similarity index 100%
-rename from drivers/clocksource/vt8500_timer.c
-rename to drivers/clocksource/timer-vt8500.c
-diff --git a/drivers/clocksource/zevio-timer.c b/drivers/clocksource/timer-zevio.c
-similarity index 100%
-rename from drivers/clocksource/zevio-timer.c
-rename to drivers/clocksource/timer-zevio.c
+-/**
+- * ttc_timer_init - Initialize the timer
+- *
+- * Initializes the timer hardware and register the clock source and clock event
+- * timers with Linux kernal timer framework
+- */
+-static int __init ttc_timer_init(struct device_node *timer)
++static int __init ttc_timer_probe(struct platform_device *pdev)
+ {
+ 	unsigned int irq;
+ 	void __iomem *timer_baseaddr;
+@@ -486,6 +482,7 @@ static int __init ttc_timer_init(struct device_node *timer)
+ 	static int initialized;
+ 	int clksel, ret;
+ 	u32 timer_width = 16;
++	struct device_node *timer = pdev->dev.of_node;
+ 
+ 	if (initialized)
+ 		return 0;
+@@ -540,4 +537,17 @@ static int __init ttc_timer_init(struct device_node *timer)
+ 	return 0;
+ }
+ 
+-TIMER_OF_DECLARE(ttc, "cdns,ttc", ttc_timer_init);
++static const struct of_device_id ttc_timer_of_match[] = {
++	{.compatible = "cdns,ttc"},
++	{},
++};
++
++MODULE_DEVICE_TABLE(of, ttc_timer_of_match);
++
++static struct platform_driver ttc_timer_driver = {
++	.driver = {
++		.name	= "cdns_ttc_timer",
++		.of_match_table = ttc_timer_of_match,
++	},
++};
++builtin_platform_driver_probe(ttc_timer_driver, ttc_timer_probe);
 -- 
 2.39.2
 
