@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362A5174EE
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:15:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6062C433C7;
-	Wed,  9 Aug 2023 11:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7C66131
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:15:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B53FC433C7;
+	Wed,  9 Aug 2023 11:15:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579747;
-	bh=0FvV6oZgFTwu27SAMhSRxyLAOq0EPaurd1b2IOC0Jyg=;
+	s=korg; t=1691579749;
+	bh=8pt/FH3ReOt5iaKQqBcK7StgEyCd0UjNigyelQWn7hE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DKIw5HFc0QzqS33EW0WW0r2ZLRp4DzcXutNOl+UdB4cncraR7jcwNSFURwFSeScmv
-	 VoIWElRdvSMchB3+DhfxIGdnKzl3TfOtK+mCeO856v0xgM22crqJg7gsyTUXIsBhPL
-	 4zESrb1JMgBlhsIlm4oPJ0HhMVIj1KxpZPB8CVSI=
+	b=NfTOswCfvmy4geG2V/n+XuaRNOFMVSp5DmRoYYIqfLDe+136T9QzthTP+t26/FywZ
+	 ymuGLQ5T4i4cfe5eQkfdf++E7TAMGOfJ2kB5CfDKzyyXSXtHZnN5k4LPZcZi1NYyFB
+	 mkcVz4XRKFJg8TlPBaN85XoEH1SabgqPnV4RHrgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Laurent Vivier <lvivier@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 100/323] sctp: fix potential deadlock on &net->sctp.addr_wq_lock
-Date: Wed,  9 Aug 2023 12:38:58 +0200
-Message-ID: <20230809103702.642696757@linuxfoundation.org>
+Subject: [PATCH 4.19 073/323] hwrng: virtio - dont wait on cleanup
+Date: Wed,  9 Aug 2023 12:38:31 +0200
+Message-ID: <20230809103701.493621661@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,55 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-[ Upstream commit 6feb37b3b06e9049e20dcf7e23998f92c9c5be9a ]
+[ Upstream commit 2bb31abdbe55742c89f4dc0cc26fcbc8467364f6 ]
 
-As &net->sctp.addr_wq_lock is also acquired by the timer
-sctp_addr_wq_timeout_handler() in protocal.c, the same lock acquisition
-at sctp_auto_asconf_init() seems should disable irq since it is called
-from sctp_accept() under process context.
+When virtio-rng device was dropped by the hwrng core we were forced
+to wait the buffer to come back from the device to not have
+remaining ongoing operation that could spoil the buffer.
 
-Possible deadlock scenario:
-sctp_accept()
-    -> sctp_sock_migrate()
-    -> sctp_auto_asconf_init()
-    -> spin_lock(&net->sctp.addr_wq_lock)
-        <timer interrupt>
-        -> sctp_addr_wq_timeout_handler()
-        -> spin_lock_bh(&net->sctp.addr_wq_lock); (deadlock here)
+But now, as the buffer is internal to the virtio-rng we can release
+the waiting loop immediately, the buffer will be retrieve and use
+when the virtio-rng driver will be selected again.
 
-This flaw was found using an experimental static analysis tool we are
-developing for irq-related deadlock.
+This avoids to hang on an rng_current write command if the virtio-rng
+device is blocked by a lack of entropy. This allows to select
+another entropy source if the current one is empty.
 
-The tentative patch fix the potential deadlock by spin_lock_bh().
-
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Fixes: 34e5b0118685 ("sctp: delay auto_asconf init until binding the first addr")
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/20230627120340.19432-1-dg573847474@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Link: https://lore.kernel.org/r/20211028101111.128049-3-lvivier@redhat.com
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Stable-dep-of: ac52578d6e8d ("hwrng: virtio - Fix race on data_avail and actual data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/char/hw_random/virtio-rng.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index a68f3d6b72335..baa825751c393 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -380,9 +380,9 @@ static void sctp_auto_asconf_init(struct sctp_sock *sp)
- 	struct net *net = sock_net(&sp->inet.sk);
+diff --git a/drivers/char/hw_random/virtio-rng.c b/drivers/char/hw_random/virtio-rng.c
+index 999f523c80c1e..9a3fbd2b41107 100644
+--- a/drivers/char/hw_random/virtio-rng.c
++++ b/drivers/char/hw_random/virtio-rng.c
+@@ -94,6 +94,11 @@ static int virtio_read(struct hwrng *rng, void *buf, size_t size, bool wait)
+ 		ret = wait_for_completion_killable(&vi->have_data);
+ 		if (ret < 0)
+ 			return ret;
++		/* if vi->data_avail is 0, we have been interrupted
++		 * by a cleanup, but buffer stays in the queue
++		 */
++		if (vi->data_avail == 0)
++			return read;
  
- 	if (net->sctp.default_auto_asconf) {
--		spin_lock(&net->sctp.addr_wq_lock);
-+		spin_lock_bh(&net->sctp.addr_wq_lock);
- 		list_add_tail(&sp->auto_asconf_list, &net->sctp.auto_asconf_splist);
--		spin_unlock(&net->sctp.addr_wq_lock);
-+		spin_unlock_bh(&net->sctp.addr_wq_lock);
- 		sp->do_auto_asconf = 1;
- 	}
+ 		chunk = min_t(unsigned int, size, vi->data_avail);
+ 		memcpy(buf + read, vi->data, chunk);
+@@ -117,7 +122,7 @@ static void virtio_cleanup(struct hwrng *rng)
+ 	struct virtrng_info *vi = (struct virtrng_info *)rng->priv;
+ 
+ 	if (vi->busy)
+-		wait_for_completion(&vi->have_data);
++		complete(&vi->have_data);
  }
+ 
+ static int probe_common(struct virtio_device *vdev)
 -- 
 2.39.2
 
