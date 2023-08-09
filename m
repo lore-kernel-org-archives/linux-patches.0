@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FE216428
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:58:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8D7C433C8;
-	Wed,  9 Aug 2023 10:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119BA16428
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:58:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A90C433C7;
+	Wed,  9 Aug 2023 10:58:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578714;
-	bh=KgDIko+Fy+0akOAfzu5bdTygXnS0jt7cYnPuq5fYPGE=;
+	s=korg; t=1691578716;
+	bh=LqfAj6TXgrvCVG67E2Iu0XiUOxKNonVzjiDz1lXHoH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DhhtLYzUQbgCRl0wRaxwGNTZKAoGrhfdcU1llyHZK7FeBBVGKPxq3x6B8jOXcB5ye
-	 yLHvzcP9ubtvDJ8yUfl2eQFaDWgcH5evHcryoI8AjG2+8SIjqOuWd9mxPckvr7YpcT
-	 MsXymV4JQBHtEfvxL8wi4gxvBYLbSCLyIgQuQIP0=
+	b=wdqgaTeiz+7MAEQUd3m4WJK5VA53QQFb0IsJ81R5GnccuQ6cXOqCbnjmnw9L9LoHU
+	 F9S1YsP95hj8I2qUVQiHPsaUirZeDae4g8fy07VLUjOCxAupkNSKkS33BnGkpOZTjs
+	 tkQaDc2Lht8AbFViJ2/1+Am0wOpHHm4KlHmgP6MQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Pedro Tammela <pctammela@mojatatu.com>
-Subject: [PATCH 5.15 31/92] net/sched: taprio: Limit TCA_TAPRIO_ATTR_SCHED_CYCLE_TIME to INT_MAX.
-Date: Wed,  9 Aug 2023 12:41:07 +0200
-Message-ID: <20230809103634.695909492@linuxfoundation.org>
+	Hou Tao <houtao1@huawei.com>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 32/92] bpf, cpumap: Handle skb as well when clean up ptr_ring
+Date: Wed,  9 Aug 2023 12:41:08 +0200
+Message-ID: <20230809103634.726216023@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -39,138 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit e739718444f7bf2fa3d70d101761ad83056ca628 ]
+[ Upstream commit 7c62b75cd1a792e14b037fa4f61f9b18914e7de1 ]
 
-syzkaller found zero division error [0] in div_s64_rem() called from
-get_cycle_time_elapsed(), where sched->cycle_time is the divisor.
+The following warning was reported when running xdp_redirect_cpu with
+both skb-mode and stress-mode enabled:
 
-We have tests in parse_taprio_schedule() so that cycle_time will never
-be 0, and actually cycle_time is not 0 in get_cycle_time_elapsed().
+  ------------[ cut here ]------------
+  Incorrect XDP memory type (-2128176192) usage
+  WARNING: CPU: 7 PID: 1442 at net/core/xdp.c:405
+  Modules linked in:
+  CPU: 7 PID: 1442 Comm: kworker/7:0 Tainted: G  6.5.0-rc2+ #1
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+  Workqueue: events __cpu_map_entry_free
+  RIP: 0010:__xdp_return+0x1e4/0x4a0
+  ......
+  Call Trace:
+   <TASK>
+   ? show_regs+0x65/0x70
+   ? __warn+0xa5/0x240
+   ? __xdp_return+0x1e4/0x4a0
+   ......
+   xdp_return_frame+0x4d/0x150
+   __cpu_map_entry_free+0xf9/0x230
+   process_one_work+0x6b0/0xb80
+   worker_thread+0x96/0x720
+   kthread+0x1a5/0x1f0
+   ret_from_fork+0x3a/0x70
+   ret_from_fork_asm+0x1b/0x30
+   </TASK>
 
-The problem is that the types of divisor are different; cycle_time is
-s64, but the argument of div_s64_rem() is s32.
+The reason for the warning is twofold. One is due to the kthread
+cpu_map_kthread_run() is stopped prematurely. Another one is
+__cpu_map_ring_cleanup() doesn't handle skb mode and treats skbs in
+ptr_ring as XDP frames.
 
-syzkaller fed this input and 0x100000000 is cast to s32 to be 0.
+Prematurely-stopped kthread will be fixed by the preceding patch and
+ptr_ring will be empty when __cpu_map_ring_cleanup() is called. But
+as the comments in __cpu_map_ring_cleanup() said, handling and freeing
+skbs in ptr_ring as well to "catch any broken behaviour gracefully".
 
-  @TCA_TAPRIO_ATTR_SCHED_CYCLE_TIME={0xc, 0x8, 0x100000000}
-
-We use s64 for cycle_time to cast it to ktime_t, so let's keep it and
-set max for cycle_time.
-
-While at it, we prevent overflow in setup_txtime() and add another
-test in parse_taprio_schedule() to check if cycle_time overflows.
-
-Also, we add a new tdc test case for this issue.
-
-[0]:
-divide error: 0000 [#1] PREEMPT SMP KASAN NOPTI
-CPU: 1 PID: 103 Comm: kworker/1:3 Not tainted 6.5.0-rc1-00330-g60cc1f7d0605 #3
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-Workqueue: ipv6_addrconf addrconf_dad_work
-RIP: 0010:div_s64_rem include/linux/math64.h:42 [inline]
-RIP: 0010:get_cycle_time_elapsed net/sched/sch_taprio.c:223 [inline]
-RIP: 0010:find_entry_to_transmit+0x252/0x7e0 net/sched/sch_taprio.c:344
-Code: 3c 02 00 0f 85 5e 05 00 00 48 8b 4c 24 08 4d 8b bd 40 01 00 00 48 8b 7c 24 48 48 89 c8 4c 29 f8 48 63 f7 48 99 48 89 74 24 70 <48> f7 fe 48 29 d1 48 8d 04 0f 49 89 cc 48 89 44 24 20 49 8d 85 10
-RSP: 0018:ffffc90000acf260 EFLAGS: 00010206
-RAX: 177450e0347560cf RBX: 0000000000000000 RCX: 177450e0347560cf
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000100000000
-RBP: 0000000000000056 R08: 0000000000000000 R09: ffffed10020a0934
-R10: ffff8880105049a7 R11: ffff88806cf3a520 R12: ffff888010504800
-R13: ffff88800c00d800 R14: ffff8880105049a0 R15: 0000000000000000
-FS:  0000000000000000(0000) GS:ffff88806cf00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f0edf84f0e8 CR3: 000000000d73c002 CR4: 0000000000770ee0
-PKRU: 55555554
-Call Trace:
- <TASK>
- get_packet_txtime net/sched/sch_taprio.c:508 [inline]
- taprio_enqueue_one+0x900/0xff0 net/sched/sch_taprio.c:577
- taprio_enqueue+0x378/0xae0 net/sched/sch_taprio.c:658
- dev_qdisc_enqueue+0x46/0x170 net/core/dev.c:3732
- __dev_xmit_skb net/core/dev.c:3821 [inline]
- __dev_queue_xmit+0x1b2f/0x3000 net/core/dev.c:4169
- dev_queue_xmit include/linux/netdevice.h:3088 [inline]
- neigh_resolve_output net/core/neighbour.c:1552 [inline]
- neigh_resolve_output+0x4a7/0x780 net/core/neighbour.c:1532
- neigh_output include/net/neighbour.h:544 [inline]
- ip6_finish_output2+0x924/0x17d0 net/ipv6/ip6_output.c:135
- __ip6_finish_output+0x620/0xaa0 net/ipv6/ip6_output.c:196
- ip6_finish_output net/ipv6/ip6_output.c:207 [inline]
- NF_HOOK_COND include/linux/netfilter.h:292 [inline]
- ip6_output+0x206/0x410 net/ipv6/ip6_output.c:228
- dst_output include/net/dst.h:458 [inline]
- NF_HOOK.constprop.0+0xea/0x260 include/linux/netfilter.h:303
- ndisc_send_skb+0x872/0xe80 net/ipv6/ndisc.c:508
- ndisc_send_ns+0xb5/0x130 net/ipv6/ndisc.c:666
- addrconf_dad_work+0xc14/0x13f0 net/ipv6/addrconf.c:4175
- process_one_work+0x92c/0x13a0 kernel/workqueue.c:2597
- worker_thread+0x60f/0x1240 kernel/workqueue.c:2748
- kthread+0x2fe/0x3f0 kernel/kthread.c:389
- ret_from_fork+0x2c/0x50 arch/x86/entry/entry_64.S:308
- </TASK>
-Modules linked in:
-
-Fixes: 4cfd5779bd6e ("taprio: Add support for txtime-assist mode")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Co-developed-by: Eric Dumazet <edumazet@google.com>
-Co-developed-by: Pedro Tammela <pctammela@mojatatu.com>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 11941f8a8536 ("bpf: cpumap: Implement generic cpumap")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Link: https://lore.kernel.org/r/20230729095107.1722450-3-houtao@huaweicloud.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_taprio.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ kernel/bpf/cpumap.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index e203deacc9533..e40b4425eb6b5 100644
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -780,6 +780,11 @@ static const struct nla_policy entry_policy[TCA_TAPRIO_SCHED_ENTRY_MAX + 1] = {
- 	[TCA_TAPRIO_SCHED_ENTRY_INTERVAL]  = { .type = NLA_U32 },
- };
+diff --git a/kernel/bpf/cpumap.c b/kernel/bpf/cpumap.c
+index db6221773e43f..17f52efba1c80 100644
+--- a/kernel/bpf/cpumap.c
++++ b/kernel/bpf/cpumap.c
+@@ -133,11 +133,17 @@ static void __cpu_map_ring_cleanup(struct ptr_ring *ring)
+ 	 * invoked cpu_map_kthread_stop(). Catch any broken behaviour
+ 	 * gracefully and warn once.
+ 	 */
+-	struct xdp_frame *xdpf;
++	void *ptr;
  
-+static struct netlink_range_validation_signed taprio_cycle_time_range = {
-+	.min = 0,
-+	.max = INT_MAX,
-+};
-+
- static const struct nla_policy taprio_policy[TCA_TAPRIO_ATTR_MAX + 1] = {
- 	[TCA_TAPRIO_ATTR_PRIOMAP]	       = {
- 		.len = sizeof(struct tc_mqprio_qopt)
-@@ -788,7 +793,8 @@ static const struct nla_policy taprio_policy[TCA_TAPRIO_ATTR_MAX + 1] = {
- 	[TCA_TAPRIO_ATTR_SCHED_BASE_TIME]            = { .type = NLA_S64 },
- 	[TCA_TAPRIO_ATTR_SCHED_SINGLE_ENTRY]         = { .type = NLA_NESTED },
- 	[TCA_TAPRIO_ATTR_SCHED_CLOCKID]              = { .type = NLA_S32 },
--	[TCA_TAPRIO_ATTR_SCHED_CYCLE_TIME]           = { .type = NLA_S64 },
-+	[TCA_TAPRIO_ATTR_SCHED_CYCLE_TIME]           =
-+		NLA_POLICY_FULL_RANGE_SIGNED(NLA_S64, &taprio_cycle_time_range),
- 	[TCA_TAPRIO_ATTR_SCHED_CYCLE_TIME_EXTENSION] = { .type = NLA_S64 },
- 	[TCA_TAPRIO_ATTR_FLAGS]                      = { .type = NLA_U32 },
- 	[TCA_TAPRIO_ATTR_TXTIME_DELAY]		     = { .type = NLA_U32 },
-@@ -923,6 +929,11 @@ static int parse_taprio_schedule(struct taprio_sched *q, struct nlattr **tb,
- 			return -EINVAL;
- 		}
- 
-+		if (cycle < 0 || cycle > INT_MAX) {
-+			NL_SET_ERR_MSG(extack, "'cycle_time' is too big");
-+			return -EINVAL;
+-	while ((xdpf = ptr_ring_consume(ring)))
+-		if (WARN_ON_ONCE(xdpf))
+-			xdp_return_frame(xdpf);
++	while ((ptr = ptr_ring_consume(ring))) {
++		WARN_ON_ONCE(1);
++		if (unlikely(__ptr_test_bit(0, &ptr))) {
++			__ptr_clear_bit(0, &ptr);
++			kfree_skb(ptr);
++			continue;
 +		}
-+
- 		new->cycle_time = cycle;
- 	}
++		xdp_return_frame(ptr);
++	}
+ }
  
-@@ -1127,7 +1138,7 @@ static void setup_txtime(struct taprio_sched *q,
- 			 struct sched_gate_list *sched, ktime_t base)
- {
- 	struct sched_entry *entry;
--	u32 interval = 0;
-+	u64 interval = 0;
- 
- 	list_for_each_entry(entry, &sched->entries, list) {
- 		entry->next_txtime = ktime_add_ns(base, interval);
+ static void put_cpu_map_entry(struct bpf_cpu_map_entry *rcpu)
 -- 
 2.40.1
 
