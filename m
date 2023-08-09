@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBE517AAB
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:29:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7336C433C9;
-	Wed,  9 Aug 2023 11:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A84117AAB
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:29:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2198C433C7;
+	Wed,  9 Aug 2023 11:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580586;
-	bh=a2+rYSzIzyrKN0bsKx86g9Py5nRj81i/DWuOUvi9XY4=;
+	s=korg; t=1691580589;
+	bh=difyhOUnjjYjKAnJhDd5dQazrBvIX//60nzFfhE3IR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MfKBrEET3+xYF9T2tHIz3jllEpF9Ci2cZD4W3XZaEgFjCdJFsIVERouztbDm8HPbV
-	 N473tXK6ct4prXffkeM0n+JYoUYAO555BpkHEUMoSOYBwiGlMht/vcGU/d97wu+ZPB
-	 QxN+ECzQBKxu8G1Mkdl/nCPW2vSoOUZzyrBJxncA=
+	b=wcLoxOPJnRkeDtFEKP5pYVOzpz9iQqXaGv3/DXDmWIhcvGtFgO643syYW2mPnz8MN
+	 IpUoGzWcE9w3YVu+bOpznBccxFph5vpSjx2g6RNKSRKQ+Ro1vr927yN7GcobFJQqgp
+	 GbX7EPxqtnPfeArlM5LBNfst7bECxpniPdSZKcgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 050/154] block: Fix a source code comment in include/uapi/linux/blkzoned.h
-Date: Wed,  9 Aug 2023 12:41:21 +0200
-Message-ID: <20230809103638.668967618@linuxfoundation.org>
+	Jason Wang <jasowang@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 077/154] virtio-net: fix race between set queues and probe
+Date: Wed,  9 Aug 2023 12:41:48 +0200
+Message-ID: <20230809103639.539749300@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -37,50 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Jason Wang <jasowang@redhat.com>
 
-[ Upstream commit e0933b526fbfd937c4a8f4e35fcdd49f0e22d411 ]
+commit 25266128fe16d5632d43ada34c847d7b8daba539 upstream.
 
-Fix the symbolic names for zone conditions in the blkzoned.h header
-file.
+A race were found where set_channels could be called after registering
+but before virtnet_set_queues() in virtnet_probe(). Fixing this by
+moving the virtnet_set_queues() before netdevice registering. While at
+it, use _virtnet_set_queues() to avoid holding rtnl as the device is
+not even registered at that time.
 
-Cc: Hannes Reinecke <hare@suse.de>
-Cc: Damien Le Moal <dlemoal@kernel.org>
-Fixes: 6a0cb1bc106f ("block: Implement support for zoned block devices")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20230706201422.3987341-1-bvanassche@acm.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: a220871be66f ("virtio-net: correctly enable multiqueue")
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20230725072049.617289-1-jasowang@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/blkzoned.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/virtio_net.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/uapi/linux/blkzoned.h b/include/uapi/linux/blkzoned.h
-index 498eec813494c..94649130e3d74 100644
---- a/include/uapi/linux/blkzoned.h
-+++ b/include/uapi/linux/blkzoned.h
-@@ -51,13 +51,13 @@ enum blk_zone_type {
-  *
-  * The Zone Condition state machine in the ZBC/ZAC standards maps the above
-  * deinitions as:
-- *   - ZC1: Empty         | BLK_ZONE_EMPTY
-+ *   - ZC1: Empty         | BLK_ZONE_COND_EMPTY
-  *   - ZC2: Implicit Open | BLK_ZONE_COND_IMP_OPEN
-  *   - ZC3: Explicit Open | BLK_ZONE_COND_EXP_OPEN
-- *   - ZC4: Closed        | BLK_ZONE_CLOSED
-- *   - ZC5: Full          | BLK_ZONE_FULL
-- *   - ZC6: Read Only     | BLK_ZONE_READONLY
-- *   - ZC7: Offline       | BLK_ZONE_OFFLINE
-+ *   - ZC4: Closed        | BLK_ZONE_COND_CLOSED
-+ *   - ZC5: Full          | BLK_ZONE_COND_FULL
-+ *   - ZC6: Read Only     | BLK_ZONE_COND_READONLY
-+ *   - ZC7: Offline       | BLK_ZONE_COND_OFFLINE
-  *
-  * Conditions 0x5 to 0xC are reserved by the current ZBC/ZAC spec and should
-  * be considered invalid.
--- 
-2.40.1
-
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3265,6 +3265,8 @@ static int virtnet_probe(struct virtio_d
+ 		}
+ 	}
+ 
++	_virtnet_set_queues(vi, vi->curr_queue_pairs);
++
+ 	/* serialize netdev register + virtio_device_ready() with ndo_open() */
+ 	rtnl_lock();
+ 
+@@ -3285,8 +3287,6 @@ static int virtnet_probe(struct virtio_d
+ 		goto free_unregister_netdev;
+ 	}
+ 
+-	virtnet_set_queues(vi, vi->curr_queue_pairs);
+-
+ 	/* Assume link up if device can't report link status,
+ 	   otherwise get link status from config. */
+ 	netif_carrier_off(dev);
 
 
