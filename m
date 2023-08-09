@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6F94680
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:42:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3D5C433C8;
-	Wed,  9 Aug 2023 11:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC674680
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:42:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2F6C433C8;
+	Wed,  9 Aug 2023 11:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581362;
-	bh=D073mCcv6dvaNlHlpJwm1qkuWFL1UYlRK+dl6Sp7KGc=;
+	s=korg; t=1691581365;
+	bh=qU8RdkPWb0lgc8jSRkdEmketJsCg3mOX3Zb7h1oelBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lrAMLWX2jjz8I5M2HzV+Zb9MkLHbMWtsV/yhRLeeyM/6gQUZJ1MCDa4L7fKTrKRxN
-	 sZvFsipbOXMXFF0okF8bKbjgpVACWP0QqUoh0MEbPDx8iL23MF4HcbgAblVFwsfjoX
-	 AIvjuZbP/9inriZ/1NCqi8qmzd+4FpHVKK4VRBD0=
+	b=IkhR86axLfpBA9EJDOxKONZQH+oaFadmaR5OnYm7DdON7q4zVJFKF9PKFxJ8e7CLU
+	 mGG6fnb4mcuS6H7T7bgJtwQbd3rMpZChwXdWseaQIjlJpbVOzcQ8/H2E+rO+0SEVeT
+	 8am5hEpr+UC1A/ILxfIlHAGSQ/OPEvM8lOWnlJy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rani Hod <rani.hod@gmail.com>,
-	Paul Fertser <fercerpav@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Kalle Valo <kvalo@kernel.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 198/201] wifi: mt76: mt7615: do not advertise 5 GHz on first phy of MT7615D (DBDC)
-Date: Wed,  9 Aug 2023 12:43:20 +0200
-Message-ID: <20230809103650.523097344@linuxfoundation.org>
+Subject: [PATCH 5.10 199/201] ARM: dts: imx: add usb alias
+Date: Wed,  9 Aug 2023 12:43:21 +0200
+Message-ID: <20230809103650.562878826@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -38,48 +35,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Fertser <fercerpav@gmail.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 421033deb91521aa6a9255e495cb106741a52275 ]
+[ Upstream commit 5c8b3b8a182cbc1ccdfcdeea9b25dd2c12a8148f ]
 
-On DBDC devices the first (internal) phy is only capable of using
-2.4 GHz band, and the 5 GHz band is exposed via a separate phy object,
-so avoid the false advertising.
+Add usb alias for bootloader searching the controller in correct order.
 
-Reported-by: Rani Hod <rani.hod@gmail.com>
-Closes: https://github.com/openwrt/openwrt/pull/12361
-Fixes: 7660a1bd0c22 ("mt76: mt7615: register ext_phy if DBDC is detected")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paul Fertser <fercerpav@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Acked-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230605073408.8699-1-fercerpav@gmail.com
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Stable-dep-of: ee70b908f77a ("ARM: dts: nxp/imx6sll: fix wrong property name in usbphy node")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/eeprom.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/imx6qdl.dtsi | 4 ++++
+ arch/arm/boot/dts/imx6sl.dtsi  | 3 +++
+ arch/arm/boot/dts/imx6sll.dtsi | 2 ++
+ arch/arm/boot/dts/imx6sx.dtsi  | 3 +++
+ arch/arm/boot/dts/imx6ul.dtsi  | 2 ++
+ arch/arm/boot/dts/imx7d.dtsi   | 6 ++++++
+ arch/arm/boot/dts/imx7s.dtsi   | 2 ++
+ 7 files changed, 22 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7615/eeprom.c
-index 48ce24f0f77b7..85f56487feff2 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/eeprom.c
-@@ -123,12 +123,12 @@ mt7615_eeprom_parse_hw_band_cap(struct mt7615_dev *dev)
- 	case MT_EE_5GHZ:
- 		dev->mphy.cap.has_5ghz = true;
- 		break;
--	case MT_EE_2GHZ:
--		dev->mphy.cap.has_2ghz = true;
--		break;
- 	case MT_EE_DBDC:
- 		dev->dbdc_support = true;
- 		fallthrough;
-+	case MT_EE_2GHZ:
-+		dev->mphy.cap.has_2ghz = true;
-+		break;
- 	default:
- 		dev->mphy.cap.has_2ghz = true;
- 		dev->mphy.cap.has_5ghz = true;
+diff --git a/arch/arm/boot/dts/imx6qdl.dtsi b/arch/arm/boot/dts/imx6qdl.dtsi
+index 7858ae5d39df7..7d81992dfafc6 100644
+--- a/arch/arm/boot/dts/imx6qdl.dtsi
++++ b/arch/arm/boot/dts/imx6qdl.dtsi
+@@ -45,6 +45,10 @@ aliases {
+ 		spi1 = &ecspi2;
+ 		spi2 = &ecspi3;
+ 		spi3 = &ecspi4;
++		usb0 = &usbotg;
++		usb1 = &usbh1;
++		usb2 = &usbh2;
++		usb3 = &usbh3;
+ 		usbphy0 = &usbphy1;
+ 		usbphy1 = &usbphy2;
+ 	};
+diff --git a/arch/arm/boot/dts/imx6sl.dtsi b/arch/arm/boot/dts/imx6sl.dtsi
+index c184a6d5bc420..5b4dfc62030e8 100644
+--- a/arch/arm/boot/dts/imx6sl.dtsi
++++ b/arch/arm/boot/dts/imx6sl.dtsi
+@@ -39,6 +39,9 @@ aliases {
+ 		spi1 = &ecspi2;
+ 		spi2 = &ecspi3;
+ 		spi3 = &ecspi4;
++		usb0 = &usbotg1;
++		usb1 = &usbotg2;
++		usb2 = &usbh;
+ 		usbphy0 = &usbphy1;
+ 		usbphy1 = &usbphy2;
+ 	};
+diff --git a/arch/arm/boot/dts/imx6sll.dtsi b/arch/arm/boot/dts/imx6sll.dtsi
+index bf5b262b91f91..eecb2f68a1c32 100644
+--- a/arch/arm/boot/dts/imx6sll.dtsi
++++ b/arch/arm/boot/dts/imx6sll.dtsi
+@@ -36,6 +36,8 @@ aliases {
+ 		spi1 = &ecspi2;
+ 		spi3 = &ecspi3;
+ 		spi4 = &ecspi4;
++		usb0 = &usbotg1;
++		usb1 = &usbotg2;
+ 		usbphy0 = &usbphy1;
+ 		usbphy1 = &usbphy2;
+ 	};
+diff --git a/arch/arm/boot/dts/imx6sx.dtsi b/arch/arm/boot/dts/imx6sx.dtsi
+index c399919943c34..629c6a7432d9b 100644
+--- a/arch/arm/boot/dts/imx6sx.dtsi
++++ b/arch/arm/boot/dts/imx6sx.dtsi
+@@ -49,6 +49,9 @@ aliases {
+ 		spi2 = &ecspi3;
+ 		spi3 = &ecspi4;
+ 		spi4 = &ecspi5;
++		usb0 = &usbotg1;
++		usb1 = &usbotg2;
++		usb2 = &usbh;
+ 		usbphy0 = &usbphy1;
+ 		usbphy1 = &usbphy2;
+ 	};
+diff --git a/arch/arm/boot/dts/imx6ul.dtsi b/arch/arm/boot/dts/imx6ul.dtsi
+index c40684ad11b8e..b40dd0c198028 100644
+--- a/arch/arm/boot/dts/imx6ul.dtsi
++++ b/arch/arm/boot/dts/imx6ul.dtsi
+@@ -47,6 +47,8 @@ aliases {
+ 		spi1 = &ecspi2;
+ 		spi2 = &ecspi3;
+ 		spi3 = &ecspi4;
++		usb0 = &usbotg1;
++		usb1 = &usbotg2;
+ 		usbphy0 = &usbphy1;
+ 		usbphy1 = &usbphy2;
+ 	};
+diff --git a/arch/arm/boot/dts/imx7d.dtsi b/arch/arm/boot/dts/imx7d.dtsi
+index cff875b80b60e..b0bcfa9094a30 100644
+--- a/arch/arm/boot/dts/imx7d.dtsi
++++ b/arch/arm/boot/dts/imx7d.dtsi
+@@ -7,6 +7,12 @@
+ #include <dt-bindings/reset/imx7-reset.h>
+ 
+ / {
++	aliases {
++		usb0 = &usbotg1;
++		usb1 = &usbotg2;
++		usb2 = &usbh;
++	};
++
+ 	cpus {
+ 		cpu0: cpu@0 {
+ 			clock-frequency = <996000000>;
+diff --git a/arch/arm/boot/dts/imx7s.dtsi b/arch/arm/boot/dts/imx7s.dtsi
+index 43b39ad9ddcee..334e781663cc2 100644
+--- a/arch/arm/boot/dts/imx7s.dtsi
++++ b/arch/arm/boot/dts/imx7s.dtsi
+@@ -47,6 +47,8 @@ aliases {
+ 		spi1 = &ecspi2;
+ 		spi2 = &ecspi3;
+ 		spi3 = &ecspi4;
++		usb0 = &usbotg1;
++		usb1 = &usbh;
+ 	};
+ 
+ 	cpus {
 -- 
 2.40.1
 
