@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4616C17AAB
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:42:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D62C433C7;
-	Wed,  9 Aug 2023 11:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD6517AAB
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:42:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0F4C433C7;
+	Wed,  9 Aug 2023 11:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581320;
-	bh=TB0Vw3s8UXBSE+qOb1uMmIQfSRaO0lsqeXiwiq/SWbo=;
+	s=korg; t=1691581323;
+	bh=ndwz2K/EduH8eDhOp4UbXDzAK6OK/YieCYWUG1SiVZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=frF1av01/RJqDox9k+iGSA5iEbmkD24RNcDg7ZawNp9lZCwjduJsSGQFWJVjg3tDV
-	 cqJOiA6mQqvZw2ih+SftyC1xKIL97WCDLcJPkY05z42swBhByb/7Ifp1dLDd6c+Eza
-	 bwu1ZYpUjchDYQ58/qdGH+tlNI/xTM4nfKbA+yw0=
+	b=GlnM671yoV/I435U3/b/FTOt6zAcEV3zFaZ9f+ha90S7H3KeWncen/bZMDzD6R5Je
+	 jZTBCzs4Lgr1x4im3pAWjbQNBWan62K4zE+AvLMSanfCYeDG+KoN51HG9t6MQsIAlT
+	 FIGlmQp0K16BE+IhQ9iC6GzY4j4n6/7O0INbJGHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Paul Blakey <paulb@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tomas Glozar <tglozar@redhat.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 155/201] net/mlx5: fs_core: Skip the FTs in the same FS_TYPE_PRIO_CHAINS fs_prio
-Date: Wed,  9 Aug 2023 12:42:37 +0200
-Message-ID: <20230809103648.907911160@linuxfoundation.org>
+Subject: [PATCH 5.10 146/201] bpf: sockmap: Remove preempt_disable in sock_map_sk_acquire
+Date: Wed,  9 Aug 2023 12:42:28 +0200
+Message-ID: <20230809103648.606329768@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -37,191 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Tomas Glozar <tglozar@redhat.com>
 
-[ Upstream commit c635ca45a7a2023904a1f851e99319af7b87017d ]
+[ Upstream commit 13d2618b48f15966d1adfe1ff6a1985f5eef40ba ]
 
-In the cited commit, new type of FS_TYPE_PRIO_CHAINS fs_prio was added
-to support multiple parallel namespaces for multi-chains. And we skip
-all the flow tables under the fs_node of this type unconditionally,
-when searching for the next or previous flow table to connect for a
-new table.
+Disabling preemption in sock_map_sk_acquire conflicts with GFP_ATOMIC
+allocation later in sk_psock_init_link on PREEMPT_RT kernels, since
+GFP_ATOMIC might sleep on RT (see bpf: Make BPF and PREEMPT_RT co-exist
+patchset notes for details).
 
-As this search function is also used for find new root table when the
-old one is being deleted, it will skip the entire FS_TYPE_PRIO_CHAINS
-fs_node next to the old root. However, new root table should be chosen
-from it if there is any table in it. Fix it by skipping only the flow
-tables in the same FS_TYPE_PRIO_CHAINS fs_node when finding the
-closest FT for a fs_node.
+This causes calling bpf_map_update_elem on BPF_MAP_TYPE_SOCKMAP maps to
+BUG (sleeping function called from invalid context) on RT kernels.
 
-Besides, complete the connecting from FTs of previous priority of prio
-because there should be multiple prevs after this fs_prio type is
-introduced. And also the next FT should be chosen from the first flow
-table next to the prio in the same FS_TYPE_PRIO_CHAINS fs_prio, if
-this prio is the first child.
+preempt_disable was introduced together with lock_sk and rcu_read_lock
+in commit 99ba2b5aba24e ("bpf: sockhash, disallow bpf_tcp_close and update
+in parallel"), probably to match disabled migration of BPF programs, and
+is no longer necessary.
 
-Fixes: 328edb499f99 ("net/mlx5: Split FDB fast path prio to multiple namespaces")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Paul Blakey <paulb@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/7a95754df479e722038996c97c97b062b372591f.1690803944.git.leonro@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Remove preempt_disable to fix BUG in sock_map_update_common on RT.
+
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/all/20200224140131.461979697@linutronix.de/
+Fixes: 99ba2b5aba24 ("bpf: sockhash, disallow bpf_tcp_close and update in parallel")
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/20230728064411.305576-1-tglozar@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/fs_core.c | 80 +++++++++++++++++--
- 1 file changed, 72 insertions(+), 8 deletions(-)
+ net/core/sock_map.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-index 692fe3e5d0763..4e8e3797aed08 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-@@ -802,7 +802,7 @@ static struct mlx5_flow_table *find_closest_ft_recursive(struct fs_node  *root,
- 	struct fs_node *iter = list_entry(start, struct fs_node, list);
- 	struct mlx5_flow_table *ft = NULL;
- 
--	if (!root || root->type == FS_TYPE_PRIO_CHAINS)
-+	if (!root)
- 		return NULL;
- 
- 	list_for_each_advance_continue(iter, &root->children, reverse) {
-@@ -818,19 +818,42 @@ static struct mlx5_flow_table *find_closest_ft_recursive(struct fs_node  *root,
- 	return ft;
+diff --git a/net/core/sock_map.c b/net/core/sock_map.c
+index ee5d3f49b0b5b..f375ef1501490 100644
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -122,7 +122,6 @@ static void sock_map_sk_acquire(struct sock *sk)
+ 	__acquires(&sk->sk_lock.slock)
+ {
+ 	lock_sock(sk);
+-	preempt_disable();
+ 	rcu_read_lock();
  }
  
-+static struct fs_node *find_prio_chains_parent(struct fs_node *parent,
-+					       struct fs_node **child)
-+{
-+	struct fs_node *node = NULL;
-+
-+	while (parent && parent->type != FS_TYPE_PRIO_CHAINS) {
-+		node = parent;
-+		parent = parent->parent;
-+	}
-+
-+	if (child)
-+		*child = node;
-+
-+	return parent;
-+}
-+
- /* If reverse is false then return the first flow table next to the passed node
-  * in the tree, else return the last flow table before the node in the tree.
-+ * If skip is true, skip the flow tables in the same prio_chains prio.
-  */
--static struct mlx5_flow_table *find_closest_ft(struct fs_node *node, bool reverse)
-+static struct mlx5_flow_table *find_closest_ft(struct fs_node *node, bool reverse,
-+					       bool skip)
+@@ -130,7 +129,6 @@ static void sock_map_sk_release(struct sock *sk)
+ 	__releases(&sk->sk_lock.slock)
  {
-+	struct fs_node *prio_chains_parent = NULL;
- 	struct mlx5_flow_table *ft = NULL;
- 	struct fs_node *curr_node;
- 	struct fs_node *parent;
- 
-+	if (skip)
-+		prio_chains_parent = find_prio_chains_parent(node, NULL);
- 	parent = node->parent;
- 	curr_node = node;
- 	while (!ft && parent) {
--		ft = find_closest_ft_recursive(parent, &curr_node->list, reverse);
-+		if (parent != prio_chains_parent)
-+			ft = find_closest_ft_recursive(parent, &curr_node->list,
-+						       reverse);
- 		curr_node = parent;
- 		parent = curr_node->parent;
- 	}
-@@ -840,13 +863,13 @@ static struct mlx5_flow_table *find_closest_ft(struct fs_node *node, bool revers
- /* Assuming all the tree is locked by mutex chain lock */
- static struct mlx5_flow_table *find_next_chained_ft(struct fs_node *node)
- {
--	return find_closest_ft(node, false);
-+	return find_closest_ft(node, false, true);
- }
- 
- /* Assuming all the tree is locked by mutex chain lock */
- static struct mlx5_flow_table *find_prev_chained_ft(struct fs_node *node)
- {
--	return find_closest_ft(node, true);
-+	return find_closest_ft(node, true, true);
- }
- 
- static struct mlx5_flow_table *find_next_fwd_ft(struct mlx5_flow_table *ft,
-@@ -882,21 +905,55 @@ static int connect_fts_in_prio(struct mlx5_core_dev *dev,
- 	return 0;
- }
- 
-+static struct mlx5_flow_table *find_closet_ft_prio_chains(struct fs_node *node,
-+							  struct fs_node *parent,
-+							  struct fs_node **child,
-+							  bool reverse)
-+{
-+	struct mlx5_flow_table *ft;
-+
-+	ft = find_closest_ft(node, reverse, false);
-+
-+	if (ft && parent == find_prio_chains_parent(&ft->node, child))
-+		return ft;
-+
-+	return NULL;
-+}
-+
- /* Connect flow tables from previous priority of prio to ft */
- static int connect_prev_fts(struct mlx5_core_dev *dev,
- 			    struct mlx5_flow_table *ft,
- 			    struct fs_prio *prio)
- {
-+	struct fs_node *prio_parent, *parent = NULL, *child, *node;
- 	struct mlx5_flow_table *prev_ft;
-+	int err = 0;
-+
-+	prio_parent = find_prio_chains_parent(&prio->node, &child);
-+
-+	/* return directly if not under the first sub ns of prio_chains prio */
-+	if (prio_parent && !list_is_first(&child->list, &prio_parent->children))
-+		return 0;
- 
- 	prev_ft = find_prev_chained_ft(&prio->node);
--	if (prev_ft) {
-+	while (prev_ft) {
- 		struct fs_prio *prev_prio;
- 
- 		fs_get_obj(prev_prio, prev_ft->node.parent);
--		return connect_fts_in_prio(dev, prev_prio, ft);
-+		err = connect_fts_in_prio(dev, prev_prio, ft);
-+		if (err)
-+			break;
-+
-+		if (!parent) {
-+			parent = find_prio_chains_parent(&prev_prio->node, &child);
-+			if (!parent)
-+				break;
-+		}
-+
-+		node = child;
-+		prev_ft = find_closet_ft_prio_chains(node, parent, &child, true);
- 	}
--	return 0;
-+	return err;
- }
- 
- static int update_root_ft_create(struct mlx5_flow_table *ft, struct fs_prio
-@@ -2072,12 +2129,19 @@ EXPORT_SYMBOL(mlx5_del_flow_rules);
- /* Assuming prio->node.children(flow tables) is sorted by level */
- static struct mlx5_flow_table *find_next_ft(struct mlx5_flow_table *ft)
- {
-+	struct fs_node *prio_parent, *child;
- 	struct fs_prio *prio;
- 
- 	fs_get_obj(prio, ft->node.parent);
- 
- 	if (!list_is_last(&ft->node.list, &prio->node.children))
- 		return list_next_entry(ft, node.list);
-+
-+	prio_parent = find_prio_chains_parent(&prio->node, &child);
-+
-+	if (prio_parent && list_is_first(&child->list, &prio_parent->children))
-+		return find_closest_ft(&prio->node, false, false);
-+
- 	return find_next_chained_ft(&prio->node);
+ 	rcu_read_unlock();
+-	preempt_enable();
+ 	release_sock(sk);
  }
  
 -- 
