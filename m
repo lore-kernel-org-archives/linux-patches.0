@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 172BC53B7
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:53:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893F7C433C7;
-	Wed,  9 Aug 2023 10:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4139613A
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:53:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472C0C433C8;
+	Wed,  9 Aug 2023 10:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578418;
-	bh=eZrklH5sZ77N4MIS5E+KpLGufMYlpx9j5J25AaEjfYA=;
+	s=korg; t=1691578421;
+	bh=epQON+OFentVD/JjSZ9Cz6JatOtbglUbCmCcf0ndNlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=omibVwYugPHgfnk7uUzxuAEmUS3Bm4fhoLmSxRs2fQdfuRH+DEtmYhRDYFiHEsZ06
-	 bL+8LLUS20as/rtPZXNbP2tt8F+o+YDDDq0Ic2oRmg2sHBDzaDlZWfFYXqRqYWZBe8
-	 JMEDCUTGNh3S8Fa7wEEsA0QmQ4vqSQQWd8QUNUPo=
+	b=iYbq4EfRg7aC0UJatzuOrDKEm5SFSIGMRA6+b+zHI8FZkCpmPCcMVYEkfT7bStGWq
+	 Ei22+FWjrUfHW833R1c/ruDndMFxMFZaCofZQlgOB0HAch2wX/6o+OvUYCeypZLY16
+	 Qzc4OgsBBuU0XApUQkED7qzdlEk2ITHxlRAtTQRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanjun Gong <ruc_gongyuanjun@163.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Akhmat Karakotov <hmukos@yandex-team.ru>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 053/127] net: korina: handle clk prepare error in korina_probe()
-Date: Wed,  9 Aug 2023 12:40:40 +0200
-Message-ID: <20230809103638.433778100@linuxfoundation.org>
+Subject: [PATCH 6.1 036/127] net: annotate data-race around sk->sk_txrehash
+Date: Wed,  9 Aug 2023 12:40:23 +0200
+Message-ID: <20230809103637.849570655@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -35,41 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuanjun Gong <ruc_gongyuanjun@163.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 0b6291ad1940c403734312d0e453e8dac9148f69 ]
+[ Upstream commit c76a0328899bbe226f8adeb88b8da9e4167bd316 ]
 
-in korina_probe(), the return value of clk_prepare_enable()
-should be checked since it might fail. we can use
-devm_clk_get_optional_enabled() instead of devm_clk_get_optional()
-and clk_prepare_enable() to automatically handle the error.
+sk_getsockopt() runs locklessly. This means sk->sk_txrehash
+can be read while other threads are changing its value.
 
-Fixes: e4cd854ec487 ("net: korina: Get mdio input clock via common clock framework")
-Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
-Link: https://lore.kernel.org/r/20230731090535.21416-1-ruc_gongyuanjun@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Other locations were handled in commit cb6cd2cec799
+("tcp: Change SYN ACK retransmit behaviour to account for rehash")
+
+Fixes: 26859240e4ee ("txhash: Add socket option to control TX hash rethink behavior")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Akhmat Karakotov <hmukos@yandex-team.ru>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/korina.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/core/sock.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/korina.c b/drivers/net/ethernet/korina.c
-index 2b9335cb4bb3a..8537578e1cf1d 100644
---- a/drivers/net/ethernet/korina.c
-+++ b/drivers/net/ethernet/korina.c
-@@ -1302,11 +1302,10 @@ static int korina_probe(struct platform_device *pdev)
- 	else if (of_get_ethdev_address(pdev->dev.of_node, dev) < 0)
- 		eth_hw_addr_random(dev);
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 9483820833c5b..77abd69c56dde 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -1521,7 +1521,9 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
+ 		}
+ 		if ((u8)val == SOCK_TXREHASH_DEFAULT)
+ 			val = READ_ONCE(sock_net(sk)->core.sysctl_txrehash);
+-		/* Paired with READ_ONCE() in tcp_rtx_synack() */
++		/* Paired with READ_ONCE() in tcp_rtx_synack()
++		 * and sk_getsockopt().
++		 */
+ 		WRITE_ONCE(sk->sk_txrehash, (u8)val);
+ 		break;
  
--	clk = devm_clk_get_optional(&pdev->dev, "mdioclk");
-+	clk = devm_clk_get_optional_enabled(&pdev->dev, "mdioclk");
- 	if (IS_ERR(clk))
- 		return PTR_ERR(clk);
- 	if (clk) {
--		clk_prepare_enable(clk);
- 		lp->mii_clock_freq = clk_get_rate(clk);
- 	} else {
- 		lp->mii_clock_freq = 200000000; /* max possible input clk */
+@@ -1927,7 +1929,8 @@ int sk_getsockopt(struct sock *sk, int level, int optname,
+ 		break;
+ 
+ 	case SO_TXREHASH:
+-		v.val = sk->sk_txrehash;
++		/* Paired with WRITE_ONCE() in sk_setsockopt() */
++		v.val = READ_ONCE(sk->sk_txrehash);
+ 		break;
+ 
+ 	default:
 -- 
 2.40.1
 
