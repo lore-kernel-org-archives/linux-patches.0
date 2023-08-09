@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847C517731
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:08:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0605CC433C7;
-	Wed,  9 Aug 2023 11:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4858217731
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:08:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFCFDC433C7;
+	Wed,  9 Aug 2023 11:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579316;
-	bh=lzMKXovOchqRLhPbKiknvSr0RlnnLWn4+skwDANVLQ8=;
+	s=korg; t=1691579319;
+	bh=m+a0k2j14ItIrk2tBZdzZuNVu8ofQQ7C0kmbW2FBohQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e3qNumzaSLJD0is3BexzO+Z/whdwhZIUMOJvLxsnEGuNl4HzL56Q7vlj1tGmunu4u
-	 3affJxM+bybRu6HwTJWn8pRR1POr7w61JeoyqbqzxbIINiI8uS3PbRp/DaANRNfyHH
-	 sD901TqTKKUex+vYX5uAiPKKkSktd6ah6v/ew9JQ=
+	b=tvozvRAnxrSh/XJPHiN3wpM92yUfwpRjxptQuqiX01rY7ZFdShklD+qrJHCJJNPUV
+	 mF+7+vz87WSN+A3cWYuYTM8ewq/FZr0YJDpUFjlALZj7I4xf7oYcEB1wBgirjJu0tf
+	 9EaXU4PBwsr3OL0Q2X7kQqWyZcr+GoW7fZ/IYvY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang Li <liali@redhat.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Maxim Mikityanskiy <maxtram95@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 153/204] team: reset teams flags when down link is P2P device
-Date: Wed,  9 Aug 2023 12:41:31 +0200
-Message-ID: <20230809103647.670291499@linuxfoundation.org>
+Subject: [PATCH 4.14 154/204] platform/x86: msi-laptop: Fix rfkill out-of-sync on MSI Wind U100
+Date: Wed,  9 Aug 2023 12:41:32 +0200
+Message-ID: <20230809103647.699525976@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -36,50 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Maxim Mikityanskiy <maxtram95@gmail.com>
 
-[ Upstream commit fa532bee17d15acf8bba4bc8e2062b7a093ba801 ]
+[ Upstream commit ad084a6d99bc182bf109c190c808e2ea073ec57b ]
 
-When adding a point to point downlink to team device, we neglected to reset
-the team's flags, which were still using flags like BROADCAST and
-MULTICAST. Consequently, this would initiate ARP/DAD for P2P downlink
-interfaces, such as when adding a GRE device to team device. Fix this by
-remove multicast/broadcast flags and add p2p and noarp flags.
+Only the HW rfkill state is toggled on laptops with quirks->ec_read_only
+(so far only MSI Wind U90/U100). There are, however, a few issues with
+the implementation:
 
-After removing the none ethernet interface and adding an ethernet interface
-to team, we need to reset team interface flags. Unlike bonding interface,
-team do not need restore IFF_MASTER, IFF_SLAVE flags.
+1. The initial HW state is always unblocked, regardless of the actual
+   state on boot, because msi_init_rfkill only sets the SW state,
+   regardless of ec_read_only.
 
-Reported-by: Liang Li <liali@redhat.com>
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2221438
-Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+2. The initial SW state corresponds to the actual state on boot, but it
+   can't be changed afterwards, because set_device_state returns
+   -EOPNOTSUPP. It confuses the userspace, making Wi-Fi and/or Bluetooth
+   unusable if it was blocked on boot, and breaking the airplane mode if
+   the rfkill was unblocked on boot.
+
+Address the above issues by properly initializing the HW state on
+ec_read_only laptops and by allowing the userspace to toggle the SW
+state. Don't set the SW state ourselves and let the userspace fully
+control it. Toggling the SW state is a no-op, however, it allows the
+userspace to properly toggle the airplane mode. The actual SW radio
+disablement is handled by the corresponding rtl818x_pci and btusb
+drivers that have their own rfkills.
+
+Tested on MSI Wind U100 Plus, BIOS ver 1.0G, EC ver 130.
+
+Fixes: 0816392b97d4 ("msi-laptop: merge quirk tables to one")
+Fixes: 0de6575ad0a8 ("msi-laptop: Add MSI Wind U90/U100 support")
+Signed-off-by: Maxim Mikityanskiy <maxtram95@gmail.com>
+Link: https://lore.kernel.org/r/20230721145423.161057-1-maxtram95@gmail.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/platform/x86/msi-laptop.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index c7c1ff419d75d..b318464a4fcad 100644
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -2095,6 +2095,15 @@ static void team_setup_by_port(struct net_device *dev,
- 	dev->mtu = port_dev->mtu;
- 	memcpy(dev->broadcast, port_dev->broadcast, port_dev->addr_len);
- 	eth_hw_addr_inherit(dev, port_dev);
-+
-+	if (port_dev->flags & IFF_POINTOPOINT) {
-+		dev->flags &= ~(IFF_BROADCAST | IFF_MULTICAST);
-+		dev->flags |= (IFF_POINTOPOINT | IFF_NOARP);
-+	} else if ((port_dev->flags & (IFF_BROADCAST | IFF_MULTICAST)) ==
-+		    (IFF_BROADCAST | IFF_MULTICAST)) {
-+		dev->flags |= (IFF_BROADCAST | IFF_MULTICAST);
-+		dev->flags &= ~(IFF_POINTOPOINT | IFF_NOARP);
-+	}
- }
+diff --git a/drivers/platform/x86/msi-laptop.c b/drivers/platform/x86/msi-laptop.c
+index 42b31c549db00..1781e67781a55 100644
+--- a/drivers/platform/x86/msi-laptop.c
++++ b/drivers/platform/x86/msi-laptop.c
+@@ -223,7 +223,7 @@ static ssize_t set_device_state(const char *buf, size_t count, u8 mask)
+ 		return -EINVAL;
  
- static int team_dev_type_check_change(struct net_device *dev,
+ 	if (quirks->ec_read_only)
+-		return -EOPNOTSUPP;
++		return 0;
+ 
+ 	/* read current device state */
+ 	result = ec_read(MSI_STANDARD_EC_COMMAND_ADDRESS, &rdata);
+@@ -854,15 +854,15 @@ static bool msi_laptop_i8042_filter(unsigned char data, unsigned char str,
+ static void msi_init_rfkill(struct work_struct *ignored)
+ {
+ 	if (rfk_wlan) {
+-		rfkill_set_sw_state(rfk_wlan, !wlan_s);
++		msi_rfkill_set_state(rfk_wlan, !wlan_s);
+ 		rfkill_wlan_set(NULL, !wlan_s);
+ 	}
+ 	if (rfk_bluetooth) {
+-		rfkill_set_sw_state(rfk_bluetooth, !bluetooth_s);
++		msi_rfkill_set_state(rfk_bluetooth, !bluetooth_s);
+ 		rfkill_bluetooth_set(NULL, !bluetooth_s);
+ 	}
+ 	if (rfk_threeg) {
+-		rfkill_set_sw_state(rfk_threeg, !threeg_s);
++		msi_rfkill_set_state(rfk_threeg, !threeg_s);
+ 		rfkill_threeg_set(NULL, !threeg_s);
+ 	}
+ }
 -- 
 2.39.2
 
