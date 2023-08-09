@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8510C17AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07873C433C7;
-	Wed,  9 Aug 2023 11:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B5717AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBAC7C433C7;
+	Wed,  9 Aug 2023 11:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581103;
-	bh=nu7s9AVL9NVwj9zGrmdq53KTNTXROrJ15SAZcbFsBto=;
+	s=korg; t=1691581106;
+	bh=WMfYavpZhy6SfzZyjVwRQwdxTEbekJnHTEWcStSw/dw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FWU6YoCKT0GBR9scnK0Zh6biNJLoi0OyfmnPU27jYkw2cl7CsMWCsKh8vK1IDpX5d
-	 BDOW4U0Ue32fonJfB1K/OwPbjYHVkivybvo5zqCYPhKWUk+Fpu61Oy7OTmgtRfszkn
-	 Wd7eeE0i3OmHvLiTfZYRHA26M97r2qmN52qDfW0I=
+	b=YoqYPBQUdIClHya5hTnYvkeKN67QA/8TqO60EV/MCIgw8OyZHR9C3Zyv797ctbSJZ
+	 bTqDogfVx96b1d1ADiJBOwI57Qdbd4mrVZSPqjbme+5cWhGcCJe+KIQgIebCZJwUj9
+	 o7mbW+Zq/xyLbtUEassLg453dRDteN52XcQoEeBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Matthew Auld <matthew.auld@intel.com>
-Subject: [PATCH 5.10 106/201] drm/ttm: make ttm_bo_unpin more defensive
-Date: Wed,  9 Aug 2023 12:41:48 +0200
-Message-ID: <20230809103647.350518501@linuxfoundation.org>
+	Pratyush Yadav <ptyadav@amazon.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Hagar Hemdan <hagarhem@amazon.de>
+Subject: [PATCH 5.10 107/201] ACPI: processor: perflib: Use the "no limit" frequency QoS
+Date: Wed,  9 Aug 2023 12:41:49 +0200
+Message-ID: <20230809103647.380281265@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -34,35 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian König <christian.koenig@amd.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 6c5403173a13a08ff61dbdafa4c0ed4a9dedbfe0 upstream.
+commit c02d5feb6e2f60affc6ba8606d8d614c071e2ba6 upstream.
 
-We seem to have some more driver bugs than thought.
+When _PPC returns 0, it means that the CPU frequency is not limited by
+the platform firmware, so make acpi_processor_get_platform_limit()
+update the frequency QoS request used by it to "no limit" in that case.
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Fixes: deb0814b43f3 ("drm/ttm: add ttm_bo_pin()/ttm_bo_unpin() v2")
-Acked-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20210312093810.2202-1-christian.koenig@amd.com
+This addresses a problem with limiting CPU frequency artificially on
+some systems after CPU offline/online to the frequency that corresponds
+to the first entry in the _PSS return package.
+
+Reported-by: Pratyush Yadav <ptyadav@amazon.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Pratyush Yadav <ptyadav@amazon.de>
+Tested-by: Pratyush Yadav <ptyadav@amazon.de>
+Tested-by: Hagar Hemdan <hagarhem@amazon.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/drm/ttm/ttm_bo_api.h |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/acpi/processor_perflib.c |   20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
---- a/include/drm/ttm/ttm_bo_api.h
-+++ b/include/drm/ttm/ttm_bo_api.h
-@@ -628,8 +628,10 @@ static inline void ttm_bo_pin(struct ttm
- static inline void ttm_bo_unpin(struct ttm_buffer_object *bo)
+--- a/drivers/acpi/processor_perflib.c
++++ b/drivers/acpi/processor_perflib.c
+@@ -56,6 +56,8 @@ static int acpi_processor_get_platform_l
  {
- 	dma_resv_assert_held(bo->base.resv);
--	WARN_ON_ONCE(!bo->pin_count);
--	--bo->pin_count;
-+	if (bo->pin_count)
-+		--bo->pin_count;
-+	else
-+		WARN_ON_ONCE(true);
- }
+ 	acpi_status status = 0;
+ 	unsigned long long ppc = 0;
++	s32 qos_value;
++	int index;
+ 	int ret;
  
- int ttm_mem_evict_first(struct ttm_bo_device *bdev,
+ 	if (!pr)
+@@ -75,17 +77,27 @@ static int acpi_processor_get_platform_l
+ 		return -ENODEV;
+ 	}
+ 
++	index = ppc;
++
+ 	pr_debug("CPU %d: _PPC is %d - frequency %s limited\n", pr->id,
+-		       (int)ppc, ppc ? "" : "not");
++		 index, index ? "is" : "is not");
+ 
+-	pr->performance_platform_limit = (int)ppc;
++	pr->performance_platform_limit = index;
+ 
+ 	if (ppc >= pr->performance->state_count ||
+ 	    unlikely(!freq_qos_request_active(&pr->perflib_req)))
+ 		return 0;
+ 
+-	ret = freq_qos_update_request(&pr->perflib_req,
+-			pr->performance->states[ppc].core_frequency * 1000);
++	/*
++	 * If _PPC returns 0, it means that all of the available states can be
++	 * used ("no limit").
++	 */
++	if (index == 0)
++		qos_value = FREQ_QOS_MAX_DEFAULT_VALUE;
++	else
++		qos_value = pr->performance->states[index].core_frequency * 1000;
++
++	ret = freq_qos_update_request(&pr->perflib_req, qos_value);
+ 	if (ret < 0) {
+ 		pr_warn("Failed to update perflib freq constraint: CPU%d (%d)\n",
+ 			pr->id, ret);
 
 
