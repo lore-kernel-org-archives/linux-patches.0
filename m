@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22D717AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:39:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56E43C433C7;
-	Wed,  9 Aug 2023 11:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9985817AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:39:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE66C433C8;
+	Wed,  9 Aug 2023 11:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581145;
-	bh=Tz8SRu9b178wK6V6K8z/pO22Pjl4cWBSHdkzZutPjvE=;
+	s=korg; t=1691581148;
+	bh=2YsowY+ZjkQKN7sO5bqU4qmT5hqnlEUOIZVxQZ0Sq0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AM3hKmT/UZ032JwEg6IQwdw0R1JhNZ39pqHjsaIGQRskpOCQf7Fo/6lFnyuiETLVN
-	 rPy7lhehSUq/z+A+0RJi9IuIRS72OALoEJCB2se01OqZvBySASuh1xJgGjKjTK4NCM
-	 N1NLtnVYLrhU9rK4iorpq4fqqWgB4njWZMLQ/TWE=
+	b=G4sJu/fiAg58vApL71hCN3O/fEiQ5dahz3pj1F3tA2J7JpR1sQuIV1qKpat86O0Rr
+	 5zt5YoqKOUckHju3b29eQLTMG4KShS47vHDMu0eAAxMZ4aJ0tFSwCUxJB3yGrADzaz
+	 HM1OZlQI1eDOqERPB7O8Ao/s/BSosSR+Ja0qQWmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.10 081/201] Revert "usb: xhci: tegra: Fix error check"
-Date: Wed,  9 Aug 2023 12:41:23 +0200
-Message-ID: <20230809103646.510990498@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Li Huafei <lihuafei1@huawei.com>
+Subject: [PATCH 5.10 115/201] x86/kprobes: Retrieve correct opcode for group instruction
+Date: Wed,  9 Aug 2023 12:41:57 +0200
+Message-ID: <20230809103647.626120665@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -34,54 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Masami Hiramatsu <mhiramat@kernel.org>
 
-commit 288b4fa1798e3637a9304c6e90a93d900e02369c upstream.
+[ Upstream commit d60ad3d46f1d04a282c56159f1deb675c12733fd ]
 
-This reverts commit 18fc7c435be3f17ea26a21b2e2312fcb9088e01f.
+Since the opcodes start from 0xff are group5 instruction group which is
+not 2 bytes opcode but the extended opcode determined by the MOD/RM byte.
 
-The reverted commit was based on static analysis and a misunderstanding
-of how PTR_ERR() and NULLs are supposed to work.  When a function
-returns both pointer errors and NULL then normally the NULL means
-"continue operating without a feature because it was deliberately
-turned off".  The NULL should not be treated as a failure.  If a driver
-cannot work when that feature is disabled then the KConfig should
-enforce that the function cannot return NULL.  We should not need to
-test for it.
+The commit abd82e533d88 ("x86/kprobes: Do not decode opcode in resume_execution()")
+used insn->opcode.bytes[1], but that is not correct. We have to refer
+the insn->modrm.bytes[1] instead.
 
-In this code, the patch means that certain tegra_xusb_probe() will
-fail if the firmware supports power-domains but CONFIG_PM is disabled.
-
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: 18fc7c435be3 ("usb: xhci: tegra: Fix error check")
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/8baace8d-fb4b-41a4-ad5f-848ae643a23b@moroto.mountain
+Fixes: abd82e533d88 ("x86/kprobes: Do not decode opcode in resume_execution()")
+Signed-off-by: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/161469872400.49483.18214724458034233166.stgit@devnote2
+Signed-off-by: Li Huafei <lihuafei1@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-tegra.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/kernel/kprobes/core.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci-tegra.c
-+++ b/drivers/usb/host/xhci-tegra.c
-@@ -1042,15 +1042,15 @@ static int tegra_xusb_powerdomain_init(s
- 	int err;
- 
- 	tegra->genpd_dev_host = dev_pm_domain_attach_by_name(dev, "xusb_host");
--	if (IS_ERR_OR_NULL(tegra->genpd_dev_host)) {
--		err = PTR_ERR(tegra->genpd_dev_host) ? : -ENODATA;
-+	if (IS_ERR(tegra->genpd_dev_host)) {
-+		err = PTR_ERR(tegra->genpd_dev_host);
- 		dev_err(dev, "failed to get host pm-domain: %d\n", err);
- 		return err;
- 	}
- 
- 	tegra->genpd_dev_ss = dev_pm_domain_attach_by_name(dev, "xusb_ss");
--	if (IS_ERR_OR_NULL(tegra->genpd_dev_ss)) {
--		err = PTR_ERR(tegra->genpd_dev_ss) ? : -ENODATA;
-+	if (IS_ERR(tegra->genpd_dev_ss)) {
-+		err = PTR_ERR(tegra->genpd_dev_ss);
- 		dev_err(dev, "failed to get superspeed pm-domain: %d\n", err);
- 		return err;
- 	}
+--- a/arch/x86/kernel/kprobes/core.c
++++ b/arch/x86/kernel/kprobes/core.c
+@@ -464,7 +464,11 @@ static void set_resume_flags(struct kpro
+ 		break;
+ #endif
+ 	case 0xff:
+-		opcode = insn->opcode.bytes[1];
++		/*
++		 * Since the 0xff is an extended group opcode, the instruction
++		 * is determined by the MOD/RM byte.
++		 */
++		opcode = insn->modrm.bytes[0];
+ 		if ((opcode & 0x30) == 0x10) {
+ 			/*
+ 			 * call absolute, indirect
 
 
