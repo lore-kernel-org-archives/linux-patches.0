@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFC76131
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:32:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40001C433C7;
-	Wed,  9 Aug 2023 11:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD296131
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:32:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DDEDC433C7;
+	Wed,  9 Aug 2023 11:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580754;
-	bh=UCte1mjOAwXTxUdypKWANPtscsuFrfZBk+gvGGj4Be4=;
+	s=korg; t=1691580757;
+	bh=vva/hb3ixTg8jmfM+Plf+S54kvTGNDLdObk1XvjQAZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KQOPpbbMTybrk4pl88HHkZEZioBFZjTDvd0wDNcMemPeel1HsmIJX+IaQNBNmPblq
-	 AwYFlhxyQybhi7DFp5dlCfwLogIlze3SpLURLxaYR3FGJi0j/sPk+5V6EpSoKtu9T7
-	 fKM+RVsFtFYtslVV0hGiyX2H2BA/dn35iJKybmaQ=
+	b=q/aevx6Q+n5GT/4qQZXdI/SJB0Hmvl0FmCpX2VxkDj7T7IfP2V1gWIMo5n3JucG2j
+	 Cp+astzmpX884ZdWuIwXl+N6W77b23c+40W1484n2uLZZ3QdcX06wskGvsxlCPaiLz
+	 4SQw8msfutIKpmNKY5U/j9ouWvhoWJIalTNUkaF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Michael Jeanson <mjeanson@efficios.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 137/154] powerpc/mm/altmap: Fix altmap boundary check
-Date: Wed,  9 Aug 2023 12:42:48 +0200
-Message-ID: <20230809103641.412578081@linuxfoundation.org>
+Subject: [PATCH 5.4 138/154] selftests/rseq: check if libc rseq support is registered
+Date: Wed,  9 Aug 2023 12:42:49 +0200
+Message-ID: <20230809103641.442648332@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -36,39 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+From: Michael Jeanson <mjeanson@efficios.com>
 
-[ Upstream commit 6722b25712054c0f903b839b8f5088438dd04df3 ]
+[ Upstream commit d1a997ba4c1bf65497d956aea90de42a6398f73a ]
 
-altmap->free includes the entire free space from which altmap blocks
-can be allocated. So when checking whether the kernel is doing altmap
-block free, compute the boundary correctly, otherwise memory hotunplug
-can fail.
+When checking for libc rseq support in the library constructor, don't
+only depend on the symbols presence, check that the registration was
+completed.
 
-Fixes: 9ef34630a461 ("powerpc/mm: Fallback to RAM if the altmap is unusable")
-Signed-off-by: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230724181320.471386-1-aneesh.kumar@linux.ibm.com
+This targets a scenario where the libc has rseq support but it is not
+wired for the current architecture in 'bits/rseq.h', we want to fallback
+to our internal registration mechanism.
+
+Signed-off-by: Michael Jeanson <mjeanson@efficios.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/r/20220614154830.1367382-4-mjeanson@efficios.com
+Stable-dep-of: 3bcbc20942db ("selftests/rseq: Play nice with binaries statically linked against glibc 2.35+")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/init_64.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tools/testing/selftests/rseq/rseq.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/mm/init_64.c b/arch/powerpc/mm/init_64.c
-index e4fb5ab41e2d3..cfb97fabd5320 100644
---- a/arch/powerpc/mm/init_64.c
-+++ b/arch/powerpc/mm/init_64.c
-@@ -279,8 +279,7 @@ void __ref vmemmap_free(unsigned long start, unsigned long end,
- 	start = _ALIGN_DOWN(start, page_size);
- 	if (altmap) {
- 		alt_start = altmap->base_pfn;
--		alt_end = altmap->base_pfn + altmap->reserve +
--			  altmap->free + altmap->alloc + altmap->align;
-+		alt_end = altmap->base_pfn + altmap->reserve + altmap->free;
- 	}
- 
- 	pr_debug("vmemmap_free %lx...%lx\n", start, end);
+diff --git a/tools/testing/selftests/rseq/rseq.c b/tools/testing/selftests/rseq/rseq.c
+index 986b9458efb26..4177f9507bbee 100644
+--- a/tools/testing/selftests/rseq/rseq.c
++++ b/tools/testing/selftests/rseq/rseq.c
+@@ -111,7 +111,8 @@ void rseq_init(void)
+ 	libc_rseq_offset_p = dlsym(RTLD_NEXT, "__rseq_offset");
+ 	libc_rseq_size_p = dlsym(RTLD_NEXT, "__rseq_size");
+ 	libc_rseq_flags_p = dlsym(RTLD_NEXT, "__rseq_flags");
+-	if (libc_rseq_size_p && libc_rseq_offset_p && libc_rseq_flags_p) {
++	if (libc_rseq_size_p && libc_rseq_offset_p && libc_rseq_flags_p &&
++			*libc_rseq_size_p != 0) {
+ 		/* rseq registration owned by glibc */
+ 		rseq_offset = *libc_rseq_offset_p;
+ 		rseq_size = *libc_rseq_size_p;
 -- 
 2.40.1
 
