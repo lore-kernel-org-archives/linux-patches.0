@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A2B15AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:48:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 963EBC433C8;
-	Wed,  9 Aug 2023 10:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D81415AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:48:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77415C433C8;
+	Wed,  9 Aug 2023 10:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578111;
-	bh=HrlcznPUuesblsN4lOcCOJN0KJIc0hSH0DpbLASXFak=;
+	s=korg; t=1691578113;
+	bh=eTcz6bIUyGp53N9M8fXParpMDa0FbsuPIF2BGIJYRq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2iUswpED5Yg03OjQt8i3ukuQMmTK9FAzuS1Epz/1bQTEKynfa/CpSR0vqRY3HVBUI
-	 40ZOdmjxu76VaUCxSeKRo3H34+r0Oj8JaukLLVJv59hC/xtQeKOOV7D4WKq0VcYRLC
-	 0Dk3fCI4ZHG1kYqK13niJGJkyRQAmYDvJT6GW+24=
+	b=YE8hgaHd0MATgSf81QwJlorOphWt77BSc+3iklIZ4wJXzfcOgNHB9ZRQoNLJeoiG0
+	 qo3D+sbxOVGCbmKnNLeoHn4d40XKPjHgm93AKKGMI4l+Gd+XKoeD6NKVf+5Gucf7ao
+	 FYI8Z1QkjB+TcdqSWAPask+LoMv9WcAxmWBqem20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Shuai <suagrfillet@gmail.com>,
-	=?UTF-8?q?Xianting=20Tian=C2=A0?= <xianting.tian@linux.alibaba.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.4 110/165] riscv: Export va_kernel_pa_offset in vmcoreinfo
-Date: Wed,  9 Aug 2023 12:40:41 +0200
-Message-ID: <20230809103646.387491921@linuxfoundation.org>
+	Hou Tao <houtao1@huawei.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.4 111/165] bpf: Disable preemption in bpf_perf_event_output
+Date: Wed,  9 Aug 2023 12:40:42 +0200
+Message-ID: <20230809103646.425080696@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -36,46 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Song Shuai <suagrfillet@gmail.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit fbe7d19d2b7fcbd38905ba9f691be8f245c6faa6 upstream.
+commit f2c67a3e60d1071b65848efaa8c3b66c363dd025 upstream.
 
-Since RISC-V Linux v6.4, the commit 3335068f8721 ("riscv: Use
-PUD/P4D/PGD pages for the linear mapping") changes phys_ram_base
-from the physical start of the kernel to the actual start of the DRAM.
+The nesting protection in bpf_perf_event_output relies on disabled
+preemption, which is guaranteed for kprobes and tracepoints.
 
-The Crash-utility's VTOP() still uses phys_ram_base and kernel_map.virt_addr
-to translate kernel virtual address, that failed the Crash with Linux v6.4 [1].
+However bpf_perf_event_output can be also called from uprobes context
+through bpf_prog_run_array_sleepable function which disables migration,
+but keeps preemption enabled.
 
-Export kernel_map.va_kernel_pa_offset in vmcoreinfo to help Crash translate
-the kernel virtual address correctly.
+This can cause task to be preempted by another one inside the nesting
+protection and lead eventually to two tasks using same perf_sample_data
+buffer and cause crashes like:
 
-Fixes: 3335068f8721 ("riscv: Use PUD/P4D/PGD pages for the linear mapping")
-Link: https://lore.kernel.org/linux-riscv/20230724040649.220279-1-suagrfillet@gmail.com/ [1]
-Signed-off-by: Song Shuai <suagrfillet@gmail.com>
-Reviewed-by: Xianting Tian  <xianting.tian@linux.alibaba.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20230724100917.309061-1-suagrfillet@gmail.com
+  kernel tried to execute NX-protected page - exploit attempt? (uid: 0)
+  BUG: unable to handle page fault for address: ffffffff82be3eea
+  ...
+  Call Trace:
+   ? __die+0x1f/0x70
+   ? page_fault_oops+0x176/0x4d0
+   ? exc_page_fault+0x132/0x230
+   ? asm_exc_page_fault+0x22/0x30
+   ? perf_output_sample+0x12b/0x910
+   ? perf_event_output+0xd0/0x1d0
+   ? bpf_perf_event_output+0x162/0x1d0
+   ? bpf_prog_c6271286d9a4c938_krava1+0x76/0x87
+   ? __uprobe_perf_func+0x12b/0x540
+   ? uprobe_dispatcher+0x2c4/0x430
+   ? uprobe_notify_resume+0x2da/0xce0
+   ? atomic_notifier_call_chain+0x7b/0x110
+   ? exit_to_user_mode_prepare+0x13e/0x290
+   ? irqentry_exit_to_user_mode+0x5/0x30
+   ? asm_exc_int3+0x35/0x40
+
+Fixing this by disabling preemption in bpf_perf_event_output.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 8c7dcb84e3b7 ("bpf: implement sleepable uprobes by chaining gps")
+Acked-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20230725084206.580930-2-jolsa@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/crash_core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/bpf_trace.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/arch/riscv/kernel/crash_core.c b/arch/riscv/kernel/crash_core.c
-index b351a3c01355..55f1d7856b54 100644
---- a/arch/riscv/kernel/crash_core.c
-+++ b/arch/riscv/kernel/crash_core.c
-@@ -18,4 +18,6 @@ void arch_crash_save_vmcoreinfo(void)
- 	vmcoreinfo_append_str("NUMBER(MODULES_END)=0x%lx\n", MODULES_END);
- #endif
- 	vmcoreinfo_append_str("NUMBER(KERNEL_LINK_ADDR)=0x%lx\n", KERNEL_LINK_ADDR);
-+	vmcoreinfo_append_str("NUMBER(va_kernel_pa_offset)=0x%lx\n",
-+						kernel_map.va_kernel_pa_offset);
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -661,8 +661,7 @@ static DEFINE_PER_CPU(int, bpf_trace_nes
+ BPF_CALL_5(bpf_perf_event_output, struct pt_regs *, regs, struct bpf_map *, map,
+ 	   u64, flags, void *, data, u64, size)
+ {
+-	struct bpf_trace_sample_data *sds = this_cpu_ptr(&bpf_trace_sds);
+-	int nest_level = this_cpu_inc_return(bpf_trace_nest_level);
++	struct bpf_trace_sample_data *sds;
+ 	struct perf_raw_record raw = {
+ 		.frag = {
+ 			.size = size,
+@@ -670,7 +669,11 @@ BPF_CALL_5(bpf_perf_event_output, struct
+ 		},
+ 	};
+ 	struct perf_sample_data *sd;
+-	int err;
++	int nest_level, err;
++
++	preempt_disable();
++	sds = this_cpu_ptr(&bpf_trace_sds);
++	nest_level = this_cpu_inc_return(bpf_trace_nest_level);
+ 
+ 	if (WARN_ON_ONCE(nest_level > ARRAY_SIZE(sds->sds))) {
+ 		err = -EBUSY;
+@@ -688,9 +691,9 @@ BPF_CALL_5(bpf_perf_event_output, struct
+ 	perf_sample_save_raw_data(sd, &raw);
+ 
+ 	err = __bpf_perf_event_output(regs, map, flags, sd);
+-
+ out:
+ 	this_cpu_dec(bpf_trace_nest_level);
++	preempt_enable();
+ 	return err;
  }
--- 
-2.41.0
-
+ 
 
 
