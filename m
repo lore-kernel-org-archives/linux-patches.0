@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24981171A6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:01:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A93CC433C7;
-	Wed,  9 Aug 2023 11:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE7F171A6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:01:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC7BC433C8;
+	Wed,  9 Aug 2023 11:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578907;
-	bh=yZ6l8IJB1VpAG3zHoDu9zP78SYwKcEvGisgxfR/ceHA=;
+	s=korg; t=1691578910;
+	bh=2iAsaos6gO1TU9oQ+5tDb/5/eJ9vc+eMLDMfEVZC2bk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2irxW9hA1QKwIg5lhN2RhlIKo7oYr0ueeRQb8Tbb1pkoS692DvKxFz/LdNtpTsp47
-	 xMezpbDXybZA1Nk5m2TFTb9ZsvqIPYBqaV/tin8ikYuSeOw3zdlLlIlArfD1sJPGiF
-	 nfP32lFFdlIhC3uxXxtsJP3e7n2qAEIWCV4d6ek4=
+	b=wGu0b3gkRXCXOwYCICsGW+Euxs3qvX8+4uM2YEYEMfr6d472yBt9KQ/XztlI5M1R0
+	 Qha/e/EhgIni6koIhy92Ed8EQv2d7O883LEl1niISodbUtnArifbOTtelSs4PE9SDx
+	 angu1lDKwXcL3EIvSKx/zwMbtthYakbP7nZorqvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Chunfeng Yun <chunfeng.yun@mediatek.com>,
+	Johan Jonker <jbx6244@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 91/92] PM / wakeirq: support enabling wake-up irq after runtime_suspend called
-Date: Wed,  9 Aug 2023 12:42:07 +0200
-Message-ID: <20230809103636.664680698@linuxfoundation.org>
+Subject: [PATCH 5.15 82/92] mtd: rawnand: rockchip: Align hwecc vs. raw page helper layouts
+Date: Wed,  9 Aug 2023 12:41:58 +0200
+Message-ID: <20230809103636.377670523@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -35,287 +35,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chunfeng Yun <chunfeng.yun@mediatek.com>
+From: Johan Jonker <jbx6244@gmail.com>
 
-[ Upstream commit 259714100d98b50bf04d36a21bf50ca8b829fc11 ]
+[ Upstream commit ea690ad78dd611e3906df5b948a516000b05c1cb ]
 
-When the dedicated wake IRQ is level trigger, and it uses the
-device's low-power status as the wakeup source, that means if the
-device is not in low-power state, the wake IRQ will be triggered
-if enabled; For this case, need enable the wake IRQ after running
-the device's ->runtime_suspend() which make it enter low-power state.
+Currently, read/write_page_hwecc() and read/write_page_raw() are not
+aligned: there is a mismatch in the OOB bytes which are not
+read/written at the same offset in both cases (raw vs. hwecc).
 
-e.g.
-Assume the wake IRQ is a low level trigger type, and the wakeup
-signal comes from the low-power status of the device.
-The wakeup signal is low level at running time (0), and becomes
-high level when the device enters low-power state (runtime_suspend
-(1) is called), a wakeup event at (2) make the device exit low-power
-state, then the wakeup signal also becomes low level.
+This is a real problem when relying on the presence of the Page
+Addresses (PA) when using the NAND chip as a boot device, as the
+BootROM expects additional data in the OOB area at specific locations.
 
-                ------------------
-               |           ^     ^|
-----------------           |     | --------------
- |<---(0)--->|<--(1)--|   (3)   (2)    (4)
+Rockchip boot blocks are written per 4 x 512 byte sectors per page.
+Each page with boot blocks must have a page address (PA) pointer in OOB
+to the next page. Pages are written in a pattern depending on the NAND chip ID.
 
-if enable the wake IRQ before running runtime_suspend during (0),
-a wake IRQ will arise, it causes resume immediately;
-it works if enable wake IRQ ( e.g. at (3) or (4)) after running
-->runtime_suspend().
+Generate boot block page address and pattern for hwecc in user space
+and copy PA data to/from the already reserved last 4 bytes before ECC
+in the chip->oob_poi data layout.
 
-This patch introduces a new status WAKE_IRQ_DEDICATED_REVERSE to
-optionally support enabling wake IRQ after running ->runtime_suspend().
+Align the different helpers. This change breaks existing jffs2 users.
 
-Suggested-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Chunfeng Yun <chunfeng.yun@mediatek.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 8527beb12087 ("PM: sleep: wakeirq: fix wake irq arming")
+Fixes: 058e0e847d54 ("mtd: rawnand: rockchip: NFC driver for RK3308, RK2928 and others")
+Signed-off-by: Johan Jonker <jbx6244@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/5e782c08-862b-51ae-47ff-3299940928ca@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/power.h   |   7 ++-
- drivers/base/power/runtime.c |   6 ++-
- drivers/base/power/wakeirq.c | 101 +++++++++++++++++++++++++++--------
- include/linux/pm_wakeirq.h   |   9 +++-
- 4 files changed, 96 insertions(+), 27 deletions(-)
+ .../mtd/nand/raw/rockchip-nand-controller.c   | 34 ++++++++++++-------
+ 1 file changed, 21 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/base/power/power.h b/drivers/base/power/power.h
-index 54292cdd7808b..0eb7f02b3ad59 100644
---- a/drivers/base/power/power.h
-+++ b/drivers/base/power/power.h
-@@ -25,8 +25,10 @@ extern u64 pm_runtime_active_time(struct device *dev);
+diff --git a/drivers/mtd/nand/raw/rockchip-nand-controller.c b/drivers/mtd/nand/raw/rockchip-nand-controller.c
+index 45cdc6ca210ca..99242bd684375 100644
+--- a/drivers/mtd/nand/raw/rockchip-nand-controller.c
++++ b/drivers/mtd/nand/raw/rockchip-nand-controller.c
+@@ -598,7 +598,7 @@ static int rk_nfc_write_page_hwecc(struct nand_chip *chip, const u8 *buf,
+ 	int pages_per_blk = mtd->erasesize / mtd->writesize;
+ 	int ret = 0, i, boot_rom_mode = 0;
+ 	dma_addr_t dma_data, dma_oob;
+-	u32 reg;
++	u32 tmp;
+ 	u8 *oob;
  
- #define WAKE_IRQ_DEDICATED_ALLOCATED	BIT(0)
- #define WAKE_IRQ_DEDICATED_MANAGED	BIT(1)
-+#define WAKE_IRQ_DEDICATED_REVERSE	BIT(2)
- #define WAKE_IRQ_DEDICATED_MASK		(WAKE_IRQ_DEDICATED_ALLOCATED | \
--					 WAKE_IRQ_DEDICATED_MANAGED)
-+					 WAKE_IRQ_DEDICATED_MANAGED | \
-+					 WAKE_IRQ_DEDICATED_REVERSE)
+ 	nand_prog_page_begin_op(chip, page, 0, NULL, 0);
+@@ -625,6 +625,13 @@ static int rk_nfc_write_page_hwecc(struct nand_chip *chip, const u8 *buf,
+ 	 *
+ 	 *   0xFF 0xFF 0xFF 0xFF | BBM OOB1 OOB2 OOB3 | ...
+ 	 *
++	 * The code here just swaps the first 4 bytes with the last
++	 * 4 bytes without losing any data.
++	 *
++	 * The chip->oob_poi data layout:
++	 *
++	 *    BBM  OOB1 OOB2 OOB3 |......|  PA0  PA1  PA2  PA3
++	 *
+ 	 * Configure the ECC algorithm supported by the boot ROM.
+ 	 */
+ 	if ((page < (pages_per_blk * rknand->boot_blks)) &&
+@@ -635,21 +642,17 @@ static int rk_nfc_write_page_hwecc(struct nand_chip *chip, const u8 *buf,
+ 	}
  
- struct wake_irq {
- 	struct device *dev;
-@@ -39,7 +41,8 @@ extern void dev_pm_arm_wake_irq(struct wake_irq *wirq);
- extern void dev_pm_disarm_wake_irq(struct wake_irq *wirq);
- extern void dev_pm_enable_wake_irq_check(struct device *dev,
- 					 bool can_change_status);
--extern void dev_pm_disable_wake_irq_check(struct device *dev);
-+extern void dev_pm_disable_wake_irq_check(struct device *dev, bool cond_disable);
-+extern void dev_pm_enable_wake_irq_complete(struct device *dev);
+ 	for (i = 0; i < ecc->steps; i++) {
+-		if (!i) {
+-			reg = 0xFFFFFFFF;
+-		} else {
++		if (!i)
++			oob = chip->oob_poi + (ecc->steps - 1) * NFC_SYS_DATA_SIZE;
++		else
+ 			oob = chip->oob_poi + (i - 1) * NFC_SYS_DATA_SIZE;
+-			reg = oob[0] | oob[1] << 8 | oob[2] << 16 |
+-			      oob[3] << 24;
+-		}
  
- #ifdef CONFIG_PM_SLEEP
+-		if (!i && boot_rom_mode)
+-			reg = (page & (pages_per_blk - 1)) * 4;
++		tmp = oob[0] | oob[1] << 8 | oob[2] << 16 | oob[3] << 24;
  
-diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-index c1142a7a4fe65..5824d41a0b745 100644
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -673,6 +673,8 @@ static int rpm_suspend(struct device *dev, int rpmflags)
- 	if (retval)
- 		goto fail;
+ 		if (nfc->cfg->type == NFC_V9)
+-			nfc->oob_buf[i] = reg;
++			nfc->oob_buf[i] = tmp;
+ 		else
+-			nfc->oob_buf[i * (oob_step / 4)] = reg;
++			nfc->oob_buf[i * (oob_step / 4)] = tmp;
+ 	}
  
-+	dev_pm_enable_wake_irq_complete(dev);
+ 	dma_data = dma_map_single(nfc->dev, (void *)nfc->page_buf,
+@@ -812,12 +815,17 @@ static int rk_nfc_read_page_hwecc(struct nand_chip *chip, u8 *buf, int oob_on,
+ 		goto timeout_err;
+ 	}
+ 
+-	for (i = 1; i < ecc->steps; i++) {
+-		oob = chip->oob_poi + (i - 1) * NFC_SYS_DATA_SIZE;
++	for (i = 0; i < ecc->steps; i++) {
++		if (!i)
++			oob = chip->oob_poi + (ecc->steps - 1) * NFC_SYS_DATA_SIZE;
++		else
++			oob = chip->oob_poi + (i - 1) * NFC_SYS_DATA_SIZE;
 +
-  no_callback:
- 	__update_runtime_status(dev, RPM_SUSPENDED);
- 	pm_runtime_deactivate_timer(dev);
-@@ -718,7 +720,7 @@ static int rpm_suspend(struct device *dev, int rpmflags)
- 	return retval;
- 
-  fail:
--	dev_pm_disable_wake_irq_check(dev);
-+	dev_pm_disable_wake_irq_check(dev, true);
- 	__update_runtime_status(dev, RPM_ACTIVE);
- 	dev->power.deferred_resume = false;
- 	wake_up_all(&dev->power.wait_queue);
-@@ -901,7 +903,7 @@ static int rpm_resume(struct device *dev, int rpmflags)
- 
- 	callback = RPM_GET_CALLBACK(dev, runtime_resume);
- 
--	dev_pm_disable_wake_irq_check(dev);
-+	dev_pm_disable_wake_irq_check(dev, false);
- 	retval = rpm_callback(callback, dev);
- 	if (retval) {
- 		__update_runtime_status(dev, RPM_SUSPENDED);
-diff --git a/drivers/base/power/wakeirq.c b/drivers/base/power/wakeirq.c
-index b91a3a9bf9f6d..0004db4a9d3b9 100644
---- a/drivers/base/power/wakeirq.c
-+++ b/drivers/base/power/wakeirq.c
-@@ -142,24 +142,7 @@ static irqreturn_t handle_threaded_wake_irq(int irq, void *_wirq)
- 	return IRQ_HANDLED;
- }
- 
--/**
-- * dev_pm_set_dedicated_wake_irq - Request a dedicated wake-up interrupt
-- * @dev: Device entry
-- * @irq: Device wake-up interrupt
-- *
-- * Unless your hardware has separate wake-up interrupts in addition
-- * to the device IO interrupts, you don't need this.
-- *
-- * Sets up a threaded interrupt handler for a device that has
-- * a dedicated wake-up interrupt in addition to the device IO
-- * interrupt.
-- *
-- * The interrupt starts disabled, and needs to be managed for
-- * the device by the bus code or the device driver using
-- * dev_pm_enable_wake_irq() and dev_pm_disable_wake_irq()
-- * functions.
-- */
--int dev_pm_set_dedicated_wake_irq(struct device *dev, int irq)
-+static int __dev_pm_set_dedicated_wake_irq(struct device *dev, int irq, unsigned int flag)
- {
- 	struct wake_irq *wirq;
- 	int err;
-@@ -197,7 +180,7 @@ int dev_pm_set_dedicated_wake_irq(struct device *dev, int irq)
- 	if (err)
- 		goto err_free_irq;
- 
--	wirq->status = WAKE_IRQ_DEDICATED_ALLOCATED;
-+	wirq->status = WAKE_IRQ_DEDICATED_ALLOCATED | flag;
- 
- 	return err;
- 
-@@ -210,8 +193,57 @@ int dev_pm_set_dedicated_wake_irq(struct device *dev, int irq)
- 
- 	return err;
- }
+ 		if (nfc->cfg->type == NFC_V9)
+ 			tmp = nfc->oob_buf[i];
+ 		else
+ 			tmp = nfc->oob_buf[i * (oob_step / 4)];
 +
-+
-+/**
-+ * dev_pm_set_dedicated_wake_irq - Request a dedicated wake-up interrupt
-+ * @dev: Device entry
-+ * @irq: Device wake-up interrupt
-+ *
-+ * Unless your hardware has separate wake-up interrupts in addition
-+ * to the device IO interrupts, you don't need this.
-+ *
-+ * Sets up a threaded interrupt handler for a device that has
-+ * a dedicated wake-up interrupt in addition to the device IO
-+ * interrupt.
-+ *
-+ * The interrupt starts disabled, and needs to be managed for
-+ * the device by the bus code or the device driver using
-+ * dev_pm_enable_wake_irq*() and dev_pm_disable_wake_irq*()
-+ * functions.
-+ */
-+int dev_pm_set_dedicated_wake_irq(struct device *dev, int irq)
-+{
-+	return __dev_pm_set_dedicated_wake_irq(dev, irq, 0);
-+}
- EXPORT_SYMBOL_GPL(dev_pm_set_dedicated_wake_irq);
- 
-+/**
-+ * dev_pm_set_dedicated_wake_irq_reverse - Request a dedicated wake-up interrupt
-+ *                                         with reverse enable ordering
-+ * @dev: Device entry
-+ * @irq: Device wake-up interrupt
-+ *
-+ * Unless your hardware has separate wake-up interrupts in addition
-+ * to the device IO interrupts, you don't need this.
-+ *
-+ * Sets up a threaded interrupt handler for a device that has a dedicated
-+ * wake-up interrupt in addition to the device IO interrupt. It sets
-+ * the status of WAKE_IRQ_DEDICATED_REVERSE to tell rpm_suspend()
-+ * to enable dedicated wake-up interrupt after running the runtime suspend
-+ * callback for @dev.
-+ *
-+ * The interrupt starts disabled, and needs to be managed for
-+ * the device by the bus code or the device driver using
-+ * dev_pm_enable_wake_irq*() and dev_pm_disable_wake_irq*()
-+ * functions.
-+ */
-+int dev_pm_set_dedicated_wake_irq_reverse(struct device *dev, int irq)
-+{
-+	return __dev_pm_set_dedicated_wake_irq(dev, irq, WAKE_IRQ_DEDICATED_REVERSE);
-+}
-+EXPORT_SYMBOL_GPL(dev_pm_set_dedicated_wake_irq_reverse);
-+
- /**
-  * dev_pm_enable_wake_irq - Enable device wake-up interrupt
-  * @dev: Device
-@@ -282,27 +314,54 @@ void dev_pm_enable_wake_irq_check(struct device *dev,
- 	return;
- 
- enable:
--	enable_irq(wirq->irq);
-+	if (!can_change_status || !(wirq->status & WAKE_IRQ_DEDICATED_REVERSE))
-+		enable_irq(wirq->irq);
- }
- 
- /**
-  * dev_pm_disable_wake_irq_check - Checks and disables wake-up interrupt
-  * @dev: Device
-+ * @cond_disable: if set, also check WAKE_IRQ_DEDICATED_REVERSE
-  *
-  * Disables wake-up interrupt conditionally based on status.
-  * Should be only called from rpm_suspend() and rpm_resume() path.
-  */
--void dev_pm_disable_wake_irq_check(struct device *dev)
-+void dev_pm_disable_wake_irq_check(struct device *dev, bool cond_disable)
- {
- 	struct wake_irq *wirq = dev->power.wakeirq;
- 
- 	if (!wirq || !(wirq->status & WAKE_IRQ_DEDICATED_MASK))
- 		return;
- 
-+	if (cond_disable && (wirq->status & WAKE_IRQ_DEDICATED_REVERSE))
-+		return;
-+
- 	if (wirq->status & WAKE_IRQ_DEDICATED_MANAGED)
- 		disable_irq_nosync(wirq->irq);
- }
- 
-+/**
-+ * dev_pm_enable_wake_irq_complete - enable wake IRQ not enabled before
-+ * @dev: Device using the wake IRQ
-+ *
-+ * Enable wake IRQ conditionally based on status, mainly used if want to
-+ * enable wake IRQ after running ->runtime_suspend() which depends on
-+ * WAKE_IRQ_DEDICATED_REVERSE.
-+ *
-+ * Should be only called from rpm_suspend() path.
-+ */
-+void dev_pm_enable_wake_irq_complete(struct device *dev)
-+{
-+	struct wake_irq *wirq = dev->power.wakeirq;
-+
-+	if (!wirq || !(wirq->status & WAKE_IRQ_DEDICATED_MASK))
-+		return;
-+
-+	if (wirq->status & WAKE_IRQ_DEDICATED_MANAGED &&
-+	    wirq->status & WAKE_IRQ_DEDICATED_REVERSE)
-+		enable_irq(wirq->irq);
-+}
-+
- /**
-  * dev_pm_arm_wake_irq - Arm device wake-up
-  * @wirq: Device wake-up interrupt
-diff --git a/include/linux/pm_wakeirq.h b/include/linux/pm_wakeirq.h
-index cd5b62db90845..e63a63aa47a37 100644
---- a/include/linux/pm_wakeirq.h
-+++ b/include/linux/pm_wakeirq.h
-@@ -17,8 +17,8 @@
- #ifdef CONFIG_PM
- 
- extern int dev_pm_set_wake_irq(struct device *dev, int irq);
--extern int dev_pm_set_dedicated_wake_irq(struct device *dev,
--					 int irq);
-+extern int dev_pm_set_dedicated_wake_irq(struct device *dev, int irq);
-+extern int dev_pm_set_dedicated_wake_irq_reverse(struct device *dev, int irq);
- extern void dev_pm_clear_wake_irq(struct device *dev);
- extern void dev_pm_enable_wake_irq(struct device *dev);
- extern void dev_pm_disable_wake_irq(struct device *dev);
-@@ -35,6 +35,11 @@ static inline int dev_pm_set_dedicated_wake_irq(struct device *dev, int irq)
- 	return 0;
- }
- 
-+static inline int dev_pm_set_dedicated_wake_irq_reverse(struct device *dev, int irq)
-+{
-+	return 0;
-+}
-+
- static inline void dev_pm_clear_wake_irq(struct device *dev)
- {
- }
+ 		*oob++ = (u8)tmp;
+ 		*oob++ = (u8)(tmp >> 8);
+ 		*oob++ = (u8)(tmp >> 16);
 -- 
 2.40.1
 
