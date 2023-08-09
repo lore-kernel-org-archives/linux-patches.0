@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E7217744
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:30:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 213D8C433C7;
-	Wed,  9 Aug 2023 11:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743C417744
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:30:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92CFC433C8;
+	Wed,  9 Aug 2023 11:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580650;
-	bh=anoDc0vbCcXzQThJN5h7bKM21xJ0Yz4y/q5VG5xNEts=;
+	s=korg; t=1691580653;
+	bh=f45O86Cx/AR9G7cJfPcNgmdNfX8pxWJAn6MY+EoqXjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=njs18JXOpaTI/BdiOhm9F357HQdccpLz7LbTgt/3yuDq6xZbCL+8H3j7NjthG7who
-	 OiorDGJmjt4bDfHgGWIHZ5TBnfEDaK83Bv3z+IURFweZS8V96zwM7hxpGVvd9UbMD3
-	 HfDtiROVQhGEpSsY7dPLru3BuqWtG0LVJcW6ehNY=
+	b=1QC2WzYz+kub+21n9Oe3SwDggawA+Unrh2pYmbVBbYKVLHZkNIbjf7t9YUgrq8sn5
+	 UJnB2LEg+9O/lCiVs2aMpzOh0J5RC0HH2zkfGV+6GgI5zWZAGHAGk/M6vV25g1OUOh
+	 q9vNKJLznfBfHcbA5seq3c314wtWz2sI/5D0vjUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 100/154] mISDN: hfcpci: Fix potential deadlock on &hc->lock
-Date: Wed,  9 Aug 2023 12:42:11 +0200
-Message-ID: <20230809103640.283342147@linuxfoundation.org>
+Subject: [PATCH 5.4 101/154] net: annotate data-races around sk->sk_max_pacing_rate
+Date: Wed,  9 Aug 2023 12:42:12 +0200
+Message-ID: <20230809103640.313066931@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -35,86 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 56c6be35fcbed54279df0a2c9e60480a61841d6f ]
+[ Upstream commit ea7f45ef77b39e72244d282e47f6cb1ef4135cd2 ]
 
-As &hc->lock is acquired by both timer _hfcpci_softirq() and hardirq
-hfcpci_int(), the timer should disable irq before lock acquisition
-otherwise deadlock could happen if the timmer is preemtped by the hadr irq.
+sk_getsockopt() runs locklessly. This means sk->sk_max_pacing_rate
+can be read while other threads are changing its value.
 
-Possible deadlock scenario:
-hfcpci_softirq() (timer)
-    -> _hfcpci_softirq()
-    -> spin_lock(&hc->lock);
-        <irq interruption>
-        -> hfcpci_int()
-        -> spin_lock(&hc->lock); (deadlock here)
-
-This flaw was found by an experimental static analysis tool I am developing
-for irq-related deadlock.
-
-The tentative patch fixes the potential deadlock by spin_lock_irq()
-in timer.
-
-Fixes: b36b654a7e82 ("mISDN: Create /sys/class/mISDN")
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Link: https://lore.kernel.org/r/20230727085619.7419-1-dg573847474@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 62748f32d501 ("net: introduce SO_MAX_PACING_RATE")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/isdn/hardware/mISDN/hfcpci.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/core/sock.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/isdn/hardware/mISDN/hfcpci.c b/drivers/isdn/hardware/mISDN/hfcpci.c
-index 41ff2e3dc8430..0a683a66fc612 100644
---- a/drivers/isdn/hardware/mISDN/hfcpci.c
-+++ b/drivers/isdn/hardware/mISDN/hfcpci.c
-@@ -839,7 +839,7 @@ hfcpci_fill_fifo(struct bchannel *bch)
- 		*z1t = cpu_to_le16(new_z1);	/* now send data */
- 		if (bch->tx_idx < bch->tx_skb->len)
- 			return;
--		dev_kfree_skb(bch->tx_skb);
-+		dev_kfree_skb_any(bch->tx_skb);
- 		if (get_next_bframe(bch))
- 			goto next_t_frame;
- 		return;
-@@ -895,7 +895,7 @@ hfcpci_fill_fifo(struct bchannel *bch)
- 	}
- 	bz->za[new_f1].z1 = cpu_to_le16(new_z1);	/* for next buffer */
- 	bz->f1 = new_f1;	/* next frame */
--	dev_kfree_skb(bch->tx_skb);
-+	dev_kfree_skb_any(bch->tx_skb);
- 	get_next_bframe(bch);
- }
- 
-@@ -1119,7 +1119,7 @@ tx_birq(struct bchannel *bch)
- 	if (bch->tx_skb && bch->tx_idx < bch->tx_skb->len)
- 		hfcpci_fill_fifo(bch);
- 	else {
--		dev_kfree_skb(bch->tx_skb);
-+		dev_kfree_skb_any(bch->tx_skb);
- 		if (get_next_bframe(bch))
- 			hfcpci_fill_fifo(bch);
- 	}
-@@ -2272,7 +2272,7 @@ _hfcpci_softirq(struct device *dev, void *unused)
- 		return 0;
- 
- 	if (hc->hw.int_m2 & HFCPCI_IRQ_ENABLE) {
--		spin_lock(&hc->lock);
-+		spin_lock_irq(&hc->lock);
- 		bch = Sel_BCS(hc, hc->hw.bswapped ? 2 : 1);
- 		if (bch && bch->state == ISDN_P_B_RAW) { /* B1 rx&tx */
- 			main_rec_hfcpci(bch);
-@@ -2283,7 +2283,7 @@ _hfcpci_softirq(struct device *dev, void *unused)
- 			main_rec_hfcpci(bch);
- 			tx_birq(bch);
+diff --git a/net/core/sock.c b/net/core/sock.c
+index d55eea5538bce..539c39ad1e488 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -1117,7 +1117,8 @@ int sock_setsockopt(struct socket *sock, int level, int optname,
+ 			cmpxchg(&sk->sk_pacing_status,
+ 				SK_PACING_NONE,
+ 				SK_PACING_NEEDED);
+-		sk->sk_max_pacing_rate = ulval;
++		/* Pairs with READ_ONCE() from sk_getsockopt() */
++		WRITE_ONCE(sk->sk_max_pacing_rate, ulval);
+ 		sk->sk_pacing_rate = min(sk->sk_pacing_rate, ulval);
+ 		break;
  		}
--		spin_unlock(&hc->lock);
-+		spin_unlock_irq(&hc->lock);
- 	}
- 	return 0;
- }
+@@ -1478,12 +1479,14 @@ int sock_getsockopt(struct socket *sock, int level, int optname,
+ #endif
+ 
+ 	case SO_MAX_PACING_RATE:
++		/* The READ_ONCE() pair with the WRITE_ONCE() in sk_setsockopt() */
+ 		if (sizeof(v.ulval) != sizeof(v.val) && len >= sizeof(v.ulval)) {
+ 			lv = sizeof(v.ulval);
+-			v.ulval = sk->sk_max_pacing_rate;
++			v.ulval = READ_ONCE(sk->sk_max_pacing_rate);
+ 		} else {
+ 			/* 32bit version */
+-			v.val = min_t(unsigned long, sk->sk_max_pacing_rate, ~0U);
++			v.val = min_t(unsigned long, ~0U,
++				      READ_ONCE(sk->sk_max_pacing_rate));
+ 		}
+ 		break;
+ 
 -- 
 2.40.1
 
