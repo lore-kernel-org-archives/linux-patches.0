@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A2A1773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:14:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A4D5C433C8;
-	Wed,  9 Aug 2023 11:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AD11773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:14:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0DDCC433C8;
+	Wed,  9 Aug 2023 11:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579641;
-	bh=hqV5ccEeJj+rf84LzZxuNNUWqJdtiXAcozvahx25CHQ=;
+	s=korg; t=1691579644;
+	bh=0jxhWEqIiCqPUSCdLH52jxN4vQhyWe3Heaj+vOP/Nm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y2xJDXgphBrKaFJeVkxyCAzMeZ93yIDoPZOsnfmr07yD2OdWBCFblVOPptQW39tqY
-	 Nbd0kWJQll48Holp57X5pQlI5yXz3bH/w3nYtNKyukddEn8bNuYuOO2eP1P7f6K4O8
-	 ndF4+Sjs3RVNWTbwB0EHtvKff8CtBRWUNWU45/Pk=
+	b=beAspAa559UlEcVU6OenjtW2YxSk5EBJulG0Jnrd8n55N6xJLRy+o3+kENLVR/NwU
+	 hO5DIo/VDeXhI1vFb0CUyvJ3e1SJl9Mt1a50rrzoNtH19rikS6f5H8gYZGPoB5SuVl
+	 7KhtkjLRjwqTdk5QHCgtPdIpy3mR3br1LjlmQWxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 063/323] arm64: dts: renesas: ulcb-kf: Remove flow control for SCIF1
-Date: Wed,  9 Aug 2023 12:38:21 +0200
-Message-ID: <20230809103701.042799586@linuxfoundation.org>
+Subject: [PATCH 4.19 064/323] fbdev: omapfb: lcd_mipid: Fix an error handling path in mipid_spi_probe()
+Date: Wed,  9 Aug 2023 12:38:22 +0200
+Message-ID: <20230809103701.085812367@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,44 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 1a2c4e5635177939a088d22fa35c6a7032725663 ]
+[ Upstream commit 79a3908d1ea6c35157a6d907b1a9d8ec06015e7a ]
 
-The schematics are misleading, the flow control is for HSCIF1. We need
-SCIF1 for GNSS/GPS which does not use flow control.
+If 'mipid_detect()' fails, we must free 'md' to avoid a memory leak.
 
-Fixes: c6c816e22bc8 ("arm64: dts: ulcb-kf: enable SCIF1")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230525084823.4195-2-wsa+renesas@sang-engineering.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 66d2f99d0bb5 ("omapfb: add support for MIPI-DCS compatible LCDs")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/ulcb-kf.dtsi | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/video/fbdev/omap/lcd_mipid.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/ulcb-kf.dtsi b/arch/arm64/boot/dts/renesas/ulcb-kf.dtsi
-index 8bf3091a899c8..5abffdaf4077e 100644
---- a/arch/arm64/boot/dts/renesas/ulcb-kf.dtsi
-+++ b/arch/arm64/boot/dts/renesas/ulcb-kf.dtsi
-@@ -165,7 +165,7 @@ hscif0_pins: hscif0 {
- 	};
+diff --git a/drivers/video/fbdev/omap/lcd_mipid.c b/drivers/video/fbdev/omap/lcd_mipid.c
+index e3a85432f9266..5730355ee5986 100644
+--- a/drivers/video/fbdev/omap/lcd_mipid.c
++++ b/drivers/video/fbdev/omap/lcd_mipid.c
+@@ -576,11 +576,15 @@ static int mipid_spi_probe(struct spi_device *spi)
  
- 	scif1_pins: scif1 {
--		groups = "scif1_data_b", "scif1_ctrl";
-+		groups = "scif1_data_b";
- 		function = "scif1";
- 	};
+ 	r = mipid_detect(md);
+ 	if (r < 0)
+-		return r;
++		goto free_md;
  
-@@ -178,7 +178,6 @@ usb0_pins: usb0 {
- &scif1 {
- 	pinctrl-0 = <&scif1_pins>;
- 	pinctrl-names = "default";
--	uart-has-rtscts;
+ 	omapfb_register_panel(&md->panel);
  
- 	status = "okay";
- };
+ 	return 0;
++
++free_md:
++	kfree(md);
++	return r;
+ }
+ 
+ static int mipid_spi_remove(struct spi_device *spi)
 -- 
 2.39.2
 
