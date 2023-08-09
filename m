@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D4F17AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DADF0C433C8;
-	Wed,  9 Aug 2023 11:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FBF17AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39C6C433C7;
+	Wed,  9 Aug 2023 11:25:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580337;
-	bh=8YUW6AFXjo412kZxzPY+R84ofg7OfwgpLaGsGghoCMA=;
+	s=korg; t=1691580340;
+	bh=wn3B7+LBtr8l7oxzsUU8qdZKM9yo6vVoDIymdneWRFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2LQ1RUAtyacK6BhicCJXrQSe3lEzCOxJanTYfDs/m3eqi0v0gfCuHVMUNUZvd+IOn
-	 PDd9VxL6DkA+KwnnotYDILm+QoFfOiVyr9lmWlDsGUDd8d2FBCaRBFvN26H3W1w6ay
-	 Flq5bhHwB4krM5HX9gyMHfisauv5YLPVgiDdXFbg=
+	b=ocajp5cOm6Ec9e1ReW/yrod1cSKbpu/n4713BElkt4eLl17ipCJmRNhlA2jlUkjQD
+	 VPjwfeD7uzxcXOrnoqOHrwoiKdnjZkwoXt7VkoZuSqc4DB8vvgOhau4Sb9ECsn5Ir0
+	 43CaQ1wx97CWXULjB0yh8ulifmUBgcmX3tH/8g04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Kees Cook <keescook@chromium.org>,
-	"Luis R. Rodriguez" <mcgrof@ruslug.rutgers.edu>,
-	Scott Branden <sbranden@broadcom.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Brian Norris <briannorris@chromium.org>,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Dan Carpenter <dan.carpenter@linaro.org>
-Subject: [PATCH 4.19 313/323] test_firmware: return ENOMEM instead of ENOSPC on failed memory allocation
-Date: Wed,  9 Aug 2023 12:42:31 +0200
-Message-ID: <20230809103712.400540577@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 314/323] mtd: rawnand: omap_elm: Fix incorrect type in assignment
+Date: Wed,  9 Aug 2023 12:42:32 +0200
+Message-ID: <20230809103712.444272062@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -41,86 +36,120 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+From: Roger Quadros <rogerq@kernel.org>
 
-commit 7dae593cd226a0bca61201cf85ceb9335cf63682 upstream.
+[ Upstream commit d8403b9eeee66d5dd81ecb9445800b108c267ce3 ]
 
-In a couple of situations like
+Once the ECC word endianness is converted to BE32, we force cast it
+to u32 so we can use elm_write_reg() which in turn uses writel().
 
-	name = kstrndup(buf, count, GFP_KERNEL);
-	if (!name)
-		return -ENOSPC;
+Fixes below sparse warnings:
 
-the error is not actually "No space left on device", but "Out of memory".
+   drivers/mtd/nand/raw/omap_elm.c:180:37: sparse:     expected unsigned int [usertype] val
+   drivers/mtd/nand/raw/omap_elm.c:180:37: sparse:     got restricted __be32 [usertype]
+   drivers/mtd/nand/raw/omap_elm.c:185:37: sparse:     expected unsigned int [usertype] val
+   drivers/mtd/nand/raw/omap_elm.c:185:37: sparse:     got restricted __be32 [usertype]
+   drivers/mtd/nand/raw/omap_elm.c:190:37: sparse:     expected unsigned int [usertype] val
+   drivers/mtd/nand/raw/omap_elm.c:190:37: sparse:     got restricted __be32 [usertype]
+>> drivers/mtd/nand/raw/omap_elm.c:200:40: sparse: sparse: restricted __be32 degrades to integer
+   drivers/mtd/nand/raw/omap_elm.c:206:39: sparse: sparse: restricted __be32 degrades to integer
+   drivers/mtd/nand/raw/omap_elm.c:210:37: sparse:     expected unsigned int [assigned] [usertype] val
+   drivers/mtd/nand/raw/omap_elm.c:210:37: sparse:     got restricted __be32 [usertype]
+   drivers/mtd/nand/raw/omap_elm.c:213:37: sparse:     expected unsigned int [assigned] [usertype] val
+   drivers/mtd/nand/raw/omap_elm.c:213:37: sparse:     got restricted __be32 [usertype]
+   drivers/mtd/nand/raw/omap_elm.c:216:37: sparse:     expected unsigned int [assigned] [usertype] val
+   drivers/mtd/nand/raw/omap_elm.c:216:37: sparse:     got restricted __be32 [usertype]
+   drivers/mtd/nand/raw/omap_elm.c:219:37: sparse:     expected unsigned int [assigned] [usertype] val
+   drivers/mtd/nand/raw/omap_elm.c:219:37: sparse:     got restricted __be32 [usertype]
+   drivers/mtd/nand/raw/omap_elm.c:222:37: sparse:     expected unsigned int [assigned] [usertype] val
+   drivers/mtd/nand/raw/omap_elm.c:222:37: sparse:     got restricted __be32 [usertype]
+   drivers/mtd/nand/raw/omap_elm.c:225:37: sparse:     expected unsigned int [assigned] [usertype] val
+   drivers/mtd/nand/raw/omap_elm.c:225:37: sparse:     got restricted __be32 [usertype]
+   drivers/mtd/nand/raw/omap_elm.c:228:39: sparse: sparse: restricted __be32 degrades to integer
 
-It is semantically correct to return -ENOMEM in all failed kstrndup()
-and kzalloc() cases in this driver, as it is not a problem with disk
-space, but with kernel memory allocator failing allocation.
-
-The semantically correct should be:
-
-        name = kstrndup(buf, count, GFP_KERNEL);
-        if (!name)
-                return -ENOMEM;
-
-Cc: Dan Carpenter <error27@gmail.com>
-Cc: Takashi Iwai <tiwai@suse.de>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: "Luis R. Rodriguez" <mcgrof@ruslug.rutgers.edu>
-Cc: Scott Branden <sbranden@broadcom.com>
-Cc: Hans de Goede <hdegoede@redhat.com>
-Cc: Brian Norris <briannorris@chromium.org>
-Fixes: c92316bf8e948 ("test_firmware: add batched firmware tests")
-Fixes: 0a8adf584759c ("test: add firmware_class loader test")
-Fixes: 548193cba2a7d ("test_firmware: add support for firmware_request_platform")
-Fixes: eb910947c82f9 ("test: firmware_class: add asynchronous request trigger")
-Fixes: 061132d2b9c95 ("test_firmware: add test custom fallback trigger")
-Fixes: 7feebfa487b92 ("test_firmware: add support for request_firmware_into_buf")
-Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Message-ID: <20230606070808.9300-1-mirsad.todorovac@alu.unizg.hr>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bf22433575ef ("mtd: devices: elm: Add support for ELM error correction")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202306212211.WDXokuWh-lkp@intel.com/
+Signed-off-by: Roger Quadros <rogerq@kernel.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230624184021.7740-1-rogerq@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_firmware.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/mtd/nand/raw/omap_elm.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
---- a/lib/test_firmware.c
-+++ b/lib/test_firmware.c
-@@ -160,7 +160,7 @@ static int __kstrncpy(char **dst, const
- {
- 	*dst = kstrndup(name, count, gfp);
- 	if (!*dst)
--		return -ENOSPC;
-+		return -ENOMEM;
- 	return count;
- }
+diff --git a/drivers/mtd/nand/raw/omap_elm.c b/drivers/mtd/nand/raw/omap_elm.c
+index 6736777a41567..02d1740383120 100644
+--- a/drivers/mtd/nand/raw/omap_elm.c
++++ b/drivers/mtd/nand/raw/omap_elm.c
+@@ -184,17 +184,17 @@ static void elm_load_syndrome(struct elm_info *info,
+ 			switch (info->bch_type) {
+ 			case BCH8_ECC:
+ 				/* syndrome fragment 0 = ecc[9-12B] */
+-				val = cpu_to_be32(*(u32 *) &ecc[9]);
++				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[9]);
+ 				elm_write_reg(info, offset, val);
  
-@@ -456,7 +456,7 @@ static ssize_t trigger_request_store(str
+ 				/* syndrome fragment 1 = ecc[5-8B] */
+ 				offset += 4;
+-				val = cpu_to_be32(*(u32 *) &ecc[5]);
++				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[5]);
+ 				elm_write_reg(info, offset, val);
  
- 	name = kstrndup(buf, count, GFP_KERNEL);
- 	if (!name)
--		return -ENOSPC;
-+		return -ENOMEM;
+ 				/* syndrome fragment 2 = ecc[1-4B] */
+ 				offset += 4;
+-				val = cpu_to_be32(*(u32 *) &ecc[1]);
++				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[1]);
+ 				elm_write_reg(info, offset, val);
  
- 	pr_info("loading '%s'\n", name);
+ 				/* syndrome fragment 3 = ecc[0B] */
+@@ -204,35 +204,35 @@ static void elm_load_syndrome(struct elm_info *info,
+ 				break;
+ 			case BCH4_ECC:
+ 				/* syndrome fragment 0 = ecc[20-52b] bits */
+-				val = (cpu_to_be32(*(u32 *) &ecc[3]) >> 4) |
++				val = ((__force u32)cpu_to_be32(*(u32 *)&ecc[3]) >> 4) |
+ 					((ecc[2] & 0xf) << 28);
+ 				elm_write_reg(info, offset, val);
  
-@@ -497,7 +497,7 @@ static ssize_t trigger_async_request_sto
- 
- 	name = kstrndup(buf, count, GFP_KERNEL);
- 	if (!name)
--		return -ENOSPC;
-+		return -ENOMEM;
- 
- 	pr_info("loading '%s'\n", name);
- 
-@@ -540,7 +540,7 @@ static ssize_t trigger_custom_fallback_s
- 
- 	name = kstrndup(buf, count, GFP_KERNEL);
- 	if (!name)
--		return -ENOSPC;
-+		return -ENOMEM;
- 
- 	pr_info("loading '%s' using custom fallback mechanism\n", name);
- 
+ 				/* syndrome fragment 1 = ecc[0-20b] bits */
+ 				offset += 4;
+-				val = cpu_to_be32(*(u32 *) &ecc[0]) >> 12;
++				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[0]) >> 12;
+ 				elm_write_reg(info, offset, val);
+ 				break;
+ 			case BCH16_ECC:
+-				val = cpu_to_be32(*(u32 *) &ecc[22]);
++				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[22]);
+ 				elm_write_reg(info, offset, val);
+ 				offset += 4;
+-				val = cpu_to_be32(*(u32 *) &ecc[18]);
++				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[18]);
+ 				elm_write_reg(info, offset, val);
+ 				offset += 4;
+-				val = cpu_to_be32(*(u32 *) &ecc[14]);
++				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[14]);
+ 				elm_write_reg(info, offset, val);
+ 				offset += 4;
+-				val = cpu_to_be32(*(u32 *) &ecc[10]);
++				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[10]);
+ 				elm_write_reg(info, offset, val);
+ 				offset += 4;
+-				val = cpu_to_be32(*(u32 *) &ecc[6]);
++				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[6]);
+ 				elm_write_reg(info, offset, val);
+ 				offset += 4;
+-				val = cpu_to_be32(*(u32 *) &ecc[2]);
++				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[2]);
+ 				elm_write_reg(info, offset, val);
+ 				offset += 4;
+-				val = cpu_to_be32(*(u32 *) &ecc[0]) >> 16;
++				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[0]) >> 16;
+ 				elm_write_reg(info, offset, val);
+ 				break;
+ 			default:
+-- 
+2.40.1
+
 
 
