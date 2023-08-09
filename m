@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F4D17AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:35:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23419C433C8;
-	Wed,  9 Aug 2023 11:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6324317AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:35:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9581C433C7;
+	Wed,  9 Aug 2023 11:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580929;
-	bh=3Vj2MRMKV3yTa5cT+BUgL4fJJih1jfVifMlINcqFn7k=;
+	s=korg; t=1691580932;
+	bh=8ali1DKspsCu6z0INdEFvVgY4zaNGaAnJWJ2nAVGAYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Yea66J9ItBH49/00zefC7iMdq3chKZaFqIw3tbmq7geCCseSKnYzTgA/wJy6H7ik
-	 4UKuJyqHpr6DT4ecDpG1FHq0rOVoRryCWejRWy5gFTYmesAoh/64tJzFTKqD/t/GJ3
-	 d2FtBV3S6fHkZ/uixFa3rFcJ9M/e1Gaw/po5YLdw=
+	b=yYqTBTzpqKd5oq2HBRWK+wYObEYkeoYfG3rMyUPd/JPeWL2Qvr+fhgZq8Y4vvjI52
+	 9zLQgO3Pn9lhzBMXyVcyIyEf6owO+/9YXdVMixSLQEu+WYPEfanJU7LzKzPqvaXLQC
+	 ERQsHXUn/DIdvcdZL6IoBXqM5RDvA3bfsw1vvjpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 044/201] netfilter: nf_tables: skip immediate deactivate in _PREPARE_ERROR
-Date: Wed,  9 Aug 2023 12:40:46 +0200
-Message-ID: <20230809103645.317966366@linuxfoundation.org>
+Subject: [PATCH 5.10 045/201] netfilter: nf_tables: disallow rule addition to bound chain via NFTA_RULE_CHAIN_ID
+Date: Wed,  9 Aug 2023 12:40:47 +0200
+Message-ID: <20230809103645.347152113@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -38,85 +38,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 0a771f7b266b02d262900c75f1e175c7fe76fec2 ]
+[ Upstream commit 0ebc1064e4874d5987722a2ddbc18f94aa53b211 ]
 
-On error when building the rule, the immediate expression unbinds the
-chain, hence objects can be deactivated by the transaction records.
+Bail out with EOPNOTSUPP when adding rule to bound chain via
+NFTA_RULE_CHAIN_ID. The following warning splat is shown when
+adding a rule to a deleted bound chain:
 
-Otherwise, it is possible to trigger the following warning:
-
- WARNING: CPU: 3 PID: 915 at net/netfilter/nf_tables_api.c:2013 nf_tables_chain_destroy+0x1f7/0x210 [nf_tables]
- CPU: 3 PID: 915 Comm: chain-bind-err- Not tainted 6.1.39 #1
+ WARNING: CPU: 2 PID: 13692 at net/netfilter/nf_tables_api.c:2013 nf_tables_chain_destroy+0x1f7/0x210 [nf_tables]
+ CPU: 2 PID: 13692 Comm: chain-bound-rul Not tainted 6.1.39 #1
  RIP: 0010:nf_tables_chain_destroy+0x1f7/0x210 [nf_tables]
 
-Fixes: 4bedf9eee016 ("netfilter: nf_tables: fix chain binding transaction logic")
+Fixes: d0e2c7de92c7 ("netfilter: nf_tables: add NFT_CHAIN_BINDING")
 Reported-by: Kevin Rich <kevinrich1337@gmail.com>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_immediate.c | 27 ++++++++++++++++++---------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ net/netfilter/nf_tables_api.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_immediate.c b/net/netfilter/nft_immediate.c
-index 6b0efab4fad09..6bf1c852e8eaa 100644
---- a/net/netfilter/nft_immediate.c
-+++ b/net/netfilter/nft_immediate.c
-@@ -125,15 +125,27 @@ static void nft_immediate_activate(const struct nft_ctx *ctx,
- 	return nft_data_hold(&priv->data, nft_dreg_to_type(priv->dreg));
- }
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 5ef9acba7c171..19653b8784bbc 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -3350,8 +3350,6 @@ static int nf_tables_newrule(struct net *net, struct sock *nlsk,
+ 			NL_SET_BAD_ATTR(extack, nla[NFTA_RULE_CHAIN]);
+ 			return PTR_ERR(chain);
+ 		}
+-		if (nft_chain_is_bound(chain))
+-			return -EOPNOTSUPP;
  
-+static void nft_immediate_chain_deactivate(const struct nft_ctx *ctx,
-+					   struct nft_chain *chain,
-+					   enum nft_trans_phase phase)
-+{
-+	struct nft_ctx chain_ctx;
-+	struct nft_rule *rule;
-+
-+	chain_ctx = *ctx;
-+	chain_ctx.chain = chain;
-+
-+	list_for_each_entry(rule, &chain->rules, list)
-+		nft_rule_expr_deactivate(&chain_ctx, rule, phase);
-+}
-+
- static void nft_immediate_deactivate(const struct nft_ctx *ctx,
- 				     const struct nft_expr *expr,
- 				     enum nft_trans_phase phase)
- {
- 	const struct nft_immediate_expr *priv = nft_expr_priv(expr);
- 	const struct nft_data *data = &priv->data;
--	struct nft_ctx chain_ctx;
- 	struct nft_chain *chain;
--	struct nft_rule *rule;
+ 	} else if (nla[NFTA_RULE_CHAIN_ID]) {
+ 		chain = nft_chain_lookup_byid(net, table, nla[NFTA_RULE_CHAIN_ID],
+@@ -3364,6 +3362,9 @@ static int nf_tables_newrule(struct net *net, struct sock *nlsk,
+ 		return -EINVAL;
+ 	}
  
- 	if (priv->dreg == NFT_REG_VERDICT) {
- 		switch (data->verdict.code) {
-@@ -143,20 +155,17 @@ static void nft_immediate_deactivate(const struct nft_ctx *ctx,
- 			if (!nft_chain_binding(chain))
- 				break;
- 
--			chain_ctx = *ctx;
--			chain_ctx.chain = chain;
--
--			list_for_each_entry(rule, &chain->rules, list)
--				nft_rule_expr_deactivate(&chain_ctx, rule, phase);
--
- 			switch (phase) {
- 			case NFT_TRANS_PREPARE_ERROR:
- 				nf_tables_unbind_chain(ctx, chain);
--				fallthrough;
-+				nft_deactivate_next(ctx->net, chain);
-+				break;
- 			case NFT_TRANS_PREPARE:
-+				nft_immediate_chain_deactivate(ctx, chain, phase);
- 				nft_deactivate_next(ctx->net, chain);
- 				break;
- 			default:
-+				nft_immediate_chain_deactivate(ctx, chain, phase);
- 				nft_chain_del(chain);
- 				chain->bound = false;
- 				chain->table->use--;
++	if (nft_chain_is_bound(chain))
++		return -EOPNOTSUPP;
++
+ 	if (nla[NFTA_RULE_HANDLE]) {
+ 		handle = be64_to_cpu(nla_get_be64(nla[NFTA_RULE_HANDLE]));
+ 		rule = __nft_rule_lookup(chain, handle);
 -- 
 2.39.2
 
