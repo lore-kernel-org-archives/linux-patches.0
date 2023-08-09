@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52AF817AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:40:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97C2C433C8;
-	Wed,  9 Aug 2023 11:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF7217AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:40:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C69C433C7;
+	Wed,  9 Aug 2023 11:40:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581238;
-	bh=B1WOSczFHeH2f30aoTe5LYVk44V9qyRZXq/YNlwjKfo=;
+	s=korg; t=1691581241;
+	bh=CIMRSvkXtM78MKU2tiik/PQwCgTy/UK9oHNc2N2kuJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xd86mJeZ6A1SzpIlgOCTKIAWfCuhbyX/iwnBnjHeQKJiWaJ/toKOECKVlbrdBhxK7
-	 A2sZsd6n5Y4rbjOFFwEEmEpdKx/WYlIik+9hUVa+3XaHaLjoU3PAsmUrcDta1E2kA0
-	 IE8qEyfhD2iA89t7J3pwPrAWJsKYe6Kibrjon+/M=
+	b=o6lj6M060uSgMGgotiUdrLhpqMiMHdF39TnNPmTQRRIO08+hPLky+O/R8p+rJIUqX
+	 UU3Umnv0OjQhAD612NKEvOFbzy8jexv0+53ScnCyqEiJHt8gWwhzUWRxgaePHTF/0C
+	 nx9ZlP0V4k94EjcLos8JXfOI/tUZVvQb1WQgCR94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 147/201] net: ll_temac: Switch to use dev_err_probe() helper
-Date: Wed,  9 Aug 2023 12:42:29 +0200
-Message-ID: <20230809103648.635674604@linuxfoundation.org>
+Subject: [PATCH 5.10 156/201] tcp_metrics: fix addr_same() helper
+Date: Wed,  9 Aug 2023 12:42:38 +0200
+Message-ID: <20230809103648.942139655@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -35,48 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 75ae8c284c00dc3584b7c173f6fcf96ee15bd02c ]
+[ Upstream commit e6638094d7af6c7b9dcca05ad009e79e31b4f670 ]
 
-dev_err() can be replace with dev_err_probe() which will check if error
-code is -EPROBE_DEFER.
+Because v4 and v6 families use separate inetpeer trees (respectively
+net->ipv4.peers and net->ipv6.peers), inetpeer_addr_cmp(a, b) assumes
+a & b share the same family.
 
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: ef45e8400f5b ("net: ll_temac: fix error checking of irq_of_parse_and_map()")
+tcp_metrics use a common hash table, where entries can have different
+families.
+
+We must therefore make sure to not call inetpeer_addr_cmp()
+if the families do not match.
+
+Fixes: d39d14ffa24c ("net: Add helper function to compare inetpeer addresses")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230802131500.1478140-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/ll_temac_main.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ net/ipv4/tcp_metrics.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/xilinx/ll_temac_main.c b/drivers/net/ethernet/xilinx/ll_temac_main.c
-index 130f4b707bdc4..2f27e93370c6c 100644
---- a/drivers/net/ethernet/xilinx/ll_temac_main.c
-+++ b/drivers/net/ethernet/xilinx/ll_temac_main.c
-@@ -1550,16 +1550,12 @@ static int temac_probe(struct platform_device *pdev)
- 	}
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index f3ca6eea2ca39..3fe7eb3bc84c9 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -78,7 +78,7 @@ static void tcp_metric_set(struct tcp_metrics_block *tm,
+ static bool addr_same(const struct inetpeer_addr *a,
+ 		      const struct inetpeer_addr *b)
+ {
+-	return inetpeer_addr_cmp(a, b) == 0;
++	return (a->family == b->family) && !inetpeer_addr_cmp(a, b);
+ }
  
- 	/* Error handle returned DMA RX and TX interrupts */
--	if (lp->rx_irq < 0) {
--		if (lp->rx_irq != -EPROBE_DEFER)
--			dev_err(&pdev->dev, "could not get DMA RX irq\n");
--		return lp->rx_irq;
--	}
--	if (lp->tx_irq < 0) {
--		if (lp->tx_irq != -EPROBE_DEFER)
--			dev_err(&pdev->dev, "could not get DMA TX irq\n");
--		return lp->tx_irq;
--	}
-+	if (lp->rx_irq < 0)
-+		return dev_err_probe(&pdev->dev, lp->rx_irq,
-+				     "could not get DMA RX irq\n");
-+	if (lp->tx_irq < 0)
-+		return dev_err_probe(&pdev->dev, lp->tx_irq,
-+				     "could not get DMA TX irq\n");
- 
- 	if (temac_np) {
- 		/* Retrieve the MAC address */
+ struct tcpm_hash_bucket {
 -- 
 2.40.1
 
