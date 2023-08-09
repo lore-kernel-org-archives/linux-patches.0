@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C5615AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:48:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51696C433C8;
-	Wed,  9 Aug 2023 10:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC53E15AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:48:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395C4C433C7;
+	Wed,  9 Aug 2023 10:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578099;
-	bh=cBUAw2310hWYFKlERpks9J9yJTjEw2ELRM3qh9FfV1s=;
+	s=korg; t=1691578102;
+	bh=ogEyB2jafn+lL0XcfemZLOnlaxUvSvCl+NBfFQsP8A8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S3L1bdC/k0CLLPuTZbl7hWNHuUW5SZtj5Snt8bk3tt7WFewiaWHjP/sDsGJEf9kUd
-	 pN8Q6IfAIZhNCG6cZn5F2RMlU5qauqbyN17wJdpZrLS+hkUqRpJaQvpaIP4tk/Sfj6
-	 kHluW+Bamn9qO4/OASDh3nYZz8G0heeAfKgZPi8A=
+	b=ICtQVy5k1DaWDuCzwfu7/pqDIjXpw9c5QB0cGhmxn7/wfgy6+ufjrCGJLBqa/Pc/t
+	 GudnwZuLPzD2/dwtw7VoK2x8I9ghSBrYMFNIqmGMcqB5eWp/92MdnsOJoe9Hg4gXrM
+	 E5lqGdLwCUfOyXaRLCaLyeSTyae3Rlth1+/o3lWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1741a5d9b79989c10bdc@syzkaller.appspotmail.com,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.4 106/165] exfat: release s_lock before calling dir_emit()
-Date: Wed,  9 Aug 2023 12:40:37 +0200
-Message-ID: <20230809103646.263299538@linuxfoundation.org>
+	Olivier Maignial <olivier.maignial@hotmail.fr>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.4 107/165] mtd: spinand: toshiba: Fix ecc_get_status
+Date: Wed,  9 Aug 2023 12:40:38 +0200
+Message-ID: <20230809103646.293594828@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -35,129 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sungjong Seo <sj1557.seo@samsung.com>
+From: Olivier Maignial <olivier.maignial@hotmail.fr>
 
-commit ff84772fd45d486e4fc78c82e2f70ce5333543e6 upstream.
+commit 8544cda94dae6be3f1359539079c68bb731428b1 upstream.
 
-There is a potential deadlock reported by syzbot as below:
+Reading ECC status is failing.
 
-======================================================
-WARNING: possible circular locking dependency detected
-6.4.0-next-20230707-syzkaller #0 Not tainted
-------------------------------------------------------
-syz-executor330/5073 is trying to acquire lock:
-ffff8880218527a0 (&mm->mmap_lock){++++}-{3:3}, at: mmap_read_lock_killable include/linux/mmap_lock.h:151 [inline]
-ffff8880218527a0 (&mm->mmap_lock){++++}-{3:3}, at: get_mmap_lock_carefully mm/memory.c:5293 [inline]
-ffff8880218527a0 (&mm->mmap_lock){++++}-{3:3}, at: lock_mm_and_find_vma+0x369/0x510 mm/memory.c:5344
-but task is already holding lock:
-ffff888019f760e0 (&sbi->s_lock){+.+.}-{3:3}, at: exfat_iterate+0x117/0xb50 fs/exfat/dir.c:232
+tx58cxgxsxraix_ecc_get_status() is using on-stack buffer
+for SPINAND_GET_FEATURE_OP() output. It is not suitable
+for DMA needs of spi-mem.
 
-which lock already depends on the new lock.
+Fix this by using the spi-mem operations dedicated buffer
+spinand->scratchbuf.
 
-Chain exists of:
-  &mm->mmap_lock --> mapping.invalidate_lock#3 --> &sbi->s_lock
+See
+spinand->scratchbuf:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/linux/mtd/spinand.h?h=v6.3#n418
+spi_mem_check_op():
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/spi/spi-mem.c?h=v6.3#n199
 
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(&sbi->s_lock);
-                               lock(mapping.invalidate_lock#3);
-                               lock(&sbi->s_lock);
-  rlock(&mm->mmap_lock);
-
-Let's try to avoid above potential deadlock condition by moving dir_emit*()
-out of sbi->s_lock coverage.
-
-Fixes: ca06197382bd ("exfat: add directory operations")
-Cc: stable@vger.kernel.org #v5.7+
-Reported-by: syzbot+1741a5d9b79989c10bdc@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/lkml/00000000000078ee7e060066270b@google.com/T/#u
-Tested-by: syzbot+1741a5d9b79989c10bdc@syzkaller.appspotmail.com
-Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 10949af1681d ("mtd: spinand: Add initial support for Toshiba TC58CVG2S0H")
+Cc: stable@vger.kernel.org
+Signed-off-by: Olivier Maignial <olivier.maignial@hotmail.fr>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/DB4P250MB1032553D05FBE36DEE0D311EFE23A@DB4P250MB1032.EURP250.PROD.OUTLOOK.COM
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/dir.c |   27 ++++++++++++---------------
- 1 file changed, 12 insertions(+), 15 deletions(-)
+ drivers/mtd/nand/spi/toshiba.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/exfat/dir.c
-+++ b/fs/exfat/dir.c
-@@ -218,7 +218,10 @@ static void exfat_free_namebuf(struct ex
- 	exfat_init_namebuf(nb);
- }
- 
--/* skip iterating emit_dots when dir is empty */
-+/*
-+ * Before calling dir_emit*(), sbi->s_lock should be released
-+ * because page fault can occur in dir_emit*().
-+ */
- #define ITER_POS_FILLED_DOTS    (2)
- static int exfat_iterate(struct file *file, struct dir_context *ctx)
+--- a/drivers/mtd/nand/spi/toshiba.c
++++ b/drivers/mtd/nand/spi/toshiba.c
+@@ -73,7 +73,7 @@ static int tx58cxgxsxraix_ecc_get_status
  {
-@@ -233,11 +236,10 @@ static int exfat_iterate(struct file *fi
- 	int err = 0, fake_offset = 0;
+ 	struct nand_device *nand = spinand_to_nand(spinand);
+ 	u8 mbf = 0;
+-	struct spi_mem_op op = SPINAND_GET_FEATURE_OP(0x30, &mbf);
++	struct spi_mem_op op = SPINAND_GET_FEATURE_OP(0x30, spinand->scratchbuf);
  
- 	exfat_init_namebuf(nb);
--	mutex_lock(&EXFAT_SB(sb)->s_lock);
+ 	switch (status & STATUS_ECC_MASK) {
+ 	case STATUS_ECC_NO_BITFLIPS:
+@@ -92,7 +92,7 @@ static int tx58cxgxsxraix_ecc_get_status
+ 		if (spi_mem_exec_op(spinand->spimem, &op))
+ 			return nanddev_get_ecc_conf(nand)->strength;
  
- 	cpos = ctx->pos;
- 	if (!dir_emit_dots(file, ctx))
--		goto unlock;
-+		goto out;
+-		mbf >>= 4;
++		mbf = *(spinand->scratchbuf) >> 4;
  
- 	if (ctx->pos == ITER_POS_FILLED_DOTS) {
- 		cpos = 0;
-@@ -249,16 +251,18 @@ static int exfat_iterate(struct file *fi
- 	/* name buffer should be allocated before use */
- 	err = exfat_alloc_namebuf(nb);
- 	if (err)
--		goto unlock;
-+		goto out;
- get_new:
-+	mutex_lock(&EXFAT_SB(sb)->s_lock);
-+
- 	if (ei->flags == ALLOC_NO_FAT_CHAIN && cpos >= i_size_read(inode))
- 		goto end_of_dir;
- 
- 	err = exfat_readdir(inode, &cpos, &de);
- 	if (err) {
- 		/*
--		 * At least we tried to read a sector.  Move cpos to next sector
--		 * position (should be aligned).
-+		 * At least we tried to read a sector.
-+		 * Move cpos to next sector position (should be aligned).
- 		 */
- 		if (err == -EIO) {
- 			cpos += 1 << (sb->s_blocksize_bits);
-@@ -281,16 +285,10 @@ get_new:
- 		inum = iunique(sb, EXFAT_ROOT_INO);
- 	}
- 
--	/*
--	 * Before calling dir_emit(), sb_lock should be released.
--	 * Because page fault can occur in dir_emit() when the size
--	 * of buffer given from user is larger than one page size.
--	 */
- 	mutex_unlock(&EXFAT_SB(sb)->s_lock);
- 	if (!dir_emit(ctx, nb->lfn, strlen(nb->lfn), inum,
- 			(de.attr & ATTR_SUBDIR) ? DT_DIR : DT_REG))
--		goto out_unlocked;
--	mutex_lock(&EXFAT_SB(sb)->s_lock);
-+		goto out;
- 	ctx->pos = cpos;
- 	goto get_new;
- 
-@@ -298,9 +296,8 @@ end_of_dir:
- 	if (!cpos && fake_offset)
- 		cpos = ITER_POS_FILLED_DOTS;
- 	ctx->pos = cpos;
--unlock:
- 	mutex_unlock(&EXFAT_SB(sb)->s_lock);
--out_unlocked:
-+out:
- 	/*
- 	 * To improve performance, free namebuf after unlock sb_lock.
- 	 * If namebuf is not allocated, this function do nothing
+ 		if (WARN_ON(mbf > nanddev_get_ecc_conf(nand)->strength || !mbf))
+ 			return nanddev_get_ecc_conf(nand)->strength;
 
 
