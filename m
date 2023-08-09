@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85FE1FA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:49:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F26C433C7;
-	Wed,  9 Aug 2023 10:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7851FA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:49:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1AE3C433C8;
+	Wed,  9 Aug 2023 10:49:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578181;
-	bh=8ubs4RcrbBIeXpq2NzUn76EDHrR9zFkXbvjB4VCqmUA=;
+	s=korg; t=1691578184;
+	bh=0q/s4nldAFDJo1bC4gD9B/sBEXenqnWeY5kDQaVyT8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E45eH7rvCwyCoV9PgOXP4u0KGAGlYkWdHbj15Lrw7yzZrsLUI59lZIkdwtNyv9+o6
-	 hy7Tk9ym0DAYoBUc3D+mOZeLpgPgKrW6iDwqmt8dSu94JzyL3t5cQLmo9Gfib+DwKd
-	 l0Es9/1YrDJ9+1N10HU6w+WUCQyX1RT8UNwZeZMk=
+	b=ia7joxYX/taPCpmGVhsD7MBg19iCh+rfxgibYYP1aqMkwVHQouIrAlTeoPJ0LVKXz
+	 JFDVP8Xyn/xH01g9D4lauUjRwPV6ijd+1MyfuH7tpyNKAbacD5WxId8rDdKZ5dNHts
+	 VeWQ3eSTEcfEaeezV2LkJjkHogREMRSoOnurjB9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AVKrasnov@sberdevices.ru,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 095/165] test/vsock: remove vsock_perf executable on `make clean`
-Date: Wed,  9 Aug 2023 12:40:26 +0200
-Message-ID: <20230809103645.891726314@linuxfoundation.org>
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Guchun Chen <guchun.chen@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
+Subject: [PATCH 6.4 128/165] drm/ttm: check null pointer before accessing when swapping
+Date: Wed,  9 Aug 2023 12:40:59 +0200
+Message-ID: <20230809103647.003812212@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -37,39 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Guchun Chen <guchun.chen@amd.com>
 
-[ Upstream commit 3c50c8b240390907c9a33c86d25d850520db6dfa ]
+commit 2dedcf414bb01b8d966eb445db1d181d92304fb2 upstream.
 
-We forgot to add vsock_perf to the rm command in the `clean`
-target, so now we have a left over after `make clean` in
-tools/testing/vsock.
+Add a check to avoid null pointer dereference as below:
 
-Fixes: 8abbffd27ced ("test/vsock: vsock_perf utility")
-Cc: AVKrasnov@sberdevices.ru
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Simon Horman <horms@kernel.org> # build-tested
-Link: https://lore.kernel.org/r/20230803085454.30897-1-sgarzare@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[   90.002283] general protection fault, probably for non-canonical
+address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN NOPTI
+[   90.002292] KASAN: null-ptr-deref in range
+[0x0000000000000000-0x0000000000000007]
+[   90.002346]  ? exc_general_protection+0x159/0x240
+[   90.002352]  ? asm_exc_general_protection+0x26/0x30
+[   90.002357]  ? ttm_bo_evict_swapout_allowable+0x322/0x5e0 [ttm]
+[   90.002365]  ? ttm_bo_evict_swapout_allowable+0x42e/0x5e0 [ttm]
+[   90.002373]  ttm_bo_swapout+0x134/0x7f0 [ttm]
+[   90.002383]  ? __pfx_ttm_bo_swapout+0x10/0x10 [ttm]
+[   90.002391]  ? lock_acquire+0x44d/0x4f0
+[   90.002398]  ? ttm_device_swapout+0xa5/0x260 [ttm]
+[   90.002412]  ? lock_acquired+0x355/0xa00
+[   90.002416]  ? do_raw_spin_trylock+0xb6/0x190
+[   90.002421]  ? __pfx_lock_acquired+0x10/0x10
+[   90.002426]  ? ttm_global_swapout+0x25/0x210 [ttm]
+[   90.002442]  ttm_device_swapout+0x198/0x260 [ttm]
+[   90.002456]  ? __pfx_ttm_device_swapout+0x10/0x10 [ttm]
+[   90.002472]  ttm_global_swapout+0x75/0x210 [ttm]
+[   90.002486]  ttm_tt_populate+0x187/0x3f0 [ttm]
+[   90.002501]  ttm_bo_handle_move_mem+0x437/0x590 [ttm]
+[   90.002517]  ttm_bo_validate+0x275/0x430 [ttm]
+[   90.002530]  ? __pfx_ttm_bo_validate+0x10/0x10 [ttm]
+[   90.002544]  ? kasan_save_stack+0x33/0x60
+[   90.002550]  ? kasan_set_track+0x25/0x30
+[   90.002554]  ? __kasan_kmalloc+0x8f/0xa0
+[   90.002558]  ? amdgpu_gtt_mgr_new+0x81/0x420 [amdgpu]
+[   90.003023]  ? ttm_resource_alloc+0xf6/0x220 [ttm]
+[   90.003038]  amdgpu_bo_pin_restricted+0x2dd/0x8b0 [amdgpu]
+[   90.003210]  ? __x64_sys_ioctl+0x131/0x1a0
+[   90.003210]  ? do_syscall_64+0x60/0x90
+
+Fixes: a2848d08742c ("drm/ttm: never consider pinned BOs for eviction&swap")
+Tested-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Signed-off-by: Guchun Chen <guchun.chen@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Cc: stable@vger.kernel.org
+Link: https://patchwork.freedesktop.org/patch/msgid/20230724024229.1118444-1-guchun.chen@amd.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/vsock/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/ttm/ttm_bo.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/vsock/Makefile b/tools/testing/vsock/Makefile
-index 43a254f0e14dd..21a98ba565ab5 100644
---- a/tools/testing/vsock/Makefile
-+++ b/tools/testing/vsock/Makefile
-@@ -8,5 +8,5 @@ vsock_perf: vsock_perf.o
- CFLAGS += -g -O2 -Werror -Wall -I. -I../../include -I../../../usr/include -Wno-pointer-sign -fno-strict-overflow -fno-strict-aliasing -fno-common -MMD -U_FORTIFY_SOURCE -D_GNU_SOURCE
- .PHONY: all test clean
- clean:
--	${RM} *.o *.d vsock_test vsock_diag_test
-+	${RM} *.o *.d vsock_test vsock_diag_test vsock_perf
- -include *.d
--- 
-2.40.1
-
+--- a/drivers/gpu/drm/ttm/ttm_bo.c
++++ b/drivers/gpu/drm/ttm/ttm_bo.c
+@@ -519,7 +519,8 @@ static bool ttm_bo_evict_swapout_allowab
+ 
+ 	if (bo->pin_count) {
+ 		*locked = false;
+-		*busy = false;
++		if (busy)
++			*busy = false;
+ 		return false;
+ 	}
+ 
 
 
