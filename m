@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A932117AAB
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:31:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28492C433C9;
-	Wed,  9 Aug 2023 11:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774BD17AAB
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:31:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBCE0C433C7;
+	Wed,  9 Aug 2023 11:31:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580701;
-	bh=g68AwBAkkKu0j96obhkoU8GYjIBrGhEWnM2znVKMmxk=;
+	s=korg; t=1691580704;
+	bh=25KzkZxL9Oa1fQLs1ftWPMHWJ1ED70rZ+se6X73M6w8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d0JxXN5hnkKHKfb6lZo1Oeu/BnNv2tQGQVlcSYvnqUrCsrunWz5t1XTIlMPGGCVPN
-	 GcY2/uijSOQ711rFxtsfo6TWf1lsbsLWIQ8D3wj3kE4dKr2Tr9tQHQs8C91yCxLkDQ
-	 RS+7lovdrSJfk2Zo2gQyI5DIzD1SoQARZ5UT4jTI=
+	b=EnOPAWKy8HIaaO/1QtUshknT2DjuM3RqCbwYdrqmkqXdckZ3UEwhbzVpDSgQSOT5a
+	 Z88LILsFvLkqDjNRaPsKicsH0RtUMrdRlkwpb+q5EAw2pZ8uRiNVkeE1y2wPQSQn2J
+	 zZldIGYGit5XZDmXhEUjXSGYDhyA8BzY+CbU3jNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrzej Hajda <a.hajda@samsung.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 111/154] driver core: add device probe log helper
-Date: Wed,  9 Aug 2023 12:42:22 +0200
-Message-ID: <20230809103640.617209878@linuxfoundation.org>
+Subject: [PATCH 5.4 120/154] tcp_metrics: annotate data-races around tm->tcpm_net
+Date: Wed,  9 Aug 2023 12:42:31 +0200
+Message-ID: <20230809103640.887894154@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -37,103 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrzej Hajda <a.hajda@samsung.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit a787e5400a1ceeb0ef92d71ec43aeb35b1fa1334 ]
+[ Upstream commit d5d986ce42c71a7562d32c4e21e026b0f87befec ]
 
-During probe every time driver gets resource it should usually check for
-error printk some message if it is not -EPROBE_DEFER and return the error.
-This pattern is simple but requires adding few lines after any resource
-acquisition code, as a result it is often omitted or implemented only
-partially.
-dev_err_probe helps to replace such code sequences with simple call,
-so code:
-	if (err != -EPROBE_DEFER)
-		dev_err(dev, ...);
-	return err;
-becomes:
-	return dev_err_probe(dev, err, ...);
+tm->tcpm_net can be read or written locklessly.
 
-Signed-off-by: Andrzej Hajda <a.hajda@samsung.com>
-Reviewed-by: Rafael J. Wysocki <rafael@kernel.org>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Link: https://lore.kernel.org/r/20200713144324.23654-2-a.hajda@samsung.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: ef45e8400f5b ("net: ll_temac: fix error checking of irq_of_parse_and_map()")
+Instead of changing write_pnet() and read_pnet() and potentially
+hurt performance, add the needed READ_ONCE()/WRITE_ONCE()
+in tm_net() and tcpm_new().
+
+Fixes: 849e8a0ca8d5 ("tcp_metrics: Add a field tcpm_net and verify it matches on lookup")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230802131500.1478140-6-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c    | 42 ++++++++++++++++++++++++++++++++++++++++++
- include/linux/device.h |  3 +++
- 2 files changed, 45 insertions(+)
+ net/ipv4/tcp_metrics.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index f8e157ede44f8..4949aba7e1880 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -3399,6 +3399,48 @@ define_dev_printk_level(_dev_info, KERN_INFO);
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index 29261aa96eb40..3d0452bb6c2a1 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -40,7 +40,7 @@ struct tcp_fastopen_metrics {
  
- #endif
+ struct tcp_metrics_block {
+ 	struct tcp_metrics_block __rcu	*tcpm_next;
+-	possible_net_t			tcpm_net;
++	struct net			*tcpm_net;
+ 	struct inetpeer_addr		tcpm_saddr;
+ 	struct inetpeer_addr		tcpm_daddr;
+ 	unsigned long			tcpm_stamp;
+@@ -51,9 +51,10 @@ struct tcp_metrics_block {
+ 	struct rcu_head			rcu_head;
+ };
  
-+/**
-+ * dev_err_probe - probe error check and log helper
-+ * @dev: the pointer to the struct device
-+ * @err: error value to test
-+ * @fmt: printf-style format string
-+ * @...: arguments as specified in the format string
-+ *
-+ * This helper implements common pattern present in probe functions for error
-+ * checking: print debug or error message depending if the error value is
-+ * -EPROBE_DEFER and propagate error upwards.
-+ * It replaces code sequence:
-+ * 	if (err != -EPROBE_DEFER)
-+ * 		dev_err(dev, ...);
-+ * 	else
-+ * 		dev_dbg(dev, ...);
-+ * 	return err;
-+ * with
-+ * 	return dev_err_probe(dev, err, ...);
-+ *
-+ * Returns @err.
-+ *
-+ */
-+int dev_err_probe(const struct device *dev, int err, const char *fmt, ...)
-+{
-+	struct va_format vaf;
-+	va_list args;
-+
-+	va_start(args, fmt);
-+	vaf.fmt = fmt;
-+	vaf.va = &args;
-+
-+	if (err != -EPROBE_DEFER)
-+		dev_err(dev, "error %d: %pV", err, &vaf);
-+	else
-+		dev_dbg(dev, "error %d: %pV", err, &vaf);
-+
-+	va_end(args);
-+
-+	return err;
-+}
-+EXPORT_SYMBOL_GPL(dev_err_probe);
-+
- static inline bool fwnode_is_primary(struct fwnode_handle *fwnode)
+-static inline struct net *tm_net(struct tcp_metrics_block *tm)
++static inline struct net *tm_net(const struct tcp_metrics_block *tm)
  {
- 	return fwnode && !IS_ERR(fwnode->secondary);
-diff --git a/include/linux/device.h b/include/linux/device.h
-index d74275e2047a4..c7be3a8073ec3 100644
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -1871,6 +1871,9 @@ do {									\
- 	WARN_ONCE(condition, "%s %s: " format, \
- 			dev_driver_string(dev), dev_name(dev), ## arg)
+-	return read_pnet(&tm->tcpm_net);
++	/* Paired with the WRITE_ONCE() in tcpm_new() */
++	return READ_ONCE(tm->tcpm_net);
+ }
  
-+extern __printf(3, 4)
-+int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
+ static bool tcp_metric_locked(struct tcp_metrics_block *tm,
+@@ -197,7 +198,9 @@ static struct tcp_metrics_block *tcpm_new(struct dst_entry *dst,
+ 		if (!tm)
+ 			goto out_unlock;
+ 	}
+-	write_pnet(&tm->tcpm_net, net);
++	/* Paired with the READ_ONCE() in tm_net() */
++	WRITE_ONCE(tm->tcpm_net, net);
 +
- /* Create alias, so I can be autoloaded. */
- #define MODULE_ALIAS_CHARDEV(major,minor) \
- 	MODULE_ALIAS("char-major-" __stringify(major) "-" __stringify(minor))
+ 	tm->tcpm_saddr = *saddr;
+ 	tm->tcpm_daddr = *daddr;
+ 
 -- 
 2.40.1
 
