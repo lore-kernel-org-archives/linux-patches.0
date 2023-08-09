@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A95917AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:35:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C60FC433C8;
-	Wed,  9 Aug 2023 11:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D6817AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:35:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500ECC433C7;
+	Wed,  9 Aug 2023 11:35:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580923;
-	bh=570S7gfmtCZd3rP6drHXGJibYlJ3XFrqiGyiJ+Ip6QA=;
+	s=korg; t=1691580926;
+	bh=2mZlbLAVD93nf+7an2Iq42iwijLxRuU4FTlpsPyEBwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bLUwo5tZ3ceiwhaFlWo1H/VTF6egBz0PKFTSpf41sP02nUB3rEoxs1JM5IE4hJLAf
-	 FnC4p2eC9stbdbzhpakjHapnHZa2g4QxnyL4lrhIgBX/f2C1V6Qi6qfWJNiERsj2Nk
-	 ynoBrFfQqV6wFJxcp3jb3UlYPZXWUwGfKJMP4Dxw=
+	b=d55J0qv6h7tL+8SYYZpSXrBv3US8cET3JO1vfT80SymdeeUrGuTNfZiNIKHI+XnSj
+	 lqU3QtASli/Lc6aYja4lOaknFklYaxVRsDMeSxniM/p90snqadtOpmiLLnBww3IF5n
+	 S1a2EnVPPwU95hSxSe8iIfmd+dRkwTu1gEfvvFzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 042/201] netfilter: nft_set_rbtree: fix overlap expiration walk
-Date: Wed,  9 Aug 2023 12:40:44 +0200
-Message-ID: <20230809103645.258738566@linuxfoundation.org>
+Subject: [PATCH 5.10 043/201] netfilter: nftables: add helper function to validate set element data
+Date: Wed,  9 Aug 2023 12:40:45 +0200
+Message-ID: <20230809103645.288315462@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -34,86 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit f718863aca469a109895cb855e6b81fff4827d71 ]
+[ Upstream commit 97c976d662fb9080a6a5d1e1a108c7a1f5c9484d ]
 
-The lazy gc on insert that should remove timed-out entries fails to release
-the other half of the interval, if any.
+When binding sets to rule, validate set element data according to
+set definition. This patch adds a helper function to be reused by
+the catch-all set element support.
 
-Can be reproduced with tests/shell/testcases/sets/0044interval_overlap_0
-in nftables.git and kmemleak enabled kernel.
-
-Second bug is the use of rbe_prev vs. prev pointer.
-If rbe_prev() returns NULL after at least one iteration, rbe_prev points
-to element that is not an end interval, hence it should not be removed.
-
-Lastly, check the genmask of the end interval if this is active in the
-current generation.
-
-Fixes: c9e6978e2725 ("netfilter: nft_set_rbtree: Switch to node list walk for overlap detection")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 0a771f7b266b ("netfilter: nf_tables: skip immediate deactivate in _PREPARE_ERROR")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_rbtree.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ net/netfilter/nf_tables_api.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index 172b994790a06..eae760adae4d5 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -216,29 +216,37 @@ static void *nft_rbtree_get(const struct net *net, const struct nft_set *set,
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 356416564d9f4..5ef9acba7c171 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -4576,10 +4576,9 @@ static int nft_validate_register_store(const struct nft_ctx *ctx,
+ 				       enum nft_data_types type,
+ 				       unsigned int len);
  
- static int nft_rbtree_gc_elem(const struct nft_set *__set,
- 			      struct nft_rbtree *priv,
--			      struct nft_rbtree_elem *rbe)
-+			      struct nft_rbtree_elem *rbe,
-+			      u8 genmask)
+-static int nf_tables_bind_check_setelem(const struct nft_ctx *ctx,
+-					struct nft_set *set,
+-					const struct nft_set_iter *iter,
+-					struct nft_set_elem *elem)
++static int nft_setelem_data_validate(const struct nft_ctx *ctx,
++				     struct nft_set *set,
++				     struct nft_set_elem *elem)
  {
- 	struct nft_set *set = (struct nft_set *)__set;
- 	struct rb_node *prev = rb_prev(&rbe->node);
--	struct nft_rbtree_elem *rbe_prev = NULL;
-+	struct nft_rbtree_elem *rbe_prev;
- 	struct nft_set_gc_batch *gcb;
+ 	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
+ 	enum nft_registers dreg;
+@@ -4591,6 +4590,14 @@ static int nf_tables_bind_check_setelem(const struct nft_ctx *ctx,
+ 					   set->dlen);
+ }
  
- 	gcb = nft_set_gc_batch_check(set, NULL, GFP_ATOMIC);
- 	if (!gcb)
- 		return -ENOMEM;
- 
--	/* search for expired end interval coming before this element. */
-+	/* search for end interval coming before this element.
-+	 * end intervals don't carry a timeout extension, they
-+	 * are coupled with the interval start element.
-+	 */
- 	while (prev) {
- 		rbe_prev = rb_entry(prev, struct nft_rbtree_elem, node);
--		if (nft_rbtree_interval_end(rbe_prev))
-+		if (nft_rbtree_interval_end(rbe_prev) &&
-+		    nft_set_elem_active(&rbe_prev->ext, genmask))
- 			break;
- 
- 		prev = rb_prev(prev);
- 	}
- 
--	if (rbe_prev) {
-+	if (prev) {
-+		rbe_prev = rb_entry(prev, struct nft_rbtree_elem, node);
++static int nf_tables_bind_check_setelem(const struct nft_ctx *ctx,
++					struct nft_set *set,
++					const struct nft_set_iter *iter,
++					struct nft_set_elem *elem)
++{
++	return nft_setelem_data_validate(ctx, set, elem);
++}
 +
- 		rb_erase(&rbe_prev->node, &priv->root);
- 		atomic_dec(&set->nelems);
-+		nft_set_gc_batch_add(gcb, rbe_prev);
- 	}
- 
- 	rb_erase(&rbe->node, &priv->root);
-@@ -320,7 +328,7 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 
- 		/* perform garbage collection to avoid bogus overlap reports. */
- 		if (nft_set_elem_expired(&rbe->ext)) {
--			err = nft_rbtree_gc_elem(set, priv, rbe);
-+			err = nft_rbtree_gc_elem(set, priv, rbe, genmask);
- 			if (err < 0)
- 				return err;
- 
+ int nf_tables_bind_set(const struct nft_ctx *ctx, struct nft_set *set,
+ 		       struct nft_set_binding *binding)
+ {
 -- 
 2.39.2
 
