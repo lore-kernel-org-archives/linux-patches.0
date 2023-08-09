@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B0F1773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:19:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE93C433C8;
-	Wed,  9 Aug 2023 11:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970BC1773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:19:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188F6C433C7;
+	Wed,  9 Aug 2023 11:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579976;
-	bh=Ac3iihuNkiicyqBjRwIVnYIfYYzB5zvmQKyjwQV3Ivw=;
+	s=korg; t=1691579979;
+	bh=nJOjsIaWQNSLUBI//4GF7vEBGQWqYszLFbqD/6J6too=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a0GiSw2sYUFFngryVDz+U5SrJ71ok7ab1M2gva3tKVUzWUrMN4Fl7pZ8Jq1hI11rb
-	 AeSbw5Wp7i59dmti/D+alhQ5xYElNQ42OB42Xhxwp9v4CXQgkX8AZuZoxgpBBYUU80
-	 Nl0V4X03n2xw5lD9w8gfV7m84zT/VJ+fI6Rve7NQ=
+	b=l77HRU0C03+jKcBdZOWNe35mhDckBPoSFaVRlcaTT97Lji0eid7k5fyeg1DIMeQ8t
+	 s6UHrk+aTlaFbLW0TrUeiyNtO6ENJLON+zMJSiEBgDJg7qcrUnV37kFDmXHVpkdu6c
+	 DMCQKYDOcz14ZKNoqaVlNbMrVLK4F5pEqh5D5tp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shreyas Deodhar <sdeodhar@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 4.19 184/323] scsi: qla2xxx: Pointer may be dereferenced
-Date: Wed,  9 Aug 2023 12:40:22 +0200
-Message-ID: <20230809103706.586105564@linuxfoundation.org>
+	shanzhulig <shanzhulig@gmail.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	stable@kernel.org,
+	Daniel Vetter <daniel.vetter@intel.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 4.19 185/323] drm/atomic: Fix potential use-after-free in nonblocking commits
+Date: Wed,  9 Aug 2023 12:40:23 +0200
+Message-ID: <20230809103706.636719097@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,36 +41,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shreyas Deodhar <sdeodhar@marvell.com>
+From: Daniel Vetter <daniel.vetter@ffwll.ch>
 
-commit 00eca15319d9ce8c31cdf22f32a3467775423df4 upstream.
+commit 4e076c73e4f6e90816b30fcd4a0d7ab365087255 upstream.
 
-Klocwork tool reported pointer 'rport' returned from call to function
-fc_bsg_to_rport() may be NULL and will be dereferenced.
+This requires a bit of background.  Properly done a modeset driver's
+unload/remove sequence should be
 
-Add a fix to validate rport before dereferencing.
+	drm_dev_unplug();
+	drm_atomic_helper_shutdown();
+	drm_dev_put();
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Shreyas Deodhar <sdeodhar@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20230607113843.37185-7-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+The trouble is that the drm_dev_unplugged() checks are by design racy,
+they do not synchronize against all outstanding ioctl.  This is because
+those ioctl could block forever (both for modeset and for driver
+specific ioctls), leading to deadlocks in hotunplug.  Instead the code
+sections that touch the hardware need to be annotated with
+drm_dev_enter/exit, to avoid accessing hardware resources after the
+unload/remove has finished.
+
+To avoid use-after-free issues all the involved userspace visible
+objects are supposed to hold a reference on the underlying drm_device,
+like drm_file does.
+
+The issue now is that we missed one, the atomic modeset ioctl can be run
+in a nonblocking fashion, and in that case it cannot rely on the implied
+drm_device reference provided by the ioctl calling context.  This can
+result in a use-after-free if an nonblocking atomic commit is carefully
+raced against a driver unload.
+
+Fix this by unconditionally grabbing a drm_device reference for any
+drm_atomic_state structures.  Strictly speaking this isn't required for
+blocking commits and TEST_ONLY calls, but it's the simpler approach.
+
+Thanks to shanzhulig for the initial idea of grabbing an unconditional
+reference, I just added comments, a condensed commit message and fixed a
+minor potential issue in where exactly we drop the final reference.
+
+Reported-by: shanzhulig <shanzhulig@gmail.com>
+Suggested-by: shanzhulig <shanzhulig@gmail.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: David Airlie <airlied@gmail.com>
+Cc: stable@kernel.org
+Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/drm_atomic.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_bsg.c
-+++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -2488,6 +2488,8 @@ qla24xx_bsg_request(struct bsg_job *bsg_
+--- a/drivers/gpu/drm/drm_atomic.c
++++ b/drivers/gpu/drm/drm_atomic.c
+@@ -91,6 +91,12 @@ drm_atomic_state_init(struct drm_device
+ 	if (!state->planes)
+ 		goto fail;
  
- 	if (bsg_request->msgcode == FC_BSG_RPT_ELS) {
- 		rport = fc_bsg_to_rport(bsg_job);
-+		if (!rport)
-+			return ret;
- 		host = rport_to_shost(rport);
- 		vha = shost_priv(host);
- 	} else {
++	/*
++	 * Because drm_atomic_state can be committed asynchronously we need our
++	 * own reference and cannot rely on the on implied by drm_file in the
++	 * ioctl call.
++	 */
++	drm_dev_get(dev);
+ 	state->dev = dev;
+ 
+ 	DRM_DEBUG_ATOMIC("Allocated atomic state %p\n", state);
+@@ -250,7 +256,8 @@ EXPORT_SYMBOL(drm_atomic_state_clear);
+ void __drm_atomic_state_free(struct kref *ref)
+ {
+ 	struct drm_atomic_state *state = container_of(ref, typeof(*state), ref);
+-	struct drm_mode_config *config = &state->dev->mode_config;
++	struct drm_device *dev = state->dev;
++	struct drm_mode_config *config = &dev->mode_config;
+ 
+ 	drm_atomic_state_clear(state);
+ 
+@@ -262,6 +269,8 @@ void __drm_atomic_state_free(struct kref
+ 		drm_atomic_state_default_release(state);
+ 		kfree(state);
+ 	}
++
++	drm_dev_put(dev);
+ }
+ EXPORT_SYMBOL(__drm_atomic_state_free);
+ 
 
 
