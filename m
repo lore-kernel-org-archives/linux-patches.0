@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B138154B4
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:12:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B734C433C8;
-	Wed,  9 Aug 2023 11:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C91174F0
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:13:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 150C2C433C7;
+	Wed,  9 Aug 2023 11:12:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579577;
-	bh=Ny92DcZpUV9QFC8+RNJHlGWJeyFTenfVWmepIdeZ1uE=;
+	s=korg; t=1691579580;
+	bh=vyQf+3mZIAmgjmDHAkm5GOb2K8UQZzMp9IVJpSJqyGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LfxLZ7irFIM70Ir0K2PqGXQ+RCV/sBzwAgYKMU3zT/vVxz8/UgW5ybt66kJSkwOyc
-	 iZbgQ6lmnoqmMgXmo7SPXcZ1Z0aXATVKlmJaeqStq+iepwdQx0xFKjpUo6PoSuNoGp
-	 CLwQZjaCeP87gpUCKxIffxUopy3rJUT1iyDnwpJk=
+	b=1Tm7Z7/4rMGB9rM4Im2oXC8vXXK711sJnxUbalgtIMZ1nq5CyfAlcRH37PN9+RNPk
+	 j50jzI1A+eeyB6DrI5zq0zNNxI8951X2xeExTcf8+ldqeQ5LqghcDBdzXPkcouIgVb
+	 IHQKUVMUhHWj54OazYAOx0nhW8MRbcyCQ4bNKWBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 012/323] md/raid10: fix io loss while replacement replace rdev
-Date: Wed,  9 Aug 2023 12:37:30 +0200
-Message-ID: <20230809103658.651239635@linuxfoundation.org>
+Subject: [PATCH 4.19 013/323] irqchip/jcore-aic: Kill use of irq_create_strict_mappings()
+Date: Wed,  9 Aug 2023 12:37:31 +0200
+Message-ID: <20230809103658.700603396@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,77 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Nan <linan122@huawei.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 2ae6aaf76912bae53c74b191569d2ab484f24bf3 ]
+[ Upstream commit 5f8b938bd790cff6542c7fe3c1495c71f89fef1b ]
 
-When removing a disk with replacement, the replacement will be used to
-replace rdev. During this process, there is a brief window in which both
-rdev and replacement are read as NULL in raid10_write_request(). This
-will result in io not being submitted but it should be.
+irq_create_strict_mappings() is a poor way to allow the use of
+a linear IRQ domain as a legacy one. Let's be upfront about it.
 
-  //remove				//write
-  raid10_remove_disk			raid10_write_request
-   mirror->rdev = NULL
-					 read rdev -> NULL
-   mirror->rdev = mirror->replacement
-   mirror->replacement = NULL
-					 read replacement -> NULL
-
-Fix it by reading replacement first and rdev later, meanwhile, use smp_mb()
-to prevent memory reordering.
-
-Fixes: 475b0321a4df ("md/raid10: writes should get directed to replacement as well as original.")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230602091839.743798-3-linan666@huaweicloud.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20210406093557.1073423-4-maz@kernel.org
+Stable-dep-of: 4848229494a3 ("irqchip/jcore-aic: Fix missing allocation of IRQ descriptors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ drivers/irqchip/irq-jcore-aic.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index f6d2be1d23864..d46056b07c079 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -781,8 +781,16 @@ static struct md_rdev *read_balance(struct r10conf *conf,
- 		disk = r10_bio->devs[slot].devnum;
- 		rdev = rcu_dereference(conf->mirrors[disk].replacement);
- 		if (rdev == NULL || test_bit(Faulty, &rdev->flags) ||
--		    r10_bio->devs[slot].addr + sectors > rdev->recovery_offset)
-+		    r10_bio->devs[slot].addr + sectors >
-+		    rdev->recovery_offset) {
-+			/*
-+			 * Read replacement first to prevent reading both rdev
-+			 * and replacement as NULL during replacement replace
-+			 * rdev.
-+			 */
-+			smp_mb();
- 			rdev = rcu_dereference(conf->mirrors[disk].rdev);
-+		}
- 		if (rdev == NULL ||
- 		    test_bit(Faulty, &rdev->flags))
- 			continue;
-@@ -1400,9 +1408,15 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
+diff --git a/drivers/irqchip/irq-jcore-aic.c b/drivers/irqchip/irq-jcore-aic.c
+index 033bccb41455c..5f47d8ee4ae39 100644
+--- a/drivers/irqchip/irq-jcore-aic.c
++++ b/drivers/irqchip/irq-jcore-aic.c
+@@ -100,11 +100,11 @@ static int __init aic_irq_of_init(struct device_node *node,
+ 	jcore_aic.irq_unmask = noop;
+ 	jcore_aic.name = "AIC";
  
- 	for (i = 0;  i < conf->copies; i++) {
- 		int d = r10_bio->devs[i].devnum;
--		struct md_rdev *rdev = rcu_dereference(conf->mirrors[d].rdev);
--		struct md_rdev *rrdev = rcu_dereference(
--			conf->mirrors[d].replacement);
-+		struct md_rdev *rdev, *rrdev;
-+
-+		rrdev = rcu_dereference(conf->mirrors[d].replacement);
-+		/*
-+		 * Read replacement first to prevent reading both rdev and
-+		 * replacement as NULL during replacement replace rdev.
-+		 */
-+		smp_mb();
-+		rdev = rcu_dereference(conf->mirrors[d].rdev);
- 		if (rdev == rrdev)
- 			rrdev = NULL;
- 		if (rdev && unlikely(test_bit(Blocked, &rdev->flags))) {
+-	domain = irq_domain_add_linear(node, dom_sz, &jcore_aic_irqdomain_ops,
++	domain = irq_domain_add_legacy(node, dom_sz - min_irq, min_irq, min_irq,
++				       &jcore_aic_irqdomain_ops,
+ 				       &jcore_aic);
+ 	if (!domain)
+ 		return -ENOMEM;
+-	irq_create_strict_mappings(domain, min_irq, min_irq, dom_sz - min_irq);
+ 
+ 	return 0;
+ }
 -- 
 2.39.2
 
