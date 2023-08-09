@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD861774C
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:11:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733EBC433C8;
-	Wed,  9 Aug 2023 11:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B0C1774C
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:11:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 475FBC433C8;
+	Wed,  9 Aug 2023 11:11:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579494;
-	bh=xvhHhuxrHpLzUkuLVxv4BvM0EUUxnl962J8jqrP9NIA=;
+	s=korg; t=1691579497;
+	bh=Omgf3TMvIvcCXys6p4t3IpxwrIM4ZEU5yexsvosOhio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U8J+wKVuaaKFlOm1jaOGnHkmIf/VuF9wGoe58NbN2FgHFjH1Uwh22I3KuoaFHlsTN
-	 qy7muYz2JKpJKgDxYTZLoGAVsM28zNAnTg9SIg+yla26GRioZnj1dnSChw/rKk1ftM
-	 8NSK/uLYzMrtndoaTqX3dUWOCVAofWWZujjjF+YA=
+	b=xLPYkO55SOGXOwY6N0CBhXper5DLAZhInLjyogrq9ScfcawjVSNxe5W/D/q1CcAfC
+	 o8453ReUzs+/zz3KzZyTyZ2mdX2Cj1qdfipHDNj+YuL3Un0O5W6Pz4Qn4vIwBLdnav
+	 XiUZafQH1l7BeoQRX7Hkm4K8bCBwHEVUyqvhSkN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 4.19 004/323] fbdev: imsttfb: Fix use after free bug in imsttfb_probe
-Date: Wed,  9 Aug 2023 12:37:22 +0200
-Message-ID: <20230809103658.309437457@linuxfoundation.org>
+	Lyude Paul <lyude@redhat.com>,
+	Ilia Mirkin <imirkin@alum.mit.edu>
+Subject: [PATCH 4.19 005/323] drm/edid: Fix uninitialized variable in drm_cvt_modes()
+Date: Wed,  9 Aug 2023 12:37:23 +0200
+Message-ID: <20230809103658.358120071@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -34,75 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Lyude Paul <lyude@redhat.com>
 
-commit c75f5a55061091030a13fef71b9995b89bc86213 upstream.
+commit 991fcb77f490390bcad89fa67d95763c58cdc04c upstream.
 
-A use-after-free bug may occur if init_imstt invokes framebuffer_release
-and free the info ptr. The caller, imsttfb_probe didn't notice that and
-still keep the ptr as private data in pdev.
+Noticed this when trying to compile with -Wall on a kernel fork. We
+potentially don't set width here, which causes the compiler to complain
+about width potentially being uninitialized in drm_cvt_modes(). So, let's
+fix that.
 
-If we remove the driver which will call imsttfb_remove to make cleanup,
-UAF happens.
+Changes since v1:
+* Don't emit an error as this code isn't reachable, just mark it as such
+Changes since v2:
+* Remove now unused variable
 
-Fix it by return error code if bad case happens in init_imstt.
-
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 3f649ab728cd ("treewide: Remove uninitialized_var() usage")
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Reviewed-by: Ilia Mirkin <imirkin@alum.mit.edu>
+Link: https://patchwork.freedesktop.org/patch/msgid/20201105235703.1328115-1-lyude@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/imsttfb.c |   15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/drm_edid.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/video/fbdev/imsttfb.c
-+++ b/drivers/video/fbdev/imsttfb.c
-@@ -1348,7 +1348,7 @@ static struct fb_ops imsttfb_ops = {
- 	.fb_ioctl 	= imsttfb_ioctl,
- };
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -2798,6 +2798,8 @@ static int drm_cvt_modes(struct drm_conn
+ 		case 0x0c:
+ 			width = height * 15 / 9;
+ 			break;
++		default:
++			unreachable();
+ 		}
  
--static void init_imstt(struct fb_info *info)
-+static int init_imstt(struct fb_info *info)
- {
- 	struct imstt_par *par = info->par;
- 	__u32 i, tmp, *ip, *end;
-@@ -1420,7 +1420,7 @@ static void init_imstt(struct fb_info *i
- 	    || !(compute_imstt_regvals(par, info->var.xres, info->var.yres))) {
- 		printk("imsttfb: %ux%ux%u not supported\n", info->var.xres, info->var.yres, info->var.bits_per_pixel);
- 		framebuffer_release(info);
--		return;
-+		return -ENODEV;
- 	}
- 
- 	sprintf(info->fix.id, "IMS TT (%s)", par->ramdac == IBM ? "IBM" : "TVP");
-@@ -1456,12 +1456,13 @@ static void init_imstt(struct fb_info *i
- 
- 	if (register_framebuffer(info) < 0) {
- 		framebuffer_release(info);
--		return;
-+		return -ENODEV;
- 	}
- 
- 	tmp = (read_reg_le32(par->dc_regs, SSTATUS) & 0x0f00) >> 8;
- 	fb_info(info, "%s frame buffer; %uMB vram; chip version %u\n",
- 		info->fix.id, info->fix.smem_len >> 20, tmp);
-+	return 0;
- }
- 
- static int imsttfb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
-@@ -1527,10 +1528,10 @@ static int imsttfb_probe(struct pci_dev
- 	if (!par->cmap_regs)
- 		goto error;
- 	info->pseudo_palette = par->palette;
--	init_imstt(info);
--
--	pci_set_drvdata(pdev, info);
--	return 0;
-+	ret = init_imstt(info);
-+	if (!ret)
-+		pci_set_drvdata(pdev, info);
-+	return ret;
- 
- error:
- 	if (par->dc_regs)
+ 		for (j = 1; j < 5; j++) {
 
 
