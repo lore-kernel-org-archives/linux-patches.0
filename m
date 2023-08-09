@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0322B171CC
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:09:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78CFFC433C8;
-	Wed,  9 Aug 2023 11:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69F853B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:09:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C93C433C7;
+	Wed,  9 Aug 2023 11:09:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579388;
-	bh=jk1aOO4apUpapoCvjzFcjvQGW6LWJoD4C975uIVuVNg=;
+	s=korg; t=1691579391;
+	bh=sukjLJV8XilSbB00831/37O+s5n1iZ9AGOwIlOj6zq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SjTjiRc4p7e96gfxaH7v0UHQAHmSZ1gg5PjBJH9Jp+o58f/3OOW+JnQkHn9kBFzE1
-	 AkIyXUsvr7x1suGDU0XM9+/DVWrrftSZdA0gTbYeWmm4/hogZXo+0ZJDki1OLjkZRu
-	 N5+JJ/jLiCSFNAIkhqvpzh3F+hfJ5ud/nUBALDmE=
+	b=Tc1MY4JZlMKkDcaQci1xMi6A2LLRf8if/lhRp79jvX+CretSsiw/fIPLRWlVkg5cJ
+	 5gwwMPbrIF7Bdhtw5+8+2KyIjAQxtj/P8J5Lku6Ome8hRRFLTA8e6NDvpaVV6pNq7m
+	 UWCTFp6jRK3YD8ZuGAllpdUORLrEnOSA+pQzmNKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gilles Buloz <gilles.buloz@kontron.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 4.14 171/204] hwmon: (nct7802) Fix for temp6 (PECI1) processed even if PECI1 disabled
-Date: Wed,  9 Aug 2023 12:41:49 +0200
-Message-ID: <20230809103648.237927645@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Lee Jones <lee@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Rishabh Bhatnagar <risbhat@amazon.com>
+Subject: [PATCH 4.14 180/204] net/sched: cls_u32: Fix reference counter leak leading to overflow
+Date: Wed,  9 Aug 2023 12:41:58 +0200
+Message-ID: <20230809103648.521541059@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -34,34 +37,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gilles Buloz <Gilles.Buloz@kontron.com>
+From: Lee Jones <lee@kernel.org>
 
-commit 54685abe660a59402344d5045ce08c43c6a5ac42 upstream.
+commit 04c55383fa5689357bcdd2c8036725a55ed632bc upstream.
 
-Because of hex value 0x46 used instead of decimal 46, the temp6
-(PECI1) temperature is always declared visible and then displayed
-even if disabled in the chip
+In the event of a failure in tcf_change_indev(), u32_set_parms() will
+immediately return without decrementing the recently incremented
+reference counter.  If this happens enough times, the counter will
+rollover and the reference freed, leading to a double free which can be
+used to do 'bad things'.
 
-Signed-off-by: Gilles Buloz <gilles.buloz@kontron.com>
-Link: https://lore.kernel.org/r/DU0PR10MB62526435ADBC6A85243B90E08002A@DU0PR10MB6252.EURPRD10.PROD.OUTLOOK.COM
-Fixes: fcdc5739dce03 ("hwmon: (nct7802) add temperature sensor type attribute")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+In order to prevent this, move the point of possible failure above the
+point where the reference counter is incremented.  Also save any
+meaningful return values to be applied to the return data at the
+appropriate point in time.
+
+This issue was caught with KASAN.
+
+Fixes: 705c7091262d ("net: sched: cls_u32: no need to call tcf_exts_change for newly allocated struct")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Rishabh Bhatnagar <risbhat@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/nct7802.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/cls_u32.c |   21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
---- a/drivers/hwmon/nct7802.c
-+++ b/drivers/hwmon/nct7802.c
-@@ -698,7 +698,7 @@ static umode_t nct7802_temp_is_visible(s
- 	if (index >= 38 && index < 46 && !(reg & 0x01))		/* PECI 0 */
- 		return 0;
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -774,11 +774,22 @@ static int u32_set_parms(struct net *net
+ 			 struct nlattr *est, bool ovr)
+ {
+ 	int err;
++#ifdef CONFIG_NET_CLS_IND
++	int ifindex = -1;
++#endif
  
--	if (index >= 0x46 && (!(reg & 0x02)))			/* PECI 1 */
-+	if (index >= 46 && !(reg & 0x02))			/* PECI 1 */
- 		return 0;
+ 	err = tcf_exts_validate(net, tp, tb, est, &n->exts, ovr);
+ 	if (err < 0)
+ 		return err;
  
- 	return attr->mode;
++#ifdef CONFIG_NET_CLS_IND
++	if (tb[TCA_U32_INDEV]) {
++		ifindex = tcf_change_indev(net, tb[TCA_U32_INDEV]);
++		if (ifindex < 0)
++			return -EINVAL;
++	}
++#endif
++
+ 	if (tb[TCA_U32_LINK]) {
+ 		u32 handle = nla_get_u32(tb[TCA_U32_LINK]);
+ 		struct tc_u_hnode *ht_down = NULL, *ht_old;
+@@ -806,14 +817,10 @@ static int u32_set_parms(struct net *net
+ 	}
+ 
+ #ifdef CONFIG_NET_CLS_IND
+-	if (tb[TCA_U32_INDEV]) {
+-		int ret;
+-		ret = tcf_change_indev(net, tb[TCA_U32_INDEV]);
+-		if (ret < 0)
+-			return -EINVAL;
+-		n->ifindex = ret;
+-	}
++	if (ifindex >= 0)
++		n->ifindex = ifindex;
+ #endif
++
+ 	return 0;
+ }
+ 
 
 
