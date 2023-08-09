@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FB21773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:19:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4420FC433C8;
-	Wed,  9 Aug 2023 11:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA461773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:19:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03ABFC433C8;
+	Wed,  9 Aug 2023 11:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579951;
-	bh=gYXngkGUL5Hwh870SJF9R5QpN/RWjCtlMX/sAxgaAdY=;
+	s=korg; t=1691579954;
+	bh=uVIqulHaXwRlpcsoExfLzlxMcNY9Td9mspEb4T8qVhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2dMbjgIs+Kn7w/qQfkhU5qKlObyD1KHI2WZjtXQ1jngzmkdOwkROQLj6UZI09XViN
-	 GpVGe9P4+cqQMN0PQuvfVmktHHQ7mL+b0TtxJAK8/CmJLrnWEyz/NT7U+aU4acB2ms
-	 6cMhAPRm1AXdSPH9ZGMqbEHz3+gOyeuHM9oY6i0s=
+	b=l6UwPydsgpIhChyUM6EGHmU2kB0oNxB5qSloBeRjYfJirMxtY7F6moFgPXCd/WoP/
+	 WeuUwqlR6yDWfpnx/IRqphUD+DiyrzA9AWvMHSulXyfYetm7mID2avaqHcVqKKAoDh
+	 bY+UGqPF1Dgrw5fj56vYjUHeECEdpyqZItsy7bk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>
-Subject: [PATCH 4.19 167/323] PCI: rockchip: Use u32 variable to access 32-bit registers
-Date: Wed,  9 Aug 2023 12:40:05 +0200
-Message-ID: <20230809103705.794251819@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jiaqing Zhao <jiaqing.zhao@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 4.19 176/323] Revert "8250: add support for ASIX devices with a FIFO bug"
+Date: Wed,  9 Aug 2023 12:40:14 +0200
+Message-ID: <20230809103706.193306207@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,76 +35,139 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+From: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
 
-commit 8962b2cb39119cbda4fc69a1f83957824f102f81 upstream.
+commit a82d62f708545d22859584e0e0620da8e3759bbc upstream.
 
-Previously u16 variables were used to access 32-bit registers, this
-resulted in not all of the data being read from the registers. Also
-the left shift of more than 16-bits would result in moving data out
-of the variable. Use u32 variables to access 32-bit registers
+This reverts commit eb26dfe8aa7eeb5a5aa0b7574550125f8aa4c3b3.
 
-Link: https://lore.kernel.org/r/20230418074700.1083505-10-rick.wertenbroek@gmail.com
-Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
-Tested-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Cc: stable@vger.kernel.org
+Commit eb26dfe8aa7e ("8250: add support for ASIX devices with a FIFO
+bug") merged on Jul 13, 2012 adds a quirk for PCI_VENDOR_ID_ASIX
+(0x9710). But that ID is the same as PCI_VENDOR_ID_NETMOS defined in
+1f8b061050c7 ("[PATCH] Netmos parallel/serial/combo support") merged
+on Mar 28, 2005. In pci_serial_quirks array, the NetMos entry always
+takes precedence over the ASIX entry even since it was initially
+merged, code in that commit is always unreachable.
+
+In my tests, adding the FIFO workaround to pci_netmos_init() makes no
+difference, and the vendor driver also does not have such workaround.
+Given that the code was never used for over a decade, it's safe to
+revert it.
+
+Also, the real PCI_VENDOR_ID_ASIX should be 0x125b, which is used on
+their newer AX99100 PCIe serial controllers released on 2016. The FIFO
+workaround should not be intended for these newer controllers, and it
+was never implemented in vendor driver.
+
+Fixes: eb26dfe8aa7e ("8250: add support for ASIX devices with a FIFO bug")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230619155743.827859-1-jiaqing.zhao@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-rockchip-ep.c |   10 +++++-----
- drivers/pci/controller/pcie-rockchip.h    |    1 +
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ drivers/tty/serial/8250/8250.h      |    1 -
+ drivers/tty/serial/8250/8250_pci.c  |   19 -------------------
+ drivers/tty/serial/8250/8250_port.c |   11 +++--------
+ include/linux/serial_8250.h         |    1 -
+ 4 files changed, 3 insertions(+), 29 deletions(-)
 
---- a/drivers/pci/controller/pcie-rockchip-ep.c
-+++ b/drivers/pci/controller/pcie-rockchip-ep.c
-@@ -313,15 +313,15 @@ static int rockchip_pcie_ep_set_msi(stru
- {
- 	struct rockchip_pcie_ep *ep = epc_get_drvdata(epc);
- 	struct rockchip_pcie *rockchip = &ep->rockchip;
--	u16 flags;
-+	u32 flags;
+--- a/drivers/tty/serial/8250/8250.h
++++ b/drivers/tty/serial/8250/8250.h
+@@ -85,7 +85,6 @@ struct serial8250_config {
+ #define UART_BUG_TXEN	(1 << 1)	/* UART has buggy TX IIR status */
+ #define UART_BUG_NOMSR	(1 << 2)	/* UART has buggy MSR status bits (Au1x00) */
+ #define UART_BUG_THRE	(1 << 3)	/* UART has buggy THRE reassertion */
+-#define UART_BUG_PARITY	(1 << 4)	/* UART mishandles parity if FIFO enabled */
  
- 	flags = rockchip_pcie_read(rockchip,
- 				   ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
- 				   ROCKCHIP_PCIE_EP_MSI_CTRL_REG);
- 	flags &= ~ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_MASK;
- 	flags |=
--	   ((multi_msg_cap << 1) <<  ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_OFFSET) |
--	   PCI_MSI_FLAGS_64BIT;
-+	   (multi_msg_cap << ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_OFFSET) |
-+	   (PCI_MSI_FLAGS_64BIT << ROCKCHIP_PCIE_EP_MSI_FLAGS_OFFSET);
- 	flags &= ~ROCKCHIP_PCIE_EP_MSI_CTRL_MASK_MSI_CAP;
- 	rockchip_pcie_write(rockchip, flags,
- 			    ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
-@@ -333,7 +333,7 @@ static int rockchip_pcie_ep_get_msi(stru
- {
- 	struct rockchip_pcie_ep *ep = epc_get_drvdata(epc);
- 	struct rockchip_pcie *rockchip = &ep->rockchip;
--	u16 flags;
-+	u32 flags;
  
- 	flags = rockchip_pcie_read(rockchip,
- 				   ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
-@@ -394,7 +394,7 @@ static int rockchip_pcie_ep_send_msi_irq
- 					 u8 interrupt_num)
- {
- 	struct rockchip_pcie *rockchip = &ep->rockchip;
--	u16 flags, mme, data, data_mask;
-+	u32 flags, mme, data, data_mask;
- 	u8 msi_count;
- 	u64 pci_addr, pci_addr_mask = 0xff;
+ #ifdef CONFIG_SERIAL_8250_SHARE_IRQ
+--- a/drivers/tty/serial/8250/8250_pci.c
++++ b/drivers/tty/serial/8250/8250_pci.c
+@@ -1049,14 +1049,6 @@ static int pci_oxsemi_tornado_init(struc
+ 	return number_uarts;
+ }
  
---- a/drivers/pci/controller/pcie-rockchip.h
-+++ b/drivers/pci/controller/pcie-rockchip.h
-@@ -232,6 +232,7 @@
- #define ROCKCHIP_PCIE_EP_CMD_STATUS			0x4
- #define   ROCKCHIP_PCIE_EP_CMD_STATUS_IS		BIT(19)
- #define ROCKCHIP_PCIE_EP_MSI_CTRL_REG			0x90
-+#define   ROCKCHIP_PCIE_EP_MSI_FLAGS_OFFSET		16
- #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_OFFSET		17
- #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_MASK		GENMASK(19, 17)
- #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MME_OFFSET		20
+-static int pci_asix_setup(struct serial_private *priv,
+-		  const struct pciserial_board *board,
+-		  struct uart_8250_port *port, int idx)
+-{
+-	port->bugs |= UART_BUG_PARITY;
+-	return pci_default_setup(priv, board, port, idx);
+-}
+-
+ /* Quatech devices have their own extra interface features */
+ 
+ struct quatech_feature {
+@@ -1683,7 +1675,6 @@ pci_wch_ch38x_setup(struct serial_privat
+ #define PCI_DEVICE_ID_WCH_CH355_4S	0x7173
+ #define PCI_VENDOR_ID_AGESTAR		0x5372
+ #define PCI_DEVICE_ID_AGESTAR_9375	0x6872
+-#define PCI_VENDOR_ID_ASIX		0x9710
+ #define PCI_DEVICE_ID_BROADCOM_TRUMANAGE 0x160a
+ #define PCI_DEVICE_ID_AMCC_ADDIDATA_APCI7800 0x818e
+ 
+@@ -2455,16 +2446,6 @@ static struct pci_serial_quirk pci_seria
+ 		.setup          = pci_wch_ch38x_setup,
+ 	},
+ 	/*
+-	 * ASIX devices with FIFO bug
+-	 */
+-	{
+-		.vendor		= PCI_VENDOR_ID_ASIX,
+-		.device		= PCI_ANY_ID,
+-		.subvendor	= PCI_ANY_ID,
+-		.subdevice	= PCI_ANY_ID,
+-		.setup		= pci_asix_setup,
+-	},
+-	/*
+ 	 * Broadcom TruManage (NetXtreme)
+ 	 */
+ 	{
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -2617,11 +2617,8 @@ static unsigned char serial8250_compute_
+ 
+ 	if (c_cflag & CSTOPB)
+ 		cval |= UART_LCR_STOP;
+-	if (c_cflag & PARENB) {
++	if (c_cflag & PARENB)
+ 		cval |= UART_LCR_PARITY;
+-		if (up->bugs & UART_BUG_PARITY)
+-			up->fifo_bug = true;
+-	}
+ 	if (!(c_cflag & PARODD))
+ 		cval |= UART_LCR_EPAR;
+ #ifdef CMSPAR
+@@ -2735,8 +2732,7 @@ serial8250_do_set_termios(struct uart_po
+ 	up->lcr = cval;					/* Save computed LCR */
+ 
+ 	if (up->capabilities & UART_CAP_FIFO && port->fifosize > 1) {
+-		/* NOTE: If fifo_bug is not set, a user can set RX_trigger. */
+-		if ((baud < 2400 && !up->dma) || up->fifo_bug) {
++		if (baud < 2400 && !up->dma) {
+ 			up->fcr &= ~UART_FCR_TRIGGER_MASK;
+ 			up->fcr |= UART_FCR_TRIGGER_1;
+ 		}
+@@ -3072,8 +3068,7 @@ static int do_set_rxtrig(struct tty_port
+ 	struct uart_8250_port *up = up_to_u8250p(uport);
+ 	int rxtrig;
+ 
+-	if (!(up->capabilities & UART_CAP_FIFO) || uport->fifosize <= 1 ||
+-	    up->fifo_bug)
++	if (!(up->capabilities & UART_CAP_FIFO) || uport->fifosize <= 1)
+ 		return -EINVAL;
+ 
+ 	rxtrig = bytes_to_fcr_rxtrig(up, bytes);
+--- a/include/linux/serial_8250.h
++++ b/include/linux/serial_8250.h
+@@ -99,7 +99,6 @@ struct uart_8250_port {
+ 	struct list_head	list;		/* ports on this IRQ */
+ 	u32			capabilities;	/* port capabilities */
+ 	unsigned short		bugs;		/* port bugs */
+-	bool			fifo_bug;	/* min RX trigger if enabled */
+ 	unsigned int		tx_loadsz;	/* transmit fifo load size */
+ 	unsigned char		acr;
+ 	unsigned char		fcr;
 
 
