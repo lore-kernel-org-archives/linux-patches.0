@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F76D17AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:39:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A43AAC433C8;
-	Wed,  9 Aug 2023 11:39:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E667717AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:39:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A73BC433C7;
+	Wed,  9 Aug 2023 11:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581154;
-	bh=Af9UUBQKmrryeTxboZKgCm1mF3PLFnu7BmC2G6IkQRI=;
+	s=korg; t=1691581156;
+	bh=C+1EicSQJNvZOGbCeipkQKbPcfoFEiSfRLYh9vWU/54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wnoIGFbA23dw36bHOGqMUJeWh4OpQlUpZQkCWowwW4M9lWjLgouM611HhNI8EacQ0
-	 J7vBOllru397PN7fVEBLIBUUcTzvS93c7UOgFyBtpfqtIo9CgMiH6dQwVt6XHT1Fbh
-	 +ELibvyzM3pk+3gcHcIHOm2Xo36oMIQcC+13Za6U=
+	b=NiOpdT1n7dOoojVrV7GnKhoKDHQTUhrkq1AIsXnj0WbiDN20hNZ2TW70SYXWbGxq3
+	 XXRIsizjQ3Zuc8/2opfGRrnhxWDl5sx/HgGmpuNCtYFUirznJK++lp5oA6uaRaC7mC
+	 38qlwVUXdwU0yQ2hrS5nLvO5P2hMEXeNHA8tFF7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 125/201] arm64: dts: imx8mn-var-som: add missing pull-up for onboard PHY reset pinmux
-Date: Wed,  9 Aug 2023 12:42:07 +0200
-Message-ID: <20230809103647.925020954@linuxfoundation.org>
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 5.10 126/201] word-at-a-time: use the same return type for has_zero regardless of endianness
+Date: Wed,  9 Aug 2023 12:42:08 +0200
+Message-ID: <20230809103647.954210441@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -36,44 +38,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: ndesaulniers@google.com <ndesaulniers@google.com>
 
-[ Upstream commit 253be5b53c2792fb4384f8005b05421e6f040ee3 ]
+[ Upstream commit 79e8328e5acbe691bbde029a52c89d70dcbc22f3 ]
 
-For SOMs with an onboard PHY, the RESET_N pull-up resistor is
-currently deactivated in the pinmux configuration. When the pinmux
-code selects the GPIO function for this pin, with a default direction
-of input, this prevents the RESET_N pin from being taken to the proper
-3.3V level (deasserted), and this results in the PHY being not
-detected since it is held in reset.
+Compiling big-endian targets with Clang produces the diagnostic:
 
-Taken from RESET_N pin description in ADIN13000 datasheet:
-    This pin requires a 1K pull-up resistor to AVDD_3P3.
+  fs/namei.c:2173:13: warning: use of bitwise '|' with boolean operands [-Wbitwise-instead-of-logical]
+	} while (!(has_zero(a, &adata, &constants) | has_zero(b, &bdata, &constants)));
+	          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                               ||
+  fs/namei.c:2173:13: note: cast one or both operands to int to silence this warning
 
-Activate the pull-up resistor to fix the issue.
+It appears that when has_zero was introduced, two definitions were
+produced with different signatures (in particular different return
+types).
 
-Fixes: ade0176dd8a0 ("arm64: dts: imx8mn-var-som: Add Variscite VAR-SOM-MX8MN System on Module")
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Looking at the usage in hash_name() in fs/namei.c, I suspect that
+has_zero() is meant to be invoked twice per while loop iteration; using
+logical-or would not update `bdata` when `a` did not have zeros.  So I
+think it's preferred to always return an unsigned long rather than a
+bool than update the while loop in hash_name() to use a logical-or
+rather than bitwise-or.
+
+[ Also changed powerpc version to do the same  - Linus ]
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1832
+Link: https://lore.kernel.org/lkml/20230801-bitwise-v1-1-799bec468dc4@google.com/
+Fixes: 36126f8f2ed8 ("word-at-a-time: make the interfaces truly generic")
+Debugged-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/include/asm/word-at-a-time.h | 2 +-
+ include/asm-generic/word-at-a-time.h      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi
-index 24f9e8fd0c8b8..9c6c21cc6c6c8 100644
---- a/arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi
-@@ -351,7 +351,7 @@
- 			MX8MN_IOMUXC_ENET_RXC_ENET1_RGMII_RXC		0x91
- 			MX8MN_IOMUXC_ENET_RX_CTL_ENET1_RGMII_RX_CTL	0x91
- 			MX8MN_IOMUXC_ENET_TX_CTL_ENET1_RGMII_TX_CTL	0x1f
--			MX8MN_IOMUXC_GPIO1_IO09_GPIO1_IO9		0x19
-+			MX8MN_IOMUXC_GPIO1_IO09_GPIO1_IO9		0x159
- 		>;
- 	};
+diff --git a/arch/powerpc/include/asm/word-at-a-time.h b/arch/powerpc/include/asm/word-at-a-time.h
+index f3f4710d4ff52..99129b0cd8b8a 100644
+--- a/arch/powerpc/include/asm/word-at-a-time.h
++++ b/arch/powerpc/include/asm/word-at-a-time.h
+@@ -34,7 +34,7 @@ static inline long find_zero(unsigned long mask)
+ 	return leading_zero_bits >> 3;
+ }
  
+-static inline bool has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
++static inline unsigned long has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
+ {
+ 	unsigned long rhs = val | c->low_bits;
+ 	*data = rhs;
+diff --git a/include/asm-generic/word-at-a-time.h b/include/asm-generic/word-at-a-time.h
+index 20c93f08c9933..95a1d214108a5 100644
+--- a/include/asm-generic/word-at-a-time.h
++++ b/include/asm-generic/word-at-a-time.h
+@@ -38,7 +38,7 @@ static inline long find_zero(unsigned long mask)
+ 	return (mask >> 8) ? byte : byte + 1;
+ }
+ 
+-static inline bool has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
++static inline unsigned long has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
+ {
+ 	unsigned long rhs = val | c->low_bits;
+ 	*data = rhs;
 -- 
 2.40.1
 
