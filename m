@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CED1773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:13:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87848C433C8;
-	Wed,  9 Aug 2023 11:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2FF1773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:13:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD1DC433C8;
+	Wed,  9 Aug 2023 11:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579624;
-	bh=9V5tinMW1075xv8MoPXtdIm1t3Puks+AYsLYIe+zkWc=;
+	s=korg; t=1691579627;
+	bh=Abx8FviPiSJUKTzp4twrBelTDxqSG+IviRrf9B1XI00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q++rkgNP1k36Xi7Z9jaKC/BB57iukudD4DF/r62iTqQQJ/2tyUlw+sdDSKHY6iuCc
-	 F8Pod8IGcyBAWoibDvt415ZYE1VXHpRNfQc2XYcc0luYHhbWOXMGgT7SjJv65NmUsY
-	 h4NMfVcWmjbr7TI8QSdQy/qaHw03RbUbNbQ/ULpE=
+	b=MsbByU7yQhI0xLG+FgDhOUcO40exwcH0rPn9DzjQdrRVhDgUP8K6yXvHWAhvxIjla
+	 du07C7b9XQb7hbrqqtW91Fvbo4ijCJHp6bA6u0jg67xCgGMhwiupniLEovHW5eHmJW
+	 zS4NcJBFMVeBasLdIzwkypTIuKY9iX7uW5Eau8Yw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 040/323] wifi: rsi: Do not set MMC_PM_KEEP_POWER in shutdown
-Date: Wed,  9 Aug 2023 12:37:58 +0200
-Message-ID: <20230809103659.965309739@linuxfoundation.org>
+Subject: [PATCH 4.19 058/323] drm/panel: simple: fix active size for Ampire AM-480272H3TMQW-T01H
+Date: Wed,  9 Aug 2023 12:38:16 +0200
+Message-ID: <20230809103700.796931227@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,39 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit e74f562328b03fbe9cf438f958464dff3a644dfc ]
+[ Upstream commit f24b49550814fdee4a98b9552e35e243ccafd4a8 ]
 
-It makes no sense to set MMC_PM_KEEP_POWER in shutdown. The flag
-indicates to the MMC subsystem to keep the slot powered on during
-suspend, but in shutdown the slot should actually be powered off.
-Drop this call.
+The previous setting was related to the overall dimension and not to the
+active display area.
+In the "PHYSICAL SPECIFICATIONS" section, the datasheet shows the
+following parameters:
 
-Fixes: 063848c3e155 ("rsi: sdio: Add WOWLAN support for S5 shutdown state")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230527222859.273768-1-marex@denx.de
+ ----------------------------------------------------------
+|       Item        |         Specifications        | unit |
+ ----------------------------------------------------------
+| Display area      | 98.7 (W) x 57.5 (H)           |  mm  |
+ ----------------------------------------------------------
+| Overall dimension | 105.5(W) x 67.2(H) x 4.96(D)  |  mm  |
+ ----------------------------------------------------------
+
+Fixes: 966fea78adf2 ("drm/panel: simple: Add support for Ampire AM-480272H3TMQW-T01H")
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+[narmstrong: fixed Fixes commit id length]
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230516085039.3797303-1-dario.binacchi@amarulasolutions.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_sdio.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/gpu/drm/panel/panel-simple.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_sdio.c b/drivers/net/wireless/rsi/rsi_91x_sdio.c
-index 48efe83c58d89..409a3e8305763 100644
---- a/drivers/net/wireless/rsi/rsi_91x_sdio.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_sdio.c
-@@ -1368,9 +1368,6 @@ static void rsi_shutdown(struct device *dev)
- 	if (sdev->write_fail)
- 		rsi_dbg(INFO_ZONE, "###### Device is not ready #######\n");
- 
--	if (rsi_set_sdio_pm_caps(adapter))
--		rsi_dbg(INFO_ZONE, "Setting power management caps failed\n");
--
- 	rsi_dbg(INFO_ZONE, "***** RSI module shut down *****\n");
- }
- 
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index a424afdcc77a1..35771e0e69fa6 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -405,8 +405,8 @@ static const struct panel_desc ampire_am_480272h3tmqw_t01h = {
+ 	.num_modes = 1,
+ 	.bpc = 8,
+ 	.size = {
+-		.width = 105,
+-		.height = 67,
++		.width = 99,
++		.height = 58,
+ 	},
+ 	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
+ };
 -- 
 2.39.2
 
