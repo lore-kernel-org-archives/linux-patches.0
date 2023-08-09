@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC9F6131
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:48:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F55BC433C9;
-	Wed,  9 Aug 2023 10:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB416131
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:48:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E7D3C433C9;
+	Wed,  9 Aug 2023 10:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578136;
-	bh=bKykhrVBkcgAeTxdZkxZD+WdT182djLJIMhQCuuI34Y=;
+	s=korg; t=1691578139;
+	bh=dk81vCqohTaPvaOOFtcRier1qAN6MN2cQtCUgo6yIpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=laOpvo1DZEbXt1QNzPLOAiMQnhYHpJ9WULw1voEWlDbtm5WG6D+d0qcY4d+ZaWZHY
-	 Sj7UOzD96/5+BT9kPNJMliZ/+YHqcd1XWdJ0+3qwoC7orEoRzWF81P1OaxrPMSUgkP
-	 nJksLIRk/MY4gNy+EF0iG3l+2fM4Xj4HtsUBCPyI=
+	b=bJtpJekLGr0/1R/l9y8XOUzspYr1cuQG16oWKoHhaO1EyekeH+cGy8tnoYCwSGjtq
+	 iVL40QuYNd0adh2qJ97FC2MnD1mXzfTWlttFZc7isp6NMtLAXOrl5tgGyI+plSWZ2q
+	 f14mZzuNR1CyiBvK32RsELZufQEN73JiMZIZsoGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Oleg=20 livelace =20Popov?= <o.popov@livelace.ru>,
-	Hou Tao <houtao1@huawei.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.4 118/165] bpf: Disable preemption in bpf_event_output
-Date: Wed,  9 Aug 2023 12:40:49 +0200
-Message-ID: <20230809103646.659922575@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.4 119/165] smb: client: fix dfs link mount against w2k8
+Date: Wed,  9 Aug 2023 12:40:50 +0200
+Message-ID: <20230809103646.698628413@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -36,91 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Paulo Alcantara <pc@manguebit.com>
 
-commit d62cc390c2e99ae267ffe4b8d7e2e08b6c758c32 upstream.
+commit 11260c3d608b59231f4c228147a795ab21a10b33 upstream.
 
-We received report [1] of kernel crash, which is caused by
-using nesting protection without disabled preemption.
+Customer reported that they couldn't mount their DFS link that was
+seen by the client as a DFS interlink -- special form of DFS link
+where its single target may point to a different DFS namespace -- and
+it turned out that it was just a regular DFS link where its referral
+header flags missed the StorageServers bit thus making the client
+think it couldn't tree connect to target directly without requiring
+further referrals.
 
-The bpf_event_output can be called by programs executed by
-bpf_prog_run_array_cg function that disabled migration but
-keeps preemption enabled.
+When the DFS link referral header flags misses the StoraServers bit
+and its target doesn't respond to any referrals, then tree connect to
+it.
 
-This can cause task to be preempted by another one inside the
-nesting protection and lead eventually to two tasks using same
-perf_sample_data buffer and cause crashes like:
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000001
-  #PF: supervisor instruction fetch in kernel mode
-  #PF: error_code(0x0010) - not-present page
-  ...
-  ? perf_output_sample+0x12a/0x9a0
-  ? finish_task_switch.isra.0+0x81/0x280
-  ? perf_event_output+0x66/0xa0
-  ? bpf_event_output+0x13a/0x190
-  ? bpf_event_output_data+0x22/0x40
-  ? bpf_prog_dfc84bbde731b257_cil_sock4_connect+0x40a/0xacb
-  ? xa_load+0x87/0xe0
-  ? __cgroup_bpf_run_filter_sock_addr+0xc1/0x1a0
-  ? release_sock+0x3e/0x90
-  ? sk_setsockopt+0x1a1/0x12f0
-  ? udp_pre_connect+0x36/0x50
-  ? inet_dgram_connect+0x93/0xa0
-  ? __sys_connect+0xb4/0xe0
-  ? udp_setsockopt+0x27/0x40
-  ? __pfx_udp_push_pending_frames+0x10/0x10
-  ? __sys_setsockopt+0xdf/0x1a0
-  ? __x64_sys_connect+0xf/0x20
-  ? do_syscall_64+0x3a/0x90
-  ? entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-Fixing this by disabling preemption in bpf_event_output.
-
-[1] https://github.com/cilium/cilium/issues/26756
+Fixes: a1c0d00572fc ("cifs: share dfs connections and supers")
 Cc: stable@vger.kernel.org
-Reported-by: Oleg "livelace" Popov <o.popov@livelace.ru>
-Closes: https://github.com/cilium/cilium/issues/26756
-Fixes: 2a916f2f546c ("bpf: Use migrate_disable/enable in array macros and cgroup/lirc code.")
-Acked-by: Hou Tao <houtao1@huawei.com>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20230725084206.580930-3-jolsa@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/bpf_trace.c |    6 +++++-
+ fs/smb/client/dfs.c |    6 +++++-
  1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -718,7 +718,6 @@ static DEFINE_PER_CPU(struct bpf_trace_s
- u64 bpf_event_output(struct bpf_map *map, u64 flags, void *meta, u64 meta_size,
- 		     void *ctx, u64 ctx_size, bpf_ctx_copy_t ctx_copy)
- {
--	int nest_level = this_cpu_inc_return(bpf_event_output_nest_level);
- 	struct perf_raw_frag frag = {
- 		.copy		= ctx_copy,
- 		.size		= ctx_size,
-@@ -735,8 +734,12 @@ u64 bpf_event_output(struct bpf_map *map
- 	};
- 	struct perf_sample_data *sd;
- 	struct pt_regs *regs;
-+	int nest_level;
- 	u64 ret;
+--- a/fs/smb/client/dfs.c
++++ b/fs/smb/client/dfs.c
+@@ -178,8 +178,12 @@ static int __dfs_mount_share(struct cifs
+ 		struct dfs_cache_tgt_list tl = DFS_CACHE_TGT_LIST_INIT(tl);
  
-+	preempt_disable();
-+	nest_level = this_cpu_inc_return(bpf_event_output_nest_level);
-+
- 	if (WARN_ON_ONCE(nest_level > ARRAY_SIZE(bpf_misc_sds.sds))) {
- 		ret = -EBUSY;
- 		goto out;
-@@ -751,6 +754,7 @@ u64 bpf_event_output(struct bpf_map *map
- 	ret = __bpf_perf_event_output(regs, map, flags, sd);
- out:
- 	this_cpu_dec(bpf_event_output_nest_level);
-+	preempt_enable();
- 	return ret;
- }
+ 		rc = dfs_get_referral(mnt_ctx, ref_path + 1, NULL, &tl);
+-		if (rc)
++		if (rc) {
++			rc = cifs_mount_get_tcon(mnt_ctx);
++			if (!rc)
++				rc = cifs_is_path_remote(mnt_ctx);
+ 			break;
++		}
  
+ 		tit = dfs_cache_get_tgt_iterator(&tl);
+ 		if (!tit) {
 
 
