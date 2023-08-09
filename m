@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FBF17AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39C6C433C7;
-	Wed,  9 Aug 2023 11:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E280917AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64EF5C433C8;
+	Wed,  9 Aug 2023 11:25:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580340;
-	bh=wn3B7+LBtr8l7oxzsUU8qdZKM9yo6vVoDIymdneWRFI=;
+	s=korg; t=1691580342;
+	bh=TUZ1rWQUcs8XCRhOo3RezvnaYoDZBgFg8qyRmLkNMh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ocajp5cOm6Ec9e1ReW/yrod1cSKbpu/n4713BElkt4eLl17ipCJmRNhlA2jlUkjQD
-	 VPjwfeD7uzxcXOrnoqOHrwoiKdnjZkwoXt7VkoZuSqc4DB8vvgOhau4Sb9ECsn5Ir0
-	 43CaQ1wx97CWXULjB0yh8ulifmUBgcmX3tH/8g04=
+	b=QkjWVxBlQNVPDOvoyPvNM/1TRf7PU64OnAqjcMzst57u3n+yXBmANUPQwBzTyTWLN
+	 mvTlpmjApK1C1XGOA1ejkfobiacGU0YHDoq6Z0LUPW+qLzdwLnaXBgR4gXOVJQBdLC
+	 vrQ8zxBp4SZkUzmWyrRflBKJMfIdtuLUnDJqzhr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Roger Quadros <rogerq@kernel.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 314/323] mtd: rawnand: omap_elm: Fix incorrect type in assignment
-Date: Wed,  9 Aug 2023 12:42:32 +0200
-Message-ID: <20230809103712.444272062@linuxfoundation.org>
+Subject: [PATCH 4.19 315/323] powerpc/mm/altmap: Fix altmap boundary check
+Date: Wed,  9 Aug 2023 12:42:33 +0200
+Message-ID: <20230809103712.492443030@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,118 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roger Quadros <rogerq@kernel.org>
+From: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
 
-[ Upstream commit d8403b9eeee66d5dd81ecb9445800b108c267ce3 ]
+[ Upstream commit 6722b25712054c0f903b839b8f5088438dd04df3 ]
 
-Once the ECC word endianness is converted to BE32, we force cast it
-to u32 so we can use elm_write_reg() which in turn uses writel().
+altmap->free includes the entire free space from which altmap blocks
+can be allocated. So when checking whether the kernel is doing altmap
+block free, compute the boundary correctly, otherwise memory hotunplug
+can fail.
 
-Fixes below sparse warnings:
-
-   drivers/mtd/nand/raw/omap_elm.c:180:37: sparse:     expected unsigned int [usertype] val
-   drivers/mtd/nand/raw/omap_elm.c:180:37: sparse:     got restricted __be32 [usertype]
-   drivers/mtd/nand/raw/omap_elm.c:185:37: sparse:     expected unsigned int [usertype] val
-   drivers/mtd/nand/raw/omap_elm.c:185:37: sparse:     got restricted __be32 [usertype]
-   drivers/mtd/nand/raw/omap_elm.c:190:37: sparse:     expected unsigned int [usertype] val
-   drivers/mtd/nand/raw/omap_elm.c:190:37: sparse:     got restricted __be32 [usertype]
->> drivers/mtd/nand/raw/omap_elm.c:200:40: sparse: sparse: restricted __be32 degrades to integer
-   drivers/mtd/nand/raw/omap_elm.c:206:39: sparse: sparse: restricted __be32 degrades to integer
-   drivers/mtd/nand/raw/omap_elm.c:210:37: sparse:     expected unsigned int [assigned] [usertype] val
-   drivers/mtd/nand/raw/omap_elm.c:210:37: sparse:     got restricted __be32 [usertype]
-   drivers/mtd/nand/raw/omap_elm.c:213:37: sparse:     expected unsigned int [assigned] [usertype] val
-   drivers/mtd/nand/raw/omap_elm.c:213:37: sparse:     got restricted __be32 [usertype]
-   drivers/mtd/nand/raw/omap_elm.c:216:37: sparse:     expected unsigned int [assigned] [usertype] val
-   drivers/mtd/nand/raw/omap_elm.c:216:37: sparse:     got restricted __be32 [usertype]
-   drivers/mtd/nand/raw/omap_elm.c:219:37: sparse:     expected unsigned int [assigned] [usertype] val
-   drivers/mtd/nand/raw/omap_elm.c:219:37: sparse:     got restricted __be32 [usertype]
-   drivers/mtd/nand/raw/omap_elm.c:222:37: sparse:     expected unsigned int [assigned] [usertype] val
-   drivers/mtd/nand/raw/omap_elm.c:222:37: sparse:     got restricted __be32 [usertype]
-   drivers/mtd/nand/raw/omap_elm.c:225:37: sparse:     expected unsigned int [assigned] [usertype] val
-   drivers/mtd/nand/raw/omap_elm.c:225:37: sparse:     got restricted __be32 [usertype]
-   drivers/mtd/nand/raw/omap_elm.c:228:39: sparse: sparse: restricted __be32 degrades to integer
-
-Fixes: bf22433575ef ("mtd: devices: elm: Add support for ELM error correction")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202306212211.WDXokuWh-lkp@intel.com/
-Signed-off-by: Roger Quadros <rogerq@kernel.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230624184021.7740-1-rogerq@kernel.org
+Fixes: 9ef34630a461 ("powerpc/mm: Fallback to RAM if the altmap is unusable")
+Signed-off-by: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230724181320.471386-1-aneesh.kumar@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/omap_elm.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ arch/powerpc/mm/init_64.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/omap_elm.c b/drivers/mtd/nand/raw/omap_elm.c
-index 6736777a41567..02d1740383120 100644
---- a/drivers/mtd/nand/raw/omap_elm.c
-+++ b/drivers/mtd/nand/raw/omap_elm.c
-@@ -184,17 +184,17 @@ static void elm_load_syndrome(struct elm_info *info,
- 			switch (info->bch_type) {
- 			case BCH8_ECC:
- 				/* syndrome fragment 0 = ecc[9-12B] */
--				val = cpu_to_be32(*(u32 *) &ecc[9]);
-+				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[9]);
- 				elm_write_reg(info, offset, val);
+diff --git a/arch/powerpc/mm/init_64.c b/arch/powerpc/mm/init_64.c
+index a5091c0347475..aff86679af961 100644
+--- a/arch/powerpc/mm/init_64.c
++++ b/arch/powerpc/mm/init_64.c
+@@ -266,8 +266,7 @@ void __ref vmemmap_free(unsigned long start, unsigned long end,
+ 	start = _ALIGN_DOWN(start, page_size);
+ 	if (altmap) {
+ 		alt_start = altmap->base_pfn;
+-		alt_end = altmap->base_pfn + altmap->reserve +
+-			  altmap->free + altmap->alloc + altmap->align;
++		alt_end = altmap->base_pfn + altmap->reserve + altmap->free;
+ 	}
  
- 				/* syndrome fragment 1 = ecc[5-8B] */
- 				offset += 4;
--				val = cpu_to_be32(*(u32 *) &ecc[5]);
-+				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[5]);
- 				elm_write_reg(info, offset, val);
- 
- 				/* syndrome fragment 2 = ecc[1-4B] */
- 				offset += 4;
--				val = cpu_to_be32(*(u32 *) &ecc[1]);
-+				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[1]);
- 				elm_write_reg(info, offset, val);
- 
- 				/* syndrome fragment 3 = ecc[0B] */
-@@ -204,35 +204,35 @@ static void elm_load_syndrome(struct elm_info *info,
- 				break;
- 			case BCH4_ECC:
- 				/* syndrome fragment 0 = ecc[20-52b] bits */
--				val = (cpu_to_be32(*(u32 *) &ecc[3]) >> 4) |
-+				val = ((__force u32)cpu_to_be32(*(u32 *)&ecc[3]) >> 4) |
- 					((ecc[2] & 0xf) << 28);
- 				elm_write_reg(info, offset, val);
- 
- 				/* syndrome fragment 1 = ecc[0-20b] bits */
- 				offset += 4;
--				val = cpu_to_be32(*(u32 *) &ecc[0]) >> 12;
-+				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[0]) >> 12;
- 				elm_write_reg(info, offset, val);
- 				break;
- 			case BCH16_ECC:
--				val = cpu_to_be32(*(u32 *) &ecc[22]);
-+				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[22]);
- 				elm_write_reg(info, offset, val);
- 				offset += 4;
--				val = cpu_to_be32(*(u32 *) &ecc[18]);
-+				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[18]);
- 				elm_write_reg(info, offset, val);
- 				offset += 4;
--				val = cpu_to_be32(*(u32 *) &ecc[14]);
-+				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[14]);
- 				elm_write_reg(info, offset, val);
- 				offset += 4;
--				val = cpu_to_be32(*(u32 *) &ecc[10]);
-+				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[10]);
- 				elm_write_reg(info, offset, val);
- 				offset += 4;
--				val = cpu_to_be32(*(u32 *) &ecc[6]);
-+				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[6]);
- 				elm_write_reg(info, offset, val);
- 				offset += 4;
--				val = cpu_to_be32(*(u32 *) &ecc[2]);
-+				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[2]);
- 				elm_write_reg(info, offset, val);
- 				offset += 4;
--				val = cpu_to_be32(*(u32 *) &ecc[0]) >> 16;
-+				val = (__force u32)cpu_to_be32(*(u32 *)&ecc[0]) >> 16;
- 				elm_write_reg(info, offset, val);
- 				break;
- 			default:
+ 	pr_debug("vmemmap_free %lx...%lx\n", start, end);
 -- 
 2.40.1
 
