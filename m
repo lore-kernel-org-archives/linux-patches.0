@@ -1,91 +1,85 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9301C9E1
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 22:24:38 +0000 (UTC)
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-686bc261111so215521b3a.3
-        for <patches@lists.linux.dev>; Wed, 09 Aug 2023 15:24:38 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3E31E507
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 23:20:01 +0000 (UTC)
+Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-6bcae8c4072so301563a34.1
+        for <patches@lists.linux.dev>; Wed, 09 Aug 2023 16:20:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691619877; x=1692224677;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BXEErU1EAFzIK7VWZ7YEZeKr+C1vSxWS6dUWwOP2Eyg=;
-        b=aMTypv5TB2eU2ZhufmmWMC07SKzbrsSxeMJTTaSby3D0o57stJun/ajDamc5l0JRR4
-         qwgx4UE+wT1o6LVWeT8Z9VH3AB/2sU12zc1XZ3y+jOqKAG87FGrSDccBjB0j5AGPgISx
-         H8XQBhOsblvMqVlkwKxVRpt1BkzhWj4lrgjT6Z90nFH9YTINzsyVaYiWG6uz9e11bLoP
-         RQsF5vta8BTz16NB4ugkumkYrEoi+dLuupGT1Bzk+WRg7nT8tsPcwgsqJPuMMGFQBLbC
-         NYwJrei8MZJfP3QKXyx28nXzypM/UrHmjePub/Ly75BME3vTAtz5YWYMJ+OjTdLhcUuh
-         n1CQ==
+        d=gmail.com; s=20221208; t=1691623201; x=1692228001;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/lRhXpkftV5WprBOjenlPu4RlVRZWyTjLExmBLK+zSg=;
+        b=mVTrbEAuawdJx3ElwaKv58oDRhAx1j/Zgd20JP5iECUNCndAK5bBHxQ/M7Gzcy/AIC
+         bEp9t4cWhfYj9qPehf0Q4kbHHfAjGPzFHt24SP2Goq4jQqCresNBZV1fDQh02mzPNuRA
+         Z4hYxarDm4ZraeNrXzUZK2Br9B7SDN7pA/gbIzxhfaYHrAZMawdtZNdye1UoE/MH5nG0
+         tbqT4ccCdMG9Z8Fb4OTYOonV2jtfeFvYPjyboY+sdn3mdF59FuqLG0af8O/bLx2pclzt
+         kEXFGSCtHQRPdvRwcCHRgjW7hm447xc99gn2drGw/Gb21XM1TWHqGjatO2T5/bmiYhSP
+         5+SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691619877; x=1692224677;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BXEErU1EAFzIK7VWZ7YEZeKr+C1vSxWS6dUWwOP2Eyg=;
-        b=WAg5HYy6U8ZOdONCKmcsXxuRfp7cgILwIf/hZCkG9FkthbvtMmT4qCvJrMxvfJCdMJ
-         XtdlJZFv56KeTd4ZW87wgqOvlNrerzbChqwfpDoIQWlC3nAEgNn5nlkrIpnldpkJDAF1
-         Bvn+BMYHn4LICNC+zBW+4RpzxO1o7flscsmOxX2s7Cb0XYRGYgaz5ijnM7hRvrvdCNnz
-         ZgXZlecGbOtgKhrPjR0T6EtnrCg+MyI8qAhKJIb+be/aCTwDli7FiUcJ6dw4H8bseyeI
-         lxDb4emuD6OiVMJNs/N4V4F0rcjoCyMSCxTn0ErkncQgrs1SOlIyaJVy+eZZslttSCI8
-         8vMQ==
-X-Gm-Message-State: AOJu0Yx7M9q9ZYsbuZtczZ1D0y5Eyp2bWmvAiaqaQZHZy9h50x8n5+d3
-	o1DqP6FeDLnfh5AycFg/r3o=
-X-Google-Smtp-Source: AGHT+IF/wuiKaV+WFKzntO3257Xvbw12LzunbFl1tnNBcC2t20ekI66/aAdzcjvyQq4w6z4iMhim5w==
-X-Received: by 2002:a05:6a21:4881:b0:140:48d4:8199 with SMTP id av1-20020a056a21488100b0014048d48199mr516661pzc.24.1691619877474;
-        Wed, 09 Aug 2023 15:24:37 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id m3-20020a637103000000b0056456fff676sm99365pgc.66.2023.08.09.15.23.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Aug 2023 15:24:36 -0700 (PDT)
-Message-ID: <9b640f96-deb7-c242-c924-8ce723ed9d2b@gmail.com>
-Date: Wed, 9 Aug 2023 15:23:54 -0700
+        d=1e100.net; s=20221208; t=1691623201; x=1692228001;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/lRhXpkftV5WprBOjenlPu4RlVRZWyTjLExmBLK+zSg=;
+        b=khlr3LGnZ4ZWFc5YEEBZNPtdTBGqv1f8LSsTNwthuBFGdmpGpYeNw8tzfLcPBRqZQb
+         BAQwIxNB2Z5lEV1X99zgKk1jvfcJcpbXeJVpiBgdzq4TbsxudjndMU+9/qowPAjGUrg1
+         DDTVB53zkBjndEp9L44uyeoMfSGl8jj407S8OSF+lvzPuA7WpL9MG50Uetxk7GmKNbZG
+         dNZLFW3KB4Aj3H5qZ3RjL9KnrZZjFOJVGt29v1nrZWe/FrWAvH21uUOZH5+ong86ItyX
+         xTB3giPve/Wj0RRku/bejk224EBLziAwkKL3hVDIYpMAYeLQXAJpxqQpq0lCryNl3piv
+         gNdg==
+X-Gm-Message-State: AOJu0Yz+JDu7QymZeePkvHhloKM5eje3BMsBuV6mJqfQyPokQIKKSmmH
+	L+TS9XqbfCfYdmf0FuOugrAvyEqdqZWWg+e7/Go=
+X-Google-Smtp-Source: AGHT+IFVwAsHAc1I/f4r+kqoInQuxwLB7X/eKeE4VB/eVwqAdhRIKHNUJUJZUxVvn1vl2e7UmaDNzTGKAMl7IyEv1YI=
+X-Received: by 2002:a05:6358:89f:b0:134:c771:bffa with SMTP id
+ m31-20020a056358089f00b00134c771bffamr651523rwj.6.1691623200560; Wed, 09 Aug
+ 2023 16:20:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 6.4 000/165] 6.4.10-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org
-References: <20230809103642.720851262@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20230718054426.1048583-1-ojeda@kernel.org>
+In-Reply-To: <20230718054426.1048583-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Thu, 10 Aug 2023 01:19:49 +0200
+Message-ID: <CANiq72k_tEaWO1MCb7mfoJPzAEFhCdSpiezvENSf0A1+mfHB8A@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: add Andreas Hindborg as Rust reviewer
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
+	Andreas Hindborg <a.hindborg@samsung.com>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 8/9/23 03:38, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.4.10 release.
-> There are 165 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.10-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Tue, Jul 18, 2023 at 7:44=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> Andreas has been involved with the Rust for Linux project for more than
+> a year now. He has been primarily working on the Rust NVMe driver [1],
+> presenting it in several places (such as LPC [2][3] and Kangrejos [4]).
+>
+> In addition, he recently submitted the Rust null block driver [5] and
+> has been reviewing patches in the mailing list for some months.
+>
+> Thus add him to the `RUST` entry as reviewer.
+>
+> Link: https://rust-for-linux.com/nvme-driver [1]
+> Link: https://lpc.events/event/16/contributions/1180/attachments/1017/196=
+1/deck.pdf [2]
+> Link: https://www.youtube.com/watch?v=3DBwywU1MqW38 [3]
+> Link: https://kangrejos.com/A%20Linux%20(PCI)%20NVMe%20Driver%20in%20Rust=
+.pdf [4]
+> Link: https://lore.kernel.org/rust-for-linux/20230503090708.2524310-1-nmi=
+@metaspace.dk/ [5]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Applied to `rust-next` -- thanks & welcome!
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
-
+Cheers,
+Miguel
