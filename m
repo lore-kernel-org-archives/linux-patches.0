@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D56F17756
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:20:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5584C433C7;
-	Wed,  9 Aug 2023 11:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3096317756
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:20:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1FDEC433C7;
+	Wed,  9 Aug 2023 11:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580044;
-	bh=SRu7SYUS9UZrnTbsJYulHWPIpGYna0or8x9wNP6jfUI=;
+	s=korg; t=1691580047;
+	bh=o55XrKVm5ppVeLVzq/eueCjL+sp/Va0Dcwr+MSFVrzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=14+01dBcMnKX27pwKKC7dboXrHvYqMKs8EqxS0KHWskjoV60DjaxYsudu66OS5jvZ
-	 b7KMwrVekLNC3IUf0ZBiBKXwjUmggoHBIBXoQCE+i9t3d41TDVemV5poczYLPTJXcV
-	 NeyBtk41cuhC/QSN+eTLavxuYoC/rPmHxRziyhiU=
+	b=H1y7De5g8uQdFTAOYxXWW5ClQzmsPfxzXiu4TTREkvThaCdA7x8NrvwYgnqp6K+RK
+	 03WxHJcHBVEEZem0SfhCfTIfcSWhg6+G7ImS7LCD3GD0xlIiJfi/JJn2Om7G+GPOl+
+	 SQnhC2eb0OlZ1m2kGiGLNsF1KPR5Xk4f8di8zUec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ying Hsu <yinghsu@chromium.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 4.19 200/323] igb: Fix igb_down hung on surprise removal
-Date: Wed,  9 Aug 2023 12:40:38 +0200
-Message-ID: <20230809103707.302428862@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 209/323] netfilter: nf_tables: fix spurious set element insertion failure
+Date: Wed,  9 Aug 2023 12:40:47 +0200
+Message-ID: <20230809103707.700401706@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -38,87 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ying Hsu <yinghsu@chromium.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 004d25060c78fc31f66da0fa439c544dda1ac9d5 ]
+[ Upstream commit ddbd8be68941985f166f5107109a90ce13147c44 ]
 
-In a setup where a Thunderbolt hub connects to Ethernet and a display
-through USB Type-C, users may experience a hung task timeout when they
-remove the cable between the PC and the Thunderbolt hub.
-This is because the igb_down function is called multiple times when
-the Thunderbolt hub is unplugged. For example, the igb_io_error_detected
-triggers the first call, and the igb_remove triggers the second call.
-The second call to igb_down will block at napi_synchronize.
-Here's the call trace:
-    __schedule+0x3b0/0xddb
-    ? __mod_timer+0x164/0x5d3
-    schedule+0x44/0xa8
-    schedule_timeout+0xb2/0x2a4
-    ? run_local_timers+0x4e/0x4e
-    msleep+0x31/0x38
-    igb_down+0x12c/0x22a [igb 6615058754948bfde0bf01429257eb59f13030d4]
-    __igb_close+0x6f/0x9c [igb 6615058754948bfde0bf01429257eb59f13030d4]
-    igb_close+0x23/0x2b [igb 6615058754948bfde0bf01429257eb59f13030d4]
-    __dev_close_many+0x95/0xec
-    dev_close_many+0x6e/0x103
-    unregister_netdevice_many+0x105/0x5b1
-    unregister_netdevice_queue+0xc2/0x10d
-    unregister_netdev+0x1c/0x23
-    igb_remove+0xa7/0x11c [igb 6615058754948bfde0bf01429257eb59f13030d4]
-    pci_device_remove+0x3f/0x9c
-    device_release_driver_internal+0xfe/0x1b4
-    pci_stop_bus_device+0x5b/0x7f
-    pci_stop_bus_device+0x30/0x7f
-    pci_stop_bus_device+0x30/0x7f
-    pci_stop_and_remove_bus_device+0x12/0x19
-    pciehp_unconfigure_device+0x76/0xe9
-    pciehp_disable_slot+0x6e/0x131
-    pciehp_handle_presence_or_link_change+0x7a/0x3f7
-    pciehp_ist+0xbe/0x194
-    irq_thread_fn+0x22/0x4d
-    ? irq_thread+0x1fd/0x1fd
-    irq_thread+0x17b/0x1fd
-    ? irq_forced_thread_fn+0x5f/0x5f
-    kthread+0x142/0x153
-    ? __irq_get_irqchip_state+0x46/0x46
-    ? kthread_associate_blkcg+0x71/0x71
-    ret_from_fork+0x1f/0x30
+On some platforms there is a padding hole in the nft_verdict
+structure, between the verdict code and the chain pointer.
 
-In this case, igb_io_error_detected detaches the network interface
-and requests a PCIE slot reset, however, the PCIE reset callback is
-not being invoked and thus the Ethernet connection breaks down.
-As the PCIE error in this case is a non-fatal one, requesting a
-slot reset can be avoided.
-This patch fixes the task hung issue and preserves Ethernet
-connection by ignoring non-fatal PCIE errors.
+On element insertion, if the new element clashes with an existing one and
+NLM_F_EXCL flag isn't set, we want to ignore the -EEXIST error as long as
+the data associated with duplicated element is the same as the existing
+one.  The data equality check uses memcmp.
 
-Signed-off-by: Ying Hsu <yinghsu@chromium.org>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230620174732.4145155-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+For normal data (NFT_DATA_VALUE) this works fine, but for NFT_DATA_VERDICT
+padding area leads to spurious failure even if the verdict data is the
+same.
+
+This then makes the insertion fail with 'already exists' error, even
+though the new "key : data" matches an existing entry and userspace
+told the kernel that it doesn't want to receive an error indication.
+
+Fixes: c016c7e45ddf ("netfilter: nf_tables: honor NLM_F_EXCL flag in set element insertion")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/netfilter/nf_tables_api.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
-index 6f9d563deb6ba..be51179089852 100644
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -9059,6 +9059,11 @@ static pci_ers_result_t igb_io_error_detected(struct pci_dev *pdev,
- 	struct net_device *netdev = pci_get_drvdata(pdev);
- 	struct igb_adapter *adapter = netdev_priv(netdev);
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 16405e71a6780..f25b6337f150a 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -7248,6 +7248,9 @@ static int nft_verdict_init(const struct nft_ctx *ctx, struct nft_data *data,
  
-+	if (state == pci_channel_io_normal) {
-+		dev_warn(&pdev->dev, "Non-correctable non-fatal error reported.\n");
-+		return PCI_ERS_RESULT_CAN_RECOVER;
-+	}
+ 	if (!tb[NFTA_VERDICT_CODE])
+ 		return -EINVAL;
 +
- 	netif_device_detach(netdev);
++	/* zero padding hole for memcmp */
++	memset(data, 0, sizeof(*data));
+ 	data->verdict.code = ntohl(nla_get_be32(tb[NFTA_VERDICT_CODE]));
  
- 	if (state == pci_channel_io_perm_failure)
+ 	switch (data->verdict.code) {
 -- 
 2.39.2
 
