@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA52D1774D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:11:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDDAC433C8;
-	Wed,  9 Aug 2023 11:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255DC1774C
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:11:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB24C433C8;
+	Wed,  9 Aug 2023 11:11:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579509;
-	bh=hVlhQO2gGJaYqNJMuzMXoxWt1IZMnjQuMTasPh0nN/4=;
+	s=korg; t=1691579512;
+	bh=+x7aS1R7vQ6ShWVgwfES8oIz6kAW0O++jLfC0KeH2XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bb19Z8LhZcJnKnRkfSYSTI8qjkRdULnvVJcJKJ7KxIEDRe2LWZULZzq0/afwr/mYG
-	 t6H2akbtwSQ2cBaVknbIlI9GXczemspWPNC/G4P5268y3uZzLz5qZzGG//CbP/zQcq
-	 SvkKZSFLzge/z+vBw+ZvRs7lgjSYB+ImGp49Pixw=
+	b=P/tgmWYtQhVLm7eLX4zMozZbjzMWaqSDMFOeLRxfvOX+cl+bGwYGL932aHkeRJ3DU
+	 wG63d0HlOg6zkp/42WEPvuRwBYIbIMbpbuqYJlolh8uF7vzh4M18fqXFQziv0NTiuS
+	 4W02/UjZB+QvGzSSvZjCugM/VvqIPShKbJ0366ZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Mingxi <m202271825@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Michal Simek <michal.simek@amd.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 017/323] clocksource/drivers/cadence-ttc: Fix memory leak in ttc_timer_probe
-Date: Wed,  9 Aug 2023 12:37:35 +0200
-Message-ID: <20230809103658.893734915@linuxfoundation.org>
+Subject: [PATCH 4.19 018/323] PM: domains: fix integer overflow issues in genpd_parse_state()
+Date: Wed,  9 Aug 2023 12:37:36 +0200
+Message-ID: <20230809103658.940653801@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -37,79 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Feng Mingxi <m202271825@hust.edu.cn>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 8b5bf64c89c7100c921bd807ba39b2eb003061ab ]
+[ Upstream commit e5d1c8722083f0332dcd3c85fa1273d85fb6bed8 ]
 
-Smatch reports:
-drivers/clocksource/timer-cadence-ttc.c:529 ttc_timer_probe()
-warn: 'timer_baseaddr' from of_iomap() not released on lines: 498,508,516.
+Currently, while calculating residency and latency values, right
+operands may overflow if resulting values are big enough.
 
-timer_baseaddr may have the problem of not being released after use,
-I replaced it with the devm_of_iomap() function and added the clk_put()
-function to cleanup the "clk_ce" and "clk_cs".
+To prevent this, albeit unlikely case, play it safe and convert
+right operands to left ones' type s64.
 
-Fixes: e932900a3279 ("arm: zynq: Use standard timer binding")
-Fixes: 70504f311d4b ("clocksource/drivers/cadence_ttc: Convert init function to return error")
-Signed-off-by: Feng Mingxi <m202271825@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20230425065611.702917-1-m202271825@hust.edu.cn
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: 30f604283e05 ("PM / Domains: Allow domain power states to be read from DT")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-cadence-ttc.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/base/power/domain.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clocksource/timer-cadence-ttc.c b/drivers/clocksource/timer-cadence-ttc.c
-index b1df0ded8f521..16b9bfb257564 100644
---- a/drivers/clocksource/timer-cadence-ttc.c
-+++ b/drivers/clocksource/timer-cadence-ttc.c
-@@ -494,10 +494,10 @@ static int __init ttc_timer_probe(struct platform_device *pdev)
- 	 * and use it. Note that the event timer uses the interrupt and it's the
- 	 * 2nd TTC hence the irq_of_parse_and_map(,1)
- 	 */
--	timer_baseaddr = of_iomap(timer, 0);
--	if (!timer_baseaddr) {
-+	timer_baseaddr = devm_of_iomap(&pdev->dev, timer, 0, NULL);
-+	if (IS_ERR(timer_baseaddr)) {
- 		pr_err("ERROR: invalid timer base address\n");
--		return -ENXIO;
-+		return PTR_ERR(timer_baseaddr);
- 	}
+diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+index e865aa4b25047..b32d3cf4f670d 100644
+--- a/drivers/base/power/domain.c
++++ b/drivers/base/power/domain.c
+@@ -2433,10 +2433,10 @@ static int genpd_parse_state(struct genpd_power_state *genpd_state,
  
- 	irq = irq_of_parse_and_map(timer, 1);
-@@ -521,20 +521,27 @@ static int __init ttc_timer_probe(struct platform_device *pdev)
- 	clk_ce = of_clk_get(timer, clksel);
- 	if (IS_ERR(clk_ce)) {
- 		pr_err("ERROR: timer input clock not found\n");
--		return PTR_ERR(clk_ce);
-+		ret = PTR_ERR(clk_ce);
-+		goto put_clk_cs;
- 	}
+ 	err = of_property_read_u32(state_node, "min-residency-us", &residency);
+ 	if (!err)
+-		genpd_state->residency_ns = 1000 * residency;
++		genpd_state->residency_ns = 1000LL * residency;
  
- 	ret = ttc_setup_clocksource(clk_cs, timer_baseaddr, timer_width);
- 	if (ret)
--		return ret;
-+		goto put_clk_ce;
- 
- 	ret = ttc_setup_clockevent(clk_ce, timer_baseaddr + 4, irq);
- 	if (ret)
--		return ret;
-+		goto put_clk_ce;
- 
- 	pr_info("%s #0 at %p, irq=%d\n", timer->name, timer_baseaddr, irq);
+-	genpd_state->power_on_latency_ns = 1000 * exit_latency;
+-	genpd_state->power_off_latency_ns = 1000 * entry_latency;
++	genpd_state->power_on_latency_ns = 1000LL * exit_latency;
++	genpd_state->power_off_latency_ns = 1000LL * entry_latency;
+ 	genpd_state->fwnode = &state_node->fwnode;
  
  	return 0;
-+
-+put_clk_ce:
-+	clk_put(clk_ce);
-+put_clk_cs:
-+	clk_put(clk_cs);
-+	return ret;
- }
- 
- static const struct of_device_id ttc_timer_of_match[] = {
 -- 
 2.39.2
 
