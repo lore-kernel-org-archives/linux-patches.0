@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0143917AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74286C433C8;
-	Wed,  9 Aug 2023 11:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CD117AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D46C433C8;
+	Wed,  9 Aug 2023 11:25:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580328;
-	bh=AbcIkz36QYCDzvE9UQA+u4iGeneHue/oyfp22pzInYk=;
+	s=korg; t=1691580331;
+	bh=1M/G1L2QxV9J2UZ7of3wner+Rz5BZwvJicOpvLFWWMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZszdUeU9jfVB/EZrJD4DqkGZzY/bp9doUeredRmRCd3yzBb1NSiz04kg4ARNVzPd2
-	 nzdmhBI0rlCzGS8RxTskdGGHD1Ly7Ab02/y1+AUv9fS6p3V03PBZmJ5f4m4Q3N9hhj
-	 M+RJOGd41LjCSVO93wCUaV1KqmWPa/GxEZ1QQZkI=
+	b=krQOw+E7BFR/L/VRZzDlsMTZ5xkBfaNlEEd/GDzDs0pgidxlbGZklH2hMBk3Egs+F
+	 Acqa83xQW5IFno4kxQflzWkroIWbqT94w0D1bL9z5eWqTqXPKeaLjWnyvX9BW8k6sb
+	 Gh7LDfR6VMWUfi2R6hY6Rf4AlxSHbgKSCTKkGlAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Oliver Neukum <oneukum@suse.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	syzbot+63ee658b9a100ffadbe2@syzkaller.appspotmail.com
-Subject: [PATCH 4.19 310/323] net: usbnet: Fix WARNING in usbnet_start_xmit/usb_submit_urb
-Date: Wed,  9 Aug 2023 12:42:28 +0200
-Message-ID: <20230809103712.256593610@linuxfoundation.org>
+	syzbot+af5e10f73dbff48f70af@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 4.19 311/323] ext2: Drop fragment support
+Date: Wed,  9 Aug 2023 12:42:29 +0200
+Message-ID: <20230809103712.305308145@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,77 +34,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Jan Kara <jack@suse.cz>
 
-commit 5e1627cb43ddf1b24b92eb26f8d958a3f5676ccb upstream.
+commit 404615d7f1dcd4cca200e9a7a9df3a1dcae1dd62 upstream.
 
-The syzbot fuzzer identified a problem in the usbnet driver:
+Ext2 has fields in superblock reserved for subblock allocation support.
+However that never landed. Drop the many years dead code.
 
-usb 1-1: BOGUS urb xfer, pipe 3 != type 1
-WARNING: CPU: 0 PID: 754 at drivers/usb/core/urb.c:504 usb_submit_urb+0xed6/0x1880 drivers/usb/core/urb.c:504
-Modules linked in:
-CPU: 0 PID: 754 Comm: kworker/0:2 Not tainted 6.4.0-rc7-syzkaller-00014-g692b7dc87ca6 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/27/2023
-Workqueue: mld mld_ifc_work
-RIP: 0010:usb_submit_urb+0xed6/0x1880 drivers/usb/core/urb.c:504
-Code: 7c 24 18 e8 2c b4 5b fb 48 8b 7c 24 18 e8 42 07 f0 fe 41 89 d8 44 89 e1 4c 89 ea 48 89 c6 48 c7 c7 a0 c9 fc 8a e8 5a 6f 23 fb <0f> 0b e9 58 f8 ff ff e8 fe b3 5b fb 48 81 c5 c0 05 00 00 e9 84 f7
-RSP: 0018:ffffc9000463f568 EFLAGS: 00010086
-RAX: 0000000000000000 RBX: 0000000000000001 RCX: 0000000000000000
-RDX: ffff88801eb28000 RSI: ffffffff814c03b7 RDI: 0000000000000001
-RBP: ffff8881443b7190 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000001 R12: 0000000000000003
-R13: ffff88802a77cb18 R14: 0000000000000003 R15: ffff888018262500
-FS:  0000000000000000(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000556a99c15a18 CR3: 0000000028c71000 CR4: 0000000000350ef0
-Call Trace:
- <TASK>
- usbnet_start_xmit+0xfe5/0x2190 drivers/net/usb/usbnet.c:1453
- __netdev_start_xmit include/linux/netdevice.h:4918 [inline]
- netdev_start_xmit include/linux/netdevice.h:4932 [inline]
- xmit_one net/core/dev.c:3578 [inline]
- dev_hard_start_xmit+0x187/0x700 net/core/dev.c:3594
-...
-
-This bug is caused by the fact that usbnet trusts the bulk endpoint
-addresses its probe routine receives in the driver_info structure, and
-it does not check to see that these endpoints actually exist and have
-the expected type and directions.
-
-The fix is simply to add such a check.
-
-Reported-and-tested-by: syzbot+63ee658b9a100ffadbe2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-usb/000000000000a56e9105d0cec021@google.com/
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-CC: Oliver Neukum <oneukum@suse.com>
-Link: https://lore.kernel.org/r/ea152b6d-44df-4f8a-95c6-4db51143dcc1@rowland.harvard.edu
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+af5e10f73dbff48f70af@syzkaller.appspotmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/usbnet.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ext2/ext2.h  |   12 ------------
+ fs/ext2/super.c |   23 ++++-------------------
+ 2 files changed, 4 insertions(+), 31 deletions(-)
 
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -1767,6 +1767,10 @@ usbnet_probe (struct usb_interface *udev
- 	} else if (!info->in || !info->out)
- 		status = usbnet_get_endpoints (dev, udev);
- 	else {
-+		u8 ep_addrs[3] = {
-+			info->in + USB_DIR_IN, info->out + USB_DIR_OUT, 0
-+		};
-+
- 		dev->in = usb_rcvbulkpipe (xdev, info->in);
- 		dev->out = usb_sndbulkpipe (xdev, info->out);
- 		if (!(info->flags & FLAG_NO_SETINT))
-@@ -1776,6 +1780,8 @@ usbnet_probe (struct usb_interface *udev
- 		else
- 			status = 0;
+--- a/fs/ext2/ext2.h
++++ b/fs/ext2/ext2.h
+@@ -68,10 +68,7 @@ struct mb_cache;
+  * second extended-fs super-block data in memory
+  */
+ struct ext2_sb_info {
+-	unsigned long s_frag_size;	/* Size of a fragment in bytes */
+-	unsigned long s_frags_per_block;/* Number of fragments per block */
+ 	unsigned long s_inodes_per_block;/* Number of inodes per block */
+-	unsigned long s_frags_per_group;/* Number of fragments in a group */
+ 	unsigned long s_blocks_per_group;/* Number of blocks in a group */
+ 	unsigned long s_inodes_per_group;/* Number of inodes in a group */
+ 	unsigned long s_itb_per_group;	/* Number of inode table blocks per group */
+@@ -186,15 +183,6 @@ static inline struct ext2_sb_info *EXT2_
+ #define EXT2_FIRST_INO(s)		(EXT2_SB(s)->s_first_ino)
  
-+		if (status == 0 && !usb_check_bulk_endpoints(udev, ep_addrs))
-+			status = -EINVAL;
+ /*
+- * Macro-instructions used to manage fragments
+- */
+-#define EXT2_MIN_FRAG_SIZE		1024
+-#define	EXT2_MAX_FRAG_SIZE		4096
+-#define EXT2_MIN_FRAG_LOG_SIZE		  10
+-#define EXT2_FRAG_SIZE(s)		(EXT2_SB(s)->s_frag_size)
+-#define EXT2_FRAGS_PER_BLOCK(s)		(EXT2_SB(s)->s_frags_per_block)
+-
+-/*
+  * Structure of a blocks group descriptor
+  */
+ struct ext2_group_desc
+--- a/fs/ext2/super.c
++++ b/fs/ext2/super.c
+@@ -691,10 +691,9 @@ static int ext2_setup_super (struct supe
+ 		es->s_max_mnt_count = cpu_to_le16(EXT2_DFL_MAX_MNT_COUNT);
+ 	le16_add_cpu(&es->s_mnt_count, 1);
+ 	if (test_opt (sb, DEBUG))
+-		ext2_msg(sb, KERN_INFO, "%s, %s, bs=%lu, fs=%lu, gc=%lu, "
++		ext2_msg(sb, KERN_INFO, "%s, %s, bs=%lu, gc=%lu, "
+ 			"bpg=%lu, ipg=%lu, mo=%04lx]",
+ 			EXT2FS_VERSION, EXT2FS_DATE, sb->s_blocksize,
+-			sbi->s_frag_size,
+ 			sbi->s_groups_count,
+ 			EXT2_BLOCKS_PER_GROUP(sb),
+ 			EXT2_INODES_PER_GROUP(sb),
+@@ -1040,14 +1039,7 @@ static int ext2_fill_super(struct super_
+ 		}
  	}
- 	if (status >= 0 && dev->status)
- 		status = init_status (dev, udev);
+ 
+-	sbi->s_frag_size = EXT2_MIN_FRAG_SIZE <<
+-				   le32_to_cpu(es->s_log_frag_size);
+-	if (sbi->s_frag_size == 0)
+-		goto cantfind_ext2;
+-	sbi->s_frags_per_block = sb->s_blocksize / sbi->s_frag_size;
+-
+ 	sbi->s_blocks_per_group = le32_to_cpu(es->s_blocks_per_group);
+-	sbi->s_frags_per_group = le32_to_cpu(es->s_frags_per_group);
+ 	sbi->s_inodes_per_group = le32_to_cpu(es->s_inodes_per_group);
+ 
+ 	if (EXT2_INODE_SIZE(sb) == 0)
+@@ -1075,11 +1067,10 @@ static int ext2_fill_super(struct super_
+ 		goto failed_mount;
+ 	}
+ 
+-	if (sb->s_blocksize != sbi->s_frag_size) {
++	if (es->s_log_frag_size != es->s_log_block_size) {
+ 		ext2_msg(sb, KERN_ERR,
+-			"error: fragsize %lu != blocksize %lu"
+-			"(not supported yet)",
+-			sbi->s_frag_size, sb->s_blocksize);
++			"error: fragsize log %u != blocksize log %u",
++			le32_to_cpu(es->s_log_frag_size), sb->s_blocksize_bits);
+ 		goto failed_mount;
+ 	}
+ 
+@@ -1089,12 +1080,6 @@ static int ext2_fill_super(struct super_
+ 			sbi->s_blocks_per_group);
+ 		goto failed_mount;
+ 	}
+-	if (sbi->s_frags_per_group > sb->s_blocksize * 8) {
+-		ext2_msg(sb, KERN_ERR,
+-			"error: #fragments per group too big: %lu",
+-			sbi->s_frags_per_group);
+-		goto failed_mount;
+-	}
+ 	if (sbi->s_inodes_per_group < sbi->s_inodes_per_block ||
+ 	    sbi->s_inodes_per_group > sb->s_blocksize * 8) {
+ 		ext2_msg(sb, KERN_ERR,
 
 
