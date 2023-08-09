@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370A617AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:36:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD23C433C8;
-	Wed,  9 Aug 2023 11:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2EE117AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:36:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7855BC433C7;
+	Wed,  9 Aug 2023 11:36:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581005;
-	bh=y2X+6Ws0RSAnwqIEIVnYHSMjoQ/u0fwlQxWXNh1VjCc=;
+	s=korg; t=1691581007;
+	bh=9ONyQ4ihBn7mfC8UgUwyjEKAdvj/wr1Iu5ByNyvxK8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=haGGjFpV9E+lxKCDHBC+a9Tscz31MsE1Nr9+x2B0g6rxnKOnN4pjVaOchw0N3ugVB
-	 670XzFmVJkfFY6RAU1f/wKeQTsj8/scuVpRWHKUKPf6PvSEiG8gXA3yYSKx5wyNDuI
-	 tILU3+JTwj6C4Rlg8ziYW+nYNFKLR0To5iiEITc4=
+	b=zAoJLf/dhTXOOR/1ZzXmXyMOWO/5ofckIUYNkpw7NywRtAxmIOTyxNBYDsYB5RMhw
+	 E5sxQpU5k3T8coeG5Ku+9X44y/Z9LDNFgj7+ACpDEGvJIk0kV8uyop2W7tGBYs5HyY
+	 VuBcNY6R2kyr1BbjHODph0MhGQg9Ui0ffbZZ/hq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohsen Tahmasebi <moh53n@moh53n.ir>,
-	Mostafa Ghofrani <mostafaghrr@gmail.com>,
+	Kaufmann Automotive GmbH <info@kaufmann-automotive.ch>,
+	Oliver Neukum <oneukum@suse.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 071/201] USB: serial: option: add Quectel EC200A module support
-Date: Wed,  9 Aug 2023 12:41:13 +0200
-Message-ID: <20230809103646.197162092@linuxfoundation.org>
+Subject: [PATCH 5.10 072/201] USB: serial: simple: add Kaufmann RKS+CAN VCP
+Date: Wed,  9 Aug 2023 12:41:14 +0200
+Message-ID: <20230809103646.227110454@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -35,64 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mohsen Tahmasebi <moh53n@moh53n.ir>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 857ea9005806e2a458016880278f98715873e977 upstream.
+commit dd92c8a1f99bcd166204ffc219ea5a23dd65d64f upstream.
 
-Add Quectel EC200A "DIAG, AT, MODEM":
+Add the device and product ID for this CAN bus interface / license
+dongle. The device is usable either directly from user space or can be
+attached to a kernel CAN interface with slcan_attach.
 
-0x6005: ECM / RNDIS + DIAG + AT + MODEM
-
-T:  Bus=01 Lev=01 Prnt=02 Port=05 Cnt=01 Dev#=  8 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=6005 Rev=03.18
-S:  Manufacturer=Android
-S:  Product=Android
-S:  SerialNumber=0000
-C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=06 Prot=00 Driver=cdc_ether
-E:  Ad=87(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-E:  Ad=0c(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=89(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=88(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-
-Signed-off-by: Mohsen Tahmasebi <moh53n@moh53n.ir>
-Tested-by: Mostafa Ghofrani <mostafaghrr@gmail.com>
+Reported-by: Kaufmann Automotive GmbH <info@kaufmann-automotive.ch>
+Tested-by: Kaufmann Automotive GmbH <info@kaufmann-automotive.ch>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+[ johan: amend commit message and move entries in sort order ]
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/serial/usb-serial-simple.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -269,6 +269,7 @@ static void option_instat_callback(struc
- #define QUECTEL_PRODUCT_RM520N			0x0801
- #define QUECTEL_PRODUCT_EC200U			0x0901
- #define QUECTEL_PRODUCT_EC200S_CN		0x6002
-+#define QUECTEL_PRODUCT_EC200A			0x6005
- #define QUECTEL_PRODUCT_EM061K_LWW		0x6008
- #define QUECTEL_PRODUCT_EM061K_LCN		0x6009
- #define QUECTEL_PRODUCT_EC200T			0x6026
-@@ -1229,6 +1230,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM520N, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, 0x0900, 0xff, 0, 0), /* RM500U-CN */
- 	  .driver_info = ZLP },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200A, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200U, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200S_CN, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200T, 0xff, 0, 0) },
+--- a/drivers/usb/serial/usb-serial-simple.c
++++ b/drivers/usb/serial/usb-serial-simple.c
+@@ -63,6 +63,11 @@ DEVICE(flashloader, FLASHLOADER_IDS);
+ 					0x01) }
+ DEVICE(google, GOOGLE_IDS);
+ 
++/* KAUFMANN RKS+CAN VCP */
++#define KAUFMANN_IDS()			\
++	{ USB_DEVICE(0x16d0, 0x0870) }
++DEVICE(kaufmann, KAUFMANN_IDS);
++
+ /* Libtransistor USB console */
+ #define LIBTRANSISTOR_IDS()			\
+ 	{ USB_DEVICE(0x1209, 0x8b00) }
+@@ -124,6 +129,7 @@ static struct usb_serial_driver * const
+ 	&funsoft_device,
+ 	&flashloader_device,
+ 	&google_device,
++	&kaufmann_device,
+ 	&libtransistor_device,
+ 	&vivopay_device,
+ 	&moto_modem_device,
+@@ -142,6 +148,7 @@ static const struct usb_device_id id_tab
+ 	FUNSOFT_IDS(),
+ 	FLASHLOADER_IDS(),
+ 	GOOGLE_IDS(),
++	KAUFMANN_IDS(),
+ 	LIBTRANSISTOR_IDS(),
+ 	VIVOPAY_IDS(),
+ 	MOTO_IDS(),
 
 
