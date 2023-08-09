@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECB215AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:47:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C448AC433C8;
-	Wed,  9 Aug 2023 10:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E6015AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:47:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9272AC433C8;
+	Wed,  9 Aug 2023 10:47:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578049;
-	bh=k5GvgFSBRFg9FOfphDpohELqQvflHGlywHSB04rntLg=;
+	s=korg; t=1691578052;
+	bh=hIB8bzkdEhVkg3ebuWgqUtM20iL7IY4hyTdDMCXLDlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UZcrMS1bkbt+kC5NA7fIeRgHhuexQS2J6Z5Cs3giiOyfZStpprqssTAadnL1aYVDs
-	 b7I1gvDwppjL8kQUoy/gkllob+60FH+KUVhzBSVWGNxNePh8p+mHX6ZW2xyaLGCg9r
-	 w7sxg340GLt1jrRHUcDGQv0M5qAL6gw8oHP578oc=
+	b=InPYIMj39lkHljsUrPMKK7D+R4kmMzPEEQC5yjbMwkLUcMqTd1W3ncbfVxaXnR5J9
+	 FhDliPbVTyKFS6idPb7Kl2q3qb4BgOaN32D2g0xQzZbSwPGUFXHS1VwGKyXIyiqXcA
+	 zfXMM9q+g6I/Zbm8BKpquzYw0oN00CFT7fTcqJh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Jonas Gorski <jonas.gorski@bisdn.de>,
+	Elad Nachman <enachman@marvell.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Taras Chornyi <taras.chornyi@plvision.eu>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 087/165] net/mlx5e: Set proper IPsec source port in L4 selector
-Date: Wed,  9 Aug 2023 12:40:18 +0200
-Message-ID: <20230809103645.655725901@linuxfoundation.org>
+Subject: [PATCH 6.4 088/165] prestera: fix fallback to previous version on same major version
+Date: Wed,  9 Aug 2023 12:40:19 +0200
+Message-ID: <20230809103645.685220118@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -35,37 +38,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Jonas Gorski <jonas.gorski@bisdn.de>
 
-[ Upstream commit 62da08331f1a2bef9d0148613133ce8e640a2f8d ]
+[ Upstream commit b755c25fbcd568821a3bb0e0d5c2daa5fcb00bba ]
 
-Fix typo in setup_fte_upper_proto_match() where destination UDP port
-was used instead of source port.
+When both supported and previous version have the same major version,
+and the firmwares are missing, the driver ends in a loop requesting the
+same (previous) version over and over again:
 
-Fixes: a7385187a386 ("net/mlx5e: IPsec, support upper protocol selector field offload")
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/ffc024a4d192113103f392b0502688366ca88c1f.1690803944.git.leonro@nvidia.com
+    [   76.327413] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.1.img firmware, fall-back to previous 4.0 version
+    [   76.339802] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
+    [   76.352162] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
+    [   76.364502] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
+    [   76.376848] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
+    [   76.389183] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
+    [   76.401522] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
+    [   76.413860] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
+    [   76.426199] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
+    ...
+
+Fix this by inverting the check to that we aren't yet at the previous
+version, and also check the minor version.
+
+This also catches the case where both versions are the same, as it was
+after commit bb5dbf2cc64d ("net: marvell: prestera: add firmware v4.0
+support").
+
+With this fix applied:
+
+    [   88.499622] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.1.img firmware, fall-back to previous 4.0 version
+    [   88.511995] Prestera DX 0000:01:00.0: failed to request previous firmware: mrvl/prestera/mvsw_prestera_fw-v4.0.img
+    [   88.522403] Prestera DX: probe of 0000:01:00.0 failed with error -2
+
+Fixes: 47f26018a414 ("net: marvell: prestera: try to load previous fw version")
+Signed-off-by: Jonas Gorski <jonas.gorski@bisdn.de>
+Acked-by: Elad Nachman <enachman@marvell.com>
+Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Acked-by: Taras Chornyi <taras.chornyi@plvision.eu>
+Link: https://lore.kernel.org/r/20230802092357.163944-1-jonas.gorski@bisdn.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/prestera/prestera_pci.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
-index dbe87bf89c0dd..832d36be4a17b 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
-@@ -808,9 +808,9 @@ static void setup_fte_upper_proto_match(struct mlx5_flow_spec *spec, struct upsp
- 	}
+diff --git a/drivers/net/ethernet/marvell/prestera/prestera_pci.c b/drivers/net/ethernet/marvell/prestera/prestera_pci.c
+index f328d957b2db7..35857dc19542f 100644
+--- a/drivers/net/ethernet/marvell/prestera/prestera_pci.c
++++ b/drivers/net/ethernet/marvell/prestera/prestera_pci.c
+@@ -727,7 +727,8 @@ static int prestera_fw_get(struct prestera_fw *fw)
  
- 	if (upspec->sport) {
--		MLX5_SET(fte_match_set_lyr_2_4, spec->match_criteria, udp_dport,
-+		MLX5_SET(fte_match_set_lyr_2_4, spec->match_criteria, udp_sport,
- 			 upspec->sport_mask);
--		MLX5_SET(fte_match_set_lyr_2_4, spec->match_value, udp_dport, upspec->sport);
-+		MLX5_SET(fte_match_set_lyr_2_4, spec->match_value, udp_sport, upspec->sport);
- 	}
- }
+ 	err = request_firmware_direct(&fw->bin, fw_path, fw->dev.dev);
+ 	if (err) {
+-		if (ver_maj == PRESTERA_SUPP_FW_MAJ_VER) {
++		if (ver_maj != PRESTERA_PREV_FW_MAJ_VER ||
++		    ver_min != PRESTERA_PREV_FW_MIN_VER) {
+ 			ver_maj = PRESTERA_PREV_FW_MAJ_VER;
+ 			ver_min = PRESTERA_PREV_FW_MIN_VER;
  
 -- 
 2.40.1
