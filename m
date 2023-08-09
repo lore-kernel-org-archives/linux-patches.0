@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB03174EE
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:51:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2173C433C8;
-	Wed,  9 Aug 2023 10:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4498174EE
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:51:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF40C433C8;
+	Wed,  9 Aug 2023 10:51:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578313;
-	bh=70iMD/RLSO8mNOULLpYpKy79TorPQ1CjsuicQaxDrOc=;
+	s=korg; t=1691578315;
+	bh=i+Wyuf2ihGUIbQ+jf9qHIatb0ECYuRajE/rWuuGKUxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F0TAUYStBT+sHkl/Z3sslfRcSeS07GthNmVZeAjPM7wMXLM+21PhFCBIjyMexpv7v
-	 pSaIq4TDsAsTnweXCgSziBIoswO1Y3Q2g8P4RTDjsNUIQInhktRVHF/DzqNpemCjHD
-	 Z25lGn1asj6HBt4brhBrePPkRtdJsD65KTjWP+Q8=
+	b=cc4lvjDOtE7FuaQWQqhn4BIVSCpiWXk3VjhtFKe6jNm3g0KWYath6LAlvtkGdLSIb
+	 Z9RtBaMfFHNs0t99K6CjONzTMfP/bptmL4owXH+SuSPm0JJp/Ea5EqK/XP8Ns3RlgX
+	 aP+g2W1trnHQDMKNPHYDa7V/PbEu2yA6peTTIERo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Punit Agrawal <punit.agrawal@bytedance.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Vikram Sethi <vsethi@nvidia.com>,
-	Shanker Donthineni <sdonthineni@nvidia.com>,
+	kernel test robot <lkp@intel.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Yury Norov <yury.norov@gmail.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 015/127] firmware: smccc: Fix use of uninitialised results structure
-Date: Wed,  9 Aug 2023 12:40:02 +0200
-Message-ID: <20230809103637.143624252@linuxfoundation.org>
+Subject: [PATCH 6.1 016/127] lib/bitmap: workaround const_eval test build failure
+Date: Wed,  9 Aug 2023 12:40:03 +0200
+Message-ID: <20230809103637.180809899@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -38,60 +38,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Punit Agrawal <punit.agrawal@bytedance.com>
+From: Yury Norov <yury.norov@gmail.com>
 
-[ Upstream commit d05799d7b4a39fa71c65aa277128ac7c843ffcdc ]
+[ Upstream commit 2356d198d2b4ddec24efea98271cb3be230bc787 ]
 
-Commit 35727af2b15d ("irqchip/gicv3: Workaround for NVIDIA erratum
-T241-FABRIC-4") moved the initialisation of the SoC version to
-arm_smccc_version_init() but forgot to update the results structure
-and it's usage.
+When building with Clang, and when KASAN and GCOV_PROFILE_ALL are both
+enabled, the test fails to build [1]:
 
-Fix the use of the uninitialised results structure and update the
-error strings.
+>> lib/test_bitmap.c:920:2: error: call to '__compiletime_assert_239' declared with 'error' attribute: BUILD_BUG_ON failed: !__builtin_constant_p(res)
+           BUILD_BUG_ON(!__builtin_constant_p(res));
+           ^
+   include/linux/build_bug.h:50:2: note: expanded from macro 'BUILD_BUG_ON'
+           BUILD_BUG_ON_MSG(condition, "BUILD_BUG_ON failed: " #condition)
+           ^
+   include/linux/build_bug.h:39:37: note: expanded from macro 'BUILD_BUG_ON_MSG'
+   #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
+                                       ^
+   include/linux/compiler_types.h:352:2: note: expanded from macro 'compiletime_assert'
+           _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+           ^
+   include/linux/compiler_types.h:340:2: note: expanded from macro '_compiletime_assert'
+           __compiletime_assert(condition, msg, prefix, suffix)
+           ^
+   include/linux/compiler_types.h:333:4: note: expanded from macro '__compiletime_assert'
+                           prefix ## suffix();                             \
+                           ^
+   <scratch space>:185:1: note: expanded from here
+   __compiletime_assert_239
 
-Fixes: 35727af2b15d ("irqchip/gicv3: Workaround for NVIDIA erratum T241-FABRIC-4")
-Signed-off-by: Punit Agrawal <punit.agrawal@bytedance.com>
-Cc: Sudeep Holla <sudeep.holla@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Vikram Sethi <vsethi@nvidia.com>
-Cc: Shanker Donthineni <sdonthineni@nvidia.com>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230717171702.424253-1-punit.agrawal@bytedance.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Originally it was attributed to s390, which now looks seemingly wrong. The
+issue is not related to bitmap code itself, but it breaks build for a given
+configuration.
+
+Disabling the const_eval test under that config may potentially hide other
+bugs. Instead, workaround it by disabling GCOV for the test_bitmap unless
+the compiler will get fixed.
+
+[1] https://github.com/ClangBuiltLinux/linux/issues/1874
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202307171254.yFcH97ej-lkp@intel.com/
+Fixes: dc34d5036692 ("lib: test_bitmap: add compile-time optimization/evaluations assertions")
+Co-developed-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Yury Norov <yury.norov@gmail.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/smccc/soc_id.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ lib/Makefile      | 6 ++++++
+ lib/test_bitmap.c | 8 ++++----
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/firmware/smccc/soc_id.c b/drivers/firmware/smccc/soc_id.c
-index 890eb454599a3..1990263fbba0e 100644
---- a/drivers/firmware/smccc/soc_id.c
-+++ b/drivers/firmware/smccc/soc_id.c
-@@ -34,7 +34,6 @@ static struct soc_device_attribute *soc_dev_attr;
+diff --git a/lib/Makefile b/lib/Makefile
+index 59bd7c2f793a7..5ffe72ec99797 100644
+--- a/lib/Makefile
++++ b/lib/Makefile
+@@ -81,8 +81,14 @@ obj-$(CONFIG_TEST_STATIC_KEYS) += test_static_key_base.o
+ obj-$(CONFIG_TEST_DYNAMIC_DEBUG) += test_dynamic_debug.o
+ obj-$(CONFIG_TEST_PRINTF) += test_printf.o
+ obj-$(CONFIG_TEST_SCANF) += test_scanf.o
++
+ obj-$(CONFIG_TEST_BITMAP) += test_bitmap.o
+ obj-$(CONFIG_TEST_STRSCPY) += test_strscpy.o
++ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_KASAN),yy)
++# FIXME: Clang breaks test_bitmap_const_eval when KASAN and GCOV are enabled
++GCOV_PROFILE_test_bitmap.o := n
++endif
++
+ obj-$(CONFIG_TEST_UUID) += test_uuid.o
+ obj-$(CONFIG_TEST_XARRAY) += test_xarray.o
+ obj-$(CONFIG_TEST_MAPLE_TREE) += test_maple_tree.o
+diff --git a/lib/test_bitmap.c b/lib/test_bitmap.c
+index a8005ad3bd589..37a9108c4f588 100644
+--- a/lib/test_bitmap.c
++++ b/lib/test_bitmap.c
+@@ -1149,6 +1149,10 @@ static void __init test_bitmap_print_buf(void)
+ 	}
+ }
  
- static int __init smccc_soc_init(void)
++/*
++ * FIXME: Clang breaks compile-time evaluations when KASAN and GCOV are enabled.
++ * To workaround it, GCOV is force-disabled in Makefile for this configuration.
++ */
+ static void __init test_bitmap_const_eval(void)
  {
--	struct arm_smccc_res res;
- 	int soc_id_rev, soc_id_version;
- 	static char soc_id_str[20], soc_id_rev_str[12];
- 	static char soc_id_jep106_id_str[12];
-@@ -49,13 +48,13 @@ static int __init smccc_soc_init(void)
- 	}
+ 	DECLARE_BITMAP(bitmap, BITS_PER_LONG);
+@@ -1174,11 +1178,7 @@ static void __init test_bitmap_const_eval(void)
+ 	 * the compiler is fixed.
+ 	 */
+ 	bitmap_clear(bitmap, 0, BITS_PER_LONG);
+-#if defined(__s390__) && defined(__clang__)
+-	if (!const_test_bit(7, bitmap))
+-#else
+ 	if (!test_bit(7, bitmap))
+-#endif
+ 		bitmap_set(bitmap, 5, 2);
  
- 	if (soc_id_version < 0) {
--		pr_err("ARCH_SOC_ID(0) returned error: %lx\n", res.a0);
-+		pr_err("Invalid SoC Version: %x\n", soc_id_version);
- 		return -EINVAL;
- 	}
- 
- 	soc_id_rev = arm_smccc_get_soc_id_revision();
- 	if (soc_id_rev < 0) {
--		pr_err("ARCH_SOC_ID(1) returned error: %lx\n", res.a0);
-+		pr_err("Invalid SoC Revision: %x\n", soc_id_rev);
- 		return -EINVAL;
- 	}
- 
+ 	/* Equals to `unsigned long bitopvar = BIT(20)` */
 -- 
 2.40.1
 
