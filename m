@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B470315AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:46:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC9DC433C8;
-	Wed,  9 Aug 2023 10:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B4A15AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:46:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077ABC433C8;
+	Wed,  9 Aug 2023 10:46:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578012;
-	bh=yheo+al2dAj+T1836xwY/C5kA47mT5hsM5VZ8UwTxis=;
+	s=korg; t=1691578015;
+	bh=eZrklH5sZ77N4MIS5E+KpLGufMYlpx9j5J25AaEjfYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XX7r2A6FqvDklsCpI128Sx2P24rClt19cMeVnAtHrbr3ftlkl8jPpdlOwt4k5IeQ5
-	 CAVDs2W3Y84eH0uBurSzjbS5mQrPXtM84lfn800wGo4WabISmf5dl35e7JBlOpAWht
-	 s1CK3/h6Nv3g2T+bOzKhCXPQeplb/FJ2ka6UHgp0=
+	b=LGVaS+SPLIM9giAB/cS9v3c8YfepEUJCP9vklo4qL6LeQ276DGaKNFHHZT1yL6qEe
+	 FQnHz9xvOe2zzsF0iCKhLFgegGULKg2W9vKef1r2Eu+cmgHtiJjnPcjxFXUv1C8Dbt
+	 wJir0tsN0TG8nB0bnSz6w97VBIZSu7y9YO2Kwq5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Esben Haabendal <esben@geanix.com>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Harini Katakam <harini.katakam@amd.com>,
+	Yuanjun Gong <ruc_gongyuanjun@163.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 075/165] net: ll_temac: fix error checking of irq_of_parse_and_map()
-Date: Wed,  9 Aug 2023 12:40:06 +0200
-Message-ID: <20230809103645.254797791@linuxfoundation.org>
+Subject: [PATCH 6.4 076/165] net: korina: handle clk prepare error in korina_probe()
+Date: Wed,  9 Aug 2023 12:40:07 +0200
+Message-ID: <20230809103645.283733060@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -38,52 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Yuanjun Gong <ruc_gongyuanjun@163.com>
 
-[ Upstream commit ef45e8400f5bb66b03cc949f76c80e2a118447de ]
+[ Upstream commit 0b6291ad1940c403734312d0e453e8dac9148f69 ]
 
-Most kernel functions return negative error codes but some irq functions
-return zero on error.  In this code irq_of_parse_and_map(), returns zero
-and platform_get_irq() returns negative error codes.  We need to handle
-both cases appropriately.
+in korina_probe(), the return value of clk_prepare_enable()
+should be checked since it might fail. we can use
+devm_clk_get_optional_enabled() instead of devm_clk_get_optional()
+and clk_prepare_enable() to automatically handle the error.
 
-Fixes: 8425c41d1ef7 ("net: ll_temac: Extend support to non-device-tree platforms")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Esben Haabendal <esben@geanix.com>
-Reviewed-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Harini Katakam <harini.katakam@amd.com>
-Link: https://lore.kernel.org/r/3d0aef75-06e0-45a5-a2a6-2cc4738d4143@moroto.mountain
+Fixes: e4cd854ec487 ("net: korina: Get mdio input clock via common clock framework")
+Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
+Link: https://lore.kernel.org/r/20230731090535.21416-1-ruc_gongyuanjun@163.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/ll_temac_main.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/korina.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/xilinx/ll_temac_main.c b/drivers/net/ethernet/xilinx/ll_temac_main.c
-index e0ac1bcd9925c..49f303353ecb0 100644
---- a/drivers/net/ethernet/xilinx/ll_temac_main.c
-+++ b/drivers/net/ethernet/xilinx/ll_temac_main.c
-@@ -1567,12 +1567,16 @@ static int temac_probe(struct platform_device *pdev)
- 	}
+diff --git a/drivers/net/ethernet/korina.c b/drivers/net/ethernet/korina.c
+index 2b9335cb4bb3a..8537578e1cf1d 100644
+--- a/drivers/net/ethernet/korina.c
++++ b/drivers/net/ethernet/korina.c
+@@ -1302,11 +1302,10 @@ static int korina_probe(struct platform_device *pdev)
+ 	else if (of_get_ethdev_address(pdev->dev.of_node, dev) < 0)
+ 		eth_hw_addr_random(dev);
  
- 	/* Error handle returned DMA RX and TX interrupts */
--	if (lp->rx_irq < 0)
--		return dev_err_probe(&pdev->dev, lp->rx_irq,
-+	if (lp->rx_irq <= 0) {
-+		rc = lp->rx_irq ?: -EINVAL;
-+		return dev_err_probe(&pdev->dev, rc,
- 				     "could not get DMA RX irq\n");
--	if (lp->tx_irq < 0)
--		return dev_err_probe(&pdev->dev, lp->tx_irq,
-+	}
-+	if (lp->tx_irq <= 0) {
-+		rc = lp->tx_irq ?: -EINVAL;
-+		return dev_err_probe(&pdev->dev, rc,
- 				     "could not get DMA TX irq\n");
-+	}
- 
- 	if (temac_np) {
- 		/* Retrieve the MAC address */
+-	clk = devm_clk_get_optional(&pdev->dev, "mdioclk");
++	clk = devm_clk_get_optional_enabled(&pdev->dev, "mdioclk");
+ 	if (IS_ERR(clk))
+ 		return PTR_ERR(clk);
+ 	if (clk) {
+-		clk_prepare_enable(clk);
+ 		lp->mii_clock_freq = clk_get_rate(clk);
+ 	} else {
+ 		lp->mii_clock_freq = 200000000; /* max possible input clk */
 -- 
 2.40.1
 
