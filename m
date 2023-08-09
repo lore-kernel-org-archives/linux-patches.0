@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6878917AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:28:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0180C433C7;
-	Wed,  9 Aug 2023 11:28:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AEB217AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:28:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E8BC433C8;
+	Wed,  9 Aug 2023 11:28:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580536;
-	bh=qHzkB4rDZhclUz0Z8Wnq1Bjd2kYpJ1sHdGLBjwrSiaw=;
+	s=korg; t=1691580539;
+	bh=tTxCWegzfyMd49qUmnIJdIIE/aw1dK+tlXQPmddkrAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h88yyPSo73uUkFhag3e/UcabRh9vmkVUXyJmBrlHi7Osd3QFH52eO68aV3jq7cOBm
-	 y8/8Oq3qC57vDjysH/Zwgr5YYnKI3zynDqaKnxZFZn08NZYlloqecv3rgfxPGQspXR
-	 dwQuZJO3kWn4bPsbi+uITfAPEeoj/S7Gv/9SbYZE=
+	b=afiAcGEmix9O2SGxDngolsO3XjFpqknfk5Trwp4ql2MyC1fGU2ADVivhBK8SFIDYn
+	 tt1GIyD72nwvAcuPCNPDQSI/dtVCOwUovRK5r/KKSvpwOb6eSdQhHlKczPNd5OXg4d
+	 nD2VJnGoQ8/FFZiq+FrogxOCi93xwHhpUeuYFSyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.4 060/154] USB: serial: simple: sort driver entries
-Date: Wed,  9 Aug 2023 12:41:31 +0200
-Message-ID: <20230809103638.983729749@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.4 061/154] can: gs_usb: gs_can_close(): add missing set of CAN state to CAN_STATE_STOPPED
+Date: Wed,  9 Aug 2023 12:41:32 +0200
+Message-ID: <20230809103639.023470761@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -33,157 +33,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan@kernel.org>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-commit d245aedc00775c4d7265a9f4522cc4e1fd34d102 upstream.
+commit f8a2da6ec2417cca169fa85a8ab15817bccbb109 upstream.
 
-Sort the driver symbols alphabetically in order to make it more obvious
-where new driver entries should be added.
+After an initial link up the CAN device is in ERROR-ACTIVE mode. Due
+to a missing CAN_STATE_STOPPED in gs_can_close() it doesn't change to
+STOPPED after a link down:
+
+| ip link set dev can0 up
+| ip link set dev can0 down
+| ip --details link show can0
+| 13: can0: <NOARP,ECHO> mtu 16 qdisc pfifo_fast state DOWN mode DEFAULT group default qlen 10
+|     link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0
+|     can state ERROR-ACTIVE restart-ms 1000
+
+Add missing assignment of CAN_STATE_STOPPED in gs_can_close().
 
 Cc: stable@vger.kernel.org
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
+Link: https://lore.kernel.org/all/20230718-gs_usb-fix-can-state-v1-1-f19738ae2c23@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/usb-serial-simple.c |   66 ++++++++++++++++-----------------
- 1 file changed, 33 insertions(+), 33 deletions(-)
+ drivers/net/can/usb/gs_usb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/serial/usb-serial-simple.c
-+++ b/drivers/usb/serial/usb-serial-simple.c
-@@ -38,16 +38,6 @@ static struct usb_serial_driver vendor##
- 	{ USB_DEVICE(0x0a21, 0x8001) }	/* MMT-7305WW */
- DEVICE(carelink, CARELINK_IDS);
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -732,6 +732,8 @@ static int gs_can_close(struct net_devic
+ 	usb_kill_anchored_urbs(&dev->tx_submitted);
+ 	atomic_set(&dev->active_tx_urbs, 0);
  
--/* ZIO Motherboard USB driver */
--#define ZIO_IDS()			\
--	{ USB_DEVICE(0x1CBE, 0x0103) }
--DEVICE(zio, ZIO_IDS);
--
--/* Funsoft Serial USB driver */
--#define FUNSOFT_IDS()			\
--	{ USB_DEVICE(0x1404, 0xcddc) }
--DEVICE(funsoft, FUNSOFT_IDS);
--
- /* Infineon Flashloader driver */
- #define FLASHLOADER_IDS()		\
- 	{ USB_DEVICE_INTERFACE_CLASS(0x058b, 0x0041, USB_CLASS_CDC_DATA) }, \
-@@ -55,6 +45,11 @@ DEVICE(funsoft, FUNSOFT_IDS);
- 	{ USB_DEVICE(0x8087, 0x0801) }
- DEVICE(flashloader, FLASHLOADER_IDS);
- 
-+/* Funsoft Serial USB driver */
-+#define FUNSOFT_IDS()			\
-+	{ USB_DEVICE(0x1404, 0xcddc) }
-+DEVICE(funsoft, FUNSOFT_IDS);
++	dev->can.state = CAN_STATE_STOPPED;
 +
- /* Google Serial USB SubClass */
- #define GOOGLE_IDS()						\
- 	{ USB_VENDOR_AND_INTERFACE_INFO(0x18d1,			\
-@@ -63,6 +58,11 @@ DEVICE(flashloader, FLASHLOADER_IDS);
- 					0x01) }
- DEVICE(google, GOOGLE_IDS);
- 
-+/* HP4x (48/49) Generic Serial driver */
-+#define HP4X_IDS()			\
-+	{ USB_DEVICE(0x03f0, 0x0121) }
-+DEVICE(hp4x, HP4X_IDS);
-+
- /* KAUFMANN RKS+CAN VCP */
- #define KAUFMANN_IDS()			\
- 	{ USB_DEVICE(0x16d0, 0x0870) }
-@@ -73,11 +73,6 @@ DEVICE(kaufmann, KAUFMANN_IDS);
- 	{ USB_DEVICE(0x1209, 0x8b00) }
- DEVICE(libtransistor, LIBTRANSISTOR_IDS);
- 
--/* ViVOpay USB Serial Driver */
--#define VIVOPAY_IDS()			\
--	{ USB_DEVICE(0x1d5f, 0x1004) }	/* ViVOpay 8800 */
--DEVICE(vivopay, VIVOPAY_IDS);
--
- /* Motorola USB Phone driver */
- #define MOTO_IDS()			\
- 	{ USB_DEVICE(0x05c6, 0x3197) },	/* unknown Motorola phone */	\
-@@ -106,10 +101,10 @@ DEVICE(nokia, NOKIA_IDS);
- 	{ USB_DEVICE(0x09d7, 0x0100) }	/* NovAtel FlexPack GPS */
- DEVICE_N(novatel_gps, NOVATEL_IDS, 3);
- 
--/* HP4x (48/49) Generic Serial driver */
--#define HP4X_IDS()			\
--	{ USB_DEVICE(0x03f0, 0x0121) }
--DEVICE(hp4x, HP4X_IDS);
-+/* Siemens USB/MPI adapter */
-+#define SIEMENS_IDS()			\
-+	{ USB_DEVICE(0x908, 0x0004) }
-+DEVICE(siemens_mpi, SIEMENS_IDS);
- 
- /* Suunto ANT+ USB Driver */
- #define SUUNTO_IDS()			\
-@@ -117,47 +112,52 @@ DEVICE(hp4x, HP4X_IDS);
- 	{ USB_DEVICE(0x0fcf, 0x1009) } /* Dynastream ANT USB-m Stick */
- DEVICE(suunto, SUUNTO_IDS);
- 
--/* Siemens USB/MPI adapter */
--#define SIEMENS_IDS()			\
--	{ USB_DEVICE(0x908, 0x0004) }
--DEVICE(siemens_mpi, SIEMENS_IDS);
-+/* ViVOpay USB Serial Driver */
-+#define VIVOPAY_IDS()			\
-+	{ USB_DEVICE(0x1d5f, 0x1004) }	/* ViVOpay 8800 */
-+DEVICE(vivopay, VIVOPAY_IDS);
-+
-+/* ZIO Motherboard USB driver */
-+#define ZIO_IDS()			\
-+	{ USB_DEVICE(0x1CBE, 0x0103) }
-+DEVICE(zio, ZIO_IDS);
- 
- /* All of the above structures mushed into two lists */
- static struct usb_serial_driver * const serial_drivers[] = {
- 	&carelink_device,
--	&zio_device,
--	&funsoft_device,
- 	&flashloader_device,
-+	&funsoft_device,
- 	&google_device,
-+	&hp4x_device,
- 	&kaufmann_device,
- 	&libtransistor_device,
--	&vivopay_device,
- 	&moto_modem_device,
- 	&motorola_tetra_device,
- 	&nokia_device,
- 	&novatel_gps_device,
--	&hp4x_device,
--	&suunto_device,
- 	&siemens_mpi_device,
-+	&suunto_device,
-+	&vivopay_device,
-+	&zio_device,
- 	NULL
- };
- 
- static const struct usb_device_id id_table[] = {
- 	CARELINK_IDS(),
--	ZIO_IDS(),
--	FUNSOFT_IDS(),
- 	FLASHLOADER_IDS(),
-+	FUNSOFT_IDS(),
- 	GOOGLE_IDS(),
-+	HP4X_IDS(),
- 	KAUFMANN_IDS(),
- 	LIBTRANSISTOR_IDS(),
--	VIVOPAY_IDS(),
- 	MOTO_IDS(),
- 	MOTOROLA_TETRA_IDS(),
- 	NOKIA_IDS(),
- 	NOVATEL_IDS(),
--	HP4X_IDS(),
--	SUUNTO_IDS(),
- 	SIEMENS_IDS(),
-+	SUUNTO_IDS(),
-+	VIVOPAY_IDS(),
-+	ZIO_IDS(),
- 	{ },
- };
- MODULE_DEVICE_TABLE(usb, id_table);
+ 	/* reset the device */
+ 	rc = gs_cmd_reset(dev);
+ 	if (rc < 0)
 
 
