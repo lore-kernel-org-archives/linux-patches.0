@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5D117AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:26:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF07C433C9;
-	Wed,  9 Aug 2023 11:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3BCE17AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:26:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E09C433C9;
+	Wed,  9 Aug 2023 11:26:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580379;
-	bh=1g4NKE7ziG5yB3fVf2fTsDUzYjCajxUhRMOqE15E93E=;
+	s=korg; t=1691580382;
+	bh=JsGghG11bIcezQvDbMqfL8Pjf7cg8zu4qiQpHOGVTA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k2nybphXuyIza2TwhH37MPdKjIYgvuVnxVUk0Lcs7kl1/On/dxGgY518GEOUYzu07
-	 LygICZ48CUV2E3RU2M0gzJJPNq22nuoJf2M8Nk/OdawxNQNzTCncsxCZuM4wEGYCuY
-	 kzIJh2198tke0pfQlGavnmg5VizTPDG3jydYG6nQ=
+	b=OtdxIRwVAZVmTUH4EpCMf08Isxsakx0l4sb/OTbwE5nae5/Ti9fCKGhjqNZREVHc4
+	 vzS8i2zuJlXD74uww7Y13xAhw2IeUO0EHRZ14QROh0obuCmyuhR7CSNE9QVRhbfk/1
+	 W4K/lFrya8rI4Lh09CK72ib/wwB0MGHKT88BAmTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Block <bblock@linux.ibm.com>,
-	Fedor Loshakov <loshakov@linux.ibm.com>,
-	Steffen Maier <maier@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 4.19 305/323] scsi: zfcp: Defer fc_rport blocking until after ADISC response
-Date: Wed,  9 Aug 2023 12:42:23 +0200
-Message-ID: <20230809103711.996742400@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>,
+	Xiubo Li <xiubli@redhat.com>
+Subject: [PATCH 4.19 306/323] libceph: fix potential hang in ceph_osdc_notify()
+Date: Wed,  9 Aug 2023 12:42:24 +0200
+Message-ID: <20230809103712.048258857@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,60 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steffen Maier <maier@linux.ibm.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit e65851989001c0c9ba9177564b13b38201c0854c upstream.
+commit e6e2843230799230fc5deb8279728a7218b0d63c upstream.
 
-Storage devices are free to send RSCNs, e.g. for internal state changes. If
-this happens on all connected paths, zfcp risks temporarily losing all
-paths at the same time. This has strong requirements on multipath
-configuration such as "no_path_retry queue".
+If the cluster becomes unavailable, ceph_osdc_notify() may hang even
+with osd_request_timeout option set because linger_notify_finish_wait()
+waits for MWatchNotify NOTIFY_COMPLETE message with no associated OSD
+request in flight -- it's completely asynchronous.
 
-Avoid such situations by deferring fc_rport blocking until after the ADISC
-response, when any actual state change of the remote port became clear.
-The already existing port recovery triggers explicitly block the fc_rport.
-The triggers are: on ADISC reject or timeout (typical cable pull case), and
-on ADISC indicating that the remote port has changed its WWPN or
-the port is meanwhile no longer open.
+Introduce an additional timeout, derived from the specified notify
+timeout.  While at it, switch both waits to killable which is more
+correct.
 
-As a side effect, this also removes a confusing direct function call to
-another work item function zfcp_scsi_rport_work() instead of scheduling
-that other work item. It was probably done that way to have the rport block
-side effect immediate and synchronous to the caller.
-
-Fixes: a2fa0aede07c ("[SCSI] zfcp: Block FC transport rports early on errors")
-Cc: stable@vger.kernel.org #v2.6.30+
-Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
-Reviewed-by: Fedor Loshakov <loshakov@linux.ibm.com>
-Signed-off-by: Steffen Maier <maier@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230724145156.3920244-1-maier@linux.ibm.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+Reviewed-by: Xiubo Li <xiubli@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/scsi/zfcp_fc.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ net/ceph/osd_client.c |   20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
---- a/drivers/s390/scsi/zfcp_fc.c
-+++ b/drivers/s390/scsi/zfcp_fc.c
-@@ -534,8 +534,7 @@ static void zfcp_fc_adisc_handler(void *
+--- a/net/ceph/osd_client.c
++++ b/net/ceph/osd_client.c
+@@ -3137,17 +3137,24 @@ static int linger_reg_commit_wait(struct
+ 	int ret;
  
- 	/* re-init to undo drop from zfcp_fc_adisc() */
- 	port->d_id = ntoh24(adisc_resp->adisc_port_id);
--	/* port is good, unblock rport without going through erp */
--	zfcp_scsi_schedule_rport_register(port);
-+	/* port is still good, nothing to do */
-  out:
- 	atomic_andnot(ZFCP_STATUS_PORT_LINK_TEST, &port->status);
- 	put_device(&port->dev);
-@@ -595,9 +594,6 @@ void zfcp_fc_link_test_work(struct work_
- 	int retval;
+ 	dout("%s lreq %p linger_id %llu\n", __func__, lreq, lreq->linger_id);
+-	ret = wait_for_completion_interruptible(&lreq->reg_commit_wait);
++	ret = wait_for_completion_killable(&lreq->reg_commit_wait);
+ 	return ret ?: lreq->reg_commit_error;
+ }
  
- 	set_worker_desc("zadisc%16llx", port->wwpn); /* < WORKER_DESC_LEN=24 */
--	get_device(&port->dev);
--	port->rport_task = RPORT_DEL;
--	zfcp_scsi_rport_work(&port->rport_work);
+-static int linger_notify_finish_wait(struct ceph_osd_linger_request *lreq)
++static int linger_notify_finish_wait(struct ceph_osd_linger_request *lreq,
++				     unsigned long timeout)
+ {
+-	int ret;
++	long left;
  
- 	/* only issue one test command at one time per port */
- 	if (atomic_read(&port->status) & ZFCP_STATUS_PORT_LINK_TEST)
+ 	dout("%s lreq %p linger_id %llu\n", __func__, lreq, lreq->linger_id);
+-	ret = wait_for_completion_interruptible(&lreq->notify_finish_wait);
+-	return ret ?: lreq->notify_finish_error;
++	left = wait_for_completion_killable_timeout(&lreq->notify_finish_wait,
++						ceph_timeout_jiffies(timeout));
++	if (left <= 0)
++		left = left ?: -ETIMEDOUT;
++	else
++		left = lreq->notify_finish_error; /* completed */
++
++	return left;
+ }
+ 
+ /*
+@@ -4760,7 +4767,8 @@ int ceph_osdc_notify(struct ceph_osd_cli
+ 
+ 	ret = linger_reg_commit_wait(lreq);
+ 	if (!ret)
+-		ret = linger_notify_finish_wait(lreq);
++		ret = linger_notify_finish_wait(lreq,
++				 msecs_to_jiffies(2 * timeout * MSEC_PER_SEC));
+ 	else
+ 		dout("lreq %p failed to initiate notify %d\n", lreq, ret);
+ 
 
 
