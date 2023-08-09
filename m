@@ -1,26 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CD117AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D46C433C8;
-	Wed,  9 Aug 2023 11:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E10617AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA079C433C7;
+	Wed,  9 Aug 2023 11:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580331;
-	bh=1M/G1L2QxV9J2UZ7of3wner+Rz5BZwvJicOpvLFWWMg=;
+	s=korg; t=1691580334;
+	bh=pXM1MHGcNxd4kEt1PfWBiAx3yv7Q4KKSy6xmv1oBz0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=krQOw+E7BFR/L/VRZzDlsMTZ5xkBfaNlEEd/GDzDs0pgidxlbGZklH2hMBk3Egs+F
-	 Acqa83xQW5IFno4kxQflzWkroIWbqT94w0D1bL9z5eWqTqXPKeaLjWnyvX9BW8k6sb
-	 Gh7LDfR6VMWUfi2R6hY6Rf4AlxSHbgKSCTKkGlAA=
+	b=lFobQQiMNjxu4Z7e6eSniHxxkWNgstcAJ00PasuEYnfT/OkBobyfPV+8d5Rpoq7s4
+	 tRdhm2hMhj/AN0tmwh74totRulQQKVWlarmhoPyyd4bVQXOntudXEsTUnZv/xObnFs
+	 jd4rPPQ1zD2TAdIrT5x1wB9ENR6Z3y3jdL5/qYO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+af5e10f73dbff48f70af@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 4.19 311/323] ext2: Drop fragment support
-Date: Wed,  9 Aug 2023 12:42:29 +0200
-Message-ID: <20230809103712.305308145@linuxfoundation.org>
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Russ Weight <russell.h.weight@intel.com>,
+	Tianfei Zhang <tianfei.zhang@intel.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	linux-kselftest@vger.kernel.org,
+	Dan Carpenter <error27@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Dan Carpenter <dan.carpenter@linaro.org>
+Subject: [PATCH 4.19 312/323] test_firmware: fix a memory leak with reqs buffer
+Date: Wed,  9 Aug 2023 12:42:30 +0200
+Message-ID: <20230809103712.354094589@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -34,106 +43,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 
-commit 404615d7f1dcd4cca200e9a7a9df3a1dcae1dd62 upstream.
+commit be37bed754ed90b2655382f93f9724b3c1aae847 upstream.
 
-Ext2 has fields in superblock reserved for subblock allocation support.
-However that never landed. Drop the many years dead code.
+Dan Carpenter spotted that test_fw_config->reqs will be leaked if
+trigger_batched_requests_store() is called two or more times.
+The same appears with trigger_batched_requests_async_store().
 
-Reported-by: syzbot+af5e10f73dbff48f70af@syzkaller.appspotmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+This bug wasn't trigger by the tests, but observed by Dan's visual
+inspection of the code.
+
+The recommended workaround was to return -EBUSY if test_fw_config->reqs
+is already allocated.
+
+Fixes: 7feebfa487b92 ("test_firmware: add support for request_firmware_into_buf")
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Russ Weight <russell.h.weight@intel.com>
+Cc: Tianfei Zhang <tianfei.zhang@intel.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Colin Ian King <colin.i.king@gmail.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: linux-kselftest@vger.kernel.org
+Cc: stable@vger.kernel.org # v5.4
+Suggested-by: Dan Carpenter <error27@gmail.com>
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: Luis Chamberlain <mcgrof@kernel.org>
+Link: https://lore.kernel.org/r/20230509084746.48259-2-mirsad.todorovac@alu.unizg.hr
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext2/ext2.h  |   12 ------------
- fs/ext2/super.c |   23 ++++-------------------
- 2 files changed, 4 insertions(+), 31 deletions(-)
+ lib/test_firmware.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/fs/ext2/ext2.h
-+++ b/fs/ext2/ext2.h
-@@ -68,10 +68,7 @@ struct mb_cache;
-  * second extended-fs super-block data in memory
-  */
- struct ext2_sb_info {
--	unsigned long s_frag_size;	/* Size of a fragment in bytes */
--	unsigned long s_frags_per_block;/* Number of fragments per block */
- 	unsigned long s_inodes_per_block;/* Number of inodes per block */
--	unsigned long s_frags_per_group;/* Number of fragments in a group */
- 	unsigned long s_blocks_per_group;/* Number of blocks in a group */
- 	unsigned long s_inodes_per_group;/* Number of inodes in a group */
- 	unsigned long s_itb_per_group;	/* Number of inode table blocks per group */
-@@ -186,15 +183,6 @@ static inline struct ext2_sb_info *EXT2_
- #define EXT2_FIRST_INO(s)		(EXT2_SB(s)->s_first_ino)
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -618,6 +618,11 @@ static ssize_t trigger_batched_requests_
  
- /*
-- * Macro-instructions used to manage fragments
-- */
--#define EXT2_MIN_FRAG_SIZE		1024
--#define	EXT2_MAX_FRAG_SIZE		4096
--#define EXT2_MIN_FRAG_LOG_SIZE		  10
--#define EXT2_FRAG_SIZE(s)		(EXT2_SB(s)->s_frag_size)
--#define EXT2_FRAGS_PER_BLOCK(s)		(EXT2_SB(s)->s_frags_per_block)
--
--/*
-  * Structure of a blocks group descriptor
-  */
- struct ext2_group_desc
---- a/fs/ext2/super.c
-+++ b/fs/ext2/super.c
-@@ -691,10 +691,9 @@ static int ext2_setup_super (struct supe
- 		es->s_max_mnt_count = cpu_to_le16(EXT2_DFL_MAX_MNT_COUNT);
- 	le16_add_cpu(&es->s_mnt_count, 1);
- 	if (test_opt (sb, DEBUG))
--		ext2_msg(sb, KERN_INFO, "%s, %s, bs=%lu, fs=%lu, gc=%lu, "
-+		ext2_msg(sb, KERN_INFO, "%s, %s, bs=%lu, gc=%lu, "
- 			"bpg=%lu, ipg=%lu, mo=%04lx]",
- 			EXT2FS_VERSION, EXT2FS_DATE, sb->s_blocksize,
--			sbi->s_frag_size,
- 			sbi->s_groups_count,
- 			EXT2_BLOCKS_PER_GROUP(sb),
- 			EXT2_INODES_PER_GROUP(sb),
-@@ -1040,14 +1039,7 @@ static int ext2_fill_super(struct super_
- 		}
- 	}
+ 	mutex_lock(&test_fw_mutex);
  
--	sbi->s_frag_size = EXT2_MIN_FRAG_SIZE <<
--				   le32_to_cpu(es->s_log_frag_size);
--	if (sbi->s_frag_size == 0)
--		goto cantfind_ext2;
--	sbi->s_frags_per_block = sb->s_blocksize / sbi->s_frag_size;
--
- 	sbi->s_blocks_per_group = le32_to_cpu(es->s_blocks_per_group);
--	sbi->s_frags_per_group = le32_to_cpu(es->s_frags_per_group);
- 	sbi->s_inodes_per_group = le32_to_cpu(es->s_inodes_per_group);
++	if (test_fw_config->reqs) {
++		rc = -EBUSY;
++		goto out_bail;
++	}
++
+ 	test_fw_config->reqs =
+ 		vzalloc(array3_size(sizeof(struct test_batched_req),
+ 				    test_fw_config->num_requests, 2));
+@@ -721,6 +726,11 @@ ssize_t trigger_batched_requests_async_s
  
- 	if (EXT2_INODE_SIZE(sb) == 0)
-@@ -1075,11 +1067,10 @@ static int ext2_fill_super(struct super_
- 		goto failed_mount;
- 	}
+ 	mutex_lock(&test_fw_mutex);
  
--	if (sb->s_blocksize != sbi->s_frag_size) {
-+	if (es->s_log_frag_size != es->s_log_block_size) {
- 		ext2_msg(sb, KERN_ERR,
--			"error: fragsize %lu != blocksize %lu"
--			"(not supported yet)",
--			sbi->s_frag_size, sb->s_blocksize);
-+			"error: fragsize log %u != blocksize log %u",
-+			le32_to_cpu(es->s_log_frag_size), sb->s_blocksize_bits);
- 		goto failed_mount;
- 	}
- 
-@@ -1089,12 +1080,6 @@ static int ext2_fill_super(struct super_
- 			sbi->s_blocks_per_group);
- 		goto failed_mount;
- 	}
--	if (sbi->s_frags_per_group > sb->s_blocksize * 8) {
--		ext2_msg(sb, KERN_ERR,
--			"error: #fragments per group too big: %lu",
--			sbi->s_frags_per_group);
--		goto failed_mount;
--	}
- 	if (sbi->s_inodes_per_group < sbi->s_inodes_per_block ||
- 	    sbi->s_inodes_per_group > sb->s_blocksize * 8) {
- 		ext2_msg(sb, KERN_ERR,
++	if (test_fw_config->reqs) {
++		rc = -EBUSY;
++		goto out_bail;
++	}
++
+ 	test_fw_config->reqs =
+ 		vzalloc(array3_size(sizeof(struct test_batched_req),
+ 				    test_fw_config->num_requests, 2));
 
 
