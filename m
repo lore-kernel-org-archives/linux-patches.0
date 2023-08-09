@@ -1,505 +1,306 @@
-Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5EB17754
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 13:53:28 +0000 (UTC)
-Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-790b080f2a0so278174739f.3
-        for <patches@lists.linux.dev>; Wed, 09 Aug 2023 06:53:28 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BAA219BAB
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 14:27:22 +0000 (UTC)
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-99c10ba30afso208149766b.1
+        for <patches@lists.linux.dev>; Wed, 09 Aug 2023 07:27:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=joelfernandes.org; s=google; t=1691589207; x=1692194007;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=tlKt8i553XkK+A6Q0tNCVCazz2IrKRXLY80BdZSCzeM=;
-        b=AD2A6LYLsAUXNH6GOCJCYuWhY0kQe1UFIf4HKclg/710rDTwbEmL7Rg3PdlR7z4YFS
-         LtOyLx/zWUNV+DG3I2YYdY+v1l0b6fToOVSxdrk3bNrp0BL63oPnRRmT9UD3qngJ0NE+
-         J+hH4WYBNLXk4xiydaju361U6k9YXtRu6jqUs=
+        d=metaspace-dk.20221208.gappssmtp.com; s=20221208; t=1691591241; x=1692196041;
+        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
+         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
+        bh=g0tf3b81o/i4i891zt2ZuwmEYtGObIVT0rQr20cIgmM=;
+        b=ka2t9rwhuAQFn95vz4kMDFZ3Q0eynbfttN8bDW66C67GMafoIikGXJ/U6LIv/FqASv
+         8x76Ej9IXjNbiueHSKNX/n9CkGxHbuHmOydy//zzt6B2nHcfLaEXwrFZ7z/AGGxnyXj8
+         d41x/u4f3HPrDeYk/ZcDzJQwSFFbBUyUb8OKOqVCShZ/j3I/+rZW0LIEsiyc2Z8U19Gz
+         Qcuu4ta9WCYEJqaKhLAkax4wXHiRX4QJkr5LYmAfp/t3h2Ur5oe3dyGWKHQTYZYHj3nu
+         JsV2FzwTRfcN8gu3BI9Q6KG3x82+AaGVKxWCu02OjnrF0AHTc9c7g1KjXUmM0ufeDmb2
+         Ui6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691589207; x=1692194007;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tlKt8i553XkK+A6Q0tNCVCazz2IrKRXLY80BdZSCzeM=;
-        b=UBwVDtY2NIsnJfhtP6yKKGV7xmhdNYdpIS8e5dA8O9W+cEseQQAXzTW4RPJjsg+fPP
-         Py3aqrz6Dc1zANKKnFLtv6/O1eFI0DKdjI8R2iEniSbiUDzPJ7yjehg+PEWVPT23U3AY
-         UPPn9d2CewGLqKDXd4eD2hdcAYsMPpXfw0xkTnX3EtAUM5hLgiefE0EcQjvA1QMNDjGM
-         6sN582O76/A1hQn5ez3HsKby7xi+8NWySnhTZ/6bj4N5sJtxG2tlC63R9zQ4JWiaUhIZ
-         9bcuUozeIGbz8YemyTfF2qAA8XvVCB7oKFJ4JognPgYGvseKuAmf5VmeY77jfLOySdlV
-         GOWQ==
-X-Gm-Message-State: AOJu0Ywh5T7PPD2NcfqDCjK9A4YeYEYh14Jsh/WeU8f6WAivtSkzWMP1
-	/8AecWXgg+J7bH3eVEdDBWdZZA==
-X-Google-Smtp-Source: AGHT+IFo+tafcL6oKvNOhzAmCNNiTJ8EKML3AZbAhADFGe58GAI9ixjhvS4phMH+jZOCkojAGKDFAA==
-X-Received: by 2002:a05:6602:42d7:b0:786:cc36:360c with SMTP id ce23-20020a05660242d700b00786cc36360cmr3097426iob.8.1691589207311;
-        Wed, 09 Aug 2023 06:53:27 -0700 (PDT)
-Received: from localhost (254.82.172.34.bc.googleusercontent.com. [34.172.82.254])
-        by smtp.gmail.com with ESMTPSA id u16-20020a5d8190000000b00783737db8ebsm4396045ion.38.2023.08.09.06.53.26
+        d=1e100.net; s=20221208; t=1691591241; x=1692196041;
+        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
+         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=g0tf3b81o/i4i891zt2ZuwmEYtGObIVT0rQr20cIgmM=;
+        b=NnkVreZ8okoVVFC7n9sDbh3bfSMH1jCbEnJkyDRDuTL7xH9Fee5PoRM7ACUQ/OgxeS
+         J1fudm51koqA+IL/xqOk+MeF/6LLXJ6pXFnlyYmQZdfqabA0nF57XGJCs4kyDgHAweKA
+         rQIANL6RzsgebD6btzqLUmV14KKDBPGCgP+hNsdrfNEL8uht4dRXQfIAGqoL2a4yZyfQ
+         RMfDN/tMFUnn8j4FGLndw+AmejBFpZDtey5wZ0D3ViXluHAQYMbE2T3DcQAYcq6b/zLd
+         XHBd/YWdvRfGV2lqiJbTibSCl9APYTdMt7tdsl2i/YavpF1b5adrlldXKFZ6LwgGBle7
+         OgLQ==
+X-Gm-Message-State: AOJu0YwqnMtw7OxFSKFbPSteBxTbjmxEjR739rpeb6YO6ZL7Kxt0THoM
+	Iq8OJlcsf8+ptkjhGitE+BkMkA==
+X-Google-Smtp-Source: AGHT+IGtEaU2vZG7J/NZdgzh5skjfNjX0nguXNiqv05n6QVi+LMT+9D9Pw3d6uTPTxMnIXT31iEWaQ==
+X-Received: by 2002:a17:906:d54a:b0:978:8979:c66c with SMTP id cr10-20020a170906d54a00b009788979c66cmr13470340ejc.18.1691591240937;
+        Wed, 09 Aug 2023 07:27:20 -0700 (PDT)
+Received: from localhost ([194.62.217.2])
+        by smtp.gmail.com with ESMTPSA id h4-20020aa7c944000000b0052369aa9956sm733683edt.26.2023.08.09.07.27.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Aug 2023 06:53:26 -0700 (PDT)
-Date: Wed, 9 Aug 2023 13:53:26 +0000
-From: Joel Fernandes <joel@joelfernandes.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, paulmck@kernel.org
-Subject: Re: [PATCH 5.15 00/92] 5.15.126-rc1 review
-Message-ID: <20230809135326.GE3031656@google.com>
-References: <20230809103633.485906560@linuxfoundation.org>
+        Wed, 09 Aug 2023 07:27:20 -0700 (PDT)
+References: <20230710074642.683831-1-aliceryhl@google.com>
+User-agent: mu4e 1.10.5; emacs 28.2.50
+From: "Andreas Hindborg (Samsung)" <nmi@metaspace.dk>
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: rust-for-linux@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>, Wedson
+ Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>,
+ Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+ =?utf-8?Q?Bj=C3=B6rn?= Roy
+ Baron <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v1] rust: add improved version of
+ `ForeignOwnable::borrow_mut`
+Date: Wed, 09 Aug 2023 16:09:12 +0200
+In-reply-to: <20230710074642.683831-1-aliceryhl@google.com>
+Message-ID: <87r0octho8.fsf@metaspace.dk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
-
-On Wed, Aug 09, 2023 at 12:40:36PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.126 release.
-> There are 92 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.126-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-
-Not necesscarily new with 5.15 stable but 3 of the 19 rcutorture scenarios
-hang with this -rc: TREE04, TREE07, TASKS03.
-
-5.15 has a known stop machine issue where it hangs after 1.5 hours with cpu
-hotplug rcutorture testing. Me and tglx are continuing to debug this. The
-issue does not show up on anything but 5.15 stable kernels and neither on
-mainline.
-
-I will do some more runs to see if TASKS03 hang is a new thing but it could
-be related to the existing issues.
-
-thanks,
-
- - Joel
+Content-Type: text/plain
 
 
+Alice Ryhl <aliceryhl@google.com> writes:
 
-> 
-> thanks,
-> 
-> greg k-h
-> 
-> -------------
-> Pseudo-Shortlog of commits:
-> 
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->     Linux 5.15.126-rc1
-> 
-> Johan Hovold <johan+linaro@kernel.org>
->     PM: sleep: wakeirq: fix wake irq arming
-> 
-> Chunfeng Yun <chunfeng.yun@mediatek.com>
->     PM / wakeirq: support enabling wake-up irq after runtime_suspend called
-> 
-> Johan Hovold <johan+linaro@kernel.org>
->     soundwire: fix enumeration completion
-> 
-> Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
->     soundwire: bus: pm_runtime_request_resume on peripheral attachment
-> 
-> Sean Christopherson <seanjc@google.com>
->     selftests/rseq: Play nice with binaries statically linked against glibc 2.35+
-> 
-> Michael Jeanson <mjeanson@efficios.com>
->     selftests/rseq: check if libc rseq support is registered
-> 
-> Alexander Stein <alexander.stein@ew.tq-group.com>
->     drm/imx/ipuv3: Fix front porch adjustment upon hactive aligning
-> 
-> Thomas Zimmermann <tzimmermann@suse.de>
->     drm/fsl-dcu: Use drm_plane_helper_destroy()
-> 
-> Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
->     powerpc/mm/altmap: Fix altmap boundary check
-> 
-> Christophe JAILLET <christophe.jaillet@wanadoo.fr>
->     mtd: rawnand: fsl_upm: Fix an off-by one test in fun_exec_op()
-> 
-> Johan Jonker <jbx6244@gmail.com>
->     mtd: rawnand: rockchip: Align hwecc vs. raw page helper layouts
-> 
-> Johan Jonker <jbx6244@gmail.com>
->     mtd: rawnand: rockchip: fix oobfree offset and description
-> 
-> Roger Quadros <rogerq@kernel.org>
->     mtd: rawnand: omap_elm: Fix incorrect type in assignment
-> 
-> Jan Kara <jack@suse.cz>
->     ext2: Drop fragment support
-> 
-> Jan Kara <jack@suse.cz>
->     fs: Protect reconfiguration of sb read-write from racing writes
-> 
-> Alan Stern <stern@rowland.harvard.edu>
->     net: usbnet: Fix WARNING in usbnet_start_xmit/usb_submit_urb
-> 
-> Sungwoo Kim <iam@sung-woo.kim>
->     Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_ready_cb
-> 
-> Prince Kumar Maurya <princekumarmaurya06@gmail.com>
->     fs/sysv: Null check to prevent null-ptr-deref bug
-> 
-> Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
->     fs/ntfs3: Use __GFP_NOWARN allocation at ntfs_load_attr_list()
-> 
-> Linus Torvalds <torvalds@linux-foundation.org>
->     file: reinstate f_pos locking optimization for regular files
-> 
-> Hou Tao <houtao1@huawei.com>
->     bpf, cpumap: Make sure kthread is running before map update returns
-> 
-> Guchun Chen <guchun.chen@amd.com>
->     drm/ttm: check null pointer before accessing when swapping
-> 
-> Aleksa Sarai <cyphar@cyphar.com>
->     open: make RESOLVE_CACHED correctly test for O_TMPFILE
-> 
-> Jiri Olsa <jolsa@kernel.org>
->     bpf: Disable preemption in bpf_event_output
-> 
-> Ilya Dryomov <idryomov@gmail.com>
->     rbd: prevent busy loop when requesting exclusive lock
-> 
-> Paul Fertser <fercerpav@gmail.com>
->     wifi: mt76: mt7615: do not advertise 5 GHz on first phy of MT7615D (DBDC)
-> 
-> Laszlo Ersek <lersek@redhat.com>
->     net: tap_open(): set sk_uid from current_fsuid()
-> 
-> Laszlo Ersek <lersek@redhat.com>
->     net: tun_chr_open(): set sk_uid from current_fsuid()
-> 
-> Dinh Nguyen <dinguyen@kernel.org>
->     arm64: dts: stratix10: fix incorrect I2C property for SCL signal
-> 
-> Arseniy Krasnov <AVKrasnov@sberdevices.ru>
->     mtd: rawnand: meson: fix OOB available bytes for ECC
-> 
-> Olivier Maignial <olivier.maignial@hotmail.fr>
->     mtd: spinand: toshiba: Fix ecc_get_status
-> 
-> Sungjong Seo <sj1557.seo@samsung.com>
->     exfat: release s_lock before calling dir_emit()
-> 
-> gaoming <gaoming20@hihonor.com>
->     exfat: use kvmalloc_array/kvfree instead of kmalloc_array/kfree
-> 
-> Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->     firmware: arm_scmi: Drop OF node reference in the transport channel setup
-> 
-> Xiubo Li <xiubli@redhat.com>
->     ceph: defer stopping mdsc delayed_work
-> 
-> Ross Maynard <bids.7405@bigpond.com>
->     USB: zaurus: Add ID for A-300/B-500/C-700
-> 
-> Ilya Dryomov <idryomov@gmail.com>
->     libceph: fix potential hang in ceph_osdc_notify()
-> 
-> Michael Kelley <mikelley@microsoft.com>
->     scsi: storvsc: Limit max_sectors for virtual Fibre Channel devices
-> 
-> Steffen Maier <maier@linux.ibm.com>
->     scsi: zfcp: Defer fc_rport blocking until after ADISC response
-> 
-> Eric Dumazet <edumazet@google.com>
->     tcp_metrics: fix data-race in tcpm_suck_dst() vs fastopen
-> 
-> Eric Dumazet <edumazet@google.com>
->     tcp_metrics: annotate data-races around tm->tcpm_net
-> 
-> Eric Dumazet <edumazet@google.com>
->     tcp_metrics: annotate data-races around tm->tcpm_vals[]
-> 
-> Eric Dumazet <edumazet@google.com>
->     tcp_metrics: annotate data-races around tm->tcpm_lock
-> 
-> Eric Dumazet <edumazet@google.com>
->     tcp_metrics: annotate data-races around tm->tcpm_stamp
-> 
-> Eric Dumazet <edumazet@google.com>
->     tcp_metrics: fix addr_same() helper
-> 
-> Jonas Gorski <jonas.gorski@bisdn.de>
->     prestera: fix fallback to previous version on same major version
-> 
-> Jianbo Liu <jianbol@nvidia.com>
->     net/mlx5: fs_core: Skip the FTs in the same FS_TYPE_PRIO_CHAINS fs_prio
-> 
-> Jianbo Liu <jianbol@nvidia.com>
->     net/mlx5: fs_core: Make find_closest_ft more generic
-> 
-> Benjamin Poirier <bpoirier@nvidia.com>
->     vxlan: Fix nexthop hash size
-> 
-> Yue Haibing <yuehaibing@huawei.com>
->     ip6mr: Fix skb_under_panic in ip6mr_cache_report()
-> 
-> Alexandra Winter <wintera@linux.ibm.com>
->     s390/qeth: Don't call dev_close/dev_open (DOWN/UP)
-> 
-> Lin Ma <linma@zju.edu.cn>
->     net: dcb: choose correct policy to parse DCB_ATTR_BCN
-> 
-> Mark Brown <broonie@kernel.org>
->     net: netsec: Ignore 'phy-mode' on SynQuacer in DT mode
-> 
-> Yuanjun Gong <ruc_gongyuanjun@163.com>
->     net: korina: handle clk prepare error in korina_probe()
-> 
-> Dan Carpenter <dan.carpenter@linaro.org>
->     net: ll_temac: fix error checking of irq_of_parse_and_map()
-> 
-> Yang Yingliang <yangyingliang@huawei.com>
->     net: ll_temac: Switch to use dev_err_probe() helper
-> 
-> Tomas Glozar <tglozar@redhat.com>
->     bpf: sockmap: Remove preempt_disable in sock_map_sk_acquire
-> 
-> valis <sec@valis.email>
->     net/sched: cls_route: No longer copy tcf_result on update to avoid use-after-free
-> 
-> valis <sec@valis.email>
->     net/sched: cls_fw: No longer copy tcf_result on update to avoid use-after-free
-> 
-> valis <sec@valis.email>
->     net/sched: cls_u32: No longer copy tcf_result on update to avoid use-after-free
-> 
-> Hou Tao <houtao1@huawei.com>
->     bpf, cpumap: Handle skb as well when clean up ptr_ring
-> 
-> Kuniyuki Iwashima <kuniyu@amazon.com>
->     net/sched: taprio: Limit TCA_TAPRIO_ATTR_SCHED_CYCLE_TIME to INT_MAX.
-> 
-> Eric Dumazet <edumazet@google.com>
->     net: add missing data-race annotation for sk_ll_usec
-> 
-> Eric Dumazet <edumazet@google.com>
->     net: add missing data-race annotations around sk->sk_peek_off
-> 
-> Eric Dumazet <edumazet@google.com>
->     net: add missing READ_ONCE(sk->sk_rcvbuf) annotation
-> 
-> Eric Dumazet <edumazet@google.com>
->     net: add missing READ_ONCE(sk->sk_sndbuf) annotation
-> 
-> Eric Dumazet <edumazet@google.com>
->     net: add missing READ_ONCE(sk->sk_rcvlowat) annotation
-> 
-> Eric Dumazet <edumazet@google.com>
->     net: annotate data-races around sk->sk_max_pacing_rate
-> 
-> Konstantin Khorenko <khorenko@virtuozzo.com>
->     qed: Fix scheduling in a tasklet while getting stats
-> 
-> Prabhakar Kushwaha <pkushwaha@marvell.com>
->     qed: Fix kernel-doc warnings
-> 
-> Chengfeng Ye <dg573847474@gmail.com>
->     mISDN: hfcpci: Fix potential deadlock on &hc->lock
-> 
-> Jamal Hadi Salim <jhs@mojatatu.com>
->     net: sched: cls_u32: Fix match key mis-addressing
-> 
-> Georg Müller <georgmueller@gmx.net>
->     perf test uprobe_from_different_cu: Skip if there is no gcc
-> 
-> Yuanjun Gong <ruc_gongyuanjun@163.com>
->     net: dsa: fix value check in bcm_sf2_sw_probe()
-> 
-> Lin Ma <linma@zju.edu.cn>
->     rtnetlink: let rtnl_bridge_setlink checks IFLA_BRIDGE_MODE length
-> 
-> Lin Ma <linma@zju.edu.cn>
->     bpf: Add length check for SK_DIAG_BPF_STORAGE_REQ_MAP_FD parsing
-> 
-> Yuanjun Gong <ruc_gongyuanjun@163.com>
->     net/mlx5e: fix return value check in mlx5e_ipsec_remove_trailer()
-> 
-> Zhengchao Shao <shaozhengchao@huawei.com>
->     net/mlx5: DR, fix memory leak in mlx5dr_cmd_create_reformat_ctx
-> 
-> Ilan Peer <ilan.peer@intel.com>
->     wifi: cfg80211: Fix return value in scan logic
-> 
-> Heiko Carstens <hca@linux.ibm.com>
->     KVM: s390: fix sthyi error handling
-> 
-> ndesaulniers@google.com <ndesaulniers@google.com>
->     word-at-a-time: use the same return type for has_zero regardless of endianness
-> 
-> Cristian Marussi <cristian.marussi@arm.com>
->     firmware: arm_scmi: Fix chan_free cleanup on SMC
-> 
-> Hugo Villeneuve <hvilleneuve@dimonoff.com>
->     arm64: dts: imx8mn-var-som: add missing pull-up for onboard PHY reset pinmux
-> 
-> Robin Murphy <robin.murphy@arm.com>
->     iommu/arm-smmu-v3: Document nesting-related errata
-> 
-> Robin Murphy <robin.murphy@arm.com>
->     iommu/arm-smmu-v3: Add explicit feature for nesting
-> 
-> Robin Murphy <robin.murphy@arm.com>
->     iommu/arm-smmu-v3: Document MMU-700 erratum 2812531
-> 
-> Robin Murphy <robin.murphy@arm.com>
->     iommu/arm-smmu-v3: Work around MMU-600 erratum 1076982
-> 
-> Suzuki K Poulose <suzuki.poulose@arm.com>
->     arm64: errata: Add detection for TRBE write to out-of-range
-> 
-> Suzuki K Poulose <suzuki.poulose@arm.com>
->     arm64: errata: Add workaround for TSB flush failures
-> 
-> Shay Drory <shayd@nvidia.com>
->     net/mlx5: Free irqs only on shutdown callback
-> 
-> Peter Zijlstra <peterz@infradead.org>
->     perf: Fix function pointer case
-> 
-> Jens Axboe <axboe@kernel.dk>
->     io_uring: gate iowait schedule on having pending requests
-> 
-> 
-> -------------
-> 
-> Diffstat:
-> 
->  Documentation/arm64/silicon-errata.rst             |  12 +
->  Makefile                                           |   4 +-
->  arch/arm64/Kconfig                                 |  74 ++
->  .../boot/dts/altera/socfpga_stratix10_socdk.dts    |   2 +-
->  .../dts/altera/socfpga_stratix10_socdk_nand.dts    |   2 +-
->  arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi  |   2 +-
->  arch/arm64/include/asm/barrier.h                   |  16 +-
->  arch/arm64/kernel/cpu_errata.c                     |  39 +
->  arch/arm64/tools/cpucaps                           |   2 +
->  arch/powerpc/include/asm/word-at-a-time.h          |   2 +-
->  arch/powerpc/mm/init_64.c                          |   3 +-
->  arch/s390/kernel/sthyi.c                           |   6 +-
->  arch/s390/kvm/intercept.c                          |   9 +-
->  drivers/base/power/power.h                         |   8 +-
->  drivers/base/power/runtime.c                       |   6 +-
->  drivers/base/power/wakeirq.c                       | 111 ++-
->  drivers/block/rbd.c                                |  28 +-
->  drivers/firmware/arm_scmi/mailbox.c                |   4 +-
->  drivers/firmware/arm_scmi/smc.c                    |  21 +-
->  drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_plane.c        |   8 +-
->  drivers/gpu/drm/imx/ipuv3-crtc.c                   |   2 +-
->  drivers/gpu/drm/ttm/ttm_bo.c                       |   3 +-
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c        |  50 ++
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h        |   8 +
->  drivers/isdn/hardware/mISDN/hfcpci.c               |  10 +-
->  drivers/mtd/nand/raw/fsl_upm.c                     |   2 +-
->  drivers/mtd/nand/raw/meson_nand.c                  |   3 +-
->  drivers/mtd/nand/raw/omap_elm.c                    |  24 +-
->  drivers/mtd/nand/raw/rockchip-nand-controller.c    |  45 +-
->  drivers/mtd/nand/spi/toshiba.c                     |   4 +-
->  drivers/net/dsa/bcm_sf2.c                          |   8 +-
->  drivers/net/ethernet/korina.c                      |   3 +-
->  .../net/ethernet/marvell/prestera/prestera_pci.c   |   3 +-
->  .../mellanox/mlx5/core/en_accel/ipsec_rxtx.c       |   4 +-
->  drivers/net/ethernet/mellanox/mlx5/core/eq.c       |   2 +-
->  drivers/net/ethernet/mellanox/mlx5/core/fs_core.c  | 105 ++-
->  drivers/net/ethernet/mellanox/mlx5/core/mlx5_irq.h |   1 +
->  drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c  |  29 +
->  .../ethernet/mellanox/mlx5/core/steering/dr_cmd.c  |   5 +-
->  drivers/net/ethernet/qlogic/qed/qed.h              |   9 +-
->  drivers/net/ethernet/qlogic/qed/qed_cxt.h          | 138 +--
->  drivers/net/ethernet/qlogic/qed/qed_dev_api.h      | 361 ++++----
->  drivers/net/ethernet/qlogic/qed/qed_fcoe.c         |  19 +-
->  drivers/net/ethernet/qlogic/qed/qed_fcoe.h         |  17 +-
->  drivers/net/ethernet/qlogic/qed/qed_hsi.h          | 922 +++++++++++----------
->  drivers/net/ethernet/qlogic/qed/qed_hw.c           |  26 +-
->  drivers/net/ethernet/qlogic/qed/qed_hw.h           | 214 ++---
->  drivers/net/ethernet/qlogic/qed/qed_init_ops.h     |  58 +-
->  drivers/net/ethernet/qlogic/qed/qed_int.h          | 274 +++---
->  drivers/net/ethernet/qlogic/qed/qed_iscsi.c        |  19 +-
->  drivers/net/ethernet/qlogic/qed/qed_iscsi.h        |  17 +-
->  drivers/net/ethernet/qlogic/qed/qed_l2.c           |  19 +-
->  drivers/net/ethernet/qlogic/qed/qed_l2.h           | 158 ++--
->  drivers/net/ethernet/qlogic/qed/qed_ll2.h          | 130 +--
->  drivers/net/ethernet/qlogic/qed/qed_main.c         |   6 +-
->  drivers/net/ethernet/qlogic/qed/qed_mcp.h          | 757 +++++++++--------
->  drivers/net/ethernet/qlogic/qed/qed_selftest.h     |  30 +-
->  drivers/net/ethernet/qlogic/qed/qed_sp.h           | 215 +++--
->  drivers/net/ethernet/qlogic/qed/qed_sriov.h        |  99 ++-
->  drivers/net/ethernet/qlogic/qed/qed_vf.h           | 301 ++++---
->  drivers/net/ethernet/qlogic/qede/qede_main.c       |   5 +-
->  drivers/net/ethernet/socionext/netsec.c            |  11 +
->  drivers/net/ethernet/xilinx/ll_temac_main.c        |  16 +-
->  drivers/net/tap.c                                  |   2 +-
->  drivers/net/tun.c                                  |   2 +-
->  drivers/net/usb/cdc_ether.c                        |  21 +
->  drivers/net/usb/usbnet.c                           |   6 +
->  drivers/net/usb/zaurus.c                           |  21 +
->  drivers/net/wireless/mediatek/mt76/mt7615/eeprom.c |   6 +-
->  drivers/s390/net/qeth_core.h                       |   1 -
->  drivers/s390/net/qeth_core_main.c                  |   2 -
->  drivers/s390/net/qeth_l2_main.c                    |   9 +-
->  drivers/s390/net/qeth_l3_main.c                    |   8 +-
->  drivers/s390/scsi/zfcp_fc.c                        |   6 +-
->  drivers/scsi/storvsc_drv.c                         |   4 +
->  drivers/soundwire/bus.c                            |  20 +-
->  fs/ceph/mds_client.c                               |   4 +-
->  fs/ceph/mds_client.h                               |   5 +
->  fs/ceph/super.c                                    |  10 +
->  fs/exfat/balloc.c                                  |   6 +-
->  fs/exfat/dir.c                                     |  27 +-
->  fs/ext2/ext2.h                                     |  12 -
->  fs/ext2/super.c                                    |  23 +-
->  fs/file.c                                          |  18 +-
->  fs/ntfs3/attrlist.c                                |   4 +-
->  fs/open.c                                          |   2 +-
->  fs/super.c                                         |  11 +-
->  fs/sysv/itree.c                                    |   4 +
->  include/asm-generic/word-at-a-time.h               |   2 +-
->  include/linux/pm_wakeirq.h                         |   9 +-
->  include/linux/qed/qed_chain.h                      |  97 ++-
->  include/linux/qed/qed_if.h                         | 255 +++---
->  include/linux/qed/qed_iscsi_if.h                   |   2 +-
->  include/linux/qed/qed_ll2_if.h                     |  42 +-
->  include/linux/qed/qed_nvmetcp_if.h                 |  17 +
->  include/net/vxlan.h                                |   4 +-
->  io_uring/io_uring.c                                |  23 +-
->  kernel/bpf/cpumap.c                                |  35 +-
->  kernel/events/core.c                               |   8 +-
->  kernel/trace/bpf_trace.c                           |   6 +-
->  net/bluetooth/l2cap_sock.c                         |   2 +
->  net/ceph/osd_client.c                              |  20 +-
->  net/core/bpf_sk_storage.c                          |   5 +-
->  net/core/rtnetlink.c                               |   8 +-
->  net/core/sock.c                                    |  21 +-
->  net/core/sock_map.c                                |   2 -
->  net/dcb/dcbnl.c                                    |   2 +-
->  net/ipv4/tcp_metrics.c                             |  70 +-
->  net/ipv6/ip6mr.c                                   |   2 +-
->  net/sched/cls_fw.c                                 |   1 -
->  net/sched/cls_route.c                              |   1 -
->  net/sched/cls_u32.c                                |  57 +-
->  net/sched/sch_taprio.c                             |  15 +-
->  net/unix/af_unix.c                                 |   2 +-
->  net/wireless/scan.c                                |   2 +-
->  .../tests/shell/test_uprobe_from_different_cu.sh   |   8 +-
->  tools/testing/selftests/rseq/rseq.c                |  31 +-
->  117 files changed, 3227 insertions(+), 2247 deletions(-)
-> 
-> 
+> Previously, the `ForeignOwnable` trait had a method called `borrow_mut`
+> that was intended to provide mutable access to the inner value. However,
+> the method accidentally made it possible to change the address of the
+> object being modified, which usually isn't what we want. (And when we
+> want that, it can be done by calling `from_foreign` and `into_foreign`,
+> like how the old `borrow_mut` was implemented.)
+>
+> In this patch, we introduce an alternate definition of `borrow_mut` that
+> solves the previous problem. Conceptually, given a pointer type `P` that
+> implements `ForeignOwnable`, the `borrow_mut` method gives you the same
+> kind of access as an `&mut P` would, except that it does not let you
+> change the pointer `P` itself.
+>
+> This is analogous to how the existing `borrow` method provides the same
+> kind of access to the inner value as an `&P`.
+>
+> Note that for types like `Arc`, having an `&mut Arc<T>` only gives you
+> immutable access to the inner `T`. This is because mutable references
+> assume exclusive access, but there might be other handles to the same
+> reference counted value, so the access isn't exclusive. The `Arc` type
+> implements this by making `borrow_mut` return the same type as `borrow`.
+>
+> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+> ---
+>
+> This patch depends on https://lore.kernel.org/all/20230706094615.3080784-1-aliceryhl@google.com/
+>
+>  rust/kernel/sync/arc.rs | 31 +++++++++-----
+>  rust/kernel/types.rs    | 93 ++++++++++++++++++++++++++++++-----------
+>  2 files changed, 89 insertions(+), 35 deletions(-)
+>  
+> diff --git a/rust/kernel/types.rs b/rust/kernel/types.rs
+> index d479f8da8f38..1c2fb36906b6 100644
+> --- a/rust/kernel/types.rs
+> +++ b/rust/kernel/types.rs
+> @@ -20,66 +20,111 @@
+>  /// This trait is meant to be used in cases when Rust objects are stored in C objects and
+>  /// eventually "freed" back to Rust.
+>  pub trait ForeignOwnable: Sized {
+> -    /// Type of values borrowed between calls to [`ForeignOwnable::into_foreign`] and
+> -    /// [`ForeignOwnable::from_foreign`].
+> +    /// Type used to immutably borrow a value that is currently foreign-owned.
+>      type Borrowed<'a>;
+>  
+> +    /// Type used to mutably borrow a value that is currently foreign-owned.
+> +    type BorrowedMut<'a>;
+> +
+>      /// Converts a Rust-owned object to a foreign-owned one.
+>      ///
+>      /// The foreign representation is a pointer to void.
+>      fn into_foreign(self) -> *const core::ffi::c_void;
+>  
+> -    /// Borrows a foreign-owned object.
+> -    ///
+> -    /// # Safety
+> -    ///
+> -    /// `ptr` must have been returned by a previous call to [`ForeignOwnable::into_foreign`] for
+> -    /// which a previous matching [`ForeignOwnable::from_foreign`] hasn't been called yet.
+> -    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> Self::Borrowed<'a>;
+> -
+>      /// Converts a foreign-owned object back to a Rust-owned one.
+>      ///
+>      /// # Safety
+>      ///
+> -    /// `ptr` must have been returned by a previous call to [`ForeignOwnable::into_foreign`] for
+> -    /// which a previous matching [`ForeignOwnable::from_foreign`] hasn't been called yet.
+> -    /// Additionally, all instances (if any) of values returned by [`ForeignOwnable::borrow`] for
+> -    /// this object must have been dropped.
+> +    /// The provided pointer must have been returned by a previous call to [`into_foreign`], and it
+> +    /// must not be passed to `from_foreign` more than once.
+> +    ///
+> +    /// [`into_foreign`]: Self::into_foreign
+>      unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self;
+> +
+> +    /// Borrows a foreign-owned object immutably.
+> +    ///
+> +    /// This method provides a way to access a foreign-owned value from Rust immutably. It provides
+> +    /// you with exactly the same abilities as an `&Self` when the value is Rust-owned.
+> +    ///
+> +    /// # Safety
+> +    ///
+> +    /// The provided pointer must have been returned by a previous call to [`into_foreign`], and if
+> +    /// the pointer is ever passed to [`from_foreign`], then that call must happen after the end of
+> +    /// the lifetime 'a.
+> +    ///
+> +    /// [`into_foreign`]: Self::into_foreign
+> +    /// [`from_foreign`]: Self::from_foreign
+> +    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> Self::Borrowed<'a>;
+> +
+> +    /// Borrows a foreign-owned object mutably.
+> +    ///
+> +    /// This method provides a way to access a foreign-owned value from Rust mutably. It provides
+> +    /// you with exactly the same abilities as an `&mut Self` when the value is Rust-owned, except
+> +    /// that this method does not let you swap the foreign-owned object for another. (That is, it
+> +    /// does not let you change the address of the void pointer that the foreign code is storing.)
+
+How about this:
+
+"For a smart pointer P<T> this method provides mutable access to T if
+&mut P<T> would allow mutable access to T. Otherwise it provides
+immutable access to T."
+
+The point is that the method provides access to the pointee, not the
+smart pointer itself. In fact it is perfectly fine to do a mem::swawp()
+for the pointee in the case of Box and depending on interpretation the
+sentence "does not let you swap the foreign-owned object for another" is
+confusing.
+
+> +    ///
+> +    /// Note that for types like [`Arc`], an `&mut Arc<T>` only gives you immutable access to the
+> +    /// inner value, so this method also only provides immutable access in that case.
+> +    ///
+> +    /// In the case of `Box<T>`, this method gives you the ability to modify the inner `T`, but it
+> +    /// does not let you change the box itself. That is, you cannot change which allocation the box
+> +    /// points at.
+> +    ///
+> +    /// # Safety
+> +    ///
+> +    /// The provided pointer must have been returned by a previous call to [`into_foreign`], and if
+> +    /// the pointer is ever passed to [`from_foreign`], then that call must happen after the end of
+> +    /// the lifetime 'a.
+> +    ///
+> +    /// The lifetime 'a must not overlap with the lifetime of any other call to [`borrow`] or
+> +    /// `borrow_mut` on the same object.
+> +    ///
+> +    /// [`into_foreign`]: Self::into_foreign
+> +    /// [`from_foreign`]: Self::from_foreign
+> +    /// [`borrow`]: Self::borrow
+> +    /// [`Arc`]: crate::sync::Arc
+> +    unsafe fn borrow_mut<'a>(ptr: *const core::ffi::c_void) -> Self::BorrowedMut<'a>;
+>  }
+>  
+>  impl<T: 'static> ForeignOwnable for Box<T> {
+>      type Borrowed<'a> = &'a T;
+> +    type BorrowedMut<'a> = &'a mut T;
+>  
+>      fn into_foreign(self) -> *const core::ffi::c_void {
+>          Box::into_raw(self) as _
+>      }
+>  
+> -    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> &'a T {
+> -        // SAFETY: The safety requirements for this function ensure that the object is still alive,
+> -        // so it is safe to dereference the raw pointer.
+> -        // The safety requirements of `from_foreign` also ensure that the object remains alive for
+> -        // the lifetime of the returned value.
+> -        unsafe { &*ptr.cast() }
+> -    }
+> -
+>      unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self {
+>          // SAFETY: The safety requirements of this function ensure that `ptr` comes from a previous
+>          // call to `Self::into_foreign`.
+>          unsafe { Box::from_raw(ptr as _) }
+>      }
+> +
+> +    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> &'a T {
+> +        // SAFETY: The safety requirements of this method ensure that the object remains alive and
+> +        // immutable for the duration of 'a.
+> +        unsafe { &*ptr.cast() }
+> +    }
+> +
+> +    unsafe fn borrow_mut<'a>(ptr: *const core::ffi::c_void) -> &'a mut T {
+> +        // SAFETY: The safety requirements of this method ensure that the pointer is valid and that
+> +        // nothing else will access the value for the duration of 'a.
+> +        unsafe { &mut *ptr.cast_mut().cast() }
+> +    }
+>  }
+>  
+>  impl ForeignOwnable for () {
+>      type Borrowed<'a> = ();
+> +    type BorrowedMut<'a> = ();
+>  
+>      fn into_foreign(self) -> *const core::ffi::c_void {
+>          core::ptr::NonNull::dangling().as_ptr()
+>      }
+>  
+> -    unsafe fn borrow<'a>(_: *const core::ffi::c_void) -> Self::Borrowed<'a> {}
+> -
+>      unsafe fn from_foreign(_: *const core::ffi::c_void) -> Self {}
+> +
+> +    unsafe fn borrow<'a>(_: *const core::ffi::c_void) -> Self::Borrowed<'a> {}
+> +    unsafe fn borrow_mut<'a>(_: *const core::ffi::c_void) -> Self::BorrowedMut<'a> {}
+>  }
+>  
+>  /// Runs a cleanup function/closure when dropped.
+>
+> diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
+> index 172f563976a9..f152a562c9c3 100644
+> --- a/rust/kernel/sync/arc.rs
+> +++ b/rust/kernel/sync/arc.rs
+> @@ -232,26 +232,35 @@ pub fn ptr_eq(this: &Self, other: &Self) -> bool {
+>  
+>  impl<T: 'static> ForeignOwnable for Arc<T> {
+>      type Borrowed<'a> = ArcBorrow<'a, T>;
+> +    // Mutable access to the `Arc` does not give any extra abilities over
+> +    // immutable access.
+> +    type BorrowedMut<'a> = ArcBorrow<'a, T>;
+>  
+>      fn into_foreign(self) -> *const core::ffi::c_void {
+>          ManuallyDrop::new(self).ptr.as_ptr() as _
+>      }
+>  
+> -    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> ArcBorrow<'a, T> {
+> -        // SAFETY: By the safety requirement of this function, we know that `ptr` came from
+> -        // a previous call to `Arc::into_foreign`.
+> -        let inner = NonNull::new(ptr as *mut ArcInner<T>).unwrap();
+> -
+> -        // SAFETY: The safety requirements of `from_foreign` ensure that the object remains alive
+> -        // for the lifetime of the returned value.
+> -        unsafe { ArcBorrow::new(inner) }
+> -    }
+> -
+>      unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self {
+>          // SAFETY: By the safety requirement of this function, we know that `ptr` came from
+>          // a previous call to `Arc::into_foreign`, which guarantees that `ptr` is valid and
+>          // holds a reference count increment that is transferrable to us.
+> -        unsafe { Self::from_inner(NonNull::new(ptr as _).unwrap()) }
+> +        unsafe { Self::from_inner(NonNull::new_unchecked(ptr as _)) }
+>      }
+> +
+> +    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> ArcBorrow<'a, T> {
+> +        // SAFETY: By the safety requirement of this function, we know that `ptr` came from
+> +        // a previous call to `Arc::into_foreign`.
+> +        let inner = unsafe { NonNull::new_unchecked(ptr as *mut ArcInner<T>) };
+> +
+> +        // SAFETY: The safety requirements ensure that we will not give up our
+> +        // foreign-owned refcount while the `ArcBorrow` is still live.
+> +        unsafe { ArcBorrow::new(inner) }
+> +    }
+> +
+> +    unsafe fn borrow_mut<'a>(ptr: *const core::ffi::c_void) -> ArcBorrow<'a, T> {
+> +        // SAFETY: The safety requirements for `borrow_mut` are a superset of the safety
+> +        // requirements for `borrow`.
+> +        unsafe { Self::borrow(ptr) }
+> +    }
+
+I am not sure this makes sense. How about splitting the trait in two,
+immutable and mutable and only implementing the immutable one or Arc?
+
+Best regards,
+Andreas
+
