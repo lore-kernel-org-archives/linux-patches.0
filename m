@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FBC31773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:16:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D6AC433C7;
-	Wed,  9 Aug 2023 11:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8C91773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:16:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA9DC433C7;
+	Wed,  9 Aug 2023 11:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579797;
-	bh=AHAfLPUTCUUHRsnA2xM2PyG6fmI/bjg4m342f+s8WGk=;
+	s=korg; t=1691579799;
+	bh=T/y0l6N58k8RbchRa8PChcGugPYW48Qa9sCRgQ/A0Ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vGr4QSz8Fw0BeEK5POFz1dxp6BX6AtXmXN5RYC2bn4GjezU7UBSe4KbdJLMF6a7d1
-	 GUpg1gp+kpQgurJaYeKAK9Yo892uzkdPhohbuxaDnFlOiDSYBnARFZYXlVrMJ3i5CA
-	 F8yoxAoL7szO68kwbV6Xpuk71RL243bHsh++dxZk=
+	b=KeSdpZeVDzT7wOuedaE2jUTeilEIO5JpkWEhVTy2P+IvPn67R/u+KLPwhebd0UyOM
+	 SWeK2Qd7e2+gYko73YFvZ+w6p8E4dcez1IFfFjrk91I2PMnhe+lv1ywCOeQU5sC+qb
+	 vKZD0IiTaSVxtw3F1hmyj7qi31VVHwg2gPWRv2wQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 4.19 120/323] ARM: orion5x: fix d2net gpio initialization
-Date: Wed,  9 Aug 2023 12:39:18 +0200
-Message-ID: <20230809103703.603932542@linuxfoundation.org>
+	Nishanth Menon <nm@ti.com>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 103/323] mailbox: ti-msgmgr: Fill non-message tx data fields with 0x0
+Date: Wed,  9 Aug 2023 12:39:01 +0200
+Message-ID: <20230809103702.781237429@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -34,55 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Nishanth Menon <nm@ti.com>
 
-commit f8ef1233939495c405a9faa4bd1ae7d3f581bae4 upstream.
+[ Upstream commit 1b712f18c461bd75f018033a15cf381e712806b5 ]
 
-The DT version of this board has a custom file with the gpio
-device. However, it does nothing because the d2net_init()
-has no caller or prototype:
+Sec proxy/message manager data buffer is 60 bytes with the last of the
+registers indicating transmission completion. This however poses a bit
+of a challenge.
 
-arch/arm/mach-orion5x/board-d2net.c:101:13: error: no previous prototype for 'd2net_init'
+The backing memory for sec_proxy / message manager is regular memory,
+and all sec proxy does is to trigger a burst of all 60 bytes of data
+over to the target thread backing ring accelerator. It doesn't do a
+memory scrub when it moves data out in the burst. When we transmit
+multiple messages, remnants of previous message is also transmitted
+which results in some random data being set in TISCI fields of
+messages that have been expanded forward.
 
-Call it from the board-dt file as intended.
+The entire concept of backward compatibility hinges on the fact that
+the unused message fields remain 0x0 allowing for 0x0 value to be
+specially considered when backward compatibility of message extension
+is done.
 
-Fixes: 94b0bd366e36 ("ARM: orion5x: convert d2net to Device Tree")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230516153109.514251-10-arnd@kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+So, instead of just writing the completion register, we continue
+to fill the message buffer up with 0x0 (note: for partial message
+involving completion, we already do this).
+
+This allows us to scale and introduce ABI changes back also work with
+other boot stages that may have left data in the internal memory.
+
+While at this, be consistent and explicit with the data_reg pointer
+increment.
+
+Fixes: aace66b170ce ("mailbox: Introduce TI message manager driver")
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-orion5x/board-dt.c |    3 +++
- arch/arm/mach-orion5x/common.h   |    6 ++++++
- 2 files changed, 9 insertions(+)
+ drivers/mailbox/ti-msgmgr.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/arch/arm/mach-orion5x/board-dt.c
-+++ b/arch/arm/mach-orion5x/board-dt.c
-@@ -63,6 +63,9 @@ static void __init orion5x_dt_init(void)
- 	if (of_machine_is_compatible("maxtor,shared-storage-2"))
- 		mss2_init();
- 
-+	if (of_machine_is_compatible("lacie,d2-network"))
-+		d2net_init();
+diff --git a/drivers/mailbox/ti-msgmgr.c b/drivers/mailbox/ti-msgmgr.c
+index 01e9e462512b7..eb1e9771037f2 100644
+--- a/drivers/mailbox/ti-msgmgr.c
++++ b/drivers/mailbox/ti-msgmgr.c
+@@ -385,14 +385,20 @@ static int ti_msgmgr_send_data(struct mbox_chan *chan, void *data)
+ 		/* Ensure all unused data is 0 */
+ 		data_trail &= 0xFFFFFFFF >> (8 * (sizeof(u32) - trail_bytes));
+ 		writel(data_trail, data_reg);
+-		data_reg++;
++		data_reg += sizeof(u32);
+ 	}
 +
- 	of_platform_default_populate(NULL, orion5x_auxdata_lookup, NULL);
+ 	/*
+ 	 * 'data_reg' indicates next register to write. If we did not already
+ 	 * write on tx complete reg(last reg), we must do so for transmit
++	 * In addition, we also need to make sure all intermediate data
++	 * registers(if any required), are reset to 0 for TISCI backward
++	 * compatibility to be maintained.
+ 	 */
+-	if (data_reg <= qinst->queue_buff_end)
+-		writel(0, qinst->queue_buff_end);
++	while (data_reg <= qinst->queue_buff_end) {
++		writel(0, data_reg);
++		data_reg += sizeof(u32);
++	}
+ 
+ 	return 0;
  }
- 
---- a/arch/arm/mach-orion5x/common.h
-+++ b/arch/arm/mach-orion5x/common.h
-@@ -75,6 +75,12 @@ extern void mss2_init(void);
- static inline void mss2_init(void) {}
- #endif
- 
-+#ifdef CONFIG_MACH_D2NET_DT
-+void d2net_init(void);
-+#else
-+static inline void d2net_init(void) {}
-+#endif
-+
- /*****************************************************************************
-  * Helpers to access Orion registers
-  ****************************************************************************/
+-- 
+2.39.2
+
 
 
