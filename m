@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC9911C98
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:13:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DFA9C433C8;
-	Wed,  9 Aug 2023 11:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47ED911C98
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:13:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6856EC433C7;
+	Wed,  9 Aug 2023 11:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579611;
-	bh=HWe8+Ld8rLn5dzFZZxaJGGP1vNVK2oI9MUI2oNJLuMQ=;
+	s=korg; t=1691579613;
+	bh=NB1k5HxhTHMe0M1gyflUM11WRtyQdJg8Zn2O7yXThvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g/qRmYj7yjUUUCyCKWxmPOb7gRU1RaVQkBJg/r5r3MIiGQC/AruPvE59QEPeDkNgx
-	 hiufPUeaIY4jnGS9hu2y5xK3jiAwwNUzDcFcNUlDBlNWi0d1jv+cSS0uB2IOmfi83F
-	 HDVd21JYTRasm1zifwTro23U8xaVFDDqThW5WHJc=
+	b=bmgpne/T+Cv0zJmKXJFEcy5++vNh9T0HcKaMBXUZZTu4EgV01UG+7XcG301UWfPCF
+	 QjYX7i4z8v6KQBuiQSD7FLZjgQfLTC7jQqROITvcW4nH/k6fnke8ol1gDWbjH2w9tU
+	 sIMk2QhWVT21BLVO1hE+9VGVy4qR+Ol8ER9fgV20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5da61cf6a9bc1902d422@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 053/323] netlink: Add __sock_i_ino() for __netlink_diag_dump().
-Date: Wed,  9 Aug 2023 12:38:11 +0200
-Message-ID: <20230809103700.553878990@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Natalia Petrova <n.petrova@fintech.ru>
+Subject: [PATCH 4.19 054/323] radeon: avoid double free in ci_dpm_init()
+Date: Wed,  9 Aug 2023 12:38:12 +0200
+Message-ID: <20230809103700.604817681@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -37,150 +36,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 25a9c8a4431c364f97f75558cb346d2ad3f53fbb ]
+[ Upstream commit 20c3dffdccbd494e0dd631d1660aeecbff6775f2 ]
 
-syzbot reported a warning in __local_bh_enable_ip(). [0]
+Several calls to ci_dpm_fini() will attempt to free resources that
+either have been freed before or haven't been allocated yet. This
+may lead to undefined or dangerous behaviour.
 
-Commit 8d61f926d420 ("netlink: fix potential deadlock in
-netlink_set_err()") converted read_lock(&nl_table_lock) to
-read_lock_irqsave() in __netlink_diag_dump() to prevent a deadlock.
+For instance, if r600_parse_extended_power_table() fails, it might
+call r600_free_extended_power_table() as will ci_dpm_fini() later
+during error handling.
 
-However, __netlink_diag_dump() calls sock_i_ino() that uses
-read_lock_bh() and read_unlock_bh().  If CONFIG_TRACE_IRQFLAGS=y,
-read_unlock_bh() finally enables IRQ even though it should stay
-disabled until the following read_unlock_irqrestore().
+Fix this by only freeing pointers to objects previously allocated.
 
-Using read_lock() in sock_i_ino() would trigger a lockdep splat
-in another place that was fixed in commit f064af1e500a ("net: fix
-a lockdep splat"), so let's add __sock_i_ino() that would be safe
-to use under BH disabled.
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-[0]:
-WARNING: CPU: 0 PID: 5012 at kernel/softirq.c:376 __local_bh_enable_ip+0xbe/0x130 kernel/softirq.c:376
-Modules linked in:
-CPU: 0 PID: 5012 Comm: syz-executor487 Not tainted 6.4.0-rc7-syzkaller-00202-g6f68fc395f49 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/27/2023
-RIP: 0010:__local_bh_enable_ip+0xbe/0x130 kernel/softirq.c:376
-Code: 45 bf 01 00 00 00 e8 91 5b 0a 00 e8 3c 15 3d 00 fb 65 8b 05 ec e9 b5 7e 85 c0 74 58 5b 5d c3 65 8b 05 b2 b6 b4 7e 85 c0 75 a2 <0f> 0b eb 9e e8 89 15 3d 00 eb 9f 48 89 ef e8 6f 49 18 00 eb a8 0f
-RSP: 0018:ffffc90003a1f3d0 EFLAGS: 00010046
-RAX: 0000000000000000 RBX: 0000000000000201 RCX: 1ffffffff1cf5996
-RDX: 0000000000000000 RSI: 0000000000000201 RDI: ffffffff8805c6f3
-RBP: ffffffff8805c6f3 R08: 0000000000000001 R09: ffff8880152b03a3
-R10: ffffed1002a56074 R11: 0000000000000005 R12: 00000000000073e4
-R13: dffffc0000000000 R14: 0000000000000002 R15: 0000000000000000
-FS:  0000555556726300(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000000045ad50 CR3: 000000007c646000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- sock_i_ino+0x83/0xa0 net/core/sock.c:2559
- __netlink_diag_dump+0x45c/0x790 net/netlink/diag.c:171
- netlink_diag_dump+0xd6/0x230 net/netlink/diag.c:207
- netlink_dump+0x570/0xc50 net/netlink/af_netlink.c:2269
- __netlink_dump_start+0x64b/0x910 net/netlink/af_netlink.c:2374
- netlink_dump_start include/linux/netlink.h:329 [inline]
- netlink_diag_handler_dump+0x1ae/0x250 net/netlink/diag.c:238
- __sock_diag_cmd net/core/sock_diag.c:238 [inline]
- sock_diag_rcv_msg+0x31e/0x440 net/core/sock_diag.c:269
- netlink_rcv_skb+0x165/0x440 net/netlink/af_netlink.c:2547
- sock_diag_rcv+0x2a/0x40 net/core/sock_diag.c:280
- netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
- netlink_unicast+0x547/0x7f0 net/netlink/af_netlink.c:1365
- netlink_sendmsg+0x925/0xe30 net/netlink/af_netlink.c:1914
- sock_sendmsg_nosec net/socket.c:724 [inline]
- sock_sendmsg+0xde/0x190 net/socket.c:747
- ____sys_sendmsg+0x71c/0x900 net/socket.c:2503
- ___sys_sendmsg+0x110/0x1b0 net/socket.c:2557
- __sys_sendmsg+0xf7/0x1c0 net/socket.c:2586
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7f5303aaabb9
-Code: 28 c3 e8 2a 14 00 00 66 2e 0f 1f 84 00 00 00 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 c0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007ffc7506e548 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f5303aaabb9
-RDX: 0000000000000000 RSI: 0000000020000180 RDI: 0000000000000003
-RBP: 00007f5303a6ed60 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 00007f5303a6edf0
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
- </TASK>
-
-Fixes: 8d61f926d420 ("netlink: fix potential deadlock in netlink_set_err()")
-Reported-by: syzbot+5da61cf6a9bc1902d422@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=5da61cf6a9bc1902d422
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230626164313.52528-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: cc8dbbb4f62a ("drm/radeon: add dpm support for CI dGPUs (v2)")
+Co-developed-by: Natalia Petrova <n.petrova@fintech.ru>
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h |  1 +
- net/core/sock.c    | 17 ++++++++++++++---
- net/netlink/diag.c |  2 +-
- 3 files changed, 16 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/radeon/ci_dpm.c | 28 ++++++++++++++++++++--------
+ 1 file changed, 20 insertions(+), 8 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 616e84d1670df..72739f72e4b90 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1840,6 +1840,7 @@ static inline void sock_graft(struct sock *sk, struct socket *parent)
- }
+diff --git a/drivers/gpu/drm/radeon/ci_dpm.c b/drivers/gpu/drm/radeon/ci_dpm.c
+index 90c1afe498bea..ce8b14592b69b 100644
+--- a/drivers/gpu/drm/radeon/ci_dpm.c
++++ b/drivers/gpu/drm/radeon/ci_dpm.c
+@@ -5552,6 +5552,7 @@ static int ci_parse_power_table(struct radeon_device *rdev)
+ 	u8 frev, crev;
+ 	u8 *power_state_offset;
+ 	struct ci_ps *ps;
++	int ret;
  
- kuid_t sock_i_uid(struct sock *sk);
-+unsigned long __sock_i_ino(struct sock *sk);
- unsigned long sock_i_ino(struct sock *sk);
+ 	if (!atom_parse_data_header(mode_info->atom_context, index, NULL,
+ 				   &frev, &crev, &data_offset))
+@@ -5581,11 +5582,15 @@ static int ci_parse_power_table(struct radeon_device *rdev)
+ 		non_clock_array_index = power_state->v2.nonClockInfoIndex;
+ 		non_clock_info = (struct _ATOM_PPLIB_NONCLOCK_INFO *)
+ 			&non_clock_info_array->nonClockInfo[non_clock_array_index];
+-		if (!rdev->pm.power_state[i].clock_info)
+-			return -EINVAL;
++		if (!rdev->pm.power_state[i].clock_info) {
++			ret = -EINVAL;
++			goto err_free_ps;
++		}
+ 		ps = kzalloc(sizeof(struct ci_ps), GFP_KERNEL);
+-		if (ps == NULL)
+-			return -ENOMEM;
++		if (ps == NULL) {
++			ret = -ENOMEM;
++			goto err_free_ps;
++		}
+ 		rdev->pm.dpm.ps[i].ps_priv = ps;
+ 		ci_parse_pplib_non_clock_info(rdev, &rdev->pm.dpm.ps[i],
+ 					      non_clock_info,
+@@ -5625,6 +5630,12 @@ static int ci_parse_power_table(struct radeon_device *rdev)
+ 	}
  
- static inline kuid_t sock_net_uid(const struct net *net, const struct sock *sk)
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 347a55519d0a5..5b31f3446fc7a 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -1939,13 +1939,24 @@ kuid_t sock_i_uid(struct sock *sk)
- }
- EXPORT_SYMBOL(sock_i_uid);
- 
--unsigned long sock_i_ino(struct sock *sk)
-+unsigned long __sock_i_ino(struct sock *sk)
- {
- 	unsigned long ino;
- 
--	read_lock_bh(&sk->sk_callback_lock);
-+	read_lock(&sk->sk_callback_lock);
- 	ino = sk->sk_socket ? SOCK_INODE(sk->sk_socket)->i_ino : 0;
--	read_unlock_bh(&sk->sk_callback_lock);
-+	read_unlock(&sk->sk_callback_lock);
-+	return ino;
-+}
-+EXPORT_SYMBOL(__sock_i_ino);
+ 	return 0;
 +
-+unsigned long sock_i_ino(struct sock *sk)
-+{
-+	unsigned long ino;
-+
-+	local_bh_disable();
-+	ino = __sock_i_ino(sk);
-+	local_bh_enable();
- 	return ino;
++err_free_ps:
++	for (i = 0; i < rdev->pm.dpm.num_ps; i++)
++		kfree(rdev->pm.dpm.ps[i].ps_priv);
++	kfree(rdev->pm.dpm.ps);
++	return ret;
  }
- EXPORT_SYMBOL(sock_i_ino);
-diff --git a/net/netlink/diag.c b/net/netlink/diag.c
-index 83a0429805e9d..85ee4891c2c7f 100644
---- a/net/netlink/diag.c
-+++ b/net/netlink/diag.c
-@@ -167,7 +167,7 @@ static int __netlink_diag_dump(struct sk_buff *skb, struct netlink_callback *cb,
- 				 NETLINK_CB(cb->skb).portid,
- 				 cb->nlh->nlmsg_seq,
- 				 NLM_F_MULTI,
--				 sock_i_ino(sk)) < 0) {
-+				 __sock_i_ino(sk)) < 0) {
- 			ret = 1;
- 			break;
- 		}
+ 
+ static int ci_get_vbios_boot_values(struct radeon_device *rdev,
+@@ -5713,25 +5724,26 @@ int ci_dpm_init(struct radeon_device *rdev)
+ 
+ 	ret = ci_get_vbios_boot_values(rdev, &pi->vbios_boot_state);
+ 	if (ret) {
+-		ci_dpm_fini(rdev);
++		kfree(rdev->pm.dpm.priv);
+ 		return ret;
+ 	}
+ 
+ 	ret = r600_get_platform_caps(rdev);
+ 	if (ret) {
+-		ci_dpm_fini(rdev);
++		kfree(rdev->pm.dpm.priv);
+ 		return ret;
+ 	}
+ 
+ 	ret = r600_parse_extended_power_table(rdev);
+ 	if (ret) {
+-		ci_dpm_fini(rdev);
++		kfree(rdev->pm.dpm.priv);
+ 		return ret;
+ 	}
+ 
+ 	ret = ci_parse_power_table(rdev);
+ 	if (ret) {
+-		ci_dpm_fini(rdev);
++		kfree(rdev->pm.dpm.priv);
++		r600_free_extended_power_table(rdev);
+ 		return ret;
+ 	}
+ 
 -- 
 2.39.2
 
