@@ -1,143 +1,122 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C41FE24503
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 19:25:51 +0000 (UTC)
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1bc0d39b52cso1689155ad.2
-        for <patches@lists.linux.dev>; Wed, 09 Aug 2023 12:25:51 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0783A24513
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 19:33:23 +0000 (UTC)
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-51b4ef5378bso163340a12.1
+        for <patches@lists.linux.dev>; Wed, 09 Aug 2023 12:33:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691609151; x=1692213951;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:sender
+        d=gmail.com; s=20221208; t=1691609603; x=1692214403;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hgrUzHI5vFElj1uMt+qwY4hut4/wXqPQ3/5aob6WtDY=;
-        b=Kgvir7UVgpNjhSrYZFSoy1mODLGrKeUEYseirWcnkmy3rHAEhIA5pM3idDM3N+9Zb9
-         UPQ7/KBPwc7nHh6M9OFVyyiFs8Fzeafy0nfWlMrQJEc71zpvNG/0jT6k961KcB0dOZG2
-         zQgUDnjjotgDHR0FE0YPNvg9WAlpEN0o1BvVLs/wmJ4sSe7xV6T+axgaeo/RwVwPO7Zm
-         UZYzazpGcprfmLvmZSgFsgm4GoirUADu96kla+AqGVkdBAz2MeSxfmb/wo2Da5eocYxW
-         2V3W50HmdJqHhntJWPehd1tk3UXYtiyEg92pDnwWzLklaUtxukW4jucS/2knlVOIhqJd
-         iznw==
+        bh=0xVlfa4BbN5B52yKwFRQSAnAaB7SvfP0B/VYlu3C5ok=;
+        b=cW5wg48VUfqEZChf2iHsXRd8YC1OkN/z7sHCpCj29Q9ipmaKoiq3k8NGe3vP+/MRHF
+         PqOI7n6+pACsDV6ZgjuBd8gjegEahfx9S4nbScpuVNvzxiI8TcQOJBJC8flryUApSWKq
+         fZCSNUJBmZVYFo7xFvMQjb3YijXk6f9iGBsPpHNLCpsAVPIRjjS5PGowtL+dZ/hFeSj0
+         epsWdhsecybANey6K3HrECWOlO2O1DkroZijAFP7l2mtzPby3cXyWpszJFrXBSF1TmN9
+         2yeUNeJsjLjQ4WAhXPm1ZvzT/oQK5wElxtjkkSSrnF4MV4rRUGtjvAMfUA3dsgENC5bt
+         AjSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691609151; x=1692213951;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:sender
+        d=1e100.net; s=20221208; t=1691609603; x=1692214403;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hgrUzHI5vFElj1uMt+qwY4hut4/wXqPQ3/5aob6WtDY=;
-        b=BtfN1Zhvr66qvDrIPGQ7FfFbPDEf7VR09ozki9HCBm10tUtdv+jIFbh8O1rjzZNURQ
-         3wpORzljDGzAYcbhQYiXL2T4nltfRNl/ersHkPc3C1PSRR8btGyhfGltEglHHthki6j7
-         F9HJE+U5ballJjHp4dChD2YneivufTGQ+CFna0Xh0tMyVwms1mGCy0dpw6NcNkwzN6vd
-         Mw7626XLdskoA/z+x/rJ3XM/YNE9fdoSgRiZcyVnx2WTWCIKfVelk+j6K4QYQernkJLr
-         Sgn/jEsnkiDyd7nbpbR+xosmIJ9kI1D0ULzampp7Y+fUqKaW6jTcPylHmqkVK4VeJ3yf
-         7eUw==
-X-Gm-Message-State: AOJu0Yy8qEvoxDOIRnvA3RhYVKY5UGXyzxTWbW9DwE1w/JfeH1N3OyYb
-	sM1XS+gEyt4Ppkb+G3rixss=
-X-Google-Smtp-Source: AGHT+IHCh9SaVL8ALKEXvvWwpKGE+QAlwNjwOJ6Afmx2DRcPEM9bCfL4/fWZMM2jxGVdnuDUtJq0sg==
-X-Received: by 2002:a17:902:868e:b0:1bb:3a7:6af7 with SMTP id g14-20020a170902868e00b001bb03a76af7mr46302plo.23.1691609150905;
-        Wed, 09 Aug 2023 12:25:50 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id i12-20020a170902eb4c00b001b8ad8382a4sm11472198pli.216.2023.08.09.12.25.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Aug 2023 12:25:50 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Wed, 9 Aug 2023 12:25:48 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Joel Fernandes <joel@joelfernandes.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	paulmck@kernel.org
-Subject: Re: [PATCH 5.15 00/92] 5.15.126-rc1 review
-Message-ID: <35e4b770-2ead-4a19-ad01-fa75996adef4@roeck-us.net>
-References: <20230809103633.485906560@linuxfoundation.org>
- <20230809135326.GE3031656@google.com>
- <f47340c6-3c41-1f91-d0f9-fe0b59a23aac@roeck-us.net>
- <CAEXW_YQ4GqPwvUF8=8CWmdj=cD56v_eEVK-EirsObQXyBDFVpg@mail.gmail.com>
+        bh=0xVlfa4BbN5B52yKwFRQSAnAaB7SvfP0B/VYlu3C5ok=;
+        b=bAVn8fLvoRcLgIV7vbQHQsS74jb9chlyM6aSvGHj0wMDNCLzcnTG0/NmQFT45s3sUD
+         kbSD2gJBd/q6gLcc9tzs6+MReRlPlzQqXwdh1vXhxhLTwt0ZFveX0/vOEF2cNpnRZs5e
+         aTZ3noTZPisq2lBJ7/UQC8DnrdTGDPn63Q4lUsMvyL0JQWul/iWPvHiZ9QF0p9QNLKZ4
+         344A0z/a01vaTTolu1dnQUdQ2JciEZp23R5plgvUWUuiXXeBIWrKYGKl9uLcPVOCniTt
+         qdLTiyny5X0hHmAwWhVpLEqKsAZ7XVmy/ADfgnPXfFU83S6IJoE7DjqKg4e1d7kTyXko
+         507g==
+X-Gm-Message-State: AOJu0Yy66Hz98jrwwo0RbcW9zATBxx22PhwakGeuOWBhUJv1Gq1nlixd
+	b26bBmKw8RDvx627XM6X4vEEuesbJFZeTA==
+X-Google-Smtp-Source: AGHT+IFCdtHHamFefuaCh4YzSuKB1mBkcLLamyxGektlJ61aV3HY05FFvFoTNIXzg6njdKJSBSNsKg==
+X-Received: by 2002:a17:90a:fa7:b0:269:14eb:653a with SMTP id 36-20020a17090a0fa700b0026914eb653amr250920pjz.4.1691609603068;
+        Wed, 09 Aug 2023 12:33:23 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id 25-20020a17090a199900b002636e5c224asm1956681pji.56.2023.08.09.12.33.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Aug 2023 12:33:22 -0700 (PDT)
+Message-ID: <cf831d49-ebdc-d132-9b8e-189e9688a9f2@gmail.com>
+Date: Wed, 9 Aug 2023 12:33:17 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAEXW_YQ4GqPwvUF8=8CWmdj=cD56v_eEVK-EirsObQXyBDFVpg@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 5.15 11/92] firmware: arm_scmi: Fix chan_free cleanup on
+ SMC
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ Jim Quinlan <james.quinlan@broadcom.com>
+Cc: patches@lists.linux.dev, Bjorn Andersson <andersson@kernel.org>,
+ Cristian Marussi <cristian.marussi@arm.com>,
+ Sudeep Holla <sudeep.holla@arm.com>, Sasha Levin <sashal@kernel.org>
+References: <20230809103633.485906560@linuxfoundation.org>
+ <20230809103633.950016368@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230809103633.950016368@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Aug 09, 2023 at 02:35:59PM -0400, Joel Fernandes wrote:
-> On Wed, Aug 9, 2023 at 12:18 PM Guenter Roeck <linux@roeck-us.net> wrote:
-> >
-> > On 8/9/23 06:53, Joel Fernandes wrote:
-> > > On Wed, Aug 09, 2023 at 12:40:36PM +0200, Greg Kroah-Hartman wrote:
-> > >> This is the start of the stable review cycle for the 5.15.126 release.
-> > >> There are 92 patches in this series, all will be posted as a response
-> > >> to this one.  If anyone has any issues with these being applied, please
-> > >> let me know.
-> > >>
-> > >> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
-> > >> Anything received after that time might be too late.
-> > >>
-> > >> The whole patch series can be found in one patch at:
-> > >>      https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.126-rc1.gz
-> > >> or in the git tree and branch at:
-> > >>      git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > >> and the diffstat can be found below.
-> > >
-> > > Not necesscarily new with 5.15 stable but 3 of the 19 rcutorture scenarios
-> > > hang with this -rc: TREE04, TREE07, TASKS03.
-> > >
-> > > 5.15 has a known stop machine issue where it hangs after 1.5 hours with cpu
-> > > hotplug rcutorture testing. Me and tglx are continuing to debug this. The
-> > > issue does not show up on anything but 5.15 stable kernels and neither on
-> > > mainline.
-> > >
-> >
-> > Do you by any have a crash pattern that we could possibly use to find the crash
-> > in ChromeOS crash logs ? No idea if that would help, but it could provide some
-> > additional data points.
+On 8/9/23 03:40, Greg Kroah-Hartman wrote:
+> From: Cristian Marussi <cristian.marussi@arm.com>
 > 
-> The pattern shows as a hard hang, the system is unresponsive and all CPUs
-> are stuck in stop_machine. Sometimes it recovers on its own from the
-> hang and then RCU immediately gives stall warnings. It takes 1.5 hour
-> to reproduce and sometimes never happens for several hours.
+> [ Upstream commit d1ff11d7ad8704f8d615f6446041c221b2d2ec4d ]
 > 
-> It appears related to CPU hotplug since gdb showed me most of the CPUs
-> are spinning in multi_cpu_stop() / stop machine after the hang.
+> SCMI transport based on SMC can optionally use an additional IRQ to
+> signal message completion. The associated interrupt handler is currently
+> allocated using devres but on shutdown the core SCMI stack will call
+> .chan_free() well before any managed cleanup is invoked by devres.
+> As a consequence, the arrival of a late reply to an in-flight pending
+> transaction could still trigger the interrupt handler well after the
+> SCMI core has cleaned up the channels, with unpleasant results.
 > 
+> Inhibit further message processing on the IRQ path by explicitly freeing
+> the IRQ inside .chan_free() callback itself.
+> 
+> Fixes: dd820ee21d5e ("firmware: arm_scmi: Augment SMC/HVC to allow optional interrupt")
+> Reported-by: Bjorn Andersson <andersson@kernel.org>
+> Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+> Link: https://lore.kernel.org/r/20230719173533.2739319-1-cristian.marussi@arm.com
+> Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>   drivers/firmware/arm_scmi/smc.c | 17 +++++++++++------
+>   1 file changed, 11 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/firmware/arm_scmi/smc.c b/drivers/firmware/arm_scmi/smc.c
+> index 4effecc3bb463..f529004f1922e 100644
+> --- a/drivers/firmware/arm_scmi/smc.c
+> +++ b/drivers/firmware/arm_scmi/smc.c
+> @@ -21,6 +21,7 @@
+>   /**
+>    * struct scmi_smc - Structure representing a SCMI smc transport
+>    *
+> + * @irq: An optional IRQ for completion
+>    * @cinfo: SCMI channel info
+>    * @shmem: Transmit/Receive shared memory area
+>    * @shmem_lock: Lock to protect access to Tx/Rx shared memory area
+> @@ -30,6 +31,7 @@
+>    */
+>   
+>   struct scmi_smc {
+> +	int irq;
 
-Hmm, we do see lots of soft lockups with multi_cpu_stop() in the backtrace,
-but not with v5.15.y but with v5.4.y. The actual hang is in stop_machine_yield().
-Example:
+For this backport to apply as-is and not define a duplicate "int irq" 
+field we need to take in f716cbd33f038af87824c30e165b3b70e4c6be1e 
+("firmware: arm_scmi: Make smc transport use common completions") which 
+did remove the "int irq" from struct scmi_smc.
 
-<0>[63298.624328] watchdog: BUG: soft lockup - CPU#0 stuck for 11s! [migration/0:11]
-<4>[63298.624331] Modules linked in: 8021q ccm snd_seq_dummy snd_seq snd_seq_device bridge stp llc tun nf_nat_tftp nf_conntrack_tftp nf_nat_ftp nf_conntrack_ftp esp6 ah6 ip6t_REJECT ip6t_ipv6header vhost_vsock vhost vmw_vsock_virtio_transport_common vsock veth rfcomm xt_cgroup cmac algif_hash algif_skcipher af_alg xt_MASQUERADE uinput iwlmvm snd_soc_skl_ssp_clk iwl7000_mac80211 btusb snd_soc_kbl_da7219_max98357a btrtl btintel snd_soc_hdac_hdmi btbcm bluetooth snd_soc_dmic snd_soc_skl ecdh_generic ecc snd_soc_sst_ipc snd_soc_sst_dsp snd_soc_hdac_hda uvcvideo snd_soc_acpi_intel_match snd_soc_acpi snd_hda_ext_core videobuf2_vmalloc videobuf2_v4l2 videobuf2_common snd_intel_dspcfg videobuf2_memops snd_hda_codec snd_hwdep snd_hda_core iwlwifi snd_soc_da7219 snd_soc_max98357a fuse ip6table_nat cfg80211 lzo_rle lzo_compress zram joydev
-<4>[63298.624357] CPU: 0 PID: 11 Comm: migration/0 Tainted: G     U  W         5.4.180-17902-g44152654f29b #1
-<4>[63298.624358] Hardware name: Google Nami/Nami, BIOS Google_Nami.10775.145.0 09/19/2019
-<4>[63298.624363] RIP: 0010:stop_machine_yield+0xb/0xd
-<4>[63298.624366] Code: ff 74 b6 f0 ff 0f 75 b1 48 83 c7 08 e8 1f cb f9 ff eb a6 e8 a0 20 e3 ff eb bc e8 50 4b f5 ff 0f 1f 44 00 00 55 48 89 e5 f3 90 <5d> c3 0f 1f 44 00 00 55 48 89 e5 41 57 41 56 41 55 41 54 53 48 81
-<4>[63298.624368] RSP: 0000:ffffbaf90006fe38 EFLAGS: 00000293 ORIG_RAX: ffffffffffffff13
-<4>[63298.624370] RAX: 0000000000000000 RBX: ffffbaf90300bca8 RCX: 0000000000000000
-<4>[63298.624371] RDX: 0000000000000000 RSI: 0000000000000008 RDI: ffffffffb0d46920
-<4>[63298.624373] RBP: ffffbaf90006fe38 R08: 0000000000000002 R09: 0000398ecf9a0ac5
-<4>[63298.624374] R10: 0000000000000171 R11: ffffffffaf9cfb11 R12: 0000000000000001
-<4>[63298.624376] R13: ffff9b09baa22201 R14: ffffffffb0d46920 R15: 0000000000000001
-<4>[63298.624377] FS:  0000000000000000(0000) GS:ffff9b09baa00000(0000) knlGS:0000000000000000
-<4>[63298.624379] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-<4>[63298.624380] CR2: 0000153c00724820 CR3: 0000000171ab8005 CR4: 00000000003606f0
-<4>[63298.624382] Call Trace:
-<4>[63298.624386]  multi_cpu_stop+0x89/0x119
-<4>[63298.624389]  ? stop_two_cpus+0x24d/0x24d
-<4>[63298.624391]  cpu_stopper_thread+0x8f/0x111
-<4>[63298.624394]  smpboot_thread_fn+0x174/0x212
-<4>[63298.624397]  kthread+0x147/0x156
-<4>[63298.624399]  ? cpu_report_death+0x43/0x43
-<4>[63298.624401]  ? kthread_blkcg+0x2e/0x2e
-<4>[63298.624404]  ret_from_fork+0x35/0x40
-<0>[63298.624407] Kernel panic - not syncing: softlockup: hung tasks
+Alternatively, we can just omit this hunk adding the "int irq" member 
+from the back port.
 
-I guess that is something different ?
+This is a 5.15 stable kernel problem only because 
+f716cbd33f038af87824c30e165b3b70e4c6be1e is in v5.18 and newer.
+-- 
+Florian
 
-Guenter
