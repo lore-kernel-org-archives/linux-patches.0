@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644E817AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:40:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861F8C433C7;
-	Wed,  9 Aug 2023 11:40:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD6817AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:40:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FFAC433C8;
+	Wed,  9 Aug 2023 11:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581226;
-	bh=y1UW9pLC2EB6CuBGzUqVmpUPEDYuH/w884/kObIcfPY=;
+	s=korg; t=1691581229;
+	bh=zMnmc6NzL5Dj5z/zJauR/HkAMOA2mMb/VWXObyjOp0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h68ANreqngkS1V+6MZHRNaXIGygnOMWhc47vqke2LbjgQ+JyBhK34OcEUVnj3f6xQ
-	 RgAJGwmoi8M5G3Q/a4BtKGjOOPmfk+pQw9NSaaVyQuq9xl96Y1D3JKy3DCW2TxhIfk
-	 sU4C/RgDhn7ZZ9DMIoBu/58Waukj7ad/MLn1wHA0=
+	b=ykyS5b38ZXxx7dKqUyRafPE+xcy+ATMsCPmASwwiHE6VeZqhYVsJkisWikuylbbqI
+	 5X9E90zdTXZS1sAauNU42gcdJ3ET6fYlUqbJxEaTFDyAn1v15PY1uPv4kc6fLNcDe8
+	 Z2X2XwL+qCTmmOEt07IXfsKBTepKZcbuI1CB0hw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nadav Amit <namit@vmware.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Li Huafei <lihuafei1@huawei.com>
-Subject: [PATCH 5.10 121/201] x86/kprobes: Fix JNG/JNLE emulation
-Date: Wed,  9 Aug 2023 12:42:03 +0200
-Message-ID: <20230809103647.807568780@linuxfoundation.org>
+	Oleksandr Natalenko <oleksandr@natalenko.name>,
+	Phil Elwell <phil@raspberrypi.com>,
+	Andres Freund <andres@anarazel.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 122/201] io_uring: gate iowait schedule on having pending requests
+Date: Wed,  9 Aug 2023 12:42:04 +0200
+Message-ID: <20230809103647.836877616@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -35,41 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nadav Amit <namit@vmware.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 8924779df820c53875abaeb10c648e9cb75b46d4 ]
+Commit 7b72d661f1f2f950ab8c12de7e2bc48bdac8ed69 upstream.
 
-When kprobes emulates JNG/JNLE instructions on x86 it uses the wrong
-condition. For JNG (opcode: 0F 8E), according to Intel SDM, the jump is
-performed if (ZF == 1 or SF != OF). However the kernel emulation
-currently uses 'and' instead of 'or'.
+A previous commit made all cqring waits marked as iowait, as a way to
+improve performance for short schedules with pending IO. However, for
+use cases that have a special reaper thread that does nothing but
+wait on events on the ring, this causes a cosmetic issue where we
+know have one core marked as being "busy" with 100% iowait.
 
-As a result, setting a kprobe on JNG/JNLE might cause the kernel to
-behave incorrectly whenever the kprobe is hit.
+While this isn't a grave issue, it is confusing to users. Rather than
+always mark us as being in iowait, gate setting of current->in_iowait
+to 1 by whether or not the waiting task has pending requests.
 
-Fix by changing the 'and' to 'or'.
-
-Fixes: 6256e668b7af ("x86/kprobes: Use int3 instead of debug trap for single-step")
-Signed-off-by: Nadav Amit <namit@vmware.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20220813225943.143767-1-namit@vmware.com
-Signed-off-by: Li Huafei <lihuafei1@huawei.com>
+Link: https://lore.kernel.org/io-uring/CAMEGJJ2RxopfNQ7GNLhr7X9=bHXKo+G5OOe0LUq=+UgLXsv1Xg@mail.gmail.com/
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217699
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217700
+Reported-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+Reported-by: Phil Elwell <phil@raspberrypi.com>
+Tested-by: Andres Freund <andres@anarazel.de>
+Fixes: 8a796565cec3 ("io_uring: Use io_schedule* in cqring wait")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/kprobes/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/io_uring.c |   23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
---- a/arch/x86/kernel/kprobes/core.c
-+++ b/arch/x86/kernel/kprobes/core.c
-@@ -505,7 +505,7 @@ static void kprobe_emulate_jcc(struct kp
- 		match = ((regs->flags & X86_EFLAGS_SF) >> X86_EFLAGS_SF_BIT) ^
- 			((regs->flags & X86_EFLAGS_OF) >> X86_EFLAGS_OF_BIT);
- 		if (p->ainsn.jcc.type >= 0xe)
--			match = match && (regs->flags & X86_EFLAGS_ZF);
-+			match = match || (regs->flags & X86_EFLAGS_ZF);
- 	}
- 	__kprobe_emulate_jmp(p, regs, (match && !invert) || (!match && invert));
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -7631,12 +7631,21 @@ static int io_run_task_work_sig(void)
+ 	return -EINTR;
  }
+ 
++static bool current_pending_io(void)
++{
++	struct io_uring_task *tctx = current->io_uring;
++
++	if (!tctx)
++		return false;
++	return percpu_counter_read_positive(&tctx->inflight);
++}
++
+ /* when returns >0, the caller should retry */
+ static inline int io_cqring_wait_schedule(struct io_ring_ctx *ctx,
+ 					  struct io_wait_queue *iowq,
+ 					  ktime_t *timeout)
+ {
+-	int token, ret;
++	int io_wait, ret;
+ 
+ 	/* make sure we run task_work before checking for signals */
+ 	ret = io_run_task_work_sig();
+@@ -7647,15 +7656,17 @@ static inline int io_cqring_wait_schedul
+ 		return 1;
+ 
+ 	/*
+-	 * Use io_schedule_prepare/finish, so cpufreq can take into account
+-	 * that the task is waiting for IO - turns out to be important for low
+-	 * QD IO.
++	 * Mark us as being in io_wait if we have pending requests, so cpufreq
++	 * can take into account that the task is waiting for IO - turns out
++	 * to be important for low QD IO.
+ 	 */
+-	token = io_schedule_prepare();
++	io_wait = current->in_iowait;
++	if (current_pending_io())
++		current->in_iowait = 1;
+ 	ret = 1;
+ 	if (!schedule_hrtimeout(timeout, HRTIMER_MODE_ABS))
+ 		ret = -ETIME;
+-	io_schedule_finish(token);
++	current->in_iowait = io_wait;
+ 	return ret;
+ }
+ 
 
 
