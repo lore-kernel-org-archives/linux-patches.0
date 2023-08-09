@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6DC66131
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:55:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58AA9C433C7;
-	Wed,  9 Aug 2023 10:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E5214F9E
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:56:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA3FC433C9;
+	Wed,  9 Aug 2023 10:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578557;
-	bh=myzsEbiuiiE31yTWcGE4JKnyijL/7CIx+4HCyT4srrw=;
+	s=korg; t=1691578560;
+	bh=RgI5jdTOnRVkueDhWlTHRh5eBIn4loITRH0kFpcrMZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CFCQ5JWvZ6uSO4c/XBESEPKwGX0r0K9H7BKbmfgHMZXUuWGNlKdmgmf94L4ijq/Ga
-	 Kw7LcudXynijwp8d8TzbbeJ1SB3syqvBS8hGUxRZ24jSZASzxkl65jJ+2R5Dg/X9V2
-	 mQ9PIdHYZDEDIygeNtmLj8pPla9tnBt7JbOGjSeM=
+	b=K2P9YT4/f4z/D8hMmXvH4jpzry5YoNy9rjJVO9XQgIZ+7z+gG0Ck7tQFv/CfGS2UM
+	 iOiVg1GOZMW1rvCCsqCvjQjmeDDPei9KAlyF/ZS+yzFwQJ+q3b92qTNAaPyCGT4cml
+	 zVQZWcR+dqQ5KxiVqwH21HhOHo9NfBkxGsH6sBW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mikelley@microsoft.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 072/127] scsi: storvsc: Limit max_sectors for virtual Fibre Channel devices
-Date: Wed,  9 Aug 2023 12:40:59 +0200
-Message-ID: <20230809103639.033388678@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>,
+	Xiubo Li <xiubli@redhat.com>
+Subject: [PATCH 6.1 073/127] libceph: fix potential hang in ceph_osdc_notify()
+Date: Wed,  9 Aug 2023 12:41:00 +0200
+Message-ID: <20230809103639.063115413@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -34,51 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Kelley <mikelley@microsoft.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit 010c1e1c5741365dbbf44a5a5bb9f30192875c4c upstream.
+commit e6e2843230799230fc5deb8279728a7218b0d63c upstream.
 
-The Hyper-V host is queried to get the max transfer size that it supports,
-and this value is used to set max_sectors for the synthetic SCSI
-controller.  However, this max transfer size may be too large for virtual
-Fibre Channel devices, which are limited to 512 Kbytes.  If a larger
-transfer size is used with a vFC device, Hyper-V always returns an error,
-and storvsc logs a message like this where the SRB status and SCSI status
-are both zero:
+If the cluster becomes unavailable, ceph_osdc_notify() may hang even
+with osd_request_timeout option set because linger_notify_finish_wait()
+waits for MWatchNotify NOTIFY_COMPLETE message with no associated OSD
+request in flight -- it's completely asynchronous.
 
-hv_storvsc <GUID>: tag#197 cmd 0x8a status: scsi 0x0 srb 0x0 hv 0xc0000001
+Introduce an additional timeout, derived from the specified notify
+timeout.  While at it, switch both waits to killable which is more
+correct.
 
-Add logic to limit the max transfer size to 512 Kbytes for vFC devices.
-
-Fixes: 1d3e0980782f ("scsi: storvsc: Correct reporting of Hyper-V I/O size limits")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/1689887102-32806-1-git-send-email-mikelley@microsoft.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+Reviewed-by: Xiubo Li <xiubli@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/storvsc_drv.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/ceph/osd_client.c |   20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -365,6 +365,7 @@ static void storvsc_on_channel_callback(
- #define STORVSC_FC_MAX_LUNS_PER_TARGET			255
- #define STORVSC_FC_MAX_TARGETS				128
- #define STORVSC_FC_MAX_CHANNELS				8
-+#define STORVSC_FC_MAX_XFER_SIZE			((u32)(512 * 1024))
+--- a/net/ceph/osd_client.c
++++ b/net/ceph/osd_client.c
+@@ -3334,17 +3334,24 @@ static int linger_reg_commit_wait(struct
+ 	int ret;
  
- #define STORVSC_IDE_MAX_LUNS_PER_TARGET			64
- #define STORVSC_IDE_MAX_TARGETS				1
-@@ -2002,6 +2003,9 @@ static int storvsc_probe(struct hv_devic
- 	 * protecting it from any weird value.
- 	 */
- 	max_xfer_bytes = round_down(stor_device->max_transfer_bytes, HV_HYP_PAGE_SIZE);
-+	if (is_fc)
-+		max_xfer_bytes = min(max_xfer_bytes, STORVSC_FC_MAX_XFER_SIZE);
+ 	dout("%s lreq %p linger_id %llu\n", __func__, lreq, lreq->linger_id);
+-	ret = wait_for_completion_interruptible(&lreq->reg_commit_wait);
++	ret = wait_for_completion_killable(&lreq->reg_commit_wait);
+ 	return ret ?: lreq->reg_commit_error;
+ }
+ 
+-static int linger_notify_finish_wait(struct ceph_osd_linger_request *lreq)
++static int linger_notify_finish_wait(struct ceph_osd_linger_request *lreq,
++				     unsigned long timeout)
+ {
+-	int ret;
++	long left;
+ 
+ 	dout("%s lreq %p linger_id %llu\n", __func__, lreq, lreq->linger_id);
+-	ret = wait_for_completion_interruptible(&lreq->notify_finish_wait);
+-	return ret ?: lreq->notify_finish_error;
++	left = wait_for_completion_killable_timeout(&lreq->notify_finish_wait,
++						ceph_timeout_jiffies(timeout));
++	if (left <= 0)
++		left = left ?: -ETIMEDOUT;
++	else
++		left = lreq->notify_finish_error; /* completed */
 +
- 	/* max_hw_sectors_kb */
- 	host->max_sectors = max_xfer_bytes >> 9;
- 	/*
++	return left;
+ }
+ 
+ /*
+@@ -4896,7 +4903,8 @@ int ceph_osdc_notify(struct ceph_osd_cli
+ 	linger_submit(lreq);
+ 	ret = linger_reg_commit_wait(lreq);
+ 	if (!ret)
+-		ret = linger_notify_finish_wait(lreq);
++		ret = linger_notify_finish_wait(lreq,
++				 msecs_to_jiffies(2 * timeout * MSEC_PER_SEC));
+ 	else
+ 		dout("lreq %p failed to initiate notify %d\n", lreq, ret);
+ 
 
 
