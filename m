@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8931773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:15:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0530C433C8;
-	Wed,  9 Aug 2023 11:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0589B1773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:15:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F541C433C8;
+	Wed,  9 Aug 2023 11:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579708;
-	bh=GsWm+AhUU0ytkmuDUgF+CMjfi5rFL/AOwPwMdfi9y1w=;
+	s=korg; t=1691579710;
+	bh=gIGLAdgQn9vJGnbBSe1F7LP1EKdgb4kes7QT/yotcdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vcQQqs8/4KpiOfM+kEtCOp8NtXfLqYp4Xdrbcaywe0JZIY9dwff810iYBderKneRA
-	 iKMO+Q+X7HZefLOU3x63yNvUEPvXzuR7cHkF7n8QMSuklJJt5mNzPOh05SZLzPr50Y
-	 7l3pGSVd/AMdC8auG8JhIbgjpQyO/W6WepYOfp7A=
+	b=gixD/PZwEb6/1hyyy8wRw2iWU30CWTBGRZaG48H0muLajZWDLkyDN4TEhPAWNUWFG
+	 yZt2No2P53Nm1HX7Y9MRZcYVYn/JYz/2KHIFMFRG/gTtK7vqyVj8G01J1n6CFywfDJ
+	 lvEm3jVFPVf43Yw9G5Bk0xCxAprt8XgOwJsL+c34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Rob Landley <rob@landley.net>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 088/323] sh: j2: Use ioremap() to translate device tree address into kernel memory
-Date: Wed,  9 Aug 2023 12:38:46 +0200
-Message-ID: <20230809103702.125940976@linuxfoundation.org>
+Subject: [PATCH 4.19 071/323] pinctrl: at91-pio4: check return value of devm_kasprintf()
+Date: Wed,  9 Aug 2023 12:38:29 +0200
+Message-ID: <20230809103701.397992340@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,41 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit bc9d1f0cecd2407cfb2364a7d4be2f52d1d46a9d ]
+[ Upstream commit f6fd5d4ff8ca0b24cee1af4130bcb1fa96b61aa0 ]
 
-Addresses the following warning when building j2_defconfig:
+devm_kasprintf() returns a pointer to dynamically allocated memory.
+Pointer could be NULL in case allocation fails. Check pointer validity.
+Identified with coccinelle (kmerr.cocci script).
 
-arch/sh/kernel/cpu/sh2/probe.c: In function 'scan_cache':
-arch/sh/kernel/cpu/sh2/probe.c:24:16: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-   24 |  j2_ccr_base = (u32 __iomem *)of_flat_dt_translate_address(node);
-      |
-
-Fixes: 5a846abad07f ("sh: add support for J-Core J2 processor")
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Rob Landley <rob@landley.net>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/20230503125746.331835-1-glaubitz@physik.fu-berlin.de
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Fixes: 776180848b57 ("pinctrl: introduce driver for Atmel PIO4 controller")
+Depends-on: 1c4e5c470a56 ("pinctrl: at91: use devm_kasprintf() to avoid potential leaks")
+Depends-on: 5a8f9cf269e8 ("pinctrl: at91-pio4: use proper format specifier for unsigned int")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230615105333.585304-4-claudiu.beznea@microchip.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/kernel/cpu/sh2/probe.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-at91-pio4.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/sh/kernel/cpu/sh2/probe.c b/arch/sh/kernel/cpu/sh2/probe.c
-index a5bd036426789..75dcb1d6bc62f 100644
---- a/arch/sh/kernel/cpu/sh2/probe.c
-+++ b/arch/sh/kernel/cpu/sh2/probe.c
-@@ -24,7 +24,7 @@ static int __init scan_cache(unsigned long node, const char *uname,
- 	if (!of_flat_dt_is_compatible(node, "jcore,cache"))
- 		return 0;
+diff --git a/drivers/pinctrl/pinctrl-at91-pio4.c b/drivers/pinctrl/pinctrl-at91-pio4.c
+index 5b883eb49ce92..cbbda24bf6a80 100644
+--- a/drivers/pinctrl/pinctrl-at91-pio4.c
++++ b/drivers/pinctrl/pinctrl-at91-pio4.c
+@@ -1024,6 +1024,8 @@ static int atmel_pinctrl_probe(struct platform_device *pdev)
+ 		/* Pin naming convention: P(bank_name)(bank_pin_number). */
+ 		pin_desc[i].name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "P%c%d",
+ 						  bank + 'A', line);
++		if (!pin_desc[i].name)
++			return -ENOMEM;
  
--	j2_ccr_base = (u32 __iomem *)of_flat_dt_translate_address(node);
-+	j2_ccr_base = ioremap(of_flat_dt_translate_address(node), 4);
- 
- 	return 1;
- }
+ 		group->name = group_names[i] = pin_desc[i].name;
+ 		group->pin = pin_desc[i].number;
 -- 
 2.39.2
 
