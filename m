@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028F6174EE
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:05:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A1AC433C8;
-	Wed,  9 Aug 2023 11:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7136174EE
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:05:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45AC0C433C7;
+	Wed,  9 Aug 2023 11:05:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579137;
-	bh=u4hkklQ7mPd5TNvxqqKW2I1ApRm6cAGp/u7Ip4YwA+0=;
+	s=korg; t=1691579140;
+	bh=F9JFjvIZkFGID7ZdIWhJBN34tcAEXsrD8X731whRwZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uCitcEinsKITepuAe4J21oPfXpr8osBXqrY8gj9YaWIksRRf30IB7KxCWKq373Rzz
-	 KiAjmVrfgk6x+JklT4V0g+CmJANcj8UjH6946euEbYihx2+w9HjWPnTnLgJ2ZLpkoi
-	 u35MnbEqdAjWpgI7cVnl0A1F84OGUZyi4e/OLEss=
+	b=ij5Vkyz6TIkufp+FDbzqQ+R12eckXHALayqRl19ybAS911OLQrsQ9/0ViLBcGc0oW
+	 i7pD99jWF3SQL2LfpAyqwyWZNfIzh1frHOm9HSpWxK/5qM0GcvzqS1/QFxTyDshb6N
+	 uXwkwwrDgym6JbZkoDXBP6cwe+57Y2iqMGqSgeSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	netfilter-devel@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Florent Revest <revest@chromium.org>,
+	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 4.14 089/204] netfilter: nf_tables: unbind non-anonymous set if rule construction fails
-Date: Wed,  9 Aug 2023 12:40:27 +0200
-Message-ID: <20230809103645.623787672@linuxfoundation.org>
+Subject: [PATCH 4.14 090/204] netfilter: conntrack: Avoid nf_ct_helper_hash uses after free
+Date: Wed,  9 Aug 2023 12:40:28 +0200
+Message-ID: <20230809103645.653339087@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -34,30 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Florent Revest <revest@chromium.org>
 
-[ 3e70489721b6c870252c9082c496703677240f53 ]
+commit 6eef7a2b933885a17679eb8ed0796ddf0ee5309b upstream.
 
-Otherwise a dangling reference to a rule object that is gone remains
-in the set binding list.
+If nf_conntrack_init_start() fails (for example due to a
+register_nf_conntrack_bpf() failure), the nf_conntrack_helper_fini()
+clean-up path frees the nf_ct_helper_hash map.
 
-Fixes: 26b5a5712eb8 ("netfilter: nf_tables: add NFT_TRANS_PREPARE_ERROR to deal with bound set/chain")
+When built with NF_CONNTRACK=y, further netfilter modules (e.g:
+netfilter_conntrack_ftp) can still be loaded and call
+nf_conntrack_helpers_register(), independently of whether nf_conntrack
+initialized correctly. This accesses the nf_ct_helper_hash dangling
+pointer and causes a uaf, possibly leading to random memory corruption.
+
+This patch guards nf_conntrack_helper_register() from accessing a freed
+or uninitialized nf_ct_helper_hash pointer and fixes possible
+uses-after-free when loading a conntrack module.
+
+Cc: stable@vger.kernel.org
+Fixes: 12f7a505331e ("netfilter: add user-space connection tracking helper infrastructure")
+Signed-off-by: Florent Revest <revest@chromium.org>
+Reviewed-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nf_conntrack_helper.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -3461,6 +3461,8 @@ void nf_tables_deactivate_set(const stru
- 		nft_set_trans_unbind(ctx, set);
- 		if (set->flags & NFT_SET_ANONYMOUS)
- 			nft_deactivate_next(ctx->net, set);
-+		else
-+			list_del_rcu(&binding->list);
+--- a/net/netfilter/nf_conntrack_helper.c
++++ b/net/netfilter/nf_conntrack_helper.c
+@@ -402,6 +402,9 @@ int nf_conntrack_helper_register(struct
+ 	BUG_ON(me->expect_class_max >= NF_CT_MAX_EXPECT_CLASSES);
+ 	BUG_ON(strlen(me->name) > NF_CT_HELPER_NAME_LEN - 1);
  
- 		set->use--;
- 		break;
++	if (!nf_ct_helper_hash)
++		return -ENOENT;
++
+ 	if (me->expect_policy->max_expected > NF_CT_EXPECT_MAX_CNT)
+ 		return -EINVAL;
+ 
+@@ -572,4 +575,5 @@ void nf_conntrack_helper_fini(void)
+ {
+ 	nf_ct_extend_unregister(&helper_extend);
+ 	nf_ct_free_hashtable(nf_ct_helper_hash, nf_ct_helper_hsize);
++	nf_ct_helper_hash = NULL;
+ }
 
 
