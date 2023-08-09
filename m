@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADF0174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:03:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A32C433C7;
-	Wed,  9 Aug 2023 11:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602C3174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:03:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7889C433C8;
+	Wed,  9 Aug 2023 11:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579026;
-	bh=S+UI0Vs6/sGEn1Joh81E7LbD6KqwNAtzlMZT59wKQxw=;
+	s=korg; t=1691579029;
+	bh=Zyl2TsRFo6xG9QTn6JXHh8R6JmKmvFSHWQSAEkmElhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QEP7IR16c71y8CM9NKr3M0iOi7no03k1X0/oihrX2G4ZElV+IuJC45ujGJdVq7SBu
-	 H2bsloguX+QOGbj3bWDyjC4AnO0uQsa8pzRxIsA/2ucQcMrqvK+Eyvvf1nBLCLgXOV
-	 PQXOVJtXQ4lOcUNi7BrhpU9/Vk3L1lXdt5pUfBZA=
+	b=qgN5MG/PhQlcqLZdSbLEkTKtINWPGhtAau1fhTykuWub40bEv9tX61FL3pwkjr11m
+	 m/f56SgkD3GAp7OiM5DxVJBrFgUUbRrXyqMxqex2n2QGi3vxaBZFVx+EoTM/qeSJZy
+	 XUVMSFNJXYeNuyyb5sbJuj5i2PVOF1lqWcv0Jm0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 020/204] wifi: ray_cs: Fix an error handling path in ray_probe()
-Date: Wed,  9 Aug 2023 12:39:18 +0200
-Message-ID: <20230809103643.250930575@linuxfoundation.org>
+Subject: [PATCH 4.14 011/204] md/raid10: fix io loss while replacement replace rdev
+Date: Wed,  9 Aug 2023 12:39:09 +0200
+Message-ID: <20230809103642.957299233@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -36,67 +36,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 4f8d66a9fb2edcd05c1e563456a55a08910bfb37 ]
+[ Upstream commit 2ae6aaf76912bae53c74b191569d2ab484f24bf3 ]
 
-Should ray_config() fail, some resources need to be released as already
-done in the remove function.
+When removing a disk with replacement, the replacement will be used to
+replace rdev. During this process, there is a brief window in which both
+rdev and replacement are read as NULL in raid10_write_request(). This
+will result in io not being submitted but it should be.
 
-While at it, remove a useless and erroneous comment. The probe is
-ray_probe(), not ray_attach().
+  //remove				//write
+  raid10_remove_disk			raid10_write_request
+   mirror->rdev = NULL
+					 read rdev -> NULL
+   mirror->rdev = mirror->replacement
+   mirror->replacement = NULL
+					 read replacement -> NULL
 
-Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/8c544d18084f8b37dd108e844f7e79e85ff708ff.1684570373.git.christophe.jaillet@wanadoo.fr
+Fix it by reading replacement first and rdev later, meanwhile, use smp_mb()
+to prevent memory reordering.
+
+Fixes: 475b0321a4df ("md/raid10: writes should get directed to replacement as well as original.")
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230602091839.743798-3-linan666@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ray_cs.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/md/raid10.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ray_cs.c b/drivers/net/wireless/ray_cs.c
-index 1ee1505632600..16d2385bd426e 100644
---- a/drivers/net/wireless/ray_cs.c
-+++ b/drivers/net/wireless/ray_cs.c
-@@ -283,13 +283,14 @@ static int ray_probe(struct pcmcia_device *p_dev)
- {
- 	ray_dev_t *local;
- 	struct net_device *dev;
-+	int ret;
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index 95c3a21cd7335..25c8f3e3d2edb 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -775,8 +775,16 @@ static struct md_rdev *read_balance(struct r10conf *conf,
+ 		disk = r10_bio->devs[slot].devnum;
+ 		rdev = rcu_dereference(conf->mirrors[disk].replacement);
+ 		if (rdev == NULL || test_bit(Faulty, &rdev->flags) ||
+-		    r10_bio->devs[slot].addr + sectors > rdev->recovery_offset)
++		    r10_bio->devs[slot].addr + sectors >
++		    rdev->recovery_offset) {
++			/*
++			 * Read replacement first to prevent reading both rdev
++			 * and replacement as NULL during replacement replace
++			 * rdev.
++			 */
++			smp_mb();
+ 			rdev = rcu_dereference(conf->mirrors[disk].rdev);
++		}
+ 		if (rdev == NULL ||
+ 		    test_bit(Faulty, &rdev->flags))
+ 			continue;
+@@ -1366,9 +1374,15 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
  
- 	dev_dbg(&p_dev->dev, "ray_attach()\n");
- 
- 	/* Allocate space for private device-specific data */
- 	dev = alloc_etherdev(sizeof(ray_dev_t));
- 	if (!dev)
--		goto fail_alloc_dev;
-+		return -ENOMEM;
- 
- 	local = netdev_priv(dev);
- 	local->finder = p_dev;
-@@ -326,11 +327,16 @@ static int ray_probe(struct pcmcia_device *p_dev)
- 	init_timer(&local->timer);
- 
- 	this_device = p_dev;
--	return ray_config(p_dev);
-+	ret = ray_config(p_dev);
-+	if (ret)
-+		goto err_free_dev;
+ 	for (i = 0;  i < conf->copies; i++) {
+ 		int d = r10_bio->devs[i].devnum;
+-		struct md_rdev *rdev = rcu_dereference(conf->mirrors[d].rdev);
+-		struct md_rdev *rrdev = rcu_dereference(
+-			conf->mirrors[d].replacement);
++		struct md_rdev *rdev, *rrdev;
 +
-+	return 0;
- 
--fail_alloc_dev:
--	return -ENOMEM;
--} /* ray_attach */
-+err_free_dev:
-+	free_netdev(dev);
-+	return ret;
-+}
- 
- static void ray_detach(struct pcmcia_device *link)
- {
++		rrdev = rcu_dereference(conf->mirrors[d].replacement);
++		/*
++		 * Read replacement first to prevent reading both rdev and
++		 * replacement as NULL during replacement replace rdev.
++		 */
++		smp_mb();
++		rdev = rcu_dereference(conf->mirrors[d].rdev);
+ 		if (rdev == rrdev)
+ 			rrdev = NULL;
+ 		if (rdev && unlikely(test_bit(Blocked, &rdev->flags))) {
 -- 
 2.39.2
 
