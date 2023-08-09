@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02865174EE
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:19:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78023C433C8;
-	Wed,  9 Aug 2023 11:19:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FB21773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:19:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4420FC433C8;
+	Wed,  9 Aug 2023 11:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579948;
-	bh=8L/TvAryEMTfA6i07lOCF+U37J9ixVgJfRQIS/3uIRo=;
+	s=korg; t=1691579951;
+	bh=gYXngkGUL5Hwh870SJF9R5QpN/RWjCtlMX/sAxgaAdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZcHJdIlp/cak4weaqHlQcgF0AXFsHllDKiJ8ecyNYRSNSqovJDUhFkbIKElZF/oBU
-	 r0kJRP7cO1WO0VhmW15zJGuiHPoA/sgk1aA6hEZI5xKArE8jhVe5fWzvK5pAHJ1+0q
-	 EzP3T49xUk/jIXA/0ENVNWAnTvaD8gges9glhwH8=
+	b=2dMbjgIs+Kn7w/qQfkhU5qKlObyD1KHI2WZjtXQ1jngzmkdOwkROQLj6UZI09XViN
+	 GpVGe9P4+cqQMN0PQuvfVmktHHQ7mL+b0TtxJAK8/CmJLrnWEyz/NT7U+aU4acB2ms
+	 6cMhAPRm1AXdSPH9ZGMqbEHz3+gOyeuHM9oY6i0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	netfilter-devel@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 4.19 133/323] netfilter: nf_tables: fix scheduling-while-atomic splat
-Date: Wed,  9 Aug 2023 12:39:31 +0200
-Message-ID: <20230809103704.216917829@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>
+Subject: [PATCH 4.19 167/323] PCI: rockchip: Use u32 variable to access 32-bit registers
+Date: Wed,  9 Aug 2023 12:40:05 +0200
+Message-ID: <20230809103705.794251819@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,36 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
 
-[ 2024439bd5ceb145eeeb428b2a59e9b905153ac3 ]
+commit 8962b2cb39119cbda4fc69a1f83957824f102f81 upstream.
 
-nf_tables_check_loops() can be called from rhashtable list
-walk so cond_resched() cannot be used here.
+Previously u16 variables were used to access 32-bit registers, this
+resulted in not all of the data being read from the registers. Also
+the left shift of more than 16-bits would result in moving data out
+of the variable. Use u32 variables to access 32-bit registers
 
-Fixes: 81ea01066741 ("netfilter: nf_tables: add rescheduling points during loop detection walks")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://lore.kernel.org/r/20230418074700.1083505-10-rick.wertenbroek@gmail.com
+Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
+Tested-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |    4 ----
- 1 file changed, 4 deletions(-)
+ drivers/pci/controller/pcie-rockchip-ep.c |   10 +++++-----
+ drivers/pci/controller/pcie-rockchip.h    |    1 +
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -7021,13 +7021,9 @@ static int nf_tables_check_loops(const s
- 				break;
- 			}
- 		}
--
--		cond_resched();
- 	}
+--- a/drivers/pci/controller/pcie-rockchip-ep.c
++++ b/drivers/pci/controller/pcie-rockchip-ep.c
+@@ -313,15 +313,15 @@ static int rockchip_pcie_ep_set_msi(stru
+ {
+ 	struct rockchip_pcie_ep *ep = epc_get_drvdata(epc);
+ 	struct rockchip_pcie *rockchip = &ep->rockchip;
+-	u16 flags;
++	u32 flags;
  
- 	list_for_each_entry(set, &ctx->table->sets, list) {
--		cond_resched();
--
- 		if (!nft_is_active_next(ctx->net, set))
- 			continue;
- 		if (!(set->flags & NFT_SET_MAP) ||
+ 	flags = rockchip_pcie_read(rockchip,
+ 				   ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
+ 				   ROCKCHIP_PCIE_EP_MSI_CTRL_REG);
+ 	flags &= ~ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_MASK;
+ 	flags |=
+-	   ((multi_msg_cap << 1) <<  ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_OFFSET) |
+-	   PCI_MSI_FLAGS_64BIT;
++	   (multi_msg_cap << ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_OFFSET) |
++	   (PCI_MSI_FLAGS_64BIT << ROCKCHIP_PCIE_EP_MSI_FLAGS_OFFSET);
+ 	flags &= ~ROCKCHIP_PCIE_EP_MSI_CTRL_MASK_MSI_CAP;
+ 	rockchip_pcie_write(rockchip, flags,
+ 			    ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
+@@ -333,7 +333,7 @@ static int rockchip_pcie_ep_get_msi(stru
+ {
+ 	struct rockchip_pcie_ep *ep = epc_get_drvdata(epc);
+ 	struct rockchip_pcie *rockchip = &ep->rockchip;
+-	u16 flags;
++	u32 flags;
+ 
+ 	flags = rockchip_pcie_read(rockchip,
+ 				   ROCKCHIP_PCIE_EP_FUNC_BASE(fn) +
+@@ -394,7 +394,7 @@ static int rockchip_pcie_ep_send_msi_irq
+ 					 u8 interrupt_num)
+ {
+ 	struct rockchip_pcie *rockchip = &ep->rockchip;
+-	u16 flags, mme, data, data_mask;
++	u32 flags, mme, data, data_mask;
+ 	u8 msi_count;
+ 	u64 pci_addr, pci_addr_mask = 0xff;
+ 
+--- a/drivers/pci/controller/pcie-rockchip.h
++++ b/drivers/pci/controller/pcie-rockchip.h
+@@ -232,6 +232,7 @@
+ #define ROCKCHIP_PCIE_EP_CMD_STATUS			0x4
+ #define   ROCKCHIP_PCIE_EP_CMD_STATUS_IS		BIT(19)
+ #define ROCKCHIP_PCIE_EP_MSI_CTRL_REG			0x90
++#define   ROCKCHIP_PCIE_EP_MSI_FLAGS_OFFSET		16
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_OFFSET		17
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MMC_MASK		GENMASK(19, 17)
+ #define   ROCKCHIP_PCIE_EP_MSI_CTRL_MME_OFFSET		20
 
 
