@@ -1,25 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E7F171CC
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:24:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E301C433C8;
-	Wed,  9 Aug 2023 11:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C3517AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:24:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45512C433C9;
+	Wed,  9 Aug 2023 11:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580292;
-	bh=kUdY39Vvl+59gv1C/dT/69binvhxB0iX9AyhSAiRqyk=;
+	s=korg; t=1691580295;
+	bh=V5wxOqbu7K5ExT1f4cIWnFpO2Bns+3jY0dmR1G6F2Lw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lIhgPJwuw8cenUqPQ9KVgCpL9JZru5bEQhbHMiLr8SmGAa3WCaYcPIeKQfdHq7z4Y
-	 NOyCSYEdcI+O/+P2vCDxFVACwcjepRfDwjeN9J/AU7/nHS5TScc3a8tIiv8/nXtIPQ
-	 XTyPKnnK8sljpesMrSOf/VU5bVpQ7t9mkzQTzZOo=
+	b=bxBY6mtr1ogb11DGxp1g6pwodm/3uFIAUUnYQQTxFBF7eBzZM98TLJVVBxS7gu7ht
+	 4m6XRhgw37cuymbhgJpH4Fc4hsQhKAsRDm8bO0SluVmiMp7aLU9H46f0o4XSBoUr4p
+	 4kPc85CQwUuXqIfeC+eJ1hMotHNlX/7OpY/s/IxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 4.19 269/323] Documentation: security-bugs.rst: update preferences when dealing with the linux-distros group
-Date: Wed,  9 Aug 2023 12:41:47 +0200
-Message-ID: <20230809103710.369119739@linuxfoundation.org>
+	valis <sec@valis.email>,
+	M A Ramdhan <ramdhan@starlabs.sg>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 296/323] net/sched: cls_u32: No longer copy tcf_result on update to avoid use-after-free
+Date: Wed,  9 Aug 2023 12:42:14 +0200
+Message-ID: <20230809103711.614578907@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -33,56 +39,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: valis <sec@valis.email>
 
-commit 4fee0915e649bd0cea56dece6d96f8f4643df33c upstream.
+[ Upstream commit 3044b16e7c6fe5d24b1cdbcf1bd0a9d92d1ebd81 ]
 
-Because the linux-distros group forces reporters to release information
-about reported bugs, and they impose arbitrary deadlines in having those
-bugs fixed despite not actually being kernel developers, the kernel
-security team recommends not interacting with them at all as this just
-causes confusion and the early-release of reported security problems.
+When u32_change() is called on an existing filter, the whole
+tcf_result struct is always copied into the new instance of the filter.
 
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/2023063020-throat-pantyhose-f110@gregkh
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This causes a problem when updating a filter bound to a class,
+as tcf_unbind_filter() is always called on the old instance in the
+success path, decreasing filter_cnt of the still referenced class
+and allowing it to be deleted, leading to a use-after-free.
+
+Fix this by no longer copying the tcf_result struct from the old filter.
+
+Fixes: de5df63228fc ("net: sched: cls_u32 changes to knode must appear atomic to readers")
+Reported-by: valis <sec@valis.email>
+Reported-by: M A Ramdhan <ramdhan@starlabs.sg>
+Signed-off-by: valis <sec@valis.email>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: M A Ramdhan <ramdhan@starlabs.sg>
+Link: https://lore.kernel.org/r/20230729123202.72406-2-jhs@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/security-bugs.rst |   24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
+ net/sched/cls_u32.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/Documentation/admin-guide/security-bugs.rst
-+++ b/Documentation/admin-guide/security-bugs.rst
-@@ -56,20 +56,18 @@ information submitted to the security li
- of the report are treated confidentially even after the embargo has been
- lifted, in perpetuity.
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index 5e052c7342b9f..1e71ff093c91d 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -879,7 +879,6 @@ static struct tc_u_knode *u32_init_knode(struct tcf_proto *tp,
+ 	new->ifindex = n->ifindex;
+ #endif
+ 	new->fshift = n->fshift;
+-	new->res = n->res;
+ 	new->flags = n->flags;
+ 	RCU_INIT_POINTER(new->ht_down, ht);
  
--Coordination
--------------
-+Coordination with other groups
-+------------------------------
- 
--Fixes for sensitive bugs, such as those that might lead to privilege
--escalations, may need to be coordinated with the private
--<linux-distros@vs.openwall.org> mailing list so that distribution vendors
--are well prepared to issue a fixed kernel upon public disclosure of the
--upstream fix. Distros will need some time to test the proposed patch and
--will generally request at least a few days of embargo, and vendor update
--publication prefers to happen Tuesday through Thursday. When appropriate,
--the security team can assist with this coordination, or the reporter can
--include linux-distros from the start. In this case, remember to prefix
--the email Subject line with "[vs]" as described in the linux-distros wiki:
--<http://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists>
-+The kernel security team strongly recommends that reporters of potential
-+security issues NEVER contact the "linux-distros" mailing list until
-+AFTER discussing it with the kernel security team.  Do not Cc: both
-+lists at once.  You may contact the linux-distros mailing list after a
-+fix has been agreed on and you fully understand the requirements that
-+doing so will impose on you and the kernel community.
-+
-+The different lists have different goals and the linux-distros rules do
-+not contribute to actually fixing any potential security problems.
- 
- CVE assignment
- --------------
+-- 
+2.40.1
+
 
 
