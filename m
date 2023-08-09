@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C157F17FE7
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:32:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB53C433D9;
-	Wed,  9 Aug 2023 11:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EB417FE7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:32:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0424FC433C9;
+	Wed,  9 Aug 2023 11:32:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580729;
-	bh=EQ4ZQNWXbrWOvn9E46s0iU/rYrE5RbLdcOQhsusyyiE=;
+	s=korg; t=1691580732;
+	bh=qXYJKnC7KHUmX80gqMcuVnvamBaTgyuKGRWI7SldRAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ajV94eM4Ip47+9L7kEC1Fi3/t7VTAIDtrL1GdY8gQ6kOJU1Skhlm5ttV0m1fbvkRc
-	 VeqgYbix0E9gsRkyBNhDxAJNgnwyreVB9n+N0wYo662bykkpE+Y8IvoluJI5syNZtJ
-	 rVCzXTZhiLDzP4MAksZAqirK3/Zm7LNcNsQDUhCQ=
+	b=VEqv5C3JEu/6hKW88RZIz4QzJtrwYJyc0gO1nRnIVvBBjFKA/jUooFFdqSs9W0Xfs
+	 c2pBIF9wI8eWhQhafcOU/5RyCxw54699ZACEk4Q/qY3WmLapWGCQc3mgaykoeF1lx/
+	 Vtv0Dy6JQQX28ujPIGfVbt5fbFIA9HvkVy8o6Qq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+aad58150cbc64ba41bdc@syzkaller.appspotmail.com,
-	Prince Kumar Maurya <princekumarmaurya06@gmail.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.4 129/154] fs/sysv: Null check to prevent null-ptr-deref bug
-Date: Wed,  9 Aug 2023 12:42:40 +0200
-Message-ID: <20230809103641.163885307@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 112/154] net: ll_temac: Switch to use dev_err_probe() helper
+Date: Wed,  9 Aug 2023 12:42:23 +0200
+Message-ID: <20230809103640.645524581@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -35,35 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Prince Kumar Maurya <princekumarmaurya06@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit ea2b62f305893992156a798f665847e0663c9f41 upstream.
+[ Upstream commit 75ae8c284c00dc3584b7c173f6fcf96ee15bd02c ]
 
-sb_getblk(inode->i_sb, parent) return a null ptr and taking lock on
-that leads to the null-ptr-deref bug.
+dev_err() can be replace with dev_err_probe() which will check if error
+code is -EPROBE_DEFER.
 
-Reported-by: syzbot+aad58150cbc64ba41bdc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=aad58150cbc64ba41bdc
-Signed-off-by: Prince Kumar Maurya <princekumarmaurya06@gmail.com>
-Message-Id: <20230531013141.19487-1-princekumarmaurya06@gmail.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: ef45e8400f5b ("net: ll_temac: fix error checking of irq_of_parse_and_map()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/sysv/itree.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/xilinx/ll_temac_main.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
---- a/fs/sysv/itree.c
-+++ b/fs/sysv/itree.c
-@@ -145,6 +145,10 @@ static int alloc_branch(struct inode *in
- 		 */
- 		parent = block_to_cpu(SYSV_SB(inode->i_sb), branch[n-1].key);
- 		bh = sb_getblk(inode->i_sb, parent);
-+		if (!bh) {
-+			sysv_free_block(inode->i_sb, branch[n].key);
-+			break;
-+		}
- 		lock_buffer(bh);
- 		memset(bh->b_data, 0, blocksize);
- 		branch[n].bh = bh;
+diff --git a/drivers/net/ethernet/xilinx/ll_temac_main.c b/drivers/net/ethernet/xilinx/ll_temac_main.c
+index a109438f4a78e..9756d83994fca 100644
+--- a/drivers/net/ethernet/xilinx/ll_temac_main.c
++++ b/drivers/net/ethernet/xilinx/ll_temac_main.c
+@@ -1481,16 +1481,12 @@ static int temac_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	/* Error handle returned DMA RX and TX interrupts */
+-	if (lp->rx_irq < 0) {
+-		if (lp->rx_irq != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "could not get DMA RX irq\n");
+-		return lp->rx_irq;
+-	}
+-	if (lp->tx_irq < 0) {
+-		if (lp->tx_irq != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "could not get DMA TX irq\n");
+-		return lp->tx_irq;
+-	}
++	if (lp->rx_irq < 0)
++		return dev_err_probe(&pdev->dev, lp->rx_irq,
++				     "could not get DMA RX irq\n");
++	if (lp->tx_irq < 0)
++		return dev_err_probe(&pdev->dev, lp->tx_irq,
++				     "could not get DMA TX irq\n");
+ 
+ 	if (temac_np) {
+ 		/* Retrieve the MAC address */
+-- 
+2.40.1
+
 
 
