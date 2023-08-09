@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E2D171CC
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:09:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C28C433CB;
-	Wed,  9 Aug 2023 11:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3F2171CC
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:09:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38518C433C8;
+	Wed,  9 Aug 2023 11:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579377;
-	bh=lGZnPdpFyt1JDy7prZ0HWcAym9BTEnaA+BV3ZlSacX8=;
+	s=korg; t=1691579380;
+	bh=Cn3kESZGYOk/T94iCGLxH/uEkKoHjTeOWvty7oRO/mA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yU69TVKwCicmLaxKEAFThe7wasOjGkM6T8haLsEIuR0oyV9NPdcMHQss8IzkGoGSb
-	 8mhoCRgjFDS5kfbhPGzEaNHbHgRmLsYnMMqVan3Q0qxG3kt3Zn/OfgsxedbTQNfkqw
-	 1Alf7DA3ymmq8WFg/WWbuFs1LPYjVveRP7QAomSw=
+	b=v6BzMF3yuTXI8c99XDjjTsbfi1q67A8Lee7Y1ChpUif772VZmfLmOUrrg19FL//Mj
+	 EBZ0DRrqtbuyPnz/lbMe/pMk7nrxbBRHakicA6jjehAozpvNThy+CiFCFoJIBSqzru
+	 9GUqjJCHIiN/jdFuCD4D5m1xmPJUv0FoVoQKf94M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 143/204] netfilter: nf_tables: fix spurious set element insertion failure
-Date: Wed,  9 Aug 2023 12:41:21 +0200
-Message-ID: <20230809103647.372965830@linuxfoundation.org>
+Subject: [PATCH 4.14 144/204] tcp: annotate data-races around rskq_defer_accept
+Date: Wed,  9 Aug 2023 12:41:22 +0200
+Message-ID: <20230809103647.405649906@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -34,47 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ddbd8be68941985f166f5107109a90ce13147c44 ]
+[ Upstream commit ae488c74422fb1dcd807c0201804b3b5e8a322a3 ]
 
-On some platforms there is a padding hole in the nft_verdict
-structure, between the verdict code and the chain pointer.
+do_tcp_getsockopt() reads rskq_defer_accept while another cpu
+might change its value.
 
-On element insertion, if the new element clashes with an existing one and
-NLM_F_EXCL flag isn't set, we want to ignore the -EEXIST error as long as
-the data associated with duplicated element is the same as the existing
-one.  The data equality check uses memcmp.
-
-For normal data (NFT_DATA_VALUE) this works fine, but for NFT_DATA_VERDICT
-padding area leads to spurious failure even if the verdict data is the
-same.
-
-This then makes the insertion fail with 'already exists' error, even
-though the new "key : data" matches an existing entry and userspace
-told the kernel that it doesn't want to receive an error indication.
-
-Fixes: c016c7e45ddf ("netfilter: nf_tables: honor NLM_F_EXCL flag in set element insertion")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230719212857.3943972-9-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv4/tcp.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index b016ae68d9db8..68a13ab584acf 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -5852,6 +5852,9 @@ static int nft_verdict_init(const struct nft_ctx *ctx, struct nft_data *data,
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index c93aa6542d43b..98811b5f2451a 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -2729,9 +2729,9 @@ static int do_tcp_setsockopt(struct sock *sk, int level,
  
- 	if (!tb[NFTA_VERDICT_CODE])
- 		return -EINVAL;
-+
-+	/* zero padding hole for memcmp */
-+	memset(data, 0, sizeof(*data));
- 	data->verdict.code = ntohl(nla_get_be32(tb[NFTA_VERDICT_CODE]));
+ 	case TCP_DEFER_ACCEPT:
+ 		/* Translate value in seconds to number of retransmits */
+-		icsk->icsk_accept_queue.rskq_defer_accept =
+-			secs_to_retrans(val, TCP_TIMEOUT_INIT / HZ,
+-					TCP_RTO_MAX / HZ);
++		WRITE_ONCE(icsk->icsk_accept_queue.rskq_defer_accept,
++			   secs_to_retrans(val, TCP_TIMEOUT_INIT / HZ,
++					   TCP_RTO_MAX / HZ));
+ 		break;
  
- 	switch (data->verdict.code) {
+ 	case TCP_WINDOW_CLAMP:
+@@ -3067,8 +3067,9 @@ static int do_tcp_getsockopt(struct sock *sk, int level,
+ 			val = (val ? : net->ipv4.sysctl_tcp_fin_timeout) / HZ;
+ 		break;
+ 	case TCP_DEFER_ACCEPT:
+-		val = retrans_to_secs(icsk->icsk_accept_queue.rskq_defer_accept,
+-				      TCP_TIMEOUT_INIT / HZ, TCP_RTO_MAX / HZ);
++		val = READ_ONCE(icsk->icsk_accept_queue.rskq_defer_accept);
++		val = retrans_to_secs(val, TCP_TIMEOUT_INIT / HZ,
++				      TCP_RTO_MAX / HZ);
+ 		break;
+ 	case TCP_WINDOW_CLAMP:
+ 		val = tp->window_clamp;
 -- 
 2.39.2
 
