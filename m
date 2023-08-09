@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C281182C4
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:50:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 722ECC433BB;
-	Wed,  9 Aug 2023 10:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC406174E3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:50:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68AE0C4339A;
+	Wed,  9 Aug 2023 10:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578239;
-	bh=sc06U4RR1eaFwU9DQlRlff9KWyeU+3QPspxLNzP20bs=;
+	s=korg; t=1691578242;
+	bh=kPceT0pqd6KXALsKV0Dwyqw2w1QmbD7SOQAMEJ1gv4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vd7JXuxzIwPt4ZtZxv4618NcrZkw81mF74Y0YFPPq+86MWv1Lu/GVRgyi41w8paLp
-	 5qbVI1d0v1/UBUdANeV096PlVx/fhGn+QvVqWM/laL4o/Q5ElC2Hezx9WagHyKsZdl
-	 SJcYgp0/EI4eHqKaYhoTPrI9P+Gj2b8ArwATPVEc=
+	b=nKPs4iah7nagvZwTv0p3f7om4qfcc96SwMEV9XACCALmbWbB0EcIWuiiQ68AHknsA
+	 sOh3LoOd1S+KNvJqlNoGmqIbTfoWF2FMCXFhaLl2T2XuEuzF4uLB3VMQYzwY5Fzrqt
+	 rV64sfuPKa1UgLeAlyCFaJFa8Y3zNvAe3b6t5B8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 154/165] powerpc/mm/altmap: Fix altmap boundary check
-Date: Wed,  9 Aug 2023 12:41:25 +0200
-Message-ID: <20230809103647.811423966@linuxfoundation.org>
+Subject: [PATCH 6.4 155/165] drm/imx/ipuv3: Fix front porch adjustment upon hactive aligning
+Date: Wed,  9 Aug 2023 12:41:26 +0200
+Message-ID: <20230809103647.840438794@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -36,39 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 6722b25712054c0f903b839b8f5088438dd04df3 ]
+[ Upstream commit ee31742bf17636da1304af77b2cb1c29b5dda642 ]
 
-altmap->free includes the entire free space from which altmap blocks
-can be allocated. So when checking whether the kernel is doing altmap
-block free, compute the boundary correctly, otherwise memory hotunplug
-can fail.
+When hactive is not aligned to 8 pixels, it is aligned accordingly and
+hfront porch needs to be reduced the same amount. Unfortunately the front
+porch is set to the difference rather than reducing it. There are some
+Samsung TVs which can't cope with a front porch of instead of 70.
 
-Fixes: 9ef34630a461 ("powerpc/mm: Fallback to RAM if the altmap is unusable")
-Signed-off-by: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230724181320.471386-1-aneesh.kumar@linux.ibm.com
+Fixes: 94dfec48fca7 ("drm/imx: Add 8 pixel alignment fix")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Link: https://lore.kernel.org/r/20230515072137.116211-1-alexander.stein@ew.tq-group.com
+[p.zabel@pengutronix.de: Fixed subject]
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230515072137.116211-1-alexander.stein@ew.tq-group.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/init_64.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/imx/ipuv3/ipuv3-crtc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/mm/init_64.c b/arch/powerpc/mm/init_64.c
-index fe1b83020e0df..0ec5b45b1e86a 100644
---- a/arch/powerpc/mm/init_64.c
-+++ b/arch/powerpc/mm/init_64.c
-@@ -314,8 +314,7 @@ void __ref vmemmap_free(unsigned long start, unsigned long end,
- 	start = ALIGN_DOWN(start, page_size);
- 	if (altmap) {
- 		alt_start = altmap->base_pfn;
--		alt_end = altmap->base_pfn + altmap->reserve +
--			  altmap->free + altmap->alloc + altmap->align;
-+		alt_end = altmap->base_pfn + altmap->reserve + altmap->free;
+diff --git a/drivers/gpu/drm/imx/ipuv3/ipuv3-crtc.c b/drivers/gpu/drm/imx/ipuv3/ipuv3-crtc.c
+index 5f26090b0c985..89585b31b985e 100644
+--- a/drivers/gpu/drm/imx/ipuv3/ipuv3-crtc.c
++++ b/drivers/gpu/drm/imx/ipuv3/ipuv3-crtc.c
+@@ -310,7 +310,7 @@ static void ipu_crtc_mode_set_nofb(struct drm_crtc *crtc)
+ 		dev_warn(ipu_crtc->dev, "8-pixel align hactive %d -> %d\n",
+ 			 sig_cfg.mode.hactive, new_hactive);
+ 
+-		sig_cfg.mode.hfront_porch = new_hactive - sig_cfg.mode.hactive;
++		sig_cfg.mode.hfront_porch -= new_hactive - sig_cfg.mode.hactive;
+ 		sig_cfg.mode.hactive = new_hactive;
  	}
  
- 	pr_debug("vmemmap_free %lx...%lx\n", start, end);
 -- 
 2.40.1
 
