@@ -1,31 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE7F171A6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:01:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC7BC433C8;
-	Wed,  9 Aug 2023 11:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F954171A6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:01:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0241BC433C8;
+	Wed,  9 Aug 2023 11:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578910;
-	bh=2iAsaos6gO1TU9oQ+5tDb/5/eJ9vc+eMLDMfEVZC2bk=;
+	s=korg; t=1691578913;
+	bh=RzbQ9CcsLWHxoYARXYWvoRTCv3msUdaULeYLLXT6Hmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wGu0b3gkRXCXOwYCICsGW+Euxs3qvX8+4uM2YEYEMfr6d472yBt9KQ/XztlI5M1R0
-	 Qha/e/EhgIni6koIhy92Ed8EQv2d7O883LEl1niISodbUtnArifbOTtelSs4PE9SDx
-	 angu1lDKwXcL3EIvSKx/zwMbtthYakbP7nZorqvI=
+	b=LNT1juF2bmyJLwXoVi3Vjf/hZ8/BFkOLCL2oUX4sXQCPHj0/QGa2G+q971o0Efi1T
+	 BSUybhNjhwHDzuSPzubdjpwzP+HxVn3554ETkaaol2/RtSOcfLjdWBkiuxP5sguVOc
+	 bWjyAk7E8EIUde7cMplji+9Fut3KDSvhtBCfHxAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Jonker <jbx6244@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 82/92] mtd: rawnand: rockchip: Align hwecc vs. raw page helper layouts
-Date: Wed,  9 Aug 2023 12:41:58 +0200
-Message-ID: <20230809103636.377670523@linuxfoundation.org>
+	Yang Lan <lanyang0908@gmail.com>,
+	Bob Peterson <rpeterso@redhat.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Dragos-Marian Panait <dragos.panait@windriver.com>
+Subject: [PATCH 4.14 001/204] gfs2: Dont deref jdesc in evict
+Date: Wed,  9 Aug 2023 12:38:59 +0200
+Message-ID: <20230809103642.601115722@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
-References: <20230809103633.485906560@linuxfoundation.org>
+In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
+References: <20230809103642.552405807@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,114 +38,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Jonker <jbx6244@gmail.com>
+From: Bob Peterson <rpeterso@redhat.com>
 
-[ Upstream commit ea690ad78dd611e3906df5b948a516000b05c1cb ]
+commit 504a10d9e46bc37b23d0a1ae2f28973c8516e636 upstream.
 
-Currently, read/write_page_hwecc() and read/write_page_raw() are not
-aligned: there is a mismatch in the OOB bytes which are not
-read/written at the same offset in both cases (raw vs. hwecc).
+On corrupt gfs2 file systems the evict code can try to reference the
+journal descriptor structure, jdesc, after it has been freed and set to
+NULL. The sequence of events is:
 
-This is a real problem when relying on the presence of the Page
-Addresses (PA) when using the NAND chip as a boot device, as the
-BootROM expects additional data in the OOB area at specific locations.
+init_journal()
+...
+fail_jindex:
+   gfs2_jindex_free(sdp); <------frees journals, sets jdesc = NULL
+      if (gfs2_holder_initialized(&ji_gh))
+         gfs2_glock_dq_uninit(&ji_gh);
+fail:
+   iput(sdp->sd_jindex); <--references jdesc in evict_linked_inode
+      evict()
+         gfs2_evict_inode()
+            evict_linked_inode()
+               ret = gfs2_trans_begin(sdp, 0, sdp->sd_jdesc->jd_blocks);
+<------references the now freed/zeroed sd_jdesc pointer.
 
-Rockchip boot blocks are written per 4 x 512 byte sectors per page.
-Each page with boot blocks must have a page address (PA) pointer in OOB
-to the next page. Pages are written in a pattern depending on the NAND chip ID.
+The call to gfs2_trans_begin is done because the truncate_inode_pages
+call can cause gfs2 events that require a transaction, such as removing
+journaled data (jdata) blocks from the journal.
 
-Generate boot block page address and pattern for hwecc in user space
-and copy PA data to/from the already reserved last 4 bytes before ECC
-in the chip->oob_poi data layout.
+This patch fixes the problem by adding a check for sdp->sd_jdesc to
+function gfs2_evict_inode. In theory, this should only happen to corrupt
+gfs2 file systems, when gfs2 detects the problem, reports it, then tries
+to evict all the system inodes it has read in up to that point.
 
-Align the different helpers. This change breaks existing jffs2 users.
-
-Fixes: 058e0e847d54 ("mtd: rawnand: rockchip: NFC driver for RK3308, RK2928 and others")
-Signed-off-by: Johan Jonker <jbx6244@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/5e782c08-862b-51ae-47ff-3299940928ca@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Yang Lan <lanyang0908@gmail.com>
+Signed-off-by: Bob Peterson <rpeterso@redhat.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+[DP: adjusted context]
+Signed-off-by: Dragos-Marian Panait <dragos.panait@windriver.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../mtd/nand/raw/rockchip-nand-controller.c   | 34 ++++++++++++-------
- 1 file changed, 21 insertions(+), 13 deletions(-)
+ fs/gfs2/super.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/mtd/nand/raw/rockchip-nand-controller.c b/drivers/mtd/nand/raw/rockchip-nand-controller.c
-index 45cdc6ca210ca..99242bd684375 100644
---- a/drivers/mtd/nand/raw/rockchip-nand-controller.c
-+++ b/drivers/mtd/nand/raw/rockchip-nand-controller.c
-@@ -598,7 +598,7 @@ static int rk_nfc_write_page_hwecc(struct nand_chip *chip, const u8 *buf,
- 	int pages_per_blk = mtd->erasesize / mtd->writesize;
- 	int ret = 0, i, boot_rom_mode = 0;
- 	dma_addr_t dma_data, dma_oob;
--	u32 reg;
-+	u32 tmp;
- 	u8 *oob;
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -1575,6 +1575,14 @@ static void gfs2_evict_inode(struct inod
+ 	if (inode->i_nlink || sb_rdonly(sb))
+ 		goto out;
  
- 	nand_prog_page_begin_op(chip, page, 0, NULL, 0);
-@@ -625,6 +625,13 @@ static int rk_nfc_write_page_hwecc(struct nand_chip *chip, const u8 *buf,
- 	 *
- 	 *   0xFF 0xFF 0xFF 0xFF | BBM OOB1 OOB2 OOB3 | ...
- 	 *
-+	 * The code here just swaps the first 4 bytes with the last
-+	 * 4 bytes without losing any data.
-+	 *
-+	 * The chip->oob_poi data layout:
-+	 *
-+	 *    BBM  OOB1 OOB2 OOB3 |......|  PA0  PA1  PA2  PA3
-+	 *
- 	 * Configure the ECC algorithm supported by the boot ROM.
- 	 */
- 	if ((page < (pages_per_blk * rknand->boot_blks)) &&
-@@ -635,21 +642,17 @@ static int rk_nfc_write_page_hwecc(struct nand_chip *chip, const u8 *buf,
- 	}
- 
- 	for (i = 0; i < ecc->steps; i++) {
--		if (!i) {
--			reg = 0xFFFFFFFF;
--		} else {
-+		if (!i)
-+			oob = chip->oob_poi + (ecc->steps - 1) * NFC_SYS_DATA_SIZE;
-+		else
- 			oob = chip->oob_poi + (i - 1) * NFC_SYS_DATA_SIZE;
--			reg = oob[0] | oob[1] << 8 | oob[2] << 16 |
--			      oob[3] << 24;
--		}
- 
--		if (!i && boot_rom_mode)
--			reg = (page & (pages_per_blk - 1)) * 4;
-+		tmp = oob[0] | oob[1] << 8 | oob[2] << 16 | oob[3] << 24;
- 
- 		if (nfc->cfg->type == NFC_V9)
--			nfc->oob_buf[i] = reg;
-+			nfc->oob_buf[i] = tmp;
- 		else
--			nfc->oob_buf[i * (oob_step / 4)] = reg;
-+			nfc->oob_buf[i * (oob_step / 4)] = tmp;
- 	}
- 
- 	dma_data = dma_map_single(nfc->dev, (void *)nfc->page_buf,
-@@ -812,12 +815,17 @@ static int rk_nfc_read_page_hwecc(struct nand_chip *chip, u8 *buf, int oob_on,
- 		goto timeout_err;
- 	}
- 
--	for (i = 1; i < ecc->steps; i++) {
--		oob = chip->oob_poi + (i - 1) * NFC_SYS_DATA_SIZE;
-+	for (i = 0; i < ecc->steps; i++) {
-+		if (!i)
-+			oob = chip->oob_poi + (ecc->steps - 1) * NFC_SYS_DATA_SIZE;
-+		else
-+			oob = chip->oob_poi + (i - 1) * NFC_SYS_DATA_SIZE;
++	/*
++	 * In case of an incomplete mount, gfs2_evict_inode() may be called for
++	 * system files without having an active journal to write to.  In that
++	 * case, skip the filesystem evict.
++	 */
++	if (!sdp->sd_jdesc)
++		goto out;
 +
- 		if (nfc->cfg->type == NFC_V9)
- 			tmp = nfc->oob_buf[i];
- 		else
- 			tmp = nfc->oob_buf[i * (oob_step / 4)];
-+
- 		*oob++ = (u8)tmp;
- 		*oob++ = (u8)(tmp >> 8);
- 		*oob++ = (u8)(tmp >> 16);
--- 
-2.40.1
-
+ 	if (test_bit(GIF_ALLOC_FAILED, &ip->i_flags)) {
+ 		BUG_ON(!gfs2_glock_is_locked_by_me(ip->i_gl));
+ 		gfs2_holder_mark_uninitialized(&gh);
 
 
