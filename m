@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C059154B4
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:53:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2B6C433C8;
-	Wed,  9 Aug 2023 10:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B80E847D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:53:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2696C433C7;
+	Wed,  9 Aug 2023 10:53:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578393;
-	bh=Qp66Jzj5anjQenM5vzmEf2ZeluSmJ/biy8nl1qCliVk=;
+	s=korg; t=1691578396;
+	bh=Oqiyly9/FhrJ5Un/cAL1BQriqw/bqeLmeXXVThwpvAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C92dxN4FwrzO4AnCAqx8nrNjlFISSP4lzJS6KzVI653JLNUvOPeUbXeYvf2gmuE8a
-	 qUB0r0xzeQs1CgfDrY4hPRljXImqybnfuQGUz1H+aNFW4Et9BY/VygeRiBjJ5pt4WD
-	 kf2sr+mGqlbgr/NI9oA/I7S3TPZfTBWEfFO5iPow=
+	b=NBy6f2mWHAk/mOmoLzQUVZigg7MfMFEX5SN0fES8viCOXJbd9lV9Ah97whG9+e4kq
+	 sXHmNDTzkMI/GxA8qo+i90jlOj6zSNKH2VJR178jp1WxM6+YXP1f23IDGf9CTUnUq8
+	 k2aRfgI5eae/vrCVVSA6poRxy9UGuFaSATktM6SE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 044/127] net: annotate data-races around sk->sk_priority
-Date: Wed,  9 Aug 2023 12:40:31 +0200
-Message-ID: <20230809103638.131133073@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Pedro Tammela <pctammela@mojatatu.com>
+Subject: [PATCH 6.1 045/127] net/sched: taprio: Limit TCA_TAPRIO_ATTR_SCHED_CYCLE_TIME to INT_MAX.
+Date: Wed,  9 Aug 2023 12:40:32 +0200
+Message-ID: <20230809103638.171618680@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -35,182 +39,174 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 8bf43be799d4b242ea552a14db10456446be843e ]
+[ Upstream commit e739718444f7bf2fa3d70d101761ad83056ca628 ]
 
-sk_getsockopt() runs locklessly. This means sk->sk_priority
-can be read while other threads are changing its value.
+syzkaller found zero division error [0] in div_s64_rem() called from
+get_cycle_time_elapsed(), where sched->cycle_time is the divisor.
 
-Other reads also happen without socket lock being held.
+We have tests in parse_taprio_schedule() so that cycle_time will never
+be 0, and actually cycle_time is not 0 in get_cycle_time_elapsed().
 
-Add missing annotations where needed.
+The problem is that the types of divisor are different; cycle_time is
+s64, but the argument of div_s64_rem() is s32.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+syzkaller fed this input and 0x100000000 is cast to s32 to be 0.
+
+  @TCA_TAPRIO_ATTR_SCHED_CYCLE_TIME={0xc, 0x8, 0x100000000}
+
+We use s64 for cycle_time to cast it to ktime_t, so let's keep it and
+set max for cycle_time.
+
+While at it, we prevent overflow in setup_txtime() and add another
+test in parse_taprio_schedule() to check if cycle_time overflows.
+
+Also, we add a new tdc test case for this issue.
+
+[0]:
+divide error: 0000 [#1] PREEMPT SMP KASAN NOPTI
+CPU: 1 PID: 103 Comm: kworker/1:3 Not tainted 6.5.0-rc1-00330-g60cc1f7d0605 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+Workqueue: ipv6_addrconf addrconf_dad_work
+RIP: 0010:div_s64_rem include/linux/math64.h:42 [inline]
+RIP: 0010:get_cycle_time_elapsed net/sched/sch_taprio.c:223 [inline]
+RIP: 0010:find_entry_to_transmit+0x252/0x7e0 net/sched/sch_taprio.c:344
+Code: 3c 02 00 0f 85 5e 05 00 00 48 8b 4c 24 08 4d 8b bd 40 01 00 00 48 8b 7c 24 48 48 89 c8 4c 29 f8 48 63 f7 48 99 48 89 74 24 70 <48> f7 fe 48 29 d1 48 8d 04 0f 49 89 cc 48 89 44 24 20 49 8d 85 10
+RSP: 0018:ffffc90000acf260 EFLAGS: 00010206
+RAX: 177450e0347560cf RBX: 0000000000000000 RCX: 177450e0347560cf
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000100000000
+RBP: 0000000000000056 R08: 0000000000000000 R09: ffffed10020a0934
+R10: ffff8880105049a7 R11: ffff88806cf3a520 R12: ffff888010504800
+R13: ffff88800c00d800 R14: ffff8880105049a0 R15: 0000000000000000
+FS:  0000000000000000(0000) GS:ffff88806cf00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f0edf84f0e8 CR3: 000000000d73c002 CR4: 0000000000770ee0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ get_packet_txtime net/sched/sch_taprio.c:508 [inline]
+ taprio_enqueue_one+0x900/0xff0 net/sched/sch_taprio.c:577
+ taprio_enqueue+0x378/0xae0 net/sched/sch_taprio.c:658
+ dev_qdisc_enqueue+0x46/0x170 net/core/dev.c:3732
+ __dev_xmit_skb net/core/dev.c:3821 [inline]
+ __dev_queue_xmit+0x1b2f/0x3000 net/core/dev.c:4169
+ dev_queue_xmit include/linux/netdevice.h:3088 [inline]
+ neigh_resolve_output net/core/neighbour.c:1552 [inline]
+ neigh_resolve_output+0x4a7/0x780 net/core/neighbour.c:1532
+ neigh_output include/net/neighbour.h:544 [inline]
+ ip6_finish_output2+0x924/0x17d0 net/ipv6/ip6_output.c:135
+ __ip6_finish_output+0x620/0xaa0 net/ipv6/ip6_output.c:196
+ ip6_finish_output net/ipv6/ip6_output.c:207 [inline]
+ NF_HOOK_COND include/linux/netfilter.h:292 [inline]
+ ip6_output+0x206/0x410 net/ipv6/ip6_output.c:228
+ dst_output include/net/dst.h:458 [inline]
+ NF_HOOK.constprop.0+0xea/0x260 include/linux/netfilter.h:303
+ ndisc_send_skb+0x872/0xe80 net/ipv6/ndisc.c:508
+ ndisc_send_ns+0xb5/0x130 net/ipv6/ndisc.c:666
+ addrconf_dad_work+0xc14/0x13f0 net/ipv6/addrconf.c:4175
+ process_one_work+0x92c/0x13a0 kernel/workqueue.c:2597
+ worker_thread+0x60f/0x1240 kernel/workqueue.c:2748
+ kthread+0x2fe/0x3f0 kernel/kthread.c:389
+ ret_from_fork+0x2c/0x50 arch/x86/entry/entry_64.S:308
+ </TASK>
+Modules linked in:
+
+Fixes: 4cfd5779bd6e ("taprio: Add support for txtime-assist mode")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Co-developed-by: Eric Dumazet <edumazet@google.com>
+Co-developed-by: Pedro Tammela <pctammela@mojatatu.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c        | 6 +++---
- net/ipv4/ip_output.c   | 4 ++--
- net/ipv4/ip_sockglue.c | 2 +-
- net/ipv4/raw.c         | 2 +-
- net/ipv4/tcp_ipv4.c    | 2 +-
- net/ipv6/raw.c         | 2 +-
- net/ipv6/tcp_ipv6.c    | 3 ++-
- net/packet/af_packet.c | 6 +++---
- 8 files changed, 14 insertions(+), 13 deletions(-)
+ net/sched/sch_taprio.c                        | 15 +++++++++--
+ .../tc-testing/tc-tests/qdiscs/taprio.json    | 25 +++++++++++++++++++
+ 2 files changed, 38 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index ff52d51dfe2c5..3b5304f084ef3 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -800,7 +800,7 @@ EXPORT_SYMBOL(sock_no_linger);
- void sock_set_priority(struct sock *sk, u32 priority)
+diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
+index a274a9332f333..8d5eebb2dd1b1 100644
+--- a/net/sched/sch_taprio.c
++++ b/net/sched/sch_taprio.c
+@@ -769,6 +769,11 @@ static const struct nla_policy taprio_tc_policy[TCA_TAPRIO_TC_ENTRY_MAX + 1] = {
+ 	[TCA_TAPRIO_TC_ENTRY_MAX_SDU]	   = { .type = NLA_U32 },
+ };
+ 
++static struct netlink_range_validation_signed taprio_cycle_time_range = {
++	.min = 0,
++	.max = INT_MAX,
++};
++
+ static const struct nla_policy taprio_policy[TCA_TAPRIO_ATTR_MAX + 1] = {
+ 	[TCA_TAPRIO_ATTR_PRIOMAP]	       = {
+ 		.len = sizeof(struct tc_mqprio_qopt)
+@@ -777,7 +782,8 @@ static const struct nla_policy taprio_policy[TCA_TAPRIO_ATTR_MAX + 1] = {
+ 	[TCA_TAPRIO_ATTR_SCHED_BASE_TIME]            = { .type = NLA_S64 },
+ 	[TCA_TAPRIO_ATTR_SCHED_SINGLE_ENTRY]         = { .type = NLA_NESTED },
+ 	[TCA_TAPRIO_ATTR_SCHED_CLOCKID]              = { .type = NLA_S32 },
+-	[TCA_TAPRIO_ATTR_SCHED_CYCLE_TIME]           = { .type = NLA_S64 },
++	[TCA_TAPRIO_ATTR_SCHED_CYCLE_TIME]           =
++		NLA_POLICY_FULL_RANGE_SIGNED(NLA_S64, &taprio_cycle_time_range),
+ 	[TCA_TAPRIO_ATTR_SCHED_CYCLE_TIME_EXTENSION] = { .type = NLA_S64 },
+ 	[TCA_TAPRIO_ATTR_FLAGS]                      = { .type = NLA_U32 },
+ 	[TCA_TAPRIO_ATTR_TXTIME_DELAY]		     = { .type = NLA_U32 },
+@@ -913,6 +919,11 @@ static int parse_taprio_schedule(struct taprio_sched *q, struct nlattr **tb,
+ 			return -EINVAL;
+ 		}
+ 
++		if (cycle < 0 || cycle > INT_MAX) {
++			NL_SET_ERR_MSG(extack, "'cycle_time' is too big");
++			return -EINVAL;
++		}
++
+ 		new->cycle_time = cycle;
+ 	}
+ 
+@@ -1110,7 +1121,7 @@ static void setup_txtime(struct taprio_sched *q,
+ 			 struct sched_gate_list *sched, ktime_t base)
  {
- 	lock_sock(sk);
--	sk->sk_priority = priority;
-+	WRITE_ONCE(sk->sk_priority, priority);
- 	release_sock(sk);
- }
- EXPORT_SYMBOL(sock_set_priority);
-@@ -1203,7 +1203,7 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
- 		if ((val >= 0 && val <= 6) ||
- 		    sockopt_ns_capable(sock_net(sk)->user_ns, CAP_NET_RAW) ||
- 		    sockopt_ns_capable(sock_net(sk)->user_ns, CAP_NET_ADMIN))
--			sk->sk_priority = val;
-+			WRITE_ONCE(sk->sk_priority, val);
- 		else
- 			ret = -EPERM;
- 		break;
-@@ -1670,7 +1670,7 @@ int sk_getsockopt(struct sock *sk, int level, int optname,
- 		break;
+ 	struct sched_entry *entry;
+-	u32 interval = 0;
++	u64 interval = 0;
  
- 	case SO_PRIORITY:
--		v.val = sk->sk_priority;
-+		v.val = READ_ONCE(sk->sk_priority);
- 		break;
- 
- 	case SO_LINGER:
-diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
-index 99d8cdbfd9ab5..acfe58d2f1dd7 100644
---- a/net/ipv4/ip_output.c
-+++ b/net/ipv4/ip_output.c
-@@ -182,7 +182,7 @@ int ip_build_and_send_pkt(struct sk_buff *skb, const struct sock *sk,
- 		ip_options_build(skb, &opt->opt, daddr, rt);
- 	}
- 
--	skb->priority = sk->sk_priority;
-+	skb->priority = READ_ONCE(sk->sk_priority);
- 	if (!skb->mark)
- 		skb->mark = READ_ONCE(sk->sk_mark);
- 
-@@ -526,7 +526,7 @@ int __ip_queue_xmit(struct sock *sk, struct sk_buff *skb, struct flowi *fl,
- 			     skb_shinfo(skb)->gso_segs ?: 1);
- 
- 	/* TODO : should we use skb->sk here instead of sk ? */
--	skb->priority = sk->sk_priority;
-+	skb->priority = READ_ONCE(sk->sk_priority);
- 	skb->mark = READ_ONCE(sk->sk_mark);
- 
- 	res = ip_local_out(net, sk, skb);
-diff --git a/net/ipv4/ip_sockglue.c b/net/ipv4/ip_sockglue.c
-index a7fd035b5b4f9..63aa52becd880 100644
---- a/net/ipv4/ip_sockglue.c
-+++ b/net/ipv4/ip_sockglue.c
-@@ -591,7 +591,7 @@ void __ip_sock_set_tos(struct sock *sk, int val)
- 	}
- 	if (inet_sk(sk)->tos != val) {
- 		inet_sk(sk)->tos = val;
--		sk->sk_priority = rt_tos2priority(val);
-+		WRITE_ONCE(sk->sk_priority, rt_tos2priority(val));
- 		sk_dst_reset(sk);
- 	}
- }
-diff --git a/net/ipv4/raw.c b/net/ipv4/raw.c
-index 86197634dcf5d..639aa5abda9dd 100644
---- a/net/ipv4/raw.c
-+++ b/net/ipv4/raw.c
-@@ -346,7 +346,7 @@ static int raw_send_hdrinc(struct sock *sk, struct flowi4 *fl4,
- 		goto error;
- 	skb_reserve(skb, hlen);
- 
--	skb->priority = sk->sk_priority;
-+	skb->priority = READ_ONCE(sk->sk_priority);
- 	skb->mark = sockc->mark;
- 	skb->tstamp = sockc->transmit_time;
- 	skb_dst_set(skb, &rt->dst);
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 23b4f93afb28d..08921b96f9728 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -933,7 +933,7 @@ static void tcp_v4_send_ack(const struct sock *sk,
- 	ctl_sk->sk_mark = (sk->sk_state == TCP_TIME_WAIT) ?
- 			   inet_twsk(sk)->tw_mark : READ_ONCE(sk->sk_mark);
- 	ctl_sk->sk_priority = (sk->sk_state == TCP_TIME_WAIT) ?
--			   inet_twsk(sk)->tw_priority : sk->sk_priority;
-+			   inet_twsk(sk)->tw_priority : READ_ONCE(sk->sk_priority);
- 	transmit_time = tcp_transmit_time(sk);
- 	ip_send_unicast_reply(ctl_sk,
- 			      skb, &TCP_SKB_CB(skb)->header.h4.opt,
-diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
-index e8675e5b5d00b..df3abd9e5237c 100644
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -612,7 +612,7 @@ static int rawv6_send_hdrinc(struct sock *sk, struct msghdr *msg, int length,
- 	skb_reserve(skb, hlen);
- 
- 	skb->protocol = htons(ETH_P_IPV6);
--	skb->priority = sk->sk_priority;
-+	skb->priority = READ_ONCE(sk->sk_priority);
- 	skb->mark = sockc->mark;
- 	skb->tstamp = sockc->transmit_time;
- 
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index 039aa51390aed..4bdd356bb5c46 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1132,7 +1132,8 @@ static void tcp_v6_reqsk_send_ack(const struct sock *sk, struct sk_buff *skb,
- 			tcp_time_stamp_raw() + tcp_rsk(req)->ts_off,
- 			READ_ONCE(req->ts_recent), sk->sk_bound_dev_if,
- 			tcp_v6_md5_do_lookup(sk, &ipv6_hdr(skb)->saddr, l3index),
--			ipv6_get_dsfield(ipv6_hdr(skb)), 0, sk->sk_priority,
-+			ipv6_get_dsfield(ipv6_hdr(skb)), 0,
-+			READ_ONCE(sk->sk_priority),
- 			READ_ONCE(tcp_rsk(req)->txhash));
- }
- 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 30a28c1ff928a..1681068400733 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2052,7 +2052,7 @@ static int packet_sendmsg_spkt(struct socket *sock, struct msghdr *msg,
- 
- 	skb->protocol = proto;
- 	skb->dev = dev;
--	skb->priority = sk->sk_priority;
-+	skb->priority = READ_ONCE(sk->sk_priority);
- 	skb->mark = READ_ONCE(sk->sk_mark);
- 	skb->tstamp = sockc.transmit_time;
- 
-@@ -2575,7 +2575,7 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
- 
- 	skb->protocol = proto;
- 	skb->dev = dev;
--	skb->priority = po->sk.sk_priority;
-+	skb->priority = READ_ONCE(po->sk.sk_priority);
- 	skb->mark = READ_ONCE(po->sk.sk_mark);
- 	skb->tstamp = sockc->transmit_time;
- 	skb_setup_tx_timestamp(skb, sockc->tsflags);
-@@ -3052,7 +3052,7 @@ static int packet_snd(struct socket *sock, struct msghdr *msg, size_t len)
- 
- 	skb->protocol = proto;
- 	skb->dev = dev;
--	skb->priority = sk->sk_priority;
-+	skb->priority = READ_ONCE(sk->sk_priority);
- 	skb->mark = sockc.mark;
- 	skb->tstamp = sockc.transmit_time;
- 
+ 	list_for_each_entry(entry, &sched->entries, list) {
+ 		entry->next_txtime = ktime_add_ns(base, interval);
+diff --git a/tools/testing/selftests/tc-testing/tc-tests/qdiscs/taprio.json b/tools/testing/selftests/tc-testing/tc-tests/qdiscs/taprio.json
+index a44455372646a..08d4861c2e782 100644
+--- a/tools/testing/selftests/tc-testing/tc-tests/qdiscs/taprio.json
++++ b/tools/testing/selftests/tc-testing/tc-tests/qdiscs/taprio.json
+@@ -131,5 +131,30 @@
+         "teardown": [
+             "echo \"1\" > /sys/bus/netdevsim/del_device"
+         ]
++    },
++    {
++        "id": "3e1e",
++        "name": "Add taprio Qdisc with an invalid cycle-time",
++        "category": [
++            "qdisc",
++            "taprio"
++        ],
++        "plugins": {
++            "requires": "nsPlugin"
++        },
++        "setup": [
++            "echo \"1 1 8\" > /sys/bus/netdevsim/new_device",
++            "$TC qdisc add dev $ETH root handle 1: taprio num_tc 3 map 2 2 1 0 2 2 2 2 2 2 2 2 2 2 2 2 queues 1@0 1@0 1@0 base-time 1000000000 sched-entry S 01 300000 flags 0x1 clockid CLOCK_TAI cycle-time 4294967296 || /bin/true",
++            "$IP link set dev $ETH up",
++            "$IP addr add 10.10.10.10/24 dev $ETH"
++        ],
++        "cmdUnderTest": "/bin/true",
++        "expExitCode": "0",
++        "verifyCmd": "$TC qdisc show dev $ETH",
++        "matchPattern": "qdisc taprio 1: root refcnt",
++        "matchCount": "0",
++        "teardown": [
++            "echo \"1\" > /sys/bus/netdevsim/del_device"
++        ]
+     }
+ ]
 -- 
 2.40.1
 
