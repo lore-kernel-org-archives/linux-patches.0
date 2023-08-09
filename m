@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D441775C
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:39:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1B4C433C7;
-	Wed,  9 Aug 2023 11:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C2621775C
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:39:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1C2C433C8;
+	Wed,  9 Aug 2023 11:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581193;
-	bh=qZocnufpXjLFWZ76oXuApne5oZiGTmyLTRdB/o27Olw=;
+	s=korg; t=1691581196;
+	bh=F7AL7vukE5KEdwhGO2B+1N4+SXnAM1eH1pyLlZsgskM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxf8xJYHbf9gsL9wFV14x8EBKnEmUPYJszXWsch/T63aSEr3S3UX84mj1uF8lHLd1
-	 34vhoWWanKMJHJNE7bBzDls+eXMc3UWruu3FNtL9IjkWYeIsWbg/XF7JABzXB6V//S
-	 wvhxKZQ9Ss+nahru4r4OtIWM+TQCWU91zXpGScbI=
+	b=DJjE01zCbE+1Q0cJDSe15JlsPK8Ie9vSxIAaTyEOf2OVz8r12VYEpqnebmGlxhGHn
+	 q1NMYKxcQjh09oYA/Psn6Jvauc0mVRwQYzPkiXIRvATjcO5eXSSCRjj+xuik1z8+T5
+	 fazHwg1HiLxwXojb82HmGAwuBlacZE+5aq96OhyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 138/201] net: add missing READ_ONCE(sk->sk_rcvlowat) annotation
-Date: Wed,  9 Aug 2023 12:42:20 +0200
-Message-ID: <20230809103648.353863909@linuxfoundation.org>
+Subject: [PATCH 5.10 139/201] net: add missing READ_ONCE(sk->sk_sndbuf) annotation
+Date: Wed,  9 Aug 2023 12:42:21 +0200
+Message-ID: <20230809103648.391646803@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -37,12 +37,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e6d12bdb435d23ff6c1890c852d85408a2f496ee ]
+[ Upstream commit 74bc084327c643499474ba75df485607da37dd6e ]
 
 In a prior commit, I forgot to change sk_getsockopt()
-when reading sk->sk_rcvlowat locklessly.
+when reading sk->sk_sndbuf locklessly.
 
-Fixes: eac66402d1c3 ("net: annotate sk->sk_rcvlowat lockless reads")
+Fixes: e292f05e0df7 ("tcp: annotate sk->sk_sndbuf lockless reads")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -51,18 +51,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/core/sock.c b/net/core/sock.c
-index c7ba7d82eb36c..66aab0981f666 100644
+index 66aab0981f666..6f422882d34f2 100644
 --- a/net/core/sock.c
 +++ b/net/core/sock.c
-@@ -1423,7 +1423,7 @@ int sock_getsockopt(struct socket *sock, int level, int optname,
+@@ -1332,7 +1332,7 @@ int sock_getsockopt(struct socket *sock, int level, int optname,
  		break;
  
- 	case SO_RCVLOWAT:
--		v.val = sk->sk_rcvlowat;
-+		v.val = READ_ONCE(sk->sk_rcvlowat);
+ 	case SO_SNDBUF:
+-		v.val = sk->sk_sndbuf;
++		v.val = READ_ONCE(sk->sk_sndbuf);
  		break;
  
- 	case SO_SNDLOWAT:
+ 	case SO_RCVBUF:
 -- 
 2.40.1
 
