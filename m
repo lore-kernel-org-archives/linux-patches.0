@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14AC417AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:39:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D146C433C8;
-	Wed,  9 Aug 2023 11:39:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22D717AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:39:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56E43C433C7;
+	Wed,  9 Aug 2023 11:39:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581142;
-	bh=SG27IMz9V0ivSMFL9ya2R/4CplalVjSLkTvmbsGVf5g=;
+	s=korg; t=1691581145;
+	bh=Tz8SRu9b178wK6V6K8z/pO22Pjl4cWBSHdkzZutPjvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J1Y56D+MmYDgULCaUV0IobqFnR8jEGckkIGOtVBbvpQCG6i/EXyFI2TZrbm7SywAX
-	 daSZ4ZBS/gAv3uFhjbc3KXYaEry49MWw3vxPvrq8WfoReS9vHbDCCy8sCks9bC4pFd
-	 3iIvpJT68ABzSk5DFPoxOKObtABtRLTgb4aLJhyE=
+	b=AM3hKmT/UZ032JwEg6IQwdw0R1JhNZ39pqHjsaIGQRskpOCQf7Fo/6lFnyuiETLVN
+	 rPy7lhehSUq/z+A+0RJi9IuIRS72OALoEJCB2se01OqZvBySASuh1xJgGjKjTK4NCM
+	 N1NLtnVYLrhU9rK4iorpq4fqqWgB4njWZMLQ/TWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Frank Ch. Eigler" <fche@redhat.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.10 090/201] nfsd: Remove incorrect check in nfsd4_validate_stateid
-Date: Wed,  9 Aug 2023 12:41:32 +0200
-Message-ID: <20230809103646.835618315@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.10 081/201] Revert "usb: xhci: tegra: Fix error check"
+Date: Wed,  9 Aug 2023 12:41:23 +0200
+Message-ID: <20230809103646.510990498@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -36,38 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit f75546f58a70da5cfdcec5a45ffc377885ccbee8 upstream.
+commit 288b4fa1798e3637a9304c6e90a93d900e02369c upstream.
 
-If the client is calling TEST_STATEID, then it is because some event
-occurred that requires it to check all the stateids for validity and
-call FREE_STATEID on the ones that have been revoked. In this case,
-either the stateid exists in the list of stateids associated with that
-nfs4_client, in which case it should be tested, or it does not. There
-are no additional conditions to be considered.
+This reverts commit 18fc7c435be3f17ea26a21b2e2312fcb9088e01f.
 
-Reported-by: "Frank Ch. Eigler" <fche@redhat.com>
-Fixes: 7df302f75ee2 ("NFSD: TEST_STATEID should not return NFS4ERR_STALE_STATEID")
-Cc: stable@vger.kernel.org # v5.7+
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+The reverted commit was based on static analysis and a misunderstanding
+of how PTR_ERR() and NULLs are supposed to work.  When a function
+returns both pointer errors and NULL then normally the NULL means
+"continue operating without a feature because it was deliberately
+turned off".  The NULL should not be treated as a failure.  If a driver
+cannot work when that feature is disabled then the KConfig should
+enforce that the function cannot return NULL.  We should not need to
+test for it.
+
+In this code, the patch means that certain tegra_xusb_probe() will
+fail if the firmware supports power-domains but CONFIG_PM is disabled.
+
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: 18fc7c435be3 ("usb: xhci: tegra: Fix error check")
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/8baace8d-fb4b-41a4-ad5f-848ae643a23b@moroto.mountain
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/usb/host/xhci-tegra.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -5656,8 +5656,6 @@ static __be32 nfsd4_validate_stateid(str
- 	if (ZERO_STATEID(stateid) || ONE_STATEID(stateid) ||
- 		CLOSE_STATEID(stateid))
- 		return status;
--	if (!same_clid(&stateid->si_opaque.so_clid, &cl->cl_clientid))
--		return status;
- 	spin_lock(&cl->cl_lock);
- 	s = find_stateid_locked(cl, stateid);
- 	if (!s)
+--- a/drivers/usb/host/xhci-tegra.c
++++ b/drivers/usb/host/xhci-tegra.c
+@@ -1042,15 +1042,15 @@ static int tegra_xusb_powerdomain_init(s
+ 	int err;
+ 
+ 	tegra->genpd_dev_host = dev_pm_domain_attach_by_name(dev, "xusb_host");
+-	if (IS_ERR_OR_NULL(tegra->genpd_dev_host)) {
+-		err = PTR_ERR(tegra->genpd_dev_host) ? : -ENODATA;
++	if (IS_ERR(tegra->genpd_dev_host)) {
++		err = PTR_ERR(tegra->genpd_dev_host);
+ 		dev_err(dev, "failed to get host pm-domain: %d\n", err);
+ 		return err;
+ 	}
+ 
+ 	tegra->genpd_dev_ss = dev_pm_domain_attach_by_name(dev, "xusb_ss");
+-	if (IS_ERR_OR_NULL(tegra->genpd_dev_ss)) {
+-		err = PTR_ERR(tegra->genpd_dev_ss) ? : -ENODATA;
++	if (IS_ERR(tegra->genpd_dev_ss)) {
++		err = PTR_ERR(tegra->genpd_dev_ss);
+ 		dev_err(dev, "failed to get superspeed pm-domain: %d\n", err);
+ 		return err;
+ 	}
 
 
