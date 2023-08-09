@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A8C174EE
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:05:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA5AC433C7;
-	Wed,  9 Aug 2023 11:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D142174EE
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:05:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A389AC433C8;
+	Wed,  9 Aug 2023 11:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579121;
-	bh=d4BwS+PL2j32Y9VE6SET67FPx9R8F+LwC9dnFqjxodg=;
+	s=korg; t=1691579124;
+	bh=+T4KfMXrIzKSvCBCS4l3Oq8BfhKOi+o2IFeWjEnYbCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mlkzs4bWQvRTtPERfsWsiMpE6uoKLK1CtJ+fNYpO4uKC+hIaJ6XwgxAObE0glM85A
-	 OV7GdwAogjIFamRo1Psk2mJl0fc6gT2GW4wDm4u9n8YVvqRtLhMgFuAMrJ9oesisve
-	 GMf6OBfCC4OEa9U3Osi8ECK7rDYdx19zMAhAOCZg=
+	b=L3ll1c7Q2JTKTf1k5bMu5PAq6N5DaQI7lMIOisReLWZj/QkvMJr8eYPyv0N7tZpBI
+	 I4TYNk7rLHPjZdghDUa/5yDL09jInMc5eRj7m4ECVQN0Z6Ilu5/chp4ViAYCpLa8ac
+	 qJBV5kfSZcceNbDTfpL2FdwBLqisJdCawQakeHCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 075/204] net/sched: act_pedit: Add size check for TCA_PEDIT_PARMS_EX
-Date: Wed,  9 Aug 2023 12:40:13 +0200
-Message-ID: <20230809103645.162625199@linuxfoundation.org>
+	Rasmus Villemoes <rasmus.villemoes@prevas.dk>,
+	Mark Brown <broonie@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>
+Subject: [PATCH 4.14 084/204] spi: spi-fsl-spi: remove always-true conditional in fsl_spi_do_one_msg
+Date: Wed,  9 Aug 2023 12:40:22 +0200
+Message-ID: <20230809103645.469888025@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -36,57 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Rasmus Villemoes <rasmus.villemoes@prevas.dk>
 
-[ Upstream commit 30c45b5361d39b4b793780ffac5538090b9e2eb1 ]
+commit 24c363623361b430fb79459ca922e816e6f48603 upstream.
 
-The attribute TCA_PEDIT_PARMS_EX is not be included in pedit_policy and
-one malicious user could fake a TCA_PEDIT_PARMS_EX whose length is
-smaller than the intended sizeof(struct tc_pedit). Hence, the
-dereference in tcf_pedit_init() could access dirty heap data.
+__spi_validate() in the generic SPI code sets ->speed_hz and
+->bits_per_word to non-zero values, so this condition is always true.
 
-static int tcf_pedit_init(...)
-{
-  // ...
-  pattr = tb[TCA_PEDIT_PARMS]; // TCA_PEDIT_PARMS is included
-  if (!pattr)
-    pattr = tb[TCA_PEDIT_PARMS_EX]; // but this is not
-
-  // ...
-  parm = nla_data(pattr);
-
-  index = parm->index; // parm is able to be smaller than 4 bytes
-                       // and this dereference gets dirty skb_buff
-                       // data created in netlink_sendmsg
-}
-
-This commit adds TCA_PEDIT_PARMS_EX length in pedit_policy which avoid
-the above case, just like the TCA_PEDIT_PARMS.
-
-Fixes: 71d0ed7079df ("net/act_pedit: Support using offset relative to the conventional network headers")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
-Link: https://lore.kernel.org/r/20230703110842.590282-1-linma@zju.edu.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Rasmus Villemoes <rasmus.villemoes@prevas.dk>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_pedit.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/spi/spi-fsl-spi.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
-index fb0caa500ac88..d14c31129e083 100644
---- a/net/sched/act_pedit.c
-+++ b/net/sched/act_pedit.c
-@@ -29,6 +29,7 @@ static struct tc_action_ops act_pedit_ops;
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -387,12 +387,10 @@ static int fsl_spi_do_one_msg(struct spi
+ 	cs_change = 1;
+ 	status = -EINVAL;
+ 	list_for_each_entry(t, &m->transfers, transfer_list) {
+-		if (t->bits_per_word || t->speed_hz) {
+-			if (cs_change)
+-				status = fsl_spi_setup_transfer(spi, t);
+-			if (status < 0)
+-				break;
+-		}
++		if (cs_change)
++			status = fsl_spi_setup_transfer(spi, t);
++		if (status < 0)
++			break;
  
- static const struct nla_policy pedit_policy[TCA_PEDIT_MAX + 1] = {
- 	[TCA_PEDIT_PARMS]	= { .len = sizeof(struct tc_pedit) },
-+	[TCA_PEDIT_PARMS_EX]	= { .len = sizeof(struct tc_pedit) },
- 	[TCA_PEDIT_KEYS_EX]   = { .type = NLA_NESTED },
- };
- 
--- 
-2.39.2
-
+ 		if (cs_change) {
+ 			fsl_spi_chipselect(spi, BITBANG_CS_ACTIVE);
 
 
