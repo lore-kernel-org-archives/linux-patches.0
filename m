@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778A917756
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:22:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FA8C433C8;
-	Wed,  9 Aug 2023 11:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9F517756
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:22:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFC2AC433C7;
+	Wed,  9 Aug 2023 11:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580136;
-	bh=6v/IFeuYC6RkNIxMW8tpxe6/qo0FAIgF1YGp+FB5FzA=;
+	s=korg; t=1691580139;
+	bh=oV63F7UrIOHVArua4huUmmIbm6Sk9j5iNap6f4tzkrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RXEMWl2Tzfq/T6/qi6ONr28NWI89tKJ5tk2SFs8HSKuyd23PjZBFXe+omrS8EYHvc
-	 jWZBvbcx7eIKo+byrx0QJAH3km8X5ig8v68e7SjbxHGcEmIevAJeoDFR3WLXhUmDPF
-	 ralKAwgtFa2FI8MbXU/RmJ2E3sGbZqFiZWjI+qx8=
+	b=kaBsqwocrtkQYTZV4gaOWJyDrrpg+2HwdgdzJ5zU+rsNxhOT6oB4F8PSk0PmUiWE+
+	 JT/EjlNBD7aO8OUgqtWp8Jp8lfeJSaCV0SFG2Pss9XmFoLd2Tb7e2cWd7RucrZ2J14
+	 Gej3ST2jK5O414EHPzgJKhdFwQTdvrJrW6oQetUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roee Goldfiner <roee.h.goldfiner@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 199/323] wifi: iwlwifi: mvm: avoid baid size integer overflow
-Date: Wed,  9 Aug 2023 12:40:37 +0200
-Message-ID: <20230809103707.268096868@linuxfoundation.org>
+Subject: [PATCH 4.19 234/323] ftrace: Fix possible warning on checking all pages used in ftrace_process_locs()
+Date: Wed,  9 Aug 2023 12:41:12 +0200
+Message-ID: <20230809103708.788357104@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,45 +35,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit 1a528ab1da324d078ec60283c34c17848580df24 ]
+[ Upstream commit 26efd79c4624294e553aeaa3439c646729bad084 ]
 
-Roee reported various hard-to-debug crashes with pings in
-EHT aggregation scenarios. Enabling KASAN showed that we
-access the BAID allocation out of bounds, and looking at
-the code a bit shows that since the reorder buffer entry
-(struct iwl_mvm_reorder_buf_entry) is 128 bytes if debug
-such as lockdep is enabled, then staring from an agg size
-512 we overflow the size calculation, and allocate a much
-smaller structure than we should, causing slab corruption
-once we initialize this.
+As comments in ftrace_process_locs(), there may be NULL pointers in
+mcount_loc section:
+ > Some architecture linkers will pad between
+ > the different mcount_loc sections of different
+ > object files to satisfy alignments.
+ > Skip any NULL pointers.
 
-Fix this by simply using u32 instead of u16.
+After commit 20e5227e9f55 ("ftrace: allow NULL pointers in mcount_loc"),
+NULL pointers will be accounted when allocating ftrace pages but skipped
+before adding into ftrace pages, this may result in some pages not being
+used. Then after commit 706c81f87f84 ("ftrace: Remove extra helper
+functions"), warning may occur at:
+  WARN_ON(pg->next);
 
-Reported-by: Roee Goldfiner <roee.h.goldfiner@intel.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230620125813.f428c856030d.I2c2bb808e945adb71bc15f5b2bac2d8957ea90eb@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+To fix it, only warn for case that no pointers skipped but pages not used
+up, then free those unused pages after releasing ftrace_lock.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230712060452.3175675-1-zhengyejian1@huawei.com
+
+Cc: stable@vger.kernel.org
+Fixes: 706c81f87f84 ("ftrace: Remove extra helper functions")
+Suggested-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/sta.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/ftrace.c | 45 +++++++++++++++++++++++++++++--------------
+ 1 file changed, 31 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-index 373ace38edab7..83883ce7f55dc 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-@@ -2237,7 +2237,7 @@ int iwl_mvm_sta_rx_agg(struct iwl_mvm *mvm, struct ieee80211_sta *sta,
+diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
+index 6b1ba7f510e2c..81f5c9c85d066 100644
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -3053,6 +3053,22 @@ static int ftrace_allocate_records(struct ftrace_page *pg, int count)
+ 	return cnt;
+ }
+ 
++static void ftrace_free_pages(struct ftrace_page *pages)
++{
++	struct ftrace_page *pg = pages;
++
++	while (pg) {
++		if (pg->records) {
++			free_pages((unsigned long)pg->records, pg->order);
++			ftrace_number_of_pages -= 1 << pg->order;
++		}
++		pages = pg->next;
++		kfree(pg);
++		pg = pages;
++		ftrace_number_of_groups--;
++	}
++}
++
+ static struct ftrace_page *
+ ftrace_allocate_pages(unsigned long num_to_init)
+ {
+@@ -3091,17 +3107,7 @@ ftrace_allocate_pages(unsigned long num_to_init)
+ 	return start_pg;
+ 
+  free_pages:
+-	pg = start_pg;
+-	while (pg) {
+-		if (pg->records) {
+-			free_pages((unsigned long)pg->records, pg->order);
+-			ftrace_number_of_pages -= 1 << pg->order;
+-		}
+-		start_pg = pg->next;
+-		kfree(pg);
+-		pg = start_pg;
+-		ftrace_number_of_groups--;
+-	}
++	ftrace_free_pages(start_pg);
+ 	pr_info("ftrace: FAILED to allocate memory for functions\n");
+ 	return NULL;
+ }
+@@ -5593,9 +5599,11 @@ static int ftrace_process_locs(struct module *mod,
+ 			       unsigned long *start,
+ 			       unsigned long *end)
+ {
++	struct ftrace_page *pg_unuse = NULL;
+ 	struct ftrace_page *start_pg;
+ 	struct ftrace_page *pg;
+ 	struct dyn_ftrace *rec;
++	unsigned long skipped = 0;
+ 	unsigned long count;
+ 	unsigned long *p;
+ 	unsigned long addr;
+@@ -5649,8 +5657,10 @@ static int ftrace_process_locs(struct module *mod,
+ 		 * object files to satisfy alignments.
+ 		 * Skip any NULL pointers.
+ 		 */
+-		if (!addr)
++		if (!addr) {
++			skipped++;
+ 			continue;
++		}
+ 
+ 		end_offset = (pg->index+1) * sizeof(pg->records[0]);
+ 		if (end_offset > PAGE_SIZE << pg->order) {
+@@ -5664,8 +5674,10 @@ static int ftrace_process_locs(struct module *mod,
+ 		rec->ip = addr;
  	}
  
- 	if (iwl_mvm_has_new_rx_api(mvm) && start) {
--		u16 reorder_buf_size = buf_size * sizeof(baid_data->entries[0]);
-+		u32 reorder_buf_size = buf_size * sizeof(baid_data->entries[0]);
+-	/* We should have used all pages */
+-	WARN_ON(pg->next);
++	if (pg->next) {
++		pg_unuse = pg->next;
++		pg->next = NULL;
++	}
  
- 		/* sparse doesn't like the __align() so don't check */
- #ifndef __CHECKER__
+ 	/* Assign the last page to ftrace_pages */
+ 	ftrace_pages = pg;
+@@ -5687,6 +5699,11 @@ static int ftrace_process_locs(struct module *mod,
+  out:
+ 	mutex_unlock(&ftrace_lock);
+ 
++	/* We should have used all pages unless we skipped some */
++	if (pg_unuse) {
++		WARN_ON(!skipped);
++		ftrace_free_pages(pg_unuse);
++	}
+ 	return ret;
+ }
+ 
 -- 
 2.39.2
 
