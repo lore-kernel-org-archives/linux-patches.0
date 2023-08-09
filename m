@@ -1,114 +1,92 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9DC71BB20;
-	Wed,  9 Aug 2023 17:11:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA43FC433C7;
-	Wed,  9 Aug 2023 17:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987A31D2E8;
+	Wed,  9 Aug 2023 18:12:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CCE1C433C8;
+	Wed,  9 Aug 2023 18:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1691601109;
-	bh=wb/aJjQcHQqvQeMSkQlG7G2vrAUAWFYd4KCk6Zyjmtk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lp0Olc0ozslFLkPuEHJvFAGRUumxQV9xdFuBa+ok4UNHZXrTs0ofCZ3TTUxpMqz50
-	 /2O3IpkmLxg9v54AHlqD6nxtA/vm+g8UhDu+QjMeCLmmD2OtM/r04raGqMOpBlksnr
-	 A8JiEkM8kCr8CyCu1VJofJcdZ1HlLV4uA4vLttY6ForVj/0+rlc5EVR/R6mk+ue7bc
-	 2QjeyAQLN2hrJ9hFDRZw0AXpJbjky0PSsDUXhvLWst1U3SLp7eTBNhEr/mpyX7GJsy
-	 odFOa3+o2UJ8S4jlP16TEtEaNzqrSPjZr8gkJF74AEMI5g+5z4xqBk6HUUm2kyXaiE
-	 FgUWmUq5NtafA==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.4 000/165] 6.4.10-rc1 review
-Date: Wed,  9 Aug 2023 17:11:46 +0000
-Message-Id: <20230809171146.90801-1-sj@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
-References: 
+	s=k20201202; t=1691604737;
+	bh=dQSxAwTg/Ur8+g1iyJEmUIHV6QtyBHM7QCfl22I5E88=;
+	h=From:Date:Subject:To:Cc:From;
+	b=QExAzpIxW8VIhUg0Dx3HmURl8L8cDXikq01/z7xjlsz992JPeLyzHZatsyZdgx8Fe
+	 SD8Jaca7/bbEOVQeWY8qiEF9DyRf6lkHZya2xYqHWJQZ9AAEkKTXQ7lG2YsoiYcl8Q
+	 76wMGGYPqhdnyqpsLlxdglMv9nWYzowNf3LllrA5d/HNTRUnr9UnCbQhLK5wC34dSu
+	 UfPqScmBzgYm68ZLPTVQCa8BzvWtK8SWHZGwk4w2rBG3bChG2LGjWxh4A9RmibSyab
+	 QwEapEYqjVHdo1kvwUIrf/LUQNK+H28VSI4xvdTjvushDEew3K+PsYEsgH3ESQJaE3
+	 xko1vLC9gP0VA==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 09 Aug 2023 11:12:07 -0700
+Subject: [PATCH] ASoC: SOF: Intel: Initialize chip in
+ hda_sdw_check_wakeen_irq()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230809-intel-hda-missing-chip-init-v1-1-61557ca6fa8a@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAPbW02QC/x3MQQqDMBBG4avIrB1I1Urbq4iLOJmaH9pUMiKCe
+ HdDl99bvINMM9ToVR2UdYPhlwpudUUSfZqVEYqpcU3rHu7JSKt+OAbPX5ghzSwRS8lYOYjIpH3
+ b331H5bBkfWP/34fxPC/UGTIgbQAAAA==
+To: broonie@kernel.org, pierre-louis.bossart@linux.intel.com, 
+ lgirdwood@gmail.com, peter.ujfalusi@linux.intel.com, 
+ yung-chuan.liao@linux.intel.com, ranjani.sridharan@linux.intel.com, 
+ daniel.baluta@nxp.com
+Cc: kai.vehmanen@linux.intel.com, ndesaulniers@google.com, trix@redhat.com, 
+ rander.wang@intel.com, sound-open-firmware@alsa-project.org, 
+ alsa-devel@alsa-project.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1494; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=dQSxAwTg/Ur8+g1iyJEmUIHV6QtyBHM7QCfl22I5E88=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCmXrzPYTvdaPP30JJdUySrx88FcXYe+p3ScPHqfSdrV/
+ KerY21vRykLgxgHg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZgItxwjw6kXaxRKy0pFy15t
+ nhx3bf6RacFfap7fl8itvCgl8+Rc+z2GP1w5N62F+FcE1HD3HLvlE+dx4MH1mxsbXsi8YFB5N8d
+ akRUA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Hello,
+Clang warns (or errors with CONFIG_WERROR):
 
-On 2023-08-09T12:38:51+02:00   Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+  sound/soc/sof/intel/hda.c:423:6: error: variable 'chip' is uninitialized when used here [-Werror,-Wuninitialized]
+    423 |         if (chip && chip->check_sdw_wakeen_irq)
+        |             ^~~~
+  sound/soc/sof/intel/hda.c:418:39: note: initialize the variable 'chip' to silence this warning
+    418 |         const struct sof_intel_dsp_desc *chip;
+        |                                              ^
+        |                                               = NULL
+  1 error generated.
 
-> This is the start of the stable review cycle for the 6.4.10 release.
-> There are 165 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 11 Aug 2023 10:36:10 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.10-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
-> and the diffstat can be found below.
+Add the missing initialization, following the pattern of the other irq
+functions.
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+Fixes: 9362ab78f175 ("ASoC: SOF: Intel: add abstraction for SoundWire wake-ups")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ sound/soc/sof/intel/hda.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Tested-by: SeongJae Park <sj@kernel.org>
-
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 80226b49c77f ("Linux 6.4.10-rc1")
-
-
-Thanks,
-SJ
-
-[...]
+diff --git a/sound/soc/sof/intel/hda.c b/sound/soc/sof/intel/hda.c
+index 04c748a72b13..15e6779efaa3 100644
+--- a/sound/soc/sof/intel/hda.c
++++ b/sound/soc/sof/intel/hda.c
+@@ -420,6 +420,7 @@ static bool hda_sdw_check_wakeen_irq(struct snd_sof_dev *sdev)
+ 	if (!(interface_mask & BIT(SOF_DAI_INTEL_ALH)))
+ 		return false;
+ 
++	chip = get_chip_info(sdev->pdata);
+ 	if (chip && chip->check_sdw_wakeen_irq)
+ 		return chip->check_sdw_wakeen_irq(sdev);
+ 
 
 ---
+base-commit: 59146c3cd326a622e9041614842346aada11ca99
+change-id: 20230809-intel-hda-missing-chip-init-dcccbe6365a4
 
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_m68k.sh
-ok 12 selftests: damon-tests: build_arm64.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
-PASS
