@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C501817AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C17C433C8;
-	Wed,  9 Aug 2023 11:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE9617AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FEDEC433C9;
+	Wed,  9 Aug 2023 11:38:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581131;
-	bh=S+LwGBwy4+JfCYlGHAsHPhhK3yg02RhkyIDpHXJMI8o=;
+	s=korg; t=1691581134;
+	bh=uGvdWJCsFNbf5m4VfhCqMqS0rCknEsFqq072qKtJ14I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KEkJlJ/qRi5Kbu+wJeMC3I7RQGy7amOM/QR8mSiJwI6VVubuVEha8iVYytxMF2QTH
-	 MKT2cGMbx6G7EpvPXwABGwiO9mYwy4mFs+Aw6qLUpC8ccRsf8uEHgybXisKJJqqfkp
-	 4SP0ZJGfmn43fFS8eVWr1SerZBOyRx41VHyZ81Y4=
+	b=QlZvvFfIebjHzhclcT7nCghJtNaDJHJzoD8mlma4HwAZiwiEtzrB4eYh25BKzAHOb
+	 w1qwfJNER7PPcQTsa/9i8bFk7sBXT5TMZ/P2F7aOtFoivCPAwCwTfy8JZqw9t1htYB
+	 AQ81/kmMr5Z/5KVtwVGgcnEwFw1JwIMp5Iy3mQWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luka Guzenko <l.guzenko@web.de>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 086/201] ALSA: hda/relatek: Enable Mute LED on HP 250 G8
-Date: Wed,  9 Aug 2023 12:41:28 +0200
-Message-ID: <20230809103646.686075241@linuxfoundation.org>
+	Gilles Buloz <gilles.buloz@kontron.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.10 087/201] hwmon: (nct7802) Fix for temp6 (PECI1) processed even if PECI1 disabled
+Date: Wed,  9 Aug 2023 12:41:29 +0200
+Message-ID: <20230809103646.715403407@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -34,31 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luka Guzenko <l.guzenko@web.de>
+From: Gilles Buloz <Gilles.Buloz@kontron.com>
 
-commit d510acb610e6aa07a04b688236868b2a5fd60deb upstream.
+commit 54685abe660a59402344d5045ce08c43c6a5ac42 upstream.
 
-This HP Notebook used ALC236 codec with COEF 0x07 idx 1 controlling
-the mute LED. Enable already existing quirk for this device.
+Because of hex value 0x46 used instead of decimal 46, the temp6
+(PECI1) temperature is always declared visible and then displayed
+even if disabled in the chip
 
-Signed-off-by: Luka Guzenko <l.guzenko@web.de>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230725111509.623773-1-l.guzenko@web.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Gilles Buloz <gilles.buloz@kontron.com>
+Link: https://lore.kernel.org/r/DU0PR10MB62526435ADBC6A85243B90E08002A@DU0PR10MB6252.EURPRD10.PROD.OUTLOOK.COM
+Fixes: fcdc5739dce03 ("hwmon: (nct7802) add temperature sensor type attribute")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/nct7802.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9015,6 +9015,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x880d, "HP EliteBook 830 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8811, "HP Spectre x360 15-eb1xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
- 	SND_PCI_QUIRK(0x103c, 0x8812, "HP Spectre x360 15-eb1xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
-+	SND_PCI_QUIRK(0x103c, 0x881d, "HP 250 G8 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x8846, "HP EliteBook 850 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8847, "HP EliteBook x360 830 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x884b, "HP EliteBook 840 Aero G8 Notebook PC", ALC285_FIXUP_HP_GPIO_LED),
+--- a/drivers/hwmon/nct7802.c
++++ b/drivers/hwmon/nct7802.c
+@@ -708,7 +708,7 @@ static umode_t nct7802_temp_is_visible(s
+ 	if (index >= 38 && index < 46 && !(reg & 0x01))		/* PECI 0 */
+ 		return 0;
+ 
+-	if (index >= 0x46 && (!(reg & 0x02)))			/* PECI 1 */
++	if (index >= 46 && !(reg & 0x02))			/* PECI 1 */
+ 		return 0;
+ 
+ 	return attr->mode;
 
 
