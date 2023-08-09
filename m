@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2074174EE
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:05:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3197EC433C8;
-	Wed,  9 Aug 2023 11:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78458174EE
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:05:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB56C433C8;
+	Wed,  9 Aug 2023 11:05:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579129;
-	bh=mewNc5/AW7N/T05NJYg1MeouL1J2XIc/JMk04u5Ul38=;
+	s=korg; t=1691579132;
+	bh=8pJflrcLjtiQfhmtVx/WccHYskOAvyk+xC4ErnaQySo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pNtQLrIo2MapO9Du8GM/+aPjQMVJTHnpbhYrUGXzdDTLuM/7UDI83BWIpLWICgZKG
-	 v2o3VbuhdrZzstnFptXwEYFuQqpd856cqN6S5gSd+JORvO8LZKGdt0IofMxSayulr9
-	 r5sSAFN18hBemHtbPLrZkVNjpfmrYrK462j1n9gQ=
+	b=AUruQYZ2Rck6Mct3b+3VPS5Gcps3bGlprJs/9y/u4L1refU4s1z9H8lHklN0QFCe2
+	 Ev07T0ZVFOonkg0a+HyBI5hpB+TScgkpJpwvLz7UHrO7b3M+PoqJL/GU4LksZ9ThCt
+	 R+JIpqyH0gC9BsMYCVxtW7yNfrtdOYToTWRE5dew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	netfilter-devel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rasmus Villemoes <rasmus.villemoes@prevas.dk>,
-	Mark Brown <broonie@kernel.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>
-Subject: [PATCH 4.14 086/204] spi: spi-fsl-spi: allow changing bits_per_word while CS is still active
-Date: Wed,  9 Aug 2023 12:40:24 +0200
-Message-ID: <20230809103645.526914388@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 4.14 087/204] netfilter: nf_tables: incorrect error path handling with NFT_MSG_NEWRULE
+Date: Wed,  9 Aug 2023 12:40:25 +0200
+Message-ID: <20230809103645.557362718@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -35,72 +34,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rasmus Villemoes <rasmus.villemoes@prevas.dk>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit a798a7086c38d91d304132c194cff9f02197f5cd upstream.
+[ 1240eb93f0616b21c675416516ff3d74798fdc97 ]
 
-Commit c9bfcb315104 (spi_mpc83xx: much improved driver) introduced
-logic to ensure bits_per_word and speed_hz stay the same for a series
-of spi_transfers with CS active, arguing that
+In case of error when adding a new rule that refers to an anonymous set,
+deactivate expressions via NFT_TRANS_PREPARE state, not NFT_TRANS_RELEASE.
+Thus, the lookup expression marks anonymous sets as inactive in the next
+generation to ensure it is not reachable in this transaction anymore and
+decrement the set refcount as introduced by c1592a89942e ("netfilter:
+nf_tables: deactivate anonymous set from preparation phase"). The abort
+step takes care of undoing the anonymous set.
 
-    The current driver may cause glitches on SPI CLK line since one
-    must disable the SPI controller before changing any HW settings.
+This is also consistent with rule deletion, where NFT_TRANS_PREPARE is
+used. Note that this error path is exercised in the preparation step of
+the commit protocol. This patch replaces nf_tables_rule_release() by the
+deactivate and destroy calls, this time with NFT_TRANS_PREPARE.
 
-This sounds quite reasonable. So this is a quite naive attempt at
-relaxing this sanity checking to only ensure that speed_hz is
-constant - in the faint hope that if we do not causes changes to the
-clock-related fields of the SPMODE register (DIV16 and PM), those
-glitches won't appear.
+Due to this incorrect error handling, it is possible to access a
+dangling pointer to the anonymous set that remains in the transaction
+list.
 
-The purpose of this change is to allow automatically optimizing large
-transfers to use 32 bits-per-word; taking one interrupt for every byte
-is extremely slow.
+[1009.379054] BUG: KASAN: use-after-free in nft_set_lookup_global+0x147/0x1a0 [nf_tables]
+[1009.379106] Read of size 8 at addr ffff88816c4c8020 by task nft-rule-add/137110
+[1009.379116] CPU: 7 PID: 137110 Comm: nft-rule-add Not tainted 6.4.0-rc4+ #256
+[1009.379128] Call Trace:
+[1009.379132]  <TASK>
+[1009.379135]  dump_stack_lvl+0x33/0x50
+[1009.379146]  ? nft_set_lookup_global+0x147/0x1a0 [nf_tables]
+[1009.379191]  print_address_description.constprop.0+0x27/0x300
+[1009.379201]  kasan_report+0x107/0x120
+[1009.379210]  ? nft_set_lookup_global+0x147/0x1a0 [nf_tables]
+[1009.379255]  nft_set_lookup_global+0x147/0x1a0 [nf_tables]
+[1009.379302]  nft_lookup_init+0xa5/0x270 [nf_tables]
+[1009.379350]  nf_tables_newrule+0x698/0xe50 [nf_tables]
+[1009.379397]  ? nf_tables_rule_release+0xe0/0xe0 [nf_tables]
+[1009.379441]  ? kasan_unpoison+0x23/0x50
+[1009.379450]  nfnetlink_rcv_batch+0x97c/0xd90 [nfnetlink]
+[1009.379470]  ? nfnetlink_rcv_msg+0x480/0x480 [nfnetlink]
+[1009.379485]  ? __alloc_skb+0xb8/0x1e0
+[1009.379493]  ? __alloc_skb+0xb8/0x1e0
+[1009.379502]  ? entry_SYSCALL_64_after_hwframe+0x46/0xb0
+[1009.379509]  ? unwind_get_return_address+0x2a/0x40
+[1009.379517]  ? write_profile+0xc0/0xc0
+[1009.379524]  ? avc_lookup+0x8f/0xc0
+[1009.379532]  ? __rcu_read_unlock+0x43/0x60
 
-Signed-off-by: Rasmus Villemoes <rasmus.villemoes@prevas.dk>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Fixes: 958bee14d071 ("netfilter: nf_tables: use new transaction infrastructure to handle sets")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-spi.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ net/netfilter/nf_tables_api.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-fsl-spi.c
-+++ b/drivers/spi/spi-fsl-spi.c
-@@ -339,7 +339,7 @@ static int fsl_spi_do_one_msg(struct spi
- 	struct spi_transfer *t, *first;
- 	unsigned int cs_change;
- 	const int nsecs = 50;
--	int status;
-+	int status, last_bpw;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -2465,7 +2465,8 @@ static int nf_tables_newrule(struct net
+ 	return 0;
  
- 	/*
- 	 * In CPU mode, optimize large byte transfers to use larger
-@@ -378,21 +378,22 @@ static int fsl_spi_do_one_msg(struct spi
- 		if (cs_change)
- 			first = t;
- 		cs_change = t->cs_change;
--		if ((first->bits_per_word != t->bits_per_word) ||
--			(first->speed_hz != t->speed_hz)) {
-+		if (first->speed_hz != t->speed_hz) {
- 			dev_err(&spi->dev,
--				"bits_per_word/speed_hz cannot change while CS is active\n");
-+				"speed_hz cannot change while CS is active\n");
- 			return -EINVAL;
- 		}
- 	}
- 
-+	last_bpw = -1;
- 	cs_change = 1;
- 	status = -EINVAL;
- 	list_for_each_entry(t, &m->transfers, transfer_list) {
--		if (cs_change)
-+		if (cs_change || last_bpw != t->bits_per_word)
- 			status = fsl_spi_setup_transfer(spi, t);
- 		if (status < 0)
- 			break;
-+		last_bpw = t->bits_per_word;
- 
- 		if (cs_change) {
- 			fsl_spi_chipselect(spi, BITBANG_CS_ACTIVE);
+ err2:
+-	nf_tables_rule_release(&ctx, rule);
++	nft_rule_expr_deactivate(&ctx, rule, NFT_TRANS_PREPARE);
++	nf_tables_rule_destroy(&ctx, rule);
+ err1:
+ 	for (i = 0; i < n; i++) {
+ 		if (info[i].ops != NULL)
 
 
