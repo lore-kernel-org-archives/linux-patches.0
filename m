@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DDDC17731
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:08:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28A1C433C8;
-	Wed,  9 Aug 2023 11:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DA117731
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:08:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E33CC433C8;
+	Wed,  9 Aug 2023 11:08:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579280;
-	bh=WNQmjsT8MDkTUBCjGAe/Kou3Xt1mB0dTTuJWGfOCJ68=;
+	s=korg; t=1691579282;
+	bh=NdY2GCTYzslb2kzkdaF75jvLETzm7PtGzK29B86froA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QUejIWh0aSIZhhdETS+GmikZStoindxYViC4saCJHe14deG3ufJcEcC7KtLlcQX8D
-	 Hnsn7zEq9ClHsMa9TMlFx52QRpeHp3KH/+SXKFB7iwo6hH0SysUyD2tPjzf78TpFiV
-	 UYtHL3giI6Pvfj200QqnIHxN+/dhSYZkikPK/X7Y=
+	b=1K4qfxBWgKJjCRBuB9I9kWQgF51L+SkTF+yPl5kJmZDHTz1ytVY8FLs+CIBtPtSzq
+	 6iEs8lEskpXLdGzAd/vmIDC4J81CPPnomvBOtiwJnE2HhWq0Dda0yjPHKDm88YyIBf
+	 YY3To3Q9Bjfv5YF9hjnIfFm0PrOVfKEcto62twOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>
-Subject: [PATCH 4.14 111/204] fs: dlm: return positive pid value for F_GETLK
-Date: Wed,  9 Aug 2023 12:40:49 +0200
-Message-ID: <20230809103646.324758083@linuxfoundation.org>
+	Martin Kaiser <martin@kaiser.cx>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 4.14 112/204] hwrng: imx-rngc - fix the timeout for init and self check
+Date: Wed,  9 Aug 2023 12:40:50 +0200
+Message-ID: <20230809103646.354331998@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -34,36 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Martin Kaiser <martin@kaiser.cx>
 
-commit 92655fbda5c05950a411eaabc19e025e86e2a291 upstream.
+commit d744ae7477190967a3ddc289e2cd4ae59e8b1237 upstream.
 
-The GETLK pid values have all been negated since commit 9d5b86ac13c5
-("fs/locks: Remove fl_nspid and use fs-specific l_pid for remote locks").
-Revert this for local pids, and leave in place negative pids for remote
-owners.
+Fix the timeout that is used for the initialisation and for the self
+test. wait_for_completion_timeout expects a timeout in jiffies, but
+RNGC_TIMEOUT is in milliseconds. Call msecs_to_jiffies to do the
+conversion.
 
 Cc: stable@vger.kernel.org
-Fixes: 9d5b86ac13c5 ("fs/locks: Remove fl_nspid and use fs-specific l_pid for remote locks")
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+Fixes: 1d5449445bd0 ("hwrng: mx-rngc - add a driver for Freescale RNGC")
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dlm/plock.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/char/hw_random/imx-rngc.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/fs/dlm/plock.c
-+++ b/fs/dlm/plock.c
-@@ -366,7 +366,9 @@ int dlm_posix_get(dlm_lockspace_t *locks
- 		locks_init_lock(fl);
- 		fl->fl_type = (op->info.ex) ? F_WRLCK : F_RDLCK;
- 		fl->fl_flags = FL_POSIX;
--		fl->fl_pid = -op->info.pid;
-+		fl->fl_pid = op->info.pid;
-+		if (op->info.nodeid != dlm_our_nodeid())
-+			fl->fl_pid = -fl->fl_pid;
- 		fl->fl_start = op->info.start;
- 		fl->fl_end = op->info.end;
- 		rv = 0;
+--- a/drivers/char/hw_random/imx-rngc.c
++++ b/drivers/char/hw_random/imx-rngc.c
+@@ -104,7 +104,7 @@ static int imx_rngc_self_test(struct imx
+ 	cmd = readl(rngc->base + RNGC_COMMAND);
+ 	writel(cmd | RNGC_CMD_SELF_TEST, rngc->base + RNGC_COMMAND);
+ 
+-	ret = wait_for_completion_timeout(&rngc->rng_op_done, RNGC_TIMEOUT);
++	ret = wait_for_completion_timeout(&rngc->rng_op_done, msecs_to_jiffies(RNGC_TIMEOUT));
+ 	if (!ret) {
+ 		imx_rngc_irq_mask_clear(rngc);
+ 		return -ETIMEDOUT;
+@@ -187,9 +187,7 @@ static int imx_rngc_init(struct hwrng *r
+ 		cmd = readl(rngc->base + RNGC_COMMAND);
+ 		writel(cmd | RNGC_CMD_SEED, rngc->base + RNGC_COMMAND);
+ 
+-		ret = wait_for_completion_timeout(&rngc->rng_op_done,
+-				RNGC_TIMEOUT);
+-
++		ret = wait_for_completion_timeout(&rngc->rng_op_done, msecs_to_jiffies(RNGC_TIMEOUT));
+ 		if (!ret) {
+ 			imx_rngc_irq_mask_clear(rngc);
+ 			return -ETIMEDOUT;
 
 
