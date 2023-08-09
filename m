@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F612174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:03:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A14B2C433C8;
-	Wed,  9 Aug 2023 11:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499A0174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:03:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7051AC433C9;
+	Wed,  9 Aug 2023 11:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579032;
-	bh=79oJTpMQ5Qe+GEEct3IbWLo3vsiIMe3t0neDilyZ+Jw=;
+	s=korg; t=1691579034;
+	bh=TwGNz0X0C4GpqbawPe0TaK0tWYkpPcLCe7+J5RCPYB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ocbUp9jz7FMfJE1K0z8MpdIYzhr5PYkSb9Yuo62mf06nxwO7rkJzjR8wLp7YdLJdU
-	 t5SXt/6nGtOdX62KsDjLv0CJ3SBevkyXBnMrhTIQyjbIeahiqYoqr5bsYoiUGiWs3z
-	 XXa7Qc9Lo/IdoE4bIwFcyRE3AJMlaTGytE4ngwNw=
+	b=0pcp2oePMKUhVMqR/Cu+5S3eIAVAZ/0U71iWWnh9dTAy4QGYAUQWXa+e7Q7YMqYRJ
+	 2yx07S9cuS+CKeuooork8OlSJ0IAPAkaMcv+/lFnV63vGTR810RiiieADS4lnBj9bf
+	 G1K8Bp4oT5kQM9Qt5b5ojalEFKcymuG7CzjKdtbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 043/204] drm/radeon: fix possible division-by-zero errors
-Date: Wed,  9 Aug 2023 12:39:41 +0200
-Message-ID: <20230809103644.012016152@linuxfoundation.org>
+Subject: [PATCH 4.14 052/204] modpost: fix section mismatch message for R_ARM_{PC24,CALL,JUMP24}
+Date: Wed,  9 Aug 2023 12:39:50 +0200
+Message-ID: <20230809103644.334485942@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -35,92 +34,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 1becc57cd1a905e2aa0e1eca60d2a37744525c4a ]
+[ Upstream commit 56a24b8ce6a7f9c4a21b2276a8644f6f3d8fc14d ]
 
-Function rv740_get_decoded_reference_divider() may return 0 due to
-unpredictable reference divider value calculated in
-radeon_atom_get_clock_dividers(). This will lead to
-division-by-zero error once that value is used as a divider
-in calculating 'clk_s'.
-While unlikely, this issue should nonetheless be prevented so add a
-sanity check for such cases by testing 'decoded_ref' value against 0.
+addend_arm_rel() processes R_ARM_PC24, R_ARM_CALL, R_ARM_JUMP24 in a
+wrong way.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+Here, test code.
 
-v2: minor coding style fixes (Alex)
-In practice this should actually happen as the vbios should be
-properly populated.
+[test code for R_ARM_JUMP24]
 
-Fixes: 66229b200598 ("drm/radeon/kms: add dpm support for rv7xx (v4)")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+  .section .init.text,"ax"
+  bar:
+          bx      lr
+
+  .section .text,"ax"
+  .globl foo
+  foo:
+          b       bar
+
+[test code for R_ARM_CALL]
+
+  .section .init.text,"ax"
+  bar:
+          bx      lr
+
+  .section .text,"ax"
+  .globl foo
+  foo:
+          push    {lr}
+          bl      bar
+          pop     {pc}
+
+If you compile it with ARM multi_v7_defconfig, modpost will show the
+symbol name, (unknown).
+
+  WARNING: modpost: vmlinux.o: section mismatch in reference: foo (section: .text) -> (unknown) (section: .init.text)
+
+(You need to use GNU linker instead of LLD to reproduce it.)
+
+Fix the code to make modpost show the correct symbol name.
+
+I imported (with adjustment) sign_extend32() from include/linux/bitops.h.
+
+The '+8' is the compensation for pc-relative instruction. It is
+documented in "ELF for the Arm Architecture" [1].
+
+  "If the relocation is pc-relative then compensation for the PC bias
+  (the PC value is 8 bytes ahead of the executing instruction in Arm
+  state and 4 bytes in Thumb state) must be encoded in the relocation
+  by the object producer."
+
+[1]: https://github.com/ARM-software/abi-aa/blob/main/aaelf32/aaelf32.rst
+
+Fixes: 56a974fa2d59 ("kbuild: make better section mismatch reports on arm")
+Fixes: 6e2e340b59d2 ("ARM: 7324/1: modpost: Fix section warnings for ARM for many compilers")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/cypress_dpm.c | 8 ++++++--
- drivers/gpu/drm/radeon/ni_dpm.c      | 8 ++++++--
- drivers/gpu/drm/radeon/rv740_dpm.c   | 8 ++++++--
- 3 files changed, 18 insertions(+), 6 deletions(-)
+ scripts/mod/modpost.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/gpu/drm/radeon/cypress_dpm.c b/drivers/gpu/drm/radeon/cypress_dpm.c
-index 3eb7899a4035b..2c637e04dfebc 100644
---- a/drivers/gpu/drm/radeon/cypress_dpm.c
-+++ b/drivers/gpu/drm/radeon/cypress_dpm.c
-@@ -558,8 +558,12 @@ static int cypress_populate_mclk_value(struct radeon_device *rdev,
- 						     ASIC_INTERNAL_MEMORY_SS, vco_freq)) {
- 			u32 reference_clock = rdev->clock.mpll.reference_freq;
- 			u32 decoded_ref = rv740_get_decoded_reference_divider(dividers.ref_div);
--			u32 clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
--			u32 clk_v = ss.percentage *
-+			u32 clk_s, clk_v;
-+
-+			if (!decoded_ref)
-+				return -EINVAL;
-+			clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
-+			clk_v = ss.percentage *
- 				(0x4000 * dividers.whole_fb_div + 0x800 * dividers.frac_fb_div) / (clk_s * 625);
+diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
+index f8bb964961b83..88f4586c35762 100644
+--- a/scripts/mod/modpost.c
++++ b/scripts/mod/modpost.c
+@@ -1763,12 +1763,20 @@ static int addend_386_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
+ #define	R_ARM_THM_JUMP19	51
+ #endif
  
- 			mpll_ss1 &= ~CLKV_MASK;
-diff --git a/drivers/gpu/drm/radeon/ni_dpm.c b/drivers/gpu/drm/radeon/ni_dpm.c
-index fa88c18099464..701c99a551388 100644
---- a/drivers/gpu/drm/radeon/ni_dpm.c
-+++ b/drivers/gpu/drm/radeon/ni_dpm.c
-@@ -2239,8 +2239,12 @@ static int ni_populate_mclk_value(struct radeon_device *rdev,
- 						     ASIC_INTERNAL_MEMORY_SS, vco_freq)) {
- 			u32 reference_clock = rdev->clock.mpll.reference_freq;
- 			u32 decoded_ref = rv740_get_decoded_reference_divider(dividers.ref_div);
--			u32 clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
--			u32 clk_v = ss.percentage *
-+			u32 clk_s, clk_v;
++static int32_t sign_extend32(int32_t value, int index)
++{
++	uint8_t shift = 31 - index;
 +
-+			if (!decoded_ref)
-+				return -EINVAL;
-+			clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
-+			clk_v = ss.percentage *
- 				(0x4000 * dividers.whole_fb_div + 0x800 * dividers.frac_fb_div) / (clk_s * 625);
- 
- 			mpll_ss1 &= ~CLKV_MASK;
-diff --git a/drivers/gpu/drm/radeon/rv740_dpm.c b/drivers/gpu/drm/radeon/rv740_dpm.c
-index afd597ec50858..50290e93c79dc 100644
---- a/drivers/gpu/drm/radeon/rv740_dpm.c
-+++ b/drivers/gpu/drm/radeon/rv740_dpm.c
-@@ -251,8 +251,12 @@ int rv740_populate_mclk_value(struct radeon_device *rdev,
- 						     ASIC_INTERNAL_MEMORY_SS, vco_freq)) {
- 			u32 reference_clock = rdev->clock.mpll.reference_freq;
- 			u32 decoded_ref = rv740_get_decoded_reference_divider(dividers.ref_div);
--			u32 clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
--			u32 clk_v = 0x40000 * ss.percentage *
-+			u32 clk_s, clk_v;
++	return (int32_t)(value << shift) >> shift;
++}
 +
-+			if (!decoded_ref)
-+				return -EINVAL;
-+			clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
-+			clk_v = 0x40000 * ss.percentage *
- 				(dividers.whole_fb_div + (dividers.frac_fb_div / 8)) / (clk_s * 10000);
+ static int addend_arm_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
+ {
+ 	unsigned int r_typ = ELF_R_TYPE(r->r_info);
+ 	Elf_Sym *sym = elf->symtab_start + ELF_R_SYM(r->r_info);
+ 	void *loc = reloc_location(elf, sechdr, r);
+ 	uint32_t inst;
++	int32_t offset;
  
- 			mpll_ss1 &= ~CLKV_MASK;
+ 	switch (r_typ) {
+ 	case R_ARM_ABS32:
+@@ -1778,6 +1786,10 @@ static int addend_arm_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
+ 	case R_ARM_PC24:
+ 	case R_ARM_CALL:
+ 	case R_ARM_JUMP24:
++		inst = TO_NATIVE(*(uint32_t *)loc);
++		offset = sign_extend32((inst & 0x00ffffff) << 2, 25);
++		r->r_addend = offset + sym->st_value + 8;
++		break;
+ 	case R_ARM_THM_CALL:
+ 	case R_ARM_THM_JUMP24:
+ 	case R_ARM_THM_JUMP19:
 -- 
 2.39.2
 
