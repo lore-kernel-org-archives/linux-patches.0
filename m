@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6855F847D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:49:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B28C433C8;
-	Wed,  9 Aug 2023 10:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405336131
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:49:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1AE9C433C8;
+	Wed,  9 Aug 2023 10:49:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578142;
-	bh=F+RXVN0k3i1juwuo8toSGH+r3hRQvCbpysTH1uIRJH8=;
+	s=korg; t=1691578145;
+	bh=oKnCtufrTBWCJoxqU9OBjThY1S93kC5T7cv1ksoUwKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Me/W/wGPzSFJL38BnASueKLKFjz4snCOntRzcnqRpSfqYZ0+qffhhE0QZoNmWSJq6
-	 GZs291KmmQ1xze5pDI+gGsLPs/5cxjTePwS2njEenUTGFFrLpC4Zc9rzr6izvGamtf
-	 fdBfOZH2eiTUB2wD3CqjM9MGopo3LnEOd1hkCv38=
+	b=xxj9CnminXJNrJ6/55wuNBOQjdR0OXKij0P16IK5WXD3xhsPEx64SR+97cO1MIuHC
+	 cpFV1U6wDq3XgjIqOliOgI5MpG92idg6NVg/n8Vm6pf1F40TAFP2azrNFqihRf5yyX
+	 jVE/4ymiygERfBb3bNV/1/GHZIX9Twu9TvHCsbuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naveen N Rao <naveen@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.4 120/165] powerpc/ftrace: Create a dummy stackframe to fix stack unwind
-Date: Wed,  9 Aug 2023 12:40:51 +0200
-Message-ID: <20230809103646.732476771@linuxfoundation.org>
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Helge Deller <deller@gmx.de>,
+	Christoph Biedl <linux-kernel.bfrz@manchmal.in-ulm.de>,
+	John David Anglin <dave.anglin@bell.net>
+Subject: [PATCH 6.4 121/165] parisc/mm: preallocate fixmap page tables at init
+Date: Wed,  9 Aug 2023 12:40:52 +0200
+Message-ID: <20230809103646.761202750@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -34,115 +37,159 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Naveen N Rao <naveen@kernel.org>
+From: Mike Rapoport (IBM) <rppt@kernel.org>
 
-commit 41a506ef71eb38d94fe133f565c87c3e06ccc072 upstream.
+commit c2ff2b736c41cc63bb0aaec85cccfead9fbcfe92 upstream.
 
-With ppc64 -mprofile-kernel and ppc32 -pg, profiling instructions to
-call into ftrace are emitted right at function entry. The instruction
-sequence used is minimal to reduce overhead. Crucially, a stackframe is
-not created for the function being traced. This breaks stack unwinding
-since the function being traced does not have a stackframe for itself.
-As such, it never shows up in the backtrace:
+Christoph Biedl reported early OOM on recent kernels:
 
-/sys/kernel/debug/tracing # echo 1 > /proc/sys/kernel/stack_tracer_enabled
-/sys/kernel/debug/tracing # cat stack_trace
-        Depth    Size   Location    (17 entries)
-        -----    ----   --------
-  0)     4144      32   ftrace_call+0x4/0x44
-  1)     4112     432   get_page_from_freelist+0x26c/0x1ad0
-  2)     3680     496   __alloc_pages+0x290/0x1280
-  3)     3184     336   __folio_alloc+0x34/0x90
-  4)     2848     176   vma_alloc_folio+0xd8/0x540
-  5)     2672     272   __handle_mm_fault+0x700/0x1cc0
-  6)     2400     208   handle_mm_fault+0xf0/0x3f0
-  7)     2192      80   ___do_page_fault+0x3e4/0xbe0
-  8)     2112     160   do_page_fault+0x30/0xc0
-  9)     1952     256   data_access_common_virt+0x210/0x220
- 10)     1696     400   0xc00000000f16b100
- 11)     1296     384   load_elf_binary+0x804/0x1b80
- 12)      912     208   bprm_execve+0x2d8/0x7e0
- 13)      704      64   do_execveat_common+0x1d0/0x2f0
- 14)      640     160   sys_execve+0x54/0x70
- 15)      480      64   system_call_exception+0x138/0x350
- 16)      416     416   system_call_common+0x160/0x2c4
+    swapper: page allocation failure: order:0, mode:0x100(__GFP_ZERO),
+nodemask=(null)
+    CPU: 0 PID: 0 Comm: swapper Not tainted 6.3.0-rc4+ #16
+    Hardware name: 9000/785/C3600
+    Backtrace:
+     [<10408594>] show_stack+0x48/0x5c
+     [<10e152d8>] dump_stack_lvl+0x48/0x64
+     [<10e15318>] dump_stack+0x24/0x34
+     [<105cf7f8>] warn_alloc+0x10c/0x1c8
+     [<105d068c>] __alloc_pages+0xbbc/0xcf8
+     [<105d0e4c>] __get_free_pages+0x28/0x78
+     [<105ad10c>] __pte_alloc_kernel+0x30/0x98
+     [<10406934>] set_fixmap+0xec/0xf4
+     [<10411ad4>] patch_map.constprop.0+0xa8/0xdc
+     [<10411bb0>] __patch_text_multiple+0xa8/0x208
+     [<10411d78>] patch_text+0x30/0x48
+     [<1041246c>] arch_jump_label_transform+0x90/0xcc
+     [<1056f734>] jump_label_update+0xd4/0x184
+     [<1056fc9c>] static_key_enable_cpuslocked+0xc0/0x110
+     [<1056fd08>] static_key_enable+0x1c/0x2c
+     [<1011362c>] init_mem_debugging_and_hardening+0xdc/0xf8
+     [<1010141c>] start_kernel+0x5f0/0xa98
+     [<10105da8>] start_parisc+0xb8/0xe4
 
-Fix this by having ftrace create a dummy stackframe for the function
-being traced. With this, backtraces now capture the function being
-traced:
+    Mem-Info:
+    active_anon:0 inactive_anon:0 isolated_anon:0
+     active_file:0 inactive_file:0 isolated_file:0
+     unevictable:0 dirty:0 writeback:0
+     slab_reclaimable:0 slab_unreclaimable:0
+     mapped:0 shmem:0 pagetables:0
+     sec_pagetables:0 bounce:0
+     kernel_misc_reclaimable:0
+     free:0 free_pcp:0 free_cma:0
+    Node 0 active_anon:0kB inactive_anon:0kB active_file:0kB
+inactive_file:0kB unevictable:0kB isolated(anon):0kB isolated(file):0kB
+mapped:0kB dirty:0kB writeback:0kB shmem:0kB
++writeback_tmp:0kB kernel_stack:0kB pagetables:0kB sec_pagetables:0kB
+all_unreclaimable? no
+    Normal free:0kB boost:0kB min:0kB low:0kB high:0kB
+reserved_highatomic:0KB active_anon:0kB inactive_anon:0kB active_file:0kB
+inactive_file:0kB unevictable:0kB writepending:0kB
++present:1048576kB managed:1039360kB mlocked:0kB bounce:0kB free_pcp:0kB
+local_pcp:0kB free_cma:0kB
+    lowmem_reserve[]: 0 0
+    Normal: 0*4kB 0*8kB 0*16kB 0*32kB 0*64kB 0*128kB 0*256kB 0*512kB
+0*1024kB 0*2048kB 0*4096kB = 0kB
+    0 total pagecache pages
+    0 pages in swap cache
+    Free swap  = 0kB
+    Total swap = 0kB
+    262144 pages RAM
+    0 pages HighMem/MovableOnly
+    2304 pages reserved
+    Backtrace:
+     [<10411d78>] patch_text+0x30/0x48
+     [<1041246c>] arch_jump_label_transform+0x90/0xcc
+     [<1056f734>] jump_label_update+0xd4/0x184
+     [<1056fc9c>] static_key_enable_cpuslocked+0xc0/0x110
+     [<1056fd08>] static_key_enable+0x1c/0x2c
+     [<1011362c>] init_mem_debugging_and_hardening+0xdc/0xf8
+     [<1010141c>] start_kernel+0x5f0/0xa98
+     [<10105da8>] start_parisc+0xb8/0xe4
 
-/sys/kernel/debug/tracing # cat stack_trace
-        Depth    Size   Location    (17 entries)
-        -----    ----   --------
-  0)     3888      32   _raw_spin_trylock+0x8/0x70
-  1)     3856     576   get_page_from_freelist+0x26c/0x1ad0
-  2)     3280      64   __alloc_pages+0x290/0x1280
-  3)     3216     336   __folio_alloc+0x34/0x90
-  4)     2880     176   vma_alloc_folio+0xd8/0x540
-  5)     2704     416   __handle_mm_fault+0x700/0x1cc0
-  6)     2288      96   handle_mm_fault+0xf0/0x3f0
-  7)     2192      48   ___do_page_fault+0x3e4/0xbe0
-  8)     2144     192   do_page_fault+0x30/0xc0
-  9)     1952     608   data_access_common_virt+0x210/0x220
- 10)     1344      16   0xc0000000334bbb50
- 11)     1328     416   load_elf_binary+0x804/0x1b80
- 12)      912      64   bprm_execve+0x2d8/0x7e0
- 13)      848     176   do_execveat_common+0x1d0/0x2f0
- 14)      672     192   sys_execve+0x54/0x70
- 15)      480      64   system_call_exception+0x138/0x350
- 16)      416     416   system_call_common+0x160/0x2c4
+    Kernel Fault: Code=15 (Data TLB miss fault) at addr 0f7fe3c0
+    CPU: 0 PID: 0 Comm: swapper Not tainted 6.3.0-rc4+ #16
+    Hardware name: 9000/785/C3600
 
-This results in two additional stores in the ftrace entry code, but
-produces reliable backtraces.
+This happens because patching static key code temporarily maps it via
+fixmap and if it happens before page allocator is initialized set_fixmap()
+cannot allocate memory using pte_alloc_kernel().
 
-Fixes: 153086644fd1 ("powerpc/ftrace: Add support for -mprofile-kernel ftrace ABI")
-Cc: stable@vger.kernel.org
-Signed-off-by: Naveen N Rao <naveen@kernel.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230621051349.759567-1-naveen@kernel.org
+Make sure that fixmap page tables are preallocated early so that
+pte_offset_kernel() in set_fixmap() never resorts to pte allocation.
+
+Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Tested-by: Christoph Biedl <linux-kernel.bfrz@manchmal.in-ulm.de>
+Tested-by: John David Anglin <dave.anglin@bell.net>
+Cc: <stable@vger.kernel.org> # v6.4+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/trace/ftrace_mprofile.S |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/parisc/mm/fixmap.c |    3 ---
+ arch/parisc/mm/init.c   |   34 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 34 insertions(+), 3 deletions(-)
 
---- a/arch/powerpc/kernel/trace/ftrace_mprofile.S
-+++ b/arch/powerpc/kernel/trace/ftrace_mprofile.S
-@@ -33,6 +33,9 @@
-  * and then arrange for the ftrace function to be called.
-  */
- .macro	ftrace_regs_entry allregs
-+	/* Create a minimal stack frame for representing B */
-+	PPC_STLU	r1, -STACK_FRAME_MIN_SIZE(r1)
+--- a/arch/parisc/mm/fixmap.c
++++ b/arch/parisc/mm/fixmap.c
+@@ -19,9 +19,6 @@ void notrace set_fixmap(enum fixed_addre
+ 	pmd_t *pmd = pmd_offset(pud, vaddr);
+ 	pte_t *pte;
+ 
+-	if (pmd_none(*pmd))
+-		pte = pte_alloc_kernel(pmd, vaddr);
+-
+ 	pte = pte_offset_kernel(pmd, vaddr);
+ 	set_pte_at(&init_mm, vaddr, pte, __mk_pte(phys, PAGE_KERNEL_RWX));
+ 	flush_tlb_kernel_range(vaddr, vaddr + PAGE_SIZE);
+--- a/arch/parisc/mm/init.c
++++ b/arch/parisc/mm/init.c
+@@ -671,6 +671,39 @@ static void __init gateway_init(void)
+ 		  PAGE_SIZE, PAGE_GATEWAY, 1);
+ }
+ 
++static void __init fixmap_init(void)
++{
++	unsigned long addr = FIXMAP_START;
++	unsigned long end = FIXMAP_START + FIXMAP_SIZE;
++	pgd_t *pgd = pgd_offset_k(addr);
++	p4d_t *p4d = p4d_offset(pgd, addr);
++	pud_t *pud = pud_offset(p4d, addr);
++	pmd_t *pmd;
 +
- 	/* Create our stack frame + pt_regs */
- 	PPC_STLU	r1,-SWITCH_FRAME_SIZE(r1)
++	BUILD_BUG_ON(FIXMAP_SIZE > PMD_SIZE);
++
++#if CONFIG_PGTABLE_LEVELS == 3
++	if (pud_none(*pud)) {
++		pmd = memblock_alloc(PAGE_SIZE << PMD_TABLE_ORDER,
++				     PAGE_SIZE << PMD_TABLE_ORDER);
++		if (!pmd)
++			panic("fixmap: pmd allocation failed.\n");
++		pud_populate(NULL, pud, pmd);
++	}
++#endif
++
++	pmd = pmd_offset(pud, addr);
++	do {
++		pte_t *pte = memblock_alloc(PAGE_SIZE, PAGE_SIZE);
++		if (!pte)
++			panic("fixmap: pte allocation failed.\n");
++
++		pmd_populate_kernel(&init_mm, pmd, pte);
++
++		addr += PAGE_SIZE;
++	} while (addr < end);
++}
++
+ static void __init parisc_bootmem_free(void)
+ {
+ 	unsigned long max_zone_pfn[MAX_NR_ZONES] = { 0, };
+@@ -685,6 +718,7 @@ void __init paging_init(void)
+ 	setup_bootmem();
+ 	pagetable_init();
+ 	gateway_init();
++	fixmap_init();
+ 	flush_cache_all_local(); /* start with known state */
+ 	flush_tlb_all_local(NULL);
  
-@@ -42,7 +45,7 @@
- 
- #ifdef CONFIG_PPC64
- 	/* Save the original return address in A's stack frame */
--	std	r0, LRSAVE+SWITCH_FRAME_SIZE(r1)
-+	std	r0, LRSAVE+SWITCH_FRAME_SIZE+STACK_FRAME_MIN_SIZE(r1)
- 	/* Ok to continue? */
- 	lbz	r3, PACA_FTRACE_ENABLED(r13)
- 	cmpdi	r3, 0
-@@ -77,6 +80,8 @@
- 	mflr	r7
- 	/* Save it as pt_regs->nip */
- 	PPC_STL	r7, _NIP(r1)
-+	/* Also save it in B's stackframe header for proper unwind */
-+	PPC_STL	r7, LRSAVE+SWITCH_FRAME_SIZE(r1)
- 	/* Save the read LR in pt_regs->link */
- 	PPC_STL	r0, _LINK(r1)
- 
-@@ -142,7 +147,7 @@
- #endif
- 
- 	/* Pop our stack frame */
--	addi r1, r1, SWITCH_FRAME_SIZE
-+	addi r1, r1, SWITCH_FRAME_SIZE+STACK_FRAME_MIN_SIZE
- 
- #ifdef CONFIG_LIVEPATCH_64
-         /* Based on the cmpd above, if the NIP was altered handle livepatch */
 
 
