@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1DD17AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:41:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508EFC433C8;
-	Wed,  9 Aug 2023 11:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A651617AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:41:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24825C433C7;
+	Wed,  9 Aug 2023 11:41:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581271;
-	bh=EUk601PggebqOuW2vRU61JwiZbHquPBH5MGhVYsjvC4=;
+	s=korg; t=1691581274;
+	bh=sff+9mdnpdJR4zyMWjaKq+ZxK7kI4+p6ZYtrikNBBkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PJUGLLKKzfjZBfBDxi4ubHXN+LU7KtAFrlX6BUne/0uATX53gY7neDlnW9P/f743G
-	 6rPMYtS0+f17B12IfVbdTiZj2w6h+9W3s43V78ClEOfVvv9N8yl96KaIowulAzxEO0
-	 EhE+zvWtGHYkR99GHp91E+NhRPy5vZivcPuT2Sys=
+	b=q47RnLNdXr06xXwCYc4ehzHfGYt/3RTDIEEGh7sJUx0yp0b8B4cdtXSaydezO2nC2
+	 ppA8VrobgYqAI+Mw0DUnLt1QtXMhcJ/hhHaAjxBnwiggrVNhsZhYuaVpuo/Gq5Lpbp
+	 jrcriiUstfLLry++Ktd0vaJEOWp0gaFwSVXbBt2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	gaoming <gaoming20@hihonor.com>,
+	syzbot+1741a5d9b79989c10bdc@syzkaller.appspotmail.com,
+	Sungjong Seo <sj1557.seo@samsung.com>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 5.10 166/201] exfat: use kvmalloc_array/kvfree instead of kmalloc_array/kfree
-Date: Wed,  9 Aug 2023 12:42:48 +0200
-Message-ID: <20230809103649.288538826@linuxfoundation.org>
+Subject: [PATCH 5.10 167/201] exfat: release s_lock before calling dir_emit()
+Date: Wed,  9 Aug 2023 12:42:49 +0200
+Message-ID: <20230809103649.321284501@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -34,81 +35,129 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: gaoming <gaoming20@hihonor.com>
+From: Sungjong Seo <sj1557.seo@samsung.com>
 
-commit daf60d6cca26e50d65dac374db92e58de745ad26 upstream.
+commit ff84772fd45d486e4fc78c82e2f70ce5333543e6 upstream.
 
-The call stack shown below is a scenario in the Linux 4.19 kernel.
-Allocating memory failed where exfat fs use kmalloc_array due to
-system memory fragmentation, while the u-disk was inserted without
-recognition.
-Devices such as u-disk using the exfat file system are pluggable and
-may be insert into the system at any time.
-However, long-term running systems cannot guarantee the continuity of
-physical memory. Therefore, it's necessary to address this issue.
+There is a potential deadlock reported by syzbot as below:
 
-Binder:2632_6: page allocation failure: order:4,
- mode:0x6040c0(GFP_KERNEL|__GFP_COMP), nodemask=(null)
-Call trace:
-[242178.097582]  dump_backtrace+0x0/0x4
-[242178.097589]  dump_stack+0xf4/0x134
-[242178.097598]  warn_alloc+0xd8/0x144
-[242178.097603]  __alloc_pages_nodemask+0x1364/0x1384
-[242178.097608]  kmalloc_order+0x2c/0x510
-[242178.097612]  kmalloc_order_trace+0x40/0x16c
-[242178.097618]  __kmalloc+0x360/0x408
-[242178.097624]  load_alloc_bitmap+0x160/0x284
-[242178.097628]  exfat_fill_super+0xa3c/0xe7c
-[242178.097635]  mount_bdev+0x2e8/0x3a0
-[242178.097638]  exfat_fs_mount+0x40/0x50
-[242178.097643]  mount_fs+0x138/0x2e8
-[242178.097649]  vfs_kern_mount+0x90/0x270
-[242178.097655]  do_mount+0x798/0x173c
-[242178.097659]  ksys_mount+0x114/0x1ac
-[242178.097665]  __arm64_sys_mount+0x24/0x34
-[242178.097671]  el0_svc_common+0xb8/0x1b8
-[242178.097676]  el0_svc_handler+0x74/0x90
-[242178.097681]  el0_svc+0x8/0x340
+======================================================
+WARNING: possible circular locking dependency detected
+6.4.0-next-20230707-syzkaller #0 Not tainted
+------------------------------------------------------
+syz-executor330/5073 is trying to acquire lock:
+ffff8880218527a0 (&mm->mmap_lock){++++}-{3:3}, at: mmap_read_lock_killable include/linux/mmap_lock.h:151 [inline]
+ffff8880218527a0 (&mm->mmap_lock){++++}-{3:3}, at: get_mmap_lock_carefully mm/memory.c:5293 [inline]
+ffff8880218527a0 (&mm->mmap_lock){++++}-{3:3}, at: lock_mm_and_find_vma+0x369/0x510 mm/memory.c:5344
+but task is already holding lock:
+ffff888019f760e0 (&sbi->s_lock){+.+.}-{3:3}, at: exfat_iterate+0x117/0xb50 fs/exfat/dir.c:232
 
-By analyzing the exfat code,we found that continuous physical memory
-is not required here,so kvmalloc_array is used can solve this problem.
+which lock already depends on the new lock.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: gaoming <gaoming20@hihonor.com>
+Chain exists of:
+  &mm->mmap_lock --> mapping.invalidate_lock#3 --> &sbi->s_lock
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  lock(&sbi->s_lock);
+                               lock(mapping.invalidate_lock#3);
+                               lock(&sbi->s_lock);
+  rlock(&mm->mmap_lock);
+
+Let's try to avoid above potential deadlock condition by moving dir_emit*()
+out of sbi->s_lock coverage.
+
+Fixes: ca06197382bd ("exfat: add directory operations")
+Cc: stable@vger.kernel.org #v5.7+
+Reported-by: syzbot+1741a5d9b79989c10bdc@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/lkml/00000000000078ee7e060066270b@google.com/T/#u
+Tested-by: syzbot+1741a5d9b79989c10bdc@syzkaller.appspotmail.com
+Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/balloc.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/exfat/dir.c |   27 ++++++++++++---------------
+ 1 file changed, 12 insertions(+), 15 deletions(-)
 
---- a/fs/exfat/balloc.c
-+++ b/fs/exfat/balloc.c
-@@ -69,7 +69,7 @@ static int exfat_allocate_bitmap(struct
- 	}
- 	sbi->map_sectors = ((need_map_size - 1) >>
- 			(sb->s_blocksize_bits)) + 1;
--	sbi->vol_amap = kmalloc_array(sbi->map_sectors,
-+	sbi->vol_amap = kvmalloc_array(sbi->map_sectors,
- 				sizeof(struct buffer_head *), GFP_KERNEL);
- 	if (!sbi->vol_amap)
- 		return -ENOMEM;
-@@ -84,7 +84,7 @@ static int exfat_allocate_bitmap(struct
- 			while (j < i)
- 				brelse(sbi->vol_amap[j++]);
- 
--			kfree(sbi->vol_amap);
-+			kvfree(sbi->vol_amap);
- 			sbi->vol_amap = NULL;
- 			return -EIO;
- 		}
-@@ -138,7 +138,7 @@ void exfat_free_bitmap(struct exfat_sb_i
- 	for (i = 0; i < sbi->map_sectors; i++)
- 		__brelse(sbi->vol_amap[i]);
- 
--	kfree(sbi->vol_amap);
-+	kvfree(sbi->vol_amap);
+--- a/fs/exfat/dir.c
++++ b/fs/exfat/dir.c
+@@ -210,7 +210,10 @@ static void exfat_free_namebuf(struct ex
+ 	exfat_init_namebuf(nb);
  }
  
- int exfat_set_bitmap(struct inode *inode, unsigned int clu)
+-/* skip iterating emit_dots when dir is empty */
++/*
++ * Before calling dir_emit*(), sbi->s_lock should be released
++ * because page fault can occur in dir_emit*().
++ */
+ #define ITER_POS_FILLED_DOTS    (2)
+ static int exfat_iterate(struct file *filp, struct dir_context *ctx)
+ {
+@@ -225,11 +228,10 @@ static int exfat_iterate(struct file *fi
+ 	int err = 0, fake_offset = 0;
+ 
+ 	exfat_init_namebuf(nb);
+-	mutex_lock(&EXFAT_SB(sb)->s_lock);
+ 
+ 	cpos = ctx->pos;
+ 	if (!dir_emit_dots(filp, ctx))
+-		goto unlock;
++		goto out;
+ 
+ 	if (ctx->pos == ITER_POS_FILLED_DOTS) {
+ 		cpos = 0;
+@@ -241,16 +243,18 @@ static int exfat_iterate(struct file *fi
+ 	/* name buffer should be allocated before use */
+ 	err = exfat_alloc_namebuf(nb);
+ 	if (err)
+-		goto unlock;
++		goto out;
+ get_new:
++	mutex_lock(&EXFAT_SB(sb)->s_lock);
++
+ 	if (ei->flags == ALLOC_NO_FAT_CHAIN && cpos >= i_size_read(inode))
+ 		goto end_of_dir;
+ 
+ 	err = exfat_readdir(inode, &cpos, &de);
+ 	if (err) {
+ 		/*
+-		 * At least we tried to read a sector.  Move cpos to next sector
+-		 * position (should be aligned).
++		 * At least we tried to read a sector.
++		 * Move cpos to next sector position (should be aligned).
+ 		 */
+ 		if (err == -EIO) {
+ 			cpos += 1 << (sb->s_blocksize_bits);
+@@ -273,16 +277,10 @@ get_new:
+ 		inum = iunique(sb, EXFAT_ROOT_INO);
+ 	}
+ 
+-	/*
+-	 * Before calling dir_emit(), sb_lock should be released.
+-	 * Because page fault can occur in dir_emit() when the size
+-	 * of buffer given from user is larger than one page size.
+-	 */
+ 	mutex_unlock(&EXFAT_SB(sb)->s_lock);
+ 	if (!dir_emit(ctx, nb->lfn, strlen(nb->lfn), inum,
+ 			(de.attr & ATTR_SUBDIR) ? DT_DIR : DT_REG))
+-		goto out_unlocked;
+-	mutex_lock(&EXFAT_SB(sb)->s_lock);
++		goto out;
+ 	ctx->pos = cpos;
+ 	goto get_new;
+ 
+@@ -290,9 +288,8 @@ end_of_dir:
+ 	if (!cpos && fake_offset)
+ 		cpos = ITER_POS_FILLED_DOTS;
+ 	ctx->pos = cpos;
+-unlock:
+ 	mutex_unlock(&EXFAT_SB(sb)->s_lock);
+-out_unlocked:
++out:
+ 	/*
+ 	 * To improve performance, free namebuf after unlock sb_lock.
+ 	 * If namebuf is not allocated, this function do nothing
 
 
