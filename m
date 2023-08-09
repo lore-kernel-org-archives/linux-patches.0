@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFC0174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:58:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB9CC433C7;
-	Wed,  9 Aug 2023 10:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BC2174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:58:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE03AC433C8;
+	Wed,  9 Aug 2023 10:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578683;
-	bh=1I8Q1Dm4wHhYvSCqlfMzS//yIwqj9DpjoZEWjh1kOk8=;
+	s=korg; t=1691578686;
+	bh=8+RgxHCLeUqDggBgbPEY7BoHgJO0zbcympNvSzdNxtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s6hFqruh620YtElPPK5nFsWeOeiBDuKQPLWvBHUVzjIW0yr7ma7rAHvhSDUS4saNg
-	 wh/tPtr+3ubR78hHFZ4KZAqcHv0vi39Q4x9HwfXEwK2IxGi7T9nIN+FpUw0VE+4ymk
-	 5hz6r7M6I7YBVt5BK6GxR/XtRLWGkBuF9xFNqwL8=
+	b=codruxTWXJHE9jw9e/UzY6/bIWdDATlokP0cnMRkqo6NxEBbFIHzggyJBBHOT/5CU
+	 YWN9bCM8LTe3SSE8DvdUg4JVaPT+uB13427PEugJi0O9hk6JCZhPyR7h0izK55tlZI
+	 HGAodVHLwQN/4GlmKBgYY1c2DMQbCR/Bz1tukwNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederick Lawler <fred@cloudflare.com>,
-	Shay Drory <shayd@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Hardik Garg <hargar@linux.microsoft.com>
-Subject: [PATCH 5.15 03/92] net/mlx5: Free irqs only on shutdown callback
-Date: Wed,  9 Aug 2023 12:40:39 +0200
-Message-ID: <20230809103633.636985356@linuxfoundation.org>
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Mike Leach <mike.leach@linaro.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Easwar Hariharan <eahariha@linux.microsoft.com>
+Subject: [PATCH 5.15 04/92] arm64: errata: Add workaround for TSB flush failures
+Date: Wed,  9 Aug 2023 12:40:40 +0200
+Message-ID: <20230809103633.677416983@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -36,267 +41,189 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shay Drory <shayd@nvidia.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
 
-commit 9c2d08010963a61a171e8cb2852d3ce015b60cb4 upstream.
+commit fa82d0b4b833790ac4572377fb777dcea24a9d69 upstream
 
-Whenever a shutdown is invoked, free irqs only and keep mlx5_irq
-synthetic wrapper intact in order to avoid use-after-free on
-system shutdown.
+Arm Neoverse-N2 (#2067961) and Cortex-A710 (#2054223) suffers
+from errata, where a TSB (trace synchronization barrier)
+fails to flush the trace data completely, when executed from
+a trace prohibited region. In Linux we always execute it
+after we have moved the PE to trace prohibited region. So,
+we can apply the workaround every time a TSB is executed.
 
-for example:
-==================================================================
-BUG: KASAN: use-after-free in _find_first_bit+0x66/0x80
-Read of size 8 at addr ffff88823fc0d318 by task kworker/u192:0/13608
+The work around is to issue two TSB consecutively.
 
-CPU: 25 PID: 13608 Comm: kworker/u192:0 Tainted: G    B   W  O  6.1.21-cloudflare-kasan-2023.3.21 #1
-Hardware name: GIGABYTE R162-R2-GEN0/MZ12-HD2-CD, BIOS R14 05/03/2021
-Workqueue: mlx5e mlx5e_tx_timeout_work [mlx5_core]
-Call Trace:
-  <TASK>
-  dump_stack_lvl+0x34/0x48
-  print_report+0x170/0x473
-  ? _find_first_bit+0x66/0x80
-  kasan_report+0xad/0x130
-  ? _find_first_bit+0x66/0x80
-  _find_first_bit+0x66/0x80
-  mlx5e_open_channels+0x3c5/0x3a10 [mlx5_core]
-  ? console_unlock+0x2fa/0x430
-  ? _raw_spin_lock_irqsave+0x8d/0xf0
-  ? _raw_spin_unlock_irqrestore+0x42/0x80
-  ? preempt_count_add+0x7d/0x150
-  ? __wake_up_klogd.part.0+0x7d/0xc0
-  ? vprintk_emit+0xfe/0x2c0
-  ? mlx5e_trigger_napi_sched+0x40/0x40 [mlx5_core]
-  ? dev_attr_show.cold+0x35/0x35
-  ? devlink_health_do_dump.part.0+0x174/0x340
-  ? devlink_health_report+0x504/0x810
-  ? mlx5e_reporter_tx_timeout+0x29d/0x3a0 [mlx5_core]
-  ? mlx5e_tx_timeout_work+0x17c/0x230 [mlx5_core]
-  ? process_one_work+0x680/0x1050
-  mlx5e_safe_switch_params+0x156/0x220 [mlx5_core]
-  ? mlx5e_switch_priv_channels+0x310/0x310 [mlx5_core]
-  ? mlx5_eq_poll_irq_disabled+0xb6/0x100 [mlx5_core]
-  mlx5e_tx_reporter_timeout_recover+0x123/0x240 [mlx5_core]
-  ? __mutex_unlock_slowpath.constprop.0+0x2b0/0x2b0
-  devlink_health_reporter_recover+0xa6/0x1f0
-  devlink_health_report+0x2f7/0x810
-  ? vsnprintf+0x854/0x15e0
-  mlx5e_reporter_tx_timeout+0x29d/0x3a0 [mlx5_core]
-  ? mlx5e_reporter_tx_err_cqe+0x1a0/0x1a0 [mlx5_core]
-  ? mlx5e_tx_reporter_timeout_dump+0x50/0x50 [mlx5_core]
-  ? mlx5e_tx_reporter_dump_sq+0x260/0x260 [mlx5_core]
-  ? newidle_balance+0x9b7/0xe30
-  ? psi_group_change+0x6a7/0xb80
-  ? mutex_lock+0x96/0xf0
-  ? __mutex_lock_slowpath+0x10/0x10
-  mlx5e_tx_timeout_work+0x17c/0x230 [mlx5_core]
-  process_one_work+0x680/0x1050
-  worker_thread+0x5a0/0xeb0
-  ? process_one_work+0x1050/0x1050
-  kthread+0x2a2/0x340
-  ? kthread_complete_and_exit+0x20/0x20
-  ret_from_fork+0x22/0x30
-  </TASK>
+NOTE: This errata is defined as LOCAL_CPU_ERRATUM, implying
+that a late CPU could be blocked from booting if it is the
+first CPU that requires the workaround. This is because we
+do not allow setting a cpu_hwcaps after the SMP boot. The
+other alternative is to use "this_cpu_has_cap()" instead
+of the faster system wide check, which may be a bit of an
+overhead, given we may have to do this in nvhe KVM host
+before a guest entry.
 
-Freed by task 1:
-  kasan_save_stack+0x23/0x50
-  kasan_set_track+0x21/0x30
-  kasan_save_free_info+0x2a/0x40
-  ____kasan_slab_free+0x169/0x1d0
-  slab_free_freelist_hook+0xd2/0x190
-  __kmem_cache_free+0x1a1/0x2f0
-  irq_pool_free+0x138/0x200 [mlx5_core]
-  mlx5_irq_table_destroy+0xf6/0x170 [mlx5_core]
-  mlx5_core_eq_free_irqs+0x74/0xf0 [mlx5_core]
-  shutdown+0x194/0x1aa [mlx5_core]
-  pci_device_shutdown+0x75/0x120
-  device_shutdown+0x35c/0x620
-  kernel_restart+0x60/0xa0
-  __do_sys_reboot+0x1cb/0x2c0
-  do_syscall_64+0x3b/0x90
-  entry_SYSCALL_64_after_hwframe+0x4b/0xb5
-
-The buggy address belongs to the object at ffff88823fc0d300
-  which belongs to the cache kmalloc-192 of size 192
-The buggy address is located 24 bytes inside of
-  192-byte region [ffff88823fc0d300, ffff88823fc0d3c0)
-
-The buggy address belongs to the physical page:
-page:0000000010139587 refcount:1 mapcount:0 mapping:0000000000000000
-index:0x0 pfn:0x23fc0c
-head:0000000010139587 order:1 compound_mapcount:0 compound_pincount:0
-flags: 0x2ffff800010200(slab|head|node=0|zone=2|lastcpupid=0x1ffff)
-raw: 002ffff800010200 0000000000000000 dead000000000122 ffff88810004ca00
-raw: 0000000000000000 0000000000200020 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
-  ffff88823fc0d200: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-  ffff88823fc0d280: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
- >ffff88823fc0d300: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                             ^
-  ffff88823fc0d380: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-  ffff88823fc0d400: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-==================================================================
-general protection fault, probably for non-canonical address
-0xdffffc005c40d7ac: 0000 [#1] PREEMPT SMP KASAN NOPTI
-KASAN: probably user-memory-access in range [0x00000002e206bd60-0x00000002e206bd67]
-CPU: 25 PID: 13608 Comm: kworker/u192:0 Tainted: G    B   W  O  6.1.21-cloudflare-kasan-2023.3.21 #1
-Hardware name: GIGABYTE R162-R2-GEN0/MZ12-HD2-CD, BIOS R14 05/03/2021
-Workqueue: mlx5e mlx5e_tx_timeout_work [mlx5_core]
-RIP: 0010:__alloc_pages+0x141/0x5c0
-Call Trace:
-  <TASK>
-  ? sysvec_apic_timer_interrupt+0xa0/0xc0
-  ? asm_sysvec_apic_timer_interrupt+0x16/0x20
-  ? __alloc_pages_slowpath.constprop.0+0x1ec0/0x1ec0
-  ? _raw_spin_unlock_irqrestore+0x3d/0x80
-  __kmalloc_large_node+0x80/0x120
-  ? kvmalloc_node+0x4e/0x170
-  __kmalloc_node+0xd4/0x150
-  kvmalloc_node+0x4e/0x170
-  mlx5e_open_channels+0x631/0x3a10 [mlx5_core]
-  ? console_unlock+0x2fa/0x430
-  ? _raw_spin_lock_irqsave+0x8d/0xf0
-  ? _raw_spin_unlock_irqrestore+0x42/0x80
-  ? preempt_count_add+0x7d/0x150
-  ? __wake_up_klogd.part.0+0x7d/0xc0
-  ? vprintk_emit+0xfe/0x2c0
-  ? mlx5e_trigger_napi_sched+0x40/0x40 [mlx5_core]
-  ? dev_attr_show.cold+0x35/0x35
-  ? devlink_health_do_dump.part.0+0x174/0x340
-  ? devlink_health_report+0x504/0x810
-  ? mlx5e_reporter_tx_timeout+0x29d/0x3a0 [mlx5_core]
-  ? mlx5e_tx_timeout_work+0x17c/0x230 [mlx5_core]
-  ? process_one_work+0x680/0x1050
-  mlx5e_safe_switch_params+0x156/0x220 [mlx5_core]
-  ? mlx5e_switch_priv_channels+0x310/0x310 [mlx5_core]
-  ? mlx5_eq_poll_irq_disabled+0xb6/0x100 [mlx5_core]
-  mlx5e_tx_reporter_timeout_recover+0x123/0x240 [mlx5_core]
-  ? __mutex_unlock_slowpath.constprop.0+0x2b0/0x2b0
-  devlink_health_reporter_recover+0xa6/0x1f0
-  devlink_health_report+0x2f7/0x810
-  ? vsnprintf+0x854/0x15e0
-  mlx5e_reporter_tx_timeout+0x29d/0x3a0 [mlx5_core]
-  ? mlx5e_reporter_tx_err_cqe+0x1a0/0x1a0 [mlx5_core]
-  ? mlx5e_tx_reporter_timeout_dump+0x50/0x50 [mlx5_core]
-  ? mlx5e_tx_reporter_dump_sq+0x260/0x260 [mlx5_core]
-  ? newidle_balance+0x9b7/0xe30
-  ? psi_group_change+0x6a7/0xb80
-  ? mutex_lock+0x96/0xf0
-  ? __mutex_lock_slowpath+0x10/0x10
-  mlx5e_tx_timeout_work+0x17c/0x230 [mlx5_core]
-  process_one_work+0x680/0x1050
-  worker_thread+0x5a0/0xeb0
-  ? process_one_work+0x1050/0x1050
-  kthread+0x2a2/0x340
-  ? kthread_complete_and_exit+0x20/0x20
-  ret_from_fork+0x22/0x30
-  </TASK>
----[ end trace 0000000000000000  ]---
-RIP: 0010:__alloc_pages+0x141/0x5c0
-Code: e0 39 a3 96 89 e9 b8 22 01 32 01 83 e1 0f 48 89 fa 01 c9 48 c1 ea
-03 d3 f8 83 e0 03 89 44 24 6c 48 b8 00 00 00 00 00 fc ff df <80> 3c 02
-00 0f 85 fc 03 00 00 89 e8 4a 8b 14 f5 e0 39 a3 96 4c 89
-RSP: 0018:ffff888251f0f438 EFLAGS: 00010202
-RAX: dffffc0000000000 RBX: 1ffff1104a3e1e8b RCX: 0000000000000000
-RDX: 000000005c40d7ac RSI: 0000000000000003 RDI: 00000002e206bd60
-RBP: 0000000000052dc0 R08: ffff8882b0044218 R09: ffff8882b0045e8a
-R10: fffffbfff300fefc R11: ffff888167af4000 R12: 0000000000000003
-R13: 0000000000000000 R14: 00000000696c7070 R15: ffff8882373f4380
-FS:  0000000000000000(0000) GS:ffff88bf2be80000(0000)
-knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005641d031eee8 CR3: 0000002e7ca14000 CR4: 0000000000350ee0
-Kernel panic - not syncing: Fatal exception
-Kernel Offset: 0x11000000 from 0xffffffff81000000 (relocation range:
-0xffffffff80000000-0xffffffffbfffffff)
----[ end Kernel panic - not syncing: Fatal exception  ]---]
-
-Reported-by: Frederick Lawler <fred@cloudflare.com>
-Link: https://lore.kernel.org/netdev/be5b9271-7507-19c5-ded1-fa78f1980e69@cloudflare.com
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-[hardik: Refer to the irqn member of the mlx5_irq struct, instead of
- the msi_map, since we don't have upstream v6.4 commit 235a25fe28de
- ("net/mlx5: Modify struct mlx5_irq to use struct msi_map")].
-[hardik: Refer to the pf_pool member of the mlx5_irq_table struct,
- instead of pcif_pool, since we don't have upstream v6.4 commit
- 8bebfd767909 ("net/mlx5: Improve naming of pci function vectors")].
-Signed-off-by: Hardik Garg <hargar@linux.microsoft.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc: Mike Leach <mike.leach@linaro.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20211019163153.3692640-4-suzuki.poulose@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/eq.c       |    2 -
- drivers/net/ethernet/mellanox/mlx5/core/mlx5_irq.h |    1 
- drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c  |   29 +++++++++++++++++++++
- 3 files changed, 31 insertions(+), 1 deletion(-)
+ Documentation/arm64/silicon-errata.rst |    4 ++++
+ arch/arm64/Kconfig                     |   33 +++++++++++++++++++++++++++++++++
+ arch/arm64/include/asm/barrier.h       |   16 +++++++++++++++-
+ arch/arm64/kernel/cpu_errata.c         |   19 +++++++++++++++++++
+ arch/arm64/tools/cpucaps               |    1 +
+ 5 files changed, 72 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/eq.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eq.c
-@@ -981,7 +981,7 @@ void mlx5_core_eq_free_irqs(struct mlx5_
- 	mutex_lock(&table->lock); /* sync with create/destroy_async_eq */
- 	if (!mlx5_core_is_sf(dev))
- 		clear_rmap(dev);
--	mlx5_irq_table_destroy(dev);
-+	mlx5_irq_table_free_irqs(dev);
- 	mutex_unlock(&table->lock);
- }
+--- a/Documentation/arm64/silicon-errata.rst
++++ b/Documentation/arm64/silicon-errata.rst
+@@ -104,6 +104,8 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-A710     | #2119858        | ARM64_ERRATUM_2119858       |
+ +----------------+-----------------+-----------------+-----------------------------+
++| ARM            | Cortex-A710     | #2054223        | ARM64_ERRATUM_2054223       |
+++----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Neoverse-N1     | #1188873,1418040| ARM64_ERRATUM_1418040       |
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Neoverse-N1     | #1349291        | N/A                         |
+@@ -112,6 +114,8 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Neoverse-N2     | #2139208        | ARM64_ERRATUM_2139208       |
+ +----------------+-----------------+-----------------+-----------------------------+
++| ARM            | Neoverse-N2     | #2067961        | ARM64_ERRATUM_2067961       |
+++----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | MMU-500         | #841119,826419  | N/A                         |
+ +----------------+-----------------+-----------------+-----------------------------+
+ +----------------+-----------------+-----------------+-----------------------------+
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -774,6 +774,39 @@ config ARM64_ERRATUM_2139208
  
---- a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_irq.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_irq.h
-@@ -16,6 +16,7 @@ int mlx5_irq_table_init(struct mlx5_core
- void mlx5_irq_table_cleanup(struct mlx5_core_dev *dev);
- int mlx5_irq_table_create(struct mlx5_core_dev *dev);
- void mlx5_irq_table_destroy(struct mlx5_core_dev *dev);
-+void mlx5_irq_table_free_irqs(struct mlx5_core_dev *dev);
- int mlx5_irq_table_get_num_comp(struct mlx5_irq_table *table);
- int mlx5_irq_table_get_sfs_vec(struct mlx5_irq_table *table);
- struct mlx5_irq_table *mlx5_irq_table_get(struct mlx5_core_dev *dev);
---- a/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
-@@ -550,6 +550,24 @@ static void irq_pools_destroy(struct mlx
- 	irq_pool_free(table->pf_pool);
- }
+ 	  If unsure, say Y.
  
-+static void mlx5_irq_pool_free_irqs(struct mlx5_irq_pool *pool)
-+{
-+	struct mlx5_irq *irq;
-+	unsigned long index;
++config ARM64_WORKAROUND_TSB_FLUSH_FAILURE
++	bool
 +
-+	xa_for_each(&pool->irqs, index, irq)
-+		free_irq(irq->irqn, &irq->nh);
-+}
++config ARM64_ERRATUM_2054223
++	bool "Cortex-A710: 2054223: workaround TSB instruction failing to flush trace"
++	default y
++	select ARM64_WORKAROUND_TSB_FLUSH_FAILURE
++	help
++	  Enable workaround for ARM Cortex-A710 erratum 2054223
 +
-+static void mlx5_irq_pools_free_irqs(struct mlx5_irq_table *table)
-+{
-+	if (table->sf_ctrl_pool) {
-+		mlx5_irq_pool_free_irqs(table->sf_comp_pool);
-+		mlx5_irq_pool_free_irqs(table->sf_ctrl_pool);
-+	}
-+	mlx5_irq_pool_free_irqs(table->pf_pool);
-+}
++	  Affected cores may fail to flush the trace data on a TSB instruction, when
++	  the PE is in trace prohibited state. This will cause losing a few bytes
++	  of the trace cached.
 +
- /* irq_table API */
++	  Workaround is to issue two TSB consecutively on affected cores.
++
++	  If unsure, say Y.
++
++config ARM64_ERRATUM_2067961
++	bool "Neoverse-N2: 2067961: workaround TSB instruction failing to flush trace"
++	default y
++	select ARM64_WORKAROUND_TSB_FLUSH_FAILURE
++	help
++	  Enable workaround for ARM Neoverse-N2 erratum 2067961
++
++	  Affected cores may fail to flush the trace data on a TSB instruction, when
++	  the PE is in trace prohibited state. This will cause losing a few bytes
++	  of the trace cached.
++
++	  Workaround is to issue two TSB consecutively on affected cores.
++
++	  If unsure, say Y.
++
+ config CAVIUM_ERRATUM_22375
+ 	bool "Cavium erratum 22375, 24313"
+ 	default y
+--- a/arch/arm64/include/asm/barrier.h
++++ b/arch/arm64/include/asm/barrier.h
+@@ -23,7 +23,7 @@
+ #define dsb(opt)	asm volatile("dsb " #opt : : : "memory")
  
- int mlx5_irq_table_init(struct mlx5_core_dev *dev)
-@@ -630,6 +648,17 @@ void mlx5_irq_table_destroy(struct mlx5_
- 	pci_free_irq_vectors(dev->pdev);
- }
+ #define psb_csync()	asm volatile("hint #17" : : : "memory")
+-#define tsb_csync()	asm volatile("hint #18" : : : "memory")
++#define __tsb_csync()	asm volatile("hint #18" : : : "memory")
+ #define csdb()		asm volatile("hint #20" : : : "memory")
  
-+void mlx5_irq_table_free_irqs(struct mlx5_core_dev *dev)
-+{
-+	struct mlx5_irq_table *table = dev->priv.irq_table;
+ #ifdef CONFIG_ARM64_PSEUDO_NMI
+@@ -46,6 +46,20 @@
+ #define dma_rmb()	dmb(oshld)
+ #define dma_wmb()	dmb(oshst)
+ 
 +
-+	if (mlx5_core_is_sf(dev))
-+		return;
++#define tsb_csync()								\
++	do {									\
++		/*								\
++		 * CPUs affected by Arm Erratum 2054223 or 2067961 needs	\
++		 * another TSB to ensure the trace is flushed. The barriers	\
++		 * don't have to be strictly back to back, as long as the	\
++		 * CPU is in trace prohibited state.				\
++		 */								\
++		if (cpus_have_final_cap(ARM64_WORKAROUND_TSB_FLUSH_FAILURE))	\
++			__tsb_csync();						\
++		__tsb_csync();							\
++	} while (0)
 +
-+	mlx5_irq_pools_free_irqs(table);
-+	pci_free_irq_vectors(dev->pdev);
-+}
+ /*
+  * Generate a mask for array_index__nospec() that is ~0UL when 0 <= idx < sz
+  * and 0 otherwise.
+--- a/arch/arm64/kernel/cpu_errata.c
++++ b/arch/arm64/kernel/cpu_errata.c
+@@ -375,6 +375,18 @@ static const struct midr_range trbe_over
+ };
+ #endif	/* CONFIG_ARM64_WORKAROUND_TRBE_OVERWRITE_FILL_MODE */
+ 
++#ifdef CONFIG_ARM64_WORKAROUND_TSB_FLUSH_FAILURE
++static const struct midr_range tsb_flush_fail_cpus[] = {
++#ifdef CONFIG_ARM64_ERRATUM_2067961
++	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
++#endif
++#ifdef CONFIG_ARM64_ERRATUM_2054223
++	MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
++#endif
++	{},
++};
++#endif	/* CONFIG_ARM64_WORKAROUND_TSB_FLUSH_FAILURE */
 +
- int mlx5_irq_table_get_sfs_vec(struct mlx5_irq_table *table)
- {
- 	if (table->sf_comp_pool)
+ const struct arm64_cpu_capabilities arm64_errata[] = {
+ #ifdef CONFIG_ARM64_WORKAROUND_CLEAN_CACHE
+ 	{
+@@ -607,6 +619,13 @@ const struct arm64_cpu_capabilities arm6
+ 		CAP_MIDR_RANGE_LIST(trbe_overwrite_fill_mode_cpus),
+ 	},
+ #endif
++#ifdef CONFIG_ARM64_WORKAROUND_TSB_FLUSH_FAILURE
++	{
++		.desc = "ARM erratum 2067961 or 2054223",
++		.capability = ARM64_WORKAROUND_TSB_FLUSH_FAILURE,
++		ERRATA_MIDR_RANGE_LIST(tsb_flush_fail_cpus),
++	},
++#endif
+ 	{
+ 	}
+ };
+--- a/arch/arm64/tools/cpucaps
++++ b/arch/arm64/tools/cpucaps
+@@ -57,6 +57,7 @@ WORKAROUND_1542419
+ WORKAROUND_1742098
+ WORKAROUND_2457168
+ WORKAROUND_TRBE_OVERWRITE_FILL_MODE
++WORKAROUND_TSB_FLUSH_FAILURE
+ WORKAROUND_CAVIUM_23154
+ WORKAROUND_CAVIUM_27456
+ WORKAROUND_CAVIUM_30115
 
 
