@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A268F174EE
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:51:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269C5C433C7;
-	Wed,  9 Aug 2023 10:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57491174EE
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:52:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEFB7C433C8;
+	Wed,  9 Aug 2023 10:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578318;
-	bh=KLHxyIfove8co41ZqW2w2HZBguBQ3LJUZ8bWyb2oW0o=;
+	s=korg; t=1691578321;
+	bh=jwvgWVtNftjjBSavMJVmhqFPAca+IA7DejtQ3+/t+bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l2NfsNMPq08rZKX7pyBXwrxomeOnoc+epr4LRoGJV+u7Grm3cLS11u1cSSKXVrf8M
-	 uVCVfS7+liG0SWQmRnf7oNXJO1Eh0rO1vs3AwmKBD66qpGPciL4mCXC0UGP7KFPQGQ
-	 rP9j3snmkvn6nmE95RNiRbxBXCWpUSr+PDRLERos=
+	b=sF81uHucDuRyJy3W2ocyVIUxBcvqa+uMPtfFhLG7fIvrkNTSlGU3NgaGgEUFPjL71
+	 FdLxbQzfg/1DLAGju747hzSqDskP2UB11l/W/BaKgM5bMQH4Xcmp77exQNgzYAErqu
+	 fQxzD5M6LmjbJnvfye+x41462s2yekcbnPa5YNrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 017/127] firmware: arm_scmi: Fix chan_free cleanup on SMC
-Date: Wed,  9 Aug 2023 12:40:04 +0200
-Message-ID: <20230809103637.219995004@linuxfoundation.org>
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.1 018/127] word-at-a-time: use the same return type for has_zero regardless of endianness
+Date: Wed,  9 Aug 2023 12:40:05 +0200
+Message-ID: <20230809103637.259799575@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -36,87 +38,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: ndesaulniers@google.com <ndesaulniers@google.com>
 
-[ Upstream commit d1ff11d7ad8704f8d615f6446041c221b2d2ec4d ]
+[ Upstream commit 79e8328e5acbe691bbde029a52c89d70dcbc22f3 ]
 
-SCMI transport based on SMC can optionally use an additional IRQ to
-signal message completion. The associated interrupt handler is currently
-allocated using devres but on shutdown the core SCMI stack will call
-.chan_free() well before any managed cleanup is invoked by devres.
-As a consequence, the arrival of a late reply to an in-flight pending
-transaction could still trigger the interrupt handler well after the
-SCMI core has cleaned up the channels, with unpleasant results.
+Compiling big-endian targets with Clang produces the diagnostic:
 
-Inhibit further message processing on the IRQ path by explicitly freeing
-the IRQ inside .chan_free() callback itself.
+  fs/namei.c:2173:13: warning: use of bitwise '|' with boolean operands [-Wbitwise-instead-of-logical]
+	} while (!(has_zero(a, &adata, &constants) | has_zero(b, &bdata, &constants)));
+	          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                               ||
+  fs/namei.c:2173:13: note: cast one or both operands to int to silence this warning
 
-Fixes: dd820ee21d5e ("firmware: arm_scmi: Augment SMC/HVC to allow optional interrupt")
-Reported-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20230719173533.2739319-1-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+It appears that when has_zero was introduced, two definitions were
+produced with different signatures (in particular different return
+types).
+
+Looking at the usage in hash_name() in fs/namei.c, I suspect that
+has_zero() is meant to be invoked twice per while loop iteration; using
+logical-or would not update `bdata` when `a` did not have zeros.  So I
+think it's preferred to always return an unsigned long rather than a
+bool than update the while loop in hash_name() to use a logical-or
+rather than bitwise-or.
+
+[ Also changed powerpc version to do the same  - Linus ]
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1832
+Link: https://lore.kernel.org/lkml/20230801-bitwise-v1-1-799bec468dc4@google.com/
+Fixes: 36126f8f2ed8 ("word-at-a-time: make the interfaces truly generic")
+Debugged-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/smc.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ arch/powerpc/include/asm/word-at-a-time.h | 2 +-
+ include/asm-generic/word-at-a-time.h      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/smc.c b/drivers/firmware/arm_scmi/smc.c
-index 87a7b13cf868b..dc383d874ee3a 100644
---- a/drivers/firmware/arm_scmi/smc.c
-+++ b/drivers/firmware/arm_scmi/smc.c
-@@ -23,6 +23,7 @@
- /**
-  * struct scmi_smc - Structure representing a SCMI smc transport
-  *
-+ * @irq: An optional IRQ for completion
-  * @cinfo: SCMI channel info
-  * @shmem: Transmit/Receive shared memory area
-  * @shmem_lock: Lock to protect access to Tx/Rx shared memory area.
-@@ -33,6 +34,7 @@
-  */
+diff --git a/arch/powerpc/include/asm/word-at-a-time.h b/arch/powerpc/include/asm/word-at-a-time.h
+index 46c31fb8748d5..30a12d2086871 100644
+--- a/arch/powerpc/include/asm/word-at-a-time.h
++++ b/arch/powerpc/include/asm/word-at-a-time.h
+@@ -34,7 +34,7 @@ static inline long find_zero(unsigned long mask)
+ 	return leading_zero_bits >> 3;
+ }
  
- struct scmi_smc {
-+	int irq;
- 	struct scmi_chan_info *cinfo;
- 	struct scmi_shared_mem __iomem *shmem;
- 	/* Protect access to shmem area */
-@@ -106,7 +108,7 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
- 	struct resource res;
- 	struct device_node *np;
- 	u32 func_id;
--	int ret, irq;
-+	int ret;
+-static inline bool has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
++static inline unsigned long has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
+ {
+ 	unsigned long rhs = val | c->low_bits;
+ 	*data = rhs;
+diff --git a/include/asm-generic/word-at-a-time.h b/include/asm-generic/word-at-a-time.h
+index 20c93f08c9933..95a1d214108a5 100644
+--- a/include/asm-generic/word-at-a-time.h
++++ b/include/asm-generic/word-at-a-time.h
+@@ -38,7 +38,7 @@ static inline long find_zero(unsigned long mask)
+ 	return (mask >> 8) ? byte : byte + 1;
+ }
  
- 	if (!tx)
- 		return -ENODEV;
-@@ -142,11 +144,10 @@ static int smc_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
- 	 * completion of a message is signaled by an interrupt rather than by
- 	 * the return of the SMC call.
- 	 */
--	irq = of_irq_get_byname(cdev->of_node, "a2p");
--	if (irq > 0) {
--		ret = devm_request_irq(dev, irq, smc_msg_done_isr,
--				       IRQF_NO_SUSPEND,
--				       dev_name(dev), scmi_info);
-+	scmi_info->irq = of_irq_get_byname(cdev->of_node, "a2p");
-+	if (scmi_info->irq > 0) {
-+		ret = request_irq(scmi_info->irq, smc_msg_done_isr,
-+				  IRQF_NO_SUSPEND, dev_name(dev), scmi_info);
- 		if (ret) {
- 			dev_err(dev, "failed to setup SCMI smc irq\n");
- 			return ret;
-@@ -168,6 +169,10 @@ static int smc_chan_free(int id, void *p, void *data)
- 	struct scmi_chan_info *cinfo = p;
- 	struct scmi_smc *scmi_info = cinfo->transport_info;
- 
-+	/* Ignore any possible further reception on the IRQ path */
-+	if (scmi_info->irq > 0)
-+		free_irq(scmi_info->irq, scmi_info);
-+
- 	cinfo->transport_info = NULL;
- 	scmi_info->cinfo = NULL;
- 
+-static inline bool has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
++static inline unsigned long has_zero(unsigned long val, unsigned long *data, const struct word_at_a_time *c)
+ {
+ 	unsigned long rhs = val | c->low_bits;
+ 	*data = rhs;
 -- 
 2.40.1
 
