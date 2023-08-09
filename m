@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5341B1774C
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:11:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCDA4C433C8;
-	Wed,  9 Aug 2023 11:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F621774C
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:12:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6A1C433C8;
+	Wed,  9 Aug 2023 11:12:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579518;
-	bh=nkAOwMaTMeYeBHV7ovo6in+7alPzH12VWhkQ9FUY+14=;
+	s=korg; t=1691579521;
+	bh=T/J1WAEOqzayksZ9saLnJHZw+g65Ve8XALJc3hruitg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nm91n89LSqZs2nRNlas7bxG/JHgcQlCFYv7IxDkutj/ZpRFycdz9kFGSdfqQ1st3J
-	 G4FfV6eDVEjlNEp7ZjxXJQ4OM9//2fh2erSR3rqpQi77zANjmA8SfBxBwgPYVAQAsb
-	 c6w5hwHTPef9MEHnKUdAtmUkv4iCPF+MV8JK0KzE=
+	b=Z8mX9CoOGIXcANXZ5HPRL6EZM0Jwt/bugVIdqbjpb69tRStX9rqdCvRQozSuewx7N
+	 leeXckypKhTm8emAZ+pfsteZl3uRQaMBII298+AsJewaEtUoLdPC5LGh0VemYKL6BD
+	 yYN4zVdPdTPeSTXigqwr3Ojd08i9jDk/mo7O9imQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Gregg Wonderly <greggwonderly@seqtechllc.com>,
+	Peter Seiderer <ps.report@gmx.net>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 020/323] evm: Complete description of evm_inode_setattr()
-Date: Wed,  9 Aug 2023 12:37:38 +0200
-Message-ID: <20230809103659.030118390@linuxfoundation.org>
+Subject: [PATCH 4.19 021/323] wifi: ath9k: fix AR9003 mac hardware hang check register offset calculation
+Date: Wed,  9 Aug 2023 12:37:39 +0200
+Message-ID: <20230809103659.080991231@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,37 +38,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Peter Seiderer <ps.report@gmx.net>
 
-[ Upstream commit b1de86d4248b273cb12c4cd7d20c08d459519f7d ]
+[ Upstream commit 3e56c80931c7615250fe4bf83f93b57881969266 ]
 
-Add the description for missing parameters of evm_inode_setattr() to
-avoid the warning arising with W=n compile option.
+Fix ath9k_hw_verify_hang()/ar9003_hw_detect_mac_hang() register offset
+calculation (do not overflow the shift for the second register/queues
+above five, use the register layout described in the comments above
+ath9k_hw_verify_hang() instead).
 
-Fixes: 817b54aa45db ("evm: add evm_inode_setattr to prevent updating an invalid security.evm") # v3.2+
-Fixes: c1632a0f1120 ("fs: port ->setattr() to pass mnt_idmap") # v6.3+
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Fixes: 222e04830ff0 ("ath9k: Fix MAC HW hang check for AR9003")
+
+Reported-by: Gregg Wonderly <greggwonderly@seqtechllc.com>
+Link: https://lore.kernel.org/linux-wireless/E3A9C354-0CB7-420C-ADEF-F0177FB722F4@seqtechllc.com/
+Signed-off-by: Peter Seiderer <ps.report@gmx.net>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230422212423.26065-1-ps.report@gmx.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/evm/evm_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/ath/ath9k/ar9003_hw.c | 27 ++++++++++++++--------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
-diff --git a/security/integrity/evm/evm_main.c b/security/integrity/evm/evm_main.c
-index 6d1efe1359f17..9c036a41e7347 100644
---- a/security/integrity/evm/evm_main.c
-+++ b/security/integrity/evm/evm_main.c
-@@ -474,7 +474,9 @@ void evm_inode_post_removexattr(struct dentry *dentry, const char *xattr_name)
+diff --git a/drivers/net/wireless/ath/ath9k/ar9003_hw.c b/drivers/net/wireless/ath/ath9k/ar9003_hw.c
+index 2fe12b0de5b4f..dea8a998fb622 100644
+--- a/drivers/net/wireless/ath/ath9k/ar9003_hw.c
++++ b/drivers/net/wireless/ath/ath9k/ar9003_hw.c
+@@ -1099,17 +1099,22 @@ static bool ath9k_hw_verify_hang(struct ath_hw *ah, unsigned int queue)
+ {
+ 	u32 dma_dbg_chain, dma_dbg_complete;
+ 	u8 dcu_chain_state, dcu_complete_state;
++	unsigned int dbg_reg, reg_offset;
+ 	int i;
  
- /**
-  * evm_inode_setattr - prevent updating an invalid EVM extended attribute
-+ * @idmap: idmap of the mount
-  * @dentry: pointer to the affected dentry
-+ * @attr: iattr structure containing the new file attributes
-  *
-  * Permit update of file attributes when files have a valid EVM signature,
-  * except in the case of them having an immutable portable signature.
+-	for (i = 0; i < NUM_STATUS_READS; i++) {
+-		if (queue < 6)
+-			dma_dbg_chain = REG_READ(ah, AR_DMADBG_4);
+-		else
+-			dma_dbg_chain = REG_READ(ah, AR_DMADBG_5);
++	if (queue < 6) {
++		dbg_reg = AR_DMADBG_4;
++		reg_offset = queue * 5;
++	} else {
++		dbg_reg = AR_DMADBG_5;
++		reg_offset = (queue - 6) * 5;
++	}
+ 
++	for (i = 0; i < NUM_STATUS_READS; i++) {
++		dma_dbg_chain = REG_READ(ah, dbg_reg);
+ 		dma_dbg_complete = REG_READ(ah, AR_DMADBG_6);
+ 
+-		dcu_chain_state = (dma_dbg_chain >> (5 * queue)) & 0x1f;
++		dcu_chain_state = (dma_dbg_chain >> reg_offset) & 0x1f;
+ 		dcu_complete_state = dma_dbg_complete & 0x3;
+ 
+ 		if ((dcu_chain_state != 0x6) || (dcu_complete_state != 0x1))
+@@ -1128,6 +1133,7 @@ static bool ar9003_hw_detect_mac_hang(struct ath_hw *ah)
+ 	u8 dcu_chain_state, dcu_complete_state;
+ 	bool dcu_wait_frdone = false;
+ 	unsigned long chk_dcu = 0;
++	unsigned int reg_offset;
+ 	unsigned int i = 0;
+ 
+ 	dma_dbg_4 = REG_READ(ah, AR_DMADBG_4);
+@@ -1139,12 +1145,15 @@ static bool ar9003_hw_detect_mac_hang(struct ath_hw *ah)
+ 		goto exit;
+ 
+ 	for (i = 0; i < ATH9K_NUM_TX_QUEUES; i++) {
+-		if (i < 6)
++		if (i < 6) {
+ 			chk_dbg = dma_dbg_4;
+-		else
++			reg_offset = i * 5;
++		} else {
+ 			chk_dbg = dma_dbg_5;
++			reg_offset = (i - 6) * 5;
++		}
+ 
+-		dcu_chain_state = (chk_dbg >> (5 * i)) & 0x1f;
++		dcu_chain_state = (chk_dbg >> reg_offset) & 0x1f;
+ 		if (dcu_chain_state == 0x6) {
+ 			dcu_wait_frdone = true;
+ 			chk_dcu |= BIT(i);
 -- 
 2.39.2
 
