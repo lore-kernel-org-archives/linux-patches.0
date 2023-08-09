@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33050171A6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:01:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC60CC433C7;
-	Wed,  9 Aug 2023 11:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF137171A6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:01:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF0AC433CC;
+	Wed,  9 Aug 2023 11:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578894;
-	bh=g3lm+/DoZrAH4e1Xzx69w5OIQX7B068y/Da5UOrfw7A=;
+	s=korg; t=1691578896;
+	bh=vva/hb3ixTg8jmfM+Plf+S54kvTGNDLdObk1XvjQAZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=de0WYLNQz4Nc6k3QPQ/UKE0UppVJGaQ2Zj5rXmVU3b4O5dMJYUQTu4jlZbpb2pdzF
-	 VrUTr3zyxw4qCJWLRXNUtAGKksXwbONBaDJ/rJHIKF65hBRhUNsoJyuBkeIHWsDBQr
-	 lJeyUaevrhh9VCXW4BmW0j/9G2G5pS4B8DLxQdi0=
+	b=pvC0GL+QYelSa+BVH7qCi73Aqhw+kbjeipX8ZXjXoOTLgYcO6T7zBxfL/j7U8xy07
+	 Q5P+PYkkjUJzsGMwbjoKit1LmehsUepwmac/S6OopYOzYhQHHLx9LdhPK0s9N7pJIv
+	 9lWSqS9ROMv5jlA2gXWsHW47I/Q8YvREId4MI00Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	Michael Jeanson <mjeanson@efficios.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 86/92] drm/imx/ipuv3: Fix front porch adjustment upon hactive aligning
-Date: Wed,  9 Aug 2023 12:42:02 +0200
-Message-ID: <20230809103636.505554984@linuxfoundation.org>
+Subject: [PATCH 5.15 87/92] selftests/rseq: check if libc rseq support is registered
+Date: Wed,  9 Aug 2023 12:42:03 +0200
+Message-ID: <20230809103636.535868733@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -35,40 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Michael Jeanson <mjeanson@efficios.com>
 
-[ Upstream commit ee31742bf17636da1304af77b2cb1c29b5dda642 ]
+[ Upstream commit d1a997ba4c1bf65497d956aea90de42a6398f73a ]
 
-When hactive is not aligned to 8 pixels, it is aligned accordingly and
-hfront porch needs to be reduced the same amount. Unfortunately the front
-porch is set to the difference rather than reducing it. There are some
-Samsung TVs which can't cope with a front porch of instead of 70.
+When checking for libc rseq support in the library constructor, don't
+only depend on the symbols presence, check that the registration was
+completed.
 
-Fixes: 94dfec48fca7 ("drm/imx: Add 8 pixel alignment fix")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Link: https://lore.kernel.org/r/20230515072137.116211-1-alexander.stein@ew.tq-group.com
-[p.zabel@pengutronix.de: Fixed subject]
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230515072137.116211-1-alexander.stein@ew.tq-group.com
+This targets a scenario where the libc has rseq support but it is not
+wired for the current architecture in 'bits/rseq.h', we want to fallback
+to our internal registration mechanism.
+
+Signed-off-by: Michael Jeanson <mjeanson@efficios.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/r/20220614154830.1367382-4-mjeanson@efficios.com
+Stable-dep-of: 3bcbc20942db ("selftests/rseq: Play nice with binaries statically linked against glibc 2.35+")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imx/ipuv3-crtc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/rseq/rseq.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/imx/ipuv3-crtc.c b/drivers/gpu/drm/imx/ipuv3-crtc.c
-index f7863d6dea804..ba5b16618c237 100644
---- a/drivers/gpu/drm/imx/ipuv3-crtc.c
-+++ b/drivers/gpu/drm/imx/ipuv3-crtc.c
-@@ -311,7 +311,7 @@ static void ipu_crtc_mode_set_nofb(struct drm_crtc *crtc)
- 		dev_warn(ipu_crtc->dev, "8-pixel align hactive %d -> %d\n",
- 			 sig_cfg.mode.hactive, new_hactive);
- 
--		sig_cfg.mode.hfront_porch = new_hactive - sig_cfg.mode.hactive;
-+		sig_cfg.mode.hfront_porch -= new_hactive - sig_cfg.mode.hactive;
- 		sig_cfg.mode.hactive = new_hactive;
- 	}
- 
+diff --git a/tools/testing/selftests/rseq/rseq.c b/tools/testing/selftests/rseq/rseq.c
+index 986b9458efb26..4177f9507bbee 100644
+--- a/tools/testing/selftests/rseq/rseq.c
++++ b/tools/testing/selftests/rseq/rseq.c
+@@ -111,7 +111,8 @@ void rseq_init(void)
+ 	libc_rseq_offset_p = dlsym(RTLD_NEXT, "__rseq_offset");
+ 	libc_rseq_size_p = dlsym(RTLD_NEXT, "__rseq_size");
+ 	libc_rseq_flags_p = dlsym(RTLD_NEXT, "__rseq_flags");
+-	if (libc_rseq_size_p && libc_rseq_offset_p && libc_rseq_flags_p) {
++	if (libc_rseq_size_p && libc_rseq_offset_p && libc_rseq_flags_p &&
++			*libc_rseq_size_p != 0) {
+ 		/* rseq registration owned by glibc */
+ 		rseq_offset = *libc_rseq_offset_p;
+ 		rseq_size = *libc_rseq_size_p;
 -- 
 2.40.1
 
