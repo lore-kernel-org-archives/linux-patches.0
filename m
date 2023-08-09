@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A871773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:20:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A202C433C7;
-	Wed,  9 Aug 2023 11:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA40917756
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:20:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65786C433C8;
+	Wed,  9 Aug 2023 11:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580033;
-	bh=tQ6g/Q9HNTeQ2FaGYQ5dU+F7LqpZmp3hePs3CPmPLH8=;
+	s=korg; t=1691580035;
+	bh=ZJchF7m3ZrlQJP4mwQBqgjadwArwlQ50Xl/dE38mYjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CTblYP8rCkQgIYAfQ7y3Jk5AumILpKOhwrYxy3lCg9KugHjSJtKZsuAtmUfjIU16I
-	 bD8Bdzlqp4KJLVRT4O3GLcabIsHR4Puf9Q5S5KHQ2XJvA4GEOs8bpLwKO/ypZ5BG7J
-	 2Gep7KfBnM9trq0gNpDLsM3cyYlLc1fBxvVp1i8c=
+	b=lr3Pzqyy9Dg4iFTn6gYhyF9dWRyDE/+omqFxwH/aHlOr4V8FjZqbdbXoO8RDEWFi7
+	 AZ2rjgwR0iwzQid4ffih36C+EBnP/WgUH7JoS1DLXFzplRckzDTZ9QAt+O+n0Ep5b+
+	 GE72m/fSTHTsjflgXcF8EWEC5n0UYAvPqIhKX5wE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 4.19 173/323] hwrng: imx-rngc - fix the timeout for init and self check
-Date: Wed,  9 Aug 2023 12:40:11 +0200
-Message-ID: <20230809103706.067119738@linuxfoundation.org>
+	Xiubo Li <xiubli@redhat.com>,
+	Milind Changire <mchangir@redhat.com>,
+	Patrick Donnelly <pdonnell@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 4.19 174/323] ceph: dont let check_caps skip sending responses for revoke msgs
+Date: Wed,  9 Aug 2023 12:40:12 +0200
+Message-ID: <20230809103706.108145941@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -34,45 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Xiubo Li <xiubli@redhat.com>
 
-commit d744ae7477190967a3ddc289e2cd4ae59e8b1237 upstream.
+commit 257e6172ab36ebbe295a6c9ee9a9dd0fe54c1dc2 upstream.
 
-Fix the timeout that is used for the initialisation and for the self
-test. wait_for_completion_timeout expects a timeout in jiffies, but
-RNGC_TIMEOUT is in milliseconds. Call msecs_to_jiffies to do the
-conversion.
+If a client sends out a cap update dropping caps with the prior 'seq'
+just before an incoming cap revoke request, then the client may drop
+the revoke because it believes it's already released the requested
+capabilities.
+
+This causes the MDS to wait indefinitely for the client to respond
+to the revoke. It's therefore always a good idea to ack the cap
+revoke request with the bumped up 'seq'.
 
 Cc: stable@vger.kernel.org
-Fixes: 1d5449445bd0 ("hwrng: mx-rngc - add a driver for Freescale RNGC")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Link: https://tracker.ceph.com/issues/61782
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Milind Changire <mchangir@redhat.com>
+Reviewed-by: Patrick Donnelly <pdonnell@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/hw_random/imx-rngc.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/ceph/caps.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/char/hw_random/imx-rngc.c
-+++ b/drivers/char/hw_random/imx-rngc.c
-@@ -105,7 +105,7 @@ static int imx_rngc_self_test(struct imx
- 	cmd = readl(rngc->base + RNGC_COMMAND);
- 	writel(cmd | RNGC_CMD_SELF_TEST, rngc->base + RNGC_COMMAND);
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -3285,6 +3285,15 @@ static void handle_cap_grant(struct inod
+ 	}
+ 	BUG_ON(cap->issued & ~cap->implemented);
  
--	ret = wait_for_completion_timeout(&rngc->rng_op_done, RNGC_TIMEOUT);
-+	ret = wait_for_completion_timeout(&rngc->rng_op_done, msecs_to_jiffies(RNGC_TIMEOUT));
- 	if (!ret) {
- 		imx_rngc_irq_mask_clear(rngc);
- 		return -ETIMEDOUT;
-@@ -188,9 +188,7 @@ static int imx_rngc_init(struct hwrng *r
- 		cmd = readl(rngc->base + RNGC_COMMAND);
- 		writel(cmd | RNGC_CMD_SEED, rngc->base + RNGC_COMMAND);
- 
--		ret = wait_for_completion_timeout(&rngc->rng_op_done,
--				RNGC_TIMEOUT);
--
-+		ret = wait_for_completion_timeout(&rngc->rng_op_done, msecs_to_jiffies(RNGC_TIMEOUT));
- 		if (!ret) {
- 			imx_rngc_irq_mask_clear(rngc);
- 			return -ETIMEDOUT;
++	/* don't let check_caps skip sending a response to MDS for revoke msgs */
++	if (le32_to_cpu(grant->op) == CEPH_CAP_OP_REVOKE) {
++		cap->mds_wanted = 0;
++		if (cap == ci->i_auth_cap)
++			check_caps = 1; /* check auth cap only */
++		else
++			check_caps = 2; /* check all caps */
++	}
++
+ 	if (extra_info->inline_version > 0 &&
+ 	    extra_info->inline_version >= ci->i_inline_version) {
+ 		ci->i_inline_version = extra_info->inline_version;
 
 
