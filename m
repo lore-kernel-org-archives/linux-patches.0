@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C264217AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:33:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4722BC433C8;
-	Wed,  9 Aug 2023 11:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981E017AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:33:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 195DAC433C8;
+	Wed,  9 Aug 2023 11:33:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580816;
-	bh=P4yEpatrAFnwbMwNmW7c4ois5O6wN0Ojycd2MqatrVg=;
+	s=korg; t=1691580819;
+	bh=s8u8dyQQwuhWxeLoWM4J+lN0kjVzfsJzRqc/4VxNzkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZD9Udq1lODv8ADKvM8u8OCLfXzFc29xgOAtWL6LzOKhKbLDd5JkrtoUnsCxKGa/N9
-	 9qLYtFqmFfblYG4e1kksPbOtliOwdYL4odXxFCV7DMjpa5FF0hsByY2EFsMkahT+38
-	 g6501vlpzTKoH0N/J/IydD8P5CCIWxmv3ATWXBeU=
+	b=KV6NkAdfYK17R+8leKAY/E+uHQpzxsLNnaAzjUPLKuMzo5TxTVTx7rtg65eb35ewb
+	 lSbEz+sjvcDE0a5IEMix4skG4m2pUAT9RfUWWjMgy9KbQiltnc4htjArxZIqif88Ni
+	 CdXYJWWgiOCokwwdj6noHD2WNwpPZhPwXNcMnK7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 150/154] ARM: dts: nxp/imx6sll: fix wrong property name in usbphy node
-Date: Wed,  9 Aug 2023 12:43:01 +0200
-Message-ID: <20230809103641.809206958@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 5.4 151/154] driver core: Annotate dev_err_probe() with __must_check
+Date: Wed,  9 Aug 2023 12:43:02 +0200
+Message-ID: <20230809103641.838614095@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -35,36 +33,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit ee70b908f77a9d8f689dea986f09e6d7dc481934 ]
+commit e1f82a0dcf388d98bcc7ad195c03bd812405e6b2 upstream.
 
-Property name "phy-3p0-supply" is used instead of "phy-reg_3p0-supply".
+We have got already new users of this API which interpret it differently
+and miss the opportunity to optimize their code.
 
-Fixes: 9f30b6b1a957 ("ARM: dts: imx: Add basic dtsi file for imx6sll")
-cc: <stable@vger.kernel.org>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In order to avoid similar cases in the future, annotate dev_err_probe()
+with __must_check.
+
+Fixes: a787e5400a1c ("driver core: add device probe log helper")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20200826104459.81979-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/imx6sll.dtsi | 2 +-
+ include/linux/device.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/imx6sll.dtsi b/arch/arm/boot/dts/imx6sll.dtsi
-index e8623d77eb42b..ad3deb82a50ac 100644
---- a/arch/arm/boot/dts/imx6sll.dtsi
-+++ b/arch/arm/boot/dts/imx6sll.dtsi
-@@ -550,7 +550,7 @@ usbphy2: usb-phy@20ca000 {
- 				reg = <0x020ca000 0x1000>;
- 				interrupts = <GIC_SPI 41 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&clks IMX6SLL_CLK_USBPHY2>;
--				phy-reg_3p0-supply = <&reg_3p0>;
-+				phy-3p0-supply = <&reg_3p0>;
- 				fsl,anatop = <&anatop>;
- 			};
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -1872,7 +1872,7 @@ do {									\
+ 			dev_driver_string(dev), dev_name(dev), ## arg)
  
--- 
-2.40.1
-
+ extern __printf(3, 4)
+-int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
++int __must_check dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
+ 
+ /* Create alias, so I can be autoloaded. */
+ #define MODULE_ALIAS_CHARDEV(major,minor) \
 
 
