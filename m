@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E484E15AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:51:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E1BC433C7;
-	Wed,  9 Aug 2023 10:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A40174F2
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:51:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2881FC433C7;
+	Wed,  9 Aug 2023 10:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578276;
-	bh=mQ6prVLlLK6mIl/u46607q4NZkfys8D0FvBUrmR/n4k=;
+	s=korg; t=1691578279;
+	bh=OL6ODWb1lVgr9XUOo8zv/7g9MB93FpiJUlNyL41Y//0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rGcp8gF07xOIU1k3oPxMOmZy8tRUoFmgXYdOo6lM/cKx3btOr5fizrgNForq7+Y6S
-	 1VD92kSqXbHE/ZpRpSUcYl6HmE5rpXBfanCc1bYaNNRQ0Pgy4JfE+I6NywmrSsJm3b
-	 55UwLsK6Al4UoAyUX06Lda3nwrFhYK2Uo2l6idYc=
+	b=QOqSRTD8KEXs63W+EpMXIH0Qv3RoFTlVlHxclZDKeFI4I9yz9NFJZacXC9SH84BYh
+	 5EPBGDHKz/1eIk+5nDgzpCzfybRR23bapUnuudrwwFNWMHE4M5c1DuILcBBnbNImNd
+	 zzfRFqNBjJg+OtR9w/Ahv05h1JdF08FB0AwDL4rE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
 	Andi Shyti <andi.shyti@linux.intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
 	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 160/165] drm/i915/gt: Ensure memory quiesced before invalidation
-Date: Wed,  9 Aug 2023 12:41:31 +0200
-Message-ID: <20230809103648.010951136@linuxfoundation.org>
+Subject: [PATCH 6.4 161/165] drm/i915/gt: Add workaround 14016712196
+Date: Wed,  9 Aug 2023 12:41:32 +0200
+Message-ID: <20230809103648.049848823@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -38,45 +36,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Cavitt <jonathan.cavitt@intel.com>
+From: Tejas Upadhyay <tejas.upadhyay@intel.com>
 
-[ Upstream commit 78a6ccd65fa3a7cc697810db079cc4b84dff03d5 ]
+[ Upstream commit d922b80b1010cd6164fa7d3c197b4fbf94b47beb ]
 
-All memory traffic must be quiesced before requesting
-an aux invalidation on platforms that use Aux CCS.
+For mtl, workaround suggests that, SW insert a
+dummy PIPE_CONTROL prior to PIPE_CONTROL which
+contains a post sync: Timestamp or Write Immediate.
 
-Fixes: 972282c4cf24 ("drm/i915/gen12: Add aux table invalidate for all engines")
-Requires: a2a4aa0eef3b ("drm/i915: Add the gen12_needs_ccs_aux_inv helper")
-Signed-off-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Cc: <stable@vger.kernel.org> # v5.8+
-Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
+Bspec: 72197
+
+V5:
+  - Remove ret variable - Andi
+V4:
+  - Update commit message, avoid returing cs - Andi/Matt
+V3:
+  - Wrap dummy pipe control stuff in API - Andi
+V2:
+  - Fix  kernel test robot warnings
+
+Closes: https://lore.kernel.org/oe-kbuild-all/202305121525.3EWdGoBY-lkp@intel.com/
+Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
 Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230725001950.1014671-4-andi.shyti@linux.intel.com
-(cherry picked from commit ad8ebf12217e451cd19804b1c3e97ad56491c74a)
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230601110959.1715927-1-tejas.upadhyay@intel.com
+Stable-dep-of: 592b228f12e1 ("drm/i915/gt: Rename flags with bit_group_X according to the datasheet")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/gen8_engine_cs.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gt/gen8_engine_cs.c | 38 ++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
 diff --git a/drivers/gpu/drm/i915/gt/gen8_engine_cs.c b/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
-index c5b926e3f20d7..6e914c3f5019a 100644
+index 6e914c3f5019a..6210b38a2d382 100644
 --- a/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
 +++ b/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
-@@ -193,7 +193,11 @@ int gen12_emit_flush_rcs(struct i915_request *rq, u32 mode)
+@@ -189,6 +189,27 @@ u32 *gen12_emit_aux_table_inv(struct intel_gt *gt, u32 *cs, const i915_reg_t inv
+ 	return cs;
+ }
+ 
++static int mtl_dummy_pipe_control(struct i915_request *rq)
++{
++	/* Wa_14016712196 */
++	if (IS_MTL_GRAPHICS_STEP(rq->engine->i915, M, STEP_A0, STEP_B0) ||
++	    IS_MTL_GRAPHICS_STEP(rq->engine->i915, P, STEP_A0, STEP_B0)) {
++		u32 *cs;
++
++		/* dummy PIPE_CONTROL + depth flush */
++		cs = intel_ring_begin(rq, 6);
++		if (IS_ERR(cs))
++			return PTR_ERR(cs);
++		cs = gen12_emit_pipe_control(cs,
++					     0,
++					     PIPE_CONTROL_DEPTH_CACHE_FLUSH,
++					     LRC_PPHWSP_SCRATCH_ADDR);
++		intel_ring_advance(rq, cs);
++	}
++
++	return 0;
++}
++
+ int gen12_emit_flush_rcs(struct i915_request *rq, u32 mode)
  {
  	struct intel_engine_cs *engine = rq->engine;
- 
--	if (mode & EMIT_FLUSH) {
-+	/*
-+	 * On Aux CCS platforms the invalidation of the Aux
-+	 * table requires quiescing memory traffic beforehand
-+	 */
-+	if (mode & EMIT_FLUSH || gen12_needs_ccs_aux_inv(engine)) {
+@@ -199,8 +220,13 @@ int gen12_emit_flush_rcs(struct i915_request *rq, u32 mode)
+ 	 */
+ 	if (mode & EMIT_FLUSH || gen12_needs_ccs_aux_inv(engine)) {
  		u32 flags = 0;
++		int err;
  		u32 *cs;
  
++		err = mtl_dummy_pipe_control(rq);
++		if (err)
++			return err;
++
+ 		flags |= PIPE_CONTROL_TILE_CACHE_FLUSH;
+ 		flags |= PIPE_CONTROL_FLUSH_L3;
+ 		flags |= PIPE_CONTROL_RENDER_TARGET_CACHE_FLUSH;
+@@ -233,6 +259,11 @@ int gen12_emit_flush_rcs(struct i915_request *rq, u32 mode)
+ 	if (mode & EMIT_INVALIDATE) {
+ 		u32 flags = 0;
+ 		u32 *cs, count;
++		int err;
++
++		err = mtl_dummy_pipe_control(rq);
++		if (err)
++			return err;
+ 
+ 		flags |= PIPE_CONTROL_COMMAND_CACHE_INVALIDATE;
+ 		flags |= PIPE_CONTROL_TLB_INVALIDATE;
+@@ -749,6 +780,13 @@ u32 *gen12_emit_fini_breadcrumb_rcs(struct i915_request *rq, u32 *cs)
+ 		     PIPE_CONTROL_DC_FLUSH_ENABLE |
+ 		     PIPE_CONTROL_FLUSH_ENABLE);
+ 
++	/* Wa_14016712196 */
++	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_A0, STEP_B0) ||
++	    IS_MTL_GRAPHICS_STEP(i915, P, STEP_A0, STEP_B0))
++		/* dummy PIPE_CONTROL + depth flush */
++		cs = gen12_emit_pipe_control(cs, 0,
++					     PIPE_CONTROL_DEPTH_CACHE_FLUSH, 0);
++
+ 	if (GRAPHICS_VER(i915) == 12 && GRAPHICS_VER_FULL(i915) < IP_VER(12, 50))
+ 		/* Wa_1409600907 */
+ 		flags |= PIPE_CONTROL_DEPTH_STALL;
 -- 
 2.40.1
 
