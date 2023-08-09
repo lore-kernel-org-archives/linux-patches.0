@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D326174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:57:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6661C433C8;
-	Wed,  9 Aug 2023 10:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01206174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:57:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77BCAC433C9;
+	Wed,  9 Aug 2023 10:57:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578622;
-	bh=w83JBWnLbCdEyXcGMhBuD7QPY5MpWujUSQxL4zK+sJs=;
+	s=korg; t=1691578624;
+	bh=Ma0v6Fzyz6uYKqGPDdR4wHjrl0VDC09imx4S4yHjzOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dWbBd0QbSSWH7wUxIUUvziyL0pLjGZkHqreuK3ci9EMkJnsuRd+rpjYgpWllX3pNk
-	 30sKGKTictHpc26ojYVjAhWKf6EG6CROLYnutXx0UJc3vNLKYzdNSg6YDYG3K/Iq2w
-	 w7An3pBR/VR+BlbmCNZLKptCP6pZWAodj62eJo0c=
+	b=G01mDfQSwg3JPLnkxDrKkB+CIOGqIH4c7kTP3r1a4R4DAwsjZZjbx9ndMbb03YNNh
+	 xGzmbM3e03dEIwVrarnXhMa5T1y81sIGbvAOz8hKLAsZhcfeW3Tr+TifQXn04EMW5n
+	 gSvJ3LggeO2DpBQRdrQ0tvaz1u92gCbFtt5nXqZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <Alexander.Deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	AMD Graphics <amd-gfx@lists.freedesktop.org>,
-	Luben Tuikov <luben.tuikov@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Le Ma <le.ma@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 125/127] drm/amdgpu: Remove unnecessary domain argument
-Date: Wed,  9 Aug 2023 12:41:52 +0200
-Message-ID: <20230809103640.735137300@linuxfoundation.org>
+Subject: [PATCH 6.1 126/127] drm/amdgpu: Use apt name for FW reserved region
+Date: Wed,  9 Aug 2023 12:41:53 +0200
+Message-ID: <20230809103640.765148012@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -38,140 +36,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luben Tuikov <luben.tuikov@amd.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-commit 3273f11675ef11959d25a56df3279f712bcd41b7 upstream
+commit db3b5cb64a9ca301d14ed027e470834316720e42 upstream
 
-Remove the "domain" argument to amdgpu_bo_create_kernel_at() since this
-function takes an "offset" argument which is the offset off of VRAM, and as
-such allocation always takes place in VRAM. Thus, the "domain" argument is
-unnecessary.
+Use the generic term fw_reserved_memory for FW reserve region. This
+region may also hold discovery TMR in addition to other reserve
+regions. This region size could be larger than discovery tmr size, hence
+don't change the discovery tmr size based on this.
 
-Cc: Alex Deucher <Alexander.Deucher@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: AMD Graphics <amd-gfx@lists.freedesktop.org>
-Signed-off-by: Luben Tuikov <luben.tuikov@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Le Ma <le.ma@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[ This change fixes reading IP discovery from debugfs.
+  It needed to be hand modified because:
+  * GC 9.4.3 support isn't introduced in older kernels until
+    228ce176434b ("drm/amdgpu: Handle VRAM dependencies on GFXIP9.4.3")
+  * It also changed because of 58ab2c08d708 (drm/amdgpu: use VRAM|GTT
+    for a bunch of kernel allocations) not being present.
+  Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2748 ]
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_object.c |   10 +++++-----
- drivers/gpu/drm/amd/amdgpu/amdgpu_object.h |    2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c    |    7 -------
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c   |    1 -
- 4 files changed, 6 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |   33 ++++++++++++++++++--------------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h |    3 +-
+ 2 files changed, 21 insertions(+), 15 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-@@ -347,17 +347,16 @@ int amdgpu_bo_create_kernel(struct amdgp
-  * @adev: amdgpu device object
-  * @offset: offset of the BO
-  * @size: size of the BO
-- * @domain: where to place it
-  * @bo_ptr:  used to initialize BOs in structures
-  * @cpu_addr: optional CPU address mapping
-  *
-- * Creates a kernel BO at a specific offset in the address space of the domain.
-+ * Creates a kernel BO at a specific offset in VRAM.
-  *
-  * Returns:
-  * 0 on success, negative error code otherwise.
-  */
- int amdgpu_bo_create_kernel_at(struct amdgpu_device *adev,
--			       uint64_t offset, uint64_t size, uint32_t domain,
-+			       uint64_t offset, uint64_t size,
- 			       struct amdgpu_bo **bo_ptr, void **cpu_addr)
- {
- 	struct ttm_operation_ctx ctx = { false, false };
-@@ -367,8 +366,9 @@ int amdgpu_bo_create_kernel_at(struct am
- 	offset &= PAGE_MASK;
- 	size = ALIGN(size, PAGE_SIZE);
- 
--	r = amdgpu_bo_create_reserved(adev, size, PAGE_SIZE, domain, bo_ptr,
--				      NULL, cpu_addr);
-+	r = amdgpu_bo_create_reserved(adev, size, PAGE_SIZE,
-+				      AMDGPU_GEM_DOMAIN_VRAM, bo_ptr, NULL,
-+				      cpu_addr);
- 	if (r)
- 		return r;
- 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.h
-@@ -284,7 +284,7 @@ int amdgpu_bo_create_kernel(struct amdgp
- 			    u32 domain, struct amdgpu_bo **bo_ptr,
- 			    u64 *gpu_addr, void **cpu_addr);
- int amdgpu_bo_create_kernel_at(struct amdgpu_device *adev,
--			       uint64_t offset, uint64_t size, uint32_t domain,
-+			       uint64_t offset, uint64_t size,
- 			       struct amdgpu_bo **bo_ptr, void **cpu_addr);
- int amdgpu_bo_create_user(struct amdgpu_device *adev,
- 			  struct amdgpu_bo_param *bp,
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -1575,7 +1575,6 @@ static int amdgpu_ttm_fw_reserve_vram_in
- 	return amdgpu_bo_create_kernel_at(adev,
- 					  adev->mman.fw_vram_usage_start_offset,
- 					  adev->mman.fw_vram_usage_size,
--					  AMDGPU_GEM_DOMAIN_VRAM,
- 					  &adev->mman.fw_vram_usage_reserved_bo,
- 					  &adev->mman.fw_vram_usage_va);
+@@ -1625,14 +1625,15 @@ static int amdgpu_ttm_training_reserve_v
+ 	return 0;
  }
-@@ -1600,7 +1599,6 @@ static int amdgpu_ttm_drv_reserve_vram_i
- 	return amdgpu_bo_create_kernel_at(adev,
- 					  adev->mman.drv_vram_usage_start_offset,
- 					  adev->mman.drv_vram_usage_size,
--					  AMDGPU_GEM_DOMAIN_VRAM,
- 					  &adev->mman.drv_vram_usage_reserved_bo,
- 					  NULL);
- }
-@@ -1681,7 +1679,6 @@ static int amdgpu_ttm_reserve_tmr(struct
+ 
+-static void amdgpu_ttm_training_data_block_init(struct amdgpu_device *adev)
++static void amdgpu_ttm_training_data_block_init(struct amdgpu_device *adev,
++						uint32_t reserve_size)
+ {
+ 	struct psp_memory_training_context *ctx = &adev->psp.mem_train_ctx;
+ 
+ 	memset(ctx, 0, sizeof(*ctx));
+ 
+ 	ctx->c2p_train_data_offset =
+-		ALIGN((adev->gmc.mc_vram_size - adev->mman.discovery_tmr_size - SZ_1M), SZ_1M);
++		ALIGN((adev->gmc.mc_vram_size - reserve_size - SZ_1M), SZ_1M);
+ 	ctx->p2c_train_data_offset =
+ 		(adev->gmc.mc_vram_size - GDDR6_MEM_TRAINING_OFFSET);
+ 	ctx->train_data_size =
+@@ -1650,9 +1651,10 @@ static void amdgpu_ttm_training_data_blo
+  */
+ static int amdgpu_ttm_reserve_tmr(struct amdgpu_device *adev)
+ {
+-	int ret;
+ 	struct psp_memory_training_context *ctx = &adev->psp.mem_train_ctx;
+ 	bool mem_train_support = false;
++	uint32_t reserve_size = 0;
++	int ret;
+ 
+ 	if (!amdgpu_sriov_vf(adev)) {
+ 		if (amdgpu_atomfirmware_mem_training_supported(adev))
+@@ -1668,14 +1670,15 @@ static int amdgpu_ttm_reserve_tmr(struct
+ 	 * Otherwise, fallback to legacy approach to check and reserve tmr block for ip
+ 	 * discovery data and G6 memory training data respectively
+ 	 */
+-	adev->mman.discovery_tmr_size =
+-		amdgpu_atomfirmware_get_fw_reserved_fb_size(adev);
+-	if (!adev->mman.discovery_tmr_size)
+-		adev->mman.discovery_tmr_size = DISCOVERY_TMR_OFFSET;
++	if (adev->bios)
++		reserve_size =
++			amdgpu_atomfirmware_get_fw_reserved_fb_size(adev);
++	if (!reserve_size)
++		reserve_size = DISCOVERY_TMR_OFFSET;
+ 
+ 	if (mem_train_support) {
+ 		/* reserve vram for mem train according to TMR location */
+-		amdgpu_ttm_training_data_block_init(adev);
++		amdgpu_ttm_training_data_block_init(adev, reserve_size);
  		ret = amdgpu_bo_create_kernel_at(adev,
  					 ctx->c2p_train_data_offset,
  					 ctx->train_data_size,
--					 AMDGPU_GEM_DOMAIN_VRAM,
- 					 &ctx->c2p_bo,
- 					 NULL);
- 		if (ret) {
-@@ -1695,7 +1692,6 @@ static int amdgpu_ttm_reserve_tmr(struct
+@@ -1690,13 +1693,14 @@ static int amdgpu_ttm_reserve_tmr(struct
+ 	}
+ 
  	ret = amdgpu_bo_create_kernel_at(adev,
- 				adev->gmc.real_vram_size - adev->mman.discovery_tmr_size,
- 				adev->mman.discovery_tmr_size,
--				AMDGPU_GEM_DOMAIN_VRAM,
- 				&adev->mman.discovery_memory,
+-				adev->gmc.real_vram_size - adev->mman.discovery_tmr_size,
+-				adev->mman.discovery_tmr_size,
+-				&adev->mman.discovery_memory,
++				adev->gmc.real_vram_size - reserve_size,
++				reserve_size,
++				&adev->mman.fw_reserved_memory,
  				NULL);
  	if (ret) {
-@@ -1796,21 +1792,18 @@ int amdgpu_ttm_init(struct amdgpu_device
- 	 * avoid display artifacts while transitioning between pre-OS
- 	 * and driver.  */
- 	r = amdgpu_bo_create_kernel_at(adev, 0, adev->mman.stolen_vga_size,
--				       AMDGPU_GEM_DOMAIN_VRAM,
- 				       &adev->mman.stolen_vga_memory,
- 				       NULL);
- 	if (r)
- 		return r;
- 	r = amdgpu_bo_create_kernel_at(adev, adev->mman.stolen_vga_size,
- 				       adev->mman.stolen_extended_size,
--				       AMDGPU_GEM_DOMAIN_VRAM,
- 				       &adev->mman.stolen_extended_memory,
- 				       NULL);
- 	if (r)
- 		return r;
- 	r = amdgpu_bo_create_kernel_at(adev, adev->mman.stolen_reserved_offset,
- 				       adev->mman.stolen_reserved_size,
--				       AMDGPU_GEM_DOMAIN_VRAM,
- 				       &adev->mman.stolen_reserved_memory,
- 				       NULL);
- 	if (r)
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-@@ -391,7 +391,6 @@ static void amdgpu_virt_ras_reserve_bps(
- 		 */
- 		if (amdgpu_bo_create_kernel_at(adev, bp << AMDGPU_GPU_PAGE_SHIFT,
- 					       AMDGPU_GPU_PAGE_SIZE,
--					       AMDGPU_GEM_DOMAIN_VRAM,
- 					       &bo, NULL))
- 			DRM_DEBUG("RAS WARN: reserve vram for retired page %llx fail\n", bp);
+ 		DRM_ERROR("alloc tmr failed(%d)!\n", ret);
+-		amdgpu_bo_free_kernel(&adev->mman.discovery_memory, NULL, NULL);
++		amdgpu_bo_free_kernel(&adev->mman.fw_reserved_memory,
++				      NULL, NULL);
+ 		return ret;
+ 	}
  
+@@ -1890,8 +1894,9 @@ void amdgpu_ttm_fini(struct amdgpu_devic
+ 	/* return the stolen vga memory back to VRAM */
+ 	amdgpu_bo_free_kernel(&adev->mman.stolen_vga_memory, NULL, NULL);
+ 	amdgpu_bo_free_kernel(&adev->mman.stolen_extended_memory, NULL, NULL);
+-	/* return the IP Discovery TMR memory back to VRAM */
+-	amdgpu_bo_free_kernel(&adev->mman.discovery_memory, NULL, NULL);
++	/* return the FW reserved memory back to VRAM */
++	amdgpu_bo_free_kernel(&adev->mman.fw_reserved_memory, NULL,
++			      NULL);
+ 	if (adev->mman.stolen_reserved_size)
+ 		amdgpu_bo_free_kernel(&adev->mman.stolen_reserved_memory,
+ 				      NULL, NULL);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h
+@@ -78,7 +78,8 @@ struct amdgpu_mman {
+ 	/* discovery */
+ 	uint8_t				*discovery_bin;
+ 	uint32_t			discovery_tmr_size;
+-	struct amdgpu_bo		*discovery_memory;
++	/* fw reserved memory */
++	struct amdgpu_bo		*fw_reserved_memory;
+ 
+ 	/* firmware VRAM reservation */
+ 	u64		fw_vram_usage_start_offset;
 
 
