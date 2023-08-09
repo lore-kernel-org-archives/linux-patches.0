@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0191717731
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:08:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79ACCC433C7;
-	Wed,  9 Aug 2023 11:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3777817731
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:08:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EF29C433C7;
+	Wed,  9 Aug 2023 11:08:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579310;
-	bh=NRua7jTjUzEYB2EoKCSRao10BbMI7ZcpmLDNmAUXln8=;
+	s=korg; t=1691579313;
+	bh=mx49CFDPxV0D3Mq3x+EVnwtwxn0Ov0tavysK04wgVzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eDBLmniQ+Z0k4QD5qmLGUNxf9lL4g9vXIVLNpos9QUIyDQ5a2MUmQrbdGG2KRilI/
-	 PsGi8LAeAKKUPdvskoiz20uY6yqZOrRevL2fnlHBMvg5UgPdvpyNkqLygccPveiB/j
-	 d2Sz/HjPsq4lGmUe0sN+2mbsrXMGzvDF2+muYI6A=
+	b=WFY5obYz4sjXV2EvX01mhazYsCTOSIka1CJBWggSF0sD5d/KbcekUGxhGU3GgQT/n
+	 9UGD+Ffh8qyp29yKh+qGNbsxhO3PZsKcDjOLqjJ52c9/QGecKByE2E6Ty2wm0/mquG
+	 d9eomjJwTRUyDDMdCePKjWmXVFU94WX1iHkGl+ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stewart Smith <trawets@amazon.com>,
-	Samuel Mendoza-Jonas <samjonas@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Liang Li <liali@redhat.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 151/204] tcp: Reduce chance of collisions in inet6_hashfn().
-Date: Wed,  9 Aug 2023 12:41:29 +0200
-Message-ID: <20230809103647.612268342@linuxfoundation.org>
+Subject: [PATCH 4.14 152/204] bonding: reset bonds flags when down link is P2P device
+Date: Wed,  9 Aug 2023 12:41:30 +0200
+Message-ID: <20230809103647.641560739@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -38,73 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stewart Smith <trawets@amazon.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit d11b0df7ddf1831f3e170972f43186dad520bfcc ]
+[ Upstream commit da19a2b967cf1e2c426f50d28550d1915214a81d ]
 
-For both IPv4 and IPv6 incoming TCP connections are tracked in a hash
-table with a hash over the source & destination addresses and ports.
-However, the IPv6 hash is insufficient and can lead to a high rate of
-collisions.
+When adding a point to point downlink to the bond, we neglected to reset
+the bond's flags, which were still using flags like BROADCAST and
+MULTICAST. Consequently, this would initiate ARP/DAD for P2P downlink
+interfaces, such as when adding a GRE device to the bonding.
 
-The IPv6 hash used an XOR to fit everything into the 96 bits for the
-fast jenkins hash, meaning it is possible for an external entity to
-ensure the hash collides, thus falling back to a linear search in the
-bucket, which is slow.
+To address this issue, let's reset the bond's flags for P2P interfaces.
 
-We take the approach of hash the full length of IPv6 address in
-__ipv6_addr_jhash() so that all users can benefit from a more secure
-version.
+Before fix:
+7: gre0@NONE: <POINTOPOINT,NOARP,SLAVE,UP,LOWER_UP> mtu 1500 qdisc noqueue master bond0 state UNKNOWN group default qlen 1000
+    link/gre6 2006:70:10::1 peer 2006:70:10::2 permaddr 167f:18:f188::
+8: bond0: <BROADCAST,MULTICAST,MASTER,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/gre6 2006:70:10::1 brd 2006:70:10::2
+    inet6 fe80::200:ff:fe00:0/64 scope link
+       valid_lft forever preferred_lft forever
 
-While this may look like it adds overhead, the reality of modern CPUs
-means that this is unmeasurable in real world scenarios.
+After fix:
+7: gre0@NONE: <POINTOPOINT,NOARP,SLAVE,UP,LOWER_UP> mtu 1500 qdisc noqueue master bond2 state UNKNOWN group default qlen 1000
+    link/gre6 2006:70:10::1 peer 2006:70:10::2 permaddr c29e:557a:e9d9::
+8: bond0: <POINTOPOINT,NOARP,MASTER,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/gre6 2006:70:10::1 peer 2006:70:10::2
+    inet6 fe80::1/64 scope link
+       valid_lft forever preferred_lft forever
 
-In simulating with llvm-mca, the increase in cycles for the hashing
-code was ~16 cycles on Skylake (from a base of ~155), and an extra ~9
-on Nehalem (base of ~173).
-
-In commit dd6d2910c5e0 ("netfilter: conntrack: switch to siphash")
-netfilter switched from a jenkins hash to a siphash, but even the faster
-hsiphash is a more significant overhead (~20-30%) in some preliminary
-testing.  So, in this patch, we keep to the more conservative approach to
-ensure we don't add much overhead per SYN.
-
-In testing, this results in a consistently even spread across the
-connection buckets.  In both testing and real-world scenarios, we have
-not found any measurable performance impact.
-
-Fixes: 08dcdbf6a7b9 ("ipv6: use a stronger hash for tcp")
-Signed-off-by: Stewart Smith <trawets@amazon.com>
-Signed-off-by: Samuel Mendoza-Jonas <samjonas@amazon.com>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230721222410.17914-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Liang Li <liali@redhat.com>
+Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2221438
+Fixes: 872254dd6b1f ("net/bonding: Enable bonding to enslave non ARPHRD_ETHER")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ipv6.h | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/net/bonding/bond_main.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/net/ipv6.h b/include/net/ipv6.h
-index 7f7e90c1992fa..f127b9a1a3077 100644
---- a/include/net/ipv6.h
-+++ b/include/net/ipv6.h
-@@ -540,12 +540,8 @@ static inline u32 ipv6_addr_hash(const struct in6_addr *a)
- /* more secured version of ipv6_addr_hash() */
- static inline u32 __ipv6_addr_jhash(const struct in6_addr *a, const u32 initval)
- {
--	u32 v = (__force u32)a->s6_addr32[0] ^ (__force u32)a->s6_addr32[1];
--
--	return jhash_3words(v,
--			    (__force u32)a->s6_addr32[2],
--			    (__force u32)a->s6_addr32[3],
--			    initval);
-+	return jhash2((__force const u32 *)a->s6_addr32,
-+		      ARRAY_SIZE(a->s6_addr32), initval);
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 0ffca2890e9a3..e86b21f097b68 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1134,6 +1134,11 @@ static void bond_setup_by_slave(struct net_device *bond_dev,
+ 
+ 	memcpy(bond_dev->broadcast, slave_dev->broadcast,
+ 		slave_dev->addr_len);
++
++	if (slave_dev->flags & IFF_POINTOPOINT) {
++		bond_dev->flags &= ~(IFF_BROADCAST | IFF_MULTICAST);
++		bond_dev->flags |= (IFF_POINTOPOINT | IFF_NOARP);
++	}
  }
  
- static inline bool ipv6_addr_loopback(const struct in6_addr *a)
+ /* On bonding slaves other than the currently active slave, suppress
 -- 
 2.39.2
 
