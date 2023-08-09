@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25DE7171A6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:01:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E709C433C8;
-	Wed,  9 Aug 2023 11:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6919171A6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:01:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 625E5C433C8;
+	Wed,  9 Aug 2023 11:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578868;
-	bh=5bvDYRsWQYjFnXUeY3L5Xz3uuD3jdckUz/TMP1bTBqs=;
+	s=korg; t=1691578871;
+	bh=n9yW3vHEBYWHJt57wCREk0x+INAOtbPlgIB80uiHSZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xf66fPBIdxFlchBQtC986ULwApaleVOXRqQ96JIdZkBgrr/68U3hadXg9rtEeltzR
-	 J79b7d9jVURRhZZcWeKDo7TU3Pl2BmiHkwc5Tv80IriLhS1J5ITeLoGr+tddiZxH7q
-	 n9e2cfgwCogIcKaJXPM+SwS5zyAIvzTit/jvWRRc=
+	b=fz3AcpA38zLDcFHkaLHkU8wGjne1fxDGwfxGFB+z4bYhZtZvdd0Cm9O7QMoUK3FpG
+	 hT1XDWkm312IgnbZ2PpRsUn5SsKC9Qdxtjhh/fo0Iiw2OZwkh9m/jfR6jZnut3skbD
+	 YYrk66T9vvlHTp39ATrPUQfcPcmuTOWSAuTlNVjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Maynard <bids.7405@bigpond.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 57/92] USB: zaurus: Add ID for A-300/B-500/C-700
-Date: Wed,  9 Aug 2023 12:41:33 +0200
-Message-ID: <20230809103635.574678876@linuxfoundation.org>
+	Xiubo Li <xiubli@redhat.com>,
+	Milind Changire <mchangir@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 5.15 58/92] ceph: defer stopping mdsc delayed_work
+Date: Wed,  9 Aug 2023 12:41:34 +0200
+Message-ID: <20230809103635.604787088@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -35,111 +35,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ross Maynard <bids.7405@bigpond.com>
+From: Xiubo Li <xiubli@redhat.com>
 
-commit b99225b4fe297d07400f9e2332ecd7347b224f8d upstream.
+commit e7e607bd00481745550389a29ecabe33e13d67cf upstream.
 
-The SL-A300, B500/5600, and C700 devices no longer auto-load because of
-"usbnet: Remove over-broad module alias from zaurus."
-This patch adds IDs for those 3 devices.
+Flushing the dirty buffer may take a long time if the cluster is
+overloaded or if there is network issue. So we should ping the
+MDSs periodically to keep alive, else the MDS will blocklist
+the kclient.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217632
-Fixes: 16adf5d07987 ("usbnet: Remove over-broad module alias from zaurus.")
-Signed-off-by: Ross Maynard <bids.7405@bigpond.com>
 Cc: stable@vger.kernel.org
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/69b5423b-2013-9fc9-9569-58e707d9bafb@bigpond.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://tracker.ceph.com/issues/61843
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Milind Changire <mchangir@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/cdc_ether.c |   21 +++++++++++++++++++++
- drivers/net/usb/zaurus.c    |   21 +++++++++++++++++++++
- 2 files changed, 42 insertions(+)
+ fs/ceph/mds_client.c |    4 ++--
+ fs/ceph/mds_client.h |    5 +++++
+ fs/ceph/super.c      |   10 ++++++++++
+ 3 files changed, 17 insertions(+), 2 deletions(-)
 
---- a/drivers/net/usb/cdc_ether.c
-+++ b/drivers/net/usb/cdc_ether.c
-@@ -617,6 +617,13 @@ static const struct usb_device_id	produc
- 	.match_flags	=   USB_DEVICE_ID_MATCH_INT_INFO
- 			  | USB_DEVICE_ID_MATCH_DEVICE,
- 	.idVendor		= 0x04DD,
-+	.idProduct		= 0x8005,   /* A-300 */
-+	ZAURUS_FAKE_INTERFACE,
-+	.driver_info        = 0,
-+}, {
-+	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
-+			  | USB_DEVICE_ID_MATCH_DEVICE,
-+	.idVendor		= 0x04DD,
- 	.idProduct		= 0x8006,	/* B-500/SL-5600 */
- 	ZAURUS_MASTER_INTERFACE,
- 	.driver_info		= 0,
-@@ -624,11 +631,25 @@ static const struct usb_device_id	produc
- 	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
- 			  | USB_DEVICE_ID_MATCH_DEVICE,
- 	.idVendor		= 0x04DD,
-+	.idProduct		= 0x8006,   /* B-500/SL-5600 */
-+	ZAURUS_FAKE_INTERFACE,
-+	.driver_info        = 0,
-+}, {
-+	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
-+			  | USB_DEVICE_ID_MATCH_DEVICE,
-+	.idVendor		= 0x04DD,
- 	.idProduct		= 0x8007,	/* C-700 */
- 	ZAURUS_MASTER_INTERFACE,
- 	.driver_info		= 0,
- }, {
- 	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
-+			  | USB_DEVICE_ID_MATCH_DEVICE,
-+	.idVendor		= 0x04DD,
-+	.idProduct		= 0x8007,   /* C-700 */
-+	ZAURUS_FAKE_INTERFACE,
-+	.driver_info        = 0,
-+}, {
-+	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
- 		 | USB_DEVICE_ID_MATCH_DEVICE,
- 	.idVendor               = 0x04DD,
- 	.idProduct              = 0x9031,	/* C-750 C-760 */
---- a/drivers/net/usb/zaurus.c
-+++ b/drivers/net/usb/zaurus.c
-@@ -289,11 +289,25 @@ static const struct usb_device_id	produc
- 	.match_flags	=   USB_DEVICE_ID_MATCH_INT_INFO
- 			  | USB_DEVICE_ID_MATCH_DEVICE,
- 	.idVendor		= 0x04DD,
-+	.idProduct		= 0x8005,	/* A-300 */
-+	ZAURUS_FAKE_INTERFACE,
-+	.driver_info = (unsigned long)&bogus_mdlm_info,
-+}, {
-+	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
-+			  | USB_DEVICE_ID_MATCH_DEVICE,
-+	.idVendor		= 0x04DD,
- 	.idProduct		= 0x8006,	/* B-500/SL-5600 */
- 	ZAURUS_MASTER_INTERFACE,
- 	.driver_info = ZAURUS_PXA_INFO,
- }, {
- 	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
-+			  | USB_DEVICE_ID_MATCH_DEVICE,
-+	.idVendor		= 0x04DD,
-+	.idProduct		= 0x8006,	/* B-500/SL-5600 */
-+	ZAURUS_FAKE_INTERFACE,
-+	.driver_info = (unsigned long)&bogus_mdlm_info,
-+}, {
-+	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
- 	          | USB_DEVICE_ID_MATCH_DEVICE,
- 	.idVendor		= 0x04DD,
- 	.idProduct		= 0x8007,	/* C-700 */
-@@ -301,6 +315,13 @@ static const struct usb_device_id	produc
- 	.driver_info = ZAURUS_PXA_INFO,
- }, {
- 	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
-+			  | USB_DEVICE_ID_MATCH_DEVICE,
-+	.idVendor		= 0x04DD,
-+	.idProduct		= 0x8007,	/* C-700 */
-+	ZAURUS_FAKE_INTERFACE,
-+	.driver_info = (unsigned long)&bogus_mdlm_info,
-+}, {
-+	.match_flags    =   USB_DEVICE_ID_MATCH_INT_INFO
- 		 | USB_DEVICE_ID_MATCH_DEVICE,
- 	.idVendor               = 0x04DD,
- 	.idProduct              = 0x9031,	/* C-750 C-760 */
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -4607,7 +4607,7 @@ static void delayed_work(struct work_str
+ 
+ 	dout("mdsc delayed_work\n");
+ 
+-	if (mdsc->stopping)
++	if (mdsc->stopping >= CEPH_MDSC_STOPPING_FLUSHED)
+ 		return;
+ 
+ 	mutex_lock(&mdsc->mutex);
+@@ -4786,7 +4786,7 @@ void send_flush_mdlog(struct ceph_mds_se
+ void ceph_mdsc_pre_umount(struct ceph_mds_client *mdsc)
+ {
+ 	dout("pre_umount\n");
+-	mdsc->stopping = 1;
++	mdsc->stopping = CEPH_MDSC_STOPPING_BEGIN;
+ 
+ 	ceph_mdsc_iterate_sessions(mdsc, send_flush_mdlog, true);
+ 	ceph_mdsc_iterate_sessions(mdsc, lock_unlock_session, false);
+--- a/fs/ceph/mds_client.h
++++ b/fs/ceph/mds_client.h
+@@ -370,6 +370,11 @@ struct cap_wait {
+ 	int			want;
+ };
+ 
++enum {
++       CEPH_MDSC_STOPPING_BEGIN = 1,
++       CEPH_MDSC_STOPPING_FLUSHED = 2,
++};
++
+ /*
+  * mds client state
+  */
+--- a/fs/ceph/super.c
++++ b/fs/ceph/super.c
+@@ -1227,6 +1227,16 @@ static void ceph_kill_sb(struct super_bl
+ 	ceph_mdsc_pre_umount(fsc->mdsc);
+ 	flush_fs_workqueues(fsc);
+ 
++	/*
++	 * Though the kill_anon_super() will finally trigger the
++	 * sync_filesystem() anyway, we still need to do it here
++	 * and then bump the stage of shutdown to stop the work
++	 * queue as earlier as possible.
++	 */
++	sync_filesystem(s);
++
++	fsc->mdsc->stopping = CEPH_MDSC_STOPPING_FLUSHED;
++
+ 	kill_anon_super(s);
+ 
+ 	fsc->client->extra_mon_dispatch = NULL;
 
 
