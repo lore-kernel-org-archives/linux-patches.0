@@ -1,27 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51CF81773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:13:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA295C433C7;
-	Wed,  9 Aug 2023 11:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2EF1773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:13:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 665B4C433C7;
+	Wed,  9 Aug 2023 11:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579633;
-	bh=uk12KAA6JkvVx4dCV5nHD6A1hj5qDg9buvL5nuQny1Y=;
+	s=korg; t=1691579635;
+	bh=aCAq70Entz2OiPP8vCxhXjQg6G0sfjdHSRWyCnjbvmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rC8+46dW8OAUJU6CTlKCQQJUJE/MEjz/fAYTfgtLGQHcOx0eSfUv+8lzucuk00STd
-	 LDZUCtRms/acwdGwN5CqZ6YMKxC4TI7GFU+VKiUs8YIDScmXGXw9AVWaODq1+8sgoR
-	 xUxHzJxxMEJNyKBYbl5PRl14cmK/8emc5mQml+AQ=
+	b=NxnVDUE7YAs6gGSGzYSwbxKv52FosYLCi/CaO0L1ICa0aizqwKrHT01wvW7YkVbh8
+	 rN3tC8dCDDTHbyPldhVlKKpWoJ0zLusntDvLR3Ues9zs3iSCN1tRmwfxZfEPEzrF2K
+	 UhSRCzb7yykZjmwHnYl2KEJ2COBUp1FmOt49bOyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Leo Li <leoyang.li@nxp.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Qiang Zhao <qiang.zhao@nxp.com>,
+	linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Kumar Gala <galak@kernel.crashing.org>,
+	Nicolas Schier <nicolas@jasle.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 060/323] ASoC: es8316: Increment max value for ALC Capture Target Volume control
-Date: Wed,  9 Aug 2023 12:38:18 +0200
-Message-ID: <20230809103700.889966824@linuxfoundation.org>
+Subject: [PATCH 4.19 061/323] soc/fsl/qe: fix usb.c build errors
+Date: Wed,  9 Aug 2023 12:38:19 +0200
+Message-ID: <20230809103700.940753976@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,88 +45,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 6f073429037cd79d7311cd8236311c53f5ea8f01 ]
+[ Upstream commit 7b1a78babd0d2cd27aa07255dee0c2d7ac0f31e3 ]
 
-The following error occurs when trying to restore a previously saved
-ALSA mixer state (tested on a Rock 5B board):
+Fix build errors in soc/fsl/qe/usb.c when QUICC_ENGINE is not set.
+This happens when PPC_EP88XC is set, which selects CPM1 & CPM.
+When CPM is set, USB_FSL_QE can be set without QUICC_ENGINE
+being set. When USB_FSL_QE is set, QE_USB deafults to y, which
+causes build errors when QUICC_ENGINE is not set. Making
+QE_USB depend on QUICC_ENGINE prevents QE_USB from defaulting to y.
 
-  $ alsactl --no-ucm -f /tmp/asound.state store hw:Analog
-  $ alsactl --no-ucm -I -f /tmp/asound.state restore hw:Analog
-  alsactl: set_control:1475: Cannot write control '2:0:0:ALC Capture Target Volume:0' : Invalid argument
+Fixes these build errors:
 
-According to ES8316 datasheet, the register at address 0x2B, which is
-related to the above mixer control, contains by default the value 0xB0.
-Considering the corresponding ALC target bits (ALCLVL) are 7:4, the
-control is initialized with 11, which is one step above the maximum
-value allowed by the driver:
+drivers/soc/fsl/qe/usb.o: in function `qe_usb_clock_set':
+usb.c:(.text+0x1e): undefined reference to `qe_immr'
+powerpc-linux-ld: usb.c:(.text+0x2a): undefined reference to `qe_immr'
+powerpc-linux-ld: usb.c:(.text+0xbc): undefined reference to `qe_setbrg'
+powerpc-linux-ld: usb.c:(.text+0xca): undefined reference to `cmxgcr_lock'
+powerpc-linux-ld: usb.c:(.text+0xce): undefined reference to `cmxgcr_lock'
 
- ALCLVL | dB gain
- -------+--------
-  0000  |  -16.5
-  0001  |  -15.0
-  0010  |  -13.5
-  ....  |  .....
-  0111  |   -6.0
-  1000  |   -4.5
-  1001  |   -3.0
-  1010  |   -1.5
-  ....  |  .....
-  1111  |   -1.5
-
-The tests performed using the VU meter feature (--vumeter=TYPE) of
-arecord/aplay confirm the specs are correct and there is no measured
-gain if the 1011-1111 range would have been mapped to 0 dB:
-
- dB gain | VU meter %
- --------+-----------
-   -6.0  |  30-31
-   -4.5  |  35-36
-   -3.0  |  42-43
-   -1.5  |  50-51
-    0.0  |  50-51
-
-Increment the max value allowed for ALC Capture Target Volume control,
-so that it matches the hardware default.  Additionally, update the
-related TLV to prevent an artificial extension of the dB gain range.
-
-Fixes: b8b88b70875a ("ASoC: add es8316 codec driver")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://lore.kernel.org/r/20230530181140.483936-2-cristian.ciocaltea@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 5e41486c408e ("powerpc/QE: add support for QE USB clocks routing")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/all/202301101500.pillNv6R-lkp@intel.com/
+Suggested-by: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Leo Li <leoyang.li@nxp.com>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nicolas Schier <nicolas@fjasle.eu>
+Cc: Qiang Zhao <qiang.zhao@nxp.com>
+Cc: linuxppc-dev <linuxppc-dev@lists.ozlabs.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: Kumar Gala <galak@kernel.crashing.org>
+Acked-by: Nicolas Schier <nicolas@jasle.eu>
+Signed-off-by: Li Yang <leoyang.li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/es8316.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/soc/fsl/qe/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/es8316.c b/sound/soc/codecs/es8316.c
-index 57130edaf3aba..834e542021fee 100644
---- a/sound/soc/codecs/es8316.c
-+++ b/sound/soc/codecs/es8316.c
-@@ -45,7 +45,12 @@ static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(dac_vol_tlv, -9600, 50, 1);
- static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(adc_vol_tlv, -9600, 50, 1);
- static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(alc_max_gain_tlv, -650, 150, 0);
- static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(alc_min_gain_tlv, -1200, 150, 0);
--static const SNDRV_CTL_TLVD_DECLARE_DB_SCALE(alc_target_tlv, -1650, 150, 0);
-+
-+static const SNDRV_CTL_TLVD_DECLARE_DB_RANGE(alc_target_tlv,
-+	0, 10, TLV_DB_SCALE_ITEM(-1650, 150, 0),
-+	11, 11, TLV_DB_SCALE_ITEM(-150, 0, 0),
-+);
-+
- static const SNDRV_CTL_TLVD_DECLARE_DB_RANGE(hpmixer_gain_tlv,
- 	0, 4, TLV_DB_SCALE_ITEM(-1200, 150, 0),
- 	8, 11, TLV_DB_SCALE_ITEM(-450, 150, 0),
-@@ -107,7 +112,7 @@ static const struct snd_kcontrol_new es8316_snd_controls[] = {
- 		       alc_max_gain_tlv),
- 	SOC_SINGLE_TLV("ALC Capture Min Volume", ES8316_ADC_ALC2, 0, 28, 0,
- 		       alc_min_gain_tlv),
--	SOC_SINGLE_TLV("ALC Capture Target Volume", ES8316_ADC_ALC3, 4, 10, 0,
-+	SOC_SINGLE_TLV("ALC Capture Target Volume", ES8316_ADC_ALC3, 4, 11, 0,
- 		       alc_target_tlv),
- 	SOC_SINGLE("ALC Capture Hold Time", ES8316_ADC_ALC3, 0, 10, 0),
- 	SOC_SINGLE("ALC Capture Decay Time", ES8316_ADC_ALC4, 4, 10, 0),
+diff --git a/drivers/soc/fsl/qe/Kconfig b/drivers/soc/fsl/qe/Kconfig
+index fabba17e9d65b..7ec158e2acf91 100644
+--- a/drivers/soc/fsl/qe/Kconfig
++++ b/drivers/soc/fsl/qe/Kconfig
+@@ -37,6 +37,7 @@ config QE_TDM
+ 
+ config QE_USB
+ 	bool
++	depends on QUICC_ENGINE
+ 	default y if USB_FSL_QE
+ 	help
+ 	  QE USB Controller support
 -- 
 2.39.2
 
