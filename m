@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596D915AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:48:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0217C433C8;
-	Wed,  9 Aug 2023 10:48:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A2B15AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:48:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 963EBC433C8;
+	Wed,  9 Aug 2023 10:48:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578108;
-	bh=8PotWt2WRbU2C8ZpTP2s4gYfkiZfIyyFJ1H8NqhZja8=;
+	s=korg; t=1691578111;
+	bh=HrlcznPUuesblsN4lOcCOJN0KJIc0hSH0DpbLASXFak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hLkRFkEjbLqYnsKLChv25ksJsAZELW5mWZvFedArHiKONSFqwc1z5ZRceNN30PDd1
-	 zGa4IqVKHo9syNSqAI/pxdoIgCGjWInO3GCF91ZevbQyv45cdoyHjDuhcR1Y2xiknQ
-	 VElMpSBQMomozmvgVV6yvTb6w0CBkhKt/aedIU0Y=
+	b=2iUswpED5Yg03OjQt8i3ukuQMmTK9FAzuS1Epz/1bQTEKynfa/CpSR0vqRY3HVBUI
+	 40ZOdmjxu76VaUCxSeKRo3H34+r0Oj8JaukLLVJv59hC/xtQeKOOV7D4WKq0VcYRLC
+	 0Dk3fCI4ZHG1kYqK13niJGJkyRQAmYDvJT6GW+24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.4 109/165] mtd: rawnand: meson: fix OOB available bytes for ECC
-Date: Wed,  9 Aug 2023 12:40:40 +0200
-Message-ID: <20230809103646.353120265@linuxfoundation.org>
+	Song Shuai <suagrfillet@gmail.com>,
+	=?UTF-8?q?Xianting=20Tian=C2=A0?= <xianting.tian@linux.alibaba.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.4 110/165] riscv: Export va_kernel_pa_offset in vmcoreinfo
+Date: Wed,  9 Aug 2023 12:40:41 +0200
+Message-ID: <20230809103646.387491921@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -35,44 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
+From: Song Shuai <suagrfillet@gmail.com>
 
-commit 7e6b04f9238eab0f684fafd158c1f32ea65b9eaa upstream.
+commit fbe7d19d2b7fcbd38905ba9f691be8f245c6faa6 upstream.
 
-It is incorrect to calculate number of OOB bytes for ECC engine using
-some "already known" ECC step size (1024 bytes here). Number of such
-bytes for ECC engine must be whole OOB except 2 bytes for bad block
-marker, while proper ECC step size and strength will be selected by
-ECC logic.
+Since RISC-V Linux v6.4, the commit 3335068f8721 ("riscv: Use
+PUD/P4D/PGD pages for the linear mapping") changes phys_ram_base
+from the physical start of the kernel to the actual start of the DRAM.
 
-Fixes: 8fae856c5350 ("mtd: rawnand: meson: add support for Amlogic NAND flash controller")
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230705065211.293500-1-AVKrasnov@sberdevices.ru
+The Crash-utility's VTOP() still uses phys_ram_base and kernel_map.virt_addr
+to translate kernel virtual address, that failed the Crash with Linux v6.4 [1].
+
+Export kernel_map.va_kernel_pa_offset in vmcoreinfo to help Crash translate
+the kernel virtual address correctly.
+
+Fixes: 3335068f8721 ("riscv: Use PUD/P4D/PGD pages for the linear mapping")
+Link: https://lore.kernel.org/linux-riscv/20230724040649.220279-1-suagrfillet@gmail.com/ [1]
+Signed-off-by: Song Shuai <suagrfillet@gmail.com>
+Reviewed-by: Xianting Tian  <xianting.tian@linux.alibaba.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20230724100917.309061-1-suagrfillet@gmail.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/meson_nand.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/riscv/kernel/crash_core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mtd/nand/raw/meson_nand.c
-+++ b/drivers/mtd/nand/raw/meson_nand.c
-@@ -1184,7 +1184,6 @@ static int meson_nand_attach_chip(struct
- 	struct meson_nfc *nfc = nand_get_controller_data(nand);
- 	struct meson_nfc_nand_chip *meson_chip = to_meson_nand(nand);
- 	struct mtd_info *mtd = nand_to_mtd(nand);
--	int nsectors = mtd->writesize / 1024;
- 	int ret;
- 
- 	if (!mtd->name) {
-@@ -1202,7 +1201,7 @@ static int meson_nand_attach_chip(struct
- 	nand->options |= NAND_NO_SUBPAGE_WRITE;
- 
- 	ret = nand_ecc_choose_conf(nand, nfc->data->ecc_caps,
--				   mtd->oobsize - 2 * nsectors);
-+				   mtd->oobsize - 2);
- 	if (ret) {
- 		dev_err(nfc->dev, "failed to ECC init\n");
- 		return -EINVAL;
+diff --git a/arch/riscv/kernel/crash_core.c b/arch/riscv/kernel/crash_core.c
+index b351a3c01355..55f1d7856b54 100644
+--- a/arch/riscv/kernel/crash_core.c
++++ b/arch/riscv/kernel/crash_core.c
+@@ -18,4 +18,6 @@ void arch_crash_save_vmcoreinfo(void)
+ 	vmcoreinfo_append_str("NUMBER(MODULES_END)=0x%lx\n", MODULES_END);
+ #endif
+ 	vmcoreinfo_append_str("NUMBER(KERNEL_LINK_ADDR)=0x%lx\n", KERNEL_LINK_ADDR);
++	vmcoreinfo_append_str("NUMBER(va_kernel_pa_offset)=0x%lx\n",
++						kernel_map.va_kernel_pa_offset);
+ }
+-- 
+2.41.0
+
 
 
