@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B2717AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:00:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C054C433D9;
-	Wed,  9 Aug 2023 11:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E27A517AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:00:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6438BC433C7;
+	Wed,  9 Aug 2023 11:00:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578815;
-	bh=3dEDVbdhzYppG5QtshsMYo3jqNivFQ9szDW09FHrRAE=;
+	s=korg; t=1691578817;
+	bh=nSKjLBCHlkUdNQteGfwgQ7q8Kp1y2IqvF+3n87CjO00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vo2/xNcRsAvmc0ya3aDL73t74BpsEELduvw9ZPsbAjeU15WTTjpS1BUL1aaZPdPGv
-	 xMDWZevjYynJ/zTUxxlw53FohEFdnsRlQq9GoALKOmU6sNsP5tdwzJE4Sxw7Cak/CQ
-	 Bhy6/oITv21M6+s9K+S+ctuAjsBwCdY+rRONOXx0=
+	b=ZQrZ6TCA8m+XJHxlcoyFPvUP95kSMA5oEmkuZFHtpan3dGwUQM/29g5tUeL5zTRrK
+	 l7K0Bwf3nmWr2cXKmOD/KmQO3FQ7PuFquukXtfBcK9eEpoW1RAa+YeH508StrVXyzS
+	 k78R0gp5jbcMsy8azwgplYHwgNVARg6I4xK7ZK5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rani Hod <rani.hod@gmail.com>,
-	Paul Fertser <fercerpav@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 5.15 67/92] wifi: mt76: mt7615: do not advertise 5 GHz on first phy of MT7615D (DBDC)
-Date: Wed,  9 Aug 2023 12:41:43 +0200
-Message-ID: <20230809103635.902246557@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>
+Subject: [PATCH 5.15 68/92] rbd: prevent busy loop when requesting exclusive lock
+Date: Wed,  9 Aug 2023 12:41:44 +0200
+Message-ID: <20230809103635.932530958@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -37,45 +34,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Fertser <fercerpav@gmail.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit 421033deb91521aa6a9255e495cb106741a52275 upstream.
+commit 9d01e07fd1bfb4daae156ab528aa196f5ac2b2bc upstream.
 
-On DBDC devices the first (internal) phy is only capable of using
-2.4 GHz band, and the 5 GHz band is exposed via a separate phy object,
-so avoid the false advertising.
+Due to rbd_try_acquire_lock() effectively swallowing all but
+EBLOCKLISTED error from rbd_try_lock() ("request lock anyway") and
+rbd_request_lock() returning ETIMEDOUT error not only for an actual
+notify timeout but also when the lock owner doesn't respond, a busy
+loop inside of rbd_acquire_lock() between rbd_try_acquire_lock() and
+rbd_request_lock() is possible.
 
-Reported-by: Rani Hod <rani.hod@gmail.com>
-Closes: https://github.com/openwrt/openwrt/pull/12361
-Fixes: 7660a1bd0c22 ("mt76: mt7615: register ext_phy if DBDC is detected")
+Requesting the lock on EBUSY error (returned by get_lock_owner_info()
+if an incompatible lock or invalid lock owner is detected) makes very
+little sense.  The same goes for ETIMEDOUT error (might pop up pretty
+much anywhere if osd_request_timeout option is set) and many others.
+
+Just fail I/O requests on rbd_dev->acquiring_list immediately on any
+error from rbd_try_lock().
+
+Cc: stable@vger.kernel.org # 588159009d5b: rbd: retrieve and check lock owner twice before blocklisting
 Cc: stable@vger.kernel.org
-Signed-off-by: Paul Fertser <fercerpav@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Acked-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230605073408.8699-1-fercerpav@gmail.com
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/eeprom.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/block/rbd.c |   28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7615/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/eeprom.c
-@@ -123,12 +123,12 @@ mt7615_eeprom_parse_hw_band_cap(struct m
- 	case MT_EE_5GHZ:
- 		dev->mphy.cap.has_5ghz = true;
- 		break;
--	case MT_EE_2GHZ:
--		dev->mphy.cap.has_2ghz = true;
--		break;
- 	case MT_EE_DBDC:
- 		dev->dbdc_support = true;
- 		fallthrough;
-+	case MT_EE_2GHZ:
-+		dev->mphy.cap.has_2ghz = true;
-+		break;
- 	default:
- 		dev->mphy.cap.has_2ghz = true;
- 		dev->mphy.cap.has_5ghz = true;
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -3677,7 +3677,7 @@ static int rbd_lock(struct rbd_device *r
+ 	ret = ceph_cls_lock(osdc, &rbd_dev->header_oid, &rbd_dev->header_oloc,
+ 			    RBD_LOCK_NAME, CEPH_CLS_LOCK_EXCLUSIVE, cookie,
+ 			    RBD_LOCK_TAG, "", 0);
+-	if (ret)
++	if (ret && ret != -EEXIST)
+ 		return ret;
+ 
+ 	__rbd_lock(rbd_dev, cookie);
+@@ -3880,7 +3880,7 @@ static struct ceph_locker *get_lock_owne
+ 				 &rbd_dev->header_oloc, RBD_LOCK_NAME,
+ 				 &lock_type, &lock_tag, &lockers, &num_lockers);
+ 	if (ret) {
+-		rbd_warn(rbd_dev, "failed to retrieve lockers: %d", ret);
++		rbd_warn(rbd_dev, "failed to get header lockers: %d", ret);
+ 		return ERR_PTR(ret);
+ 	}
+ 
+@@ -3942,8 +3942,10 @@ static int find_watcher(struct rbd_devic
+ 	ret = ceph_osdc_list_watchers(osdc, &rbd_dev->header_oid,
+ 				      &rbd_dev->header_oloc, &watchers,
+ 				      &num_watchers);
+-	if (ret)
++	if (ret) {
++		rbd_warn(rbd_dev, "failed to get watchers: %d", ret);
+ 		return ret;
++	}
+ 
+ 	sscanf(locker->id.cookie, RBD_LOCK_COOKIE_PREFIX " %llu", &cookie);
+ 	for (i = 0; i < num_watchers; i++) {
+@@ -3987,8 +3989,12 @@ static int rbd_try_lock(struct rbd_devic
+ 		locker = refreshed_locker = NULL;
+ 
+ 		ret = rbd_lock(rbd_dev);
+-		if (ret != -EBUSY)
++		if (!ret)
++			goto out;
++		if (ret != -EBUSY) {
++			rbd_warn(rbd_dev, "failed to lock header: %d", ret);
+ 			goto out;
++		}
+ 
+ 		/* determine if the current lock holder is still alive */
+ 		locker = get_lock_owner_info(rbd_dev);
+@@ -4091,11 +4097,8 @@ static int rbd_try_acquire_lock(struct r
+ 
+ 	ret = rbd_try_lock(rbd_dev);
+ 	if (ret < 0) {
+-		rbd_warn(rbd_dev, "failed to lock header: %d", ret);
+-		if (ret == -EBLOCKLISTED)
+-			goto out;
+-
+-		ret = 1; /* request lock anyway */
++		rbd_warn(rbd_dev, "failed to acquire lock: %d", ret);
++		goto out;
+ 	}
+ 	if (ret > 0) {
+ 		up_write(&rbd_dev->lock_rwsem);
+@@ -6631,12 +6634,11 @@ static int rbd_add_acquire_lock(struct r
+ 		cancel_delayed_work_sync(&rbd_dev->lock_dwork);
+ 		if (!ret)
+ 			ret = -ETIMEDOUT;
+-	}
+ 
+-	if (ret) {
+-		rbd_warn(rbd_dev, "failed to acquire exclusive lock: %ld", ret);
+-		return ret;
++		rbd_warn(rbd_dev, "failed to acquire lock: %ld", ret);
+ 	}
++	if (ret)
++		return ret;
+ 
+ 	/*
+ 	 * The lock may have been released by now, unless automatic lock
 
 
