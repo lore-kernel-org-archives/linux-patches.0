@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140FF15AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:46:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89037C433C8;
-	Wed,  9 Aug 2023 10:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D549D15AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:46:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554F0C433C7;
+	Wed,  9 Aug 2023 10:46:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691577981;
-	bh=+w5/Zduul5tnSgpVFEGA9PFKCeV/Xgi+eD0DUWXoz70=;
+	s=korg; t=1691577984;
+	bh=pfYc9I8mC54nHGWCQd3JzznCJTCEb5hPpITuOovZFOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=foNwaT4ikoM1SYW9c68vIV83FayER8hNOPFdB7nU+Q0UYKrN2ulLsnFA85fTLfWwO
-	 BkGszNqAbfg46nzL0QgYau9trNN2TPzTNcf71WP+rNrFJNNjRTAmhwDAZ1PTvrZ+kC
-	 CAHv2gkpD3UDLVJ90ZRXZujJlHmDg4KKC5WBjo2w=
+	b=0FQ6VzmZ/5kTDVEypU/2QA5FUgkq6haiIvP29LXShB8huE+MELYOy+2JDb7/jXHqE
+	 opQa9QoC1VMBU8WPEXidt/JIzo0YKh4kFwnQWxnMUv2DVuKZhMR2exPsuE1+FRmNSK
+	 /zIhrfQOm8ivUy94wYDVXIM2VDZHlLHrlGC/F7y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Vlad Buslov <vladbu@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 062/165] net: usb: lan78xx: reorder cleanup operations to avoid UAF bugs
-Date: Wed,  9 Aug 2023 12:39:53 +0200
-Message-ID: <20230809103644.851543936@linuxfoundation.org>
+Subject: [PATCH 6.4 035/165] net/mlx5e: Move representor neigh cleanup to profile cleanup_tx
+Date: Wed,  9 Aug 2023 12:39:26 +0200
+Message-ID: <20230809103643.958406116@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -35,101 +36,174 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-[ Upstream commit 1e7417c188d0a83fb385ba2dbe35fd2563f2b6f3 ]
+[ Upstream commit d03b6e6f31820b84f7449cca022047f36c42bc3f ]
 
-The timer dev->stat_monitor can schedule the delayed work dev->wq and
-the delayed work dev->wq can also arm the dev->stat_monitor timer.
+For IP tunnel encapsulation in ECMP (Equal-Cost Multipath) mode, as
+the flow is duplicated to the peer eswitch, the related neighbour
+information on the peer uplink representor is created as well.
 
-When the device is detaching, the net_device will be deallocated. but
-the net_device private data could still be dereferenced in delayed work
-or timer handler. As a result, the UAF bugs will happen.
+In the cited commit, eswitch devcom unpair is moved to uplink unload
+API, specifically the profile->cleanup_tx. If there is a encap rule
+offloaded in ECMP mode, when one eswitch does unpair (because of
+unloading the driver, for instance), and the peer rule from the peer
+eswitch is going to be deleted, the use-after-free error is triggered
+while accessing neigh info, as it is already cleaned up in uplink's
+profile->disable, which is before its profile->cleanup_tx.
 
-One racy situation is shown below:
+To fix this issue, move the neigh cleanup to profile's cleanup_tx
+callback, and after mlx5e_cleanup_uplink_rep_tx is called. The neigh
+init is moved to init_tx for symmeter.
 
-      (Thread 1)                 |      (Thread 2)
-lan78xx_stat_monitor()           |
- ...                             |  lan78xx_disconnect()
- lan78xx_defer_kevent()          |    ...
-  ...                            |    cancel_delayed_work_sync(&dev->wq);
-  schedule_delayed_work()        |    ...
-  (wait some time)               |    free_netdev(net); //free net_device
-  lan78xx_delayedwork()          |
-  //use net_device private data  |
-  dev-> //use                    |
+[ 2453.376299] BUG: KASAN: slab-use-after-free in mlx5e_rep_neigh_entry_release+0x109/0x3a0 [mlx5_core]
+[ 2453.379125] Read of size 4 at addr ffff888127af9008 by task modprobe/2496
 
-Although we use cancel_delayed_work_sync() to cancel the delayed work
-in lan78xx_disconnect(), it could still be scheduled in timer handler
-lan78xx_stat_monitor().
+[ 2453.381542] CPU: 7 PID: 2496 Comm: modprobe Tainted: G    B              6.4.0-rc7+ #15
+[ 2453.383386] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+[ 2453.384335] Call Trace:
+[ 2453.384625]  <TASK>
+[ 2453.384891]  dump_stack_lvl+0x33/0x50
+[ 2453.385285]  print_report+0xc2/0x610
+[ 2453.385667]  ? __virt_addr_valid+0xb1/0x130
+[ 2453.386091]  ? mlx5e_rep_neigh_entry_release+0x109/0x3a0 [mlx5_core]
+[ 2453.386757]  kasan_report+0xae/0xe0
+[ 2453.387123]  ? mlx5e_rep_neigh_entry_release+0x109/0x3a0 [mlx5_core]
+[ 2453.387798]  mlx5e_rep_neigh_entry_release+0x109/0x3a0 [mlx5_core]
+[ 2453.388465]  mlx5e_rep_encap_entry_detach+0xa6/0xe0 [mlx5_core]
+[ 2453.389111]  mlx5e_encap_dealloc+0xa7/0x100 [mlx5_core]
+[ 2453.389706]  mlx5e_tc_tun_encap_dests_unset+0x61/0xb0 [mlx5_core]
+[ 2453.390361]  mlx5_free_flow_attr_actions+0x11e/0x340 [mlx5_core]
+[ 2453.391015]  ? complete_all+0x43/0xd0
+[ 2453.391398]  ? free_flow_post_acts+0x38/0x120 [mlx5_core]
+[ 2453.392004]  mlx5e_tc_del_fdb_flow+0x4ae/0x690 [mlx5_core]
+[ 2453.392618]  mlx5e_tc_del_fdb_peers_flow+0x308/0x370 [mlx5_core]
+[ 2453.393276]  mlx5e_tc_clean_fdb_peer_flows+0xf5/0x140 [mlx5_core]
+[ 2453.393925]  mlx5_esw_offloads_unpair+0x86/0x540 [mlx5_core]
+[ 2453.394546]  ? mlx5_esw_offloads_set_ns_peer.isra.0+0x180/0x180 [mlx5_core]
+[ 2453.395268]  ? down_write+0xaa/0x100
+[ 2453.395652]  mlx5_esw_offloads_devcom_event+0x203/0x530 [mlx5_core]
+[ 2453.396317]  mlx5_devcom_send_event+0xbb/0x190 [mlx5_core]
+[ 2453.396917]  mlx5_esw_offloads_devcom_cleanup+0xb0/0xd0 [mlx5_core]
+[ 2453.397582]  mlx5e_tc_esw_cleanup+0x42/0x120 [mlx5_core]
+[ 2453.398182]  mlx5e_rep_tc_cleanup+0x15/0x30 [mlx5_core]
+[ 2453.398768]  mlx5e_cleanup_rep_tx+0x6c/0x80 [mlx5_core]
+[ 2453.399367]  mlx5e_detach_netdev+0xee/0x120 [mlx5_core]
+[ 2453.399957]  mlx5e_netdev_change_profile+0x84/0x170 [mlx5_core]
+[ 2453.400598]  mlx5e_vport_rep_unload+0xe0/0xf0 [mlx5_core]
+[ 2453.403781]  mlx5_eswitch_unregister_vport_reps+0x15e/0x190 [mlx5_core]
+[ 2453.404479]  ? mlx5_eswitch_register_vport_reps+0x200/0x200 [mlx5_core]
+[ 2453.405170]  ? up_write+0x39/0x60
+[ 2453.405529]  ? kernfs_remove_by_name_ns+0xb7/0xe0
+[ 2453.405985]  auxiliary_bus_remove+0x2e/0x40
+[ 2453.406405]  device_release_driver_internal+0x243/0x2d0
+[ 2453.406900]  ? kobject_put+0x42/0x2d0
+[ 2453.407284]  bus_remove_device+0x128/0x1d0
+[ 2453.407687]  device_del+0x240/0x550
+[ 2453.408053]  ? waiting_for_supplier_show+0xe0/0xe0
+[ 2453.408511]  ? kobject_put+0xfa/0x2d0
+[ 2453.408889]  ? __kmem_cache_free+0x14d/0x280
+[ 2453.409310]  mlx5_rescan_drivers_locked.part.0+0xcd/0x2b0 [mlx5_core]
+[ 2453.409973]  mlx5_unregister_device+0x40/0x50 [mlx5_core]
+[ 2453.410561]  mlx5_uninit_one+0x3d/0x110 [mlx5_core]
+[ 2453.411111]  remove_one+0x89/0x130 [mlx5_core]
+[ 2453.411628]  pci_device_remove+0x59/0xf0
+[ 2453.412026]  device_release_driver_internal+0x243/0x2d0
+[ 2453.412511]  ? parse_option_str+0x14/0x90
+[ 2453.412915]  driver_detach+0x7b/0xf0
+[ 2453.413289]  bus_remove_driver+0xb5/0x160
+[ 2453.413685]  pci_unregister_driver+0x3f/0xf0
+[ 2453.414104]  mlx5_cleanup+0xc/0x20 [mlx5_core]
 
-Another racy situation is shown below:
-
-      (Thread 1)                |      (Thread 2)
-lan78xx_delayedwork             |
- mod_timer()                    |  lan78xx_disconnect()
-                                |   cancel_delayed_work_sync()
- (wait some time)               |   if (timer_pending(&dev->stat_monitor))
-             	                |       del_timer_sync(&dev->stat_monitor);
- lan78xx_stat_monitor()         |   ...
-  lan78xx_defer_kevent()        |   free_netdev(net); //free
-   //use net_device private data|
-   dev-> //use                  |
-
-Although we use del_timer_sync() to delete the timer, the function
-timer_pending() returns 0 when the timer is activated. As a result,
-the del_timer_sync() will not be executed and the timer could be
-re-armed.
-
-In order to mitigate this bug, We use timer_shutdown_sync() to shutdown
-the timer and then use cancel_delayed_work_sync() to cancel the delayed
-work. As a result, the net_device could be deallocated safely.
-
-What's more, the dev->flags is set to EVENT_DEV_DISCONNECT in
-lan78xx_disconnect(). But it could still be set to EVENT_STAT_UPDATE
-in lan78xx_stat_monitor(). So this patch put the set_bit() behind
-timer_shutdown_sync().
-
-Fixes: 77dfff5bb7e2 ("lan78xx: Fix race condition in disconnect handling")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 2be5bd42a5bb ("net/mlx5: Handle pairing of E-switch via uplink un/load APIs")
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Vlad Buslov <vladbu@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/en_rep.c    | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index c458c030fadf6..59cde06aa7f60 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -4224,8 +4224,6 @@ static void lan78xx_disconnect(struct usb_interface *intf)
- 	if (!dev)
- 		return;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+index 95d8714765f70..ad63d1f9a611f 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+@@ -1112,6 +1112,10 @@ static int mlx5e_init_rep_tx(struct mlx5e_priv *priv)
+ 		return err;
+ 	}
  
--	set_bit(EVENT_DEV_DISCONNECT, &dev->flags);
++	err = mlx5e_rep_neigh_init(rpriv);
++	if (err)
++		goto err_neigh_init;
++
+ 	if (rpriv->rep->vport == MLX5_VPORT_UPLINK) {
+ 		err = mlx5e_init_uplink_rep_tx(rpriv);
+ 		if (err)
+@@ -1128,6 +1132,8 @@ static int mlx5e_init_rep_tx(struct mlx5e_priv *priv)
+ 	if (rpriv->rep->vport == MLX5_VPORT_UPLINK)
+ 		mlx5e_cleanup_uplink_rep_tx(rpriv);
+ err_init_tx:
++	mlx5e_rep_neigh_cleanup(rpriv);
++err_neigh_init:
+ 	mlx5e_destroy_tises(priv);
+ 	return err;
+ }
+@@ -1141,22 +1147,17 @@ static void mlx5e_cleanup_rep_tx(struct mlx5e_priv *priv)
+ 	if (rpriv->rep->vport == MLX5_VPORT_UPLINK)
+ 		mlx5e_cleanup_uplink_rep_tx(rpriv);
+ 
++	mlx5e_rep_neigh_cleanup(rpriv);
+ 	mlx5e_destroy_tises(priv);
+ }
+ 
+ static void mlx5e_rep_enable(struct mlx5e_priv *priv)
+ {
+-	struct mlx5e_rep_priv *rpriv = priv->ppriv;
 -
- 	netif_napi_del(&dev->napi);
+ 	mlx5e_set_netdev_mtu_boundaries(priv);
+-	mlx5e_rep_neigh_init(rpriv);
+ }
  
- 	udev = interface_to_usbdev(intf);
-@@ -4233,6 +4231,8 @@ static void lan78xx_disconnect(struct usb_interface *intf)
- 
- 	unregister_netdev(net);
- 
-+	timer_shutdown_sync(&dev->stat_monitor);
-+	set_bit(EVENT_DEV_DISCONNECT, &dev->flags);
- 	cancel_delayed_work_sync(&dev->wq);
- 
- 	phydev = net->phydev;
-@@ -4247,9 +4247,6 @@ static void lan78xx_disconnect(struct usb_interface *intf)
- 
- 	usb_scuttle_anchored_urbs(&dev->deferred);
- 
--	if (timer_pending(&dev->stat_monitor))
--		del_timer_sync(&dev->stat_monitor);
+ static void mlx5e_rep_disable(struct mlx5e_priv *priv)
+ {
+-	struct mlx5e_rep_priv *rpriv = priv->ppriv;
 -
- 	lan78xx_unbind(dev, intf);
+-	mlx5e_rep_neigh_cleanup(rpriv);
+ }
  
- 	lan78xx_free_tx_resources(dev);
+ static int mlx5e_update_rep_rx(struct mlx5e_priv *priv)
+@@ -1206,7 +1207,6 @@ static int uplink_rep_async_event(struct notifier_block *nb, unsigned long event
+ 
+ static void mlx5e_uplink_rep_enable(struct mlx5e_priv *priv)
+ {
+-	struct mlx5e_rep_priv *rpriv = priv->ppriv;
+ 	struct net_device *netdev = priv->netdev;
+ 	struct mlx5_core_dev *mdev = priv->mdev;
+ 	u16 max_mtu;
+@@ -1228,7 +1228,6 @@ static void mlx5e_uplink_rep_enable(struct mlx5e_priv *priv)
+ 	mlx5_notifier_register(mdev, &priv->events_nb);
+ 	mlx5e_dcbnl_initialize(priv);
+ 	mlx5e_dcbnl_init_app(priv);
+-	mlx5e_rep_neigh_init(rpriv);
+ 	mlx5e_rep_bridge_init(priv);
+ 
+ 	netdev->wanted_features |= NETIF_F_HW_TC;
+@@ -1243,7 +1242,6 @@ static void mlx5e_uplink_rep_enable(struct mlx5e_priv *priv)
+ 
+ static void mlx5e_uplink_rep_disable(struct mlx5e_priv *priv)
+ {
+-	struct mlx5e_rep_priv *rpriv = priv->ppriv;
+ 	struct mlx5_core_dev *mdev = priv->mdev;
+ 
+ 	rtnl_lock();
+@@ -1253,7 +1251,6 @@ static void mlx5e_uplink_rep_disable(struct mlx5e_priv *priv)
+ 	rtnl_unlock();
+ 
+ 	mlx5e_rep_bridge_cleanup(priv);
+-	mlx5e_rep_neigh_cleanup(rpriv);
+ 	mlx5e_dcbnl_delete_app(priv);
+ 	mlx5_notifier_unregister(mdev, &priv->events_nb);
+ 	mlx5e_rep_tc_disable(priv);
 -- 
 2.40.1
 
