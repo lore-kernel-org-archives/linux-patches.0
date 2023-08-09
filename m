@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026151773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:18:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 773DDC433C8;
-	Wed,  9 Aug 2023 11:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B4F1773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:18:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E38EC433C7;
+	Wed,  9 Aug 2023 11:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579934;
-	bh=fGeovoFhlI+GA4ikgjCjGOE/jQvGD87dRSJljQv41MQ=;
+	s=korg; t=1691579937;
+	bh=IZHb1zt9D0xRB5bklRHdIbvHTe+HbSuKK2gMtrmcaUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R9RtRZbzwEkTFuf0c3nhC5QjFCsBFWjSNjTEnoQ4XuA4bq/YtWmTSNtsXy0poQuQf
-	 5FTlkfKzpF2PCzXHHIZzWoDF0ROIxVRF0T7ZyiXL2sIyKRP++KdCPeMb12h7nZ5eTB
-	 qXtyDKs6TCcgmZ+cHih7Zyz+TMfn65eXzpXR7/Jw=
+	b=QNjeV0vCnE+IpZwynV2A4A6b1O9Oc2HdzaKcDdR8OHDowhcystVuwxqzEokqrTWS5
+	 qMD1dRMXh+CxUEp6ZyzfFRt8+u0BiNTXDBVwVpPeP9K3hx5VbLFsKp4Pg9DtpAJsBH
+	 MqBNaS1jQGnDvqjsiVrBfyRktlG/ZYWu/OHkTc5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Klaus Kudielka <klaus.kudielka@gmail.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Stephen Suryaputra <ssuryaextr@gmail.com>,
+	David Ahern <dsahern@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 138/323] net: mvneta: fix txq_map in case of txq_number==1
-Date: Wed,  9 Aug 2023 12:39:36 +0200
-Message-ID: <20230809103704.455070745@linuxfoundation.org>
+Subject: [PATCH 4.19 139/323] vrf: Increment Icmp6InMsgs on the original netdev
+Date: Wed,  9 Aug 2023 12:39:37 +0200
+Message-ID: <20230809103704.504527435@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,46 +36,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Klaus Kudielka <klaus.kudielka@gmail.com>
+From: Stephen Suryaputra <ssuryaextr@gmail.com>
 
-[ Upstream commit 21327f81db6337c8843ce755b01523c7d3df715b ]
+[ Upstream commit e1ae5c2ea4783b1fd87be250f9fcc9d9e1a6ba3f ]
 
-If we boot with mvneta.txq_number=1, the txq_map is set incorrectly:
-MVNETA_CPU_TXQ_ACCESS(1) refers to TX queue 1, but only TX queue 0 is
-initialized. Fix this.
+Get the ingress interface and increment ICMP counters based on that
+instead of skb->dev when the the dev is a VRF device.
 
-Fixes: 50bf8cb6fc9c ("net: mvneta: Configure XPS support")
-Signed-off-by: Klaus Kudielka <klaus.kudielka@gmail.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Link: https://lore.kernel.org/r/20230705053712.3914-1-klaus.kudielka@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This is a follow up on the following message:
+https://www.spinics.net/lists/netdev/msg560268.html
+
+v2: Avoid changing skb->dev since it has unintended effect for local
+    delivery (David Ahern).
+Signed-off-by: Stephen Suryaputra <ssuryaextr@gmail.com>
+Reviewed-by: David Ahern <dsahern@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 2aaa8a15de73 ("icmp6: Fix null-ptr-deref of ip6_null_entry->rt6i_idev in icmp6_dev().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvneta.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/addrconf.h | 16 ++++++++++++++++
+ net/ipv6/icmp.c        | 17 +++++++++++------
+ net/ipv6/reassembly.c  |  4 ++--
+ 3 files changed, 29 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
-index f1a4b11ce0d19..512f9cd68070a 100644
---- a/drivers/net/ethernet/marvell/mvneta.c
-+++ b/drivers/net/ethernet/marvell/mvneta.c
-@@ -1415,7 +1415,7 @@ static void mvneta_defaults_set(struct mvneta_port *pp)
- 			 */
- 			if (txq_number == 1)
- 				txq_map = (cpu == pp->rxq_def) ?
--					MVNETA_CPU_TXQ_ACCESS(1) : 0;
-+					MVNETA_CPU_TXQ_ACCESS(0) : 0;
+diff --git a/include/net/addrconf.h b/include/net/addrconf.h
+index db2a87981dd46..9583d3bbab039 100644
+--- a/include/net/addrconf.h
++++ b/include/net/addrconf.h
+@@ -340,6 +340,22 @@ static inline struct inet6_dev *__in6_dev_get(const struct net_device *dev)
+ 	return rcu_dereference_rtnl(dev->ip6_ptr);
+ }
  
- 		} else {
- 			txq_map = MVNETA_CPU_TXQ_ACCESS_ALL_MASK;
-@@ -3665,7 +3665,7 @@ static void mvneta_percpu_elect(struct mvneta_port *pp)
- 		 */
- 		if (txq_number == 1)
- 			txq_map = (cpu == elected_cpu) ?
--				MVNETA_CPU_TXQ_ACCESS(1) : 0;
-+				MVNETA_CPU_TXQ_ACCESS(0) : 0;
- 		else
- 			txq_map = mvreg_read(pp, MVNETA_CPU_MAP(cpu)) &
- 				MVNETA_CPU_TXQ_ACCESS_ALL_MASK;
++/**
++ * __in6_dev_stats_get - get inet6_dev pointer for stats
++ * @dev: network device
++ * @skb: skb for original incoming interface if neeeded
++ *
++ * Caller must hold rcu_read_lock or RTNL, because this function
++ * does not take a reference on the inet6_dev.
++ */
++static inline struct inet6_dev *__in6_dev_stats_get(const struct net_device *dev,
++						    const struct sk_buff *skb)
++{
++	if (netif_is_l3_master(dev))
++		dev = dev_get_by_index_rcu(dev_net(dev), inet6_iif(skb));
++	return __in6_dev_get(dev);
++}
++
+ /**
+  * __in6_dev_get_safely - get inet6_dev pointer from netdevice
+  * @dev: network device
+diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
+index fbc8746371b6d..1b86a2e03d049 100644
+--- a/net/ipv6/icmp.c
++++ b/net/ipv6/icmp.c
+@@ -395,23 +395,28 @@ static struct dst_entry *icmpv6_route_lookup(struct net *net,
+ 	return ERR_PTR(err);
+ }
+ 
+-static int icmp6_iif(const struct sk_buff *skb)
++static struct net_device *icmp6_dev(const struct sk_buff *skb)
+ {
+-	int iif = skb->dev->ifindex;
++	struct net_device *dev = skb->dev;
+ 
+ 	/* for local traffic to local address, skb dev is the loopback
+ 	 * device. Check if there is a dst attached to the skb and if so
+ 	 * get the real device index. Same is needed for replies to a link
+ 	 * local address on a device enslaved to an L3 master device
+ 	 */
+-	if (unlikely(iif == LOOPBACK_IFINDEX || netif_is_l3_master(skb->dev))) {
++	if (unlikely(dev->ifindex == LOOPBACK_IFINDEX || netif_is_l3_master(skb->dev))) {
+ 		const struct rt6_info *rt6 = skb_rt6_info(skb);
+ 
+ 		if (rt6)
+-			iif = rt6->rt6i_idev->dev->ifindex;
++			dev = rt6->rt6i_idev->dev;
+ 	}
+ 
+-	return iif;
++	return dev;
++}
++
++static int icmp6_iif(const struct sk_buff *skb)
++{
++	return icmp6_dev(skb)->ifindex;
+ }
+ 
+ /*
+@@ -800,7 +805,7 @@ void icmpv6_notify(struct sk_buff *skb, u8 type, u8 code, __be32 info)
+ static int icmpv6_rcv(struct sk_buff *skb)
+ {
+ 	struct net *net = dev_net(skb->dev);
+-	struct net_device *dev = skb->dev;
++	struct net_device *dev = icmp6_dev(skb);
+ 	struct inet6_dev *idev = __in6_dev_get(dev);
+ 	const struct in6_addr *saddr, *daddr;
+ 	struct icmp6hdr *hdr;
+diff --git a/net/ipv6/reassembly.c b/net/ipv6/reassembly.c
+index 60dfd0d118512..b596727f04978 100644
+--- a/net/ipv6/reassembly.c
++++ b/net/ipv6/reassembly.c
+@@ -302,7 +302,7 @@ static int ip6_frag_reasm(struct frag_queue *fq, struct sk_buff *skb,
+ 			   skb_network_header_len(skb));
+ 
+ 	rcu_read_lock();
+-	__IP6_INC_STATS(net, __in6_dev_get(dev), IPSTATS_MIB_REASMOKS);
++	__IP6_INC_STATS(net, __in6_dev_stats_get(dev, skb), IPSTATS_MIB_REASMOKS);
+ 	rcu_read_unlock();
+ 	fq->q.fragments = NULL;
+ 	fq->q.rb_fragments = RB_ROOT;
+@@ -317,7 +317,7 @@ static int ip6_frag_reasm(struct frag_queue *fq, struct sk_buff *skb,
+ 	net_dbg_ratelimited("ip6_frag_reasm: no memory for reassembly\n");
+ out_fail:
+ 	rcu_read_lock();
+-	__IP6_INC_STATS(net, __in6_dev_get(dev), IPSTATS_MIB_REASMFAILS);
++	__IP6_INC_STATS(net, __in6_dev_stats_get(dev, skb), IPSTATS_MIB_REASMFAILS);
+ 	rcu_read_unlock();
+ 	inet_frag_kill(&fq->q);
+ 	return -1;
 -- 
 2.39.2
 
