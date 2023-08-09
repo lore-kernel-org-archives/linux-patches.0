@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E85117AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:35:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B77C433C7;
-	Wed,  9 Aug 2023 11:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D404017AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:35:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C037C433C7;
+	Wed,  9 Aug 2023 11:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580938;
-	bh=DS7uVw8ZU8+UWsfp3epzyyQvQZ6W+CgxRLakmwsEUU4=;
+	s=korg; t=1691580940;
+	bh=zt8m6+ocboRYsXwshUSV93BTHV3fnqjyRhJaoxtWpzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iOVWDsliGwBq2FmEJ0XKc2NF/T7Pua7/HsAbUHQUUSxC7zyedMeUtwUsMNgLOPhr7
-	 c0EIXYkkzU5ytGl3OZhJGUdR/YRXzECh7pQi5pV9m7Ws9w1S+ebNfpHGRjEZxSFfcS
-	 L14zm+39IzqhT7n+BpEyGeA9OEYmDkZzt0xWlp0E=
+	b=yxpjJWEAp8vO9H8XiEo9/5wgOQo/Z8Eb1dOc1PaLIw4oDFd49y3G67Czq7JlrFI1Y
+	 oKvymzKOkCFhp35tq2+RI+A9J+dqjtTB+ljPxOG7joSGVTuzF+Rv5FnUqcn5UTWu6h
+	 xLSCGZBPq4pAaeyEpnK/HuVU4evl71W8nEr6V4xM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Ferenc Fejes <fejes@inf.elte.hu>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 020/201] pwm: meson: Simplify duplicated per-channel tracking
-Date: Wed,  9 Aug 2023 12:40:22 +0200
-Message-ID: <20230809103644.501164639@linuxfoundation.org>
+Subject: [PATCH 5.10 047/201] net/sched: mqprio: add extack to mqprio_parse_nlattr()
+Date: Wed,  9 Aug 2023 12:40:49 +0200
+Message-ID: <20230809103645.410444967@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -36,72 +38,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 5f97f18feac9bd5a8163b108aee52d783114b36f ]
+[ Upstream commit 57f21bf85400abadac0cb2a4db5de1d663f8863f ]
 
-The driver tracks per-channel data via struct pwm_device::chip_data and
-struct meson_pwm::channels[]. The latter holds the actual data, the former
-is only a pointer to the latter. So simplify by using struct
-meson_pwm::channels[] consistently.
+Netlink attribute parsing in mqprio is a minesweeper game, with many
+options having the possibility of being passed incorrectly and the user
+being none the wiser.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-Stable-dep-of: 87a2cbf02d77 ("pwm: meson: fix handling of period/duty if greater than UINT_MAX")
+Try to make errors less sour by giving user space some information
+regarding what went wrong.
+
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Ferenc Fejes <fejes@inf.elte.hu>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 6c58c8816abb ("net/sched: mqprio: Add length check for TCA_MQPRIO_{MAX/MIN}_RATE64")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-meson.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ net/sched/sch_mqprio.c | 30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/pwm/pwm-meson.c b/drivers/pwm/pwm-meson.c
-index 0283163ddbe8e..d3d9767aeb455 100644
---- a/drivers/pwm/pwm-meson.c
-+++ b/drivers/pwm/pwm-meson.c
-@@ -147,12 +147,13 @@ static int meson_pwm_request(struct pwm_chip *chip, struct pwm_device *pwm)
- 		return err;
- 	}
- 
--	return pwm_set_chip_data(pwm, channel);
-+	return 0;
+diff --git a/net/sched/sch_mqprio.c b/net/sched/sch_mqprio.c
+index a5df5604e0150..4ec222a5530d1 100644
+--- a/net/sched/sch_mqprio.c
++++ b/net/sched/sch_mqprio.c
+@@ -131,7 +131,8 @@ static int parse_attr(struct nlattr *tb[], int maxtype, struct nlattr *nla,
  }
  
- static void meson_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
+ static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
+-			       struct nlattr *opt)
++			       struct nlattr *opt,
++			       struct netlink_ext_ack *extack)
  {
--	struct meson_pwm_channel *channel = pwm_get_chip_data(pwm);
-+	struct meson_pwm *meson = to_meson_pwm(chip);
-+	struct meson_pwm_channel *channel = &meson->channels[pwm->hwpwm];
+ 	struct mqprio_sched *priv = qdisc_priv(sch);
+ 	struct nlattr *tb[TCA_MQPRIO_MAX + 1];
+@@ -143,8 +144,11 @@ static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
+ 	if (err < 0)
+ 		return err;
  
- 	if (channel)
- 		clk_disable_unprepare(channel->clk);
-@@ -161,7 +162,7 @@ static void meson_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
- static int meson_pwm_calc(struct meson_pwm *meson, struct pwm_device *pwm,
- 			  const struct pwm_state *state)
- {
--	struct meson_pwm_channel *channel = pwm_get_chip_data(pwm);
-+	struct meson_pwm_channel *channel = &meson->channels[pwm->hwpwm];
- 	unsigned int duty, period, pre_div, cnt, duty_cnt;
- 	unsigned long fin_freq;
+-	if (!qopt->hw)
++	if (!qopt->hw) {
++		NL_SET_ERR_MSG(extack,
++			       "mqprio TCA_OPTIONS can only contain netlink attributes in hardware mode");
+ 		return -EINVAL;
++	}
  
-@@ -230,7 +231,7 @@ static int meson_pwm_calc(struct meson_pwm *meson, struct pwm_device *pwm,
+ 	if (tb[TCA_MQPRIO_MODE]) {
+ 		priv->flags |= TC_MQPRIO_F_MODE;
+@@ -157,13 +161,19 @@ static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
+ 	}
  
- static void meson_pwm_enable(struct meson_pwm *meson, struct pwm_device *pwm)
- {
--	struct meson_pwm_channel *channel = pwm_get_chip_data(pwm);
-+	struct meson_pwm_channel *channel = &meson->channels[pwm->hwpwm];
- 	struct meson_pwm_channel_data *channel_data;
- 	unsigned long flags;
- 	u32 value;
-@@ -273,8 +274,8 @@ static void meson_pwm_disable(struct meson_pwm *meson, struct pwm_device *pwm)
- static int meson_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 			   const struct pwm_state *state)
- {
--	struct meson_pwm_channel *channel = pwm_get_chip_data(pwm);
- 	struct meson_pwm *meson = to_meson_pwm(chip);
-+	struct meson_pwm_channel *channel = &meson->channels[pwm->hwpwm];
- 	int err = 0;
+ 	if (tb[TCA_MQPRIO_MIN_RATE64]) {
+-		if (priv->shaper != TC_MQPRIO_SHAPER_BW_RATE)
++		if (priv->shaper != TC_MQPRIO_SHAPER_BW_RATE) {
++			NL_SET_ERR_MSG_ATTR(extack, tb[TCA_MQPRIO_MIN_RATE64],
++					    "min_rate accepted only when shaper is in bw_rlimit mode");
+ 			return -EINVAL;
++		}
+ 		i = 0;
+ 		nla_for_each_nested(attr, tb[TCA_MQPRIO_MIN_RATE64],
+ 				    rem) {
+-			if (nla_type(attr) != TCA_MQPRIO_MIN_RATE64)
++			if (nla_type(attr) != TCA_MQPRIO_MIN_RATE64) {
++				NL_SET_ERR_MSG_ATTR(extack, attr,
++						    "Attribute type expected to be TCA_MQPRIO_MIN_RATE64");
+ 				return -EINVAL;
++			}
+ 			if (i >= qopt->num_tc)
+ 				break;
+ 			priv->min_rate[i] = *(u64 *)nla_data(attr);
+@@ -173,13 +183,19 @@ static int mqprio_parse_nlattr(struct Qdisc *sch, struct tc_mqprio_qopt *qopt,
+ 	}
  
- 	if (!state)
+ 	if (tb[TCA_MQPRIO_MAX_RATE64]) {
+-		if (priv->shaper != TC_MQPRIO_SHAPER_BW_RATE)
++		if (priv->shaper != TC_MQPRIO_SHAPER_BW_RATE) {
++			NL_SET_ERR_MSG_ATTR(extack, tb[TCA_MQPRIO_MAX_RATE64],
++					    "max_rate accepted only when shaper is in bw_rlimit mode");
+ 			return -EINVAL;
++		}
+ 		i = 0;
+ 		nla_for_each_nested(attr, tb[TCA_MQPRIO_MAX_RATE64],
+ 				    rem) {
+-			if (nla_type(attr) != TCA_MQPRIO_MAX_RATE64)
++			if (nla_type(attr) != TCA_MQPRIO_MAX_RATE64) {
++				NL_SET_ERR_MSG_ATTR(extack, attr,
++						    "Attribute type expected to be TCA_MQPRIO_MAX_RATE64");
+ 				return -EINVAL;
++			}
+ 			if (i >= qopt->num_tc)
+ 				break;
+ 			priv->max_rate[i] = *(u64 *)nla_data(attr);
+@@ -224,7 +240,7 @@ static int mqprio_init(struct Qdisc *sch, struct nlattr *opt,
+ 
+ 	len = nla_len(opt) - NLA_ALIGN(sizeof(*qopt));
+ 	if (len > 0) {
+-		err = mqprio_parse_nlattr(sch, qopt, opt);
++		err = mqprio_parse_nlattr(sch, qopt, opt, extack);
+ 		if (err)
+ 			return err;
+ 	}
 -- 
 2.39.2
 
