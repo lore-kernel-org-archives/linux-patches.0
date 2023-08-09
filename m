@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60CD154B4
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:13:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ADEDC433C8;
-	Wed,  9 Aug 2023 11:13:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983C011C98
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:13:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A018C433C9;
+	Wed,  9 Aug 2023 11:13:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579602;
-	bh=6vGXeVQlHc4YB0qM9k27AkeH/leB3WiFtiewHLBer80=;
+	s=korg; t=1691579605;
+	bh=9PkZKDTZWODivOsk3nLdNBX1sCO6dMjUtySSN7gXTs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yG8cQNSib85fdHomKo4iWC7HKmbkjDXhWsZB0yre4SIJ4T73owx2kwNpIcoPKaOmX
-	 kTvnbsCxhQGSUP3TyB8JKcSpCvYETNfidJUWcPuN3tp36/HzOIbHLJhMQzCX1rbGex
-	 24JaH1XPNL+GtuaAu1DZoIHPnUJVpg7l/IXMFMgU=
+	b=GBehkahQvObkBUlFcA1TCIOyXufHgmqKThAiMnU85jQwaQfRavkz4GfTqI36Gq2ye
+	 J0nj9s7QvVjLLwme07BdQVVWo+8Stw2Elgq0Ys56QjC+Q1RajMUa0BvpFoiIXpSSdh
+	 V1yUnsqCae/koTrywADuxsFb7Be/apRN/MC9BXMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Sowden <jeremy@azazel.net>,
+	"Ilia.Gavrilov" <Ilia.Gavrilov@infotecs.ru>,
+	Simon Horman <simon.horman@corigine.com>,
+	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 050/323] lib/ts_bm: reset initial match offset for every block of text
-Date: Wed,  9 Aug 2023 12:38:08 +0200
-Message-ID: <20230809103700.417755763@linuxfoundation.org>
+Subject: [PATCH 4.19 051/323] netfilter: nf_conntrack_sip: fix the ct_sip_parse_numerical_param() return value.
+Date: Wed,  9 Aug 2023 12:38:09 +0200
+Message-ID: <20230809103700.466114440@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,57 +37,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Sowden <jeremy@azazel.net>
+From: Ilia.Gavrilov <Ilia.Gavrilov@infotecs.ru>
 
-[ Upstream commit 6f67fbf8192da80c4db01a1800c7fceaca9cf1f9 ]
+[ Upstream commit f188d30087480eab421cd8ca552fb15f55d57f4d ]
 
-The `shift` variable which indicates the offset in the string at which
-to start matching the pattern is initialized to `bm->patlen - 1`, but it
-is not reset when a new block is retrieved.  This means the implemen-
-tation may start looking at later and later positions in each successive
-block and miss occurrences of the pattern at the beginning.  E.g.,
-consider a HTTP packet held in a non-linear skb, where the HTTP request
-line occurs in the second block:
+ct_sip_parse_numerical_param() returns only 0 or 1 now.
+But process_register_request() and process_register_response() imply
+checking for a negative value if parsing of a numerical header parameter
+failed.
+The invocation in nf_nat_sip() looks correct:
+ 	if (ct_sip_parse_numerical_param(...) > 0 &&
+ 	    ...) { ... }
 
-  [... 52 bytes of packet headers ...]
-  GET /bmtest HTTP/1.1\r\nHost: www.example.com\r\n\r\n
+Make the return value of the function ct_sip_parse_numerical_param()
+a tristate to fix all the cases
+a) return 1 if value is found; *val is set
+b) return 0 if value is not found; *val is unchanged
+c) return -1 on error; *val is undefined
 
-and the pattern is "GET /bmtest".
+Found by InfoTeCS on behalf of Linux Verification Center
+(linuxtesting.org) with SVACE.
 
-Once the first block comprising the packet headers has been examined,
-`shift` will be pointing to somewhere near the end of the block, and so
-when the second block is examined the request line at the beginning will
-be missed.
-
-Reinitialize the variable for each new block.
-
-Fixes: 8082e4ed0a61 ("[LIB]: Boyer-Moore extension for textsearch infrastructure strike #2")
-Link: https://bugzilla.netfilter.org/show_bug.cgi?id=1390
-Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
+Fixes: 0f32a40fc91a ("[NETFILTER]: nf_conntrack_sip: create signalling expectations")
+Signed-off-by: Ilia.Gavrilov <Ilia.Gavrilov@infotecs.ru>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/ts_bm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_sip.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/ts_bm.c b/lib/ts_bm.c
-index 9e66ee4020e90..5de382e79a45a 100644
---- a/lib/ts_bm.c
-+++ b/lib/ts_bm.c
-@@ -64,10 +64,12 @@ static unsigned int bm_find(struct ts_config *conf, struct ts_state *state)
- 	struct ts_bm *bm = ts_config_priv(conf);
- 	unsigned int i, text_len, consumed = state->offset;
- 	const u8 *text;
--	int shift = bm->patlen - 1, bs;
-+	int bs;
- 	const u8 icase = conf->flags & TS_IGNORECASE;
- 
- 	for (;;) {
-+		int shift = bm->patlen - 1;
-+
- 		text_len = conf->get_next_block(consumed, &text, conf, state);
- 
- 		if (unlikely(text_len == 0))
+diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
+index 046f118dea06b..d16aa43ebd4d6 100644
+--- a/net/netfilter/nf_conntrack_sip.c
++++ b/net/netfilter/nf_conntrack_sip.c
+@@ -605,7 +605,7 @@ int ct_sip_parse_numerical_param(const struct nf_conn *ct, const char *dptr,
+ 	start += strlen(name);
+ 	*val = simple_strtoul(start, &end, 0);
+ 	if (start == end)
+-		return 0;
++		return -1;
+ 	if (matchoff && matchlen) {
+ 		*matchoff = start - dptr;
+ 		*matchlen = end - start;
 -- 
 2.39.2
 
