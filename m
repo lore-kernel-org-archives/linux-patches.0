@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C357317756
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:21:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47BCFC433C8;
-	Wed,  9 Aug 2023 11:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB0417756
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:21:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DDBDC433C8;
+	Wed,  9 Aug 2023 11:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580088;
-	bh=4xNu8jg5eALBaPtyIvJb6Onlj0E/JE0pqB3rsYFtGfg=;
+	s=korg; t=1691580091;
+	bh=6iI6/vCHSfKb+uIjXTBGyP96xUBJmqOKzHe5LVLcX+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0x/1S2OvHFdMG+Wan8/xkliqmxrVMJ/JfWyiosn+si93cJp4PmXzrb5qqDmlJlyU5
-	 f/IwuO7qfVycN0Q3bnJgXkbsyZPnNwAOdIffjKeeMc5ft0CD2RKfkJf8rTrYB13LxP
-	 dl2XI14u8aPHY26cLvIg2x++cRQPRBOtHIF5tvrM=
+	b=0kFDXAj2LVS4/VfX+RbHkD5vgBB/0oL0HQKqxTrq88xHWC92X1F5V8GQMtIHsGaUz
+	 /2L8xMHwX1wwufe+E41W6E45nxHuFR8IWQRNlM1P0iHkX0Lyx0m0u3ou/jUWU4rtx+
+	 3OzQT57dAiJ4AKlD9Q8r0LizbL0ALjp/UmlTr0DE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	=?UTF-8?q?Stefan=20M=C3=A4tje?= <stefan.maetje@esd.eu>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 223/323] ext4: Fix reusing stale buffer heads from last failed mounting
-Date: Wed,  9 Aug 2023 12:41:01 +0200
-Message-ID: <20230809103708.299429760@linuxfoundation.org>
+Subject: [PATCH 4.19 224/323] PCI: Rework pcie_retrain_link() wait loop
+Date: Wed,  9 Aug 2023 12:41:02 +0200
+Message-ID: <20230809103708.343056806@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,124 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Stefan Mätje <stefan.maetje@esd.eu>
 
-[ Upstream commit 26fb5290240dc31cae99b8b4dd2af7f46dfcba6b ]
+[ Upstream commit 658eec837b11fbfab9082ebf8da24d94cefa47c0 ]
 
-Following process makes ext4 load stale buffer heads from last failed
-mounting in a new mounting operation:
-mount_bdev
- ext4_fill_super
- | ext4_load_and_init_journal
- |  ext4_load_journal
- |   jbd2_journal_load
- |    load_superblock
- |     journal_get_superblock
- |      set_buffer_verified(bh) // buffer head is verified
- |   jbd2_journal_recover // failed caused by EIO
- | goto failed_mount3a // skip 'sb->s_root' initialization
- deactivate_locked_super
-  kill_block_super
-   generic_shutdown_super
-    if (sb->s_root)
-    // false, skip ext4_put_super->invalidate_bdev->
-    // invalidate_mapping_pages->mapping_evict_folio->
-    // filemap_release_folio->try_to_free_buffers, which
-    // cannot drop buffer head.
-   blkdev_put
-    blkdev_put_whole
-     if (atomic_dec_and_test(&bdev->bd_openers))
-     // false, systemd-udev happens to open the device. Then
-     // blkdev_flush_mapping->kill_bdev->truncate_inode_pages->
-     // truncate_inode_folio->truncate_cleanup_folio->
-     // folio_invalidate->block_invalidate_folio->
-     // filemap_release_folio->try_to_free_buffers will be skipped,
-     // dropping buffer head is missed again.
+Transform wait code to a "do {} while (time_before())" loop as recommended
+by reviewer.  No functional change intended.
 
-Second mount:
-ext4_fill_super
- ext4_load_and_init_journal
-  ext4_load_journal
-   ext4_get_journal
-    jbd2_journal_init_inode
-     journal_init_common
-      bh = getblk_unmovable
-       bh = __find_get_block // Found stale bh in last failed mounting
-      journal->j_sb_buffer = bh
-   jbd2_journal_load
-    load_superblock
-     journal_get_superblock
-      if (buffer_verified(bh))
-      // true, skip journal->j_format_version = 2, value is 0
-    jbd2_journal_recover
-     do_one_pass
-      next_log_block += count_tags(journal, bh)
-      // According to journal_tag_bytes(), 'tag_bytes' calculating is
-      // affected by jbd2_has_feature_csum3(), jbd2_has_feature_csum3()
-      // returns false because 'j->j_format_version >= 2' is not true,
-      // then we get wrong next_log_block. The do_one_pass may exit
-      // early whenoccuring non JBD2_MAGIC_NUMBER in 'next_log_block'.
-
-The filesystem is corrupted here, journal is partially replayed, and
-new journal sequence number actually is already used by last mounting.
-
-The invalidate_bdev() can drop all buffer heads even racing with bare
-reading block device(eg. systemd-udev), so we can fix it by invalidating
-bdev in error handling path in __ext4_fill_super().
-
-Fetch a reproducer in [Link].
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217171
-Fixes: 25ed6e8a54df ("jbd2: enable journal clients to enable v2 checksumming")
-Cc: stable@vger.kernel.org # v3.5
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230315013128.3911115-2-chengzhihao1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Stefan Mätje <stefan.maetje@esd.eu>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Stable-dep-of: e7e39756363a ("PCI/ASPM: Avoid link retraining race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/pci/pcie/aspm.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index da7ca0b73e4b4..926063a6d2321 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -907,6 +907,12 @@ static void ext4_blkdev_remove(struct ext4_sb_info *sbi)
- 	struct block_device *bdev;
- 	bdev = sbi->s_journal_bdev;
- 	if (bdev) {
-+		/*
-+		 * Invalidate the journal device's buffers.  We don't want them
-+		 * floating about in memory - the physical journal device may
-+		 * hotswapped, and it breaks the `ro-after' testing code.
-+		 */
-+		invalidate_bdev(bdev);
- 		ext4_blkdev_put(bdev);
- 		sbi->s_journal_bdev = NULL;
+diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+index 279f9f0197b01..598e246fa70ed 100644
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -206,7 +206,7 @@ static void pcie_clkpm_cap_init(struct pcie_link_state *link, int blacklist)
+ static bool pcie_retrain_link(struct pcie_link_state *link)
+ {
+ 	struct pci_dev *parent = link->pdev;
+-	unsigned long start_jiffies;
++	unsigned long end_jiffies;
+ 	u16 reg16;
+ 
+ 	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
+@@ -223,15 +223,13 @@ static bool pcie_retrain_link(struct pcie_link_state *link)
  	}
-@@ -1033,13 +1039,7 @@ static void ext4_put_super(struct super_block *sb)
- 	sync_blockdev(sb->s_bdev);
- 	invalidate_bdev(sb->s_bdev);
- 	if (sbi->s_journal_bdev && sbi->s_journal_bdev != sb->s_bdev) {
--		/*
--		 * Invalidate the journal device's buffers.  We don't want them
--		 * floating about in memory - the physical journal device may
--		 * hotswapped, and it breaks the `ro-after' testing code.
--		 */
- 		sync_blockdev(sbi->s_journal_bdev);
--		invalidate_bdev(sbi->s_journal_bdev);
- 		ext4_blkdev_remove(sbi);
- 	}
- 	if (sbi->s_ea_inode_cache) {
-@@ -4673,6 +4673,7 @@ static int ext4_fill_super(struct super_block *sb, void *data, int silent)
- 	ext4_blkdev_remove(sbi);
- 	brelse(bh);
- out_fail:
-+	invalidate_bdev(sb->s_bdev);
- 	sb->s_fs_info = NULL;
- 	kfree(sbi->s_blockgroup_lock);
- out_free_base:
+ 
+ 	/* Wait for link training end. Break out after waiting for timeout */
+-	start_jiffies = jiffies;
+-	for (;;) {
++	end_jiffies = jiffies + LINK_RETRAIN_TIMEOUT;
++	do {
+ 		pcie_capability_read_word(parent, PCI_EXP_LNKSTA, &reg16);
+ 		if (!(reg16 & PCI_EXP_LNKSTA_LT))
+ 			break;
+-		if (time_after(jiffies, start_jiffies + LINK_RETRAIN_TIMEOUT))
+-			break;
+ 		msleep(1);
+-	}
++	} while (time_before(jiffies, end_jiffies));
+ 	return !(reg16 & PCI_EXP_LNKSTA_LT);
+ }
+ 
 -- 
 2.39.2
 
