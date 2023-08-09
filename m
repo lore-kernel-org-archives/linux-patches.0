@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579E717744
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:30:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD5D9C433C7;
-	Wed,  9 Aug 2023 11:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2399317744
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:30:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A32C433C7;
+	Wed,  9 Aug 2023 11:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580639;
-	bh=amBguDPUCJRWu4tmzWYL7H+NEZ6MoIrz699xoBWM0vQ=;
+	s=korg; t=1691580642;
+	bh=6hIdId1yqY9QBdbekgub2Y2doSMGNu3qzrtXTVKKTDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TtLLImuKCgu4jtbIpxvIYQfaUAR/FhZ2RI7ZskTSz0uwShSd/QrT1X110EXE51J9J
-	 If9h1WoPNSBpJejPletsCRc+5H8stBKhc35dv0KLo8J9o62MIxXjbJE2IGsI8Snac0
-	 5jwhYt92Q7o8hdnLkrJ1ErHhQcrnT7L8BIKLmXxk=
+	b=ulb+KFrEgImMqmxe6TirAwENnKYIF/IQz1Mtc5dNjEEclKrhAk8bjWh72TvvQJ+Gi
+	 01tfTDvYEWdZeA4Jn5uQbrMHWZE66zCyvc4Il0qQVOHsryfEbf3dC+QK3xajZTYIOM
+	 re2SWeVFLbVhJ6WhlnbHkKvOo5u2oUwAI/ZAMNRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Lin Ma <linma@zju.edu.cn>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 097/154] rtnetlink: let rtnl_bridge_setlink checks IFLA_BRIDGE_MODE length
-Date: Wed,  9 Aug 2023 12:42:08 +0200
-Message-ID: <20230809103640.183448522@linuxfoundation.org>
+	David Jeffery <djeffery@redhat.com>,
+	Joe Thornber <ejt@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 5.4 080/154] dm cache policy smq: ensure IO doesnt prevent cleaner policy progress
+Date: Wed,  9 Aug 2023 12:41:51 +0200
+Message-ID: <20230809103639.634727085@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -37,66 +35,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Joe Thornber <ejt@redhat.com>
 
-[ Upstream commit d73ef2d69c0dba5f5a1cb9600045c873bab1fb7f ]
+commit 1e4ab7b4c881cf26c1c72b3f56519e03475486fb upstream.
 
-There are totally 9 ndo_bridge_setlink handlers in the current kernel,
-which are 1) bnxt_bridge_setlink, 2) be_ndo_bridge_setlink 3)
-i40e_ndo_bridge_setlink 4) ice_bridge_setlink 5)
-ixgbe_ndo_bridge_setlink 6) mlx5e_bridge_setlink 7)
-nfp_net_bridge_setlink 8) qeth_l2_bridge_setlink 9) br_setlink.
+When using the cleaner policy to decommission the cache, there is
+never any writeback started from the cache as it is constantly delayed
+due to normal I/O keeping the device busy. Meaning @idle=false was
+always being passed to clean_target_met()
 
-By investigating the code, we find that 1-7 parse and use nlattr
-IFLA_BRIDGE_MODE but 3 and 4 forget to do the nla_len check. This can
-lead to an out-of-attribute read and allow a malformed nlattr (e.g.,
-length 0) to be viewed as a 2 byte integer.
+Fix this by adding a specific 'cleaner' flag that is set when the
+cleaner policy is configured. This flag serves to always allow the
+cleaner's writeback work to be queued until the cache is
+decommissioned (even if the cache isn't idle).
 
-To avoid such issues, also for other ndo_bridge_setlink handlers in the
-future. This patch adds the nla_len check in rtnl_bridge_setlink and
-does an early error return if length mismatches. To make it works, the
-break is removed from the parsing for IFLA_BRIDGE_FLAGS to make sure
-this nla_for_each_nested iterates every attribute.
-
-Fixes: b1edc14a3fbf ("ice: Implement ice_bridge_getlink and ice_bridge_setlink")
-Fixes: 51616018dd1b ("i40e: Add support for getlink, setlink ndo ops")
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://lore.kernel.org/r/20230726075314.1059224-1-linma@zju.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: David Jeffery <djeffery@redhat.com>
+Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Joe Thornber <ejt@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/rtnetlink.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/md/dm-cache-policy-smq.c |   28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 1db92a44548f0..3eaf7c706b0ec 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -4590,13 +4590,17 @@ static int rtnl_bridge_setlink(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	br_spec = nlmsg_find_attr(nlh, sizeof(struct ifinfomsg), IFLA_AF_SPEC);
- 	if (br_spec) {
- 		nla_for_each_nested(attr, br_spec, rem) {
--			if (nla_type(attr) == IFLA_BRIDGE_FLAGS) {
-+			if (nla_type(attr) == IFLA_BRIDGE_FLAGS && !have_flags) {
- 				if (nla_len(attr) < sizeof(flags))
- 					return -EINVAL;
+--- a/drivers/md/dm-cache-policy-smq.c
++++ b/drivers/md/dm-cache-policy-smq.c
+@@ -854,7 +854,13 @@ struct smq_policy {
  
- 				have_flags = true;
- 				flags = nla_get_u16(attr);
--				break;
-+			}
+ 	struct background_tracker *bg_work;
+ 
+-	bool migrations_allowed;
++	bool migrations_allowed:1;
 +
-+			if (nla_type(attr) == IFLA_BRIDGE_MODE) {
-+				if (nla_len(attr) < sizeof(u16))
-+					return -EINVAL;
- 			}
- 		}
- 	}
--- 
-2.40.1
-
++	/*
++	 * If this is set the policy will try and clean the whole cache
++	 * even if the device is not idle.
++	 */
++	bool cleaner:1;
+ };
+ 
+ /*----------------------------------------------------------------*/
+@@ -1133,7 +1139,7 @@ static bool clean_target_met(struct smq_
+ 	 * Cache entries may not be populated.  So we cannot rely on the
+ 	 * size of the clean queue.
+ 	 */
+-	if (idle) {
++	if (idle || mq->cleaner) {
+ 		/*
+ 		 * We'd like to clean everything.
+ 		 */
+@@ -1716,11 +1722,9 @@ static void calc_hotspot_params(sector_t
+ 		*hotspot_block_size /= 2u;
+ }
+ 
+-static struct dm_cache_policy *__smq_create(dm_cblock_t cache_size,
+-					    sector_t origin_size,
+-					    sector_t cache_block_size,
+-					    bool mimic_mq,
+-					    bool migrations_allowed)
++static struct dm_cache_policy *
++__smq_create(dm_cblock_t cache_size, sector_t origin_size, sector_t cache_block_size,
++	     bool mimic_mq, bool migrations_allowed, bool cleaner)
+ {
+ 	unsigned i;
+ 	unsigned nr_sentinels_per_queue = 2u * NR_CACHE_LEVELS;
+@@ -1807,6 +1811,7 @@ static struct dm_cache_policy *__smq_cre
+ 		goto bad_btracker;
+ 
+ 	mq->migrations_allowed = migrations_allowed;
++	mq->cleaner = cleaner;
+ 
+ 	return &mq->policy;
+ 
+@@ -1830,21 +1835,24 @@ static struct dm_cache_policy *smq_creat
+ 					  sector_t origin_size,
+ 					  sector_t cache_block_size)
+ {
+-	return __smq_create(cache_size, origin_size, cache_block_size, false, true);
++	return __smq_create(cache_size, origin_size, cache_block_size,
++			    false, true, false);
+ }
+ 
+ static struct dm_cache_policy *mq_create(dm_cblock_t cache_size,
+ 					 sector_t origin_size,
+ 					 sector_t cache_block_size)
+ {
+-	return __smq_create(cache_size, origin_size, cache_block_size, true, true);
++	return __smq_create(cache_size, origin_size, cache_block_size,
++			    true, true, false);
+ }
+ 
+ static struct dm_cache_policy *cleaner_create(dm_cblock_t cache_size,
+ 					      sector_t origin_size,
+ 					      sector_t cache_block_size)
+ {
+-	return __smq_create(cache_size, origin_size, cache_block_size, false, false);
++	return __smq_create(cache_size, origin_size, cache_block_size,
++			    false, false, true);
+ }
+ 
+ /*----------------------------------------------------------------*/
 
 
