@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8650F14A8D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:49:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07B9DC433C9;
-	Wed,  9 Aug 2023 10:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C36715AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:50:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42D9C433C8;
+	Wed,  9 Aug 2023 10:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578198;
-	bh=Z93bfm3pDPyvdWF2aHqETyK0Gb7IKXx6/VPRm98yjJM=;
+	s=korg; t=1691578201;
+	bh=YDN/hNZBg2X4BCNR8eJi+x2jHSDhKxLLzBqQxjGZn2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kVBLuGcetzZidm26ZjQHUhXVkcJfcJ0Hc7PkYrdoex6A6Zj0Rk6gnJ6M153HmvpGC
-	 f96YF0DJEhn/Dl/IGMcb9f/eSg8g1TijKl7m2vkRmt7tcgOjK2OyP+zxhiP11TMjfr
-	 KuHLNNIYXaXKHW+Txh+Z39l/w+v47CrKMSpOit+s=
+	b=qvCJWI75lMh4B9SDdsxaE9bX6ZI7QJOvIaqqZzxv5jnZQn6Bh0uXFdlthcAgAJfe/
+	 peSqH+KN3eRDtxYqVXxoegtyRKoMUkSt1dsnyMIurTGbEDiIekBODydGIc8edTVAmH
+	 J1LSJl0WNac6Kgt7POrtUJZoyuBN359TvH8DBlvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Oliver Neukum <oneukum@suse.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	syzbot+63ee658b9a100ffadbe2@syzkaller.appspotmail.com
-Subject: [PATCH 6.4 141/165] net: usbnet: Fix WARNING in usbnet_start_xmit/usb_submit_urb
-Date: Wed,  9 Aug 2023 12:41:12 +0200
-Message-ID: <20230809103647.417011934@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.4 142/165] fs: Protect reconfiguration of sb read-write from racing writes
+Date: Wed,  9 Aug 2023 12:41:13 +0200
+Message-ID: <20230809103647.451989226@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -36,77 +34,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Jan Kara <jack@suse.cz>
 
-commit 5e1627cb43ddf1b24b92eb26f8d958a3f5676ccb upstream.
+commit c541dce86c537714b6761a79a969c1623dfa222b upstream.
 
-The syzbot fuzzer identified a problem in the usbnet driver:
+The reconfigure / remount code takes a lot of effort to protect
+filesystem's reconfiguration code from racing writes on remounting
+read-only. However during remounting read-only filesystem to read-write
+mode userspace writes can start immediately once we clear SB_RDONLY
+flag. This is inconvenient for example for ext4 because we need to do
+some writes to the filesystem (such as preparation of quota files)
+before we can take userspace writes so we are clearing SB_RDONLY flag
+before we are fully ready to accept userpace writes and syzbot has found
+a way to exploit this [1]. Also as far as I'm reading the code
+the filesystem remount code was protected from racing writes in the
+legacy mount path by the mount's MNT_READONLY flag so this is relatively
+new problem. It is actually fairly easy to protect remount read-write
+from racing writes using sb->s_readonly_remount flag so let's just do
+that instead of having to workaround these races in the filesystem code.
 
-usb 1-1: BOGUS urb xfer, pipe 3 != type 1
-WARNING: CPU: 0 PID: 754 at drivers/usb/core/urb.c:504 usb_submit_urb+0xed6/0x1880 drivers/usb/core/urb.c:504
-Modules linked in:
-CPU: 0 PID: 754 Comm: kworker/0:2 Not tainted 6.4.0-rc7-syzkaller-00014-g692b7dc87ca6 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/27/2023
-Workqueue: mld mld_ifc_work
-RIP: 0010:usb_submit_urb+0xed6/0x1880 drivers/usb/core/urb.c:504
-Code: 7c 24 18 e8 2c b4 5b fb 48 8b 7c 24 18 e8 42 07 f0 fe 41 89 d8 44 89 e1 4c 89 ea 48 89 c6 48 c7 c7 a0 c9 fc 8a e8 5a 6f 23 fb <0f> 0b e9 58 f8 ff ff e8 fe b3 5b fb 48 81 c5 c0 05 00 00 e9 84 f7
-RSP: 0018:ffffc9000463f568 EFLAGS: 00010086
-RAX: 0000000000000000 RBX: 0000000000000001 RCX: 0000000000000000
-RDX: ffff88801eb28000 RSI: ffffffff814c03b7 RDI: 0000000000000001
-RBP: ffff8881443b7190 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000001 R12: 0000000000000003
-R13: ffff88802a77cb18 R14: 0000000000000003 R15: ffff888018262500
-FS:  0000000000000000(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000556a99c15a18 CR3: 0000000028c71000 CR4: 0000000000350ef0
-Call Trace:
- <TASK>
- usbnet_start_xmit+0xfe5/0x2190 drivers/net/usb/usbnet.c:1453
- __netdev_start_xmit include/linux/netdevice.h:4918 [inline]
- netdev_start_xmit include/linux/netdevice.h:4932 [inline]
- xmit_one net/core/dev.c:3578 [inline]
- dev_hard_start_xmit+0x187/0x700 net/core/dev.c:3594
-...
+[1] https://lore.kernel.org/all/00000000000006a0df05f6667499@google.com/T/
 
-This bug is caused by the fact that usbnet trusts the bulk endpoint
-addresses its probe routine receives in the driver_info structure, and
-it does not check to see that these endpoints actually exist and have
-the expected type and directions.
-
-The fix is simply to add such a check.
-
-Reported-and-tested-by: syzbot+63ee658b9a100ffadbe2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-usb/000000000000a56e9105d0cec021@google.com/
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-CC: Oliver Neukum <oneukum@suse.com>
-Link: https://lore.kernel.org/r/ea152b6d-44df-4f8a-95c6-4db51143dcc1@rowland.harvard.edu
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Message-Id: <20230615113848.8439-1-jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/usbnet.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/super.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -1775,6 +1775,10 @@ usbnet_probe (struct usb_interface *udev
- 	} else if (!info->in || !info->out)
- 		status = usbnet_get_endpoints (dev, udev);
- 	else {
-+		u8 ep_addrs[3] = {
-+			info->in + USB_DIR_IN, info->out + USB_DIR_OUT, 0
-+		};
-+
- 		dev->in = usb_rcvbulkpipe (xdev, info->in);
- 		dev->out = usb_sndbulkpipe (xdev, info->out);
- 		if (!(info->flags & FLAG_NO_SETINT))
-@@ -1784,6 +1788,8 @@ usbnet_probe (struct usb_interface *udev
- 		else
- 			status = 0;
+--- a/fs/super.c
++++ b/fs/super.c
+@@ -903,6 +903,7 @@ int reconfigure_super(struct fs_context
+ 	struct super_block *sb = fc->root->d_sb;
+ 	int retval;
+ 	bool remount_ro = false;
++	bool remount_rw = false;
+ 	bool force = fc->sb_flags & SB_FORCE;
  
-+		if (status == 0 && !usb_check_bulk_endpoints(udev, ep_addrs))
-+			status = -EINVAL;
+ 	if (fc->sb_flags_mask & ~MS_RMT_MASK)
+@@ -920,7 +921,7 @@ int reconfigure_super(struct fs_context
+ 		    bdev_read_only(sb->s_bdev))
+ 			return -EACCES;
+ #endif
+-
++		remount_rw = !(fc->sb_flags & SB_RDONLY) && sb_rdonly(sb);
+ 		remount_ro = (fc->sb_flags & SB_RDONLY) && !sb_rdonly(sb);
  	}
- 	if (status >= 0 && dev->status)
- 		status = init_status (dev, udev);
+ 
+@@ -950,6 +951,14 @@ int reconfigure_super(struct fs_context
+ 			if (retval)
+ 				return retval;
+ 		}
++	} else if (remount_rw) {
++		/*
++		 * We set s_readonly_remount here to protect filesystem's
++		 * reconfigure code from writes from userspace until
++		 * reconfigure finishes.
++		 */
++		sb->s_readonly_remount = 1;
++		smp_wmb();
+ 	}
+ 
+ 	if (fc->ops->reconfigure) {
 
 
