@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421B71773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:13:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D03C433C7;
-	Wed,  9 Aug 2023 11:13:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CED1773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:13:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87848C433C8;
+	Wed,  9 Aug 2023 11:13:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579622;
-	bh=VxxPHbPRzxylhZddv1Mk+fOdS+nDWhx7V0gXxFY1E3o=;
+	s=korg; t=1691579624;
+	bh=9V5tinMW1075xv8MoPXtdIm1t3Puks+AYsLYIe+zkWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A/PKhg0LitSGtv/ikKx8VGQk+pKeEw1/Af/6tBnxqS9DkH0ma7CSPBdTGJkTUlUnL
-	 SZlJENASVlgpdirFIFGVFivjgGIXfqodNbyhM7c1ZwHpV4WlODdgJYEXwB4BlpVlyF
-	 HA4/UgiO5DgB3D7+pj0CWDmFO/o80k38qmlDQuZI=
+	b=q++rkgNP1k36Xi7Z9jaKC/BB57iukudD4DF/r62iTqQQJ/2tyUlw+sdDSKHY6iuCc
+	 F8Pod8IGcyBAWoibDvt415ZYE1VXHpRNfQc2XYcc0luYHhbWOXMGgT7SjJv65NmUsY
+	 h4NMfVcWmjbr7TI8QSdQy/qaHw03RbUbNbQ/ULpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Marek Vasut <marex@denx.de>,
-	Michael Hennerich <michael.hennerich@analog.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 057/323] Input: adxl34x - do not hardcode interrupt trigger type
-Date: Wed,  9 Aug 2023 12:38:15 +0200
-Message-ID: <20230809103700.746909980@linuxfoundation.org>
+Subject: [PATCH 4.19 040/323] wifi: rsi: Do not set MMC_PM_KEEP_POWER in shutdown
+Date: Wed,  9 Aug 2023 12:37:58 +0200
+Message-ID: <20230809103659.965309739@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -38,35 +38,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit e96220bce5176ed2309f77f061dcc0430b82b25e ]
+[ Upstream commit e74f562328b03fbe9cf438f958464dff3a644dfc ]
 
-Instead of hardcoding IRQ trigger type to IRQF_TRIGGER_HIGH, let's
-respect the settings specified in the firmware description.
+It makes no sense to set MMC_PM_KEEP_POWER in shutdown. The flag
+indicates to the MMC subsystem to keep the slot powered on during
+suspend, but in shutdown the slot should actually be powered off.
+Drop this call.
 
-Fixes: e27c729219ad ("Input: add driver for ADXL345/346 Digital Accelerometers")
+Fixes: 063848c3e155 ("rsi: sdio: Add WOWLAN support for S5 shutdown state")
 Signed-off-by: Marek Vasut <marex@denx.de>
-Acked-by: Michael Hennerich <michael.hennerich@analog.com>
-Link: https://lore.kernel.org/r/20230509203555.549158-1-marex@denx.de
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230527222859.273768-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/adxl34x.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/wireless/rsi/rsi_91x_sdio.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/input/misc/adxl34x.c b/drivers/input/misc/adxl34x.c
-index 3695dd7dbb9b4..ec0c91ec52277 100644
---- a/drivers/input/misc/adxl34x.c
-+++ b/drivers/input/misc/adxl34x.c
-@@ -811,8 +811,7 @@ struct adxl34x *adxl34x_probe(struct device *dev, int irq,
- 	AC_WRITE(ac, POWER_CTL, 0);
+diff --git a/drivers/net/wireless/rsi/rsi_91x_sdio.c b/drivers/net/wireless/rsi/rsi_91x_sdio.c
+index 48efe83c58d89..409a3e8305763 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_sdio.c
++++ b/drivers/net/wireless/rsi/rsi_91x_sdio.c
+@@ -1368,9 +1368,6 @@ static void rsi_shutdown(struct device *dev)
+ 	if (sdev->write_fail)
+ 		rsi_dbg(INFO_ZONE, "###### Device is not ready #######\n");
  
- 	err = request_threaded_irq(ac->irq, NULL, adxl34x_irq,
--				   IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
--				   dev_name(dev), ac);
-+				   IRQF_ONESHOT, dev_name(dev), ac);
- 	if (err) {
- 		dev_err(dev, "irq %d busy?\n", ac->irq);
- 		goto err_free_mem;
+-	if (rsi_set_sdio_pm_caps(adapter))
+-		rsi_dbg(INFO_ZONE, "Setting power management caps failed\n");
+-
+ 	rsi_dbg(INFO_ZONE, "***** RSI module shut down *****\n");
+ }
+ 
 -- 
 2.39.2
 
