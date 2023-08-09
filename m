@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F83A174F2
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:05:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3640C433C8;
-	Wed,  9 Aug 2023 11:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7E9174EE
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:05:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BEEBC433C7;
+	Wed,  9 Aug 2023 11:05:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579157;
-	bh=pBNfEecOGy5y0g4apnTJFUrxtuxRusLi22Jiv62NQNE=;
+	s=korg; t=1691579154;
+	bh=bWi64Aqe/kxocpKQG2GUvYVRg1eq9LDgpssL2Tc/5og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XMMKjraXNt3dwwRM4dn1xye5RMTON3ZZD9+nsYqS8ZsxiszJ6iBLYcnSwev+qZp6N
-	 d5+Ehu9zrn4YTL/uQUaCwbtzZQzxUObZAFMYAgHKu6WxPlL7MXu4Upm0PCcK0Js4kP
-	 xhT+1FHtA1l8IAfo9UpUUlNVA4QBuICIKWiWBHZ4=
+	b=jyeEJrGaCRbnsIh5UMXMxxWtE4EeFTKfpQj5j054k+JDEqFot+5LXB7AuNYpuP4vZ
+	 Xg+xEbcXOp4ZGe8RVUT55BF805+lN5xwE0bT8vunLwbTtCFcHqJCufPT9UWVueickI
+	 Nr+ezIcWRsMxoDkh/8a7KvT7oNAdWRsu8ANKP7Oo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Jon Mason <jdmason@kudzu.us>,
+	Amit Klein <aksecurity@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willy Tarreau <w@1wt.eu>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	Hannes Frederic Sowa <hannes@stressinduktion.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 095/204] ntb: idt: Fix error handling in idt_pci_driver_init()
-Date: Wed,  9 Aug 2023 12:40:33 +0200
-Message-ID: <20230809103645.816694704@linuxfoundation.org>
+Subject: [PATCH 4.14 094/204] udp6: fix udp6_ehashfn() typo
+Date: Wed,  9 Aug 2023 12:40:32 +0200
+Message-ID: <20230809103645.775922989@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -35,64 +40,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c012968259b451dc4db407f2310fe131eaefd800 ]
+[ Upstream commit 51d03e2f2203e76ed02d33fb5ffbb5fc85ffaf54 ]
 
-A problem about ntb_hw_idt create debugfs failed is triggered with the
-following log given:
+Amit Klein reported that udp6_ehash_secret was initialized but never used.
 
- [ 1236.637636] IDT PCI-E Non-Transparent Bridge Driver 2.0
- [ 1236.639292] debugfs: Directory 'ntb_hw_idt' with parent '/' already present!
-
-The reason is that idt_pci_driver_init() returns pci_register_driver()
-directly without checking its return value, if pci_register_driver()
-failed, it returns without destroy the newly created debugfs, resulting
-the debugfs of ntb_hw_idt can never be created later.
-
- idt_pci_driver_init()
-   debugfs_create_dir() # create debugfs directory
-   pci_register_driver()
-     driver_register()
-       bus_add_driver()
-         priv = kzalloc(...) # OOM happened
-   # return without destroy debugfs directory
-
-Fix by removing debugfs when pci_register_driver() returns error.
-
-Fixes: bf2a952d31d2 ("NTB: Add IDT 89HPESxNTx PCIe-switches support")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Signed-off-by: Jon Mason <jdmason@kudzu.us>
+Fixes: 1bbdceef1e53 ("inet: convert inet_ehash_secret and ipv6_hash_secret to net_get_random_once")
+Reported-by: Amit Klein <aksecurity@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Willy Tarreau <w@1wt.eu>
+Cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Cc: David Ahern <dsahern@kernel.org>
+Cc: Hannes Frederic Sowa <hannes@stressinduktion.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/hw/idt/ntb_hw_idt.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/ipv6/udp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ntb/hw/idt/ntb_hw_idt.c b/drivers/ntb/hw/idt/ntb_hw_idt.c
-index b68e2cad74cc7..d6f68a17bbd91 100644
---- a/drivers/ntb/hw/idt/ntb_hw_idt.c
-+++ b/drivers/ntb/hw/idt/ntb_hw_idt.c
-@@ -2689,6 +2689,7 @@ static struct pci_driver idt_pci_driver = {
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index ea681360a522f..3fee10cc5d5dc 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -99,7 +99,7 @@ static u32 udp6_ehashfn(const struct net *net,
+ 	fhash = __ipv6_addr_jhash(faddr, udp_ipv6_hash_secret);
  
- static int __init idt_pci_driver_init(void)
- {
-+	int ret;
- 	pr_info("%s %s\n", NTB_DESC, NTB_VER);
- 
- 	/* Create the top DebugFS directory if the FS is initialized */
-@@ -2696,7 +2697,11 @@ static int __init idt_pci_driver_init(void)
- 		dbgfs_topdir = debugfs_create_dir(KBUILD_MODNAME, NULL);
- 
- 	/* Register the NTB hardware driver to handle the PCI device */
--	return pci_register_driver(&idt_pci_driver);
-+	ret = pci_register_driver(&idt_pci_driver);
-+	if (ret)
-+		debugfs_remove_recursive(dbgfs_topdir);
-+
-+	return ret;
+ 	return __inet6_ehashfn(lhash, lport, fhash, fport,
+-			       udp_ipv6_hash_secret + net_hash_mix(net));
++			       udp6_ehash_secret + net_hash_mix(net));
  }
- module_init(idt_pci_driver_init);
  
+ static u32 udp6_portaddr_hash(const struct net *net,
 -- 
 2.39.2
 
