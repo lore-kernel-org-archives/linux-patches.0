@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7E153B7
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:00:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F5FC433C8;
-	Wed,  9 Aug 2023 11:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022236131
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:00:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC9AC433C7;
+	Wed,  9 Aug 2023 11:00:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578828;
-	bh=dqrofLYrXSlgaW3/6Nh5XdwMgO734l+ASe5AK48AB+U=;
+	s=korg; t=1691578831;
+	bh=VUG+ByRL25HMSdf8bc7sbiuPHKD2Aa9XqPK/rk2GeWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OG+0kfc8UVBBzgAo6Y04RsjTp4oFKfmAlTmpP+wmULqMo0XiDV1ZAcx4JDVhoywQv
-	 ic85ZQ6yIuxSxEEpVtqPi9crrl2oElqeptbagndorGgBiEGNE7y6V7qj3VDhZV7Ech
-	 AkYJF7tCo07eg5J+M+8z/sXBYowfpwK159zlU63E=
+	b=sBgQajGXPKFDDS/3z1acytDChK8/oPB+5Zt/DWRLLKwtOjcJ2htyX3kPid7LTVLtj
+	 fKYxe8u1yBEFd8UfKgITNM12SoZfZr9Gwv7tJyDF/hFZ53zJumcnTN+ccTvISBCpf5
+	 gTX+qLALZMJ5DKWebRMeUGNMA2lJTT2YlEjmp5HQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Guchun Chen <guchun.chen@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
-Subject: [PATCH 5.15 71/92] drm/ttm: check null pointer before accessing when swapping
-Date: Wed,  9 Aug 2023 12:41:47 +0200
-Message-ID: <20230809103636.027639692@linuxfoundation.org>
+	Hou Tao <houtao1@huawei.com>,
+	Pu Lehui <pulehui@huawei.com>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>
+Subject: [PATCH 5.15 72/92] bpf, cpumap: Make sure kthread is running before map update returns
+Date: Wed,  9 Aug 2023 12:41:48 +0200
+Message-ID: <20230809103636.058698229@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -36,68 +36,137 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guchun Chen <guchun.chen@amd.com>
+From: Hou Tao <houtao1@huawei.com>
 
-commit 2dedcf414bb01b8d966eb445db1d181d92304fb2 upstream.
+commit 640a604585aa30f93e39b17d4d6ba69fcb1e66c9 upstream.
 
-Add a check to avoid null pointer dereference as below:
+The following warning was reported when running stress-mode enabled
+xdp_redirect_cpu with some RT threads:
 
-[   90.002283] general protection fault, probably for non-canonical
-address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN NOPTI
-[   90.002292] KASAN: null-ptr-deref in range
-[0x0000000000000000-0x0000000000000007]
-[   90.002346]  ? exc_general_protection+0x159/0x240
-[   90.002352]  ? asm_exc_general_protection+0x26/0x30
-[   90.002357]  ? ttm_bo_evict_swapout_allowable+0x322/0x5e0 [ttm]
-[   90.002365]  ? ttm_bo_evict_swapout_allowable+0x42e/0x5e0 [ttm]
-[   90.002373]  ttm_bo_swapout+0x134/0x7f0 [ttm]
-[   90.002383]  ? __pfx_ttm_bo_swapout+0x10/0x10 [ttm]
-[   90.002391]  ? lock_acquire+0x44d/0x4f0
-[   90.002398]  ? ttm_device_swapout+0xa5/0x260 [ttm]
-[   90.002412]  ? lock_acquired+0x355/0xa00
-[   90.002416]  ? do_raw_spin_trylock+0xb6/0x190
-[   90.002421]  ? __pfx_lock_acquired+0x10/0x10
-[   90.002426]  ? ttm_global_swapout+0x25/0x210 [ttm]
-[   90.002442]  ttm_device_swapout+0x198/0x260 [ttm]
-[   90.002456]  ? __pfx_ttm_device_swapout+0x10/0x10 [ttm]
-[   90.002472]  ttm_global_swapout+0x75/0x210 [ttm]
-[   90.002486]  ttm_tt_populate+0x187/0x3f0 [ttm]
-[   90.002501]  ttm_bo_handle_move_mem+0x437/0x590 [ttm]
-[   90.002517]  ttm_bo_validate+0x275/0x430 [ttm]
-[   90.002530]  ? __pfx_ttm_bo_validate+0x10/0x10 [ttm]
-[   90.002544]  ? kasan_save_stack+0x33/0x60
-[   90.002550]  ? kasan_set_track+0x25/0x30
-[   90.002554]  ? __kasan_kmalloc+0x8f/0xa0
-[   90.002558]  ? amdgpu_gtt_mgr_new+0x81/0x420 [amdgpu]
-[   90.003023]  ? ttm_resource_alloc+0xf6/0x220 [ttm]
-[   90.003038]  amdgpu_bo_pin_restricted+0x2dd/0x8b0 [amdgpu]
-[   90.003210]  ? __x64_sys_ioctl+0x131/0x1a0
-[   90.003210]  ? do_syscall_64+0x60/0x90
+  ------------[ cut here ]------------
+  WARNING: CPU: 4 PID: 65 at kernel/bpf/cpumap.c:135
+  CPU: 4 PID: 65 Comm: kworker/4:1 Not tainted 6.5.0-rc2+ #1
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+  Workqueue: events cpu_map_kthread_stop
+  RIP: 0010:put_cpu_map_entry+0xda/0x220
+  ......
+  Call Trace:
+   <TASK>
+   ? show_regs+0x65/0x70
+   ? __warn+0xa5/0x240
+   ......
+   ? put_cpu_map_entry+0xda/0x220
+   cpu_map_kthread_stop+0x41/0x60
+   process_one_work+0x6b0/0xb80
+   worker_thread+0x96/0x720
+   kthread+0x1a5/0x1f0
+   ret_from_fork+0x3a/0x70
+   ret_from_fork_asm+0x1b/0x30
+   </TASK>
 
-Fixes: a2848d08742c ("drm/ttm: never consider pinned BOs for eviction&swap")
-Tested-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Signed-off-by: Guchun Chen <guchun.chen@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Cc: stable@vger.kernel.org
-Link: https://patchwork.freedesktop.org/patch/msgid/20230724024229.1118444-1-guchun.chen@amd.com
-Signed-off-by: Christian König <christian.koenig@amd.com>
+The root cause is the same as commit 436901649731 ("bpf: cpumap: Fix memory
+leak in cpu_map_update_elem"). The kthread is stopped prematurely by
+kthread_stop() in cpu_map_kthread_stop(), and kthread() doesn't call
+cpu_map_kthread_run() at all but XDP program has already queued some
+frames or skbs into ptr_ring. So when __cpu_map_ring_cleanup() checks
+the ptr_ring, it will find it was not emptied and report a warning.
+
+An alternative fix is to use __cpu_map_ring_cleanup() to drop these
+pending frames or skbs when kthread_stop() returns -EINTR, but it may
+confuse the user, because these frames or skbs have been handled
+correctly by XDP program. So instead of dropping these frames or skbs,
+just make sure the per-cpu kthread is running before
+__cpu_map_entry_alloc() returns.
+
+After apply the fix, the error handle for kthread_stop() will be
+unnecessary because it will always return 0, so just remove it.
+
+Fixes: 6710e1126934 ("bpf: introduce new bpf cpu map type BPF_MAP_TYPE_CPUMAP")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Reviewed-by: Pu Lehui <pulehui@huawei.com>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Link: https://lore.kernel.org/r/20230729095107.1722450-2-houtao@huaweicloud.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ttm/ttm_bo.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/bpf/cpumap.c |   21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/ttm/ttm_bo.c
-+++ b/drivers/gpu/drm/ttm/ttm_bo.c
-@@ -606,7 +606,8 @@ static bool ttm_bo_evict_swapout_allowab
+--- a/kernel/bpf/cpumap.c
++++ b/kernel/bpf/cpumap.c
+@@ -26,6 +26,7 @@
+ #include <linux/workqueue.h>
+ #include <linux/kthread.h>
+ #include <linux/capability.h>
++#include <linux/completion.h>
+ #include <trace/events/xdp.h>
  
- 	if (bo->pin_count) {
- 		*locked = false;
--		*busy = false;
-+		if (busy)
-+			*busy = false;
- 		return false;
- 	}
+ #include <linux/netdevice.h>   /* netif_receive_skb_list */
+@@ -70,6 +71,7 @@ struct bpf_cpu_map_entry {
+ 	struct rcu_head rcu;
  
+ 	struct work_struct kthread_stop_wq;
++	struct completion kthread_running;
+ };
+ 
+ struct bpf_cpu_map {
+@@ -163,7 +165,6 @@ static void put_cpu_map_entry(struct bpf
+ static void cpu_map_kthread_stop(struct work_struct *work)
+ {
+ 	struct bpf_cpu_map_entry *rcpu;
+-	int err;
+ 
+ 	rcpu = container_of(work, struct bpf_cpu_map_entry, kthread_stop_wq);
+ 
+@@ -173,14 +174,7 @@ static void cpu_map_kthread_stop(struct
+ 	rcu_barrier();
+ 
+ 	/* kthread_stop will wake_up_process and wait for it to complete */
+-	err = kthread_stop(rcpu->kthread);
+-	if (err) {
+-		/* kthread_stop may be called before cpu_map_kthread_run
+-		 * is executed, so we need to release the memory related
+-		 * to rcpu.
+-		 */
+-		put_cpu_map_entry(rcpu);
+-	}
++	kthread_stop(rcpu->kthread);
+ }
+ 
+ static void cpu_map_bpf_prog_run_skb(struct bpf_cpu_map_entry *rcpu,
+@@ -308,11 +302,11 @@ static int cpu_map_bpf_prog_run(struct b
+ 	return nframes;
+ }
+ 
+-
+ static int cpu_map_kthread_run(void *data)
+ {
+ 	struct bpf_cpu_map_entry *rcpu = data;
+ 
++	complete(&rcpu->kthread_running);
+ 	set_current_state(TASK_INTERRUPTIBLE);
+ 
+ 	/* When kthread gives stop order, then rcpu have been disconnected
+@@ -475,6 +469,7 @@ __cpu_map_entry_alloc(struct bpf_map *ma
+ 		goto free_ptr_ring;
+ 
+ 	/* Setup kthread */
++	init_completion(&rcpu->kthread_running);
+ 	rcpu->kthread = kthread_create_on_node(cpu_map_kthread_run, rcpu, numa,
+ 					       "cpumap/%d/map:%d", cpu,
+ 					       map->id);
+@@ -488,6 +483,12 @@ __cpu_map_entry_alloc(struct bpf_map *ma
+ 	kthread_bind(rcpu->kthread, cpu);
+ 	wake_up_process(rcpu->kthread);
+ 
++	/* Make sure kthread has been running, so kthread_stop() will not
++	 * stop the kthread prematurely and all pending frames or skbs
++	 * will be handled by the kthread before kthread_stop() returns.
++	 */
++	wait_for_completion(&rcpu->kthread_running);
++
+ 	return rcpu;
+ 
+ free_prog:
 
 
