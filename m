@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081B6171A6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:00:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20EB1C433C7;
-	Wed,  9 Aug 2023 11:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7732C171A6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:00:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8654C433C8;
+	Wed,  9 Aug 2023 11:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578856;
-	bh=1g4NKE7ziG5yB3fVf2fTsDUzYjCajxUhRMOqE15E93E=;
+	s=korg; t=1691578859;
+	bh=dUKuDLoNj7wfdgXFXgIKH5EXeHj+vm3a1UtLcZ3z43A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fd0RKWYU3eCuhKat0FroHEkVYzLKA5xBYUcetBOZmeuXfdN3pjjsIop9p/gGZEdjl
-	 PvZLcBFaKmhcWt7bZWcAX1J99GUzjVbAR9MU3+NqiUlJB6lkJ0jxsLTGvkm1excD4P
-	 xZqVD6LknivUY7/Y1a2z17iI+TvQKLCO2wzmSf4g=
+	b=Zm1WY7oy3/LELWicRqam0hlNy5h8qDY7MTpxAdE6fg4Nsu8n2WLJu2vcWme6+SL0G
+	 CEujg59dAZncA+LoR5QuMBb0lLyEZBalpmhAPK5B6Gu6kw7i4en7hQFGTf/XQbpYO9
+	 xFdKbVGdPhwHVH6f2L5IPhkCW9slH1BxnqIk40Oo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Block <bblock@linux.ibm.com>,
-	Fedor Loshakov <loshakov@linux.ibm.com>,
-	Steffen Maier <maier@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 54/92] scsi: zfcp: Defer fc_rport blocking until after ADISC response
-Date: Wed,  9 Aug 2023 12:41:30 +0200
-Message-ID: <20230809103635.483577597@linuxfoundation.org>
+	Johan Jonker <jbx6244@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 81/92] mtd: rawnand: rockchip: fix oobfree offset and description
+Date: Wed,  9 Aug 2023 12:41:57 +0200
+Message-ID: <20230809103636.348196448@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -36,60 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steffen Maier <maier@linux.ibm.com>
+From: Johan Jonker <jbx6244@gmail.com>
 
-commit e65851989001c0c9ba9177564b13b38201c0854c upstream.
+[ Upstream commit d0ca3b92b7a6f42841ea9da8492aaf649db79780 ]
 
-Storage devices are free to send RSCNs, e.g. for internal state changes. If
-this happens on all connected paths, zfcp risks temporarily losing all
-paths at the same time. This has strong requirements on multipath
-configuration such as "no_path_retry queue".
+Rockchip boot blocks are written per 4 x 512 byte sectors per page.
+Each page with boot blocks must have a page address (PA) pointer in OOB
+to the next page.
 
-Avoid such situations by deferring fc_rport blocking until after the ADISC
-response, when any actual state change of the remote port became clear.
-The already existing port recovery triggers explicitly block the fc_rport.
-The triggers are: on ADISC reject or timeout (typical cable pull case), and
-on ADISC indicating that the remote port has changed its WWPN or
-the port is meanwhile no longer open.
+The currently advertised free OOB area starts at offset 6, like
+if 4 PA bytes were located right after the BBM. This is wrong as the
+PA bytes are located right before the ECC bytes.
 
-As a side effect, this also removes a confusing direct function call to
-another work item function zfcp_scsi_rport_work() instead of scheduling
-that other work item. It was probably done that way to have the rport block
-side effect immediate and synchronous to the caller.
+Fix the layout by allowing access to all bytes between the BBM and the
+PA bytes instead of reserving 4 bytes right after the BBM.
 
-Fixes: a2fa0aede07c ("[SCSI] zfcp: Block FC transport rports early on errors")
-Cc: stable@vger.kernel.org #v2.6.30+
-Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
-Reviewed-by: Fedor Loshakov <loshakov@linux.ibm.com>
-Signed-off-by: Steffen Maier <maier@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230724145156.3920244-1-maier@linux.ibm.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This change breaks existing jffs2 users.
+
+Fixes: 058e0e847d54 ("mtd: rawnand: rockchip: NFC driver for RK3308, RK2928 and others")
+Signed-off-by: Johan Jonker <jbx6244@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/d202f12d-188c-20e8-f2c2-9cc874ad4d22@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/scsi/zfcp_fc.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/mtd/nand/raw/rockchip-nand-controller.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
---- a/drivers/s390/scsi/zfcp_fc.c
-+++ b/drivers/s390/scsi/zfcp_fc.c
-@@ -534,8 +534,7 @@ static void zfcp_fc_adisc_handler(void *
+diff --git a/drivers/mtd/nand/raw/rockchip-nand-controller.c b/drivers/mtd/nand/raw/rockchip-nand-controller.c
+index b5405bc7ca3a3..45cdc6ca210ca 100644
+--- a/drivers/mtd/nand/raw/rockchip-nand-controller.c
++++ b/drivers/mtd/nand/raw/rockchip-nand-controller.c
+@@ -562,9 +562,10 @@ static int rk_nfc_write_page_raw(struct nand_chip *chip, const u8 *buf,
+ 		 *    BBM  OOB1 OOB2 OOB3 |......|  PA0  PA1  PA2  PA3
+ 		 *
+ 		 * The rk_nfc_ooblayout_free() function already has reserved
+-		 * these 4 bytes with:
++		 * these 4 bytes together with 2 bytes for BBM
++		 * by reducing it's length:
+ 		 *
+-		 * oob_region->offset = NFC_SYS_DATA_SIZE + 2;
++		 * oob_region->length = rknand->metadata_size - NFC_SYS_DATA_SIZE - 2;
+ 		 */
+ 		if (!i)
+ 			memcpy(rk_nfc_oob_ptr(chip, i),
+@@ -935,12 +936,8 @@ static int rk_nfc_ooblayout_free(struct mtd_info *mtd, int section,
+ 	if (section)
+ 		return -ERANGE;
  
- 	/* re-init to undo drop from zfcp_fc_adisc() */
- 	port->d_id = ntoh24(adisc_resp->adisc_port_id);
--	/* port is good, unblock rport without going through erp */
--	zfcp_scsi_schedule_rport_register(port);
-+	/* port is still good, nothing to do */
-  out:
- 	atomic_andnot(ZFCP_STATUS_PORT_LINK_TEST, &port->status);
- 	put_device(&port->dev);
-@@ -595,9 +594,6 @@ void zfcp_fc_link_test_work(struct work_
- 	int retval;
+-	/*
+-	 * The beginning of the OOB area stores the reserved data for the NFC,
+-	 * the size of the reserved data is NFC_SYS_DATA_SIZE bytes.
+-	 */
+ 	oob_region->length = rknand->metadata_size - NFC_SYS_DATA_SIZE - 2;
+-	oob_region->offset = NFC_SYS_DATA_SIZE + 2;
++	oob_region->offset = 2;
  
- 	set_worker_desc("zadisc%16llx", port->wwpn); /* < WORKER_DESC_LEN=24 */
--	get_device(&port->dev);
--	port->rport_task = RPORT_DEL;
--	zfcp_scsi_rport_work(&port->rport_work);
- 
- 	/* only issue one test command at one time per port */
- 	if (atomic_read(&port->status) & ZFCP_STATUS_PORT_LINK_TEST)
+ 	return 0;
+ }
+-- 
+2.40.1
+
 
 
