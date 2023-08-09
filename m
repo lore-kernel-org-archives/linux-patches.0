@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E27A517AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:00:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6438BC433C7;
-	Wed,  9 Aug 2023 11:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A807A6131
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:00:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29FB6C433C8;
+	Wed,  9 Aug 2023 11:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578817;
-	bh=nSKjLBCHlkUdNQteGfwgQ7q8Kp1y2IqvF+3n87CjO00=;
+	s=korg; t=1691578820;
+	bh=AC0uBao4KIafDZjUGYhJmvO1fM0Vx30S+GywV4P56cM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZQrZ6TCA8m+XJHxlcoyFPvUP95kSMA5oEmkuZFHtpan3dGwUQM/29g5tUeL5zTRrK
-	 l7K0Bwf3nmWr2cXKmOD/KmQO3FQ7PuFquukXtfBcK9eEpoW1RAa+YeH508StrVXyzS
-	 k78R0gp5jbcMsy8azwgplYHwgNVARg6I4xK7ZK5s=
+	b=T7F1YdX8rNESraoy9dEaY1A7SC6OatSfisp53OJlkS04nryZ3BEZ4FGvw7avRvAkH
+	 CYbX1XZrHjTtuSBZuyWDqC2kTN718QFMSZVflh/j8F0adIpn0gczVrQmO7cIiXlilR
+	 jb660f4MBzMhqNPeI8diE9Oe+uhfqZ61TR2PHGCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Dongsheng Yang <dongsheng.yang@easystack.cn>
-Subject: [PATCH 5.15 68/92] rbd: prevent busy loop when requesting exclusive lock
-Date: Wed,  9 Aug 2023 12:41:44 +0200
-Message-ID: <20230809103635.932530958@linuxfoundation.org>
+	=?UTF-8?q?Oleg=20 livelace =20Popov?= <o.popov@livelace.ru>,
+	Hou Tao <houtao1@huawei.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 5.15 69/92] bpf: Disable preemption in bpf_event_output
+Date: Wed,  9 Aug 2023 12:41:45 +0200
+Message-ID: <20230809103635.963261225@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103633.485906560@linuxfoundation.org>
 References: <20230809103633.485906560@linuxfoundation.org>
@@ -34,109 +36,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit 9d01e07fd1bfb4daae156ab528aa196f5ac2b2bc upstream.
+commit d62cc390c2e99ae267ffe4b8d7e2e08b6c758c32 upstream.
 
-Due to rbd_try_acquire_lock() effectively swallowing all but
-EBLOCKLISTED error from rbd_try_lock() ("request lock anyway") and
-rbd_request_lock() returning ETIMEDOUT error not only for an actual
-notify timeout but also when the lock owner doesn't respond, a busy
-loop inside of rbd_acquire_lock() between rbd_try_acquire_lock() and
-rbd_request_lock() is possible.
+We received report [1] of kernel crash, which is caused by
+using nesting protection without disabled preemption.
 
-Requesting the lock on EBUSY error (returned by get_lock_owner_info()
-if an incompatible lock or invalid lock owner is detected) makes very
-little sense.  The same goes for ETIMEDOUT error (might pop up pretty
-much anywhere if osd_request_timeout option is set) and many others.
+The bpf_event_output can be called by programs executed by
+bpf_prog_run_array_cg function that disabled migration but
+keeps preemption enabled.
 
-Just fail I/O requests on rbd_dev->acquiring_list immediately on any
-error from rbd_try_lock().
+This can cause task to be preempted by another one inside the
+nesting protection and lead eventually to two tasks using same
+perf_sample_data buffer and cause crashes like:
 
-Cc: stable@vger.kernel.org # 588159009d5b: rbd: retrieve and check lock owner twice before blocklisting
+  BUG: kernel NULL pointer dereference, address: 0000000000000001
+  #PF: supervisor instruction fetch in kernel mode
+  #PF: error_code(0x0010) - not-present page
+  ...
+  ? perf_output_sample+0x12a/0x9a0
+  ? finish_task_switch.isra.0+0x81/0x280
+  ? perf_event_output+0x66/0xa0
+  ? bpf_event_output+0x13a/0x190
+  ? bpf_event_output_data+0x22/0x40
+  ? bpf_prog_dfc84bbde731b257_cil_sock4_connect+0x40a/0xacb
+  ? xa_load+0x87/0xe0
+  ? __cgroup_bpf_run_filter_sock_addr+0xc1/0x1a0
+  ? release_sock+0x3e/0x90
+  ? sk_setsockopt+0x1a1/0x12f0
+  ? udp_pre_connect+0x36/0x50
+  ? inet_dgram_connect+0x93/0xa0
+  ? __sys_connect+0xb4/0xe0
+  ? udp_setsockopt+0x27/0x40
+  ? __pfx_udp_push_pending_frames+0x10/0x10
+  ? __sys_setsockopt+0xdf/0x1a0
+  ? __x64_sys_connect+0xf/0x20
+  ? do_syscall_64+0x3a/0x90
+  ? entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+Fixing this by disabling preemption in bpf_event_output.
+
+[1] https://github.com/cilium/cilium/issues/26756
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+Reported-by: Oleg "livelace" Popov <o.popov@livelace.ru>
+Closes: https://github.com/cilium/cilium/issues/26756
+Fixes: 2a916f2f546c ("bpf: Use migrate_disable/enable in array macros and cgroup/lirc code.")
+Acked-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20230725084206.580930-3-jolsa@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |   28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ kernel/trace/bpf_trace.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -3677,7 +3677,7 @@ static int rbd_lock(struct rbd_device *r
- 	ret = ceph_cls_lock(osdc, &rbd_dev->header_oid, &rbd_dev->header_oloc,
- 			    RBD_LOCK_NAME, CEPH_CLS_LOCK_EXCLUSIVE, cookie,
- 			    RBD_LOCK_TAG, "", 0);
--	if (ret)
-+	if (ret && ret != -EEXIST)
- 		return ret;
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -662,7 +662,6 @@ static DEFINE_PER_CPU(struct bpf_trace_s
+ u64 bpf_event_output(struct bpf_map *map, u64 flags, void *meta, u64 meta_size,
+ 		     void *ctx, u64 ctx_size, bpf_ctx_copy_t ctx_copy)
+ {
+-	int nest_level = this_cpu_inc_return(bpf_event_output_nest_level);
+ 	struct perf_raw_frag frag = {
+ 		.copy		= ctx_copy,
+ 		.size		= ctx_size,
+@@ -679,8 +678,12 @@ u64 bpf_event_output(struct bpf_map *map
+ 	};
+ 	struct perf_sample_data *sd;
+ 	struct pt_regs *regs;
++	int nest_level;
+ 	u64 ret;
  
- 	__rbd_lock(rbd_dev, cookie);
-@@ -3880,7 +3880,7 @@ static struct ceph_locker *get_lock_owne
- 				 &rbd_dev->header_oloc, RBD_LOCK_NAME,
- 				 &lock_type, &lock_tag, &lockers, &num_lockers);
- 	if (ret) {
--		rbd_warn(rbd_dev, "failed to retrieve lockers: %d", ret);
-+		rbd_warn(rbd_dev, "failed to get header lockers: %d", ret);
- 		return ERR_PTR(ret);
- 	}
++	preempt_disable();
++	nest_level = this_cpu_inc_return(bpf_event_output_nest_level);
++
+ 	if (WARN_ON_ONCE(nest_level > ARRAY_SIZE(bpf_misc_sds.sds))) {
+ 		ret = -EBUSY;
+ 		goto out;
+@@ -695,6 +698,7 @@ u64 bpf_event_output(struct bpf_map *map
+ 	ret = __bpf_perf_event_output(regs, map, flags, sd);
+ out:
+ 	this_cpu_dec(bpf_event_output_nest_level);
++	preempt_enable();
+ 	return ret;
+ }
  
-@@ -3942,8 +3942,10 @@ static int find_watcher(struct rbd_devic
- 	ret = ceph_osdc_list_watchers(osdc, &rbd_dev->header_oid,
- 				      &rbd_dev->header_oloc, &watchers,
- 				      &num_watchers);
--	if (ret)
-+	if (ret) {
-+		rbd_warn(rbd_dev, "failed to get watchers: %d", ret);
- 		return ret;
-+	}
- 
- 	sscanf(locker->id.cookie, RBD_LOCK_COOKIE_PREFIX " %llu", &cookie);
- 	for (i = 0; i < num_watchers; i++) {
-@@ -3987,8 +3989,12 @@ static int rbd_try_lock(struct rbd_devic
- 		locker = refreshed_locker = NULL;
- 
- 		ret = rbd_lock(rbd_dev);
--		if (ret != -EBUSY)
-+		if (!ret)
-+			goto out;
-+		if (ret != -EBUSY) {
-+			rbd_warn(rbd_dev, "failed to lock header: %d", ret);
- 			goto out;
-+		}
- 
- 		/* determine if the current lock holder is still alive */
- 		locker = get_lock_owner_info(rbd_dev);
-@@ -4091,11 +4097,8 @@ static int rbd_try_acquire_lock(struct r
- 
- 	ret = rbd_try_lock(rbd_dev);
- 	if (ret < 0) {
--		rbd_warn(rbd_dev, "failed to lock header: %d", ret);
--		if (ret == -EBLOCKLISTED)
--			goto out;
--
--		ret = 1; /* request lock anyway */
-+		rbd_warn(rbd_dev, "failed to acquire lock: %d", ret);
-+		goto out;
- 	}
- 	if (ret > 0) {
- 		up_write(&rbd_dev->lock_rwsem);
-@@ -6631,12 +6634,11 @@ static int rbd_add_acquire_lock(struct r
- 		cancel_delayed_work_sync(&rbd_dev->lock_dwork);
- 		if (!ret)
- 			ret = -ETIMEDOUT;
--	}
- 
--	if (ret) {
--		rbd_warn(rbd_dev, "failed to acquire exclusive lock: %ld", ret);
--		return ret;
-+		rbd_warn(rbd_dev, "failed to acquire lock: %ld", ret);
- 	}
-+	if (ret)
-+		return ret;
- 
- 	/*
- 	 * The lock may have been released by now, unless automatic lock
 
 
