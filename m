@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970BC1773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:19:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188F6C433C7;
-	Wed,  9 Aug 2023 11:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2921773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:19:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F22C433C7;
+	Wed,  9 Aug 2023 11:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579979;
-	bh=nJOjsIaWQNSLUBI//4GF7vEBGQWqYszLFbqD/6J6too=;
+	s=korg; t=1691579982;
+	bh=DyFU02lJUbQpITflYUfjoJ1QmKSAdpNCchUjyUHNaLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l77HRU0C03+jKcBdZOWNe35mhDckBPoSFaVRlcaTT97Lji0eid7k5fyeg1DIMeQ8t
-	 s6UHrk+aTlaFbLW0TrUeiyNtO6ENJLON+zMJSiEBgDJg7qcrUnV37kFDmXHVpkdu6c
-	 DMCQKYDOcz14ZKNoqaVlNbMrVLK4F5pEqh5D5tp0=
+	b=R8xnlKtA+aHhqYlHgdAjafAi9ozwUJEZl4Jd93vbTVyOAjPRY6YmPDUTnklUJARwb
+	 LQpstUJYc/bAnf2gkrapQ481KTyTgkNk6q+WCcMs8EJDMi+NLKH9A+aex83hNKMffv
+	 E44R4opgRZ/d2JlE/5D4KTo3pkgZ/wlcYDmBdyHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	shanzhulig <shanzhulig@gmail.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	stable@kernel.org,
-	Daniel Vetter <daniel.vetter@intel.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 4.19 185/323] drm/atomic: Fix potential use-after-free in nonblocking commits
-Date: Wed,  9 Aug 2023 12:40:23 +0200
-Message-ID: <20230809103706.636719097@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <mani@kernel.org>
+Subject: [PATCH 4.19 168/323] misc: pci_endpoint_test: Free IRQs before removing the device
+Date: Wed,  9 Aug 2023 12:40:06 +0200
+Message-ID: <20230809103705.836771463@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -41,91 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Vetter <daniel.vetter@ffwll.ch>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 4e076c73e4f6e90816b30fcd4a0d7ab365087255 upstream.
+commit f61b7634a3249d12b9daa36ffbdb9965b6f24c6c upstream.
 
-This requires a bit of background.  Properly done a modeset driver's
-unload/remove sequence should be
+In pci_endpoint_test_remove(), freeing the IRQs after removing the device
+creates a small race window for IRQs to be received with the test device
+memory already released, causing the IRQ handler to access invalid memory,
+resulting in an oops.
 
-	drm_dev_unplug();
-	drm_atomic_helper_shutdown();
-	drm_dev_put();
+Free the device IRQs before removing the device to avoid this issue.
 
-The trouble is that the drm_dev_unplugged() checks are by design racy,
-they do not synchronize against all outstanding ioctl.  This is because
-those ioctl could block forever (both for modeset and for driver
-specific ioctls), leading to deadlocks in hotunplug.  Instead the code
-sections that touch the hardware need to be annotated with
-drm_dev_enter/exit, to avoid accessing hardware resources after the
-unload/remove has finished.
-
-To avoid use-after-free issues all the involved userspace visible
-objects are supposed to hold a reference on the underlying drm_device,
-like drm_file does.
-
-The issue now is that we missed one, the atomic modeset ioctl can be run
-in a nonblocking fashion, and in that case it cannot rely on the implied
-drm_device reference provided by the ioctl calling context.  This can
-result in a use-after-free if an nonblocking atomic commit is carefully
-raced against a driver unload.
-
-Fix this by unconditionally grabbing a drm_device reference for any
-drm_atomic_state structures.  Strictly speaking this isn't required for
-blocking commits and TEST_ONLY calls, but it's the simpler approach.
-
-Thanks to shanzhulig for the initial idea of grabbing an unconditional
-reference, I just added comments, a condensed commit message and fixed a
-minor potential issue in where exactly we drop the final reference.
-
-Reported-by: shanzhulig <shanzhulig@gmail.com>
-Suggested-by: shanzhulig <shanzhulig@gmail.com>
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: David Airlie <airlied@gmail.com>
-Cc: stable@kernel.org
-Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20230415023542.77601-15-dlemoal@kernel.org
+Fixes: e03327122e2c ("pci_endpoint_test: Add 2 ioctl commands")
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_atomic.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/misc/pci_endpoint_test.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/drm_atomic.c
-+++ b/drivers/gpu/drm/drm_atomic.c
-@@ -91,6 +91,12 @@ drm_atomic_state_init(struct drm_device
- 	if (!state->planes)
- 		goto fail;
+--- a/drivers/misc/pci_endpoint_test.c
++++ b/drivers/misc/pci_endpoint_test.c
+@@ -785,6 +785,9 @@ static void pci_endpoint_test_remove(str
+ 	if (id < 0)
+ 		return;
  
-+	/*
-+	 * Because drm_atomic_state can be committed asynchronously we need our
-+	 * own reference and cannot rely on the on implied by drm_file in the
-+	 * ioctl call.
-+	 */
-+	drm_dev_get(dev);
- 	state->dev = dev;
- 
- 	DRM_DEBUG_ATOMIC("Allocated atomic state %p\n", state);
-@@ -250,7 +256,8 @@ EXPORT_SYMBOL(drm_atomic_state_clear);
- void __drm_atomic_state_free(struct kref *ref)
- {
- 	struct drm_atomic_state *state = container_of(ref, typeof(*state), ref);
--	struct drm_mode_config *config = &state->dev->mode_config;
-+	struct drm_device *dev = state->dev;
-+	struct drm_mode_config *config = &dev->mode_config;
- 
- 	drm_atomic_state_clear(state);
- 
-@@ -262,6 +269,8 @@ void __drm_atomic_state_free(struct kref
- 		drm_atomic_state_default_release(state);
- 		kfree(state);
- 	}
++	pci_endpoint_test_release_irq(test);
++	pci_endpoint_test_free_irq_vectors(test);
 +
-+	drm_dev_put(dev);
- }
- EXPORT_SYMBOL(__drm_atomic_state_free);
+ 	misc_deregister(&test->miscdev);
+ 	kfree(misc_device->name);
+ 	ida_simple_remove(&pci_endpoint_test_ida, id);
+@@ -793,9 +796,6 @@ static void pci_endpoint_test_remove(str
+ 			pci_iounmap(pdev, test->bar[bar]);
+ 	}
  
+-	pci_endpoint_test_release_irq(test);
+-	pci_endpoint_test_free_irq_vectors(test);
+-
+ 	pci_release_regions(pdev);
+ 	pci_disable_device(pdev);
+ }
 
 
