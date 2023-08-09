@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2E317AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:29:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C02B4C433C8;
-	Wed,  9 Aug 2023 11:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17EA017AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:29:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F257C433C7;
+	Wed,  9 Aug 2023 11:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580553;
-	bh=QhMdq6GsBUCYsRgx77tTtwmBPNjhq1VtDPdyxlTqKHY=;
+	s=korg; t=1691580555;
+	bh=2LLDDKUg2Ww0IzYscdsVU+L2osfz5L7izTZI+UfUaJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ldCstW3mD7ugl9fpMI03UK4goNHFVqJ38mPzVsMfFaL8GCE501UeyWz3rTurQ3sei
-	 zlBmMEW6hPkxYQws7bImjCI6PjaQd/pQ9KNSQS2BDZG9y2ODRvisPpVP4oZrxV1k+k
-	 ZylBbRtBVOvBLAP8xtGzpa2DCn9C960k4hMNIYiQ=
+	b=U8gnRoFpvbLD9v+gV/bQVJfeiKOi+UQNJJGz9OEmVEXELqfMrPCqca8R/kQwYM6wR
+	 ADAJXx7ww2QFABl4yH9bqjMVdtA4MJLFUhTn/fwejjsWM/Qh8BtsV+Ldx0rXh0umxO
+	 YPr1W9AGi6VAhZ8TNUzfYGR/0QSOxsdK46YSpZ1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <lb@semihalf.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.4 066/154] USB: quirks: add quirk for Focusrite Scarlett
-Date: Wed,  9 Aug 2023 12:41:37 +0200
-Message-ID: <20230809103639.176602012@linuxfoundation.org>
+	Matus Gajdos <matuszpd@gmail.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 049/154] ASoC: fsl_spdif: Silence output on stop
+Date: Wed,  9 Aug 2023 12:41:20 +0200
+Message-ID: <20230809103638.639343654@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -34,63 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Łukasz Bartosik <lb@semihalf.com>
+From: Matus Gajdos <matuszpd@gmail.com>
 
-commit 9dc162e22387080e2d06de708b89920c0e158c9a upstream.
+[ Upstream commit 0e4c2b6b0c4a4b4014d9424c27e5e79d185229c5 ]
 
-The Focusrite Scarlett audio device does not behave correctly during
-resumes. Below is what happens during every resume (captured with
-Beagle 5000):
+Clear TX registers on stop to prevent the SPDIF interface from sending
+last written word over and over again.
 
-<Suspend>
-<Resume>
-<Reset>/<Chirp J>/<Tiny J>
-<Reset/Target disconnected>
-<High Speed>
-
-The Scarlett disconnects and is enumerated again.
-
-However from time to time it drops completely off the USB bus during
-resume. Below is captured occurrence of such an event:
-
-<Suspend>
-<Resume>
-<Reset>/<Chirp J>/<Tiny J>
-<Reset>/<Chirp K>/<Tiny K>
-<High Speed>
-<Corrupted packet>
-<Reset/Target disconnected>
-
-To fix the condition a user has to unplug and plug the device again.
-
-With USB_QUIRK_RESET_RESUME applied ("usbcore.quirks=1235:8211:b")
-for the Scarlett audio device the issue still reproduces.
-
-Applying USB_QUIRK_DISCONNECT_SUSPEND ("usbcore.quirks=1235:8211:m")
-fixed the issue and the Scarlett audio device didn't drop off the USB
-bus for ~5000 suspend/resume cycles where originally issue reproduced in
-~100 or less suspend/resume cycles.
-
-Signed-off-by: Łukasz Bartosik <lb@semihalf.com>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20230724112911.1802577-1-lb@semihalf.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a2388a498ad2 ("ASoC: fsl: Add S/PDIF CPU DAI driver")
+Signed-off-by: Matus Gajdos <matuszpd@gmail.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Link: https://lore.kernel.org/r/20230719164729.19969-1-matuszpd@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/quirks.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/fsl/fsl_spdif.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -437,6 +437,10 @@ static const struct usb_device_id usb_qu
- 	/* novation SoundControl XL */
- 	{ USB_DEVICE(0x1235, 0x0061), .driver_info = USB_QUIRK_RESET_RESUME },
- 
-+	/* Focusrite Scarlett Solo USB */
-+	{ USB_DEVICE(0x1235, 0x8211), .driver_info =
-+			USB_QUIRK_DISCONNECT_SUSPEND },
-+
- 	/* Huawei 4G LTE module */
- 	{ USB_DEVICE(0x12d1, 0x15bb), .driver_info =
- 			USB_QUIRK_DISCONNECT_SUSPEND },
+diff --git a/sound/soc/fsl/fsl_spdif.c b/sound/soc/fsl/fsl_spdif.c
+index 7858a5499ac5d..4fd4ba9972afd 100644
+--- a/sound/soc/fsl/fsl_spdif.c
++++ b/sound/soc/fsl/fsl_spdif.c
+@@ -615,6 +615,8 @@ static int fsl_spdif_trigger(struct snd_pcm_substream *substream,
+ 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+ 		regmap_update_bits(regmap, REG_SPDIF_SCR, dmaen, 0);
+ 		regmap_update_bits(regmap, REG_SPDIF_SIE, intr, 0);
++		regmap_write(regmap, REG_SPDIF_STL, 0x0);
++		regmap_write(regmap, REG_SPDIF_STR, 0x0);
+ 		break;
+ 	default:
+ 		return -EINVAL;
+-- 
+2.40.1
+
 
 
