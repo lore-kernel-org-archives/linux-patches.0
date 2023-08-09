@@ -1,53 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934761773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:14:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1A47C433C7;
-	Wed,  9 Aug 2023 11:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908D51773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:14:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A26C433C7;
+	Wed,  9 Aug 2023 11:14:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579655;
-	bh=TaMsA6na1gSV9lSMQDk+3hta+SSmGoxzSBy1i9S0XcM=;
+	s=korg; t=1691579658;
+	bh=xPYz9Qf1ltxneREIyjf/20IeNFScxEpylKzHSjoZiFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ty28JppJiAL+4Yi+1AKsQM3gyXaWrMCzhUVAktV4diGsDpEuYST3Tt9c+oBJUhAfx
-	 P7a+BGr+rp2PoyNlQ5BUoX/0oYDzfzz9dFHf7t3VdoyO8lIitrhQsoAgL8IARmwQu2
-	 0/2VTCxuuqIYhjMBLdvA9zJSYen3CucP/gG29v+8=
+	b=CIS4WHV5VNGjC/b4nMFGahha8FxVA5l5f63yY2uXqt3kdQ32ad3RFHVypDLBGtNI7
+	 IoA5iRsf3g06pDfvtSFu8Pm/ce4bjmeQNJ8S94YEfmyBRoDxRrA/+NR7nOS34t7yV4
+	 vi7xRv6XOSCsbP/XpD0XBDjnUQbz44hrQvmhmzu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Petr Mladek <pmladek@suse.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Guenter Roeck <groeck@chromium.org>,
-	Ian Rogers <irogers@google.com>,
-	Lecopzer Chen <lecopzer.chen@mediatek.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Masayoshi Mizuma <msys.mizuma@gmail.com>,
-	Matthias Kaehlcke <mka@chromium.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Pingfan Liu <kernelfans@gmail.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Ravi V. Shankar" <ravi.v.shankar@intel.com>,
-	Ricardo Neri <ricardo.neri@intel.com>,
-	Stephane Eranian <eranian@google.com>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Sumit Garg <sumit.garg@linaro.org>,
-	Tzung-Bi Shih <tzungbi@chromium.org>,
-	Will Deacon <will@kernel.org>,
-	Colin Cross <ccross@android.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Sui Jingfeng <suijingfeng@loongson.cn>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 041/323] watchdog/perf: define dummy watchdog_update_hrtimer_threshold() on correct config
-Date: Wed,  9 Aug 2023 12:37:59 +0200
-Message-ID: <20230809103700.009815681@linuxfoundation.org>
+Subject: [PATCH 4.19 068/323] PCI: Add pci_clear_master() stub for non-CONFIG_PCI
+Date: Wed,  9 Aug 2023 12:38:26 +0200
+Message-ID: <20230809103701.255549413@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -61,86 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Sui Jingfeng <suijingfeng@loongson.cn>
 
-[ Upstream commit 5e008df11c55228a86a1bae692cc2002503572c9 ]
+[ Upstream commit 2aa5ac633259843f656eb6ecff4cf01e8e810c5e ]
 
-Patch series "watchdog/hardlockup: Add the buddy hardlockup detector", v5.
+Add a pci_clear_master() stub when CONFIG_PCI is not set so drivers that
+support both PCI and platform devices don't need #ifdefs or extra Kconfig
+symbols for the PCI parts.
 
-This patch series adds the "buddy" hardlockup detector.  In brief, the
-buddy hardlockup detector can detect hardlockups without arch-level
-support by having CPUs checkup on a "buddy" CPU periodically.
-
-Given the new design of this patch series, testing all combinations is
-fairly difficult. I've attempted to make sure that all combinations of
-CONFIG_ options are good, but it wouldn't surprise me if I missed
-something. I apologize in advance and I'll do my best to fix any
-problems that are found.
-
-This patch (of 18):
-
-The real watchdog_update_hrtimer_threshold() is defined in
-kernel/watchdog_hld.c.  That file is included if
-CONFIG_HARDLOCKUP_DETECTOR_PERF and the function is defined in that file
-if CONFIG_HARDLOCKUP_CHECK_TIMESTAMP.
-
-The dummy version of the function in "nmi.h" didn't get that quite right.
-While this doesn't appear to be a huge deal, it's nice to make it
-consistent.
-
-It doesn't break builds because CHECK_TIMESTAMP is only defined by x86 so
-others don't get a double definition, and x86 uses perf lockup detector,
-so it gets the out of line version.
-
-Link: https://lkml.kernel.org/r/20230519101840.v5.18.Ia44852044cdcb074f387e80df6b45e892965d4a1@changeid
-Link: https://lkml.kernel.org/r/20230519101840.v5.1.I8cbb2f4fa740528fcfade4f5439b6cdcdd059251@changeid
-Fixes: 7edaeb6841df ("kernel/watchdog: Prevent false positives with turbo modes")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Chen-Yu Tsai <wens@csie.org>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Daniel Thompson <daniel.thompson@linaro.org>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Guenter Roeck <groeck@chromium.org>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Lecopzer Chen <lecopzer.chen@mediatek.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Masayoshi Mizuma <msys.mizuma@gmail.com>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Pingfan Liu <kernelfans@gmail.com>
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Cc: "Ravi V. Shankar" <ravi.v.shankar@intel.com>
-Cc: Ricardo Neri <ricardo.neri@intel.com>
-Cc: Stephane Eranian <eranian@google.com>
-Cc: Stephen Boyd <swboyd@chromium.org>
-Cc: Sumit Garg <sumit.garg@linaro.org>
-Cc: Tzung-Bi Shih <tzungbi@chromium.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: Colin Cross <ccross@android.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[bhelgaas: commit log]
+Fixes: 6a479079c072 ("PCI: Add pci_clear_master() as opposite of pci_set_master()")
+Link: https://lore.kernel.org/r/20230531102744.2354313-1-suijingfeng@loongson.cn
+Signed-off-by: Sui Jingfeng <suijingfeng@loongson.cn>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/nmi.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/pci.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/nmi.h b/include/linux/nmi.h
-index e972d1ae1ee63..6cb593d9ed08a 100644
---- a/include/linux/nmi.h
-+++ b/include/linux/nmi.h
-@@ -197,7 +197,7 @@ u64 hw_nmi_get_sample_period(int watchdog_thresh);
- #endif
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 3e06e9790c255..1d1b0bfd51968 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -1643,6 +1643,7 @@ static inline struct pci_dev *pci_get_class(unsigned int class,
+ #define pci_dev_put(dev)	do { } while (0)
  
- #if defined(CONFIG_HARDLOCKUP_CHECK_TIMESTAMP) && \
--    defined(CONFIG_HARDLOCKUP_DETECTOR)
-+    defined(CONFIG_HARDLOCKUP_DETECTOR_PERF)
- void watchdog_update_hrtimer_threshold(u64 period);
- #else
- static inline void watchdog_update_hrtimer_threshold(u64 period) { }
+ static inline void pci_set_master(struct pci_dev *dev) { }
++static inline void pci_clear_master(struct pci_dev *dev) { }
+ static inline int pci_enable_device(struct pci_dev *dev) { return -EIO; }
+ static inline void pci_disable_device(struct pci_dev *dev) { }
+ static inline int pci_assign_resource(struct pci_dev *dev, int i)
 -- 
 2.39.2
 
