@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312E31CA1C;
-	Wed,  9 Aug 2023 17:08:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45BBDC433C8;
-	Wed,  9 Aug 2023 17:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9DC71BB20;
+	Wed,  9 Aug 2023 17:11:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA43FC433C7;
+	Wed,  9 Aug 2023 17:11:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1691600937;
-	bh=USf2CNe+vFO69oOfDz0XeOn7FuniUtUriqfKItXgvK4=;
+	s=k20201202; t=1691601109;
+	bh=wb/aJjQcHQqvQeMSkQlG7G2vrAUAWFYd4KCk6Zyjmtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NXwJo2LgnroqBwTpqLtCkwwTTCIYQLvxPfr7dlQDtc5YcUDZB+minjxD3eoA6Xj3h
-	 d7x3QIT0qm6wSuGF1tL72qwEQZcaZZ4Kd5HP+Ov/MOEo9DBQFXiS7oBtFAp1TV9Sb9
-	 WZDulZyxy/XEj5OyuZ4RICAnWuG1UGuVt7+brQdOu2z1mNcR37I7xJT30x9iya7xqh
-	 EJ75Xyt8FPjnYRXLB+MWsgK3D/zPMXtRegBjX6ReT0FTnurWMav0HVd9d/zRSThYQ5
-	 zGLE2k9XNwBbBQd+9s7z6sBFHMZrzwvBcQRo6gg8SmBmrHra56RJDdkGa6A2cStGHQ
-	 3RFUPZdtYH8+Q==
+	b=Lp0Olc0ozslFLkPuEHJvFAGRUumxQV9xdFuBa+ok4UNHZXrTs0ofCZ3TTUxpMqz50
+	 /2O3IpkmLxg9v54AHlqD6nxtA/vm+g8UhDu+QjMeCLmmD2OtM/r04raGqMOpBlksnr
+	 A8JiEkM8kCr8CyCu1VJofJcdZ1HlLV4uA4vLttY6ForVj/0+rlc5EVR/R6mk+ue7bc
+	 2QjeyAQLN2hrJ9hFDRZw0AXpJbjky0PSsDUXhvLWst1U3SLp7eTBNhEr/mpyX7GJsy
+	 odFOa3+o2UJ8S4jlP16TEtEaNzqrSPjZr8gkJF74AEMI5g+5z4xqBk6HUUm2kyXaiE
+	 FgUWmUq5NtafA==
 From: SeongJae Park <sj@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org,
@@ -35,11 +35,11 @@ Cc: stable@vger.kernel.org,
 	conor@kernel.org,
 	damon@lists.linux.dev,
 	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.1 000/127] 6.1.45-rc1 review
-Date: Wed,  9 Aug 2023 17:08:54 +0000
-Message-Id: <20230809170854.90727-1-sj@kernel.org>
+Subject: Re: [PATCH 6.4 000/165] 6.4.10-rc1 review
+Date: Wed,  9 Aug 2023 17:11:46 +0000
+Message-Id: <20230809171146.90801-1-sj@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
+In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -51,10 +51,10 @@ Content-Transfer-Encoding: 8bit
 
 Hello,
 
-On 2023-08-09T12:39:47+02:00   Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On 2023-08-09T12:38:51+02:00   Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> This is the start of the stable review cycle for the 6.1.45 release.
-> There are 127 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.4.10 release.
+> There are 165 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -62,9 +62,9 @@ On 2023-08-09T12:39:47+02:00   Greg Kroah-Hartman <gregkh@linuxfoundation.org> w
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.45-rc1.gz
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.10-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
 > and the diffstat can be found below.
 
 This rc kernel passes DAMON functionality test[1] on my test machine.
@@ -74,7 +74,7 @@ kernel from linux-stable-rc tree[2].
 Tested-by: SeongJae Park <sj@kernel.org>
 
 [1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 02a4c6c322d1 ("Linux 6.1.45-rc1")
+[2] 80226b49c77f ("Linux 6.4.10-rc1")
 
 
 Thanks,
@@ -90,7 +90,11 @@ ok 3 selftests: damon: debugfs_target_ids.sh
 ok 4 selftests: damon: debugfs_empty_targets.sh
 ok 5 selftests: damon: debugfs_huge_count_read_write.sh
 ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: sysfs.sh
+ok 7 selftests: damon: debugfs_rm_non_contexts.sh
+ok 8 selftests: damon: sysfs.sh
+ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
+ok 10 selftests: damon: reclaim.sh
+ok 11 selftests: damon: lru_sort.sh
 ok 1 selftests: damon-tests: kunit.sh
 ok 2 selftests: damon-tests: huge_count_read_write.sh
 ok 3 selftests: damon-tests: buffer_overflow.sh
