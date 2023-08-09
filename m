@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D1017AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:34:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 626CDC433C7;
-	Wed,  9 Aug 2023 11:34:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F56C17AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:34:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE3DC433C7;
+	Wed,  9 Aug 2023 11:34:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580844;
-	bh=dWcf/R750Buawz2Py6+NQACT1zETv7K1TX4Qd6rwSso=;
+	s=korg; t=1691580847;
+	bh=9X6dGSt48HQhRg93b1piqbxRQPQyjkj9oKRBXmYNEcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SgWxW9AsPVJSFJ1F4g43fosplbqQ9VEUoib2uIkAA7hTSNU5dqqk2Q00YGdKzkZAJ
-	 CueCdaxzrMkR5VW2qKvRrUqCPcXw2vWgf077xM5eCYJfgZ/JjPzjJjNMYfwMA9KbAr
-	 jMPoEcVV//4bHDaDH9EHkU3OG0q0j1oBbmABl7nA=
+	b=xl5jcJX/jzeBaaHBZT5kji5m4A0ZRsiSzoKapG4OHiRqQykJQGkDxlPfuD0ONNhqW
+	 UpsheBqDjClPWq6NOLXRNKuyxQcbJnZ8snVSfDOCTPtWAukAvACvZB4kVlVCpBVWd9
+	 Hxd0/9WjaQA8NyYNfbGppOMJuFOmIFkHCPchkup4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexander Aring <aahringo@redhat.com>,
 	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 015/201] dlm: rearrange async condition return
-Date: Wed,  9 Aug 2023 12:40:17 +0200
-Message-ID: <20230809103644.328956337@linuxfoundation.org>
+Subject: [PATCH 5.10 016/201] fs: dlm: interrupt posix locks only when process is killed
+Date: Wed,  9 Aug 2023 12:40:18 +0200
+Message-ID: <20230809103644.359053178@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -37,63 +37,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit a800ba77fd285c6391a82819867ac64e9ab3af46 ]
+[ Upstream commit 59e45c758ca1b9893ac923dd63536da946ac333b ]
 
-This patch moves the return of FILE_LOCK_DEFERRED a little bit earlier
-than checking afterwards again if the request was an asynchronous request.
+If a posix lock request is waiting for a result from user space
+(dlm_controld), do not let it be interrupted unless the process
+is killed. This reverts commit a6b1533e9a57 ("dlm: make posix locks
+interruptible"). The problem with the interruptible change is
+that all locks were cleared on any signal interrupt. If a signal
+was received that did not terminate the process, the process
+could continue running after all its dlm posix locks had been
+cleared. A future patch will add cancelation to allow proper
+interruption.
 
+Cc: stable@vger.kernel.org
+Fixes: a6b1533e9a57 ("dlm: make posix locks interruptible")
 Signed-off-by: Alexander Aring <aahringo@redhat.com>
 Signed-off-by: David Teigland <teigland@redhat.com>
-Stable-dep-of: 59e45c758ca1 ("fs: dlm: interrupt posix locks only when process is killed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/plock.c | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+ fs/dlm/plock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/dlm/plock.c b/fs/dlm/plock.c
-index e70e23eca03ec..01fb7d8c0bca5 100644
+index 01fb7d8c0bca5..f3482e936cc25 100644
 --- a/fs/dlm/plock.c
 +++ b/fs/dlm/plock.c
-@@ -149,26 +149,25 @@ int dlm_posix_lock(dlm_lockspace_t *lockspace, u64 number, struct file *file,
- 		op_data->file	= file;
- 
- 		op->data = op_data;
-+
-+		send_op(op);
-+		rv = FILE_LOCK_DEFERRED;
-+		goto out;
- 	} else {
- 		op->info.owner	= (__u64)(long) fl->fl_owner;
- 	}
+@@ -159,7 +159,7 @@ int dlm_posix_lock(dlm_lockspace_t *lockspace, u64 number, struct file *file,
  
  	send_op(op);
  
--	if (!op->data) {
--		rv = wait_event_interruptible(recv_wq, (op->done != 0));
--		if (rv == -ERESTARTSYS) {
--			log_debug(ls, "dlm_posix_lock: wait killed %llx",
--				  (unsigned long long)number);
--			spin_lock(&ops_lock);
--			list_del(&op->list);
--			spin_unlock(&ops_lock);
--			dlm_release_plock_op(op);
--			do_unlock_close(ls, number, file, fl);
--			goto out;
--		}
--	} else {
--		rv = FILE_LOCK_DEFERRED;
-+	rv = wait_event_interruptible(recv_wq, (op->done != 0));
-+	if (rv == -ERESTARTSYS) {
-+		log_debug(ls, "%s: wait killed %llx", __func__,
-+			  (unsigned long long)number);
-+		spin_lock(&ops_lock);
-+		list_del(&op->list);
-+		spin_unlock(&ops_lock);
-+		dlm_release_plock_op(op);
-+		do_unlock_close(ls, number, file, fl);
- 		goto out;
- 	}
- 
+-	rv = wait_event_interruptible(recv_wq, (op->done != 0));
++	rv = wait_event_killable(recv_wq, (op->done != 0));
+ 	if (rv == -ERESTARTSYS) {
+ 		log_debug(ls, "%s: wait killed %llx", __func__,
+ 			  (unsigned long long)number);
 -- 
 2.39.2
 
