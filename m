@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7A81773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:18:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA90C433C8;
-	Wed,  9 Aug 2023 11:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13CEB1773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:18:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3082AC433C7;
+	Wed,  9 Aug 2023 11:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579909;
-	bh=lkhUxhy61uW8P0bPLPvndZLu+Wlp2DuCOPG4mnQCbCw=;
+	s=korg; t=1691579912;
+	bh=F8boBhUI2j4wx0GuDhJ750eG95unnqZUPbPTId/pP1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YIhs3fJ/QLi1YQxFUbqZbSpe4ZNhGbSn0cW+itQ0KL8pe8u3C5qVU0k+Jqf2w7now
-	 +6hekbMpKBpb5VzYQeH09OsNwxT265ofV6/ErrCOOGpScfiQjzpbgdgq9ZHWvvicUj
-	 kBV48aJiWrWS4Q/EQQwd30hPYA3LuZMLdXtCI/gE=
+	b=icdCF1SL3nAGVe6Lda4odS3RbbyyL2zb4ndL/XNOQrcu93urv3bnmBJnzKXE0pmBF
+	 rscn4d92BFD0BhHPHuvFNzgP7DbRghjoeSU8Pi7fKxv86jPM9rHIhFjEb9x52aDj9L
+	 YbxwhTTr+4JROucAFjx+n2KKp+AsRcXni/xftbLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Siddh Raman Pant <code@siddh.me>,
-	syzbot+d2cd27dcf8e04b232eb2@syzkaller.appspotmail.com
-Subject: [PATCH 4.19 159/323] jfs: jfs_dmap: Validate db_l2nbperpage while mounting
-Date: Wed,  9 Aug 2023 12:39:57 +0200
-Message-ID: <20230809103705.421028010@linuxfoundation.org>
+	Ondrej Zary <linux@zary.sk>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 4.19 160/323] PCI/PM: Avoid putting EloPOS E2/S2/H2 PCIe Ports in D3cold
+Date: Wed,  9 Aug 2023 12:39:58 +0200
+Message-ID: <20230809103705.474027517@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,66 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Siddh Raman Pant <code@siddh.me>
+From: Ondrej Zary <linux@zary.sk>
 
-commit 11509910c599cbd04585ec35a6d5e1a0053d84c1 upstream.
+commit 9e30fd26f43b89cb6b4e850a86caa2e50dedb454 upstream.
 
-In jfs_dmap.c at line 381, BLKTODMAP is used to get a logical block
-number inside dbFree(). db_l2nbperpage, which is the log2 number of
-blocks per page, is passed as an argument to BLKTODMAP which uses it
-for shifting.
+The quirk for Elo i2 introduced in commit 92597f97a40b ("PCI/PM: Avoid
+putting Elo i2 PCIe Ports in D3cold") is also needed by EloPOS E2/S2/H2
+which uses the same Continental Z2 board.
 
-Syzbot reported a shift out-of-bounds crash because db_l2nbperpage is
-too big. This happens because the large value is set without any
-validation in dbMount() at line 181.
+Change the quirk to match the board instead of system.
 
-Thus, make sure that db_l2nbperpage is correct while mounting.
-
-Max number of blocks per page = Page size / Min block size
-=> log2(Max num_block per page) = log2(Page size / Min block size)
-				= log2(Page size) - log2(Min block size)
-
-=> Max db_l2nbperpage = L2PSIZE - L2MINBLOCKSIZE
-
-Reported-and-tested-by: syzbot+d2cd27dcf8e04b232eb2@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?id=2a70a453331db32ed491f5cbb07e81bf2d225715
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=215715
+Link: https://lore.kernel.org/r/20230614074253.22318-1-linux@zary.sk
+Signed-off-by: Ondrej Zary <linux@zary.sk>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Suggested-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-Signed-off-by: Siddh Raman Pant <code@siddh.me>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/jfs_dmap.c   |    6 ++++++
- fs/jfs/jfs_filsys.h |    2 ++
- 2 files changed, 8 insertions(+)
+ drivers/pci/pci.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -191,7 +191,13 @@ int dbMount(struct inode *ipbmap)
- 	dbmp_le = (struct dbmap_disk *) mp->data;
- 	bmp->db_mapsize = le64_to_cpu(dbmp_le->dn_mapsize);
- 	bmp->db_nfree = le64_to_cpu(dbmp_le->dn_nfree);
-+
- 	bmp->db_l2nbperpage = le32_to_cpu(dbmp_le->dn_l2nbperpage);
-+	if (bmp->db_l2nbperpage > L2PSIZE - L2MINBLOCKSIZE) {
-+		err = -EINVAL;
-+		goto err_release_metapage;
-+	}
-+
- 	bmp->db_numag = le32_to_cpu(dbmp_le->dn_numag);
- 	if (!bmp->db_numag) {
- 		err = -EINVAL;
---- a/fs/jfs/jfs_filsys.h
-+++ b/fs/jfs/jfs_filsys.h
-@@ -135,7 +135,9 @@
- #define NUM_INODE_PER_IAG	INOSPERIAG
- 
- #define MINBLOCKSIZE		512
-+#define L2MINBLOCKSIZE		9
- #define MAXBLOCKSIZE		4096
-+#define L2MAXBLOCKSIZE		12
- #define	MAXFILESIZE		((s64)1 << 52)
- 
- #define JFS_LINK_MAX		0xffffffff
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -2521,13 +2521,13 @@ static const struct dmi_system_id bridge
+ 	{
+ 		/*
+ 		 * Downstream device is not accessible after putting a root port
+-		 * into D3cold and back into D0 on Elo i2.
++		 * into D3cold and back into D0 on Elo Continental Z2 board
+ 		 */
+-		.ident = "Elo i2",
++		.ident = "Elo Continental Z2",
+ 		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "Elo Touch Solutions"),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "Elo i2"),
+-			DMI_MATCH(DMI_PRODUCT_VERSION, "RevB"),
++			DMI_MATCH(DMI_BOARD_VENDOR, "Elo Touch Solutions"),
++			DMI_MATCH(DMI_BOARD_NAME, "Geminilake"),
++			DMI_MATCH(DMI_BOARD_VERSION, "Continental Z2"),
+ 		},
+ 	},
+ #endif
 
 
