@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A986817AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:37:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F6A2C433C7;
-	Wed,  9 Aug 2023 11:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C84417AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:37:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E14B8C433C7;
+	Wed,  9 Aug 2023 11:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581027;
-	bh=XoO+8MEOW6KMlYuItrjrz9EFCIFGGdUVUl+6v9cOQvk=;
+	s=korg; t=1691581030;
+	bh=QhMdq6GsBUCYsRgx77tTtwmBPNjhq1VtDPdyxlTqKHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oUnnbtj4ne0SQAnxGsLtev+JxxaoULdJz3beUTogv4NXz3errnJw6hnAwI7fGpBo4
-	 K1N13j8bpFG3hfUX4pEIdrP5CQakWoVQYWQWdk/gT9cr6wQKp55A86XA8O6uJk6Y2x
-	 ytMArqfvyjFZoF8clGTnp4Mc25YCfS02EH3ijbSI=
+	b=1ovic7cm/I6Chq/SaR/uOPpNQulfRPBvCgzBT6lLQO7rQL3daoh9vJH7M8BMOTCaw
+	 Xy4z7f94N25iWl2OQ65rzGM17kJac4MtyNkAB8vN7WUorqbalNlpvTKy+uarbOXQZL
+	 qv9kgHokHze0klO1P0aYFViqAlzP2AYh5RiboSak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 052/201] RDMA/mlx4: Make check for invalid flags stricter
-Date: Wed,  9 Aug 2023 12:40:54 +0200
-Message-ID: <20230809103645.586527095@linuxfoundation.org>
+	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <lb@semihalf.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.10 079/201] USB: quirks: add quirk for Focusrite Scarlett
+Date: Wed,  9 Aug 2023 12:41:21 +0200
+Message-ID: <20230809103646.451791558@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -35,55 +34,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Łukasz Bartosik <lb@semihalf.com>
 
-[ Upstream commit d64b1ee12a168030fbb3e0aebf7bce49e9a07589 ]
+commit 9dc162e22387080e2d06de708b89920c0e158c9a upstream.
 
-This code is trying to ensure that only the flags specified in the list
-are allowed.  The problem is that ucmd->rx_hash_fields_mask is a u64 and
-the flags are an enum which is treated as a u32 in this context.  That
-means the test doesn't check whether the highest 32 bits are zero.
+The Focusrite Scarlett audio device does not behave correctly during
+resumes. Below is what happens during every resume (captured with
+Beagle 5000):
 
-Fixes: 4d02ebd9bbbd ("IB/mlx4: Fix RSS hash fields restrictions")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/233ed975-982d-422a-b498-410f71d8a101@moroto.mountain
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+<Suspend>
+<Resume>
+<Reset>/<Chirp J>/<Tiny J>
+<Reset/Target disconnected>
+<High Speed>
+
+The Scarlett disconnects and is enumerated again.
+
+However from time to time it drops completely off the USB bus during
+resume. Below is captured occurrence of such an event:
+
+<Suspend>
+<Resume>
+<Reset>/<Chirp J>/<Tiny J>
+<Reset>/<Chirp K>/<Tiny K>
+<High Speed>
+<Corrupted packet>
+<Reset/Target disconnected>
+
+To fix the condition a user has to unplug and plug the device again.
+
+With USB_QUIRK_RESET_RESUME applied ("usbcore.quirks=1235:8211:b")
+for the Scarlett audio device the issue still reproduces.
+
+Applying USB_QUIRK_DISCONNECT_SUSPEND ("usbcore.quirks=1235:8211:m")
+fixed the issue and the Scarlett audio device didn't drop off the USB
+bus for ~5000 suspend/resume cycles where originally issue reproduced in
+~100 or less suspend/resume cycles.
+
+Signed-off-by: Łukasz Bartosik <lb@semihalf.com>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230724112911.1802577-1-lb@semihalf.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/mlx4/qp.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/usb/core/quirks.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/infiniband/hw/mlx4/qp.c b/drivers/infiniband/hw/mlx4/qp.c
-index 255194029e2d8..50b355e34445c 100644
---- a/drivers/infiniband/hw/mlx4/qp.c
-+++ b/drivers/infiniband/hw/mlx4/qp.c
-@@ -530,15 +530,15 @@ static int set_qp_rss(struct mlx4_ib_dev *dev, struct mlx4_ib_rss *rss_ctx,
- 		return (-EOPNOTSUPP);
- 	}
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -437,6 +437,10 @@ static const struct usb_device_id usb_qu
+ 	/* novation SoundControl XL */
+ 	{ USB_DEVICE(0x1235, 0x0061), .driver_info = USB_QUIRK_RESET_RESUME },
  
--	if (ucmd->rx_hash_fields_mask & ~(MLX4_IB_RX_HASH_SRC_IPV4	|
--					  MLX4_IB_RX_HASH_DST_IPV4	|
--					  MLX4_IB_RX_HASH_SRC_IPV6	|
--					  MLX4_IB_RX_HASH_DST_IPV6	|
--					  MLX4_IB_RX_HASH_SRC_PORT_TCP	|
--					  MLX4_IB_RX_HASH_DST_PORT_TCP	|
--					  MLX4_IB_RX_HASH_SRC_PORT_UDP	|
--					  MLX4_IB_RX_HASH_DST_PORT_UDP  |
--					  MLX4_IB_RX_HASH_INNER)) {
-+	if (ucmd->rx_hash_fields_mask & ~(u64)(MLX4_IB_RX_HASH_SRC_IPV4	|
-+					       MLX4_IB_RX_HASH_DST_IPV4	|
-+					       MLX4_IB_RX_HASH_SRC_IPV6	|
-+					       MLX4_IB_RX_HASH_DST_IPV6	|
-+					       MLX4_IB_RX_HASH_SRC_PORT_TCP |
-+					       MLX4_IB_RX_HASH_DST_PORT_TCP |
-+					       MLX4_IB_RX_HASH_SRC_PORT_UDP |
-+					       MLX4_IB_RX_HASH_DST_PORT_UDP |
-+					       MLX4_IB_RX_HASH_INNER)) {
- 		pr_debug("RX Hash fields_mask has unsupported mask (0x%llx)\n",
- 			 ucmd->rx_hash_fields_mask);
- 		return (-EOPNOTSUPP);
--- 
-2.40.1
-
++	/* Focusrite Scarlett Solo USB */
++	{ USB_DEVICE(0x1235, 0x8211), .driver_info =
++			USB_QUIRK_DISCONNECT_SUSPEND },
++
+ 	/* Huawei 4G LTE module */
+ 	{ USB_DEVICE(0x12d1, 0x15bb), .driver_info =
+ 			USB_QUIRK_DISCONNECT_SUSPEND },
 
 
