@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF58616428
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:52:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C14A9C433C8;
-	Wed,  9 Aug 2023 10:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1605816428
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:52:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C496C433C8;
+	Wed,  9 Aug 2023 10:52:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578335;
-	bh=w8W9vcNiaAvRJxiDXnsDvbwGEJ1KmzsA5O5Ax1MqMQE=;
+	s=korg; t=1691578337;
+	bh=6WhjAG1T28u5DjVEQTAG3JW0y652XEj+QoODt3HW8o8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mXYjX0sK7wdd9DPUFOotx4+tBNznS4phxyNAjwxftFW6J/buJRY1Q1JFu4AH/xmjr
-	 qr8Iky+x5W3ekbG4MP3NAtgNtQNuVmGosRdJ7oBCIaJs1+WKIJQWfolrkBvmHMADFG
-	 j60mrGVr86sV9Jl0n6oM30M6wroVCBswKHylF7Xk=
+	b=AD64zOFpEYliAXBdt9wHC6MCI+yI7DvwwdFhlYgtR3hjX6WP7iC1+eJCyaD6n/h36
+	 Hs1Jz1n3j6nMv4yiBS0t+KZVvk49bFKfkd3wWVaw/MLHOUV3tb4S5wLbIbcJawsmw1
+	 b2VhArxdRteKvvBSEot/WAixHBC73+/h9OuudiBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Simon Horman <simon.horman@corigine.com>,
 	Leon Romanovsky <leonro@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/127] net/mlx5e: fix double free in macsec_fs_tx_create_crypto_table_groups
-Date: Wed,  9 Aug 2023 12:40:09 +0200
-Message-ID: <20230809103637.378800821@linuxfoundation.org>
+Subject: [PATCH 6.1 023/127] net/mlx5: DR, fix memory leak in mlx5dr_cmd_create_reformat_ctx
+Date: Wed,  9 Aug 2023 12:40:10 +0200
+Message-ID: <20230809103637.407899898@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -39,35 +38,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit aeb660171b0663847fa04806a96302ac6112ad26 ]
+[ Upstream commit 5dd77585dd9d0e03dd1bceb95f0269a7eaf6b936 ]
 
-In function macsec_fs_tx_create_crypto_table_groups(), when the ft->g
-memory is successfully allocated but the 'in' memory fails to be
-allocated, the memory pointed to by ft->g is released once. And in function
-macsec_fs_tx_create(), macsec_fs_tx_destroy() is called to release the
-memory pointed to by ft->g again. This will cause double free problem.
+when mlx5_cmd_exec failed in mlx5dr_cmd_create_reformat_ctx, the memory
+pointed by 'in' is not released, which will cause memory leak. Move memory
+release after mlx5_cmd_exec.
 
-Fixes: e467b283ffd5 ("net/mlx5e: Add MACsec TX steering rules")
+Fixes: 1d9186476e12 ("net/mlx5: DR, Add direct rule command utilities")
 Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/steering/dr_cmd.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c
-index 5b658a5588c64..6ecf0bf2366ad 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c
-@@ -160,6 +160,7 @@ static int macsec_fs_tx_create_crypto_table_groups(struct mlx5e_flow_table *ft)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_cmd.c
+index 84364691a3791..d7b1a230b59e8 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_cmd.c
+@@ -538,11 +538,12 @@ int mlx5dr_cmd_create_reformat_ctx(struct mlx5_core_dev *mdev,
  
- 	if (!in) {
- 		kfree(ft->g);
-+		ft->g = NULL;
- 		return -ENOMEM;
- 	}
+ 	err = mlx5_cmd_exec(mdev, in, inlen, out, sizeof(out));
+ 	if (err)
+-		return err;
++		goto err_free_in;
+ 
+ 	*reformat_id = MLX5_GET(alloc_packet_reformat_context_out, out, packet_reformat_id);
+-	kvfree(in);
+ 
++err_free_in:
++	kvfree(in);
+ 	return err;
+ }
  
 -- 
 2.40.1
