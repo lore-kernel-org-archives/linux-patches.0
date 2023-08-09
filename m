@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F021773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:17:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC4BEC433C8;
-	Wed,  9 Aug 2023 11:17:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3139F1773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:18:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7927C433CC;
+	Wed,  9 Aug 2023 11:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579879;
-	bh=bXWQZ+JqD0uS2Qqt4S6OQVWlgOZK9PxJ6N/lJIiGs+4=;
+	s=korg; t=1691579882;
+	bh=1tTUMOrtH4t8FeyFBPR6ECdpDSgokq1hd0pzlKF9KLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W98GkXR31oo+WLf81FcbLOB+otYvmMhTAvhcGzklCr5FG51kZzrp7huDjYAIozF7J
-	 pXk1HclSIu483s4DWuykaEs6niV3rjyDNTBnuac2ui+0XLDYXUzv1zujRGPByzP9ra
-	 K0Vv36nTVRX44g5uhkiMoM+mlb2LrdE1yN5Zs3sc=
+	b=Bd/qEF1KfkvcPaCBMo4D0jj50pBDfAtPoCJ3ijAyIrOe6uc5w4RMNvBKOo0eR1ky6
+	 +BYGbwg7K7z0IHQzi1MEve7pdY0Gbx8faEtx1zBuno9TNo+6Objd2IQD3Zye7U0PjA
+	 R6Mlsmw1RjcrZMbwXY5blaz0BTKqfiKIKJ0Eloac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 149/323] net/sched: make psched_mtu() RTNL-less safe
-Date: Wed,  9 Aug 2023 12:39:47 +0200
-Message-ID: <20230809103704.974196072@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 4.19 150/323] pinctrl: amd: Fix mistake in handling clearing pins at startup
+Date: Wed,  9 Aug 2023 12:39:48 +0200
+Message-ID: <20230809103705.024293747@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -37,49 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 150e33e62c1fa4af5aaab02776b6c3812711d478 ]
+commit a855724dc08b8cb0c13ab1e065a4922f1e5a7552 upstream.
 
-Eric Dumazet says[1]:
--------
-Speaking of psched_mtu(), I see that net/sched/sch_pie.c is using it
-without holding RTNL, so dev->mtu can be changed underneath.
-KCSAN could issue a warning.
--------
+commit 4e5a04be88fe ("pinctrl: amd: disable and mask interrupts on probe")
+had a mistake in loop iteration 63 that it would clear offset 0xFC instead
+of 0x100.  Offset 0xFC is actually `WAKE_INT_MASTER_REG`.  This was
+clearing bits 13 and 15 from the register which significantly changed the
+expected handling for some platforms for GPIO0.
 
-Annotate dev->mtu with READ_ONCE() so KCSAN don't issue a warning.
-
-[1] https://lore.kernel.org/all/CANn89iJoJO5VtaJ-2=_d2aOQhb0Xw8iBT_Cxqp2HyuS-zj6azw@mail.gmail.com/
-
-v1 -> v2: Fix commit message
-
-Fixes: d4b36210c2e6 ("net: pkt_sched: PIE AQM scheme")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230711021634.561598-1-pctammela@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217315
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20230421120625.3366-3-mario.limonciello@amd.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/pkt_sched.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-amd.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/pkt_sched.h b/include/net/pkt_sched.h
-index e09ea6917c061..83a16f3bd6e6a 100644
---- a/include/net/pkt_sched.h
-+++ b/include/net/pkt_sched.h
-@@ -131,7 +131,7 @@ extern const struct nla_policy rtm_tca_policy[TCA_MAX + 1];
-  */
- static inline unsigned int psched_mtu(const struct net_device *dev)
- {
--	return dev->mtu + dev->hard_header_len;
-+	return READ_ONCE(dev->mtu) + dev->hard_header_len;
- }
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -794,9 +794,9 @@ static void amd_gpio_irq_init(struct amd
  
- static inline struct net *qdisc_net(struct Qdisc *q)
--- 
-2.39.2
-
+ 		raw_spin_lock_irqsave(&gpio_dev->lock, flags);
+ 
+-		pin_reg = readl(gpio_dev->base + i * 4);
++		pin_reg = readl(gpio_dev->base + pin * 4);
+ 		pin_reg &= ~mask;
+-		writel(pin_reg, gpio_dev->base + i * 4);
++		writel(pin_reg, gpio_dev->base + pin * 4);
+ 
+ 		raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
+ 	}
 
 
