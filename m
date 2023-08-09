@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602C3174CA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:03:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7889C433C8;
-	Wed,  9 Aug 2023 11:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F612174CA
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:03:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A14B2C433C8;
+	Wed,  9 Aug 2023 11:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579029;
-	bh=Zyl2TsRFo6xG9QTn6JXHh8R6JmKmvFSHWQSAEkmElhM=;
+	s=korg; t=1691579032;
+	bh=79oJTpMQ5Qe+GEEct3IbWLo3vsiIMe3t0neDilyZ+Jw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qgN5MG/PhQlcqLZdSbLEkTKtINWPGhtAau1fhTykuWub40bEv9tX61FL3pwkjr11m
-	 m/f56SgkD3GAp7OiM5DxVJBrFgUUbRrXyqMxqex2n2QGi3vxaBZFVx+EoTM/qeSJZy
-	 XUVMSFNJXYeNuyyb5sbJuj5i2PVOF1lqWcv0Jm0g=
+	b=ocbUp9jz7FMfJE1K0z8MpdIYzhr5PYkSb9Yuo62mf06nxwO7rkJzjR8wLp7YdLJdU
+	 t5SXt/6nGtOdX62KsDjLv0CJ3SBevkyXBnMrhTIQyjbIeahiqYoqr5bsYoiUGiWs3z
+	 XXa7Qc9Lo/IdoE4bIwFcyRE3AJMlaTGytE4ngwNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 011/204] md/raid10: fix io loss while replacement replace rdev
-Date: Wed,  9 Aug 2023 12:39:09 +0200
-Message-ID: <20230809103642.957299233@linuxfoundation.org>
+Subject: [PATCH 4.14 043/204] drm/radeon: fix possible division-by-zero errors
+Date: Wed,  9 Aug 2023 12:39:41 +0200
+Message-ID: <20230809103644.012016152@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -36,77 +35,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Nan <linan122@huawei.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 2ae6aaf76912bae53c74b191569d2ab484f24bf3 ]
+[ Upstream commit 1becc57cd1a905e2aa0e1eca60d2a37744525c4a ]
 
-When removing a disk with replacement, the replacement will be used to
-replace rdev. During this process, there is a brief window in which both
-rdev and replacement are read as NULL in raid10_write_request(). This
-will result in io not being submitted but it should be.
+Function rv740_get_decoded_reference_divider() may return 0 due to
+unpredictable reference divider value calculated in
+radeon_atom_get_clock_dividers(). This will lead to
+division-by-zero error once that value is used as a divider
+in calculating 'clk_s'.
+While unlikely, this issue should nonetheless be prevented so add a
+sanity check for such cases by testing 'decoded_ref' value against 0.
 
-  //remove				//write
-  raid10_remove_disk			raid10_write_request
-   mirror->rdev = NULL
-					 read rdev -> NULL
-   mirror->rdev = mirror->replacement
-   mirror->replacement = NULL
-					 read replacement -> NULL
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-Fix it by reading replacement first and rdev later, meanwhile, use smp_mb()
-to prevent memory reordering.
+v2: minor coding style fixes (Alex)
+In practice this should actually happen as the vbios should be
+properly populated.
 
-Fixes: 475b0321a4df ("md/raid10: writes should get directed to replacement as well as original.")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230602091839.743798-3-linan666@huaweicloud.com
+Fixes: 66229b200598 ("drm/radeon/kms: add dpm support for rv7xx (v4)")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/radeon/cypress_dpm.c | 8 ++++++--
+ drivers/gpu/drm/radeon/ni_dpm.c      | 8 ++++++--
+ drivers/gpu/drm/radeon/rv740_dpm.c   | 8 ++++++--
+ 3 files changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 95c3a21cd7335..25c8f3e3d2edb 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -775,8 +775,16 @@ static struct md_rdev *read_balance(struct r10conf *conf,
- 		disk = r10_bio->devs[slot].devnum;
- 		rdev = rcu_dereference(conf->mirrors[disk].replacement);
- 		if (rdev == NULL || test_bit(Faulty, &rdev->flags) ||
--		    r10_bio->devs[slot].addr + sectors > rdev->recovery_offset)
-+		    r10_bio->devs[slot].addr + sectors >
-+		    rdev->recovery_offset) {
-+			/*
-+			 * Read replacement first to prevent reading both rdev
-+			 * and replacement as NULL during replacement replace
-+			 * rdev.
-+			 */
-+			smp_mb();
- 			rdev = rcu_dereference(conf->mirrors[disk].rdev);
-+		}
- 		if (rdev == NULL ||
- 		    test_bit(Faulty, &rdev->flags))
- 			continue;
-@@ -1366,9 +1374,15 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
- 
- 	for (i = 0;  i < conf->copies; i++) {
- 		int d = r10_bio->devs[i].devnum;
--		struct md_rdev *rdev = rcu_dereference(conf->mirrors[d].rdev);
--		struct md_rdev *rrdev = rcu_dereference(
--			conf->mirrors[d].replacement);
-+		struct md_rdev *rdev, *rrdev;
+diff --git a/drivers/gpu/drm/radeon/cypress_dpm.c b/drivers/gpu/drm/radeon/cypress_dpm.c
+index 3eb7899a4035b..2c637e04dfebc 100644
+--- a/drivers/gpu/drm/radeon/cypress_dpm.c
++++ b/drivers/gpu/drm/radeon/cypress_dpm.c
+@@ -558,8 +558,12 @@ static int cypress_populate_mclk_value(struct radeon_device *rdev,
+ 						     ASIC_INTERNAL_MEMORY_SS, vco_freq)) {
+ 			u32 reference_clock = rdev->clock.mpll.reference_freq;
+ 			u32 decoded_ref = rv740_get_decoded_reference_divider(dividers.ref_div);
+-			u32 clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
+-			u32 clk_v = ss.percentage *
++			u32 clk_s, clk_v;
 +
-+		rrdev = rcu_dereference(conf->mirrors[d].replacement);
-+		/*
-+		 * Read replacement first to prevent reading both rdev and
-+		 * replacement as NULL during replacement replace rdev.
-+		 */
-+		smp_mb();
-+		rdev = rcu_dereference(conf->mirrors[d].rdev);
- 		if (rdev == rrdev)
- 			rrdev = NULL;
- 		if (rdev && unlikely(test_bit(Blocked, &rdev->flags))) {
++			if (!decoded_ref)
++				return -EINVAL;
++			clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
++			clk_v = ss.percentage *
+ 				(0x4000 * dividers.whole_fb_div + 0x800 * dividers.frac_fb_div) / (clk_s * 625);
+ 
+ 			mpll_ss1 &= ~CLKV_MASK;
+diff --git a/drivers/gpu/drm/radeon/ni_dpm.c b/drivers/gpu/drm/radeon/ni_dpm.c
+index fa88c18099464..701c99a551388 100644
+--- a/drivers/gpu/drm/radeon/ni_dpm.c
++++ b/drivers/gpu/drm/radeon/ni_dpm.c
+@@ -2239,8 +2239,12 @@ static int ni_populate_mclk_value(struct radeon_device *rdev,
+ 						     ASIC_INTERNAL_MEMORY_SS, vco_freq)) {
+ 			u32 reference_clock = rdev->clock.mpll.reference_freq;
+ 			u32 decoded_ref = rv740_get_decoded_reference_divider(dividers.ref_div);
+-			u32 clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
+-			u32 clk_v = ss.percentage *
++			u32 clk_s, clk_v;
++
++			if (!decoded_ref)
++				return -EINVAL;
++			clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
++			clk_v = ss.percentage *
+ 				(0x4000 * dividers.whole_fb_div + 0x800 * dividers.frac_fb_div) / (clk_s * 625);
+ 
+ 			mpll_ss1 &= ~CLKV_MASK;
+diff --git a/drivers/gpu/drm/radeon/rv740_dpm.c b/drivers/gpu/drm/radeon/rv740_dpm.c
+index afd597ec50858..50290e93c79dc 100644
+--- a/drivers/gpu/drm/radeon/rv740_dpm.c
++++ b/drivers/gpu/drm/radeon/rv740_dpm.c
+@@ -251,8 +251,12 @@ int rv740_populate_mclk_value(struct radeon_device *rdev,
+ 						     ASIC_INTERNAL_MEMORY_SS, vco_freq)) {
+ 			u32 reference_clock = rdev->clock.mpll.reference_freq;
+ 			u32 decoded_ref = rv740_get_decoded_reference_divider(dividers.ref_div);
+-			u32 clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
+-			u32 clk_v = 0x40000 * ss.percentage *
++			u32 clk_s, clk_v;
++
++			if (!decoded_ref)
++				return -EINVAL;
++			clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
++			clk_v = 0x40000 * ss.percentage *
+ 				(dividers.whole_fb_div + (dividers.frac_fb_div / 8)) / (clk_s * 10000);
+ 
+ 			mpll_ss1 &= ~CLKV_MASK;
 -- 
 2.39.2
 
