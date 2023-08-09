@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF5E17731
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:06:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF199C433C8;
-	Wed,  9 Aug 2023 11:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2A017731
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:06:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9405CC433C9;
+	Wed,  9 Aug 2023 11:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579174;
-	bh=qIUbFIFjGGlJsCQorxyHsKGFqClDeyPkXu6KpR2Woc0=;
+	s=korg; t=1691579176;
+	bh=h3eCyERTzNdjXRZTxvGHXInrl1OBWlykxQMqCXbe1v0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ngoFATR47nOQ1VXgCElyzOc3Rkjv68Ui+fdRowpKOJJxo/7FG7gccIZP1iYhccvep
-	 sQQIzG7uCC2AVnHB8dj6tYi1lkE916NLDmbwOwmEQnqHO1R0PaS4fx0CXAD0P6KhUo
-	 KLd91hHBk2/LX3NCVhUru1t+OCrLzWvu3GFXc29I=
+	b=NjwnO5MVXMoVkWOmB38JbA9pmZRdQww1QiroTAOEfPU8H8u7NMwPKNI7fQsdCLVlm
+	 Evcr2Pgp1+pYvURzWJXuorAVQ1//sCVHm1MDtPJ4fIEKaWpnr3LM8XkMZ1fO5emkfe
+	 EYMZhxPjCat9McAf/IDFzw75GE28KhHkYg3gZgHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 101/204] net/sched: make psched_mtu() RTNL-less safe
-Date: Wed,  9 Aug 2023 12:40:39 +0200
-Message-ID: <20230809103646.009801105@linuxfoundation.org>
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Jarkko Sakkinen <jarkko.sakkinen@tuni.fi>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 4.14 102/204] tpm: tpm_vtpm_proxy: fix a race condition in /dev/vtpmx creation
+Date: Wed,  9 Aug 2023 12:40:40 +0200
+Message-ID: <20230809103646.042930488@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -37,49 +35,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Jarkko Sakkinen <jarkko.sakkinen@tuni.fi>
 
-[ Upstream commit 150e33e62c1fa4af5aaab02776b6c3812711d478 ]
+commit f4032d615f90970d6c3ac1d9c0bce3351eb4445c upstream.
 
-Eric Dumazet says[1]:
--------
-Speaking of psched_mtu(), I see that net/sched/sch_pie.c is using it
-without holding RTNL, so dev->mtu can be changed underneath.
-KCSAN could issue a warning.
--------
+/dev/vtpmx is made visible before 'workqueue' is initialized, which can
+lead to a memory corruption in the worst case scenario.
 
-Annotate dev->mtu with READ_ONCE() so KCSAN don't issue a warning.
+Address this by initializing 'workqueue' as the very first step of the
+driver initialization.
 
-[1] https://lore.kernel.org/all/CANn89iJoJO5VtaJ-2=_d2aOQhb0Xw8iBT_Cxqp2HyuS-zj6azw@mail.gmail.com/
-
-v1 -> v2: Fix commit message
-
-Fixes: d4b36210c2e6 ("net: pkt_sched: PIE AQM scheme")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230711021634.561598-1-pctammela@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 6f99612e2500 ("tpm: Proxy driver for supporting multiple emulated TPMs")
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Signed-off-by: Jarkko Sakkinen <jarkko.sakkinen@tuni.fi>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/pkt_sched.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/tpm/tpm_vtpm_proxy.c |   30 +++++++-----------------------
+ 1 file changed, 7 insertions(+), 23 deletions(-)
 
-diff --git a/include/net/pkt_sched.h b/include/net/pkt_sched.h
-index 85e059d3bc233..7b6024f2d4eaa 100644
---- a/include/net/pkt_sched.h
-+++ b/include/net/pkt_sched.h
-@@ -133,7 +133,7 @@ extern const struct nla_policy rtm_tca_policy[TCA_MAX + 1];
-  */
- static inline unsigned int psched_mtu(const struct net_device *dev)
+--- a/drivers/char/tpm/tpm_vtpm_proxy.c
++++ b/drivers/char/tpm/tpm_vtpm_proxy.c
+@@ -700,37 +700,21 @@ static struct miscdevice vtpmx_miscdev =
+ 	.fops = &vtpmx_fops,
+ };
+ 
+-static int vtpmx_init(void)
+-{
+-	return misc_register(&vtpmx_miscdev);
+-}
+-
+-static void vtpmx_cleanup(void)
+-{
+-	misc_deregister(&vtpmx_miscdev);
+-}
+-
+ static int __init vtpm_module_init(void)
  {
--	return dev->mtu + dev->hard_header_len;
-+	return READ_ONCE(dev->mtu) + dev->hard_header_len;
+ 	int rc;
+ 
+-	rc = vtpmx_init();
+-	if (rc) {
+-		pr_err("couldn't create vtpmx device\n");
+-		return rc;
+-	}
+-
+ 	workqueue = create_workqueue("tpm-vtpm");
+ 	if (!workqueue) {
+ 		pr_err("couldn't create workqueue\n");
+-		rc = -ENOMEM;
+-		goto err_vtpmx_cleanup;
++		return -ENOMEM;
+ 	}
+ 
+-	return 0;
+-
+-err_vtpmx_cleanup:
+-	vtpmx_cleanup();
++	rc = misc_register(&vtpmx_miscdev);
++	if (rc) {
++		pr_err("couldn't create vtpmx device\n");
++		destroy_workqueue(workqueue);
++	}
+ 
+ 	return rc;
+ }
+@@ -738,7 +722,7 @@ err_vtpmx_cleanup:
+ static void __exit vtpm_module_exit(void)
+ {
+ 	destroy_workqueue(workqueue);
+-	vtpmx_cleanup();
++	misc_deregister(&vtpmx_miscdev);
  }
  
- static inline bool is_classid_clsact_ingress(u32 classid)
--- 
-2.39.2
-
+ module_init(vtpm_module_init);
 
 
