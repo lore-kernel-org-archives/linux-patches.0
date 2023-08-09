@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038C117AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:36:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ACC0C433C8;
-	Wed,  9 Aug 2023 11:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBE617AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:36:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F2BFC433C8;
+	Wed,  9 Aug 2023 11:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580993;
-	bh=v/YyHskIMONw7W8OYh+x6h1qcGTm1Mgs/t4Mnf22p58=;
+	s=korg; t=1691580996;
+	bh=wzF1K+u6aaEzLFict1PTn5PtZscftQQ8HPIFxJw/9FI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Id2O4Vv/8cEWRRZPa8ui4zcirbxaxc31DYTfLkq1MySjbIk0NwvXPz8wbcE8d5rf8
-	 R7Pi491jln4RMZ0yGyhtgt68yUIGbjPGnJY2uLn+vwHkDsr+AsslhGi0GlmzXC1I0X
-	 yRdceyEkXQ9CNaJ1P/K1m53gbFAALDwxqfnY35OQ=
+	b=zPDfIUC+ZH9eYGBYEJ76LVQbjz2AFOOsp2RlTlFs36JPRdcOgA+R2tn3JfTz5sOXM
+	 AEax/SmfBYsKcA4VRJVFzNquTbp7eNF5ZJGQFbEOkKNHLh7632kcIrS192J4cCzJ9S
+	 Mkgoovo8yrIxhgfMiFaoaFi1v664Su7iPYJb9Psk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ruihong Luo <colorsu1922@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 5.10 068/201] serial: 8250_dw: Preserve original value of DLF register
-Date: Wed,  9 Aug 2023 12:41:10 +0200
-Message-ID: <20230809103646.109426702@linuxfoundation.org>
+	Xin Long <lucien.xin@gmail.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 051/201] tipc: stop tipc crypto on failure in tipc_node_create
+Date: Wed,  9 Aug 2023 12:40:53 +0200
+Message-ID: <20230809103645.557172319@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -36,50 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ruihong Luo <colorsu1922@gmail.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 748c5ea8b8796ae8ee80b8d3a3d940570b588d59 upstream.
+[ Upstream commit de52e17326c3e9a719c9ead4adb03467b8fae0ef ]
 
-Preserve the original value of the Divisor Latch Fraction (DLF) register.
-When the DLF register is modified without preservation, it can disrupt
-the baudrate settings established by firmware or bootloader, leading to
-data corruption and the generation of unreadable or distorted characters.
+If tipc_link_bc_create() fails inside tipc_node_create() for a newly
+allocated tipc node then we should stop its tipc crypto and free the
+resources allocated with a call to tipc_crypto_start().
 
-Fixes: 701c5e73b296 ("serial: 8250_dw: add fractional divisor support")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ruihong Luo <colorsu1922@gmail.com>
-Link: https://lore.kernel.org/stable/20230713004235.35904-1-colorsu1922%40gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230713004235.35904-1-colorsu1922@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+As the node ref is initialized to one to that point, just put the ref on
+tipc_link_bc_create() error case that would lead to tipc_node_free() be
+eventually executed and properly clean the node and its crypto resources.
+
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: cb8092d70a6f ("tipc: move bc link creation back to tipc_node_create")
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/20230725214628.25246-1-pchelkin@ispras.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_dwlib.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/tipc/node.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/8250/8250_dwlib.c
-+++ b/drivers/tty/serial/8250/8250_dwlib.c
-@@ -80,7 +80,7 @@ static void dw8250_set_divisor(struct ua
- void dw8250_setup_port(struct uart_port *p)
- {
- 	struct uart_8250_port *up = up_to_u8250p(p);
--	u32 reg;
-+	u32 reg, old_dlf;
- 
- 	/*
- 	 * If the Component Version Register returns zero, we know that
-@@ -93,9 +93,11 @@ void dw8250_setup_port(struct uart_port
- 	dev_dbg(p->dev, "Designware UART version %c.%c%c\n",
- 		(reg >> 24) & 0xff, (reg >> 16) & 0xff, (reg >> 8) & 0xff);
- 
-+	/* Preserve value written by firmware or bootloader  */
-+	old_dlf = dw8250_readl_ext(p, DW_UART_DLF);
- 	dw8250_writel_ext(p, DW_UART_DLF, ~0U);
- 	reg = dw8250_readl_ext(p, DW_UART_DLF);
--	dw8250_writel_ext(p, DW_UART_DLF, 0);
-+	dw8250_writel_ext(p, DW_UART_DLF, old_dlf);
- 
- 	if (reg) {
- 		struct dw8250_port_data *d = p->private_data;
+diff --git a/net/tipc/node.c b/net/tipc/node.c
+index 38f61dccb8552..9e3cfeb82a23d 100644
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -567,7 +567,7 @@ struct tipc_node *tipc_node_create(struct net *net, u32 addr, u8 *peer_id,
+ 				 n->capabilities, &n->bc_entry.inputq1,
+ 				 &n->bc_entry.namedq, snd_l, &n->bc_entry.link)) {
+ 		pr_warn("Broadcast rcv link creation failed, no memory\n");
+-		kfree(n);
++		tipc_node_put(n);
+ 		n = NULL;
+ 		goto exit;
+ 	}
+-- 
+2.39.2
+
 
 
