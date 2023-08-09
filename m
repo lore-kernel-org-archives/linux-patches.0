@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D66763B4
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:10:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD867C433C7;
-	Wed,  9 Aug 2023 11:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4EC14F8E
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:10:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBFD9C433C8;
+	Wed,  9 Aug 2023 11:10:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579439;
-	bh=p73Xefp+eZuzIvz0TvYZQjRi1+zTZoheJpMRaOwCD9o=;
+	s=korg; t=1691579442;
+	bh=b6D4oGDJPJ/t8wjEXFx6aE0D7uDPZU5QAoKaGZliVC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IUUJGghkm0t4w7hTZVFi0b+Av0jA3QoxeNLp4VG6pb9sz4nHz8Dnrjyge/9M7/dAi
-	 jihqIGqyXDoUNGm5JWox/hOo8lBB7+PfpueXa2k1NRQ5AWU1lEV9MYGG4Lh6WVTBJa
-	 T5Nj2g6OUH4yqhcYYOWY4YwqVSAzQnPnqN4NBZVk=
+	b=BwfC4GlPv/3AIoKTZLSA6VjtAzpDDxIpdEpNUGMYF+zztoynY6WHEjHCyBgFeKLFp
+	 Rriv3BB0e2pMHnCJR+3CC9m9pNr/tmY5EflrWqysUWe/K8KBulVUjNbB1tp9TLPjru
+	 YwmXju/5SwVfxaXvqhmTeSMEKiWIX00QgANWW50I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Ming Lei <ming.lei@redhat.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Martijn Coenen <maco@android.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 4.14 196/204] loop: Select I/O scheduler none from inside add_disk()
-Date: Wed,  9 Aug 2023 12:42:14 +0200
-Message-ID: <20230809103649.042478097@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>,
+	Xiubo Li <xiubli@redhat.com>
+Subject: [PATCH 4.14 197/204] libceph: fix potential hang in ceph_osdc_notify()
+Date: Wed,  9 Aug 2023 12:42:15 +0200
+Message-ID: <20230809103649.081278214@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -39,53 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit 2112f5c1330a671fa852051d85cb9eadc05d7eb7 upstream.
+commit e6e2843230799230fc5deb8279728a7218b0d63c upstream.
 
-We noticed that the user interface of Android devices becomes very slow
-under memory pressure. This is because Android uses the zram driver on top
-of the loop driver for swapping, because under memory pressure the swap
-code alternates reads and writes quickly, because mq-deadline is the
-default scheduler for loop devices and because mq-deadline delays writes by
-five seconds for such a workload with default settings. Fix this by making
-the kernel select I/O scheduler 'none' from inside add_disk() for loop
-devices. This default can be overridden at any time from user space,
-e.g. via a udev rule. This approach has an advantage compared to changing
-the I/O scheduler from userspace from 'mq-deadline' into 'none', namely
-that synchronize_rcu() does not get called.
+If the cluster becomes unavailable, ceph_osdc_notify() may hang even
+with osd_request_timeout option set because linger_notify_finish_wait()
+waits for MWatchNotify NOTIFY_COMPLETE message with no associated OSD
+request in flight -- it's completely asynchronous.
 
-This patch changes the default I/O scheduler for loop devices from
-'mq-deadline' into 'none'.
+Introduce an additional timeout, derived from the specified notify
+timeout.  While at it, switch both waits to killable which is more
+correct.
 
-Additionally, this patch reduces the Android boot time on my test setup
-with 0.5 seconds compared to configuring the loop I/O scheduler from user
-space.
-
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Ming Lei <ming.lei@redhat.com>
-Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Cc: Martijn Coenen <maco@android.com>
-Cc: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20210805174200.3250718-3-bvanassche@acm.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+Reviewed-by: Xiubo Li <xiubli@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/loop.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ceph/osd_client.c |   20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -1846,7 +1846,8 @@ static int loop_add(struct loop_device *
- 	lo->tag_set.queue_depth = 128;
- 	lo->tag_set.numa_node = NUMA_NO_NODE;
- 	lo->tag_set.cmd_size = sizeof(struct loop_cmd);
--	lo->tag_set.flags = BLK_MQ_F_SHOULD_MERGE | BLK_MQ_F_SG_MERGE;
-+	lo->tag_set.flags = BLK_MQ_F_SHOULD_MERGE | BLK_MQ_F_SG_MERGE |
-+		BLK_MQ_F_NO_SCHED;
- 	lo->tag_set.driver_data = lo;
+--- a/net/ceph/osd_client.c
++++ b/net/ceph/osd_client.c
+@@ -3041,17 +3041,24 @@ static int linger_reg_commit_wait(struct
+ 	int ret;
  
- 	err = blk_mq_alloc_tag_set(&lo->tag_set);
+ 	dout("%s lreq %p linger_id %llu\n", __func__, lreq, lreq->linger_id);
+-	ret = wait_for_completion_interruptible(&lreq->reg_commit_wait);
++	ret = wait_for_completion_killable(&lreq->reg_commit_wait);
+ 	return ret ?: lreq->reg_commit_error;
+ }
+ 
+-static int linger_notify_finish_wait(struct ceph_osd_linger_request *lreq)
++static int linger_notify_finish_wait(struct ceph_osd_linger_request *lreq,
++				     unsigned long timeout)
+ {
+-	int ret;
++	long left;
+ 
+ 	dout("%s lreq %p linger_id %llu\n", __func__, lreq, lreq->linger_id);
+-	ret = wait_for_completion_interruptible(&lreq->notify_finish_wait);
+-	return ret ?: lreq->notify_finish_error;
++	left = wait_for_completion_killable_timeout(&lreq->notify_finish_wait,
++						ceph_timeout_jiffies(timeout));
++	if (left <= 0)
++		left = left ?: -ETIMEDOUT;
++	else
++		left = lreq->notify_finish_error; /* completed */
++
++	return left;
+ }
+ 
+ /*
+@@ -4666,7 +4673,8 @@ int ceph_osdc_notify(struct ceph_osd_cli
+ 
+ 	ret = linger_reg_commit_wait(lreq);
+ 	if (!ret)
+-		ret = linger_notify_finish_wait(lreq);
++		ret = linger_notify_finish_wait(lreq,
++				 msecs_to_jiffies(2 * timeout * MSEC_PER_SEC));
+ 	else
+ 		dout("lreq %p failed to initiate notify %d\n", lreq, ret);
+ 
 
 
