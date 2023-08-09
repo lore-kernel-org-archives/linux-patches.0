@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A7D15AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:45:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C7FC433C8;
-	Wed,  9 Aug 2023 10:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D06415AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:45:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 108AEC433C7;
+	Wed,  9 Aug 2023 10:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691577931;
-	bh=AqAh7YCAiUeU0r707uGxMBwKEUx2DmtY4bG0LN6OTqI=;
+	s=korg; t=1691577934;
+	bh=iPaa9r7atXl47JPGr+2Ljzu2q7SBLJtZu2Y/1elZZiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FDICxi20i8eg+HTnMaMeznOWLyIEF99QnskRntqZTuKUn9fFJooE1bgvtYiDYe6Fl
-	 YZknTSNNwThjdWMTv+XFB306lmzPU+tutTTlxqw37PgJf6Vkyn80ui7a12q+ge8mQS
-	 wzEyo7Gf2s1I3K6xGsZS8Bqqq0rO8OQHna6Ty9TY=
+	b=fsdvqoIaKkP1O1Uodje3taxQ2mDHFJ4dyQUM/CzTxmwTm/m7j7Psrf0r/QYuMlZ4+
+	 KSDKsI31t5PpoJ4SzJxzUCVOTuUMtNnT4CBtkOolNmdbA77Rp/BcXxfjmzuFEkPqXo
+	 i7T/BgZkomJYchzm/QXoNLKQkSS78MKCCy3jh5ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Thierry Reding <treding@nvidia.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 046/165] mISDN: hfcpci: Fix potential deadlock on &hc->lock
-Date: Wed,  9 Aug 2023 12:39:37 +0200
-Message-ID: <20230809103644.327805975@linuxfoundation.org>
+Subject: [PATCH 6.4 047/165] net: stmmac: tegra: Properly allocate clock bulk data
+Date: Wed,  9 Aug 2023 12:39:38 +0200
+Message-ID: <20230809103644.362688776@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -35,86 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Thierry Reding <treding@nvidia.com>
 
-[ Upstream commit 56c6be35fcbed54279df0a2c9e60480a61841d6f ]
+[ Upstream commit a0b1b2055be34c0ec1371764d040164cde1ead79 ]
 
-As &hc->lock is acquired by both timer _hfcpci_softirq() and hardirq
-hfcpci_int(), the timer should disable irq before lock acquisition
-otherwise deadlock could happen if the timmer is preemtped by the hadr irq.
+The clock data is an array of struct clk_bulk_data, so make sure to
+allocate enough memory.
 
-Possible deadlock scenario:
-hfcpci_softirq() (timer)
-    -> _hfcpci_softirq()
-    -> spin_lock(&hc->lock);
-        <irq interruption>
-        -> hfcpci_int()
-        -> spin_lock(&hc->lock); (deadlock here)
-
-This flaw was found by an experimental static analysis tool I am developing
-for irq-related deadlock.
-
-The tentative patch fixes the potential deadlock by spin_lock_irq()
-in timer.
-
-Fixes: b36b654a7e82 ("mISDN: Create /sys/class/mISDN")
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Link: https://lore.kernel.org/r/20230727085619.7419-1-dg573847474@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d8ca113724e7 ("net: stmmac: tegra: Add MGBE support")
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/isdn/hardware/mISDN/hfcpci.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/isdn/hardware/mISDN/hfcpci.c b/drivers/isdn/hardware/mISDN/hfcpci.c
-index c0331b2680108..fe391de1aba32 100644
---- a/drivers/isdn/hardware/mISDN/hfcpci.c
-+++ b/drivers/isdn/hardware/mISDN/hfcpci.c
-@@ -839,7 +839,7 @@ hfcpci_fill_fifo(struct bchannel *bch)
- 		*z1t = cpu_to_le16(new_z1);	/* now send data */
- 		if (bch->tx_idx < bch->tx_skb->len)
- 			return;
--		dev_kfree_skb(bch->tx_skb);
-+		dev_kfree_skb_any(bch->tx_skb);
- 		if (get_next_bframe(bch))
- 			goto next_t_frame;
- 		return;
-@@ -895,7 +895,7 @@ hfcpci_fill_fifo(struct bchannel *bch)
- 	}
- 	bz->za[new_f1].z1 = cpu_to_le16(new_z1);	/* for next buffer */
- 	bz->f1 = new_f1;	/* next frame */
--	dev_kfree_skb(bch->tx_skb);
-+	dev_kfree_skb_any(bch->tx_skb);
- 	get_next_bframe(bch);
- }
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c
+index bdf990cf2f310..0880048ccdddc 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c
+@@ -234,7 +234,8 @@ static int tegra_mgbe_probe(struct platform_device *pdev)
+ 	res.addr = mgbe->regs;
+ 	res.irq = irq;
  
-@@ -1119,7 +1119,7 @@ tx_birq(struct bchannel *bch)
- 	if (bch->tx_skb && bch->tx_idx < bch->tx_skb->len)
- 		hfcpci_fill_fifo(bch);
- 	else {
--		dev_kfree_skb(bch->tx_skb);
-+		dev_kfree_skb_any(bch->tx_skb);
- 		if (get_next_bframe(bch))
- 			hfcpci_fill_fifo(bch);
- 	}
-@@ -2277,7 +2277,7 @@ _hfcpci_softirq(struct device *dev, void *unused)
- 		return 0;
+-	mgbe->clks = devm_kzalloc(&pdev->dev, sizeof(*mgbe->clks), GFP_KERNEL);
++	mgbe->clks = devm_kcalloc(&pdev->dev, ARRAY_SIZE(mgbe_clks),
++				  sizeof(*mgbe->clks), GFP_KERNEL);
+ 	if (!mgbe->clks)
+ 		return -ENOMEM;
  
- 	if (hc->hw.int_m2 & HFCPCI_IRQ_ENABLE) {
--		spin_lock(&hc->lock);
-+		spin_lock_irq(&hc->lock);
- 		bch = Sel_BCS(hc, hc->hw.bswapped ? 2 : 1);
- 		if (bch && bch->state == ISDN_P_B_RAW) { /* B1 rx&tx */
- 			main_rec_hfcpci(bch);
-@@ -2288,7 +2288,7 @@ _hfcpci_softirq(struct device *dev, void *unused)
- 			main_rec_hfcpci(bch);
- 			tx_birq(bch);
- 		}
--		spin_unlock(&hc->lock);
-+		spin_unlock_irq(&hc->lock);
- 	}
- 	return 0;
- }
 -- 
 2.40.1
 
