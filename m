@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C614117AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B08C433C8;
-	Wed,  9 Aug 2023 11:38:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8510C17AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:38:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07873C433C7;
+	Wed,  9 Aug 2023 11:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581100;
-	bh=6hIdId1yqY9QBdbekgub2Y2doSMGNu3qzrtXTVKKTDU=;
+	s=korg; t=1691581103;
+	bh=nu7s9AVL9NVwj9zGrmdq53KTNTXROrJ15SAZcbFsBto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jcXnpuYabqKvgHOA0QV7V2W4qNdx02Ko16DRquNcAqeRb7l0uJH6f8tF6uO6tpW9u
-	 noyJC2LC8dMdyYloa05MbD4UO0elMJU+q7GfI+XmAlIl3Mb99+I+MSSmi94VkUL3p1
-	 Skep1xnUmcI8KaHgRIyhwE/42acKFRo+z6zTrYy8=
+	b=FWU6YoCKT0GBR9scnK0Zh6biNJLoi0OyfmnPU27jYkw2cl7CsMWCsKh8vK1IDpX5d
+	 BDOW4U0Ue32fonJfB1K/OwPbjYHVkivybvo5zqCYPhKWUk+Fpu61Oy7OTmgtRfszkn
+	 Wd7eeE0i3OmHvLiTfZYRHA26M97r2qmN52qDfW0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Jeffery <djeffery@redhat.com>,
-	Joe Thornber <ejt@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.10 105/201] dm cache policy smq: ensure IO doesnt prevent cleaner policy progress
-Date: Wed,  9 Aug 2023 12:41:47 +0200
-Message-ID: <20230809103647.319891193@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Matthew Auld <matthew.auld@intel.com>
+Subject: [PATCH 5.10 106/201] drm/ttm: make ttm_bo_unpin more defensive
+Date: Wed,  9 Aug 2023 12:41:48 +0200
+Message-ID: <20230809103647.350518501@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -35,106 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joe Thornber <ejt@redhat.com>
+From: Christian König <christian.koenig@amd.com>
 
-commit 1e4ab7b4c881cf26c1c72b3f56519e03475486fb upstream.
+commit 6c5403173a13a08ff61dbdafa4c0ed4a9dedbfe0 upstream.
 
-When using the cleaner policy to decommission the cache, there is
-never any writeback started from the cache as it is constantly delayed
-due to normal I/O keeping the device busy. Meaning @idle=false was
-always being passed to clean_target_met()
+We seem to have some more driver bugs than thought.
 
-Fix this by adding a specific 'cleaner' flag that is set when the
-cleaner policy is configured. This flag serves to always allow the
-cleaner's writeback work to be queued until the cache is
-decommissioned (even if the cache isn't idle).
-
-Reported-by: David Jeffery <djeffery@redhat.com>
-Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Joe Thornber <ejt@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: deb0814b43f3 ("drm/ttm: add ttm_bo_pin()/ttm_bo_unpin() v2")
+Acked-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20210312093810.2202-1-christian.koenig@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-policy-smq.c |   28 ++++++++++++++++++----------
- 1 file changed, 18 insertions(+), 10 deletions(-)
+ include/drm/ttm/ttm_bo_api.h |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-cache-policy-smq.c
-+++ b/drivers/md/dm-cache-policy-smq.c
-@@ -854,7 +854,13 @@ struct smq_policy {
- 
- 	struct background_tracker *bg_work;
- 
--	bool migrations_allowed;
-+	bool migrations_allowed:1;
-+
-+	/*
-+	 * If this is set the policy will try and clean the whole cache
-+	 * even if the device is not idle.
-+	 */
-+	bool cleaner:1;
- };
- 
- /*----------------------------------------------------------------*/
-@@ -1133,7 +1139,7 @@ static bool clean_target_met(struct smq_
- 	 * Cache entries may not be populated.  So we cannot rely on the
- 	 * size of the clean queue.
- 	 */
--	if (idle) {
-+	if (idle || mq->cleaner) {
- 		/*
- 		 * We'd like to clean everything.
- 		 */
-@@ -1716,11 +1722,9 @@ static void calc_hotspot_params(sector_t
- 		*hotspot_block_size /= 2u;
+--- a/include/drm/ttm/ttm_bo_api.h
++++ b/include/drm/ttm/ttm_bo_api.h
+@@ -628,8 +628,10 @@ static inline void ttm_bo_pin(struct ttm
+ static inline void ttm_bo_unpin(struct ttm_buffer_object *bo)
+ {
+ 	dma_resv_assert_held(bo->base.resv);
+-	WARN_ON_ONCE(!bo->pin_count);
+-	--bo->pin_count;
++	if (bo->pin_count)
++		--bo->pin_count;
++	else
++		WARN_ON_ONCE(true);
  }
  
--static struct dm_cache_policy *__smq_create(dm_cblock_t cache_size,
--					    sector_t origin_size,
--					    sector_t cache_block_size,
--					    bool mimic_mq,
--					    bool migrations_allowed)
-+static struct dm_cache_policy *
-+__smq_create(dm_cblock_t cache_size, sector_t origin_size, sector_t cache_block_size,
-+	     bool mimic_mq, bool migrations_allowed, bool cleaner)
- {
- 	unsigned i;
- 	unsigned nr_sentinels_per_queue = 2u * NR_CACHE_LEVELS;
-@@ -1807,6 +1811,7 @@ static struct dm_cache_policy *__smq_cre
- 		goto bad_btracker;
- 
- 	mq->migrations_allowed = migrations_allowed;
-+	mq->cleaner = cleaner;
- 
- 	return &mq->policy;
- 
-@@ -1830,21 +1835,24 @@ static struct dm_cache_policy *smq_creat
- 					  sector_t origin_size,
- 					  sector_t cache_block_size)
- {
--	return __smq_create(cache_size, origin_size, cache_block_size, false, true);
-+	return __smq_create(cache_size, origin_size, cache_block_size,
-+			    false, true, false);
- }
- 
- static struct dm_cache_policy *mq_create(dm_cblock_t cache_size,
- 					 sector_t origin_size,
- 					 sector_t cache_block_size)
- {
--	return __smq_create(cache_size, origin_size, cache_block_size, true, true);
-+	return __smq_create(cache_size, origin_size, cache_block_size,
-+			    true, true, false);
- }
- 
- static struct dm_cache_policy *cleaner_create(dm_cblock_t cache_size,
- 					      sector_t origin_size,
- 					      sector_t cache_block_size)
- {
--	return __smq_create(cache_size, origin_size, cache_block_size, false, false);
-+	return __smq_create(cache_size, origin_size, cache_block_size,
-+			    false, false, true);
- }
- 
- /*----------------------------------------------------------------*/
+ int ttm_mem_evict_first(struct ttm_bo_device *bdev,
 
 
