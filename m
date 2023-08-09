@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F7D14A8D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:53:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A2B6C433CB;
-	Wed,  9 Aug 2023 10:53:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B08154B4
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:53:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51DD4C433C7;
+	Wed,  9 Aug 2023 10:53:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578387;
-	bh=Sw/llUOb9mYICqypP9MOg/n7HwrSCiawYlYdmdYQdeg=;
+	s=korg; t=1691578390;
+	bh=BXIUvC0cUv55HgX07SYhpYopfR/7+pmRHsoigTIM5wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zbplwxFAz85BdXacAplegAYyMh+zqnIkouYfCDRyp2vlhaOX3hl2ruhgFjZ+FOyX1
-	 OYm3Lu+8/BU+nGjsBHliHQgUoBa53RfWWOLlmG+hJKkwabLEWMoIucBeqSRFiRfsFV
-	 lM2h3fHc3H8Ta7lWaM2EJCbqRLUoBLj4DLRt4XMw=
+	b=BkzXfSAPcAsg6K/pfgLdCwvMQk3B2tFFTtY5+yjjzWlwDr2wYHPLMIcCYB0bVDalw
+	 9aFB1gSP0OqjRjJdk4Y/94dUAmQXGsAh8OMyyIEuqA6QwfNP2xXoMyID6b05eW+aJF
+	 WZIEfiZCAemGsEFb7DhuQrAxxDivWPlW+k0227Hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Cixi Geng <cixi.geng1@unisoc.com>
-Subject: [PATCH 6.1 002/127] perf: Fix function pointer case
-Date: Wed,  9 Aug 2023 12:39:49 +0200
-Message-ID: <20230809103636.699171662@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Wei Wang <weiwan@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 035/127] net: annotate data-races around sk->sk_reserved_mem
+Date: Wed,  9 Aug 2023 12:40:22 +0200
+Message-ID: <20230809103637.820196429@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -35,48 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 1af6239d1d3e61d33fd2f0ba53d3d1a67cc50574 upstream.
+[ Upstream commit fe11fdcb4207907d80cda2e73777465d68131e66 ]
 
-With the advent of CFI it is no longer acceptible to cast function
-pointers.
+sk_getsockopt() runs locklessly. This means sk->sk_reserved_mem
+can be read while other threads are changing its value.
 
-The robot complains thusly:
+Add missing annotations where they are needed.
 
-  kernel-events-core.c:warning:cast-from-int-(-)(struct-perf_cpu_pmu_context-)-to-remote_function_f-(aka-int-(-)(void-)-)-converts-to-incompatible-function-type
-
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Cixi Geng <cixi.geng1@unisoc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2bb2f5fb21b0 ("net: add new socket option SO_RESERVE_MEM")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Wei Wang <weiwan@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/core/sock.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -1133,6 +1133,11 @@ static int perf_mux_hrtimer_restart(stru
- 	return 0;
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 0c1baa5517f11..9483820833c5b 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -996,7 +996,7 @@ static void sock_release_reserved_memory(struct sock *sk, int bytes)
+ 	bytes = round_down(bytes, PAGE_SIZE);
+ 
+ 	WARN_ON(bytes > sk->sk_reserved_mem);
+-	sk->sk_reserved_mem -= bytes;
++	WRITE_ONCE(sk->sk_reserved_mem, sk->sk_reserved_mem - bytes);
+ 	sk_mem_reclaim(sk);
  }
  
-+static int perf_mux_hrtimer_restart_ipi(void *arg)
-+{
-+	return perf_mux_hrtimer_restart(arg);
-+}
-+
- void perf_pmu_disable(struct pmu *pmu)
- {
- 	int *count = this_cpu_ptr(pmu->pmu_disable_count);
-@@ -11155,8 +11160,7 @@ perf_event_mux_interval_ms_store(struct
- 		cpuctx = per_cpu_ptr(pmu->pmu_cpu_context, cpu);
- 		cpuctx->hrtimer_interval = ns_to_ktime(NSEC_PER_MSEC * timer);
- 
--		cpu_function_call(cpu,
--			(remote_function_f)perf_mux_hrtimer_restart, cpuctx);
-+		cpu_function_call(cpu, perf_mux_hrtimer_restart_ipi, cpuctx);
+@@ -1033,7 +1033,8 @@ static int sock_reserve_memory(struct sock *sk, int bytes)
  	}
- 	cpus_read_unlock();
- 	mutex_unlock(&mux_interval_mutex);
+ 	sk->sk_forward_alloc += pages << PAGE_SHIFT;
+ 
+-	sk->sk_reserved_mem += pages << PAGE_SHIFT;
++	WRITE_ONCE(sk->sk_reserved_mem,
++		   sk->sk_reserved_mem + (pages << PAGE_SHIFT));
+ 
+ 	return 0;
+ }
+@@ -1922,7 +1923,7 @@ int sk_getsockopt(struct sock *sk, int level, int optname,
+ 		break;
+ 
+ 	case SO_RESERVE_MEM:
+-		v.val = sk->sk_reserved_mem;
++		v.val = READ_ONCE(sk->sk_reserved_mem);
+ 		break;
+ 
+ 	case SO_TXREHASH:
+-- 
+2.40.1
+
 
 
