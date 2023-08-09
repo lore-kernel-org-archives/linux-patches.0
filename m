@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685FF53B7
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:53:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD885C433C8;
-	Wed,  9 Aug 2023 10:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3572A53B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:53:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA468C433C8;
+	Wed,  9 Aug 2023 10:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578427;
-	bh=v47xBzXjD+GHjZL4ICjkuLE4qxgPP/0Aqz0GJvuScHA=;
+	s=korg; t=1691578430;
+	bh=CP+m6OiCvJjydhiiP8VVZY25lYLszjj7A3Kya1sc5mI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JRIDTqt+/HqJW7DJwH4R6hmkWtzUXe7aU56unNysXq0nJwPmO9MyfF+qi44OWfBgr
-	 tYYeqNv8WC5rkL5PHcn3Hh8aKV0eUwvTqiX8HFbJUpE3ASzFx/Vk3ObtDfJ28Gxpz9
-	 pObzmsuRG3ng6TqgGS9JcxTBcD+V3rzWvHAx8g14=
+	b=0Ba4PGxFdw5pItb3fgsBjtheOJDfyd0rswlytj9rhQuPFWyRTpeYz1o5eY7TUuD5v
+	 FF12tS6kmZc68k9TfkOnv3U/nq7IWzrpxIHf1seSPE1C6X/DZ4fjvBkbSfrCbASDYd
+	 AA21DorgSD2UoZc4BTeNcO393ld9aK8utf4ImnbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
 	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Ajit Khaparde <ajit.khaparde@broadcom.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
 	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/127] bnxt_en: Fix page pool logic for page size >= 64K
-Date: Wed,  9 Aug 2023 12:40:42 +0200
-Message-ID: <20230809103638.506475405@linuxfoundation.org>
+Subject: [PATCH 6.1 056/127] bnxt_en: Fix max_mtu setting for multi-buf XDP
+Date: Wed,  9 Aug 2023 12:40:43 +0200
+Message-ID: <20230809103638.536365979@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -37,191 +38,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Somnath Kotur <somnath.kotur@broadcom.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit f6974b4c2d8e1062b5a52228ee47293c15b4ee1e ]
+[ Upstream commit 08450ea98ae98d5a35145b675b76db616046ea11 ]
 
-The RXBD length field on all bnxt chips is 16-bit and so we cannot
-support a full page when the native page size is 64K or greater.
-The non-XDP (non page pool) code path has logic to handle this but
-the XDP page pool code path does not handle this.  Add the missing
-logic to use page_pool_dev_alloc_frag() to allocate 32K chunks if
-the page size is 64K or greater.
+The existing code does not allow the MTU to be set to the maximum even
+after an XDP program supporting multiple buffers is attached.  Fix it
+to set the netdev->max_mtu to the maximum value if the attached XDP
+program supports mutiple buffers, regardless of the current MTU value.
 
-Fixes: 9f4b28301ce6 ("bnxt: XDP multibuffer enablement")
-Link: https://lore.kernel.org/netdev/20230728231829.235716-2-michael.chan@broadcom.com/
+Also use a local variable dev instead of repeatedly using bp->dev.
+
+Fixes: 1dc4c557bfed ("bnxt: adding bnxt_xdp_build_skb to build skb from multibuffer xdp_buff")
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Reviewed-by: Ajit Khaparde <ajit.khaparde@broadcom.com>
 Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Signed-off-by: Somnath Kotur <somnath.kotur@broadcom.com>
 Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://lore.kernel.org/r/20230731142043.58855-2-michael.chan@broadcom.com
+Link: https://lore.kernel.org/r/20230731142043.58855-3-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 42 ++++++++++++-------
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c |  6 +--
- 2 files changed, 29 insertions(+), 19 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 6469fb8a42a89..9bd18c2b10bc6 100644
+index 9bd18c2b10bc6..969db3c45d176 100644
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -721,17 +721,24 @@ static void bnxt_tx_int(struct bnxt *bp, struct bnxt_napi *bnapi, int nr_pkts)
- 
- static struct page *__bnxt_alloc_rx_page(struct bnxt *bp, dma_addr_t *mapping,
- 					 struct bnxt_rx_ring_info *rxr,
-+					 unsigned int *offset,
- 					 gfp_t gfp)
+@@ -4027,26 +4027,29 @@ void bnxt_set_ring_params(struct bnxt *bp)
+  */
+ int bnxt_set_rx_skb_mode(struct bnxt *bp, bool page_mode)
  {
- 	struct device *dev = &bp->pdev->dev;
- 	struct page *page;
++	struct net_device *dev = bp->dev;
++
+ 	if (page_mode) {
+ 		bp->flags &= ~BNXT_FLAG_AGG_RINGS;
+ 		bp->flags |= BNXT_FLAG_RX_PAGE_MODE;
  
--	page = page_pool_dev_alloc_pages(rxr->page_pool);
-+	if (PAGE_SIZE > BNXT_RX_PAGE_SIZE) {
-+		page = page_pool_dev_alloc_frag(rxr->page_pool, offset,
-+						BNXT_RX_PAGE_SIZE);
-+	} else {
-+		page = page_pool_dev_alloc_pages(rxr->page_pool);
-+		*offset = 0;
-+	}
- 	if (!page)
- 		return NULL;
- 
--	*mapping = dma_map_page_attrs(dev, page, 0, PAGE_SIZE, bp->rx_dir,
--				      DMA_ATTR_WEAK_ORDERING);
-+	*mapping = dma_map_page_attrs(dev, page, *offset, BNXT_RX_PAGE_SIZE,
-+				      bp->rx_dir, DMA_ATTR_WEAK_ORDERING);
- 	if (dma_mapping_error(dev, *mapping)) {
- 		page_pool_recycle_direct(rxr->page_pool, page);
- 		return NULL;
-@@ -771,15 +778,16 @@ int bnxt_alloc_rx_data(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
- 	dma_addr_t mapping;
- 
- 	if (BNXT_RX_PAGE_MODE(bp)) {
-+		unsigned int offset;
- 		struct page *page =
--			__bnxt_alloc_rx_page(bp, &mapping, rxr, gfp);
-+			__bnxt_alloc_rx_page(bp, &mapping, rxr, &offset, gfp);
- 
- 		if (!page)
- 			return -ENOMEM;
- 
- 		mapping += bp->rx_dma_offset;
- 		rx_buf->data = page;
--		rx_buf->data_ptr = page_address(page) + bp->rx_offset;
-+		rx_buf->data_ptr = page_address(page) + offset + bp->rx_offset;
- 	} else {
- 		u8 *data = __bnxt_alloc_rx_frag(bp, &mapping, gfp);
- 
-@@ -839,7 +847,7 @@ static inline int bnxt_alloc_rx_page(struct bnxt *bp,
- 	unsigned int offset = 0;
- 
- 	if (BNXT_RX_PAGE_MODE(bp)) {
--		page = __bnxt_alloc_rx_page(bp, &mapping, rxr, gfp);
-+		page = __bnxt_alloc_rx_page(bp, &mapping, rxr, &offset, gfp);
- 
- 		if (!page)
- 			return -ENOMEM;
-@@ -986,15 +994,15 @@ static struct sk_buff *bnxt_rx_multi_page_skb(struct bnxt *bp,
- 		return NULL;
- 	}
- 	dma_addr -= bp->rx_dma_offset;
--	dma_unmap_page_attrs(&bp->pdev->dev, dma_addr, PAGE_SIZE, bp->rx_dir,
--			     DMA_ATTR_WEAK_ORDERING);
--	skb = build_skb(page_address(page), PAGE_SIZE);
-+	dma_unmap_page_attrs(&bp->pdev->dev, dma_addr, BNXT_RX_PAGE_SIZE,
-+			     bp->rx_dir, DMA_ATTR_WEAK_ORDERING);
-+	skb = build_skb(data_ptr - bp->rx_offset, BNXT_RX_PAGE_SIZE);
- 	if (!skb) {
- 		page_pool_recycle_direct(rxr->page_pool, page);
- 		return NULL;
- 	}
- 	skb_mark_for_recycle(skb);
--	skb_reserve(skb, bp->rx_dma_offset);
-+	skb_reserve(skb, bp->rx_offset);
- 	__skb_put(skb, len);
- 
- 	return skb;
-@@ -1020,8 +1028,8 @@ static struct sk_buff *bnxt_rx_page_skb(struct bnxt *bp,
- 		return NULL;
- 	}
- 	dma_addr -= bp->rx_dma_offset;
--	dma_unmap_page_attrs(&bp->pdev->dev, dma_addr, PAGE_SIZE, bp->rx_dir,
--			     DMA_ATTR_WEAK_ORDERING);
-+	dma_unmap_page_attrs(&bp->pdev->dev, dma_addr, BNXT_RX_PAGE_SIZE,
-+			     bp->rx_dir, DMA_ATTR_WEAK_ORDERING);
- 
- 	if (unlikely(!payload))
- 		payload = eth_get_headlen(bp->dev, data_ptr, len);
-@@ -1034,7 +1042,7 @@ static struct sk_buff *bnxt_rx_page_skb(struct bnxt *bp,
- 
- 	skb_mark_for_recycle(skb);
- 	off = (void *)data_ptr - page_address(page);
--	skb_add_rx_frag(skb, 0, page, off, len, PAGE_SIZE);
-+	skb_add_rx_frag(skb, 0, page, off, len, BNXT_RX_PAGE_SIZE);
- 	memcpy(skb->data - NET_IP_ALIGN, data_ptr - NET_IP_ALIGN,
- 	       payload + NET_IP_ALIGN);
- 
-@@ -1169,7 +1177,7 @@ static struct sk_buff *bnxt_rx_agg_pages_skb(struct bnxt *bp,
- 
- 	skb->data_len += total_frag_len;
- 	skb->len += total_frag_len;
--	skb->truesize += PAGE_SIZE * agg_bufs;
-+	skb->truesize += BNXT_RX_PAGE_SIZE * agg_bufs;
- 	return skb;
- }
- 
-@@ -2972,8 +2980,8 @@ static void bnxt_free_one_rx_ring_skbs(struct bnxt *bp, int ring_nr)
- 		rx_buf->data = NULL;
- 		if (BNXT_RX_PAGE_MODE(bp)) {
- 			mapping -= bp->rx_dma_offset;
--			dma_unmap_page_attrs(&pdev->dev, mapping, PAGE_SIZE,
--					     bp->rx_dir,
-+			dma_unmap_page_attrs(&pdev->dev, mapping,
-+					     BNXT_RX_PAGE_SIZE, bp->rx_dir,
- 					     DMA_ATTR_WEAK_ORDERING);
- 			page_pool_recycle_direct(rxr->page_pool, data);
+-		if (bp->dev->mtu > BNXT_MAX_PAGE_MODE_MTU) {
++		if (bp->xdp_prog->aux->xdp_has_frags)
++			dev->max_mtu = min_t(u16, bp->max_mtu, BNXT_MAX_MTU);
++		else
++			dev->max_mtu =
++				min_t(u16, bp->max_mtu, BNXT_MAX_PAGE_MODE_MTU);
++		if (dev->mtu > BNXT_MAX_PAGE_MODE_MTU) {
+ 			bp->flags |= BNXT_FLAG_JUMBO;
+ 			bp->rx_skb_func = bnxt_rx_multi_page_skb;
+-			bp->dev->max_mtu =
+-				min_t(u16, bp->max_mtu, BNXT_MAX_MTU);
  		} else {
-@@ -3241,6 +3249,8 @@ static int bnxt_alloc_rx_page_pool(struct bnxt *bp,
- 	pp.nid = dev_to_node(&bp->pdev->dev);
- 	pp.dev = &bp->pdev->dev;
- 	pp.dma_dir = DMA_BIDIRECTIONAL;
-+	if (PAGE_SIZE > BNXT_RX_PAGE_SIZE)
-+		pp.flags |= PP_FLAG_PAGE_FRAG;
- 
- 	rxr->page_pool = page_pool_create(&pp);
- 	if (IS_ERR(rxr->page_pool)) {
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-index 36d5202c0aeec..aa56db138d6b5 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-@@ -180,8 +180,8 @@ void bnxt_xdp_buff_init(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
- 			u16 cons, u8 *data_ptr, unsigned int len,
- 			struct xdp_buff *xdp)
- {
-+	u32 buflen = BNXT_RX_PAGE_SIZE;
- 	struct bnxt_sw_rx_bd *rx_buf;
--	u32 buflen = PAGE_SIZE;
- 	struct pci_dev *pdev;
- 	dma_addr_t mapping;
- 	u32 offset;
-@@ -297,7 +297,7 @@ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
- 		rx_buf = &rxr->rx_buf_ring[cons];
- 		mapping = rx_buf->mapping - bp->rx_dma_offset;
- 		dma_unmap_page_attrs(&pdev->dev, mapping,
--				     PAGE_SIZE, bp->rx_dir,
-+				     BNXT_RX_PAGE_SIZE, bp->rx_dir,
- 				     DMA_ATTR_WEAK_ORDERING);
- 
- 		/* if we are unable to allocate a new buffer, abort and reuse */
-@@ -478,7 +478,7 @@ bnxt_xdp_build_skb(struct bnxt *bp, struct sk_buff *skb, u8 num_frags,
- 	}
- 	xdp_update_skb_shared_info(skb, num_frags,
- 				   sinfo->xdp_frags_size,
--				   PAGE_SIZE * sinfo->nr_frags,
-+				   BNXT_RX_PAGE_SIZE * sinfo->nr_frags,
- 				   xdp_buff_is_frag_pfmemalloc(xdp));
- 	return skb;
- }
+ 			bp->flags |= BNXT_FLAG_NO_AGG_RINGS;
+ 			bp->rx_skb_func = bnxt_rx_page_skb;
+-			bp->dev->max_mtu =
+-				min_t(u16, bp->max_mtu, BNXT_MAX_PAGE_MODE_MTU);
+ 		}
+ 		bp->rx_dir = DMA_BIDIRECTIONAL;
+ 		/* Disable LRO or GRO_HW */
+-		netdev_update_features(bp->dev);
++		netdev_update_features(dev);
+ 	} else {
+-		bp->dev->max_mtu = bp->max_mtu;
++		dev->max_mtu = bp->max_mtu;
+ 		bp->flags &= ~BNXT_FLAG_RX_PAGE_MODE;
+ 		bp->rx_dir = DMA_FROM_DEVICE;
+ 		bp->rx_skb_func = bnxt_rx_skb;
 -- 
 2.40.1
 
