@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B091774C
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:11:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E9EC433C7;
-	Wed,  9 Aug 2023 11:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2041774C
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:11:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30341C433C7;
+	Wed,  9 Aug 2023 11:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579483;
-	bh=euwBlSNnrv+lJCndowg+XL48O4JzGKtTJNyCutwPPqU=;
+	s=korg; t=1691579486;
+	bh=BHnsoVT4HnXAqTRvJjulU+m0HOthvcowuedN+U2N6fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=egxLezirMwEtt3ef4upPPZC3Xrt7242MoJu/ztmjV8lqc3E1P86rVgAFFuctJOzYL
-	 la7l3jAC0UOunQcGfTJ1gaHOMGKsNrxr/vII1f3wowrB7DWyFzR8Qxf/KsY4AGGEDz
-	 EGR2sUkxZ+nu0JnGbIlw6nStVeekOC2/iUQ/6REs=
+	b=hbWgzyOirkdyjPiiVycEUSM2v2pUwdjv9KG2Ua2x3jnccUtk0HJtJhid2DkXeV3SQ
+	 g0pINYPSKqkjv+ATuMKEQWXa/B457eBF6MgXQrLI6jdQsscDlRHP2wDslUeysOnCuQ
+	 Hl+3Qq9VZabknuUVpUK1ISvw2o+0isCZsUfvsgsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+af5e10f73dbff48f70af@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 4.14 202/204] ext2: Drop fragment support
-Date: Wed,  9 Aug 2023 12:42:20 +0200
-Message-ID: <20230809103649.264643195@linuxfoundation.org>
+	Yang Lan <lanyang0908@gmail.com>,
+	Bob Peterson <rpeterso@redhat.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Dragos-Marian Panait <dragos.panait@windriver.com>
+Subject: [PATCH 4.19 001/323] gfs2: Dont deref jdesc in evict
+Date: Wed,  9 Aug 2023 12:37:19 +0200
+Message-ID: <20230809103658.178990444@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
-References: <20230809103642.552405807@linuxfoundation.org>
+In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
+References: <20230809103658.104386911@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,106 +38,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Bob Peterson <rpeterso@redhat.com>
 
-commit 404615d7f1dcd4cca200e9a7a9df3a1dcae1dd62 upstream.
+commit 504a10d9e46bc37b23d0a1ae2f28973c8516e636 upstream.
 
-Ext2 has fields in superblock reserved for subblock allocation support.
-However that never landed. Drop the many years dead code.
+On corrupt gfs2 file systems the evict code can try to reference the
+journal descriptor structure, jdesc, after it has been freed and set to
+NULL. The sequence of events is:
 
-Reported-by: syzbot+af5e10f73dbff48f70af@syzkaller.appspotmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+init_journal()
+...
+fail_jindex:
+   gfs2_jindex_free(sdp); <------frees journals, sets jdesc = NULL
+      if (gfs2_holder_initialized(&ji_gh))
+         gfs2_glock_dq_uninit(&ji_gh);
+fail:
+   iput(sdp->sd_jindex); <--references jdesc in evict_linked_inode
+      evict()
+         gfs2_evict_inode()
+            evict_linked_inode()
+               ret = gfs2_trans_begin(sdp, 0, sdp->sd_jdesc->jd_blocks);
+<------references the now freed/zeroed sd_jdesc pointer.
+
+The call to gfs2_trans_begin is done because the truncate_inode_pages
+call can cause gfs2 events that require a transaction, such as removing
+journaled data (jdata) blocks from the journal.
+
+This patch fixes the problem by adding a check for sdp->sd_jdesc to
+function gfs2_evict_inode. In theory, this should only happen to corrupt
+gfs2 file systems, when gfs2 detects the problem, reports it, then tries
+to evict all the system inodes it has read in up to that point.
+
+Reported-by: Yang Lan <lanyang0908@gmail.com>
+Signed-off-by: Bob Peterson <rpeterso@redhat.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+[DP: adjusted context]
+Signed-off-by: Dragos-Marian Panait <dragos.panait@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext2/ext2.h  |   12 ------------
- fs/ext2/super.c |   23 ++++-------------------
- 2 files changed, 4 insertions(+), 31 deletions(-)
+ fs/gfs2/super.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/ext2/ext2.h
-+++ b/fs/ext2/ext2.h
-@@ -68,10 +68,7 @@ struct mb_cache;
-  * second extended-fs super-block data in memory
-  */
- struct ext2_sb_info {
--	unsigned long s_frag_size;	/* Size of a fragment in bytes */
--	unsigned long s_frags_per_block;/* Number of fragments per block */
- 	unsigned long s_inodes_per_block;/* Number of inodes per block */
--	unsigned long s_frags_per_group;/* Number of fragments in a group */
- 	unsigned long s_blocks_per_group;/* Number of blocks in a group */
- 	unsigned long s_inodes_per_group;/* Number of inodes in a group */
- 	unsigned long s_itb_per_group;	/* Number of inode table blocks per group */
-@@ -186,15 +183,6 @@ static inline struct ext2_sb_info *EXT2_
- #define EXT2_FIRST_INO(s)		(EXT2_SB(s)->s_first_ino)
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -1586,6 +1586,14 @@ static void gfs2_evict_inode(struct inod
+ 	if (inode->i_nlink || sb_rdonly(sb))
+ 		goto out;
  
- /*
-- * Macro-instructions used to manage fragments
-- */
--#define EXT2_MIN_FRAG_SIZE		1024
--#define	EXT2_MAX_FRAG_SIZE		4096
--#define EXT2_MIN_FRAG_LOG_SIZE		  10
--#define EXT2_FRAG_SIZE(s)		(EXT2_SB(s)->s_frag_size)
--#define EXT2_FRAGS_PER_BLOCK(s)		(EXT2_SB(s)->s_frags_per_block)
--
--/*
-  * Structure of a blocks group descriptor
-  */
- struct ext2_group_desc
---- a/fs/ext2/super.c
-+++ b/fs/ext2/super.c
-@@ -684,10 +684,9 @@ static int ext2_setup_super (struct supe
- 		es->s_max_mnt_count = cpu_to_le16(EXT2_DFL_MAX_MNT_COUNT);
- 	le16_add_cpu(&es->s_mnt_count, 1);
- 	if (test_opt (sb, DEBUG))
--		ext2_msg(sb, KERN_INFO, "%s, %s, bs=%lu, fs=%lu, gc=%lu, "
-+		ext2_msg(sb, KERN_INFO, "%s, %s, bs=%lu, gc=%lu, "
- 			"bpg=%lu, ipg=%lu, mo=%04lx]",
- 			EXT2FS_VERSION, EXT2FS_DATE, sb->s_blocksize,
--			sbi->s_frag_size,
- 			sbi->s_groups_count,
- 			EXT2_BLOCKS_PER_GROUP(sb),
- 			EXT2_INODES_PER_GROUP(sb),
-@@ -1024,14 +1023,7 @@ static int ext2_fill_super(struct super_
- 		}
- 	}
- 
--	sbi->s_frag_size = EXT2_MIN_FRAG_SIZE <<
--				   le32_to_cpu(es->s_log_frag_size);
--	if (sbi->s_frag_size == 0)
--		goto cantfind_ext2;
--	sbi->s_frags_per_block = sb->s_blocksize / sbi->s_frag_size;
--
- 	sbi->s_blocks_per_group = le32_to_cpu(es->s_blocks_per_group);
--	sbi->s_frags_per_group = le32_to_cpu(es->s_frags_per_group);
- 	sbi->s_inodes_per_group = le32_to_cpu(es->s_inodes_per_group);
- 
- 	if (EXT2_INODE_SIZE(sb) == 0)
-@@ -1059,11 +1051,10 @@ static int ext2_fill_super(struct super_
- 		goto failed_mount;
- 	}
- 
--	if (sb->s_blocksize != sbi->s_frag_size) {
-+	if (es->s_log_frag_size != es->s_log_block_size) {
- 		ext2_msg(sb, KERN_ERR,
--			"error: fragsize %lu != blocksize %lu"
--			"(not supported yet)",
--			sbi->s_frag_size, sb->s_blocksize);
-+			"error: fragsize log %u != blocksize log %u",
-+			le32_to_cpu(es->s_log_frag_size), sb->s_blocksize_bits);
- 		goto failed_mount;
- 	}
- 
-@@ -1073,12 +1064,6 @@ static int ext2_fill_super(struct super_
- 			sbi->s_blocks_per_group);
- 		goto failed_mount;
- 	}
--	if (sbi->s_frags_per_group > sb->s_blocksize * 8) {
--		ext2_msg(sb, KERN_ERR,
--			"error: #fragments per group too big: %lu",
--			sbi->s_frags_per_group);
--		goto failed_mount;
--	}
- 	if (sbi->s_inodes_per_group < sbi->s_inodes_per_block ||
- 	    sbi->s_inodes_per_group > sb->s_blocksize * 8) {
- 		ext2_msg(sb, KERN_ERR,
++	/*
++	 * In case of an incomplete mount, gfs2_evict_inode() may be called for
++	 * system files without having an active journal to write to.  In that
++	 * case, skip the filesystem evict.
++	 */
++	if (!sdp->sd_jdesc)
++		goto out;
++
+ 	if (test_bit(GIF_ALLOC_FAILED, &ip->i_flags)) {
+ 		BUG_ON(!gfs2_glock_is_locked_by_me(ip->i_gl));
+ 		gfs2_holder_mark_uninitialized(&gh);
 
 
