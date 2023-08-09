@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E58514A8D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:50:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3BA2C433C9;
-	Wed,  9 Aug 2023 10:50:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4072314A8D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:50:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE29EC433C8;
+	Wed,  9 Aug 2023 10:50:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578251;
-	bh=KKVi2bbA1Q6bv143vAKbeQn3sSDsFkzRtiY/acM/1cM=;
+	s=korg; t=1691578254;
+	bh=vy0OOD+YSoZmSiOgeeQwh8tKBFm1C0IeJLb3ivRcqOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=msvRz0zUpeTGFqjAFpk5TgAzNynXFEKnAeBn05nAr01jcWDTecahvps0WEBUWCXmc
-	 66lQ3kAjeo6Vl2dHmWpYs0lD8DOplq3mftS21YKkyVpDOOKTf6bjMgNLra9hKi6g5f
-	 NQxNiiexspG5DbPfTN4fowWnzsN3Km+08IKhJxjM=
+	b=NQqJMSGIUi+tElF5KVE5ucV3IJ4gf23sR6sz8CM4XowqF+tDmSjJ5cuDBKW631OoC
+	 AeCcuv+xEiV/8fLj08PeuDapJNEz5zCvNIPVoTFZaZ4x/0/QwrD6DMQE81nxa59ou6
+	 q7tjqQ4kmTLfIR2jZ8bBRMtPCdRB2+u/hfmDfNic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Lewis <aaronlewis@google.com>,
-	kvm@vger.kernel.org,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 157/165] selftests/rseq: Play nice with binaries statically linked against glibc 2.35+
-Date: Wed,  9 Aug 2023 12:41:28 +0200
-Message-ID: <20230809103647.907748512@linuxfoundation.org>
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Ackerley Tng <ackerleytng@google.com>,
+	Erdem Aktas <erdemaktas@google.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Vishal Annapurve <vannapurve@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.4 131/165] Revert "page cache: fix page_cache_next/prev_miss off by one"
+Date: Wed,  9 Aug 2023 12:41:02 +0200
+Message-ID: <20230809103647.102352796@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -37,83 +41,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Mike Kravetz <mike.kravetz@oracle.com>
 
-[ Upstream commit 3bcbc20942db5d738221cca31a928efc09827069 ]
+commit 16f8eb3eea9eb2a1568279d64ca4dc977e7aa538 upstream.
 
-To allow running rseq and KVM's rseq selftests as statically linked
-binaries, initialize the various "trampoline" pointers to point directly
-at the expect glibc symbols, and skip the dlysm() lookups if the rseq
-size is non-zero, i.e. the binary is statically linked *and* the libc
-registered its own rseq.
+This reverts commit 9425c591e06a9ab27a145ba655fb50532cf0bcc9
 
-Define weak versions of the symbols so as not to break linking against
-libc versions that don't support rseq in any capacity.
+The reverted commit fixed up routines primarily used by readahead code
+such that they could also be used by hugetlb.  Unfortunately, this
+caused a performance regression as pointed out by the Closes: tag.
 
-The KVM selftests in particular are often statically linked so that they
-can be run on targets with very limited runtime environments, i.e. test
-machines.
+The hugetlb code which uses page_cache_next_miss will be addressed in
+a subsequent patch.
 
-Fixes: 233e667e1ae3 ("selftests/rseq: Uplift rseq selftests for compatibility with glibc-2.35")
-Cc: Aaron Lewis <aaronlewis@google.com>
-Cc: kvm@vger.kernel.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20230721223352.2333911-1-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20230621212403.174710-1-mike.kravetz@oracle.com
+Fixes: 9425c591e06a ("page cache: fix page_cache_next/prev_miss off by one")
+Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202306211346.1e9ff03e-oliver.sang@intel.com
+Reviewed-by: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Cc: Ackerley Tng <ackerleytng@google.com>
+Cc: Erdem Aktas <erdemaktas@google.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Vishal Annapurve <vannapurve@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/rseq/rseq.c | 28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ mm/filemap.c |   26 ++++++++++----------------
+ 1 file changed, 10 insertions(+), 16 deletions(-)
 
-diff --git a/tools/testing/selftests/rseq/rseq.c b/tools/testing/selftests/rseq/rseq.c
-index 4e4aa006004c8..a723da2532441 100644
---- a/tools/testing/selftests/rseq/rseq.c
-+++ b/tools/testing/selftests/rseq/rseq.c
-@@ -34,9 +34,17 @@
- #include "../kselftest.h"
- #include "rseq.h"
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -1760,9 +1760,7 @@ bool __folio_lock_or_retry(struct folio
+  *
+  * Return: The index of the gap if found, otherwise an index outside the
+  * range specified (in which case 'return - index >= max_scan' will be true).
+- * In the rare case of index wrap-around, 0 will be returned.  0 will also
+- * be returned if index == 0 and there is a gap at the index.  We can not
+- * wrap-around if passed index == 0.
++ * In the rare case of index wrap-around, 0 will be returned.
+  */
+ pgoff_t page_cache_next_miss(struct address_space *mapping,
+ 			     pgoff_t index, unsigned long max_scan)
+@@ -1772,13 +1770,12 @@ pgoff_t page_cache_next_miss(struct addr
+ 	while (max_scan--) {
+ 		void *entry = xas_next(&xas);
+ 		if (!entry || xa_is_value(entry))
+-			return xas.xa_index;
+-		if (xas.xa_index == 0 && index != 0)
+-			return xas.xa_index;
++			break;
++		if (xas.xa_index == 0)
++			break;
+ 	}
  
--static const ptrdiff_t *libc_rseq_offset_p;
--static const unsigned int *libc_rseq_size_p;
--static const unsigned int *libc_rseq_flags_p;
-+/*
-+ * Define weak versions to play nice with binaries that are statically linked
-+ * against a libc that doesn't support registering its own rseq.
-+ */
-+__weak ptrdiff_t __rseq_offset;
-+__weak unsigned int __rseq_size;
-+__weak unsigned int __rseq_flags;
-+
-+static const ptrdiff_t *libc_rseq_offset_p = &__rseq_offset;
-+static const unsigned int *libc_rseq_size_p = &__rseq_size;
-+static const unsigned int *libc_rseq_flags_p = &__rseq_flags;
+-	/* No gaps in range and no wrap-around, return index beyond range */
+-	return xas.xa_index + 1;
++	return xas.xa_index;
+ }
+ EXPORT_SYMBOL(page_cache_next_miss);
  
- /* Offset from the thread pointer to the rseq area. */
- ptrdiff_t rseq_offset;
-@@ -155,9 +163,17 @@ unsigned int get_rseq_feature_size(void)
- static __attribute__((constructor))
- void rseq_init(void)
- {
--	libc_rseq_offset_p = dlsym(RTLD_NEXT, "__rseq_offset");
--	libc_rseq_size_p = dlsym(RTLD_NEXT, "__rseq_size");
--	libc_rseq_flags_p = dlsym(RTLD_NEXT, "__rseq_flags");
-+	/*
-+	 * If the libc's registered rseq size isn't already valid, it may be
-+	 * because the binary is dynamically linked and not necessarily due to
-+	 * libc not having registered a restartable sequence.  Try to find the
-+	 * symbols if that's the case.
-+	 */
-+	if (!*libc_rseq_size_p) {
-+		libc_rseq_offset_p = dlsym(RTLD_NEXT, "__rseq_offset");
-+		libc_rseq_size_p = dlsym(RTLD_NEXT, "__rseq_size");
-+		libc_rseq_flags_p = dlsym(RTLD_NEXT, "__rseq_flags");
-+	}
- 	if (libc_rseq_size_p && libc_rseq_offset_p && libc_rseq_flags_p &&
- 			*libc_rseq_size_p != 0) {
- 		/* rseq registration owned by glibc */
--- 
-2.40.1
-
+@@ -1799,9 +1796,7 @@ EXPORT_SYMBOL(page_cache_next_miss);
+  *
+  * Return: The index of the gap if found, otherwise an index outside the
+  * range specified (in which case 'index - return >= max_scan' will be true).
+- * In the rare case of wrap-around, ULONG_MAX will be returned.  ULONG_MAX
+- * will also be returned if index == ULONG_MAX and there is a gap at the
+- * index.  We can not wrap-around if passed index == ULONG_MAX.
++ * In the rare case of wrap-around, ULONG_MAX will be returned.
+  */
+ pgoff_t page_cache_prev_miss(struct address_space *mapping,
+ 			     pgoff_t index, unsigned long max_scan)
+@@ -1811,13 +1806,12 @@ pgoff_t page_cache_prev_miss(struct addr
+ 	while (max_scan--) {
+ 		void *entry = xas_prev(&xas);
+ 		if (!entry || xa_is_value(entry))
+-			return xas.xa_index;
+-		if (xas.xa_index == ULONG_MAX && index != ULONG_MAX)
+-			return xas.xa_index;
++			break;
++		if (xas.xa_index == ULONG_MAX)
++			break;
+ 	}
+ 
+-	/* No gaps in range and no wrap-around, return index beyond range */
+-	return xas.xa_index - 1;
++	return xas.xa_index;
+ }
+ EXPORT_SYMBOL(page_cache_prev_miss);
+ 
 
 
