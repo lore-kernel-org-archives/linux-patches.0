@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B28553B7
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:53:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C7EC433C8;
-	Wed,  9 Aug 2023 10:53:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376DD53B7
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:53:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0BCC433C8;
+	Wed,  9 Aug 2023 10:53:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578413;
-	bh=QHnAsdTwt6iTvDspyAhM/hx3JwlIKEavjdheFmuAnTE=;
+	s=korg; t=1691578416;
+	bh=xjZZ/8jvHpQOh/+80GPkKFhmpOqURT+iRep7SjkPJ0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vCTljbcWxMQ38e3MukrIxVobux1HtQDklMyvaLN/keyb7n7gRyhr58h4kRpjCMSYh
-	 u2DoyCStrb/JGmS+8sS0n7gTeQqipnKQqdQ77R5LkxgbO4+hntvuK8VmnOU6x3vYUT
-	 16qVN7eqURtunTUGmlFfmOtVesdjMyzOd/C+EEUk=
+	b=CN5Yc48pAiHmapDNs2YQIF2KVAvmbwtLbmq4TkZ1+WSHId9ESb2IrQTAyt3jQozNc
+	 iEWmpP6ZNLVmNUcA21H0Vj0NdIECFb60DRQtLcvPSGkZIyAiHHilAfa2NzO+0898Sx
+	 RIAXLF4qzQmRTU/b3R7xLAqbcPD9+e3Ikk9qyQ10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Glozar <tglozar@redhat.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Esben Haabendal <esben@geanix.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Harini Katakam <harini.katakam@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 051/127] bpf: sockmap: Remove preempt_disable in sock_map_sk_acquire
-Date: Wed,  9 Aug 2023 12:40:38 +0200
-Message-ID: <20230809103638.373931254@linuxfoundation.org>
+Subject: [PATCH 6.1 052/127] net: ll_temac: fix error checking of irq_of_parse_and_map()
+Date: Wed,  9 Aug 2023 12:40:39 +0200
+Message-ID: <20230809103638.404426104@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -37,57 +38,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomas Glozar <tglozar@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 13d2618b48f15966d1adfe1ff6a1985f5eef40ba ]
+[ Upstream commit ef45e8400f5bb66b03cc949f76c80e2a118447de ]
 
-Disabling preemption in sock_map_sk_acquire conflicts with GFP_ATOMIC
-allocation later in sk_psock_init_link on PREEMPT_RT kernels, since
-GFP_ATOMIC might sleep on RT (see bpf: Make BPF and PREEMPT_RT co-exist
-patchset notes for details).
+Most kernel functions return negative error codes but some irq functions
+return zero on error.  In this code irq_of_parse_and_map(), returns zero
+and platform_get_irq() returns negative error codes.  We need to handle
+both cases appropriately.
 
-This causes calling bpf_map_update_elem on BPF_MAP_TYPE_SOCKMAP maps to
-BUG (sleeping function called from invalid context) on RT kernels.
-
-preempt_disable was introduced together with lock_sk and rcu_read_lock
-in commit 99ba2b5aba24e ("bpf: sockhash, disallow bpf_tcp_close and update
-in parallel"), probably to match disabled migration of BPF programs, and
-is no longer necessary.
-
-Remove preempt_disable to fix BUG in sock_map_update_common on RT.
-
-Signed-off-by: Tomas Glozar <tglozar@redhat.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/all/20200224140131.461979697@linutronix.de/
-Fixes: 99ba2b5aba24 ("bpf: sockhash, disallow bpf_tcp_close and update in parallel")
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/r/20230728064411.305576-1-tglozar@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 8425c41d1ef7 ("net: ll_temac: Extend support to non-device-tree platforms")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: Esben Haabendal <esben@geanix.com>
+Reviewed-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Harini Katakam <harini.katakam@amd.com>
+Link: https://lore.kernel.org/r/3d0aef75-06e0-45a5-a2a6-2cc4738d4143@moroto.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_map.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/ethernet/xilinx/ll_temac_main.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index d382672018928..c84e5073c0b66 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -117,7 +117,6 @@ static void sock_map_sk_acquire(struct sock *sk)
- 	__acquires(&sk->sk_lock.slock)
- {
- 	lock_sock(sk);
--	preempt_disable();
- 	rcu_read_lock();
- }
+diff --git a/drivers/net/ethernet/xilinx/ll_temac_main.c b/drivers/net/ethernet/xilinx/ll_temac_main.c
+index 1066420d6a83a..6bf5e341c3c11 100644
+--- a/drivers/net/ethernet/xilinx/ll_temac_main.c
++++ b/drivers/net/ethernet/xilinx/ll_temac_main.c
+@@ -1568,12 +1568,16 @@ static int temac_probe(struct platform_device *pdev)
+ 	}
  
-@@ -125,7 +124,6 @@ static void sock_map_sk_release(struct sock *sk)
- 	__releases(&sk->sk_lock.slock)
- {
- 	rcu_read_unlock();
--	preempt_enable();
- 	release_sock(sk);
- }
+ 	/* Error handle returned DMA RX and TX interrupts */
+-	if (lp->rx_irq < 0)
+-		return dev_err_probe(&pdev->dev, lp->rx_irq,
++	if (lp->rx_irq <= 0) {
++		rc = lp->rx_irq ?: -EINVAL;
++		return dev_err_probe(&pdev->dev, rc,
+ 				     "could not get DMA RX irq\n");
+-	if (lp->tx_irq < 0)
+-		return dev_err_probe(&pdev->dev, lp->tx_irq,
++	}
++	if (lp->tx_irq <= 0) {
++		rc = lp->tx_irq ?: -EINVAL;
++		return dev_err_probe(&pdev->dev, rc,
+ 				     "could not get DMA TX irq\n");
++	}
  
+ 	if (temac_np) {
+ 		/* Retrieve the MAC address */
 -- 
 2.40.1
 
