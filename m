@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FBF17756
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:21:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD11C433C8;
-	Wed,  9 Aug 2023 11:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66DA17756
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:21:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE6CC433C7;
+	Wed,  9 Aug 2023 11:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580072;
-	bh=Ca2xW03CkZsnqK+E76VYFr7uIFkOOdn/ahPLoWva4HY=;
+	s=korg; t=1691580074;
+	bh=d7bIEEX+a4+7VdW/TyVgxCt0oFBeV9TzH7T5ruEhwj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yT7MJttbKoSQPsjB6OoUeKyJQjCCLTOtYz1Hm2syjgTEZFcNn90kJZoTyh5k3e9Q3
-	 DRQW+/cf/IixUEtME/xTJNvNvA128QHNXRBz2X/pN+kJHicZ/sAjxSaaI6kAmAhG0e
-	 I5NVL4Lzm3P4XqV75ZlGv8oGpj0Q5yOI/p1n+dWA=
+	b=XnRzLfGeusqIHjwkaqNNz1aDpG90DKBmu6CUCJkl2JJaBuCTZ/0b6bBFECuxYhfqE
+	 lyDMYvUbM3MiwPS+Ek7uwlCGQOarKkLsILShyc3LF5JM1DIKKcTyjAXm8o9giTYqBe
+	 v1nvVmMWDNnVv3ja0DdY2QLYgh45sMajTgGqgRo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenghui Wang <shhuiw@foxmail.com>,
-	Coly Li <colyli@suse.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 218/323] bcache: use MAX_CACHES_PER_SET instead of magic number 8 in __bch_bucket_alloc_set
-Date: Wed,  9 Aug 2023 12:40:56 +0200
-Message-ID: <20230809103708.083779483@linuxfoundation.org>
+Subject: [PATCH 4.19 201/323] spi: bcm63xx: fix max prepend length
+Date: Wed,  9 Aug 2023 12:40:39 +0200
+Message-ID: <20230809103707.347756168@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,42 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shenghui Wang <shhuiw@foxmail.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit 8792099f9ad487cf381f4e8199ff2158ba0f6eb5 ]
+[ Upstream commit 5158814cbb37bbb38344b3ecddc24ba2ed0365f2 ]
 
-Current cache_set has MAX_CACHES_PER_SET caches most, and the macro
-is used for
-"
-	struct cache *cache_by_alloc[MAX_CACHES_PER_SET];
-"
-in the define of struct cache_set.
+The command word is defined as following:
 
-Use MAX_CACHES_PER_SET instead of magic number 8 in
-__bch_bucket_alloc_set.
+    /* Command */
+    #define SPI_CMD_COMMAND_SHIFT           0
+    #define SPI_CMD_DEVICE_ID_SHIFT         4
+    #define SPI_CMD_PREPEND_BYTE_CNT_SHIFT  8
+    #define SPI_CMD_ONE_BYTE_SHIFT          11
+    #define SPI_CMD_ONE_WIRE_SHIFT          12
 
-Signed-off-by: Shenghui Wang <shhuiw@foxmail.com>
-Signed-off-by: Coly Li <colyli@suse.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 80fca8a10b60 ("bcache: Fix __bch_btree_node_alloc to make the failure behavior consistent")
+If the prepend byte count field starts at bit 8, and the next defined
+bit is SPI_CMD_ONE_BYTE at bit 11, it can be at most 3 bits wide, and
+thus the max value is 7, not 15.
+
+Fixes: b17de076062a ("spi/bcm63xx: work around inability to keep CS up")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Link: https://lore.kernel.org/r/20230629071453.62024-1-jonas.gorski@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/bcache/alloc.c | 2 +-
+ drivers/spi/spi-bcm63xx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/bcache/alloc.c b/drivers/md/bcache/alloc.c
-index 46794cac167e7..a1df0d95151c6 100644
---- a/drivers/md/bcache/alloc.c
-+++ b/drivers/md/bcache/alloc.c
-@@ -497,7 +497,7 @@ int __bch_bucket_alloc_set(struct cache_set *c, unsigned int reserve,
- 		return -1;
+diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
+index bfe5754768f97..cc6ec3fb5bfdf 100644
+--- a/drivers/spi/spi-bcm63xx.c
++++ b/drivers/spi/spi-bcm63xx.c
+@@ -134,7 +134,7 @@ enum bcm63xx_regs_spi {
+ 	SPI_MSG_DATA_SIZE,
+ };
  
- 	lockdep_assert_held(&c->bucket_lock);
--	BUG_ON(!n || n > c->caches_loaded || n > 8);
-+	BUG_ON(!n || n > c->caches_loaded || n > MAX_CACHES_PER_SET);
+-#define BCM63XX_SPI_MAX_PREPEND		15
++#define BCM63XX_SPI_MAX_PREPEND		7
  
- 	bkey_init(k);
- 
+ #define BCM63XX_SPI_MAX_CS		8
+ #define BCM63XX_SPI_BUS_NUM		0
 -- 
 2.39.2
 
