@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B510917756
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:21:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33551C433C8;
-	Wed,  9 Aug 2023 11:21:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7386417756
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:21:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4342C433C9;
+	Wed,  9 Aug 2023 11:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580066;
-	bh=zQj0mF09h+PsoflCAP/MixvTSZp8WKAFEJ9F/zbnAfI=;
+	s=korg; t=1691580069;
+	bh=A8h31/oX3dqLXdzJMAQvlBClgdzboMUqP23qpJXtQ5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xrOZdyIS8GD6LPru7xZQqJbPMfSqkNi6i1H5hhGXHOlKWCP3vcJmh8mxKYx/jAXvK
-	 ufXlRqMZ70bd+/TE3BdLh3uUhhljH/fqq0PIomIsW5VlILxvOY2sgRe+sR3Yqhxgq0
-	 cqAJiVMaIJz7Oa2BiqGLbDptwgbvOF+KSSEeT8jQ=
+	b=axckv4owrTwp5AAwu/dLN7MOd0ggZpRIz7g3hbTGb9eLPjdXG8TEpCfCJXcNoSW2C
+	 d9hAW10oUKcMmEwtcCZOyYw4a5vW87Vz/9EazLuHrd0B+G2DFnSLjyitj/0YnppEpi
+	 dNkBCo6VGcN3kTL7mANcOCDU6Q0a7swAWm4E45Fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Khalfella <mkhalfella@purestorage.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 4.19 216/323] tracing/histograms: Return an error if we fail to add histogram to hist_vars list
-Date: Wed,  9 Aug 2023 12:40:54 +0200
-Message-ID: <20230809103707.994494332@linuxfoundation.org>
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Daniel Scally <dan.scally@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 217/323] gpio: tps68470: Make tps68470_gpio_output() always set the initial value
+Date: Wed,  9 Aug 2023 12:40:55 +0200
+Message-ID: <20230809103708.035101638@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -34,38 +38,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mohamed Khalfella <mkhalfella@purestorage.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 4b8b3905165ef98386a3c06f196c85d21292d029 upstream.
+[ Upstream commit 5a7adc6c1069ce31ef4f606ae9c05592c80a6ab5 ]
 
-Commit 6018b585e8c6 ("tracing/histograms: Add histograms to hist_vars if
-they have referenced variables") added a check to fail histogram creation
-if save_hist_vars() failed to add histogram to hist_vars list. But the
-commit failed to set ret to failed return code before jumping to
-unregister histogram, fix it.
+Make tps68470_gpio_output() call tps68470_gpio_set() for output-only pins
+too, so that the initial value passed to gpiod_direction_output() is
+honored for these pins too.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230714203341.51396-1-mkhalfella@purestorage.com
-
-Cc: stable@vger.kernel.org
-Fixes: 6018b585e8c6 ("tracing/histograms: Add histograms to hist_vars if they have referenced variables")
-Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 275b13a65547 ("gpio: Add support for TPS68470 GPIOs")
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
+Tested-by: Daniel Scally <dan.scally@ideasonboard.com>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-tps68470.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -5792,7 +5792,8 @@ static int event_hist_trigger_func(struc
- 		goto out_unreg;
+diff --git a/drivers/gpio/gpio-tps68470.c b/drivers/gpio/gpio-tps68470.c
+index aff6e504c6668..9704cff9b4aa3 100644
+--- a/drivers/gpio/gpio-tps68470.c
++++ b/drivers/gpio/gpio-tps68470.c
+@@ -91,13 +91,13 @@ static int tps68470_gpio_output(struct gpio_chip *gc, unsigned int offset,
+ 	struct tps68470_gpio_data *tps68470_gpio = gpiochip_get_data(gc);
+ 	struct regmap *regmap = tps68470_gpio->tps68470_regmap;
  
- 	if (has_hist_vars(hist_data) || hist_data->n_var_refs) {
--		if (save_hist_vars(hist_data))
-+		ret = save_hist_vars(hist_data);
-+		if (ret)
- 			goto out_unreg;
- 	}
++	/* Set the initial value */
++	tps68470_gpio_set(gc, offset, value);
++
+ 	/* rest are always outputs */
+ 	if (offset >= TPS68470_N_REGULAR_GPIO)
+ 		return 0;
  
+-	/* Set the initial value */
+-	tps68470_gpio_set(gc, offset, value);
+-
+ 	return regmap_update_bits(regmap, TPS68470_GPIO_CTL_REG_A(offset),
+ 				 TPS68470_GPIO_MODE_MASK,
+ 				 TPS68470_GPIO_MODE_OUT_CMOS);
+-- 
+2.39.2
+
 
 
