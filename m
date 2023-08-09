@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2921773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:19:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F22C433C7;
-	Wed,  9 Aug 2023 11:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5E51773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:19:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA6CCC433C7;
+	Wed,  9 Aug 2023 11:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579982;
-	bh=DyFU02lJUbQpITflYUfjoJ1QmKSAdpNCchUjyUHNaLw=;
+	s=korg; t=1691579985;
+	bh=n9C1qj3uEH7oFeSXLN5izOYMoP9sZSaXM2OPJ3IR1/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R8xnlKtA+aHhqYlHgdAjafAi9ozwUJEZl4Jd93vbTVyOAjPRY6YmPDUTnklUJARwb
-	 LQpstUJYc/bAnf2gkrapQ481KTyTgkNk6q+WCcMs8EJDMi+NLKH9A+aex83hNKMffv
-	 E44R4opgRZ/d2JlE/5D4KTo3pkgZ/wlcYDmBdyHk=
+	b=sN2mRsBX+eW1BI01rsN439Ey/YyfkLlbscXnJp+ceRANUbhbamOS1YfLdnl38ubkq
+	 dv81OOlz0oYOo57uswZnJ8VbGwedWulyeeNfEyReeYQQ/m6rpEKOl3h8VyX9xcjNAo
+	 OjIdjqyCGR5VJsiYrnMba/TWlFhAylH5bT4T0nDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH 4.19 168/323] misc: pci_endpoint_test: Free IRQs before removing the device
-Date: Wed,  9 Aug 2023 12:40:06 +0200
-Message-ID: <20230809103705.836771463@linuxfoundation.org>
+	Mohamed Khalfella <mkhalfella@purestorage.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 4.19 186/323] tracing/histograms: Add histograms to hist_vars if they have referenced variables
+Date: Wed,  9 Aug 2023 12:40:24 +0200
+Message-ID: <20230809103706.682516699@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,50 +34,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Mohamed Khalfella <mkhalfella@purestorage.com>
 
-commit f61b7634a3249d12b9daa36ffbdb9965b6f24c6c upstream.
+commit 6018b585e8c6fa7d85d4b38d9ce49a5b67be7078 upstream.
 
-In pci_endpoint_test_remove(), freeing the IRQs after removing the device
-creates a small race window for IRQs to be received with the test device
-memory already released, causing the IRQ handler to access invalid memory,
-resulting in an oops.
+Hist triggers can have referenced variables without having direct
+variables fields. This can be the case if referenced variables are added
+for trigger actions. In this case the newly added references will not
+have field variables. Not taking such referenced variables into
+consideration can result in a bug where it would be possible to remove
+hist trigger with variables being refenced. This will result in a bug
+that is easily reproducable like so
 
-Free the device IRQs before removing the device to avoid this issue.
+$ cd /sys/kernel/tracing
+$ echo 'synthetic_sys_enter char[] comm; long id' >> synthetic_events
+$ echo 'hist:keys=common_pid.execname,id.syscall:vals=hitcount:comm=common_pid.execname' >> events/raw_syscalls/sys_enter/trigger
+$ echo 'hist:keys=common_pid.execname,id.syscall:onmatch(raw_syscalls.sys_enter).synthetic_sys_enter($comm, id)' >> events/raw_syscalls/sys_enter/trigger
+$ echo '!hist:keys=common_pid.execname,id.syscall:vals=hitcount:comm=common_pid.execname' >> events/raw_syscalls/sys_enter/trigger
 
-Link: https://lore.kernel.org/r/20230415023542.77601-15-dlemoal@kernel.org
-Fixes: e03327122e2c ("pci_endpoint_test: Add 2 ioctl commands")
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+[  100.263533] ==================================================================
+[  100.264634] BUG: KASAN: slab-use-after-free in resolve_var_refs+0xc7/0x180
+[  100.265520] Read of size 8 at addr ffff88810375d0f0 by task bash/439
+[  100.266320]
+[  100.266533] CPU: 2 PID: 439 Comm: bash Not tainted 6.5.0-rc1 #4
+[  100.267277] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.0-20220807_005459-localhost 04/01/2014
+[  100.268561] Call Trace:
+[  100.268902]  <TASK>
+[  100.269189]  dump_stack_lvl+0x4c/0x70
+[  100.269680]  print_report+0xc5/0x600
+[  100.270165]  ? resolve_var_refs+0xc7/0x180
+[  100.270697]  ? kasan_complete_mode_report_info+0x80/0x1f0
+[  100.271389]  ? resolve_var_refs+0xc7/0x180
+[  100.271913]  kasan_report+0xbd/0x100
+[  100.272380]  ? resolve_var_refs+0xc7/0x180
+[  100.272920]  __asan_load8+0x71/0xa0
+[  100.273377]  resolve_var_refs+0xc7/0x180
+[  100.273888]  event_hist_trigger+0x749/0x860
+[  100.274505]  ? kasan_save_stack+0x2a/0x50
+[  100.275024]  ? kasan_set_track+0x29/0x40
+[  100.275536]  ? __pfx_event_hist_trigger+0x10/0x10
+[  100.276138]  ? ksys_write+0xd1/0x170
+[  100.276607]  ? do_syscall_64+0x3c/0x90
+[  100.277099]  ? entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+[  100.277771]  ? destroy_hist_data+0x446/0x470
+[  100.278324]  ? event_hist_trigger_parse+0xa6c/0x3860
+[  100.278962]  ? __pfx_event_hist_trigger_parse+0x10/0x10
+[  100.279627]  ? __kasan_check_write+0x18/0x20
+[  100.280177]  ? mutex_unlock+0x85/0xd0
+[  100.280660]  ? __pfx_mutex_unlock+0x10/0x10
+[  100.281200]  ? kfree+0x7b/0x120
+[  100.281619]  ? ____kasan_slab_free+0x15d/0x1d0
+[  100.282197]  ? event_trigger_write+0xac/0x100
+[  100.282764]  ? __kasan_slab_free+0x16/0x20
+[  100.283293]  ? __kmem_cache_free+0x153/0x2f0
+[  100.283844]  ? sched_mm_cid_remote_clear+0xb1/0x250
+[  100.284550]  ? __pfx_sched_mm_cid_remote_clear+0x10/0x10
+[  100.285221]  ? event_trigger_write+0xbc/0x100
+[  100.285781]  ? __kasan_check_read+0x15/0x20
+[  100.286321]  ? __bitmap_weight+0x66/0xa0
+[  100.286833]  ? _find_next_bit+0x46/0xe0
+[  100.287334]  ? task_mm_cid_work+0x37f/0x450
+[  100.287872]  event_triggers_call+0x84/0x150
+[  100.288408]  trace_event_buffer_commit+0x339/0x430
+[  100.289073]  ? ring_buffer_event_data+0x3f/0x60
+[  100.292189]  trace_event_raw_event_sys_enter+0x8b/0xe0
+[  100.295434]  syscall_trace_enter.constprop.0+0x18f/0x1b0
+[  100.298653]  syscall_enter_from_user_mode+0x32/0x40
+[  100.301808]  do_syscall_64+0x1a/0x90
+[  100.304748]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+[  100.307775] RIP: 0033:0x7f686c75c1cb
+[  100.310617] Code: 73 01 c3 48 8b 0d 65 3c 10 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa b8 21 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 35 3c 10 00 f7 d8 64 89 01 48
+[  100.317847] RSP: 002b:00007ffc60137a38 EFLAGS: 00000246 ORIG_RAX: 0000000000000021
+[  100.321200] RAX: ffffffffffffffda RBX: 000055f566469ea0 RCX: 00007f686c75c1cb
+[  100.324631] RDX: 0000000000000001 RSI: 0000000000000001 RDI: 000000000000000a
+[  100.328104] RBP: 00007ffc60137ac0 R08: 00007f686c818460 R09: 000000000000000a
+[  100.331509] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000009
+[  100.334992] R13: 0000000000000007 R14: 000000000000000a R15: 0000000000000007
+[  100.338381]  </TASK>
+
+We hit the bug because when second hist trigger has was created
+has_hist_vars() returned false because hist trigger did not have
+variables. As a result of that save_hist_vars() was not called to add
+the trigger to trace_array->hist_vars. Later on when we attempted to
+remove the first histogram find_any_var_ref() failed to detect it is
+being used because it did not find the second trigger in hist_vars list.
+
+With this change we wait until trigger actions are created so we can take
+into consideration if hist trigger has variable references. Also, now we
+check the return value of save_hist_vars() and fail trigger creation if
+save_hist_vars() fails.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230712223021.636335-1-mkhalfella@purestorage.com
+
 Cc: stable@vger.kernel.org
+Fixes: 067fe038e70f6 ("tracing: Add variable reference handling to hist triggers")
+Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/pci_endpoint_test.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/trace/trace_events_hist.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/misc/pci_endpoint_test.c
-+++ b/drivers/misc/pci_endpoint_test.c
-@@ -785,6 +785,9 @@ static void pci_endpoint_test_remove(str
- 	if (id < 0)
- 		return;
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -5787,13 +5787,15 @@ static int event_hist_trigger_func(struc
+ 	if (get_named_trigger_data(trigger_data))
+ 		goto enable;
  
-+	pci_endpoint_test_release_irq(test);
-+	pci_endpoint_test_free_irq_vectors(test);
-+
- 	misc_deregister(&test->miscdev);
- 	kfree(misc_device->name);
- 	ida_simple_remove(&pci_endpoint_test_ida, id);
-@@ -793,9 +796,6 @@ static void pci_endpoint_test_remove(str
- 			pci_iounmap(pdev, test->bar[bar]);
- 	}
- 
--	pci_endpoint_test_release_irq(test);
--	pci_endpoint_test_free_irq_vectors(test);
+-	if (has_hist_vars(hist_data))
+-		save_hist_vars(hist_data);
 -
- 	pci_release_regions(pdev);
- 	pci_disable_device(pdev);
- }
+ 	ret = create_actions(hist_data, file);
+ 	if (ret)
+ 		goto out_unreg;
+ 
++	if (has_hist_vars(hist_data) || hist_data->n_var_refs) {
++		if (save_hist_vars(hist_data))
++			goto out_unreg;
++	}
++
+ 	ret = tracing_map_init(hist_data->map);
+ 	if (ret)
+ 		goto out_unreg;
 
 
