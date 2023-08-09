@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7775117AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF9BC433C8;
-	Wed,  9 Aug 2023 11:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3806B17AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:25:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1DCC433C7;
+	Wed,  9 Aug 2023 11:25:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580312;
-	bh=p94nl83yJD6eUrRCtdIAjj7zKXeRltVVEBcKvCQh0d4=;
+	s=korg; t=1691580315;
+	bh=werk7RZWHTc0ehFZfT3Fkw2zufSa3dzfdR3lFBoxkak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UcmuNMNDgR4hCK7sKWOJz82IThdAqEu5+Bf7brPFgWlfdn+6TlJnPNkERVYi8A8/T
-	 gD1OSZu/TMtcjjec2OBD2fuzg+H8+P7XjVSy7ZSOZnOed91Vj957IAGyOxrjKmbokZ
-	 HDodUkpk/NMpASsm1JgYzCFsTAokTVTqQJ0tfLKY=
+	b=i+7AhiyRx8KYqytwlw+MUBKjPEf43O9fPiYr7fEPEk3jbNwQMDSoutUJFaT9potfN
+	 78pvZKPhhQERqKzQvTSezjJPmrgI0GncK2OUqvkFMZ/xPHzdOJPDa85bO+TMnHlonq
+	 h+AsngJUxGwGHiZCF2IIYYnOpyR3I9qwOQtHTkLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 4.19 273/323] btrfs: check for commit error at btrfs_attach_transaction_barrier()
-Date: Wed,  9 Aug 2023 12:41:51 +0200
-Message-ID: <20230809103710.556859322@linuxfoundation.org>
+	Alexander Steffen <Alexander.Steffen@infineon.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 4.19 274/323] tpm_tis: Explicitly check for error code
+Date: Wed,  9 Aug 2023 12:41:52 +0200
+Message-ID: <20230809103710.598335731@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,53 +34,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Alexander Steffen <Alexander.Steffen@infineon.com>
 
-commit b28ff3a7d7e97456fd86b68d24caa32e1cfa7064 upstream.
+commit 513253f8c293c0c8bd46d09d337fc892bf8f9f48 upstream.
 
-btrfs_attach_transaction_barrier() is used to get a handle pointing to the
-current running transaction if the transaction has not started its commit
-yet (its state is < TRANS_STATE_COMMIT_START). If the transaction commit
-has started, then we wait for the transaction to commit and finish before
-returning - however we completely ignore if the transaction was aborted
-due to some error during its commit, we simply return ERR_PT(-ENOENT),
-which makes the caller assume everything is fine and no errors happened.
+recv_data either returns the number of received bytes, or a negative value
+representing an error code. Adding the return value directly to the total
+number of received bytes therefore looks a little weird, since it might add
+a negative error code to a sum of bytes.
 
-This could make an fsync return success (0) to user space when in fact we
-had a transaction abort and the target inode changes were therefore not
-persisted.
+The following check for size < expected usually makes the function return
+ETIME in that case, so it does not cause too many problems in practice. But
+to make the code look cleaner and because the caller might still be
+interested in the original error code, explicitly check for the presence of
+an error code and pass that through.
 
-Fix this by checking for the return value from btrfs_wait_for_commit(),
-and if it returned an error, return it back to the caller.
-
-Fixes: d4edf39bd5db ("Btrfs: fix uncompleted transaction")
-CC: stable@vger.kernel.org # 4.19+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Fixes: cb5354253af2 ("[PATCH] tpm: spacing cleanups 2")
+Signed-off-by: Alexander Steffen <Alexander.Steffen@infineon.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/transaction.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -703,8 +703,13 @@ btrfs_attach_transaction_barrier(struct
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -270,6 +270,7 @@ static int tpm_tis_recv(struct tpm_chip
+ 	int size = 0;
+ 	int status;
+ 	u32 expected;
++	int rc;
  
- 	trans = start_transaction(root, 0, TRANS_ATTACH,
- 				  BTRFS_RESERVE_NO_FLUSH, true);
--	if (trans == ERR_PTR(-ENOENT))
--		btrfs_wait_for_commit(root->fs_info, 0);
-+	if (trans == ERR_PTR(-ENOENT)) {
-+		int ret;
-+
-+		ret = btrfs_wait_for_commit(root->fs_info, 0);
-+		if (ret)
-+			return ERR_PTR(ret);
+ 	if (count < TPM_HEADER_SIZE) {
+ 		size = -EIO;
+@@ -289,8 +290,13 @@ static int tpm_tis_recv(struct tpm_chip
+ 		goto out;
+ 	}
+ 
+-	size += recv_data(chip, &buf[TPM_HEADER_SIZE],
+-			  expected - TPM_HEADER_SIZE);
++	rc = recv_data(chip, &buf[TPM_HEADER_SIZE],
++		       expected - TPM_HEADER_SIZE);
++	if (rc < 0) {
++		size = rc;
++		goto out;
 +	}
- 
- 	return trans;
- }
++	size += rc;
+ 	if (size < expected) {
+ 		dev_err(&chip->dev, "Unable to read remainder of result\n");
+ 		size = -ETIME;
 
 
