@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AEB217AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:28:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E8BC433C8;
-	Wed,  9 Aug 2023 11:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016CF17AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:29:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7647EC433C8;
+	Wed,  9 Aug 2023 11:29:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580539;
-	bh=tTxCWegzfyMd49qUmnIJdIIE/aw1dK+tlXQPmddkrAI=;
+	s=korg; t=1691580541;
+	bh=ftL66v6tpbr7JHeHa/t8K+XsWO91jDhSHt5WpNqZJvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=afiAcGEmix9O2SGxDngolsO3XjFpqknfk5Trwp4ql2MyC1fGU2ADVivhBK8SFIDYn
-	 tt1GIyD72nwvAcuPCNPDQSI/dtVCOwUovRK5r/KKSvpwOb6eSdQhHlKczPNd5OXg4d
-	 nD2VJnGoQ8/FFZiq+FrogxOCi93xwHhpUeuYFSyw=
+	b=vnw2ogufsxrh9MX7gVNVGCnoYHg/G8VYybMDqsmPIOAc+YoYDSW3RbBPPOI0o1hFl
+	 0L/beXUSmri+KYzFMj74rLAZYGirL4B5DQz+oeFpTJIY2SbQZNsrxJxDTpFfR4QKbe
+	 Krjs80iyhs6PMRgHWnFEGCd7q9c2ZIl2kRIXrrWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.4 061/154] can: gs_usb: gs_can_close(): add missing set of CAN state to CAN_STATE_STOPPED
-Date: Wed,  9 Aug 2023 12:41:32 +0200
-Message-ID: <20230809103639.023470761@linuxfoundation.org>
+	Mauro Ribeiro <mauro.ribeiro@hardkernel.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Jakub Vanek <linuxtardis@gmail.com>
+Subject: [PATCH 5.4 062/154] Revert "usb: dwc3: core: Enable AutoRetry feature in the controller"
+Date: Wed,  9 Aug 2023 12:41:33 +0200
+Message-ID: <20230809103639.051358136@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -33,42 +36,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Jakub Vanek <linuxtardis@gmail.com>
 
-commit f8a2da6ec2417cca169fa85a8ab15817bccbb109 upstream.
+commit 734ae15ab95a18d3d425fc9cb38b7a627d786f08 upstream.
 
-After an initial link up the CAN device is in ERROR-ACTIVE mode. Due
-to a missing CAN_STATE_STOPPED in gs_can_close() it doesn't change to
-STOPPED after a link down:
+This reverts commit b138e23d3dff90c0494925b4c1874227b81bddf7.
 
-| ip link set dev can0 up
-| ip link set dev can0 down
-| ip --details link show can0
-| 13: can0: <NOARP,ECHO> mtu 16 qdisc pfifo_fast state DOWN mode DEFAULT group default qlen 10
-|     link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0
-|     can state ERROR-ACTIVE restart-ms 1000
+AutoRetry has been found to sometimes cause controller freezes when
+communicating with buggy USB devices.
 
-Add missing assignment of CAN_STATE_STOPPED in gs_can_close().
+This controller feature allows the controller in host mode to send
+non-terminating/burst retry ACKs instead of terminating retry ACKs
+to devices when a transaction error (CRC error or overflow) occurs.
 
+Unfortunately, if the USB device continues to respond with a CRC error,
+the controller will not complete endpoint-related commands while it
+keeps trying to auto-retry. [3] The xHCI driver will notice this once
+it tries to abort the transfer using a Stop Endpoint command and
+does not receive a completion in time. [1]
+This situation is reported to dmesg:
+
+[sda] tag#29 uas_eh_abort_handler 0 uas-tag 1 inflight: CMD IN
+[sda] tag#29 CDB: opcode=0x28 28 00 00 69 42 80 00 00 48 00
+xhci-hcd: xHCI host not responding to stop endpoint command
+xhci-hcd: xHCI host controller not responding, assume dead
+xhci-hcd: HC died; cleaning up
+
+Some users observed this problem on an Odroid HC2 with the JMS578
+USB3-to-SATA bridge. The issue can be triggered by starting
+a read-heavy workload on an attached SSD. After a while, the host
+controller would die and the SSD would disappear from the system. [1]
+
+Further analysis by Synopsys determined that controller revisions
+other than the one in Odroid HC2 are also affected by this.
+The recommended solution was to disable AutoRetry altogether.
+This change does not have a noticeable performance impact. [2]
+
+Revert the enablement commit. This will keep the AutoRetry bit in
+the default state configured during SoC design [2].
+
+Fixes: b138e23d3dff ("usb: dwc3: core: Enable AutoRetry feature in the controller")
+Link: https://lore.kernel.org/r/a21f34c04632d250cd0a78c7c6f4a1c9c7a43142.camel@gmail.com/ [1]
+Link: https://lore.kernel.org/r/20230711214834.kyr6ulync32d4ktk@synopsys.com/ [2]
+Link: https://lore.kernel.org/r/20230712225518.2smu7wse6djc7l5o@synopsys.com/ [3]
 Cc: stable@vger.kernel.org
-Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
-Link: https://lore.kernel.org/all/20230718-gs_usb-fix-can-state-v1-1-f19738ae2c23@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: Mauro Ribeiro <mauro.ribeiro@hardkernel.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Suggested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Jakub Vanek <linuxtardis@gmail.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20230714122419.27741-1-linuxtardis@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/gs_usb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/dwc3/core.c |   16 ----------------
+ drivers/usb/dwc3/core.h |    3 ---
+ 2 files changed, 19 deletions(-)
 
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -732,6 +732,8 @@ static int gs_can_close(struct net_devic
- 	usb_kill_anchored_urbs(&dev->tx_submitted);
- 	atomic_set(&dev->active_tx_urbs, 0);
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1010,22 +1010,6 @@ static int dwc3_core_init(struct dwc3 *d
+ 		dwc3_writel(dwc->regs, DWC3_GUCTL1, reg);
+ 	}
  
-+	dev->can.state = CAN_STATE_STOPPED;
-+
- 	/* reset the device */
- 	rc = gs_cmd_reset(dev);
- 	if (rc < 0)
+-	if (dwc->dr_mode == USB_DR_MODE_HOST ||
+-	    dwc->dr_mode == USB_DR_MODE_OTG) {
+-		reg = dwc3_readl(dwc->regs, DWC3_GUCTL);
+-
+-		/*
+-		 * Enable Auto retry Feature to make the controller operating in
+-		 * Host mode on seeing transaction errors(CRC errors or internal
+-		 * overrun scenerios) on IN transfers to reply to the device
+-		 * with a non-terminating retry ACK (i.e, an ACK transcation
+-		 * packet with Retry=1 & Nump != 0)
+-		 */
+-		reg |= DWC3_GUCTL_HSTINAUTORETRY;
+-
+-		dwc3_writel(dwc->regs, DWC3_GUCTL, reg);
+-	}
+-
+ 	/*
+ 	 * Must config both number of packets and max burst settings to enable
+ 	 * RX and/or TX threshold.
+--- a/drivers/usb/dwc3/core.h
++++ b/drivers/usb/dwc3/core.h
+@@ -246,9 +246,6 @@
+ #define DWC3_GCTL_GBLHIBERNATIONEN	BIT(1)
+ #define DWC3_GCTL_DSBLCLKGTNG		BIT(0)
+ 
+-/* Global User Control Register */
+-#define DWC3_GUCTL_HSTINAUTORETRY	BIT(14)
+-
+ /* Global User Control 1 Register */
+ #define DWC3_GUCTL1_PARKMODE_DISABLE_SS	BIT(17)
+ #define DWC3_GUCTL1_TX_IPGAP_LINECHECK_DIS	BIT(28)
 
 
