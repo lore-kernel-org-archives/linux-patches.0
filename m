@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55711774C
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:11:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7FAC433C8;
-	Wed,  9 Aug 2023 11:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918EF1774C
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:11:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F68EC433C7;
+	Wed,  9 Aug 2023 11:11:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579472;
-	bh=mVaMurqfNZT9mxKIFQ1nvunouZFvg8lVaG5Ps+splQM=;
+	s=korg; t=1691579475;
+	bh=yCNO3Zuo3wG/hMZ3W27QWTrszfexDRaGqdc/xUc+VNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jwAsR16BqEjkCYHtqTD/kTNFr5bRLVjI2a5ohp4GEGPU0V+AiiFv8EGO+ZACuQ/36
-	 6gCS6rERPOH2fn9YJY+/p+WNE7tPkL6IzsuCgIB5oq5dlS0ovXk1Ga0CHa1+sOKG0w
-	 GY7d6l7WuyaIHRlo4yfKM9y5f9VTIse4acxQWy9c=
+	b=uoqUfUSBj+v7Hp3mVA1/5H86NhryWEQ1a0bOXekyH3J0nb1BhZINn+K5R5bhABpxR
+	 RfBth9XhFNQXYndh5caob8vjxH/YwfMWXkCCWjBw+KRVwKF07YCkfvn/grWSF0/5C/
+	 BiAxX3lEyraLn0yGFRbZXwuawATyAmKKqQ99YDb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lion <nnamrec@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Shaoying Xu <shaoyi@amazon.com>
-Subject: [PATCH 4.14 179/204] net/sched: sch_qfq: account for stab overhead in qfq_enqueue
-Date: Wed,  9 Aug 2023 12:41:57 +0200
-Message-ID: <20230809103648.490996360@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>
+Subject: [PATCH 4.14 170/204] staging: ks7010: potential buffer overflow in ks_wlan_set_encode_ext()
+Date: Wed,  9 Aug 2023 12:41:48 +0200
+Message-ID: <20230809103648.200134502@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -39,92 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-commit 3e337087c3b5805fe0b8a46ba622a962880b5d64 upstream.
+commit 5f1c7031e044cb2fba82836d55cc235e2ad619dc upstream.
 
-Lion says:
--------
-In the QFQ scheduler a similar issue to CVE-2023-31436
-persists.
+The "exc->key_len" is a u16 that comes from the user.  If it's over
+IW_ENCODING_TOKEN_MAX (64) that could lead to memory corruption.
 
-Consider the following code in net/sched/sch_qfq.c:
-
-static int qfq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
-                struct sk_buff **to_free)
-{
-     unsigned int len = qdisc_pkt_len(skb), gso_segs;
-
-    // ...
-
-     if (unlikely(cl->agg->lmax < len)) {
-         pr_debug("qfq: increasing maxpkt from %u to %u for class %u",
-              cl->agg->lmax, len, cl->common.classid);
-         err = qfq_change_agg(sch, cl, cl->agg->class_weight, len);
-         if (err) {
-             cl->qstats.drops++;
-             return qdisc_drop(skb, sch, to_free);
-         }
-
-    // ...
-
-     }
-
-Similarly to CVE-2023-31436, "lmax" is increased without any bounds
-checks according to the packet length "len". Usually this would not
-impose a problem because packet sizes are naturally limited.
-
-This is however not the actual packet length, rather the
-"qdisc_pkt_len(skb)" which might apply size transformations according to
-"struct qdisc_size_table" as created by "qdisc_get_stab()" in
-net/sched/sch_api.c if the TCA_STAB option was set when modifying the qdisc.
-
-A user may choose virtually any size using such a table.
-
-As a result the same issue as in CVE-2023-31436 can occur, allowing heap
-out-of-bounds read / writes in the kmalloc-8192 cache.
--------
-
-We can create the issue with the following commands:
-
-tc qdisc add dev $DEV root handle 1: stab mtu 2048 tsize 512 mpu 0 \
-overhead 999999999 linklayer ethernet qfq
-tc class add dev $DEV parent 1: classid 1:1 htb rate 6mbit burst 15k
-tc filter add dev $DEV parent 1: matchall classid 1:1
-ping -I $DEV 1.1.1.2
-
-This is caused by incorrectly assuming that qdisc_pkt_len() returns a
-length within the QFQ_MIN_LMAX < len < QFQ_MAX_LMAX.
-
-Fixes: 462dbc9101ac ("pkt_sched: QFQ Plus: fair-queueing service at DRR cost")
-Reported-by: Lion <nnamrec@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Shaoying Xu <shaoyi@amazon.com>
+Fixes: b121d84882b9 ("staging: ks7010: simplify calls to memcpy()")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/tencent_5153B668C0283CAA15AA518325346E026A09@qq.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_qfq.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/staging/ks7010/ks_wlan_net.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/sched/sch_qfq.c
-+++ b/net/sched/sch_qfq.c
-@@ -387,8 +387,13 @@ static int qfq_change_agg(struct Qdisc *
- 			   u32 lmax)
- {
- 	struct qfq_sched *q = qdisc_priv(sch);
--	struct qfq_aggregate *new_agg = qfq_find_agg(q, lmax, weight);
-+	struct qfq_aggregate *new_agg;
- 
-+	/* 'lmax' can range from [QFQ_MIN_LMAX, pktlen + stab overhead] */
-+	if (lmax > (1UL << QFQ_MTU_SHIFT))
-+		return -EINVAL;
+--- a/drivers/staging/ks7010/ks_wlan_net.c
++++ b/drivers/staging/ks7010/ks_wlan_net.c
+@@ -1787,8 +1787,10 @@ static int ks_wlan_set_encode_ext(struct
+ 			commit |= SME_WEP_FLAG;
+ 		}
+ 		if (enc->key_len) {
+-			memcpy(&key->key_val[0], &enc->key[0], enc->key_len);
+-			key->key_len = enc->key_len;
++			int key_len = clamp_val(enc->key_len, 0, IW_ENCODING_TOKEN_MAX);
 +
-+	new_agg = qfq_find_agg(q, lmax, weight);
- 	if (new_agg == NULL) { /* create new aggregate */
- 		new_agg = kzalloc(sizeof(*new_agg), GFP_ATOMIC);
- 		if (new_agg == NULL)
++			memcpy(&key->key_val[0], &enc->key[0], key_len);
++			key->key_len = key_len;
+ 			commit |= (SME_WEP_VAL1 << index);
+ 		}
+ 		break;
 
 
