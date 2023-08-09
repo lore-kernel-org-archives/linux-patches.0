@@ -1,31 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7349847D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:51:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25362C433C8;
-	Wed,  9 Aug 2023 10:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C23847D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:51:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C137C433C8;
+	Wed,  9 Aug 2023 10:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578293;
-	bh=CmD37yCS0W9/zt85kp8DbXO4L8Qr+ez1h2V1K9sTpeA=;
+	s=korg; t=1691578296;
+	bh=ivFOtbTCQxcdV72QTUpaI5N2OPbIwThgfTFiFX3MxSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ghXryagp+yW7hcik+y9alU2fvYFsxYwH2+vYpUP9vwDdE57m4W+ZrbVWgJUNDwtjp
-	 Mxqhiw6hLeLzZjfV4MqmETHmvFYyRMTeiyQN/FsGZYio1PQsm21Eu2uEkng2GovL6E
-	 hjju9bW5PxKTtaOzm+05KofxOAHuViCu6sNBGG1k=
+	b=BU/Dy0LtD1XVmQTmWCrlXzZHKhm+gl00eEIfA1dA4+ix6rH/d+/kk7cRFsXOMts50
+	 p3qjPohZDuDKRCGoTydnuw9BTb71Sr92Bq+9pEGsEZbypOxMGODUiCgSTykeYn1Sl+
+	 OBD7S128dOKDDqti9ruY8XBBt7Oma/W3rHumBPJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 158/165] ARM: dts: nxp/imx6sll: fix wrong property name in usbphy node
-Date: Wed,  9 Aug 2023 12:41:29 +0200
-Message-ID: <20230809103647.937448847@linuxfoundation.org>
+	Oleksandr Natalenko <oleksandr@natalenko.name>,
+	Phil Elwell <phil@raspberrypi.com>,
+	Andres Freund <andres@anarazel.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 001/127] io_uring: gate iowait schedule on having pending requests
+Date: Wed,  9 Aug 2023 12:39:48 +0200
+Message-ID: <20230809103636.669012811@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
-References: <20230809103642.720851262@linuxfoundation.org>
+In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
+References: <20230809103636.615294317@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,36 +38,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit ee70b908f77a9d8f689dea986f09e6d7dc481934 ]
+Commit 7b72d661f1f2f950ab8c12de7e2bc48bdac8ed69 upstream.
 
-Property name "phy-3p0-supply" is used instead of "phy-reg_3p0-supply".
+A previous commit made all cqring waits marked as iowait, as a way to
+improve performance for short schedules with pending IO. However, for
+use cases that have a special reaper thread that does nothing but
+wait on events on the ring, this causes a cosmetic issue where we
+know have one core marked as being "busy" with 100% iowait.
 
-Fixes: 9f30b6b1a957 ("ARM: dts: imx: Add basic dtsi file for imx6sll")
-cc: <stable@vger.kernel.org>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+While this isn't a grave issue, it is confusing to users. Rather than
+always mark us as being in iowait, gate setting of current->in_iowait
+to 1 by whether or not the waiting task has pending requests.
+
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/io-uring/CAMEGJJ2RxopfNQ7GNLhr7X9=bHXKo+G5OOe0LUq=+UgLXsv1Xg@mail.gmail.com/
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217699
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217700
+Reported-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+Reported-by: Phil Elwell <phil@raspberrypi.com>
+Tested-by: Andres Freund <andres@anarazel.de>
+Fixes: 8a796565cec3 ("io_uring: Use io_schedule* in cqring wait")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/imx6sll.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/io_uring.c |   23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx6sll.dtsi b/arch/arm/boot/dts/imx6sll.dtsi
-index 2873369a57c02..3659fd5ecfa62 100644
---- a/arch/arm/boot/dts/imx6sll.dtsi
-+++ b/arch/arm/boot/dts/imx6sll.dtsi
-@@ -552,7 +552,7 @@ usbphy2: usb-phy@20ca000 {
- 				reg = <0x020ca000 0x1000>;
- 				interrupts = <GIC_SPI 41 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&clks IMX6SLL_CLK_USBPHY2>;
--				phy-reg_3p0-supply = <&reg_3p0>;
-+				phy-3p0-supply = <&reg_3p0>;
- 				fsl,anatop = <&anatop>;
- 			};
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2349,12 +2349,21 @@ int io_run_task_work_sig(struct io_ring_
+ 	return 0;
+ }
  
--- 
-2.40.1
-
++static bool current_pending_io(void)
++{
++	struct io_uring_task *tctx = current->io_uring;
++
++	if (!tctx)
++		return false;
++	return percpu_counter_read_positive(&tctx->inflight);
++}
++
+ /* when returns >0, the caller should retry */
+ static inline int io_cqring_wait_schedule(struct io_ring_ctx *ctx,
+ 					  struct io_wait_queue *iowq,
+ 					  ktime_t *timeout)
+ {
+-	int token, ret;
++	int io_wait, ret;
+ 	unsigned long check_cq;
+ 
+ 	/* make sure we run task_work before checking for signals */
+@@ -2372,15 +2381,17 @@ static inline int io_cqring_wait_schedul
+ 	}
+ 
+ 	/*
+-	 * Use io_schedule_prepare/finish, so cpufreq can take into account
+-	 * that the task is waiting for IO - turns out to be important for low
+-	 * QD IO.
++	 * Mark us as being in io_wait if we have pending requests, so cpufreq
++	 * can take into account that the task is waiting for IO - turns out
++	 * to be important for low QD IO.
+ 	 */
+-	token = io_schedule_prepare();
++	io_wait = current->in_iowait;
++	if (current_pending_io())
++		current->in_iowait = 1;
+ 	ret = 1;
+ 	if (!schedule_hrtimeout(timeout, HRTIMER_MODE_ABS))
+ 		ret = -ETIME;
+-	io_schedule_finish(token);
++	current->in_iowait = io_wait;
+ 	return ret;
+ }
+ 
 
 
