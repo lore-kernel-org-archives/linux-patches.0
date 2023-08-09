@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8594B4680
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:42:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A43CC433CB;
-	Wed,  9 Aug 2023 11:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7637D4680
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:42:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED490C433C8;
+	Wed,  9 Aug 2023 11:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581345;
-	bh=yM3h/ytfl8HFqQOGWnjQj2o2cTF1i5EP/kxziaCNv5s=;
+	s=korg; t=1691581348;
+	bh=4CV7nWb+q+Lx+9Lce86mil4/a9QJlqbHjNsA6iLXmpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FYdD7e03xllzBEBFC6dRlWp6Ftnlo6ipad5IW2aQGwTK5G0amW7868tphsjnXrvSx
-	 l3y/lCOzQj+Y8r0SWTfF750eUzu8awFs+80pdJPWnwT86Tsj93xKiGz3oGqqplMryx
-	 fjl6lqG43kGZIwVnjcSITvN6U6FJ6pygi395+gZw=
+	b=L6beQrvYsTF6p4eeGJ+r+SmSed8y5l+5PD8j9txUEqESC7pXKr/LXdCnLh9J/ALmy
+	 FvS6xvMsEpz4Mm0zJxYPyNKuGzT0y8Z/3qDZdaopnGkg39fM1oFwp98ii7DCFNjKNi
+	 T1spdEsg3aoJvhag3YUnrca7g9z6fg463TBKYZFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyeongseok Kim <hyeongseok@gmail.com>,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Andy Wu <Andy.Wu@sony.com>,
+	Aoyama Wataru <wataru.aoyama@sony.com>,
 	Sungjong Seo <sj1557.seo@samsung.com>,
-	Namjae Jeon <namjae.jeon@samsung.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 193/201] exfat: speed up iterate/lookup by fixing start point of traversing cluster chain
-Date: Wed,  9 Aug 2023 12:43:15 +0200
-Message-ID: <20230809103650.303814918@linuxfoundation.org>
+Subject: [PATCH 5.10 194/201] exfat: support dynamic allocate bh for exfat_entry_set_cache
+Date: Wed,  9 Aug 2023 12:43:16 +0200
+Message-ID: <20230809103650.353831735@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -36,128 +38,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hyeongseok Kim <hyeongseok@gmail.com>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-[ Upstream commit c6e2f52e3051e8d898d38840104638ca8bbcdec2 ]
+[ Upstream commit a3ff29a95fde16906304455aa8c0bd84eb770258 ]
 
-When directory iterate and lookup is called, there's a buggy rewinding
-of start point for traversing cluster chain to the parent directory
-entry's first cluster. This caused repeated cluster chain traversing
-from the first entry of the parent directory that would show worse
-performance if huge amounts of files exist under the parent directory.
-Fix not to rewind, make continue from currently referenced cluster and
-dir entry.
+In special cases, a file or a directory may occupied more than 19
+directory entries, pre-allocating 3 bh is not enough. Such as
+  - Support vendor secondary directory entry in the future.
+  - Since file directory entry is damaged, the SecondaryCount
+    field is bigger than 18.
 
-Tested with 50,000 files under single directory / 256GB sdcard,
-with command "time ls -l > /dev/null",
-Before :     0m08.69s real     0m00.27s user     0m05.91s system
-After  :     0m07.01s real     0m00.25s user     0m04.34s system
+So this commit supports dynamic allocation of bh.
 
-Signed-off-by: Hyeongseok Kim <hyeongseok@gmail.com>
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Reviewed-by: Andy Wu <Andy.Wu@sony.com>
+Reviewed-by: Aoyama Wataru <wataru.aoyama@sony.com>
 Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
-Signed-off-by: Namjae Jeon <namjae.jeon@samsung.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Stable-dep-of: d42334578eba ("exfat: check if filename entries exceeds max filename length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/dir.c      | 19 +++++++++++++------
- fs/exfat/exfat_fs.h |  2 +-
- fs/exfat/namei.c    |  9 ++++++++-
- 3 files changed, 22 insertions(+), 8 deletions(-)
+ fs/exfat/dir.c      | 15 +++++++++++++++
+ fs/exfat/exfat_fs.h |  5 ++++-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
 diff --git a/fs/exfat/dir.c b/fs/exfat/dir.c
-index 093f79ae3c671..0e1886f9a6241 100644
+index 0e1886f9a6241..185aa13945d3d 100644
 --- a/fs/exfat/dir.c
 +++ b/fs/exfat/dir.c
-@@ -148,7 +148,7 @@ static int exfat_readdir(struct inode *inode, loff_t *cpos, struct exfat_dir_ent
- 					0);
+@@ -609,6 +609,10 @@ int exfat_free_dentry_set(struct exfat_entry_set_cache *es, int sync)
+ 			bforget(es->bh[i]);
+ 		else
+ 			brelse(es->bh[i]);
++
++	if (IS_DYNAMIC_ES(es))
++		kfree(es->bh);
++
+ 	kfree(es);
+ 	return err;
+ }
+@@ -844,6 +848,7 @@ struct exfat_entry_set_cache *exfat_get_dentry_set(struct super_block *sb,
+ 	/* byte offset in sector */
+ 	off = EXFAT_BLK_OFFSET(byte_offset, sb);
+ 	es->start_off = off;
++	es->bh = es->__bh;
  
- 			*uni_name.name = 0x0;
--			exfat_get_uniname_from_ext_entry(sb, &dir, dentry,
-+			exfat_get_uniname_from_ext_entry(sb, &clu, i,
- 				uni_name.name);
- 			exfat_utf16_to_nls(sb, &uni_name,
- 				dir_entry->namebuf.lfn,
-@@ -902,14 +902,19 @@ enum {
- };
+ 	/* sector offset in cluster */
+ 	sec = EXFAT_B_TO_BLK(byte_offset, sb);
+@@ -863,6 +868,16 @@ struct exfat_entry_set_cache *exfat_get_dentry_set(struct super_block *sb,
+ 	es->num_entries = num_entries;
  
- /*
-- * return values:
-- *   >= 0	: return dir entiry position with the name in dir
-- *   -ENOENT	: entry with the name does not exist
-- *   -EIO	: I/O error
-+ * @ei:         inode info of parent directory
-+ * @p_dir:      directory structure of parent directory
-+ * @num_entries:entry size of p_uniname
-+ * @hint_opt:   If p_uniname is found, filled with optimized dir/entry
-+ *              for traversing cluster chain.
-+ * @return:
-+ *   >= 0:      file directory entry position where the name exists
-+ *   -ENOENT:   entry with the name does not exist
-+ *   -EIO:      I/O error
-  */
- int exfat_find_dir_entry(struct super_block *sb, struct exfat_inode_info *ei,
- 		struct exfat_chain *p_dir, struct exfat_uni_name *p_uniname,
--		int num_entries, unsigned int type)
-+		int num_entries, unsigned int type, struct exfat_hint *hint_opt)
- {
- 	int i, rewind = 0, dentry = 0, end_eidx = 0, num_ext = 0, len;
- 	int order, step, name_len = 0;
-@@ -986,6 +991,8 @@ int exfat_find_dir_entry(struct super_block *sb, struct exfat_inode_info *ei,
- 
- 			if (entry_type == TYPE_FILE || entry_type == TYPE_DIR) {
- 				step = DIRENT_STEP_FILE;
-+				hint_opt->clu = clu.dir;
-+				hint_opt->eidx = i;
- 				if (type == TYPE_ALL || type == entry_type) {
- 					num_ext = ep->dentry.file.num_ext;
- 					step = DIRENT_STEP_STRM;
+ 	num_bh = EXFAT_B_TO_BLK_ROUND_UP(off + num_entries * DENTRY_SIZE, sb);
++	if (num_bh > ARRAY_SIZE(es->__bh)) {
++		es->bh = kmalloc_array(num_bh, sizeof(*es->bh), GFP_KERNEL);
++		if (!es->bh) {
++			brelse(bh);
++			kfree(es);
++			return NULL;
++		}
++		es->bh[0] = bh;
++	}
++
+ 	for (i = 1; i < num_bh; i++) {
+ 		/* get the next sector */
+ 		if (exfat_is_last_sector_in_cluster(sbi, sec)) {
 diff --git a/fs/exfat/exfat_fs.h b/fs/exfat/exfat_fs.h
-index 07b09af57436f..436683da2515c 100644
+index 436683da2515c..11e579a2598d8 100644
 --- a/fs/exfat/exfat_fs.h
 +++ b/fs/exfat/exfat_fs.h
-@@ -458,7 +458,7 @@ void exfat_update_dir_chksum_with_entry_set(struct exfat_entry_set_cache *es);
- int exfat_calc_num_entries(struct exfat_uni_name *p_uniname);
- int exfat_find_dir_entry(struct super_block *sb, struct exfat_inode_info *ei,
- 		struct exfat_chain *p_dir, struct exfat_uni_name *p_uniname,
--		int num_entries, unsigned int type);
-+		int num_entries, unsigned int type, struct exfat_hint *hint_opt);
- int exfat_alloc_new_dir(struct inode *inode, struct exfat_chain *clu);
- int exfat_find_location(struct super_block *sb, struct exfat_chain *p_dir,
- 		int entry, sector_t *sector, int *offset);
-diff --git a/fs/exfat/namei.c b/fs/exfat/namei.c
-index 1382d816912c8..bd00afc5e4c16 100644
---- a/fs/exfat/namei.c
-+++ b/fs/exfat/namei.c
-@@ -596,6 +596,8 @@ static int exfat_find(struct inode *dir, struct qstr *qname,
- 	struct exfat_inode_info *ei = EXFAT_I(dir);
- 	struct exfat_dentry *ep, *ep2;
- 	struct exfat_entry_set_cache *es;
-+	/* for optimized dir & entry to prevent long traverse of cluster chain */
-+	struct exfat_hint hint_opt;
+@@ -170,10 +170,13 @@ struct exfat_entry_set_cache {
+ 	bool modified;
+ 	unsigned int start_off;
+ 	int num_bh;
+-	struct buffer_head *bh[DIR_CACHE_SIZE];
++	struct buffer_head *__bh[DIR_CACHE_SIZE];
++	struct buffer_head **bh;
+ 	unsigned int num_entries;
+ };
  
- 	if (qname->len == 0)
- 		return -ENOENT;
-@@ -619,7 +621,7 @@ static int exfat_find(struct inode *dir, struct qstr *qname,
- 
- 	/* search the file name for directories */
- 	dentry = exfat_find_dir_entry(sb, ei, &cdir, &uni_name,
--			num_entries, TYPE_ALL);
-+			num_entries, TYPE_ALL, &hint_opt);
- 
- 	if (dentry < 0)
- 		return dentry; /* -error value */
-@@ -628,6 +630,11 @@ static int exfat_find(struct inode *dir, struct qstr *qname,
- 	info->entry = dentry;
- 	info->num_subdirs = 0;
- 
-+	/* adjust cdir to the optimized value */
-+	cdir.dir = hint_opt.clu;
-+	if (cdir.flags & ALLOC_NO_FAT_CHAIN)
-+		cdir.size -= dentry / sbi->dentries_per_clu;
-+	dentry = hint_opt.eidx;
- 	es = exfat_get_dentry_set(sb, &cdir, dentry, ES_2_ENTRIES);
- 	if (!es)
- 		return -EIO;
++#define IS_DYNAMIC_ES(es)	((es)->__bh != (es)->bh)
++
+ struct exfat_dir_entry {
+ 	struct exfat_chain dir;
+ 	int entry;
 -- 
 2.40.1
 
