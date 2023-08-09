@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32441773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:16:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2641CC433C8;
-	Wed,  9 Aug 2023 11:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A731773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:16:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8055C433C7;
+	Wed,  9 Aug 2023 11:16:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579808;
-	bh=mewNc5/AW7N/T05NJYg1MeouL1J2XIc/JMk04u5Ul38=;
+	s=korg; t=1691579811;
+	bh=KaaLgaKfLr+MtyI+szDyMC5AbVhnpQgr+qqtE/3DtJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y5ml49aHXykJj20etO2lvWEzh0WGkVwBDpBqUJ/nA9pyfFVR/K4KfKaD2fmnWbPm4
-	 b5aOvOmAvXOsxiEVzz++3vVKc5ejxJ6ZUNe/JE+pu7l0CoL7qfWX8uiAPMV0p7ytaT
-	 2SyHmuH1D447j/kZy6Ngxw3c3k4uMHn1lpr5gAjw=
+	b=KQbuGqCFpGvzAgpk75aqJcYbuAPTwSzsfj8VLmnVZI4Ob/mTxChxgoqKpV/liml2p
+	 J6NfD/cjcFwqM1+xnH5/kcYpS8q1YS3Zblp4doA3SEH1zN0mlU2aIlKtlou9r8Ag4a
+	 6KlsFza/N1m2+w+2Ws0M6z8XAtY/9WhrfWzWGgH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	netfilter-devel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rasmus Villemoes <rasmus.villemoes@prevas.dk>,
-	Mark Brown <broonie@kernel.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>
-Subject: [PATCH 4.19 123/323] spi: spi-fsl-spi: allow changing bits_per_word while CS is still active
-Date: Wed,  9 Aug 2023 12:39:21 +0200
-Message-ID: <20230809103703.748542135@linuxfoundation.org>
+	syzbot+2570f2c036e3da5db176@syzkaller.appspotmail.com,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 4.19 124/323] netfilter: nf_tables: fix nat hook table deletion
+Date: Wed,  9 Aug 2023 12:39:22 +0200
+Message-ID: <20230809103703.799831783@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,72 +36,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rasmus Villemoes <rasmus.villemoes@prevas.dk>
+From: Florian Westphal <fw@strlen.de>
 
-commit a798a7086c38d91d304132c194cff9f02197f5cd upstream.
+[ 1e9451cbda456a170518b2bfd643e2cb980880bf ]
 
-Commit c9bfcb315104 (spi_mpc83xx: much improved driver) introduced
-logic to ensure bits_per_word and speed_hz stay the same for a series
-of spi_transfers with CS active, arguing that
+sybot came up with following transaction:
+ add table ip syz0
+ add chain ip syz0 syz2 { type nat hook prerouting priority 0; policy accept; }
+ add table ip syz0 { flags dormant; }
+ delete chain ip syz0 syz2
+ delete table ip syz0
 
-    The current driver may cause glitches on SPI CLK line since one
-    must disable the SPI controller before changing any HW settings.
+which yields:
+hook not found, pf 2 num 0
+WARNING: CPU: 0 PID: 6775 at net/netfilter/core.c:413 __nf_unregister_net_hook+0x3e6/0x4a0 net/netfilter/core.c:413
+[..]
+ nft_unregister_basechain_hooks net/netfilter/nf_tables_api.c:206 [inline]
+ nft_table_disable net/netfilter/nf_tables_api.c:835 [inline]
+ nf_tables_table_disable net/netfilter/nf_tables_api.c:868 [inline]
+ nf_tables_commit+0x32d3/0x4d70 net/netfilter/nf_tables_api.c:7550
+ nfnetlink_rcv_batch net/netfilter/nfnetlink.c:486 [inline]
+ nfnetlink_rcv_skb_batch net/netfilter/nfnetlink.c:544 [inline]
+ nfnetlink_rcv+0x14a5/0x1e50 net/netfilter/nfnetlink.c:562
+ netlink_unicast_kernel net/netlink/af_netlink.c:1303 [inline]
 
-This sounds quite reasonable. So this is a quite naive attempt at
-relaxing this sanity checking to only ensure that speed_hz is
-constant - in the faint hope that if we do not causes changes to the
-clock-related fields of the SPMODE register (DIV16 and PM), those
-glitches won't appear.
+Problem is that when I added ability to override base hook registration
+to make nat basechains register with the nat core instead of netfilter
+core, I forgot to update nft_table_disable() to use that instead of
+the 'raw' hook register interface.
 
-The purpose of this change is to allow automatically optimizing large
-transfers to use 32 bits-per-word; taking one interrupt for every byte
-is extremely slow.
+In syzbot transaction, the basechain is of 'nat' type. Its registered
+with the nat core.  The switch to 'dormant mode' attempts to delete from
+netfilter core instead.
 
-Signed-off-by: Rasmus Villemoes <rasmus.villemoes@prevas.dk>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+After updating nft_table_disable/enable to use the correct helper,
+nft_(un)register_basechain_hooks can be folded into the only remaining
+caller.
+
+Because nft_trans_table_enable() won't do anything when the DORMANT flag
+is set, remove the flag first, then re-add it in case re-enablement
+fails, else this patch breaks sequence:
+
+add table ip x { flags dormant; }
+/* add base chains */
+add table ip x
+
+The last 'add' will remove the dormant flags, but won't have any other
+effect -- base chains are not registered.
+Then, next 'set dormant flag' will create another 'hook not found'
+splat.
+
+Reported-by: syzbot+2570f2c036e3da5db176@syzkaller.appspotmail.com
+Fixes: 4e25ceb80b58 ("netfilter: nf_tables: allow chain type to override hook register")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+(cherry picked from commit 1e9451cbda456a170518b2bfd643e2cb980880bf)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-spi.c |   11 ++++++-----
+ net/netfilter/nf_tables_api.c |   11 ++++++-----
  1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/spi/spi-fsl-spi.c
-+++ b/drivers/spi/spi-fsl-spi.c
-@@ -339,7 +339,7 @@ static int fsl_spi_do_one_msg(struct spi
- 	struct spi_transfer *t, *first;
- 	unsigned int cs_change;
- 	const int nsecs = 50;
--	int status;
-+	int status, last_bpw;
- 
- 	/*
- 	 * In CPU mode, optimize large byte transfers to use larger
-@@ -378,21 +378,22 @@ static int fsl_spi_do_one_msg(struct spi
- 		if (cs_change)
- 			first = t;
- 		cs_change = t->cs_change;
--		if ((first->bits_per_word != t->bits_per_word) ||
--			(first->speed_hz != t->speed_hz)) {
-+		if (first->speed_hz != t->speed_hz) {
- 			dev_err(&spi->dev,
--				"bits_per_word/speed_hz cannot change while CS is active\n");
-+				"speed_hz cannot change while CS is active\n");
- 			return -EINVAL;
- 		}
- 	}
- 
-+	last_bpw = -1;
- 	cs_change = 1;
- 	status = -EINVAL;
- 	list_for_each_entry(t, &m->transfers, transfer_list) {
--		if (cs_change)
-+		if (cs_change || last_bpw != t->bits_per_word)
- 			status = fsl_spi_setup_transfer(spi, t);
- 		if (status < 0)
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -743,7 +743,7 @@ static void nft_table_disable(struct net
+ 		if (cnt && i++ == cnt)
  			break;
-+		last_bpw = t->bits_per_word;
  
- 		if (cs_change) {
- 			fsl_spi_chipselect(spi, BITBANG_CS_ACTIVE);
+-		nf_unregister_net_hook(net, &nft_base_chain(chain)->ops);
++		nf_tables_unregister_hook(net, table, chain);
+ 	}
+ }
+ 
+@@ -758,7 +758,7 @@ static int nf_tables_table_enable(struct
+ 		if (!nft_is_base_chain(chain))
+ 			continue;
+ 
+-		err = nf_register_net_hook(net, &nft_base_chain(chain)->ops);
++		err = nf_tables_register_hook(net, table, chain);
+ 		if (err < 0)
+ 			goto err;
+ 
+@@ -802,11 +802,12 @@ static int nf_tables_updtable(struct nft
+ 		nft_trans_table_enable(trans) = false;
+ 	} else if (!(flags & NFT_TABLE_F_DORMANT) &&
+ 		   ctx->table->flags & NFT_TABLE_F_DORMANT) {
++		ctx->table->flags &= ~NFT_TABLE_F_DORMANT;
+ 		ret = nf_tables_table_enable(ctx->net, ctx->table);
+-		if (ret >= 0) {
+-			ctx->table->flags &= ~NFT_TABLE_F_DORMANT;
++		if (ret >= 0)
+ 			nft_trans_table_enable(trans) = true;
+-		}
++		else
++			ctx->table->flags |= NFT_TABLE_F_DORMANT;
+ 	}
+ 	if (ret < 0)
+ 		goto err;
 
 
