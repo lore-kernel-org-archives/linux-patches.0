@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785C817AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:33:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB09BC433C8;
-	Wed,  9 Aug 2023 11:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429A417AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:33:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9434C433C7;
+	Wed,  9 Aug 2023 11:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580822;
-	bh=UD0Kl1gOzaS+GIp1COMgsFqNPgGWy7Fcg5SXJTzNLu8=;
+	s=korg; t=1691580825;
+	bh=ThE9WBsDcCqK+yf7CSKqcMWSS5THlmEZZNfvC4oUKYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l+1qbG1j4Hz/1CucjDnSB707QjioTI8KbdH22n7peCcIbdYEoDo79NrJzPMdH3p+a
-	 sSyxO23wn5rv8rwEPDvcKpkON75NPhpcbiH0dupkJy7OF7WHwN3nplMQDMoqmPRgem
-	 zJZPsVoujOsIQ26rvVU49XI41qL/elXZVI3w4ijA=
+	b=AuB04WgEM3wF9i/4pSNl4Yq4owFwM2NE20YI86BUY0wrDP7P2U8zV2u+UvG6mLIob
+	 o6OsTaOrl0GKLlNRigjtsb/isfKh6BEG3vgJQ6n96+qgK/HDD3WUX2f1eoxLFXZNYX
+	 EUzUGkainaMbQlqLpdJvkXxN7LRlwJqs8VaOKHzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>
-Subject: [PATCH 5.4 152/154] driver code: print symbolic error code
-Date: Wed,  9 Aug 2023 12:43:03 +0200
-Message-ID: <20230809103641.868019930@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 143/154] ceph: use kill_anon_super helper
+Date: Wed,  9 Aug 2023 12:42:54 +0200
+Message-ID: <20230809103641.595194478@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -33,34 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michał Mirosław <mirq-linux@rere.qmqm.pl>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 693a8e936590f93451e6f5a3d748616f5a59c80b upstream.
+[ Upstream commit 470a5c77eac0e07bfe60413fb3d314b734392bc3 ]
 
-dev_err_probe() prepends the message with an error code. Let's make it
-more readable by translating the code to a more recognisable symbol.
+ceph open-codes this around some other activity and the rationale
+for it isn't clear. There is no need to delay free_anon_bdev until
+the end of kill_sb.
 
-Fixes: a787e5400a1c ("driver core: add device probe log helper")
-Signed-off-by: Michał Mirosław <mirq-linux@rere.qmqm.pl>
-Link: https://lore.kernel.org/r/ea3f973e4708919573026fdce52c264db147626d.1598630856.git.mirq-linux@rere.qmqm.pl
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Stable-dep-of: e7e607bd0048 ("ceph: defer stopping mdsc delayed_work")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ceph/super.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -3431,9 +3431,9 @@ int dev_err_probe(const struct device *d
- 	vaf.va = &args;
+diff --git a/fs/ceph/super.c b/fs/ceph/super.c
+index d40658d5e8089..279334f955702 100644
+--- a/fs/ceph/super.c
++++ b/fs/ceph/super.c
+@@ -1174,14 +1174,13 @@ static struct dentry *ceph_mount(struct file_system_type *fs_type,
+ static void ceph_kill_sb(struct super_block *s)
+ {
+ 	struct ceph_fs_client *fsc = ceph_sb_to_client(s);
+-	dev_t dev = s->s_dev;
  
- 	if (err != -EPROBE_DEFER)
--		dev_err(dev, "error %d: %pV", err, &vaf);
-+		dev_err(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
- 	else
--		dev_dbg(dev, "error %d: %pV", err, &vaf);
-+		dev_dbg(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
+ 	dout("kill_sb %p\n", s);
  
- 	va_end(args);
+ 	ceph_mdsc_pre_umount(fsc->mdsc);
+ 	flush_fs_workqueues(fsc);
  
+-	generic_shutdown_super(s);
++	kill_anon_super(s);
+ 
+ 	fsc->client->extra_mon_dispatch = NULL;
+ 	ceph_fs_debugfs_cleanup(fsc);
+@@ -1189,7 +1188,6 @@ static void ceph_kill_sb(struct super_block *s)
+ 	ceph_fscache_unregister_fs(fsc);
+ 
+ 	destroy_fs_client(fsc);
+-	free_anon_bdev(dev);
+ }
+ 
+ static struct file_system_type ceph_fs_type = {
+-- 
+2.40.1
+
 
 
