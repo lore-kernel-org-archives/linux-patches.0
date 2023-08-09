@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10D6174EE
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:04:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A2CC433C8;
-	Wed,  9 Aug 2023 11:04:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CEDB174EE
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:04:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 210AAC433C8;
+	Wed,  9 Aug 2023 11:04:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579065;
-	bh=DjVFLkD0CLRc2OH7tvQ45jrsy+F7lpmBLPH6os8/o20=;
+	s=korg; t=1691579068;
+	bh=MbUhgCTB9fZsmXO1iFVYJXgf+G+46FnhGl14y7FNXsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DBSlNJI0Iev3jbDoIBrPG8hD6+n1TR0sUA7/23nVILsUlIUDElSf3Gmjw1DA0rQqY
-	 S84VGTGUgDqaAVn6nbUtpZdD1GNWS8sI15UaRydOt3f51qq5nF7bDa90XyVvOdGeoS
-	 t82NC393NXdqO4Hxmpf6K+xoA51VBrK3f7UV7BtE=
+	b=vsD10kKcBAVA3ZR/bEMJhYejn/5M6KfyO0MLIu9eFE/MS6NczWvBDtMYOmzCUikjt
+	 qp0fMgIM1A8cHjn++LID5kTBFKMi9eIjSBbuVgVXife4WlayCfKy3PVqFIsaD5gblp
+	 F+jF3O1vR4YBpQA03bPbU4UqOz73dN87roWN/EUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
+	Li Yang <lidaxian@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 062/204] extcon: Fix kernel doc of property capability fields to avoid warnings
-Date: Wed,  9 Aug 2023 12:40:00 +0200
-Message-ID: <20230809103644.715230629@linuxfoundation.org>
+Subject: [PATCH 4.14 063/204] usb: phy: phy-tahvo: fix memory leak in tahvo_usb_probe()
+Date: Wed,  9 Aug 2023 12:40:01 +0200
+Message-ID: <20230809103644.753180701@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -35,43 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Li Yang <lidaxian@hust.edu.cn>
 
-[ Upstream commit 73346b9965ebda2feb7fef8629e9b28baee820e3 ]
+[ Upstream commit 342161c11403ea00e9febc16baab1d883d589d04 ]
 
-Kernel documentation has to be synchronized with a code, otherwise
-the validator is not happy:
+Smatch reports:
+drivers/usb/phy/phy-tahvo.c: tahvo_usb_probe()
+warn: missing unwind goto?
 
-     Function parameter or member 'usb_bits' not described in 'extcon_cable'
-     Function parameter or member 'chg_bits' not described in 'extcon_cable'
-     Function parameter or member 'jack_bits' not described in 'extcon_cable'
-     Function parameter or member 'disp_bits' not described in 'extcon_cable'
+After geting irq, if ret < 0, it will return without error handling to
+free memory.
+Just add error handling to fix this problem.
 
-Describe the fields added in the past.
-
-Fixes: ceaa98f442cf ("extcon: Add the support for the capability of each property")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Fixes: 0d45a1373e66 ("usb: phy: tahvo: add IRQ check")
+Signed-off-by: Li Yang <lidaxian@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Link: https://lore.kernel.org/r/20230420140832.9110-1-lidaxian@hust.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/extcon/extcon.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/phy/phy-tahvo.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/extcon/extcon.c b/drivers/extcon/extcon.c
-index e131d3287c5d0..e6e3e404052bb 100644
---- a/drivers/extcon/extcon.c
-+++ b/drivers/extcon/extcon.c
-@@ -208,6 +208,10 @@ struct __extcon_info {
-  * @chg_propval:	the array of charger connector properties
-  * @jack_propval:	the array of jack connector properties
-  * @disp_propval:	the array of display connector properties
-+ * @usb_bits:		the bit array of the USB connector property capabilities
-+ * @chg_bits:		the bit array of the charger connector property capabilities
-+ * @jack_bits:		the bit array of the jack connector property capabilities
-+ * @disp_bits:		the bit array of the display connector property capabilities
-  */
- struct extcon_cable {
- 	struct extcon_dev *edev;
+diff --git a/drivers/usb/phy/phy-tahvo.c b/drivers/usb/phy/phy-tahvo.c
+index e4fc73bf6ee9b..c156c051df990 100644
+--- a/drivers/usb/phy/phy-tahvo.c
++++ b/drivers/usb/phy/phy-tahvo.c
+@@ -406,7 +406,7 @@ static int tahvo_usb_probe(struct platform_device *pdev)
+ 
+ 	tu->irq = ret = platform_get_irq(pdev, 0);
+ 	if (ret < 0)
+-		return ret;
++		goto err_remove_phy;
+ 	ret = request_threaded_irq(tu->irq, NULL, tahvo_usb_vbus_interrupt,
+ 				   IRQF_ONESHOT,
+ 				   "tahvo-vbus", tu);
 -- 
 2.39.2
 
