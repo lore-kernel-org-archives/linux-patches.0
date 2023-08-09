@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5D317ABA
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:32:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 821A8C433C8;
-	Wed,  9 Aug 2023 11:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63FB17AB6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:32:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45BFBC433C7;
+	Wed,  9 Aug 2023 11:32:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580768;
-	bh=H1R4meBP+gybEelHqUkyRx9/otf1h1WKQzA2Ym1Jo8s=;
+	s=korg; t=1691580771;
+	bh=yXhS/abqS7zlCSJ3cHBMaA/Hp27HnZgm0SZKGE/FGCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RzVgcSLW8zkIQZ1E0CJrd0msGgUTfWOn8gUIQm7hrj4S3VSn+NfIHxWZ9V9j0fihJ
-	 llECJIxMgEH1l7eaRfLaO+AOGNb735KRktLaO3nFEg4PPCRx34ktkUTdNF693I0Gb3
-	 96RSCes5Y0b1HwyBqy0sWflqs3JRCw5LigPK9Psw=
+	b=cd1na0rXATLodfAlD04PfSEe3DWwFbIQDm0u8rbh+vO1EI7NQTEk0hkLYimDDs7Nv
+	 aFiKBQcaHkJzGxZBnKOHjYCYY/1vxOPEJZguyVKiZTp3tj9FFxPfCziMfCHQj3WML1
+	 d+Zln+A4O9dN63Sv/A/TWbYMfy64sap0QaBXfHes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Tony Lindgren <tony@atomide.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	"Yan, Zheng" <zyan@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 141/154] PM: sleep: wakeirq: fix wake irq arming
-Date: Wed,  9 Aug 2023 12:42:52 +0200
-Message-ID: <20230809103641.532953708@linuxfoundation.org>
+Subject: [PATCH 5.4 142/154] ceph: show tasks waiting on caps in debugfs caps file
+Date: Wed,  9 Aug 2023 12:42:53 +0200
+Message-ID: <20230809103641.564000283@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -36,93 +36,132 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 8527beb12087238d4387607597b4020bc393c4b4 ]
+[ Upstream commit 3a3430affce5de301fc8e6e50fa3543d7597820e ]
 
-The decision whether to enable a wake irq during suspend can not be done
-based on the runtime PM state directly as a driver may use wake irqs
-without implementing runtime PM. Such drivers specifically leave the
-state set to the default 'suspended' and the wake irq is thus never
-enabled at suspend.
+Add some visibility of tasks that are waiting for caps to the "caps"
+debugfs file. Display the tgid of the waiting task, inode number, and
+the caps the task needs and wants.
 
-Add a new wake irq flag to track whether a dedicated wake irq has been
-enabled at runtime suspend and therefore must not be enabled at system
-suspend.
-
-Note that pm_runtime_enabled() can not be used as runtime PM is always
-disabled during late suspend.
-
-Fixes: 69728051f5bf ("PM / wakeirq: Fix unbalanced IRQ enable for wakeirq")
-Cc: 4.16+ <stable@vger.kernel.org> # 4.16+
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Tested-by: Tony Lindgren <tony@atomide.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: "Yan, Zheng" <zyan@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Stable-dep-of: e7e607bd0048 ("ceph: defer stopping mdsc delayed_work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/power.h   |  1 +
- drivers/base/power/wakeirq.c | 12 ++++++++----
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ fs/ceph/caps.c       | 17 +++++++++++++++++
+ fs/ceph/debugfs.c    | 13 +++++++++++++
+ fs/ceph/mds_client.c |  1 +
+ fs/ceph/mds_client.h |  9 +++++++++
+ 4 files changed, 40 insertions(+)
 
-diff --git a/drivers/base/power/power.h b/drivers/base/power/power.h
-index 24772075235f6..310abe7251fc3 100644
---- a/drivers/base/power/power.h
-+++ b/drivers/base/power/power.h
-@@ -29,6 +29,7 @@ extern u64 pm_runtime_active_time(struct device *dev);
- #define WAKE_IRQ_DEDICATED_MASK		(WAKE_IRQ_DEDICATED_ALLOCATED | \
- 					 WAKE_IRQ_DEDICATED_MANAGED | \
- 					 WAKE_IRQ_DEDICATED_REVERSE)
-+#define WAKE_IRQ_DEDICATED_ENABLED	BIT(3)
+diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
+index 243e246cb5046..4e88cb9907230 100644
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -2790,7 +2790,19 @@ int ceph_get_caps(struct file *filp, int need, int want,
+ 		if (ret == -EAGAIN)
+ 			continue;
+ 		if (!ret) {
++			struct ceph_mds_client *mdsc = fsc->mdsc;
++			struct cap_wait cw;
+ 			DEFINE_WAIT_FUNC(wait, woken_wake_function);
++
++			cw.ino = inode->i_ino;
++			cw.tgid = current->tgid;
++			cw.need = need;
++			cw.want = want;
++
++			spin_lock(&mdsc->caps_list_lock);
++			list_add(&cw.list, &mdsc->cap_wait_list);
++			spin_unlock(&mdsc->caps_list_lock);
++
+ 			add_wait_queue(&ci->i_cap_wq, &wait);
  
- struct wake_irq {
- 	struct device *dev;
-diff --git a/drivers/base/power/wakeirq.c b/drivers/base/power/wakeirq.c
-index 327fdc8e8ebde..46654adf00a10 100644
---- a/drivers/base/power/wakeirq.c
-+++ b/drivers/base/power/wakeirq.c
-@@ -317,8 +317,10 @@ void dev_pm_enable_wake_irq_check(struct device *dev,
- 	return;
+ 			flags |= NON_BLOCKING;
+@@ -2804,6 +2816,11 @@ int ceph_get_caps(struct file *filp, int need, int want,
+ 			}
  
- enable:
--	if (!can_change_status || !(wirq->status & WAKE_IRQ_DEDICATED_REVERSE))
-+	if (!can_change_status || !(wirq->status & WAKE_IRQ_DEDICATED_REVERSE)) {
- 		enable_irq(wirq->irq);
-+		wirq->status |= WAKE_IRQ_DEDICATED_ENABLED;
-+	}
- }
+ 			remove_wait_queue(&ci->i_cap_wq, &wait);
++
++			spin_lock(&mdsc->caps_list_lock);
++			list_del(&cw.list);
++			spin_unlock(&mdsc->caps_list_lock);
++
+ 			if (ret == -EAGAIN)
+ 				continue;
+ 		}
+diff --git a/fs/ceph/debugfs.c b/fs/ceph/debugfs.c
+index facb387c27356..c281f32b54f7b 100644
+--- a/fs/ceph/debugfs.c
++++ b/fs/ceph/debugfs.c
+@@ -139,6 +139,7 @@ static int caps_show(struct seq_file *s, void *p)
+ 	struct ceph_fs_client *fsc = s->private;
+ 	struct ceph_mds_client *mdsc = fsc->mdsc;
+ 	int total, avail, used, reserved, min, i;
++	struct cap_wait	*cw;
  
- /**
-@@ -339,8 +341,10 @@ void dev_pm_disable_wake_irq_check(struct device *dev, bool cond_disable)
- 	if (cond_disable && (wirq->status & WAKE_IRQ_DEDICATED_REVERSE))
- 		return;
- 
--	if (wirq->status & WAKE_IRQ_DEDICATED_MANAGED)
-+	if (wirq->status & WAKE_IRQ_DEDICATED_MANAGED) {
-+		wirq->status &= ~WAKE_IRQ_DEDICATED_ENABLED;
- 		disable_irq_nosync(wirq->irq);
-+	}
- }
- 
- /**
-@@ -379,7 +383,7 @@ void dev_pm_arm_wake_irq(struct wake_irq *wirq)
- 
- 	if (device_may_wakeup(wirq->dev)) {
- 		if (wirq->status & WAKE_IRQ_DEDICATED_ALLOCATED &&
--		    !pm_runtime_status_suspended(wirq->dev))
-+		    !(wirq->status & WAKE_IRQ_DEDICATED_ENABLED))
- 			enable_irq(wirq->irq);
- 
- 		enable_irq_wake(wirq->irq);
-@@ -402,7 +406,7 @@ void dev_pm_disarm_wake_irq(struct wake_irq *wirq)
- 		disable_irq_wake(wirq->irq);
- 
- 		if (wirq->status & WAKE_IRQ_DEDICATED_ALLOCATED &&
--		    !pm_runtime_status_suspended(wirq->dev))
-+		    !(wirq->status & WAKE_IRQ_DEDICATED_ENABLED))
- 			disable_irq_nosync(wirq->irq);
+ 	ceph_reservation_status(fsc, &total, &avail, &used, &reserved, &min);
+ 	seq_printf(s, "total\t\t%d\n"
+@@ -166,6 +167,18 @@ static int caps_show(struct seq_file *s, void *p)
  	}
+ 	mutex_unlock(&mdsc->mutex);
+ 
++	seq_printf(s, "\n\nWaiters:\n--------\n");
++	seq_printf(s, "tgid         ino                need             want\n");
++	seq_printf(s, "-----------------------------------------------------\n");
++
++	spin_lock(&mdsc->caps_list_lock);
++	list_for_each_entry(cw, &mdsc->cap_wait_list, list) {
++		seq_printf(s, "%-13d0x%-17lx%-17s%-17s\n", cw->tgid, cw->ino,
++				ceph_cap_string(cw->need),
++				ceph_cap_string(cw->want));
++	}
++	spin_unlock(&mdsc->caps_list_lock);
++
+ 	return 0;
  }
+ 
+diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
+index 3bf81fe5f10a3..6ceda2a4791c4 100644
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -4174,6 +4174,7 @@ int ceph_mdsc_init(struct ceph_fs_client *fsc)
+ 	INIT_DELAYED_WORK(&mdsc->delayed_work, delayed_work);
+ 	mdsc->last_renew_caps = jiffies;
+ 	INIT_LIST_HEAD(&mdsc->cap_delay_list);
++	INIT_LIST_HEAD(&mdsc->cap_wait_list);
+ 	spin_lock_init(&mdsc->cap_delay_lock);
+ 	INIT_LIST_HEAD(&mdsc->snap_flush_list);
+ 	spin_lock_init(&mdsc->snap_flush_lock);
+diff --git a/fs/ceph/mds_client.h b/fs/ceph/mds_client.h
+index 5cd131b41d84f..14c7e8c49970a 100644
+--- a/fs/ceph/mds_client.h
++++ b/fs/ceph/mds_client.h
+@@ -340,6 +340,14 @@ struct ceph_quotarealm_inode {
+ 	struct inode *inode;
+ };
+ 
++struct cap_wait {
++	struct list_head	list;
++	unsigned long		ino;
++	pid_t			tgid;
++	int			need;
++	int			want;
++};
++
+ /*
+  * mds client state
+  */
+@@ -416,6 +424,7 @@ struct ceph_mds_client {
+ 	spinlock_t	caps_list_lock;
+ 	struct		list_head caps_list; /* unused (reserved or
+ 						unreserved) */
++	struct		list_head cap_wait_list;
+ 	int		caps_total_count;    /* total caps allocated */
+ 	int		caps_use_count;      /* in use */
+ 	int		caps_use_max;	     /* max used caps */
 -- 
 2.40.1
 
