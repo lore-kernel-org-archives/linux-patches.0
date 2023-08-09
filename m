@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8C91773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:16:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA9DC433C7;
-	Wed,  9 Aug 2023 11:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5601773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:16:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93BE3C433C7;
+	Wed,  9 Aug 2023 11:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579799;
-	bh=T/y0l6N58k8RbchRa8PChcGugPYW48Qa9sCRgQ/A0Ic=;
+	s=korg; t=1691579802;
+	bh=+T4KfMXrIzKSvCBCS4l3Oq8BfhKOi+o2IFeWjEnYbCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KeSdpZeVDzT7wOuedaE2jUTeilEIO5JpkWEhVTy2P+IvPn67R/u+KLPwhebd0UyOM
-	 SWeK2Qd7e2+gYko73YFvZ+w6p8E4dcez1IFfFjrk91I2PMnhe+lv1ywCOeQU5sC+qb
-	 vKZD0IiTaSVxtw3F1hmyj7qi31VVHwg2gPWRv2wQ=
+	b=NcGMcuZaOGEi74xtLLxDEE0lxeRK4ejc2Ac/SNHQydZY2kpya+ie2LCiX4VECjvrr
+	 piTm6ZuKKT6/owsHZG/LHklQgj/KNrm0/7elT0ZZS6MnyDaxSsHJ/Ml8oOMaEYQopN
+	 toFW7PmcqR1e6UNkZfA7yUf6sLw8PBaYvf9ynPaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nishanth Menon <nm@ti.com>,
-	Jassi Brar <jaswinder.singh@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 103/323] mailbox: ti-msgmgr: Fill non-message tx data fields with 0x0
-Date: Wed,  9 Aug 2023 12:39:01 +0200
-Message-ID: <20230809103702.781237429@linuxfoundation.org>
+	Rasmus Villemoes <rasmus.villemoes@prevas.dk>,
+	Mark Brown <broonie@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>
+Subject: [PATCH 4.19 121/323] spi: spi-fsl-spi: remove always-true conditional in fsl_spi_do_one_msg
+Date: Wed,  9 Aug 2023 12:39:19 +0200
+Message-ID: <20230809103703.649765214@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -35,75 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nishanth Menon <nm@ti.com>
+From: Rasmus Villemoes <rasmus.villemoes@prevas.dk>
 
-[ Upstream commit 1b712f18c461bd75f018033a15cf381e712806b5 ]
+commit 24c363623361b430fb79459ca922e816e6f48603 upstream.
 
-Sec proxy/message manager data buffer is 60 bytes with the last of the
-registers indicating transmission completion. This however poses a bit
-of a challenge.
+__spi_validate() in the generic SPI code sets ->speed_hz and
+->bits_per_word to non-zero values, so this condition is always true.
 
-The backing memory for sec_proxy / message manager is regular memory,
-and all sec proxy does is to trigger a burst of all 60 bytes of data
-over to the target thread backing ring accelerator. It doesn't do a
-memory scrub when it moves data out in the burst. When we transmit
-multiple messages, remnants of previous message is also transmitted
-which results in some random data being set in TISCI fields of
-messages that have been expanded forward.
-
-The entire concept of backward compatibility hinges on the fact that
-the unused message fields remain 0x0 allowing for 0x0 value to be
-specially considered when backward compatibility of message extension
-is done.
-
-So, instead of just writing the completion register, we continue
-to fill the message buffer up with 0x0 (note: for partial message
-involving completion, we already do this).
-
-This allows us to scale and introduce ABI changes back also work with
-other boot stages that may have left data in the internal memory.
-
-While at this, be consistent and explicit with the data_reg pointer
-increment.
-
-Fixes: aace66b170ce ("mailbox: Introduce TI message manager driver")
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Rasmus Villemoes <rasmus.villemoes@prevas.dk>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mailbox/ti-msgmgr.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/spi/spi-fsl-spi.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mailbox/ti-msgmgr.c b/drivers/mailbox/ti-msgmgr.c
-index 01e9e462512b7..eb1e9771037f2 100644
---- a/drivers/mailbox/ti-msgmgr.c
-+++ b/drivers/mailbox/ti-msgmgr.c
-@@ -385,14 +385,20 @@ static int ti_msgmgr_send_data(struct mbox_chan *chan, void *data)
- 		/* Ensure all unused data is 0 */
- 		data_trail &= 0xFFFFFFFF >> (8 * (sizeof(u32) - trail_bytes));
- 		writel(data_trail, data_reg);
--		data_reg++;
-+		data_reg += sizeof(u32);
- 	}
-+
- 	/*
- 	 * 'data_reg' indicates next register to write. If we did not already
- 	 * write on tx complete reg(last reg), we must do so for transmit
-+	 * In addition, we also need to make sure all intermediate data
-+	 * registers(if any required), are reset to 0 for TISCI backward
-+	 * compatibility to be maintained.
- 	 */
--	if (data_reg <= qinst->queue_buff_end)
--		writel(0, qinst->queue_buff_end);
-+	while (data_reg <= qinst->queue_buff_end) {
-+		writel(0, data_reg);
-+		data_reg += sizeof(u32);
-+	}
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -387,12 +387,10 @@ static int fsl_spi_do_one_msg(struct spi
+ 	cs_change = 1;
+ 	status = -EINVAL;
+ 	list_for_each_entry(t, &m->transfers, transfer_list) {
+-		if (t->bits_per_word || t->speed_hz) {
+-			if (cs_change)
+-				status = fsl_spi_setup_transfer(spi, t);
+-			if (status < 0)
+-				break;
+-		}
++		if (cs_change)
++			status = fsl_spi_setup_transfer(spi, t);
++		if (status < 0)
++			break;
  
- 	return 0;
- }
--- 
-2.39.2
-
+ 		if (cs_change) {
+ 			fsl_spi_chipselect(spi, BITBANG_CS_ACTIVE);
 
 
