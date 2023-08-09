@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9BF4680
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:42:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F38C433C8;
-	Wed,  9 Aug 2023 11:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2CE4680
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:42:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A783C433C7;
+	Wed,  9 Aug 2023 11:42:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581353;
-	bh=uc0N3ZPxqF39p4g1zFbBw/a9elrWOT+SHfZ9zUA/1C4=;
+	s=korg; t=1691581356;
+	bh=HQ8P8t91cdD5KXn4t7Gjcz0dMlEk5j6TvsBhPiDyDGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B36win40EtBNa0AJ4t/oFQNqJzNJpmxslXgwwRjaXb5mT4qrPJ/iZF5wNzOYx8TXZ
-	 7zwhOLZvTy/Y9hjN8gVwb9K1ivJOldQc0oNv7nzPq6FWYy0e7gLI7j7I/yIPBIdUqM
-	 p+pgP/P7bL0ASPUWMvpGkBa2kefe+30O7wzkZ/bg=
+	b=zF6QRZ60p53I7VRdefQFEtlnvg3pMcnf1GU+a7et+DUljzXO4HJdDOii1z/HkHP1w
+	 LDP0a995VD/xHLtRhDrrwrrl56Yh9UiwIjljVVh6RoS/NVJGi5RQvbzsSN+RVFrmnd
+	 X2cWWvhtLaZ0/kkg12WsXwGr511O/gek5pqp/iIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 196/201] mt76: move band capabilities in mt76_phy
-Date: Wed,  9 Aug 2023 12:43:18 +0200
-Message-ID: <20230809103650.438067267@linuxfoundation.org>
+	Sungwoo Kim <iam@sung-woo.kim>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 179/201] Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_ready_cb
+Date: Wed,  9 Aug 2023 12:43:01 +0200
+Message-ID: <20230809103649.764675394@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -35,295 +35,150 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Sungwoo Kim <iam@sung-woo.kim>
 
-[ Upstream commit 48dbce5cb1ba3ce5b2ed3e997bcb1e4697d41b71 ]
+commit 1728137b33c00d5a2b5110ed7aafb42e7c32e4a1 upstream.
 
-This is a preliminary patch to move properly support mt7915 dbdc
+l2cap_sock_release(sk) frees sk. However, sk's children are still alive
+and point to the already free'd sk's address.
+To fix this, l2cap_sock_release(sk) also cleans sk's children.
 
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Stable-dep-of: 421033deb915 ("wifi: mt76: mt7615: do not advertise 5 GHz on first phy of MT7615D (DBDC)")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+==================================================================
+BUG: KASAN: use-after-free in l2cap_sock_ready_cb+0xb7/0x100 net/bluetooth/l2cap_sock.c:1650
+Read of size 8 at addr ffff888104617aa8 by task kworker/u3:0/276
+
+CPU: 0 PID: 276 Comm: kworker/u3:0 Not tainted 6.2.0-00001-gef397bd4d5fb-dirty #59
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Workqueue: hci2 hci_rx_work
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x72/0x95 lib/dump_stack.c:106
+ print_address_description mm/kasan/report.c:306 [inline]
+ print_report+0x175/0x478 mm/kasan/report.c:417
+ kasan_report+0xb1/0x130 mm/kasan/report.c:517
+ l2cap_sock_ready_cb+0xb7/0x100 net/bluetooth/l2cap_sock.c:1650
+ l2cap_chan_ready+0x10e/0x1e0 net/bluetooth/l2cap_core.c:1386
+ l2cap_config_req+0x753/0x9f0 net/bluetooth/l2cap_core.c:4480
+ l2cap_bredr_sig_cmd net/bluetooth/l2cap_core.c:5739 [inline]
+ l2cap_sig_channel net/bluetooth/l2cap_core.c:6509 [inline]
+ l2cap_recv_frame+0xe2e/0x43c0 net/bluetooth/l2cap_core.c:7788
+ l2cap_recv_acldata+0x6ed/0x7e0 net/bluetooth/l2cap_core.c:8506
+ hci_acldata_packet net/bluetooth/hci_core.c:3813 [inline]
+ hci_rx_work+0x66e/0xbc0 net/bluetooth/hci_core.c:4048
+ process_one_work+0x4ea/0x8e0 kernel/workqueue.c:2289
+ worker_thread+0x364/0x8e0 kernel/workqueue.c:2436
+ kthread+0x1b9/0x200 kernel/kthread.c:376
+ ret_from_fork+0x2c/0x50 arch/x86/entry/entry_64.S:308
+ </TASK>
+
+Allocated by task 288:
+ kasan_save_stack+0x22/0x50 mm/kasan/common.c:45
+ kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+ ____kasan_kmalloc mm/kasan/common.c:374 [inline]
+ __kasan_kmalloc+0x82/0x90 mm/kasan/common.c:383
+ kasan_kmalloc include/linux/kasan.h:211 [inline]
+ __do_kmalloc_node mm/slab_common.c:968 [inline]
+ __kmalloc+0x5a/0x140 mm/slab_common.c:981
+ kmalloc include/linux/slab.h:584 [inline]
+ sk_prot_alloc+0x113/0x1f0 net/core/sock.c:2040
+ sk_alloc+0x36/0x3c0 net/core/sock.c:2093
+ l2cap_sock_alloc.constprop.0+0x39/0x1c0 net/bluetooth/l2cap_sock.c:1852
+ l2cap_sock_create+0x10d/0x220 net/bluetooth/l2cap_sock.c:1898
+ bt_sock_create+0x183/0x290 net/bluetooth/af_bluetooth.c:132
+ __sock_create+0x226/0x380 net/socket.c:1518
+ sock_create net/socket.c:1569 [inline]
+ __sys_socket_create net/socket.c:1606 [inline]
+ __sys_socket_create net/socket.c:1591 [inline]
+ __sys_socket+0x112/0x200 net/socket.c:1639
+ __do_sys_socket net/socket.c:1652 [inline]
+ __se_sys_socket net/socket.c:1650 [inline]
+ __x64_sys_socket+0x40/0x50 net/socket.c:1650
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3f/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+Freed by task 288:
+ kasan_save_stack+0x22/0x50 mm/kasan/common.c:45
+ kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+ kasan_save_free_info+0x2e/0x50 mm/kasan/generic.c:523
+ ____kasan_slab_free mm/kasan/common.c:236 [inline]
+ ____kasan_slab_free mm/kasan/common.c:200 [inline]
+ __kasan_slab_free+0x10a/0x190 mm/kasan/common.c:244
+ kasan_slab_free include/linux/kasan.h:177 [inline]
+ slab_free_hook mm/slub.c:1781 [inline]
+ slab_free_freelist_hook mm/slub.c:1807 [inline]
+ slab_free mm/slub.c:3787 [inline]
+ __kmem_cache_free+0x88/0x1f0 mm/slub.c:3800
+ sk_prot_free net/core/sock.c:2076 [inline]
+ __sk_destruct+0x347/0x430 net/core/sock.c:2168
+ sk_destruct+0x9c/0xb0 net/core/sock.c:2183
+ __sk_free+0x82/0x220 net/core/sock.c:2194
+ sk_free+0x7c/0xa0 net/core/sock.c:2205
+ sock_put include/net/sock.h:1991 [inline]
+ l2cap_sock_kill+0x256/0x2b0 net/bluetooth/l2cap_sock.c:1257
+ l2cap_sock_release+0x1a7/0x220 net/bluetooth/l2cap_sock.c:1428
+ __sock_release+0x80/0x150 net/socket.c:650
+ sock_close+0x19/0x30 net/socket.c:1368
+ __fput+0x17a/0x5c0 fs/file_table.c:320
+ task_work_run+0x132/0x1c0 kernel/task_work.c:179
+ resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
+ exit_to_user_mode_loop kernel/entry/common.c:171 [inline]
+ exit_to_user_mode_prepare+0x113/0x120 kernel/entry/common.c:203
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:285 [inline]
+ syscall_exit_to_user_mode+0x21/0x50 kernel/entry/common.c:296
+ do_syscall_64+0x4c/0x90 arch/x86/entry/common.c:86
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+The buggy address belongs to the object at ffff888104617800
+ which belongs to the cache kmalloc-1k of size 1024
+The buggy address is located 680 bytes inside of
+ 1024-byte region [ffff888104617800, ffff888104617c00)
+
+The buggy address belongs to the physical page:
+page:00000000dbca6a80 refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff888104614000 pfn:0x104614
+head:00000000dbca6a80 order:2 compound_mapcount:0 subpages_mapcount:0 compound_pincount:0
+flags: 0x200000000010200(slab|head|node=0|zone=2)
+raw: 0200000000010200 ffff888100041dc0 ffffea0004212c10 ffffea0004234b10
+raw: ffff888104614000 0000000000080002 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff888104617980: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff888104617a00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>ffff888104617a80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                  ^
+ ffff888104617b00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff888104617b80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================
+
+Ack: This bug is found by FuzzBT with a modified Syzkaller. Other
+contributors are Ruoyu Wu and Hui Peng.
+Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mac80211.c    |  8 ++++----
- drivers/net/wireless/mediatek/mt76/mt76.h        |  2 +-
- .../net/wireless/mediatek/mt76/mt7603/eeprom.c   |  2 +-
- drivers/net/wireless/mediatek/mt76/mt7615/dma.c  |  2 +-
- .../net/wireless/mediatek/mt76/mt7615/eeprom.c   | 16 ++++++++--------
- .../net/wireless/mediatek/mt76/mt76x0/eeprom.c   |  6 +++---
- drivers/net/wireless/mediatek/mt76/mt76x0/init.c |  4 ++--
- drivers/net/wireless/mediatek/mt76/mt76x0/phy.c  |  4 ++--
- .../net/wireless/mediatek/mt76/mt76x02_eeprom.c  |  8 ++++----
- .../net/wireless/mediatek/mt76/mt7915/eeprom.c   |  8 ++++----
- drivers/net/wireless/mediatek/mt76/mt7915/init.c |  5 ++---
- 11 files changed, 32 insertions(+), 33 deletions(-)
+ net/bluetooth/l2cap_sock.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
-index 81ff3b4c6c1b3..dc1191aa0443e 100644
---- a/drivers/net/wireless/mediatek/mt76/mac80211.c
-+++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
-@@ -160,9 +160,9 @@ static void mt76_init_stream_cap(struct mt76_phy *phy,
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -45,6 +45,7 @@ static const struct proto_ops l2cap_sock
+ static void l2cap_sock_init(struct sock *sk, struct sock *parent);
+ static struct sock *l2cap_sock_alloc(struct net *net, struct socket *sock,
+ 				     int proto, gfp_t prio, int kern);
++static void l2cap_sock_cleanup_listen(struct sock *parent);
  
- void mt76_set_stream_caps(struct mt76_phy *phy, bool vht)
+ bool l2cap_is_socket(struct socket *sock)
  {
--	if (phy->dev->cap.has_2ghz)
-+	if (phy->cap.has_2ghz)
- 		mt76_init_stream_cap(phy, &phy->sband_2g.sband, false);
--	if (phy->dev->cap.has_5ghz)
-+	if (phy->cap.has_5ghz)
- 		mt76_init_stream_cap(phy, &phy->sband_5g.sband, vht);
- }
- EXPORT_SYMBOL_GPL(mt76_set_stream_caps);
-@@ -463,13 +463,13 @@ int mt76_register_device(struct mt76_dev *dev, bool vht,
- 	dev_set_drvdata(dev->dev, dev);
- 	mt76_phy_init(dev, hw);
+@@ -1414,6 +1415,7 @@ static int l2cap_sock_release(struct soc
+ 	if (!sk)
+ 		return 0;
  
--	if (dev->cap.has_2ghz) {
-+	if (phy->cap.has_2ghz) {
- 		ret = mt76_init_sband_2g(dev, rates, n_rates);
- 		if (ret)
- 			return ret;
- 	}
++	l2cap_sock_cleanup_listen(sk);
+ 	bt_sock_unlink(&l2cap_sk_list, sk);
  
--	if (dev->cap.has_5ghz) {
-+	if (phy->cap.has_5ghz) {
- 		ret = mt76_init_sband_5g(dev, rates + 4, n_rates - 4, vht);
- 		if (ret)
- 			return ret;
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
-index 5a8060790a61f..16e65020a242d 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76.h
-@@ -561,6 +561,7 @@ struct mt76_phy {
- 	struct mt76_channel_state *chan_state;
- 	ktime_t survey_time;
- 
-+	struct mt76_hw_cap cap;
- 	struct mt76_sband sband_2g;
- 	struct mt76_sband sband_5g;
- 
-@@ -630,7 +631,6 @@ struct mt76_dev {
- 
- 	struct debugfs_blob_wrapper eeprom;
- 	struct debugfs_blob_wrapper otp;
--	struct mt76_hw_cap cap;
- 
- 	struct mt76_rate_power rate_power;
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
-index 01f1e0da5ee1e..a6df733aca492 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
-@@ -170,7 +170,7 @@ int mt7603_eeprom_init(struct mt7603_dev *dev)
- 	}
- 
- 	eeprom = (u8 *)dev->mt76.eeprom.data;
--	dev->mt76.cap.has_2ghz = true;
-+	dev->mphy.cap.has_2ghz = true;
- 	memcpy(dev->mt76.macaddr, eeprom + MT_EE_MAC_ADDR, ETH_ALEN);
- 
- 	/* Check for 1SS devices */
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/dma.c b/drivers/net/wireless/mediatek/mt76/mt7615/dma.c
-index bf8ae14121dba..637ef0882436c 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/dma.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/dma.c
-@@ -202,7 +202,7 @@ int mt7615_dma_init(struct mt7615_dev *dev)
- 	int ret;
- 
- 	/* Increase buffer size to receive large VHT MPDUs */
--	if (dev->mt76.cap.has_5ghz)
-+	if (dev->mphy.cap.has_5ghz)
- 		rx_buf_size *= 2;
- 
- 	mt76_dma_attach(&dev->mt76);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7615/eeprom.c
-index e9cdcdc54d5c3..714d1ff69c560 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/eeprom.c
-@@ -100,20 +100,20 @@ mt7615_eeprom_parse_hw_band_cap(struct mt7615_dev *dev)
- 
- 	if (is_mt7663(&dev->mt76)) {
- 		/* dual band */
--		dev->mt76.cap.has_2ghz = true;
--		dev->mt76.cap.has_5ghz = true;
-+		dev->mphy.cap.has_2ghz = true;
-+		dev->mphy.cap.has_5ghz = true;
- 		return;
- 	}
- 
- 	if (is_mt7622(&dev->mt76)) {
- 		/* 2GHz only */
--		dev->mt76.cap.has_2ghz = true;
-+		dev->mphy.cap.has_2ghz = true;
- 		return;
- 	}
- 
- 	if (is_mt7611(&dev->mt76)) {
- 		/* 5GHz only */
--		dev->mt76.cap.has_5ghz = true;
-+		dev->mphy.cap.has_5ghz = true;
- 		return;
- 	}
- 
-@@ -121,17 +121,17 @@ mt7615_eeprom_parse_hw_band_cap(struct mt7615_dev *dev)
- 			eeprom[MT_EE_WIFI_CONF]);
- 	switch (val) {
- 	case MT_EE_5GHZ:
--		dev->mt76.cap.has_5ghz = true;
-+		dev->mphy.cap.has_5ghz = true;
- 		break;
- 	case MT_EE_2GHZ:
--		dev->mt76.cap.has_2ghz = true;
-+		dev->mphy.cap.has_2ghz = true;
- 		break;
- 	case MT_EE_DBDC:
- 		dev->dbdc_support = true;
- 		/* fall through */
- 	default:
--		dev->mt76.cap.has_2ghz = true;
--		dev->mt76.cap.has_5ghz = true;
-+		dev->mphy.cap.has_2ghz = true;
-+		dev->mphy.cap.has_5ghz = true;
- 		break;
- 	}
- }
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x0/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt76x0/eeprom.c
-index 9087607b621e8..ebf4c96532d31 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x0/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x0/eeprom.c
-@@ -52,15 +52,15 @@ static void mt76x0_set_chip_cap(struct mt76x02_dev *dev)
- 
- 	mt76x02_eeprom_parse_hw_cap(dev);
- 	dev_dbg(dev->mt76.dev, "2GHz %d 5GHz %d\n",
--		dev->mt76.cap.has_2ghz, dev->mt76.cap.has_5ghz);
-+		dev->mphy.cap.has_2ghz, dev->mphy.cap.has_5ghz);
- 
- 	if (dev->no_2ghz) {
--		dev->mt76.cap.has_2ghz = false;
-+		dev->mphy.cap.has_2ghz = false;
- 		dev_dbg(dev->mt76.dev, "mask out 2GHz support\n");
- 	}
- 
- 	if (is_mt7630(dev)) {
--		dev->mt76.cap.has_5ghz = false;
-+		dev->mphy.cap.has_5ghz = false;
- 		dev_dbg(dev->mt76.dev, "mask out 5GHz support\n");
- 	}
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x0/init.c b/drivers/net/wireless/mediatek/mt76/mt76x0/init.c
-index d78866bf41ba3..0bac39bf3b66d 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x0/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x0/init.c
-@@ -245,7 +245,7 @@ int mt76x0_register_device(struct mt76x02_dev *dev)
- 	if (ret)
- 		return ret;
- 
--	if (dev->mt76.cap.has_5ghz) {
-+	if (dev->mphy.cap.has_5ghz) {
- 		struct ieee80211_supported_band *sband;
- 
- 		sband = &dev->mphy.sband_5g.sband;
-@@ -253,7 +253,7 @@ int mt76x0_register_device(struct mt76x02_dev *dev)
- 		mt76x0_init_txpower(dev, sband);
- 	}
- 
--	if (dev->mt76.cap.has_2ghz)
-+	if (dev->mphy.cap.has_2ghz)
- 		mt76x0_init_txpower(dev, &dev->mphy.sband_2g.sband);
- 
- 	mt76x02_init_debugfs(dev);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x0/phy.c b/drivers/net/wireless/mediatek/mt76/mt76x0/phy.c
-index 3de33aadf7941..e91c314cdfac5 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x0/phy.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x0/phy.c
-@@ -447,11 +447,11 @@ static void mt76x0_phy_ant_select(struct mt76x02_dev *dev)
- 		else
- 			coex3 |= BIT(4);
- 		coex3 |= BIT(3);
--		if (dev->mt76.cap.has_2ghz)
-+		if (dev->mphy.cap.has_2ghz)
- 			wlan |= BIT(6);
- 	} else {
- 		/* sigle antenna mode */
--		if (dev->mt76.cap.has_5ghz) {
-+		if (dev->mphy.cap.has_5ghz) {
- 			coex3 |= BIT(3) | BIT(4);
- 		} else {
- 			wlan |= BIT(6);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c b/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c
-index c54c50fd639a9..0acabba2d1a50 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x02_eeprom.c
-@@ -75,14 +75,14 @@ void mt76x02_eeprom_parse_hw_cap(struct mt76x02_dev *dev)
- 
- 	switch (FIELD_GET(MT_EE_NIC_CONF_0_BOARD_TYPE, val)) {
- 	case BOARD_TYPE_5GHZ:
--		dev->mt76.cap.has_5ghz = true;
-+		dev->mphy.cap.has_5ghz = true;
- 		break;
- 	case BOARD_TYPE_2GHZ:
--		dev->mt76.cap.has_2ghz = true;
-+		dev->mphy.cap.has_2ghz = true;
- 		break;
- 	default:
--		dev->mt76.cap.has_2ghz = true;
--		dev->mt76.cap.has_5ghz = true;
-+		dev->mphy.cap.has_2ghz = true;
-+		dev->mphy.cap.has_5ghz = true;
- 		break;
- 	}
- }
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
-index e4c5f968f706d..5f6c527611f20 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
-@@ -57,14 +57,14 @@ static void mt7915_eeprom_parse_hw_cap(struct mt7915_dev *dev)
- 	val = FIELD_GET(MT_EE_WIFI_CONF_BAND_SEL, val);
- 	switch (val) {
- 	case MT_EE_5GHZ:
--		dev->mt76.cap.has_5ghz = true;
-+		dev->mphy.cap.has_5ghz = true;
- 		break;
- 	case MT_EE_2GHZ:
--		dev->mt76.cap.has_2ghz = true;
-+		dev->mphy.cap.has_2ghz = true;
- 		break;
- 	default:
--		dev->mt76.cap.has_2ghz = true;
--		dev->mt76.cap.has_5ghz = true;
-+		dev->mphy.cap.has_2ghz = true;
-+		dev->mphy.cap.has_5ghz = true;
- 		break;
- 	}
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/init.c b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-index 8f01ca1694bca..99683688a8363 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-@@ -528,10 +528,9 @@ void mt7915_set_stream_he_caps(struct mt7915_phy *phy)
- {
- 	struct ieee80211_sband_iftype_data *data;
- 	struct ieee80211_supported_band *band;
--	struct mt76_dev *mdev = &phy->dev->mt76;
- 	int n;
- 
--	if (mdev->cap.has_2ghz) {
-+	if (phy->mt76->cap.has_2ghz) {
- 		data = phy->iftype[NL80211_BAND_2GHZ];
- 		n = mt7915_init_he_caps(phy, NL80211_BAND_2GHZ, data);
- 
-@@ -540,7 +539,7 @@ void mt7915_set_stream_he_caps(struct mt7915_phy *phy)
- 		band->n_iftype_data = n;
- 	}
- 
--	if (mdev->cap.has_5ghz) {
-+	if (phy->mt76->cap.has_5ghz) {
- 		data = phy->iftype[NL80211_BAND_5GHZ];
- 		n = mt7915_init_he_caps(phy, NL80211_BAND_5GHZ, data);
- 
--- 
-2.40.1
-
+ 	err = l2cap_sock_shutdown(sock, SHUT_RDWR);
 
 
