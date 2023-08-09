@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5766417AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:28:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF41C433C7;
-	Wed,  9 Aug 2023 11:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B14617AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:28:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B94C433C7;
+	Wed,  9 Aug 2023 11:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580519;
-	bh=f7obBiLJDvI6Lh9qJbRR6Pg6GuyNDfAulUmJjWocjn8=;
+	s=korg; t=1691580521;
+	bh=lPugAP0vYa6mjlja02DZJMNKUKeEy+qevsAcwIEyhxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oQdOrSrvwTEvzSGSfLIIWYaeq4dTZGessT3EHuf+5hPYSV5R5A0q/FwuiauANCN/q
-	 geArrY3BeKYp7vANkBRHS9T5mDhaI5rMSouvHEzwal44672rFbVG9dVcwtSkB1GQiY
-	 EOX22HFbnUAw1L6I1BfShXqJRrgApguDvtGkns6c=
+	b=B4vbrm9hnII4D0D8D2PB0Pi7q88ynXzSCfLP8HwaVmV8CrGsEK5WZ9ZXiEDfDIpiy
+	 gkzP414/V7Q0YzN+3f+tCPnI0LJRl1nDWIJBf+BWkuH8iYf/F1jlyPyIkROGvnVURx
+	 nEIM3Omh6bC2rHJunp1G70M/aAM8kHNmWci/AHrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.king@canonical.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 024/154] pwm: meson: Remove redundant assignment to variable fin_freq
-Date: Wed,  9 Aug 2023 12:40:55 +0200
-Message-ID: <20230809103637.781836989@linuxfoundation.org>
+Subject: [PATCH 5.4 015/154] PCI/ASPM: Factor out pcie_wait_for_retrain()
+Date: Wed,  9 Aug 2023 12:40:46 +0200
+Message-ID: <20230809103637.446355788@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -36,37 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Colin Ian King <colin.king@canonical.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 437fb760d046340d0dee3b4307e1cf4578fd8ca8 ]
+[ Upstream commit 9c7f136433d26592cb4d9cd00b4e15c33d9797c6 ]
 
-The variable fin_freq is being initialized with a value that is never
-read and it is being updated later with a new value. The initialization
-is redundant and can be removed.
+Factor pcie_wait_for_retrain() out from pcie_retrain_link().  No functional
+change intended.
 
-Addresses-Coverity: ("Unused value")
-Signed-off-by: Colin Ian King <colin.king@canonical.com>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-Stable-dep-of: 87a2cbf02d77 ("pwm: meson: fix handling of period/duty if greater than UINT_MAX")
+[bhelgaas: split out from
+https: //lore.kernel.org/r/20230502083923.34562-1-ilpo.jarvinen@linux.intel.com]
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Stable-dep-of: e7e39756363a ("PCI/ASPM: Avoid link retraining race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-meson.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/pcie/aspm.c | 30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/pwm/pwm-meson.c b/drivers/pwm/pwm-meson.c
-index 9fc08d1de34c2..5cab720d50680 100644
---- a/drivers/pwm/pwm-meson.c
-+++ b/drivers/pwm/pwm-meson.c
-@@ -163,7 +163,7 @@ static int meson_pwm_calc(struct meson_pwm *meson, struct pwm_device *pwm,
- {
- 	struct meson_pwm_channel *channel = pwm_get_chip_data(pwm);
- 	unsigned int duty, period, pre_div, cnt, duty_cnt;
--	unsigned long fin_freq = -1;
-+	unsigned long fin_freq;
+diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+index 3197ac6dda35b..749a367bde2df 100644
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -200,10 +200,26 @@ static void pcie_clkpm_cap_init(struct pcie_link_state *link, int blacklist)
+ 	link->clkpm_disable = blacklist ? 1 : 0;
+ }
  
- 	duty = state->duty_cycle;
- 	period = state->period;
++static int pcie_wait_for_retrain(struct pci_dev *pdev)
++{
++	unsigned long end_jiffies;
++	u16 reg16;
++
++	/* Wait for Link Training to be cleared by hardware */
++	end_jiffies = jiffies + LINK_RETRAIN_TIMEOUT;
++	do {
++		pcie_capability_read_word(pdev, PCI_EXP_LNKSTA, &reg16);
++		if (!(reg16 & PCI_EXP_LNKSTA_LT))
++			return 0;
++		msleep(1);
++	} while (time_before(jiffies, end_jiffies));
++
++	return -ETIMEDOUT;
++}
++
+ static int pcie_retrain_link(struct pcie_link_state *link)
+ {
+ 	struct pci_dev *parent = link->pdev;
+-	unsigned long end_jiffies;
+ 	u16 reg16;
+ 
+ 	pcie_capability_read_word(parent, PCI_EXP_LNKCTL, &reg16);
+@@ -219,17 +235,7 @@ static int pcie_retrain_link(struct pcie_link_state *link)
+ 		pcie_capability_write_word(parent, PCI_EXP_LNKCTL, reg16);
+ 	}
+ 
+-	/* Wait for link training end. Break out after waiting for timeout */
+-	end_jiffies = jiffies + LINK_RETRAIN_TIMEOUT;
+-	do {
+-		pcie_capability_read_word(parent, PCI_EXP_LNKSTA, &reg16);
+-		if (!(reg16 & PCI_EXP_LNKSTA_LT))
+-			break;
+-		msleep(1);
+-	} while (time_before(jiffies, end_jiffies));
+-	if (reg16 & PCI_EXP_LNKSTA_LT)
+-		return -ETIMEDOUT;
+-	return 0;
++	return pcie_wait_for_retrain(parent);
+ }
+ 
+ /*
 -- 
 2.39.2
 
