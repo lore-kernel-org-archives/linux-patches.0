@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E978917AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:24:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1A7C433C7;
-	Wed,  9 Aug 2023 11:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1795917AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:24:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C6ADC433C8;
+	Wed,  9 Aug 2023 11:24:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580256;
-	bh=mVaMurqfNZT9mxKIFQ1nvunouZFvg8lVaG5Ps+splQM=;
+	s=korg; t=1691580259;
+	bh=fJkDtPkTGMDdvBeinE9EhWLb0IOtRQvHqUZH8RwLvXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I/dT1GviH7amcuKl5iyINPE+7sibJQc2UGSjGX+ZEQx7gVT1zPEyafaCphuigIKBP
-	 MTE9oPPXzh1G5t053+h7qLDsoNXN3ydLUbtTzYpq5D1IiuiHOd6z5RRqpjv1yHFE9G
-	 fWzScgX2ktH6sgvxdVULJSG7kZO7WQ5NEEzR/kiU=
+	b=t0671SxFL9KtU7+vorkzTNzuXPpBhCj7aPFf5H+LInEFNTNyfPK28OhsXqYpuTV+0
+	 nXa7qA7FlbLqznw2pz1k/+K5OBK/oXe7v8tlylPNCSyBHawFPSVCv3HRpt12PpwZDb
+	 +FgXDpEIYVCuhkrbJzwcqXuySH0FXaLT59abwCCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lion <nnamrec@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Shaoying Xu <shaoyi@amazon.com>
-Subject: [PATCH 4.19 284/323] net/sched: sch_qfq: account for stab overhead in qfq_enqueue
-Date: Wed,  9 Aug 2023 12:42:02 +0200
-Message-ID: <20230809103711.047560584@linuxfoundation.org>
+	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 4.19 285/323] ASoC: cs42l51: fix driver to properly autoload with automatic module loading
+Date: Wed,  9 Aug 2023 12:42:03 +0200
+Message-ID: <20230809103711.086327261@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -39,92 +34,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
 
-commit 3e337087c3b5805fe0b8a46ba622a962880b5d64 upstream.
+commit e51df4f81b02bcdd828a04de7c1eb6a92988b61e upstream.
 
-Lion says:
--------
-In the QFQ scheduler a similar issue to CVE-2023-31436
-persists.
+In commit 2cb1e0259f50 ("ASoC: cs42l51: re-hook of_match_table
+pointer"), 9 years ago, some random guy fixed the cs42l51 after it was
+split into a core part and an I2C part to properly match based on a
+Device Tree compatible string.
 
-Consider the following code in net/sched/sch_qfq.c:
+However, the fix in this commit is wrong: the MODULE_DEVICE_TABLE(of,
+....) is in the core part of the driver, not the I2C part. Therefore,
+automatic module loading based on module.alias, based on matching with
+the DT compatible string, loads the core part of the driver, but not
+the I2C part. And threfore, the i2c_driver is not registered, and the
+codec is not known to the system, nor matched with a DT node with the
+corresponding compatible string.
 
-static int qfq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
-                struct sk_buff **to_free)
-{
-     unsigned int len = qdisc_pkt_len(skb), gso_segs;
+In order to fix that, we move the MODULE_DEVICE_TABLE(of, ...) into
+the I2C part of the driver. The cs42l51_of_match[] array is also moved
+as well, as it is not possible to have this definition in one file,
+and the MODULE_DEVICE_TABLE(of, ...) invocation in another file, due
+to how MODULE_DEVICE_TABLE works.
 
-    // ...
+Thanks to this commit, the I2C part of the driver now properly
+autoloads, and thanks to its dependency on the core part, the core
+part gets autoloaded as well, resulting in a functional sound card
+without having to manually load kernel modules.
 
-     if (unlikely(cl->agg->lmax < len)) {
-         pr_debug("qfq: increasing maxpkt from %u to %u for class %u",
-              cl->agg->lmax, len, cl->common.classid);
-         err = qfq_change_agg(sch, cl, cl->agg->class_weight, len);
-         if (err) {
-             cl->qstats.drops++;
-             return qdisc_drop(skb, sch, to_free);
-         }
-
-    // ...
-
-     }
-
-Similarly to CVE-2023-31436, "lmax" is increased without any bounds
-checks according to the packet length "len". Usually this would not
-impose a problem because packet sizes are naturally limited.
-
-This is however not the actual packet length, rather the
-"qdisc_pkt_len(skb)" which might apply size transformations according to
-"struct qdisc_size_table" as created by "qdisc_get_stab()" in
-net/sched/sch_api.c if the TCA_STAB option was set when modifying the qdisc.
-
-A user may choose virtually any size using such a table.
-
-As a result the same issue as in CVE-2023-31436 can occur, allowing heap
-out-of-bounds read / writes in the kmalloc-8192 cache.
--------
-
-We can create the issue with the following commands:
-
-tc qdisc add dev $DEV root handle 1: stab mtu 2048 tsize 512 mpu 0 \
-overhead 999999999 linklayer ethernet qfq
-tc class add dev $DEV parent 1: classid 1:1 htb rate 6mbit burst 15k
-tc filter add dev $DEV parent 1: matchall classid 1:1
-ping -I $DEV 1.1.1.2
-
-This is caused by incorrectly assuming that qdisc_pkt_len() returns a
-length within the QFQ_MIN_LMAX < len < QFQ_MAX_LMAX.
-
-Fixes: 462dbc9101ac ("pkt_sched: QFQ Plus: fair-queueing service at DRR cost")
-Reported-by: Lion <nnamrec@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Shaoying Xu <shaoyi@amazon.com>
+Fixes: 2cb1e0259f50 ("ASoC: cs42l51: re-hook of_match_table pointer")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+Link: https://lore.kernel.org/r/20230713112112.778576-1-thomas.petazzoni@bootlin.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_qfq.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ sound/soc/codecs/cs42l51-i2c.c |    6 ++++++
+ sound/soc/codecs/cs42l51.c     |    7 -------
+ sound/soc/codecs/cs42l51.h     |    1 -
+ 3 files changed, 6 insertions(+), 8 deletions(-)
 
---- a/net/sched/sch_qfq.c
-+++ b/net/sched/sch_qfq.c
-@@ -387,8 +387,13 @@ static int qfq_change_agg(struct Qdisc *
- 			   u32 lmax)
- {
- 	struct qfq_sched *q = qdisc_priv(sch);
--	struct qfq_aggregate *new_agg = qfq_find_agg(q, lmax, weight);
-+	struct qfq_aggregate *new_agg;
+--- a/sound/soc/codecs/cs42l51-i2c.c
++++ b/sound/soc/codecs/cs42l51-i2c.c
+@@ -23,6 +23,12 @@ static struct i2c_device_id cs42l51_i2c_
+ };
+ MODULE_DEVICE_TABLE(i2c, cs42l51_i2c_id);
  
-+	/* 'lmax' can range from [QFQ_MIN_LMAX, pktlen + stab overhead] */
-+	if (lmax > (1UL << QFQ_MTU_SHIFT))
-+		return -EINVAL;
++const struct of_device_id cs42l51_of_match[] = {
++	{ .compatible = "cirrus,cs42l51", },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, cs42l51_of_match);
 +
-+	new_agg = qfq_find_agg(q, lmax, weight);
- 	if (new_agg == NULL) { /* create new aggregate */
- 		new_agg = kzalloc(sizeof(*new_agg), GFP_ATOMIC);
- 		if (new_agg == NULL)
+ static int cs42l51_i2c_probe(struct i2c_client *i2c,
+ 			     const struct i2c_device_id *id)
+ {
+--- a/sound/soc/codecs/cs42l51.c
++++ b/sound/soc/codecs/cs42l51.c
+@@ -563,13 +563,6 @@ error:
+ }
+ EXPORT_SYMBOL_GPL(cs42l51_probe);
+ 
+-const struct of_device_id cs42l51_of_match[] = {
+-	{ .compatible = "cirrus,cs42l51", },
+-	{ }
+-};
+-MODULE_DEVICE_TABLE(of, cs42l51_of_match);
+-EXPORT_SYMBOL_GPL(cs42l51_of_match);
+-
+ MODULE_AUTHOR("Arnaud Patard <arnaud.patard@rtp-net.org>");
+ MODULE_DESCRIPTION("Cirrus Logic CS42L51 ALSA SoC Codec Driver");
+ MODULE_LICENSE("GPL");
+--- a/sound/soc/codecs/cs42l51.h
++++ b/sound/soc/codecs/cs42l51.h
+@@ -22,7 +22,6 @@ struct device;
+ 
+ extern const struct regmap_config cs42l51_regmap;
+ int cs42l51_probe(struct device *dev, struct regmap *regmap);
+-extern const struct of_device_id cs42l51_of_match[];
+ 
+ #define CS42L51_CHIP_ID			0x1B
+ #define CS42L51_CHIP_REV_A		0x00
 
 
