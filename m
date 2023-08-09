@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100A41775C
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:23:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81CF9C433C9;
-	Wed,  9 Aug 2023 11:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C455017AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:23:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47631C433C8;
+	Wed,  9 Aug 2023 11:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580214;
-	bh=FCLMibFVuhFZ3Zi1V5QfhvJNRA5jhOqFvSwHWIv8tI0=;
+	s=korg; t=1691580217;
+	bh=WQSpoqPhUn1pdgB2dhi/t22MSwUsZVJFsTn0MEsJkQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nex16sOBXXFx3B2jnqWbaAGKo7eOyhp6AkJ1TOFK4xcy98jjPtTdmDr6dj9IiioAs
-	 i6imFlzKQEai1CVzMhvzg5UaAoHRoK+1f16ElHW+N4QmQpCBfsVKSWCXFDTAl6gHkM
-	 WNwDzdV6tOeMEnf14TBVxpRiR+WUw//FfxPbolBE=
+	b=YqWJsHv6QXsGcV08I9Z61TWP96C8GQAjtyaye/+2QZjlpUapvPqeuEIY214RYATwK
+	 3xsMUZ9IAJFtNNZ0Irgp3si279cYmJdzAkpe2YDJ89+qE/Pv5nc1YolFeuGIMiJKaQ
+	 wF+KeIepuwMZyjwLgi7wJ7GsIp2VM9qwPN8/ETk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Ming <machel@vivo.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 4.19 238/323] i40e: Fix an NULL vs IS_ERR() bug for debugfs_create_dir()
-Date: Wed,  9 Aug 2023 12:41:16 +0200
-Message-ID: <20230809103708.968560234@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 239/323] phy: hisilicon: Fix an out of bounds check in hisi_inno_phy_probe()
+Date: Wed,  9 Aug 2023 12:41:17 +0200
+Message-ID: <20230809103709.013379333@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,38 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Ming <machel@vivo.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit 043b1f185fb0f3939b7427f634787706f45411c4 ]
+[ Upstream commit 13c088cf3657d70893d75cf116be937f1509cc0f ]
 
-The debugfs_create_dir() function returns error pointers.
-It never returns NULL. Most incorrect error checks were fixed,
-but the one in i40e_dbg_init() was forgotten.
+The size of array 'priv->ports[]' is INNO_PHY_PORT_NUM.
 
-Fix the remaining error check.
+In the for loop, 'i' is used as the index for array 'priv->ports[]'
+with a check (i > INNO_PHY_PORT_NUM) which indicates that
+INNO_PHY_PORT_NUM is allowed value for 'i' in the same loop.
 
-Fixes: 02e9c290814c ("i40e: debugfs interface")
-Signed-off-by: Wang Ming <machel@vivo.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+This > comparison needs to be changed to >=, otherwise it potentially leads
+to an out of bounds write on the next iteration through the loop
+
+Fixes: ba8b0ee81fbb ("phy: add inno-usb2-phy driver for hi3798cv200 SoC")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Link: https://lore.kernel.org/r/20230721090558.3588613-1-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_debugfs.c | 2 +-
+ drivers/phy/hisilicon/phy-hisi-inno-usb2.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_debugfs.c b/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
-index a66492b9403c4..5b82c89330e30 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
-@@ -1798,7 +1798,7 @@ void i40e_dbg_pf_exit(struct i40e_pf *pf)
- void i40e_dbg_init(void)
- {
- 	i40e_dbg_root = debugfs_create_dir(i40e_driver_name, NULL);
--	if (!i40e_dbg_root)
-+	if (IS_ERR(i40e_dbg_root))
- 		pr_info("init of debugfs failed\n");
- }
+diff --git a/drivers/phy/hisilicon/phy-hisi-inno-usb2.c b/drivers/phy/hisilicon/phy-hisi-inno-usb2.c
+index 524381249a2b8..b51e19402ab0c 100644
+--- a/drivers/phy/hisilicon/phy-hisi-inno-usb2.c
++++ b/drivers/phy/hisilicon/phy-hisi-inno-usb2.c
+@@ -167,7 +167,7 @@ static int hisi_inno_phy_probe(struct platform_device *pdev)
+ 		phy_set_drvdata(phy, &priv->ports[i]);
+ 		i++;
  
+-		if (i > INNO_PHY_PORT_NUM) {
++		if (i >= INNO_PHY_PORT_NUM) {
+ 			dev_warn(dev, "Support %d ports in maximum\n", i);
+ 			break;
+ 		}
 -- 
 2.39.2
 
