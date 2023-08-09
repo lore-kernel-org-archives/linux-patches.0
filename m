@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C317717AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:37:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403F2C433C7;
-	Wed,  9 Aug 2023 11:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACB017AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:37:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1068BC433C7;
+	Wed,  9 Aug 2023 11:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691581072;
-	bh=hbHBrkmb3zO/4wCorDCJDA3Swc/hPtL+18fIiKGITDc=;
+	s=korg; t=1691581075;
+	bh=OZXxHmHGhsPZfKhw6WGIknHj8bu56fsZ+gst+f8YR0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=izXnFLefBTBpIco/98JGJS9w3J+y+Az3xuPFSp7IMkQTO/ju7gCT6xiGKuUIQr+5e
-	 9AGEXki1QQEb/smrOlupBTeKE4EDkqgQRhPcN9SUHrEb8uo6O3u9r2BiSb24ksNURy
-	 OBn9Jo1ZtaqIrO4Xsn1A8UTJ4HO6mQIXzYipCndk=
+	b=DKtUz2EBEgSSenVZtsrVfetQyBnDYBDBmL2v9S9VzE3cDhi/Ih81mbypt08Ic30/E
+	 I5IyDUcA7Vhpnt4e6aKsYOoNT04x+QHfx8MerY3ouRZUPpxRb6dzvD8IqgnlZxqM5V
+	 CURybA4xG8lhhXHyZlciRqA8jwi4PKF4CTZOWgoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jim Mattson <jmattson@google.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 096/201] KVM: nVMX: Do not clear CR3 load/store exiting bits if L1 wants em
-Date: Wed,  9 Aug 2023 12:41:38 +0200
-Message-ID: <20230809103647.031132491@linuxfoundation.org>
+Subject: [PATCH 5.10 097/201] KVM: VMX: Dont fudge CR0 and CR4 for restricted L2 guest
+Date: Wed,  9 Aug 2023 12:41:39 +0200
+Message-ID: <20230809103647.061493781@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -37,112 +38,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 470750b3425513b9f63f176e564e63e0e7998afc ]
+[ Upstream commit c4abd7352023aa96114915a0bb2b88016a425cda ]
 
-Keep CR3 load/store exiting enable as needed when running L2 in order to
-honor L1's desires.  This fixes a largely theoretical bug where L1 could
-intercept CR3 but not CR0.PG and end up not getting the desired CR3 exits
-when L2 enables paging.  In other words, the existing !is_paging() check
-inadvertantly handles the normal case for L2 where vmx_set_cr0() is
-called during VM-Enter, which is guaranteed to run with paging enabled,
-and thus will never clear the bits.
+Stuff CR0 and/or CR4 to be compliant with a restricted guest if and only
+if KVM itself is not configured to utilize unrestricted guests, i.e. don't
+stuff CR0/CR4 for a restricted L2 that is running as the guest of an
+unrestricted L1.  Any attempt to VM-Enter a restricted guest with invalid
+CR0/CR4 values should fail, i.e. in a nested scenario, KVM (as L0) should
+never observe a restricted L2 with incompatible CR0/CR4, since nested
+VM-Enter from L1 should have failed.
 
-Removing the !is_paging() check will also allow future consolidation and
-cleanup of the related code.  From a performance perspective, this is
-all a nop, as the VMCS controls shadow will optimize away the VMWRITE
-when the controls are in the desired state.
+And if KVM does observe an active, restricted L2 with incompatible state,
+e.g. due to a KVM bug, fudging CR0/CR4 instead of letting VM-Enter fail
+does more harm than good, as KVM will often neglect to undo the side
+effects, e.g. won't clear rmode.vm86_active on nested VM-Exit, and thus
+the damage can easily spill over to L1.  On the other hand, letting
+VM-Enter fail due to bad guest state is more likely to contain the damage
+to L2 as KVM relies on hardware to perform most guest state consistency
+checks, i.e. KVM needs to be able to reflect a failed nested VM-Enter into
+L1 irrespective of (un)restricted guest behavior.
 
-Add a comment explaining why CR3 is intercepted, with a big disclaimer
-about not querying the old CR3.  Because vmx_set_cr0() is used for flows
-that are not directly tied to MOV CR3, e.g. vCPU RESET/INIT and nested
-VM-Enter, it's possible that is_paging() is not synchronized with CR3
-load/store exiting.  This is actually guaranteed in the current code, as
-KVM starts with CR3 interception disabled.  Obviously that can be fixed,
-but there's no good reason to play whack-a-mole, and it tends to end
-poorly, e.g. descriptor table exiting for UMIP emulation attempted to be
-precise in the past and ended up botching the interception toggling.
-
-Fixes: fe3ef05c7572 ("KVM: nVMX: Prepare vmcs02 from vmcs01 and vmcs12")
+Cc: Jim Mattson <jmattson@google.com>
+Cc: stable@vger.kernel.org
+Fixes: bddd82d19e2e ("KVM: nVMX: KVM needs to unset "unrestricted guest" VM-execution control in vmcs02 if vmcs12 doesn't set it")
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20210713163324.627647-25-seanjc@google.com>
+Message-Id: <20230613203037.1968489-3-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: c4abd7352023 ("KVM: VMX: Don't fudge CR0 and CR4 for restricted L2 guest")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/vmx.c | 46 +++++++++++++++++++++++++++++++++---------
- 1 file changed, 37 insertions(+), 9 deletions(-)
+ arch/x86/kvm/vmx/vmx.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index b9abe08c9d590..ca51df0df3f94 100644
+index ca51df0df3f94..2445c61038954 100644
 --- a/arch/x86/kvm/vmx/vmx.c
 +++ b/arch/x86/kvm/vmx/vmx.c
-@@ -3063,10 +3063,14 @@ void ept_save_pdptrs(struct kvm_vcpu *vcpu)
- 	kvm_register_mark_dirty(vcpu, VCPU_EXREG_PDPTR);
- }
- 
-+#define CR3_EXITING_BITS (CPU_BASED_CR3_LOAD_EXITING | \
-+			  CPU_BASED_CR3_STORE_EXITING)
-+
- void vmx_set_cr0(struct kvm_vcpu *vcpu, unsigned long cr0)
- {
+@@ -1519,6 +1519,11 @@ void vmx_set_rflags(struct kvm_vcpu *vcpu, unsigned long rflags)
  	struct vcpu_vmx *vmx = to_vmx(vcpu);
- 	unsigned long hw_cr0;
-+	u32 tmp;
+ 	unsigned long old_rflags;
+ 
++	/*
++	 * Unlike CR0 and CR4, RFLAGS handling requires checking if the vCPU
++	 * is an unrestricted guest in order to mark L2 as needing emulation
++	 * if L1 runs L2 as a restricted guest.
++	 */
+ 	if (is_unrestricted_guest(vcpu)) {
+ 		kvm_register_mark_available(vcpu, VCPU_EXREG_RFLAGS);
+ 		vmx->rflags = rflags;
+@@ -3073,7 +3078,7 @@ void vmx_set_cr0(struct kvm_vcpu *vcpu, unsigned long cr0)
+ 	u32 tmp;
  
  	hw_cr0 = (cr0 & ~KVM_VM_CR0_ALWAYS_OFF);
- 	if (is_unrestricted_guest(vcpu))
-@@ -3093,18 +3097,42 @@ void vmx_set_cr0(struct kvm_vcpu *vcpu, unsigned long cr0)
+-	if (is_unrestricted_guest(vcpu))
++	if (enable_unrestricted_guest)
+ 		hw_cr0 |= KVM_VM_CR0_ALWAYS_ON_UNRESTRICTED_GUEST;
+ 	else {
+ 		hw_cr0 |= KVM_VM_CR0_ALWAYS_ON;
+@@ -3096,7 +3101,7 @@ void vmx_set_cr0(struct kvm_vcpu *vcpu, unsigned long cr0)
+ 	}
  #endif
  
- 	if (enable_ept && !is_unrestricted_guest(vcpu)) {
-+		/*
-+		 * Ensure KVM has an up-to-date snapshot of the guest's CR3.  If
-+		 * the below code _enables_ CR3 exiting, vmx_cache_reg() will
-+		 * (correctly) stop reading vmcs.GUEST_CR3 because it thinks
-+		 * KVM's CR3 is installed.
-+		 */
- 		if (!kvm_register_is_available(vcpu, VCPU_EXREG_CR3))
- 			vmx_cache_reg(vcpu, VCPU_EXREG_CR3);
-+
-+		/*
-+		 * When running with EPT but not unrestricted guest, KVM must
-+		 * intercept CR3 accesses when paging is _disabled_.  This is
-+		 * necessary because restricted guests can't actually run with
-+		 * paging disabled, and so KVM stuffs its own CR3 in order to
-+		 * run the guest when identity mapped page tables.
-+		 *
-+		 * Do _NOT_ check the old CR0.PG, e.g. to optimize away the
-+		 * update, it may be stale with respect to CR3 interception,
-+		 * e.g. after nested VM-Enter.
-+		 *
-+		 * Lastly, honor L1's desires, i.e. intercept CR3 loads and/or
-+		 * stores to forward them to L1, even if KVM does not need to
-+		 * intercept them to preserve its identity mapped page tables.
-+		 */
- 		if (!(cr0 & X86_CR0_PG)) {
--			/* From paging/starting to nonpaging */
--			exec_controls_setbit(vmx, CPU_BASED_CR3_LOAD_EXITING |
--						  CPU_BASED_CR3_STORE_EXITING);
--			vcpu->arch.cr0 = cr0;
--			vmx_set_cr4(vcpu, kvm_read_cr4(vcpu));
--		} else if (!is_paging(vcpu)) {
--			/* From nonpaging to paging */
--			exec_controls_clearbit(vmx, CPU_BASED_CR3_LOAD_EXITING |
--						    CPU_BASED_CR3_STORE_EXITING);
-+			exec_controls_setbit(vmx, CR3_EXITING_BITS);
-+		} else if (!is_guest_mode(vcpu)) {
-+			exec_controls_clearbit(vmx, CR3_EXITING_BITS);
-+		} else {
-+			tmp = exec_controls_get(vmx);
-+			tmp &= ~CR3_EXITING_BITS;
-+			tmp |= get_vmcs12(vcpu)->cpu_based_vm_exec_control & CR3_EXITING_BITS;
-+			exec_controls_set(vmx, tmp);
-+		}
-+
-+		if (!is_paging(vcpu) != !(cr0 & X86_CR0_PG)) {
- 			vcpu->arch.cr0 = cr0;
- 			vmx_set_cr4(vcpu, kvm_read_cr4(vcpu));
- 		}
+-	if (enable_ept && !is_unrestricted_guest(vcpu)) {
++	if (enable_ept && !enable_unrestricted_guest) {
+ 		/*
+ 		 * Ensure KVM has an up-to-date snapshot of the guest's CR3.  If
+ 		 * the below code _enables_ CR3 exiting, vmx_cache_reg() will
+@@ -3231,7 +3236,7 @@ void vmx_set_cr4(struct kvm_vcpu *vcpu, unsigned long cr4)
+ 	unsigned long hw_cr4;
+ 
+ 	hw_cr4 = (cr4_read_shadow() & X86_CR4_MCE) | (cr4 & ~X86_CR4_MCE);
+-	if (is_unrestricted_guest(vcpu))
++	if (enable_unrestricted_guest)
+ 		hw_cr4 |= KVM_VM_CR4_ALWAYS_ON_UNRESTRICTED_GUEST;
+ 	else if (vmx->rmode.vm86_active)
+ 		hw_cr4 |= KVM_RMODE_VM_CR4_ALWAYS_ON;
+@@ -3251,7 +3256,7 @@ void vmx_set_cr4(struct kvm_vcpu *vcpu, unsigned long cr4)
+ 	vcpu->arch.cr4 = cr4;
+ 	kvm_register_mark_available(vcpu, VCPU_EXREG_CR4);
+ 
+-	if (!is_unrestricted_guest(vcpu)) {
++	if (!enable_unrestricted_guest) {
+ 		if (enable_ept) {
+ 			if (!is_paging(vcpu)) {
+ 				hw_cr4 &= ~X86_CR4_PAE;
 -- 
 2.40.1
 
