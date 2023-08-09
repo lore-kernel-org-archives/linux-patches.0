@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8096131
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:55:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D60F6C433C8;
-	Wed,  9 Aug 2023 10:55:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208A16131
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:55:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D45C433C9;
+	Wed,  9 Aug 2023 10:55:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578552;
-	bh=acfMqngAeV0gNx5frunirjsPGUeLPm73wqijOYUHaa0=;
+	s=korg; t=1691578555;
+	bh=1g4NKE7ziG5yB3fVf2fTsDUzYjCajxUhRMOqE15E93E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YlIq2UWtPlXFY5Q1IJ1XhFrw6AcLuQ6cNOLkN863/OYBYmeG1Hrrtl7pX65DFtT8U
-	 gHS89c162vZwYnGaYj2gotrKPe+4p0jsH6YN9fkMCRptV+y1mdBb3pb18KbhaEu8E7
-	 axb2KofTOmSKrVq5hxwfhjrJ6c1kOMq+JpSC17fQ=
+	b=gPWAEmF/dZs/Y1vsSAf7z7LB6Yoc2y30JMeFBN17GoFmOYoFDhGydkQZcU9U66WBh
+	 B7cGnRPbZkpjyTD4NA/u+ko7IOO+n6aRj4PlRHoHaVZQxTKq9kPdKzOomTp6za2de4
+	 v/3E+uCXz4B9KTpMchI0912QGapJvMWccU4CyAPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@suse.cz>,
-	"Andreas Hindborg (Samsung)" <nmi@metaspace.dk>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.1 070/127] rust: allocator: Prevent mis-aligned allocation
-Date: Wed,  9 Aug 2023 12:40:57 +0200
-Message-ID: <20230809103638.972990226@linuxfoundation.org>
+	Benjamin Block <bblock@linux.ibm.com>,
+	Fedor Loshakov <loshakov@linux.ibm.com>,
+	Steffen Maier <maier@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 071/127] scsi: zfcp: Defer fc_rport blocking until after ADISC response
+Date: Wed,  9 Aug 2023 12:40:58 +0200
+Message-ID: <20230809103639.002540082@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.615294317@linuxfoundation.org>
 References: <20230809103636.615294317@linuxfoundation.org>
@@ -36,149 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Boqun Feng <boqun.feng@gmail.com>
+From: Steffen Maier <maier@linux.ibm.com>
 
-commit b3d8aa84bbfe9b58ccc5332cacf8ea17200af310 upstream.
+commit e65851989001c0c9ba9177564b13b38201c0854c upstream.
 
-Currently the rust allocator simply passes the size of the type Layout
-to krealloc(), and in theory the alignment requirement from the type
-Layout may be larger than the guarantee provided by SLAB, which means
-the allocated object is mis-aligned.
+Storage devices are free to send RSCNs, e.g. for internal state changes. If
+this happens on all connected paths, zfcp risks temporarily losing all
+paths at the same time. This has strong requirements on multipath
+configuration such as "no_path_retry queue".
 
-Fix this by adjusting the allocation size to the nearest power of two,
-which SLAB always guarantees a size-aligned allocation. And because Rust
-guarantees that the original size must be a multiple of alignment and
-the alignment must be a power of two, then the alignment requirement is
-satisfied.
+Avoid such situations by deferring fc_rport blocking until after the ADISC
+response, when any actual state change of the remote port became clear.
+The already existing port recovery triggers explicitly block the fc_rport.
+The triggers are: on ADISC reject or timeout (typical cable pull case), and
+on ADISC indicating that the remote port has changed its WWPN or
+the port is meanwhile no longer open.
 
-Suggested-by: Vlastimil Babka <vbabka@suse.cz>
-Co-developed-by: "Andreas Hindborg (Samsung)" <nmi@metaspace.dk>
-Signed-off-by: "Andreas Hindborg (Samsung)" <nmi@metaspace.dk>
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-Cc: stable@vger.kernel.org # v6.1+
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Fixes: 247b365dc8dc ("rust: add `kernel` crate")
-Link: https://github.com/Rust-for-Linux/linux/issues/974
-Link: https://lore.kernel.org/r/20230730012905.643822-2-boqun.feng@gmail.com
-[ Applied rewording of comment as discussed in the mailing list. ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+As a side effect, this also removes a confusing direct function call to
+another work item function zfcp_scsi_rport_work() instead of scheduling
+that other work item. It was probably done that way to have the rport block
+side effect immediate and synchronous to the caller.
+
+Fixes: a2fa0aede07c ("[SCSI] zfcp: Block FC transport rports early on errors")
+Cc: stable@vger.kernel.org #v2.6.30+
+Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
+Reviewed-by: Fedor Loshakov <loshakov@linux.ibm.com>
+Signed-off-by: Steffen Maier <maier@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230724145156.3920244-1-maier@linux.ibm.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/bindings/bindings_helper.h |    1 
- rust/kernel/allocator.rs        |   74 +++++++++++++++++++++++++++++++---------
- 2 files changed, 60 insertions(+), 15 deletions(-)
+ drivers/s390/scsi/zfcp_fc.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/rust/bindings/bindings_helper.h
-+++ b/rust/bindings/bindings_helper.h
-@@ -9,5 +9,6 @@
- #include <linux/slab.h>
+--- a/drivers/s390/scsi/zfcp_fc.c
++++ b/drivers/s390/scsi/zfcp_fc.c
+@@ -534,8 +534,7 @@ static void zfcp_fc_adisc_handler(void *
  
- /* `bindgen` gets confused at certain things. */
-+const size_t BINDINGS_ARCH_SLAB_MINALIGN = ARCH_SLAB_MINALIGN;
- const gfp_t BINDINGS_GFP_KERNEL = GFP_KERNEL;
- const gfp_t BINDINGS___GFP_ZERO = __GFP_ZERO;
---- a/rust/kernel/allocator.rs
-+++ b/rust/kernel/allocator.rs
-@@ -9,6 +9,36 @@ use crate::bindings;
+ 	/* re-init to undo drop from zfcp_fc_adisc() */
+ 	port->d_id = ntoh24(adisc_resp->adisc_port_id);
+-	/* port is good, unblock rport without going through erp */
+-	zfcp_scsi_schedule_rport_register(port);
++	/* port is still good, nothing to do */
+  out:
+ 	atomic_andnot(ZFCP_STATUS_PORT_LINK_TEST, &port->status);
+ 	put_device(&port->dev);
+@@ -595,9 +594,6 @@ void zfcp_fc_link_test_work(struct work_
+ 	int retval;
  
- struct KernelAllocator;
+ 	set_worker_desc("zadisc%16llx", port->wwpn); /* < WORKER_DESC_LEN=24 */
+-	get_device(&port->dev);
+-	port->rport_task = RPORT_DEL;
+-	zfcp_scsi_rport_work(&port->rport_work);
  
-+/// Calls `krealloc` with a proper size to alloc a new object aligned to `new_layout`'s alignment.
-+///
-+/// # Safety
-+///
-+/// - `ptr` can be either null or a pointer which has been allocated by this allocator.
-+/// - `new_layout` must have a non-zero size.
-+unsafe fn krealloc_aligned(ptr: *mut u8, new_layout: Layout, flags: bindings::gfp_t) -> *mut u8 {
-+    // Customized layouts from `Layout::from_size_align()` can have size < align, so pad first.
-+    let layout = new_layout.pad_to_align();
-+
-+    let mut size = layout.size();
-+
-+    if layout.align() > bindings::BINDINGS_ARCH_SLAB_MINALIGN {
-+        // The alignment requirement exceeds the slab guarantee, thus try to enlarge the size
-+        // to use the "power-of-two" size/alignment guarantee (see comments in `kmalloc()` for
-+        // more information).
-+        //
-+        // Note that `layout.size()` (after padding) is guaranteed to be a multiple of
-+        // `layout.align()`, so `next_power_of_two` gives enough alignment guarantee.
-+        size = size.next_power_of_two();
-+    }
-+
-+    // SAFETY:
-+    // - `ptr` is either null or a pointer returned from a previous `k{re}alloc()` by the
-+    //   function safety requirement.
-+    // - `size` is greater than 0 since it's either a `layout.size()` (which cannot be zero
-+    //    according to the function safety requirement) or a result from `next_power_of_two()`.
-+    unsafe { bindings::krealloc(ptr as *const core::ffi::c_void, size, flags) as *mut u8 }
-+}
-+
- unsafe impl GlobalAlloc for KernelAllocator {
-     unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
-         // `krealloc()` is used instead of `kmalloc()` because the latter is
-@@ -30,10 +60,20 @@ static ALLOCATOR: KernelAllocator = Kern
- // to extract the object file that has them from the archive. For the moment,
- // let's generate them ourselves instead.
- //
-+// Note: Although these are *safe* functions, they are called by the compiler
-+// with parameters that obey the same `GlobalAlloc` function safety
-+// requirements: size and align should form a valid layout, and size is
-+// greater than 0.
-+//
- // Note that `#[no_mangle]` implies exported too, nowadays.
- #[no_mangle]
--fn __rust_alloc(size: usize, _align: usize) -> *mut u8 {
--    unsafe { bindings::krealloc(core::ptr::null(), size, bindings::GFP_KERNEL) as *mut u8 }
-+fn __rust_alloc(size: usize, align: usize) -> *mut u8 {
-+    // SAFETY: See assumption above.
-+    let layout = unsafe { Layout::from_size_align_unchecked(size, align) };
-+
-+    // SAFETY: `ptr::null_mut()` is null, per assumption above the size of `layout` is greater
-+    // than 0.
-+    unsafe { krealloc_aligned(ptr::null_mut(), layout, bindings::GFP_KERNEL) }
- }
- 
- #[no_mangle]
-@@ -42,23 +82,27 @@ fn __rust_dealloc(ptr: *mut u8, _size: u
- }
- 
- #[no_mangle]
--fn __rust_realloc(ptr: *mut u8, _old_size: usize, _align: usize, new_size: usize) -> *mut u8 {
--    unsafe {
--        bindings::krealloc(
--            ptr as *const core::ffi::c_void,
--            new_size,
--            bindings::GFP_KERNEL,
--        ) as *mut u8
--    }
-+fn __rust_realloc(ptr: *mut u8, _old_size: usize, align: usize, new_size: usize) -> *mut u8 {
-+    // SAFETY: See assumption above.
-+    let new_layout = unsafe { Layout::from_size_align_unchecked(new_size, align) };
-+
-+    // SAFETY: Per assumption above, `ptr` is allocated by `__rust_*` before, and the size of
-+    // `new_layout` is greater than 0.
-+    unsafe { krealloc_aligned(ptr, new_layout, bindings::GFP_KERNEL) }
- }
- 
- #[no_mangle]
--fn __rust_alloc_zeroed(size: usize, _align: usize) -> *mut u8 {
-+fn __rust_alloc_zeroed(size: usize, align: usize) -> *mut u8 {
-+    // SAFETY: See assumption above.
-+    let layout = unsafe { Layout::from_size_align_unchecked(size, align) };
-+
-+    // SAFETY: `ptr::null_mut()` is null, per assumption above the size of `layout` is greater
-+    // than 0.
-     unsafe {
--        bindings::krealloc(
--            core::ptr::null(),
--            size,
-+        krealloc_aligned(
-+            ptr::null_mut(),
-+            layout,
-             bindings::GFP_KERNEL | bindings::__GFP_ZERO,
--        ) as *mut u8
-+        )
-     }
- }
+ 	/* only issue one test command at one time per port */
+ 	if (atomic_read(&port->status) & ZFCP_STATUS_PORT_LINK_TEST)
 
 
