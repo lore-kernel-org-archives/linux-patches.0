@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F126117AAB
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:29:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7654DC433C8;
-	Wed,  9 Aug 2023 11:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485C917AAB
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:29:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63EC2C433C8;
+	Wed,  9 Aug 2023 11:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580591;
-	bh=TTol5m6Sv1oM8m9CmvhaWMDwaDBKFWmIXiIGwbgS6Ig=;
+	s=korg; t=1691580594;
+	bh=lZbcCEtZoqWTNPra4TMi2+z0AxULSmFVMLhD/SK+VAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GfN1Kcf0bNrHVh0BeCdqkxF17QiIZxTDUdGeorm3+nN6cjREKKhCtXxlhKEV7zMHM
-	 hQc+G0mgmNJoUbbxLkeSKoyr6aLEnRrkXnmPr4ba5AKN6gYAGr17sOrBjoONbJMDBS
-	 5I3gVZDajhWsota8sOzFQ0Wya2e9pNawV4zknaAQ=
+	b=A/Ao5BvRU0CIPmce+dyOU56Jnr7agIRDVsxCjNqF6vxIc0A6nrW35FVgwew8IPuWF
+	 lTOr8zt65IhIv0Bs/r4jB97rLw17kkKsIXGEwRk5w8LXrnrcR6xYaDObiQ7SZFmb98
+	 2+lDK6IyiC1F/qPmXDR+zUziDz+K9yoDCDVceXI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Mike Snitzer <snitzer@kernel.org>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 051/154] dm raid: fix missing reconfig_mutex unlock in raid_ctr() error paths
-Date: Wed,  9 Aug 2023 12:41:22 +0200
-Message-ID: <20230809103638.708135663@linuxfoundation.org>
+Subject: [PATCH 5.4 052/154] ata: pata_ns87415: mark ns87560_tf_read static
+Date: Wed,  9 Aug 2023 12:41:23 +0200
+Message-ID: <20230809103638.736715785@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -35,55 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit bae3028799dc4f1109acc4df37c8ff06f2d8f1a0 ]
+[ Upstream commit 3fc2febb0f8ffae354820c1772ec008733237cfa ]
 
-In the error paths 'bad_stripe_cache' and 'bad_check_reshape',
-'reconfig_mutex' is still held after raid_ctr() returns.
+The global function triggers a warning because of the missing prototype
 
-Fixes: 9dbd1aa3a81c ("dm raid: add reshaping support to the target")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+drivers/ata/pata_ns87415.c:263:6: warning: no previous prototype for 'ns87560_tf_read' [-Wmissing-prototypes]
+  263 | void ns87560_tf_read(struct ata_port *ap, struct ata_taskfile *tf)
+
+There are no other references to this, so just make it static.
+
+Fixes: c4b5b7b6c4423 ("pata_ns87415: Initial cut at 87415/87560 IDE support")
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-raid.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/ata/pata_ns87415.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm-raid.c b/drivers/md/dm-raid.c
-index 882e83d51ef43..9f05ae2b90191 100644
---- a/drivers/md/dm-raid.c
-+++ b/drivers/md/dm-raid.c
-@@ -3284,15 +3284,19 @@ static int raid_ctr(struct dm_target *ti, unsigned int argc, char **argv)
- 	/* Try to adjust the raid4/5/6 stripe cache size to the stripe size */
- 	if (rs_is_raid456(rs)) {
- 		r = rs_set_raid456_stripe_cache(rs);
--		if (r)
-+		if (r) {
-+			mddev_unlock(&rs->md);
- 			goto bad_stripe_cache;
-+		}
- 	}
+diff --git a/drivers/ata/pata_ns87415.c b/drivers/ata/pata_ns87415.c
+index 4b2ba813dcaba..491853b9f0856 100644
+--- a/drivers/ata/pata_ns87415.c
++++ b/drivers/ata/pata_ns87415.c
+@@ -261,7 +261,7 @@ static u8 ns87560_check_status(struct ata_port *ap)
+  *	LOCKING:
+  *	Inherited from caller.
+  */
+-void ns87560_tf_read(struct ata_port *ap, struct ata_taskfile *tf)
++static void ns87560_tf_read(struct ata_port *ap, struct ata_taskfile *tf)
+ {
+ 	struct ata_ioports *ioaddr = &ap->ioaddr;
  
- 	/* Now do an early reshape check */
- 	if (test_bit(RT_FLAG_RESHAPE_RS, &rs->runtime_flags)) {
- 		r = rs_check_reshape(rs);
--		if (r)
-+		if (r) {
-+			mddev_unlock(&rs->md);
- 			goto bad_check_reshape;
-+		}
- 
- 		/* Restore new, ctr requested layout to perform check */
- 		rs_config_restore(rs, &rs_layout);
-@@ -3301,6 +3305,7 @@ static int raid_ctr(struct dm_target *ti, unsigned int argc, char **argv)
- 			r = rs->md.pers->check_reshape(&rs->md);
- 			if (r) {
- 				ti->error = "Reshape check failed";
-+				mddev_unlock(&rs->md);
- 				goto bad_check_reshape;
- 			}
- 		}
 -- 
 2.40.1
 
