@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9C817AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:35:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E968C433C7;
-	Wed,  9 Aug 2023 11:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D6717AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:35:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F52C433C8;
+	Wed,  9 Aug 2023 11:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580909;
-	bh=5rKkfLKPUSTN/DIvAIKog5KyPq3/0EhyhSD58ZMZzAQ=;
+	s=korg; t=1691580912;
+	bh=Thg+zncokL3pE3ftedusitXN7t7V4BYpC5VTPvyJUFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TM/VhHxNot6TvNWk3CKb4YR4MQt0u7lsMvF1duHyUdgp25enezCrVts2qSLLX2N4z
-	 yEidx8EmfXFFe/T8Y1pyTmmWzOH7DMqDxJt9kO9eMzAFS40D5fq9Lf239MrLNYKr0e
-	 I9/YI8gDAG9H6yzvlEpTm1mKXJQsWkuSMKbcpky4=
+	b=0eCa4ZBLTxRKMMRpfE+91JM098Oli8/aYU5BkkOApltGUZ2JQzUuYEVGyKYZkKB4I
+	 Q0EZHgJ4/mo4Ehf5d1c7IKK3k0i+CyV+WD8Dm8sOWuuobEutiqoW366TCGzaJMByq4
+	 09wECumfJrTh/dawkyXsBIsZ9jb9PInbb0qyvBGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stewart Smith <trawets@amazon.com>,
-	Samuel Mendoza-Jonas <samjonas@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Michal Schmidt <mschmidt@redhat.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jedrzej Jagielski <jedrzej.jagielski@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 037/201] tcp: Reduce chance of collisions in inet6_hashfn().
-Date: Wed,  9 Aug 2023 12:40:39 +0200
-Message-ID: <20230809103645.089542156@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 5.10 038/201] ice: Fix memory management in ice_ethtool_fdir.c
+Date: Wed,  9 Aug 2023 12:40:40 +0200
+Message-ID: <20230809103645.130341380@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -38,73 +40,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stewart Smith <trawets@amazon.com>
+From: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
 
-[ Upstream commit d11b0df7ddf1831f3e170972f43186dad520bfcc ]
+[ Upstream commit a3336056504d780590ac6d6ac94fbba829994594 ]
 
-For both IPv4 and IPv6 incoming TCP connections are tracked in a hash
-table with a hash over the source & destination addresses and ports.
-However, the IPv6 hash is insufficient and can lead to a high rate of
-collisions.
+Fix ethtool FDIR logic to not use memory after its release.
+In the ice_ethtool_fdir.c file there are 2 spots where code can
+refer to pointers which may be missing.
 
-The IPv6 hash used an XOR to fit everything into the 96 bits for the
-fast jenkins hash, meaning it is possible for an external entity to
-ensure the hash collides, thus falling back to a linear search in the
-bucket, which is slow.
+In the ice_cfg_fdir_xtrct_seq() function seg may be freed but
+even then may be still used by memcpy(&tun_seg[1], seg, sizeof(*seg)).
 
-We take the approach of hash the full length of IPv6 address in
-__ipv6_addr_jhash() so that all users can benefit from a more secure
-version.
+In the ice_add_fdir_ethtool() function struct ice_fdir_fltr *input
+may first fail to be added via ice_fdir_update_list_entry() but then
+may be deleted by ice_fdir_update_list_entry.
 
-While this may look like it adds overhead, the reality of modern CPUs
-means that this is unmeasurable in real world scenarios.
+Terminate in both cases when the returned value of the previous
+operation is other than 0, free memory and don't use it anymore.
 
-In simulating with llvm-mca, the increase in cycles for the hashing
-code was ~16 cycles on Skylake (from a base of ~155), and an extra ~9
-on Nehalem (base of ~173).
-
-In commit dd6d2910c5e0 ("netfilter: conntrack: switch to siphash")
-netfilter switched from a jenkins hash to a siphash, but even the faster
-hsiphash is a more significant overhead (~20-30%) in some preliminary
-testing.  So, in this patch, we keep to the more conservative approach to
-ensure we don't add much overhead per SYN.
-
-In testing, this results in a consistently even spread across the
-connection buckets.  In both testing and real-world scenarios, we have
-not found any measurable performance impact.
-
-Fixes: 08dcdbf6a7b9 ("ipv6: use a stronger hash for tcp")
-Signed-off-by: Stewart Smith <trawets@amazon.com>
-Signed-off-by: Samuel Mendoza-Jonas <samjonas@amazon.com>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230721222410.17914-1-kuniyu@amazon.com
+Reported-by: Michal Schmidt <mschmidt@redhat.com>
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2208423
+Fixes: cac2a27cd9ab ("ice: Support IPv4 Flow Director filters")
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20230721155854.1292805-1-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ipv6.h | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ .../net/ethernet/intel/ice/ice_ethtool_fdir.c | 26 ++++++++++---------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/include/net/ipv6.h b/include/net/ipv6.h
-index 8879c0ab0b89d..4c8f97a6da5a7 100644
---- a/include/net/ipv6.h
-+++ b/include/net/ipv6.h
-@@ -663,12 +663,8 @@ static inline u32 ipv6_addr_hash(const struct in6_addr *a)
- /* more secured version of ipv6_addr_hash() */
- static inline u32 __ipv6_addr_jhash(const struct in6_addr *a, const u32 initval)
- {
--	u32 v = (__force u32)a->s6_addr32[0] ^ (__force u32)a->s6_addr32[1];
+diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c b/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
+index 192729546bbfc..a122a267ede53 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
++++ b/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
+@@ -1135,16 +1135,21 @@ ice_cfg_fdir_xtrct_seq(struct ice_pf *pf, struct ethtool_rx_flow_spec *fsp,
+ 				     ICE_FLOW_FLD_OFF_INVAL);
+ 	}
+ 
+-	/* add filter for outer headers */
+ 	fltr_idx = ice_ethtool_flow_to_fltr(fsp->flow_type & ~FLOW_EXT);
++
++	assign_bit(fltr_idx, hw->fdir_perfect_fltr, perfect_filter);
++
++	/* add filter for outer headers */
+ 	ret = ice_fdir_set_hw_fltr_rule(pf, seg, fltr_idx,
+ 					ICE_FD_HW_SEG_NON_TUN);
+-	if (ret == -EEXIST)
+-		/* Rule already exists, free memory and continue */
+-		devm_kfree(dev, seg);
+-	else if (ret)
++	if (ret == -EEXIST) {
++		/* Rule already exists, free memory and count as success */
++		ret = 0;
++		goto err_exit;
++	} else if (ret) {
+ 		/* could not write filter, free memory */
+ 		goto err_exit;
++	}
+ 
+ 	/* make tunneled filter HW entries if possible */
+ 	memcpy(&tun_seg[1], seg, sizeof(*seg));
+@@ -1159,18 +1164,13 @@ ice_cfg_fdir_xtrct_seq(struct ice_pf *pf, struct ethtool_rx_flow_spec *fsp,
+ 		devm_kfree(dev, tun_seg);
+ 	}
+ 
+-	if (perfect_filter)
+-		set_bit(fltr_idx, hw->fdir_perfect_fltr);
+-	else
+-		clear_bit(fltr_idx, hw->fdir_perfect_fltr);
 -
--	return jhash_3words(v,
--			    (__force u32)a->s6_addr32[2],
--			    (__force u32)a->s6_addr32[3],
--			    initval);
-+	return jhash2((__force const u32 *)a->s6_addr32,
-+		      ARRAY_SIZE(a->s6_addr32), initval);
+ 	return ret;
+ 
+ err_exit:
+ 	devm_kfree(dev, tun_seg);
+ 	devm_kfree(dev, seg);
+ 
+-	return -EOPNOTSUPP;
++	return ret;
  }
  
- static inline bool ipv6_addr_loopback(const struct in6_addr *a)
+ /**
+@@ -1680,7 +1680,9 @@ int ice_add_fdir_ethtool(struct ice_vsi *vsi, struct ethtool_rxnfc *cmd)
+ 	}
+ 
+ 	/* input struct is added to the HW filter list */
+-	ice_fdir_update_list_entry(pf, input, fsp->location);
++	ret = ice_fdir_update_list_entry(pf, input, fsp->location);
++	if (ret)
++		goto release_lock;
+ 
+ 	ret = ice_fdir_write_all_fltr(pf, input, true);
+ 	if (ret)
 -- 
 2.39.2
 
