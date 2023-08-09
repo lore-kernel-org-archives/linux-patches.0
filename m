@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC89D14A8D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:50:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AED7C433C7;
-	Wed,  9 Aug 2023 10:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7882514A8D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:51:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE79FC433C7;
+	Wed,  9 Aug 2023 10:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578259;
-	bh=yjb+DL6XkIoN0iV3XWxSpWjgrrfESiZWTyArR9z9F0Q=;
+	s=korg; t=1691578262;
+	bh=VyamkGxHw20EZnr6NfjS7vn1NEbDOapFJzrIPRFpVuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WfVs74VhURYe9Q/X2AyXaJ0/5t4d1yA2Ellmsmvzil3BmzSr/gP/Lg+ftheAabJt7
-	 zsx8PtWiFU9U1Ef9oEf7/+yToi/IRrAHsndXU4y7ulTGzv08oxegYtBMYKD+aX96pO
-	 tlTWrMc7CPFTR0nqgv8IJQQbRd7f+3l7Ge+lDIFs=
+	b=hxPYZRMg24XvGV492kCQaMXSsd3heqCBrqRZj/d1CZw5J2ksBv5f7m0fpkp4+SUDB
+	 BTX7abfPV1+xjWNBRg3dseRBFOM/ou7xj7Bq/CkNhJxONH0KI3hNkf6jXOBW1XCFGp
+	 9cAFKJdAPwMjAQAMUxzimvsRKdtuUqVCJzdCZ7dA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	kernel test robot <lkp@intel.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Peng Fan <peng.fan@nxp.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 6.4 133/165] clk: imx93: Propagate correct error in imx93_clocks_probe()
-Date: Wed,  9 Aug 2023 12:41:04 +0200
-Message-ID: <20230809103647.167080790@linuxfoundation.org>
+	Mateusz Guzik <mjguzik@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.4 134/165] file: reinstate f_pos locking optimization for regular files
+Date: Wed,  9 Aug 2023 12:41:05 +0200
+Message-ID: <20230809103647.199248198@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -37,42 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit a29b2fccf5f2689a9637be85ff1f51c834c6fb33 upstream.
+commit 797964253d358cf8d705614dda394dbe30120223 upstream.
 
-smatch reports:
+In commit 20ea1e7d13c1 ("file: always lock position for
+FMODE_ATOMIC_POS") we ended up always taking the file pos lock, because
+pidfd_getfd() could get a reference to the file even when it didn't have
+an elevated file count due to threading of other sharing cases.
 
-    drivers/clk/imx/clk-imx93.c:294 imx93_clocks_probe() error: uninitialized symbol 'base'.
+But Mateusz Guzik reports that the extra locking is actually measurable,
+so let's re-introduce the optimization, and only force the locking for
+directory traversal.
 
-Indeed, in case of an error, the wrong (yet uninitialized) variable is
-converted to an error code and returned.
-Fix this by propagating the error code in the correct variable.
+Directories need the lock for correctness reasons, while regular files
+only need it for "POSIX semantics".  Since pidfd_getfd() is about
+debuggers etc special things that are _way_ outside of POSIX, we can
+relax the rules for that case.
 
-Fixes: e02ba11b45764705 ("clk: imx93: fix memory leak and missing unwind goto in imx93_clocks_probe")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/9c2acd81-3ad8-485d-819e-9e4201277831@kadam.mountain
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/all/202306161533.4YDmL22b-lkp@intel.com/
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230711150812.3562221-1-geert+renesas@glider.be
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Reported-by: Mateusz Guzik <mjguzik@gmail.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Link: https://lore.kernel.org/linux-fsdevel/20230803095311.ijpvhx3fyrbkasul@f/
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/imx/clk-imx93.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/file.c |   18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
---- a/drivers/clk/imx/clk-imx93.c
-+++ b/drivers/clk/imx/clk-imx93.c
-@@ -291,7 +291,7 @@ static int imx93_clocks_probe(struct pla
- 	anatop_base = devm_of_iomap(dev, np, 0, NULL);
- 	of_node_put(np);
- 	if (WARN_ON(IS_ERR(anatop_base))) {
--		ret = PTR_ERR(base);
-+		ret = PTR_ERR(anatop_base);
- 		goto unregister_hws;
- 	}
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -1036,12 +1036,28 @@ unsigned long __fdget_raw(unsigned int f
+ 	return __fget_light(fd, 0);
+ }
  
++/*
++ * Try to avoid f_pos locking. We only need it if the
++ * file is marked for FMODE_ATOMIC_POS, and it can be
++ * accessed multiple ways.
++ *
++ * Always do it for directories, because pidfd_getfd()
++ * can make a file accessible even if it otherwise would
++ * not be, and for directories this is a correctness
++ * issue, not a "POSIX requirement".
++ */
++static inline bool file_needs_f_pos_lock(struct file *file)
++{
++	return (file->f_mode & FMODE_ATOMIC_POS) &&
++		(file_count(file) > 1 || S_ISDIR(file_inode(file)->i_mode));
++}
++
+ unsigned long __fdget_pos(unsigned int fd)
+ {
+ 	unsigned long v = __fdget(fd);
+ 	struct file *file = (struct file *)(v & ~3);
+ 
+-	if (file && (file->f_mode & FMODE_ATOMIC_POS)) {
++	if (file && file_needs_f_pos_lock(file)) {
+ 		v |= FDPUT_POS_UNLOCK;
+ 		mutex_lock(&file->f_pos_lock);
+ 	}
 
 
