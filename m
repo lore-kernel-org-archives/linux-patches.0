@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE2717744
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:31:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C263CC433C8;
-	Wed,  9 Aug 2023 11:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B61417744
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:31:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F936C433CA;
+	Wed,  9 Aug 2023 11:31:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580673;
-	bh=WMfYavpZhy6SfzZyjVwRQwdxTEbekJnHTEWcStSw/dw=;
+	s=korg; t=1691580675;
+	bh=C26m9QNtAk5c1ikrIGckr4mcgTLN0m3srO6IIB2+MX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RmDwaK56aAHkDD/FKppIAf5Lj+RJPja8Im+mm2mWAY1xIsHrwtK0Mpi/f3SguhNlo
-	 vjVtgaes2VRDPFHK0IsE1wJ8kNLY8nLLqKa8OPbNwoZEXwfghiNBJVOlsF5e+ig6Qt
-	 XSSHK5w7UQ2G+vRgWH6YbcflNi3OxN6+XmT+pnzI=
+	b=mkcPsYMxXGvRurIiaMDbpiBHuug13EByKXxdxj21tkcqXPe1SmgqCZ5yzbuV45hjq
+	 mJvSBeDSaFaggNAdJwgzlKZ1EOe6M3oHLC3iPYHou02Tjn+fAK76bUsw5TUpULtwXR
+	 X5P7IDEbAoJDZbEr1gvxeOH3hB1F7V3uq8tBdDr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pratyush Yadav <ptyadav@amazon.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Hagar Hemdan <hagarhem@amazon.de>
-Subject: [PATCH 5.4 081/154] ACPI: processor: perflib: Use the "no limit" frequency QoS
-Date: Wed,  9 Aug 2023 12:41:52 +0200
-Message-ID: <20230809103639.665452884@linuxfoundation.org>
+	valis <sec@valis.email>,
+	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	M A Ramdhan <ramdhan@starlabs.sg>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 108/154] net/sched: cls_fw: No longer copy tcf_result on update to avoid use-after-free
+Date: Wed,  9 Aug 2023 12:42:19 +0200
+Message-ID: <20230809103640.526968022@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -35,70 +40,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: valis <sec@valis.email>
 
-commit c02d5feb6e2f60affc6ba8606d8d614c071e2ba6 upstream.
+[ Upstream commit 76e42ae831991c828cffa8c37736ebfb831ad5ec ]
 
-When _PPC returns 0, it means that the CPU frequency is not limited by
-the platform firmware, so make acpi_processor_get_platform_limit()
-update the frequency QoS request used by it to "no limit" in that case.
+When fw_change() is called on an existing filter, the whole
+tcf_result struct is always copied into the new instance of the filter.
 
-This addresses a problem with limiting CPU frequency artificially on
-some systems after CPU offline/online to the frequency that corresponds
-to the first entry in the _PSS return package.
+This causes a problem when updating a filter bound to a class,
+as tcf_unbind_filter() is always called on the old instance in the
+success path, decreasing filter_cnt of the still referenced class
+and allowing it to be deleted, leading to a use-after-free.
 
-Reported-by: Pratyush Yadav <ptyadav@amazon.de>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Pratyush Yadav <ptyadav@amazon.de>
-Tested-by: Pratyush Yadav <ptyadav@amazon.de>
-Tested-by: Hagar Hemdan <hagarhem@amazon.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by no longer copying the tcf_result struct from the old filter.
+
+Fixes: e35a8ee5993b ("net: sched: fw use RCU")
+Reported-by: valis <sec@valis.email>
+Reported-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
+Signed-off-by: valis <sec@valis.email>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: M A Ramdhan <ramdhan@starlabs.sg>
+Link: https://lore.kernel.org/r/20230729123202.72406-3-jhs@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_perflib.c |   20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ net/sched/cls_fw.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/acpi/processor_perflib.c
-+++ b/drivers/acpi/processor_perflib.c
-@@ -56,6 +56,8 @@ static int acpi_processor_get_platform_l
- {
- 	acpi_status status = 0;
- 	unsigned long long ppc = 0;
-+	s32 qos_value;
-+	int index;
- 	int ret;
+diff --git a/net/sched/cls_fw.c b/net/sched/cls_fw.c
+index 41f0898a5a565..08c41f1976c47 100644
+--- a/net/sched/cls_fw.c
++++ b/net/sched/cls_fw.c
+@@ -266,7 +266,6 @@ static int fw_change(struct net *net, struct sk_buff *in_skb,
+ 			return -ENOBUFS;
  
- 	if (!pr)
-@@ -75,17 +77,27 @@ static int acpi_processor_get_platform_l
- 		return -ENODEV;
- 	}
+ 		fnew->id = f->id;
+-		fnew->res = f->res;
+ 		fnew->ifindex = f->ifindex;
+ 		fnew->tp = f->tp;
  
-+	index = ppc;
-+
- 	pr_debug("CPU %d: _PPC is %d - frequency %s limited\n", pr->id,
--		       (int)ppc, ppc ? "" : "not");
-+		 index, index ? "is" : "is not");
- 
--	pr->performance_platform_limit = (int)ppc;
-+	pr->performance_platform_limit = index;
- 
- 	if (ppc >= pr->performance->state_count ||
- 	    unlikely(!freq_qos_request_active(&pr->perflib_req)))
- 		return 0;
- 
--	ret = freq_qos_update_request(&pr->perflib_req,
--			pr->performance->states[ppc].core_frequency * 1000);
-+	/*
-+	 * If _PPC returns 0, it means that all of the available states can be
-+	 * used ("no limit").
-+	 */
-+	if (index == 0)
-+		qos_value = FREQ_QOS_MAX_DEFAULT_VALUE;
-+	else
-+		qos_value = pr->performance->states[index].core_frequency * 1000;
-+
-+	ret = freq_qos_update_request(&pr->perflib_req, qos_value);
- 	if (ret < 0) {
- 		pr_warn("Failed to update perflib freq constraint: CPU%d (%d)\n",
- 			pr->id, ret);
+-- 
+2.40.1
+
 
 
