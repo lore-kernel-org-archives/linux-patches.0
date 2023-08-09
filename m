@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEEAC17AAD
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:34:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43326C433C8;
-	Wed,  9 Aug 2023 11:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B514A17AAD
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:34:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39DDCC433C8;
+	Wed,  9 Aug 2023 11:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580858;
-	bh=d1ZAlTI9uhU7W9fDSrct5ECdfzuzf0UCNoBPnbmkhJk=;
+	s=korg; t=1691580861;
+	bh=lausnEgg029whm/HvP1pe8VaXC5LsLy45zSkH/vd8TA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kpOBCnW7/FPibQS69KGSTemicrbG/EcDdBOk9L1V+VU406Gh6FelJDLlYRkeyL9qG
-	 rGNZXk6e+ceYUXsuTkRrBT7Zh3GQUbREIfJhiSFp3quw0SOj5JQd/IW+wa8/25joFw
-	 BKutIKHyoBX9oYMQA4bwPWn4lhWf4NbZA3f6jqac=
+	b=x5nJOVvjmpGQexjjBvAXJ7ywK0ux6kCGMVOFb2pbJYa9a8JdQGfSjORKHhalsuyeh
+	 kIpdFnpKIHUb8EKWYl6LeCrzWceDXAb+NNGAsxqzr1ohfFsMhmI4mUUvBSJtW/YlfO
+	 zq4foeQ/TZJReh2jjNb38RTXt8Uxo8JY+yccXjjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Markus Elfring <elfring@users.sourceforge.net>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 005/201] btrfs: fix extent buffer leak after tree mod log failure at split_node()
-Date: Wed,  9 Aug 2023 12:40:07 +0200
-Message-ID: <20230809103643.980511568@linuxfoundation.org>
+Subject: [PATCH 5.10 006/201] i2c: Delete error messages for failed memory allocations
+Date: Wed,  9 Aug 2023 12:40:08 +0200
+Message-ID: <20230809103644.010708890@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103643.799166053@linuxfoundation.org>
 References: <20230809103643.799166053@linuxfoundation.org>
@@ -36,39 +35,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Markus Elfring <elfring@users.sourceforge.net>
 
-[ Upstream commit ede600e497b1461d06d22a7d17703d9096868bc3 ]
+[ Upstream commit 6b3b21a8542fd2fb6ffc61bc13b9419f0c58ebad ]
 
-At split_node(), if we fail to log the tree mod log copy operation, we
-return without unlocking the split extent buffer we just allocated and
-without decrementing the reference we own on it. Fix this by unlocking
-it and decrementing the ref count before returning.
+These issues were detected by using the Coccinelle software.
 
-Fixes: 5de865eebb83 ("Btrfs: fix tree mod logging")
-CC: stable@vger.kernel.org # 5.4+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Stable-dep-of: 05f933d5f731 ("i2c: nomadik: Remove a useless call in the remove function")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/i2c/busses/i2c-ibm_iic.c  | 4 +---
+ drivers/i2c/busses/i2c-nomadik.c  | 1 -
+ drivers/i2c/busses/i2c-sh7760.c   | 1 -
+ drivers/i2c/busses/i2c-tiny-usb.c | 4 +---
+ 4 files changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
-index 41a7ace9998e4..814f2f07e74c4 100644
---- a/fs/btrfs/ctree.c
-+++ b/fs/btrfs/ctree.c
-@@ -3589,6 +3589,8 @@ static noinline int split_node(struct btrfs_trans_handle *trans,
+diff --git a/drivers/i2c/busses/i2c-ibm_iic.c b/drivers/i2c/busses/i2c-ibm_iic.c
+index 9f71daf6db64b..c073f5b8833a2 100644
+--- a/drivers/i2c/busses/i2c-ibm_iic.c
++++ b/drivers/i2c/busses/i2c-ibm_iic.c
+@@ -694,10 +694,8 @@ static int iic_probe(struct platform_device *ofdev)
+ 	int ret;
  
- 	ret = tree_mod_log_eb_copy(split, c, 0, mid, c_nritems - mid);
- 	if (ret) {
-+		btrfs_tree_unlock(split);
-+		free_extent_buffer(split);
- 		btrfs_abort_transaction(trans, ret);
- 		return ret;
+ 	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
+-	if (!dev) {
+-		dev_err(&ofdev->dev, "failed to allocate device data\n");
++	if (!dev)
+ 		return -ENOMEM;
+-	}
+ 
+ 	platform_set_drvdata(ofdev, dev);
+ 
+diff --git a/drivers/i2c/busses/i2c-nomadik.c b/drivers/i2c/busses/i2c-nomadik.c
+index a3363b20f168a..b456e4ae8830c 100644
+--- a/drivers/i2c/busses/i2c-nomadik.c
++++ b/drivers/i2c/busses/i2c-nomadik.c
+@@ -972,7 +972,6 @@ static int nmk_i2c_probe(struct amba_device *adev, const struct amba_id *id)
+ 
+ 	dev = devm_kzalloc(&adev->dev, sizeof(struct nmk_i2c_dev), GFP_KERNEL);
+ 	if (!dev) {
+-		dev_err(&adev->dev, "cannot allocate memory\n");
+ 		ret = -ENOMEM;
+ 		goto err_no_mem;
  	}
+diff --git a/drivers/i2c/busses/i2c-sh7760.c b/drivers/i2c/busses/i2c-sh7760.c
+index 319d1fa617c88..a0ccc5d009874 100644
+--- a/drivers/i2c/busses/i2c-sh7760.c
++++ b/drivers/i2c/busses/i2c-sh7760.c
+@@ -445,7 +445,6 @@ static int sh7760_i2c_probe(struct platform_device *pdev)
+ 
+ 	id = kzalloc(sizeof(struct cami2c), GFP_KERNEL);
+ 	if (!id) {
+-		dev_err(&pdev->dev, "no mem for private data\n");
+ 		ret = -ENOMEM;
+ 		goto out0;
+ 	}
+diff --git a/drivers/i2c/busses/i2c-tiny-usb.c b/drivers/i2c/busses/i2c-tiny-usb.c
+index 7279ca0eaa2d0..d1fa9ff5aeab4 100644
+--- a/drivers/i2c/busses/i2c-tiny-usb.c
++++ b/drivers/i2c/busses/i2c-tiny-usb.c
+@@ -226,10 +226,8 @@ static int i2c_tiny_usb_probe(struct usb_interface *interface,
+ 
+ 	/* allocate memory for our device state and initialize it */
+ 	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
+-	if (dev == NULL) {
+-		dev_err(&interface->dev, "Out of memory\n");
++	if (!dev)
+ 		goto error;
+-	}
+ 
+ 	dev->usb_dev = usb_get_dev(interface_to_usbdev(interface));
+ 	dev->interface = interface;
 -- 
 2.39.2
 
