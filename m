@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED66818AE1
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:50:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59E76C433CC;
-	Wed,  9 Aug 2023 10:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62D118AE1
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:50:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27BA0C433C9;
+	Wed,  9 Aug 2023 10:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578245;
-	bh=iXSH5QLqqjxWitb/56c6CklVHqBQYwlYS6X7vnjmbfM=;
+	s=korg; t=1691578248;
+	bh=feLQySvwu0wxk7o6rmeceHGz43t0uldhn1T2ZYJD+AU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xxZzkpxSvJOxDLW7dRdq6a9ajP+yEbaq5Sj3zR0+LOYbd1HmATVvpjR1qWX50bRIm
-	 65wjp4bRuI4Sfe3BICNbr9BBWDtYHzSwOFmalLwPfUPGdZ7Ascy38Ns2EUJOGqKtJl
-	 6eNt0BNEZWU2d13McuANmSu0n7U9s0CQcVtP15UM=
+	b=DoFJXKu59hy047IAbvXg8/nVROq2NsfPOvZShCKw21zaFWK954Jy0FqasyfDq/Poz
+	 tH5eU7dA1RtEd5CdfMoT4eUw22Cell5i9iG8zdm5F84Ykw8uYKRJdoAxPuPktI2QzZ
+	 1GysgmsECTNdLqFhKcNS18M2tyOwCrKCHRT1ifN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Le Ma <le.ma@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.4 156/165] drm/amdgpu: Use apt name for FW reserved region
-Date: Wed,  9 Aug 2023 12:41:27 +0200
-Message-ID: <20230809103647.878452376@linuxfoundation.org>
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Subject: [PATCH 6.4 130/165] drm/i915/gt: Cleanup aux invalidation registers
+Date: Wed,  9 Aug 2023 12:41:01 +0200
+Message-ID: <20230809103647.072825010@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -36,126 +36,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Andi Shyti <andi.shyti@linux.intel.com>
 
-commit db3b5cb64a9ca301d14ed027e470834316720e42 upstream.
+commit d14560ac1b595aa2e792365e91fea6aeaee66c2b upstream.
 
-Use the generic term fw_reserved_memory for FW reserve region. This
-region may also hold discovery TMR in addition to other reserve
-regions. This region size could be larger than discovery tmr size, hence
-don't change the discovery tmr size based on this.
+Fix the 'NV' definition postfix that is supposed to be INV.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Le Ma <le.ma@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-This change fixes reading IP discovery from debugfs.
-It needed to be hand modified because GC 9.4.3 support isn't
-introduced in older kernels until 228ce176434b ("drm/amdgpu: Handle
-VRAM dependencies on GFXIP9.4.3")
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2748
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Take the chance to also order properly the registers based on
+their address and call the GEN12_GFX_CCS_AUX_INV address as
+GEN12_CCS_AUX_INV like all the other similar registers.
+
+Remove also VD1, VD3 and VE1 registers that don't exist and add
+BCS0 and CCS0.
+
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Cc: <stable@vger.kernel.org> # v5.8+
+Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230725001950.1014671-2-andi.shyti@linux.intel.com
+(cherry picked from commit 2f0b927d3ca3440445975ebde27f3df1c3ed6f76)
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |   35 +++++++++++++++++---------------
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h |    3 +-
- 2 files changed, 21 insertions(+), 17 deletions(-)
+ drivers/gpu/drm/i915/gt/gen8_engine_cs.c |    8 ++++----
+ drivers/gpu/drm/i915/gt/intel_gt_regs.h  |   16 ++++++++--------
+ drivers/gpu/drm/i915/gt/intel_lrc.c      |    6 +++---
+ 3 files changed, 15 insertions(+), 15 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -1623,14 +1623,15 @@ static int amdgpu_ttm_training_reserve_v
- 	return 0;
- }
+--- a/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
++++ b/drivers/gpu/drm/i915/gt/gen8_engine_cs.c
+@@ -256,8 +256,8 @@ int gen12_emit_flush_rcs(struct i915_req
  
--static void amdgpu_ttm_training_data_block_init(struct amdgpu_device *adev)
-+static void amdgpu_ttm_training_data_block_init(struct amdgpu_device *adev,
-+						uint32_t reserve_size)
- {
- 	struct psp_memory_training_context *ctx = &adev->psp.mem_train_ctx;
+ 		if (!HAS_FLAT_CCS(rq->engine->i915)) {
+ 			/* hsdes: 1809175790 */
+-			cs = gen12_emit_aux_table_inv(rq->engine->gt,
+-						      cs, GEN12_GFX_CCS_AUX_NV);
++			cs = gen12_emit_aux_table_inv(rq->engine->gt, cs,
++						      GEN12_CCS_AUX_INV);
+ 		}
  
- 	memset(ctx, 0, sizeof(*ctx));
- 
- 	ctx->c2p_train_data_offset =
--		ALIGN((adev->gmc.mc_vram_size - adev->mman.discovery_tmr_size - SZ_1M), SZ_1M);
-+		ALIGN((adev->gmc.mc_vram_size - reserve_size - SZ_1M), SZ_1M);
- 	ctx->p2c_train_data_offset =
- 		(adev->gmc.mc_vram_size - GDDR6_MEM_TRAINING_OFFSET);
- 	ctx->train_data_size =
-@@ -1648,9 +1649,10 @@ static void amdgpu_ttm_training_data_blo
-  */
- static int amdgpu_ttm_reserve_tmr(struct amdgpu_device *adev)
- {
--	int ret;
- 	struct psp_memory_training_context *ctx = &adev->psp.mem_train_ctx;
- 	bool mem_train_support = false;
-+	uint32_t reserve_size = 0;
-+	int ret;
- 
- 	if (!amdgpu_sriov_vf(adev)) {
- 		if (amdgpu_atomfirmware_mem_training_supported(adev))
-@@ -1666,14 +1668,15 @@ static int amdgpu_ttm_reserve_tmr(struct
- 	 * Otherwise, fallback to legacy approach to check and reserve tmr block for ip
- 	 * discovery data and G6 memory training data respectively
- 	 */
--	adev->mman.discovery_tmr_size =
--		amdgpu_atomfirmware_get_fw_reserved_fb_size(adev);
--	if (!adev->mman.discovery_tmr_size)
--		adev->mman.discovery_tmr_size = DISCOVERY_TMR_OFFSET;
-+	if (adev->bios)
-+		reserve_size =
-+			amdgpu_atomfirmware_get_fw_reserved_fb_size(adev);
-+	if (!reserve_size)
-+		reserve_size = DISCOVERY_TMR_OFFSET;
- 
- 	if (mem_train_support) {
- 		/* reserve vram for mem train according to TMR location */
--		amdgpu_ttm_training_data_block_init(adev);
-+		amdgpu_ttm_training_data_block_init(adev, reserve_size);
- 		ret = amdgpu_bo_create_kernel_at(adev,
- 						 ctx->c2p_train_data_offset,
- 						 ctx->train_data_size,
-@@ -1687,14 +1690,13 @@ static int amdgpu_ttm_reserve_tmr(struct
- 		ctx->init = PSP_MEM_TRAIN_RESERVE_SUCCESS;
+ 		*cs++ = preparser_disable(false);
+@@ -317,10 +317,10 @@ int gen12_emit_flush_xcs(struct i915_req
+ 	if (aux_inv) { /* hsdes: 1809175790 */
+ 		if (rq->engine->class == VIDEO_DECODE_CLASS)
+ 			cs = gen12_emit_aux_table_inv(rq->engine->gt,
+-						      cs, GEN12_VD0_AUX_NV);
++						      cs, GEN12_VD0_AUX_INV);
+ 		else
+ 			cs = gen12_emit_aux_table_inv(rq->engine->gt,
+-						      cs, GEN12_VE0_AUX_NV);
++						      cs, GEN12_VE0_AUX_INV);
  	}
  
--	ret = amdgpu_bo_create_kernel_at(adev,
--					 adev->gmc.real_vram_size - adev->mman.discovery_tmr_size,
--					 adev->mman.discovery_tmr_size,
--					 &adev->mman.discovery_memory,
--					 NULL);
-+	ret = amdgpu_bo_create_kernel_at(
-+		adev, adev->gmc.real_vram_size - reserve_size,
-+		reserve_size, &adev->mman.fw_reserved_memory, NULL);
- 	if (ret) {
- 		DRM_ERROR("alloc tmr failed(%d)!\n", ret);
--		amdgpu_bo_free_kernel(&adev->mman.discovery_memory, NULL, NULL);
-+		amdgpu_bo_free_kernel(&adev->mman.fw_reserved_memory,
-+				      NULL, NULL);
- 		return ret;
+ 	if (mode & EMIT_INVALIDATE)
+--- a/drivers/gpu/drm/i915/gt/intel_gt_regs.h
++++ b/drivers/gpu/drm/i915/gt/intel_gt_regs.h
+@@ -331,9 +331,11 @@
+ #define GEN8_PRIVATE_PAT_HI			_MMIO(0x40e0 + 4)
+ #define GEN10_PAT_INDEX(index)			_MMIO(0x40e0 + (index) * 4)
+ #define BSD_HWS_PGA_GEN7			_MMIO(0x4180)
+-#define GEN12_GFX_CCS_AUX_NV			_MMIO(0x4208)
+-#define GEN12_VD0_AUX_NV			_MMIO(0x4218)
+-#define GEN12_VD1_AUX_NV			_MMIO(0x4228)
++
++#define GEN12_CCS_AUX_INV			_MMIO(0x4208)
++#define GEN12_VD0_AUX_INV			_MMIO(0x4218)
++#define GEN12_VE0_AUX_INV			_MMIO(0x4238)
++#define GEN12_BCS0_AUX_INV			_MMIO(0x4248)
+ 
+ #define GEN8_RTCR				_MMIO(0x4260)
+ #define GEN8_M1TCR				_MMIO(0x4264)
+@@ -341,14 +343,12 @@
+ #define GEN8_BTCR				_MMIO(0x426c)
+ #define GEN8_VTCR				_MMIO(0x4270)
+ 
+-#define GEN12_VD2_AUX_NV			_MMIO(0x4298)
+-#define GEN12_VD3_AUX_NV			_MMIO(0x42a8)
+-#define GEN12_VE0_AUX_NV			_MMIO(0x4238)
+-
+ #define BLT_HWS_PGA_GEN7			_MMIO(0x4280)
+ 
+-#define GEN12_VE1_AUX_NV			_MMIO(0x42b8)
++#define GEN12_VD2_AUX_INV			_MMIO(0x4298)
++#define GEN12_CCS0_AUX_INV			_MMIO(0x42c8)
+ #define   AUX_INV				REG_BIT(0)
++
+ #define VEBOX_HWS_PGA_GEN7			_MMIO(0x4380)
+ 
+ #define GEN12_AUX_ERR_DBG			_MMIO(0x43f4)
+--- a/drivers/gpu/drm/i915/gt/intel_lrc.c
++++ b/drivers/gpu/drm/i915/gt/intel_lrc.c
+@@ -1367,7 +1367,7 @@ gen12_emit_indirect_ctx_rcs(const struct
+ 	/* hsdes: 1809175790 */
+ 	if (!HAS_FLAT_CCS(ce->engine->i915))
+ 		cs = gen12_emit_aux_table_inv(ce->engine->gt,
+-					      cs, GEN12_GFX_CCS_AUX_NV);
++					      cs, GEN12_CCS_AUX_INV);
+ 
+ 	/* Wa_16014892111 */
+ 	if (IS_DG2(ce->engine->i915))
+@@ -1394,10 +1394,10 @@ gen12_emit_indirect_ctx_xcs(const struct
+ 	if (!HAS_FLAT_CCS(ce->engine->i915)) {
+ 		if (ce->engine->class == VIDEO_DECODE_CLASS)
+ 			cs = gen12_emit_aux_table_inv(ce->engine->gt,
+-						      cs, GEN12_VD0_AUX_NV);
++						      cs, GEN12_VD0_AUX_INV);
+ 		else if (ce->engine->class == VIDEO_ENHANCEMENT_CLASS)
+ 			cs = gen12_emit_aux_table_inv(ce->engine->gt,
+-						      cs, GEN12_VE0_AUX_NV);
++						      cs, GEN12_VE0_AUX_INV);
  	}
  
-@@ -1881,8 +1883,9 @@ void amdgpu_ttm_fini(struct amdgpu_devic
- 	/* return the stolen vga memory back to VRAM */
- 	amdgpu_bo_free_kernel(&adev->mman.stolen_vga_memory, NULL, NULL);
- 	amdgpu_bo_free_kernel(&adev->mman.stolen_extended_memory, NULL, NULL);
--	/* return the IP Discovery TMR memory back to VRAM */
--	amdgpu_bo_free_kernel(&adev->mman.discovery_memory, NULL, NULL);
-+	/* return the FW reserved memory back to VRAM */
-+	amdgpu_bo_free_kernel(&adev->mman.fw_reserved_memory, NULL,
-+			      NULL);
- 	if (adev->mman.stolen_reserved_size)
- 		amdgpu_bo_free_kernel(&adev->mman.stolen_reserved_memory,
- 				      NULL, NULL);
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h
-@@ -78,7 +78,8 @@ struct amdgpu_mman {
- 	/* discovery */
- 	uint8_t				*discovery_bin;
- 	uint32_t			discovery_tmr_size;
--	struct amdgpu_bo		*discovery_memory;
-+	/* fw reserved memory */
-+	struct amdgpu_bo		*fw_reserved_memory;
- 
- 	/* firmware VRAM reservation */
- 	u64		fw_vram_usage_start_offset;
+ 	return cs;
 
 
