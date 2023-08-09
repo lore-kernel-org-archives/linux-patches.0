@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3977715AE3
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:47:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABFCFC433C8;
-	Wed,  9 Aug 2023 10:47:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CFE15AE3
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 10:47:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 972BBC433C8;
+	Wed,  9 Aug 2023 10:47:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691578066;
-	bh=b7vk0MF4LhYlNhHz9qOdxlXZC0Wgoeoq+OeoHh+bgPc=;
+	s=korg; t=1691578069;
+	bh=HqxHB1BkX3P7VovaGf2jiIVzQKWXw3rhyBzklKdPS1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NWfgtUL7AHrAey0EU2VxCSSkIzJWaDthe99Z876bwDtW7SkNPOmVDriFxsKECFO5/
-	 iZOMWOq29mCsdQ6196dN39GSdTxh5Yj2S+XeqoZ/Vyyx36w+/1YEkODSejL6p35vtj
-	 dLrIHLc6ruFx58A3TT6+JPKsrwi0aoLg4O8ok7kU=
+	b=RfagOgX656cZyNuR9Ci1nwB2ktpiRIczj9rnncsi3zMR/SOXMBaWV7DZqoqZzz0Eu
+	 047eOMwQXfXGE++gdVWltJCCAbhQpnmTAqcLpw+1X43xs9LPpA/rroMk16ZpuFrgFB
+	 ExuAnyeFr00Y2stijEl+wZ+ZbY/pYqMRdKe3AjUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Stanislav Fomichev <sdf@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 066/165] bpf: Move unprivileged checks into map_create() and bpf_prog_load()
-Date: Wed,  9 Aug 2023 12:39:57 +0200
-Message-ID: <20230809103644.978127864@linuxfoundation.org>
+Subject: [PATCH 6.4 093/165] tcp_metrics: annotate data-races around tm->tcpm_net
+Date: Wed,  9 Aug 2023 12:40:24 +0200
+Message-ID: <20230809103645.833827227@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.720851262@linuxfoundation.org>
 References: <20230809103642.720851262@linuxfoundation.org>
@@ -36,90 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1d28635abcf1914425d6516e641978011984c58a ]
+[ Upstream commit d5d986ce42c71a7562d32c4e21e026b0f87befec ]
 
-Make each bpf() syscall command a bit more self-contained, making it
-easier to further enhance it. We move sysctl_unprivileged_bpf_disabled
-handling down to map_create() and bpf_prog_load(), two special commands
-in this regard.
+tm->tcpm_net can be read or written locklessly.
 
-Also swap the order of checks, calling bpf_capable() only if
-sysctl_unprivileged_bpf_disabled is true, avoiding unnecessary audit
-messages.
+Instead of changing write_pnet() and read_pnet() and potentially
+hurt performance, add the needed READ_ONCE()/WRITE_ONCE()
+in tm_net() and tcpm_new().
 
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Stanislav Fomichev <sdf@google.com>
-Link: https://lore.kernel.org/bpf/20230613223533.3689589-2-andrii@kernel.org
-Stable-dep-of: 640a604585aa ("bpf, cpumap: Make sure kthread is running before map update returns")
+Fixes: 849e8a0ca8d5 ("tcp_metrics: Add a field tcpm_net and verify it matches on lookup")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230802131500.1478140-6-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ net/ipv4/tcp_metrics.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 5524fcf6fb2a4..0a7238125e1a4 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -1157,6 +1157,15 @@ static int map_create(union bpf_attr *attr)
- 	     !node_online(numa_node)))
- 		return -EINVAL;
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index fd4ab7a51cef2..4fd274836a48f 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -40,7 +40,7 @@ struct tcp_fastopen_metrics {
  
-+	/* Intent here is for unprivileged_bpf_disabled to block BPF map
-+	 * creation for unprivileged users; other actions depend
-+	 * on fd availability and access to bpffs, so are dependent on
-+	 * object creation success. Even with unprivileged BPF disabled,
-+	 * capability checks are still carried out.
-+	 */
-+	if (sysctl_unprivileged_bpf_disabled && !bpf_capable())
-+		return -EPERM;
-+
- 	/* find map type and init map: hashtable vs rbtree vs bloom vs ... */
- 	map = find_and_alloc_map(attr);
- 	if (IS_ERR(map))
-@@ -2535,6 +2544,16 @@ static int bpf_prog_load(union bpf_attr *attr, bpfptr_t uattr, u32 uattr_size)
- 	/* eBPF programs must be GPL compatible to use GPL-ed functions */
- 	is_gpl = license_is_gpl_compatible(license);
+ struct tcp_metrics_block {
+ 	struct tcp_metrics_block __rcu	*tcpm_next;
+-	possible_net_t			tcpm_net;
++	struct net			*tcpm_net;
+ 	struct inetpeer_addr		tcpm_saddr;
+ 	struct inetpeer_addr		tcpm_daddr;
+ 	unsigned long			tcpm_stamp;
+@@ -51,9 +51,10 @@ struct tcp_metrics_block {
+ 	struct rcu_head			rcu_head;
+ };
  
-+	/* Intent here is for unprivileged_bpf_disabled to block BPF program
-+	 * creation for unprivileged users; other actions depend
-+	 * on fd availability and access to bpffs, so are dependent on
-+	 * object creation success. Even with unprivileged BPF disabled,
-+	 * capability checks are still carried out for these
-+	 * and other operations.
-+	 */
-+	if (sysctl_unprivileged_bpf_disabled && !bpf_capable())
-+		return -EPERM;
-+
- 	if (attr->insn_cnt == 0 ||
- 	    attr->insn_cnt > (bpf_capable() ? BPF_COMPLEXITY_LIMIT_INSNS : BPF_MAXINSNS))
- 		return -E2BIG;
-@@ -5018,23 +5037,8 @@ static int bpf_prog_bind_map(union bpf_attr *attr)
- static int __sys_bpf(int cmd, bpfptr_t uattr, unsigned int size)
+-static inline struct net *tm_net(struct tcp_metrics_block *tm)
++static inline struct net *tm_net(const struct tcp_metrics_block *tm)
  {
- 	union bpf_attr attr;
--	bool capable;
- 	int err;
+-	return read_pnet(&tm->tcpm_net);
++	/* Paired with the WRITE_ONCE() in tcpm_new() */
++	return READ_ONCE(tm->tcpm_net);
+ }
  
--	capable = bpf_capable() || !sysctl_unprivileged_bpf_disabled;
--
--	/* Intent here is for unprivileged_bpf_disabled to block key object
--	 * creation commands for unprivileged users; other actions depend
--	 * of fd availability and access to bpffs, so are dependent on
--	 * object creation success.  Capabilities are later verified for
--	 * operations such as load and map create, so even with unprivileged
--	 * BPF disabled, capability checks are still carried out for these
--	 * and other operations.
--	 */
--	if (!capable &&
--	    (cmd == BPF_MAP_CREATE || cmd == BPF_PROG_LOAD))
--		return -EPERM;
--
- 	err = bpf_check_uarg_tail_zero(uattr, sizeof(attr), size);
- 	if (err)
- 		return err;
+ static bool tcp_metric_locked(struct tcp_metrics_block *tm,
+@@ -197,7 +198,9 @@ static struct tcp_metrics_block *tcpm_new(struct dst_entry *dst,
+ 		if (!tm)
+ 			goto out_unlock;
+ 	}
+-	write_pnet(&tm->tcpm_net, net);
++	/* Paired with the READ_ONCE() in tm_net() */
++	WRITE_ONCE(tm->tcpm_net, net);
++
+ 	tm->tcpm_saddr = *saddr;
+ 	tm->tcpm_daddr = *daddr;
+ 
 -- 
 2.40.1
 
