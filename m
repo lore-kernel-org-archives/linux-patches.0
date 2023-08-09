@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78ABF17AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:27:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF40AC433C7;
-	Wed,  9 Aug 2023 11:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A67717AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:27:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0067C433C7;
+	Wed,  9 Aug 2023 11:27:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580463;
-	bh=PIerRCkuYAa4O3KDqj1uItBm4vKg2JLR/jWl7Oids4E=;
+	s=korg; t=1691580466;
+	bh=bv2PSAVRbGg+3oRSYoBHnwRRW2OdEbYtYDgnpivWkmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PBLNDhqVEBv9Dby4X0g4kaC6/mP19xkxNhibjJ1CPaMmEpl+D++FGchO6VegpfFMZ
-	 2g4Gy3xhbmj8Tc4Pdk413hjdpOD8D6O5QF9XZjYIWdswwruGkNmGhikZw8AmUSIWt3
-	 +MNXkUxyrFzZSOl4dWyNyWS4FNEbx99FixM3VjC8=
+	b=U7xJ3kMyHqHMeV0HEhooOG2bQpsc5VaYx2lbZfaqs7QebcQBfGcVtmjFPV8H/32VU
+	 D010ZOVTgJdkdXpsc1e9MzgQKUg1AqqLToMYJqOM44AsPLTQ7Dwkx/dk+lKaehTKiP
+	 RBaRT+1DU5u1cjSc9G71Nx1T6Hv3lrcaxlr847vU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 034/154] phy: hisilicon: Fix an out of bounds check in hisi_inno_phy_probe()
-Date: Wed,  9 Aug 2023 12:41:05 +0200
-Message-ID: <20230809103638.147782689@linuxfoundation.org>
+Subject: [PATCH 5.4 017/154] dlm: cleanup plock_op vs plock_xop
+Date: Wed,  9 Aug 2023 12:40:48 +0200
+Message-ID: <20230809103637.508216500@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -36,42 +35,231 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit 13c088cf3657d70893d75cf116be937f1509cc0f ]
+[ Upstream commit bcbb4ba6c9ba81e6975b642a2cade68044cd8a66 ]
 
-The size of array 'priv->ports[]' is INNO_PHY_PORT_NUM.
+Lately the different casting between plock_op and plock_xop and list
+holders which was involved showed some issues which were hard to see.
+This patch removes the "plock_xop" structure and introduces a
+"struct plock_async_data". This structure will be set in "struct plock_op"
+in case of asynchronous lock handling as the original "plock_xop" was
+made for. There is no need anymore to cast pointers around for
+additional fields in case of asynchronous lock handling.  As disadvantage
+another allocation was introduces but only needed in the asynchronous
+case which is currently only used in combination with nfs lockd.
 
-In the for loop, 'i' is used as the index for array 'priv->ports[]'
-with a check (i > INNO_PHY_PORT_NUM) which indicates that
-INNO_PHY_PORT_NUM is allowed value for 'i' in the same loop.
-
-This > comparison needs to be changed to >=, otherwise it potentially leads
-to an out of bounds write on the next iteration through the loop
-
-Fixes: ba8b0ee81fbb ("phy: add inno-usb2-phy driver for hi3798cv200 SoC")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Link: https://lore.kernel.org/r/20230721090558.3588613-1-harshit.m.mogalapalli@oracle.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
+Stable-dep-of: 59e45c758ca1 ("fs: dlm: interrupt posix locks only when process is killed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/hisilicon/phy-hisi-inno-usb2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/dlm/plock.c | 77 ++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 46 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/phy/hisilicon/phy-hisi-inno-usb2.c b/drivers/phy/hisilicon/phy-hisi-inno-usb2.c
-index 9b16f13b5ab29..96162b9a2e53d 100644
---- a/drivers/phy/hisilicon/phy-hisi-inno-usb2.c
-+++ b/drivers/phy/hisilicon/phy-hisi-inno-usb2.c
-@@ -155,7 +155,7 @@ static int hisi_inno_phy_probe(struct platform_device *pdev)
- 		phy_set_drvdata(phy, &priv->ports[i]);
- 		i++;
+diff --git a/fs/dlm/plock.c b/fs/dlm/plock.c
+index edce0b25cd90e..e70e23eca03ec 100644
+--- a/fs/dlm/plock.c
++++ b/fs/dlm/plock.c
+@@ -19,20 +19,20 @@ static struct list_head recv_list;
+ static wait_queue_head_t send_wq;
+ static wait_queue_head_t recv_wq;
  
--		if (i > INNO_PHY_PORT_NUM) {
-+		if (i >= INNO_PHY_PORT_NUM) {
- 			dev_warn(dev, "Support %d ports in maximum\n", i);
- 			break;
+-struct plock_op {
+-	struct list_head list;
+-	int done;
+-	struct dlm_plock_info info;
+-	int (*callback)(struct file_lock *fl, int result);
+-};
+-
+-struct plock_xop {
+-	struct plock_op xop;
++struct plock_async_data {
+ 	void *fl;
+ 	void *file;
+ 	struct file_lock flc;
++	int (*callback)(struct file_lock *fl, int result);
+ };
+ 
++struct plock_op {
++	struct list_head list;
++	int done;
++	struct dlm_plock_info info;
++	/* if set indicates async handling */
++	struct plock_async_data *data;
++};
+ 
+ static inline void set_version(struct dlm_plock_info *info)
+ {
+@@ -58,6 +58,12 @@ static int check_version(struct dlm_plock_info *info)
+ 	return 0;
+ }
+ 
++static void dlm_release_plock_op(struct plock_op *op)
++{
++	kfree(op->data);
++	kfree(op);
++}
++
+ static void send_op(struct plock_op *op)
+ {
+ 	set_version(&op->info);
+@@ -101,22 +107,21 @@ static void do_unlock_close(struct dlm_ls *ls, u64 number,
+ int dlm_posix_lock(dlm_lockspace_t *lockspace, u64 number, struct file *file,
+ 		   int cmd, struct file_lock *fl)
+ {
++	struct plock_async_data *op_data;
+ 	struct dlm_ls *ls;
+ 	struct plock_op *op;
+-	struct plock_xop *xop;
+ 	int rv;
+ 
+ 	ls = dlm_find_lockspace_local(lockspace);
+ 	if (!ls)
+ 		return -EINVAL;
+ 
+-	xop = kzalloc(sizeof(*xop), GFP_NOFS);
+-	if (!xop) {
++	op = kzalloc(sizeof(*op), GFP_NOFS);
++	if (!op) {
+ 		rv = -ENOMEM;
+ 		goto out;
+ 	}
+ 
+-	op = &xop->xop;
+ 	op->info.optype		= DLM_PLOCK_OP_LOCK;
+ 	op->info.pid		= fl->fl_pid;
+ 	op->info.ex		= (fl->fl_type == F_WRLCK);
+@@ -125,22 +130,32 @@ int dlm_posix_lock(dlm_lockspace_t *lockspace, u64 number, struct file *file,
+ 	op->info.number		= number;
+ 	op->info.start		= fl->fl_start;
+ 	op->info.end		= fl->fl_end;
++	/* async handling */
+ 	if (fl->fl_lmops && fl->fl_lmops->lm_grant) {
++		op_data = kzalloc(sizeof(*op_data), GFP_NOFS);
++		if (!op_data) {
++			dlm_release_plock_op(op);
++			rv = -ENOMEM;
++			goto out;
++		}
++
+ 		/* fl_owner is lockd which doesn't distinguish
+ 		   processes on the nfs client */
+ 		op->info.owner	= (__u64) fl->fl_pid;
+-		op->callback	= fl->fl_lmops->lm_grant;
+-		locks_init_lock(&xop->flc);
+-		locks_copy_lock(&xop->flc, fl);
+-		xop->fl		= fl;
+-		xop->file	= file;
++		op_data->callback = fl->fl_lmops->lm_grant;
++		locks_init_lock(&op_data->flc);
++		locks_copy_lock(&op_data->flc, fl);
++		op_data->fl		= fl;
++		op_data->file	= file;
++
++		op->data = op_data;
+ 	} else {
+ 		op->info.owner	= (__u64)(long) fl->fl_owner;
+ 	}
+ 
+ 	send_op(op);
+ 
+-	if (!op->callback) {
++	if (!op->data) {
+ 		rv = wait_event_interruptible(recv_wq, (op->done != 0));
+ 		if (rv == -ERESTARTSYS) {
+ 			log_debug(ls, "dlm_posix_lock: wait killed %llx",
+@@ -148,7 +163,7 @@ int dlm_posix_lock(dlm_lockspace_t *lockspace, u64 number, struct file *file,
+ 			spin_lock(&ops_lock);
+ 			list_del(&op->list);
+ 			spin_unlock(&ops_lock);
+-			kfree(xop);
++			dlm_release_plock_op(op);
+ 			do_unlock_close(ls, number, file, fl);
+ 			goto out;
  		}
+@@ -173,7 +188,7 @@ int dlm_posix_lock(dlm_lockspace_t *lockspace, u64 number, struct file *file,
+ 				  (unsigned long long)number);
+ 	}
+ 
+-	kfree(xop);
++	dlm_release_plock_op(op);
+ out:
+ 	dlm_put_lockspace(ls);
+ 	return rv;
+@@ -183,11 +198,11 @@ EXPORT_SYMBOL_GPL(dlm_posix_lock);
+ /* Returns failure iff a successful lock operation should be canceled */
+ static int dlm_plock_callback(struct plock_op *op)
+ {
++	struct plock_async_data *op_data = op->data;
+ 	struct file *file;
+ 	struct file_lock *fl;
+ 	struct file_lock *flc;
+ 	int (*notify)(struct file_lock *fl, int result) = NULL;
+-	struct plock_xop *xop = (struct plock_xop *)op;
+ 	int rv = 0;
+ 
+ 	spin_lock(&ops_lock);
+@@ -199,10 +214,10 @@ static int dlm_plock_callback(struct plock_op *op)
+ 	spin_unlock(&ops_lock);
+ 
+ 	/* check if the following 2 are still valid or make a copy */
+-	file = xop->file;
+-	flc = &xop->flc;
+-	fl = xop->fl;
+-	notify = op->callback;
++	file = op_data->file;
++	flc = &op_data->flc;
++	fl = op_data->fl;
++	notify = op_data->callback;
+ 
+ 	if (op->info.rv) {
+ 		notify(fl, op->info.rv);
+@@ -233,7 +248,7 @@ static int dlm_plock_callback(struct plock_op *op)
+ 	}
+ 
+ out:
+-	kfree(xop);
++	dlm_release_plock_op(op);
+ 	return rv;
+ }
+ 
+@@ -303,7 +318,7 @@ int dlm_posix_unlock(dlm_lockspace_t *lockspace, u64 number, struct file *file,
+ 		rv = 0;
+ 
+ out_free:
+-	kfree(op);
++	dlm_release_plock_op(op);
+ out:
+ 	dlm_put_lockspace(ls);
+ 	fl->fl_flags = fl_flags;
+@@ -371,7 +386,7 @@ int dlm_posix_get(dlm_lockspace_t *lockspace, u64 number, struct file *file,
+ 		rv = 0;
+ 	}
+ 
+-	kfree(op);
++	dlm_release_plock_op(op);
+ out:
+ 	dlm_put_lockspace(ls);
+ 	return rv;
+@@ -407,7 +422,7 @@ static ssize_t dev_read(struct file *file, char __user *u, size_t count,
+ 	   (the process did not make an unlock call). */
+ 
+ 	if (op->info.flags & DLM_PLOCK_FL_CLOSE)
+-		kfree(op);
++		dlm_release_plock_op(op);
+ 
+ 	if (copy_to_user(u, &info, sizeof(info)))
+ 		return -EFAULT;
+@@ -439,7 +454,7 @@ static ssize_t dev_write(struct file *file, const char __user *u, size_t count,
+ 		    op->info.owner == info.owner) {
+ 			list_del_init(&op->list);
+ 			memcpy(&op->info, &info, sizeof(info));
+-			if (op->callback)
++			if (op->data)
+ 				do_callback = 1;
+ 			else
+ 				op->done = 1;
 -- 
 2.39.2
 
