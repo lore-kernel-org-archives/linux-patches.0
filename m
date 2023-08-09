@@ -1,45 +1,45 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8CFD39C
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 04:34:45 +0000 (UTC)
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-6bc9d16c317so5149783a34.1
-        for <patches@lists.linux.dev>; Tue, 08 Aug 2023 21:34:45 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B191FA4
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 04:34:50 +0000 (UTC)
+Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-6bcac140aaaso5008150a34.2
+        for <patches@lists.linux.dev>; Tue, 08 Aug 2023 21:34:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691555684; x=1692160484;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=2qfg0WIadQaxwkKNJkFn8ap8YFqlO2fSpQ74DKXH6rI=;
-        b=jYl84TsyuM77kswO9vDzgMlUr1RJU00GQ0HoGpndLPQco8KJGeXmKZQhC4pN7Qcuny
-         1MfWOJqB4jIiWwtu+aLobCWnEGcemKmjeJeUm0o9/pzgqf4GcgdiSx8l4wQ5BQbJ/XvJ
-         KMU6ESHDfqoT2+DCRXp/hiaDiLWtHwwGIuG0fioc1SzXj4UHaa/+VVTxaHGzK6K7gHE1
-         5DLk0F1m2SMVasfij4TXX0k1toWpGLVbYGZ7G7haNzw6NPdRtEGgCw6gnIucfZAdar2m
-         sWxNZiSmk6Qr3msEoJNKictDNLU1hnQjsRIv7LLLPKrGdC+GBnFO2aEa7rD/Z6WZEqHR
-         CscA==
+        d=gmail.com; s=20221208; t=1691555689; x=1692160489;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LrIFCxoQFLt3rBqRXdHfgV9VxVhBqDIM5mI2fCXfaF4=;
+        b=c/2Uh2cWsZ7udAAfauq/GjzvN/3uMjvvnG9YOb9MmutQUaDQs5RhLLz42RGuQBduAt
+         J+UaHCVD0LKJOubierM1goQOJ+TMPsEPV6DcZXJEvQcA25G+1G5SgDd/qHm0wSYBwGn1
+         3sSdJa1BAT2kibEjGrZ8hVse4/5K/YtcSf0z4MOTcJ7f8//W5mL2iBzeT6R2YGyYPhjt
+         3zQ2U8BQ1UI/fgPxN7B4cgVpue3F6kVPAYvy+Rs/L9AIxR0YhH+Ua8dsyGm4QyRcpSOI
+         MKO1dDVNbeUfuTGBQRUBbVUHMejzqzhpfAcU4BB/5A1aDTf0ASEesepBnYue3S+AUeIL
+         vO3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691555684; x=1692160484;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1691555689; x=1692160489;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2qfg0WIadQaxwkKNJkFn8ap8YFqlO2fSpQ74DKXH6rI=;
-        b=fn01x4+exH9Pnu8InBwneL38bCZx7pE2Uj+7T2HCRt65kriYVXgqHRme3uPIFQWmkI
-         toAmTJL7xt2I2Fz5s22VCEOr4Fnn9aQLamZp5qQhXO9I+WwcvzedZ7k9sWsWqXHBztLL
-         4xxQaelswaXUO3L/namHyn/stXY5NsITxw0c7LcC8d8mIpde7jhp1Vhf7IwKl744Hm9O
-         S3RrCxHsQe0Toh2ZxhhK6DAZZ0iXVsyIhiEK2OE+36xsReaVtpvxAIZEActqyWzCH+4m
-         4r5hd49SaCI9oRu1x+v10tEXBF0B7b6diV91ULRV48tfiV5LapYcJCq2R/4u3v/W54Zc
-         R/VQ==
-X-Gm-Message-State: AOJu0YyJPacuZFBea6v88NsCdD40YGVBkYb6N055Ps89qMplA0nHEMYE
-	mZfmR7wzPktQoMqAn6z1WhY=
-X-Google-Smtp-Source: AGHT+IH//L5g3jbAjte61tfU8iZCVBXpJcuPCxzhAHTs9tJYQVS6D0cWjx5UAmUGEin7rY3I0cy29g==
-X-Received: by 2002:a9d:7f16:0:b0:6b9:304a:e778 with SMTP id j22-20020a9d7f16000000b006b9304ae778mr1628062otq.34.1691555684468;
-        Tue, 08 Aug 2023 21:34:44 -0700 (PDT)
+        bh=LrIFCxoQFLt3rBqRXdHfgV9VxVhBqDIM5mI2fCXfaF4=;
+        b=RrHGKAMAzH168L1cJfKW+e5AojQHrYk50QFHcFL0NHCt6y/51dPde4DqCcO2PJQ/Z+
+         lJlszsvq3WRBmxerzDod7mjHpHb7p33KAZjXh6EUUfZXnaSlHcwUS/ddNYHTa94O7LOr
+         F0Wz8zjFf6bGq/LxpAS+f1hy7bj/5J0KAJd3EnTdnnxDky2SSWSgMW21d8T9yYeChhlx
+         apRz3rhyFFevOiO8WALwD8pUe2leXvZtqEI0qaHnFpX+08/4SrtgcV+2BYeuGmHTRKWJ
+         0WMs0siXk6SLDshO9EzTDBYax+oyvMXQ4HGy8QdxA1buKnPRkV+W4vMAHivBFwW4f8R+
+         TakQ==
+X-Gm-Message-State: AOJu0YyuQ3UphEge4dHV4xwQIeu1YLthLFcSx48CD/cDN+nkx4p2NAKt
+	LG02YsHWX+oOWxicUvGBwu8=
+X-Google-Smtp-Source: AGHT+IGD64zPGlC3vs1oKuT2FH/1je1GCjZMX1il7yzIo+Ecc7zLHE/qDNQ9lQHRx+wy6SimoQSdbg==
+X-Received: by 2002:a9d:6c49:0:b0:6bd:a82:8edb with SMTP id g9-20020a9d6c49000000b006bd0a828edbmr1523277otq.10.1691555689218;
+        Tue, 08 Aug 2023 21:34:49 -0700 (PDT)
 Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id n26-20020a9d741a000000b006b87f593877sm6552031otk.37.2023.08.08.21.34.40
+        by smtp.gmail.com with ESMTPSA id n26-20020a9d741a000000b006b87f593877sm6552031otk.37.2023.08.08.21.34.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Aug 2023 21:34:44 -0700 (PDT)
-Message-ID: <94a50510-c539-49d5-bc36-241f1f003172@gmail.com>
-Date: Tue, 8 Aug 2023 23:59:04 -0300
+        Tue, 08 Aug 2023 21:34:48 -0700 (PDT)
+Message-ID: <4478c068-9e7a-482a-aee6-bbe3d151202f@gmail.com>
+Date: Wed, 9 Aug 2023 01:02:20 -0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,8 +47,8 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Subject: Re: [RFC PATCH v1 1/5] rust: file: add bindings for `struct file`
+Subject: Re: [RFC PATCH v1 3/5] rust: file: add `FileDescriptorReservation`
+Content-Language: en-US
 To: Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
  linux-fsdevel@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>,
  Alexander Viro <viro@zeniv.linux.org.uk>,
@@ -58,69 +58,49 @@ Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
  Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?=
  <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
  linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- Wedson Almeida Filho <walmeida@microsoft.com>, Daniel Xu <dxu@dxuuu.xyz>
+ Wedson Almeida Filho <walmeida@microsoft.com>
 References: <20230720152820.3566078-1-aliceryhl@google.com>
- <20230720152820.3566078-2-aliceryhl@google.com>
-Content-Language: en-US
-In-Reply-To: <20230720152820.3566078-2-aliceryhl@google.com>
+ <20230720152820.3566078-4-aliceryhl@google.com>
+From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+In-Reply-To: <20230720152820.3566078-4-aliceryhl@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 7/20/23 12:28, Alice Ryhl wrote:
 > From: Wedson Almeida Filho <walmeida@microsoft.com>
 > 
-> Using these bindings it becomes possible to access files from drivers
-> written in Rust. This patch only adds support for accessing the flags,
-> and for managing the refcount of the file.
+> This allows the creation of a file descriptor in two steps: first, we
+> reserve a slot for it, then we commit or drop the reservation. The first
+> step may fail (e.g., the current process ran out of available slots),
+> but commit and drop never fail (and are mutually exclusive).
 > 
-> Signed-off-by: Wedson Almeida Filho <walmeida@microsoft.com>
-> Co-Developed-by: Daniel Xu <dxu@dxuuu.xyz>
-> Signed-off-by: Daniel Xu <dxu@dxuuu.xyz>
 > Co-Developed-by: Alice Ryhl <aliceryhl@google.com>
+> Signed-off-by: Wedson Almeida Filho <walmeida@microsoft.com>
 > Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 > ---
-> In this patch, I am defining an error type called `BadFdError`. I'd like
-> your thoughts on doing it this way vs just using the normal `Error`
-> type.
-> 
-> Pros:
->   * The type system makes it clear that the function can only fail with
->     EBADF, and that no other errors are possible.
->   * Since the compiler knows that `ARef<Self>` cannot be null and that
->     `BadFdError` has only one possible value, the return type of
->     `File::from_fd` is represented as a pointer with null being an error.
-> 
-> Cons:
->   * Defining additional error types involves boilerplate.
->   * The return type becomes a tagged union, making it larger than a
->     pointer.
-
-These two are kinda passable, as a `impl_null_ptr_err` macro can be opted
-to implement error types from nulls. Also if we consider that
-`File::from_fd` isn't going to be called a gorillion times a second or a
-recursive call is done, then I'd say that the tagged union won't bring
-any other problems, except that a compiler optim is skipped.
-
->   * The question mark operator will only utilize the `From` trait once,
->     which prevents you from using the question mark operator on
->     `BadFdError` in methods that return some third error type that the
->     kernel `Error` is convertible into.
-
-Although, I want this to be mentioned in the doc of `BadFdError` as this
-cannot be overlooked when said usage of `?` is done.
-
-> 
->   rust/bindings/bindings_helper.h |   2 +
->   rust/helpers.c                  |   7 ++
->   rust/kernel/file.rs             | 176 ++++++++++++++++++++++++++++++++
->   rust/kernel/lib.rs              |   1 +
->   4 files changed, 186 insertions(+)
->   create mode 100644 rust/kernel/file.rs
-> 
 > [...]
-> diff --git a/rust/bindings/bindings_helper.h b/rust/bindings/bindings_helper.h
-> [...]
-> diff --git a/rust/helpers.c b/rust/helpers.c
-> [...]
+> +/// A file descriptor reservation.
+> +///
+> +/// This allows the creation of a file descriptor in two steps: first, we reserve a slot for it,
+> +/// then we commit or drop the reservation. The first step may fail (e.g., the current process ran
+> +/// out of available slots), but commit and drop never fail (and are mutually exclusive).
 
-This one is making my head spin, shouldn't they go first?
+This "drop" suggests to me that there was a method that it does said
+action, and indeed it is `Drop::drop`. But if I look at the doc comment
+of `commit` then it doesn't look that these two are mutex.
+
+     /// Commits the reservation.
+     ///
+     /// The previously reserved file descriptor is bound to `file`.
+
+I'd put a mention that `FileDescriptorReservation` gets forgotten when
+`commit` is called so then it clears up that it's mutex with drop.
+
+> +///
+> +/// # Invariants
+> +///
+> +/// The fd stored in this struct must correspond to a reserved file descriptor of the current task.
+> +pub struct FileDescriptorReservation {
+> [...]
+> +}
+> [...]
