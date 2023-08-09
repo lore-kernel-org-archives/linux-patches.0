@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5AD17731
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:06:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5024FC433C7;
-	Wed,  9 Aug 2023 11:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A7017731
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:06:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15C35C433C8;
+	Wed,  9 Aug 2023 11:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579193;
-	bh=9EkPA70tfcvex043nceDNayBSNkuPT5+4oLfBE1oUrY=;
+	s=korg; t=1691579196;
+	bh=CZNTdOr0qThjqT/wf9+TGGciE3frlEIOaIt1tsNMhY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V8EHMgHSx68qBepXShjC+bmMPTVWIQXg8My3ZWQwEbiIYKK1eeib0H0xRZ3vuYddD
-	 OKf+HhHr+gqb0qNLQF7gHIectFFeKhoixTNF5uWBYBRKvOYqezI4mH88hQKYQINE+3
-	 0yf3CmLx9hSLDALgyzyaEmjzGCj0kw+dycWe9B0M=
+	b=YvrphXCZgQ7LXT1uxsEEYpZJi+G2pjiAR1sh2WeK7SjXDA4cNm+AMonSJkCxtwU7t
+	 4juoQ9BTzMN+s7I6l/WNkDZ3EAjeNs0h4w4RhYue5Rk2SKHNv8qUOMjjNcpv0tEyB2
+	 QpK9PUrbqkUZmfM/2GXFm/xXVXjGkebPcF+iuAuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianjia Zhang <tianjia.zhang@linux.alibaba.com>,
-	Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 4.14 080/204] integrity: Fix possible multiple allocation in integrity_inode_get()
-Date: Wed,  9 Aug 2023 12:40:18 +0200
-Message-ID: <20230809103645.344732728@linuxfoundation.org>
+	Tim Gardner <tim.gardner@canonical.com>,
+	kernel test robot <lkp@intel.com>,
+	Ron Economos <re@w6rz.net>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Fabian Frederick <fabf@skynet.be>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 4.14 081/204] jffs2: reduce stack usage in jffs2_build_xattr_subsystem()
+Date: Wed,  9 Aug 2023 12:40:19 +0200
+Message-ID: <20230809103645.378008760@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103642.552405807@linuxfoundation.org>
 References: <20230809103642.552405807@linuxfoundation.org>
@@ -35,62 +40,128 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+From: Fabian Frederick <fabf@skynet.be>
 
-commit 9df6a4870dc371136e90330cfbbc51464ee66993 upstream.
+commit 1168f095417643f663caa341211e117db552989f upstream.
 
-When integrity_inode_get() is querying and inserting the cache, there
-is a conditional race in the concurrent environment.
+Use kcalloc() for allocation/flush of 128 pointers table to
+reduce stack usage.
 
-The race condition is the result of not properly implementing
-"double-checked locking". In this case, it first checks to see if the
-iint cache record exists before taking the lock, but doesn't check
-again after taking the integrity_iint_lock.
+Function now returns -ENOMEM or 0 on success.
 
-Fixes: bf2276d10ce5 ("ima: allocating iint improvements")
-Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
-Cc: Dmitry Kasatkin <dmitry.kasatkin@gmail.com>
-Cc: <stable@vger.kernel.org> # v3.10+
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+stackusage
+Before:
+./fs/jffs2/xattr.c:775  jffs2_build_xattr_subsystem     1208
+dynamic,bounded
+
+After:
+./fs/jffs2/xattr.c:775  jffs2_build_xattr_subsystem     192
+dynamic,bounded
+
+Also update definition when CONFIG_JFFS2_FS_XATTR is not enabled
+
+Tested with an MTD mount point and some user set/getfattr.
+
+Many current target on OpenWRT also suffer from a compilation warning
+(that become an error with CONFIG_WERROR) with the following output:
+
+fs/jffs2/xattr.c: In function 'jffs2_build_xattr_subsystem':
+fs/jffs2/xattr.c:887:1: error: the frame size of 1088 bytes is larger than 1024 bytes [-Werror=frame-larger-than=]
+  887 | }
+      | ^
+
+Using dynamic allocation fix this compilation warning.
+
+Fixes: c9f700f840bd ("[JFFS2][XATTR] using 'delete marker' for xdatum/xref deletion")
+Reported-by: Tim Gardner <tim.gardner@canonical.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Ron Economos <re@w6rz.net>
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Fabian Frederick <fabf@skynet.be>
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Cc: stable@vger.kernel.org
+Message-Id: <20230506045612.16616-1-ansuelsmth@gmail.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/iint.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ fs/jffs2/build.c |    5 ++++-
+ fs/jffs2/xattr.c |   13 +++++++++----
+ fs/jffs2/xattr.h |    4 ++--
+ 3 files changed, 15 insertions(+), 7 deletions(-)
 
---- a/security/integrity/iint.c
-+++ b/security/integrity/iint.c
-@@ -43,12 +43,10 @@ static struct integrity_iint_cache *__in
- 		else if (inode > iint->inode)
- 			n = n->rb_right;
- 		else
--			break;
-+			return iint;
+--- a/fs/jffs2/build.c
++++ b/fs/jffs2/build.c
+@@ -211,7 +211,10 @@ static int jffs2_build_filesystem(struct
+ 		ic->scan_dents = NULL;
+ 		cond_resched();
  	}
--	if (!n)
--		return NULL;
+-	jffs2_build_xattr_subsystem(c);
++	ret = jffs2_build_xattr_subsystem(c);
++	if (ret)
++		goto exit;
++
+ 	c->flags &= ~JFFS2_SB_FLAG_BUILDING;
  
--	return iint;
-+	return NULL;
+ 	dbg_fsbuild("FS build complete\n");
+--- a/fs/jffs2/xattr.c
++++ b/fs/jffs2/xattr.c
+@@ -772,10 +772,10 @@ void jffs2_clear_xattr_subsystem(struct
  }
  
- /*
-@@ -112,10 +110,15 @@ struct integrity_iint_cache *integrity_i
- 		parent = *p;
- 		test_iint = rb_entry(parent, struct integrity_iint_cache,
- 				     rb_node);
--		if (inode < test_iint->inode)
-+		if (inode < test_iint->inode) {
- 			p = &(*p)->rb_left;
--		else
-+		} else if (inode > test_iint->inode) {
- 			p = &(*p)->rb_right;
-+		} else {
-+			write_unlock(&integrity_iint_lock);
-+			kmem_cache_free(iint_cache, iint);
-+			return test_iint;
-+		}
- 	}
+ #define XREF_TMPHASH_SIZE	(128)
+-void jffs2_build_xattr_subsystem(struct jffs2_sb_info *c)
++int jffs2_build_xattr_subsystem(struct jffs2_sb_info *c)
+ {
+ 	struct jffs2_xattr_ref *ref, *_ref;
+-	struct jffs2_xattr_ref *xref_tmphash[XREF_TMPHASH_SIZE];
++	struct jffs2_xattr_ref **xref_tmphash;
+ 	struct jffs2_xattr_datum *xd, *_xd;
+ 	struct jffs2_inode_cache *ic;
+ 	struct jffs2_raw_node_ref *raw;
+@@ -784,9 +784,12 @@ void jffs2_build_xattr_subsystem(struct
  
- 	iint->inode = inode;
+ 	BUG_ON(!(c->flags & JFFS2_SB_FLAG_BUILDING));
+ 
++	xref_tmphash = kcalloc(XREF_TMPHASH_SIZE,
++			       sizeof(struct jffs2_xattr_ref *), GFP_KERNEL);
++	if (!xref_tmphash)
++		return -ENOMEM;
++
+ 	/* Phase.1 : Merge same xref */
+-	for (i=0; i < XREF_TMPHASH_SIZE; i++)
+-		xref_tmphash[i] = NULL;
+ 	for (ref=c->xref_temp; ref; ref=_ref) {
+ 		struct jffs2_xattr_ref *tmp;
+ 
+@@ -884,6 +887,8 @@ void jffs2_build_xattr_subsystem(struct
+ 		     "%u of xref (%u dead, %u orphan) found.\n",
+ 		     xdatum_count, xdatum_unchecked_count, xdatum_orphan_count,
+ 		     xref_count, xref_dead_count, xref_orphan_count);
++	kfree(xref_tmphash);
++	return 0;
+ }
+ 
+ struct jffs2_xattr_datum *jffs2_setup_xattr_datum(struct jffs2_sb_info *c,
+--- a/fs/jffs2/xattr.h
++++ b/fs/jffs2/xattr.h
+@@ -71,7 +71,7 @@ static inline int is_xattr_ref_dead(stru
+ #ifdef CONFIG_JFFS2_FS_XATTR
+ 
+ extern void jffs2_init_xattr_subsystem(struct jffs2_sb_info *c);
+-extern void jffs2_build_xattr_subsystem(struct jffs2_sb_info *c);
++extern int jffs2_build_xattr_subsystem(struct jffs2_sb_info *c);
+ extern void jffs2_clear_xattr_subsystem(struct jffs2_sb_info *c);
+ 
+ extern struct jffs2_xattr_datum *jffs2_setup_xattr_datum(struct jffs2_sb_info *c,
+@@ -103,7 +103,7 @@ extern ssize_t jffs2_listxattr(struct de
+ #else
+ 
+ #define jffs2_init_xattr_subsystem(c)
+-#define jffs2_build_xattr_subsystem(c)
++#define jffs2_build_xattr_subsystem(c)		(0)
+ #define jffs2_clear_xattr_subsystem(c)
+ 
+ #define jffs2_xattr_do_crccheck_inode(c, ic)
 
 
