@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4256017AA6
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:27:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A79C433CA;
-	Wed,  9 Aug 2023 11:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B9817AA6
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:27:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77E98C433C9;
+	Wed,  9 Aug 2023 11:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580455;
-	bh=yr8KPD87HHrbVkXz6Lxl2lpLdcIynT1od3rUjJpr9Oc=;
+	s=korg; t=1691580457;
+	bh=Vpi+MLiUEhchUpzqFWJtF9+AMg+fHe/OX0X+0gs13wQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XovtVR6mxNjsEjiO++LPIwMsDV3/7GzoQ2e1TRZ8HwLR5/xfxiVnaocZ/GDaCBrVs
-	 t7AdzL9aof6WOx2rwvsVFG9OWSBH6zzyUzgPJPFTrvhQNTR0T8PCk3chE3B0mkyrGk
-	 0irGZMZUvbNhVAKWU/nTcuvz0o7+FHWZWuBEII2k=
+	b=bKRb6UFoylnFMgFGd5Rdi6aMazW2fZtE1zIhP+F0d6J1n/JS2nvMKyQ/wz85MrHtW
+	 Y+Q1bDZiw9ui+AV4a43buGYsQQRg1cY6YlLlQSnWj0wTOZVpQLH8FRl5fJePk3QLTV
+	 wgXTFypndo0epcVcUL+zc4VlFTWjP5jA0kZVEIwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 031/154] ext4: fix to check return value of freeze_bdev() in ext4_shutdown()
-Date: Wed,  9 Aug 2023 12:41:02 +0200
-Message-ID: <20230809103638.029514999@linuxfoundation.org>
+	Wang Ming <machel@vivo.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 5.4 032/154] i40e: Fix an NULL vs IS_ERR() bug for debugfs_create_dir()
+Date: Wed,  9 Aug 2023 12:41:03 +0200
+Message-ID: <20230809103638.068337606@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103636.887175326@linuxfoundation.org>
 References: <20230809103636.887175326@linuxfoundation.org>
@@ -36,46 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Wang Ming <machel@vivo.com>
 
-[ Upstream commit c4d13222afd8a64bf11bc7ec68645496ee8b54b9 ]
+[ Upstream commit 043b1f185fb0f3939b7427f634787706f45411c4 ]
 
-freeze_bdev() can fail due to a lot of reasons, it needs to check its
-reason before later process.
+The debugfs_create_dir() function returns error pointers.
+It never returns NULL. Most incorrect error checks were fixed,
+but the one in i40e_dbg_init() was forgotten.
 
-Fixes: 783d94854499 ("ext4: add EXT4_IOC_GOINGDOWN ioctl")
-Cc: stable@kernel.org
-Signed-off-by: Chao Yu <chao@kernel.org>
-Link: https://lore.kernel.org/r/20230606073203.1310389-1-chao@kernel.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fix the remaining error check.
+
+Fixes: 02e9c290814c ("i40e: debugfs interface")
+Signed-off-by: Wang Ming <machel@vivo.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ioctl.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/ioctl.c b/fs/ext4/ioctl.c
-index 306ad7d0003bb..ae47505964c4b 100644
---- a/fs/ext4/ioctl.c
-+++ b/fs/ext4/ioctl.c
-@@ -573,6 +573,7 @@ static int ext4_shutdown(struct super_block *sb, unsigned long arg)
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_debugfs.c b/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
+index 276f04c0e51d6..31f60657f5321 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
+@@ -1755,7 +1755,7 @@ void i40e_dbg_pf_exit(struct i40e_pf *pf)
+ void i40e_dbg_init(void)
  {
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
- 	__u32 flags;
-+	struct super_block *ret;
+ 	i40e_dbg_root = debugfs_create_dir(i40e_driver_name, NULL);
+-	if (!i40e_dbg_root)
++	if (IS_ERR(i40e_dbg_root))
+ 		pr_info("init of debugfs failed\n");
+ }
  
- 	if (!capable(CAP_SYS_ADMIN))
- 		return -EPERM;
-@@ -591,7 +592,9 @@ static int ext4_shutdown(struct super_block *sb, unsigned long arg)
- 
- 	switch (flags) {
- 	case EXT4_GOING_FLAGS_DEFAULT:
--		freeze_bdev(sb->s_bdev);
-+		ret = freeze_bdev(sb->s_bdev);
-+		if (IS_ERR(ret))
-+			return PTR_ERR(ret);
- 		set_bit(EXT4_FLAGS_SHUTDOWN, &sbi->s_ext4_flags);
- 		thaw_bdev(sb->s_bdev, sb);
- 		break;
 -- 
 2.39.2
 
