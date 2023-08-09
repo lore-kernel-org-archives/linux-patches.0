@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58AD91773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:20:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D304DC433CA;
-	Wed,  9 Aug 2023 11:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A871773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:20:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A202C433C7;
+	Wed,  9 Aug 2023 11:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691580030;
-	bh=5ELQ0BDJ9SjiJguy0eiDz3rrVkV8UAGxL3v3HC38j14=;
+	s=korg; t=1691580033;
+	bh=tQ6g/Q9HNTeQ2FaGYQ5dU+F7LqpZmp3hePs3CPmPLH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Dh3RwyvSu6Ps0aytVHEo/WN2kF7UBpnP1l+PYMVrGARvbsINXQ7dNV0UZ7FARkN1
-	 7YGjCtr1zs26imi46h02mdRE0MPY3YEQi17vOwMiqF0R9reNvV5w44JQc6yYnDY+ez
-	 AX9tHlhVk5gvGq4/inKbqsWeuArZtgRNY+yyKWKo=
+	b=CTblYP8rCkQgIYAfQ7y3Jk5AumILpKOhwrYxy3lCg9KugHjSJtKZsuAtmUfjIU16I
+	 bD8Bdzlqp4KJLVRT4O3GLcabIsHR4Puf9Q5S5KHQ2XJvA4GEOs8bpLwKO/ypZ5BG7J
+	 2Gep7KfBnM9trq0gNpDLsM3cyYlLc1fBxvVp1i8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Richard Genoud <richard.genoud@gmail.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 4.19 172/323] serial: atmel: dont enable IRQs prematurely
-Date: Wed,  9 Aug 2023 12:40:10 +0200
-Message-ID: <20230809103706.028176713@linuxfoundation.org>
+	Martin Kaiser <martin@kaiser.cx>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 4.19 173/323] hwrng: imx-rngc - fix the timeout for init and self check
+Date: Wed,  9 Aug 2023 12:40:11 +0200
+Message-ID: <20230809103706.067119738@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -36,45 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Martin Kaiser <martin@kaiser.cx>
 
-commit 27a826837ec9a3e94cc44bd9328b8289b0fcecd7 upstream.
+commit d744ae7477190967a3ddc289e2cd4ae59e8b1237 upstream.
 
-The atmel_complete_tx_dma() function disables IRQs at the start
-of the function by calling spin_lock_irqsave(&port->lock, flags);
-There is no need to disable them a second time using the
-spin_lock_irq() function and, in fact, doing so is a bug because
-it will enable IRQs prematurely when we call spin_unlock_irq().
+Fix the timeout that is used for the initialisation and for the self
+test. wait_for_completion_timeout expects a timeout in jiffies, but
+RNGC_TIMEOUT is in milliseconds. Call msecs_to_jiffies to do the
+conversion.
 
-Just use spin_lock/unlock() instead without disabling or enabling
-IRQs.
-
-Fixes: 08f738be88bb ("serial: at91: add tx dma support")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Acked-by: Richard Genoud <richard.genoud@gmail.com>
-Link: https://lore.kernel.org/r/cb7c39a9-c004-4673-92e1-be4e34b85368@moroto.mountain
-Cc: stable <stable@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 1d5449445bd0 ("hwrng: mx-rngc - add a driver for Freescale RNGC")
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/atmel_serial.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/char/hw_random/imx-rngc.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/atmel_serial.c
-+++ b/drivers/tty/serial/atmel_serial.c
-@@ -791,11 +791,11 @@ static void atmel_complete_tx_dma(void *
+--- a/drivers/char/hw_random/imx-rngc.c
++++ b/drivers/char/hw_random/imx-rngc.c
+@@ -105,7 +105,7 @@ static int imx_rngc_self_test(struct imx
+ 	cmd = readl(rngc->base + RNGC_COMMAND);
+ 	writel(cmd | RNGC_CMD_SELF_TEST, rngc->base + RNGC_COMMAND);
  
- 	port->icount.tx += atmel_port->tx_len;
+-	ret = wait_for_completion_timeout(&rngc->rng_op_done, RNGC_TIMEOUT);
++	ret = wait_for_completion_timeout(&rngc->rng_op_done, msecs_to_jiffies(RNGC_TIMEOUT));
+ 	if (!ret) {
+ 		imx_rngc_irq_mask_clear(rngc);
+ 		return -ETIMEDOUT;
+@@ -188,9 +188,7 @@ static int imx_rngc_init(struct hwrng *r
+ 		cmd = readl(rngc->base + RNGC_COMMAND);
+ 		writel(cmd | RNGC_CMD_SEED, rngc->base + RNGC_COMMAND);
  
--	spin_lock_irq(&atmel_port->lock_tx);
-+	spin_lock(&atmel_port->lock_tx);
- 	async_tx_ack(atmel_port->desc_tx);
- 	atmel_port->cookie_tx = -EINVAL;
- 	atmel_port->desc_tx = NULL;
--	spin_unlock_irq(&atmel_port->lock_tx);
-+	spin_unlock(&atmel_port->lock_tx);
- 
- 	if (uart_circ_chars_pending(xmit) < WAKEUP_CHARS)
- 		uart_write_wakeup(port);
+-		ret = wait_for_completion_timeout(&rngc->rng_op_done,
+-				RNGC_TIMEOUT);
+-
++		ret = wait_for_completion_timeout(&rngc->rng_op_done, msecs_to_jiffies(RNGC_TIMEOUT));
+ 		if (!ret) {
+ 			imx_rngc_irq_mask_clear(rngc);
+ 			return -ETIMEDOUT;
 
 
