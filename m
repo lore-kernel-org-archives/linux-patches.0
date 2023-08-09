@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070191773D
-	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:18:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E193C433C7;
-	Wed,  9 Aug 2023 11:18:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C044F1773D
+	for <patches@lists.linux.dev>; Wed,  9 Aug 2023 11:18:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4364AC433C8;
+	Wed,  9 Aug 2023 11:18:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1691579920;
-	bh=bODkoiT2slns5eDs7hKURVdtm4JhUSM8yxH87bwyfMg=;
+	s=korg; t=1691579923;
+	bh=EKcH2o6427pAXaOwgUCID/qLOEi1EO7D8d1Lira7wXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g7nXM2IRvbBs3u4iuPW1Opa51ZK7WEBAaI8031bj0ISTUzm9lZJCsMGqvWIX0j/R4
-	 7r9hDdwUrtj0Mxouh6kok0HtnRmSz6CrCpP+iRlHHtJ7deM544d0//MMdPkdorHGhW
-	 vpAtTgLvrhiCziaC2/ZLxUQ2OvFwgEeP8syJqH4g=
+	b=vL3c/OnflFdi3sP5JQHQTuc7ynR/ebqv+Pwyl5cqzL/7D9NcgbSuJwim9NK/tz429
+	 LvNgP++j9tkjKv6ObnYrtoqFeHnLVHMLx7zc+aBTDac+iT02vcL96MipLb+vEsQ33N
+	 W3csK/EIKs4Uh/L9okcMJi4VWAHx/mcI46VV09q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan Whitehead <bryan.whitehead@microchip.com>,
-	UNGLinuxDriver@microchip.com,
-	Moritz Fischer <moritzf@google.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 4.19 136/323] net: lan743x: Dont sleep in atomic context
-Date: Wed,  9 Aug 2023 12:39:34 +0200
-Message-ID: <20230809103704.362309898@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>
+Subject: [PATCH 4.19 163/323] PCI: rockchip: Assert PCI Configuration Enable bit after probe
+Date: Wed,  9 Aug 2023 12:40:01 +0200
+Message-ID: <20230809103705.605850161@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230809103658.104386911@linuxfoundation.org>
 References: <20230809103658.104386911@linuxfoundation.org>
@@ -37,72 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Moritz Fischer <moritzf@google.com>
+From: Rick Wertenbroek <rick.wertenbroek@gmail.com>
 
-commit 7a8227b2e76be506b2ac64d2beac950ca04892a5 upstream.
+commit f397fd4ac1fa3afcabd8cee030f953ccaed2a364 upstream.
 
-dev_set_rx_mode() grabs a spin_lock, and the lan743x implementation
-proceeds subsequently to go to sleep using readx_poll_timeout().
+Assert PCI Configuration Enable bit after probe. When this bit is left to
+0 in the endpoint mode, the RK3399 PCIe endpoint core will generate
+configuration request retry status (CRS) messages back to the root complex.
+Assert this bit after probe to allow the RK3399 PCIe endpoint core to reply
+to configuration requests from the root complex.
+This is documented in section 17.5.8.1.2 of the RK3399 TRM.
 
-Introduce a helper wrapping the readx_poll_timeout_atomic() function
-and use it to replace the calls to readx_polL_timeout().
-
-Fixes: 23f0703c125b ("lan743x: Add main source files for new lan743x driver")
+Link: https://lore.kernel.org/r/20230418074700.1083505-4-rick.wertenbroek@gmail.com
+Fixes: cf590b078391 ("PCI: rockchip: Add EP driver for Rockchip PCIe controller")
+Tested-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Cc: stable@vger.kernel.org
-Cc: Bryan Whitehead <bryan.whitehead@microchip.com>
-Cc: UNGLinuxDriver@microchip.com
-Signed-off-by: Moritz Fischer <moritzf@google.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20230627035000.1295254-1-moritzf@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microchip/lan743x_main.c |   21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ drivers/pci/controller/pcie-rockchip-ep.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/ethernet/microchip/lan743x_main.c
-+++ b/drivers/net/ethernet/microchip/lan743x_main.c
-@@ -80,6 +80,18 @@ static int lan743x_csr_light_reset(struc
- 				  !(data & HW_CFG_LRST_), 100000, 10000000);
- }
+--- a/drivers/pci/controller/pcie-rockchip-ep.c
++++ b/drivers/pci/controller/pcie-rockchip-ep.c
+@@ -620,6 +620,9 @@ static int rockchip_pcie_ep_probe(struct
  
-+static int lan743x_csr_wait_for_bit_atomic(struct lan743x_adapter *adapter,
-+					   int offset, u32 bit_mask,
-+					   int target_value, int udelay_min,
-+					   int udelay_max, int count)
-+{
-+	u32 data;
+ 	ep->irq_pci_addr = ROCKCHIP_PCIE_EP_DUMMY_IRQ_ADDR;
+ 
++	rockchip_pcie_write(rockchip, PCIE_CLIENT_CONF_ENABLE,
++			    PCIE_CLIENT_CONFIG);
 +
-+	return readx_poll_timeout_atomic(LAN743X_CSR_READ_OP, offset, data,
-+					 target_value == !!(data & bit_mask),
-+					 udelay_max, udelay_min * count);
-+}
-+
- static int lan743x_csr_wait_for_bit(struct lan743x_adapter *adapter,
- 				    int offset, u32 bit_mask,
- 				    int target_value, int usleep_min,
-@@ -675,8 +687,8 @@ static int lan743x_dp_write(struct lan74
- 	u32 dp_sel;
- 	int i;
- 
--	if (lan743x_csr_wait_for_bit(adapter, DP_SEL, DP_SEL_DPRDY_,
--				     1, 40, 100, 100))
-+	if (lan743x_csr_wait_for_bit_atomic(adapter, DP_SEL, DP_SEL_DPRDY_,
-+					    1, 40, 100, 100))
- 		return -EIO;
- 	dp_sel = lan743x_csr_read(adapter, DP_SEL);
- 	dp_sel &= ~DP_SEL_MASK_;
-@@ -687,8 +699,9 @@ static int lan743x_dp_write(struct lan74
- 		lan743x_csr_write(adapter, DP_ADDR, addr + i);
- 		lan743x_csr_write(adapter, DP_DATA_0, buf[i]);
- 		lan743x_csr_write(adapter, DP_CMD, DP_CMD_WRITE_);
--		if (lan743x_csr_wait_for_bit(adapter, DP_SEL, DP_SEL_DPRDY_,
--					     1, 40, 100, 100))
-+		if (lan743x_csr_wait_for_bit_atomic(adapter, DP_SEL,
-+						    DP_SEL_DPRDY_,
-+						    1, 40, 100, 100))
- 			return -EIO;
- 	}
- 
+ 	return 0;
+ err_epc_mem_exit:
+ 	pci_epc_mem_exit(epc);
 
 
